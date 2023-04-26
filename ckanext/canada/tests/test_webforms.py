@@ -1,5 +1,6 @@
 # -*- coding: UTF-8 -*-
 from StringIO import StringIO
+from openpyxl import Workbook
 from nose.tools import assert_raises
 from nose import SkipTest
 from ckan.lib.helpers import url_for
@@ -18,6 +19,11 @@ from ckan.tests.helpers import FunctionalTestBase
 
 from ckanext.recombinant.tables import get_chromo
 from ckanext.recombinant.read_excel import read_excel
+from ckanext.recombinant.write_excel import (
+    excel_template,
+    fill_cell,
+    DATA_FIRST_ROW
+)
 
 
 class TestPackageWebForms(FunctionalTestBase):
@@ -221,6 +227,7 @@ class TestRecombinantWebForms(FunctionalTestBase):
 
 
     def lc_init_pd(self, org=None):
+        # type: (Organization|None) -> None
         lc = LocalCKAN()
         org = org if org else self.org
         try:
@@ -230,6 +237,7 @@ class TestRecombinantWebForms(FunctionalTestBase):
 
 
     def lc_create_pd_record(self, org=None, is_nil=False):
+        # type: (Organization|None, bool) -> None
         lc = LocalCKAN()
         org = org if org else self.org
         self.lc_init_pd(org=org)
@@ -237,6 +245,14 @@ class TestRecombinantWebForms(FunctionalTestBase):
         resource_id = rval['resources'][1]['id'] if is_nil else rval['resources'][0]['id']
         record = self.example_nil_record if is_nil else self.example_record
         lc.action.datastore_upsert(resource_id=resource_id, records=[record])
+
+
+    def lc_pd_template(self, org=None):
+        # type: (Organization|None) -> Workbook
+        org = org if org else self.org
+        self.lc_create_pd_record(org=org)
+        self.lc_create_pd_record(org=org, is_nil=True)
+        return excel_template(dataset_type=self.pd_type, org=org)
 
 
     def test_member_cannot_init_pd(self):
@@ -491,35 +507,136 @@ class TestRecombinantWebForms(FunctionalTestBase):
                 assert f['datastore_id'] in template_file[1][2]  # check each field id is in column names
 
 
-    def test_upload_multiple(self):
-        raise SkipTest("TODO: Implement test for uploading filled template file.")
-        # ckanext.recombinant.controller:UploadController -> preview_table
-        # (resource_name, owner_org)
-        # forms['dataset-form'] -> ['xls_update'] -> 'upload'
-        # Your file was successfully uploaded into the central system.
+    def test_upload_records(self):
+        template = self.lc_pd_template()
+        for i, v in enumerate(['2023',
+                               '7',
+                               'B-8019',
+                               'This is an English Summary',
+                               'This is a French Summary',
+                               'DA',
+                               '80',
+                               'This is an English Comment',
+                               'This is a French Comment']):
+            fill_cell(sheet=template.active,
+                      row=DATA_FIRST_ROW,
+                      column=(i + 1),
+                      value=v,
+                      style='reco_ref_value')
+        template_file = StringIO()
+        template.save(template_file)
 
-        from logging import getLogger
-        from pprint import pprint
-        log = getLogger(__name__)
-        log.info("    ")
-        log.info("DEBUGGING::")
-        log.info(pprint(template_file[0]))
-        log.info("    ")
+        offset = url_for(controller='ckanext.recombinant.controller:UploadController',
+                         action='preview_table',
+                         resource_name=self.pd_type,
+                         owner_org=self.org['name'])
+
+        response = self.app.get(offset, extra_environ=self.extra_environ_editor)
+        assert 'Create and update multiple records' in response.body
+
+        raise SkipTest("TODO: fix recombinant templates to solve hanging html tags...")
+        dataset_form = response.forms['dataset-form']
+        dataset_form['xls_update'] = template_file
+        # Submit
+        response = dataset_form.submit('upload', extra_environ=self.extra_environ_editor)
+
+        response = self.app.get(response.headers['Location'], extra_environ=self.extra_environ_editor)
+        assert 'Your file was successfully uploaded into the central system.' in response.body
 
 
     def test_upload_validation(self):
-        raise SkipTest("TODO: Implement test for validating filled template file.")
-        # ckanext.recombinant.controller:UploadController -> preview_table
-        # (resource_name, owner_org)
-        # forms['dataset-form'] -> ['xls_update'] -> 'validate'
-        # No errors found.
-        # year: Please enter a valid year
-        # month: Please enter a month number from 1-12
-        # pages: This value must not be negative
+        template = self.lc_pd_template()
+        for i, v in enumerate(['2023',
+                               '7',
+                               'B-8019',
+                               'This is an English Summary',
+                               'This is a French Summary',
+                               'DA',
+                               '80',
+                               'This is an English Comment',
+                               'This is a French Comment']):
+            fill_cell(sheet=template.active,
+                      row=DATA_FIRST_ROW,
+                      column=(i + 1),
+                      value=v,
+                      style='reco_ref_value')
+        good_template_file = StringIO()
+        template.save(good_template_file)
+
+        for i, v in enumerate(['1978',
+                               '20',
+                               'B-8019',
+                               'This is an English Summary',
+                               'This is a French Summary',
+                               'DA',
+                               '-18',
+                               'This is an English Comment',
+                               'This is a French Comment']):
+            fill_cell(sheet=template.active,
+                      row=DATA_FIRST_ROW,
+                      column=(i + 1),
+                      value=v,
+                      style='reco_ref_value')
+        bad_template_file = StringIO()
+        template.save(bad_template_file)
+
+        offset = url_for(controller='ckanext.recombinant.controller:UploadController',
+                         action='preview_table',
+                         resource_name=self.pd_type,
+                         owner_org=self.org['name'])
+
+        response = self.app.get(offset, extra_environ=self.extra_environ_editor)
+        assert 'Create and update multiple records' in response.body
+
+        raise SkipTest("TODO: fix recombinant templates to solve hanging html tags...")
+        dataset_form = response.forms['dataset-form']
+        dataset_form['xls_update'] = bad_template_file
+        # Submit
+        response = dataset_form.submit('validate', extra_environ=self.extra_environ_editor)
+
+        assert 'year: Please enter a valid year' in response.body
+        assert 'month: Please enter a month number from 1-12' in response.body
+        assert 'pages: This value must not be negative' in response.body
+
+        response = self.app.get(offset, extra_environ=self.extra_environ_editor)
+
+        dataset_form = response.forms['dataset-form']
+        dataset_form['xls_update'] = good_template_file
+        # Submit
+        response = dataset_form.submit('validate', extra_environ=self.extra_environ_editor)
+
+        response = self.app.get(response.headers['Location'], extra_environ=self.extra_environ_editor)
+        assert 'No errors found.' in response.body
 
 
     def test_delete_records(self):
-        raise SkipTest("TODO: Implement test for deleting records.")
-        # ckanext.recombinant.controller:UploadController -> preview_table
-        # (resource_name, owner_org)
-        # forms['delete-form'] -> ['bulk-delete'] -> ''
+        records_to_delete = self.example_record['request_number']
+        self.lc_create_pd_record()
+        self.example_record['request_number'] = 'B-8019'
+        self.lc_create_pd_record()
+        records_to_delete += '\n{}'.format(self.example_record['request_number'])
+
+        offset = url_for(controller='ckanext.recombinant.controller:UploadController',
+                         action='preview_table',
+                         resource_name=self.pd_type,
+                         owner_org=self.org['name'])
+        
+        response = self.app.get(offset, extra_environ=self.extra_environ_editor)
+        assert 'Create and update multiple records' in response.body
+
+        raise SkipTest("TODO: fix recombinant templates to solve hanging html tags...")
+        delete_form = response.forms['delete-form']
+        delete_form['bulk-delete'] = records_to_delete
+        # Submit
+        response = delete_form.submit('', extra_environ=self.extra_environ_editor)
+
+        response = self.app.get(response.headers['Location'], extra_environ=self.extra_environ_editor)
+        assert 'Confirm Delete' in response.body
+        assert 'Are you sure you want to delete 2 records' in response.body
+
+        confirm_form = response.form['recombinant-confirm-delete-form']
+        # Submit
+        response = confirm_form.submit('', extra_environ=self.extra_environ_editor)
+
+        response = self.app.get(response.headers['Location'], extra_environ=self.extra_environ_editor)
+        assert '2 deleted.' in response.body
