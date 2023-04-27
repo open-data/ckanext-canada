@@ -1,9 +1,10 @@
 # -*- coding: UTF-8 -*-
 from StringIO import StringIO
-from openpyxl import Workbook
+from openpyxl.workbook import Workbook
+from webtest.app import Upload
 from nose.tools import assert_raises
 from nose import SkipTest
-from ckan.lib.helpers import url_for
+from ckan.plugins.toolkit import h
 from ckanapi import (
     LocalCKAN,
     NotAuthorized,
@@ -22,7 +23,8 @@ from ckanext.recombinant.read_excel import read_excel
 from ckanext.recombinant.write_excel import (
     excel_template,
     fill_cell,
-    DATA_FIRST_ROW
+    DATA_FIRST_ROW,
+    DATA_FIRST_COL_NUM
 )
 
 
@@ -36,7 +38,7 @@ class TestPackageWebForms(FunctionalTestBase):
 
 
     def test_new_dataset_required_fields(self):
-        offset = url_for(controller='package', action='new')
+        offset = h.url_for(controller='package', action='new')
 
         # test first form, creating a dataset
         response = self.app.get(offset, extra_environ=self.extra_environ_tester)
@@ -63,7 +65,7 @@ class TestPackageWebForms(FunctionalTestBase):
 
 
     def test_new_dataset_missing_fields(self):
-        offset = url_for(controller='package', action='new')
+        offset = h.url_for(controller='package', action='new')
 
         # test first form, creating a dataset
         response = self.app.get(offset, extra_environ=self.extra_environ_tester)
@@ -152,7 +154,7 @@ class TestNewUserWebForms(FunctionalTestBase):
 
 
     def test_new_user_required_fields(self):
-        offset = url_for(controller='user', action='register')
+        offset = h.url_for(controller='user', action='register')
 
         # test form, registering new user account
         response = self.app.get(offset)
@@ -168,7 +170,7 @@ class TestNewUserWebForms(FunctionalTestBase):
 
 
     def test_new_user_missing_fields(self):
-        offset = url_for(controller='user', action='register')
+        offset = h.url_for(controller='user', action='register')
 
         # test form, registering new user account
         response = self.app.get(offset)
@@ -256,10 +258,10 @@ class TestRecombinantWebForms(FunctionalTestBase):
 
 
     def test_member_cannot_init_pd(self):
-        offset = url_for(controller='ckanext.recombinant.controller:UploadController',
-                         action='preview_table',
-                         resource_name=self.pd_type,
-                         owner_org=self.org['name'])
+        offset = h.url_for(controller='ckanext.recombinant.controller:UploadController',
+                           action='preview_table',
+                           resource_name=self.pd_type,
+                           owner_org=self.org['name'])
 
         # test form, initializing new pd resource
         response = self.app.get(offset, extra_environ=self.extra_environ_member)
@@ -275,10 +277,10 @@ class TestRecombinantWebForms(FunctionalTestBase):
 
 
     def test_editor_can_init_pd(self):
-        offset = url_for(controller='ckanext.recombinant.controller:UploadController',
-                         action='preview_table',
-                         resource_name=self.pd_type,
-                         owner_org=self.org['name'])
+        offset = h.url_for(controller='ckanext.recombinant.controller:UploadController',
+                           action='preview_table',
+                           resource_name=self.pd_type,
+                           owner_org=self.org['name'])
 
         # test form, initializing new pd resource
         response = self.app.get(offset, extra_environ=self.extra_environ_editor)
@@ -294,10 +296,10 @@ class TestRecombinantWebForms(FunctionalTestBase):
 
 
     def test_admin_can_init_pd(self):
-        offset = url_for(controller='ckanext.recombinant.controller:UploadController',
-                         action='preview_table',
-                         resource_name=self.pd_type,
-                         owner_org=self.org['name'])
+        offset = h.url_for(controller='ckanext.recombinant.controller:UploadController',
+                           action='preview_table',
+                           resource_name=self.pd_type,
+                           owner_org=self.org['name'])
 
         # test form, initializing new pd resource
         response = self.app.get(offset, extra_environ=self.extra_environ_system)
@@ -317,31 +319,31 @@ class TestRecombinantWebForms(FunctionalTestBase):
         self.lc_init_pd(org=no_ati_email_org)
         self.lc_init_pd()
 
-        offset = url_for(controller='ckanext.recombinant.controller:UploadController',
-                         action='preview_table',
-                         resource_name=self.pd_type,
-                         owner_org=no_ati_email_org['name'])
+        offset = h.url_for(controller='ckanext.recombinant.controller:UploadController',
+                           action='preview_table',
+                           resource_name=self.pd_type,
+                           owner_org=no_ati_email_org['name'])
 
         response = self.app.get(offset, extra_environ=self.extra_environ_system)
         assert 'Your organization does not have an Access to Information email on file' in response.body
 
-        offset = url_for(controller='ckanext.recombinant.controller:UploadController',
-                         action='preview_table',
-                         resource_name=self.pd_type,
-                         owner_org=self.org['name'])
+        offset = h.url_for(controller='ckanext.recombinant.controller:UploadController',
+                           action='preview_table',
+                           resource_name=self.pd_type,
+                           owner_org=self.org['name'])
 
         response = self.app.get(offset, extra_environ=self.extra_environ_system)
         assert 'Your organization does not have an Access to Information email on file' not in response.body
-        assert 'Informal Requests for ATI Records Previously Released are being sent to' in response.body
+        assert 'Informal Requests for ATI Records Previously Released are being sent to {}'.format(self.org['ati_email']) in response.body
 
 
     def test_member_cannot_create_single_record(self):
         self.lc_init_pd()
 
-        offset = url_for(controller='ckanext.canada.controller:PDUpdateController',
-                         action='create_pd_record',
-                         resource_name=self.pd_type,
-                         owner_org=self.org['name'])
+        offset = h.url_for(controller='ckanext.canada.controller:PDUpdateController',
+                           action='create_pd_record',
+                           resource_name=self.pd_type,
+                           owner_org=self.org['name'])
 
         # members should not be able to acces create_pd_record endpoint
         response = self.app.get(offset, extra_environ=self.extra_environ_member, status=403)
@@ -360,10 +362,10 @@ class TestRecombinantWebForms(FunctionalTestBase):
     def test_editor_can_create_single_record(self):
         self.lc_init_pd()
 
-        offset = url_for(controller='ckanext.canada.controller:PDUpdateController',
-                         action='create_pd_record',
-                         resource_name=self.pd_type,
-                         owner_org=self.org['name'])
+        offset = h.url_for(controller='ckanext.canada.controller:PDUpdateController',
+                           action='create_pd_record',
+                           resource_name=self.pd_type,
+                           owner_org=self.org['name'])
 
         response = self.app.get(offset, extra_environ=self.extra_environ_editor)
         assert 'Create Record' in response.body
@@ -379,10 +381,10 @@ class TestRecombinantWebForms(FunctionalTestBase):
     def test_admin_can_create_single_record(self):
         self.lc_init_pd()
 
-        offset = url_for(controller='ckanext.canada.controller:PDUpdateController',
-                         action='create_pd_record',
-                         resource_name=self.pd_type,
-                         owner_org=self.org['name'])
+        offset = h.url_for(controller='ckanext.canada.controller:PDUpdateController',
+                           action='create_pd_record',
+                           resource_name=self.pd_type,
+                           owner_org=self.org['name'])
 
         response = self.app.get(offset, extra_environ=self.extra_environ_system)
         assert 'Create Record' in response.body
@@ -398,11 +400,11 @@ class TestRecombinantWebForms(FunctionalTestBase):
     def test_member_cannot_update_single_record(self):
         self.lc_create_pd_record()
 
-        offset = url_for(controller='ckanext.canada.controller:PDUpdateController',
-                         action='update_pd_record',
-                         resource_name=self.pd_type,
-                         owner_org=self.org['name'],
-                         pk=self.example_record['request_number'])
+        offset = h.url_for(controller='ckanext.canada.controller:PDUpdateController',
+                           action='update_pd_record',
+                           resource_name=self.pd_type,
+                           owner_org=self.org['name'],
+                           pk=self.example_record['request_number'])
 
         # members should not be able to acces update_pd_record endpoint
         response = self.app.get(offset, extra_environ=self.extra_environ_member, status=403)
@@ -423,11 +425,11 @@ class TestRecombinantWebForms(FunctionalTestBase):
     def test_editor_can_update_single_record(self):
         self.lc_create_pd_record()
 
-        offset = url_for(controller='ckanext.canada.controller:PDUpdateController',
-                         action='update_pd_record',
-                         resource_name=self.pd_type,
-                         owner_org=self.org['name'],
-                         pk=self.example_record['request_number'])
+        offset = h.url_for(controller='ckanext.canada.controller:PDUpdateController',
+                           action='update_pd_record',
+                           resource_name=self.pd_type,
+                           owner_org=self.org['name'],
+                           pk=self.example_record['request_number'])
 
         response = self.app.get(offset, extra_environ=self.extra_environ_editor)
         assert 'Update Record' in response.body
@@ -445,11 +447,11 @@ class TestRecombinantWebForms(FunctionalTestBase):
     def test_admin_can_update_single_record(self):
         self.lc_create_pd_record()
 
-        offset = url_for(controller='ckanext.canada.controller:PDUpdateController',
-                         action='update_pd_record',
-                         resource_name=self.pd_type,
-                         owner_org=self.org['name'],
-                         pk=self.example_record['request_number'])
+        offset = h.url_for(controller='ckanext.canada.controller:PDUpdateController',
+                           action='update_pd_record',
+                           resource_name=self.pd_type,
+                           owner_org=self.org['name'],
+                           pk=self.example_record['request_number'])
 
         response = self.app.get(offset, extra_environ=self.extra_environ_system)
         assert 'Update Record' in response.body
@@ -480,11 +482,11 @@ class TestRecombinantWebForms(FunctionalTestBase):
         self.lc_create_pd_record()
         self.lc_create_pd_record(is_nil=True)
 
-        offset = url_for(controller='ckanext.recombinant.controller:UploadController',
-                         action='template',
-                         dataset_type=self.pd_type,
-                         lang='en',
-                         owner_org=self.org['name'])
+        offset = h.url_for(controller='ckanext.recombinant.controller:UploadController',
+                           action='template',
+                           dataset_type=self.pd_type,
+                           lang='en',
+                           owner_org=self.org['name'])
         
         # members should be able to download template
         response = self.app.get(offset, extra_environ=self.extra_environ_member)
@@ -507,6 +509,10 @@ class TestRecombinantWebForms(FunctionalTestBase):
                 assert f['datastore_id'] in template_file[1][2]  # check each field id is in column names
 
 
+    def test_selected_download_template(self):
+        raise SkipTest("TODO: write test to check that selected records are in template file...")
+
+
     def test_upload_records(self):
         template = self.lc_pd_template()
         for i, v in enumerate(['2023',
@@ -520,27 +526,31 @@ class TestRecombinantWebForms(FunctionalTestBase):
                                'This is a French Comment']):
             fill_cell(sheet=template.active,
                       row=DATA_FIRST_ROW,
-                      column=(i + 1),
+                      column=(i + DATA_FIRST_COL_NUM),
                       value=v,
                       style='reco_ref_value')
         template_file = StringIO()
         template.save(template_file)
+        template_file.seek(0, 0)
 
-        offset = url_for(controller='ckanext.recombinant.controller:UploadController',
-                         action='preview_table',
-                         resource_name=self.pd_type,
-                         owner_org=self.org['name'])
+        offset = h.url_for(controller='ckanext.recombinant.controller:UploadController',
+                           action='preview_table',
+                           resource_name=self.pd_type,
+                           owner_org=self.org['name'])
 
         response = self.app.get(offset, extra_environ=self.extra_environ_editor)
         assert 'Create and update multiple records' in response.body
 
-        raise SkipTest("TODO: fix recombinant templates to solve hanging html tags...")
         dataset_form = response.forms['dataset-form']
-        dataset_form['xls_update'] = template_file
         # Submit
-        response = dataset_form.submit('upload', extra_environ=self.extra_environ_editor)
+        response = dataset_form.submit(upload_files=[('xls_update',
+                                                      '{}_en_{}.xlsx'.format(self.pd_type, self.org['name']),
+                                                      template_file.read())],
+                                       extra_environ=self.extra_environ_editor)
 
-        response = self.app.get(response.headers['Location'], extra_environ=self.extra_environ_editor)
+        raise SkipTest("TODO: solve issues with redirects from responses...")
+        # recombinant returns package.read url, which redirects in recombinant, thus the extra follow()
+        response = self.app.get(response.headers['Location'], extra_environ=self.extra_environ_editor).follow()
         assert 'Your file was successfully uploaded into the central system.' in response.body
 
 
@@ -580,15 +590,15 @@ class TestRecombinantWebForms(FunctionalTestBase):
         bad_template_file = StringIO()
         template.save(bad_template_file)
 
-        offset = url_for(controller='ckanext.recombinant.controller:UploadController',
-                         action='preview_table',
-                         resource_name=self.pd_type,
-                         owner_org=self.org['name'])
+        offset = h.url_for(controller='ckanext.recombinant.controller:UploadController',
+                           action='preview_table',
+                           resource_name=self.pd_type,
+                           owner_org=self.org['name'])
 
         response = self.app.get(offset, extra_environ=self.extra_environ_editor)
         assert 'Create and update multiple records' in response.body
 
-        raise SkipTest("TODO: fix recombinant templates to solve hanging html tags...")
+        raise SkipTest("TODO: solve issues with webtest 1.4.3 file uploads...")
         dataset_form = response.forms['dataset-form']
         dataset_form['xls_update'] = bad_template_file
         # Submit
@@ -616,15 +626,23 @@ class TestRecombinantWebForms(FunctionalTestBase):
         self.lc_create_pd_record()
         records_to_delete += '\n{}'.format(self.example_record['request_number'])
 
-        offset = url_for(controller='ckanext.recombinant.controller:UploadController',
-                         action='preview_table',
-                         resource_name=self.pd_type,
-                         owner_org=self.org['name'])
+        offset = h.url_for(controller='ckanext.recombinant.controller:UploadController',
+                           action='preview_table',
+                           resource_name=self.pd_type,
+                           owner_org=self.org['name'])
         
         response = self.app.get(offset, extra_environ=self.extra_environ_editor)
         assert 'Create and update multiple records' in response.body
 
-        raise SkipTest("TODO: fix recombinant templates to solve hanging html tags...")
+        from pprint import pprint
+        from logging import getLogger
+        log = getLogger(__name__)
+        log.info("    ")
+        log.info("DEBUGGING::")
+        log.info(pprint(records_to_delete))
+        log.info("    ")
+
+        raise SkipTest("TODO: finalize this test...")
         delete_form = response.forms['delete-form']
         delete_form['bulk-delete'] = records_to_delete
         # Submit
