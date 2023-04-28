@@ -387,4 +387,5 @@ def resource_format_replacements(value, context):
             for r in f['replaces']:
                 if value.lower() == r.lower():
                     return f['value']
+    #TODO: try to get the resource format guessing stuff from core and check here??
     return value

@@ -4,6 +4,7 @@ import os
 import os.path
 import logging
 from pylons.i18n import _
+from six import string_types
 import ckan.plugins as p
 from ckan.lib.plugins import DefaultDatasetForm, DefaultTranslation
 import ckan.lib.helpers as hlp
@@ -303,15 +304,30 @@ def schema_format_autocomplete(func, context, data_dict):
     check_access('format_autocomplete', context, data_dict)
 
     q = data_dict['q']
-    limit = data_dict.get('limit', 5)
+    limit = data_dict.get('limit', 8)
 
     fmt_choices = scheming_get_preset('canada_resource_format')['choices']
+
+    #TODO: move this to JS method with localized choices??
 
     choices = []
     for f in fmt_choices:
         if len(choices) >= limit:
             return choices
-        if q.lower() in f['value'].lower():
+        if 'label' in f:  # check labels if they exist. Can be str, or dict of {'en':str,'fr':str}
+            if isinstance(f['label'], string_types) \
+            and q.lower() in f['label'].lower():  # check string type label
+                choices.append(f['value'])
+                continue
+            elif isinstance(f['label'], dict) \
+            and h.lang() in f['label'] \
+            and q.lower() in f['label'][h.lang()].lower():  # check dict type label
+                choices.append(f['value'])
+                continue
+        if 'replaces' in f and q.lower() in [e.lower() for e in f['replaces']]:  # check replacements list
+            choices.append(f['value'])
+            continue
+        if q.lower() in f['value'].lower():  # check the actual value
             choices.append(f['value'])
 
     return choices
