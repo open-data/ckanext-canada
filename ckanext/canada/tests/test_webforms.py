@@ -513,7 +513,55 @@ class TestRecombinantWebForms(FunctionalTestBase):
         raise SkipTest("TODO: write test to check that selected records are in template file...")
 
 
-    def test_upload_records(self):
+    def test_member_cannot_upload_records(self):
+        template = self.lc_pd_template()
+        for i, v in enumerate(['2023',
+                               '7',
+                               'B-8019',
+                               'This is an English Summary',
+                               'This is a French Summary',
+                               'DA',
+                               '80',
+                               'This is an English Comment',
+                               'This is a French Comment']):
+            fill_cell(sheet=template.active,
+                      row=DATA_FIRST_ROW,
+                      column=(i + DATA_FIRST_COL_NUM),
+                      value=v,
+                      style='reco_ref_value')
+        template_file = StringIO()
+        template.save(template_file)
+        template_file.seek(0, 0)
+
+        offset = h.url_for(controller='ckanext.recombinant.controller:UploadController',
+                           action='preview_table',
+                           resource_name=self.pd_type,
+                           owner_org=self.org['name'])
+
+        response = self.app.get(offset, extra_environ=self.extra_environ_member)
+        assert 'Create and update multiple records' not in response.body
+        # the `dataset-form` html form tag is still rendered
+        # as it contains other elements, but should not contain
+        # the upload fields for a member
+        dataset_form = response.forms['dataset-form']
+        assert 'xls_update' not in dataset_form.fields
+
+        # use sysadmin to get page for permission reasons
+        response = self.app.get(offset, extra_environ=self.extra_environ_system)
+        assert 'Create and update multiple records' in response.body
+
+        dataset_form = response.forms['dataset-form']
+        # Submit
+        assert_raises(NotAuthorized,
+                      dataset_form.submit,
+                      upload_files=[('xls_update',
+                                     '{}_en_{}.xlsx'.format(self.pd_type, self.org['name']),
+                                     template_file.read())],
+                      extra_environ=self.extra_environ_member,
+                      status=403)
+
+
+    def test_editor_can_upload_records(self):
         template = self.lc_pd_template()
         for i, v in enumerate(['2023',
                                '7',
@@ -548,9 +596,48 @@ class TestRecombinantWebForms(FunctionalTestBase):
                                                       template_file.read())],
                                        extra_environ=self.extra_environ_editor)
 
-        raise SkipTest("TODO: solve issues with redirects from responses...")
         # recombinant returns package.read url, which redirects in recombinant, thus the extra follow()
-        response = self.app.get(response.headers['Location'], extra_environ=self.extra_environ_editor).follow()
+        response = self.app.get(response.headers['Location'], extra_environ=self.extra_environ_editor).follow(extra_environ=self.extra_environ_editor)
+        assert 'Your file was successfully uploaded into the central system.' in response.body
+
+
+    def test_admin_can_upload_records(self):
+        template = self.lc_pd_template()
+        for i, v in enumerate(['2023',
+                               '7',
+                               'B-8019',
+                               'This is an English Summary',
+                               'This is a French Summary',
+                               'DA',
+                               '80',
+                               'This is an English Comment',
+                               'This is a French Comment']):
+            fill_cell(sheet=template.active,
+                      row=DATA_FIRST_ROW,
+                      column=(i + DATA_FIRST_COL_NUM),
+                      value=v,
+                      style='reco_ref_value')
+        template_file = StringIO()
+        template.save(template_file)
+        template_file.seek(0, 0)
+
+        offset = h.url_for(controller='ckanext.recombinant.controller:UploadController',
+                           action='preview_table',
+                           resource_name=self.pd_type,
+                           owner_org=self.org['name'])
+
+        response = self.app.get(offset, extra_environ=self.extra_environ_system)
+        assert 'Create and update multiple records' in response.body
+
+        dataset_form = response.forms['dataset-form']
+        # Submit
+        response = dataset_form.submit(upload_files=[('xls_update',
+                                                      '{}_en_{}.xlsx'.format(self.pd_type, self.org['name']),
+                                                      template_file.read())],
+                                       extra_environ=self.extra_environ_system)
+
+        # recombinant returns package.read url, which redirects in recombinant, thus the extra follow()
+        response = self.app.get(response.headers['Location'], extra_environ=self.extra_environ_system).follow(extra_environ=self.extra_environ_system)
         assert 'Your file was successfully uploaded into the central system.' in response.body
 
 
@@ -619,7 +706,48 @@ class TestRecombinantWebForms(FunctionalTestBase):
         assert 'No errors found.' in response.body
 
 
-    def test_delete_records(self):
+    def test_member_cannot_delete_records(self):
+        records_to_delete = self.example_record['request_number']
+        self.lc_create_pd_record()
+        self.example_record['request_number'] = 'B-8019'
+        self.lc_create_pd_record()
+        records_to_delete += '\n{}'.format(self.example_record['request_number'])
+
+        offset = h.url_for(controller='ckanext.recombinant.controller:UploadController',
+                           action='preview_table',
+                           resource_name=self.pd_type,
+                           owner_org=self.org['name'])
+        
+        response = self.app.get(offset, extra_environ=self.extra_environ_member)
+        assert 'Create and update multiple records' not in response.body
+        assert 'delete-form' not in response.forms
+
+        # use sysadmin to get page for permission reasons
+        response = self.app.get(offset, extra_environ=self.extra_environ_system)
+        assert 'Create and update multiple records' in response.body
+
+        delete_form = response.forms['delete-form']
+        delete_form['bulk-delete'] = records_to_delete
+        # Submit
+        response = delete_form.submit(extra_environ=self.extra_environ_member)
+        raise SkipTest("TODO: finish assertions...")
+        assert 'Access was denied to this resource' in response.body
+        
+        # use sysadmin to submit for permission reasons
+        response = self.app.get(offset, extra_environ=self.extra_environ_system)
+        delete_form = response.forms['delete-form']
+        delete_form['bulk-delete'] = records_to_delete
+        response = delete_form.submit(extra_environ=self.extra_environ_system)
+        assert 'Confirm Delete' in response.body
+        assert 'Are you sure you want to delete 2 records' in response.body
+
+        confirm_form = response.forms['recombinant-confirm-delete-form']
+        # Submit
+        response = confirm_form.submit('confirm', extra_environ=self.extra_environ_member)
+        assert 'Access was denied to this resource' in response.body
+
+
+    def test_editor_can_delete_records(self):
         records_to_delete = self.example_record['request_number']
         self.lc_create_pd_record()
         self.example_record['request_number'] = 'B-8019'
@@ -634,27 +762,48 @@ class TestRecombinantWebForms(FunctionalTestBase):
         response = self.app.get(offset, extra_environ=self.extra_environ_editor)
         assert 'Create and update multiple records' in response.body
 
-        from pprint import pprint
-        from logging import getLogger
-        log = getLogger(__name__)
-        log.info("    ")
-        log.info("DEBUGGING::")
-        log.info(pprint(records_to_delete))
-        log.info("    ")
-
-        raise SkipTest("TODO: finalize this test...")
         delete_form = response.forms['delete-form']
         delete_form['bulk-delete'] = records_to_delete
         # Submit
-        response = delete_form.submit('', extra_environ=self.extra_environ_editor)
+        response = delete_form.submit(extra_environ=self.extra_environ_editor)
 
-        response = self.app.get(response.headers['Location'], extra_environ=self.extra_environ_editor)
         assert 'Confirm Delete' in response.body
         assert 'Are you sure you want to delete 2 records' in response.body
 
-        confirm_form = response.form['recombinant-confirm-delete-form']
+        confirm_form = response.forms['recombinant-confirm-delete-form']
         # Submit
-        response = confirm_form.submit('', extra_environ=self.extra_environ_editor)
+        response = confirm_form.submit('confirm', extra_environ=self.extra_environ_editor)
 
         response = self.app.get(response.headers['Location'], extra_environ=self.extra_environ_editor)
+        assert '2 deleted.' in response.body
+
+
+    def test_admin_can_delete_records(self):
+        records_to_delete = self.example_record['request_number']
+        self.lc_create_pd_record()
+        self.example_record['request_number'] = 'B-8019'
+        self.lc_create_pd_record()
+        records_to_delete += '\n{}'.format(self.example_record['request_number'])
+
+        offset = h.url_for(controller='ckanext.recombinant.controller:UploadController',
+                           action='preview_table',
+                           resource_name=self.pd_type,
+                           owner_org=self.org['name'])
+        
+        response = self.app.get(offset, extra_environ=self.extra_environ_system)
+        assert 'Create and update multiple records' in response.body
+
+        delete_form = response.forms['delete-form']
+        delete_form['bulk-delete'] = records_to_delete
+        # Submit
+        response = delete_form.submit(extra_environ=self.extra_environ_system)
+
+        assert 'Confirm Delete' in response.body
+        assert 'Are you sure you want to delete 2 records' in response.body
+
+        confirm_form = response.forms['recombinant-confirm-delete-form']
+        # Submit
+        response = confirm_form.submit('confirm', extra_environ=self.extra_environ_system)
+
+        response = self.app.get(response.headers['Location'], extra_environ=self.extra_environ_system)
         assert '2 deleted.' in response.body
