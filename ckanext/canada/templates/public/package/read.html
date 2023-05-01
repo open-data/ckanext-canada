@@ -33,29 +33,6 @@
   <div class="module">
     {% block internal_actions %}{% endblock %}
 
-    {% if pkg.id in [
-      'd8f85d91-7dec-4fd1-8055-483b77225d8b',
-      '432527ab-7aac-45b5-81d6-7597107a7013',
-      '8634f1c9-597e-416d-91f2-df24d2ffbeea',
-      'f132b8a6-abad-43d6-b6ad-2301e778b1b6',
-      '4ae27978-0931-49ab-9c17-0b119c0ba92f',
-      '009f9a49-c2d9-4d29-a6d4-1a228da335ce',
-      'b9f51ef4-4605-4ef2-8231-62a2edda1b54',
-      'ee9bd7e8-90a5-45db-9287-85c8cf3589b6',
-      'ecd1a913-47da-47fc-8f96-2432be420986',
-      '6e75f19c-d19d-48aa-984e-609c8d9bc403',
-      '98abeb62-7c76-4dfb-a134-1551f55ede55',
-    ] %}
-      <div class="alert alert-warning">
-        {# Improper language handling for temporary notice. Don't @ me #}
-        {% if h.lang() == 'en' %}
-          Due to current labour disruptions, institutions are making best efforts to meet proactive publication requirements, including meeting legislated timelines, in accordance with operational realities. However, there may be delays in posting proactively published information to the Open Government Portal.
-        {% else %}
-          En raison des conflits de travail actuels, les institutions s’efforcent de respecter les exigences de publication proactive, y compris les délais prescrits par la loi, en tenant compte des réalités opérationnelles. Cependant, il peut y avoir des retards dans la mise en ligne des informations publiées de manière proactive sur le Portail du gouvernement ouvert.
-        {% endif %}
-      </div>
-    {% endif %}
-
     {% block package_archive_notice %}
     {% if c.is_activity_archive %}
     <div class="alert alert-error">
