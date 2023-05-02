@@ -1,6 +1,6 @@
 {% import 'macros/form.html' as form %}
 
-<form role="form" action="" method="post">
+<form id="user-register-form" role="form" action="" method="post">
   {{ form.errors(error_summary) }}
   {% set valid_dict1={ 'oninvalid': "setCustomValidity('"+_("Please fill out this field.")+"')", 'onchange':"setCustomValidity('')"} %}
   {% set valid_dict2={ 'oninvalid': "setCustomValidity('"+_("Please enter a valid email address.")+"')", 'onchange':"setCustomValidity('')"} %}
