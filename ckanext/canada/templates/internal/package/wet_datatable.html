@@ -76,7 +76,8 @@
       'colvis',
       {extend:"selected",text:"{{_('Edit in Excel')}}",action: function ( e, dt, button, config ){
 
-          var form = $('<form>',{
+          // closing form tag needed for py webtest lib
+          var form = $('<form></form>',{
             action : "{% url_for 'recombinant.template', dataset_type=dataset_type, lang=h.lang(),owner_org=owner_org %}",
             method : "post"
           });
