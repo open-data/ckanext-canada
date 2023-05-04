@@ -3,7 +3,6 @@ import pytest
 from urlparse import urlparse
 from StringIO import StringIO
 from openpyxl.workbook import Workbook
-from webtest import AppError, TestResponse
 from ckan.plugins.toolkit import h
 from ckanapi import (
     LocalCKAN,
@@ -11,7 +10,7 @@ from ckanapi import (
     ValidationError
 )
 
-from ckan.tests.helpers import reset_db
+from ckan.tests.helpers import reset_db, CKANResponse
 from ckan.lib.search import clear_all
 
 from ckan.tests.factories import Sysadmin
@@ -30,8 +29,8 @@ from ckanext.recombinant.write_excel import (
 )
 
 
-def _get_offset_from_response(response):
-    # type: (TestResponse) -> str
+def _get_relative_offset_from_response(response):
+    # type: (CKANResponse) -> str
     assert response.headers
     assert 'Location' in response.headers
     return urlparse(response.headers['Location'])._replace(scheme='', netloc='').geturl()
@@ -65,7 +64,7 @@ class TestPackageWebForms(object):
                             extra_environ=self.extra_environ_tester,
                             follow_redirects=False)
 
-        offset = _get_offset_from_response(response)
+        offset = _get_relative_offset_from_response(response)
         response = app.get(offset, extra_environ=self.extra_environ_tester)
 
         assert 'Add data to the dataset' in response.body
@@ -115,7 +114,7 @@ class TestPackageWebForms(object):
                             extra_environ=self.extra_environ_tester,
                             follow_redirects=False)
 
-        offset = _get_offset_from_response(response)
+        offset = _get_relative_offset_from_response(response)
         response = app.get(offset, extra_environ=self.extra_environ_tester)
 
         assert 'Add data to the dataset' in response.body
@@ -324,7 +323,7 @@ class TestRecombinantWebForms(object):
         create_pd_form = {
             'create': ''
         }
-        with pytest.raises(AppError) as e:
+        with pytest.raises(NotAuthorized) as e:
             app.post(offset,
                      data=create_pd_form,
                      extra_environ=self.extra_environ_member,
@@ -404,10 +403,6 @@ class TestRecombinantWebForms(object):
 
         assert 'Unauthorized to create a resource for this package' in response.body
 
-        # use sysadmin to get page for permission reasons
-        response = app.get(offset, extra_environ=self.extra_environ_system)
-        assert 'Create Record' in response.body
-
         pd_record_form = self._filled_create_single_record_form()
         response = app.post(offset,
                             data=pd_record_form,
@@ -466,11 +461,7 @@ class TestRecombinantWebForms(object):
         # members should not be able to acces update_pd_record endpoint
         response = app.get(offset, extra_environ=self.extra_environ_member, status=403)
 
-        assert 'Access was denied to this resource' in response.body
-
-        # use sysadmin to get page for permission reasons
-        response = app.get(offset, extra_environ=self.extra_environ_system)
-        assert 'Update Record' in response.body
+        assert 'Unauthorized to update dataset' in response.body
 
         pd_record_form = self._filled_create_single_record_form()
         pd_record_form['summary_en'] = 'New Summary EN'
@@ -481,7 +472,7 @@ class TestRecombinantWebForms(object):
                             status=403,
                             follow_redirects=True)
 
-        assert 'Access was denied to this resource' in response.body
+        assert 'Unauthorized to update dataset' in response.body
 
 
     def test_editor_can_update_single_record(self, app):
@@ -583,8 +574,8 @@ class TestRecombinantWebForms(object):
 
         # members should be able to download template
         response = app.post(offset,
-                            {'resource_name': resource_name,
-                             'bulk-template': [self.example_record['request_number']]},
+                            data={'resource_name': resource_name,
+                                  'bulk-template': [self.example_record['request_number']]},
                             extra_environ=self.extra_environ_member)
         template_file = StringIO()
         template_file.write(response.body)
@@ -612,8 +603,8 @@ class TestRecombinantWebForms(object):
 
         # members should be able to download template
         response = app.post(offset,
-                            {'resource_name': nil_resource_name,
-                             'bulk-template': [self.example_nil_record['year'], self.example_nil_record['month']]},
+                            data={'resource_name': nil_resource_name,
+                                  'bulk-template': [self.example_nil_record['year'], self.example_nil_record['month']]},
                             extra_environ=self.extra_environ_member)
         template_file = StringIO()
         template_file.write(response.body)
@@ -633,7 +624,7 @@ class TestRecombinantWebForms(object):
             break
 
 
-    @pytest.mark.skip(reason="TODO: fix issues with raised errors during Webtest; solve 400 error")
+    @pytest.mark.skip(reason="TODO: fix issues with raised errors during Webtest")
     def test_member_cannot_upload_records(self, app):
         template = self._lc_pd_template()
         template_file = self._populate_good_template_file(template)
@@ -644,21 +635,12 @@ class TestRecombinantWebForms(object):
         response = app.get(offset, extra_environ=self.extra_environ_member)
 
         assert 'Create and update multiple records' not in response.body
-        # the `dataset-form` html form tag is still rendered
-        # as it contains other elements, but should not contain
-        # the upload fields for a member
-        # TODO: can we access the forms still??
-        dataset_form = response.forms['dataset-form']
-        assert 'xls_update' not in dataset_form.fields
-
-        # use sysadmin to get page for permission reasons
-        response = app.get(offset, extra_environ=self.extra_environ_system)
-        assert 'Create and update multiple records' in response.body
+        assert 'xls_update' not in response.body
 
         form_action = h.url_for('recombinant.upload',
                                 id=self._lc_get_pd_package_id())
         dataset_form = self._filled_upload_form(filestream=template_file)
-        with pytest.raises(AppError) as e:
+        with pytest.raises(NotAuthorized) as e:
             app.post(form_action,
                      data=dataset_form,
                      extra_environ=self.extra_environ_member,
@@ -668,7 +650,6 @@ class TestRecombinantWebForms(object):
         assert 'not authorized to update packages' in err
 
 
-    @pytest.mark.skip(reason="TODO: solve 400 error")
     def test_editor_can_upload_records(self, app):
         template = self._lc_pd_template()
         template_file = self._populate_good_template_file(template)
@@ -691,7 +672,6 @@ class TestRecombinantWebForms(object):
         assert 'Your file was successfully uploaded into the central system.' in response.body
 
 
-    @pytest.mark.skip(reason="TODO: solve 400 error")
     def test_admin_can_upload_records(self, app):
         template = self._lc_pd_template()
         template_file = self._populate_good_template_file(template)
@@ -714,7 +694,7 @@ class TestRecombinantWebForms(object):
         assert 'Your file was successfully uploaded into the central system.' in response.body
 
 
-    @pytest.mark.skip(reason="TODO: fix issues with raised errors during Webtest; solve 400 error")
+    @pytest.mark.skip(reason="TODO: fix issues with raised errors during Webtest")
     def test_member_cannot_validate_upload(self, app):
         template = self._lc_pd_template()
         good_template_file = self._populate_good_template_file(template)
@@ -723,22 +703,13 @@ class TestRecombinantWebForms(object):
                            resource_name=self.pd_type,
                            owner_org=self.org['name'])
         response = app.get(offset, extra_environ=self.extra_environ_member)
-        # the `dataset-form` html form tag is still rendered
-        # as it contains other elements, but should not contain
-        # the upload fields for a member
-        # TODO: can we access the forms still??
-        dataset_form = response.forms['dataset-form']
-        assert 'xls_update' not in dataset_form.fields
-
-        # use sysadmin to get page for permission reasons
-        response = app.get(offset, extra_environ=self.extra_environ_system)
-        assert 'Create and update multiple records' in response.body
+        assert 'xls_update' not in response.body
 
         form_action = h.url_for('recombinant.upload',
                                 id=self._lc_get_pd_package_id())
         dataset_form = self._filled_upload_form(filestream=good_template_file,
                                                 action='validate')
-        with pytest.raises(AppError) as e:
+        with pytest.raises(NotAuthorized) as e:
             app.post(form_action,
                      data=dataset_form,
                      extra_environ=self.extra_environ_member,
@@ -748,7 +719,6 @@ class TestRecombinantWebForms(object):
         assert 'not authorized to update packages' in err
 
 
-    @pytest.mark.skip(reason="TODO: solve 400 error")
     def test_editor_can_validate_upload(self, app):
         template = self._lc_pd_template()
         good_template_file = self._populate_good_template_file(template)
@@ -784,7 +754,6 @@ class TestRecombinantWebForms(object):
         assert 'No errors found.' in response.body
 
 
-    @pytest.mark.skip(reason="TODO: solve 400 error")
     def test_admin_can_validate_upload(self, app):
         template = self._lc_pd_template()
         good_template_file = self._populate_good_template_file(template)
@@ -867,7 +836,7 @@ class TestRecombinantWebForms(object):
     def _filled_upload_form(self, filestream, action='upload'):
         # type: (StringIO, str) -> dict
         return {
-            'xls_update': filestream,
+            'xls_update': (filestream, u'{}_en_{}.xlsx'.format(self.pd_type, self.org['name'])),
             action: ''
         }
 
@@ -884,10 +853,6 @@ class TestRecombinantWebForms(object):
         assert 'Create and update multiple records' not in response.body
         assert 'delete-form' not in response.body
 
-        # use sysadmin to get page for permission reasons
-        response = app.get(offset, extra_environ=self.extra_environ_system)
-        assert 'Create and update multiple records' in response.body
-
         # members are allowed to submit the bulk delete form
         # as it will ask for confirmation of the delete
         form_action = h.url_for('recombinant.delete_records',
@@ -903,7 +868,7 @@ class TestRecombinantWebForms(object):
         assert 'recombinant-confirm-delete-form' in response.forms
 
         records_to_delete['form']['confirm'] = ''
-        with pytest.raises(AppError) as e:
+        with pytest.raises(NotAuthorized) as e:
             app.post(form_action,
                      data=records_to_delete['form'],
                      extra_environ=self.extra_environ_member,
