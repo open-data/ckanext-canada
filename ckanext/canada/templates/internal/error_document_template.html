@@ -9,9 +9,7 @@
 {% block primary %}
   <div class="row">
     <div class="col-md-12">
-      {% set err_msg = content.split('</h1>') %}
-      {% set err_reason = content.split('<h1>') %}
-      <p class="mrgn-tp-lg"><strong>{{ err_reason[0] | striptags }}: </strong>{{ err_msg[1] | striptags }}</p>
+      <p class="mrgn-tp-lg"><strong>{{ content }}</strong></p>
       {% if code[0] == '403' %}
         {% if not c.userobj %}
         <p class="mrgn-tp-lg">{{ _('You are not logged in to the Open Government Registry.

@@ -223,7 +223,7 @@ def create_pd_record(owner_org, resource_name):
             {'user': g.user, 'auth_user_obj': g.userobj},
             {'resource_id': res['id']})
     except NotAuthorized:
-        return abort(403, _('Unauthorized'))
+        return abort(403, _('Unauthorized to create a resource for this package'))
 
     choice_fields = {
         f['datastore_id']: [
@@ -317,7 +317,7 @@ def update_pd_record(owner_org, resource_name, pk):
             {'user': g.user, 'auth_user_obj': g.userobj},
             {'resource_id': res['id']})
     except NotAuthorized:
-        abort(403, _('Unauthorized'))
+        abort(403, _('Unauthorized to update dataset'))
 
     choice_fields = {
         f['datastore_id']: [
@@ -333,7 +333,7 @@ def update_pd_record(owner_org, resource_name, pk):
         resource_id=res['id'],
         filters=pk_filter)['records']
     if len(records) == 0:
-        abort(404, _('Not found'))
+        abort(404, _('Not Found'))
     if len(records) > 1:
         abort(400, _('Multiple records found'))
     record = records[0]
@@ -542,7 +542,7 @@ def delete_datastore_table(id, resource_id):
                 force=True,  # FIXME: check url_type first?
             )
         except NotAuthorized:
-            return abort(403, _('Unauthorized'))
+            return abort(403, _(u'Unauthorized to delete resource %s') % resource_id)
         # FIXME else: render confirmation page for non-JS users
         return h.redirect_to(
             'xloader.resource_data',
