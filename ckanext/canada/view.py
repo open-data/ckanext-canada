@@ -333,7 +333,7 @@ def update_pd_record(owner_org, resource_name, pk):
         resource_id=res['id'],
         filters=pk_filter)['records']
     if len(records) == 0:
-        abort(404, _('Not Found'))
+        abort(404, _('Not found'))
     if len(records) > 1:
         abort(400, _('Multiple records found'))
     record = records[0]
