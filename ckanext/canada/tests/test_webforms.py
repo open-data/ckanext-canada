@@ -402,7 +402,7 @@ class TestRecombinantWebForms(object):
         # members should not be able to acces create_pd_record endpoint
         response = app.get(offset, extra_environ=self.extra_environ_member, status=403)
 
-        assert 'Access was denied to this resource' in response.body
+        assert 'Unauthorized to create a resource for this package' in response.body
 
         # use sysadmin to get page for permission reasons
         response = app.get(offset, extra_environ=self.extra_environ_system)
@@ -415,7 +415,7 @@ class TestRecombinantWebForms(object):
                             status=403,
                             follow_redirects=True)
 
-        assert 'Access was denied to this resource' in response.body
+        assert 'Unauthorized to create a resource for this package' in response.body
 
 
     def test_editor_can_create_single_record(self, app):
