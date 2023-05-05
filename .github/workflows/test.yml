@@ -88,6 +88,7 @@ jobs:
         ckan -c test-core.ini db init
         ckan -c test-core.ini datastore set-permissions | psql -U postgres --set ON_ERROR_STOP=1
         paster --plugin=ckanext-canada canada update-triggers -c test-core.ini
+        paster --plugin=ckanext-recombinant recombinant create-triggers -a -c test-core.ini
         python2 .\/bin\/download_country.py
     - name: Run all tests
       run: |
