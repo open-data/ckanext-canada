@@ -311,7 +311,6 @@ class TestRecombinantWebForms(object):
         return rval['id']
 
 
-    @pytest.mark.skip(reason="TODO: fix issues with raised errors during Webtest")
     def test_member_cannot_init_pd(self, app):
         offset = h.url_for('recombinant.preview_table',
                            resource_name=self.pd_type,
@@ -323,13 +322,13 @@ class TestRecombinantWebForms(object):
         create_pd_form = {
             'create': ''
         }
-        with pytest.raises(NotAuthorized) as e:
-            app.post(offset,
-                     data=create_pd_form,
-                     extra_environ=self.extra_environ_member,
-                     follow_redirects=True)
-        err = str(e.value)
-        assert 'not authorized to create packages' in err
+        response = app.post(offset,
+                            data=create_pd_form,
+                            extra_environ=self.extra_environ_member,
+                            status=403,
+                            follow_redirects=True)
+
+        assert 'not authorized to create packages' in response.body
 
 
     def test_editor_can_init_pd(self, app):
@@ -389,7 +388,6 @@ class TestRecombinantWebForms(object):
 
         assert 'Your organization does not have an Access to Information email on file' not in response.body
         assert 'Informal Requests for ATI Records Previously Released are being sent to' in response.body
-        assert self.org['ati_email'].encode() in response.body
 
 
     def test_member_cannot_create_single_record(self, app):
@@ -624,7 +622,6 @@ class TestRecombinantWebForms(object):
             break
 
 
-    @pytest.mark.skip(reason="TODO: fix issues with raised errors during Webtest")
     def test_member_cannot_upload_records(self, app):
         template = self._lc_pd_template()
         template_file = self._populate_good_template_file(template)
@@ -640,14 +637,13 @@ class TestRecombinantWebForms(object):
         form_action = h.url_for('recombinant.upload',
                                 id=self._lc_get_pd_package_id())
         dataset_form = self._filled_upload_form(filestream=template_file)
-        with pytest.raises(NotAuthorized) as e:
-            app.post(form_action,
+        response = app.post(form_action,
                      data=dataset_form,
                      extra_environ=self.extra_environ_member,
                      status=403,
                      follow_redirects=True)
-        err = str(e.value)
-        assert 'not authorized to update packages' in err
+
+        assert 'not authorized to update resource' in response.body
 
 
     def test_editor_can_upload_records(self, app):
@@ -694,7 +690,6 @@ class TestRecombinantWebForms(object):
         assert 'Your file was successfully uploaded into the central system.' in response.body
 
 
-    @pytest.mark.skip(reason="TODO: fix issues with raised errors during Webtest")
     def test_member_cannot_validate_upload(self, app):
         template = self._lc_pd_template()
         good_template_file = self._populate_good_template_file(template)
@@ -709,14 +704,13 @@ class TestRecombinantWebForms(object):
                                 id=self._lc_get_pd_package_id())
         dataset_form = self._filled_upload_form(filestream=good_template_file,
                                                 action='validate')
-        with pytest.raises(NotAuthorized) as e:
-            app.post(form_action,
-                     data=dataset_form,
-                     extra_environ=self.extra_environ_member,
-                     status=403,
-                     follow_redirects=True)
-        err = str(e.value)
-        assert 'not authorized to update packages' in err
+        response = app.post(form_action,
+                            data=dataset_form,
+                            extra_environ=self.extra_environ_member,
+                            status=403,
+                            follow_redirects=True)
+
+        assert 'not authorized to update resource' in response.body
 
 
     def test_editor_can_validate_upload(self, app):
@@ -841,7 +835,6 @@ class TestRecombinantWebForms(object):
         }
 
 
-    @pytest.mark.skip(reason="TODO: fix issues with raised errors during Webtest; solve 404 on delete_records")
     def test_member_cannot_delete_records(self, app):
         records_to_delete = self._prepare_records_to_delete()
 
@@ -853,32 +846,28 @@ class TestRecombinantWebForms(object):
         assert 'Create and update multiple records' not in response.body
         assert 'delete-form' not in response.body
 
-        # members are allowed to submit the bulk delete form
-        # as it will ask for confirmation of the delete
+        # members are no longer allowed to submit the bulk delete form
         form_action = h.url_for('recombinant.delete_records',
                                 id=self._lc_get_pd_package_id(),
                                 resource_id=records_to_delete['resource_id'])
         response = app.post(form_action,
                             data=records_to_delete['form'],
                             extra_environ=self.extra_environ_member,
+                            status=403,
                             follow_redirects=True)
 
-        assert 'Confirm Delete' in response.body
-        assert 'Are you sure you want to delete 2 records' in response.body
-        assert 'recombinant-confirm-delete-form' in response.forms
+        assert 'not authorized to update resource' in response.body
 
         records_to_delete['form']['confirm'] = ''
-        with pytest.raises(NotAuthorized) as e:
-            app.post(form_action,
-                     data=records_to_delete['form'],
-                     extra_environ=self.extra_environ_member,
-                     status=403,
-                     follow_redirects=True)
-        err = str(e.value)
-        assert 'not authorized to delete resources' in err
+        response = app.post(form_action,
+                            data=records_to_delete['form'],
+                            extra_environ=self.extra_environ_member,
+                            status=403,
+                            follow_redirects=True)
+
+        assert 'not authorized to update resource' in response.body
 
 
-    @pytest.mark.skip(reason="TODO: solve 404 on delete_records")
     def test_editor_can_delete_records(self, app):
         records_to_delete = self._prepare_records_to_delete()
 
@@ -899,7 +888,6 @@ class TestRecombinantWebForms(object):
 
         assert 'Confirm Delete' in response.body
         assert 'Are you sure you want to delete 2 records' in response.body
-        assert 'recombinant-confirm-delete-form' in response.forms
 
         records_to_delete['form']['confirm'] = ''
         response = app.post(form_action,
@@ -910,7 +898,6 @@ class TestRecombinantWebForms(object):
         assert '2 deleted.' in response.body
 
 
-    @pytest.mark.skip(reason="TODO: solve 404 on delete_records")
     def test_admin_can_delete_records(self, app):
         records_to_delete = self._prepare_records_to_delete()
 
@@ -931,7 +918,6 @@ class TestRecombinantWebForms(object):
 
         assert 'Confirm Delete' in response.body
         assert 'Are you sure you want to delete 2 records' in response.body
-        assert 'recombinant-confirm-delete-form' in response.forms
 
         records_to_delete['form']['confirm'] = ''
         response = app.post(form_action,

@@ -374,7 +374,9 @@ class TestNAVLSchema(object):
         "creating a resource view should default `title` and `title_fr` fields"
         resource_view_data = dict(
             resource_id=Resource()['id'],
-            view_type='image_view')
+            view_type='image_view',
+            title='',
+            title_fr='')
 
         resp = self.sysadmin_action.resource_view_create(**resource_view_data)
 
