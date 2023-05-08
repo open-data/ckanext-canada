@@ -2,8 +2,6 @@ name: Download DAC members list
 
 on:
   workflow_dispatch:
-  # schedule:
-  #   - cron:  '0 5 * * *'
 
 jobs:
   build:
