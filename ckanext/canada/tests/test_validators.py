@@ -370,22 +370,12 @@ class TestNAVLSchema(object):
         assert resp['portal_release_date'] == resp2.get('portal_release_date')
 
 
-    #@pytest.mark.skip(reason="TODO: fix resource_view_create not being overridden...")
     def test_resource_view(self):
         "creating a resource view should default `title` and `title_fr` fields"
         resource_view_data = dict(
             resource_id=Resource()['id'],
             view_type='image_view')
 
-        import inspect
-        import os
-        from logging import getLogger
-        log = getLogger(__name__)
-        log.info("    ")
-        log.info("DEBUGGING::")
-        log.info(os.path.abspath(inspect.getfile(self.sysadmin_action.resource_view_create)))
-        log.info(inspect.getmodule(self.sysadmin_action.resource_view_create))
-        log.info("    ")
         resp = self.sysadmin_action.resource_view_create(**resource_view_data)
 
         assert resp['title'] == 'View'
