@@ -1,21 +1,25 @@
 # -*- coding: UTF-8 -*-
+import flask
 import tempfile
 from ckanapi import LocalCKAN
 
 import pytest
 from ckan.tests.helpers import reset_db
 from ckan.lib.search import clear_all
-from ckanext.canada.tests.factories import CanadaOrganization as Organization
+from ckanext.canada.tests.factories import (
+    CanadaOrganization as Organization,
+    CanadaUser as User
+)
 
 from ckanext.recombinant.tables import get_chromo, get_geno
 from ckanext.recombinant.views import _process_upload_file
 from ckanext.recombinant.write_excel import excel_template, append_data
 from ckanext.recombinant.errors import  BadExcelData
-from openpyxl import load_workbook, Workbook
 
 
 # testing the upload of PD template files
 # 'wrongdoing' PD template is used as an example here
+@pytest.mark.usefixtures('with_request_context')
 class TestXlsUpload(object):
     @classmethod
     def setup_method(self, method):
@@ -25,7 +29,10 @@ class TestXlsUpload(object):
         reset_db()
         clear_all()
 
-        org = Organization()
+        self.editor = User()
+        org = Organization(users=[
+            {'name': self.editor['name'],
+             'capacity': 'editor'}])
         self.lc = LocalCKAN()
 
         self.lc.action.recombinant_create(dataset_type='wrongdoing', owner_org=org['name'])
@@ -35,8 +42,8 @@ class TestXlsUpload(object):
         self.pkg_id = rval['id']
 
 
-    @pytest.mark.skip(reason="TODO: fix trying to load context on get_geno...")
     def test_upload_empty(self):
+        flask.g.user = self.editor['name']
         wb = excel_template('wrongdoing', self.org)
         f = tempfile.NamedTemporaryFile(suffix=".xlsx")
         wb.save(f.name)
@@ -50,8 +57,8 @@ class TestXlsUpload(object):
         assert e.value.message == 'The template uploaded is empty'
 
 
-    @pytest.mark.skip(reason="TODO: fix trying to load context on get_geno...")
     def test_upload_example(self):
+        flask.g.user = self.editor['name']
         wb = excel_template('wrongdoing', self.org)
         f = tempfile.NamedTemporaryFile(suffix=".xlsx")
 
@@ -69,6 +76,7 @@ class TestXlsUpload(object):
 
 
     def test_upload_wrong_type(self):
+        flask.g.user = self.editor['name']
         wb = excel_template('travela', self.org)
         f = tempfile.NamedTemporaryFile(suffix=".xlsx")
         wb.save(f.name)

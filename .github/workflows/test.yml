@@ -90,7 +90,6 @@ jobs:
         paster --plugin=ckanext-canada canada update-triggers -c test-core.ini
         paster --plugin=ckanext-recombinant recombinant create-triggers -a -c test-core.ini
         python2 .\/bin\/download_country.py
-        cd ckanext\/canada\/bin && . build-combined-ckan-mo.sh && rm -f \/srv\/app\/src\/ckan\/ckan\/i18n\/fr\/LC_MESSAGES\/ckan.mo && cd \/srv\/app\/src\/ckan\/ckanext-canada
     - name: Run all tests
       run: |
         pytest --ckan-ini=test-core.ini ckanext/canada/tests
