@@ -176,6 +176,15 @@ class TestPortalSearch(object):
                 portal_release_date='2000-01-01')
 
 
+    @classmethod
+    def teardown_method(self, method):
+        """Method is called at class level after EACH test methods of the class are called.
+        Remove any state specific to the execution of the given class methods.
+        """
+        if not p.plugin_loaded('canada_internal'):
+            p.load('canada_internal')
+
+
     def test_user_package_search(self):
         response = self.lc.action.package_search(
             q='*:*',
