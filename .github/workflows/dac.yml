@@ -2,8 +2,8 @@ name: Download DAC members list
 
 on:
   workflow_dispatch:
-  schedule:
-    - cron:  '0 5 * * *'
+  # schedule:
+  #   - cron:  '0 5 * * *'
 
 jobs:
   build:
@@ -19,7 +19,7 @@ jobs:
           
       - name: download DAC members list
         run: |
-          python bin/download_dac.py -o ckanext/canada/tables/choices/dac_members.yaml
+          python bin/download_dac.py -o ckanext/canada/tables/choices/dac_members.yaml -v 0
           cat ckanext/canada/tables/choices/dac_members.yaml
 
       - name: set git config

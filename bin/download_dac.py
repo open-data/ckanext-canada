@@ -16,21 +16,25 @@ import getopt
 import json
 import yaml
 import sys
+import ssl
 from urllib import urlopen
 
 
 def main(argv):
     try:
         outfile = ''
-        opts, args = getopt.getopt(argv, "o:", ["output="])
+        verify = True
+        opts, args = getopt.getopt(argv, "o: v:", ["output=", "verify="])
         for opt, arg in opts:
             if opt in ("-o", "--output"):
                 outfile = arg
+            if opt in ("-v", "--verify"):
+                verify = True if arg == "1" else False
         if not outfile:
             raise ValueError
 
     except (ValueError, getopt.GetoptError):
-        print 'USAGE: python download_dac.py -o/--output outfile.yaml'
+        print("USAGE: python download_dac.py -o/--output outfile.yaml [-v/--verify 1|0]")
         sys.exit(1)
 
     # Extract member names from API endpoint and publish as yaml
@@ -41,7 +45,12 @@ def main(argv):
     url = 'https://open.canada.ca/data/api/3/action/datastore_search_sql?sql' \
           '=SELECT distinct "CONTACT_NAME" from ' \
           '"59c86d81-fd29-495f-9a7a-7ba3d2c70cc2" '
-    response = urlopen(url)
+    context = ssl.create_default_context()
+    if verify is False:
+        print("Ignoring ssl verification...")
+        context.check_hostname = False
+        context.verify_mode = ssl.CERT_NONE
+    response = urlopen(url, context=context)
     results = json.loads(response.read().decode('utf-8'))
     records = sorted(results['result']['records'],
                      key=lambda k: k['CONTACT_NAME'].lower())
