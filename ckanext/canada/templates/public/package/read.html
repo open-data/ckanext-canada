@@ -233,11 +233,6 @@
 {% endblock %}
 
 
-{% block package_rate %}
-  <a id="rate"></a>
-  <div id="voting-wrapper" data-ajax-replace="/{{ h.lang() }}/vote?uuid={{ c.pkg_dict.id }}"></div>
-{% endblock %}
-
 {% block more_like_this %}
   {% if h.adv_search_url() %}
   <section class="panel panel-primary">
@@ -248,6 +243,11 @@
     </div>
   </section>
   {% endif %}
+{% endblock %}
+
+{% block package_rate %}
+  <a id="rate"></a>
+  <div id="voting-wrapper" data-ajax-replace="/{{ h.lang() }}/vote?uuid={{ c.pkg_dict.id }}"></div>
 {% endblock %}
 
 {% block package_feedback %}
