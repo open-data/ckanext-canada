@@ -225,7 +225,7 @@
 
 
 {% block package_rate %}
-  <a name="rate"></a>
+  <a id="rate"></a>
   <div id="voting-wrapper" data-ajax-replace="/{{ h.lang() }}/vote?uuid={{ c.pkg_dict.id }}"></div>
 {% endblock %}
 
@@ -233,12 +233,19 @@
   {% if h.adv_search_url() %}
   <section class="panel panel-primary">
     <header class="panel-heading">
-      <h5 class="panel-title">{{ _('Similar records') }}</h5>
+      <div class="panel-title">{{ _('Similar records') }}</div>
     </header>
     <div data-ajax-replace="{{ h.adv_search_mlt_root() }}{{ c.pkg_dict.id }}" class="panel-body" id="related_pkgs">
     </div>
   </section>
   {% endif %}
+{% endblock %}
+
+{% block package_feedback %}
+  <a id="feedback"></a>
+  <section class="indent-large">
+    <div id="feedback-wrapper" data-ajax-replace="/{{ h.lang() }}/feedback?uuid={{ c.pkg_dict.id }}"></div>
+  </section>
 {% endblock %}
 
   </div>
