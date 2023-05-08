@@ -341,27 +341,21 @@ disabled_anon_action.auth_audit_exempt = True  # XXX ought to be a better way...
 
 @chained_action
 def resource_view_create_bilingual(up_func, context, data_dict):
-    log.info("    ")
-    log.info("DEBUGGING::")
-    log.info("Overridden method is firing off...")
-    log.info("    ")
     from ckan.logic.schema import default_create_resource_view_schema_filtered
     # assuming all resource views we used are filtered
     # filter_fields and filter_values have ignore_missing validator
     # so using the filtered schema should be fine here.
-    schema = default_create_resource_view_schema_filtered()
-    schema['title'] = [get_validator('default')('View'), get_validator('unicode_safe')]
-    schema['title_fr'] = [get_validator('default')('Vue'), get_validator('unicode_safe')]
-    schema['description'] = [get_validator('default')(''), get_validator('unicode_safe')]
-    schema['description_fr'] = [get_validator('default')(''), get_validator('unicode_safe')]
-    log.info("    ")
-    log.info("DEBUGGING::")
-    log.info(schema)
-    log.info("    ")
+    s = default_create_resource_view_schema_filtered()
     return up_func(
         dict(
             context,
-            schema=schema,
+            schema=dict(
+                s,
+                title=[get_validator('default')('View'), get_validator('unicode_safe')],
+                title_fr=[get_validator('default')('Vue'), get_validator('unicode_safe')],
+                description=[get_validator('default')(''), get_validator('unicode_safe')],
+                description_fr=[get_validator('default')(''), get_validator('unicode_safe')],
+            ),
         ),
         data_dict
     )
@@ -375,14 +369,16 @@ def resource_view_update_bilingual(up_func, context, data_dict):
     # assuming all resource views we used are filtered
     # filter_fields and filter_values have ignore_missing validator
     # so using the filtered schema should be fine here.
-    schema = default_create_resource_view_schema_filtered()
-    schema.update(default_update_resource_view_schema_changes())
-    schema['title_fr'] = list(schema['title'])
-    schema['description_fr'] = list(schema['description'])
+    s = default_create_resource_view_schema_filtered()
+    s.update(default_update_resource_view_schema_changes())
     return up_func(
         dict(
             context,
-            schema=schema,
+            schema=dict(
+                s,
+                title_fr=list(s['title']),
+                description_fr=list(s['description']),
+            ),
         ),
         data_dict
     )

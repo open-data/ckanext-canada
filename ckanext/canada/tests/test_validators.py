@@ -377,6 +377,15 @@ class TestNAVLSchema(object):
             resource_id=Resource()['id'],
             view_type='image_view')
 
+        import inspect
+        import os
+        from logging import getLogger
+        log = getLogger(__name__)
+        log.info("    ")
+        log.info("DEBUGGING::")
+        log.info(os.path.abspath(inspect.getfile(self.sysadmin_action.resource_view_create)))
+        log.info(inspect.getmodule(self.sysadmin_action.resource_view_create))
+        log.info("    ")
         resp = self.sysadmin_action.resource_view_create(**resource_view_data)
 
         assert resp['title'] == 'View'

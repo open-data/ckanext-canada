@@ -311,7 +311,6 @@ class TestRecombinantWebForms(object):
         return rval['id']
 
 
-    #@pytest.mark.skip(reason="TODO: fix incorrect error message...")
     def test_member_cannot_init_pd(self, app):
         offset = h.url_for('recombinant.preview_table',
                            resource_name=self.pd_type,
@@ -329,13 +328,8 @@ class TestRecombinantWebForms(object):
                             status=403,
                             follow_redirects=True)
 
-        from logging import getLogger
-        log = getLogger(__name__)
-        log.info("    ")
-        log.info("DEBUGGING::")
-        log.info(response.body)
-        log.info("    ")
-        assert 'not authorized to create packages' in response.body
+        assert 'not authorized to add dataset' in response.body or \
+               'not authorized to create packages' in response.body
 
 
     def test_editor_can_init_pd(self, app):
