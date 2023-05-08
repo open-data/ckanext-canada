@@ -281,6 +281,12 @@ ckanext.canada:schemas/presets.yaml
     # IActions
 
     def get_actions(self):
+        from logging import getLogger
+        log = getLogger(__name__)
+        log.info("    ")
+        log.info("DEBUGGING::")
+        log.info("resource_view_create updating to resource_view_update_bilingual...")
+        log.info("    ")
         return dict(
             {
                 k: disabled_anon_action for k in [
@@ -346,6 +352,12 @@ def resource_view_create_bilingual(up_func, context, data_dict):
     # filter_fields and filter_values have ignore_missing validator
     # so using the filtered schema should be fine here.
     s = default_create_resource_view_schema_filtered()
+    from logging import getLogger
+    log = getLogger(__name__)
+    log.info("    ")
+    log.info("DEBUGGING::")
+    log.info("resource_view_create_bilingual firing off...")
+    log.info("    ")
     return up_func(
         dict(
             context,
