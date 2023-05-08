@@ -6,6 +6,7 @@ from ckan.tests.helpers import FunctionalTestBase
 from ckan.tests.factories import Organization
 
 from ckanext.recombinant.tables import get_chromo
+from ckanext.recombinant.helpers import recombinant_choice_fields
 
 class TestDAC(FunctionalTestBase):
     def setup(self):
@@ -19,6 +20,12 @@ class TestDAC(FunctionalTestBase):
     def test_example(self):
         lc = LocalCKAN()
         record = get_chromo('dac')['examples']['record']
+        choices_fields = recombinant_choice_fields('dac')
+        for f in choices_fields:
+            if f['datastore_id'] != 'member_name':
+                continue
+            record['member_name'] = f['choices'][0][0]
+            break
         lc.action.datastore_upsert(
             resource_id=self.resource_id,
             records=[record])
