@@ -447,7 +447,7 @@ ckanext.canada:schemas/prop.yaml
         config['scheming.organization_schemas'] = 'ckanext.canada:schemas/organization.yaml'
 
         # Enable our custom DCAT profile.
-        config['ckanext.dcat.rdf.profile'] = 'canada_dcat'
+        config['ckanext.dcat.rdf.profiles'] = 'euro_dcat_ap_2'
 
         if 'ckan.i18n_directory' in config:
             # Reload when translaton files change, because I'm slowly going
