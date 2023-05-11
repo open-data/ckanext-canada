@@ -40,8 +40,8 @@ fields:
     size: 75
   display_snippet: fluent_text.html
   error_snippet: fluent_text.html
-  validators: fluent_text unicode scheming_required canada_org_title_translated_save
-  output_validators: canada_org_title_translated_output
+  validators: fluent_text unicode scheming_required
+  output_validators: fluent_text_output
 
 # Field = Short Form.
 # {The organization's short form}
