@@ -201,8 +201,8 @@ def canada_copy_from_org_name(key, data, errors, context):
         return
 
     data[key] = json.dumps({
-        'en': org['title'].split(' | ')[0],
-        'fr': org['title'].split(' | ')[-1],
+        'en': org['title_translated']['en'],
+        'fr': org['title_translated']['fr'],
     })
 
 def canada_non_related_required(key, data, errors, context):
