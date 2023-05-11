@@ -14,6 +14,6 @@
     <span>{{ _('0 Datasets') }}</span>
   {%- endif -%}
   {% if h.check_access('group_update', {'id': organization.id}) %}
-  <a href="{% url_for organization.type + '.edit', id=organization.name %}" class="btn btn-default">{{ _('Edit') }}</a>
+  <a href="{{h.url(('organization' if organization.is_organization else 'group') + '.edit', id=organization.name)}}" class="btn btn-default">{{ _('Edit') }}</a>
   {% endif %}
 </dd>
