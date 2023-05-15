@@ -214,6 +214,9 @@ ckanext.canada:schemas/presets.yaml
 	"ckanext.canada:schemas/validation_placeholder_presets.yaml"
 )
 
+        # Include private datasets in Feeds
+        config['ckan.feeds.include_private'] = True
+
 
     # IBlueprint
     def get_blueprint(self):
@@ -445,6 +448,9 @@ ckanext.canada:schemas/info.yaml
 ckanext.canada:schemas/prop.yaml
 """
         config['scheming.organization_schemas'] = 'ckanext.canada:schemas/organization.yaml'
+
+        # Pretty output for Feeds
+        config['ckan.feeds.pretty'] = True
 
         # Enable our custom DCAT profile.
         config['ckanext.dcat.rdf.profiles'] = 'euro_dcat_ap_2'
