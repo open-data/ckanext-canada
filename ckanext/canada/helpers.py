@@ -236,6 +236,9 @@ def adv_search_mlt_root():
 def googleanalytics_id():
     return str(config.get('googleanalytics.id'))
 
+def ga4_id():
+    return str(config.get('ga4.id'))
+
 def adobe_analytics_login_required(current_url):
     return "2" #return 1 if page requires a login and 2 if page is public
 
