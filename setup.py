@@ -42,9 +42,6 @@ setup(
     inventory=ckanext.canada.pd:PDCommand
     wrongdoing=ckanext.canada.pd:PDCommand
 
-    [ckan.rdf.profiles]
-    canada_dcat=ckanext.canada.dcat:CanadaDCATProfile
-
     [babel.extractors]
     ckan = ckan.lib.extract:extract_ckan
     """,
