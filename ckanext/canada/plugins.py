@@ -401,6 +401,7 @@ ckanext.canada:schemas/prop.yaml
             'adv_search_url',
             'adv_search_mlt_root',
             'googleanalytics_id',
+            'ga4_id',
             'loop11_key',
             'drupal_session_present',
             'fgp_url',
