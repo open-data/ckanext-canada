@@ -449,6 +449,9 @@ ckanext.canada:schemas/prop.yaml
         # Enable our custom DCAT profile.
         config['ckanext.dcat.rdf.profiles'] = 'euro_dcat_ap_2'
 
+        # Enable license restriction
+        config['ckan.dataset.restrict_license_choices'] = True
+
         if 'ckan.i18n_directory' in config:
             # Reload when translaton files change, because I'm slowly going
             # insane.
@@ -637,8 +640,6 @@ class DataGCCAForms(p.SingletonPlugin, DefaultDatasetForm):
                 validators.ati_email_validate,
             'isodate':
                 validators.isodate,
-            'licence_choices':
-                validators.licence_choices,
             'string_safe':
                 validators.string_safe,
             'string_safe_stop':

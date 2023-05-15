@@ -326,12 +326,6 @@ def isodate(value, context):
         raise Invalid(_('Date format incorrect. Expecting YYYY-MM-DD'))
     return date
 
-def licence_choices(value, context):
-    licences = base.model.Package.get_license_register()
-    if value in licences:
-        return value
-    raise Invalid(_('Invalid licence'))
-
 def string_safe(value, context):
     if isinstance(value, text_type):
         return value
