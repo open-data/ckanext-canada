@@ -31,7 +31,7 @@
   ga('send', 'pageview');
   </script>
   <!-- End Google Analytics -->
-  {% set ga4_id = h.ga4_id %}
+  {% set ga4_id = h.ga4_id() %}
   {% if ga4_id %}
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id={{ ga4_id }}"></script>
