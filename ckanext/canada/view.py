@@ -531,7 +531,7 @@ def ckanadmin_publish_datasets():
     return h.redirect_to(h.url_for('canada.ckanadmin_publish'))
 
 
-@canada_views.route('/dataset/{id}/delete-datastore-table/{resource_id}', methods=['GET', 'POST'])
+@canada_views.route('/dataset/<id>/delete-datastore-table/<resource_id>', methods=['GET', 'POST'])
 def delete_datastore_table(id, resource_id):
     if request.method == 'POST':
         lc = LocalCKAN(username=g.user)
