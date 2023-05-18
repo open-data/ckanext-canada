@@ -12,7 +12,7 @@
 {% block content_primary_nav %}
   {{ h.build_nav_icon(pkg.type ~ '_resource.canada_edit', _('Edit resource'), id=pkg.name, resource_id=res.id, icon='pencil-square-o') }}
   {{ h.build_nav_icon(pkg.type ~ '_resource.views', _('Views'), id=pkg.name, resource_id=res.id, icon='bars') }}
-  {% if 'datapusher' in g.plugins %}
+  {% if 'datapusher' in g.plugins or 'xloader' in g.plugins %}
     {{ h.build_nav_icon('resource_data', _('DataStore'), id=pkg.name, resource_id=res.id) }}
   {% endif %}
 {% endblock %}
