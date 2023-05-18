@@ -10,6 +10,13 @@
 
 {% block secondary_content %}{% endblock %}
 
+{% block page_title %}
+  {{ super() }}
+  {% if h.is_registry() %}
+    {{ h.get_validation_badge(res)|safe }}
+  {% endif %}
+{% endblock %}
+
 {% block resource_content %}
           {% block resource_read_title %}{{ super() }}{% endblock %}
           {% block resource_read_url %}
