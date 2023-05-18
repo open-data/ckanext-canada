@@ -494,7 +494,7 @@ def home():
 def links():
     if not h.is_registry():
         return h.redirect_to('dataset.search')
-    return render('home/quick_links.html')
+    return render('home/quick_links.html', extra_vars={'is_sysadmin': is_sysadmin(g.user)})
 
 
 @canada_views.route('/ckan-admin/publish', methods=['GET', 'POST'])

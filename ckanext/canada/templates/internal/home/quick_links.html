@@ -123,18 +123,18 @@
             'Search All Records',
             'Add all Open Data and Information records in the Registry.'
           )}}
-          {% set org = orgs[0] %}
+          {% set org_name = orgs[0]['name'] if not is_sysadmin else 'tbs-sct' %}
           {{ quick_link(
-            'search_org', 
-            h.url_for('dataset_search', organization=org.name),
-            'fa fa-search', 
+            'search_org',
+            h.url_for('dataset_search', organization=org_name),
+            'fa fa-search',
             'Search your Organization Records',
             'Search all records in the Registry, for your Organization.'
           )}}
           {{ quick_link(
-            'view_org', 
-            h.url_for('organization_members', id=org.name),
-            'fa fa-users', 
+            'view_org',
+            h.url_for('organization_members', id=org_name),
+            'fa fa-users', =
             'View Members of your Organization',
             'View the list of members linked to your organization.'
           )}}
