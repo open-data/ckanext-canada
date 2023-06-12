@@ -1,5 +1,5 @@
 {% set resource_id = h.sanitize_id(resource_id) %}
-{% set sql_example_url = h.url_for('api.action', ver=3, logic_function='datastore_search_sql', qualified=True) + '?sql=SELECT * from "' + resource_id + '" WHERE title LIKE \'jones\'' %}
+{% set sql_example_url = h.url_for('api.action', ver=api_version, logic_function='datastore_search_sql', qualified=True) + '?sql=SELECT * from "' + resource_id + '" WHERE title LIKE \'jones\'' %}
 {# not urlencoding the sql because its clearer #}
 <div{% if not embedded %} class="modal fade"{% endif %}>
   <div class="modal-dialog">
@@ -27,11 +27,11 @@
                     {% block endpoints %}
                     <tr>
                       <th scope="row">{{ _('Query') }}</th>
-                      <td><code>{{ h.url_for('api.action', ver=3, logic_function='datastore_search', qualified=True) }}</code></td>
+                      <td><code>{{ h.url_for('api.action', ver=api_version, logic_function='datastore_search', qualified=True) }}</code></td>
                     </tr>
                     <tr>
                       <th scope="row">{{ _('Query (via SQL)') }}</th>
-                      <td><code>{{ h.url_for('api.action', ver=3, logic_function='datastore_search_sql', qualified=True) }}</code></td>
+                      <td><code>{{ h.url_for('api.action', ver=api_version, logic_function='datastore_search_sql', qualified=True) }}</code></td>
                     </tr>
                     {% endblock %}
                   </tbody>
@@ -48,12 +48,12 @@
               <div class="panel-body">
                 <strong>{{ _('Query example (first 5 results)') }}</strong>
                 <p>
-                <code>{{ h.url_for('api.action', ver=3, logic_function='datastore_search', resource_id=resource_id, limit=5, qualified=True) }}</code>
+                <code>{{ h.url_for('api.action', ver=api_version, logic_function='datastore_search', resource_id=resource_id, limit=5, qualified=True) }}</code>
                 </p>
 
                 <strong>{{ _('Query example (results containing \'jones\')') }}</strong>
                 <p>
-                <code>{{ h.url_for('api.action', ver=3, logic_function='datastore_search', resource_id=resource_id, q='jones', qualified=True) }}</code>
+                <code>{{ h.url_for('api.action', ver=api_version, logic_function='datastore_search', resource_id=resource_id, q='jones', qualified=True) }}</code>
                 </p>
 
                 <strong>{{ _('Query example (via SQL statement)') }}</strong>
@@ -79,7 +79,7 @@
           q: 'jones' // query for 'jones'
         };
         $.ajax({
-          url: '{{ h.url_for('api.action', ver=3, logic_function='datastore_search', qualified=True) }}',
+          url: '{{ h.url_for('api.action', ver=api_version, logic_function='datastore_search', qualified=True) }}',
           data: data,
           dataType: 'jsonp',
           success: function(data) {
@@ -98,7 +98,7 @@
               <div class="panel-body">
                 <pre>
       import urllib
-      url = '{{ h.url_for(qualified=True, 'api.action', ver=3, logic_function='datastore_search', resource_id=resource_id, limit=5) + '&q=title:jones' }}'  {# not urlencoding the ":" because its clearer #}
+      url = '{{ h.url_for('api.action', ver=api_version, logic_function='datastore_search', resource_id=resource_id, limit=5, qualified=True) + '&q=title:jones' }}'  {# not urlencoding the ":" because its clearer #}
       fileobj = urllib.urlopen(url)
       print fileobj.read()
       </pre>
