@@ -224,16 +224,11 @@
 {% endblock %}
 
 
-{% block package_rate %}
-  <a name="rate"></a>
-  <div id="voting-wrapper" data-ajax-replace="/{{ h.lang() }}/vote?uuid={{ c.pkg_dict.id }}"></div>
-{% endblock %}
-
 {% block more_like_this %}
   {% if h.adv_search_url() %}
   <section class="panel panel-primary">
     <header class="panel-heading">
-      <h5 class="panel-title">{{ _('Similar records') }}</h5>
+      <div class="panel-title">{{ _('Similar records') }}</div>
     </header>
     <div data-ajax-replace="{{ h.adv_search_mlt_root() }}{{ c.pkg_dict.id }}" class="panel-body" id="related_pkgs">
     </div>
@@ -241,10 +236,15 @@
   {% endif %}
 {% endblock %}
 
-{% block package_comments %}
-  <a name="comments"></a>
+{% block package_rate %}
+  <a id="rate"></a>
+  <div id="voting-wrapper" data-ajax-replace="/{{ h.lang() }}/vote?uuid={{ c.pkg_dict.id }}"></div>
+{% endblock %}
+
+{% block package_feedback %}
+  <a id="feedback"></a>
   <section class="indent-large">
-    <div data-ajax-replace="/{{ h.lang() }}/external-comment/dataset/{{ c.pkg_dict.id }}"></div>
+    <div id="feedback-wrapper" data-ajax-replace="/{{ h.lang() }}/feedback?uuid={{ c.pkg_dict.id }}"></div>
   </section>
 {% endblock %}
 
