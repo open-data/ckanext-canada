@@ -10,6 +10,9 @@ import ckan.lib.helpers as hlp
 from ckan.logic import validators as logic_validators
 from routes.mapper import SubMapper
 from paste.reloader import watch_file
+from ckan.model.domain_object import DomainObjectOperation
+from ckan.model.resource import Resource
+
 
 from ckantoolkit import h, chained_action, side_effect_free, ValidationError, ObjectNotFound
 import ckanapi
@@ -21,6 +24,7 @@ from ckanext.canada import auth
 from ckanext.canada import helpers
 from ckanext.canada import activity as act
 from ckanext.extendedactivity.plugins import IActivity
+from ckanext.validation.settings import SUPPORTED_FORMATS as SUPPORTED_XLOADER_FORMATS
 
 import json
 
@@ -48,7 +52,7 @@ class DataGCCAInternal(p.SingletonPlugin):
     p.implements(p.IRoutes, inherit=True)
     p.implements(p.IPackageController, inherit=True)
     p.implements(p.IActions)
-    p.implements(p.IResourceUrlChange)
+    p.implements(p.IDomainObjectModification)
 
     def update_config(self, config):
         p.toolkit.add_template_directory(config, 'templates/internal')
@@ -165,9 +169,26 @@ ckanext.canada:schemas/presets.yaml
             )
         return map
 
-    # IResourceUrlChange
-    def notify(self, resource):
-        p.toolkit.enqueue_job(fn=remove_outdated_resource_from_datastore, args=[resource.id])
+    # IDomainObjectModification
+
+    def notify(self, entity, operation):
+        # type: (ckan.model.Package|ckan.model.Resource, DomainObjectOperation) -> None
+        """
+        Runs before_commit to database for Packages and Resources.
+        We only want to check for changed Resources for this.
+        We want to check if values have changed, namely the url and the format.
+        See: ckan/model/modification.py.DomainObjectModificationExtension
+        """
+        if operation != DomainObjectOperation.changed:
+            return
+        if not isinstance(entity, Resource):
+            return
+        if getattr(entity, 'format', u'').lower() not in SUPPORTED_XLOADER_FORMATS \
+        or getattr(entity, 'url_changed', False):
+            p.toolkit.enqueue_job(fn=remove_unsupported_resource_from_datastore, args=[entity.id])
+        if getattr(entity, 'url_changed', False):
+            p.toolkit.enqueue_job(fn=remove_outdated_resource_from_datastore, args=[entity.id])
+
 
     def get_helpers(self):
         return dict((h, getattr(helpers, h)) for h in [
@@ -231,7 +252,6 @@ ckanext.canada:schemas/presets.yaml
             resource_view_update=resource_view_update_bilingual,
             resource_view_create=resource_view_create_bilingual,
         )
-
 
 
 @chained_action
@@ -963,3 +983,38 @@ def remove_outdated_resource_from_datastore(resource_id):
             log.info('Datastore table dropped for resource %s' % res['id'])
         except ObjectNotFound:
             log.error('Datastore table for resource %s does not exist' % res['id'])
+
+
+def remove_unsupported_resource_from_datastore(resource_id):
+    """
+    Double check the resource format. Only supported Xloader/Validation formats should have validation reports.
+    If the resource format is not supported, we should delete the validation reports and datastore tables.
+    """
+    lc = ckanapi.LocalCKAN()
+    try:
+        res = lc.action.resource_show(id=resource_id)
+        pkg = lc.action.package_show(id=res['package_id'])
+    except ObjectNotFound:
+        log.error('Resource %s does not exist.' % res['id'])
+        return
+
+    # only plain datasets will have validation applied to resources
+    # this avoids accidental deletion of PD datastore tables
+    if pkg['type'] != 'dataset':
+        return
+
+    if res.get(u'format', u'').lower() not in SUPPORTED_XLOADER_FORMATS:
+        log.info('Unsupported resource format "{}". Deleting validation reports and datastore tables for resource {}'
+                 .format(res.get(u'format', u'').lower(), res['id']))
+        try:
+            lc.action.resource_validation_delete(resource_id=res['id'])
+            log.info('Validation report deleted for resource %s' % res['id'])
+        except ObjectNotFound:
+            log.error('Validation report for resource %s does not exist' % res['id'])
+
+        if res['url_type'] == 'upload' or res['url_type'] == '':
+            try:
+                lc.action.datastore_delete(resource_id=res['id'], force=True)
+                log.info('Datastore table dropped for resource %s' % res['id'])
+            except ObjectNotFound:
+                log.error('Datastore table for resource %s does not exist' % res['id'])
