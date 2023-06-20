@@ -80,7 +80,9 @@ front_matter:
 
 
 resources:
-- title: Proactive Publication – Contracts over $10,000 
+- title: 
+    en: Proactive Publication – Contracts over $10,000 
+    fr: Publication proactive – Contrats attribués de plus de 10 000 $ 
   resource_name: contracts
 
   excel_data_num_rows: 5000
@@ -1619,8 +1621,8 @@ resources:
         Numéro de l’offre
         à commandes
     description:
-      en: This field should be populated with the Standing Offer or Supply Arrangement Number applicable to this contract. This field should be left blank if there is no standing offer or supply arrangement established by PSPC or SSC associated with this contract.
-      fr: Il est recommandé de saisir dans cette zone le numéro de l’offre à commandes ou de l’arrangement en matière d’approvisionnement qui s’applique au marché. Cette zone demeure vide en l’absence d’une offre à commandes ou d’un arrangement en matière d’approvisionnement conclu par SPAC ou SPC relativement à ce marché.
+      en: It is recommended that this field be populated with the Standing Offer or Supply Arrangement Number applicable to this contract. This field should be left blank if there is no standing offer or supply arrangement established by PSPC or SSC associated with this contract.
+      fr: Il est recommandé de saisir dans ce champ le numéro de l’offre à commandes ou de l’arrangement en matière d’approvisionnement qui s’applique au marché. Ce champ demeure vide en l’absence d’une offre à commandes ou d’un arrangement en matière d’approvisionnement établi par SPAC ou SPC relativement à ce marché.
     validation:
       en: |
         This field must be populated if a Call-up against a standing offer or supply arrangement was identified as PWSOSA or SSCSOSA
@@ -1637,13 +1639,25 @@ resources:
       fr: Type d’instrument
     description:
       en: |
-        This field should be populated to identify whether the item being disclosed is a contract, contract amendment, or a standing offer/supply arrangement agreement (i.e. the agreement against which a call-up is issued should be disclosed as an ‘SOSA’. The call-up itself should be disclosed as a ‘C’ or ‘A’).
-
-        When a contract is entered into and subsequently amended in the same fiscal quarter, the two transactions should be disclosed separately. Entry into the contract should be disclosed as one entry and should be identified as a contract by entering ‘C’. The contract amendment should be disclosed as a separate entry and be identified as an amendment by entering ‘A’. When a standing offer or supply arrangement agreement is amended, it should continue to be identified as an ‘SOSA’.
+        i. It is recommended that the instrument type identify whether the transaction being reported is a contract, contract amendment, or a standing offer or supply arrangement agreement. 
+        ii. The instrument type for:
+          -	A contract is “C”;
+          -	An amendment is “A”;
+          -	A standing offer agreement or supply arrangement agreement is “SOSA”;
+          -	Issuing a call-up against a standing offer or supply arrangement is “C”; and
+          -	An amendment to a call-up is “A” for this field.
+        iii. When a contract is entered into and subsequently amended in the same fiscal quarter, the two transactions should be reported separately. Entry into the contract should be reported as one entry and should be identified as a contract by entering “C” for this field. The contract amendment should be reported as a separate entry and be identified as an amendment by entering “A” for this field.
+        iv. When a standing offer or supply arrangement agreement is amended, it should continue to be identified as an “SOSA” for this field.
       fr: |
-        Il est recommandé pour le type d’instrument d’indiquer si l’opération divulguée est un marché, une modification à un marché, une offre à commandes ou un arrangement en matière d’approvisionnement. Par exemple, une offre à commandes ou un arrangement en matière d’approvisionnement est « SOSA »; l’émission d’une commande subséquente à une offre à commandes ou à un arrangement en matière d’approvisionnement est « C »; et une modification à une commande subséquente est « A ».
-
-        Lorsqu’un marché est conclu, puis modifié au cours du même trimestre de l’exercice, les deux opérations doivent être divulguées séparément. La signature du marché sera divulguée comme une saisie, soit « C ». Une modification au marché sera divulguée comme saisie séparée, soit « A ». Lorsqu’une offre à commandes ou un arrangement en   matière d’approvisionnement est modifié, il convient de saisir le code « SOSA ».
+        i. Il est recommandé d’indiquer dans ce champ si l’opération déclarée est un marché, une modification de marché, une offre à commandes ou un arrangement en matière d’approvisionnement.
+        ii. Voici le type d’instrument :
+          -	un marché est « C »;
+          -	une modification est « A »;
+          -	une offre à commandes ou un arrangement en matière d’approvisionnement est « SOSA »;
+          -	l’émission d’une commande subséquente à une offre à commandes ou à un arrangement en matière d’approvisionnement est « C »;
+          -	une modification d’une commande subséquente est « A » pour ce champ.
+        iii. Lorsqu’un marché est conclu, puis modifié au cours du même trimestre de l’exercice, les deux opérations doivent être déclarées séparément. La signature du marché sera déclarée comme une seule entrée et devrait être indiquée comme étant un marché, soit « C », dans ce champ. Une modification de marché sera déclarée comme une entrée séparée et indiquée comme telle, en inscrivant « A » dans ce champ.
+        iv. Lorsqu’une offre à commandes ou un arrangement en matière d’approvisionnement est modifié, il convient de saisir le code « SOSA » dans ce champ.
     validation:
       en: Mandatory for contracts after 2019-01-01
       fr: Obligatoire pour les marchés conclus après le 2019-01-01
@@ -1653,13 +1667,13 @@ resources:
     choices:
       C:
         en: Contract
-        fr: Contrat
+        fr: Marché
       A:
         en: Amendment
         fr: Modification
       SOSA:
-        en: Standing Offer/Supply Arrangement Agreement
-        fr: Offre à commandes / Arrangement en matière d’approvisionnement
+        en: Standing Offer or Supply Arrangement Agreement
+        fr: Offre à commandes ou Arrangement en matière d’approvisionnement
 
   - datastore_id: ministers_office
     label:
@@ -1673,8 +1687,8 @@ resources:
         Marchés du cabinet
         du ministre
     description:
-      en: It is recommended for this field to indicate whether the transaction is for the Minister’s office. Ministers’ offices contracts are any contract for goods and services entered into by a minister or their exempt staff. In accordance with the Policies for Minister’s Offices, such contracts should be charged to either a Minister’s other operating budget; or to the Parliamentary Assistant/Advisor operating budget. Please refer to the Policies for Ministers’ Offices for more information on the Minister’s office budgets. This data field should be entered for contracts and amendments awarded effective 2019-06-21 or alternatively, for the contracts and amendments awarded within the month of this effective date.
-      fr: Dans cette zone, il est recommandé d’indiquer si l’opération concerne le cabinet d’un ministre. Les marchés des cabinets des ministres sont des marchés de biens et de services qui sont conclus par un ministre ou son personnel exonéré. Conformément aux Politiques à l’intention des cabinets des ministres, les dépenses liées à ces marchés doivent être imputées aux autres budgets de fonctionnement d’un ministre ou au budget de fonctionnement de l’adjoint parlementaire ou conseiller au secrétaire parlementaire. Consultez les Politiques à l’intention des cabinets des ministres pour obtenir de plus amples renseignements sur les budgets du cabinet d’un ministre. Les données dans ce champ doivent être saisies dans le cas des marchés et des modifications entrés en vigueur le 2019-06-21 ou dans le cas des marchés et des modifications adjugés dans le mois de cette date d’entrée en vigueur.
+      en: It is recommended that this field indicate whether the transaction is for the Minister’s office. Ministers’ offices contracts are any contracts for goods and services entered into by a minister or their exempt staff. In accordance with the Policies for Ministers’ Offices, such contracts should be charged to either a Minister’s other operating budget or to the Parliamentary Secretary’s Assistant/Advisor operating budget. Please refer to the Policies for Ministers’ Offices for more information on the Minister’s office budgets. This data field should be entered for contracts and amendments awarded effective June 21, 2019, or, alternatively, for the contracts and amendments awarded within the month of this effective date.
+      fr: Dans ce champ, il est recommandé d’indiquer si l’opération concerne le cabinet d’un ministre. Les marchés des cabinets de ministre sont des marchés de biens et de services qui sont conclus par un ministre ou son personnel exonéré. Conformément aux Politiques à l’intention des cabinets des ministres, les dépenses liées à ces marchés doivent être imputées aux autres budgets de fonctionnement d’un ministre ou au budget de fonctionnement de l’adjoint ou du conseiller du secrétaire parlementaire. Se reporter aux Politiques à l’intention des cabinets des ministres pour obtenir de plus amples renseignements sur les budgets des cabinets de ministre. Les données dans ce champ doivent être saisies dans le cas des marchés et des modifications de marché entrés en vigueur le 21 juin 2019 ou dans le cas des marchés attribués et des modifications de marché acceptées dans le mois de cette date d’entrée en vigueur.
     validation:
       en: Mandatory for contracts after 2019-06-21
       fr: Obligatoire pour les marchés conclus après le 2019-06-21
@@ -1697,26 +1711,22 @@ resources:
     description:
       en: |
         It is recommended that this field be populated with the total number of compliant and non-compliant bids received in the procurement.
-
         i. For a competitive contract, it is recommended for this field to be the number of bids received pursuant to a bid solicitation.
         ii. For a call-up contract against a standing offer agreement established under a competitive process, it is recommended that a value of “0” be entered for this field. In this instance, the value of “0” represents not applicable.
-        iii. For a contract with task authorizations, the number of bids of the contract may be disclosed if this value is known when the task authorization is issued. If the number of bids is unknown, the department may input a value of 0 to indicate it is not applicable.
+        iii. For a contract with task authorizations, the number of bids of the contract may be reported if this value is known when the task authorization is issued. If the number of bids is unknown, the department may input a value of 0 to indicate it is not applicable.
         iv. If the contract was awarded using an Advance Contract Award Notice (ACAN) and it was determined that there were no statements of capabilities that met the ACAN requirements, it is recommended that a value of “1” be entered for this field.
         iv. For non-competitive contract, it is recommended that a value of “1” be entered for this field.
-        vi. For the establishment of a standing offer or supply arrangement agreement, it is recommend for this field to be the number of standing offer or supply arrangement bids received. If the standing offer was established under a non-competitive or an ACAN procurement process where it was determined that there were no statements of capabilities that meet the ACAN requirements, it is recommended that a value of “1” be entered for this field for subsequent contracts awarded under the standing offer.
+        vi. For the establishment of a standing offer or supply arrangement agreement, it is recommended for this field to be the number of standing offer or supply arrangement bids received. If the standing offer was established under a non-competitive or an ACAN procurement process where it was determined that there were no statements of capabilities that meet the ACAN requirements, it is recommended that a value of “1” be entered for this field for subsequent contracts awarded under the standing offer.
         vii. For a competitive contract awarded by PSPC, SSC or another department on behalf of the client department, a value of “0” may be entered if the information is not available within the reporting period for which the contract was awarded. Once the information is available, the contract record is to be updated at the next subsequent reporting period, or as soon as practicable.
-
       fr: |
-        Il est recommandé de saisir dans cette zone le nombre total de soumissions conformes et non conformes qui ont été reçues dans le cadre de l’approvisionnement.
-
-        i. Pour un marché concurrentiel, il est recommandé que cette zone indique le nombre de soumissions reçues conformément à une invitation à soumissionner.
-        ii. Dans le cas d’un contrat de travail sur convocation subséquent à une offre à commandes établi dans le cadre d’un processus concurrentiel, il est recommandé de saisir la valeur « 0 » dans cette zone. En pareil cas, la valeur « 0 » signifie sans objet.
-        iii. Pour un marché avec des autorisations de tâches, le nombre de soumissions pour le marché peut être divulgué si cette donnée est connue au moment d’émettre l’autorisation de tâches. Si le nombre de soumissions est inconnu, le ministère peut saisir la valeur « 0 ». En pareil cas, la valeur « 0 » signifie sans objet.
-        iv. Si le marché a été attribué au moyen d’un préavis d’adjudication de contrat (PAC) et qu’il a été déterminé qu’aucun énoncé de capacités ne répondait aux exigences du PAC, il est recommandé de saisir la valeur « 1 » dans cette zone.
-        v. Dans le cas d’un marché non concurrentiel, il est recommandé de saisir la valeur « 1 » dans cette zone.
-        vi. Dans le cas de l’établissement d’une offre à commandes ou d’un arrangement en matière d’approvisionnement, il est recommandé d’indiquer dans cette zone le nombre de soumissions reçues relativement à l’offre à commandes ou à l’arrangement en matière d’approvisionnement. Si l’offre à commandes a été établie dans le cadre d’un processus d’approvisionnement non concurrentiel ou d’un PAC et qu’il a été déterminé qu’il n’y avait pas d’énoncés de capacités qui répondent aux exigences du PAC, il est recommandé qu’une valeur de « 1 » soit inscrite dans cette zone pour les marches subséquents attribués en fonction de l’offre à commandes.
-        vii. Dans le cas d’un marché concurrentiel attribué par SPAC, SPC ou un autre ministère au nom du ministère client, on peut saisir la valeur « 0 » si les renseignements ne sont pas disponibles au cours de la période de déclaration pour laquelle le marché a été attribué. Une fois que les renseignements sont disponibles, le dossier contractuel doit être mis à jour lors de la période de déclaration ultérieure, ou dès que cela est possible.
-
+        Il est recommandé de saisir dans ce champ le nombre total de soumissions conformes et non conformes qui ont été reçues dans le cadre du processus d’approvisionnement.
+        i. Pour un marché concurrentiel, il est recommandé que ce champ indique le nombre de soumissions reçues conformément à une invitation à soumissionner.
+        ii. Dans le cas d’une commande subséquente à une offre à commandes établie dans le cadre d’un processus concurrentiel, il est recommandé de saisir la valeur « 0 » dans ce champ. En pareil cas, la valeur « 0 » signifie sans objet.
+        iii. Pour un marché comprenant des autorisations de tâches, le nombre de soumissions pour le marché peut être déclaré si cette donnée est connue au moment de donner l’autorisation de tâches. Si le nombre de soumissions est inconnu, le ministère peut saisir la valeur « 0 ». En pareil cas, la valeur « 0 » signifie sans objet.
+        iv. Si le marché a été attribué au moyen d’un préavis d’adjudication de contrat (PAC) et qu’il a été déterminé qu’aucun énoncé de capacités ne répondait aux exigences du PAC, il est recommandé de saisir la valeur « 1 » dans ce champ.
+        v. Dans le cas d’un marché non concurrentiel, il est recommandé de saisir la valeur « 1 » dans ce champ.
+        vi. Dans le cas de l’établissement d’une offre à commandes ou d’un arrangement en matière d’approvisionnement, il est recommandé d’indiquer dans ce champ le nombre de soumissions reçues relativement à l’offre à commandes ou à l’arrangement en matière d’approvisionnement. Si l’offre à commandes a été établie dans le cadre d’un processus d’approvisionnement non concurrentiel ou d’un PAC et qu’il a été déterminé qu’il n’y avait pas d’énoncés de capacités qui répondent aux exigences du PAC, il est recommandé qu’une valeur de « 1 » soit inscrite dans ce champ pour les marches subséquents attribués en fonction de l’offre à commandes.
+        vii. Dans le cas d’un marché concurrentiel attribué par SPAC, SPC ou un autre ministère au nom du ministère client, il faut saisir la valeur « 0 » si les renseignements ne sont pas disponibles au cours de la période de déclaration au cours de laquelle le marché a été attribué. Une fois que les renseignements sont disponibles, le dossier contractuel doit être mis à jour au cours de la période de déclaration suivante, ou dès que cela est possible.
     validation:
       en: |
         This field must be populated with a “1” if the solicitation procedure is identified as non-competitive (TN) or Advance Contract Award Notice (ACAN).
@@ -1724,6 +1734,7 @@ resources:
         Cette zone doit contenir un « 1 » si la méthode d’invitation à soumissionner est identifiée comme étant non concurrentielle (TN) ou un préavis d’attribution de contrat (AC).
     datastore_type: int
     excel_error_formula: 'OR({default_formula},AND(VALUE({cell})<>1,OR({solicitation_procedure}="TN",{solicitation_procedure}="AC")))'
+    
   - datastore_id: article_6_exceptions
     label:
       en: Section 6 Government Contracts Regulations Exceptions
@@ -1738,14 +1749,14 @@ resources:
     description:
       en: |
         i. The Government Contracts Regulations requires the solicitation of bids unless one of the s.6 exceptions to the Government Contracts Regulations applies to the contract.
-        ii. It is recommended for this field to be populated with one of the s.6 exceptions to solicit bids if bids have not been solicited for the contract.
-        iii. It is recommended for this field to be populated with one of the s.6 exceptions to solicit bids if the contract was awarded using an Advance Contract Award Notice (ACAN) and it was determined that there were no statements of capabilities that met the ACAN requirements.
+        ii. It is recommended that this field be populated with one of the s.6 exceptions to solicit bids if bids have not been solicited for the contract.
+        iii. It is recommended that this field be populated with one of the s.6 exceptions to solicit bids if the contract was awarded using an Advance Contract Award Notice (ACAN) and it was determined that there were no statements of capabilities that met the ACAN requirements.
         iv. For contracts whereby bids have been solicited or if the procurement is not a contract subject to the Government Contracts Regulations, the value of “0” should be entered. For this data value, the value of “0” represents not applicable.
       fr: |
-        i. Le Règlement concernant les marchés de l’État exige le recours à un appel d’offres, à moins que l’une des exceptions prévues à l’article 6 ne s’applique au marché.
-        ii. Il est recommandé de saisir dans cette zone l’une des exceptions à l’appel d’offres prévues à l’article 6 si aucun appel d’offres n’a été lancé à l’égard du marché.
-        iii. Il est recommandé de saisir dans cette zone l’une des exceptions à l’appel d’offres prévues à l’article 6 si le marché a été attribué au moyen d’un préavis d’adjudication de contrat (PAC) et qu’il a été déterminé qu’aucun énoncé de capacités ne répondait aux exigences du PAC.
-        iv. Dans le cas des marchés en vertu desquels un appel d’offres a été lancé, ou si l’approvisionnement ne constitue pas un marché assujetti au Règlement concernant les marchés de l’État, on doit saisir la valeur « 0 ». Pour cette valeur de données, la valeur « 0 » signifie sans objet.
+        i. Le Règlement sur les marchés de l’État exige le recours à un appel d’offres, à moins que l’une des exceptions prévues à l’article 6 dudit règlement ne s’applique au marché.
+        ii. Il est recommandé de saisir dans ce champ l’une des exceptions à l’appel d’offres prévues à l’article 6 si aucun appel d’offres n’a été lancé à l’égard du marché.
+        iii. Il est recommandé de saisir dans ce champ l’une des exceptions à l’appel d’offres prévues à l’article 6 si le marché a été attribué au moyen d’un préavis d’adjudication de contrat (PAC) et qu’il a été déterminé qu’aucun énoncé de capacités ne répondait aux exigences du PAC.
+        iv. Dans le cas des marchés pour lesquels un appel d’offres a été lancé, ou si l’approvisionnement n’est pas visé par un marché assujetti au Règlement sur les marchés de l’État, il faut saisir la valeur « 0 ». Pour cette valeur de données, la valeur « 0 » signifie sans objet."
     validation:
       en: |
         This field may only be populated with “0” if the procurement was identified as competitive (open bidding (OB), traditional competitive (TC) or selective tendering (ST)).
@@ -1757,16 +1768,16 @@ resources:
     choices:
       "0":
         en: Not applicable
-        fr: Ne s’applique pas
+        fr: Sans objet
       "1":
         en: Pressing emergency in which delay would be injurious to the public interest
         fr: Extrême urgence où un retard serait préjudiciable à l’intérêt public.
       "2":
         en: Does not exceed s.6 (b) Government Contracts Regulations prescribed dollar limits.
-        fr: N’excède pas la limite financière prescrite à l’alinéa 6 b) du Règlement concernant les     marchés de l’État.
+        fr: N’excède pas la limite financière prescrite à l’alinéa 6 b) du Règlement sur les marchés de l’État.
       "3":
         en: Not in the public interest to solicit bids
-        fr: Situation dans laquelle un appel d’offres ne servirait pas l’intérêt public
+        fr: Situation dans laquelle un appel d’offres ne servirait pas l’intérêt public.
       "4":
         en: Only one person is capable of performing the contract
         fr: Une seule personne est en mesure d’exécuter le marché.
@@ -1777,17 +1788,17 @@ resources:
       fr: Critères d’attribution
     description:
       en: |
-        It is recommended for this field to be populated with one of the bid evaluation methodologies below if bids have been solicited for the contract:
-
+        It is recommended that this field be populated with one of the bid evaluation methodologies below if bids have been solicited for the contract:
         i. If bids have not been solicited, the value of “0” is to be selected.
         ii. For ACANs whereby it was determined that there were no statements of capabilities that met the ACAN requirements, the value of “0” should be entered.
-        iii. For amendments, the value of “0” is to be selected.
-        iv. For a competitive contract awarded by PSPC, SSC or another department on behalf of the client department, a value of “0” may be entered if the information is not available within the reporting period for which the contract was awarded Once information is available, the contract record is to be updated at the next subsequent reporting period, or as soon as practicable.
+        iii. For amendments, select the value of “0” of this field.
+        iv. For a competitive contract awarded by PSPC, SSC or another department on behalf of the client department, a value of “0” may be entered if the information is not available within the reporting period for which the contract was awarded. Once information is available, the contract record is to be updated at the next subsequent reporting period, or as soon as practicable.
       fr: |
-        i. S’il n’y a pas eu d’appel d’offres, il faut sélectionner la valeur « 0 ».
+        Il est recommandé de saisir dans ce champ l’une des méthodes d’évaluation des soumissions indiquées ci-dessous, si un appel d’offres a été lancé à l’égard du marché : 
+        i. S’il n’y a pas eu d’appel d’offres, il faut choisir la valeur « 0 ».
         ii. Dans le cas d’un PAC à l’égard duquel il a été déterminé qu’aucun énoncé de capacités ne répondait aux exigences du PAC, il faut saisir la valeur « 0 ».
-        iii. En cas de modification, il faut sélectionner la valeur « 0 ».
-        iv. Pour un marché concurrentiel attribué par SPAC, SPC ou un autre ministère au nom du ministère client, on peut saisir la valeur « 0 » si les renseignements ne sont pas disponibles au cours de la période de déclaration pour laquelle le marché a été attribué. Une fois que les renseignements sont disponibles, le dossier contractuel doit être mis à jour lors de la période de déclaration ultérieure, ou dès que cela est possible.
+        iii. S’il s’agit d’une modification, il faut choisir la valeur « 0 » pour ce champ.
+        iv. Dans le cas d’un marché concurrentiel attribué par SPAC, SPC ou un autre ministère au nom du ministère client, il faut saisir la valeur « 0 » si les renseignements ne sont pas disponibles au cours de la période de déclaration au cours de laquelle le marché a été attribué. Une fois que les renseignements sont disponibles, le dossier contractuel doit être mis à jour au cours de la période de déclaration suivante, ou dès que cela est possible.
     validation:
       en: |
         If this field is populated, it must be with a “0” if the procurement was identified
@@ -1804,7 +1815,7 @@ resources:
     choices:
       "0":
         en: Not applicable
-        fr: Ne s’applique pas
+        fr: Sans objet
       "1":
         en: Lowest Price
         fr: Prix le plus bas
@@ -1826,14 +1837,14 @@ resources:
       en: Socio-Economic Indicator
       fr: Indicateur socioéconomique
     description:
-      en: It is recommended for this field to indicate whether the procurement is subject one or more of the applicable Socio-economic indicator(s)
-      fr: Il est recommandé d’indiquer dans cette zone si l’approvisionnement fait l’objet d’au moins un des indicateurs socioéconomiques applicables.
+      en: It is recommended for this field to indicate whether the procurement is subject to one or more of the applicable Socio-economic indicators.
+      fr: Il est recommandé d’indiquer dans ce champ si l’approvisionnement est relié à au moins un des indicateurs socioéconomiques applicables.
     datastore_type: text
     excel_full_text_choices: false
     choices:
       NA:
         en: None
-        fr: Sans objet
+        fr: Aucune valeur
       FP:
         en: Federal Contractors Program for Employment Equity
         fr: Programme de contrats fédéraux pour l’équité en matière d’emploi
@@ -1843,8 +1854,12 @@ resources:
       en: Reporting Period
       fr: Periode de déclaration
     description:
-      en: This field should be populated in the standard format described below. When published on the Open Government portal, this field will contain the fiscal quarter this particular contract entry was disclosed to the public. For example if a contract amendment is being disclosed on May 3, 2015, the entry should be 2015-2016-Q1.
-      fr: "Il est recommandé de saisir les données dans cette zone selon le format normalisé décrit ci-dessous.  Lorsqu’il est publié sur le portail du Gouvernement Ouvert, cette zone contiendra le quartier fiscal dont cette donné était divulguée.  Par exemple, si un marché est modifié le 3 mai 2015, et la modification est divulguée au cours du premier trimestre de l’exercice 2015-2016, il convient d’indiquer : 2015 à 2016-Q1)."
+      en: |
+          It is recommended that this field be populated in the standard format described below. 
+          When published on the Open Government portal, this field will contain the fiscal quarter this particular contract entry was reported to the public. For example if a contract is being amended on May 3, 2017, and reported in the first fiscal quarter of 2017-–2018, the entry should be 2017-2018-Q1.
+      fr: |
+          Il est recommandé de remplir ce champ dans le format standard décrit ci-dessous. 
+          Lorsqu’il est publié sur le portail du Gouvernement Ouvert, ce champ contiendra le quartier fiscal dont cette donné était déclarée. Par exemple, si un marché est modifié le 3 mai 2017, et la modification est déclarée au cours du premier trimestre de l’exercice 2017-2018, il convient d’indiquer : 2017 à 2018-Q1).
     validation:
       en: Mandatory for contracts after 2019-01-01
       fr: Obligatoire pour les marchés conclus après le 2019-01-01
@@ -2180,14 +2195,18 @@ resources:
     sort: contract_date desc
 
 
-- title: Proactive Disclosure - Contracts Nothing to Report
+- title:
+    en: Proactive Publication – Contracts Nothing to Report
+    fr: Publication proactive – Contrats (Rien à signaler) 
   resource_name: contracts-nil
   create_form: true
   edit_form: false #edit not possible for nil reports since only stored data is primary key
   fields:
 
   - datastore_id: reporting_period
-    label: Reporting Period
+    label: 
+      en: Reporting Period
+      fr: Periode de declaration
     excel_required: true
     format_type: YYYY-YYYY-QX
     datastore_type: text
