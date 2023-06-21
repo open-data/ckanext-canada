@@ -1409,10 +1409,12 @@ resources:
         Entreprises autochtones excluant
         le marché réservé en vertu de la SAEA
     description:
-      en: i. It is recommended that this field indicate whether a contract was awarded to an Indigenous business.
-          ii. Any contract awarded to an Indigenous business where the procurement is subject to a mandatory or voluntary set-aside under the Procurement Strategy for Indigenous Business should be reported as “No” under this data field as such contracts are already reported under the Procurement Strategy for Indigenous Business data field.
-      fr: i. Il est recommandé que ce champ indique si un marché a été attribué à une entreprise autochtone.
-          ii. Tout marché attribué à une entreprise autochtone lorsque l’approvisionnement est assujetti aux exigences relatives aux marchés réservés obligatoirement ou volontairement en vertu de la Stratégie d’approvisionnement auprès des entreprises autochtones devrait être déclaré comme étant « Non » dans ce champ, puisque de tels marchés sont déjà déclarés dans le champ de données « Stratégie d’approvisionnement auprès des entreprises autochtones ».
+      en: |
+        i. It is recommended that this field indicate whether a contract was awarded to an Indigenous business.
+        ii. Any contract awarded to an Indigenous business where the procurement is subject to a mandatory or voluntary set-aside under the Procurement Strategy for Indigenous Business should be reported as “No” under this data field as such contracts are already reported under the Procurement Strategy for Indigenous Business data field.
+      fr: |
+        i. Il est recommandé que ce champ indique si un marché a été attribué à une entreprise autochtone.
+        ii. Tout marché attribué à une entreprise autochtone lorsque l’approvisionnement est assujetti aux exigences relatives aux marchés réservés obligatoirement ou volontairement en vertu de la Stratégie d’approvisionnement auprès des entreprises autochtones devrait être déclaré comme étant « Non » dans ce champ, puisque de tels marchés sont déjà déclarés dans le champ de données « Stratégie d’approvisionnement auprès des entreprises autochtones ».
     validation:
       en: |
         Mandatory for contracts after 2019-01-01
