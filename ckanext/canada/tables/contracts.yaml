@@ -1,7 +1,7 @@
 dataset_type: contracts
 target_dataset: contracts
 
-title: Proactive Disclosure - Contracts over 10K
+title: Proactive Publication – Contracts over $10,000 
 notes: Access, upload and modify the Contracts over 10K reports for your organization
 
 upload_info:
@@ -80,9 +80,7 @@ front_matter:
 
 
 resources:
-- title: 
-    en: Proactive Publication – Contracts over $10,000 
-    fr: Publication proactive – Contrats attribués de plus de 10 000 $ 
+- title: Proactive Publication – Contracts over $10,000 
   resource_name: contracts
 
   excel_data_num_rows: 5000
@@ -227,12 +225,14 @@ resources:
       en: Economic Object Code
       fr: Code d’article économique
     description:
-      en: i. It is recommended that this field be populated with the contract’s numeric economic object code. Economic object codes are listed in the government-wide chart of accounts. The use of accurate economic object codes is important for maintaining the integrity of the Public Accounts of Canada. Departments are to ensure that all expenditures are coded appropriately in accordance with the Directive on Accounting Standards: GC 5000 Recording Financial Transactions in the Accounts of Canada.
-          ii. For standing offers and supply arrangement agreements, this field may be populated with the data value “NA” as the value “NA” for this field means not applicable.
-          iii. When a contract involves more than one economic object, it is recommended that the economic object associated with the largest dollar value be used. A department may use a different approach if this is the standard practice in the department.
-      fr: i.  Il est recommandé de saisir dans ce champ les chiffres du code d’article économique du marché. Les codes d’article économique sont indiqués dans le plan comptable à l’échelle de l’administration fédérale. Il est important d’utiliser les bons codes d’article économique pour préserver l’intégrité des Comptes publics du Canada. Il y aurait lieu pour les ministères de s’assurer que toutes les dépenses sont codées de manière appropriée, conformément à la Directive sur les normes comptables : GC 5000 Inscription des opérations financières dans les comptes du Canada.
-          ii. Pour les offres à commandes et les arrangements en matière d’approvisionnement, il est recommandé que ce champ soit rempli avec la valeur « NA », car la valeur « NA » pour ce champ indique qu’il ne s’applique pas.
-          iii. Quand un marché porte sur plus d’un article économique, il est recommandé d’utiliser celui qui correspond à la valeur monétaire la plus élevée. Un ministère peut employer une approche différente si elle correspond à sa pratique courante.
+      en: |
+        i. It is recommended that this field be populated with the contract’s numeric economic object code. Economic object codes are listed in the government-wide chart of accounts. The use of accurate economic object codes is important for maintaining the integrity of the Public Accounts of Canada. Departments are to ensure that all expenditures are coded appropriately in accordance with the Directive on Accounting Standards: GC 5000 Recording Financial Transactions in the Accounts of Canada.
+        ii. For standing offers and supply arrangement agreements, this field may be populated with the data value “NA” as the value “NA” for this field means not applicable.
+        iii. When a contract involves more than one economic object, it is recommended that the economic object associated with the largest dollar value be used. A department may use a different approach if this is the standard practice in the department.
+      fr: |
+        i.  Il est recommandé de saisir dans ce champ les chiffres du code d’article économique du marché. Les codes d’article économique sont indiqués dans le plan comptable à l’échelle de l’administration fédérale. Il est important d’utiliser les bons codes d’article économique pour préserver l’intégrité des Comptes publics du Canada. Il y aurait lieu pour les ministères de s’assurer que toutes les dépenses sont codées de manière appropriée, conformément à la Directive sur les normes comptables : GC 5000 Inscription des opérations financières dans les comptes du Canada.
+        ii. Pour les offres à commandes et les arrangements en matière d’approvisionnement, il est recommandé que ce champ soit rempli avec la valeur « NA », car la valeur « NA » pour ce champ indique qu’il ne s’applique pas.
+        iii. Quand un marché porte sur plus d’un article économique, il est recommandé d’utiliser celui qui correspond à la valeur monétaire la plus élevée. Un ministère peut employer une approche différente si elle correspond à sa pratique courante.
     validation:
       en: |
         Mandatory for contracts after 2019-01-01
@@ -258,10 +258,8 @@ resources:
         Description du travail
         Anglais
     description:
-      en: |
-        It is recommended that this field be populated with the economic object code’s text description as listed in the government-wide chart of accounts ( http://www.tpsgc-pwgsc.gc.ca/recgen/pceaf-gwcoa/index-eng.html ). For standing offers and supply arrangement agreements, this field may be populated with the commodity code’s text description used by the federal government for procurement activities.
-      fr: |
-        Il est recommandé de saisir dans ce champ le texte de description du code d’article économique figurant dans le plan comptable à l’échelle de l’administration fédérale ( http://www.tpsgc-pwgsc.gc.ca/recgen/pceaf-gwcoa/index-fra.html ). Pour les offres à commande et les arrangements en matière d’approvisionnement, ce champ peut comprendre une description du code de produit utilisée par le gouvernement fédéral pour les activités relatives à l’approvisionnement.
+      en: It is recommended that this field be populated with the economic object code’s text description as listed in the government-wide chart of accounts ( http://www.tpsgc-pwgsc.gc.ca/recgen/pceaf-gwcoa/index-eng.html ). For standing offers and supply arrangement agreements, this field may be populated with the commodity code’s text description used by the federal government for procurement activities.
+      fr: Il est recommandé de saisir dans ce champ le texte de description du code d’article économique figurant dans le plan comptable à l’échelle de l’administration fédérale ( http://www.tpsgc-pwgsc.gc.ca/recgen/pceaf-gwcoa/index-fra.html ). Pour les offres à commande et les arrangements en matière d’approvisionnement, ce champ peut comprendre une description du code de produit utilisée par le gouvernement fédéral pour les activités relatives à l’approvisionnement.
     validation:
       en: Mandatory for contracts after 2019-01-01
       fr: Obligatoire pour les marchés conclus après le 2019-01-01
@@ -459,12 +457,14 @@ resources:
       en: Comments English
       fr: Commentaires en anglais
     description:
-      en: i. Standardized comments are recommended to be used (refer to Appendix C). Avoid the use of acronyms within this field.
-          ii. Departments are encouraged to provide a brief description of each contract.
-          iii. When a contract involves an economic object code specified in Appendix D, departments are to fulfill the reporting requirements specified in Appendix D.
-      fr: i. Il est recommandé d’utiliser les commentaires normalisés (consultez l’annexe C). Il faut éviter d’utiliser des acronymes dans ce champ.
-          ii. Les ministères sont invités à fournir une brève description de chaque marché.
-          iii. Lorsqu’un marché comprend un code d’article économique précisé à l’annexe D, les ministères doivent satisfaire aux exigences en matière de déclaration précisées à l’annexe D.
+      en: |
+        i. Standardized comments are recommended to be used (refer to Appendix C). Avoid the use of acronyms within this field.
+        ii. Departments are encouraged to provide a brief description of each contract.
+        iii. When a contract involves an economic object code specified in Appendix D, departments are to fulfill the reporting requirements specified in Appendix D.
+      fr: |
+        i. Il est recommandé d’utiliser les commentaires normalisés (consultez l’annexe C). Il faut éviter d’utiliser des acronymes dans ce champ.
+        ii. Les ministères sont invités à fournir une brève description de chaque marché.
+        iii. Lorsqu’un marché comprend un code d’article économique précisé à l’annexe D, les ministères doivent satisfaire aux exigences en matière de déclaration précisées à l’annexe D.
     excel_column_width: 40
     datastore_type: text
     form_snippet: scheming/form_snippets/textarea.html
@@ -476,12 +476,14 @@ resources:
       en: Comments French
       fr: Commentaires en français
     description:
-      en: i. Standardized comments are recommended to be used (refer to Appendix C). Avoid the use of acronyms within this field.
-          ii. Departments are encouraged to provide a brief description of each contract.
-          iii. When a contract involves an economic object code specified in Appendix D, departments are to fulfill the reporting requirements specified in Appendix D.
-      fr: i. Il est recommandé d’utiliser les commentaires normalisés (consultez l’annexe C). Évitez d’utiliser des acronymes dans ce champ.
-          ii. Les ministères sont invités à fournir une brève description de chaque marché.
-          iii. Lorsqu’un marché comprend un code d’article économique précisé à l’annexe D, les ministères doivent satisfaire aux exigences en matière de déclaration précisées à l’annexe D.
+      en: |
+        i. Standardized comments are recommended to be used (refer to Appendix C). Avoid the use of acronyms within this field.
+        ii. Departments are encouraged to provide a brief description of each contract.
+        iii. When a contract involves an economic object code specified in Appendix D, departments are to fulfill the reporting requirements specified in Appendix D.
+      fr: |
+        i. Il est recommandé d’utiliser les commentaires normalisés (consultez l’annexe C). Évitez d’utiliser des acronymes dans ce champ.
+        ii. Les ministères sont invités à fournir une brève description de chaque marché.
+        iii. Lorsqu’un marché comprend un code d’article économique précisé à l’annexe D, les ministères doivent satisfaire aux exigences en matière de déclaration précisées à l’annexe D.
     excel_column_width: 40
     datastore_type: text
     form_snippet: scheming/form_snippets/textarea.html
@@ -531,10 +533,8 @@ resources:
       en: Agreement Type
       fr: Type d’accord
     description:
-      en: |
-        This data field is archived and replaced by the Appendix A data fields for Trade Agreement, Comprehensive Land Claims Agreement and Procurement Strategy for Indigenous Business.
-      fr: |
-       Ce champ de données est archivé et remplacé par les champs de données de l’annexe A pour l’Accord de libre-échange, l’entente sur les revendications territoriales globales et la Stratégie d’approvisionnement auprès des entreprises autochtones.
+      en: This data field is archived and replaced by the Appendix A data fields for Trade Agreement, Comprehensive Land Claims Agreement and Procurement Strategy for Indigenous Business.
+      fr: Ce champ de données est archivé et remplacé par les champs de données de l’annexe A pour l’Accord de libre-échange, l’entente sur les revendications territoriales globales et la Stratégie d’approvisionnement auprès des entreprises autochtones.
     validation:
       en: |
         Mandatory for contracts after 2019-01-01, unless Trade Agreement specified.
@@ -889,10 +889,12 @@ resources:
       en: Trade Agreement
       fr: Accord commercial
     description:
-      en: i. It is recommended that this field indicate whether the procurement is covered by each of the applicable trade agreements.
-          ii. It is recommended that this field be populated with one or more of the following alphabetic characters. Report the alphabetic characters only. All text after the alphabetic characters, including the colon, is for information purposes only. For example, a procurement covered by the Canadian Free Trade Agreement and the Comprehensive Economic Free Trade Agreement is reported as CA, EU.
-      fr: i. Il est recommandé d’indiquer dans ce champ si l’approvisionnement est visé par chacun des accords commerciaux applicables.
-          ii. Il est recommandé de remplir ce champ avec un ou plusieurs des caractères alphabétiques suivants. Il faut indiquer uniquement les caractères alphabétiques. Tout le texte après les caractères alphabétiques, y compris les deux-points, est fourni à titre informatif uniquement. À titre d’exemple, un approvisionnement visé par l’Accord de libre-échange canadien et l’Accord économique et commercial global entre le Canada et l’Union européenne est déclaré sous le code CA, EU.
+      en: |
+        i. It is recommended that this field indicate whether the procurement is covered by each of the applicable trade agreements.
+        ii. It is recommended that this field be populated with one or more of the following alphabetic characters. Report the alphabetic characters only. All text after the alphabetic characters, including the colon, is for information purposes only. For example, a procurement covered by the Canadian Free Trade Agreement and the Comprehensive Economic Free Trade Agreement is reported as CA, EU.
+      fr: |
+        i. Il est recommandé d’indiquer dans ce champ si l’approvisionnement est visé par chacun des accords commerciaux applicables.
+        ii. Il est recommandé de remplir ce champ avec un ou plusieurs des caractères alphabétiques suivants. Il faut indiquer uniquement les caractères alphabétiques. Tout le texte après les caractères alphabétiques, y compris les deux-points, est fourni à titre informatif uniquement. À titre d’exemple, un approvisionnement visé par l’Accord de libre-échange canadien et l’Accord économique et commercial global entre le Canada et l’Union européenne est déclaré sous le code CA, EU.
     validation:
       en: |
         Mandatory for contracts after 2022-01-01
@@ -1143,13 +1145,15 @@ resources:
         Méthode d’invitation
         à soumissionner
     description:
-      en: It is recommended that this field be populated with one of the five solicitation procedures listed below:
+      en: |
+        It is recommended that this field be populated with one of the five solicitation procedures listed below:
           •	AC: Advance Contract Award Notice (ACAN) refers to a contract awarded to a supplier identified under an ACAN process where it was determined that there were no other statements of capabilities that could successfully meet the government’s requirements. 
           • OB: Competitive – Open Bidding (Government Electronic Tendering System (GETS)) refers to a competitive contract where bids were solicited via GETS.
           •	TC: Competitive – Traditional refers to a competitive contract where bids were not solicited via GETS, but through another medium, such as soliciting bids directly from suppliers by email or phone.
           •	ST: Competitive – Selective Tendering refers to a solicitation procedure permitted under Canada’s trade agreements where qualified suppliers are selected from a source list (including single-use or multi-use lists) under the selective tendering procedural rules in Canada’s trade agreements.
           •	TN: Non-competitive refers to a contract awarded to a supplier without soliciting bids.
-      fr: Il est recommandé de saisir dans ce champ l’une des cinq méthodes d’invitation à soumissionner énumérées ci-dessous.
+      fr: |
+        Il est recommandé de saisir dans ce champ l’une des cinq méthodes d’invitation à soumissionner énumérées ci-dessous.
           •	AC: Préavis d’adjudication de contrat (PAC) fait référence à un contrat attribué à un fournisseur dans le cadre du processus de PAC lorsqu’il a été déterminé qu’aucun autre énoncé de capacités ne répondait aux exigences du gouvernement.
           •	OB: Concurrentielle – Invitation ouverte à soumissionner (Service électronique d’appels d’offres – SEAO) fait référence à un marché concurrentiel pour lequel l’appel d’offres a été fait par le biais du SEAO.
           •	TC: Concurrentielle – Traditionnelle fait référence à un marché concurrentiel l’appel d’offres n’a pas été fait par le biais du SEAO, mais par un autre moyen, comme la demande de soumissions directement auprès des fournisseurs par courriel ou par téléphone.
