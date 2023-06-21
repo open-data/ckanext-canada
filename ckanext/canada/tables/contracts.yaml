@@ -2201,9 +2201,7 @@ resources:
     sort: contract_date desc
 
 
-- title:
-    en: Proactive Publication – Contracts Nothing to Report
-    fr: Publication proactive – Contrats (Rien à signaler) 
+- title: Proactive Publication – Contracts Nothing to Report
   resource_name: contracts-nil
   create_form: true
   edit_form: false #edit not possible for nil reports since only stored data is primary key
