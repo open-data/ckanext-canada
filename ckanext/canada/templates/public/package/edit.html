@@ -17,7 +17,7 @@
 {% endblock %}
 
 {% block secondary_content %}
-  {% if resources %}
+  {% if pkg_dict and pkg_dict.resources %}
       {% snippet "package/snippets/resources.html", pkg=pkg %}
   {% endif %}
 {% endblock %}
