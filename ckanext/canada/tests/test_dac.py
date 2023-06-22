@@ -7,6 +7,7 @@ from ckan.lib.search import clear_all
 from ckanext.canada.tests.factories import CanadaOrganization as Organization
 
 from ckanext.recombinant.tables import get_chromo
+from ckanext.recombinant.helpers import recombinant_choice_fields
 
 
 class TestDAC(object):
@@ -29,6 +30,12 @@ class TestDAC(object):
 
     def test_example(self):
         record = get_chromo('dac')['examples']['record']
+        choices_fields = recombinant_choice_fields('dac')
+        for f in choices_fields:
+            if f['datastore_id'] != 'member_name':
+                continue
+            record['member_name'] = f['choices'][0][0]
+            break
         self.lc.action.datastore_upsert(
             resource_id=self.resource_id,
             records=[record])

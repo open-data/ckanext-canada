@@ -494,7 +494,7 @@ $(workdir)/nap5.csv:
 	$(paster) $(combine) nap5 -d $(workdir) -c $(registry_ini)
 
 $(workdir)/filtered/nap5.csv: $(workdir)/nap5.csv
-	$(fdir)/filter_nap5.py < $< > $@
+	$(fdir)/filter_modified_created.py < $< > $@
 
 ###
 ###  Open Data Inventory
@@ -638,7 +638,36 @@ $(workdir)/wrongdoing.csv:
 $(workdir)/filtered/wrongdoing.csv: $(workdir)/wrongdoing.csv
 	$(fdir)/filter_wrongdoing.py < $< > $@
 
+###
+###  Supplier Vaccination
+###
+.PHONY: suppliervax
+suppliervax: upload-suppliervax rebuild-suppliervax
 
+.PHONY: upload-suppliervax
+upload-suppliervax: $(workdir)/filtered/contract-data.csv $(workdir)/filtered/verification-data.csv
+	@echo Uploading Supplier Vaccination...
+	@$(ckanapi) action resource_patch -c $(registry_ini) \
+	id=5334e05b-5c48-4cba-b5e3-cf755ef43dd3 upload@"$(workdir)/filtered/contract-data.csv" \
+	> /dev/null
+	@$(ckanapi) action resource_patch -c $(registry_ini) \
+	id=0d10f492-fcc3-467e-bd22-98492226569e upload@"$(workdir)/filtered/verification-data.csv" \
+	> /dev/null
+
+.PHONY: rebuild-suppliervax
+rebuild-suppliervax: $(workdir)/filtered/contracts.csv $(workdir)/filtered/contracts-nil.csv
+	# no search for suppliervax
+
+$(workdir)/contract-data.csv:
+	$(paster) $(combine) contract-data -d $(workdir) -c $(registry_ini)
+
+$(workdir)/verification-data.csv:
+	$(paster) $(combine) verification-data -d $(workdir) -c $(registry_ini)
+
+$(workdir)/filtered/contract-data.csv: $(workdir)/contract-data.csv
+	$(fdir)/filter_suppliervax.py < $< > $@
+$(workdir)/filtered/verification-data.csv: $(workdir)/verification-data.csv
+	$(fdir)/filter_suppliervax.py < $< > $@
 
 ###
 ###  Government Administrative Aircraft Use

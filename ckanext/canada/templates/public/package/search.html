@@ -67,57 +67,6 @@ Please review your spelling, or reduce the number of filters selected.
 
 <!-- i18n -->
 <script src="{{ h.url_for_static('/static/js/i18n.js') }}"></script>
-<!-- OGS Map Shopping Cart -->
-<script src="{{ h.url_for_static('/static/js/OGSCookie.js') }}"></script>
-<script src="{{ h.url_for_static('/static/js/OGSMapsCart.js') }}"></script>
-<script type="text/javascript">
-var OGSMapsCart_lang = '{{ h.lang() }}'
-
-$( document ).ready(function() {
-  initCart()
-  updateCartUI()
-
-  $("#OGSCartPlotItems").click(function() {
-    viewOnMap()
-  });
-
-  // Part UI ease of use and part system reset
-  $("#OGSCartDumpItems").click(function() {
-    dumpCart()
-    updateCartUI()
-  });
-
-  $(".ogscartviewbtn").click(function() {
-    var action = $(this).attr('id').split('_')
-    type = action[0]
-    id = action[1]
-
-    location.href='https://open.canada.ca/data/en/fgpv-vpgf/'+id
-    return false
-  });
-
-  $(".ogscartbtn").click(function() {
-    var action = $(this).attr('id').split('_')
-    type = action[0]
-    id = action[1]
-
-    // Action
-    if(type == 'OGSCartAdd')    { addCartItem(id)    }
-    if(type == 'OGSCartRemove') { removeCartItem(id) }
-    updateCartUI()
-  });
-
-  // Changes to the cart in another tab/window should be accounted for
-  $(window).focus(function() {
-    initCart()
-    updateCartUI()
-  });
-
-<!-- End Cart -->
-
-});
-</script>
-
 {% endblock %}
 
 

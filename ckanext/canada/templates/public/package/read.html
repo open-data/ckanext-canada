@@ -1,6 +1,15 @@
 {% ckan_extends %}
 {% import 'macros/canada_read.html' as cr %}
 
+{%- block custom_styles %}
+  {% if (c.pkg_dict.organization.name == 'psc-cfp') %}
+    {%- block invitation_manager_styles -%}
+      <link rel="stylesheet" href="{{ h.url_for_static('/invitation-manager/Overlay.css') }}" type="text/css">
+    {%- endblock -%}
+  {% endif %}
+  {{ super() }}
+{%- endblock -%}
+
 {% set pkg = c.pkg_dict %}
 {% set client_lang = h.lang() %}
 
@@ -43,7 +52,7 @@
       </div>
 
       {% if 'fgp_viewer' in pkg.get('display_flags', []) %}
-        <p><a href="/data/{{ h.lang() }}/fgpv-vpgf/{{ pkg.name }}" class="btn btn-primary btn-xs"><span class="fa fa-map-marker"></span> {{ _('View on Map') }}</a></p>
+        <p><a href="https://{{ h.canada_search_domain() }}{{ _('/openmap/' ) }}{{ pkg.id }}" class="btn btn-primary btn-xs"><span class="fa fa-map-marker"></span> {{ _('View on Map') }}</a></p>
       {% endif %}
 
     </section>
@@ -224,16 +233,11 @@
 {% endblock %}
 
 
-{% block package_rate %}
-  <a name="rate"></a>
-  <div id="voting-wrapper" data-ajax-replace="/{{ h.lang() }}/vote?uuid={{ c.pkg_dict.id }}"></div>
-{% endblock %}
-
 {% block more_like_this %}
   {% if h.adv_search_url() %}
   <section class="panel panel-primary">
     <header class="panel-heading">
-      <h5 class="panel-title">{{ _('Similar records') }}</h5>
+      <div class="panel-title">{{ _('Similar records') }}</div>
     </header>
     <div data-ajax-replace="{{ h.adv_search_mlt_root() }}{{ c.pkg_dict.id }}" class="panel-body" id="related_pkgs">
     </div>
@@ -241,10 +245,15 @@
   {% endif %}
 {% endblock %}
 
-{% block package_comments %}
-  <a name="comments"></a>
+{% block package_rate %}
+  <a id="rate"></a>
+  <div id="voting-wrapper" data-ajax-replace="/{{ h.lang() }}/vote?uuid={{ c.pkg_dict.id }}"></div>
+{% endblock %}
+
+{% block package_feedback %}
+  <a id="feedback"></a>
   <section class="indent-large">
-    <div data-ajax-replace="/{{ h.lang() }}/external-comment/dataset/{{ c.pkg_dict.id }}"></div>
+    <div id="feedback-wrapper" data-ajax-replace="/{{ h.lang() }}/feedback?uuid={{ c.pkg_dict.id }}"></div>
   </section>
 {% endblock %}
 
@@ -259,6 +268,14 @@
 <![endif]-->
 <script src="{{ h.url_for_static('/static/js/more_like_this.js') }}"></script>
 <script src="{{ h.url_for_static('/static/js/voting_fix.js?cv=1') }}"></script>
+
+{% if (c.pkg_dict.organization.name == 'psc-cfp') %}
+  {%- block invitation_manager_scripts -%}
+    <script defer src="{{ h.url_for_static('/invitation-manager/Overlay.js') }}" type="text/javascript"></script>
+    <script defer src="{{ h.url_for_static('/invitation-manager/InvitationManager.js') }}" type="text/javascript"></script>
+  {%- endblock -%}
+{% endif %}
+
 {{ super() }}
 {% endblock %}
 
