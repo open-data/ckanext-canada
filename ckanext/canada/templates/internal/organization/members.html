@@ -1,0 +1,8 @@
+{% ckan_extends %}
+
+{% block page_primary_action %}
+  {{ super() }}
+  {% if h.check_access('organization_update', {'id': organization.id}) %}
+    {% link_for _('CSV'), named_route='canada.organization_member_dump', id=organization.id, class_='btn btn-primary', icon='download' %}
+  {% endif %}
+{% endblock %}
