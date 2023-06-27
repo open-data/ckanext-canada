@@ -134,19 +134,6 @@ body {
   background: none;
 }
 
-.js .image-upload .btn-remove-url {
-    position: absolute;
-    top: auto;
-    right: 0;
-    padding: 5px;
-    border-radius: 0;
-    margin-top: 29px;
-}
-
-.js .image-upload #field-image-upload {
-    display: inline-block;
-}
-
 .nav-item > a, .nav-aside li a {
     font-size: inherit;
 }
@@ -272,11 +259,6 @@ a#edit-comment-body-0-format-help-about, button#edit-submit,button#edit-actions-
     background-color: #256EB8;
 }
 
-#resource_title {
-    display: inline-block;
-    width: 50%;
-}
-
 .resource-heading {
     overflow: hidden;
     text-overflow: ellipsis;
@@ -365,14 +347,160 @@ label.no-colon::after{
   content: none !important;
 }
 
+
+/*#################
+## Resource Item ##
+###################*/
+
+/* Dataset Index */
+.resource-item #resource_title{
+  display: inline-block;
+  width: 60%;
+}
+.resource-item .resource-action-links{
+  display: block !important;
+  position: relative !important;
+  float: right;
+  margin-left: 10px;
+}
+@media all and (max-width: 992px) {
+  .resource-item #resource_title{
+    width: 50%;
+  }
+}
+@media all and (max-width: 768px) {
+  .resource-item #resource_title{
+    width: 100%;
+  }
+  .resource-item a.validation-badge{
+    margin-left: 0 !important;
+  }
+  .resource-item .resource-action-links{
+    display: block !important;
+    float: none !important;
+    margin-top: 10px !important;
+    margin-bottom: 10px !important;
+  }
+  .resource-item .resource-action-links a.btn{
+    float: none !important;
+  }
+}
+/* END - Dataset Index - END */
+
+/* Side Panel */
+.resources-side-panel .nav-item button.dropdown-toggle::after{
+  display: inline-block;
+  margin-left: 0.255em;
+  vertical-align: 0.255em;
+  content: "";
+  border-top: 0.3em solid;
+  border-right: 0.3em solid transparent;
+  border-bottom: 0;
+  border-left: 0.3em solid transparent;
+}
+.resources-side-panel .nav-item > a{
+  padding-left: 15px;
+  padding-right: 15px;
+  position: relative;
+}
+.resources-side-panel .nav-item ul.dropdown-menu{
+  position: absolute;
+  inset: 0px auto auto 0px;
+  margin: 0px;
+  transform: translate3d(0px, 30px, 0px);
+  z-index: 100 !important;
+}
+.resources-side-panel .nav-item.active a{
+  pointer-events: none !important;
+  cursor: default !important;
+  color: #555555 !important;
+  font-weight: 700 !important;
+}
+.resources-side-panel .nav-item.active{
+  background-color: #cfd1d5 !important;
+  margin-right: -15px !important;
+}
+.resources-side-panel .nav-item.active::before{
+  content: " ";
+  position: absolute;
+  border: 20px solid transparent;
+  border-right: none;
+  border-left-color: #cfd1d5;
+  border-left-width: 6px;
+  top: 0;
+  bottom: 0;
+  right: -6px;
+  width: 6px;
+  height: 34px;
+}
+.resources-side-panel .nav-item .dropdown.position-absolute{
+  position: absolute !important;
+  right: 0 !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  margin-right: 0 !important;
+  /*
+  TODO: z-index and positions to get dropdown always on top
+  */
+}
+.resources-side-section + div.module-content > a.btn-light{
+  background-color: #eaebed !important;
+  border-color: #dcdee1 !important;
+  color: #335075 !important;
+  line-height: 2 !important;
+}
+.resources-side-section + div.module-content > a.btn-light:visited{
+  color: #335075 !important
+}
+.resources-side-section + div.module-content > a.btn-light:hover,
+.resources-side-section + div.module-content > a.btn-light:focus,
+.resources-side-section + div.module-content > a.btn-light:active{
+  background-color: #cfd1d5 !important;
+  border-color: #bbbfc5 !important;
+}
+/* END - Side Panel - END */
+
+/*#################
+##      END      ##
+## Resource Item ##
+##      END      ##
+###################*/
+
+
 /*###############################
 ## FontAwesome5 Icon Overrides ##
 #################################*/
 body i.fa.fa-chart-bar::before{
-  content: '\f080';
+  content: '\f080' !important;
 }
 /*###############################
 ##            END              ##
 ## FontAwesome5 Icon Overrides ##
 ##            END              ##
 #################################*/
+
+
+/*##################################
+## Bootstrap Versioning Overrides ##
+###################################*/
+
+/* Resource File Upload Field */
+.resource-upload-field .btn-remove-url{
+  position: absolute !important;
+  top: auto !important;
+  right: 0 !important;
+  padding: 5px !important;
+  border-radius: 0 !important;
+  margin-top: 29px !important;
+}
+.resource-upload-field .upload-type input.form-control{
+  display: inline-block !important;
+  width: 100% !important;
+}
+/* END - Resource File Upload Field - END */
+
+/*##################################
+##              END               ##
+## Bootstrap Versioning Overrides ##
+##              END               ##
+####################################*/
