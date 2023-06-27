@@ -364,3 +364,15 @@ a#edit-comment-body-0-format-help-about, button#edit-submit,button#edit-actions-
 label.no-colon::after{
   content: none !important;
 }
+
+/*###############################
+## FontAwesome5 Icon Overrides ##
+#################################*/
+body i.fa.fa-chart-bar::before{
+  content: '\f080';
+}
+/*###############################
+##            END              ##
+## FontAwesome5 Icon Overrides ##
+##            END              ##
+#################################*/
