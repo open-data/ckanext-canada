@@ -7,6 +7,7 @@ from pytz import timezone, utc
 from dateutil.tz import tzutc
 from socket import error as socket_error
 from logging import getLogger
+from ckanext.datastore.writer import csv_writer
 
 from ckan.plugins.toolkit import (
     abort,
@@ -65,7 +66,7 @@ from ckanext.recombinant.errors import RecombinantException
 
 from ckanapi import LocalCKAN
 
-from flask import Blueprint
+from flask import Blueprint, make_response
 
 from ckanext.canada.urlsafe import url_part_unescape, url_part_escape
 from ckanext.canada.helpers import canada_date_str_to_datetime
@@ -963,3 +964,62 @@ def notify_ckan_user_create(email, fullname, username, phoneno, dept):
         log = getLogger('ckanext')
         log.error(m.message)
 
+
+@canada_views.route('/organization/member_dump/<id>', methods=['GET'])
+def organization_member_dump(id):
+    writer_factory = csv_writer
+    records_format = u'csv'
+
+    org_dict = model.Group.get(id)
+    if not org_dict:
+        abort(404, _(u'Organization not found'))
+
+    context = {u'model': model,
+                u'session': model.Session,
+                u'user': g.user}
+
+    try:
+        check_access('organization_member_create', context, {u'id': id})
+    except NotAuthorized:
+        abort(404,
+             _(u'Not authorized to access {org_name} members download'
+                .format(org_name=org_dict.title)))
+
+    try:
+        members = get_action(u'member_list')(context, {
+            u'id': id,
+            u'object_type': u'user',
+            u'records_format': records_format,
+            u'include_total': False,
+        })
+    except NotFound:
+        abort(404, _('Members not found'))
+
+    results = ''
+    for uid, _user, role in members:
+        user_obj = model.User.get(uid)
+        if not user_obj:
+            continue
+        results += '{name},{email},{fullname},{role}\n'.format(
+            name=user_obj.name,
+            email=user_obj.email,
+            fullname=user_obj.fullname if user_obj.fullname else _('N/A'),
+            role=role)
+
+    fields = [
+        {'id': _('Username')},
+        {'id': _('Email')},
+        {'id': _('Name')},
+        {'id': _('Role')}]
+
+    response = make_response()
+    def start_writer(fields):
+        file_name = u'{org_id}-{members}'.format(
+            org_id=org_dict.name,
+            members=_(u'members'))
+        return writer_factory(response, fields, file_name, bom=True)
+
+    with start_writer(fields) as wr:
+        wr.write_records(results)
+
+    return response
