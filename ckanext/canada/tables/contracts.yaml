@@ -98,7 +98,7 @@ resources:
       fr: Numéro de référence
     description:
       en: It is a unique identifier given to each line item in the spreadsheet. Having a unique identifier for each item will allow users to locate a specific item should they need to modify or delete.
-      fr: Un identificateur unique est attribué à chaque poste dans le gabarit de rapport.
+      fr: Un identificateur unique est attribué à chaque article d’exécution du gabarit de rapport.
     excel_required: true
     datastore_type: text
     form_required: true
@@ -115,8 +115,8 @@ resources:
         Numéro d’identification
         d’approvisionnement
     description:
-      en: This field should be populated with the contract number.  Alternatively, this field may be the commitment number or requisition number if this is the standard practice in the department.
-      fr: Il est recommandé que le numéro d’identification d’approvisionnement corresponde au numéro de marché. Sinon, le numéro d’identification d’approvisionnement peut correspondre au numéro d’engagement ou au numéro de demande, s’il s’agit de la pratique courante au ministère.
+      en: It is recommended that the procurement identification number be the contract number. Alternatively, the procurement identification number may be the commitment number or requisition number if this is the standard practice in the department.
+      fr: Il est recommandé que le numéro d’identification de l’approvisionnement corresponde au numéro du marché. Sinon, le numéro d’identification de l’approvisionnement peut correspondre au numéro d’engagement ou au numéro de la demande d’achat, s’il s’agit de la pratique courante du ministère.
     validation:
       en: Mandatory for contracts after 2019-01-01
       fr: Obligatoire pour les marchés conclus après le 2019-01-01
@@ -128,8 +128,8 @@ resources:
       en: Vendor Name
       fr: Nom du fournisseur
     description:
-      en: This field should be populated with the legal name of the company, as indicated on the contract.  Alternatively, this field may be the name in the financial system if this is the standard practice in the department.
-      fr: Il est recommandé que le nom du fournisseur corresponde à la dénomination sociale de l’entrepreneur, telle qu’elle est indiquée dans le marché. Sinon, le nom du fournisseur peut correspondre au nom dans le système financier, s’il s’agit de la pratique courante au ministère.
+      en: It is recommended that the vendor name be the legal name of the contractor, as indicated on the contract. Alternatively, the vendor name may be the name in the financial system if this is the standard practice in the department.
+      fr: Il est recommandé que le nom du fournisseur corresponde à la dénomination sociale de l’entrepreneur, telle qu’elle est indiquée dans le marché. Sinon, le nom du fournisseur peut correspondre au nom indiqué dans le système financier, s’il s’agit de la pratique courante du ministère.
     validation:
       en: Mandatory for contracts after 2019-01-01
       fr: Obligatoire pour les marchés conclus après le 2019-01-01
@@ -144,13 +144,14 @@ resources:
       fr: Code postal du fournisseur
     description:
       en: |
-        i. This field should be populated with the first 3 digits of the postal code for the vendor identified in the contract.
-        ii. Alternatively, the vendor postal code may be the first three digits of the postal code identified in the procurement/financial system if this is the standard practice in the department.
-        iii. This field is to be populated with “NA” if the vendor is located outside of Canada.
+        i. It is recommended that this field be populated with the first three digits of the postal code for the vendor identified in the contract.
+        ii. Alternatively, the vendor postal code may be the first three digits of the postal code identified in the procurement or financial system if this is the standard practice in the department.
+        iii. This field is to be populated with “NA” if the vendor is located outside of Canada, as the value “NA” for this field indicates not applicable.
       fr: |
-        i. Il est recommandé de saisir dans cette zone les trois premiers chiffres du code postal du fournisseur désigné dans le contrat.
-        ii. Sinon, le code postal du fournisseur peut être les trois premiers chiffres du code postal relevés dans le système d’approvisionnement/financier s’il s’agit de la pratique courante du ministère.
-        iii. Il faut indiquer « NA » dans cette zone si le fournisseur se trouve à l’étranger.
+        i. Il est recommandé de saisir dans ce champ les trois premiers chiffres du code postal du fournisseur indiqué dans le marché.
+        ii. Sinon, le code postal du fournisseur peut être les trois premiers chiffres du code postal inscrits dans le système financier ou d’approvisionnement s’il s’agit de la pratique courante du ministère.
+        iii. Il faut indiquer « NA » dans ce champ si le fournisseur se trouve à l’étranger, car la valeur « NA » dans ce champ indique qu’il ne s’applique pas.
+
     validation:
       en: |
         Mandatory for contracts after 2022-01-01
@@ -168,28 +169,29 @@ resources:
       fr: Nom de l’acheteur
     description:
       en: |
-        i. It is recommended that the field be populated with the name of the buyer, as indicated on the original contract, or alternatively the individual responsible for the procurement at the client department.
+        i. It is recommended that the field be populated with the name of the buyer, as indicated on the original contract or, alternatively, the individual responsible for the procurement at the department.
         ii. For the establishment of a standing offer or supply arrangement agreement, it is recommended that this field be populated with the name of the buyer that issued the original standing offer or supply arrangement agreement.
         iii. For a call-up contract against a standing offer or supply arrangement, this field should be the name of the buyer identified in the original call-up contract.
         iv. For a contract with task authorizations, this field may be populated with the name of the buyer indicated in the original contract or in the individual task authorization.
-        v. The name format can be either “John Doe” or “Doe, John”.
-        vi. For amendments, it is recommended that this field be populated with the value “NA”. The value “NA” for this field indicates not applicable.
-        vii. For contracts awarded by PSPC, SSC or another department on behalf of the client department, the buyer may be the name of the buyer indicated in the contract or individual responsible for the procurement at the client department.
+        v. For amendments, it is recommended that this field be populated with the value “NA,” as the value “NA” for this field indicates not applicable.
+        vi. For contracts awarded by PSPC or Shared Services Canada (SSC) on behalf of the client department, it is recommended that this field be populated with the name of the PSPC or SSC contracting authority. If this is not available, indicate the values, “PSPC-SPAC” or “SSC-SPC” as applicable.
+
       fr: |
-        i. Il est recommandé de saisir dans cette zone le nom de l’acheteur, qui est indiqué dans le contrat initial, ou, à titre subsidiaire, celui de la personne responsable de l’approvisionnement dans le ministère client.
-        ii. Dans le cas de l’établissement d’une offre à commandes ou d’un arrangement en matière d’approvisionnement, il est recommandé de saisir dans cette zone le nom de l’acheteur qui a émis l’offre à commandes ou l’arrangement initial en matière d’approvisionnement.
-        iii. Dans le cas d’une commande subséquente à une offre à commandes ou à un arrangement en matière d’approvisionnement, cette zone devrait indiquer le nom de l’acheteur désigné dans le contrat initial de travail sur convocation.
-        iv. Dans le cas d’un marché assorti d’autorisations de tâches, on peut inscrire dans cette zone le nom de l’acheteur indiqué dans le marché initial ou dans l’autorisation de tâche individuelle.
-        v. Le format du nom peut être soit « John Doe » soit « Doe, John ».
-        vi. Dans le cas des modifications, il est recommandé de saisir dans cette zone la valeur « NA ». Pour cette zone, la valeur « NA » signifie sans objet.
-        vii. Dans le cas des marchés attribués par SPAC, SPC ou un autre ministère au nom du ministère client, le nom de l’acheteur peut être celui de l’acheteur indiqué dans le contrat ou de la personne responsable de l’approvisionnement dans le ministère client.
+        i. Il est recommandé de saisir dans ce champ le nom de l’acheteur, comme il est indiqué dans le marché initial, sinon il faut saisir celui de la personne responsable de l’approvisionnement au ministère .
+        ii. Dans le cas de l’établissement d’une offre à commandes ou d’un arrangement en matière d’approvisionnement, il est recommandé de saisir dans ce champ le nom de l’acheteur qui a émis l’offre à commandes ou l’arrangement en matière d’approvisionnement initial.
+        iii. Dans le cas d’une commande subséquente à une offre à commandes ou à un arrangement en matière d’approvisionnement, ce champ devrait indiquer le nom de l’acheteur mentionné dans le marché ou la commande subséquente initial.
+        iv. Dans le cas d’un marché comportant des autorisations de tâches, ce champ peut comprendre le nom de l’acheteur indiqué dans le marché initial ou dans chaque autorisation de tâches.
+        v. Pour les modifications de marché, il est recommandé que ce champ soit rempli avec la valeur « NA », car la valeur « NA » pour ce champ indique qu’il ne s’applique pas.
+        vi. Pour les marchés attribués par SPAC ou SPC pour le compte du ministère client, il est recommandé de saisir le nom de l’autorité contractante de SPAC ou de SPC dans ce champ. S’il n’est pas disponible, il faut indiquer la valeur «  PSPC-SPAC  » ou «  SSC-SPC  », selon le cas. 
+
     validation:
       en: |
-        Mandatory for contracts after 2022-01-01
-        This field must be populated with an NA if an amendment is disclosed under Instrument Type.
+       Mandatory for contracts after 2022-01-01
+       This field must be populated with an NA if an amendment is reported under Instrument Type.
+
       fr: |
         Obligatoire pour les marchés conclus après le 2022-01-01
-        Ce champ doit contenir NA si une modification est divulguée sous l’élément Type d’instrument.
+        Ce champ doit contenir NA si une modification est déclarée sous l’élément Type d’instrument.
     excel_required_formula: 'VALUE({contract_date})>=DATE(2022,1,1)'
     excel_error_formula: 'AND(TRIM({cell})<>"NA",{instrument_type}="A",VALUE({contract_date})>=DATE(2022,1,1))'
     datastore_type: text
@@ -203,15 +205,16 @@ resources:
       fr: Date du contrat
     description:
       en: |
-        This field should be populated with the date the contract is awarded. Alternatively, the contract date may be the hard commitment date (the date that the financial commitment is recorded in the financial system) if this is the standard practice in the department. For a contract with task authorizations, this field should be populated with the date that the contract is awarded (or the hard commitment date).
-
-        If task authorizations for a contract are disclosed separately, the contract date for each task authorization may be the date that each task authorization is issued (or the hard commitment date). For an amended contract or the exercising of an option, the contract date is the date that the contract is awarded (or the hard commitment date). For a confirming order, the contract date is the date of the verbal contract. If the date of the verbal contract cannot be determined, the contract date may be the date that the confirming order is issued.
+        i. It is recommended that the contract date be the date the contract is awarded by the government. Alternatively, the contract date may be the hard commitment date (the date that the financial commitment is recorded in the departmental financial system) if this is the standard practice in the department.
+        ii. It is recommended that the contract date for a contract with task authorizations be the date that the contract is awarded (or the hard commitment date) for the contract. When the full value of the contract with task authorizations is likely not to be used, the contract date for each task authorization may be the date that each task authorization is issued (or the hard commitment date).
+        iii. It is recommended that the contract date for an amended contract or the exercising of an option be the date that the contract is awarded (or the hard commitment date).
+        iv. It is recommended that the contract date for a confirming order be the date of the verbal contract for goods, services or an amendment. If the date of the verbal contract cannot be determined, the contract date may be the date that the confirming order is issued.
       fr: |
-        Il est recommandé que la date du marché corresponde à la date à laquelle le marché a été attribué par le gouvernement.
+        i. Il est recommandé que la date du marché corresponde à la date à laquelle le marché a été attribué par le gouvernement. Sinon, il peut s’agir de la date de l’engagement ferme (la date à laquelle l’engagement financier est consigné dans le système financier ministériel) s’il s’agit de la pratique courante du ministère.
+        ii. Il est recommandé que la date d’un marché qui comprend des autorisations de tâches corresponde à la date d’adjudication du marché (ou à la date de l’engagement ferme) du marché. S’il est probable que le montant du marché comprenant des autorisations de tâches ne sera pas utilisé en totalité, la date du marché pour chaque autorisation de tâche peut être la date à laquelle chaque autorisation de tâche a été accordée (ou la date de l’engagement ferme).
+        iii. Il est recommandé que la date du marché pour un marché modifié ou l’exercice d’une option corresponde à la date d’adjudication du marché (ou à la date de l’engagement ferme).
+        iv. Il est recommandé que la date du marché pour une commande de confirmation corresponde à la date du marché verbal de biens ou de services ou d’une modification de marché. Si la date du marché verbal ne peut pas être déterminée, la date du marché peut être la date de la commande de confirmation.
 
-        Sinon, il peut s’agir de la date de l’engagement ferme (la date à laquelle l’engagement financier est consigné dans le système financier ministériel) s’il s’agit de la pratique courante au ministère.  Pour la date d’un marché qui inclut des autorisations de tâches corresponde à la date d’adjudication du marché (ou à la date de l’engagement ferme).
-
-        S’il est possible que le montant du marché incluant des autorisations de tâches ne sera pas utilisé en totalité, la date du marché pour chaque autorisation de tâche peut être la date à laquelle chaque autorisation de tâche a été accordée (ou la date de l’engagement ferme).  Il est recommandé la date du marché pour un marché modifié ou l’exercice d’une option corresponde à la date d’octroi du marché (ou à la date de l’engagement ferme). Finalement, la date du marché pour une demande de confirmation peut correspondre à la date de l’entente verbale pour les biens, les services ou une modification. Si la date de l’entente verbale ne peut pas être déterminée, la date indiquée peut être la date de la demande de confirmation.
     excel_required: true
     datastore_type: date
     extract_date_year: true
@@ -225,16 +228,14 @@ resources:
       en: Economic Object Code
       fr: Code d’article économique
     description:
-      en: "i. It is recommended that this field be populated with the contract’s numeric economic object code. Economic object codes are listed in the Government-wide Chart of Accounts. The use of accurate economic object codes is important for maintaining the integrity of the Public Accounts of Canada. Departments are to ensure that all expenditures are coded appropriately in accordance with the Directive on Accounting Standards: GC 5000 Recording Financial Transactions in the Accounts of Canada.
-
-ii. For standing offers and supply arrangement agreements, this field may be populated with the data value “NA”. The value “NA” for this field means not applicable.
-
-iii. When a contract involves more than one economic object, it is recommended that the economic object associated with the largest dollar value be used. A department may use a different approach if this is the standard practice in the department."
-      fr: "i.    Il est recommandé de saisir dans cette zone le code d’article économique du contrat. Les codes d’article économique sont indiqués dans le Plan comptable à l’échelle de l’administration fédérale. Il est important d’utiliser les bons codes d’article économique pour préserver l’intégrité des Comptes publics du Canada. Les ministères doivent s’assurer que toutes les dépenses sont codées adéquatement, conformément à la Directive sur les normes comptables : GC 5000 Inscription des opérations financières dans les comptes du Canada.
-
-ii. Dans le cas des offres à commandes et des arrangements en matière d’approvisionnements, on peut saisir dans cette zone la valeur « NA ».  Pour cette zone, la valeur « NA » signifie sans objet.
-
-iii. Quand un contrat porte sur plus d’un article économique, il est recommandé d’utiliser celui qui correspond à la valeur monétaire la plus élevée. Un ministère peut utiliser une démarche différente si elle correspond à sa pratique courante."
+      en: |
+        i. It is recommended that this field be populated with the contract’s numeric economic object code. Economic object codes are listed in the government-wide chart of accounts. The use of accurate economic object codes is important for maintaining the integrity of the Public Accounts of Canada. Departments are to ensure that all expenditures are coded appropriately in accordance with the Directive on Accounting Standards: GC 5000 Recording Financial Transactions in the Accounts of Canada.
+        ii. For standing offers and supply arrangement agreements, this field may be populated with the data value “NA” as the value “NA” for this field means not applicable.
+        iii. When a contract involves more than one economic object, it is recommended that the economic object associated with the largest dollar value be used. A department may use a different approach if this is the standard practice in the department.
+      fr: |
+        i.  Il est recommandé de saisir dans ce champ les chiffres du code d’article économique du marché. Les codes d’article économique sont indiqués dans le plan comptable à l’échelle de l’administration fédérale. Il est important d’utiliser les bons codes d’article économique pour préserver l’intégrité des Comptes publics du Canada. Il y aurait lieu pour les ministères de s’assurer que toutes les dépenses sont codées de manière appropriée, conformément à la Directive sur les normes comptables : GC 5000 Inscription des opérations financières dans les comptes du Canada.
+        ii. Pour les offres à commandes et les arrangements en matière d’approvisionnement, il est recommandé que ce champ soit rempli avec la valeur « NA », car la valeur « NA » pour ce champ indique qu’il ne s’applique pas.
+        iii. Quand un marché porte sur plus d’un article économique, il est recommandé d’utiliser celui qui correspond à la valeur monétaire la plus élevée. Un ministère peut employer une approche différente si elle correspond à sa pratique courante.
     validation:
       en: |
         Mandatory for contracts after 2019-01-01
@@ -260,10 +261,8 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
         Description du travail
         Anglais
     description:
-      en: |
-        It is recommended that this field be populated with the economic object code’s text description as listed in the Government-wide Chart of Accounts ( http://www.tpsgc-pwgsc.gc.ca/recgen/pceaf-gwcoa/index-eng.html ). For standing offers and supply arrangement agreements, this field may be populated with the commodity code’s text description used by the federal government for procurement activities.
-      fr: |
-        Il est recommandé de saisir le texte de description du code d’article économique figurant dans le Plan comptable à l’échelle de l’administration fédérale ( http://www.tpsgc-pwgsc.gc.ca/recgen/pceaf-gwcoa/index-fra.html ) dans cette zone. Sinon, le texte de description du code de produit génériques utilisées par le gouvernement fédéral pour les activités relatives à l’approvisionnement peut être saisi dans cette zone.
+      en: It is recommended that this field be populated with the economic object code’s text description as listed in the government-wide chart of accounts ( http://www.tpsgc-pwgsc.gc.ca/recgen/pceaf-gwcoa/index-eng.html ). For standing offers and supply arrangement agreements, this field may be populated with the commodity code’s text description used by the federal government for procurement activities.
+      fr: Il est recommandé de saisir dans ce champ le texte de description du code d’article économique figurant dans le plan comptable à l’échelle de l’administration fédérale ( http://www.tpsgc-pwgsc.gc.ca/recgen/pceaf-gwcoa/index-fra.html ). Pour les offres à commande et les arrangements en matière d’approvisionnement, ce champ peut comprendre une description du code de produit utilisée par le gouvernement fédéral pour les activités relatives à l’approvisionnement.
     validation:
       en: Mandatory for contracts after 2019-01-01
       fr: Obligatoire pour les marchés conclus après le 2019-01-01
@@ -286,9 +285,9 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
         Français
     description:
       en: |
-        It is recommended that this field be populated with the economic object code’s text description as listed in the Government-wide Chart of Accounts ( http://www.tpsgc-pwgsc.gc.ca/recgen/pceaf-gwcoa/index-eng.html ). For standing offers and supply arrangement agreements, this field may be populated with the commodity code’s text description used by the federal government for procurement activities.
+        It is recommended that this field be populated with the economic object code’s text description as listed in the government-wide chart of accounts ( http://www.tpsgc-pwgsc.gc.ca/recgen/pceaf-gwcoa/index-eng.html ). For standing offers and supply arrangement agreements, this field may be populated with the commodity code’s text description used by the federal government for procurement activities.
       fr: |
-        Il est recommandé de saisir le texte de description du code d’article économique figurant dans le Plan comptable à l’échelle de l’administration fédérale ( http://www.tpsgc-pwgsc.gc.ca/recgen/pceaf-gwcoa/index-fra.html ) dans cette zone. Sinon, le texte de description du code de produit génériques utilisées par le gouvernement fédéral pour les activités relatives à l’approvisionnement peut être saisi dans cette zone.
+        Il est recommandé de saisir dans ce champ le texte de description du code d’article économique figurant dans le plan comptable à l’échelle de l’administration fédérale ( http://www.tpsgc-pwgsc.gc.ca/recgen/pceaf-gwcoa/index-fra.html ). Pour les offres à commande et les arrangements en matière d’approvisionnement, ce champ peut comprendre une description du code de produit utilisée par le gouvernement fédéral pour les activités relatives à l’approvisionnement.
     validation:
       en: Mandatory for contracts after 2019-01-01
       fr: Obligatoire pour les marchés conclus après le 2019-01-01
@@ -311,21 +310,13 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
         du contrat
     description:
       en: |
-        For a Services or Construction Services contract, this field should be populated with the starting date for the period of time over which the services are provided.
-
-        For a standing or supply arrangement, this field should be populated with be the starting date for the period of time over which a call-up may be entered into.
-
-        For a contract with task authorizations, this field should be populated with be the starting date for the period of time over the entire Services or Construction Services contract.
-
-        For a contract with task authorizations where the full value of a contract with task authorizations is likely not to be used, this field should be populated with the starting date for the contract period for each task authorization.
+        i. For a services or construction services contract, it is recommended that the contract period start date be the starting date for the period of time over which the services are provided.
+        ii. For a standing or supply arrangement, it is recommended that this field be populated with the starting date for the period of time over which a call-up may be entered into.
+        iii. For a contract with task authorizations, it is recommended that this field be populated with the starting date for the period of time over the entire contract. For a contract with task authorizations where the full value of a contract with task authorizations is likely not to be used, it is recommended for this field be populated with the starting date for each task authorization.
       fr: |
-        Pour un marché de services ou de travaux de construction, il est recommandé que la date de début du marché corresponde à la date de début pour la période où les services sont fournis.
-
-        Pour une offre à commandes ou un arrangement en matière d’approvisionnement, il est recommandé de saisir dans cette zone la date de début pour la période où l’on peut passer une commande subséquente.
-
-        Pour un marché incluant des autorisations de tâches, il est recommandé de saisir dans cette zone la date de début pour la toute la durée du marché.
-
-        Pour un marché comportant des autorisations de tâches dont on risque de ne pas utiliser le montant total, on recommande de saisir dans cette zone la date de début de chaque autorisation de tâche.
+        i. Pour un marché de services ou de services de construction, il est recommandé que la date de début du marché corresponde à la date de début de la période au cours de laquelle les services sont fournis.
+        ii. Pour une offre à commandes ou un arrangement en matière d’approvisionnement, il est recommandé de saisir dans ce champ la date de début de la période au cours de laquelle une commande subséquente est passée.
+        iii. Pour un marché comprenant des autorisations de tâches, il est recommandé de saisir dans ce champ la date de début de la période correspondant à l’ensemble du marché. Pour un marché comportant des autorisations de tâches et pour lequel il est probable que le montant ne soit pas utilisé au complet, il est recommandé de saisir dans ce champ la date de début de chaque autorisation de tâches.
     validation:
       en: |
         Mandatory for contracts after 2019-01-01
@@ -351,25 +342,15 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
         ou Date de livraison
     description:
       en: |
-        For a Goods contract, this field should be populated with the date when the goods are to be delivered, which may be the contract period end date. The department may use the last delivery date if the contract involves multiple items on multiple dates.
-
-        For a Services or Construction Service contract, this field should be populated with the end date for the period of time over which the services are provided.
-
-        For a standing offer or supply arrangement, this field should be populated with the end date for the period of time over which a call-up may be entered into.
-
-        For a contract with task authorizations, this field should be populated with the end date for the period of time over the entire Services or Construction Services contract.
-
-        For a contact with task authorizations where the full value of a contract with task authorization is likely not to be used, this field should be populated with the end date for the contract period for each task authorization.
+        i. For a goods contract, it is recommended that this field be the date when goods are to be delivered, which may be the contract period end date. The department may use the last delivery date if the contract involves multiple items on multiple dates.
+        ii. For a services or construction services contract, it is recommended that this field be the end date for the period of time over which the services are provided.
+        iii. For a standing offer or supply arrangement, it is recommended that this field be the end date for the period of time over which a call-up may be entered into.
+        iv. For a contract with task authorizations, it is recommended that this field be populated with the end date for the period of time over the entire contract. For a contract with task authorizations where the full value of a contract with task authorization is likely not to be used, it is recommended for this field to be populated with the end date for each task authorization.
       fr: |
-        Pour un marché de biens, il est recommandé de saisir dans cette zone la date à laquelle les biens seront livrés, ce qui peut correspondre à la date de fin de la période du marché. Le ministère peut utiliser la dernière date de livraison, si le marché prévoit différentes dates pour différents articles.
-
-        Pour un marché de services ou de travaux de construction, il est recommandé de saisir dans cette zone la date de fin pour la période de temps où les services sont fournis.
-
-        Pour une offre à commandes ou un arrangement en matière d’approvisionnement, il est recommandé de saisir dans cette zone la date de fin pour la période de temps où l’on peut passer une commande subséquente.
-
-        Pour un marché comportant des autorisations de tâches, il est recommandé de saisir dans cette zone la date de fin pour toute la durée du marché.
-
-        Pour un marché comportant des autorisations de tâches dont on risque de ne pas utiliser le montant total, il est recommandé de saisir dans cette zone la date de fin de chaque autorisation de tâche.
+        i. Pour un marché de biens, il est recommandé de saisir dans ce champ la date à laquelle les biens seront livrés, ce qui peut correspondre à la date de fin de la période du marché. Le ministère peut utiliser la dernière date de livraison, si le marché prévoit différentes dates pour différents articles.
+        ii. Pour un marché de services ou de services de construction, il est recommandé de saisir dans ce champ la date de fin de la période au cours de laquelle les services sont fournis.
+        iii. Pour une offre à commandes ou un arrangement en matière d’approvisionnement, il est recommandé de saisir dans ce champ la date de fin de la période au cours de laquelle une commande subséquente est passée.
+        iv. Pour un marché comportant des autorisations de tâches, il est recommandé de saisir dans ce champ la date de fin de la période correspondant à l’ensemble du marché. Pour un marché comportant des autorisations de tâches et pour lequel il est probable que le montant ne soit pas utilisé au complet, il est recommandé de saisir dans ce champ la date de fin de chaque autorisation de tâches.
     validation:
       en: Mandatory for contracts after 2019-01-01
       fr: Obligatoire pour les marchés conclus après le 2019-01-01
@@ -390,17 +371,17 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
         du contrat
     description:
       en: |
-        This field should be populated with the full amount of the hard commitment recorded in the departmental financial system for all contracts and amendments regardless of dollar value. It is recommended that this field be in Canadian currency and include all applicable taxes.
-
-        For a multi-year contract, it is recommended to be the total amount of the contract for all years. When the contract is amended over $10K, it is recommended that this field be the amended contract value. A contract option, when exercised, may be disclosed as an amendment if the organization chose not to disclose the contract option at the time of contract award.
-
-        For contracts with task authorizations, the full potential value of the contract may be disclosed upon contract award unless the full value is not expected to be used. In the latter situation, each task authorization may be disclosed individually or cumulatively. When a contract includes a fixed deliverable and another deliverable that requires a task authorization, the department may disclose the contract and task authorizations in any manner that is transparent. The value of this field for the proactive disclosure of a standing offer agreement or supply arrangement agreement should be $0.
+        i. It is recommended that the total contract value be the amount of the hard commitment recorded in the departmental financial system for all contracts and all subsequent amendments regardless of dollar value. It is recommended for this field be in Canadian currency and for it to include all applicable taxes.
+        ii. For a multi-year contract, it is recommended for this field to be the total amount of the contract for all years.
+        iii. For a contract amendment, it is recommended for this field to be the amended contract value.
+        iv. For a contract with task authorizations, the full potential value of the contract may be reported upon contract award unless the full value is not expected to be used. In the latter situation, each task authorization may be reported individually or cumulatively. When a contract includes a fixed deliverable and another deliverable that requires a task authorization, the department may report the contract and task authorizations in any manner that is transparent.
+        v. The value of this field for the reporting of a standing offer agreement or supply arrangement agreement is $0.
       fr: |
-        Il est recommandé que la valeur totale du marché corresponde au montant de l’engagement ferme consigné dans le système financier ministériel pour le marché et toutes les modifications subséquentes, peu importe la valeur en dollars. Il est en outre recommandé d’y inscrire les montants en dollars canadiens et d’y ajouter toutes les taxes applicables.
-
-        Pour un marché pluriannuel, il est recommandé de fournir le montant total du marché pour toutes les années. Pour la modification d’un marché, il est recommandé de saisir dans cette zone la valeur modifiée du marché.
-
-        Dans le cas d’un marché comportant des autorisations de tâches, la valeur totale potentielle du marché peut être divulguée à la date d’adjudication du marché, sauf si l’on ne prévoit pas utiliser la valeur totale du marché. Dans ce dernier cas, chaque autorisation de tâches peut être divulguée individuellement ou collectivement. Si le marché comporte un produit livrable fixe et un autre qui doit être accompagné d’une autorisation de tâches, le ministère peut divulguer le marché et les autorisations de tâches de n’importe quelle façon jugée transparente. La valeur inscrite dans cette zone pour la divulgation d’une offre à commandes ou d’un arrangement en matière d’approvisionnement doit être de 0 $.
+        i. Il est recommandé que la valeur totale du marché corresponde au montant de l’engagement ferme consigné dans le système financier ministériel pour le marché et toutes les modifications subséquentes, peu importe la valeur en dollars. Il est recommandé d’inscrire dans ce champ les montants en dollars canadiens et d’y ajouter toutes les taxes applicables.
+        ii. Pour un marché pluriannuel, il est recommandé, de fournir dans ce champ le montant total du marché pour toutes les années.
+        iii. Pour une modification d’un marché, il est recommandé de saisir dans ce champ la valeur modifiée du marché.
+        iv. Dans le cas d’un marché comportant des autorisations de tâches, la valeur totale éventuelle du marché peut être déclarée à la date d’adjudication du marché, sauf s’il n’est pas prévu d’utiliser la valeur totale du marché. Dans ce dernier cas, les autorisations de tâches peuvent être déclarées séparément ou en bloc. Si le marché comporte un produit livrable fixe et un autre qui doit être accompagné d’une autorisation de tâches, le ministère peut déclarér le marché et les autorisations de tâches de n’importe quelle façon jugée transparente.
+        v. La valeur inscrite dans ce champ pour la déclaration d’une offre à commandes ou d’un arrangement en matière d’approvisionnement doit être de 0 $.
     validation: Mandatory for contracts after 2019-01-01
     excel_required_formula: 'VALUE({contract_date})>=DATE(2019,1,1)'
     datastore_type: money
@@ -427,22 +408,17 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
         du contrat
     description:
       en: |
-        This field should be populated with the amount of the hard commitment recorded in the departmental financial systems at the time of contract award for a contract or amended contract regardless of dollar value.
-
-        It is recommended that this field be in Canadian currency and include all applicable taxes.  For a multi-year contract, it is recommended to be the total amount of the contract for all years.
-
-        Contract option may be excluded from the original contract value and disclosed at a later date as an amendment when the contract option is exercised. Alternatively, the full value of a contract, including options, may be disclosed at the time of contract award.
-
-        For a contract with task authorizations, it is recommended that this field be for the full amount of the contract rather than the amount specified within the minimum work guarantee clause. For contracts with task authorizations, the full potential value of the contract may be disclosed upon contract award unless the full value is not expected to be used. In the latter situation, each task authorization may be disclosed individually or cumulatively. When a contract includes a fixed deliverable and another deliverable that requires a task authorization, the department may disclose the contract and task authorizations in any manner that is transparent. The value of this field for the proactive disclosure of a standing offer agreement or supply arrangement agreement should be $0.
-
+        i. It is recommended that the original contract value be the amount of the hard commitment recorded in the departmental financial system at the time of contract award for a contract or amended contract. It is recommended for this field be in Canadian currency and for it to include all applicable taxes.
+        ii. For a multi-year contract, it is recommended for this field to be the amount at the time of contract award for the multi-year contract period.
+        iii. For a contract option, it is recommended for this field to be excluded from the original contract value and for it to be reported at a later date as an amendment when the contract option is exercised. Alternatively, the full value of a contract, including options, may be reported at the time of contract award.
+        iv. For a contract with task authorizations, it is recommended that the original contract value be for the full amount of the contract rather than the amount specified within the minimum work guarantee clause. The full potential value of the contract may be reported in the original contract value unless the full value is not expected to be used. In the latter situation, each task authorization may be reported individually or cumulatively. When a contract includes a fixed deliverable and another deliverable that requires a task authorization, the department may report the contract and task authorizations in any manner that is transparent.
+        v. The value of this field for the reporting of a standing offer agreement or supply arrangement agreement should be $0.
       fr: |
-        Il est recommandé que la valeur d’origine du marché corresponde au montant de l’engagement ferme consigné dans le système financier ministériel au moment de l’attribution du marché pour un marché ou un marché modifié.
-
-        Il est recommandé d’y inscrire les montants en dollars canadiens et d’y ajouter toutes les taxes applicables. Pour un marché pluriannuel, il est recommandé qu’elle corresponde au montant au moment de l’attribution du marché pour une période de marché pluriannuelle.
-
-        Pour une option contractuelle, il est recommandé de l’exclure de l’élément de données « valeur d’origine du marché » et de la divulguer à une date ultérieure à titre de modification lorsqu’elle est exercée. Sinon, la valeur totale du marché, y compris les options, peut être divulguée à la date d’adjudication du marché.
-
-        Dans le cas d’un marché comportant des autorisations de tâches, il est recommandé de déclarer dans cette zone la valeur d’origine du marché au lieu du montant précisé dans la clause de garantie des travaux minimum. La valeur totale potentielle du marché peut être divulguée dans l’élément de données « valeur d’origine du marché », à moins que l’on ne prévoie pas utiliser la valeur totale du marché. Dans ce dernier cas, chaque autorisation de tâches peut être divulguée individuellement ou collectivement. Si le marché comporte un produit livrable fixe et un autre qui doit être accompagné d’une autorisation de tâches, le ministère peut divulguer le marché et les autorisations de tâches de n’importe quelle façon jugée transparente. La valeur inscrite dans cette zone pour la divulgation d’une offre à commandes ou d’un arrangement en matière d’approvisionnement devrait être de 0 $.
+        i. Il est recommandé que la valeur d’origine du marché corresponde au montant de l’engagement ferme consigné dans le système financier ministériel au moment de l’attribution du marché pour un marché ou un marché modifié. Il est recommandé d’inscrire dans ce champs les montants en dollars canadiens et d’y ajouter toutes les taxes applicables.
+        ii. Pour un marché pluriannuel, il est recommandé d’inscrire dans ce champ la valeur correspondant au montant au moment de l’attribution du marché pour la période du marché pluriannuel.
+        iii. Pour une option de marché, il est recommandé pour ce champ d’exclure le montant de l’option de l’élément de données « valeur d’origine du marché » pour le déclarer à une date ultérieure à titre de modification lorsqu’elle est exercée. Sinon, la valeur totale du marché, y compris les options, peut être déclarée à la date d’adjudication du marché.
+        iv. Dans le cas d’un marché comportant des autorisations de tâches, il est recommandé de déclarer dans ce champ la valeur d’origine du marché au lieu du montant précisé dans la clause de garantie des travaux minimums. La valeur totale éventuelle du marché peut être déclarée dans l’élément de données « valeur d’origine du marché », à moins qu’il ne soit par prévu d’utiliser la valeur totale du marché. Dans ce dernier cas, les autorisations de tâches peuvent être déclarées séparément ou en bloc. Si le marché comporte un produit livrable fixe et un autre qui doit être accompagné d’une autorisation de tâches, le ministère peut déclarer le marché et les autorisations de tâches de n’importe quelle façon jugée transparente.
+        v. La valeur inscrite dans ce champ pour la déclaration d’une offre à commandes ou d’un arrangement en matière d’approvisionnement devrait être de 0 $.
     validation:
       en: Mandatory for contracts after 2019-01-01
       fr: Obligatoire pour les marchés conclus après le 2019-01-01
@@ -462,19 +438,17 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
         modification
     description:
       en: |
-        For all contracts and amendments regardless of dollar value (excluding acquisition card procurements from -$10K to $10K), this field should be populated with the value of the amendment.
-
-        Amendment(s) to a contract that take place in the same fiscal quarter may be reported either individually or combined. An amendment should be disclosed in only one template being either the Quarterly Contracts template or the Annual Contracts template. Disclosingtemplate. Disclosing an amendment in both templates would result in double counting of the amendment value when calculating the total contracting activity of an organization.
-
-        It is recommended that this field be in Canadian currency and include all applicable taxes. For a contract with task authorizations when the full value is likely not to be used, the value of any subsequent task authorization may be reported as an amendment with its value reported in this field.
-
-        When a contract is entered into and subsequently amended in the same fiscal quarter, the two transactions should be disclosed separately. Entry into the contract should be disclosed with the value at contract entry in the ‘Original Contract Value’ field and should not include the value of the contract amendment in the ‘Contract Amendment Value’ field. The contract amendment should be disclosed with the value of the amendment in the ‘Contract Amendment Value’ field and the value at contract entry in the ‘Original Contract Value’ field. Negative amendments should use a minus sign in front of the value. A ‘0’ should be included if there are no amendments associated with the contract.
+        i. For an amendment, it is recommended that the contract amendment value be the value of the contract amendment. Negative amendments should include a minus sign in front of the value. It is recommended for this field to be in Canadian currency and for it to include all applicable taxes.
+        ii. Multiple amendment(s) to a contract that take place in the same fiscal quarter may be reported either individually or combined. Positive or negative amendments over $10,000 are to be reported quarterly in accordance with Appendix A. Positive or negative amendments of $10,000 and under are to be reported annually via email to PSPC in accordance with Appendix A, and to be reported annually on the Open Government Portal in accordance with Appendix B. An amendment should be reported either quarterly or annually. Reporting an amendment both quarterly and annually would result in double counting of the amendment’s value when calculating the total contracting activity of an organization.
+        iii. When a contract is entered into and subsequently amended in the same fiscal quarter, the two transactions should be reported separately. Entry into the contract should be reported as a separate entry with the value at contract entry in the original contract value and should not include the value of the contract amendment. The contract amendment should also be reported as a separate entry with the value of the amendment in the contract amendment value and the contract entry value in the original contract value.
+        iv. For a contract with task authorizations, when the full value is likely not to be used, the value of any subsequent task authorization may be reported as an amendment with its value reported in the contract amendment value.
+        v. A “0” value should be included if there are no amendments associated with the contract.
       fr: |
-        Pour une modification, il est recommandé que l’élément de données « valeur de modification » corresponde à la valeur de la modification. Les modifications négatives doivent inclure un signe négatif devant la valeur. Il est en outre recommandé d’y inscrire les montants en dollars canadiens et d’inclure toutes les taxes applicables.
-
-        Les modifications multiples à un marché apportées au cours du même trimestre de l’exercice financier peuvent être divulguées individuellement ou ensemble. Les modifications positives ou négatives de plus de 10 000 $ doivent être divulguées tous les trois mois, conformément à l’annexe A. Les modifications positives et négatives de 10 000 $ ou moins doivent être déclarées une fois par an au moyen d’un courriel à SPAC, conformément à l’annexe A, et elles doivent être divulguées une fois par an dans le Portail du gouvernement ouvert, conformément à l’annexe B. Une modification devrait être divulguée tous les trois mois ou une fois par an. La divulgation d’une modification de façon trimestrielle et annuelle engendrerait un double dénombrement de la valeur de la modification lorsqu’il s’agit de calculer le total de l’activité contractuelle d’une organisation. Lorsqu’un marché a été conclu, puis modifié au cours du même trimestre d’exercice, les deux opérations doivent être divulguées séparément. La signature du marché devrait être divulguée séparément, et la valeur au moment de la signature du marché devrait être consignée dans l’élément de données « valeur d’origine du marché », sans la valeur de modification. La valeur de modification sera également divulguée dans une entrée distincte qui comprend la valeur de la modification dans la zone « valeur de modification », et la valeur au moment de la signature du marché sera saisie dans l’élément de données « valeur d’origine du marché ».
-
-        Dans le cas d’un marché comportant des autorisations de tâches, lorsqu’il est improbable que la valeur totale soit utilisée, on peut déclarer la valeur des autorisations de tâches ultérieures dans la zone « valeur de modification ». Un « 0 » doit être saisi s’il n’y a pas de modification associée au marché.
+        i. Pour une modification, il est recommandé que l’élément de données « valeur de modification » corresponde à la valeur de la modification. Les modifications de marché négatives doivent inclure un signe négatif devant la valeur. Il est recommandé d’inscrire dans ce champ les montants en dollars canadiens et d’y ajouter toutes les taxes applicables.
+        ii. Les modifications multiples apportées à un marché au cours du même trimestre de l’exercice financier peuvent être déclarée séparément ou en bloc. Les modifications de marché positives ou négatives de plus de 10 000 $ sont à déclarer tous les trois mois, conformément à l’annexe A. Les modifications positives et négatives de 10 000 $ ou moins sont à déclarer une fois par an au moyen d’un courriel à SPAC, conformément à l’annexe A, et elles doivent être déclarée une fois par an dans le Portail du gouvernement ouvert, conformément à l’annexe B. Une modification de marché doit être déclarée tous les trois mois ou une fois par an. La déclaration d’une modification de marché de façon trimestrielle et annuelle donnerait lieu à un double dénombrement de la valeur de la modification au moment de calculer le total de l’activité contractuelle d’une organisation.
+        iii. Lorsqu’un marché est conclu, puis modifié au cours du même trimestre d’exercice, les deux opérations doivent être déclarées séparément. La signature du marché doit être saisie comme une entrée séparée, et la valeur au moment de la signature du marché doit être consignée dans l’élément de données « valeur d’origine du marché », sans la valeur de modification. La valeur de modification sera également déclarée dans une entrée distincte qui comprend la valeur de la modification figurant dans le champ de la « valeur de la modification du marché », et la valeur au moment de la signature du marché sera saisie dans l’élément de données « valeur d’origine du marché ».
+        iv. Dans le cas d’un marché comportant des autorisations de tâches, lorsqu’il est improbable que la valeur totale soit utilisée, la valeur de toute autorisation de tâche ultérieure peut être déclarée en tant que modification, sa valeur étant comprise dans la valeur de la modification.
+        v. Il faut inscrire « 0 » s’il n’y a pas de modification de marché.
     validation:
       en: This field must be populated if Amendment (A) was selected as the Instrument Type
       fr: Ce champ doit être rempli si Modification (A) a été sélectionné comme Type d’instrument
@@ -486,8 +460,14 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
       en: Comments English
       fr: Commentaires en anglais
     description:
-      en: For this field, standardized comments are recommended to be used (refer to Appendix B of the Guidelines on the Proactive Disclosure of Contracts). Departments are encouraged to provide a brief description of each contract. When a contract involves an economic code specified in Appendix C of the Guidelines, departments are to provide a brief description of the contract so that the public may benefit from additional context.  For example, for a management consulting contract the comments could state ¨Feasibility study of a green building standard for departmental projects. Avoid the use of acronyms within the comments data element.
-      fr: "Il est recommandé d’utiliser les commentaires normalisés (consultez l’annexe C). Évitez d’utiliser des acronymes dans cette zone. Les ministères sont invités à fournir une brève description de chaque marché. Lorsqu’un marché comprend un code d’article économique précisé à l’annexe D, les ministères doivent fournir une brève description du marché pour que le public puisse bénéficier du contexte additionnel (par exemple, le commentaire accompagnant un marché de services de consultation en gestion pourrait se lire ainsi : « Étude de faisabilité portant sur une norme en matière de bâtiments écologiques devant s’appliquer aux projets ministériels »)."
+      en: |
+        i. Standardized comments are recommended to be used (refer to Appendix C). Avoid the use of acronyms within this field.
+        ii. Departments are encouraged to provide a brief description of each contract.
+        iii. When a contract involves an economic object code specified in Appendix D, departments are to fulfill the reporting requirements specified in Appendix D.
+      fr: |
+        i. Il est recommandé d’utiliser les commentaires normalisés (consultez l’annexe C). Il faut éviter d’utiliser des acronymes dans ce champ.
+        ii. Les ministères sont invités à fournir une brève description de chaque marché.
+        iii. Lorsqu’un marché comprend un code d’article économique précisé à l’annexe D, les ministères doivent satisfaire aux exigences en matière de déclaration précisées à l’annexe D.
     excel_column_width: 40
     datastore_type: text
     form_snippet: scheming/form_snippets/textarea.html
@@ -499,8 +479,14 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
       en: Comments French
       fr: Commentaires en français
     description:
-      en: For this field, standardized comments are recommended to be used (refer to Appendix B of the Guidelines on the Proactive Disclosure of Contracts). Departments are encouraged to provide a brief description of each contract. When a contract involves an economic code specified in Appendix C of the Guidelines, departments are to provide a brief description of the contract so that the public may benefit from additional context.  For example, for a management consulting contract the comments could state ¨Feasibility study of a green building standard for departmental projects. Avoid the use of acronyms within the comments data element.
-      fr: "Il est recommandé d’utiliser les commentaires normalisés (consultez l’annexe C). Évitez d’utiliser des acronymes dans cette zone. Les ministères sont invités à fournir une brève description de chaque marché. Lorsqu’un marché comprend un code d’article économique précisé à l’annexe D, les ministères doivent fournir une brève description du marché pour que le public puisse bénéficier du contexte additionnel (par exemple, le commentaire accompagnant un marché de services de consultation en gestion pourrait se lire ainsi : « Étude de faisabilité portant sur une norme en matière de bâtiments écologiques devant s’appliquer aux projets ministériels »)."
+      en: |
+        i. Standardized comments are recommended to be used (refer to Appendix C). Avoid the use of acronyms within this field.
+        ii. Departments are encouraged to provide a brief description of each contract.
+        iii. When a contract involves an economic object code specified in Appendix D, departments are to fulfill the reporting requirements specified in Appendix D.
+      fr: |
+        i. Il est recommandé d’utiliser les commentaires normalisés (consultez l’annexe C). Évitez d’utiliser des acronymes dans ce champ.
+        ii. Les ministères sont invités à fournir une brève description de chaque marché.
+        iii. Lorsqu’un marché comprend un code d’article économique précisé à l’annexe D, les ministères doivent satisfaire aux exigences en matière de déclaration précisées à l’annexe D.
     excel_column_width: 40
     datastore_type: text
     form_snippet: scheming/form_snippets/textarea.html
@@ -519,8 +505,8 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
         Commentaires additionnels
         en anglais
     description:
-      en: This field may be populated with additional comments in English.
-      fr: On peut saisir dans la zone « commentaires additionnels » en anglais tout commentaire additionnel.
+      en: The additional comments English field may be populated with additional comments when an organization needs additional capacity to fulfill the reporting requirements under the comments English data field.
+      fr: Ce champ sert à consigner tout commentaire additionnel lorsqu’une organisation a besoin d’une capacité additionnelle pour répondre aux exigences de déclaration dans le champ « commentaires en anglais ».
     datastore_type: text
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
@@ -538,8 +524,8 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
         Commentaires additionnels
         en français
     description:
-      en: This field may be populated with additional comments in French.
-      fr: On peut saisir dans la zone « commentaires additionnels » en français tout commentaire additionnel.
+      en: The additional comments French field may be populated with additional comments when an organization needs additional capacity to fulfill the reporting requirements under the comments French data field.
+      fr: Ce champ sert à consigner tout commentaire additionnel lorsqu’une organisation a besoin d’une capacité additionnelle pour répondre aux exigences de déclaration dans le champ « commentaires en   français ».
     datastore_type: text
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
@@ -550,14 +536,8 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
       en: Agreement Type
       fr: Type d’accord
     description:
-      en: |
-        Departments are to continue to report under this data field on an interim basis until they are able to report under the new Appendix A Trade Agreement, Comprehensive Land Claims Agreement and Procurement Strategy for Aboriginal Business data fields.
-
-        This field should be populated to specify which trade agreement(s) apply to the contract.
-      fr: |
-        Les ministères doivent continuer à déclarer des renseignements dans cette zone de données, à titre provisoire, jusqu’à ce qu’ils puissent le faire dans les nouvelles zones de données de l’annexe A concernant l’Accord de libre-échange, les ententes sur les revendications territoriales globales et la Stratégie d’approvisionnement auprès des entreprises autochtones.
-
-        Pour la zone « type d’accord », il est recommandé d’indiquer si un accord commercial s’applique au marché.
+      en: This data field is archived and replaced by the Appendix A data fields for Trade Agreement, Comprehensive Land Claims Agreement and Procurement Strategy for Indigenous Business.
+      fr: Ce champ de données est archivé et remplacé par les champs de données de l’annexe A pour l’Accord de libre-échange, l’entente sur les revendications territoriales globales et la Stratégie d’approvisionnement auprès des entreprises autochtones.
     validation:
       en: |
         Mandatory for contracts after 2019-01-01, unless Trade Agreement specified.
@@ -911,8 +891,12 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
       en: Trade Agreement
       fr: Accord commercial
     description:
-      en: This field should be populated with one or more of the following alphabetic characters (Disclose the alphabetic characters only, all text after the alphabetic characters and including the colon is for information purposes only). For example, a procurement covered by the Canadian Free Trade Agreement and the Comprehensive Economic Free Trade Agreement is reported as CA, EU.
-      fr: Il est recommandé de saisir dans cette zone au moins un des codes alphabétiques suivants (saisir le code alphabétique seulement; ne pas reproduire les deux points ni le texte, qui n’est là qu’à titre informatif). À titre d’exemple, un approvisionnement visé par l’Accord de libre-échange canadien et l’Accord économique et commercial global est déclaré sous le code CA, EU.
+      en: |
+        i. It is recommended that this field indicate whether the procurement is covered by each of the applicable trade agreements.
+        ii. It is recommended that this field be populated with one or more of the following alphabetic characters. Report the alphabetic characters only. All text after the alphabetic characters, including the colon, is for information purposes only. For example, a procurement covered by the Canadian Free Trade Agreement and the Comprehensive Economic Free Trade Agreement is reported as CA, EU.
+      fr: |
+        i. Il est recommandé d’indiquer dans ce champ si l’approvisionnement est visé par chacun des accords commerciaux applicables.
+        ii. Il est recommandé de remplir ce champ avec un ou plusieurs des caractères alphabétiques suivants. Il faut indiquer uniquement les caractères alphabétiques. Tout le texte après les caractères alphabétiques, y compris les deux-points, est fourni à titre informatif uniquement. À titre d’exemple, un approvisionnement visé par l’Accord de libre-échange canadien et l’Accord économique et commercial global entre le Canada et l’Union européenne est déclaré sous le code CA, EU.
     validation:
       en: |
         Mandatory for contracts after 2022-01-01
@@ -985,8 +969,8 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
         Entente sur les revendications
         territoriales globales
     description:
-      en: This field should be populated to indicate whether the procurement is for goods, services or construction services to be delivered to an area that is within one or more of the Comprehensive Land Claims Agreement(s).
-      fr: Il est recommandé pour cette zone d’indiquer si l’approvisionnement concerne des biens, des services ou des services de construction qui doivent être fournis dans une région visée par l’une des ententes sur les revendications territoriales globales.
+      en: It is recommended that this field indicate whether the procurement is for goods, services or construction services to be delivered to an area that is within one or more of the Comprehensive Land Claims Agreements.
+      fr: Il est recommandé d’indiquer dans ce champ si l’approvisionnement concerne des biens, des services ou des services de construction qui doivent être fournis dans une région visée par l’une des ententes sur les revendications territoriales globales.
     validation:
       en: |
         Mandatory for contracts after 2022-01-01.
@@ -1089,8 +1073,8 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
       en: Commodity Type
       fr: Type de produit
     description:
-      en: This field should be populated with the one of the three commodity types (Good, Service or Construction). When a contract involves more than one commodity type, the commodity type associated with the largest dollar value should be used. A department may use a different approach if this is the standard practice in the department.
-      fr: Il est recommandé de saisir dans la zone « type de produit » l’un des trois types de produits (bien, service ou construction). Lorsqu’un marché comprend plus qu’un type de produit, il faut utiliser celui qui correspond à la valeur monétaire la plus élevée. Un ministère peut adopter une approche différente s’il s’agit de la pratique courante au sein du ministère.
+      en: It is recommended that the commodity type be populated with the one of the three commodity types (Good, Service or Construction). When a contract involves more than one commodity type, the commodity type associated with the largest dollar value should be used. A department may use a different approach if this is the standard practice in the department.
+      fr: Il est recommandé de saisir dans ce champ l’un des trois types de produits (bien, service ou construction). Lorsqu’un marché comprend plus d’un type de produit, il faut utiliser celui qui correspond à la valeur monétaire la plus élevée. Un ministère peut employer une approche différente si elle correspond à sa pratique courante.
     validation:
       en: Mandatory for contracts after 2019-01-01
       fr: Obligatoire pour les marchés conclus après le 2019-01-01
@@ -1114,13 +1098,13 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
       fr: Code de produit
     description:
       en: |
-        This field should be populated with the generic product descriptions used by the federal government for procurement activities. When using the Goods and Services Identification Number (GSIN), only those GSINs published by PSPC may be used.
-
-        The Commodity Code for Goods must be four numeric characters. The Commodity Code for Services must be either one alphabetic character and three numeric characters or, two alphabetic characters and two numeric characters. The Commodity Code for Construction must be ‘51’ and one or two numeric characters. When a contract involves more than one commodity code, the commodity code associated with the largest dollar value should be used. A department may use a different approach if this is the standard practice in the department.
+        i. It is recommended that the commodity code be populated with the generic product descriptions used by the federal government for procurement activities.
+        ii. When using the Goods and Services Identification Number (GSIN), only those GSINs published by PSPC may be used. The commodity code for goods must use a minimum of four numeric characters. The commodity code for services must use either a minimum of one alphabetic character and three numeric characters or, two alphabetic characters and two numeric characters. The commodity code for construction must use a minimum of “51” and one or two numeric characters.
+        iii. When a contract involves more than one commodity code, the commodity code associated with the largest dollar value should be used. A department may use a different approach if this is the standard practice in the department.
       fr: |
-        Il est recommandé de saisir dans la zone « code de produit » les descriptions de produits génériques utilisées par le gouvernement fédéral pour les activités relatives à l’approvisionnement.  Lorsqu’il s’agit d’utiliser le numéro d’identification des biens et services (NIBS), seulement les NIBS publiés par SPAC peuvent être utilisés.
-
-        Le code de produit pour les biens doit comprendre un minimum de quatre caractères numériques. Le code de produit pour les services doit comprendre au minimum un caractère alphabétique et trois caractères numériques ou deux caractères alphabétiques et deux caractères numériques. Le code de produit pour la construction doit comprendre au minimum « 51 », suivi d’un ou de deux caractères numériques. Lorsqu’un marché comprend plus qu’un code de produit, il faut utiliser celui qui correspond à la valeur monétaire la plus élevée. Un ministère peut adopter une approche différente s’il s’agit de la pratique courante au sein du ministère.
+        i. Il est recommandé de saisir dans ce champ les descriptions de produits génériques utilisées par le gouvernement fédéral pour les activités relatives à l’approvisionnement.
+        ii. Lorsqu’il s’agit d’utiliser le numéro d’identification des biens et services (NIBS), seulement les NIBS publiés par SPAC peuvent être utilisés. Le code de produit pour les biens doit comprendre un minimum de quatre caractères numériques. Le code de produit pour les services doit comprendre au minimum un caractère alphabétique et trois caractères numériques ou deux caractères alphabétiques et deux caractères numériques. Le code de produit pour la construction doit comprendre au minimum « 51 », suivi d’un ou de deux caractères numériques.
+        iii. Lorsqu’un marché comprend plus qu’un code de produit, il faut utiliser celui qui correspond à la valeur monétaire la plus élevée. Un ministère peut employer une approche différente si elle correspond à sa pratique courante.
     validation:
       en: |
         Mandatory for contracts after 2019-01-01
@@ -1137,17 +1121,13 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
       fr: Pays du fournisseur
     description:
       en: |
-        It is recommended that this data field be populated with the country of the vendor’s address identified in the contract.
-
-        Alternatively, the country of the vendor may be the country of the vendor’s address identified in the procurement/financial system if this is the standard practice in the department.
-
-        The country of vendor must be alphabetic characters listed in the International Organization for Standardization (ISO) Standard 3166-1-alphas-2, Codes for the representation of Names of Countries.
+        i. It is recommended that this data field be populated with the country of the vendor’s address identified in the contract.
+        ii. Alternatively, the country of the vendor may be the country of the vendor’s address identified in the procurement or financial system if this is the standard practice in the department.
+        iii. The country of vendor must be alphabetic characters listed in the International Organization for Standardization (ISO) 3166 Country Codes.
       fr: |
-        Il est recommandé de remplir ce champ de données en indiquant le pays de l’adresse du fournisseur qui figure dans le contrat.
-
-        Par ailleurs, le pays du fournisseur peut être le pays de l’adresse du fournisseur qui figure dans le système d’approvisionnement ou le système financier si cela est la pratique courante au sein du ministère.
-
-        Le pays du fournisseur doit comprendre les caractères alphabétiques énumérés dans les Codes de représentation du nom des pays 3166-1-alphas-2 de l’Organisation internationale de normalisation (ISO).
+        i. Il est recommandé de remplir ce champ de données en indiquant le pays indiqué dans l’adresse du fournisseur qui figure dans le marché.
+        ii. Par ailleurs, le pays du fournisseur peut être le pays indiqué dans l’adresse du fournisseur qui figure dans le système financier ou d’approvisionnement s’il s’agit de la pratique courante au sein du ministère.
+        iii. Le pays du fournisseur doit comprendre les caractères alphabétiques répertoriés dans les Codes des nom des pays - 3166 de l’Organisation internationale de normalisation (ISO).
     validation:
       en: Mandatory for contracts after 2019-01-01
       fr: Obligatoire pour les marchés conclus après le 2019-01-01
@@ -1167,8 +1147,21 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
         Méthode d’invitation
         à soumissionner
     description:
-      en: This field should be populated with one of the five solicitation procedures listed below.
-      fr: Il est recommandé de saisir dans cette zone l’une des cinq méthodes d’invitation à soumissionner énumérées ci-dessous.
+      en: |
+        It is recommended that this field be populated with one of the five solicitation procedures listed below:
+          •	AC: Advance Contract Award Notice (ACAN) refers to a contract awarded to a supplier identified under an ACAN process where it was determined that there were no other statements of capabilities that could successfully meet the government’s requirements. 
+          • OB: Competitive – Open Bidding (Government Electronic Tendering System (GETS)) refers to a competitive contract where bids were solicited via GETS.
+          •	TC: Competitive – Traditional refers to a competitive contract where bids were not solicited via GETS, but through another medium, such as soliciting bids directly from suppliers by email or phone.
+          •	ST: Competitive – Selective Tendering refers to a solicitation procedure permitted under Canada’s trade agreements where qualified suppliers are selected from a source list (including single-use or multi-use lists) under the selective tendering procedural rules in Canada’s trade agreements.
+          •	TN: Non-competitive refers to a contract awarded to a supplier without soliciting bids.
+      fr: |
+        Il est recommandé de saisir dans ce champ l’une des cinq méthodes d’invitation à soumissionner énumérées ci-dessous.
+          •	AC: Préavis d’adjudication de contrat (PAC) fait référence à un contrat attribué à un fournisseur dans le cadre du processus de PAC lorsqu’il a été déterminé qu’aucun autre énoncé de capacités ne répondait aux exigences du gouvernement.
+          •	OB: Concurrentielle – Invitation ouverte à soumissionner (Service électronique d’appels d’offres – SEAO) fait référence à un marché concurrentiel pour lequel l’appel d’offres a été fait par le biais du SEAO.
+          •	TC: Concurrentielle – Traditionnelle fait référence à un marché concurrentiel l’appel d’offres n’a pas été fait par le biais du SEAO, mais par un autre moyen, comme la demande de soumissions directement auprès des fournisseurs par courriel ou par téléphone.
+          •	ST: Concurrentielle – Appel d’offres sélectif fait référence à une procédure de sollicitation autorisée en vertu des accords commerciaux du Canada selon laquelle les fournisseurs qualifiés sont sélectionnés à partir d’une liste de sources (y compris des listes à usage unique ou à usage multiple) en vertu des règles procédurales d’appel d’offres sélectif des accords commerciaux du Canada.
+          •	TN: Non concurrentielle fait référence à un marché attribué à un fournisseur sans appel d’offres.
+
     validation:
       en: |
         Mandatory for contracts after 2022-01-01
@@ -1186,10 +1179,10 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
     choices:
       AC:
         en: Advance Contract Award Notice
-        fr: Préavis d’attribution de contrat
+        fr: Préavis d’adjudication de contrat
       OB:
-        en: Competitive – Open Bidding
-        fr: Concurrentielle – Invitation ouverte à soumissionner
+        en: Competitive – Open Bidding (GETS)
+        fr: Concurrentielle – Invitation ouverte à soumissionner (SEAOG)
       ST:
         en: Competitive – Selective Tendering
         fr: Concurrentielle – Appel d’offres sélectif
@@ -1205,8 +1198,8 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
       en: Limited Tendering Reason
       fr: Raisons justifiant le recours à l’appel d’offres limité
     description:
-      en: It is recommended this field be populated with one or more of the limited tendering reasons listed below.
-      fr:  Il est recommandé de saisir dans cette zone une ou plusieurs raisons justifiant le recours à l’appel d’offres limité parmi celles qui sont énumérées ci-dessous.
+      en: It is recommended that this field be populated with one or more of the limited tendering reasons listed below.
+      fr: Il est recommandé de saisir dans ce champ une ou plusieurs raisons justifiant le recours à l’appel d’offres limité énumérées ci-dessous.
     validation:
       en: |
         Mandatory for contracts after 2022-01-01.
@@ -1230,28 +1223,28 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
     choices:
       "00":
         en: None
-        fr: Sans objet
+        fr: Aucune
       "05":
         en: No response to bid solicitation
         fr: Aucune réponse à une invitation à soumissionner
       "20":
-        en: Goods Purchased on a Commodity Market
-        fr: Biens achetés dans un marché de produits de base
+        en: Goods purchased on a commodity market
+        fr: Biens achetés conformément à un marché de produits de base
       "21":
-        en: Purchases Made Under Exceptionally Advantageous Conditions
-        fr: Achats selon des conditions exceptionnellement avantageuses
+        en: Purchases made under exceptionally advantageous conditions
+        fr: Achats effectués selon des conditions exceptionnellement avantageuses
       "22":
-        en: Winner of an Architectural Design Contest
+        en: Winner of an architectural design contest
         fr: Lauréat d’un concours de conception architecturale
       "23":
-        en: Consulting Services Regarding Matters of a Confidential Nature (for contracts not covered by CETA, CFTA, WTO-GPA, CPTPP, CKFTA and CUFTA)
-        fr: Services confidentiels d’experts-conseils (pour les marchés non visés par l’AECG, l’ALEC, l’AMP-OMC, le PTPGP, l’ALECC et l’ALE)
+        en: Consulting services regarding matters of a confidential nature (for contracts not covered by CETA, TCA ,WTO-GPA, CPTPP, CKFTA and CUFTA)
+        fr: Services confidentiels d’experts-conseils (pour les marchés non visés par l’AECG, l’ACC, l’AMP-OMC, le PTPGP, l’ALECC et l’ALECU)
       "24":
-        en: Additional Construction Services (discontinued as of 2022-01-01)
+        en: Additional construction services (discontinued as of 2022-01-01)
         fr: Services de construction supplémentaire (discontinué à partir de 2022-01-01)
         discontinued: true
       "25":
-        en: New Construction Services (discontinued as of 2022-01-01)
+        en: New construction services (discontinued as of 2022-01-01)
         fr: Nouveaux services de construction (discontinué à partir de 2022-01-01)
         discontinued: true
       "30":
@@ -1267,31 +1260,31 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
         en: Goods regarding matters of a confidential or privileged nature (for contracts that are only covered by the CFTA)
         fr: Biens concernant des questions de nature confidentielle ou privilégiée (pour les marchés qui sont visés par l’ALEC seulement)
       "71":
-        en: Exclusive Rights
+        en: Exclusive rights
         fr: Droits exclusifs
       "72":
-        en: Prototype Purchase
+        en: Prototype purchase
         fr: Achat de prototype
       "74":
-        en: Additional Deliveries (formerly Interchangeable Parts)
+        en: Additional deliveries (formerly Interchangeable Parts)
         fr: Livraisons supplémentaires (anciennement Pièces interchangeables)
       "81":
-        en: Extreme Urgency
-        fr: Extrême urgence
+        en: Extreme urgency
+        fr: Urgence extrême
       "85":
-        en: Low Dollar-value (discontinued as of 2022-01-01)
+        en: Low dollar-value (discontinued as of 2022-01-01)
         fr: Faible valeur (discontinué à partir de 2022-01-01)
         discontinued: true
       "86":
-        en: Prices and/or Sources Fixed by Government Regulations (discontinued as of 2022-01-01)
+        en: Prices and/or sources fixed by government regulations (discontinued as of 2022-01-01)
         fr: Prix ou fournisseurs déterminés par des règlements gouvernementaux (discontinué à partir de 2022-01-01)
         discontinued: true
       "87":
-        en: Government Objectives Representing Best Interests/Value (discontinued as of 2022-01-01)
+        en: Government objectives representing best interests/value (discontinued as of 2022-01-01)
         fr: Objectifs gouvernementaux représentant les meilleurs (discontinué à partir de 2022-01-01)
         discontinued: true
       "90":
-        en: Protection of Human, Animal, or Plant Life or Health (discontinued as of 2022-01-01)
+        en: Protection of human, animal, or plant Life or health (discontinued as of 2022-01-01)
         fr: Protection de la vie ou de la santé des personnes, animaux, plantes (discontinué à partir de 2022-01-01)
         discontinued: true
 
@@ -1307,8 +1300,8 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
         Exceptions et exclusions
         applicables aux accords commerciaux
     description:
-      en: It is recommended for this field to be populated with one or more of the exceptions/exclusions listed below.
-      fr: Il est recommandé de saisir dans cette zone au moins une des exceptions et/ou exclusions énumérées ci-dessous.
+      en: It is recommended that this field to be populated with one or more of the exceptions or exclusions listed below.
+      fr: Il est recommandé de saisir dans ce champ une ou plusieurs des exceptions ou exclusions énumérées ci-dessous.
     validation:
       en: |
         Mandatory for contracts after 2019-01-01
@@ -1332,30 +1325,26 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
         en: Shipbuilding and repair (applies to all agreements except the CFTA)
         fr: Contrats de construction et réparation de navires (s’applique à tous les accords sauf l’ALEC)
       "02":
-        en: Urban rail and urban transportation equipment systems,
-            components and materials (applies to all agreements except CFTA, CETA and CPTPP)
-        fr: Marchés portant sur du matériel et des systèmes de transport ferroviaire urbain et de transport en commun urbain, les éléments et matériaux servant à leur fabrication, ainsi que tous les matériaux de fer ou d’acier reliés à ces projets (s’applique à tous les accords sauf l’ALEC, l’AECG et le PTPGP)
+        en: Urban rail and urban transportation equipment systems, components and materials (applies to all agreements except CFTA, CETA, TCA and CPTPP)
+        fr: Marchés portant sur du matériel et des systèmes de transport ferroviaire urbain et de transport en commun urbain, les éléments et matériaux servant à leur fabrication, ainsi que tous les matériaux de fer ou d’acier reliés à ces projets (s’applique à tous les accords sauf l’ALEC, l’AECG, l’ACC et le PTPGP)
       "03":
-        en: Contracts respecting FSC 58 (communications, detection and
-            coherent radiation equipment) (applies to all agreements except CFTA, CETA and CPTPP)
-        fr: Marchés relevant de la classification fédérale des approvisionnements (CFA) 58 (matériel de communications, de détection et de rayonnement cohérent) (s’applique à tous les accords sauf l’ALEC, l’AECG et le PTPGP)
+        en: Contracts respecting FSC 58 (communications, detection and coherent radiation equipment) (applies to all agreements except CFTA, CETA, TCA and CPTPP)
+        fr: Marchés relevant de la Classification fédérale des approvisionnements (CFA) 58 (matériel de communications, de détection et de rayonnement cohérent) (s’applique à tous les accords sauf l’ALEC, l’AECG, l’ACC et le PTPGP)
       "04":
         en: Set-asides for small and minority businesses (discontinued as of 2022-01-01)
         fr: Marchés réservés aux petites entreprises et aux entreprises minoritaires (discontinué à partir de 2022-01-01)
       "05":
-        en: Agricultural products made in furtherance of agricultural
-            support programs or human feeding programs (applies to all agreements except for CFTA)
+        en: Agricultural products made in furtherance of agricultural support programs or human feeding programs (applies to all agreements except for CFTA)
         fr: Achats de produits agricoles effectués dans le cadre de programmes de soutien à l’agriculture ou de programmes d’aide alimentaire (s’applique à tous les accords sauf l’ALEC)
       "06":
-        en: The Depts. of Transport, Communications and Fisheries &
-            Oceans respecting FSC 70, 74, 36 (applies to all agreements except CFTA, CKFTA, WTO-AGP, CUFTA, CETA and CPTPP)
-        fr: Marchés de Transports Canada, du ministère des Communications et de Pêches et Océans dans les catégories FSC 70, 74, 36 (s’applique à tous les accords sauf l’ALEC, l’ALECC, l’AMP-OMC, l’ALECU, l’AECG et le PTPGC)
+        en: The Depts. of Transport, Communications and Fisheries & Oceans respecting FSC 70, 74, 36 (applies to all agreements except CFTA, CKFTA, WTO-AGP, CUFTA, CETA, TCA and CPTPP)
+        fr: Marchés de Transports Canada, du ministère des Communications et de Pêches et Océans dans les catégories FSC 70, 74, 36 (s’applique à tous les accords sauf l’ALEC, l’ALECC, l’AMP-OMC, l’ALECU, l’AECG, l’ACC et le PTPGC)
       "07":
-        en: "Any measures for Indigenous peoples and businesses, including set asides for Indigenous businesses (applies to all agreements)"
-        fr: "Toute mesure en faveur des peuples et des entreprises autochtones, y compris les marchés réservés aux entreprises autochtones (s’applique à tous les accords)"
+        en: Any measures for Indigenous peoples and businesses, including set asides for Indigenous businesses (applies to all agreements)
+        fr: Toute mesure en faveur des peuples et des entreprises autochtones, y compris les marchés réservés aux entreprises autochtones (s’applique à tous les accords)
       "08":
-        en: Set-asides for small businesses other than indigenous businesses (applies to all agreements except for CETA)
-        fr: Marchés réservés aux petites entreprises (autres que des entreprises autochtones) (s’applique à tous les accords sauf l’AECG)
+        en: Set-asides for small businesses other than indigenous businesses (applies to all agreements except for CETA and TCA)
+        fr: Marchés réservés aux petites entreprises (autres que des entreprises autochtones) (s’applique à tous les accords sauf l’AECG et l’ACC)
       "09":
         en: Measures necessary to protect public morals, order or safety (applies to all agreements)
         fr: Mesures nécessaires à la protection de la moralité publique, de l’ordre public ou de la sécurité publique (s’applique à tous les accords)
@@ -1387,8 +1376,8 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
         Stratégie d’approvisionnement
         auprès des entreprises autochtones
     description:
-      en: It is recommended for this field to indicate whether the Procurement Strategy for Indigenous Business mandatory or voluntary set-aside applies to the procurement transaction.
-      fr: Il est recommandé pour cette zone d’indiquer si le marché réservé aux entreprises autochtones, obligatoire ou facultatif dans le cadre de la Stratégie d’approvisionnement auprès des entreprises autochtones, s’applique à la transaction liée à l’approvisionnement
+      en: It is recommended that this field indicate whether the Procurement Strategy for Indigenous Business mandatory or voluntary set-aside applies to the procurement transaction.
+      fr: Il est recommandé que ce champ indique si un marché réservé aux entreprises autochtones, obligatoire ou facultatif dans le cadre de la Stratégie d’approvisionnement auprès des entreprises autochtones, s’applique à l’opération liée à l’approvisionnement.
     validation:
       en: |
         Mandatory for contracts after 2022-01-01
@@ -1423,8 +1412,11 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
         le marché réservé en vertu de la SAEA
     description:
       en: |
-        This field should be populated with a flag indicating whether an Indigenous Business is awarded a contract excluding contracts awarded under a Procurement Strategy for Indigenous Business set-aside.
-      fr: Ce champ devrait avoir un indicateur pour préciser si un marché a été octroyé à une entreprise autochtone, à l’exception des marchés attribués au moyen de marchés réservés dans le cadre de la Stratégie d’approvisionnement auprès des entreprises autochtones
+        i. It is recommended that this field indicate whether a contract was awarded to an Indigenous business.
+        ii. Any contract awarded to an Indigenous business where the procurement is subject to a mandatory or voluntary set-aside under the Procurement Strategy for Indigenous Business should be reported as “No” under this data field as such contracts are already reported under the Procurement Strategy for Indigenous Business data field.
+      fr: |
+        i. Il est recommandé que ce champ indique si un marché a été attribué à une entreprise autochtone.
+        ii. Tout marché attribué à une entreprise autochtone lorsque l’approvisionnement est assujetti aux exigences relatives aux marchés réservés obligatoirement ou volontairement en vertu de la Stratégie d’approvisionnement auprès des entreprises autochtones devrait être déclaré comme étant « Non » dans ce champ, puisque de tels marchés sont déjà déclarés dans le champ de données « Stratégie d’approvisionnement auprès des entreprises autochtones ».
     validation:
       en: |
         Mandatory for contracts after 2019-01-01
@@ -1458,8 +1450,8 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
         Indicateur de propriété
         intellectuelle
     description:
-      en: This field should be populated to identify whether there are terms and conditions in the contract related to intellectual property and whether those terms would result in Crown or contractor ownership of the rights to the intellectual property.
-      fr: Il est recommandé d’indiquer dans cette zone si le marché comporte des dispositions relatives à la propriété intellectuelle (PI) et si, selon ces dispositions, les droits de propriété intellectuelle appartiendront à l’État ou à l’entrepreneur.
+      en: It is recommended that this field identify whether there are terms and conditions in the contract related to intellectual property and whether those terms would result in Crown or contractor ownership of the rights to the intellectual property.
+      fr: Il est recommandé d’indiquer dans ce champ si le marché comporte des modalités se rapportant à la propriété intellectuelle et si, selon ces modalités, les droits de propriété intellectuelle appartiendront à l’État ou à l’entrepreneur.
     validation:
       en: Mandatory for contracts after 2019-01-01
       fr: Obligatoire pour les marchés conclus après le 2019-01-01
@@ -1533,8 +1525,8 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
         Potentiel d'exploitation
         commerciale
     description:
-      en: This field should be populated to identify whether intellectual property generated under the contract has the potential for commercial exploitation.
-      fr: Il est recommandé d’indiquer dans cette zone si la propriété intellectuelle produite en vertu du marché présente un potentiel d’exploitation commerciale.
+      en: It is recommended that this field identify whether intellectual property generated under the contract has the potential for commercial exploitation.
+      fr: Il est recommandé d’indiquer dans ce champ si la propriété intellectuelle produite en vertu du marché présente un potentiel d’exploitation commerciale.
     validation:
       en: |
         This field must not be empty when the Intellectual Property data field is one of the following values (A2, A3, A41, A42, A43, A5, A8 or B). This field may be left empty if none of the Intellectual Property data field values apply. Valid formats include: Yes or No.
@@ -1564,8 +1556,8 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
         Ancien fonctionnaire recevant
         une pension en vertu de la LPFP
     description:
-      en: This field should be populated to identify whether the contractor is a former public servant in receipt of a pension under the Public Service Superannuation Act (PSSA).
-      fr: Il est recommandé pour cette zone d’indiquer si l’entrepreneur est un ancien fonctionnaire touchant une pension en vertu de la Loi sur la pension de la fonction publique (LPFP).
+      en: It is recommended that this field identify whether the contractor is a former public servant in receipt of a pension under the Public Service Superannuation Act (PSSA).
+      fr: Il est recommandé pour ce champ d’indiquer si l’entrepreneur est un ancien fonctionnaire touchant une pension en vertu de la Loi sur la pension de la fonction publique (LPFP).
     validation:
       en: Mandatory for contracts after 2019-01-01
       fr: Obligatoire pour les marchés conclus après le 2019-01-01
@@ -1587,17 +1579,15 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
       fr: Entité contractante
     description:
       en: |
-        i. It is recommended for this field to identify whether the procurement is a contract awarded by the client department, PSPC, SSC or another departmental entity or a call-up contract against a standing offer agreement or supply arrangement agreement established by PSPC, Shared Services Canada (SSC) or the department.
-        ii. If PSPC awards a contract against a PSPC SOSA on behalf of a client department, it is recommended that the contract be reported as “PWC”.
-        iii. If SSC awards a contract against a SSC SOSA on behalf of a client department, it is recommended that the contract be reported as “SSCC”.
+        i. It is recommended that this field identify whether the procurement is a contract awarded by the client department, PSPC, SSC or another departmental entity or a call-up contract against a standing offer agreement or supply arrangement agreement established by PSPC, SSC or the department.
+        ii. If PSPC awards a contract against a PSPC SOSA on behalf of a client department, it is recommended that the contract be reported as “PWC” for this field.
+        iii. If SSC awards a contract against a SSC SOSA on behalf of a client department, it is recommended that the contract be reported as “SSCC” for this field.
         iv. If a department awards a contract against a PSPC or SSC SOSA, it is recommended that the contract be reported as “PWSOSA” or “SSCSOSA” as applicable.
-
       fr: |
-        i. Il est recommandé d’indiquer dans cette zone si l’approvisionnement constitue un marché attribué par le ministère client, SPAC, SPC ou une autre entité ministérielle, ou bien un contrat de travail sur convocation subséquent à une offre à commandes ou à un arrangement en matière d’approvisionnement établi par SPAC, Services partagés Canada (SPC) ou le ministère.
-        ii. Si SPAC attribue un marché dans le cadre des OCAMA de SPAC au nom d’un ministère client, il est recommandé que le marché soit déclaré comme « PWC ».
-        iii. Si SPC attribue un marché dans le cadre des OCAMA des SPC au nom d’un ministère client, il est recommandé que le marché soit déclaré comme « SSCC ».
-        iv. Si un ministère attribue un marché dans le cadre des OCAMA de SPAC ou de SPC, il est recommandé que le marché soit déclaré comme « PWSOSA » ou « SSCSOSA », selon le cas.
-
+        i. Il est recommandé d’indiquer dans ce champ si l’approvisionnement est visé par un marché attribué par le ministère client, SPAC, SPC ou une autre entité ministérielle, ou bien une commande subséquente à une offre à commandes ou à un arrangement en matière d’approvisionnement établi par SPAC, SPC ou le ministère.
+        ii. Si SPAC attribue un marché dans le cadre d’une OCAMA de SPAC au nom d’un ministère client, il est recommandé que le marché soit déclaré comme « PWC » pour ce champ.
+        iii. Si SPC attribue un marché dans le cadre d’une OCAMA des SPC au nom d’un ministère client, il est recommandé que le marché soit déclaré comme « SSCC » pour ce champ.
+        iv. Si un ministère attribue un marché dans le cadre d’une OCAMA de SPAC ou de SPC, il est recommandé que le marché soit déclaré comme « PWSOSA » ou « SSCSOSA », selon le cas.
     validation:
       en: Mandatory for contracts after 2022-01-01
       fr: Obligatoire pour les marchés conclus après le 2022-01-01
@@ -1639,8 +1629,8 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
         Numéro de l’offre
         à commandes
     description:
-      en: This field should be populated with the Standing Offer or Supply Arrangement Number applicable to this contract. This field should be left blank if there is no standing offer or supply arrangement established by PSPC or SSC associated with this contract.
-      fr: Il est recommandé de saisir dans cette zone le numéro de l’offre à commandes ou de l’arrangement en matière d’approvisionnement qui s’applique au marché. Cette zone demeure vide en l’absence d’une offre à commandes ou d’un arrangement en matière d’approvisionnement conclu par SPAC ou SPC relativement à ce marché.
+      en: It is recommended that this field be populated with the Standing Offer or Supply Arrangement Number applicable to this contract. This field should be left blank if there is no standing offer or supply arrangement established by PSPC or SSC associated with this contract.
+      fr: Il est recommandé de saisir dans ce champ le numéro de l’offre à commandes ou de l’arrangement en matière d’approvisionnement qui s’applique au marché. Ce champ demeure vide en l’absence d’une offre à commandes ou d’un arrangement en matière d’approvisionnement établi par SPAC ou SPC relativement à ce marché.
     validation:
       en: |
         This field must be populated if a Call-up against a standing offer or supply arrangement was identified as PWSOSA or SSCSOSA
@@ -1657,13 +1647,25 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
       fr: Type d’instrument
     description:
       en: |
-        This field should be populated to identify whether the item being disclosed is a contract, contract amendment, or a standing offer/supply arrangement agreement (i.e. the agreement against which a call-up is issued should be disclosed as an ‘SOSA’. The call-up itself should be disclosed as a ‘C’ or ‘A’).
-
-        When a contract is entered into and subsequently amended in the same fiscal quarter, the two transactions should be disclosed separately. Entry into the contract should be disclosed as one entry and should be identified as a contract by entering ‘C’. The contract amendment should be disclosed as a separate entry and be identified as an amendment by entering ‘A’. When a standing offer or supply arrangement agreement is amended, it should continue to be identified as an ‘SOSA’.
+        i. It is recommended that the instrument type identify whether the transaction being reported is a contract, contract amendment, or a standing offer or supply arrangement agreement. 
+        ii. The instrument type for:
+          -	A contract is “C”;
+          -	An amendment is “A”;
+          -	A standing offer agreement or supply arrangement agreement is “SOSA”;
+          -	Issuing a call-up against a standing offer or supply arrangement is “C”; and
+          -	An amendment to a call-up is “A” for this field.
+        iii. When a contract is entered into and subsequently amended in the same fiscal quarter, the two transactions should be reported separately. Entry into the contract should be reported as one entry and should be identified as a contract by entering “C” for this field. The contract amendment should be reported as a separate entry and be identified as an amendment by entering “A” for this field.
+        iv. When a standing offer or supply arrangement agreement is amended, it should continue to be identified as an “SOSA” for this field.
       fr: |
-        Il est recommandé pour le type d’instrument d’indiquer si l’opération divulguée est un marché, une modification à un marché, une offre à commandes ou un arrangement en matière d’approvisionnement. Par exemple, une offre à commandes ou un arrangement en matière d’approvisionnement est « SOSA »; l’émission d’une commande subséquente à une offre à commandes ou à un arrangement en matière d’approvisionnement est « C »; et une modification à une commande subséquente est « A ».
-
-        Lorsqu’un marché est conclu, puis modifié au cours du même trimestre de l’exercice, les deux opérations doivent être divulguées séparément. La signature du marché sera divulguée comme une saisie, soit « C ». Une modification au marché sera divulguée comme saisie séparée, soit « A ». Lorsqu’une offre à commandes ou un arrangement en   matière d’approvisionnement est modifié, il convient de saisir le code « SOSA ».
+        i. Il est recommandé d’indiquer dans ce champ si l’opération déclarée est un marché, une modification de marché, une offre à commandes ou un arrangement en matière d’approvisionnement.
+        ii. Voici le type d’instrument :
+          -	un marché est « C »;
+          -	une modification est « A »;
+          -	une offre à commandes ou un arrangement en matière d’approvisionnement est « SOSA »;
+          -	l’émission d’une commande subséquente à une offre à commandes ou à un arrangement en matière d’approvisionnement est « C »;
+          -	une modification d’une commande subséquente est « A » pour ce champ.
+        iii. Lorsqu’un marché est conclu, puis modifié au cours du même trimestre de l’exercice, les deux opérations doivent être déclarées séparément. La signature du marché sera déclarée comme une seule entrée et devrait être indiquée comme étant un marché, soit « C », dans ce champ. Une modification de marché sera déclarée comme une entrée séparée et indiquée comme telle, en inscrivant « A » dans ce champ.
+        iv. Lorsqu’une offre à commandes ou un arrangement en matière d’approvisionnement est modifié, il convient de saisir le code « SOSA » dans ce champ.
     validation:
       en: Mandatory for contracts after 2019-01-01
       fr: Obligatoire pour les marchés conclus après le 2019-01-01
@@ -1673,13 +1675,13 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
     choices:
       C:
         en: Contract
-        fr: Contrat
+        fr: Marché
       A:
         en: Amendment
         fr: Modification
       SOSA:
-        en: Standing Offer/Supply Arrangement Agreement
-        fr: Offre à commandes / Arrangement en matière d’approvisionnement
+        en: Standing Offer or Supply Arrangement Agreement
+        fr: Offre à commandes ou Arrangement en matière d’approvisionnement
 
   - datastore_id: ministers_office
     label:
@@ -1693,8 +1695,8 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
         Marchés du cabinet
         du ministre
     description:
-      en: It is recommended for this field to indicate whether the transaction is for the Minister’s office. Ministers’ offices contracts are any contract for goods and services entered into by a minister or their exempt staff. In accordance with the Policies for Minister’s Offices, such contracts should be charged to either a Minister’s other operating budget; or to the Parliamentary Assistant/Advisor operating budget. Please refer to the Policies for Ministers’ Offices for more information on the Minister’s office budgets. This data field should be entered for contracts and amendments awarded effective 2019-06-21 or alternatively, for the contracts and amendments awarded within the month of this effective date.
-      fr: Dans cette zone, il est recommandé d’indiquer si l’opération concerne le cabinet d’un ministre. Les marchés des cabinets des ministres sont des marchés de biens et de services qui sont conclus par un ministre ou son personnel exonéré. Conformément aux Politiques à l’intention des cabinets des ministres, les dépenses liées à ces marchés doivent être imputées aux autres budgets de fonctionnement d’un ministre ou au budget de fonctionnement de l’adjoint parlementaire ou conseiller au secrétaire parlementaire. Consultez les Politiques à l’intention des cabinets des ministres pour obtenir de plus amples renseignements sur les budgets du cabinet d’un ministre. Les données dans ce champ doivent être saisies dans le cas des marchés et des modifications entrés en vigueur le 2019-06-21 ou dans le cas des marchés et des modifications adjugés dans le mois de cette date d’entrée en vigueur.
+      en: It is recommended that this field indicate whether the transaction is for the Minister’s office. Ministers’ offices contracts are any contracts for goods and services entered into by a minister or their exempt staff. In accordance with the Policies for Ministers’ Offices, such contracts should be charged to either a Minister’s other operating budget or to the Parliamentary Secretary’s Assistant/Advisor operating budget. Please refer to the Policies for Ministers’ Offices for more information on the Minister’s office budgets. This data field should be entered for contracts and amendments awarded effective June 21, 2019, or, alternatively, for the contracts and amendments awarded within the month of this effective date.
+      fr: Dans ce champ, il est recommandé d’indiquer si l’opération concerne le cabinet d’un ministre. Les marchés des cabinets de ministre sont des marchés de biens et de services qui sont conclus par un ministre ou son personnel exonéré. Conformément aux Politiques à l’intention des cabinets des ministres, les dépenses liées à ces marchés doivent être imputées aux autres budgets de fonctionnement d’un ministre ou au budget de fonctionnement de l’adjoint ou du conseiller du secrétaire parlementaire. Se reporter aux Politiques à l’intention des cabinets des ministres pour obtenir de plus amples renseignements sur les budgets des cabinets de ministre. Les données dans ce champ doivent être saisies dans le cas des marchés et des modifications de marché entrés en vigueur le 21 juin 2019 ou dans le cas des marchés attribués et des modifications de marché acceptées dans le mois de cette date d’entrée en vigueur.
     validation:
       en: Mandatory for contracts after 2019-06-21
       fr: Obligatoire pour les marchés conclus après le 2019-06-21
@@ -1717,26 +1719,22 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
     description:
       en: |
         It is recommended that this field be populated with the total number of compliant and non-compliant bids received in the procurement.
-
         i. For a competitive contract, it is recommended for this field to be the number of bids received pursuant to a bid solicitation.
         ii. For a call-up contract against a standing offer agreement established under a competitive process, it is recommended that a value of “0” be entered for this field. In this instance, the value of “0” represents not applicable.
-        iii. For a contract with task authorizations, the number of bids of the contract may be disclosed if this value is known when the task authorization is issued. If the number of bids is unknown, the department may input a value of 0 to indicate it is not applicable.
+        iii. For a contract with task authorizations, the number of bids of the contract may be reported if this value is known when the task authorization is issued. If the number of bids is unknown, the department may input a value of 0 to indicate it is not applicable.
         iv. If the contract was awarded using an Advance Contract Award Notice (ACAN) and it was determined that there were no statements of capabilities that met the ACAN requirements, it is recommended that a value of “1” be entered for this field.
         iv. For non-competitive contract, it is recommended that a value of “1” be entered for this field.
-        vi. For the establishment of a standing offer or supply arrangement agreement, it is recommend for this field to be the number of standing offer or supply arrangement bids received. If the standing offer was established under a non-competitive or an ACAN procurement process where it was determined that there were no statements of capabilities that meet the ACAN requirements, it is recommended that a value of “1” be entered for this field for subsequent contracts awarded under the standing offer.
+        vi. For the establishment of a standing offer or supply arrangement agreement, it is recommended for this field to be the number of standing offer or supply arrangement bids received. If the standing offer was established under a non-competitive or an ACAN procurement process where it was determined that there were no statements of capabilities that meet the ACAN requirements, it is recommended that a value of “1” be entered for this field for subsequent contracts awarded under the standing offer.
         vii. For a competitive contract awarded by PSPC, SSC or another department on behalf of the client department, a value of “0” may be entered if the information is not available within the reporting period for which the contract was awarded. Once the information is available, the contract record is to be updated at the next subsequent reporting period, or as soon as practicable.
-
       fr: |
-        Il est recommandé de saisir dans cette zone le nombre total de soumissions conformes et non conformes qui ont été reçues dans le cadre de l’approvisionnement.
-
-        i. Pour un marché concurrentiel, il est recommandé que cette zone indique le nombre de soumissions reçues conformément à une invitation à soumissionner.
-        ii. Dans le cas d’un contrat de travail sur convocation subséquent à une offre à commandes établi dans le cadre d’un processus concurrentiel, il est recommandé de saisir la valeur « 0 » dans cette zone. En pareil cas, la valeur « 0 » signifie sans objet.
-        iii. Pour un marché avec des autorisations de tâches, le nombre de soumissions pour le marché peut être divulgué si cette donnée est connue au moment d’émettre l’autorisation de tâches. Si le nombre de soumissions est inconnu, le ministère peut saisir la valeur « 0 ». En pareil cas, la valeur « 0 » signifie sans objet.
-        iv. Si le marché a été attribué au moyen d’un préavis d’adjudication de contrat (PAC) et qu’il a été déterminé qu’aucun énoncé de capacités ne répondait aux exigences du PAC, il est recommandé de saisir la valeur « 1 » dans cette zone.
-        v. Dans le cas d’un marché non concurrentiel, il est recommandé de saisir la valeur « 1 » dans cette zone.
-        vi. Dans le cas de l’établissement d’une offre à commandes ou d’un arrangement en matière d’approvisionnement, il est recommandé d’indiquer dans cette zone le nombre de soumissions reçues relativement à l’offre à commandes ou à l’arrangement en matière d’approvisionnement. Si l’offre à commandes a été établie dans le cadre d’un processus d’approvisionnement non concurrentiel ou d’un PAC et qu’il a été déterminé qu’il n’y avait pas d’énoncés de capacités qui répondent aux exigences du PAC, il est recommandé qu’une valeur de « 1 » soit inscrite dans cette zone pour les marches subséquents attribués en fonction de l’offre à commandes.
-        vii. Dans le cas d’un marché concurrentiel attribué par SPAC, SPC ou un autre ministère au nom du ministère client, on peut saisir la valeur « 0 » si les renseignements ne sont pas disponibles au cours de la période de déclaration pour laquelle le marché a été attribué. Une fois que les renseignements sont disponibles, le dossier contractuel doit être mis à jour lors de la période de déclaration ultérieure, ou dès que cela est possible.
-
+        Il est recommandé de saisir dans ce champ le nombre total de soumissions conformes et non conformes qui ont été reçues dans le cadre du processus d’approvisionnement.
+        i. Pour un marché concurrentiel, il est recommandé que ce champ indique le nombre de soumissions reçues conformément à une invitation à soumissionner.
+        ii. Dans le cas d’une commande subséquente à une offre à commandes établie dans le cadre d’un processus concurrentiel, il est recommandé de saisir la valeur « 0 » dans ce champ. En pareil cas, la valeur « 0 » signifie sans objet.
+        iii. Pour un marché comprenant des autorisations de tâches, le nombre de soumissions pour le marché peut être déclaré si cette donnée est connue au moment de donner l’autorisation de tâches. Si le nombre de soumissions est inconnu, le ministère peut saisir la valeur « 0 ». En pareil cas, la valeur « 0 » signifie sans objet.
+        iv. Si le marché a été attribué au moyen d’un préavis d’adjudication de contrat (PAC) et qu’il a été déterminé qu’aucun énoncé de capacités ne répondait aux exigences du PAC, il est recommandé de saisir la valeur « 1 » dans ce champ.
+        v. Dans le cas d’un marché non concurrentiel, il est recommandé de saisir la valeur « 1 » dans ce champ.
+        vi. Dans le cas de l’établissement d’une offre à commandes ou d’un arrangement en matière d’approvisionnement, il est recommandé d’indiquer dans ce champ le nombre de soumissions reçues relativement à l’offre à commandes ou à l’arrangement en matière d’approvisionnement. Si l’offre à commandes a été établie dans le cadre d’un processus d’approvisionnement non concurrentiel ou d’un PAC et qu’il a été déterminé qu’il n’y avait pas d’énoncés de capacités qui répondent aux exigences du PAC, il est recommandé qu’une valeur de « 1 » soit inscrite dans ce champ pour les marches subséquents attribués en fonction de l’offre à commandes.
+        vii. Dans le cas d’un marché concurrentiel attribué par SPAC, SPC ou un autre ministère au nom du ministère client, il faut saisir la valeur « 0 » si les renseignements ne sont pas disponibles au cours de la période de déclaration au cours de laquelle le marché a été attribué. Une fois que les renseignements sont disponibles, le dossier contractuel doit être mis à jour au cours de la période de déclaration suivante, ou dès que cela est possible.
     validation:
       en: |
         This field must be populated with a “1” if the solicitation procedure is identified as non-competitive (TN) or Advance Contract Award Notice (ACAN).
@@ -1744,6 +1742,7 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
         Cette zone doit contenir un « 1 » si la méthode d’invitation à soumissionner est identifiée comme étant non concurrentielle (TN) ou un préavis d’attribution de contrat (AC).
     datastore_type: int
     excel_error_formula: 'OR({default_formula},AND(VALUE({cell})<>1,OR({solicitation_procedure}="TN",{solicitation_procedure}="AC")))'
+    
   - datastore_id: article_6_exceptions
     label:
       en: Section 6 Government Contracts Regulations Exceptions
@@ -1758,14 +1757,14 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
     description:
       en: |
         i. The Government Contracts Regulations requires the solicitation of bids unless one of the s.6 exceptions to the Government Contracts Regulations applies to the contract.
-        ii. It is recommended for this field to be populated with one of the s.6 exceptions to solicit bids if bids have not been solicited for the contract.
-        iii. It is recommended for this field to be populated with one of the s.6 exceptions to solicit bids if the contract was awarded using an Advance Contract Award Notice (ACAN) and it was determined that there were no statements of capabilities that met the ACAN requirements.
+        ii. It is recommended that this field be populated with one of the s.6 exceptions to solicit bids if bids have not been solicited for the contract.
+        iii. It is recommended that this field be populated with one of the s.6 exceptions to solicit bids if the contract was awarded using an Advance Contract Award Notice (ACAN) and it was determined that there were no statements of capabilities that met the ACAN requirements.
         iv. For contracts whereby bids have been solicited or if the procurement is not a contract subject to the Government Contracts Regulations, the value of “0” should be entered. For this data value, the value of “0” represents not applicable.
       fr: |
-        i. Le Règlement concernant les marchés de l’État exige le recours à un appel d’offres, à moins que l’une des exceptions prévues à l’article 6 ne s’applique au marché.
-        ii. Il est recommandé de saisir dans cette zone l’une des exceptions à l’appel d’offres prévues à l’article 6 si aucun appel d’offres n’a été lancé à l’égard du marché.
-        iii. Il est recommandé de saisir dans cette zone l’une des exceptions à l’appel d’offres prévues à l’article 6 si le marché a été attribué au moyen d’un préavis d’adjudication de contrat (PAC) et qu’il a été déterminé qu’aucun énoncé de capacités ne répondait aux exigences du PAC.
-        iv. Dans le cas des marchés en vertu desquels un appel d’offres a été lancé, ou si l’approvisionnement ne constitue pas un marché assujetti au Règlement concernant les marchés de l’État, on doit saisir la valeur « 0 ». Pour cette valeur de données, la valeur « 0 » signifie sans objet.
+        i. Le Règlement sur les marchés de l’État exige le recours à un appel d’offres, à moins que l’une des exceptions prévues à l’article 6 dudit règlement ne s’applique au marché.
+        ii. Il est recommandé de saisir dans ce champ l’une des exceptions à l’appel d’offres prévues à l’article 6 si aucun appel d’offres n’a été lancé à l’égard du marché.
+        iii. Il est recommandé de saisir dans ce champ l’une des exceptions à l’appel d’offres prévues à l’article 6 si le marché a été attribué au moyen d’un préavis d’adjudication de contrat (PAC) et qu’il a été déterminé qu’aucun énoncé de capacités ne répondait aux exigences du PAC.
+        iv. Dans le cas des marchés pour lesquels un appel d’offres a été lancé, ou si l’approvisionnement n’est pas visé par un marché assujetti au Règlement sur les marchés de l’État, il faut saisir la valeur « 0 ». Pour cette valeur de données, la valeur « 0 » signifie sans objet."
     validation:
       en: |
         This field may only be populated with “0” if the procurement was identified as competitive (open bidding (OB), traditional competitive (TC) or selective tendering (ST)).
@@ -1777,16 +1776,16 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
     choices:
       "0":
         en: Not applicable
-        fr: Ne s’applique pas
+        fr: Sans objet
       "1":
         en: Pressing emergency in which delay would be injurious to the public interest
         fr: Extrême urgence où un retard serait préjudiciable à l’intérêt public.
       "2":
         en: Does not exceed s.6 (b) Government Contracts Regulations prescribed dollar limits.
-        fr: N’excède pas la limite financière prescrite à l’alinéa 6 b) du Règlement concernant les     marchés de l’État.
+        fr: N’excède pas la limite financière prescrite à l’alinéa 6 b) du Règlement sur les marchés de l’État.
       "3":
         en: Not in the public interest to solicit bids
-        fr: Situation dans laquelle un appel d’offres ne servirait pas l’intérêt public
+        fr: Situation dans laquelle un appel d’offres ne servirait pas l’intérêt public.
       "4":
         en: Only one person is capable of performing the contract
         fr: Une seule personne est en mesure d’exécuter le marché.
@@ -1797,17 +1796,17 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
       fr: Critères d’attribution
     description:
       en: |
-        It is recommended for this field to be populated with one of the bid evaluation methodologies below if bids have been solicited for the contract:
-
+        It is recommended that this field be populated with one of the bid evaluation methodologies below if bids have been solicited for the contract:
         i. If bids have not been solicited, the value of “0” is to be selected.
         ii. For ACANs whereby it was determined that there were no statements of capabilities that met the ACAN requirements, the value of “0” should be entered.
-        iii. For amendments, the value of “0” is to be selected.
-        iv. For a competitive contract awarded by PSPC, SSC or another department on behalf of the client department, a value of “0” may be entered if the information is not available within the reporting period for which the contract was awarded Once information is available, the contract record is to be updated at the next subsequent reporting period, or as soon as practicable.
+        iii. For amendments, select the value of “0” of this field.
+        iv. For a competitive contract awarded by PSPC, SSC or another department on behalf of the client department, a value of “0” may be entered if the information is not available within the reporting period for which the contract was awarded. Once information is available, the contract record is to be updated at the next subsequent reporting period, or as soon as practicable.
       fr: |
-        i. S’il n’y a pas eu d’appel d’offres, il faut sélectionner la valeur « 0 ».
+        Il est recommandé de saisir dans ce champ l’une des méthodes d’évaluation des soumissions indiquées ci-dessous, si un appel d’offres a été lancé à l’égard du marché : 
+        i. S’il n’y a pas eu d’appel d’offres, il faut choisir la valeur « 0 ».
         ii. Dans le cas d’un PAC à l’égard duquel il a été déterminé qu’aucun énoncé de capacités ne répondait aux exigences du PAC, il faut saisir la valeur « 0 ».
-        iii. En cas de modification, il faut sélectionner la valeur « 0 ».
-        iv. Pour un marché concurrentiel attribué par SPAC, SPC ou un autre ministère au nom du ministère client, on peut saisir la valeur « 0 » si les renseignements ne sont pas disponibles au cours de la période de déclaration pour laquelle le marché a été attribué. Une fois que les renseignements sont disponibles, le dossier contractuel doit être mis à jour lors de la période de déclaration ultérieure, ou dès que cela est possible.
+        iii. S’il s’agit d’une modification, il faut choisir la valeur « 0 » pour ce champ.
+        iv. Dans le cas d’un marché concurrentiel attribué par SPAC, SPC ou un autre ministère au nom du ministère client, il faut saisir la valeur « 0 » si les renseignements ne sont pas disponibles au cours de la période de déclaration au cours de laquelle le marché a été attribué. Une fois que les renseignements sont disponibles, le dossier contractuel doit être mis à jour au cours de la période de déclaration suivante, ou dès que cela est possible.
     validation:
       en: |
         If this field is populated, it must be with a “0” if the procurement was identified
@@ -1824,7 +1823,7 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
     choices:
       "0":
         en: Not applicable
-        fr: Ne s’applique pas
+        fr: Sans objet
       "1":
         en: Lowest Price
         fr: Prix le plus bas
@@ -1846,14 +1845,14 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
       en: Socio-Economic Indicator
       fr: Indicateur socioéconomique
     description:
-      en: It is recommended for this field to indicate whether the procurement is subject one or more of the applicable Socio-economic indicator(s)
-      fr: Il est recommandé d’indiquer dans cette zone si l’approvisionnement fait l’objet d’au moins un des indicateurs socioéconomiques applicables.
+      en: It is recommended for this field to indicate whether the procurement is subject to one or more of the applicable Socio-economic indicators.
+      fr: Il est recommandé d’indiquer dans ce champ si l’approvisionnement est relié à au moins un des indicateurs socioéconomiques applicables.
     datastore_type: text
     excel_full_text_choices: false
     choices:
       NA:
         en: None
-        fr: Sans objet
+        fr: Aucune valeur
       FP:
         en: Federal Contractors Program for Employment Equity
         fr: Programme de contrats fédéraux pour l’équité en matière d’emploi
@@ -1863,8 +1862,12 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
       en: Reporting Period
       fr: Periode de déclaration
     description:
-      en: This field should be populated in the standard format described below. When published on the Open Government portal, this field will contain the fiscal quarter this particular contract entry was disclosed to the public. For example if a contract amendment is being disclosed on May 3, 2015, the entry should be 2015-2016-Q1.
-      fr: "Il est recommandé de saisir les données dans cette zone selon le format normalisé décrit ci-dessous.  Lorsqu’il est publié sur le portail du Gouvernement Ouvert, cette zone contiendra le quartier fiscal dont cette donné était divulguée.  Par exemple, si un marché est modifié le 3 mai 2015, et la modification est divulguée au cours du premier trimestre de l’exercice 2015-2016, il convient d’indiquer : 2015 à 2016-Q1)."
+      en: |
+          It is recommended that this field be populated in the standard format described below. 
+          When published on the Open Government portal, this field will contain the fiscal quarter this particular contract entry was reported to the public. For example if a contract is being amended on May 3, 2017, and reported in the first fiscal quarter of 2017-–2018, the entry should be 2017-2018-Q1.
+      fr: |
+          Il est recommandé de remplir ce champ dans le format standard décrit ci-dessous. 
+          Lorsqu’il est publié sur le portail du Gouvernement Ouvert, ce champ contiendra le quartier fiscal dont cette donné était déclarée. Par exemple, si un marché est modifié le 3 mai 2017, et la modification est déclarée au cours du premier trimestre de l’exercice 2017-2018, il convient d’indiquer : 2017 à 2018-Q1).
     validation:
       en: Mandatory for contracts after 2019-01-01
       fr: Obligatoire pour les marchés conclus après le 2019-01-01
@@ -2199,7 +2202,6 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
       reference_number: "C-2017-2018-Q1-00170"
     sort: contract_date desc
 
-
 - title: Proactive Publication - Contracts Nothing to Report
   resource_name: contracts-nil
   create_form: true
@@ -2207,7 +2209,9 @@ iii. Quand un contrat porte sur plus d’un article économique, il est recomman
   fields:
 
   - datastore_id: reporting_period
-    label: Reporting Period
+    label: 
+      en: Reporting Period
+      fr: Periode de declaration
     excel_required: true
     format_type: YYYY-YYYY-QX
     datastore_type: text

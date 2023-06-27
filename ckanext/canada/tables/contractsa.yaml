@@ -30,7 +30,8 @@ resources:
         Période de
         déclaration
     description:
-      en: "It is recommended for this field to be populated in the standard format described below. For example if the template is being disclosed for the 2017 calendar year, the entry will be populated as: 2017."
+      en: "It is recommended for this field to be populated in the standard format described below. For example, if the template is being reported for the 2017 calendar year, the entry will be populated as 2017."
+      fr: "Il est recommandé de remplir ce champ en utilisant le format standard décrit ci-dessous. Par exemple, si le modèle est déclaré pour l’année civile 2017, il faut inscrire 2017."
     obligation: Mandatory
     form_required: true
     excel_required: true
@@ -51,12 +52,15 @@ resources:
         de 10 000 $ et moins
     description:
       en: "It is recommended for this field to be populated with the total number of goods contracts entered into with a value of $10,000 and under. This includes goods contracts entered into and subsequently amended in the same calendar year to an amended contract value of $10,000 and under."
+      fr: "Il est recommandé de saisir dans ce champ le nombre total de marchés de biens conclus d’une valeur de 10 000 $ ou moins, ce qui comprend les marchés de biens conclus et modifiés par la suite au cours de la même année civile et d’une valeur de 10 000 $ ou moins."
     obligation: Mandatory
     form_required: true
     form_attrs:
       size: 10
     excel_required: true
-    format_type: Numeric and excluding spaces and commas.
+    format_type: 
+      en: "Numeric and excluding spaces and commas. Formulas are not to be used to populate this data field."
+      fr: "Données numériques, excluant les espaces et les virgules. Il ne faut pas utiliser de formule pour remplir ce champ."
     datastore_type: int
     solr_sum_to_field: contract_total_number_of
 
@@ -64,20 +68,23 @@ resources:
   - datastore_id: contracts_goods_original_value
     label:
       en: Goods Contracts $10K and under - Original Value
-      fr: Marchés de biens de 10 000 $ et moins - Valeur initiale
+      fr: Marchés de biens de 10 000 $ et moins - Valeur d’origine
     excel_heading:
       en: |
         Goods Contracts $10K and under
         - Original Value
       fr: |
-        Marchés de biens de 10 000 $ et
-        moins - Valeur initiale
+        Marchés de biens de 10 000 $ et
+        moins - Valeur d’origine
     description:
       en: "It is recommended for this field to be populated with the value of all goods contracts with a value of $10,000 and under, at the time of contract entry. This value should be in Canadian currency and include all applicable taxes."
+      fr: "Il est recommandé de saisir dans ce champ la valeur des marchés de biens de 10 000 $ ou moins au moment de la conclusion du marché. Cette valeur doit être exprimée en dollars canadiens et inclure toutes les taxes qui s’appliquent."
     obligation: Mandatory
     form_required: true
     excel_required: true
-    format_type: "Numeric and excluding dollar signs, spaces and commas. For example: 23000.23"
+    format_type: 
+      en: "Numeric and excluding dollar signs, spaces and commas. For example, 23000.23. Formulas are not to be used to populate this data field."
+      fr: "Données numériques, excluant les symboles de dollars, les espaces et les virgules, par exemple, 23000.23. Il ne faut pas utiliser de formule pour remplir ce champ."
     datastore_type: money
     solr_sum_to_field: [contracts_goods_total_value, contracts_total_original_value, contracts_total_total_value]
 
@@ -96,11 +103,14 @@ resources:
         biens de -10 000 $ à 10 000 $
         - Valeur nette des modifications
     description:
-      en: "It is recommended for this field to be populated with the value of all goods contracts’ net amendments (i.e. all positive and negative amendments) with a value from -$10,000 to $10,000. This value should be in Canadian currency and include all applicable taxes. An amendment should be disclosed either quarterly or annually. Disclosing an amendment both quarterly and annually would result in double counting of the amendment’s value when calculating the total contracting activity of an organization."
+      en: "It is recommended for this field to be populated with the value of all net amendments to goods contracts (that is, all positive and negative amendments) with a value from -$10,000 to $10,000. This value should be in Canadian currency and include all applicable taxes. An amendment should be reported either quarterly or annually. Reporting an amendment both quarterly and annually would result in double counting of the amendment’s value when calculating the total contracting activity of an organization."
+      fr: "Il est recommandé de saisir dans ce champ la valeur nette de toutes les modifications de marché de biens (c’est-à-dire, toutes les modifications positives et négatives) de -10 000 $ à 10 000 $. Cette valeur doit être exprimée en dollars canadiens et inclure toutes les taxes qui s’appliquent. Une modification doit faire l’objet d’une déclaration trimestrielle ou annuelle. La déclaration d’une modification de façon trimestrielle et annuelle donnerait lieu au double dénombrement de la valeur de la modification au moment de calculer le total de l’activité contractuelle d’une organisation."
     obligation: Mandatory
     form_required: true
     excel_required: true
-    format_type: "Numeric and excluding dollar signs, spaces and commas. For example: 23000.23"
+    format_type: 
+      en: "Numeric and excluding dollar signs, spaces and commas. For example, 23000.23. Formulas are not to be used to populate this data field."
+      fr: "Données numériques, excluant les symboles de dollars, les espaces et les virgules, par exemple, 23000.23. Il ne faut pas utiliser de formule pour remplir ce champ."
     datastore_type: money
     solr_sum_to_field: [contracts_goods_total_value, contracts_total_amendment_value, contracts_total_total_value]
 
@@ -120,12 +130,15 @@ resources:
         10 000 $ et moins
     description:
       en: "It is recommended for this field to be populated with the total number of services contracts entered into with a value of $10,000 and under. This includes services contracts entered into and subsequently amended in the same calendar year to an amended contract value of $10,000 and under."
+      fr: "Il est recommandé de saisir dans ce champ le nombre total de marchés de services conclus d’une valeur de 10 000 $ ou moins, ce qui comprend les marchés de services conclus et modifiés par la suite au cours de la même année civile et d’une valeur de 10 000 $ ou moins."
     obligation: Mandatory
     form_required: true
     form_attrs:
       size: 10
     excel_required: true
-    format_type: Numeric and excluding spaces and commas.
+    format_type: 
+      en: "Numeric and excluding spaces and commas. Formulas are not to be used to populate this data field."
+      fr: "Données numériques, excluant les espaces et les virgules. Il ne faut pas utiliser de formule pour remplir ce champ."
     datastore_type: int
     solr_sum_to_field: contract_total_number_of
 
@@ -133,22 +146,25 @@ resources:
   - datastore_id: contracts_service_original_value
     label:
       en: Service Contracts $10K and under - Original Value
-      fr: Marchés de services de 10 000 $ et moins – Valeur initiale
+      fr: Marchés de services de 10 000 $ ou moins - Valeur d’origine
     excel_heading:
       en: |
         Service Contracts
         $10K and under
         - Original Value
       fr: |
-        Marchés de services de
-        10 000 $ et moins
-        - Valeur initiale
+        Marchés de services de 
+        10 000 $ ou moins
+        - Valeur d’origine
     description:
       en: "It is recommended for this field to be populated with the value of all service contracts with a value $10,000 and under, at the time of contract entry. This value should be in Canadian currency and include all applicable taxes."
+      fr: "Il est recommandé de saisir dans ce champ la valeur des marchés de services de 10 000 $ ou moins au moment de la conclusion du marché. Cette valeur doit être exprimée en dollars canadiens et inclure toutes les taxes qui s’appliquent."
     obligation: Mandatory
     form_required: true
     excel_required: true
-    format_type: "Numeric and excluding dollar signs, spaces and commas. For example: 23000.23"
+    format_type: 
+      en: "Numeric and excluding dollar signs, spaces and commas. For example, 23000.23. Formulas are not to be used to populate this data field."
+      fr: "Données numériques, excluant les symboles de dollars, les espaces et les virgules, par exemple, 23000.23. Il ne faut pas utiliser de formule pour remplir ce champ."
     datastore_type: money
     solr_sum_to_field: [contracts_service_total_value, contracts_total_original_value, contracts_total_total_value]
 
@@ -156,22 +172,25 @@ resources:
   - datastore_id: contracts_service_amendment_value
     label:
       en: Service Contracts from -$10K to $10K - Net Amendment Value
-      fr: Marchés de services de -10 000 $ à 10 000 $ - Valeur nette des modifications
+      fr: Modifications de marché de services de -10 000 $ à 10 000 $ - Valeur nette des modifications
     excel_heading:
       en: |
         Service Contracts
         from -$10K to $10K
         - Net Amendment Value
       fr: |
-        Marchés de services
-        de -10 000 $ à 10 000 $
+        Modifications de marché de services
+        de -10 000 $ à 10 000 $
         - Valeur nette des modifications
     description:
-      en: "It is recommended for this field to be populated with the value of all service contracts’ net amendments (i.e. all positive and negative amendments) with a value from -$10,000 to $10,000. This value should be in Canadian currency and include all applicable taxes. An amendment should be disclosed either quarterly or annually. Disclosing an amendment both quarterly and annually would result in double counting of the amendment’s value when calculating the total contracting activity of an organization."
+      en: "It is recommended for this field to be populated with the value of all net amendments to service contracts (that is, all positive and negative amendments) with a value from -$10,000 to $10,000. This value should be in Canadian currency and include all applicable taxes. An amendment should be reported either quarterly or annually. Reporting an amendment both quarterly and annually would result in double counting of the amendment’s value when calculating the total contracting activity of an organization."
+      fr: "Il est recommandé de saisir dans ce champ la valeur nette de toutes les modifications de marchés de services (c’est-à-dire, toutes les modifications positives et négatives) de -10 000 $ à 10 000 $. Cette valeur doit être exprimée en dollars canadiens et inclure toutes les taxes qui s’appliquent. Une modification doit faire l’objet d’une déclaration trimestrielle ou annuelle. La déclaration d’une modification de façon trimestrielle et annuelle donnerait lieu au double dénombrement de la valeur de la modification au moment de calculer le total de l’activité contractuelle d’une organisation."
     obligation: Mandatory
     form_required: true
     excel_required: true
-    format_type: "Numeric and excluding dollar signs, spaces and commas. For example: 23000.23"
+    format_type: 
+      en: "Numeric and excluding dollar signs, spaces and commas. For example, 23000.23. Formulas are not to be used to populate this data field."
+      fr: "Données numériques, excluant les symboles de dollars, les espaces et les virgules, par exemple, 23000.23. Il ne faut pas utiliser de formule pour remplir ce champ."
     datastore_type: money
     solr_sum_to_field: [contracts_service_total_value, contracts_total_amendment_value, contracts_total_total_value]
 
@@ -190,13 +209,16 @@ resources:
         services de construction
         de 10 000 $ et moins
     description:
-      en: "It is recommended for this field to be populated with the total number of goods contracts entered into with a value of $10,000 and under. This includes goods contracts entered into and subsequently amended in the same calendar year to an amended contract value of $10,000 and under."
+      en: "It is recommended for this field to be populated with the total number of construction contracts entered into with a value of $10,000 and under. This includes construction contracts entered into and subsequently amended in the same calendar year to an amended contract value of $10,000 and under."
+      fr: "Il est recommandé de saisir dans ce champ le nombre total de marchés de services de construction conclus d’une valeur de 10 000 $ ou moins, ce qui comprend les marchés de services de construction conclus et modifiés par la suite au cours de la même année civile et d’une valeur de 10 000 $ ou moins."
     obligation: Mandatory
     form_required: true
     form_attrs:
       size: 10
     excel_required: true
-    format_type: Numeric and excluding spaces and commas.
+    format_type: 
+      en: "Numeric and excluding spaces and commas. Formulas are not to be used to populate this data field."
+      fr: "Données numériques, excluant les espaces et les virgules. Il ne faut pas utiliser de formule pour remplir ce champ."
     datastore_type: int
     solr_sum_to_field: contract_total_number_of
 
@@ -204,22 +226,25 @@ resources:
   - datastore_id: contracts_construction_original_value
     label:
       en: Construction Contracts $10K and under - Original Value
-      fr: Marchés de services de construction de 10 000 $ et moins - Valeur initiale
+      fr: Marchés de services de construction de 10 000 $ et moins - Valeur d’origine
     excel_heading:
       en: |
         Construction Contracts
         $10K and under
         Original Value
       fr: |
-        Marchés de services de
-        construction de 10 000 $ et moins
-        - Valeur initiale
+        Marchés de services de 
+        construction de 10 000 $ et moins 
+        - Valeur d’origine
     description:
       en: "It is recommended for this field to be populated with the value of all construction contracts with a value $10,000 and under, at the time of contract entry. This value should be in Canadian currency and include all applicable taxes."
+      fr: "Il est recommandé de saisir dans ce champ la valeur des marchés de services de construction de 10 000 $ ou moins au moment de la conclusion du marché. Cette valeur doit être exprimée en dollars canadiens et inclure toutes les taxes qui s’appliquent."
     obligation: Mandatory
     form_required: true
     excel_required: true
-    format_type: "Numeric and excluding dollar signs, spaces and commas. For example: 23000.23"
+    format_type: 
+      en: "Numeric and excluding dollar signs, spaces and commas. For example, 23000.23. Formulas are not to be used to populate this data field."
+      fr: "Données numériques, excluant les symboles de dollars, les espaces et les virgules, par exemple, 23000.23. Il ne faut pas utiliser de formule pour remplir ce champ."
     datastore_type: money
     solr_sum_to_field: [contracts_construction_total_value, contracts_total_original_value, contracts_total_total_value]
 
@@ -227,22 +252,25 @@ resources:
   - datastore_id: contracts_construction_amendment_value
     label:
       en: Construction Contracts Amendments from -$10K to $10K - Net Amendment Value
-      fr: Modifications de marchés de construction de -10 000 $ à 10 000 $ - Valeur nette des modifications
+      fr: Modifications de marché de services de construction de -10 000 $ à 10 000 $ - Valeur nette des modifications
     excel_heading:
       en: |
         Construction Contracts
         Amendments from -$10K to $10K
         Net Amendment Value
       fr: |
-        Modifications de marchés de
-        construction de -10 000 $ à 10 000 $
+        Modifications de marché de 
+        services de construction de -10 000 $ à 10 000 $ 
         - Valeur nette des modifications
     description:
-      en: "It is recommended for this field to be populated with the value of all net amendments (i.e. all positive and negative amendments) with a value from -$10K to $10K. This value should be in Canadian currency and include all applicable taxes. An amendment should be disclosed either quarterly or annually. Disclosing an amendment both quarterly and annually would result in double counting of the amendment’s value when calculating the total contracting activity of an organization."
+      en: "It is recommended for this field to be populated with the value of all net amendments to construction contracts (that is, all positive and negative amendments) with a value from -$10,000 to $10,000. This value should be in Canadian currency and include all applicable taxes. An amendment should be reported either quarterly or annually. Reporting an amendment both quarterly and annually would result in double counting of the amendment’s value when calculating the total contracting activity of an organization."
+      fr: "Il est recommandé de saisir dans ce champ la valeur nette de toutes les modifications de marchés de services de construction (c’est-à-dire, toutes les modifications positives et négatives) de -10 000 $ à 10 000 $. Cette valeur doit être exprimée en dollars canadiens et inclure toutes les taxes qui s’appliquent. Une modification doit faire l’objet d’une déclaration trimestrielle ou annuelle. La déclaration d’une modification de façon trimestrielle et annuelle donnerait lieu au double dénombrement de la valeur de la modification au moment de calculer le total de l’activité contractuelle d’une organisation."
     obligation: Mandatory
     form_required: true
     excel_required: true
-    format_type: "Numeric and excluding dollar signs, spaces and commas. For example: 23000.23"
+    format_type: 
+      en: "Numeric and excluding dollar signs, spaces and commas. For example, 23000.23. Formulas are not to be used to populate this data field."
+      fr: "Données numériques, excluant les symboles de dollars, les espaces et les virgules, par exemple, 23000.23. Il ne faut pas utiliser de formule pour remplir ce champ."
     datastore_type: money
     solr_sum_to_field: [contracts_construction_total_value, contracts_total_amendment_value, contracts_total_total_value]
 
@@ -262,12 +290,15 @@ resources:
         pour toutes les valeurs en dollars
     description:
       en: "It is recommended for this field to be populated with the total number of all acquisition card transactions for all dollar values."
+      fr: "Il est recommandé de saisir dans ce champ le nombre total d’opérations effectuées par carte d’achat, peu importe le montant."
     obligation: Mandatory
     form_required: true
     form_attrs:
       size: 10
     excel_required: true
-    format_type: Numeric and excluding spaces and commas.
+    format_type: 
+      en: "Numeric and excluding spaces and commas. Formulas are not to be used to populate this data field."
+      fr: "Données numériques, excluant les espaces et les virgules. Il ne faut pas utiliser de formule pour remplir ce champ."
     datastore_type: int
 
   # 12.
@@ -286,10 +317,13 @@ resources:
         – Valeur totale
     description:
       en: "It is recommended for this field to be populated with the sum of all dollar values for all acquisition card transactions. This value should be in Canadian currency and include all applicable taxes."
+      fr: "Il est recommandé de saisir dans ce champ la somme des montants de toutes les opérations effectuées par carte d’achat. Cette valeur doit être exprimée en dollars canadiens et inclure toutes les taxes qui s’appliquent."
     obligation: Mandatory
     form_required: true
     excel_required: true
-    format_type: "Numeric and excluding dollar signs, spaces and commas. For example: 23000.23"
+    format_type: 
+      en: "Numeric and excluding dollar signs, spaces and commas. For example, 23000.23. Formulas are not to be used to populate this data field."
+      fr: "Données numériques, excluant les symboles de dollars, les espaces et les virgules, par exemple, 23000.23. Il ne faut pas utiliser de formule pour remplir ce champ."
     datastore_type: money
 
   - datastore_id: record_created
