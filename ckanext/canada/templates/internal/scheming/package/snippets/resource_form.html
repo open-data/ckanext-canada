@@ -1,5 +1,7 @@
 {% ckan_extends %}
 
+{% import 'macros/form.html' as form %}
+
 {# Separate our resource fields into common and resource/related-specific panels #}
 
 {% block basic_fields %}
@@ -67,4 +69,7 @@
         {%- endfor -%}
     </details>
   </div>
+
+  {{ form.required_message() }}
+
 {% endblock %}
