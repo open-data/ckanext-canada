@@ -451,8 +451,8 @@ form .form-actions .btn{
   border-right: none;
   border-left-color: #cfd1d5;
   border-left-width: 6px;
-  top: 0;
-  bottom: 0;
+  top: 50%;
+  transform: translateY(-50%);
   right: -6px;
   width: 6px;
   height: 34px;
