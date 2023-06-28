@@ -18,19 +18,19 @@
     {% for language in res.language %}
       {% for option in language_options %}
         {% if option.value == language %}
-        <span class="badge res-tag res-tag-lang"> 
+        <span class="badge res-tag res-tag-lang">
             {{ option.label[h.lang()] }}
           </span>
         {% endif %}
       {% endfor %}
     {% endfor %}
     {% if res.resource_type %}
-    <span class="badge res-tag"> 
+    <span class="badge res-tag">
       {{ res.resource_type }}
     </span>
     {% endif %}
     {% if res.format %}
-    <span class="badge res-tag"> 
+    <span class="badge res-tag">
       {{ res.format }}
     </span>
     {% endif %}
@@ -42,42 +42,45 @@
 
 {% block resource_item_explore %}
   {% if not url_is_edit %}
-  <div style="float: right">
-    <ul class="list-inline lst-spcd">
+  <div class="dropdown btn-group resource-action-links">
+    <a href="#" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+      <i class="fa fa-share"></i>
+      {{ _('Explore') }}
+      <span class="caret"></span>
+    </a>
+    <ul class="dropdown-menu">
       {% block resource_item_explore_links %}
-        <li>
-          {% if res.has_views %}
-            <a href="{{ url }}" class="btn btn-default btn-sm">
-                <i class="fa fa-bar-chart-o"></i>
-                {{ _('Preview') }}
-            </a>
+      <li>
+        <a href="{{ url }}">
+          {% if not is_activity_archive and res.has_views %}
+            <i class="fa fa-bar-chart-o"></i>
+            {{ _('Preview') }}
+          {% else %}
+            <i class="fa fa-info-circle"></i>
+            {{ _('More information') }}
           {% endif %}
-        </li>
-        {% if res.url and h.is_url(res.url) %}
-        <li>
-          <a href="{{ res.url }}" class="btn btn-primary btn-sm resource-url-analytics"
-             target="_blank" data-gc-analytics="manualDownload"
-             data-pkg-id="{{ pkg.id }}" data-res-id="{{ res.id }}" data-org-id="{{ pkg.organization.id }}">
-            {% if res.format == 'HTML' %}
-              <i class="fa fa-external-link"></i>
-              {{ _('Go to resource') }}
-            {% else %}
-              <i class="fa fa-arrow-circle-o-down"></i>
-              {{ _('Download') }}
-            {% endif %}
-          </a>
-        </li>
-        {% endif %}
-        {% if can_edit %}
-        <li>
-          <a href="{{ h.url_for(pkg.type ~ '_resource.edit', id=pkg.name, resource_id=res.id) }}" class="btn btn-primary btn-sm">
-            <i class="fa fa-pencil-square-o"></i>
-            {{ _('Edit') }}
-          </a>
-        </li>
-        {% endif %}
+        </a>
+      </li>
+      {% if res.url and h.is_url(res.url) %}
+      <li>
+        <a href="{{ res.url }}" class="resource-url-analytics" target="_blank">
+          {% if res.has_views or res.url_type == 'upload' %}
+            <i class="fa fa-arrow-circle-o-down"></i>
+            {{ _('Download') }}
+          {% else %}
+            <i class="fa fa-external-link"></i>
+            {{ _('Go to resource') }}
+          {% endif %}
+        </a>
+      </li>
+      {% endif %}
+      {% if can_edit %}
+        <li>{% link_for _('Edit resource'), named_route=pkg.type ~ '_resource.edit', id=pkg.name, resource_id=res.id, class_='dropdown-item', icon='pencil' %}</li>
+        {% block resource_item_explore_inner scoped %}{% endblock %}
+        <li>{% link_for _('Views'), named_route=pkg.type ~ '_resource.views', id=pkg.name, resource_id=res.id, class_='dropdown-item', icon='chart-bar' %}
+      {% endif %}
       {% endblock %}
     </ul>
   </div>
   {% endif %}
-  {% endblock %}
+{% endblock %}
