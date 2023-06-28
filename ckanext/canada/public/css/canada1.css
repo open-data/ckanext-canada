@@ -464,6 +464,17 @@ form .form-actions .btn{
   transform: translateY(-50%) !important;
   margin-right: 0 !important;
 }
+.resources-side-panel .nav-item .dropdown.position-absolute > .btn-light{
+  background-color: #eaebed !important;
+  border-color: #dcdee1 !important;
+  color: #335075 !important;
+}
+.resources-side-panel .nav-item .dropdown.position-absolute > .btn-light:hover,
+.resources-side-panel .nav-item .dropdown.position-absolute > .btn-light:active,
+.resources-side-panel .nav-item .dropdown.position-absolute > .btn-light:focus{
+  background-color: #cfd1d5 !important;
+  border-color: #bbbfc5 !important;
+}
 .resources-side-panel .nav-item .dropdown.position-absolute.open{
   z-index: 100 !important;
 }
