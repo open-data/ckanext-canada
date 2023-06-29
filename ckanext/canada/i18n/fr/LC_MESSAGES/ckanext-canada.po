@@ -57,9 +57,8 @@ msgstr ""
 "Cette mise à jour sera bientôt effectuée dans ouvert.canada.ca."
 
 #: ckanext/canada/controller.py:363
-#, fuzzy
 msgid "Resource updated."
-msgstr "Type de ressource"
+msgstr ""
 
 #: ckanext/canada/controller.py:395
 msgid "<strong>Note</strong><br>{0} is now logged in"
@@ -74,14 +73,12 @@ msgid "Unauthorized to create a user"
 msgstr ""
 
 #: ckanext/canada/controller.py:502 ckanext/canada/controller.py:542
-#, fuzzy
 msgid "Open Government Dataset Feed"
-msgstr "Gouvernement ouvert"
+msgstr ""
 
 #: ckanext/canada/controller.py:518
-#, fuzzy
 msgid "Dataset not found"
-msgstr "{number} dossier trouvé"
+msgstr ""
 
 #: ckanext/canada/controller.py:634
 msgid " record(s) published."
@@ -148,9 +145,8 @@ msgid "This record already exists"
 msgstr ""
 
 #: ckanext/canada/controller.py:928
-#, fuzzy
 msgid "Record Created"
-msgstr "Dossier publié"
+msgstr ""
 
 #: ckanext/canada/controller.py:982
 msgid "Multiple records found"
@@ -162,23 +158,20 @@ msgid "Record %s Updated"
 msgstr "Dossier %s mis à jour"
 
 #: ckanext/canada/controller.py:1063
-#, fuzzy
 msgid "No organizations found"
-msgstr "0 organisations trouvées"
+msgstr ""
 
 #: ckanext/canada/controller.py:1067
 msgid "Recombinant resource_name not found"
 msgstr ""
 
 #: ckanext/canada/controller.py:1109
-#, fuzzy
 msgid "Number required"
-msgstr "Renseignements généraux"
+msgstr ""
 
 #: ckanext/canada/controller.py:1114
-#, fuzzy
 msgid "Integer required"
-msgstr "Renseignements généraux"
+msgstr ""
 
 #: ckanext/canada/helpers.py:387
 msgid "A system administrator"
@@ -250,9 +243,9 @@ msgid "Suggestion Status"
 msgstr "État de la suggestion"
 
 #: ckanext/canada/plugins.py:714
-#, fuzzy, python-format
+#, python-format
 msgid "Your record %s has been saved."
-msgstr "Ce dossier a été supprimé de %s."
+msgstr ""
 
 #: ckanext/canada/plugins.py:838
 msgid "Resource Language"
@@ -301,14 +294,11 @@ msgstr ""
 "peut être inscrite dans ce champ."
 
 #: ckanext/canada/strings.py:12
-#, fuzzy
 msgid ""
 "This field must be NA (not applicable) if the Agreement Type or Trade "
 "Agreement field is not 0 (none) or XX (none), as applicable."
 msgstr ""
-"Ce champ doit être N, No ou Non, si les champs Type d’accord ou Accord "
-"commercial ne contiennent pas la valeur 0 (aucun) ou XX (aucun), le cas "
-"échéant."
+""
 
 #: ckanext/canada/strings.py:14
 msgid ""
@@ -344,15 +334,12 @@ msgstr ""
 "d’approvisionnement auprès des entreprises autochtones contient MS ou VS."
 
 #: ckanext/canada/strings.py:19
-#, fuzzy
 msgid ""
 "This field may only be populated with a 1 if the solicitation procedure "
 "is identified as non-competitive (TN) or Advance Contract Award Notice "
 "(AC)"
 msgstr ""
-"Cette zone doit contenir un « 1 » si la méthode d’invitation à "
-"soumissionner est identifiée comme étant non concurrentielle (TN) ou un "
-"préavis d’attribution de contrat (AC)."
+""
 
 #: ckanext/canada/strings.py:21
 msgid ""
@@ -362,24 +349,18 @@ msgid ""
 msgstr ""
 
 #: ckanext/canada/strings.py:23
-#, fuzzy
 msgid ""
 "This field may only be populated with \"0\" if the procurement was "
 "identified as non-competitive (TN) or advance contract award notice (AC)."
 msgstr ""
-"Cette zone doit contenir un « 1 » si la méthode d’invitation à "
-"soumissionner est identifiée comme étant non concurrentielle (TN) ou un "
-"préavis d’attribution de contrat (AC)."
+""
 
 #: ckanext/canada/strings.py:25
-#, fuzzy
 msgid ""
 "This field may not be populated with 1, 2, 3 or 4 if the procurement was "
 "identified as non-competitive or Advance Contract Award Notice."
 msgstr ""
-"Cette zone doit contenir un « 1 » si la méthode d’invitation à "
-"soumissionner est identifiée comme étant non concurrentielle (TN) ou un "
-"préavis d’attribution de contrat (AC)."
+""
 
 #: ckanext/canada/strings.py:27
 msgid ""
@@ -439,9 +420,8 @@ msgid "Please enter a valid email address."
 msgstr "S\\'il vous plaît, mettez une adresse email valide."
 
 #: ckanext/canada/validators.py:183
-#, fuzzy
 msgid "Invalid GeoJSON"
-msgstr "Licence non valide"
+msgstr ""
 
 #: ckanext/canada/validators.py:260
 msgid "Date may not be in the future when this record is marked ready to publish"
@@ -540,9 +520,8 @@ msgid "Log out"
 msgstr ""
 
 #: ckanext/canada/templates/internal/header.html:57
-#, fuzzy
 msgid "Home"
-msgstr "Afficher plus"
+msgstr ""
 
 #: ckanext/canada/templates/internal/header.html:59
 #: ckanext/canada/templates/internal/header.html:61
@@ -706,9 +685,8 @@ msgstr ""
 #: ckanext/canada/templates/internal/user/list.html:24
 #: ckanext/canada/templates/internal/user/list.html:73
 #: ckanext/canada/templates/internal/user/read_base.html:5
-#, fuzzy
 msgid "Users"
-msgstr "Entreprises"
+msgstr ""
 
 #: ckanext/canada/templates/internal/admin/base.html:9
 #: ckanext/canada/templates/public/admin/trash.html:38
@@ -776,9 +754,8 @@ msgid "Create"
 msgstr "Créer"
 
 #: ckanext/canada/templates/internal/ajax_snippets/api_info.html:9
-#, fuzzy
 msgid "Update / Insert"
-msgstr "Mis à jour le dossier"
+msgstr ""
 
 #: ckanext/canada/templates/internal/datastore/snippets/dictionary_form.html:3
 msgid "Field {num}."
@@ -789,18 +766,16 @@ msgid "Type Override"
 msgstr ""
 
 #: ckanext/canada/templates/internal/datastore/snippets/dictionary_form.html:20
-#, fuzzy
 msgid "English Label"
-msgstr "Anglais"
+msgstr ""
 
 #: ckanext/canada/templates/internal/datastore/snippets/dictionary_form.html:24
 msgid "French Label"
 msgstr ""
 
 #: ckanext/canada/templates/internal/datastore/snippets/dictionary_form.html:28
-#, fuzzy
 msgid "English Description"
-msgstr "Aucune description disponible pour cet ensemble de données"
+msgstr ""
 
 #: ckanext/canada/templates/internal/datastore/snippets/dictionary_form.html:32
 msgid "French Description"
@@ -869,9 +844,8 @@ msgid ""
 msgstr "Cet ensemble de données a été supprimé et n'est plus accessible"
 
 #: ckanext/canada/templates/internal/package/read.html:16
-#, fuzzy
 msgid "Undelete"
-msgstr "non défini à"
+msgstr ""
 
 #: ckanext/canada/templates/internal/package/read.html:26
 #: ckanext/canada/templates/public/package/read_base.html:88
@@ -904,9 +878,8 @@ msgid "five stars"
 msgstr "cinq étoiles"
 
 #: ckanext/canada/templates/internal/package/read_base.html:4
-#, fuzzy
 msgid "Dataset"
-msgstr "Dossiers"
+msgstr ""
 
 #: ckanext/canada/templates/internal/package/read_base.html:5
 #: ckanext/canada/templates/public/organization/activity_stream.html:4
@@ -948,14 +921,12 @@ msgid "Add Resource or Related Item"
 msgstr "Ajouter une ressource ou un objet connexe"
 
 #: ckanext/canada/templates/internal/package/snippets/stages.html:37
-#, fuzzy
 msgid "Add Resource Metadata"
-msgstr "Ajouter les métadonnées du produit"
+msgstr ""
 
 #: ckanext/canada/templates/internal/package/snippets/stages.html:39
-#, fuzzy
 msgid "Add data"
-msgstr "Métadonnées"
+msgstr ""
 
 #: ckanext/canada/templates/internal/package/snippets/view_form.html:8
 msgid "Title (English)"
@@ -1002,9 +973,8 @@ msgstr ""
 #: ckanext/canada/templates/internal/recombinant/create_pd_record.html:82
 #: ckanext/canada/templates/internal/recombinant/update_pd_record.html:85
 #: ckanext/canada/templates/internal/scheming/package/snippets/package_form.html:68
-#, fuzzy
 msgid "Save"
-msgstr "Voyage"
+msgstr ""
 
 #: ckanext/canada/templates/internal/recombinant/resource_edit.html:16
 #, python-format
@@ -1074,7 +1044,6 @@ msgid "Invalid choice for"
 msgstr "Choix non valide pour"
 
 #: ckanext/canada/templates/internal/scheming/form_snippets/imso_approval_select.html:38
-#, fuzzy
 msgid ""
 "<small class='text-info' style='margin-bottom: 15px; display: inline-"
 "block'> <p>Has approval been obtained? By selecting yes, you have ensured"
@@ -1112,50 +1081,7 @@ msgid ""
 "legal, contractual, or third party, policy restrictions or "
 "limitations).</li> </ol> </small>"
 msgstr ""
-"<small class='text-info' style='margin-bottom: 15px; display: inline-"
-"block'><p>A-t-on obtenu l’approbation? En sélectionnant << oui >>, vous "
-"avez fait certain que les énoncés suivants sont "
-"vrais:</p><ol><li><b>Confidentialité</b> -  Les ressources en données ou "
-"documentaires ne sont pas assujetties à aucune restriction liée à la "
-"confidentialité, comme les documents confidentiels du Cabinet, le secret "
-"professionnel de l’avocat, les renseignements , conseils ou "
-"recommandations classifiés ou protégés, les renseignements de tiers ou "
-"les renseignements obtenus à titre confidentiel.</li><li><b>Autorisation "
-"de diffuser</b> - L’institution a le mandat, l’autorisation législative "
-"ou la permission d’un fournisseur tiers de publier les ressources en "
-"données ou documentaires en vertu de la <a "
-"href='https://ouvert.canada.ca/fr/licence-du-gouvernement-ouvert-"
-"canada'><u>Licence du gouvernement ouvert – "
-"Canada</u></a>.</li><li><b>Formats</b> - Les ressources en données ou "
-"documentaires sont dans un format ouvert et accessible qui est conforme à"
-" la <a href='https://www.tbs-sct.gc.ca/pol/doc-"
-"fra.aspx?id=23601'><u>Norme sur l’accessibilité des sites "
-"Web</u></a>.</li><li><b>Protection des renseignements personnels</b> - "
-"Les ressources en données ou documentaires ne contiennent pas des "
-"renseignements personnels, au sens de l’article 3 de la <a "
-"href='https://www.priv.gc.ca/fr/sujets-lies-a-la-protection-de-la-vie-"
-"privee/lois-sur-la-protection-des-renseignements-personnels-au-canada/la-"
-"loi-sur-la-protection-des-renseignements-personnels/'><u>Loi sur la "
-"protection des renseignements personnels</u></a>, à moins que la personne"
-" concernée n’ait consenti à leur divulgation ou que les renseignements "
-"personnels ne répondent aux critères énoncés au paragraphe 8(2) de cette "
-"même Loi.</li><li><b>Langues officielles</b> - Les ressources en données "
-"ou documentaires sont disponibles dans les deux langues officielles et "
-"sont conformes aux exigences de la <a href='https://laws-"
-"lois.justice.gc.ca/fra/lois/O-3.01/'><u>Loi sur les langues "
-"officielles</u></a>.</li><li><b>Sécurité</b> - Les ressources en données "
-"ou documentaires n’augmentent pas les risques à la sécurité de "
-"l’institution, des autres institutions ou du gouvernement dans son "
-"ensemble et sont conformes aux exigences de la <a href='https://www.tbs-"
-"sct.gc.ca/pol/doc-fra.aspx?id=16578'><u>Politique sur la sécurité du "
-"gouvernement</u></a> et de ses instruments connexes.</li><li><b>Autres – "
-"Aspects juridiques, réglementaires, stratégiques ou contractuelsl</b> - "
-"La diffusion des ressources en données ou d’autres ressources "
-"documentaires est conforme à toutes les autres exigences juridiques, "
-"réglementaires, contractuelles et stratégiques pertinentes (p. ex., il "
-"est confirmé qu’il n’y a pas de restrictions ou de limitations "
-"juridiques, contractuelles, de tiers ou de stratégiques "
-"pertinentes).</li></ol></small>"
+""
 
 #: ckanext/canada/templates/internal/scheming/form_snippets/repeating_subfields.html:8
 #: ckanext/canada/templates/public/macros/canada_read.html:151
@@ -1320,9 +1246,8 @@ msgstr "Aucun filtre sélectionné pour cette recherche"
 
 #: ckanext/canada/templates/internal/snippets/social.html:7
 #: ckanext/canada/templates/public/snippets/social.html:7
-#, fuzzy
 msgid "Social"
-msgstr "Provinciale"
+msgstr ""
 
 #: ckanext/canada/templates/internal/snippets/user.html:12
 #: ckanext/canada/templates/public/snippets/user.html:21
@@ -1393,18 +1318,16 @@ msgstr "Nom"
 
 #: ckanext/canada/templates/internal/user/list.html:37
 #: ckanext/canada/templates/public/organization/member_new.html:59
-#, fuzzy
 msgid "Role"
-msgstr "Explorer"
+msgstr ""
 
 #: ckanext/canada/templates/internal/user/list.html:52
 msgid "Sysadmin"
 msgstr ""
 
 #: ckanext/canada/templates/internal/user/list.html:52
-#, fuzzy
 msgid "Member"
-msgstr "{0} membre"
+msgstr "Membre"
 
 #: ckanext/canada/templates/internal/user/list.html:78
 msgid "Search and view users."
@@ -1456,9 +1379,8 @@ msgid "NOTE: Username and password are case sensitive."
 msgstr "NOTE: Le nom d'utilisateur et mot de passe sont sensibles à la casse."
 
 #: ckanext/canada/templates/internal/user/new.html:6
-#, fuzzy
 msgid "Registration"
-msgstr "Organisation"
+msgstr ""
 
 #: ckanext/canada/templates/internal/user/new.html:18
 msgid "Why Sign Up?"
@@ -1502,9 +1424,8 @@ msgstr ""
 "(_). Exemplar : joe-bloggs"
 
 #: ckanext/canada/templates/internal/user/new_user_form.html:10
-#, fuzzy
 msgid "Full Name"
-msgstr "Aucun nom complet fourni"
+msgstr ""
 
 #: ckanext/canada/templates/internal/user/new_user_form.html:11
 msgid "Example: Joe Bloggs"
@@ -1532,16 +1453,14 @@ msgstr "Exemplar : 000 000 0000"
 #: ckanext/canada/templates/internal/user/snippets/login_form.html:17
 #: ckanext/canada/templates/public/user/edit_user_form.html:32
 #: ckanext/canada/templates/public/user/snippets/login_form.html:15
-#, fuzzy
 msgid "Password"
-msgstr "Réinitialiser le mot de passe"
+msgstr ""
 
 #: ckanext/canada/templates/internal/user/new_user_form.html:23
 msgid "Confirm"
 msgstr ""
 
 #: ckanext/canada/templates/internal/user/new_user_form.html:26
-#, fuzzy
 msgid ""
 " <h2>Terms and Conditions for the Open Government Registry</h2> "
 "<p><em>Privacy Statement</em></p> <p>The Government of Canada is "
@@ -1626,128 +1545,7 @@ msgid ""
 "conditions of use.</p> <p>If you select “I do not agree” you will not "
 "have access to the Registry.</p> "
 msgstr ""
-"\n"
-"    <h2>Modalités pour le registre du gouvernement ouvert</h2>\n"
-"    <p><em>Déclaration sur la protection des renseignements "
-"personnels</em></p>\n"
-"    <p>Le gouvernement du Canada attache de l'importance à votre vie "
-"privée et à votre sécurité et s'engage à mettre en œuvre des mesures qui "
-"respectent ces valeurs. Ce document résume la politique et les pratiques "
-"en matière de protection des renseignements personnels qui s’appliquent "
-"aux justificatifs de votre compte dans le registre du gouvernement "
-"ouvert.</p>\n"
-"    <p>La collecte et l’utilisation des « nom d’utilisateur, mot de passe"
-" et adresse courriel » servent à attribuer, à gérer et à authentifier les"
-" justificatifs d’identité anonymes des particuliers qui accèdent aux "
-"applications en ligne du gouvernement du Canada ou qui communiquent avec "
-"celles-ci.</p>\n"
-"    <p>Les renseignements personnels peuvent être utilisés pour établir "
-"des pistes d’audit de l’utilisation des justificatifs. Dans les cas "
-"d’infractions présumées à la sécurité ou de violations de la "
-"confidentialité, les renseignements personnels peuvent être communiqués "
-"aux services ministériels de sécurité, aux agents de l’accès à "
-"l’information et de la protection des renseignements personnels et aux "
-"institutions fédérales où les renseignements personnels ont peut-être été"
-" compromis (veuillez vous référer aux Fichiers de renseignements "
-"personnels sur les Incidents de sécurité ordinaire - POU 939). Dans les "
-"cas d’activité criminelle présumée, les renseignements personnels peuvent"
-" également être communiqués à la Gendarmerie royale du Canada aux fins "
-"d’enquête; veuillez vous référer aux Fichiers de renseignements "
-"personnels sur les dossiers de cas opérationnels spécifiques - GRC PPU "
-"005.</p>\n"
-"    <p>Nous utilisons des programmes logiciels pour surveiller "
-"l’achalandage sur le réseau afin de déceler toute tentative non autorisée"
-" de téléverser ou de modifier des renseignements, ou de causer d’autres "
-"dommages. Ce logiciel reçoit et enregistre l’adresse de protocole "
-"Internet (IP) de l’ordinateur qui a communiqué avec nos sites Web, ainsi "
-"que la date et l’heure de la visite et les pages visitées. Nous ne "
-"cherchons pas à établir de lien entre ces adresses et l’identité des "
-"personnes visitant nos sites, à moins qu’une manœuvre visant à endommager"
-" les sites ait été décelée. </p>\n"
-"    <p>Toute question, préoccupation ou plainte concernant cet avis ou "
-"l’application de la Loi sur la protection des renseignements personnels "
-"relativement à votre CléGC peuvent être adressées à la Direction de "
-"l'accès à l'information et de la protection des renseignements personnels"
-" par courriel au <a href=\"mailto:ATIP-AIPRP@ssc-spc.gc.ca\">ATIP-AIPRP"
-"@ssc-spc.gc.ca</a>, ou en écrivant à l’adresse suivante :</p>\n"
-"    <p>Direction de l'accès à l'information et de la protection des "
-"renseignements personnels<br/>\n"
-"    Secrétariat aux affaires générales<br/>\n"
-"    Services partagés Canada<br/>\n"
-"    CP 9808, Station T, SCC<br/>\n"
-"    Ottawa (Ontario)  K1G 4A8<br/>\n"
-"    <p>Pour en apprendre davantage sur les questions relatives à la "
-"protection des renseignements personnels ainsi que sur la <em>Loi sur la "
-"protection des renseignements personnels</em> en général, veuillez "
-"consulter le site Web du<a "
-"href=\"https://www.priv.gc.ca/fr/\">Commissariat à la protection de la "
-"vie privée du Canada</a> ou téléphoner au 1-800-282-1376.</p>\n"
-"    <p>En échange de l’accès que vous offre le Secrétariat du Conseil du "
-"Trésor du Canada (SCT) au registre du gouvernement ouvert (le Registre), "
-"vous acceptez de vous conformer aux modalités d’utilisation suivantes "
-"relatives à l’utilisation actuelle du Registre ainsi qu’à toutes les "
-"utilisations futures :</p>\n"
-"    <ol><li>Vous convenez de fournir tous les renseignements requis pour "
-"la création d’un compte dans le Registre :<br/>\n"
-"    Nom d’utilisateur<br/>\n"
-"    Nom complet<br/>\n"
-"    Adresse courriel du gouvernement du Canada<br/>\n"
-"    Nom du ministère<br/>\n"
-"    Mot de passe</li>\n"
-"    <li>Vous convenez que tous les renseignements fournis sont à votre "
-"connaissance vrais, exacts et complets.</li>\n"
-"    <li>Vous comprenez et convenez que vous êtes en tout temps "
-"responsable de vos identifiants. Cette responsabilité s’applique même si "
-"vous modifiez vos identifiants. Ceux-ci doivent demeurer confidentiels en"
-" tout temps et ne doivent pas être partagés ni divulgués à des "
-"tiers.</li>\n"
-"    <li>Si vos identifiants (c.-à-d. nom d’utilisateur, mot de passe) "
-"sont communiqués ou que vous soupçonnez qu’une autre personne les a "
-"découverts ou obtenus, il vous appartient de prendre les dispositions "
-"nécessaires afin d’assurer la conformité aux modalités auxquelles vous "
-"avez convenu lors de la création de vos identifiants.</li>\n"
-"    <li>Vous convenez de ne pas utiliser vos propres identifiants ou ceux"
-" d’une autre personne à des fins inappropriées.</li>\n"
-"    <li>Vous convenez de fournir tous les renseignements nécessaires pour"
-" la création des dossiers.</li>\n"
-"    <li>Vous convenez de ne pas utiliser le service d'une façon qui "
-"harcèle ou qui pourrait harceler d'autres parties ou qui perturbe ou a le"
-" potentiel de perturber, de miner, de corrompre, de diminuer, de menacer "
-"ou de compromettre le Registre.</li>\n"
-"    <li>L’équipe du gouvernement ouvert du SCT surveillera l’accès au "
-"Registre afin d’assurer l’utilisation responsable du service et la "
-"conformité à ces modalités.</li>\n"
-"    <li>Vous comprenez et acceptez que le Groupe de travail du "
-"gouvernement ouvert du SCT peut sans préavis suspendre ou révoquer votre "
-"accès au Registre dans les circonstances suivantes :\n"
-"      <ul><li>nous soupçonnons une utilisation non autorisée de vos "
-"renseignements personnels ou de connexion;</li>\n"
-"      <li>vous ne vous conformez pas aux modalités d’utilisation ou aux "
-"ententes en place avec le Secrétariat du Conseil du Trésor du "
-"Canada;</li>\n"
-"      <li>par mesure de sécurité;</li>\n"
-"      <li>pour des raisons opérationnelles;</li>\n"
-"      <li>pour des raisons administratives.</li></ul></li>\n"
-"    <li>Le Groupe de travail du gouvernement ouvert du SCT a pris toutes "
-"les mesures qui s’imposent en vue d’assurer la sécurité de ce site Web. "
-"Nous avons utilisé une technologie de chiffrement avancée et intégré "
-"d’autres procédures afin de protéger vos renseignements personnels en "
-"tout temps. Cependant, l’Internet est un réseau public et une violation "
-"de la sécurité des données demeure une possibilité.</li>\n"
-"    <li>Le SCT n’est pas responsable du non-respect des délais de "
-"publication en raison de :\n"
-"      <ul><li>la disponibilité ou non-disponibilité, peu importe la "
-"raison, d’Internet, des services de connexion ou de tout autre système "
-"d’infrastructure;</li>\n"
-"      <li>restriction, de retard, d’un mauvais fonctionnement ou de la "
-"non-disponibilité du Registre.</li></ul></li>\n"
-"    <li>Ces modalités d’utilisation peuvent être modifiées de temps à "
-"autre.</li></ol>\n"
-"    <p>En sélectionnant « J’accepte », vous indiquez que vous acceptez "
-"ces modalités d’utilisation.</p>\n"
-"    <p>Si vous sélectionnez « Je n’accepte pas », vous n’aurez pas accès "
-"au Registre.</p>\n"
-"    "
+""
 
 #: ckanext/canada/templates/internal/user/new_user_form.html:71
 msgid "I agree"
@@ -1758,7 +1556,7 @@ msgid "I do not agree"
 msgstr "Je n’accepte pas"
 
 #: ckanext/canada/templates/internal/user/perform_reset.html:8
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "1. Passwords must contain characters from at least 3 of the following 4 "
 "classes: * Upper Case Letters: A, B, C, … Z * Lower Case Letters: a, b, "
@@ -1766,14 +1564,7 @@ msgid ""
 "({}[],.<>;:'\"?/|\\`~!@#$%%^&*()_-+=). 2. No accented characters are "
 "permitted. 3. All passwords must be at least 8 characters long. "
 msgstr ""
-"1. Les mots de passe doivent contenir des caractères provenant d’au moins"
-" trois des quatre catégories suivantes :\n"
-"    * Lettres majuscules :A, B, C, … Z\n"
-"    * Lettres minuscules : a, b, c, … z\n"
-"    * Chiffres arabes :0, 1, 2, … 9\n"
-"    * Caractères spéciaux : ({}[],.<>;:'\"?/|\\`~!@#$%^&*()_-+=).\n"
-"2. Les lettres accentuées ne sont pas acceptées.\n"
-"3. Tous les mots de passe doivent compter au moins huit caractères.\n"
+""
 
 #: ckanext/canada/templates/internal/user/read_base.html:12
 msgid "Edit User"
@@ -1945,9 +1736,8 @@ msgid "Mobile applications"
 msgstr "Applications mobiles"
 
 #: ckanext/canada/templates/public/footer.html:35
-#, fuzzy
 msgid "https://www.canada.ca/en/government/about.html"
-msgstr "https://www.canada.ca/fr/gouvernement/min.html"
+msgstr "https://www.canada.ca/fr/gouvernement/a-propos.html"
 
 #: ckanext/canada/templates/public/footer.html:35
 msgid "About Canada.ca"
@@ -2077,9 +1867,8 @@ msgstr ""
 " et du magasin de données</a>.</p>"
 
 #: ckanext/canada/templates/public/ajax_snippets/api_info.html:19
-#, fuzzy
 msgid "Endpoints"
-msgstr "Rapports"
+msgstr ""
 
 #: ckanext/canada/templates/public/ajax_snippets/api_info.html:23
 msgid ""
@@ -2154,14 +1943,12 @@ msgstr ""
 "par Cartes ouvertes"
 
 #: ckanext/canada/templates/public/macros/canada_read.html:36
-#, fuzzy
 msgid "Keyword"
-msgstr "Mots clés"
+msgstr ""
 
 #: ckanext/canada/templates/public/macros/canada_read.html:226
-#, fuzzy
 msgid "entry"
-msgstr "entrées"
+msgstr ""
 
 #: ckanext/canada/templates/public/macros/canada_read.html:226
 msgid "entries"
@@ -2207,9 +1994,8 @@ msgid "Are you sure you want to delete member - {name}?"
 msgstr ""
 
 #: ckanext/canada/templates/public/organization/index.html:13
-#, fuzzy
 msgid "There are currently no organizations for this site"
-msgstr "Aucun filtre sélectionné pour cette recherche"
+msgstr ""
 
 #: ckanext/canada/templates/public/organization/index.html:15
 msgid "How about creating one?"
@@ -2220,15 +2006,13 @@ msgid "Back to all members"
 msgstr ""
 
 #: ckanext/canada/templates/public/organization/member_new.html:9
-#, fuzzy
 msgid "Edit Member"
-msgstr "Modifier les membres"
+msgstr "Modifier le membre"
 
 #: ckanext/canada/templates/public/organization/member_new.html:9
 #: ckanext/canada/templates/public/organization/member_new.html:68
-#, fuzzy
 msgid "Add Member"
-msgstr "{0} membre"
+msgstr ""
 
 #: ckanext/canada/templates/public/organization/member_new.html:17
 msgid "Existing User"
@@ -2243,28 +2027,24 @@ msgid "or"
 msgstr ""
 
 #: ckanext/canada/templates/public/organization/member_new.html:45
-#, fuzzy
 msgid "New User"
-msgstr "une étoile"
+msgstr ""
 
 #: ckanext/canada/templates/public/organization/member_new.html:48
 msgid "If you wish to invite a new user, enter their email address."
 msgstr ""
 
 #: ckanext/canada/templates/public/organization/member_new.html:51
-#, fuzzy
 msgid "Email address"
-msgstr "Adresse Web"
+msgstr ""
 
 #: ckanext/canada/templates/public/organization/member_new.html:62
-#, fuzzy
 msgid "Are you sure you want to delete this member?"
-msgstr "Êtes-vous certain de vouloir supprimer cet état?"
+msgstr ""
 
 #: ckanext/canada/templates/public/organization/member_new.html:64
-#, fuzzy
 msgid "Update Member"
-msgstr "Modifier les membres"
+msgstr ""
 
 #: ckanext/canada/templates/public/organization/member_new.html:81
 msgid "What are roles?"
@@ -2366,15 +2146,12 @@ msgstr "Retourner à la page de recherche"
 #: ckanext/canada/templates/public/scheming/display_snippets/fluent_tags.html:9
 #: ckanext/canada/templates/public/snippets/package_item.html:38
 #: ckanext/canada/templates/public/snippets/package_item.html:52
-#, fuzzy
 msgid ""
 "This third party metadata element has been translated using an automated "
 "translation tool. To report any discrepancies please contact open-ouvert"
 "@tbs-sct.gc.ca"
 msgstr ""
-"Cet élément de métadonnées provenant d’une tierce partie a été traduit à "
-"l'aide d'un outil de traduction automatisée. Pour signaler toute "
-"anomalie, veuillez communiquer avec nous à open-ouvert@tbs-sct.gc.ca"
+""
 
 #: ckanext/canada/templates/public/package/read.html:30
 #, python-format
@@ -2486,9 +2263,8 @@ msgstr "{record_title} - Portail des données ouvertes - Données ouvertes"
 
 #: ckanext/canada/templates/public/package/read_base.html:43
 #: ckanext/canada/templates/public/scheming/package/resource_read.html:7
-#, fuzzy
 msgid "Additional Information"
-msgstr "Informations supplémentaires en français"
+msgstr ""
 
 #: ckanext/canada/templates/public/package/read_base.html:72
 msgid "Temporal Coverage"
@@ -2547,9 +2323,8 @@ msgid "HNAP ISO:19115 Metadata Record"
 msgstr "Enregistrement de métadonnées de HNAP ISO:19115"
 
 #: ckanext/canada/templates/public/package/resource_read.html:46
-#, fuzzy
 msgid "Data Dictionary"
-msgstr "Validation des données"
+msgstr ""
 
 #: ckanext/canada/templates/public/package/search.html:15
 msgid "Search Open Government"
@@ -2615,9 +2390,8 @@ msgid "Save & add another"
 msgstr "Sauvegarder et ajouter une autre ressource ou objet annexe"
 
 #: ckanext/canada/templates/public/package/snippets/resource_item.html:63
-#, fuzzy
 msgid "Go to resource"
-msgstr "Modifier ressources"
+msgstr ""
 
 #: ckanext/canada/templates/public/package/snippets/resource_item.html:66
 msgid "Download"
@@ -2690,14 +2464,12 @@ msgid "Spatial Feature"
 msgstr "Élément spatial"
 
 #: ckanext/canada/templates/public/snippets/menu.html:2
-#, fuzzy
 msgid "Topics menu"
-msgstr "Menu du site"
+msgstr ""
 
 #: ckanext/canada/templates/public/snippets/organization.html:23
-#, fuzzy
 msgid "read more"
-msgstr "En charger davantage"
+msgstr ""
 
 #: ckanext/canada/templates/public/snippets/package_item.html:56
 msgid "This dataset has no description"
@@ -2705,14 +2477,12 @@ msgstr "Aucune description disponible pour cet ensemble de données"
 
 #: ckanext/canada/templates/public/snippets/package_item.html:86
 #: ckanext/canada/templates/public/snippets/package_item.html:99
-#, fuzzy
 msgid "Status"
-msgstr "Contactez-nous"
+msgstr ""
 
 #: ckanext/canada/templates/public/snippets/package_item.html:94
-#, fuzzy
 msgid "Date"
-msgstr "Date de fin"
+msgstr ""
 
 #: ckanext/canada/templates/public/snippets/package_item.html:107
 msgid "Resource Formats"
@@ -2801,9 +2571,8 @@ msgid "Relevance"
 msgstr "pertinence"
 
 #: ckanext/canada/templates/public/snippets/user.html:59
-#, fuzzy
 msgid "Register"
-msgstr "Premier ministre"
+msgstr ""
 
 #: ckanext/canada/templates/public/snippets/activities/deleted_datastore.html:6
 msgid "{actor} {activity_type} for resource \"{resource}\""
@@ -2861,12 +2630,10 @@ msgid "Change your details"
 msgstr "Modifier vos détails"
 
 #: ckanext/canada/templates/public/user/edit_user_form.html:11
-#, fuzzy
 msgid "Full name"
-msgstr "Aucun nom complet fourni"
+msgstr ""
 
 #: ckanext/canada/templates/public/user/edit_user_form.html:11
-#, fuzzy
 msgid "eg. Joe Bloggs"
 msgstr "Exemplar : Joe Bloggs"
 
@@ -2887,26 +2654,22 @@ msgid "Change your password"
 msgstr "Modifier votre mot de passe"
 
 #: ckanext/canada/templates/public/user/edit_user_form.html:29
-#, fuzzy
 msgid "Old Password"
-msgstr "Réinitialiser le mot de passe"
+msgstr ""
 
 #: ckanext/canada/templates/public/user/edit_user_form.html:34
-#, fuzzy
 msgid "Confirm Password"
-msgstr "Modifier votre mot de passe"
+msgstr ""
 
 #: ckanext/canada/templates/public/user/edit_user_form.html:38
 msgid "Update Profile"
 msgstr "Mettre à jour le profil"
 
 #: ckanext/canada/templates/public/user/login.html:18
-#, fuzzy
 msgid " Create an Account"
 msgstr "Créer un compte"
 
 #: ckanext/canada/templates/public/user/login.html:28
-#, fuzzy
 msgid "Forgot your password?"
 msgstr "Réinitialiser le mot de passe"
 
@@ -2915,14 +2678,12 @@ msgid "You are now logged out."
 msgstr "Vous êtes maintenant déconnecté"
 
 #: ckanext/canada/templates/public/user/new_user_form.html:4
-#, fuzzy
 msgid "Create Account"
 msgstr "Créer un compte"
 
 #: ckanext/canada/templates/public/user/perform_reset.html:8
-#, fuzzy
 msgid "Update Password"
-msgstr "Réinitialiser le mot de passe"
+msgstr ""
 
 #: ckanext/canada/templates/public/user/read_base.html:6
 msgid "Details"
@@ -2933,9 +2694,8 @@ msgid "Followers"
 msgstr ""
 
 #: ckanext/canada/templates/public/user/read_base.html:26
-#, fuzzy
 msgid "Edits"
-msgstr "Modifier"
+msgstr ""
 
 #: ckanext/canada/templates/public/user/read_base.html:40
 msgid "Open ID"
@@ -2970,14 +2730,12 @@ msgid "Close"
 msgstr ""
 
 #: ckanext/canada/templates/public/user/snippets/followee_dropdown.html:13
-#, fuzzy
 msgid "Activity from:"
-msgstr "Flux d'Activités"
+msgstr ""
 
 #: ckanext/canada/templates/public/user/snippets/followee_dropdown.html:21
-#, fuzzy
 msgid "Search list..."
-msgstr "Recherche..."
+msgstr ""
 
 #: ckanext/canada/templates/public/user/snippets/followee_dropdown.html:46
 msgid "You are not following anything"
