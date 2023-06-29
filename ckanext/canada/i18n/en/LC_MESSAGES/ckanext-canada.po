@@ -75,9 +75,8 @@ msgid "Open Government Dataset Feed"
 msgstr ""
 
 #: ckanext/canada/controller.py:518
-#, fuzzy
 msgid "Dataset not found"
-msgstr "No records found"
+msgstr ""
 
 #: ckanext/canada/controller.py:634
 msgid " record(s) published."
@@ -132,9 +131,8 @@ msgid "Unauthorized"
 msgstr ""
 
 #: ckanext/canada/controller.py:913
-#, fuzzy
 msgid "This record already exists"
-msgstr "Record id already exists"
+msgstr ""
 
 #: ckanext/canada/controller.py:928
 msgid "Record Created"
@@ -158,7 +156,6 @@ msgid "Recombinant resource_name not found"
 msgstr ""
 
 #: ckanext/canada/controller.py:1109
-#, fuzzy
 msgid "Number required"
 msgstr ""
 
@@ -216,9 +213,8 @@ msgid "Spatial Representation Type"
 msgstr ""
 
 #: ckanext/canada/plugins.py:376
-#, fuzzy
 msgid "Map Viewer"
-msgstr "Viewable on Map"
+msgstr ""
 
 #: ckanext/canada/plugins.py:377
 msgid "Record Status"
@@ -426,9 +422,8 @@ msgstr ""
 
 #: ckanext/canada/templates/internal/error_document_template.html:5
 #: ckanext/canada/templates/internal/home/quick_links.html:2
-#, fuzzy
 msgid "Open Government Registry"
-msgstr "Open Government E-mail"
+msgstr ""
 
 #: ckanext/canada/templates/internal/error_document_template.html:17
 msgid ""
@@ -550,9 +545,8 @@ msgstr ""
 #: ckanext/canada/templates/internal/snippets/dataset_facets.html:5
 #: ckanext/canada/templates/public/macros/canada_read.html:182
 #: ckanext/canada/templates/public/snippets/dataset_facets.html:4
-#, fuzzy
 msgid "Suggested Datasets"
-msgstr "No edited records"
+msgstr ""
 
 #: ckanext/canada/templates/internal/header.html:101
 #: ckanext/canada/templates/internal/header.html:103
@@ -657,7 +651,6 @@ msgid "Search..."
 msgstr ""
 
 #: ckanext/canada/templates/internal/admin/publish_search.html:32
-#, fuzzy
 msgid "Search Results:"
 msgstr "Search Records"
 
@@ -722,9 +715,8 @@ msgid "French Label"
 msgstr ""
 
 #: ckanext/canada/templates/internal/datastore/snippets/dictionary_form.html:28
-#, fuzzy
 msgid "English Description"
-msgstr "This record has no description"
+msgstr ""
 
 #: ckanext/canada/templates/internal/datastore/snippets/dictionary_form.html:32
 msgid "French Description"
@@ -758,19 +750,16 @@ msgstr ""
 
 #: ckanext/canada/templates/internal/organization/edit_base.html:21
 #: ckanext/canada/templates/public/organization/read_base.html:23
-#, fuzzy
 msgid "Edit Members"
-msgstr "Keep me logged in"
+msgstr ""
 
 #: ckanext/canada/templates/internal/package/base_form_page.html:4
-#, fuzzy
 msgid "Create Dataset"
-msgstr "Create record"
+msgstr ""
 
 #: ckanext/canada/templates/internal/package/edit_base.html:5
-#, fuzzy
 msgid "Edit metadata"
-msgstr "Add record"
+msgstr ""
 
 #: ckanext/canada/templates/internal/package/edit_base.html:6
 #: ckanext/canada/templates/public/package/resources.html:5
@@ -824,9 +813,8 @@ msgid "five stars"
 msgstr ""
 
 #: ckanext/canada/templates/internal/package/read_base.html:4
-#, fuzzy
 msgid "Dataset"
-msgstr "Records"
+msgstr ""
 
 #: ckanext/canada/templates/internal/package/read_base.html:5
 #: ckanext/canada/templates/public/organization/activity_stream.html:4
@@ -860,9 +848,8 @@ msgid "Add Asset Metadata"
 msgstr ""
 
 #: ckanext/canada/templates/internal/package/snippets/stages.html:23
-#, fuzzy
 msgid "Add Dataset Metadata"
-msgstr "Add record"
+msgstr ""
 
 #: ckanext/canada/templates/internal/package/snippets/stages.html:33
 msgid "Add Resource or Related Item"
@@ -1063,9 +1050,8 @@ msgstr ""
 
 #: ckanext/canada/templates/internal/scheming/package/snippets/package_form.html:34
 #: ckanext/canada/templates/public/snippets/package_item.html:14
-#, fuzzy
 msgid "Suggested Dataset"
-msgstr "No edited records"
+msgstr ""
 
 #: ckanext/canada/templates/internal/scheming/package/snippets/package_form.html:37
 msgid ""
@@ -1126,9 +1112,8 @@ msgid "Errors in form"
 msgstr ""
 
 #: ckanext/canada/templates/internal/scheming/snippets/form_field.html:4
-#, fuzzy
 msgid "Are you sure you want to delete this status?"
-msgstr "Are you sure you want to delete this record?"
+msgstr ""
 
 #: ckanext/canada/templates/internal/scheming/snippets/form_field.html:21
 #: ckanext/canada/templates/public/organization/member_new.html:62
@@ -1213,14 +1198,12 @@ msgid "Get Help"
 msgstr ""
 
 #: ckanext/canada/templates/internal/snippets/activities/changed_datastore.html:6
-#, fuzzy
 msgid "{actor} updated the record {datastore} {datastore_detail}"
-msgstr "{actor} updated the record {dataset}"
+msgstr ""
 
 #: ckanext/canada/templates/internal/snippets/activities/deleted_datastore.html:6
-#, fuzzy
 msgid "{actor} deleted the record {datastore} {datastore_detail}"
-msgstr "{actor} deleted the record {dataset}"
+msgstr ""
 
 #: ckanext/canada/templates/internal/user/list.html:26
 msgid "Create an Account"
@@ -1492,14 +1475,12 @@ msgstr ""
 #: ckanext/canada/templates/internal/user/snippets/user_search.html:2
 #: ckanext/canada/templates/internal/user/snippets/user_search.html:5
 #: ckanext/canada/templates/internal/user/snippets/user_search.html:6
-#, fuzzy
 msgid "Search Users"
-msgstr "Search Records"
+msgstr ""
 
 #: ckanext/canada/templates/internal/xloader/resource_data.html:8
-#, fuzzy
 msgid "Are you sure you want to delete this DataStore table and Data Dictionary?"
-msgstr "Are you sure you want to delete this record?"
+msgstr ""
 
 #: ckanext/canada/templates/internal/xloader/resource_data.html:9
 msgid "Delete DataStore table"
@@ -1520,9 +1501,8 @@ msgstr ""
 
 #: ckanext/canada/templates/obd/package/snippets/socialmedia.html:8
 #: ckanext/canada/templates/public/package/snippets/socialmedia.html:8
-#, fuzzy
 msgid "Rate this dataset"
-msgstr "Create record"
+msgstr ""
 
 #: ckanext/canada/templates/obd/package/snippets/socialmedia.html:9
 msgid "Comment(s)"
@@ -1615,9 +1595,8 @@ msgid "https://open.canada.ca/en"
 msgstr ""
 
 #: ckanext/canada/templates/public/footer.html:19
-#, fuzzy
 msgid "Open government"
-msgstr "Open Government E-mail"
+msgstr ""
 
 #: ckanext/canada/templates/public/footer.html:33
 msgid "https://www.canada.ca/en/social.html"
@@ -1894,9 +1873,8 @@ msgid "Back to all members"
 msgstr ""
 
 #: ckanext/canada/templates/public/organization/member_new.html:9
-#, fuzzy
 msgid "Edit Member"
-msgstr "Keep me logged in"
+msgstr ""
 
 #: ckanext/canada/templates/public/organization/member_new.html:9
 #: ckanext/canada/templates/public/organization/member_new.html:68
@@ -1979,9 +1957,8 @@ msgstr ""
 "organizations."
 
 #: ckanext/canada/templates/public/organization/snippets/organization_item.html:6
-#, fuzzy
 msgid "This organization has no description"
-msgstr "This record has no description"
+msgstr ""
 
 #: ckanext/canada/templates/public/organization/snippets/organization_item.html:12
 msgid "{num} Dataset"
@@ -2397,14 +2374,12 @@ msgid ""
 msgstr ""
 
 #: ckanext/canada/templates/public/snippets/search_form.html:45
-#, fuzzy
 msgid "/en/suggested-datasets"
-msgstr "No edited records"
+msgstr ""
 
 #: ckanext/canada/templates/public/snippets/search_form.html:45
-#, fuzzy
 msgid "Suggest a Dataset"
-msgstr "Total records"
+msgstr ""
 
 #: ckanext/canada/templates/public/snippets/search_form.html:52
 msgid "Tally of Cart Items"
@@ -2461,9 +2436,8 @@ msgid "My Datasets"
 msgstr "My Records"
 
 #: ckanext/canada/templates/public/user/dashboard.html:48
-#, fuzzy
 msgid "You do not have any datasets"
-msgstr "You haven't created any records."
+msgstr ""
 
 #: ckanext/canada/templates/public/user/dashboard.html:54
 #: ckanext/canada/templates/public/user/dashboard.html:60
