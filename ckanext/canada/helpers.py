@@ -148,7 +148,7 @@ def catalogue_last_update_date():
 
 def today():
     return datetime.datetime.now(EST()).strftime("%Y-%m-%d")
-    
+
 # Return the Date format that the WET datepicker requires to function properly
 def date_format(date_string):
     if not date_string:
@@ -201,7 +201,7 @@ def remove_duplicates(a_list):
     s = set()
     for i in a_list:
         s.add(i)
-            
+
     return s
 
 def get_license(license_id):
@@ -230,8 +230,9 @@ def adv_search_url():
 def adv_search_mlt_root():
     return "{0}/donneesouvertes/similaire/".format(config.get('ckanext.canada.adv_search_url_fr')) if h.lang() == 'fr' else "{0}/opendata/similar/".format(config.get('ckanext.canada.adv_search_url_en'))
 
-def googleanalytics_id():
-    return str(config.get('googleanalytics.id'))
+
+def ga4_id():
+    return str(config.get('ga4.id'))
 
 def adobe_analytics_login_required(current_url):
     return "2" #return 1 if page requires a login and 2 if page is public
@@ -244,7 +245,7 @@ def adobe_analytics_lang():
 
 def adobe_analytics_js():
     return str(config.get('adobe_analytics.js', ''))
-    
+
 def loop11_key():
     return str(config.get('loop11.key', ''))
 
@@ -252,14 +253,14 @@ def drupal_session_present(request):
     for name in request.cookies.keys():
         if name.startswith("SESS"):
             return True
-    
+
     return False
-    
+
 def parse_release_date_facet(facet_results):
     counts = facet_results['counts'][1::2]
     ranges = facet_results['counts'][0::2]
     facet_dict = dict()
-    
+
     if len(counts) == 0:
         return dict()
     elif len(counts) == 1:
@@ -268,9 +269,9 @@ def parse_release_date_facet(facet_results):
         else:
             facet_dict = {'scheduled': {'count': counts[0], 'url_param': '[' + ranges[0] + ' TO ' + facet_results['end'] + ']'} }
     else:
-        facet_dict = {'published': {'count': counts[0], 'url_param': '[' + ranges[0] + ' TO ' + ranges[1] + ']'} , 
+        facet_dict = {'published': {'count': counts[0], 'url_param': '[' + ranges[0] + ' TO ' + ranges[1] + ']'} ,
                       'scheduled': {'count': counts[1], 'url_param': '[' + ranges[1] + ' TO ' + facet_results['end'] + ']'} }
-    
+
     return facet_dict
 
 def is_ready_to_publish(package):
