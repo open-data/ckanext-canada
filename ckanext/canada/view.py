@@ -511,19 +511,17 @@ def ckanadmin_publish_datasets():
     lc = LocalCKAN(username=g.user)
     params = parse_params(request.form)
 
-    publish_date = date_str_to_datetime(
-        params.get('publish_date')
-    ).strftime("%Y-%m-%d %H:%M:%S")
+    publish_date = params.get('publish_date')
+    publish_date = date_str_to_datetime(publish_date).strftime("%Y-%m-%d %H:%M:%S")
 
     # get a list of package id's from the for POST data
-    count = 0
-    for key, package_id in params.iteritems():
-        if key == 'publish':
-            lc.action.package_patch(
-                id=package_id,
-                portal_release_date=publish_date,
-            )
-            count += 1
+    publish_packages = params.get('publish', [])
+    count = len(publish_packages)
+    for package_id in publish_packages:
+        lc.action.package_patch(
+            id=package_id,
+            portal_release_date=publish_date,
+        )
 
     # flash notice that records are published
     h.flash_notice(str(count) + _(u' record(s) published.'))
