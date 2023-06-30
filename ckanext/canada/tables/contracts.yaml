@@ -6,19 +6,21 @@ notes: Access, upload and modify the Contracts over 10K reports for your organiz
 
 upload_info:
   en: |
-    The contracts over $10,000 template includes data fields that have data
-    validation rules per the Guide on the Proactive Publication of Contracts. Users
-    should review the data validation rules in the reference tab of the template for
-    each data field under “validation” for more information to ensure that the data
-    can be uploaded to the registry. 
+    The contracts over $10,000 template includes data fields that have data validation 
+    rules per the Guide on the Proactive Publication of Contracts. Users should review 
+    the data validation rules in the reference tab of the template for each data field 
+    under “validation” for more information to ensure that the data can be uploaded 
+    to the registry. Users should download the latest version of the template prior to 
+    uploading to ensure the template is accepted by the system.
   fr: |
-    Le modèle pour les contrats de plus de 10 000 $ comprend des champs de
-    données qui sont soumis à des règles de validation des données conformément
-    au Guide de la publication proactive des marchés.
-    Les utilisateurs devraient examiner les règles de validation des données dans
-    l’onglet de référence du modèle pour chaque champ de données sous «
-    validation » pour plus d’informations afin de s’assurer que les données peuvent
-    être téléchargées dans le registre.
+    Le modèle pour les contrats de plus de 10 000 $ comprend des champs de 
+    données qui sont soumis à des règles de validation des données conformément au
+    Guide de la publication proactive des marchés. Les utilisateurs devraient examiner 
+    les règles de validation des données dans l’onglet de référence du modèle pour 
+    chaque champ de données sous « validation » pour plus d’informations afin de 
+    s’assurer que les données peuvent être téléchargées dans le registre. Les 
+    utilisateurs doivent télécharger la dernière version du modèle avant de le 
+    sauvegarder afin que le système puisse le prendre en charge.
 
 template_version: 3
 template_updated: 2023-06-28
@@ -177,7 +179,7 @@ resources:
         vi. For contracts awarded by PSPC or Shared Services Canada (SSC) on behalf of the client department, it is recommended that this field be populated with the name of the PSPC or SSC contracting authority. If this is not available, indicate the values, “PSPC-SPAC” or “SSC-SPC” as applicable.
 
       fr: |
-        i. Il est recommandé de saisir dans ce champ le nom de l’acheteur, comme il est indiqué dans le marché initial, sinon il faut saisir celui de la personne responsable de l’approvisionnement au ministère .
+        i. Il est recommandé de saisir dans ce champ le nom de l’acheteur, comme il est indiqué dans le marché initial, sinon il faut saisir celui de la personne responsable de l’approvisionnement au ministère.
         ii. Dans le cas de l’établissement d’une offre à commandes ou d’un arrangement en matière d’approvisionnement, il est recommandé de saisir dans ce champ le nom de l’acheteur qui a émis l’offre à commandes ou l’arrangement en matière d’approvisionnement initial.
         iii. Dans le cas d’une commande subséquente à une offre à commandes ou à un arrangement en matière d’approvisionnement, ce champ devrait indiquer le nom de l’acheteur mentionné dans le marché ou la commande subséquente initial.
         iv. Dans le cas d’un marché comportant des autorisations de tâches, ce champ peut comprendre le nom de l’acheteur indiqué dans le marché initial ou dans chaque autorisation de tâches.
@@ -1343,7 +1345,7 @@ resources:
         en: Any measures for Indigenous peoples and businesses, including set asides for Indigenous businesses (applies to all agreements)
         fr: Toute mesure en faveur des peuples et des entreprises autochtones, y compris les marchés réservés aux entreprises autochtones (s’applique à tous les accords)
       "08":
-        en: Set-asides for small businesses other than indigenous businesses (applies to all agreements except for CETA and TCA)
+        en: Set-asides for small businesses other than Indigenous businesses (applies to all agreements except for CETA and TCA)
         fr: Marchés réservés aux petites entreprises (autres que des entreprises autochtones) (s’applique à tous les accords sauf l’AECG et l’ACC)
       "09":
         en: Measures necessary to protect public morals, order or safety (applies to all agreements)
@@ -1531,7 +1533,7 @@ resources:
       en: |
         This field must not be empty when the Intellectual Property data field is one of the following values (A2, A3, A41, A42, A43, A5, A8 or B). This field may be left empty if none of the Intellectual Property data field values apply. Valid formats include: Yes or No.
       fr: |
-        Cette zone ne doit pas être vide lorsque le champ Propriété intellectuelle contient l’une des valeurs suivantes : A2, A3, A41, A42, A43, A5, A8 ou B. Cette zone peut demeurer vide si aucune des valeurs de Propriété intellectuelle ne s’applique. Les formats valides incluent : Oui ou Non.
+        Ce champ ne doit pas être vide lorsque le champ Propriété intellectuelle contient l’une des valeurs suivantes : A2, A3, A41, A42, A43, A5, A8 ou B. Ce champ peut demeurer vide si aucune des valeurs de Propriété intellectuelle ne s’applique. Les formats valides incluent : Oui ou Non.
     datastore_type: text
     excel_required_formula: 'NOT(OR({intellectual_property}="C",{intellectual_property}="NA",{intellectual_property}=""))'
     excel_error_formula: 'ISERROR(SEARCH("|"&TRIM({cell})&"|","|true|t|vrai|v|1|yes|y|oui|o|false|f|faux|0|no|n|non|"))'
@@ -1739,7 +1741,7 @@ resources:
       en: |
         This field must be populated with a “1” if the solicitation procedure is identified as non-competitive (TN) or Advance Contract Award Notice (ACAN).
       fr: |
-        Cette zone doit contenir un « 1 » si la méthode d’invitation à soumissionner est identifiée comme étant non concurrentielle (TN) ou un préavis d’attribution de contrat (AC).
+        Ce champ doit contenir un « 1 » si la méthode d’invitation à soumissionner est identifiée comme étant non concurrentielle (TN) ou un préavis d’attribution de contrat (AC).
     datastore_type: int
     excel_error_formula: 'OR({default_formula},AND(VALUE({cell})<>1,OR({solicitation_procedure}="TN",{solicitation_procedure}="AC")))'
     
@@ -1769,7 +1771,7 @@ resources:
       en: |
         This field may only be populated with “0” if the procurement was identified as competitive (open bidding (OB), traditional competitive (TC) or selective tendering (ST)).
       fr: |
-        Cette zone peut seulement contenir « 0 » si l’acquisition a été identifiée comme étant concurrentielle (invitation ouverte à soumissionner (OB) ou concurrentielle - traditionnelle (TC) ou Concurrentielle – Appel d’offres sélectif (ST)).
+        Ce champ peut seulement contenir « 0 » si l’acquisition a été identifiée comme étant concurrentielle (invitation ouverte à soumissionner (OB) ou concurrentielle - traditionnelle (TC) ou Concurrentielle – Appel d’offres sélectif (ST)).
     datastore_type: text
     excel_full_text_choices: false
     excel_error_formula: 'OR({default_formula},AND(VALUE({cell})<>0,NOT(OR({solicitation_procedure}="TN",{solicitation_procedure}="AC"))))'
@@ -1813,7 +1815,7 @@ resources:
         as non-competitive (TN) or advance contract award notice (AC) in the solicitation procedure data field or was
         identified as an Amendment (A) in the Instrument type data field.
       fr: |
-        Si cette zone est remplie, il doit contenir un « 0 » si l’acquisition a été identifiée
+        Si ce champ est rempli, il doit contenir un « 0 » si l’acquisition a été identifiée
         comme étant non concurrentielle (TN) ou un préavis d’attribution de contrat
         (AC) ou si l’acquisition a été identifiée comme un modification (A) dans le
         champ Type d’instrument.
