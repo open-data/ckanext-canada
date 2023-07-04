@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ckanext-canada 0.4.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2023-06-28 18:22+0000\n"
+"POT-Creation-Date: 2023-07-04 13:51+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -340,6 +340,121 @@ msgid ""
 "be identified as NA or N, as applicable: Comprehensive Land Claim Agreement, "
 "Procurement Strategy for Aboriginal Business, Procurement Strategy for "
 "Aboriginal Business Incidental Indicator"
+msgstr ""
+
+#: ckanext/canada/strings.py:38
+msgid "Not authorized to access {group} members download"
+msgstr ""
+
+#: ckanext/canada/strings.py:39
+msgid "Members not found"
+msgstr ""
+
+#: ckanext/canada/strings.py:40
+msgid "N/A"
+msgstr ""
+
+#: ckanext/canada/strings.py:41 ckanext/canada/templates/internal/user/list.html:35
+#: ckanext/canada/templates/internal/user/new_user_form.html:7
+#: ckanext/canada/templates/internal/user/snippets/login_form.html:15
+#: ckanext/canada/templates/public/organization/member_new.html:29
+#: ckanext/canada/templates/public/user/edit_user_form.html:9
+#: ckanext/canada/templates/public/user/read_base.html:43
+#: ckanext/canada/templates/public/user/snippets/login_form.html:13
+msgid "Username"
+msgstr ""
+
+#: ckanext/canada/strings.py:42
+#: ckanext/canada/templates/internal/user/new_user_form.html:13
+#: ckanext/canada/templates/public/user/edit_user_form.html:13
+#: ckanext/canada/templates/public/user/read_base.html:50
+msgid "Email"
+msgstr ""
+
+#: ckanext/canada/strings.py:43 ckanext/canada/templates/internal/user/list.html:36
+#: ckanext/canada/templates/public/snippets/geomap_dynamic.html:18
+#: ckanext/canada/templates/public/snippets/geomap_static.html:15
+msgid "Name"
+msgstr ""
+
+#: ckanext/canada/strings.py:44 ckanext/canada/templates/internal/user/list.html:37
+#: ckanext/canada/templates/public/organization/member_new.html:59
+msgid "Role"
+msgstr ""
+
+#: ckanext/canada/strings.py:45
+msgid "members"
+msgstr ""
+
+#: ckanext/canada/strings.py:46
+msgid "CSV"
+msgstr ""
+
+#: ckanext/canada/strings.py:47
+msgid "A related item has been added"
+msgstr ""
+
+#: ckanext/canada/strings.py:48
+msgid "A resource has been added"
+msgstr ""
+
+#: ckanext/canada/strings.py:49
+msgid "Resource id already exists."
+msgstr ""
+
+#: ckanext/canada/strings.py:50
+msgid "Invalid characters in resource id"
+msgstr ""
+
+#: ckanext/canada/strings.py:51
+msgid "Invalid length for resource id"
+msgstr ""
+
+#: ckanext/canada/strings.py:52
+msgid "Resource view id already exists"
+msgstr ""
+
+#: ckanext/canada/strings.py:53
+msgid "Value must be one of {}"
+msgstr ""
+
+#: ckanext/canada/strings.py:54
+msgid "Could not parse the value as a valid JSON object"
+msgstr ""
+
+#: ckanext/canada/strings.py:55
+msgid "Could not parse extra '{name}' as valid JSON"
+msgstr ""
+
+#: ckanext/canada/strings.py:56
+#, python-format
+msgid "Dear %(user_name)s,"
+msgstr ""
+
+#: ckanext/canada/strings.py:57
+#, python-format
+msgid "Invite for %(site_title)s"
+msgstr ""
+
+#: ckanext/canada/strings.py:58
+msgid "Dataset Deleted"
+msgstr ""
+
+#: ckanext/canada/strings.py:59
+#: ckanext/canada/templates/public/package/deleted.html:10
+msgid "Created On"
+msgstr ""
+
+#: ckanext/canada/strings.py:60
+msgid "Choose format"
+msgstr ""
+
+#: ckanext/canada/strings.py:61
+msgid "Submit"
+msgstr ""
+
+#: ckanext/canada/strings.py:62
+msgid "{actor} deleted the {view_type} view {view}"
 msgstr ""
 
 #: ckanext/canada/validators.py:117
@@ -1196,27 +1311,6 @@ msgstr ""
 msgid "Create an Account"
 msgstr ""
 
-#: ckanext/canada/templates/internal/user/list.html:35
-#: ckanext/canada/templates/internal/user/new_user_form.html:7
-#: ckanext/canada/templates/internal/user/snippets/login_form.html:15
-#: ckanext/canada/templates/public/organization/member_new.html:29
-#: ckanext/canada/templates/public/user/edit_user_form.html:9
-#: ckanext/canada/templates/public/user/read_base.html:43
-#: ckanext/canada/templates/public/user/snippets/login_form.html:13
-msgid "Username"
-msgstr ""
-
-#: ckanext/canada/templates/internal/user/list.html:36
-#: ckanext/canada/templates/public/snippets/geomap_dynamic.html:18
-#: ckanext/canada/templates/public/snippets/geomap_static.html:15
-msgid "Name"
-msgstr ""
-
-#: ckanext/canada/templates/internal/user/list.html:37
-#: ckanext/canada/templates/public/organization/member_new.html:59
-msgid "Role"
-msgstr ""
-
 #: ckanext/canada/templates/internal/user/list.html:52
 msgid "Sysadmin"
 msgstr ""
@@ -1308,12 +1402,6 @@ msgstr ""
 
 #: ckanext/canada/templates/internal/user/new_user_form.html:11
 msgid "Example: Joe Bloggs"
-msgstr ""
-
-#: ckanext/canada/templates/internal/user/new_user_form.html:13
-#: ckanext/canada/templates/public/user/edit_user_form.html:13
-#: ckanext/canada/templates/public/user/read_base.html:50
-msgid "Email"
 msgstr ""
 
 #: ckanext/canada/templates/internal/user/new_user_form.html:14
@@ -1959,10 +2047,6 @@ msgstr ""
 
 #: ckanext/canada/templates/public/package/deleted.html:7
 msgid "Open.canada.ca"
-msgstr ""
-
-#: ckanext/canada/templates/public/package/deleted.html:10
-msgid "Created On"
 msgstr ""
 
 #: ckanext/canada/templates/public/package/deleted.html:12

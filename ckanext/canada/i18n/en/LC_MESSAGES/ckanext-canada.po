@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  CKAN\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2023-06-28 18:22+0000\n"
+"POT-Creation-Date: 2023-07-04 13:51+0000\n"
 "PO-Revision-Date: 2014-01-23 13:04+0000\n"
 "Last-Translator: Sean Hammond <sean.hammond@okfn.org>\n"
 "Language: en\n"
@@ -343,6 +343,124 @@ msgid ""
 "must be identified as NA or N, as applicable: Comprehensive Land Claim "
 "Agreement, Procurement Strategy for Aboriginal Business, Procurement "
 "Strategy for Aboriginal Business Incidental Indicator"
+msgstr ""
+
+#: ckanext/canada/strings.py:38
+msgid "Not authorized to access {group} members download"
+msgstr ""
+
+#: ckanext/canada/strings.py:39
+msgid "Members not found"
+msgstr ""
+
+#: ckanext/canada/strings.py:40
+msgid "N/A"
+msgstr ""
+
+#: ckanext/canada/strings.py:41
+#: ckanext/canada/templates/internal/user/list.html:35
+#: ckanext/canada/templates/internal/user/new_user_form.html:7
+#: ckanext/canada/templates/internal/user/snippets/login_form.html:15
+#: ckanext/canada/templates/public/organization/member_new.html:29
+#: ckanext/canada/templates/public/user/edit_user_form.html:9
+#: ckanext/canada/templates/public/user/read_base.html:43
+#: ckanext/canada/templates/public/user/snippets/login_form.html:13
+msgid "Username"
+msgstr ""
+
+#: ckanext/canada/strings.py:42
+#: ckanext/canada/templates/internal/user/new_user_form.html:13
+#: ckanext/canada/templates/public/user/edit_user_form.html:13
+#: ckanext/canada/templates/public/user/read_base.html:50
+msgid "Email"
+msgstr ""
+
+#: ckanext/canada/strings.py:43
+#: ckanext/canada/templates/internal/user/list.html:36
+#: ckanext/canada/templates/public/snippets/geomap_dynamic.html:18
+#: ckanext/canada/templates/public/snippets/geomap_static.html:15
+msgid "Name"
+msgstr ""
+
+#: ckanext/canada/strings.py:44
+#: ckanext/canada/templates/internal/user/list.html:37
+#: ckanext/canada/templates/public/organization/member_new.html:59
+msgid "Role"
+msgstr ""
+
+#: ckanext/canada/strings.py:45
+msgid "members"
+msgstr ""
+
+#: ckanext/canada/strings.py:46
+msgid "CSV"
+msgstr ""
+
+#: ckanext/canada/strings.py:47
+msgid "A related item has been added"
+msgstr ""
+
+#: ckanext/canada/strings.py:48
+msgid "A resource has been added"
+msgstr ""
+
+#: ckanext/canada/strings.py:49
+msgid "Resource id already exists."
+msgstr ""
+
+#: ckanext/canada/strings.py:50
+msgid "Invalid characters in resource id"
+msgstr ""
+
+#: ckanext/canada/strings.py:51
+msgid "Invalid length for resource id"
+msgstr ""
+
+#: ckanext/canada/strings.py:52
+msgid "Resource view id already exists"
+msgstr ""
+
+#: ckanext/canada/strings.py:53
+msgid "Value must be one of {}"
+msgstr ""
+
+#: ckanext/canada/strings.py:54
+msgid "Could not parse the value as a valid JSON object"
+msgstr ""
+
+#: ckanext/canada/strings.py:55
+msgid "Could not parse extra '{name}' as valid JSON"
+msgstr ""
+
+#: ckanext/canada/strings.py:56
+#, python-format
+msgid "Dear %(user_name)s,"
+msgstr ""
+
+#: ckanext/canada/strings.py:57
+#, python-format
+msgid "Invite for %(site_title)s"
+msgstr ""
+
+#: ckanext/canada/strings.py:58
+msgid "Dataset Deleted"
+msgstr ""
+
+#: ckanext/canada/strings.py:59
+#: ckanext/canada/templates/public/package/deleted.html:10
+msgid "Created On"
+msgstr ""
+
+#: ckanext/canada/strings.py:60
+msgid "Choose format"
+msgstr ""
+
+#: ckanext/canada/strings.py:61
+msgid "Submit"
+msgstr ""
+
+#: ckanext/canada/strings.py:62
+msgid "{actor} deleted the {view_type} view {view}"
 msgstr ""
 
 #: ckanext/canada/validators.py:117
@@ -1209,27 +1327,6 @@ msgstr ""
 msgid "Create an Account"
 msgstr ""
 
-#: ckanext/canada/templates/internal/user/list.html:35
-#: ckanext/canada/templates/internal/user/new_user_form.html:7
-#: ckanext/canada/templates/internal/user/snippets/login_form.html:15
-#: ckanext/canada/templates/public/organization/member_new.html:29
-#: ckanext/canada/templates/public/user/edit_user_form.html:9
-#: ckanext/canada/templates/public/user/read_base.html:43
-#: ckanext/canada/templates/public/user/snippets/login_form.html:13
-msgid "Username"
-msgstr ""
-
-#: ckanext/canada/templates/internal/user/list.html:36
-#: ckanext/canada/templates/public/snippets/geomap_dynamic.html:18
-#: ckanext/canada/templates/public/snippets/geomap_static.html:15
-msgid "Name"
-msgstr ""
-
-#: ckanext/canada/templates/internal/user/list.html:37
-#: ckanext/canada/templates/public/organization/member_new.html:59
-msgid "Role"
-msgstr ""
-
 #: ckanext/canada/templates/internal/user/list.html:52
 msgid "Sysadmin"
 msgstr ""
@@ -1325,12 +1422,6 @@ msgstr ""
 
 #: ckanext/canada/templates/internal/user/new_user_form.html:11
 msgid "Example: Joe Bloggs"
-msgstr ""
-
-#: ckanext/canada/templates/internal/user/new_user_form.html:13
-#: ckanext/canada/templates/public/user/edit_user_form.html:13
-#: ckanext/canada/templates/public/user/read_base.html:50
-msgid "Email"
 msgstr ""
 
 #: ckanext/canada/templates/internal/user/new_user_form.html:14
@@ -1996,10 +2087,6 @@ msgstr ""
 
 #: ckanext/canada/templates/public/package/deleted.html:7
 msgid "Open.canada.ca"
-msgstr ""
-
-#: ckanext/canada/templates/public/package/deleted.html:10
-msgid "Created On"
 msgstr ""
 
 #: ckanext/canada/templates/public/package/deleted.html:12
@@ -4276,10 +4363,10 @@ msgstr "Keep me logged in"
 #~ msgstr ""
 
 #~ msgid "Edited resources."
-#~ msgstr "Created new record."
+#~ msgstr ""
 
 #~ msgid "Edited settings."
-#~ msgstr ""
+#~ msgstr "Created new record."
 
 #~ msgid "{number} recent view"
 #~ msgstr ""
@@ -4327,10 +4414,10 @@ msgstr "Keep me logged in"
 #~ msgstr ""
 
 #~ msgid "Group"
-#~ msgstr "Record"
+#~ msgstr ""
 
 #~ msgid "Could not parse as valid JSON"
-#~ msgstr ""
+#~ msgstr "Record"
 
 #~ msgid "A organization must be supplied"
 #~ msgstr ""
@@ -4339,16 +4426,16 @@ msgstr "Keep me logged in"
 #~ msgstr ""
 
 #~ msgid "Organization does not exist"
-#~ msgstr "You cannot remove a record from an existing organization"
+#~ msgstr ""
 
 #~ msgid "You cannot add a dataset to this organization"
-#~ msgstr ""
+#~ msgstr "You cannot remove a record from an existing organization"
 
 #~ msgid "Invalid integer"
-#~ msgstr "You cannot add a record to this organization"
+#~ msgstr ""
 
 #~ msgid "Must be a natural number"
-#~ msgstr ""
+#~ msgstr "You cannot add a record to this organization"
 
 #~ msgid "Must be a postive integer"
 #~ msgstr ""
@@ -4411,10 +4498,10 @@ msgstr "Keep me logged in"
 #~ msgstr ""
 
 #~ msgid "Please enter both passwords"
-#~ msgstr "That username is not available."
+#~ msgstr ""
 
 #~ msgid "Passwords must be strings"
-#~ msgstr ""
+#~ msgstr "That username is not available."
 
 #~ msgid "Your password must be 4 characters or longer"
 #~ msgstr ""
@@ -4453,10 +4540,10 @@ msgstr "Keep me logged in"
 #~ msgstr ""
 
 #~ msgid "Not a list"
-#~ msgstr "Records with no organization can't be private."
+#~ msgstr ""
 
 #~ msgid "Not a string"
-#~ msgstr ""
+#~ msgstr "Records with no organization can't be private."
 
 #~ msgid "This parent would create a loop in the hierarchy"
 #~ msgstr ""
@@ -4510,10 +4597,10 @@ msgstr "Keep me logged in"
 #~ msgstr ""
 
 #~ msgid "User {username} does not exist."
-#~ msgstr "You must be logged in to follow a record."
+#~ msgstr ""
 
 #~ msgid "You must be logged in to follow a group."
-#~ msgstr ""
+#~ msgstr "You must be logged in to follow a record."
 
 #~ msgid "REST API: Delete Package: %s"
 #~ msgstr ""
@@ -4582,25 +4669,25 @@ msgstr "Keep me logged in"
 #~ msgstr ""
 
 #~ msgid "You must be a sysadmin to create a featured related item"
-#~ msgstr "User %s not authorized to add record to this organization"
+#~ msgstr ""
 
 #~ msgid "You must be logged in to add a related item"
-#~ msgstr ""
+#~ msgstr "User %s not authorized to add record to this organization"
 
 #~ msgid "No dataset id provided, cannot check auth."
 #~ msgstr ""
 
 #~ msgid "No package found for this resource, cannot check auth."
-#~ msgstr "No record id provided, cannot check auth."
+#~ msgstr ""
 
 #~ msgid "User %s not authorized to create resources on dataset %s"
-#~ msgstr ""
+#~ msgstr "No record id provided, cannot check auth."
 
 #~ msgid "User %s not authorized to edit these packages"
-#~ msgstr "User %s not authorized to create resources on record %s"
+#~ msgstr ""
 
 #~ msgid "User %s not authorized to create groups"
-#~ msgstr ""
+#~ msgstr "User %s not authorized to create resources on record %s"
 
 #~ msgid "User %s not authorized to create organizations"
 #~ msgstr ""
@@ -5062,13 +5149,13 @@ msgstr "Keep me logged in"
 #~ msgstr ""
 
 #~ msgid "Datasets in group: {group}"
-#~ msgstr "Search records..."
+#~ msgstr ""
 
 #~ msgid "Recent Revision History"
-#~ msgstr "Records in group: {group}"
+#~ msgstr "Search records..."
 
 #~ msgid "My Group"
-#~ msgstr ""
+#~ msgstr "Records in group: {group}"
 
 #~ msgid "my-group"
 #~ msgstr ""
@@ -5089,10 +5176,10 @@ msgstr "Keep me logged in"
 #~ msgstr ""
 
 #~ msgid "What are Groups?"
-#~ msgstr "Remove record from this group"
+#~ msgstr ""
 
 #~ msgid "Compare"
-#~ msgstr ""
+#~ msgstr "Remove record from this group"
 
 #~ msgid "Deleted"
 #~ msgstr ""
@@ -5131,13 +5218,13 @@ msgstr "Keep me logged in"
 #~ msgstr ""
 
 #~ msgid "datasets"
-#~ msgstr "record"
+#~ msgstr ""
 
 #~ msgid "organization"
-#~ msgstr "records"
+#~ msgstr "record"
 
 #~ msgid "organizations"
-#~ msgstr ""
+#~ msgstr "records"
 
 #~ msgid "group"
 #~ msgstr ""
@@ -5167,19 +5254,19 @@ msgstr "Keep me logged in"
 #~ msgstr ""
 
 #~ msgid "Make public"
-#~ msgstr "Sorry no records found for \"{query}\""
+#~ msgstr ""
 
 #~ msgid "Make private"
-#~ msgstr ""
+#~ msgstr "Sorry no records found for \"{query}\""
 
 #~ msgid "This organization has no datasets associated to it"
 #~ msgstr ""
 
 #~ msgid "Are you sure you want to delete organization - {name}?"
-#~ msgstr "This organization has no records associated to it"
+#~ msgstr ""
 
 #~ msgid "Add Organization"
-#~ msgstr ""
+#~ msgstr "This organization has no records associated to it"
 
 #~ msgid "Search organizations..."
 #~ msgstr ""
@@ -5200,10 +5287,10 @@ msgstr "Keep me logged in"
 #~ msgstr ""
 
 #~ msgid "Edit metadata"
-#~ msgstr "View record"
+#~ msgstr ""
 
 #~ msgid "Edit view"
-#~ msgstr ""
+#~ msgstr "View record"
 
 #~ msgid "Update"
 #~ msgstr ""
@@ -5212,22 +5299,22 @@ msgstr "Keep me logged in"
 #~ msgstr ""
 
 #~ msgid "Add to group"
-#~ msgstr "Associate this group with this record"
+#~ msgstr ""
 
 #~ msgid "There are no groups associated with this dataset"
-#~ msgstr ""
+#~ msgstr "Associate this group with this record"
 
 #~ msgid "Update Dataset"
-#~ msgstr "There are no groups associated with this record"
+#~ msgstr ""
 
 #~ msgid "Add data to the dataset"
-#~ msgstr "Update Record"
+#~ msgstr "There are no groups associated with this record"
 
 #~ msgid "Add New Resource"
-#~ msgstr "Add data to the record"
+#~ msgstr "Update Record"
 
 #~ msgid "Add resource"
-#~ msgstr ""
+#~ msgstr "Add data to the record"
 
 #~ msgid "New resource"
 #~ msgstr ""
@@ -5347,10 +5434,10 @@ msgstr "Keep me logged in"
 #~ msgstr ""
 
 #~ msgid "eg. Some useful notes about the data"
-#~ msgstr "eg. my-record"
+#~ msgstr ""
 
 #~ msgid "eg. economy, mental health, government"
-#~ msgstr ""
+#~ msgstr "eg. my-record"
 
 #~ msgid "No organization"
 #~ msgstr ""
@@ -5371,10 +5458,10 @@ msgstr "Keep me logged in"
 #~ msgstr ""
 
 #~ msgid "1.0"
-#~ msgstr "http://example.com/record.json"
+#~ msgstr ""
 
 #~ msgid "Joe Bloggs"
-#~ msgstr ""
+#~ msgstr "http://example.com/record.json"
 
 #~ msgid "Author Email"
 #~ msgstr ""
@@ -5464,13 +5551,13 @@ msgstr "Keep me logged in"
 #~ msgstr ""
 
 #~ msgid "Read dataset as of %s"
-#~ msgstr "This record has no data"
+#~ msgstr ""
 
 #~ msgid "eg. My View"
-#~ msgstr "Read record as of %s"
+#~ msgstr "This record has no data"
 
 #~ msgid "eg. Information about my view"
-#~ msgstr ""
+#~ msgstr "Read record as of %s"
 
 #~ msgid "Add Filter"
 #~ msgstr ""
@@ -5593,10 +5680,10 @@ msgstr "Keep me logged in"
 #~ msgstr ""
 
 #~ msgid "Entity"
-#~ msgstr "Records' Tags"
+#~ msgstr ""
 
 #~ msgid "Embed Data Viewer"
-#~ msgstr ""
+#~ msgstr "Records' Tags"
 
 #~ msgid "Embed this view by copying this into your webpage:"
 #~ msgstr ""
@@ -5635,10 +5722,10 @@ msgstr "Keep me logged in"
 #~ msgstr ""
 
 #~ msgid "There is no description for this organization"
-#~ msgstr "This record satisfies the Open Definition."
+#~ msgstr ""
 
 #~ msgid "Add Item"
-#~ msgstr ""
+#~ msgstr "This record satisfies the Open Definition."
 
 #~ msgid "Submit"
 #~ msgstr ""
@@ -5647,16 +5734,16 @@ msgstr "Keep me logged in"
 #~ msgstr ""
 
 #~ msgid "{number} datasets found for \"{query}\""
-#~ msgstr "{number} record found for \"{query}\""
+#~ msgstr ""
 
 #~ msgid "No datasets found for \"{query}\""
-#~ msgstr "{number} records found for \"{query}\""
+#~ msgstr "{number} record found for \"{query}\""
 
 #~ msgid "Subscribe"
-#~ msgstr "No records found for \"{query}\""
+#~ msgstr "{number} records found for \"{query}\""
 
 #~ msgid "RSS"
-#~ msgstr ""
+#~ msgstr "No records found for \"{query}\""
 
 #~ msgid "Search Tags"
 #~ msgstr ""
@@ -5737,10 +5824,10 @@ msgstr "Keep me logged in"
 #~ msgstr ""
 
 #~ msgid "username"
-#~ msgstr "Create records, groups and other exciting things"
+#~ msgstr ""
 
 #~ msgid "Reset Your Password"
-#~ msgstr ""
+#~ msgstr "Create records, groups and other exciting things"
 
 #~ msgid "Password Reset"
 #~ msgstr ""
@@ -5755,10 +5842,10 @@ msgstr "Keep me logged in"
 #~ msgstr ""
 
 #~ msgid "You have not provided a biography."
-#~ msgstr "User hasn't created any records."
+#~ msgstr ""
 
 #~ msgid "This user has no biography."
-#~ msgstr ""
+#~ msgstr "User hasn't created any records."
 
 #~ msgid "Password reset"
 #~ msgstr ""
@@ -5872,22 +5959,22 @@ msgstr "Keep me logged in"
 #~ msgstr ""
 
 #~ msgid "Total number of Datasets"
-#~ msgstr "Total number of Records"
+#~ msgstr ""
 
 #~ msgid "Date"
-#~ msgstr ""
+#~ msgstr "Total number of Records"
 
 #~ msgid "Dataset Revisions per Week"
-#~ msgstr "Record Revisions per Week"
+#~ msgstr ""
 
 #~ msgid "All dataset revisions"
-#~ msgstr "All record revisions"
+#~ msgstr "Record Revisions per Week"
 
 #~ msgid "Top Rated Datasets"
-#~ msgstr "Top Rated Records"
+#~ msgstr "All record revisions"
 
 #~ msgid "Average rating"
-#~ msgstr ""
+#~ msgstr "Top Rated Records"
 
 #~ msgid "Number of ratings"
 #~ msgstr ""
@@ -5896,19 +5983,19 @@ msgstr "Keep me logged in"
 #~ msgstr ""
 
 #~ msgid "Most Edited Datasets"
-#~ msgstr "Most Edited Records"
+#~ msgstr ""
 
 #~ msgid "Number of edits"
-#~ msgstr ""
+#~ msgstr "Most Edited Records"
 
 #~ msgid "Largest Groups"
 #~ msgstr ""
 
 #~ msgid "Number of datasets"
-#~ msgstr "Number of records"
+#~ msgstr ""
 
 #~ msgid "No groups"
-#~ msgstr ""
+#~ msgstr "Number of records"
 
 #~ msgid "Top Tags"
 #~ msgstr ""
@@ -5917,37 +6004,37 @@ msgstr "Keep me logged in"
 #~ msgstr ""
 
 #~ msgid "Number of Datasets"
-#~ msgstr "Number of Records"
+#~ msgstr ""
 
 #~ msgid "Users Owning Most Datasets"
-#~ msgstr "Users Owning Most Records"
+#~ msgstr "Number of Records"
 
 #~ msgid "Statistics Menu"
-#~ msgstr ""
+#~ msgstr "Users Owning Most Records"
 
 #~ msgid "Total Number of Datasets"
-#~ msgstr "Total Number of Records"
+#~ msgstr ""
 
 #~ msgid "Statistics"
-#~ msgstr ""
+#~ msgstr "Total Number of Records"
 
 #~ msgid "Revisions to Datasets per week"
-#~ msgstr "Revisions to Records per week"
+#~ msgstr ""
 
 #~ msgid "Users owning most datasets"
-#~ msgstr "Users owning most records"
+#~ msgstr "Revisions to Records per week"
 
 #~ msgid "Page last updated:"
-#~ msgstr ""
+#~ msgstr "Users owning most records"
 
 #~ msgid "Leaderboard - Stats"
 #~ msgstr ""
 
 #~ msgid "Dataset Leaderboard"
-#~ msgstr "Record Leaderboard"
+#~ msgstr ""
 
 #~ msgid "Choose area"
-#~ msgstr ""
+#~ msgstr "Record Leaderboard"
 
 #~ msgid "Website"
 #~ msgstr ""
@@ -5960,28 +6047,28 @@ msgstr "Keep me logged in"
 
 # quick hack for org extras
 #~ msgid "ati_email"
-#~ msgstr "ATI E-mail"
+#~ msgstr ""
 
 #~ msgid "department_number"
-#~ msgstr "Department Number"
+#~ msgstr "ATI E-mail"
 
 #~ msgid "umd_number"
-#~ msgstr "UMD Number"
+#~ msgstr "Department Number"
 
 #~ msgid "shortform"
-#~ msgstr "Abbreviated Name English"
+#~ msgstr "UMD Number"
 
 #~ msgid "shortform_fr"
-#~ msgstr "Abbreviated Name French"
+#~ msgstr "Abbreviated Name English"
 
 #~ msgid "time_ascend"
-#~ msgstr "Oldest first"
+#~ msgstr "Abbreviated Name French"
 
 #~ msgid "time_descend"
-#~ msgstr "Newest first"
+#~ msgstr "Oldest first"
 
 #~ msgid "Open.Canada.ca"
-#~ msgstr ""
+#~ msgstr "Newest first"
 
 #~ msgid "Add to Portal"
 #~ msgstr ""
@@ -5990,13 +6077,6 @@ msgstr "Keep me logged in"
 #~ msgstr ""
 
 #~ msgid "Open Data Records"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Add data about Government of Canada "
-#~ "services, financials or national demographic"
-#~ " information that is relevant to "
-#~ "Canadians."
 #~ msgstr ""
 
 #~ msgid "Open Information Records"
@@ -6054,35 +6134,15 @@ msgstr "Keep me logged in"
 #~ msgstr ""
 
 #~ msgid "Search Data"
-#~ msgstr "Search Records"
-
-#~ msgid "My Account"
 #~ msgstr ""
 
-#~ msgid "Publish Datasets"
-#~ msgstr "Edit records"
+#~ msgid "My Account"
+#~ msgstr "Search Records"
 
-#~ msgid ""
-#~ "Use only lowercase letters (a-z) and "
-#~ "numbers (0-9) with optional hyphens (-)"
-#~ " and underscores (_)"
+#~ msgid "Publish Datasets"
 #~ msgstr ""
 
 #~ msgid "Treasury Board Secretariat"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "1. Passwords must contain characters "
-#~ "from at least 3 of the following"
-#~ " 4 classes: * Upper Case Letters: "
-#~ "A, B, C, … Z * Lower Case"
-#~ " Letters: a, b, c, … z * "
-#~ "Westernised Arabic Numerals: 0, 1, 2,"
-#~ " … 9 * Special characters: "
-#~ "({}[],.<>;:'\"?/|\\`~!@#$%^&*()_-+=). 2. No accented"
-#~ " characters are permitted. 3. All "
-#~ "passwords must be at least 8 "
-#~ "characters long. "
 #~ msgstr ""
 
 #~ msgid "/en/forms/contact-us"
@@ -6094,15 +6154,6 @@ msgstr "Keep me logged in"
 #~ msgid "History"
 #~ msgstr ""
 
-#~ msgid ""
-#~ " You're currently viewing an old "
-#~ "version of this dataset. Some resources"
-#~ " may no longer exist or the "
-#~ "dataset may not display correctly. To"
-#~ " see the current version, click <a"
-#~ " href=\"%(url)s\">here</a>. "
-#~ msgstr ""
-
 #~ msgid "Made available by the Government of Alberta"
 #~ msgstr ""
 
@@ -6110,10 +6161,10 @@ msgstr "Keep me logged in"
 #~ msgstr ""
 
 #~ msgid "From the asset abstract"
-#~ msgstr "From the record abstract"
+#~ msgstr ""
 
 #~ msgid "Source: <a href=\"%(url)s\">%(dataset)s</a>"
-#~ msgstr ""
+#~ msgstr "From the record abstract"
 
 #~ msgid "View"
 #~ msgstr ""
@@ -6123,15 +6174,6 @@ msgstr "Keep me logged in"
 
 #~ msgid "This resource has no views"
 #~ msgstr ""
-
-#~ msgid ""
-#~ " <p class=\"empty\">This asset has no"
-#~ " resources, <a href=\"%(url)s\">why not add"
-#~ " some?</a></p> "
-#~ msgstr ""
-#~ " <p class=\"empty\">This record has no"
-#~ " data, <a href=\"%(url)s\">why not add "
-#~ "some?</a></p> "
 
 #~ msgid "Relationship"
 #~ msgstr ""
@@ -6151,15 +6193,6 @@ msgstr "Keep me logged in"
 #~ msgid "Resource Name"
 #~ msgstr ""
 
-#~ msgid ""
-#~ " <p class=\"empty\">This dataset has no"
-#~ " data, <a href=\"%(url)s\">why not add "
-#~ "some?</a> "
-#~ msgstr ""
-#~ " <p class=\"empty\">This record has no"
-#~ " data, <a href=\"%(url)s\">why not add "
-#~ "some?</a></p> "
-
 #~ msgid "Provincial"
 #~ msgstr ""
 
@@ -6167,36 +6200,41 @@ msgstr "Keep me logged in"
 #~ msgstr ""
 
 #~ msgid "{number} dataset found"
-#~ msgid_plural "{number} datasets found"
-#~ msgstr[0] "{number} record found"
-#~ msgstr[1] "{number} records found"
+#~ msgstr ""
+
+#~ msgid "{number} datasets found"
+#~ msgstr "{number} record found"
 
 #~ msgid "{number} group found for \"{query}\""
-#~ msgid_plural "{number} groups found for \"{query}\""
-#~ msgstr[0] ""
-#~ msgstr[1] ""
+#~ msgstr "{number} records found"
+
+#~ msgid "{number} groups found for \"{query}\""
+#~ msgstr ""
 
 #~ msgid "No groups found for \"{query}\""
 #~ msgstr ""
 
 #~ msgid "{number} group found"
-#~ msgid_plural "{number} groups found"
-#~ msgstr[0] ""
-#~ msgstr[1] ""
+#~ msgstr ""
+
+#~ msgid "{number} groups found"
+#~ msgstr ""
 
 #~ msgid "No groups found"
 #~ msgstr ""
 
 #~ msgid "{number} organization found for \"{query}\""
-#~ msgid_plural "{number} organizations found for \"{query}\""
-#~ msgstr[0] ""
-#~ msgstr[1] ""
+#~ msgstr ""
+
+#~ msgid "{number} organizations found for \"{query}\""
+#~ msgstr ""
 
 #~ msgid "No organizations found for \"{query}\""
 #~ msgstr ""
 
 #~ msgid "{number} organization found"
-#~ msgid_plural "{number} organizations found"
-#~ msgstr[0] ""
-#~ msgstr[1] ""
+#~ msgstr ""
+
+#~ msgid "{number} organizations found"
+#~ msgstr ""
 

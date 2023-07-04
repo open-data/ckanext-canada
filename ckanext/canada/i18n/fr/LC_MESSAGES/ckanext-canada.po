@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2023-06-28 18:22+0000\n"
+"POT-Creation-Date: 2023-07-04 13:51+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: fr\n"
@@ -298,7 +298,6 @@ msgid ""
 "This field must be NA (not applicable) if the Agreement Type or Trade "
 "Agreement field is not 0 (none) or XX (none), as applicable."
 msgstr ""
-""
 
 #: ckanext/canada/strings.py:14
 msgid ""
@@ -339,7 +338,6 @@ msgid ""
 "is identified as non-competitive (TN) or Advance Contract Award Notice "
 "(AC)"
 msgstr ""
-""
 
 #: ckanext/canada/strings.py:21
 msgid ""
@@ -353,14 +351,12 @@ msgid ""
 "This field may only be populated with \"0\" if the procurement was "
 "identified as non-competitive (TN) or advance contract award notice (AC)."
 msgstr ""
-""
 
 #: ckanext/canada/strings.py:25
 msgid ""
 "This field may not be populated with 1, 2, 3 or 4 if the procurement was "
 "identified as non-competitive or Advance Contract Award Notice."
 msgstr ""
-""
 
 #: ckanext/canada/strings.py:27
 msgid ""
@@ -378,6 +374,124 @@ msgid ""
 "must be identified as NA or N, as applicable: Comprehensive Land Claim "
 "Agreement, Procurement Strategy for Aboriginal Business, Procurement "
 "Strategy for Aboriginal Business Incidental Indicator"
+msgstr ""
+
+#: ckanext/canada/strings.py:38
+msgid "Not authorized to access {group} members download"
+msgstr ""
+
+#: ckanext/canada/strings.py:39
+msgid "Members not found"
+msgstr ""
+
+#: ckanext/canada/strings.py:40
+msgid "N/A"
+msgstr ""
+
+#: ckanext/canada/strings.py:41
+#: ckanext/canada/templates/internal/user/list.html:35
+#: ckanext/canada/templates/internal/user/new_user_form.html:7
+#: ckanext/canada/templates/internal/user/snippets/login_form.html:15
+#: ckanext/canada/templates/public/organization/member_new.html:29
+#: ckanext/canada/templates/public/user/edit_user_form.html:9
+#: ckanext/canada/templates/public/user/read_base.html:43
+#: ckanext/canada/templates/public/user/snippets/login_form.html:13
+msgid "Username"
+msgstr ""
+
+#: ckanext/canada/strings.py:42
+#: ckanext/canada/templates/internal/user/new_user_form.html:13
+#: ckanext/canada/templates/public/user/edit_user_form.html:13
+#: ckanext/canada/templates/public/user/read_base.html:50
+msgid "Email"
+msgstr "Courriel"
+
+#: ckanext/canada/strings.py:43
+#: ckanext/canada/templates/internal/user/list.html:36
+#: ckanext/canada/templates/public/snippets/geomap_dynamic.html:18
+#: ckanext/canada/templates/public/snippets/geomap_static.html:15
+msgid "Name"
+msgstr "Nom"
+
+#: ckanext/canada/strings.py:44
+#: ckanext/canada/templates/internal/user/list.html:37
+#: ckanext/canada/templates/public/organization/member_new.html:59
+msgid "Role"
+msgstr ""
+
+#: ckanext/canada/strings.py:45
+msgid "members"
+msgstr ""
+
+#: ckanext/canada/strings.py:46
+msgid "CSV"
+msgstr ""
+
+#: ckanext/canada/strings.py:47
+msgid "A related item has been added"
+msgstr ""
+
+#: ckanext/canada/strings.py:48
+msgid "A resource has been added"
+msgstr ""
+
+#: ckanext/canada/strings.py:49
+msgid "Resource id already exists."
+msgstr ""
+
+#: ckanext/canada/strings.py:50
+msgid "Invalid characters in resource id"
+msgstr ""
+
+#: ckanext/canada/strings.py:51
+msgid "Invalid length for resource id"
+msgstr ""
+
+#: ckanext/canada/strings.py:52
+msgid "Resource view id already exists"
+msgstr ""
+
+#: ckanext/canada/strings.py:53
+msgid "Value must be one of {}"
+msgstr ""
+
+#: ckanext/canada/strings.py:54
+msgid "Could not parse the value as a valid JSON object"
+msgstr ""
+
+#: ckanext/canada/strings.py:55
+msgid "Could not parse extra '{name}' as valid JSON"
+msgstr ""
+
+#: ckanext/canada/strings.py:56
+#, python-format
+msgid "Dear %(user_name)s,"
+msgstr ""
+
+#: ckanext/canada/strings.py:57
+#, python-format
+msgid "Invite for %(site_title)s"
+msgstr ""
+
+#: ckanext/canada/strings.py:58
+msgid "Dataset Deleted"
+msgstr ""
+
+#: ckanext/canada/strings.py:59
+#: ckanext/canada/templates/public/package/deleted.html:10
+msgid "Created On"
+msgstr "Date de création"
+
+#: ckanext/canada/strings.py:60
+msgid "Choose format"
+msgstr ""
+
+#: ckanext/canada/strings.py:61
+msgid "Submit"
+msgstr ""
+
+#: ckanext/canada/strings.py:62
+msgid "{actor} deleted the {view_type} view {view}"
 msgstr ""
 
 #: ckanext/canada/validators.py:117
@@ -1081,7 +1195,6 @@ msgid ""
 "legal, contractual, or third party, policy restrictions or "
 "limitations).</li> </ol> </small>"
 msgstr ""
-""
 
 #: ckanext/canada/templates/internal/scheming/form_snippets/repeating_subfields.html:8
 #: ckanext/canada/templates/public/macros/canada_read.html:151
@@ -1300,27 +1413,6 @@ msgstr "{actor} a supprimé le jeu de données {datastore} {datastore_detail}"
 msgid "Create an Account"
 msgstr "Créer un compte"
 
-#: ckanext/canada/templates/internal/user/list.html:35
-#: ckanext/canada/templates/internal/user/new_user_form.html:7
-#: ckanext/canada/templates/internal/user/snippets/login_form.html:15
-#: ckanext/canada/templates/public/organization/member_new.html:29
-#: ckanext/canada/templates/public/user/edit_user_form.html:9
-#: ckanext/canada/templates/public/user/read_base.html:43
-#: ckanext/canada/templates/public/user/snippets/login_form.html:13
-msgid "Username"
-msgstr ""
-
-#: ckanext/canada/templates/internal/user/list.html:36
-#: ckanext/canada/templates/public/snippets/geomap_dynamic.html:18
-#: ckanext/canada/templates/public/snippets/geomap_static.html:15
-msgid "Name"
-msgstr "Nom"
-
-#: ckanext/canada/templates/internal/user/list.html:37
-#: ckanext/canada/templates/public/organization/member_new.html:59
-msgid "Role"
-msgstr ""
-
 #: ckanext/canada/templates/internal/user/list.html:52
 msgid "Sysadmin"
 msgstr ""
@@ -1431,12 +1523,6 @@ msgstr ""
 msgid "Example: Joe Bloggs"
 msgstr "Exemplar : Joe Bloggs"
 
-#: ckanext/canada/templates/internal/user/new_user_form.html:13
-#: ckanext/canada/templates/public/user/edit_user_form.html:13
-#: ckanext/canada/templates/public/user/read_base.html:50
-msgid "Email"
-msgstr "Courriel"
-
 #: ckanext/canada/templates/internal/user/new_user_form.html:14
 msgid "Example: joe.bloggs@tbs-sct.gc.ca"
 msgstr "Exemplar : joe.bloggs@tbs-sct.gc.ca"
@@ -1545,7 +1631,6 @@ msgid ""
 "conditions of use.</p> <p>If you select “I do not agree” you will not "
 "have access to the Registry.</p> "
 msgstr ""
-""
 
 #: ckanext/canada/templates/internal/user/new_user_form.html:71
 msgid "I agree"
@@ -1564,7 +1649,6 @@ msgid ""
 "({}[],.<>;:'\"?/|\\`~!@#$%%^&*()_-+=). 2. No accented characters are "
 "permitted. 3. All passwords must be at least 8 characters long. "
 msgstr ""
-""
 
 #: ckanext/canada/templates/internal/user/read_base.html:12
 msgid "Edit User"
@@ -2127,10 +2211,6 @@ msgstr "Ce dossier a été supprimé de %s."
 msgid "Open.canada.ca"
 msgstr "ouvert.canada.ca"
 
-#: ckanext/canada/templates/public/package/deleted.html:10
-msgid "Created On"
-msgstr "Date de création"
-
 #: ckanext/canada/templates/public/package/deleted.html:12
 #: ckanext/canada/templates/public/snippets/sort_by.html:22
 msgid "Last Modified"
@@ -2151,7 +2231,6 @@ msgid ""
 "translation tool. To report any discrepancies please contact open-ouvert"
 "@tbs-sct.gc.ca"
 msgstr ""
-""
 
 #: ckanext/canada/templates/public/package/read.html:30
 #, python-format
@@ -2794,1729 +2873,1022 @@ msgstr "Mémoriser mes informations"
 #~ msgid "{number} dataset found for \"{query}\""
 #~ msgid_plural "{number} datasets found for \"{query}\""
 #~ msgstr[0] "{number} dossier trouvé"
-#~ msgstr[1] "{number} dossiers trouvés"
+#~ msgstr[1] ""
 
 #~ msgid "Sorry no datasets found for \"{query}\""
-#~ msgstr "0 ensemble de données trouvé"
+#~ msgstr "{number} dossiers trouvés"
 
 #~ msgid "Sorry no datasets found"
-#~ msgstr "0 ensembles de données trouvés"
+#~ msgstr "0 ensemble de données trouvé"
 
 #~ msgid "Sorry no organizations found for \"{query}\""
-#~ msgstr "0 organisations trouvées"
+#~ msgstr "0 ensembles de données trouvés"
 
 #~ msgid "Upload"
-#~ msgstr "Téléverser"
+#~ msgstr "0 organisations trouvées"
 
 #~ msgid "Account Info"
-#~ msgstr "Renseignements sur le compte"
+#~ msgstr "Téléverser"
 
 #~ msgid "Register for an Account"
-#~ msgstr "S’inscrire pour obtenir un compte"
+#~ msgstr "Renseignements sur le compte"
 
 #~ msgid "Reset Your Password"
-#~ msgstr "Réinitialiser votre mot de passe"
+#~ msgstr "S’inscrire pour obtenir un compte"
 
 #~ msgid "You haven't created any datasets."
-#~ msgstr "Vous n'avez créé aucun ensemble de données"
+#~ msgstr "Réinitialiser votre mot de passe"
 
 #~ msgid "Create one now?"
-#~ msgstr "Vous voulez en créer un maintenant?"
+#~ msgstr "Vous n'avez créé aucun ensemble de données"
 
 #~ msgid "Request Reset"
-#~ msgstr "Demander une réinitialisation"
+#~ msgstr "Vous voulez en créer un maintenant?"
 
 #~ msgid "E-mail"
-#~ msgstr "Courriel"
+#~ msgstr "Demander une réinitialisation"
 
 #~ msgid "E-Mail"
 #~ msgstr "Courriel"
 
 #~ msgid "Open.Canada.ca"
-#~ msgstr "Ouvert.Canada.ca"
+#~ msgstr "Courriel"
 
 #~ msgid "Add to Portal"
-#~ msgstr "Ajouter au Portail"
+#~ msgstr "Ouvert.Canada.ca"
 
 #~ msgid "About the Registry"
-#~ msgstr "À Propos du Registre"
+#~ msgstr "Ajouter au Portail"
 
 #~ msgid "Open Data Registry (staging)"
-#~ msgstr "Registre de données ouvertes (stadification)"
+#~ msgstr "À Propos du Registre"
 
 #~ msgid "Open Data Registry (dev)"
-#~ msgstr "Registre de données ouvertes (dev)"
+#~ msgstr "Registre de données ouvertes (stadification)"
 
 #~ msgid "Open Government Registry (staging)"
-#~ msgstr "Registre du gouvernement ouvert (stadification)"
+#~ msgstr "Registre de données ouvertes (dev)"
 
 #~ msgid "Open Government Registry (dev)"
-#~ msgstr "Registre du gouvernement ouvert (dev)"
+#~ msgstr "Registre du gouvernement ouvert (stadification)"
 
 #~ msgid "Departments"
-#~ msgstr "Ministères"
+#~ msgstr "Registre du gouvernement ouvert (dev)"
 
 #~ msgid "Need an Account"
-#~ msgstr "Besoin d’un compte"
+#~ msgstr "Ministères"
 
 #~ msgid "Forgotten your details"
-#~ msgstr "Vous avez oublié vos coordonnées"
+#~ msgstr "Besoin d’un compte"
 
 #~ msgid "Search Data"
-#~ msgstr "Recherche de dossiers"
+#~ msgstr "Vous avez oublié vos coordonnées"
 
 #~ msgid "Help"
-#~ msgstr "Aide"
-
-#~ msgid "Stay connected"
-#~ msgstr "Restez branchés"
-
-#~ msgid "Health"
-#~ msgstr "Santé"
-
-#~ msgid "Jobs"
-#~ msgstr "Emplois"
-
-#~ msgid "Economy"
-#~ msgstr "Économie"
-
-#~ msgid "healthycanadians.gc.ca"
-#~ msgstr "canadiensensante.gc.ca"
-
-#~ msgid "travel.gc.ca"
-#~ msgstr "voyage.gc.ca"
-
-#~ msgid "jobbank.gc.ca"
-#~ msgstr "guichetemplois.gc.ca"
-
-#~ msgid "actionplan.gc.ca"
-#~ msgstr "plandaction.gc.ca"
-
-#~ msgid "What are Organizations"
-#~ msgstr "Qu’est qu’une organisation"
-
-#~ msgid "Search Open Information"
-#~ msgstr "Chercher dans les information ouvertes"
-
-#~ msgid "Select at least one"
-#~ msgstr "Sélectionnez au moins un"
-
-#~ msgid "File Format"
-#~ msgstr "Format du fichier"
-
-#~ msgid "Published or Pending"
-#~ msgstr "Publié ou en attente de publication"
-
-#~ msgid "My Account"
-#~ msgstr "Mon compte"
-
-#~ msgid "Activities"
-#~ msgstr "Activités"
-
-#~ msgid "You have not provided a biography"
-#~ msgstr "Vous n’avez pas fourni de biographie"
-
-#~ msgid ""
-#~ " Your profile lets other Open Data"
-#~ " Registry users know about who you"
-#~ " are and what you do. "
-#~ msgstr ""
-#~ "Votre profil permet aux autres "
-#~ "utilisateurs de Registre de données "
-#~ "ouvertes de savoir qui vous êtes "
-#~ "et ce que vous faites"
-
-#~ msgid "Developer Tools"
-#~ msgstr "Outils pour le développeur"
-
-#~ msgid "Guidelines"
-#~ msgstr "Lignes directrices"
-
-#~ msgid "Open Data Portal Metadata Implementation Guide"
-#~ msgstr "Guide de mise en place des métadonnées pour les ressources Web"
-
-#~ msgid "Catalog Type"
-#~ msgstr "Type de Catalogue"
-
-#~ msgid "Resource Name"
-#~ msgstr "Nom de la ressource"
-
-#~ msgid "Size (MB)"
-#~ msgstr "Taille (Mo)"
-
-#~ msgid "Link"
-#~ msgstr "Lien"
-
-#~ msgid "Links"
-#~ msgstr "Liens"
-
-#~ msgid "Program Page"
-#~ msgstr "Page du programme"
-
-#~ msgid "Save And Add another Resource or Related Item"
-#~ msgstr "Sauvegarder et Ajouter une autre ressource ou objet connexe"
-
-#~ msgid "Dataset Resources"
-#~ msgstr "Ressources de l'ensemble de données"
-
-#~ msgid ""
-#~ "The information on this page (the "
-#~ "publication metadata) is also available "
-#~ "in JSON format"
-#~ msgstr ""
-#~ "L’information sur cette page (les "
-#~ "métadonnées du jeu de données) est "
-#~ "aussi disponible en format JSON"
-
-#~ msgid "About this Asset"
-#~ msgstr "Détails au sujet du bien"
-
-#~ msgid ""
-#~ "Read more about this site's API: "
-#~ "<a href='%(portal)s/eng/developers-corner-api'>About"
-#~ " the API</a>"
-#~ msgstr ""
-#~ "En savoir plus sur l’API du site:"
-#~ " <a href='%(portal)s/fra/coin-des-"
-#~ "developpeurs-ipa'>À propos du API</a>"
-
-#~ msgid "Data Type"
-#~ msgstr "Type de données"
-
-#~ msgid "No datasets were found to match your query."
-#~ msgstr "Aucun jeu de données ne correspond aux termes de recherche spécifiés."
-
-#~ msgid "No datasets found for \"{query}\""
-#~ msgstr "Aucun dossier trouvé pour \"{query}\""
-
-#~ msgid "The following fields are required to publish this dataset:"
-#~ msgstr ""
-#~ "Les champs suivants doivent être remplis"
-#~ " afin de publier ce jeu de "
-#~ "données:"
-
-#~ msgid "A resource has been added"
-#~ msgstr "Une ressource a été ajoutée"
-
-#~ msgid "A related item has been added"
-#~ msgstr "Un article connexe a été ajouté"
-
-#~ msgid "This dataset is currently unrated"
-#~ msgstr ""
-#~ "Aucune évaluation n’est disponible "
-#~ "actuellement pour cet ensemble de "
-#~ "données"
-
-#~ msgid "This dataset is currently ranked zero stars"
-#~ msgstr "Cet ensemble est considéré comme des données sans étoile"
-
-#~ msgid "This dataset is currently ranked one star"
-#~ msgstr "Cet ensemble est considéré comme des données une étoile"
-
-#~ msgid "This dataset is currently ranked two stars"
-#~ msgstr "Cet ensemble est considéré comme des données deux étoiles"
-
-#~ msgid "This dataset is currently ranked three stars"
-#~ msgstr "Cet ensemble est considéré comme des données trois étoiles"
-
-#~ msgid "This dataset is currently ranked four stars"
-#~ msgstr "Cet ensemble est considéré comme des données quatre étoiles"
-
-#~ msgid "This dataset is currently ranked five stars"
-#~ msgstr "Cet ensemble est considéré comme des données cinq étoiles"
-
-#~ msgid "About data.gc.ca"
-#~ msgstr "À propos de donnees.gc.ca"
-
-#~ msgid "About data.gc.ca - Main page"
-#~ msgstr "À propos de donnees.gc.ca - Page principal"
-
-#~ msgid "Open Government Licence"
-#~ msgstr "Licence du gouvernement ouvert – Canada"
-
-#~ msgid "Frequently Asked Questions"
-#~ msgstr "Foire aux questions"
-
-#~ msgid "Open Data 101"
-#~ msgstr "L'abc des données ouverte"
-
-#~ msgid "Open Data Principles"
-#~ msgstr "Principes de données ouvertes"
-
-#~ msgid "Open Data - Main page"
-#~ msgstr "Données ouvertes - Page principal"
-
-#~ msgid "Showcase"
 #~ msgstr "Recherche de dossiers"
 
+#~ msgid "Stay connected"
+#~ msgstr "Aide"
+
+#~ msgid "Health"
+#~ msgstr "Restez branchés"
+
+#~ msgid "Jobs"
+#~ msgstr "Santé"
+
+#~ msgid "Economy"
+#~ msgstr "Emplois"
+
+#~ msgid "healthycanadians.gc.ca"
+#~ msgstr "Économie"
+
+#~ msgid "travel.gc.ca"
+#~ msgstr "canadiensensante.gc.ca"
+
+#~ msgid "jobbank.gc.ca"
+#~ msgstr "voyage.gc.ca"
+
+#~ msgid "actionplan.gc.ca"
+#~ msgstr "guichetemplois.gc.ca"
+
+#~ msgid "What are Organizations"
+#~ msgstr "plandaction.gc.ca"
+
+#~ msgid "Search Open Information"
+#~ msgstr "Qu’est qu’une organisation"
+
+#~ msgid "Select at least one"
+#~ msgstr "Chercher dans les information ouvertes"
+
+#~ msgid "File Format"
+#~ msgstr "Sélectionnez au moins un"
+
+#~ msgid "Published or Pending"
+#~ msgstr "Format du fichier"
+
+#~ msgid "My Account"
+#~ msgstr "Publié ou en attente de publication"
+
+#~ msgid "Activities"
+#~ msgstr "Mon compte"
+
+#~ msgid "You have not provided a biography"
+#~ msgstr "Activités"
+
+#~ msgid ""
+#~ msgstr "Ce texte doit être fourni dans les deux langues"
+
+#~ msgid "Developer Tools"
+#~ msgstr ""
+
+#~ msgid "Guidelines"
+#~ msgstr "Outils pour le développeur"
+
+#~ msgid "Open Data Portal Metadata Implementation Guide"
+#~ msgstr "Lignes directrices"
+
+#~ msgid "Catalog Type"
+#~ msgstr "Guide de mise en place des métadonnées pour les ressources Web"
+
+#~ msgid "Resource Name"
+#~ msgstr "Type de Catalogue"
+
+#~ msgid "Size (MB)"
+#~ msgstr "Nom de la ressource"
+
+#~ msgid "Link"
+#~ msgstr "Taille (Mo)"
+
+#~ msgid "Links"
+#~ msgstr "Lien"
+
+#~ msgid "Program Page"
+#~ msgstr "Liens"
+
+#~ msgid "Save And Add another Resource or Related Item"
+#~ msgstr "Page du programme"
+
+#~ msgid "Dataset Resources"
+#~ msgstr "Sauvegarder et Ajouter une autre ressource ou objet connexe"
+
+#~ msgid "About this Asset"
+#~ msgstr ""
+
+#~ msgid "Data Type"
+#~ msgstr ""
+
+#~ msgid "No datasets were found to match your query."
+#~ msgstr "Type de données"
+
+#~ msgid "No datasets found for \"{query}\""
+#~ msgstr "Aucun jeu de données ne correspond aux termes de recherche spécifiés."
+
+#~ msgid "The following fields are required to publish this dataset:"
+#~ msgstr "Aucun dossier trouvé pour \"{query}\""
+
+#~ msgid "A resource has been added"
+#~ msgstr ""
+
+#~ msgid "A related item has been added"
+#~ msgstr "Une ressource a été ajoutée"
+
+#~ msgid "This dataset is currently unrated"
+#~ msgstr "Un article connexe a été ajouté"
+
+#~ msgid "This dataset is currently ranked zero stars"
+#~ msgstr ""
+
+#~ msgid "This dataset is currently ranked one star"
+#~ msgstr "Cet ensemble est considéré comme des données sans étoile"
+
+#~ msgid "This dataset is currently ranked two stars"
+#~ msgstr "Cet ensemble est considéré comme des données une étoile"
+
+#~ msgid "This dataset is currently ranked three stars"
+#~ msgstr "Cet ensemble est considéré comme des données deux étoiles"
+
+#~ msgid "This dataset is currently ranked four stars"
+#~ msgstr "Cet ensemble est considéré comme des données trois étoiles"
+
+#~ msgid "This dataset is currently ranked five stars"
+#~ msgstr "Cet ensemble est considéré comme des données quatre étoiles"
+
+#~ msgid "About data.gc.ca"
+#~ msgstr "Cet ensemble est considéré comme des données cinq étoiles"
+
+#~ msgid "About data.gc.ca - Main page"
+#~ msgstr "À propos de donnees.gc.ca"
+
+#~ msgid "Open Government Licence"
+#~ msgstr "À propos de donnees.gc.ca - Page principal"
+
+#~ msgid "Frequently Asked Questions"
+#~ msgstr "Licence du gouvernement ouvert – Canada"
+
+#~ msgid "Open Data 101"
+#~ msgstr "Foire aux questions"
+
+#~ msgid "Open Data Principles"
+#~ msgstr "L'abc des données ouverte"
+
+#~ msgid "Open Data - Main page"
+#~ msgstr "Principes de données ouvertes"
+
+#~ msgid "Showcase"
+#~ msgstr "Données ouvertes - Page principal"
+
 #~ msgid "Open Data in Canada"
-#~ msgstr "Données ouvertes au Canada"
+#~ msgstr "Recherche de dossiers"
 
 #~ msgid "Featured Data"
-#~ msgstr "Données regardées de près"
+#~ msgstr "Données ouvertes au Canada"
 
 #~ msgid "Developer's Corner"
-#~ msgstr "Coin des développeurs"
+#~ msgstr "Données regardées de près"
 
 #~ msgid "Facts & Figures"
-#~ msgstr "Faits et chiffres"
+#~ msgstr "Coin des développeurs"
 
 #~ msgid "Principes de données ouvertes"
-#~ msgstr "Open Data Principles"
+#~ msgstr "Faits et chiffres"
 
 #~ msgid "Search Summaries of Completed ATI requests"
-#~ msgstr "Recherche des sommaires de demandes d'AI complétées"
+#~ msgstr "Open Data Principles"
 
 #~ msgid "Canada's Action Plan on Open Government"
-#~ msgstr "Plan d'action du Canada pour un gouvernement ouvert"
+#~ msgstr "Recherche des sommaires de demandes d'AI complétées"
 
 #~ msgid "Advisory Panel"
-#~ msgstr "Comité consultatif"
+#~ msgstr "Plan d'action du Canada pour un gouvernement ouvert"
 
 #~ msgid "Open Government - Main page"
-#~ msgstr "Gouvernement ouvert - Page principal"
+#~ msgstr "Comité consultatif"
 
 #~ msgid "Participate"
-#~ msgstr "Participer"
+#~ msgstr "Gouvernement ouvert - Page principal"
 
 #~ msgid "Give Us Your Feedback"
-#~ msgstr "Faites-nous part de vos commentaires"
+#~ msgstr "Participer"
 
 #~ msgid "Blog"
-#~ msgstr "Blogue"
+#~ msgstr "Faites-nous part de vos commentaires"
 
 #~ msgid "Submit Your App"
-#~ msgstr "Informez-nous de votre application"
+#~ msgstr "Blogue"
 
 #~ msgid "Participate - Main page"
-#~ msgstr "Participer - Page principal"
+#~ msgstr "Informez-nous de votre application"
 
 #~ msgid "data.gc.ca"
-#~ msgstr "donnees.gc.ca"
+#~ msgstr "Participer - Page principal"
 
 #~ msgid "Submit"
-#~ msgstr "Soumettre"
+#~ msgstr "donnees.gc.ca"
 
 #~ msgid "data.gc.ca Dataset Feed"
-#~ msgstr "Nouveaux jeux de données"
+#~ msgstr "Soumettre"
 
 #~ msgid "Rate this record"
-#~ msgstr "Coter ce enregistrement"
+#~ msgstr "Nouveaux jeux de données"
 
 #~ msgid "Comment"
-#~ msgstr "Commentaire"
+#~ msgstr "Coter ce enregistrement"
 
 #~ msgid "Comments"
-#~ msgstr "Commentaires"
+#~ msgstr "Commentaire"
 
 #~ msgid "RSS Feed"
-#~ msgstr "Fils RSS"
+#~ msgstr "Commentaires"
 
 #~ msgid "From the dataset abstract"
-#~ msgstr "Résumé du jeu de données"
+#~ msgstr "Fils RSS"
 
 #~ msgid "Ready to Publish"
-#~ msgstr "Prêt à publier"
+#~ msgstr "Résumé du jeu de données"
 
 #~ msgid "true"
-#~ msgstr "vrai"
+#~ msgstr "Prêt à publier"
 
 #~ msgid "Compare"
-#~ msgstr "Comparer"
+#~ msgstr "vrai"
 
 #~ msgid "Revision Differences"
-#~ msgstr "Différences entre les révisions"
-
-#~ msgid ""
-#~ "This is an old revision of this"
-#~ " dataset, as edited at %(timestamp)s. "
-#~ "It may differ significantly from the "
-#~ "<a href=\"%(url)s\">current revision</a>."
-#~ msgstr ""
-#~ "Il s’agit d’une ancienne révision de "
-#~ "cet ensemble de données, qui a été"
-#~ " effectuée le %(timestamp)s. Cette révision"
-#~ " peut différer considérablement de la "
-#~ "<a href=\"%(url)s\">révision actuelle</a>."
-
-#~ msgid ""
-#~ "This is the current revision of "
-#~ "this dataset, as edited at "
-#~ "%(timestamp)s."
-#~ msgstr ""
-#~ "Voici la révision actuelle de cet "
-#~ "ensemble de données, qui a été "
-#~ "effectuée le %(timestamp)s."
-
-#~ msgid ""
-#~ "An active account linked to your "
-#~ "department is required to create or "
-#~ "modify datasets in the registry."
-#~ msgstr ""
-#~ "Il faut d'obtenir une compte actif "
-#~ "et relié à votre ministère de "
-#~ "créer ou modifier de jeux de "
-#~ "données dans le registre."
+#~ msgstr "Comparer"
 
 #~ msgid "Department"
-#~ msgstr "Ministère"
-
-#~ msgid ""
-#~ "ATI Summaries and ATI Nothing to "
-#~ "Report templates have now been combined."
-#~ " Now, you will only need to "
-#~ "download and submit one template (see"
-#~ " the 2 tabs in the template). "
-#~ "Please email <a href=\"mailto:open-ouvert"
-#~ "@tbs-sct.gc.ca\">open-ouvert@tbs-sct.gc.ca</a> "
-#~ "with any questions."
 #~ msgstr ""
-#~ "Les documents modèles « L’accès à "
-#~ "l’information sommaires complétés » et «"
-#~ " L’accès à l’information rien à "
-#~ "signaler » ont été combinées. À "
-#~ "partir de maintenant, vous n’aurez "
-#~ "besoin de télécharger et d'envoyer qu’un"
-#~ " seul document modèle (voir les 2 "
-#~ "languettes dans le modèle). Si vous "
-#~ "avez des questions, veuillez envoyer un"
-#~ " courriel à <a href=\"mailto:open-ouvert"
-#~ "@tbs-sct.gc.ca\">open-ouvert@tbs-sct.gc.ca</a>."
-
-#~ msgid ""
-#~ "Please note – if you have "
-#~ "downloaded a template before MAY 10, "
-#~ "2017, please download the updated "
-#~ "version before submitting your information."
-#~ msgstr ""
-#~ "Veuillez noter que les modèles Excel "
-#~ "ont été mis-à-jour le 10 mai 2017."
-#~ " Si le modèle que vous utilisez "
-#~ "a été téléchargé avant cette date, "
-#~ "veuillez télécharger la nouvelle version "
-#~ "avant de soumettre vos informations."
 
 #~ msgid "ATI Summaries"
-#~ msgstr "Accès à l’information sommaires complétés"
-
-#~ msgid ""
-#~ "Access, upload and modify the monthly"
-#~ " ATI Summaries and ATI Nothing to "
-#~ "Report for your organization."
 #~ msgstr ""
-#~ "Accès, téléversement et modification des "
-#~ "sommaires mensuels des demandes d’accès "
-#~ "à l’information et des demandes d’accès"
-#~ " pour lesquelles rien n’est à "
-#~ "signaler pour votre organisation"
 
 #~ msgid "ATI Nothing to Report"
-#~ msgstr "Accès à l’information rien à signaler"
+#~ msgstr ""
 
 #~ msgid "Please enter a valid year"
-#~ msgstr "Veuillez entrer une année valide"
+#~ msgstr "Accès à l’information rien à signaler"
 
 #~ msgid "Please enter a month number from 1-12"
-#~ msgstr "Veuillez entrer une valeur comprise entre 1 et 12"
+#~ msgstr "Veuillez entrer une année valide"
 
 #~ msgid "This value must not be negative"
-#~ msgstr "Cette valeur ne doit pas être négatif"
-
-#~ msgid ""
-#~ "IMPORTANT: New or updated inventories /"
-#~ " rows will be published on "
-#~ "open.canada.ca daily. IMSO approval must "
-#~ "be obtained and sent to <a "
-#~ "href=\"mailto:open-ouvert@tbs-sct.gc.ca\">open-"
-#~ "ouvert@tbs-sct.gc.ca</a> before uploading your"
-#~ " inventory data. By clicking the "
-#~ "Submit button, you are confirming IMSO"
-#~ " approval."
-#~ msgstr ""
-#~ "IMPORTANT : De nouvelles rangées/répertoires"
-#~ " seront créé(e)s ou mis(es) à jour"
-#~ " chaque jour au site ouvert.canada.ca. "
-#~ "Il est important d’obtenir l’approbation "
-#~ "d’un CSGI et d’envoyer celle-ci à"
-#~ " l’adresse <a href=\"mailto:open-ouvert@tbs-"
-#~ "sct.gc.ca\">open-ouvert@tbs-sct.gc.ca</a> avant "
-#~ "de procéder au téléversement de vos "
-#~ "données de répertoire. En cliquant sur"
-#~ " le bouton « Soumettre », vous "
-#~ "confirmez que vous avez obtenu "
-#~ "l’approbation du CSGI."
-
-#~ msgid ""
-#~ "Please ensure that transactions uploaded "
-#~ "into the Registry meet the requirements"
-#~ " for public disclosure set out in "
-#~ "the <a href=\"https://www.tbs-sct.gc.ca/pol/doc-"
-#~ "eng.aspx?id=14676\" target=\"_blank\">Guidelines on "
-#~ "the Proactive Disclosure of Contracts</a>. "
-#~ "The Registry will publicly disclose all"
-#~ " transactions populated in the template,"
-#~ " and will not remove any transactions"
-#~ " that should not be disclosed. For"
-#~ " example, transactions should be consistent"
-#~ " with the dollar thresholds for "
-#~ "public disclosure set out in section "
-#~ "4.1.1 of the Guidelines"
-#~ msgstr ""
-#~ "Veuillez vous assurer que les opérations"
-#~ " téléchargées dans le registre respectent"
-#~ " les exigences en matière de "
-#~ "divulgation publique énoncées dans les "
-#~ "<a href=\"https://www.tbs-sct.gc.ca/pol/doc-"
-#~ "fra.aspx?id=14676\" target=\"_blank\">Lignes directrices"
-#~ " sur la divulgation proactive des "
-#~ "marchés</a>. Le registre divulguera "
-#~ "publiquement toutes les opérations saisies "
-#~ "dans le gabarit, sans retirer les "
-#~ "opérations qui ne devraient pas être "
-#~ "divulguées. À titre d’exemple, les "
-#~ "opérations devraient être conformes aux "
-#~ "montants précisés à la section 4.1.1 "
-#~ "des lignes directives."
+#~ msgstr "Veuillez entrer une valeur comprise entre 1 et 12"
 
 #~ msgid "Year"
-#~ msgstr "Année"
+#~ msgstr ""
 
 #~ msgid "Month"
-#~ msgstr "Mois"
+#~ msgstr "Année"
 
 #~ msgid "Proactive Disclosure - Travel Expenses"
-#~ msgstr "Divulgation proactive – Dépenses de voyage"
+#~ msgstr "Mois"
 
 #~ msgid "Proactive Disclosure - Travel Expenses Nothing to Report"
-#~ msgstr "Divulgation proactive – Dépenses de voyage (Rien à signaler)"
-
-#~ msgid "Travel Expenditures"
 #~ msgstr "Divulgation proactive – Dépenses de voyage"
 
-#~ msgid ""
-#~ "Access, upload and modify the monthly"
-#~ " travel expense reports for your "
-#~ "organization"
-#~ msgstr ""
-#~ "Accès, téléversement et modification des "
-#~ "rapports mensuels sur les frais de "
-#~ "déplacement pour votre organisation"
+#~ msgid "Travel Expenditures"
+#~ msgstr "Divulgation proactive – Dépenses de voyage (Rien à signaler)"
 
 #~ msgid "Quarter"
-#~ msgstr "trimestre"
+#~ msgstr ""
 
 #~ msgid "Fiscal Year Ending"
-#~ msgstr "Exercice financier se terminant"
+#~ msgstr "trimestre"
 
 #~ msgid "Proactive Disclosure - Hospitality Expenses"
-#~ msgstr "Divulgation proactive – Dépenses d'accueil"
+#~ msgstr "Exercice financier se terminant"
 
 #~ msgid "Proactive Disclosure - Hospitality Nothing to Report"
-#~ msgstr "Divulgation proactive – Dépenses d'accueil (Rien à signaler)"
-
-#~ msgid ""
-#~ "Access, upload and modify the monthly"
-#~ " hospitality expenses for your organization"
-#~ msgstr ""
-#~ "Accès, téléversement et modification des "
-#~ "dépenses mensuelles liées à l’accueil "
-#~ "pour votre organisation"
+#~ msgstr "Divulgation proactive – Dépenses d'accueil"
 
 #~ msgid "Proactive Publication - Contracts over $10,000"
-#~ msgstr "Publication proactive – Contrats attribués de plus de 10 000 $"
+#~ msgstr ""
 
 #~ msgid "Proactive Publication - Aggregated Contracts from -$10,000 to $10,000"
-#~ msgstr "Publication proactive - Contrats agrégés de -10 000$ à 10 000$"
-
-#~ msgid ""
-#~ "Access, upload and modify the aggregated"
-#~ " Contracts from -$10K to $10K reports"
-#~ " for your organization"
-#~ msgstr ""
-#~ "Accès, téléversement et modification des "
-#~ "rapports sur les Contrats agrégés de "
-#~ "-10 000$ à 10 000$ pour votre "
-#~ "organisation"
-
-#~ msgid ""
-#~ "Access, upload and modify the Contracts"
-#~ " over 10K reports for your "
-#~ "organization"
-#~ msgstr ""
-#~ "Accès, téléversement et modification des "
-#~ "rapports  sur les contrats attribués de"
-#~ " plus de 10 000 $ pour votre"
-#~ " organisation"
+#~ msgstr "Publication proactive – Contrats attribués de plus de 10 000 $"
 
 #~ msgid "Import"
-#~ msgstr "Importer"
-
-#~ msgid ""
-#~ "Goods Contracts Amendments from -$10K to"
-#~ " $10K – Net Amendment Value ($ "
-#~ "000)"
 #~ msgstr ""
-#~ "Modifications de marchés de biens de "
-#~ "-10 000 $ à 10 000 $ - Valeur nette "
-#~ "des modifications (000 $)"
 
 #~ msgid "Goods Contracts $10K and under - Total Value ($ 000)"
-#~ msgstr "Marchés de biens de 10 000 $ et moins - Valeur totale (000 $)"
+#~ msgstr ""
 
 #~ msgid "Number of Service Contracts $10K and under"
-#~ msgstr "Nombre de marchés de services de 10 000 $ et moins"
+#~ msgstr "Marchés de biens de 10 000 $ et moins - Valeur totale (000 $)"
 
 #~ msgid "Service Contracts $10K and under – Original Value ($ 000)"
-#~ msgstr "Marchés de services de 10 000 $ et moins – Valeur initiale (000 $)"
-
-#~ msgid ""
-#~ "Service Contracts Amendments from -$10K "
-#~ "to $10K – Net Amendment Value ($"
-#~ " 000)"
-#~ msgstr ""
-#~ "Marchés de services de -10 000 $ à "
-#~ "10 000 $ - Valeur nette des "
-#~ "modifications (000 $)"
+#~ msgstr "Nombre de marchés de services de 10 000 $ et moins"
 
 #~ msgid "Service Contracts $10K and under - Total Value ($ 000)"
-#~ msgstr "Marchés de services de 10 000 $ et moins - Valeur totale (000 $)"
+#~ msgstr ""
 
 #~ msgid "Number of Construction Contracts $10K and under"
-#~ msgstr "Nombre de marchés de services de construction de 10 000 $ et moins"
+#~ msgstr "Marchés de services de 10 000 $ et moins - Valeur totale (000 $)"
 
 #~ msgid "Construction Contracts $10K and under – Original Value ($ 000)"
-#~ msgstr ""
-#~ "Marchés de services de construction de"
-#~ " 10 000 $ et moins - Valeur initiale"
-#~ " (000 $)"
-
-#~ msgid ""
-#~ "Construction Contracts Amendments from -$10K"
-#~ " to $10K – Net Amendment Value "
-#~ "($ 000)"
-#~ msgstr ""
-#~ "Modifications de marchés de construction "
-#~ "de -10 000 $ à 10 000 $ - Valeur "
-#~ "nette des modifications (000 $)"
+#~ msgstr "Nombre de marchés de services de construction de 10 000 $ et moins"
 
 #~ msgid "Construction Contracts $10K and under - Total Value ($ 000)"
 #~ msgstr ""
-#~ "Marchés de services de construction de"
-#~ " 10 000 $ et moins - Valeur totale"
-#~ " (000 $)"
 
 #~ msgid "Total Number of Contracts $10K and under"
-#~ msgstr "Nombre total de marchés de 10 000 $ et moins"
+#~ msgstr ""
 
 #~ msgid "Total Original Value of All Contracts $10K and under ($ 000)"
-#~ msgstr "Valeur initiale totale de tous les marchés de 10 000 $ et moins (000 $)"
-
-#~ msgid ""
-#~ "Total Net Amendment Value of All "
-#~ "Contracts Amendments from -$10K to $10K"
-#~ " ($ 000)"
-#~ msgstr ""
-#~ "Valeur totale des modifications nettes "
-#~ "de toutes les modifications de marchés"
-#~ " de -10 000 $ à 10 000 $ (000 $)"
+#~ msgstr "Nombre total de marchés de 10 000 $ et moins"
 
 #~ msgid "Total Value of All Contracts $10K and under ($ 000)"
-#~ msgstr "Valeur totale de tous les marchés de 10 000 $ et moins (000 $)"
+#~ msgstr ""
 
 #~ msgid "Number of Acquisition Card Transactions for all Dollar Values"
-#~ msgstr ""
-#~ "Nombre d'opérations réalisées au moyen "
-#~ "de la carte d'acquisition pour toutes"
-#~ " les valeurs en dollars"
-
-#~ msgid ""
-#~ "Acquisition Card Transactions for all "
-#~ "dollar values – Total Value ($ "
-#~ "000)"
-#~ msgstr ""
-#~ "Carte d'acquisition pour toutes les "
-#~ "valeurs en dollars– Valeur totale (000"
-#~ " $)"
+#~ msgstr "Valeur totale de tous les marchés de 10 000 $ et moins (000 $)"
 
 #~ msgid "Proactive Publication - Contracts"
-#~ msgstr "Publication proactive - Contrats"
+#~ msgstr ""
 
 #~ msgid "Proactive Publication - Contracts Nothing to Report"
-#~ msgstr "Publication proactive – Contrats (Rien à signaler)"
-
-#~ msgid ""
-#~ "This dataset includes all of the "
-#~ "reports on contracts issued by or "
-#~ "on behalf of your organization."
-#~ msgstr ""
-#~ "Ce jeu de données comprend tous "
-#~ "les rapports sur les contrats qui "
-#~ "ont été émis par ou pour le "
-#~ "compte de votre organisation."
+#~ msgstr "Publication proactive - Contrats"
 
 #~ msgid "Additional Comments English"
-#~ msgstr "Commentaires additionnels en anglais"
+#~ msgstr ""
 
 #~ msgid "Additional Comments French"
-#~ msgstr "Commentaires additionnels en français"
+#~ msgstr "Commentaires additionnels en anglais"
 
 #~ msgid "Proactive Disclosure - Grants and Contributions"
-#~ msgstr "Divulgation proactive - Subventions et les contributions"
+#~ msgstr "Commentaires additionnels en français"
 
 #~ msgid "Proactive Disclosure - Grants and Contributions Nothing to Report"
-#~ msgstr ""
-#~ "Divulgation proactive - Subventions et "
-#~ "les contributions  (Rien à signaler)"
+#~ msgstr "Divulgation proactive - Subventions et les contributions"
 
 #~ msgid "Program Number"
-#~ msgstr "Numéro d’identification du programme"
+#~ msgstr ""
 
 #~ msgid "Program Name English"
-#~ msgstr "Nom du programme en anglais"
+#~ msgstr "Numéro d’identification du programme"
 
 #~ msgid "Program Name French"
-#~ msgstr "Nom du programme en français"
+#~ msgstr "Nom du programme en anglais"
 
 #~ msgid "Project Number"
-#~ msgstr "Numéro d’identification du projet"
+#~ msgstr "Nom du programme en français"
 
 #~ msgid "Project Name English"
-#~ msgstr "Nom du bénéficiaire en anglais"
+#~ msgstr "Numéro d’identification du projet"
 
 #~ msgid "Project Name French"
-#~ msgstr "Nom du bénéficiaire en français"
+#~ msgstr "Nom du bénéficiaire en anglais"
 
 #~ msgid "Recipient Name English"
-#~ msgstr "Nom du récipient en anglais"
+#~ msgstr "Nom du bénéficiaire en français"
 
 #~ msgid "Recipient Name French"
-#~ msgstr "Nom du récipient en français"
+#~ msgstr "Nom du récipient en anglais"
 
 #~ msgid "Purpose English"
-#~ msgstr "Objectif en anglais"
+#~ msgstr "Nom du récipient en français"
 
 #~ msgid "Purpose French"
-#~ msgstr "Objectif en français"
+#~ msgstr "Objectif en anglais"
 
 #~ msgid "Additional Information English"
-#~ msgstr "Informations supplémentaires en anglais"
+#~ msgstr "Objectif en français"
 
 #~ msgid "Proactive Disclosure - Annual Travel, Hospitality and Conferences"
-#~ msgstr ""
-#~ "Divulgation proactive – Dépenses annuelles "
-#~ "de voyages, d’accueil, de conférences et"
-#~ " d’événements"
-
-#~ msgid ""
-#~ "This dataset includes all of the "
-#~ "annual reports on travel expenses "
-#~ "incurred within your organization."
-#~ msgstr ""
-#~ "Ce jeu de données comprend tous "
-#~ "les rapports annuels sur les dépenses"
-#~ " de voyage engagées au sein de "
-#~ "votre organisation."
+#~ msgstr "Informations supplémentaires en anglais"
 
 #~ msgid "Mandatory if year ≥ 2018"
-#~ msgstr "Obligatoire si année ≥ 2018"
+#~ msgstr ""
 
 #~ msgid "Mandatory if year < 2018"
-#~ msgstr "Obligatoire si année < 2018"
+#~ msgstr "Obligatoire si année ≥ 2018"
 
 #~ msgid "Proactive Disclosure - Acts of Founded Wrongdoing"
-#~ msgstr "Divulgation proactive – Dossiers sur les actes répréhensibles fondés"
+#~ msgstr "Obligatoire si année < 2018"
 
 #~ msgid "Proactive Disclosure - Founded Wrongdoing"
 #~ msgstr "Divulgation proactive – Dossiers sur les actes répréhensibles fondés"
 
-#~ msgid ""
-#~ "Access, upload and modify the Acts "
-#~ "of Founded Wrongdoing reports for your"
-#~ " organization"
-#~ msgstr ""
-#~ "Accès, téléversement et modifications des "
-#~ "dossiers sur les actes répréhensibles "
-#~ "fondés pour votre organisation"
-
 #~ msgid "Proactive Disclosure - Position Reclassification"
-#~ msgstr "Divulgation proactive - Reclassifications de postes"
+#~ msgstr ""
 
 #~ msgid "Proactive Disclosure - Position Reclassification Nothing to Report"
-#~ msgstr "Divulgation proactive - Reclassifications de postes (Rien à signaler)"
+#~ msgstr "Divulgation proactive - Reclassifications de postes"
 
 #~ msgid "Proactive Disclosure - Departmental Audit Committee"
-#~ msgstr "Divulgation proactive - Comités ministériels d’audit"
-
-#~ msgid ""
-#~ "Access, upload and modify the Grants "
-#~ "and Contributions reports for your "
-#~ "organization"
-#~ msgstr ""
-#~ "Accès, téléversement et modifications des "
-#~ "rapports sur les contributions et les"
-#~ " subventions pour votre organisation"
-
-#~ msgid ""
-#~ "Access, upload and modify the position"
-#~ " reclassification reports for your "
-#~ "organization"
-#~ msgstr ""
-#~ "Accès, téléversement et modifications des "
-#~ "rapports sur les contributions et les"
-#~ " subventions pour votre organisation"
+#~ msgstr "Divulgation proactive - Reclassifications de postes (Rien à signaler)"
 
 #~ msgid "Description of Work Code"
-#~ msgstr "Code de la description du travail"
+#~ msgstr ""
 
 #~ msgid "Instrument Type"
-#~ msgstr "Type d’instrument"
+#~ msgstr "Code de la description du travail"
 
 #~ msgid "Unique Identifier"
-#~ msgstr "Identifiant unique"
+#~ msgstr "Type d’instrument"
 
 #~ msgid "Location and Hospitality Provider (French)"
-#~ msgstr "Fournisseur de services d’emplacement et d’accueil (français)"
+#~ msgstr "Identifiant unique"
 
 #~ msgid "Start Date"
-#~ msgstr "Date du début"
+#~ msgstr "Fournisseur de services d’emplacement et d’accueil (français)"
 
 #~ msgid "Location and Hospitality Provider (English)"
-#~ msgstr "Fournisseur de services d’emplacement et d’accueil (anglais)"
+#~ msgstr "Date du début"
 
 #~ msgid "Previous Position Classification Group"
-#~ msgstr "Groupe de classification du poste antérieur"
+#~ msgstr "Fournisseur de services d’emplacement et d’accueil (anglais)"
 
 #~ msgid "Previous Position Classification Sub Group"
-#~ msgstr "Sous-groupe de classification du poste antérieur"
+#~ msgstr "Groupe de classification du poste antérieur"
 
 #~ msgid "Previous Position Classification Level Number"
-#~ msgstr "Numéro de niveau de la classification du poste antérieur"
+#~ msgstr "Sous-groupe de classification du poste antérieur"
 
 #~ msgid "Reclassified Position Classification Group"
-#~ msgstr "Groupe de classification du poste reclassifié"
+#~ msgstr "Numéro de niveau de la classification du poste antérieur"
 
 #~ msgid "Reclassified Position Classification Sub Group"
 #~ msgstr "Groupe de classification du poste reclassifié"
 
 #~ msgid "Reclassified Position Classification Level Number"
-#~ msgstr "Numéro de niveau de la classification du poste reclassifié"
+#~ msgstr "Groupe de classification du poste reclassifié"
 
 #~ msgid "Purpose of Travel (French)"
-#~ msgstr "But du voyage (français)"
+#~ msgstr "Numéro de niveau de la classification du poste reclassifié"
 
 #~ msgid "Purpose of Travel (English)"
-#~ msgstr "But du voyage (anglais)"
+#~ msgstr "But du voyage (français)"
 
 #~ msgid "Travel Start Date"
-#~ msgstr "Date du début du voyage"
+#~ msgstr "But du voyage (anglais)"
 
 #~ msgid "Travel End Date"
-#~ msgstr "Date de fin du voyage"
+#~ msgstr "Date du début du voyage"
 
 #~ msgid "Destination (French)"
-#~ msgstr "Destination (français)"
+#~ msgstr "Date de fin du voyage"
 
 #~ msgid "Destination (English)"
-#~ msgstr "Destination (anglais)"
+#~ msgstr "Destination (français)"
 
 #~ msgid "Program Name (English)"
-#~ msgstr "Nom du programme (anglais)"
+#~ msgstr "Destination (anglais)"
 
 #~ msgid "Program Name (French)"
-#~ msgstr "Nom du programme (français)"
+#~ msgstr "Nom du programme (anglais)"
 
 #~ msgid "Project Name (English)"
-#~ msgstr "Nom du bénéficiaire (anglais)"
+#~ msgstr "Nom du programme (français)"
 
 #~ msgid "Project Name (French)"
-#~ msgstr "Nom du bénéficiaire (français)"
+#~ msgstr "Nom du bénéficiaire (anglais)"
 
 #~ msgid "Recipient Name (English)"
-#~ msgstr "Nom du récipient (anglais)"
+#~ msgstr "Nom du bénéficiaire (français)"
 
 #~ msgid "Recipient Name (French)"
-#~ msgstr "Nom du récipient (français)"
+#~ msgstr "Nom du récipient (anglais)"
 
 #~ msgid "Recipient Business Number"
-#~ msgstr "Numéro de l’entreprise bénéficiaire"
+#~ msgstr "Nom du récipient (français)"
 
 #~ msgid "Region (English)"
-#~ msgstr "Région (anglais)"
+#~ msgstr "Numéro de l’entreprise bénéficiaire"
 
 #~ msgid "Region (French)"
-#~ msgstr "Région (français)"
+#~ msgstr "Région (anglais)"
 
 #~ msgid "Additional Information (English)"
-#~ msgstr "Informations supplémentaires (anglais)"
+#~ msgstr "Région (français)"
 
 #~ msgid "Additional Information (French)"
-#~ msgstr "Informations supplémentaires (français)"
+#~ msgstr "Informations supplémentaires (anglais)"
 
 #~ msgid "Resources associates with this dataset."
-#~ msgstr "Ressources associés avec cet ensemble de données."
+#~ msgstr "Informations supplémentaires (français)"
 
 #~ msgid "other"
-#~ msgstr "autre"
+#~ msgstr "Ressources associés avec cet ensemble de données."
 
 #~ msgid "Other"
-#~ msgstr "Autre"
+#~ msgstr "autre"
 
 #~ msgid "Search Open Data"
-#~ msgstr "Recherche de données ouvertes"
+#~ msgstr "Autre"
 
 #~ msgid "Open Canada Dataset Feed"
-#~ msgstr "Nouveaux jeux de données"
+#~ msgstr "Recherche de données ouvertes"
 
 #~ msgid "Open Canada"
-#~ msgstr "Canada ouvert"
+#~ msgstr "Nouveaux jeux de données"
 
 #~ msgid "Open Government Portal"
-#~ msgstr "Portail du gouvernement ouvert"
+#~ msgstr "Canada ouvert"
 
 #~ msgid "Open Government Portal (staging)"
-#~ msgstr "Portail du gouvernement ouvert (stadification)"
+#~ msgstr "Portail du gouvernement ouvert"
 
 #~ msgid "Open Data Portal"
-#~ msgstr "Portail des données ouvertes"
+#~ msgstr "Portail du gouvernement ouvert (stadification)"
 
 #~ msgid "Open Data Portal (staging)"
-#~ msgstr "Portail des données ouvertes (stadification)"
+#~ msgstr "Portail des données ouvertes"
 
 #~ msgid "Open Data Portal - Open Data"
-#~ msgstr "Portail des données ouvertes - Données ouvertes"
+#~ msgstr "Portail des données ouvertes (stadification)"
 
 #~ msgid "Bilingual (English and French)"
-#~ msgstr "Bilingue (français et anglais)"
+#~ msgstr "Portail des données ouvertes - Données ouvertes"
 
 #~ msgid "Open Data Inventory"
-#~ msgstr "Inventaire des données ouvertes"
-
-#~ msgid ""
-#~ "This dataset houses your departmental "
-#~ "open data inventory. This is where "
-#~ "you can access and upload your "
-#~ "open data inventory template."
-#~ msgstr ""
-#~ "Ce jeu de données contient l’inventaire"
-#~ " des données ouvertes de votre "
-#~ "ministère. C’est l’occasion pour accéder "
-#~ "à et pour télécharger votre modèle "
-#~ "d'inventaire des données ouvertes. "
+#~ msgstr "Bilingue (français et anglais)"
 
 #~ msgid "Publisher - Name at Publication (English)"
-#~ msgstr "Éditeur – Nom de l'organisation au moment de la publication (anglais)"
+#~ msgstr ""
 
 #~ msgid "Publisher - Name at Publication (French)"
-#~ msgstr "Éditeur – Nom de l'organisation au moment de la publication (français)"
+#~ msgstr "Éditeur – Nom de l'organisation au moment de la publication (anglais)"
 
 #~ msgid "Date Published"
-#~ msgstr "Date de publication "
+#~ msgstr "Éditeur – Nom de l'organisation au moment de la publication (français)"
 
 #~ msgid "Language"
-#~ msgstr "Langue"
+#~ msgstr "Date de publication "
 
 #~ msgid "Size"
-#~ msgstr "Taille"
+#~ msgstr "Langue"
 
 #~ msgid "Eligible for Release"
-#~ msgstr "Admissible à la publication"
+#~ msgstr "Taille"
 
 #~ msgid "Program Alignment Architecture (English)"
-#~ msgstr "Architecture d'alignement des programmes (anglais)"
+#~ msgstr "Admissible à la publication"
 
 #~ msgid "Program Alignment Architecture (French)"
-#~ msgstr "Architecture d'alignement des programmes (français)"
+#~ msgstr "Architecture d'alignement des programmes (anglais)"
 
 #~ msgid "Date Released"
-#~ msgstr "Date de sortie"
+#~ msgstr "Architecture d'alignement des programmes (français)"
 
 #~ msgid "Open Government Portal Record (English)"
-#~ msgstr "Enregistrement de la portail du Gouvernement ouvert (anglais)"
+#~ msgstr "Date de sortie"
 
 #~ msgid "Open Government Portal Record (French)"
-#~ msgstr "Enregistrement de la portail du Gouvernement ouvert (français)"
+#~ msgstr "Enregistrement de la portail du Gouvernement ouvert (anglais)"
 
 #~ msgid "User Votes"
-#~ msgstr "Votes des utilisateurs"
+#~ msgstr "Enregistrement de la portail du Gouvernement ouvert (français)"
 
 #~ msgid "Template"
-#~ msgstr "Modèle"
+#~ msgstr "Votes des utilisateurs"
 
 #~ msgid "You do not have permission to upload to {0}"
-#~ msgstr "Vous n'avez pas la permission de télécharger à {0}"
+#~ msgstr "Modèle"
 
 #~ msgid "You must provide a valid file"
-#~ msgstr "Voud devez fournir un fichier valide"
+#~ msgstr "Vous n'avez pas la permission de télécharger à {0}"
 
 #~ msgid "Sheet name '{0}' not found in list of valid tables"
-#~ msgstr ""
-#~ "Le nom de la feuille '{0}' n'a "
-#~ "pas été trouvé dans la liste des"
-#~ " tableaux valides"
+#~ msgstr "Voud devez fournir un fichier valide"
 
 #~ msgid "Search Assets"
-#~ msgstr "Rechercher des biens"
+#~ msgstr ""
 
 #~ msgid "Add Assets"
-#~ msgstr "Ajouter des biens"
+#~ msgstr "Rechercher des biens"
 
 #~ msgid "Open Information Registry"
-#~ msgstr "Registre pour les information ouverte"
-
-#~ msgid "Add Asset"
 #~ msgstr "Ajouter des biens"
 
-#~ msgid "New Password"
-#~ msgstr "Nouveau mot de passe"
-
-#~ msgid "Open Information Portal"
+#~ msgid "Add Asset"
 #~ msgstr "Registre pour les information ouverte"
 
+#~ msgid "New Password"
+#~ msgstr "Ajouter des biens"
+
+#~ msgid "Open Information Portal"
+#~ msgstr "Nouveau mot de passe"
+
 #~ msgid "{number} asset found"
-#~ msgid_plural "{number} assets found"
-#~ msgstr[0] "{number}  bien  trouvé"
-#~ msgstr[1] "{number} biens  trouvés"
+#~ msgstr "Registre pour les information ouverte"
+
+#~ msgid "{number} assets found"
+#~ msgstr "{number}  bien  trouvé"
 
 #~ msgid "{number} Asset"
-#~ msgid_plural "{number} Assets"
-#~ msgstr[0] "{number} Bien"
-#~ msgstr[1] "{number} Biens"
+#~ msgstr "{number} biens  trouvés"
+
+#~ msgid "{number} Assets"
+#~ msgstr "{number} Bien"
 
 #~ msgid "0 Assets"
-#~ msgstr "0 Biens"
+#~ msgstr "{number} Biens"
 
 #~ msgid "No assets were found to match your query."
-#~ msgstr "Aucun bien trouvé qui corresponde à votre requête."
+#~ msgstr "0 Biens"
 
 #~ msgid "Asset Resources"
-#~ msgstr "Biens de la ressource"
+#~ msgstr "Aucun bien trouvé qui corresponde à votre requête."
 
 #~ msgid "Settings"
-#~ msgstr "Paramètres"
+#~ msgstr "Biens de la ressource"
 
 #~ msgid "* indicates a mandatory field"
-#~ msgstr "* Indique un champ obligatoire "
+#~ msgstr "Paramètres"
 
 #~ msgid "Next: Add Resource or Related Item"
-#~ msgstr "Suivant: Ajouter une ressource ou un objet connexe"
+#~ msgstr "* Indique un champ obligatoire "
 
 #~ msgid "No file chosen"
-#~ msgstr "Aucun fichier choisi"
+#~ msgstr "Suivant: Ajouter une ressource ou un objet connexe"
 
 #~ msgid "{actor} created the dataset {dataset}"
-#~ msgstr "{actor} a créé le dosier {dataset}"
+#~ msgstr "Aucun fichier choisi"
 
 #~ msgid "{actor} updated the dataset {dataset}"
-#~ msgstr "{actor} a mis à jour le dossier {dataset}"
+#~ msgstr "{actor} a créé le dosier {dataset}"
 
 #~ msgid "Specialized enquiries"
-#~ msgstr "Requêtes particulières"
+#~ msgstr "{actor} a mis à jour le dossier {dataset}"
 
 #~ msgid "Open Government Log In"
-#~ msgstr "Ouverture de session Gouvernement ouvert"
+#~ msgstr "Requêtes particulières"
 
 #~ msgid "/en/user"
-#~ msgstr "/fr/user"
+#~ msgstr "Ouverture de session Gouvernement ouvert"
 
 #~ msgid "Receive Open Government Email"
-#~ msgstr "Courriels sur le Gouvernement ouvert"
+#~ msgstr "/fr/user"
 
 #~ msgid "/en/forms/receive-open-government-email-form"
-#~ msgstr "/fr/formulaire/courriels-gouvernement-ouvert"
+#~ msgstr "Courriels sur le Gouvernement ouvert"
 
 #~ msgid "Most asked-about topics"
-#~ msgstr "Sujets sur lesquels portent la plupart des questions"
+#~ msgstr "/fr/formulaire/courriels-gouvernement-ouvert"
 
 #~ msgid "http://open.canada.ca/en/contact/index.html#aat"
-#~ msgstr "http://ouvert.canada.ca/fr/contact/index.html#slq"
+#~ msgstr "Sujets sur lesquels portent la plupart des questions"
 
 #~ msgid "http://open.canada.ca/en/contact/index.html#gen"
-#~ msgstr "http://www.canada.ca/fr/contact/index.html#gen"
+#~ msgstr "http://ouvert.canada.ca/fr/contact/index.html#slq"
 
 # Dataset view page
 #~ msgid "Access"
-#~ msgstr "Accès"
+#~ msgstr "http://www.canada.ca/fr/contact/index.html#gen"
 
 #~ msgid "Select the role this user should have within this organization."
-#~ msgstr ""
-#~ "Sélectionnez le rôle du nouvel "
-#~ "utilisateur au sein de cette "
-#~ "organisation."
+#~ msgstr "Accès"
 
 #~ msgid "IMSO Approved"
-#~ msgstr "Approuvé du CSGI"
+#~ msgstr ""
 
 #~ msgid "Create Organization"
-#~ msgstr "Créer l'orgaisation"
-
-#~ msgid ""
-#~ " You can also access this registry"
-#~ " using the %(api_link)s (see "
-#~ "%(api_doc_link)s). "
-#~ msgstr ""
-#~ " Vous pouvez également accéder à "
-#~ "ce catalogue en utilisant %(api_link)s "
-#~ "(voir documentation de l’API %(api_doc_link)s)"
+#~ msgstr "Approuvé du CSGI"
 
 #~ msgid "Relationship"
-#~ msgstr "Type de relation"
+#~ msgstr ""
 
 #~ msgid "Powered by"
-#~ msgstr "Réalisé avec"
+#~ msgstr "Type de relation"
 
 #~ msgid "Quick Links"
-#~ msgstr "Liens rapides"
-
-#~ msgid ""
-#~ "Add data about Government of Canada "
-#~ "services, financials or national demographic"
-#~ " information that is relevant to "
-#~ "Canadians."
-#~ msgstr ""
-#~ "Ajouter des données sur les services "
-#~ "du gouvernement du Canada, des données"
-#~ " financières ou de l'information "
-#~ "démographique nationale qui sont pertinentes"
-#~ " pour les Canadiens."
+#~ msgstr "Réalisé avec"
 
 #~ msgid "Add information about government programs, activities and publications."
 #~ msgstr ""
-#~ "Ajouter de l'information sur les "
-#~ "programmes, activités et publications du "
-#~ "gouvernement."
-
-#~ msgid ""
-#~ "Access, upload and modify the monthly"
-#~ " ATI Summaries and ATI Nothing to "
-#~ "Report for your organization"
-#~ msgstr ""
-#~ "Accès, téléversement et modification des "
-#~ "rapports mensuels sur les accès à "
-#~ "l'information sommaires et les accès à"
-#~ " l'information rien a signaler"
 
 #~ msgid "Open Data Records"
-#~ msgstr "Dossiers de données ouvertes"
+#~ msgstr ""
 
 #~ msgid "Open Information Records"
-#~ msgstr "Dossiers d’information ouverte"
+#~ msgstr "Dossiers de données ouvertes"
 
 #~ msgid "Search your Organization Records"
-#~ msgstr "Faire une recherche dans les dossiers de votre organisation"
+#~ msgstr "Dossiers d’information ouverte"
 
 #~ msgid "Search All Records"
-#~ msgstr "Faire une recherche dans tous les dossiers"
+#~ msgstr "Faire une recherche dans les dossiers de votre organisation"
 
 #~ msgid "View Members of your Organization"
-#~ msgstr "Voir les members liés à votre organisation"
+#~ msgstr "Faire une recherche dans tous les dossiers"
 
 #~ msgid "Search all records in the Registry, for your Organization."
-#~ msgstr ""
-#~ "Faire une recherche dans tous les "
-#~ "dossiers du registre, pour votre "
-#~ "organisation."
+#~ msgstr "Voir les members liés à votre organisation"
 
 #~ msgid "Add all Open Data and Information records in the Registry."
-#~ msgstr "Faire une recherche dans tous les dossiers du registre."
+#~ msgstr ""
 
 #~ msgid "View the list of members linked to your organization."
-#~ msgstr "Voir la liste des membres liés à votre organisation"
+#~ msgstr "Faire une recherche dans tous les dossiers du registre."
 
 #~ msgid "http://www.gcpedia.gc.ca/wiki/Proactive_Disclosure_on_Open.Canada.ca"
-#~ msgstr "http://www.gcpedia.gc.ca/wiki/Divulgation_proactive_dans_ouvert.canada.ca"
+#~ msgstr "Voir la liste des membres liés à votre organisation"
 
 #~ msgid "{0} members"
-#~ msgstr "{0} membres"
+#~ msgstr "http://www.gcpedia.gc.ca/wiki/Divulgation_proactive_dans_ouvert.canada.ca"
 
 #~ msgid "Please check your inbox for a reset code."
-#~ msgstr ""
-#~ "S.V.P. consulter votre boîte à lettres"
-#~ " électronique pour confirmer votre demande"
-#~ " de réinitialisation."
+#~ msgstr "{0} membres"
 
 #~ msgid "Column visibility"
-#~ msgstr "Visibilité des colonnes"
+#~ msgstr ""
 
 #~ msgid "Data Contact"
-#~ msgstr "Personne-ressource responsable des données"
+#~ msgstr "Visibilité des colonnes"
 
 #~ msgid "Distributor Contact"
-#~ msgstr "Personne-ressource responsable de la distribution"
+#~ msgstr "Personne-ressource responsable des données"
 
 #~ msgid "Organization Name"
-#~ msgstr "Nom de l'organisation"
+#~ msgstr "Personne-ressource responsable de la distribution"
 
 #~ msgid "Telephone Number"
-#~ msgstr "Numéro de téléphone"
+#~ msgstr "Nom de l'organisation"
 
 #~ msgid "Address"
-#~ msgstr "Adresse"
+#~ msgstr "Numéro de téléphone"
 
 #~ msgid "Dataset Deleted"
-#~ msgstr "Dossier supprimé"
+#~ msgstr "Adresse"
 
 #~ msgid "Consultations"
-#~ msgstr "Consultations"
+#~ msgstr "Dossier supprimé"
 
 #~ msgid "Open Dialogue - Consultations"
-#~ msgstr "Dialogue ouvert - Consultations"
-
-#~ msgid ""
-#~ "Access, upload and modify consultation reports for your organization\n"
-#~ "\n"
-#~ "- [Consultations master dataset](/static/data/consultations.csv)\n"
-#~ "  This dataset consolidates all the "
-#~ "consultations reports submitted by federal "
-#~ "institutions.\n"
-#~ msgstr ""
-#~ "Accès, téléversement et modifications des "
-#~ "rapports sur les consultations pour "
-#~ "votre organisation\n"
-#~ "\n"
-#~ "- [Données de consultations "
-#~ "principales](/static/data/consultations.csv)\n"
-#~ "  Cette base de données regroupe "
-#~ "tous les rapports de consultations "
-#~ "soumis par les institutions fédérales\n"
+#~ msgstr "Consultations"
 
 #~ msgid "Service Inventory"
-#~ msgstr "Répertoire de services"
-
-#~ msgid ""
-#~ "Access, upload and modify the Service"
-#~ " Inventory of external and internal "
-#~ "enterprise services for your organization"
 #~ msgstr ""
-#~ "Accèder, téléverser et modifier le "
-#~ "catalogue des service internes intégrés "
-#~ "et externes pour votre organisation"
 
 #~ msgid "Service Identification Information & Metrics"
-#~ msgstr "Renseignements sur l’identification des services, données volumétrique"
+#~ msgstr ""
 
 #~ msgid "Service Standards & Performance Results"
-#~ msgstr "Normes relatives aux services et résultats de rendement"
+#~ msgstr "Renseignements sur l’identification des services, données volumétrique"
 
 #~ msgid "Mandatory"
-#~ msgstr "Obligatoire"
+#~ msgstr "Normes relatives aux services et résultats de rendement"
 
 #~ msgid "Optional"
-#~ msgstr "Facultatif"
+#~ msgstr "Obligatoire"
 
 #~ msgid "Free text"
-#~ msgstr "Texte libre"
+#~ msgstr "Facultatif"
 
 #~ msgid "Free text (comma separated list of codes from reference table)"
-#~ msgstr ""
-#~ "Texte libre (liste des codes de la"
-#~ " table de référence, séparées par des"
-#~ " virgules)"
+#~ msgstr "Texte libre"
 
 #~ msgid "Free Text (separate paragraphs with two blank lines)"
-#~ msgstr "Texte libre (Séparez les paragraphes par deux lignes vides)"
+#~ msgstr ""
 
 #~ msgid "Date (Please format the data as YYYY-MM-DD)"
-#~ msgstr "Date (format suivant: AAAA-MM-JJ)"
+#~ msgstr "Texte libre (Séparez les paragraphes par deux lignes vides)"
 
 #~ msgid "Controlled List"
-#~ msgstr "Liste contrôlée"
+#~ msgstr "Date (format suivant: AAAA-MM-JJ)"
 
 #~ msgid "Single"
-#~ msgstr "Une seule"
+#~ msgstr "Liste contrôlée"
 
 #~ msgid "Repeatable"
-#~ msgstr "Plusieurs"
+#~ msgstr "Une seule"
 
 #~ msgid "Sheet {0} Row {1}:"
-#~ msgstr "Feuille {0} rangée {1}:"
+#~ msgstr "Plusieurs"
 
 #~ msgid "invalid input syntax for type boolean"
-#~ msgstr "Syntaxe d’entrée non valide pour ce type de recherche booléenne"
+#~ msgstr "Feuille {0} rangée {1}:"
 
 #~ msgid "invalid input syntax for type date"
-#~ msgstr "Syntaxe d’entrée non valide pour le type de date"
+#~ msgstr "Syntaxe d’entrée non valide pour ce type de recherche booléenne"
 
 #~ msgid "Record Creation Time"
-#~ msgstr "Heure de la création du dossier"
+#~ msgstr "Syntaxe d’entrée non valide pour le type de date"
 
 #~ msgid "Last Record Modification Time"
-#~ msgstr "Heure de la dernière modification au dossier"
+#~ msgstr "Heure de la création du dossier"
 
 #~ msgid "User Last Modified Record"
-#~ msgstr "Utilisateur de la dernière modification au dossier"
+#~ msgstr "Heure de la dernière modification au dossier"
 
 #~ msgid "time_ascend"
-#~ msgstr "Les plus anciens d’abord"
+#~ msgstr "Utilisateur de la dernière modification au dossier"
 
 #~ msgid "time_descend"
-#~ msgstr "Les plus récents d’abord"
+#~ msgstr "Les plus anciens d’abord"
 
 #~ msgid "View this version"
-#~ msgstr "Voir cette version"
+#~ msgstr "Les plus récents d’abord"
 
 #~ msgid "Dear %(user_name)s,"
-#~ msgstr "Cher %(user_name)s,"
-
-#~ msgid ""
-#~ "You have requested your password on %(site_title)s to be reset.\n"
-#~ "\n"
-#~ "Please click the following link to confirm this request:\n"
-#~ "\n"
-#~ "   %(reset_link)s"
-#~ msgstr ""
-#~ "Vous avez demandé la réinitialisation de"
-#~ " votre mot de passe sur le site"
-#~ " %(site_title)s.\n"
-#~ "\n"
-#~ "Merci de cliquer sur le lien suivant pour confirmer votre requête :\n"
-#~ "%(reset_link)s"
+#~ msgstr "Voir cette version"
 
 #~ msgid "Invite for %(site_title)s"
-#~ msgstr "Invitation pour %(site_title)s"
-
-#~ msgid ""
-#~ "You have been invited to %(site_title)s.\n"
-#~ "\n"
-#~ "A user has already been created to"
-#~ " you with the username %(user_name)s. "
-#~ "You can change it later.\n"
-#~ "\n"
-#~ "To accept this invite, please reset your password at:\n"
-#~ "\n"
-#~ "   %(reset_link)s\n"
 #~ msgstr ""
-#~ "Vous avez été invité sur %(site_title)s.\n"
-#~ "\n"
-#~ "Un utilisateur a déjà été créé "
-#~ "pour vous avec l'identifiant %(user_name)s."
-#~ " Vous pourrez le changer ultérieurement."
-#~ "\n"
-#~ "\n"
-#~ "Pour accepter cette invitation, veuillez "
-#~ "réinitialiser votre mot de passe via "
-#~ ":\n"
-#~ "%(reset_link)s\n"
 
 #~ msgid "Have a nice day."
-#~ msgstr "Bonne journée."
+#~ msgstr ""
 
 #~ msgid "Message sent by %(site_title)s (%(site_url)s)"
-#~ msgstr "Message envoyé par %(site_title)s (%(site_url)s)"
-
-#~ msgid ""
-#~ "Your password must be {} characters "
-#~ "or longer, contain no accented "
-#~ "characters and consist of at least "
-#~ "three of the following character sets:"
-#~ " uppercase characters, lowercase characters, "
-#~ "digits, punctuation & special characters."
-#~ msgstr ""
-#~ "Les mots de passe doivent contenir "
-#~ "des caractères provenant d’au moins "
-#~ "trois des quatre catégories suivantes: "
-#~ "lettres majuscules, lettres minuscules, "
-#~ "chiffres arabes, caractères spéciaux. Les "
-#~ "lettres accentuées ne sont pas "
-#~ "acceptées. Tous les mots de passe "
-#~ "doivent compter au moins {} caractères."
-
-#~ msgid ""
-#~ "If you would like to request an"
-#~ " account for the Open Government "
-#~ "Registry, please email <a href=\"mailto"
-#~ ":open-ouvert@tbs-sct.gc.ca\">open-ouvert@tbs-"
-#~ "sct.gc.ca</a> with your name, department "
-#~ "and email"
-#~ msgstr ""
-#~ "Si vous souhaitez demander un compte "
-#~ "pour le Répertoire du gouvernement "
-#~ "ouvert, veuillez envoyer un courriel à"
-#~ " <a href=\"mailto:open-ouvert@tbs-sct.gc.ca"
-#~ "\">open-ouvert@tbs-sct.gc.ca</a> avec votre "
-#~ "nom, ministère et adresse courriel."
+#~ msgstr "Bonne journée."
 
 #~ msgid "Request an account"
-#~ msgstr "Demande d'un compte"
-
-#~ msgid ""
-#~ "Note: Only records belonging to your "
-#~ "organizations are now visible on the "
-#~ "Registry. Please use the portal to "
-#~ "access published records from all "
-#~ "organizations. If you need to see "
-#~ "draft records or create or update "
-#~ "records for other organizations, please "
-#~ "send a request and justification to "
-#~ "<a href=\"mailto:open-ouvert@tbs-sct.gc.ca"
-#~ "\">open-ouvert@tbs-sct.gc.ca</a>"
 #~ msgstr ""
-#~ "Nota : Seuls les enregistrements "
-#~ "appartenant à vos organisations sont "
-#~ "désormais visibles dans le Répertoire. "
-#~ "Veuillez vous servir du portail pour "
-#~ "accéder aux documents publiés par toutes"
-#~ " les organisations. Si vous avez "
-#~ "besoin de consulter des ébauches "
-#~ "d’enregistrements ou de créer des "
-#~ "enregistrements pour d’autres organisations ou"
-#~ " en effectuer la mise à jour, "
-#~ "veuillez envoyer une demande et une "
-#~ "justification à <a href=\"mailto:open-ouvert"
-#~ "@tbs-sct.gc.ca\">open-ouvert@tbs-sct.gc.ca</a>"
 
 #~ msgid "Numeric only"
-#~ msgstr "Valeur numérique seulement"
-
-#~ msgid ""
-#~ "This metadata element is machine "
-#~ "translated. If you have questions, "
-#~ "contact open-ouvert@tbs-sct.gc.ca"
 #~ msgstr ""
-#~ "Cet élément de métadonnée est traduit"
-#~ " automatiquement. Veuillez communiquer avec "
-#~ "open-ouvert@tbs-sct.gc.ca si vous avez"
-#~ " des questions."
 
 #~ msgid "Finish"
-#~ msgstr "Soumettre"
+#~ msgstr ""
 
 #~ msgid "Federal"
-#~ msgstr "Fédérale"
+#~ msgstr "Soumettre"
 
 #~ msgid "Proactive Disclosure - Briefing Note Titles and Numbers"
-#~ msgstr "Divulgation proactive - titres et numéros des notes d’information"
-
-#~ msgid ""
-#~ "Access, upload and modify the Briefing"
-#~ " Note Titles and Numbers reports for"
-#~ " your organization"
-#~ msgstr ""
-#~ "Accès, téléversement et modifications des "
-#~ "rapports sur les titres at numéros "
-#~ "des notes d’information pour votre "
-#~ "organisation"
+#~ msgstr "Fédérale"
 
 #~ msgid "Proactive Disclosure - Question Period Notes"
-#~ msgstr "Divulgation proactive - Notes pour la période des questions"
-
-#~ msgid ""
-#~ "Access, upload and modify the Question"
-#~ " Period Notes for your organization"
 #~ msgstr ""
-#~ "Accès, téléversement et modifications des "
-#~ "notes pour la période des questions "
-#~ "pour votre organisation"
 
 #~ msgid "Use of Administrative Aircraft"
-#~ msgstr "Utilisation des avions d'affaires"
+#~ msgstr ""
 
 #~ msgid "Proactive Disclosure - Use of Administrative Aircraft"
-#~ msgstr "Divulgation proactive - Utilisation des avions d'affaires"
+#~ msgstr "Utilisation des avions d'affaires"
 
 #~ msgid "Access, upload and modify government administrative aircraft use"
-#~ msgstr ""
-#~ "Accès, téléversement et modifications des "
-#~ "rapports sur la utilisation des avions"
-#~ " d'affaires"
+#~ msgstr "Divulgation proactive - Utilisation des avions d'affaires"
 
 #~ msgid "Access, upload and modify Question Period notes for your organization"
 #~ msgstr ""
-#~ "Accès, téléversement et modifications des "
-#~ "notes de la période de questions "
-#~ "pour votre organisation"
 
 #~ msgid "National Action Plan on Open Government Tracker"
 #~ msgstr ""
-#~ "Outil de suivi pour le Plan "
-#~ "d'action national pour un gouvernement "
-#~ "ouvert"
 
 #~ msgid "5th National Action Plan on Open Government Tracker"
 #~ msgstr ""
-#~ "Outil de suivi pour le 5ᵉ Plan "
-#~ "d'action national pour un gouvernement "
-#~ "ouvert"
-
-#~ msgid ""
-#~ "Access, upload and modify the National"
-#~ " Action Plan on Open Government "
-#~ "Tracker for your organization"
-#~ msgstr ""
-#~ "Accès, téléversement et Modifier le "
-#~ "outil de suivi pour le Plan "
-#~ "d'action national pour un gouvernement "
-#~ "ouvert pour votre organisation"
 
 #~ msgid "Experimentation Inventory"
-#~ msgstr "Répertoire d'expérimentation"
-
-#~ msgid ""
-#~ "This field must be NA (not "
-#~ "applicable) if the Trade Agreement field"
-#~ " is not XX (none)."
 #~ msgstr ""
-#~ "Ce champ doit être NA (aucune) si"
-#~ " les champs Accord commercial ne "
-#~ "contiennent pas la valeur XX (aucun)."
-
-#~ msgid ""
-#~ "If this field is populated, it "
-#~ "must be with a “0” if the "
-#~ "procurement was identified as non-"
-#~ "competitive (TN) or advance contract "
-#~ "award notice (AC) or was identified "
-#~ "as an Amendment (A) in the "
-#~ "Instrument type data field."
-#~ msgstr ""
-#~ "Si cette zone est remplie, il doit"
-#~ " contenir un « 0 » si "
-#~ "l’acquisition a été identifiée comme "
-#~ "étant non concurrentielle (TN) ou un "
-#~ "préavis d’attribution de contrat (AC) ou"
-#~ " si l’acquisition a été identifiée "
-#~ "comme un modification (A) dans le "
-#~ "champ Type d’instrument."
-
-#~ msgid ""
-#~ "If this field is populated, it "
-#~ "must be with a 1,2,3,4 or 5 "
-#~ "if the procurement was identified as "
-#~ "Open Bidding (OB), Selective Tendering "
-#~ "(ST) or Traditional Competitive (TC)."
-#~ msgstr ""
-#~ "Si Cette zone est remplie, il doit"
-#~ " contenir un 1, 2, 3, 4 ou "
-#~ "5 si l’acquisition a été identifiée "
-#~ "comme étant OB : Concurrentielle – "
-#~ "Invitation ouverte à soumissionner (SEAOG),"
-#~ " ST : Concurrentielle – Appel "
-#~ "d’offres sélectif ou TC : "
-#~ "Concurrentielle – Traditionnelle."
-
-#~ msgid ""
-#~ "If “TC” (Competitive - Traditional), "
-#~ "“TN” (Non-Competitive) or “AC” (Advanced"
-#~ " Contract Award Notice) is selected "
-#~ "and trade agreement with a value "
-#~ "other than “XX” (None) is selected, "
-#~ "limited tendering cannot have a value"
-#~ " of “0” or “00” (None)."
-#~ msgstr ""
-#~ "Si les options « TC » "
-#~ "(Concurrentielle - Traditionnelle), « TN "
-#~ "» (non concurrentielle) ou « AC »"
-#~ " (préavis d’attribution de contrat) sont"
-#~ " sélectionnées et qu’une entente de "
-#~ "marché ayant une valeur autre que "
-#~ "« XX » (nulle) est sélectionnée, "
-#~ "le champ Appel d’offres restreint ne "
-#~ "peut avoir la valeur « 0 » "
-#~ "ou « 00 » (nulle)."
-
-#~ msgid ""
-#~ "If “AC” (Advanced Contract Award Notice)"
-#~ " or “TN” (Non-competitive) is "
-#~ "selected, Award Criteria must have a "
-#~ "value of “0” (Not applicable)."
-#~ msgstr ""
-#~ "Si les options « AC » (préavis "
-#~ "d’attribution de contrat) ou « TN "
-#~ "» (non concurrentielle) sont sélectionnées,"
-#~ " le champ Critère de mérite doit "
-#~ "avoir une valeur de « 0 » "
-#~ "(sans objet)."
-
-#~ msgid ""
-#~ "If “OB” (Competitive – Open bidding),"
-#~ " “ST” (Selective Tendering) or “TC” "
-#~ "(Competitive – Traditional) is selected, "
-#~ "section 6 Government Contracts Regulations "
-#~ "Exceptions must have a value of "
-#~ "“0”."
-#~ msgstr ""
-#~ "Si les options « OB » "
-#~ "(Concurrentielle – appel d’offres ouvert), "
-#~ "« ST » (mise en concurrence) ou"
-#~ " « TC » (Concurrentielle – "
-#~ "Traditionnelle) sont sélectionnées, la section"
-#~ " 6 des exceptions au Règlement sur"
-#~ " les marchés de l’État doit avoir "
-#~ "une valeur de « 0 »."
-
-#~ msgid ""
-#~ "If TC, TN or AC is selected "
-#~ "in the Solicitation Procedure data field"
-#~ " with a value other than XX "
-#~ "(None) selected in the Trade Agreement"
-#~ " data field, then a Limited Tendering"
-#~ " value other than 00 (none) must "
-#~ "be entered."
-#~ msgstr ""
-#~ "Si TC, TN ou AC est sélectionné"
-#~ " dans le champ de données Méthode "
-#~ "d’invitation à soumissioner avec une "
-#~ "valeur autre que XX (Aucune) "
-#~ "sélectionnée dans le champ de données"
-#~ " Accord commercial, une valeur d'offre "
-#~ "limitée autre que 0 (aucune) doit "
-#~ "être entrée."
-
-#~ msgid ""
-#~ "This field may only be populated "
-#~ "with “0” if the procurement was "
-#~ "identified as competitive (open bidding "
-#~ "(OB), traditional competitive (TC) or "
-#~ "selective tendering (ST))."
-#~ msgstr ""
-#~ "Cette zone peut seulement contenir « "
-#~ "0 » si l’acquisition a été "
-#~ "identifiée comme étant concurrentielle "
-#~ "(invitation ouverte à soumissionner (OB) "
-#~ "ou concurrentielle - traditionnelle (TC) "
-#~ "ou Concurrentielle – Appel d’offres "
-#~ "sélectif (ST))."
 
 #~ msgid "This must list the year you are reporting on (not the fiscal year)."
-#~ msgstr "Veuillez indiquer l’année civile visée par le rapport."
-
-#~ msgid ""
-#~ "Access, upload and modify the "
-#~ "Experimentation Inventory for your "
-#~ "organization"
 #~ msgstr ""
-#~ "Accès, téléversement et modifier le "
-#~ "répertoire d'expérimentation pour votre "
-#~ "organisation"
 
 #~ msgid "This field is limited to only 3 or 4 digits."
-#~ msgstr "Ce champ est limité à 3 ou 4 caractères."
+#~ msgstr ""
 
 #~ msgid "The field is limited to eight alpha-numeric digits or less."
-#~ msgstr "Ce champ est limité à 8 caractères alphanumériques."
+#~ msgstr "Ce champ est limité à 3 ou 4 caractères."
 
 #~ msgid "Error"
-#~ msgstr "Erreur"
-
-#~ msgid ""
-#~ "We're sorry you ended up here. "
-#~ "Sometimes a page gets moved or "
-#~ "deleted, but hopefully we can help "
-#~ "you find what you're looking for. "
-#~ "What next?"
-#~ msgstr ""
-#~ "Nous sommes désolés que vous ayez "
-#~ "abouti ici. Il arrive parfois qu'une "
-#~ "page ait été déplacée ou supprimée. "
-#~ "Heureusement, nous pouvons vous aider à"
-#~ " trouver ce que vous cherchez. Que"
-#~ " faire?"
+#~ msgstr "Ce champ est limité à 8 caractères alphanumériques."
 
 #~ msgid "Return to the <a href=\"https://www.canada.ca/en.html\">home page</a>;"
 #~ msgstr ""
-#~ "Retournez à la <a "
-#~ "href=\"http://www.canada.ca/fr/index.html\">page d'accueil</a>;"
 
 #~ msgid "Consult the <a href=\"/en/sitemap.html\">site map</a>;"
 #~ msgstr ""
-#~ "Consultez le <a "
-#~ "href=\"http://www.canada.ca/fr/plan.html\">plan du "
-#~ "site</a>;"
-
-#~ msgid ""
-#~ "Check out the <a "
-#~ "href=\"http://www.collectionscanada.gc.ca/012/012-412.01-e.html\" "
-#~ "rel=\"external\">Government of Canada Web "
-#~ "Archive</a> to view an older version;"
-#~ " or"
-#~ msgstr ""
-#~ "Vérifiez dans les <a "
-#~ "href=\"http://www.collectionscanada.gc.ca/012/012-412.01-f.html\" "
-#~ "rel=\"external\">Archives Web du gouvernement "
-#~ "du Canada</a> s’il existe une version"
-#~ " antérieure;"
 
 #~ msgid "<a href=\"/en/contact.html\">Contact us</a> and we'll help you out."
 #~ msgstr ""
-#~ "<a href=\"http://www.canada.ca/fr/contact/index.html"
-#~ "\">Contactez-nous</a> pour de l'assistance."
 
 #~ msgid "https://www.canada.ca/en/contact.html"
-#~ msgstr "https://www.canada.ca/fr/contact.html"
+#~ msgstr ""
 
 #~ msgid "How government works"
-#~ msgstr "Comment le gouvernement fonctionne"
+#~ msgstr "https://www.canada.ca/fr/contact.html"
 
 #~ msgid "http://open.canada.ca/en/"
-#~ msgstr "http://ouvert.canada.ca/"
+#~ msgstr "Comment le gouvernement fonctionne"
 
 #~ msgid "https://www1.canada.ca/en/contact/feedback.html"
-#~ msgstr "https://www1.canada.ca/fr/contact/retroaction.html"
+#~ msgstr "http://ouvert.canada.ca/"
 
 #~ msgid "Feedback"
-#~ msgstr "Rétroaction"
+#~ msgstr "https://www1.canada.ca/fr/contact/retroaction.html"
 
 #~ msgid "https://www1.canada.ca/fr/nouveausite.html"
-#~ msgstr "https://www1.canada.ca/fr/nouveausite.html"
+#~ msgstr "Rétroaction"
 
 #~ msgid "Search and menus"
-#~ msgstr "Recherche et menus"
+#~ msgstr "https://www1.canada.ca/fr/nouveausite.html"
 
 #~ msgid "http://www.esdc.gc.ca/en/jobs/index.page"
-#~ msgstr "http://www.edsc.gc.ca/fr/emplois/index.page"
+#~ msgstr "Recherche et menus"
 
 #~ msgid "http://www.cic.gc.ca/english/index.asp"
-#~ msgstr "http://www.cic.gc.ca/francais/index.asp"
+#~ msgstr "http://www.edsc.gc.ca/fr/emplois/index.page"
 
 #~ msgid "Immigration"
-#~ msgstr "Immigration"
+#~ msgstr "http://www.cic.gc.ca/francais/index.asp"
 
 #~ msgid "http://travel.gc.ca"
-#~ msgstr "https://voyage.gc.ca/"
+#~ msgstr "Immigration"
 
 #~ msgid "http://www.canada.ca/en/services/business/index.html"
-#~ msgstr "https://www.canada.ca/fr/services/entreprises.html"
+#~ msgstr "https://voyage.gc.ca/"
 
 #~ msgid "http://www.canada.ca/en/services/benefits/index.html"
-#~ msgstr "https://www.canada.ca/fr/services/prestations.html"
+#~ msgstr "https://www.canada.ca/fr/services/entreprises.html"
 
 #~ msgid "Benefits"
-#~ msgstr "Prestations"
+#~ msgstr "https://www.canada.ca/fr/services/prestations.html"
 
 #~ msgid "http://healthycanadians.gc.ca/index-eng.php"
-#~ msgstr "http://canadiensensante.gc.ca/index-fra.php"
+#~ msgstr "Prestations"
 
 #~ msgid "http://www.canada.ca/en/services/taxes/index.html"
-#~ msgstr "https://www.canada.ca/fr/services/impots.html"
+#~ msgstr "http://canadiensensante.gc.ca/index-fra.php"
 
 #~ msgid "Taxes"
-#~ msgstr "Impôts"
+#~ msgstr "https://www.canada.ca/fr/services/impots.html"
 
 #~ msgid "http://www.canada.ca/en/services/index.html"
-#~ msgstr "https://www.canada.ca/fr/services.html"
+#~ msgstr "Impôts"
 
 #~ msgid "More services"
-#~ msgstr "Autres services"
+#~ msgstr "https://www.canada.ca/fr/services.html"
 
 #~ msgid "About {0}"
-#~ msgstr " propos de {0}"
+#~ msgstr "Autres services"
 
 #~ msgid "Terms and Conditions"
-#~ msgstr "Avis"
+#~ msgstr " propos de {0}"
 
 #~ msgid "Accessibility"
-#~ msgstr "Accessibilité"
+#~ msgstr "Avis"
 
 #~ msgid "Code of conduct"
-#~ msgstr ""
+#~ msgstr "Accessibilité"
 
 #~ msgid "Moderation policy"
 #~ msgstr ""
 
 #~ msgid "Search Your Data"
-#~ msgstr "Rechercher dans vos données"
+#~ msgstr ""
 
 #~ msgid "Revision"
-#~ msgstr ""
+#~ msgstr "Rechercher dans vos données"
 
 #~ msgid "Timestamp"
 #~ msgstr ""
@@ -4533,30 +3905,10 @@ msgstr "Mémoriser mes informations"
 #~ msgid "What are Groups?"
 #~ msgstr ""
 
-#~ msgid ""
-#~ " Groups allow you to group "
-#~ "together datasets under a community (for"
-#~ " example, Civil Liberty data) or "
-#~ "topic (e.g. Transport, Health, Environment)"
-#~ " to make it easier for users to"
-#~ " browse datasets by theme. Datasets "
-#~ "can be part of a group, but "
-#~ "do not belong to the group for "
-#~ "editing or authorisation purposes. "
-#~ msgstr ""
-
 #~ msgid "E.g. environment"
 #~ msgstr ""
 
 #~ msgid "Welcome"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "This is a nice introductory paragraph"
-#~ " about CKAN or the site in "
-#~ "general. We don't have any copy to"
-#~ " go here yet but soon we will"
-#~ " "
 #~ msgstr ""
 
 #~ msgid "This is a featured section"
@@ -4589,141 +3941,51 @@ msgstr "Mémoriser mes informations"
 #~ msgid "This resource has no views"
 #~ msgstr ""
 
-#~ msgid ""
-#~ " <p class=\"empty\">This dataset has no"
-#~ " data, <a href=\"%(url)s\">why not add "
-#~ "some?</a> "
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Access the suggested datasets that your"
-#~ " organization has received in order "
-#~ "to provide a status update."
-#~ msgstr ""
-#~ "Veuillez accéder aux jeux de données "
-#~ "proposés que votre organisation a reçus"
-#~ " afin de faire le point sur "
-#~ "ceux-ci."
-
 #~ msgid "Suggested Datasets - Update Status"
-#~ msgstr "Le point sur les jeux de données proposés"
+#~ msgstr ""
 
 #~ msgid "Create Information Asset"
-#~ msgstr "Créer un enregistrement d'informations ouvertes"
+#~ msgstr "Le point sur les jeux de données proposés"
 
 #~ msgid "Update Status"
-#~ msgstr "Mettre à jour un statut"
+#~ msgstr "Créer un enregistrement d'informations ouvertes"
 
 #~ msgid "Acts of Founded Wrongdoing"
-#~ msgstr "Dossiers sur les actes répréhensibles fondés"
+#~ msgstr "Mettre à jour un statut"
 
 #~ msgid "Aggregated Contracts from -$10K to $10K"
-#~ msgstr "Contrats agrégés de -10 000$ à 10 000$"
+#~ msgstr "Dossiers sur les actes répréhensibles fondés"
 
 #~ msgid "Briefing Note Titles and Numbers"
-#~ msgstr "Titres et numéros des notes d’information"
+#~ msgstr "Contrats agrégés de -10 000$ à 10 000$"
 
 #~ msgid "Contracts over $10,000"
-#~ msgstr "Contrats attribués de plus de 10 000 $"
+#~ msgstr "Titres et numéros des notes d’information"
 
 #~ msgid "Departmental Audit Committee"
-#~ msgstr "Comités ministériels d’audit"
+#~ msgstr "Contrats attribués de plus de 10 000 $"
 
 #~ msgid "Grants and Contributions"
-#~ msgstr "Subventions et les contributions"
+#~ msgstr "Comités ministériels d’audit"
 
 #~ msgid "Hospitality Expenses"
-#~ msgstr "Dépenses d'accueil"
+#~ msgstr "Subventions et les contributions"
 
 #~ msgid "Position Reclassification"
-#~ msgstr "Reclassifications de postes"
+#~ msgstr "Dépenses d'accueil"
 
 #~ msgid "Question Period Notes"
-#~ msgstr "Notes pour la période des questions"
+#~ msgstr "Reclassifications de postes"
 
 #~ msgid "Travel Expenses"
-#~ msgstr "Dépenses de voyage"
+#~ msgstr "Notes pour la période des questions"
 
 #~ msgid "Annual Travel, Hospitality and Conferences"
-#~ msgstr ""
-#~ "Dépenses annuelles de voyages, d’accueil, "
-#~ "de conférences et d’événements"
-
-#~ msgid ""
-#~ "Access, add or modify briefing package"
-#~ " information for your new or incoming"
-#~ " minister."
-#~ msgstr ""
-#~ "Consultez la trousse d’information pour "
-#~ "le nouveau ministre, ajoutez-y du "
-#~ "contenu ou modifiez-la."
-
-#~ msgid ""
-#~ "Access, add or modify briefing package"
-#~ " information for your new or incoming"
-#~ " deputy head."
-#~ msgstr ""
-#~ "Consultez la trousse d’information pour "
-#~ "le nouvel administrateur général, ajoutez-y"
-#~ " du contenu ou modifiez-la."
-
-#~ msgid ""
-#~ "Access, add or modify briefing packages"
-#~ " for Parliamentary Committee appearance for"
-#~ " your minister."
-#~ msgstr ""
-#~ "Consultez la trousse d’information pour "
-#~ "la comparution de votre ministre devant"
-#~ " un comité parlementaire, ajoutez-y du "
-#~ "contenu ou modifiez-la."
-
-#~ msgid ""
-#~ "Access, add or modify briefing packages"
-#~ " for Parliamentary Committee appearance for"
-#~ " your deputy head."
-#~ msgstr ""
-#~ "Consultez la trousse d’information pour "
-#~ "la comparution de votre administrateur "
-#~ "général devant un comité parlementaire, "
-#~ "ajoutez-y du contenu ou modifiez-la."
+#~ msgstr "Dépenses de voyage"
 
 #~ msgid "Access, add or modify your reports tabled in Parliament."
 #~ msgstr ""
-#~ "Consultez vos rapports déposés au "
-#~ "Parlement, ajoutez-y du contenu ou "
-#~ "modifiez-les."
-
-#~ msgid ""
-#~ "These fields have been removed, click"
-#~ " save below to update the record "
-#~ "with your changes."
-#~ msgstr ""
-#~ "Ces champs ont été supprimés. Cliquez"
-#~ " sur « Enregistrer » ci-dessous "
-#~ "pour mettre à jour le document."
-
-#~ msgid ""
-#~ "Access, upload and modify your "
-#~ "Departmental Audit Committee members’ "
-#~ "remuneration and expenses."
-#~ msgstr ""
-#~ "Accès, téléversement et modification de "
-#~ "la rémunération et des dépenses des "
-#~ "membres de votre Comité ministériel "
-#~ "d’audit."
 
 #~ msgid "This text must be provided in both languages"
-#~ msgstr "Ce texte doit être fourni dans les deux langues"
-
-#~ msgid ""
-#~ "Are you sure you want to delete"
-#~ " this Organization? Note*: Deleting cannot"
-#~ " be performed while public or private"
-#~ " datasets belong to this organization."
 #~ msgstr ""
-#~ "Voulez-vous vraiment supprimer cette "
-#~ "organisation? Remarque* : il n'est pas"
-#~ " possible de supprimer une organisation "
-#~ "qui détient encore des jeux de "
-#~ "données publics ou privés."
 
