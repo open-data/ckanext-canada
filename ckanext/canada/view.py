@@ -501,6 +501,11 @@ def links():
 
 @canada_views.route('/ckan-admin/publish', methods=['GET', 'POST'])
 def ckanadmin_publish():
+    """
+    Executes a dataset_search for the route.
+    See: ckanext/canada/plugins.py:CanadaDatasetsPlugin.before_search
+    for custom search facets for this admin route.
+    """
     if not is_sysadmin(g.user):
         abort(401, _('Not authorized to see this page'))
 
