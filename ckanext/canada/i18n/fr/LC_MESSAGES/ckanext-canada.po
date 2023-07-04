@@ -3578,3 +3578,15 @@ msgstr "Rechercher et gérer les utilisateurs."
 #: ckanext/canada/templates/internal/user/snippets/search.html:78
 msgid "Search and view users."
 msgstr "Rechercher et afficher les utilisateurs."
+
+#: ckanext/canada/templates/internal/package/read.html:6
+msgid "Your record will be published at:"
+msgstr "Votre document sera publié à :"
+
+#: ckanext/canada/templates/internal/package/read.html:9
+msgid "Record marked not ready to publish"
+msgstr "On indique que le document n'est pas prêt à être publié"
+
+#: ckanext/canada/templates/internal/package/read.html:11
+msgid "Queued for publishing"
+msgstr "Mis en file d'attente à des fins de publication"
