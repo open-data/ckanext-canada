@@ -116,7 +116,7 @@ class CanadaDatasetsPlugin(SchemingDatasetsPlugin):
         if has_request_context() and 'ckan-admin/publish' in request.url:
             search_params['extras']['ready_to_publish'] = u'true'
             search_params['extras']['imso_approval'] = u'true'
-            search_params['fq'] += '-portal_release_date:*'
+            search_params['fq'] += '+ready_to_publish:"true", +imso_approval:"true", -portal_release_date:*'
 
         return search_params
 
