@@ -8,6 +8,7 @@ from dateutil.tz import tzutc
 from socket import error as socket_error
 from logging import getLogger
 from ckanext.datastore.writer import csv_writer
+from six import string_types
 
 from ckan.plugins.toolkit import (
     abort,
@@ -516,6 +517,8 @@ def ckanadmin_publish_datasets():
 
     # get a list of package id's from the for POST data
     publish_packages = params.get('publish', [])
+    if isinstance(publish_packages, string_types):
+        publish_packages = [publish_packages]
     count = len(publish_packages)
     for package_id in publish_packages:
         lc.action.package_patch(
