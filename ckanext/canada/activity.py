@@ -5,6 +5,7 @@ from ckan.lib.helpers import url_for
 import datetime
 import ckan.logic as logic
 import ckan.lib.dictization.model_dictize as model_dictize
+from ckan.plugins.toolkit import side_effect_free
 
 MERGE_ACTIVITIES_WITHIN_SECONDS = 2
 
@@ -59,6 +60,7 @@ def datastore_activity_create(context, act_data):
 
 
 @logic.validate(logic.schema.default_dashboard_activity_list_schema)
+@side_effect_free
 def recently_changed_packages_activity_list(context, data_dict):
     '''Copied from ckan/ckan/logic/action/get.py
     Custom: Sets include_data to True
