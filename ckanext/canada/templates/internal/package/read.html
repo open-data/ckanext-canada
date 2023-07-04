@@ -4,9 +4,14 @@
   <section class="resources module-content indent-large">
     {% set portal_link = h.portal_url() ~ "/data/" ~ client_lang ~ "/" ~ pkg.name %}
     {% set sub_label = _("Your record will be published at:") %}
+    {% set alert_class = "info" %}
     {% set show_portal_status_alert = true %}
     {% if pkg['ready_to_publish'] == 'false' or not pkg['ready_to_publish'] %}
       {% set label = _("Record marked not ready to publish") %}
+      {% set alert_class = "warning" %}
+    {% elif pkg['imso_approval'] == 'false' or not pkg['imso_approval'] %}
+      {% set label = _("Record missing approval from the Information Management Senior Official (IMSO)") %}
+      {% set alert_class = "warning" %}
     {% elif not pkg['portal_release_date'] or h.date_format(pkg['portal_release_date']) > h.today() %}
       {% set label = _("Queued for publishing") %}
     {% else %}
@@ -15,7 +20,7 @@
       {% set show_portal_status_alert = false %}
     {% endif %}
     {% if show_portal_status_alert %}
-      <div class="module-alert alert alert-info mrgn-tp-sm">
+      <div class="module-alert alert alert-{{ alert_class }} mrgn-tp-sm">
         <p>
           {{ label }}
           {% if sub_label %}
