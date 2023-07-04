@@ -564,7 +564,9 @@ ckanext.canada:schemas/prop.yaml
     def get_actions(self):
         return {
                 'datastore_upsert': datastore_upsert,
-                'datastore_delete': datastore_delete}
+                'datastore_delete': datastore_delete,
+                'recently_changed_packages_activity_list': act.recently_changed_packages_activity_list,  #TODO: Remove this action override in CKAN 2.10 upgrade
+               }
 
     # IAuthFunctions
     def get_auth_functions(self):
