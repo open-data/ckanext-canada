@@ -10,7 +10,7 @@
       {% set label = _("Record marked not ready to publish") %}
       {% set alert_class = "warning" %}
     {% elif pkg['imso_approval'] == 'false' or not pkg['imso_approval'] %}
-      {% set label = _("Record missing approval from the Information Management Senior Official (IMSO)") %}
+      {% set label = _("Approval required") %}
       {% set alert_class = "warning" %}
     {% elif not pkg['portal_release_date'] or h.date_format(pkg['portal_release_date']) > h.today() %}
       {% set label = _("Queued for publishing") %}
