@@ -47,7 +47,12 @@
       {% block notes %}
         {% set notes, machine_translated = h.get_translated_t(package, 'notes') %}
         {% if notes %}
-          <div>{{ _(h.markdown_extract(notes, extract_length=300)) }}
+          <div>
+            {% if 'notes_translated' not in package %}
+              {{ _(h.markdown_extract(notes, extract_length=300)) }}
+            {% else %}
+              {{ h.markdown_extract(notes, extract_length=300) }}
+            {% endif %}
             {% if machine_translated %}
               <i class="fa fa-language text-muted mrgn-lft-sm" title="{{ _("This third party metadata element has been translated using an automated translation tool.  To report any discrepancies please contact open-ouvert@tbs-sct.gc.ca") }}"></i>
             {% endif %}
