@@ -176,7 +176,7 @@ class DatasetDownload():
                 password=passwd, host=host, port="5432")
         except:
             import traceback
-            traceback.print_exce()
+            traceback.print_exc()
             print ("Opened database failed")
             sys.exit(-1)
 
@@ -192,7 +192,7 @@ class DatasetDownload():
         cur = self.conn.cursor()
         cur.execute('''SELECT a.id, c.value, a.owner_org from package a,
                     package_extra c
-                    where a.state='deleted' 
+                    where a.state='deleted'
                         and a.id=c.package_id and c.key='title_translated'; ''')
         rows = cur.fetchall()
         for row in rows[:1]:
@@ -249,12 +249,12 @@ class DatasetDownload():
                     continue
                 if self.og_type =='info':
                     if rec['type'] != 'info':
-                        stats.pop(rec['id']) # not open info 
+                        stats.pop(rec['id']) # not open info
                         continue
                 self.ds[rec['id']] = {'title_translated':rec['title_translated'],
                                       'owner_org':rec['owner_org']}
                 self.org_count[rec['owner_org']] += 1
-            
+
     def getVisitStats(self, start_date, end_date, og_type):
         self.set_catalogue_file(end_date)
 
@@ -320,7 +320,7 @@ class DatasetDownload():
         top100 = heapq.nlargest(100, top100, key=lambda x:x[1])
         rows = [['ID / Identificateur',
                  'Title English / Titre en anglais',
-                 'Title French / Titre en français', 
+                 'Title French / Titre en français',
                  "Department Name English / Nom du ministère en anglais",
                  "Department Name French / Nom du ministère en français",
                  "number of downloads / nombre de téléchargements"]]
@@ -377,20 +377,20 @@ class DatasetDownload():
             for k,v in deleted_ds.iteritems():
                 data.pop(k)
             deleted_ds = {}
-        
+
         rows = []
         for k,v in ds.iteritems():
             title = self.orgs.get(k, ['', ''])
             if len(title) ==1:
                 title.append(title[0])
-            rows.append([title[0].strip(), title[1].strip(),v]) 
+            rows.append([title[0].strip(), title[1].strip(),v])
         rows.sort(key=lambda x: -x[2])
         header = ["Department Name English / Nom du ministère en anglais",
                   "Department Name French / Nom du ministère en français",
                   "number of downloads / nombre de téléchargements"]
 
         #write_csv('/tmp/a.csv', rows, header)
-        
+
         #now save to xls
         self.saveXls(sheets, data, ds, deleted_ds, ignore_deleted)
 
@@ -404,7 +404,7 @@ class DatasetDownload():
             title = title.split('|')
             rows.append( [name, title[0].strip(), title[1].strip(), count])
         rows.sort(key=lambda x: -x[3])
-        rows.insert(0, ['Abbreviation / Abréviation', 
+        rows.insert(0, ['Abbreviation / Abréviation',
                         "Department Name English / Nom du ministère en anglais",
                         "Department Name French / Nom du ministère en français",
                         "Number of downloads / Nombre de téléchargements"])
@@ -421,7 +421,7 @@ class DatasetDownload():
         top100 = heapq.nlargest(100, top100, key=lambda x:x[1])
         rows = [['ID / Identificateur',
                  'Title English / Titre en anglais',
-                 'Title French / Titre en français', 
+                 'Title French / Titre en français',
                  "Department Name English / Nom du ministère en anglais",
                  "Department Name French / Nom du ministère en français",
                  "number of downloads / nombre de téléchargements"]]
@@ -479,7 +479,7 @@ class DatasetDownload():
         sheets.insert(0, sheet2)
         sheets.insert(0, sheet1)
         write_xls(os.path.join(ga_tmp_dir, 'od_ga_downloads.xls'), sheets)
-        
+
     def getRawReport(self, start='0', size = '1000'):
           return self.ga.reports().batchGet(
               body={
@@ -508,7 +508,7 @@ class DatasetDownload():
                     }],
                    'pageToken': start,
                    'pageSize': size,
-                    
+
                 }]
               }
           ).execute()
@@ -1121,7 +1121,7 @@ def report(client_secret_path, view_id, og_config_file, start, end, va):
       ds.monthly_usage(start, end, os.path.join(ga_tmp_dir, 'od_ga_month.csv')); time.sleep(2)
       ds.by_country(end, os.path.join(ga_tmp_dir, 'od_ga_by_country.csv')); time.sleep(2)
       ds.by_region(end, os.path.join(ga_tmp_dir, 'od_ga_by_region.csv'))
-      ds.by_org_month(end, os.path.join(ga_tmp_dir, 'od_ga_by_org_month.csv'), 
+      ds.by_org_month(end, os.path.join(ga_tmp_dir, 'od_ga_by_org_month.csv'),
                       os.path.join(ga_tmp_dir, 'od_ga_by_org.csv'))
 
 def main():
