@@ -385,7 +385,7 @@ def canada_resource_schema_validator(value, context):
         try:
             value = resource_schema_validator(value, context)
         except AttributeError:
-            raise Invalid(_('Bad Schema JSON'))
+            raise Invalid(_('Invalid JSON for Schema'))
         if isinstance(value, basestring) \
         and value.lower().startswith('http'):
             raise Invalid(_('Schema URLs are not supported'))
