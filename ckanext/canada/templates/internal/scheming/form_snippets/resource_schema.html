@@ -31,18 +31,6 @@
         )
      }}
 
-    {# Schema URL #}
-    {{ form.input(
-      'schema_url',
-      label='Data Schema URL',
-      id='field-schema-url',
-      type='url',
-      placeholder='https://example.com/schema.json',
-      value=data.get('schema') if is_url else '',
-      error=errors.get('schema') if is_url else '',
-      classes=['control-full']
-      )
-    }}
 
     {# Schema JSON #}
     {{ form.textarea(
