@@ -115,17 +115,6 @@
         </div>
       {% endif %}
       {% block map_cart_buttons %}
-        {% if 'fgp_viewer' in package.get('display_flags', []) %}
-          <div>
-          <hr>
-          <a value="{{ package.name }}" id="OGSCartAdd_{{ package.name }}"
-            class="ogscartbtn ogscartaddbtn btn btn-success btn-xs" href="javascript:;"
-            ><span class="fa fa-plus"></span> {{ _('Add to Map Cart') }}</a>
-          <a value="{{ package.name }}" id="OGSCartRemove_{{ package.name }}"
-            class="ogscartbtn ogscartremovebtn btn btn-danger btn-xs" href="javascript:;"
-            ><span class="fa fa-minus"></span> {{ _('Remove from Map Cart') }}</a>
-          </div>
-        {% endif %}
       {% endblock %}
     {% endblock %}
     </div>
