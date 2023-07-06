@@ -3,7 +3,7 @@ img.openness-rating-stars {
 }
 
 .facet-item {
-	padding-bottom: 3px; 
+	padding-bottom: 3px;
 	padding-top: 3px;
 }
 
@@ -348,3 +348,10 @@ a#edit-comment-body-0-format-help-about, button#edit-submit,button#edit-actions-
     background-color: #e5e5e5;
 
 }
+
+/* body #resource-schema-buttons div.form-group > a.btn:nth-of-type(2){
+
+  display: none !important;
+  z-index: -1 !important;
+
+} */
