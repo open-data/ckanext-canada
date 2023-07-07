@@ -164,6 +164,7 @@ class CanadaDatasetsPlugin(SchemingDatasetsPlugin):
             if 'collection' in geno:
                 data_dict['collection'] = geno['collection']
 
+        # need to keep fgp_viewer in the index for Advanced Search App
         if 'fgp_viewer' in data_dict.get('display_flags', []):
             data_dict['fgp_viewer'] = 'map_view'
 
@@ -493,9 +494,6 @@ ckanext.canada:schemas/prop.yaml
             'res_format': _('Format'),
             'res_type': _('Resource Type'),
             'frequency': _('Maintenance and Update Frequency'),
-            'topic_category': _('Topic Categories'),
-            'spatial_representation_type': _('Spatial Representation Type'),
-            'fgp_viewer': _('Map Viewer'),
             'ready_to_publish': _('Record Status'),
             'imso_approval': _('IMSO Approval'),
             'jurisdiction': _('Jurisdiction'),
@@ -534,8 +532,6 @@ ckanext.canada:schemas/prop.yaml
             'drupal_session_present',
             'fgp_url',
             'contact_information',
-            'show_subject_facet',
-            'show_fgp_facets',
             'show_openinfo_facets',
             'gravatar',
             'linked_gravatar',

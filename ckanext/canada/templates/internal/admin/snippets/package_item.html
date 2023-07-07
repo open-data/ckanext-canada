@@ -1,6 +1,7 @@
 {% extends 'snippets/package_item.html' %}
 
-{% block map_cart_buttons %}
+{% block resources_outer %}
+  {{ super() }}
   {% if h.is_ready_to_publish(package) %}
     <div class="col-md-3 pull-right">
       <label class="form-checkbox no-colon">
