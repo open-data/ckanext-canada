@@ -326,6 +326,13 @@ a#edit-comment-body-0-format-help-about, button#edit-submit,button#edit-actions-
 
 }
 
+body #resource-schema-buttons div.form-group > a.btn:nth-of-type(2){
+
+  display: none !important;
+  z-index: -1 !important;
+
+}
+
 .modal .modal-dialog .modal-content .modal-title{
 
     color: white;
