@@ -371,8 +371,6 @@ ckanext.canada:schemas/prop.yaml
             'res_format': _('Format'),
             'res_type': _('Resource Type'),
             'frequency': _('Maintenance and Update Frequency'),
-            'topic_category': _('Topic Categories'),
-            'spatial_representation_type': _('Spatial Representation Type'),
             'ready_to_publish': _('Record Status'),
             'imso_approval': _('IMSO Approval'),
             'jurisdiction': _('Jurisdiction'),
