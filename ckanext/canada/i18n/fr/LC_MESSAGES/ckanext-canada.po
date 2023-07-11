@@ -3581,3 +3581,7 @@ msgstr "Rechercher et gérer les utilisateurs."
 #: ckanext/canada/templates/internal/user/snippets/search.html:78
 msgid "Search and view users."
 msgstr "Rechercher et afficher les utilisateurs."
+
+#: ckanext/canada/validators.py:388
+msgid "Invalid JSON for Schema"
+msgstr "JSON non valide pour le schéma"
