@@ -3597,3 +3597,7 @@ msgstr "Approbation nécessaire"
 #: ckanext/canada/templates/internal/package/read.html:16
 msgid "Queued for publishing"
 msgstr "Mis en file d'attente à des fins de publication"
+
+#: ckanext/canada/validators.py:382
+msgid "Invalid JSON for Schema"
+msgstr "JSON non valide pour le schéma"
