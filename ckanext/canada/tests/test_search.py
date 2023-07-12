@@ -9,6 +9,7 @@ from ckanext.canada.tests.factories import (
     CanadaUser as User,
     CanadaDataset as Dataset
 )
+from ckanext.canada.tests import canada_tests_init_validation
 
 
 class TestRegistrySearch(FunctionalTestBase):
@@ -16,6 +17,7 @@ class TestRegistrySearch(FunctionalTestBase):
     Class to test the package_search functionality for the Registry.
     """
     def setup(self):
+        canada_tests_init_validation()
         super(TestRegistrySearch, self).setup()
         # all datasets in canada_internal are private
         self.include_private = True
@@ -127,6 +129,7 @@ class TestPortalSearch(FunctionalTestBase):
     Class to test the package_search functionality for the Portal.
     """
     def setup(self):
+        canada_tests_init_validation()
         if p.plugin_loaded('canada_internal'):
             p.unload('canada_internal')
         super(TestPortalSearch, self).setup()

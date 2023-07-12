@@ -10,12 +10,14 @@ from ckanext.recombinant.tables import get_chromo, get_geno
 from ckanext.recombinant.controller import _process_upload_file
 from ckanext.recombinant.write_excel import excel_template, append_data
 from ckanext.recombinant.errors import  BadExcelData
+from ckanext.canada.tests import canada_tests_init_validation
 
 
 # testing the upload of PD template files
 # 'wrongdoing' PD template is used as an example here
 class TestXlsUpload(FunctionalTestBase):
     def setup(self):
+        canada_tests_init_validation()
         super(TestXlsUpload, self).setup()
         self.org = Organization()
         self.lc = LocalCKAN()
@@ -23,7 +25,7 @@ class TestXlsUpload(FunctionalTestBase):
         rval = self.lc.action.recombinant_show(dataset_type='wrongdoing', owner_org=self.org['name'])
         self.pkg_id = rval['id']
 
-    
+
     def test_upload_empty(self):
         wb = excel_template('wrongdoing', self.org)
         f = tempfile.NamedTemporaryFile(suffix=".xlsx")

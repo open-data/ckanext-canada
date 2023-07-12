@@ -6,10 +6,12 @@ from ckan.tests.helpers import FunctionalTestBase
 from ckanext.canada.tests.factories import CanadaOrganization as Organization
 
 from ckanext.recombinant.tables import get_chromo
+from ckanext.canada.tests import canada_tests_init_validation
 
 
 class TestExperiment(FunctionalTestBase):
     def setup(self):
+        canada_tests_init_validation()
         super(TestExperiment, self).setup()
         org = Organization()
         self.lc = LocalCKAN()

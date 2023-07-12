@@ -25,10 +25,12 @@ from ckanext.recombinant.write_excel import (
     DATA_FIRST_ROW,
     DATA_FIRST_COL_NUM
 )
+from ckanext.canada.tests import canada_tests_init_validation
 
 
 class TestPackageWebForms(FunctionalTestBase):
     def setup(self):
+        canada_tests_init_validation()
         super(TestPackageWebForms, self).setup()
         self.sysadmin = Sysadmin()
         self.extra_environ_tester = {'REMOTE_USER': self.sysadmin['name'].encode('ascii')}
@@ -149,6 +151,7 @@ class TestPackageWebForms(FunctionalTestBase):
 
 class TestNewUserWebForms(FunctionalTestBase):
     def setup(self):
+        canada_tests_init_validation()
         super(TestNewUserWebForms, self).setup()
         self.org = Organization()
         self.app = self._get_test_app()
@@ -204,6 +207,7 @@ class TestNewUserWebForms(FunctionalTestBase):
 
 class TestRecombinantWebForms(FunctionalTestBase):
     def setup(self):
+        canada_tests_init_validation()
         super(TestRecombinantWebForms, self).setup()
         member = User()
         editor = User()
@@ -523,7 +527,7 @@ class TestRecombinantWebForms(FunctionalTestBase):
                            dataset_type=self.pd_type,
                            lang='en',
                            owner_org=self.org['name'])
-        
+
         # members should be able to download template
         response = self.app.post(offset,
                                  {'resource_name': resource_name,

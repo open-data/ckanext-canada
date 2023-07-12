@@ -5,10 +5,12 @@ from ckanext.canada.tests.factories import (
     CanadaResource as Resource)
 
 from ckanext.canada.commands import _trim_package, PACKAGE_TRIM_FIELDS, RESOURCE_TRIM_FIELDS
+from ckanext.canada.tests import canada_tests_init_validation
 
 
 class TestTrimPackage(FunctionalTestBase):
     def setup(self):
+        canada_tests_init_validation()
         super(TestTrimPackage, self).setup()
         self.example_pkg = Dataset()
         resources = []
@@ -26,7 +28,7 @@ class TestTrimPackage(FunctionalTestBase):
         assert 'name' in self.example_pkg and self.example_pkg['name'] is not None
         assert 'state' in self.example_pkg
 
-    
+
     def test_trimmed_resources(self):
         for resource in self.example_pkg['resources']:
             for field in RESOURCE_TRIM_FIELDS:

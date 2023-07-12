@@ -7,6 +7,7 @@ from ckanext.canada.tests.factories import (
 
 from ckanapi import LocalCKAN, ValidationError, NotAuthorized
 from nose.tools import assert_raises
+from ckanext.canada.tests import canada_tests_init_validation
 
 SIMPLE_SUGGESTION = {
     'type': 'prop',
@@ -67,6 +68,7 @@ UPDATED_SUGGESTION = dict(SIMPLE_SUGGESTION,
 
 class TestSuggestedDataset(FunctionalTestBase):
     def setup(self):
+        canada_tests_init_validation()
         super(TestSuggestedDataset, self).setup()
         member = User()
         editor = User()
