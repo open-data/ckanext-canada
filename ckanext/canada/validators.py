@@ -19,7 +19,7 @@ from datetime import datetime
 
 from ckanapi import LocalCKAN, NotFound
 from ckan.lib.helpers import date_str_to_datetime, plugin_loaded
-from ckantoolkit import get_validator, Invalid, missing, config
+from ckantoolkit import get_validator, Invalid, missing
 from ckanext.fluent.validators import fluent_text_output, LANG_SUFFIX
 from ckan.lib import base
 
