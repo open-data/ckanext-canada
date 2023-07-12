@@ -1,5 +1,4 @@
 # -*- coding: UTF-8 -*-
-from ckan.tests.helpers import FunctionalTestBase
 from ckan.tests.factories import Sysadmin
 from ckan.plugins.toolkit import Invalid
 from ckanext.canada.tests.factories import (
@@ -11,7 +10,7 @@ from ckanapi import LocalCKAN, ValidationError
 from nose.tools import assert_raises, assert_equal
 
 from ckanext.canada.validators import canada_tags
-from ckanext.canada.tests import canada_tests_init_validation
+from ckanext.canada.tests import CanadaTestBase
 
 
 class TestCanadaTags(object):
@@ -49,9 +48,8 @@ class TestCanadaTags(object):
         assert_raises(Invalid, canada_tags, u'one line\u2028two', {})
 
 
-class TestNAVLSchema(FunctionalTestBase):
+class TestNAVLSchema(CanadaTestBase):
     def setup(self):
-        canada_tests_init_validation()
         super(TestNAVLSchema, self).setup()
         sysadmin_user = Sysadmin()
         normal_user = User()

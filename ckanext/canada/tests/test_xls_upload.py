@@ -3,21 +3,19 @@ import tempfile
 from nose.tools import assert_equal, assert_raises
 from ckanapi import LocalCKAN
 
-from ckan.tests.helpers import FunctionalTestBase
 from ckanext.canada.tests.factories import CanadaOrganization as Organization
 
 from ckanext.recombinant.tables import get_chromo, get_geno
 from ckanext.recombinant.controller import _process_upload_file
 from ckanext.recombinant.write_excel import excel_template, append_data
 from ckanext.recombinant.errors import  BadExcelData
-from ckanext.canada.tests import canada_tests_init_validation
+from ckanext.canada.tests import CanadaTestBase
 
 
 # testing the upload of PD template files
 # 'wrongdoing' PD template is used as an example here
-class TestXlsUpload(FunctionalTestBase):
+class TestXlsUpload(CanadaTestBase):
     def setup(self):
-        canada_tests_init_validation()
         super(TestXlsUpload, self).setup()
         self.org = Organization()
         self.lc = LocalCKAN()

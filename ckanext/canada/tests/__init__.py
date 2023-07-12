@@ -1,5 +1,11 @@
-from ckanext.validation.model import create_tables, tables_exist
+from ckan.tests.helpers import FunctionalTestBase
+from ckanext.validation.model import (
+    create_tables as validation_create_tables,
+    tables_exist as validation_tables_exist
+)
 
-def canada_tests_init_validation():
- if not tables_exist():
-  create_tables()
+class CanadaTestBase(FunctionalTestBase):
+    def setup(self):
+        if not validation_tables_exist():
+            validation_create_tables()
+        super(CanadaTestBase, self).setup()

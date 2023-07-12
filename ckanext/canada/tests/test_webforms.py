@@ -15,7 +15,6 @@ from ckanext.canada.tests.factories import (
     CanadaOrganization as Organization,
     CanadaUser as User
 )
-from ckan.tests.helpers import FunctionalTestBase
 
 from ckanext.recombinant.tables import get_chromo
 from ckanext.recombinant.read_excel import read_excel
@@ -25,12 +24,11 @@ from ckanext.recombinant.write_excel import (
     DATA_FIRST_ROW,
     DATA_FIRST_COL_NUM
 )
-from ckanext.canada.tests import canada_tests_init_validation
+from ckanext.canada.tests import CanadaTestBase
 
 
-class TestPackageWebForms(FunctionalTestBase):
+class TestPackageWebForms(CanadaTestBase):
     def setup(self):
-        canada_tests_init_validation()
         super(TestPackageWebForms, self).setup()
         self.sysadmin = Sysadmin()
         self.extra_environ_tester = {'REMOTE_USER': self.sysadmin['name'].encode('ascii')}
@@ -149,9 +147,8 @@ class TestPackageWebForms(FunctionalTestBase):
         return resource_form
 
 
-class TestNewUserWebForms(FunctionalTestBase):
+class TestNewUserWebForms(CanadaTestBase):
     def setup(self):
-        canada_tests_init_validation()
         super(TestNewUserWebForms, self).setup()
         self.org = Organization()
         self.app = self._get_test_app()
@@ -205,9 +202,8 @@ class TestNewUserWebForms(FunctionalTestBase):
         return new_user_form
 
 
-class TestRecombinantWebForms(FunctionalTestBase):
+class TestRecombinantWebForms(CanadaTestBase):
     def setup(self):
-        canada_tests_init_validation()
         super(TestRecombinantWebForms, self).setup()
         member = User()
         editor = User()
