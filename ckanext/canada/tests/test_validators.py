@@ -1,5 +1,4 @@
 # -*- coding: UTF-8 -*-
-from ckan.tests.helpers import FunctionalTestBase
 from ckan.tests.factories import Sysadmin
 from ckan.plugins.toolkit import Invalid
 from ckanext.canada.tests.factories import (
@@ -11,6 +10,7 @@ from ckanapi import LocalCKAN, ValidationError
 from nose.tools import assert_raises, assert_equal
 
 from ckanext.canada.validators import canada_tags
+from ckanext.canada.tests import CanadaTestBase
 
 
 class TestCanadaTags(object):
@@ -48,7 +48,7 @@ class TestCanadaTags(object):
         assert_raises(Invalid, canada_tags, u'one line\u2028two', {})
 
 
-class TestNAVLSchema(FunctionalTestBase):
+class TestNAVLSchema(CanadaTestBase):
     def setup(self):
         super(TestNAVLSchema, self).setup()
         sysadmin_user = Sysadmin()
@@ -288,3 +288,29 @@ class TestNAVLSchema(FunctionalTestBase):
             self.sysadmin_action.resource_view_create,
             **resource_view_data)
 
+
+    def test_validation_schema(self):
+        "creating a resource with a URL schema should not be allowed"
+        pkg = self.sysadmin_action.package_create(**self.complete_pkg)
+
+        resource_data = {
+            'name_translated': {'en': u'Full text.', 'fr': u'Full text.'},
+            'format': u'TXT',
+            'url': u'http://www.annakarenina.com/download/',
+            'size': 42,
+            'resource_type': 'dataset',
+            'language': ['zxx'],
+            'package_id': pkg['id'],
+            'schema': 'https://www.annakarenina.com'
+        }
+
+        assert_raises(ValidationError,
+            self.sysadmin_action.resource_create,
+            **resource_data)
+
+        resource_data = dict(resource_data,
+                            schema='{"fields":["this is bad JSON for Schema"]}')
+
+        assert_raises(ValidationError,
+            self.sysadmin_action.resource_create,
+            **resource_data)

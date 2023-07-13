@@ -18,7 +18,7 @@ import uuid
 from datetime import datetime
 
 from ckanapi import LocalCKAN, NotFound
-from ckan.lib.helpers import date_str_to_datetime
+from ckan.lib.helpers import date_str_to_datetime, plugin_loaded
 from ckantoolkit import get_validator, Invalid, missing
 from ckanext.fluent.validators import fluent_text_output, LANG_SUFFIX
 from ckan.lib import base
@@ -376,4 +376,17 @@ def json_string_has_en_fr_keys(value, context):
             raise Invalid(_('JSON object must contain \"fr\" key'))
     except ValueError:
         raise Invalid(_('Must be a JSON string'))
+    return value
+
+
+def canada_resource_schema_validator(value, context):
+    if plugin_loaded('validation'):
+        from ckanext.validation.validators import resource_schema_validator
+        try:
+            value = resource_schema_validator(value, context)
+        except AttributeError:
+            raise Invalid(_('Invalid JSON for Schema'))
+        if isinstance(value, basestring) \
+        and value.lower().startswith('http'):
+            raise Invalid(_('Schema URLs are not supported'))
     return value

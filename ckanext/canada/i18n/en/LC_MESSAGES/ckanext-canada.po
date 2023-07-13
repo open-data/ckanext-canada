@@ -6165,6 +6165,13 @@ msgstr ""
 msgid "Search and view users."
 msgstr ""
 
+#: ckanext/canada/validators.py:388
+msgid "Invalid JSON for Schema"
+msgstr ""
+
+#: ckanext/canada/validators.py:391
+msgid "Schema URLs are not supported"
+
 #: ckanext/canada/templates/internal/package/read.html:6
 msgid "Your record will be published at:"
 msgstr ""

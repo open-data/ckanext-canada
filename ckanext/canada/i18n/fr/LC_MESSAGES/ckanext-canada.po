@@ -3582,6 +3582,14 @@ msgstr "Rechercher et gérer les utilisateurs."
 msgid "Search and view users."
 msgstr "Rechercher et afficher les utilisateurs."
 
+#: ckanext/canada/validators.py:388
+msgid "Invalid JSON for Schema"
+msgstr "JSON non valide pour le schéma"
+
+#: ckanext/canada/validators.py:391
+msgid "Schema URLs are not supported"
+msgstr "Les adresses URL des schémas ne sont pas prises en charge"
+
 #: ckanext/canada/templates/internal/package/read.html:6
 msgid "Your record will be published at:"
 msgstr "Votre document sera publié à :"

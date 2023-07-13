@@ -15,7 +15,6 @@ from ckanext.canada.tests.factories import (
     CanadaOrganization as Organization,
     CanadaUser as User
 )
-from ckan.tests.helpers import FunctionalTestBase
 
 from ckanext.recombinant.tables import get_chromo
 from ckanext.recombinant.read_excel import read_excel
@@ -25,9 +24,10 @@ from ckanext.recombinant.write_excel import (
     DATA_FIRST_ROW,
     DATA_FIRST_COL_NUM
 )
+from ckanext.canada.tests import CanadaTestBase
 
 
-class TestPackageWebForms(FunctionalTestBase):
+class TestPackageWebForms(CanadaTestBase):
     def setup(self):
         super(TestPackageWebForms, self).setup()
         self.sysadmin = Sysadmin()
@@ -147,7 +147,7 @@ class TestPackageWebForms(FunctionalTestBase):
         return resource_form
 
 
-class TestNewUserWebForms(FunctionalTestBase):
+class TestNewUserWebForms(CanadaTestBase):
     def setup(self):
         super(TestNewUserWebForms, self).setup()
         self.org = Organization()
@@ -202,7 +202,7 @@ class TestNewUserWebForms(FunctionalTestBase):
         return new_user_form
 
 
-class TestRecombinantWebForms(FunctionalTestBase):
+class TestRecombinantWebForms(CanadaTestBase):
     def setup(self):
         super(TestRecombinantWebForms, self).setup()
         member = User()
@@ -523,7 +523,7 @@ class TestRecombinantWebForms(FunctionalTestBase):
                            dataset_type=self.pd_type,
                            lang='en',
                            owner_org=self.org['name'])
-        
+
         # members should be able to download template
         response = self.app.post(offset,
                                  {'resource_name': resource_name,

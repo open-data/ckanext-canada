@@ -2,13 +2,13 @@
 from nose.tools import assert_raises
 from ckanapi import LocalCKAN, ValidationError
 
-from ckan.tests.helpers import FunctionalTestBase
 from ckanext.canada.tests.factories import CanadaOrganization as Organization
 
 from ckanext.recombinant.tables import get_chromo
+from ckanext.canada.tests import CanadaTestBase
 
 
-class TestExperiment(FunctionalTestBase):
+class TestExperiment(CanadaTestBase):
     def setup(self):
         super(TestExperiment, self).setup()
         org = Organization()

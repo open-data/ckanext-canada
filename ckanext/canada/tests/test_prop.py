@@ -1,5 +1,4 @@
 # -*- coding: UTF-8 -*-
-from ckan.tests.helpers import FunctionalTestBase
 from ckan.tests.factories import Sysadmin
 from ckanext.canada.tests.factories import (
     CanadaOrganization as Organization,
@@ -7,6 +6,7 @@ from ckanext.canada.tests.factories import (
 
 from ckanapi import LocalCKAN, ValidationError, NotAuthorized
 from nose.tools import assert_raises
+from ckanext.canada.tests import CanadaTestBase
 
 SIMPLE_SUGGESTION = {
     'type': 'prop',
@@ -65,7 +65,7 @@ UPDATED_SUGGESTION = dict(SIMPLE_SUGGESTION,
 )
 
 
-class TestSuggestedDataset(FunctionalTestBase):
+class TestSuggestedDataset(CanadaTestBase):
     def setup(self):
         super(TestSuggestedDataset, self).setup()
         member = User()
