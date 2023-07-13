@@ -3589,3 +3589,19 @@ msgstr "JSON non valide pour le schéma"
 #: ckanext/canada/validators.py:391
 msgid "Schema URLs are not supported"
 msgstr "Les adresses URL des schémas ne sont pas prises en charge"
+
+#: ckanext/canada/templates/internal/package/read.html:6
+msgid "Your record will be published at:"
+msgstr "Votre document sera publié à :"
+
+#: ckanext/canada/templates/internal/package/read.html:10
+msgid "Record marked not ready to publish"
+msgstr "On indique que le document n'est pas prêt à être publié"
+
+#: ckanext/canada/templates/internal/package/read.html:13
+msgid "Approval required"
+msgstr "Approbation nécessaire"
+
+#: ckanext/canada/templates/internal/package/read.html:16
+msgid "Queued for publishing"
+msgstr "Mis en file d'attente à des fins de publication"

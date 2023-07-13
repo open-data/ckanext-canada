@@ -325,27 +325,6 @@ def contact_information(info):
     except Exception:
         return {}
 
-def show_subject_facet():
-    '''
-    Return True when the subject facet should be visible
-    '''
-    if any(f['active'] for f in h.get_facet_items_dict('subject')):
-        return True
-    return not show_fgp_facets()
-
-def show_fgp_facets():
-    '''
-    Return True when the fgp facets and map cart should be visible
-    '''
-    for group in [
-            'topic_category', 'spatial_representation_type', 'fgp_viewer']:
-        if any(f['active'] for f in h.get_facet_items_dict(group)):
-            return True
-    for f in h.get_facet_items_dict('collection'):
-        if f['name'] == 'fgp':
-            return f['active']
-    return False
-
 
 def show_openinfo_facets():
     '''
