@@ -4,10 +4,10 @@ from ckanapi import LocalCKAN
 
 from ckan.tests.factories import Sysadmin
 from ckanext.canada.tests.factories import CanadaOrganization as Organization
-from ckan.tests.helpers import FunctionalTestBase
+from ckanext.canada.tests import CanadaTestBase
 
 
-class TestPackageAlerts(FunctionalTestBase):
+class TestPackageAlerts(CanadaTestBase):
     def setup(self):
         super(TestPackageAlerts, self).setup()
         self.sysadmin = Sysadmin()
