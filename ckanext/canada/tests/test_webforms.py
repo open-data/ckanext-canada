@@ -1,4 +1,5 @@
 # -*- coding: UTF-8 -*-
+from ckanext.canada.tests import CanadaTestBase
 import pytest
 from urlparse import urlparse
 from StringIO import StringIO
@@ -6,12 +7,10 @@ from openpyxl.workbook import Workbook
 from ckan.plugins.toolkit import h
 from ckanapi import (
     LocalCKAN,
-    NotAuthorized,
     ValidationError
 )
 
-from ckan.tests.helpers import reset_db, CKANResponse
-from ckan.lib.search import clear_all
+from ckan.tests.helpers import CKANResponse
 
 from ckan.tests.factories import Sysadmin
 from ckanext.canada.tests.factories import (
@@ -37,14 +36,13 @@ def _get_relative_offset_from_response(response):
 
 
 @pytest.mark.usefixtures('with_request_context')
-class TestPackageWebForms(object):
+class TestPackageWebForms(CanadaTestBase):
     @classmethod
     def setup_method(self, method):
         """Method is called at class level before EACH test methods of the class are called.
         Setup any state specific to the execution of the given class methods.
         """
-        reset_db()
-        clear_all()
+        super(TestPackageWebForms, self).setup_method()
         self.sysadmin = Sysadmin()
         self.extra_environ_tester = {'REMOTE_USER': self.sysadmin['name'].encode('ascii')}
         self.org = Organization()
@@ -178,14 +176,13 @@ class TestPackageWebForms(object):
 
 
 @pytest.mark.usefixtures('with_request_context')
-class TestNewUserWebForms(object):
+class TestNewUserWebForms(CanadaTestBase):
     @classmethod
     def setup_method(self, method):
         """Method is called at class level before EACH test methods of the class are called.
         Setup any state specific to the execution of the given class methods.
         """
-        reset_db()
-        clear_all()
+        super(TestNewUserWebForms, self).setup_method()
         self.org = Organization()
 
 
@@ -240,14 +237,13 @@ class TestNewUserWebForms(object):
 
 
 @pytest.mark.usefixtures('with_request_context')
-class TestRecombinantWebForms(object):
+class TestRecombinantWebForms(CanadaTestBase):
     @classmethod
     def setup_method(self, method):
         """Method is called at class level before EACH test methods of the class are called.
         Setup any state specific to the execution of the given class methods.
         """
-        reset_db()
-        clear_all()
+        super(TestRecombinantWebForms, self).setup_method()
         member = User()
         editor = User()
         sysadmin = Sysadmin()

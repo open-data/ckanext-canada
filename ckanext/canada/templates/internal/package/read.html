@@ -2,7 +2,7 @@
 
 {% block internal_actions %}
   <section class="resources module-content indent-large">
-    {% set portal_link = h.portal_url() ~ "/data/" ~ client_lang ~ "/" ~ pkg.name %}
+    {% set portal_link = h.portal_url() ~ "/data/" ~ client_lang ~ "/" ~ pkg.get('type', 'dataset') ~ "/" ~ pkg.name %}
     {% set sub_label = _("Your record will be published at:") %}
     {% set alert_class = "info" %}
     {% set show_portal_status_alert = true %}

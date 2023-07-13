@@ -18,8 +18,8 @@ import uuid
 from datetime import datetime
 
 from ckanapi import LocalCKAN, NotFound
-from ckan.lib.helpers import date_str_to_datetime
-from ckantoolkit import get_validator, Invalid, missing, config
+from ckan.lib.helpers import date_str_to_datetime, plugin_loaded
+from ckantoolkit import get_validator, Invalid, missing
 from ckanext.fluent.validators import fluent_text_output, LANG_SUFFIX
 from ckan.lib import base
 
@@ -374,7 +374,7 @@ def json_string_has_en_fr_keys(value, context):
 
 
 def canada_resource_schema_validator(value, context):
-    if "validation" in config['ckan.plugins']:
+    if plugin_loaded('validation'):
         from ckanext.validation.validators import resource_schema_validator
         try:
             value = resource_schema_validator(value, context)

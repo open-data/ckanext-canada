@@ -1,23 +1,21 @@
 # -*- coding: UTF-8 -*-
+from ckanext.canada.tests import CanadaTestBase
 from ckan.plugins.toolkit import h
 from ckanapi import LocalCKAN
 
 import pytest
-from ckan.tests.helpers import reset_db
-from ckan.lib.search import clear_all
 from ckan.tests.factories import Sysadmin
 from ckanext.canada.tests.factories import CanadaOrganization as Organization
 
 
 @pytest.mark.usefixtures('with_request_context')
-class TestPackageAlerts(object):
+class TestPackageAlerts(CanadaTestBase):
     @classmethod
     def setup_method(self, method):
         """Method is called at class level before EACH test methods of the class are called.
         Setup any state specific to the execution of the given class methods.
         """
-        reset_db()
-        clear_all()
+        super(TestPackageAlerts, self).setup_method()
 
         self.sysadmin = Sysadmin()
         self.extra_environ_tester = {'REMOTE_USER': self.sysadmin['name'].encode('ascii')}

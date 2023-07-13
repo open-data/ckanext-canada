@@ -1,14 +1,9 @@
 # -*- coding: UTF-8 -*-
-from ckan.tests.helpers import call_action
+from ckanext.canada.tests import CanadaTestBase
 from ckan.tests.factories import Sysadmin
-import ckan.lib.search as search
-from ckan.lib.create_test_data import CreateTestData
-import ckan.model as model
 from ckan.plugins.toolkit import Invalid
 
 import pytest
-from ckan.tests.helpers import reset_db
-from ckan.lib.search import clear_all
 from ckanext.canada.tests.factories import (
     CanadaOrganization as Organization,
     CanadaResource as Resource,
@@ -16,7 +11,6 @@ from ckanext.canada.tests.factories import (
 )
 
 from ckanapi import LocalCKAN, ValidationError
-import json
 
 from ckanext.canada.validators import canada_tags
 
@@ -84,14 +78,13 @@ class TestCanadaTags(object):
         assert 'may not contain separator charater' in err
 
 
-class TestNAVLSchema(object):
+class TestNAVLSchema(CanadaTestBase):
     @classmethod
     def setup_method(self, method):
         """Method is called at class level before EACH test methods of the class are called.
         Setup any state specific to the execution of the given class methods.
         """
-        reset_db()
-        clear_all()
+        super(TestNAVLSchema, self).setup_method()
 
         self.sysadmin_user = Sysadmin()
         self.normal_user = User()
@@ -391,3 +384,32 @@ class TestNAVLSchema(object):
 
         assert resp['title'] == 'Test Resource View'
         assert resp['title_fr'] == 'Test Resource View FR'
+
+
+    def test_validation_schema(self):
+        "creating a resource with a URL schema should not be allowed"
+        pkg = self.sysadmin_action.package_create(**self.complete_pkg)
+
+        resource_data = {
+            'name_translated': {'en': u'Full text.', 'fr': u'Full text.'},
+            'format': u'TXT',
+            'url': u'http://www.annakarenina.com/download/',
+            'size': 42,
+            'resource_type': 'dataset',
+            'language': ['zxx'],
+            'package_id': pkg['id'],
+            'schema': 'https://www.annakarenina.com'
+        }
+
+        with pytest.raises(ValidationError) as ve:
+            self.sysadmin_action.resource_create(**resource_data)
+        err = ve.value.error_dict
+        assert 'Schema URLs are not supported' in err
+
+        resource_data = dict(resource_data,
+                            schema='{"fields":["this is bad JSON for Schema"]}')
+
+        with pytest.raises(ValidationError) as ve:
+            self.sysadmin_action.resource_create(**resource_data)
+        err = ve.value.error_dict
+        assert 'Invalid JSON for Schema' in err

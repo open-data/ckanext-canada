@@ -1,9 +1,8 @@
 # -*- coding: UTF-8 -*-
+from ckanext.canada.tests import CanadaTestBase
 from ckanapi import LocalCKAN
 import ckan.plugins as p
 
-from ckan.tests.helpers import reset_db
-from ckan.lib.search import clear_all
 from ckan.tests.factories import Sysadmin
 from ckanext.canada.tests.factories import (
     CanadaOrganization as Organization,
@@ -12,7 +11,7 @@ from ckanext.canada.tests.factories import (
 )
 
 
-class TestRegistrySearch(object):
+class TestRegistrySearch(CanadaTestBase):
     """
     Class to test the package_search functionality for the Registry.
     """
@@ -21,8 +20,7 @@ class TestRegistrySearch(object):
         """Method is called at class level before EACH test methods of the class are called.
         Setup any state specific to the execution of the given class methods.
         """
-        reset_db()
-        clear_all()
+        super(TestRegistrySearch, self).setup_method()
         # all datasets in canada_internal are private
         self.include_private = True
         user = User()
@@ -128,7 +126,7 @@ class TestRegistrySearch(object):
         assert response['count'] == 0
 
 
-class TestPortalSearch(object):
+class TestPortalSearch(CanadaTestBase):
     """
     Class to test the package_search functionality for the Portal.
     """
@@ -139,8 +137,7 @@ class TestPortalSearch(object):
         """
         if p.plugin_loaded('canada_internal'):
             p.unload('canada_internal')
-        reset_db()
-        clear_all()
+        super(TestPortalSearch, self).setup_method()
         # datasets on the portal are all public
         self.include_private = False
         self.org = Organization()
