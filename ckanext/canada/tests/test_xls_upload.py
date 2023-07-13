@@ -25,7 +25,7 @@ class TestXlsUpload(CanadaTestBase):
         """Method is called at class level before EACH test methods of the class are called.
         Setup any state specific to the execution of the given class methods.
         """
-        super(TestXlsUpload, self).setup_method()
+        super(TestXlsUpload, self).setup_method(method)
 
         self.editor = User()
         org = Organization(users=[

@@ -84,7 +84,7 @@ class TestNAVLSchema(CanadaTestBase):
         """Method is called at class level before EACH test methods of the class are called.
         Setup any state specific to the execution of the given class methods.
         """
-        super(TestNAVLSchema, self).setup_method()
+        super(TestNAVLSchema, self).setup_method(method)
 
         self.sysadmin_user = Sysadmin()
         self.normal_user = User()
@@ -404,7 +404,8 @@ class TestNAVLSchema(CanadaTestBase):
         with pytest.raises(ValidationError) as ve:
             self.sysadmin_action.resource_create(**resource_data)
         err = ve.value.error_dict
-        assert 'Schema URLs are not supported' in err
+        assert 'schema' in err
+        assert 'Schema URLs are not supported' in err['schema'][0]
 
         resource_data = dict(resource_data,
                             schema='{"fields":["this is bad JSON for Schema"]}')
@@ -412,4 +413,5 @@ class TestNAVLSchema(CanadaTestBase):
         with pytest.raises(ValidationError) as ve:
             self.sysadmin_action.resource_create(**resource_data)
         err = ve.value.error_dict
-        assert 'Invalid JSON for Schema' in err
+        assert 'schema' in err
+        assert 'Invalid JSON for Schema' in err['schema'][0]

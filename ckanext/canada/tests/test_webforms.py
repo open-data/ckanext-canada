@@ -42,7 +42,7 @@ class TestPackageWebForms(CanadaTestBase):
         """Method is called at class level before EACH test methods of the class are called.
         Setup any state specific to the execution of the given class methods.
         """
-        super(TestPackageWebForms, self).setup_method()
+        super(TestPackageWebForms, self).setup_method(method)
         self.sysadmin = Sysadmin()
         self.extra_environ_tester = {'REMOTE_USER': self.sysadmin['name'].encode('ascii')}
         self.org = Organization()
@@ -182,7 +182,7 @@ class TestNewUserWebForms(CanadaTestBase):
         """Method is called at class level before EACH test methods of the class are called.
         Setup any state specific to the execution of the given class methods.
         """
-        super(TestNewUserWebForms, self).setup_method()
+        super(TestNewUserWebForms, self).setup_method(method)
         self.org = Organization()
 
 
@@ -243,7 +243,7 @@ class TestRecombinantWebForms(CanadaTestBase):
         """Method is called at class level before EACH test methods of the class are called.
         Setup any state specific to the execution of the given class methods.
         """
-        super(TestRecombinantWebForms, self).setup_method()
+        super(TestRecombinantWebForms, self).setup_method(method)
         member = User()
         editor = User()
         sysadmin = Sysadmin()

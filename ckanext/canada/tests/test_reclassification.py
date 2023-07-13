@@ -14,7 +14,7 @@ class TestReclassification(CanadaTestBase):
         """Method is called at class level before EACH test methods of the class are called.
         Setup any state specific to the execution of the given class methods.
         """
-        super(TestReclassification, self).setup_method()
+        super(TestReclassification, self).setup_method(method)
 
         org = Organization()
         self.lc = LocalCKAN()
@@ -48,7 +48,7 @@ class TestReclassificationNil(CanadaTestBase):
         """Method is called at class level before EACH test methods of the class are called.
         Setup any state specific to the execution of the given class methods.
         """
-        super(TestReclassificationNil, self).setup_method()
+        super(TestReclassificationNil, self).setup_method(method)
 
         org = Organization()
         self.lc = LocalCKAN()

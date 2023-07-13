@@ -14,7 +14,7 @@ class TestHospitalityQ(CanadaTestBase):
         """Method is called at class level before EACH test methods of the class are called.
         Setup any state specific to the execution of the given class methods.
         """
-        super(TestHospitalityQ, self).setup_method()
+        super(TestHospitalityQ, self).setup_method(method)
 
         org = Organization()
         self.lc = LocalCKAN()
@@ -48,7 +48,7 @@ class TestHospitalityQNil(CanadaTestBase):
         """Method is called at class level before EACH test methods of the class are called.
         Setup any state specific to the execution of the given class methods.
         """
-        super(TestHospitalityQNil, self).setup_method()
+        super(TestHospitalityQNil, self).setup_method(method)
 
         org = Organization()
         self.lc = LocalCKAN()

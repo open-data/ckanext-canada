@@ -14,7 +14,7 @@ class TestService(CanadaTestBase):
         """Method is called at class level before EACH test methods of the class are called.
         Setup any state specific to the execution of the given class methods.
         """
-        super(TestService, self).setup_method()
+        super(TestService, self).setup_method(method)
 
         org = Organization()
         self.lc = LocalCKAN()
@@ -48,7 +48,7 @@ class TestStdService(CanadaTestBase):
         """Method is called at class level before EACH test methods of the class are called.
         Setup any state specific to the execution of the given class methods.
         """
-        super(TestStdService, self).setup_method()
+        super(TestStdService, self).setup_method(method)
 
         org = Organization()
         self.lc = LocalCKAN()

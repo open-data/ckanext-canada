@@ -14,7 +14,7 @@ class TestAti(CanadaTestBase):
         """Method is called at class level before EACH test methods of the class are called.
         Setup any state specific to the execution of the given class methods.
         """
-        super(TestAti, self).setup_method()
+        super(TestAti, self).setup_method(method)
 
         org = Organization()
         self.lc = LocalCKAN()
@@ -48,7 +48,7 @@ class TestAtiNil(CanadaTestBase):
         """Method is called at class level before EACH test methods of the class are called.
         Setup any state specific to the execution of the given class methods.
         """
-        super(TestAtiNil, self).setup_method()
+        super(TestAtiNil, self).setup_method(method)
 
         org = Organization()
         self.lc = LocalCKAN()

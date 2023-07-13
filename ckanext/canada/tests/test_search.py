@@ -20,7 +20,7 @@ class TestRegistrySearch(CanadaTestBase):
         """Method is called at class level before EACH test methods of the class are called.
         Setup any state specific to the execution of the given class methods.
         """
-        super(TestRegistrySearch, self).setup_method()
+        super(TestRegistrySearch, self).setup_method(method)
         # all datasets in canada_internal are private
         self.include_private = True
         user = User()
@@ -137,7 +137,7 @@ class TestPortalSearch(CanadaTestBase):
         """
         if p.plugin_loaded('canada_internal'):
             p.unload('canada_internal')
-        super(TestPortalSearch, self).setup_method()
+        super(TestPortalSearch, self).setup_method(method)
         # datasets on the portal are all public
         self.include_private = False
         self.org = Organization()

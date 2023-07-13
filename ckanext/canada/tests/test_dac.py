@@ -14,7 +14,7 @@ class TestDAC(CanadaTestBase):
         """Method is called at class level before EACH test methods of the class are called.
         Setup any state specific to the execution of the given class methods.
         """
-        super(TestDAC, self).setup_method()
+        super(TestDAC, self).setup_method(method)
 
         org = Organization()
         self.lc = LocalCKAN()

@@ -14,7 +14,7 @@ class TestWrongdoing(CanadaTestBase):
         """Method is called at class level before EACH test methods of the class are called.
         Setup any state specific to the execution of the given class methods.
         """
-        super(TestWrongdoing, self).setup_method()
+        super(TestWrongdoing, self).setup_method(method)
 
         org = Organization()
         self.lc = LocalCKAN()
