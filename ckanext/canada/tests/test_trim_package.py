@@ -1,23 +1,19 @@
 # -*- coding: UTF-8 -*-
-from ckan.tests.helpers import FunctionalTestBase
+from ckanext.canada.tests import CanadaTestBase
 from ckanext.canada.tests.factories import (
     CanadaDataset as Dataset,
     CanadaResource as Resource)
 
-from ckan.tests.helpers import reset_db
-from ckan.lib.search import clear_all
-
 from ckanext.canada.commands import _trim_package, PACKAGE_TRIM_FIELDS, RESOURCE_TRIM_FIELDS
 
 
-class TestTrimPackage(object):
+class TestTrimPackage(CanadaTestBase):
     @classmethod
     def setup_method(self, method):
         """Method is called at class level before EACH test methods of the class are called.
         Setup any state specific to the execution of the given class methods.
         """
-        reset_db()
-        clear_all()
+        super(TestTrimPackage, self).setup_method(method)
 
         self.example_pkg = Dataset()
         resources = []

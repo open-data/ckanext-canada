@@ -1,22 +1,20 @@
 # -*- coding: UTF-8 -*-
+from ckanext.canada.tests import CanadaTestBase
 from ckanapi import LocalCKAN, ValidationError
 
 import pytest
-from ckan.tests.helpers import reset_db
-from ckan.lib.search import clear_all
 from ckanext.canada.tests.factories import CanadaOrganization as Organization
 
 from ckanext.recombinant.tables import get_chromo
 
 
-class TestTravelQ(object):
+class TestTravelQ(CanadaTestBase):
     @classmethod
     def setup_method(self, method):
         """Method is called at class level before EACH test methods of the class are called.
         Setup any state specific to the execution of the given class methods.
         """
-        reset_db()
-        clear_all()
+        super(TestTravelQ, self).setup_method(method)
 
         org = Organization()
         self.lc = LocalCKAN()
@@ -44,14 +42,13 @@ class TestTravelQ(object):
         assert 'ref_number' in err['key'][0]
 
 
-class TestTravelQNil(object):
+class TestTravelQNil(CanadaTestBase):
     @classmethod
     def setup_method(self, method):
         """Method is called at class level before EACH test methods of the class are called.
         Setup any state specific to the execution of the given class methods.
         """
-        reset_db()
-        clear_all()
+        super(TestTravelQNil, self).setup_method(method)
 
         org = Organization()
         self.lc = LocalCKAN()

@@ -1,22 +1,20 @@
 # -*- coding: UTF-8 -*-
+from ckanext.canada.tests import CanadaTestBase
 from ckanapi import LocalCKAN, ValidationError
 
 import pytest
-from ckan.tests.helpers import reset_db
-from ckan.lib.search import clear_all
 from ckanext.canada.tests.factories import CanadaOrganization as Organization
 
 from ckanext.recombinant.tables import get_chromo
 
 
-class TestService(object):
+class TestService(CanadaTestBase):
     @classmethod
     def setup_method(self, method):
         """Method is called at class level before EACH test methods of the class are called.
         Setup any state specific to the execution of the given class methods.
         """
-        reset_db()
-        clear_all()
+        super(TestService, self).setup_method(method)
 
         org = Organization()
         self.lc = LocalCKAN()
@@ -44,14 +42,13 @@ class TestService(object):
         assert 'fiscal_yr, service_id' in err['key'][0]
 
 
-class TestStdService(object):
+class TestStdService(CanadaTestBase):
     @classmethod
     def setup_method(self, method):
         """Method is called at class level before EACH test methods of the class are called.
         Setup any state specific to the execution of the given class methods.
         """
-        reset_db()
-        clear_all()
+        super(TestStdService, self).setup_method(method)
 
         org = Organization()
         self.lc = LocalCKAN()

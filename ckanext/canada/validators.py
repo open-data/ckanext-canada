@@ -5,7 +5,7 @@ import unicodedata
 
 from six import text_type
 
-from ckan.plugins.toolkit import _
+from ckan.plugins.toolkit import _, h
 from ckan.lib.navl.validators import StopOnError
 from ckan.authz import is_sysadmin
 from ckan import model
@@ -19,9 +19,8 @@ from datetime import datetime
 
 from ckanapi import LocalCKAN, NotFound
 from ckan.lib.helpers import date_str_to_datetime
-from ckantoolkit import get_validator, Invalid, missing, config
+from ckantoolkit import get_validator, Invalid, missing
 from ckanext.fluent.validators import fluent_text_output, LANG_SUFFIX
-from ckan.lib import base
 
 not_empty = get_validator('not_empty')
 ignore_missing = get_validator('ignore_missing')
@@ -383,7 +382,7 @@ def json_string_has_en_fr_keys(value, context):
 
 
 def canada_resource_schema_validator(value, context):
-    if "validation" in config['ckan.plugins']:
+    if h.plugin_loaded('validation'):
         from ckanext.validation.validators import resource_schema_validator
         try:
             value = resource_schema_validator(value, context)

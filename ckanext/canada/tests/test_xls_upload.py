@@ -1,11 +1,10 @@
 # -*- coding: UTF-8 -*-
+from ckanext.canada.tests import CanadaTestBase
 import flask
 import tempfile
 from ckanapi import LocalCKAN
 
 import pytest
-from ckan.tests.helpers import reset_db
-from ckan.lib.search import clear_all
 from ckanext.canada.tests.factories import (
     CanadaOrganization as Organization,
     CanadaUser as User
@@ -20,14 +19,13 @@ from ckanext.recombinant.errors import  BadExcelData
 # testing the upload of PD template files
 # 'wrongdoing' PD template is used as an example here
 @pytest.mark.usefixtures('with_request_context')
-class TestXlsUpload(object):
+class TestXlsUpload(CanadaTestBase):
     @classmethod
     def setup_method(self, method):
         """Method is called at class level before EACH test methods of the class are called.
         Setup any state specific to the execution of the given class methods.
         """
-        reset_db()
-        clear_all()
+        super(TestXlsUpload, self).setup_method(method)
 
         self.editor = User()
         org = Organization(users=[

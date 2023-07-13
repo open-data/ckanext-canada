@@ -1,4 +1,5 @@
 # -*- coding: UTF-8 -*-
+from ckanext.canada.tests import CanadaTestBase
 from ckan.tests.factories import Sysadmin
 from ckanext.canada.tests.factories import (
     CanadaOrganization as Organization,
@@ -6,11 +7,8 @@ from ckanext.canada.tests.factories import (
 )
 
 import pytest
-from ckan.tests.helpers import reset_db
-from ckan.lib.search import clear_all
 
 from ckanapi import LocalCKAN, ValidationError, NotAuthorized
-
 
 SIMPLE_SUGGESTION = {
     'type': 'prop',
@@ -71,14 +69,13 @@ UPDATED_SUGGESTION = dict(SIMPLE_SUGGESTION,
 )
 
 
-class TestSuggestedDataset(object):
+class TestSuggestedDataset(CanadaTestBase):
     @classmethod
     def setup_method(self, method):
         """Method is called at class level before EACH test methods of the class are called.
         Setup any state specific to the execution of the given class methods.
         """
-        reset_db()
-        clear_all()
+        super(TestSuggestedDataset, self).setup_method(method)
 
         member = User()
         editor = User()
