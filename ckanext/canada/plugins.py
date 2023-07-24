@@ -21,7 +21,6 @@ from ckanext.canada import auth
 from ckanext.canada import helpers
 from ckanext.canada import activity as act
 from ckanext.extendedactivity.plugins import IActivity
-from ckanext.validation.interfaces import IDataValidation
 
 import json
 
@@ -50,7 +49,8 @@ class DataGCCAInternal(p.SingletonPlugin):
     p.implements(p.IPackageController, inherit=True)
     p.implements(p.IActions)
     p.implements(p.IResourceUrlChange)
-    p.implements(IDataValidation)
+    from ckanext.validation.interfaces import IDataValidation
+    p.implements(IDataValidation, inherit=True)
 
     def update_config(self, config):
         p.toolkit.add_template_directory(config, 'templates/internal')
