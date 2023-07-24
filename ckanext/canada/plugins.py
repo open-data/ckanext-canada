@@ -49,8 +49,12 @@ class DataGCCAInternal(p.SingletonPlugin):
     p.implements(p.IPackageController, inherit=True)
     p.implements(p.IActions)
     p.implements(p.IResourceUrlChange)
-    from ckanext.validation.interfaces import IDataValidation
-    p.implements(IDataValidation, inherit=True)
+    try:
+        from ckanext.validation.interfaces import IDataValidation
+    except ImportError:
+        log.warn('failed to import ckanext-validation interface')
+    else:
+        p.implements(IDataValidation, inherit=True)
 
     def update_config(self, config):
         p.toolkit.add_template_directory(config, 'templates/internal')
