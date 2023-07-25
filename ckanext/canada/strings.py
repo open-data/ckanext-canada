@@ -30,3 +30,6 @@ _("Commodity Type of G for Goods which requires a Delivery Date and not a Contra
 _("If the value XX (none) is entered here, then the following three fields must be identified as NA or N, "
   "as applicable: Comprehensive Land Claim Agreement, Procurement Strategy for Aboriginal Business, "
   "Procurement Strategy for Aboriginal Business Incidental Indicator")
+
+# strings from core
+_("Create Dataset")
