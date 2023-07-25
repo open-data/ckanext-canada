@@ -57,6 +57,12 @@ class CanadaDatasetsPlugin(SchemingDatasetsPlugin):
     """
     p.implements(p.IDatasetForm, inherit=True)
     p.implements(p.IPackageController, inherit=True)
+    try:
+        from ckanext.validation.interfaces import IDataValidation
+    except ImportError:
+        log.warn('failed to import ckanext-validation interface')
+    else:
+        p.implements(IDataValidation, inherit=True)
 
     #IDatasetForm
     def prepare_dataset_blueprint(self, package_type, blueprint):
@@ -86,6 +92,16 @@ class CanadaDatasetsPlugin(SchemingDatasetsPlugin):
             methods=['GET', 'POST']
         )
         return blueprint
+
+    # IDataValidation
+
+    def can_validate(self, context, resource):
+        """
+        Only uploaded resources are allowed to be validated
+        """
+        if resource.get(u'url_type') != u'upload':
+            return False
+        return True
 
 
     # IPackageController
