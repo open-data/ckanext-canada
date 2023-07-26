@@ -49,6 +49,12 @@ class DataGCCAInternal(p.SingletonPlugin):
     p.implements(p.IPackageController, inherit=True)
     p.implements(p.IActions)
     p.implements(p.IResourceUrlChange)
+    try:
+        from ckanext.validation.interfaces import IDataValidation
+    except ImportError:
+        log.warn('failed to import ckanext-validation interface')
+    else:
+        p.implements(IDataValidation, inherit=True)
 
     def update_config(self, config):
         p.toolkit.add_template_directory(config, 'templates/internal')
@@ -231,6 +237,16 @@ ckanext.canada:schemas/presets.yaml
             resource_view_update=resource_view_update_bilingual,
             resource_view_create=resource_view_create_bilingual,
         )
+
+    # IDataValidation
+
+    def can_validate(self, context, resource):
+        """
+        Only uploaded resources are allowed to be validated
+        """
+        if resource.get(u'url_type') != u'upload':
+            return False
+        return True
 
 
 
