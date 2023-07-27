@@ -3224,12 +3224,9 @@ presets:
       en: "eg. CSV, XML or JSON"
       fr: "par exemple CSV, XML ou JSON"
     validators: canada_guess_resource_format scheming_required clean_format unicode_safe canada_non_related_required canada_resource_format_replacements scheming_choices
-    form_attrs:
-      data-module: "autocomplete"
-      data-module-source: "/api/2/util/resource/format_autocomplete?incomplete=?"
     required: true
     form_panel: resource
-    form_snippet: select2.html
+    form_snippet: select.html
     choices:
     - value: AAC
       mimetype: audio/mp4

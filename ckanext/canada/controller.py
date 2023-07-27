@@ -33,7 +33,7 @@ import ckan.lib.jsonp as jsonp
 from ckan.controllers.package import PackageController
 from ckan.logic import parse_params, NotFound
 
-from ckanext.canada.helpers import normalize_strip_accents, canada_date_str_to_datetime
+from ckanext.canada.helpers import normalize_strip_accents, canada_date_str_to_datetime, canada_guess_mimetype
 from ckanext.canada.urlsafe import url_part_escape, url_part_unescape
 from pylons.i18n import _
 from pylons import config, session
@@ -735,6 +735,31 @@ class CanadaApiController(ApiController):
                            str(e)}
             return_dict['success'] = False
             return self._finish(500, return_dict, content_type='json')
+        return self._finish_ok(return_dict)
+
+
+    def guess_resource_format(self, ver=None):
+        try:
+            request_data = self._get_request_data(try_url_params=False)
+        except ValueError as e:
+            log.info('Bad API request data: %s', e)
+            return self._finish_bad_request(_('JSON Error: %s') % e)
+        if not isinstance(request_data, dict):
+            # this occurs if request_data is blank
+            log.info('Bad API request data - not dict: %r', request_data)
+            return self._finish_bad_request(_('Bad request data: %s') %
+                                            'Request data JSON decoded to %r but '
+                                            'it needs to be a dictionary.' % request_data)
+        if not request_data.get('url', None):
+            log.info('Bad API request data - missing url key: %r', request_data)
+            return self._finish_bad_request(_('Bad request data: %s') %
+                                            'Request data %r missing url key.' % request_data)
+        mimetype = canada_guess_mimetype(request_data.get('url', None))
+        return_dict = {
+            'success': True,
+            'result': mimetype
+        }
+        #TODO: convert mimetype to scheming value?
         return self._finish_ok(return_dict)
 
 

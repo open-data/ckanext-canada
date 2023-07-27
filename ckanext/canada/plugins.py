@@ -158,6 +158,13 @@ ckanext.canada:schemas/presets.yaml
             controller='ckanext.canada.controller:CanadaDatastoreController',
             action='delete_datastore_table',
         )
+        map.connect(
+            '/api{ver:/3|}/util/guess_resource_format',
+            ver='/3',
+            action='guess_resource_format',
+            controller='ckanext.canada.controller:CanadaApiController',
+            conditions={'method':['POST']},
+        )
 
         return map
 

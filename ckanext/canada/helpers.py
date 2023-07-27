@@ -22,6 +22,8 @@ import dateutil.parser
 import geomet.wkt as wkt
 import json as json
 from markupsafe import Markup, escape
+from six.moves.urllib.parse import urlparse
+import mimetypes
 
 ORG_MAY_PUBLISH_OPTION = 'canada.publish_datasets_organization_name'
 ORG_MAY_PUBLISH_DEFAULT_NAME = 'tb-ct'
@@ -545,3 +547,23 @@ def get_user_email(user_id):
 
     except NotFound as e:
         return ""
+
+
+def canada_guess_mimetype(url):
+    """
+    Returns mimetype based on url.
+    """
+    mimetype, encoding = mimetypes.guess_type(url)
+    if mimetype:
+        return mimetype
+    else:
+        # if we cannot guess the mimetype, check if
+        # it is an actual web address
+        # and we can set the mimetype to text/html.
+        # Uploaded files have only the filename as url,
+        # so check scheme to determine if it's
+        # an actual web address
+        parsed = urlparse(url)
+        if parsed.scheme:
+            return 'text/html'
+    return None

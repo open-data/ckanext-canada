@@ -4,15 +4,13 @@ import re
 import unicodedata
 
 from six import text_type
-from six.moves.urllib.parse import urlparse
-import mimetypes
 
 from pylons.i18n import _
 from ckan.lib.navl.validators import StopOnError
 from ckan.authz import is_sysadmin
 from ckan import model
 
-from ckanext.canada.helpers import may_publish_datasets
+from ckanext.canada.helpers import may_publish_datasets, canada_guess_mimetype
 import geojson
 from geomet import wkt
 import json
@@ -396,26 +394,6 @@ def canada_resource_format_replacements(value, context):
     return value
 
 
-def _canada_guess_mimetype(key, data):
-    url = data.get(key[:-1] + ('url',), '')
-    if not url:
-        return
-
-    mimetype, encoding = mimetypes.guess_type(url)
-    if mimetype:
-        data[key] = mimetype
-    else:
-        # if we cannot guess the mimetype, check if
-        # it is an actual web address
-        # and we can set the mimetype to HTML.
-        # Uploaded files have only the filename as url,
-        # so check scheme to determine if it's
-        # an actual web address
-        parsed = urlparse(url)
-        if parsed.scheme:
-            data[key] = 'HTML'
-
-
 def canada_guess_resource_format(key, data, errors, context):
     """
     Guesses the resource format based on the url if missing.
@@ -427,7 +405,12 @@ def canada_guess_resource_format(key, data, errors, context):
     # we will guess all url types, unlike Core
     # which only checks uploaded files.
     if not value or value is missing:
-        _canada_guess_mimetype(key, data)
+        url = data.get(key[:-1] + ('url',), '')
+        if not url:
+            return
+        mimetype = canada_guess_mimetype(url)
+        if mimetype:
+            data[key] = mimetype
 
     # if there is a resource id, then it is an update.
     # we can check if the url field value has changed.
@@ -435,8 +418,12 @@ def canada_guess_resource_format(key, data, errors, context):
     if resource_id:
         old_url = context.get('old_resource_url', None)
         new_url = data.get(key[:-1] + ('url',), '')
-        if old_url and old_url != new_url:
-            _canada_guess_mimetype(key, data)
+        if not new_url:
+            return
+        if old_url != new_url:
+            mimetype = canada_guess_mimetype(new_url)
+            if mimetype:
+                data[key] = mimetype
 
 
 def canada_resource_schema_validator(value, context):
