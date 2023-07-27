@@ -556,6 +556,7 @@ class DataGCCAForms(p.SingletonPlugin, DefaultDatasetForm):
     """
     p.implements(p.IActions)
     p.implements(p.IValidators, inherit=True)
+    p.implements(p.IResourceController, inherit=True)
 
     # IActions
 
@@ -628,11 +629,22 @@ class DataGCCAForms(p.SingletonPlugin, DefaultDatasetForm):
                 validators.json_string,
             'json_string_has_en_fr_keys':
                 validators.json_string_has_en_fr_keys,
-            'resource_format_replacements':
-                validators.resource_format_replacements,
+            'canada_resource_format_replacements':
+                validators.canada_resource_format_replacements,
+            'canada_guess_resource_format':
+                validators.canada_guess_resource_format,
             'resource_schema_validator':
                 validators.canada_resource_schema_validator,
             }
+
+    # IResourceController
+
+    def before_update(self, context, resource, data_dict):
+        """
+        Set the old resource url in the context for use in the validators.
+        """
+        if resource.get('url', None) and resource.get('package_id', None):  # insure that it is a resource
+            context['old_resource_url'] = resource.get('url', None)
 
 
 class LogExtraMiddleware(object):

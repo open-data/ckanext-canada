@@ -4,6 +4,8 @@ import re
 import unicodedata
 
 from six import text_type
+from six.moves.urllib.parse import urlparse
+import mimetypes
 
 from pylons.i18n import _
 from ckan.lib.navl.validators import StopOnError
@@ -19,7 +21,7 @@ from datetime import datetime
 
 from ckanapi import LocalCKAN, NotFound
 from ckan.lib.helpers import date_str_to_datetime, plugin_loaded
-from ckantoolkit import get_validator, Invalid, missing
+from ckantoolkit import get_validator, Invalid, missing, get_action
 from ckanext.fluent.validators import fluent_text_output, LANG_SUFFIX
 from ckan.lib import base
 from ckanext.scheming.helpers import scheming_get_preset
@@ -380,15 +382,61 @@ def json_string_has_en_fr_keys(value, context):
     return value
 
 
-def resource_format_replacements(value, context):
+def canada_resource_format_replacements(value, context):
+    """
+    Checks replaces key values from schema choices.
+    e.g. checks replaces: ["jpg", "jpeg"] and returns value JPG
+    """
     fmt_choices = scheming_get_preset('canada_resource_format')['choices']
     for f in fmt_choices:
         if 'replaces' in f:
             for r in f['replaces']:
                 if value.lower() == r.lower():
                     return f['value']
-    #TODO: try to get the resource format guessing stuff from core and check here??
     return value
+
+
+def _canada_guess_mimetype(key, data):
+    url = data.get(key[:-1] + ('url',), '')
+    if not url:
+        return
+
+    mimetype, encoding = mimetypes.guess_type(url)
+    if mimetype:
+        data[key] = mimetype
+    else:
+        # if we cannot guess the mimetype, check if
+        # it is an actual web address
+        # and we can set the mimetype to HTML.
+        # Uploaded files have only the filename as url,
+        # so check scheme to determine if it's
+        # an actual web address
+        parsed = urlparse(url)
+        if parsed.scheme:
+            data[key] = 'HTML'
+
+
+def canada_guess_resource_format(key, data, errors, context):
+    """
+    Guesses the resource format based on the url if missing.
+    Guesses the resource format based on url change.
+    """
+    value = data[key]
+
+    # if it is empty, then do the initial guess.
+    # we will guess all url types, unlike Core
+    # which only checks uploaded files.
+    if not value or value is missing:
+        _canada_guess_mimetype(key, data)
+
+    # if there is a resource id, then it is an update.
+    # we can check if the url field value has changed.
+    resource_id = data.get(key[:-1] + ('id',))
+    if resource_id:
+        old_url = context.get('old_resource_url', None)
+        new_url = data.get(key[:-1] + ('url',), '')
+        if old_url and old_url != new_url:
+            _canada_guess_mimetype(key, data)
 
 
 def canada_resource_schema_validator(value, context):
