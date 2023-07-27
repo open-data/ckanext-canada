@@ -10,7 +10,7 @@
   <div class="row">
     <div class="col-md-12">
       <p class="mrgn-tp-lg"><strong>{{ content }}</strong></p>
-      {% if code[0] == '403' %}
+      {% if code == 403 %}
         {% if not c.userobj %}
         <p class="mrgn-tp-lg">{{ _('You are not logged in to the Open Government Registry.
           Note that your login expires after 1 hour of inactivity.
@@ -19,9 +19,9 @@
               <span class="fa fa-sign-in"></span><span class="text">{{ _('Log in') }}</span>
             </a></p>
         {% endif %}
-      {% elif code[0] == '404' %}
+      {% elif code == 404 %}
         <p class="mrgn-tp-lg">{{ _('We couldn\'t find that Web page') }}</p>
-      {% elif code[0] == '500' %}
+      {% elif code == 500 %}
         <p class="mrgn-tp-lg">{{ _('We encountered an error and are unable to serve your request. Please try again in short time or contact <a href="mailto:open-ouvert@tbs-sct.gc.ca">open-ouvert@tbs-sct.gc.ca</a> if you need immediate assistance or if this issue persists. Note that your login expires after 1 hour of inactivity.') | safe }}</p>
       {% else %}
         <p class="mrgn-tp-lg">{{ _('We encountered an error') }}</p>
