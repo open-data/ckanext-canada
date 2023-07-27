@@ -230,8 +230,9 @@ def adv_search_url():
 def adv_search_mlt_root():
     return "{0}/donneesouvertes/similaire/".format(config.get('ckanext.canada.adv_search_url_fr')) if h.lang() == 'fr' else "{0}/opendata/similar/".format(config.get('ckanext.canada.adv_search_url_en'))
 
-def googleanalytics_id():
-    return str(config.get('googleanalytics.id'))
+
+def ga4_id():
+    return str(config.get('ga4.id'))
 
 def adobe_analytics_login_required(current_url):
     return "2" #return 1 if page requires a login and 2 if page is public
@@ -323,27 +324,6 @@ def contact_information(info):
         return json.loads(info)[h.lang()]
     except Exception:
         return {}
-
-def show_subject_facet():
-    '''
-    Return True when the subject facet should be visible
-    '''
-    if any(f['active'] for f in h.get_facet_items_dict('subject')):
-        return True
-    return not show_fgp_facets()
-
-def show_fgp_facets():
-    '''
-    Return True when the fgp facets and map cart should be visible
-    '''
-    for group in [
-            'topic_category', 'spatial_representation_type', 'fgp_viewer']:
-        if any(f['active'] for f in h.get_facet_items_dict(group)):
-            return True
-    for f in h.get_facet_items_dict('collection'):
-        if f['name'] == 'fgp':
-            return f['active']
-    return False
 
 
 def show_openinfo_facets():

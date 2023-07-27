@@ -871,12 +871,12 @@ msgstr ""
 "Accès, téléversement et modification des dépenses mensuelles liées à "
 "l’accueil pour votre organisation"
 
-msgid "Proactive Disclosure - Contracts over 10K"
+msgid "Proactive Publication - Contracts over $10,000"
 msgstr ""
-"Divulgation proactive – Contrats attribués de plus de 10 000 $"
+"Publication proactive – Contrats attribués de plus de 10 000 $"
 
-msgid "Proactive Disclosure - Aggregated Contracts from -$10K to $10K"
-msgstr "Divulgation proactive -  Contrats agrégés de -10 000$ à 10 000$"
+msgid "Proactive Publication - Aggregated Contracts from -$10,000 to $10,000"
+msgstr "Publication proactive - Contrats agrégés de -10 000$ à 10 000$"
 
 msgid ""
 "Access, upload and modify the aggregated Contracts from -$10K to $10K "
@@ -972,14 +972,17 @@ msgid ""
 msgstr ""
 "Carte d'acquisition pour toutes les valeurs en dollars– Valeur totale (000 $)"
 
-msgid "Proactive Disclosure - Contracts"
-msgstr "Divulgation proactive - Contrats"
+msgid "Proactive Publication - Contracts"
+msgstr "Publication proactive - Contrats"
 
-msgid "Proactive Disclosure - Contracts Nothing to Report"
-msgstr "Divulgation proactive – Contrats (Rien à signaler)"
+msgid "Proactive Publication - Contracts Nothing to Report"
+msgstr "Publication proactive – Contrats (Rien à signaler)"
 
 msgid "Proactive Disclosure"
 msgstr "Divulgation proactive"
+
+msgid "Proactive Publication"
+msgstr "Publication proactive"
 
 msgid ""
 "This dataset includes all of the reports on contracts issued by or on behalf "
@@ -2756,8 +2759,8 @@ msgid "Public service and military"
 msgstr "Fonction publique et force militaire"
 
 #: ckanext/GCWeb/templates/footer.html:9
-msgid "http://news.gc.ca/"
-msgstr "http://nouvelles.gc.ca/"
+msgid "https://www.canada.ca/en/news.html"
+msgstr "https://www.canada.ca/fr/nouvelles.html"
 
 #: ckanext/GCWeb/templates/footer.html:9
 #: ckanext/wet_boew/templates/footer.html:13
@@ -3416,7 +3419,7 @@ msgstr "Contrats agrégés de -10 000$ à 10 000$"
 msgid "Briefing Note Titles and Numbers"
 msgstr "Titres et numéros des notes d’information"
 
-msgid "Contracts over 10K"
+msgid "Contracts over $10,000"
 msgstr "Contrats attribués de plus de 10 000 $"
 
 msgid "Departmental Audit Committee"
@@ -3578,3 +3581,27 @@ msgstr "Rechercher et gérer les utilisateurs."
 #: ckanext/canada/templates/internal/user/snippets/search.html:78
 msgid "Search and view users."
 msgstr "Rechercher et afficher les utilisateurs."
+
+#: ckanext/canada/validators.py:388
+msgid "Invalid JSON for Schema"
+msgstr "JSON non valide pour le schéma"
+
+#: ckanext/canada/validators.py:391
+msgid "Schema URLs are not supported"
+msgstr "Les adresses URL des schémas ne sont pas prises en charge"
+
+#: ckanext/canada/templates/internal/package/read.html:6
+msgid "Your record will be published at:"
+msgstr "Votre document sera publié à :"
+
+#: ckanext/canada/templates/internal/package/read.html:10
+msgid "Record marked not ready to publish"
+msgstr "On indique que le document n'est pas prêt à être publié"
+
+#: ckanext/canada/templates/internal/package/read.html:13
+msgid "Approval required"
+msgstr "Approbation nécessaire"
+
+#: ckanext/canada/templates/internal/package/read.html:16
+msgid "Queued for publishing"
+msgstr "Mis en file d'attente à des fins de publication"

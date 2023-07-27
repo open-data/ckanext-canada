@@ -31,35 +31,11 @@
   name='keywords_fra', extras=extras %}
 {% endif %}
 
-{% if h.show_subject_facet() %}
-  {% snippet 'snippets/facet_list.html',
-    title=c.facet_titles['subject'],
-    name='subject',
-    scheming_choices=h.scheming_get_preset('canada_subject').choices,
-    extras=extras %}
-{% endif %}
-
-{% if h.show_fgp_facets() %}
-  {% snippet 'snippets/facet_list.html',
-    title=c.facet_titles['topic_category'],
-    name='topic_category',
-    scheming_choices=h.scheming_get_preset('canada_topic_category').choices,
-    extras=extras %}
-
-  {% snippet 'snippets/facet_list.html',
-    title=c.facet_titles['spatial_representation_type'],
-    name='spatial_representation_type',
-    scheming_choices=h.scheming_get_preset('canada_spatial_representation_type').choices,
-    extras=extras %}
-
-  {% snippet 'snippets/facet_list.html',
-    title=c.facet_titles['fgp_viewer'],
-    name='fgp_viewer',
-    scheming_choices=[
-      {'value': 'map_view', 'label': _('Viewable on Map')},
-      ],
-    extras=extras %}
-{% endif %}
+{% snippet 'snippets/facet_list.html',
+  title=c.facet_titles['subject'],
+  name='subject',
+  scheming_choices=h.scheming_get_preset('canada_subject').choices,
+  extras=extras %}
 
 {% snippet 'snippets/facet_list.html',
   title=c.facet_titles['res_format'],

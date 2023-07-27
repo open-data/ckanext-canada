@@ -27,7 +27,9 @@
     {% block package_archive_notice %}
     {% if c.is_activity_archive %}
     <div class="alert alert-error">
-      {% trans url = h.url_for(controller='package', action='read', id=pkg.id) %}You're currently viewing an old version of this dataset. Some resources may no longer exist or the dataset may not display correctly. To see the current version, click <a href="{{ url }}">here</a>.{% endtrans %}
+      <p>
+        {% trans url = h.url_for(controller='package', action='read', id=pkg.id) %}You're currently viewing an old version of this dataset. Some resources may no longer exist or the dataset may not display correctly. To see the current version, click <a href="{{ url }}">here</a>.{% endtrans %}
+      </p>
     </div>
     {% endif %}
     {% endblock %}
@@ -43,7 +45,11 @@
       </div>
 
       {% if 'fgp_viewer' in pkg.get('display_flags', []) %}
-        <p><a href="/data/{{ h.lang() }}/fgpv_vpgf/{{ pkg.name }}" class="btn btn-primary btn-xs"><span class="fa fa-map-marker"></span> {{ _('View on Map') }}</a></p>    
+        {% set openmap_uri = 'openmap' %}
+        {% if h.lang() == 'fr' %}
+          {% set openmap_uri = 'carteouverte' %}
+        {% endif %}
+        <p><a href="{{ h.adv_search_url() }}/{{ openmap_uri }}/{{ pkg.name }}" class="btn btn-primary btn-xs"><span class="fa fa-map-marker"></span> {{ _('View on Map') }}</a></p>
       {% endif %}
 
     </section>
@@ -224,16 +230,11 @@
 {% endblock %}
 
 
-{% block package_rate %}
-  <a name="rate"></a>
-  <div id="voting-wrapper" data-ajax-replace="/{{ h.lang() }}/vote?uuid={{ c.pkg_dict.id }}"></div>
-{% endblock %}
-
 {% block more_like_this %}
   {% if h.adv_search_url() %}
   <section class="panel panel-primary">
     <header class="panel-heading">
-      <h5 class="panel-title">{{ _('Similar records') }}</h5>
+      <div class="panel-title">{{ _('Similar records') }}</div>
     </header>
     <div data-ajax-replace="{{ h.adv_search_mlt_root() }}{{ c.pkg_dict.id }}" class="panel-body" id="related_pkgs">
     </div>
@@ -241,10 +242,15 @@
   {% endif %}
 {% endblock %}
 
-{% block package_comments %}
-  <a name="comments"></a>
+{% block package_rate %}
+  <a id="rate"></a>
+  <div id="voting-wrapper" data-ajax-replace="/{{ h.lang() }}/vote?uuid={{ c.pkg_dict.id }}"></div>
+{% endblock %}
+
+{% block package_feedback %}
+  <a id="feedback"></a>
   <section class="indent-large">
-    <div data-ajax-replace="/{{ h.lang() }}/external-comment/dataset/{{ c.pkg_dict.id }}"></div>
+    <div id="feedback-wrapper" data-ajax-replace="/{{ h.lang() }}/feedback?uuid={{ c.pkg_dict.id }}"></div>
   </section>
 {% endblock %}
 

@@ -54,6 +54,12 @@ class DataGCCAInternal(p.SingletonPlugin):
     p.implements(p.IPackageController, inherit=True)
     p.implements(p.IActions)
     p.implements(p.IResourceUrlChange)
+    try:
+        from ckanext.validation.interfaces import IDataValidation
+    except ImportError:
+        log.warn('failed to import ckanext-validation interface')
+    else:
+        p.implements(IDataValidation, inherit=True)
 
     def update_config(self, config):
         p.toolkit.add_template_directory(config, 'templates/internal')
@@ -237,6 +243,16 @@ ckanext.canada:schemas/presets.yaml
             resource_view_create=resource_view_create_bilingual,
             format_autocomplete=schema_format_autocomplete,
         )
+
+    # IDataValidation
+
+    def can_validate(self, context, resource):
+        """
+        Only uploaded resources are allowed to be validated
+        """
+        if resource.get(u'url_type') != u'upload':
+            return False
+        return True
 
 
 
@@ -422,9 +438,6 @@ ckanext.canada:schemas/prop.yaml
             'res_format': _('Format'),
             'res_type': _('Resource Type'),
             'frequency': _('Maintenance and Update Frequency'),
-            'topic_category': _('Topic Categories'),
-            'spatial_representation_type': _('Spatial Representation Type'),
-            'fgp_viewer': _('Map Viewer'),
             'ready_to_publish': _('Record Status'),
             'imso_approval': _('IMSO Approval'),
             'jurisdiction': _('Jurisdiction'),
@@ -451,13 +464,11 @@ ckanext.canada:schemas/prop.yaml
             'portal_url',
             'adv_search_url',
             'adv_search_mlt_root',
-            'googleanalytics_id',
+            'ga4_id',
             'loop11_key',
             'drupal_session_present',
             'fgp_url',
             'contact_information',
-            'show_subject_facet',
-            'show_fgp_facets',
             'show_openinfo_facets',
             'gravatar',
             'linked_gravatar',
@@ -483,11 +494,6 @@ ckanext.canada:schemas/prop.yaml
 
 
     def before_map(self, map):
-        map.connect(
-            '/fgpv_vpgf/{pkg_id}',
-            action='fgpv_vpgf',
-            controller='ckanext.canada.controller:CanadaController'
-        )
         map.connect(
             'organizations_index', '/organization',
             controller='ckanext.canada.controller:CanadaController',
@@ -624,6 +630,8 @@ class DataGCCAForms(p.SingletonPlugin, DefaultDatasetForm):
                 validators.json_string_has_en_fr_keys,
             'resource_format_replacements':
                 validators.resource_format_replacements,
+            'resource_schema_validator':
+                validators.canada_resource_schema_validator,
             }
 
 
@@ -735,6 +743,7 @@ class DataGCCAPackageController(p.SingletonPlugin):
             if 'collection' in geno:
                 data_dict['collection'] = geno['collection']
 
+        # need to keep fgp_viewer in the index for Advanced Search App
         if 'fgp_viewer' in data_dict.get('display_flags', []):
             data_dict['fgp_viewer'] = 'map_view'
 
@@ -909,13 +918,10 @@ ckanext.canada:schemas/doc.yaml
             'get_license',
             'normalize_strip_accents',
             'portal_url',
-            'googleanalytics_id',
             'loop11_key',
             'drupal_session_present',
             'fgp_url',
             'contact_information',
-            'show_subject_facet',
-            'show_fgp_facets',
             'show_openinfo_facets',
             'gravatar',
             'linked_gravatar',

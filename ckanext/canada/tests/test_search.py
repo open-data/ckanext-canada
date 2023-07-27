@@ -2,16 +2,16 @@
 from ckanapi import LocalCKAN
 import ckan.plugins as p
 
-from ckan.tests.helpers import FunctionalTestBase
 from ckan.tests.factories import Sysadmin
 from ckanext.canada.tests.factories import (
     CanadaOrganization as Organization,
     CanadaUser as User,
     CanadaDataset as Dataset
 )
+from ckanext.canada.tests import CanadaTestBase
 
 
-class TestRegistrySearch(FunctionalTestBase):
+class TestRegistrySearch(CanadaTestBase):
     """
     Class to test the package_search functionality for the Registry.
     """
@@ -122,7 +122,7 @@ class TestRegistrySearch(FunctionalTestBase):
         assert response['count'] == 0
 
 
-class TestPortalSearch(FunctionalTestBase):
+class TestPortalSearch(CanadaTestBase):
     """
     Class to test the package_search functionality for the Portal.
     """
