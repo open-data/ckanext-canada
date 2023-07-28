@@ -15,7 +15,7 @@
         <p class="mrgn-tp-lg">{{ _('You are not logged in to the Open Government Registry.
           Note that your login expires after 1 hour of inactivity.
           Click on the log in button below to log in.') }}</p>
-        <p><a href="{% url_for 'user.login' %}" class="btn btn-primary">
+        <p><a href="{{ h.url_for('user.login') }}" class="btn btn-primary">
               <span class="fa fa-sign-in"></span><span class="text">{{ _('Log in') }}</span>
             </a></p>
         {% endif %}
