@@ -27,11 +27,11 @@ Render a list of keywords for the client language
       <li>
         <a class="btn btn-default btn-xs mrgn-bttm-sm mrgn-rght-sm" href="
           {%- if client_lang == 'fr' -%}
-            {%- url_for pkg.type + '.search',
-              keywords_fra=tag.strip() -%}
+            {{ h.url_for(pkg.type + '.search',
+              keywords_fra=tag.strip()) }}
           {%- else -%}
-            {%- url_for pkg.type + '.search',
-              keywords=tag.strip() -%}
+            {{ h.url_for(pkg.type + '.search',
+              keywords=tag.strip()) }}
           {%- endif -%}
           " title="{{ _('Keyword') ~ ' ' ~ tag.strip() }}">{{ tag.strip() }}</a>
       </li>
@@ -138,8 +138,8 @@ Render a file download size field with 'O' or 'B' appended for Octets/Bytes
 {%- endmacro -%}
 
 
-{# 
-Search Facet Formatters 
+{#
+Search Facet Formatters
 #}
 
 {%- macro subject_label(subject, lang) -%}

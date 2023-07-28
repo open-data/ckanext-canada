@@ -15,7 +15,7 @@
             {{ _('If you are currently entering data on this page, you may lose it when submitted. To avoid this, you can click on the log in button below to log in again in a new tab without losing your progress and you can then keep working on this page. If you have any issues please contact <a href="mailto:open-ouvert@tbs-sct.gc.ca">open-ouvert@tbs-sct.gc.ca</a>.') | safe }}
           </div>
           <div class="modal-footer">
-            <a href="{% url_for 'user.login' %}" target="_blank" class="btn btn-default btn-sm">
+            <a href="{{ h.url_for('user.login') }}" target="_blank" class="btn btn-default btn-sm">
               <span class="fa fa-sign-in"></span>
               <span class="text">{{ _('Log in') }}</span>
             </a>
