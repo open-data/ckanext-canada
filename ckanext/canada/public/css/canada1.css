@@ -433,7 +433,7 @@ form .form-actions .btn{
   position: absolute;
   inset: 0px auto auto 0px;
   margin: 0px;
-  transform: translateY(30px);
+  transform: translateY(38px);
   z-index: 100 !important;
 }
 @media all and (max-width: 992px){
@@ -444,25 +444,13 @@ form .form-actions .btn{
 .resources-side-panel .nav-item.active a{
   pointer-events: none !important;
   cursor: default !important;
-  color: #555555 !important;
-  font-weight: 700 !important;
+  color: #295376 !important;
 }
 .resources-side-panel .nav-item.active{
-  background-color: #cfd1d5 !important;
-  margin-right: -15px !important;
+  background-color: #eeeeee !important;
 }
 .resources-side-panel .nav-item.active::before{
-  content: " ";
-  position: absolute;
-  border: 20px solid transparent;
-  border-right: none;
-  border-left-color: #cfd1d5;
-  border-left-width: 6px;
-  top: 50%;
-  transform: translateY(-50%);
-  right: -6px;
-  width: 6px;
-  height: 34px;
+  content: none;
 }
 .resources-side-panel .nav-item .dropdown.position-absolute{
   position: absolute !important;
