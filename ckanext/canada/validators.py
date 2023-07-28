@@ -21,6 +21,10 @@ from ckanapi import LocalCKAN, NotFound
 from ckan.lib.helpers import date_str_to_datetime
 from ckantoolkit import get_validator, Invalid, missing
 from ckanext.fluent.validators import fluent_text_output, LANG_SUFFIX
+from ckan.logic import ValidationError
+from ckanext.security.resource_upload_validator import (
+    validate_upload_type, validate_upload_presence
+)
 
 not_empty = get_validator('not_empty')
 ignore_missing = get_validator('ignore_missing')
@@ -383,3 +387,29 @@ def canada_resource_schema_validator(value, context):
         and value.lower().startswith('http'):
             raise Invalid(_('Schema URLs are not supported'))
     return value
+
+
+def canada_security_upload_type(key, data, errors, context):
+    try:
+        resource = context.get('resource_for_security')
+        validate_upload_type(resource)
+    except ValidationError as e:
+        url_type = data.get(key[:-1] + ('url_type',))
+        if url_type == 'tabledesigner':
+            return
+        error = e.error_dict['File'][0]
+        errors[key].append(_(error))
+        raise Invalid(_(error))
+
+
+def canada_security_upload_presence(key, data, errors, context):
+    try:
+        resource = context.get('resource_for_security')
+        validate_upload_presence(resource)
+    except ValidationError as e:
+        url_type = data.get(key[:-1] + ('url_type',))
+        if url_type == 'tabledesigner':
+            return
+        error = e.error_dict['File'][0]
+        errors[key].append(_(error))
+        raise Invalid(_(error))
