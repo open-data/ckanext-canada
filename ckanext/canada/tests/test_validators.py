@@ -314,3 +314,57 @@ class TestNAVLSchema(CanadaTestBase):
         assert_raises(ValidationError,
             self.sysadmin_action.resource_create,
             **resource_data)
+
+
+    def test_auto_resource_format(self):
+        "Resource formats should be guessed at creation and during URL change"
+        pkg = self.sysadmin_action.package_create(**self.complete_pkg)
+
+        # an empty format should be guessed at creation
+
+        resource_data = {
+            'name_translated': {'en': u'Full text.', 'fr': u'Full text.'},
+            'url': u'http://www.annakarenina.com/download/test.jpeg',
+            'size': 42,
+            'resource_type': 'dataset',
+            'language': ['zxx'],
+            'package_id': pkg['id']
+        }
+
+        resource_dict = self.sysadmin_action.resource_create(**resource_data)
+
+        assert 'format' in resource_dict
+        assert resource_dict['format'] == 'JPG'
+
+        resource_data['id'] = resource_dict['id']
+
+        # changing a resource url should re-guess the format
+
+        resource_data['format'] = 'JPG'
+        resource_data['url'] = 'http://www.annakarenina.com/download/test.docx'
+
+        resource_dict = self.sysadmin_action.resource_update(**resource_data)
+
+        assert 'format' in resource_dict
+        assert resource_dict['format'] == 'DOCX'
+
+        # a file upload should have its format guessed
+
+        resource_data['format'] = 'DOCX'
+        resource_data['url'] = 'test.png'
+
+        resource_dict = self.sysadmin_action.resource_update(**resource_data)
+
+        assert 'format' in resource_dict
+        assert resource_dict['format'] == 'PNG'
+
+        # format guessing should soft fallback to HTML
+        # if the url is a web address without an extension
+
+        resource_data['format'] = 'PNG'
+        resource_data['url'] = 'http://www.annakarenina.com/download'
+
+        resource_dict = self.sysadmin_action.resource_update(**resource_data)
+
+        assert 'format' in resource_dict
+        assert resource_dict['format'] == 'HTML'

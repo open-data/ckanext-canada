@@ -111,7 +111,6 @@ class TestPackageWebForms(CanadaTestBase):
         assert 'Title (English): Missing value' in response
         assert 'Title (French): Missing value' in response
         assert 'Resource Type: Missing value' in response
-        assert 'Format: Missing value' in response
 
 
     def filled_dataset_form(self, response):
