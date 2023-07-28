@@ -90,6 +90,12 @@
 
           form.append($('<input>').attr({
             type: 'hidden',
+            value: "{{request.cookies.token}}",
+            name: 'token'
+          }));
+
+          form.append($('<input>').attr({
+            type: 'hidden',
             value: {{primary_keys}},
           name: 'key_indices'
         }));
