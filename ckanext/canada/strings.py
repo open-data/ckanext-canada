@@ -33,3 +33,8 @@ _("If the value XX (none) is entered here, then the following three fields must 
 
 # strings from core
 _("Create Dataset")
+
+# strings from security
+_("Please upload a file or link to an external resource")
+_("Cannot upload files of this type")
+_("Cannot link files of this type")
