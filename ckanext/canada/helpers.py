@@ -549,3 +549,16 @@ def get_user_email(user_id):
 
 
 core_helper(plugin_loaded)
+
+
+def organization_member_count(id):
+    try:
+        members = ckan.logic.get_action(u'member_list')({}, {
+            u'id': id,
+            u'object_type': u'user',
+            u'include_total': True,
+        })
+    except NotFound:
+        raise NotFound( _('Members not found'))
+
+    return len(members)

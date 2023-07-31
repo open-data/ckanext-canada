@@ -596,6 +596,7 @@ ckanext.canada:schemas/prop.yaml
             'adobe_analytics_js',
             'mail_to_with_params',
             'is_registry',
+            'organization_member_count',
         ])
 
     # IActions
