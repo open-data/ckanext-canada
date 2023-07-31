@@ -15,14 +15,10 @@
             </a>
         </li>
         {% endif %}
-        {% set new_activities = h.new_activities() %}
-        <li class="notifications {% if new_activities > 0 %}notifications-important{% endif %}">
-            {% set notifications_tooltip = ngettext('Dashboard (%(num)d new item)', 'Dashboard (%(num)d new items)', new_activities) %}
-            <a href="{{ h.url_for('dashboard.index') }}" title="{{ notifications_tooltip }}" class="btn btn-default mrgn-tp-sm">
+        <li class="notifications">
+            <a href="{{ h.url_for('dashboard.index') }}" class="btn btn-default mrgn-tp-sm">
                 <i class="fa fa-tachometer"></i>
                 <span class="text">{{ _('Dashboard') }}</span>
-                <span class="wb-inv">{{ _(': ') }}</span>
-                <span class="badge">{{ new_activities }}</span>
             </a>
         </li>
             {% block header_account_settings_link %}
