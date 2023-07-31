@@ -52,6 +52,7 @@ from ckan.views.api import(
     _finish_ok,
     _finish
 )
+from ckan.views.group import set_org
 
 from ckan.authz import is_sysadmin
 from ckan.logic import (
@@ -1029,3 +1030,48 @@ def organization_member_dump(id):
         wr.write_records(results)
 
     return response
+
+
+@canada_views.route('/organization/members/<id>', methods=['GET', 'POST'])
+def members(id):
+    """
+    Copied from core. Permissions for Editors to view members in GET.
+    """
+    extra_vars = {}
+    set_org(True)
+    context = {u'model': model, u'session': model.Session, u'user': g.user}
+
+    try:
+        data_dict = {u'id': id}
+        if request.method == 'POST':
+            auth_action = u'group_edit_permissions'
+        else:
+            auth_action = u'view_org_members'
+        check_access(auth_action, context, data_dict)
+        members = get_action(u'member_list')(context, {
+            u'id': id,
+            u'object_type': u'user'
+        })
+        data_dict['include_datasets'] = False
+        group_dict = get_action(u'organization_show')(context, data_dict)
+    except NotFound:
+        abort(404, _(u'Organization not found'))
+    except NotAuthorized:
+        if request.method == 'POST':
+            error_message = _(u'User %r not authorized to edit members of %s') % (g.user, id)
+        else:
+            error_message = _(u'User %r not authorized to view members of %s') % (g.user, id)
+        abort(403, error_message)
+
+    # TODO: Remove
+    # ckan 2.9: Adding variables that were removed from c object for
+    # compatibility with templates in existing extensions
+    g.members = members
+    g.group_dict = group_dict
+
+    extra_vars = {
+        u"members": members,
+        u"group_dict": group_dict,
+        u"group_type": 'organization'
+    }
+    return render(u'organization/members.html', extra_vars)

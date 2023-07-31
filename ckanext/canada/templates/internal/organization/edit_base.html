@@ -16,6 +16,10 @@
             <li class="{% if c.action == 'members' %}active{% endif %}">
               <a href="{{h.url('organization.members', id=c.group_dict.name)}}">{{_('Edit Members')}}</a>
             </li>
+          {% elif h.check_access('view_org_members', {'id': c.group_dict.id}) %}
+            <li class="{% if c.action == 'members' %}active{% endif %}">
+              <a href="{{h.url('organization.members', id=c.group_dict.name)}}">{{_('View Members')}}</a>
+            </li>
           {% endif %}
           {% if h.check_access('group_update', {'id': c.group_dict.id}) %}
             <li class="{% if c.action == 'edit' %}active{% endif %}">

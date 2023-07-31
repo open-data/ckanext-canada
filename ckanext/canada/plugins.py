@@ -614,6 +614,7 @@ ckanext.canada:schemas/prop.yaml
             'datastore_create': auth.datastore_create,
             'datastore_delete': auth.datastore_delete,
             'datastore_upsert': auth.datastore_upsert,
+            'view_org_members': auth.view_org_members,
         }
 
     # IMiddleware

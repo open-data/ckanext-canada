@@ -26,10 +26,14 @@
             <a href="{{h.url('organization.members', id=c.group_dict.name)}}">{{_('Edit Members')}}</a>
           </li>
           {% if h.check_access('group_update', {'id': c.group_dict.id}) %}
-          <li class="{% if c.action == 'edit' %}active{% endif %}">
-            <a href="{{h.url(('organization' if c.group_dict.is_organization else 'group') + '.edit', id=c.group_dict.name)}}">{{ _('Edit') }}</a>
-          </li>
+            <li class="{% if c.action == 'edit' %}active{% endif %}">
+              <a href="{{h.url(('organization' if c.group_dict.is_organization else 'group') + '.edit', id=c.group_dict.name)}}">{{ _('Edit') }}</a>
+            </li>
           {% endif %}
+        {% elif h.check_access('view_org_members', {'id': c.group_dict.id}) %}
+          <li class="{% if c.action == 'members' %}active{% endif %}">
+            <a href="{{h.url('organization.members', id=c.group_dict.name)}}">{{_('View Members')}}</a>
+          </li>
         {% endif %}
       </ul>
     </header>
