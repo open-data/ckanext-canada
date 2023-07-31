@@ -395,10 +395,10 @@ def canada_security_upload_type(key, data, errors, context):
         validate_upload_type(resource)
     except ValidationError as e:
         url_type = data.get(key[:-1] + ('url_type',))
+        #TODO: handle how to validate table designer
         if url_type == 'tabledesigner':
             return
         error = e.error_dict['File'][0]
-        errors[key].append(_(error))
         raise Invalid(_(error))
 
 
@@ -408,8 +408,8 @@ def canada_security_upload_presence(key, data, errors, context):
         validate_upload_presence(resource)
     except ValidationError as e:
         url_type = data.get(key[:-1] + ('url_type',))
+        #TODO: handle how to validate table designer
         if url_type == 'tabledesigner':
             return
         error = e.error_dict['File'][0]
-        errors[key].append(_(error))
         raise Invalid(_(error))
