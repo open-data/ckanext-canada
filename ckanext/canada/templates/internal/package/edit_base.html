@@ -6,7 +6,18 @@
   {% endif %}
 {% endblock %}
 
+{% block secondary_content %}
+  {% if pkg_dict and not pkg_dict.resources %}
+    <div class="resources-side-section--no-resources">
+      {{ super() }}
+    </div>
+  {% else %}
+    {{ super() }}
+  {% endif %}
+{% endblock %}
+
 {% block scripts %}
   <script type="text/javascript" src="{{ h.url_for_static('/registry_package_edit.js') }}" ></script>
+  <script type="text/javascript" src="{{ h.url_for_static('/registry_resource_edit.js') }}" ></script>
   {{ super() }}
 {% endblock %}

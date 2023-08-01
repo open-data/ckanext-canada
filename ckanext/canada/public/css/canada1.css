@@ -473,18 +473,23 @@ form .form-actions .btn{
 .resources-side-panel .nav-item .dropdown.position-absolute.open{
   z-index: 100 !important;
 }
-.resources-side-section + div.module-content > a.btn-light{
+.resources-side-section + div.module-content > a.btn-light,
+.resources-side-section--no-resources > div.module-content > a.btn-light{
   background-color: #eaebed !important;
   border-color: #dcdee1 !important;
   color: #335075 !important;
   line-height: 2 !important;
 }
-.resources-side-section + div.module-content > a.btn-light:visited{
+.resources-side-section + div.module-content > a.btn-light:visited,
+.resources-side-section--no-resources > div.module-content > a.btn-light:visited{
   color: #335075 !important
 }
 .resources-side-section + div.module-content > a.btn-light:hover,
 .resources-side-section + div.module-content > a.btn-light:focus,
-.resources-side-section + div.module-content > a.btn-light:active{
+.resources-side-section + div.module-content > a.btn-light:active,
+.resources-side-section--no-resources > div.module-content > a.btn-light:hover,
+.resources-side-section--no-resources > div.module-content > a.btn-light:focus,
+.resources-side-section--no-resources > div.module-content > a.btn-light:active{
   background-color: #cfd1d5 !important;
   border-color: #bbbfc5 !important;
 }
