@@ -5,8 +5,11 @@
     {% set portal_link = h.portal_url() ~ "/data/" ~ client_lang ~ "/" ~ pkg.get('type', 'dataset') ~ "/" ~ pkg.name %}
     {% set sub_label = _("Your record will be published at:") %}
     {% set alert_class = "info" %}
+    {% set is_draft = false %}
     {% set show_portal_status_alert = true %}
-    {% if pkg['ready_to_publish'] == 'false' or not pkg['ready_to_publish'] %}
+    {% if pkg.state.startswith('draft') %}
+      {% set is_draft = true %}
+    {% elif pkg['ready_to_publish'] == 'false' or not pkg['ready_to_publish'] %}
       {% set label = _("Record marked not ready to publish") %}
       {% set alert_class = "warning" %}
     {% elif pkg['imso_approval'] == 'false' or not pkg['imso_approval'] %}
@@ -19,21 +22,23 @@
       {% set sub_label = "" %}
       {% set show_portal_status_alert = false %}
     {% endif %}
-    {% if show_portal_status_alert %}
-      <div class="module-alert alert alert-{{ alert_class }} mrgn-tp-sm">
-        <p>
-          {{ label }}
-          {% if sub_label %}
-            <br/><small>{{ sub_label }} <a href="{{ portal_link }}">{{ portal_link }}</a></small>
-          {% endif %}
-        </p>
-      </div>
-    {% else %}
-      <a href="{{ portal_link }}"
-        title="{{ label }}" class="btn btn-success" target="_blank">
-        <span class="fa fa-arrow-circle-right"></span>
-        <span class="text">{{ label }}</span>
-      </a>
+    {% if not is_draft %}
+      {% if show_portal_status_alert %}
+        <div class="module-alert alert alert-{{ alert_class }} mrgn-tp-sm">
+          <p>
+            {{ label }}
+            {% if sub_label %}
+              <br/><small>{{ sub_label }} <a href="{{ portal_link }}">{{ portal_link }}</a></small>
+            {% endif %}
+          </p>
+        </div>
+      {% else %}
+        <a href="{{ portal_link }}"
+          title="{{ label }}" class="btn btn-success" target="_blank">
+          <span class="fa fa-arrow-circle-right"></span>
+          <span class="text">{{ label }}</span>
+        </a>
+      {% endif %}
     {% endif %}
     {% if pkg.state == "deleted" %}
     <div class="module-alert alert alert-danger mrgn-tp-sm">
