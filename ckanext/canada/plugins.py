@@ -120,9 +120,7 @@ class CanadaDatasetsPlugin(SchemingDatasetsPlugin):
         """
         Only uploaded resources are allowed to be validated
         """
-        if resource.get(u'url_type') != u'upload':
-            return False
-        return True
+        return resource.get(u'url_type') == u'upload'
 
 
     # IPackageController
