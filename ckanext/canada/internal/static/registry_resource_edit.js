@@ -2,6 +2,21 @@ window.addEventListener('load', function(){
 
   $(document).ready(function() {
 
+    let editToolbar = $('header.page-header ul.nav-tabs');
+
+    if ( editToolbar.length > 0 ){
+
+      let activeElement = $(editToolbar).find('li.active');
+
+      if ( activeElement.length === 0 ){
+
+        // if there is no active element, assume that we are editing the metadata
+        $(editToolbar).find('li').first().addClass('active');
+
+      }
+
+    }
+
     let resourceDataFieldWrapper = $('.resource-upload-field');
 
     if ( resourceDataFieldWrapper.length > 0 ){
