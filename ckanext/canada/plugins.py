@@ -60,10 +60,16 @@ class CanadaSecurityPlugin(CkanSecurityPlugin):
     p.implements(p.IValidators, inherit=True)
 
     def before_create(self, context, resource):
-        pass
+        """
+        Override before_create from CkanSecurityPlugin.
+        Want to use the methods in scheming instead of before_create.
+        """
 
     def before_update(self, context, current, resource):
-        pass
+        """
+        Override before_update from CkanSecurityPlugin.
+        Want to use the methods in scheming instead of before_update.
+        """
 
     def get_validators(self):
         return {'canada_security_upload_type':
