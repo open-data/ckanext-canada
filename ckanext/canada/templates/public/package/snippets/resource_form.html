@@ -1,5 +1,15 @@
 {% ckan_extends %}
 
+{% block stages %}
+  {{ super() }}
+  {% if error_summary and error_summary|length == 1 and _('Error') in error_summary %}
+    <section class="alert alert-danger">
+      <h3>{{ _('Error') }}</h3>
+      <p>{{ error_summary[_('Error')] }}</p>
+    </section>
+  {% endif %}
+{% endblock %}
+
 {% block basic_fields_url %}
       {{ form.input('url', id='field-url', label=_('URL'), placeholder=_('http://whatever'), value=data.url, error=errors.name) }}
 {% endblock %}
@@ -10,4 +20,3 @@
 {% block again_button %}
   <button class="btn btn-default" name="save" value="again" type="submit">{{ _('Save & add another') }}</button>
 {% endblock %}
-

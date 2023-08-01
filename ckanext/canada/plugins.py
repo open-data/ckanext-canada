@@ -34,6 +34,7 @@ import ckan.lib.formatters as formatters
 from webhelpers.html import literal
 from flask import Blueprint
 from ckanext.scheming.plugins import SchemingDatasetsPlugin
+from ckanext.security.plugin import CkanSecurityPlugin
 from ckanext.canada.view import (
     canada_views,
     CanadaDatasetEditView,
@@ -49,6 +50,26 @@ except ImportError:
     pass
 
 log = logging.getLogger(__name__)
+
+
+class CanadaSecurityPlugin(CkanSecurityPlugin):
+    """
+    Plugin for extra security
+    """
+    p.implements(p.IResourceController, inherit=True)
+    p.implements(p.IValidators, inherit=True)
+
+    def before_create(self, context, resource):
+        pass
+
+    def before_update(self, context, current, resource):
+        pass
+
+    def get_validators(self):
+        return {'canada_security_upload_type':
+                    validators.canada_security_upload_type,
+                'canada_security_upload_presence':
+                    validators.canada_security_upload_presence}
 
 
 class CanadaDatasetsPlugin(SchemingDatasetsPlugin):
@@ -569,6 +590,7 @@ ckanext.canada:schemas/prop.yaml
             'adobe_analytics_js',
             'mail_to_with_params',
             'is_registry',
+            'organization_member_count',
         ])
 
     # IActions
@@ -586,6 +608,7 @@ ckanext.canada:schemas/prop.yaml
             'datastore_create': auth.datastore_create,
             'datastore_delete': auth.datastore_delete,
             'datastore_upsert': auth.datastore_upsert,
+            'view_org_members': auth.view_org_members,
         }
 
     # IMiddleware

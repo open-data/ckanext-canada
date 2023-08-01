@@ -7,3 +7,8 @@
     <li{% block breadcrumb_edit_selected %} class="active"{% endblock %}><a href="">{{ _('Edit') }}</a></li>
   {% endif %}
 {% endblock %}
+
+{% block scripts %}
+  <script type="text/javascript" src="{{ h.url_for_static('/registry_resource_edit.js') }}" ></script>
+  {{ super() }}
+{% endblock %}
