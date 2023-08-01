@@ -390,11 +390,16 @@ def canada_resource_schema_validator(value, context):
 
 
 def canada_security_upload_type(key, data, errors, context):
+    url_type = data.get(key[:-1] + ('url_type',))
+    url = data.get(key[:-1] + ('url',))
+    upload = data.get(key[:-1] + ('upload',))
+    resource = {
+        'url': url,
+        'upload': upload,
+    }
     try:
-        resource = context.get('resource_for_security')
         validate_upload_type(resource)
     except ValidationError as e:
-        url_type = data.get(key[:-1] + ('url_type',))
         #TODO: handle how to validate table designer
         if url_type == 'tabledesigner':
             return
@@ -403,11 +408,16 @@ def canada_security_upload_type(key, data, errors, context):
 
 
 def canada_security_upload_presence(key, data, errors, context):
+    url_type = data.get(key[:-1] + ('url_type',))
+    url = data.get(key[:-1] + ('url',))
+    upload = data.get(key[:-1] + ('upload',))
+    resource = {
+        'url': url,
+        'upload': upload,
+    }
     try:
-        resource = context.get('resource_for_security')
         validate_upload_presence(resource)
     except ValidationError as e:
-        url_type = data.get(key[:-1] + ('url_type',))
         #TODO: handle how to validate table designer
         if url_type == 'tabledesigner':
             return

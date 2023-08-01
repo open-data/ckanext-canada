@@ -60,16 +60,10 @@ class CanadaSecurityPlugin(CkanSecurityPlugin):
     p.implements(p.IValidators, inherit=True)
 
     def before_create(self, context, resource):
-        context['resource_for_security'] = resource
-
-    def after_create(self, context, resource):
-        context.pop('resource_for_security')
+        pass
 
     def before_update(self, context, current, resource):
-        context['resource_for_security'] = resource
-
-    def after_update(self, context, resource):
-        context.pop('resource_for_security')
+        pass
 
     def get_validators(self):
         return {'canada_security_upload_type':
