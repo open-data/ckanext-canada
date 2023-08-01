@@ -230,8 +230,8 @@ class TestNewUserWebForms(CanadaTestBase):
             'email': 'newuser@example.com',
             'department': self.org['id'],
             'phoneno': '1234567890',
-            'password1': 'thisisapassword',
-            'password2': 'thisisapassword',
+            'password1': 'iptkH6kuctURRQadDBM0',  # security extension required good passphrase/password
+            'password2': 'iptkH6kuctURRQadDBM0',  # security extension required good passphrase/password
             'save': ''
         }
 
