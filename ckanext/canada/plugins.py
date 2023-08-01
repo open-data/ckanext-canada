@@ -48,7 +48,6 @@ class DataGCCAInternal(p.SingletonPlugin):
     p.implements(p.IRoutes, inherit=True)
     p.implements(p.IPackageController, inherit=True)
     p.implements(p.IActions)
-    p.implements(p.IResourceUrlChange)
     try:
         from ckanext.validation.interfaces import IDataValidation
     except ImportError:
@@ -171,9 +170,6 @@ ckanext.canada:schemas/presets.yaml
             )
         return map
 
-    # IResourceUrlChange
-    def notify(self, resource):
-        p.toolkit.enqueue_job(fn=remove_outdated_resource_from_datastore, args=[resource.id])
 
     def get_helpers(self):
         return dict((h, getattr(helpers, h)) for h in [
@@ -939,33 +935,3 @@ def build_nav_main(*args):
         output += hlp._make_menu_item(menu_item, title, class_='list-group-item')
     return output
 
-
-def remove_outdated_resource_from_datastore(resource_id):
-    lc = ckanapi.LocalCKAN()
-    try:
-        res = lc.action.resource_show(id=resource_id)
-        pkg = lc.action.package_show(id=res['package_id'])
-    except ObjectNotFound:
-        log.error('Resource %s does not exist.' % res['id'])
-        return
-
-    # only plain datasets will have validation applied to resources
-    # this avoids accidental deletion of PD datastore tables
-    if pkg['type'] != 'dataset':
-        return
-
-    # remove outdated validation report for linked resources
-    if res['url_type'] != 'upload' and h.validation_status(res['id']) != 'unknown':
-        try:
-            lc.action.resource_validation_delete(resource_id=res['id'])
-            log.info('Validation report deleted for resource %s' % res['id'])
-        except ObjectNotFound:
-            log.error('Validation report for resource %s does not exist' % res['id'])
-
-    # remove outdated datastore table for linked resources
-    if res['url_type'] != 'upload' and 'datastore_active' in res and res['datastore_active']:
-        try:
-            lc.action.datastore_delete(resource_id=res['id'], force=True)
-            log.info('Datastore table dropped for resource %s' % res['id'])
-        except ObjectNotFound:
-            log.error('Datastore table for resource %s does not exist' % res['id'])
