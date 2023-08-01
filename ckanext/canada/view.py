@@ -536,7 +536,7 @@ def ckanadmin_publish_datasets():
     h.flash_notice(str(count) + _(u' record(s) published.'))
 
     # return us to the publishing interface
-    return h.redirect_to(h.url_for('canada.ckanadmin_publish'))
+    return h.redirect_to('canada.ckanadmin_publish')
 
 
 @canada_views.route('/dataset/<id>/delete-datastore-table/<resource_id>', methods=['GET', 'POST'])
