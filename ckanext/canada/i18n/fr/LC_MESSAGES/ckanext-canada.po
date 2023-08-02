@@ -351,15 +351,15 @@ msgstr "{actor} a supprimé l’affichage {view_type} {view}"
 
 #: ckanext/canada/strings.py:66
 msgid "Please upload a file or link to an external resource"
-msgstr ""
+msgstr "Veuillez téléverser un fichier ou donner un lien vers une ressource externe"
 
 #: ckanext/canada/strings.py:67
 msgid "Cannot upload files of this type"
-msgstr ""
+msgstr "Impossible de téléverser un fichier de ce type"
 
 #: ckanext/canada/strings.py:68
 msgid "Cannot link files of this type"
-msgstr ""
+msgstr "Impossible de donner un lien vers un fichier de ce type"
 
 #: ckanext/canada/validators.py:120
 #, python-format
@@ -455,9 +455,8 @@ msgstr ""
 "Cette mise à jour sera bientôt effectuée dans ouvert.canada.ca."
 
 #: ckanext/canada/view.py:130
-#, fuzzy
 msgid "Dataset updated."
-msgstr "Jeu de données supprimé"
+msgstr "Jeu de données mise à jour."
 
 #: ckanext/canada/view.py:133 ckanext/canada/view.py:152
 #, python-format
@@ -469,14 +468,12 @@ msgid "Resource updated."
 msgstr "Ressource mise à jour."
 
 #: ckanext/canada/view.py:162
-#, fuzzy
 msgid "Resource added."
-msgstr "Ressource mise à jour."
+msgstr "Une ressource a été ajoutée."
 
 #: ckanext/canada/view.py:229
-#, fuzzy
 msgid "Unauthorized to create a resource for this package"
-msgstr "Non autorisé à créer un utilisateur"
+msgstr "Non autorisé à créer une ressource pour cet ensemble"
 
 #: ckanext/canada/view.py:269
 msgid "This record already exists"
@@ -487,9 +484,8 @@ msgid "Record Created"
 msgstr "Renregistrement créé"
 
 #: ckanext/canada/view.py:323
-#, fuzzy
 msgid "Unauthorized to update dataset"
-msgstr "Non autorisé à créer un utilisateur"
+msgstr "Vous n'êtes pas autorisé à mettre à jour ce jeu de données"
 
 #: ckanext/canada/view.py:339 ckanext/canada/view.py:839
 msgid "Not found"
@@ -529,9 +525,9 @@ msgid " record(s) published."
 msgstr " d’enregistrements publiés."
 
 #: ckanext/canada/view.py:553
-#, fuzzy, python-format
+#, python-format
 msgid "Unauthorized to delete resource %s"
-msgstr "Non autorisé à créer un utilisateur"
+msgstr "Vous n'êtes pas autorisé à supprimer la ressource %s"
 
 #: ckanext/canada/templates/internal/organization/edit_base.html:26
 #: ckanext/canada/templates/internal/package/resource_edit.html:3
@@ -597,24 +593,22 @@ msgstr ""
 "href=\"mailto: open-ouvert@tbs-sct.gc.ca\">open-ouvert@tbs-sct.gc.ca.</a"
 
 #: ckanext/canada/view.py:982 ckanext/canada/view.py:1058
-#, fuzzy
 msgid "Organization not found"
-msgstr "Aucune organisation n’a été trouvée"
+msgstr "Organisation non trouvée"
 
 #: ckanext/canada/view.py:993
-#, fuzzy
 msgid "Not authorized to access {org_name} members download"
 msgstr "Non autorisé à accéder au téléchargement des membres du {group}"
 
 #: ckanext/canada/view.py:1061
-#, fuzzy, python-format
+#, python-format
 msgid "User %r not authorized to edit members of %s"
-msgstr "Non autorisé à accéder au téléchargement des membres du {group}"
+msgstr "L’utilisateur %r n’est pas autorisé à modifier les membres de %s"
 
 #: ckanext/canada/view.py:1063
-#, fuzzy, python-format
+#, python-format
 msgid "User %r not authorized to view members of %s"
-msgstr "Non autorisé à accéder au téléchargement des membres du {group}"
+msgstr "L’utilisateur %r n’est pas autorisé à voir les membres de %s"
 
 #: ckanext/canada/templates/internal/base.html:5
 msgid "Open Data Registry"
@@ -626,7 +620,6 @@ msgid "Open Government Registry"
 msgstr "Registre du gouvernement ouvert"
 
 #: ckanext/canada/templates/internal/error_document_template.html:15
-#, fuzzy
 msgid ""
 "You are not logged in to the Open Government Registry.\n"
 "          Note that your login expires after 1 hour of inactivity.\n"
@@ -883,12 +876,10 @@ msgid "Search Results:"
 msgstr "Résultats de la recherche:"
 
 #: ckanext/canada/templates/internal/admin/publish_search.html:49
-#, fuzzy
 msgid "<p class=\"extra\">Please try another search.</p>"
-msgstr "Veuillez essayer une nouvelle recherche"
+msgstr "<p class=\"extra\">Veuillez essayer une nouvelle recherche.</p>"
 
 #: ckanext/canada/templates/internal/admin/publish_search.html:57
-#, fuzzy
 msgid ""
 "<p><strong>There was an error while searching.</strong> Please try "
 "again.</p>"
@@ -977,9 +968,8 @@ msgstr "Modifier les membres"
 
 #: ckanext/canada/templates/internal/organization/edit_base.html:21
 #: ckanext/canada/templates/public/organization/read_base.html:35
-#, fuzzy
 msgid "View Members"
-msgstr "membres"
+msgstr "Afficher les membres"
 
 #: ckanext/canada/templates/internal/package/read.html:6
 msgid "Your record will be published at:"
@@ -1240,6 +1230,55 @@ msgid ""
 "legal, contractual, or third party, policy restrictions or "
 "limitations).</li> </ol> </small>"
 msgstr ""
+"<small class='text-info' style='margin-bottom: 15px; display: inline-block'>"
+"<p>A-t-on obtenu l'approbation? En sélectionnant << oui >>, vous avez fait"
+" certain que les énoncés suivants sont vrais:</p>"
+"<ol>"
+"<li><b>Confidentialité</b> -  Les ressources en données ou"
+" documentaires ne sont pas assujetties à aucune restriction"
+" liée à la confidentialité, comme les documents confidentiels du Cabinet,"
+" le secret professionnel de l'avocat, les renseignements"
+" , conseils ou recommandations classifiés ou protégés,"
+" les renseignements"
+" de tiers ou les renseignements obtenus à titre confidentiel.</li>"
+"<li><b>Autorisation de diffuser</b> - L'institution a le"
+" mandat, l'autorisation législative ou la permission d'un fournisseur tiers"
+" de publier les ressources en données ou documentaires en vertu de la"
+" <a href='https://ouvert.canada.ca/fr/licence-du-gouvernement-ouvert-canada'>"
+"<u>Licence du gouvernement ouvert – Canada</u></a>.</li>"
+"<li><b>Formats</b> - Les ressources en données ou documentaires sont"
+" dans un format ouvert et accessible qui est conforme à la"
+" <a href='https://www.tbs-sct.gc.ca/pol/doc-fra.aspx?id=23601'><u>"
+"Norme sur l'accessibilité des sites Web</u></a>.</li>"
+"<li><b>Protection des renseignements personnels</b> - Les ressources en données"
+" ou documentaires ne contiennent pas des renseignements personnels, au"
+" sens de l'article 3 de la <a href='https://www.priv.gc.ca/fr/sujets-lies"
+"-a-la-protection-de-la-vie-privee/lois-sur-la-protection-des-renseignements"
+"-personnels-au-canada/la-loi-sur-la-protection-des-renseignements-personnels/'>"
+"<u>Loi sur la protection des renseignements personnels</u></a>, à moins que"
+" la personne concernée n'ait consenti à leur divulgation ou que les renseignements personnels ne"
+" répondent aux critères énoncés au paragraphe 8(2) de cette même Loi.</li>"
+"<li><b>Langues officielles</b> - Les ressources en"
+" données ou documentaires sont disponibles dans les deux"
+" langues officielles et sont conformes aux exigences de"
+" la <a href='https://laws-lois.justice.gc.ca/fra/lois/O-3.01/'>"
+"<u>Loi sur les langues officielles</u></a>.</li>"
+"<li><b>Sécurité</b> - Les ressources en données ou"
+" documentaires n'augmentent pas les risques à la sécurité"
+" de l'institution, des autres institutions ou du gouvernement"
+" dans son ensemble et sont conformes aux exigences de la"
+" <a href='https://www.tbs-sct.gc.ca/pol/doc-fra.aspx?id=16578'>"
+"<u>Politique sur la sécurité du gouvernement</u></a> et"
+" de ses instruments connexes.</li>"
+"<li><b>Autres – Aspects juridiques, réglementaires, stratégiques"
+" ou contractuelsl</b> - La diffusion des ressources en données ou d'autres"
+" ressources documentaires est conforme à toutes les autres"
+" exigences juridiques, réglementaires, contractuelles et"
+" stratégiques pertinentes (p. ex., il est confirmé qu'il n'y"
+" a pas de restrictions ou de limitations juridiques,"
+" contractuelles, de tiers ou de stratégiques pertinentes).</li>"
+"</ol>"
+"</small>"
 
 #: ckanext/canada/templates/internal/scheming/form_snippets/repeating_subfields.html:8
 #: ckanext/canada/templates/public/macros/canada_read.html:151
@@ -1445,9 +1484,8 @@ msgstr "{actor} a supprimé le jeu de données {datastore} {datastore_detail}"
 
 #: ckanext/canada/templates/internal/user/edit_user_form.html:7
 #: ckanext/canada/templates/public/user/edit_user_form.html:7
-#, fuzzy
 msgid "Change details"
-msgstr "Modifier vos détails"
+msgstr "Modifier les détails"
 
 #: ckanext/canada/templates/internal/user/edit_user_form.html:10
 msgid "Full name"
@@ -1481,15 +1519,13 @@ msgstr "S’abonner aux courriels de notification"
 
 #: ckanext/canada/templates/internal/user/edit_user_form.html:25
 #: ckanext/canada/templates/public/user/edit_user_form.html:38
-#, fuzzy
 msgid "Change password"
-msgstr "Modifier votre mot de passe"
+msgstr "Changer le mot de passe"
 
 #: ckanext/canada/templates/internal/user/edit_user_form.html:28
 #: ckanext/canada/templates/public/user/edit_user_form.html:30
-#, fuzzy
 msgid "Sysadmin Password"
-msgstr "Réinitialiser le mot de passe"
+msgstr "Mot de passe administrateur système"
 
 #: ckanext/canada/templates/internal/user/edit_user_form.html:28
 msgid "Old Password"
@@ -1510,15 +1546,13 @@ msgstr "Confirmer le mot de passe"
 
 #: ckanext/canada/templates/internal/user/edit_user_form.html:46
 #: ckanext/canada/templates/public/user/edit_user_form.html:49
-#, fuzzy
 msgid "Are you sure you want to delete this User?"
-msgstr "Êtes-vous certain de vouloir supprimer cet état?"
+msgstr "Êtes-vous sûr de vouloir supprimer cet utilisateur?"
 
 #: ckanext/canada/templates/internal/user/edit_user_form.html:51
 #: ckanext/canada/templates/public/user/edit_user_form.html:54
-#, fuzzy
 msgid "Create API Token"
-msgstr "Créer un jeu de données"
+msgstr "Créer une clé API"
 
 #: ckanext/canada/templates/internal/user/edit_user_form.html:54
 #: ckanext/canada/templates/public/user/edit_user_form.html:57
@@ -1656,7 +1690,6 @@ msgid "Confirm"
 msgstr "Confirmer"
 
 #: ckanext/canada/templates/internal/user/new_user_form.html:26
-#, fuzzy
 msgid ""
 "<h2>Terms and Conditions for the Open Government Registry</h2> "
 "<p><em>Privacy Statement</em></p> <p>The Government of Canada is "
@@ -1846,7 +1879,7 @@ msgid "I do not agree"
 msgstr "Je n’accepte pas"
 
 #: ckanext/canada/templates/internal/user/perform_reset.html:8
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "1. Passwords must contain characters from at least 3 of the following 4 "
 "classes:\n"
@@ -1905,9 +1938,8 @@ msgid "Government of Canada"
 msgstr "Gouvernement du Canada"
 
 #: ckanext/canada/templates/public/footer.html:10
-#, fuzzy
 msgid "https://www.canada.ca/en/contact.html"
-msgstr "https://www.canada.ca/fr/sociaux.html"
+msgstr "https://www.canada.ca/fr/contact.html"
 
 #: ckanext/canada/templates/public/footer.html:10
 msgid "All Contacts"
@@ -1939,7 +1971,7 @@ msgstr "https://www.canada.ca/fr/services/entreprises.html"
 
 #: ckanext/canada/templates/public/footer.html:16
 msgid "Jobs"
-msgstr ""
+msgstr "Emplois"
 
 #: ckanext/canada/templates/public/footer.html:17
 msgid "https://www.canada.ca/en/services/immigration-citizenship.html"
@@ -1963,7 +1995,7 @@ msgstr "https://www.canada.ca/fr/services/entreprises.html"
 
 #: ckanext/canada/templates/public/footer.html:19
 msgid "Business"
-msgstr ""
+msgstr "Entreprises"
 
 #: ckanext/canada/templates/public/footer.html:20
 msgid "https://www.canada.ca/en/services/benefits.html"
@@ -1971,7 +2003,7 @@ msgstr "https://www.canada.ca/fr/services/prestations.html"
 
 #: ckanext/canada/templates/public/footer.html:20
 msgid "Benefits"
-msgstr ""
+msgstr "Prestations"
 
 #: ckanext/canada/templates/public/footer.html:21
 msgid "https://www.canada.ca/en/services/health.html"
@@ -1979,16 +2011,15 @@ msgstr "https://www.canada.ca/fr/services/sante.html"
 
 #: ckanext/canada/templates/public/footer.html:21
 msgid "Health"
-msgstr ""
+msgstr "Santé"
 
 #: ckanext/canada/templates/public/footer.html:22
 msgid "https://www.canada.ca/en/services/taxes.html"
 msgstr "https://www.canada.ca/fr/services/impots.html"
 
 #: ckanext/canada/templates/public/footer.html:22
-#, fuzzy
 msgid "Taxes"
-msgstr "État"
+msgstr "Impôts"
 
 #: ckanext/canada/templates/public/footer.html:23
 msgid "https://www.canada.ca/en/services/environment.html"
@@ -2159,7 +2190,7 @@ msgid "CKAN config options"
 msgstr "CKAN options de configuration"
 
 #: ckanext/canada/templates/public/admin/config.html:33
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "<p><strong>Site Title:</strong> This is the title of this CKAN instance "
 "It appears in various places throughout CKAN.</p> "
@@ -2201,7 +2232,7 @@ msgid "Administer CKAN"
 msgstr "Administrer CKAN"
 
 #: ckanext/canada/templates/public/admin/index.html:24
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "<p>As a sysadmin user you have full control over this CKAN instance. "
 "Proceed with care!</p> <p>For guidance on using sysadmin features, see "
@@ -2219,7 +2250,6 @@ msgid "Purge"
 msgstr "Purge"
 
 #: ckanext/canada/templates/public/admin/trash.html:42
-#, fuzzy
 msgid "<p>Purge deleted datasets forever and irreversibly.</p>"
 msgstr ""
 " <p>Purgez les jeux de données supprimés de manière définitive et "
@@ -2317,7 +2347,6 @@ msgid "What are roles?"
 msgstr "Que sont les rôles?"
 
 #: ckanext/canada/templates/public/organization/member_new.html:88
-#, fuzzy
 msgid ""
 "<p><strong>Admin:</strong> Can add/edit and delete datasets, as well as "
 "manage organization members.</p> <p><strong>Editor:</strong> Can add and "
@@ -2346,7 +2375,6 @@ msgid "What are Organizations?"
 msgstr "Que sont les organisations?"
 
 #: ckanext/canada/templates/public/organization/snippets/helper.html:4
-#, fuzzy
 msgid ""
 "CKAN Organizations are used to create, manage and publish collections of "
 "datasets. Users can have different roles within an Organization, "
@@ -2378,7 +2406,6 @@ msgid "What are datasets?"
 msgstr "Qu’est-ce qu’un ensemble de données?"
 
 #: ckanext/canada/templates/public/package/base_form_page.html:10
-#, fuzzy
 msgid ""
 "Datasets are simply used to group related pieces of data. These can then "
 "be found under a single url with a description and licensing information."
@@ -2419,7 +2446,6 @@ msgstr "Retourner à la page de recherche"
 #: ckanext/canada/templates/public/scheming/display_snippets/fluent_tags.html:9
 #: ckanext/canada/templates/public/snippets/package_item.html:38
 #: ckanext/canada/templates/public/snippets/package_item.html:57
-#, fuzzy
 msgid ""
 "This third party metadata element has been translated using an automated "
 "translation tool.  To report any discrepancies please contact open-ouvert"
@@ -2660,11 +2686,11 @@ msgstr "État"
 
 #: ckanext/canada/templates/public/package/snippets/data_api_button.html:7
 msgid "Loading..."
-msgstr ""
+msgstr "Chargement..."
 
 #: ckanext/canada/templates/public/package/snippets/data_api_button.html:9
 msgid "Data API"
-msgstr ""
+msgstr "API de données"
 
 #: ckanext/canada/templates/public/package/snippets/resource_form.html:4
 msgid "URL"
@@ -2680,12 +2706,11 @@ msgstr "Sauvegarder et ajouter une autre ressource ou objet annexe"
 
 #: ckanext/canada/templates/public/package/snippets/resource_item.html:48
 msgid "Explore"
-msgstr ""
+msgstr "Explorer"
 
 #: ckanext/canada/templates/public/package/snippets/resource_item.html:60
-#, fuzzy
 msgid "More information"
-msgstr "Information ouverte"
+msgstr "Plus d'information"
 
 #: ckanext/canada/templates/public/package/snippets/resource_item.html:69
 msgid "Download"
@@ -2696,14 +2721,12 @@ msgid "Go to resource"
 msgstr "Aller à la ressource"
 
 #: ckanext/canada/templates/public/package/snippets/resource_item.html:78
-#, fuzzy
 msgid "Edit resource"
-msgstr "Aller à la ressource"
+msgstr "Editer la ressource"
 
 #: ckanext/canada/templates/public/package/snippets/resource_item.html:80
-#, fuzzy
 msgid "Views"
-msgstr "Aperçu"
+msgstr "Vues"
 
 #: ckanext/canada/templates/public/package/snippets/schemaorg.html:5
 msgid "Government of Canada Open Government Portal"
@@ -2905,20 +2928,18 @@ msgstr "Ajouter un jeu de données"
 
 #: ckanext/canada/templates/public/user/dashboard_datasets.html:5
 #: ckanext/canada/templates/public/user/dashboard_datasets.html:9
-#, fuzzy
 msgid "My Records"
-msgstr "Dossiers similaires"
+msgstr "Mes jeux de données"
 
 #: ckanext/canada/templates/public/user/dashboard_groups.html:5
 #: ckanext/canada/templates/public/user/dashboard_groups.html:9
 msgid "My Groups"
-msgstr ""
+msgstr "Mes groupes"
 
 #: ckanext/canada/templates/public/user/dashboard_organizations.html:5
 #: ckanext/canada/templates/public/user/dashboard_organizations.html:9
-#, fuzzy
 msgid "My Organizations"
-msgstr "Organisations"
+msgstr "Mes organisations"
 
 #: ckanext/canada/templates/public/user/edit.html:8
 msgid "Manage"

@@ -883,9 +883,8 @@ msgstr ""
 
 #: ckanext/canada/templates/internal/organization/edit_base.html:21
 #: ckanext/canada/templates/public/organization/read_base.html:35
-#, fuzzy
 msgid "View Members"
-msgstr "Keep me logged in"
+msgstr ""
 
 #: ckanext/canada/templates/internal/package/read.html:6
 msgid "Your record will be published at:"
@@ -1388,9 +1387,8 @@ msgstr ""
 
 #: ckanext/canada/templates/internal/user/edit_user_form.html:46
 #: ckanext/canada/templates/public/user/edit_user_form.html:49
-#, fuzzy
 msgid "Are you sure you want to delete this User?"
-msgstr "Are you sure you want to delete record - {name}?"
+msgstr ""
 
 #: ckanext/canada/templates/internal/user/edit_user_form.html:51
 #: ckanext/canada/templates/public/user/edit_user_form.html:54
@@ -1954,7 +1952,6 @@ msgid "Purge"
 msgstr ""
 
 #: ckanext/canada/templates/public/admin/trash.html:42
-#, fuzzy
 msgid "<p>Purge deleted datasets forever and irreversibly.</p>"
 msgstr " <p>Purge deleted records forever and irreversibly.</p> "
 
@@ -2046,7 +2043,6 @@ msgid "What are roles?"
 msgstr ""
 
 #: ckanext/canada/templates/public/organization/member_new.html:88
-#, fuzzy
 msgid ""
 "<p><strong>Admin:</strong> Can add/edit and delete datasets, as well as "
 "manage organization members.</p> <p><strong>Editor:</strong> Can add and "
@@ -2074,7 +2070,6 @@ msgid "What are Organizations?"
 msgstr ""
 
 #: ckanext/canada/templates/public/organization/snippets/helper.html:4
-#, fuzzy
 msgid ""
 "CKAN Organizations are used to create, manage and publish collections of "
 "datasets. Users can have different roles within an Organization, "
