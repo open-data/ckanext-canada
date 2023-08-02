@@ -62,10 +62,12 @@ _("Choose format")
 _("Submit")
 _("{actor} deleted the {view_type} view {view}")
 _("Request Reset")
+_("Create API Token")
 _("Token")
 _("Last access")
 _("Actions")
 _("Revoke")
+_("You haven't created any API Tokens.")
 
 # strings from security
 _("Please upload a file or link to an external resource")
