@@ -31,8 +31,36 @@ _("If the value XX (none) is entered here, then the following three fields must 
   "as applicable: Comprehensive Land Claim Agreement, Procurement Strategy for Aboriginal Business, "
   "Procurement Strategy for Aboriginal Business Incidental Indicator")
 
-# strings from core
+# CKAN Core
+# Include any custom strings put into our CKAN fork.
+# And any strings that are fuzzy in French so that
+# we can fully transalate them in this extension.
 _("Create Dataset")
+_("Not authorized to access {group} members download")
+_("Members not found")
+_("N/A")
+_("Username")
+_("Email")
+_("Name")
+_("Role")
+_("members")
+_("CSV")
+_("A related item has been added")
+_("A resource has been added")
+_("Resource id already exists.")
+_("Invalid characters in resource id")
+_("Invalid length for resource id")
+_("Resource view id already exists")
+_("Value must be one of {}")
+_("Could not parse the value as a valid JSON object")
+_("Could not parse extra '{name}' as valid JSON")
+_("Dear %(user_name)s,")
+_("Invite for %(site_title)s")
+_("Dataset Deleted")
+_("Created On")
+_("Choose format")
+_("Submit")
+_("{actor} deleted the {view_type} view {view}")
 
 # strings from security
 _("Please upload a file or link to an external resource")
