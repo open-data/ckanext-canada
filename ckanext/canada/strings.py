@@ -61,6 +61,11 @@ _("Created On")
 _("Choose format")
 _("Submit")
 _("{actor} deleted the {view_type} view {view}")
+_("Request Reset")
+_("Token")
+_("Last access")
+_("Actions")
+_("Revoke")
 
 # strings from security
 _("Please upload a file or link to an external resource")

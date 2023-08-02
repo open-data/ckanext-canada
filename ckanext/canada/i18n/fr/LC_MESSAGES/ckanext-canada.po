@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2023-08-02 13:59+0000\n"
+"POT-Creation-Date: 2023-08-02 17:07+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: fr\n"
@@ -257,6 +257,7 @@ msgid "Email"
 msgstr "Courriel"
 
 #: ckanext/canada/strings.py:44
+#: ckanext/canada/templates/internal/user/api_tokens.html:5
 #: ckanext/canada/templates/internal/user/list.html:36
 #: ckanext/canada/templates/public/snippets/geomap_dynamic.html:18
 #: ckanext/canada/templates/public/snippets/geomap_static.html:15
@@ -349,15 +350,37 @@ msgstr "Soumettre"
 msgid "{actor} deleted the {view_type} view {view}"
 msgstr "{actor} a supprimé l’affichage {view_type} {view}"
 
+#: ckanext/canada/strings.py:64
+msgid "Request Reset"
+msgstr "Demander une réinitialisation"
+
+#: ckanext/canada/strings.py:65
+msgid "Token"
+msgstr ""
+
 #: ckanext/canada/strings.py:66
-msgid "Please upload a file or link to an external resource"
-msgstr "Veuillez téléverser un fichier ou donner un lien vers une ressource externe"
+msgid "Last access"
+msgstr ""
 
 #: ckanext/canada/strings.py:67
+msgid "Actions"
+msgstr ""
+
+#: ckanext/canada/strings.py:68
+msgid "Revoke"
+msgstr ""
+
+#: ckanext/canada/strings.py:71
+msgid "Please upload a file or link to an external resource"
+msgstr ""
+"Veuillez téléverser un fichier ou donner un lien vers une ressource "
+"externe"
+
+#: ckanext/canada/strings.py:72
 msgid "Cannot upload files of this type"
 msgstr "Impossible de téléverser un fichier de ce type"
 
-#: ckanext/canada/strings.py:68
+#: ckanext/canada/strings.py:73
 msgid "Cannot link files of this type"
 msgstr "Impossible de donner un lien vers un fichier de ce type"
 
@@ -839,7 +862,7 @@ msgstr ""
 #: ckanext/canada/templates/internal/snippets/user.html:14
 #: ckanext/canada/templates/public/snippets/user.html:20
 msgid "Admin"
-msgstr "Admin"
+msgstr "Administrateur"
 
 #: ckanext/canada/templates/internal/admin/base.html:8
 #: ckanext/canada/templates/internal/user/list.html:9
@@ -1230,55 +1253,50 @@ msgid ""
 "legal, contractual, or third party, policy restrictions or "
 "limitations).</li> </ol> </small>"
 msgstr ""
-"<small class='text-info' style='margin-bottom: 15px; display: inline-block'>"
-"<p>A-t-on obtenu l'approbation? En sélectionnant << oui >>, vous avez fait"
-" certain que les énoncés suivants sont vrais:</p>"
-"<ol>"
-"<li><b>Confidentialité</b> -  Les ressources en données ou"
-" documentaires ne sont pas assujetties à aucune restriction"
-" liée à la confidentialité, comme les documents confidentiels du Cabinet,"
-" le secret professionnel de l'avocat, les renseignements"
-" , conseils ou recommandations classifiés ou protégés,"
-" les renseignements"
-" de tiers ou les renseignements obtenus à titre confidentiel.</li>"
-"<li><b>Autorisation de diffuser</b> - L'institution a le"
-" mandat, l'autorisation législative ou la permission d'un fournisseur tiers"
-" de publier les ressources en données ou documentaires en vertu de la"
-" <a href='https://ouvert.canada.ca/fr/licence-du-gouvernement-ouvert-canada'>"
-"<u>Licence du gouvernement ouvert – Canada</u></a>.</li>"
-"<li><b>Formats</b> - Les ressources en données ou documentaires sont"
-" dans un format ouvert et accessible qui est conforme à la"
-" <a href='https://www.tbs-sct.gc.ca/pol/doc-fra.aspx?id=23601'><u>"
-"Norme sur l'accessibilité des sites Web</u></a>.</li>"
-"<li><b>Protection des renseignements personnels</b> - Les ressources en données"
-" ou documentaires ne contiennent pas des renseignements personnels, au"
-" sens de l'article 3 de la <a href='https://www.priv.gc.ca/fr/sujets-lies"
-"-a-la-protection-de-la-vie-privee/lois-sur-la-protection-des-renseignements"
-"-personnels-au-canada/la-loi-sur-la-protection-des-renseignements-personnels/'>"
-"<u>Loi sur la protection des renseignements personnels</u></a>, à moins que"
-" la personne concernée n'ait consenti à leur divulgation ou que les renseignements personnels ne"
-" répondent aux critères énoncés au paragraphe 8(2) de cette même Loi.</li>"
-"<li><b>Langues officielles</b> - Les ressources en"
-" données ou documentaires sont disponibles dans les deux"
-" langues officielles et sont conformes aux exigences de"
-" la <a href='https://laws-lois.justice.gc.ca/fra/lois/O-3.01/'>"
-"<u>Loi sur les langues officielles</u></a>.</li>"
-"<li><b>Sécurité</b> - Les ressources en données ou"
-" documentaires n'augmentent pas les risques à la sécurité"
-" de l'institution, des autres institutions ou du gouvernement"
-" dans son ensemble et sont conformes aux exigences de la"
-" <a href='https://www.tbs-sct.gc.ca/pol/doc-fra.aspx?id=16578'>"
-"<u>Politique sur la sécurité du gouvernement</u></a> et"
-" de ses instruments connexes.</li>"
-"<li><b>Autres – Aspects juridiques, réglementaires, stratégiques"
-" ou contractuelsl</b> - La diffusion des ressources en données ou d'autres"
-" ressources documentaires est conforme à toutes les autres"
-" exigences juridiques, réglementaires, contractuelles et"
-" stratégiques pertinentes (p. ex., il est confirmé qu'il n'y"
-" a pas de restrictions ou de limitations juridiques,"
-" contractuelles, de tiers ou de stratégiques pertinentes).</li>"
-"</ol>"
-"</small>"
+"<small class='text-info' style='margin-bottom: 15px; display: inline-"
+"block'><p>A-t-on obtenu l'approbation? En sélectionnant << oui >>, vous "
+"avez fait certain que les énoncés suivants sont "
+"vrais:</p><ol><li><b>Confidentialité</b> -  Les ressources en données ou "
+"documentaires ne sont pas assujetties à aucune restriction liée à la "
+"confidentialité, comme les documents confidentiels du Cabinet, le secret "
+"professionnel de l'avocat, les renseignements , conseils ou "
+"recommandations classifiés ou protégés, les renseignements de tiers ou "
+"les renseignements obtenus à titre confidentiel.</li><li><b>Autorisation "
+"de diffuser</b> - L'institution a le mandat, l'autorisation législative "
+"ou la permission d'un fournisseur tiers de publier les ressources en "
+"données ou documentaires en vertu de la <a "
+"href='https://ouvert.canada.ca/fr/licence-du-gouvernement-ouvert-"
+"canada'><u>Licence du gouvernement ouvert – "
+"Canada</u></a>.</li><li><b>Formats</b> - Les ressources en données ou "
+"documentaires sont dans un format ouvert et accessible qui est conforme à"
+" la <a href='https://www.tbs-sct.gc.ca/pol/doc-"
+"fra.aspx?id=23601'><u>Norme sur l'accessibilité des sites "
+"Web</u></a>.</li><li><b>Protection des renseignements personnels</b> - "
+"Les ressources en données ou documentaires ne contiennent pas des "
+"renseignements personnels, au sens de l'article 3 de la <a "
+"href='https://www.priv.gc.ca/fr/sujets-lies-a-la-protection-de-la-vie-"
+"privee/lois-sur-la-protection-des-renseignements-personnels-au-canada/la-"
+"loi-sur-la-protection-des-renseignements-personnels/'><u>Loi sur la "
+"protection des renseignements personnels</u></a>, à moins que la personne"
+" concernée n'ait consenti à leur divulgation ou que les renseignements "
+"personnels ne répondent aux critères énoncés au paragraphe 8(2) de cette "
+"même Loi.</li><li><b>Langues officielles</b> - Les ressources en données "
+"ou documentaires sont disponibles dans les deux langues officielles et "
+"sont conformes aux exigences de la <a href='https://laws-"
+"lois.justice.gc.ca/fra/lois/O-3.01/'><u>Loi sur les langues "
+"officielles</u></a>.</li><li><b>Sécurité</b> - Les ressources en données "
+"ou documentaires n'augmentent pas les risques à la sécurité de "
+"l'institution, des autres institutions ou du gouvernement dans son "
+"ensemble et sont conformes aux exigences de la <a href='https://www.tbs-"
+"sct.gc.ca/pol/doc-fra.aspx?id=16578'><u>Politique sur la sécurité du "
+"gouvernement</u></a> et de ses instruments connexes.</li><li><b>Autres – "
+"Aspects juridiques, réglementaires, stratégiques ou contractuelsl</b> - "
+"La diffusion des ressources en données ou d'autres ressources "
+"documentaires est conforme à toutes les autres exigences juridiques, "
+"réglementaires, contractuelles et stratégiques pertinentes (p. ex., il "
+"est confirmé qu'il n'y a pas de restrictions ou de limitations "
+"juridiques, contractuelles, de tiers ou de stratégiques "
+"pertinentes).</li></ol></small>"
 
 #: ckanext/canada/templates/internal/scheming/form_snippets/repeating_subfields.html:8
 #: ckanext/canada/templates/public/macros/canada_read.html:151
@@ -1552,7 +1570,7 @@ msgstr "Êtes-vous sûr de vouloir supprimer cet utilisateur?"
 #: ckanext/canada/templates/internal/user/edit_user_form.html:51
 #: ckanext/canada/templates/public/user/edit_user_form.html:54
 msgid "Create API Token"
-msgstr "Créer une clé API"
+msgstr ""
 
 #: ckanext/canada/templates/internal/user/edit_user_form.html:54
 #: ckanext/canada/templates/public/user/edit_user_form.html:57

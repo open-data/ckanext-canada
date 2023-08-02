@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  CKAN\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2023-08-02 13:59+0000\n"
+"POT-Creation-Date: 2023-08-02 17:07+0000\n"
 "PO-Revision-Date: 2014-01-23 13:04+0000\n"
 "Last-Translator: Sean Hammond <sean.hammond@okfn.org>\n"
 "Language: en\n"
@@ -220,6 +220,7 @@ msgid "Email"
 msgstr ""
 
 #: ckanext/canada/strings.py:44
+#: ckanext/canada/templates/internal/user/api_tokens.html:5
 #: ckanext/canada/templates/internal/user/list.html:36
 #: ckanext/canada/templates/public/snippets/geomap_dynamic.html:18
 #: ckanext/canada/templates/public/snippets/geomap_static.html:15
@@ -310,15 +311,35 @@ msgstr ""
 msgid "{actor} deleted the {view_type} view {view}"
 msgstr ""
 
+#: ckanext/canada/strings.py:64
+msgid "Request Reset"
+msgstr ""
+
+#: ckanext/canada/strings.py:65
+msgid "Token"
+msgstr ""
+
 #: ckanext/canada/strings.py:66
-msgid "Please upload a file or link to an external resource"
+msgid "Last access"
 msgstr ""
 
 #: ckanext/canada/strings.py:67
-msgid "Cannot upload files of this type"
+msgid "Actions"
 msgstr ""
 
 #: ckanext/canada/strings.py:68
+msgid "Revoke"
+msgstr ""
+
+#: ckanext/canada/strings.py:71
+msgid "Please upload a file or link to an external resource"
+msgstr ""
+
+#: ckanext/canada/strings.py:72
+msgid "Cannot upload files of this type"
+msgstr ""
+
+#: ckanext/canada/strings.py:73
 msgid "Cannot link files of this type"
 msgstr ""
 
