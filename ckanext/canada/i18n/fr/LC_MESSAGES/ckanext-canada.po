@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2023-08-02 17:07+0000\n"
+"POT-Creation-Date: 2023-08-02 17:13+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: fr\n"
@@ -355,32 +355,42 @@ msgid "Request Reset"
 msgstr "Demander une réinitialisation"
 
 #: ckanext/canada/strings.py:65
-msgid "Token"
+#: ckanext/canada/templates/internal/user/edit_user_form.html:51
+#: ckanext/canada/templates/public/user/edit_user_form.html:54
+msgid "Create API Token"
 msgstr ""
 
 #: ckanext/canada/strings.py:66
-msgid "Last access"
+msgid "Token"
 msgstr ""
 
 #: ckanext/canada/strings.py:67
-msgid "Actions"
+msgid "Last access"
 msgstr ""
 
 #: ckanext/canada/strings.py:68
+msgid "Actions"
+msgstr ""
+
+#: ckanext/canada/strings.py:69
 msgid "Revoke"
 msgstr ""
 
-#: ckanext/canada/strings.py:71
+#: ckanext/canada/strings.py:70
+msgid "You haven't created any API Tokens."
+msgstr ""
+
+#: ckanext/canada/strings.py:73
 msgid "Please upload a file or link to an external resource"
 msgstr ""
 "Veuillez téléverser un fichier ou donner un lien vers une ressource "
 "externe"
 
-#: ckanext/canada/strings.py:72
+#: ckanext/canada/strings.py:74
 msgid "Cannot upload files of this type"
 msgstr "Impossible de téléverser un fichier de ce type"
 
-#: ckanext/canada/strings.py:73
+#: ckanext/canada/strings.py:75
 msgid "Cannot link files of this type"
 msgstr "Impossible de donner un lien vers un fichier de ce type"
 
@@ -1566,11 +1576,6 @@ msgstr "Confirmer le mot de passe"
 #: ckanext/canada/templates/public/user/edit_user_form.html:49
 msgid "Are you sure you want to delete this User?"
 msgstr "Êtes-vous sûr de vouloir supprimer cet utilisateur?"
-
-#: ckanext/canada/templates/internal/user/edit_user_form.html:51
-#: ckanext/canada/templates/public/user/edit_user_form.html:54
-msgid "Create API Token"
-msgstr ""
 
 #: ckanext/canada/templates/internal/user/edit_user_form.html:54
 #: ckanext/canada/templates/public/user/edit_user_form.html:57
