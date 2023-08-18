@@ -260,10 +260,16 @@ def create_pd_record(owner_org, resource_name):
                 dry_run=bool(err))
         except ValidationError as ve:
             if 'records' in ve.error_dict:
-                err = dict({
-                    k: [_(e) for e in v]
-                    for (k, v) in ve.error_dict['records'][0].items()
-                }, **err)
+                try:
+                    err = dict({
+                        k: [_(e) for e in v]
+                        for (k, v) in ve.error_dict['records'][0].items()
+                    }, **err)
+                except AttributeError:
+                    err = dict({
+                        k: [_("This record already exists")]
+                        for k in pk_fields
+                    }, **err)
             elif ve.error_dict.get('info', {}).get('pgcode', '') == '23505':
                 err = dict({
                     k: [_("This record already exists")]
