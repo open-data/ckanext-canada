@@ -93,7 +93,7 @@
   <script src="{{ h.url_for_static('/static/js/csrf.js?ver=2') }}"></script>
   <script type="text/javascript" src="{{ h.url_for_static('/static/js/googleanalytics_event_tracking.js') }}" ></script>
   {% block adobe_analytics_footer %}
-    <script type="text/javascript">_satellite.pageBottom();</script>
+    <script type="text/javascript">if( typeof _satellite !== "undefined" ){ _satellite.pageBottom(); }</script>
   {%- endblock -%}
   {% block google_analytics_footer %}{%- endblock -%}
   {{ super() }}

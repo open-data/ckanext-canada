@@ -51,7 +51,7 @@
 
 {% block scripts %}
   {% block adobe_analytics_footer %}
-    <script type="text/javascript">_satellite.pageBottom();</script>
+    <script type="text/javascript">if( typeof _satellite !== "undefined" ){ _satellite.pageBottom(); }</script>
   {%- endblock -%}
   {% block google_analytics_footer %}{%- endblock -%}
   {{ super() }}
