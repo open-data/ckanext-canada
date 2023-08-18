@@ -140,24 +140,26 @@ class CanadaDatasetEditView(DatasetEditView):
             data=None,
             errors=None,
             error_summary=None):
-        response = super(CanadaDatasetEditView, self).get(package_type,
-                                                          id,
-                                                          data,
-                                                          errors,
-                                                          error_summary)
         context = self._prepare(id)
-        pkg_dict = get_action(u'package_show')(
-            dict(context, for_view=True), {
-                u'id': id
-            }
-        )
+        try:
+            pkg_dict = get_action(u'package_show')(
+                dict(context, for_view=True), {
+                    u'id': id
+                }
+            )
+        except (NotAuthorized, NotFound):
+            return abort(404, _(u'Dataset not found'))
         if pkg_dict['type'] in h.recombinant_get_types():
             return h.redirect_to(
                 'recombinant.preview_table',
                 resource_name=pkg_dict['type'],
                 owner_org=pkg_dict['owner_org'],
             )
-        return response
+        return super(CanadaDatasetEditView, self).get(package_type,
+                                                      id,
+                                                      data,
+                                                      errors,
+                                                      error_summary)
 
 
 class CanadaResourceEditView(ResourceEditView):
@@ -185,25 +187,27 @@ class CanadaResourceEditView(ResourceEditView):
             data=None,
             errors=None,
             error_summary=None):
-        response =  super(CanadaResourceEditView, self).get(package_type,
-                                                            id,
-                                                            resource_id,
-                                                            data,
-                                                            errors,
-                                                            error_summary)
         context = self._prepare(id)
-        pkg_dict = get_action(u'package_show')(
-            dict(context, for_view=True), {
-                u'id': id
-            }
-        )
+        try:
+            pkg_dict = get_action(u'package_show')(
+                dict(context, for_view=True), {
+                    u'id': id
+                }
+            )
+        except (NotAuthorized, NotFound):
+            return abort(404, _(u'Dataset not found'))
         if pkg_dict['type'] in h.recombinant_get_types():
             return h.redirect_to(
                 'recombinant.preview_table',
                 resource_name=pkg_dict['type'],
                 owner_org=pkg_dict['owner_org'],
             )
-        return response
+        return super(CanadaResourceEditView, self).get(package_type,
+                                                       id,
+                                                       resource_id,
+                                                       data,
+                                                       errors,
+                                                       error_summary)
 
 
 class CanadaResourceCreateView(ResourceCreateView):
