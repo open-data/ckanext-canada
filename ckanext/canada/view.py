@@ -150,11 +150,7 @@ class CanadaDatasetEditView(DatasetEditView):
         except (NotAuthorized, NotFound):
             return abort(404, _(u'Dataset not found'))
         if pkg_dict['type'] in h.recombinant_get_types():
-            return h.redirect_to(
-                'recombinant.preview_table',
-                resource_name=pkg_dict['type'],
-                owner_org=pkg_dict['owner_org'],
-            )
+            return abort(404, _(u'Dataset not found'))
         return super(CanadaDatasetEditView, self).get(package_type,
                                                       id,
                                                       data,
@@ -197,11 +193,7 @@ class CanadaResourceEditView(ResourceEditView):
         except (NotAuthorized, NotFound):
             return abort(404, _(u'Dataset not found'))
         if pkg_dict['type'] in h.recombinant_get_types():
-            return h.redirect_to(
-                'recombinant.preview_table',
-                resource_name=pkg_dict['type'],
-                owner_org=pkg_dict['owner_org'],
-            )
+            return abort(404, _(u'Dataset not found'))
         return super(CanadaResourceEditView, self).get(package_type,
                                                        id,
                                                        resource_id,
