@@ -1,5 +1,11 @@
 {% ckan_extends %}
 
+{% block content_action %}
+  {% if pkg.type not in h.recombinant_get_types() %}
+    {{ super() }}
+  {% endif %}
+{% endblock %}
+
 {% block content_primary_nav %}
   {{ h.build_nav_icon(pkg.type + '.read', _('Dataset'), id=pkg.name) }}
   {{ h.build_nav_icon('dataset.activity', _('Activity Stream'), id=pkg.name) }}

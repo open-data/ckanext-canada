@@ -134,6 +134,31 @@ class CanadaDatasetEditView(DatasetEditView):
                         % pkg_dict['id'])
         return response
 
+    def get(self,
+            package_type,
+            id,
+            data=None,
+            errors=None,
+            error_summary=None):
+        response = super(CanadaDatasetEditView, self).get(package_type,
+                                                          id,
+                                                          data,
+                                                          errors,
+                                                          error_summary)
+        context = self._prepare(id)
+        pkg_dict = get_action(u'package_show')(
+            dict(context, for_view=True), {
+                u'id': id
+            }
+        )
+        if pkg_dict['type'] in h.recombinant_get_types():
+            return h.redirect_to(
+                'recombinant.preview_table',
+                resource_name=pkg_dict['type'],
+                owner_org=pkg_dict['owner_org'],
+            )
+        return response
+
 
 class CanadaResourceEditView(ResourceEditView):
     def post(self, package_type, id, resource_id):
@@ -151,6 +176,33 @@ class CanadaResourceEditView(ResourceEditView):
                     h.flash_success(
                         _("Your record %s has been saved.")
                         % pkg_dict['id'])
+        return response
+
+    def get(self,
+            package_type,
+            id,
+            resource_id,
+            data=None,
+            errors=None,
+            error_summary=None):
+        response =  super(CanadaResourceEditView, self).get(package_type,
+                                                            id,
+                                                            resource_id,
+                                                            data,
+                                                            errors,
+                                                            error_summary)
+        context = self._prepare(id)
+        pkg_dict = get_action(u'package_show')(
+            dict(context, for_view=True), {
+                u'id': id
+            }
+        )
+        if pkg_dict['type'] in h.recombinant_get_types():
+            return h.redirect_to(
+                'recombinant.preview_table',
+                resource_name=pkg_dict['type'],
+                owner_org=pkg_dict['owner_org'],
+            )
         return response
 
 
