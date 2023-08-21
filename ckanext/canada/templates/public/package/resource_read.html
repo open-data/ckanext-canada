@@ -15,7 +15,8 @@
 {% endblock %}
 
 {% block download_resource_button %}
-  {%if res.datastore_active %}
+  {# FIXME: disable for resources known to trigger timeouts #}
+  {%if res.id != 'fac950c0-00d5-4ec1-a4d3-9cbebf98a305' and res.datastore_active %}
     <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
     <span class="caret"></span>
     </button>

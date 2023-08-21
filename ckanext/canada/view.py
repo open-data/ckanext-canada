@@ -134,6 +134,29 @@ class CanadaDatasetEditView(DatasetEditView):
                         % pkg_dict['id'])
         return response
 
+    def get(self,
+            package_type,
+            id,
+            data=None,
+            errors=None,
+            error_summary=None):
+        context = self._prepare(id)
+        try:
+            pkg_dict = get_action(u'package_show')(
+                dict(context, for_view=True), {
+                    u'id': id
+                }
+            )
+        except (NotAuthorized, NotFound):
+            return abort(404, _(u'Dataset not found'))
+        if pkg_dict['type'] in h.recombinant_get_types():
+            return abort(404, _(u'Dataset not found'))
+        return super(CanadaDatasetEditView, self).get(package_type,
+                                                      id,
+                                                      data,
+                                                      errors,
+                                                      error_summary)
+
 
 class CanadaResourceEditView(ResourceEditView):
     def post(self, package_type, id, resource_id):
@@ -152,6 +175,31 @@ class CanadaResourceEditView(ResourceEditView):
                         _("Your record %s has been saved.")
                         % pkg_dict['id'])
         return response
+
+    def get(self,
+            package_type,
+            id,
+            resource_id,
+            data=None,
+            errors=None,
+            error_summary=None):
+        context = self._prepare(id)
+        try:
+            pkg_dict = get_action(u'package_show')(
+                dict(context, for_view=True), {
+                    u'id': id
+                }
+            )
+        except (NotAuthorized, NotFound):
+            return abort(404, _(u'Dataset not found'))
+        if pkg_dict['type'] in h.recombinant_get_types():
+            return abort(404, _(u'Dataset not found'))
+        return super(CanadaResourceEditView, self).get(package_type,
+                                                       id,
+                                                       resource_id,
+                                                       data,
+                                                       errors,
+                                                       error_summary)
 
 
 class CanadaResourceCreateView(ResourceCreateView):
@@ -260,10 +308,16 @@ def create_pd_record(owner_org, resource_name):
                 dry_run=bool(err))
         except ValidationError as ve:
             if 'records' in ve.error_dict:
-                err = dict({
-                    k: [_(e) for e in v]
-                    for (k, v) in ve.error_dict['records'][0].items()
-                }, **err)
+                try:
+                    err = dict({
+                        k: [_(e) for e in v]
+                        for (k, v) in ve.error_dict['records'][0].items()
+                    }, **err)
+                except AttributeError:
+                    err = dict({
+                        k: [_("This record already exists")]
+                        for k in pk_fields
+                    }, **err)
             elif ve.error_dict.get('info', {}).get('pgcode', '') == '23505':
                 err = dict({
                     k: [_("This record already exists")]
