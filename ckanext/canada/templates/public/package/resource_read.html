@@ -28,10 +28,10 @@
         <a href="{{ h.url_for('datastore.dump', resource_id=res.id, format='tsv', bom=True) }}"
            target="_blank" class="resource-url-analytics" data-gc-analytics="manualDownload"
            data-pkg-id="{{ pkg.id }}" data-res-id="{{ res.id }}" data-org-id="{{ pkg.organization.id }}"><span>TSV</span></a>
-        <a href="{{ h.url_for('datastore.dump', action='dump', resource_id=res.id, format='json') }}"
+        <a href="{{ h.url_for('datastore.dump', resource_id=res.id, format='json') }}"
            target="_blank" class="resource-url-analytics" data-gc-analytics="manualDownload"
            data-pkg-id="{{ pkg.id }}" data-res-id="{{ res.id }}" data-org-id="{{ pkg.organization.id }}"><span>JSON</span></a>
-        <a href="{{ h.url_for('datastore.dump', action='dump', resource_id=res.id, format='xml')}}"
+        <a href="{{ h.url_for('datastore.dump', resource_id=res.id, format='xml')}}"
            target="_blank" class="resource-url-analytics" data-gc-analytics="manualDownload"
            data-pkg-id="{{ pkg.id }}" data-res-id="{{ res.id }}" data-org-id="{{ pkg.organization.id }}"><span>XML</span></a>
         </li>
