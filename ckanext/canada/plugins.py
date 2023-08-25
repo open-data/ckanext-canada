@@ -12,6 +12,7 @@ from paste.reloader import watch_file
 
 from ckan.plugins.toolkit import (
     c,
+    g,
     h,
     chained_action,
     ValidationError,
@@ -702,11 +703,15 @@ class LogExtraMiddleware(object):
     def __call__(self, environ, start_response):
         def _start_response(status, response_headers, exc_info=None):
             extra = []
-            if c.user:
-                log_extra = c.log_extra if hasattr(c, 'log_extra') else u''
+            try:
+                contextual_user = g.user
+            except TypeError:
+                contextual_user = None
+            if contextual_user:
+                log_extra = g.log_extra if hasattr(g, 'log_extra') else u''
                 extra = [(
                     'X-LogExtra', u'user={uid} {extra}'.format(
-                        uid=c.user,
+                        uid=contextual_user,
                         extra=log_extra).encode('utf-8')
                     )
                 ]
