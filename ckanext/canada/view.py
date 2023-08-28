@@ -8,7 +8,7 @@ from dateutil.tz import tzutc
 from socket import error as socket_error
 from logging import getLogger
 from ckanext.datastore.writer import csv_writer
-from six import string_types
+from six import string_types, PY2
 
 from ckan.plugins.toolkit import (
     abort,
@@ -73,6 +73,10 @@ from flask import Blueprint, make_response
 from ckanext.canada.urlsafe import url_part_unescape, url_part_escape
 from ckanext.canada.helpers import canada_date_str_to_datetime
 
+if PY2:
+    from cStringIO import StringIO
+else:
+    from io import StringIO
 
 canada_views = Blueprint('canada', __name__)
 ottawa_tz = timezone('America/Montreal')
@@ -1073,15 +1077,25 @@ def organization_member_dump(id):
         {'id': _('Name')},
         {'id': _('Role')}]
 
-    response = make_response()
+    output_stream = StringIO()
     def start_writer(fields):
-        file_name = u'{org_id}-{members}'.format(
-            org_id=org_dict.name,
-            members=_(u'members'))
-        return writer_factory(response, fields, file_name, bom=True)
+        return writer_factory(output_stream, fields, bom=True)
 
     with start_writer(fields) as wr:
         wr.write_records(results)
+
+    file_name = u'{org_id}-{members}'.format(
+            org_id=org_dict.name,
+            members=_(u'members'))
+
+    output_stream.seek(0)
+    response = make_response(output_stream.read())
+    output_stream.close()
+    content_disposition = u'attachment; filename="{name}.csv"'.format(
+                                    name=file_name)
+    content_type = b'text/csv; charset=utf-8'
+    response.headers['Content-Type'] = content_type
+    response.headers['Content-Disposition'] = content_disposition
 
     return response
 
