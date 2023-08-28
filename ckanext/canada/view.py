@@ -7,7 +7,8 @@ from pytz import timezone, utc
 from dateutil.tz import tzutc
 from socket import error as socket_error
 from logging import getLogger
-from ckanext.datastore.writer import csv_writer
+import unicodecsv
+from codecs import BOM_UTF8
 from six import string_types, PY2
 
 from ckan.plugins.toolkit import (
@@ -1032,7 +1033,6 @@ def notify_ckan_user_create(email, fullname, username, phoneno, dept):
 
 @canada_views.route('/organization/member_dump/<id>', methods=['GET'])
 def organization_member_dump(id):
-    writer_factory = csv_writer
     records_format = u'csv'
 
     org_dict = model.Group.get(id)
@@ -1060,29 +1060,21 @@ def organization_member_dump(id):
     except NotFound:
         abort(404, _('Members not found'))
 
-    results = ''
+    results = [[_('Username'), _('Email'), _('Name'), _('Role')]]
     for uid, _user, role in members:
         user_obj = model.User.get(uid)
         if not user_obj:
             continue
-        results += '{name},{email},{fullname},{role}\n'.format(
-            name=user_obj.name,
-            email=user_obj.email,
-            fullname=user_obj.fullname if user_obj.fullname else _('N/A'),
-            role=role)
-
-    fields = [
-        {'id': _('Username')},
-        {'id': _('Email')},
-        {'id': _('Name')},
-        {'id': _('Role')}]
+        results.append([
+            user_obj.name,
+            user_obj.email,
+            user_obj.fullname if user_obj.fullname else _('N/A'),
+            role,
+        ])
 
     output_stream = StringIO()
-    def start_writer(fields):
-        return writer_factory(output_stream, fields, bom=True)
-
-    with start_writer(fields) as wr:
-        wr.write_records(results)
+    output_stream.write(BOM_UTF8)
+    unicodecsv.writer(output_stream, encoding=u'utf-8').writerows(results)
 
     file_name = u'{org_id}-{members}'.format(
             org_id=org_dict.name,
