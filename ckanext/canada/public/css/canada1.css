@@ -424,10 +424,17 @@ form .form-actions .btn{
   border-bottom: 0;
   border-left: 0.3em solid transparent;
 }
+.resources-side-panel .nav-item{
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
 .resources-side-panel .nav-item > a{
   padding-left: 15px;
   padding-right: 65px;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
   position: relative;
+  width: 100%;
 }
 .resources-side-panel .nav-item ul.dropdown-menu{
   position: absolute;
@@ -562,5 +569,18 @@ body i.fa.fa-arrow-left::before{
 /*##################################
 ##              END               ##
 ## Bootstrap Versioning Overrides ##
+##              END               ##
+####################################*/
+
+
+/*##################################
+##  Resource Actions Toolbar Area ##
+###################################*/
+.resource-actions-toolbar ul.gap-1 > li{
+  margin-right: 5px !important;
+}
+/*##################################
+##              END               ##
+##  Resource Actions Toolbar Area ##
 ##              END               ##
 ####################################*/
