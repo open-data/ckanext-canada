@@ -7,6 +7,10 @@
   {% endif %}
 {% endblock %}
 
+{% block resource_actions %}
+  <div class="resource-actions-toolbar">{{ super() }}</div>
+{% endblock %}
+
 {% block resource_content %}
   {% block resource_read_title %}{{ super() }}{% endblock %}
   {% block resource_read_url %}
