@@ -24,24 +24,23 @@
       <i class="fa fa-language text-muted mrgn-lft-sm" title="{{ _("This third party metadata element has been translated using an automated translation tool.  To report any discrepancies please contact open-ouvert@tbs-sct.gc.ca") }}"></i>
     {% endif %}
   </h1>
+  {% if is_activity_archive %}
+    <div class="module-alert alert alert-danger mrgn-tp-sm">
+      <p>
+        {% trans url = h.url_for(pkg.type + '.read', id=pkg.id) %}You're currently viewing an old version of this dataset. Some resources may no longer exist or the dataset may not display correctly. To see the current version, click <a href="{{ url }}">here</a>.{% endtrans %}
+      </p>
+    </div>
+  {% endif %}
 {% endblock %}
 
 {% block primary_content_inner %}
-  {% if not c.is_activity_archive %}
+  {% if not is_activity_archive %}
     {%- snippet 'package/snippets/schemaorg.html', data=pkg -%}
   {% endif %}
   <div class="module">
     {% block internal_actions %}{% endblock %}
 
-    {% block package_archive_notice %}
-    {% if c.is_activity_archive %}
-    <div class="alert alert-error">
-      <p>
-        {% trans url = h.url_for(pkg.type + '.read', id=pkg.id) %}You're currently viewing an old version of this dataset. Some resources may no longer exist or the dataset may not display correctly. To see the current version, click <a href="{{ url }}">here</a>.{% endtrans %}
-      </p>
-    </div>
-    {% endif %}
-    {% endblock %}
+    {% block package_archive_notice %}{% endblock %}
 
     {% block package_item_title %}
     <section class="module-content indent-large">
