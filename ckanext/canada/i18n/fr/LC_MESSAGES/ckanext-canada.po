@@ -397,10 +397,12 @@ msgstr "Impossible de donner un lien vers un fichier de ce type"
 #: ckanext/canada/strings.py:78
 msgid "These fields have been removed, click update below to save your changes."
 msgstr ""
+"Ces champs seront supprimés une fois que vous aurez sauvegardé "
+"vos changements."
 
 #: ckanext/canada/strings.py:79
 msgid "These fields have been removed."
-msgstr ""
+msgstr "Ces champs ont été supprimés."
 
 #: ckanext/canada/validators.py:120
 #, python-format
