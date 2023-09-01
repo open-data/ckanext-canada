@@ -130,14 +130,14 @@
               {{ _('Link to JSON format') }}
             </a>
           </li>
-          {% if h.plugin_loaded('dcat_json_interface') %}
+          {% if h.plugin_loaded('dcat_json_interface') and pkg.type not in h.recombinant_get_types() %}
           <li class="list-group-item" style="border: none;">
             <a href="{{ h.url_for(pkg.type + '.read', id=pkg.id) }}.jsonld" rel="nofollow">
               {{ _('DCAT (JSON-LD)') }}
             </a>
           </li>
           {% endif %}
-          {% if h.plugin_loaded('dcat') %}
+          {% if h.plugin_loaded('dcat') and pkg.type not in h.recombinant_get_types() %}
           <li class="list-group-item" style="border: none;">
             <a href="{{ h.url_for(pkg.type + '.read', id=pkg.id) }}.xml" rel="nofollow">
               {{ _('DCAT (XML)') }}
