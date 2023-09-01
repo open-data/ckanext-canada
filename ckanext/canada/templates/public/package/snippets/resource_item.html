@@ -11,7 +11,9 @@
       {%- if machine_translated -%}
       <i class="fa fa-language text-muted" style="margin-left: 10px;" title="{{ _("This third party metadata element has been translated using an automated translation tool.  To report any discrepancies please contact open-ouvert@tbs-sct.gc.ca") }}"></i>
       {%- endif -%}
-      {{ h.popular('views', res.tracking_summary.total, min=10) }}
+      {% if 'tracking_summary' in res %}
+        {{ h.popular('views', res.tracking_summary.total, min=10) }}
+      {% endif %}
     </a>
     {% set language_options = h.scheming_get_preset('canada_resource_language').choices %}
     <div>
@@ -74,7 +76,7 @@
         </a>
       </li>
       {% endif %}
-      {% if can_edit %}
+      {% if can_edit and not is_activity_archive %}
         <li>{% link_for _('Edit resource'), named_route=pkg.type ~ '_resource.edit', id=pkg.name, resource_id=res.id, class_='dropdown-item', icon='pencil' %}</li>
         {% block resource_item_explore_inner scoped %}{% endblock %}
         <li>{% link_for _('Views'), named_route=pkg.type ~ '_resource.views', id=pkg.name, resource_id=res.id, class_='dropdown-item', icon='chart-bar' %}
