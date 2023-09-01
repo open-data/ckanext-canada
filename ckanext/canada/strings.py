@@ -73,3 +73,7 @@ _("You haven't created any API Tokens.")
 _("Please upload a file or link to an external resource")
 _("Cannot upload files of this type")
 _("Cannot link files of this type")
+
+# strings from scheming
+_('These fields have been removed, click update below to save your changes.')
+_('These fields have been removed.')

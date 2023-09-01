@@ -754,7 +754,7 @@ def datastore_delete(up_func, context, data_dict):
     if data_dict.get('url_type', None) == 'upload':
         return up_func(context, data_dict)
 
-    lc = ckanapi.LocalCKAN(username=c.user)
+    lc = ckanapi.LocalCKAN(username=context['user'])
     res_id = data_dict['id'] if 'id' in data_dict.keys() else data_dict['resource_id']
     res = lc.action.datastore_search(
         resource_id=res_id,
