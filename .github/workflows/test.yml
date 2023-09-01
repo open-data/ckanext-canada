@@ -62,8 +62,7 @@ jobs:
         git --git-dir=\/srv\/app\/src\/ckan\/.git --work-tree=\/srv\/app\/src\/ckan\/ pull
     - name: Install requirements
       run: |
-        apk --update add libxml2-dev libxslt-dev libffi-dev gcc musl-dev libgcc openssl-dev curl
-        apk add jpeg-dev zlib-dev freetype-dev lcms2-dev openjpeg-dev tiff-dev tk-dev tcl-dev
+        apk add jpeg-dev
         pip install setuptools==36.1
         pip install --upgrade pip==19.2.1
         pip install -e \/srv\/app\/src\/ckan\/ -r \/srv\/app\/src\/ckan\/requirements-py2.txt -r \/srv\/app\/src\/ckan\/dev-requirements.txt
