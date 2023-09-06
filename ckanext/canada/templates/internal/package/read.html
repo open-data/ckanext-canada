@@ -5,6 +5,7 @@
     {# Package State Messages #}
     {% set portal_link = h.portal_url() ~ "/data/" ~ client_lang ~ "/" ~ pkg.get('type', 'dataset') ~ "/" ~ pkg.name %}
     {% set portal_status_alerts = [] %}
+    {% set is_type_for_alerts = pkg.get('type') == 'dataset' or pkg.get('type') == 'info' %}
     {% set is_draft = pkg.state.startswith('draft') %}
     {% set no_ready_to_publish = pkg['ready_to_publish'] == 'false' or not pkg['ready_to_publish'] %}
     {% set no_has_approval = pkg['imso_approval'] == 'false' or not pkg['imso_approval'] %}
@@ -41,7 +42,7 @@
     {% endif %}
 
     {# Show State Messages #}
-    {% if not is_draft %}  {# Do not show alerts or button if Draft #}
+    {% if not is_draft and is_type_for_alerts %}  {# Do not show alerts or button if Draft #}
       {% if portal_status_alerts %}  {# Show all status alerts #}
         {% for alert in portal_status_alerts %}
           <div class="module-alert alert alert-{{ alert['alert_class'] }} mrgn-tp-sm">
