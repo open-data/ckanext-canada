@@ -183,17 +183,19 @@ class TestNewUserWebForms(CanadaTestBase):
         Setup any state specific to the execution of the given class methods.
         """
         super(TestNewUserWebForms, self).setup_method(method)
+        self.extra_environ_tester = {'REMOTE_USER': str(u"")}
         self.org = Organization()
 
 
     def test_new_user_required_fields(self, app):
         offset = h.url_for('user.register')
-        response = app.get(offset)
+        response = app.get(offset, extra_environ=self.extra_environ_tester)
 
         assert 'Request an Account' in response.body
 
         response = app.post(offset,
                             data=self._filled_new_user_form(),
+                            extra_environ=self.extra_environ_tester,
                             follow_redirects=True)
 
         assert 'Account Created' in response.body
@@ -202,7 +204,7 @@ class TestNewUserWebForms(CanadaTestBase):
 
     def test_new_user_missing_fields(self, app):
         offset = h.url_for('user.register')
-        response = app.get(offset)
+        response = app.get(offset, extra_environ=self.extra_environ_tester)
 
         assert 'Request an Account' in response.body
 
@@ -214,6 +216,7 @@ class TestNewUserWebForms(CanadaTestBase):
         }
         response = app.post(offset,
                             data=incomplete_new_user_form,
+                            extra_environ=self.extra_environ_tester,
                             follow_redirects=True)
 
         assert 'The form contains invalid entries' in response.body
