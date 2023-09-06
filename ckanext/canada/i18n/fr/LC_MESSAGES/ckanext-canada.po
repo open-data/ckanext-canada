@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2023-08-31 15:35+0000\n"
+"POT-Creation-Date: 2023-09-06 15:33+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: fr\n"
@@ -23,7 +23,7 @@ msgstr ""
 msgid "A system administrator"
 msgstr "Un administrateur du système"
 
-#: ckanext/canada/helpers.py:562 ckanext/canada/strings.py:40
+#: ckanext/canada/helpers.py:562 ckanext/canada/strings.py:13
 #: ckanext/canada/view.py:1061
 msgid "Members not found"
 msgstr "Membres non trouvés"
@@ -89,152 +89,20 @@ msgstr "Précédent"
 msgid "Next"
 msgstr "Suivant"
 
-#: ckanext/canada/strings.py:8
-msgid ""
-"This field must be populated with an NA if an amendment is disclosed "
-"under Instrument Type."
-msgstr ""
-"Ce champ doit contenir NA si une modification est divulguée sous "
-"l’élément Type d’instrument."
-
-#: ckanext/canada/strings.py:9
-msgid ""
-"If N/A, then Instrument Type must be identified as a standing "
-"offer/supply arrangement (SOSA)"
-msgstr ""
-"Si N/A, alors le Type d’instrument doit être identifié comme étant une "
-"offre à commandes ou un arrangement en matière d’approvisionnement "
-"(SOSA)."
-
-#: ckanext/canada/strings.py:10
-msgid ""
-"If the value XX (none) is entered, then no other value can be entered in "
-"this field."
-msgstr ""
-"Si la valeur XX (aucun) est inscrite, alors aucune autre valeur ne peut "
-"être inscrite dans ce champ."
-
 #: ckanext/canada/strings.py:11
-msgid ""
-"If the value NA (not applicable) is entered, then no other value can be "
-"entered in this field."
-msgstr ""
-"Si la valeur NA (sans objet) est inscrite, alors aucune autre valeur ne "
-"peut être inscrite dans ce champ."
-
-#: ckanext/canada/strings.py:12
-msgid ""
-"This field must be NA (not applicable) if the Agreement Type or Trade "
-"Agreement field is not 0 (none) or XX (none), as applicable."
-msgstr ""
-"Ce champ doit être NA (non applicable) si le champ Type d’accord ou "
-"Accord commercial n’est pas 0 (aucun) ou XX (aucun) selon le cas"
-
-#: ckanext/canada/strings.py:14
-msgid ""
-"If the value 00 (none) is entered, then no other value can be entered in "
-"this field."
-msgstr ""
-"Si la valeur 00 (aucune) est inscrite, alors aucune autre valeur ne peut "
-"être inscrite dans ce champ."
-
-#: ckanext/canada/strings.py:15
-msgid ""
-"This field must contain the first three digits of a postal code in A1A "
-"format or the value \"NA\""
-msgstr ""
-"Ce champ doit contenir les trois premiers chiffres d’un code postal dans "
-"le format A1A ou la valeur « NA. »"
-
-#: ckanext/canada/strings.py:16
-msgid ""
-"This field must be N, No or Non, if the Agreement Type or Trade Agreement"
-" field is not 0 (none) or XX (none), as applicable."
-msgstr ""
-"Ce champ doit être N, No ou Non, si les champs Type d’accord ou Accord "
-"commercial ne contiennent pas la valeur 0 (aucun) ou XX (aucun), le cas "
-"échéant."
-
-#: ckanext/canada/strings.py:18
-msgid ""
-"This field must be N, No or Non, if the Procurement Strategy for "
-"Aboriginal Business field is MS or VS."
-msgstr ""
-"Ce champ doit être N, No ou Non, si le champ Stratégie "
-"d’approvisionnement auprès des entreprises autochtones contient MS ou VS."
-
-#: ckanext/canada/strings.py:19
-msgid ""
-"This field may only be populated with a 1 if the solicitation procedure "
-"is identified as non-competitive (TN) or Advance Contract Award Notice "
-"(AC)"
-msgstr ""
-"Ce champ ne peut être rempli avec un 1 que si la procédure de "
-"consultation est jugée non concurrentielle (TN) ou si elle fait référence"
-" à un préavis d’adjudication de contrat (PAC)"
-
-#: ckanext/canada/strings.py:21
-msgid ""
-"This field may only be populated with a 0 if a Call-up against a standing"
-" offer or supply arrangement was identified in the Contracting Entity "
-"data field"
-msgstr ""
-"Ce champ ne peut être rempli avec un 0 que si une commande subséquente à "
-"une offre à commandes ou à un arrangement en matière d’approvisionnement "
-"est indiquée dans le champ de données de l’entité contractante"
-
-#: ckanext/canada/strings.py:23
-msgid ""
-"This field may only be populated with \"0\" if the procurement was "
-"identified as non-competitive (TN) or advance contract award notice (AC)."
-msgstr ""
-
-#: ckanext/canada/strings.py:25
-msgid ""
-"This field may not be populated with 1, 2, 3 or 4 if the procurement was "
-"identified as non-competitive or Advance Contract Award Notice."
-msgstr ""
-"Ce champ ne peut être rempli avec un 1 2 3 ou 4 si l’approvisionnement "
-"est jugé non concurrentiel ou s’il fait référence à un préavis "
-"d’adjudication de contrat."
-
-#: ckanext/canada/strings.py:27
-msgid ""
-"Commodity Type of G for Goods which requires a Delivery Date and not a "
-"Contract Period Start Date. Please either change the Commodity Type to S "
-"or remove the date from the Contract Period Start Date field"
-msgstr ""
-"Type de produit G pour les biens, ce qui requière une Date de livraison "
-"et non une Date de début du marché. Prière de changer le Type de produit "
-"pour S ou de retirer la date du champ Date de début du marché"
-
-#: ckanext/canada/strings.py:30
-msgid ""
-"If the value XX (none) is entered here, then the following three fields "
-"must be identified as NA or N, as applicable: Comprehensive Land Claim "
-"Agreement, Procurement Strategy for Aboriginal Business, Procurement "
-"Strategy for Aboriginal Business Incidental Indicator"
-msgstr ""
-"Si la valeur XX (aucun) est saisie ici les trois champs suivants doivent "
-"indiquer NA ou N selon le cas : Ententes sur les revendications "
-"territoriales globales Stratégie d’approvisionnement auprès des "
-"entreprises autochtones Indicateur d’incidence de la Stratégie "
-"d’approvisionnement auprès des entreprises autochtones"
-
-#: ckanext/canada/strings.py:38
 #: ckanext/canada/templates/internal/package/base_form_page.html:4
 msgid "Create Dataset"
 msgstr "Créer un jeu de données"
 
-#: ckanext/canada/strings.py:39
+#: ckanext/canada/strings.py:12
 msgid "Not authorized to access {group} members download"
 msgstr "Non autorisé à accéder au téléchargement des membres du {group}"
 
-#: ckanext/canada/strings.py:41 ckanext/canada/view.py:1071
+#: ckanext/canada/strings.py:14 ckanext/canada/view.py:1071
 msgid "N/A"
 msgstr "N/A"
 
-#: ckanext/canada/strings.py:42
+#: ckanext/canada/strings.py:15
 #: ckanext/canada/templates/internal/user/edit_user_form.html:8
 #: ckanext/canada/templates/internal/user/list.html:35
 #: ckanext/canada/templates/internal/user/new_user_form.html:7
@@ -247,7 +115,7 @@ msgstr "N/A"
 msgid "Username"
 msgstr "Nom d’utilisateur"
 
-#: ckanext/canada/strings.py:43
+#: ckanext/canada/strings.py:16
 #: ckanext/canada/templates/internal/user/edit_user_form.html:12
 #: ckanext/canada/templates/internal/user/new_user_form.html:13
 #: ckanext/canada/templates/public/user/edit_user_form.html:10
@@ -256,7 +124,7 @@ msgstr "Nom d’utilisateur"
 msgid "Email"
 msgstr "Courriel"
 
-#: ckanext/canada/strings.py:44
+#: ckanext/canada/strings.py:17
 #: ckanext/canada/templates/internal/user/api_tokens.html:5
 #: ckanext/canada/templates/internal/user/list.html:36
 #: ckanext/canada/templates/public/snippets/geomap_dynamic.html:18
@@ -265,144 +133,606 @@ msgstr "Courriel"
 msgid "Name"
 msgstr "Nom"
 
-#: ckanext/canada/strings.py:45
+#: ckanext/canada/strings.py:18
 #: ckanext/canada/templates/internal/user/list.html:37
 #: ckanext/canada/templates/public/organization/member_new.html:63
 #: ckanext/canada/view.py:1063
 msgid "Role"
 msgstr "Rôle"
 
-#: ckanext/canada/strings.py:46 ckanext/canada/view.py:1081
+#: ckanext/canada/strings.py:19 ckanext/canada/view.py:1081
 msgid "members"
 msgstr "membres"
 
-#: ckanext/canada/strings.py:47
+#: ckanext/canada/strings.py:20
 #: ckanext/canada/templates/internal/organization/members.html:6
 msgid "CSV"
 msgstr "CSV"
 
-#: ckanext/canada/strings.py:48
+#: ckanext/canada/strings.py:21
 msgid "A related item has been added"
 msgstr "Un élément connexe a été ajouté"
 
-#: ckanext/canada/strings.py:49
+#: ckanext/canada/strings.py:22
 msgid "A resource has been added"
 msgstr "Une ressource a été ajoutée"
 
-#: ckanext/canada/strings.py:50
+#: ckanext/canada/strings.py:23
 msgid "Resource id already exists."
 msgstr "L’identifiant de la ressource existe déjà."
 
-#: ckanext/canada/strings.py:51
+#: ckanext/canada/strings.py:24
 msgid "Invalid characters in resource id"
 msgstr "Caractères non valides dans l’identifiant de la ressource"
 
-#: ckanext/canada/strings.py:52
+#: ckanext/canada/strings.py:25
 msgid "Invalid length for resource id"
 msgstr "Longueur non valide pour l’identifiant de la ressource"
 
-#: ckanext/canada/strings.py:53
+#: ckanext/canada/strings.py:26
 msgid "Resource view id already exists"
 msgstr "L’identifiant d’affichage de la ressource existe déjà"
 
-#: ckanext/canada/strings.py:54
+#: ckanext/canada/strings.py:27
 msgid "Value must be one of {}"
 msgstr "La valeur doit être l’une des suivantes : {}"
 
-#: ckanext/canada/strings.py:55
+#: ckanext/canada/strings.py:28
 msgid "Could not parse the value as a valid JSON object"
 msgstr "Impossible d’analyser la valeur comme un objet JSON valide"
 
-#: ckanext/canada/strings.py:56
+#: ckanext/canada/strings.py:29
 msgid "Could not parse extra '{name}' as valid JSON"
 msgstr ""
 "Impossible d’analyser les données supplémentaires '{name}' en tant que "
 "JSON valide"
 
-#: ckanext/canada/strings.py:57
+#: ckanext/canada/strings.py:30
 #, python-format
 msgid "Dear %(user_name)s,"
 msgstr "Bonjour %(user_name)s"
 
-#: ckanext/canada/strings.py:58
+#: ckanext/canada/strings.py:31
 #, python-format
 msgid "Invite for %(site_title)s"
 msgstr "Invitation pour %(site_title)s"
 
-#: ckanext/canada/strings.py:59
+#: ckanext/canada/strings.py:32
 msgid "Dataset Deleted"
 msgstr "Jeu de données supprimé"
 
-#: ckanext/canada/strings.py:60
+#: ckanext/canada/strings.py:33
 #: ckanext/canada/templates/public/package/deleted.html:10
 msgid "Created On"
 msgstr "Date de création"
 
-#: ckanext/canada/strings.py:61
+#: ckanext/canada/strings.py:34
 msgid "Choose format"
 msgstr "Choisir le format"
 
-#: ckanext/canada/strings.py:62
+#: ckanext/canada/strings.py:35
 msgid "Submit"
 msgstr "Soumettre"
 
-#: ckanext/canada/strings.py:63
+#: ckanext/canada/strings.py:36
 msgid "{actor} deleted the {view_type} view {view}"
 msgstr "{actor} a supprimé l’affichage {view_type} {view}"
 
-#: ckanext/canada/strings.py:64
+#: ckanext/canada/strings.py:37
 msgid "Request Reset"
 msgstr "Demander une réinitialisation"
 
-#: ckanext/canada/strings.py:65
+#: ckanext/canada/strings.py:38
 #: ckanext/canada/templates/internal/user/edit_user_form.html:51
 #: ckanext/canada/templates/public/user/edit_user_form.html:54
 msgid "Create API Token"
 msgstr "Créer un jeton d’API"
 
-#: ckanext/canada/strings.py:66
+#: ckanext/canada/strings.py:39
 msgid "Token"
 msgstr "Jeton"
 
-#: ckanext/canada/strings.py:67
+#: ckanext/canada/strings.py:40
 msgid "Last access"
 msgstr "Dernière date d’accès"
 
-#: ckanext/canada/strings.py:68
+#: ckanext/canada/strings.py:41
 msgid "Actions"
 msgstr "Actions"
 
-#: ckanext/canada/strings.py:69
+#: ckanext/canada/strings.py:42
 msgid "Revoke"
 msgstr "Supprimer"
 
-#: ckanext/canada/strings.py:70
+#: ckanext/canada/strings.py:43
 msgid "You haven't created any API Tokens."
 msgstr "Vous n’avez créé aucun jeton d’API."
 
-#: ckanext/canada/strings.py:73
+#: ckanext/canada/strings.py:46
 msgid "Please upload a file or link to an external resource"
 msgstr ""
 "Veuillez téléverser un fichier ou donner un lien vers une ressource "
 "externe"
 
-#: ckanext/canada/strings.py:74
+#: ckanext/canada/strings.py:47
 msgid "Cannot upload files of this type"
 msgstr "Impossible de téléverser un fichier de ce type"
 
-#: ckanext/canada/strings.py:75
+#: ckanext/canada/strings.py:48
 msgid "Cannot link files of this type"
 msgstr "Impossible de donner un lien vers un fichier de ce type"
 
-#: ckanext/canada/strings.py:78
+#: ckanext/canada/strings.py:51
 msgid "These fields have been removed, click update below to save your changes."
 msgstr ""
-"Ces champs seront supprimés une fois que vous aurez sauvegardé "
-"vos changements."
+"Ces champs seront supprimés une fois que vous aurez sauvegardé vos "
+"changements."
 
-#: ckanext/canada/strings.py:79
+#: ckanext/canada/strings.py:52
 msgid "These fields have been removed."
 msgstr "Ces champs ont été supprimés."
+
+#: ckanext/canada/strings.py:56
+msgid "Proactive Disclosure - Use of Administrative Aircraft"
+msgstr "Divulgation proactive - Utilisation des avions d'affaires"
+
+#: ckanext/canada/strings.py:57
+msgid "Use of Administrative Aircraft"
+msgstr "Utilisation des avions d'affaires"
+
+#: ckanext/canada/strings.py:58
+msgid "Access, upload and modify government administrative aircraft use"
+msgstr ""
+"Accès, téléversement et modifications des rapports sur la utilisation des"
+" avions d'affaires"
+
+#: ckanext/canada/strings.py:60
+msgid "ATI Summaries"
+msgstr "Accès à l’information sommaires complétés"
+
+#: ckanext/canada/strings.py:61
+msgid ""
+"Access, upload and modify the monthly ATI Summaries and ATI Nothing to "
+"Report for your organization"
+msgstr ""
+"Accès, téléversement et modification des sommaires mensuels des demandes "
+"d’accès à l’information et des demandes d’accès pour lesquelles rien "
+"n’est à signaler pour votre organisation"
+
+#: ckanext/canada/strings.py:62
+msgid "ATI Nothing to Report"
+msgstr "Accès à l’information rien à signaler"
+
+#: ckanext/canada/strings.py:63
+msgid "Please enter a valid year"
+msgstr "Veuillez entrer une année valide"
+
+#: ckanext/canada/strings.py:64
+msgid "Please enter a month number from 1-12"
+msgstr "Veuillez entrer une valeur comprise entre 1 et 12"
+
+#: ckanext/canada/strings.py:65
+msgid "This value must not be negative"
+msgstr "Cette valeur ne doit pas être négatif"
+
+#: ckanext/canada/strings.py:67
+msgid "Proactive Disclosure - Briefing Note Titles and Numbers"
+msgstr "Divulgation proactive - Titres et numéros des notes d’information"
+
+#: ckanext/canada/strings.py:68
+msgid "Briefing Note Titles and Numbers"
+msgstr "Titres et numéros des notes d’information"
+
+#: ckanext/canada/strings.py:69
+msgid ""
+"Access, upload and modify the Briefing Note Titles and Numbers reports "
+"for your organization"
+msgstr ""
+"Accès, téléversement et modifications des rapports sur les titres at "
+"numéros des notes d’information pour votre organisation"
+
+#: ckanext/canada/strings.py:71
+msgid "Open Dialogue - Consultations"
+msgstr "Dialogue ouvert - Consultations"
+
+#: ckanext/canada/strings.py:72
+msgid "Consultations"
+msgstr "Consultations"
+
+#: ckanext/canada/strings.py:73
+msgid "Access, upload and modify consultation reports for your organization"
+msgstr ""
+"Accès, téléversement et modifications des rapports sur les consultations "
+"pour votre organisation"
+
+#: ckanext/canada/strings.py:74
+msgid "If Status is set to: Not Going Forward, Publish Record must be set to No"
+msgstr ""
+
+#: ckanext/canada/strings.py:76
+msgid "Proactive Publication - Contracts over $10,000"
+msgstr "Publication proactive - Contrats attribués de plus de 10 000 $"
+
+#: ckanext/canada/strings.py:77
+msgid "Contracts over $10,000"
+msgstr "Contrats attribués de plus de 10 000 $"
+
+#: ckanext/canada/strings.py:78
+msgid ""
+"Access, upload and modify the Contracts over 10K reports for your "
+"organization"
+msgstr ""
+"Accès, téléversement et modification des rapports  sur les contrats "
+"attribués de plus de 10 000 $ pour votre organisation"
+
+#: ckanext/canada/strings.py:79
+msgid "Proactive Publication - Contracts Nothing to Report"
+msgstr "Publication proactive - Contrats (Rien à signaler)"
+
+#: ckanext/canada/strings.py:80
+msgid "Contracts Nothing to Report"
+msgstr "Contrats (Rien à signaler)"
+
+#: ckanext/canada/strings.py:81
+msgid ""
+"This field must contain the first three digits of a postal code in A1A "
+"format or the value \"NA\""
+msgstr ""
+"Ce champ doit contenir les trois premiers chiffres d’un code postal dans "
+"le format A1A ou la valeur « NA. »"
+
+#: ckanext/canada/strings.py:82
+msgid ""
+"This field must be populated with an NA if an amendment is disclosed "
+"under Instrument Type."
+msgstr ""
+"Ce champ doit contenir NA si une modification est divulguée sous "
+"l’élément Type d’instrument."
+
+#: ckanext/canada/strings.py:83
+msgid "This field is limited to only 3 or 4 digits."
+msgstr "Ce champ est limité à 3 ou 4 caractères."
+
+#: ckanext/canada/strings.py:84
+msgid ""
+"If N/A, then Instrument Type must be identified as a standing "
+"offer/supply arrangement (SOSA)"
+msgstr ""
+"Si N/A, alors le Type d’instrument doit être identifié comme étant une "
+"offre à commandes ou un arrangement en matière d’approvisionnement "
+"(SOSA)."
+
+#: ckanext/canada/strings.py:85
+msgid ""
+"If the value XX (none) is entered, then no other value can be entered in "
+"this field."
+msgstr ""
+"Si la valeur XX (aucun) est inscrite, alors aucune autre valeur ne peut "
+"être inscrite dans ce champ."
+
+#: ckanext/canada/strings.py:86
+msgid "Discontinued as of 2022-01-01"
+msgstr ""
+
+#: ckanext/canada/strings.py:87
+msgid "Must be left blank when trade agreements specified"
+msgstr ""
+
+#: ckanext/canada/strings.py:88
+msgid ""
+"If the value NA (not applicable) is entered, then no other value can be "
+"entered in this field."
+msgstr ""
+"Si la valeur NA (sans objet) est inscrite, alors aucune autre valeur ne "
+"peut être inscrite dans ce champ."
+
+#: ckanext/canada/strings.py:89
+msgid "The field is limited to eight alpha-numeric digits or less."
+msgstr "Ce champ est limité à 8 caractères alphanumériques."
+
+#: ckanext/canada/strings.py:90
+msgid ""
+"If the value 00 (none) is entered, then no other value can be entered in "
+"this field."
+msgstr ""
+"Si la valeur 00 (aucune) est inscrite, alors aucune autre valeur ne peut "
+"être inscrite dans ce champ."
+
+#: ckanext/canada/strings.py:91
+msgid ""
+"If TC, TN or AC is selected in the Solicitation Procedure data field with"
+" a value other than XX (None) selected in the Trade Agreement data field,"
+" then a Limited Tendering value other than 00 (none) must be entered."
+msgstr ""
+"Si TC, TN ou AC est sélectionné dans le champ de données Méthode "
+"d’invitation à soumissioner avec une valeur autre que XX (Aucune) "
+"sélectionnée dans le champ de données Accord commercial, une valeur "
+"d'offre limitée autre que 0 (aucune) doit être entrée."
+
+#: ckanext/canada/strings.py:92
+msgid ""
+"If “TC” (Competitive - Traditional), “TN” (Non-Competitive) or “AC” "
+"(Advanced Contract Award Notice) is selected and trade agreement with a "
+"value other than “XX” (None) is selected, limited tendering cannot have a"
+" value of “0” or “00” (None)."
+msgstr ""
+"Si les options « TC » (Concurrentielle - Traditionnelle), « TN » (non "
+"concurrentielle) ou « AC » (préavis d’attribution de contrat) sont "
+"sélectionnées et qu’une entente de marché ayant une valeur autre que « XX"
+" » (nulle) est sélectionnée, le champ Appel d’offres restreint ne peut "
+"avoir la valeur « 0 » ou « 00 » (nulle)."
+
+#: ckanext/canada/strings.py:93
+msgid ""
+"This field must be N, No or Non, if the Procurement Strategy for "
+"Aboriginal Business field is MS or VS."
+msgstr ""
+"Ce champ doit être N, No ou Non, si le champ Stratégie "
+"d’approvisionnement auprès des entreprises autochtones contient MS ou VS."
+
+#: ckanext/canada/strings.py:94
+msgid ""
+"This field must be populated with a 1 if the solicitation procedure is "
+"identified as non-competitive (TN) or Advance Contract Award Notice (AC)."
+msgstr ""
+"Cette zone doit contenir un « 1 » si la méthode d’invitation à "
+"soumissionner est identifiée comme étant non concurrentielle (TN) ou un "
+"préavis d’attribution de contrat (AC)."
+
+#: ckanext/canada/strings.py:95
+msgid ""
+"If this field is populated, it must be with a “0” if the procurement was "
+"identified as non-competitive (TN) or advance contract award notice (AC) "
+"or was identified as an Amendment (A) in the Instrument type data field."
+msgstr ""
+"Si cette zone est remplie, il doit contenir un « 0 » si l’acquisition a "
+"été identifiée comme étant non concurrentielle (TN) ou un préavis "
+"d’attribution de contrat (AC) ou si l’acquisition a été identifiée comme "
+"un modification (A) dans le champ Type d’instrument."
+
+#: ckanext/canada/strings.py:96
+msgid ""
+"This field may only be populated with “0” if the procurement was "
+"identified as competitive (open bidding (OB), traditional competitive "
+"(TC) or selective tendering (ST))."
+msgstr ""
+"Cette zone peut seulement contenir « 0 » si l’acquisition a été "
+"identifiée comme étant concurrentielle (invitation ouverte à "
+"soumissionner (OB) ou concurrentielle - traditionnelle (TC) ou "
+"Concurrentielle – Appel d’offres sélectif (ST))."
+
+#: ckanext/canada/strings.py:98
+msgid "Proactive Publication - Aggregated Contracts from -$10,000 to $10,000"
+msgstr "Publication proactive - Contrats agrégés de -10 000$ à 10 000$"
+
+#: ckanext/canada/strings.py:99
+msgid "Aggregated Contracts from -$10,000 to $10,000"
+msgstr "Contrats agrégés de -10 000$ à 10 000$"
+
+#: ckanext/canada/strings.py:100
+msgid ""
+"Access, upload and modify the aggregated Contracts from -$10K to $10K "
+"reports for your organization"
+msgstr ""
+"Accès, téléversement et modification des rapports sur les Contrats "
+"agrégés de -10 000$ à 10 000$ pour votre organisation"
+
+#: ckanext/canada/strings.py:101
+msgid "This must list the year you are reporting on (not the fiscal year)."
+msgstr "Veuillez indiquer l’année civile visée par le rapport."
+
+#: ckanext/canada/strings.py:103
+msgid "Proactive Disclosure - Departmental Audit Committee"
+msgstr "Divulgation proactive - Comités ministériels d’audit"
+
+#: ckanext/canada/strings.py:104
+msgid "Departmental Audit Committee"
+msgstr "Comités ministériels d’audit"
+
+#: ckanext/canada/strings.py:105
+msgid ""
+"Access, upload and modify your Departmental Audit Committee members’ "
+"remuneration and expenses."
+msgstr ""
+"Accès, téléversement et modification de la rémunération et des dépenses "
+"des membres de votre Comité ministériel d’audit."
+
+#: ckanext/canada/strings.py:107
+msgid "Experimentation Inventory"
+msgstr "Répertoire d'expérimentation"
+
+#: ckanext/canada/strings.py:108
+msgid ""
+"Access, upload and modify the Experimentation Inventory for your "
+"organization"
+msgstr ""
+"Accès, téléversement et modifier le répertoire d'expérimentation pour "
+"votre organisation"
+
+#: ckanext/canada/strings.py:110
+msgid "Proactive Disclosure - Grants and Contributions"
+msgstr "Divulgation proactive - Subventions et les contributions"
+
+#: ckanext/canada/strings.py:111
+msgid "Grants and Contributions"
+msgstr "Subventions et les contributions"
+
+#: ckanext/canada/strings.py:112
+msgid ""
+"Access, upload and modify the Grants and Contributions reports for your "
+"organization"
+msgstr ""
+"Accès, téléversement et modifications des rapports sur les contributions "
+"et les subventions pour votre organisation"
+
+#: ckanext/canada/strings.py:113
+msgid "Proactive Disclosure - Grants and Contributions Nothing to Report"
+msgstr ""
+"Divulgation proactive - Subventions et les contributions  (Rien à "
+"signaler)"
+
+#: ckanext/canada/strings.py:114
+msgid "Grants and Contributions Nothing to Report"
+msgstr "Subventions et les contributions  (Rien à signaler)"
+
+#: ckanext/canada/strings.py:116
+msgid "Proactive Disclosure - Hospitality Expenses"
+msgstr "Divulgation proactive - Dépenses d'accueil"
+
+#: ckanext/canada/strings.py:117
+msgid "Hospitality Expenses"
+msgstr "Dépenses d'accueil"
+
+#: ckanext/canada/strings.py:118
+msgid ""
+"Access, upload and modify the quarterly hospitality expenses for your "
+"organization"
+msgstr ""
+"Accès, téléversement et modification des dépenses trimestriellement liées"
+" à l’accueil pour votre organisation"
+
+#: ckanext/canada/strings.py:119
+msgid "Proactive Disclosure - Hospitality Nothing to Report"
+msgstr "Divulgation proactive - Dépenses d'accueil (Rien à signaler)"
+
+#: ckanext/canada/strings.py:120
+msgid "Hospitality Nothing to Report"
+msgstr "Dépenses d'accueil (Rien à signaler)"
+
+#: ckanext/canada/strings.py:122
+msgid "Open Data Inventory"
+msgstr "Inventaire des données ouvertes"
+
+#: ckanext/canada/strings.py:123
+msgid ""
+"This dataset houses your departmental open data inventory. This is where "
+"you can access and upload your open data inventory template."
+msgstr ""
+"Ce jeu de données contient l’inventaire des données ouvertes de votre "
+"ministère. C’est l’occasion pour accéder à et pour télécharger votre "
+"modèle d'inventaire des données ouvertes."
+
+#: ckanext/canada/strings.py:125
+msgid "5th National Action Plan on Open Government Tracker"
+msgstr ""
+"Outil de suivi pour le 5ᵉ Plan d'action national pour un gouvernement "
+"ouvert"
+
+#: ckanext/canada/strings.py:126
+msgid ""
+"Access, upload and modify the National Action Plan on Open Government "
+"Tracker for your organization"
+msgstr ""
+"Accès, téléversement et Modifier le outil de suivi pour le Plan d'action "
+"national pour un gouvernement ouvert pour votre organisation"
+
+#: ckanext/canada/strings.py:128
+msgid "Proactive Disclosure - Question Period Notes"
+msgstr "Divulgation proactive - Notes pour la période des questions"
+
+#: ckanext/canada/strings.py:129
+msgid "Question Period Notes"
+msgstr "Notes pour la période des questions"
+
+#: ckanext/canada/strings.py:130
+msgid "Access, upload and modify Question Period notes for your organization"
+msgstr ""
+"Accès, téléversement et modifications des notes de la période de "
+"questions pour votre organisation"
+
+#: ckanext/canada/strings.py:132
+msgid "Proactive Disclosure - Position Reclassification"
+msgstr "Divulgation proactive - Reclassifications de postes"
+
+#: ckanext/canada/strings.py:133
+msgid "Position Reclassification"
+msgstr "Reclassifications de postes"
+
+#: ckanext/canada/strings.py:134
+msgid ""
+"Access, upload and modify the position reclassification reports for your "
+"organization"
+msgstr ""
+"Accès, téléversement et modifications des rapports sur les contributions "
+"et les subventions pour votre organisation"
+
+#: ckanext/canada/strings.py:135
+msgid "Proactive Disclosure - Position Reclassification Nothing to Report"
+msgstr "Divulgation proactive - Reclassifications de postes (Rien à signaler)"
+
+#: ckanext/canada/strings.py:136
+msgid "Position Reclassification Nothing to Report"
+msgstr "Reclassifications de postes (Rien à signaler)"
+
+#: ckanext/canada/strings.py:138
+msgid "Service Inventory"
+msgstr "Répertoire de services"
+
+#: ckanext/canada/strings.py:139
+msgid ""
+"Access, upload and modify the Service Inventory of external and internal "
+"enterprise services for your organization"
+msgstr ""
+"Accèder, téléverser et modifier le catalogue des service internes "
+"intégrés et externes pour votre organisation"
+
+#: ckanext/canada/strings.py:141
+msgid "Proactive Disclosure - Annual Travel, Hospitality and Conferences"
+msgstr ""
+"Divulgation proactive - Dépenses annuelles de voyages, d’accueil, de "
+"conférences et d’événements"
+
+#: ckanext/canada/strings.py:142
+msgid "Annual Travel, Hospitality and Conferences"
+msgstr "Dépenses annuelles de voyages, d’accueil, de conférences et d’événements"
+
+#: ckanext/canada/strings.py:143
+msgid ""
+"This dataset includes all of the annual reports on travel expenses "
+"incurred within your organization."
+msgstr ""
+"Ce jeu de données comprend tous les rapports annuels sur les dépenses de "
+"voyage engagées au sein de votre organisation."
+
+#: ckanext/canada/strings.py:145
+msgid "Proactive Disclosure - Travel Expenses"
+msgstr "Divulgation proactive - Dépenses de voyage"
+
+#: ckanext/canada/strings.py:146
+msgid "Travel Expenses"
+msgstr "Dépenses de voyage"
+
+#: ckanext/canada/strings.py:147
+msgid ""
+"Access, upload and modify the monthly travel expense reports for your "
+"organization"
+msgstr ""
+"Accès, téléversement et modification des rapports mensuels sur les frais "
+"de déplacement pour votre organisation"
+
+#: ckanext/canada/strings.py:148
+msgid "Proactive Disclosure - Travel Expenses Nothing to Report"
+msgstr "Divulgation proactive - Dépenses de voyage (Rien à signaler)"
+
+#: ckanext/canada/strings.py:149
+msgid "Travel Expenses Nothing to Report"
+msgstr "Dépenses de voyage (Rien à signaler)"
+
+#: ckanext/canada/strings.py:151
+msgid "Proactive Disclosure - Acts of Founded Wrongdoing"
+msgstr "Divulgation proactive - Dossiers sur les actes répréhensibles fondés"
+
+#: ckanext/canada/strings.py:152
+msgid "Acts of Founded Wrongdoing"
+msgstr "Dossiers sur les actes répréhensibles fondés"
+
+#: ckanext/canada/strings.py:153
+msgid ""
+"Access, upload and modify the Acts of Founded Wrongdoing reports for your"
+" organization"
+msgstr ""
+"Accès, téléversement et modifications des dossiers sur les actes "
+"répréhensibles fondés pour votre organisation"
 
 #: ckanext/canada/validators.py:120
 #, python-format
@@ -1019,76 +1349,76 @@ msgstr "Modifier les membres"
 msgid "View Members"
 msgstr "Afficher les membres"
 
-#: ckanext/canada/templates/internal/package/read.html:16
-#: ckanext/canada/templates/internal/package/read.html:26
+#: ckanext/canada/templates/internal/package/read.html:17
+#: ckanext/canada/templates/internal/package/read.html:27
 msgid "Action required:"
 msgstr "Mesure requise :"
 
-#: ckanext/canada/templates/internal/package/read.html:17
+#: ckanext/canada/templates/internal/package/read.html:18
 msgid ""
 "Draft record has been saved and can be edited. Mark as ready to publish "
 "to continue."
 msgstr ""
-"Une ébauche du document a été sauvegardée et peut-être modifiée. "
-"Marquer en tant que prête à publier pour poursuivre."
+"Une ébauche du document a été sauvegardée et peut-être modifiée. Marquer "
+"en tant que prête à publier pour poursuivre."
 
-#: ckanext/canada/templates/internal/package/read.html:27
+#: ckanext/canada/templates/internal/package/read.html:28
 msgid "Seek out departmental approval and mark as approved to continue."
 msgstr ""
 "Chercher à obtenir l'approbation du ministère et marquer en tant "
 "qu'approuvé pour poursuivre."
 
-#: ckanext/canada/templates/internal/package/read.html:36
+#: ckanext/canada/templates/internal/package/read.html:37
 msgid "Data record is in queue for validation."
 msgstr "La fiche est dans la file d'attente à des fins de validation."
 
-#: ckanext/canada/templates/internal/package/read.html:37
+#: ckanext/canada/templates/internal/package/read.html:38
 msgid "Record will be published by the following business day upon validation."
 msgstr ""
-"Le document sera publié d'ici le prochain jour ouvrable "
-"une fois qu'il aura été validé."
+"Le document sera publié d'ici le prochain jour ouvrable une fois qu'il "
+"aura été validé."
 
-#: ckanext/canada/templates/internal/package/read.html:58
-#: ckanext/canada/templates/internal/package/read.html:60
+#: ckanext/canada/templates/internal/package/read.html:59
+#: ckanext/canada/templates/internal/package/read.html:61
 msgid "View on Portal"
 msgstr "Consulter le Portail"
 
-#: ckanext/canada/templates/internal/package/read.html:68
+#: ckanext/canada/templates/internal/package/read.html:69
 msgid ""
 "This dataset has been deleted and is no longer accessible to non-admin "
 "users"
 msgstr "Cet ensemble de données a été supprimé et n’est plus accessible"
 
-#: ckanext/canada/templates/internal/package/read.html:70
+#: ckanext/canada/templates/internal/package/read.html:71
 msgid "Undelete"
 msgstr "Annuler une suppression"
 
-#: ckanext/canada/templates/internal/package/read.html:80
+#: ckanext/canada/templates/internal/package/read.html:81
 #: ckanext/canada/templates/public/package/read_base.html:88
 msgid "Openness Rating"
 msgstr "Cote de degrée d’ouverture des données"
 
-#: ckanext/canada/templates/internal/package/read.html:85
+#: ckanext/canada/templates/internal/package/read.html:86
 #: ckanext/canada/templates/public/package/read_base.html:93
 msgid "one star"
 msgstr "une étoile"
 
-#: ckanext/canada/templates/internal/package/read.html:86
+#: ckanext/canada/templates/internal/package/read.html:87
 #: ckanext/canada/templates/public/package/read_base.html:94
 msgid "two stars"
 msgstr "deux étoiles"
 
-#: ckanext/canada/templates/internal/package/read.html:87
+#: ckanext/canada/templates/internal/package/read.html:88
 #: ckanext/canada/templates/public/package/read_base.html:95
 msgid "three stars"
 msgstr "trois étoiles"
 
-#: ckanext/canada/templates/internal/package/read.html:88
+#: ckanext/canada/templates/internal/package/read.html:89
 #: ckanext/canada/templates/public/package/read_base.html:96
 msgid "four stars"
 msgstr "quatre étoiles"
 
-#: ckanext/canada/templates/internal/package/read.html:89
+#: ckanext/canada/templates/internal/package/read.html:90
 #: ckanext/canada/templates/public/package/read_base.html:97
 msgid "five stars"
 msgstr "cinq étoiles"
@@ -1097,7 +1427,7 @@ msgstr "cinq étoiles"
 msgid "Dataset"
 msgstr "Jeu de données"
 
-#: ckanext/canada/templates/internal/package/read_base.html:11
+#: ckanext/canada/templates/internal/package/read_base.html:15
 #: ckanext/canada/templates/public/organization/activity_stream.html:4
 #: ckanext/canada/templates/public/user/activity_stream.html:12
 msgid "Activity Stream"
@@ -1108,7 +1438,7 @@ msgid "Go back"
 msgstr "Retourner"
 
 #: ckanext/canada/templates/internal/package/wet_datatable.html:11
-#: ckanext/canada/templates/public/package/snippets/resource_item.html:57
+#: ckanext/canada/templates/public/package/snippets/resource_item.html:59
 msgid "Preview"
 msgstr "Aperçu"
 
@@ -2493,7 +2823,7 @@ msgid "Return to Index"
 msgstr "Retourner à la page de recherche"
 
 #: ckanext/canada/templates/public/package/read.html:15
-#: ckanext/canada/templates/public/package/read.html:42
+#: ckanext/canada/templates/public/package/read.html:41
 #: ckanext/canada/templates/public/package/snippets/resource_item.html:12
 #: ckanext/canada/templates/public/scheming/display_snippets/fluent_tags.html:9
 #: ckanext/canada/templates/public/snippets/package_item.html:38
@@ -2507,7 +2837,8 @@ msgstr ""
 "traduction automatique. Pour signaler toute anomalie veuillez communiquer"
 " avec open-ouvert@tbs-sct.gc.ca"
 
-#: ckanext/canada/templates/public/package/read.html:31
+#: ckanext/canada/templates/public/package/read.html:21
+#: ckanext/canada/templates/public/package/resource_read.html:8
 #, python-format
 msgid ""
 "You're currently viewing an old version of this dataset. Some resources "
@@ -2519,16 +2850,16 @@ msgstr ""
 "données ne s’affiche pas correctement. Pour voir la version actuelle, "
 "cliquez <a href=\"%(url)s\">ici</a>."
 
-#: ckanext/canada/templates/public/package/read.html:52
+#: ckanext/canada/templates/public/package/read.html:51
 #: ckanext/canada/templates/public/snippets/search_form.html:39
 msgid "View on Map"
 msgstr "Afficher la carte"
 
-#: ckanext/canada/templates/public/package/read.html:63
+#: ckanext/canada/templates/public/package/read.html:62
 msgid "Made available by the "
 msgstr "Rendus disponibles par l’entremise du "
 
-#: ckanext/canada/templates/public/package/read.html:65
+#: ckanext/canada/templates/public/package/read.html:64
 msgid ""
 "<p>These resources are not under the control of the Government of Canada "
 "and the link is provided solely for the convenience of our website "
@@ -2566,48 +2897,48 @@ msgstr ""
 " Web non gouvernemental avant de fournir leurs renseignements "
 "personnels.</p>"
 
-#: ckanext/canada/templates/public/package/read.html:103
+#: ckanext/canada/templates/public/package/read.html:102
 #: ckanext/canada/templates/public/snippets/package_item.html:72
 msgid "Issued by"
 msgstr "Publiée par"
 
-#: ckanext/canada/templates/public/package/read.html:139
+#: ckanext/canada/templates/public/package/read.html:138
 msgid "Related Items"
 msgstr "Articles connexes"
 
-#: ckanext/canada/templates/public/package/read.html:156
+#: ckanext/canada/templates/public/package/read.html:155
 msgid "Geographic Information"
 msgstr "Renseignements géographiques"
 
-#: ckanext/canada/templates/public/package/read.html:191
+#: ckanext/canada/templates/public/package/read.html:190
 msgid "Contact Information"
 msgstr "Coordonnées"
 
-#: ckanext/canada/templates/public/package/read.html:193
+#: ckanext/canada/templates/public/package/read.html:192
 msgid "Delivery Point"
 msgstr "Point de livraison"
 
-#: ckanext/canada/templates/public/package/read.html:196
+#: ckanext/canada/templates/public/package/read.html:195
 msgid "City"
 msgstr "Ville"
 
-#: ckanext/canada/templates/public/package/read.html:199
+#: ckanext/canada/templates/public/package/read.html:198
 msgid "Administrative Area"
 msgstr "Zone administrative"
 
-#: ckanext/canada/templates/public/package/read.html:202
+#: ckanext/canada/templates/public/package/read.html:201
 msgid "Postal Code"
 msgstr "Code postal"
 
-#: ckanext/canada/templates/public/package/read.html:205
+#: ckanext/canada/templates/public/package/read.html:204
 msgid "Country"
 msgstr "Pays"
 
-#: ckanext/canada/templates/public/package/read.html:208
+#: ckanext/canada/templates/public/package/read.html:207
 msgid "Electronic Mail Address"
 msgstr "Adresse de courrier électronique"
 
-#: ckanext/canada/templates/public/package/read.html:237
+#: ckanext/canada/templates/public/package/read.html:236
 msgid "Similar records"
 msgstr "Dossiers similaires"
 
@@ -2676,7 +3007,7 @@ msgstr "Métadonnées de la PGF"
 msgid "HNAP ISO:19115 Metadata Record"
 msgstr "Enregistrement de métadonnées de HNAP ISO:19115"
 
-#: ckanext/canada/templates/public/package/resource_read.html:47
+#: ckanext/canada/templates/public/package/resource_read.html:58
 msgid "Data Dictionary"
 msgstr "Dictionnaire de données"
 
@@ -2756,27 +3087,27 @@ msgstr ""
 msgid "Save & add another"
 msgstr "Sauvegarder et ajouter une autre ressource ou objet annexe"
 
-#: ckanext/canada/templates/public/package/snippets/resource_item.html:48
+#: ckanext/canada/templates/public/package/snippets/resource_item.html:50
 msgid "Explore"
 msgstr "Explorer"
 
-#: ckanext/canada/templates/public/package/snippets/resource_item.html:60
+#: ckanext/canada/templates/public/package/snippets/resource_item.html:62
 msgid "More information"
 msgstr "Plus d'information"
 
-#: ckanext/canada/templates/public/package/snippets/resource_item.html:69
+#: ckanext/canada/templates/public/package/snippets/resource_item.html:71
 msgid "Download"
 msgstr "Télécharger"
 
-#: ckanext/canada/templates/public/package/snippets/resource_item.html:72
+#: ckanext/canada/templates/public/package/snippets/resource_item.html:74
 msgid "Go to resource"
 msgstr "Aller à la ressource"
 
-#: ckanext/canada/templates/public/package/snippets/resource_item.html:78
+#: ckanext/canada/templates/public/package/snippets/resource_item.html:80
 msgid "Edit resource"
 msgstr "Editer la ressource"
 
-#: ckanext/canada/templates/public/package/snippets/resource_item.html:80
+#: ckanext/canada/templates/public/package/snippets/resource_item.html:82
 msgid "Views"
 msgstr "Vues"
 
@@ -4881,4 +5212,84 @@ msgstr "Mémoriser mes informations"
 
 #~ msgid "Queued for publishing"
 #~ msgstr "Mis en file d'attente à des fins de publication"
+
+#~ msgid ""
+#~ "This field must be NA (not "
+#~ "applicable) if the Agreement Type or "
+#~ "Trade Agreement field is not 0 "
+#~ "(none) or XX (none), as applicable."
+#~ msgstr ""
+#~ "Ce champ doit être NA (non "
+#~ "applicable) si le champ Type d’accord"
+#~ " ou Accord commercial n’est pas 0 "
+#~ "(aucun) ou XX (aucun) selon le cas"
+
+#~ msgid ""
+#~ "This field must be N, No or "
+#~ "Non, if the Agreement Type or "
+#~ "Trade Agreement field is not 0 "
+#~ "(none) or XX (none), as applicable."
+#~ msgstr ""
+#~ "Ce champ doit être N, No ou "
+#~ "Non, si les champs Type d’accord "
+#~ "ou Accord commercial ne contiennent pas"
+#~ " la valeur 0 (aucun) ou XX "
+#~ "(aucun), le cas échéant."
+
+#~ msgid ""
+#~ "This field may only be populated "
+#~ "with a 0 if a Call-up "
+#~ "against a standing offer or supply "
+#~ "arrangement was identified in the "
+#~ "Contracting Entity data field"
+#~ msgstr ""
+#~ "Ce champ ne peut être rempli avec"
+#~ " un 0 que si une commande "
+#~ "subséquente à une offre à commandes "
+#~ "ou à un arrangement en matière "
+#~ "d’approvisionnement est indiquée dans le "
+#~ "champ de données de l’entité "
+#~ "contractante"
+
+#~ msgid ""
+#~ "This field may only be populated "
+#~ "with \"0\" if the procurement was "
+#~ "identified as non-competitive (TN) or"
+#~ " advance contract award notice (AC)."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Commodity Type of G for Goods "
+#~ "which requires a Delivery Date and "
+#~ "not a Contract Period Start Date. "
+#~ "Please either change the Commodity Type"
+#~ " to S or remove the date from"
+#~ " the Contract Period Start Date field"
+#~ msgstr ""
+#~ "Type de produit G pour les biens,"
+#~ " ce qui requière une Date de "
+#~ "livraison et non une Date de début"
+#~ " du marché. Prière de changer le "
+#~ "Type de produit pour S ou de "
+#~ "retirer la date du champ Date de"
+#~ " début du marché"
+
+#~ msgid ""
+#~ "If the value XX (none) is entered"
+#~ " here, then the following three "
+#~ "fields must be identified as NA or"
+#~ " N, as applicable: Comprehensive Land "
+#~ "Claim Agreement, Procurement Strategy for "
+#~ "Aboriginal Business, Procurement Strategy for"
+#~ " Aboriginal Business Incidental Indicator"
+#~ msgstr ""
+#~ "Si la valeur XX (aucun) est saisie"
+#~ " ici les trois champs suivants "
+#~ "doivent indiquer NA ou N selon le"
+#~ " cas : Ententes sur les "
+#~ "revendications territoriales globales Stratégie "
+#~ "d’approvisionnement auprès des entreprises "
+#~ "autochtones Indicateur d’incidence de la "
+#~ "Stratégie d’approvisionnement auprès des "
+#~ "entreprises autochtones"
 
