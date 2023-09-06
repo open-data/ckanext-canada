@@ -930,62 +930,70 @@ msgstr ""
 msgid "View Members"
 msgstr ""
 
-#: ckanext/canada/templates/internal/package/read.html:6
-msgid "Your record will be published at:"
-msgstr ""
-
-#: ckanext/canada/templates/internal/package/read.html:13
-msgid "Record marked not ready to publish"
-msgstr ""
-
 #: ckanext/canada/templates/internal/package/read.html:16
-msgid "Approval required"
+#: ckanext/canada/templates/internal/package/read.html:26
+msgid "Action required:"
 msgstr ""
 
-#: ckanext/canada/templates/internal/package/read.html:19
-msgid "Queued for publishing"
+#: ckanext/canada/templates/internal/package/read.html:17
+msgid ""
+"Draft record has been saved and can be edited. Mark as ready to publish "
+"to continue."
 msgstr ""
 
-#: ckanext/canada/templates/internal/package/read.html:21
+#: ckanext/canada/templates/internal/package/read.html:27
+msgid "Seek out departmental approval and mark as approved to continue."
+msgstr ""
+
+#: ckanext/canada/templates/internal/package/read.html:36
+msgid "Data record is in queue for validation."
+msgstr ""
+
+#: ckanext/canada/templates/internal/package/read.html:37
+msgid "Record will be published by the following business day upon validation."
+msgstr ""
+
+#: ckanext/canada/templates/internal/package/read.html:58
+#: ckanext/canada/templates/internal/package/read.html:60
 msgid "View on Portal"
 msgstr ""
 
-#: ckanext/canada/templates/internal/package/read.html:46
+#: ckanext/canada/templates/internal/package/read.html:68
 msgid ""
 "This dataset has been deleted and is no longer accessible to non-admin "
 "users"
 msgstr ""
 
-#: ckanext/canada/templates/internal/package/read.html:48
+#: ckanext/canada/templates/internal/package/read.html:70
 msgid "Undelete"
 msgstr ""
 
-#: ckanext/canada/templates/internal/package/read.html:58
+#: ckanext/canada/templates/internal/package/read.html:80
 #: ckanext/canada/templates/public/package/read_base.html:88
 msgid "Openness Rating"
 msgstr ""
 
-#: ckanext/canada/templates/internal/package/read.html:63
+#: ckanext/canada/templates/internal/package/read.html:85
 #: ckanext/canada/templates/public/package/read_base.html:93
 msgid "one star"
 msgstr ""
 
-#: ckanext/canada/templates/internal/package/read.html:64
+#: ckanext/canada/templates/internal/package/read.html:86
 #: ckanext/canada/templates/public/package/read_base.html:94
 msgid "two stars"
 msgstr ""
 
-#: ckanext/canada/templates/internal/package/read.html:65
+#: ckanext/canada/templates/internal/package/read.html:87
 #: ckanext/canada/templates/public/package/read_base.html:95
 msgid "three stars"
 msgstr ""
 
-#: ckanext/canada/templates/internal/package/read.html:66
+#: ckanext/canada/templates/internal/package/read.html:88
 #: ckanext/canada/templates/public/package/read_base.html:96
 msgid "four stars"
 msgstr ""
 
-#: ckanext/canada/templates/internal/package/read.html:67
+#: ckanext/canada/templates/internal/package/read.html:89
 #: ckanext/canada/templates/public/package/read_base.html:97
 msgid "five stars"
 msgstr ""
@@ -6815,5 +6823,17 @@ msgstr "Keep me logged in"
 #~ msgstr ""
 
 #~ msgid "Change your details"
+#~ msgstr ""
+
+#~ msgid "Your record will be published at:"
+#~ msgstr ""
+
+#~ msgid "Record marked not ready to publish"
+#~ msgstr ""
+
+#~ msgid "Approval required"
+#~ msgstr ""
+
+#~ msgid "Queued for publishing"
 #~ msgstr ""
 

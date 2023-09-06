@@ -1019,62 +1019,76 @@ msgstr "Modifier les membres"
 msgid "View Members"
 msgstr "Afficher les membres"
 
-#: ckanext/canada/templates/internal/package/read.html:6
-msgid "Your record will be published at:"
-msgstr "Votre document sera publié à :"
-
-#: ckanext/canada/templates/internal/package/read.html:13
-msgid "Record marked not ready to publish"
-msgstr "On indique que le document n'est pas prêt à être publié"
-
 #: ckanext/canada/templates/internal/package/read.html:16
-msgid "Approval required"
-msgstr "Approbation nécessaire"
+#: ckanext/canada/templates/internal/package/read.html:26
+msgid "Action required:"
+msgstr "Mesure requise :"
 
-#: ckanext/canada/templates/internal/package/read.html:19
-msgid "Queued for publishing"
-msgstr "Mis en file d'attente à des fins de publication"
+#: ckanext/canada/templates/internal/package/read.html:17
+msgid ""
+"Draft record has been saved and can be edited. Mark as ready to publish "
+"to continue."
+msgstr ""
+"Une ébauche du document a été sauvegardée et peut-être modifiée. "
+"Marquer en tant que prête à publier pour poursuivre."
 
-#: ckanext/canada/templates/internal/package/read.html:21
+#: ckanext/canada/templates/internal/package/read.html:27
+msgid "Seek out departmental approval and mark as approved to continue."
+msgstr ""
+"Chercher à obtenir l'approbation du ministère et marquer en tant "
+"qu'approuvé pour poursuivre."
+
+#: ckanext/canada/templates/internal/package/read.html:36
+msgid "Data record is in queue for validation."
+msgstr "La fiche est dans la file d'attente à des fins de validation."
+
+#: ckanext/canada/templates/internal/package/read.html:37
+msgid "Record will be published by the following business day upon validation."
+msgstr ""
+"Le document sera publié d'ici le prochain jour ouvrable "
+"une fois qu'il aura été validé."
+
+#: ckanext/canada/templates/internal/package/read.html:58
+#: ckanext/canada/templates/internal/package/read.html:60
 msgid "View on Portal"
 msgstr "Consulter le Portail"
 
-#: ckanext/canada/templates/internal/package/read.html:46
+#: ckanext/canada/templates/internal/package/read.html:68
 msgid ""
 "This dataset has been deleted and is no longer accessible to non-admin "
 "users"
 msgstr "Cet ensemble de données a été supprimé et n’est plus accessible"
 
-#: ckanext/canada/templates/internal/package/read.html:48
+#: ckanext/canada/templates/internal/package/read.html:70
 msgid "Undelete"
 msgstr "Annuler une suppression"
 
-#: ckanext/canada/templates/internal/package/read.html:58
+#: ckanext/canada/templates/internal/package/read.html:80
 #: ckanext/canada/templates/public/package/read_base.html:88
 msgid "Openness Rating"
 msgstr "Cote de degrée d’ouverture des données"
 
-#: ckanext/canada/templates/internal/package/read.html:63
+#: ckanext/canada/templates/internal/package/read.html:85
 #: ckanext/canada/templates/public/package/read_base.html:93
 msgid "one star"
 msgstr "une étoile"
 
-#: ckanext/canada/templates/internal/package/read.html:64
+#: ckanext/canada/templates/internal/package/read.html:86
 #: ckanext/canada/templates/public/package/read_base.html:94
 msgid "two stars"
 msgstr "deux étoiles"
 
-#: ckanext/canada/templates/internal/package/read.html:65
+#: ckanext/canada/templates/internal/package/read.html:87
 #: ckanext/canada/templates/public/package/read_base.html:95
 msgid "three stars"
 msgstr "trois étoiles"
 
-#: ckanext/canada/templates/internal/package/read.html:66
+#: ckanext/canada/templates/internal/package/read.html:88
 #: ckanext/canada/templates/public/package/read_base.html:96
 msgid "four stars"
 msgstr "quatre étoiles"
 
-#: ckanext/canada/templates/internal/package/read.html:67
+#: ckanext/canada/templates/internal/package/read.html:89
 #: ckanext/canada/templates/public/package/read_base.html:97
 msgid "five stars"
 msgstr "cinq étoiles"
@@ -4855,4 +4869,16 @@ msgstr "Mémoriser mes informations"
 #~ "éprouvez des problèmes, veuillez en "
 #~ "aviser <a href=\"mailto:open-ouvert@tbs-"
 #~ "sct.gc.ca\">open-ouvert@tbs-sct.gc.ca</a>"
+
+#~ msgid "Your record will be published at:"
+#~ msgstr "Votre document sera publié à :"
+
+#~ msgid "Record marked not ready to publish"
+#~ msgstr "On indique que le document n'est pas prêt à être publié"
+
+#~ msgid "Approval required"
+#~ msgstr "Approbation nécessaire"
+
+#~ msgid "Queued for publishing"
+#~ msgstr "Mis en file d'attente à des fins de publication"
 

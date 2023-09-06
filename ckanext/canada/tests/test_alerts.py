@@ -36,7 +36,7 @@ class TestPackageAlerts(CanadaTestBase):
 
         # Check dataset page
         assert not 'View on Portal' in response.body
-        assert 'Approval required' in response.body
+        assert 'Seek out departmental approval and mark as approved to continue' in response.body
 
 
     def test_approval_required(self, app):
@@ -51,19 +51,7 @@ class TestPackageAlerts(CanadaTestBase):
 
         # Check dataset page
         assert not 'View on Portal' in response.body
-        assert 'Record marked not ready to publish' in response.body
-
-        data['imso_approval'] = 'false'
-        self.sysadmin_action.package_create(
-            name='12345678-9abc-def0-1234-56789abcdef2', **data)
-
-        offset = h.url_for('dataset.read',
-                           id='12345678-9abc-def0-1234-56789abcdef2')
-        response = app.get(offset, extra_environ=self.extra_environ_tester)
-
-        # Check dataset page
-        assert not 'View on Portal' in response.body
-        assert 'Record marked not ready to publish' in response.body
+        assert 'Draft record has been saved and can be edited. Mark as ready to publish to continue' in response.body
 
 
     def test_queued_for_publishing(self, app):
@@ -79,7 +67,8 @@ class TestPackageAlerts(CanadaTestBase):
 
         # Check dataset page
         assert not 'View on Portal' in response.body
-        assert 'Queued for publishing' in response.body
+        assert 'Data record is in queue for validation' in response.body
+        assert 'Record will be published by the following business day upon validation' in response.body
 
 
     def test_view_on_portal(self, app):
@@ -96,9 +85,10 @@ class TestPackageAlerts(CanadaTestBase):
 
         # Check dataset page
         assert 'View on Portal' in response.body
-        assert not 'Queued for publishing' in response.body
-        assert not 'Approval required' in response.body
-        assert not 'Record marked not ready to publish' in response.body
+        assert not 'Data record is in queue for validation' in response.body
+        assert not 'Record will be published by the following business day upon validation' in response.body
+        assert not 'Seek out departmental approval and mark as approved to continue' in response.body
+        assert not 'Draft record has been saved and can be edited. Mark as ready to publish to continue' in response.body
 
 
     def _filled_dataset_data(self):
