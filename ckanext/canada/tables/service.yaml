@@ -872,7 +872,7 @@ resources:
     datastore_type: text
 
 # 3.37 (new field)
-  - datastore_id: harmonized_service_id 
+  - datastore_id: harmonized_service_id
     label:
       en: Harmonized Service ID
       fr: Désignation du service harmonisé
@@ -1216,9 +1216,9 @@ resources:
       fr: Dernier examen de la norme relative aux services à l’aide de l’outil d’évaluation des normes relatives aux services du GC
     description:
       en: "Identifies the fiscal year in which the service standard was last reviewed using the GC Service Standard Assessment Tool available on the GC Service Policy GCPedia page. ( http://www.gcpedia.gc.ca/wiki/GC_Service_Policy_Agenda#Guidance )"
-      fr: "Indique l’exercice au cours duquel la norme relative aux services a été examinée 
-pour la dernière fois à l’aide de l’outil d’évaluation des normes relatives aux 
-services du GC accessible sur la page GCpédia de la Politique sur les services du 
+      fr: "Indique l’exercice au cours duquel la norme relative aux services a été examinée
+pour la dernière fois à l’aide de l’outil d’évaluation des normes relatives aux
+services du GC accessible sur la page GCpédia de la Politique sur les services du
 GC. (http://www.gcpedia.gc.ca/wiki/GC_Service_Policy_Agenda#Guidance)"
     obligation: Mandatory
     excel_required: true
@@ -1233,7 +1233,7 @@ GC. (http://www.gcpedia.gc.ca/wiki/GC_Service_Policy_Agenda#Guidance)"
       en: URL to Real-Time Performance Results (English)
       fr: URL aux résultats de rendement en temps réel (anglais)
     description:
-      en: "Identifies the departmental webpage where the real-time performance results for a service are published. 
+      en: "Identifies the departmental webpage where the real-time performance results for a service are published.
     • If data is not available, please indicate that there is no data (“ND”)."
       fr: "Si aucune donnée n’est disponible, veuillez indiquer qu’il n’y a aucune donnée (« ND »)."
     obligation: Mandatory
@@ -1413,7 +1413,7 @@ GC. (http://www.gcpedia.gc.ca/wiki/GC_Service_Policy_Agenda#Guidance)"
     datastore_type: text
 
   # 4.19 (new field)
-  - datastore_id: harmonized_service_id 
+  - datastore_id: harmonized_service_id
     label:
       en: Harmonized Service ID
       fr: Désignation du service harmonisé
@@ -1471,7 +1471,7 @@ GC. (http://www.gcpedia.gc.ca/wiki/GC_Service_Policy_Agenda#Guidance)"
         NEW.service_std_type := choices_from(
           NEW.service_std_type, {service_std_type}, 'service_std_type');
         IF NEW.service_std_target < 0 OR NEW.service_std_target > 1 THEN
-          RAISE EXCEPTION 'Please enter a decimal value between zero and one: %', 'service_std_target';
+          RAISE EXCEPTION {service_std_target_error}, 'service_std_target';
         END IF;
         errors := errors || required_error(NEW.gcss_tool_fiscal_yr, 'gcss_tool_fiscal_yr');
         errors := errors || choice_error(NEW.gcss_tool_fiscal_yr, {gcss_tool_fiscal_yr}, 'gcss_tool_fiscal_yr');
@@ -1499,6 +1499,9 @@ GC. (http://www.gcpedia.gc.ca/wiki/GC_Service_Policy_Agenda#Guidance)"
         RAISE EXCEPTION E'TAB-DELIMITED\t%', array_to_string(errors, E'\t');
       END;
   - update_record_modified_created_trigger
+
+  trigger_strings:
+    service_std_target_error: "Please enter a decimal value between zero and one: %"
 
   examples:
     record:

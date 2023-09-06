@@ -218,11 +218,11 @@ resources:
       BEGIN
         errors := errors || required_error(NEW.year, 'year');
         IF NEW.year < 2011 OR NEW.year > date_part('year', CURRENT_DATE) THEN
-          errors := errors || ARRAY[['year', 'Please enter a valid year']];
+          errors := errors || ARRAY[['year', {year_error}]];
         END IF;
         errors := errors || required_error(NEW.month, 'month');
         IF NEW.month < 1 OR NEW.month > 12 THEN
-          errors := errors || ARRAY[['month', 'Please enter a month number from 1-12']];
+          errors := errors || ARRAY[['month', {month_error}]];
         END IF;
         IF NEW.pages < 0 THEN
           errors := errors || ARRAY[['pages', 'This value must not be negative']];
@@ -241,6 +241,10 @@ resources:
         RAISE EXCEPTION E'TAB-DELIMITED\t%', array_to_string(errors, E'\t');
       END;
   - update_record_modified_created_trigger
+
+  trigger_strings:
+    year_error: Please enter a valid year
+    month_error: Please enter a month number from 1-12
 
   examples:
     record:
@@ -352,11 +356,11 @@ resources:
       BEGIN
         errors := errors || required_error(NEW.year, 'year');
         IF NEW.year < 2011 OR NEW.year > date_part('year', CURRENT_DATE) THEN
-          errors := errors || ARRAY[['year', 'Please enter a valid year']];
+          errors := errors || ARRAY[['year', {year_error}]];
         END IF;
         errors := errors || required_error(NEW.month, 'month');
         IF NEW.month < 1 OR NEW.month > 12 THEN
-          errors := errors || ARRAY[['month', 'Please enter a month number from 1-12']];
+          errors := errors || ARRAY[['month', {month_error}]];
         END IF;
 
         IF errors = '{{}}' THEN
@@ -365,6 +369,10 @@ resources:
         RAISE EXCEPTION E'TAB-DELIMITED\t%', array_to_string(errors, E'\t');
       END;
   - update_record_modified_created_trigger
+
+  trigger_strings:
+    year_error: Please enter a valid year
+    month_error: Please enter a month number from 1-12
 
   examples:
     record:

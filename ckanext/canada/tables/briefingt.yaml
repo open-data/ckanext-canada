@@ -2,6 +2,7 @@ dataset_type: briefingt
 target_dataset: briefingt
 
 title: Proactive Disclosure - Briefing Note Titles and Numbers
+shortname: Briefing Note Titles and Numbers
 notes: Access, upload and modify the Briefing Note Titles and Numbers reports for your organization
 
 template_version: 3
@@ -23,7 +24,7 @@ resources:
       fr: Numéro de suivi
     description:
       en: This field will display the internal tracking number of the Briefing Note.
-      fr: Ce champ affichera le numéro de suivi interne de la note de breffage. 
+      fr: Ce champ affichera le numéro de suivi interne de la note de breffage.
     obligation: Mandatory
     excel_required: true
     form_required: true
@@ -59,7 +60,7 @@ resources:
       fr: Titre (en français)
     description:
       en: This field is populated by the user with the official title of the Briefing Note, in French.
-      fr: Ce champ est rempli par l'utilisateur avec le titre officiel de la note de breffage, en français.    
+      fr: Ce champ est rempli par l'utilisateur avec le titre officiel de la note de breffage, en français.
     obligation: Mandatory
     excel_required: true
     form_required: true
@@ -139,7 +140,7 @@ resources:
         fr: Administrateurs généraux (y compris une personne nommée à un poste de rang équivalent)
         shortform:
           en: Deputy head or equivalent
-          fr: Administrateurs généraux ou équivalent 
+          fr: Administrateurs généraux ou équivalent
 
   # 3.5 (again)
   - datastore_id: date_received
