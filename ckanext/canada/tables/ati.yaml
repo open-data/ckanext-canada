@@ -225,7 +225,7 @@ resources:
           errors := errors || ARRAY[['month', {month_error}]];
         END IF;
         IF NEW.pages < 0 THEN
-          errors := errors || ARRAY[['pages', 'This value must not be negative']];
+          errors := errors || ARRAY[['pages', {pages_error}]];
         END IF;
         errors := errors || required_error(NEW.request_number, 'request_number');
         errors := errors || required_error(NEW.summary_en, 'summary_en');
@@ -245,6 +245,7 @@ resources:
   trigger_strings:
     year_error: Please enter a valid year
     month_error: Please enter a month number from 1-12
+    pages_error: This value must not be negative
 
   examples:
     record:
