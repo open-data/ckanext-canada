@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2023-09-06 15:33+0000\n"
+"POT-Creation-Date: 2023-09-12 15:49+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: fr\n"
@@ -272,468 +272,6 @@ msgstr ""
 msgid "These fields have been removed."
 msgstr "Ces champs ont été supprimés."
 
-#: ckanext/canada/strings.py:56
-msgid "Proactive Disclosure - Use of Administrative Aircraft"
-msgstr "Divulgation proactive - Utilisation des avions d'affaires"
-
-#: ckanext/canada/strings.py:57
-msgid "Use of Administrative Aircraft"
-msgstr "Utilisation des avions d'affaires"
-
-#: ckanext/canada/strings.py:58
-msgid "Access, upload and modify government administrative aircraft use"
-msgstr ""
-"Accès, téléversement et modifications des rapports sur la utilisation des"
-" avions d'affaires"
-
-#: ckanext/canada/strings.py:60
-msgid "ATI Summaries"
-msgstr "Accès à l’information sommaires complétés"
-
-#: ckanext/canada/strings.py:61
-msgid ""
-"Access, upload and modify the monthly ATI Summaries and ATI Nothing to "
-"Report for your organization"
-msgstr ""
-"Accès, téléversement et modification des sommaires mensuels des demandes "
-"d’accès à l’information et des demandes d’accès pour lesquelles rien "
-"n’est à signaler pour votre organisation"
-
-#: ckanext/canada/strings.py:62
-msgid "ATI Nothing to Report"
-msgstr "Accès à l’information rien à signaler"
-
-#: ckanext/canada/strings.py:63
-msgid "Please enter a valid year"
-msgstr "Veuillez entrer une année valide"
-
-#: ckanext/canada/strings.py:64
-msgid "Please enter a month number from 1-12"
-msgstr "Veuillez entrer une valeur comprise entre 1 et 12"
-
-#: ckanext/canada/strings.py:65
-msgid "This value must not be negative"
-msgstr "Cette valeur ne doit pas être négatif"
-
-#: ckanext/canada/strings.py:67
-msgid "Proactive Disclosure - Briefing Note Titles and Numbers"
-msgstr "Divulgation proactive - Titres et numéros des notes d’information"
-
-#: ckanext/canada/strings.py:68
-msgid "Briefing Note Titles and Numbers"
-msgstr "Titres et numéros des notes d’information"
-
-#: ckanext/canada/strings.py:69
-msgid ""
-"Access, upload and modify the Briefing Note Titles and Numbers reports "
-"for your organization"
-msgstr ""
-"Accès, téléversement et modifications des rapports sur les titres at "
-"numéros des notes d’information pour votre organisation"
-
-#: ckanext/canada/strings.py:71
-msgid "Open Dialogue - Consultations"
-msgstr "Dialogue ouvert - Consultations"
-
-#: ckanext/canada/strings.py:72
-msgid "Consultations"
-msgstr "Consultations"
-
-#: ckanext/canada/strings.py:73
-msgid "Access, upload and modify consultation reports for your organization"
-msgstr ""
-"Accès, téléversement et modifications des rapports sur les consultations "
-"pour votre organisation"
-
-#: ckanext/canada/strings.py:74
-msgid "If Status is set to: Not Going Forward, Publish Record must be set to No"
-msgstr ""
-
-#: ckanext/canada/strings.py:76
-msgid "Proactive Publication - Contracts over $10,000"
-msgstr "Publication proactive - Contrats attribués de plus de 10 000 $"
-
-#: ckanext/canada/strings.py:77
-msgid "Contracts over $10,000"
-msgstr "Contrats attribués de plus de 10 000 $"
-
-#: ckanext/canada/strings.py:78
-msgid ""
-"Access, upload and modify the Contracts over 10K reports for your "
-"organization"
-msgstr ""
-"Accès, téléversement et modification des rapports  sur les contrats "
-"attribués de plus de 10 000 $ pour votre organisation"
-
-#: ckanext/canada/strings.py:79
-msgid "Proactive Publication - Contracts Nothing to Report"
-msgstr "Publication proactive - Contrats (Rien à signaler)"
-
-#: ckanext/canada/strings.py:80
-msgid "Contracts Nothing to Report"
-msgstr "Contrats (Rien à signaler)"
-
-#: ckanext/canada/strings.py:81
-msgid ""
-"This field must contain the first three digits of a postal code in A1A "
-"format or the value \"NA\""
-msgstr ""
-"Ce champ doit contenir les trois premiers chiffres d’un code postal dans "
-"le format A1A ou la valeur « NA. »"
-
-#: ckanext/canada/strings.py:82
-msgid ""
-"This field must be populated with an NA if an amendment is disclosed "
-"under Instrument Type."
-msgstr ""
-"Ce champ doit contenir NA si une modification est divulguée sous "
-"l’élément Type d’instrument."
-
-#: ckanext/canada/strings.py:83
-msgid "This field is limited to only 3 or 4 digits."
-msgstr "Ce champ est limité à 3 ou 4 caractères."
-
-#: ckanext/canada/strings.py:84
-msgid ""
-"If N/A, then Instrument Type must be identified as a standing "
-"offer/supply arrangement (SOSA)"
-msgstr ""
-"Si N/A, alors le Type d’instrument doit être identifié comme étant une "
-"offre à commandes ou un arrangement en matière d’approvisionnement "
-"(SOSA)."
-
-#: ckanext/canada/strings.py:85
-msgid ""
-"If the value XX (none) is entered, then no other value can be entered in "
-"this field."
-msgstr ""
-"Si la valeur XX (aucun) est inscrite, alors aucune autre valeur ne peut "
-"être inscrite dans ce champ."
-
-#: ckanext/canada/strings.py:86
-msgid "Discontinued as of 2022-01-01"
-msgstr ""
-
-#: ckanext/canada/strings.py:87
-msgid "Must be left blank when trade agreements specified"
-msgstr ""
-
-#: ckanext/canada/strings.py:88
-msgid ""
-"If the value NA (not applicable) is entered, then no other value can be "
-"entered in this field."
-msgstr ""
-"Si la valeur NA (sans objet) est inscrite, alors aucune autre valeur ne "
-"peut être inscrite dans ce champ."
-
-#: ckanext/canada/strings.py:89
-msgid "The field is limited to eight alpha-numeric digits or less."
-msgstr "Ce champ est limité à 8 caractères alphanumériques."
-
-#: ckanext/canada/strings.py:90
-msgid ""
-"If the value 00 (none) is entered, then no other value can be entered in "
-"this field."
-msgstr ""
-"Si la valeur 00 (aucune) est inscrite, alors aucune autre valeur ne peut "
-"être inscrite dans ce champ."
-
-#: ckanext/canada/strings.py:91
-msgid ""
-"If TC, TN or AC is selected in the Solicitation Procedure data field with"
-" a value other than XX (None) selected in the Trade Agreement data field,"
-" then a Limited Tendering value other than 00 (none) must be entered."
-msgstr ""
-"Si TC, TN ou AC est sélectionné dans le champ de données Méthode "
-"d’invitation à soumissioner avec une valeur autre que XX (Aucune) "
-"sélectionnée dans le champ de données Accord commercial, une valeur "
-"d'offre limitée autre que 0 (aucune) doit être entrée."
-
-#: ckanext/canada/strings.py:92
-msgid ""
-"If “TC” (Competitive - Traditional), “TN” (Non-Competitive) or “AC” "
-"(Advanced Contract Award Notice) is selected and trade agreement with a "
-"value other than “XX” (None) is selected, limited tendering cannot have a"
-" value of “0” or “00” (None)."
-msgstr ""
-"Si les options « TC » (Concurrentielle - Traditionnelle), « TN » (non "
-"concurrentielle) ou « AC » (préavis d’attribution de contrat) sont "
-"sélectionnées et qu’une entente de marché ayant une valeur autre que « XX"
-" » (nulle) est sélectionnée, le champ Appel d’offres restreint ne peut "
-"avoir la valeur « 0 » ou « 00 » (nulle)."
-
-#: ckanext/canada/strings.py:93
-msgid ""
-"This field must be N, No or Non, if the Procurement Strategy for "
-"Aboriginal Business field is MS or VS."
-msgstr ""
-"Ce champ doit être N, No ou Non, si le champ Stratégie "
-"d’approvisionnement auprès des entreprises autochtones contient MS ou VS."
-
-#: ckanext/canada/strings.py:94
-msgid ""
-"This field must be populated with a 1 if the solicitation procedure is "
-"identified as non-competitive (TN) or Advance Contract Award Notice (AC)."
-msgstr ""
-"Cette zone doit contenir un « 1 » si la méthode d’invitation à "
-"soumissionner est identifiée comme étant non concurrentielle (TN) ou un "
-"préavis d’attribution de contrat (AC)."
-
-#: ckanext/canada/strings.py:95
-msgid ""
-"If this field is populated, it must be with a “0” if the procurement was "
-"identified as non-competitive (TN) or advance contract award notice (AC) "
-"or was identified as an Amendment (A) in the Instrument type data field."
-msgstr ""
-"Si cette zone est remplie, il doit contenir un « 0 » si l’acquisition a "
-"été identifiée comme étant non concurrentielle (TN) ou un préavis "
-"d’attribution de contrat (AC) ou si l’acquisition a été identifiée comme "
-"un modification (A) dans le champ Type d’instrument."
-
-#: ckanext/canada/strings.py:96
-msgid ""
-"This field may only be populated with “0” if the procurement was "
-"identified as competitive (open bidding (OB), traditional competitive "
-"(TC) or selective tendering (ST))."
-msgstr ""
-"Cette zone peut seulement contenir « 0 » si l’acquisition a été "
-"identifiée comme étant concurrentielle (invitation ouverte à "
-"soumissionner (OB) ou concurrentielle - traditionnelle (TC) ou "
-"Concurrentielle – Appel d’offres sélectif (ST))."
-
-#: ckanext/canada/strings.py:98
-msgid "Proactive Publication - Aggregated Contracts from -$10,000 to $10,000"
-msgstr "Publication proactive - Contrats agrégés de -10 000$ à 10 000$"
-
-#: ckanext/canada/strings.py:99
-msgid "Aggregated Contracts from -$10,000 to $10,000"
-msgstr "Contrats agrégés de -10 000$ à 10 000$"
-
-#: ckanext/canada/strings.py:100
-msgid ""
-"Access, upload and modify the aggregated Contracts from -$10K to $10K "
-"reports for your organization"
-msgstr ""
-"Accès, téléversement et modification des rapports sur les Contrats "
-"agrégés de -10 000$ à 10 000$ pour votre organisation"
-
-#: ckanext/canada/strings.py:101
-msgid "This must list the year you are reporting on (not the fiscal year)."
-msgstr "Veuillez indiquer l’année civile visée par le rapport."
-
-#: ckanext/canada/strings.py:103
-msgid "Proactive Disclosure - Departmental Audit Committee"
-msgstr "Divulgation proactive - Comités ministériels d’audit"
-
-#: ckanext/canada/strings.py:104
-msgid "Departmental Audit Committee"
-msgstr "Comités ministériels d’audit"
-
-#: ckanext/canada/strings.py:105
-msgid ""
-"Access, upload and modify your Departmental Audit Committee members’ "
-"remuneration and expenses."
-msgstr ""
-"Accès, téléversement et modification de la rémunération et des dépenses "
-"des membres de votre Comité ministériel d’audit."
-
-#: ckanext/canada/strings.py:107
-msgid "Experimentation Inventory"
-msgstr "Répertoire d'expérimentation"
-
-#: ckanext/canada/strings.py:108
-msgid ""
-"Access, upload and modify the Experimentation Inventory for your "
-"organization"
-msgstr ""
-"Accès, téléversement et modifier le répertoire d'expérimentation pour "
-"votre organisation"
-
-#: ckanext/canada/strings.py:110
-msgid "Proactive Disclosure - Grants and Contributions"
-msgstr "Divulgation proactive - Subventions et les contributions"
-
-#: ckanext/canada/strings.py:111
-msgid "Grants and Contributions"
-msgstr "Subventions et les contributions"
-
-#: ckanext/canada/strings.py:112
-msgid ""
-"Access, upload and modify the Grants and Contributions reports for your "
-"organization"
-msgstr ""
-"Accès, téléversement et modifications des rapports sur les contributions "
-"et les subventions pour votre organisation"
-
-#: ckanext/canada/strings.py:113
-msgid "Proactive Disclosure - Grants and Contributions Nothing to Report"
-msgstr ""
-"Divulgation proactive - Subventions et les contributions  (Rien à "
-"signaler)"
-
-#: ckanext/canada/strings.py:114
-msgid "Grants and Contributions Nothing to Report"
-msgstr "Subventions et les contributions  (Rien à signaler)"
-
-#: ckanext/canada/strings.py:116
-msgid "Proactive Disclosure - Hospitality Expenses"
-msgstr "Divulgation proactive - Dépenses d'accueil"
-
-#: ckanext/canada/strings.py:117
-msgid "Hospitality Expenses"
-msgstr "Dépenses d'accueil"
-
-#: ckanext/canada/strings.py:118
-msgid ""
-"Access, upload and modify the quarterly hospitality expenses for your "
-"organization"
-msgstr ""
-"Accès, téléversement et modification des dépenses trimestriellement liées"
-" à l’accueil pour votre organisation"
-
-#: ckanext/canada/strings.py:119
-msgid "Proactive Disclosure - Hospitality Nothing to Report"
-msgstr "Divulgation proactive - Dépenses d'accueil (Rien à signaler)"
-
-#: ckanext/canada/strings.py:120
-msgid "Hospitality Nothing to Report"
-msgstr "Dépenses d'accueil (Rien à signaler)"
-
-#: ckanext/canada/strings.py:122
-msgid "Open Data Inventory"
-msgstr "Inventaire des données ouvertes"
-
-#: ckanext/canada/strings.py:123
-msgid ""
-"This dataset houses your departmental open data inventory. This is where "
-"you can access and upload your open data inventory template."
-msgstr ""
-"Ce jeu de données contient l’inventaire des données ouvertes de votre "
-"ministère. C’est l’occasion pour accéder à et pour télécharger votre "
-"modèle d'inventaire des données ouvertes."
-
-#: ckanext/canada/strings.py:125
-msgid "5th National Action Plan on Open Government Tracker"
-msgstr ""
-"Outil de suivi pour le 5ᵉ Plan d'action national pour un gouvernement "
-"ouvert"
-
-#: ckanext/canada/strings.py:126
-msgid ""
-"Access, upload and modify the National Action Plan on Open Government "
-"Tracker for your organization"
-msgstr ""
-"Accès, téléversement et Modifier le outil de suivi pour le Plan d'action "
-"national pour un gouvernement ouvert pour votre organisation"
-
-#: ckanext/canada/strings.py:128
-msgid "Proactive Disclosure - Question Period Notes"
-msgstr "Divulgation proactive - Notes pour la période des questions"
-
-#: ckanext/canada/strings.py:129
-msgid "Question Period Notes"
-msgstr "Notes pour la période des questions"
-
-#: ckanext/canada/strings.py:130
-msgid "Access, upload and modify Question Period notes for your organization"
-msgstr ""
-"Accès, téléversement et modifications des notes de la période de "
-"questions pour votre organisation"
-
-#: ckanext/canada/strings.py:132
-msgid "Proactive Disclosure - Position Reclassification"
-msgstr "Divulgation proactive - Reclassifications de postes"
-
-#: ckanext/canada/strings.py:133
-msgid "Position Reclassification"
-msgstr "Reclassifications de postes"
-
-#: ckanext/canada/strings.py:134
-msgid ""
-"Access, upload and modify the position reclassification reports for your "
-"organization"
-msgstr ""
-"Accès, téléversement et modifications des rapports sur les contributions "
-"et les subventions pour votre organisation"
-
-#: ckanext/canada/strings.py:135
-msgid "Proactive Disclosure - Position Reclassification Nothing to Report"
-msgstr "Divulgation proactive - Reclassifications de postes (Rien à signaler)"
-
-#: ckanext/canada/strings.py:136
-msgid "Position Reclassification Nothing to Report"
-msgstr "Reclassifications de postes (Rien à signaler)"
-
-#: ckanext/canada/strings.py:138
-msgid "Service Inventory"
-msgstr "Répertoire de services"
-
-#: ckanext/canada/strings.py:139
-msgid ""
-"Access, upload and modify the Service Inventory of external and internal "
-"enterprise services for your organization"
-msgstr ""
-"Accèder, téléverser et modifier le catalogue des service internes "
-"intégrés et externes pour votre organisation"
-
-#: ckanext/canada/strings.py:141
-msgid "Proactive Disclosure - Annual Travel, Hospitality and Conferences"
-msgstr ""
-"Divulgation proactive - Dépenses annuelles de voyages, d’accueil, de "
-"conférences et d’événements"
-
-#: ckanext/canada/strings.py:142
-msgid "Annual Travel, Hospitality and Conferences"
-msgstr "Dépenses annuelles de voyages, d’accueil, de conférences et d’événements"
-
-#: ckanext/canada/strings.py:143
-msgid ""
-"This dataset includes all of the annual reports on travel expenses "
-"incurred within your organization."
-msgstr ""
-"Ce jeu de données comprend tous les rapports annuels sur les dépenses de "
-"voyage engagées au sein de votre organisation."
-
-#: ckanext/canada/strings.py:145
-msgid "Proactive Disclosure - Travel Expenses"
-msgstr "Divulgation proactive - Dépenses de voyage"
-
-#: ckanext/canada/strings.py:146
-msgid "Travel Expenses"
-msgstr "Dépenses de voyage"
-
-#: ckanext/canada/strings.py:147
-msgid ""
-"Access, upload and modify the monthly travel expense reports for your "
-"organization"
-msgstr ""
-"Accès, téléversement et modification des rapports mensuels sur les frais "
-"de déplacement pour votre organisation"
-
-#: ckanext/canada/strings.py:148
-msgid "Proactive Disclosure - Travel Expenses Nothing to Report"
-msgstr "Divulgation proactive - Dépenses de voyage (Rien à signaler)"
-
-#: ckanext/canada/strings.py:149
-msgid "Travel Expenses Nothing to Report"
-msgstr "Dépenses de voyage (Rien à signaler)"
-
-#: ckanext/canada/strings.py:151
-msgid "Proactive Disclosure - Acts of Founded Wrongdoing"
-msgstr "Divulgation proactive - Dossiers sur les actes répréhensibles fondés"
-
-#: ckanext/canada/strings.py:152
-msgid "Acts of Founded Wrongdoing"
-msgstr "Dossiers sur les actes répréhensibles fondés"
-
-#: ckanext/canada/strings.py:153
-msgid ""
-"Access, upload and modify the Acts of Founded Wrongdoing reports for your"
-" organization"
-msgstr ""
-"Accès, téléversement et modifications des dossiers sur les actes "
-"répréhensibles fondés pour votre organisation"
-
 #: ckanext/canada/validators.py:120
 #, python-format
 msgid "Tag \"%s\" length is less than minimum %s"
@@ -987,6 +525,416 @@ msgstr "L’utilisateur %r n’est pas autorisé à modifier les membres de %s"
 #, python-format
 msgid "User %r not authorized to view members of %s"
 msgstr "L’utilisateur %r n’est pas autorisé à voir les membres de %s"
+
+#. Title for PD Type: adminaircraft
+#. Resource Title for PD Type: adminaircraft
+#: ckanext/canada/tables/adminaircraft.yaml:5
+#: ckanext/canada/tables/adminaircraft.yaml:10
+msgid "Proactive Disclosure - Use of Administrative Aircraft"
+msgstr "Divulgation proactive - Utilisation des avions d'affaires"
+
+#. Label for PD Type: adminaircraft
+#: ckanext/canada/tables/adminaircraft.yaml:6
+msgid "Use of Administrative Aircraft"
+msgstr "Utilisation des avions d'affaires"
+
+#. Description for PD Type: adminaircraft
+#: ckanext/canada/tables/adminaircraft.yaml:7
+msgid "Access, upload and modify government administrative aircraft use"
+msgstr ""
+"Accès, téléversement et modifications des rapports sur la utilisation des"
+" avions d'affaires"
+
+#. Title for PD Type: ati
+#. Resource Title for PD Type: ati
+#: ckanext/canada/tables/ati.yaml:4 ckanext/canada/tables/ati.yaml:11
+msgid "ATI Summaries"
+msgstr "Accès à l’information sommaires complétés"
+
+#. Description for PD Type: ati
+#: ckanext/canada/tables/ati.yaml:5
+msgid ""
+"Access, upload and modify the monthly ATI Summaries and ATI Nothing to "
+"Report for your organization"
+msgstr ""
+"Accès, téléversement et modification des sommaires mensuels des demandes "
+"d’accès à l’information et des demandes d’accès pour lesquelles rien "
+"n’est à signaler pour votre organisation"
+
+#. SQL Trigger String for PD Type: ati
+#: ckanext/canada/tables/ati.yaml:248
+msgid "This value must not be negative"
+msgstr "Cette valeur ne doit pas être négatif"
+
+#. SQL Trigger String for PD Type: ati
+#: ckanext/canada/tables/ati.yaml:129 ckanext/canada/tables/ati.yaml:247
+msgid "Please enter a month number from 1-12"
+msgstr "Veuillez entrer une valeur comprise entre 1 et 12"
+
+#. SQL Trigger String for PD Type: ati
+#: ckanext/canada/tables/ati.yaml:129 ckanext/canada/tables/ati.yaml:246
+msgid "Please enter a valid year"
+msgstr "Veuillez entrer une année valide"
+
+#. NIL Resource Title for PD Type: ati
+#: ckanext/canada/tables/ati.yaml:275
+msgid "ATI Nothing to Report"
+msgstr "Accès à l’information rien à signaler"
+
+#. Title for PD Type: briefingt
+#. Resource Title for PD Type: briefingt
+#: ckanext/canada/tables/briefingt.yaml:4
+#: ckanext/canada/tables/briefingt.yaml:10
+msgid "Proactive Disclosure - Briefing Note Titles and Numbers"
+msgstr "Divulgation proactive - Titres et numéros des notes d’information"
+
+#. Label for PD Type: briefingt
+#: ckanext/canada/tables/briefingt.yaml:5
+msgid "Briefing Note Titles and Numbers"
+msgstr "Titres et numéros des notes d’information"
+
+#. Description for PD Type: briefingt
+#: ckanext/canada/tables/briefingt.yaml:6
+msgid ""
+"Access, upload and modify the Briefing Note Titles and Numbers reports "
+"for your organization"
+msgstr ""
+"Accès, téléversement et modifications des rapports sur les titres at "
+"numéros des notes d’information pour votre organisation"
+
+#. Title for PD Type: consultations
+#. Resource Title for PD Type: consultations
+#: ckanext/canada/tables/consultations.yaml:4
+#: ckanext/canada/tables/consultations.yaml:17
+msgid "Open Dialogue - Consultations"
+msgstr "Dialogue ouvert - Consultations"
+
+#. Label for PD Type: consultations
+#: ckanext/canada/tables/consultations.yaml:5
+msgid "Consultations"
+msgstr "Consultations"
+
+#. Description for PD Type: consultations
+#: ckanext/canada/tables/consultations.yaml:6
+msgid "Access, upload and modify consultation reports for your organization"
+msgstr ""
+"Accès, téléversement et modifications des rapports sur les consultations "
+"pour votre organisation"
+
+#. Title for PD Type: contracts
+#. Resource Title for PD Type: contracts
+#: ckanext/canada/tables/contracts.yaml:4
+#: ckanext/canada/tables/contracts.yaml:85
+msgid "Proactive Publication - Contracts over $10,000"
+msgstr "Publication proactive - Contrats attribués de plus de 10 000 $"
+
+#. Label for PD Type: contracts
+#: ckanext/canada/tables/contracts.yaml:5
+msgid "Contracts over $10,000"
+msgstr "Contrats attribués de plus de 10 000 $"
+
+#. Description for PD Type: contracts
+#: ckanext/canada/tables/contracts.yaml:6
+msgid ""
+"Access, upload and modify the Contracts over 10K reports for your "
+"organization"
+msgstr ""
+"Accès, téléversement et modification des rapports  sur les contrats "
+"attribués de plus de 10 000 $ pour votre organisation"
+
+#. NIL Resource Title for PD Type: contracts
+#: ckanext/canada/tables/contracts.yaml:2262
+msgid "Proactive Publication - Contracts Nothing to Report"
+msgstr "Publication proactive - Contrats (Rien à signaler)"
+
+#. Title for PD Type: contractsa
+#. Resource Title for PD Type: contractsa
+#: ckanext/canada/tables/contractsa.yaml:4
+#: ckanext/canada/tables/contractsa.yaml:11
+msgid "Proactive Publication - Aggregated Contracts from -$10,000 to $10,000"
+msgstr "Publication proactive - Contrats agrégés de -10 000$ à 10 000$"
+
+#. Label for PD Type: contractsa
+#: ckanext/canada/tables/contractsa.yaml:5
+msgid "Aggregated Contracts from -$10,000 to $10,000"
+msgstr "Contrats agrégés de -10 000$ à 10 000$"
+
+#. Description for PD Type: contractsa
+#: ckanext/canada/tables/contractsa.yaml:6
+msgid ""
+"Access, upload and modify the aggregated Contracts from -$10K to $10K "
+"reports for your organization"
+msgstr ""
+"Accès, téléversement et modification des rapports sur les Contrats "
+"agrégés de -10 000$ à 10 000$ pour votre organisation"
+
+#. SQL Trigger String for PD Type: contractsa
+#. SQL Trigger String for PD Type: hospitalityq
+#. SQL Trigger String for PD Type: reclassification
+#. SQL Trigger String for PD Type: travela
+#. SQL Trigger String for PD Type: travelq
+#: ckanext/canada/tables/contractsa.yaml:387
+#: ckanext/canada/tables/hospitalityq.yaml:591
+#: ckanext/canada/tables/reclassification.yaml:371
+#: ckanext/canada/tables/travela.yaml:642
+#: ckanext/canada/tables/travelq.yaml:580
+msgid "This must list the year you are reporting on (not the fiscal year)."
+msgstr "Veuillez indiquer l’année civile visée par le rapport."
+
+#. Title for PD Type: dac
+#. Resource Title for PD Type: dac
+#: ckanext/canada/tables/dac.yaml:3 ckanext/canada/tables/dac.yaml:10
+msgid "Proactive Disclosure - Departmental Audit Committee"
+msgstr "Divulgation proactive - Comités ministériels d’audit"
+
+#. Label for PD Type: dac
+#: ckanext/canada/tables/dac.yaml:4
+msgid "Departmental Audit Committee"
+msgstr "Comités ministériels d’audit"
+
+#. Description for PD Type: dac
+#: ckanext/canada/tables/dac.yaml:5
+msgid ""
+"Access, upload and modify your Departmental Audit Committee members’ "
+"remuneration and expenses."
+msgstr ""
+"Accès, téléversement et modification de la rémunération et des dépenses "
+"des membres de votre Comité ministériel d’audit."
+
+#. Title for PD Type: experiment
+#. Resource Title for PD Type: experiment
+#: ckanext/canada/tables/experiment.yaml:4
+msgid "Experimentation Inventory"
+msgstr "Répertoire d'expérimentation"
+
+#. Description for PD Type: experiment
+#: ckanext/canada/tables/experiment.yaml:5
+msgid ""
+"Access, upload and modify the Experimentation Inventory for your "
+"organization"
+msgstr ""
+"Accès, téléversement et modifier le répertoire d'expérimentation pour "
+"votre organisation"
+
+#. Title for PD Type: grants
+#. Resource Title for PD Type: grants
+#: ckanext/canada/tables/grants.yaml:3 ckanext/canada/tables/grants.yaml:11
+#: ckanext/canada/tables/grants.yaml:860
+msgid "Proactive Disclosure - Grants and Contributions"
+msgstr "Divulgation proactive - Subventions et les contributions"
+
+#. Label for PD Type: grants
+#: ckanext/canada/tables/grants.yaml:4
+msgid "Grants and Contributions"
+msgstr "Subventions et les contributions"
+
+#. Description for PD Type: grants
+#: ckanext/canada/tables/grants.yaml:5
+msgid ""
+"Access, upload and modify the Grants and Contributions reports for your "
+"organization"
+msgstr ""
+"Accès, téléversement et modifications des rapports sur les contributions "
+"et les subventions pour votre organisation"
+
+#. NIL Resource Title for PD Type: grants
+#: ckanext/canada/tables/grants.yaml:874
+msgid "Proactive Disclosure - Grants and Contributions Nothing to Report"
+msgstr ""
+"Divulgation proactive - Subventions et les contributions  (Rien à "
+"signaler)"
+
+#. Title for PD Type: hospitalityq
+#. Resource Title for PD Type: hospitalityq
+#: ckanext/canada/tables/hospitalityq.yaml:4
+#: ckanext/canada/tables/hospitalityq.yaml:12
+msgid "Proactive Disclosure - Hospitality Expenses"
+msgstr "Divulgation proactive - Dépenses d'accueil"
+
+#. Label for PD Type: hospitalityq
+#: ckanext/canada/tables/hospitalityq.yaml:5
+msgid "Hospitality Expenses"
+msgstr "Dépenses d'accueil"
+
+#. Description for PD Type: hospitalityq
+#: ckanext/canada/tables/hospitalityq.yaml:6
+msgid ""
+"Access, upload and modify the quarterly hospitality expenses for your "
+"organization"
+msgstr ""
+"Accès, téléversement et modification des dépenses trimestriellement liées"
+" à l’accueil pour votre organisation"
+
+#. NIL Resource Title for PD Type: hospitalityq
+#: ckanext/canada/tables/hospitalityq.yaml:471
+msgid "Proactive Disclosure - Hospitality Nothing to Report"
+msgstr "Divulgation proactive - Dépenses d'accueil (Rien à signaler)"
+
+#. Title for PD Type: inventory
+#. Resource Title for PD Type: inventory
+#: ckanext/canada/tables/inventory.yaml:5
+#: ckanext/canada/tables/inventory.yaml:10
+msgid "Open Data Inventory"
+msgstr "Inventaire des données ouvertes"
+
+#. Description for PD Type: inventory
+#: ckanext/canada/tables/inventory.yaml:6
+msgid ""
+"This dataset houses your departmental open data inventory. This is where "
+"you can access and upload your open data inventory template."
+msgstr ""
+"Ce jeu de données contient l’inventaire des données ouvertes de votre "
+"ministère. C’est l’occasion pour accéder à et pour télécharger votre "
+"modèle d'inventaire des données ouvertes."
+
+#. Title for PD Type: nap5
+#. Resource Title for PD Type: nap5
+#: ckanext/canada/tables/nap5.yaml:3 ckanext/canada/tables/nap5.yaml:9
+msgid "5th National Action Plan on Open Government Tracker"
+msgstr ""
+"Outil de suivi pour le 5ᵉ Plan d'action national pour un gouvernement "
+"ouvert"
+
+#. Description for PD Type: nap5
+#: ckanext/canada/tables/nap5.yaml:4
+msgid ""
+"Access, upload and modify the National Action Plan on Open Government "
+"Tracker for your organization"
+msgstr ""
+"Accès, téléversement et Modifier le outil de suivi pour le Plan d'action "
+"national pour un gouvernement ouvert pour votre organisation"
+
+#. Title for PD Type: qpnotes
+#. Resource Title for PD Type: qpnotes
+#: ckanext/canada/tables/qpnotes.yaml:4 ckanext/canada/tables/qpnotes.yaml:10
+msgid "Proactive Disclosure - Question Period Notes"
+msgstr "Divulgation proactive - Notes pour la période des questions"
+
+#. Label for PD Type: qpnotes
+#: ckanext/canada/tables/qpnotes.yaml:5
+msgid "Question Period Notes"
+msgstr "Notes pour la période des questions"
+
+#. Description for PD Type: qpnotes
+#: ckanext/canada/tables/qpnotes.yaml:6
+msgid "Access, upload and modify Question Period notes for your organization"
+msgstr ""
+"Accès, téléversement et modifications des notes de la période de "
+"questions pour votre organisation"
+
+#. Title for PD Type: reclassification
+#. Resource Title for PD Type: reclassification
+#: ckanext/canada/tables/reclassification.yaml:3
+#: ckanext/canada/tables/reclassification.yaml:11
+#: ckanext/canada/tables/reclassification.yaml:268
+msgid "Proactive Disclosure - Position Reclassification"
+msgstr "Divulgation proactive - Reclassifications de postes"
+
+#. Label for PD Type: reclassification
+#: ckanext/canada/tables/reclassification.yaml:4
+msgid "Position Reclassification"
+msgstr "Reclassifications de postes"
+
+#. Description for PD Type: reclassification
+#: ckanext/canada/tables/reclassification.yaml:5
+msgid ""
+"Access, upload and modify the position reclassification reports for your "
+"organization"
+msgstr ""
+"Accès, téléversement et modifications des rapports sur les contributions "
+"et les subventions pour votre organisation"
+
+#. NIL Resource Title for PD Type: reclassification
+#: ckanext/canada/tables/reclassification.yaml:282
+msgid "Proactive Disclosure - Position Reclassification Nothing to Report"
+msgstr "Divulgation proactive - Reclassifications de postes (Rien à signaler)"
+
+#. Title for PD Type: service
+#: ckanext/canada/tables/service.yaml:4
+msgid "Service Inventory"
+msgstr "Répertoire de services"
+
+#. Description for PD Type: service
+#: ckanext/canada/tables/service.yaml:5
+msgid ""
+"Access, upload and modify the Service Inventory of external and internal "
+"enterprise services for your organization"
+msgstr ""
+"Accèder, téléverser et modifier le catalogue des service internes "
+"intégrés et externes pour votre organisation"
+
+#. Resource Title for PD Type: service
+#: ckanext/canada/tables/service.yaml:16
+msgid "Service Identification Information & Metrics"
+msgstr ""
+
+#. NIL Resource Title for PD Type: service
+#: ckanext/canada/tables/service.yaml:1063
+msgid "Service Standards & Performance Results"
+msgstr ""
+
+#. Title for PD Type: travela
+#. Resource Title for PD Type: travela
+#: ckanext/canada/tables/travela.yaml:3 ckanext/canada/tables/travela.yaml:14
+msgid "Proactive Disclosure - Annual Travel, Hospitality and Conferences"
+msgstr ""
+"Divulgation proactive - Dépenses annuelles de voyages, d’accueil, de "
+"conférences et d’événements"
+
+#. Label for PD Type: travela
+#: ckanext/canada/tables/travela.yaml:4
+msgid "Annual Travel, Hospitality and Conferences"
+msgstr "Dépenses annuelles de voyages, d’accueil, de conférences et d’événements"
+
+#. Title for PD Type: travelq
+#. Resource Title for PD Type: travelq
+#: ckanext/canada/tables/travelq.yaml:4 ckanext/canada/tables/travelq.yaml:12
+#: ckanext/canada/tables/travelq.yaml:441
+msgid "Proactive Disclosure - Travel Expenses"
+msgstr "Divulgation proactive - Dépenses de voyage"
+
+#. Label for PD Type: travelq
+#: ckanext/canada/tables/travelq.yaml:5
+msgid "Travel Expenses"
+msgstr "Dépenses de voyage"
+
+#. Description for PD Type: travelq
+#: ckanext/canada/tables/travelq.yaml:6
+msgid ""
+"Access, upload and modify the monthly travel expense reports for your "
+"organization"
+msgstr ""
+"Accès, téléversement et modification des rapports mensuels sur les frais "
+"de déplacement pour votre organisation"
+
+#. NIL Resource Title for PD Type: travelq
+#: ckanext/canada/tables/travelq.yaml:457
+msgid "Proactive Disclosure - Travel Expenses Nothing to Report"
+msgstr "Divulgation proactive - Dépenses de voyage (Rien à signaler)"
+
+#. Title for PD Type: wrongdoing
+#: ckanext/canada/tables/wrongdoing.yaml:3
+msgid "Proactive Disclosure - Acts of Founded Wrongdoing"
+msgstr "Divulgation proactive - Dossiers sur les actes répréhensibles fondés"
+
+#. Label for PD Type: wrongdoing
+#: ckanext/canada/tables/wrongdoing.yaml:4
+msgid "Acts of Founded Wrongdoing"
+msgstr "Dossiers sur les actes répréhensibles fondés"
+
+#. Description for PD Type: wrongdoing
+#: ckanext/canada/tables/wrongdoing.yaml:5
+msgid ""
+"Access, upload and modify the Acts of Founded Wrongdoing reports for your"
+" organization"
+msgstr ""
+"Accès, téléversement et modifications des dossiers sur les actes "
+"répréhensibles fondés pour votre organisation"
+
+#. Resource Title for PD Type: wrongdoing
+#: ckanext/canada/tables/wrongdoing.yaml:14
+msgid "Proactive Disclosure - Founded Wrongdoing"
+msgstr "Divulgation proactive – Dossiers sur les actes répréhensibles fondés"
 
 #: ckanext/canada/templates/internal/base.html:5
 msgid "Open Data Registry"
@@ -5292,4 +5240,189 @@ msgstr "Mémoriser mes informations"
 #~ "autochtones Indicateur d’incidence de la "
 #~ "Stratégie d’approvisionnement auprès des "
 #~ "entreprises autochtones"
+
+#~ msgid "Contracts Nothing to Report"
+#~ msgstr "Contrats (Rien à signaler)"
+
+#~ msgid "Discontinued as of 2022-01-01"
+#~ msgstr ""
+
+#~ msgid "Must be left blank when trade agreements specified"
+#~ msgstr ""
+
+#~ msgid "Grants and Contributions Nothing to Report"
+#~ msgstr "Subventions et les contributions  (Rien à signaler)"
+
+#~ msgid "Hospitality Nothing to Report"
+#~ msgstr "Dépenses d'accueil (Rien à signaler)"
+
+#~ msgid "Position Reclassification Nothing to Report"
+#~ msgstr "Reclassifications de postes (Rien à signaler)"
+
+#~ msgid "Travel Expenses Nothing to Report"
+#~ msgstr "Dépenses de voyage (Rien à signaler)"
+
+#~ msgid ""
+#~ "If Status is set to: Not Going "
+#~ "Forward, Publish Record must be set "
+#~ "to No"
+#~ msgstr ""
+
+#~ msgid "The field is limited to eight alpha-numeric digits or less.\n"
+#~ msgstr "Ce champ est limité à 8 caractères alphanumériques."
+
+#~ msgid ""
+#~ "If N/A, then Instrument Type must be identified as a\n"
+#~ "standing offer/supply arrangement (SOSA)\n"
+#~ msgstr ""
+#~ "Si N/A, alors le Type d’instrument "
+#~ "doit être identifié comme étant une "
+#~ "offre à commandes ou un arrangement "
+#~ "en matière d’approvisionnement (SOSA)."
+
+#~ msgid ""
+#~ "If “TC” (Competitive - Traditional), “TN” (Non-Competitive) or “AC”\n"
+#~ "(Advanced Contract Award Notice) is "
+#~ "selected and trade agreement with a\n"
+#~ ""
+#~ "value other than “XX” (None) is "
+#~ "selected, limited tendering cannot have\n"
+#~ ""
+#~ "a value of “0” or “00” (None).\n"
+#~ msgstr ""
+#~ "Si les options « TC » "
+#~ "(Concurrentielle - Traditionnelle), « TN "
+#~ "» (non concurrentielle) ou « AC »"
+#~ " (préavis d’attribution de contrat) sont"
+#~ " sélectionnées et qu’une entente de "
+#~ "marché ayant une valeur autre que "
+#~ "« XX » (nulle) est sélectionnée, "
+#~ "le champ Appel d’offres restreint ne "
+#~ "peut avoir la valeur « 0 » "
+#~ "ou « 00 » (nulle)."
+
+#~ msgid ""
+#~ "If the value 00 (none) is entered, then no other value\n"
+#~ "can be entered in this field.\n"
+#~ msgstr ""
+#~ "Si la valeur 00 (aucune) est "
+#~ "inscrite, alors aucune autre valeur ne"
+#~ " peut être inscrite dans ce champ."
+
+#~ msgid "Discontinued as of 2022-01-01\n"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "This field must be populated with an NA if an amendment\n"
+#~ "is disclosed under Instrument Type\n"
+#~ msgstr ""
+#~ "Ce champ doit contenir NA si une"
+#~ " modification est divulguée sous l’élément"
+#~ " Type d’instrument."
+
+#~ msgid ""
+#~ "This field may only be populated with “0” if the procurement was\n"
+#~ "identified as competitive (open bidding "
+#~ "(OB), traditional competitive (TC)\n"
+#~ "or selective tendering (ST)).\n"
+#~ msgstr ""
+#~ "Cette zone peut seulement contenir « "
+#~ "0 » si l’acquisition a été "
+#~ "identifiée comme étant concurrentielle "
+#~ "(invitation ouverte à soumissionner (OB) "
+#~ "ou concurrentielle - traditionnelle (TC) "
+#~ "ou Concurrentielle – Appel d’offres "
+#~ "sélectif (ST))."
+
+#~ msgid ""
+#~ "If the value XX (none) is entered, then no other value\n"
+#~ "can be entered in this field.\n"
+#~ msgstr ""
+#~ "Si la valeur XX (aucun) est "
+#~ "inscrite, alors aucune autre valeur ne"
+#~ " peut être inscrite dans ce champ."
+
+#~ msgid ""
+#~ "This field must be N, No or Non, if the Procurement Strategy for\n"
+#~ "Aboriginal Business field is MS or VS.\n"
+#~ msgstr ""
+#~ "Ce champ doit être N, No ou "
+#~ "Non, si le champ Stratégie "
+#~ "d’approvisionnement auprès des entreprises "
+#~ "autochtones contient MS ou VS."
+
+#~ msgid ""
+#~ "This field must be populated with "
+#~ "a 1 if the solicitation procedure "
+#~ "is\n"
+#~ "identified as non-competitive (TN) or"
+#~ " Advance Contract Award Notice (AC).\n\n"
+#~ msgstr ""
+#~ "Cette zone doit contenir un « 1"
+#~ " » si la méthode d’invitation à "
+#~ "soumissionner est identifiée comme étant "
+#~ "non concurrentielle (TN) ou un préavis"
+#~ " d’attribution de contrat (AC)."
+
+#~ msgid "Must be left blank when trade agreements specified\n"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "If the value NA (not applicable) is entered, then no\n"
+#~ "other value can be entered in this field.\n"
+#~ msgstr ""
+#~ "Si la valeur NA (sans objet) est"
+#~ " inscrite, alors aucune autre valeur "
+#~ "ne peut être inscrite dans ce "
+#~ "champ."
+
+#~ msgid ""
+#~ "If TC, TN or AC is selected in the Solicitation Procedure data field\n"
+#~ "with a value other than XX (None)"
+#~ " selected in the Trade Agreement data"
+#~ "\n"
+#~ "field, then a Limited Tendering value"
+#~ " other than 00 (none) must be "
+#~ "entered.\n"
+#~ msgstr ""
+#~ "Si TC, TN ou AC est sélectionné"
+#~ " dans le champ de données Méthode "
+#~ "d’invitation à soumissioner avec une "
+#~ "valeur autre que XX (Aucune) "
+#~ "sélectionnée dans le champ de données"
+#~ " Accord commercial, une valeur d'offre "
+#~ "limitée autre que 0 (aucune) doit "
+#~ "être entrée."
+
+#~ msgid ""
+#~ "If this field is populated, it must be with a “0” if the procurement\n"
+#~ "was identified as non-competitive (TN)"
+#~ " or advance contract award notice\n"
+#~ "(AC) or was identified as an "
+#~ "Amendment (A) in the Instrument type "
+#~ "data field.\n"
+#~ msgstr ""
+#~ "Si cette zone est remplie, il doit"
+#~ " contenir un « 0 » si "
+#~ "l’acquisition a été identifiée comme "
+#~ "étant non concurrentielle (TN) ou un "
+#~ "préavis d’attribution de contrat (AC) ou"
+#~ " si l’acquisition a été identifiée "
+#~ "comme un modification (A) dans le "
+#~ "champ Type d’instrument."
+
+#~ msgid "This field is limited to only 3 or 4 digits.\n"
+#~ msgstr "Ce champ est limité à 3 ou 4 caractères."
+
+#~ msgid ""
+#~ "This field must contain the first three digits of a postal\n"
+#~ "code in A1A format or the value \"NA\"\n"
+#~ msgstr ""
+#~ "Ce champ doit contenir les trois "
+#~ "premiers chiffres d’un code postal dans"
+#~ " le format A1A ou la valeur «"
+#~ " NA. »"
+
+#~ msgid "Please enter a decimal value between zero and one: %"
+#~ msgstr ""
 
