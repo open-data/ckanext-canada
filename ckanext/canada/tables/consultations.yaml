@@ -581,7 +581,7 @@ resources:
           errors := errors || required_error(NEW.rationale, 'rationale');
         END IF;
         IF NEW.status = 'NF' AND NEW.publishable = 'Y' THEN
-          errors := errors || ARRAY[['status', {status_error}];
+          errors := errors || ARRAY[['status', {status_error}]];
         END IF;
         crval := choices_clean_error(NEW.rationale, {rationale}, 'rationale');
         errors := errors || crval.error;
