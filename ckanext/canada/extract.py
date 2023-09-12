@@ -1,27 +1,32 @@
 from yaml import load
+from yaml.loader import SafeLoader
 from six import string_types
 
 
-def _get_line_number(fileobj, phrase, encoding):
-    line = fileobj.readline().decode(encoding)
-    num = 1
-    while line:
-        if phrase in line:
-            return num
-        line = fileobj.readline().decode(encoding)
-        num += 1
-    return None
+class SafeLineLoader(SafeLoader):
+    def __init__(self, stream):
+        super(SafeLineLoader, self).__init__(stream)
+        self.line_numbers = {}
+
+    def construct_scalar(self, node):
+        if node.value in self.line_numbers:
+            self.line_numbers[node.value].append(node.start_mark.line + 1)
+        else:
+            self.line_numbers[node.value] = [node.start_mark.line + 1]
+        return super(SafeLineLoader, self).construct_scalar(node)
+
+    def get_single_data(self):
+        data = super(SafeLineLoader, self).get_single_data()
+        return self, data
 
 
-def _extract_string(fileobj, key, value, encoding, comments):
-    fileobj.seek(0)
-    lineno = _get_line_number(fileobj, '%s: %s' % (key, value), encoding)
-    while lineno:
-        yield (lineno,
-               '',
-               value,
-               comments)
-        lineno = _get_line_number(fileobj, '%s: %s' % (key, value), encoding)
+def _extract_string(loader, value, comments):
+    if value in loader.line_numbers:
+        for lineno in loader.line_numbers[value]:
+            yield (lineno,
+                   '',
+                   value,
+                   comments)
 
 
 def extract_pd(fileobj, keywords, comment_tags, options):
@@ -39,7 +44,7 @@ def extract_pd(fileobj, keywords, comment_tags, options):
     :rtype: ``iterator``
     """
     encoding = options.get('encoding', 'utf-8')
-    chromo = load(fileobj.read().decode(encoding))
+    loader, chromo = load(fileobj.read().decode(encoding), Loader=SafeLineLoader)
 
     pd_type = chromo.get('dataset_type', 'unknown')
 
@@ -47,21 +52,21 @@ def extract_pd(fileobj, keywords, comment_tags, options):
     title = chromo.get('title')
     if isinstance(title, string_types):
         for lineno, funcname, message, comments in \
-        _extract_string(fileobj, 'title', title, encoding, ['Title for PD Type: %s' % pd_type]):
+        _extract_string(loader, title, ['Title for PD Type: %s' % pd_type]):
             yield (lineno, funcname, message, comments)
 
     # PD Type Short Label
     label = chromo.get('shortname')
     if isinstance(label, string_types):
         for lineno, funcname, message, comments in \
-        _extract_string(fileobj, 'shortname', label, encoding, ['Label for PD Type: %s' % pd_type]):
+        _extract_string(loader, label, ['Label for PD Type: %s' % pd_type]):
             yield (lineno, funcname, message, comments)
 
     # PD Type Description
     notes = chromo.get('notes')
     if isinstance(notes, string_types):
         for lineno, funcname, message, comments in \
-        _extract_string(fileobj, 'notes', notes, encoding, ['Description for PD Type: %s' % pd_type]):
+        _extract_string(loader, notes, ['Description for PD Type: %s' % pd_type]):
             yield (lineno, funcname, message, comments)
 
     # PD Type Resource Titles
@@ -70,7 +75,7 @@ def extract_pd(fileobj, keywords, comment_tags, options):
         base_title = resources[0].get('title')  # normal resource title
         if isinstance(base_title, string_types):
             for lineno, funcname, message, comments in \
-            _extract_string(fileobj, 'title', base_title, encoding, ['Resource Title for PD Type: %s' % pd_type]):
+            _extract_string(loader, base_title, ['Resource Title for PD Type: %s' % pd_type]):
                 yield (lineno, funcname, message, comments)
 
         base_trigger_strings = resources[0].get('trigger_strings')  # normal resource sql error messages
@@ -78,14 +83,14 @@ def extract_pd(fileobj, keywords, comment_tags, options):
             for k, v in base_trigger_strings.items():
                 if isinstance(v, string_types):
                     for lineno, funcname, message, comments in \
-                    _extract_string(fileobj, k, v, encoding, ['SQL Trigger String for PD Type: %s' % pd_type]):
+                    _extract_string(loader, v, ['SQL Trigger String for PD Type: %s' % pd_type]):
                         yield (lineno, funcname, message, comments)
 
         if len(resources) > 1:  # nil resource
             nil_title = resources[1].get('title')  # nil resource title
             if isinstance(nil_title, string_types):
                 for lineno, funcname, message, comments in \
-                _extract_string(fileobj, 'title', nil_title, encoding, ['NIL Resource Title for PD Type: %s' % pd_type]):
+                _extract_string(loader, nil_title, ['NIL Resource Title for PD Type: %s' % pd_type]):
                     yield (lineno, funcname, message, comments)
 
             nil_triggers_strings = resources[1].get('trigger_strings')  # nil resource sql error messages
@@ -93,5 +98,5 @@ def extract_pd(fileobj, keywords, comment_tags, options):
                 for k, v in nil_triggers_strings.items():
                     if isinstance(v, string_types):
                         for lineno, funcname, message, comments in \
-                        _extract_string(fileobj, k, v, encoding, ['SQL Trigger String for PD Type: %s' % pd_type]):
+                        _extract_string(loader, v, ['SQL Trigger String for PD Type: %s' % pd_type]):
                             yield (lineno, funcname, message, comments)
