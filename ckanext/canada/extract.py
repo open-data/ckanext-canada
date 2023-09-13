@@ -17,16 +17,7 @@ class SafeLineLoader(SafeLoader):
 
     def get_single_data(self):
         data = super(SafeLineLoader, self).get_single_data()
-        return self, data
-
-
-def _extract_string(loader, value, comments):
-    if value in loader.line_numbers:
-        for lineno in loader.line_numbers[value]:
-            yield (lineno,
-                   '',
-                   value,
-                   comments)
+        return self.line_numbers, data
 
 
 def extract_pd(fileobj, keywords, comment_tags, options):
@@ -44,59 +35,52 @@ def extract_pd(fileobj, keywords, comment_tags, options):
     :rtype: ``iterator``
     """
     encoding = options.get('encoding', 'utf-8')
-    loader, chromo = load(fileobj.read().decode(encoding), Loader=SafeLineLoader)
+    line_numbers, chromo = load(fileobj.read().decode(encoding), Loader=SafeLineLoader)
 
     pd_type = chromo.get('dataset_type', 'unknown')
 
     # PD Type Title
     title = chromo.get('title')
     if isinstance(title, string_types):
-        for lineno, funcname, message, comments in \
-        _extract_string(loader, title, ['Title for PD Type: %s' % pd_type]):
-            yield (lineno, funcname, message, comments)
+        for line_number in line_numbers.get(title, [0]):
+            yield (line_number, '', title, ['Title for PD Type: %s' % pd_type])
 
     # PD Type Short Label
     label = chromo.get('shortname')
     if isinstance(label, string_types):
-        for lineno, funcname, message, comments in \
-        _extract_string(loader, label, ['Label for PD Type: %s' % pd_type]):
-            yield (lineno, funcname, message, comments)
+        for line_number in line_numbers.get(label, [0]):
+            yield (line_number, '', label, ['Label for PD Type: %s' % pd_type])
 
     # PD Type Description
     notes = chromo.get('notes')
     if isinstance(notes, string_types):
-        for lineno, funcname, message, comments in \
-        _extract_string(loader, notes, ['Description for PD Type: %s' % pd_type]):
-            yield (lineno, funcname, message, comments)
+        for line_number in line_numbers.get(notes, [0]):
+            yield (line_number, '', notes, ['Description for PD Type: %s' % pd_type])
 
     # PD Type Resource Titles
     resources = chromo.get('resources')
     if resources:
         base_title = resources[0].get('title')  # normal resource title
         if isinstance(base_title, string_types):
-            for lineno, funcname, message, comments in \
-            _extract_string(loader, base_title, ['Resource Title for PD Type: %s' % pd_type]):
-                yield (lineno, funcname, message, comments)
+            for line_number in line_numbers.get(base_title, [0]):
+                yield (line_number, '', base_title, ['Resource Title for PD Type: %s' % pd_type])
 
         base_trigger_strings = resources[0].get('trigger_strings')  # normal resource sql error messages
         if base_trigger_strings:
             for k, v in base_trigger_strings.items():
                 if isinstance(v, string_types):
-                    for lineno, funcname, message, comments in \
-                    _extract_string(loader, v, ['SQL Trigger String for PD Type: %s' % pd_type]):
-                        yield (lineno, funcname, message, comments)
+                    for line_number in line_numbers.get(v, [0]):
+                        yield (line_number, '', v, ['SQL Trigger String for PD Type: %s' % pd_type])
 
         if len(resources) > 1:  # nil resource
             nil_title = resources[1].get('title')  # nil resource title
             if isinstance(nil_title, string_types):
-                for lineno, funcname, message, comments in \
-                _extract_string(loader, nil_title, ['NIL Resource Title for PD Type: %s' % pd_type]):
-                    yield (lineno, funcname, message, comments)
+                for line_number in line_numbers.get(nil_title, [0]):
+                    yield (line_number, '', nil_title, ['NIL Resource Title for PD Type: %s' % pd_type])
 
             nil_triggers_strings = resources[1].get('trigger_strings')  # nil resource sql error messages
             if nil_triggers_strings:
                 for k, v in nil_triggers_strings.items():
                     if isinstance(v, string_types):
-                        for lineno, funcname, message, comments in \
-                        _extract_string(loader, v, ['SQL Trigger String for PD Type: %s' % pd_type]):
-                            yield (lineno, funcname, message, comments)
+                        for line_number in line_numbers.get(v, [0]):
+                            yield (line_number, '', v, ['SQL Trigger String for PD Type: %s' % pd_type])
