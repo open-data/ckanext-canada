@@ -57,30 +57,17 @@ def extract_pd(fileobj, keywords, comment_tags, options):
         for line_number in line_numbers.get(notes, [0]):
             yield (line_number, '', notes, ['Description for PD Type: %s' % pd_type])
 
-    # PD Type Resource Titles
-    resources = chromo.get('resources')
-    if resources:
-        base_title = resources[0].get('title')  # normal resource title
-        if isinstance(base_title, string_types):
-            for line_number in line_numbers.get(base_title, [0]):
-                yield (line_number, '', base_title, ['Resource Title for PD Type: %s' % pd_type])
+    # PD Type Resources
+    resources = chromo.get('resources', [])
+    for resource in resources:
+        resource_title = resource.get('title')  # resource title
+        if isinstance(resource_title, string_types):
+            for line_number in line_numbers.get(resource_title, [0]):
+                yield (line_number, '', resource_title, ['Resource Title for PD Type: %s' % pd_type])
 
-        base_trigger_strings = resources[0].get('trigger_strings')  # normal resource sql error messages
-        if base_trigger_strings:
-            for k, v in base_trigger_strings.items():
+        resource_trigger_strings = resource.get('trigger_strings')  # resource sql error messages
+        if resource_trigger_strings:
+            for k, v in resource_trigger_strings.items():
                 if isinstance(v, string_types):
                     for line_number in line_numbers.get(v, [0]):
                         yield (line_number, '', v, ['SQL Trigger String for PD Type: %s' % pd_type])
-
-        if len(resources) > 1:  # nil resource
-            nil_title = resources[1].get('title')  # nil resource title
-            if isinstance(nil_title, string_types):
-                for line_number in line_numbers.get(nil_title, [0]):
-                    yield (line_number, '', nil_title, ['NIL Resource Title for PD Type: %s' % pd_type])
-
-            nil_triggers_strings = resources[1].get('trigger_strings')  # nil resource sql error messages
-            if nil_triggers_strings:
-                for k, v in nil_triggers_strings.items():
-                    if isinstance(v, string_types):
-                        for line_number in line_numbers.get(v, [0]):
-                            yield (line_number, '', v, ['SQL Trigger String for PD Type: %s' % pd_type])
