@@ -1,4 +1,6 @@
-version: 2
+version: 2.1
+orbs:
+  slack: circleci/slack@4.12.5
 jobs:
   test:
     docker:
@@ -76,9 +78,16 @@ jobs:
           name: Run all tests
           command: |
             pytest --ckan-ini=test-core.ini ckanext/canada/tests
+      - slack/notify:
+          event: fail
+          template: basic_fail_1
+      - slack/notify:
+          event: pass
+          template: success_tagged_deploy_1
 
 workflows:
-  version: 2
+  version: 2.1
   build_and_test:
     jobs:
       - test
+          context: Slack
