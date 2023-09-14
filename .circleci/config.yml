@@ -29,7 +29,6 @@ jobs:
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: pass
           POSTGRES_DB: postgres
-        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
       - image: redis:3  # dependency service
     steps:
       - run:
