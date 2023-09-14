@@ -85,7 +85,6 @@ jobs:
           template: success_tagged_deploy_1
 
 workflows:
-  version: 2.1
   build_and_test:
     jobs:
       - test:
