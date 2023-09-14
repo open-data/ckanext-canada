@@ -1,6 +1,6 @@
 # ckanext-canada
 
-[![CircleCI](https://dl.circleci.com/status-badge/img/gh/open-data/ckanext-canada/tree/master.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/gh/open-data/ckanext-canada/tree/master)
+[![Tests](https://github.com/open-data/ckanext-canada/workflows/Tests/badge.svg?branch=master&event=push)](https://github.com/open-data/ckanext-canada/actions?query=name%3ATests)
 
 Government of Canada CKAN Extension - Extension à CKAN du Gouvernement du Canada
 
