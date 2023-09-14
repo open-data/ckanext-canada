@@ -1,0 +1,16 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/python:2-stretch-browsers
+    steps:
+      - checkout
+      - run: virtualenv venv
+      - run: venv/bin/pip install nose==1.3.7
+      - run: venv/bin/nosetests
+
+workflows:
+  version: 2
+  build_and_test:
+    jobs:
+      - build
