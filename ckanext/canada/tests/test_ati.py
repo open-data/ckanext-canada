@@ -30,6 +30,7 @@ class TestAti(CanadaTestBase):
         self.lc.action.datastore_upsert(
             resource_id=self.resource_id,
             records=[record])
+        assert False
 
 
     def test_blank(self):
