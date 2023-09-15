@@ -2,6 +2,7 @@ dataset_type: travelq
 target_dataset: travelq
 
 title: Proactive Disclosure - Travel Expenses
+shortname: Travel Expenses
 notes: Access, upload and modify the monthly travel expense reports for your organization
 
 template_version: 3
@@ -203,7 +204,7 @@ resources:
     datastore_type: text
     label:
       en: Places visited (French)
-      fr: Endroits visités (français) 
+      fr: Endroits visités (français)
     description:
       en: To include names of all places visited during the trip in question, in French
       fr: Cette zone indique, en français, le nom de tous les endroits visités pendant le voyage.
@@ -566,7 +567,7 @@ resources:
           errors := errors || required_error(NEW.month, 'month');
           errors := errors || choice_error(NEW.month, {month}, 'month');
           IF NEW.year > date_part('year', CURRENT_DATE) THEN
-            errors := errors || ARRAY[['year', 'This must list the year you are reporting on (not the fiscal year).']];
+            errors := errors || ARRAY[['year', {year_error}]];
           END IF;
           IF errors = '{{}}' THEN
             RETURN NEW;
@@ -574,6 +575,9 @@ resources:
           RAISE EXCEPTION E'TAB-DELIMITED\t%', array_to_string(errors, E'\t');
         END;
     - update_record_modified_created_trigger
+
+  trigger_strings:  # yaml | not supported
+    year_error: This must list the year you are reporting on (not the fiscal year).
 
   examples:
     record:

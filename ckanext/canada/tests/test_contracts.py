@@ -110,18 +110,10 @@ class TestContracts(CanadaTestBase):
                 records=[record])
         err = ve.value.error_dict['records'][0]
         expected = {
-            'trade_agreement': [
-                'If the value XX (none) is entered, then no other value '
-                'can be entered in this field.'],
-            'land_claims': [
-                'If the value NA (not applicable) is entered, then no other '
-                'value can be entered in this field.'],
-            'limited_tendering_reason': [
-                'If the value 00 (none) is entered, then no other value can '
-                'be entered in this field.'],
-            'trade_agreement_exceptions': [
-                'If the value 00 (none) is entered, then no other value can '
-                'be entered in this field.'],
+            'trade_agreement': ['If the value XX (none) is entered, then no other value can be entered in this field.'],
+            'land_claims': ['If the value NA (not applicable) is entered, then no other value can be entered in this field.'],
+            'limited_tendering_reason': ['If the value 00 (none) is entered, then no other value can be entered in this field.'],
+            'trade_agreement_exceptions': ['If the value 00 (none) is entered, then no other value can be entered in this field.'],
         }
         assert isinstance(err, dict), err
         for k in set(err) | set(expected):
@@ -147,15 +139,9 @@ class TestContracts(CanadaTestBase):
                 records=[record])
         err = ve.value.error_dict['records'][0]
         expected = {
-            'buyer_name': [
-                'This field must be populated with an NA '
-                'if an amendment is disclosed under Instrument Type'],
-            'economic_object_code': [
-                'If N/A, then Instrument Type must be identified '
-                'as a standing offer/supply arrangement (SOSA)'],
-            'number_of_bids':[
-                'This field must be populated with a 1 if the solicitation procedure is '
-                'identified as non-competitive (TN) or Advance Contract Award Notice (AC).'],
+            'buyer_name': ['This field must be populated with an NA if an amendment is disclosed under Instrument Type'],
+            'economic_object_code': ['If N/A, then Instrument Type must be identified as a standing offer/supply arrangement (SOSA)'],
+            'number_of_bids':['This field must be populated with a 1 if the solicitation procedure is identified as non-competitive (TN) or Advance Contract Award Notice (AC).'],
         }
         assert isinstance(err, dict), err
         for k in set(err) | set(expected):

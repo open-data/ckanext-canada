@@ -45,9 +45,11 @@ setup(
 
     [babel.extractors]
     ckan = ckan.lib.extract:extract_ckan
+    pd = ckanext.canada.extract:extract_pd
     """,
     message_extractors={
         'ckanext': [
+            ('**/tables/**.yaml', 'pd', None),
             ('**.py', 'python', None),
             ('**.js', 'javascript', None),
             ('**/templates/**.html', 'ckan', None),
