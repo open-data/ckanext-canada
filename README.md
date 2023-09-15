@@ -11,7 +11,7 @@ Features:
 Installation:
 
 * Use [open-data fork of CKAN](https://github.com/open-data/ckan),
-  branch canada-v2.8
+  branch canada-v2.9
 
 From a clean database you must run:
 
