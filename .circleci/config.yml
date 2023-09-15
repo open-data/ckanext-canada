@@ -5,6 +5,7 @@ jobs:
   test:
     docker:
       - image: openknowledge/ckan-dev:2.8  # primary executor
+        name: ckan
         environment:
           PGHOST: postgres
           PGDATABASE: postgres
@@ -24,17 +25,21 @@ jobs:
           CKAN_SOLR_URL: http://solr:8983/solr/ckan_registry
           CKAN_REDIS_URL: redis://redis:6379/1
       - image: opendatacanada/solr  # dependency service
+        name: solr
       - image: postgres:9.6  # dependency service
+        name: postgres
         environment:
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: pass
           POSTGRES_DB: postgres
       - image: redis:3  # dependency service
+        name: redis
     steps:
       - add_ssh_keys:
           fingerprints:
             - "94:db:2e:03:93:db:67:64:e3:8c:32:b0:d1:c6:7a:b7"
             - "0c:02:84:7e:c0:46:16:eb:9b:5e:1d:c9:f8:3b:5a:3d"
+      - checkout
       - run:
           name: Set CKAN to open-data/ckan@canada-v2.9
           command: |
