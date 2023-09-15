@@ -11,7 +11,7 @@ Features:
 Installation:
 
 * Use [open-data fork of CKAN](https://github.com/open-data/ckan),
-  branch canada-v2.8
+  branch canada-v2.9
 
 From a clean database you must run:
 
@@ -40,6 +40,10 @@ before loading any data.
   package processing between CKAN and Solr (requires
   `Scheming extension`, see below)
 
+`canada_security`
+  extra security processing (requires
+  `Security extension`, see below)
+
 ## Related Open Source Repos
 
 Project | Github group/repo | Our Contribution
@@ -64,14 +68,14 @@ The CKAN ini file needs the following settings for the registry server:
 ```ini
 ckan.plugins = dcat dcat_json_interface googleanalytics canada_forms canada_internal
         canada_public datastore recombinant
-        canada_datasets scheming_organizations fluent
+        canada_datasets scheming_organizations canada_security fluent
 ```
 
 For the public server use only:
 
 ```ini
 ckan.plugins = dcat dcat_json_interface googleanalytics canada_forms
-        canada_public canada_datasets scheming_organizations fluent
+        canada_public canada_datasets scheming_organizations canada_security fluent
 
 canada.portal_url = http://myserver.com
 
@@ -149,17 +153,36 @@ You will need to rebuild your search index using:
 ckan search-index rebuild
 ```
 
-## Compiling the updated French localization strings
+## Localization strings
+
+To update strings in the translation files:
+
+```bash
+python setup.py extract_messages
+```
+
+Extract messages will gather `gettext` calls in Python, JS, and Jinja2 files. It will also use th custom PD extractor to get specific strings for the Recombinant YAML files.
+
+To update the English and French catalog files:
+
+```bash
+python setup.py update_catalog
+```
+
+This will update both English and French PO files. You will need to confirm that there are NO `fuzzy` translations in either of the PO files.
+
+After updating the PO files and ensuring that there are no fuzzies, you may commit the two PO files along with the POT file.
+
+### Compiling localization strings
 
 Each time you install or update this extension you need to install the
 updated translations by running:
 
 ```bash
-bin/build-combined-ckan-mo.sh
+python setup.py compile_catalog
 ```
 
-This script overwrites the ckan French translations by combining it with
-ours.
+
 
 ## Migrating Proactive Disclosure (recombinant) data
 
