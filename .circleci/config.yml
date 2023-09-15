@@ -31,6 +31,10 @@ jobs:
           POSTGRES_DB: postgres
       - image: redis:3  # dependency service
     steps:
+      - add_ssh_keys:
+          fingerprints:
+            - "94:db:2e:03:93:db:67:64:e3:8c:32:b0:d1:c6:7a:b7"
+            - "0c:02:84:7e:c0:46:16:eb:9b:5e:1d:c9:f8:3b:5a:3d"
       - run:
           name: Set CKAN to open-data/ckan@canada-v2.9
           command: |
