@@ -1,0 +1,11 @@
+name: CircleCI
+on: [push, pull_request, workflow_dispatch]
+jobs:
+  trigger-circleci:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger CircleCI Build
+        id: trigger_circleci_build
+        uses: circleci/trigger_circleci_pipeline@v1.0
+        env:
+          CCI_TOKEN: $
