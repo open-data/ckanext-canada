@@ -1,5 +1,14 @@
 {% ckan_extends %}
 
+{% block page %}
+  {{ super() }}
+  <div id="dtprv_processing" class="dataTables_processing card">
+    <div>
+      <div></div><div></div><div></div><div></div>
+    </div>
+  </div>
+{% endblock %}
+
 {%- block datatable_column_label -%}
   {%- set label = 'label_' + h.lang() -%}
   {%- set description = 'notes_' + h.lang() -%}
@@ -61,4 +70,10 @@
   {%- endblock -%}
   {% block google_analytics_footer %}{%- endblock -%}
   {{ super() }}
+  {% asset 'canada_datatables/js' %}
 {% endblock %}
+
+{%- block styles %}
+  {{ super() }}
+  {% asset 'canada_datatables/css' %}
+{%- endblock -%}
