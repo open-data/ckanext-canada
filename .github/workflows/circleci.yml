@@ -1,4 +1,4 @@
-name: CircleCI
+name: Trigger CircleCI
 on: [push, pull_request, workflow_dispatch]
 jobs:
   trigger-circleci:
@@ -6,6 +6,6 @@ jobs:
     steps:
       - name: Trigger CircleCI Build
         id: trigger_circleci_build
-        uses: circleci/trigger_circleci_pipeline@v1.0
+        uses: CircleCI-Public/trigger-circleci-pipeline-action@v1.0.5
         env:
-          CCI_TOKEN: $
+          CCI_TOKEN: ${{ secrets.CCI_TOKEN }}
