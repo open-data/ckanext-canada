@@ -2157,58 +2157,23 @@ resources:
   - update_record_modified_created_trigger
 
   trigger_strings:
-    vendor_postal_code_error: |
-      This field must contain the first three digits of a postal
-      code in A1A format or the value "NA"
-    buyer_name_error: |
-      This field must be populated with an NA if an amendment
-      is disclosed under Instrument Type
-    economic_object_code_limit_error: |
-      This field is limited to only 3 or 4 digits.
-    economic_object_code_error: |
-      If N/A, then Instrument Type must be identified as a
-      standing offer/supply arrangement (SOSA)
-    trade_agreement_error: |
-      If the value XX (none) is entered, then no other value
-      can be entered in this field.
-    agreement_type_code_discontinued_error: |
-      Discontinued as of 2022-01-01
-    agreement_type_code_error: |
-      Must be left blank when trade agreements specified
-    land_claims_error: |
-      If the value NA (not applicable) is entered, then no
-      other value can be entered in this field.
-    commodity_code_error: |
-      The field is limited to eight alpha-numeric digits or less.
-    limited_tendering_reason_00_error: |
-      If the value 00 (none) is entered, then no other value
-      can be entered in this field.
-    limited_tendering_reason_error: |
-      If TC, TN or AC is selected in the Solicitation Procedure data field
-      with a value other than XX (None) selected in the Trade Agreement data
-      field, then a Limited Tendering value other than 00 (none) must be entered.
-    solicitation_procedure_error: |
-      If “TC” (Competitive - Traditional), “TN” (Non-Competitive) or “AC”
-      (Advanced Contract Award Notice) is selected and trade agreement with a
-      value other than “XX” (None) is selected, limited tendering cannot have
-      a value of “0” or “00” (None).
-    trade_agreement_exceptions_error: |
-      If the value 00 (none) is entered, then no other value
-      can be entered in this field.
-    indigenous_business_excluding_psib_error: |
-      This field must be N, No or Non, if the Procurement Strategy for
-      Aboriginal Business field is MS or VS.
-    number_of_bids_error: |
-      This field must be populated with a 1 if the solicitation procedure is
-      identified as non-competitive (TN) or Advance Contract Award Notice (AC).
-    award_criteria_error: |
-      If this field is populated, it must be with a “0” if the procurement
-      was identified as non-competitive (TN) or advance contract award notice
-      (AC) or was identified as an Amendment (A) in the Instrument type data field.
-    article_6_exceptions_error: |
-      This field may only be populated with “0” if the procurement was
-      identified as competitive (open bidding (OB), traditional competitive (TC)
-      or selective tendering (ST)).
+    vendor_postal_code_error: This field must contain the first three digits of a postal code in A1A format or the value "NA"
+    buyer_name_error: This field must be populated with an NA if an amendment is disclosed under Instrument Type
+    economic_object_code_limit_error: This field is limited to only 3 or 4 digits.
+    economic_object_code_error: If N/A, then Instrument Type must be identified as a standing offer/supply arrangement (SOSA)
+    trade_agreement_error: If the value XX (none) is entered, then no other value can be entered in this field.
+    agreement_type_code_discontinued_error: Discontinued as of 2022-01-01
+    agreement_type_code_error: Must be left blank when trade agreements specified
+    land_claims_error: If the value NA (not applicable) is entered, then no other value can be entered in this field.
+    commodity_code_error: The field is limited to eight alpha-numeric digits or less.
+    limited_tendering_reason_00_error: If the value 00 (none) is entered, then no other value can be entered in this field.
+    limited_tendering_reason_error: If TC, TN or AC is selected in the Solicitation Procedure data field with a value other than XX (None) selected in the Trade Agreement data field, then a Limited Tendering value other than 00 (none) must be entered.
+    solicitation_procedure_error: If “TC” (Competitive - Traditional), “TN” (Non-Competitive) or “AC” (Advanced Contract Award Notice) is selected and trade agreement with a value other than “XX” (None) is selected, limited tendering cannot have a value of “0” or “00” (None).
+    trade_agreement_exceptions_error: If the value 00 (none) is entered, then no other value can be entered in this field.
+    indigenous_business_excluding_psib_error: This field must be N, No or Non, if the Procurement Strategy for Aboriginal Business field is MS or VS.
+    number_of_bids_error: This field must be populated with a 1 if the solicitation procedure is identified as non-competitive (TN) or Advance Contract Award Notice (AC).
+    award_criteria_error: If this field is populated, it must be with a “0” if the procurement was identified as non-competitive (TN) or advance contract award notice (AC) or was identified as an Amendment (A) in the Instrument type data field.
+    article_6_exceptions_error: This field may only be populated with “0” if the procurement was identified as competitive (open bidding (OB), traditional competitive (TC) or selective tendering (ST)).
 
   examples:
     record:
