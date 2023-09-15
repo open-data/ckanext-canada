@@ -3,6 +3,7 @@ target_dataset: adminaircraft
 
 
 title: Proactive Disclosure - Use of Administrative Aircraft
+shortname: Use of Administrative Aircraft
 notes: Access, upload and modify government administrative aircraft use
 
 
@@ -182,7 +183,7 @@ resources:
       en: Number of hours flown
       fr: Le nombre d’heures de vol
     description:
-      en: The number of hours flown. 
+      en: The number of hours flown.
       fr: Le nombre d’heures de vol.
     obligation: Mandatory
     excel_required: true

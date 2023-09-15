@@ -3,7 +3,7 @@ img.openness-rating-stars {
 }
 
 .facet-item {
-	padding-bottom: 3px; 
+	padding-bottom: 3px;
 	padding-top: 3px;
 }
 
@@ -128,19 +128,6 @@ body {
   background: none;
 }
 
-.js .image-upload .btn-remove-url {
-    position: absolute;
-    top: auto;
-    right: 0;
-    padding: 5px;
-    border-radius: 0;
-    margin-top: 29px;
-}
-
-.js .image-upload #field-image-upload {
-    display: inline-block;
-}
-
 .nav-item > a, .nav-aside li a {
     font-size: inherit;
 }
@@ -162,11 +149,6 @@ body {
 
 .module-content {
   padding: 0;
-}
-
-.module-resource .actions {
-    top: unset;
-    right: unset;
 }
 
 .context-info .nums {
@@ -266,11 +248,6 @@ a#edit-comment-body-0-format-help-about, button#edit-submit,button#edit-actions-
     background-color: #256EB8;
 }
 
-#resource_title {
-    display: inline-block;
-    width: 50%;
-}
-
 .resource-heading {
     overflow: hidden;
     text-overflow: ellipsis;
@@ -339,6 +316,265 @@ a#edit-comment-body-0-format-help-about, button#edit-submit,button#edit-actions-
 
 .modal .modal-dialog .modal-content .modal-header{
 
-    background-color: #e5e5e5;
+    background-color: #2e5274;
 
 }
+
+body #resource-schema-buttons div.form-group > a.btn:nth-of-type(2){
+
+  display: none !important;
+  z-index: -1 !important;
+
+}
+
+.modal .modal-dialog .modal-content .modal-title{
+
+    color: white;
+
+}
+
+.modal .modal-dialog .modal-content button.close span{
+
+    color: white;
+
+}
+
+label.no-colon::after{
+  content: none !important;
+}
+
+
+@media all and (max-width: 768px){
+  nav#wb-bc{
+    padding-left: 15px !important;
+  }
+}
+
+
+/*#################
+## Form Elements ##
+###################*/
+
+/* Action Buttons */
+form .form-actions .btn{
+  margin-right: 6px !important;
+}
+/* END - Action Buttons - END */
+
+/*#################
+##      END      ##
+## Form Elements ##
+##      END      ##
+###################*/
+
+
+/*#################
+## Resource Item ##
+###################*/
+
+/* Dataset Index */
+.resource-item #resource_title{
+  display: inline-block;
+  width: 60%;
+}
+.resource-item .resource-action-links{
+  display: block !important;
+  position: relative !important;
+  float: right;
+  margin-left: 10px;
+}
+@media all and (max-width: 992px) {
+  .resource-item #resource_title{
+    width: 50%;
+  }
+}
+@media all and (max-width: 768px) {
+  .resource-item #resource_title{
+    width: 100%;
+  }
+  .resource-item a.validation-badge{
+    margin-left: 0 !important;
+  }
+  .resource-item .resource-action-links{
+    display: block !important;
+    float: none !important;
+    margin-top: 10px !important;
+    margin-bottom: 10px !important;
+  }
+  .resource-item .resource-action-links a.btn{
+    float: none !important;
+  }
+}
+/* END - Dataset Index - END */
+
+/* Side Panel */
+.resources-side-panel .nav-item button.dropdown-toggle::after{
+  display: inline-block;
+  margin-left: 0.255em;
+  vertical-align: 0.255em;
+  content: "";
+  border-top: 0.3em solid;
+  border-right: 0.3em solid transparent;
+  border-bottom: 0;
+  border-left: 0.3em solid transparent;
+}
+.resources-side-panel .nav-item{
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+.resources-side-panel .nav-item > a{
+  padding-left: 15px;
+  padding-right: 65px;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  position: relative;
+  width: 100%;
+}
+.resources-side-panel .nav-item ul.dropdown-menu{
+  position: absolute;
+  inset: 0px auto auto 0px;
+  margin: 0px;
+  transform: translateY(38px);
+  z-index: 100 !important;
+}
+@media all and (max-width: 992px){
+  .resources-side-panel .nav-item ul.dropdown-menu{
+    transform: translateY(30px) translateX(calc(-100% + 50px));
+  }
+}
+.resources-side-panel .nav-item.active a{
+  pointer-events: none !important;
+  cursor: default !important;
+  color: #295376 !important;
+}
+.resources-side-panel .nav-item.active{
+  background-color: #eeeeee !important;
+}
+.resources-side-panel .nav-item.active::before{
+  content: none;
+}
+.resources-side-panel .nav-item .dropdown.position-absolute{
+  position: absolute !important;
+  right: 0 !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  margin-right: 0 !important;
+}
+.resources-side-panel .nav-item .dropdown.position-absolute > .btn-light{
+  background-color: #eaebed !important;
+  border-color: #dcdee1 !important;
+  color: #335075 !important;
+}
+.resources-side-panel .nav-item .dropdown.position-absolute > .btn-light:hover,
+.resources-side-panel .nav-item .dropdown.position-absolute > .btn-light:active,
+.resources-side-panel .nav-item .dropdown.position-absolute > .btn-light:focus{
+  background-color: #cfd1d5 !important;
+  border-color: #bbbfc5 !important;
+}
+.resources-side-panel .nav-item .dropdown.position-absolute.open{
+  z-index: 100 !important;
+}
+.resources-side-section + div.module-content > a.btn-light,
+.resources-side-section--no-resources > div.module-content > a.btn-light{
+  background-color: #eaebed !important;
+  border-color: #dcdee1 !important;
+  color: #335075 !important;
+  line-height: 2 !important;
+}
+.resources-side-section + div.module-content > a.btn-light:visited,
+.resources-side-section--no-resources > div.module-content > a.btn-light:visited{
+  color: #335075 !important
+}
+.resources-side-section + div.module-content > a.btn-light:hover,
+.resources-side-section + div.module-content > a.btn-light:focus,
+.resources-side-section + div.module-content > a.btn-light:active,
+.resources-side-section--no-resources > div.module-content > a.btn-light:hover,
+.resources-side-section--no-resources > div.module-content > a.btn-light:focus,
+.resources-side-section--no-resources > div.module-content > a.btn-light:active{
+  background-color: #cfd1d5 !important;
+  border-color: #bbbfc5 !important;
+}
+/* END - Side Panel - END */
+
+/* Resource Action Buttons */
+.module-resource .actions {
+  top: unset;
+  right: unset;
+}
+.module-resource .actions > ul > li:nth-last-of-type(2){
+  margin-right: 5px !important;
+}
+@media all and (max-width: 992px){
+  .module-resource .actions {
+    float: none !important;
+  }
+  .module-resource .actions > ul{
+    padding-left: 0 !important;
+    margin-bottom: calc(11.5px - 5px) !important;
+  }
+  .module-resource .actions > ul > li{
+    margin-bottom: 5px !important;
+  }
+}
+/* END - Resource Action Buttons - END */
+
+/*#################
+##      END      ##
+## Resource Item ##
+##      END      ##
+###################*/
+
+
+/*###############################
+## FontAwesome5 Icon Overrides ##
+#################################*/
+body i.fa.fa-chart-bar::before{
+  content: '\f080' !important;
+}
+body i.fa.fa-arrow-left::before{
+  margin-right: 6px !important;
+}
+/*###############################
+##            END              ##
+## FontAwesome5 Icon Overrides ##
+##            END              ##
+#################################*/
+
+
+/*##################################
+## Bootstrap Versioning Overrides ##
+###################################*/
+
+/* Resource File Upload Field */
+.resource-upload-field .btn-remove-url{
+  position: absolute !important;
+  top: auto !important;
+  right: 0 !important;
+  padding: 5px !important;
+  border-radius: 0 !important;
+  margin-top: 29px !important;
+}
+.resource-upload-field .upload-type input.form-control{
+  display: inline-block !important;
+  width: 100% !important;
+}
+/* END - Resource File Upload Field - END */
+
+/*##################################
+##              END               ##
+## Bootstrap Versioning Overrides ##
+##              END               ##
+####################################*/
+
+
+/*##################################
+##  Resource Actions Toolbar Area ##
+###################################*/
+.resource-actions-toolbar ul.gap-1 > li{
+  margin-right: 5px !important;
+}
+/*##################################
+##              END               ##
+##  Resource Actions Toolbar Area ##
+##              END               ##
+####################################*/

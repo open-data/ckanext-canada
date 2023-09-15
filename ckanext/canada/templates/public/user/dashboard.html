@@ -2,6 +2,10 @@
 
 {% import 'macros/canada_read.html' as cr %}
 
+{% block page_heading %}
+  {{ _('Dashboard') }} - {{ _('News feed') }}
+{% endblock %}
+
 {% block font_awesome %}<link href="{{ wet_server }}/font-awesome/css/font-awesome.css" rel="stylesheet">{% endblock %}
 
 {% block primary_content_inner %}
@@ -9,7 +13,7 @@
     {% snippet 'user/snippets/followee_dropdown.html', context=dashboard_activity_stream_context, followees=followee_list %}
     <div data-module="dashboard" class="panel">
       <div class="panel-heading">
-        <h3 class="panel-title">{% block page_heading %}{{ _('News feed') }}{% endblock %}</h3>
+        <h3 class="panel-title">{{ _('News feed') }}</h3>
       </div>
       <div class="panel-body">
       {{ _('Activity from items that you follow') }}
@@ -40,7 +44,7 @@
         {% for package in c.user_dict['datasets'][0:10] %}
           {% set title = package.title or package.name %}
           <li class="list-group-item">
-            {{ h.link_to(h.truncate(title, 80), h.url_for(controller='package', action='read', id=package.name)) }}
+            {{ h.link_to(h.truncate(title, 80), h.url_for(package.type + '.read', id=package.name)) }}
           </li>
         {% endfor %}
       </ul>
@@ -50,14 +54,14 @@
     </div>
   </div>
 
-  <a href="{{ h.url_for(controller='package', action='new') }}" class="btn btn-primary">
+  <a href="{{ h.url_for(package.type + '.new') }}" class="btn btn-primary">
     {{ _('Add Dataset') }}
   </a>
 {% endblock %}
 
 {% block add_action_content %}
   {% if h.check_access('package_create') %}
-    <li>{% link_for _('Add Dataset'), controller='package', action='new', class_="btn btn-primary", icon="plus-square" %}</li>
+    <li>{% link_for _('Add Dataset'), package.type + '.new', class_="btn btn-primary", icon="plus-square" %}</li>
   {% endif %}
 {% endblock %}
 

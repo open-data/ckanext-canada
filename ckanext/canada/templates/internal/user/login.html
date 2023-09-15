@@ -1,6 +1,6 @@
 {% ckan_extends %}
 
-{% set reset_link = h.url_for(controller='user', action='request_reset') %}
+{% set reset_link = h.url_for('user.request_reset') %}
 
 {% block secondary_content %}
 
@@ -10,7 +10,7 @@
     <div class="panel-body">
       <p>{{ _('Then sign right up, it only takes a minute') }}.</p>
       <p class="action">
-        <a class="btn btn-primary btn-xs" href="{{ h.url_for(controller='user', action='register') }}" role="button">{{ _('Request an Account') }}</a>
+        <a class="btn btn-primary btn-xs" href="{{ h.url_for('user.register') }}" role="button">{{ _('Request an Account') }}</a>
       </p>
     </div>
   </div>

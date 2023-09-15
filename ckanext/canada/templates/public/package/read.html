@@ -18,28 +18,29 @@
   {% set title, machine_translated = h.get_translated_t(pkg, 'title') %}
   <h1>{{ title or pkg.name }}
     {% if pkg.state.startswith('draft') %}
-      [{{ _('Draft') }}]
+      <span class="label label-info" style="padding-top: 4px; padding-bottom: 4px;">{{ _('Draft') }}</span>
     {% endif %}
     {% if machine_translated %}
       <i class="fa fa-language text-muted mrgn-lft-sm" title="{{ _("This third party metadata element has been translated using an automated translation tool.  To report any discrepancies please contact open-ouvert@tbs-sct.gc.ca") }}"></i>
     {% endif %}
   </h1>
+  {% if is_activity_archive %}
+    <div class="module-alert alert alert-danger mrgn-tp-sm">
+      <p>
+        {% trans url = h.url_for(pkg.type + '.read', id=pkg.id) %}You're currently viewing an old version of this dataset. Some resources may no longer exist or the dataset may not display correctly. To see the current version, click <a href="{{ url }}">here</a>.{% endtrans %}
+      </p>
+    </div>
+  {% endif %}
 {% endblock %}
 
 {% block primary_content_inner %}
-  {% if not c.is_activity_archive %}
+  {% if not is_activity_archive %}
     {%- snippet 'package/snippets/schemaorg.html', data=pkg -%}
   {% endif %}
   <div class="module">
     {% block internal_actions %}{% endblock %}
 
-    {% block package_archive_notice %}
-    {% if c.is_activity_archive %}
-    <div class="alert alert-error">
-      {% trans url = h.url_for(controller='package', action='read', id=pkg.id) %}You're currently viewing an old version of this dataset. Some resources may no longer exist or the dataset may not display correctly. To see the current version, click <a href="{{ url }}">here</a>.{% endtrans %}
-    </div>
-    {% endif %}
-    {% endblock %}
+    {% block package_archive_notice %}{% endblock %}
 
     {% block package_item_title %}
     <section class="module-content indent-large">
@@ -52,7 +53,11 @@
       </div>
 
       {% if 'fgp_viewer' in pkg.get('display_flags', []) %}
-        <p><a href="https://{{ h.canada_search_domain() }}{{ _('/openmap/' ) }}{{ pkg.id }}" class="btn btn-primary btn-xs"><span class="fa fa-map-marker"></span> {{ _('View on Map') }}</a></p>
+        {% set openmap_uri = 'openmap' %}
+        {% if h.lang() == 'fr' %}
+          {% set openmap_uri = 'carteouverte' %}
+        {% endif %}
+        <p><a href="{{ h.adv_search_url() }}/{{ openmap_uri }}/{{ pkg.name }}" class="btn btn-primary btn-xs"><span class="fa fa-map-marker"></span> {{ _('View on Map') }}</a></p>
       {% endif %}
 
     </section>

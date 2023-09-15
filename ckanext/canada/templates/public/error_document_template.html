@@ -2,7 +2,7 @@
 
 {% block page_heading %}
   {% block subtitle %}
-    {% if code[0] == '404' %}
+    {% if code == 404 or code == 403 %}
       {{ _('We couldn\'t find that Web page') }}
     {% else %}
       {{ _('We encountered an error') }}

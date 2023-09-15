@@ -3,29 +3,45 @@
 import os
 import os.path
 import logging
-from pylons.i18n import _
+from flask import has_request_context
 import ckan.plugins as p
 from ckan.lib.plugins import DefaultDatasetForm, DefaultTranslation
 import ckan.lib.helpers as hlp
 from ckan.logic import validators as logic_validators
-from routes.mapper import SubMapper
 from paste.reloader import watch_file
 
-from ckantoolkit import h, chained_action, side_effect_free, ValidationError, ObjectNotFound
+from ckan.plugins.toolkit import (
+    c,
+    g,
+    h,
+    chained_action,
+    ValidationError,
+    ObjectNotFound,
+    _,
+    get_validator,
+    request
+)
 import ckanapi
-from ckan.lib.base import c
 
 from ckanext.canada import validators
 from ckanext.canada import logic
 from ckanext.canada import auth
 from ckanext.canada import helpers
 from ckanext.canada import activity as act
-from ckanext.extendedactivity.plugins import IActivity
-
+from ckanext.xloader.interfaces import IXloader
 import json
 
 import ckan.lib.formatters as formatters
 from webhelpers.html import literal
+from flask import Blueprint
+from ckanext.scheming.plugins import SchemingDatasetsPlugin
+from ckanext.security.plugin import CkanSecurityPlugin
+from ckanext.canada.view import (
+    canada_views,
+    CanadaDatasetEditView,
+    CanadaResourceEditView,
+    CanadaResourceCreateView
+)
 
 # XXX Monkey patch to work around libcloud/azure 400 error on get_container
 try:
@@ -37,6 +53,178 @@ except ImportError:
 log = logging.getLogger(__name__)
 
 
+class CanadaSecurityPlugin(CkanSecurityPlugin):
+    """
+    Plugin for extra security
+    """
+    p.implements(p.IResourceController, inherit=True)
+    p.implements(p.IValidators, inherit=True)
+
+    def before_create(self, context, resource):
+        """
+        Override before_create from CkanSecurityPlugin.
+        Want to use the methods in scheming instead of before_create.
+        """
+
+    def before_update(self, context, current, resource):
+        """
+        Override before_update from CkanSecurityPlugin.
+        Want to use the methods in scheming instead of before_update.
+        """
+
+    def get_validators(self):
+        return {'canada_security_upload_type':
+                    validators.canada_security_upload_type,
+                'canada_security_upload_presence':
+                    validators.canada_security_upload_presence}
+
+
+class CanadaDatasetsPlugin(SchemingDatasetsPlugin):
+    """
+    Plugin for dataset and resource
+    """
+    p.implements(p.IDatasetForm, inherit=True)
+    p.implements(p.IPackageController, inherit=True)
+    try:
+        from ckanext.validation.interfaces import IDataValidation
+    except ImportError:
+        log.warn('failed to import ckanext-validation interface')
+    else:
+        p.implements(IDataValidation, inherit=True)
+
+    #IDatasetForm
+    def prepare_dataset_blueprint(self, package_type, blueprint):
+        # type: (str,Blueprint) -> Blueprint
+        blueprint.add_url_rule(
+            u'/edit/<id>',
+            endpoint='canada_edit',
+            view_func=CanadaDatasetEditView.as_view(str(u'edit')),
+            methods=['GET', 'POST']
+        )
+        return blueprint
+
+
+    #IDatasetForm
+    def prepare_resource_blueprint(self, package_type, blueprint):
+        # type: (str,Blueprint) -> Blueprint
+        blueprint.add_url_rule(
+            u'/<resource_id>/edit',
+            endpoint='canada_edit',
+            view_func=CanadaResourceEditView.as_view(str(u'edit')),
+            methods=['GET', 'POST']
+        )
+        blueprint.add_url_rule(
+            u'/new',
+            endpoint='canada_new',
+            view_func=CanadaResourceCreateView.as_view(str(u'new')),
+            methods=['GET', 'POST']
+        )
+        return blueprint
+
+    # IDataValidation
+
+    def can_validate(self, context, resource):
+        """
+        Only uploaded resources are allowed to be validated
+        """
+        return resource.get(u'url_type') == u'upload'
+
+
+    # IPackageController
+    def before_search(self, search_params):
+        # We're going to group portal_release_date into two bins - to today and
+        # after today.
+        search_params['facet.range'] = 'portal_release_date'
+        search_params['facet.range.start'] = 'NOW/DAY-100YEARS'
+        search_params['facet.range.end'] = 'NOW/DAY+100YEARS'
+        search_params['facet.range.gap'] = '+100YEARS'
+
+        # FIXME: so terrible. hack out WET4 wbdisable parameter
+        try:
+            search_params['fq'] = search_params['fq'].replace(
+                'wbdisable:"true"', '').replace(
+                'wbdisable:"false"', '')
+        except Exception:
+            pass
+
+        try:
+            c.fields_grouped.pop('wbdisable', None)
+        except Exception:
+            pass
+
+        # search extras for ckan-admin/publish route.
+        # we only want to show ready to publish,
+        # approved datasets without a release date.
+        if has_request_context() and 'ckan-admin/publish' in request.url:
+            search_params['extras']['ready_to_publish'] = u'true'
+            search_params['extras']['imso_approval'] = u'true'
+            search_params['fq'] += '+ready_to_publish:"true", +imso_approval:"true", -portal_release_date:*'
+
+        return search_params
+
+
+    # IPackageController
+    def after_search(self, search_results, search_params):
+        for result in search_results.get('results', []):
+            for extra in result.get('extras', []):
+                if extra.get('key') in ['title_fra', 'notes_fra']:
+                    result[extra['key']] = extra['value']
+
+        return search_results
+
+
+    # IPackageController
+    def before_index(self, data_dict):
+        kw = json.loads(data_dict.get('extras_keywords', '{}'))
+        data_dict['keywords'] = kw.get('en', [])
+        data_dict['keywords_fra'] = kw.get('fr', kw.get('fr-t-en', []))
+        data_dict['catalog_type'] = data_dict.get('type', '')
+
+        data_dict['subject'] = json.loads(data_dict.get('subject', '[]'))
+        data_dict['topic_category'] = json.loads(data_dict.get(
+            'topic_category', '[]'))
+        try:
+            data_dict['spatial_representation_type'] = json.loads(
+                data_dict.get('spatial_representation_type')
+            )
+        except (TypeError, ValueError):
+            data_dict['spatial_representation_type'] = []
+
+        if data_dict.get('portal_release_date'):
+            data_dict.pop('ready_to_publish', None)
+        elif data_dict.get('ready_to_publish') == 'true':
+            data_dict['ready_to_publish'] = 'true'
+        else:
+            data_dict['ready_to_publish'] = 'false'
+
+        try:
+            geno = h.recombinant_get_geno(data_dict['type']) or {}
+        except AttributeError:
+            pass
+        else:
+            data_dict['portal_type'] = geno.get('portal_type', data_dict['type'])
+            if 'collection' in geno:
+                data_dict['collection'] = geno['collection']
+
+        # need to keep fgp_viewer in the index for Advanced Search App
+        if 'fgp_viewer' in data_dict.get('display_flags', []):
+            data_dict['fgp_viewer'] = 'map_view'
+
+        titles = json.loads(data_dict.get('title_translated', '{}'))
+        data_dict['title_fr'] = titles.get('fr', '')
+        data_dict['title_string'] = titles.get('en', '')
+
+        if data_dict['type'] == 'prop':
+            status = data_dict.get('status')
+            data_dict['status'] = status[-1]['reason'] if status else 'department_contacted'
+
+        if data_dict.get('credit'):
+            for cr in data_dict['credit']:
+                cr.pop('__extras', None)
+
+        return data_dict
+
+
 class DataGCCAInternal(p.SingletonPlugin):
     """
     Plugin for internal version of data.gc.ca site, aka the "registry"
@@ -45,11 +233,12 @@ class DataGCCAInternal(p.SingletonPlugin):
     p.implements(p.IConfigurable)
     p.implements(p.IConfigurer)
     p.implements(p.ITemplateHelpers)
-    p.implements(p.IRoutes, inherit=True)
     p.implements(p.IPackageController, inherit=True)
     p.implements(p.IActions)
-    p.implements(p.IResourceUrlChange)
+    p.implements(p.IBlueprint)
+    p.implements(IXloader)
 
+    # IConfigurer
     def update_config(self, config):
         p.toolkit.add_template_directory(config, 'templates/internal')
         p.toolkit.add_public_directory(config, 'internal/static')
@@ -67,108 +256,17 @@ ckanext.canada:schemas/presets.yaml
 	"ckanext.canada:schemas/validation_placeholder_presets.yaml"
 )
 
-    def before_map(self, map):
-        map.connect(
-            '/',
-            action='home',
-            controller='ckanext.canada.controller:CanadaController'
-        )
-        map.connect(
-            '/links',
-            action='links',
-            controller='ckanext.canada.controller:CanadaController'
-        )
-        map.connect(
-            '/user/logged_in',
-            action='logged_in',
-            controller='ckanext.canada.controller:CanadaUserController'
-        )
-        map.connect(
-            '/user/register',
-            action='register',
-            controller='ckanext.canada.controller:CanadaUserController'
-        )
-        map.connect(
-            'user_reports',
-            '/user/reports/{id}',
-            action='reports',
-            controller='ckanext.canada.controller:CanadaUserController',
-            ckan_icon='bar-chart-o'
-        )
-        map.connect(
-            'ckanadmin_publish',
-            '/ckan-admin/publish',
-            action='search',
-            controller='ckanext.canada.controller:CanadaAdminController',
-            ckan_icon='cloud-upload'
-        )
-        map.connect(
-            '/ckan_admin/publish_datasets',
-            action='publish',
-            conditions=dict(method=['POST']),
-            controller='ckanext.canada.controller:CanadaAdminController'
-        )
-        map.connect(
-            '/dataset/edit/{id}',
-            action='edit',
-            controller='ckanext.canada.controller:CanadaDatasetController'
-        )
-        map.connect(
-            '/dataset/{id}/resource_edit/{resource_id}',
-            action='resource_edit',
-            controller='ckanext.canada.controller:CanadaDatasetController'
-        )
-        # reset to regular delete controller for internal site
-        map.connect(
-            'dataset_delete',
-            '/dataset/delete/{id}',
-            controller='package',
-            action='delete'
-        )
-        map.connect(
-            'create_pd_record',
-            '/create-pd-record/{owner_org}/{resource_name}',
-            controller='ckanext.canada.controller:PDUpdateController',
-            action='create_pd_record',
-        )
-        map.connect(
-            'update_pd_record',
-            '/update-pd-record/{owner_org}/{resource_name}/{pk}',
-            controller='ckanext.canada.controller:PDUpdateController',
-            action='update_pd_record',
-        )
-        map.connect('recombinant_type',
-                    '/recombinant/{resource_name}',
-                    action='type_redirect',
-                    controller='ckanext.canada.controller:PDUpdateController')
-        map.connect(
-            'delete_datastore_table',
-            '/dataset/{id}/delete-datastore-table/{resource_id}',
-            controller='ckanext.canada.controller:CanadaDatastoreController',
-            action='delete_datastore_table',
-        )
+        # Include private datasets in Feeds
+        config['ckan.feeds.include_private'] = True
 
-        return map
 
-    def after_map(self, map):
-        mapper = SubMapper(
-            map,
-            controller='ckanext.canada.controller:CanadaController'
-        )
+    # IBlueprint
+    def get_blueprint(self):
+        # type: () -> list[Blueprint]
+        return [canada_views]
 
-        with mapper as m:
-            m.connect('/guidelines', action='view_guidelines')
-            m.connect('/help', action='view_help')
-            m.connect(
-                '/datatable/{resource_name}/{resource_id}',
-                action='datatable'
-            )
-        return map
 
-    # IResourceUrlChange
-    def notify(self, resource):
-        p.toolkit.enqueue_job(fn=remove_outdated_resource_from_datastore, args=[resource.id])
-
+    # ITemplateHelpers
     def get_helpers(self):
         return dict((h, getattr(helpers, h)) for h in [
             'may_publish_datasets',
@@ -184,6 +282,7 @@ ckanext.canada:schemas/presets.yaml
             'get_user_email',
         ])
 
+    # IConfigurable
     def configure(self, config):
         # FIXME: monkey-patch datastore upsert_data
         from ckanext.datastore.backend import postgres as db
@@ -206,17 +305,21 @@ ckanext.canada:schemas/presets.yaml
         if db.upsert_data.__name__ == 'upsert_data':
             db.upsert_data = patched_upsert_data
 
+    # IPackageController
     def create(self, pkg):
         """
         All datasets on registry should now be marked private
         """
         pkg.private = True
 
+    # IPackageController
     def edit(self, pkg):
         """
         All datasets on registry should now be marked private
         """
         pkg.private = True
+
+    # IActions
 
     def get_actions(self):
         return dict(
@@ -232,6 +335,40 @@ ckanext.canada:schemas/presets.yaml
             resource_view_create=resource_view_create_bilingual,
         )
 
+    # IXloader
+
+    def can_upload(self, resource_id):
+
+        # check if file is uploded
+        try:
+            res = p.toolkit.get_action(u'resource_show')({'ignore_auth': True},
+                                                         {'id': resource_id})
+
+            if res.get('url_type', None) != 'upload':
+                log.error(
+                    'Only uploaded resources can be added to the Data Store.')
+                return False
+
+        except ObjectNotFound:
+            log.error('Resource %s does not exist.' % resource_id)
+            return False
+
+        # check if validation report exists
+        try:
+            validation = p.toolkit.get_action(u'resource_validation_show')(
+                {'ignore_auth': True},
+                {'resource_id': res['id']})
+            if validation.get('status', None) != 'success':
+                log.error(
+                    'Only validated resources can be added to the Data Store.')
+                return False
+
+        except ObjectNotFound:
+            log.error('No validation report exists for resource %s' %
+                      resource_id)
+            return False
+
+        return True
 
 
 @chained_action
@@ -246,15 +383,19 @@ disabled_anon_action.auth_audit_exempt = True  # XXX ought to be a better way...
 @chained_action
 def resource_view_create_bilingual(up_func, context, data_dict):
     from ckan.logic.schema import default_create_resource_view_schema_filtered
-    # FIXME: assuming all resource views we used are filtered
+    # assuming all resource views we used are filtered
+    # filter_fields and filter_values have ignore_missing validator
+    # so using the filtered schema should be fine here.
     s = default_create_resource_view_schema_filtered()
     return up_func(
         dict(
             context,
             schema=dict(
                 s,
-                title_fr=list(s['title']),
-                description_fr=list(s['description']),
+                title=[get_validator('default')('View'), get_validator('unicode_safe')],
+                title_fr=[get_validator('default')('Vue'), get_validator('unicode_safe')],
+                description=[get_validator('default')(''), get_validator('unicode_safe')],
+                description_fr=[get_validator('default')(''), get_validator('unicode_safe')],
             ),
         ),
         data_dict
@@ -266,7 +407,9 @@ def resource_view_update_bilingual(up_func, context, data_dict):
         default_create_resource_view_schema_filtered,
         default_update_resource_view_schema_changes,
     )
-    # FIXME: assuming all resource views we used are filtered
+    # assuming all resource views we used are filtered
+    # filter_fields and filter_values have ignore_missing validator
+    # so using the filtered schema should be fine here.
     s = default_create_resource_view_schema_filtered()
     s.update(default_update_resource_view_schema_changes())
     return up_func(
@@ -291,18 +434,22 @@ class DataGCCAPublic(p.SingletonPlugin, DefaultTranslation):
     p.implements(p.IAuthFunctions)
     p.implements(p.IFacets)
     p.implements(p.ITemplateHelpers)
-    p.implements(p.IRoutes, inherit=True)
     p.implements(p.ITranslation, inherit=True)
     p.implements(p.IMiddleware, inherit=True)
+    p.implements(p.IActions)
 
+    # DefaultTranslation, ITranslation
     def i18n_domain(self):
         return 'ckanext-canada'
 
+    # IConfigurer
     def update_config(self, config):
         # add our templates
         p.toolkit.add_template_directory(config, 'templates/public')
         p.toolkit.add_public_directory(config, 'public')
         p.toolkit.add_resource('public/static/js', 'js')
+        p.toolkit.add_resource('assets/datatables', 'canada_datatables')
+        config['ckan.auth.public_user_details'] = False
         config['recombinant.definitions'] = """
 ckanext.canada:tables/ati.yaml
 ckanext.canada:tables/briefingt.yaml
@@ -322,9 +469,10 @@ ckanext.canada:tables/dac.yaml
 ckanext.canada:tables/nap5.yaml
 ckanext.canada:tables/experiment.yaml
 ckanext.canada:tables/adminaircraft.yaml
-ckanext.canada:tables/suppliervax.yaml
+
 """
         config['ckan.search.show_all_types'] = True
+        config['ckan.gravatar_default'] = 'disabled'
         config['search.facets.limit'] = 200  # because org list
         if 'validation' not in config.get('scheming.presets', ''):
             config['scheming.presets'] = """
@@ -340,8 +488,14 @@ ckanext.canada:schemas/prop.yaml
 """
         config['scheming.organization_schemas'] = 'ckanext.canada:schemas/organization.yaml'
 
+        # Pretty output for Feeds
+        config['ckan.feeds.pretty'] = True
+
         # Enable our custom DCAT profile.
-        config['ckanext.dcat.rdf.profile'] = 'canada_dcat'
+        config['ckanext.dcat.rdf.profiles'] = 'euro_dcat_ap_2'
+
+        # Enable license restriction
+        config['ckan.dataset.restrict_license_choices'] = True
 
         if 'ckan.i18n_directory' in config:
             # Reload when translaton files change, because I'm slowly going
@@ -358,6 +512,13 @@ ckanext.canada:schemas/prop.yaml
 
         hlp.build_nav_main = build_nav_main
 
+        # migration from `canada_activity` and `ckanext-extendedactivity` - Aug 2022
+        logic_validators.object_id_validators.update({
+            'changed datastore': logic_validators.package_id_exists,
+            'deleted datastore': logic_validators.package_id_exists,
+        })
+
+    # IFacets
     def dataset_facets(self, facets_dict, package_type):
         ''' Update the facets_dict and return it. '''
 
@@ -371,9 +532,6 @@ ckanext.canada:schemas/prop.yaml
             'res_format': _('Format'),
             'res_type': _('Resource Type'),
             'frequency': _('Maintenance and Update Frequency'),
-            'topic_category': _('Topic Categories'),
-            'spatial_representation_type': _('Spatial Representation Type'),
-            'fgp_viewer': _('Map Viewer'),
             'ready_to_publish': _('Record Status'),
             'imso_approval': _('IMSO Approval'),
             'jurisdiction': _('Jurisdiction'),
@@ -382,14 +540,21 @@ ckanext.canada:schemas/prop.yaml
 
         return facets_dict
 
+    # IFacets
+    #FIXME: remove `group_facets` method once issue https://github.com/ckan/ckan/issues/7017 is patched into <2.9
     def group_facets(self, facets_dict, group_type, package_type):
         ''' Update the facets_dict and return it. '''
+        if group_type == 'organization':
+            return self.dataset_facets(facets_dict, package_type)
         return facets_dict
 
+    # IFacets
     def organization_facets(self, facets_dict, organization_type,
                             package_type):
         return self.dataset_facets(facets_dict, package_type)
 
+
+    # ITemplateHelpers
     def get_helpers(self):
         return dict((h, getattr(helpers, h)) for h in [
             'user_organizations',
@@ -400,14 +565,11 @@ ckanext.canada:schemas/prop.yaml
             'portal_url',
             'adv_search_url',
             'adv_search_mlt_root',
-            'googleanalytics_id',
             'ga4_id',
             'loop11_key',
             'drupal_session_present',
             'fgp_url',
             'contact_information',
-            'show_subject_facet',
-            'show_fgp_facets',
             'show_openinfo_facets',
             'gravatar',
             'linked_gravatar',
@@ -417,7 +579,6 @@ ckanext.canada:schemas/prop.yaml
             'get_translated_t',
             'language_text_t',
             'link_to_user',
-            'gravatar_show',
             'get_datapreview',
             'iso_to_goctime',
             'geojson_to_wkt',
@@ -429,57 +590,26 @@ ckanext.canada:schemas/prop.yaml
             'adobe_analytics_lang',
             'adobe_analytics_js',
             'mail_to_with_params',
-            'canada_search_domain',
+            'is_registry',
+            'organization_member_count',
         ])
 
+    # IActions
+    # `datastore_upsert` and `datastore_delete` migrated from `canada_activity` and `ckanext-extendedactivity` - Aug 2022
+    def get_actions(self):
+        return {
+                'datastore_upsert': datastore_upsert,
+                'datastore_delete': datastore_delete,
+                'recently_changed_packages_activity_list': act.recently_changed_packages_activity_list,  #TODO: Remove this action override in CKAN 2.10 upgrade
+               }
 
-    def before_map(self, map):
-        map.connect(
-            'organizations_index', '/organization',
-            controller='ckanext.canada.controller:CanadaController',
-            action='organization_index',
-        )
-        with SubMapper(map, controller='ckanext.canada.controller:CanadaFeedController') as m:
-            m.connect('/feeds/organization/{id}.atom', action='organization')
-        map.connect(
-            'general', '/feeds/dataset/{pkg_id}.atom',
-            controller='ckanext.canada.controller:CanadaFeedController',
-            action='dataset',
-        )
-        map.connect(
-            '/dataset/delete/{pkg_id}',
-            controller='ckanext.canada.controller:CanadaController',
-            action='package_delete'
-        )
-        map.connect(
-            '/dataset/undelete/{pkg_id}',
-            controller='ckanext.canada.controller:CanadaController',
-            action='package_undelete'
-        )
-        map.connect(
-            '/organization/autocomplete',
-            action='organization_autocomplete',
-            controller='ckanext.canada.controller:CanadaController',
-        )
-        map.connect(
-            '/500',
-            action='server_error',
-            controller='ckanext.canada.controller:CanadaController'
-        )
-        map.connect(
-            '/api{ver:/3|}/action/{logic_function}',
-            ver='/3',
-            action='action',
-            controller='ckanext.canada.controller:CanadaApiController',
-            conditions={'method':['GET', 'POST']},
-        )
-        return map
-
+    # IAuthFunctions
     def get_auth_functions(self):
         return {
             'datastore_create': auth.datastore_create,
             'datastore_delete': auth.datastore_delete,
             'datastore_upsert': auth.datastore_upsert,
+            'view_org_members': auth.view_org_members,
         }
 
     # IMiddleware
@@ -506,12 +636,9 @@ class DataGCCAForms(p.SingletonPlugin, DefaultDatasetForm):
             ])
         actions.update({k: disabled_anon_action for k in [
             'current_package_list_with_resources',
-            'revision_list',
-            'package_revision_list',
             'user_list',
             'user_activity_list',
             'member_list',
-            'group_revision_list',
             #'user_show',  FIXME: required for password reset
             'package_autocomplete',
             'format_autocomplete',
@@ -519,7 +646,6 @@ class DataGCCAForms(p.SingletonPlugin, DefaultDatasetForm):
             'group_activity_list',
             'organization_activity_list',
             'group_package_show',
-            'activity_detail_list',
             ]})
         return actions
 
@@ -558,8 +684,6 @@ class DataGCCAForms(p.SingletonPlugin, DefaultDatasetForm):
                 validators.ati_email_validate,
             'isodate':
                 validators.isodate,
-            'licence_choices':
-                validators.licence_choices,
             'string_safe':
                 validators.string_safe,
             'string_safe_stop':
@@ -568,6 +692,8 @@ class DataGCCAForms(p.SingletonPlugin, DefaultDatasetForm):
                 validators.json_string,
             'json_string_has_en_fr_keys':
                 validators.json_string_has_en_fr_keys,
+            'resource_schema_validator':
+                validators.canada_resource_schema_validator,
             }
 
 
@@ -578,11 +704,15 @@ class LogExtraMiddleware(object):
     def __call__(self, environ, start_response):
         def _start_response(status, response_headers, exc_info=None):
             extra = []
-            if c.user:
-                log_extra = c.log_extra if hasattr(c, 'log_extra') else u''
+            try:
+                contextual_user = g.user
+            except TypeError:
+                contextual_user = None
+            if contextual_user:
+                log_extra = g.log_extra if hasattr(g, 'log_extra') else u''
                 extra = [(
                     'X-LogExtra', u'user={uid} {extra}'.format(
-                        uid=c.user,
+                        uid=contextual_user,
                         extra=log_extra).encode('utf-8')
                     )
                 ]
@@ -593,134 +723,6 @@ class LogExtraMiddleware(object):
                 exc_info)
 
         return self.app(environ, _start_response)
-
-
-class DataGCCAPackageController(p.SingletonPlugin):
-    p.implements(p.IPackageController)
-
-    def read(self, entity):
-        pass
-
-    def create(self, entity):
-        pass
-
-    def edit(self, entity):
-        pass
-
-    def authz_add_role(self, object_role):
-        pass
-
-    def authz_remove_role(self, object_role):
-        pass
-
-    def delete(self, entity):
-        pass
-
-    def before_search(self, search_params):
-        # We're going to group portal_release_date into two bins - to today and
-        # after today.
-        search_params['facet.range'] = 'portal_release_date'
-        search_params['facet.range.start'] = 'NOW/DAY-100YEARS'
-        search_params['facet.range.end'] = 'NOW/DAY+100YEARS'
-        search_params['facet.range.gap'] = '+100YEARS'
-
-        # FIXME: so terrible. hack out WET4 wbdisable parameter
-        try:
-            search_params['fq'] = search_params['fq'].replace(
-                'wbdisable:"true"', '').replace(
-                'wbdisable:"false"', '')
-        except Exception:
-            pass
-        from pylons import c
-        try:
-            c.fields_grouped.pop('wbdisable', None)
-        except Exception:
-            pass
-
-        return search_params
-
-    def after_search(self, search_results, search_params):
-        for result in search_results.get('results', []):
-            for extra in result.get('extras', []):
-                if extra.get('key') in ['title_fra', 'notes_fra']:
-                    result[extra['key']] = extra['value']
-
-        return search_results
-
-    def before_index(self, data_dict):
-        kw = json.loads(data_dict.get('extras_keywords', '{}'))
-        data_dict['keywords'] = kw.get('en', [])
-        data_dict['keywords_fra'] = kw.get('fr', kw.get('fr-t-en', []))
-        data_dict['catalog_type'] = data_dict.get('type', '')
-
-        data_dict['subject'] = json.loads(data_dict.get('subject', '[]'))
-        data_dict['topic_category'] = json.loads(data_dict.get(
-            'topic_category', '[]'))
-        try:
-            data_dict['spatial_representation_type'] = json.loads(
-                data_dict.get('spatial_representation_type')
-            )
-        except (TypeError, ValueError):
-            data_dict['spatial_representation_type'] = []
-
-        if data_dict.get('portal_release_date'):
-            data_dict.pop('ready_to_publish', None)
-        elif data_dict.get('ready_to_publish') == 'true':
-            data_dict['ready_to_publish'] = 'true'
-        else:
-            data_dict['ready_to_publish'] = 'false'
-
-        try:
-            geno = h.recombinant_get_geno(data_dict['type']) or {}
-        except AttributeError:
-            pass
-        else:
-            data_dict['portal_type'] = geno.get('portal_type', data_dict['type'])
-            if 'collection' in geno:
-                data_dict['collection'] = geno['collection']
-
-        if 'fgp_viewer' in data_dict.get('display_flags', []):
-            data_dict['fgp_viewer'] = 'map_view'
-
-        titles = json.loads(data_dict.get('title_translated', '{}'))
-        data_dict['title_fr'] = titles.get('fr', '')
-        data_dict['title_string'] = titles.get('en', '')
-
-        if data_dict['type'] == 'prop':
-            status = data_dict.get('status')
-            data_dict['status'] = status[-1]['reason'] if status else 'department_contacted'
-
-        if data_dict.get('credit'):
-            for cr in data_dict['credit']:
-                cr.pop('__extras', None)
-
-        return data_dict
-
-    def before_view(self, pkg_dict):
-        return pkg_dict
-
-    def after_create(self, context, data_dict):
-        return data_dict
-
-    def after_update(self, context, data_dict):
-        # FIXME: flash_success makes no sense if this was an API call
-        # consider moving this to an overridden controller method instead
-        if context.get('allow_state_change') and data_dict.get(
-                'state') == 'active':
-            h.flash_success(
-                _("Your record %s has been saved.")
-                % data_dict['id']
-            )
-        return data_dict
-
-    def after_delete(self, context, data_dict):
-        return data_dict
-
-    def after_show(self, context, data_dict):
-        return data_dict
-
-    def update_facet_titles(self, facet_titles):
-        return facet_titles
 
 
 @chained_action
@@ -750,10 +752,10 @@ def datastore_upsert(up_func, context, data_dict):
 
 @chained_action
 def datastore_delete(up_func, context, data_dict):
-    if context.get('agent') == 'xloader':
+    if data_dict.get('url_type', None) == 'upload':
         return up_func(context, data_dict)
 
-    lc = ckanapi.LocalCKAN(username=c.user)
+    lc = ckanapi.LocalCKAN(username=context['user'], context={'ignore_auth':True})
     res_id = data_dict['id'] if 'id' in data_dict.keys() else data_dict['resource_id']
     res = lc.action.datastore_search(
         resource_id=res_id,
@@ -769,126 +771,6 @@ def datastore_delete(up_func, context, data_dict):
                                    'resource_id': res_id}
                                   )
     return result
-
-
-class CanadaActivity(p.SingletonPlugin):
-    p.implements(p.IActions)
-    p.implements(IActivity)
-
-    def get_actions(self):
-        return ({'datastore_upsert':datastore_upsert,
-                'datastore_delete': datastore_delete})
-
-    def string_icons(self, string_icons):
-        pass
-
-    def snippet_functions(self, snippet_functions):
-        pass
-
-    def string_functions(self, string_functions):
-        pass
-
-    def actions_obj_id_validator(self, obj_id_validators):
-        obj_id_validators.update({
-            'changed datastore': logic_validators.package_id_exists,
-            'deleted datastore': logic_validators.package_id_exists,
-                })
-
-
-class CanadaOpenByDefault(p.SingletonPlugin):
-    """
-    Plugin for public-facing version of Open By Default site
-    This plugin requires the DataGCCAForms plugin
-    """
-    p.implements(p.IConfigurer)
-    p.implements(p.IFacets)
-    p.implements(p.ITemplateHelpers)
-    p.implements(p.IRoutes, inherit=True)
-
-    def update_config(self, config):
-        # add our templates
-        p.toolkit.add_template_directory(config, 'templates/obd')
-        p.toolkit.add_template_directory(config, 'templates/public')
-        p.toolkit.add_public_directory(config, 'public')
-        p.toolkit.add_resource('public/static/js', 'js')
-        config['ckan.search.show_all_types'] = True
-        config['ckan.extra_resource_fields'] = 'language'
-        config['search.facets.limit'] = 200  # because org list
-        config['scheming.presets'] = """
-ckanext.scheming:presets.json
-ckanext.fluent:presets.json
-ckanext.canada:schemas/presets.yaml
-"""
-        config['scheming.dataset_schemas'] = """
-ckanext.canada:schemas/doc.yaml
-"""
-
-    def dataset_facets(self, facets_dict, package_type):
-        ''' Update the facets_dict and return it. '''
-
-        facets_dict.update({
-            'organization': _('Organization'),
-            'keywords': _('Keywords'),
-            'keywords_fra': _('Keywords'),
-            'res_format': _('Format'),
-            'res_type': _('Resource Type'),
-            'res_extras_language': _('Resource Language'),
-            })
-
-        return facets_dict
-
-    def group_facets(self, facets_dict, group_type, package_type):
-        ''' Update the facets_dict and return it. '''
-        return facets_dict
-
-    def organization_facets(self, facets_dict, organization_type,
-                            package_type):
-        return self.dataset_facets(facets_dict, package_type)
-
-    def get_helpers(self):
-        return dict(((h, getattr(helpers, h)) for h in [
-            'user_organizations',
-            'openness_score',
-            'remove_duplicates',
-            'get_license',
-            'normalize_strip_accents',
-            'portal_url',
-            'googleanalytics_id',
-            'loop11_key',
-            'drupal_session_present',
-            'fgp_url',
-            'contact_information',
-            'show_subject_facet',
-            'show_fgp_facets',
-            'show_openinfo_facets',
-            'gravatar',
-            'linked_gravatar',
-            'linked_user',
-            'json_loads',
-            'catalogue_last_update_date',
-            'get_translated_t',
-            'language_text_t',
-            'mail_to_with_params',
-            ]),
-            )
-
-    def before_map(self, map):
-        map.connect(
-            'organizations_index', '/organization',
-            controller='ckanext.canada.controller:CanadaController',
-            action='organization_index',
-        )
-        map.connect(
-            'general', '/feeds/dataset/{pkg_id}.atom',
-            controller='ckanext.canada.controller:CanadaFeedController',
-            action='dataset',
-        )
-        map.connect(
-            '/organization/autocomplete',
-            action='organization_autocomplete',
-            controller='ckanext.canada.controller:CanadaController',
-        )
-        return map
 
 
 def _wet_pager(self, *args, **kwargs):
@@ -929,33 +811,3 @@ def build_nav_main(*args):
         output += hlp._make_menu_item(menu_item, title, class_='list-group-item')
     return output
 
-
-def remove_outdated_resource_from_datastore(resource_id):
-    lc = ckanapi.LocalCKAN()
-    try:
-        res = lc.action.resource_show(id=resource_id)
-        pkg = lc.action.package_show(id=res['package_id'])
-    except ObjectNotFound:
-        log.error('Resource %s does not exist.' % res['id'])
-        return
-
-    # only plain datasets will have validation applied to resources
-    # this avoids accidental deletion of PD datastore tables
-    if pkg['type'] != 'dataset':
-        return
-
-    # remove outdated validation report for linked resources
-    if res['url_type'] != 'upload' and h.validation_status(res['id']) != 'unknown':
-        try:
-            lc.action.resource_validation_delete(resource_id=res['id'])
-            log.info('Validation report deleted for resource %s' % res['id'])
-        except ObjectNotFound:
-            log.error('Validation report for resource %s does not exist' % res['id'])
-
-    # remove outdated datastore table for linked resources
-    if res['url_type'] != 'upload' and 'datastore_active' in res and res['datastore_active']:
-        try:
-            lc.action.datastore_delete(resource_id=res['id'], force=True)
-            log.info('Datastore table dropped for resource %s' % res['id'])
-        except ObjectNotFound:
-            log.error('Datastore table for resource %s does not exist' % res['id'])

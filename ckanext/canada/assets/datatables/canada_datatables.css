@@ -1,0 +1,28 @@
+/*####################
+## Datatables Views ##
+######################*/
+div#dtprv_processing.dataTables_processing{
+  z-index: 9999 !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  margin: 0 !important;
+  /* see static/js/canada_datatables for dynamic styles */
+}
+div#dtprv_processing.dataTables_processing > div:last-child{
+  position: absolute !important;
+  left: 50% !important;
+  transform: translate(-50%, -50%) !important;
+  pointer-events: none !important;
+  /* see static/js/canada_datatables for dynamic styles */
+}
+div#dtprv_processing.dataTables_processing > div:last-child > div{
+  background-color: #335075 !important;
+  pointer-events: none !important;
+}
+/*#####################
+##       END         ##
+##  Datatables Views ##
+##       END         ##
+#######################*/

@@ -2,10 +2,11 @@ dataset_type: contractsa
 target_dataset: contractsa
 
 title: Proactive Publication - Aggregated Contracts from -$10,000 to $10,000
+shortname: Aggregated Contracts from -$10,000 to $10,000
 notes: Access, upload and modify the aggregated Contracts from -$10K to $10K reports for your organization
 
 template_version: 3
-template_updated: 2020-04-08
+template_updated: 2023-06-28
 
 portal_type: info
 collection: pd
@@ -58,7 +59,7 @@ resources:
     form_attrs:
       size: 10
     excel_required: true
-    format_type: 
+    format_type:
       en: "Numeric and excluding spaces and commas. Formulas are not to be used to populate this data field."
       fr: "Données numériques, excluant les espaces et les virgules. Il ne faut pas utiliser de formule pour remplir ce champ."
     datastore_type: int
@@ -82,7 +83,7 @@ resources:
     obligation: Mandatory
     form_required: true
     excel_required: true
-    format_type: 
+    format_type:
       en: "Numeric and excluding dollar signs, spaces and commas. For example, 23000.23. Formulas are not to be used to populate this data field."
       fr: "Données numériques, excluant les symboles de dollars, les espaces et les virgules, par exemple, 23000.23. Il ne faut pas utiliser de formule pour remplir ce champ."
     datastore_type: money
@@ -108,7 +109,7 @@ resources:
     obligation: Mandatory
     form_required: true
     excel_required: true
-    format_type: 
+    format_type:
       en: "Numeric and excluding dollar signs, spaces and commas. For example, 23000.23. Formulas are not to be used to populate this data field."
       fr: "Données numériques, excluant les symboles de dollars, les espaces et les virgules, par exemple, 23000.23. Il ne faut pas utiliser de formule pour remplir ce champ."
     datastore_type: money
@@ -136,7 +137,7 @@ resources:
     form_attrs:
       size: 10
     excel_required: true
-    format_type: 
+    format_type:
       en: "Numeric and excluding spaces and commas. Formulas are not to be used to populate this data field."
       fr: "Données numériques, excluant les espaces et les virgules. Il ne faut pas utiliser de formule pour remplir ce champ."
     datastore_type: int
@@ -153,7 +154,7 @@ resources:
         $10K and under
         - Original Value
       fr: |
-        Marchés de services de 
+        Marchés de services de
         10 000 $ ou moins
         - Valeur d’origine
     description:
@@ -162,7 +163,7 @@ resources:
     obligation: Mandatory
     form_required: true
     excel_required: true
-    format_type: 
+    format_type:
       en: "Numeric and excluding dollar signs, spaces and commas. For example, 23000.23. Formulas are not to be used to populate this data field."
       fr: "Données numériques, excluant les symboles de dollars, les espaces et les virgules, par exemple, 23000.23. Il ne faut pas utiliser de formule pour remplir ce champ."
     datastore_type: money
@@ -188,7 +189,7 @@ resources:
     obligation: Mandatory
     form_required: true
     excel_required: true
-    format_type: 
+    format_type:
       en: "Numeric and excluding dollar signs, spaces and commas. For example, 23000.23. Formulas are not to be used to populate this data field."
       fr: "Données numériques, excluant les symboles de dollars, les espaces et les virgules, par exemple, 23000.23. Il ne faut pas utiliser de formule pour remplir ce champ."
     datastore_type: money
@@ -216,7 +217,7 @@ resources:
     form_attrs:
       size: 10
     excel_required: true
-    format_type: 
+    format_type:
       en: "Numeric and excluding spaces and commas. Formulas are not to be used to populate this data field."
       fr: "Données numériques, excluant les espaces et les virgules. Il ne faut pas utiliser de formule pour remplir ce champ."
     datastore_type: int
@@ -233,8 +234,8 @@ resources:
         $10K and under
         Original Value
       fr: |
-        Marchés de services de 
-        construction de 10 000 $ et moins 
+        Marchés de services de
+        construction de 10 000 $ et moins
         - Valeur d’origine
     description:
       en: "It is recommended for this field to be populated with the value of all construction contracts with a value $10,000 and under, at the time of contract entry. This value should be in Canadian currency and include all applicable taxes."
@@ -242,7 +243,7 @@ resources:
     obligation: Mandatory
     form_required: true
     excel_required: true
-    format_type: 
+    format_type:
       en: "Numeric and excluding dollar signs, spaces and commas. For example, 23000.23. Formulas are not to be used to populate this data field."
       fr: "Données numériques, excluant les symboles de dollars, les espaces et les virgules, par exemple, 23000.23. Il ne faut pas utiliser de formule pour remplir ce champ."
     datastore_type: money
@@ -259,8 +260,8 @@ resources:
         Amendments from -$10K to $10K
         Net Amendment Value
       fr: |
-        Modifications de marché de 
-        services de construction de -10 000 $ à 10 000 $ 
+        Modifications de marché de
+        services de construction de -10 000 $ à 10 000 $
         - Valeur nette des modifications
     description:
       en: "It is recommended for this field to be populated with the value of all net amendments to construction contracts (that is, all positive and negative amendments) with a value from -$10,000 to $10,000. This value should be in Canadian currency and include all applicable taxes. An amendment should be reported either quarterly or annually. Reporting an amendment both quarterly and annually would result in double counting of the amendment’s value when calculating the total contracting activity of an organization."
@@ -268,7 +269,7 @@ resources:
     obligation: Mandatory
     form_required: true
     excel_required: true
-    format_type: 
+    format_type:
       en: "Numeric and excluding dollar signs, spaces and commas. For example, 23000.23. Formulas are not to be used to populate this data field."
       fr: "Données numériques, excluant les symboles de dollars, les espaces et les virgules, par exemple, 23000.23. Il ne faut pas utiliser de formule pour remplir ce champ."
     datastore_type: money
@@ -296,7 +297,7 @@ resources:
     form_attrs:
       size: 10
     excel_required: true
-    format_type: 
+    format_type:
       en: "Numeric and excluding spaces and commas. Formulas are not to be used to populate this data field."
       fr: "Données numériques, excluant les espaces et les virgules. Il ne faut pas utiliser de formule pour remplir ce champ."
     datastore_type: int
@@ -321,7 +322,7 @@ resources:
     obligation: Mandatory
     form_required: true
     excel_required: true
-    format_type: 
+    format_type:
       en: "Numeric and excluding dollar signs, spaces and commas. For example, 23000.23. Formulas are not to be used to populate this data field."
       fr: "Données numériques, excluant les symboles de dollars, les espaces et les virgules, par exemple, 23000.23. Il ne faut pas utiliser de formule pour remplir ce champ."
     datastore_type: money
@@ -372,7 +373,7 @@ resources:
         errors := errors || required_error(NEW.acquisition_card_transactions_number_of, 'acquisition_card_transactions_number_of');
         errors := errors || required_error(NEW.acquisition_card_transactions_total_value, 'acquisition_card_transactions_total_value');
         IF NEW.year > date_part('year', CURRENT_DATE) THEN
-          errors := errors || ARRAY[['year', 'This must list the year you are reporting on (not the fiscal year).']];
+          errors := errors || ARRAY[['year', {year_error}]];
         END IF;
 
         IF errors = '{{}}' THEN
@@ -381,6 +382,9 @@ resources:
         RAISE EXCEPTION E'TAB-DELIMITED\t%', array_to_string(errors, E'\t');
       END;
   - update_record_modified_created_trigger
+
+  trigger_strings:  # yaml | not supported
+    year_error: This must list the year you are reporting on (not the fiscal year).
 
   examples:
     record:

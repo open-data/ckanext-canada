@@ -2,6 +2,7 @@ dataset_type: consultations
 target_dataset: consultations
 
 title: Open Dialogue - Consultations
+shortname: Consultations
 notes: Access, upload and modify consultation reports for your organization
 
 template_version: 3
@@ -580,7 +581,7 @@ resources:
           errors := errors || required_error(NEW.rationale, 'rationale');
         END IF;
         IF NEW.status = 'NF' AND NEW.publishable = 'Y' THEN
-          errors := errors || ARRAY[['status', 'If Status is set to: Not Going Forward, Publish Record must be set to No']];
+          errors := errors || ARRAY[['status', {status_error}]];
         END IF;
         crval := choices_clean_error(NEW.rationale, {rationale}, 'rationale');
         errors := errors || crval.error;
@@ -592,6 +593,9 @@ resources:
         RAISE EXCEPTION E'TAB-DELIMITED\t%', array_to_string(errors, E'\t');
       END;
   - update_record_modified_created_trigger
+
+  trigger_strings:  # yaml | not supported
+    status_error: "If Status is set to: Not Going Forward, Publish Record must be set to No"
 
   examples:
     record:

@@ -1,12 +1,14 @@
 # -*- coding: UTF-8 -*-
-from ckan.tests.helpers import FunctionalTestBase
+from ckanext.canada.tests import CanadaTestBase
 from ckan.tests.factories import Sysadmin
 from ckanext.canada.tests.factories import (
     CanadaOrganization as Organization,
-    CanadaUser as User)
+    CanadaUser as User
+)
+
+import pytest
 
 from ckanapi import LocalCKAN, ValidationError, NotAuthorized
-from nose.tools import assert_raises
 
 SIMPLE_SUGGESTION = {
     'type': 'prop',
@@ -30,6 +32,7 @@ SIMPLE_SUGGESTION = {
     'status': [],
 }
 
+
 COMPLETE_SUGGESTION = dict(SIMPLE_SUGGESTION,
     status=[
         {
@@ -42,6 +45,7 @@ COMPLETE_SUGGESTION = dict(SIMPLE_SUGGESTION,
         },
     ]
 )
+
 
 UPDATED_SUGGESTION = dict(SIMPLE_SUGGESTION,
     status=[
@@ -65,9 +69,14 @@ UPDATED_SUGGESTION = dict(SIMPLE_SUGGESTION,
 )
 
 
-class TestSuggestedDataset(FunctionalTestBase):
-    def setup(self):
-        super(TestSuggestedDataset, self).setup()
+class TestSuggestedDataset(CanadaTestBase):
+    @classmethod
+    def setup_method(self, method):
+        """Method is called at class level before EACH test methods of the class are called.
+        Setup any state specific to the execution of the given class methods.
+        """
+        super(TestSuggestedDataset, self).setup_method(method)
+
         member = User()
         editor = User()
         sysadmin = Sysadmin()
@@ -94,10 +103,13 @@ class TestSuggestedDataset(FunctionalTestBase):
 
     def test_normal_user_cant_create(self):
         "Member users cannot create suggested datasets"
-        assert_raises(NotAuthorized,
-            self.member_lc.action.package_create,
-            owner_org=self.org['name'],
-            **SIMPLE_SUGGESTION)
+        with pytest.raises(NotAuthorized) as e:
+            self.member_lc.action.package_create(
+                owner_org=self.org['name'],
+                **SIMPLE_SUGGESTION)
+        err = str(e.value)
+        assert 'not authorized to add dataset' in err or \
+               'not authorized to create packages' in err
 
 
     def test_normal_user_cant_update(self):
@@ -106,19 +118,24 @@ class TestSuggestedDataset(FunctionalTestBase):
             owner_org=self.org['name'],
             **SIMPLE_SUGGESTION)
 
-        assert_raises(NotAuthorized,
-            self.member_lc.action.package_update,
-            owner_org=self.org['name'],
-            id=response['id'],
-            **COMPLETE_SUGGESTION)
+        with pytest.raises(NotAuthorized) as e:
+            self.member_lc.action.package_update(
+                owner_org=self.org['name'],
+                id=response['id'],
+                **COMPLETE_SUGGESTION)
+        err = str(e.value)
+        assert 'not authorized to edit package' in err
 
 
     def test_editor_user_cant_create(self):
         "Editor users cannot create suggested datasets"
-        assert_raises(ValidationError,
-            self.editor_lc.action.package_create,
-            owner_org=self.org['name'],
-            **SIMPLE_SUGGESTION)
+        with pytest.raises(ValidationError) as ve:
+            self.editor_lc.action.package_create(
+                owner_org=self.org['name'],
+                **SIMPLE_SUGGESTION)
+        err = ve.value.error_dict
+        for e in err:
+            assert [m for m in err[e] if 'Only sysadmin may set this value' in m]
 
 
     def test_editor_user_can_update(self):
@@ -142,4 +159,3 @@ class TestSuggestedDataset(FunctionalTestBase):
 
         # first update will be moved to end based on date field
         assert resp['status'][1]['reason'] == 'released'
-

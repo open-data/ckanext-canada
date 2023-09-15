@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  CKAN\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2020-01-02 13:56-0500\n"
+"POT-Creation-Date: 2023-09-12 20:15+0000\n"
 "PO-Revision-Date: 2014-01-23 13:04+0000\n"
 "Last-Translator: Sean Hammond <sean.hammond@okfn.org>\n"
 "Language: en\n"
@@ -17,49 +17,464 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.3.4\n"
+"Generated-By: Babel 2.7.0\n"
 
-#: ckanext/canada/controller.py:157 ckanext/canada/controller.py:521
-msgid "Not authorized to see this page"
+#: ckanext/canada/helpers.py:370
+msgid "A system administrator"
 msgstr ""
 
-#: ckanext/canada/controller.py:235
-msgid ""
-"<strong>Note</strong><br> The dataset has been removed from the Open "
-"Government Portal. <br/> The record may re-appear if it is re-harvested "
-"or updated. Please ensure that the record is deleted and purged from the "
-"source catalogue in order to prevent it from reappearing."
+#: ckanext/canada/helpers.py:562 ckanext/canada/strings.py:13
+#: ckanext/canada/view.py:1061
+msgid "Members not found"
 msgstr ""
 
-#: ckanext/canada/controller.py:253
-msgid "<strong>Note</strong><br> The record has been restored."
+#: ckanext/canada/plugins.py:525
+#: ckanext/canada/templates/internal/scheming/package/snippets/package_form.html:26
+msgid "Portal Type"
 msgstr ""
 
-#: ckanext/canada/controller.py:323
-msgid "Resource updated."
+#: ckanext/canada/plugins.py:526
+#: ckanext/canada/templates/internal/user/new_user_form.html:18
+#: ckanext/canada/templates/public/package/deleted.html:15
+#: ckanext/canada/templates/public/snippets/package_item.html:66
+msgid "Organization"
 msgstr ""
 
-#: ckanext/canada/controller.py:355
+#: ckanext/canada/plugins.py:527
+msgid "Collection Type"
+msgstr ""
+
+#: ckanext/canada/plugins.py:528 ckanext/canada/plugins.py:529
+msgid "Keywords"
+msgstr ""
+
+#: ckanext/canada/plugins.py:530
+msgid "Subject"
+msgstr ""
+
+#: ckanext/canada/plugins.py:531
+msgid "Format"
+msgstr ""
+
+#: ckanext/canada/plugins.py:532
+msgid "Resource Type"
+msgstr ""
+
+#: ckanext/canada/plugins.py:533
+msgid "Maintenance and Update Frequency"
+msgstr ""
+
+#: ckanext/canada/plugins.py:534
+msgid "Record Status"
+msgstr ""
+
+#: ckanext/canada/plugins.py:535
+msgid "IMSO Approval"
+msgstr ""
+
+#: ckanext/canada/plugins.py:536
+msgid "Jurisdiction"
+msgstr ""
+
+#: ckanext/canada/plugins.py:537
+msgid "Suggestion Status"
+msgstr ""
+
+#: ckanext/canada/plugins.py:781
+#: ckanext/canada/templates/public/package/snippets/resource_form.html:8
+msgid "Previous"
+msgstr ""
+
+#: ckanext/canada/plugins.py:781
+msgid "Next"
+msgstr ""
+
+#: ckanext/canada/strings.py:11
+#: ckanext/canada/templates/internal/package/base_form_page.html:4
+msgid "Create Dataset"
+msgstr ""
+
+#: ckanext/canada/strings.py:12
+msgid "Not authorized to access {group} members download"
+msgstr ""
+
+#: ckanext/canada/strings.py:14 ckanext/canada/view.py:1071
+msgid "N/A"
+msgstr ""
+
+#: ckanext/canada/strings.py:15
+#: ckanext/canada/templates/internal/user/edit_user_form.html:8
+#: ckanext/canada/templates/internal/user/list.html:35
+#: ckanext/canada/templates/internal/user/new_user_form.html:7
+#: ckanext/canada/templates/internal/user/snippets/login_form.html:15
+#: ckanext/canada/templates/public/organization/member_new.html:33
+#: ckanext/canada/templates/public/user/edit_user_form.html:8
+#: ckanext/canada/templates/public/user/read_base.html:38
+#: ckanext/canada/templates/public/user/snippets/login_form.html:13
+#: ckanext/canada/view.py:1063
+msgid "Username"
+msgstr ""
+
+#: ckanext/canada/strings.py:16
+#: ckanext/canada/templates/internal/user/edit_user_form.html:12
+#: ckanext/canada/templates/internal/user/new_user_form.html:13
+#: ckanext/canada/templates/public/user/edit_user_form.html:10
+#: ckanext/canada/templates/public/user/read_base.html:45
+#: ckanext/canada/view.py:1063
+msgid "Email"
+msgstr ""
+
+#: ckanext/canada/strings.py:17
+#: ckanext/canada/templates/internal/user/api_tokens.html:5
+#: ckanext/canada/templates/internal/user/list.html:36
+#: ckanext/canada/templates/public/snippets/geomap_dynamic.html:18
+#: ckanext/canada/templates/public/snippets/geomap_static.html:15
+#: ckanext/canada/view.py:1063
+msgid "Name"
+msgstr ""
+
+#: ckanext/canada/strings.py:18
+#: ckanext/canada/templates/internal/user/list.html:37
+#: ckanext/canada/templates/public/organization/member_new.html:63
+#: ckanext/canada/view.py:1063
+msgid "Role"
+msgstr ""
+
+#: ckanext/canada/strings.py:19 ckanext/canada/view.py:1081
+msgid "members"
+msgstr ""
+
+#: ckanext/canada/strings.py:20
+#: ckanext/canada/templates/internal/organization/members.html:6
+msgid "CSV"
+msgstr ""
+
+#: ckanext/canada/strings.py:21
+msgid "A related item has been added"
+msgstr ""
+
+#: ckanext/canada/strings.py:22
+msgid "A resource has been added"
+msgstr ""
+
+#: ckanext/canada/strings.py:23
+msgid "Resource id already exists."
+msgstr ""
+
+#: ckanext/canada/strings.py:24
+msgid "Invalid characters in resource id"
+msgstr ""
+
+#: ckanext/canada/strings.py:25
+msgid "Invalid length for resource id"
+msgstr ""
+
+#: ckanext/canada/strings.py:26
+msgid "Resource view id already exists"
+msgstr ""
+
+#: ckanext/canada/strings.py:27
+msgid "Value must be one of {}"
+msgstr ""
+
+#: ckanext/canada/strings.py:28
+msgid "Could not parse the value as a valid JSON object"
+msgstr ""
+
+#: ckanext/canada/strings.py:29
+msgid "Could not parse extra '{name}' as valid JSON"
+msgstr ""
+
+#: ckanext/canada/strings.py:30
+#, python-format
+msgid "Dear %(user_name)s,"
+msgstr ""
+
+#: ckanext/canada/strings.py:31
+#, python-format
+msgid "Invite for %(site_title)s"
+msgstr ""
+
+#: ckanext/canada/strings.py:32
+msgid "Dataset Deleted"
+msgstr ""
+
+#: ckanext/canada/strings.py:33
+#: ckanext/canada/templates/public/package/deleted.html:10
+msgid "Created On"
+msgstr ""
+
+#: ckanext/canada/strings.py:34
+msgid "Choose format"
+msgstr ""
+
+#: ckanext/canada/strings.py:35
+msgid "Submit"
+msgstr ""
+
+#: ckanext/canada/strings.py:36
+msgid "{actor} deleted the {view_type} view {view}"
+msgstr ""
+
+#: ckanext/canada/strings.py:37
+msgid "Request Reset"
+msgstr ""
+
+#: ckanext/canada/strings.py:38
+#: ckanext/canada/templates/internal/user/edit_user_form.html:51
+#: ckanext/canada/templates/public/user/edit_user_form.html:54
+msgid "Create API Token"
+msgstr ""
+
+#: ckanext/canada/strings.py:39
+msgid "Token"
+msgstr ""
+
+#: ckanext/canada/strings.py:40
+msgid "Last access"
+msgstr ""
+
+#: ckanext/canada/strings.py:41
+msgid "Actions"
+msgstr ""
+
+#: ckanext/canada/strings.py:42
+msgid "Revoke"
+msgstr ""
+
+#: ckanext/canada/strings.py:43
+msgid "You haven't created any API Tokens."
+msgstr ""
+
+#: ckanext/canada/strings.py:46
+msgid "Please upload a file or link to an external resource"
+msgstr ""
+
+#: ckanext/canada/strings.py:47
+msgid "Cannot upload files of this type"
+msgstr ""
+
+#: ckanext/canada/strings.py:48
+msgid "Cannot link files of this type"
+msgstr ""
+
+#: ckanext/canada/strings.py:51
+msgid "These fields have been removed, click update below to save your changes."
+msgstr "These fields will be removed once you save your changes."
+
+#: ckanext/canada/strings.py:52
+msgid "These fields have been removed."
+msgstr ""
+
+#: ckanext/canada/validators.py:120
+#, python-format
+msgid "Tag \"%s\" length is less than minimum %s"
+msgstr ""
+
+#: ckanext/canada/validators.py:124
+#, python-format
+msgid "Tag \"%s\" length is more than maximum %i"
+msgstr ""
+
+#: ckanext/canada/validators.py:127
+#, python-format
+msgid "Tag \"%s\" may not contain commas"
+msgstr ""
+
+#: ckanext/canada/validators.py:130
+#, python-format
+msgid "Tag \"%s\" may not contain consecutive spaces"
+msgstr ""
+
+#: ckanext/canada/validators.py:137
+#, python-format
+msgid "Tag \"%s\" may not contain unprintable character U+%04x"
+msgstr ""
+
+#: ckanext/canada/validators.py:141
+#, python-format
+msgid "Tag \"%s\" may not contain separator charater U+%04x"
+msgstr ""
+
+#: ckanext/canada/validators.py:157
+msgid "Badly formed hexadecimal UUID string"
+msgstr ""
+
+#: ckanext/canada/templates/internal/user/new_user_form.html:6
+#: ckanext/canada/validators.py:169 ckanext/canada/validators.py:171
+msgid "Please enter a valid email address."
+msgstr ""
+
+#: ckanext/canada/validators.py:186
+msgid "Invalid GeoJSON"
+msgstr ""
+
+#: ckanext/canada/validators.py:263
+msgid "Date may not be in the future when this record is marked ready to publish"
+msgstr ""
+
+#: ckanext/canada/validators.py:329
+msgid "Date format incorrect. Expecting YYYY-MM-DD"
+msgstr ""
+
+#: ckanext/canada/validators.py:343 ckanext/canada/validators.py:357
+msgid "Must be a Unicode string value"
+msgstr ""
+
+#: ckanext/canada/validators.py:364 ckanext/canada/validators.py:375
+msgid "Must be a JSON string"
+msgstr ""
+
+#: ckanext/canada/validators.py:371
+msgid "JSON object must contain \"en\" key"
+msgstr ""
+
+#: ckanext/canada/validators.py:373
+msgid "JSON object must contain \"fr\" key"
+msgstr ""
+
+#: ckanext/canada/validators.py:385
+msgid "Invalid JSON for Schema"
+msgstr ""
+
+#: ckanext/canada/validators.py:388
+msgid "Schema URLs are not supported"
+msgstr ""
+
+#: ckanext/canada/view.py:106
 msgid "<strong>Note</strong><br>{0} is now logged in"
 msgstr ""
 
-#: ckanext/canada/controller.py:368
+#: ckanext/canada/view.py:116
 msgid "Login failed. Bad username or password."
 msgstr ""
 
-#: ckanext/canada/controller.py:389
-msgid "Unauthorized to create a user"
+#: ckanext/canada/view.py:133
+msgid ""
+"The status has been added / updated for this suggested  dataset. This "
+"update will be reflected on open.canada.ca shortly."
 msgstr ""
 
-#: ckanext/canada/controller.py:457
-msgid "Open Government Dataset Feed"
+#: ckanext/canada/view.py:135
+msgid "Dataset updated."
 msgstr ""
 
-#: ckanext/canada/controller.py:556
+#: ckanext/canada/view.py:138 ckanext/canada/view.py:180
+#, python-format
+msgid "Your record %s has been saved."
+msgstr ""
+
+#: ckanext/canada/view.py:156 ckanext/canada/view.py:158
+#: ckanext/canada/view.py:199 ckanext/canada/view.py:201
+msgid "Dataset not found"
+msgstr ""
+
+#: ckanext/canada/view.py:171
+msgid "Resource updated."
+msgstr ""
+
+#: ckanext/canada/view.py:215
+msgid "Resource added."
+msgstr ""
+
+#: ckanext/canada/view.py:282
+msgid "Unauthorized to create a resource for this package"
+msgstr ""
+
+#: ckanext/canada/view.py:323 ckanext/canada/view.py:328
+msgid "This record already exists"
+msgstr ""
+
+#: ckanext/canada/view.py:344
+msgid "Record Created"
+msgstr ""
+
+#: ckanext/canada/view.py:382
+msgid "Unauthorized to update dataset"
+msgstr ""
+
+#: ckanext/canada/view.py:398 ckanext/canada/view.py:898
+msgid "Not found"
+msgstr ""
+
+#: ckanext/canada/view.py:400
+msgid "Multiple records found"
+msgstr ""
+
+#: ckanext/canada/view.py:450
+#, python-format
+msgid "Record %s Updated"
+msgstr ""
+
+#: ckanext/canada/view.py:483
+msgid "No organizations found"
+msgstr ""
+
+#: ckanext/canada/view.py:487
+msgid "Recombinant resource_name not found"
+msgstr ""
+
+#: ckanext/canada/view.py:530
+msgid "Number required"
+msgstr ""
+
+#: ckanext/canada/view.py:535
+msgid "Integer required"
+msgstr ""
+
+#: ckanext/canada/view.py:570
+msgid "Not authorized to see this page"
+msgstr ""
+
+#: ckanext/canada/view.py:595
+msgid " record(s) published."
+msgstr ""
+
+#: ckanext/canada/view.py:612
+#, python-format
+msgid "Unauthorized to delete resource %s"
+msgstr ""
+
+#: ckanext/canada/templates/internal/organization/edit_base.html:26
+#: ckanext/canada/templates/internal/package/resource_edit.html:3
+#: ckanext/canada/templates/internal/package/resource_edit_base.html:7
+#: ckanext/canada/templates/internal/package/wet_datatable.html:19
+#: ckanext/canada/templates/public/organization/read_base.html:30
+#: ckanext/canada/templates/public/organization/snippets/organization_item.html:17
+#: ckanext/canada/templates/public/package/edit.html:4
+#: ckanext/canada/templates/public/package/edit.html:8
+#: ckanext/canada/view.py:742
+msgid "Edit"
+msgstr ""
+
+#: ckanext/canada/view.py:788
+msgid "<strong>Note</strong><br> The record has been restored."
+msgstr ""
+
+#: ckanext/canada/view.py:839
+#, python-format
+msgid "Action name not known: %s"
+msgstr ""
+
+#: ckanext/canada/view.py:857
+#, python-format
+msgid "JSON Error: %s"
+msgstr ""
+
+#: ckanext/canada/view.py:863
+#, python-format
+msgid "Bad request data: %s"
+msgstr ""
+
+#: ckanext/canada/view.py:889
+msgid "Access denied"
+msgstr ""
+
+#: ckanext/canada/view.py:957
 msgid "Account Created"
 msgstr ""
 
-#: ckanext/canada/controller.py:558
+#: ckanext/canada/view.py:959
 msgid ""
 "Thank you for creating your account for the Open Government registry. "
 "Although your account is active, it has not yet been linked to your "
@@ -67,7 +482,7 @@ msgid ""
 "be able to create or modify datasets in the registry."
 msgstr ""
 
-#: ckanext/canada/controller.py:565
+#: ckanext/canada/view.py:966
 msgid ""
 "You should receive an email within the next business day once the account"
 " activation process has been completed. If you require faster processing "
@@ -75,269 +490,695 @@ msgid ""
 ":open-ouvert@tbs-sct.gc.ca\">open-ouvert@tbs-sct.gc.ca</a>"
 msgstr ""
 
-#: ckanext/canada/controller.py:650 ckanext/canada/controller.py:739
-msgid "Unauthorized"
+#: ckanext/canada/view.py:1040 ckanext/canada/view.py:1118
+msgid "Organization not found"
 msgstr ""
 
-#: ckanext/canada/controller.py:688
-#, fuzzy
-msgid "This record already exists"
-msgstr "Record id already exists"
-
-#: ckanext/canada/controller.py:703
-msgid "Record Created"
+#: ckanext/canada/view.py:1051
+msgid "Not authorized to access {org_name} members download"
 msgstr ""
 
-#: ckanext/canada/controller.py:752
-msgid "Not found"
-msgstr ""
-
-#: ckanext/canada/controller.py:754
-msgid "Multiple records found"
-msgstr ""
-
-#: ckanext/canada/controller.py:801
+#: ckanext/canada/view.py:1121
 #, python-format
-msgid "Record %s Updated"
+msgid "User %r not authorized to edit members of %s"
 msgstr ""
 
-#: ckanext/canada/controller.py:832
-#: ckanext/canada/templates/public/snippets/search_result_text.html:30
-msgid "No organizations found"
-msgstr ""
-
-#: ckanext/canada/controller.py:836
-msgid "Recombinant resource_name not found"
-msgstr ""
-
-#: ckanext/canada/controller.py:879
-#, fuzzy
-msgid "Number required"
-msgstr ""
-
-#: ckanext/canada/controller.py:884
-msgid "Integer required"
-msgstr ""
-
-#: ckanext/canada/helpers.py:343
-msgid "A system administrator"
-msgstr ""
-
-#: ckanext/canada/plugins.py:296
-#: ckanext/canada/templates/internal/scheming/package/snippets/package_form.html:26
-#: ckanext/canada/templates/public/package/snippets/all_resources_list.html:35
-msgid "Portal Type"
-msgstr ""
-
-#: ckanext/canada/plugins.py:297 ckanext/canada/plugins.py:681
-#: ckanext/canada/templates/internal/user/new_user_form.html:14
-#: ckanext/canada/templates/public/package/deleted.html:15
-#: ckanext/canada/templates/public/snippets/package_item.html:52
-msgid "Organization"
-msgstr ""
-
-#: ckanext/canada/plugins.py:298
-msgid "Collection Type"
-msgstr ""
-
-#: ckanext/canada/plugins.py:299 ckanext/canada/plugins.py:300
-#: ckanext/canada/plugins.py:682 ckanext/canada/plugins.py:683
-msgid "Keywords"
-msgstr ""
-
-#: ckanext/canada/plugins.py:301
-msgid "Subject"
-msgstr ""
-
-#: ckanext/canada/plugins.py:302 ckanext/canada/plugins.py:684
-#: ckanext/canada/templates/public/package/snippets/resources_list.html:17
-msgid "Format"
-msgstr ""
-
-#: ckanext/canada/plugins.py:303 ckanext/canada/plugins.py:685
-#: ckanext/canada/templates/public/package/snippets/resources_list.html:16
-msgid "Resource Type"
-msgstr ""
-
-#: ckanext/canada/plugins.py:304
-msgid "Maintenance and Update Frequency"
-msgstr ""
-
-#: ckanext/canada/plugins.py:305
-msgid "Topic Categories"
-msgstr ""
-
-#: ckanext/canada/plugins.py:306
-msgid "Spatial Representation Type"
-msgstr ""
-
-#: ckanext/canada/plugins.py:307
-#, fuzzy
-msgid "Map Viewer"
-msgstr "Viewable on Map"
-
-#: ckanext/canada/plugins.py:308
-msgid "Record Status"
-msgstr ""
-
-#: ckanext/canada/plugins.py:309
-msgid "IMSO Approval"
-msgstr ""
-
-#: ckanext/canada/plugins.py:310
-msgid "Jurisdiction"
-msgstr ""
-
-#: ckanext/canada/plugins.py:566
+#: ckanext/canada/view.py:1123
 #, python-format
-msgid "Your record %s has been saved."
+msgid "User %r not authorized to view members of %s"
 msgstr ""
 
-#: ckanext/canada/plugins.py:686
-msgid "Resource Language"
+#. Title for PD Type: adminaircraft
+#. Resource Title for PD Type: adminaircraft
+#: ckanext/canada/tables/adminaircraft.yaml:5
+#: ckanext/canada/tables/adminaircraft.yaml:15
+#: ckanext/canada/tables/adminaircraft.yaml:20
+msgid "Proactive Disclosure - Use of Administrative Aircraft"
 msgstr ""
 
-#: ckanext/canada/plugins.py:750
-#: ckanext/canada/templates/public/package/snippets/resource_form.html:8
-msgid "Previous"
+#. Label for PD Type: adminaircraft
+#: ckanext/canada/tables/adminaircraft.yaml:6
+msgid "Use of Administrative Aircraft"
 msgstr ""
 
-#: ckanext/canada/plugins.py:750
-msgid "Next"
+#. Description for PD Type: adminaircraft
+#: ckanext/canada/tables/adminaircraft.yaml:7
+msgid "Access, upload and modify government administrative aircraft use"
 msgstr ""
 
-#: ckanext/canada/validators.py:73
-#, python-format
-msgid "Tag \"%s\" length is less than minimum %s"
+#. Title for PD Type: ati
+#. Resource Title for PD Type: ati
+#: ckanext/canada/tables/ati.yaml:4 ckanext/canada/tables/ati.yaml:15
+#: ckanext/canada/tables/ati.yaml:199
+msgid "ATI Summaries"
 msgstr ""
 
-#: ckanext/canada/validators.py:77
-#, python-format
-msgid "Tag \"%s\" length is more than maximum %i"
+#. Description for PD Type: ati
+#: ckanext/canada/tables/ati.yaml:5
+msgid ""
+"Access, upload and modify the monthly ATI Summaries and ATI Nothing to "
+"Report for your organization"
 msgstr ""
 
-#: ckanext/canada/validators.py:80
-#, python-format
-msgid "Tag \"%s\" may not contain commas"
+#. SQL Trigger String for PD Type: ati
+#: ckanext/canada/tables/ati.yaml:139 ckanext/canada/tables/ati.yaml:248
+msgid "This value must not be negative"
 msgstr ""
 
-#: ckanext/canada/validators.py:83
-#, python-format
-msgid "Tag \"%s\" may not contain consecutive spaces"
+#. SQL Trigger String for PD Type: ati
+#: ckanext/canada/tables/ati.yaml:247 ckanext/canada/tables/ati.yaml:376
+msgid "Please enter a month number from 1-12"
 msgstr ""
 
-#: ckanext/canada/validators.py:90
-#, python-format
-msgid "Tag \"%s\" may not contain unprintable character U+%04x"
+#. SQL Trigger String for PD Type: ati
+#: ckanext/canada/tables/ati.yaml:246 ckanext/canada/tables/ati.yaml:375
+msgid "Please enter a valid year"
 msgstr ""
 
-#: ckanext/canada/validators.py:94
-#, python-format
-msgid "Tag \"%s\" may not contain separator charater U+%04x"
+#. NIL Resource Title for PD Type: ati
+#: ckanext/canada/tables/ati.yaml:275
+msgid "ATI Nothing to Report"
 msgstr ""
 
-#: ckanext/canada/validators.py:110
-msgid "Badly formed hexadecimal UUID string"
+#. Title for PD Type: briefingt
+#. Resource Title for PD Type: briefingt
+#: ckanext/canada/tables/briefingt.yaml:4
+#: ckanext/canada/tables/briefingt.yaml:14
+msgid "Proactive Disclosure - Briefing Note Titles and Numbers"
 msgstr ""
 
-#: ckanext/canada/templates/internal/user/new_user_form.html:6
-#: ckanext/canada/validators.py:122 ckanext/canada/validators.py:124
-msgid "Please enter a valid email address."
+#. Label for PD Type: briefingt
+#: ckanext/canada/tables/briefingt.yaml:5
+msgid "Briefing Note Titles and Numbers"
 msgstr ""
 
-#: ckanext/canada/validators.py:139
-msgid "Invalid GeoJSON"
+#. Description for PD Type: briefingt
+#: ckanext/canada/tables/briefingt.yaml:6
+msgid ""
+"Access, upload and modify the Briefing Note Titles and Numbers reports "
+"for your organization"
+msgstr ""
+
+#. Title for PD Type: consultations
+#. Resource Title for PD Type: consultations
+#: ckanext/canada/tables/consultations.yaml:4
+#: ckanext/canada/tables/consultations.yaml:21
+msgid "Open Dialogue - Consultations"
+msgstr ""
+
+#. Label for PD Type: consultations
+#: ckanext/canada/tables/consultations.yaml:5
+msgid "Consultations"
+msgstr ""
+
+#. Description for PD Type: consultations
+#: ckanext/canada/tables/consultations.yaml:6
+msgid "Access, upload and modify consultation reports for your organization"
+msgstr ""
+
+#. SQL Trigger String for PD Type: consultations
+#: ckanext/canada/tables/consultations.yaml:598
+msgid "If Status is set to: Not Going Forward, Publish Record must be set to No"
+msgstr ""
+
+#. Title for PD Type: contracts
+#. Resource Title for PD Type: contracts
+#: ckanext/canada/tables/contracts.yaml:4
+#: ckanext/canada/tables/contracts.yaml:89
+msgid "Proactive Publication - Contracts over $10,000"
+msgstr ""
+
+#. Label for PD Type: contracts
+#: ckanext/canada/tables/contracts.yaml:5
+msgid "Contracts over $10,000"
+msgstr ""
+
+#. Description for PD Type: contracts
+#: ckanext/canada/tables/contracts.yaml:6
+msgid ""
+"Access, upload and modify the Contracts over 10K reports for your "
+"organization"
+msgstr ""
+
+#. SQL Trigger String for PD Type: contracts
+#: ckanext/canada/tables/contracts.yaml:2181
+msgid "The field is limited to eight alpha-numeric digits or less.\n"
+msgstr ""
+
+#. SQL Trigger String for PD Type: contracts
+#: ckanext/canada/tables/contracts.yaml:2168
+msgid ""
+"If N/A, then Instrument Type must be identified as a\n"
+"standing offer/supply arrangement (SOSA)\n"
+msgstr ""
+
+#. SQL Trigger String for PD Type: contracts
+#: ckanext/canada/tables/contracts.yaml:2190
+msgid ""
+"If “TC” (Competitive - Traditional), “TN” (Non-Competitive) or “AC”\n"
+"(Advanced Contract Award Notice) is selected and trade agreement with a\n"
+"value other than “XX” (None) is selected, limited tendering cannot have\n"
+"a value of “0” or “00” (None).\n"
+msgstr ""
+
+#. SQL Trigger String for PD Type: contracts
+#: ckanext/canada/tables/contracts.yaml:2183
+#: ckanext/canada/tables/contracts.yaml:2195
+msgid ""
+"If the value 00 (none) is entered, then no other value\n"
+"can be entered in this field.\n"
+msgstr ""
+
+#. SQL Trigger String for PD Type: contracts
+#: ckanext/canada/tables/contracts.yaml:2174
+msgid "Discontinued as of 2022-01-01\n"
+msgstr ""
+
+#. SQL Trigger String for PD Type: contracts
+#: ckanext/canada/tables/contracts.yaml:2163
+msgid ""
+"This field must be populated with an NA if an amendment\n"
+"is disclosed under Instrument Type\n"
+msgstr ""
+
+#. SQL Trigger String for PD Type: contracts
+#: ckanext/canada/tables/contracts.yaml:2208
+msgid ""
+"This field may only be populated with “0” if the procurement was\n"
+"identified as competitive (open bidding (OB), traditional competitive "
+"(TC)\n"
+"or selective tendering (ST)).\n"
+msgstr ""
+
+#. SQL Trigger String for PD Type: contracts
+#: ckanext/canada/tables/contracts.yaml:2171
+msgid ""
+"If the value XX (none) is entered, then no other value\n"
+"can be entered in this field.\n"
+msgstr ""
+
+#. SQL Trigger String for PD Type: contracts
+#: ckanext/canada/tables/contracts.yaml:2198
+msgid ""
+"This field must be N, No or Non, if the Procurement Strategy for\n"
+"Aboriginal Business field is MS or VS.\n"
+msgstr ""
+
+#. SQL Trigger String for PD Type: contracts
+#: ckanext/canada/tables/contracts.yaml:2201
+msgid ""
+"This field must be populated with a 1 if the solicitation procedure is\n"
+"identified as non-competitive (TN) or Advance Contract Award Notice (AC)."
+"\n"
+msgstr ""
+
+#. SQL Trigger String for PD Type: contracts
+#: ckanext/canada/tables/contracts.yaml:2176
+msgid "Must be left blank when trade agreements specified\n"
+msgstr ""
+
+#. SQL Trigger String for PD Type: contracts
+#: ckanext/canada/tables/contracts.yaml:2178
+msgid ""
+"If the value NA (not applicable) is entered, then no\n"
+"other value can be entered in this field.\n"
+msgstr ""
+
+#. SQL Trigger String for PD Type: contracts
+#: ckanext/canada/tables/contracts.yaml:2186
+msgid ""
+"If TC, TN or AC is selected in the Solicitation Procedure data field\n"
+"with a value other than XX (None) selected in the Trade Agreement data\n"
+"field, then a Limited Tendering value other than 00 (none) must be "
+"entered.\n"
+msgstr ""
+
+#. SQL Trigger String for PD Type: contracts
+#: ckanext/canada/tables/contracts.yaml:2204
+msgid ""
+"If this field is populated, it must be with a “0” if the procurement\n"
+"was identified as non-competitive (TN) or advance contract award notice\n"
+"(AC) or was identified as an Amendment (A) in the Instrument type data "
+"field.\n"
+msgstr ""
+
+#. SQL Trigger String for PD Type: contracts
+#: ckanext/canada/tables/contracts.yaml:2166
+msgid "This field is limited to only 3 or 4 digits.\n"
+msgstr ""
+
+#. SQL Trigger String for PD Type: contracts
+#: ckanext/canada/tables/contracts.yaml:2160
+msgid ""
+"This field must contain the first three digits of a postal\n"
+"code in A1A format or the value \"NA\"\n"
+msgstr ""
+
+#. NIL Resource Title for PD Type: contracts
+#: ckanext/canada/tables/contracts.yaml:2262
+msgid "Proactive Publication - Contracts Nothing to Report"
+msgstr ""
+
+#. Title for PD Type: contractsa
+#. Resource Title for PD Type: contractsa
+#: ckanext/canada/tables/contractsa.yaml:4
+#: ckanext/canada/tables/contractsa.yaml:15
+msgid "Proactive Publication - Aggregated Contracts from -$10,000 to $10,000"
+msgstr ""
+
+#. Label for PD Type: contractsa
+#: ckanext/canada/tables/contractsa.yaml:5
+msgid "Aggregated Contracts from -$10,000 to $10,000"
+msgstr ""
+
+#. Description for PD Type: contractsa
+#: ckanext/canada/tables/contractsa.yaml:6
+msgid ""
+"Access, upload and modify the aggregated Contracts from -$10K to $10K "
+"reports for your organization"
+msgstr ""
+
+#. SQL Trigger String for PD Type: contractsa
+#. SQL Trigger String for PD Type: hospitalityq
+#. SQL Trigger String for PD Type: reclassification
+#. SQL Trigger String for PD Type: travela
+#. SQL Trigger String for PD Type: travelq
+#: ckanext/canada/tables/contractsa.yaml:387
+#: ckanext/canada/tables/hospitalityq.yaml:591
+#: ckanext/canada/tables/reclassification.yaml:371
+#: ckanext/canada/tables/travela.yaml:642
+#: ckanext/canada/tables/travelq.yaml:580
+msgid "This must list the year you are reporting on (not the fiscal year)."
+msgstr ""
+
+#. Title for PD Type: dac
+#. Resource Title for PD Type: dac
+#: ckanext/canada/tables/dac.yaml:3 ckanext/canada/tables/dac.yaml:13
+msgid "Proactive Disclosure - Departmental Audit Committee"
+msgstr ""
+
+#. Label for PD Type: dac
+#: ckanext/canada/tables/dac.yaml:4
+msgid "Departmental Audit Committee"
+msgstr ""
+
+#. Description for PD Type: dac
+#: ckanext/canada/tables/dac.yaml:5
+msgid ""
+"Access, upload and modify your Departmental Audit Committee members’ "
+"remuneration and expenses."
+msgstr ""
+
+#. Title for PD Type: experiment
+#. Resource Title for PD Type: experiment
+#: ckanext/canada/tables/experiment.yaml:4
+#: ckanext/canada/tables/experiment.yaml:12
+msgid "Experimentation Inventory"
+msgstr ""
+
+#. Description for PD Type: experiment
+#: ckanext/canada/tables/experiment.yaml:5
+msgid ""
+"Access, upload and modify the Experimentation Inventory for your "
+"organization"
+msgstr ""
+
+#. Title for PD Type: grants
+#. Resource Title for PD Type: grants
+#: ckanext/canada/tables/grants.yaml:3 ckanext/canada/tables/grants.yaml:14
+msgid "Proactive Disclosure - Grants and Contributions"
+msgstr ""
+
+#. Label for PD Type: grants
+#: ckanext/canada/tables/grants.yaml:4
+msgid "Grants and Contributions"
+msgstr ""
+
+#. Description for PD Type: grants
+#: ckanext/canada/tables/grants.yaml:5
+msgid ""
+"Access, upload and modify the Grants and Contributions reports for your "
+"organization"
+msgstr ""
+
+#. NIL Resource Title for PD Type: grants
+#: ckanext/canada/tables/grants.yaml:874
+msgid "Proactive Disclosure - Grants and Contributions Nothing to Report"
+msgstr ""
+
+#. Title for PD Type: hospitalityq
+#. Resource Title for PD Type: hospitalityq
+#: ckanext/canada/tables/hospitalityq.yaml:4
+#: ckanext/canada/tables/hospitalityq.yaml:16
+msgid "Proactive Disclosure - Hospitality Expenses"
+msgstr ""
+
+#. Label for PD Type: hospitalityq
+#: ckanext/canada/tables/hospitalityq.yaml:5
+#: ckanext/canada/tables/hospitalityq.yaml:402
+msgid "Hospitality Expenses"
+msgstr ""
+
+#. Description for PD Type: hospitalityq
+#: ckanext/canada/tables/hospitalityq.yaml:6
+msgid ""
+"Access, upload and modify the quarterly hospitality expenses for your "
+"organization"
+msgstr ""
+
+#. NIL Resource Title for PD Type: hospitalityq
+#: ckanext/canada/tables/hospitalityq.yaml:471
+msgid "Proactive Disclosure - Hospitality Nothing to Report"
+msgstr ""
+
+#. Title for PD Type: inventory
+#. Resource Title for PD Type: inventory
+#: ckanext/canada/tables/inventory.yaml:5
+#: ckanext/canada/tables/inventory.yaml:15
+msgid "Open Data Inventory"
+msgstr ""
+
+#. Description for PD Type: inventory
+#: ckanext/canada/tables/inventory.yaml:6
+msgid ""
+"This dataset houses your departmental open data inventory. This is where "
+"you can access and upload your open data inventory template."
+msgstr ""
+
+#. Title for PD Type: nap5
+#. Resource Title for PD Type: nap5
+#: ckanext/canada/tables/nap5.yaml:3 ckanext/canada/tables/nap5.yaml:12
+msgid "5th National Action Plan on Open Government Tracker"
+msgstr ""
+
+#. Description for PD Type: nap5
+#: ckanext/canada/tables/nap5.yaml:4
+msgid ""
+"Access, upload and modify the National Action Plan on Open Government "
+"Tracker for your organization"
+msgstr ""
+
+#. Title for PD Type: qpnotes
+#. Resource Title for PD Type: qpnotes
+#: ckanext/canada/tables/qpnotes.yaml:4 ckanext/canada/tables/qpnotes.yaml:14
+msgid "Proactive Disclosure - Question Period Notes"
+msgstr ""
+
+#. Label for PD Type: qpnotes
+#: ckanext/canada/tables/qpnotes.yaml:5
+msgid "Question Period Notes"
+msgstr ""
+
+#. Description for PD Type: qpnotes
+#: ckanext/canada/tables/qpnotes.yaml:6
+msgid "Access, upload and modify Question Period notes for your organization"
+msgstr ""
+
+#. Title for PD Type: reclassification
+#. Resource Title for PD Type: reclassification
+#: ckanext/canada/tables/reclassification.yaml:3
+#: ckanext/canada/tables/reclassification.yaml:14
+msgid "Proactive Disclosure - Position Reclassification"
+msgstr ""
+
+#. Label for PD Type: reclassification
+#: ckanext/canada/tables/reclassification.yaml:4
+#: ckanext/canada/tables/reclassification.yaml:226
+msgid "Position Reclassification"
+msgstr ""
+
+#. Description for PD Type: reclassification
+#: ckanext/canada/tables/reclassification.yaml:5
+msgid ""
+"Access, upload and modify the position reclassification reports for your "
+"organization"
+msgstr ""
+
+#. NIL Resource Title for PD Type: reclassification
+#: ckanext/canada/tables/reclassification.yaml:282
+msgid "Proactive Disclosure - Position Reclassification Nothing to Report"
+msgstr ""
+
+#. Title for PD Type: service
+#: ckanext/canada/tables/service.yaml:4
+msgid "Service Inventory"
+msgstr ""
+
+#. Description for PD Type: service
+#: ckanext/canada/tables/service.yaml:5
+msgid ""
+"Access, upload and modify the Service Inventory of external and internal "
+"enterprise services for your organization"
+msgstr ""
+
+#. Resource Title for PD Type: service
+#: ckanext/canada/tables/service.yaml:16
+msgid "Service Identification Information & Metrics"
+msgstr ""
+
+#. NIL Resource Title for PD Type: service
+#: ckanext/canada/tables/service.yaml:1063
+msgid "Service Standards & Performance Results"
+msgstr ""
+
+#. SQL Trigger String for PD Type: service
+#: ckanext/canada/tables/service.yaml:1504
+msgid "Please enter a decimal value between zero and one: %"
+msgstr ""
+
+#. Title for PD Type: travela
+#. Resource Title for PD Type: travela
+#: ckanext/canada/tables/travela.yaml:3 ckanext/canada/tables/travela.yaml:17
+msgid "Proactive Disclosure - Annual Travel, Hospitality and Conferences"
+msgstr ""
+
+#. Label for PD Type: travela
+#: ckanext/canada/tables/travela.yaml:4
+msgid "Annual Travel, Hospitality and Conferences"
+msgstr ""
+
+#. Description for PD Type: travela
+#: ckanext/canada/tables/travela.yaml:5
+msgid ""
+"This dataset includes all of the annual reports on travel expenses "
+"incurred within your organization."
+msgstr ""
+
+#. Title for PD Type: travelq
+#. Resource Title for PD Type: travelq
+#: ckanext/canada/tables/travelq.yaml:4 ckanext/canada/tables/travelq.yaml:16
+msgid "Proactive Disclosure - Travel Expenses"
+msgstr ""
+
+#. Label for PD Type: travelq
+#: ckanext/canada/tables/travelq.yaml:5 ckanext/canada/tables/travelq.yaml:388
+msgid "Travel Expenses"
+msgstr ""
+
+#. Description for PD Type: travelq
+#: ckanext/canada/tables/travelq.yaml:6
+msgid ""
+"Access, upload and modify the monthly travel expense reports for your "
+"organization"
+msgstr ""
+
+#. NIL Resource Title for PD Type: travelq
+#: ckanext/canada/tables/travelq.yaml:457
+msgid "Proactive Disclosure - Travel Expenses Nothing to Report"
+msgstr ""
+
+#. Title for PD Type: wrongdoing
+#: ckanext/canada/tables/wrongdoing.yaml:3
+msgid "Proactive Disclosure - Acts of Founded Wrongdoing"
+msgstr ""
+
+#. Label for PD Type: wrongdoing
+#: ckanext/canada/tables/wrongdoing.yaml:4
+msgid "Acts of Founded Wrongdoing"
+msgstr ""
+
+#. Description for PD Type: wrongdoing
+#: ckanext/canada/tables/wrongdoing.yaml:5
+msgid ""
+"Access, upload and modify the Acts of Founded Wrongdoing reports for your"
+" organization"
+msgstr ""
+
+#. Resource Title for PD Type: wrongdoing
+#: ckanext/canada/tables/wrongdoing.yaml:14
+msgid "Proactive Disclosure - Founded Wrongdoing"
 msgstr ""
 
 #: ckanext/canada/templates/internal/base.html:5
 msgid "Open Data Registry"
 msgstr ""
 
-#: ckanext/canada/templates/internal/header.html:16
-#: ckanext/canada/templates/internal/menu.html:9
-#: ckanext/canada/templates/public/package/snippets/schemaorg.html:23
-msgid "http://open.canada.ca"
+#: ckanext/canada/templates/internal/error_document_template.html:5
+#: ckanext/canada/templates/internal/home/quick_links.html:2
+msgid "Open Government Registry"
 msgstr ""
 
-#: ckanext/canada/templates/internal/header.html:16
-#: ckanext/canada/templates/internal/menu.html:9
-msgid "Open.Canada.ca"
+#: ckanext/canada/templates/internal/error_document_template.html:15
+msgid ""
+"You are not logged in to the Open Government Registry.\n"
+"          Note that your login expires after 1 hour of inactivity.\n"
+"          Click on the log in button below to log in."
 msgstr ""
 
-#: ckanext/canada/templates/internal/header.html:19
-#: ckanext/canada/templates/internal/menu.html:11
-msgid "Add to Portal"
+#: ckanext/canada/templates/internal/error_document_template.html:19
+#: ckanext/canada/templates/internal/header.html:36
+#: ckanext/canada/templates/internal/page.html:20
+#: ckanext/canada/templates/internal/user/snippets/login_form.html:22
+#: ckanext/canada/templates/public/snippets/user.html:56
+#: ckanext/canada/templates/public/user/snippets/login_form.html:22
+msgid "Log in"
+msgstr ""
+
+#: ckanext/canada/templates/internal/error_document_template.html:23
+#: ckanext/canada/templates/public/error_document_template.html:6
+msgid "We couldn't find that Web page"
+msgstr ""
+
+#: ckanext/canada/templates/internal/error_document_template.html:25
+msgid ""
+"We encountered an error and are unable to serve your request. Please try "
+"again in short time or contact <a href=\"mailto:open-ouvert@tbs-sct.gc.ca"
+"\">open-ouvert@tbs-sct.gc.ca</a> if you need immediate assistance or if "
+"this issue persists. Note that your login expires after 1 hour of "
+"inactivity."
+msgstr ""
+
+#: ckanext/canada/templates/internal/error_document_template.html:27
+#: ckanext/canada/templates/public/error_document_template.html:8
+msgid "We encountered an error"
+msgstr ""
+
+#: ckanext/canada/templates/internal/header.html:14
+#: ckanext/canada/templates/public/snippets/user.html:11
+msgid "Signed in as"
+msgstr ""
+
+#: ckanext/canada/templates/internal/header.html:15
+#: ckanext/canada/templates/public/snippets/user.html:12
+msgid "View profile"
 msgstr ""
 
 #: ckanext/canada/templates/internal/header.html:21
-#: ckanext/canada/templates/internal/menu.html:14
+#: ckanext/canada/templates/internal/header.html:23
+#: ckanext/canada/templates/public/snippets/user.html:43
+#: ckanext/canada/templates/public/snippets/user.html:45
+msgid "Log out"
+msgstr ""
+
+#: ckanext/canada/templates/internal/header.html:54
+msgid "Home"
+msgstr ""
+
+#: ckanext/canada/templates/internal/header.html:56
+#: ckanext/canada/templates/internal/header.html:58
+#: ckanext/canada/templates/internal/home/quick_links.html:65
 #: ckanext/canada/templates/internal/scheming/package/snippets/package_form.html:30
 #: ckanext/canada/templates/internal/snippets/dataset_facets.html:2
 #: ckanext/canada/templates/public/macros/canada_read.html:180
 #: ckanext/canada/templates/public/snippets/dataset_facets.html:2
+#: ckanext/canada/templates/public/snippets/package_item.html:12
 msgid "Open Data"
 msgstr ""
 
-#: ckanext/canada/templates/internal/header.html:22
-#: ckanext/canada/templates/internal/menu.html:16
+#: ckanext/canada/templates/internal/header.html:60
+msgid "Create an Open Data Record"
+msgstr ""
+
+#: ckanext/canada/templates/internal/header.html:68
+#: ckanext/canada/templates/internal/home/quick_links.html:80
 #: ckanext/canada/templates/internal/scheming/package/snippets/package_form.html:32
 #: ckanext/canada/templates/internal/snippets/dataset_facets.html:4
 #: ckanext/canada/templates/public/macros/canada_read.html:181
 #: ckanext/canada/templates/public/snippets/dataset_facets.html:3
+#: ckanext/canada/templates/public/snippets/package_item.html:18
 msgid "Open Information"
 msgstr ""
 
+#: ckanext/canada/templates/internal/header.html:69
+#: ckanext/canada/templates/internal/header.html:71
+#: ckanext/canada/templates/internal/snippets/dataset_facets.html:32
+#: ckanext/canada/templates/public/macros/canada_read.html:202
+#: ckanext/canada/templates/public/snippets/package_item.html:16
+#: ckanext/canada/templates/public/snippets/package_item.html:22
+msgid "Proactive Disclosure"
+msgstr ""
+
+#: ckanext/canada/templates/internal/header.html:83
+msgid "Reports Tabled in Parliament"
+msgstr ""
+
+#: ckanext/canada/templates/internal/header.html:87
+#: ckanext/canada/templates/internal/home/quick_links.html:171
+msgid "Briefing packages"
+msgstr ""
+
+#: ckanext/canada/templates/internal/header.html:89
+msgid "New or incoming ministers"
+msgstr ""
+
+#: ckanext/canada/templates/internal/header.html:90
+msgid "New or incoming deputy heads"
+msgstr ""
+
+#: ckanext/canada/templates/internal/header.html:91
+msgid "Parliamentary Committee appearances for ministers"
+msgstr ""
+
+#: ckanext/canada/templates/internal/header.html:92
+msgid "Parliamentary Committee appearances for deputy heads"
+msgstr ""
+
+#: ckanext/canada/templates/internal/header.html:97
+#: ckanext/canada/templates/internal/home/quick_links.html:92
+#: ckanext/canada/templates/internal/snippets/dataset_facets.html:5
+#: ckanext/canada/templates/public/macros/canada_read.html:182
+#: ckanext/canada/templates/public/snippets/dataset_facets.html:4
+msgid "Suggested Datasets"
+msgstr ""
+
+#: ckanext/canada/templates/internal/header.html:98
+#: ckanext/canada/templates/internal/header.html:100
+#: ckanext/canada/templates/internal/home/quick_links.html:104
+#: ckanext/canada/templates/internal/snippets/dataset_facets.html:3
+#: ckanext/canada/templates/public/snippets/package_item.html:20
+msgid "Open Dialogue"
+msgstr ""
+
+#: ckanext/canada/templates/internal/header.html:103
+msgid "Consultations master dataset"
+msgstr ""
+
 #: ckanext/canada/templates/internal/admin/publish_search.html:20
-#: ckanext/canada/templates/internal/header.html:49
-#: ckanext/canada/templates/internal/menu.html:43
+#: ckanext/canada/templates/internal/header.html:108
+#: ckanext/canada/templates/internal/home/quick_links.html:117
 #: ckanext/canada/templates/public/header.html:15
 #: ckanext/canada/templates/public/header.html:26
-#: ckanext/canada/templates/public/snippets/search_form.html:67
+#: ckanext/canada/templates/public/snippets/search_form.html:52
 #: ckanext/canada/templates/public/user/snippets/followee_dropdown.html:20
 #: ckanext/canada/templates/public/user/snippets/followee_dropdown.html:24
 msgid "Search"
 msgstr ""
 
-#: ckanext/canada/templates/internal/header.html:50
-#: ckanext/canada/templates/internal/menu.html:44
-#: ckanext/canada/templates/internal/snippets/menu.html:27
-#: ckanext/canada/templates/internal/snippets/menu.html:29
+#: ckanext/canada/templates/internal/header.html:109
 #: ckanext/canada/templates/internal/user/read_base.html:21
 #: ckanext/canada/templates/public/organization/index.html:26
-#: ckanext/canada/templates/public/organization/read_base.html:5
+#: ckanext/canada/templates/public/organization/members.html:10
+#: ckanext/canada/templates/public/organization/read_base.html:7
 #: ckanext/canada/templates/public/user/read.html:23
 msgid "Organizations"
 msgstr ""
 
-#: ckanext/canada/templates/internal/header.html:51
-#: ckanext/canada/templates/internal/menu.html:45
+#: ckanext/canada/templates/internal/header.html:111
 msgid "FAQ"
 msgstr ""
 
-#: ckanext/canada/templates/internal/header.html:53
-#: ckanext/canada/templates/internal/menu.html:47
-#: ckanext/canada/templates/internal/snippets/menu.html:35
-#: ckanext/canada/templates/internal/snippets/menu.html:37
-#: ckanext/canada/templates/internal/snippets/user.html:49
-#: ckanext/canada/templates/internal/snippets/user.html:51
-#: ckanext/canada/templates/public/snippets/user.html:48
-#: ckanext/canada/templates/public/snippets/user.html:50
-msgid "Log out"
-msgstr ""
-
-#: ckanext/canada/templates/internal/header.html:55
-#: ckanext/canada/templates/internal/menu.html:49
-#: ckanext/canada/templates/internal/snippets/menu.html:40
-#: ckanext/canada/templates/internal/snippets/menu.html:42
-#: ckanext/canada/templates/internal/snippets/user.html:62
-#: ckanext/canada/templates/internal/user/snippets/login_form.html:20
-#: ckanext/canada/templates/public/snippets/user.html:61
-#: ckanext/canada/templates/public/user/snippets/login_form.html:22
-msgid "Log in"
-msgstr ""
-
-#: ckanext/canada/templates/internal/header.html:68
-#: ckanext/canada/templates/public/header.html:49
+#: ckanext/canada/templates/internal/header.html:121
+#: ckanext/canada/templates/public/header.html:52
 msgid "You are here:"
 msgstr ""
 
@@ -345,30 +1186,56 @@ msgstr ""
 msgid "Frequently Asked Questions (FAQ)"
 msgstr ""
 
-#: ckanext/canada/templates/internal/menu.html:6
-#: ckanext/canada/templates/public/snippets/menu.html:2
-msgid "Topics menu"
+#: ckanext/canada/templates/internal/page.html:9
+msgid "Your user sessions has timed out due to inactivity"
+msgstr ""
+
+#: ckanext/canada/templates/internal/page.html:15
+msgid ""
+"If you are currently entering data on this page, you may lose it when "
+"submitted. To avoid this, you can click on the log in button below to log"
+" in again in a new tab without losing your progress and you can then keep"
+" working on this page. If you have any issues please contact <a "
+"href=\"mailto:open-ouvert@tbs-sct.gc.ca\">open-ouvert@tbs-sct.gc.ca</a>."
+msgstr ""
+
+#: ckanext/canada/templates/internal/page.html:36
+msgid ""
+"Internet Explorer is no longer being supported within the Open Government"
+" Registry. Some features will not work as expected, including publication"
+" of records. Please use MS Edge or Google Chrome, or contact <a "
+"href=\"mailto:open-ouvert@tbs-sct.gc.ca\">open-ouvert@tbs-sct.gc.ca</a> "
+"for additional support."
 msgstr ""
 
 #: ckanext/canada/templates/internal/admin/base.html:4
-#: ckanext/canada/templates/internal/user/list.html:4
+#: ckanext/canada/templates/internal/snippets/user.html:14
+#: ckanext/canada/templates/public/snippets/user.html:20
+msgid "Admin"
+msgstr ""
+
+#: ckanext/canada/templates/internal/admin/base.html:8
+#: ckanext/canada/templates/internal/user/list.html:9
+#: ckanext/canada/templates/internal/user/list.html:17
+#: ckanext/canada/templates/internal/user/list.html:24
+#: ckanext/canada/templates/internal/user/list.html:73
 #: ckanext/canada/templates/internal/user/read_base.html:5
 msgid "Users"
 msgstr ""
 
-#: ckanext/canada/templates/internal/admin/base.html:6
+#: ckanext/canada/templates/internal/admin/base.html:9
 #: ckanext/canada/templates/public/admin/trash.html:38
 msgid "Trash"
 msgstr "Deleted Records"
 
-#: ckanext/canada/templates/internal/admin/base.html:7
+#: ckanext/canada/templates/internal/admin/base.html:10
 msgid "Publish Records"
 msgstr ""
 
 #: ckanext/canada/templates/internal/admin/publish_search.html:13
-#: ckanext/canada/templates/internal/package/search.html:4
+#: ckanext/canada/templates/internal/package/search.html:10
 #: ckanext/canada/templates/internal/snippets/search_form.html:3
-#: ckanext/canada/templates/public/snippets/search_form.html:43
+#: ckanext/canada/templates/public/snippets/search_form.html:28
 msgid "Search Datasets"
 msgstr "Search Records"
 
@@ -378,18 +1245,17 @@ msgid "Search..."
 msgstr ""
 
 #: ckanext/canada/templates/internal/admin/publish_search.html:32
-#, fuzzy
 msgid "Search Results:"
 msgstr "Search Records"
 
 #: ckanext/canada/templates/internal/admin/publish_search.html:49
-msgid " <p class=\"extra\">Please try another search.</p> "
+msgid "<p class=\"extra\">Please try another search.</p>"
 msgstr ""
 
 #: ckanext/canada/templates/internal/admin/publish_search.html:57
 msgid ""
-" <p><strong>There was an error while searching.</strong> Please try "
-"again.</p> "
+"<p><strong>There was an error while searching.</strong> Please try "
+"again.</p>"
 msgstr ""
 
 #: ckanext/canada/templates/internal/admin/publish_search.html:81
@@ -418,11 +1284,23 @@ msgstr ""
 msgid "Publish Selected Records"
 msgstr ""
 
-#: ckanext/canada/templates/internal/home/quick_links.html:2
-msgid "Quick Links"
+#: ckanext/canada/templates/internal/datastore/snippets/dictionary_form.html:7
+msgid "English Label"
 msgstr ""
 
-#: ckanext/canada/templates/internal/home/quick_links.html:22
+#: ckanext/canada/templates/internal/datastore/snippets/dictionary_form.html:11
+msgid "French Label"
+msgstr ""
+
+#: ckanext/canada/templates/internal/datastore/snippets/dictionary_form.html:15
+msgid "English Description"
+msgstr ""
+
+#: ckanext/canada/templates/internal/datastore/snippets/dictionary_form.html:19
+msgid "French Description"
+msgstr ""
+
+#: ckanext/canada/templates/internal/home/quick_links.html:58
 msgid ""
 "Welcome to the Open Government Registry. Use the Registry to add "
 "government resources that will be published on the Open Government "
@@ -431,229 +1309,126 @@ msgid ""
 "sct.gc.ca</a>."
 msgstr ""
 
-#: ckanext/canada/templates/internal/home/quick_links.html:29
-msgid "Open Data Records"
-msgstr ""
-
-#: ckanext/canada/templates/internal/home/quick_links.html:30
-msgid ""
-"Add data about Government of Canada services, financials or national "
-"demographic information that is relevant to Canadians."
-msgstr ""
-
-#: ckanext/canada/templates/internal/home/quick_links.html:33
-msgid "Open Information Records"
-msgstr ""
-
-#: ckanext/canada/templates/internal/home/quick_links.html:34
-msgid "Add information about government programs, activities and publications."
-msgstr ""
-
-#: ckanext/canada/templates/internal/home/quick_links.html:58
-#, fuzzy
-msgid "Search your Organization Records"
-msgstr ""
-
-#: ckanext/canada/templates/internal/home/quick_links.html:59
-msgid "Search all records in the Registry, for your Organization."
-msgstr ""
-
-#: ckanext/canada/templates/internal/home/quick_links.html:63
-msgid "Search All Records"
-msgstr ""
-
-#: ckanext/canada/templates/internal/home/quick_links.html:64
-msgid "Add all Open Data and Information records in the Registry."
-msgstr ""
-
-#: ckanext/canada/templates/internal/home/quick_links.html:68
-msgid "View Members of your Organization"
-msgstr ""
-
-#: ckanext/canada/templates/internal/home/quick_links.html:69
-msgid "View the list of members linked to your organization."
+#: ckanext/canada/templates/internal/home/quick_links.html:146
+msgid "Proactive Publication"
 msgstr ""
 
 #: ckanext/canada/templates/internal/organization/edit_base.html:10
-#: ckanext/canada/templates/internal/package/search.html:6
-#: ckanext/canada/templates/public/organization/read_base.html:16
-#: ckanext/canada/templates/public/snippets/organization.html:38
+#: ckanext/canada/templates/internal/package/search.html:12
+#: ckanext/canada/templates/public/organization/read_base.html:19
+#: ckanext/canada/templates/public/snippets/organization.html:36
 #: ckanext/canada/templates/public/user/read.html:12
 msgid "Datasets"
 msgstr "Records"
 
 #: ckanext/canada/templates/internal/organization/edit_base.html:13
-#: ckanext/canada/templates/public/organization/read_base.html:19
-#: ckanext/canada/templates/public/package/activity.html:7
+#: ckanext/canada/templates/public/organization/read_base.html:22
 msgid "Activity"
 msgstr ""
 
-#: ckanext/canada/templates/internal/organization/edit_base.html:21
-#: ckanext/canada/templates/public/organization/read_base.html:23
-#, fuzzy
+#: ckanext/canada/templates/internal/organization/edit_base.html:17
+#: ckanext/canada/templates/public/organization/read_base.html:26
 msgid "Edit Members"
-msgstr "Keep me logged in"
-
-#: ckanext/canada/templates/internal/organization/edit_base.html:26
-#: ckanext/canada/templates/internal/package/resource_edit.html:3
-#: ckanext/canada/templates/internal/package/resource_edit_base.html:7
-#: ckanext/canada/templates/public/organization/read_base.html:27
-#: ckanext/canada/templates/public/organization/snippets/organization_item.html:17
-#: ckanext/canada/templates/public/package/edit.html:4
-#: ckanext/canada/templates/public/package/edit.html:8
-#: ckanext/canada/templates/public/package/read.html:18
-#: ckanext/canada/templates/public/package/snippets/all_resources_list.html:80
-#: ckanext/canada/templates/public/package/snippets/resource_item.html:47
-msgid "Edit"
 msgstr ""
 
-#: ckanext/canada/templates/internal/organization/member_new.html:31
-msgid "Existing User"
-msgstr ""
-
-#: ckanext/canada/templates/internal/organization/member_new.html:35
-msgid "If you wish to add an existing user, search for their username below."
-msgstr ""
-
-#: ckanext/canada/templates/internal/organization/member_new.html:43
-#: ckanext/canada/templates/internal/user/list.html:12
-#: ckanext/canada/templates/internal/user/new_user_form.html:7
-#: ckanext/canada/templates/internal/user/snippets/login_form.html:13
-#: ckanext/canada/templates/public/user/edit_user_form.html:9
-#: ckanext/canada/templates/public/user/read_base.html:43
-#: ckanext/canada/templates/public/user/request_reset.html:11
-#: ckanext/canada/templates/public/user/snippets/login_form.html:13
-msgid "Username"
-msgstr ""
-
-#: ckanext/canada/templates/internal/organization/member_new.html:50
-msgid "or"
-msgstr ""
-
-#: ckanext/canada/templates/internal/organization/member_new.html:54
-msgid "New User"
-msgstr ""
-
-#: ckanext/canada/templates/internal/organization/member_new.html:57
-msgid "If you wish to invite a new user, enter their email address."
-msgstr ""
-
-#: ckanext/canada/templates/internal/organization/member_new.html:60
-msgid "Email address"
-msgstr ""
-
-#: ckanext/canada/templates/internal/organization/member_new.html:66
-#: ckanext/canada/templates/internal/user/list.html:14
-msgid "Role"
-msgstr ""
-
-#: ckanext/canada/templates/internal/organization/member_new.html:69
-msgid "Select the role this user should have within this organization."
-msgstr ""
-
-#: ckanext/canada/templates/internal/organization/member_new.html:82
-msgid "Are you sure you want to delete this member?"
-msgstr ""
-
-#: ckanext/canada/templates/internal/organization/member_new.html:83
-#: ckanext/canada/templates/internal/organization/snippets/organization_form.html:49
-#: ckanext/canada/templates/public/scheming/package/read.html:26
-msgid "Delete"
-msgstr ""
-
-#: ckanext/canada/templates/internal/organization/member_new.html:85
-msgid "Update Member"
-msgstr ""
-
-#: ckanext/canada/templates/internal/organization/member_new.html:89
-msgid "Add Member"
-msgstr ""
-
-#: ckanext/canada/templates/internal/organization/new_organization_form.html:9
-msgid "Update Organization"
-msgstr ""
-
-#: ckanext/canada/templates/internal/organization/new_organization_form.html:11
-msgid "Create Organization"
-msgstr ""
-
-#: ckanext/canada/templates/internal/organization/snippets/organization_form.html:10
-#: ckanext/canada/templates/public/package/snippets/all_resources_list.html:33
-msgid "Title"
-msgstr ""
-
-#: ckanext/canada/templates/internal/organization/snippets/organization_form.html:10
-msgid "My Organization"
-msgstr ""
-
-#: ckanext/canada/templates/internal/organization/snippets/organization_form.html:18
-#: ckanext/canada/templates/public/package/snippets/resource_form.html:4
-msgid "URL"
-msgstr ""
-
-#: ckanext/canada/templates/internal/organization/snippets/organization_form.html:18
-msgid "my-organization"
-msgstr ""
-
-#: ckanext/canada/templates/internal/organization/snippets/organization_form.html:20
-msgid "Description"
-msgstr ""
-
-#: ckanext/canada/templates/internal/organization/snippets/organization_form.html:20
-msgid "A little information about my organization..."
-msgstr ""
-
-#: ckanext/canada/templates/internal/organization/snippets/organization_form.html:48
-#, fuzzy
-msgid "Are you sure you want to delete this Organization?"
-msgstr "Are you sure you want to delete this record?"
-
-#: ckanext/canada/templates/internal/organization/snippets/organization_form.html:52
-msgid "Save Organization"
-msgstr ""
-
-#: ckanext/canada/templates/internal/package/read.html:8
-#: ckanext/canada/templates/public/package/read_base.html:109
-msgid "Openness Rating"
-msgstr ""
-
-#: ckanext/canada/templates/internal/package/read.html:13
-#: ckanext/canada/templates/public/package/read_base.html:114
-msgid "one star"
-msgstr ""
-
-#: ckanext/canada/templates/internal/package/read.html:14
-#: ckanext/canada/templates/public/package/read_base.html:115
-msgid "two stars"
-msgstr ""
-
-#: ckanext/canada/templates/internal/package/read.html:15
-#: ckanext/canada/templates/public/package/read_base.html:116
-msgid "three stars"
-msgstr ""
-
-#: ckanext/canada/templates/internal/package/read.html:16
-#: ckanext/canada/templates/public/package/read_base.html:117
-msgid "four stars"
+#: ckanext/canada/templates/internal/organization/edit_base.html:21
+#: ckanext/canada/templates/public/organization/read_base.html:35
+msgid "View Members"
 msgstr ""
 
 #: ckanext/canada/templates/internal/package/read.html:17
-#: ckanext/canada/templates/public/package/read_base.html:118
+#: ckanext/canada/templates/internal/package/read.html:27
+msgid "Action required:"
+msgstr ""
+
+#: ckanext/canada/templates/internal/package/read.html:18
+msgid ""
+"Draft record has been saved and can be edited. Mark as ready to publish "
+"to continue."
+msgstr ""
+
+#: ckanext/canada/templates/internal/package/read.html:28
+msgid "Seek out departmental approval and mark as approved to continue."
+msgstr ""
+
+#: ckanext/canada/templates/internal/package/read.html:37
+msgid "Data record is in queue for validation."
+msgstr ""
+
+#: ckanext/canada/templates/internal/package/read.html:38
+msgid "Record will be published by the following business day upon validation."
+msgstr ""
+
+#: ckanext/canada/templates/internal/package/read.html:59
+#: ckanext/canada/templates/internal/package/read.html:61
+msgid "View on Portal"
+msgstr ""
+
+#: ckanext/canada/templates/internal/package/read.html:69
+msgid ""
+"This dataset has been deleted and is no longer accessible to non-admin "
+"users"
+msgstr ""
+
+#: ckanext/canada/templates/internal/package/read.html:71
+msgid "Undelete"
+msgstr ""
+
+#: ckanext/canada/templates/internal/package/read.html:81
+#: ckanext/canada/templates/public/package/read_base.html:88
+msgid "Openness Rating"
+msgstr ""
+
+#: ckanext/canada/templates/internal/package/read.html:86
+#: ckanext/canada/templates/public/package/read_base.html:93
+msgid "one star"
+msgstr ""
+
+#: ckanext/canada/templates/internal/package/read.html:87
+#: ckanext/canada/templates/public/package/read_base.html:94
+msgid "two stars"
+msgstr ""
+
+#: ckanext/canada/templates/internal/package/read.html:88
+#: ckanext/canada/templates/public/package/read_base.html:95
+msgid "three stars"
+msgstr ""
+
+#: ckanext/canada/templates/internal/package/read.html:89
+#: ckanext/canada/templates/public/package/read_base.html:96
+msgid "four stars"
+msgstr ""
+
+#: ckanext/canada/templates/internal/package/read.html:90
+#: ckanext/canada/templates/public/package/read_base.html:97
 msgid "five stars"
 msgstr ""
 
-#: ckanext/canada/templates/internal/package/resource_edit.html:15
-#: ckanext/canada/templates/public/package/activity.html:15
+#: ckanext/canada/templates/internal/package/read_base.html:10
+msgid "Dataset"
+msgstr ""
+
+#: ckanext/canada/templates/internal/package/read_base.html:15
+#: ckanext/canada/templates/public/organization/activity_stream.html:4
+#: ckanext/canada/templates/public/user/activity_stream.html:12
+msgid "Activity Stream"
+msgstr ""
+
+#: ckanext/canada/templates/internal/package/resource_edit.html:12
 msgid "Go back"
 msgstr ""
 
-#: ckanext/canada/templates/internal/package/resource_edit_base.html:14
-msgid "DataStore"
+#: ckanext/canada/templates/internal/package/wet_datatable.html:11
+#: ckanext/canada/templates/public/package/snippets/resource_item.html:59
+msgid "Preview"
 msgstr ""
 
-#: ckanext/canada/templates/internal/package/wet_datatable.html:2
-#: ckanext/canada/templates/public/package/snippets/resource_item.html:44
-msgid "Preview"
+#: ckanext/canada/templates/internal/package/wet_datatable.html:17
+msgid "Select"
+msgstr ""
+
+#: ckanext/canada/templates/internal/package/wet_datatable.html:77
+msgid "Edit in Excel"
 msgstr ""
 
 #: ckanext/canada/templates/internal/package/snippets/stages.html:21
@@ -661,9 +1436,8 @@ msgid "Add Asset Metadata"
 msgstr ""
 
 #: ckanext/canada/templates/internal/package/snippets/stages.html:23
-#, fuzzy
 msgid "Add Dataset Metadata"
-msgstr "Add record"
+msgstr ""
 
 #: ckanext/canada/templates/internal/package/snippets/stages.html:33
 msgid "Add Resource or Related Item"
@@ -677,42 +1451,75 @@ msgstr ""
 msgid "Add data"
 msgstr ""
 
+#: ckanext/canada/templates/internal/package/snippets/view_form.html:8
+msgid "Title (English)"
+msgstr ""
+
+#: ckanext/canada/templates/internal/package/snippets/view_form.html:9
+msgid "Title (French)"
+msgstr ""
+
+#: ckanext/canada/templates/internal/package/snippets/view_form.html:10
+msgid "Description (English)"
+msgstr ""
+
+#: ckanext/canada/templates/internal/package/snippets/view_form.html:11
+msgid "Description (French)"
+msgstr ""
+
 #: ckanext/canada/templates/internal/recombinant/create_pd_record.html:3
 #: ckanext/canada/templates/internal/recombinant/create_pd_record.html:4
-#: ckanext/canada/templates/internal/recombinant/create_pd_record.html:12
+#: ckanext/canada/templates/internal/recombinant/create_pd_record.html:11
 msgid "Create Record"
 msgstr ""
 
-#: ckanext/canada/templates/internal/recombinant/create_pd_record.html:22
-#: ckanext/canada/templates/internal/recombinant/update_pd_record.html:22
+#: ckanext/canada/templates/internal/recombinant/create_pd_record.html:21
+#: ckanext/canada/templates/internal/recombinant/update_pd_record.html:21
 #: ckanext/canada/templates/internal/scheming/snippets/errors.html:6
-#: ckanext/canada/templates/public/macros/form.html:308
 msgid "The form contains invalid entries:"
 msgstr ""
 
-#: ckanext/canada/templates/internal/recombinant/create_pd_record.html:51
-#: ckanext/canada/templates/internal/recombinant/update_pd_record.html:54
+#: ckanext/canada/templates/internal/recombinant/create_pd_record.html:50
+#: ckanext/canada/templates/internal/recombinant/update_pd_record.html:53
 msgid "You may select or deselect multiple entries (Ctrl+Click)."
 msgstr ""
 
-#: ckanext/canada/templates/internal/recombinant/create_pd_record.html:81
-#: ckanext/canada/templates/internal/recombinant/update_pd_record.html:84
+#: ckanext/canada/templates/internal/recombinant/create_pd_record.html:80
+#: ckanext/canada/templates/internal/recombinant/update_pd_record.html:83
 #: ckanext/canada/templates/public/organization/confirm_delete_member.html:12
 #: ckanext/canada/templates/public/package/confirm_delete.html:12
 #: ckanext/canada/templates/public/package/confirm_delete_resource.html:11
 msgid "Cancel"
 msgstr ""
 
-#: ckanext/canada/templates/internal/recombinant/create_pd_record.html:82
-#: ckanext/canada/templates/internal/recombinant/update_pd_record.html:85
+#: ckanext/canada/templates/internal/recombinant/create_pd_record.html:81
+#: ckanext/canada/templates/internal/recombinant/update_pd_record.html:84
+#: ckanext/canada/templates/internal/scheming/package/snippets/package_form.html:68
 msgid "Save"
 msgstr ""
 
-#: ckanext/canada/templates/internal/recombinant/resource_edit.html:19
+#: ckanext/canada/templates/internal/recombinant/resource_edit.html:16
+#, python-format
+msgid ""
+"Informal Requests for ATI Records Previously Released are being sent to "
+"<strong>%s.</strong> Please contact <a href=\"mailto:open-ouvert@tbs-"
+"sct.gc.ca\">open-ouvert@tbs-sct.gc.ca</a> if that address is no longer "
+"valid."
+msgstr ""
+
+#: ckanext/canada/templates/internal/recombinant/resource_edit.html:20
+msgid ""
+"Your organization does not have an Access to Information email on file. "
+"Please contact <a href=\"mailto:open-ouvert@tbs-sct.gc.ca\">open-ouvert"
+"@tbs-sct.gc.ca</a> with the email for your organization's Access to "
+"Information Coordinator."
+msgstr ""
+
+#: ckanext/canada/templates/internal/recombinant/resource_edit.html:33
 msgid "Guide"
 msgstr ""
 
-#: ckanext/canada/templates/internal/recombinant/resource_edit.html:24
+#: ckanext/canada/templates/internal/recombinant/resource_edit.html:38
 #, python-format
 msgid ""
 "For information on how to prepare, maintain and upload templates to the "
@@ -720,13 +1527,9 @@ msgid ""
 "href=\"%(gclink)s\">GCPEDIA</a>"
 msgstr ""
 
-#: ckanext/canada/templates/internal/recombinant/resource_edit.html:54
-msgid "Column visibility"
-msgstr ""
-
 #: ckanext/canada/templates/internal/recombinant/update_pd_record.html:3
 #: ckanext/canada/templates/internal/recombinant/update_pd_record.html:4
-#: ckanext/canada/templates/internal/recombinant/update_pd_record.html:12
+#: ckanext/canada/templates/internal/recombinant/update_pd_record.html:11
 msgid "Update Record"
 msgstr ""
 
@@ -750,18 +1553,63 @@ msgstr ""
 msgid "Invalid choice for"
 msgstr ""
 
+#: ckanext/canada/templates/internal/scheming/form_snippets/imso_approval_select.html:38
+msgid ""
+"<small class='text-info' style='margin-bottom: 15px; display: inline-"
+"block'> <p>Has approval been obtained? By selecting yes, you have ensured"
+" that the following statements are true:</p> <ol> "
+"<li><b>Confidentiality</b> -  The data or information resource is not "
+"subject to confidentiality restrictions, such as Cabinet confidences, "
+"solicitor-client privilege, classified or protected information, advice "
+"or recommendations, third party information, or information obtained in "
+"confidence.</li> <li><b>Authority to Release</b> - The institution has "
+"the mandate, legislative authority or permission from a third party "
+"provider to release the data or information resources under the <a "
+"href='https://open.canada.ca/en/open-government-licence-canada'><u>Open "
+"Government Licence – Canada</u></a>.</li> <li><b>Formats</b> - The data "
+"or information resource is in an open and accessible format that complies"
+" with <a href='https://www.tbs-sct.gc.ca/pol/doc-"
+"eng.aspx?id=23601'><u>the Standard on Web Accessibility</u></a>.</li> "
+"<li><b>Privacy</b> - The data or information resource does not contain "
+"personal information, as defined in section 3 of the <a "
+"href='https://www.priv.gc.ca/en/privacy-topics/privacy-laws-in-canada"
+"/the-privacy-act/'><u>Privacy Act</u></a>, unless the individual to whom "
+"it relates has consented to its release or unless it meets criteria "
+"outlined in section 8(2) of the Privacy Act.</li> <li><b>Official "
+"Languages</b> - The data or information resource is available in both "
+"official languages and conforms to the requirements of the <a href='https"
+"://laws-lois.justice.gc.ca/eng/acts/O-3.01/'><u>Official Languages "
+"Act</u></a>.</li> <li><b>Security</b> - The data or information resource "
+"does not increase security risks to the institution, to other "
+"institutions, or to the government as a whole and conforms to the "
+"requirements of the <a href='https://www.tbs-sct.gc.ca/pol/doc-"
+"eng.aspx?id=16578'><u>Policy on Government Security</u></a> and its "
+"related instruments.</li> <li><b>Other - Legal / Regulatory / Policy / "
+"Contractual</b> - The release of data or other information resource "
+"complies with all other relevant legal, regulatory, contractual, and "
+"policy requirements (e.g., it is confirmed that there are no relevant "
+"legal, contractual, or third party, policy restrictions or "
+"limitations).</li> </ol> </small>"
+msgstr ""
+
+#: ckanext/canada/templates/internal/scheming/form_snippets/repeating_subfields.html:8
+#: ckanext/canada/templates/public/macros/canada_read.html:151
+msgid "Remove"
+msgstr ""
+
+#: ckanext/canada/templates/internal/scheming/form_snippets/repeating_subfields.html:17
+msgid "Add"
+msgstr ""
+
 #: ckanext/canada/templates/internal/scheming/form_snippets/upload_only.html:7
-#: ckanext/canada/templates/public/macros/form.html:413
 msgid "http://example.com/my-image.jpg"
 msgstr ""
 
 #: ckanext/canada/templates/internal/scheming/form_snippets/upload_only.html:8
-#: ckanext/canada/templates/public/macros/form.html:414
 msgid "Image URL"
 msgstr ""
 
 #: ckanext/canada/templates/internal/scheming/form_snippets/upload_only.html:9
-#: ckanext/canada/templates/public/macros/form.html:415
 msgid "Image"
 msgstr ""
 
@@ -783,120 +1631,90 @@ msgid ""
 "used to describe the record type and the placement in the registry"
 msgstr ""
 
-#: ckanext/canada/templates/internal/scheming/package/snippets/package_form.html:35
+#: ckanext/canada/templates/internal/scheming/package/snippets/package_form.html:34
+#: ckanext/canada/templates/public/snippets/package_item.html:14
+msgid "Suggested Dataset"
+msgstr ""
+
+#: ckanext/canada/templates/internal/scheming/package/snippets/package_form.html:37
 msgid ""
 "The portal to which the metadata record belongs (Open Data or Open "
 "Information)"
 msgstr ""
 
-#: ckanext/canada/templates/internal/scheming/package/snippets/package_form.html:38
+#: ckanext/canada/templates/internal/scheming/package/snippets/package_form.html:40
 msgid "Metadata Scheme"
 msgstr ""
 
-#: ckanext/canada/templates/internal/scheming/package/snippets/package_form.html:41
+#: ckanext/canada/templates/internal/scheming/package/snippets/package_form.html:43
 msgid "The name of the metadata scheme used (including profile name)"
 msgstr ""
 
-#: ckanext/canada/templates/internal/scheming/package/snippets/package_form.html:44
+#: ckanext/canada/templates/internal/scheming/package/snippets/package_form.html:46
 msgid "Metadata Scheme Version"
 msgstr ""
 
-#: ckanext/canada/templates/internal/scheming/package/snippets/package_form.html:47
+#: ckanext/canada/templates/internal/scheming/package/snippets/package_form.html:49
 msgid "The version of the metadata scheme used (version of the profile)"
 msgstr ""
 
-#: ckanext/canada/templates/internal/scheming/package/snippets/package_form.html:50
+#: ckanext/canada/templates/internal/scheming/package/snippets/package_form.html:52
 msgid "Metadata Record Identifier"
 msgstr ""
 
-#: ckanext/canada/templates/internal/scheming/package/snippets/package_form.html:53
+#: ckanext/canada/templates/internal/scheming/package/snippets/package_form.html:55
 msgid ""
 "A unique phrase or string which identifies the metadata record within the"
 " Open Government Portal"
 msgstr ""
 
-#: ckanext/canada/templates/internal/scheming/package/snippets/resource_form.html:17
+#: ckanext/canada/templates/internal/scheming/package/snippets/resource_form.html:19
 msgid ""
 "You can add either a Resource or a Related Item per session, i.e. not "
 "both:"
 msgstr ""
 
-#: ckanext/canada/templates/internal/scheming/package/snippets/resource_form.html:24
+#: ckanext/canada/templates/internal/scheming/package/snippets/resource_form.html:26
 msgid "Metadata Fields for Resources Only (Not for Related Items)"
 msgstr ""
 
-#: ckanext/canada/templates/internal/scheming/package/snippets/resource_form.html:40
+#: ckanext/canada/templates/internal/scheming/package/snippets/resource_form.html:42
 msgid "Metadata Fields for Related Items Only"
 msgstr ""
 
-#: ckanext/canada/templates/internal/scheming/package/snippets/resource_form.html:51
+#: ckanext/canada/templates/internal/scheming/package/snippets/resource_form.html:53
 msgid "Use the Download URL field above to link to the related record."
+msgstr ""
+
+#: ckanext/canada/templates/internal/scheming/package/snippets/resource_form.html:62
+msgid "Data Validation"
 msgstr ""
 
 #: ckanext/canada/templates/internal/scheming/snippets/errors.html:5
 msgid "Errors in form"
 msgstr ""
 
-#: ckanext/canada/templates/internal/snippets/dataset_facets.html:3
-msgid "Open Dialogue"
+#: ckanext/canada/templates/internal/scheming/snippets/form_field.html:4
+msgid "Are you sure you want to delete this status?"
 msgstr ""
 
-#: ckanext/canada/templates/internal/snippets/dataset_facets.html:14
-#: ckanext/canada/templates/public/macros/canada_read.html:193
-msgid "Proactive Disclosure"
+#: ckanext/canada/templates/internal/scheming/snippets/form_field.html:21
+#: ckanext/canada/templates/internal/user/edit_user_form.html:46
+#: ckanext/canada/templates/public/organization/member_new.html:66
+#: ckanext/canada/templates/public/scheming/package/read.html:26
+#: ckanext/canada/templates/public/user/edit_user_form.html:49
+msgid "Delete"
+msgstr ""
+
+#: ckanext/canada/templates/internal/snippets/dataset_facets.html:24
+#: ckanext/canada/templates/public/macros/canada_read.html:190
+#: ckanext/canada/templates/public/snippets/package_item.html:106
+msgid "Request sent to data owner – awaiting response"
 msgstr ""
 
 #: ckanext/canada/templates/internal/snippets/home_breadcrumb_item.html:2
-msgid "Home"
+msgid "Registry Home"
 msgstr ""
-
-#: ckanext/canada/templates/internal/snippets/menu.html:20
-#: ckanext/canada/templates/internal/snippets/menu.html:22
-#, fuzzy
-msgid "Search Data"
-msgstr "Search Records"
-
-#: ckanext/canada/templates/internal/snippets/menu.html:49
-#: ckanext/canada/templates/internal/snippets/menu.html:51
-#: ckanext/canada/templates/internal/snippets/user.html:60
-#: ckanext/canada/templates/public/snippets/user.html:59
-msgid "Register"
-msgstr ""
-
-#: ckanext/canada/templates/internal/snippets/menu.html:58
-msgid "My Account"
-msgstr ""
-
-#: ckanext/canada/templates/internal/snippets/menu.html:60
-#: ckanext/canada/templates/internal/snippets/user.html:33
-#: ckanext/canada/templates/public/snippets/user.html:32
-msgid "Dashboard"
-msgstr ""
-
-#: ckanext/canada/templates/internal/snippets/menu.html:61
-#: ckanext/canada/templates/public/user/edit_base.html:5
-msgid "My Profile"
-msgstr ""
-
-#: ckanext/canada/templates/internal/snippets/menu.html:62
-#: ckanext/canada/templates/internal/snippets/user.html:40
-#: ckanext/canada/templates/internal/snippets/user.html:42
-#: ckanext/canada/templates/public/snippets/user.html:39
-#: ckanext/canada/templates/public/snippets/user.html:41
-msgid "Edit Profile"
-msgstr ""
-
-#: ckanext/canada/templates/internal/snippets/menu.html:65
-#, fuzzy
-msgid "Publish Datasets"
-msgstr "Edit records"
-
-#: ckanext/canada/templates/internal/snippets/menu.html:71
-#: ckanext/canada/templates/internal/snippets/menu.html:73
-#: ckanext/canada/templates/public/user/dashboard.html:54
-#: ckanext/canada/templates/public/user/dashboard.html:60
-msgid "Add Dataset"
-msgstr "Add Record"
 
 #: ckanext/canada/templates/internal/snippets/publish_facet.html:22
 msgid "Published"
@@ -911,7 +1729,7 @@ msgid "Pending"
 msgstr ""
 
 #: ckanext/canada/templates/internal/snippets/publish_facet.html:40
-#: ckanext/canada/templates/public/package/read.html:57
+#: ckanext/canada/templates/public/package/read.html:12
 msgid "Draft"
 msgstr ""
 
@@ -926,64 +1744,133 @@ msgid "Social"
 msgstr ""
 
 #: ckanext/canada/templates/internal/snippets/user.html:12
-#: ckanext/canada/templates/public/snippets/user.html:11
-msgid "Signed in as"
-msgstr ""
-
-#: ckanext/canada/templates/internal/snippets/user.html:13
-#: ckanext/canada/templates/public/snippets/user.html:12
-msgid "View profile"
-msgstr ""
-
-#: ckanext/canada/templates/internal/snippets/user.html:22
-#: ckanext/canada/templates/public/snippets/user.html:21
+#: ckanext/canada/templates/public/snippets/user.html:18
 msgid "Sysadmin settings"
 msgstr ""
 
-#: ckanext/canada/templates/internal/snippets/user.html:24
-#: ckanext/canada/templates/public/snippets/user.html:23
-msgid "Admin"
+#: ckanext/canada/templates/internal/snippets/user.html:21
+#: ckanext/canada/templates/public/snippets/user.html:27
+#: ckanext/canada/templates/public/user/dashboard.html:6
+#: ckanext/canada/templates/public/user/dashboard_datasets.html:9
+#: ckanext/canada/templates/public/user/dashboard_groups.html:9
+#: ckanext/canada/templates/public/user/dashboard_organizations.html:9
+msgid "Dashboard"
 msgstr ""
 
-#: ckanext/canada/templates/internal/snippets/user.html:30
-#: ckanext/canada/templates/public/snippets/user.html:29
-#, python-format
-msgid "Dashboard (%(num)d new item)"
-msgid_plural "Dashboard (%(num)d new items)"
-msgstr[0] ""
-msgstr[1] ""
+#: ckanext/canada/templates/internal/snippets/user.html:26
+#: ckanext/canada/templates/internal/snippets/user.html:28
+#: ckanext/canada/templates/public/snippets/user.html:34
+#: ckanext/canada/templates/public/snippets/user.html:36
+msgid "Edit Profile"
+msgstr ""
 
-#: ckanext/canada/templates/internal/snippets/user.html:34
-#: ckanext/canada/templates/public/snippets/user.html:33
-msgid ": "
+#: ckanext/canada/templates/internal/snippets/user.html:35
+msgid "Help using the Open Government Registry"
+msgstr ""
+
+#: ckanext/canada/templates/internal/snippets/user.html:36
+#: ckanext/canada/templates/internal/snippets/user.html:39
+msgid "Get Help"
 msgstr ""
 
 #: ckanext/canada/templates/internal/snippets/activities/changed_datastore.html:6
-#, fuzzy
 msgid "{actor} updated the record {datastore} {datastore_detail}"
-msgstr "{actor} updated the record {dataset}"
+msgstr ""
 
 #: ckanext/canada/templates/internal/snippets/activities/deleted_datastore.html:6
-#, fuzzy
 msgid "{actor} deleted the record {datastore} {datastore_detail}"
-msgstr "{actor} deleted the record {dataset}"
+msgstr ""
 
-#: ckanext/canada/templates/internal/user/list.html:6
+#: ckanext/canada/templates/internal/user/edit_user_form.html:7
+#: ckanext/canada/templates/public/user/edit_user_form.html:7
+msgid "Change details"
+msgstr ""
+
+#: ckanext/canada/templates/internal/user/edit_user_form.html:10
+msgid "Full name"
+msgstr ""
+
+#: ckanext/canada/templates/internal/user/edit_user_form.html:10
+msgid "eg. Joe Bloggs"
+msgstr ""
+
+#: ckanext/canada/templates/internal/user/edit_user_form.html:12
+#: ckanext/canada/templates/public/user/edit_user_form.html:10
+msgid "eg. joe@example.com"
+msgstr ""
+
+#: ckanext/canada/templates/internal/user/edit_user_form.html:14
+#: ckanext/canada/templates/public/organization/about.html:4
+#: ckanext/canada/templates/public/page.html:39
+#: ckanext/canada/templates/public/user/edit_user_form.html:12
+msgid "About"
+msgstr ""
+
+#: ckanext/canada/templates/internal/user/edit_user_form.html:14
+#: ckanext/canada/templates/public/user/edit_user_form.html:12
+msgid "A little information about yourself"
+msgstr ""
+
+#: ckanext/canada/templates/internal/user/edit_user_form.html:17
+#: ckanext/canada/templates/public/user/edit_user_form.html:15
+msgid "Subscribe to notification emails"
+msgstr ""
+
+#: ckanext/canada/templates/internal/user/edit_user_form.html:25
+#: ckanext/canada/templates/public/user/edit_user_form.html:38
+msgid "Change password"
+msgstr ""
+
+#: ckanext/canada/templates/internal/user/edit_user_form.html:28
+#: ckanext/canada/templates/public/user/edit_user_form.html:30
+msgid "Sysadmin Password"
+msgstr ""
+
+#: ckanext/canada/templates/internal/user/edit_user_form.html:28
+msgid "Old Password"
+msgstr ""
+
+#: ckanext/canada/templates/internal/user/edit_user_form.html:36
+#: ckanext/canada/templates/internal/user/new_user_form.html:22
+#: ckanext/canada/templates/internal/user/snippets/login_form.html:17
+#: ckanext/canada/templates/public/user/edit_user_form.html:30
+#: ckanext/canada/templates/public/user/snippets/login_form.html:15
+msgid "Password"
+msgstr ""
+
+#: ckanext/canada/templates/internal/user/edit_user_form.html:38
+#: ckanext/canada/templates/public/user/edit_user_form.html:41
+msgid "Confirm Password"
+msgstr ""
+
+#: ckanext/canada/templates/internal/user/edit_user_form.html:46
+#: ckanext/canada/templates/public/user/edit_user_form.html:49
+msgid "Are you sure you want to delete this User?"
+msgstr ""
+
+#: ckanext/canada/templates/internal/user/edit_user_form.html:54
+#: ckanext/canada/templates/public/user/edit_user_form.html:57
+msgid "Update Profile"
+msgstr ""
+
+#: ckanext/canada/templates/internal/user/list.html:26
 msgid "Create an Account"
 msgstr ""
 
-#: ckanext/canada/templates/internal/user/list.html:13
-#: ckanext/canada/templates/public/snippets/geomap_dynamic.html:18
-#: ckanext/canada/templates/public/snippets/geomap_static.html:15
-msgid "Name"
-msgstr ""
-
-#: ckanext/canada/templates/internal/user/list.html:27
+#: ckanext/canada/templates/internal/user/list.html:52
 msgid "Sysadmin"
 msgstr ""
 
-#: ckanext/canada/templates/internal/user/list.html:27
+#: ckanext/canada/templates/internal/user/list.html:52
 msgid "Member"
+msgstr ""
+
+#: ckanext/canada/templates/internal/user/list.html:78
+msgid "Search and view users."
+msgstr ""
+
+#: ckanext/canada/templates/internal/user/list.html:80
+msgid "Search and manage users."
 msgstr ""
 
 #: ckanext/canada/templates/internal/user/login.html:9
@@ -1056,7 +1943,7 @@ msgstr ""
 #: ckanext/canada/templates/internal/user/new_user_form.html:8
 msgid ""
 "Use only lowercase letters (a-z) and numbers (0-9) with optional hyphens "
-"(-) and underscores (_)"
+"(-) and underscores (_). Example: joe-bloggs"
 msgstr ""
 
 #: ckanext/canada/templates/internal/user/new_user_form.html:10
@@ -1064,33 +1951,28 @@ msgid "Full Name"
 msgstr ""
 
 #: ckanext/canada/templates/internal/user/new_user_form.html:11
-#: ckanext/canada/templates/public/user/edit_user_form.html:13
-#: ckanext/canada/templates/public/user/read_base.html:49
-msgid "Email"
+msgid "Example: Joe Bloggs"
 msgstr ""
 
 #: ckanext/canada/templates/internal/user/new_user_form.html:14
-msgid "Treasury Board Secretariat"
+msgid "Example: joe.bloggs@tbs-sct.gc.ca"
 msgstr ""
 
-#: ckanext/canada/templates/internal/user/new_user_form.html:15
+#: ckanext/canada/templates/internal/user/new_user_form.html:19
 msgid "Phone Number"
 msgstr ""
 
-#: ckanext/canada/templates/internal/user/new_user_form.html:16
-#: ckanext/canada/templates/internal/user/snippets/login_form.html:15
-#: ckanext/canada/templates/public/user/edit_user_form.html:32
-#: ckanext/canada/templates/public/user/snippets/login_form.html:15
-msgid "Password"
+#: ckanext/canada/templates/internal/user/new_user_form.html:20
+msgid "Example: 000 000 0000"
 msgstr ""
 
-#: ckanext/canada/templates/internal/user/new_user_form.html:17
+#: ckanext/canada/templates/internal/user/new_user_form.html:23
 msgid "Confirm"
 msgstr ""
 
-#: ckanext/canada/templates/internal/user/new_user_form.html:20
+#: ckanext/canada/templates/internal/user/new_user_form.html:26
 msgid ""
-" <h2>Terms and Conditions for the Open Government Registry</h2> "
+"<h2>Terms and Conditions for the Open Government Registry</h2> "
 "<p><em>Privacy Statement</em></p> <p>The Government of Canada is "
 "committed to providing measures that respect and value your privacy and "
 "security. This page summarizes the privacy policy and practices that "
@@ -1171,209 +2053,284 @@ msgid ""
 "conditions of use may be amended from time to time</li></ol> <p>By "
 "selecting “I agree” you indicate that you accept these terms and "
 "conditions of use.</p> <p>If you select “I do not agree” you will not "
-"have access to the Registry.</p> "
+"have access to the Registry.</p>"
 msgstr ""
 
-#: ckanext/canada/templates/internal/user/new_user_form.html:65
+#: ckanext/canada/templates/internal/user/new_user_form.html:71
 msgid "I agree"
 msgstr ""
 
-#: ckanext/canada/templates/internal/user/new_user_form.html:66
+#: ckanext/canada/templates/internal/user/new_user_form.html:72
 msgid "I do not agree"
 msgstr ""
 
 #: ckanext/canada/templates/internal/user/perform_reset.html:8
+#, python-format
 msgid ""
 "1. Passwords must contain characters from at least 3 of the following 4 "
-"classes: * Upper Case Letters: A, B, C, … Z * Lower Case Letters: a, b, "
-"c, … z * Westernised Arabic Numerals: 0, 1, 2, … 9 * Special characters: "
-"({}[],.<>;:'\"?/|\\`~!@#$%^&*()_-+=). 2. No accented characters are "
-"permitted. 3. All passwords must be at least 8 characters long. "
+"classes:\n"
+"    * Upper Case Letters: A, B, C, … Z\n"
+"    * Lower Case Letters: a, b, c, … z\n"
+"    * Westernised Arabic Numerals: 0, 1, 2, … 9\n"
+"    * Special characters: ({}[],.<>;:'\"?/|\\`~!@#$%%^&*()_-+=).\n"
+"2. No accented characters are permitted.\n"
+"3. All passwords must be at least 8 characters long.\n"
 msgstr ""
 
 #: ckanext/canada/templates/internal/user/read_base.html:12
 msgid "Edit User"
 msgstr ""
 
-#: ckanext/canada/templates/internal/user/reports.html:4
-msgid "Reports"
+#: ckanext/canada/templates/internal/user/snippets/user_search.html:2
+#: ckanext/canada/templates/internal/user/snippets/user_search.html:5
+#: ckanext/canada/templates/internal/user/snippets/user_search.html:6
+msgid "Search Users"
 msgstr ""
 
-#: ckanext/canada/templates/internal/user/reports.html:6
-msgid "No reports are available"
+#: ckanext/canada/templates/internal/xloader/resource_data.html:8
+msgid "Are you sure you want to delete this DataStore table and Data Dictionary?"
 msgstr ""
 
-#: ckanext/canada/templates/obd/package/search.html:3
-msgid "Open by Default Portal"
+#: ckanext/canada/templates/internal/xloader/resource_data.html:9
+msgid "Delete DataStore table"
 msgstr ""
 
-#: ckanext/canada/templates/obd/package/snippets/socialmedia.html:4
-#: ckanext/canada/templates/public/package/snippets/socialmedia.html:4
-msgid "Have your say"
+#: ckanext/canada/templates/internal/xloader/resource_data.html:18
+msgid "Upload to DataStore"
 msgstr ""
 
-#: ckanext/canada/templates/obd/package/snippets/socialmedia.html:8
-#: ckanext/canada/templates/public/package/snippets/socialmedia.html:8
-#, fuzzy
-msgid "Rate this dataset"
-msgstr "Create record"
-
-#: ckanext/canada/templates/obd/package/snippets/socialmedia.html:9
-#: ckanext/canada/templates/public/package/snippets/socialmedia.html:9
-msgid "Comment(s)"
-msgstr ""
-
-#: ckanext/canada/templates/obd/snippets/search_form.html:4
-msgid ""
-"Open by Default provides access to working documents used by the "
-"Government of Canada. Most of this information is unpublished. Documents "
-"may be in draft form, and are generally available in the language in "
-"which they were created. Unless otherwise indicated, information is made "
-"available under the <a href=\"http://open.canada.ca/en/open-government-"
-"licence-canada\">Open Government Licence</a>. To obtain documents in the "
-"official language of your choice, or in an accessible format, please <a "
-"href=\"http://open.canada.ca/en/forms/contact-us\">contact us</a>."
-msgstr ""
-
-#: ckanext/canada/templates/public/base.html:12
+#: ckanext/canada/templates/public/base.html:14
+#: ckanext/canada/templates/public/datatables/datatables_view.html:30
+#: ckanext/canada/templates/public/package/read_base.html:21
 msgid "Treasury Board of Canada Secretariat"
 msgstr ""
 
-#: ckanext/canada/templates/public/error_document_template.html:6
-msgid "We couldn't find that Web page"
-msgstr ""
-
-#: ckanext/canada/templates/public/error_document_template.html:8
-msgid "We encountered an error"
-msgstr ""
-
-#: ckanext/canada/templates/public/error_document_template.html:18
-msgid ""
-"We encountered an error and are unable to serve your request. Please try "
-"again in short time or contact <a href=\"mailto:open-ouvert@tbs-sct.gc.ca"
-"\">open-ouvert@tbs-sct.gc.ca</a> if you need immediate assistance or if "
-"this issue persists. Note that your login expires after 1 hour of "
-"inactivity."
-msgstr ""
-
-#: ckanext/canada/templates/public/footer.html:11
-msgid "/en/forms/contact-us"
-msgstr ""
-
-#: ckanext/canada/templates/public/footer.html:11
-msgid "Contact Open Government"
-msgstr ""
-
-#: ckanext/canada/templates/public/footer.html:12
-msgid "https://www.canada.ca/en/government/dept.html"
-msgstr ""
-
-#: ckanext/canada/templates/public/footer.html:12
-msgid "Departments and agencies"
-msgstr ""
-
-#: ckanext/canada/templates/public/footer.html:13
-msgid "https://www.canada.ca/en/government/publicservice.html"
-msgstr ""
-
-#: ckanext/canada/templates/public/footer.html:13
-msgid "Public service and military"
-msgstr ""
-
-#: ckanext/canada/templates/public/footer.html:14
-msgid "https://www.canada.ca/en/news.html"
-msgstr ""
-
-#: ckanext/canada/templates/public/footer.html:14
-msgid "News"
-msgstr ""
-
-#: ckanext/canada/templates/public/footer.html:15
-msgid "https://www.canada.ca/en/government/system/laws.html"
-msgstr ""
-
-#: ckanext/canada/templates/public/footer.html:15
-msgid "Treaties, laws and regulations"
-msgstr ""
-
-#: ckanext/canada/templates/public/footer.html:16
-msgid "https://www.canada.ca/en/transparency/reporting.html"
-msgstr ""
-
-#: ckanext/canada/templates/public/footer.html:16
-msgid "Government-wide reporting"
-msgstr ""
-
-#: ckanext/canada/templates/public/footer.html:17
-msgid "http://pm.gc.ca/eng"
-msgstr ""
-
-#: ckanext/canada/templates/public/footer.html:17
-msgid "Prime Minister"
-msgstr ""
-
-#: ckanext/canada/templates/public/footer.html:18
-msgid "https://www.canada.ca/en/government/system.html"
-msgstr ""
-
-#: ckanext/canada/templates/public/footer.html:18
-msgid "About government"
-msgstr ""
-
-#: ckanext/canada/templates/public/footer.html:19
-msgid "https://open.canada.ca/en"
-msgstr ""
-
-#: ckanext/canada/templates/public/footer.html:19
-#, fuzzy
-msgid "Open government"
-msgstr "Open Government E-mail"
-
-#: ckanext/canada/templates/public/footer.html:33
-msgid "https://www.canada.ca/en/social.html"
-msgstr ""
-
-#: ckanext/canada/templates/public/footer.html:33
-msgid "Social media"
-msgstr ""
-
-#: ckanext/canada/templates/public/footer.html:34
-msgid "https://www.canada.ca/en/mobile.html"
-msgstr ""
-
-#: ckanext/canada/templates/public/footer.html:34
-msgid "Mobile applications"
-msgstr ""
-
-#: ckanext/canada/templates/public/footer.html:35
-msgid "https://www.canada.ca/en/government/about.html"
-msgstr ""
-
-#: ckanext/canada/templates/public/footer.html:35
-msgid "About Canada.ca"
-msgstr ""
-
-#: ckanext/canada/templates/public/footer.html:36
-msgid "https://www.canada.ca/en/transparency/terms.html"
-msgstr ""
-
-#: ckanext/canada/templates/public/footer.html:36
-msgid "Terms and conditions"
-msgstr ""
-
-#: ckanext/canada/templates/public/footer.html:37
-msgid "https://www.canada.ca/en/transparency/privacy.html"
-msgstr ""
-
-#: ckanext/canada/templates/public/footer.html:37
-msgid "Privacy"
-msgstr ""
-
-#: ckanext/canada/templates/public/footer.html:43
+#: ckanext/canada/templates/public/footer.html:3
 msgid "About this site"
 msgstr ""
 
+#: ckanext/canada/templates/public/footer.html:8
+#: ckanext/canada/templates/public/snippets/wet-boew/brand.html:4
+msgid "Government of Canada"
+msgstr ""
+
+#: ckanext/canada/templates/public/footer.html:10
+msgid "https://www.canada.ca/en/contact.html"
+msgstr ""
+
+#: ckanext/canada/templates/public/footer.html:10
+msgid "All Contacts"
+msgstr ""
+
+#: ckanext/canada/templates/public/footer.html:11
+msgid "https://www.canada.ca/en/government/dept.html"
+msgstr ""
+
+#: ckanext/canada/templates/public/footer.html:11
+msgid "Departments and agencies"
+msgstr ""
+
+#: ckanext/canada/templates/public/footer.html:12
+msgid "https://www.canada.ca/en/government/system.html"
+msgstr ""
+
+#: ckanext/canada/templates/public/footer.html:12
+msgid "About government"
+msgstr ""
+
+#: ckanext/canada/templates/public/footer.html:14
+msgid "Themes and topics"
+msgstr ""
+
+#: ckanext/canada/templates/public/footer.html:16
+msgid "https://www.canada.ca/en/services/jobs.html"
+msgstr ""
+
+#: ckanext/canada/templates/public/footer.html:16
+msgid "Jobs"
+msgstr ""
+
+#: ckanext/canada/templates/public/footer.html:17
+msgid "https://www.canada.ca/en/services/immigration-citizenship.html"
+msgstr ""
+
+#: ckanext/canada/templates/public/footer.html:17
+msgid "Immigration and citizenship"
+msgstr ""
+
+#: ckanext/canada/templates/public/footer.html:18
+msgid "https://travel.gc.ca/"
+msgstr ""
+
+#: ckanext/canada/templates/public/footer.html:18
+msgid "Travel and tourism"
+msgstr ""
+
+#: ckanext/canada/templates/public/footer.html:19
+msgid "https://www.canada.ca/en/services/business.html"
+msgstr ""
+
+#: ckanext/canada/templates/public/footer.html:19
+msgid "Business"
+msgstr ""
+
+#: ckanext/canada/templates/public/footer.html:20
+msgid "https://www.canada.ca/en/services/benefits.html"
+msgstr ""
+
+#: ckanext/canada/templates/public/footer.html:20
+msgid "Benefits"
+msgstr ""
+
+#: ckanext/canada/templates/public/footer.html:21
+msgid "https://www.canada.ca/en/services/health.html"
+msgstr ""
+
+#: ckanext/canada/templates/public/footer.html:21
+msgid "Health"
+msgstr ""
+
+#: ckanext/canada/templates/public/footer.html:22
+msgid "https://www.canada.ca/en/services/taxes.html"
+msgstr ""
+
+#: ckanext/canada/templates/public/footer.html:22
+msgid "Taxes"
+msgstr ""
+
+#: ckanext/canada/templates/public/footer.html:23
+msgid "https://www.canada.ca/en/services/environment.html"
+msgstr ""
+
+#: ckanext/canada/templates/public/footer.html:23
+msgid "Environment and natural resources"
+msgstr ""
+
+#: ckanext/canada/templates/public/footer.html:24
+msgid "https://www.canada.ca/en/services/defence.html"
+msgstr ""
+
+#: ckanext/canada/templates/public/footer.html:24
+msgid "National security and defence"
+msgstr ""
+
+#: ckanext/canada/templates/public/footer.html:25
+msgid "https://www.canada.ca/en/services/culture.html"
+msgstr ""
+
+#: ckanext/canada/templates/public/footer.html:25
+msgid "Culture, history and sport"
+msgstr ""
+
+#: ckanext/canada/templates/public/footer.html:26
+msgid "https://www.canada.ca/en/services/policing.html"
+msgstr ""
+
+#: ckanext/canada/templates/public/footer.html:26
+msgid "Policing, justice and emergencies"
+msgstr ""
+
+#: ckanext/canada/templates/public/footer.html:27
+msgid "https://www.canada.ca/en/services/transport.html"
+msgstr ""
+
+#: ckanext/canada/templates/public/footer.html:27
+msgid "Transport and infrastructure"
+msgstr ""
+
+#: ckanext/canada/templates/public/footer.html:28
+msgid "https://international.gc.ca/world-monde/index.aspx?lang=eng"
+msgstr ""
+
+#: ckanext/canada/templates/public/footer.html:28
+msgid "Canada and the world"
+msgstr ""
+
+#: ckanext/canada/templates/public/footer.html:29
+msgid "https://www.canada.ca/en/services/finance.html"
+msgstr ""
+
+#: ckanext/canada/templates/public/footer.html:29
+msgid "Money and finance"
+msgstr ""
+
+#: ckanext/canada/templates/public/footer.html:30
+msgid "https://www.canada.ca/en/services/science.html"
+msgstr ""
+
+#: ckanext/canada/templates/public/footer.html:30
+msgid "Science and innovation"
+msgstr ""
+
+#: ckanext/canada/templates/public/footer.html:31
+msgid "https://www.canada.ca/en/services/indigenous-peoples.html"
+msgstr ""
+
+#: ckanext/canada/templates/public/footer.html:31
+msgid "Indigenous peoples"
+msgstr ""
+
+#: ckanext/canada/templates/public/footer.html:32
+msgid "https://www.canada.ca/en/services/veterans.html"
+msgstr ""
+
+#: ckanext/canada/templates/public/footer.html:32
+msgid "Veterans and military"
+msgstr ""
+
+#: ckanext/canada/templates/public/footer.html:33
+msgid "https://www.canada.ca/en/services/youth.html"
+msgstr ""
+
+#: ckanext/canada/templates/public/footer.html:33
+msgid "Youth"
+msgstr ""
+
+#: ckanext/canada/templates/public/footer.html:44
+msgid "Government of Canada Corporate"
+msgstr ""
+
 #: ckanext/canada/templates/public/footer.html:46
+msgid "https://www.canada.ca/en/social.html"
+msgstr ""
+
+#: ckanext/canada/templates/public/footer.html:46
+msgid "Social media"
+msgstr ""
+
+#: ckanext/canada/templates/public/footer.html:47
+msgid "https://www.canada.ca/en/mobile.html"
+msgstr ""
+
+#: ckanext/canada/templates/public/footer.html:47
+msgid "Mobile applications"
+msgstr ""
+
+#: ckanext/canada/templates/public/footer.html:48
+msgid "https://www.canada.ca/en/government/about.html"
+msgstr ""
+
+#: ckanext/canada/templates/public/footer.html:48
+msgid "About Canada.ca"
+msgstr ""
+
+#: ckanext/canada/templates/public/footer.html:49
+msgid "https://www.canada.ca/en/transparency/terms.html"
+msgstr ""
+
+#: ckanext/canada/templates/public/footer.html:49
+msgid "Terms and conditions"
+msgstr ""
+
+#: ckanext/canada/templates/public/footer.html:50
+msgid "https://www.canada.ca/en/transparency/privacy.html"
+msgstr ""
+
+#: ckanext/canada/templates/public/footer.html:50
+msgid "Privacy"
+msgstr ""
+
+#: ckanext/canada/templates/public/footer.html:56
 msgid "Symbol of the Government of Canada"
 msgstr ""
 
@@ -1383,12 +2340,6 @@ msgstr ""
 
 #: ckanext/canada/templates/public/header.html:21
 msgid "Search Canada.ca"
-msgstr ""
-
-#: ckanext/canada/templates/public/organization/about.html:4
-#: ckanext/canada/templates/public/page.html:60
-#: ckanext/canada/templates/public/user/edit_user_form.html:15
-msgid "About"
 msgstr ""
 
 #: ckanext/canada/templates/public/activity_streams/activity_stream_items.html:19
@@ -1418,7 +2369,7 @@ msgstr ""
 #: ckanext/canada/templates/public/admin/config.html:33
 #, python-format
 msgid ""
-" <p><strong>Site Title:</strong> This is the title of this CKAN instance "
+"<p><strong>Site Title:</strong> This is the title of this CKAN instance "
 "It appears in various places throughout CKAN.</p> "
 "<p><strong>Style:</strong> Choose from a list of simple variations of the"
 " main colour scheme to get a very quick custom theme working.</p> "
@@ -1433,7 +2384,7 @@ msgid ""
 " templates more fully we recommend <a href=\"%(docs_url)s\" "
 "target=\"_blank\">reading the documentation</a>.</p> "
 "<p><strong>Homepage:</strong> This is for choosing a predefined layout "
-"for the modules that appear on your homepage.</p> "
+"for the modules that appear on your homepage.</p>"
 msgstr ""
 
 #: ckanext/canada/templates/public/admin/index.html:18
@@ -1443,10 +2394,10 @@ msgstr ""
 #: ckanext/canada/templates/public/admin/index.html:24
 #, python-format
 msgid ""
-" <p>As a sysadmin user you have full control over this CKAN instance. "
+"<p>As a sysadmin user you have full control over this CKAN instance. "
 "Proceed with care!</p> <p>For guidance on using sysadmin features, see "
-"the CKAN <a href=\"%(docs_url)s\" target=\"_blank\">sysadmin "
-"guide</a></p> "
+"the CKAN  <a href=\"%(docs_url)s\" target=\"_blank\">sysadmin "
+"guide</a></p>"
 msgstr ""
 
 #: ckanext/canada/templates/public/admin/trash.html:26
@@ -1454,77 +2405,23 @@ msgid "Purge"
 msgstr ""
 
 #: ckanext/canada/templates/public/admin/trash.html:42
-msgid " <p>Purge deleted datasets forever and irreversibly.</p> "
+msgid "<p>Purge deleted datasets forever and irreversibly.</p>"
 msgstr " <p>Purge deleted records forever and irreversibly.</p> "
-
-#: ckanext/canada/templates/public/fgpv_vpgf/index.html:2
-#: ckanext/canada/templates/public/fgpv_vpgf/index.html:5
-#: ckanext/canada/templates/public/fgpv_vpgf/index.html:10
-msgid "Open Maps Data Viewer"
-msgstr ""
-
-#: ckanext/canada/templates/public/fgpv_vpgf/index.html:9
-msgid "Search Open Maps"
-msgstr ""
-
-#: ckanext/canada/templates/public/fgpv_vpgf/index.html:41
-#: ckanext/canada/templates/public/snippets/search_form.html:53
-msgid "List Cart Items"
-msgstr ""
-
-#: ckanext/canada/templates/public/fgpv_vpgf/index.html:76
-msgid ""
-"This interactive map requires JavaScript. To view this content please "
-"enable JavaScript in your browser or download a browser that supports it."
-msgstr ""
 
 #: ckanext/canada/templates/public/macros/canada_read.html:36
 msgid "Keyword"
 msgstr ""
 
-#: ckanext/canada/templates/public/macros/canada_read.html:151
-#: ckanext/canada/templates/public/macros/form.html:248
-msgid "Remove"
-msgstr ""
-
-#: ckanext/canada/templates/public/macros/canada_read.html:217
+#: ckanext/canada/templates/public/macros/canada_read.html:226
 msgid "entry"
 msgstr ""
 
-#: ckanext/canada/templates/public/macros/canada_read.html:217
+#: ckanext/canada/templates/public/macros/canada_read.html:226
 msgid "entries"
 msgstr ""
 
-#: ckanext/canada/templates/public/macros/form.html:122
-msgid ""
-"You can use <a href='http://daringfireball.net/projects/markdown/syntax' "
-"target='_blank'>Markdown formatting</a> here"
-msgstr ""
-
-#: ckanext/canada/templates/public/macros/form.html:279
-msgid "Custom"
-msgstr ""
-
-#: ckanext/canada/templates/public/macros/form.html:281
-msgid "(required)"
-msgstr ""
-
-#: ckanext/canada/templates/public/macros/form.html:418
-msgid " Or "
-msgstr ""
-
-#: ckanext/canada/templates/public/macros/form.html:426
-msgid "Clear Upload"
-msgstr ""
-
-#: ckanext/canada/templates/public/organization/activity_stream.html:4
-#: ckanext/canada/templates/public/package/activity.html:3
-#: ckanext/canada/templates/public/user/activity_stream.html:12
-msgid "Activity Stream"
-msgstr ""
-
 #: ckanext/canada/templates/public/organization/activity_stream.html:11
-#: ckanext/canada/templates/public/package/read_base.html:179
+#: ckanext/canada/templates/public/package/read_base.html:159
 msgid "Atom Feed"
 msgstr ""
 
@@ -1550,16 +2447,61 @@ msgid "How about creating one?"
 msgstr ""
 
 #: ckanext/canada/templates/public/organization/member_new.html:11
+msgid "Back to all members"
+msgstr ""
+
+#: ckanext/canada/templates/public/organization/member_new.html:13
+msgid "Edit Member"
+msgstr ""
+
+#: ckanext/canada/templates/public/organization/member_new.html:13
+#: ckanext/canada/templates/public/organization/member_new.html:72
+msgid "Add Member"
+msgstr ""
+
+#: ckanext/canada/templates/public/organization/member_new.html:21
+msgid "Existing User"
+msgstr ""
+
+#: ckanext/canada/templates/public/organization/member_new.html:24
+msgid "If you wish to add an existing user, search for their username below."
+msgstr ""
+
+#: ckanext/canada/templates/public/organization/member_new.html:43
+msgid "or"
+msgstr ""
+
+#: ckanext/canada/templates/public/organization/member_new.html:49
+msgid "New User"
+msgstr ""
+
+#: ckanext/canada/templates/public/organization/member_new.html:52
+msgid "If you wish to invite a new user, enter their email address."
+msgstr ""
+
+#: ckanext/canada/templates/public/organization/member_new.html:55
+msgid "Email address"
+msgstr ""
+
+#: ckanext/canada/templates/public/organization/member_new.html:66
+msgid "Are you sure you want to delete this member?"
+msgstr ""
+
+#: ckanext/canada/templates/public/organization/member_new.html:68
+msgid "Update Member"
+msgstr ""
+
+#: ckanext/canada/templates/public/organization/member_new.html:85
 msgid "What are roles?"
 msgstr ""
 
-#: ckanext/canada/templates/public/organization/member_new.html:14
+#: ckanext/canada/templates/public/organization/member_new.html:88
 msgid ""
-" <p><strong>Admin:</strong> Can add/edit and delete datasets, as well as "
+"<p><strong>Admin:</strong> Can add/edit and delete datasets, as well as "
 "manage organization members.</p> <p><strong>Editor:</strong> Can add and "
 "edit datasets, but not manage organization members.</p> "
 "<p><strong>Member:</strong> Can view the organization's private datasets,"
-" but not add new datasets.</p> "
+" but not add new datasets.</p>"
 msgstr ""
 " <p><strong>Admin:</strong> Can add/edit and delete records, as well as "
 "manage organization members.</p> <p><strong>Editor:</strong> Can add and "
@@ -1567,8 +2509,8 @@ msgstr ""
 "<p><strong>Member:</strong> Can view the organization's private records, "
 "but not add new records.</p> "
 
-#: ckanext/canada/templates/public/organization/members.html:3
-#: ckanext/canada/templates/public/snippets/organization.html:32
+#: ckanext/canada/templates/public/organization/members.html:18
+#: ckanext/canada/templates/public/snippets/organization.html:30
 msgid "Members"
 msgstr ""
 
@@ -1582,9 +2524,9 @@ msgstr ""
 
 #: ckanext/canada/templates/public/organization/snippets/helper.html:4
 msgid ""
-" CKAN Organizations are used to create, manage and publish collections of"
-" datasets. Users can have different roles within an Organization, "
-"depending on their level of authorisation to create, edit and publish. "
+"CKAN Organizations are used to create, manage and publish collections of "
+"datasets. Users can have different roles within an Organization, "
+"depending on their level of authorisation to create, edit and publish."
 msgstr ""
 " Organizations act like publishing agents for records (Example: Health "
 "Canada). This means records can be published by, and belong to an "
@@ -1593,9 +2535,8 @@ msgstr ""
 "organizations."
 
 #: ckanext/canada/templates/public/organization/snippets/organization_item.html:6
-#, fuzzy
 msgid "This organization has no description"
-msgstr "This record has no description"
+msgstr ""
 
 #: ckanext/canada/templates/public/organization/snippets/organization_item.html:12
 msgid "{num} Dataset"
@@ -1613,9 +2554,8 @@ msgstr "What are records?"
 
 #: ckanext/canada/templates/public/package/base_form_page.html:10
 msgid ""
-" Datasets are simply used to group related pieces of data. These can then"
-" be found under a single url with a description and licensing "
-"information. "
+"Datasets are simply used to group related pieces of data. These can then "
+"be found under a single url with a description and licensing information."
 msgstr ""
 
 #: ckanext/canada/templates/public/package/confirm_delete.html:9
@@ -1635,10 +2575,6 @@ msgstr ""
 msgid "Open.canada.ca"
 msgstr ""
 
-#: ckanext/canada/templates/public/package/deleted.html:10
-msgid "Created On"
-msgstr ""
-
 #: ckanext/canada/templates/public/package/deleted.html:12
 #: ckanext/canada/templates/public/snippets/sort_by.html:22
 msgid "Last Modified"
@@ -1648,50 +2584,37 @@ msgstr ""
 msgid "Return to Index"
 msgstr ""
 
-#: ckanext/canada/templates/public/package/read.html:19
-msgid "History"
-msgstr ""
-
-#: ckanext/canada/templates/public/package/read.html:23
-msgid "Undelete"
-msgstr ""
-
-#: ckanext/canada/templates/public/package/read.html:34
-msgid ""
-"This dataset has been deleted and is no longer accessible to non-admin "
-"users"
-msgstr ""
-
-#: ckanext/canada/templates/public/package/read.html:42
-#, python-format
-msgid ""
-" You're currently viewing an old version of this dataset. Some resources "
-"may no longer exist or the dataset may not display correctly. To see the "
-"current version, click <a href=\"%(url)s\">here</a>. "
-msgstr ""
-
-#: ckanext/canada/templates/public/package/read.html:60
-#: ckanext/canada/templates/public/package/read.html:66
-#: ckanext/canada/templates/public/package/snippets/resource_item.html:24
-#: ckanext/canada/templates/public/scheming/display_snippets/fluent_tags.html:17
-#: ckanext/canada/templates/public/snippets/package_item.html:29
-#: ckanext/canada/templates/public/snippets/package_item.html:43
+#: ckanext/canada/templates/public/package/read.html:15
+#: ckanext/canada/templates/public/package/read.html:41
+#: ckanext/canada/templates/public/package/snippets/resource_item.html:12
+#: ckanext/canada/templates/public/scheming/display_snippets/fluent_tags.html:9
+#: ckanext/canada/templates/public/snippets/package_item.html:38
+#: ckanext/canada/templates/public/snippets/package_item.html:57
 msgid ""
 "This third party metadata element has been translated using an automated "
-"translation tool. To report any discrepancies please contact "
-"open-ouvert@tbs-sct.gc.ca"
+"translation tool.  To report any discrepancies please contact open-ouvert"
+"@tbs-sct.gc.ca"
 msgstr ""
 
-#: ckanext/canada/templates/public/package/read.html:72
-#: ckanext/canada/templates/public/snippets/search_form.html:54
+#: ckanext/canada/templates/public/package/read.html:21
+#: ckanext/canada/templates/public/package/resource_read.html:8
+#, python-format
+msgid ""
+"You're currently viewing an old version of this dataset. Some resources "
+"may no longer exist or the dataset may not display correctly. To see the "
+"current version, click <a href=\"%(url)s\">here</a>."
+msgstr ""
+
+#: ckanext/canada/templates/public/package/read.html:51
+#: ckanext/canada/templates/public/snippets/search_form.html:39
 msgid "View on Map"
 msgstr ""
 
-#: ckanext/canada/templates/public/package/read.html:82
-msgid "Made available by the Government of Alberta"
+#: ckanext/canada/templates/public/package/read.html:62
+msgid "Made available by the "
 msgstr ""
 
-#: ckanext/canada/templates/public/package/read.html:84
+#: ckanext/canada/templates/public/package/read.html:64
 msgid ""
 "<p>These resources are not under the control of the Government of Canada "
 "and the link is provided solely for the convenience of our website "
@@ -1710,156 +2633,124 @@ msgid ""
 "information.</p>"
 msgstr ""
 
-#: ckanext/canada/templates/public/package/read.html:125
-#: ckanext/canada/templates/public/snippets/package_item.html:58
+#: ckanext/canada/templates/public/package/read.html:102
+#: ckanext/canada/templates/public/snippets/package_item.html:72
 msgid "Issued by"
 msgstr ""
 
-#: ckanext/canada/templates/public/package/read.html:142
-msgid "Licence"
-msgstr ""
-
-#: ckanext/canada/templates/public/package/read.html:166
-#: ckanext/canada/templates/public/package/snippets/all_resources_list.html:27
+#: ckanext/canada/templates/public/package/read.html:138
 msgid "Related Items"
 msgstr ""
 
-#: ckanext/canada/templates/public/package/read.html:183
+#: ckanext/canada/templates/public/package/read.html:155
 msgid "Geographic Information"
 msgstr ""
 
-#: ckanext/canada/templates/public/package/read.html:216
+#: ckanext/canada/templates/public/package/read.html:190
 msgid "Contact Information"
 msgstr ""
 
-#: ckanext/canada/templates/public/package/read.html:218
+#: ckanext/canada/templates/public/package/read.html:192
 msgid "Delivery Point"
 msgstr ""
 
-#: ckanext/canada/templates/public/package/read.html:221
+#: ckanext/canada/templates/public/package/read.html:195
 msgid "City"
 msgstr ""
 
-#: ckanext/canada/templates/public/package/read.html:224
+#: ckanext/canada/templates/public/package/read.html:198
 msgid "Administrative Area"
 msgstr ""
 
-#: ckanext/canada/templates/public/package/read.html:227
+#: ckanext/canada/templates/public/package/read.html:201
 msgid "Postal Code"
 msgstr ""
 
-#: ckanext/canada/templates/public/package/read.html:230
+#: ckanext/canada/templates/public/package/read.html:204
 msgid "Country"
 msgstr ""
 
-#: ckanext/canada/templates/public/package/read.html:233
+#: ckanext/canada/templates/public/package/read.html:207
 msgid "Electronic Mail Address"
 msgstr ""
 
-#: ckanext/canada/templates/public/package/read_base.html:19
+#: ckanext/canada/templates/public/package/read.html:236
+msgid "Similar records"
+msgstr ""
+
+#: ckanext/canada/templates/public/package/read_base.html:29
 msgid "{record_title} - Open Data Portal - Open Data"
 msgstr ""
 
-#: ckanext/canada/templates/public/package/read_base.html:35
+#: ckanext/canada/templates/public/package/read_base.html:43
+#: ckanext/canada/templates/public/scheming/package/resource_read.html:7
 msgid "Additional Information"
 msgstr ""
 
-#: ckanext/canada/templates/public/package/read_base.html:93
+#: ckanext/canada/templates/public/package/read_base.html:72
 msgid "Temporal Coverage"
 msgstr ""
 
-#: ckanext/canada/templates/public/package/read_base.html:96
+#: ckanext/canada/templates/public/package/read_base.html:75
 msgid "to"
 msgstr ""
 
-#: ckanext/canada/templates/public/package/read_base.html:98
+#: ckanext/canada/templates/public/package/read_base.html:77
 msgid "to undefined"
 msgstr ""
 
-#: ckanext/canada/templates/public/package/read_base.html:100
+#: ckanext/canada/templates/public/package/read_base.html:79
 msgid "undefined to"
 msgstr ""
 
-#: ckanext/canada/templates/public/package/read_base.html:129
+#: ckanext/canada/templates/public/package/read_base.html:109
 msgid "About this Record"
 msgstr ""
 
-#: ckanext/canada/templates/public/package/read_base.html:134
+#: ckanext/canada/templates/public/package/read_base.html:114
 msgid "Record Released"
 msgstr ""
 
-#: ckanext/canada/templates/public/package/read_base.html:138
+#: ckanext/canada/templates/public/package/read_base.html:118
 msgid "Record Modified"
 msgstr ""
 
-#: ckanext/canada/templates/public/package/read_base.html:142
+#: ckanext/canada/templates/public/package/read_base.html:122
 msgid "Record ID"
 msgstr ""
 
-#: ckanext/canada/templates/public/package/read_base.html:146
+#: ckanext/canada/templates/public/package/read_base.html:126
 msgid "Metadata"
 msgstr ""
 
-#: ckanext/canada/templates/public/package/read_base.html:150
+#: ckanext/canada/templates/public/package/read_base.html:130
 msgid "Link to JSON format"
 msgstr ""
 
-#: ckanext/canada/templates/public/package/read_base.html:156
+#: ckanext/canada/templates/public/package/read_base.html:136
 msgid "DCAT (JSON-LD)"
 msgstr ""
 
-#: ckanext/canada/templates/public/package/read_base.html:163
+#: ckanext/canada/templates/public/package/read_base.html:143
 msgid "DCAT (XML)"
 msgstr ""
 
-#: ckanext/canada/templates/public/package/read_base.html:171
+#: ckanext/canada/templates/public/package/read_base.html:151
 msgid "FGP Metadata"
 msgstr ""
 
-#: ckanext/canada/templates/public/package/read_base.html:173
+#: ckanext/canada/templates/public/package/read_base.html:153
 msgid "HNAP ISO:19115 Metadata Record"
 msgstr ""
 
-#: ckanext/canada/templates/public/package/resource_read.html:32
-msgid "Download"
+#: ckanext/canada/templates/public/package/resource_read.html:58
+msgid "Data Dictionary"
 msgstr ""
 
-#: ckanext/canada/templates/public/package/resource_read.html:36
-#, fuzzy
-msgid "From the asset abstract"
-msgstr "From the record abstract"
-
-#: ckanext/canada/templates/public/package/resource_read.html:39
-#, python-format
-msgid "Source: <a href=\"%(url)s\">%(dataset)s</a>"
-msgstr ""
-
-#: ckanext/canada/templates/public/package/resource_views.html:4
-msgid "View"
-msgstr ""
-
-#: ckanext/canada/templates/public/package/resource_views.html:10
-msgid "New view"
-msgstr ""
-
-#: ckanext/canada/templates/public/package/resource_views.html:28
-msgid "This resource has no views"
-msgstr ""
-
-#: ckanext/canada/templates/public/package/resources.html:4
-#: ckanext/canada/templates/public/package/snippets/resources.html:9
-#: ckanext/canada/templates/public/package/snippets/resources_list.html:7
+#: ckanext/canada/templates/public/package/resources.html:5
+#: ckanext/canada/templates/public/package/snippets/resources.html:7
 msgid "Resources"
 msgstr ""
-
-#: ckanext/canada/templates/public/package/resources.html:12
-#, fuzzy, python-format
-msgid ""
-" <p class=\"empty\">This asset has no resources, <a href=\"%(url)s\">why "
-"not add some?</a></p> "
-msgstr ""
-" <p class=\"empty\">This record has no data, <a href=\"%(url)s\">why not "
-"add some?</a></p> "
 
 #: ckanext/canada/templates/public/package/search.html:15
 msgid "Search Open Government"
@@ -1910,23 +2801,16 @@ msgstr ""
 msgid "State"
 msgstr ""
 
-#: ckanext/canada/templates/public/package/snippets/all_resources_list.html:34
-msgid "Relationship"
+#: ckanext/canada/templates/public/package/snippets/data_api_button.html:7
+msgid "Loading..."
 msgstr ""
 
-#: ckanext/canada/templates/public/package/snippets/all_resources_list.html:36
-#: ckanext/canada/templates/public/package/snippets/resources_list.html:18
-msgid "Language"
+#: ckanext/canada/templates/public/package/snippets/data_api_button.html:9
+msgid "Data API"
 msgstr ""
 
-#: ckanext/canada/templates/public/package/snippets/all_resources_list.html:37
-#: ckanext/canada/templates/public/package/snippets/resources_list.html:19
-msgid "Links"
-msgstr ""
-
-#: ckanext/canada/templates/public/package/snippets/all_resources_list.html:78
-#: ckanext/canada/templates/public/package/snippets/resource_item.html:41
-msgid "Access"
+#: ckanext/canada/templates/public/package/snippets/resource_form.html:4
+msgid "URL"
 msgstr ""
 
 #: ckanext/canada/templates/public/package/snippets/resource_form.html:4
@@ -1937,22 +2821,29 @@ msgstr ""
 msgid "Save & add another"
 msgstr ""
 
-#: ckanext/canada/templates/public/package/snippets/resource_item.html:40
-msgid "Resource"
+#: ckanext/canada/templates/public/package/snippets/resource_item.html:50
+msgid "Explore"
 msgstr ""
 
-#: ckanext/canada/templates/public/package/snippets/resources_list.html:15
-msgid "Resource Name"
+#: ckanext/canada/templates/public/package/snippets/resource_item.html:62
+msgid "More information"
 msgstr ""
 
-#: ckanext/canada/templates/public/package/snippets/resources_list.html:34
-#, fuzzy, python-format
-msgid ""
-" <p class=\"empty\">This dataset has no data, <a href=\"%(url)s\">why not"
-" add some?</a> "
+#: ckanext/canada/templates/public/package/snippets/resource_item.html:71
+msgid "Download"
 msgstr ""
-" <p class=\"empty\">This record has no data, <a href=\"%(url)s\">why not "
-"add some?</a></p> "
+
+#: ckanext/canada/templates/public/package/snippets/resource_item.html:74
+msgid "Go to resource"
+msgstr ""
+
+#: ckanext/canada/templates/public/package/snippets/resource_item.html:80
+msgid "Edit resource"
+msgstr ""
+
+#: ckanext/canada/templates/public/package/snippets/resource_item.html:82
+msgid "Views"
+msgstr ""
 
 #: ckanext/canada/templates/public/package/snippets/schemaorg.html:5
 msgid "Government of Canada Open Government Portal"
@@ -1962,6 +2853,10 @@ msgstr ""
 msgid ""
 "This catalog contains metadata records describing open datasets available"
 " from the Government of Canada"
+msgstr ""
+
+#: ckanext/canada/templates/public/package/snippets/schemaorg.html:23
+msgid "http://open.canada.ca"
 msgstr ""
 
 #: ckanext/canada/templates/public/package/snippets/schemaorg.html:26
@@ -1978,12 +2873,24 @@ msgid ""
 "Government Licence - Canada"
 msgstr ""
 
-#: ckanext/canada/templates/public/snippets/activity_item.html:3
-msgid "New activity item"
+#: ckanext/canada/templates/public/package/snippets/socialmedia.html:4
+msgid "Have your say"
 msgstr ""
 
-#: ckanext/canada/templates/public/snippets/dataset_facets.html:58
-msgid "Viewable on Map"
+#: ckanext/canada/templates/public/package/snippets/socialmedia.html:8
+msgid "Rate this dataset"
+msgstr ""
+
+#: ckanext/canada/templates/public/package/snippets/socialmedia.html:9
+msgid "Provide feedback"
+msgstr ""
+
+#: ckanext/canada/templates/public/scheming/display_snippets/email_with_parameters.html:7
+msgid "The following is a question related to the record {url} found on {site}"
+msgstr ""
+
+#: ckanext/canada/templates/public/snippets/activity_item.html:3
+msgid "New activity item"
 msgstr ""
 
 #: ckanext/canada/templates/public/snippets/facet_list.html:49
@@ -2004,32 +2911,29 @@ msgstr ""
 msgid "Spatial Feature"
 msgstr ""
 
-#: ckanext/canada/templates/public/snippets/organization.html:25
+#: ckanext/canada/templates/public/snippets/menu.html:2
+msgid "Topics menu"
+msgstr ""
+
+#: ckanext/canada/templates/public/snippets/organization.html:23
 msgid "read more"
 msgstr ""
 
-#: ckanext/canada/templates/public/snippets/package_item.html:11
-msgid "Provincial"
-msgstr ""
-
-#: ckanext/canada/templates/public/snippets/package_item.html:13
-msgid "Federal"
-msgstr ""
-
-#: ckanext/canada/templates/public/snippets/package_item.html:47
+#: ckanext/canada/templates/public/snippets/package_item.html:61
 msgid "This dataset has no description"
 msgstr "This record has no description"
 
-#: ckanext/canada/templates/public/snippets/package_item.html:66
+#: ckanext/canada/templates/public/snippets/package_item.html:91
+#: ckanext/canada/templates/public/snippets/package_item.html:104
+msgid "Status"
+msgstr ""
+
+#: ckanext/canada/templates/public/snippets/package_item.html:99
+msgid "Date"
+msgstr ""
+
+#: ckanext/canada/templates/public/snippets/package_item.html:112
 msgid "Resource Formats"
-msgstr ""
-
-#: ckanext/canada/templates/public/snippets/package_item.html:80
-msgid "Add to Map Cart"
-msgstr ""
-
-#: ckanext/canada/templates/public/snippets/package_item.html:83
-msgid "Remove from Map Cart"
 msgstr ""
 
 #: ckanext/canada/templates/public/snippets/search_form.html:6
@@ -2046,21 +2950,6 @@ msgstr ""
 
 #: ckanext/canada/templates/public/snippets/search_form.html:19
 msgid ""
-"Search for geospatial data or click <b>Add to cart</b> to select multiple"
-" datasets to plot on a single map.<br/>Click <b>View on Map</b> to "
-"visualize and overlay the datasets using a geospatial viewer"
-msgstr ""
-
-#: ckanext/canada/templates/public/snippets/search_form.html:24
-msgid ""
-"We will be completing technical work on open.canada.ca, which may create "
-"content and performance issues. If you experience any issues please "
-"notify <a href=\"mailto:open-ouvert@tbs-sct.gc.ca\">open-ouvert@tbs-"
-"sct.gc.ca</a>"
-msgstr ""
-
-#: ckanext/canada/templates/public/snippets/search_form.html:34
-msgid ""
 "Please note that the Open Information Portal contains a sample of "
 "government of Canada publications and information resources. For more "
 "resources, please visit <a href=\"http://publications.gc.ca/\">Government"
@@ -2068,69 +2957,25 @@ msgid ""
 "lac.gc.ca/\">Library and Archives Canada</a>."
 msgstr ""
 
-#: ckanext/canada/templates/public/snippets/search_form.html:45
-#, fuzzy
+#: ckanext/canada/templates/public/snippets/search_form.html:30
 msgid "/en/suggested-datasets"
-msgstr "No edited records"
+msgstr ""
 
-#: ckanext/canada/templates/public/snippets/search_form.html:45
-#, fuzzy
+#: ckanext/canada/templates/public/snippets/search_form.html:30
 msgid "Suggest a Dataset"
-msgstr "Total records"
+msgstr ""
 
-#: ckanext/canada/templates/public/snippets/search_form.html:52
+#: ckanext/canada/templates/public/snippets/search_form.html:37
 msgid "Tally of Cart Items"
 msgstr ""
 
-#: ckanext/canada/templates/public/snippets/search_form.html:55
+#: ckanext/canada/templates/public/snippets/search_form.html:38
+msgid "List Cart Items"
+msgstr ""
+
+#: ckanext/canada/templates/public/snippets/search_form.html:40
 msgid "Empty Cart"
 msgstr ""
-
-#: ckanext/canada/templates/public/snippets/search_result_text.html:15
-msgid "{number} dataset found"
-msgid_plural "{number} datasets found"
-msgstr[0] "{number} record found"
-msgstr[1] "{number} records found"
-
-#: ckanext/canada/templates/public/snippets/search_result_text.html:16
-msgid "No datasets found"
-msgstr "No records found"
-
-#: ckanext/canada/templates/public/snippets/search_result_text.html:21
-msgid "{number} group found for \"{query}\""
-msgid_plural "{number} groups found for \"{query}\""
-msgstr[0] ""
-msgstr[1] ""
-
-#: ckanext/canada/templates/public/snippets/search_result_text.html:22
-msgid "No groups found for \"{query}\""
-msgstr ""
-
-#: ckanext/canada/templates/public/snippets/search_result_text.html:23
-msgid "{number} group found"
-msgid_plural "{number} groups found"
-msgstr[0] ""
-msgstr[1] ""
-
-#: ckanext/canada/templates/public/snippets/search_result_text.html:24
-msgid "No groups found"
-msgstr ""
-
-#: ckanext/canada/templates/public/snippets/search_result_text.html:27
-msgid "{number} organization found for \"{query}\""
-msgid_plural "{number} organizations found for \"{query}\""
-msgstr[0] ""
-msgstr[1] ""
-
-#: ckanext/canada/templates/public/snippets/search_result_text.html:28
-msgid "No organizations found for \"{query}\""
-msgstr ""
-
-#: ckanext/canada/templates/public/snippets/search_result_text.html:29
-msgid "{number} organization found"
-msgid_plural "{number} organizations found"
-msgstr[0] ""
-msgstr[1] ""
 
 #: ckanext/canada/templates/public/snippets/sort_by.html:12
 msgid "Order by"
@@ -2140,8 +2985,16 @@ msgstr ""
 msgid "Relevance"
 msgstr ""
 
-#: ckanext/canada/templates/public/snippets/wet-boew/brand.html:4
-msgid "Government of Canada"
+#: ckanext/canada/templates/public/snippets/user.html:28
+msgid ": "
+msgstr ""
+
+#: ckanext/canada/templates/public/snippets/user.html:54
+msgid "Register"
+msgstr ""
+
+#: ckanext/canada/templates/public/snippets/activities/deleted_datastore.html:6
+msgid "{actor} {activity_type} for resource \"{resource}\""
 msgstr ""
 
 #: ckanext/canada/templates/public/snippets/wet-boew/languagetoggle.html:2
@@ -2156,63 +3009,63 @@ msgstr ""
 msgid "Skip to site information"
 msgstr ""
 
-#: ckanext/canada/templates/public/user/dashboard.html:12
-#: ckanext/canada/templates/public/user/dashboard.html:67
+#: ckanext/canada/templates/public/user/dashboard.html:6
+#: ckanext/canada/templates/public/user/dashboard.html:16
+#: ckanext/canada/templates/public/user/dashboard.html:71
 msgid "News feed"
 msgstr ""
 
-#: ckanext/canada/templates/public/user/dashboard.html:15
+#: ckanext/canada/templates/public/user/dashboard.html:19
 msgid "Activity from items that you follow"
 msgstr ""
 
-#: ckanext/canada/templates/public/user/dashboard.html:35
-#: ckanext/canada/templates/public/user/dashboard.html:68
+#: ckanext/canada/templates/public/user/dashboard.html:39
+#: ckanext/canada/templates/public/user/dashboard.html:72
 msgid "My Datasets"
 msgstr "My Records"
 
-#: ckanext/canada/templates/public/user/dashboard.html:48
-#, fuzzy
+#: ckanext/canada/templates/public/user/dashboard.html:52
 msgid "You do not have any datasets"
-msgstr "You haven't created any records."
-
-#: ckanext/canada/templates/public/user/edit_user_form.html:7
-msgid "Change your details"
 msgstr ""
 
-#: ckanext/canada/templates/public/user/edit_user_form.html:11
-msgid "Full name"
+#: ckanext/canada/templates/public/user/dashboard.html:58
+#: ckanext/canada/templates/public/user/dashboard.html:64
+msgid "Add Dataset"
+msgstr "Add Record"
+
+#: ckanext/canada/templates/public/user/dashboard_datasets.html:5
+#: ckanext/canada/templates/public/user/dashboard_datasets.html:9
+msgid "My Records"
 msgstr ""
 
-#: ckanext/canada/templates/public/user/edit_user_form.html:11
-msgid "eg. Joe Bloggs"
+#: ckanext/canada/templates/public/user/dashboard_groups.html:5
+#: ckanext/canada/templates/public/user/dashboard_groups.html:9
+msgid "My Groups"
 msgstr ""
 
-#: ckanext/canada/templates/public/user/edit_user_form.html:13
-msgid "eg. joe@example.com"
+#: ckanext/canada/templates/public/user/dashboard_organizations.html:5
+#: ckanext/canada/templates/public/user/dashboard_organizations.html:9
+msgid "My Organizations"
 msgstr ""
 
-#: ckanext/canada/templates/public/user/edit_user_form.html:15
-msgid "A little information about yourself"
+#: ckanext/canada/templates/public/user/edit.html:8
+msgid "Manage"
 msgstr ""
 
-#: ckanext/canada/templates/public/user/edit_user_form.html:18
-msgid "Subscribe to notification emails"
+#: ckanext/canada/templates/public/user/edit_base.html:5
+msgid "My Profile"
 msgstr ""
 
-#: ckanext/canada/templates/public/user/edit_user_form.html:26
-msgid "Change your password"
+#: ckanext/canada/templates/public/user/edit_user_form.html:24
+msgid "Profile picture"
 msgstr ""
 
-#: ckanext/canada/templates/public/user/edit_user_form.html:29
-msgid "Old Password"
+#: ckanext/canada/templates/public/user/edit_user_form.html:24
+msgid "Profile picture URL"
 msgstr ""
 
-#: ckanext/canada/templates/public/user/edit_user_form.html:34
-msgid "Confirm Password"
-msgstr ""
-
-#: ckanext/canada/templates/public/user/edit_user_form.html:38
-msgid "Update Profile"
+#: ckanext/canada/templates/public/user/edit_user_form.html:39
+msgid "New Password"
 msgstr ""
 
 #: ckanext/canada/templates/public/user/login.html:18
@@ -2239,38 +3092,44 @@ msgstr ""
 msgid "Details"
 msgstr ""
 
-#: ckanext/canada/templates/public/user/read_base.html:22
+#: ckanext/canada/templates/public/user/read_base.html:17
 msgid "Followers"
 msgstr ""
 
-#: ckanext/canada/templates/public/user/read_base.html:26
+#: ckanext/canada/templates/public/user/read_base.html:21
 msgid "Edits"
 msgstr ""
 
-#: ckanext/canada/templates/public/user/read_base.html:40
+#: ckanext/canada/templates/public/user/read_base.html:35
 msgid "Open ID"
 msgstr ""
 
-#: ckanext/canada/templates/public/user/read_base.html:50
-#: ckanext/canada/templates/public/user/read_base.html:61
+#: ckanext/canada/templates/public/user/read_base.html:46
+#: ckanext/canada/templates/public/user/read_base.html:57
 msgid "This means only you can see this"
 msgstr ""
 
-#: ckanext/canada/templates/public/user/read_base.html:50
-#: ckanext/canada/templates/public/user/read_base.html:61
+#: ckanext/canada/templates/public/user/read_base.html:46
+#: ckanext/canada/templates/public/user/read_base.html:57
 msgid "Private"
 msgstr ""
 
-#: ckanext/canada/templates/public/user/read_base.html:55
+#: ckanext/canada/templates/public/user/read_base.html:51
 msgid "Member Since"
 msgstr ""
 
-#: ckanext/canada/templates/public/user/read_base.html:60
+#: ckanext/canada/templates/public/user/read_base.html:56
+#: ckanext/canada/templates/public/user/read_base.html:64
 msgid "API Key"
 msgstr ""
 
-#: ckanext/canada/templates/public/user/request_reset.html:16
-msgid "Request Reset"
+#: ckanext/canada/templates/public/user/read_base.html:59
+msgid "Show API Key"
+msgstr ""
+
+#: ckanext/canada/templates/public/user/read_base.html:65
+#: ckanext/canada/templates/public/user/read_base.html:71
+msgid "Close"
 msgstr ""
 
 #: ckanext/canada/templates/public/user/snippets/followee_dropdown.html:13
@@ -3366,12 +4225,6 @@ msgstr "Keep me logged in"
 #~ msgid "Homepage"
 #~ msgstr ""
 
-#~ msgid ""
-#~ "Cannot purge package %s as associated"
-#~ " revision %s includes non-deleted "
-#~ "packages %s"
-#~ msgstr ""
-
 #~ msgid "Problem purging revision %s: %s"
 #~ msgstr ""
 
@@ -3528,19 +4381,6 @@ msgstr "Keep me logged in"
 #~ msgid "This site is currently off-line. Database is not initialised."
 #~ msgstr ""
 
-#~ msgid ""
-#~ "Please <a href=\"{link}\">update your "
-#~ "profile</a> and add your email address"
-#~ " and your full name. {site} uses "
-#~ "your email address if you need to"
-#~ " reset your password."
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Please <a href=\"%s\">update your profile</a>"
-#~ " and add your email address. "
-#~ msgstr ""
-
 #~ msgid "%s uses your email address if you need to reset your password."
 #~ msgstr ""
 
@@ -3551,22 +4391,13 @@ msgstr "Keep me logged in"
 #~ msgstr ""
 
 #~ msgid "Dataset not found"
-#~ msgstr "Record not found"
+#~ msgstr ""
 
 #~ msgid "Unauthorized to read package %s"
 #~ msgstr ""
 
 #~ msgid "Invalid revision format: %r"
 #~ msgstr ""
-
-#~ msgid ""
-#~ "Viewing {package_type} datasets in {format}"
-#~ " format is not supported (template "
-#~ "file {file} not found)."
-#~ msgstr ""
-#~ "Viewing {package_type} records in {format} "
-#~ "format is not supported (template file"
-#~ " {file} not found)."
 
 #~ msgid "CKAN Dataset Revision History"
 #~ msgstr "CKAN Record Revision History"
@@ -3760,12 +4591,6 @@ msgstr "Keep me logged in"
 #~ msgid "Bad Captcha. Please try again."
 #~ msgstr ""
 
-#~ msgid ""
-#~ "User \"%s\" is now registered but "
-#~ "you are still logged in as \"%s\""
-#~ " from before"
-#~ msgstr ""
-
 #~ msgid "Unauthorized to edit a user."
 #~ msgstr ""
 
@@ -3783,9 +4608,6 @@ msgstr "Keep me logged in"
 
 #~ msgid "Please check your inbox for a reset code."
 #~ msgstr ""
-#~ "Please check your e-mail inbox in "
-#~ "order to confirm your password reset "
-#~ "request."
 
 #~ msgid "Could not send reset link: %s"
 #~ msgstr ""
@@ -3844,13 +4666,6 @@ msgstr "Keep me logged in"
 #~ msgid "{actor} updated their profile"
 #~ msgstr ""
 
-#~ msgid ""
-#~ "{actor} updated the {related_type} "
-#~ "{related_item} of the dataset {dataset}"
-#~ msgstr ""
-#~ "{actor} updated the {related_type} "
-#~ "{related_item} of the record {dataset}"
-
 #~ msgid "{actor} updated the {related_type} {related_item}"
 #~ msgstr ""
 
@@ -3898,11 +4713,6 @@ msgstr "Keep me logged in"
 
 #~ msgid "{actor} started following {group}"
 #~ msgstr ""
-
-#~ msgid ""
-#~ "{actor} added the {related_type} "
-#~ "{related_item} to the dataset {dataset}"
-#~ msgstr "{actor} added the {related_type} {related_item} to the record {dataset}"
 
 #~ msgid "{actor} added the {related_type} {related_item}"
 #~ msgstr ""
@@ -3952,29 +4762,34 @@ msgstr "Keep me logged in"
 #~ msgstr ""
 
 #~ msgid "{mins} minute ago"
-#~ msgid_plural "{mins} minutes ago"
-#~ msgstr[0] ""
-#~ msgstr[1] ""
+#~ msgstr ""
+
+#~ msgid "{mins} minutes ago"
+#~ msgstr ""
 
 #~ msgid "{hours} hour ago"
-#~ msgid_plural "{hours} hours ago"
-#~ msgstr[0] ""
-#~ msgstr[1] ""
+#~ msgstr ""
+
+#~ msgid "{hours} hours ago"
+#~ msgstr ""
 
 #~ msgid "{days} day ago"
-#~ msgid_plural "{days} days ago"
-#~ msgstr[0] ""
-#~ msgstr[1] ""
+#~ msgstr ""
+
+#~ msgid "{days} days ago"
+#~ msgstr ""
 
 #~ msgid "{months} month ago"
-#~ msgid_plural "{months} months ago"
-#~ msgstr[0] ""
-#~ msgstr[1] ""
+#~ msgstr ""
+
+#~ msgid "{months} months ago"
+#~ msgstr ""
 
 #~ msgid "over {years} year ago"
-#~ msgid_plural "over {years} years ago"
-#~ msgstr[0] ""
-#~ msgstr[1] ""
+#~ msgstr ""
+
+#~ msgid "over {years} years ago"
+#~ msgstr ""
 
 #~ msgid "{month} {day}, {year}, {hour:02}:{min:02}"
 #~ msgstr ""
@@ -4034,18 +4849,19 @@ msgstr "Keep me logged in"
 #~ msgstr ""
 
 #~ msgid "Created new dataset."
-#~ msgstr "Created new record."
+#~ msgstr ""
 
 #~ msgid "Edited resources."
 #~ msgstr ""
 
 #~ msgid "Edited settings."
-#~ msgstr ""
+#~ msgstr "Created new record."
 
 #~ msgid "{number} recent view"
-#~ msgid_plural "{number} recent views"
-#~ msgstr[0] ""
-#~ msgstr[1] ""
+#~ msgstr ""
+
+#~ msgid "{number} recent views"
+#~ msgstr ""
 
 #~ msgid "Dear %s,"
 #~ msgstr ""
@@ -4054,25 +4870,6 @@ msgstr "Keep me logged in"
 #~ msgstr ""
 
 #~ msgid "No recipient email address available!"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "You have requested your password on {site_title} to be reset.\n"
-#~ "\n"
-#~ "Please click the following link to confirm this request:\n"
-#~ "\n"
-#~ "   {reset_link}\n"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "You have been invited to {site_title}."
-#~ " A user has already been createdto"
-#~ " you with the username {user_name}. "
-#~ "You can change it later.\n"
-#~ "\n"
-#~ "To accept this invite, please reset your password at:\n"
-#~ "\n"
-#~ "   {reset_link}\n"
 #~ msgstr ""
 
 #~ msgid "Reset your password"
@@ -4103,31 +4900,31 @@ msgstr "Keep me logged in"
 #~ msgstr ""
 
 #~ msgid "Dataset"
-#~ msgstr "Record"
+#~ msgstr ""
 
 #~ msgid "Group"
 #~ msgstr ""
 
 #~ msgid "Could not parse as valid JSON"
-#~ msgstr ""
+#~ msgstr "Record"
 
 #~ msgid "A organization must be supplied"
 #~ msgstr ""
 
 #~ msgid "You cannot remove a dataset from an existing organization"
-#~ msgstr "You cannot remove a record from an existing organization"
+#~ msgstr ""
 
 #~ msgid "Organization does not exist"
 #~ msgstr ""
 
 #~ msgid "You cannot add a dataset to this organization"
-#~ msgstr "You cannot add a record to this organization"
+#~ msgstr "You cannot remove a record from an existing organization"
 
 #~ msgid "Invalid integer"
 #~ msgstr ""
 
 #~ msgid "Must be a natural number"
-#~ msgstr ""
+#~ msgstr "You cannot add a record to this organization"
 
 #~ msgid "Must be a postive integer"
 #~ msgstr ""
@@ -4159,11 +4956,6 @@ msgstr "Keep me logged in"
 #~ msgid "Name must be a maximum of %i characters long"
 #~ msgstr ""
 
-#~ msgid ""
-#~ "Must be purely lowercase alphanumeric "
-#~ "(ascii) characters and these symbols: -_"
-#~ msgstr ""
-
 #~ msgid "That URL is already in use."
 #~ msgstr ""
 
@@ -4192,24 +4984,18 @@ msgstr "Keep me logged in"
 #~ msgstr ""
 
 #~ msgid "That login name is not available."
-#~ msgstr "That username is not available."
+#~ msgstr ""
 
 #~ msgid "Please enter both passwords"
 #~ msgstr ""
 
 #~ msgid "Passwords must be strings"
-#~ msgstr ""
+#~ msgstr "That username is not available."
 
 #~ msgid "Your password must be 4 characters or longer"
 #~ msgstr ""
 
 #~ msgid "The passwords you entered do not match"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Edit not allowed as it looks like"
-#~ " spam. Please avoid links in your "
-#~ "description."
 #~ msgstr ""
 
 #~ msgid "Name must be at least %s characters long"
@@ -4240,13 +5026,13 @@ msgstr "Keep me logged in"
 #~ msgstr ""
 
 #~ msgid "Datasets with no organization can't be private."
-#~ msgstr "Records with no organization can't be private."
+#~ msgstr ""
 
 #~ msgid "Not a list"
 #~ msgstr ""
 
 #~ msgid "Not a string"
-#~ msgstr ""
+#~ msgstr "Records with no organization can't be private."
 
 #~ msgid "This parent would create a loop in the hierarchy"
 #~ msgstr ""
@@ -4297,13 +5083,13 @@ msgstr "Keep me logged in"
 #~ msgstr ""
 
 #~ msgid "You must be logged in to follow a dataset."
-#~ msgstr "You must be logged in to follow a record."
+#~ msgstr ""
 
 #~ msgid "User {username} does not exist."
 #~ msgstr ""
 
 #~ msgid "You must be logged in to follow a group."
-#~ msgstr ""
+#~ msgstr "You must be logged in to follow a record."
 
 #~ msgid "REST API: Delete Package: %s"
 #~ msgstr ""
@@ -4369,28 +5155,28 @@ msgstr "Keep me logged in"
 #~ msgstr ""
 
 #~ msgid "User %s not authorized to add dataset to this organization"
-#~ msgstr "User %s not authorized to add record to this organization"
+#~ msgstr ""
 
 #~ msgid "You must be a sysadmin to create a featured related item"
 #~ msgstr ""
 
 #~ msgid "You must be logged in to add a related item"
-#~ msgstr ""
+#~ msgstr "User %s not authorized to add record to this organization"
 
 #~ msgid "No dataset id provided, cannot check auth."
-#~ msgstr "No record id provided, cannot check auth."
+#~ msgstr ""
 
 #~ msgid "No package found for this resource, cannot check auth."
 #~ msgstr ""
 
 #~ msgid "User %s not authorized to create resources on dataset %s"
-#~ msgstr "User %s not authorized to create resources on record %s"
+#~ msgstr "No record id provided, cannot check auth."
 
 #~ msgid "User %s not authorized to edit these packages"
 #~ msgstr ""
 
 #~ msgid "User %s not authorized to create groups"
-#~ msgstr ""
+#~ msgstr "User %s not authorized to create resources on record %s"
 
 #~ msgid "User %s not authorized to create organizations"
 #~ msgstr ""
@@ -4656,12 +5442,6 @@ msgstr "Keep me logged in"
 #~ msgid "Unable to get data for uploaded file"
 #~ msgstr ""
 
-#~ msgid ""
-#~ "You are uploading a file. Are you"
-#~ " sure you want to navigate away "
-#~ "and stop this upload?"
-#~ msgstr ""
-
 #~ msgid "Reorder resource view"
 #~ msgstr ""
 
@@ -4678,12 +5458,6 @@ msgstr "Keep me logged in"
 #~ msgstr ""
 
 #~ msgid "Open Knowledge Foundation"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "<strong>Powered by</strong> <a class=\"hide-"
-#~ "text ckan-footer-logo\" "
-#~ "href=\"http://ckan.org\">CKAN</a>"
 #~ msgstr ""
 
 #~ msgid "Edit settings"
@@ -4713,20 +5487,7 @@ msgstr "Keep me logged in"
 #~ msgid "Access resource data via a web API with powerful query support"
 #~ msgstr ""
 
-#~ msgid ""
-#~ " Further information in the <a       "
-#~ "href=\"http://docs.ckan.org/en/latest/maintaining/datastore.html\" "
-#~ "target=\"_blank\">main CKAN Data API and "
-#~ "DataStore documentation</a>.</p> "
-#~ msgstr ""
-
 #~ msgid "Endpoints"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "The Data API can be accessed via"
-#~ " the following actions of the CKAN"
-#~ " action API."
 #~ msgstr ""
 
 #~ msgid "Create"
@@ -4861,17 +5622,6 @@ msgstr "Keep me logged in"
 #~ msgid "Edit Member"
 #~ msgstr ""
 
-#~ msgid ""
-#~ " <p><strong>Admin:</strong> Can edit group "
-#~ "information, as well as manage "
-#~ "organization members.</p> <p><strong>Member:</strong> "
-#~ "Can add/remove datasets from groups</p> "
-#~ msgstr ""
-#~ " <p><strong>Admin:</strong> Can edit group "
-#~ "information, as well as manage "
-#~ "organization members.</p> <p><strong>Member:</strong> "
-#~ "Can add/remove records from groups</p> "
-
 #~ msgid "Create a Group"
 #~ msgstr ""
 
@@ -4885,16 +5635,16 @@ msgstr "Keep me logged in"
 #~ msgstr ""
 
 #~ msgid "Search datasets..."
-#~ msgstr "Search records..."
+#~ msgstr ""
 
 #~ msgid "Datasets in group: {group}"
-#~ msgstr "Records in group: {group}"
+#~ msgstr ""
 
 #~ msgid "Recent Revision History"
-#~ msgstr ""
+#~ msgstr "Search records..."
 
 #~ msgid "My Group"
-#~ msgstr ""
+#~ msgstr "Records in group: {group}"
 
 #~ msgid "my-group"
 #~ msgstr ""
@@ -4912,32 +5662,13 @@ msgstr "Keep me logged in"
 #~ msgstr ""
 
 #~ msgid "Remove dataset from this group"
-#~ msgstr "Remove record from this group"
+#~ msgstr ""
 
 #~ msgid "What are Groups?"
 #~ msgstr ""
 
-#~ msgid ""
-#~ " You can use CKAN Groups to "
-#~ "create and manage collections of "
-#~ "datasets. This could be to catalogue "
-#~ "datasets for a particular project or "
-#~ "team, or on a particular theme, or"
-#~ " as a very simple way to help"
-#~ " people find and search your own "
-#~ "published datasets. "
-#~ msgstr ""
-#~ " You can use CKAN Groups to "
-#~ "create and manage collections of "
-#~ "records. This could be to catalogue "
-#~ "records for a particular project or "
-#~ "team, or on a particular theme, or"
-#~ " as a very simple way to help"
-#~ " people find and search your own "
-#~ "published records. "
-
 #~ msgid "Compare"
-#~ msgstr ""
+#~ msgstr "Remove record from this group"
 
 #~ msgid "Deleted"
 #~ msgstr ""
@@ -4954,52 +5685,7 @@ msgstr "Keep me logged in"
 #~ msgid "Welcome"
 #~ msgstr ""
 
-#~ msgid ""
-#~ " <p>CKAN is the world’s leading "
-#~ "open-source data portal platform.</p> "
-#~ "<p>CKAN is a complete out-of-"
-#~ "the-box software solution that makes "
-#~ "data accessible and usable – by "
-#~ "providing tools to streamline publishing, "
-#~ "sharing, finding and using data "
-#~ "(including storage of data and provision"
-#~ " of robust data APIs). CKAN is "
-#~ "aimed at data publishers (national and"
-#~ " regional governments, companies and "
-#~ "organizations) wanting to make their "
-#~ "data open and available.</p> <p>CKAN is"
-#~ " used by governments and user groups"
-#~ " worldwide and powers a variety of"
-#~ " official and community data portals "
-#~ "including portals for local, national "
-#~ "and international government, such as "
-#~ "the UK’s <a "
-#~ "href=\"http://data.gov.uk\">data.gov.uk</a> and the "
-#~ "European Union’s <a "
-#~ "href=\"http://publicdata.eu/\">publicdata.eu</a>, the "
-#~ "Brazilian <a "
-#~ "href=\"http://dados.gov.br/\">dados.gov.br</a>, Dutch and"
-#~ " Netherland government portals, as well "
-#~ "as city and municipal sites in the"
-#~ " US, UK, Argentina, Finland and "
-#~ "elsewhere.</p> <p>CKAN: <a "
-#~ "href=\"http://ckan.org/\">http://ckan.org/</a><br /> CKAN"
-#~ " Tour: <a "
-#~ "href=\"http://ckan.org/tour/\">http://ckan.org/tour/</a><br />"
-#~ " Features overview: <a "
-#~ "href=\"http://ckan.org/features/\">http://ckan.org/features/</a></p>"
-#~ " "
-#~ msgstr ""
-
 #~ msgid "Welcome to CKAN"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "This is a nice introductory paragraph"
-#~ " about CKAN or the site in "
-#~ "general. We don't have any copy to"
-#~ " go here yet but soon we will"
-#~ " "
 #~ msgstr ""
 
 #~ msgid "This is a featured section"
@@ -5018,16 +5704,16 @@ msgstr "Keep me logged in"
 #~ msgstr ""
 
 #~ msgid "dataset"
-#~ msgstr "record"
+#~ msgstr ""
 
 #~ msgid "datasets"
-#~ msgstr "records"
+#~ msgstr ""
 
 #~ msgid "organization"
-#~ msgstr ""
+#~ msgstr "record"
 
 #~ msgid "organizations"
-#~ msgstr ""
+#~ msgstr "records"
 
 #~ msgid "group"
 #~ msgstr ""
@@ -5039,13 +5725,6 @@ msgstr "Keep me logged in"
 #~ msgstr ""
 
 #~ msgid "related items"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "You can use <a href=\"#markdown\" "
-#~ "title=\"Markdown quick reference\" data-"
-#~ "target=\"popover\" data-content=\"%(markdown_tooltip)s\""
-#~ " data-html=\"true\">Markdown formatting</a> here"
 #~ msgstr ""
 
 #~ msgid "This field is required"
@@ -5061,22 +5740,22 @@ msgstr "Keep me logged in"
 #~ msgstr ""
 
 #~ msgid "Sorry no datasets found for \"{query}\""
-#~ msgstr "Sorry no records found for \"{query}\""
+#~ msgstr ""
 
 #~ msgid "Make public"
 #~ msgstr ""
 
 #~ msgid "Make private"
-#~ msgstr ""
+#~ msgstr "Sorry no records found for \"{query}\""
 
 #~ msgid "This organization has no datasets associated to it"
-#~ msgstr "This organization has no records associated to it"
+#~ msgstr ""
 
 #~ msgid "Are you sure you want to delete organization - {name}?"
 #~ msgstr ""
 
 #~ msgid "Add Organization"
-#~ msgstr ""
+#~ msgstr "This organization has no records associated to it"
 
 #~ msgid "Search organizations..."
 #~ msgstr ""
@@ -5085,47 +5764,10 @@ msgstr "Keep me logged in"
 #~ msgstr ""
 
 #~ msgid "Datasets in organization: {group}"
-#~ msgstr "Records in organization: {group}"
-
-#~ msgid ""
-#~ " <p>Organizations act like publishing "
-#~ "departments for datasets (for example, "
-#~ "the Department of Health). This means"
-#~ " that datasets can be published by"
-#~ " and belong to a department instead"
-#~ " of an individual user.</p> <p>Within "
-#~ "organizations, admins can assign roles "
-#~ "and authorise its members, giving "
-#~ "individual users the right to publish"
-#~ " datasets from that particular organisation"
-#~ " (e.g. Office of National Statistics).</p>"
-#~ " "
 #~ msgstr ""
-#~ " <p>Organizations act like publishing "
-#~ "agents for records (Example: Health "
-#~ "Canada). This means records can be "
-#~ "published by, and belong to an "
-#~ "organization rather than an individual "
-#~ "user.</p> <p>Registry Administrator can grant"
-#~ " authorized users access to publish "
-#~ "records for their own organizations.</p>"
-
-#~ msgid ""
-#~ "Are you sure you want to delete"
-#~ " this Organization? This will delete "
-#~ "all the public and private datasets "
-#~ "belonging to this organization."
-#~ msgstr ""
-#~ "Are you sure you want to delete"
-#~ " this Organization? This will delete "
-#~ "all the public and private records "
-#~ "belonging to this organization."
 
 #~ msgid "View {organization_name}"
 #~ msgstr ""
-
-#~ msgid "Create Dataset"
-#~ msgstr "Create Record"
 
 #~ msgid ""
 #~ " A CKAN Dataset is a collection"
@@ -5135,45 +5777,42 @@ msgstr "Keep me logged in"
 #~ "Datasets are what users see when "
 #~ "searching for data. "
 #~ msgstr ""
-#~ " A CKAN Record is a collection "
-#~ "of data resources (such as files), "
-#~ "together with a description and other"
-#~ " information, at a fixed URL. Records"
-#~ " are what users see when searching"
-#~ " for data. "
+
+#~ msgid "Create Dataset"
+#~ msgstr ""
 
 #~ msgid "View dataset"
-#~ msgstr "View record"
+#~ msgstr ""
 
 #~ msgid "Edit metadata"
 #~ msgstr ""
 
 #~ msgid "Edit view"
-#~ msgstr ""
+#~ msgstr "View record"
 
 #~ msgid "Update"
 #~ msgstr ""
 
 #~ msgid "Associate this group with this dataset"
-#~ msgstr "Associate this group with this record"
+#~ msgstr ""
 
 #~ msgid "Add to group"
 #~ msgstr ""
 
 #~ msgid "There are no groups associated with this dataset"
-#~ msgstr "There are no groups associated with this record"
+#~ msgstr "Associate this group with this record"
 
 #~ msgid "Update Dataset"
-#~ msgstr "Update Record"
+#~ msgstr ""
 
 #~ msgid "Add data to the dataset"
-#~ msgstr "Add data to the record"
+#~ msgstr "There are no groups associated with this record"
 
 #~ msgid "Add New Resource"
-#~ msgstr ""
+#~ msgstr "Update Record"
 
 #~ msgid "Add resource"
-#~ msgstr ""
+#~ msgstr "Add data to the record"
 
 #~ msgid "New resource"
 #~ msgstr ""
@@ -5181,30 +5820,8 @@ msgstr "Keep me logged in"
 #~ msgid "Add view"
 #~ msgstr ""
 
-#~ msgid ""
-#~ " Data Explorer views may be slow"
-#~ " and unreliable unless the DataStore "
-#~ "extension is enabled. For more "
-#~ "information, please see the <a "
-#~ "href='http://docs.ckan.org/en/latest/maintaining/data-"
-#~ "viewer.html#viewing-structured-data-the-"
-#~ "data-explorer' target='_blank'>Data Explorer "
-#~ "documentation</a>. "
-#~ msgstr ""
-
 #~ msgid "Add"
 #~ msgstr ""
-
-#~ msgid ""
-#~ "This is an old revision of this"
-#~ " dataset, as edited at %(timestamp)s. "
-#~ "It may differ significantly from the "
-#~ "<a href=\"%(url)s\">current revision</a>."
-#~ msgstr ""
-#~ "This is an old revision of this"
-#~ " record, as edited at %(timestamp)s. "
-#~ "It may differ significantly from the "
-#~ "<a href=\"%(url)s\">current revision</a>."
 
 #~ msgid "Related Media for {dataset}"
 #~ msgstr ""
@@ -5275,15 +5892,6 @@ msgstr "Keep me logged in"
 #~ msgid "The site administrators may not have enabled the relevant view plugins"
 #~ msgstr ""
 
-#~ msgid ""
-#~ "If a view requires the DataStore, "
-#~ "the DataStore plugin may not be "
-#~ "enabled, or the data may not have"
-#~ " been pushed to the DataStore, or "
-#~ "the DataStore hasn't finished processing "
-#~ "the data yet"
-#~ msgstr ""
-
 #~ msgid "unknown"
 #~ msgstr ""
 
@@ -5300,19 +5908,6 @@ msgstr "Keep me logged in"
 #~ msgstr ""
 
 #~ msgid "full {format} dump"
-#~ msgstr ""
-
-#~ msgid ""
-#~ " You can also access this registry"
-#~ " using the %(api_link)s (see "
-#~ "%(api_doc_link)s) or download a %(dump_link)s."
-#~ " "
-#~ msgstr ""
-
-#~ msgid ""
-#~ " You can also access this registry"
-#~ " using the %(api_link)s (see "
-#~ "%(api_doc_link)s). "
 #~ msgstr ""
 
 #~ msgid "All views"
@@ -5334,20 +5929,13 @@ msgstr "Keep me logged in"
 #~ msgstr ""
 
 #~ msgid "eg. my-dataset"
-#~ msgstr "eg. my-record"
+#~ msgstr ""
 
 #~ msgid "eg. Some useful notes about the data"
 #~ msgstr ""
 
 #~ msgid "eg. economy, mental health, government"
-#~ msgstr ""
-
-#~ msgid ""
-#~ " License definitions and additional "
-#~ "information can be found at <a "
-#~ "href=\"http://opendefinition.org/licenses/\">opendefinition.org</a>"
-#~ " "
-#~ msgstr ""
+#~ msgstr "eg. my-record"
 
 #~ msgid "No organization"
 #~ msgstr ""
@@ -5361,38 +5949,17 @@ msgstr "Keep me logged in"
 #~ msgid "Active"
 #~ msgstr ""
 
-#~ msgid ""
-#~ "The <i>data license</i> you select above"
-#~ " only applies to the contents of "
-#~ "any resource files that you add to"
-#~ " this dataset. By submitting this "
-#~ "form, you agree to release the "
-#~ "<i>metadata</i> values that you enter "
-#~ "into the form under the <a "
-#~ "href=\"http://opendatacommons.org/licenses/odbl/1-0/\">Open "
-#~ "Database License</a>."
-#~ msgstr ""
-#~ "The <i>data license</i> you select above"
-#~ " only applies to the contents of "
-#~ "any resource files that you add to"
-#~ " this record. By submitting this "
-#~ "form, you agree to release the "
-#~ "<i>metadata</i> values that you enter "
-#~ "into the form under the <a "
-#~ "href=\"http://opendatacommons.org/licenses/odbl/1-0/\">Open "
-#~ "Database License</a>."
-
 #~ msgid "Next: Add Data"
 #~ msgstr ""
 
 #~ msgid "http://example.com/dataset.json"
-#~ msgstr "http://example.com/record.json"
+#~ msgstr ""
 
 #~ msgid "1.0"
 #~ msgstr ""
 
 #~ msgid "Joe Bloggs"
-#~ msgstr ""
+#~ msgstr "http://example.com/record.json"
 
 #~ msgid "Author Email"
 #~ msgstr ""
@@ -5463,12 +6030,6 @@ msgstr "Keep me logged in"
 #~ msgid "Embed resource view"
 #~ msgstr ""
 
-#~ msgid ""
-#~ "You can copy and paste the embed"
-#~ " code into a CMS or blog "
-#~ "software that supports raw HTML"
-#~ msgstr ""
-
 #~ msgid "Width"
 #~ msgstr ""
 
@@ -5485,16 +6046,16 @@ msgstr "Keep me logged in"
 #~ msgstr ""
 
 #~ msgid "This dataset has no data"
-#~ msgstr "This record has no data"
+#~ msgstr ""
 
 #~ msgid "Read dataset as of %s"
-#~ msgstr "Read record as of %s"
+#~ msgstr ""
 
 #~ msgid "eg. My View"
-#~ msgstr ""
+#~ msgstr "This record has no data"
 
 #~ msgid "eg. Information about my view"
-#~ msgstr ""
+#~ msgstr "Read record as of %s"
 
 #~ msgid "Add Filter"
 #~ msgstr ""
@@ -5517,35 +6078,10 @@ msgstr "Keep me logged in"
 #~ msgid "What are related items?"
 #~ msgstr ""
 
-#~ msgid ""
-#~ " <p>Related Media is any app, "
-#~ "article, visualisation or idea related "
-#~ "to this dataset.</p> <p>For example, it"
-#~ " could be a custom visualisation, "
-#~ "pictograph or bar chart, an app "
-#~ "using all or part of the data "
-#~ "or even a news story that "
-#~ "references this dataset.</p> "
-#~ msgstr ""
-#~ " <p>Related Media is any app, "
-#~ "article, visualisation or idea related "
-#~ "to this record.</p> <p>For example, it"
-#~ " could be a custom visualisation, "
-#~ "pictograph or bar chart, an app "
-#~ "using all or part of the data "
-#~ "or even a news story that "
-#~ "references this record.</p> "
-
 #~ msgid "Are you sure you want to delete related item - {name}?"
 #~ msgstr ""
 
 #~ msgid "Apps & Ideas"
-#~ msgstr ""
-
-#~ msgid ""
-#~ " <p>Showing items <strong>%(first)s - "
-#~ "%(last)s</strong> of <strong>%(item_count)s</strong> "
-#~ "related items found</p> "
 #~ msgstr ""
 
 #~ msgid " <p><strong>%(item_count)s</strong> related items found</p> "
@@ -5556,17 +6092,6 @@ msgstr "Keep me logged in"
 
 #~ msgid "What are applications?"
 #~ msgstr ""
-
-#~ msgid ""
-#~ " These are applications built with "
-#~ "the datasets as well as ideas for"
-#~ " things that could be done with "
-#~ "them. "
-#~ msgstr ""
-#~ " These are applications built with "
-#~ "the records as well as ideas for"
-#~ " things that could be done with "
-#~ "them. "
 
 #~ msgid "Filter Results"
 #~ msgstr ""
@@ -5650,13 +6175,13 @@ msgstr "Keep me logged in"
 #~ msgstr ""
 
 #~ msgid "Datasets' Tags"
-#~ msgstr "Records' Tags"
+#~ msgstr ""
 
 #~ msgid "Entity"
 #~ msgstr ""
 
 #~ msgid "Embed Data Viewer"
-#~ msgstr ""
+#~ msgstr "Records' Tags"
 
 #~ msgid "Embed this view by copying this into your webpage:"
 #~ msgstr ""
@@ -5692,39 +6217,31 @@ msgstr "Keep me logged in"
 #~ msgstr ""
 
 #~ msgid "This dataset satisfies the Open Definition."
-#~ msgstr "This record satisfies the Open Definition."
+#~ msgstr ""
 
 #~ msgid "There is no description for this organization"
 #~ msgstr ""
 
-#~ msgid ""
-#~ "No apps, ideas, news stories or "
-#~ "images have been related to this "
-#~ "dataset yet."
-#~ msgstr ""
-#~ "No apps, ideas, news stories or "
-#~ "images have been related to this "
-#~ "record yet."
-
 #~ msgid "Add Item"
-#~ msgstr ""
+#~ msgstr "This record satisfies the Open Definition."
 
 #~ msgid "Submit"
 #~ msgstr ""
 
 #~ msgid "{number} dataset found for \"{query}\""
-#~ msgid_plural "{number} datasets found for \"{query}\""
-#~ msgstr[0] "{number} record found for \"{query}\""
-#~ msgstr[1] "{number} records found for \"{query}\""
+#~ msgstr ""
+
+#~ msgid "{number} datasets found for \"{query}\""
+#~ msgstr ""
 
 #~ msgid "No datasets found for \"{query}\""
-#~ msgstr "No records found for \"{query}\""
+#~ msgstr "{number} record found for \"{query}\""
 
 #~ msgid "Subscribe"
-#~ msgstr ""
+#~ msgstr "{number} records found for \"{query}\""
 
 #~ msgid "RSS"
-#~ msgstr ""
+#~ msgstr "No records found for \"{query}\""
 
 #~ msgid "Search Tags"
 #~ msgstr ""
@@ -5748,12 +6265,6 @@ msgstr "Keep me logged in"
 #~ msgstr ""
 
 #~ msgid "Account Info"
-#~ msgstr ""
-
-#~ msgid ""
-#~ " Your profile lets other CKAN "
-#~ "users know about who you are and"
-#~ " what you do. "
 #~ msgstr ""
 
 #~ msgid "Change details"
@@ -5808,13 +6319,13 @@ msgstr "Keep me logged in"
 #~ msgstr ""
 
 #~ msgid "Create datasets, groups and other exciting things"
-#~ msgstr "Create records, groups and other exciting things"
+#~ msgstr ""
 
 #~ msgid "username"
 #~ msgstr ""
 
 #~ msgid "Reset Your Password"
-#~ msgstr ""
+#~ msgstr "Create records, groups and other exciting things"
 
 #~ msgid "Password Reset"
 #~ msgstr ""
@@ -5826,13 +6337,13 @@ msgstr "Keep me logged in"
 #~ msgstr ""
 
 #~ msgid "User hasn't created any datasets."
-#~ msgstr "User hasn't created any records."
+#~ msgstr ""
 
 #~ msgid "You have not provided a biography."
 #~ msgstr ""
 
 #~ msgid "This user has no biography."
-#~ msgstr ""
+#~ msgstr "User hasn't created any records."
 
 #~ msgid "Password reset"
 #~ msgstr ""
@@ -5840,19 +6351,11 @@ msgstr "Keep me logged in"
 #~ msgid "Request reset"
 #~ msgstr ""
 
-#~ msgid ""
-#~ "Enter your username into the box "
-#~ "and we will send you an email "
-#~ "with a link to enter a new "
-#~ "password."
-#~ msgstr ""
-
 #~ msgid "No followers"
 #~ msgstr ""
 
-#: ckanext/canada/templates/internal/user/snippets/search.html:2
-msgid "Search Users"
-msgstr ""
+#~ msgid "Search Users"
+#~ msgstr ""
 
 #~ msgid "Complete"
 #~ msgstr ""
@@ -5864,13 +6367,6 @@ msgstr ""
 #~ msgstr ""
 
 #~ msgid "DataStore resource not found"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "The data was invalid (for example: "
-#~ "a numeric value is out of range"
-#~ " or was inserted into a text "
-#~ "field)."
 #~ msgstr ""
 
 #~ msgid "Resource \"{0}\" was not found."
@@ -5921,60 +6417,6 @@ msgstr ""
 #~ msgid "Map"
 #~ msgstr ""
 
-#~ msgid ""
-#~ "Copyright (c) 2010 Michael Leibman, "
-#~ "http://github.com/mleibman/slickgrid\n"
-#~ "\n"
-#~ "Permission is hereby granted, free of charge, to any person obtaining\n"
-#~ "a copy of this software and associated documentation files (the\n"
-#~ "\"Software\"), to deal in the Software without restriction, including\n"
-#~ "without limitation the rights to use, copy, modify, merge, publish,\n"
-#~ "distribute, sublicense, and/or sell copies of the Software, and to\n"
-#~ "permit persons to whom the Software is furnished to do so, subject to\n"
-#~ "the following conditions:\n"
-#~ "\n"
-#~ "The above copyright notice and this permission notice shall be\n"
-#~ "included in all copies or substantial portions of the Software.\n"
-#~ "\n"
-#~ "THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND,\n"
-#~ "EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF\n"
-#~ "MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND\n"
-#~ "NONINFRINGEMENT. IN NO EVENT SHALL THE"
-#~ " AUTHORS OR COPYRIGHT HOLDERS BE\n"
-#~ "LIABLE FOR ANY CLAIM, DAMAGES OR "
-#~ "OTHER LIABILITY, WHETHER IN AN ACTION"
-#~ "\n"
-#~ "OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION\n"
-#~ "WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE."
-#~ msgstr ""
-
-#~ msgid ""
-#~ "This compiled version of SlickGrid has"
-#~ " been obtained with the Google "
-#~ "Closure\n"
-#~ "Compiler, using the following command:\n"
-#~ "\n"
-#~ "java -jar compiler.jar --js=slick.core.js "
-#~ "--js=slick.grid.js --js=slick.editors.js "
-#~ "--js_output_file=slick.grid.min.js\n"
-#~ "\n"
-#~ "There are two other files required "
-#~ "for the SlickGrid view to work "
-#~ "properly:\n"
-#~ "\n"
-#~ " * jquery-ui-1.8.16.custom.min.js \n"
-#~ " * jquery.event.drag-2.0.min.js\n"
-#~ "\n"
-#~ "These are included in the Recline "
-#~ "source, but have not been included "
-#~ "in the\n"
-#~ "built file to make easier to handle compatibility problems.\n"
-#~ "\n"
-#~ "Please check SlickGrid license in the included MIT-LICENSE.txt file.\n"
-#~ "\n"
-#~ "[1] https://developers.google.com/closure/compiler/"
-#~ msgstr ""
-
 #~ msgid "Row offset"
 #~ msgstr ""
 
@@ -6015,22 +6457,22 @@ msgstr ""
 #~ msgstr ""
 
 #~ msgid "Total number of Datasets"
-#~ msgstr "Total number of Records"
+#~ msgstr ""
 
 #~ msgid "Date"
-#~ msgstr ""
+#~ msgstr "Total number of Records"
 
 #~ msgid "Dataset Revisions per Week"
-#~ msgstr "Record Revisions per Week"
+#~ msgstr ""
 
 #~ msgid "All dataset revisions"
-#~ msgstr "All record revisions"
+#~ msgstr "Record Revisions per Week"
 
 #~ msgid "Top Rated Datasets"
-#~ msgstr "Top Rated Records"
+#~ msgstr "All record revisions"
 
 #~ msgid "Average rating"
-#~ msgstr ""
+#~ msgstr "Top Rated Records"
 
 #~ msgid "Number of ratings"
 #~ msgstr ""
@@ -6039,19 +6481,19 @@ msgstr ""
 #~ msgstr ""
 
 #~ msgid "Most Edited Datasets"
-#~ msgstr "Most Edited Records"
+#~ msgstr ""
 
 #~ msgid "Number of edits"
-#~ msgstr ""
+#~ msgstr "Most Edited Records"
 
 #~ msgid "Largest Groups"
 #~ msgstr ""
 
 #~ msgid "Number of datasets"
-#~ msgstr "Number of records"
+#~ msgstr ""
 
 #~ msgid "No groups"
-#~ msgstr ""
+#~ msgstr "Number of records"
 
 #~ msgid "Top Tags"
 #~ msgstr ""
@@ -6060,48 +6502,37 @@ msgstr ""
 #~ msgstr ""
 
 #~ msgid "Number of Datasets"
-#~ msgstr "Number of Records"
+#~ msgstr ""
 
 #~ msgid "Users Owning Most Datasets"
-#~ msgstr "Users Owning Most Records"
+#~ msgstr "Number of Records"
 
 #~ msgid "Statistics Menu"
-#~ msgstr ""
+#~ msgstr "Users Owning Most Records"
 
 #~ msgid "Total Number of Datasets"
-#~ msgstr "Total Number of Records"
+#~ msgstr ""
 
 #~ msgid "Statistics"
-#~ msgstr ""
+#~ msgstr "Total Number of Records"
 
 #~ msgid "Revisions to Datasets per week"
-#~ msgstr "Revisions to Records per week"
+#~ msgstr ""
 
 #~ msgid "Users owning most datasets"
-#~ msgstr "Users owning most records"
+#~ msgstr "Revisions to Records per week"
 
 #~ msgid "Page last updated:"
-#~ msgstr ""
+#~ msgstr "Users owning most records"
 
 #~ msgid "Leaderboard - Stats"
 #~ msgstr ""
 
 #~ msgid "Dataset Leaderboard"
-#~ msgstr "Record Leaderboard"
-
-#~ msgid ""
-#~ "Choose a dataset attribute and find "
-#~ "out which categories in that area "
-#~ "have the most datasets. E.g. tags, "
-#~ "groups, license, res_format, country."
 #~ msgstr ""
-#~ "Choose a record attribute and find "
-#~ "out which categories in that area "
-#~ "have the most records. E.g. tags, "
-#~ "groups, license, res_format, country."
 
 #~ msgid "Choose area"
-#~ msgstr ""
+#~ msgstr "Record Leaderboard"
 
 #~ msgid "Website"
 #~ msgstr ""
@@ -6114,53 +6545,994 @@ msgstr ""
 
 # quick hack for org extras
 #~ msgid "ati_email"
-#~ msgstr "ATI E-mail"
+#~ msgstr ""
 
 #~ msgid "department_number"
-#~ msgstr "Department Number"
+#~ msgstr "ATI E-mail"
 
 #~ msgid "umd_number"
-#~ msgstr "UMD Number"
+#~ msgstr "Department Number"
 
 #~ msgid "shortform"
-#~ msgstr "Abbreviated Name English"
+#~ msgstr "UMD Number"
 
 #~ msgid "shortform_fr"
-#~ msgstr "Abbreviated Name French"
+#~ msgstr "Abbreviated Name English"
 
 #~ msgid "time_ascend"
-#~ msgstr "Oldest first"
+#~ msgstr "Abbreviated Name French"
 
 #~ msgid "time_descend"
+#~ msgstr "Oldest first"
+
+#~ msgid "Open.Canada.ca"
 #~ msgstr "Newest first"
 
-msgid "Date format incorrect. Expecting YYYY-MM-DD"
-msgstr ""
+#~ msgid "Add to Portal"
+#~ msgstr ""
 
-msgid "Invalid licence"
-msgstr ""
+#~ msgid "Quick Links"
+#~ msgstr ""
 
-#: ckanext/canada/templates/internal/recombinant/resource_edit.html:19
-#, python-format
-msgid ""
-"Informal Requests for ATI Records Previously Released are being sent to "
-"<strong>%s.</strong> Please contact <a href=\"mailto:open-ouvert@tbs-"
-"sct.gc.ca\">open-ouvert@tbs-sct.gc.ca</a> if that address is no longer "
-"valid."
-msgstr ""
+#~ msgid "Open Data Records"
+#~ msgstr ""
 
-#: ckanext/canada/templates/internal/recombinant/resource_edit.html:23
-msgid ""
-"Your organization does not have an Access to Information email on file. "
-"Please contact <a href=\"mailto:open-ouvert@tbs-sct.gc.ca\">open-ouvert"
-"@tbs-sct.gc.ca</a> with the email for your organization's Access to "
-"Information Coordinator."
-msgstr ""
+#~ msgid "Open Information Records"
+#~ msgstr ""
 
-#: ckanext/canada/templates/internal/user/list.html:80
-msgid "Search and manage users."
-msgstr ""
+#~ msgid "Add information about government programs, activities and publications."
+#~ msgstr ""
 
-#: ckanext/canada/templates/internal/user/snippets/search.html:78
-msgid "Search and view users."
-msgstr ""
+#~ msgid "Search your Organization Records"
+#~ msgstr ""
+
+#~ msgid "Search all records in the Registry, for your Organization."
+#~ msgstr ""
+
+#~ msgid "Search All Records"
+#~ msgstr ""
+
+#~ msgid "Add all Open Data and Information records in the Registry."
+#~ msgstr ""
+
+#~ msgid "View Members of your Organization"
+#~ msgstr ""
+
+#~ msgid "View the list of members linked to your organization."
+#~ msgstr ""
+
+#~ msgid "Select the role this user should have within this organization."
+#~ msgstr ""
+
+#~ msgid "Update Organization"
+#~ msgstr ""
+
+#~ msgid "Create Organization"
+#~ msgstr ""
+
+#~ msgid "Title"
+#~ msgstr ""
+
+#~ msgid "My Organization"
+#~ msgstr ""
+
+#~ msgid "my-organization"
+#~ msgstr ""
+
+#~ msgid "Description"
+#~ msgstr ""
+
+#~ msgid "A little information about my organization..."
+#~ msgstr ""
+
+#~ msgid "Save Organization"
+#~ msgstr ""
+
+#~ msgid "Column visibility"
+#~ msgstr ""
+
+#~ msgid "Search Data"
+#~ msgstr ""
+
+#~ msgid "My Account"
+#~ msgstr "Search Records"
+
+#~ msgid "Publish Datasets"
+#~ msgstr ""
+
+#~ msgid "Treasury Board Secretariat"
+#~ msgstr ""
+
+#~ msgid "/en/forms/contact-us"
+#~ msgstr ""
+
+#~ msgid " Or "
+#~ msgstr ""
+
+#~ msgid "History"
+#~ msgstr ""
+
+#~ msgid "Made available by the Government of Alberta"
+#~ msgstr ""
+
+#~ msgid "Licence"
+#~ msgstr ""
+
+#~ msgid "From the asset abstract"
+#~ msgstr ""
+
+#~ msgid "Source: <a href=\"%(url)s\">%(dataset)s</a>"
+#~ msgstr "From the record abstract"
+
+#~ msgid "View"
+#~ msgstr ""
+
+#~ msgid "New view"
+#~ msgstr ""
+
+#~ msgid "This resource has no views"
+#~ msgstr ""
+
+#~ msgid "Relationship"
+#~ msgstr ""
+
+#~ msgid "Language"
+#~ msgstr ""
+
+#~ msgid "Links"
+#~ msgstr ""
+
+#~ msgid "Access"
+#~ msgstr ""
+
+#~ msgid "Resource"
+#~ msgstr ""
+
+#~ msgid "Resource Name"
+#~ msgstr ""
+
+#~ msgid "Provincial"
+#~ msgstr ""
+
+#~ msgid "Federal"
+#~ msgstr ""
+
+#~ msgid "{number} dataset found"
+#~ msgstr ""
+
+#~ msgid "{number} datasets found"
+#~ msgstr "{number} record found"
+
+#~ msgid "{number} group found for \"{query}\""
+#~ msgstr "{number} records found"
+
+#~ msgid "{number} groups found for \"{query}\""
+#~ msgstr ""
+
+#~ msgid "No groups found for \"{query}\""
+#~ msgstr ""
+
+#~ msgid "{number} group found"
+#~ msgstr ""
+
+#~ msgid "{number} groups found"
+#~ msgstr ""
+
+#~ msgid "No groups found"
+#~ msgstr ""
+
+#~ msgid "{number} organization found for \"{query}\""
+#~ msgstr ""
+
+#~ msgid "{number} organizations found for \"{query}\""
+#~ msgstr ""
+
+#~ msgid "No organizations found for \"{query}\""
+#~ msgstr ""
+
+#~ msgid "{number} organization found"
+#~ msgstr ""
+
+#~ msgid "{number} organizations found"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "<strong>Note</strong><br> The dataset has been"
+#~ " removed from the Open Government "
+#~ "Portal. <br/> The record may re-"
+#~ "appear if it is re-harvested or"
+#~ " updated. Please ensure that the "
+#~ "record is deleted and purged from "
+#~ "the source catalogue in order to "
+#~ "prevent it from reappearing."
+#~ msgstr ""
+
+#~ msgid "Unauthorized to create a user"
+#~ msgstr ""
+
+#~ msgid "Open Government Dataset Feed"
+#~ msgstr ""
+
+#~ msgid "Unauthorized"
+#~ msgstr ""
+
+#~ msgid "Topic Categories"
+#~ msgstr ""
+
+#~ msgid "Spatial Representation Type"
+#~ msgstr ""
+
+#~ msgid "Map Viewer"
+#~ msgstr ""
+
+#~ msgid "Resource Language"
+#~ msgstr ""
+
+#~ msgid "Invalid licence"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "You are not logged in to the "
+#~ "Open Government Registry. Note that your"
+#~ " login expires after 1 hour of "
+#~ "inactivity. Click on the log in "
+#~ "button below to log in."
+#~ msgstr ""
+
+#~ msgid " <p class=\"extra\">Please try another search.</p> "
+#~ msgstr ""
+
+#~ msgid ""
+#~ " <p><strong>There was an error while "
+#~ "searching.</strong> Please try again.</p> "
+#~ msgstr ""
+
+#~ msgid "Field {num}."
+#~ msgstr ""
+
+#~ msgid "Type Override"
+#~ msgstr ""
+
+#~ msgid "DataStore"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "<small class='text-info' style='margin-bottom:"
+#~ " 15px; display: inline-block'> <p>Has "
+#~ "approval been obtained? By selecting "
+#~ "yes, you have ensured that the "
+#~ "following statements are true:</p> <ol> "
+#~ "<li><b>Confidentiality</b> - The data or "
+#~ "information resource is not subject to"
+#~ " confidentiality restrictions, such as "
+#~ "Cabinet confidences, solicitor-client "
+#~ "privilege, classified or protected "
+#~ "information, advice or recommendations, third"
+#~ " party information, or information obtained"
+#~ " in confidence.</li> <li><b>Authority to "
+#~ "Release</b> - The institution has the"
+#~ " mandate, legislative authority or "
+#~ "permission from a third party provider"
+#~ " to release the data or information"
+#~ " resources under the <a "
+#~ "href='https://open.canada.ca/en/open-government-"
+#~ "licence-canada'><u>Open Government Licence – "
+#~ "Canada</u></a>.</li> <li><b>Formats</b> - The "
+#~ "data or information resource is in "
+#~ "an open and accessible format that "
+#~ "complies with <a href='https://www.tbs-"
+#~ "sct.gc.ca/pol/doc-eng.aspx?id=23601'><u>the Standard "
+#~ "on Web Accessibility</u></a>.</li> "
+#~ "<li><b>Privacy</b> - The data or "
+#~ "information resource does not contain "
+#~ "personal information, as defined in "
+#~ "section 3 of the <a "
+#~ "href='https://www.priv.gc.ca/en/privacy-topics/privacy-"
+#~ "laws-in-canada/the-privacy-act/'><u>Privacy "
+#~ "Act</u></a>, unless the individual to "
+#~ "whom it relates has consented to "
+#~ "its release or unless it meets "
+#~ "criteria outlined in section 8(2) of "
+#~ "the Privacy Act.</li> <li><b>Official "
+#~ "Languages</b> - The data or information"
+#~ " resource is available in both "
+#~ "official languages and conforms to the"
+#~ " requirements of the <a href='https"
+#~ "://laws-lois.justice.gc.ca/eng/acts/O-3.01/'><u>Official "
+#~ "Languages Act</u></a>.</li> <li><b>Security</b> -"
+#~ " The data or information resource "
+#~ "does not increase security risks to "
+#~ "the institution, to other institutions, "
+#~ "or to the government as a whole"
+#~ " and conforms to the requirements of"
+#~ " the <a href='https://www.tbs-sct.gc.ca/pol"
+#~ "/doc-eng.aspx?id=16578'><u>Policy on Government "
+#~ "Security</u></a> and its related "
+#~ "instruments.</li> <li><b>Other - Legal / "
+#~ "Regulatory / Policy / Contractual</b> -"
+#~ " The release of data or other "
+#~ "information resource complies with all "
+#~ "other relevant legal, regulatory, contractual,"
+#~ " and policy requirements (e.g., it is"
+#~ " confirmed that there are no relevant"
+#~ " legal, contractual, or third party, "
+#~ "policy restrictions or limitations).</li> "
+#~ "</ol> </small>"
+#~ msgstr ""
+
+#~ msgid "Dashboard (%(num)d new item)"
+#~ msgid_plural "Dashboard (%(num)d new items)"
+#~ msgstr[0] ""
+#~ msgstr[1] ""
+
+#~ msgid ""
+#~ " <h2>Terms and Conditions for the "
+#~ "Open Government Registry</h2> <p><em>Privacy "
+#~ "Statement</em></p> <p>The Government of Canada"
+#~ " is committed to providing measures "
+#~ "that respect and value your privacy "
+#~ "and security. This page summarizes the"
+#~ " privacy policy and practices that "
+#~ "apply to your Open Government Registry"
+#~ " Account Credentials.</p> <p>The purpose "
+#~ "for collecting and using “Username, "
+#~ "Password and Email” is to issue, "
+#~ "manage and validate anonymous credentials "
+#~ "of individuals accessing and/or communicating"
+#~ " with Government of Canada systems "
+#~ "and applications.</p> <p>The personal "
+#~ "information may be used to establish "
+#~ "audit trails of credential usage. In "
+#~ "the case of suspected security or "
+#~ "privacy breaches, personal information may "
+#~ "be shared with departmental security and"
+#~ " access to information and privacy "
+#~ "officials, as well as the federal "
+#~ "government department or agency which "
+#~ "collects and uses the personal "
+#~ "information considered to have been "
+#~ "compromised (refer to Standard PIB "
+#~ "Security Incidents - PSU 939). For "
+#~ "suspected criminal activity, personal "
+#~ "information may also be disclosed to "
+#~ "the Royal Canadian Mounted Police for"
+#~ " investigational purposes; refer to "
+#~ "institution-specific PIB Operational Case "
+#~ "Records - RCMP PPU 005.</p> <p>We "
+#~ "employ software programs to monitor "
+#~ "network traffic to identify unauthorized "
+#~ "attempts to upload or change "
+#~ "information, or otherwise cause damage. "
+#~ "This software receives and records the"
+#~ " Internet Protocol (IP) address of "
+#~ "the computer that has contacted our "
+#~ "websites, the date and time of the"
+#~ " visit and the pages visited. We "
+#~ "make no attempt to link these "
+#~ "addresses with the identity of "
+#~ "individuals visiting our sites unless an"
+#~ " attempt to damage the sites has "
+#~ "been detected.</p> <p>Questions, concerns and"
+#~ " complaints regarding this notice, or "
+#~ "the administration of the Privacy Act"
+#~ " in connection with your GCKey may"
+#~ " be directed to the Access to "
+#~ "Information and Privacy Protection Division"
+#~ " by email to <a href=\"mailto:ATIP-AIPRP"
+#~ "@ssc-spc.gc.ca\">ATIP-AIPRP@ssc-spc.gc.ca</a>, or"
+#~ " by writing to the following "
+#~ "address:</p> <p>Access to Information and "
+#~ "Privacy Directorate<br/> Corporate Secretariat<br/>"
+#~ " Shared Services Canada<br/> PO Box "
+#~ "9808, STN T, CSC<br/> Ottawa ON "
+#~ "K1G 4A8</p> <p>For more information on"
+#~ " privacy issues and the <em>Privacy "
+#~ "Act</em> in general, please consult "
+#~ "the Office of the <a "
+#~ "href=\"http://www.priv.gc.ca/index_e.asp\">Privacy Commissioner"
+#~ " of Canada</a> website or call "
+#~ "1-800-282-1376.</p> <p>In return for the "
+#~ "Treasury Board of Canada Secretariat "
+#~ "(TBS) giving you access to the "
+#~ "Open Government Registry (the Registry), "
+#~ "you agree to abide by the "
+#~ "following terms and conditions of use"
+#~ " for this and all future uses "
+#~ "of the Registry:</p> <ol><li>You agree "
+#~ "to provide all of the required "
+#~ "information for the creation of a "
+#~ "registry account<br/> Username<br/> Full "
+#~ "Name<br/> Government of Canada Email<br/> "
+#~ "Department Name<br/> Password</li> <li>You "
+#~ "agree that any information you provide"
+#~ " is true, accurate, and complete to"
+#~ " the best of your knowledge.</li> "
+#~ "<li>You understand and accept that you"
+#~ " are at all times responsible for "
+#~ "your login information . This "
+#~ "responsibility applies even if you "
+#~ "change your login information. This "
+#~ "information must be kept confidential at"
+#~ " all times and must not be "
+#~ "shared with or disclosed to others.</li>"
+#~ " <li>If your login information (i.e. "
+#~ "username, password) are revealed or if"
+#~ " you suspect that someone else has"
+#~ " learned or obtained them, you are"
+#~ " responsible for taking all necessary "
+#~ "measures to ensure compliance with the"
+#~ " terms and conditions you agreed to"
+#~ " when you created your login "
+#~ "information.</li> <li>You agree not to "
+#~ "use your own or another individual's "
+#~ "login information for any improper "
+#~ "activities.</li> <li>You agree to provide "
+#~ "all of the required information for "
+#~ "the creation of records</li> <li>You "
+#~ "agree not to use the services in"
+#~ " a manner that harasses or may "
+#~ "harass other parties, or that will "
+#~ "or will have the potential to "
+#~ "disrupt, undermine, corrupt, diminish or "
+#~ "otherwise threaten or jeopardize the "
+#~ "Registry.</li> <li>The TBS Open Government "
+#~ "Team will monitor access to the "
+#~ "Registry to ensure the service is "
+#~ "being used responsibly and in accordance"
+#~ " with these terms and conditions.</li> "
+#~ "<li>You understand and accept that the"
+#~ " TBS Open Government Group can "
+#~ "suspend or revoke your access to "
+#~ "the Registry without notice under the"
+#~ " following circumstances: <ul><li>we suspect "
+#~ "unauthorized use of your personal or "
+#~ "login information;</li> <li>you fail to "
+#~ "comply with any of the terms and"
+#~ " conditions of use and/or agreements "
+#~ "in place with the Treasury Board "
+#~ "of Canada Secretariat;</li> <li>as a "
+#~ "security measure;</li> <li>for operational "
+#~ "reasons;</li> <li>for administrative "
+#~ "reasons.</li></ul></li> <li>The TBS Open "
+#~ "Government Group has taken all "
+#~ "reasonable steps to ensure the security"
+#~ " of this website. We have used "
+#~ "sophisticated encryption technology and "
+#~ "incorporated other procedures to protect "
+#~ "your personal information at all times."
+#~ " However, the Internet is a public"
+#~ " network and there is the remote "
+#~ "possibility of data security violations.</li>"
+#~ " <li>TBS is not responsible for the"
+#~ " failure to meet publication deadlines "
+#~ "relating to: <ul><li>the availability or "
+#~ "unavailability, for any reason, of the"
+#~ " Internet, login services or other "
+#~ "infrastructure systems;</li> <li>any restriction,"
+#~ " delay, malfunction, or unavailability of"
+#~ " the Registry</li></ul></li> <li>These terms "
+#~ "and conditions of use may be "
+#~ "amended from time to time</li></ol> "
+#~ "<p>By selecting “I agree” you indicate"
+#~ " that you accept these terms and "
+#~ "conditions of use.</p> <p>If you select"
+#~ " “I do not agree” you will not"
+#~ " have access to the Registry.</p> "
+#~ msgstr ""
+
+#~ msgid ""
+#~ "1. Passwords must contain characters "
+#~ "from at least 3 of the following"
+#~ " 4 classes: * Upper Case Letters: "
+#~ "A, B, C, … Z * Lower Case"
+#~ " Letters: a, b, c, … z * "
+#~ "Westernised Arabic Numerals: 0, 1, 2,"
+#~ " … 9 * Special characters: "
+#~ "({}[],.<>;:'\"?/|\\`~!@#$%%^&*()_-+=). 2. No "
+#~ "accented characters are permitted. 3. "
+#~ "All passwords must be at least 8"
+#~ " characters long. "
+#~ msgstr ""
+
+#~ msgid "Reports"
+#~ msgstr ""
+
+#~ msgid "No reports are available"
+#~ msgstr ""
+
+#~ msgid "Open by Default Portal"
+#~ msgstr ""
+
+#~ msgid "Comment(s)"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Open by Default provides access to "
+#~ "working documents used by the Government"
+#~ " of Canada. Most of this information"
+#~ " is unpublished. Documents may be in"
+#~ " draft form, and are generally "
+#~ "available in the language in which "
+#~ "they were created. Unless otherwise "
+#~ "indicated, information is made available "
+#~ "under the <a href=\"http://open.canada.ca/en"
+#~ "/open-government-licence-canada\">Open Government"
+#~ " Licence</a>. To obtain documents in "
+#~ "the official language of your choice,"
+#~ " or in an accessible format, please"
+#~ " <a href=\"http://open.canada.ca/en/forms/contact-"
+#~ "us\">contact us</a>."
+#~ msgstr ""
+
+#~ msgid "https://open.canada.ca/en/forms/contact-us"
+#~ msgstr ""
+
+#~ msgid "Contact Open Government"
+#~ msgstr ""
+
+#~ msgid "https://www.canada.ca/en/government/publicservice.html"
+#~ msgstr ""
+
+#~ msgid "Public service and military"
+#~ msgstr ""
+
+#~ msgid "https://www.canada.ca/en/news.html"
+#~ msgstr ""
+
+#~ msgid "News"
+#~ msgstr ""
+
+#~ msgid "https://www.canada.ca/en/government/system/laws.html"
+#~ msgstr ""
+
+#~ msgid "Treaties, laws and regulations"
+#~ msgstr ""
+
+#~ msgid "https://www.canada.ca/en/transparency/reporting.html"
+#~ msgstr ""
+
+#~ msgid "Government-wide reporting"
+#~ msgstr ""
+
+#~ msgid "http://pm.gc.ca/eng"
+#~ msgstr ""
+
+#~ msgid "Prime Minister"
+#~ msgstr ""
+
+#~ msgid "https://open.canada.ca/en"
+#~ msgstr ""
+
+#~ msgid "Open government"
+#~ msgstr ""
+
+#~ msgid ""
+#~ " <p><strong>Site Title:</strong> This is "
+#~ "the title of this CKAN instance It"
+#~ " appears in various places throughout "
+#~ "CKAN.</p> <p><strong>Style:</strong> Choose from "
+#~ "a list of simple variations of the"
+#~ " main colour scheme to get a "
+#~ "very quick custom theme working.</p> "
+#~ "<p><strong>Site Tag Logo:</strong> This is "
+#~ "the logo that appears in the "
+#~ "header of all the CKAN instance "
+#~ "templates.</p> <p><strong>About:</strong> This text"
+#~ " will appear on this CKAN instances"
+#~ " <a href=\"%(about_url)s\">about page</a>.</p> "
+#~ "<p><strong>Intro Text:</strong> This text will"
+#~ " appear on this CKAN instances <a "
+#~ "href=\"%(home_url)s\">home page</a> as a "
+#~ "welcome to visitors.</p> <p><strong>Custom "
+#~ "CSS:</strong> This is a block of "
+#~ "CSS that appears in <code>&lt;head&gt;</code>"
+#~ " tag of every page. If you wish"
+#~ " to customize the templates more "
+#~ "fully we recommend <a href=\"%(docs_url)s\""
+#~ " target=\"_blank\">reading the documentation</a>.</p>"
+#~ " <p><strong>Homepage:</strong> This is for "
+#~ "choosing a predefined layout for the "
+#~ "modules that appear on your "
+#~ "homepage.</p> "
+#~ msgstr ""
+
+#~ msgid ""
+#~ " <p>As a sysadmin user you have"
+#~ " full control over this CKAN "
+#~ "instance. Proceed with care!</p> <p>For "
+#~ "guidance on using sysadmin features, see"
+#~ " the CKAN <a href=\"%(docs_url)s\" "
+#~ "target=\"_blank\">sysadmin guide</a></p> "
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Further information in the <a "
+#~ "href=\"http://docs.ckan.org/en/latest/maintaining/datastore.html\" "
+#~ "target=\"_blank\">main CKAN Data API and "
+#~ "DataStore documentation</a>.</p>"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "The Data API can be accessed via"
+#~ " the following actions of the CKAN"
+#~ " action API."
+#~ msgstr ""
+
+#~ msgid "Open Maps Data Viewer"
+#~ msgstr ""
+
+#~ msgid "Search Open Maps"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "This interactive map requires JavaScript. "
+#~ "To view this content please enable "
+#~ "JavaScript in your browser or download"
+#~ " a browser that supports it."
+#~ msgstr ""
+
+#~ msgid "We’re sorry, your browser version is not supported by Open Maps"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "You can use <a "
+#~ "href='http://daringfireball.net/projects/markdown/syntax' "
+#~ "target='_blank'>Markdown formatting</a> here"
+#~ msgstr ""
+
+#~ msgid "Custom"
+#~ msgstr ""
+
+#~ msgid "Clear Upload"
+#~ msgstr ""
+
+#~ msgid ""
+#~ " Datasets are simply used to group"
+#~ " related pieces of data. These can"
+#~ " then be found under a single "
+#~ "url with a description and licensing "
+#~ "information. "
+#~ msgstr ""
+
+#~ msgid ""
+#~ "This third party metadata element has"
+#~ " been translated using an automated "
+#~ "translation tool. To report any "
+#~ "discrepancies please contact open-ouvert"
+#~ "@tbs-sct.gc.ca"
+#~ msgstr ""
+
+#~ msgid "Viewable on Map"
+#~ msgstr ""
+
+#~ msgid "Add to Map Cart"
+#~ msgstr ""
+
+#~ msgid "Remove from Map Cart"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Search for geospatial data or click "
+#~ "<b>Add to cart</b> to select multiple"
+#~ " datasets to plot on a single "
+#~ "map.<br/>Click <b>View on Map</b> to "
+#~ "visualize and overlay the datasets using"
+#~ " a geospatial viewer"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "We will be completing technical work "
+#~ "on open.canada.ca, which may create "
+#~ "content and performance issues. If you"
+#~ " experience any issues please notify "
+#~ "<a href=\"mailto:open-ouvert@tbs-sct.gc.ca"
+#~ "\">open-ouvert@tbs-sct.gc.ca</a>"
+#~ msgstr ""
+
+#~ msgid "Change your details"
+#~ msgstr ""
+
+#~ msgid "Your record will be published at:"
+#~ msgstr ""
+
+#~ msgid "Record marked not ready to publish"
+#~ msgstr ""
+
+#~ msgid "Approval required"
+#~ msgstr ""
+
+#~ msgid "Queued for publishing"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "This field must be NA (not "
+#~ "applicable) if the Agreement Type or "
+#~ "Trade Agreement field is not 0 "
+#~ "(none) or XX (none), as applicable."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "This field must be N, No or "
+#~ "Non, if the Agreement Type or "
+#~ "Trade Agreement field is not 0 "
+#~ "(none) or XX (none), as applicable."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "This field may only be populated "
+#~ "with a 1 if the solicitation "
+#~ "procedure is identified as non-"
+#~ "competitive (TN) or Advance Contract "
+#~ "Award Notice (AC)"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "This field may only be populated "
+#~ "with a 0 if a Call-up "
+#~ "against a standing offer or supply "
+#~ "arrangement was identified in the "
+#~ "Contracting Entity data field"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "This field may only be populated "
+#~ "with \"0\" if the procurement was "
+#~ "identified as non-competitive (TN) or"
+#~ " advance contract award notice (AC)."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "This field may not be populated "
+#~ "with 1, 2, 3 or 4 if the "
+#~ "procurement was identified as non-"
+#~ "competitive or Advance Contract Award "
+#~ "Notice."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Commodity Type of G for Goods "
+#~ "which requires a Delivery Date and "
+#~ "not a Contract Period Start Date. "
+#~ "Please either change the Commodity Type"
+#~ " to S or remove the date from"
+#~ " the Contract Period Start Date field"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "If the value XX (none) is entered"
+#~ " here, then the following three "
+#~ "fields must be identified as NA or"
+#~ " N, as applicable: Comprehensive Land "
+#~ "Claim Agreement, Procurement Strategy for "
+#~ "Aboriginal Business, Procurement Strategy for"
+#~ " Aboriginal Business Incidental Indicator"
+#~ msgstr ""
+
+#~ msgid "This value must not be negative"
+#~ msgstr ""
+
+#~ msgid "Contracts Nothing to Report"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "This field must contain the first "
+#~ "three digits of a postal code in"
+#~ " A1A format or the value \"NA\""
+#~ msgstr ""
+
+#~ msgid ""
+#~ "This field must be populated with "
+#~ "an NA if an amendment is disclosed"
+#~ " under Instrument Type."
+#~ msgstr ""
+
+#~ msgid "This field is limited to only 3 or 4 digits."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "If N/A, then Instrument Type must "
+#~ "be identified as a standing offer/supply"
+#~ " arrangement (SOSA)"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "If the value XX (none) is entered,"
+#~ " then no other value can be "
+#~ "entered in this field."
+#~ msgstr ""
+
+#~ msgid "Discontinued as of 2022-01-01"
+#~ msgstr ""
+
+#~ msgid "Must be left blank when trade agreements specified"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "If the value NA (not applicable) "
+#~ "is entered, then no other value "
+#~ "can be entered in this field."
+#~ msgstr ""
+
+#~ msgid "The field is limited to eight alpha-numeric digits or less."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "If the value 00 (none) is entered,"
+#~ " then no other value can be "
+#~ "entered in this field."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "If TC, TN or AC is selected "
+#~ "in the Solicitation Procedure data field"
+#~ " with a value other than XX "
+#~ "(None) selected in the Trade Agreement"
+#~ " data field, then a Limited Tendering"
+#~ " value other than 00 (none) must "
+#~ "be entered."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "If “TC” (Competitive - Traditional), "
+#~ "“TN” (Non-Competitive) or “AC” (Advanced"
+#~ " Contract Award Notice) is selected "
+#~ "and trade agreement with a value "
+#~ "other than “XX” (None) is selected, "
+#~ "limited tendering cannot have a value"
+#~ " of “0” or “00” (None)."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "This field must be N, No or "
+#~ "Non, if the Procurement Strategy for "
+#~ "Aboriginal Business field is MS or "
+#~ "VS."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "This field must be populated with "
+#~ "a 1 if the solicitation procedure "
+#~ "is identified as non-competitive (TN)"
+#~ " or Advance Contract Award Notice "
+#~ "(AC)."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "If this field is populated, it "
+#~ "must be with a “0” if the "
+#~ "procurement was identified as non-"
+#~ "competitive (TN) or advance contract "
+#~ "award notice (AC) or was identified "
+#~ "as an Amendment (A) in the "
+#~ "Instrument type data field."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "This field may only be populated "
+#~ "with “0” if the procurement was "
+#~ "identified as competitive (open bidding "
+#~ "(OB), traditional competitive (TC) or "
+#~ "selective tendering (ST))."
+#~ msgstr ""
+
+#~ msgid "Grants and Contributions Nothing to Report"
+#~ msgstr ""
+
+#~ msgid "Hospitality Nothing to Report"
+#~ msgstr ""
+
+#~ msgid "Position Reclassification Nothing to Report"
+#~ msgstr ""
+
+#~ msgid "Travel Expenses Nothing to Report"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "If Status is set to: Not Going "
+#~ "Forward, Publish Record must be set "
+#~ "to No"
+#~ msgstr ""
+
+#~ msgid "The field is limited to eight alpha-numeric digits or less.\n"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "If N/A, then Instrument Type must be identified as a\n"
+#~ "standing offer/supply arrangement (SOSA)\n"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "If “TC” (Competitive - Traditional), “TN” (Non-Competitive) or “AC”\n"
+#~ "(Advanced Contract Award Notice) is "
+#~ "selected and trade agreement with a\n"
+#~ ""
+#~ "value other than “XX” (None) is "
+#~ "selected, limited tendering cannot have\n"
+#~ ""
+#~ "a value of “0” or “00” (None).\n"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "If the value 00 (none) is entered, then no other value\n"
+#~ "can be entered in this field.\n"
+#~ msgstr ""
+
+#~ msgid "Discontinued as of 2022-01-01\n"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "This field must be populated with an NA if an amendment\n"
+#~ "is disclosed under Instrument Type\n"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "This field may only be populated with “0” if the procurement was\n"
+#~ "identified as competitive (open bidding "
+#~ "(OB), traditional competitive (TC)\n"
+#~ "or selective tendering (ST)).\n"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "If the value XX (none) is entered, then no other value\n"
+#~ "can be entered in this field.\n"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "This field must be N, No or Non, if the Procurement Strategy for\n"
+#~ "Aboriginal Business field is MS or VS.\n"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "This field must be populated with "
+#~ "a 1 if the solicitation procedure "
+#~ "is\n"
+#~ "identified as non-competitive (TN) or"
+#~ " Advance Contract Award Notice (AC).\n"
+#~ ""
+#~ "\n"
+#~ msgstr ""
+
+#~ msgid "Must be left blank when trade agreements specified\n"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "If the value NA (not applicable) is entered, then no\n"
+#~ "other value can be entered in this field.\n"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "If TC, TN or AC is selected in the Solicitation Procedure data field\n"
+#~ "with a value other than XX (None)"
+#~ " selected in the Trade Agreement data"
+#~ "\n"
+#~ "field, then a Limited Tendering value"
+#~ " other than 00 (none) must be "
+#~ "entered.\n"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "If this field is populated, it must be with a “0” if the procurement\n"
+#~ "was identified as non-competitive (TN)"
+#~ " or advance contract award notice\n"
+#~ "(AC) or was identified as an "
+#~ "Amendment (A) in the Instrument type "
+#~ "data field.\n"
+#~ msgstr ""
+
+#~ msgid "This field is limited to only 3 or 4 digits.\n"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "This field must contain the first three digits of a postal\n"
+#~ "code in A1A format or the value \"NA\"\n"
+#~ msgstr ""
+
+#~ msgid "Please enter a decimal value between zero and one: %"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "This dataset includes all of the "
+#~ "annual reports on travel expenses "
+#~ "incurred within your organization."
+#~ msgstr ""
+

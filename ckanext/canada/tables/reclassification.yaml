@@ -1,6 +1,7 @@
 dataset_type: reclassification
 target_dataset: reclassification
 title: Proactive Disclosure - Position Reclassification
+shortname: Position Reclassification
 notes: Access, upload and modify the position reclassification reports for your organization
 
 template_version: 3
@@ -356,7 +357,7 @@ resources:
         errors := errors || required_error(NEW.quarter, 'quarter');
         errors := errors || choice_error(NEW.quarter, {quarter}, 'quarter');
         IF NEW.year > date_part('year', CURRENT_DATE) THEN
-          errors := errors || ARRAY[['year', 'This must list the year you are reporting on (not the fiscal year).']];
+          errors := errors || ARRAY[['year', {year_error}]];
         END IF;
 
         IF errors = '{{}}' THEN
@@ -366,6 +367,8 @@ resources:
       END;
   - update_record_modified_created_trigger
 
+  trigger_strings:  # yaml | not supported
+    year_error: This must list the year you are reporting on (not the fiscal year).
 
   examples:
     record:

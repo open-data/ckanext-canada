@@ -1,6 +1,16 @@
 {% ckan_extends %}
 
+{% block content_action %}
+  {% if pkg.type not in h.recombinant_get_types() %}
+    {{ super() }}
+  {% endif %}
+{% endblock %}
+
 {% block content_primary_nav %}
-  {{ h.build_nav_icon('dataset_read', _('Dataset'), id=pkg.name) }}
-  {{ h.build_nav_icon('dataset_activity', _('Activity Stream'), id=pkg.name) }}
+  {% set dataset_label = _('Dataset') %}
+  {% if pkg.type in h.recombinant_get_types() %}
+    {% set dataset_label = _(pkg.title) %}
+  {% endif %}
+  {{ h.build_nav_icon(pkg.type + '.read', dataset_label, id=pkg.name) }}
+  {{ h.build_nav_icon(pkg.type + '.activity', _('Activity Stream'), id=pkg.name) }}
 {% endblock %}

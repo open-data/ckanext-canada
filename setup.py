@@ -26,9 +26,8 @@ setup(
     canada_internal=ckanext.canada.plugins:DataGCCAInternal
     canada_public=ckanext.canada.plugins:DataGCCAPublic
     canada_forms=ckanext.canada.plugins:DataGCCAForms
-    canada_package=ckanext.canada.plugins:DataGCCAPackageController
-    canada_activity=ckanext.canada.plugins:CanadaActivity
-    canada_obd=ckanext.canada.plugins:CanadaOpenByDefault
+    canada_datasets=ckanext.canada.plugins:CanadaDatasetsPlugin
+    canada_security=ckanext.canada.plugins:CanadaSecurityPlugin
 
     [paste.paster_command]
     canada=ckanext.canada.commands:CanadaCommand
@@ -44,14 +43,13 @@ setup(
     inventory=ckanext.canada.pd:PDCommand
     wrongdoing=ckanext.canada.pd:PDCommand
 
-    [ckan.rdf.profiles]
-    canada_dcat=ckanext.canada.dcat:CanadaDCATProfile
-
     [babel.extractors]
     ckan = ckan.lib.extract:extract_ckan
+    pd = ckanext.canada.extract:extract_pd
     """,
     message_extractors={
         'ckanext': [
+            ('**/tables/**.yaml', 'pd', None),
             ('**.py', 'python', None),
             ('**.js', 'javascript', None),
             ('**/templates/**.html', 'ckan', None),

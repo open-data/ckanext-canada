@@ -1,6 +1,7 @@
 dataset_type: dac
 target_dataset: dac
 title: Proactive Disclosure - Departmental Audit Committee
+shortname: Departmental Audit Committee
 notes: Access, upload and modify your Departmental Audit Committee members’ remuneration and expenses.
 
 template_version: 3
@@ -46,6 +47,10 @@ resources:
       2022-2023-Q2: 2022-2023-Q2
       2022-2023-Q3: 2022-2023-Q3
       2022-2023-Q4: 2022-2023-Q4
+      2023-2024-Q1: 2023-2024-Q1
+      2023-2024-Q2: 2023-2024-Q2
+      2023-2024-Q3: 2023-2024-Q3
+      2023-2024-Q4: 2023-2024-Q4
 
   - datastore_id: line_number
     label:

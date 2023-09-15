@@ -4,10 +4,9 @@ from ckan.lib.dictization import model_dictize
 from ckan import model
 
 from ckan.plugins.toolkit import (
-    get_or_bust, ValidationError, side_effect_free, check_access, chained_action)
+    get_or_bust, ValidationError, side_effect_free, check_access, chained_action, config)
 from ckan.authz import is_sysadmin
 
-from pylons import config
 import functools
 
 from sqlalchemy import func
@@ -168,6 +167,9 @@ def datastore_create_temp_user_table(context):
     Create a table to pass the current username and sysadmin
     state to our triggers for marking modified rows
     '''
+    if 'user' not in context:
+        return
+
     from ckanext.datastore.backend.postgres import literal_string
     connection = context['connection']
     username = context['user']

@@ -1,8 +1,8 @@
 # -*- coding: UTF-8 -*-
+from ckanext.canada.tests import CanadaTestBase
 from ckanapi import LocalCKAN
 import ckan.plugins as p
 
-from ckan.tests.helpers import FunctionalTestBase
 from ckan.tests.factories import Sysadmin
 from ckanext.canada.tests.factories import (
     CanadaOrganization as Organization,
@@ -11,12 +11,16 @@ from ckanext.canada.tests.factories import (
 )
 
 
-class TestRegistrySearch(FunctionalTestBase):
+class TestRegistrySearch(CanadaTestBase):
     """
     Class to test the package_search functionality for the Registry.
     """
-    def setup(self):
-        super(TestRegistrySearch, self).setup()
+    @classmethod
+    def setup_method(self, method):
+        """Method is called at class level before EACH test methods of the class are called.
+        Setup any state specific to the execution of the given class methods.
+        """
+        super(TestRegistrySearch, self).setup_method(method)
         # all datasets in canada_internal are private
         self.include_private = True
         user = User()
@@ -122,14 +126,18 @@ class TestRegistrySearch(FunctionalTestBase):
         assert response['count'] == 0
 
 
-class TestPortalSearch(FunctionalTestBase):
+class TestPortalSearch(CanadaTestBase):
     """
     Class to test the package_search functionality for the Portal.
     """
-    def setup(self):
+    @classmethod
+    def setup_method(self, method):
+        """Method is called at class level before EACH test methods of the class are called.
+        Setup any state specific to the execution of the given class methods.
+        """
         if p.plugin_loaded('canada_internal'):
             p.unload('canada_internal')
-        super(TestPortalSearch, self).setup()
+        super(TestPortalSearch, self).setup_method(method)
         # datasets on the portal are all public
         self.include_private = False
         self.org = Organization()
@@ -163,6 +171,15 @@ class TestPortalSearch(FunctionalTestBase):
                     'fr': ['Test %s' % i, 'FR', 'Keywords']},
                 ready_to_publish='true',
                 portal_release_date='2000-01-01')
+
+
+    @classmethod
+    def teardown_method(self, method):
+        """Method is called at class level after EACH test methods of the class are called.
+        Remove any state specific to the execution of the given class methods.
+        """
+        if not p.plugin_loaded('canada_internal'):
+            p.load('canada_internal')
 
 
     def test_user_package_search(self):

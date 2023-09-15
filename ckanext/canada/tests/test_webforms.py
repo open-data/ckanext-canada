@@ -1,21 +1,22 @@
 # -*- coding: UTF-8 -*-
+from ckanext.canada.tests import CanadaTestBase
+import pytest
+from urlparse import urlparse
 from StringIO import StringIO
 from openpyxl.workbook import Workbook
-from webtest import Text, Form, TestResponse
-from nose.tools import assert_raises
 from ckan.plugins.toolkit import h
 from ckanapi import (
     LocalCKAN,
-    NotAuthorized,
     ValidationError
 )
+
+from ckan.tests.helpers import CKANResponse
 
 from ckan.tests.factories import Sysadmin
 from ckanext.canada.tests.factories import (
     CanadaOrganization as Organization,
     CanadaUser as User
 )
-from ckan.tests.helpers import FunctionalTestBase
 
 from ckanext.recombinant.tables import get_chromo
 from ckanext.recombinant.read_excel import read_excel
@@ -27,184 +28,225 @@ from ckanext.recombinant.write_excel import (
 )
 
 
-class TestPackageWebForms(FunctionalTestBase):
-    def setup(self):
-        super(TestPackageWebForms, self).setup()
+def _get_relative_offset_from_response(response):
+    # type: (CKANResponse) -> str
+    assert response.headers
+    assert 'Location' in response.headers
+    return urlparse(response.headers['Location'])._replace(scheme='', netloc='').geturl()
+
+
+@pytest.mark.usefixtures('with_request_context')
+class TestPackageWebForms(CanadaTestBase):
+    @classmethod
+    def setup_method(self, method):
+        """Method is called at class level before EACH test methods of the class are called.
+        Setup any state specific to the execution of the given class methods.
+        """
+        super(TestPackageWebForms, self).setup_method(method)
         self.sysadmin = Sysadmin()
         self.extra_environ_tester = {'REMOTE_USER': self.sysadmin['name'].encode('ascii')}
         self.org = Organization()
-        self.app = self._get_test_app()
+        self.dataset_id = 'f3e4adb9-6e32-4cb4-bf68-1eab9d1288f4'
+        self.resource_id = '8b29e2c6-8a12-4537-bf97-fe4e5f0a14c1'
 
 
-    def test_new_dataset_required_fields(self):
-        offset = h.url_for(controller='package', action='new')
+    def test_new_dataset_required_fields(self, app):
+        offset = h.url_for('dataset.new')
+        response = app.get(offset, extra_environ=self.extra_environ_tester)
 
-        # test first form, creating a dataset
-        response = self.app.get(offset, extra_environ=self.extra_environ_tester)
-        # test if the page has the Create Dataset heading or title
         assert 'Create Dataset' in response.body
-        # test if the page has the create org warning
         assert 'Before you can create a dataset you need to create an organization' not in response.body
 
-        dataset_form = self.filled_dataset_form(response)
-        # Submit
-        response = dataset_form.submit('save', extra_environ=self.extra_environ_tester)
+        response = app.post(offset,
+                            data=self._filled_dataset_form(),
+                            extra_environ=self.extra_environ_tester,
+                            follow_redirects=False)
 
-        # Check dataset page
-        assert not 'Error' in response
+        offset = _get_relative_offset_from_response(response)
+        response = app.get(offset, extra_environ=self.extra_environ_tester)
 
-        # test second form, creating a resource for the above dataset
-        response = self.app.get(response.headers['Location'], extra_environ=self.extra_environ_tester)
-        resource_form = self.filled_resource_form(response)
-        # Submit
-        response = resource_form.submit('save', 2, extra_environ=self.extra_environ_tester)
+        assert 'Add data to the dataset' in response.body
 
-        # Check resource page
-        assert not 'Error' in response
+        response = app.post(offset,
+                            data=self._filled_resource_form(),
+                            extra_environ=self.extra_environ_tester,
+                            follow_redirects=True)
+
+        assert 'Resource added' in response.body
 
 
-    def test_new_dataset_missing_fields(self):
-        offset = h.url_for(controller='package', action='new')
+    def test_new_dataset_missing_fields(self, app):
+        offset = h.url_for('dataset.new')
+        response = app.get(offset, extra_environ=self.extra_environ_tester)
 
-        # test first form, creating a dataset
-        response = self.app.get(offset, extra_environ=self.extra_environ_tester)
-        # test if the page has the Create Dataset heading or title
         assert 'Create Dataset' in response.body
-        # test if the page has the create org warning
         assert 'Before you can create a dataset you need to create an organization' not in response.body
 
-        dataset_form = response.forms['dataset-edit']
-        dataset_form['owner_org'] = self.org['id']
-        # Submit
-        response = dataset_form.submit('save', extra_environ=self.extra_environ_tester)
+        incomplete_dataset_form = {
+            'id': self.dataset_id,
+            'save': '',
+            '_ckan_phase': '1'
+        }
+        response = app.post(offset,
+                            data=incomplete_dataset_form,
+                            extra_environ=self.extra_environ_tester,
+                            follow_redirects=True)
 
-        assert 'Error' in response
-        assert 'Title (French): Missing value' in response
-        #FIXME: subject error not showing up in response body
-        #assert 'Subject: Select at least one' in response
-        assert 'Title (English): Missing value' in response
-        assert 'Description (English): Missing value' in response
-        assert 'Description (French): Missing value' in response
-        assert 'Keywords (English): Missing value' in response
-        assert 'Keywords (French): Missing value' in response
-        assert 'Date Published: Missing value' in response
-        assert 'Frequency: Missing value' in response
-        assert 'Approval: Missing value' in response
-        assert 'Date Published: Missing value' in response
-        assert 'Ready to Publish: Missing value' in response
+        assert 'Errors in form' in response.body
+        assert 'Title (French):' in response.body
+        assert 'Publisher - Current Organization Name:' in response.body
+        assert 'Subject:' in response.body
+        assert 'Title (English):' in response.body
+        assert 'Description (English):' in response.body
+        assert 'Description (French):' in response.body
+        assert 'Keywords (English):' in response.body
+        assert 'Keywords (French):' in response.body
+        assert 'Date Published:' in response.body
+        assert 'Frequency:' in response.body
+        assert 'Approval:' in response.body
+        assert 'Date Published:' in response.body
+        assert 'Ready to Publish:' in response.body
 
-        dataset_form = self.filled_dataset_form(response)
-        # Submit filled form to continue onto the resource edit form
-        response = dataset_form.submit('save', extra_environ=self.extra_environ_tester)
+        response = app.post(offset,
+                            data=self._filled_dataset_form(),
+                            extra_environ=self.extra_environ_tester,
+                            follow_redirects=False)
 
-        # Check dataset page
-        assert not 'Error' in response
+        offset = _get_relative_offset_from_response(response)
+        response = app.get(offset, extra_environ=self.extra_environ_tester)
 
-        # test second form, creating a resource for the above dataset
-        response = self.app.get(response.headers['Location'], extra_environ=self.extra_environ_tester)
-        resource_form = response.forms['resource-edit']
-        resource_form['url'] = 'somewhere'
-        # Submit
-        response = resource_form.submit('save', 2, extra_environ=self.extra_environ_tester)
+        assert 'Add data to the dataset' in response.body
 
-        assert 'Error' in response
-        assert 'Title (English): Missing value' in response
-        assert 'Title (French): Missing value' in response
-        assert 'Resource Type: Missing value' in response
-        assert 'Format: Missing value' in response
+        incomplete_resource_form = {
+            'id': '',
+            'package_id': self.dataset_id,
+            'url': 'somewhere',
+            'save': 'go-dataset-complete'
+        }
+        response = app.post(offset,
+                            data=incomplete_resource_form,
+                            extra_environ=self.extra_environ_tester,
+                            follow_redirects=True)
 
-
-    def filled_dataset_form(self, response):
-        # type: (TestResponse) -> Form
-        dataset_form = response.forms['dataset-edit']
-        dataset_form['owner_org'] = self.org['id']
-        dataset_form['title_translated-en'] = 'english title'
-        dataset_form['title_translated-fr'] = 'french title'
-        dataset_form['notes_translated-en'] = 'english description'
-        dataset_form['notes_translated-fr'] = 'french description'
-        dataset_form['subject'] = 'arts_music_literature'
-        dataset_form['keywords-en'] = 'english keywords'
-        dataset_form['keywords-fr'] = 'french keywords'
-        dataset_form['date_published'] = '2000-01-01'
-        dataset_form['ready_to_publish'] = 'false'
-        dataset_form['frequency'] = 'as_needed'
-        dataset_form['jurisdiction'] = 'federal'
-        dataset_form['license_id'] = 'ca-ogl-lgo'
-        dataset_form['restrictions'] = 'unrestricted'
-        dataset_form['imso_approval'] = 'true'
-        return dataset_form
+        assert 'Errors in form' in response.body
+        assert 'Title (English):' in response.body
+        assert 'Title (French):' in response.body
+        assert 'Resource Type:' in response.body
+        assert 'Format:' in response.body
 
 
-    def filled_resource_form(self, response):
-        # type: (TestResponse) -> Form
-        resource_form = response.forms['resource-edit']
-        resource_form['name_translated-en'] = 'english resource name'
-        resource_form['name_translated-fr'] = 'french resource name'
-        resource_form['resource_type'] = 'dataset'
-        resource_form['url'] = 'somewhere'
-        resource_form['format'] = 'CSV'
-        resource_form['language'] = 'en'
-        return resource_form
+    def _filled_dataset_form(self):
+        # type: () -> dict
+        return {
+            'id': self.dataset_id,
+            'owner_org': self.org['id'],
+            'collection': 'primary',
+            'title_translated-en': 'english title',
+            'title_translated-fr': 'french title',
+            'notes_translated-en': 'english description',
+            'notes_translated-fr': 'french description',
+            'subject': 'arts_music_literature',
+            'keywords-en': 'english keywords',
+            'keywords-fr' : 'french keywords',
+            'date_published': '2000-01-01',
+            'ready_to_publish': 'false',
+            'frequency': 'as_needed',
+            'jurisdiction': 'federal',
+            'license_id': 'ca-ogl-lgo',
+            'restrictions': 'unrestricted',
+            'imso_approval': 'true',
+            'save': '',
+            '_ckan_phase': '1'
+        }
 
 
-class TestNewUserWebForms(FunctionalTestBase):
-    def setup(self):
-        super(TestNewUserWebForms, self).setup()
+    def _filled_resource_form(self):
+        # type: () -> dict
+        return {
+            'id': '',
+            'package_id': self.dataset_id,
+            'name_translated-en': 'english resource name',
+            'name_translated-fr': 'french resource name',
+            'resource_type': 'dataset',
+            'url': 'somewhere',
+            'format': 'CSV',
+            'language': 'en',
+            'save': 'go-dataset-complete'
+        }
+
+
+@pytest.mark.usefixtures('with_request_context')
+class TestNewUserWebForms(CanadaTestBase):
+    @classmethod
+    def setup_method(self, method):
+        """Method is called at class level before EACH test methods of the class are called.
+        Setup any state specific to the execution of the given class methods.
+        """
+        super(TestNewUserWebForms, self).setup_method(method)
+        self.extra_environ_tester = {'REMOTE_USER': str(u"")}
         self.org = Organization()
-        self.app = self._get_test_app()
 
 
-    def test_new_user_required_fields(self):
-        offset = h.url_for(controller='user', action='register')
+    def test_new_user_required_fields(self, app):
+        offset = h.url_for('user.register')
+        response = app.get(offset, extra_environ=self.extra_environ_tester)
 
-        # test form, registering new user account
-        response = self.app.get(offset)
-        # test if the page has the Request an Account heading or title
         assert 'Request an Account' in response.body
 
-        new_user_form = self.filled_new_user_form(response)
-        # Submit
-        response = new_user_form.submit('save')
+        response = app.post(offset,
+                            data=self._filled_new_user_form(),
+                            extra_environ=self.extra_environ_tester,
+                            follow_redirects=True)
 
-        # Check response page
-        assert not 'Error' in response
+        assert 'Account Created' in response.body
+        assert 'Thank you for creating your account for the Open Government registry' in response.body
 
 
-    def test_new_user_missing_fields(self):
-        offset = h.url_for(controller='user', action='register')
+    def test_new_user_missing_fields(self, app):
+        offset = h.url_for('user.register')
+        response = app.get(offset, extra_environ=self.extra_environ_tester)
 
-        # test form, registering new user account
-        response = self.app.get(offset)
-        # test if the page has the Request an Account heading or title
         assert 'Request an Account' in response.body
 
-        new_user_form = response.forms['user-register-form']
-        new_user_form['phoneno'] = '1234567890'
-        # Submit
-        response = new_user_form.submit('save')
+        incomplete_new_user_form = {
+            'phoneno': '1234567890',
+            'password1': '',
+            'password2': '',
+            'save': ''
+        }
+        response = app.post(offset,
+                            data=incomplete_new_user_form,
+                            extra_environ=self.extra_environ_tester,
+                            follow_redirects=True)
 
-        assert 'The form contains invalid entries' in response
-        assert 'Name: Missing value' in response
-        assert 'Email: Missing value' in response
-        assert 'Password: Please enter both passwords' in response
-
-
-    def filled_new_user_form(self, response):
-        # type: (TestResponse) -> Form
-        new_user_form = response.forms['user-register-form']
-        new_user_form['name'] = 'newusername'
-        new_user_form['fullname'] = 'New User'
-        new_user_form['email'] = 'newuser@example.com'
-        new_user_form['department'] = self.org['id']
-        new_user_form['phoneno'] = '1234567890'
-        new_user_form['password1'] = 'thisisapassword'
-        new_user_form['password2'] = 'thisisapassword'
-        return new_user_form
+        assert 'The form contains invalid entries' in response.body
+        assert 'Name: Missing value' in response.body
+        assert 'Email: Missing value' in response.body
+        assert 'Password: Please enter both passwords' in response.body
 
 
-class TestRecombinantWebForms(FunctionalTestBase):
-    def setup(self):
-        super(TestRecombinantWebForms, self).setup()
+    def _filled_new_user_form(self):
+        # type: () -> dict
+        return {
+            'name': 'newusername',
+            'fullname': 'New User',
+            'email': 'newuser@example.com',
+            'department': self.org['id'],
+            'phoneno': '1234567890',
+            'password1': 'iptkH6kuctURRQadDBM0',  # security extension required good passphrase/password
+            'password2': 'iptkH6kuctURRQadDBM0',  # security extension required good passphrase/password
+            'save': ''
+        }
+
+
+@pytest.mark.usefixtures('with_request_context')
+class TestRecombinantWebForms(CanadaTestBase):
+    @classmethod
+    def setup_method(self, method):
+        """Method is called at class level before EACH test methods of the class are called.
+        Setup any state specific to the execution of the given class methods.
+        """
+        super(TestRecombinantWebForms, self).setup_method(method)
         member = User()
         editor = User()
         sysadmin = Sysadmin()
@@ -227,10 +269,9 @@ class TestRecombinantWebForms(FunctionalTestBase):
         self.nil_fields = self.nil_chromo['fields']
         self.example_record = self.chromo['examples']['record']
         self.example_nil_record = self.nil_chromo['examples']['record']
-        self.app = self._get_test_app()
 
 
-    def lc_init_pd(self, org=None):
+    def _lc_init_pd(self, org=None):
         # type: (Organization|None) -> None
         lc = LocalCKAN()
         org = org if org else self.org
@@ -240,261 +281,267 @@ class TestRecombinantWebForms(FunctionalTestBase):
             pass
 
 
-    def lc_create_pd_record(self, org=None, is_nil=False):
-        # type: (Organization|None, bool) -> str
+    def _lc_create_pd_record(self, org=None, is_nil=False, return_field='name'):
+        # type: (Organization|None, bool, str) -> str
         lc = LocalCKAN()
         org = org if org else self.org
-        self.lc_init_pd(org=org)
+        self._lc_init_pd(org=org)
         rval = lc.action.recombinant_show(dataset_type=self.pd_type, owner_org=org['name'])
         resource_id = rval['resources'][1]['id'] if is_nil else rval['resources'][0]['id']
         record = self.example_nil_record if is_nil else self.example_record
         lc.action.datastore_upsert(resource_id=resource_id, records=[record])
-        return rval['resources'][1]['name'] if is_nil else rval['resources'][0]['name']
+        return rval['resources'][1][return_field] if is_nil else rval['resources'][0][return_field]
 
 
-    def lc_pd_template(self, org=None):
+    def _lc_pd_template(self, org=None):
         # type: (Organization|None) -> Workbook
         org = org if org else self.org
-        self.lc_create_pd_record(org=org)
-        self.lc_create_pd_record(org=org, is_nil=True)
+        self._lc_create_pd_record(org=org)
+        self._lc_create_pd_record(org=org, is_nil=True)
         return excel_template(dataset_type=self.pd_type, org=org)
 
 
-    def test_member_cannot_init_pd(self):
-        offset = h.url_for(controller='ckanext.recombinant.controller:UploadController',
-                           action='preview_table',
+    def _lc_get_pd_package_id(self, org=None):
+        # type: (Organization|None) -> str
+        lc = LocalCKAN()
+        org = org if org else self.org
+        self._lc_init_pd(org=org)
+        rval = lc.action.recombinant_show(dataset_type=self.pd_type, owner_org=org['name'])
+        return rval['id']
+
+
+    def test_member_cannot_init_pd(self, app):
+        offset = h.url_for('recombinant.preview_table',
                            resource_name=self.pd_type,
                            owner_org=self.org['name'])
+        response = app.get(offset, extra_environ=self.extra_environ_member)
 
-        # test form, initializing new pd resource
-        response = self.app.get(offset, extra_environ=self.extra_environ_member)
-        # test if the page has the Create and update records heading or title
         assert 'Create and update records' in response.body
 
-        registration_form = response.forms['create-pd-resource']
-        # Submit
-        assert_raises(NotAuthorized,
-                      registration_form.submit,
-                      'create',
-                      extra_environ=self.extra_environ_member)
+        create_pd_form = {
+            'create': ''
+        }
+        response = app.post(offset,
+                            data=create_pd_form,
+                            extra_environ=self.extra_environ_member,
+                            status=403,
+                            follow_redirects=True)
+
+        assert 'not authorized to add dataset' in response.body or \
+               'not authorized to create packages' in response.body
 
 
-    def test_editor_can_init_pd(self):
-        offset = h.url_for(controller='ckanext.recombinant.controller:UploadController',
-                           action='preview_table',
+    def test_editor_can_init_pd(self, app):
+        offset = h.url_for('recombinant.preview_table',
                            resource_name=self.pd_type,
                            owner_org=self.org['name'])
+        response = app.get(offset, extra_environ=self.extra_environ_editor)
 
-        # test form, initializing new pd resource
-        response = self.app.get(offset, extra_environ=self.extra_environ_editor)
-        # test if the page has the Create and update records heading or title
         assert 'Create and update records' in response.body
 
-        registration_form = response.forms['create-pd-resource']
-        # Submit
-        response = registration_form.submit('create', extra_environ=self.extra_environ_editor)
+        create_pd_form = {
+            'create': ''
+        }
+        response = app.post(offset,
+                            data=create_pd_form,
+                            extra_environ=self.extra_environ_editor,
+                            follow_redirects=True)
 
-        response = self.app.get(response.headers['Location'], extra_environ=self.extra_environ_editor)
         assert 'Create and update multiple records' in response.body
 
 
-    def test_admin_can_init_pd(self):
-        offset = h.url_for(controller='ckanext.recombinant.controller:UploadController',
-                           action='preview_table',
+    def test_admin_can_init_pd(self, app):
+        offset = h.url_for('recombinant.preview_table',
                            resource_name=self.pd_type,
                            owner_org=self.org['name'])
+        response = app.get(offset, extra_environ=self.extra_environ_system)
 
-        # test form, initializing new pd resource
-        response = self.app.get(offset, extra_environ=self.extra_environ_system)
-        # test if the page has the Create and update records heading or title
         assert 'Create and update records' in response.body
 
-        registration_form = response.forms['create-pd-resource']
-        # Submit
-        response = registration_form.submit('create', extra_environ=self.extra_environ_system)
+        create_pd_form = {
+            'create': ''
+        }
+        response = app.post(offset,
+                            data=create_pd_form,
+                            extra_environ=self.extra_environ_system,
+                            follow_redirects=True)
 
-        response = self.app.get(response.headers['Location'], extra_environ=self.extra_environ_system)
         assert 'Create and update multiple records' in response.body
 
 
-    def test_ati_email_notice(self):
+    def test_ati_email_notice(self, app):
         no_ati_email_org = Organization(ati_email=None)
-        self.lc_init_pd(org=no_ati_email_org)
-        self.lc_init_pd()
+        self._lc_init_pd(org=no_ati_email_org)
+        self._lc_init_pd()
 
-        offset = h.url_for(controller='ckanext.recombinant.controller:UploadController',
-                           action='preview_table',
+        offset = h.url_for('recombinant.preview_table',
                            resource_name=self.pd_type,
                            owner_org=no_ati_email_org['name'])
+        response = app.get(offset, extra_environ=self.extra_environ_system)
 
-        response = self.app.get(offset, extra_environ=self.extra_environ_system)
         assert 'Your organization does not have an Access to Information email on file' in response.body
 
-        offset = h.url_for(controller='ckanext.recombinant.controller:UploadController',
-                           action='preview_table',
+        offset = h.url_for('recombinant.preview_table',
                            resource_name=self.pd_type,
                            owner_org=self.org['name'])
+        response = app.get(offset, extra_environ=self.extra_environ_system)
 
-        response = self.app.get(offset, extra_environ=self.extra_environ_system)
         assert 'Your organization does not have an Access to Information email on file' not in response.body
         assert 'Informal Requests for ATI Records Previously Released are being sent to' in response.body
-        assert self.org['ati_email'].encode() in response.body
 
 
-    def test_member_cannot_create_single_record(self):
-        self.lc_init_pd()
+    def test_member_cannot_create_single_record(self, app):
+        self._lc_init_pd()
 
-        offset = h.url_for(controller='ckanext.canada.controller:PDUpdateController',
-                           action='create_pd_record',
+        offset = h.url_for('canada.create_pd_record',
                            resource_name=self.pd_type,
                            owner_org=self.org['name'])
-
         # members should not be able to acces create_pd_record endpoint
-        response = self.app.get(offset, extra_environ=self.extra_environ_member, status=403)
-        assert 'Access was denied to this resource' in response.body
+        response = app.get(offset, extra_environ=self.extra_environ_member, status=403)
 
-        # use sysadmin to get page for permission reasons
-        response = self.app.get(offset, extra_environ=self.extra_environ_system)
-        assert 'Create Record' in response.body
+        assert 'Unauthorized to create a resource for this package' in response.body
 
-        pd_record_form = self.filled_create_single_record_form(response)
-        # Submit as member
-        response = pd_record_form.submit('save', extra_environ=self.extra_environ_member, status=403)
-        assert 'Access was denied to this resource' in response.body
+        pd_record_form = self._filled_create_single_record_form()
+        response = app.post(offset,
+                            data=pd_record_form,
+                            extra_environ=self.extra_environ_member,
+                            status=403,
+                            follow_redirects=True)
+
+        assert 'Unauthorized to create a resource for this package' in response.body
 
 
-    def test_editor_can_create_single_record(self):
-        self.lc_init_pd()
+    def test_editor_can_create_single_record(self, app):
+        self._lc_init_pd()
 
-        offset = h.url_for(controller='ckanext.canada.controller:PDUpdateController',
-                           action='create_pd_record',
+        offset = h.url_for('canada.create_pd_record',
                            resource_name=self.pd_type,
                            owner_org=self.org['name'])
+        response = app.get(offset, extra_environ=self.extra_environ_editor)
 
-        response = self.app.get(offset, extra_environ=self.extra_environ_editor)
         assert 'Create Record' in response.body
 
-        pd_record_form = self.filled_create_single_record_form(response)
-        # Submit
-        response = pd_record_form.submit('save', extra_environ=self.extra_environ_editor)
+        pd_record_form = self._filled_create_single_record_form()
+        response = app.post(offset,
+                            data=pd_record_form,
+                            extra_environ=self.extra_environ_editor,
+                            follow_redirects=True)
 
-        response = self.app.get(response.headers['Location'], extra_environ=self.extra_environ_editor)
         assert 'Record Created' in response.body
 
 
-    def test_admin_can_create_single_record(self):
-        self.lc_init_pd()
+    def test_admin_can_create_single_record(self, app):
+        self._lc_init_pd()
 
-        offset = h.url_for(controller='ckanext.canada.controller:PDUpdateController',
-                           action='create_pd_record',
+        offset = h.url_for('canada.create_pd_record',
                            resource_name=self.pd_type,
                            owner_org=self.org['name'])
+        response = app.get(offset, extra_environ=self.extra_environ_system)
 
-        response = self.app.get(offset, extra_environ=self.extra_environ_system)
         assert 'Create Record' in response.body
 
-        pd_record_form = self.filled_create_single_record_form(response)
-        # Submit
-        response = pd_record_form.submit('save', extra_environ=self.extra_environ_system)
+        pd_record_form = self._filled_create_single_record_form()
+        response = app.post(offset,
+                            data=pd_record_form,
+                            extra_environ=self.extra_environ_system,
+                            follow_redirects=True)
 
-        response = self.app.get(response.headers['Location'], extra_environ=self.extra_environ_system)
         assert 'Record Created' in response.body
 
 
-    def test_member_cannot_update_single_record(self):
-        self.lc_create_pd_record()
+    def test_member_cannot_update_single_record(self, app):
+        self._lc_create_pd_record()
 
-        offset = h.url_for(controller='ckanext.canada.controller:PDUpdateController',
-                           action='update_pd_record',
+        offset = h.url_for('canada.update_pd_record',
                            resource_name=self.pd_type,
                            owner_org=self.org['name'],
                            pk=self.example_record['request_number'])
-
         # members should not be able to acces update_pd_record endpoint
-        response = self.app.get(offset, extra_environ=self.extra_environ_member, status=403)
-        assert 'Access was denied to this resource' in response.body
+        response = app.get(offset, extra_environ=self.extra_environ_member, status=403)
 
-        # use sysadmin to get page for permission reasons
-        response = self.app.get(offset, extra_environ=self.extra_environ_system)
-        assert 'Update Record' in response.body
+        assert 'Unauthorized to update dataset' in response.body
 
-        pd_record_form = response.forms['update_pd_record']
+        pd_record_form = self._filled_create_single_record_form()
         pd_record_form['summary_en'] = 'New Summary EN'
         pd_record_form['summary_fr'] = 'New Summary FR'
-        # Submit as member
-        response = pd_record_form.submit('save', extra_environ=self.extra_environ_member, status=403)
-        assert 'Access was denied to this resource' in response.body
+        response = app.post(offset,
+                            data=pd_record_form,
+                            extra_environ=self.extra_environ_member,
+                            status=403,
+                            follow_redirects=True)
+
+        assert 'Unauthorized to update dataset' in response.body
 
 
-    def test_editor_can_update_single_record(self):
-        self.lc_create_pd_record()
+    def test_editor_can_update_single_record(self, app):
+        self._lc_create_pd_record()
 
-        offset = h.url_for(controller='ckanext.canada.controller:PDUpdateController',
-                           action='update_pd_record',
+        offset = h.url_for('canada.update_pd_record',
                            resource_name=self.pd_type,
                            owner_org=self.org['name'],
                            pk=self.example_record['request_number'])
+        response = app.get(offset, extra_environ=self.extra_environ_editor)
 
-        response = self.app.get(offset, extra_environ=self.extra_environ_editor)
         assert 'Update Record' in response.body
 
-        pd_record_form = response.forms['update_pd_record']
+        pd_record_form = self._filled_create_single_record_form()
         pd_record_form['summary_en'] = 'New Summary EN'
         pd_record_form['summary_fr'] = 'New Summary FR'
-        # Submit
-        response = pd_record_form.submit('save', extra_environ=self.extra_environ_editor)
+        response = app.post(offset,
+                            data=pd_record_form,
+                            extra_environ=self.extra_environ_editor,
+                            follow_redirects=True)
 
-        response = self.app.get(response.headers['Location'], extra_environ=self.extra_environ_editor)
         assert 'Record {} Updated'.format(self.example_record['request_number']) in response.body
 
 
-    def test_admin_can_update_single_record(self):
-        self.lc_create_pd_record()
+    def test_admin_can_update_single_record(self, app):
+        self._lc_create_pd_record()
 
-        offset = h.url_for(controller='ckanext.canada.controller:PDUpdateController',
-                           action='update_pd_record',
+        offset = h.url_for('canada.update_pd_record',
                            resource_name=self.pd_type,
                            owner_org=self.org['name'],
                            pk=self.example_record['request_number'])
+        response = app.get(offset, extra_environ=self.extra_environ_system)
 
-        response = self.app.get(offset, extra_environ=self.extra_environ_system)
         assert 'Update Record' in response.body
 
-        pd_record_form = response.forms['update_pd_record']
+        pd_record_form = self._filled_create_single_record_form()
         pd_record_form['summary_en'] = 'New Summary EN'
         pd_record_form['summary_fr'] = 'New Summary FR'
-        # Submit
-        response = pd_record_form.submit('save', extra_environ=self.extra_environ_system)
+        response = app.post(offset,
+                            data=pd_record_form,
+                            extra_environ=self.extra_environ_system,
+                            follow_redirects=True)
 
-        response = self.app.get(response.headers['Location'], extra_environ=self.extra_environ_system)
         assert 'Record {} Updated'.format(self.example_record['request_number']) in response.body
 
 
-    def filled_create_single_record_form(self, response):
-        # type: (TestResponse) -> Form
-        pd_record_form = response.forms['create_pd_record']
-        pd_record_form['year'] = self.example_record['year']
-        pd_record_form['month'] = self.example_record['month']
-        pd_record_form['request_number'] = self.example_record['request_number']
-        pd_record_form['summary_en'] = self.example_record['summary_en']
-        pd_record_form['summary_fr'] = self.example_record['summary_fr']
-        pd_record_form['disposition'] = self.example_record['disposition']
-        pd_record_form['pages'] = self.example_record['pages']
-        return pd_record_form
+    def _filled_create_single_record_form(self):
+        # type: () -> dict
+        return {
+            'year': self.example_record['year'],
+            'month': self.example_record['month'],
+            'request_number': self.example_record['request_number'],
+            'summary_en': self.example_record['summary_en'],
+            'summary_fr': self.example_record['summary_fr'],
+            'disposition': self.example_record['disposition'],
+            'pages': self.example_record['pages'],
+            'save': ''
+        }
 
 
-    def test_download_template(self):
-        self.lc_create_pd_record()
-        self.lc_create_pd_record(is_nil=True)
+    def test_download_template(self, app):
+        self._lc_create_pd_record()
+        self._lc_create_pd_record(is_nil=True)
 
-        offset = h.url_for(controller='ckanext.recombinant.controller:UploadController',
-                           action='template',
+        offset = h.url_for('recombinant.template',
                            dataset_type=self.pd_type,
                            lang='en',
                            owner_org=self.org['name'])
 
         # members should be able to download template
-        response = self.app.get(offset, extra_environ=self.extra_environ_member)
+        response = app.get(offset, extra_environ=self.extra_environ_member)
         template_file = StringIO()
         template_file.write(response.body)
         # produces: (sheet-name, org-name, column_names, data_rows_generator)
@@ -514,21 +561,20 @@ class TestRecombinantWebForms(FunctionalTestBase):
                 assert f['datastore_id'] in template_file[1][2]  # check each field id is in column names
 
 
-    def test_selected_download_template(self):
-        resource_name = self.lc_create_pd_record()
-        nil_resource_name = self.lc_create_pd_record(is_nil=True)
+    def test_selected_download_template(self, app):
+        resource_name = self._lc_create_pd_record()
+        nil_resource_name = self._lc_create_pd_record(is_nil=True)
 
-        offset = h.url_for(controller='ckanext.recombinant.controller:UploadController',
-                           action='template',
+        offset = h.url_for('recombinant.template',
                            dataset_type=self.pd_type,
                            lang='en',
                            owner_org=self.org['name'])
-        
+
         # members should be able to download template
-        response = self.app.post(offset,
-                                 {'resource_name': resource_name,
+        response = app.post(offset,
+                            data={'resource_name': resource_name,
                                   'bulk-template': [self.example_record['request_number']]},
-                                 extra_environ=self.extra_environ_member)
+                            extra_environ=self.extra_environ_member)
         template_file = StringIO()
         template_file.write(response.body)
         # produces: (sheet-name, org-name, column_names, data_rows_generator)
@@ -554,10 +600,10 @@ class TestRecombinantWebForms(FunctionalTestBase):
             break
 
         # members should be able to download template
-        response = self.app.post(offset,
-                                 {'resource_name': nil_resource_name,
+        response = app.post(offset,
+                            data={'resource_name': nil_resource_name,
                                   'bulk-template': [self.example_nil_record['year'], self.example_nil_record['month']]},
-                                 extra_environ=self.extra_environ_member)
+                            extra_environ=self.extra_environ_member)
         template_file = StringIO()
         template_file.write(response.body)
         # produces: (sheet-name, org-name, column_names, data_rows_generator)
@@ -576,199 +622,168 @@ class TestRecombinantWebForms(FunctionalTestBase):
             break
 
 
-    def test_member_cannot_upload_records(self):
-        template = self.lc_pd_template()
-        template_file = self.populate_good_template_file(template)
+    def test_member_cannot_upload_records(self, app):
+        template = self._lc_pd_template()
+        template_file = self._populate_good_template_file(template)
 
-        offset = h.url_for(controller='ckanext.recombinant.controller:UploadController',
-                           action='preview_table',
+        offset = h.url_for('recombinant.preview_table',
                            resource_name=self.pd_type,
                            owner_org=self.org['name'])
+        response = app.get(offset, extra_environ=self.extra_environ_member)
 
-        response = self.app.get(offset, extra_environ=self.extra_environ_member)
         assert 'Create and update multiple records' not in response.body
-        # the `dataset-form` html form tag is still rendered
-        # as it contains other elements, but should not contain
-        # the upload fields for a member
-        dataset_form = response.forms['dataset-form']
-        assert 'xls_update' not in dataset_form.fields
+        assert 'xls_update' not in response.body
 
-        # use sysadmin to get page for permission reasons
-        response = self.app.get(offset, extra_environ=self.extra_environ_system)
-        assert 'Create and update multiple records' in response.body
+        form_action = h.url_for('recombinant.upload',
+                                id=self._lc_get_pd_package_id())
+        dataset_form = self._filled_upload_form(filestream=template_file)
+        response = app.post(form_action,
+                     data=dataset_form,
+                     extra_environ=self.extra_environ_member,
+                     status=403,
+                     follow_redirects=True)
 
-        dataset_form = response.forms['dataset-form']
-        # Submit
-        assert_raises(NotAuthorized,
-                      dataset_form.submit,
-                      upload_files=[('xls_update',
-                                     '{}_en_{}.xlsx'.format(self.pd_type, self.org['name']),
-                                     template_file.read())],
-                      extra_environ=self.extra_environ_member,
-                      status=403)
+        assert 'not authorized to update resource' in response.body
 
 
-    def test_editor_can_upload_records(self):
-        template = self.lc_pd_template()
-        template_file = self.populate_good_template_file(template)
+    def test_editor_can_upload_records(self, app):
+        template = self._lc_pd_template()
+        template_file = self._populate_good_template_file(template)
 
-        offset = h.url_for(controller='ckanext.recombinant.controller:UploadController',
-                           action='preview_table',
+        offset = h.url_for('recombinant.preview_table',
                            resource_name=self.pd_type,
                            owner_org=self.org['name'])
+        response = app.get(offset, extra_environ=self.extra_environ_editor)
 
-        response = self.app.get(offset, extra_environ=self.extra_environ_editor)
         assert 'Create and update multiple records' in response.body
 
-        dataset_form = response.forms['dataset-form']
-        # Submit
-        response = dataset_form.submit(upload_files=[('xls_update',
-                                                      '{}_en_{}.xlsx'.format(self.pd_type, self.org['name']),
-                                                      template_file.read())],
-                                       extra_environ=self.extra_environ_editor)
+        form_action = h.url_for('recombinant.upload',
+                                id=self._lc_get_pd_package_id())
+        dataset_form = self._filled_upload_form(filestream=template_file)
+        response = app.post(form_action,
+                            data=dataset_form,
+                            extra_environ=self.extra_environ_editor,
+                            follow_redirects=True)
 
-        # recombinant returns package.read url, which redirects in recombinant, thus the extra follow()
-        response = self.app.get(response.headers['Location'], extra_environ=self.extra_environ_editor).follow(extra_environ=self.extra_environ_editor)
         assert 'Your file was successfully uploaded into the central system.' in response.body
 
 
-    def test_admin_can_upload_records(self):
-        template = self.lc_pd_template()
-        template_file = self.populate_good_template_file(template)
+    def test_admin_can_upload_records(self, app):
+        template = self._lc_pd_template()
+        template_file = self._populate_good_template_file(template)
 
-        offset = h.url_for(controller='ckanext.recombinant.controller:UploadController',
-                           action='preview_table',
+        offset = h.url_for('recombinant.preview_table',
                            resource_name=self.pd_type,
                            owner_org=self.org['name'])
+        response = app.get(offset, extra_environ=self.extra_environ_system)
 
-        response = self.app.get(offset, extra_environ=self.extra_environ_system)
         assert 'Create and update multiple records' in response.body
 
-        dataset_form = response.forms['dataset-form']
-        # Submit
-        response = dataset_form.submit(upload_files=[('xls_update',
-                                                      '{}_en_{}.xlsx'.format(self.pd_type, self.org['name']),
-                                                      template_file.read())],
-                                       extra_environ=self.extra_environ_system)
+        form_action = h.url_for('recombinant.upload',
+                                id=self._lc_get_pd_package_id())
+        dataset_form = self._filled_upload_form(filestream=template_file)
+        response = app.post(form_action,
+                            data=dataset_form,
+                            extra_environ=self.extra_environ_system,
+                            follow_redirects=True)
 
-        # recombinant returns package.read url, which redirects in recombinant, thus the extra follow()
-        response = self.app.get(response.headers['Location'], extra_environ=self.extra_environ_system).follow(extra_environ=self.extra_environ_system)
         assert 'Your file was successfully uploaded into the central system.' in response.body
 
 
-    def test_member_cannot_validate_upload(self):
-        template = self.lc_pd_template()
-        good_template_file = self.populate_good_template_file(template)
+    def test_member_cannot_validate_upload(self, app):
+        template = self._lc_pd_template()
+        good_template_file = self._populate_good_template_file(template)
 
-        offset = h.url_for(controller='ckanext.recombinant.controller:UploadController',
-                           action='preview_table',
+        offset = h.url_for('recombinant.preview_table',
                            resource_name=self.pd_type,
                            owner_org=self.org['name'])
+        response = app.get(offset, extra_environ=self.extra_environ_member)
+        assert 'xls_update' not in response.body
 
-        response = self.app.get(offset, extra_environ=self.extra_environ_member)
-        # the `dataset-form` html form tag is still rendered
-        # as it contains other elements, but should not contain
-        # the upload fields for a member
-        dataset_form = response.forms['dataset-form']
-        assert 'xls_update' not in dataset_form.fields
+        form_action = h.url_for('recombinant.upload',
+                                id=self._lc_get_pd_package_id())
+        dataset_form = self._filled_upload_form(filestream=good_template_file,
+                                                action='validate')
+        response = app.post(form_action,
+                            data=dataset_form,
+                            extra_environ=self.extra_environ_member,
+                            status=403,
+                            follow_redirects=True)
 
-        # use sysadmin to get page for permission reasons
-        response = self.app.get(offset, extra_environ=self.extra_environ_system)
-        assert 'Create and update multiple records' in response.body
-
-        dataset_form = response.forms['dataset-form']
-        dataset_form = self.webtest_validate_post_fix(dataset_form)  # adds `validate` to POST body
-        # Submit
-        assert_raises(NotAuthorized,
-                      dataset_form.submit,
-                      upload_files=[('xls_update',
-                                     '{}_en_{}.xlsx'.format(self.pd_type, self.org['name']),
-                                     good_template_file.read())],
-                      extra_environ=self.extra_environ_member,
-                      status=403)
+        assert 'not authorized to update resource' in response.body
 
 
-    def test_editor_can_validate_upload(self):
-        template = self.lc_pd_template()
-        good_template_file = self.populate_good_template_file(template)
-        bad_template_file = self.populate_bad_template_file(template)
+    def test_editor_can_validate_upload(self, app):
+        template = self._lc_pd_template()
+        good_template_file = self._populate_good_template_file(template)
+        bad_template_file = self._populate_bad_template_file(template)
 
-        offset = h.url_for(controller='ckanext.recombinant.controller:UploadController',
-                           action='preview_table',
+        offset = h.url_for('recombinant.preview_table',
                            resource_name=self.pd_type,
                            owner_org=self.org['name'])
+        response = app.get(offset, extra_environ=self.extra_environ_editor)
 
-        response = self.app.get(offset, extra_environ=self.extra_environ_editor)
         assert 'Create and update multiple records' in response.body
 
-        dataset_form = response.forms['dataset-form']
-        dataset_form = self.webtest_validate_post_fix(dataset_form)
-        # Submit
-        response = dataset_form.submit(upload_files=[('xls_update',
-                                                      '{}_en_{}.xlsx'.format(self.pd_type, self.org['name']),
-                                                      bad_template_file.read())],
-                                       extra_environ=self.extra_environ_editor)
+        form_action = h.url_for('recombinant.upload',
+                                id=self._lc_get_pd_package_id())
+        dataset_form = self._filled_upload_form(filestream=bad_template_file,
+                                                action='validate')
+        response = app.post(form_action,
+                            data=dataset_form,
+                            extra_environ=self.extra_environ_editor,
+                            follow_redirects=True)
 
         assert 'year: Please enter a valid year' in response.body
         assert 'month: Please enter a month number from 1-12' in response.body
         assert 'pages: This value must not be negative' in response.body
 
-        response = self.app.get(offset, extra_environ=self.extra_environ_editor)
+        dataset_form = self._filled_upload_form(filestream=good_template_file,
+                                                action='validate')
+        response = app.post(form_action,
+                            data=dataset_form,
+                            extra_environ=self.extra_environ_editor,
+                            follow_redirects=True)
 
-        dataset_form = response.forms['dataset-form']
-        dataset_form = self.webtest_validate_post_fix(dataset_form)  # adds `validate` to POST body
-        # Submit
-        response = dataset_form.submit(upload_files=[('xls_update',
-                                                      '{}_en_{}.xlsx'.format(self.pd_type, self.org['name']),
-                                                      good_template_file.read())],
-                                       extra_environ=self.extra_environ_editor)
-
-        # recombinant returns package.read url, which redirects in recombinant, thus the extra follow()
-        response = self.app.get(response.headers['Location'], extra_environ=self.extra_environ_editor).follow(extra_environ=self.extra_environ_editor)
         assert 'No errors found.' in response.body
 
 
-    def test_admin_can_validate_upload(self):
-        template = self.lc_pd_template()
-        good_template_file = self.populate_good_template_file(template)
-        bad_template_file = self.populate_bad_template_file(template)
+    def test_admin_can_validate_upload(self, app):
+        template = self._lc_pd_template()
+        good_template_file = self._populate_good_template_file(template)
+        bad_template_file = self._populate_bad_template_file(template)
 
-        offset = h.url_for(controller='ckanext.recombinant.controller:UploadController',
-                           action='preview_table',
+        offset = h.url_for('recombinant.preview_table',
                            resource_name=self.pd_type,
                            owner_org=self.org['name'])
+        response = app.get(offset, extra_environ=self.extra_environ_system)
 
-        response = self.app.get(offset, extra_environ=self.extra_environ_system)
         assert 'Create and update multiple records' in response.body
 
-        dataset_form = response.forms['dataset-form']
-        dataset_form = self.webtest_validate_post_fix(dataset_form)  # adds `validate` to POST body
-        # Submit
-        response = dataset_form.submit(upload_files=[('xls_update',
-                                                      '{}_en_{}.xlsx'.format(self.pd_type, self.org['name']),
-                                                      bad_template_file.read())],
-                                       extra_environ=self.extra_environ_system)
+        form_action = h.url_for('recombinant.upload',
+                                id=self._lc_get_pd_package_id())
+        dataset_form = self._filled_upload_form(filestream=bad_template_file,
+                                                action='validate')
+        response = app.post(form_action,
+                            data=dataset_form,
+                            extra_environ=self.extra_environ_system,
+                            follow_redirects=True)
 
         assert 'year: Please enter a valid year' in response.body
         assert 'month: Please enter a month number from 1-12' in response.body
         assert 'pages: This value must not be negative' in response.body
 
-        response = self.app.get(offset, extra_environ=self.extra_environ_system)
+        dataset_form = self._filled_upload_form(filestream=good_template_file,
+                                                action='validate')
+        response = app.post(form_action,
+                            data=dataset_form,
+                            extra_environ=self.extra_environ_system,
+                            follow_redirects=True)
 
-        dataset_form = response.forms['dataset-form']
-        dataset_form = self.webtest_validate_post_fix(dataset_form)
-        # Submit
-        response = dataset_form.submit(upload_files=[('xls_update',
-                                                      '{}_en_{}.xlsx'.format(self.pd_type, self.org['name']),
-                                                      good_template_file.read())],
-                                       extra_environ=self.extra_environ_system)
-
-        # recombinant returns package.read url, which redirects in recombinant, thus the extra follow()
-        response = self.app.get(response.headers['Location'], extra_environ=self.extra_environ_system).follow(extra_environ=self.extra_environ_system)
         assert 'No errors found.' in response.body
 
 
-    def populate_good_template_file(self, template):
+    def _populate_good_template_file(self, template):
         # type: (Workbook) -> StringIO
         for i, v in enumerate(['2023',
                                '7',
@@ -790,7 +805,7 @@ class TestRecombinantWebForms(FunctionalTestBase):
         return good_template_file
 
 
-    def populate_bad_template_file(self, template):
+    def _populate_bad_template_file(self, template):
         # type: (Workbook) -> StringIO
         for i, v in enumerate(['1978',
                                '20',
@@ -812,123 +827,120 @@ class TestRecombinantWebForms(FunctionalTestBase):
         return bad_template_file
 
 
-    def webtest_validate_post_fix(self, form):
-        # type: (Form) -> Form
-
-        # webtest field for validate
-        # because recombinant checks POST['validate']
-        # and webtest does not add submit fields to POST.
-        # This replaces submitting the form with the validate
-        # submit input index.
-        validate_field = Text(form, 'input', None, None, '1')
-        form.fields['validate'] = [validate_field]
-        form.field_order.append(('validate', validate_field))
-        return form
+    def _filled_upload_form(self, filestream, action='upload'):
+        # type: (StringIO, str) -> dict
+        return {
+            'xls_update': (filestream, u'{}_en_{}.xlsx'.format(self.pd_type, self.org['name'])),
+            action: ''
+        }
 
 
-    def test_member_cannot_delete_records(self):
-        original_request_number = self.example_record['request_number']
-        self.example_record['request_number'] = 'B-8019'
-        self.lc_create_pd_record()
-        records_to_delete = self.example_record['request_number']
-        # reset example record request number to original
-        self.example_record['request_number'] = original_request_number
-        self.lc_create_pd_record()
-        records_to_delete += '\n{}'.format(self.example_record['request_number'])
+    def test_member_cannot_delete_records(self, app):
+        records_to_delete = self._prepare_records_to_delete()
 
-        offset = h.url_for(controller='ckanext.recombinant.controller:UploadController',
-                           action='preview_table',
+        offset = h.url_for('recombinant.preview_table',
                            resource_name=self.pd_type,
                            owner_org=self.org['name'])
+        response = app.get(offset, extra_environ=self.extra_environ_member)
 
-        response = self.app.get(offset, extra_environ=self.extra_environ_member)
         assert 'Create and update multiple records' not in response.body
-        assert 'delete-form' not in response.forms
+        assert 'delete-form' not in response.body
 
-        # use sysadmin to get page for permission reasons
-        response = self.app.get(offset, extra_environ=self.extra_environ_system)
-        assert 'Create and update multiple records' in response.body
+        # members are no longer allowed to submit the bulk delete form
+        form_action = h.url_for('recombinant.delete_records',
+                                id=self._lc_get_pd_package_id(),
+                                resource_id=records_to_delete['resource_id'])
+        response = app.post(form_action,
+                            data=records_to_delete['form'],
+                            extra_environ=self.extra_environ_member,
+                            status=403,
+                            follow_redirects=True)
 
-        delete_form = response.forms['delete-form']
-        delete_form['bulk-delete'] = records_to_delete
-        # Submit
-        # members are allowed to submit the bulk delete form
-        # as it will ask for confirmation of the delete
-        response = delete_form.submit(extra_environ=self.extra_environ_member)
-        assert 'Confirm Delete' in response.body
-        assert 'Are you sure you want to delete 2 records' in response.body
+        assert 'not authorized to update resource' in response.body
 
-        confirm_form = response.forms['recombinant-confirm-delete-form']
-        # Submit
-        assert_raises(NotAuthorized,
-                      confirm_form.submit,
-                      'confirm',
-                      extra_environ=self.extra_environ_member)
+        records_to_delete['form']['confirm'] = ''
+        response = app.post(form_action,
+                            data=records_to_delete['form'],
+                            extra_environ=self.extra_environ_member,
+                            status=403,
+                            follow_redirects=True)
+
+        assert 'not authorized to update resource' in response.body
 
 
-    def test_editor_can_delete_records(self):
-        original_request_number = self.example_record['request_number']
-        self.example_record['request_number'] = 'B-8019'
-        self.lc_create_pd_record()
-        records_to_delete = self.example_record['request_number']
-        # reset example record request number to original
-        self.example_record['request_number'] = original_request_number
-        self.lc_create_pd_record()
-        records_to_delete += '\n{}'.format(self.example_record['request_number'])
+    def test_editor_can_delete_records(self, app):
+        records_to_delete = self._prepare_records_to_delete()
 
-        offset = h.url_for(controller='ckanext.recombinant.controller:UploadController',
-                           action='preview_table',
+        offset = h.url_for('recombinant.preview_table',
                            resource_name=self.pd_type,
                            owner_org=self.org['name'])
 
-        response = self.app.get(offset, extra_environ=self.extra_environ_editor)
+        response = app.get(offset, extra_environ=self.extra_environ_editor)
         assert 'Create and update multiple records' in response.body
 
-        delete_form = response.forms['delete-form']
-        delete_form['bulk-delete'] = records_to_delete
-        # Submit
-        response = delete_form.submit(extra_environ=self.extra_environ_editor)
+        form_action = h.url_for('recombinant.delete_records',
+                                id=self._lc_get_pd_package_id(),
+                                resource_id=records_to_delete['resource_id'])
+        response = app.post(form_action,
+                            data=records_to_delete['form'],
+                            extra_environ=self.extra_environ_editor,
+                            follow_redirects=False)
 
         assert 'Confirm Delete' in response.body
         assert 'Are you sure you want to delete 2 records' in response.body
 
-        confirm_form = response.forms['recombinant-confirm-delete-form']
-        # Submit
-        response = confirm_form.submit('confirm', extra_environ=self.extra_environ_editor)
+        records_to_delete['form']['confirm'] = ''
+        response = app.post(form_action,
+                            data=records_to_delete['form'],
+                            extra_environ=self.extra_environ_editor,
+                            follow_redirects=True)
 
-        response = self.app.get(response.headers['Location'], extra_environ=self.extra_environ_editor)
         assert '2 deleted.' in response.body
 
 
-    def test_admin_can_delete_records(self):
-        original_request_number = self.example_record['request_number']
-        self.example_record['request_number'] = 'B-8019'
-        self.lc_create_pd_record()
-        records_to_delete = self.example_record['request_number']
-        # reset example record request number to original
-        self.example_record['request_number'] = original_request_number
-        self.lc_create_pd_record()
-        records_to_delete += '\n{}'.format(self.example_record['request_number'])
+    def test_admin_can_delete_records(self, app):
+        records_to_delete = self._prepare_records_to_delete()
 
-        offset = h.url_for(controller='ckanext.recombinant.controller:UploadController',
-                           action='preview_table',
+        offset = h.url_for('recombinant.preview_table',
                            resource_name=self.pd_type,
                            owner_org=self.org['name'])
 
-        response = self.app.get(offset, extra_environ=self.extra_environ_system)
+        response = app.get(offset, extra_environ=self.extra_environ_system)
         assert 'Create and update multiple records' in response.body
 
-        delete_form = response.forms['delete-form']
-        delete_form['bulk-delete'] = records_to_delete
-        # Submit
-        response = delete_form.submit(extra_environ=self.extra_environ_system)
+        form_action = h.url_for('recombinant.delete_records',
+                                id=self._lc_get_pd_package_id(),
+                                resource_id=records_to_delete['resource_id'])
+        response = app.post(form_action,
+                            data=records_to_delete['form'],
+                            extra_environ=self.extra_environ_system,
+                            follow_redirects=True)
 
         assert 'Confirm Delete' in response.body
         assert 'Are you sure you want to delete 2 records' in response.body
 
-        confirm_form = response.forms['recombinant-confirm-delete-form']
-        # Submit
-        response = confirm_form.submit('confirm', extra_environ=self.extra_environ_system)
+        records_to_delete['form']['confirm'] = ''
+        response = app.post(form_action,
+                            data=records_to_delete['form'],
+                            extra_environ=self.extra_environ_system,
+                            follow_redirects=True)
 
-        response = self.app.get(response.headers['Location'], extra_environ=self.extra_environ_system)
         assert '2 deleted.' in response.body
+
+
+    def _prepare_records_to_delete(self):
+        # type: () -> dict
+        original_request_number = self.example_record['request_number']
+        self.example_record['request_number'] = 'B-8019'
+        self._lc_create_pd_record()
+        records_to_delete = self.example_record['request_number']
+        # reset example record request number to original
+        self.example_record['request_number'] = original_request_number
+        resource_id = self._lc_create_pd_record(return_field='id')
+        records_to_delete += '\n{}'.format(self.example_record['request_number'])
+        return {
+            'resource_id': resource_id,
+            'form': {
+                'bulk-delete': records_to_delete
+            }
+        }

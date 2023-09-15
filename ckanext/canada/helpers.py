@@ -1,7 +1,7 @@
 import json
 import re
-from pylons import c, config
-from ckan.common import _
+from ckan.plugins import plugin_loaded
+from ckan.plugins.toolkit import c, config, _
 from ckan.model import User, Package, Activity
 import ckan.model as model
 import datetime
@@ -12,7 +12,6 @@ import jinja2
 import ckanapi
 from ckanapi import NotFound
 from ckantoolkit import h, aslist
-import ckan.lib.helpers as hlp
 import ckan.plugins.toolkit as t
 from ckanext.scheming.helpers import scheming_get_preset
 from ckan.logic.validators import boolean_validator
@@ -22,6 +21,8 @@ import dateutil.parser
 import geomet.wkt as wkt
 import json as json
 from markupsafe import Markup, escape
+from ckan.lib.helpers import core_helper
+from ckan.plugins.core import plugin_loaded
 
 ORG_MAY_PUBLISH_OPTION = 'canada.publish_datasets_organization_name'
 ORG_MAY_PUBLISH_DEFAULT_NAME = 'tb-ct'
@@ -31,14 +32,16 @@ PORTAL_URL_DEFAULT_FR = 'https://ouvert.canada.ca'
 DATAPREVIEW_MAX = 500
 FGP_URL_OPTION = 'fgp.service_endpoint'
 FGP_URL_DEFAULT = 'http://localhost/'
-GRAVATAR_SHOW_OPTION = 'ckan.gravatar_show'
-GRAVATAR_SHOW_DEFAULT = True
 WET_URL = config.get('wet_boew.url', '')
 WET_JQUERY_OFFLINE_OPTION = 'wet_boew.jquery.offline'
 WET_JQUERY_OFFLINE_DEFAULT = False
 GEO_MAP_TYPE_OPTION = 'wet_theme.geo_map_type'
 GEO_MAP_TYPE_DEFAULT = 'static'
 
+
+def is_registry():
+    # type: () -> bool
+    return plugin_loaded('canada_internal')
 
 
 def get_translated_t(data_dict, field):
@@ -230,8 +233,6 @@ def adv_search_url():
 def adv_search_mlt_root():
     return "{0}/donneesouvertes/similaire/".format(config.get('ckanext.canada.adv_search_url_fr')) if h.lang() == 'fr' else "{0}/opendata/similar/".format(config.get('ckanext.canada.adv_search_url_en'))
 
-def googleanalytics_id():
-    return str(config.get('googleanalytics.id'))
 
 def ga4_id():
     return str(config.get('ga4.id'))
@@ -278,7 +279,7 @@ def parse_release_date_facet(facet_results):
 
 def is_ready_to_publish(package):
     portal_release_date = package.get('portal_release_date')
-    ready_to_publish = package['ready_to_publish']
+    ready_to_publish = package.get('ready_to_publish')
 
     if ready_to_publish == 'true' and not portal_release_date:
         return True
@@ -327,27 +328,6 @@ def contact_information(info):
     except Exception:
         return {}
 
-def show_subject_facet():
-    '''
-    Return True when the subject facet should be visible
-    '''
-    if any(f['active'] for f in h.get_facet_items_dict('subject')):
-        return True
-    return not show_fgp_facets()
-
-def show_fgp_facets():
-    '''
-    Return True when the fgp facets and map cart should be visible
-    '''
-    for group in [
-            'topic_category', 'spatial_representation_type', 'fgp_viewer']:
-        if any(f['active'] for f in h.get_facet_items_dict(group)):
-            return True
-    for f in h.get_facet_items_dict('collection'):
-        if f['name'] == 'fgp':
-            return f['active']
-    return False
-
 
 def show_openinfo_facets():
     '''
@@ -394,7 +374,7 @@ def linked_user(user, maxlength=0, avatar=20):
 
         return h.literal(h.link_to(
                 displayname,
-                h.url_for(controller='user', action='read', id=name)
+                h.url_for('user.read', id=name)
             )
         )
 # FIXME: because ckan/lib/activity_streams is terrible
@@ -419,10 +399,8 @@ def link_to_user(user, maxlength=0):
         if maxlength and len(user.display_name) > maxlength:
             displayname = displayname[:maxlength] + '...'
         return html.tags.link_to(displayname,
-                       h.url_for(controller='user', action='read', id=_name))
+                       h.url_for('user.read', id=_name))
 
-def gravatar_show():
-    return t.asbool(config.get(GRAVATAR_SHOW_OPTION, GRAVATAR_SHOW_DEFAULT))
 
 def get_datapreview(res_id):
 
@@ -536,7 +514,7 @@ def mail_to_with_params(email_address, name, subject, body):
     return html
 
 def get_timeout_length():
-    return int(config.get('beaker.session.timeout'))
+    return int(config.get('beaker.session.timeout', 0))
 
 
 def canada_search_domain():
@@ -575,3 +553,19 @@ def get_user_email(user_id):
 
     except NotFound as e:
         return ""
+
+
+core_helper(plugin_loaded)
+
+
+def organization_member_count(id):
+    try:
+        members = ckan.logic.get_action(u'member_list')({}, {
+            u'id': id,
+            u'object_type': u'user',
+            u'include_total': True,
+        })
+    except NotFound:
+        raise NotFound( _('Members not found'))
+
+    return len(members)

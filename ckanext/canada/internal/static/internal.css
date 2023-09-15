@@ -665,3 +665,11 @@ ul#brf-pkg { padding-left: 0; }
 
 }
 
+div.resource-upload-field label#resource-menu-label::before,
+div.resource-upload-field label[for="field-resource-upload"]::before,
+div.resource-upload-field label[for="field-resource-url"]::before,
+div.resource-upload-field .upload-type > label.control-label::before{
+  content: "*";
+  color: #c6898b;
+  margin-right: 2.5px;
+}

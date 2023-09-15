@@ -2,23 +2,26 @@ dataset_type: contracts
 target_dataset: contracts
 
 title: Proactive Publication - Contracts over $10,000
+shortname: Contracts over $10,000
 notes: Access, upload and modify the Contracts over 10K reports for your organization
 
 upload_info:
   en: |
-    The contracts over $10,000 template includes data fields that have data
-    validation rules per the Guide on the Proactive Publication of Contracts. Users
-    should review the data validation rules in the reference tab of the template for
-    each data field under “validation” for more information to ensure that the data
-    can be uploaded to the registry. 
+    The contracts over $10,000 template includes data fields that have data validation
+    rules per the Guide to the Proactive Publication of Contracts. Users should review
+    the data validation rules in the reference tab of the template for each data field
+    under “validation” for more information to ensure that the data can be uploaded
+    to the registry. Users should download the latest version of the template prior to
+    uploading to ensure the template is accepted by the system.
   fr: |
     Le modèle pour les contrats de plus de 10 000 $ comprend des champs de
-    données qui sont soumis à des règles de validation des données conformément
-    au Guide de la publication proactive des marchés.
-    Les utilisateurs devraient examiner les règles de validation des données dans
-    l’onglet de référence du modèle pour chaque champ de données sous «
-    validation » pour plus d’informations afin de s’assurer que les données peuvent
-    être téléchargées dans le registre.
+    données qui sont soumis à des règles de validation des données conformément au
+    Guide de la publication proactive des marchés. Les utilisateurs devraient examiner
+    les règles de validation des données dans l’onglet de référence du modèle pour
+    chaque champ de données sous « validation » pour plus d’informations afin de
+    s’assurer que les données peuvent être téléchargées dans le registre. Les
+    utilisateurs doivent télécharger la dernière version du modèle avant de le
+    sauvegarder afin que le système puisse le prendre en charge.
 
 template_version: 3
 template_updated: 2023-06-28
@@ -27,7 +30,7 @@ portal_type: info
 collection: pd
 
 sidebar_extra_content:
-  en: 'For information on the Proactive Publication of Contracts, refer to the the [Guide on the Proactive Publication of Contracts](https://www.tbs-sct.canada.ca/pol/doc-eng.aspx?id=32763).'
+  en: 'For information on the Proactive Publication of Contracts, refer to the [Guide to the Proactive Publication of Contracts](https://www.tbs-sct.canada.ca/pol/doc-eng.aspx?id=32763).'
   fr: 'Pour de l’information sur la publication proactive des marchés, consultez le [Guide de la publication des marchés](https://www.tbs-sct.canada.ca/pol/doc-fra.aspx?id=32763).'
 
 front_matter:
@@ -58,23 +61,23 @@ front_matter:
     14. Departments are to provide a nil report for any quarter in which no contract or amendment is disclosed.  Departments are to populate the ‘Reporting Period’ and ‘Nil Report’ data elements within the Nil Reporting template.
   fr: |
     # Calendrier
-    1. Les organisations sont tenues de rendre publics dans le mois suivant la fin de chaque trimestre les marchés conclus d’un montant supérieur à 10 000 dollars et les modifications positives et négatives de plus de 10 000 dollars. 
-    2. Les organisations sont tenues de fournir à Services publics et Approvisionnement Canada (SPAC) des informations sur les marchés conclus et les modifications d’une valeur comprise entre -10 000 $ et 10 000 $. Elles doivent rendre compte annuellement de ces marchés et modifications au plus tard le 1er mars de l’année civile suivante. Par exemple, un marché conclu au cours de l’année civile 2017 doit faire l’objet d’un rapport au plus tard le 1er mars 2018. 
+    1. Les organisations sont tenues de rendre publics dans le mois suivant la fin de chaque trimestre les marchés conclus d’un montant supérieur à 10 000 dollars et les modifications positives et négatives de plus de 10 000 dollars.
+    2. Les organisations sont tenues de fournir à Services publics et Approvisionnement Canada (SPAC) des informations sur les marchés conclus et les modifications d’une valeur comprise entre -10 000 $ et 10 000 $. Elles doivent rendre compte annuellement de ces marchés et modifications au plus tard le 1er mars de l’année civile suivante. Par exemple, un marché conclu au cours de l’année civile 2017 doit faire l’objet d’un rapport au plus tard le 1er mars 2018.
     3. Les organisations sont tenues de rendre public chaque année civile un rapport distinct sur le volume et la valeur cumulative en dollars de chaque type de produit pour les marchés de 10 000 $ et moins et les modifications de -10 000 $ à 10 000 $. Par exemple, le rapport pour l’année civile 2017 doit être rendu public au plus tard le 1er mars 2018. De plus, les organisations doivent déclarer le volume et la valeur monétaire cumulative de toutes les opérations effectuées par carte d’achat, quelle que soit leur valeur monétaire. Se reporter au document *Système de publication centralisée pour la divulgation proactive - Profil des éléments de données : modèle des marchés annuels (de -10 000 $ à 10 000 $)* pour obtenir d’autres renseignements.
     # Exigences générales
-    1. Le modèle des marchés trimestriels doit comprendre les marchés conclus de plus de 10 000 $ et les modifications positives et négatives de plus de 10 000 $, y compris les marchés dont la valeur des modifications est supérieure à 10 000 dollars. 
-    2. Les marchés de 10 000 $ et moins et les modifications de -10 000 $ à 10 000 $ doivent être déclarés à SPAC dans un modèle des marchés trimestriels distinct par courriel à l’adresse [ncr.gwprs@gc.ca](mailto:ncr.gwprs@gc.ca). Ces informations permettront à SPAC de surveiller l’utilisation des offres à commandes et des arrangements en matière d’approvisionnement et seront utilisées pour satisfaire à d’autres obligations de déclaration du gouvernement. 
-    3. Les opérations par carte d’achat pour les marchés de plus de 10 000 $ et les modifications positives et négatives de plus de 10 000 $ doivent être déclarées dans le modèle des marchés trimestriels. Le volume et la valeur cumulative de toutes les opérations par carte d’achat, peu importe le seuil en dollars, doivent être déclarés dans le modèle des marchés annuels. Les organisations qui ont besoin d’aide pour déterminer le volume et la valeur cumulative peuvent contacter le Secrétariat du Conseil du Trésor en envoyant un courriel à la boîte de réception électronique de la divulgation proactive des marchés à [ZZPDCDC@tbs-sct.gc.ca](mailto:ZZPDCDC@tbs-sct.gc.ca). 
-    4. Les organisations ne doivent pas déclarer les marchés ni les modifications non financières d’une valeur de 0 $, sauf s’il est dans l’intérêt public de le faire (par exemple, annulation d’un important achat militaire) ou lorsqu’elles divulguent une convention d’offre à commandes ou d’un arrangement en matière d’approvisionnement. 
-    5. Une convention d’offre à commandes et un arrangement en matière d’approvisionnement ne sont pas des marchés d’approvisionnement, mais doivent être déclarés à des fins de transparence par le ministère qui l’établit. Lorsqu’un ministère rend publiques des informations sur une convention d’offre à commandes ou un arrangement en matière d’approvisionnement sur un site Web distinct, il n’est pas tenu de faire état de la convention ou de l’arrangement dans son rapport. 
+    1. Le modèle des marchés trimestriels doit comprendre les marchés conclus de plus de 10 000 $ et les modifications positives et négatives de plus de 10 000 $, y compris les marchés dont la valeur des modifications est supérieure à 10 000 dollars.
+    2. Les marchés de 10 000 $ et moins et les modifications de -10 000 $ à 10 000 $ doivent être déclarés à SPAC dans un modèle des marchés trimestriels distinct par courriel à l’adresse [ncr.gwprs@gc.ca](mailto:ncr.gwprs@gc.ca). Ces informations permettront à SPAC de surveiller l’utilisation des offres à commandes et des arrangements en matière d’approvisionnement et seront utilisées pour satisfaire à d’autres obligations de déclaration du gouvernement.
+    3. Les opérations par carte d’achat pour les marchés de plus de 10 000 $ et les modifications positives et négatives de plus de 10 000 $ doivent être déclarées dans le modèle des marchés trimestriels. Le volume et la valeur cumulative de toutes les opérations par carte d’achat, peu importe le seuil en dollars, doivent être déclarés dans le modèle des marchés annuels. Les organisations qui ont besoin d’aide pour déterminer le volume et la valeur cumulative peuvent contacter le Secrétariat du Conseil du Trésor en envoyant un courriel à la boîte de réception électronique de la divulgation proactive des marchés à [ZZPDCDC@tbs-sct.gc.ca](mailto:ZZPDCDC@tbs-sct.gc.ca).
+    4. Les organisations ne doivent pas déclarer les marchés ni les modifications non financières d’une valeur de 0 $, sauf s’il est dans l’intérêt public de le faire (par exemple, annulation d’un important achat militaire) ou lorsqu’elles divulguent une convention d’offre à commandes ou d’un arrangement en matière d’approvisionnement.
+    5. Une convention d’offre à commandes et un arrangement en matière d’approvisionnement ne sont pas des marchés d’approvisionnement, mais doivent être déclarés à des fins de transparence par le ministère qui l’établit. Lorsqu’un ministère rend publiques des informations sur une convention d’offre à commandes ou un arrangement en matière d’approvisionnement sur un site Web distinct, il n’est pas tenu de faire état de la convention ou de l’arrangement dans son rapport.
     6. L’engagement du gouvernement est de divulguer tous les marchés ou les modifications, à quelques exceptions près, par exemple ceux liés à la sécurité nationale. Un ministère n’est pas tenu de publier des informations concernant les éléments suivants :
-        a) les protocoles d’entente avec d’autres ordres de gouvernement et des gouvernements étrangers; 
-        b) les ententes sur les niveaux de service entre les ministères fédéraux ou avec les sociétés d’État; 
-        c) les informations sur les marchés dont la divulgation proactive compromettrait les enquêtes criminelles, les litiges, la sécurité nationale ou la sécurité publique; 
-        d) les informations de tiers au sens de l’un ou l’autre des alinéas 20(1)a) à d) de la Loi sur l’accès à l’information, par exemple les informations confidentielles sur les prix d’un entrepreneur. 
-    7. Lorsqu’un ministère détermine que les informations relatives à un marché sont dispensées de l’obligation de divulgation, il devrait divulguer le marché ou la modification une fois que les informations ne sont plus classifiées. 
-    8. Un marché ou une modification qui n’a pas été déclaré au cours de la période de référence dans laquelle il a été attribué doit être ajouté à cette période de référence, dès que possible. Il faut indiquer clairement dans le champ de commentaires tout marché ou modification ajouté à une période de référence après sa publication (voir l’annexe B des Lignes directrices sur la divulgation proactive des marchés). 
-    9. Les informations publiées au cours d’une période de référence donnée ne peuvent être modifiées pour cette période de référence que si une erreur importante a été commise dans les données initialement déclarées. Cela doit être clairement indiqué comme tel dans le champ de données des commentaires (voir l’annexe B des Lignes directrices sur la divulgation proactive des marchés). 
+        a) les protocoles d’entente avec d’autres ordres de gouvernement et des gouvernements étrangers;
+        b) les ententes sur les niveaux de service entre les ministères fédéraux ou avec les sociétés d’État;
+        c) les informations sur les marchés dont la divulgation proactive compromettrait les enquêtes criminelles, les litiges, la sécurité nationale ou la sécurité publique;
+        d) les informations de tiers au sens de l’un ou l’autre des alinéas 20(1)a) à d) de la Loi sur l’accès à l’information, par exemple les informations confidentielles sur les prix d’un entrepreneur.
+    7. Lorsqu’un ministère détermine que les informations relatives à un marché sont dispensées de l’obligation de divulgation, il devrait divulguer le marché ou la modification une fois que les informations ne sont plus classifiées.
+    8. Un marché ou une modification qui n’a pas été déclaré au cours de la période de référence dans laquelle il a été attribué doit être ajouté à cette période de référence, dès que possible. Il faut indiquer clairement dans le champ de commentaires tout marché ou modification ajouté à une période de référence après sa publication (voir l’annexe B des Lignes directrices sur la divulgation proactive des marchés).
+    9. Les informations publiées au cours d’une période de référence donnée ne peuvent être modifiées pour cette période de référence que si une erreur importante a été commise dans les données initialement déclarées. Cela doit être clairement indiqué comme tel dans le champ de données des commentaires (voir l’annexe B des Lignes directrices sur la divulgation proactive des marchés).
     10. L’utilisation de codes d’article économique précis est importante pour maintenir l’intégrité des Comptes publics du Canada. Les ministères doivent s’assurer que toutes les dépenses sont codées de manière appropriée conformément à la [Directive sur l’inscription des opérations financières dans les comptes du Canada](https://www.tbs-sct.gc.ca/pol/doc-fra.aspx?id=15793). Une liste des codes d’article économique accompagnés d’une description se trouve sur le site du Plan comptable à l’échelle de l’administration fédérale (https://www.tpsgc-pwgsc.gc.ca/recgen/pceaf-gwcoa/index-fra.html).
     11. Lorsque SPAC, Services partagés Canada (SPC) ou un autre ministère ou société d’État passe un marché au nom d’un ministère, c’est le ministère client qui doit déclarer le marché. SPAC aidera les ministères clients en leur fournissant toutes les informations dont il dispose sur ces marchés par l’entremise du Portail du gouvernement ouvert. SPC et tout autre ministère contractant aideront le ministère client à remplir ses obligations en matière de rapports en lui fournissant toute information dont ils disposent sur ces marchés, s’il y a lieu. De plus, l’autorité contractante de SPAC et de SPC doit fournir une copie de chaque marché ou modification au ministère client au moment de l’attribution.
     12. Lorsque plus d’un ministère finance le marché, chaque ministère peut divulguer sa part du marché. Dans le cas d’une convention d’offre à commandes ou d’un arrangement en matière d’approvisionnement, il est recommandé que le ministère qui autorise la convention ou l’arrangement en fasse rapport.
@@ -177,12 +180,12 @@ resources:
         vi. For contracts awarded by PSPC or Shared Services Canada (SSC) on behalf of the client department, it is recommended that this field be populated with the name of the PSPC or SSC contracting authority. If this is not available, indicate the values, “PSPC-SPAC” or “SSC-SPC” as applicable.
 
       fr: |
-        i. Il est recommandé de saisir dans ce champ le nom de l’acheteur, comme il est indiqué dans le marché initial, sinon il faut saisir celui de la personne responsable de l’approvisionnement au ministère .
+        i. Il est recommandé de saisir dans ce champ le nom de l’acheteur, comme il est indiqué dans le marché initial, sinon il faut saisir celui de la personne responsable de l’approvisionnement au ministère.
         ii. Dans le cas de l’établissement d’une offre à commandes ou d’un arrangement en matière d’approvisionnement, il est recommandé de saisir dans ce champ le nom de l’acheteur qui a émis l’offre à commandes ou l’arrangement en matière d’approvisionnement initial.
         iii. Dans le cas d’une commande subséquente à une offre à commandes ou à un arrangement en matière d’approvisionnement, ce champ devrait indiquer le nom de l’acheteur mentionné dans le marché ou la commande subséquente initial.
         iv. Dans le cas d’un marché comportant des autorisations de tâches, ce champ peut comprendre le nom de l’acheteur indiqué dans le marché initial ou dans chaque autorisation de tâches.
         v. Pour les modifications de marché, il est recommandé que ce champ soit rempli avec la valeur « NA », car la valeur « NA » pour ce champ indique qu’il ne s’applique pas.
-        vi. Pour les marchés attribués par SPAC ou SPC pour le compte du ministère client, il est recommandé de saisir le nom de l’autorité contractante de SPAC ou de SPC dans ce champ. S’il n’est pas disponible, il faut indiquer la valeur «  PSPC-SPAC  » ou «  SSC-SPC  », selon le cas. 
+        vi. Pour les marchés attribués par SPAC ou SPC pour le compte du ministère client, il est recommandé de saisir le nom de l’autorité contractante de SPAC ou de SPC dans ce champ. S’il n’est pas disponible, il faut indiquer la valeur «  PSPC-SPAC  » ou «  SSC-SPC  », selon le cas.
 
     validation:
       en: |
@@ -1149,7 +1152,7 @@ resources:
     description:
       en: |
         It is recommended that this field be populated with one of the five solicitation procedures listed below:
-          •	AC: Advance Contract Award Notice (ACAN) refers to a contract awarded to a supplier identified under an ACAN process where it was determined that there were no other statements of capabilities that could successfully meet the government’s requirements. 
+          •	AC: Advance Contract Award Notice (ACAN) refers to a contract awarded to a supplier identified under an ACAN process where it was determined that there were no other statements of capabilities that could successfully meet the government’s requirements.
           • OB: Competitive – Open Bidding (Government Electronic Tendering System (GETS)) refers to a competitive contract where bids were solicited via GETS.
           •	TC: Competitive – Traditional refers to a competitive contract where bids were not solicited via GETS, but through another medium, such as soliciting bids directly from suppliers by email or phone.
           •	ST: Competitive – Selective Tendering refers to a solicitation procedure permitted under Canada’s trade agreements where qualified suppliers are selected from a source list (including single-use or multi-use lists) under the selective tendering procedural rules in Canada’s trade agreements.
@@ -1343,7 +1346,7 @@ resources:
         en: Any measures for Indigenous peoples and businesses, including set asides for Indigenous businesses (applies to all agreements)
         fr: Toute mesure en faveur des peuples et des entreprises autochtones, y compris les marchés réservés aux entreprises autochtones (s’applique à tous les accords)
       "08":
-        en: Set-asides for small businesses other than indigenous businesses (applies to all agreements except for CETA and TCA)
+        en: Set-asides for small businesses other than Indigenous businesses (applies to all agreements except for CETA and TCA)
         fr: Marchés réservés aux petites entreprises (autres que des entreprises autochtones) (s’applique à tous les accords sauf l’AECG et l’ACC)
       "09":
         en: Measures necessary to protect public morals, order or safety (applies to all agreements)
@@ -1531,7 +1534,7 @@ resources:
       en: |
         This field must not be empty when the Intellectual Property data field is one of the following values (A2, A3, A41, A42, A43, A5, A8 or B). This field may be left empty if none of the Intellectual Property data field values apply. Valid formats include: Yes or No.
       fr: |
-        Cette zone ne doit pas être vide lorsque le champ Propriété intellectuelle contient l’une des valeurs suivantes : A2, A3, A41, A42, A43, A5, A8 ou B. Cette zone peut demeurer vide si aucune des valeurs de Propriété intellectuelle ne s’applique. Les formats valides incluent : Oui ou Non.
+        Ce champ ne doit pas être vide lorsque le champ Propriété intellectuelle contient l’une des valeurs suivantes : A2, A3, A41, A42, A43, A5, A8 ou B. Ce champ peut demeurer vide si aucune des valeurs de Propriété intellectuelle ne s’applique. Les formats valides incluent : Oui ou Non.
     datastore_type: text
     excel_required_formula: 'NOT(OR({intellectual_property}="C",{intellectual_property}="NA",{intellectual_property}=""))'
     excel_error_formula: 'ISERROR(SEARCH("|"&TRIM({cell})&"|","|true|t|vrai|v|1|yes|y|oui|o|false|f|faux|0|no|n|non|"))'
@@ -1647,7 +1650,7 @@ resources:
       fr: Type d’instrument
     description:
       en: |
-        i. It is recommended that the instrument type identify whether the transaction being reported is a contract, contract amendment, or a standing offer or supply arrangement agreement. 
+        i. It is recommended that the instrument type identify whether the transaction being reported is a contract, contract amendment, or a standing offer or supply arrangement agreement.
         ii. The instrument type for:
           -	A contract is “C”;
           -	An amendment is “A”;
@@ -1739,10 +1742,10 @@ resources:
       en: |
         This field must be populated with a “1” if the solicitation procedure is identified as non-competitive (TN) or Advance Contract Award Notice (ACAN).
       fr: |
-        Cette zone doit contenir un « 1 » si la méthode d’invitation à soumissionner est identifiée comme étant non concurrentielle (TN) ou un préavis d’attribution de contrat (AC).
+        Ce champ doit contenir un « 1 » si la méthode d’invitation à soumissionner est identifiée comme étant non concurrentielle (TN) ou un préavis d’attribution de contrat (AC).
     datastore_type: int
     excel_error_formula: 'OR({default_formula},AND(VALUE({cell})<>1,OR({solicitation_procedure}="TN",{solicitation_procedure}="AC")))'
-    
+
   - datastore_id: article_6_exceptions
     label:
       en: Section 6 Government Contracts Regulations Exceptions
@@ -1769,7 +1772,7 @@ resources:
       en: |
         This field may only be populated with “0” if the procurement was identified as competitive (open bidding (OB), traditional competitive (TC) or selective tendering (ST)).
       fr: |
-        Cette zone peut seulement contenir « 0 » si l’acquisition a été identifiée comme étant concurrentielle (invitation ouverte à soumissionner (OB) ou concurrentielle - traditionnelle (TC) ou Concurrentielle – Appel d’offres sélectif (ST)).
+        Ce champ peut seulement contenir « 0 » si l’acquisition a été identifiée comme étant concurrentielle (invitation ouverte à soumissionner (OB) ou concurrentielle - traditionnelle (TC) ou Concurrentielle – Appel d’offres sélectif (ST)).
     datastore_type: text
     excel_full_text_choices: false
     excel_error_formula: 'OR({default_formula},AND(VALUE({cell})<>0,NOT(OR({solicitation_procedure}="TN",{solicitation_procedure}="AC"))))'
@@ -1802,7 +1805,7 @@ resources:
         iii. For amendments, select the value of “0” of this field.
         iv. For a competitive contract awarded by PSPC, SSC or another department on behalf of the client department, a value of “0” may be entered if the information is not available within the reporting period for which the contract was awarded. Once information is available, the contract record is to be updated at the next subsequent reporting period, or as soon as practicable.
       fr: |
-        Il est recommandé de saisir dans ce champ l’une des méthodes d’évaluation des soumissions indiquées ci-dessous, si un appel d’offres a été lancé à l’égard du marché : 
+        Il est recommandé de saisir dans ce champ l’une des méthodes d’évaluation des soumissions indiquées ci-dessous, si un appel d’offres a été lancé à l’égard du marché :
         i. S’il n’y a pas eu d’appel d’offres, il faut choisir la valeur « 0 ».
         ii. Dans le cas d’un PAC à l’égard duquel il a été déterminé qu’aucun énoncé de capacités ne répondait aux exigences du PAC, il faut saisir la valeur « 0 ».
         iii. S’il s’agit d’une modification, il faut choisir la valeur « 0 » pour ce champ.
@@ -1813,7 +1816,7 @@ resources:
         as non-competitive (TN) or advance contract award notice (AC) in the solicitation procedure data field or was
         identified as an Amendment (A) in the Instrument type data field.
       fr: |
-        Si cette zone est remplie, il doit contenir un « 0 » si l’acquisition a été identifiée
+        Si ce champ est rempli, il doit contenir un « 0 » si l’acquisition a été identifiée
         comme étant non concurrentielle (TN) ou un préavis d’attribution de contrat
         (AC) ou si l’acquisition a été identifiée comme un modification (A) dans le
         champ Type d’instrument.
@@ -1863,10 +1866,10 @@ resources:
       fr: Periode de déclaration
     description:
       en: |
-          It is recommended that this field be populated in the standard format described below. 
+          It is recommended that this field be populated in the standard format described below.
           When published on the Open Government portal, this field will contain the fiscal quarter this particular contract entry was reported to the public. For example if a contract is being amended on May 3, 2017, and reported in the first fiscal quarter of 2017-–2018, the entry should be 2017-2018-Q1.
       fr: |
-          Il est recommandé de remplir ce champ dans le format standard décrit ci-dessous. 
+          Il est recommandé de remplir ce champ dans le format standard décrit ci-dessous.
           Lorsqu’il est publié sur le portail du Gouvernement Ouvert, ce champ contiendra le quartier fiscal dont cette donné était déclarée. Par exemple, si un marché est modifié le 3 mai 2017, et la modification est déclarée au cours du premier trimestre de l’exercice 2017-2018, il convient d’indiquer : 2017 à 2018-Q1).
     validation:
       en: Mandatory for contracts after 2019-01-01
@@ -1920,22 +1923,22 @@ resources:
           errors := errors || required_error(NEW.vendor_postal_code, 'vendor_postal_code');
         END IF;
         IF NOT((NEW.vendor_postal_code = '') IS NOT FALSE) AND NEW.vendor_postal_code <> 'NA' AND NEW.vendor_postal_code !~ '^[A-Z][0-9][A-Z]$' THEN
-          errors := errors || ARRAY[['vendor_postal_code', 'This field must contain the first three digits of a postal code in A1A format or the value "NA"']];
+          errors := errors || ARRAY[['vendor_postal_code', {vendor_postal_code_error}]];
         END IF;
 
         IF NEW.contract_date >= '2022-01-01'::date THEN
           errors := errors || required_error(NEW.buyer_name, 'buyer_name');
           IF trim(both E'\t\n\x0b\x0c\r \xc2\xa0' from NEW.buyer_name) <> 'NA' AND NEW.instrument_type = 'A' THEN
-            errors := errors || ARRAY[['buyer_name', 'This field must be populated with an NA if an amendment is disclosed under Instrument Type']];
+            errors := errors || ARRAY[['buyer_name', {buyer_name_error}]];
           END IF;
         END IF;
 
         NEW.economic_object_code := trim(both E'\t\n\x0b\x0c\r \xc2\xa0' from NEW.economic_object_code);
         IF length(NEW.economic_object_code) > 4 THEN
-          errors := errors || ARRAY[['economic_object_code', 'This field is limited to only 3 or 4 digits.']];
+          errors := errors || ARRAY[['economic_object_code', {economic_object_code_limit_error}]];
         END IF;
         IF NEW.economic_object_code = 'NA' and NEW.instrument_type <> 'SOSA' THEN
-          errors := errors || ARRAY[['economic_object_code', 'If N/A, then Instrument Type must be identified as a standing offer/supply arrangement (SOSA)']];
+          errors := errors || ARRAY[['economic_object_code', {economic_object_code_error}]];
         END IF;
 
         IF NEW.contract_date >= '2019-01-01'::date THEN
@@ -1965,12 +1968,12 @@ resources:
         errors := errors || crval.error;
         NEW.trade_agreement = crval.clean;
         IF 'XX' = ANY(NEW.trade_agreement) AND NEW.trade_agreement <> '{{XX}}' THEN
-          errors := errors || ARRAY[['trade_agreement', 'If the value XX (none) is entered, then no other value can be entered in this field.']];
+          errors := errors || ARRAY[['trade_agreement', {trade_agreement_error}]];
         END IF;
 
         IF NEW.contract_date >= '2022-01-01'::date THEN
           IF NOT (NEW.agreement_type_code = '') IS NOT FALSE THEN
-            errors := errors || ARRAY[['agreement_type_code', 'Discontinued as of 2022-01-01']];
+            errors := errors || ARRAY[['agreement_type_code', {agreement_type_code_discontinued_error}]];
           END IF;
         ELSIF NEW.trade_agreement = '{{}}' THEN
           IF NEW.contract_date >= '2019-01-01'::date THEN
@@ -1979,8 +1982,7 @@ resources:
         END IF;
 
         IF NEW.trade_agreement <> '{{}}' AND NOT (NEW.agreement_type_code = '') IS NOT FALSE THEN
-          errors := errors || ARRAY[['agreement_type_code',
-            'Must be left blank when trade agreements specified']];
+          errors := errors || ARRAY[['agreement_type_code', {agreement_type_code_error}]];
         END IF;
 
         IF NEW.contract_date >= '2022-01-01'::date THEN
@@ -1990,7 +1992,7 @@ resources:
         errors := errors || crval.error;
         NEW.land_claims = crval.clean;
         IF 'NA' = ANY(NEW.land_claims) AND NEW.land_claims <> '{{NA}}' THEN
-          errors := errors || ARRAY[['land_claims', 'If the value NA (not applicable) is entered, then no other value can be entered in this field.']];
+          errors := errors || ARRAY[['land_claims', {land_claims_error}]];
         END IF;
 
         IF NEW.contract_date >= '2019-01-01'::date THEN
@@ -2006,7 +2008,7 @@ resources:
         END IF;
         NEW.commodity_code := trim(both E'\t\n\x0b\x0c\r \xc2\xa0' from NEW.commodity_code);
         IF length(NEW.commodity_code) > 8 THEN
-          errors := errors || ARRAY[['commodity_code', 'The field is limited to eight alpha-numeric digits or less.']];
+          errors := errors || ARRAY[['commodity_code', {commodity_code_error}]];
         END IF;
         errors := errors || choice_error(NEW.country_of_vendor,
           {country_of_vendor},
@@ -2035,11 +2037,11 @@ resources:
         errors := errors || crval.error;
         NEW.limited_tendering_reason = crval.clean;
         IF '00' = ANY(NEW.limited_tendering_reason) AND NEW.limited_tendering_reason <> '{{00}}' THEN
-          errors := errors || ARRAY[['limited_tendering_reason', 'If the value 00 (none) is entered, then no other value can be entered in this field.']];
+          errors := errors || ARRAY[['limited_tendering_reason', {limited_tendering_reason_00_error}]];
         END IF;
         IF (NEW.solicitation_procedure = 'TC' OR NEW.solicitation_procedure = 'TN' OR NEW.solicitation_procedure = 'AC') AND NEW.trade_agreement <> '{{}}' AND NEW.trade_agreement <> '{{XX}}' AND NEW.limited_tendering_reason = '{{00}}' AND NEW.contract_date >= '2022-01-01'::date THEN
-          errors := errors || ARRAY[['limited_tendering_reason', 'If TC, TN or AC is selected in the Solicitation Procedure data field with a value other than XX (None) selected in the Trade Agreement data field, then a Limited Tendering value other than 00 (none) must be entered.']];
-          errors := errors || ARRAY[['solicitation_procedure', 'If “TC” (Competitive - Traditional), “TN” (Non-Competitive) or “AC” (Advanced Contract Award Notice) is selected and trade agreement with a value other than “XX” (None) is selected, limited tendering cannot have a value of “0” or “00” (None).']];
+          errors := errors || ARRAY[['limited_tendering_reason', {limited_tendering_reason_error}]];
+          errors := errors || ARRAY[['solicitation_procedure', {solicitation_procedure_error}]];
         END IF;
 
         IF length(array_to_string(NEW.trade_agreement_exceptions,'','')) = 1 THEN
@@ -2047,7 +2049,7 @@ resources:
           NEW.trade_agreement_exceptions = ARRAY['0' || array_to_string(NEW.trade_agreement_exceptions,'','')];
         END IF;
         IF '00' = ANY(NEW.trade_agreement_exceptions) AND NEW.trade_agreement_exceptions <> '{{00}}' THEN
-          errors := errors || ARRAY[['trade_agreement_exceptions', 'If the value 00 (none) is entered, then no other value can be entered in this field.']];
+          errors := errors || ARRAY[['trade_agreement_exceptions', {trade_agreement_exceptions_error}]];
         END IF;
 
         IF NEW.contract_date >= '2019-01-01'::date THEN
@@ -2073,7 +2075,7 @@ resources:
         END IF;
         IF NEW.indigenous_business_excluding_psib <> '' AND NEW.indigenous_business_excluding_psib <> 'N' AND (
             NEW.indigenous_business = 'MS' OR NEW.indigenous_business = 'VS') THEN
-          errors := errors || ARRAY[['indigenous_business_excluding_psib', 'This field must be N, No or Non, if the Procurement Strategy for Aboriginal Business field is MS or VS.']];
+          errors := errors || ARRAY[['indigenous_business_excluding_psib', {indigenous_business_excluding_psib_error}]];
         END IF;
 
         IF NEW.contract_date >= '2017-01-01'::date THEN
@@ -2126,17 +2128,17 @@ resources:
 
         IF NEW.number_of_bids IS NOT NULL THEN
           IF NEW.solicitation_procedure = ANY('{{TN,AC}}') AND NEW.number_of_bids <> 1 THEN
-            errors := errors || ARRAY[['number_of_bids', 'This field must be populated with a 1 if the solicitation procedure is identified as non-competitive (TN) or Advance Contract Award Notice (AC).']];
+            errors := errors || ARRAY[['number_of_bids', {number_of_bids_error}]];
           END IF;
         END IF;
 
         IF NEW.award_criteria <> '' AND NEW.award_criteria <> '0' AND (
             NEW.solicitation_procedure = 'TN' OR NEW.solicitation_procedure = 'AC' OR NEW.instrument_type = 'A') THEN
-          errors := errors || ARRAY[['award_criteria', 'If this field is populated, it must be with a “0” if the procurement was identified as non-competitive (TN) or advance contract award notice (AC) or was identified as an Amendment (A) in the Instrument type data field.']];
+          errors := errors || ARRAY[['award_criteria', {award_criteria_error}]];
         END IF;
 
         IF NEW.article_6_exceptions <> '' AND NEW.article_6_exceptions <> '0' AND NOT(NEW.solicitation_procedure = 'TN' OR NEW.solicitation_procedure = 'AC') THEN
-          errors := errors || ARRAY[['article_6_exceptions', 'This field may only be populated with “0” if the procurement was identified as competitive (open bidding (OB), traditional competitive (TC) or selective tendering (ST)).']];
+          errors := errors || ARRAY[['article_6_exceptions', {article_6_exceptions_error}]];
         END IF;
 
         IF NEW.contract_date >= '2019-01-01'::date THEN
@@ -2152,6 +2154,25 @@ resources:
         RAISE EXCEPTION E'TAB-DELIMITED\t%', array_to_string(errors, E'\t');
       END;
   - update_record_modified_created_trigger
+
+  trigger_strings:  # yaml | not supported
+    vendor_postal_code_error: This field must contain the first three digits of a postal code in A1A format or the value "NA"
+    buyer_name_error: This field must be populated with an NA if an amendment is disclosed under Instrument Type
+    economic_object_code_limit_error: This field is limited to only 3 or 4 digits.
+    economic_object_code_error: If N/A, then Instrument Type must be identified as a standing offer/supply arrangement (SOSA)
+    trade_agreement_error: If the value XX (none) is entered, then no other value can be entered in this field.
+    agreement_type_code_discontinued_error: Discontinued as of 2022-01-01
+    agreement_type_code_error: Must be left blank when trade agreements specified
+    land_claims_error: If the value NA (not applicable) is entered, then no other value can be entered in this field.
+    commodity_code_error: The field is limited to eight alpha-numeric digits or less.
+    limited_tendering_reason_00_error: If the value 00 (none) is entered, then no other value can be entered in this field.
+    limited_tendering_reason_error: If TC, TN or AC is selected in the Solicitation Procedure data field with a value other than XX (None) selected in the Trade Agreement data field, then a Limited Tendering value other than 00 (none) must be entered.
+    solicitation_procedure_error: If “TC” (Competitive - Traditional), “TN” (Non-Competitive) or “AC” (Advanced Contract Award Notice) is selected and trade agreement with a value other than “XX” (None) is selected, limited tendering cannot have a value of “0” or “00” (None).
+    trade_agreement_exceptions_error: If the value 00 (none) is entered, then no other value can be entered in this field.
+    indigenous_business_excluding_psib_error: This field must be N, No or Non, if the Procurement Strategy for Aboriginal Business field is MS or VS.
+    number_of_bids_error: This field must be populated with a 1 if the solicitation procedure is identified as non-competitive (TN) or Advance Contract Award Notice (AC).
+    award_criteria_error: If this field is populated, it must be with a “0” if the procurement was identified as non-competitive (TN) or advance contract award notice (AC) or was identified as an Amendment (A) in the Instrument type data field.
+    article_6_exceptions_error: This field may only be populated with “0” if the procurement was identified as competitive (open bidding (OB), traditional competitive (TC) or selective tendering (ST)).
 
   examples:
     record:
@@ -2209,7 +2230,7 @@ resources:
   fields:
 
   - datastore_id: reporting_period
-    label: 
+    label:
       en: Reporting Period
       fr: Periode de declaration
     excel_required: true

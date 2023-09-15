@@ -1,14 +1,14 @@
 {% ckan_extends %}
 
 {% block site_title %}
-<a href="{{ h.url_for(controller='package', action='search') }}"
+<a href="{{ h.url_for('dataset.search') }}"
     >{{ _('Open Data Registry') }}</a>
 {% endblock %}
 
 {# Remove when WET v4.0.21 is out #}
 {%- block custom_styles %}
   {{ super() }}
-  <link rel="stylesheet" href="/internal.css?x=9" type="text/css" />
+  <link rel="stylesheet" href="/internal.css?x=10" type="text/css" />
 {%- endblock -%}
 
 {%- block adobe_analytics -%}{%- endblock -%}
