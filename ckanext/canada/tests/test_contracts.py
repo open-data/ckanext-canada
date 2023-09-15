@@ -7,6 +7,8 @@ from ckanext.canada.tests.factories import CanadaOrganization as Organization
 
 from ckanext.recombinant.tables import get_chromo
 
+from logging import getLogger
+log = getLogger('ckan.model')
 
 class TestContracts(CanadaTestBase):
     @classmethod
@@ -90,6 +92,10 @@ class TestContracts(CanadaTestBase):
             'land_claims': ['This field must not be empty'],
             'indigenous_business': ['This field must not be empty'],
         }
+        log.info("    ")
+        log.info("DEBUGGING::test_2022_fields")
+        log.info(err)
+        log.info("    ")
         assert isinstance(err, dict), err
         for k in set(err) | set(expected):
             assert k in err
@@ -110,19 +116,15 @@ class TestContracts(CanadaTestBase):
                 records=[record])
         err = ve.value.error_dict['records'][0]
         expected = {
-            'trade_agreement': [
-                'If the value XX (none) is entered, then no other value '
-                'can be entered in this field.'],
-            'land_claims': [
-                'If the value NA (not applicable) is entered, then no other '
-                'value can be entered in this field.'],
-            'limited_tendering_reason': [
-                'If the value 00 (none) is entered, then no other value can '
-                'be entered in this field.'],
-            'trade_agreement_exceptions': [
-                'If the value 00 (none) is entered, then no other value can '
-                'be entered in this field.'],
+            'trade_agreement': ['If the value XX (none) is entered, then no other value can be entered in this field.'],
+            'land_claims': ['If the value NA (not applicable) is entered, then no other value can be entered in this field.'],
+            'limited_tendering_reason': ['If the value 00 (none) is entered, then no other value can be entered in this field.'],
+            'trade_agreement_exceptions': ['If the value 00 (none) is entered, then no other value can be entered in this field.'],
         }
+        log.info("    ")
+        log.info("DEBUGGING::test_multi_field_errors")
+        log.info(err)
+        log.info("    ")
         assert isinstance(err, dict), err
         for k in set(err) | set(expected):
             assert k in err
@@ -147,16 +149,14 @@ class TestContracts(CanadaTestBase):
                 records=[record])
         err = ve.value.error_dict['records'][0]
         expected = {
-            'buyer_name': [
-                'This field must be populated with an NA '
-                'if an amendment is disclosed under Instrument Type'],
-            'economic_object_code': [
-                'If N/A, then Instrument Type must be identified '
-                'as a standing offer/supply arrangement (SOSA)'],
-            'number_of_bids':[
-                'This field must be populated with a 1 if the solicitation procedure is '
-                'identified as non-competitive (TN) or Advance Contract Award Notice (AC).'],
+            'buyer_name': ['This field must be populated with an NA if an amendment is disclosed under Instrument Type'],
+            'economic_object_code': ['If N/A, then Instrument Type must be identified as a standing offer/supply arrangement (SOSA)'],
+            'number_of_bids':['This field must be populated with a 1 if the solicitation procedure is identified as non-competitive (TN) or Advance Contract Award Notice (AC).'],
         }
+        log.info("    ")
+        log.info("DEBUGGING::test_inter_field_errors")
+        log.info(err)
+        log.info("    ")
         assert isinstance(err, dict), err
         for k in set(err) | set(expected):
             assert k in err
@@ -178,6 +178,10 @@ class TestContracts(CanadaTestBase):
             'economic_object_code': ['This field is limited to only 3 or 4 digits.'],
             'commodity_code': ['The field is limited to eight alpha-numeric digits or less.'],
         }
+        log.info("    ")
+        log.info("DEBUGGING::test_field_length_errors")
+        log.info(err)
+        log.info("    ")
         assert isinstance(err, dict), err
         for k in set(err) | set(expected):
             assert k in err
