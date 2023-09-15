@@ -594,7 +594,7 @@ resources:
       END;
   - update_record_modified_created_trigger
 
-  trigger_strings:
+  trigger_strings:  # yaml | not supported
     status_error: "If Status is set to: Not Going Forward, Publish Record must be set to No"
 
   examples:

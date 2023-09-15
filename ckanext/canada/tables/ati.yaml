@@ -242,7 +242,7 @@ resources:
       END;
   - update_record_modified_created_trigger
 
-  trigger_strings:
+  trigger_strings:  # yaml | not supported
     year_error: Please enter a valid year
     month_error: Please enter a month number from 1-12
     pages_error: This value must not be negative
@@ -371,7 +371,7 @@ resources:
       END;
   - update_record_modified_created_trigger
 
-  trigger_strings:
+  trigger_strings:  # yaml | not supported
     year_error: Please enter a valid year
     month_error: Please enter a month number from 1-12
 

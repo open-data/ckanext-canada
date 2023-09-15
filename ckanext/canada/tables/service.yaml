@@ -1500,7 +1500,7 @@ GC. (http://www.gcpedia.gc.ca/wiki/GC_Service_Policy_Agenda#Guidance)"
       END;
   - update_record_modified_created_trigger
 
-  trigger_strings:
+  trigger_strings:  # yaml | not supported
     service_std_target_error: "Please enter a decimal value between zero and one: %"
 
   examples:

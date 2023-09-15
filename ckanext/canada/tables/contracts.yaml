@@ -2156,7 +2156,7 @@ resources:
       END;
   - update_record_modified_created_trigger
 
-  trigger_strings:
+  trigger_strings:  # yaml | not supported
     vendor_postal_code_error: This field must contain the first three digits of a postal code in A1A format or the value "NA"
     buyer_name_error: This field must be populated with an NA if an amendment is disclosed under Instrument Type
     economic_object_code_limit_error: This field is limited to only 3 or 4 digits.

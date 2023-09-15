@@ -367,7 +367,7 @@ resources:
       END;
   - update_record_modified_created_trigger
 
-  trigger_strings:
+  trigger_strings:  # yaml | not supported
     year_error: This must list the year you are reporting on (not the fiscal year).
 
   examples:
