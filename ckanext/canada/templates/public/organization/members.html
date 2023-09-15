@@ -1,3 +1,64 @@
 {% ckan_extends %}
+
+{% set is_org_editor = (not h.check_access('organization_update', {'id': c.group_dict.id}) and
+                        h.check_access('view_org_members', {'id': c.group_dict.id})) %}
+
+{% set translated_title = h.get_translated(c.group_dict, 'title') %}
+
+{% block breadcrumb_content %}
+  {% if is_org_editor %}
+    <li>{% link_for _('Organizations'), named_route=group_type + '.index' %}</li>
+    <li class="active">{% link_for translated_title, named_route=group_type + '.read', id= c.group_dict.name%}</li>
+  {% else %}
+    {{ super() }}
+  {% endif %}
+{% endblock %}
+
 {% block subtitle %}{{ super.super() }}{% endblock %}
 {% block subtitle_2 %}{{ _('Members') }}{% endblock %}
+
+{% block primary_content %}
+  {% if is_org_editor %}
+    <div class="organization-members-content-view-wrapper">{{ super() }}</div>
+  {% else %}
+    {{ super() }}
+  {% endif %}
+{% endblock %}
+
+{% block primary_content_inner %}
+  {% if is_org_editor %}
+    <div class="organization-members-table-view-wrapper">{{ super() }}</div>
+  {% else %}
+    {{ super() }}
+  {% endif %}
+{% endblock %}
+
+{% block secondary_content %}
+  {% if is_org_editor %}
+    {% snippet 'snippets/organization.html', organization=group_dict, show_nums=true, group_type=group_type %}
+    {% block organization_facets %}{% endblock %}
+  {% else %}
+    {{ super() }}
+  {% endif %}
+{% endblock %}
+
+{% block styles %}
+  {{ super() }}
+  {% if is_org_editor %}
+    <style>
+      .organization-members-content-view-wrapper > header.page-header,
+      .organization-members-content-view-wrapper > header.page-header ul.nav-tabs{
+        margin: 0;
+        background: transparent;
+        border: none;
+      }
+      .organization-members-content-view-wrapper > header.page-header ul.nav-tabs ul.nav.nav-pills li:not(.active) a:hover{
+        background: #eeeeee;
+      }
+      .organization-members-table-view-wrapper table.table thead th:last-of-type,
+      .organization-members-table-view-wrapper table.table tbody td:last-of-type{
+        display: none;
+      }
+    </style>
+  {% endif %}
+{% endblock %}

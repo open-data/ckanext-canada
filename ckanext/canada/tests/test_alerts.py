@@ -1,106 +1,97 @@
 # -*- coding: UTF-8 -*-
+from ckanext.canada.tests import CanadaTestBase
 from ckan.plugins.toolkit import h
 from ckanapi import LocalCKAN
 
+import pytest
 from ckan.tests.factories import Sysadmin
 from ckanext.canada.tests.factories import CanadaOrganization as Organization
-from ckanext.canada.tests import CanadaTestBase
 
 
+@pytest.mark.usefixtures('with_request_context')
 class TestPackageAlerts(CanadaTestBase):
-    def setup(self):
-        super(TestPackageAlerts, self).setup()
+    @classmethod
+    def setup_method(self, method):
+        """Method is called at class level before EACH test methods of the class are called.
+        Setup any state specific to the execution of the given class methods.
+        """
+        super(TestPackageAlerts, self).setup_method(method)
+
         self.sysadmin = Sysadmin()
         self.extra_environ_tester = {'REMOTE_USER': self.sysadmin['name'].encode('ascii')}
         self.org = Organization()
-        self.app = self._get_test_app()
         self.sysadmin_action = LocalCKAN(
             username=self.sysadmin['name']).action
 
 
-    def test_marked_not_eady_to_publish(self):
-        data = self.filled_dataset_data()
+    def test_marked_not_eady_to_publish(self, app):
+        data = self._filled_dataset_data()
         data['imso_approval'] = 'false'
         self.sysadmin_action.package_create(
             name='12345678-9abc-def0-1234-56789abcdef0', **data)
 
-        offset = h.url_for(controller='package',
-                           action='read',
+        offset = h.url_for('dataset.read',
                            id='12345678-9abc-def0-1234-56789abcdef0')
-        response = self.app.get(offset, extra_environ=self.extra_environ_tester)
+        response = app.get(offset, extra_environ=self.extra_environ_tester)
 
         # Check dataset page
-        assert not 'View on Portal' in response
-        assert 'Approval required' in response
+        assert not 'View on Portal' in response.body
+        assert 'Seek out departmental approval and mark as approved to continue' in response.body
 
 
-    def test_approval_required(self):
-        data = self.filled_dataset_data()
+    def test_approval_required(self, app):
+        data = self._filled_dataset_data()
         data['ready_to_publish'] = 'false'
         self.sysadmin_action.package_create(
             name='12345678-9abc-def0-1234-56789abcdef1', **data)
 
-        offset = h.url_for(controller='package',
-                           action='read',
+        offset = h.url_for('dataset.read',
                            id='12345678-9abc-def0-1234-56789abcdef1')
-        response = self.app.get(offset, extra_environ=self.extra_environ_tester)
+        response = app.get(offset, extra_environ=self.extra_environ_tester)
 
         # Check dataset page
-        assert not 'View on Portal' in response
-        assert 'Record marked not ready to publish' in response
-
-        data['imso_approval'] = 'false'
-        self.sysadmin_action.package_create(
-            name='12345678-9abc-def0-1234-56789abcdef2', **data)
-
-        offset = h.url_for(controller='package',
-                           action='read',
-                           id='12345678-9abc-def0-1234-56789abcdef2')
-        response = self.app.get(offset, extra_environ=self.extra_environ_tester)
-
-        # Check dataset page
-        assert not 'View on Portal' in response
-        assert 'Record marked not ready to publish' in response
+        assert not 'View on Portal' in response.body
+        assert 'Draft record has been saved and can be edited. Mark as ready to publish to continue' in response.body
 
 
-    def test_queued_for_publishing(self):
-        data = self.filled_dataset_data()
+    def test_queued_for_publishing(self, app):
+        data = self._filled_dataset_data()
         data['imso_approval'] = 'true'
         data['ready_to_publish'] = 'true'
         self.sysadmin_action.package_create(
             name='12345678-9abc-def0-1234-56789abcdef3', **data)
 
-        offset = h.url_for(controller='package',
-                           action='read',
+        offset = h.url_for('dataset.read',
                            id='12345678-9abc-def0-1234-56789abcdef3')
-        response = self.app.get(offset, extra_environ=self.extra_environ_tester)
+        response = app.get(offset, extra_environ=self.extra_environ_tester)
 
         # Check dataset page
-        assert not 'View on Portal' in response
-        assert 'Queued for publishing' in response
+        assert not 'View on Portal' in response.body
+        assert 'Data record is in queue for validation' in response.body
+        assert 'Record will be published by the following business day upon validation' in response.body
 
 
-    def test_view_on_portal(self):
-        data = self.filled_dataset_data()
+    def test_view_on_portal(self, app):
+        data = self._filled_dataset_data()
         data['imso_approval'] = 'true'
         data['ready_to_publish'] = 'true'
         data['portal_release_date'] = '2023-07-07'
         self.sysadmin_action.package_create(
             name='12345678-9abc-def0-1234-56789abcdef4', **data)
 
-        offset = h.url_for(controller='package',
-                           action='read',
+        offset = h.url_for('dataset.read',
                            id='12345678-9abc-def0-1234-56789abcdef4')
-        response = self.app.get(offset, extra_environ=self.extra_environ_tester)
+        response = app.get(offset, extra_environ=self.extra_environ_tester)
 
         # Check dataset page
-        assert 'View on Portal' in response
-        assert not 'Queued for publishing' in response
-        assert not 'Approval required' in response
-        assert not 'Record marked not ready to publish' in response
+        assert 'View on Portal' in response.body
+        assert not 'Data record is in queue for validation' in response.body
+        assert not 'Record will be published by the following business day upon validation' in response.body
+        assert not 'Seek out departmental approval and mark as approved to continue' in response.body
+        assert not 'Draft record has been saved and can be edited. Mark as ready to publish to continue' in response.body
 
 
-    def filled_dataset_data(self):
+    def _filled_dataset_data(self):
         # type: () -> dict
         return {
             'type': 'dataset',

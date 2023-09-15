@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 from ckan.tests.factories import User, Organization, Dataset, Resource, ResourceView
-from factory import LazyAttribute
+from factory import LazyAttribute, Sequence
 import ckan.tests.helpers as helpers
 from ckan.model import Session
 
@@ -35,6 +35,8 @@ class CanadaOrganization(Organization):
         'en': 'Test Org Title',
         'fr': 'Test FR Org Title'}
     faa_schedule = 'NA'
+    # Use hyphenated org name for Recombinant flask urls
+    name = Sequence(lambda n: "test-org-{0:02d}".format(n))
 
 
 class CanadaResourceView(ResourceView):

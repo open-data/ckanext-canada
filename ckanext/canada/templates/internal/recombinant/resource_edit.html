@@ -13,7 +13,7 @@
   {% if dataset_type == 'ati' %}
     {% if organization.ati_email %}
       <div class="dataset-alert alert alert-info">
-        <p>{{ _('Informal Requests for ATI Records Previously Released are being sent to <strong>%s.</strong> Please contact <a href="mailto:open-ouvert@tbs-sct.gc.ca">open-ouvert@tbs-sct.gc.ca</a> if that address is no longer valid.') | safe % (organization.ati_email) }}</p>
+        <p>{{ (_('Informal Requests for ATI Records Previously Released are being sent to <strong>%s.</strong> Please contact <a href="mailto:open-ouvert@tbs-sct.gc.ca">open-ouvert@tbs-sct.gc.ca</a> if that address is no longer valid.') | safe ).format(organization.ati_email) }}</p>
       </div>
     {% else %}
       <div class="dataset-alert alert alert-danger">

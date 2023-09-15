@@ -50,9 +50,7 @@
       "serverSide": true,
       "processing": true,
       "ajax": {
-        "url": "{{ h.url_for(
-        controller='ckanext.canada.controller:CanadaController',
-        action='datatable',
+        "url": "{{ h.url_for('canada.datatable',
         resource_name=resource_name,
         resource_id=resource_id,
     ) }}",
@@ -80,7 +78,7 @@
 
           // closing form tag needed for py webtest lib
           var form = $('<form></form>',{
-            action : "{% url_for 'recombinant_template', dataset_type=dataset_type, lang=h.lang(),owner_org=owner_org %}",
+            action : "{{ h.url_for('recombinant.template', dataset_type=dataset_type, lang=h.lang(), owner_org=owner_org) }}",
             method : "post"
           });
 
@@ -88,6 +86,12 @@
             type: 'hidden',
             value: "{{resource_name}}",
             name: 'resource_name'
+          }));
+
+          form.append($('<input>').attr({
+            type: 'hidden',
+            value: "{{request.cookies.token}}",
+            name: 'token'
           }));
 
           form.append($('<input>').attr({

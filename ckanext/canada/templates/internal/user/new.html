@@ -3,13 +3,13 @@
 {% block subtitle %}{% block page_heading %}{{ _('Request an Account') }}{% endblock %}{% endblock %}
 
 {% block breadcrumb_content %}
-  <li class="active">{{ h.nav_link(_('Registration'), controller='user', action='register') }}</li>
+  <li class="active">{{ h.nav_link(_('Registration'), 'user.register') }}</li>
 {% endblock %}
 
 {% block primary_content %}
 
   <div class="row col-md-12">
-    {{ c.form | safe }}
+    {{ form | safe }}
   </div>
 {% endblock %}
 

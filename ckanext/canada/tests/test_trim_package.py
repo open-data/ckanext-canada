@@ -1,18 +1,23 @@
 # -*- coding: UTF-8 -*-
+from ckanext.canada.tests import CanadaTestBase
 from ckanext.canada.tests.factories import (
     CanadaDataset as Dataset,
     CanadaResource as Resource)
 
 from ckanext.canada.commands import _trim_package, PACKAGE_TRIM_FIELDS, RESOURCE_TRIM_FIELDS
-from ckanext.canada.tests import CanadaTestBase
 
 
 class TestTrimPackage(CanadaTestBase):
-    def setup(self):
-        super(TestTrimPackage, self).setup()
+    @classmethod
+    def setup_method(self, method):
+        """Method is called at class level before EACH test methods of the class are called.
+        Setup any state specific to the execution of the given class methods.
+        """
+        super(TestTrimPackage, self).setup_method(method)
+
         self.example_pkg = Dataset()
         resources = []
-        for _ in range(6):
+        for _i in range(6):
             resources.append(Resource(
                 package_id=self.example_pkg['id']))
         self.example_pkg['resources'] = resources
@@ -33,4 +38,3 @@ class TestTrimPackage(CanadaTestBase):
                 assert field not in resource
                 assert 'size' in resource
                 assert 'name' in resource
-

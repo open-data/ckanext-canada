@@ -1,6 +1,7 @@
 dataset_type: grants
 target_dataset: grants
 title: Proactive Disclosure - Grants and Contributions
+shortname: Grants and Contributions
 notes: Access, upload and modify the Grants and Contributions reports for your organization
 
 template_version: 3
@@ -24,23 +25,23 @@ resources:
     description:
       en: |
         The Reference number is populated by departments. It is a unique reference number given to each entry. Having a unique identifier for each item will allow departments to locate a specific item in the registry should they need to modify or delete.
-      
+
         Controlled format; This field is populated in the following format DDD-YYYY-YYYY-QX-XXXXX
          1. DDD represents the department number – See annex A for list of department numbers
          2. YYYY-YYYY represents the fiscal year
          3. QX represents the fiscal quarter
-         4. XXXXX represents the unique number assigned by the department for each entry. 
-      
+         4. XXXXX represents the unique number assigned by the department for each entry.
+
         For example, entries in the 2018-2019 Q1 fiscal year should be assigned numbers as follows: 001-2018-2019-Q1-00001, 001-2018-2019-Q1-00002, 001-2018-2019-Q1-00003, etc.'
       fr: |
         Ce champ est rempli par l’utilisateur. L’identificateur de projet ministériel permet aux ministères d’identifier rapidement les rapports produits dans leur propre système. Les ministères devraient utiliser un chiffre qui est logique pour le ministère. Ces renseignements seront publiés dans le cadre du rapport.
-      
+
         Format contrôlé; Ce champ est rempli au format suivant: DDD-YYYY-YYYY-QX-XXXXX
-         1.	DDD représente le numéro de département - Voir l’annexe A pour la liste des numéros de département. 
+         1.	DDD représente le numéro de département - Voir l’annexe A pour la liste des numéros de département.
          2.	AAAA-AAAA représente l'année fiscale
          3.	QX représente le trimestre fiscal
-         4.	XXXXX représente le numéro unique attribué par le département pour chaque entrée.      
-      
+         4.	XXXXX représente le numéro unique attribué par le département pour chaque entrée.
+
         Par exemple, les numéros de l'exercice 2018-2019 du T1 devraient recevoir les numéros suivants: 001-2018-2019-Q1-00001, 001-2018-2019-Q1-00002, 001-2018-2019-Q1-00003, etc.'
     obligation: Mandatory
     excel_required: true
@@ -150,7 +151,7 @@ resources:
 
         The business number should be populated for an organization or charity.
 
-        Real-time validation of business identity information linked to the Business Number, including legal name and operating name, for sole proprietorship, partnerships and incorporations, is available to departments through the Business Number Web Validation Service. For more details contact ic.bnadoptionne.ic@canada.ca. 
+        Real-time validation of business identity information linked to the Business Number, including legal name and operating name, for sole proprietorship, partnerships and incorporations, is available to departments through the Business Number Web Validation Service. For more details contact ic.bnadoptionne.ic@canada.ca.
 
         To validate a Business Number associated with a charity, departments can access the List of Charities basic search on the Canada.ca website. Enter the Charity name and click the Search button. Then click the Charity name of the search result to find additional information about the charity (e.g., Charity Program number, charity status, effective date of status, designation, etc.) Legal name and operating name cannot be validated using this basic search.
 
@@ -160,7 +161,7 @@ resources:
 
         Le numéro d’entreprise devrait être consigné pour une organisation ou un organisme de bienfaisance.
 
-        Les ministères peuvent obtenir la validation en temps réel de l’identité d’une entreprise en saisissant son numéro d’entreprise dans le Service de validation du numéro d’entreprise en ligne, qui inclut le nom légal et le nom commercial pour les entreprises individuelles, les partenariats et les constitutions en personne morale. Si vous voulez obtenir de plus amples renseignements, envoyez un courriel à ic.bnadoptionne.ic@canada.ca. 
+        Les ministères peuvent obtenir la validation en temps réel de l’identité d’une entreprise en saisissant son numéro d’entreprise dans le Service de validation du numéro d’entreprise en ligne, qui inclut le nom légal et le nom commercial pour les entreprises individuelles, les partenariats et les constitutions en personne morale. Si vous voulez obtenir de plus amples renseignements, envoyez un courriel à ic.bnadoptionne.ic@canada.ca.
 
         Pour valider un numéro d’entreprise associé à un organisme de bienfaisance, les ministères peuvent effectuer une recherche de base dans la Liste d’organismes de bienfaisance, sur le site Web Canada.ca. Entrez le nom de l’organisme de bienfaisance, puis cliquez sur le bouton de Recherche. Ensuite, cliquez sur le nom de l’organisme de bienfaisance tiré du résultat de la recherche afin de trouver de plus amples renseignements sur l’organisme de bienfaisance (p. ex., le numéro du programme de bienfaisance, le statut de l’organisme de bienfaisance, la date d’entrée en vigueur du statut et la désignation de l’organisme de bienfaisance). Il est impossible de valider le nom légal et le nom commercial au moyen de la fonction de recherche de base.
     obligation: Optional
@@ -179,7 +180,7 @@ resources:
         Only translated if the legal name is provided in both official languages by the recipient.  Provide in the following format: name English|name French.
       fr: |
         Le nom légal du bénéficiaire se veut complémentaire au champ « Numéro d'entreprise du bénéficiaire ». Cette information devrait être tirée de l'entente de subvention ou de contribution.
-        
+
         Traduction seulement si le nom légal est fourni dans les deux langues officielles par le bénéficiaire. Fournir dans le format suivant : nom anglais|nom français.
     obligation: Mandatory
     excel_required: true
@@ -306,13 +307,13 @@ resources:
         The "Recipient city" is a mandatory field that identifies which city the recipient operates in. This field can be populated with Canadian or foreign cities.
 
         Official city names should be provided, including both official languages (where applicable in the following format: name English|name French
-        
-        Free text, but a controlled list from Canada Revenue Agency’s qualified donees list of municipalities can be consulted: Canada Revenue Agency website (http://www.cra-arc.gc.ca/chrts-gvng/qlfd-dns/mncplts-eng.html). 
+
+        Free text, but a controlled list from Canada Revenue Agency’s qualified donees list of municipalities can be consulted: Canada Revenue Agency website (http://www.cra-arc.gc.ca/chrts-gvng/qlfd-dns/mncplts-eng.html).
       fr: |
         La « Ville du bénéficiaire » est un champ obligatoire qui indique la ville où le bénéficiaire exerce ses activités. On peut y inscrire le nom de villes canadiennes ou de villes étrangères.
 
         Nom officiel exact de la ville, y compris dans les deux langues officielles (le cas échéant) au format suivant : nom anglais|nom français
-        
+
         Texte libre, mais une liste contrôlée de la liste des municipalités désignées donataires de l’Agence du revenu du Canada peut être consultée: site Web de l’Agence du revenu du Canada (http://www.cra-arc.gc.ca/chrts-gvng/qlfd-dns/mncplts-fra.html).
     obligation: Mandatory
     excel_required: true
@@ -330,11 +331,11 @@ resources:
     description:
       en: |
         The "Recipient postal code" is a mandatory field that serves to identify the specific area in which the recipient operates. In cases where this field cannot be populated this field may be left blank.
-      
+
         Text format locked to "X#X #X#"; The Canada Post tool for looking up a postal code can be found on the Canada Post website.
       fr: |
         Le « Code postal du bénéficiaire » est un champ obligatoire qui sert à identifier avec précision la région où le bénéficiaire exerce ses activités. Si le fait de remplir ce champ suscite des préoccupations à l'égard de la vie privée, il est possible de le laisser vide.
-      
+
         Format de texte : "X#X #X#"; L'outil de Postes Canada permettant de rechercher un code postal se trouve sur le site Web de Postes Canada.
     obligation: Optional
     format_type: "Text format locked to (X#X #X#)"
@@ -506,12 +507,12 @@ resources:
     description:
       en: |
         The foreign currency type should be selected if a recipient is paid in a currency other than Canadian dollars. Select the type of foreign currency in this field (for example, US dollar (USD), Australian dollar (AUD), British pound (GBP)). This field is mandatory if the agreement is awarded in foreign currency.'
-      
+
         Foreign currency type is populated using the ISO 4217 alphabetic codes for foreign currency. This list can be found on the XE website. Entry is selected from a drop-down list.
 
       fr: |
         Le champ Type de monnaie étrangère doit être rempli si le bénéficiaire est payé dans une devise autre que le dollar canadien. Il faut sélectionner le type de monnaie étrangère; par exemple, dollar américain (USD), dollar australien (AUD), livre sterling (GBP). Ce champ est obligatoire si l'entente est en devise étrangère.
-      
+
         Le type de monnaie étrangère est complété à l'aide des codes alphabétiques ISO 4217 pour les monnaie étrangères. Cette liste se trouve sur le site Web XE. L'entrée est sélectionnée dans une liste déroulante.
     obligation: Optional (Mandatory when funding provided in foreign currency)
     format_type: Controlled List
@@ -621,14 +622,14 @@ resources:
     obligation: Optional
     format_type: |
       Free text based on controlled list from Statistics Canada; This list is available to users on the Statistics Canada website. http://www.statcan.gc.ca/eng/subjects/standard/naics/2012/index
-    
+
       The “NAICS identifier” field should be populated with the most appropriate choice in the selection list. Departments should consult the Statistics Canada website and populate at their own discretion. At least 3 digits should be entered to allow for broad coding when specificity is not possible.
-    
+
       For example, if Employment and Social Development Canada is signing an agreement with an educational support services organization, the NAICS identifier would be 611710. The identifier is broken down as follows:
       * sector: 61 (educational services)
       * subsector: 1 (educational services)
       * industry group: 7 (educational support services)
-      * industry: 10 (educational support services) 
+      * industry: 10 (educational support services)
 
     datastore_type: text
 
@@ -693,7 +694,7 @@ resources:
         •divulgation tardive;
         •entente d'innovation;
         •résiliations;
-        •remboursement. 
+        •remboursement.
     obligation: Optional
     format_type: Free text
     datastore_type: text
@@ -732,7 +733,7 @@ resources:
         •divulgation tardive;
         •entente d'innovation;
         •résiliations;
-        •remboursement. 
+        •remboursement.
     obligation: Optional
     format_type: Free text
     datastore_type: text

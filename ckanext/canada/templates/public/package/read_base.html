@@ -33,7 +33,7 @@
 
 {% block secondary_content %}
 
-  {% block ds_socialmedia %} 
+  {% block ds_socialmedia %}
   {% include "package/snippets/socialmedia.html" %}
   {% endblock ds_socialmedia %}
   {% if schema %}
@@ -130,16 +130,16 @@
               {{ _('Link to JSON format') }}
             </a>
           </li>
-          {% if h.plugin_loaded('dcat_json_interface') %}
+          {% if h.plugin_loaded('dcat_json_interface') and pkg.type not in h.recombinant_get_types() %}
           <li class="list-group-item" style="border: none;">
-            <a href="{{ h.url_for(controller='package', action='read', id=pkg.id) }}.jsonld" rel="nofollow">
+            <a href="{{ h.url_for(pkg.type + '.read', id=pkg.id) }}.jsonld" rel="nofollow">
               {{ _('DCAT (JSON-LD)') }}
             </a>
           </li>
           {% endif %}
-          {% if h.plugin_loaded('dcat') %}
+          {% if h.plugin_loaded('dcat') and pkg.type not in h.recombinant_get_types() %}
           <li class="list-group-item" style="border: none;">
-            <a href="{{ h.url_for(controller='package', action='read', id=pkg.id) }}.xml" rel="nofollow">
+            <a href="{{ h.url_for(pkg.type + '.read', id=pkg.id) }}.xml" rel="nofollow">
               {{ _('DCAT (XML)') }}
             </a>
           </li>
@@ -155,7 +155,7 @@
       </li>
       {% endif %}
       <li class="list-group-item">
-        <a href="{{ h.url_for(action='dataset', controller='ckanext.canada.controller:CanadaFeedController', pkg_id=pkg.id) }}" title="RSS">
+        <a href="{{ h.url_for('feeds.dataset', id=pkg.id) }}" title="RSS">
           <span class="fa fa-rss-square"></span> {{_('Atom Feed')}}
         </a>
       </li>

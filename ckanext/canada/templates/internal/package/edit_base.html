@@ -2,12 +2,22 @@
 
 {% block content_primary_nav %}
   {% if pkg.type != 'prop' %}  {# suggested datasets have no resources #}
-    {{ h.build_nav_icon('dataset_edit', _('Edit metadata'), id=pkg.name) }}
-    {{ h.build_nav_icon('dataset_resources', _('Resources'), id=pkg.name) }}
+    {{ super() }}
+  {% endif %}
+{% endblock %}
+
+{% block secondary_content %}
+  {% if pkg_dict and not pkg_dict.resources %}
+    <div class="resources-side-section--no-resources">
+      {{ super() }}
+    </div>
+  {% else %}
+    {{ super() }}
   {% endif %}
 {% endblock %}
 
 {% block scripts %}
   <script type="text/javascript" src="{{ h.url_for_static('/registry_package_edit.js') }}" ></script>
+  <script type="text/javascript" src="{{ h.url_for_static('/registry_resource_edit.js') }}" ></script>
   {{ super() }}
 {% endblock %}

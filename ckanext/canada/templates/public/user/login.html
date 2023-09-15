@@ -15,7 +15,7 @@
 {% endblock %}
 
 {% block help_register_button %}
-  <a class="btn btn-default" href="{{ h.url_for(controller='user', action='register') }}">{{ _(' Create an Account') }}</a>
+  <a class="btn btn-default" href="{{ h.url_for('user.register') }}">{{ _(' Create an Account') }}</a>
 {% endblock %}
 
 {% block help_forgotten %}
@@ -25,7 +25,7 @@
 {% endblock %}
 
 {% block help_forgotten_button %}
-  <a class="btn btn-default" href="{{ h.url_for(controller='user', action='request_reset') }}">{{ _('Forgot your password?') }}</a>
+  <a class="btn btn-default" href="{{ h.url_for('user.request_reset') }}">{{ _('Forgot your password?') }}</a>
 {% endblock %}
 
 {% block form %}

@@ -2356,7 +2356,7 @@ presets:
       fr: Licence s’appliquant au jeu de données
     required: true
     display_snippet: canada_license.html
-    validators: scheming_required string_safe licence_choices
+    validators: scheming_required string_safe license_choices
 
 #Field = Access Restrictions.
 #Default Value = Unrestricted.
@@ -3989,9 +3989,8 @@ presets:
     help_text:
       en: The location for online access to the distribution of the resource, if the file resides elsewhere.
       fr: Emplacement pour l’accès en ligne aux fins de la distribution de la ressource.
-    required: true
     # copied from resource_url_upload
-    validators: not_empty scheming_required string_safe remove_whitespace
+    validators: canada_security_upload_presence canada_security_upload_type scheming_required unicode_safe remove_whitespace
     form_snippet: upload.html
     upload_field: upload
     upload_clear: clear_upload

@@ -7,23 +7,23 @@
       {% if c.action != 'new' %}
         <ul class="nav nav-pills">
           <li class="{% if c.action == 'read' %}active{% endif %}">
-            <a href="{{h.url(controller='organization', action='read', id=c.group_dict.name)}}">{{_('Datasets')}}</a>
+            <a href="{{h.url('organization.read', id=c.group_dict.name)}}">{{_('Datasets')}}</a>
           </li>
           <li class="{% if c.action == 'activity' %}active{% endif %}">
-            <a href="{{h.url(controller='organization', action='activity', id=c.group_dict.name, offset=0)}}">{{_('Activity')}}</a>
+            <a href="{{h.url('organization.activity', id=c.group_dict.name, offset=0)}}">{{_('Activity')}}</a>
           </li>
           {% if h.check_access('organization_update', {'id': c.group_dict.id}) %}
-            {# FIXME: orgs are copied from original registry for now
-            <li class="{% if c.action == 'edit' %}active{% endif %}">
-              <a href="{{h.url(controller='organization', action='edit', id=c.group_dict.name)}}">{{_('Edit Organization')}}</a>
-            </li>#}
             <li class="{% if c.action == 'members' %}active{% endif %}">
-              <a href="{{h.url(controller='organization', action='members', id=c.group_dict.name)}}">{{_('Edit Members')}}</a>
+              <a href="{{h.url('organization.members', id=c.group_dict.name)}}">{{_('Edit Members')}}</a>
+            </li>
+          {% elif h.check_access('view_org_members', {'id': c.group_dict.id}) %}
+            <li class="{% if c.action == 'members' %}active{% endif %}">
+              <a href="{{h.url('organization.members', id=c.group_dict.name)}}">{{_('View Members')}}</a>
             </li>
           {% endif %}
           {% if h.check_access('group_update', {'id': c.group_dict.id}) %}
             <li class="{% if c.action == 'edit' %}active{% endif %}">
-              <a href="{% url_for controller='organization' if c.group_dict.type == 'organization' else 'group', action='edit', id=c.group_dict.id %}">{{ _('Edit') }}</a>
+              <a href="{{h.url(('organization' if c.group_dict.is_organization else 'group') + '.edit', id=c.group_dict.name)}}">{{ _('Edit') }}</a>
             </li>
           {% endif %}
 	    </ul>

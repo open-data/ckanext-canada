@@ -2,7 +2,7 @@
 import sys
 import os
 from unicodecsv import DictReader
-from pylons import config
+from ckan.plugins.toolkit import config
 from ckanext.recombinant.tables import get_geno, get_dataset_types
 
 BATCH_SIZE = 1000

@@ -1,6 +1,6 @@
 # ckanext-canada
 
-[![Tests](https://github.com/open-data/ckanext-canada/workflows/Tests/badge.svg?branch=master&event=push)](https://github.com/open-data/ckanext-canada/actions?query=name%3ATests)
+[![CircleCI](https://dl.circleci.com/status-badge/img/gh/open-data/ckanext-canada/tree/master.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/gh/open-data/ckanext-canada/tree/master)
 
 Government of Canada CKAN Extension - Extension à CKAN du Gouvernement du Canada
 
@@ -11,7 +11,7 @@ Features:
 Installation:
 
 * Use [open-data fork of CKAN](https://github.com/open-data/ckan),
-  branch canada-v2.8
+  branch canada-v2.9
 
 From a clean database you must run:
 
@@ -36,12 +36,13 @@ before loading any data.
   templates for internal site and registration (requires
   `canada_forms` and `canada_public`)
 
-`canada_package`
-  package processing between CKAN and Solr
+`canada_datasets`
+  package processing between CKAN and Solr (requires
+  `Scheming extension`, see below)
 
-`canada_obd`
-  Open By Default site plugin
-
+`canada_security`
+  extra security processing (requires
+  `Security extension`, see below)
 
 ## Related Open Source Repos
 
@@ -66,15 +67,15 @@ The CKAN ini file needs the following settings for the registry server:
 
 ```ini
 ckan.plugins = dcat dcat_json_interface googleanalytics canada_forms canada_internal
-        canada_public canada_package canada_activity datastore recombinant
-        scheming_datasets fluent extendedactivity
+        canada_public datastore recombinant
+        canada_datasets scheming_organizations canada_security fluent
 ```
 
 For the public server use only:
 
 ```ini
 ckan.plugins = dcat dcat_json_interface googleanalytics canada_forms
-        canada_public canada_package scheming_datasets fluent
+        canada_public canada_datasets scheming_organizations canada_security fluent
 
 canada.portal_url = http://myserver.com
 
@@ -141,39 +142,6 @@ Set `wet_theme.geo_map_type` to indicate what style of [WET Geomap widget](https
 wet_theme.geo_map_type = static
 ```
 
-
-## OBD Configuration
-
-We use a different list of plugins for Open By Default:
-
-```ini
-ckan.plugins = dcat dcat_json_interface googleanalytics canada_forms
-        canada_obd canada_package wet_boew_gcweb scheming_datasets
-        fluent cloudstorage
-
-ckan.extra_resource_fields = language
-```
-
-Update OBD documents (example):
-
-```bash
-touch /tmp/marker
-import_xml2obd.py  pull ./production.ini ./obd-repo  > /tmp/pull.log
-find ./obd-repo -type f -newer /tmp/marker > ./new.txt
-import_xml2obd.py ./obd-repo  http://obd-dev.canadacentral.cloudapp.azure.com/ckan ./new.txt >  ./data/obd-20170704.jsonl
-import_xml2obd.py upload  http://obd-dev.canadacentral.cloudapp.azure.com/ckan <site API key> ./data/obd-20170704.jsonl ./obd-repo
-
-Delete OBD documents (only change the dataset state):
-import_xml2obd.py delete ./to_delete.csv ./obd-repo  http://obd-dev.canadacentral.cloudapp.azure.com/ckan <site API key>
-
-Verify OBD documents:
-# check resource exists
-import_xml2obd.py <site_url> azure_user azure_key azure_container
-
-# check duplicates
-import_xml2obd.py de-dup <site_url>
-```
-
 ## Configuration: Solr
 
 This extension uses a custom Solr schema based on the ckan 2.8 schema. You can find the schema in the root directory of the project.
@@ -182,20 +150,39 @@ Overwrite the default CKAN Solr schema with this one in order to enable search f
 You will need to rebuild your search index using:
 
 ```bash
-paster --plugin ckan search-index rebuild
+ckan search-index rebuild
 ```
 
-## Compiling the updated French localization strings
+## Localization strings
+
+To update strings in the translation files:
+
+```bash
+python setup.py extract_messages
+```
+
+Extract messages will gather `gettext` calls in Python, JS, and Jinja2 files. It will also use th custom PD extractor to get specific strings for the Recombinant YAML files.
+
+To update the English and French catalog files:
+
+```bash
+python setup.py update_catalog
+```
+
+This will update both English and French PO files. You will need to confirm that there are NO `fuzzy` translations in either of the PO files.
+
+After updating the PO files and ensuring that there are no fuzzies, you may commit the two PO files along with the POT file.
+
+### Compiling localization strings
 
 Each time you install or update this extension you need to install the
 updated translations by running:
 
 ```bash
-bin/build-combined-ckan-mo.sh
+python setup.py compile_catalog
 ```
 
-This script overwrites the ckan French translations by combining it with
-ours.
+
 
 ## Migrating Proactive Disclosure (recombinant) data
 
@@ -313,7 +300,7 @@ Once translation is added, the user publishes the suggestion.
     in the Registry
     - Next, the status updates for all suggested datasets is exported from the Registry in a JSON file using
     `ckanapi search datasets q=type:prop include_private=true`
-    - [New status updates are compared with existing status updates](https://github.com/open-data/ogc_search/blob/master/ogc_search/suggested_dataset/management/commands/check_for_status_change.py) 
+    - [New status updates are compared with existing status updates](https://github.com/open-data/ogc_search/blob/master/ogc_search/suggested_dataset/management/commands/check_for_status_change.py)
     in the Solr index and emails are sent out to external public users for any new status updates
     - New status updates exported as JSON are
     [loaded into to the Solr index](https://github.com/open-data/ogc_search/blob/master/ogc_search/load_sd_to_solr.py)

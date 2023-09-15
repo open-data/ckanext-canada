@@ -2,6 +2,7 @@ dataset_type: contracts
 target_dataset: contracts
 
 title: Proactive Publication - Contracts over $10,000
+shortname: Contracts over $10,000
 notes: Access, upload and modify the Contracts over 10K reports for your organization
 
 upload_info:
@@ -1923,22 +1924,22 @@ resources:
           errors := errors || required_error(NEW.vendor_postal_code, 'vendor_postal_code');
         END IF;
         IF NOT((NEW.vendor_postal_code = '') IS NOT FALSE) AND NEW.vendor_postal_code <> 'NA' AND NEW.vendor_postal_code !~ '^[A-Z][0-9][A-Z]$' THEN
-          errors := errors || ARRAY[['vendor_postal_code', 'This field must contain the first three digits of a postal code in A1A format or the value "NA"']];
+          errors := errors || ARRAY[['vendor_postal_code', {vendor_postal_code_error}]];
         END IF;
 
         IF NEW.contract_date >= '2022-01-01'::date THEN
           errors := errors || required_error(NEW.buyer_name, 'buyer_name');
           IF trim(both E'\t\n\x0b\x0c\r \xc2\xa0' from NEW.buyer_name) <> 'NA' AND NEW.instrument_type = 'A' THEN
-            errors := errors || ARRAY[['buyer_name', 'This field must be populated with an NA if an amendment is disclosed under Instrument Type']];
+            errors := errors || ARRAY[['buyer_name', {buyer_name_error}]];
           END IF;
         END IF;
 
         NEW.economic_object_code := trim(both E'\t\n\x0b\x0c\r \xc2\xa0' from NEW.economic_object_code);
         IF length(NEW.economic_object_code) > 4 THEN
-          errors := errors || ARRAY[['economic_object_code', 'This field is limited to only 3 or 4 digits.']];
+          errors := errors || ARRAY[['economic_object_code', {economic_object_code_limit_error}]];
         END IF;
         IF NEW.economic_object_code = 'NA' and NEW.instrument_type <> 'SOSA' THEN
-          errors := errors || ARRAY[['economic_object_code', 'If N/A, then Instrument Type must be identified as a standing offer/supply arrangement (SOSA)']];
+          errors := errors || ARRAY[['economic_object_code', {economic_object_code_error}]];
         END IF;
 
         IF NEW.contract_date >= '2019-01-01'::date THEN
@@ -1968,12 +1969,12 @@ resources:
         errors := errors || crval.error;
         NEW.trade_agreement = crval.clean;
         IF 'XX' = ANY(NEW.trade_agreement) AND NEW.trade_agreement <> '{{XX}}' THEN
-          errors := errors || ARRAY[['trade_agreement', 'If the value XX (none) is entered, then no other value can be entered in this field.']];
+          errors := errors || ARRAY[['trade_agreement', {trade_agreement_error}]];
         END IF;
 
         IF NEW.contract_date >= '2022-01-01'::date THEN
           IF NOT (NEW.agreement_type_code = '') IS NOT FALSE THEN
-            errors := errors || ARRAY[['agreement_type_code', 'Discontinued as of 2022-01-01']];
+            errors := errors || ARRAY[['agreement_type_code', {agreement_type_code_discontinued_error}]];
           END IF;
         ELSIF NEW.trade_agreement = '{{}}' THEN
           IF NEW.contract_date >= '2019-01-01'::date THEN
@@ -1982,8 +1983,7 @@ resources:
         END IF;
 
         IF NEW.trade_agreement <> '{{}}' AND NOT (NEW.agreement_type_code = '') IS NOT FALSE THEN
-          errors := errors || ARRAY[['agreement_type_code',
-            'Must be left blank when trade agreements specified']];
+          errors := errors || ARRAY[['agreement_type_code', {agreement_type_code_error}]];
         END IF;
 
         IF NEW.contract_date >= '2022-01-01'::date THEN
@@ -1993,7 +1993,7 @@ resources:
         errors := errors || crval.error;
         NEW.land_claims = crval.clean;
         IF 'NA' = ANY(NEW.land_claims) AND NEW.land_claims <> '{{NA}}' THEN
-          errors := errors || ARRAY[['land_claims', 'If the value NA (not applicable) is entered, then no other value can be entered in this field.']];
+          errors := errors || ARRAY[['land_claims', {land_claims_error}]];
         END IF;
 
         IF NEW.contract_date >= '2019-01-01'::date THEN
@@ -2009,7 +2009,7 @@ resources:
         END IF;
         NEW.commodity_code := trim(both E'\t\n\x0b\x0c\r \xc2\xa0' from NEW.commodity_code);
         IF length(NEW.commodity_code) > 8 THEN
-          errors := errors || ARRAY[['commodity_code', 'The field is limited to eight alpha-numeric digits or less.']];
+          errors := errors || ARRAY[['commodity_code', {commodity_code_error}]];
         END IF;
         errors := errors || choice_error(NEW.country_of_vendor,
           {country_of_vendor},
@@ -2038,11 +2038,11 @@ resources:
         errors := errors || crval.error;
         NEW.limited_tendering_reason = crval.clean;
         IF '00' = ANY(NEW.limited_tendering_reason) AND NEW.limited_tendering_reason <> '{{00}}' THEN
-          errors := errors || ARRAY[['limited_tendering_reason', 'If the value 00 (none) is entered, then no other value can be entered in this field.']];
+          errors := errors || ARRAY[['limited_tendering_reason', {limited_tendering_reason_00_error}]];
         END IF;
         IF (NEW.solicitation_procedure = 'TC' OR NEW.solicitation_procedure = 'TN' OR NEW.solicitation_procedure = 'AC') AND NEW.trade_agreement <> '{{}}' AND NEW.trade_agreement <> '{{XX}}' AND NEW.limited_tendering_reason = '{{00}}' AND NEW.contract_date >= '2022-01-01'::date THEN
-          errors := errors || ARRAY[['limited_tendering_reason', 'If TC, TN or AC is selected in the Solicitation Procedure data field with a value other than XX (None) selected in the Trade Agreement data field, then a Limited Tendering value other than 00 (none) must be entered.']];
-          errors := errors || ARRAY[['solicitation_procedure', 'If “TC” (Competitive - Traditional), “TN” (Non-Competitive) or “AC” (Advanced Contract Award Notice) is selected and trade agreement with a value other than “XX” (None) is selected, limited tendering cannot have a value of “0” or “00” (None).']];
+          errors := errors || ARRAY[['limited_tendering_reason', {limited_tendering_reason_error}]];
+          errors := errors || ARRAY[['solicitation_procedure', {solicitation_procedure_error}]];
         END IF;
 
         IF length(array_to_string(NEW.trade_agreement_exceptions,'','')) = 1 THEN
@@ -2050,7 +2050,7 @@ resources:
           NEW.trade_agreement_exceptions = ARRAY['0' || array_to_string(NEW.trade_agreement_exceptions,'','')];
         END IF;
         IF '00' = ANY(NEW.trade_agreement_exceptions) AND NEW.trade_agreement_exceptions <> '{{00}}' THEN
-          errors := errors || ARRAY[['trade_agreement_exceptions', 'If the value 00 (none) is entered, then no other value can be entered in this field.']];
+          errors := errors || ARRAY[['trade_agreement_exceptions', {trade_agreement_exceptions_error}]];
         END IF;
 
         IF NEW.contract_date >= '2019-01-01'::date THEN
@@ -2076,7 +2076,7 @@ resources:
         END IF;
         IF NEW.indigenous_business_excluding_psib <> '' AND NEW.indigenous_business_excluding_psib <> 'N' AND (
             NEW.indigenous_business = 'MS' OR NEW.indigenous_business = 'VS') THEN
-          errors := errors || ARRAY[['indigenous_business_excluding_psib', 'This field must be N, No or Non, if the Procurement Strategy for Aboriginal Business field is MS or VS.']];
+          errors := errors || ARRAY[['indigenous_business_excluding_psib', {indigenous_business_excluding_psib_error}]];
         END IF;
 
         IF NEW.contract_date >= '2017-01-01'::date THEN
@@ -2129,17 +2129,17 @@ resources:
 
         IF NEW.number_of_bids IS NOT NULL THEN
           IF NEW.solicitation_procedure = ANY('{{TN,AC}}') AND NEW.number_of_bids <> 1 THEN
-            errors := errors || ARRAY[['number_of_bids', 'This field must be populated with a 1 if the solicitation procedure is identified as non-competitive (TN) or Advance Contract Award Notice (AC).']];
+            errors := errors || ARRAY[['number_of_bids', {number_of_bids_error}]];
           END IF;
         END IF;
 
         IF NEW.award_criteria <> '' AND NEW.award_criteria <> '0' AND (
             NEW.solicitation_procedure = 'TN' OR NEW.solicitation_procedure = 'AC' OR NEW.instrument_type = 'A') THEN
-          errors := errors || ARRAY[['award_criteria', 'If this field is populated, it must be with a “0” if the procurement was identified as non-competitive (TN) or advance contract award notice (AC) or was identified as an Amendment (A) in the Instrument type data field.']];
+          errors := errors || ARRAY[['award_criteria', {award_criteria_error}]];
         END IF;
 
         IF NEW.article_6_exceptions <> '' AND NEW.article_6_exceptions <> '0' AND NOT(NEW.solicitation_procedure = 'TN' OR NEW.solicitation_procedure = 'AC') THEN
-          errors := errors || ARRAY[['article_6_exceptions', 'This field may only be populated with “0” if the procurement was identified as competitive (open bidding (OB), traditional competitive (TC) or selective tendering (ST)).']];
+          errors := errors || ARRAY[['article_6_exceptions', {article_6_exceptions_error}]];
         END IF;
 
         IF NEW.contract_date >= '2019-01-01'::date THEN
@@ -2155,6 +2155,25 @@ resources:
         RAISE EXCEPTION E'TAB-DELIMITED\t%', array_to_string(errors, E'\t');
       END;
   - update_record_modified_created_trigger
+
+  trigger_strings:  # yaml | not supported
+    vendor_postal_code_error: This field must contain the first three digits of a postal code in A1A format or the value "NA"
+    buyer_name_error: This field must be populated with an NA if an amendment is disclosed under Instrument Type
+    economic_object_code_limit_error: This field is limited to only 3 or 4 digits.
+    economic_object_code_error: If N/A, then Instrument Type must be identified as a standing offer/supply arrangement (SOSA)
+    trade_agreement_error: If the value XX (none) is entered, then no other value can be entered in this field.
+    agreement_type_code_discontinued_error: Discontinued as of 2022-01-01
+    agreement_type_code_error: Must be left blank when trade agreements specified
+    land_claims_error: If the value NA (not applicable) is entered, then no other value can be entered in this field.
+    commodity_code_error: The field is limited to eight alpha-numeric digits or less.
+    limited_tendering_reason_00_error: If the value 00 (none) is entered, then no other value can be entered in this field.
+    limited_tendering_reason_error: If TC, TN or AC is selected in the Solicitation Procedure data field with a value other than XX (None) selected in the Trade Agreement data field, then a Limited Tendering value other than 00 (none) must be entered.
+    solicitation_procedure_error: If “TC” (Competitive - Traditional), “TN” (Non-Competitive) or “AC” (Advanced Contract Award Notice) is selected and trade agreement with a value other than “XX” (None) is selected, limited tendering cannot have a value of “0” or “00” (None).
+    trade_agreement_exceptions_error: If the value 00 (none) is entered, then no other value can be entered in this field.
+    indigenous_business_excluding_psib_error: This field must be N, No or Non, if the Procurement Strategy for Aboriginal Business field is MS or VS.
+    number_of_bids_error: This field must be populated with a 1 if the solicitation procedure is identified as non-competitive (TN) or Advance Contract Award Notice (AC).
+    award_criteria_error: If this field is populated, it must be with a “0” if the procurement was identified as non-competitive (TN) or advance contract award notice (AC) or was identified as an Amendment (A) in the Instrument type data field.
+    article_6_exceptions_error: This field may only be populated with “0” if the procurement was identified as competitive (open bidding (OB), traditional competitive (TC) or selective tendering (ST)).
 
   examples:
     record:

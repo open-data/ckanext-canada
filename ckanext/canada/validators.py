@@ -5,7 +5,7 @@ import unicodedata
 
 from six import text_type
 
-from pylons.i18n import _
+from ckan.plugins.toolkit import _, h
 from ckan.lib.navl.validators import StopOnError
 from ckan.authz import is_sysadmin
 from ckan import model
@@ -18,10 +18,13 @@ import uuid
 from datetime import datetime
 
 from ckanapi import LocalCKAN, NotFound
-from ckan.lib.helpers import date_str_to_datetime, plugin_loaded
+from ckan.lib.helpers import date_str_to_datetime
 from ckantoolkit import get_validator, Invalid, missing
 from ckanext.fluent.validators import fluent_text_output, LANG_SUFFIX
-from ckan.lib import base
+from ckan.logic import ValidationError
+from ckanext.security.resource_upload_validator import (
+    validate_upload_type, validate_upload_presence
+)
 
 not_empty = get_validator('not_empty')
 ignore_missing = get_validator('ignore_missing')
@@ -262,11 +265,11 @@ def no_future_date(key, data, errors, context):
 
 
 def canada_org_title_translated_save(key, data, errors, context):
-  try:
-      title_translated = fluent_text_output(data[key])
-      data[('title',)] = title_translated['en'] + ' | ' + title_translated['fr']
-  except KeyError:
-      raise StopOnError
+    try:
+        title_translated = fluent_text_output(data[key])
+        data[('title',)] = title_translated['en'] + ' | ' + title_translated['fr']
+    except KeyError:
+        raise StopOnError
 
 
 def canada_org_title_translated_output(key, data, errors, context):
@@ -326,12 +329,6 @@ def isodate(value, context):
         raise Invalid(_('Date format incorrect. Expecting YYYY-MM-DD'))
     return date
 
-def licence_choices(value, context):
-    licences = base.model.Package.get_license_register()
-    if value in licences:
-        return value
-    raise Invalid(_('Invalid licence'))
-
 def string_safe(value, context):
     if isinstance(value, text_type):
         return value
@@ -380,7 +377,7 @@ def json_string_has_en_fr_keys(value, context):
 
 
 def canada_resource_schema_validator(value, context):
-    if plugin_loaded('validation'):
+    if h.plugin_loaded('validation'):
         from ckanext.validation.validators import resource_schema_validator
         try:
             value = resource_schema_validator(value, context)
@@ -390,3 +387,37 @@ def canada_resource_schema_validator(value, context):
         and value.lower().startswith('http'):
             raise Invalid(_('Schema URLs are not supported'))
     return value
+
+
+def canada_security_upload_type(key, data, errors, context):
+    url_type = data.get(key[:-1] + ('url_type',))
+    url = data.get(key[:-1] + ('url',))
+    upload = data.get(key[:-1] + ('upload',))
+    resource = {
+        'url': url,
+        'upload': upload,
+    }
+    try:
+        validate_upload_type(resource)
+    except ValidationError as e:
+        if url_type == 'tabledesigner':
+            return
+        error = e.error_dict['File'][0]
+        raise Invalid(_(error))
+
+
+def canada_security_upload_presence(key, data, errors, context):
+    url_type = data.get(key[:-1] + ('url_type',))
+    url = data.get(key[:-1] + ('url',))
+    upload = data.get(key[:-1] + ('upload',))
+    resource = {
+        'url': url,
+        'upload': upload,
+    }
+    try:
+        validate_upload_presence(resource)
+    except ValidationError as e:
+        if url_type == 'tabledesigner':
+            return
+        error = e.error_dict['File'][0]
+        raise Invalid(_(error))

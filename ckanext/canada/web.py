@@ -27,7 +27,7 @@ def link_to_user(user, maxlength=0):
         if maxlength and len(user.display_name) > maxlength:
             displayname = displayname[:maxlength] + '...'
         return html.tags.link_to(displayname,
-                       h.url_for(controller='user', action='read', id=_name))
+                       h.url_for('user.read', id=_name))
 
 def render_new_dataset(template, activity):
     """Return the HTML snippet describing a user creating a new dataset"""

@@ -23,7 +23,7 @@
   <ul class="nav nav-pills">
       {% if h.check_access('package_update', {'id':pkg.id }) %}
         {% block actions_content_inner %}
-        <li>{% link_for _('Delete'), controller='ckanext.canada.controller:CanadaController', action='package_delete', pkg_id=pkg.name, class_='btn btn-danger' %}</li>
+        <li>{% link_for _('Delete'), pkg.type + '.delete', pkg_id=pkg.name, class_='btn btn-danger' %}</li>
         {% endblock %}
       {% endif %}
   </ul>

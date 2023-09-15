@@ -1,5 +1,7 @@
 {% ckan_extends %}
 
+{% import 'macros/form.html' as form %}
+
 {# Separate our resource fields into common and resource/related-specific panels #}
 
 {% block basic_fields %}
@@ -18,7 +20,7 @@
   {% endif %}
 
   <div class="accordion mrgn-tp-lg mrgn-bttm-lg">
-    {%- if (not data.related_type) or c.action=='new_resource' -%}
+    {%- if (not data.related_type) or c.action.endswith('new') -%}
     <details class="acc-group" open="open">
       <summary class="wb-toggle tgl-tab" data-toggle='{"parent": ".accordion", "group": ".acc-group"}'>
         {{ _("Metadata Fields for Resources Only (Not for Related Items)") }}
@@ -34,7 +36,7 @@
       </div>
     </details>
     {% endif %}
-    {%- if data.related_type  or c.action=='new_resource' -%}
+    {%- if data.related_type  or c.action.endswith('new') -%}
     <details class="acc-group" {% if data.related_type %}open="open"{% endif %}>
       <summary class="wb-toggle tgl-tab" data-toggle='{"parent": ".accordion", "group": ".acc-group"}'>
         {{ _("Metadata Fields for Related Items Only") }}
@@ -67,4 +69,7 @@
         {%- endfor -%}
     </details>
   </div>
+
+  {{ form.required_message() }}
+
 {% endblock %}
