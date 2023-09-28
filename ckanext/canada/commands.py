@@ -11,7 +11,10 @@ from ckanext.canada.triggers import update_triggers
 
 #TODO: move all of this to ckanext.canda.cli and deprecate in the usage here...
 
-USAGE = """DEPRECATED: use `ckan [-c/--c=<config>] canada` instead.
+USAGE = """
+
+DEPRECATED: use `ckan [-c/--c=<config>] canada` instead.
+
 Commands:
     - portal-update               Updates Portal records with Registry records.
     - copy-datasets               Copy records from another source.
@@ -42,27 +45,6 @@ Usage:
 
     <last activity date> for reading activites, default: 7 days ago
     <k> number of hours/minutes/seconds in the past for reading activities
-
-Options:
-    -a/--push-apikey <apikey>   push to <remote server> using apikey
-    -b/--brief                  don't output requested dates
-    -c/--config <ckan config>   use named ckan config file
-                                (available to all commands)
-    -d/--delay <seconds>        delay between retries, default: 60
-    -l/--log <log filename>     write log of actions to log filename
-    -m/--mirror                 copy all datasets, default is to treat
-                                unreleased datasets as deleted
-    -p/--processes <num>        sets the number of worker processes,
-                                default: 1
-    --portal                    don't filter record types
-    -s/--server <remote server> retrieve from <remote server>
-    -t/--tries <num>            try <num> times, set > 1 to retry on
-                                failures, default: 1
-    -u/--ckan-user <username>   sets the owner of packages created,
-                                default: ckan system user
-    --use-created-date          use date_created field for date forwarded to data
-                                owner and other statuses instead of today's date
-    -o/--source <source url>    source datastore url to copy datastore records
 """
 
 
@@ -78,41 +60,41 @@ class CanadaCommand(CkanCommand):
             '--processes',
             dest='processes',
             default=1,
-            type='int'
+            type='int',
+            help='sets the number of worker processes, default: 1'
         )
         self.parser.add_option(
             '-u',
             '--ckan-user',
             dest='ckan_user',
-            default=None
+            default=None,
+            help='sets the owner of packages created, default: ckan system user'
         )
-        self.parser.add_option('-l', '--log', dest='log', default=None)
-        self.parser.add_option('-m', '--mirror', dest='mirror', action='store_true')
+        self.parser.add_option('-l', '--log', dest='log', default=None, help='write log of actions to log filename')
+        self.parser.add_option('-m', '--mirror', dest='mirror', action='store_true', help='copy all datasets, default is to treat unreleased datasets as deleted')
         self.parser.add_option(
             '-a',
             '--push-apikey',
             dest='push_apikey',
-            default=None
+            default=None,
+            help='push to <remote server> using apikey'
         )
-        self.parser.add_option('-s', '--server', dest='server', default=None)
-        self.parser.add_option('-b', '--brief', dest='brief', action='store_true')
-        self.parser.add_option('-t', '--tries', dest='tries', default=1, type='int')
-        self.parser.add_option('-d', '--delay', dest='delay', default=60, type='float')
-        self.parser.add_option('--portal', dest='portal', action='store_true')
-        self.parser.add_option('-o', '--source', dest='src_ds_url', default=None)
-        self.parser.add_option('--use-created-date', dest='use_created_date', action='store_true')
+        self.parser.add_option('-s', '--server', dest='server', default=None, help='retrieve from <remote server>')
+        self.parser.add_option('-b', '--brief', dest='brief', action='store_true', help='don\'t output requested dates')
+        self.parser.add_option('-t', '--tries', dest='tries', default=1, type='int', help='try <num> times, set > 1 to retry on failures, default: 1')
+        self.parser.add_option('-d', '--delay', dest='delay', default=60, type='float', help='delay between retries, default: 60')
+        self.parser.add_option('--portal', dest='portal', action='store_true', help='don\'t filter record types')
+        self.parser.add_option('-o', '--source', dest='src_ds_url', default=None, help='source datastore url to copy datastore records')
+        self.parser.add_option('--use-created-date', dest='use_created_date', action='store_true', help='use date_created field for date forwarded to data owner and other statuses instead of today\'s date')
 
 
     def command(self):
         '''
         Parse command line arguments and call appropriate method.
         '''
+        return
         self._load_config()
         args = docopt(USAGE, argv=self.args)
-
-        if not args or args['--help'] or args['-h'] or args['help']:
-            print(self.usage)
-            return
 
         if args['portal-update']:
             utils.portal_update(args[1], *args[2:])
@@ -143,6 +125,3 @@ class CanadaCommand(CkanCommand):
 
         elif args['bulk-validate']:
             utils.bulk_validate()
-
-        else:
-            print(self.usage)
