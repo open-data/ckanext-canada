@@ -24,7 +24,6 @@ from ckan.plugins.toolkit import (
     render
 )
 from ckan.lib.base import model
-import ckan.lib.jsonp as jsonp
 from ckan.lib.helpers import (
     date_str_to_datetime,
     render_markdown,
@@ -699,7 +698,7 @@ def view_help():
 def datatable(resource_name, resource_id):
     params = parse_params(request.form)
     draw = int(params['draw'])
-    search_text = unicode(params['search[value]'])
+    search_text = str(params['search[value]'])
     offset = int(params['start'])
     limit = int(params['length'])
 
@@ -786,11 +785,11 @@ def datatablify(v, colname):
     if v is False:
         return u'FALSE'
     if isinstance(v, list):
-        return u', '.join(unicode(e) for e in v)
+        return u', '.join(str(e) for e in v)
     if colname in ('record_created', 'record_modified') and v:
         return canada_date_str_to_datetime(v).replace(tzinfo=utc).astimezone(
             ottawa_tz).strftime('%Y-%m-%d %H:%M:%S %Z')
-    return unicode(v)
+    return str(v)
 
 
 @canada_views.route('/fgpv-vpgf/<pkg_id>', methods=['GET'])
@@ -817,7 +816,6 @@ def package_undelete(pkg_id):
         id=pkg_id)
 
 
-@jsonp.jsonpify
 @canada_views.route('/organization/autocomplete', methods=['GET'])
 def organization_autocomplete():
     q = request.args.get('q', '')
@@ -906,14 +904,14 @@ def action(logic_function, ver=API_DEFAULT_VERSION):
                                 'message': _('Access denied')}
         return_dict['success'] = False
 
-        if unicode(e):
+        if str(e):
             return_dict['error']['message'] += u': %s' % e
 
         return _finish(403, return_dict, content_type='json')
     except NotFound as e:
         return_dict['error'] = {'__type': 'Not Found Error',
                                 'message': _('Not found')}
-        if unicode(e):
+        if str(e):
             return_dict['error']['message'] += u': %s' % e
         return_dict['success'] = False
         return _finish(404, return_dict, content_type='json')

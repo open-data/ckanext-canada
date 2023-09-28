@@ -67,7 +67,7 @@ class PDCommand(CkanCommand):
 
     def command(self):
         if not self.args or self.args[0] in ['--help', '-h', 'help']:
-            print self.__doc__
+            print(self.__doc__)
             return
 
         cmd = self.args[0]
@@ -128,7 +128,7 @@ class PDNilCommand(CkanCommand):
 
     def command(self):
         if not self.args or self.args[0] in ['--help', '-h', 'help']:
-            print self.__doc__
+            print(self.__doc__)
             return
 
         cmd = self.args[0]
@@ -167,7 +167,7 @@ def rebuild(command_name, csv_files=None, solr_url=None, strict=True):
     lc = LocalCKAN()
     if csv_files:
         for csv_file in csv_files:
-            print csv_file + ':'
+            print(csv_file + ':')
             prev_org = None
             unmatched = None
             firstpart, filename = os.path.split(csv_file)
@@ -186,7 +186,7 @@ def rebuild(command_name, csv_files=None, solr_url=None, strict=True):
                     org_detail = lc.action.organization_show(id=org_id)
                 except NotFound:
                     continue
-                print "    {0:s} {1}".format(org_id, len(records))
+                print("    {0:s} {1}".format(org_id, len(records)))
                 unmatched = _update_records(
                     records, org_detail, conn, resource_name, unmatched)
     else:
@@ -198,9 +198,9 @@ def rebuild(command_name, csv_files=None, solr_url=None, strict=True):
                 unmatched = _update_records(
                     records, org_detail, conn, resource_name, unmatched)
                 count += len(records)
-            print org, count
+            print(org, count)
 
-    print "commit"
+    print("commit")
     conn.commit()
 
 
@@ -231,9 +231,9 @@ def _update_records(records, org_detail, conn, resource_name, unmatched):
         p = org
         for k in pk:
             s = hashlib.md5(s + r[k].encode('utf-8')).hexdigest()
-            f += u'|' + unicode(r[k])
+            f += u'|' + str(r[k])
             if u'|' not in p:
-                p += u'|' + unicode(r[k])
+                p += u'|' + str(r[k])
         return s, f, p
 
     out = []
@@ -344,7 +344,7 @@ def _update_records(records, org_detail, conn, resource_name, unmatched):
                 solrrec[key + '_name_en'] = calendar.month_name[int(value)]
                 solrrec[key + '_name_fr'] = MONTHS_FR[int(value)]
 
-        solrrec['text'] = u' '.join(unicode(v) for v in solrrec.values())
+        solrrec['text'] = u' '.join(str(v) for v in solrrec.values())
 
         if 'solr_static_fields' in chromo:
             solrrec.update(chromo['solr_static_fields'])
@@ -375,10 +375,10 @@ def _update_records(records, org_detail, conn, resource_name, unmatched):
         except pysolr.SolrError:
             if not a:
                 raise
-            print "waiting..."
+            print("waiting...")
             import time
             time.sleep((10-a) * 5)
-            print "retrying..."
+            print("retrying...")
     return unmatched
 
 
@@ -457,16 +457,16 @@ def dollar_range_facet(key, facet_range, float_value):
         last_fac = fac
     else:
         return {
-            key + u'_range': unicode(i),
+            key + u'_range': str(i),
             key + u'_en': u'A: ' + en_dollars(fac) + u'+',
             key + u'_fr': u'A: ' + fr_dollars(fac) + u' +'}
 
     if last_fac is None:
         return {}
 
-    prefix = unichr(ord('A') + len(facet_range) - i) + u': '
+    prefix = chr(ord('A') + len(facet_range) - i) + u': '
     return {
-        key + u'_range': unicode(i - 1),
+        key + u'_range': str(i - 1),
         key + u'_en': prefix + en_dollars(last_fac) + u' - ' + en_dollars(fac-0.01),
         key + u'_fr': prefix + fr_dollars(last_fac) + u' - ' + fr_dollars(fac-0.01)}
 
@@ -497,16 +497,16 @@ def numeric_range_facet(key, facet_range, float_value):
         last_fac = fac
     else:
         return {
-            key + u'_range': unicode(i),
+            key + u'_range': str(i),
             key + u'_en': u'A: ' + en_numeric(fac) + u'+',
             key + u'_fr': u'A: ' + fr_numeric(fac) + u' +'}
 
     if last_fac is None:
         return {}
 
-    prefix = unichr(ord('A') + len(facet_range) - i) + u': '
+    prefix = chr(ord('A') + len(facet_range) - i) + u': '
     return {
-        key + u'_range': unicode(i - 1),
+        key + u'_range': str(i - 1),
         key + u'_en': prefix + en_numeric(last_fac) + u' - ' + en_numeric(fac-1),
         key + u'_fr': prefix + fr_numeric(last_fac) + u' - ' + fr_numeric(fac-1)}
 

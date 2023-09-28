@@ -27,12 +27,12 @@ from ckanext.canada import validators
 from ckanext.canada import logic
 from ckanext.canada import auth
 from ckanext.canada import helpers
+from ckanext.canada import cli
 from ckanext.canada import activity as act
 from ckanext.xloader.interfaces import IXloader
 import json
 
 import ckan.lib.formatters as formatters
-from webhelpers.html import literal
 from flask import Blueprint
 from ckanext.scheming.plugins import SchemingDatasetsPlugin
 from ckanext.security.plugin import CkanSecurityPlugin
@@ -437,6 +437,7 @@ class DataGCCAPublic(p.SingletonPlugin, DefaultTranslation):
     p.implements(p.ITranslation, inherit=True)
     p.implements(p.IMiddleware, inherit=True)
     p.implements(p.IActions)
+    p.implements(p.IClick)
 
     # DefaultTranslation, ITranslation
     def i18n_domain(self):
@@ -617,6 +618,11 @@ ckanext.canada:schemas/prop.yaml
     def make_middleware(self, app, config):
         return LogExtraMiddleware(app, config)
 
+    # IClick
+
+    def get_commands(self):
+        return cli.get_commands()
+
 
 
 
@@ -789,10 +795,10 @@ def _SI_number_span_close(number):
     ''' outputs a span with the number in SI unit eg 14700 -> 14.7k '''
     number = int(number)
     if number < 1000:
-        output = literal('<span>')
+        output = h.literal('<span>')
     else:
-        output = literal('<span title="' + formatters.localised_number(number) + '">')
-    return output + formatters.localised_SI_number(number) + literal('</span>')
+        output = h.literal('<span title="' + formatters.localised_number(number) + '">')
+    return output + formatters.localised_SI_number(number) + h.literal('</span>')
 
 
 # Monkey Patched to inlude the 'list-group-item' class
