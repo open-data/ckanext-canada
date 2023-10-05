@@ -1,6 +1,6 @@
 dataset_type: wrongdoing
 target_dataset: wrongdoing
-title: Proactive Disclosure - Acts of Founded Wrongdoing
+title: Proactive Publication - Acts of Founded Wrongdoing
 shortname: Acts of Founded Wrongdoing
 notes: Access, upload and modify the Acts of Founded Wrongdoing reports for your organization
 
@@ -11,7 +11,7 @@ portal_type: info
 collection: pd
 
 resources:
-- title: Proactive Disclosure - Founded Wrongdoing
+- title: Proactive Publication - Founded Wrongdoing
   resource_name: wrongdoing
   create_form: true
   edit_form: true

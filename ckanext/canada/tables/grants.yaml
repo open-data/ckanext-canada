@@ -1,6 +1,6 @@
 dataset_type: grants
 target_dataset: grants
-title: Proactive Disclosure - Grants and Contributions
+title: Proactive Publication - Grants and Contributions
 shortname: Grants and Contributions
 notes: Access, upload and modify the Grants and Contributions reports for your organization
 
@@ -11,7 +11,7 @@ portal_type: info
 collection: pd
 
 resources:
-- title: Proactive Disclosure - Grants and Contributions
+- title: Proactive Publication - Grants and Contributions
   resource_name: grants
   create_form: true
   edit_form: true
@@ -871,7 +871,7 @@ resources:
     sort: agreement_date desc
 
 
-- title: Proactive Disclosure - Grants and Contributions Nothing to Report
+- title: Proactive Publication - Grants and Contributions Nothing to Report
   resource_name: grants-nil
   create_form: true
   edit_form: false #edit not possible for nil reports since only stored data is primary key
