@@ -1,7 +1,7 @@
 dataset_type: travelq
 target_dataset: travelq
 
-title: Proactive Disclosure - Travel Expenses
+title: Proactive Publication - Travel Expenses
 shortname: Travel Expenses
 notes: Access, upload and modify the monthly travel expense reports for your organization
 
@@ -13,7 +13,7 @@ collection: pd
 
 
 resources:
-- title: Proactive Disclosure - Travel Expenses
+- title: Proactive Publication - Travel Expenses
   resource_name: travelq
   create_form: true
   edit_form: true
@@ -454,7 +454,7 @@ resources:
   - ati_email
 
 
-- title: Proactive Disclosure - Travel Expenses Nothing to Report
+- title: Proactive Publication - Travel Expenses Nothing to Report
   resource_name: travelq-nil
   create_form: true
   edit_form: false #edit not possible for nil reports since only stored data is primary key
