@@ -66,128 +66,151 @@ RESOURCE_TRIM_FIELDS = ['package_id', 'revision_id',
                 'position']
 
 
-def portal_update(self, portal_ini, activity_date=None):
+class PortalUpdater(object):
     """
-    collect batches of packages modified at local CKAN since activity_date
-    and apply the package updates to the portal instance for all
-    packages with published_date set to any time in the past.
+    Class to update Portal records with Registry ones.
     """
-    if self.options.ckan_user is None:
-        raise ValueError('--ckan-user is required for portal_update')
-    tries = self.options.tries
-    self._portal_update_completed = False
-    self._portal_update_activity_date = activity_date
-    while tries > 0:
-        tries -= 1
-        self._portal_update(portal_ini, self._portal_update_activity_date)
-        if self._portal_update_completed or not tries:
-            return
-        time.sleep(self.options.delay)
+    def __init__(self,
+                 portal_ini,
+                 ckan_user,
+                 last_activity_date,
+                 processes,
+                 mirror,
+                 log,
+                 tries,
+                 delay):
+        self.portal_ini = portal_ini
+        self.ckan_user = ckan_user
+        self.last_activity_date = last_activity_date
+        self.processes = processes
+        self.mirror = mirror
+        self.log = log
+        self.tries = tries
+        self.delay = delay
+        self._portal_update_activity_date = None
+        self._portal_update_completed = False
 
-
-def _portal_update(self, portal_ini, activity_date):
-    # determine activity date
-    if activity_date:
-        past = re.match(PAST_RE, activity_date)
-        if past:
-            days, hours, minutes = (
-                int(x) if x else 0 for x in past.groups()
-            )
-            activity_date = datetime.now() - timedelta(
-                days=days,
-                seconds=(hours * 60 + minutes) * 60
-            )
-        else:
-            activity_date = isodate(activity_date, None)
-    else:
-        activity_date = datetime.now() - timedelta(days=7)
-
-    log = None
-    if self.options.log:
-        log = open(self.options.log, 'a')
-
-    registry = LocalCKAN()
-    source_ds = str(datastore.get_write_engine().url)
-
-    def changed_package_id_runs(start_date):
-        # retrieve a list of changed packages from the registry
-        while True:
-            packages, next_date = self._changed_packages_since(
-                registry, start_date)
-            if next_date is None:
+    def portal_update(self):
+        """
+        Collect batches of packages modified at local CKAN since activity_date
+        and apply the package updates to the portal instance for all
+        packages with published_date set to any time in the past.
+        """
+        if self.ckan_user is None:
+            raise ValueError('--ckan-user is required for portal_update')
+        self._portal_update_completed = False
+        self._portal_update_activity_date = self.last_activity_date
+        while self.tries > 0:
+            self.tries -= 1
+            self._portal_update(self._portal_update_activity_date)
+            if self._portal_update_completed or not self.tries:
                 return
-            yield packages, next_date
-            start_date = next_date
+            time.sleep(self.delay)
 
-    # copy the changed packages to portal
-    cmd = [
-        sys.argv[0],
-        'canada',
-        'copy-datasets',
-        '-c',
-        portal_ini,
-        '-o',
-        source_ds,
-        '-u',
-        self.options.ckan_user
-    ]
-    if self.options.mirror:
-        cmd.append('-m')
 
-    pool = worker_pool(
-        cmd,
-        self.options.processes,
-        [],
-        stop_when_jobs_done=False,
-        stop_on_keyboard_interrupt=False,
-        )
+    def _portal_update(self, activity_date):
+        # determine activity date
+        if activity_date:
+            past = re.match(PAST_RE, activity_date)
+            if past:
+                days, hours, minutes = (
+                    int(x) if x else 0 for x in past.groups()
+                )
+                activity_date = datetime.now() - timedelta(
+                    days=days,
+                    seconds=(hours * 60 + minutes) * 60
+                )
+            else:
+                activity_date = isodate(activity_date, None)
+        else:
+            activity_date = datetime.now() - timedelta(days=7)
 
-    # Advance generator so we may call send() below
-    pool.next()
+        log = None
+        if self.log is not None:
+            log = open(self.log, 'a')
 
-    def append_log(finished, package_id, action, reason):
-        if not log:
-            return
-        log.write(json.dumps([
-            datetime.now().isoformat(),
-            finished,
-            package_id,
-            action,
-            reason,
-            ]) + '\n')
-        log.flush()
+        registry = LocalCKAN()
+        source_ds = str(datastore.get_write_engine().url)
 
-    with _quiet_int_pipe():
-        append_log(
-            None,
-            None,
-            "started updating from:",
-            activity_date.isoformat()
-        )
+        def changed_package_id_runs(start_date):
+            # retrieve a list of changed packages from the registry
+            while True:
+                packages, next_date = _changed_packages_since(
+                    registry, start_date)
+                if next_date is None:
+                    return
+                yield packages, next_date
+                start_date = next_date
 
-        for packages, next_date in (
-                changed_package_id_runs(activity_date)):
-            job_ids, finished, result = pool.send(enumerate(packages))
-            stats = completion_stats(self.options.processes)
-            while result is not None:
-                package_id, action, reason = json.loads(result)
-                print(job_ids, stats.next(), finished, package_id, \
-                    action, reason)
-                append_log(finished, package_id, action, reason)
-                job_ids, finished, result = pool.next()
+        # copy the changed packages to portal
+        cmd = [
+            sys.argv[0],
+            '-c',
+            self.portal_ini,
+            'canada',
+            'copy-datasets',
+            '-o',
+            source_ds,
+            '-u',
+            self.ckan_user
+        ]
+        if self.mirror:
+            cmd.append('-m')
 
-            print(" --- next batch starting at: " + next_date.isoformat())
+        pool = worker_pool(
+            cmd,
+            self.processes,
+            [],
+            stop_when_jobs_done=False,
+            stop_on_keyboard_interrupt=False,
+            )
+
+        # Advance generator so we may call send() below
+        pool.next()
+
+        def append_log(finished, package_id, action, reason):
+            if not log:
+                return
+            log.write(json.dumps([
+                datetime.now().isoformat(),
+                finished,
+                package_id,
+                action,
+                reason,
+                ]) + '\n')
+            log.flush()
+
+        with _quiet_int_pipe():
             append_log(
                 None,
                 None,
-                "next batch starting at:",
-                next_date.isoformat()
+                "started updating from:",
+                activity_date.isoformat()
             )
-            self._portal_update_activity_date = next_date.isoformat()
-        self._portal_update_completed = True
+
+            for packages, next_date in (
+                    changed_package_id_runs(activity_date)):
+                job_ids, finished, result = pool.send(enumerate(packages))
+                stats = completion_stats(self.processes)
+                while result is not None:
+                    package_id, action, reason = json.loads(result)
+                    print(job_ids, stats.next(), finished, package_id, \
+                        action, reason)
+                    append_log(finished, package_id, action, reason)
+                    job_ids, finished, result = pool.next()
+
+                print(" --- next batch starting at: " + next_date.isoformat())
+                append_log(
+                    None,
+                    None,
+                    "next batch starting at:",
+                    next_date.isoformat()
+                )
+                self._portal_update_activity_date = next_date.isoformat()
+            self._portal_update_completed = True
 
 
-def _changed_packages_since(self, registry, since_time):
+def _changed_packages_since(registry, since_time, ids_only=False):
     """
     Query source ckan instance for packages changed since_time.
     returns (packages, next since_time to query) or (None, None)
@@ -215,8 +238,11 @@ def _changed_packages_since(self, registry, since_time):
         except NotFound:
             print(package_id + " not found in database.")
         else:
-            source_package = get_datastore_and_views(source_package, registry)
-            packages.append(json.dumps(source_package))
+            if ids_only:
+                packages.append(source_package['id'])
+            else:
+                source_package = get_datastore_and_views(source_package, registry)
+                packages.append(json.dumps(source_package))
 
     if data:
         since_time = isodate(data[-1]['timestamp'], None)
@@ -224,133 +250,134 @@ def _changed_packages_since(self, registry, since_time):
     return packages, since_time
 
 
-def copy_datasets(source, user, mirror=False, package_ids=None):
+def copy_datasets(source, user, mirror=False):
     """
-    a process that accepts packages on stdin which are compared
+    A process that accepts packages on stdin which are compared
     to the local version of the same package.  The local package is
     then created, updated, deleted or left unchanged.  This process
     outputs that action as a string 'created', 'updated', 'deleted'
     or 'unchanged'
     """
-    portal = LocalCKAN(username = user)
+    with _quiet_int_pipe():
+        portal = LocalCKAN(username = user)
 
-    now = datetime.now()
+        now = datetime.now()
 
-    packages = iter(sys.stdin.readline, '')
-    for package in packages:
-        source_pkg = json.loads(package)
-        package_id = source_pkg['id']
-        reason = None
-        target_deleted = False
-        if source_pkg and source_pkg['state'] == 'deleted':
-            source_pkg = None
-
-        if source_pkg and source_pkg['type'] not in DATASET_TYPES:
-            # non-default dataset types ignored
-            source_pkg = None
-
-        _trim_package(source_pkg)
-
-        action = None
-        if source_pkg and not mirror:
-            if source_pkg.get('ready_to_publish') == 'false':
+        packages = iter(sys.stdin.readline, '')
+        for package in packages:
+            source_pkg = json.loads(package)
+            package_id = source_pkg['id']
+            reason = None
+            target_deleted = False
+            if source_pkg and source_pkg['state'] == 'deleted':
                 source_pkg = None
-                reason = 'marked not ready to publish'
-            elif not source_pkg.get('portal_release_date'):
+
+            if source_pkg and source_pkg['type'] not in DATASET_TYPES:
+                # non-default dataset types ignored
                 source_pkg = None
-                reason = 'release date not set'
-            elif isodate(source_pkg['portal_release_date'], None) > now:
-                source_pkg = None
-                reason = 'release date in future'
+
+            _trim_package(source_pkg)
+
+            action = None
+            if source_pkg and not mirror:
+                if source_pkg.get('ready_to_publish') == 'false':
+                    source_pkg = None
+                    reason = 'marked not ready to publish'
+                elif not source_pkg.get('portal_release_date'):
+                    source_pkg = None
+                    reason = 'release date not set'
+                elif isodate(source_pkg['portal_release_date'], None) > now:
+                    source_pkg = None
+                    reason = 'release date in future'
+                else:
+                    # portal packages published public
+                    source_pkg['private'] = False
+
+            target_pkg = None
+            if action != 'skip':
+                try:
+                    target_pkg = portal.call_action('package_show', {
+                        'id': package_id
+                    })
+                except (NotFound, NotAuthorized):
+                    target_pkg = None
+                except (CKANAPIError, URLError) as e:
+                    sys.stdout.write(
+                        json.dumps([
+                            package_id,
+                            'target error',
+                            str(e.args)
+                        ]) + '\n'
+                    )
+                    raise
+                if target_pkg and target_pkg['state'] == 'deleted':
+                    target_pkg = None
+                    target_deleted = True
+
+                target_pkg = get_datastore_and_views(target_pkg, portal)
+                _trim_package(target_pkg)
+
+            target_hash = {}
+
+            if action == 'skip':
+                pass
+            elif target_pkg is None and source_pkg is None:
+                action = 'unchanged'
+                reason = reason or 'deleted on registry'
+            elif target_deleted:
+                action = 'updated'
+                reason = 'undeleting on target'
+                portal.action.package_update(**source_pkg)
+                for r in source_pkg['resources']:
+                    target_hash[r['id']] = r.get('hash')
+                action += _add_datastore_and_views(source_pkg, portal, target_hash, source)
+            elif target_pkg is None:
+                action = 'created'
+                portal.action.package_create(**source_pkg)
+                action += _add_datastore_and_views(source_pkg, portal, target_hash, source)
+            elif source_pkg is None:
+                action = 'deleted'
+                portal.action.package_delete(id=package_id)
+            elif source_pkg == target_pkg:
+                action = 'unchanged'
+                reason = 'no difference found'
             else:
-                # portal packages published public
-                source_pkg['private'] = False
+                action = 'updated'
+                for r in target_pkg['resources']:
+                    target_hash[r['id']] = r.get('hash')
+                portal.action.package_update(**source_pkg)
+                action += _add_datastore_and_views(source_pkg, portal, target_hash, source)
 
-        target_pkg = None
-        if action != 'skip':
-            try:
-                target_pkg = portal.call_action('package_show', {
-                    'id': package_id
-                })
-            except (NotFound, NotAuthorized):
-                target_pkg = None
-            except (CKANAPIError, URLError) as e:
-                sys.stdout.write(
-                    json.dumps([
-                        package_id,
-                        'target error',
-                        str(e.args)
-                    ]) + '\n'
-                )
-                raise
-            if target_pkg and target_pkg['state'] == 'deleted':
-                target_pkg = None
-                target_deleted = True
-
-            target_pkg = get_datastore_and_views(target_pkg, portal)
-            _trim_package(target_pkg)
-
-        target_hash = {}
-
-        if action == 'skip':
-            pass
-        elif target_pkg is None and source_pkg is None:
-            action = 'unchanged'
-            reason = reason or 'deleted on registry'
-        elif target_deleted:
-            action = 'updated'
-            reason = 'undeleting on target'
-            portal.action.package_update(**source_pkg)
-            for r in source_pkg['resources']:
-                target_hash[r['id']] = r.get('hash')
-            action += _add_datastore_and_views(source_pkg, portal, target_hash, source)
-        elif target_pkg is None:
-            action = 'created'
-            portal.action.package_create(**source_pkg)
-            action += _add_datastore_and_views(source_pkg, portal, target_hash, source)
-        elif source_pkg is None:
-            action = 'deleted'
-            portal.action.package_delete(id=package_id)
-        elif source_pkg == target_pkg:
-            action = 'unchanged'
-            reason = 'no difference found'
-        else:
-            action = 'updated'
-            for r in target_pkg['resources']:
-                target_hash[r['id']] = r.get('hash')
-            portal.action.package_update(**source_pkg)
-            action += _add_datastore_and_views(source_pkg, portal, target_hash, source)
-
-        sys.stdout.write(json.dumps([package_id, action, reason]) + '\n')
-        sys.stdout.flush()
+            sys.stdout.write(json.dumps([package_id, action, reason]) + '\n')
+            sys.stdout.flush()
 
 
-def changed_datasets(self, since_date):
+def changed_datasets(since_date, server, brief):
     """
     Produce a list of dataset ids and requested dates. Each package
     id will appear at most once, showing the activity date closest
     to since_date. Requested dates are preceeded with a "#"
     """
     since_date = isodate(since_date, None)
-    seen_ids = set()
 
-    if self.options.server:
-        registry = RemoteCKAN(self.options.server)
+    if server:
+        registry = RemoteCKAN(server)
     else:
         registry = LocalCKAN()
 
     while True:
-        ids, since_date = self._changed_package_ids_since(
-            registry, since_date, seen_ids)
+        ids, since_date = _changed_packages_since(registry,
+                                                  since_date,
+                                                  ids_only=True)
         if not ids:
             return
         for i in ids:
             print(i)
-        if not self.options.brief:
+        if not brief:
             print("# {0}".format(since_date.isoformat()))
 
 
-def resource_size_update(self, size_report):
+def resource_size_update(size_report):
     registry = LocalCKAN()
     size_report = open(size_report, "r")
     reader = csv.DictReader(size_report)
@@ -371,7 +398,7 @@ def resource_size_update(self, size_report):
     size_report.close()
 
 
-def resource_https_update(self, https_report, https_alt_report):
+def resource_https_update(https_report, https_alt_report):
     """
     This function updates all broken http links into https links.
     https_report: the report with all of the links (a .json file)
@@ -426,9 +453,9 @@ def resource_https_update(self, https_report, https_alt_report):
     log.close()
 
 
-def load_suggested(self, use_created_date, filename):
+def load_suggested(use_created_date, filename):
     """
-    a process that loads suggested datasets from Drupal into CKAN
+    A process that loads suggested datasets from Drupal into CKAN
     """
     registry = LocalCKAN()
 
@@ -438,7 +465,10 @@ def load_suggested(self, use_created_date, filename):
     batch_size = 100
     existing_suggestions = {}
     while results:
-        packages = registry.action.package_search(q='type:prop', start=counter, rows=batch_size, include_private=True)['results']
+        packages = registry.action.package_search(q='type:prop',
+                                                  start=counter,
+                                                  rows=batch_size,
+                                                  include_private=True)['results']
         if packages:
             for package in packages:
                 existing_suggestions[package['id']] = package
@@ -547,7 +577,7 @@ def load_suggested(self, use_created_date, filename):
     csv_file.close()
 
 
-def bulk_validate(self):
+def bulk_validate():
     """
     Usage: ckanapi search datasets include_private=true -c $CONFIG_INI |
     paster canada bulk-validate -c $CONFIG_INI
