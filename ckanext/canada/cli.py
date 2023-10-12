@@ -12,7 +12,7 @@ def _get_user(user):
 
 
 def get_commands():
-    return [canada]
+    return canada
 
 
 @click.group(short_help="Canada management commands")

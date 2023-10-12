@@ -28,6 +28,7 @@ from ckanext.canada import logic
 from ckanext.canada import auth
 from ckanext.canada import helpers
 from ckanext.canada import cli
+from ckanext.canada.pd import get_commands as get_pd_commands
 from ckanext.canada import activity as act
 from ckanext.xloader.interfaces import IXloader
 import json
@@ -621,7 +622,7 @@ ckanext.canada:schemas/prop.yaml
     # IClick
 
     def get_commands(self):
-        return cli.get_commands()
+        return [cli.get_commands(), get_pd_commands()]
 
 
 
