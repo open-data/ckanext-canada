@@ -29,7 +29,7 @@
 
 {% set collection_choices =
   h.scheming_get_preset('canada_collection').choices + [
-  {'value': 'pd', 'label': _('Proactive Disclosure')},
+  {'value': 'pd', 'label': _('Proactive Publication')},
   ] %}
 {% for t in h.recombinant_get_types() %}
   {% do collection_choices.append({

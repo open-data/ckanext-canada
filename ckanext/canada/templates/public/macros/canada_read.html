@@ -199,7 +199,7 @@ Search Facet Formatters
       {% if field=='collection' %}
         {# collection is special, see also dataset_facets #}
         {% set collection_choices = preset_choices %}
-        {% set preset_choices = [{'value': 'pd', 'label': _('Proactive Disclosure')}] %}
+        {% set preset_choices = [{'value': 'pd', 'label': _('Proactive Publication')}] %}
 
             {% for t in collection_choices %}
               {% do preset_choices.append(t) %}

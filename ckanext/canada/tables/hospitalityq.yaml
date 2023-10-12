@@ -1,7 +1,7 @@
 dataset_type: hospitalityq
 target_dataset: hospitalityq
 
-title: Proactive Disclosure - Hospitality Expenses
+title: Proactive Publication - Hospitality Expenses
 shortname: Hospitality Expenses
 notes: Access, upload and modify the quarterly hospitality expenses for your organization
 
@@ -13,7 +13,7 @@ collection: pd
 
 
 resources:
-- title: Proactive Disclosure - Hospitality Expenses
+- title: Proactive Publication - Hospitality Expenses
   resource_name: hospitalityq
   create_form: true
   edit_form: true
@@ -468,7 +468,7 @@ resources:
   - ati_email
 
 
-- title: Proactive Disclosure - Hospitality Nothing to Report
+- title: Proactive Publication - Hospitality Nothing to Report
   resource_name: hospitalityq-nil
   create_form: true
   edit_form: false #edit not possible for nil reports since only stored data is primary key
