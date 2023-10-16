@@ -87,14 +87,14 @@ jobs:
             ln -s \/srv\/app\/src\/ckan\/who.ini .\/links\/who.ini
             mkdir -p .\/links\/ckanext\/datastore\/tests\/ && ln -s \/srv\/app\/src\/ckan\/ckanext\/datastore\/tests\/allowed_functions.txt .\/links\/ckanext\/datastore\/tests\/allowed_functions.txt
             mkdir -p .\/links\/ckan\/bin\/postgres_init\/ && ln -s \/srv\/app\/src\/ckan\/bin\/postgres_init\/1_create_ckan_db.sh .\/links\/ckan\/bin\/postgres_init\/1_create_ckan_db.sh && ln -s \/srv\/app\/src\/ckan\/bin\/postgres_init\/2_create_ckan_datastore_db.sh .\/links\/ckan\/bin\/postgres_init\/2_create_ckan_datastore_db.sh
-            python2 setup.py develop
+            python3 setup.py develop
             . .\/links\/ckan\/bin\/postgres_init\/1_create_ckan_db.sh
             . .\/links\/ckan\/bin\/postgres_init\/2_create_ckan_datastore_db.sh
             ckan -c test-core.ini db init
             ckan -c test-core.ini datastore set-permissions | psql -U postgres --set ON_ERROR_STOP=1
             ckan -c test-core.ini canada update-triggers
             ckan -c test-core.ini recombinant create-triggers -a
-            python2 .\/bin\/download_country.py
+            python3 .\/bin\/download_country.py
       - run:
           name: Run all tests
           command: |
