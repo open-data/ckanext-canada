@@ -9,7 +9,9 @@ from ckanapi import LocalCKAN, NotFound
 
 from ckanext.recombinant.tables import (
     get_geno,
-    get_chromo)
+    get_chromo,
+    get_dataset_types)
+from ckanext.recombinant.errors import RecombinantException
 from ckanext.recombinant.read_csv import csv_data_batch
 from ckanext.recombinant.helpers import (
     recombinant_choice_fields,
@@ -26,17 +28,22 @@ def get_commands():
     return pd
 
 
+def _check_pd_type(pd_type):
+    if pd_type not in get_dataset_types():
+        raise RecombinantException(f'PD Type "{pd_type}" does not exist')
+
+
 @click.group(short_help="Proactive Disclosure/Publication management commands")
 def pd():
     """Proactive Disclosure/Publication management commands.
     """
     pass
 
-#TODO: Get chromos and make either the group ot subcommands dynamic based on schemas...
 
 @pd.command(short_help="Clear all SOLR records.")
 @click.argument("pd_type")
 def clear(pd_type):
+    _check_pd_type(pd_type)
     clear_index(pd_type)
 
 
@@ -76,6 +83,7 @@ def rebuild(pd_type, files=None, solr_url=None, lenient=False, is_nil=False):
     For NIL:\n
         pd <pd-type> rebuild [--lenient] [-f <file> <file>] [-s <solr-url>]
     """
+    _check_pd_type(pd_type)
     if files:
         if not is_nil and len(files) >= 2:
             raise ValueError('You may only supply one file for non NIL types')

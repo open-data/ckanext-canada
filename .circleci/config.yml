@@ -17,7 +17,7 @@ orbs:
 jobs:
   test:
     docker:
-      - image: openknowledge/ckan-dev:2.8  # primary executor
+      - image: openknowledge/ckan-dev:2.9  # primary executor
         name: ckan
         environment:
           PGHOST: postgres
@@ -54,34 +54,34 @@ jobs:
             - "0c:02:84:7e:c0:46:16:eb:9b:5e:1d:c9:f8:3b:5a:3d"
       - checkout
       - run:
-          name: Set CKAN to open-data/ckan@canada-v2.9
+          name: Set CKAN to open-data/ckan@canada-py3
           command: |
             pip uninstall -y ckan
             git --git-dir=\/srv\/app\/src\/ckan\/.git --work-tree=\/srv\/app\/src\/ckan\/ remote add canada https://github.com/open-data/ckan.git
-            git --git-dir=\/srv\/app\/src\/ckan\/.git --work-tree=\/srv\/app\/src\/ckan\/ fetch canada canada-v2.9
-            git --git-dir=\/srv\/app\/src\/ckan\/.git --work-tree=\/srv\/app\/src\/ckan\/ checkout -b canada-v2.9 canada/canada-v2.9
+            git --git-dir=\/srv\/app\/src\/ckan\/.git --work-tree=\/srv\/app\/src\/ckan\/ fetch canada canada-py3
+            git --git-dir=\/srv\/app\/src\/ckan\/.git --work-tree=\/srv\/app\/src\/ckan\/ checkout -b canada-py3 canada/canada-py3
             git --git-dir=\/srv\/app\/src\/ckan\/.git --work-tree=\/srv\/app\/src\/ckan\/ pull
       - run:
           name: Install requirements
           command: |
             apk add jpeg-dev
-            pip install setuptools==36.1
-            pip install --upgrade pip==19.2.1
-            pip install -e \/srv\/app\/src\/ckan\/ -r \/srv\/app\/src\/ckan\/requirements-py2.txt -r \/srv\/app\/src\/ckan\/dev-requirements.txt
+            pip install setuptools==44.1.0
+            pip install --upgrade pip==23.2.1
+            pip install -e \/srv\/app\/src\/ckan\/ -r \/srv\/app\/src\/ckan\/requirements.txt -r \/srv\/app\/src\/ckan\/dev-requirements.txt
             pip install -e 'git+https://github.com/ckan/ckanapi.git#egg=ckanapi' -r 'https://raw.githubusercontent.com/ckan/ckanapi/master/requirements.txt'
             pip install -e . -r .\/requirements.txt -r .\/test-requirements.txt
             pip install -e 'git+https://github.com/ckan/ckanext-fluent.git#egg=ckanext-fluent' -r 'https://raw.githubusercontent.com/ckan/ckanext-fluent/master/requirements.txt'
-            pip install -e 'git+https://github.com/open-data/ckanext-recombinant.git@master#egg=ckanext-recombinant' -r 'https://raw.githubusercontent.com/open-data/ckanext-recombinant/master/requirements.txt'
+            pip install -e 'git+https://github.com/open-data/ckanext-recombinant.git@canada-py3#egg=ckanext-recombinant' -r 'https://raw.githubusercontent.com/open-data/ckanext-recombinant/canada-py3/requirements.txt'
             pip install -e 'git+https://github.com/ckan/ckanext-scheming.git#egg=ckanext-scheming'
-            pip install -e 'git+https://github.com/open-data/ckanext-validation.git@canada#egg=ckanext-validation' -r 'https://raw.githubusercontent.com/open-data/ckanext-validation/canada/requirements.txt' -r 'https://raw.githubusercontent.com/open-data/ckanext-validation/canada/dev-requirements.txt'
+            pip install -e 'git+https://github.com/open-data/ckanext-validation.git@canada-py3#egg=ckanext-validation' -r 'https://raw.githubusercontent.com/open-data/ckanext-validation/canada-py3/requirements.txt' -r 'https://raw.githubusercontent.com/open-data/ckanext-validation/canada-py3/dev-requirements.txt'
             pip install -e 'git+https://github.com/open-data/ckanext-xloader.git#egg=ckanext-xloader' -r 'https://raw.githubusercontent.com/open-data/ckanext-xloader/master/requirements.txt' -r 'https://raw.githubusercontent.com/open-data/ckanext-xloader/master/dev-requirements.txt'
             pip install -e 'git+https://github.com/ckan/ckantoolkit.git#egg=ckantoolkit' -r 'https://raw.githubusercontent.com/ckan/ckantoolkit/master/requirements.txt'
             pip install -e 'git+https://github.com/open-data/goodtables.git@canada#egg=goodtables' -r 'https://raw.githubusercontent.com/open-data/goodtables/canada/requirements.txt'
             pip install -e 'git+https://github.com/open-data/ckanext-wet-boew.git#egg=ckanext-wet-boew' -r 'https://raw.githubusercontent.com/open-data/ckanext-wet-boew/master/requirements.txt'
-            pip install -e 'git+https://github.com/open-data/ckanext-security.git@canada-v2.9#egg=ckanext-security' -r 'https://raw.githubusercontent.com/open-data/ckanext-security/canada-v2.9/requirements-py2.txt'
+            pip install -e 'git+https://github.com/open-data/ckanext-security.git@canada-py3#egg=ckanext-security' -r 'https://raw.githubusercontent.com/open-data/ckanext-security/canada-py3/requirements.txt'
             find \/srv\/app\/ -name '*.pyc' -delete
       - run:
-          name: Setup extension (CKAN 2.9)
+          name: Setup extension (CKAN 2.9 PY3)
           command: |
             ln -s \/srv\/app\/src\/ckan\/test-core.ini .\/links\/test-core.ini
             ln -s \/srv\/app\/src\/ckan\/who.ini .\/links\/who.ini
@@ -92,8 +92,8 @@ jobs:
             . .\/links\/ckan\/bin\/postgres_init\/2_create_ckan_datastore_db.sh
             ckan -c test-core.ini db init
             ckan -c test-core.ini datastore set-permissions | psql -U postgres --set ON_ERROR_STOP=1
-            paster --plugin=ckanext-canada canada update-triggers -c test-core.ini
-            paster --plugin=ckanext-recombinant recombinant create-triggers -a -c test-core.ini
+            ckan -c test-core.ini canada update-triggers
+            ckan -c test-core.ini recombinant create-triggers -a
             python2 .\/bin\/download_country.py
       - run:
           name: Run all tests
