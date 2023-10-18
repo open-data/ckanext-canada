@@ -5,7 +5,7 @@ targets := ati briefingt qpnotes contracts contractsa dac experiment grants hosp
 
 csv_files := \
 	ati.csv ati-nil.csv \
-	briefingt.csv \
+	briefingt.csv briefingt-nil \
 	qpnotes.csv \
         contractsa.csv \
         contracts.csv contracts-nil.csv \
@@ -181,22 +181,28 @@ $(workdir)/filtered/ati-nil.csv: $(workdir)/ati-nil.csv
 briefingt: upload-briefingt rebuild-briefingt
 
 .PHONY: upload-briefingt
-upload-briefingt: $(workdir)/filtered/briefingt.csv
+upload-briefingt: $(workdir)/filtered/briefingt.csv $(workdir)/filtered/briefingt-nil.csv
 	@$(echo_date) Uploading Briefing Note Titles...
 	@$(ckanapi) action resource_patch -c $(registry_ini) \
-	id=299a2e26-5103-4a49-ac3a-53db9fcc06c7 upload@"$(workdir)/filtered/briefingt.csv" \
+	id=299a2e26-5103-4a49-ac3a-53db9fcc06c7 upload@"$(workdir)/filtered/briefingt.csv" upload@"$(workdir)/filtered/briefingt-nil.csv" \
 	> /dev/null
 
 .PHONY: rebuild-briefingt
-rebuild-briefingt: $(workdir)/filtered/briefingt.csv
+rebuild-briefingt: $(workdir)/filtered/briefingt.csv $(workdir)/filtered/briefingt-nil.csv
 	@$(echo_date) Rebuilding Briefing Note Titles...
 	@$(oc_search) import_data_csv --csv "$(workdir)/filtered/briefingt.csv" --search briefingt --quiet
 
 $(workdir)/briefingt.csv:
 	$(paster) $(combine) briefingt -d $(workdir) -c $(registry_ini)
 
+$(workdir)/briefingt-nil.csv:
+	$(paster) $(combine) briefingt-nil -d $(workdir) -c $(registry_ini)
+
 $(workdir)/filtered/briefingt.csv: $(workdir)/briefingt.csv
-	$(fdir)/filter_briefingt.py < $< > $@
+	$(fdir)/filter_modified_created.py < $< > $@
+
+$(workdir)/filtered/briefingt-nil.csv: $(workdir)/briefingt-nil.csv
+	$(fdir)/filter_modified_created.py < $< > $@
 
 ###
 ###  Question Period Notes
