@@ -86,18 +86,13 @@ class IntentionalServerError(Exception):
     pass
 
 
-@canada_views.route('/user/login', methods=['GET'])
-def login():
-    from ckan.views.user import _get_repoze_handler
-
-    came_from = h.url_for(u'canada.logged_in')
-    g.login_handler = h.url_for(
-        _get_repoze_handler(u'login_handler_path'), came_from=came_from)
-    return render(u'user/login.html', {})
-
-
-@canada_views.route('/logged_in', methods=['GET'])
+@canada_views.route('/user/logged_in', methods=['GET'])
 def logged_in():
+    # redirect if needed
+    came_from = request.params.get(u'came_from', u'')
+    if h.url_is_local(came_from):
+        return h.redirect_to(str(came_from))
+
     if g.user:
         user_dict = get_action('user_show')(None, {'id': g.user})
 
@@ -548,6 +543,7 @@ def home():
 
     if is_new:
         return h.redirect_to('dataset.search')
+
     return h.redirect_to('canada.links')
 
 

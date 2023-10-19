@@ -695,7 +695,6 @@ class DataGCCAForms(p.SingletonPlugin, DefaultDatasetForm):
 
 
 class LogExtraMiddleware(object):
-    #FIXME: Is this really what i breaking everything??
     def __init__(self, app, config):
         self.app = app
 
@@ -704,16 +703,13 @@ class LogExtraMiddleware(object):
             extra = []
             try:
                 contextual_user = g.user
-            except TypeError:
+            except (TypeError, RuntimeError):
                 contextual_user = None
             if contextual_user:
-                log_extra = g.log_extra if hasattr(g, 'log_extra') else u''
-                extra = [(
-                    'X-LogExtra', u'user={uid} {extra}'.format(
-                        uid=contextual_user,
-                        extra=log_extra).encode('utf-8')
-                    )
-                ]
+                log_extra = g.log_extra if hasattr(g, 'log_extra') else ''
+                #FIXME: make sure username special chars are handled
+                # the values in the tuple HAVE to be str types.
+                extra = [('X-LogExtra', f'user={contextual_user} {log_extra}')]
 
             return start_response(
                 status,
