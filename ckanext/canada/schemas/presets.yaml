@@ -150,6 +150,8 @@ presets:
     error_snippet: fluent_text.html
     validators: fluent_text
     output_validators: fluent_core_translated_output
+    form_attrs:
+      size: 60
 
 # Field = Publisher - Current Organization Name.
 # List box Source: Publisher - Current Organization Name code table (refer to Data Migration).
@@ -210,6 +212,8 @@ presets:
     display_snippet: fluent_text.html
     error_snippet: fluent_text.html
     output_validators: fluent_text_output
+    form_attrs:
+      size: 60
 
 # Field = Publisher - Organization Section Name English.
 # {The English names of the work groups, units of work, business units, etc. of the organization that publishes the dataset (separate multiple names by commas).}
@@ -242,6 +246,8 @@ presets:
     error_snippet: fluent_text.html
     validators: fluent_text
     output_validators: fluent_text_output
+    form_attrs:
+      size: 60
 
 # Field = Creator.
 # {Individual entities (persons) primarily responsible for making the dataset (separate multiple entities by commas).}
@@ -255,6 +261,8 @@ presets:
       en: Individual entities (persons) primarily responsible for making the dataset (separate multiple entities by commas)
       fr: Entités individuelles (personnes) principalement responsables de produire le jeu de données (séparer les multiples entités par des virgules)
     validators: ignore_missing string_safe
+    form_attrs:
+      size: 60
 
 
 # Field = Contributor English.
@@ -287,6 +295,8 @@ presets:
     error_snippet: fluent_text.html
     validators: fluent_text
     output_validators: fluent_text_output
+    form_attrs:
+      size: 60
 
 
 # Field = Contact Email.
@@ -302,6 +312,8 @@ presets:
       fr: Courriel de la personne-ressource à contacter au sujet du jeu de données ou de l’ensemble de données
     validators: scheming_required string_safe canada_maintainer_email_default strip_value email_validator
     display_snippet: email_with_parameters.html
+    form_attrs:
+      size: 60
 
 - preset_name: canada_maintainer_contact_form
   values:
@@ -673,6 +685,8 @@ presets:
     help_text:
       en: The range of spatial applicability of a dataset, as a GeoJson string.
       fr: Étendue de l’applicabilité spatiale d’un produit. Cet élément peut inclure un cadre de délimitation ou une chaîne GeoJson.
+    form_attrs:
+      size: 60
 
 # Field = Geographic Region Name.
 # List box Source: Geographic Region name code table (refer to Data Migration).
@@ -2227,6 +2241,8 @@ presets:
     error_snippet: fluent_text.html
     validators: fluent_text
     output_validators: fluent_text_output
+    form_attrs:
+      style: "width: 100%;"
 
 # Field = Series Title English.
 # {The English name of the series, or aggregate dataset, of which the dataset is a part}
@@ -2258,6 +2274,8 @@ presets:
     error_snippet: fluent_text.html
     validators: fluent_text
     output_validators: fluent_text_output
+    form_attrs:
+      size: 60
 
 # Field = Series Issue ID English.
 # {English identification of the series’ issue information}
@@ -2289,6 +2307,8 @@ presets:
     error_snippet: fluent_text.html
     validators: fluent_text
     output_validators: fluent_text_output
+    form_attrs:
+      size: 60
 
 # Field = Digital Object Identifier (DOI).
 # {The Digital Object Identifier assigned to the dataset. For more information visit: http://cisti-icist.nrc-cnrc.gc.ca/eng/services/cisti/datacite-canada/index.html}
