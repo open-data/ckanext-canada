@@ -673,3 +673,22 @@ div.resource-upload-field .upload-type > label.control-label::before{
   color: #c6898b;
   margin-right: 2.5px;
 }
+.form-group .info-block {
+    padding: 0;
+    font-size: small;
+    color: #2572b4;
+}
+label.control-label:has(span.control-required):after {
+    content: "(required)";
+    display: inline;
+    color: #e00;
+    vertical-align: baseline;
+    margin-left: 4px;
+    background-image: none;
+}
+label.control-label:has(span.control-required):lang(fr):after {
+    content: "(requis)";
+}
+.control-required {
+    color: #e00;
+}

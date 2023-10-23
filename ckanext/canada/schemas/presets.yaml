@@ -2663,6 +2663,8 @@ presets:
     error_snippet: fluent_text.html
     validators: fluent_text
     output_validators: fluent_core_translated_output
+    form_attrs:
+      size: 60
 
 
 # Field = Relationship Type.
