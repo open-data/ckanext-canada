@@ -152,6 +152,7 @@ presets:
     output_validators: fluent_core_translated_output
     form_attrs:
       size: 60
+      class: form-control
 
 # Field = Publisher - Current Organization Name.
 # List box Source: Publisher - Current Organization Name code table (refer to Data Migration).
@@ -214,6 +215,7 @@ presets:
     output_validators: fluent_text_output
     form_attrs:
       size: 60
+      class: form-control
 
 # Field = Publisher - Organization Section Name English.
 # {The English names of the work groups, units of work, business units, etc. of the organization that publishes the dataset (separate multiple names by commas).}
@@ -248,6 +250,7 @@ presets:
     output_validators: fluent_text_output
     form_attrs:
       size: 60
+      class: form-control
 
 # Field = Creator.
 # {Individual entities (persons) primarily responsible for making the dataset (separate multiple entities by commas).}
@@ -297,6 +300,7 @@ presets:
     output_validators: fluent_text_output
     form_attrs:
       size: 60
+      class: form-control
 
 
 # Field = Contact Email.
@@ -361,6 +365,9 @@ presets:
       error_snippet: fluent_text.html
       validators: fluent_text
       output_validators: fluent_text_output
+      form_attrs:
+        size: 60
+        class: form-control
 
 
 # Field = Description (English).
@@ -396,6 +403,9 @@ presets:
     error_snippet: fluent_text.html
     validators: fluent_text
     output_validators: fluent_core_translated_output
+    form_attrs:
+      class: form-control
+
 
 # Field = Keywords (English).
 # {Commonly used words or phrases, which describe the dataset, in English (separate multiple entities by commas).}
@@ -432,6 +442,8 @@ presets:
     output_validators: fluent_tags_output
     form_attrs:
       style: "width: 100%"
+      class: form-control
+
 
 # Field = Subject.
 # List box Source: Subject code table (refer to Data Migration).
@@ -2243,6 +2255,8 @@ presets:
     output_validators: fluent_text_output
     form_attrs:
       style: "width: 100%;"
+      class: form-control
+
 
 # Field = Series Title English.
 # {The English name of the series, or aggregate dataset, of which the dataset is a part}
@@ -2276,6 +2290,8 @@ presets:
     output_validators: fluent_text_output
     form_attrs:
       size: 60
+      class: form-control
+
 
 # Field = Series Issue ID English.
 # {English identification of the series’ issue information}
@@ -2309,6 +2325,8 @@ presets:
     output_validators: fluent_text_output
     form_attrs:
       size: 60
+      class: form-control
+
 
 # Field = Digital Object Identifier (DOI).
 # {The Digital Object Identifier assigned to the dataset. For more information visit: http://cisti-icist.nrc-cnrc.gc.ca/eng/services/cisti/datacite-canada/index.html}
@@ -2377,6 +2395,9 @@ presets:
     required: true
     display_snippet: canada_license.html
     validators: scheming_required string_safe license_choices
+    form_attrs:
+      class: form-control
+
 
 #Field = Access Restrictions.
 #Default Value = Unrestricted.
