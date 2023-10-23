@@ -5,7 +5,7 @@ targets := ati briefingt qpnotes contracts contractsa dac experiment grants hosp
 
 csv_files := \
 	ati.csv ati-nil.csv \
-	briefingt.csv briefingt-nil \
+	briefingt.csv briefingt-nil.csv \
 	qpnotes.csv \
         contractsa.csv \
         contracts.csv contracts-nil.csv \
