@@ -692,3 +692,33 @@ label.control-label:has(span.control-required):lang(fr):after {
 .control-required {
     color: #e00;
 }
+.stages li.active:after {
+    border-top-color: #EDEDED;
+    border-bottom-color: #EDEDED;
+    border-right-color: #284162;
+    z-index: -1;
+}
+
+.stages li.complete .highlight {
+    color: #aeaeae;
+    background: #EDEDED;
+}
+
+.stages li.complete:before {
+    color: #aeaeae;
+    background: white;
+}
+
+.stages li.active:after {
+    border-top-color: #284162;
+    border-bottom-color: #284162;
+    border-right-color: #284162;
+}
+.stages li.active:after {
+  border-top-color: #EDEDED;
+  border-bottom-color: #EDEDED;
+}
+.stages li.complete:after {
+  border-top-color: #EDEDED;
+  border-bottom-color: #EDEDED;
+}

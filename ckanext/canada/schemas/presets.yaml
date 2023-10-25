@@ -2686,7 +2686,7 @@ presets:
     output_validators: fluent_core_translated_output
     form_attrs:
       size: 60
-
+      class: form-control
 
 # Field = Relationship Type.
 # List box Source: Relationship Type code table (refer to Data Migration).
