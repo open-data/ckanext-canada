@@ -8,7 +8,7 @@
 {# Remove when WET v4.0.21 is out #}
 {%- block custom_styles %}
   {{ super() }}
-  <link rel="stylesheet" href="/internal.css?x=12" type="text/css" />
+  {% asset 'canada_internal/css' %}
 {%- endblock -%}
 
 {%- block adobe_analytics -%}{%- endblock -%}
