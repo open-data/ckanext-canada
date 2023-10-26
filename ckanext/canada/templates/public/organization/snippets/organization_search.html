@@ -14,13 +14,8 @@
 </form>
 
 <div class="row mrgn-bttm-lg">
-  {% if count==0 %}
-    <div class="col-md-12 text-center text-warning">
-      <strong>{% snippet 'snippets/search_result_text.html', query=q, count=count, type="organization" %}</strong>
-    </div>
-  {% else %}
-    <div class="col-md-6 mrgn-tp-sm text-left text-success">
-        <strong>{% snippet 'snippets/search_result_text.html', query=q, count=count, type="organization" %}</strong>
-    </div>
-  {% endif %}
+  <div class="{{ 'col-md-12 text-center text-warning'
+      if not count else 'col-md-6 mrgn-tp-sm text-left text-success' }}">
+    <strong>{% snippet 'snippets/search_result_text.html', query=q, count=count, type="organization" %}</strong>
+  </div>
 </div>
