@@ -4,10 +4,12 @@
 {% block primary_content_inner %}
   <div class="panel mrgn-rght-md">
 
-    {% block organizations_search_form %}{% endblock %}
+    {% block organizations_search_form %}
+      {% snippet 'organization/snippets/organization_search.html', q=q, count=page.item_count %}
+    {% endblock %}
     {% block organizations_list %}
-    {% if c.page.items or request.params %}
-      {% snippet "organization/snippets/organization_list.html", organizations=c.page.items %}
+    {% if page.items or request.params %}
+      {% snippet "organization/snippets/organization_list.html", organizations=page.items %}
     {% else %}
       <p class="empty">
         {{ _('There are currently no organizations for this site') }}.
@@ -18,7 +20,7 @@
     {% endif %}
     {% endblock %}
   {% block page_pagination %}
-  {{ c.page.pager() }}
+    {{ super() }}
   {% endblock %}
   </div>
 {% endblock %}
