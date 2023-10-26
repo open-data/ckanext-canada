@@ -593,6 +593,7 @@ body i.fa.fa-arrow-left::before{
 }
 .canada-flash-messages .alert{
   padding-right: 15px;
+  position: relative;
 }
 .canada-flash-messages .flash-messages a.close{
   display: block;
