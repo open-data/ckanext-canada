@@ -23,13 +23,15 @@
     <div class="container">
       <div class="row">
         {% block flash %}
-          <aside class="container">
-          {% for message in h.flash.pop_messages() | list %}
-            <div class="row alert fade in {{ message.category }}">
-              <p>{{ h.literal(message) }}</p>
+          <div class="col-md-12 canada-flash-messages">
+            <div class="flash-messages">
+              {% for message in h.flash.pop_messages() | list %}
+                <section class="alert fade in {{ message.category }}">
+                  <p>{{ h.literal(message) }}</p>
+                </section>
+              {% endfor %}
             </div>
-          {% endfor %}
-          </aside>
+          </div>
         {% endblock flash %}
         <main role="main" property="mainContentOfPage" class="container">
           {% block page_title %}
