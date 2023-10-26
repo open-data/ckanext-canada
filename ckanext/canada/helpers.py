@@ -23,6 +23,7 @@ import json as json
 from markupsafe import Markup, escape
 from ckan.lib.helpers import core_helper
 from ckan.plugins.core import plugin_loaded
+from ckan.logic import NotAuthorized
 
 ORG_MAY_PUBLISH_OPTION = 'canada.publish_datasets_organization_name'
 ORG_MAY_PUBLISH_DEFAULT_NAME = 'tb-ct'
@@ -560,5 +561,7 @@ def organization_member_count(id):
         })
     except NotFound:
         raise NotFound( _('Members not found'))
+    except NotAuthorized:
+        return 0
 
     return len(members)
