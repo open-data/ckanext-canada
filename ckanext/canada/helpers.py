@@ -562,6 +562,6 @@ def organization_member_count(id):
     except NotFound:
         raise NotFound( _('Members not found'))
     except NotAuthorized:
-        return 0
+        return -1
 
     return len(members)
