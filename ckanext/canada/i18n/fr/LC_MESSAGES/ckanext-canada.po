@@ -448,7 +448,7 @@ msgstr "Vous n'êtes pas autorisé à supprimer la ressource %s"
 #: ckanext/canada/view.py:617
 #, python-format
 msgid "DataStore table and Data Dictionary deleted for resource %s"
-msgstr ""
+msgstr "Tableau de stockage de données et dictionnaire de données supprimés pour la ressource %s"
 
 #: ckanext/canada/templates/internal/organization/edit_base.html:26
 #: ckanext/canada/templates/internal/package/resource_edit.html:3
@@ -681,19 +681,19 @@ msgstr ""
 msgid ""
 "If the value 00 (none) is entered, then no other value can be entered in "
 "this field."
-msgstr ""
+msgstr "Si la valeur 00 (aucun) est saisie, aucune autre valeur ne peut être saisie dans ce champ."
 
 #. SQL Trigger String for PD Type: contracts
 #: ckanext/canada/tables/contracts.yaml:2165
 msgid "Discontinued as of 2022-01-01"
-msgstr ""
+msgstr "Supprimé à compter du 2022-01-01"
 
 #. SQL Trigger String for PD Type: contracts
 #: ckanext/canada/tables/contracts.yaml:2161
 msgid ""
 "This field must be populated with an NA if an amendment is disclosed "
 "under Instrument Type"
-msgstr ""
+msgstr "Ce champ doit être rempli par un S.O., lorsqu’une modification est divulguée dans le cadre du type d’instrument"
 
 #. SQL Trigger String for PD Type: contracts
 #: ckanext/canada/tables/contracts.yaml:2176
@@ -701,40 +701,40 @@ msgid ""
 "This field may only be populated with “0” if the procurement was "
 "identified as competitive (open bidding (OB), traditional competitive "
 "(TC) or selective tendering (ST))."
-msgstr ""
+msgstr "Ce champ peut être uniquement rempli par un « 0 », lorsque l’approvisionnement a été identifié comme concurrentiel (appel d’offres ouvert [APO], appel d’offres traditionnel, concurrentiel [AOTC] ou appel d’offres sélectif [AOS])."
 
 #. SQL Trigger String for PD Type: contracts
 #: ckanext/canada/tables/contracts.yaml:2164
 msgid ""
 "If the value XX (none) is entered, then no other value can be entered in "
 "this field."
-msgstr ""
+msgstr "Si la valeur XX (aucun) est saisie, aucune autre valeur ne peut être saisie dans ce champ."
 
 #. SQL Trigger String for PD Type: contracts
 #: ckanext/canada/tables/contracts.yaml:2173
 msgid ""
 "This field must be N, No or Non, if the Procurement Strategy for "
 "Aboriginal Business field is MS or VS."
-msgstr ""
+msgstr "Ce champ doit correspondre à « Nul », « Non » ou « Aucun », lorsque le champ Stratégie d’approvisionnement auprès des entreprises autochtones est MS ou VS."
 
 #. SQL Trigger String for PD Type: contracts
 #: ckanext/canada/tables/contracts.yaml:2174
 msgid ""
 "This field must be populated with a 1 if the solicitation procedure is "
 "identified as non-competitive (TN) or Advance Contract Award Notice (AC)."
-msgstr ""
+msgstr "Ce champ doit être rempli par un « 1 », lorsque la procédure d’appel d’offres est identifiée comme non concurrentielle (AON) ou comme préavis d’adjudication de contrat (PAC)."
 
 #. SQL Trigger String for PD Type: contracts
 #: ckanext/canada/tables/contracts.yaml:2166
 msgid "Must be left blank when trade agreements specified"
-msgstr ""
+msgstr "Ce champ ne doit pas être rempli lorsque des accords commerciaux sont précisés"
 
 #. SQL Trigger String for PD Type: contracts
 #: ckanext/canada/tables/contracts.yaml:2167
 msgid ""
 "If the value NA (not applicable) is entered, then no other value can be "
 "entered in this field."
-msgstr ""
+msgstr "Lorsque la valeur S.A. (sans objet) est saisie, aucune autre valeur ne peut être saisie dans ce champ."
 
 #. SQL Trigger String for PD Type: contracts
 #: ckanext/canada/tables/contracts.yaml:2170
@@ -742,7 +742,7 @@ msgid ""
 "If TC, TN or AC is selected in the Solicitation Procedure data field with"
 " a value other than XX (None) selected in the Trade Agreement data field,"
 " then a Limited Tendering value other than 00 (none) must be entered."
-msgstr ""
+msgstr "Lorsque « AOTC », « AON » ou « PAC » est sélectionné dans le champ de données « Procédure d’appel d’offres » et qu’une valeur autre que XX (aucun) est sélectionnée dans le champ de données « Accord commercial », une valeur d’appel d’offres limité autre que 00 (aucun) doit être saisie."
 
 #. SQL Trigger String for PD Type: contracts
 #: ckanext/canada/tables/contracts.yaml:2175
@@ -750,12 +750,12 @@ msgid ""
 "If this field is populated, it must be with a “0” if the procurement was "
 "identified as non-competitive (TN) or advance contract award notice (AC) "
 "or was identified as an Amendment (A) in the Instrument type data field."
-msgstr ""
+msgstr "Lorsque ce champ est rempli, il doit être rempli par un « 0 », si l’approvisionnement a été identifié comme non concurrentiel (AON) ou comme préavis d’adjudication de contrat (PAC) ou a été identifié comme une modification (M) dans le champ de données du type d’instrument."
 
 #. SQL Trigger String for PD Type: contracts
 #: ckanext/canada/tables/contracts.yaml:2162
 msgid "This field is limited to only 3 or 4 digits."
-msgstr ""
+msgstr "Ce champ a une limite de 3 ou 4 chiffres."
 
 #. SQL Trigger String for PD Type: contracts
 #: ckanext/canada/tables/contracts.yaml:2160
@@ -862,7 +862,7 @@ msgstr ""
 #. Resource Title for PD Type: grants
 #: ckanext/canada/tables/grants.yaml:874
 msgid "Proactive Publication - Grants and Contributions Nothing to Report"
-msgstr ""
+msgstr "Publication proactive – Subventions et contributions, rien à signaler"
 "Publication proactive - Subventions et les contributions  (Rien à "
 "signaler)"
 
@@ -994,7 +994,7 @@ msgstr ""
 #. Resource Title for PD Type: service
 #: ckanext/canada/tables/service.yaml:1063
 msgid "Service Standards & Performance Results"
-msgstr ""
+msgstr "Normes de service et résultats du rendement"
 
 #. SQL Trigger String for PD Type: service
 #: ckanext/canada/tables/service.yaml:1504
@@ -3516,6 +3516,15 @@ msgstr "Vous ne suivez rien"
 msgid "Remember me"
 msgstr "Mémoriser mes informations"
 
+msgid "Record Creation Time"
+msgstr "Syntaxe d’entrée non valide pour le type de date"
+
+msgid "Last Record Modification Time"
+msgstr "Heure de la création du dossier"
+
+msgid "User Last Modified Record"
+msgstr "Heure de la dernière modification au dossier"
+
 #~ msgid "Plot Cart Items on a Map"
 #~ msgstr "Tracer les article due panier sur une carte"
 
@@ -4434,15 +4443,6 @@ msgstr "Mémoriser mes informations"
 
 #~ msgid "invalid input syntax for type date"
 #~ msgstr "Syntaxe d’entrée non valide pour ce type de recherche booléenne"
-
-#~ msgid "Record Creation Time"
-#~ msgstr "Syntaxe d’entrée non valide pour le type de date"
-
-#~ msgid "Last Record Modification Time"
-#~ msgstr "Heure de la création du dossier"
-
-#~ msgid "User Last Modified Record"
-#~ msgstr "Heure de la dernière modification au dossier"
 
 #~ msgid "time_ascend"
 #~ msgstr "Utilisateur de la dernière modification au dossier"
