@@ -709,3 +709,6 @@ label.control-label:has(span.control-required):lang(fr):after {
   border-top-color: #EDEDED;
   border-bottom-color: #EDEDED;
 }
+li.nav-item.justify-content-between.position-relative:hover {
+  background-color: #eee;
+}

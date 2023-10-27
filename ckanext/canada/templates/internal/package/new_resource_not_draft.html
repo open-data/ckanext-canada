@@ -1,6 +1,5 @@
 {% ckan_extends %}
 
-{% block subtitle %}
+{% block secondary_content %}
+ {% snippet 'package/snippets/resources.html', pkg=pkg %}
 {% endblock %}
-
-{% block secondary_content %}{% endblock %}
