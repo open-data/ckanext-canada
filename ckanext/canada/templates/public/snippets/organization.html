@@ -25,22 +25,24 @@ Example:
     {% endif %}
 
     {% if show_nums %}
-    <div class="row">
-      <div class="col-md-6">
-        <h4 class="text-center">{{ _('Members') }}</h4>
-        <p class="font-xlarge text-center">
-          {{ h.SI_number_span(h.organization_member_count(organization.name)) }}
-        </p>
-      </div>
-      <div class="col-md-6">
-        <h4 class="text-center">{{ _('Datasets') }}</h4>
-
-        <p class="font-xlarge text-center">
-          {{ h.SI_number_span(organization.package_count) }}
-        </p>
-      </div>
-    </div>
-  {% endif %}
+      {% set member_count = h.organization_member_count(organization.name) %}
+      {% if member_count >= 0 %}
+        <div class="row">
+          <div class="col-md-6">
+            <h4 class="text-center">{{ _('Members') }}</h4>
+            <p class="font-xlarge text-center">
+              {{ h.SI_number_span(member_count) }}
+            </p>
+          </div>
+          <div class="col-md-6">
+            <h4 class="text-center">{{ _('Datasets') }}</h4>
+            <p class="font-xlarge text-center">
+              {{ h.SI_number_span(organization.package_count) }}
+            </p>
+          </div>
+        </div>
+      {% endif %}
+    {% endif %}
   </div>
 </div>
 {% endwith %}
