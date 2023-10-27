@@ -3372,10 +3372,8 @@ msgstr "Passer au contenu principal"
 msgid "Skip to site information"
 msgstr "Passer aux informations sur le site"
 
-#: ckanext/canada/templates/public/user/confirm_delete.html:8
-#, fuzzy
 msgid "Are you sure you want to delete user - {name}?"
-msgstr "Êtes-vous sûr de vouloir supprimer le membre {name}?"
+msgstr "Êtes-vous sûr de vouloir supprimer le membre - {name}?"
 
 #: ckanext/canada/templates/public/user/dashboard.html:6
 #: ckanext/canada/templates/public/user/dashboard.html:16
