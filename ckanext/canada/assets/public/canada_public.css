@@ -1,14 +1,14 @@
 img.openness-rating-stars {
-    margin-bottom: -4px !important;
+  margin-bottom: -4px !important;
 }
 
 .facet-item {
-	padding-bottom: 3px;
-	padding-top: 3px;
+  padding-bottom: 3px;
+  padding-top: 3px;
 }
 
 .pkg-rss-feed-text {
-    color: white;
+  color: white;
 }
 
 .table>tbody>tr>td,
@@ -17,7 +17,7 @@ img.openness-rating-stars {
 .table>tfoot>tr>th,
 .table>thead>tr>td,
 .table>thead>tr>th {
-border: 1px solid #ddd;
+  border: 1px solid #ddd;
 }
 .table>caption+thead>tr:first-child>td,
 .table>caption+thead>tr:first-child>th,
@@ -25,16 +25,16 @@ border: 1px solid #ddd;
 .table>colgroup+thead>tr:first-child>th,
 .table>thead:first-child>tr:first-child>td,
 .table>thead:first-child>tr:first-child>th {
-border: 1px solid #ddd;
+  border: 1px solid #ddd;
 }
 .td-center {
-text-align: center;
+  text-align: center;
 }
 .td-full {
-width: 100%;
+  width: 100%;
 }
 .resource-list td {
-vertical-align: middle !important;
+  vertical-align: middle !important;
 }
 .alert-error,
 .label-error,
@@ -42,21 +42,21 @@ vertical-align: middle !important;
 .label-error[href]:focus,
 .label-error[href]:hover,
 details.alert-error {
-    background: #f3e9e8;
-    border-color: #d3080c;
-    color: #000;
+  background: #f3e9e8;
+  border-color: #d3080c;
+  color: #000;
 }
 .alert-error>:first-child:before {
-    color: #d3080c;
-    content: "\e101";
+  color: #d3080c;
+  content: "\e101";
 }
 
 .list-facets a {
-    text-decoration: none;
+  text-decoration: none;
 }
 
 .list-facets a:visited {
-    color: #295376;
+  color: #295376;
 }
 
 .breadcrumb li:last-child a {
@@ -88,63 +88,63 @@ details.alert-error {
 }
 
 #wb-sm li.dropdown-item a {
-    color: #284162;
-    text-align: left;
-    text-decoration: none;
+  color: #284162;
+  text-align: left;
+  text-decoration: none;
 }
 
 #wb-sm .menu li.dropdown-item a:hover {
-    color: white;
+  color: white;
 }
 
 #wb-sm .menu>li {
-    padding:0;
+  padding:0;
 }
 #wb-sm .menu>li>a {
-    display: block;
-    padding: 1em;
-    text-align: center;
-    text-decoration: none;
+  display: block;
+  padding: 1em;
+  text-align: center;
+  text-decoration: none;
 }
 
 #wb-sm .menu {
-    text-shadow: none;
+  text-shadow: none;
 }
 
 [role="main"], .main {
-    background: none;
-}
-
-.stages li.active .highlight {
-    background: #284162;
-}
-
-.stages li.active::before {
-    color: #284162;
-}
-
-.stages li.active:after {
-    border-top-color: #c5e2c4;
-    border-bottom-color: #c5e2c4;
-    border-right-color: #284162;
-    z-index: -1;
-}
-
-body {
   background: none;
 }
 
+.stages li.active .highlight {
+  background: #284162;
+}
+
+.stages li.active::before {
+  color: #284162;
+}
+
+.stages li.active:after {
+  border-top-color: #c5e2c4;
+  border-bottom-color: #c5e2c4;
+  border-right-color: #284162;
+  z-index: -1;
+}
+
+body {
+background: none;
+}
+
 .nav-item > a, .nav-aside li a {
-    font-size: inherit;
+  font-size: inherit;
 }
 
 .nav-item.active > a, .nav-aside li.active a {
-    background-color: unset;
-    color: #335075;
+  background-color: unset;
+  color: #335075;
 }
 
 .nav-item.active > a::before, .nav-aside li.active a::before {
-    border: none;
+  border: none;
 }
 
 .nav-item.active > a:hover,
@@ -158,51 +158,51 @@ body {
 }
 
 .context-info .nums {
-    border: none;
+  border: none;
 }
 
 .form-actions {
-    text-align: inherit;
+  text-align: inherit;
 }
 
 .form-actions .action-info.small {
-    font-size: inherit;
-    line-height: inherit;
+  font-size: inherit;
+  line-height: inherit;
 }
 .form-actions .action-info {
-    float: inherit;
-    width: auto;
-    margin-right: inherit;
+  float: inherit;
+  width: auto;
+  margin-right: inherit;
 }
 .form-actions .action-info {
-    line-height: 2;
-    text-align: inherit;
-    color: inherit;
-    margin: revert;
+  line-height: 2;
+  text-align: inherit;
+  color: inherit;
+  margin: revert;
 }
 
 table {
-    table-layout: initial;
+  table-layout: initial;
 }
 
 button.dt-button, div.dt-button, a.dt-button {
-    padding: 2px 10px;
+  padding: 2px 10px;
 }
 
 .resource-tags {
-    text-align: left;
-    white-space: inherit;
-    word-break: break-word;
-    word-wrap: break-word;
+  text-align: left;
+  white-space: inherit;
+  word-break: break-word;
+  word-wrap: break-word;
 }
 
 #resource-desc {
-    word-break: break-word;
-    word-wrap: break-word;
+  word-break: break-word;
+  word-wrap: break-word;
 }
 
 #resources_nav {
-    font-size: initial;
+  font-size: initial;
 }
 
 .panel.panel-primary, .panel.panel-primary .panel-heading { border-color: #335075; }
@@ -211,11 +211,11 @@ button.dt-button, div.dt-button, a.dt-button {
 .panel-primary { overflow-wrap: break-word; }
 
 .page-header .content_action {
-    margin-top: 3px;
+  margin-top: 3px;
 }
 .page-header.module-content {
-    padding-top: 0;
-    padding-bottom: 0;
+  padding-top: 0;
+  padding-bottom: 0;
 }
 .label.lb-open-data { float:right; border-color: #088; background: #fff }
 .label.lb-sug-datasets { float:right; border-color: #f80; background: #fff }
@@ -224,49 +224,49 @@ button.dt-button, div.dt-button, a.dt-button {
 .label.lb-pd { float:right; border-color: #44f; background: #fff }
 
 a#edit-comment-body-0-format-help-about, button#edit-submit,button#edit-actions-submit  {
-    width: auto;
-    top: auto;
+  width: auto;
+  top: auto;
 }
 
 .table-striped tbody tr:nth-child(even) td, .table-striped tbody tr:nth-child(even) th {
-    background-color: #fff;
+  background-color: #fff;
 }
 
 .activity .item {
-    position: relative;
-    margin: 0 0 15px 0;
-    padding: 0;
+  position: relative;
+  margin: 0 0 15px 0;
+  padding: 0;
 }
 .activity .item .icon {
-    padding-left:0;
+  padding-left:0;
 }
 .activity .item p {
-    font-size: 14px;
-    line-height: 1.5;
-    margin: 5px 0 0 40px;
+  font-size: 14px;
+  line-height: 1.5;
+  margin: 5px 0 0 40px;
 }
 
 .res-tag {
-    font-size: 10px;
+  font-size: 10px;
 }
 
 .res-tag-lang {
-    background-color: #256EB8;
+  background-color: #256EB8;
 }
 
 .resource-heading {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
 }
 .geomap-progress:before {
-     background: none;
+   background: none;
 }
 
 .geomap-progress:after {
-     content: none;
+   content: none;
 }
 
 .goodtables-ui-report .file-heading .file-name {
@@ -276,53 +276,53 @@ a#edit-comment-body-0-format-help-about, button#edit-submit,button#edit-actions-
   display: none;
 }
 .goodtables-ui-report .file-heading .inner::before {
-    content: none;
+  content: none;
 }
 .goodtables-ui-report .passed-tests li .badge.badge-success {
   display: none;
 }
 .goodtables-ui-report .result {
-    margin: 0;
+  margin: 0;
 }
 .goodtables-ui-report .result .error-details .error-list .error-list-heading {
-    display: none;
+  display: none;
 }
 
 .clear-both {
-    clear: both;
+  clear: both;
 }
 
 .float-none {
-    float: none;
+  float: none;
 }
 
 .geographic-region-wrapper {
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    align-items: baseline;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: baseline;
 }
 
 .geographic-region-wrapper > div{
-    padding-left: 0;
+  padding-left: 0;
 }
 
 .module-resource .module-content > .actions{
 
-    z-index: 2;
+  z-index: 2;
 
 }
 
 .module-resource .module-content > .resource-view .actions{
 
-    z-index: 1;
+  z-index: 1;
 
 }
 
 .modal .modal-dialog .modal-content .modal-header{
 
-    background-color: #2e5274;
+  background-color: #2e5274;
 
 }
 
@@ -335,13 +335,13 @@ body #resource-schema-buttons div.form-group > a.btn:nth-of-type(2){
 
 .modal .modal-dialog .modal-content .modal-title{
 
-    color: white;
+  color: white;
 
 }
 
 .modal .modal-dialog .modal-content button.close span{
 
-    color: white;
+  color: white;
 
 }
 
@@ -584,3 +584,26 @@ body i.fa.fa-arrow-left::before{
 ##  Resource Actions Toolbar Area ##
 ##              END               ##
 ####################################*/
+
+/*###################
+##  Flash Messages ##
+#####################*/
+.canada-flash-messages{
+  z-index: 2;
+}
+.canada-flash-messages .alert{
+  padding-right: 15px;
+  position: relative;
+}
+.canada-flash-messages .flash-messages a.close{
+  display: block;
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  padding-bottom: 0;
+}
+/*###################
+##       END       ##
+##  Flash Messages ##
+##       END       ##
+#####################*/

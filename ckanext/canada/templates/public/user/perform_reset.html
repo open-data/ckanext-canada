@@ -4,10 +4,6 @@
   {{ self.primary_content_inner() }}
 {% endblock %}
 
-{% block form_button %}
-  <button class="button button-accent" type="submit" name="save">{{ _("Update Password") }}</button>
-{% endblock %}
-
 {% block help %}
   <section class="module module-info span-2">
     {{ self.help_inner() }}

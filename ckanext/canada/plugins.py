@@ -242,6 +242,7 @@ class DataGCCAInternal(p.SingletonPlugin):
     def update_config(self, config):
         p.toolkit.add_template_directory(config, 'templates/internal')
         p.toolkit.add_public_directory(config, 'internal/static')
+        p.toolkit.add_resource('assets/internal', 'canada_internal')
 
         config.update({
             "ckan.user_list_limit": 250
@@ -449,6 +450,7 @@ class DataGCCAPublic(p.SingletonPlugin, DefaultTranslation):
         p.toolkit.add_public_directory(config, 'public')
         p.toolkit.add_resource('public/static/js', 'js')
         p.toolkit.add_resource('assets/datatables', 'canada_datatables')
+        p.toolkit.add_resource('assets/public', 'canada_public')
         config['ckan.auth.public_user_details'] = False
         config['recombinant.definitions'] = """
 ckanext.canada:tables/ati.yaml
