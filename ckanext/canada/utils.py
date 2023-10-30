@@ -580,7 +580,7 @@ def load_suggested(use_created_date, filename):
 def bulk_validate():
     """
     Usage: ckanapi search datasets include_private=true -c $CONFIG_INI |
-    paster canada bulk-validate -c $CONFIG_INI
+    ckan -c $CONFIG_INI canada bulk-validate
 
     Use this command to bulk validate the resources. Any resources which
     are already in datastore but not validated will be removed.

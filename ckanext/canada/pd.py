@@ -40,6 +40,12 @@ def pd():
     pass
 
 
+@pd.command(short_help="List the available PD types.")
+def list_types():
+    for pd_type in get_dataset_types():
+        click.echo(pd_type)
+
+
 @pd.command(short_help="Clear all SOLR records.")
 @click.argument("pd_type")
 def clear(pd_type):
