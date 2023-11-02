@@ -66,11 +66,7 @@
 
     {% if pkg.state == "deleted" %}
       <div class="module-alert alert alert-danger mrgn-tp-sm">
-        <p>{{ _('This dataset has been deleted and is no longer accessible to non-admin users') }}.
-          {% if h.check_access('package_update', {'id': pkg.id}) %}
-            <br><a href="{{ h.url_for('canada.package_undelete', pkg_id=pkg.id) }}" class="btn btn-warning">{{ _('Undelete') }}</a>
-          {% endif %}
-        </p>
+        <p>{{ _('This dataset has been deleted and is no longer accessible to non-admin users') }}.</p>
       </div>
     {% endif %}
   </section>

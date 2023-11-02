@@ -800,23 +800,6 @@ def fgpv_vpgf(pkg_id):
     })
 
 
-@canada_views.route('/dataset/undelete/<pkg_id>', methods=['GET', 'POST'])
-def package_undelete(pkg_id):
-    h.flash_success(_(
-        '<strong>Note</strong><br> The record has been restored.'),
-        allow_html=True
-    )
-
-    lc = LocalCKAN(username=g.user)
-    lc.action.package_patch(
-        id=pkg_id,
-        state='active'
-    )
-
-    return h.redirect_to('dataset.read',
-        id=pkg_id)
-
-
 @jsonp.jsonpify
 @canada_views.route('/organization/autocomplete', methods=['GET'])
 def organization_autocomplete():
