@@ -596,6 +596,16 @@ body i.fa.fa-arrow-left::before{
   right: 5px;
   padding-bottom: 0;
 }
+body .alert a.btn-default{
+  color: #335075 !important;
+}
+body .alert a.btn-primary,
+body .alert a.btn-danger{
+  color: white !important;
+}
+body .alert a.btn-warning{
+  color: black !important;
+}
 /*###################
 ##       END       ##
 ##  Flash Messages ##

@@ -6,7 +6,7 @@
     {% set portal_link = h.portal_url() ~ "/data/" ~ client_lang ~ "/" ~ pkg.get('type', 'dataset') ~ "/" ~ pkg.name %}
     {% set portal_status_alerts = [] %}
     {% set is_type_for_alerts = pkg.get('type') == 'dataset' or pkg.get('type') == 'info' %}
-    {% set is_draft = pkg.state.startswith('draft') %}
+    {% set do_not_show_alerts = pkg.state.startswith('draft') or pkg.state.startswith('deleted') %}
     {% set no_ready_to_publish = pkg['ready_to_publish'] == 'false' or not pkg['ready_to_publish'] %}
     {% set no_has_approval = pkg['imso_approval'] == 'false' or not pkg['imso_approval'] %}
     {% set queued_for_publishing = not pkg['portal_release_date'] or h.date_format(pkg['portal_release_date']) > h.today() %}
@@ -42,7 +42,7 @@
     {% endif %}
 
     {# Show State Messages #}
-    {% if not is_draft and is_type_for_alerts %}  {# Do not show alerts or button if Draft #}
+    {% if not do_not_show_alerts and is_type_for_alerts %}  {# Do not show alerts or button if Draft or Deleted #}
       {% if portal_status_alerts %}  {# Show all status alerts #}
         {% for alert in portal_status_alerts %}
           <div class="module-alert alert alert-{{ alert['alert_class'] }} mrgn-tp-sm">
@@ -65,12 +65,9 @@
     {# END - Package State Messages - END #}
 
     {% if pkg.state == "deleted" %}
-    <div class="module-alert alert alert-danger mrgn-tp-sm">
-      <p>{{ _('This dataset has been deleted and is no longer accessible to non-admin users') }}.</p>
-      {% if h.check_access('package_update', {'id': pkg.id}) %}
-        {% link_for _('Undelete'), 'canada.package_undelete', pkg_id=pkg.name, class_='btn btn-default' %}
-      {% endif %}
-    </div>
+      <div class="module-alert alert alert-danger mrgn-tp-sm">
+        <p>{{ _('This dataset has been deleted and is no longer accessible') }}.</p>
+      </div>
     {% endif %}
   </section>
 {% endblock internal_actions %}
