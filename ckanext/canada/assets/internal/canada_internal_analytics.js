@@ -2,6 +2,7 @@ window.addEventListener('load', function(){
   /*
   Add Google Analytics Event Tracking to actions on the Registry
   */
+ //TODO: rewrite ga method to gtag method
   $(document).ready(function() {
     let user, title;
     if ($( '.username' ).length)

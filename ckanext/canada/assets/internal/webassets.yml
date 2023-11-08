@@ -2,3 +2,8 @@ css:
   contents:
     - canada_internal.css
   output: canada_internal/%(version)s_canada_internal.css
+
+analytics:
+  contents:
+    - canada_internal_analytics.js
+  output: canada_internal_analytics/%(version)s_canada_internal_analytics.js

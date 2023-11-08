@@ -32,6 +32,7 @@
 
             {% block header_get_help %}
             <li>
+                {# TODO: rewrite ga method to gtag method #}
                 <a href="mailto:open-ouvert@tbs-sct.gc.ca?subject={{ _('Help using the Open Government Registry') }}"
                    title="{{ _('Get Help') }}" class="btn btn-warning mrgn-tp-sm"
                    onclick="ga('send', 'event', 'Get Help', 'Help requested by {{ c.userobj.display_name }}', document.location.href);">
