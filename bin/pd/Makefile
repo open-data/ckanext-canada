@@ -294,7 +294,7 @@ upload-consultations: $(workdir)/filtered/consultations.csv \
 	cp $(workdir)/filtered/consultations.csv $(registry_static)/consultations_open.csv
 	cp $(workdir)/filtered/consultations.csv $(portal_static)/consultations_open.csv
 	@$(ckanapi) action resource_patch -c $(registry_ini) \
-	id=92bec4b7-6feb-4215-a5f7-61da342b2354 last_modified=$(isodate) \
+	id=92bec4b7-6feb-4215-a5f7-61da342b2354 upload@"$(workdir)/filtered/consultations.csv" \
 	> /dev/null
 	cp $(workdir)/filtered/current_consultations.csv $(registry_static)
 	cp $(workdir)/filtered/current_consultations_open.csv $(registry_static)
