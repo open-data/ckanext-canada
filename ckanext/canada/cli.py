@@ -1,6 +1,7 @@
 import click
 
 from ckan.logic import get_action
+from ckan import model
 
 from ckanext.canada import utils, triggers
 
@@ -239,3 +240,34 @@ def bulk_validate():
          ckan -c $CONFIG_INI canada bulk-validate
     """
     utils.bulk_validate()
+
+
+@canada.command(short_help="Deletes rows from the activity table.")
+@click.option(
+    u"-d",
+    u"--days",
+    help=u"Number of days to go back. E.g. 120 will keep 120 days of activities. Default: 90",
+    default=90
+)
+@click.option(u"-q", u"--quiet", is_flag=True, help=u"Suppress human interaction.", default=False)
+def delete_activities(days=90, quiet=False):
+    """Delete rows from the activity table past a certain number of days.
+    """
+    activity_count = model.Session.execute(
+                        u"SELECT count(*) FROM activity "
+                        "WHERE timestamp < NOW() - INTERVAL '{d} days';"
+                        .format(d=days)) \
+                        .fetchall()[0][0]
+
+    if not bool(activity_count):
+        click.echo(u"\nNo activities found past {d} days".format(d=days))
+        return
+
+    if not quiet:
+        click.confirm(u"\nAre you sure you want to delete {num} activities?"
+                          .format(num=activity_count), abort=True)
+
+    model.Session.execute(u"DELETE FROM activity WHERE timestamp < NOW() - INTERVAL '{d} days';".format(d=days))
+    model.Session.commit()
+
+    click.echo(u"\nDeleted {num} rows from the activity table".format(num=activity_count))
