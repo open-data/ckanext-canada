@@ -8,10 +8,10 @@ import json
 FIELDNAMES = 'registration_number,publishable,partner_departments,subjects,title_en,title_fr,description_en,description_fr,target_participants_and_audience,start_date,end_date,status,profile_page_en,profile_page_fr,report_available_online,report_link_en,report_link_fr,contact_email,policy_program_lead_email,remarks_en,remarks_fr,high_profile,rationale,record_created,record_modified,user_modified,owner_org,owner_org_title'.split(',')
 
 assert sys.stdin.read(3) == codecs.BOM_UTF8
+sys.stdout.write(codecs.BOM_UTF8)
 
 in_csv = unicodecsv.DictReader(sys.stdin, encoding='utf-8')
 out_csv = unicodecsv.DictWriter(sys.stdout, fieldnames=FIELDNAMES, encoding='utf-8')
-sys.stdout.write(codecs.BOM_UTF8)
 out_csv.writeheader()
 
 RATIONALE = {

@@ -119,6 +119,9 @@ def dt(legacy_date):
     return d.strftime('%Y-%m-%d')
 
 def main():
+    assert sys.stdin.read(3) == codecs.BOM_UTF8
+    sys.stdout.write(codecs.BOM_UTF8)
+
     try:
         in_csv = unicodecsv.DictReader(sys.stdin, encoding='utf-8')
 
@@ -153,7 +156,6 @@ def main():
             except KeyError as err:
                 sys.stderr.write(line['ID'] + ': ' + str(err) + '\n')
 
-        sys.stdout.write(codecs.BOM_UTF8)
         out_csv = unicodecsv.DictWriter(sys.stdout, fieldnames=FIELDNAMES, encoding='utf-8')
         out_csv.writeheader()
         for o in sorted(orgs):

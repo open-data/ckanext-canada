@@ -8,6 +8,7 @@ import json
 FIELDNAMES = 'fiscal_yr,service_id,service_name_en,service_name_fr,external_internal,service_type,special_designations,service_description_en,service_description_fr,authority_en,authority_fr,service_url_en,service_url_fr,program_name_en,program_name_fr,program_id_code,client_target_groups,service_fee,cra_business_number,use_of_sin,online_applications,web_visits_info_service,calls_received,in_person_applications,email_applications,fax_applications,postal_mail_applications,e_registration,e_authentication,e_application,e_decision,e_issuance,e_feedback,client_feedback,special_remarks_en,special_remarks_fr,record_created,record_modified,user_modified,owner_org,owner_org_title'.split(',')
 
 assert sys.stdin.read(3) == codecs.BOM_UTF8
+sys.stdout.write(codecs.BOM_UTF8)
 
 in_csv = unicodecsv.DictReader(sys.stdin, encoding='utf-8')
 out_csv = unicodecsv.DictWriter(sys.stdout, fieldnames=FIELDNAMES, encoding='utf-8')

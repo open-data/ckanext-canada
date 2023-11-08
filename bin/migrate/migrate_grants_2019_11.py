@@ -5,6 +5,7 @@ import csv
 import codecs
 
 assert sys.stdin.read(3) == codecs.BOM_UTF8
+sys.stdout.write(codecs.BOM_UTF8)
 
 reader = csv.DictReader(sys.stdin)
 writer = csv.DictWriter(sys.stdout, fieldnames=reader.fieldnames)

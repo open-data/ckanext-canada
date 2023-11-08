@@ -8,6 +8,7 @@ from decimal import Decimal
 FIELDNAMES = 'year,contract_goods_number_of,contracts_goods_original_value,contracts_goods_amendment_value,contract_service_number_of,contracts_service_original_value,contracts_service_amendment_value,contract_construction_number_of,contracts_construction_original_value,contracts_construction_amendment_value,acquisition_card_transactions_number_of,acquisition_card_transactions_total_value,record_created,record_modified,user_modified,owner_org,owner_org_title'.split(',')
 
 assert sys.stdin.read(3) == codecs.BOM_UTF8
+sys.stdout.write(codecs.BOM_UTF8)
 
 in_csv = unicodecsv.DictReader(sys.stdin, encoding='utf-8')
 out_csv = unicodecsv.DictWriter(sys.stdout, fieldnames=FIELDNAMES, encoding='utf-8')

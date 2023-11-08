@@ -6,8 +6,13 @@ import codecs
 import json
 
 assert sys.stdin.read(3) == codecs.BOM_UTF8
+sys.stdout.write(codecs.BOM_UTF8)
 
 in_csv = unicodecsv.DictReader(sys.stdin, encoding='utf-8')
+
+if 'warehouse' in sys.argv and 'comments_en' in in_csv.fieldnames:
+    sys.exit(85)
+
 if 'report' in sys.argv:
     out_csv = unicodecsv.DictWriter(sys.stdout, fieldnames=['old_disposition', 'new_disposition'])
     seen = set()
@@ -77,4 +82,10 @@ for line in in_csv:
 
     line['comments_en'] = ''
     line['comments_fr'] = ''
-    out_csv.writerow(line)
+    try:
+        out_csv.writerow(line)
+    except (KeyError, ValueError):
+        if 'warehouse' in sys.argv:
+            sys.exit(85)
+        else:
+            raise
