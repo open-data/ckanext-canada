@@ -33,6 +33,7 @@ ckanapi := $(REGISTRY_CKANAPI_COMMAND)
 ogc_search := $(OGC_SEARCH_COMMAND)
 oc_search := $(OC_SEARCH_COMMAND)
 backup_dir := $(PD_BACKUP_DIRECTORY)
+tmp_dir := $(or $(PD_TMP_DIRECTORY),$(TMPDIR),/tmp)
 registry_static := $(REGISTRY_STATIC_SMB_DIRECTORY)
 portal_static := $(PORTAL_STATIC_SMB_DIRECTORY)
 
@@ -96,7 +97,7 @@ self := $(location)
 # Create and clean up working directory workdir=... not passed
 # by calling the Makefile recursively
 %:
-	@workdir=`mktemp -d -t pdmake.XXXXXXXX`; \
+	@workdir=`mktemp -d -p (tmp_dir) -t pdmake.XXXXXXXX`; \
 	trap 'rm -rf "$$workdir"' EXIT; \
 	$(MAKE) -f $(self) --no-print-directory workdir=$$workdir $@
 
