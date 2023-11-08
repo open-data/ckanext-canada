@@ -97,7 +97,7 @@ self := $(location)
 # Create and clean up working directory workdir=... not passed
 # by calling the Makefile recursively
 %:
-	@workdir=`mktemp -d -p (tmp_dir) -t pdmake.XXXXXXXX`; \
+	@workdir=`mktemp -d -p $(tmp_dir) -t pdmake.XXXXXXXX`; \
 	trap 'rm -rf "$$workdir"' EXIT; \
 	$(MAKE) -f $(self) --no-print-directory workdir=$$workdir $@
 
