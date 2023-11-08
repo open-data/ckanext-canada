@@ -33,7 +33,7 @@ ckanapi := $(REGISTRY_CKANAPI_COMMAND)
 ogc_search := $(OGC_SEARCH_COMMAND)
 oc_search := $(OC_SEARCH_COMMAND)
 backup_dir := $(PD_BACKUP_DIRECTORY)
-tmp_dir := $(PD_TMP_DIRECTORY)
+tmp_dir := $(or $(PD_TMP_DIRECTORY),$(TMPDIR),/tmp)
 registry_static := $(REGISTRY_STATIC_SMB_DIRECTORY)
 portal_static := $(PORTAL_STATIC_SMB_DIRECTORY)
 
