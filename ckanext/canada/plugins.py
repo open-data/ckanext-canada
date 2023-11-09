@@ -236,7 +236,7 @@ class DataGCCAInternal(p.SingletonPlugin):
     p.implements(p.IPackageController, inherit=True)
     p.implements(p.IActions)
     p.implements(p.IBlueprint)
-    p.implements(IXloader)
+    p.implements(IXloader, inherit=True)
 
     # IConfigurer
     def update_config(self, config):
