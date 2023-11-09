@@ -39,6 +39,7 @@ from ckanext.security.plugin import CkanSecurityPlugin
 from ckanext.canada.view import (
     canada_views,
     CanadaDatasetEditView,
+    CanadaDatasetCreateView,
     CanadaResourceEditView,
     CanadaResourceCreateView
 )
@@ -99,6 +100,12 @@ class CanadaDatasetsPlugin(SchemingDatasetsPlugin):
             u'/edit/<id>',
             endpoint='canada_edit',
             view_func=CanadaDatasetEditView.as_view(str(u'edit')),
+            methods=['GET', 'POST']
+        )
+        blueprint.add_url_rule(
+            u'/new',
+            endpoint='canada_new',
+            view_func=CanadaDatasetCreateView.as_view(str(u'new')),
             methods=['GET', 'POST']
         )
         return blueprint

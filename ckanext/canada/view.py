@@ -39,7 +39,8 @@ from ckan.lib.search import (
 
 from ckan.views.dataset import (
     EditView as DatasetEditView,
-    search as dataset_search
+    search as dataset_search,
+    CreateView as DatasetCreateView
 )
 from ckan.views.resource import (
     EditView as ResourceEditView,
@@ -130,12 +131,10 @@ class CanadaDatasetEditView(DatasetEditView):
                     }
                 )
                 if pkg_dict['type'] == 'prop':
-                    h.flash_success(_(u'The status has been added / updated for this suggested  dataset. This update will be reflected on open.canada.ca shortly.'))
+                    h.flash_success(_(u'The status has been added/updated for this suggested dataset. This update will be reflected on open.canada.ca shortly.'))
                 else:
-                    h.flash_success(_(u'Dataset updated.'))
-                if pkg_dict.get('state') == 'active':
                     h.flash_success(
-                        _("Your record %s has been saved.")
+                        _("Your dataset %s has been saved.")
                         % pkg_dict['id'])
         return response
 
@@ -163,6 +162,15 @@ class CanadaDatasetEditView(DatasetEditView):
                                                       error_summary)
 
 
+class CanadaDatasetCreateView(DatasetCreateView):
+    def post(self, package_type):
+        response = super(CanadaDatasetCreateView, self).post(package_type)
+        if hasattr(response, 'status_code'):
+            if response.status_code == 200 or response.status_code == 302:
+                h.flash_success(_(u'Dataset added.'))
+        return response
+
+
 class CanadaResourceEditView(ResourceEditView):
     def post(self, package_type, id, resource_id):
         response = super(CanadaResourceEditView, self).post(package_type, id, resource_id)
@@ -177,7 +185,7 @@ class CanadaResourceEditView(ResourceEditView):
                 )
                 if pkg_dict.get('state') == 'active':
                     h.flash_success(
-                        _("Your record %s has been saved.")
+                        _("Your resource %s has been saved.")
                         % pkg_dict['id'])
         return response
 
