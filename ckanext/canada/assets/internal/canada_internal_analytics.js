@@ -164,7 +164,7 @@ window.addEventListener('load', function(){
 
         // track dataset created
         if( messages.match(/.*Dataset added.*/) ||
-            messages.match(/.*Dataset added.*/) //TODO: add French translation
+            messages.match(/.*Jeu de données ajouté.*/)
         ){
 
           gtag('event', 'dataset', {
@@ -179,7 +179,7 @@ window.addEventListener('load', function(){
 
         // track dataset updated
         if( messages.match(/.*Your dataset.*has been saved.*/) ||
-            messages.match(/.*Votre enregistrement.*a été sauvegardé.*/) //TODO: add French translation
+            messages.match(/.*Votre jeu de données.*a été sauvegardé.*/)
         ){
 
           gtag('event', 'dataset', {
@@ -254,7 +254,7 @@ window.addEventListener('load', function(){
 
         // track resource updated
         if( messages.match(/.*Your resource.*has been saved.*/) ||
-            messages.match(/.*Votre enregistrement.*a été sauvegardé.*/) //TODO: add French translation
+            messages.match(/.*Votre ressource.*a été sauvegardée.*/)
         ){
 
           gtag('event', 'resource', {

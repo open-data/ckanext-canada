@@ -366,9 +366,8 @@ msgstr ""
 "Cette mise à jour sera bientôt effectuée dans ouvert.canada.ca."
 
 #: ckanext/canada/view.py:137
-#, fuzzy, python-format #TODO: add new translation
 msgid "Your dataset %s has been saved."
-msgstr "Votre enregistrement %s a été sauvegardé."
+msgstr "Votre jeu de données %s a été sauvegardé."
 
 #: ckanext/canada/view.py:155 ckanext/canada/view.py:157
 #: ckanext/canada/view.py:207 ckanext/canada/view.py:209
@@ -376,18 +375,16 @@ msgid "Dataset not found"
 msgstr "Jeu de données non trouvé"
 
 #: ckanext/canada/view.py:170
-#, fuzzy #TODO: add new translation
 msgid "Dataset added."
-msgstr "Jeu de données mise à jour."
+msgstr "Jeu de données ajouté."
 
 #: ckanext/canada/view.py:179
 msgid "Resource updated."
 msgstr "Ressource mise à jour."
 
 #: ckanext/canada/view.py:188
-#, fuzzy, python-format #TODO: add new translation
 msgid "Your resource %s has been saved."
-msgstr "Votre enregistrement %s a été sauvegardé."
+msgstr "Votre ressource %s a été sauvegardée."
 
 #: ckanext/canada/view.py:223
 msgid "Resource added."
