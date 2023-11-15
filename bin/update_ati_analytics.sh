@@ -93,6 +93,8 @@ fi
 ###
 filter_date="$(date +%Y),$(echo $(date +%m) | sed 's/^0*//'),";
 echo "Filtering out rows: ${filter_date}";
+# sed should be safe, as there should not be newlines in the CSV
+# that is generated in Drupal from PHP's fputcsv
 sed "/^${filter_date}*/d" < ${generated_file} > ${tmp_file};
 
 resource_id='e664cf3d-6cb7-4aaa-adfa-e459c2552e3e';
