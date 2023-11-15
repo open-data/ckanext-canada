@@ -43,6 +43,11 @@ if [[ ! -d "/opt/tbs/tmp" ]]; then
 
 fi
 
+###
+# Get the file path generated from Drupal
+# The SMB directories are different on some servers
+# hence the checks for the different file paths
+###
 generated_file='/opt/tbs/ckan/smb_portal/portal/public/ati-informal-requests-analytics.csv';
 
 if [[ ! -f "${generated_file}" ]]; then
@@ -68,6 +73,11 @@ if [[ ! -f "${generated_file}" ]]; then
     fi
 
 fi
+###
+# END
+# Get the file generated from Drupal
+# END
+###
 
 tmp_dir=$(mktemp -p /opt/tbs/tmp -d);
 tmp_file="${tmp_dir}/ati-informal-requests-analytics.csv";
@@ -78,7 +88,12 @@ if [[ ! -d "${tmp_dir}" ]]; then
 
 fi
 
-cp ${generated_file} ${tmp_file};
+###
+# We do not want the current month's counts
+###
+filter_date="$(date +%Y),$(echo $(date +%m) | sed 's/^0*//'),";
+echo "Filtering out rows: ${filter_date}";
+sed "/^${filter_date}*/d" < ${generated_file} > ${tmp_file};
 
 resource_id='e664cf3d-6cb7-4aaa-adfa-e459c2552e3e';
 ckanapi action resource_patch -c ${config_file} id=${resource_id} upload@"${tmp_file}";
