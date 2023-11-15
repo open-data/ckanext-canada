@@ -22,7 +22,7 @@ with open(file_report) as csvfile:
     for row in reader:
         uuid = row["uuid"]
         resource_id = row["resource_id"]
-        new_size = unicode(row["found_file_size"])
+        new_size = str(row["found_file_size"])
         try:
             if (new_size == 'N/A'):
                 continue

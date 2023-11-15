@@ -388,7 +388,7 @@ def upload_resources(remote_site, api_key, jsonfile, resource_directory):
                     json.dumps([
                         rec['id'],
                         'target error',
-                        unicode(e.args)
+                        str(e.args)
                     ]) + '\n'
                 )
                 #raise
@@ -657,12 +657,12 @@ def duplicate_docs(file_dir, site_url):
                         json.dumps([
                             rec['id'],
                             'target error',
-                            unicode(e.args)
+                            str(e.args)
                         ]) + '\n'
                     )
                     raise
             if count > 1:
-                print out
+                print(out)
 
 def de_dup2(site_url):
     count =0
