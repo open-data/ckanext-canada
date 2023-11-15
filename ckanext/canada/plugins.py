@@ -703,7 +703,7 @@ class LogExtraMiddleware(object):
             extra = []
             try:
                 contextual_user = g.user
-            except (TypeError, RuntimeError):
+            except (TypeError, RuntimeError, AttributeError):
                 contextual_user = None
             if contextual_user:
                 log_extra = g.log_extra if hasattr(g, 'log_extra') else ''
