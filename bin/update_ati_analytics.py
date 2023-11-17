@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """
 Gets the ati-informal-requests-analytics.csv from the SMB
 and filters out the current month's rows and then patches the
@@ -11,14 +12,10 @@ import traceback
 import tempfile
 from datetime import datetime
 import subprocess
-from six import PY2
-from shutil import rmtree
 from codecs import BOM_UTF8
+from io import StringIO
 
-if PY2:
-    from cStringIO import StringIO
-else:
-    from io import StringIO
+BOM = "\N{bom}"
 
 
 def error_message(message):
@@ -59,18 +56,16 @@ def update(config, resource_id, verbose):
     generated_file = get_smb_file()
     if not generated_file:
         return
-    if PY2:
-        temp_dir = tempfile.mkdtemp()
-    else:
-        temp_dir = tempfile.TemporaryDirectory()
-    temp_file = os.path.join(temp_dir, 'ati-informal-requests-analytics.csv')
+    temp_dir = tempfile.TemporaryDirectory()
+    temp_file = os.path.join(temp_dir.name, 'ati-informal-requests-analytics.csv')
 
     today = datetime.today()
 
     errors = StringIO()
     skipped_rows = 0
-    command = 'ckanapi action resource_patch -c %s id=%s upload@"%s"' \
-        % (config.name, resource_id, temp_file)
+    #FIXME: command not working...
+    command = ['ckanapi', 'ckanapi', 'action', 'resource_patch', '--config=%s' % config.name,
+               'id=%s' % resource_id, 'upload@%s' % temp_file]
     try:
         with open(generated_file, 'r') as df:
             reader = csv.DictReader(df)
@@ -84,6 +79,8 @@ def update(config, resource_id, verbose):
                             year_key = 'Year'
                         elif '%sYear' % BOM_UTF8 in row:
                             year_key = '%sYear' % BOM_UTF8
+                        elif '%sYear' % BOM in row:
+                            year_key = '%sYear' % BOM
                         else:
                             errors.write('Failed to patch resource %s with errors:\n\nCannot find Year header.' % resource_id)
                             raise LookupError
@@ -98,14 +95,8 @@ def update(config, resource_id, verbose):
                     row_index += 1
         if skipped_rows:
             success_message('Filtered %s rows, excluded Y,M: %s,%s' % (skipped_rows, today.year, today.month))
-        if PY2:
-            p = subprocess.call(command, shell=True)
-            if p != 0:
-                errors.write('Failed to patch resource %s' % resource_id)
-        else:
-            p = subprocess.run(command, shell=True)
-            if p.returncode != 0:
-                errors.write('Failed to patch resource %s' % resource_id)
+        p = subprocess.run(command)
+        p.check_returncode()
     except LookupError:
         pass
     except Exception as e:
@@ -119,7 +110,7 @@ def update(config, resource_id, verbose):
         error_message(errors.read())
     else:
         success_message('Patched resource %s with new CSV file' % resource_id)
-    rmtree(temp_dir)
+    temp_dir.cleanup()
 
 
 update()
