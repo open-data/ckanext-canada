@@ -601,6 +601,9 @@ ckanext.canada:schemas/prop.yaml
             'mail_to_with_params',
             'is_registry',
             'organization_member_count',
+            'flash_notice',
+            'flash_error',
+            'flash_success',
         ])
 
     # IActions

@@ -1,5 +1,6 @@
 import json
 import re
+import inspect
 from ckan.plugins import plugin_loaded
 from ckan.plugins.toolkit import c, config, _
 from ckan.model import User, Package, Activity
@@ -8,6 +9,7 @@ import datetime
 import unicodedata
 import ckan as ckan
 import jinja2
+from six import PY2
 
 import ckanapi
 from ckanapi import NotFound
@@ -565,3 +567,69 @@ def organization_member_count(id):
         return -1
 
     return len(members)
+
+
+GA4_CALLER_MAPPING = {
+    'logged_in': {
+        'notice': None,
+        'error': {},
+        'success': {'event': 'user',
+                    'action': 'Login Successful'},
+    }
+}
+
+
+def _build_flash_html_for_ga4(message, category, caller):
+    attributes = GA4_CALLER_MAPPING.get(caller).get(category) if GA4_CALLER_MAPPING.get(caller) else None
+    if not attributes:
+        return message
+    return '<div class="canada-ga-flash" data-ga-event="%s" data-ga-action="%s">%s</div>' \
+        % (attributes.get('event'), attributes.get('action'), message)
+
+
+def flash_notice(message, allow_html=True):
+    """
+    Show a flash message of type notice
+
+    Adding the view/action caller for GA4 Custom Events
+    """
+    stack = inspect.stack()
+    immediate_caller = stack[1][3]
+    if not PY2:
+        immediate_caller = stack[1].function
+    t.h.flash(_build_flash_html_for_ga4(message, 'notice', immediate_caller),
+              category='alert-info',
+              ignore_duplicate=True,
+              allow_html=allow_html)
+
+
+def flash_error(message, allow_html=True):
+    """
+    Show a flash message of type error
+
+    Adding the view/action caller for GA4 Custom Events
+    """
+    stack = inspect.stack()
+    immediate_caller = stack[1][3]
+    if not PY2:
+        immediate_caller = stack[1].function
+    t.h.flash(_build_flash_html_for_ga4(message, 'error', immediate_caller),
+              category='alert-danger',
+              ignore_duplicate=True,
+              allow_html=allow_html)
+
+
+def flash_success(message, allow_html=True):
+    """
+    Show a flash message of type success
+
+    Adding the view/action caller for GA4 Custom Events
+    """
+    stack = inspect.stack()
+    immediate_caller = stack[1][3]
+    if not PY2:
+        immediate_caller = stack[1].function
+    t.h.flash(_build_flash_html_for_ga4(message, 'success', immediate_caller),
+              category='alert-success',
+              ignore_duplicate=True,
+              allow_html=allow_html)
