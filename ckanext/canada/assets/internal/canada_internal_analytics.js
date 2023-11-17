@@ -19,43 +19,36 @@ window.addEventListener('load', function(){
     if( typeof gtag != 'undefined' ){
       // gtag function exists
 
-      let flashes = $('.flash-messages');
-      if( flashes.length > 0 &&
-          flashes[0].innerText.length > 0
+      let flashes = $('.canada-ga-flash');
+      if( flashes.length > 0 ){
+
+        $(flashes).each(function(_index, _flash){
+
+          let event = $(_flash).attr('data-ga-event');
+          let action = $(_flash).attr('data-ga-action');
+
+          if( event.length > 0 && action.length > 0 ){
+
+            gtag('event', event, {
+              'action': action,
+              'user': user,
+              'title': title,
+              'referrer': referrer,
+            });
+
+          }
+
+        });
+
+      }
+
+      let flashes2 = $('.flash-messages');
+      if( flashes2.length > 0 &&
+        flashes2[0].innerText.length > 0
       ){
         // there are flash messages with content in them
 
-        let messages = flashes[0].innerText; // get all text inside messages (excludes HTML tags)
-
-        // track successful login
-        if( messages.match(/.*now logged in.*/) ||
-            messages.match(/.*est maintenant connecté.*/)
-        ){
-
-          gtag('event', 'user', {
-            'action': 'Login Successful',
-            'user': user,
-            'title': title,
-            'referrer': referrer,
-            'messages': messages,
-          });
-
-        }
-
-        // track failed login
-        if( messages.match(/.*Login failed.*/) ||
-            messages.match(/.*Authentification échouée.*/)
-        ){
-
-          gtag('event', 'user', {
-            'action': 'Login Failed',
-            'user': user,
-            'title': title,
-            'referrer': referrer,
-            'messages': messages,
-          });
-
-        }
+        let messages = flashes2[0].innerText; // get all text inside messages (excludes HTML tags)
 
         // track password reset request
         if( messages.match(/.*check your e-mail inbox in order to confirm your password reset.*/) ||

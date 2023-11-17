@@ -572,7 +572,8 @@ def organization_member_count(id):
 GA4_CALLER_MAPPING = {
     'logged_in': {
         'notice': None,
-        'error': {},
+        'error': {'event': 'user',
+                  'action': 'Login Failed'},
         'success': {'event': 'user',
                     'action': 'Login Successful'},
     }
@@ -580,11 +581,12 @@ GA4_CALLER_MAPPING = {
 
 
 def _build_flash_html_for_ga4(message, category, caller):
+    #FIXME: core views do not use pluggable toolkit helpers
     attributes = GA4_CALLER_MAPPING.get(caller).get(category) if GA4_CALLER_MAPPING.get(caller) else None
     if not attributes:
-        return message
+        return '<div>%s</div>' % (message)
     return '<div class="canada-ga-flash" data-ga-event="%s" data-ga-action="%s">%s</div>' \
-        % (attributes.get('event'), attributes.get('action'), message)
+        % (attributes.get('event'), attributes.get('action'), message, caller)
 
 
 def flash_notice(message, allow_html=True):
