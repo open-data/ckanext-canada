@@ -26,11 +26,13 @@ window.addEventListener('load', function(){
 
           let event = $(_flash).attr('data-ga-event');
           let action = $(_flash).attr('data-ga-action');
+          let message = $(_flash)[0].innerText;
 
           if( event.length > 0 && action.length > 0 ){
 
             gtag('event', event, {
               'action': action,
+              'message': message,
               'user': user,
               'title': title,
               'referrer': referrer,

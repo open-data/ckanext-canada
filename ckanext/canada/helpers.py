@@ -568,107 +568,16 @@ def organization_member_count(id):
 
     return len(members)
 
-# <module>.<class>.<method> OR <module>.<method>
-GA4_CALLER_MAPPING = {
-    # Users
-    'ckanext.canada.view.logged_in': {
-        'notice': None,
-        'error': {'event': 'user',
-                  'action': 'Login Failed'},
-        'success': {'event': 'user',
-                    'action': 'Login Successful'},
-    },
-    'ckan.views.user.RequestResetView.post': {
-        'notice': None,
-        'error': None,
-        'success': {'event': 'user',
-                    'action': 'Reset Password'},
-    },
-    'ckanext.canada.view.notice_no_access': {
-        'notice': {'event': 'user',
-                   'action': 'Request an Account'},
-        'error': None,
-        'success': None,
-    },
-    # Recombinant
-    'ckanext.canada.view.create_pd_record': {
-        'notice': {'event': 'recombinant',
-                   'action': 'Single Record Created'},
-        'error': None,
-        'success': None,
-    },
-    'ckanext.canada.view.update_pd_record': {
-        'notice': {'event': 'recombinant',
-                   'action': 'Single Record Updated'},
-        'error': None,
-        'success': None,
-    },
-    'ckanext.recombinant.views.upload': {
-        'notice': None,
-        'error': {'event': 'recombinant',
-                  'action': 'Spreadsheet Upload Failed'},
-        'success': {'event': 'recombinant',
-                    'action': 'Spreadsheet Uploaded'},
-    },
-    'ckanext.recombinant.views.delete_records': {
-        'notice': None,
-        'error': None,
-        'success': {'event': 'recombinant',
-                    'action': 'Deleted Records'},
-    },
-    # Datasets
-    'ckanext.canada.view.CanadaDatasetCreateView.post': {
-        'notice': None,
-        'error': None,
-        'success': {'event': 'dataset',
-                    'action': 'Dataset Created'},
-    },
-    'ckanext.canada.view.CanadaDatasetEditView.post': {
-        'notice': None,
-        'error': None,
-        'success': {'event': 'dataset',
-                    'action': 'Dataset Updated'},
-    },
-    'ckan.views.dataset.DeleteView.post': {
-        'notice': {'event': 'dataset',
-                   'action': 'Dataset Deleted'},
-        'error': None,
-        'success': None,
-    },
-    'ckanext.canada.view.ckanadmin_publish_datasets': {
-        'notice': {'event': 'dataset',
-                   'action': 'Datasets Published by Admin'},
-        'error': None,
-        'success': None,
-    },
-    # Resources
-    'ckanext.canada.view.CanadaResourceCreateView.post': {
-        'notice': None,
-        'error': None,
-        'success': {'event': 'resource',
-                    'action': 'Resource Created'},
-    },
-    'ckanext.canada.view.CanadaResourceEditView.post': {
-        'notice': None,
-        'error': None,
-        'success': {'event': 'resource',
-                    'action': 'Resource Updated'},
-    },
-    'ckan.views.resource.DeleteView.post': {
-        'notice': {'event': 'resource',
-                   'action': 'Resource Deleted'},
-        'error': None,
-        'success': None,
-    },
-}
-
 
 def _build_flash_html_for_ga4(message, category, caller):
-    attributes = GA4_CALLER_MAPPING.get(caller).get(category) if GA4_CALLER_MAPPING.get(caller) else None
-    if not attributes:
-        return message
+    """
+    All flash messages will be given an event name and action attribute.
+
+    data-ga-event: CALLER in format of <module>.<class>.<method> | <module>.<method>
+    data-ga-action: CATEGORY in format of notice | error | success
+    """
     return '<div class="canada-ga-flash" data-ga-event="%s" data-ga-action="%s">%s</div>' \
-        % (attributes.get('event'), attributes.get('action'), message)
+        % (caller, category, message)
 
 
 def _get_caller_info(stack):
