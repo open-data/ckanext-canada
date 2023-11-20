@@ -63,8 +63,7 @@ def update(config, resource_id, verbose):
 
     errors = StringIO()
     skipped_rows = 0
-    #FIXME: command not working...
-    command = ['ckanapi', 'ckanapi', 'action', 'resource_patch', '--config=%s' % config.name,
+    command = ['ckanapi', 'action', 'resource_patch', '--config=%s' % config.name,
                'id=%s' % resource_id, 'upload@%s' % temp_file]
     try:
         with open(generated_file, 'r') as df:
@@ -95,6 +94,8 @@ def update(config, resource_id, verbose):
                     row_index += 1
         if skipped_rows:
             success_message('Filtered %s rows, excluded Y,M: %s,%s' % (skipped_rows, today.year, today.month))
+        if verbose:
+            success_message('Executing command:\n\n%s\n' % subprocess.list2cmdline(command))
         p = subprocess.run(command)
         p.check_returncode()
     except LookupError:
