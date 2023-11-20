@@ -568,25 +568,135 @@ def organization_member_count(id):
 
     return len(members)
 
-
+# <module>.<class>.<method> OR <module>.<method>
 GA4_CALLER_MAPPING = {
-    'logged_in': {
+    # Users
+    'ckanext.canada.view.logged_in': {
         'notice': None,
         'error': {'event': 'user',
                   'action': 'Login Failed'},
         'success': {'event': 'user',
                     'action': 'Login Successful'},
-    }
+    },
+    'ckan.views.user.RequestResetView.post': {
+        'notice': None,
+        'error': None,
+        'success': {'event': 'user',
+                    'action': 'Reset Password'},
+    },
+    'ckanext.canada.view.notice_no_access': {
+        'notice': {'event': 'user',
+                   'action': 'Request an Account'},
+        'error': None,
+        'success': None,
+    },
+    # Recombinant
+    'ckanext.canada.view.create_pd_record': {
+        'notice': {'event': 'recombinant',
+                   'action': 'Single Record Created'},
+        'error': None,
+        'success': None,
+    },
+    'ckanext.canada.view.update_pd_record': {
+        'notice': {'event': 'recombinant',
+                   'action': 'Single Record Updated'},
+        'error': None,
+        'success': None,
+    },
+    'ckanext.recombinant.views.upload': {
+        'notice': None,
+        'error': {'event': 'recombinant',
+                  'action': 'Spreadsheet Upload Failed'},
+        'success': {'event': 'recombinant',
+                    'action': 'Spreadsheet Uploaded'},
+    },
+    'ckanext.recombinant.views.delete_records': {
+        'notice': None,
+        'error': None,
+        'success': {'event': 'recombinant',
+                    'action': 'Deleted Records'},
+    },
+    # Datasets
+    'ckanext.canada.view.CanadaDatasetCreateView.post': {
+        'notice': None,
+        'error': None,
+        'success': {'event': 'dataset',
+                    'action': 'Dataset Created'},
+    },
+    'ckanext.canada.view.CanadaDatasetEditView.post': {
+        'notice': None,
+        'error': None,
+        'success': {'event': 'dataset',
+                    'action': 'Dataset Updated'},
+    },
+    'ckan.views.dataset.DeleteView.post': {
+        'notice': {'event': 'dataset',
+                   'action': 'Dataset Deleted'},
+        'error': None,
+        'success': None,
+    },
+    'ckanext.canada.view.ckanadmin_publish_datasets': {
+        'notice': {'event': 'dataset',
+                   'action': 'Datasets Published by Admin'},
+        'error': None,
+        'success': None,
+    },
+    # Resources
+    'ckanext.canada.view.CanadaResourceCreateView.post': {
+        'notice': None,
+        'error': None,
+        'success': {'event': 'resource',
+                    'action': 'Resource Created'},
+    },
+    'ckanext.canada.view.CanadaResourceEditView.post': {
+        'notice': None,
+        'error': None,
+        'success': {'event': 'resource',
+                    'action': 'Resource Updated'},
+    },
+    'ckan.views.resource.DeleteView.post': {
+        'notice': {'event': 'resource',
+                   'action': 'Resource Deleted'},
+        'error': None,
+        'success': None,
+    },
 }
 
 
 def _build_flash_html_for_ga4(message, category, caller):
-    #FIXME: core views do not use pluggable toolkit helpers
     attributes = GA4_CALLER_MAPPING.get(caller).get(category) if GA4_CALLER_MAPPING.get(caller) else None
     if not attributes:
-        return '<div>%s</div>' % (message)
+        return message
     return '<div class="canada-ga-flash" data-ga-event="%s" data-ga-action="%s">%s</div>' \
-        % (attributes.get('event'), attributes.get('action'), message, caller)
+        % (attributes.get('event'), attributes.get('action'), message)
+
+
+def _get_caller_info(stack):
+    parentframe = stack[1][0]
+    module_info = inspect.getmodule(parentframe)
+
+    # module name
+    if module_info:
+        caller_module = module_info.__name__
+
+    # class name
+    caller_class = None
+    if 'self' in parentframe.f_locals:
+        caller_class = parentframe.f_locals['self'].__class__.__name__
+
+    # method name
+    caller_method = None
+    if parentframe.f_code.co_name != '<module>':
+        caller_method = parentframe.f_code.co_name
+
+    # Remove reference to frame
+    # See: https://docs.python.org/3/library/inspect.html#the-interpreter-stack
+    del parentframe
+
+    if caller_class:
+        return '%s.%s.%s' % (caller_module, caller_class, caller_method)
+
+    return '%s.%s' % (caller_module, caller_method)
 
 
 def flash_notice(message, allow_html=True):
@@ -595,11 +705,8 @@ def flash_notice(message, allow_html=True):
 
     Adding the view/action caller for GA4 Custom Events
     """
-    stack = inspect.stack()
-    immediate_caller = stack[1][3]
-    if not PY2:
-        immediate_caller = stack[1].function
-    t.h.flash(_build_flash_html_for_ga4(message, 'notice', immediate_caller),
+    t.h.flash(_build_flash_html_for_ga4(message, 'notice',
+                                        _get_caller_info(inspect.stack())),
               category='alert-info',
               ignore_duplicate=True,
               allow_html=allow_html)
@@ -611,11 +718,8 @@ def flash_error(message, allow_html=True):
 
     Adding the view/action caller for GA4 Custom Events
     """
-    stack = inspect.stack()
-    immediate_caller = stack[1][3]
-    if not PY2:
-        immediate_caller = stack[1].function
-    t.h.flash(_build_flash_html_for_ga4(message, 'error', immediate_caller),
+    t.h.flash(_build_flash_html_for_ga4(message, 'error',
+                                        _get_caller_info(inspect.stack())),
               category='alert-danger',
               ignore_duplicate=True,
               allow_html=allow_html)
@@ -627,11 +731,8 @@ def flash_success(message, allow_html=True):
 
     Adding the view/action caller for GA4 Custom Events
     """
-    stack = inspect.stack()
-    immediate_caller = stack[1][3]
-    if not PY2:
-        immediate_caller = stack[1].function
-    t.h.flash(_build_flash_html_for_ga4(message, 'success', immediate_caller),
+    t.h.flash(_build_flash_html_for_ga4(message, 'success',
+                                        _get_caller_info(inspect.stack())),
               category='alert-success',
               ignore_duplicate=True,
               allow_html=allow_html)

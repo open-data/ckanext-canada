@@ -177,16 +177,6 @@ class CanadaResourceEditView(ResourceEditView):
         if hasattr(response, 'status_code'):
             if response.status_code == 200 or response.status_code == 302:
                 h.flash_success(_(u'Resource updated.'))
-                context = self._prepare(id)
-                pkg_dict = get_action(u'package_show')(
-                    dict(context, for_view=True), {
-                        u'id': id
-                    }
-                )
-                if pkg_dict.get('state') == 'active':
-                    h.flash_success(
-                        _("Your resource %s has been saved.")
-                        % pkg_dict['id'])
         return response
 
     def get(self,
