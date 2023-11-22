@@ -176,7 +176,7 @@ def geojson_validator(value):
     if value:
         try:
             # accept decoded geojson too
-            if isinstance(value, basestring):
+            if isinstance(value, str):
                 value = json.loads(value)
             shape = geojson.GeoJSON.to_instance(value, strict=True)
             if not shape.is_valid:
@@ -383,7 +383,7 @@ def canada_resource_schema_validator(value, context):
             value = resource_schema_validator(value, context)
         except AttributeError:
             raise Invalid(_('Invalid JSON for Schema'))
-        if isinstance(value, basestring) \
+        if isinstance(value, str) \
         and value.lower().startswith('http'):
             raise Invalid(_('Schema URLs are not supported'))
     return value
