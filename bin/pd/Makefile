@@ -1,6 +1,6 @@
 .DELETE_ON_ERROR:
 
-targets := ati briefingt qpnotes contracts contractsa dac experiment grants hospitalityq inventory \
+targets := ati briefingt qpnotes consultations contracts contractsa dac experiment grants hospitalityq inventory \
 	nap5 reclassification service travela travelq wrongdoing adminaircraft
 
 csv_files := \
