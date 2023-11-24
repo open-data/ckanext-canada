@@ -1,5 +1,6 @@
 import json
 import re
+import inspect
 from ckan.plugins import plugin_loaded
 from ckan.plugins.toolkit import c, config, _
 from ckan.model import User, Package, Activity
@@ -9,14 +10,11 @@ import unicodedata
 import ckan as ckan
 import jinja2
 
-import ckanapi
 from ckanapi import NotFound
 from ckantoolkit import h, aslist
 import ckan.plugins.toolkit as t
 from ckanext.scheming.helpers import scheming_get_preset
-from ckan.logic.validators import boolean_validator
 import webhelpers.html as html
-from webhelpers.html.tags import link_to
 import dateutil.parser
 import geomet.wkt as wkt
 import json as json
@@ -572,3 +570,81 @@ def organization_member_count(id):
         return -1
 
     return len(members)
+
+
+def _build_flash_html_for_ga4(message, category, caller):
+    """
+    All flash messages will be given an event name and action attribute.
+
+    data-ga-event: CALLER in format of <module>.<class>.<method> | <module>.<method>
+    data-ga-action: CATEGORY in format of notice | error | success
+    """
+    return '<div class="canada-ga-flash" data-ga-event="%s" data-ga-action="%s">%s</div>' \
+        % (caller, category, message)
+
+
+def _get_caller_info(stack):
+    parentframe = stack[1][0]
+    module_info = inspect.getmodule(parentframe)
+
+    # module name
+    if module_info:
+        caller_module = module_info.__name__
+
+    # class name
+    caller_class = None
+    if 'self' in parentframe.f_locals:
+        caller_class = parentframe.f_locals['self'].__class__.__name__
+
+    # method name
+    caller_method = None
+    if parentframe.f_code.co_name != '<module>':
+        caller_method = parentframe.f_code.co_name
+
+    # Remove reference to frame
+    # See: https://docs.python.org/3/library/inspect.html#the-interpreter-stack
+    del parentframe
+
+    if caller_class:
+        return '%s.%s.%s' % (caller_module, caller_class, caller_method)
+
+    return '%s.%s' % (caller_module, caller_method)
+
+
+def flash_notice(message, allow_html=True):
+    """
+    Show a flash message of type notice
+
+    Adding the view/action caller for GA4 Custom Events
+    """
+    t.h.flash(_build_flash_html_for_ga4(message, 'notice',
+                                        _get_caller_info(inspect.stack())),
+              category='alert-info',
+              ignore_duplicate=True,
+              allow_html=allow_html)
+
+
+def flash_error(message, allow_html=True):
+    """
+    Show a flash message of type error
+
+    Adding the view/action caller for GA4 Custom Events
+    """
+    t.h.flash(_build_flash_html_for_ga4(message, 'error',
+                                        _get_caller_info(inspect.stack())),
+              category='alert-danger',
+              ignore_duplicate=True,
+              allow_html=allow_html)
+
+
+def flash_success(message, allow_html=True):
+    """
+    Show a flash message of type success
+
+    Adding the view/action caller for GA4 Custom Events
+    """
+    t.h.flash(_build_flash_html_for_ga4(message, 'success',
+                                        _get_caller_info(inspect.stack())),
+              category='alert-success',
+              ignore_duplicate=True,
+              allow_html=allow_html)

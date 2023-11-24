@@ -69,7 +69,7 @@
   {{ super() }}
   {%- block adobe_analytics_footer -%}{%- endblock -%}
   {%- block google_analytics_footer -%}
-    <script type="text/javascript" src="{{ h.url_for_static('/registry_ga_event_tracking.js') }}" ></script>
+    {% asset 'canada_internal/analytics' %}
   {%- endblock -%}
   {%- block session_timeout -%}
     {% if c.userobj and h.get_timeout_length() %}
