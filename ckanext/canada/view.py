@@ -792,7 +792,6 @@ def fgpv_vpgf(pkg_id):
     })
 
 
-@jsonp.jsonpify
 @canada_views.route('/organization/autocomplete', methods=['GET'])
 def organization_autocomplete():
     q = request.args.get('q', '')
