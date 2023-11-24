@@ -16,7 +16,7 @@ def datastore_activity_create(context, act_data):
     resource_id = act_data['resource_id']
     user = context['user']
     model = context['model']
-    user_obj = model.User.by_name(user.decode('utf8'))
+    user_obj = model.User.by_name(user)
     if not user_obj:
         # automated process, no user
         return
