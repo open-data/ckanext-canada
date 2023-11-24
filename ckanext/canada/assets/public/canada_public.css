@@ -595,12 +595,34 @@ body i.fa.fa-arrow-left::before{
   padding-right: 15px;
   position: relative;
 }
+@keyframes flash-fade-in-close-button{
+  0% {
+    visibility: hidden;
+    opacity: 0;
+  }
+  67% {
+    visibility: hidden;
+    opacity: 0;
+  }
+  100% {
+    visibility: visible;
+    opacity: 0.625;
+  }
+}
 .canada-flash-messages .flash-messages a.close{
   display: block;
   position: absolute;
   top: 5px;
   right: 5px;
   padding-bottom: 0;
+  visibility: hidden;
+  opacity: 0;
+  animation: flash-fade-in-close-button 2s ease-in 1s forwards;
+}
+.canada-flash-messages .flash-messages a.close:hover,
+.canada-flash-messages .flash-messages a.close:active,
+.canada-flash-messages .flash-messages a.close:focus{
+  color: #335075;
 }
 body .alert a.btn-default{
   color: #335075 !important;
