@@ -23,13 +23,15 @@
     <div class="container">
       <div class="row">
         {% block flash %}
-          <aside class="container">
-          {% for message in h.flash.pop_messages() | list %}
-            <div class="row alert fade in {{ message.category }}">
-              <p>{{ h.literal(message) }}</p>
+          <div class="col-md-12 canada-flash-messages">
+            <div class="flash-messages">
+              {% for message in h.flash.pop_messages() | list %}
+                <section class="alert fade in {{ message.category }}">
+                  <p>{{ h.literal(message) }}</p>
+                </section>
+              {% endfor %}
             </div>
-          {% endfor %}
-          </aside>
+          </div>
         {% endblock flash %}
         <main role="main" property="mainContentOfPage" class="container">
           {% block page_title %}
@@ -44,6 +46,7 @@
           {% block pre_primary %}
             <div class="row">
               <div class="col-md-12">
+                {# _site_messaging is handled by aliases in nginx to SMB #}
                 <div data-ajax-replace="/data/static/_site_messaging/header_od_ckan.{{ h.lang() }}"></div>
               </div>
             </div>
@@ -91,7 +94,7 @@
 {% block scripts %}
   {% snippet 'snippets/wet-boew/footerresources.html' %}
   <script src="{{ h.url_for_static('/static/js/csrf.js?ver=2') }}"></script>
-  <script type="text/javascript" src="{{ h.url_for_static('/static/js/googleanalytics_event_tracking.js') }}" ></script>
+  {% asset 'canada_public/analytics' %}
   {% block adobe_analytics_footer %}
     <script type="text/javascript">if( typeof _satellite !== "undefined" ){ _satellite.pageBottom(); }</script>
   {%- endblock -%}

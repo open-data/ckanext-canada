@@ -17,7 +17,7 @@
     {% block errors %}
       {%- if errors -%}
         {%- set chromo = h.recombinant_get_chromo(resource_name) -%}
-        <div class="error-explanation alert alert-error">
+        <div class="error-explanation alert alert-danger">
           <p>{{ _('The form contains invalid entries:') }}</p>
           <ul>
             {% for field in chromo.fields -%}

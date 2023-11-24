@@ -37,6 +37,7 @@ from ckanext.security.plugin import CkanSecurityPlugin
 from ckanext.canada.view import (
     canada_views,
     CanadaDatasetEditView,
+    CanadaDatasetCreateView,
     CanadaResourceEditView,
     CanadaResourceCreateView
 )
@@ -97,6 +98,12 @@ class CanadaDatasetsPlugin(SchemingDatasetsPlugin):
             u'/edit/<id>',
             endpoint='canada_edit',
             view_func=CanadaDatasetEditView.as_view(str(u'edit')),
+            methods=['GET', 'POST']
+        )
+        blueprint.add_url_rule(
+            u'/new',
+            endpoint='canada_new',
+            view_func=CanadaDatasetCreateView.as_view(str(u'new')),
             methods=['GET', 'POST']
         )
         return blueprint
@@ -234,12 +241,13 @@ class DataGCCAInternal(p.SingletonPlugin):
     p.implements(p.IPackageController, inherit=True)
     p.implements(p.IActions)
     p.implements(p.IBlueprint)
-    p.implements(IXloader)
+    p.implements(IXloader, inherit=True)
 
     # IConfigurer
     def update_config(self, config):
         p.toolkit.add_template_directory(config, 'templates/internal')
         p.toolkit.add_public_directory(config, 'internal/static')
+        p.toolkit.add_resource('assets/internal', 'canada_internal')
 
         config.update({
             "ckan.user_list_limit": 250
@@ -448,6 +456,7 @@ class DataGCCAPublic(p.SingletonPlugin, DefaultTranslation):
         p.toolkit.add_public_directory(config, 'public')
         p.toolkit.add_resource('public/static/js', 'js')
         p.toolkit.add_resource('assets/datatables', 'canada_datatables')
+        p.toolkit.add_resource('assets/public', 'canada_public')
         config['ckan.auth.public_user_details'] = False
         config['recombinant.definitions'] = """
 ckanext.canada:tables/ati.yaml
@@ -582,6 +591,9 @@ ckanext.canada:schemas/prop.yaml
             'mail_to_with_params',
             'is_registry',
             'organization_member_count',
+            'flash_notice',
+            'flash_error',
+            'flash_success',
         ])
 
     # IActions

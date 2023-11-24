@@ -265,6 +265,17 @@ def no_future_date(key, data, errors, context):
 
 
 def canada_org_title_translated_save(key, data, errors, context):
+    """Saves a piped string into the core title field.
+    E.g. "<English Title> | <French Title>"
+
+    Although fluent now supports organizations, a fair amount of
+    core features still do not query title translated fields for groups.
+
+    Required by:
+        - Organization Index Search
+        - Recombinant CSV Output
+        - TODO: add any more required-bys
+    """
     try:
         title_translated = fluent_text_output(data[key])
         data[('title',)] = title_translated['en'] + ' | ' + title_translated['fr']

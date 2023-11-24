@@ -1,0 +1,9 @@
+css:
+  contents:
+    - canada_public.css
+  output: canada_public/%(version)s_canada_public.css
+
+analytics:
+  contents:
+    - canada_public_analytics.js
+  output: canada_public_analytics/%(version)s_canada_public_analytics.js

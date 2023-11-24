@@ -4,7 +4,6 @@ import pkg_resources
 import lxml.etree as ET
 import lxml.html as html
 from pytz import timezone, utc
-from dateutil.tz import tzutc
 from socket import error as socket_error
 from logging import getLogger
 import unicodecsv
@@ -38,7 +37,8 @@ from ckan.lib.search import (
 
 from ckan.views.dataset import (
     EditView as DatasetEditView,
-    search as dataset_search
+    search as dataset_search,
+    CreateView as DatasetCreateView
 )
 from ckan.views.resource import (
     EditView as ResourceEditView,
@@ -124,12 +124,10 @@ class CanadaDatasetEditView(DatasetEditView):
                     }
                 )
                 if pkg_dict['type'] == 'prop':
-                    h.flash_success(_(u'The status has been added / updated for this suggested  dataset. This update will be reflected on open.canada.ca shortly.'))
+                    h.flash_success(_(u'The status has been added/updated for this suggested dataset. This update will be reflected on open.canada.ca shortly.'))
                 else:
-                    h.flash_success(_(u'Dataset updated.'))
-                if pkg_dict.get('state') == 'active':
                     h.flash_success(
-                        _("Your record %s has been saved.")
+                        _("Your dataset %s has been saved.")
                         % pkg_dict['id'])
         return response
 
@@ -157,22 +155,21 @@ class CanadaDatasetEditView(DatasetEditView):
                                                       error_summary)
 
 
+class CanadaDatasetCreateView(DatasetCreateView):
+    def post(self, package_type):
+        response = super(CanadaDatasetCreateView, self).post(package_type)
+        if hasattr(response, 'status_code'):
+            if response.status_code == 200 or response.status_code == 302:
+                h.flash_success(_(u'Dataset added.'))
+        return response
+
+
 class CanadaResourceEditView(ResourceEditView):
     def post(self, package_type, id, resource_id):
         response = super(CanadaResourceEditView, self).post(package_type, id, resource_id)
         if hasattr(response, 'status_code'):
             if response.status_code == 200 or response.status_code == 302:
                 h.flash_success(_(u'Resource updated.'))
-                context = self._prepare(id)
-                pkg_dict = get_action(u'package_show')(
-                    dict(context, for_view=True), {
-                        u'id': id
-                    }
-                )
-                if pkg_dict.get('state') == 'active':
-                    h.flash_success(
-                        _("Your record %s has been saved.")
-                        % pkg_dict['id'])
         return response
 
     def get(self,
@@ -795,23 +792,7 @@ def fgpv_vpgf(pkg_id):
     })
 
 
-@canada_views.route('/dataset/undelete/<pkg_id>', methods=['GET', 'POST'])
-def package_undelete(pkg_id):
-    h.flash_success(_(
-        '<strong>Note</strong><br> The record has been restored.'),
-        allow_html=True
-    )
-
-    lc = LocalCKAN(username=g.user)
-    lc.action.package_patch(
-        id=pkg_id,
-        state='active'
-    )
-
-    return h.redirect_to('dataset.read',
-        id=pkg_id)
-
-
+@jsonp.jsonpify
 @canada_views.route('/organization/autocomplete', methods=['GET'])
 def organization_autocomplete():
     q = request.args.get('q', '')
