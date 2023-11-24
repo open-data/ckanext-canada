@@ -1,14 +1,11 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-import os
-import os.path
 import logging
 from flask import has_request_context
 import ckan.plugins as p
 from ckan.lib.plugins import DefaultDatasetForm, DefaultTranslation
 import ckan.lib.helpers as hlp
 from ckan.logic import validators as logic_validators
-from paste.reloader import watch_file
 
 from ckan.plugins.toolkit import (
     c,
@@ -39,6 +36,7 @@ from ckanext.security.plugin import CkanSecurityPlugin
 from ckanext.canada.view import (
     canada_views,
     CanadaDatasetEditView,
+    CanadaDatasetCreateView,
     CanadaResourceEditView,
     CanadaResourceCreateView
 )
@@ -99,6 +97,12 @@ class CanadaDatasetsPlugin(SchemingDatasetsPlugin):
             u'/edit/<id>',
             endpoint='canada_edit',
             view_func=CanadaDatasetEditView.as_view(str(u'edit')),
+            methods=['GET', 'POST']
+        )
+        blueprint.add_url_rule(
+            u'/new',
+            endpoint='canada_new',
+            view_func=CanadaDatasetCreateView.as_view(str(u'new')),
             methods=['GET', 'POST']
         )
         return blueprint
@@ -499,15 +503,6 @@ ckanext.canada:schemas/prop.yaml
         # Enable license restriction
         config['ckan.dataset.restrict_license_choices'] = True
 
-        if 'ckan.i18n_directory' in config:
-            # Reload when translaton files change, because I'm slowly going
-            # insane.
-            translations_dir = config['ckan.i18n_directory']
-            if os.path.isdir(translations_dir):
-                for folder, subs, files in os.walk(translations_dir):
-                    for filename in files:
-                        watch_file(os.path.join(folder, filename))
-
         # monkey patch helpers.py pagination method
         hlp.Page.pager = _wet_pager
         hlp.SI_number_span = _SI_number_span_close
@@ -594,6 +589,9 @@ ckanext.canada:schemas/prop.yaml
             'mail_to_with_params',
             'is_registry',
             'organization_member_count',
+            'flash_notice',
+            'flash_error',
+            'flash_success',
         ])
 
     # IActions

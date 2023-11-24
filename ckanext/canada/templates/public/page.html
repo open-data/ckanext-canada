@@ -94,7 +94,7 @@
 {% block scripts %}
   {% snippet 'snippets/wet-boew/footerresources.html' %}
   <script src="{{ h.url_for_static('/static/js/csrf.js?ver=2') }}"></script>
-  <script type="text/javascript" src="{{ h.url_for_static('/static/js/googleanalytics_event_tracking.js') }}" ></script>
+  {% asset 'canada_public/analytics' %}
   {% block adobe_analytics_footer %}
     <script type="text/javascript">if( typeof _satellite !== "undefined" ){ _satellite.pageBottom(); }</script>
   {%- endblock -%}
