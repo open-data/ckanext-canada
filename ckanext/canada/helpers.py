@@ -9,16 +9,12 @@ import datetime
 import unicodedata
 import ckan as ckan
 import jinja2
-from six import PY2
 
-import ckanapi
 from ckanapi import NotFound
 from ckantoolkit import h, aslist
 import ckan.plugins.toolkit as t
 from ckanext.scheming.helpers import scheming_get_preset
-from ckan.logic.validators import boolean_validator
 import webhelpers.html as html
-from webhelpers.html.tags import link_to
 import dateutil.parser
 import geomet.wkt as wkt
 import json as json

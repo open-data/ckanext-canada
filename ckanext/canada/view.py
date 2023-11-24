@@ -4,7 +4,6 @@ import pkg_resources
 import lxml.etree as ET
 import lxml.html as html
 from pytz import timezone, utc
-from dateutil.tz import tzutc
 from socket import error as socket_error
 from logging import getLogger
 import unicodecsv
