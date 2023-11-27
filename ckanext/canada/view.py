@@ -218,19 +218,20 @@ class CanadaUserRegisterView(UserRegisterView):
         response = super(CanadaUserRegisterView, self).post()
         if hasattr(response, 'status_code'):
             if response.status_code == 200 or response.status_code == 302:
-                # redirected after successful user create
-                import ckan.lib.mailer
-                # checks if there is a custom function "notify_ckan_user_create" in the mailer (added by ckanext-gcnotify)
-                getattr(
-                    ckan.lib.mailer,
-                    "notify_ckan_user_create",
-                    notify_ckan_user_create
-                )(
-                    email=email,
-                    fullname=fullname,
-                    username=username,
-                    phoneno=phoneno,
-                    dept=dept)
+                if not config.get('ckanext.canada.suppress_user_emails', False):
+                    # redirected after successful user create
+                    import ckan.lib.mailer
+                    # checks if there is a custom function "notify_ckan_user_create" in the mailer (added by ckanext-gcnotify)
+                    getattr(
+                        ckan.lib.mailer,
+                        "notify_ckan_user_create",
+                        notify_ckan_user_create
+                    )(
+                        email=email,
+                        fullname=fullname,
+                        username=username,
+                        phoneno=phoneno,
+                        dept=dept)
                 notice_no_access()
         return response
 

@@ -176,6 +176,7 @@ class TestPackageWebForms(CanadaTestBase):
 
 
 @pytest.mark.usefixtures('with_request_context')
+@pytest.mark.ckan_config("ckanext.canada.suppress_user_emails", True)
 class TestNewUserWebForms(CanadaTestBase):
     @classmethod
     def setup_method(self, method):
