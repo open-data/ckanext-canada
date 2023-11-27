@@ -1,8 +1,8 @@
 # -*- coding: UTF-8 -*-
 from ckanext.canada.tests import CanadaTestBase
 import pytest
-from urlparse import urlparse
-from StringIO import StringIO
+from urllib.parse import urlparse
+from io import StringIO
 from openpyxl.workbook import Workbook
 from ckan.plugins.toolkit import h
 from ckanapi import (
