@@ -99,6 +99,8 @@ jobs:
           name: Run all tests
           command: |
             pytest --ckan-ini=test-core.ini ckanext/canada/tests
+      - store_test_results:
+          path: ~/junit
       - slack/notify:
           event: fail
           template: basic_fail_1
