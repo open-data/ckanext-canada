@@ -95,6 +95,7 @@ jobs:
             paster --plugin=ckanext-canada canada update-triggers -c test-core.ini
             paster --plugin=ckanext-recombinant recombinant create-triggers -a -c test-core.ini
             python2 .\/bin\/download_country.py
+            mkdir -p ~/junit
       - run:
           name: Run all tests
           command: |
