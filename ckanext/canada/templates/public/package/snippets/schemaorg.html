@@ -57,10 +57,11 @@
         {%- for value in data.subject -%}
           <span property="genre">{{ h.scheming_choices_label(scheming_choices, value) }}</span>
         {%- endfor -%}
-
-        {%- for keyword in h.get_translated(data.keywords, h.lang()) -%}
-            <span property="keywords">{{ keyword }}</span>
-        {%- endfor -%}
+        {% if data.get('keywords') %}
+          {%- for keyword in h.get_translated(data.get('keywords'), h.lang()) -%}
+              <span property="keywords">{{ keyword }}</span>
+          {%- endfor -%}
+        {% endif %}
         <span property="sameAs" value="{{ h.url_for(c.pkg.type + '.read', id=data.id) }}"></span>
           {%- if data.resources -%}
             {%- set nonapps = [] -%}
