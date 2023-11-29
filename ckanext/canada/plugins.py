@@ -625,8 +625,6 @@ ckanext.canada:schemas/prop.yaml
         return [cli.get_commands(), get_pd_commands()]
 
 
-
-
 class DataGCCAForms(p.SingletonPlugin, DefaultDatasetForm):
     """
     Plugin for dataset forms for Canada's metadata schema
