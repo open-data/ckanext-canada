@@ -40,6 +40,7 @@ from ckanext.canada.view import (
     CanadaResourceEditView,
     CanadaResourceCreateView
 )
+from ckanext.canada.scripts import get_commands as get_script_commands
 
 # XXX Monkey patch to work around libcloud/azure 400 error on get_container
 try:
@@ -442,6 +443,7 @@ class DataGCCAPublic(p.SingletonPlugin, DefaultTranslation):
     p.implements(p.ITranslation, inherit=True)
     p.implements(p.IMiddleware, inherit=True)
     p.implements(p.IActions)
+    p.implements(p.IClick)
 
     # DefaultTranslation, ITranslation
     def i18n_domain(self):
@@ -616,6 +618,11 @@ ckanext.canada:schemas/prop.yaml
 
     def make_middleware(self, app, config):
         return LogExtraMiddleware(app, config)
+
+    # IClick
+
+    def get_commands(self):
+        return [get_script_commands()]
 
 
 
