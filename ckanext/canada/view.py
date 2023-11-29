@@ -43,7 +43,8 @@ from ckan.views.dataset import (
 )
 from ckan.views.resource import (
     EditView as ResourceEditView,
-    CreateView as ResourceCreateView
+    CreateView as ResourceCreateView,
+    read as resource_read
 )
 from ckan.views.user import RegisterView as UserRegisterView
 from ckan.views.api import(
@@ -118,6 +119,27 @@ def logged_in():
         return h.redirect_to('user.login')
 
 
+def _redirect_pd_view(package_type, id):
+    # you can access any package_type via /dataset still
+    # so need to actually check the package_type in the DB here.
+    context = {
+        u'model': model,
+        u'session': model.Session,
+        u'user': g.user,
+        u'auth_user_obj': g.userobj
+    }
+    try:
+        pkg_dict = get_action(u'package_show')(
+            dict(context, for_view=True), {
+                u'id': id
+            }
+        )
+    except (NotAuthorized, NotFound):
+        return abort(404, _(u'Dataset not found'))
+    if pkg_dict['type'] in h.recombinant_get_types():
+        return type_redirect(pkg_dict['type'])
+
+
 class CanadaDatasetEditView(DatasetEditView):
     def post(self, package_type, id):
         response = super(CanadaDatasetEditView, self).post(package_type, id)
@@ -155,7 +177,7 @@ class CanadaDatasetEditView(DatasetEditView):
         except (NotAuthorized, NotFound):
             return abort(404, _(u'Dataset not found'))
         if pkg_dict['type'] in h.recombinant_get_types():
-            return abort(404, _(u'Dataset not found'))
+            return type_redirect(pkg_dict['type'])
         return super(CanadaDatasetEditView, self).get(package_type,
                                                       id,
                                                       data,
@@ -177,7 +199,7 @@ class CanadaDatasetCreateView(DatasetCreateView):
             errors=None,
             error_summary=None):
         if package_type in h.recombinant_get_types():
-            return abort(404, _(u'Dataset not found'))
+            return type_redirect(package_type)
         return super(CanadaDatasetCreateView, self).get(package_type,
                                                         data,
                                                         errors,
@@ -211,7 +233,7 @@ class CanadaResourceEditView(ResourceEditView):
         except (NotAuthorized, NotFound):
             return abort(404, _(u'Dataset not found'))
         if pkg_dict['type'] in h.recombinant_get_types():
-            return abort(404, _(u'Dataset not found'))
+            return type_redirect(pkg_dict['type'])
         return super(CanadaResourceEditView, self).get(package_type,
                                                        id,
                                                        resource_id,
@@ -251,7 +273,7 @@ class CanadaResourceCreateView(ResourceCreateView):
         except (NotAuthorized, NotFound):
             return abort(404, _(u'Dataset not found'))
         if pkg_dict['type'] in h.recombinant_get_types():
-            return abort(404, _(u'Dataset not found'))
+            return type_redirect(pkg_dict['type'])
         return super(CanadaResourceCreateView, self).get(package_type,
                                                          id,
                                                          data,
@@ -291,6 +313,27 @@ canada_views.add_url_rule(
     u'/user/register',
     view_func=CanadaUserRegisterView.as_view(str(u'register'))
 )
+
+def canada_resource_read(package_type, id, resource_id):
+    context = {
+        u'model': model,
+        u'session': model.Session,
+        u'user': g.user,
+        u'auth_user_obj': g.userobj
+    }
+    # you can access any package_type via /dataset still
+    # so need to actually check the package_type in the DB here.
+    try:
+        pkg_dict = get_action(u'package_show')(
+            dict(context, for_view=True), {
+                u'id': id
+            }
+        )
+    except (NotAuthorized, NotFound):
+        return abort(404, _(u'Dataset not found'))
+    if pkg_dict['type'] in h.recombinant_get_types():
+        return type_redirect(pkg_dict['type'])
+    return resource_read(package_type, id, resource_id)
 
 
 def canada_search(package_type):
