@@ -126,6 +126,8 @@ def set_datastore_false_for_invalid_resources(resource_id=None, verbose=False, q
     for id in resource_ids_to_set:
         try:
             set_datastore_active_flag(model, {"resource_id": id}, False)
+            if verbose:
+                click.echo("Set datastore_active flag to False for Invalid Resource %s" % id)
         except Exception as e:
             if verbose:
                 errors.write('Failed to set datastore_active flag for Invalid Resource %s with errors:\n\n%s' % (resource_id, e))
@@ -195,6 +197,8 @@ def resubmit_empty_datastore_resources(resource_id=None, verbose=False, quiet=Fa
     for id in resource_ids_to_submit:
         try:
             get_action('xloader_submit')(context, {"resource_id": id, "ignore_hash": False})
+            if verbose:
+                click.echo("Submitted Resource %s to Xloader" % id)
         except Exception as e:
             if verbose:
                 errors.write('Failed to submit Resource %s to Xloader with errors:\n\n%s' % (resource_id, e))
