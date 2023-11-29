@@ -6,7 +6,7 @@ targets := ati briefingt qpnotes consultations contracts contractsa dac experime
 csv_files := \
 	ati.csv ati-nil.csv \
 	briefingt.csv \
-	qpnotes.csv \
+	qpnotes.csv qpnotes-nil.csv \
         contractsa.csv \
         contracts.csv contracts-nil.csv \
 	consultations.csv \
@@ -206,22 +206,33 @@ $(workdir)/filtered/briefingt.csv: $(workdir)/briefingt.csv
 qpnotes: upload-qpnotes rebuild-qpnotes
 
 .PHONY: upload-qpnotes
-upload-qpnotes: $(workdir)/filtered/qpnotes.csv
+upload-qpnotes: $(workdir)/filtered/qpnotes.csv $(workdir)/filtered/qpnotes-nil.csv
 	@$(echo_date) Uploading Question Period Notes...
 	@$(ckanapi) action resource_patch -c $(registry_ini) \
 	id=c55a2862-7ec4-462c-a844-22acab664812 upload@"$(workdir)/filtered/qpnotes.csv" \
 	> /dev/null
+	@$(ckanapi) action resource_patch -c $(registry_ini) \
+	id=TBD upload@"$(workdir)/filtered/qpnotes-nil.csv" \
+	> /dev/null
 
 .PHONY: rebuild-qpnotes
-rebuild-qpnotes: $(workdir)/filtered/qpnotes.csv
+rebuild-qpnotes: $(workdir)/filtered/qpnotes.csv $(workdir)/filtered/qpnotes-nil.csv
 	@$(echo_date) Rebuilding Question Period Notes...
 	@$(oc_search) import_data_csv --csv "$(workdir)/filtered/qpnotes.csv" --search qpnotes --quiet
+	
+	# @$(oc_search) import_data_csv --csv "$(workdir)/filtered/qpnotes-nil.csv" --search qpnotes --nothing_to_report
 
 $(workdir)/qpnotes.csv:
 	$(paster) $(combine) qpnotes -d $(workdir) -c $(registry_ini)
 
+$(workdir)/qpnotes-nil.csv:
+	$(paster) $(combine) qpnotes-nil -d $(workdir) -c $(registry_ini)
+
 $(workdir)/filtered/qpnotes.csv: $(workdir)/qpnotes.csv
 	$(fdir)/filter_qpnotes.py < $< > $@
+
+$(workdir)/filtered/qpnotes-nil.csv: $(workdir)/qpnotes-nil.csv
+	$(fdir)/filter_modified_created.py < $< > $@
 
 ###
 ###  Contracts
