@@ -280,8 +280,8 @@ def _get_site_user_context():
     return {"user": user['name'], "ignore_auth": True}
 
 
-def _get_datastore_tables():
-    # type: () -> list
+def _get_datastore_tables(verbose=False):
+    # type: (bool) -> list
     """
     Returns a list of resource ids (table names) from
     the DataStore database.
@@ -292,11 +292,13 @@ def _get_datastore_tables():
                                              "limit": 100000})
     if not tables:
         return []
+    if verbose:
+        click.echo("Gathered %s table names from the DataStore." % len(tables.get('records', [])))
     return [r.get('name') for r in tables.get('records', [])]
 
 
-def _get_datastore_resources(valid=True):
-    # type: (bool) -> list
+def _get_datastore_resources(valid=True, verbose=False):
+    # type: (bool, bool) -> list
     """
     Returns a list of resource ids that are DataStore
     enabled and that are of upload url_type.
@@ -314,6 +316,8 @@ def _get_datastore_resources(valid=True):
                                                   "rows": batch_size,
                                                   "include_private": True})['results']
         if _packages:
+            if verbose:
+                click.echo("Looking through %s packages to find DataStore Resources." % len(_packages))
             counter += len(_packages)
             for _package in _packages:
                 for _resource in _package.get('resources', []):
@@ -328,6 +332,8 @@ def _get_datastore_resources(valid=True):
                         datastore_resources.append(_resource.get('id'))
         else:
             results = False
+    if verbose:
+        click.echo("Gathered %s DataStore Resources." % len(datastore_resources))
     return datastore_resources
 
 
@@ -359,10 +365,10 @@ def set_datastore_false_for_invalid_resources(resource_id=None, verbose=False, q
 
     errors = StringIO()
 
-    datastore_tables = _get_datastore_tables()
+    datastore_tables = _get_datastore_tables(verbose=verbose)
     resource_ids_to_set = []
     if not resource_id:
-        for resource_id in _get_datastore_resources(valid=False):
+        for resource_id in _get_datastore_resources(valid=False, verbose=verbose):
             if resource_id in resource_ids_to_set:
                 continue
             if resource_id in datastore_tables:
@@ -419,10 +425,10 @@ def resubmit_empty_datastore_resources(resource_id=None, verbose=False, quiet=Fa
 
     context = _get_site_user_context()
 
-    datastore_tables = _get_datastore_tables()
+    datastore_tables = _get_datastore_tables(verbose=verbose)
     resource_ids_to_submit = []
     if not resource_id:
-        for resource_id in _get_datastore_resources():
+        for resource_id in _get_datastore_resources(verbose=verbose):
             if resource_id in resource_ids_to_submit:
                 continue
             if resource_id in datastore_tables:
