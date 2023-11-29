@@ -103,6 +103,7 @@ def update(config, resource_id, verbose):
     except Exception as e:
         errors.write('Failed to patch resource %s with errors:\n\n%s' % (resource_id, e))
         if verbose:
+            errors.write('\n')
             traceback.print_exc(file=errors)
         pass
     has_errors = errors.tell()
