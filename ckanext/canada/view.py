@@ -119,29 +119,36 @@ def logged_in():
         return h.redirect_to('user.login')
 
 
-def _redirect_pd_view(package_type, id):
+def _redirect_pd_view(package_type, id=None):
     # you can access any package_type via /dataset still
-    # so need to actually check the package_type in the DB here.
+    # so need to actually check the package_type
+    # in the DB here if the package exists.
     context = {
         u'model': model,
         u'session': model.Session,
         u'user': g.user,
         u'auth_user_obj': g.userobj
     }
-    try:
-        pkg_dict = get_action(u'package_show')(
-            dict(context, for_view=True), {
-                u'id': id
-            }
-        )
-    except (NotAuthorized, NotFound):
-        return abort(404, _(u'Dataset not found'))
-    if pkg_dict['type'] in h.recombinant_get_types():
-        return type_redirect(pkg_dict['type'])
+    if id:
+        try:
+            pkg_dict = get_action(u'package_show')(
+                dict(context, for_view=True), {
+                    u'id': id
+                }
+            )
+            package_type = pkg_dict['type']
+        except (NotAuthorized, NotFound):
+            return abort(404, _(u'Dataset not found'))
+    if package_type in h.recombinant_get_types():
+        return type_redirect(package_type)
+    return False
 
 
 class CanadaDatasetEditView(DatasetEditView):
     def post(self, package_type, id):
+        do_pd_redirect = _redirect_pd_view(package_type, id)
+        if do_pd_redirect != False:
+            return do_pd_redirect
         response = super(CanadaDatasetEditView, self).post(package_type, id)
         if hasattr(response, 'status_code'):
             if response.status_code == 200 or response.status_code == 302:
@@ -165,19 +172,9 @@ class CanadaDatasetEditView(DatasetEditView):
             data=None,
             errors=None,
             error_summary=None):
-        context = self._prepare(id)
-        # you can access any package_type via /dataset still
-        # so need to actually check the package_type in the DB here.
-        try:
-            pkg_dict = get_action(u'package_show')(
-                dict(context, for_view=True), {
-                    u'id': id
-                }
-            )
-        except (NotAuthorized, NotFound):
-            return abort(404, _(u'Dataset not found'))
-        if pkg_dict['type'] in h.recombinant_get_types():
-            return type_redirect(pkg_dict['type'])
+        do_pd_redirect = _redirect_pd_view(package_type, id)
+        if do_pd_redirect != False:
+            return do_pd_redirect
         return super(CanadaDatasetEditView, self).get(package_type,
                                                       id,
                                                       data,
@@ -187,6 +184,9 @@ class CanadaDatasetEditView(DatasetEditView):
 
 class CanadaDatasetCreateView(DatasetCreateView):
     def post(self, package_type):
+        do_pd_redirect = _redirect_pd_view(package_type)
+        if do_pd_redirect != False:
+            return do_pd_redirect
         response = super(CanadaDatasetCreateView, self).post(package_type)
         if hasattr(response, 'status_code'):
             if response.status_code == 200 or response.status_code == 302:
@@ -198,8 +198,9 @@ class CanadaDatasetCreateView(DatasetCreateView):
             data=None,
             errors=None,
             error_summary=None):
-        if package_type in h.recombinant_get_types():
-            return type_redirect(package_type)
+        do_pd_redirect = _redirect_pd_view(package_type)
+        if do_pd_redirect != False:
+            return do_pd_redirect
         return super(CanadaDatasetCreateView, self).get(package_type,
                                                         data,
                                                         errors,
@@ -208,6 +209,9 @@ class CanadaDatasetCreateView(DatasetCreateView):
 
 class CanadaResourceEditView(ResourceEditView):
     def post(self, package_type, id, resource_id):
+        do_pd_redirect = _redirect_pd_view(package_type, id)
+        if do_pd_redirect != False:
+            return do_pd_redirect
         response = super(CanadaResourceEditView, self).post(package_type, id, resource_id)
         if hasattr(response, 'status_code'):
             if response.status_code == 200 or response.status_code == 302:
@@ -221,19 +225,9 @@ class CanadaResourceEditView(ResourceEditView):
             data=None,
             errors=None,
             error_summary=None):
-        context = self._prepare(id)
-        # you can access any package_type via /dataset still
-        # so need to actually check the package_type in the DB here.
-        try:
-            pkg_dict = get_action(u'package_show')(
-                dict(context, for_view=True), {
-                    u'id': id
-                }
-            )
-        except (NotAuthorized, NotFound):
-            return abort(404, _(u'Dataset not found'))
-        if pkg_dict['type'] in h.recombinant_get_types():
-            return type_redirect(pkg_dict['type'])
+        do_pd_redirect = _redirect_pd_view(package_type, id)
+        if do_pd_redirect != False:
+            return do_pd_redirect
         return super(CanadaResourceEditView, self).get(package_type,
                                                        id,
                                                        resource_id,
@@ -244,6 +238,9 @@ class CanadaResourceEditView(ResourceEditView):
 
 class CanadaResourceCreateView(ResourceCreateView):
     def post(self, package_type, id):
+        do_pd_redirect = _redirect_pd_view(package_type, id)
+        if do_pd_redirect != False:
+            return do_pd_redirect
         response = super(CanadaResourceCreateView, self).post(package_type, id)
         if hasattr(response, 'status_code'):
             if response.status_code == 200 or response.status_code == 302:
@@ -256,24 +253,9 @@ class CanadaResourceCreateView(ResourceCreateView):
             data=None,
             errors=None,
             error_summary=None):
-        context = {
-            u'model': model,
-            u'session': model.Session,
-            u'user': g.user,
-            u'auth_user_obj': g.userobj
-        }
-        # you can access any package_type via /dataset still
-        # so need to actually check the package_type in the DB here.
-        try:
-            pkg_dict = get_action(u'package_show')(
-                dict(context, for_view=True), {
-                    u'id': id
-                }
-            )
-        except (NotAuthorized, NotFound):
-            return abort(404, _(u'Dataset not found'))
-        if pkg_dict['type'] in h.recombinant_get_types():
-            return type_redirect(pkg_dict['type'])
+        do_pd_redirect = _redirect_pd_view(package_type, id)
+        if do_pd_redirect != False:
+            return do_pd_redirect
         return super(CanadaResourceCreateView, self).get(package_type,
                                                          id,
                                                          data,
@@ -315,24 +297,9 @@ canada_views.add_url_rule(
 )
 
 def canada_resource_read(package_type, id, resource_id):
-    context = {
-        u'model': model,
-        u'session': model.Session,
-        u'user': g.user,
-        u'auth_user_obj': g.userobj
-    }
-    # you can access any package_type via /dataset still
-    # so need to actually check the package_type in the DB here.
-    try:
-        pkg_dict = get_action(u'package_show')(
-            dict(context, for_view=True), {
-                u'id': id
-            }
-        )
-    except (NotAuthorized, NotFound):
-        return abort(404, _(u'Dataset not found'))
-    if pkg_dict['type'] in h.recombinant_get_types():
-        return type_redirect(pkg_dict['type'])
+    do_pd_redirect = _redirect_pd_view(package_type, id)
+    if do_pd_redirect != False:
+        return do_pd_redirect
     return resource_read(package_type, id, resource_id)
 
 
