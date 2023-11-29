@@ -90,7 +90,8 @@ def _success_message(message):
               help='Resource ID to set the datastore_active flag. Defaults to None.')
 @click.option('-v', '--verbose', is_flag=True, type=click.BOOL, help='Increase verbosity.')
 @click.option('-q', '--quiet', is_flag=True, type=click.BOOL, help='Suppress human interaction.')
-def set_datastore_false_for_invalid_resources(resource_id=None, verbose=False, quiet=False):
+@click.option('-l', '--list', is_flag=True, type=click.BOOL, help='List the Resource IDs instead of setting the flags to false.')
+def set_datastore_false_for_invalid_resources(resource_id=None, verbose=False, quiet=False, list=False):
     """
     Sets datastore_active to False for Resources that are
     not valid but are still in the DataStore database.
@@ -124,16 +125,22 @@ def set_datastore_false_for_invalid_resources(resource_id=None, verbose=False, q
         click.confirm("Do you want to set datastore_active flag to False for %s Invalid Resources?" % len(resource_ids_to_set), abort=True)
 
     for id in resource_ids_to_set:
-        try:
-            set_datastore_active_flag(model, {"resource_id": id}, False)
-            if verbose:
-                click.echo("Set datastore_active flag to False for Invalid Resource %s" % id)
-        except Exception as e:
-            if verbose:
-                errors.write('Failed to set datastore_active flag for Invalid Resource %s with errors:\n\n%s' % (resource_id, e))
-                errors.write('\n')
-                traceback.print_exc(file=errors)
-            pass
+        if list:
+            click.echo(id)
+        else:
+            try:
+                set_datastore_active_flag(model, {"resource_id": id}, False)
+                if verbose:
+                    click.echo("Set datastore_active flag to False for Invalid Resource %s" % id)
+            except Exception as e:
+                if verbose:
+                    errors.write('Failed to set datastore_active flag for Invalid Resource %s with errors:\n\n%s' % (resource_id, e))
+                    errors.write('\n')
+                    traceback.print_exc(file=errors)
+                pass
+
+    if list:
+        return
 
     has_errors = errors.tell()
     errors.seek(0)
@@ -150,7 +157,8 @@ def set_datastore_false_for_invalid_resources(resource_id=None, verbose=False, q
               help='Resource ID to re-submit to Xloader. Defaults to None.')
 @click.option('-v', '--verbose', is_flag=True, type=click.BOOL, help='Increase verbosity.')
 @click.option('-q', '--quiet', is_flag=True, type=click.BOOL, help='Suppress human interaction.')
-def resubmit_empty_datastore_resources(resource_id=None, verbose=False, quiet=False):
+@click.option('-l', '--list', is_flag=True, type=click.BOOL, help='List the Resource IDs instead of submitting them to Xloader.')
+def resubmit_empty_datastore_resources(resource_id=None, verbose=False, quiet=False, list=False):
     """
     Re-submits empty DataStore Resources to Xloader.
     """
@@ -195,16 +203,22 @@ def resubmit_empty_datastore_resources(resource_id=None, verbose=False, quiet=Fa
         click.confirm("Do you want to re-submit %s Resources to Xloader?" % len(resource_ids_to_submit), abort=True)
 
     for id in resource_ids_to_submit:
-        try:
-            get_action('xloader_submit')(context, {"resource_id": id, "ignore_hash": False})
-            if verbose:
-                click.echo("Submitted Resource %s to Xloader" % id)
-        except Exception as e:
-            if verbose:
-                errors.write('Failed to submit Resource %s to Xloader with errors:\n\n%s' % (resource_id, e))
-                errors.write('\n')
-                traceback.print_exc(file=errors)
-            pass
+        if list:
+            click.echo(id)
+        else:
+            try:
+                get_action('xloader_submit')(context, {"resource_id": id, "ignore_hash": False})
+                if verbose:
+                    click.echo("Submitted Resource %s to Xloader" % id)
+            except Exception as e:
+                if verbose:
+                    errors.write('Failed to submit Resource %s to Xloader with errors:\n\n%s' % (resource_id, e))
+                    errors.write('\n')
+                    traceback.print_exc(file=errors)
+                pass
+
+    if list:
+        return
 
     has_errors = errors.tell()
     errors.seek(0)
