@@ -38,7 +38,8 @@ from ckanext.canada.view import (
     CanadaDatasetEditView,
     CanadaDatasetCreateView,
     CanadaResourceEditView,
-    CanadaResourceCreateView
+    CanadaResourceCreateView,
+    canada_search
 )
 from ckanext.canada.scripts import get_commands as get_script_commands
 
@@ -84,6 +85,7 @@ class CanadaDatasetsPlugin(SchemingDatasetsPlugin):
     """
     p.implements(p.IDatasetForm, inherit=True)
     p.implements(p.IPackageController, inherit=True)
+    p.implements(p.IBlueprint)
     try:
         from ckanext.validation.interfaces import IDataValidation
     except ImportError:
@@ -91,20 +93,48 @@ class CanadaDatasetsPlugin(SchemingDatasetsPlugin):
     else:
         p.implements(IDataValidation, inherit=True)
 
+
+    # IBlueprint
+    def get_blueprint(self):
+        """
+        Runs the Recombinant package types through
+        the extended IDatasetForm implementation.
+        """
+        # type: () -> list[Blueprint]
+        blueprints = []
+        for pd_type in h.recombinant_get_types():
+            blueprint = Blueprint(
+                u'canada_%s' % pd_type,
+                __name__,
+                url_prefix=u'/%s' % pd_type,
+                url_defaults={u'package_type': pd_type})
+            self.prepare_dataset_blueprint(pd_type, blueprint)
+            self.prepare_resource_blueprint(pd_type, blueprint)
+            blueprints.append(blueprint)
+        return blueprints
+
+
     #IDatasetForm
     def prepare_dataset_blueprint(self, package_type, blueprint):
         # type: (str,Blueprint) -> Blueprint
         blueprint.add_url_rule(
             u'/edit/<id>',
-            endpoint='canada_edit',
+            endpoint='canada_edit_%s' % package_type,
             view_func=CanadaDatasetEditView.as_view(str(u'edit')),
             methods=['GET', 'POST']
         )
         blueprint.add_url_rule(
             u'/new',
-            endpoint='canada_new',
+            endpoint='canada_new_%s' % package_type,
             view_func=CanadaDatasetCreateView.as_view(str(u'new')),
             methods=['GET', 'POST']
+        )
+        blueprint.add_url_rule(
+            u'/',
+            endpoint='canada_search_%s' % package_type,
+            view_func=canada_search,
+            methods=['GET'],
+            strict_slashes=False
         )
         return blueprint
 
@@ -114,13 +144,13 @@ class CanadaDatasetsPlugin(SchemingDatasetsPlugin):
         # type: (str,Blueprint) -> Blueprint
         blueprint.add_url_rule(
             u'/<resource_id>/edit',
-            endpoint='canada_edit',
+            endpoint='canada_resource_edit_%s' % package_type,
             view_func=CanadaResourceEditView.as_view(str(u'edit')),
             methods=['GET', 'POST']
         )
         blueprint.add_url_rule(
             u'/new',
-            endpoint='canada_new',
+            endpoint='canada_resource_new_%s' % package_type,
             view_func=CanadaResourceCreateView.as_view(str(u'new')),
             methods=['GET', 'POST']
         )

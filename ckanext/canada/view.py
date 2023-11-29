@@ -144,6 +144,8 @@ class CanadaDatasetEditView(DatasetEditView):
             errors=None,
             error_summary=None):
         context = self._prepare(id)
+        # you can access any package_type via /dataset still
+        # so need to actually check the package_type in the DB here.
         try:
             pkg_dict = get_action(u'package_show')(
                 dict(context, for_view=True), {
@@ -169,6 +171,18 @@ class CanadaDatasetCreateView(DatasetCreateView):
                 h.flash_success(_(u'Dataset added.'))
         return response
 
+    def get(self,
+            package_type,
+            data=None,
+            errors=None,
+            error_summary=None):
+        if package_type in h.recombinant_get_types():
+            return abort(404, _(u'Dataset not found'))
+        return super(CanadaDatasetCreateView, self).get(package_type,
+                                                        data,
+                                                        errors,
+                                                        error_summary)
+
 
 class CanadaResourceEditView(ResourceEditView):
     def post(self, package_type, id, resource_id):
@@ -186,6 +200,8 @@ class CanadaResourceEditView(ResourceEditView):
             errors=None,
             error_summary=None):
         context = self._prepare(id)
+        # you can access any package_type via /dataset still
+        # so need to actually check the package_type in the DB here.
         try:
             pkg_dict = get_action(u'package_show')(
                 dict(context, for_view=True), {
@@ -211,6 +227,36 @@ class CanadaResourceCreateView(ResourceCreateView):
             if response.status_code == 200 or response.status_code == 302:
                 h.flash_success(_(u'Resource added.'))
         return response
+
+    def get(self,
+            package_type,
+            id,
+            data=None,
+            errors=None,
+            error_summary=None):
+        context = {
+            u'model': model,
+            u'session': model.Session,
+            u'user': g.user,
+            u'auth_user_obj': g.userobj
+        }
+        # you can access any package_type via /dataset still
+        # so need to actually check the package_type in the DB here.
+        try:
+            pkg_dict = get_action(u'package_show')(
+                dict(context, for_view=True), {
+                    u'id': id
+                }
+            )
+        except (NotAuthorized, NotFound):
+            return abort(404, _(u'Dataset not found'))
+        if pkg_dict['type'] in h.recombinant_get_types():
+            return abort(404, _(u'Dataset not found'))
+        return super(CanadaResourceCreateView, self).get(package_type,
+                                                         id,
+                                                         data,
+                                                         errors,
+                                                         error_summary)
 
 
 class CanadaUserRegisterView(UserRegisterView):
@@ -245,6 +291,12 @@ canada_views.add_url_rule(
     u'/user/register',
     view_func=CanadaUserRegisterView.as_view(str(u'register'))
 )
+
+
+def canada_search(package_type):
+    if h.is_registry() and not g.user:
+        return abort(403)
+    return dataset_search(package_type)
 
 
 @canada_views.route('/500', methods=['GET'])
