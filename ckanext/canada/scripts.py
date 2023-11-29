@@ -105,8 +105,6 @@ def set_datastore_false_for_invalid_resources(resource_id=None, verbose=False, q
 
     errors = StringIO()
 
-    context = _get_site_user_context()
-
     datastore_tables = _get_datastore_tables()
     resource_ids_to_set = []
     if not resource_id:
@@ -121,7 +119,7 @@ def set_datastore_false_for_invalid_resources(resource_id=None, verbose=False, q
     else:
         resource_ids_to_set = [resource_id]
 
-    if resource_ids_to_set and not quiet:
+    if resource_ids_to_set and not quiet and not list:
         click.confirm("Do you want to set datastore_active flag to False for %s Invalid Resources?" % len(resource_ids_to_set), abort=True)
 
     for id in resource_ids_to_set:
@@ -199,7 +197,7 @@ def resubmit_empty_datastore_resources(resource_id=None, verbose=False, quiet=Fa
                 traceback.print_exc(file=errors)
             pass
 
-    if resource_ids_to_submit and not quiet:
+    if resource_ids_to_submit and not quiet and not list:
         click.confirm("Do you want to re-submit %s Resources to Xloader?" % len(resource_ids_to_submit), abort=True)
 
     for id in resource_ids_to_submit:
