@@ -83,13 +83,13 @@ def _get_datastore_resources(valid=True, verbose=False):
     return datastore_resources
 
 
-def _get_datastore_count(context, resource_id, verbose=False):
-    # type: (dict, str, bool) -> int|None
+def _get_datastore_count(context, resource_id, verbose=False, status=1, max=1):
+    # type: (dict, str, bool, int, int) -> int|None
     """
     Returns the count of rows in the DataStore table for a given resource ID.
     """
     if verbose:
-        click.echo("Checking DataStore record count for Resource %s" % resource_id)
+        click.echo("%s/%s -- Checking DataStore record count for Resource %s" % (status, max, resource_id))
     info = get_action('datastore_info')(context, {"id": resource_id})
     return info.get('meta', {}).get('count')
 
@@ -126,35 +126,38 @@ def set_datastore_false_for_invalid_resources(resource_id=None, verbose=False, q
 
     datastore_tables = _get_datastore_tables(verbose=verbose)
     resource_ids_to_set = []
+    status = 1
     if not resource_id:
-        for resource_id in _get_datastore_resources(valid=False, verbose=verbose):
+        resource_ids = _get_datastore_resources(valid=False, verbose=verbose)
+        max = len(resource_ids)
+        for resource_id in resource_ids:
             if resource_id in resource_ids_to_set:
                 continue
             if resource_id in datastore_tables:
                 try:
-                    count = _get_datastore_count(context, resource_id, verbose=verbose)
+                    count = _get_datastore_count(context, resource_id, verbose=verbose, status=status, max=max)
                     if int(count) == 0:
                         if verbose:
-                            click.echo("Resource %s has %s rows in DataStore. Let's fix this one..." % (resource_id, count))
+                            click.echo("%s/%s -- Resource %s has %s rows in DataStore. Let's fix this one..." % (status, max, resource_id, count))
                         resource_ids_to_set.append(resource_id)
                     elif verbose:
-                        click.echo("Resource %s has %s rows in DataStore. Skipping..." % (resource_id, count))
+                        click.echo("%s/%s -- Resource %s has %s rows in DataStore. Skipping..." % (status, max, resource_id, count))
                 except Exception as e:
                     if verbose:
                         errors.write('Failed to get DataStore info for Resource %s with errors:\n\n%s' % (resource_id, e))
                         errors.write('\n')
                         traceback.print_exc(file=errors)
                     pass
-                resource_ids_to_set.append(resource_id)
+            status += 1
     else:
         try:
             count = _get_datastore_count(context, resource_id, verbose=verbose)
             if int(count) == 0:
                 if verbose:
-                    click.echo("Resource %s has %s rows in DataStore. Let's fix this one..." % (resource_id, count))
+                    click.echo("1/1 -- Resource %s has %s rows in DataStore. Let's fix this one..." % (resource_id, count))
                 resource_ids_to_set = [resource_id]
             elif verbose:
-                click.echo("Resource %s has %s rows in DataStore. Skipping..." % (resource_id, count))
+                click.echo("1/1 -- Resource %s has %s rows in DataStore. Skipping..." % (resource_id, count))
         except Exception as e:
             if verbose:
                 errors.write('Failed to get DataStore info for Resource %s with errors:\n\n%s' % (resource_id, e))
@@ -165,6 +168,8 @@ def set_datastore_false_for_invalid_resources(resource_id=None, verbose=False, q
     if resource_ids_to_set and not quiet and not list:
         click.confirm("Do you want to set datastore_active flag to False for %s Invalid Resources?" % len(resource_ids_to_set), abort=True)
 
+    status = 1
+    max = len(resource_ids_to_set)
     for id in resource_ids_to_set:
         if list:
             click.echo(id)
@@ -172,22 +177,20 @@ def set_datastore_false_for_invalid_resources(resource_id=None, verbose=False, q
             try:
                 set_datastore_active_flag(model, {"resource_id": id}, False)
                 if verbose:
-                    click.echo("Set datastore_active flag to False for Invalid Resource %s" % id)
+                    click.echo("%s/%s -- Set datastore_active flag to False for Invalid Resource %s" % (status, max, id))
             except Exception as e:
                 if verbose:
                     errors.write('Failed to set datastore_active flag for Invalid Resource %s with errors:\n\n%s' % (resource_id, e))
                     errors.write('\n')
                     traceback.print_exc(file=errors)
                 pass
-
-    if list:
-        return
+        status += 1
 
     has_errors = errors.tell()
     errors.seek(0)
     if has_errors:
         _error_message(errors.read())
-    elif resource_ids_to_set:
+    elif resource_ids_to_set and not list:
         _success_message('Set datastore_active flag for %s Invalid Resources.' % len(resource_ids_to_set))
     else:
         _success_message('There are no Invalid Resources that have the datastore_active flag at this time.')
@@ -210,35 +213,39 @@ def resubmit_empty_datastore_resources(resource_id=None, verbose=False, quiet=Fa
 
     datastore_tables = _get_datastore_tables(verbose=verbose)
     resource_ids_to_submit = []
+    status = 1
     if not resource_id:
-        for resource_id in _get_datastore_resources(verbose=verbose):
+        resource_ids = _get_datastore_resources(verbose=verbose)
+        max = len(resource_ids)
+        for resource_id in resource_ids:
             if resource_id in resource_ids_to_submit:
                 continue
             if resource_id in datastore_tables:
                 try:
-                    count = _get_datastore_count(context, resource_id, verbose=verbose)
+                    count = _get_datastore_count(context, resource_id, verbose=verbose, status=status, max=max)
                     if int(count) == 0:
                         if verbose:
-                            click.echo("Resource %s has %s rows in DataStore. Let's fix this one..." % (resource_id, count))
+                            click.echo("%s/%s -- Resource %s has %s rows in DataStore. Let's fix this one..." % (status, max, resource_id, count))
                         resource_ids_to_submit.append(resource_id)
                     elif verbose:
-                        click.echo("Resource %s has %s rows in DataStore. Skipping..." % (resource_id, count))
+                        click.echo("%s/%s -- Resource %s has %s rows in DataStore. Skipping..." % (status, max, resource_id, count))
                 except Exception as e:
                     if verbose:
                         errors.write('Failed to get DataStore info for Resource %s with errors:\n\n%s' % (resource_id, e))
                         errors.write('\n')
                         traceback.print_exc(file=errors)
                     pass
+            status += 1
     else:
         # we want to check that the provided resource id has no DataStore rows still
         try:
             count = _get_datastore_count(context, resource_id, verbose=verbose)
             if int(count) == 0:
                 if verbose:
-                    click.echo("Resource %s has %s rows in DataStore. Let's fix this one..." % (resource_id, count))
+                    click.echo("1/1 -- Resource %s has %s rows in DataStore. Let's fix this one..." % (resource_id, count))
                 resource_ids_to_submit.append(resource_id)
             elif verbose:
-                click.echo("Resource %s has %s rows in DataStore. Skipping..." % (resource_id, count))
+                click.echo("1/1 -- Resource %s has %s rows in DataStore. Skipping..." % (resource_id, count))
         except Exception as e:
             if verbose:
                 errors.write('Failed to get DataStore info for Resource %s with errors:\n\n%s' % (resource_id, e))
@@ -249,6 +256,8 @@ def resubmit_empty_datastore_resources(resource_id=None, verbose=False, quiet=Fa
     if resource_ids_to_submit and not quiet and not list:
         click.confirm("Do you want to re-submit %s Resources to Xloader?" % len(resource_ids_to_submit), abort=True)
 
+    status = 1
+    max = len(resource_ids_to_submit)
     for id in resource_ids_to_submit:
         if list:
             click.echo(id)
@@ -256,22 +265,20 @@ def resubmit_empty_datastore_resources(resource_id=None, verbose=False, quiet=Fa
             try:
                 get_action('xloader_submit')(context, {"resource_id": id, "ignore_hash": False})
                 if verbose:
-                    click.echo("Submitted Resource %s to Xloader" % id)
+                    click.echo("%s/%s -- Submitted Resource %s to Xloader" % (status, max, id))
             except Exception as e:
                 if verbose:
                     errors.write('Failed to submit Resource %s to Xloader with errors:\n\n%s' % (resource_id, e))
                     errors.write('\n')
                     traceback.print_exc(file=errors)
                 pass
-
-    if list:
-        return
+        status += 1
 
     has_errors = errors.tell()
     errors.seek(0)
     if has_errors:
         _error_message(errors.read())
-    elif resource_ids_to_submit:
+    elif resource_ids_to_submit and not list:
         _success_message('Re-submitted %s Resources to Xloader.' % len(resource_ids_to_submit))
     else:
         _success_message('No empty DataStore Resources to re-submit at this time.')
