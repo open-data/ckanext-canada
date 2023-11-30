@@ -99,8 +99,9 @@ class CanadaDatasetsPlugin(SchemingDatasetsPlugin):
     # IBlueprint
     def get_blueprint(self):
         """
-        Runs the Recombinant package types through
-        the extended IDatasetForm implementation.
+        Prevents all Core Dataset and Resources Views
+        for all the PD types. Will type_redirect them
+        to the pd_type. Will allow /<pd_type>/activity
         """
         # type: () -> list[Blueprint]
         blueprints = []
