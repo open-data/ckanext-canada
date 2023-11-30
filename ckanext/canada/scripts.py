@@ -105,10 +105,11 @@ def _success_message(message):
 @canada_scripts.command(short_help="Sets datastore_active to False for Invalid Resources.")
 @click.option('-r', '--resource-id', required=False, type=click.STRING, default=None,
               help='Resource ID to set the datastore_active flag. Defaults to None.')
+@click.option('-d', '--delete-table-views', is_flag=True, type=click.BOOL, help='Deletes any Datatable Views from the Resource.')
 @click.option('-v', '--verbose', is_flag=True, type=click.BOOL, help='Increase verbosity.')
 @click.option('-q', '--quiet', is_flag=True, type=click.BOOL, help='Suppress human interaction.')
 @click.option('-l', '--list', is_flag=True, type=click.BOOL, help='List the Resource IDs instead of setting the flags to false.')
-def set_datastore_false_for_invalid_resources(resource_id=None, verbose=False, quiet=False, list=False):
+def set_datastore_false_for_invalid_resources(resource_id=None, delete_table_views=False, verbose=False, quiet=False, list=False):
     """
     Sets datastore_active to False for Resources that are
     not valid but are empty in the DataStore database.
@@ -178,6 +179,14 @@ def set_datastore_false_for_invalid_resources(resource_id=None, verbose=False, q
                 set_datastore_active_flag(model, {"resource_id": id}, False)
                 if verbose:
                     click.echo("%s/%s -- Set datastore_active flag to False for Invalid Resource %s" % (status, max, id))
+                if delete_table_views:
+                    views = get_action('resource_view_list')(context, {"id": id})
+                    if views:
+                        for view in views:
+                            if view.get('view_type') == 'datatables_view':
+                                get_action('resource_view_delete')(context, {"id": view.get('id')})
+                                if verbose:
+                                    click.echo("%s/%s -- Deleted datatables_view %s from Invalid Resource %s" % (status, max, view.get('id'), id))
             except Exception as e:
                 if verbose:
                     errors.write('Failed to set datastore_active flag for Invalid Resource %s with errors:\n\n%s' % (resource_id, e))
