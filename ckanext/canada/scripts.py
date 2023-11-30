@@ -192,7 +192,7 @@ def set_datastore_false_for_invalid_resources(resource_id=None, verbose=False, q
         _error_message(errors.read())
     elif resource_ids_to_set and not list:
         _success_message('Set datastore_active flag for %s Invalid Resources.' % len(resource_ids_to_set))
-    else:
+    elif not resource_ids_to_set:
         _success_message('There are no Invalid Resources that have the datastore_active flag at this time.')
 
 
@@ -280,5 +280,5 @@ def resubmit_empty_datastore_resources(resource_id=None, verbose=False, quiet=Fa
         _error_message(errors.read())
     elif resource_ids_to_submit and not list:
         _success_message('Re-submitted %s Resources to Xloader.' % len(resource_ids_to_submit))
-    else:
+    elif not resource_ids_to_submit:
         _success_message('No empty DataStore Resources to re-submit at this time.')
