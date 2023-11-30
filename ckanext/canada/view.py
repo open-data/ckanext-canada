@@ -119,18 +119,17 @@ def logged_in():
         return h.redirect_to('user.login')
 
 
-def _redirect_pd_view(package_type, id=None):
-    # you can access any package_type via /dataset still
-    # so need to actually check the package_type
-    # in the DB here if the package exists.
-    context = {
-        u'model': model,
-        u'session': model.Session,
-        u'user': g.user,
-        u'auth_user_obj': g.userobj
-    }
-    if id:
+def canada_prevent_pd_views(uri, package_type):
+    uri = uri.split('/')
+    if uri[0]:
+        id = uri[0]
         try:
+            context = {
+                u'model': model,
+                u'session': model.Session,
+                u'user': g.user,
+                u'auth_user_obj': g.userobj
+            }
             pkg_dict = get_action(u'package_show')(
                 dict(context, for_view=True), {
                     u'id': id
@@ -138,17 +137,13 @@ def _redirect_pd_view(package_type, id=None):
             )
             package_type = pkg_dict['type']
         except (NotAuthorized, NotFound):
-            return abort(404, _(u'Dataset not found'))
+            pass
     if package_type in h.recombinant_get_types():
         return type_redirect(package_type)
-    return False
 
 
 class CanadaDatasetEditView(DatasetEditView):
     def post(self, package_type, id):
-        do_pd_redirect = _redirect_pd_view(package_type, id)
-        if do_pd_redirect != False:
-            return do_pd_redirect
         response = super(CanadaDatasetEditView, self).post(package_type, id)
         if hasattr(response, 'status_code'):
             if response.status_code == 200 or response.status_code == 302:
@@ -166,101 +161,32 @@ class CanadaDatasetEditView(DatasetEditView):
                         % pkg_dict['id'])
         return response
 
-    def get(self,
-            package_type,
-            id,
-            data=None,
-            errors=None,
-            error_summary=None):
-        do_pd_redirect = _redirect_pd_view(package_type, id)
-        if do_pd_redirect != False:
-            return do_pd_redirect
-        return super(CanadaDatasetEditView, self).get(package_type,
-                                                      id,
-                                                      data,
-                                                      errors,
-                                                      error_summary)
-
 
 class CanadaDatasetCreateView(DatasetCreateView):
     def post(self, package_type):
-        do_pd_redirect = _redirect_pd_view(package_type)
-        if do_pd_redirect != False:
-            return do_pd_redirect
         response = super(CanadaDatasetCreateView, self).post(package_type)
         if hasattr(response, 'status_code'):
             if response.status_code == 200 or response.status_code == 302:
                 h.flash_success(_(u'Dataset added.'))
         return response
 
-    def get(self,
-            package_type,
-            data=None,
-            errors=None,
-            error_summary=None):
-        do_pd_redirect = _redirect_pd_view(package_type)
-        if do_pd_redirect != False:
-            return do_pd_redirect
-        return super(CanadaDatasetCreateView, self).get(package_type,
-                                                        data,
-                                                        errors,
-                                                        error_summary)
-
 
 class CanadaResourceEditView(ResourceEditView):
     def post(self, package_type, id, resource_id):
-        do_pd_redirect = _redirect_pd_view(package_type, id)
-        if do_pd_redirect != False:
-            return do_pd_redirect
         response = super(CanadaResourceEditView, self).post(package_type, id, resource_id)
         if hasattr(response, 'status_code'):
             if response.status_code == 200 or response.status_code == 302:
                 h.flash_success(_(u'Resource updated.'))
         return response
 
-    def get(self,
-            package_type,
-            id,
-            resource_id,
-            data=None,
-            errors=None,
-            error_summary=None):
-        do_pd_redirect = _redirect_pd_view(package_type, id)
-        if do_pd_redirect != False:
-            return do_pd_redirect
-        return super(CanadaResourceEditView, self).get(package_type,
-                                                       id,
-                                                       resource_id,
-                                                       data,
-                                                       errors,
-                                                       error_summary)
-
 
 class CanadaResourceCreateView(ResourceCreateView):
     def post(self, package_type, id):
-        do_pd_redirect = _redirect_pd_view(package_type, id)
-        if do_pd_redirect != False:
-            return do_pd_redirect
         response = super(CanadaResourceCreateView, self).post(package_type, id)
         if hasattr(response, 'status_code'):
             if response.status_code == 200 or response.status_code == 302:
                 h.flash_success(_(u'Resource added.'))
         return response
-
-    def get(self,
-            package_type,
-            id,
-            data=None,
-            errors=None,
-            error_summary=None):
-        do_pd_redirect = _redirect_pd_view(package_type, id)
-        if do_pd_redirect != False:
-            return do_pd_redirect
-        return super(CanadaResourceCreateView, self).get(package_type,
-                                                         id,
-                                                         data,
-                                                         errors,
-                                                         error_summary)
 
 
 class CanadaUserRegisterView(UserRegisterView):
@@ -295,12 +221,6 @@ canada_views.add_url_rule(
     u'/user/register',
     view_func=CanadaUserRegisterView.as_view(str(u'register'))
 )
-
-def canada_resource_read(package_type, id, resource_id):
-    do_pd_redirect = _redirect_pd_view(package_type, id)
-    if do_pd_redirect != False:
-        return do_pd_redirect
-    return resource_read(package_type, id, resource_id)
 
 
 def canada_search(package_type):

@@ -40,7 +40,7 @@ from ckanext.canada.view import (
     CanadaResourceEditView,
     CanadaResourceCreateView,
     canada_search,
-    canada_resource_read
+    canada_prevent_pd_views
 )
 from ckanext.canada.scripts import get_commands as get_script_commands
 
@@ -104,20 +104,18 @@ class CanadaDatasetsPlugin(SchemingDatasetsPlugin):
         # type: () -> list[Blueprint]
         blueprints = []
         for pd_type in h.recombinant_get_types():
-            d_blueprint = Blueprint(
+            blueprint = Blueprint(
                 u'canada_%s' % pd_type,
                 __name__,
                 url_prefix=u'/%s' % pd_type,
                 url_defaults={u'package_type': pd_type})
-            r_blueprint = Blueprint(
-                u'canada_%s_resource' % pd_type,
-                __name__,
-                url_prefix=u'/%s/<id>/resource' % pd_type,
-                url_defaults={u'package_type': pd_type})
-            self.prepare_dataset_blueprint(pd_type, d_blueprint)
-            self.prepare_resource_blueprint(pd_type, r_blueprint)
-            blueprints.append(d_blueprint)
-            blueprints.append(r_blueprint)
+            blueprint.add_url_rule(
+                u'/<path:uri>',
+                endpoint='canada_prevent_%s' % pd_type,
+                view_func=canada_prevent_pd_views,
+                methods=['GET', 'POST']
+            )
+            blueprints.append(blueprint)
         return blueprints
 
 
@@ -160,13 +158,6 @@ class CanadaDatasetsPlugin(SchemingDatasetsPlugin):
             endpoint='canada_resource_new_%s' % package_type,
             view_func=CanadaResourceCreateView.as_view(str(u'new')),
             methods=['GET', 'POST']
-        )
-        blueprint.add_url_rule(
-            u'/<resource_id>',
-            endpoint='canada_resource_read_%s' % package_type,
-            view_func=canada_resource_read,
-            methods=['GET'],
-            strict_slashes=False
         )
         return blueprint
 
