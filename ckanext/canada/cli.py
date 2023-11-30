@@ -337,6 +337,17 @@ def _get_datastore_resources(valid=True, verbose=False):
     return datastore_resources
 
 
+def _get_datastore_count(context, resource_id, verbose=False):
+    # type: (dict, str, bool) -> int|None
+    """
+    Returns the count of rows in the DataStore table for a given resource ID.
+    """
+    if verbose:
+        click.echo("Checking DataStore record count for Resource %s" % resource_id)
+    info = get_action('datastore_info')(context, {"id": resource_id})
+    return info.get('meta', {}).get('count')
+
+
 def _error_message(message):
     click.echo("\n\033[1;33m%s\033[0;0m\n\n" % message)
 
@@ -354,7 +365,7 @@ def _success_message(message):
 def set_datastore_false_for_invalid_resources(resource_id=None, verbose=False, quiet=False, list=False):
     """
     Sets datastore_active to False for Resources that are
-    not valid but are still in the DataStore database.
+    not valid but are empty in the DataStore database.
     """
 
     try:
@@ -365,6 +376,8 @@ def set_datastore_false_for_invalid_resources(resource_id=None, verbose=False, q
 
     errors = StringIO()
 
+    context = _get_site_user_context()
+
     datastore_tables = _get_datastore_tables(verbose=verbose)
     resource_ids_to_set = []
     if not resource_id:
@@ -372,12 +385,28 @@ def set_datastore_false_for_invalid_resources(resource_id=None, verbose=False, q
             if resource_id in resource_ids_to_set:
                 continue
             if resource_id in datastore_tables:
-                # we do not need to check anything else here as we know
-                # at this point that the resource is not valid and it
-                # still has the datastore_active flag.
+                try:
+                    count = _get_datastore_count(context, resource_id, verbose=verbose)
+                    if int(count) == 0:
+                        resource_ids_to_set.append(resource_id)
+                except Exception as e:
+                    if verbose:
+                        errors.write('Failed to get DataStore info for Resource %s with errors:\n\n%s' % (resource_id, e))
+                        errors.write('\n')
+                        traceback.print_exc(file=errors)
+                    pass
                 resource_ids_to_set.append(resource_id)
     else:
-        resource_ids_to_set = [resource_id]
+        try:
+            count = _get_datastore_count(context, resource_id, verbose=verbose)
+            if int(count) == 0:
+                resource_ids_to_set = [resource_id]
+        except Exception as e:
+            if verbose:
+                errors.write('Failed to get DataStore info for Resource %s with errors:\n\n%s' % (resource_id, e))
+                errors.write('\n')
+                traceback.print_exc(file=errors)
+            pass
 
     if resource_ids_to_set and not quiet and not list:
         click.confirm("Do you want to set datastore_active flag to False for %s Invalid Resources?" % len(resource_ids_to_set), abort=True)
@@ -433,8 +462,7 @@ def resubmit_empty_datastore_resources(resource_id=None, verbose=False, quiet=Fa
                 continue
             if resource_id in datastore_tables:
                 try:
-                    info = get_action('datastore_info')(context, {"id": resource_id})
-                    count = info.get('meta', {}).get('count')
+                    count = _get_datastore_count(context, resource_id, verbose=verbose)
                     if int(count) == 0:
                         resource_ids_to_submit.append(resource_id)
                 except Exception as e:
@@ -446,8 +474,7 @@ def resubmit_empty_datastore_resources(resource_id=None, verbose=False, quiet=Fa
     else:
         # we want to check that the provided resource id has no DataStore rows still
         try:
-            info = get_action('datastore_info')(context, {"id": resource_id})
-            count = info.get('meta', {}).get('count')
+            count = _get_datastore_count(context, resource_id, verbose=verbose)
             if int(count) == 0:
                 resource_ids_to_submit.append(resource_id)
         except Exception as e:
