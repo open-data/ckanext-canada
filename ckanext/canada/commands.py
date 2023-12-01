@@ -924,6 +924,11 @@ def get_datastore_and_views(package, ckan_instance):
                         }
                 except NotFound:
                     pass
+                except ValidationError as e:
+                    raise ValidationError({
+                        'original_error': e,
+                        'resource_id': resource['id'],
+                    })
             else:
                 resource_views = ckan_instance.call_action('resource_view_list',
                                                            {'id': resource['id']})
