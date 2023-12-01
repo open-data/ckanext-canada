@@ -856,8 +856,8 @@ def action(logic_function, ver=API_DEFAULT_VERSION):
     if pkg_dict:
         _log_api_access(request_data, pkg_dict)
 
-    # prevent PD types from being POSTed to via the API
-    if request.method == 'POST':
+    # prevent PD types from being POSTed to via the API, but allow DataStore POSTing
+    if request.method == 'POST' and not logic_function.startswith('datastore'):
         package_type = pkg_dict.get('type') if pkg_dict \
             else request_data.get('package_type', request_data.get('type'))
         if package_type and package_type in h.recombinant_get_types():
@@ -881,7 +881,8 @@ def _get_package_from_api_request(logic_function, id, context):
     or logic_function.startswith('organization') \
     or logic_function.startswith('urser'):
         return None
-    if logic_function.startswith('resource'):
+    if logic_function.startswith('resource') \
+    or logic_function.startswith('datastore'):
         try:
             res_dict = get_action(u'resource_show')(context, {u'id': id})
             id = res_dict['package_id']
