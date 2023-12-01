@@ -385,8 +385,14 @@ excel_column_heading_style:
       en: Reporting Period
       fr: Période de déclaration
     description:
-      en: This tab / field in the template is only populated if there are no briefing notes for the reporting period. This field should be populated with the reporting period.
-      fr: Cet onglet/champ du modèle n’est rempli que s'il n'y a pas de note pour la période de questions pour la période d’établissement de rapports. Ce champ doit être rempli avec la période d’établissement de rapports.
+      en: |
+        This tab / field in the template is only populated if there are no question period notes for the reporting period. This field should be populated with the reporting period.
+        P01 for first reporting period of the year, within 30 days after the last sitting day of the House of Commons in June, or no later than July 31st if the House of Commons is not sitting in June.
+        P02 for second reporting period of the year, within 30 days after the last sitting day of the House of Commons in December, or no later than January 31st if the House of Commons is not sitting in December.
+      fr: |
+        Cet onglet/champ du modèle n’est rempli que s'il n'y a pas de note pour la période de questions pour la période d’établissement de rapports. Ce champ doit être rempli avec la période d’établissement de rapports.
+        P01 pour la première période de rapport de l’année, dans les 30 jours suivant le dernier jour de séance de la Chambre des communes en juin, ou au plus tard le 31 juillet si la Chambre des communes ne siège pas en juin.
+        P02 pour la deuxième période de rapport de l’année, dans les 30 jours suivant le dernier jour de séance de la Chambre des communes en décembre, ou au plus tard le 31 janvier si la Chambre des communes ne siège pas en décembre
     obligation: Mandatory
     excel_required: true
     form_required: true
