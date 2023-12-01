@@ -40,7 +40,8 @@ from ckanext.canada.view import (
     CanadaResourceEditView,
     CanadaResourceCreateView,
     canada_search,
-    canada_prevent_pd_views
+    canada_prevent_pd_views,
+    _get_package_type_from_dict
 )
 from ckanext.canada.scripts import get_commands as get_script_commands
 
@@ -120,6 +121,23 @@ class CanadaDatasetsPlugin(SchemingDatasetsPlugin):
         return blueprints
 
 
+    def _redirect_pd_dataset_endpoints(blueprint):
+        """
+        Runs before request for /dataset and /dataset/<pkg id>/resource
+
+        Checks if the actual package type is a PD type and redirects it.
+        """
+        if has_request_context() and hasattr(request, 'view_args'):
+            id = request.view_args.get('id')
+            if not id:
+                return
+            package_type = request.view_args.get('package_type')
+            package_type = _get_package_type_from_dict(id, package_type)
+            if package_type in h.recombinant_get_types():
+                return h.redirect_to('canada.type_redirect',
+                                        resource_name=package_type)
+
+
     #IDatasetForm
     def prepare_dataset_blueprint(self, package_type, blueprint):
         # type: (str,Blueprint) -> Blueprint
@@ -142,6 +160,8 @@ class CanadaDatasetsPlugin(SchemingDatasetsPlugin):
             methods=['GET'],
             strict_slashes=False
         )
+        # redirect PD endpoints accessed from /dataset/<pd pkg id>
+        blueprint.before_request(self._redirect_pd_dataset_endpoints)
         return blueprint
 
 
@@ -160,6 +180,8 @@ class CanadaDatasetsPlugin(SchemingDatasetsPlugin):
             view_func=CanadaResourceCreateView.as_view(str(u'new')),
             methods=['GET', 'POST']
         )
+        # redirect PD endpoints accessed from /dataset/<pd pkg id>/resource
+        blueprint.before_request(self._redirect_pd_dataset_endpoints)
         return blueprint
 
     # IDataValidation

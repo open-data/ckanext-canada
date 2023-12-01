@@ -113,27 +113,31 @@ def logged_in():
         return h.redirect_to('user.login')
 
 
+def _get_package_type_from_dict(package_id, package_type='dataset'):
+    try:
+        context = {
+            u'model': model,
+            u'session': model.Session,
+            u'user': g.user,
+            u'auth_user_obj': g.userobj
+        }
+        pkg_dict = get_action(u'package_show')(
+            dict(context, for_view=True), {
+                u'id': package_id
+            }
+        )
+        return pkg_dict['type']
+    except (NotAuthorized, NotFound):
+        return package_type
+
+
 def canada_prevent_pd_views(uri, package_type):
     uri = uri.split('/')
     if uri[0]:
         if uri[0] == 'activity':  # allow activity route
             return dataset_activity(package_type, uri[1])
         id = uri[0]
-        try:
-            context = {
-                u'model': model,
-                u'session': model.Session,
-                u'user': g.user,
-                u'auth_user_obj': g.userobj
-            }
-            pkg_dict = get_action(u'package_show')(
-                dict(context, for_view=True), {
-                    u'id': id
-                }
-            )
-            package_type = pkg_dict['type']
-        except (NotAuthorized, NotFound):
-            pass
+        package_type = _get_package_type_from_dict(id, package_type)
     if package_type in h.recombinant_get_types():
         return type_redirect(package_type)
     return abort(404)
