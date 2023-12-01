@@ -857,20 +857,12 @@ def _get_package_from_api_request(logic_function, id, context):
         return None
     if logic_function.startswith('resource'):
         try:
-            res_dict = get_action(u'resource_show')(
-                dict(context, for_view=True), {
-                    u'id': id
-                }
-            )
+            res_dict = get_action(u'resource_show')(context, {u'id': id})
             id = res_dict['package_id']
         except (NotAuthorized, NotFound):
             pass
     try:
-        pkg_dict = get_action(u'package_show')(
-            dict(context, for_view=True), {
-                u'id': id
-            }
-        )
+        pkg_dict = get_action(u'package_show')(context, {u'id': id})
         return pkg_dict
     except (NotAuthorized, NotFound):
         return None
