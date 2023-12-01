@@ -927,7 +927,8 @@ def get_datastore_and_views(package, ckan_instance):
                     pass
                 except ValidationError as e:
                     raise ValidationError({
-                        'original_error': e,
+                        'original_error': repr(e),
+                        'original_error_dict': e.error_dict,
                         'resource_id': resource['id'],
                     })
             else:
