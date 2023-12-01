@@ -845,7 +845,7 @@ def action(logic_function, ver=API_DEFAULT_VERSION):
 
 
 def _get_package_from_api_request(logic_function, id, context):
-    # type: (str, str, dict) -> str|None
+    # type: (str, str, dict) -> dict|None
     """
     Tries to return the package for an API request
     """
@@ -877,8 +877,6 @@ def _get_package_from_api_request(logic_function, id, context):
 
 
 def _log_api_access(request_data, pkg_dict):
-    # Core code has stopped passing objects inside of the context.
-    # So we cannot rely on key/values existing inside the context.
     org = model.Group.get(pkg_dict.get('owner_org'))
     g.log_extra = u'org={o} type={t} id={i}'.format(
         o=org.name,
