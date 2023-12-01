@@ -46,7 +46,8 @@ from ckan.views.api import(
     API_MAX_VERSION,
     _finish_ok,
     _finish,
-    action as api_view_action
+    action as api_view_action,
+    _get_request_data
 )
 from ckan.views.group import set_org
 
@@ -826,7 +827,28 @@ def action(logic_function, ver=API_DEFAULT_VERSION):
         We also have -1 to version to return the context and request_data for extra logging.
         And if the request is a POST request, we want to not authorize any PD type.
     '''
-    context, request_data, return_dict = api_view_action(logic_function, ver=-1)
+    try:
+        function = get_action(logic_function)
+    except Exception:
+        return api_view_action(logic_function, ver)
+
+    try:
+        side_effect_free = getattr(function, u'side_effect_free', False)
+        request_data = _get_request_data(try_url_params=side_effect_free)
+    except Exception:
+        return api_view_action(logic_function, ver)
+
+    if not isinstance(request_data, dict):
+        return api_view_action(logic_function, ver)
+
+    context = {u'model': model, u'session': model.Session, u'user': g.user,
+               u'api_version': ver, u'auth_user_obj': g.userobj}
+
+    return_dict = {u'help': h.url_for(u'api.action',
+                                      logic_function=u'help_show',
+                                      ver=ver,
+                                      name=logic_function,
+                                      _external=True,)}
 
     # extra logging here
     id = request_data.get('id', request_data.get('package_id', request_data.get('resource_id')))
