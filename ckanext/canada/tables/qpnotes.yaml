@@ -397,7 +397,7 @@ excel_column_heading_style:
     excel_required: true
     form_required: true
     validation: This field must not be empty
-    excel_full_text_choices: true
+    excel_full_text_choices: false
     choices:
       P01:
         en: Jan. - June
