@@ -151,7 +151,7 @@ def set_datastore_false_for_invalid_resources(resource_id=None, delete_table_vie
     resource_ids_to_set = []
     status = 1
     if not resource_id:
-        resource_ids = _get_datastore_resources(valid=False, verbose=verbose)
+        resource_ids = _get_datastore_resources(valid=False, verbose=verbose)  # gets invalid Resources, w/ datastore_active=1
         max = len(resource_ids)
         for resource_id in resource_ids:
             if resource_id in resource_ids_to_set:
@@ -227,21 +227,28 @@ def set_datastore_false_for_invalid_resources(resource_id=None, delete_table_vie
         _success_message('There are no Invalid Resources that have the datastore_active flag at this time.')
 
 
-@canada_scripts.command(short_help="Re-submits valid, empty DataStore Resources to Validation.")
+@canada_scripts.command(short_help="Re-submits valid, empty DataStore Resources to Validation OR Xloader.")
 @click.option('-r', '--resource-id', required=False, type=click.STRING, default=None,
               help='Resource ID to re-submit to Validation. Defaults to None.')
 @click.option('-v', '--verbose', is_flag=True, type=click.BOOL, help='Increase verbosity.')
 @click.option('-q', '--quiet', is_flag=True, type=click.BOOL, help='Suppress human interaction.')
 @click.option('-l', '--list', is_flag=True, type=click.BOOL, help='List the Resource IDs instead of submitting them to Validation.')
-def resubmit_empty_datastore_resources(resource_id=None, verbose=False, quiet=False, list=False):
+@click.option('-x', '--xloader', is_flag=True, type=click.BOOL,
+              help='Submits the resources to Xloader instead of Validation. Will Xloader even if file hash has not changed.')
+def resubmit_empty_datastore_resources(resource_id=None, verbose=False, quiet=False, list=False, xloader=False):
     """
-    Re-submits valid, empty DataStore Resources to Validation.
+    Re-submits valid, empty DataStore Resources to Validation OR Xloader (use --xloader).
     """
 
     try:
         get_action('resource_validation_run')
     except Exception:
         _error_message("Validation extension is not active.")
+        return
+    try:
+        get_action('xloader_submit')
+    except Exception:
+        _error_message("Xloader extension is not active.")
         return
 
     errors = StringIO()
@@ -252,7 +259,7 @@ def resubmit_empty_datastore_resources(resource_id=None, verbose=False, quiet=Fa
     resource_ids_to_submit = []
     status = 1
     if not resource_id:
-        resource_ids = _get_datastore_resources(verbose=verbose)
+        resource_ids = _get_datastore_resources(verbose=verbose)  # gets valid Resources, w/ datastore_active=1
         max = len(resource_ids)
         for resource_id in resource_ids:
             if resource_id in resource_ids_to_submit:
@@ -291,7 +298,10 @@ def resubmit_empty_datastore_resources(resource_id=None, verbose=False, quiet=Fa
             pass
 
     if resource_ids_to_submit and not quiet and not list:
-        click.confirm("Do you want to re-submit %s Resources to Validation?" % len(resource_ids_to_submit), abort=True)
+        if xloader:
+            click.confirm("Do you want to re-submit %s Resources to Xloader?" % len(resource_ids_to_submit), abort=True)
+        else:
+            click.confirm("Do you want to re-submit %s Resources to Validation?" % len(resource_ids_to_submit), abort=True)
 
     status = 1
     max = len(resource_ids_to_submit)
@@ -300,12 +310,20 @@ def resubmit_empty_datastore_resources(resource_id=None, verbose=False, quiet=Fa
             click.echo(id)
         else:
             try:
-                get_action('resource_validation_run')(context, {"resource_id": id, "async": True})
+                if xloader:
+                    get_action('xloader_submit')(context, {"resource_id": id, "ignore_hash": False})
+                    msg = "%s/%s -- Submitted Resource %s to Xloader" % (status, max, id)
+                else:
+                    get_action('resource_validation_run')(context, {"resource_id": id, "async": True})
+                    msg = "%s/%s -- Submitted Resource %s to Validation" % (status, max, id)
                 if verbose:
-                    click.echo("%s/%s -- Submitted Resource %s to Validation" % (status, max, id))
+                    click.echo(msg)
             except Exception as e:
                 if verbose:
-                    errors.write('Failed to submit Resource %s to Validation with errors:\n\n%s' % (id, e))
+                    if xloader:
+                        errors.write('Failed to submit Resource %s to Xloader with errors:\n\n%s' % (id, e))
+                    else:
+                        errors.write('Failed to submit Resource %s to Validation with errors:\n\n%s' % (id, e))
                     errors.write('\n')
                     traceback.print_exc(file=errors)
                 pass
@@ -316,7 +334,10 @@ def resubmit_empty_datastore_resources(resource_id=None, verbose=False, quiet=Fa
     if has_errors:
         _error_message(errors.read())
     elif resource_ids_to_submit and not list:
-        _success_message('Re-submitted %s Resources to Validation.' % len(resource_ids_to_submit))
+        if xloader:
+            _success_message('Re-submitted %s Resources to Xloader.' % len(resource_ids_to_submit))
+        else:
+            _success_message('Re-submitted %s Resources to Validation.' % len(resource_ids_to_submit))
     elif not resource_ids_to_submit:
         _success_message('No valid, empty DataStore Resources to re-submit at this time.')
 
@@ -328,7 +349,8 @@ def resubmit_empty_datastore_resources(resource_id=None, verbose=False, quiet=Fa
 @click.option('-v', '--verbose', is_flag=True, type=click.BOOL, help='Increase verbosity.')
 @click.option('-q', '--quiet', is_flag=True, type=click.BOOL, help='Suppress human interaction.')
 @click.option('-l', '--list', is_flag=True, type=click.BOOL, help='List the Resource IDs instead of deleting their DataStore tables.')
-def delete_invalid_datastore_tables(resource_id=None, delete_table_views=False, verbose=False, quiet=False, list=False):
+@click.option('-e', '--any-empty', is_flag=True, type=click.BOOL, help='Deletes any empty DataStore tables, valid or invalid Resources.')
+def delete_invalid_datastore_tables(resource_id=None, delete_table_views=False, verbose=False, quiet=False, list=False, any_empty=False):
     """
     Deletes Invalid Resources DataStore tables. Even if the table is not empty.
     """
@@ -340,7 +362,10 @@ def delete_invalid_datastore_tables(resource_id=None, delete_table_views=False, 
     datastore_tables = _get_datastore_tables(verbose=verbose)
     resource_ids_to_delete = []
     if not resource_id:
-        resource_ids = _get_datastore_resources(valid=False, verbose=verbose)
+        get_valid = False
+        if any_empty:
+            get_valid = None  # will get valid and invalid Resources
+        resource_ids = _get_datastore_resources(valid=get_valid, verbose=verbose)  # w/ datastore_active=1
         for resource_id in resource_ids:
             if resource_id in resource_ids_to_delete:
                 continue
@@ -405,7 +430,7 @@ def delete_table_view_from_non_datastore_resources(resource_id=None, verbose=Fal
 
     view_ids_to_delete = []
     if not resource_id:
-        resource_ids = _get_datastore_resources(valid=None, is_datastore_active=False, verbose=verbose)
+        resource_ids = _get_datastore_resources(valid=None, is_datastore_active=False, verbose=verbose)  # gets invalid and valid Resources, w/ datastore_active=1|0
         for resource_id in resource_ids:
             try:
                 views = get_action('resource_view_list')(context, {"id": resource_id})
