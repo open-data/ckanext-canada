@@ -311,7 +311,7 @@ def resubmit_empty_datastore_resources(resource_id=None, verbose=False, quiet=Fa
         else:
             try:
                 if xloader:
-                    get_action('xloader_submit')(context, {"resource_id": id, "ignore_hash": False})
+                    get_action('xloader_submit')(context, {"resource_id": id, "ignore_hash": True})
                     msg = "%s/%s -- Submitted Resource %s to Xloader" % (status, max, id)
                 else:
                     get_action('resource_validation_run')(context, {"resource_id": id, "async": True})
