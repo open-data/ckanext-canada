@@ -366,8 +366,8 @@ def _get_datastore_count(context, resource_id, verbose=False, status=1, max=1):
     """
     if verbose:
         click.echo("%s/%s -- Checking DataStore record count for Resource %s" % (status, max, resource_id))
-    info = get_action('datastore_info')(context, {"id": resource_id})
-    return info.get('meta', {}).get('count')
+    info = get_action('datastore_search')(context, {"id": resource_id, "limit": 0})
+    return info.get('total')
 
 
 def _error_message(message):
