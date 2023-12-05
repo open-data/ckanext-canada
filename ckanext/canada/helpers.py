@@ -23,7 +23,10 @@ from ckan.lib.helpers import core_helper
 from ckan.plugins.core import plugin_loaded
 from ckan.logic import NotAuthorized
 
-from ckanext.xloader.utils import XLoaderFormats
+try:
+    from ckanext.xloader.utils import XLoaderFormats
+except ImportError:
+    XLoaderFormats = None
 
 ORG_MAY_PUBLISH_OPTION = 'canada.publish_datasets_organization_name'
 ORG_MAY_PUBLISH_DEFAULT_NAME = 'tb-ct'
@@ -651,6 +654,9 @@ def get_loader_status_badge(resource):
     Displays a custom badge for the status of Xloader and DataStore
     for the specified resource.
     """
+
+    if not XLoaderFormats:
+        return ''
 
     if not resource.get('url_type') == 'upload' or \
     not XLoaderFormats.is_it_an_xloader_format(resource.get('format')):
