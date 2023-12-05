@@ -23,6 +23,8 @@ from ckan.lib.helpers import core_helper
 from ckan.plugins.core import plugin_loaded
 from ckan.logic import NotAuthorized
 
+from ckanext.xloader.utils import XLoaderFormats
+
 ORG_MAY_PUBLISH_OPTION = 'canada.publish_datasets_organization_name'
 ORG_MAY_PUBLISH_DEFAULT_NAME = 'tb-ct'
 PORTAL_URL_OPTION = 'canada.portal_url'
@@ -641,3 +643,69 @@ def flash_success(message, allow_html=True):
               category='alert-success',
               ignore_duplicate=True,
               allow_html=allow_html)
+
+
+def get_loader_status_badge(resource):
+    # type: (dict) -> str
+    """
+    Displays a custom badge for the status of Xloader and DataStore
+    for the specified resource.
+    """
+
+    if not resource.get('url_type') == 'upload' or \
+    not XLoaderFormats.is_it_an_xloader_format(resource.get('format')):
+        # we only want to show badges for uploads of supported xloader formats
+        return ''
+
+    is_datastore_active = resource.get('datastore_active', False)
+
+    try:
+        xloader_job = t.get_action("xloader_status")(None, {"resource_id": resource.get('id')})
+    except (t.ObjectNotFound, t.NotAuthorized):
+        xloader_job = {}
+
+    if is_datastore_active:
+        # xloader will delete the datastore table at the beggining of the job run.
+        # so this will only be true if the job is fully finished and successful.
+        status = 'active'
+    elif xloader_job.get('status') in ['pending', 'running', 'running_but_viewable', 'complete', 'error']:
+        # the job is running or has been completed
+        if not is_datastore_active:
+            # the resource might be inactive in the datastore,
+            # thus we do not want to show the status over the inactive.
+            status = 'inactive'
+        else:
+            # show the xloader status
+            status = xloader_job.get('status')
+            if status == 'running_but_viewable':
+                # treat running_but_viewable the same as running
+                status = 'running'
+    else:
+        # we do not know what the status is
+        status = 'unknown'
+
+    messages = {
+        'pending': _('Data awaiting load to DataStore'),
+        'running': _('Loading data into DataStore'),
+        'complete': _('Data loaded into DataStore'),
+        'error': _('Failed to load data into DataStore'),
+        'active': _('Data available in DataStore'),
+        'inactive': _('Resource not active in DataStore'),
+        'unknown': _('DataStore status unknown'),
+    }
+
+    pusher_url = t.h.url_for('xloader.resource_data',
+                             id=resource.get('package_id'),
+                             resource_id=resource.get('id'))
+
+    timestamp = t.h.render_datetime(xloader_job.get('last_updated'), with_hours=True) \
+        if xloader_job.get('last_updated') else ''
+
+    badge_url = t.h.url_for_static('/static/img/badges/{lang}/datastore-{status}.svg'.format(lang=t.h.lang(), status=status))
+
+    # TODO: use str instead of unicode for py3
+    return unicode('<a href="{pusher_url}" class="validation-badge"><img src="{badge_url}" alt="{alt}" title="{title}"/></a>').format(
+        pusher_url=pusher_url,
+        badge_url=badge_url,
+        alt=messages[status],
+        title=timestamp)

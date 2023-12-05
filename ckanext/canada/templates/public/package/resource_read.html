@@ -24,6 +24,7 @@
   {% endif %}
   {% if is_registry %}
     {{ h.get_validation_badge(res)|safe }}
+    {{ h.get_loader_status_badge(res)|safe }}
   {% endif %}
 {% endblock %}
 

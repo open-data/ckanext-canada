@@ -88,12 +88,19 @@ class CanadaDatasetsPlugin(SchemingDatasetsPlugin):
     p.implements(p.IDatasetForm, inherit=True)
     p.implements(p.IPackageController, inherit=True)
     p.implements(p.IBlueprint)
+    p.implements(p.IActions)
     try:
         from ckanext.validation.interfaces import IDataValidation
     except ImportError:
         log.warn('failed to import ckanext-validation interface')
     else:
         p.implements(IDataValidation, inherit=True)
+
+
+    # IActions
+    def get_actions(self):
+        return {'resource_view_show': logic.canada_resource_view_show,
+                'resource_view_list': logic.canada_resource_view_list}
 
 
     # IBlueprint
@@ -344,6 +351,7 @@ ckanext.canada:schemas/presets.yaml
             'get_timeout_length',
             'canada_check_access',
             'get_user_email',
+            'get_loader_status_badge',
         ])
 
     # IConfigurable

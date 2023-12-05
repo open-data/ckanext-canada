@@ -21,6 +21,21 @@ div#dtprv_processing.dataTables_processing > div:last-child > div{
   background-color: #335075 !important;
   pointer-events: none !important;
 }
+body#canada-disabled-view-body div#resize_wrapper{
+  margin-top: 75px !important;
+}
+@media all and (max-width: 992px){
+  body#canada-disabled-view-body div#resize_wrapper{
+    margin-top: 125px !important;
+  }
+}
+div.canada-disabled-view-alert{
+  text-align: center !important;
+  pointer-events: none !important;
+  z-index: 9999 !important;
+  width: 100% !important;
+  margin: 0 !important;
+}
 /*#####################
 ##       END         ##
 ##  Datatables Views ##
