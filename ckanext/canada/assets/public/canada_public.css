@@ -389,8 +389,13 @@ ul.resource-list > li.resource-item:not(:last-of-type){
   border-bottom: 1px solid rgba(0, 0, 0, 0.15);
 }
 ul.resource-list > li.resource-item > div#resource_title{
+  display: inline-block;
+  flex: 1;
   padding-right: 10px;
   align-self: center;
+}
+ul.resource-list > li.resource-item > div#resource_title > a.resource-heading{
+  display: inline !important;
 }
 ul.resource-list > li.resource-item > a.validation-badge{
   display: none !important;
@@ -404,10 +409,6 @@ ul.resource-list > li.resource-item > div.canada-resource-list-badges a.validati
 ul.resource-list > li.resource-item > div.canada-resource-list-badges{
   align-self: last baseline;
 }
-.resource-item #resource_title{
-  display: inline-block;
-  width: 60%;
-}
 .resource-item .resource-action-links{
   display: block !important;
   position: relative !important;
@@ -418,14 +419,6 @@ ul.resource-list > li.resource-item > div.canada-resource-list-badges{
 .resource-item .resource-action-links > a.btn{
   margin: 0 !important;
 }
-@media all and (max-width: 992px) {
-  .resource-item #resource_title{
-    width: 50%;
-  }
-  .resource-item a.validation-badge{
-    margin-left: 0 !important;
-  }
-}
 @media all and (max-width: 768px) {
   ul.resource-list > li.resource-item{
     flex-direction: column;
@@ -435,20 +428,9 @@ ul.resource-list > li.resource-item > div.canada-resource-list-badges{
   ul.resource-list > li.resource-item > div.canada-resource-list-badges{
     align-self: initial;
   }
-  .resource-item #resource_title{
-    width: 100%;
-  }
-  .resource-item a.validation-badge{
-    margin-left: 0 !important;
-  }
   .resource-item .resource-action-links{
-    display: block !important;
-    float: none !important;
     margin-top: 10px !important;
     margin-bottom: 10px !important;
-  }
-  .resource-item .resource-action-links a.btn{
-    float: none !important;
   }
 }
 /* END - Dataset Index - END */
