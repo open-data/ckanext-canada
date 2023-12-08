@@ -1,6 +1,9 @@
 from ckan.tests.helpers import reset_db
 from ckan.lib.search import clear_all
-from ckanext.validation.model import create_tables as validation_create_tables
+from ckanext.validation.model import (
+    create_tables as validation_create_tables,
+    tables_exist as validation_tables_exist
+)
 from ckanext.security.model import db_setup as security_db_setup
 
 class CanadaTestBase(object):
@@ -9,7 +12,8 @@ class CanadaTestBase(object):
         """Method is called at class level before EACH test methods of the class are called.
         Setup any state specific to the execution of the given class methods.
         """
-        validation_create_tables()
+        if not validation_tables_exist():
+            validation_create_tables()
         security_db_setup()
         reset_db()
         clear_all()
