@@ -379,6 +379,31 @@ form .form-actions .btn{
 ###################*/
 
 /* Dataset Index */
+ul.resource-list > li.resource-item{
+  display: flex;
+  flex-wrap: nowrap;
+  width: 100%;
+}
+ul.resource-list > li.resource-item:not(:last-of-type){
+  border-radius: 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+}
+ul.resource-list > li.resource-item > div#resource_title{
+  padding-right: 10px;
+  align-self: center;
+}
+ul.resource-list > li.resource-item > a.validation-badge{
+  display: none !important;
+}
+ul.resource-list > li.resource-item > div.canada-resource-list-badges a.loader-badge{
+  margin-right: 10px;
+}
+ul.resource-list > li.resource-item > div.canada-resource-list-badges a.validation-badge{
+  margin-left: 0;
+}
+ul.resource-list > li.resource-item > div.canada-resource-list-badges{
+  align-self: last baseline;
+}
 .resource-item #resource_title{
   display: inline-block;
   width: 60%;
@@ -386,15 +411,30 @@ form .form-actions .btn{
 .resource-item .resource-action-links{
   display: block !important;
   position: relative !important;
-  float: right;
-  margin-left: 10px;
+  right: initial !important;
+  top: initial !important;
+  align-self: center;
+}
+.resource-item .resource-action-links > a.btn{
+  margin: 0 !important;
 }
 @media all and (max-width: 992px) {
   .resource-item #resource_title{
     width: 50%;
   }
+  .resource-item a.validation-badge{
+    margin-left: 0 !important;
+  }
 }
 @media all and (max-width: 768px) {
+  ul.resource-list > li.resource-item{
+    flex-direction: column;
+  }
+  ul.resource-list > li.resource-item > div#resource_title,
+  .resource-item .resource-action-links,
+  ul.resource-list > li.resource-item > div.canada-resource-list-badges{
+    align-self: initial;
+  }
   .resource-item #resource_title{
     width: 100%;
   }

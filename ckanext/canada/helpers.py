@@ -710,7 +710,7 @@ def get_loader_status_badge(resource):
     badge_url = t.h.url_for_static('/static/img/badges/{lang}/datastore-{status}.svg'.format(lang=t.h.lang(), status=status))
 
     # TODO: use str instead of unicode for py3
-    return unicode('<a href="{pusher_url}" class="validation-badge"><img src="{badge_url}" alt="{alt}" title="{title}"/></a>').format(
+    return unicode('<a href="{pusher_url}" class="loader-badge"><img src="{badge_url}" alt="{alt}" title="{title}"/></a>').format(
         pusher_url=pusher_url,
         badge_url=badge_url,
         alt=messages[status],
