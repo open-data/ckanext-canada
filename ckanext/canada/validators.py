@@ -388,6 +388,13 @@ def json_string_has_en_fr_keys(value, context):
 
 
 def canada_resource_schema_validator(value, context):
+    """
+    Do not support Schema URLs as our servers cannot reach out to most addresses.
+
+    Also prevent some keys from being added, as we do not want to allow
+    users to make their data scheming more lax just to pass Validation.
+    This can also result in Xloader failing to load the data into the DataStore.
+    """
     if h.plugin_loaded('validation'):
         from ckanext.validation.validators import resource_schema_validator
         try:
@@ -397,6 +404,7 @@ def canada_resource_schema_validator(value, context):
         if isinstance(value, basestring) \
         and value.lower().startswith('http'):
             raise Invalid(_('Schema URLs are not supported'))
+    #TODO: delete some key,values that would allow goodtables/frictionless to be weaker
     return value
 
 

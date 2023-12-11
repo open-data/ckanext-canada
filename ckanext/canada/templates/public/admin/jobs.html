@@ -1,0 +1,48 @@
+{% extends "admin/base.html" %}
+
+{% block primary_content_inner %}
+<div class="col-sm-12">
+  {% if job_list %}
+    {% if warning %}
+      <div class="module-alert alert alert-warning">
+        <p>{{ _('The first job in the queue has not run in the past 18 minutes, you may want to confirm that the background worker is running.') }}</p>
+      </div>
+    {% endif %}
+    <ul class="job-list activity">
+      {% for job in job_list %}
+        <li class="item changed-package">
+          <i class="fa icon fa-circle-o-notch"></i>
+          <p>
+            {{ job.get('title') or job.get('id') }}
+            <br/>
+            <span class="date">
+              {{ job.get('created_human_readable') }}
+              {% if job.get('queue') %}
+                | {{ job.get('queue') }}
+              {% endif %}
+            </span>
+          </p>
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <div class="module-alert alert alert-info">
+      <p>{{ _("There are currently no queued or running jobs.") }}</p>
+    </div>
+  {% endif %}
+</div>
+{% endblock %}
+
+{% block secondary_content %}
+  <section class="panel panel-info">
+    <header class="panel-heading">
+        <h3 class="panel-title">
+            <i class="fa fa-info-circle"></i>
+            {{ _('Job Queue') }}
+        </h3>
+    </header>
+    <div class="panel-body">
+      <p>{{ _("View the current job queue and running jobs.") }}</p>
+    </div>
+  </section>
+{% endblock %}

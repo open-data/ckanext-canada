@@ -588,6 +588,13 @@ body i.fa.fa-arrow-left::before{
 }
 /* END - Resource File Upload Field - END */
 
+ul.job-list.activity li.item i.fa.icon::before{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
 /*##################################
 ##              END               ##
 ## Bootstrap Versioning Overrides ##
