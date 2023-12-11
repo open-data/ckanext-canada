@@ -4,10 +4,10 @@
 {% block subtitle %}{{ _("Update Record") }}{% endblock %}
 
 {% block breadcrumb_content %}
-  <li>{% link_for h.recombinant_language_text(chromo_title),
-    'recombinant.preview_table',
-    resource_name=resource_name,
-    owner_org=owner_org %}</li>
+  <li>{{ h.nav_link(h.recombinant_language_text(chromo_title),
+                    named_route='recombinant.preview_table',
+                    resource_name=resource_name,
+                    owner_org=owner_org) }}</li>
   <li>{{ _("Update Record") }}</li>
 {% endblock %}
 
