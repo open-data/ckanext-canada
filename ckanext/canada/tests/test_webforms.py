@@ -544,7 +544,7 @@ class TestRecombinantWebForms(CanadaTestBase):
         # members should be able to download template
         response = app.get(offset, extra_environ=self.extra_environ_member)
         template_file = BytesIO()
-        template_file.write(response.body.encode('utf-8'))
+        template_file.write(response.body.decode("utf-8"))
         # produces: (sheet-name, org-name, column_names, data_rows_generator)
         #   note: data_rows_generator excludes the example row
         template_file = list(read_excel(template_file))
@@ -577,7 +577,7 @@ class TestRecombinantWebForms(CanadaTestBase):
                                   'bulk-template': [self.example_record['request_number']]},
                             extra_environ=self.extra_environ_member)
         template_file = BytesIO()
-        template_file.write(response.body.encode('utf-8'))
+        template_file.write(response.body.decode("utf-8"))
         # produces: (sheet-name, org-name, column_names, data_rows_generator)
         #   note: data_rows_generator excludes the example row
         template_file = list(read_excel(template_file))
