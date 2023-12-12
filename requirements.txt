@@ -11,4 +11,7 @@ rdflib-jsonld
 backports.ssl-match-hostname>=3.5.0.1
 azure-storage==0.33.0
 configparser>=3.5.0
+# bin/resource_management/
+grequests==0.6.0
 openpyxl==2.6.4
+requests-ftp==0.3.1

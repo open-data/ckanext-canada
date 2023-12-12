@@ -29,17 +29,12 @@ from ckan.lib.helpers import (
     render_markdown,
     lang
 )
-from ckan.lib.navl.dictization_functions import DataError
-from ckan.lib.search import (
-    SearchError,
-    SearchIndexError,
-    SearchQueryError
-)
 
 from ckan.views.dataset import (
     EditView as DatasetEditView,
     search as dataset_search,
-    CreateView as DatasetCreateView
+    CreateView as DatasetCreateView,
+    activity as dataset_activity
 )
 from ckan.views.resource import (
     EditView as ResourceEditView,
@@ -48,10 +43,11 @@ from ckan.views.resource import (
 from ckan.views.user import RegisterView as UserRegisterView
 from ckan.views.api import(
     API_DEFAULT_VERSION,
-    _finish_bad_request,
-    _get_request_data,
+    API_MAX_VERSION,
     _finish_ok,
-    _finish
+    _finish,
+    action as api_view_action,
+    _get_request_data
 )
 from ckan.views.group import set_org
 
@@ -118,6 +114,36 @@ def logged_in():
         return h.redirect_to('user.login')
 
 
+def _get_package_type_from_dict(package_id, package_type='dataset'):
+    try:
+        context = {
+            u'model': model,
+            u'session': model.Session,
+            u'user': g.user,
+            u'auth_user_obj': g.userobj
+        }
+        pkg_dict = get_action(u'package_show')(
+            dict(context, for_view=True), {
+                u'id': package_id
+            }
+        )
+        return pkg_dict['type']
+    except (NotAuthorized, NotFound):
+        return package_type
+
+
+def canada_prevent_pd_views(uri, package_type):
+    uri = uri.split('/')
+    if uri[0]:
+        if uri[0] == 'activity':  # allow activity route
+            return dataset_activity(package_type, uri[1])
+        id = uri[0]
+        package_type = _get_package_type_from_dict(id, package_type)
+    if package_type in h.recombinant_get_types():
+        return type_redirect(package_type)
+    return abort(404)
+
+
 class CanadaDatasetEditView(DatasetEditView):
     def post(self, package_type, id):
         response = super(CanadaDatasetEditView, self).post(package_type, id)
@@ -137,29 +163,6 @@ class CanadaDatasetEditView(DatasetEditView):
                         % pkg_dict['id'])
         return response
 
-    def get(self,
-            package_type,
-            id,
-            data=None,
-            errors=None,
-            error_summary=None):
-        context = self._prepare(id)
-        try:
-            pkg_dict = get_action(u'package_show')(
-                dict(context, for_view=True), {
-                    u'id': id
-                }
-            )
-        except (NotAuthorized, NotFound):
-            return abort(404, _(u'Dataset not found'))
-        if pkg_dict['type'] in h.recombinant_get_types():
-            return abort(404, _(u'Dataset not found'))
-        return super(CanadaDatasetEditView, self).get(package_type,
-                                                      id,
-                                                      data,
-                                                      errors,
-                                                      error_summary)
-
 
 class CanadaDatasetCreateView(DatasetCreateView):
     def post(self, package_type):
@@ -177,31 +180,6 @@ class CanadaResourceEditView(ResourceEditView):
             if response.status_code == 200 or response.status_code == 302:
                 h.flash_success(_(u'Resource updated.'))
         return response
-
-    def get(self,
-            package_type,
-            id,
-            resource_id,
-            data=None,
-            errors=None,
-            error_summary=None):
-        context = self._prepare(id)
-        try:
-            pkg_dict = get_action(u'package_show')(
-                dict(context, for_view=True), {
-                    u'id': id
-                }
-            )
-        except (NotAuthorized, NotFound):
-            return abort(404, _(u'Dataset not found'))
-        if pkg_dict['type'] in h.recombinant_get_types():
-            return abort(404, _(u'Dataset not found'))
-        return super(CanadaResourceEditView, self).get(package_type,
-                                                       id,
-                                                       resource_id,
-                                                       data,
-                                                       errors,
-                                                       error_summary)
 
 
 class CanadaResourceCreateView(ResourceCreateView):
@@ -245,6 +223,12 @@ canada_views.add_url_rule(
     u'/user/register',
     view_func=CanadaUserRegisterView.as_view(str(u'register'))
 )
+
+
+def canada_search(package_type):
+    if h.is_registry() and not g.user:
+        return abort(403)
+    return dataset_search(package_type)
 
 
 @canada_views.route('/500', methods=['GET'])
@@ -824,125 +808,101 @@ def organization_autocomplete():
 
 
 @canada_views.route('/api/<int(min=1, max=2):ver>/action/<logic_function>', methods=['GET', 'POST'])
+@canada_views.route('/api/action/<logic_function>', methods=[u'GET', u'POST'])
+@canada_views.route('/api/<int(min=3, max={0}):ver>/action/<logic_function>'.format(
+                    API_MAX_VERSION), methods=[u'GET', u'POST'])
 def action(logic_function, ver=API_DEFAULT_VERSION):
-    log = getLogger('ckanext')
-    # Copied from ApiController so we can log details of some API calls
-    # XXX: for later ckans look for a better hook
+    u'''Main endpoint for the action API (v3)
+
+    Creates a dict with the incoming request data and calls the appropiate
+    logic function. Returns a JSON response with the following keys:
+
+        * ``help``: A URL to the docstring for the specified action
+        * ``success``: A boolean indicating if the request was successful or
+                an exception was raised
+        * ``result``: The output of the action, generally an Object or an Array
+
+    Canada Fork:
+        We keep version 1 and 2 endpoints just incase any systems are still using that.
+        We also have -1 to version to return the context and request_data for extra logging.
+        And if the request is a POST request, we want to not authorize any PD type.
+    '''
     try:
         function = get_action(logic_function)
-    except KeyError:
-        log.info('Can\'t find logic function: %s', logic_function)
-        return _finish_bad_request(
-            _('Action name not known: %s') % logic_function)
+    except Exception:
+        return api_view_action(logic_function, ver)
 
-    context = {'model': model, 'session': model.Session, 'user': g.user,
-                'api_version': ver, 'auth_user_obj': g.userobj}
-    model.Session()._context = context
-
-    return_dict = {'help': h.url_for('api.action',
-                                        logic_function='help_show',
-                                        ver=ver,
-                                        name=logic_function,
-                                        qualified=True)}
     try:
-        side_effect_free = getattr(function, 'side_effect_free', False)
-        request_data = _get_request_data(try_url_params=
-                                                side_effect_free)
-    except ValueError as inst:
-        log.info('Bad Action API request data: %s', inst)
-        return _finish_bad_request(
-            _('JSON Error: %s') % inst)
+        side_effect_free = getattr(function, u'side_effect_free', False)
+        request_data = _get_request_data(try_url_params=side_effect_free)
+    except Exception:
+        return api_view_action(logic_function, ver)
+
     if not isinstance(request_data, dict):
-        # this occurs if request_data is blank
-        log.info('Bad Action API request data - not dict: %r',
-                    request_data)
-        return _finish_bad_request(
-            _('Bad request data: %s') %
-            'Request data JSON decoded to %r but '
-            'it needs to be a dictionary.' % request_data)
-    # if callback is specified we do not want to send that to the search
-    if 'callback' in request_data:
-        del request_data['callback']
-        g.user = None
-        g.userobj = None
-        context['user'] = None
-        context['auth_user_obj'] = None
+        return api_view_action(logic_function, ver)
+
+    context = {u'model': model, u'session': model.Session, u'user': g.user,
+               u'api_version': ver, u'auth_user_obj': g.userobj}
+
+    return_dict = {u'help': h.url_for(u'api.action',
+                                      logic_function=u'help_show',
+                                      ver=ver,
+                                      name=logic_function,
+                                      _external=True,)}
+
+    # extra logging here
+    id = request_data.get('id', request_data.get('package_id', request_data.get('resource_id')))
+    pkg_dict = _get_package_from_api_request(logic_function, id, context)
+    if pkg_dict:
+        _log_api_access(request_data, pkg_dict)
+
+    # prevent PD types from being POSTed to via the API, but allow DataStore POSTing
+    if request.method == 'POST' and not logic_function.startswith('datastore'):
+        package_type = pkg_dict.get('type') if pkg_dict \
+            else request_data.get('package_type', request_data.get('type'))
+        if package_type and package_type in h.recombinant_get_types():
+            return_dict[u'error'] = {u'__type': u'Authorization Error',
+                                    u'message': _(u'Access denied')}
+            return_dict[u'success'] = False
+
+            return _finish(403, return_dict, content_type=u'json')
+
+    return api_view_action(logic_function, ver)
+
+
+def _get_package_from_api_request(logic_function, id, context):
+    # type: (str, str, dict) -> dict|None
+    """
+    Tries to return the package for an API request
+    """
+    if not id:
+        return None
+    if logic_function.startswith('group') \
+    or logic_function.startswith('organization') \
+    or logic_function.startswith('urser'):
+        return None
+    if logic_function.startswith('resource') \
+    or logic_function.startswith('datastore'):
+        try:
+            res_dict = get_action(u'resource_show')(context, {u'id': id})
+            id = res_dict['package_id']
+        except (NotAuthorized, NotFound):
+            pass
     try:
-        result = function(context, request_data)
-        # XXX extra logging here
-        _log_api_access(context, request_data)
-        return_dict['success'] = True
-        return_dict['result'] = result
-    except DataError as e:
-        log.info('Format incorrect (Action API): %s - %s',
-                    e.error, request_data)
-        return_dict['error'] = {'__type': 'Integrity Error',
-                                'message': e.error,
-                                'data': request_data}
-        return_dict['success'] = False
-        return _finish(400, return_dict, content_type='json')
-    except NotAuthorized as e:
-        return_dict['error'] = {'__type': 'Authorization Error',
-                                'message': _('Access denied')}
-        return_dict['success'] = False
-
-        if unicode(e):
-            return_dict['error']['message'] += u': %s' % e
-
-        return _finish(403, return_dict, content_type='json')
-    except NotFound as e:
-        return_dict['error'] = {'__type': 'Not Found Error',
-                                'message': _('Not found')}
-        if unicode(e):
-            return_dict['error']['message'] += u': %s' % e
-        return_dict['success'] = False
-        return _finish(404, return_dict, content_type='json')
-    except ValidationError as e:
-        error_dict = e.error_dict
-        error_dict['__type'] = 'Validation Error'
-        return_dict['error'] = error_dict
-        return_dict['success'] = False
-        # CS nasty_string ignore
-        log.info('Validation error (Action API): %r', str(e.error_dict))
-        return _finish(409, return_dict, content_type='json')
-    except SearchQueryError as e:
-        return_dict['error'] = {'__type': 'Search Query Error',
-                                'message': 'Search Query is invalid: %r' %
-                                e.args}
-        return_dict['success'] = False
-        return _finish(400, return_dict, content_type='json')
-    except SearchError as e:
-        return_dict['error'] = {'__type': 'Search Error',
-                                'message': 'Search error: %r' % e.args}
-        return_dict['success'] = False
-        return _finish(409, return_dict, content_type='json')
-    except SearchIndexError as e:
-        return_dict['error'] = {
-            '__type': 'Search Index Error',
-            'message': 'Unable to add package to search index: %s' %
-                        str(e)}
-        return_dict['success'] = False
-        return _finish(500, return_dict, content_type='json')
-    return _finish_ok(return_dict)
+        pkg_dict = get_action(u'package_show')(context, {u'id': id})
+        return pkg_dict
+    except (NotAuthorized, NotFound):
+        return None
 
 
-def _log_api_access(context, data_dict):
-    if 'package' not in context:
-        if 'resource_id' not in data_dict:
-            return
-        res = model.Resource.get(data_dict['resource_id'])
-        if not res:
-            return
-        pkg = res.package
-    else:
-        pkg = context['package']
-    org = model.Group.get(pkg.owner_org)
+def _log_api_access(request_data, pkg_dict):
+    org = model.Group.get(pkg_dict.get('owner_org'))
     g.log_extra = u'org={o} type={t} id={i}'.format(
         o=org.name,
-        t=pkg.type,
-        i=pkg.id)
-    if 'resource_id' in data_dict:
-        g.log_extra += u' rid={0}'.format(data_dict['resource_id'])
+        t=pkg_dict.get('type'),
+        i=pkg_dict.get('id'))
+    if 'resource_id' in request_data:
+        g.log_extra += u' rid={0}'.format(request_data['resource_id'])
 
 
 def notice_no_access():

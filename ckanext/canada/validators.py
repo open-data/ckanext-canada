@@ -227,6 +227,16 @@ def canada_maintainer_email_default(key, data, errors, context):
         data[key] = 'open-ouvert@tbs-sct.gc.ca'
 
 
+def no_future_date(key, data, errors, context):
+    ready = data.get(('ready_to_publish',))
+    if not ready or ready == 'false':
+        return
+    value = data.get(key)
+    if value and value > datetime.today():
+        raise Invalid(_("Date may not be in the future when this record is marked ready to publish"))
+    return value
+
+
 def canada_sort_prop_status(key, data, errors, context):
     """
     sort the status composite values by date in ascending order
@@ -319,7 +329,6 @@ def protect_reporting_requirements(key, data, errors, context):
                            " from '%s' to '%s'. This field is read-only." %
                            (original, value))
         raise StopOnError
-
 
 def ati_email_validate(key, data, errors, context):
     """

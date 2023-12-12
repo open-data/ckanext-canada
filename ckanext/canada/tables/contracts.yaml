@@ -736,9 +736,8 @@ resources:
         fr: PTPGP
       AL:
         lookup: [CFTA, CPTPP]
-        en: (discontinued) CFTA / CPTPP
-        fr: (discontinué) ALEC / PTPGP
-        discontinued: true
+        en: CFTA / CPTPP
+        fr: ALEC / PTPGP
       AM:
         conditional_lookup:
         - column: contract_date

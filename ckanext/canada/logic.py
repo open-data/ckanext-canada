@@ -4,7 +4,16 @@ from ckan.lib.dictization import model_dictize
 from ckan import model
 
 from ckan.plugins.toolkit import (
-    get_or_bust, ValidationError, side_effect_free, check_access, chained_action, config)
+    get_or_bust,
+    ValidationError,
+    side_effect_free,
+    chained_action,
+    config,
+    ObjectNotFound,
+    _,
+    g,
+    h
+)
 from ckan.authz import is_sysadmin
 
 import functools
@@ -185,3 +194,81 @@ def datastore_create_temp_user_table(context):
             username=literal_string(username),
             sysadmin='TRUE' if is_sysadmin(username) else 'FALSE'))
 
+
+@chained_action
+def canada_resource_view_show(up_func, context, data_dict):
+    """
+    Return the metadata of a resource_view.
+
+    :param id: the id of the resource_view
+    :type id: string
+
+    :rtype: dictionary
+
+    Canada Fork: extends the resource_view_show action method
+    to prevent showing datatable_views for invalid and inactive Resources
+
+    We need this method to 404 the resource_view page (e.g. viewing in full screen)
+
+    If a user is logged in, we want them to be able to see and edit the datatables_view
+    views still. We will just add a key to the view dict to be used within templates for visuals.
+    """
+    view_dict = up_func(context, data_dict)
+    if view_dict.get('view_type') == 'datatables_view':
+        # at this point, the core function has been called, calling resource_show
+        # and adding the Resource Object into the context
+        res_dict = context.get('resource').__dict__
+        res_extras = res_dict.get('extras', {})
+
+        if not res_extras.get('datastore_active', False) or \
+        res_extras.get('validation_status') != 'success':
+            # if the Resource is not active in the DataStore or has not
+            # passed validation, we do not want to show its datatables_view views
+
+            if not g.user:
+                # only raise if a user is not logged in
+                raise ObjectNotFound
+
+            view_dict['canada_disabled_view'] = True
+
+    return view_dict
+
+
+@chained_action
+def canada_resource_view_list(up_func, context, data_dict):
+    """
+    Return the list of resource views for a particular resource.
+
+    :param id: the id of the resource
+    :type id: string
+
+    :rtype: list of dictionaries.
+
+    Canada Fork: extends the resource_view_list action method
+    to prevent showing datatable_views for invalid and inactive Resources
+
+    This will delete any datatables_view from the list of views.
+
+    If a user is logged in, we want them to be able to see and edit the datatables_view
+    views still. We will just add a key to the view dict to be used within templates for visuals.
+    """
+    view_list = up_func(context, data_dict)
+    # at this point, the core function has been called, calling resource_show
+    # and adding the Resource Object into the context
+    res_dict = context.get('resource').__dict__
+    res_extras = res_dict.get('extras', {})
+    for i, view_dict in enumerate(view_list):
+
+        if view_dict.get('view_type') == 'datatables_view' and \
+        ( not res_extras.get('datastore_active', False) or
+          res_extras.get('validation_status') != 'success'):
+            # if the Resource is not active in the DataStore or has not
+            # passed validation, we do not want to show its datatables_view views
+
+            if not g.user:
+                # only remove from the list if a user is not logged in
+                del view_list[i]
+
+            view_list[i]['canada_disabled_view'] = True
+
+    return view_list

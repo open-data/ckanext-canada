@@ -761,8 +761,7 @@ PACKAGE_TRIM_FIELDS = ['extras', 'metadata_modified', 'metadata_created',
             'version', 'tracking_summary',
             'tags', # just because we don't use them
             'num_tags', 'num_resources', 'maintainer',
-            'isopen', 'relationships_as_object', 'license_title',
-            'license_title_fra', 'license_url_fra', 'license_url',
+            'isopen', 'relationships_as_object',
             'author',
             'groups', # just because we don't use them
             'relationships_as_subject', 'department_number',
@@ -925,6 +924,12 @@ def get_datastore_and_views(package, ckan_instance):
                         }
                 except NotFound:
                     pass
+                except ValidationError as e:
+                    raise ValidationError({
+                        'original_error': repr(e),
+                        'original_error_dict': e.error_dict,
+                        'resource_id': resource['id'],
+                    })
             else:
                 resource_views = ckan_instance.call_action('resource_view_list',
                                                            {'id': resource['id']})

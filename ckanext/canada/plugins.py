@@ -38,8 +38,12 @@ from ckanext.canada.view import (
     CanadaDatasetEditView,
     CanadaDatasetCreateView,
     CanadaResourceEditView,
-    CanadaResourceCreateView
+    CanadaResourceCreateView,
+    canada_search,
+    canada_prevent_pd_views,
+    _get_package_type_from_dict
 )
+from ckanext.canada.scripts import get_commands as get_script_commands
 
 # XXX Monkey patch to work around libcloud/azure 400 error on get_container
 try:
@@ -83,6 +87,8 @@ class CanadaDatasetsPlugin(SchemingDatasetsPlugin):
     """
     p.implements(p.IDatasetForm, inherit=True)
     p.implements(p.IPackageController, inherit=True)
+    p.implements(p.IBlueprint)
+    p.implements(p.IActions)
     try:
         from ckanext.validation.interfaces import IDataValidation
     except ImportError:
@@ -90,21 +96,79 @@ class CanadaDatasetsPlugin(SchemingDatasetsPlugin):
     else:
         p.implements(IDataValidation, inherit=True)
 
+
+    # IActions
+    def get_actions(self):
+        return {'resource_view_show': logic.canada_resource_view_show,
+                'resource_view_list': logic.canada_resource_view_list}
+
+
+    # IBlueprint
+    def get_blueprint(self):
+        """
+        Prevents all Core Dataset and Resources Views
+        for all the PD types. Will type_redirect them
+        to the pd_type. Will allow /<pd_type>/activity
+        """
+        # type: () -> list[Blueprint]
+        blueprints = []
+        for pd_type in h.recombinant_get_types():
+            blueprint = Blueprint(
+                u'canada_%s' % pd_type,
+                __name__,
+                url_prefix=u'/%s' % pd_type,
+                url_defaults={u'package_type': pd_type})
+            blueprint.add_url_rule(
+                u'/<path:uri>',
+                endpoint='canada_prevent_%s' % pd_type,
+                view_func=canada_prevent_pd_views,
+                methods=['GET', 'POST']
+            )
+            blueprints.append(blueprint)
+        return blueprints
+
+
+    def _redirect_pd_dataset_endpoints(blueprint):
+        """
+        Runs before request for /dataset and /dataset/<pkg id>/resource
+
+        Checks if the actual package type is a PD type and redirects it.
+        """
+        if has_request_context() and hasattr(request, 'view_args'):
+            id = request.view_args.get('id')
+            if not id:
+                return
+            package_type = request.view_args.get('package_type')
+            package_type = _get_package_type_from_dict(id, package_type)
+            if package_type in h.recombinant_get_types():
+                return h.redirect_to('canada.type_redirect',
+                                        resource_name=package_type)
+
+
     #IDatasetForm
     def prepare_dataset_blueprint(self, package_type, blueprint):
         # type: (str,Blueprint) -> Blueprint
         blueprint.add_url_rule(
             u'/edit/<id>',
-            endpoint='canada_edit',
+            endpoint='canada_edit_%s' % package_type,
             view_func=CanadaDatasetEditView.as_view(str(u'edit')),
             methods=['GET', 'POST']
         )
         blueprint.add_url_rule(
             u'/new',
-            endpoint='canada_new',
+            endpoint='canada_new_%s' % package_type,
             view_func=CanadaDatasetCreateView.as_view(str(u'new')),
             methods=['GET', 'POST']
         )
+        blueprint.add_url_rule(
+            u'/',
+            endpoint='canada_search_%s' % package_type,
+            view_func=canada_search,
+            methods=['GET'],
+            strict_slashes=False
+        )
+        # redirect PD endpoints accessed from /dataset/<pd pkg id>
+        blueprint.before_request(self._redirect_pd_dataset_endpoints)
         return blueprint
 
 
@@ -113,16 +177,18 @@ class CanadaDatasetsPlugin(SchemingDatasetsPlugin):
         # type: (str,Blueprint) -> Blueprint
         blueprint.add_url_rule(
             u'/<resource_id>/edit',
-            endpoint='canada_edit',
+            endpoint='canada_resource_edit_%s' % package_type,
             view_func=CanadaResourceEditView.as_view(str(u'edit')),
             methods=['GET', 'POST']
         )
         blueprint.add_url_rule(
             u'/new',
-            endpoint='canada_new',
+            endpoint='canada_resource_new_%s' % package_type,
             view_func=CanadaResourceCreateView.as_view(str(u'new')),
             methods=['GET', 'POST']
         )
+        # redirect PD endpoints accessed from /dataset/<pd pkg id>/resource
+        blueprint.before_request(self._redirect_pd_dataset_endpoints)
         return blueprint
 
     # IDataValidation
@@ -285,6 +351,7 @@ ckanext.canada:schemas/presets.yaml
             'get_timeout_length',
             'canada_check_access',
             'get_user_email',
+            'get_loader_status_badge',
         ])
 
     # IConfigurable
@@ -442,6 +509,7 @@ class DataGCCAPublic(p.SingletonPlugin, DefaultTranslation):
     p.implements(p.ITranslation, inherit=True)
     p.implements(p.IMiddleware, inherit=True)
     p.implements(p.IActions)
+    p.implements(p.IClick)
 
     # DefaultTranslation, ITranslation
     def i18n_domain(self):
@@ -509,11 +577,6 @@ ckanext.canada:schemas/prop.yaml
 
         hlp.build_nav_main = build_nav_main
 
-        # migration from `canada_activity` and `ckanext-extendedactivity` - Aug 2022
-        logic_validators.object_id_validators.update({
-            'changed datastore': logic_validators.package_id_exists,
-            'deleted datastore': logic_validators.package_id_exists,
-        })
 
     # IFacets
     def dataset_facets(self, facets_dict, package_type):
@@ -595,13 +658,10 @@ ckanext.canada:schemas/prop.yaml
         ])
 
     # IActions
-    # `datastore_upsert` and `datastore_delete` migrated from `canada_activity` and `ckanext-extendedactivity` - Aug 2022
     def get_actions(self):
         return {
-                'datastore_upsert': datastore_upsert,
-                'datastore_delete': datastore_delete,
-                'recently_changed_packages_activity_list': act.recently_changed_packages_activity_list,  #TODO: Remove this action override in CKAN 2.10 upgrade
-               }
+            'recently_changed_packages_activity_list': act.recently_changed_packages_activity_list,  #TODO: Remove this action override in CKAN 2.10 upgrade
+        }
 
     # IAuthFunctions
     def get_auth_functions(self):
@@ -616,6 +676,11 @@ ckanext.canada:schemas/prop.yaml
 
     def make_middleware(self, app, config):
         return LogExtraMiddleware(app, config)
+
+    # IClick
+
+    def get_commands(self):
+        return [get_script_commands()]
 
 
 
@@ -725,52 +790,6 @@ class LogExtraMiddleware(object):
         return self.app(environ, _start_response)
 
 
-@chained_action
-def datastore_upsert(up_func, context, data_dict):
-    lc = ckanapi.LocalCKAN(username=context['user'])
-    res_data = lc.action.datastore_search(
-        resource_id=data_dict['resource_id'],
-        filters={},
-        limit=1,
-    )
-    count = res_data.get('total', 0)
-    result = up_func(context, data_dict)
-
-    res_data = lc.action.datastore_search(
-        resource_id=data_dict['resource_id'],
-        filters={},
-        limit=1,
-    )
-    count = res_data.get('total', 0) - count
-
-    act.datastore_activity_create(context, {'count':count,
-                                            'activity_type': 'changed datastore',
-                                            'resource_id': data_dict['resource_id']}
-                                  )
-    return result
-
-
-@chained_action
-def datastore_delete(up_func, context, data_dict):
-    if data_dict.get('url_type', None) == 'upload':
-        return up_func(context, data_dict)
-
-    lc = ckanapi.LocalCKAN(username=context['user'], context={'ignore_auth':True})
-    res_id = data_dict['id'] if 'id' in data_dict.keys() else data_dict['resource_id']
-    res = lc.action.datastore_search(
-        resource_id=res_id,
-        filters=data_dict.get('filters'),
-        limit=1,
-    )
-
-    result = up_func(context, data_dict)
-
-    act.datastore_activity_create(context,
-                                  {'count': res.get('total', 0),
-                                   'activity_type': 'deleted datastore',
-                                   'resource_id': res_id}
-                                  )
-    return result
 
 
 def _wet_pager(self, *args, **kwargs):

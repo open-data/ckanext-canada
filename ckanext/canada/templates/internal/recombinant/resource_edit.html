@@ -50,3 +50,9 @@
     {{ h.get_datapreview_recombinant(resource.name, resource.id, organization.name, dataset.dataset_type) }}
   {% endif %}
 {% endblock %}
+
+{%- block styles %}
+  <link rel="stylesheet"  href="https://cdn.datatables.net/buttons/1.2.2/css/buttons.dataTables.min.css" />
+  <link rel="stylesheet" type="text/css" href="{{ h.url_for_static('base/vendor/font-awesome/css/font-awesome.css') }}" />
+  {{ super() }}
+{% endblock %}

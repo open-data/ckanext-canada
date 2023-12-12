@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-"filter for briefingt.csv"
+"filter for contract-data.csv and verification-data.csv"
 
 import csv
 import sys

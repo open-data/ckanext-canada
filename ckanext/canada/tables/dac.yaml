@@ -73,11 +73,13 @@ resources:
     obligation: Mandatory
     excel_required: true
     form_required: true
-    format_type: Free text
+    format_type: Controlled List
     validation: This field must not be empty
+    occurrence: Single
     datastore_type: text
-    form_attrs:
-      size: 60
+    excel_full_text_choices: True
+    choices_file: choices/dac_members.yaml
+    excel_error_formula: 'FALSE'
 
   - datastore_id: province
     label:
@@ -216,7 +218,7 @@ resources:
     obligation: Mandatory
     excel_required: true
     form_required: true
-    datastore_type: money
+    datastore_type: numeric
 
   - datastore_id: travel_expenses
     label:
@@ -228,7 +230,7 @@ resources:
     obligation: Mandatory
     excel_required: true
     form_required: true
-    datastore_type: money
+    datastore_type: numeric
 
   - datastore_id: notes_en
     label:
@@ -293,6 +295,7 @@ resources:
         errors := errors || choice_error(NEW.reporting_period, {reporting_period}, 'reporting_period');
         errors := errors || required_error(NEW.line_number, 'line_number');
         errors := errors || required_error(NEW.member_name, 'member_name');
+        errors := errors || choice_error(NEW.member_name, {member_name}, 'member_name');
         errors := errors || required_error(NEW.province, 'province');
         errors := errors || choice_error(NEW.province, {province}, 'province');
         errors := errors || required_error(NEW.meeting_hours, 'meeting_hours');
