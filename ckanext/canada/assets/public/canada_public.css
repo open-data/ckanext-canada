@@ -588,13 +588,6 @@ body i.fa.fa-arrow-left::before{
 }
 /* END - Resource File Upload Field - END */
 
-ul.job-list.activity li.item i.fa.icon::before{
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
-
 /*##################################
 ##              END               ##
 ## Bootstrap Versioning Overrides ##
@@ -696,3 +689,22 @@ body .alert a.btn-warning{
 ##  Header Search Form ##
 ##         END         ##
 #########################*/
+
+/*########################
+##  Background Job List ##
+##########################*/
+ul.canada-job-list.activity li.item i.fa.icon::before{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+div.canada-job-list-title *{
+  font-size: 16px;
+  line-height: 23px;
+}
+/*########################
+##          END         ##
+##  Background Job List ##
+##          END         ##
+##########################*/

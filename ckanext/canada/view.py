@@ -604,7 +604,9 @@ def ckanadmin_job_queue():
                 .strftime('%Y-%m-%d %H:%M:%S %Z')
         job_list.append(job)
 
-    return render('admin/jobs.html', extra_vars={'job_list': job_list, 'warning': warning})
+    return render('admin/jobs.html', extra_vars={'job_list': job_list[:25],
+                                                 'warning': warning,
+                                                 'total_job_count': len(job_list),})
 
 
 @canada_views.route('/dataset/<id>/delete-datastore-table/<resource_id>', methods=['GET', 'POST'])

@@ -8,7 +8,11 @@
         <p>{{ _('The first job in the queue has not run in the past 18 minutes, you may want to confirm that the background worker is running.') }}</p>
       </div>
     {% endif %}
-    <ul class="job-list activity">
+    <div class="text-left text-info mrgn-bttm-md canada-job-list-title">
+      {# TODO: compare total_job_count and job_list|length and do nicer output here... #}
+      <p><strong>{{ total_job_count ~ _(" job(s) in queue.") }}</strong><strong>{{ _("Showing ") ~ job_list|length }}</strong></p>
+    </div>
+    <ul class="canada-job-list activity">
       {% for job in job_list %}
         <li class="item changed-package">
           <i class="fa icon fa-circle-o-notch"></i>
