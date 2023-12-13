@@ -9,8 +9,13 @@
       </div>
     {% endif %}
     <div class="text-left text-info mrgn-bttm-md canada-job-list-title">
-      {# TODO: compare total_job_count and job_list|length and do nicer output here... #}
-      <p><strong>{{ total_job_count ~ _(" job(s) in queue.") }}</strong><strong>{{ _("Showing ") ~ job_list|length }}</strong></p>
+      <p>
+        <strong>{{ total_job_count ~ _(" job(s) in queue.") }}</strong>
+        {% if total_job_count > job_list|length %}
+          <br/>
+          <strong><small>{{ _("Showing ") ~ job_list|length ~ "/" ~ total_job_count }}</small></strong>
+        {% endif %}
+      </p>
     </div>
     <ul class="canada-job-list activity">
       {% for job in job_list %}
