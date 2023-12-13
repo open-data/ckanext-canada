@@ -608,7 +608,8 @@ class TestRecombinantWebForms(CanadaTestBase):
                                   'bulk-template': [self.example_nil_record['year'], self.example_nil_record['month']]},
                             extra_environ=self.extra_environ_member)
         template_file = BytesIO()
-        template_file.write(response.body)
+        # use get_data instead of body to avoid decoding issues. This is a file, we want bytes.
+        template_file.write(response.get_data(as_text=False))
         # produces: (sheet-name, org-name, column_names, data_rows_generator)
         #   note: data_rows_generator excludes the example row
         template_file = list(read_excel(template_file))
