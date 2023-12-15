@@ -9,6 +9,7 @@ from logging import getLogger
 import unicodecsv
 from codecs import BOM_UTF8
 from six import string_types, PY2
+from datetime import datetime, timedelta
 
 from ckan.plugins.toolkit import (
     abort,
@@ -548,13 +549,16 @@ def ckanadmin_publish():
     for custom search facets for this admin route.
     """
     if not is_sysadmin(g.user):
-        abort(401, _('Not authorized to see this page'))
+        abort(403, _('Not authorized to see this page'))
 
     return dataset_search('dataset')
 
 
 @canada_views.route('/ckan-admin/publish-datasets', methods=['GET', 'POST'])
 def ckanadmin_publish_datasets():
+    if not is_sysadmin(g.user):
+        abort(403, _('Not authorized to see this page'))
+
     lc = LocalCKAN(username=g.user)
     params = parse_params(request.form)
 
@@ -577,6 +581,32 @@ def ckanadmin_publish_datasets():
 
     # return us to the publishing interface
     return h.redirect_to('canada.ckanadmin_publish')
+
+
+@canada_views.route('/ckan-admin/job-queue', methods=['GET'])
+def ckanadmin_job_queue():
+    """
+    Lists all of the queued and running jobs.
+    """
+    try:
+        jobs = get_action('job_list')({}, {})
+    except NotAuthorized:
+        abort(403, _('Not authorized to see this page'))
+
+    warning = False
+    if jobs and datetime.strptime(jobs[0]['created'], '%Y-%m-%dT%H:%M:%S') < (datetime.now() - timedelta(minutes=18)):
+        warning = True
+
+    job_list = []
+    for job in jobs:
+        job['created_human_readable'] = canada_date_str_to_datetime(job.get('created')) \
+                .replace(tzinfo=utc).astimezone(ottawa_tz) \
+                .strftime('%Y-%m-%d %H:%M:%S %Z')
+        job_list.append(job)
+
+    return render('admin/jobs.html', extra_vars={'job_list': job_list[:25],
+                                                 'warning': warning,
+                                                 'total_job_count': len(job_list),})
 
 
 @canada_views.route('/dataset/<id>/delete-datastore-table/<resource_id>', methods=['GET', 'POST'])

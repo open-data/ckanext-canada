@@ -759,6 +759,8 @@ class DataGCCAForms(p.SingletonPlugin, DefaultDatasetForm):
                 validators.json_string_has_en_fr_keys,
             'resource_schema_validator':
                 validators.canada_resource_schema_validator,
+            'validation_options_validator':
+                validators.canada_validation_options_validator,
             }
 
 

@@ -683,3 +683,25 @@ body .alert a.btn-warning{
 ##  Header Search Form ##
 ##         END         ##
 #########################*/
+
+/*########################
+##  Background Job List ##
+##########################*/
+ul.canada-job-list.activity li.item i.fa.icon::before{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+div.canada-job-list-title strong{
+  font-size: 16px;
+  line-height: 23px;
+}
+div.canada-job-list-title small{
+  font-size: 87%;
+}
+/*########################
+##          END         ##
+##  Background Job List ##
+##          END         ##
+##########################*/

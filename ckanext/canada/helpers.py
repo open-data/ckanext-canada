@@ -677,22 +677,18 @@ def get_loader_status_badge(resource):
     except (t.ObjectNotFound, t.NotAuthorized):
         xloader_job = {}
 
-    if is_datastore_active:
+    if xloader_job.get('status') == 'complete':
+        # the xloader task is complete, show datastore active or inactive.
         # xloader will delete the datastore table at the beggining of the job run.
-        # so this will only be true if the job is fully finished and successful.
-        status = 'active'
-    elif xloader_job.get('status') in ['pending', 'running', 'running_but_viewable', 'complete', 'error']:
-        # the job is running or has been completed
-        if not is_datastore_active:
-            # the resource might be inactive in the datastore,
-            # thus we do not want to show the status over the inactive.
-            status = 'inactive'
-        else:
-            # show the xloader status
-            status = xloader_job.get('status')
-            if status == 'running_but_viewable':
-                # treat running_but_viewable the same as running
-                status = 'running'
+        # so this will only be true if the job is fully finished.
+        status = 'active' if is_datastore_active else 'inactive'
+    elif xloader_job.get('status') in ['pending', 'running', 'running_but_viewable', 'error']:
+        # the job is running or pending or errored
+        # show the xloader status
+        status = xloader_job.get('status')
+        if status == 'running_but_viewable':
+            # treat running_but_viewable the same as running
+            status = 'running'
     else:
         # we do not know what the status is
         status = 'unknown'
@@ -711,14 +707,30 @@ def get_loader_status_badge(resource):
                              id=resource.get('package_id'),
                              resource_id=resource.get('id'))
 
-    timestamp = t.h.render_datetime(xloader_job.get('last_updated'), with_hours=True) \
-        if xloader_job.get('last_updated') else ''
-
     badge_url = t.h.url_for_static('/static/img/badges/{lang}/datastore-{status}.svg'.format(lang=t.h.lang(), status=status))
+
+    # in queue, try to get the number in the queue
+    # NOTE: the Validation extension does not use the task_status table,
+    # and we will never know the job id of a Validation job.
+    # FIXME: is this worth it if we cannot display in the Xloader page?
+    # is it worth it if we cannot display for the Validation extension?
+    queue_number = None
+    if status == 'pending':
+        queue_number = 1
+        jobs_in_queue = t.get_action('job_list')({"ignore_auth": True}, {})
+        for job in jobs_in_queue:
+            if job.get('id') == xloader_job.get('job_id'):
+                break
+            queue_number += 1
+
+    title = t.h.render_datetime(xloader_job.get('last_updated'), with_hours=True) \
+        if xloader_job.get('last_updated') else ''
+    if queue_number:
+        title = _("Number %s in queue") % queue_number
 
     # TODO: use str instead of unicode for py3
     return unicode('<a href="{pusher_url}" class="loader-badge"><img src="{badge_url}" alt="{alt}" title="{title}"/></a>').format(
         pusher_url=pusher_url,
         badge_url=badge_url,
         alt=messages[status],
-        title=timestamp)
+        title=title)

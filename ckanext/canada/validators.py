@@ -397,6 +397,9 @@ def json_string_has_en_fr_keys(value, context):
 
 
 def canada_resource_schema_validator(value, context):
+    """
+    Do not support Schema URLs as our servers cannot reach out to most addresses.
+    """
     if h.plugin_loaded('validation'):
         from ckanext.validation.validators import resource_schema_validator
         try:
@@ -406,6 +409,122 @@ def canada_resource_schema_validator(value, context):
         if isinstance(value, basestring) \
         and value.lower().startswith('http'):
             raise Invalid(_('Schema URLs are not supported'))
+    return value
+
+
+def canada_validation_options_validator(value, context):
+    """
+    Prevent some keys from being added, as we do not want to allow
+    users to make their data scheming more lax just to pass Validation.
+    This can also result in Xloader failing to load the data into the DataStore.
+
+    The validation options from this field are used throughout the Goodtables extension,
+    parsed, and passed deeper into the Tabulator's Stream and Parser classes.
+
+    Goodtables Inspector options:
+        'checks',           # type: list[str]
+        'skip_checks',      # type: list[str]
+        'infer_schema',     # type: bool
+        'infer_fields',     # type: bool
+        'order_fields',     # type: bool
+        'error_limit',      # type: int
+        'table_limit',      # type: int
+        'row_limit',        # type: int
+        'custom_presets',   # type: str
+        'custom_checks',    # type: list[str]
+
+    Tabulator Stream options:
+        'headers',                          # type: int|list[int]
+        'scheme',                           # type: str
+        'format',                           # type: str
+        'encoding',                         # type: str
+        'compression',                      # type: str
+        'pick_rows',                        # type: list[int]
+        'skip_rows',                        # type: list[int]
+        'pick_fields',                      # type: list[int]
+        'skip_fields',                      # type: list[int]
+        'sample_size',                      # type: int
+        'bytes_sample_size',                # type: int
+        'allow_html',                       # type: bool
+        'multiline_headers_joiner',         # type: str
+        'multiline_headers_duplicates',     # type: bool
+        'hashing_algorithm',                # type: str
+        'force_strings',                    # type: bool
+        'force_parse',                      # type: bool
+        'post_parse',                       # type: list[func]|None
+        'custom_loaders',                   # type: dict
+        'custom_parsers',                   # type: dict
+
+    Tabulator CSV Parser options:
+        'delimiter',            # type: str
+        'doublequote',          # type: bool
+        'escapechar',           # type: str
+        'quotechar',            # type: str
+        'quoting',              # type: int[Literal[0-3]]
+        'skipinitialspace',     # type: bool
+        'lineterminator',       # type: str
+
+    Tabulator XLS Parser options:
+        'sheet',                # type: int
+        'fill_merged_cells',    # type: bool
+
+    Tabulator XLSX Parser options:
+        'sheet',                            # type: int
+        'workbook_cache',                   # type: FileObject
+        'fill_merged_cells',                # type: bool
+        'preserve_formatting',              # type: bool
+        'adjust_floating_point_error',      # type: bool
+    """
+    remove_keys = [
+        # skip_checks reason: We do not want users to lax the default validation checks.
+        'skip_checks',
+        # headers reason: Xloader will use first row for DataStore, so we do not want users
+        # to be able to specify validating based on a different row for headers.
+        'headers',
+        # scheme reason: We only support uploaded files.
+        'scheme',
+        # format reason: We always want the format to be inferred from the source.
+        'format',
+        # encoding reason: We always want the encoding to be inferred from the source.
+        'encoding',
+        # compression reason: Xloader doesn't support compressed files.
+        'compression',
+        # pick_rows reason: We want every row to be validated.
+        'pick_rows',
+        # skip_rows reason: We want every row to be validated.
+        'skip_rows',
+        # pick_fields reason: We want every column to be validated.
+        'pick_fields',
+        # skip_fields reason: We want every column to be validated.
+        'skip_fields',
+        # allow_html reason: We do NOT want html in the DataStore database.
+        'allow_html',
+        # post_parse reason: We do not want users to be able to specify Functions.
+        'post_parse',
+        # custom_loaders reason: We do not want users to be able to specify Functions.
+        'custom_loaders',
+        # custom_parsers reason: We do not want users to be able to specify Functions.
+        'custom_parsers',
+        # delimiter reason: We do not want users to specify a delimiter that the source upload
+        # isn't actually using. We want the delimiter to be inferred from the source.
+        'delimiter',
+        # sheet reason: Xloader does not support sheet pointers for xls and xlsx files.
+        'sheet',
+        # fill_merged_cells reason: Xloader won't support this.
+        'fill_merged_cells',
+        # workbook_cache reason: This should never be supplied by a user.
+        'workbook_cache',
+    ]
+    if h.plugin_loaded('validation'):
+        from ckanext.validation.validators import validation_options_validator
+        try:
+            value = validation_options_validator(value, context)
+            value = json.loads(value)
+            for key in remove_keys:
+                value.pop(key, None)
+            value = json.dumps(value, indent=None, sort_keys=True)
+        except AttributeError:
+            raise Invalid(_('Invalid JSON for Schema'))
     return value
 
 
