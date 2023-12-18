@@ -345,15 +345,122 @@ resources:
       reference_number: DND-2019-QP-00001
     sort: date_received desc
 
+- title: Proactive Publication - Question Period Notes Nothing to Report
+  resource_name: qpnotes-nil
+  create_form: true
+  edit_form: false #edit not possible for nil reports since only stored data is primary key
+  fields:
+
+  - datastore_id: year
+    datastore_type: year
+    label: Year
+    description:
+      en: This tab / field in the template is only populated if there are no question period notes for the reporting period. This field should be populated with the year of the reporting period.
+      fr: Cet onglet/champ du modèle n’est rempli que s'il n'y a pas de notes pour la période de questions pour la période d’établissement de rapports. Ce champ doit être rempli avec l’année de la période d’établissement de rapports.
+    obligation: Mandatory
+    excel_required: true
+    form_required: true
+    validation: This field must not be empty
+    excel_column_width: 10
+    extract_date_year: true
+    form_attrs:
+      size: 20
+
+  - datastore_id: reporting_period
+    datastore_type: text
+    label:
+      en: Reporting Period
+      fr: Période de déclaration
+    description:
+      en: This tab / field in the template is only populated if there are no briefing notes for the reporting period. This field should be populated with the reporting period.
+      fr: Cet onglet/champ du modèle n’est rempli que s'il n'y a pas de note pour la période de questions pour la période d’établissement de rapports. Ce champ doit être rempli avec la période d’établissement de rapports.
+    obligation: Mandatory
+    excel_required: true
+    form_required: true
+    validation: This field must not be empty
+    excel_full_text_choices: true
+    choices:
+      P01:
+        en: Jan. - June
+        fr: jan. - juin
+      P02:
+        en: July - Dec.
+        fr: juil. - déc.
+      
+
+  - datastore_id: record_created
+    label: Record Creation Time
+    import_template_include: false
+    visible_to_public: false
+    datastore_type: timestamp
+    preview_class: bg-info
+
+  - datastore_id: record_modified
+    label: Last Record Modification Time
+    import_template_include: false
+    visible_to_public: false
+    datastore_type: timestamp
+    preview_class: bg-info
+
+  - datastore_id: user_modified
+    label: User Last Modified Record
+    import_template_include: false
+    visible_to_public: false
+    datastore_type: text
+    preview_class: bg-info
+
+
+  solr_static_fields:
+    nothing_to_report_en: Nothing to report for this period
+    nothing_to_report_fr: Rien à signaler pour cette période
+    report_type_en: Nothing to report
+    report_type_fr: Rien à signaler
+
+  datastore_primary_key: [year, reporting_period]
+  datastore_indexes: ""
+
+  triggers:
+    - briefingt_nil_trigger: |
+        DECLARE
+          errors text[][] := '{{}}';
+          crval RECORD;
+        BEGIN
+          errors := errors || required_error(NEW.year, 'year');
+          errors := errors || required_error(NEW.reporting_period, 'reporting_period');
+          errors := errors || choice_error(NEW.reporting_period, {reporting_period}, 'reporting_period');
+          IF NEW.year > date_part('year', CURRENT_DATE) THEN
+            errors := errors || ARRAY[['year', {year_error}]];
+          END IF;
+          IF errors = '{{}}' THEN
+            RETURN NEW;
+          END IF;
+          RAISE EXCEPTION E'TAB-DELIMITED\t%', array_to_string(errors, E'\t');
+        END;
+    - update_record_modified_created_trigger
+
+  trigger_strings:  # yaml | not supported
+    year_error: This must list the year you are reporting on (not the fiscal year).
+
+  examples:
+    record:
+      year: 2023
+      reporting_period: P01
+    filters:
+      year: 2023
+    filter_one:
+      year: 2023
+      reporting_period: P01
+    sort: year desc, reporting_period desc
+
 excel_edge_style:
   PatternFill:
-    fgColor: FF336B87
+    fgColor: FF3d4647
     patternType: solid
 excel_header_style:
   PatternFill:
     patternType: solid
-    fgColor: FFF0C5EE
+    fgColor: FF84acb6
 excel_column_heading_style:
   PatternFill:
     patternType: solid
-    fgColor: FFEFEFEF
+    fgColor: FF84acb6
