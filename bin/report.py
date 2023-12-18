@@ -45,6 +45,7 @@ ROWS_PD_TYPE_COLUMNS = {
     'wrongdoing.csv': 'rows:wrongdoing',
     'dac.csv': 'rows:dac',
     'briefingt.csv': 'rows:briefingt',
+    'briefingt-nil.csv': 'rows:briefingt',
     'qpnotes.csv': 'rows:qpnotes',
 }
 
