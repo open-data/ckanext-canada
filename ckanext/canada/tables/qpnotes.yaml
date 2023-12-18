@@ -345,19 +345,6 @@ resources:
       reference_number: DND-2019-QP-00001
     sort: date_received desc
 
-excel_edge_style:
-  PatternFill:
-    fgColor: FF336B87
-    patternType: solid
-excel_header_style:
-  PatternFill:
-    patternType: solid
-    fgColor: FFF0C5EE
-excel_column_heading_style:
-  PatternFill:
-    patternType: solid
-    fgColor: FFEFEFEF
-
 - title: Proactive Publication - Question Period Notes Nothing to Report
   resource_name: qpnotes-nil
   create_form: true
