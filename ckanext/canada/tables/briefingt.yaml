@@ -399,6 +399,7 @@ resources:
 
   trigger_strings:  # yaml | not supported
     year_error: This must list the year you are reporting on (not the fiscal year).
+    month_error: Please enter a month number from 1-12
 
   examples:
     record:
