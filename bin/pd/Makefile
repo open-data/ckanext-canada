@@ -213,7 +213,7 @@ upload-qpnotes: $(workdir)/filtered/qpnotes.csv $(workdir)/filtered/qpnotes-nil.
 	> /dev/null
 	# @$(ckanapi) action resource_patch -c $(registry_ini) \
 	# id=TBD upload@"$(workdir)/filtered/qpnotes-nil.csv" \
-	> /dev/null
+	# > /dev/null
 
 .PHONY: rebuild-qpnotes
 rebuild-qpnotes: $(workdir)/filtered/qpnotes.csv $(workdir)/filtered/qpnotes-nil.csv
