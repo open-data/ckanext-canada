@@ -185,7 +185,7 @@ briefingt: upload-briefingt rebuild-briefingt
 upload-briefingt: $(workdir)/filtered/briefingt.csv $(workdir)/filtered/briefingt-nil.csv
 	@$(echo_date) Uploading Briefing Note Titles...
 	@$(ckanapi) action resource_patch -c $(registry_ini) \
-	id=299a2e26-5103-4a49-ac3a-53db9fcc06c7 upload@"$(workdir)/filtered/briefingt.csv" upload@"$(workdir)/filtered/briefingt-nil.csv" \
+	id=299a2e26-5103-4a49-ac3a-53db9fcc06c7 upload@"$(workdir)/filtered/briefingt.csv" \
 	> /dev/null
 
 .PHONY: rebuild-briefingt
