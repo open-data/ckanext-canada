@@ -1,14 +1,11 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-import os
-import os.path
 import logging
 from flask import has_request_context
 import ckan.plugins as p
 from ckan.lib.plugins import DefaultDatasetForm, DefaultTranslation
 import ckan.lib.helpers as hlp
 from ckan.logic import validators as logic_validators
-from paste.reloader import watch_file
 
 from ckan.plugins.toolkit import (
     c,
@@ -39,9 +36,14 @@ from ckanext.security.plugin import CkanSecurityPlugin
 from ckanext.canada.view import (
     canada_views,
     CanadaDatasetEditView,
+    CanadaDatasetCreateView,
     CanadaResourceEditView,
-    CanadaResourceCreateView
+    CanadaResourceCreateView,
+    canada_search,
+    canada_prevent_pd_views,
+    _get_package_type_from_dict
 )
+from ckanext.canada.scripts import get_commands as get_script_commands
 
 # XXX Monkey patch to work around libcloud/azure 400 error on get_container
 try:
@@ -85,6 +87,7 @@ class CanadaDatasetsPlugin(SchemingDatasetsPlugin):
     """
     p.implements(p.IDatasetForm, inherit=True)
     p.implements(p.IPackageController, inherit=True)
+    p.implements(p.IBlueprint)
     try:
         from ckanext.validation.interfaces import IDataValidation
     except ImportError:
@@ -92,15 +95,73 @@ class CanadaDatasetsPlugin(SchemingDatasetsPlugin):
     else:
         p.implements(IDataValidation, inherit=True)
 
+
+    # IBlueprint
+    def get_blueprint(self):
+        """
+        Prevents all Core Dataset and Resources Views
+        for all the PD types. Will type_redirect them
+        to the pd_type. Will allow /<pd_type>/activity
+        """
+        # type: () -> list[Blueprint]
+        blueprints = []
+        for pd_type in h.recombinant_get_types():
+            blueprint = Blueprint(
+                u'canada_%s' % pd_type,
+                __name__,
+                url_prefix=u'/%s' % pd_type,
+                url_defaults={u'package_type': pd_type})
+            blueprint.add_url_rule(
+                u'/<path:uri>',
+                endpoint='canada_prevent_%s' % pd_type,
+                view_func=canada_prevent_pd_views,
+                methods=['GET', 'POST']
+            )
+            blueprints.append(blueprint)
+        return blueprints
+
+
+    def _redirect_pd_dataset_endpoints(blueprint):
+        """
+        Runs before request for /dataset and /dataset/<pkg id>/resource
+
+        Checks if the actual package type is a PD type and redirects it.
+        """
+        if has_request_context() and hasattr(request, 'view_args'):
+            id = request.view_args.get('id')
+            if not id:
+                return
+            package_type = request.view_args.get('package_type')
+            package_type = _get_package_type_from_dict(id, package_type)
+            if package_type in h.recombinant_get_types():
+                return h.redirect_to('canada.type_redirect',
+                                        resource_name=package_type)
+
+
     #IDatasetForm
     def prepare_dataset_blueprint(self, package_type, blueprint):
         # type: (str,Blueprint) -> Blueprint
         blueprint.add_url_rule(
             u'/edit/<id>',
-            endpoint='canada_edit',
+            endpoint='canada_edit_%s' % package_type,
             view_func=CanadaDatasetEditView.as_view(str(u'edit')),
             methods=['GET', 'POST']
         )
+        blueprint.add_url_rule(
+            u'/new',
+            endpoint='canada_new_%s' % package_type,
+            view_func=CanadaDatasetCreateView.as_view(str(u'new')),
+            methods=['GET', 'POST']
+        )
+        blueprint.add_url_rule(
+            u'/',
+            endpoint='canada_search_%s' % package_type,
+            view_func=canada_search,
+            methods=['GET'],
+            strict_slashes=False
+        )
+        # redirect PD endpoints accessed from /dataset/<pd pkg id>
+        blueprint.before_request(self._redirect_pd_dataset_endpoints)
         return blueprint
 
 
@@ -109,16 +170,18 @@ class CanadaDatasetsPlugin(SchemingDatasetsPlugin):
         # type: (str,Blueprint) -> Blueprint
         blueprint.add_url_rule(
             u'/<resource_id>/edit',
-            endpoint='canada_edit',
+            endpoint='canada_resource_edit_%s' % package_type,
             view_func=CanadaResourceEditView.as_view(str(u'edit')),
             methods=['GET', 'POST']
         )
         blueprint.add_url_rule(
             u'/new',
-            endpoint='canada_new',
+            endpoint='canada_resource_new_%s' % package_type,
             view_func=CanadaResourceCreateView.as_view(str(u'new')),
             methods=['GET', 'POST']
         )
+        # redirect PD endpoints accessed from /dataset/<pd pkg id>/resource
+        blueprint.before_request(self._redirect_pd_dataset_endpoints)
         return blueprint
 
     # IDataValidation
@@ -236,12 +299,13 @@ class DataGCCAInternal(p.SingletonPlugin):
     p.implements(p.IPackageController, inherit=True)
     p.implements(p.IActions)
     p.implements(p.IBlueprint)
-    p.implements(IXloader)
+    p.implements(IXloader, inherit=True)
 
     # IConfigurer
     def update_config(self, config):
         p.toolkit.add_template_directory(config, 'templates/internal')
         p.toolkit.add_public_directory(config, 'internal/static')
+        p.toolkit.add_resource('assets/internal', 'canada_internal')
 
         config.update({
             "ckan.user_list_limit": 250
@@ -437,6 +501,7 @@ class DataGCCAPublic(p.SingletonPlugin, DefaultTranslation):
     p.implements(p.ITranslation, inherit=True)
     p.implements(p.IMiddleware, inherit=True)
     p.implements(p.IActions)
+    p.implements(p.IClick)
 
     # DefaultTranslation, ITranslation
     def i18n_domain(self):
@@ -449,6 +514,7 @@ class DataGCCAPublic(p.SingletonPlugin, DefaultTranslation):
         p.toolkit.add_public_directory(config, 'public')
         p.toolkit.add_resource('public/static/js', 'js')
         p.toolkit.add_resource('assets/datatables', 'canada_datatables')
+        p.toolkit.add_resource('assets/public', 'canada_public')
         config['ckan.auth.public_user_details'] = False
         config['recombinant.definitions'] = """
 ckanext.canada:tables/ati.yaml
@@ -496,15 +562,6 @@ ckanext.canada:schemas/prop.yaml
 
         # Enable license restriction
         config['ckan.dataset.restrict_license_choices'] = True
-
-        if 'ckan.i18n_directory' in config:
-            # Reload when translaton files change, because I'm slowly going
-            # insane.
-            translations_dir = config['ckan.i18n_directory']
-            if os.path.isdir(translations_dir):
-                for folder, subs, files in os.walk(translations_dir):
-                    for filename in files:
-                        watch_file(os.path.join(folder, filename))
 
         # monkey patch helpers.py pagination method
         hlp.Page.pager = _wet_pager
@@ -592,6 +649,9 @@ ckanext.canada:schemas/prop.yaml
             'mail_to_with_params',
             'is_registry',
             'organization_member_count',
+            'flash_notice',
+            'flash_error',
+            'flash_success',
         ])
 
     # IActions
@@ -616,6 +676,11 @@ ckanext.canada:schemas/prop.yaml
 
     def make_middleware(self, app, config):
         return LogExtraMiddleware(app, config)
+
+    # IClick
+
+    def get_commands(self):
+        return [get_script_commands()]
 
 
 

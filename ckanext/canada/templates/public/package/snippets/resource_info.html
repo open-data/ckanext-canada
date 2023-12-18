@@ -5,4 +5,7 @@
 {% block resource_info %}
   {# TODO - add resource details #}
   {{ super() }}
+  {% if h.is_registry() %}
+    {{ h.get_validation_badge(res)|safe }}
+  {% endif %}
 {% endblock %}

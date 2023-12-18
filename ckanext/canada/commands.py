@@ -8,6 +8,7 @@ from paste.script.util.logging_config import fileConfig
 from ckanapi.cli.workers import worker_pool
 from ckanapi.cli.utils import completion_stats
 import ckan.lib.uploader as uploader
+from ckan import model
 
 import csv
 import io
@@ -71,6 +72,7 @@ class CanadaCommand(CkanCommand):
                       update-inventory-votes <votes.json>
                       update-resource-url-https <https_report> <https_alt_report>
                       bulk-validate
+                      delete-activities [-D <days>]
 
         <last activity date> for reading activites, default: 7 days ago
         <k> number of hours/minutes/seconds in the past for reading activities
@@ -96,6 +98,7 @@ class CanadaCommand(CkanCommand):
         --use-created-date          use date_created field for date forwarded to data
                                     owner and other statuses instead of today's date
         -o/--source <source url>    source datastore url to copy datastore records
+        -D/--days <days>            number of days of activities to keep. default: 90
     """
     summary = __doc__.split('\n')[0]
     usage = __doc__
@@ -136,6 +139,7 @@ class CanadaCommand(CkanCommand):
     parser.add_option('--portal', dest='portal', action='store_true')
     parser.add_option('-o', '--source', dest='src_ds_url', default=None)
     parser.add_option('--use-created-date', dest='use_created_date', action='store_true')
+    parser.add_option('-D', '--days', dest='days', default=90, type='int')
 
     def command(self):
         '''
@@ -178,6 +182,9 @@ class CanadaCommand(CkanCommand):
 
         elif cmd == 'bulk-validate':
             self.bulk_validate()
+
+        elif cmd == 'delete-activities':
+            self.delete_activities(self.options.days)
 
         else:
             print self.__doc__
@@ -730,6 +737,24 @@ class CanadaCommand(CkanCommand):
 
         log.close()
 
+    def delete_activities(self, days=90):
+        """Delete rows from the activity table past a certain number of days.
+        """
+        activity_count = model.Session.execute(
+                            u"SELECT count(*) FROM activity "
+                            "WHERE timestamp < NOW() - INTERVAL '{d} days';"
+                            .format(d=days)) \
+                            .fetchall()[0][0]
+
+        if not bool(activity_count):
+            print(u"\nNo activities found past {d} days".format(d=days))
+            return
+
+        model.Session.execute(u"DELETE FROM activity WHERE timestamp < NOW() - INTERVAL '{d} days';".format(d=days))
+        model.Session.commit()
+
+        print(u"\nDeleted {num} rows from the activity table".format(num=activity_count))
+
 
 PACKAGE_TRIM_FIELDS = ['extras', 'metadata_modified', 'metadata_created',
             'revision_id', 'revision_timestamp', 'organization',
@@ -900,6 +925,12 @@ def get_datastore_and_views(package, ckan_instance):
                         }
                 except NotFound:
                     pass
+                except ValidationError as e:
+                    raise ValidationError({
+                        'original_error': repr(e),
+                        'original_error_dict': e.error_dict,
+                        'resource_id': resource['id'],
+                    })
             else:
                 resource_views = ckan_instance.call_action('resource_view_list',
                                                            {'id': resource['id']})

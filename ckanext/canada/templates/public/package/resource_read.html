@@ -1,7 +1,20 @@
 {% ckan_extends %}
 
+{% set is_registry = h.is_registry() %}
+
 {% block page_title %}
   {{ super() }}
+  <div class="row">
+    <div class="col-md-12">
+      {# _site_messaging is handled by aliases in nginx to SMB #}
+      {# has to be below title for a11y H3 after H1 #}
+      {% if is_registry %}
+        <div data-ajax-replace="/static/_site_messaging/header_od_registry.{{ h.lang() }}"></div>
+      {% else %}
+        <div data-ajax-replace="/data/static/_site_messaging/header_od_ckan.{{ h.lang() }}"></div>
+      {% endif %}
+    </div>
+  </div>
   {% if is_activity_archive %}
     <div class="module-alert alert alert-danger mrgn-tp-sm">
       <p>
@@ -9,7 +22,7 @@
       </p>
     </div>
   {% endif %}
-  {% if h.is_registry() %}
+  {% if is_registry %}
     {{ h.get_validation_badge(res)|safe }}
   {% endif %}
 {% endblock %}
