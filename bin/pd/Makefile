@@ -211,8 +211,8 @@ upload-qpnotes: $(workdir)/filtered/qpnotes.csv $(workdir)/filtered/qpnotes-nil.
 	@$(ckanapi) action resource_patch -c $(registry_ini) \
 	id=c55a2862-7ec4-462c-a844-22acab664812 upload@"$(workdir)/filtered/qpnotes.csv" \
 	> /dev/null
-	@$(ckanapi) action resource_patch -c $(registry_ini) \
-	id=50754b87-f54c-41db-a0cc-590008c5a2fa upload@"$(workdir)/filtered/qpnotes-nil.csv" \
+	# @$(ckanapi) action resource_patch -c $(registry_ini) \
+	# id=TBD upload@"$(workdir)/filtered/qpnotes-nil.csv" \
 	> /dev/null
 
 .PHONY: rebuild-qpnotes
