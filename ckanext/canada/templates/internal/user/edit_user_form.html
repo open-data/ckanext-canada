@@ -30,7 +30,8 @@
                   value=data.oldpassword,
                   error=errors.oldpassword,
                   classes=['control-medium'],
-                  attrs={'autocomplete': 'off', 'class': 'form-control'}
+                  attrs={'autocomplete': 'off', 'class': 'form-control'},
+                  is_required=true
                   ) }}
 
     {{ form.input('password1', type='password', label=_('Password'), id='field-password', value=data.password1, error=errors.password1, classes=['control-medium'], attrs={'autocomplete': 'off', 'class': 'form-control'} ) }}
