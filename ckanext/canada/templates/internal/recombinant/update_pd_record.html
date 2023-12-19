@@ -90,6 +90,6 @@
 {%- block scripts -%}
   {{ super() }}
   {% if h.recombinant_get_chromo(resource_name).get('cascading_select_fields') %}
-    <script type="text/javascript" src="{{ h.url_for_static('/cascading_select.js') }}" ></script>
+    {% asset 'canada_internal/cascading_select' %}
   {% endif %}
 {%- endblock -%}
