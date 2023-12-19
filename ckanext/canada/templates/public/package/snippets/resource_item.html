@@ -38,10 +38,6 @@
     {% endif %}
     </div>
   </div>
-  {% if h.is_registry() %}
-    {# TODO: remove after feature/datastore-xloader-status #}
-    {{ h.get_validation_badge(res, in_listing=True)|safe }}
-  {% endif %}
 {% endblock %}
 
 {% block resource_item_description %}{% endblock %}
