@@ -6,9 +6,8 @@ import lxml.html as html
 from pytz import timezone, utc
 from socket import error as socket_error
 from logging import getLogger
-import unicodecsv
-from codecs import BOM_UTF8
-from six import string_types, PY2
+import csv
+from six import string_types
 
 from ckan.plugins.toolkit import (
     abort,
@@ -69,10 +68,9 @@ from flask import Blueprint, make_response
 from ckanext.canada.urlsafe import url_part_unescape, url_part_escape
 from ckanext.canada.helpers import canada_date_str_to_datetime
 
-if PY2:
-    from cStringIO import StringIO
-else:
-    from io import StringIO
+from io import StringIO
+
+BOM = "\N{bom}"
 
 canada_views = Blueprint('canada', __name__)
 ottawa_tz = timezone('America/Montreal')
@@ -1025,8 +1023,8 @@ def organization_member_dump(id):
         ])
 
     output_stream = StringIO()
-    output_stream.write(BOM_UTF8)
-    unicodecsv.writer(output_stream, encoding=u'utf-8').writerows(results)
+    output_stream.write(BOM)
+    csv.writer(output_stream).writerows(results)
 
     file_name = u'{org_id}-{members}'.format(
             org_id=org_dict.name,
