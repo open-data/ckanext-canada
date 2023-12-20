@@ -31,4 +31,4 @@ for l in sys.stdin:
             {"name": u["name"], "capacity": u["capacity"]}
             for u in o["users"]]
 
-    print json.dumps(line, ensure_ascii=False).encode('utf-8')
+    print(json.dumps(line, ensure_ascii=False).encode('utf-8'))

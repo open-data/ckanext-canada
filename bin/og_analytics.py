@@ -177,7 +177,7 @@ class DatasetDownload():
         except:
             import traceback
             traceback.print_exc()
-            print ("Opened database failed")
+            print("Opened database failed")
             sys.exit(-1)
 
     def read_conf(self,filename):
@@ -218,12 +218,12 @@ class DatasetDownload():
         count = 0
         while count <=5:
             try:
-                print 'reading organizations...'
+                print('reading organizations...')
                 orgs = self.site.action.organization_list(all_fields=True)
                 break
             except ckanapi.errors.CKANAPIError:
                 count += 1
-                print 'Error read org list from open.canada.ca'
+                print('Error read org list from open.canada.ca')
                 time.sleep(2)
         self.orgs = {}
         self.org_name2id = {}
@@ -235,7 +235,7 @@ class DatasetDownload():
             self.org_name2id[rec['name']] = rec['id']
             self.org_id2name[rec['id']] = [ rec['name'], rec['title'] ]
         assert(len(self.orgs)>100)
-        print 'total orgs ', len(self.orgs)
+        print('total orgs %s', len(self.orgs))
 
     def read_portal(self, stats):
         self.ds = {}
@@ -243,7 +243,7 @@ class DatasetDownload():
         count = 0
         for records in self.download():
             count += len(records)
-            print 'read records ', count, ' ',  len(self.ds)
+            print('read records %s', count, ' %s',  len(self.ds))
             for rec in records:
                 if not stats.get(rec['id']):
                     continue
@@ -275,10 +275,10 @@ class DatasetDownload():
                 if len(id)!=36: continue #make sure it is an UUID
                 stats[id] += int(count)
             if len(data)==0 or not start:
-                print 'Done ', start, len(stats)
+                print('Done %s %s', start, len(stats))
                 break
             else:
-                print start
+                print(start)
         stats = dict(stats)
         self.read_portal(stats)
 
@@ -302,10 +302,10 @@ class DatasetDownload():
                 if len(id)!=36: continue #make sure it is an UUID
                 stats[id] += int(count)
             if len(data)==0 or not start:
-                print 'Done ', start, len(stats)
+                print('Done %s %s', start, len(stats))
                 break
             else:
-                print start
+                print(start)
         stats = dict(stats)
         self.read_portal(stats)
 
@@ -362,11 +362,11 @@ class DatasetDownload():
                 deleted_ds[id] = True
                 continue
             if not rec:
-                print id, ' deleted'
+                print('%s deleted', id)
                 rec_title, org_id = self.get_deleted_dataset(id)
                 deleted_ds[id] = {'title_translated':rec_title,
                                   'org_id':org_id}
-                print (rec_title, org_id)
+                print(rec_title, org_id)
             else:
                 org_id = rec['owner_org']
             ds[org_id] += c
@@ -642,11 +642,11 @@ class DatasetDownload():
             ).execute()
         data, nextPage = parseReport(response, None, 'ga:totalEvents')
         downloads = int(data[0][0])
-        print total, downloads
+        print(total, downloads)
         [year, month, _] = start.split('-')
         data = read_csv(csv_file)
         if int(data[1][0]) == int(year) and int(data[1][1]) == int(month):
-            print 'entry exists, no overwriting'
+            print('entry exists, no overwriting')
             return
         row = [year, month, total, downloads]
         data[0] = ['year / année', 'month / mois', 'visits / visites', 'downloads / téléchargements']
@@ -1021,7 +1021,7 @@ class DatasetDownload():
         fr_header = fr_months[int(m)-1]+'-'+y
         new_header = en_header + ' / ' + fr_header
         if header[-2] == new_header:
-            print 'exists ', new_header
+            print('exists ', new_header)
             return
         header[0] = 'Government of Canada Department or Agency / Ministère ou organisme'
         header[1] = 'Department or Agency datasets / Jeux de données du Ministère ou organisme'

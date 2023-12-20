@@ -131,7 +131,7 @@ def get_ministries_list():
 
 
 def get_parliamentary_position_roles(url, positions=None):
-    print url, positions
+    print(url, positions)
     url_fr = url.replace('/en/', '/fr/')
     member_roles = []
 

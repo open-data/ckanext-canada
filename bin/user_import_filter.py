@@ -16,7 +16,7 @@ for l in sys.stdin.readlines():
     o = json.loads(l)
     if o["display_name"] == 'visitor':
         continue
-    print json.dumps({
+    print(json.dumps({
         "id": o["id"],
         "apikey": o["apikey"],
         "display_name": o["display_name"],
@@ -25,5 +25,5 @@ for l in sys.stdin.readlines():
         "name": o["name"],
         "password_hash": o["password_hash"],
         "sysadmin": o["sysadmin"],
-        })
+        }))
 
