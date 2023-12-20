@@ -68,8 +68,8 @@
             'new_od',
             h.url_for('dataset_new'),
             'fa fa-folder-open',
-            'Create an Open Data Record',
-            'Add data about Government of Canada services, financials or national demographic information that is relevant to Canadians.'
+            _('Create an Open Data Record'),
+            _('Add data about Government of Canada services, financials or national demographic information that is relevant to Canadians.')
           )}}
           {{ quick_link_pd('experiment') }}
           {{ quick_link_pd('nap5') }}
@@ -83,8 +83,8 @@
             'new_oi',
             h.url_for('info_new'),
             'fa fa-folder-open',
-            'Create Information Asset',
-            'Add information about government programs, activities and publications.'
+            _('Create Information Asset'),
+            _('Add information about government programs, activities and publications.')
           )}}
         </ul>
       </section>
@@ -95,8 +95,8 @@
             'sug_dataset',
             h.url_for('dataset_search', portal_type='prop'),
             'fa fa-comment',
-            'Update Status',
-            'Access the suggested datasets that your organization has received in order to provide a status update.'
+            _('Update Status'),
+            _('Access the suggested datasets that your organization has received in order to provide a status update.')
           )}}
         </ul>
       </section>
@@ -108,8 +108,8 @@
             'consultations_master',
             '/static/data/consultations.csv',
             'fa fa-download',
-            'Consultations master dataset',
-            'Acces the dataset that consolidates all the consultations reports submitted by federal institutions.'
+            _('Consultations master dataset'),
+            _('Access the dataset that consolidates all the consultations reports submitted by federal institutions.')
           )}}
         </ul>
       </section>
@@ -120,23 +120,23 @@
             'dataset_search',
             h.url_for('dataset_search'),
             'fa fa-search',
-            'Search All Records',
-            'Add all Open Data and Information records in the Registry.'
+            _('Search All Records'),
+            _('Add all Open Data and Information records in the Registry.')
           )}}
           {% set org_name = orgs[0]['name'] if not is_sysadmin else 'tbs-sct' %}
           {{ quick_link(
             'search_org',
             h.url_for('dataset_search', organization=org_name),
             'fa fa-search',
-            'Search your Organization Records',
-            'Search all records in the Registry, for your Organization.'
+            _('Search your Organization Records'),
+            _('Search all records in the Registry, for your Organization.')
           )}}
           {{ quick_link(
             'view_org',
             h.url_for('organization_members', id=org_name),
             'fa fa-users',
-            'View Members of your Organization',
-            'View the list of members linked to your organization.'
+            _('View Members of your Organization'),
+            _('View the list of members linked to your organization.')
           )}}
         </ul>
       </section>
@@ -161,8 +161,8 @@
             'tab_par',
             tab_par_path,
             'fa fa-folder-open',
-            'Reports Tabled in Parliament',
-            'Access, add or modify your reports tabled in Parliament.'
+            _('Reports Tabled in Parliament'),
+            _('Access, add or modify your reports tabled in Parliament.')
           )}}
           {{ quick_link_pd('travelq') }}
           {{ quick_link_pd('travela') }}
@@ -175,32 +175,32 @@
                 'new_min',
                 new_min_path,
                 null,
-                'New or incoming ministers',
-                'Access, add or modify briefing package information for your new or incoming minister.'
+                _('New or incoming ministers'),
+                _('Access, add or modify briefing package information for your new or incoming minister.')
               )}}
               {% set min_dep_path = h.url_for("info_new") + '?collection=transition_deputy' %}
               {{ quick_link(
                 'min_dep',
                 min_dep_path,
                 null,
-                'New or incoming deputy heads',
-                'Access, add or modify briefing package information for your new or incoming deputy head.'
+                _('New or incoming deputy heads'),
+                _('Access, add or modify briefing package information for your new or incoming deputy head.')
               )}}
               {% set par_min_path = h.url_for("info_new") + '?collection=parliament_committee' %}
               {{ quick_link(
                 'par_min',
                 par_min_path,
                 null,
-                'Parliamentary Committee appearances for ministers',
-                'Access, add or modify briefing packages for Parliamentary Committee appearance for your minister.'
+                _('Parliamentary Committee appearances for ministers'),
+                _('Access, add or modify briefing packages for Parliamentary Committee appearance for your minister.')
               )}}
               {% set par_dep_path = h.url_for("info_new") + '?collection=parliament_committee_deputy' %}
               {{ quick_link(
                 'par_dep',
                 par_dep_path,
                 null,
-                'Parliamentary Committee appearances for deputy heads',
-                'Access, add or modify briefing packages for Parliamentary Committee appearance for your deputy head.'
+                _('Parliamentary Committee appearances for deputy heads'),
+                _('Access, add or modify briefing packages for Parliamentary Committee appearance for your deputy head.')
               )}}
             </ul>
           <li>
