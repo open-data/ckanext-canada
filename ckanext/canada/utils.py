@@ -166,7 +166,7 @@ class PortalUpdater(object):
             )
 
         # Advance generator so we may call send() below
-        pool.next()
+        next(pool)
 
         def append_log(finished, package_id, action, reason):
             if not log:
@@ -194,10 +194,10 @@ class PortalUpdater(object):
                 stats = completion_stats(self.processes)
                 while result is not None:
                     package_id, action, reason = json.loads(result)
-                    print(job_ids, stats.next(), finished, package_id, \
+                    print(job_ids, next(stats), finished, package_id, \
                         action, reason)
                     append_log(finished, package_id, action, reason)
-                    job_ids, finished, result = pool.next()
+                    job_ids, finished, result = next(pool)
 
                 print(" --- next batch starting at: " + next_date.isoformat())
                 append_log(
