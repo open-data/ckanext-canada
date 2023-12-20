@@ -13,8 +13,7 @@
   {%- set label = 'label_' + h.lang() -%}
   {%- set description = 'notes_' + h.lang() -%}
   {%- if data_dictionary_labels and field.info is defined and field.info[label]|length -%}
-    {# remove encode when upgrading to CKAN 2.9 - applied as a fix for OPEN-2054 #}
-    {{ field.info[label].encode('ascii', 'xmlcharrefreplace') | safe }}
+    {{ field.info[label]|replace(" ", nbspval) | safe }}
   {%- else -%}
     {{ field.id|replace(" ", nbspval) }}
   {%- endif -%}
