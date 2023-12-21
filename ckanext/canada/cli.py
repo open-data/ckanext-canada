@@ -745,7 +745,6 @@ def _add_to_datastore(portal, resource, resource_details, t_hash, source_ds_url,
     out, err = cmd2.communicate()
     action += ' data-loaded' if not err else ' data-load-failed'
     if verbose:
-        action += '\n    Using %s as target DataStore URL' % target_ds_url
         action += '\n    Stdout of psql command: %s' % out
         action += '\n    Stderr of psql command: %s' % err
     return action
