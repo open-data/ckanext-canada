@@ -12,6 +12,10 @@ ckanapi dump organizations --all -r http://registry.data.gc.ca | bin/transitiona
 
 import sys
 import json
+from logging import getLogger
+
+
+log = getLogger(__name__)
 
 filtered_fields = {u'id', u'name', u'title', u'title_translated',
                    u'department_number', u'umd_number', u'shortform',
@@ -31,4 +35,9 @@ for l in sys.stdin:
             {"name": u["name"], "capacity": u["capacity"]}
             for u in o["users"]]
 
-    print(json.dumps(line, ensure_ascii=False).encode('utf-8'))
+    try:
+        print(json.dumps(line, ensure_ascii=False))
+    except Exception as e:
+        log.error("Failed on Organization:")
+        log.error(line)
+        raise Exception(e)
