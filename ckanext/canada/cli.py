@@ -746,9 +746,9 @@ def _add_to_datastore(portal, resource, resource_details, t_hash, source_ds_url,
     action += ' data-loaded' if not result[1] else ' data-load-failed'
     if verbose:
         action += '\n    Using %s as target DataStore URL' % target_ds_url
-        action += '\n    PG Dump: %r' % cmd1.stdout
-        action += '\n    PSQL Command: %r' % cmd2.stdout
-        action += '\n    Result of PSQL Command: %r' % result
+        action += '\n    PG Dump: %s' % cmd1.stdout
+        action += '\n    PSQL Command: %s' % cmd2.stdout
+        action += '\n    Result of PSQL Command: %s' % result
     return action
 
 
@@ -769,7 +769,7 @@ def _add_views(portal, resource, resource_details, verbose=False):
             except ValidationError as e:
                 action += '\n  ' + view_action + ' failed for view ' + src_view['id'] + ' for resource ' + resource['id']
                 if verbose:
-                    action += '\n    Failed with ValidationError: %r' % e.error_dict
+                    action += '\n    Failed with ValidationError: %s' % e.error_dict
                 pass
 
     for target_view in target_views:
