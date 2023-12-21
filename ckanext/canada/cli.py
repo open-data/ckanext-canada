@@ -723,6 +723,8 @@ def _add_to_datastore(portal, resource, resource_details, t_hash, source_ds_url,
         if t_hash.get(resource['id']) \
                 and t_hash.get(resource['id']) == resource.get('hash')\
                 and datastore_dictionary(resource['id']) == resource_details['data_dict']:
+            if verbose:
+                action += '\n  File hash or Data Dictionary has not changed, skipping %s...' % resource['id']
             return action
         else:
             portal.call_action('datastore_delete', {"id": resource['id'], "force": True})
@@ -737,6 +739,8 @@ def _add_to_datastore(portal, resource, resource_details, t_hash, source_ds_url,
                         "force": True})
 
     action += '\n  datastore-created for ' + resource['id']
+    if verbose:
+        action += '\n    Used fields: %r' + resource_details['data_dict']
 
     # load data
     target_ds_url = str(datastore.get_write_engine().url)
