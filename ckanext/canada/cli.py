@@ -204,7 +204,7 @@ class PortalUpdater(object):
                 job_ids, finished, result = pool.send(enumerate(packages))
                 stats = completion_stats(self.processes)
                 while result is not None:
-                    package_id, action, reason = json.loads(result)
+                    package_id, action, reason = json.loads(result.decode('utf-8'))
                     print(job_ids, next(stats), finished, package_id, \
                         action, reason)
                     append_log(finished, package_id, action, reason)
@@ -746,14 +746,10 @@ def _add_to_datastore(portal, resource, resource_details, t_hash, source_ds_url,
     action += ' data-loaded' if not result[1] else ' data-load-failed'
     if verbose:
         action += '\n    Using %s as target DataStore URL' % target_ds_url
-        action += '\n    PG Dump: %s' % cmd1.stdout
-        action += '\n    PSQL Command: %s' % cmd2.stdout
-        action += '\n    Result of PSQL Command: %s' % result
     return action
 
 
 def _add_views(portal, resource, resource_details, verbose=False):
-    #FIXME: not working in py3
     action = ''
     target_views = portal.call_action('resource_view_list', {'id': resource['id']})
     for src_view in resource_details['views']:
