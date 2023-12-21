@@ -4,7 +4,7 @@ from ckanext.canada.tests.factories import (
     CanadaDataset as Dataset,
     CanadaResource as Resource)
 
-from ckanext.canada.utils import _trim_package, PACKAGE_TRIM_FIELDS, RESOURCE_TRIM_FIELDS
+from ckanext.canada.cli import _trim_package, PACKAGE_TRIM_FIELDS, RESOURCE_TRIM_FIELDS
 
 
 class TestTrimPackage(CanadaTestBase):
