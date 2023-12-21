@@ -197,7 +197,7 @@ $(workdir)/briefingt.csv:
 	$(ckan_command) -c $(registry_ini) $(combine) briefingt -d $(workdir)
 
 $(workdir)/briefingt-nil.csv:
-	$(paster) $(combine) briefingt-nil -d $(workdir) -c $(registry_ini)
+	$(ckan_command) -c $(registry_ini) $(combine) briefingt-nil -d $(workdir)
 
 $(workdir)/filtered/briefingt.csv: $(workdir)/briefingt.csv
 	$(fdir)/filter_modified_created.py < $< > $@
@@ -225,14 +225,14 @@ upload-qpnotes: $(workdir)/filtered/qpnotes.csv $(workdir)/filtered/qpnotes-nil.
 rebuild-qpnotes: $(workdir)/filtered/qpnotes.csv $(workdir)/filtered/qpnotes-nil.csv
 	@$(echo_date) Rebuilding Question Period Notes...
 	@$(oc_search) import_data_csv --csv "$(workdir)/filtered/qpnotes.csv" --search qpnotes --quiet
-	
+
 	# @$(oc_search) import_data_csv --csv "$(workdir)/filtered/qpnotes-nil.csv" --search qpnotes --nothing_to_report
 
 $(workdir)/qpnotes.csv:
 	$(ckan_command) -c $(registry_ini) $(combine) qpnotes -d $(workdir)
 
 $(workdir)/qpnotes-nil.csv:
-	$(paster) $(combine) qpnotes-nil -d $(workdir) -c $(registry_ini)
+	$(ckan_command) -c $(registry_ini) $(combine) qpnotes-nil -d $(workdir)
 
 $(workdir)/filtered/qpnotes.csv: $(workdir)/qpnotes.csv
 	$(fdir)/filter_qpnotes.py < $< > $@
