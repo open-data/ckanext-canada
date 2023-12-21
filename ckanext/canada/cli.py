@@ -37,6 +37,10 @@ from ckanext.datastore.helpers import datastore_dictionary
 
 from ckanext.canada import triggers
 
+from logging import getLogger
+
+log = getLogger(__name__)
+
 PAST_RE = (
     r'^'
     # Days
@@ -204,7 +208,13 @@ class PortalUpdater(object):
                 job_ids, finished, result = pool.send(enumerate(packages))
                 stats = completion_stats(self.processes)
                 while result is not None:
-                    package_id, action, reason = json.loads(result.decode('utf-8'))
+                    try:
+                        package_id, action, reason = json.loads(result)
+                    except Exception as e:
+                        if self.verbose:
+                            log.error("Worker proccess failed on:")
+                            log.error(result)
+                        raise Exception(e)
                     print(job_ids, next(stats), finished, package_id, \
                         action, reason)
                     append_log(finished, package_id, action, reason)
