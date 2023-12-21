@@ -5,7 +5,7 @@ targets := ati briefingt qpnotes consultations contracts contractsa dac experime
 
 csv_files := \
 	ati.csv ati-nil.csv \
-	briefingt.csv \
+	briefingt.csv briefingt-nil.csv \
 	qpnotes.csv qpnotes-nil.csv \
         contractsa.csv \
         contracts.csv contracts-nil.csv \
@@ -155,7 +155,7 @@ upload-ati: $(workdir)/filtered/ati-nil.csv $(workdir)/filtered/ati-all.csv
 	> /dev/null
 
 .PHONY: rebuild-ati
-rebuild-ati: $(workdir)/filtered/ati.csv $(workdir)/filtered/ati-nil.csv 
+rebuild-ati: $(workdir)/filtered/ati.csv $(workdir)/filtered/ati-nil.csv
 	@$(echo_date) Rebuilding ATI Summaries...
 	@$(paster) --plugin=ckanext-canada ati rebuild --lenient -c $(portal_ini) \
 	-f "$(workdir)/filtered/ati.csv" "$(workdir)/filtered/ati-nil.csv"
@@ -185,7 +185,7 @@ briefingt: upload-briefingt rebuild-briefingt
 upload-briefingt: $(workdir)/filtered/briefingt.csv $(workdir)/filtered/briefingt-nil.csv
 	@$(echo_date) Uploading Briefing Note Titles...
 	@$(ckanapi) action resource_patch -c $(registry_ini) \
-	id=299a2e26-5103-4a49-ac3a-53db9fcc06c7 upload@"$(workdir)/filtered/briefingt.csv" upload@"$(workdir)/filtered/briefingt-nil.csv" \
+	id=299a2e26-5103-4a49-ac3a-53db9fcc06c7 upload@"$(workdir)/filtered/briefingt.csv" \
 	> /dev/null
 
 .PHONY: rebuild-briefingt
@@ -217,15 +217,21 @@ upload-qpnotes: $(workdir)/filtered/qpnotes.csv $(workdir)/filtered/qpnotes-nil.
 	@$(ckanapi) action resource_patch -c $(registry_ini) \
 	id=c55a2862-7ec4-462c-a844-22acab664812 upload@"$(workdir)/filtered/qpnotes.csv" \
 	> /dev/null
+
 	@$(ckanapi) action resource_patch -c $(registry_ini) \
 	id=50754b87-f54c-41db-a0cc-590008c5a2fa upload@"$(workdir)/filtered/qpnotes-nil.csv" \
 	> /dev/null
+
+# master comment out no data yet...
+# @$(ckanapi) action resource_patch -c $(registry_ini) \
+# id=TBD upload@"$(workdir)/filtered/qpnotes-nil.csv" \
+# > /dev/null
 
 .PHONY: rebuild-qpnotes
 rebuild-qpnotes: $(workdir)/filtered/qpnotes.csv $(workdir)/filtered/qpnotes-nil.csv
 	@$(echo_date) Rebuilding Question Period Notes...
 	@$(oc_search) import_data_csv --csv "$(workdir)/filtered/qpnotes.csv" --search qpnotes --quiet
-	
+
 	# @$(oc_search) import_data_csv --csv "$(workdir)/filtered/qpnotes-nil.csv" --search qpnotes --nothing_to_report
 
 $(workdir)/qpnotes.csv:
@@ -296,10 +302,10 @@ $(workdir)/filtered/contractsa.csv: $(workdir)/contractsa.csv
 ###
 ###  Consultations
 ###
-.PHONY: consultations 
+.PHONY: consultations
 consultations: upload-consultations rebuild-consultations
 
-.PHONY: upload-consultations 
+.PHONY: upload-consultations
 upload-consultations: $(workdir)/filtered/consultations.csv \
 		$(workdir)/filtered/consultations.csv \
 		$(workdir)/filtered/current_consultations.csv \
@@ -383,7 +389,7 @@ $(workdir)/experiment.csv:
 
 $(workdir)/filtered/experiment.csv: $(workdir)/experiment.csv
 	$(fdir)/filter_experiment.py < $< > $@
-	
+
 ###
 ###  Grants and Contributions
 ###
@@ -610,7 +616,7 @@ $(workdir)/filtered/service-std.csv: $(workdir)/service-std.csv
 ###  Annual Travel, Hospitality and Conferences
 ###
 .PHONY: travela
-travela: upload-travela rebuild-travela 
+travela: upload-travela rebuild-travela
 
 .PHONY: upload-travela
 upload-travela: $(workdir)/filtered/travela.csv
