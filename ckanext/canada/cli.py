@@ -740,7 +740,7 @@ def _add_to_datastore(portal, resource, resource_details, t_hash, source_ds_url,
 
     action += '\n  datastore-created for ' + resource['id']
     if verbose:
-        action += '\n    Used fields: %s' + ' ; '.join(str(i) for i in resource_details['data_dict']) if resource_details['data_dict'] else '[]'
+        action += '\n    Used fields: %s' % ', '.join(str(i) for i in resource_details['data_dict']) if resource_details['data_dict'] else '[]'
 
     # load data
     target_ds_url = str(datastore.get_write_engine().url)
