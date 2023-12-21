@@ -742,10 +742,12 @@ def _add_to_datastore(portal, resource, resource_details, t_hash, source_ds_url,
     target_ds_url = str(datastore.get_write_engine().url)
     cmd1 = subprocess.Popen(['pg_dump', source_ds_url, '-a', '-t', resource['id']], stdout=subprocess.PIPE)
     cmd2 = subprocess.Popen(['psql', target_ds_url], stdin=cmd1.stdout, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-    result = cmd2.communicate()
-    action += ' data-loaded' if not result[1] else ' data-load-failed'
+    out, err = cmd2.communicate()
+    action += ' data-loaded' if not err else ' data-load-failed'
     if verbose:
         action += '\n    Using %s as target DataStore URL' % target_ds_url
+        action += '\n    Stdout of psql command: %s' % out
+        action += '\n    Stderr of psql command: %s' % err
     return action
 
 
