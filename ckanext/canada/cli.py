@@ -739,8 +739,6 @@ def _add_to_datastore(portal, resource, resource_details, t_hash, source_ds_url,
                         "force": True})
 
     action += '\n  datastore-created for ' + resource['id']
-    if verbose:
-        action += '\n    Used fields: %s' % ', '.join(str(i) for i in resource_details['data_dict']) if resource_details['data_dict'] else '[]'
 
     # load data
     target_ds_url = str(datastore.get_write_engine().url)
@@ -749,6 +747,12 @@ def _add_to_datastore(portal, resource, resource_details, t_hash, source_ds_url,
     out, err = cmd2.communicate()
     action += ' data-loaded' if not err else ' data-load-failed'
     if verbose:
+        if resource_details['data_dict']:
+            action += '\n    Using DataStore fields:'
+            for field in resource_details['data_dict']:
+                action += '\n      %s' % field['id']
+        else:
+            action += '\n    There are no DataStore fields!!!'
         action += '\n    Stdout of psql command: %s' % out
         action += '\n    Stderr of psql command: %s' % err
     return action
