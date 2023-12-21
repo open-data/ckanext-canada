@@ -141,11 +141,11 @@ class PortalUpdater(object):
         registry = LocalCKAN()
         source_ds = str(datastore.get_write_engine().url)
 
-        def changed_package_id_runs(start_date):
+        def changed_package_id_runs(start_date, verbose=False):
             # retrieve a list of changed packages from the registry
             while True:
                 packages, next_date = _changed_packages_since(
-                    registry, start_date)
+                    registry, start_date, verbose=verbose)
                 if next_date is None:
                     return
                 yield packages, next_date
@@ -200,7 +200,7 @@ class PortalUpdater(object):
             )
 
             for packages, next_date in (
-                    changed_package_id_runs(activity_date)):
+                    changed_package_id_runs(activity_date, verbose=self.verbose)):
                 job_ids, finished, result = pool.send(enumerate(packages))
                 stats = completion_stats(self.processes)
                 while result is not None:
@@ -221,7 +221,7 @@ class PortalUpdater(object):
             self._portal_update_completed = True
 
 
-def _changed_packages_since(registry, since_time, ids_only=False):
+def _changed_packages_since(registry, since_time, ids_only=False, verbose=False):
     """
     Query source ckan instance for packages changed since_time.
     returns (packages, next since_time to query) or (None, None)
@@ -242,6 +242,11 @@ def _changed_packages_since(registry, since_time, ids_only=False):
         return None, None
 
     packages = []
+    if verbose:
+        if ids_only:
+            print("Only retrieving changed package IDs...")
+        else:
+            print("Retrieving changed package dicts, resource views, and resource dictionaries...")
     for result in data:
         package_id = result['package_id']
         try:
@@ -253,7 +258,7 @@ def _changed_packages_since(registry, since_time, ids_only=False):
                 # ckanapi workers are expecting bytes
                 packages.append(source_package['id'].encode('utf-8'))
             else:
-                source_package = get_datastore_and_views(source_package, registry)
+                source_package = get_datastore_and_views(source_package, registry, verbose=verbose)
                 # ckanapi workers are expecting bytes
                 packages.append(json.dumps(source_package).encode('utf-8'))
 
@@ -327,7 +332,7 @@ def _copy_datasets(source, user, mirror=False, verbose=False):
                     target_pkg = None
                     target_deleted = True
 
-                target_pkg = get_datastore_and_views(target_pkg, portal)
+                target_pkg = get_datastore_and_views(target_pkg, portal, verbose=verbose)
                 _trim_package(target_pkg)
 
             target_hash = {}
@@ -716,10 +721,9 @@ def _delete_datastore_and_views(package, portal):
 
 
 def _add_to_datastore(portal, resource, resource_details, t_hash, source_ds_url, verbose=False):
-    #FIXME: not working in py3
     action = ''
     try:
-        portal.call_action('datastore_search', {'id': resource['id'], 'limit': 0})
+        portal.call_action('datastore_search', {'resource_id': resource['id'], 'limit': 0})
         if t_hash.get(resource['id']) \
                 and t_hash.get(resource['id']) == resource.get('hash')\
                 and datastore_dictionary(resource['id']) == resource_details['data_dict']:
@@ -731,6 +735,8 @@ def _add_to_datastore(portal, resource, resource_details, t_hash, source_ds_url,
             action += '\n  datastore-deleted for ' + resource['id']
     except NotFound:
         # not an issue, resource does not exist in datastore
+        if verbose:
+            action += '\n  DataStore does not exist for resource %s...trying to create it...' % resource['id']
         pass
 
     portal.call_action('datastore_create',
@@ -791,15 +797,18 @@ def _add_views(portal, resource, resource_details, verbose=False):
     return action
 
 
-def get_datastore_and_views(package, ckan_instance):
+def get_datastore_and_views(package, ckan_instance, verbose=False):
     if package and 'resources' in package:
         for resource in package['resources']:
             # check if resource exists in datastore
             if resource['datastore_active']:
+                if verbose:
+                    print("DataStore is active for %s" % resource['id'])
+                    print("  Getting resource views and DataStore fields...")
                 try:
                     table = ckan_instance.call_action('datastore_search',
-                                                             {'id': resource['id'],
-                                                              'limit': 0})
+                                                      {'resource_id': resource['id'],
+                                                       'limit': 0})
                     if table:
                         # add hash, views and data dictionary
                         package[resource['id']] = {
@@ -809,6 +818,8 @@ def get_datastore_and_views(package, ckan_instance):
                             "data_dict": datastore_dictionary(resource['id']),
                         }
                 except NotFound:
+                    if verbose:
+                        print("  WARNING: Did not find resource views or DataStore fields...")
                     pass
                 except ValidationError as e:
                     raise ValidationError({
@@ -817,6 +828,9 @@ def get_datastore_and_views(package, ckan_instance):
                         'resource_id': resource['id'],
                     })
             else:
+                if verbose:
+                    print("DataStore is inactive for %s" % resource['id'])
+                    print("  Only getting resource views...")
                 resource_views = ckan_instance.call_action('resource_view_list',
                                                            {'id': resource['id']})
                 if resource_views:
@@ -1244,7 +1258,7 @@ def _get_datastore_count(context, resource_id, verbose=False, status=1, max=1):
     """
     if verbose:
         click.echo("%s/%s -- Checking DataStore record count for Resource %s" % (status, max, resource_id))
-    info = get_action('datastore_search')(context, {"id": resource_id, "limit": 0})
+    info = get_action('datastore_search')(context, {"resource_id": resource_id, "limit": 0})
     return info.get('total')
 
 
