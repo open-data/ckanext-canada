@@ -250,15 +250,15 @@ def _changed_packages_since(registry, since_time, ids_only=False, verbose=False)
     packages = []
     if verbose:
         if ids_only:
-            print("Only retrieving changed package IDs...")
+            print("Only retrieving changed package IDs...", file=sys.stderr)
         else:
-            print("Retrieving changed package dicts, resource views, and resource dictionaries...")
+            print("Retrieving changed package dicts, resource views, and resource dictionaries...", file=sys.stderr)
     for result in data:
         package_id = result['package_id']
         try:
             source_package = registry.action.package_show(id=package_id)
         except NotFound:
-            print(package_id + " not found in database.")
+            print(package_id + " not found in database.", file=sys.stderr)
         else:
             if ids_only:
                 # ckanapi workers are expecting bytes
@@ -809,8 +809,8 @@ def get_datastore_and_views(package, ckan_instance, verbose=False):
             # check if resource exists in datastore
             if resource['datastore_active']:
                 if verbose:
-                    print("DataStore is active for %s" % resource['id'])
-                    print("  Getting resource views and DataStore fields...")
+                    print("DataStore is active for %s" % resource['id'], file=sys.stderr)
+                    print("  Getting resource views and DataStore fields...", file=sys.stderr)
                 try:
                     table = ckan_instance.call_action('datastore_search',
                                                       {'resource_id': resource['id'],
@@ -825,7 +825,7 @@ def get_datastore_and_views(package, ckan_instance, verbose=False):
                         }
                 except NotFound:
                     if verbose:
-                        print("  WARNING: Did not find resource views or DataStore fields...")
+                        print("  WARNING: Did not find resource views or DataStore fields...", file=sys.stderr)
                     pass
                 except ValidationError as e:
                     raise ValidationError({
@@ -835,8 +835,8 @@ def get_datastore_and_views(package, ckan_instance, verbose=False):
                     })
             else:
                 if verbose:
-                    print("DataStore is inactive for %s" % resource['id'])
-                    print("  Only getting resource views...")
+                    print("DataStore is inactive for %s" % resource['id'], file=sys.stderr)
+                    print("  Only getting resource views...", file=sys.stderr)
                 resource_views = ckan_instance.call_action('resource_view_list',
                                                            {'id': resource['id']})
                 if resource_views:
