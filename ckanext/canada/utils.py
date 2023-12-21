@@ -239,10 +239,12 @@ def _changed_packages_since(registry, since_time, ids_only=False):
             print(package_id + " not found in database.")
         else:
             if ids_only:
-                packages.append(source_package['id'])
+                # ckanapi workers are expecting bytes
+                packages.append(source_package['id'].encode('utf-8'))
             else:
                 source_package = get_datastore_and_views(source_package, registry)
-                packages.append(json.dumps(source_package))
+                # ckanapi workers are expecting bytes
+                packages.append(json.dumps(source_package).encode('utf-8'))
 
     if data:
         since_time = isodate(data[-1]['timestamp'], None)
