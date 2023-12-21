@@ -78,7 +78,8 @@ class PortalUpdater(object):
                  mirror,
                  log,
                  tries,
-                 delay):
+                 delay,
+                 verbose):
         self.portal_ini = portal_ini
         self.ckan_user = ckan_user
         self.last_activity_date = last_activity_date
@@ -89,6 +90,7 @@ class PortalUpdater(object):
         self.delay = delay
         self._portal_update_activity_date = None
         self._portal_update_completed = False
+        self.verbose = verbose
 
     def portal_update(self):
         """
@@ -156,6 +158,8 @@ class PortalUpdater(object):
         ]
         if self.mirror:
             cmd.append('-m')
+        if self.verbose:
+            cmd.append('-v')
 
         pool = worker_pool(
             cmd,
@@ -252,7 +256,7 @@ def _changed_packages_since(registry, since_time, ids_only=False):
     return packages, since_time
 
 
-def copy_datasets(source, user, mirror=False):
+def copy_datasets(source, user, mirror=False, verbose=False):
     """
     A process that accepts packages on stdin which are compared
     to the local version of the same package.  The local package is
@@ -332,11 +336,11 @@ def copy_datasets(source, user, mirror=False):
                 portal.action.package_update(**source_pkg)
                 for r in source_pkg['resources']:
                     target_hash[r['id']] = r.get('hash')
-                action += _add_datastore_and_views(source_pkg, portal, target_hash, source)
+                action += _add_datastore_and_views(source_pkg, portal, target_hash, source, verbose=verbose)
             elif target_pkg is None:
                 action = 'created'
                 portal.action.package_create(**source_pkg)
-                action += _add_datastore_and_views(source_pkg, portal, target_hash, source)
+                action += _add_datastore_and_views(source_pkg, portal, target_hash, source, verbose=verbose)
             elif source_pkg is None:
                 action = 'deleted'
                 portal.action.package_delete(id=package_id)
@@ -348,7 +352,7 @@ def copy_datasets(source, user, mirror=False):
                 for r in target_pkg['resources']:
                     target_hash[r['id']] = r.get('hash')
                 portal.action.package_update(**source_pkg)
-                action += _add_datastore_and_views(source_pkg, portal, target_hash, source)
+                action += _add_datastore_and_views(source_pkg, portal, target_hash, source, verbose=verbose)
 
             sys.stdout.write(json.dumps([package_id, action, reason]) + '\n')
             sys.stdout.flush()
@@ -673,16 +677,16 @@ def _trim_package(pkg):
             pkg[k] = ''
 
 
-def _add_datastore_and_views(package, portal, res_hash, ds):
+def _add_datastore_and_views(package, portal, res_hash, ds, verbose=False):
     # create datastore table and views for each resource of the package
     action = ''
     for resource in package['resources']:
         res_id = resource['id']
         if res_id in package.keys():
             if 'data_dict' in package[res_id].keys():
-                action += _add_to_datastore(portal, resource, package[res_id], res_hash, ds)
+                action += _add_to_datastore(portal, resource, package[res_id], res_hash, ds, verbose=verbose)
             if 'views' in package[res_id].keys():
-                action += _add_views(portal, resource, package[res_id])
+                action += _add_views(portal, resource, package[res_id], verbose=verbose)
     return action
 
 
@@ -704,7 +708,8 @@ def _delete_datastore_and_views(package, portal):
     return action
 
 
-def _add_to_datastore(portal, resource, resource_details, t_hash, source_ds_url):
+def _add_to_datastore(portal, resource, resource_details, t_hash, source_ds_url, verbose=False):
+    #FIXME: not working in py3
     action = ''
     try:
         portal.call_action('datastore_search', {'id': resource['id'], 'limit': 0})
@@ -732,10 +737,16 @@ def _add_to_datastore(portal, resource, resource_details, t_hash, source_ds_url)
     cmd2 = subprocess.Popen(['psql', target_ds_url], stdin=cmd1.stdout, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     result = cmd2.communicate()
     action += ' data-loaded' if not result[1] else ' data-load-failed'
+    if verbose:
+        action += '\n    Using %s as target DataStore URL' % target_ds_url
+        action += '\n    PG Dump: %r' % cmd1.stdout
+        action += '\n    PSQL Command: %r' % cmd2.stdout
+        action += '\n    Result of PSQL Command: %r' % result
     return action
 
 
-def _add_views(portal, resource, resource_details):
+def _add_views(portal, resource, resource_details, verbose=False):
+    #FIXME: not working in py3
     action = ''
     target_views = portal.call_action('resource_view_list', {'id': resource['id']})
     for src_view in resource_details['views']:
@@ -750,6 +761,8 @@ def _add_views(portal, resource, resource_details):
                 action += '\n  ' + view_action + ' ' + src_view['id'] + ' for resource ' + resource['id']
             except ValidationError as e:
                 action += '\n  ' + view_action + ' failed for view ' + src_view['id'] + ' for resource ' + resource['id']
+                if verbose:
+                    action += '\n    Failed with ValidationError: %r' % e.error_dict
                 pass
 
     for target_view in target_views:

@@ -64,6 +64,12 @@ def canada():
     default=60,
     help="Delay between retries, default: 60",
 )
+@click.option(
+    "-v",
+    "--vebose",
+    is_flag=True,
+    help="Increase verbosity",
+)
 def portal_update(portal_ini,
                   ckan_user,
                   last_activity_date=None,
@@ -71,7 +77,8 @@ def portal_update(portal_ini,
                   mirror=False,
                   log=None,
                   tries=1,
-                  delay=60):
+                  delay=60,
+                  verbose=False):
     """
     Collect batches of packages modified at local CKAN since activity_date
     and apply the package updates to the portal instance for all
@@ -93,7 +100,8 @@ def portal_update(portal_ini,
                         mirror,
                         log,
                         tries,
-                        delay).portal_update()
+                        delay,
+                        verbose).portal_update()
 
 
 @canada.command(short_help="Copy records from another source.")
@@ -115,7 +123,13 @@ def portal_update(portal_ini,
     default=None,
     help="Source datastore url to copy datastore records",
 )
-def copy_datasets(mirror=False, ckan_user=None, source=None):
+@click.option(
+    "-v",
+    "--vebose",
+    is_flag=True,
+    help="Increase verbosity",
+)
+def copy_datasets(mirror=False, ckan_user=None, source=None, verbose=False):
     """
     A process that accepts packages on stdin which are compared
     to the local version of the same package.  The local package is
@@ -128,7 +142,8 @@ def copy_datasets(mirror=False, ckan_user=None, source=None):
     """
     utils.copy_datasets(source,
                         _get_user(ckan_user),
-                        mirror)
+                        mirror,
+                        verbose)
 
 
 
