@@ -12,7 +12,7 @@ from ckan.plugins.toolkit import (
     ObjectNotFound,
     _,
     g,
-    h
+    get_action
 )
 from ckan.authz import is_sysadmin
 
@@ -219,6 +219,7 @@ def canada_resource_view_show(up_func, context, data_dict):
         # and adding the Resource Object into the context
         res_dict = context.get('resource').__dict__
         res_extras = res_dict.get('extras', {})
+        site_user = get_action('get_site_user')({'ignore_auth': True}, {})['name']
 
         if not res_extras.get('datastore_active', False) or \
         res_extras.get('validation_status') != 'success':
@@ -229,7 +230,9 @@ def canada_resource_view_show(up_func, context, data_dict):
                 # only raise if a user is not logged in
                 raise ObjectNotFound
 
-            view_dict['canada_disabled_view'] = True
+            if g.user != site_user:
+                # only add key/value if not system process
+                view_dict['canada_disabled_view'] = True
 
     return view_dict
 
@@ -257,6 +260,7 @@ def canada_resource_view_list(up_func, context, data_dict):
     # and adding the Resource Object into the context
     res_dict = context.get('resource').__dict__
     res_extras = res_dict.get('extras', {})
+    site_user = get_action('get_site_user')({'ignore_auth': True}, {})['name']
     for i, view_dict in enumerate(view_list):
 
         if view_dict.get('view_type') == 'datatables_view' and \
@@ -268,7 +272,10 @@ def canada_resource_view_list(up_func, context, data_dict):
             if not g.user:
                 # only remove from the list if a user is not logged in
                 del view_list[i]
+                continue
 
-            view_list[i]['canada_disabled_view'] = True
+            if g.user != site_user:
+                # only add key/value if not system process
+                view_list[i]['canada_disabled_view'] = True
 
     return view_list
