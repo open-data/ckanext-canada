@@ -586,12 +586,6 @@ def ckanadmin_publish_datasets():
     return h.redirect_to('canada.ckanadmin_publish')
 
 
-JOB_MAPPING = {'ckanext.validation.jobs.run_validation_job': '',
-               'ckanext.validation.plugin._remove_unsupported_resource_validation_reports': '',
-               'ckanext.xloader.jobs.xloader_data_into_datastore': '',
-               'ckanext.xloader.plugin._remove_unsupported_resource_from_datastore': '',}
-
-
 @canada_views.route('/ckan-admin/job-queue', methods=['GET'])
 def ckanadmin_job_queue():
     """

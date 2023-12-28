@@ -699,6 +699,9 @@ ul.canada-job-list.activity li.item i.fa.icon::before{
   left: 50%;
   transform: translate(-50%, -50%);
 }
+ul.canada-job-list .canada-job-item-title{
+  font-size: 115%;
+}
 div.canada-job-list-title strong{
   font-size: 16px;
   line-height: 23px;
