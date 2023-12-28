@@ -42,6 +42,14 @@ _("Actions")
 _("Revoke")
 _("You haven't created any API Tokens.")
 _("Beta")  # in our fork only
+_("Deleted API token %s")  # TODO: remove after upstream fix
+_("Organization created.")  # TODO: remove after upstream fix
+_("Group created.")  # TODO: remove after upstream fix
+_("%s created.")  # TODO: remove after upstream fix
+_("Organization updated.")  # TODO: remove after upstream fix
+_("Group updated.")  # TODO: remove after upstream fix
+_("%s updated.")  # TODO: remove after upstream fix
+_("Assigned %s as %s.")  # TODO: remove after upstream fix
 
 # strings from security
 _("Please upload a file or link to an external resource")

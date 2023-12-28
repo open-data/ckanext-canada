@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2023-12-20 17:12+0000\n"
+"POT-Creation-Date: 2023-12-28 16:35+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: fr\n"
@@ -248,31 +248,71 @@ msgstr "Supprimer"
 msgid "You haven't created any API Tokens."
 msgstr "Vous n’avez créé aucun jeton d’API."
 
-#: ckanext/canada/strings.py:43
+#: ckanext/canada/strings.py:44
 msgid "Beta"
 msgstr "Bêta"
 
+#: ckanext/canada/strings.py:45
+#, TODO: add translation, python-format
+msgid "Deleted API token %s"
+msgstr ""
+
 #: ckanext/canada/strings.py:46
+#, TODO: add translation
+msgid "Organization created."
+msgstr ""
+
+#: ckanext/canada/strings.py:47
+#, TODO: add translation
+msgid "Group created."
+msgstr ""
+
+#: ckanext/canada/strings.py:48
+#, python-format
+msgid "%s created."
+msgstr ""
+
+#: ckanext/canada/strings.py:49
+#, TODO: add translation
+msgid "Organization updated."
+msgstr ""
+
+#: ckanext/canada/strings.py:50
+#, TODO: add translation
+msgid "Group updated."
+msgstr ""
+
+#: ckanext/canada/strings.py:51
+#, TODO: add translation, python-format
+msgid "%s updated."
+msgstr ""
+
+#: ckanext/canada/strings.py:52
+#, TODO: add translation, python-format
+msgid "Assigned %s as %s."
+msgstr ""
+
+#: ckanext/canada/strings.py:55
 msgid "Please upload a file or link to an external resource"
 msgstr ""
 "Veuillez téléverser un fichier ou donner un lien vers une ressource "
 "externe"
 
-#: ckanext/canada/strings.py:47
+#: ckanext/canada/strings.py:56
 msgid "Cannot upload files of this type"
 msgstr "Impossible de téléverser un fichier de ce type"
 
-#: ckanext/canada/strings.py:48
+#: ckanext/canada/strings.py:57
 msgid "Cannot link files of this type"
 msgstr "Impossible de donner un lien vers un fichier de ce type"
 
-#: ckanext/canada/strings.py:51
+#: ckanext/canada/strings.py:60
 msgid "These fields have been removed, click update below to save your changes."
 msgstr ""
 "Ces champs seront supprimés une fois que vous aurez sauvegardé vos "
 "changements."
 
-#: ckanext/canada/strings.py:52
+#: ckanext/canada/strings.py:61
 msgid "These fields have been removed."
 msgstr "Ces champs ont été supprimés."
 
@@ -1449,9 +1489,9 @@ msgid ""
 "Add data about Government of Canada services, financials or national "
 "demographic information that is relevant to Canadians."
 msgstr ""
-"Ajouter des données sur les services du gouvernement du Canada, des données "
-"financières ou de l'information démographique nationale qui sont pertinentes "
-"pour les Canadiens."
+"Ajouter des données sur les services du gouvernement du Canada, des "
+"données financières ou de l'information démographique nationale qui sont "
+"pertinentes pour les Canadiens."
 
 #: ckanext/canada/templates/internal/home/quick_links.html:86
 msgid "Create Information Asset"
@@ -1460,8 +1500,8 @@ msgstr "Créer un enregistrement d'informations ouvertes"
 #: ckanext/canada/templates/internal/home/quick_links.html:87
 msgid "Add information about government programs, activities and publications."
 msgstr ""
-"Ajouter de l'information sur les programmes, activités et publications du "
-"gouvernement."
+"Ajouter de l'information sur les programmes, activités et publications du"
+" gouvernement."
 
 #: ckanext/canada/templates/internal/home/quick_links.html:98
 msgid "Update Status"
@@ -1472,8 +1512,8 @@ msgid ""
 "Access the suggested datasets that your organization has received in "
 "order to provide a status update."
 msgstr ""
-"Veuillez accéder aux jeux de données proposés que votre"
-" organisation a reçus afin de faire le point sur ceux-ci."
+"Veuillez accéder aux jeux de données proposés que votre organisation a "
+"reçus afin de faire le point sur ceux-ci."
 
 #: ckanext/canada/templates/internal/home/quick_links.html:112
 msgid ""
@@ -1496,8 +1536,8 @@ msgstr "Faire une recherche dans les dossiers de votre organisation"
 #: ckanext/canada/templates/internal/home/quick_links.html:132
 msgid "Search all records in the Registry, for your Organization."
 msgstr ""
-"Faire une recherche dans tous les dossiers du registre,"
-" pour votre organisation."
+"Faire une recherche dans tous les dossiers du registre, pour votre "
+"organisation."
 
 #: ckanext/canada/templates/internal/home/quick_links.html:138
 msgid "View Members of your Organization"
@@ -1510,42 +1550,41 @@ msgstr "Voir la liste des membres liés à votre organisation."
 #: ckanext/canada/templates/internal/home/quick_links.html:165
 msgid "Access, add or modify your reports tabled in Parliament."
 msgstr ""
-"Consultez vos rapports déposés au Parlement,"
-" ajoutez-y du contenu ou modifiez-les."
+"Consultez vos rapports déposés au Parlement, ajoutez-y du contenu ou "
+"modifiez-les."
 
 #: ckanext/canada/templates/internal/home/quick_links.html:179
 msgid ""
 "Access, add or modify briefing package information for your new or "
 "incoming minister."
 msgstr ""
-"Consultez la trousse d’information pour le nouveau ministre,"
-" ajoutez-y du contenu ou modifiez-la."
+"Consultez la trousse d’information pour le nouveau ministre, ajoutez-y du"
+" contenu ou modifiez-la."
 
 #: ckanext/canada/templates/internal/home/quick_links.html:187
 msgid ""
 "Access, add or modify briefing package information for your new or "
 "incoming deputy head."
 msgstr ""
-"Consultez la trousse d’information pour le nouvel"
-" administrateur général, ajoutez-y du contenu ou modifiez-la."
+"Consultez la trousse d’information pour le nouvel administrateur général,"
+" ajoutez-y du contenu ou modifiez-la."
 
 #: ckanext/canada/templates/internal/home/quick_links.html:195
 msgid ""
 "Access, add or modify briefing packages for Parliamentary Committee "
 "appearance for your minister."
 msgstr ""
-"Consultez la trousse d’information pour la comparution de votre"
-" ministre devant un comité parlementaire, ajoutez-y du"
-" contenu ou modifiez-la."
+"Consultez la trousse d’information pour la comparution de votre ministre "
+"devant un comité parlementaire, ajoutez-y du contenu ou modifiez-la."
 
 #: ckanext/canada/templates/internal/home/quick_links.html:203
 msgid ""
 "Access, add or modify briefing packages for Parliamentary Committee "
 "appearance for your deputy head."
 msgstr ""
-"Consultez la trousse d’information pour la comparution de votre"
-" administrateur général devant un comité parlementaire,"
-" ajoutez-y du contenu ou modifiez-la."
+"Consultez la trousse d’information pour la comparution de votre "
+"administrateur général devant un comité parlementaire, ajoutez-y du "
+"contenu ou modifiez-la."
 
 #: ckanext/canada/templates/internal/organization/edit_base.html:10
 #: ckanext/canada/templates/internal/package/search.html:12
