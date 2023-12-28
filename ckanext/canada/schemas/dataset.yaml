@@ -484,12 +484,12 @@ resource_fields:
 
 - field_name: schema
   label: Schema
-  preset: resource_schema
+  preset: hidden_in_form
   form_panel: validation
 
 - field_name: validation_options
   label: Validation options
-  preset: validation_options
+  preset: hidden_in_form
   form_panel: validation
 
 - field_name: validation_status

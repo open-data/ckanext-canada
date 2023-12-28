@@ -409,6 +409,9 @@ def canada_validation_options_validator(value, context):
     users to make their data scheming more lax just to pass Validation.
     This can also result in Xloader failing to load the data into the DataStore.
 
+    Even though we hide this field in the UI, it is still available via the API.
+    So we still want to limit the key/values here.
+
     The validation options from this field are used throughout the Goodtables extension,
     parsed, and passed deeper into the Tabulator's Stream and Parser classes.
 
@@ -513,6 +516,15 @@ def canada_validation_options_validator(value, context):
             value = json.loads(value)
             for key in remove_keys:
                 value.pop(key, None)
+            # enforce that row limit is an integer an no less than 1,000,000
+            if 'row_limit' in value:
+                if isinstance(value['row_limit'], text_type):
+                    if not value['row_limit'].isnumeric():
+                        value['row_limit'] = 1000000
+                    else:
+                        value['row_limit'] = int(value['row_limit'])
+                if int(value['row_limit']) < 1000000:
+                    value['row_limit'] = 1000000
             value = json.dumps(value, indent=None, sort_keys=True)
         except AttributeError:
             raise Invalid(_('Invalid JSON for Schema'))
