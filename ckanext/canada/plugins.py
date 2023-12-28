@@ -449,7 +449,16 @@ def disabled_anon_action(up_func, context, data_dict):
         return []
     return up_func(context, data_dict)
 disabled_anon_action.side_effect_free = True
-disabled_anon_action.auth_audit_exempt = True  # XXX ought to be a better way...
+disabled_anon_action.auth_audit_exempt = True
+
+
+def _disabled_action(context, data_dict):
+    """
+    Raises a NotFound exception to disable a logic action method.
+    """
+    raise ObjectNotFound
+_disabled_action.side_effect_free = True
+_disabled_action.auth_audit_exempt = True
 
 
 @chained_action
@@ -720,6 +729,11 @@ class DataGCCAForms(p.SingletonPlugin, DefaultDatasetForm):
             'organization_activity_list',
             'group_package_show',
             ]})
+        actions.update({k: _disabled_action for k in [
+            'bulk_update_private',
+            'bulk_update_public',
+            'bulk_update_delete',
+            '_bulk_update_dataset',]})
         return actions
 
     # IValidators

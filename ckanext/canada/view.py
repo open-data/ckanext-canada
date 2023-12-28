@@ -248,6 +248,16 @@ def _get_form_full_text_choices(field_name, chromo):
     return False
 
 
+@canada_views.route('/group/bulk_process/<id>', methods=['GET', 'POST'])
+def canada_group_bulk_process(id, group_type='group', is_organization=False, data=None):
+    return h.redirect_to('%s.read' % group_type, id=id)
+
+
+@canada_views.route('/organization/bulk_process/<id>', methods=['GET', 'POST'])
+def canada_organization_bulk_process(id, group_type='organization', is_organization=True, data=None):
+    return h.redirect_to('%s.read' % group_type, id=id)
+
+
 @canada_views.route('/create-pd-record/<owner_org>/<resource_name>', methods=['GET', 'POST'])
 def create_pd_record(owner_org, resource_name):
     lc = LocalCKAN(username=g.user)
