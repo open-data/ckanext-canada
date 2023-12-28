@@ -19,16 +19,19 @@
     </div>
     <ul class="canada-job-list activity">
       {% for job in job_list %}
-        <li class="item changed-package">
-          <i class="fa icon fa-circle-o-notch"></i>
+        <li class="item">
+          <i class="fa icon {{ job.get('icon') }}"></i>
           <p>
-            {{ job.get('title') or job.get('id') }}
+            <span class="canada-job-item-title">{{ job.get('type') }}</span>
             <br/>
             <span class="date">
-              {{ job.get('created_human_readable') }}
-              {% if job.get('queue') %}
-                | {{ job.get('queue') }}
+              {{ job.get('since_time') }} ({{ job.get('created_human_readable') }}) |
+              {% if job.get('info') %}
+                <a href="{{ job.get('info', {}).get('url') }}">{{ h.get_translated(job.get('info'), 'name') }}</a>
+              {% else %}
+                <span>{{ _('Unknown') }}</span>
               {% endif %}
+              | <a href="{{ h.url_for('api.action', logic_function='job_show', id=job.get('id')) }}">{{ job.get('id') }}</a>
             </span>
           </p>
         </li>

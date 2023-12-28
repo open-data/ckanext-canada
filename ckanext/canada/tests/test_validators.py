@@ -415,3 +415,42 @@ class TestNAVLSchema(CanadaTestBase):
         err = ve.value.error_dict
         assert 'schema' in err
         assert 'Invalid JSON for Schema' in err['schema'][0]
+
+
+    def test_validation_options(self):
+        "creating a resource with lax validation options should remove them"
+        pkg = self.sysadmin_action.package_create(**self.complete_pkg)
+
+        resource_data = {
+            'name_translated': {'en': u'Full text.', 'fr': u'Full text.'},
+            'format': u'TXT',
+            'url': u'http://www.annakarenina.com/download/',
+            'size': 42,
+            'resource_type': 'dataset',
+            'language': ['zxx'],
+            'package_id': pkg['id'],
+            'validation_options': {
+                'skip_checks': [],
+                'headers': 3,
+                'scheme': 'http',
+                'format': 'PNG',
+                'encoding': 'ascii',
+                'compression': True,
+                'pick_rows': [5, 6, 8],
+                'skip_rows': [3, 4],
+                'pick_fields': ['A', 'B'],
+                'skip_fields': ['C'],
+                'allow_html': True,
+                'post_parse': 'lambda',
+                'custom_loaders': 'lambda',
+                'custom_parsers': 'lambda',
+                'delimiter': ';',
+                'sheet': 2,
+                'fill_merged_cells': True,
+                'workbook_cache': 'lambda',
+                'row_limit': 'STR to 1 MIL'
+            }
+        }
+
+        resource = self.sysadmin_action.resource_create(**resource_data)
+        assert resource['validation_options'] == {u"row_limit": 1000000}

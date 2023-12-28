@@ -71,6 +71,9 @@ from flask import Blueprint, make_response
 from ckanext.canada.urlsafe import url_part_unescape, url_part_escape
 from ckanext.canada.helpers import canada_date_str_to_datetime
 
+from rq.job import Job
+from rq.exceptions import NoSuchJobError
+
 if PY2:
     from cStringIO import StringIO
 else:
@@ -243,6 +246,16 @@ def _get_form_full_text_choices(field_name, chromo):
                 field.get('form_full_text_choices', False):
             return True
     return False
+
+
+@canada_views.route('/group/bulk_process/<id>', methods=['GET', 'POST'])
+def canada_group_bulk_process(id, group_type='group', is_organization=False, data=None):
+    return h.redirect_to('%s.read' % group_type, id=id)
+
+
+@canada_views.route('/organization/bulk_process/<id>', methods=['GET', 'POST'])
+def canada_organization_bulk_process(id, group_type='organization', is_organization=True, data=None):
+    return h.redirect_to('%s.read' % group_type, id=id)
 
 
 @canada_views.route('/create-pd-record/<owner_org>/<resource_name>', methods=['GET', 'POST'])
@@ -598,15 +611,62 @@ def ckanadmin_job_queue():
         warning = True
 
     job_list = []
-    for job in jobs:
+    mystery_job_count = 0
+    for job in jobs[:25]:
+        try:
+            job_obj = Job.fetch(job.get('id'))
+            job_args = job_obj.args[0]
+        except (NoSuchJobError, KeyError):
+            mystery_job_count += 1
+            continue
+
+        if '.run_validation_job' in job_obj.func_name:
+            rid = job_args.get('id')
+            job_type = _('Validate Resource')
+            icon = 'fa-check-circle'
+        elif '._remove_unsupported_resource_validation_reports' in job_obj.func_name:
+            rid = job_args
+            job_type = _('Remove Validation Reports for Unsupported Format or Type')
+            icon = 'fa-trash'
+        elif '.xloader_data_into_datastore' in job_obj.func_name:
+            rid = job_args.get('metadata', {}).get('resource_id')
+            job_type = _('Upload to DataStore')
+            icon = 'fa-cloud-upload'
+        elif '._remove_unsupported_resource_from_datastore' in job_obj.func_name:
+            rid = job_args
+            job_type = _('Remove DataStore for Unsupported Format or Type')
+            icon = 'fa-trash'
+        else:
+            rid = None
+            job_type = _('Unknown Job')
+            icon = 'fa-circle-o-notch'
+
+        job_info = {}
+        if rid:
+            try:
+                resource = get_action('resource_show')({'user': g.user}, {'id': rid})
+            except (NotFound, NotAuthorized):
+                mystery_job_count += 1
+                continue
+            job_info = {'name_translated': resource.get('name_translated'),
+                        'resource_id': rid,
+                        'url': h.url_for('dataset_resource.read',
+                                         id=resource.get('package_id'),
+                                         resource_id=rid)}
+
         job['created_human_readable'] = canada_date_str_to_datetime(job.get('created')) \
                 .replace(tzinfo=utc).astimezone(ottawa_tz) \
                 .strftime('%Y-%m-%d %H:%M:%S %Z')
+        job['since_time'] = h.time_ago_from_timestamp(job.get('created'))
+        job['info'] = job_info
+        job['type'] = job_type
+        job['icon'] = icon
         job_list.append(job)
 
-    return render('admin/jobs.html', extra_vars={'job_list': job_list[:25],
+    return render('admin/jobs.html', extra_vars={'job_list': job_list,
                                                  'warning': warning,
-                                                 'total_job_count': len(job_list),})
+                                                 'total_job_count': len(jobs),
+                                                 'mystery_job_count': mystery_job_count})
 
 
 @canada_views.route('/dataset/<id>/delete-datastore-table/<resource_id>', methods=['GET', 'POST'])
