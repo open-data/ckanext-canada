@@ -33,7 +33,6 @@ from ckanapi.cli.workers import worker_pool
 from ckanapi.cli.utils import completion_stats
 
 import ckanext.datastore.backend.postgres as datastore
-from ckanext.datastore.helpers import datastore_dictionary
 
 from ckanext.canada import triggers
 
@@ -732,9 +731,9 @@ def _add_to_datastore(portal, resource, resource_details, t_hash, source_ds_url,
         portal.call_action('datastore_search', {'resource_id': resource['id'], 'limit': 0})
         if t_hash.get(resource['id']) \
                 and t_hash.get(resource['id']) == resource.get('hash')\
-                and datastore_dictionary(resource['id']) == resource_details['data_dict']:
+                and _datastore_dictionary(portal, resource['id']) == resource_details['data_dict']:
             if verbose:
-                action += '\n  File hash or Data Dictionary has not changed, skipping %s...' % resource['id']
+                action += '\n  File hash and Data Dictionary has not changed, skipping %s...' % resource['id']
             return action
         else:
             portal.call_action('datastore_delete', {"id": resource['id'], "force": True})
@@ -821,7 +820,7 @@ def get_datastore_and_views(package, ckan_instance, verbose=False):
                             "hash": resource.get('hash'),
                             "views": ckan_instance.call_action('resource_view_list',
                                                                {'id': resource['id']}),
-                            "data_dict": datastore_dictionary(resource['id']),
+                            "data_dict": _datastore_dictionary(ckan_instance, resource['id']),
                         }
                 except NotFound:
                     if verbose:
@@ -875,6 +874,21 @@ def _update_inventory_votes(json_name):
             registry.action.datastore_upsert(
                 resource_id=resource_id,
                 records=update)
+
+
+def _datastore_dictionary(ckan_instance, resource_id):
+    """
+    Return the data dictionary info for a resource
+    """
+    try:
+        return [
+            f for f in ckan_instance.call_action('datastore_search', {
+                    u'resource_id': resource_id,
+                    u'limit': 0,
+                    u'include_total': False})['fields']
+            if not f['id'].startswith(u'_')]
+    except (NotFound, NotAuthorized):
+        return []
 
 
 @contextmanager
