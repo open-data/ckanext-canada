@@ -712,3 +712,34 @@ label.control-label:has(span.control-required):lang(fr):after {
 li.nav-item.justify-content-between.position-relative:hover {
   background-color: #eee;
 }
+
+/*#####################
+## DataStore Buttons ##
+#######################*/
+form.canada-xloader-delete-form{
+  position: relative;
+  display: inline-block;
+  margin-bottom: 10px !important;
+  min-height: 40px;
+  float: left;
+}
+form.datapusher-form{
+  position: relative;
+  display: inline-block;
+  margin-bottom: 10px !important;
+  min-height: 40px;
+  float: left;
+}
+div.canada-datastore-button-fix{
+  height: 55px;
+}
+@media all and (max-width: 768px){
+  div.canada-datastore-button-fix{
+    height: 65px;
+  }
+}
+/*#####################
+##        END        ##
+## DataStore Buttons ##
+##        END        ##
+#######################*/

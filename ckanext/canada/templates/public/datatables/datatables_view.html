@@ -3,7 +3,7 @@
 {% block bodytag %}
   {{- super() -}}
   {% if resource_view.get('canada_disabled_view') %}
-    id="canada-disabled-view-body"
+    data-disabled-view="true"
   {% endif %}
 {% endblock %}
 

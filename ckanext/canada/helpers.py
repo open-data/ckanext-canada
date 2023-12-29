@@ -721,9 +721,8 @@ def get_loader_status_badge(resource):
     if queue_number:
         title = _("Number %s in queue") % queue_number
 
-    # TODO: use str instead of unicode for py3
-    return unicode('<a href="{pusher_url}" class="loader-badge"><img src="{badge_url}" alt="{alt}" title="{title}"/></a>').format(
+    return u'<a href="{pusher_url}" class="loader-badge"><img src="{badge_url}" alt="{alt}" title="{title}"/></a>'.format(
         pusher_url=pusher_url,
         badge_url=badge_url,
-        alt=messages[status],
-        title=title)
+        alt=html.escape(messages[status].replace('"', '\"')),
+        title=html.escape(title.replace('"', '\"')))

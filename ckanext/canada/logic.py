@@ -217,8 +217,7 @@ def canada_resource_view_show(up_func, context, data_dict):
     if view_dict.get('view_type') == 'datatables_view':
         # at this point, the core function has been called, calling resource_show
         # and adding the Resource Object into the context
-        res_dict = context.get('resource').__dict__
-        res_extras = res_dict.get('extras', {})
+        res_extras = getattr(context.get('resource'), 'extras', {})
         site_user = get_action('get_site_user')({'ignore_auth': True}, {})['name']
 
         if not res_extras.get('datastore_active', False) or \
@@ -258,9 +257,9 @@ def canada_resource_view_list(up_func, context, data_dict):
     view_list = up_func(context, data_dict)
     # at this point, the core function has been called, calling resource_show
     # and adding the Resource Object into the context
-    res_dict = context.get('resource').__dict__
-    res_extras = res_dict.get('extras', {})
+    res_extras = getattr(context.get('resource'), 'extras', {})
     site_user = get_action('get_site_user')({'ignore_auth': True}, {})['name']
+    disabled_views_indexes = []
     for i, view_dict in enumerate(view_list):
 
         if view_dict.get('view_type') == 'datatables_view' and \
@@ -271,11 +270,13 @@ def canada_resource_view_list(up_func, context, data_dict):
 
             if not g.user:
                 # only remove from the list if a user is not logged in
-                del view_list[i]
+                disabled_views_indexes.append(i)
                 continue
 
             if g.user != site_user:
                 # only add key/value if not system process
                 view_list[i]['canada_disabled_view'] = True
-
+    for i in disabled_views_indexes:
+        # actually delete the views from the list
+        del view_list[i]
     return view_list

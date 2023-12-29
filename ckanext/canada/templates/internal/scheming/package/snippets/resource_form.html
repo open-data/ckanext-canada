@@ -57,17 +57,14 @@
     {% endif %}
   </div>
 
-  <div class="mrgn-bttm-lg hidden">
-    <details>
-      <summary>{{ _("Data Validation") }}</summary>
-        {%- for field in schema.resource_fields -%}
-          {%- if field.form_panel == 'validation' -%}
-            {%- snippet 'scheming/snippets/form_field.html',
-              field=field, data=data, errors=errors,
-              entity_type='dataset', object_type=dataset_type -%}
-          {%- endif -%}
-        {%- endfor -%}
-    </details>
+  <div>
+    {%- for field in schema.resource_fields -%}
+      {%- if field.form_panel == 'validation' -%}
+        {%- snippet 'scheming/snippets/form_field.html',
+          field=field, data=data, errors=errors,
+          entity_type='dataset', object_type=dataset_type -%}
+      {%- endif -%}
+    {%- endfor -%}
   </div>
 
   {{ form.required_message() }}

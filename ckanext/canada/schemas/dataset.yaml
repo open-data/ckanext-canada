@@ -482,15 +482,8 @@ resource_fields:
 - preset: canada_resource_url
 - preset: canada_resource_data_quality
 
-- field_name: schema
-  label: Schema
-  preset: resource_schema
-  form_panel: validation
-
-- field_name: validation_options
-  label: Validation options
-  preset: validation_options
-  form_panel: validation
+- preset: canada_resource_validation_schema
+- preset: canada_resource_validation_options
 
 - field_name: validation_status
   label: Validation status

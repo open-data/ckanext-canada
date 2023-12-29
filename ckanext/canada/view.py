@@ -79,6 +79,8 @@ if PY2:
 else:
     from io import StringIO
 
+MAX_JOB_QUEUE_LIST_SIZE = 25
+
 canada_views = Blueprint('canada', __name__)
 ottawa_tz = timezone('America/Montreal')
 
@@ -611,13 +613,11 @@ def ckanadmin_job_queue():
         warning = True
 
     job_list = []
-    mystery_job_count = 0
-    for job in jobs[:25]:
+    for job in jobs[:MAX_JOB_QUEUE_LIST_SIZE]:
         try:
             job_obj = Job.fetch(job.get('id'))
             job_args = job_obj.args[0]
         except (NoSuchJobError, KeyError):
-            mystery_job_count += 1
             continue
 
         if '.run_validation_job' in job_obj.func_name:
@@ -646,7 +646,6 @@ def ckanadmin_job_queue():
             try:
                 resource = get_action('resource_show')({'user': g.user}, {'id': rid})
             except (NotFound, NotAuthorized):
-                mystery_job_count += 1
                 continue
             job_info = {'name_translated': resource.get('name_translated'),
                         'resource_id': rid,
@@ -665,8 +664,7 @@ def ckanadmin_job_queue():
 
     return render('admin/jobs.html', extra_vars={'job_list': job_list,
                                                  'warning': warning,
-                                                 'total_job_count': len(jobs),
-                                                 'mystery_job_count': mystery_job_count})
+                                                 'total_job_count': len(jobs),})
 
 
 @canada_views.route('/dataset/<id>/delete-datastore-table/<resource_id>', methods=['GET', 'POST'])

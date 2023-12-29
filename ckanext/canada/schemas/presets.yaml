@@ -4075,3 +4075,37 @@ presets:
     display_snippet: multiple_choice.html
     validators: scheming_multiple_choice
     output_validators: scheming_multiple_choice_output
+
+# Field = Schema.
+- preset_name: canada_resource_validation_schema
+  values:
+    field_name: schema
+    form_snippet: hidden.html
+    form_panel: validation
+    form_attrs:
+      readonly: ''
+      class: form-control
+    label:
+      en: "Schema"
+      fr: "Schéma"
+    required: false
+    display_snippet: json.html
+    validators: ignore_missing canada_resource_schema_validator
+    output_validators: scheming_load_json
+
+# Field = Validation options.
+- preset_name: canada_resource_validation_options
+  values:
+    field_name: validation_options
+    form_snippet: hidden.html
+    form_panel: validation
+    form_attrs:
+      readonly: ''
+      class: form-control
+    label:
+      en: "Validation options"
+      fr: "Options de validation"
+    required: false
+    display_snippet: json.html
+    validators: ignore_missing scheming_valid_json_object canada_validation_options_validator
+    output_validators: scheming_load_json
