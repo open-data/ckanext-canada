@@ -50,6 +50,9 @@ _("Organization updated.")  # TODO: remove after upstream fix
 _("Group updated.")  # TODO: remove after upstream fix
 _("%s updated.")  # TODO: remove after upstream fix
 _("Assigned %s as %s.")  # TODO: remove after upstream fix
+_("View deleted.")  # TODO: remove after upstream fix
+_("View updated.")  # TODO: remove after upstream fix
+_("View created.")  # TODO: remove after upstream fix
 
 # strings from security
 _("Please upload a file or link to an external resource")
