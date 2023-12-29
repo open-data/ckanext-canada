@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ckanext-canada 0.4.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2023-12-29 14:13+0000\n"
+"POT-Creation-Date: 2023-12-29 14:48+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -261,57 +261,47 @@ msgid "Group created."
 msgstr ""
 
 #: ckanext/canada/strings.py:48
-#, python-format
-msgid "%s created."
-msgstr ""
-
-#: ckanext/canada/strings.py:49
 msgid "Organization updated."
 msgstr ""
 
-#: ckanext/canada/strings.py:50
+#: ckanext/canada/strings.py:49
 msgid "Group updated."
 msgstr ""
 
-#: ckanext/canada/strings.py:51
-#, python-format
-msgid "%s updated."
-msgstr ""
-
-#: ckanext/canada/strings.py:52
+#: ckanext/canada/strings.py:50
 #, python-format
 msgid "Assigned %s as %s."
 msgstr ""
 
-#: ckanext/canada/strings.py:53
+#: ckanext/canada/strings.py:51
 msgid "View deleted."
 msgstr ""
 
-#: ckanext/canada/strings.py:54
+#: ckanext/canada/strings.py:52
 msgid "View updated."
 msgstr ""
 
-#: ckanext/canada/strings.py:55
+#: ckanext/canada/strings.py:53
 msgid "View created."
 msgstr ""
 
-#: ckanext/canada/strings.py:58
+#: ckanext/canada/strings.py:56
 msgid "Please upload a file or link to an external resource"
 msgstr ""
 
-#: ckanext/canada/strings.py:59
+#: ckanext/canada/strings.py:57
 msgid "Cannot upload files of this type"
 msgstr ""
 
-#: ckanext/canada/strings.py:60
+#: ckanext/canada/strings.py:58
 msgid "Cannot link files of this type"
 msgstr ""
 
-#: ckanext/canada/strings.py:63
+#: ckanext/canada/strings.py:61
 msgid "These fields have been removed, click update below to save your changes."
 msgstr ""
 
-#: ckanext/canada/strings.py:64
+#: ckanext/canada/strings.py:62
 msgid "These fields have been removed."
 msgstr ""
 
