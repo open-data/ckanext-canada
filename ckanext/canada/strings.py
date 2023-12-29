@@ -47,7 +47,9 @@ _("Organization created.")  # TODO: remove after upstream fix
 _("Group created.")  # TODO: remove after upstream fix
 _("Organization updated.")  # TODO: remove after upstream fix
 _("Group updated.")  # TODO: remove after upstream fix
-_("Assigned %s as %s.")  # TODO: remove after upstream fix
+_("Assigned %s as a member.")  # TODO: remove after upstream fix
+_("Assigned %s as an editor.")  # TODO: remove after upstream fix
+_("Assigned %s as an admin.")  # TODO: remove after upstream fix
 _("View deleted.")  # TODO: remove after upstream fix
 _("View updated.")  # TODO: remove after upstream fix
 _("View created.")  # TODO: remove after upstream fix
