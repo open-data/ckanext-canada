@@ -57,7 +57,7 @@
     {% endif %}
   </div>
 
-  <div>
+  <div class="hidden">
     {%- for field in schema.resource_fields -%}
       {%- if field.form_panel == 'validation' -%}
         {%- snippet 'scheming/snippets/form_field.html',

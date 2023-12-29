@@ -620,25 +620,23 @@ def ckanadmin_job_queue():
         except (NoSuchJobError, KeyError):
             continue
 
-        if '.run_validation_job' in job_obj.func_name:
+        job_title = job.get('title')
+
+        if job_title == 'Validate Resource':
             rid = job_args.get('id')
-            job_type = _('Validate Resource')
             icon = 'fa-check-circle'
-        elif '._remove_unsupported_resource_validation_reports' in job_obj.func_name:
+        elif job_title == 'Remove Validation Reports for Unsupported Format or Type':
             rid = job_args
-            job_type = _('Remove Validation Reports for Unsupported Format or Type')
             icon = 'fa-trash'
-        elif '.xloader_data_into_datastore' in job_obj.func_name:
+        elif job_title == 'Upload to DataStore':
             rid = job_args.get('metadata', {}).get('resource_id')
-            job_type = _('Upload to DataStore')
             icon = 'fa-cloud-upload'
-        elif '._remove_unsupported_resource_from_datastore' in job_obj.func_name:
+        elif job_title == 'Remove DataStore for Unsupported Format or Type':
             rid = job_args
-            job_type = _('Remove DataStore for Unsupported Format or Type')
             icon = 'fa-trash'
         else:
             rid = None
-            job_type = _('Unknown Job')
+            job_title = 'Unknown Job'
             icon = 'fa-circle-o-notch'
 
         job_info = {}
@@ -658,7 +656,7 @@ def ckanadmin_job_queue():
                 .strftime('%Y-%m-%d %H:%M:%S %Z')
         job['since_time'] = h.time_ago_from_timestamp(job.get('created'))
         job['info'] = job_info
-        job['type'] = job_type
+        job['type'] = _(job_title)
         job['icon'] = icon
         job_list.append(job)
 
