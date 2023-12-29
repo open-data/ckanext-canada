@@ -733,7 +733,7 @@ def _add_to_datastore(portal, resource, resource_details, t_hash, source_ds_url,
                 and t_hash.get(resource['id']) == resource.get('hash')\
                 and _datastore_dictionary(portal, resource['id']) == resource_details['data_dict']:
             if verbose:
-                action += '\n  File hash and Data Dictionary has not changed, skipping %s...' % resource['id']
+                action += '\n  File hash and Data Dictionary has not changed, skipping DataStore for %s...' % resource['id']
             return action
         else:
             portal.call_action('datastore_delete', {"id": resource['id'], "force": True})
@@ -764,8 +764,6 @@ def _add_to_datastore(portal, resource, resource_details, t_hash, source_ds_url,
                 action += '\n      %s' % field['id']
         else:
             action += '\n    There are no DataStore fields!!!'
-        action += '\n    Stdout of psql command: %s' % out
-        action += '\n    Stderr of psql command: %s' % err
     return action
 
 
