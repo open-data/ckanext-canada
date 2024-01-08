@@ -41,6 +41,7 @@ _("Last access")
 _("Actions")
 _("Revoke")
 _("You haven't created any API Tokens.")
+_("Beta")  # in our fork only
 
 # strings from security
 _("Please upload a file or link to an external resource")
