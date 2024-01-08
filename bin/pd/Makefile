@@ -26,7 +26,7 @@ csv_files := \
 fdir := $(PD_FILTER_SCRIPT_DIRECTORY)
 ckan_command := $(REGISTRY_CKAN_COMMAND)
 registry_python := $(REGISTRY_PYTHON_COMMAND)
-combine := recombinant combine
+combine := recombinant combine $(PD_MAKE_VERBOSITY_FLAG)
 registry_ini := $(REGISTRY_INI)
 portal_ini := $(PORTAL_INI)
 ckanapi := $(REGISTRY_CKANAPI_COMMAND)
@@ -158,7 +158,7 @@ upload-ati: $(workdir)/filtered/ati-nil.csv $(workdir)/filtered/ati-all.csv
 rebuild-ati: $(workdir)/filtered/ati.csv $(workdir)/filtered/ati-nil.csv
 	@$(echo_date) Rebuilding ATI Summaries...
 	@$(ckan_command) -c $(portal_ini) pd rebuild ati --lenient \
-	-f "$(workdir)/filtered/ati.csv" "$(workdir)/filtered/ati-nil.csv"
+	-f "$(workdir)/filtered/ati.csv" -f "$(workdir)/filtered/ati-nil.csv"
 
 $(workdir)/ati.csv:
 	$(ckan_command) -c $(registry_ini) $(combine) ati -d $(workdir)
@@ -441,7 +441,7 @@ upload-hospitalityq: $(workdir)/filtered/hospitalityq.csv $(workdir)/filtered/ho
 rebuild-hospitalityq: $(workdir)/filtered/hospitalityq.csv $(workdir)/filtered/hospitalityq-nil.csv
 	@$(echo_date) Rebuilding Hospitality Expenses...
 	$(ckan_command) -c $(portal_ini) pd rebuild hospitalityq --lenient \
-	-f "$(workdir)/filtered/hospitalityq.csv" "$(workdir)/filtered/hospitalityq-nil.csv"
+	-f "$(workdir)/filtered/hospitalityq.csv" -f "$(workdir)/filtered/hospitalityq-nil.csv"
 
 $(workdir)/hospitalityq.csv:
 	$(ckan_command) -c $(registry_ini) $(combine) hospitalityq -d $(workdir)
@@ -558,7 +558,7 @@ upload-reclassification: $(workdir)/filtered/reclassification.csv $(workdir)/fil
 rebuild-reclassification: $(workdir)/filtered/reclassification.csv $(workdir)/filtered/reclassification-nil.csv
 	@$(echo_date) Rebuilding Position Reclassification...
 	$(ckan_command) -c $(portal_ini) pd rebuild reclassification --lenient \
-	-f "$(workdir)/filtered/reclassification.csv" "$(workdir)/filtered/reclassification-nil.csv"
+	-f "$(workdir)/filtered/reclassification.csv" -f "$(workdir)/filtered/reclassification-nil.csv"
 
 $(workdir)/reclassification.csv:
 	$(ckan_command) -c $(registry_ini) $(combine) reclassification -d $(workdir)
