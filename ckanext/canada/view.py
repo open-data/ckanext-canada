@@ -252,11 +252,19 @@ def _get_form_full_text_choices(field_name, chromo):
 
 @canada_views.route('/group/bulk_process/<id>', methods=['GET', 'POST'])
 def canada_group_bulk_process(id, group_type='group', is_organization=False, data=None):
+    """
+    Redirects the Group bulk action endpoint as it does not support
+    the IPackageController and IResourceController implementations.
+    """
     return h.redirect_to('%s.read' % group_type, id=id)
 
 
 @canada_views.route('/organization/bulk_process/<id>', methods=['GET', 'POST'])
 def canada_organization_bulk_process(id, group_type='organization', is_organization=True, data=None):
+    """
+    Redirects the Organization bulk action endpoint as it does not support
+    the IPackageController and IResourceController implementations.
+    """
     return h.redirect_to('%s.read' % group_type, id=id)
 
 

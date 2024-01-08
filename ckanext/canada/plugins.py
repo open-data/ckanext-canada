@@ -724,6 +724,8 @@ class DataGCCAForms(p.SingletonPlugin, DefaultDatasetForm):
             'organization_activity_list',
             'group_package_show',
             ]})
+        # disable group & organization bulk actions as they do not support
+        # IPackageController and IResourceController implementations.
         actions.update({k: _disabled_action for k in [
             'bulk_update_private',
             'bulk_update_public',
