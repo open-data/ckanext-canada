@@ -276,7 +276,4 @@ def canada_resource_view_list(up_func, context, data_dict):
             if g.user != site_user:
                 # only add key/value if not system process
                 view_list[i]['canada_disabled_view'] = True
-    for i in disabled_views_indexes:
-        # actually delete the views from the list
-        del view_list[i]
-    return view_list
+    return [v for i, v in enumerate(view_list) if i not in disabled_views_indexes]
