@@ -4076,7 +4076,7 @@ presets:
     validators: scheming_multiple_choice
     output_validators: scheming_multiple_choice_output
 
-# Field = Schema.
+# Field = Validation Schema.
 - preset_name: canada_resource_validation_schema
   values:
     field_name: schema
@@ -4084,10 +4084,10 @@ presets:
     form_panel: _exclude_from_form
     required: false
     display_snippet: null
-    validators: canada_resource_schema_validator
-    output_validators: scheming_load_json
+    validators: ignore
+    output_validators: canada_resource_schema_output
 
-# Field = Validation options.
+# Field = Validation Options.
 - preset_name: canada_resource_validation_options
   values:
     field_name: validation_options
@@ -4095,5 +4095,5 @@ presets:
     form_panel: _exclude_from_form
     required: false
     display_snippet: null
-    validators: canada_validation_options_validator
-    output_validators: scheming_load_json
+    validators: ignore
+    output_validators: canada_validation_options_output

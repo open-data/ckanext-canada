@@ -387,18 +387,18 @@ def json_string_has_en_fr_keys(value, context):
     return value
 
 
-def canada_resource_schema_validator(value, context):
+def canada_resource_schema_output(value, context):
     """
     Always forces an empty dict
     """
-    return json.dumps({}, indent=None, sort_keys=True)
+    return {}
 
 
-def canada_validation_options_validator(value, context):
+def canada_validation_options_output(value, context):
     """
     Always force 1 Million row limit
     """
-    return json.dumps({'row_limit': 1000000}, indent=None, sort_keys=True)
+    return {u'row_limit': 1000000}
 
 
 def canada_security_upload_type(key, data, errors, context):
