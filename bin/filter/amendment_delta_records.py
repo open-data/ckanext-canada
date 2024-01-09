@@ -76,7 +76,7 @@ with tempfile.NamedTemporaryFile() as dbfile:
             for i, row in iterator:
                 row[AMENDMENT_COLUMN] = "%02d" % i
                 out_csv.writerow({
-                    k: v for (k, v) in row.iteritems()
+                    k: v for (k, v) in row.items()
                     if k in (f0, AMENDMENT_COLUMN, OWNER_ORG, OWNER_ORG_TITLE)
                         or v != prev[k]})
                 prev = row

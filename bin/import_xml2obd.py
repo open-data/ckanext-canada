@@ -274,7 +274,7 @@ xml2resource={
 
 def xml_obd_mapping(dict_data, map_dict):
     res = {}
-    for k,f in map_dict.iteritems():
+    for k,f in map_dict.items():
         if k in dict_data:
             v = dict_data[k]
             dict_data.pop(k)
@@ -346,12 +346,12 @@ def read_conf(filename):
 
 
 def _compare_pkgs(rec, pkg):
-    for k,v in rec.iteritems():
+    for k,v in rec.items():
         if k in ['date_published', 'metadata_modified', 'metadata_created', 'resources']:
             continue
         if v != pkg.get(k, None):
             return False
-    for k,v in rec['resources'][0].iteritems():
+    for k,v in rec['resources'][0].items():
         if k in ['created']:
             if v in pkg['resources'][0].get(k, None):
                 continue
@@ -539,7 +539,7 @@ def pull_docs(conf_file, local_dir):
         else:
             print('\t same file name, but older %s', fname)
 
-    for f_basename, details in files_info.iteritems():
+    for f_basename, details in files_info.items():
         fname = details['fname']
         objmd5 = details['objmd5']
         print('Downloading %s', fname)
@@ -639,7 +639,7 @@ def duplicate_docs(file_dir, site_url):
         apikey=None,
         user_agent='ckanapi-uploader/1.0')
 
-    for md5, flist in md5dict.iteritems():
+    for md5, flist in md5dict.items():
         if len(flist) > 1:
             ids = [ str(uuid.uuid5(uuid.NAMESPACE_URL,
                    'http://obd.open.canada.ca/' + fbase + '.xml')) for fbase in flist]
@@ -691,7 +691,7 @@ def de_dup2(site_url):
             break
     print('Total records %s', count)
 
-    for k, vl in records.iteritems():
+    for k, vl in records.items():
         if len(vl) <=1: continue
         print(vl)
 

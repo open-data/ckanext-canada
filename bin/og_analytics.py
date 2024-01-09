@@ -54,7 +54,7 @@ def write_xls(filename, sheets):
 
         cols =  [col for col in ws.columns]
         widths = sheet.get('col_width', {})
-        for k,v in widths.iteritems():
+        for k,v in widths.items():
             ws.column_dimensions[cols[k][0].column_letter].width = v
     try:
         sheet1 = book.get_sheet_by_name("Sheet")
@@ -316,7 +316,7 @@ class DatasetDownload():
 
     def dump_info(self, data):
         sheets =[]
-        top100 = [[id,c] for id,c in data.iteritems()]
+        top100 = [[id,c] for id,c in data.items()]
         top100 = heapq.nlargest(100, top100, key=lambda x:x[1])
         rows = [['ID / Identificateur',
                  'Title English / Titre en anglais',
@@ -356,7 +356,7 @@ class DatasetDownload():
         ds = defaultdict(int)
         sheets = defaultdict(list)
         deleted_ds = {}
-        for id,c in data.iteritems():
+        for id,c in data.items():
             rec = self.ds.get(id, None)
             if (not rec) and ignore_deleted:
                 deleted_ds[id] = True
@@ -374,12 +374,12 @@ class DatasetDownload():
             sheet = sheets[org_id]
             sheet.append(id)
         if ignore_deleted:
-            for k,v in deleted_ds.iteritems():
+            for k,v in deleted_ds.items():
                 data.pop(k)
             deleted_ds = {}
 
         rows = []
-        for k,v in ds.iteritems():
+        for k,v in ds.items():
             title = self.orgs.get(k, ['', ''])
             if len(title) ==1:
                 title.append(title[0])
@@ -397,7 +397,7 @@ class DatasetDownload():
     def saveXls(self, org_recs, data, org_stats, deleted_ds, isVisit=False):
         sheets =[]
         rows =[]
-        for k, [name, title] in self.org_id2name.iteritems():
+        for k, [name, title] in self.org_id2name.items():
             count = org_stats.get(k, 0)
             if count == 0:
                 continue
@@ -417,7 +417,7 @@ class DatasetDownload():
                    }
 
         #get top100
-        top100 = [[id,c] for id,c in data.iteritems()]
+        top100 = [[id,c] for id,c in data.items()]
         top100 = heapq.nlargest(100, top100, key=lambda x:x[1])
         rows = [['ID / Identificateur',
                  'Title English / Titre en anglais',
@@ -449,7 +449,7 @@ class DatasetDownload():
         ga_tmp_dir = os.environ['GA_TMP_DIR']
         write_csv(os.path.join(ga_tmp_dir, "od_ga_top100.csv"), rows)
 
-        for org_id, recs in org_recs.iteritems():
+        for org_id, recs in org_recs.items():
             rows = []
             title = self.org_id2name.get(org_id, ['unknown'])[0]
             for rec_id in recs:
@@ -985,7 +985,7 @@ class DatasetDownload():
         rows = []
         header = ['Department or Agency', 'Ministère ou organisme',
                      'Department or Agency datasets', 'Jeux de données du Ministère ou organisme' , 'Total']
-        for org_id, count in org_stats.iteritems():
+        for org_id, count in org_stats.items():
             [title_en, title_fr] = self.orgs.get(org_id, ['', ''])
             name = self.org_id2name[org_id][0]
             link_en = 'http://open.canada.ca/data/en/dataset?organization=' + name
@@ -1079,7 +1079,7 @@ class DatasetDownload():
             row[2] = pr + c
 
         # New org
-        for org_id, count in org_stats.iteritems():
+        for org_id, count in org_stats.items():
             if org_id in exists:
                 continue
             titles =  self.orgs.get(org_id, ['', ''])
