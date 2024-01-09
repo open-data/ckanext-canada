@@ -180,7 +180,7 @@ def _update_records(records, org_detail, conn, resource_name, unmatched):
         pk = [pk]
 
     org = org_detail['name']
-    orghash = hashlib.md5(org).hexdigest()
+    orghash = hashlib.md5(org.encode('utf-8')).hexdigest()
 
     def unique_id(r):
         "return hash, friendly id, partial id"
