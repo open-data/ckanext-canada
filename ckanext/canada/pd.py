@@ -188,7 +188,7 @@ def _update_records(records, org_detail, conn, resource_name, unmatched):
         f = org
         p = org
         for k in pk:
-            s = hashlib.md5(s + r[k].encode('utf-8')).hexdigest()
+            s = hashlib.md5((s + r[k]).encode('utf-8')).hexdigest()
             f += u'|' + str(r[k])
             if u'|' not in p:
                 p += u'|' + str(r[k])
@@ -211,9 +211,9 @@ def _update_records(records, org_detail, conn, resource_name, unmatched):
         unique, friendly, partial = unique_id(r)
         if chromo.get('solr_legacy_ati_ids', False):
             # for compatibility with existing urls
-            unique = hashlib.md5(orghash
+            unique = hashlib.md5((orghash
                 + r.get('request_number', repr((int(r['year']), int(r['month'])))
-                ).encode('utf-8')).hexdigest()
+                )).encode('utf-8')).hexdigest()
 
         solrrec = {
             'id': unique,
