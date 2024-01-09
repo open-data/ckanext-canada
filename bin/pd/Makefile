@@ -157,7 +157,7 @@ upload-ati: $(workdir)/filtered/ati-nil.csv $(workdir)/filtered/ati-all.csv
 .PHONY: rebuild-ati
 rebuild-ati: $(workdir)/filtered/ati.csv $(workdir)/filtered/ati-nil.csv
 	@$(echo_date) Rebuilding ATI Summaries...
-	@$(ckan_command) -c $(portal_ini) pd rebuild ati --lenient \
+	@$(ckan_command) -c $(portal_ini) pd rebuild ati --lenient --has-nil \
 	-f "$(workdir)/filtered/ati.csv" -f "$(workdir)/filtered/ati-nil.csv"
 
 $(workdir)/ati.csv:
@@ -440,7 +440,7 @@ upload-hospitalityq: $(workdir)/filtered/hospitalityq.csv $(workdir)/filtered/ho
 .PHONY: rebuild-hospitalityq
 rebuild-hospitalityq: $(workdir)/filtered/hospitalityq.csv $(workdir)/filtered/hospitalityq-nil.csv
 	@$(echo_date) Rebuilding Hospitality Expenses...
-	$(ckan_command) -c $(portal_ini) pd rebuild hospitalityq --lenient \
+	$(ckan_command) -c $(portal_ini) pd rebuild hospitalityq --lenient --has-nil \
 	-f "$(workdir)/filtered/hospitalityq.csv" -f "$(workdir)/filtered/hospitalityq-nil.csv"
 
 $(workdir)/hospitalityq.csv:
@@ -557,7 +557,7 @@ upload-reclassification: $(workdir)/filtered/reclassification.csv $(workdir)/fil
 .PHONY: rebuild-reclassification
 rebuild-reclassification: $(workdir)/filtered/reclassification.csv $(workdir)/filtered/reclassification-nil.csv
 	@$(echo_date) Rebuilding Position Reclassification...
-	$(ckan_command) -c $(portal_ini) pd rebuild reclassification --lenient \
+	$(ckan_command) -c $(portal_ini) pd rebuild reclassification --lenient --has-nil \
 	-f "$(workdir)/filtered/reclassification.csv" -f "$(workdir)/filtered/reclassification-nil.csv"
 
 $(workdir)/reclassification.csv:

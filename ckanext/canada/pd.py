@@ -62,10 +62,10 @@ def clear(pd_type):
 )
 @click.option(
     "-f",
-    "--file",
+    "--files",
     default=None,
     multiple=True,
-    help="CSV file to use as input (or default CKAN DB). Use PD and PD-nil files for NIL types.",
+    help="CSV file(s) to use as input (or default CKAN DB). Use PD and PD-nil files for NIL types.",
 )
 @click.option(
     "-s",
@@ -75,11 +75,11 @@ def clear(pd_type):
 )
 @click.option(
     "-n",
-    "--is-nil",
+    "--has-nil",
      is_flag=True,
     help="If the PD Type is a NIL type.",
 )
-def rebuild(pd_type, files=None, solr_url=None, lenient=False, is_nil=False):
+def rebuild(pd_type, files=None, solr_url=None, lenient=False, has_nil=False):
     """
     Rebuilds and reindexes all SOLR records.
 
@@ -91,7 +91,7 @@ def rebuild(pd_type, files=None, solr_url=None, lenient=False, is_nil=False):
     """
     _check_pd_type(pd_type)
     if files:
-        if not is_nil and len(files) >= 2:
+        if not has_nil and len(files) >= 2:
             raise ValueError('You may only supply one file for non NIL types')
         if len(files) > 2:
             raise ValueError('You may only supply up to two files')
