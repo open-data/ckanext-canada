@@ -81,6 +81,25 @@ else:
 
 MAX_JOB_QUEUE_LIST_SIZE = 25
 
+JOB_MAPPING = {
+    'ckanext.validation.jobs.run_validation_job': {
+        'icon': 'fa-check-circle',
+        'rid': lambda job_args: job_args.get('id'),
+    },
+    'ckanext.validation.plugin._remove_unsupported_resource_validation_reports': {
+        'icon': 'fa-trash',
+        'rid': lambda job_args: job_args,
+    },
+    'ckanext.xloader.jobs.xloader_data_into_datastore': {
+        'icon': 'fa-cloud-upload',
+        'rid': lambda job_args: job_args.get('metadata', {}).get('resource_id'),
+    },
+    'ckanext.xloader.plugin._remove_unsupported_resource_from_datastore': {
+        'icon': 'fa-trash',
+        'rid': lambda job_args: job_args,
+    },
+}
+
 canada_views = Blueprint('canada', __name__)
 ottawa_tz = timezone('America/Montreal')
 
@@ -628,23 +647,14 @@ def ckanadmin_job_queue():
         except (NoSuchJobError, KeyError):
             continue
 
-        job_title = job.get('title')
+        job_title = _(job.get('title', 'Unknown Job'))
 
-        if job_title == 'Validate Resource':
-            rid = job_args.get('id')
-            icon = 'fa-check-circle'
-        elif job_title == 'Remove Validation Reports for Unsupported Format or Type':
-            rid = job_args
-            icon = 'fa-trash'
-        elif job_title == 'Upload to DataStore':
-            rid = job_args.get('metadata', {}).get('resource_id')
-            icon = 'fa-cloud-upload'
-        elif job_title == 'Remove DataStore for Unsupported Format or Type':
-            rid = job_args
-            icon = 'fa-trash'
+        if job_obj.func_name in JOB_MAPPING:
+            rid = JOB_MAPPING[job_obj.func_name]['rid'](job_args)
+            icon = JOB_MAPPING[job_obj.func_name]['icon']
         else:
             rid = None
-            job_title = 'Unknown Job'
+            job_title = _('Unknown Job')
             icon = 'fa-circle-o-notch'
 
         job_info = {}
@@ -664,7 +674,7 @@ def ckanadmin_job_queue():
                 .strftime('%Y-%m-%d %H:%M:%S %Z')
         job['since_time'] = h.time_ago_from_timestamp(job.get('created'))
         job['info'] = job_info
-        job['type'] = _(job_title)
+        job['type'] = job_title
         job['icon'] = icon
         job_list.append(job)
 

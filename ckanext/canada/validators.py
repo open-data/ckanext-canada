@@ -387,6 +387,13 @@ def json_string_has_en_fr_keys(value, context):
     return value
 
 
+def canada_blank_value_creator(value):
+    """
+    Generates a blank value
+    """
+    return u''
+
+
 def canada_resource_schema_output(value, context):
     """
     Always forces an empty dict
