@@ -669,8 +669,8 @@ ckanext.canada:schemas/prop.yaml
     # IActions
     def get_actions(self):
         return {
-            'recently_changed_packages_activity_list': act.recently_changed_packages_activity_list,  #TODO: Remove this action override in CKAN 2.10 upgrade
-        }
+                'recently_changed_packages_activity_list': act.recently_changed_packages_activity_list,  #TODO: Remove this action override in CKAN 2.10 upgrade
+               }
 
     # IAuthFunctions
     def get_auth_functions(self):
@@ -804,8 +804,6 @@ class LogExtraMiddleware(object):
                 exc_info)
 
         return self.app(environ, _start_response)
-
-
 
 
 def _wet_pager(self, *args, **kwargs):
