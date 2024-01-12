@@ -88,19 +88,12 @@ class CanadaDatasetsPlugin(SchemingDatasetsPlugin):
     p.implements(p.IDatasetForm, inherit=True)
     p.implements(p.IPackageController, inherit=True)
     p.implements(p.IBlueprint)
-    p.implements(p.IActions)
     try:
         from ckanext.validation.interfaces import IDataValidation
     except ImportError:
         log.warn('failed to import ckanext-validation interface')
     else:
         p.implements(IDataValidation, inherit=True)
-
-
-    # IActions
-    def get_actions(self):
-        return {'resource_view_show': logic.canada_resource_view_show,
-                'resource_view_list': logic.canada_resource_view_list}
 
 
     # IBlueprint
@@ -670,6 +663,8 @@ ckanext.canada:schemas/prop.yaml
     def get_actions(self):
         return {
                 'recently_changed_packages_activity_list': act.recently_changed_packages_activity_list,  #TODO: Remove this action override in CKAN 2.10 upgrade
+                'resource_view_show': logic.canada_resource_view_show,
+                'resource_view_list': logic.canada_resource_view_list
                }
 
     # IAuthFunctions
@@ -721,6 +716,8 @@ class DataGCCAForms(p.SingletonPlugin, DefaultDatasetForm):
             'organization_activity_list',
             'group_package_show',
             ]})
+        # disable group & organization bulk actions as they do not support
+        # IPackageController and IResourceController implementations.
         actions.update({k: _disabled_action for k in [
             'bulk_update_private',
             'bulk_update_public',
@@ -771,10 +768,12 @@ class DataGCCAForms(p.SingletonPlugin, DefaultDatasetForm):
                 validators.json_string,
             'json_string_has_en_fr_keys':
                 validators.json_string_has_en_fr_keys,
-            'resource_schema_validator':
-                validators.canada_resource_schema_validator,
-            'validation_options_validator':
-                validators.canada_validation_options_validator,
+            'canada_blank_value_creator':
+                validators.canada_blank_value_creator,
+            'canada_resource_schema_output':
+                validators.canada_resource_schema_output,
+            'canada_validation_options_output':
+                validators.canada_validation_options_output,
             }
 
 

@@ -21,11 +21,11 @@ div#dtprv_processing.dataTables_processing > div:last-child > div{
   background-color: #335075 !important;
   pointer-events: none !important;
 }
-body#canada-disabled-view-body div#resize_wrapper{
+body[data-disabled-view="true"] div#resize_wrapper{
   margin-top: 75px !important;
 }
 @media all and (max-width: 992px){
-  body#canada-disabled-view-body div#resize_wrapper{
+  body[data-disabled-view="true"] div#resize_wrapper{
     margin-top: 125px !important;
   }
 }

@@ -387,7 +387,7 @@ class TestNAVLSchema(CanadaTestBase):
 
 
     def test_validation_schema(self):
-        "creating a resource with a URL schema should not be allowed"
+        "creating a resource with a URL schema should empty the schema"
         pkg = self.sysadmin_action.package_create(**self.complete_pkg)
 
         resource_data = {
@@ -401,20 +401,14 @@ class TestNAVLSchema(CanadaTestBase):
             'schema': 'https://www.annakarenina.com'
         }
 
-        with pytest.raises(ValidationError) as ve:
-            self.sysadmin_action.resource_create(**resource_data)
-        err = ve.value.error_dict
-        assert 'schema' in err
-        assert 'Schema URLs are not supported' in err['schema'][0]
+        resource = self.sysadmin_action.resource_create(**resource_data)
+        assert resource['schema'] == {}
 
         resource_data = dict(resource_data,
                             schema='{"fields":["this is bad JSON for Schema"]}')
 
-        with pytest.raises(ValidationError) as ve:
-            self.sysadmin_action.resource_create(**resource_data)
-        err = ve.value.error_dict
-        assert 'schema' in err
-        assert 'Invalid JSON for Schema' in err['schema'][0]
+        resource = self.sysadmin_action.resource_create(**resource_data)
+        assert resource['schema'] == {}
 
 
     def test_validation_options(self):

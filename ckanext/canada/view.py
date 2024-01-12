@@ -79,6 +79,27 @@ if PY2:
 else:
     from io import StringIO
 
+MAX_JOB_QUEUE_LIST_SIZE = 25
+
+JOB_MAPPING = {
+    'ckanext.validation.jobs.run_validation_job': {
+        'icon': 'fa-check-circle',
+        'rid': lambda job_args: job_args.get('id'),
+    },
+    'ckanext.validation.plugin._remove_unsupported_resource_validation_reports': {
+        'icon': 'fa-trash',
+        'rid': lambda job_args: job_args,
+    },
+    'ckanext.xloader.jobs.xloader_data_into_datastore': {
+        'icon': 'fa-cloud-upload',
+        'rid': lambda job_args: job_args.get('metadata', {}).get('resource_id'),
+    },
+    'ckanext.xloader.plugin._remove_unsupported_resource_from_datastore': {
+        'icon': 'fa-trash',
+        'rid': lambda job_args: job_args,
+    },
+}
+
 canada_views = Blueprint('canada', __name__)
 ottawa_tz = timezone('America/Montreal')
 
@@ -250,11 +271,19 @@ def _get_form_full_text_choices(field_name, chromo):
 
 @canada_views.route('/group/bulk_process/<id>', methods=['GET', 'POST'])
 def canada_group_bulk_process(id, group_type='group', is_organization=False, data=None):
+    """
+    Redirects the Group bulk action endpoint as it does not support
+    the IPackageController and IResourceController implementations.
+    """
     return h.redirect_to('%s.read' % group_type, id=id)
 
 
 @canada_views.route('/organization/bulk_process/<id>', methods=['GET', 'POST'])
 def canada_organization_bulk_process(id, group_type='organization', is_organization=True, data=None):
+    """
+    Redirects the Organization bulk action endpoint as it does not support
+    the IPackageController and IResourceController implementations.
+    """
     return h.redirect_to('%s.read' % group_type, id=id)
 
 
@@ -611,34 +640,21 @@ def ckanadmin_job_queue():
         warning = True
 
     job_list = []
-    mystery_job_count = 0
-    for job in jobs[:25]:
+    for job in jobs[:MAX_JOB_QUEUE_LIST_SIZE]:
         try:
             job_obj = Job.fetch(job.get('id'))
             job_args = job_obj.args[0]
         except (NoSuchJobError, KeyError):
-            mystery_job_count += 1
             continue
 
-        if '.run_validation_job' in job_obj.func_name:
-            rid = job_args.get('id')
-            job_type = _('Validate Resource')
-            icon = 'fa-check-circle'
-        elif '._remove_unsupported_resource_validation_reports' in job_obj.func_name:
-            rid = job_args
-            job_type = _('Remove Validation Reports for Unsupported Format or Type')
-            icon = 'fa-trash'
-        elif '.xloader_data_into_datastore' in job_obj.func_name:
-            rid = job_args.get('metadata', {}).get('resource_id')
-            job_type = _('Upload to DataStore')
-            icon = 'fa-cloud-upload'
-        elif '._remove_unsupported_resource_from_datastore' in job_obj.func_name:
-            rid = job_args
-            job_type = _('Remove DataStore for Unsupported Format or Type')
-            icon = 'fa-trash'
+        job_title = _(job.get('title', 'Unknown Job'))
+
+        if job_obj.func_name in JOB_MAPPING:
+            rid = JOB_MAPPING[job_obj.func_name]['rid'](job_args)
+            icon = JOB_MAPPING[job_obj.func_name]['icon']
         else:
             rid = None
-            job_type = _('Unknown Job')
+            job_title = _('Unknown Job')
             icon = 'fa-circle-o-notch'
 
         job_info = {}
@@ -646,7 +662,6 @@ def ckanadmin_job_queue():
             try:
                 resource = get_action('resource_show')({'user': g.user}, {'id': rid})
             except (NotFound, NotAuthorized):
-                mystery_job_count += 1
                 continue
             job_info = {'name_translated': resource.get('name_translated'),
                         'resource_id': rid,
@@ -659,14 +674,13 @@ def ckanadmin_job_queue():
                 .strftime('%Y-%m-%d %H:%M:%S %Z')
         job['since_time'] = h.time_ago_from_timestamp(job.get('created'))
         job['info'] = job_info
-        job['type'] = job_type
+        job['type'] = job_title
         job['icon'] = icon
         job_list.append(job)
 
     return render('admin/jobs.html', extra_vars={'job_list': job_list,
                                                  'warning': warning,
-                                                 'total_job_count': len(jobs),
-                                                 'mystery_job_count': mystery_job_count})
+                                                 'total_job_count': len(jobs),})
 
 
 @canada_views.route('/dataset/<id>/delete-datastore-table/<resource_id>', methods=['GET', 'POST'])
