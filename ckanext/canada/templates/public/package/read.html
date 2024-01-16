@@ -2,11 +2,6 @@
 {% import 'macros/canada_read.html' as cr %}
 
 {%- block custom_styles %}
-  {% if (c.pkg_dict.organization.name == 'psc-cfp') %}
-    {%- block invitation_manager_styles -%}
-      <link rel="stylesheet" href="{{ h.url_for_static('/invitation-manager/Overlay.css') }}" type="text/css">
-    {%- endblock -%}
-  {% endif %}
   {{ super() }}
 {%- endblock -%}
 
@@ -266,14 +261,6 @@
 {% endblock primary_content_inner %}
 
 {% block scripts %}
-
-{% if (c.pkg_dict.organization.name == 'psc-cfp') %}
-  {%- block invitation_manager_scripts -%}
-    <script defer src="{{ h.url_for_static('/invitation-manager/Overlay.js') }}" type="text/javascript"></script>
-    <script defer src="{{ h.url_for_static('/invitation-manager/InvitationManager.js') }}" type="text/javascript"></script>
-  {%- endblock -%}
-{% endif %}
-
   {% if h.is_registry() %}
     {% asset 'canada_internal/geomap_zoom' %}
   {% else %}
