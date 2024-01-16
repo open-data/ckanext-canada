@@ -14,7 +14,6 @@ from ckanapi import NotFound
 from ckantoolkit import h, aslist
 import ckan.plugins.toolkit as t
 from ckanext.scheming.helpers import scheming_get_preset
-import webhelpers.html as html
 import dateutil.parser
 import geomet.wkt as wkt
 import json as json
@@ -27,6 +26,11 @@ try:
     from ckanext.xloader.utils import XLoaderFormats
 except ImportError:
     XLoaderFormats = None
+
+try:
+    import webhelpers.html as html
+except ImportError:
+    import html
 
 ORG_MAY_PUBLISH_OPTION = 'canada.publish_datasets_organization_name'
 ORG_MAY_PUBLISH_DEFAULT_NAME = 'tb-ct'
