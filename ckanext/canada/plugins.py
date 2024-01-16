@@ -655,11 +655,8 @@ ckanext.canada:schemas/prop.yaml
         ])
 
     # IActions
-    # `datastore_upsert` and `datastore_delete` migrated from `canada_activity` and `ckanext-extendedactivity` - Aug 2022
     def get_actions(self):
         return {
-                'datastore_upsert': datastore_upsert,
-                'datastore_delete': datastore_delete,
                 'recently_changed_packages_activity_list': act.recently_changed_packages_activity_list,  #TODO: Remove this action override in CKAN 2.10 upgrade
                }
 
@@ -783,54 +780,6 @@ class LogExtraMiddleware(object):
                 exc_info)
 
         return self.app(environ, _start_response)
-
-
-@chained_action
-def datastore_upsert(up_func, context, data_dict):
-    lc = ckanapi.LocalCKAN(username=context['user'])
-    res_data = lc.action.datastore_search(
-        resource_id=data_dict['resource_id'],
-        filters={},
-        limit=1,
-    )
-    count = res_data.get('total', 0)
-    result = up_func(context, data_dict)
-
-    res_data = lc.action.datastore_search(
-        resource_id=data_dict['resource_id'],
-        filters={},
-        limit=1,
-    )
-    count = res_data.get('total', 0) - count
-
-    act.datastore_activity_create(context, {'count':count,
-                                            'activity_type': 'changed datastore',
-                                            'resource_id': data_dict['resource_id']}
-                                  )
-    return result
-
-
-@chained_action
-def datastore_delete(up_func, context, data_dict):
-    if data_dict.get('url_type', None) == 'upload':
-        return up_func(context, data_dict)
-
-    lc = ckanapi.LocalCKAN(username=context['user'], context={'ignore_auth':True})
-    res_id = data_dict['id'] if 'id' in data_dict.keys() else data_dict['resource_id']
-    res = lc.action.datastore_search(
-        resource_id=res_id,
-        filters=data_dict.get('filters'),
-        limit=1,
-    )
-
-    result = up_func(context, data_dict)
-
-    act.datastore_activity_create(context,
-                                  {'count': res.get('total', 0),
-                                   'activity_type': 'deleted datastore',
-                                   'resource_id': res_id}
-                                  )
-    return result
 
 
 def _wet_pager(self, *args, **kwargs):
