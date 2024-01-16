@@ -14,6 +14,7 @@ from ckanapi import NotFound
 from ckantoolkit import aslist
 import ckan.plugins.toolkit as t
 from ckanext.scheming.helpers import scheming_get_preset
+import html
 import dateutil.parser
 import geomet.wkt as wkt
 import json as json
