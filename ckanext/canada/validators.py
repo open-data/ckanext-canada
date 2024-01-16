@@ -405,9 +405,9 @@ def canada_blank_value_creator(value):
 
 def canada_resource_schema_output(value, context):
     """
-    Always forces an empty dict
+    Always forces None
     """
-    return {}
+    return None
 
 
 def canada_validation_options_output(value, context):
