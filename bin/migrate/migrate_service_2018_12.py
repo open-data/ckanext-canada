@@ -17,7 +17,7 @@ try:
     for line in in_csv:
         service_id = line.pop('service_id_number')
         y1, y2, org, num = service_id.split('-')
-        line['service_id'] = unicode(int(num))
+        line['service_id'] = str(int(num))
         line['fiscal_yr'] = '2016-2017'  # all existing reports from this year
 
         line['program_id_code'] = line.pop('program_id_number')

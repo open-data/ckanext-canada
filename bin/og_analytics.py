@@ -54,7 +54,7 @@ def write_xls(filename, sheets):
 
         cols =  [col for col in ws.columns]
         widths = sheet.get('col_width', {})
-        for k,v in widths.iteritems():
+        for k,v in widths.items():
             ws.column_dimensions[cols[k][0].column_letter].width = v
     try:
         sheet1 = book.get_sheet_by_name("Sheet")
@@ -177,7 +177,7 @@ class DatasetDownload():
         except:
             import traceback
             traceback.print_exc()
-            print ("Opened database failed")
+            print("Opened database failed")
             sys.exit(-1)
 
     def read_conf(self,filename):
@@ -218,12 +218,12 @@ class DatasetDownload():
         count = 0
         while count <=5:
             try:
-                print 'reading organizations...'
+                print('reading organizations...')
                 orgs = self.site.action.organization_list(all_fields=True)
                 break
             except ckanapi.errors.CKANAPIError:
                 count += 1
-                print 'Error read org list from open.canada.ca'
+                print('Error read org list from open.canada.ca')
                 time.sleep(2)
         self.orgs = {}
         self.org_name2id = {}
@@ -235,7 +235,7 @@ class DatasetDownload():
             self.org_name2id[rec['name']] = rec['id']
             self.org_id2name[rec['id']] = [ rec['name'], rec['title'] ]
         assert(len(self.orgs)>100)
-        print 'total orgs ', len(self.orgs)
+        print('total orgs %s', len(self.orgs))
 
     def read_portal(self, stats):
         self.ds = {}
@@ -243,7 +243,7 @@ class DatasetDownload():
         count = 0
         for records in self.download():
             count += len(records)
-            print 'read records ', count, ' ',  len(self.ds)
+            print('read records %s', count, ' %s',  len(self.ds))
             for rec in records:
                 if not stats.get(rec['id']):
                     continue
@@ -275,10 +275,10 @@ class DatasetDownload():
                 if len(id)!=36: continue #make sure it is an UUID
                 stats[id] += int(count)
             if len(data)==0 or not start:
-                print 'Done ', start, len(stats)
+                print('Done %s %s', start, len(stats))
                 break
             else:
-                print start
+                print(start)
         stats = dict(stats)
         self.read_portal(stats)
 
@@ -302,10 +302,10 @@ class DatasetDownload():
                 if len(id)!=36: continue #make sure it is an UUID
                 stats[id] += int(count)
             if len(data)==0 or not start:
-                print 'Done ', start, len(stats)
+                print('Done %s %s', start, len(stats))
                 break
             else:
-                print start
+                print(start)
         stats = dict(stats)
         self.read_portal(stats)
 
@@ -316,7 +316,7 @@ class DatasetDownload():
 
     def dump_info(self, data):
         sheets =[]
-        top100 = [[id,c] for id,c in data.iteritems()]
+        top100 = [[id,c] for id,c in data.items()]
         top100 = heapq.nlargest(100, top100, key=lambda x:x[1])
         rows = [['ID / Identificateur',
                  'Title English / Titre en anglais',
@@ -356,17 +356,17 @@ class DatasetDownload():
         ds = defaultdict(int)
         sheets = defaultdict(list)
         deleted_ds = {}
-        for id,c in data.iteritems():
+        for id,c in data.items():
             rec = self.ds.get(id, None)
             if (not rec) and ignore_deleted:
                 deleted_ds[id] = True
                 continue
             if not rec:
-                print id, ' deleted'
+                print('%s deleted', id)
                 rec_title, org_id = self.get_deleted_dataset(id)
                 deleted_ds[id] = {'title_translated':rec_title,
                                   'org_id':org_id}
-                print (rec_title, org_id)
+                print(rec_title, org_id)
             else:
                 org_id = rec['owner_org']
             ds[org_id] += c
@@ -374,12 +374,12 @@ class DatasetDownload():
             sheet = sheets[org_id]
             sheet.append(id)
         if ignore_deleted:
-            for k,v in deleted_ds.iteritems():
+            for k,v in deleted_ds.items():
                 data.pop(k)
             deleted_ds = {}
 
         rows = []
-        for k,v in ds.iteritems():
+        for k,v in ds.items():
             title = self.orgs.get(k, ['', ''])
             if len(title) ==1:
                 title.append(title[0])
@@ -397,7 +397,7 @@ class DatasetDownload():
     def saveXls(self, org_recs, data, org_stats, deleted_ds, isVisit=False):
         sheets =[]
         rows =[]
-        for k, [name, title] in self.org_id2name.iteritems():
+        for k, [name, title] in self.org_id2name.items():
             count = org_stats.get(k, 0)
             if count == 0:
                 continue
@@ -417,7 +417,7 @@ class DatasetDownload():
                    }
 
         #get top100
-        top100 = [[id,c] for id,c in data.iteritems()]
+        top100 = [[id,c] for id,c in data.items()]
         top100 = heapq.nlargest(100, top100, key=lambda x:x[1])
         rows = [['ID / Identificateur',
                  'Title English / Titre en anglais',
@@ -449,7 +449,7 @@ class DatasetDownload():
         ga_tmp_dir = os.environ['GA_TMP_DIR']
         write_csv(os.path.join(ga_tmp_dir, "od_ga_top100.csv"), rows)
 
-        for org_id, recs in org_recs.iteritems():
+        for org_id, recs in org_recs.items():
             rows = []
             title = self.org_id2name.get(org_id, ['unknown'])[0]
             for rec_id in recs:
@@ -642,11 +642,11 @@ class DatasetDownload():
             ).execute()
         data, nextPage = parseReport(response, None, 'ga:totalEvents')
         downloads = int(data[0][0])
-        print total, downloads
+        print(total, downloads)
         [year, month, _] = start.split('-')
         data = read_csv(csv_file)
         if int(data[1][0]) == int(year) and int(data[1][1]) == int(month):
-            print 'entry exists, no overwriting'
+            print('entry exists, no overwriting')
             return
         row = [year, month, total, downloads]
         data[0] = ['year / année', 'month / mois', 'visits / visites', 'downloads / téléchargements']
@@ -985,7 +985,7 @@ class DatasetDownload():
         rows = []
         header = ['Department or Agency', 'Ministère ou organisme',
                      'Department or Agency datasets', 'Jeux de données du Ministère ou organisme' , 'Total']
-        for org_id, count in org_stats.iteritems():
+        for org_id, count in org_stats.items():
             [title_en, title_fr] = self.orgs.get(org_id, ['', ''])
             name = self.org_id2name[org_id][0]
             link_en = 'http://open.canada.ca/data/en/dataset?organization=' + name
@@ -1021,7 +1021,7 @@ class DatasetDownload():
         fr_header = fr_months[int(m)-1]+'-'+y
         new_header = en_header + ' / ' + fr_header
         if header[-2] == new_header:
-            print 'exists ', new_header
+            print('exists ', new_header)
             return
         header[0] = 'Government of Canada Department or Agency / Ministère ou organisme'
         header[1] = 'Department or Agency datasets / Jeux de données du Ministère ou organisme'
@@ -1079,7 +1079,7 @@ class DatasetDownload():
             row[2] = pr + c
 
         # New org
-        for org_id, count in org_stats.iteritems():
+        for org_id, count in org_stats.items():
             if org_id in exists:
                 continue
             titles =  self.orgs.get(org_id, ['', ''])

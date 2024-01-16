@@ -43,7 +43,7 @@ def deepl_query(b):
     return [(
         s,
         r['text'],
-        unicode(datetime.utcnow()),
+        str(datetime.utcnow()),
         r['detected_source_language'],
         source_lang,
         target_lang) for r, s in zip(resp, b)]

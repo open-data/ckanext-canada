@@ -106,7 +106,7 @@ def update_triggers():
             {u'argname': u'choices', u'argtype': u'_text'},
             {u'argname': u'field_name', u'argtype': u'text'}],
         rettype=u'_text',
-        definition=ur'''
+        definition=r'''
             BEGIN
                 IF value IS NOT NULL AND value <> '' AND NOT (value = ANY (choices)) THEN
                     -- \t is used when converting errors to string
@@ -128,7 +128,7 @@ def update_triggers():
             {u'argname': u'clean', u'argtype': u'_text', u'argmode': u'out'},
             {u'argname': u'error', u'argtype': u'_text', u'argmode': u'out'}],
         rettype=u'record',
-        definition=ur'''
+        definition=r'''
             DECLARE
                 bad_choices text := array_to_string(ARRAY(
                     SELECT c FROM(SELECT unnest(value) as c) u

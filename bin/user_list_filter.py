@@ -16,10 +16,10 @@ for l in sys.stdin.readlines():
     o = json.loads(l)
     if o["display_name"] == 'visitor':
         continue
-    print json.dumps({
+    print(json.dumps({
         "id": o["id"],
         "display_name": o["display_name"],
         "fullname": o["fullname"],
         "name": o["name"],
         "sysadmin": o["sysadmin"],
-        })
+        }))

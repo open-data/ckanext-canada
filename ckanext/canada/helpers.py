@@ -2,7 +2,7 @@ import json
 import re
 import inspect
 from ckan.plugins import plugin_loaded
-from ckan.plugins.toolkit import c, config, _
+from ckan.plugins.toolkit import c, config, _, h
 from ckan.model import User, Package, Activity
 import ckan.model as model
 import datetime
@@ -11,10 +11,9 @@ import ckan as ckan
 import jinja2
 
 from ckanapi import NotFound
-from ckantoolkit import h, aslist
+from ckantoolkit import aslist
 import ckan.plugins.toolkit as t
 from ckanext.scheming.helpers import scheming_get_preset
-import webhelpers.html as html
 import dateutil.parser
 import geomet.wkt as wkt
 import json as json
@@ -65,7 +64,7 @@ def get_translated_t(data_dict, field):
                 if l.startswith(language + '-t-'):
                     return data_dict[field+'_translated'][l], True
         val = data_dict.get(field, '')
-        return (_(val) if val and isinstance(val, basestring) else val), False
+        return (_(val) if val and isinstance(val, str) else val), False
 
 
 def language_text_t(text, prefer_lang=None):
@@ -103,7 +102,7 @@ def language_text_t(text, prefer_lang=None):
         l, v = sorted(text.items())[0]
         return v, False
 
-    t = gettext(text)
+    t = _(text)
     if isinstance(t, str):
         return t.decode('utf-8'), False
     return t, False
@@ -363,7 +362,7 @@ def linked_user(user, maxlength=0, avatar=20):
     '''Brute force disable gravatar, mostly copied from ckan/lib/helpers'''
     from ckan import model
     if not isinstance(user, model.User):
-        user_name = unicode(user)
+        user_name = str(user)
         user = model.User.get(user_name)
         if not user:
             return user_name
@@ -392,7 +391,7 @@ def link_to_user(user, maxlength=0):
     if user in [model.PSEUDO_USER__LOGGED_IN, model.PSEUDO_USER__VISITOR]:
         return user
     if not isinstance(user, model.User):
-        user_name = unicode(user)
+        user_name = str(user)
         user = model.User.get(user_name)
         if not user:
             return user_name
@@ -402,8 +401,8 @@ def link_to_user(user, maxlength=0):
         displayname = user.display_name
         if maxlength and len(user.display_name) > maxlength:
             displayname = displayname[:maxlength] + '...'
-        return html.tags.link_to(displayname,
-                       h.url_for('user.read', id=_name))
+        anchor = h.url_for('user.read', id=_name)
+        return Markup(f'<a href="{anchor}">{displayname}</a>')
 
 
 def get_datapreview(res_id):

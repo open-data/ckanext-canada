@@ -6,10 +6,9 @@ import lxml.html as html
 from pytz import timezone, utc
 from socket import error as socket_error
 from logging import getLogger
-import unicodecsv
-from codecs import BOM_UTF8
-from six import string_types, PY2
 from datetime import datetime, timedelta
+import csv
+from six import string_types
 
 from ckan.plugins.toolkit import (
     abort,
@@ -24,7 +23,6 @@ from ckan.plugins.toolkit import (
     render
 )
 from ckan.lib.base import model
-import ckan.lib.jsonp as jsonp
 from ckan.lib.helpers import (
     date_str_to_datetime,
     render_markdown,
@@ -74,10 +72,9 @@ from ckanext.canada.helpers import canada_date_str_to_datetime
 from rq.job import Job
 from rq.exceptions import NoSuchJobError
 
-if PY2:
-    from cStringIO import StringIO
-else:
-    from io import StringIO
+from io import StringIO
+
+BOM = "\N{bom}"
 
 MAX_JOB_QUEUE_LIST_SIZE = 25
 
@@ -108,18 +105,13 @@ class IntentionalServerError(Exception):
     pass
 
 
-@canada_views.route('/user/login', methods=['GET'])
-def login():
-    from ckan.views.user import _get_repoze_handler
-
-    came_from = h.url_for(u'canada.logged_in')
-    g.login_handler = h.url_for(
-        _get_repoze_handler(u'login_handler_path'), came_from=came_from)
-    return render(u'user/login.html', {})
-
-
-@canada_views.route('/logged_in', methods=['GET'])
+@canada_views.route('/user/logged_in', methods=['GET'])
 def logged_in():
+    # redirect if needed
+    came_from = request.params.get(u'came_from', u'')
+    if h.url_is_local(came_from):
+        return h.redirect_to(str(came_from))
+
     if g.user:
         user_dict = get_action('user_show')(None, {'id': g.user})
 
@@ -227,19 +219,20 @@ class CanadaUserRegisterView(UserRegisterView):
         response = super(CanadaUserRegisterView, self).post()
         if hasattr(response, 'status_code'):
             if response.status_code == 200 or response.status_code == 302:
-                # redirected after successful user create
-                import ckan.lib.mailer
-                # checks if there is a custom function "notify_ckan_user_create" in the mailer (added by ckanext-gcnotify)
-                getattr(
-                    ckan.lib.mailer,
-                    "notify_ckan_user_create",
-                    notify_ckan_user_create
-                )(
-                    email=email,
-                    fullname=fullname,
-                    username=username,
-                    phoneno=phoneno,
-                    dept=dept)
+                if not config.get('ckanext.canada.suppress_user_emails', False):
+                    # redirected after successful user create
+                    import ckan.lib.mailer
+                    # checks if there is a custom function "notify_ckan_user_create" in the mailer (added by ckanext-gcnotify)
+                    getattr(
+                        ckan.lib.mailer,
+                        "notify_ckan_user_create",
+                        notify_ckan_user_create
+                    )(
+                        email=email,
+                        fullname=fullname,
+                        username=username,
+                        phoneno=phoneno,
+                        dept=dept)
                 notice_no_access()
         return response
 
@@ -573,6 +566,7 @@ def home():
 
     if is_new:
         return h.redirect_to('dataset.search')
+
     return h.redirect_to('canada.links')
 
 
@@ -784,7 +778,7 @@ def view_help():
 def datatable(resource_name, resource_id):
     params = parse_params(request.form)
     draw = int(params['draw'])
-    search_text = unicode(params['search[value]'])
+    search_text = str(params['search[value]'])
     offset = int(params['start'])
     limit = int(params['length'])
 
@@ -871,11 +865,11 @@ def datatablify(v, colname):
     if v is False:
         return u'FALSE'
     if isinstance(v, list):
-        return u', '.join(unicode(e) for e in v)
+        return u', '.join(str(e) for e in v)
     if colname in ('record_created', 'record_modified') and v:
         return canada_date_str_to_datetime(v).replace(tzinfo=utc).astimezone(
             ottawa_tz).strftime('%Y-%m-%d %H:%M:%S %Z')
-    return unicode(v)
+    return str(v)
 
 
 @canada_views.route('/fgpv-vpgf/<pkg_id>', methods=['GET'])
@@ -885,7 +879,6 @@ def fgpv_vpgf(pkg_id):
     })
 
 
-@jsonp.jsonpify
 @canada_views.route('/organization/autocomplete', methods=['GET'])
 def organization_autocomplete():
     q = request.args.get('q', '')
@@ -1134,8 +1127,8 @@ def organization_member_dump(id):
         ])
 
     output_stream = StringIO()
-    output_stream.write(BOM_UTF8)
-    unicodecsv.writer(output_stream, encoding=u'utf-8').writerows(results)
+    output_stream.write(BOM)
+    csv.writer(output_stream).writerows(results)
 
     file_name = u'{org_id}-{members}'.format(
             org_id=org_dict.name,

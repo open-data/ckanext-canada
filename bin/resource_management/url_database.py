@@ -113,7 +113,7 @@ for i, url in enumerate(ftp_urls):
         if i%batch_size == 0:
             check_for_connection()
     except (requests.exceptions.RequestException, UnicodeEncodeError) as e:
-        print str(e)
+        print(str(e))
         ftp_batch.append(url)
         ftp_response.append(None)
         continue

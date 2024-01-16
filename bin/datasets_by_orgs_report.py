@@ -50,7 +50,7 @@ def main():
                 months.append(prior_month(months[-1]))
                 for c in counts:
                     counts[c].append(0)
-                sys.stderr.write(unicode(processed) + u'\n'
+                sys.stderr.write(str(processed) + u'\n'
                     + ym_head(months[-1]) + u':')
                 processed = 0
                 if months[-1] == act_ym:
@@ -73,7 +73,7 @@ def main():
         elif act_type == 'deleted package':
             counts[owner_org][-1] -= 1
         processed += 1
-    sys.stderr.write(unicode(processed) + u'\n')
+    sys.stderr.write(str(processed) + u'\n')
 
     fieldnames = [
         u'id', u'title_en', u'title_fr', u'url', u'current_datasets',
