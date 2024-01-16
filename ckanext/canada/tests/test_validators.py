@@ -402,7 +402,7 @@ class TestNAVLSchema(CanadaTestBase):
         }
 
         resource = self.sysadmin_action.resource_create(**resource_data)
-        assert resource['schema'] == {}
+        assert resource['schema'] == None
 
         resource_data = dict(resource_data,
                             schema='{"fields":["this is bad JSON for Schema"]}')
