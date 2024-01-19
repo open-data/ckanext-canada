@@ -61,6 +61,22 @@ class CanadaSecurityPlugin(CkanSecurityPlugin):
     """
     p.implements(p.IResourceController, inherit=True)
     p.implements(p.IValidators, inherit=True)
+    p.implements(p.IConfigurer)
+
+    def update_config(self, config):
+        # Disable auth settings
+        config['ckan.auth.anon_create_dataset'] = False
+        config['ckan.auth.create_unowned_dataset'] = False
+        config['ckan.auth.create_dataset_if_not_in_organization'] = False
+        config['ckan.auth.user_create_groups'] = False
+        config['ckan.auth.user_create_organizations'] = False
+        config['ckan.auth.create_user_via_api'] = config.get('ckan.auth.create_user_via_api', False)  # allow setting in INI file
+        # Enable auth settings
+        config['ckan.auth.user_delete_groups'] = True
+        config['ckan.auth.user_delete_organizations'] = True
+        config['ckan.auth.create_user_via_web'] = True
+        # Set auth settings
+        config['ckan.auth.roles_that_cascade_to_sub_groups'] = 'admin'
 
     def before_create(self, context, resource):
         """
