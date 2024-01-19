@@ -26,6 +26,11 @@ from ckanext.security.resource_upload_validator import (
     validate_upload_type, validate_upload_presence
 )
 
+try:
+    from unicodecsv import QUOTE_MINIMAL
+except ImportError:
+    from csv import QUOTE_MINIMAL
+
 not_empty = get_validator('not_empty')
 ignore_missing = get_validator('ignore_missing')
 
@@ -403,9 +408,29 @@ def canada_resource_schema_output(value, context):
 
 def canada_validation_options_output(value, context):
     """
-    Always force 1 Million row limit
+    Always force 1 Million row limit and set static dialect
     """
-    return {u'row_limit': 1000000}
+    return {'row_limit': 1000000,
+            'dialect': {
+                'csv': {
+                    'delimiter' : ',',
+                    'doublequote': True,
+                    'escapechar': None,
+                    'quotechar': '"',
+                    'quoting': QUOTE_MINIMAL,
+                    'skipinitialspace': False,
+                    'lineterminator': '\r\n',
+                },
+                'tsv': {
+                    'delimiter' : '\t',
+                    'doublequote': True,
+                    'escapechar': None,
+                    'quotechar': '"',
+                    'quoting': QUOTE_MINIMAL,
+                    'skipinitialspace': False,
+                    'lineterminator': '\r\n',
+                },
+            }}
 
 
 def canada_security_upload_type(key, data, errors, context):
