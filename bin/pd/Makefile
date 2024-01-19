@@ -187,6 +187,9 @@ upload-briefingt: $(workdir)/filtered/briefingt.csv $(workdir)/filtered/briefing
 	@$(ckanapi) action resource_patch -c $(registry_ini) \
 	id=299a2e26-5103-4a49-ac3a-53db9fcc06c7 upload@"$(workdir)/filtered/briefingt.csv" \
 	> /dev/null
+	@$(ckanapi) action resource_patch -c $(registry_ini) \
+	id=5e28b544-720b-4745-9e55-3aac6464a4fb upload@"$(workdir)/filtered/briefingt-nil.csv" \
+	> /dev/null
 
 .PHONY: rebuild-briefingt
 rebuild-briefingt: $(workdir)/filtered/briefingt.csv $(workdir)/filtered/briefingt-nil.csv
