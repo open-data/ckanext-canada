@@ -447,4 +447,24 @@ class TestNAVLSchema(CanadaTestBase):
         }
 
         resource = self.sysadmin_action.resource_create(**resource_data)
-        assert resource['validation_options'] == {u"row_limit": 1000000}
+        assert resource['validation_options'] == {'row_limit': 1000000,
+                                                  'dialect': {
+                                                      'csv': {
+                                                          'delimiter' : ',',
+                                                          'doublequote': True,
+                                                          'escapechar': None,
+                                                          'quotechar': '"',
+                                                          'quoting': 0,
+                                                          'skipinitialspace': False,
+                                                          'lineterminator': '\r\n',
+                                                      },
+                                                      'tsv': {
+                                                          'delimiter' : '\t',
+                                                          'doublequote': True,
+                                                          'escapechar': None,
+                                                          'quotechar': '"',
+                                                          'quoting': 0,
+                                                          'skipinitialspace': False,
+                                                          'lineterminator': '\r\n',
+                                                      },
+                                                  }}
