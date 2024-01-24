@@ -1,0 +1,15 @@
+{% import 'macros/canada_activity.html' as cah %}
+
+<li class="item {{ activity.activity_type|replace(' ', '-')|lower }}">
+  <i class="fa icon fa-code"></i>
+  <p>
+    {{ _('{actor} updated Data Dictionary for {resource}').format(
+      actor=ah.actor(activity),
+      resource=cah.resource_data_dictionary_activity(activity, h)
+    )|safe }}
+    <br />
+    <span class="date">
+      {{ h.time_ago_from_timestamp(activity.timestamp) }}
+    </span>
+  </p>
+</li>

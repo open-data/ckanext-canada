@@ -18,7 +18,6 @@ from ckan.plugins.toolkit import (
     get_validator,
     request
 )
-import ckanapi
 
 from ckanext.canada import validators
 from ckanext.canada import logic
@@ -593,6 +592,7 @@ ckanext.canada:schemas/prop.yaml
             'new resource view': logic_validators.package_id_exists,
             'changed resource view': logic_validators.package_id_exists,
             'deleted resource view': logic_validators.package_id_exists,
+            'updated resource data dictionary': logic_validators.package_id_exists,
         })
 
     # IFacets
@@ -679,6 +679,7 @@ ckanext.canada:schemas/prop.yaml
     # IActions
     def get_actions(self):
         return {
+                'datastore_create': logic.canada_datastore_create,
                 'recently_changed_packages_activity_list': act.recently_changed_packages_activity_list,  #TODO: Remove this action override in CKAN 2.10 upgrade
                }
 

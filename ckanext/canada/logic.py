@@ -4,7 +4,7 @@ from ckan.lib.dictization import model_dictize
 from ckan import model
 
 from ckan.plugins.toolkit import (
-    get_or_bust, ValidationError, side_effect_free, check_access, chained_action, config)
+    get_or_bust, ValidationError, side_effect_free, get_action, chained_action, config)
 from ckan.authz import is_sysadmin
 
 import functools
@@ -140,7 +140,8 @@ def _changed_packages_activity_timestamp_since(since, limit):
                             func.max(model.Activity.timestamp).label(
                                 'timestamp'))
     q = q.filter(or_(model.Activity.activity_type.endswith('package'),
-                     model.Activity.activity_type.endswith('view')))
+                     model.Activity.activity_type.endswith('view'),
+                     model.Activity.activity_type.endswith('data dictionary')))
     q = q.filter(model.Activity.timestamp > since)
     q = q.group_by(model.Activity.object_id)
     q = q.order_by('timestamp')
@@ -185,3 +186,51 @@ def datastore_create_temp_user_table(context):
             username=literal_string(username),
             sysadmin='TRUE' if is_sysadmin(username) else 'FALSE'))
 
+
+@chained_action
+def canada_datastore_create(up_func, context, data_dict):
+    """
+    Checks if the Data Dictionary (fields) have been updated and creates an Activity if so.
+    """
+    resource_id = data_dict.get('resource_id', data_dict.get('resource', {}).get('id', None))
+    if resource_id:
+        new_data_dictionary = data_dict.get('fields', {})
+        old_ds_data = get_action('datastore_search')(context, {'resource_id': resource_id, 'limit': 0})
+
+        has_updated_dictionary = False
+
+        if old_ds_data and 'fields' in old_ds_data:
+
+            for field_dict in old_ds_data.get('fields'):
+                if field_dict.get('id') == '_id':
+                    continue
+                if field_dict not in new_data_dictionary:
+                    has_updated_dictionary = True
+                    break
+
+        if has_updated_dictionary:
+            res_dict = get_action('resource_show')(context, {'id': resource_id})
+            try:
+                user = context['user']
+                user_id = model.User.by_name(user.decode('utf8')).id
+            except AttributeError:
+                # do not create activity for non-users
+                pass
+            else:
+                activity_dict = {
+                    'user_id': user_id,
+                    'object_id': res_dict['package_id'],
+                    'activity_type': 'updated resource data dictionary',
+                    'data': {'id': resource_id, 'name_translated': res_dict.get('name_translated'),
+                             'package_id': res_dict['package_id']},
+                }
+                activity_create_context = {
+                    'model': model,
+                    'user': user,
+                    'defer_commit': False,
+                    'ignore_auth': True,
+                    'session': context['session'],
+                }
+                get_action('activity_create')(activity_create_context, activity_dict)
+
+    return up_func(context, data_dict)
