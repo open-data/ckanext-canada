@@ -1,0 +1,11 @@
+{% macro resource_view_activity(activity_data, h) %}
+  {# (canada fork only): adds HTML for resource view activities #}
+  <span class="resource-view">
+    {{ h.link_to(
+          activity_data.title if activity_data.title else h.resource_view_type(activity_data),
+          h.url_for('dataset_resource.read',
+            id=activity_data.package_id,
+            resource_id=activity_data.resource_id) ~ '?view_id=' ~ activity_data.id)
+    }}
+  </span>
+{% endmacro %}
