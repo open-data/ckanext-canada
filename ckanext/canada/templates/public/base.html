@@ -9,7 +9,7 @@
     <meta property="og:title" content="{{ self.title() }}">
   {% endblock %}
   {% block adobe_analytics_meta %}
-    {% if h.is_registry() %}
+    {% if not h.is_registry() %}
       {% block adobe_analytics_title %}
         <meta property="dcterms:title" content="{{ self.title() }}" />
       {% endblock %}
@@ -42,7 +42,7 @@
   {% endblock %}
 
   {% block adobe_analytics %}
-    {% if h.is_registry() and h.adobe_analytics_js() %}
+    {% if not h.is_registry() and h.adobe_analytics_js() %}
       <script src="{{ h.adobe_analytics_js() }}"></script>
     {% endif %}
   {% endblock %}
