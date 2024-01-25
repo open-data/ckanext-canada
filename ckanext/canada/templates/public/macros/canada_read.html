@@ -237,3 +237,20 @@ Search Facet Formatters
  <a href="{{ resource_link }}">{{ resource_name }}</a>
 </span>
 {% endmacro %}
+
+{% macro adobe_analytics_creator(creator=None, owner_1=None, owner_2='N/A', owner_3='N/A', owner_4='N/A') %}
+  {#
+    creator and owner_1 should be the Organization who made the "page" (org, package, resource, or PD record set)
+    owner_2, owner_3, and owner_4 are for the org_section field in the package schema.
+  #}
+  {% if not creator %}
+    {# Default page creator is lang respective TBS #}
+    {% set creator = _('Treasury Board of Canada Secretariat') %}
+  {% endif %}
+  {% if not owner_1 %}
+    {# Default page owner 1 is the creator #}
+    {% set owner_1 = creator %}
+  {% endif %}
+  <meta property="dcterms:creator" content="{{ creator | safe }}"
+        data-gc-analytics-owner="{{ owner_1 | safe }}|{{ owner_2 | safe }}|{{ owner_3 | safe }}|{{ owner_4 | safe }}"/>
+{% endmacro %}

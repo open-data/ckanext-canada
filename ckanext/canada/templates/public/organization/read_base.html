@@ -8,7 +8,13 @@
   <li class="active">{% link_for translated_title, named_route=group_type + '.read', id= c.group_dict.name%}</li>
 {% endblock %}
 
-{% block subtitle %}{{ translated_title }}{% endblock %}
+{%- block subtitle -%}
+  {{ translated_title | trim }}
+{%- endblock -%}
+
+{% block adobe_analytics_creator %}
+  {{ cr.adobe_analytics_creator(creator=translated_title, owner_1=translated_title) }}
+{% endblock %}
 
 {% block primary_content %}
 <div class="row">

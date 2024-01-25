@@ -237,13 +237,27 @@ def ga4_id():
     return str(config.get('ga4.id'))
 
 def adobe_analytics_login_required(current_url):
-    return "2" #return 1 if page requires a login and 2 if page is public
+    # type: (str) -> int
+    """
+    1: login required
+    2: public
+    3: intranet or extranet
+
+    Only supporting Public Portal w/ Adobe Analytics for now,
+    so just always return 2 for public.
+    """
+    return 2
 
 def adobe_analytics_lang():
-    if h.lang() == 'en':
-        return 'eng'
-    elif h.lang() == 'fr':
+    # type: () -> str
+    """
+    Return Adobe Analytics expected language codes.
+
+    Returns `eng` (English) by default
+    """
+    if h.lang() == 'fr':
         return 'fra'
+    return 'eng'
 
 def adobe_analytics_js():
     return str(config.get('adobe_analytics.js', ''))
