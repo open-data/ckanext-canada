@@ -676,7 +676,6 @@ ckanext.canada:schemas/prop.yaml
     # IActions
     def get_actions(self):
         return {
-                #'datastore_create': logic.canada_datastore_create,
                 'recently_changed_packages_activity_list': act.recently_changed_packages_activity_list,  #TODO: Remove this action override in CKAN 2.10 upgrade
                }
 
