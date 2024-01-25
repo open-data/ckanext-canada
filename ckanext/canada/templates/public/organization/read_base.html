@@ -1,7 +1,7 @@
 {% ckan_extends %}
 {% import 'macros/canada_read.html' as cr %}
 
-{% set translated_title = h.get_translated(c.group_dict, 'title') %}
+{%- set translated_title = h.get_translated(c.group_dict, 'title') -%}
 
 {% block breadcrumb_content %}
   <li>{% link_for _('Organizations'), named_route=group_type + '.index' %}</li>

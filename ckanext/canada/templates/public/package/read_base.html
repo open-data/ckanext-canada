@@ -7,15 +7,15 @@
 {% set schema = h.scheming_get_dataset_schema(pkg.type) %}
 
 {% block adobe_analytics_creator %}
-  {% set owner_org_title = cr.split_bilingual_field(pkg.organization.title, h.lang()) %}
-  {% set owner_2 = 'N/A' %}
-  {% set owner_3 = 'N/A' %}
-  {% set owner_4 = 'N/A' %}
+  {%- set owner_org_title = cr.split_bilingual_field(pkg.organization.title, h.lang()) -%}
+  {%- set owner_2 = 'N/A' -%}
+  {%- set owner_3 = 'N/A' -%}
+  {%- set owner_4 = 'N/A' -%}
   {% if 'org_section' in pkg and h.scheming_language_text(pkg.org_section) | length > 0 %}
     {% set org_sections = h.scheming_language_text(pkg.org_section).split(',') %}
-    {% set owner_2 = (org_sections[0] or 'N/A') | safe | trim %}
-    {% set owner_3 = (org_sections[1] or 'N/A') | safe | trim %}
-    {% set owner_4 = (org_sections[2] or 'N/A') | safe | trim %}
+    {%- set owner_2 = (org_sections[0] or 'N/A') | safe | trim -%}
+    {%- set owner_3 = (org_sections[1] or 'N/A') | safe | trim -%}
+    {%- set owner_4 = (org_sections[2] or 'N/A') | safe | trim -%}
   {% endif %}
   {{ cr.adobe_analytics_creator(creator=owner_org_title,
                                 owner_1=owner_org_title, owner_2=owner_2,
@@ -64,8 +64,8 @@
             {% endif %}
           {% endif %}
         {% endfor %}
-      {% set start_date = cr.date_field({"id":"time_period_coverage_start"}, pkg) %}
-      {% set end_date = cr.date_field({"id":"time_period_coverage_end"}, pkg) %}
+      {%- set start_date = cr.date_field({"id":"time_period_coverage_start"}, pkg) -%}
+      {%- set end_date = cr.date_field({"id":"time_period_coverage_end"}, pkg) -%}
       {% if start_date or end_date %}
       <li class="list-group-item"><b>{{ _('Temporal Coverage') }}:</b>
         <small>
@@ -84,7 +84,7 @@
         <li class="list-group-item"><a
            href="{{ '/en/openness-rating' if h.lang() == 'en' else
             '/fr/cote-degre-douvertrure-des-donnees' }}"><b>{{ _('Openness Rating') }}</b></a>:
-            {% set openness = h.openness_score(pkg) %}
+            {%- set openness = h.openness_score(pkg) -%}
             <img src="{{ h.url_for_static('/static/img/stars/star'
               ~ openness ~ '.png') }}" alt="{{
                 ['',

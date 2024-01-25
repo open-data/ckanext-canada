@@ -17,31 +17,31 @@
   </div>
 {% endblock %}
 
-{% block datatable_column_label %}
-  {% set label = 'label_' + h.lang() %}
-  {% set description = 'notes_' + h.lang() %}
-  {% if data_dictionary_labels and field.info is defined and field.info[label]|length %}
+{%- block datatable_column_label -%}
+  {%- set label = 'label_' + h.lang() -%}
+  {%- set description = 'notes_' + h.lang() -%}
+  {%- if data_dictionary_labels and field.info is defined and field.info[label]|length -%}
     {{ field.info[label] | safe }}
-  {% else %}
+  {%- else -%}
     {{ field.id|replace(" ", nbspval) }}
-  {% endif %}
+  {%- endif -%}
   &nbsp;
-  {% if data_dictionary_labels and field.info is defined and field.info[description]|length %}
+  {%- if data_dictionary_labels and field.info is defined and field.info[description]|length -%}
     <i class="fa fa-info-circle" title="{{ h.markdown_extract(field.info[description], 300) }}"></i>
-  {% endif %}
+  {%- endif -%}
   &nbsp;
-{% endblock %}
+{%- endblock -%}
 
 {% block adobe_analytics_creator %}
-  {% set owner_org_title = cr.split_bilingual_field(package.organization.title, h.lang()) %}
-  {% set owner_2 = 'N/A' %}
-  {% set owner_3 = 'N/A' %}
-  {% set owner_4 = 'N/A' %}
+  {%- set owner_org_title = cr.split_bilingual_field(package.organization.title, h.lang()) -%}
+  {%- set owner_2 = 'N/A' -%}
+  {%- set owner_3 = 'N/A' -%}
+  {%- set owner_4 = 'N/A' -%}
   {% if 'org_section' in package and h.scheming_language_text(package.org_section) | length > 0 %}
     {% set org_sections = h.scheming_language_text(package.org_section).split(',') %}
-    {% set owner_2 = (org_sections[0] or 'N/A') | safe | trim %}
-    {% set owner_3 = (org_sections[1] or 'N/A') | safe | trim %}
-    {% set owner_4 = (org_sections[2] or 'N/A') | safe | trim %}
+    {%- set owner_2 = (org_sections[0] or 'N/A') | safe | trim -%}
+    {%- set owner_3 = (org_sections[1] or 'N/A') | safe | trim -%}
+    {%- set owner_4 = (org_sections[2] or 'N/A') | safe | trim -%}
   {% endif %}
   {{ cr.adobe_analytics_creator(creator=owner_org_title,
                                 owner_1=owner_org_title, owner_2=owner_2,
