@@ -56,21 +56,21 @@
   {% endif %}
 {% endblock %}
 
-{% block wet_scripts %}
-{% endblock %}
+{%- block wet_scripts -%}
+{%- endblock -%}
 
-{% block custom_styles %}
+{%- block custom_styles -%}
   {% snippet 'snippets/wet-boew/headresources.html' %}
   {% asset 'canada_public/css' %}
-{% endblock %}
+{%- endblock -%}
 
 
-{% block htmltag %}
-  {% set lang = h.lang() %}
+{%- block htmltag -%}
+  {%- set lang = h.lang() -%}
   <!--[if lt IE 9]>
   <html class="no-js lt-ie9" lang="{{ lang }}" dir="ltr"><![endif]--> <!--[if gt IE 8]><!-->
   <html class="no-js" lang="{{ lang }}" dir="ltr"> <!--<![endif]-->
-{% endblock %}
+{%- endblock -%}
 
 {%- block title -%}
   {%- block subtitle_2 -%}{%- endblock -%}
