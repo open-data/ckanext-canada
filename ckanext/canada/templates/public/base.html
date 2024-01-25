@@ -1,29 +1,31 @@
 {% ckan_extends %}
 {% import 'macros/canada_read.html' as cr %}
 
+{% block meta %}
+
+  {{ super() }}
+
+  {% block og_meta_title %}
+    <meta property="og:title" content="{{ self.title() }}">
+  {% endblock %}
+  {% block adobe_analytics_meta %}
+    {% if h.is_registry() %}
+      {% block adobe_analytics_title %}
+        <meta property="dcterms:title" content="{{ self.title() }}" />
+      {% endblock %}
+      <meta property="dcterms:language" content="{{ h.adobe_analytics_lang() }}" />
+      {% block adobe_analytics_creator %}
+        {{ cr.adobe_analytics_creator() }}
+      {% endblock %}
+      <meta property="dcterms:service" content="OG-GO" />
+      <meta property="dcterms:accessRights" content="{{ h.adobe_analytics_login_required(h.full_current_url()) }}" />
+    {% endif %}
+  {% endblock %}
+{% endblock %}
+
 {% block links %}
 
   {{super()}}
-
-  {% block meta %}
-    {{ super() }}
-    {% block og_meta_title %}
-      <meta property="og:title" content="{{ self.title() }}">
-    {% endblock %}
-    {% block adobe_analytics_meta %}
-      {% if h.is_registry() %}
-        {% block adobe_analytics_title %}
-          <meta property="dcterms:title" content="{{ self.title() }}" />
-        {% endblock %}
-        <meta property="dcterms:language" content="{{ h.adobe_analytics_lang() }}" />
-        {% block adobe_analytics_creator %}
-          {{ cr.adobe_analytics_creator() }}
-        {% endblock %}
-        <meta property="dcterms:service" content="OG-GO" />
-        <meta property="dcterms:accessRights" content="{{ h.adobe_analytics_login_required(h.full_current_url()) }}" />
-      {% endif %}
-    {% endblock %}
-  {% endblock %}
 
   {% block google_analytics %}
     {% set ga4_id = h.ga4_id() %}
