@@ -2,18 +2,18 @@
 
 {% import 'macros/canada_read.html' as cr %}
 
-{% set org_title_translated = cr.split_bilingual_field(organization.title, h.lang()) %}
-
 {% block organization_display %}
-  {{- org_title_translated | truncate(60) -}}
+  {# this is a scoped macro call, passes in `org` dict #}
+  {{- cr.split_bilingual_field(org.title, h.lang()) | truncate(60) -}}
 {% endblock %}
 
 {%- block subtitle_2 -%}
-  {{ org_title_translated | safe }}
+  {{ cr.split_bilingual_field(organization.title, h.lang()) | safe }}
 {%- endblock -%}
 
 {% block adobe_analytics_creator %}
-  {{ cr.adobe_analytics_creator(creator=org_title_translated, owner_1=org_title_translated) }}
+  {% set _title_trans = cr.split_bilingual_field(organization.title, h.lang()) | safe %}
+  {{ cr.adobe_analytics_creator(creator=_title_trans, owner_1=_title_trans) }}
 {% endblock %}
 
 {# we want a wide display for the table #}
