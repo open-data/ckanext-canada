@@ -18,7 +18,6 @@ from ckan.plugins.toolkit import (
     get_validator,
     request
 )
-import ckanapi
 
 from ckanext.canada import validators
 from ckanext.canada import logic
@@ -586,9 +585,11 @@ ckanext.canada:schemas/prop.yaml
         hlp.build_nav_main = build_nav_main
 
         # migration from `canada_activity` and `ckanext-extendedactivity` - Aug 2022
+        # migrated from `ckan` canada fork for resource view activities - Jan 2024
         logic_validators.object_id_validators.update({
-            'changed datastore': logic_validators.package_id_exists,
-            'deleted datastore': logic_validators.package_id_exists,
+            'new resource view': logic_validators.package_id_exists,
+            'changed resource view': logic_validators.package_id_exists,
+            'deleted resource view': logic_validators.package_id_exists,
         })
 
     # IFacets
@@ -668,6 +669,8 @@ ckanext.canada:schemas/prop.yaml
             'flash_notice',
             'flash_error',
             'flash_success',
+            'get_resource_view',
+            'resource_view_type',
         ])
 
     # IActions
