@@ -669,6 +669,7 @@ ckanext.canada:schemas/prop.yaml
             'flash_error',
             'flash_success',
             'adobe_analytics_creator',
+            'resource_view_meta_title',
         ])
 
     # IActions

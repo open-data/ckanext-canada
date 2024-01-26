@@ -1,5 +1,14 @@
 {% ckan_extends %}
 
+{%- block title -%}
+  {# Lets force our title formatting here... #}
+  {{- h.resource_view_meta_title(package=package, resource=resource, view=resource_view) | safe -}}
+{%- endblock -%}
+
+{% block adobe_analytics_creator %}
+  {{ h.adobe_analytics_creator(organization=package.organization, package=package) | safe }}
+{% endblock %}
+
 {% block description %}
 <p class="desc">
   {%- if h.lang() == 'fr' -%}

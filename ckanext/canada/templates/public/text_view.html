@@ -1,0 +1,10 @@
+{% ckan_extends %}
+
+{%- block subtitle -%}
+  {# Lets force our title formatting here... #}
+  {{- h.resource_view_meta_title(package=package, resource=resource, view=resource_view, is_subtitle=True) | safe -}}
+{%- endblock -%}
+
+{% block adobe_analytics_creator %}
+  {{ h.adobe_analytics_creator(organization=package.organization, package=package) | safe }}
+{% endblock %}

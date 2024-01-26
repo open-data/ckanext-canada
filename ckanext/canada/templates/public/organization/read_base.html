@@ -13,7 +13,7 @@
 {%- endblock -%}
 
 {% block adobe_analytics_creator %}
-  {{ h.adobe_analytics_creator(creator=translated_title, owner_1=translated_title) }}
+  {{ h.adobe_analytics_creator(organization=c.group_dict) | safe }}
 {% endblock %}
 
 {% block primary_content %}

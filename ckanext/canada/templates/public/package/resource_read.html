@@ -23,7 +23,7 @@
     </div>
   {% endif %}
   {% if is_registry %}
-    {{ h.get_validation_badge(res) }}
+    {{ h.get_validation_badge(res) | safe }}
   {% endif %}
 {% endblock %}
 

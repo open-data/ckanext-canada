@@ -12,8 +12,7 @@
 {%- endblock -%}
 
 {% block adobe_analytics_creator %}
-  {%- set _title_trans = cr.split_bilingual_field(organization.title, h.lang()) | trim -%}
-  {{ h.adobe_analytics_creator(creator=_title_trans, owner_1=_title_trans) }}
+  {{ h.adobe_analytics_creator(organization=organization) | safe }}
 {% endblock %}
 
 {# we want a wide display for the table #}

@@ -2,7 +2,7 @@ import json
 import re
 import inspect
 from ckan.plugins import plugin_loaded
-from ckan.plugins.toolkit import c, config, _
+from ckan.plugins.toolkit import c, config, _, g
 from ckan.model import User, Package, Activity
 import ckan.model as model
 import datetime
@@ -263,24 +263,64 @@ def adobe_analytics_js():
     return str(config.get('adobe_analytics.js', ''))
 
 
-def adobe_analytics_creator(creator=None, owner_1=None,
-                            owner_2='N/A', owner_3='N/A', owner_4='N/A'):
+def adobe_analytics_creator(organization=None, package=None):
+    # type: (dict|None, dict|None) -> str
     """
     Generates HTML Meta Tag for Adobe Analytics, along with extra GoC
     page ownership HTML attribute.
 
+    Need to have organization and package parameters separately for Organization/Group templates.
+
     creator and owner_1 should be the Organization who made the "page" (org, package, resource, or PD record set)
     owner_2, owner_3, and owner_4 are for the org_section field in the package schema.
     """
-    if not creator:
-        creator = _('Treasury Board of Canada Secretariat')
-    if not owner_1:
+    # defaults
+    creator = _('Treasury Board of Canada Secretariat')
+    owner_1 = _('Treasury Board of Canada Secretariat')
+    owner_2 = 'N/A'
+    owner_3 = 'N/A'
+    owner_4 = 'N/A'
+
+    # set creator and owner_1 to the package's organization title (language respective)
+    if organization:
+        if ' | ' in organization.get('title'):
+            creator = organization.get('title').split(' | ')[1 if h.lang() == 'fr' else 0].strip()
+        else:
+            creator = h.get_translated(organization, h.lang()).strip()
         owner_1 = creator
+
+    # set owners 2-4 to the package's org_section field value if available (language respective)
+    if package and 'org_section' in package and h.scheming_language_text(package.get('org_section')):
+        org_sections = h.scheming_language_text(package.get('org_section')).split(',')
+        osl = len(org_sections)
+        owner_2 = org_sections[0].strip() if osl >= 1 else 'N/A'
+        owner_3 = org_sections[1].strip() if osl >= 2 else 'N/A'
+        owner_4 = org_sections[2].strip() if osl >= 3 else 'N/A'
+
     return u'<meta property="dcterms:creator" content="%s" ' \
             'data-gc-analytics-owner="%s|%s|%s|%s"/>' % (
                 html.escape(creator), html.escape(owner_1),
                 html.escape(owner_2), html.escape(owner_3),
                 html.escape(owner_4))
+
+
+def resource_view_meta_title(package, resource, view, is_subtitle=False):
+    # type: (dict, dict, dict, bool) -> str
+    """
+    Generates the string for the title meta tag for Resource Views.
+
+    Includes the Resource View translated title.
+    """
+    package_title = h.get_translated(package, 'title')
+    resource_title = h.get_translated(resource, 'name')
+    view_title = view['title_fr'] if h.lang() == 'fr' else view['title']
+    if not is_subtitle:
+        return u'%s - %s - %s - %s' % (
+            html.escape(package_title), html.escape(resource_title),
+            html.escape(view_title), html.escape(_(g.site_title)))
+    return u'%s - %s - %s' % (
+        html.escape(package_title), html.escape(resource_title),
+        html.escape(view_title))
 
 
 def loop11_key():
