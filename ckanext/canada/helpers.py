@@ -262,6 +262,27 @@ def adobe_analytics_lang():
 def adobe_analytics_js():
     return str(config.get('adobe_analytics.js', ''))
 
+
+def adobe_analytics_creator(creator=None, owner_1=None,
+                            owner_2='N/A', owner_3='N/A', owner_4='N/A'):
+    """
+    Generates HTML Meta Tag for Adobe Analytics, along with extra GoC
+    page ownership HTML attribute.
+
+    creator and owner_1 should be the Organization who made the "page" (org, package, resource, or PD record set)
+    owner_2, owner_3, and owner_4 are for the org_section field in the package schema.
+    """
+    if not creator:
+        creator = _('Treasury Board of Canada Secretariat')
+    if not owner_1:
+        owner_1 = creator
+    return u'<meta property="dcterms:creator" content="%s" ' \
+            'data-gc-analytics-owner="%s|%s|%s|%s"/>' % (
+                html.escape(creator), html.escape(owner_1),
+                html.escape(owner_2), html.escape(owner_3),
+                html.escape(owner_4))
+
+
 def loop11_key():
     return str(config.get('loop11.key', ''))
 

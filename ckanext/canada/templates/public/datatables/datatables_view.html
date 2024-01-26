@@ -5,7 +5,7 @@
   {# Core datatables views uses no spaces and EM Dashes. Lets force our title formatting here... #}
   {%- set package_title, package_machine_translated = h.get_translated_t(package, 'title') -%}
   {%- set resource_title, resource_machine_translated = h.get_translated_t(resource, 'name') -%}
-  {{- (package_title or package.name) | trim -}}{{ ' - ' }}{{- (resource_title or resource.name) | trim -}}{{ ' - ' }}{{- _(g.site_title) | trim -}}
+  {{- (package_title or package.name) | trim -}} - {{- (resource_title or resource.name) | trim -}} - {{- _(g.site_title) | trim -}}
 {%- endblock -%}
 
 {% block page %}
@@ -21,7 +21,7 @@
   {%- set label = 'label_' + h.lang() -%}
   {%- set description = 'notes_' + h.lang() -%}
   {%- if data_dictionary_labels and field.info is defined and field.info[label]|length -%}
-    {{ field.info[label] | safe }}
+    {{ field.info[label] | trim }}
   {%- else -%}
     {{ field.id|replace(" ", nbspval) }}
   {%- endif -%}
@@ -39,11 +39,11 @@
   {%- set owner_4 = 'N/A' -%}
   {% if 'org_section' in package and h.scheming_language_text(package.org_section) | length > 0 %}
     {% set org_sections = h.scheming_language_text(package.org_section).split(',') %}
-    {%- set owner_2 = (org_sections[0] or 'N/A') | safe | trim -%}
-    {%- set owner_3 = (org_sections[1] or 'N/A') | safe | trim -%}
-    {%- set owner_4 = (org_sections[2] or 'N/A') | safe | trim -%}
+    {%- set owner_2 = (org_sections[0] or 'N/A') | trim -%}
+    {%- set owner_3 = (org_sections[1] or 'N/A') | trim -%}
+    {%- set owner_4 = (org_sections[2] or 'N/A') | trim -%}
   {% endif %}
-  {{ cr.adobe_analytics_creator(creator=owner_org_title,
+  {{ h.adobe_analytics_creator(creator=owner_org_title,
                                 owner_1=owner_org_title, owner_2=owner_2,
                                 owner_3=owner_3, owner_4=owner_4) }}
 {% endblock %}

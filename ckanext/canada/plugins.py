@@ -668,6 +668,7 @@ ckanext.canada:schemas/prop.yaml
             'flash_notice',
             'flash_error',
             'flash_success',
+            'adobe_analytics_creator',
         ])
 
     # IActions

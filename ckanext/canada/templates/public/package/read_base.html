@@ -13,11 +13,11 @@
   {%- set owner_4 = 'N/A' -%}
   {% if 'org_section' in pkg and h.scheming_language_text(pkg.org_section) | length > 0 %}
     {% set org_sections = h.scheming_language_text(pkg.org_section).split(',') %}
-    {%- set owner_2 = (org_sections[0] or 'N/A') | safe | trim -%}
-    {%- set owner_3 = (org_sections[1] or 'N/A') | safe | trim -%}
-    {%- set owner_4 = (org_sections[2] or 'N/A') | safe | trim -%}
+    {%- set owner_2 = (org_sections[0] or 'N/A') | trim -%}
+    {%- set owner_3 = (org_sections[1] or 'N/A') | trim -%}
+    {%- set owner_4 = (org_sections[2] or 'N/A') | trim -%}
   {% endif %}
-  {{ cr.adobe_analytics_creator(creator=owner_org_title,
+  {{ h.adobe_analytics_creator(creator=owner_org_title,
                                 owner_1=owner_org_title, owner_2=owner_2,
                                 owner_3=owner_3, owner_4=owner_4) }}
 {% endblock %}

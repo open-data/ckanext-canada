@@ -1,5 +1,4 @@
 {% ckan_extends %}
-{% import 'macros/canada_read.html' as cr %}
 
 {% block meta %}
 
@@ -15,7 +14,7 @@
       {% endblock %}
       <meta property="dcterms:language" content="{{ h.adobe_analytics_lang() }}" />
       {% block adobe_analytics_creator %}
-        {{ cr.adobe_analytics_creator() }}
+        {{ h.adobe_analytics_creator() }}
       {% endblock %}
       <meta property="dcterms:service" content="OG-GO" />
       <meta property="dcterms:accessRights" content="{{ h.adobe_analytics_login_required(h.full_current_url()) }}" />
@@ -74,9 +73,9 @@
 
 {%- block title -%}
   {%- block subtitle_2 -%}{%- endblock -%}
-  {%- if self.subtitle_2() | trim -%}{{ ' - ' }}{%- endif -%}
+  {%- if self.subtitle_2() | trim -%} - {%- endif -%}
   {%- block subtitle -%}{%- endblock -%}
-  {%- if self.subtitle() | trim -%}{{ ' - ' }}{%- endif -%}
+  {%- if self.subtitle() | trim -%} - {%- endif -%}
   {{ _(g.site_title) | trim }}
 {%- endblock -%}
 
