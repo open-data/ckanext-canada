@@ -22,6 +22,7 @@ from markupsafe import Markup, escape
 from ckan.lib.helpers import core_helper
 from ckan.plugins.core import plugin_loaded
 from ckan.logic import NotAuthorized
+import ckan.lib.datapreview as datapreview
 
 ORG_MAY_PUBLISH_OPTION = 'canada.publish_datasets_organization_name'
 ORG_MAY_PUBLISH_DEFAULT_NAME = 'tb-ct'
@@ -716,3 +717,19 @@ def flash_success(message, allow_html=True):
               category='alert-success',
               ignore_duplicate=True,
               allow_html=allow_html)
+
+
+def get_resource_view(resource_view_id):
+    """
+    Returns a resource view dict for the resource_view_id
+    """
+    try:
+        return t.get_action('resource_view_show')(
+            {}, {'id': resource_view_id})
+    except t.ObjectNotFound:
+        return None
+
+
+def resource_view_type(resource_view):
+    view_plugin = datapreview.get_view_plugin(resource_view['view_type'])
+    return view_plugin.info().get('title')
