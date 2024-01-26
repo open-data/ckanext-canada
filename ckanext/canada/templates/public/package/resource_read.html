@@ -2,6 +2,10 @@
 
 {% set is_registry = h.is_registry() %}
 
+{% block adobe_analytics_creator %}
+  {{ h.adobe_analytics_creator(organization=pkg.organization, package=pkg) }}
+{% endblock %}
+
 {% block page_title %}
   {{ super() }}
   <div class="row">

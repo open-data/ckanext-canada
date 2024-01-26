@@ -7,7 +7,7 @@
 {% set schema = h.scheming_get_dataset_schema(pkg.type) %}
 
 {% block adobe_analytics_creator %}
-  {{ h.adobe_analytics_creator(organization=pkg.organization, package=pkg) | safe }}
+  {{ h.adobe_analytics_creator(organization=pkg.organization, package=pkg) }}
 {% endblock %}
 
 {%- block subtitle -%}

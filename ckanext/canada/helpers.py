@@ -298,11 +298,11 @@ def adobe_analytics_creator(organization=None, package=None):
         owner_3 = org_sections[1].strip() if osl >= 2 else 'N/A'
         owner_4 = org_sections[2].strip() if osl >= 3 else 'N/A'
 
-    return u'<meta property="dcterms:creator" content="%s" ' \
+    return Markup(u'<meta property="dcterms:creator" content="%s" ' \
             'data-gc-analytics-owner="%s|%s|%s|%s"/>' % (
                 html.escape(creator), html.escape(owner_1),
                 html.escape(owner_2), html.escape(owner_3),
-                html.escape(owner_4))
+                html.escape(owner_4)))
 
 
 def resource_view_meta_title(package, resource, view, is_subtitle=False):
@@ -319,9 +319,9 @@ def resource_view_meta_title(package, resource, view, is_subtitle=False):
         return u'%s - %s - %s - %s' % (
             html.escape(package_title), html.escape(resource_title),
             html.escape(view_title), html.escape(_(g.site_title)))
-    return u'%s - %s - %s' % (
+    return Markup(u'%s - %s - %s' % (
         html.escape(package_title), html.escape(resource_title),
-        html.escape(view_title))
+        html.escape(view_title)))
 
 
 def loop11_key():
