@@ -5,7 +5,7 @@ import unicodedata
 
 from six import text_type
 
-from ckan.plugins.toolkit import _, h
+from ckan.plugins.toolkit import _, h, get_action
 from ckan.lib.navl.validators import StopOnError
 from ckan.authz import is_sysadmin
 from ckan import model
@@ -432,3 +432,35 @@ def canada_security_upload_presence(key, data, errors, context):
             return
         error = e.error_dict['File'][0]
         raise Invalid(_(error))
+
+
+def canada_guess_resource_format(key, data, errors, context):
+    """
+    Guesses the resource format based on the url if missing.
+    Guesses the resource format based on url change.
+    """
+    value = data[key]
+
+    # if it is empty, then do the initial guess.
+    # we will guess all url types, unlike Core
+    # which only checks uploaded files.
+    if not value or value is missing:
+        url = data.get(key[:-1] + ('url',), '')
+        if not url:
+            return
+        mimetype = get_action('canada_guess_mimetype')(context, {"url": url})
+        if mimetype:
+            data[key] = mimetype
+
+    # if there is a resource id, then it is an update.
+    # we can check if the url field value has changed.
+    resource_id = data.get(key[:-1] + ('id',))
+    if resource_id:
+        old_url = context.get('old_resource_url', None)
+        new_url = data.get(key[:-1] + ('url',), '')
+        if not new_url:
+            return
+        if old_url != new_url:
+            mimetype = get_action('canada_guess_mimetype')(context, {"url": new_url})
+            if mimetype:
+                data[key] = mimetype

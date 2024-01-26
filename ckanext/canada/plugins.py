@@ -714,6 +714,7 @@ class DataGCCAForms(p.SingletonPlugin, DefaultDatasetForm):
         actions = logic.limit_api_logic()
         actions.update((h, getattr(logic, h)) for h in [
             'changed_packages_activity_timestamp_since',
+            'canada_guess_mimetype',
             ])
         actions.update({k: disabled_anon_action for k in [
             'current_package_list_with_resources',
@@ -775,6 +776,8 @@ class DataGCCAForms(p.SingletonPlugin, DefaultDatasetForm):
                 validators.json_string_has_en_fr_keys,
             'resource_schema_validator':
                 validators.canada_resource_schema_validator,
+            'canada_guess_resource_format':
+                validators.canada_guess_resource_format,
             }
 
 

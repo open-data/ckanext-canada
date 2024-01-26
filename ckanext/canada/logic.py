@@ -4,13 +4,22 @@ from ckan.lib.dictization import model_dictize
 from ckan import model
 
 from ckan.plugins.toolkit import (
-    get_or_bust, ValidationError, side_effect_free, get_action, chained_action, config)
+    get_or_bust, ValidationError, side_effect_free, h, config)
 from ckan.authz import is_sysadmin
 
 import functools
 
 from sqlalchemy import func
 from sqlalchemy import or_
+
+from six.moves.urllib.parse import urlparse
+import mimetypes
+from ckanext.scheming.helpers import scheming_get_preset
+
+MIMETYPES_AS_DOMAINS = [
+    'application/x-msdos-program',  # .com
+    'application/vnd.lotus-organizer',  # .org
+]
 
 
 def limit_api_logic():
@@ -185,3 +194,34 @@ def datastore_create_temp_user_table(context):
         '''.format(
             username=literal_string(username),
             sysadmin='TRUE' if is_sysadmin(username) else 'FALSE'))
+
+
+def canada_guess_mimetype(context, data_dict):
+    """
+    Returns mimetype based on url, similar to the Core code,
+    but will respect the Schema and choice replacements such
+    as ["jpg", "jpeg"] and returns value JPG.
+    """
+    url = data_dict.pop('url', None)
+    mimetype, encoding = mimetypes.guess_type(url)
+
+    if not mimetype or mimetype in MIMETYPES_AS_DOMAINS:
+        # if we cannot guess the mimetype, check if it is an actual web address
+        # and we can set the mimetype to text/html. Uploaded files have only the filename as url,
+        # so check scheme to determine if it's an actual web address.
+        parsed = urlparse(url)
+        if parsed.scheme:
+            mimetype = 'text/html'
+
+    if mimetype:
+        # run mimetype through core helper to clean format, then
+        # check replacements in the scheming choices.
+        mimetype = h.unified_resource_format(mimetype)
+        fmt_choices = scheming_get_preset('canada_resource_format')['choices']
+        for f in fmt_choices:
+            if 'replaces' in f:
+                for r in f['replaces']:
+                    if mimetype.lower() == r.lower():
+                        mimetype = f['value']
+
+    return mimetype

@@ -10,5 +10,11 @@
 
 {% block scripts %}
   <script type="text/javascript" src="{{ h.url_for_static('/registry_resource_edit.js') }}" ></script>
+  {% asset 'canada_internal/guess_mimetype' %}
   {{ super() }}
+{% endblock %}
+
+{% block custom_styles %}
+  {{ super() }}
+  {% asset 'vendor/select2-css' %}
 {% endblock %}
