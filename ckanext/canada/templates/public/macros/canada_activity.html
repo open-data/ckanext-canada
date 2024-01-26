@@ -1,0 +1,22 @@
+{% macro resource_view_activity(activity_data, h) %}
+  <span class="resource-view">
+    {{ h.link_to(
+          activity_data.title if activity_data.title else h.resource_view_type(activity_data),
+          h.url_for('dataset_resource.read',
+            id=activity_data.package_id,
+            resource_id=activity_data.resource_id) ~ '?view_id=' ~ activity_data.id)
+    }}
+  </span>
+{% endmacro %}
+
+
+{% macro resource_data_dictionary_activity(activity, h) %}
+  <span class="resource-data-dictionary">
+    {{ h.link_to(
+          h.get_translated(activity.data, 'name'),
+          h.url_for('dataset_resource.read',
+            id=activity.data.package_id,
+            resource_id=activity.data.id) ~ '#data-dictionary')
+    }}
+  </span>
+{% endmacro %}

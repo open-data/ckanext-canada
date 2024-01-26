@@ -18,7 +18,6 @@ from ckan.plugins.toolkit import (
     get_validator,
     request
 )
-import ckanapi
 
 from ckanext.canada import validators
 from ckanext.canada import logic
@@ -61,6 +60,22 @@ class CanadaSecurityPlugin(CkanSecurityPlugin):
     """
     p.implements(p.IResourceController, inherit=True)
     p.implements(p.IValidators, inherit=True)
+    p.implements(p.IConfigurer)
+
+    def update_config(self, config):
+        # Disable auth settings
+        config['ckan.auth.anon_create_dataset'] = False
+        config['ckan.auth.create_unowned_dataset'] = False
+        config['ckan.auth.create_dataset_if_not_in_organization'] = False
+        config['ckan.auth.user_create_groups'] = False
+        config['ckan.auth.user_create_organizations'] = False
+        config['ckan.auth.create_user_via_api'] = config.get('ckan.auth.create_user_via_api', False)  # allow setting in INI file
+        # Enable auth settings
+        config['ckan.auth.user_delete_groups'] = True
+        config['ckan.auth.user_delete_organizations'] = True
+        config['ckan.auth.create_user_via_web'] = True
+        # Set auth settings
+        config['ckan.auth.roles_that_cascade_to_sub_groups'] = 'admin'
 
     def before_create(self, context, resource):
         """
@@ -580,9 +595,11 @@ ckanext.canada:schemas/prop.yaml
         hlp.build_nav_main = build_nav_main
 
         # migration from `canada_activity` and `ckanext-extendedactivity` - Aug 2022
+        # migrated from `ckan` canada fork for resource view activities - Jan 2024
         logic_validators.object_id_validators.update({
-            'changed datastore': logic_validators.package_id_exists,
-            'deleted datastore': logic_validators.package_id_exists,
+            'new resource view': logic_validators.package_id_exists,
+            'changed resource view': logic_validators.package_id_exists,
+            'deleted resource view': logic_validators.package_id_exists,
         })
 
     # IFacets
@@ -662,14 +679,13 @@ ckanext.canada:schemas/prop.yaml
             'flash_notice',
             'flash_error',
             'flash_success',
+            'get_resource_view',
+            'resource_view_type',
         ])
 
     # IActions
-    # `datastore_upsert` and `datastore_delete` migrated from `canada_activity` and `ckanext-extendedactivity` - Aug 2022
     def get_actions(self):
         return {
-                'datastore_upsert': datastore_upsert,
-                'datastore_delete': datastore_delete,
                 'recently_changed_packages_activity_list': act.recently_changed_packages_activity_list,  #TODO: Remove this action override in CKAN 2.10 upgrade
                 'resource_view_show': logic.canada_resource_view_show,
                 'resource_view_list': logic.canada_resource_view_list
@@ -811,54 +827,6 @@ class LogExtraMiddleware(object):
                 exc_info)
 
         return self.app(environ, _start_response)
-
-
-@chained_action
-def datastore_upsert(up_func, context, data_dict):
-    lc = ckanapi.LocalCKAN(username=context['user'])
-    res_data = lc.action.datastore_search(
-        resource_id=data_dict['resource_id'],
-        filters={},
-        limit=1,
-    )
-    count = res_data.get('total', 0)
-    result = up_func(context, data_dict)
-
-    res_data = lc.action.datastore_search(
-        resource_id=data_dict['resource_id'],
-        filters={},
-        limit=1,
-    )
-    count = res_data.get('total', 0) - count
-
-    act.datastore_activity_create(context, {'count':count,
-                                            'activity_type': 'changed datastore',
-                                            'resource_id': data_dict['resource_id']}
-                                  )
-    return result
-
-
-@chained_action
-def datastore_delete(up_func, context, data_dict):
-    if data_dict.get('url_type', None) == 'upload':
-        return up_func(context, data_dict)
-
-    lc = ckanapi.LocalCKAN(username=context['user'], context={'ignore_auth':True})
-    res_id = data_dict['id'] if 'id' in data_dict.keys() else data_dict['resource_id']
-    res = lc.action.datastore_search(
-        resource_id=res_id,
-        filters=data_dict.get('filters'),
-        limit=1,
-    )
-
-    result = up_func(context, data_dict)
-
-    act.datastore_activity_create(context,
-                                  {'count': res.get('total', 0),
-                                   'activity_type': 'deleted datastore',
-                                   'resource_id': res_id}
-                                  )
-    return result
 
 
 def _wet_pager(self, *args, **kwargs):

@@ -148,8 +148,9 @@ def _changed_packages_activity_timestamp_since(since, limit):
     q = model.Session.query(model.Activity.object_id.label('object_id'),
                             func.max(model.Activity.timestamp).label(
                                 'timestamp'))
-    q = q.filter(or_(model.Activity.activity_type.endswith('package'),
-                     model.Activity.activity_type.endswith('view')))
+    q = q.filter(or_(model.Activity.activity_type.endswith('package'),  # Package create, update, delete
+                     model.Activity.activity_type.endswith('view'),  # Resource View create, update, delete
+                     model.Activity.activity_type.endswith('created datastore')))  # DataStore create & Data Dictionary update
     q = q.filter(model.Activity.timestamp > since)
     q = q.group_by(model.Activity.object_id)
     q = q.order_by('timestamp')
