@@ -226,6 +226,9 @@ a#edit-comment-body-0-format-help-about, button#edit-submit,button#edit-actions-
   background-color: #fff;
 }
 
+/*###################
+## Activity Stream ##
+#####################*/
 .activity .item {
   position: relative;
   margin: 0 0 15px 0;
@@ -239,6 +242,19 @@ a#edit-comment-body-0-format-help-about, button#edit-submit,button#edit-actions-
   line-height: 1.5;
   margin: 5px 0 0 40px;
 }
+.activity .item table{
+  font-size: 14px;
+  line-height: 1.5;
+  margin-bottom: 5px;
+}
+.activity .item table p{
+  margin: 0;
+}
+/*###################
+##       END       ##
+## Activity Stream ##
+##       END       ##
+#####################*/
 
 .res-tag {
   font-size: 10px;
