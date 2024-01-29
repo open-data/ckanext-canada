@@ -223,7 +223,10 @@ def canada_resource_view_show(up_func, context, data_dict):
         site_user = get_action('get_site_user')({'ignore_auth': True}, {})['name']
         is_system_process = False
         if has_request_context():
-            current_user = g.user
+            try:
+                current_user = g.user
+            except (TypeError, AttributeError):
+                current_user = None
         else:
             current_user = None
             is_system_process = True
@@ -269,7 +272,10 @@ def canada_resource_view_list(up_func, context, data_dict):
     site_user = get_action('get_site_user')({'ignore_auth': True}, {})['name']
     is_system_process = False
     if has_request_context():
-        current_user = g.user
+        try:
+            current_user = g.user
+        except (TypeError, AttributeError):
+            current_user = None
     else:
         current_user = None
         is_system_process = True
