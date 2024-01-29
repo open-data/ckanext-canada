@@ -455,9 +455,10 @@ class TestNAVLSchema(CanadaTestBase):
         assert res_dict['format'] == 'JPG'
 
         # updating a url should re-guess the format
+        resource_data['id'] = res_dict['id']
         resource_data['url'] = u'http://www.annakarenina.com/download/image.png'
 
-        res_dict = self.sysadmin_action.resource_update(**resource_data)
+        res_dict = self.sysadmin_action.resource_patch(**resource_data)
 
         assert 'format' in res_dict
         assert res_dict['format'] == 'PNG'
@@ -465,7 +466,7 @@ class TestNAVLSchema(CanadaTestBase):
         # updating a format without changing the url should use the supplied format
         resource_data['format'] = u'HTML'
 
-        res_dict = self.sysadmin_action.resource_update(**resource_data)
+        res_dict = self.sysadmin_action.resource_patch(**resource_data)
 
         assert 'format' in res_dict
         assert res_dict['format'] == 'HTML'
@@ -474,7 +475,7 @@ class TestNAVLSchema(CanadaTestBase):
         resource_data['url'] = u'thisisabadformat.blublub'
 
         with pytest.raises(ValidationError) as ve:
-            self.sysadmin_action.resource_update(**resource_data)
+            self.sysadmin_action.resource_patch(**resource_data)
         err = ve.value.error_dict
         assert 'format' in err
         assert 'Could not determine a resource format' in err['format'][0]
