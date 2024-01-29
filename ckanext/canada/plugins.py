@@ -102,6 +102,7 @@ class CanadaDatasetsPlugin(SchemingDatasetsPlugin):
     """
     p.implements(p.IDatasetForm, inherit=True)
     p.implements(p.IPackageController, inherit=True)
+    p.implements(p.IResourceController, inherit=True)
     p.implements(p.IBlueprint)
     try:
         from ckanext.validation.interfaces import IDataValidation
@@ -301,6 +302,15 @@ class CanadaDatasetsPlugin(SchemingDatasetsPlugin):
                 cr.pop('__extras', None)
 
         return data_dict
+
+
+    # IResourceController
+    def before_update(self, context, old_dict, new_dict):
+        """
+        Set the old resource url in the context for use in the validator: canada_guess_resource_format
+        """
+        if old_dict.get('url', None) and old_dict.get('package_id', None):  # ensure that it is a resource
+            context['old_resource_url'] = old_dict.get('url', None)
 
 
 class DataGCCAInternal(p.SingletonPlugin):
