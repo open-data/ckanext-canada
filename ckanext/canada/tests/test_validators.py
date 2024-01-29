@@ -477,4 +477,4 @@ class TestNAVLSchema(CanadaTestBase):
             self.sysadmin_action.resource_update(**resource_data)
         err = ve.value.error_dict
         assert 'format' in err
-        assert 'Could not determine resource format' in err['format'][0]
+        assert 'Could not determine a resource format' in err['format'][0]

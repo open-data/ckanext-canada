@@ -226,6 +226,6 @@ def canada_guess_mimetype(context, data_dict):
 
     if not mimetype:
         # raise the ValidationError here so that the front-end and back-end will have it.
-        raise ValidationError({'format': _('Could not determine resource format. Please supply a format.')})
+        raise ValidationError({'format': _('Could not determine a resource format. Please supply a format.')})
 
     return mimetype
