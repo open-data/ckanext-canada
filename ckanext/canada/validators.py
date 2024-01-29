@@ -412,9 +412,9 @@ def canada_resource_schema_output(value, context):
 
 def canada_validation_options_output(value, context):
     """
-    Always force 1 Million row limit
+    Always forces None
     """
-    return {u'row_limit': 1000000}
+    return None
 
 
 def canada_security_upload_type(key, data, errors, context):

@@ -447,4 +447,4 @@ class TestNAVLSchema(CanadaTestBase):
         }
 
         resource = self.sysadmin_action.resource_create(**resource_data)
-        assert resource['validation_options'] == {u"row_limit": 1000000}
+        assert resource['validation_options'] == None
