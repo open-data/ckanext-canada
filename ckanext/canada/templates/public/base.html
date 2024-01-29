@@ -1,73 +1,82 @@
 {% ckan_extends %}
 
-{%- block links -%}
-{{super()}}
-{%- block meta -%}
+{% block meta %}
+
   {{ super() }}
+
+  {% block og_meta_title %}
+    <meta property="og:title" content="{{ self.title() }}">
+  {% endblock %}
   {% block adobe_analytics_meta %}
-    {%- block adobe_analytics_title -%}
-    <meta property="dcterms:title" content="{{ g.site_title }}" />
-    {%- endblock -%}
-    <meta property="dcterms:language" content="{{ h.adobe_analytics_lang() }}" />
-    {%- block adobe_analytics_creator -%}
-    {# remove encode when moving from fanstatic - applied as a fix for OPEN-1566 #}
-    <meta property="dcterms:creator" content="{{ _('Treasury Board of Canada Secretariat').encode('ascii', 'xmlcharrefreplace') | safe }}"/>
-    {%- endblock -%}
-    <meta property="dcterms:service" content="OG-GO" />
-    <meta property="dcterms:accessRights" content="{{ h.adobe_analytics_login_required(h.full_current_url()) }}" />
-  {%- endblock -%}
-{%- endblock -%}
-{%- block google_analytics -%}
-  {% set ga4_id = h.ga4_id() %}
-  {% if ga4_id %}
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id={{ ga4_id }}"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', '{{ ga4_id }}');
+    {% if not h.is_registry() %}
+      {% block adobe_analytics_title %}
+        <meta property="dcterms:title" content="{{ self.title() }}" />
+      {% endblock %}
+      <meta property="dcterms:language" content="{{ h.adobe_analytics_lang() }}" />
+      {% block adobe_analytics_creator %}
+        {{ h.adobe_analytics_creator() }}
+      {% endblock %}
+      <meta property="dcterms:service" content="OG-GO" />
+      <meta property="dcterms:accessRights" content="{{ h.adobe_analytics_login_required(h.full_current_url()) }}" />
+    {% endif %}
+  {% endblock %}
+{% endblock %}
+
+{% block links %}
+
+  {{ super() }}
+
+  {% block google_analytics %}
+    {% set ga4_id = h.ga4_id() %}
+    {% if ga4_id %}
+      <!-- Google tag (gtag.js) -->
+      <script async src="https://www.googletagmanager.com/gtag/js?id={{ ga4_id }}"></script>
+      <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', '{{ ga4_id }}');
+      </script>
+    {% endif %}
+  {% endblock %}
+
+  {% block adobe_analytics %}
+    {% if not h.is_registry() and h.adobe_analytics_js() %}
+      <script src="{{ h.adobe_analytics_js() }}"></script>
+    {% endif %}
+  {% endblock %}
+
+  {% set loop11_key = h.loop11_key() %}
+  {% if loop11_key %}
+    <script type="text/javascript">
+      window.loop11_key = '{{ loop11_key }}';
     </script>
+    <script src="//cdn.loop11.com/my/loop11.js" type="text/javascript" async="async"></script>
   {% endif %}
-{%- endblock -%}
-
-{% block adobe_analytics %}
-{% if h.adobe_analytics_js() %}
-  <script src="{{ h.adobe_analytics_js() }}"></script>
-{% endif %}
-{%- endblock -%}
-
-{% set loop11_key = h.loop11_key() %}
-{% if loop11_key %}
-  <script type="text/javascript">
-    window.loop11_key = '{{ loop11_key }}';
-  </script>
-  <script src="//cdn.loop11.com/my/loop11.js" type="text/javascript" async="async"></script>
-{% endif %}
-{%- endblock -%}
+{% endblock %}
 
 {%- block wet_scripts -%}
 {%- endblock -%}
 
-{%- block custom_styles %}
+{%- block custom_styles -%}
   {% snippet 'snippets/wet-boew/headresources.html' %}
   {% asset 'canada_public/css' %}
 {%- endblock -%}
 
 
 {%- block htmltag -%}
-{% set lang = h.lang() %}
-<!--[if lt IE 9]>
-<html class="no-js lt-ie9" lang="{{ lang }}" dir="ltr"><![endif]--> <!--[if gt IE 8]><!-->
-<html class="no-js" lang="{{ lang }}" dir="ltr"> <!--<![endif]-->
+  {%- set lang = h.lang() -%}
+  <!--[if lt IE 9]>
+  <html class="no-js lt-ie9" lang="{{ lang }}" dir="ltr"><![endif]--> <!--[if gt IE 8]><!-->
+  <html class="no-js" lang="{{ lang }}" dir="ltr"> <!--<![endif]-->
 {%- endblock -%}
 
 {%- block title -%}
-  {%- block subtitle_2 %}{% endblock -%}
-  {%- if self.subtitle_2()|trim %} {{ g.template_title_deliminater }} {% endif -%}
-  {%- block subtitle %}{% endblock -%}
-  {%- if self.subtitle()|trim %} {{ g.template_title_deliminater }} {% endif -%}
-  {{ _(g.site_title) }}
+  {%- block subtitle_2 -%}{%- endblock -%}
+  {%- if self.subtitle_2() | trim %} - {% endif -%}
+  {%- block subtitle -%}{%- endblock -%}
+  {%- if self.subtitle() | trim %} - {% endif %}
+  {{- _(g.site_title) | trim -}}
 {%- endblock -%}
 
-{% block bodytag %}{{super()}} vocab="http://schema.org/" typeof="WebPage"{% endblock %}
+{% block bodytag %}{{super()}} vocab="https://schema.org/" typeof="WebPage"{% endblock %}

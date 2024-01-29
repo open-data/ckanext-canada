@@ -3,7 +3,16 @@
 {% import 'macros/canada_read.html' as cr %}
 
 {% block organization_display %}
+  {# this is a scoped macro call, passes in `org` dict #}
   {{- cr.split_bilingual_field(org.title, h.lang()) | truncate(60) -}}
+{% endblock %}
+
+{%- block subtitle_2 -%}
+  {{ cr.split_bilingual_field(organization.title, h.lang()) | trim }}
+{%- endblock -%}
+
+{% block adobe_analytics_creator %}
+  {{ h.adobe_analytics_creator(organization=organization) }}
 {% endblock %}
 
 {# we want a wide display for the table #}
