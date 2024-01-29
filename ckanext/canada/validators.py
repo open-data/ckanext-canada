@@ -5,7 +5,7 @@ import unicodedata
 
 from six import text_type
 
-from ckan.plugins.toolkit import _, h, get_action
+from ckan.plugins.toolkit import _, h, get_action, ValidationError
 from ckan.lib.navl.validators import StopOnError
 from ckan.authz import is_sysadmin
 from ckan import model
@@ -448,9 +448,12 @@ def canada_guess_resource_format(key, data, errors, context):
         url = data.get(key[:-1] + ('url',), '')
         if not url:
             return
-        mimetype = get_action('canada_guess_mimetype')(context, {"url": url})
-        if mimetype:
+        try:
+            mimetype = get_action('canada_guess_mimetype')(context, {"url": url})
             data[key] = mimetype
+        except ValidationError as e:
+            errors[key].append(e.error_dict['format'])
+            raise StopOnError
 
     # if there is a resource id, then it is an update.
     # we can check if the url field value has changed.
@@ -461,6 +464,9 @@ def canada_guess_resource_format(key, data, errors, context):
         if not new_url:
             return
         if old_url != new_url:
-            mimetype = get_action('canada_guess_mimetype')(context, {"url": new_url})
-            if mimetype:
+            try:
+                mimetype = get_action('canada_guess_mimetype')(context, {"url": new_url})
                 data[key] = mimetype
+            except ValidationError as e:
+                errors[key].append(e.error_dict['format'])
+                raise StopOnError

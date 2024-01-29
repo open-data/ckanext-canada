@@ -1,6 +1,16 @@
 window.addEventListener('load', function(){
   $(document).ready(function() {
 
+    const lang = $('html').attr('lang').length > 0 ? $('html').attr('lang') : 'en';
+
+    // slightly different error messages for the front-end users.
+    // as the UX is different than the API users.
+    let failedGuessErrorMessage = 'Could not determine a resource format. Please supply a format below.';
+    let failedChoicesErrorMessage = 'Could not determine a valid resource format. Please supply a different format below.';
+    if( lang == 'fr' ){
+      //TODO: set french error messages
+    }
+
     let dataUploadWrapper = $('.resource-upload-field.form-group');
 
     let formatField = $('#field-format');
@@ -16,6 +26,18 @@ window.addEventListener('load', function(){
 
     }
 
+    function _set_success_message(format){
+      let message = 'Set Resource Format to <strong>' + format + '</strong>';
+      if( lang == 'fr' ){
+        //TODO: set french message
+      }
+      $(dataUploadWrapper).after('<div class="module-alert alert alert-info mrgn-tp-sm mrgn-bttm-sm canada-guess-mimetype-alert" style="margin-left: 3px;"><p>' + message + '</p></div>');
+    }
+
+    function _set_warning_message(error){
+      $(dataUploadWrapper).after('<div class="module-alert alert alert-danger mrgn-tp-sm mrgn-bttm-sm canada-guess-mimetype-alert" style="margin-left: 3px;"><p>' + error + '</p></div>');
+    }
+
     function _guess_mimetype(url){
       $.ajax({
         'url': '/api/action/canada_guess_mimetype',
@@ -25,10 +47,16 @@ window.addEventListener('load', function(){
           'url': url,
         },
         'complete': function(_data){
-          if( _data.responseJSON && _data.responseJSON.success ){
-            _set_resource_format(_data.responseJSON.result);
-          }else{
+          if( _data.responseJSON ){  // we have response JSON
+            if( _data.responseJSON.success ){  // successful format guess
+              _set_resource_format(_data.responseJSON.result);
+            }else{  // validation error
+              _set_resource_format('');
+              _set_warning_message(failedGuessErrorMessage);
+            }
+          }else{  // fully flopped ajax request
             _set_resource_format('');
+            _set_warning_message(failedGuessErrorMessage);
           }
         }
       });
@@ -38,12 +66,18 @@ window.addEventListener('load', function(){
       let has_option_value = $(formatField).find('option[value="' + mimetype + '"]');
       if( has_option_value.length == 0 ){
         // there is no option with the guessed mimetype
+        // we can assume that the format is not in scheming choices
+        // for the front-end here.
         mimetype = '';
+        // we have a different message here for the front-end, because
+        // API users will need the full list of choices, but the front-end
+        // users will have the select2 field to choose from.
+        _set_warning_message(failedChoicesErrorMessage);
       }
       $(formatField).val(mimetype).trigger('change');
-      let semantic_mimetype = mimetype.length > 0 ? mimetype : 'None';
-      //TODO: French translation here??
-      $(dataUploadWrapper).after('<div class="module-alert alert alert-info mrgn-tp-sm mrgn-bttm-sm canada-guess-mimetype-alert" style="margin-left: 3px;"><p>Set Resource Format to ' + semantic_mimetype + '</p></div>');
+      if( mimetype.length > 0 ){
+        _set_success_message(mimetype);
+      }
     }
 
     function _bind_events(){

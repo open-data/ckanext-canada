@@ -4,7 +4,7 @@ from ckan.lib.dictization import model_dictize
 from ckan import model
 
 from ckan.plugins.toolkit import (
-    get_or_bust, ValidationError, side_effect_free, h, config)
+    get_or_bust, ValidationError, side_effect_free, h, config, _)
 from ckan.authz import is_sysadmin
 
 import functools
@@ -223,5 +223,9 @@ def canada_guess_mimetype(context, data_dict):
                 for r in f['replaces']:
                     if mimetype.lower() == r.lower():
                         mimetype = f['value']
+
+    if not mimetype:
+        # raise the ValidationError here so that the front-end and back-end will have it.
+        raise ValidationError({'format': _('Could not determine resource format. Please supply a format.')})
 
     return mimetype

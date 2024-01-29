@@ -415,3 +415,66 @@ class TestNAVLSchema(CanadaTestBase):
         err = ve.value.error_dict
         assert 'schema' in err
         assert 'Invalid JSON for Schema' in err['schema'][0]
+
+
+    def test_guess_resource_format(self):
+        """
+        Creating/updating a Resource should guess the format based on url.
+        """
+        pkg = self.sysadmin_action.package_create(**self.complete_pkg)
+
+        # creating a resource WITH a format should use the supplied format
+        resource_data = {
+            'name_translated': {'en': u'Full text.', 'fr': u'Full text.'},
+            'url': u'http://www.annakarenina.com/download/image.jpeg',
+            'format': u'TXT',
+            'size': 42,
+            'resource_type': 'dataset',
+            'language': ['en', 'fr'],
+            'package_id': pkg['id'],
+        }
+
+        res_dict = self.sysadmin_action.resource_create(**resource_data)
+
+        assert 'format' in res_dict
+        assert res_dict['format'] == 'TXT'
+
+        # creating a resource WITHOUT a format should guess the format
+        resource_data = {
+            'name_translated': {'en': u'Full text.', 'fr': u'Full text.'},
+            'url': u'http://www.annakarenina.com/download/image.jpeg',
+            'size': 42,
+            'resource_type': 'dataset',
+            'language': ['en', 'fr'],
+            'package_id': pkg['id'],
+        }
+
+        res_dict = self.sysadmin_action.resource_create(**resource_data)
+
+        assert 'format' in res_dict
+        assert res_dict['format'] == 'JPG'
+
+        # updating a url should re-guess the format
+        resource_data['url'] = u'http://www.annakarenina.com/download/image.png'
+
+        res_dict = self.sysadmin_action.resource_update(**resource_data)
+
+        assert 'format' in res_dict
+        assert res_dict['format'] == 'PNG'
+
+        # updating a format without changing the url should use the supplied format
+        resource_data['format'] = u'HTML'
+
+        res_dict = self.sysadmin_action.resource_update(**resource_data)
+
+        assert 'format' in res_dict
+        assert res_dict['format'] == 'HTML'
+
+        # failed mimetype guessing should raise a validation error
+        resource_data['url'] = u'thisisabadformat.blublub'
+
+        with pytest.raises(ValidationError) as ve:
+            self.sysadmin_action.resource_update(**resource_data)
+        err = ve.value.error_dict
+        assert 'format' in err
+        assert 'Could not determine resource format' in err['format'][0]
