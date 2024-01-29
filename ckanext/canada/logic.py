@@ -17,6 +17,7 @@ from ckan.plugins.toolkit import (
 from ckan.authz import is_sysadmin
 
 import functools
+from flask import has_request_context
 
 from sqlalchemy import func
 from sqlalchemy import or_
@@ -220,17 +221,23 @@ def canada_resource_view_show(up_func, context, data_dict):
         # and adding the Resource Object into the context
         res_extras = getattr(context.get('resource'), 'extras', {})
         site_user = get_action('get_site_user')({'ignore_auth': True}, {})['name']
+        is_system_process = False
+        if has_request_context():
+            current_user = g.user
+        else:
+            current_user = None
+            is_system_process = True
 
         if not res_extras.get('datastore_active', False) or \
         res_extras.get('validation_status') != 'success':
             # if the Resource is not active in the DataStore or has not
             # passed validation, we do not want to show its datatables_view views
 
-            if not g.user:
+            if not is_system_process and not current_user:
                 # only raise if a user is not logged in
                 raise ObjectNotFound
 
-            if g.user != site_user:
+            if not is_system_process and current_user != site_user:
                 # only add key/value if not system process
                 view_dict['canada_disabled_view'] = True
 
@@ -260,6 +267,12 @@ def canada_resource_view_list(up_func, context, data_dict):
     # and adding the Resource Object into the context
     res_extras = getattr(context.get('resource'), 'extras', {})
     site_user = get_action('get_site_user')({'ignore_auth': True}, {})['name']
+    is_system_process = False
+    if has_request_context():
+        current_user = g.user
+    else:
+        current_user = None
+        is_system_process = True
     disabled_views_indexes = []
     for i, view_dict in enumerate(view_list):
 
@@ -269,12 +282,12 @@ def canada_resource_view_list(up_func, context, data_dict):
             # if the Resource is not active in the DataStore or has not
             # passed validation, we do not want to show its datatables_view views
 
-            if not g.user:
+            if not is_system_process and not current_user:
                 # only remove from the list if a user is not logged in
                 disabled_views_indexes.append(i)
                 continue
 
-            if g.user != site_user:
+            if not is_system_process and current_user != site_user:
                 # only add key/value if not system process
                 view_list[i]['canada_disabled_view'] = True
     return [v for i, v in enumerate(view_list) if i not in disabled_views_indexes]
