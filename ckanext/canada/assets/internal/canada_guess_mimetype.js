@@ -63,6 +63,21 @@ window.addEventListener('load', function(){
 
           });
 
+          $(_button).off('keyup.reset_guessing');
+          $(_button).on('keyup.reset_guessing', function(_event){
+
+            let keyCode = _event.keyCode ? _event.keyCode : _event.which;
+
+            // space and enter keys required for a11y
+            if( keyCode == 32 || keyCode == 13 ){
+
+              $('.canada-guess-mimetype-alert').remove();
+              _bind_events();
+
+            }
+
+          });
+
         });
       }
 
