@@ -6,6 +6,6 @@
   {# TODO - add resource details #}
   {{ super() }}
   {% if h.is_registry() %}
-    {{ h.get_validation_badge(res)|safe }}
+    {{ h.get_validation_badge(res) | safe }}
   {% endif %}
 {% endblock %}
