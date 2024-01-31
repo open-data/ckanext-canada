@@ -4,9 +4,13 @@
 {% set pkg = c.pkg_dict %}
 {% set client_lang = h.lang() %}
 
-{% block subtitle %}{% endblock %}
+{% set title, machine_translated = h.get_translated_t(pkg, 'title') %}
+
+{%- block subtitle -%}
+  {{ (title or pkg.name) | trim }}
+{%- endblock -%}
+
 {% block page_title %}
-  {% set title, machine_translated = h.get_translated_t(pkg, 'title') %}
   <h1>{{ title or pkg.name }}
     {% if pkg.state.startswith('draft') %}
       <span class="label label-info" style="padding-top: 4px; padding-bottom: 4px;">{{ _('Draft') }}</span>
