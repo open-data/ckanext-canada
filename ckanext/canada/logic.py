@@ -217,9 +217,9 @@ def canada_resource_view_show(up_func, context, data_dict):
     """
     view_dict = up_func(context, data_dict)
     if view_dict.get('view_type') == 'datatables_view':
-        # at this point, the core function has been called, calling resource_show etc.
-        # so we can assume that the Resource exists here, and that `id` is in data_dict
-        resource = model.Resource.get(data_dict.get('id'))
+        # at this point, the core function has been called, calling resource_view_show etc.
+        # so we can assume that the Resource and View exists here, and that `resource_id` is in view_dict
+        resource = model.Resource.get(view_dict.get('resource_id'))
         res_extras = getattr(resource, 'extras', {})
         site_user = get_action('get_site_user')({'ignore_auth': True}, {})['name']
         is_system_process = False
