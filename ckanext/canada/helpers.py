@@ -782,30 +782,14 @@ def get_loader_status_badge(resource):
 
     badge_url = t.h.url_for_static('/static/img/badges/{lang}/datastore-{status}.svg'.format(lang=t.h.lang(), status=status))
 
-    # in queue, try to get the number in the queue
-    # NOTE: the Validation extension does not use the task_status table,
-    # and we will never know the job id of a Validation job.
-    # FIXME: is this worth it if we cannot display in the Xloader page?
-    # is it worth it if we cannot display for the Validation extension?
-    queue_number = None
-    if status == 'pending':
-        queue_number = 1
-        jobs_in_queue = t.get_action('job_list')({"ignore_auth": True}, {})
-        for job in jobs_in_queue:
-            if job.get('id') == xloader_job.get('job_id'):
-                break
-            queue_number += 1
-
     title = t.h.render_datetime(xloader_job.get('last_updated'), with_hours=True) \
         if xloader_job.get('last_updated') else ''
-    if queue_number:
-        title = _("Number %s in queue") % queue_number
 
-    return u'<a href="{pusher_url}" class="loader-badge"><img src="{badge_url}" alt="{alt}" title="{title}"/></a>'.format(
+    return Markup(u'<a href="{pusher_url}" class="loader-badge"><img src="{badge_url}" alt="{alt}" title="{title}"/></a>'.format(
         pusher_url=pusher_url,
         badge_url=badge_url,
         alt=html.escape(messages[status].replace('"', '\"')),
-        title=html.escape(title.replace('"', '\"')))
+        title=html.escape(title.replace('"', '\"'))))
 
 
 def get_resource_view(resource_view_id):

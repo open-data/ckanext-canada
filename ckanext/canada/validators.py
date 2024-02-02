@@ -387,23 +387,11 @@ def json_string_has_en_fr_keys(value, context):
     return value
 
 
-def canada_blank_value_creator(value):
+def canada_output_none(value):
     """
-    Generates a blank value
-    """
-    return u''
+    A custom output validator.
 
-
-def canada_resource_schema_output(value, context):
-    """
-    Always forces None
-    """
-    return None
-
-
-def canada_validation_options_output(value, context):
-    """
-    Always forces None
+    Awlays returns None
     """
     return None
 

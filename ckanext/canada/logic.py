@@ -217,9 +217,10 @@ def canada_resource_view_show(up_func, context, data_dict):
     """
     view_dict = up_func(context, data_dict)
     if view_dict.get('view_type') == 'datatables_view':
-        # at this point, the core function has been called, calling resource_show
-        # and adding the Resource Object into the context
-        res_extras = getattr(context.get('resource'), 'extras', {})
+        # at this point, the core function has been called, calling resource_show etc.
+        # so we can assume that the Resource exists here, and that `id` is in data_dict
+        resource = model.Resource.get(data_dict.get('id'))
+        res_extras = getattr(resource, 'extras', {})
         site_user = get_action('get_site_user')({'ignore_auth': True}, {})['name']
         is_system_process = False
         if has_request_context():
@@ -266,9 +267,10 @@ def canada_resource_view_list(up_func, context, data_dict):
     views still. We will just add a key to the view dict to be used within templates for visuals.
     """
     view_list = up_func(context, data_dict)
-    # at this point, the core function has been called, calling resource_show
-    # and adding the Resource Object into the context
-    res_extras = getattr(context.get('resource'), 'extras', {})
+    # at this point, the core function has been called, calling resource_show etc.
+    # so we can assume that the Resource exists here, and that `id` is in data_dict
+    resource = model.Resource.get(data_dict.get('id'))
+    res_extras = getattr(resource, 'extras', {})
     site_user = get_action('get_site_user')({'ignore_auth': True}, {})['name']
     is_system_process = False
     if has_request_context():
