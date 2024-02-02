@@ -10,11 +10,7 @@
     {% endif %}
     <div class="text-left text-info mrgn-bttm-md canada-job-list-title">
       <p>
-        <strong>{{ total_job_count ~ _(" job(s) in queue.") }}</strong>
-        {% if total_job_count > job_list|length %}
-          <br/>
-          <strong><small>{{ _("Showing ") ~ job_list|length ~ "/" ~ total_job_count }}</small></strong>
-        {% endif %}
+        <strong>{{ job_list|length ~ _(" job(s) in queue.") }}</strong>
       </p>
     </div>
     <ul class="canada-job-list activity">

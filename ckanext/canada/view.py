@@ -71,34 +71,12 @@ from flask import Blueprint, make_response
 from ckanext.canada.urlsafe import url_part_unescape, url_part_escape
 from ckanext.canada.helpers import canada_date_str_to_datetime
 
-from rq.job import Job
-from rq.exceptions import NoSuchJobError
-
 if PY2:
     from cStringIO import StringIO
 else:
     from io import StringIO
 
 MAX_JOB_QUEUE_LIST_SIZE = 25
-
-JOB_MAPPING = {
-    'ckanext.validation.jobs.run_validation_job': {
-        'icon': 'fa-check-circle',
-        'rid': lambda job_args: job_args.get('id'),
-    },
-    'ckanext.validation.plugin._remove_unsupported_resource_validation_reports': {
-        'icon': 'fa-trash',
-        'rid': lambda job_args: job_args,
-    },
-    'ckanext.xloader.jobs.xloader_data_into_datastore': {
-        'icon': 'fa-cloud-upload',
-        'rid': lambda job_args: job_args.get('metadata', {}).get('resource_id'),
-    },
-    'ckanext.xloader.plugin._remove_unsupported_resource_from_datastore': {
-        'icon': 'fa-trash',
-        'rid': lambda job_args: job_args,
-    },
-}
 
 canada_views = Blueprint('canada', __name__)
 ottawa_tz = timezone('America/Montreal')
@@ -631,7 +609,7 @@ def ckanadmin_job_queue():
     Lists all of the queued and running jobs.
     """
     try:
-        jobs = get_action('job_list')({}, {})
+        jobs = get_action('job_list')({}, {'limit': MAX_JOB_QUEUE_LIST_SIZE})
     except NotAuthorized:
         abort(403, _('Not authorized to see this page'))
 
@@ -639,48 +617,8 @@ def ckanadmin_job_queue():
     if jobs and datetime.strptime(jobs[0]['created'], '%Y-%m-%dT%H:%M:%S') < (datetime.now() - timedelta(minutes=18)):
         warning = True
 
-    job_list = []
-    for job in jobs[:MAX_JOB_QUEUE_LIST_SIZE]:
-        try:
-            job_obj = Job.fetch(job.get('id'))
-            job_args = job_obj.args[0]
-        except (NoSuchJobError, KeyError):
-            continue
-
-        job_title = _(job.get('title', 'Unknown Job'))
-
-        if job_obj.func_name in JOB_MAPPING:
-            rid = JOB_MAPPING[job_obj.func_name]['rid'](job_args)
-            icon = JOB_MAPPING[job_obj.func_name]['icon']
-        else:
-            rid = None
-            job_title = _('Unknown Job')
-            icon = 'fa-circle-o-notch'
-
-        job_info = {}
-        if rid:
-            try:
-                resource = get_action('resource_show')({'user': g.user}, {'id': rid})
-            except (NotFound, NotAuthorized):
-                continue
-            job_info = {'name_translated': resource.get('name_translated'),
-                        'resource_id': rid,
-                        'url': h.url_for('dataset_resource.read',
-                                         id=resource.get('package_id'),
-                                         resource_id=rid)}
-
-        job['created_human_readable'] = canada_date_str_to_datetime(job.get('created')) \
-                .replace(tzinfo=utc).astimezone(ottawa_tz) \
-                .strftime('%Y-%m-%d %H:%M:%S %Z')
-        job['since_time'] = h.time_ago_from_timestamp(job.get('created'))
-        job['info'] = job_info
-        job['type'] = job_title
-        job['icon'] = icon
-        job_list.append(job)
-
-    return render('admin/jobs.html', extra_vars={'job_list': job_list,
-                                                 'warning': warning,
-                                                 'total_job_count': len(jobs),})
+    return render('admin/jobs.html', extra_vars={'job_list': jobs,
+                                                 'warning': warning,})
 
 
 @canada_views.route('/dataset/<id>/delete-datastore-table/<resource_id>', methods=['GET', 'POST'])

@@ -10,17 +10,48 @@ from ckan.plugins.toolkit import (
     chained_action,
     config,
     ObjectNotFound,
+    NotAuthorized,
     _,
     g,
-    get_action
+    get_action,
+    h
 )
 from ckan.authz import is_sysadmin
+
+from ckanext.canada.helpers import canada_date_str_to_datetime
 
 import functools
 from flask import has_request_context
 
 from sqlalchemy import func
 from sqlalchemy import or_
+
+from rq.job import Job
+from rq.exceptions import NoSuchJobError
+
+from pytz import timezone, utc
+
+
+ottawa_tz = timezone('America/Montreal')
+
+JOB_MAPPING = {
+    'ckanext.validation.jobs.run_validation_job': {
+        'icon': 'fa-check-circle',
+        'rid': lambda job_args: job_args.get('id'),
+    },
+    'ckanext.validation.plugin._remove_unsupported_resource_validation_reports': {
+        'icon': 'fa-trash',
+        'rid': lambda job_args: job_args,
+    },
+    'ckanext.xloader.jobs.xloader_data_into_datastore': {
+        'icon': 'fa-cloud-upload',
+        'rid': lambda job_args: job_args.get('metadata', {}).get('resource_id'),
+    },
+    'ckanext.xloader.plugin._remove_unsupported_resource_from_datastore': {
+        'icon': 'fa-trash',
+        'rid': lambda job_args: job_args,
+    },
+}
 
 
 def limit_api_logic():
@@ -299,3 +330,47 @@ def canada_resource_view_list(up_func, context, data_dict):
                 # only add key/value if not system process
                 view_list[i]['canada_disabled_view'] = True
     return [v for i, v in enumerate(view_list) if i not in disabled_views_indexes]
+
+
+@chained_action
+def canada_job_list(up_func, context, data_dict):
+    job_list = up_func(context, data_dict)
+
+    for job in job_list:
+        try:
+            job_obj = Job.fetch(job.get('id'))
+            job_args = job_obj.args[0]
+        except (NoSuchJobError, KeyError):
+            continue
+
+        job_title = _(job.get('title', 'Unknown Job'))
+
+        if job_obj.func_name in JOB_MAPPING:
+            rid = JOB_MAPPING[job_obj.func_name]['rid'](job_args)
+            icon = JOB_MAPPING[job_obj.func_name]['icon']
+        else:
+            rid = None
+            job_title = _('Unknown Job')
+            icon = 'fa-circle-o-notch'
+
+        job_info = {}
+        if rid:
+            try:
+                resource = get_action('resource_show')({'user': g.user}, {'id': rid})
+            except (ObjectNotFound, NotAuthorized):
+                continue
+            job_info = {'name_translated': resource.get('name_translated'),
+                        'resource_id': rid,
+                        'url': h.url_for('dataset_resource.read',
+                                         id=resource.get('package_id'),
+                                         resource_id=rid)}
+
+        job['created_human_readable'] = canada_date_str_to_datetime(job.get('created')) \
+                .replace(tzinfo=utc).astimezone(ottawa_tz) \
+                .strftime('%Y-%m-%d %H:%M:%S %Z')
+        job['since_time'] = h.time_ago_from_timestamp(job.get('created'))
+        job['info'] = job_info
+        job['type'] = job_title
+        job['icon'] = icon
+
+    return job_list
