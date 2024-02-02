@@ -334,6 +334,24 @@ def canada_resource_view_list(up_func, context, data_dict):
 
 @chained_action
 def canada_job_list(up_func, context, data_dict):
+    """List enqueued background jobs.
+
+    :param list queues: Queues to list jobs from. If not given then the
+        jobs from all queues are listed.
+
+    :param int offset: Number to offset the list of jobs by.
+
+    :param int limit: Number to limit the list of jobs by.
+
+    :param bool ids_only: Whether to return only a list if job IDs or not.
+
+    :returns: The currently enqueued background jobs.
+    :rtype: list
+
+    Canada Fork: fetches some more information from the backend Redis
+    and parses it and maps it into some more dict entries to be
+    used in the custom Job Queue view method and template.
+    """
     job_list = up_func(context, data_dict)
 
     for job in job_list:
