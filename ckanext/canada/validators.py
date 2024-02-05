@@ -459,11 +459,15 @@ def canada_guess_resource_format(key, data, errors, context):
     # we can check if the url field value has changed.
     resource_id = data.get(key[:-1] + ('id',))
     if resource_id:
-        old_url = context.get('old_resource_url', None)
+        # get the old/current resource url
+        current_resource = model.Resource.get(resource_id)
+        current_url = None
+        if current_resource:
+            current_url = current_resource.url
         new_url = data.get(key[:-1] + ('url',), '')
         if not new_url:
             return
-        if old_url != new_url:
+        if current_url != new_url:
             try:
                 mimetype = get_action('canada_guess_mimetype')(context, {"url": new_url})
                 data[key] = mimetype
