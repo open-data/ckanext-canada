@@ -3,16 +3,9 @@ window.addEventListener('load', function(){
 
     const lang = $('html').attr('lang').length > 0 ? $('html').attr('lang') : 'en';
 
-    // slightly different error messages for the front-end users.
-    // as the UX is different than the API users.
-    let failedGuessErrorMessage = 'Could not determine a resource format. Please supply a format below.';
-    let failedChoicesErrorMessage = 'Could not determine a valid resource format. Please supply a different format below.';
-    if( lang == 'fr' ){
-      //TODO: set french error messages
-    }
-
     let dataUploadWrapper = $('.resource-upload-field.form-group');
 
+    let charsetField = $('#field-character_set');
     let formatField = $('#field-format');
     if ( formatField.length > 0 ){
 
@@ -34,8 +27,8 @@ window.addEventListener('load', function(){
       $(dataUploadWrapper).after('<div class="module-alert alert alert-info mrgn-tp-sm mrgn-bttm-sm canada-guess-mimetype-alert" style="margin-left: 3px;"><p>' + message + '</p></div>');
     }
 
-    function _set_warning_message(error){
-      $(dataUploadWrapper).after('<div class="module-alert alert alert-danger mrgn-tp-sm mrgn-bttm-sm canada-guess-mimetype-alert" style="margin-left: 3px;"><p>' + error + '</p></div>');
+    function _clear_alert(){
+      $('.canada-guess-mimetype-alert').remove();
     }
 
     function _guess_mimetype(url){
@@ -52,11 +45,9 @@ window.addEventListener('load', function(){
               _set_resource_format(_data.responseJSON.result);
             }else{  // validation error
               _set_resource_format('');
-              _set_warning_message(failedGuessErrorMessage);
             }
           }else{  // fully flopped ajax request
             _set_resource_format('');
-            _set_warning_message(failedGuessErrorMessage);
           }
         }
       });
@@ -69,10 +60,6 @@ window.addEventListener('load', function(){
         // we can assume that the format is not in scheming choices
         // for the front-end here.
         mimetype = '';
-        // we have a different message here for the front-end, because
-        // API users will need the full list of choices, but the front-end
-        // users will have the select2 field to choose from.
-        _set_warning_message(failedChoicesErrorMessage);
       }
       $(formatField).val(mimetype).trigger('change');
       if( mimetype.length > 0 ){
@@ -80,10 +67,18 @@ window.addEventListener('load', function(){
       }
     }
 
+    function _set_tabledesigner_related_fields(){
+      // explicitly set charset to UTF-8 and format to CSV
+      // for TableDesigner Resources.
+      $(charsetField).val('UTF-8').trigger('change');
+      _set_resource_format('CSV');
+    }
+
     function _bind_events(){
 
       let urlField = $('input#field-resource-url');
       let uploadField = $('input#field-resource-upload');
+      let tableDesignerButton = $('button#resource-table-designer-button');
       let removeButtons = $('button.btn-remove-url');
 
       if( removeButtons.length > 0 ){
@@ -92,7 +87,7 @@ window.addEventListener('load', function(){
           $(_button).off('click.reset_guessing');
           $(_button).on('click.reset_guessing', function(_event){
 
-            $('.canada-guess-mimetype-alert').remove();
+            _clear_alert();
             _bind_events();
 
           });
@@ -105,7 +100,7 @@ window.addEventListener('load', function(){
             // space and enter keys required for a11y
             if( keyCode == 32 || keyCode == 13 ){
 
-              $('.canada-guess-mimetype-alert').remove();
+              _clear_alert();
               _bind_events();
 
             }
@@ -117,7 +112,7 @@ window.addEventListener('load', function(){
 
       $(urlField).off('change.guess_mimetype');
       $(urlField).on('change.guess_mimetype', function(_event){
-        $('.canada-guess-mimetype-alert').remove();
+        _clear_alert();
         let urlValue = $(urlField).val()
         if( urlValue.length > 0 ){
            _guess_mimetype(urlValue);
@@ -126,10 +121,26 @@ window.addEventListener('load', function(){
 
       $(uploadField).off('change.guess_mimetype');
       $(uploadField).on('change.guess_mimetype', function(_event){
-        $('.canada-guess-mimetype-alert').remove();
+        _clear_alert();
         let fileName = $(uploadField).val().split(/^C:\\fakepath\\/).pop();
         if( fileName.length > 0 ){
           _guess_mimetype(fileName);
+        }
+      });
+
+      $(tableDesignerButton).off('click.set_mimetype');
+      $(tableDesignerButton).on('click.set_mimetype', function(_event){
+        _clear_alert();
+        _set_tabledesigner_related_fields();
+      });
+
+      $(tableDesignerButton).off('keyup.set_mimetype');
+      $(tableDesignerButton).on('keyup.set_mimetype', function(_event){
+        let keyCode = _event.keyCode ? _event.keyCode : _event.which;
+        // space and enter keys required for a11y
+        if( keyCode == 32 || keyCode == 13 ){
+          _clear_alert();
+          _set_tabledesigner_related_fields();
         }
       });
 
