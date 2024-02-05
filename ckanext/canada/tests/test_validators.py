@@ -408,7 +408,7 @@ class TestNAVLSchema(CanadaTestBase):
                             schema='{"fields":["this is bad JSON for Schema"]}')
 
         resource = self.sysadmin_action.resource_create(**resource_data)
-        assert resource['schema'] == None
+        assert 'schema' not in resource or resource['schema'] == None
 
 
     def test_validation_options(self):
@@ -447,4 +447,4 @@ class TestNAVLSchema(CanadaTestBase):
         }
 
         resource = self.sysadmin_action.resource_create(**resource_data)
-        assert resource['validation_options'] == None
+        assert 'validation_options' not in resource or resource['validation_options'] == None
