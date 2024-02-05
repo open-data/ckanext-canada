@@ -3593,7 +3593,7 @@ presets:
     form_snippet: select.html
     form_restrict_choices_to: [UTF-8, US-ASCII]
     display_snippet: select.html
-    validators: scheming_required scheming_choices
+    validators: scheming_required canada_static_charset_tabledesigner scheming_choices
     form_panel: resource
     choices:
     - value: UTF-8

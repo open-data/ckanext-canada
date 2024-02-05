@@ -434,11 +434,26 @@ def canada_security_upload_presence(key, data, errors, context):
         raise Invalid(_(error))
 
 
+def canada_static_charset_tabledesigner(key, data, errors, context):
+    """
+    Always sets to UTF-8 if TableDesigner
+    """
+    url_type = data.get(key[:-1] + ('url_type',))
+    if url_type == 'tabledesigner':
+        data[key] = 'UTF-8'
+
+
 def canada_guess_resource_format(key, data, errors, context):
     """
     Guesses the resource format based on the url if missing.
     Guesses the resource format based on url change.
+    Always sets to CSV if TableDesigner
     """
+    url_type = data.get(key[:-1] + ('url_type',))
+    if url_type == 'tabledesigner':
+        data[key] = 'CSV'
+        return
+
     value = data[key]
 
     # if it is empty, then do the initial guess.
