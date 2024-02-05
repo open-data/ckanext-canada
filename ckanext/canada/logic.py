@@ -339,14 +339,16 @@ def canada_job_list(up_func, context, data_dict):
     :param list queues: Queues to list jobs from. If not given then the
         jobs from all queues are listed.
 
-    :param int offset: Number to offset the list of jobs by.
-
     :param int limit: Number to limit the list of jobs by.
 
     :param bool ids_only: Whether to return only a list if job IDs or not.
 
     :returns: The currently enqueued background jobs.
     :rtype: list
+
+    Will return the list in the way that RQ workers will execute the jobs.
+    Thus the left most non-empty queue will be emptied firts
+    before the next right non-empty one.
 
     Canada Fork: fetches some more information from the backend Redis
     and parses it and maps it into some more dict entries to be
@@ -373,8 +375,14 @@ def canada_job_list(up_func, context, data_dict):
 
         job_info = {}
         if rid:
+            current_user = get_action('get_site_user')({'ignore_auth': True}, {})['name']
+            if has_request_context():
+                try:
+                    current_user = g.user
+                except (TypeError, AttributeError):
+                    pass
             try:
-                resource = get_action('resource_show')({'user': g.user}, {'id': rid})
+                resource = get_action('resource_show')({'user': current_user}, {'id': rid})
             except (ObjectNotFound, NotAuthorized):
                 continue
             job_info = {'name_translated': resource.get('name_translated'),
@@ -386,7 +394,6 @@ def canada_job_list(up_func, context, data_dict):
         job['created_human_readable'] = canada_date_str_to_datetime(job.get('created')) \
                 .replace(tzinfo=utc).astimezone(ottawa_tz) \
                 .strftime('%Y-%m-%d %H:%M:%S %Z')
-        job['since_time'] = h.time_ago_from_timestamp(job.get('created'))
         job['info'] = job_info
         job['type'] = job_title
         job['icon'] = icon

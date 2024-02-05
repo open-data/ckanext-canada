@@ -617,6 +617,10 @@ def ckanadmin_job_queue():
     if jobs and datetime.strptime(jobs[0]['created'], '%Y-%m-%dT%H:%M:%S') < (datetime.now() - timedelta(minutes=18)):
         warning = True
 
+    for job in jobs:
+        # need to do since_time inside of view method due to contextual locale in helper/formatters.
+        job['since_time'] = h.time_ago_from_timestamp(job.get('created'))
+
     return render('admin/jobs.html', extra_vars={'job_list': jobs,
                                                  'warning': warning,})
 
