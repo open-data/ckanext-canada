@@ -9,6 +9,7 @@ import datetime
 import unicodedata
 import ckan as ckan
 import jinja2
+import html
 
 from ckanapi import NotFound
 from ckantoolkit import h, aslist
@@ -28,10 +29,6 @@ try:
 except ImportError:
     XLoaderFormats = None
 
-try:
-    import webhelpers.html as html
-except ImportError:
-    import html
 
 ORG_MAY_PUBLISH_OPTION = 'canada.publish_datasets_organization_name'
 ORG_MAY_PUBLISH_DEFAULT_NAME = 'tb-ct'
@@ -430,62 +427,6 @@ def json_loads(value):
     return json.loads(value)
 
 
-# FIXME: terrible hacks
-def gravatar(*args, **kwargs):
-    '''Brute force disable gravatar'''
-    return ''
-def linked_gravatar(*args, **kwargs):
-    '''Brute force disable gravatar'''
-    return ''
-
-# FIXME: terrible, terrible hacks
-def linked_user(user, maxlength=0, avatar=20):
-    '''Brute force disable gravatar, mostly copied from ckan/lib/helpers'''
-    from ckan import model
-    if not isinstance(user, model.User):
-        user_name = unicode(user)
-        user = model.User.get(user_name)
-        if not user:
-            return user_name
-    if user:
-        name = user.name if model.User.VALID_NAME.match(user.name) else user.id
-        displayname = user.display_name
-        if displayname==config.get('ckan.site_id', '').strip():
-            displayname = _('A system administrator')
-
-        if maxlength and len(user.display_name) > maxlength:
-            displayname = displayname[:maxlength] + '...'
-
-        return h.literal(h.link_to(
-                displayname,
-                h.url_for('user.read', id=name)
-            )
-        )
-# FIXME: because ckan/lib/activity_streams is terrible
-h.linked_user = linked_user
-
-
-def link_to_user(user, maxlength=0):
-    """ Return the HTML snippet that returns a link to a user.  """
-
-    # Do not link to pseudo accounts
-    if user in [model.PSEUDO_USER__LOGGED_IN, model.PSEUDO_USER__VISITOR]:
-        return user
-    if not isinstance(user, model.User):
-        user_name = unicode(user)
-        user = model.User.get(user_name)
-        if not user:
-            return user_name
-
-    if user:
-        _name = user.name if model.User.VALID_NAME.match(user.name) else user.id
-        displayname = user.display_name
-        if maxlength and len(user.display_name) > maxlength:
-            displayname = displayname[:maxlength] + '...'
-        return html.tags.link_to(displayname,
-                       h.url_for('user.read', id=_name))
-
-
 def get_datapreview(res_id):
 
     #import pdb; pdb.set_trace()
@@ -788,8 +729,8 @@ def get_loader_status_badge(resource):
     return Markup(u'<a href="{pusher_url}" class="loader-badge"><img src="{badge_url}" alt="{alt}" title="{title}"/></a>'.format(
         pusher_url=pusher_url,
         badge_url=badge_url,
-        alt=html.escape(messages[status].replace('"', '\"')),
-        title=html.escape(title.replace('"', '\"'))))
+        alt=html.escape(messages[status], quote=True),
+        title=html.escape(title, quote=True)))
 
 
 def get_resource_view(resource_view_id):
