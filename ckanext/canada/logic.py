@@ -391,9 +391,6 @@ def canada_job_list(up_func, context, data_dict):
                                          id=resource.get('package_id'),
                                          resource_id=rid)}
 
-        job['created_human_readable'] = canada_date_str_to_datetime(job.get('created')) \
-                .replace(tzinfo=utc).astimezone(ottawa_tz) \
-                .strftime('%Y-%m-%d %H:%M:%S %Z')
         job['info'] = job_info
         job['type'] = job_title
         job['icon'] = icon

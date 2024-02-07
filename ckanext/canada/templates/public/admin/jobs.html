@@ -21,7 +21,7 @@
             <span class="canada-job-item-title">{{ job.get('type') }}</span>
             <br/>
             <span class="date">
-              {{ job.get('since_time') }} ({{ job.get('created_human_readable') }}) |
+              {{ h.time_ago_from_timestamp(job.get('created')) }} ({{ h.render_datetime(job.get('created'), '%Y-%m-%d %H:%M:%S %Z') }}) |
               {% if job.get('info') %}
                 <a href="{{ job.get('info', {}).get('url') }}">{{ h.get_translated(job.get('info'), 'name') }}</a>
               {% else %}
