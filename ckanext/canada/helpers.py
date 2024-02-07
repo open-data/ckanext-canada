@@ -9,6 +9,7 @@ import datetime
 import unicodedata
 import ckan as ckan
 import jinja2
+import html
 
 from ckanapi import NotFound
 from ckantoolkit import aslist
