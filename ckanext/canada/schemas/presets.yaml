@@ -3264,9 +3264,11 @@ presets:
       en: "Format"
       fr: "Format"
     form_snippet: select.html
-    display_snippet: select.html
-    validators: canada_non_related_required scheming_choices
-    required: true
+    form_placeholder:
+      en: "eg. CSV, XML or JSON"
+      fr: "par exemple CSV, XML ou JSON"
+    validators: canada_guess_resource_format scheming_required unicode_safe canada_non_related_required scheming_choices
+    required: false
     form_include_blank_choice: true
     form_panel: resource
     choices:
@@ -3342,9 +3344,6 @@ presets:
       mimetype: application/postscript
       replaces: [eps]
     - value: ESRI REST
-    - value: EXE
-      mimetype: application/vnd.microsoft.portable-executable
-      replaces: [exe]
     - value: FGDB/GDB
       openness_score: 3
       replaces: ["FGDB / GDB", "fgdb / gdb"]
@@ -3411,7 +3410,7 @@ presets:
       replaces: [jpeg 2000]
     - value: JPG
       mimetype: image/jpeg
-      replaces: [jpg]
+      replaces: ["jpg", "jpeg"]
     - value: JSON
       mimetype: application/json
       openness_score: 3
@@ -3594,7 +3593,7 @@ presets:
     form_snippet: select.html
     form_restrict_choices_to: [UTF-8, US-ASCII]
     display_snippet: select.html
-    validators: scheming_required scheming_choices
+    validators: scheming_required canada_static_charset_tabledesigner scheming_choices
     form_panel: resource
     choices:
     - value: UTF-8

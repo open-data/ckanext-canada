@@ -26,6 +26,15 @@ from flask import has_request_context
 from sqlalchemy import func
 from sqlalchemy import or_
 
+from six.moves.urllib.parse import urlparse
+import mimetypes
+from ckanext.scheming.helpers import scheming_get_preset
+
+MIMETYPES_AS_DOMAINS = [
+    'application/x-msdos-program',  # .com
+    'application/vnd.lotus-organizer',  # .org
+]
+
 from rq.job import Job
 from rq.exceptions import NoSuchJobError
 
@@ -228,6 +237,41 @@ def datastore_create_temp_user_table(context):
             sysadmin='TRUE' if is_sysadmin(username) else 'FALSE'))
 
 
+def canada_guess_mimetype(context, data_dict):
+    """
+    Returns mimetype based on url, similar to the Core code,
+    but will respect the Schema and choice replacements such
+    as ["jpg", "jpeg"] and returns value JPG.
+    """
+    url = data_dict.pop('url', None)
+    mimetype, encoding = mimetypes.guess_type(url)
+
+    if not mimetype or mimetype in MIMETYPES_AS_DOMAINS:
+        # if we cannot guess the mimetype, check if it is an actual web address
+        # and we can set the mimetype to text/html. Uploaded files have only the filename as url,
+        # so check scheme to determine if it's an actual web address.
+        parsed = urlparse(url)
+        if parsed.scheme:
+            mimetype = 'text/html'
+
+    if mimetype:
+        # run mimetype through core helper to clean format, then
+        # check replacements in the scheming choices.
+        mimetype = h.unified_resource_format(mimetype)
+        fmt_choices = scheming_get_preset('canada_resource_format')['choices']
+        for f in fmt_choices:
+            if 'replaces' in f:
+                for r in f['replaces']:
+                    if mimetype.lower() == r.lower():
+                        mimetype = f['value']
+
+    if not mimetype:
+        # raise the ValidationError here so that the front-end and back-end will have it.
+        raise ValidationError({'format': _('Could not determine a resource format. Please supply a format.')})
+
+    return mimetype
+
+  
 @chained_action
 def canada_resource_view_show(up_func, context, data_dict):
     """

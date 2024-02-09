@@ -7,3 +7,8 @@ analytics:
   contents:
     - canada_internal_analytics.js
   output: canada_internal_analytics/%(version)s_canada_internal_analytics.js
+
+guess_mimetype:
+  contents:
+    - canada_guess_mimetype.js
+  output: canada_guess_mimetype/%(version)s_canada_guess_mimetype.js
