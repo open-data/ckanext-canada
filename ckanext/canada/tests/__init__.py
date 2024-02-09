@@ -12,8 +12,8 @@ class CanadaTestBase(object):
         """Method is called at class level before EACH test methods of the class are called.
         Setup any state specific to the execution of the given class methods.
         """
+        reset_db()
+        clear_all()
         if not validation_tables_exist():
             validation_create_tables()
         security_db_setup()
-        reset_db()
-        clear_all()

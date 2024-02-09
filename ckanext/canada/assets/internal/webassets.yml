@@ -32,3 +32,8 @@ resource_edit:
   contents:
     - registry_resource_edit.js
   output: canada_internal/%(version)s_registry_resource_edit.js
+
+guess_mimetype:
+  contents:
+    - canada_guess_mimetype.js
+  output: canada_guess_mimetype/%(version)s_canada_guess_mimetype.js

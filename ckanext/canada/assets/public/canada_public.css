@@ -395,36 +395,58 @@ form .form-actions .btn{
 ###################*/
 
 /* Dataset Index */
-.resource-item #resource_title{
+ul.resource-list > li.resource-item{
+  display: flex;
+  flex-wrap: nowrap;
+  width: 100%;
+}
+ul.resource-list > li.resource-item:not(:last-of-type){
+  border-radius: 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+}
+ul.resource-list > li.resource-item > div#resource_title{
   display: inline-block;
-  width: 60%;
+  flex: 1;
+  padding-right: 10px;
+  align-self: center;
+}
+ul.resource-list > li.resource-item > div#resource_title > a.resource-heading{
+  display: inline !important;
+}
+ul.resource-list > li.resource-item > a.validation-badge{
+  display: none !important;
+}
+ul.resource-list > li.resource-item > div.canada-resource-list-badges a.loader-badge{
+  margin-right: 10px;
+}
+ul.resource-list > li.resource-item > div.canada-resource-list-badges a.validation-badge{
+  margin-left: 0;
+}
+ul.resource-list > li.resource-item > div.canada-resource-list-badges{
+  align-self: last baseline;
 }
 .resource-item .resource-action-links{
   display: block !important;
   position: relative !important;
-  float: right;
-  margin-left: 10px;
+  right: initial !important;
+  top: initial !important;
+  align-self: center;
 }
-@media all and (max-width: 992px) {
-  .resource-item #resource_title{
-    width: 50%;
-  }
+.resource-item .resource-action-links > a.btn{
+  margin: 0 !important;
 }
 @media all and (max-width: 768px) {
-  .resource-item #resource_title{
-    width: 100%;
+  ul.resource-list > li.resource-item{
+    flex-direction: column;
   }
-  .resource-item a.validation-badge{
-    margin-left: 0 !important;
+  ul.resource-list > li.resource-item > div#resource_title,
+  .resource-item .resource-action-links,
+  ul.resource-list > li.resource-item > div.canada-resource-list-badges{
+    align-self: initial;
   }
   .resource-item .resource-action-links{
-    display: block !important;
-    float: none !important;
     margin-top: 10px !important;
     margin-bottom: 10px !important;
-  }
-  .resource-item .resource-action-links a.btn{
-    float: none !important;
   }
 }
 /* END - Dataset Index - END */
@@ -683,3 +705,28 @@ body .alert a.btn-warning{
 ##  Header Search Form ##
 ##         END         ##
 #########################*/
+
+/*########################
+##  Background Job List ##
+##########################*/
+ul.canada-job-list.activity li.item i.fa.icon::before{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+ul.canada-job-list .canada-job-item-title{
+  font-size: 115%;
+}
+div.canada-job-list-title strong{
+  font-size: 16px;
+  line-height: 23px;
+}
+div.canada-job-list-title small{
+  font-size: 87%;
+}
+/*########################
+##          END         ##
+##  Background Job List ##
+##          END         ##
+##########################*/

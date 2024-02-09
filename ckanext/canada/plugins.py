@@ -359,6 +359,7 @@ ckanext.canada:schemas/presets.yaml
             'get_timeout_length',
             'canada_check_access',
             'get_user_email',
+            'get_loader_status_badge',
         ])
 
     # IConfigurable
@@ -456,7 +457,16 @@ def disabled_anon_action(up_func, context, data_dict):
         return []
     return up_func(context, data_dict)
 disabled_anon_action.side_effect_free = True
-disabled_anon_action.auth_audit_exempt = True  # XXX ought to be a better way...
+disabled_anon_action.auth_audit_exempt = True
+
+
+def _disabled_action(context, data_dict):
+    """
+    Raises a NotFound exception to disable a logic action method.
+    """
+    raise ObjectNotFound
+_disabled_action.side_effect_free = True
+_disabled_action.auth_audit_exempt = True
 
 
 @chained_action
@@ -645,14 +655,10 @@ ckanext.canada:schemas/prop.yaml
             'fgp_url',
             'contact_information',
             'show_openinfo_facets',
-            'gravatar',
-            'linked_gravatar',
-            'linked_user',
             'json_loads',
             'catalogue_last_update_date',
             'get_translated_t',
             'language_text_t',
-            'link_to_user',
             'get_datapreview',
             'iso_to_goctime',
             'geojson_to_wkt',
@@ -679,6 +685,9 @@ ckanext.canada:schemas/prop.yaml
     def get_actions(self):
         return {
                 'recently_changed_packages_activity_list': act.recently_changed_packages_activity_list,  #TODO: Remove this action override in CKAN 2.10 upgrade
+                'resource_view_show': logic.canada_resource_view_show,
+                'resource_view_list': logic.canada_resource_view_list,
+                'job_list': logic.canada_job_list,
                }
 
     # IAuthFunctions
@@ -714,6 +723,7 @@ class DataGCCAForms(p.SingletonPlugin, DefaultDatasetForm):
         actions = logic.limit_api_logic()
         actions.update((h, getattr(logic, h)) for h in [
             'changed_packages_activity_timestamp_since',
+            'canada_guess_mimetype',
             ])
         actions.update({k: disabled_anon_action for k in [
             'current_package_list_with_resources',
@@ -728,6 +738,13 @@ class DataGCCAForms(p.SingletonPlugin, DefaultDatasetForm):
             'organization_activity_list',
             'group_package_show',
             ]})
+        # disable group & organization bulk actions as they do not support
+        # IPackageController and IResourceController implementations.
+        actions.update({k: _disabled_action for k in [
+            'bulk_update_private',
+            'bulk_update_public',
+            'bulk_update_delete',
+            '_bulk_update_dataset',]})
         return actions
 
     # IValidators
@@ -773,8 +790,12 @@ class DataGCCAForms(p.SingletonPlugin, DefaultDatasetForm):
                 validators.json_string,
             'json_string_has_en_fr_keys':
                 validators.json_string_has_en_fr_keys,
-            'resource_schema_validator':
-                validators.canada_resource_schema_validator,
+            'canada_static_charset_tabledesigner':
+                validators.canada_static_charset_tabledesigner,
+            'canada_guess_resource_format':
+                validators.canada_guess_resource_format,
+            'canada_output_none':
+                validators.canada_output_none,
             }
 
 

@@ -4,13 +4,63 @@ from ckan.lib.dictization import model_dictize
 from ckan import model
 
 from ckan.plugins.toolkit import (
-    get_or_bust, ValidationError, side_effect_free, get_action, chained_action, config)
+    get_or_bust,
+    ValidationError,
+    side_effect_free,
+    chained_action,
+    config,
+    ObjectNotFound,
+    NotAuthorized,
+    _,
+    g,
+    get_action,
+    h
+)
 from ckan.authz import is_sysadmin
 
+from ckanext.canada.helpers import canada_date_str_to_datetime
+
 import functools
+from flask import has_request_context
 
 from sqlalchemy import func
 from sqlalchemy import or_
+
+from six.moves.urllib.parse import urlparse
+import mimetypes
+from ckanext.scheming.helpers import scheming_get_preset
+
+MIMETYPES_AS_DOMAINS = [
+    'application/x-msdos-program',  # .com
+    'application/vnd.lotus-organizer',  # .org
+]
+
+from rq.job import Job
+from rq.exceptions import NoSuchJobError
+
+from pytz import timezone, utc
+
+
+ottawa_tz = timezone('America/Montreal')
+
+JOB_MAPPING = {
+    'ckanext.validation.jobs.run_validation_job': {
+        'icon': 'fa-check-circle',
+        'rid': lambda job_args: job_args.get('id'),
+    },
+    'ckanext.validation.plugin._remove_unsupported_resource_validation_reports': {
+        'icon': 'fa-trash',
+        'rid': lambda job_args: job_args,
+    },
+    'ckanext.xloader.jobs.xloader_data_into_datastore': {
+        'icon': 'fa-cloud-upload',
+        'rid': lambda job_args: job_args.get('metadata', {}).get('resource_id'),
+    },
+    'ckanext.xloader.plugin._remove_unsupported_resource_from_datastore': {
+        'icon': 'fa-trash',
+        'rid': lambda job_args: job_args,
+    },
+}
 
 
 def limit_api_logic():
@@ -185,3 +235,208 @@ def datastore_create_temp_user_table(context):
         '''.format(
             username=literal_string(username),
             sysadmin='TRUE' if is_sysadmin(username) else 'FALSE'))
+
+
+def canada_guess_mimetype(context, data_dict):
+    """
+    Returns mimetype based on url, similar to the Core code,
+    but will respect the Schema and choice replacements such
+    as ["jpg", "jpeg"] and returns value JPG.
+    """
+    url = data_dict.pop('url', None)
+    mimetype, encoding = mimetypes.guess_type(url)
+
+    if not mimetype or mimetype in MIMETYPES_AS_DOMAINS:
+        # if we cannot guess the mimetype, check if it is an actual web address
+        # and we can set the mimetype to text/html. Uploaded files have only the filename as url,
+        # so check scheme to determine if it's an actual web address.
+        parsed = urlparse(url)
+        if parsed.scheme:
+            mimetype = 'text/html'
+
+    if mimetype:
+        # run mimetype through core helper to clean format, then
+        # check replacements in the scheming choices.
+        mimetype = h.unified_resource_format(mimetype)
+        fmt_choices = scheming_get_preset('canada_resource_format')['choices']
+        for f in fmt_choices:
+            if 'replaces' in f:
+                for r in f['replaces']:
+                    if mimetype.lower() == r.lower():
+                        mimetype = f['value']
+
+    if not mimetype:
+        # raise the ValidationError here so that the front-end and back-end will have it.
+        raise ValidationError({'format': _('Could not determine a resource format. Please supply a format.')})
+
+    return mimetype
+
+  
+@chained_action
+def canada_resource_view_show(up_func, context, data_dict):
+    """
+    Return the metadata of a resource_view.
+
+    :param id: the id of the resource_view
+    :type id: string
+
+    :rtype: dictionary
+
+    Canada Fork: extends the resource_view_show action method
+    to prevent showing datatable_views for invalid and inactive Resources
+
+    We need this method to 404 the resource_view page (e.g. viewing in full screen)
+
+    If a user is logged in, we want them to be able to see and edit the datatables_view
+    views still. We will just add a key to the view dict to be used within templates for visuals.
+    """
+    view_dict = up_func(context, data_dict)
+    if view_dict.get('view_type') == 'datatables_view':
+        # at this point, the core function has been called, calling resource_view_show etc.
+        # so we can assume that the Resource and View exists here, and that `resource_id` is in view_dict
+        resource = model.Resource.get(view_dict.get('resource_id'))
+        res_extras = getattr(resource, 'extras', {})
+        site_user = get_action('get_site_user')({'ignore_auth': True}, {})['name']
+        is_system_process = False
+        if has_request_context():
+            try:
+                current_user = g.user
+            except (TypeError, AttributeError):
+                current_user = None
+        else:
+            current_user = None
+            is_system_process = True
+
+        if not res_extras.get('datastore_active', False) or \
+        res_extras.get('validation_status') != 'success':
+            # if the Resource is not active in the DataStore or has not
+            # passed validation, we do not want to show its datatables_view views
+
+            if not is_system_process and not current_user:
+                # only raise if a user is not logged in
+                raise ObjectNotFound
+
+            if not is_system_process and current_user != site_user:
+                # only add key/value if not system process
+                view_dict['canada_disabled_view'] = True
+
+    return view_dict
+
+
+@chained_action
+def canada_resource_view_list(up_func, context, data_dict):
+    """
+    Return the list of resource views for a particular resource.
+
+    :param id: the id of the resource
+    :type id: string
+
+    :rtype: list of dictionaries.
+
+    Canada Fork: extends the resource_view_list action method
+    to prevent showing datatable_views for invalid and inactive Resources
+
+    This will delete any datatables_view from the list of views.
+
+    If a user is logged in, we want them to be able to see and edit the datatables_view
+    views still. We will just add a key to the view dict to be used within templates for visuals.
+    """
+    view_list = up_func(context, data_dict)
+    # at this point, the core function has been called, calling resource_show etc.
+    # so we can assume that the Resource exists here, and that `id` is in data_dict
+    resource = model.Resource.get(data_dict.get('id'))
+    res_extras = getattr(resource, 'extras', {})
+    site_user = get_action('get_site_user')({'ignore_auth': True}, {})['name']
+    is_system_process = False
+    if has_request_context():
+        try:
+            current_user = g.user
+        except (TypeError, AttributeError):
+            current_user = None
+    else:
+        current_user = None
+        is_system_process = True
+    disabled_views_indexes = []
+    for i, view_dict in enumerate(view_list):
+
+        if view_dict.get('view_type') == 'datatables_view' and \
+        ( not res_extras.get('datastore_active', False) or
+          res_extras.get('validation_status') != 'success'):
+            # if the Resource is not active in the DataStore or has not
+            # passed validation, we do not want to show its datatables_view views
+
+            if not is_system_process and not current_user:
+                # only remove from the list if a user is not logged in
+                disabled_views_indexes.append(i)
+                continue
+
+            if not is_system_process and current_user != site_user:
+                # only add key/value if not system process
+                view_list[i]['canada_disabled_view'] = True
+    return [v for i, v in enumerate(view_list) if i not in disabled_views_indexes]
+
+
+@chained_action
+def canada_job_list(up_func, context, data_dict):
+    """List enqueued background jobs.
+
+    :param list queues: Queues to list jobs from. If not given then the
+        jobs from all queues are listed.
+
+    :param int limit: Number to limit the list of jobs by.
+
+    :param bool ids_only: Whether to return only a list if job IDs or not.
+
+    :returns: The currently enqueued background jobs.
+    :rtype: list
+
+    Will return the list in the way that RQ workers will execute the jobs.
+    Thus the left most non-empty queue will be emptied firts
+    before the next right non-empty one.
+
+    Canada Fork: fetches some more information from the backend Redis
+    and parses it and maps it into some more dict entries to be
+    used in the custom Job Queue view method and template.
+    """
+    job_list = up_func(context, data_dict)
+
+    for job in job_list:
+        try:
+            job_obj = Job.fetch(job.get('id'))
+            job_args = job_obj.args[0]
+        except (NoSuchJobError, KeyError):
+            continue
+
+        job_title = _(job.get('title', 'Unknown Job'))
+
+        if job_obj.func_name in JOB_MAPPING:
+            rid = JOB_MAPPING[job_obj.func_name]['rid'](job_args)
+            icon = JOB_MAPPING[job_obj.func_name]['icon']
+        else:
+            rid = None
+            job_title = _('Unknown Job')
+            icon = 'fa-circle-o-notch'
+
+        job_info = {}
+        if rid:
+            current_user = get_action('get_site_user')({'ignore_auth': True}, {})['name']
+            if has_request_context():
+                try:
+                    current_user = g.user
+                except (TypeError, AttributeError):
+                    pass
+            try:
+                resource = get_action('resource_show')({'user': current_user}, {'id': rid})
+            except (ObjectNotFound, NotAuthorized):
+                continue
+            job_info = {'name_translated': resource.get('name_translated'),
+                        'resource_id': rid,
+                        'url': h.url_for('dataset_resource.read',
+                                         id=resource.get('package_id'),
+                                         resource_id=rid)}
+
+        job['info'] = job_info
+        job['type'] = job_title
+        job['icon'] = icon
+
+    return job_list
