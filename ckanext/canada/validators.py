@@ -387,17 +387,13 @@ def json_string_has_en_fr_keys(value, context):
     return value
 
 
-def canada_resource_schema_validator(value, context):
-    if h.plugin_loaded('validation'):
-        from ckanext.validation.validators import resource_schema_validator
-        try:
-            value = resource_schema_validator(value, context)
-        except AttributeError:
-            raise Invalid(_('Invalid JSON for Schema'))
-        if isinstance(value, basestring) \
-        and value.lower().startswith('http'):
-            raise Invalid(_('Schema URLs are not supported'))
-    return value
+def canada_output_none(value):
+    """
+    A custom output validator.
+
+    Awlays returns None
+    """
+    return None
 
 
 def canada_security_upload_type(key, data, errors, context):

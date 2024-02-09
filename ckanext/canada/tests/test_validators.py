@@ -387,7 +387,7 @@ class TestNAVLSchema(CanadaTestBase):
 
 
     def test_validation_schema(self):
-        "creating a resource with a URL schema should not be allowed"
+        "creating a resource with a URL schema should empty the schema"
         pkg = self.sysadmin_action.package_create(**self.complete_pkg)
 
         resource_data = {
@@ -401,17 +401,50 @@ class TestNAVLSchema(CanadaTestBase):
             'schema': 'https://www.annakarenina.com'
         }
 
-        with pytest.raises(ValidationError) as ve:
-            self.sysadmin_action.resource_create(**resource_data)
-        err = ve.value.error_dict
-        assert 'schema' in err
-        assert 'Schema URLs are not supported' in err['schema'][0]
+        resource = self.sysadmin_action.resource_create(**resource_data)
+        assert 'schema' not in resource or resource['schema'] == None
 
         resource_data = dict(resource_data,
                             schema='{"fields":["this is bad JSON for Schema"]}')
 
-        with pytest.raises(ValidationError) as ve:
-            self.sysadmin_action.resource_create(**resource_data)
-        err = ve.value.error_dict
-        assert 'schema' in err
-        assert 'Invalid JSON for Schema' in err['schema'][0]
+        resource = self.sysadmin_action.resource_create(**resource_data)
+        assert 'schema' not in resource or resource['schema'] == None
+
+
+    def test_validation_options(self):
+        "creating a resource with lax validation options should remove them"
+        pkg = self.sysadmin_action.package_create(**self.complete_pkg)
+
+        resource_data = {
+            'name_translated': {'en': u'Full text.', 'fr': u'Full text.'},
+            'format': u'TXT',
+            'url': u'http://www.annakarenina.com/download/',
+            'size': 42,
+            'resource_type': 'dataset',
+            'language': ['zxx'],
+            'package_id': pkg['id'],
+            'validation_options': {
+                'skip_checks': [],
+                'headers': 3,
+                'scheme': 'http',
+                'format': 'PNG',
+                'encoding': 'ascii',
+                'compression': True,
+                'pick_rows': [5, 6, 8],
+                'skip_rows': [3, 4],
+                'pick_fields': ['A', 'B'],
+                'skip_fields': ['C'],
+                'allow_html': True,
+                'post_parse': 'lambda',
+                'custom_loaders': 'lambda',
+                'custom_parsers': 'lambda',
+                'delimiter': ';',
+                'sheet': 2,
+                'fill_merged_cells': True,
+                'workbook_cache': 'lambda',
+                'row_limit': 'STR to 1 MIL'
+            }
+        }
+
+        resource = self.sysadmin_action.resource_create(**resource_data)
+        assert 'validation_options' not in resource or resource['validation_options'] == None

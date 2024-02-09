@@ -24,7 +24,7 @@ class TestPackageAlerts(CanadaTestBase):
             username=self.sysadmin['name']).action
 
 
-    def test_marked_not_eady_to_publish(self, app):
+    def test_marked_not_ready_to_publish(self, app):
         data = self._filled_dataset_data()
         data['imso_approval'] = 'false'
         self.sysadmin_action.package_create(
