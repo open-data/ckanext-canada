@@ -1,0 +1,56 @@
+{% extends "admin/base.html" %}
+
+{% block primary_content_inner %}
+<div class="col-sm-12">
+  {% if job_list %}
+    {% if warning %}
+      <div class="module-alert alert alert-warning">
+        <p>{{ _('The first job in the queue has not run in the past 18 minutes, you may want to confirm that the background worker is running.') }}</p>
+      </div>
+    {% endif %}
+    <div class="text-left text-info mrgn-bttm-md canada-job-list-title">
+      <p>
+        <strong>{{ job_list|length ~ _(" job(s) in queue.") }}</strong>
+      </p>
+    </div>
+    <ul class="canada-job-list activity">
+      {% for job in job_list %}
+        <li class="item">
+          <i class="fa icon {{ job.get('icon') }}"></i>
+          <p>
+            <span class="canada-job-item-title">{{ job.get('type') }}</span>
+            <br/>
+            <span class="date">
+              {{ h.time_ago_from_timestamp(job.get('created')) }} ({{ h.render_datetime(job.get('created'), '%Y-%m-%d %H:%M:%S %Z') }}) |
+              {% if job.get('info') %}
+                <a href="{{ job.get('info', {}).get('url') }}">{{ h.get_translated(job.get('info'), 'name') }}</a>
+              {% else %}
+                <span>{{ _('Unknown') }}</span>
+              {% endif %}
+              | <a href="{{ h.url_for('api.action', logic_function='job_show', id=job.get('id')) }}">{{ job.get('id') }}</a>
+            </span>
+          </p>
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <div class="module-alert alert alert-info">
+      <p>{{ _("There are currently no queued or running jobs.") }}</p>
+    </div>
+  {% endif %}
+</div>
+{% endblock %}
+
+{% block secondary_content %}
+  <section class="panel panel-info">
+    <header class="panel-heading">
+        <h3 class="panel-title">
+            <i class="fa fa-info-circle"></i>
+            {{ _('Job Queue') }}
+        </h3>
+    </header>
+    <div class="panel-body">
+      <p>{{ _("View the current job queue and running jobs.") }}</p>
+    </div>
+  </section>
+{% endblock %}

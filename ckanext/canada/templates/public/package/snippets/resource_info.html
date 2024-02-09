@@ -7,5 +7,7 @@
   {{ super() }}
   {% if h.is_registry() %}
     {{ h.get_validation_badge(res)|safe }}
+    <div class="clearfix"></div>
+    {{ h.get_loader_status_badge(res) }}
   {% endif %}
 {% endblock %}

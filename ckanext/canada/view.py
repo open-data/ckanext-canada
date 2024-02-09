@@ -9,6 +9,7 @@ from logging import getLogger
 import unicodecsv
 from codecs import BOM_UTF8
 from six import string_types, PY2
+from datetime import datetime, timedelta
 
 from ckan.plugins.toolkit import (
     abort,
@@ -74,6 +75,8 @@ if PY2:
     from cStringIO import StringIO
 else:
     from io import StringIO
+
+MAX_JOB_QUEUE_LIST_SIZE = 25
 
 canada_views = Blueprint('canada', __name__)
 ottawa_tz = timezone('America/Montreal')
@@ -242,6 +245,24 @@ def _get_form_full_text_choices(field_name, chromo):
                 field.get('form_full_text_choices', False):
             return True
     return False
+
+
+@canada_views.route('/group/bulk_process/<id>', methods=['GET', 'POST'])
+def canada_group_bulk_process(id, group_type='group', is_organization=False, data=None):
+    """
+    Redirects the Group bulk action endpoint as it does not support
+    the IPackageController and IResourceController implementations.
+    """
+    return h.redirect_to('%s.read' % group_type, id=id)
+
+
+@canada_views.route('/organization/bulk_process/<id>', methods=['GET', 'POST'])
+def canada_organization_bulk_process(id, group_type='organization', is_organization=True, data=None):
+    """
+    Redirects the Organization bulk action endpoint as it does not support
+    the IPackageController and IResourceController implementations.
+    """
+    return h.redirect_to('%s.read' % group_type, id=id)
 
 
 @canada_views.route('/create-pd-record/<owner_org>/<resource_name>', methods=['GET', 'POST'])
@@ -548,13 +569,16 @@ def ckanadmin_publish():
     for custom search facets for this admin route.
     """
     if not is_sysadmin(g.user):
-        abort(401, _('Not authorized to see this page'))
+        abort(403, _('Not authorized to see this page'))
 
     return dataset_search('dataset')
 
 
 @canada_views.route('/ckan-admin/publish-datasets', methods=['GET', 'POST'])
 def ckanadmin_publish_datasets():
+    if not is_sysadmin(g.user):
+        abort(403, _('Not authorized to see this page'))
+
     lc = LocalCKAN(username=g.user)
     params = parse_params(request.form)
 
@@ -577,6 +601,24 @@ def ckanadmin_publish_datasets():
 
     # return us to the publishing interface
     return h.redirect_to('canada.ckanadmin_publish')
+
+
+@canada_views.route('/ckan-admin/job-queue', methods=['GET'])
+def ckanadmin_job_queue():
+    """
+    Lists all of the queued and running jobs.
+    """
+    try:
+        jobs = get_action('job_list')({}, {'limit': MAX_JOB_QUEUE_LIST_SIZE})
+    except NotAuthorized:
+        abort(403, _('Not authorized to see this page'))
+
+    warning = False
+    if jobs and datetime.strptime(jobs[0]['created'], '%Y-%m-%dT%H:%M:%S') < (datetime.now() - timedelta(minutes=18)):
+        warning = True
+
+    return render('admin/jobs.html', extra_vars={'job_list': jobs,
+                                                 'warning': warning,})
 
 
 @canada_views.route('/dataset/<id>/delete-datastore-table/<resource_id>', methods=['GET', 'POST'])

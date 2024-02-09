@@ -2,19 +2,19 @@ import json
 import re
 import inspect
 from ckan.plugins import plugin_loaded
-from ckan.plugins.toolkit import c, config, _
+from ckan.plugins.toolkit import c, config, _, g
 from ckan.model import User, Package, Activity
 import ckan.model as model
 import datetime
 import unicodedata
 import ckan as ckan
 import jinja2
+import html
 
 from ckanapi import NotFound
 from ckantoolkit import h, aslist
 import ckan.plugins.toolkit as t
 from ckanext.scheming.helpers import scheming_get_preset
-import webhelpers.html as html
 import dateutil.parser
 import geomet.wkt as wkt
 import json as json
@@ -23,6 +23,12 @@ from ckan.lib.helpers import core_helper
 from ckan.plugins.core import plugin_loaded
 from ckan.logic import NotAuthorized
 import ckan.lib.datapreview as datapreview
+
+try:
+    from ckanext.xloader.utils import XLoaderFormats
+except ImportError:
+    XLoaderFormats = None
+
 
 ORG_MAY_PUBLISH_OPTION = 'canada.publish_datasets_organization_name'
 ORG_MAY_PUBLISH_DEFAULT_NAME = 'tb-ct'
@@ -238,16 +244,91 @@ def ga4_id():
     return str(config.get('ga4.id'))
 
 def adobe_analytics_login_required(current_url):
-    return "2" #return 1 if page requires a login and 2 if page is public
+    # type: (str) -> int
+    """
+    1: login required
+    2: public
+    3: intranet or extranet
+
+    Only supporting Public Portal w/ Adobe Analytics for now,
+    so just always return 2 for public.
+    """
+    return 2
 
 def adobe_analytics_lang():
-    if h.lang() == 'en':
-        return 'eng'
-    elif h.lang() == 'fr':
+    # type: () -> str
+    """
+    Return Adobe Analytics expected language codes.
+
+    Returns `eng` (English) by default
+    """
+    if h.lang() == 'fr':
         return 'fra'
+    return 'eng'
 
 def adobe_analytics_js():
     return str(config.get('adobe_analytics.js', ''))
+
+
+def adobe_analytics_creator(organization=None, package=None):
+    # type: (dict|None, dict|None) -> str
+    """
+    Generates HTML Meta Tag for Adobe Analytics, along with extra GoC
+    page ownership HTML attribute.
+
+    Need to have organization and package parameters separately for Organization/Group templates.
+
+    creator and owner_1 should be the Organization who made the "page" (org, package, resource, or PD record set)
+    owner_2, owner_3, and owner_4 are for the org_section field in the package schema.
+    """
+    # defaults
+    creator = _('Treasury Board of Canada Secretariat')
+    owner_1 = _('Treasury Board of Canada Secretariat')
+    owner_2 = 'N/A'
+    owner_3 = 'N/A'
+    owner_4 = 'N/A'
+
+    # set creator and owner_1 to the package's organization title (language respective)
+    if organization:
+        if ' | ' in organization.get('title'):
+            creator = organization.get('title').split(' | ')[1 if h.lang() == 'fr' else 0].strip()
+        else:
+            creator = h.get_translated(organization, h.lang()).strip()
+        owner_1 = creator
+
+    # set owners 2-4 to the package's org_section field value if available (language respective)
+    if package and 'org_section' in package and h.scheming_language_text(package.get('org_section')):
+        org_sections = h.scheming_language_text(package.get('org_section')).split(',')
+        osl = len(org_sections)
+        owner_2 = org_sections[0].strip() if osl >= 1 else 'N/A'
+        owner_3 = org_sections[1].strip() if osl >= 2 else 'N/A'
+        owner_4 = org_sections[2].strip() if osl >= 3 else 'N/A'
+
+    return Markup(u'<meta property="dcterms:creator" content="%s" ' \
+            'data-gc-analytics-owner="%s|%s|%s|%s"/>' % (
+                html.escape(creator), html.escape(owner_1),
+                html.escape(owner_2), html.escape(owner_3),
+                html.escape(owner_4)))
+
+
+def resource_view_meta_title(package, resource, view, is_subtitle=False):
+    # type: (dict, dict, dict, bool) -> str
+    """
+    Generates the string for the title meta tag for Resource Views.
+
+    Includes the Resource View translated title.
+    """
+    package_title = h.get_translated(package, 'title')
+    resource_title = h.get_translated(resource, 'name')
+    view_title = view['title_fr'] if h.lang() == 'fr' else view['title']
+    if not is_subtitle:
+        return u'%s - %s - %s - %s' % (
+            html.escape(package_title), html.escape(resource_title),
+            html.escape(view_title), html.escape(_(g.site_title)))
+    return Markup(u'%s - %s - %s' % (
+        html.escape(package_title), html.escape(resource_title),
+        html.escape(view_title)))
+
 
 def loop11_key():
     return str(config.get('loop11.key', ''))
@@ -344,62 +425,6 @@ def show_openinfo_facets():
 
 def json_loads(value):
     return json.loads(value)
-
-
-# FIXME: terrible hacks
-def gravatar(*args, **kwargs):
-    '''Brute force disable gravatar'''
-    return ''
-def linked_gravatar(*args, **kwargs):
-    '''Brute force disable gravatar'''
-    return ''
-
-# FIXME: terrible, terrible hacks
-def linked_user(user, maxlength=0, avatar=20):
-    '''Brute force disable gravatar, mostly copied from ckan/lib/helpers'''
-    from ckan import model
-    if not isinstance(user, model.User):
-        user_name = unicode(user)
-        user = model.User.get(user_name)
-        if not user:
-            return user_name
-    if user:
-        name = user.name if model.User.VALID_NAME.match(user.name) else user.id
-        displayname = user.display_name
-        if displayname==config.get('ckan.site_id', '').strip():
-            displayname = _('A system administrator')
-
-        if maxlength and len(user.display_name) > maxlength:
-            displayname = displayname[:maxlength] + '...'
-
-        return h.literal(h.link_to(
-                displayname,
-                h.url_for('user.read', id=name)
-            )
-        )
-# FIXME: because ckan/lib/activity_streams is terrible
-h.linked_user = linked_user
-
-
-def link_to_user(user, maxlength=0):
-    """ Return the HTML snippet that returns a link to a user.  """
-
-    # Do not link to pseudo accounts
-    if user in [model.PSEUDO_USER__LOGGED_IN, model.PSEUDO_USER__VISITOR]:
-        return user
-    if not isinstance(user, model.User):
-        user_name = unicode(user)
-        user = model.User.get(user_name)
-        if not user:
-            return user_name
-
-    if user:
-        _name = user.name if model.User.VALID_NAME.match(user.name) else user.id
-        displayname = user.display_name
-        if maxlength and len(user.display_name) > maxlength:
-            displayname = displayname[:maxlength] + '...'
-        return html.tags.link_to(displayname,
-                       h.url_for('user.read', id=_name))
 
 
 def get_datapreview(res_id):
@@ -642,6 +667,70 @@ def flash_success(message, allow_html=True):
               category='alert-success',
               ignore_duplicate=True,
               allow_html=allow_html)
+
+
+def get_loader_status_badge(resource):
+    # type: (dict) -> str
+    """
+    Displays a custom badge for the status of Xloader and DataStore
+    for the specified resource.
+    """
+
+    if not XLoaderFormats:
+        return ''
+
+    if not resource.get('url_type') == 'upload' or \
+    not XLoaderFormats.is_it_an_xloader_format(resource.get('format')):
+        # we only want to show badges for uploads of supported xloader formats
+        return ''
+
+    is_datastore_active = resource.get('datastore_active', False)
+
+    try:
+        xloader_job = t.get_action("xloader_status")(None, {"resource_id": resource.get('id')})
+    except (t.ObjectNotFound, t.NotAuthorized):
+        xloader_job = {}
+
+    if xloader_job.get('status') == 'complete':
+        # the xloader task is complete, show datastore active or inactive.
+        # xloader will delete the datastore table at the beggining of the job run.
+        # so this will only be true if the job is fully finished.
+        status = 'active' if is_datastore_active else 'inactive'
+    elif xloader_job.get('status') in ['pending', 'running', 'running_but_viewable', 'error']:
+        # the job is running or pending or errored
+        # show the xloader status
+        status = xloader_job.get('status')
+        if status == 'running_but_viewable':
+            # treat running_but_viewable the same as running
+            status = 'running'
+    else:
+        # we do not know what the status is
+        status = 'unknown'
+
+    messages = {
+        'pending': _('Data awaiting load to DataStore'),
+        'running': _('Loading data into DataStore'),
+        'complete': _('Data loaded into DataStore'),
+        'error': _('Failed to load data into DataStore'),
+        'active': _('Data available in DataStore'),
+        'inactive': _('Resource not active in DataStore'),
+        'unknown': _('DataStore status unknown'),
+    }
+
+    pusher_url = t.h.url_for('xloader.resource_data',
+                             id=resource.get('package_id'),
+                             resource_id=resource.get('id'))
+
+    badge_url = t.h.url_for_static('/static/img/badges/{lang}/datastore-{status}.svg'.format(lang=t.h.lang(), status=status))
+
+    title = t.h.render_datetime(xloader_job.get('last_updated'), with_hours=True) \
+        if xloader_job.get('last_updated') else ''
+
+    return Markup(u'<a href="{pusher_url}" class="loader-badge"><img src="{badge_url}" alt="{alt}" title="{title}"/></a>'.format(
+        pusher_url=pusher_url,
+        badge_url=badge_url,
+        alt=html.escape(messages[status], quote=True),
+        title=html.escape(title, quote=True)))
 
 
 def get_resource_view(resource_view_id):
