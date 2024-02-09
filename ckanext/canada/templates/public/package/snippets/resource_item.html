@@ -44,7 +44,7 @@
   {% if h.is_registry() %}
     <div class="canada-resource-list-badges">
       {{ h.get_validation_badge(res, in_listing=True)|safe }}
-      {{ h.get_loader_status_badge(res)|safe }}
+      {{ h.get_loader_status_badge(res) }}
     </div>
   {% endif %}
 {% endblock %}

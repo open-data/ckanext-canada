@@ -655,14 +655,10 @@ ckanext.canada:schemas/prop.yaml
             'fgp_url',
             'contact_information',
             'show_openinfo_facets',
-            'gravatar',
-            'linked_gravatar',
-            'linked_user',
             'json_loads',
             'catalogue_last_update_date',
             'get_translated_t',
             'language_text_t',
-            'link_to_user',
             'get_datapreview',
             'iso_to_goctime',
             'geojson_to_wkt',
@@ -690,7 +686,8 @@ ckanext.canada:schemas/prop.yaml
         return {
                 'recently_changed_packages_activity_list': act.recently_changed_packages_activity_list,  #TODO: Remove this action override in CKAN 2.10 upgrade
                 'resource_view_show': logic.canada_resource_view_show,
-                'resource_view_list': logic.canada_resource_view_list
+                'resource_view_list': logic.canada_resource_view_list,
+                'job_list': logic.canada_job_list,
                }
 
     # IAuthFunctions
@@ -726,6 +723,7 @@ class DataGCCAForms(p.SingletonPlugin, DefaultDatasetForm):
         actions = logic.limit_api_logic()
         actions.update((h, getattr(logic, h)) for h in [
             'changed_packages_activity_timestamp_since',
+            'canada_guess_mimetype',
             ])
         actions.update({k: disabled_anon_action for k in [
             'current_package_list_with_resources',
@@ -792,12 +790,12 @@ class DataGCCAForms(p.SingletonPlugin, DefaultDatasetForm):
                 validators.json_string,
             'json_string_has_en_fr_keys':
                 validators.json_string_has_en_fr_keys,
-            'canada_blank_value_creator':
-                validators.canada_blank_value_creator,
-            'canada_resource_schema_output':
-                validators.canada_resource_schema_output,
-            'canada_validation_options_output':
-                validators.canada_validation_options_output,
+            'canada_static_charset_tabledesigner':
+                validators.canada_static_charset_tabledesigner,
+            'canada_guess_resource_format':
+                validators.canada_guess_resource_format,
+            'canada_output_none':
+                validators.canada_output_none,
             }
 
 

@@ -2,13 +2,14 @@ import json
 import re
 import inspect
 from ckan.plugins import plugin_loaded
-from ckan.plugins.toolkit import c, config, _, g, h
+from ckan.plugins.toolkit import c, config, _, h, g
 from ckan.model import User, Package, Activity
 import ckan.model as model
 import datetime
 import unicodedata
 import ckan as ckan
 import jinja2
+import html
 
 from ckanapi import NotFound
 from ckantoolkit import aslist
@@ -426,62 +427,6 @@ def json_loads(value):
     return json.loads(value)
 
 
-# FIXME: terrible hacks
-def gravatar(*args, **kwargs):
-    '''Brute force disable gravatar'''
-    return ''
-def linked_gravatar(*args, **kwargs):
-    '''Brute force disable gravatar'''
-    return ''
-
-# FIXME: terrible, terrible hacks
-def linked_user(user, maxlength=0, avatar=20):
-    '''Brute force disable gravatar, mostly copied from ckan/lib/helpers'''
-    from ckan import model
-    if not isinstance(user, model.User):
-        user_name = str(user)
-        user = model.User.get(user_name)
-        if not user:
-            return user_name
-    if user:
-        name = user.name if model.User.VALID_NAME.match(user.name) else user.id
-        displayname = user.display_name
-        if displayname==config.get('ckan.site_id', '').strip():
-            displayname = _('A system administrator')
-
-        if maxlength and len(user.display_name) > maxlength:
-            displayname = displayname[:maxlength] + '...'
-
-        return h.literal(h.link_to(
-                displayname,
-                h.url_for('user.read', id=name)
-            )
-        )
-# FIXME: because ckan/lib/activity_streams is terrible
-h.linked_user = linked_user
-
-
-def link_to_user(user, maxlength=0):
-    """ Return the HTML snippet that returns a link to a user.  """
-
-    # Do not link to pseudo accounts
-    if user in [model.PSEUDO_USER__LOGGED_IN, model.PSEUDO_USER__VISITOR]:
-        return user
-    if not isinstance(user, model.User):
-        user_name = str(user)
-        user = model.User.get(user_name)
-        if not user:
-            return user_name
-
-    if user:
-        _name = user.name if model.User.VALID_NAME.match(user.name) else user.id
-        displayname = user.display_name
-        if maxlength and len(user.display_name) > maxlength:
-            displayname = displayname[:maxlength] + '...'
-        anchor = h.url_for('user.read', id=_name)
-        return Markup(f'<a href="{anchor}">{displayname}</a>')
-
-
 def get_datapreview(res_id):
 
     #import pdb; pdb.set_trace()
@@ -785,30 +730,14 @@ def get_loader_status_badge(resource):
 
     badge_url = t.h.url_for_static('/static/img/badges/{lang}/datastore-{status}.svg'.format(lang=t.h.lang(), status=status))
 
-    # in queue, try to get the number in the queue
-    # NOTE: the Validation extension does not use the task_status table,
-    # and we will never know the job id of a Validation job.
-    # FIXME: is this worth it if we cannot display in the Xloader page?
-    # is it worth it if we cannot display for the Validation extension?
-    queue_number = None
-    if status == 'pending':
-        queue_number = 1
-        jobs_in_queue = t.get_action('job_list')({"ignore_auth": True}, {})
-        for job in jobs_in_queue:
-            if job.get('id') == xloader_job.get('job_id'):
-                break
-            queue_number += 1
-
     title = t.h.render_datetime(xloader_job.get('last_updated'), with_hours=True) \
         if xloader_job.get('last_updated') else ''
-    if queue_number:
-        title = _("Number %s in queue") % queue_number
 
-    return u'<a href="{pusher_url}" class="loader-badge"><img src="{badge_url}" alt="{alt}" title="{title}"/></a>'.format(
+    return Markup(u'<a href="{pusher_url}" class="loader-badge"><img src="{badge_url}" alt="{alt}" title="{title}"/></a>'.format(
         pusher_url=pusher_url,
         badge_url=badge_url,
-        alt=html.escape(messages[status].replace('"', '\"')),
-        title=html.escape(title.replace('"', '\"')))
+        alt=html.escape(messages[status], quote=True),
+        title=html.escape(title, quote=True)))
 
 
 def get_resource_view(resource_view_id):

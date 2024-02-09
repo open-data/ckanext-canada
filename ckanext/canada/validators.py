@@ -5,7 +5,7 @@ import unicodedata
 
 from six import text_type
 
-from ckan.plugins.toolkit import _, h
+from ckan.plugins.toolkit import _, h, get_action, ValidationError
 from ckan.lib.navl.validators import StopOnError
 from ckan.authz import is_sysadmin
 from ckan import model
@@ -396,23 +396,11 @@ def json_string_has_en_fr_keys(value, context):
     return value
 
 
-def canada_blank_value_creator(value):
+def canada_output_none(value):
     """
-    Generates a blank value
-    """
-    return u''
+    A custom output validator.
 
-
-def canada_resource_schema_output(value, context):
-    """
-    Always forces None
-    """
-    return None
-
-
-def canada_validation_options_output(value, context):
-    """
-    Always forces None
+    Awlays returns None
     """
     return None
 
@@ -449,3 +437,60 @@ def canada_security_upload_presence(key, data, errors, context):
             return
         error = e.error_dict['File'][0]
         raise Invalid(_(error))
+
+
+def canada_static_charset_tabledesigner(key, data, errors, context):
+    """
+    Always sets to UTF-8 if TableDesigner
+    """
+    url_type = data.get(key[:-1] + ('url_type',))
+    if url_type == 'tabledesigner':
+        data[key] = 'UTF-8'
+
+
+def canada_guess_resource_format(key, data, errors, context):
+    """
+    Guesses the resource format based on the url if missing.
+    Guesses the resource format based on url change.
+    Always sets to CSV if TableDesigner
+    """
+    url_type = data.get(key[:-1] + ('url_type',))
+    if url_type == 'tabledesigner':
+        data[key] = 'CSV'
+        return
+
+    value = data[key]
+
+    # if it is empty, then do the initial guess.
+    # we will guess all url types, unlike Core
+    # which only checks uploaded files.
+    if not value or value is missing:
+        url = data.get(key[:-1] + ('url',), '')
+        if not url:
+            return
+        try:
+            mimetype = get_action('canada_guess_mimetype')(context, {"url": url})
+            data[key] = mimetype
+        except ValidationError as e:
+            errors[key].append(e.error_dict['format'])
+            raise StopOnError
+
+    # if there is a resource id, then it is an update.
+    # we can check if the url field value has changed.
+    resource_id = data.get(key[:-1] + ('id',))
+    if resource_id:
+        # get the old/current resource url
+        current_resource = model.Resource.get(resource_id)
+        current_url = None
+        if current_resource:
+            current_url = current_resource.url
+        new_url = data.get(key[:-1] + ('url',), '')
+        if not new_url:
+            return
+        if current_url != new_url:
+            try:
+                mimetype = get_action('canada_guess_mimetype')(context, {"url": new_url})
+                data[key] = mimetype
+            except ValidationError as e:
+                errors[key].append(e.error_dict['format'])
+                raise StopOnError
