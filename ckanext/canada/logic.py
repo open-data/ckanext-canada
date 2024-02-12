@@ -14,7 +14,8 @@ from ckan.plugins.toolkit import (
     _,
     g,
     get_action,
-    h
+    h,
+    asbool
 )
 from ckan.authz import is_sysadmin
 
@@ -271,7 +272,7 @@ def canada_guess_mimetype(context, data_dict):
 
     return mimetype
 
-  
+
 @chained_action
 def canada_resource_view_show(up_func, context, data_dict):
     """
@@ -291,6 +292,8 @@ def canada_resource_view_show(up_func, context, data_dict):
     views still. We will just add a key to the view dict to be used within templates for visuals.
     """
     view_dict = up_func(context, data_dict)
+    if not asbool(config.get('ckanext.canada.disable_failed_ds_views', False)):
+        return view_dict
     if view_dict.get('view_type') == 'datatables_view':
         # at this point, the core function has been called, calling resource_view_show etc.
         # so we can assume that the Resource and View exists here, and that `resource_id` is in view_dict
@@ -342,6 +345,8 @@ def canada_resource_view_list(up_func, context, data_dict):
     views still. We will just add a key to the view dict to be used within templates for visuals.
     """
     view_list = up_func(context, data_dict)
+    if not asbool(config.get('ckanext.canada.disable_failed_ds_views', False)):
+        return view_list
     # at this point, the core function has been called, calling resource_show etc.
     # so we can assume that the Resource exists here, and that `id` is in data_dict
     resource = model.Resource.get(data_dict.get('id'))
