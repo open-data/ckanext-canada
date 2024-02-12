@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  CKAN\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-02-09 15:34+0000\n"
+"POT-Creation-Date: 2024-02-12 16:55+0000\n"
 "PO-Revision-Date: 2014-01-23 13:04+0000\n"
 "Last-Translator: Sean Hammond <sean.hammond@okfn.org>\n"
 "Language: en\n"
@@ -18,6 +18,20 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.7.0\n"
+
+#: ckanext/canada/assets/internal/validation_spec.js:8
+#: ckanext/canada/checks.py:25
+msgid ""
+"Column name {value} in column {column_number} is not valid for a "
+"DataStore header"
+msgstr ""
+
+#: ckanext/canada/assets/internal/validation_spec.js:16
+#: ckanext/canada/checks.py:30
+msgid ""
+"Column name {value} in column {column_number} is too long for a DataStore"
+" header"
+msgstr ""
 
 #: ckanext/canada/helpers.py:285 ckanext/canada/helpers.py:286
 msgid "Treasury Board of Canada Secretariat"
@@ -64,64 +78,64 @@ msgstr ""
 msgid "Unknown Job"
 msgstr ""
 
-#: ckanext/canada/plugins.py:610
+#: ckanext/canada/plugins.py:612
 #: ckanext/canada/templates/internal/scheming/package/snippets/package_form.html:26
 msgid "Portal Type"
 msgstr ""
 
-#: ckanext/canada/plugins.py:611
+#: ckanext/canada/plugins.py:613
 #: ckanext/canada/templates/internal/user/new_user_form.html:18
 #: ckanext/canada/templates/public/package/deleted.html:15
 #: ckanext/canada/templates/public/snippets/package_item.html:66
 msgid "Organization"
 msgstr ""
 
-#: ckanext/canada/plugins.py:612
+#: ckanext/canada/plugins.py:614
 msgid "Collection Type"
 msgstr ""
 
-#: ckanext/canada/plugins.py:613 ckanext/canada/plugins.py:614
+#: ckanext/canada/plugins.py:615 ckanext/canada/plugins.py:616
 msgid "Keywords"
 msgstr ""
 
-#: ckanext/canada/plugins.py:615
+#: ckanext/canada/plugins.py:617
 msgid "Subject"
 msgstr ""
 
-#: ckanext/canada/plugins.py:616
+#: ckanext/canada/plugins.py:618
 msgid "Format"
 msgstr ""
 
-#: ckanext/canada/plugins.py:617
+#: ckanext/canada/plugins.py:619
 msgid "Resource Type"
 msgstr ""
 
-#: ckanext/canada/plugins.py:618
+#: ckanext/canada/plugins.py:620
 msgid "Maintenance and Update Frequency"
 msgstr ""
 
-#: ckanext/canada/plugins.py:619
+#: ckanext/canada/plugins.py:621
 msgid "Record Status"
 msgstr ""
 
-#: ckanext/canada/plugins.py:620
+#: ckanext/canada/plugins.py:622
 msgid "IMSO Approval"
 msgstr ""
 
-#: ckanext/canada/plugins.py:621
+#: ckanext/canada/plugins.py:623
 msgid "Jurisdiction"
 msgstr ""
 
-#: ckanext/canada/plugins.py:622
+#: ckanext/canada/plugins.py:624
 msgid "Suggestion Status"
 msgstr ""
 
-#: ckanext/canada/plugins.py:838
+#: ckanext/canada/plugins.py:840
 #: ckanext/canada/templates/public/package/snippets/resource_form.html:8
 msgid "Previous"
 msgstr ""
 
-#: ckanext/canada/plugins.py:838
+#: ckanext/canada/plugins.py:840
 msgid "Next"
 msgstr ""
 
@@ -569,6 +583,33 @@ msgstr ""
 #: ckanext/canada/view.py:1122
 #, python-format
 msgid "User %r not authorized to view members of %s"
+msgstr ""
+
+#: ckanext/canada/assets/internal/validation_spec.js:7
+msgid "Invalid Header for DataStore"
+msgstr ""
+
+#: ckanext/canada/assets/internal/validation_spec.js:9
+msgid ""
+"Column name is invalid for a DataStore header.\n"
+"\n"
+" How it could be resolved:\n"
+" - Remove any leading underscores('_') from the column name.\n"
+" - Remove any leading or trailing white space from the column name.\n"
+" - Remove any double quotes('\"') from the column name.\n"
+" - Make sure the column name is not blank."
+msgstr ""
+
+#: ckanext/canada/assets/internal/validation_spec.js:15
+msgid "Header Too Long for DataStore"
+msgstr ""
+
+#: ckanext/canada/assets/internal/validation_spec.js:17
+msgid ""
+"Column name is too long for a DataStore header.\n"
+"\n"
+" How it could be resolved:\n"
+" - Make the column name at most 63 characters long."
 msgstr ""
 
 #. Title for PD Type: adminaircraft
