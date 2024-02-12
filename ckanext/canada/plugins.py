@@ -26,6 +26,8 @@ from ckanext.canada import helpers
 from ckanext.canada import cli
 from ckanext.canada.pd import get_commands as get_pd_commands
 from ckanext.canada import activity as act
+# type_ignore_reason: importing to proc decorators
+from ckanext.canada import checks  # type: ignore
 from ckanext.xloader.interfaces import IXloader
 import json
 
