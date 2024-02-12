@@ -24,6 +24,8 @@ from ckanext.canada import logic
 from ckanext.canada import auth
 from ckanext.canada import helpers
 from ckanext.canada import activity as act
+# type_ignore_reason: importing to proc decorators
+from ckanext.canada import checks  # type: ignore
 from ckanext.xloader.interfaces import IXloader
 import json
 
