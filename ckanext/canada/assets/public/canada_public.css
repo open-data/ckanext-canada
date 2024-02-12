@@ -1,3 +1,16 @@
+body .canada-w10-spacer{
+  display: inline-block !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  min-width: 10px !important;
+  max-width: 10px !important;
+  width: 10px !important;
+  min-height: 0 !important;
+  max-height: 0 !important;
+  height: 0 !important;
+  line-height: 0 !important;
+}
+
 img.openness-rating-stars {
   margin-bottom: -4px !important;
 }
