@@ -675,6 +675,8 @@ def get_loader_status_badge(resource):
     Displays a custom badge for the status of Xloader and DataStore
     for the specified resource.
     """
+    if not t.asbool(config.get('ckanext.canada.show_loader_badges', False)):
+        return ''
 
     if not XLoaderFormats:
         return ''
