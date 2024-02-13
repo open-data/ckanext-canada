@@ -941,8 +941,10 @@ def _log_api_access(request_data, pkg_dict):
 
 
 def notice_no_access():
-    '''flash_notice if logged-in user can't actually do anything yet'''
-    if h.check_access('package_create'):
+    '''flash_notice if logged-in user can't actually do anything yet.'''
+    if get_action('organization_list_for_user')({'user': g.user},
+                                                {'permission': 'read',
+                                                 'include_dataset_count': False}):
         return
 
     h.flash_notice(
