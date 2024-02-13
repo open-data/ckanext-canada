@@ -10,7 +10,6 @@ import unicodecsv
 from codecs import BOM_UTF8
 from six import string_types, PY2
 from datetime import datetime, timedelta
-from sqlalchemy import or_, and_
 
 from ckan.plugins.toolkit import (
     abort,
