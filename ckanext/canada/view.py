@@ -10,6 +10,7 @@ import unicodecsv
 from codecs import BOM_UTF8
 from six import string_types, PY2
 from datetime import datetime, timedelta
+from sqlalchemy import or_, and_
 
 from ckan.plugins.toolkit import (
     abort,
@@ -948,8 +949,15 @@ def _log_api_access(request_data, pkg_dict):
 
 
 def notice_no_access():
-    '''flash_notice if logged-in user can't actually do anything yet'''
-    if h.check_access('package_create'):
+    '''flash_notice if logged-in user can't actually do anything yet.'''
+    has_org_membership = model.Session.query(model.Member.id).filter(
+                            and_(model.Member.state == 'active',
+                                 model.Member.table_name == 'user',
+                                 model.Member.table_id == g.userobj.id,
+                                 or_(model.Member.capacity == 'admin',
+                                     model.Member.capacity == 'editor',
+                                     model.Member.capacity == 'member'))).first()
+    if has_org_membership:
         return
 
     h.flash_notice(
