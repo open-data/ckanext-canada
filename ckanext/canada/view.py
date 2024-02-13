@@ -950,17 +950,9 @@ def _log_api_access(request_data, pkg_dict):
 
 def notice_no_access():
     '''flash_notice if logged-in user can't actually do anything yet.'''
-    if not g.userobj:
-        return
-
-    has_org_membership = model.Session.query(model.Member.id).filter(
-                            and_(model.Member.state == 'active',
-                                 model.Member.table_name == 'user',
-                                 model.Member.table_id == g.userobj.id,
-                                 or_(model.Member.capacity == 'admin',
-                                     model.Member.capacity == 'editor',
-                                     model.Member.capacity == 'member'))).first()
-    if has_org_membership:
+    if not g.user or get_action('organization_list_for_user')({'user': g.user},
+                                                              {'permission': 'read',
+                                                               'include_dataset_count': False}):
         return
 
     h.flash_notice(
