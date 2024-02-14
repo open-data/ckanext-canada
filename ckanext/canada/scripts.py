@@ -236,7 +236,9 @@ def set_datastore_false_for_invalid_resources(resource_id=None, delete_table_vie
 @click.option('-l', '--list', is_flag=True, type=click.BOOL, help='List the Resource IDs instead of submitting them to Validation.')
 @click.option('-x', '--xloader', is_flag=True, type=click.BOOL,
               help='Submits the resources to Xloader instead of Validation. Will Xloader even if file hash has not changed.')
-def resubmit_datastore_resources(resource_id=None, empty_only=False, verbose=False, quiet=False, list=False, xloader=False):
+@click.option('-f', '--failed', is_flag=True, type=click.BOOL,
+              help='Only re-submit resources that failed. Mutually exclusive with --empty-only.')
+def resubmit_datastore_resources(resource_id=None, empty_only=False, verbose=False, quiet=False, list=False, xloader=False, failed=False):
     """
     Re-submits valid, empty DataStore Resources to Validation OR Xloader (use --xloader).
     """
@@ -275,6 +277,39 @@ def resubmit_datastore_resources(resource_id=None, empty_only=False, verbose=Fal
                             resource_ids_to_submit.append(resource_id)
                         elif verbose:
                             click.echo("%s/%s -- Resource %s has %s rows in DataStore. Skipping..." % (status, max, resource_id, count))
+                    elif failed:
+                        if xloader:
+                            # check xloader status
+                            try:
+                                xloader_job = get_action('xloader_status')({'ignore_auth': True},
+                                                                           {'resource_id': resource_id})
+                            except Exception as e:
+                                if verbose:
+                                    errors.write('Failed to get XLoader Report for Resource %s with errors:\n\n%s' % (resource_id, e))
+                                    errors.write('\n')
+                                    traceback.print_exc(file=errors)
+                                xloader_job = {}
+                                pass
+                            if xloader_job.get('status') == 'error':
+                                resource_ids_to_submit.append(resource_id)
+                                if verbose:
+                                    click.echo("%s/%s -- Going to re-submit Resource %s..." % (status, max, resource_id))
+                        else:
+                            # check validation status
+                            try:
+                                res_dict = get_action('resource_show')({'ignore_auth': True},
+                                                                       {'id': resource_id})
+                            except Exception as e:
+                                if verbose:
+                                    errors.write('Failed to get Resource %s with errors:\n\n%s' % (resource_id, e))
+                                    errors.write('\n')
+                                    traceback.print_exc(file=errors)
+                                res_dict = {}
+                                pass
+                            if res_dict.get('validation_status') == 'failure':
+                                resource_ids_to_submit.append(resource_id)
+                                if verbose:
+                                    click.echo("%s/%s -- Going to re-submit Resource %s..." % (status, max, resource_id))
                     else:
                         resource_ids_to_submit.append(resource_id)
                         if verbose:
@@ -297,6 +332,39 @@ def resubmit_datastore_resources(resource_id=None, empty_only=False, verbose=Fal
                     resource_ids_to_submit.append(resource_id)
                 elif verbose:
                     click.echo("1/1 -- Resource %s has %s rows in DataStore. Skipping..." % (resource_id, count))
+            elif failed:
+                if xloader:
+                    # check xloader status
+                    try:
+                        xloader_job = get_action('xloader_status')({'ignore_auth': True},
+                                                                   {'resource_id': resource_id})
+                    except Exception as e:
+                        if verbose:
+                            errors.write('Failed to get XLoader Report for Resource %s with errors:\n\n%s' % (resource_id, e))
+                            errors.write('\n')
+                            traceback.print_exc(file=errors)
+                        xloader_job = {}
+                        pass
+                    if xloader_job.get('status') == 'error':
+                        resource_ids_to_submit.append(resource_id)
+                        if verbose:
+                            click.echo("1/1 -- Going to re-submit Resource %s..." % (resource_id))
+                else:
+                    # check validation status
+                    try:
+                        res_dict = get_action('resource_show')({'ignore_auth': True},
+                                                               {'id': resource_id})
+                    except Exception as e:
+                        if verbose:
+                            errors.write('Failed to get Resource %s with errors:\n\n%s' % (resource_id, e))
+                            errors.write('\n')
+                            traceback.print_exc(file=errors)
+                        res_dict = {}
+                        pass
+                    if res_dict.get('validation_status') == 'failure':
+                        resource_ids_to_submit.append(resource_id)
+                        if verbose:
+                            click.echo("1/1 -- Going to re-submit Resource %s..." % (resource_id))
             else:
                 resource_ids_to_submit.append(resource_id)
                 if verbose:
