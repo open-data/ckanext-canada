@@ -294,6 +294,8 @@ def resubmit_datastore_resources(resource_id=None, empty_only=False, verbose=Fal
                                 resource_ids_to_submit.append(resource_id)
                                 if verbose:
                                     click.echo("%s/%s -- Going to re-submit Resource %s..." % (status, max, resource_id))
+                            elif verbose:
+                                click.echo("%s/%s -- Resource %s did not fail XLoader. Skipping..." % (status, max, resource_id))
                         else:
                             # check validation status
                             try:
@@ -310,6 +312,8 @@ def resubmit_datastore_resources(resource_id=None, empty_only=False, verbose=Fal
                                 resource_ids_to_submit.append(resource_id)
                                 if verbose:
                                     click.echo("%s/%s -- Going to re-submit Resource %s..." % (status, max, resource_id))
+                            elif verbose:
+                                click.echo("%s/%s -- Resource %s did not fail Validation. Skipping..." % (status, max, resource_id))
                     else:
                         resource_ids_to_submit.append(resource_id)
                         if verbose:
@@ -349,6 +353,8 @@ def resubmit_datastore_resources(resource_id=None, empty_only=False, verbose=Fal
                         resource_ids_to_submit.append(resource_id)
                         if verbose:
                             click.echo("1/1 -- Going to re-submit Resource %s..." % (resource_id))
+                    elif verbose:
+                        click.echo("1/1 -- Resource %s did not fail XLoader. Skipping..." % (resource_id))
                 else:
                     # check validation status
                     try:
@@ -365,6 +371,8 @@ def resubmit_datastore_resources(resource_id=None, empty_only=False, verbose=Fal
                         resource_ids_to_submit.append(resource_id)
                         if verbose:
                             click.echo("1/1 -- Going to re-submit Resource %s..." % (resource_id))
+                    elif verbose:
+                        click.echo("1/1 -- Resource %s did not fail Validation. Skipping..." % (resource_id))
             else:
                 resource_ids_to_submit.append(resource_id)
                 if verbose:
