@@ -32,7 +32,12 @@
 
             {% block header_get_help %}
             <li>
-                <a href="mailto:open-ouvert@tbs-sct.gc.ca?subject={{ _('Help using the Open Government Registry') }}"
+                {% if h.lang() == 'fr' %}
+                  {% set help_link = h.portal_url() ~ "/fr/guide-operations-registre/ton-compte" %}
+                {% else %}
+                  {% set help_link = h.portal_url() ~ "/en/registry-operations-guide/your-account" %}
+                {% endif %}
+                <a href="{{ help_link }}"
                    title="{{ _('Get Help') }}" class="btn btn-warning mrgn-tp-sm get-help-analytics">
                     <span class="fa fa-question"></span>
                     <span class="text">{{ _('Get Help') }}</span>
