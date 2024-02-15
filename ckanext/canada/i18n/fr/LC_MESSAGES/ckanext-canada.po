@@ -19,21 +19,23 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.7.0\n"
 
-# TODO: add FR translation
 #: ckanext/canada/assets/internal/validation_spec.js:8
 #: ckanext/canada/checks.py:25
 msgid ""
 "Column name {value} in column {column_number} is not valid for a "
 "DataStore header"
 msgstr ""
+"Le nom de la colonne {value} dans la colonne {column_number} "
+"est invalide comme en-tête dans DataStore"
 
-# TODO: add FR translation
 #: ckanext/canada/assets/internal/validation_spec.js:16
 #: ckanext/canada/checks.py:30
 msgid ""
 "Column name {value} in column {column_number} is too long for a DataStore"
 " header"
 msgstr ""
+"Le nom de la colonne {value} dans la colonne {column_number} est "
+"trop long comme en-tête dans DataStore"
 
 #: ckanext/canada/helpers.py:285 ckanext/canada/helpers.py:286
 msgid "Treasury Board of Canada Secretariat"
@@ -44,50 +46,43 @@ msgstr "Secrétariat du Conseil du Trésor du Canada"
 msgid "Members not found"
 msgstr "Membres non trouvés"
 
-# TODO: add FR translation
 #: ckanext/canada/helpers.py:711
 msgid "Data awaiting load to DataStore"
-msgstr ""
+msgstr "Le versement des données dans DataStore est en attente"
 
-# TODO: add FR translation
 #: ckanext/canada/helpers.py:712
 msgid "Loading data into DataStore"
-msgstr ""
+msgstr "Le versement des données dans DataStore est en cours"
 
-# TODO: add FR translation
 #: ckanext/canada/helpers.py:713
 msgid "Data loaded into DataStore"
-msgstr ""
+msgstr "Les données ont été versées dans DataStore"
 
-# TODO: add FR translation
 #: ckanext/canada/helpers.py:714
 msgid "Failed to load data into DataStore"
-msgstr ""
+msgstr "Les données n'ont pas été versées dans DataStore"
 
-# TODO: add FR translation
 #: ckanext/canada/helpers.py:715
 msgid "Data available in DataStore"
-msgstr ""
+msgstr "Les données sont disponibles dans DataStore"
 
-# TODO: add FR translation
 #: ckanext/canada/helpers.py:716
 msgid "Resource not active in DataStore"
-msgstr ""
+msgstr "La ressource est inactive dans DataStore"
 
-# TODO: add FR translation
 #: ckanext/canada/helpers.py:717
 msgid "DataStore status unknown"
-msgstr ""
+msgstr "L'état de DataStore est inconnu"
 
-# TODO: add FR translation
 #: ckanext/canada/logic.py:270
 msgid "Could not determine a resource format. Please supply a format."
 msgstr ""
+"Il est impossible de déterminer le format de "
+"la ressource. Veuillez indiquer un format."
 
-# TODO: add FR translation
 #: ckanext/canada/logic.py:417
 msgid "Unknown Job"
-msgstr ""
+msgstr "Tâche inconnue "
 
 #: ckanext/canada/plugins.py:612
 #: ckanext/canada/templates/internal/scheming/package/snippets/package_form.html:26
@@ -616,12 +611,10 @@ msgstr "L’utilisateur %r n’est pas autorisé à modifier les membres de %s"
 msgid "User %r not authorized to view members of %s"
 msgstr "L’utilisateur %r n’est pas autorisé à voir les membres de %s"
 
-# TODO: add FR translation
 #: ckanext/canada/assets/internal/validation_spec.js:7
 msgid "Invalid Header for DataStore"
-msgstr ""
+msgstr "En-tête invalide dans DataStore"
 
-# TODO: add FR translation
 #: ckanext/canada/assets/internal/validation_spec.js:9
 msgid ""
 "Column name is invalid for a DataStore header.\n"
@@ -632,13 +625,20 @@ msgid ""
 " - Remove any double quotes('\"') from the column name.\n"
 " - Make sure the column name is not blank."
 msgstr ""
+"Le nom de la colonne est invalide comme en-tête dans DataStore.\n"
+"\n"
+" Solution :\n"
+" - Supprimez les traits de soulignement ('_') au début du "
+"nom de la colonne.\n"
+" - Supprimez les espaces au début et à la fin du nom de la "
+"colonne.\n"
+" - Supprimez les guillemets ('\"') du nom de la colonne.\n"
+" - Veillez à ce que le nom de la colonne soit indiqué."
 
-# TODO: add FR translation
 #: ckanext/canada/assets/internal/validation_spec.js:15
 msgid "Header Too Long for DataStore"
-msgstr ""
+msgstr "L'en-tête est trop long dans DataStore"
 
-# TODO: add FR translation
 #: ckanext/canada/assets/internal/validation_spec.js:17
 msgid ""
 "Column name is too long for a DataStore header.\n"
@@ -646,6 +646,10 @@ msgid ""
 " How it could be resolved:\n"
 " - Make the column name at most 63 characters long."
 msgstr ""
+"Le nom de la colonne est trop long comme en-tête dans DataStore.\n"
+"\n"
+" Solution :\n"
+" - Le nom de la colonne ne doit pas dépasser 63 caractères."
 
 #. Title for PD Type: adminaircraft
 #. Resource Title for PD Type: adminaircraft
@@ -1493,11 +1497,10 @@ msgstr "Dossiers supprimés"
 msgid "Publish Records"
 msgstr "Publier des dossiers"
 
-# TODO: add FR translation
 #: ckanext/canada/templates/internal/admin/base.html:11
 #: ckanext/canada/templates/public/admin/jobs.html:49
 msgid "Job Queue"
-msgstr ""
+msgstr "File d'attente des tâches"
 
 #: ckanext/canada/templates/internal/admin/publish_search.html:13
 #: ckanext/canada/templates/internal/package/search.html:10
@@ -2984,32 +2987,29 @@ msgstr ""
 "href=\"%(docs_url)s\" target=\"_blank\">guide d’administration</a> "
 "CKAN.</p>"
 
-# TODO: add FR translation
 #: ckanext/canada/templates/public/admin/jobs.html:8
 msgid ""
 "The first job in the queue has not run in the past 18 minutes, you may "
 "want to confirm that the background worker is running."
 msgstr ""
+"La première tâche dans la file d'attente est inactive depuis 18 minutes. "
+"Vérifiez que le système de gestion des tâches fonctionne."
 
-# TODO: add FR translation
 #: ckanext/canada/templates/public/admin/jobs.html:13
 msgid " job(s) in queue."
-msgstr ""
+msgstr " tâche(s) dans la file d'attente."
 
-# TODO: add FR translation
 #: ckanext/canada/templates/public/admin/jobs.html:28
 msgid "Unknown"
-msgstr ""
+msgstr "Inconnue"
 
-# TODO: add FR translation
 #: ckanext/canada/templates/public/admin/jobs.html:38
 msgid "There are currently no queued or running jobs."
-msgstr ""
+msgstr "Aucune tâche n'est dans la file d'attente ou en cours d'exécution."
 
-# TODO: add FR translation
 #: ckanext/canada/templates/public/admin/jobs.html:53
 msgid "View the current job queue and running jobs."
-msgstr ""
+msgstr "Affichez les tâches dans la file d'attente et en cours d'exécution."
 
 #: ckanext/canada/templates/public/admin/trash.html:26
 msgid "Purge"
@@ -3656,15 +3656,13 @@ msgstr " : "
 msgid "Register"
 msgstr "Registre"
 
-# TODO: add FR translation
 #: ckanext/canada/templates/public/snippets/activities/changed_resource_view.html:8
 msgid "{actor} changed the {view_type} view {view}"
-msgstr ""
+msgstr "{actor} a modifié le {view_type} de l'affichage {view}"
 
-# TODO: add FR translation
 #: ckanext/canada/templates/public/snippets/activities/new_resource_view.html:8
 msgid "{actor} added the {view_type} view {view}"
-msgstr ""
+msgstr "{actor} a ajouté le {view_type} de l'affichage {view}"
 
 #: ckanext/canada/templates/public/snippets/wet-boew/languagetoggle.html:2
 msgid "Language selection"
