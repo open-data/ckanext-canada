@@ -22,7 +22,7 @@ window.addEventListener('load', function(){
     function _set_success_message(format){
       let message = 'Set Resource Format to <strong>' + format + '</strong>';
       if( lang == 'fr' ){
-        //TODO: set french message
+        message = 'Établissez le format de la ressource à <strong>' + format + '</strong>';
       }
       $(dataUploadWrapper).after('<div class="module-alert alert alert-info mrgn-tp-sm mrgn-bttm-sm canada-guess-mimetype-alert" style="margin-left: 3px;"><p>' + message + '</p></div>');
     }
