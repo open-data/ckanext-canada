@@ -796,6 +796,8 @@ class DataGCCAForms(p.SingletonPlugin, DefaultDatasetForm):
                 validators.json_string_has_en_fr_keys,
             'canada_static_charset_tabledesigner':
                 validators.canada_static_charset_tabledesigner,
+            'canada_static_rtype_tabledesigner':
+                validators.canada_static_rtype_tabledesigner,
             'canada_guess_resource_format':
                 validators.canada_guess_resource_format,
             'canada_output_none':

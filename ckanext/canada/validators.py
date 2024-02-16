@@ -439,6 +439,15 @@ def canada_static_charset_tabledesigner(key, data, errors, context):
         data[key] = 'UTF-8'
 
 
+def canada_static_rtype_tabledesigner(key, data, errors, context):
+    """
+    Always sets to dataset if TableDesigner
+    """
+    url_type = data.get(key[:-1] + ('url_type',))
+    if url_type == 'tabledesigner':
+        data[key] = 'dataset'
+
+
 def canada_guess_resource_format(key, data, errors, context):
     """
     Guesses the resource format based on the url if missing.
