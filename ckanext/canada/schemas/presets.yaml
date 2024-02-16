@@ -2841,7 +2841,7 @@ presets:
     field_name: resource_type
     form_snippet: select.html
     display_snippet: select.html
-    validators: canada_non_related_required scheming_choices
+    validators: canada_non_related_required canada_static_rtype_tabledesigner scheming_choices
     required: true
     form_include_blank_choice: true
     form_panel: resource
@@ -3431,6 +3431,7 @@ presets:
     - value: LYR
     - label: MapInfo
       value: TAB
+    - value: MAPX
     - value: MFX
       mimetype: application/mxf
     - value: MOV
