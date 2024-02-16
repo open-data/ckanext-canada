@@ -108,7 +108,6 @@ def canada_tags(value, context):
     - single internal spaces (no double-spaces)
 
     Reject
-    - commas
     - tags that are too short or too long
 
     Strip
@@ -123,8 +122,6 @@ def canada_tags(value, context):
         raise Invalid(
             _(u'Tag "%s" length is more than maximum %i')
             % (value, MAX_TAG_LENGTH))
-    if u',' in value:
-        raise Invalid(_(u'Tag "%s" may not contain commas') % (value,))
     if u'  ' in value:
         raise Invalid(
             _(u'Tag "%s" may not contain consecutive spaces') % (value,))
