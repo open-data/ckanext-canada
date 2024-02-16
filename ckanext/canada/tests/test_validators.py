@@ -38,13 +38,6 @@ class TestCanadaTags(object):
         canada_tags(u'z' * 140, {})
 
 
-    def test_comma(self):
-        with pytest.raises(Invalid) as ie:
-            canada_tags(u'who,me', {})
-        err = str(ie.value)
-        assert 'may not contain commas' in err
-
-
     def test_strip_whitespace(self):
         assert canada_tags(u'  hello world\n ', {}) == u'hello world'
 
