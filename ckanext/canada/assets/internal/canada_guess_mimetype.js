@@ -5,6 +5,7 @@ window.addEventListener('load', function(){
 
     let dataUploadWrapper = $('.resource-upload-field.form-group');
 
+    let rtypeField = $('#field-resource_type');
     let charsetField = $('#field-character_set');
     let formatField = $('#field-format');
     if ( formatField.length > 0 ){
@@ -68,9 +69,10 @@ window.addEventListener('load', function(){
     }
 
     function _set_tabledesigner_related_fields(){
-      // explicitly set charset to UTF-8 and format to CSV
+      // explicitly set type to dataset and charset to UTF-8 and format to CSV
       // for TableDesigner Resources.
       $(charsetField).val('UTF-8').trigger('change');
+      $(rtypeField).val('dataset').trigger('change');
       _set_resource_format('CSV');
     }
 

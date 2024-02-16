@@ -108,7 +108,6 @@ def canada_tags(value, context):
     - single internal spaces (no double-spaces)
 
     Reject
-    - commas
     - tags that are too short or too long
 
     Strip
@@ -123,8 +122,6 @@ def canada_tags(value, context):
         raise Invalid(
             _(u'Tag "%s" length is more than maximum %i')
             % (value, MAX_TAG_LENGTH))
-    if u',' in value:
-        raise Invalid(_(u'Tag "%s" may not contain commas') % (value,))
     if u'  ' in value:
         raise Invalid(
             _(u'Tag "%s" may not contain consecutive spaces') % (value,))
@@ -446,6 +443,15 @@ def canada_static_charset_tabledesigner(key, data, errors, context):
     url_type = data.get(key[:-1] + ('url_type',))
     if url_type == 'tabledesigner':
         data[key] = 'UTF-8'
+
+
+def canada_static_rtype_tabledesigner(key, data, errors, context):
+    """
+    Always sets to dataset if TableDesigner
+    """
+    url_type = data.get(key[:-1] + ('url_type',))
+    if url_type == 'tabledesigner':
+        data[key] = 'dataset'
 
 
 def canada_guess_resource_format(key, data, errors, context):
