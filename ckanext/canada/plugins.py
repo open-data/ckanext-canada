@@ -802,6 +802,8 @@ class DataGCCAForms(p.SingletonPlugin, DefaultDatasetForm):
                 validators.canada_guess_resource_format,
             'canada_output_none':
                 validators.canada_output_none,
+            'protect_registry_access':
+                validators.protect_registry_access,
             }
 
 
