@@ -244,9 +244,10 @@ fields:
       fr: "TBD"
     value: "public"
   - label:
-      en: "Government of Canada network"
+      en: "Internal (Government of Canada) network"
       fr: "TBD"
-    value: "goc"
+    value: "internal"
+  required: true
   form_snippet: radio.html
   display_snippet: select.html
-  validators: protect_registry_access scheming_choices
+  validators: protect_registry_access scheming_required scheming_choices
