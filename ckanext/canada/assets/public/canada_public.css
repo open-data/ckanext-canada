@@ -723,6 +723,21 @@ ul.canada-job-list.activity li.item i.fa.icon::before{
   left: 50%;
   transform: translate(-50%, -50%);
 }
+ul.canada-job-list li.item.rq-job-queued i.fa.icon{
+  background-color: #999999;
+}
+ul.canada-job-list li.item.rq-job-started i.fa.icon{
+  background-color: #28a745;
+}
+ul.canada-job-list li.item.rq-job-finished i.fa.icon{
+  background-color: #17a2b8;
+}
+ul.canada-job-list li.item.rq-job-failed i.fa.icon{
+  background-color: #dc3545;
+}
+ul.canada-job-list li.item.rq-job-deferred i.fa.icon{
+  background-color: #ffc107;
+}
 ul.canada-job-list .canada-job-item-title{
   font-size: 115%;
 }
