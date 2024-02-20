@@ -35,6 +35,7 @@ class CanadaOrganization(Organization):
         'en': 'Test Org Title',
         'fr': 'Test FR Org Title'}
     faa_schedule = 'NA'
+    registry_access = 'internal'
     # Use hyphenated org name for Recombinant flask urls
     name = Sequence(lambda n: "test-org-{0:02d}".format(n))
 
