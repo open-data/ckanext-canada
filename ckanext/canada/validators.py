@@ -513,9 +513,12 @@ def protect_registry_access(key, data, errors, context):
         return
 
     original = ''
-    org = context.get('group')
+    org_id = data.get(key[:-1] + ('id',))
+    if org_id:
+        org = model.Group.get(org_id)
     if org:
         original = org.extras.get('registry_access', [])
+
     value = data.get(key, [])
 
     if not value:
