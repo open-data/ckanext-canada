@@ -234,18 +234,18 @@ fields:
 - field_name: registry_access
   label:
     en: "Access to the Registry"
-    fr: "TBD"
+    fr: "Accès au Registre"
   help_text:
     en: The organization will be accessing the Registry through a public or internal (Government of Canada) network
-    fr: TBD
+    fr: L’organisation accédera au Registre par l’entremise d’un réseau public ou interne (gouvernement du Canada)
   choices:
   - label:
       en: "Public network"
-      fr: "TBD"
+      fr: "Réseau public"
     value: "public"
   - label:
       en: "Internal (Government of Canada) network"
-      fr: "TBD"
+      fr: "Réseau interne (gouvernement du Canada)"
     value: "internal"
   required: true
   form_snippet: radio.html
