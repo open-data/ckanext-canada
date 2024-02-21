@@ -499,7 +499,8 @@ def canada_guess_resource_format(key, data, errors, context):
         new_url = data.get(key[:-1] + ('url',), '')
         if not new_url:
             return
-        if current_url != new_url:
+        # ckan core will dictize save Resource urls with `rsplit`
+        if current_url != new_url and current_url != new_url.rsplit('/', 1)[-1]:
             try:
                 mimetype = get_action('canada_guess_mimetype')(context, {"url": new_url})
                 data[key] = mimetype
