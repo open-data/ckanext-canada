@@ -469,8 +469,14 @@ def canada_guess_resource_format(key, data, errors, context):
             mimetype = get_action('canada_guess_mimetype')(context, {"url": url})
             data[key] = mimetype
         except ValidationError as e:
-            errors[key].append(e.error_dict['format'])
-            raise StopOnError
+            # could not guess the format, use `unknown` for now
+            data[key] = 'unknown'
+            pass
+            #TODO: write script/test to loop file extensions
+            #      and check if we can guess them. We need to always
+            #      set this to something...
+            #errors[key].append(e.error_dict['format'])
+            #raise StopOnError
 
     # if there is a resource id, then it is an update.
     # we can check if the url field value has changed.
@@ -489,8 +495,14 @@ def canada_guess_resource_format(key, data, errors, context):
                 mimetype = get_action('canada_guess_mimetype')(context, {"url": new_url})
                 data[key] = mimetype
             except ValidationError as e:
-                errors[key].append(e.error_dict['format'])
-                raise StopOnError
+                # could not guess the format, use `unknown` for now
+                data[key] = 'unknown'
+                pass
+                #TODO: write script/test to loop file extensions
+                #      and check if we can guess them. We need to always
+                #      set this to something...
+                #errors[key].append(e.error_dict['format'])
+                #raise StopOnError
 
 
 def protect_registry_access(key, data, errors, context):

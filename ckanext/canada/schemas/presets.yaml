@@ -3491,7 +3491,7 @@ presets:
       replaces: [rss]
     - value: RTF
       mimetype: text/rtf
-      replaces: [rtf]
+      replaces: [rtf, application/rtf]
     - value: SAM
       mimetype: text/plain
       openness_score: 3
@@ -3560,6 +3560,10 @@ presets:
         en: Other
         fr: Autre
       value: other
+    - label:
+        en: Unknown
+        fr: Inconnu
+      value: unknown
 
 # Field = Size.
 # {The [estimated] size of a distribution in kilobytes}

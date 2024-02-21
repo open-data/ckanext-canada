@@ -15,7 +15,7 @@
     </div>
     <ul class="canada-job-list activity">
       {% for job in job_list %}
-        <li class="item">
+        <li class="item rq-job-{{ job.get('status') }}">
           <i class="fa icon {{ job.get('icon') }}"></i>
           <p>
             <span class="canada-job-item-title">{{ job.get('type') }}</span>

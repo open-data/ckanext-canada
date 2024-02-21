@@ -261,6 +261,10 @@ def canada_guess_mimetype(context, data_dict):
         mimetype = h.unified_resource_format(mimetype)
         fmt_choices = scheming_get_preset('canada_resource_format')['choices']
         for f in fmt_choices:
+            if 'mimetype' in f and mimetype == f['mimetype']:
+                # core unified_resource_format may not have all of our
+                # scheming mimetype choices.
+                mimetype = f['value']
             if 'replaces' in f:
                 for r in f['replaces']:
                     if mimetype.lower() == r.lower():
@@ -453,5 +457,6 @@ def canada_job_list(up_func, context, data_dict):
         job['info'] = job_info
         job['type'] = job_title
         job['icon'] = icon
+        job['status'] = job_obj.get_status()
 
     return job_list
