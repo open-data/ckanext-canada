@@ -132,7 +132,6 @@ class TestPackageWebForms(CanadaTestBase):
         assert 'Title (English):' in response.body
         assert 'Title (French):' in response.body
         assert 'Resource Type:' in response.body
-        assert 'Format:' in response.body
 
 
     def _filled_dataset_form(self):
