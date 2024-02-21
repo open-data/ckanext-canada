@@ -3560,6 +3560,10 @@ presets:
         en: Other
         fr: Autre
       value: other
+    - label:
+        en: Unknown
+        fr: Inconnu
+      value: unknown
 
 # Field = Size.
 # {The [estimated] size of a distribution in kilobytes}
