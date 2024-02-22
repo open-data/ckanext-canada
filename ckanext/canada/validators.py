@@ -523,9 +523,12 @@ def protect_registry_access(key, data, errors, context):
         return
 
     original = ''
-    org = context.get('group')
+    org_id = data.get(key[:-1] + ('id',))
+    if org_id:
+        org = model.Group.get(org_id)
     if org:
         original = org.extras.get('registry_access', [])
+
     value = data.get(key, [])
 
     if not value:
@@ -534,7 +537,7 @@ def protect_registry_access(key, data, errors, context):
     elif value == original:
         return
     else:
-        errors[key].append("Cannot change value of registry_access field"
+        errors[key].append(_("Cannot change value of registry_access field"
                            " from '%s' to '%s'. This field is read-only." %
-                           (original, value))
+                           (original, value)))
         raise StopOnError

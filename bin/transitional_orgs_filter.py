@@ -19,7 +19,8 @@ log = getLogger(__name__)
 
 filtered_fields = {u'id', u'name', u'title', u'title_translated',
                    u'department_number', u'umd_number', u'shortform',
-                   u'ati_email', u'opengov_email', u'faa_schedule'}
+                   u'ati_email', u'opengov_email', u'faa_schedule',
+                   u'registry_access',}
 
 users = '--users' in sys.argv
 
