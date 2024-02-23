@@ -157,40 +157,6 @@
 {% block related_items %}
 {% endblock related_items %}
 
-{% block package_item_geo_preview %}
-{% if pkg.geographic_region or pkg.spatial %}
-<div class="span-6 margin-top-medium clear-both">
-  <h4>{{ _('Geographic Information') }}</h4>
-  {% if pkg.spatial %}
-    {% set wkt = h.geojson_to_wkt(pkg.spatial) %}
-    {% if wkt %}
-      {% if h.get_map_type() == 'static' %}
-        {% snippet 'snippets/geomap_static.html', gid=h.get_translated(pkg, 'title'), wkt=wkt %}
-      {% else %}
-        {% snippet 'snippets/geomap_dynamic.html', gid=h.get_translated(pkg, 'title'), wkt=wkt %}
-      {% endif %}
-    {% endif %}
-  {% endif %}
-  {% if pkg.geographic_region %}
-    {% set schema = h.scheming_get_dataset_schema(pkg.type) %}
-    {% set geo_region = h.scheming_field_by_name(schema.dataset_fields,
-      'geographic_region') %}
-    <div class="geographic-region-wrapper clear-both">
-      <div class="col-md-4 float-none">
-        <h4>{{
-        h.scheming_language_text(geo_region.label) }}: </h4>
-      </div>
-      <div class="col-md-8 float-none">
-        {% snippet 'scheming/snippets/display_field.html',
-          field=geo_region, data=pkg, entity_type='dataset', object_type=pkg.type %}
-      </div>
-    </div>
-
-  {% endif %}
-</div>
-{% endif %}
-{% endblock package_item_geo_preview %}
-
 {% block contact_information %}
   {% set info = h.contact_information(pkg.get('contact_information')) %}
   {% if info %}
@@ -265,11 +231,6 @@
 {% endblock primary_content_inner %}
 
 {% block scripts %}
-  {% if h.is_registry() %}
-    {% asset 'canada_internal/geomap_zoom' %}
-  {% else %}
-    {% asset 'canada_public/geomap_zoom' %}
-  {% endif %}
   {% asset 'canada_public/more_like_this' %}
   {% asset 'canada_public/voting_fix' %}
   {{ super() }}
