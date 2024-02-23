@@ -504,3 +504,31 @@ def canada_guess_resource_format(key, data, errors, context):
                 #      set this to something...
                 #errors[key].append(e.error_dict['format'])
                 #raise StopOnError
+
+
+def protect_registry_access(key, data, errors, context):
+    """
+    Ensure the registry_access field is not changed by an unauthorized user.
+    """
+    if is_sysadmin(context['user']):
+        return
+
+    original = ''
+    org_id = data.get(key[:-1] + ('id',))
+    if org_id:
+        org = model.Group.get(org_id)
+    if org:
+        original = org.extras.get('registry_access', [])
+
+    value = data.get(key, [])
+
+    if not value:
+        data[key] = original
+        return
+    elif value == original:
+        return
+    else:
+        errors[key].append(_("Cannot change value of registry_access field"
+                           " from '%s' to '%s'. This field is read-only." %
+                           (original, value)))
+        raise StopOnError

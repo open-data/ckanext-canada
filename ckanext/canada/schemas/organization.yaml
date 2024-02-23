@@ -227,3 +227,27 @@ fields:
     fr: Courriel de la gouvernement ouvert
   validators: scheming_required email_validator
   display_snippet: email_with_parameters.html
+
+# Field = Public Access.
+# Default value = Government of Canada network.
+# {Determines if the organization's access to the Registry is through a public or closed network}
+- field_name: registry_access
+  label:
+    en: "Access to the Registry"
+    fr: "Accès au Registre"
+  help_text:
+    en: The organization will be accessing the Registry through a public or internal (Government of Canada) network
+    fr: L’organisation accédera au Registre par l’entremise d’un réseau public ou interne (gouvernement du Canada)
+  choices:
+  - label:
+      en: "Public network"
+      fr: "Réseau public"
+    value: "public"
+  - label:
+      en: "Internal (Government of Canada) network"
+      fr: "Réseau interne (gouvernement du Canada)"
+    value: "internal"
+  required: true
+  form_snippet: radio.html
+  display_snippet: select.html
+  validators: protect_registry_access scheming_required scheming_choices
