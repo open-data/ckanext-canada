@@ -450,6 +450,14 @@ msgstr "L’objet JSON doit contenir la clé \"en\""
 msgid "JSON object must contain \"fr\" key"
 msgstr "L’objet JSON doit contenir la clé \"fr\""
 
+#: ckanext/canada/validators.py:527
+msgid ""
+"Cannot change value of registry_access field"
+" from '%s' to '%s'. This field is read-only."
+msgstr ""
+"Impossible de modifier la valeur du champ d’accès au registre"
+" de '%s' à '%s'. Ce champ ne sert qu’à des fins de lecture."
+
 #: ckanext/canada/view.py:105
 msgid "<strong>Note</strong><br>{0} is now logged in"
 msgstr "<strong>Note</strong><br />{0} est maintenant connecté"
