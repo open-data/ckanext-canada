@@ -88,20 +88,14 @@
         </a>
       </li>
       {% endif %}
-      {% if 'fgp_viewer' in pkg.get('display_flags', []) %}
-        {% if res.url and h.is_url(res.url) and res.format not in ['PDF','HTML', 'PNG', 'CSV', 'TXT',] %}
+      {% set fgp_url = h.fgp_viewer_url(pkg) %}
+      {% if fgp_url and res.url and h.is_url(res.url) and res.format not in ['PDF','HTML', 'PNG', 'CSV', 'TXT',] %}
         <li>
-          {% if res.language == 'fr' %}
-            {% set openmap_uri = 'carteouverte' %}
-          {% else %}
-          {% set openmap_uri = 'openmap' %}
-          {% endif %}
-          <a href="{{ h.adv_search_url() }}/{{ openmap_uri }}/{{ pkg.name }}" class="dropdown-item" target="_blank">
+          <a href="{{ fgp_url }}" class="dropdown-item" target="_blank">
               <i class="fa fa-map-marker"></i>
               {{ _('View on Map') }}
           </a>
         </li>
-        {% endif %}
       {% endif %}
       {% if can_edit and not is_activity_archive %}
         <li>{% link_for _('Edit resource'), named_route=pkg.type ~ '_resource.edit', id=pkg.name, resource_id=res.id, class_='dropdown-item', icon='pencil' %}</li>
