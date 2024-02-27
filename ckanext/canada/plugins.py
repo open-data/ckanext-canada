@@ -654,7 +654,6 @@ ckanext.canada:schemas/prop.yaml
             'ga4_id',
             'loop11_key',
             'drupal_session_present',
-            'fgp_url',
             'contact_information',
             'show_openinfo_facets',
             'json_loads',
@@ -681,6 +680,7 @@ ckanext.canada:schemas/prop.yaml
             'resource_view_meta_title',
             'get_resource_view',
             'resource_view_type',
+            'fgp_viewer_url',
         ])
 
     # IActions
