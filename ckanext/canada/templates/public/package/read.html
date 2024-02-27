@@ -47,14 +47,6 @@
         {{ h.render_markdown(notes) }}
       </div>
 
-      {% if 'fgp_viewer' in pkg.get('display_flags', []) %}
-        {% set openmap_uri = 'openmap' %}
-        {% if h.lang() == 'fr' %}
-          {% set openmap_uri = 'carteouverte' %}
-        {% endif %}
-        <p><a href="{{ h.adv_search_url() }}/{{ openmap_uri }}/{{ pkg.name }}" class="btn btn-primary btn-xs"><span class="fa fa-map-marker"></span> {{ _('View on Map') }}</a></p>
-      {% endif %}
-
     </section>
     {%- endblock -%}
 

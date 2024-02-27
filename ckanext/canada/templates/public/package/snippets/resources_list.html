@@ -1,0 +1,15 @@
+{% ckan_extends %}
+
+{% block resource_list_title %}
+  <h2>{{ _('Data and Resources') }}
+  <div class="pull-right mrgn-bttm-md">
+    {% if 'fgp_viewer' in pkg.get('display_flags', []) %}
+      {% set openmap_uri = 'openmap' %}
+      {% if h.lang() == 'fr' %}
+        {% set openmap_uri = 'carteouverte' %}
+      {% endif %}
+      <a href="{{ h.adv_search_url() }}/{{ openmap_uri }}/{{ pkg.name }}" class="btn btn-success" target="_blank">
+        <span class="fa fa-map-marker"></span> {{ _('View on Map') }}</a>
+    {% endif %}
+  </div></h2>
+{% endblock %}
