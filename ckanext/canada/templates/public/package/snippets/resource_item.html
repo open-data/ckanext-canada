@@ -88,6 +88,15 @@
         </a>
       </li>
       {% endif %}
+      {% set fgp_url = h.fgp_viewer_url(pkg) %}
+      {% if fgp_url and res.url and h.is_url(res.url) and res.format not in ['PDF','HTML', 'PNG', 'CSV', 'TXT',] %}
+        <li>
+          <a href="{{ fgp_url }}" class="dropdown-item" target="_blank">
+              <i class="fa fa-map-marker"></i>
+              {{ _('View on Map') }}
+          </a>
+        </li>
+      {% endif %}
       {% if can_edit and not is_activity_archive %}
         <li>{% link_for _('Edit resource'), named_route=pkg.type ~ '_resource.edit', id=pkg.name, resource_id=res.id, class_='dropdown-item', icon='pencil' %}</li>
         {% block resource_item_explore_inner scoped %}{{ super() }}{% endblock %}

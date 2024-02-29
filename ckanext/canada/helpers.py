@@ -36,8 +36,6 @@ PORTAL_URL_OPTION = 'canada.portal_url'
 PORTAL_URL_DEFAULT_EN = 'https://open.canada.ca'
 PORTAL_URL_DEFAULT_FR = 'https://ouvert.canada.ca'
 DATAPREVIEW_MAX = 500
-FGP_URL_OPTION = 'fgp.service_endpoint'
-FGP_URL_DEFAULT = 'http://localhost/'
 WET_URL = config.get('wet_boew.url', '')
 WET_JQUERY_OFFLINE_OPTION = 'wet_boew.jquery.offline'
 WET_JQUERY_OFFLINE_DEFAULT = False
@@ -397,9 +395,6 @@ def get_datapreview_recombinant(resource_name, resource_id, owner_org, dataset_t
         dataset_type=dataset_type,
         ds_fields=fields)
 
-def fgp_url():
-    return str(config.get(FGP_URL_OPTION, FGP_URL_DEFAULT))
-
 def contact_information(info):
     """
     produce label, value pairs from contact info
@@ -749,3 +744,17 @@ def get_resource_view(resource_view_id):
 def resource_view_type(resource_view):
     view_plugin = datapreview.get_view_plugin(resource_view['view_type'])
     return view_plugin.info().get('title')
+
+
+def fgp_viewer_url(package):
+    """
+    Returns a link to fgp viewer for the package
+    """
+    viewers = package.get('display_flags', [])
+    if 'fgp_viewer' in viewers:
+        if h.lang() == 'fr':
+            openmap_uri = 'carteouverte'
+        else:
+            openmap_uri = 'openmap'
+
+        return h.adv_search_url() + '/' + openmap_uri + '/' + package.get('id')
