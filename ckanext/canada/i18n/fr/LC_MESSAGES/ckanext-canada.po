@@ -41,6 +41,80 @@ msgstr ""
 msgid "Treasury Board of Canada Secretariat"
 msgstr "Secrétariat du Conseil du Trésor du Canada"
 
+#: ckanext/canada/column_types.py:8
+msgid "Canadian Province or Territory"
+msgstr ""
+
+#: ckanext/canada/column_types.py:9
+msgid ""
+"based on data reference standard "
+"https://open.canada.ca/data/en/dataset/cd8fad92-b276-4250-972f-2d6c40ca04fa/"
+msgstr ""
+
+#: ckanext/canada/column_types.py:19
+msgid "Alberta"
+msgstr "Alberta"
+
+#: ckanext/canada/column_types.py:20
+msgid "British Columbia"
+msgstr "Colombie-Britannique"
+
+#: ckanext/canada/column_types.py:21
+msgid "Manitoba"
+msgstr "Manitoba"
+
+#: ckanext/canada/column_types.py:22
+msgid "New Brunswick"
+msgstr "Nouveau-Brunswick"
+
+#: ckanext/canada/column_types.py:23
+msgid "Newfoundland and Labrador"
+msgstr "Terre-Neuve-et-Labrador"
+
+#: ckanext/canada/column_types.py:24
+msgid "Northwest Territories"
+msgstr "Territoires du Nord-Ouest"
+
+#: ckanext/canada/column_types.py:25
+msgid "Nova Scotia"
+msgstr "Nouvelle-Écosse"
+
+#: ckanext/canada/column_types.py:26
+msgid "Nunavut"
+msgstr "Nunavut"
+
+#: ckanext/canada/column_types.py:27
+msgid "Ontario"
+msgstr "Ontario"
+
+#: ckanext/canada/column_types.py:28
+msgid "Prince Edward Island"
+msgstr "Île-du-Prince-Édouard"
+
+#: ckanext/canada/column_types.py:29
+msgid "Quebec"
+msgstr "Québec"
+
+#: ckanext/canada/column_types.py:30
+msgid "Saskatchewan"
+msgstr "Saskatchewan"
+
+#: ckanext/canada/column_types.py:31
+msgid "Yukon"
+msgstr "Yukon"
+
+#: ckanext/canada/column_types.py:41
+msgid "CRA Business Number"
+msgstr ""
+
+#: ckanext/canada/column_types.py:42
+msgid "9-digit CRA business number (upcoming data standard)"
+msgstr ""
+
+#: ckanext/canada/column_types.py:60
+msgid "Invalid business number"
+msgstr ""
+
 #: ckanext/canada/helpers.py:587 ckanext/canada/strings.py:13
 #: ckanext/canada/view.py:1060
 msgid "Members not found"
