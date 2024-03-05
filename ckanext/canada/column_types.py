@@ -59,3 +59,11 @@ class CRABusinessNumber(TextColumn):
             colname=literal_string(self.colname),
             error=literal_string(_('Invalid business number')),
         )
+
+    def excel_validate_rule(self):
+        # COUNT(FIND(...)) lets us accept single-quote-prefixed values
+        # like "'012345678" as a business number
+        return (
+            'OR(COUNT(FIND({{0,1,2,3,4,5,6,7,8,9}},{_value_}))<>9,'
+            'LEN({_value_})<>9)'
+        )
