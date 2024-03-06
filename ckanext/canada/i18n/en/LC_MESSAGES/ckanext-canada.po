@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  CKAN\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-03-06 14:16+0000\n"
+"POT-Creation-Date: 2024-03-06 14:30+0000\n"
 "PO-Revision-Date: 2014-01-23 13:04+0000\n"
 "Last-Translator: Sean Hammond <sean.hammond@okfn.org>\n"
 "Language: en\n"
@@ -38,7 +38,7 @@ msgid "Treasury Board of Canada Secretariat"
 msgstr ""
 
 #: ckanext/canada/helpers.py:582 ckanext/canada/strings.py:13
-#: ckanext/canada/view.py:1128
+#: ckanext/canada/view.py:1121
 msgid "Members not found"
 msgstr ""
 
@@ -130,12 +130,12 @@ msgstr ""
 msgid "Suggestion Status"
 msgstr ""
 
-#: ckanext/canada/plugins.py:844
+#: ckanext/canada/plugins.py:839
 #: ckanext/canada/templates/public/package/snippets/resource_form.html:8
 msgid "Previous"
 msgstr ""
 
-#: ckanext/canada/plugins.py:844
+#: ckanext/canada/plugins.py:839
 msgid "Next"
 msgstr ""
 
@@ -148,7 +148,7 @@ msgstr ""
 msgid "Not authorized to access {group} members download"
 msgstr ""
 
-#: ckanext/canada/strings.py:14 ckanext/canada/view.py:1138
+#: ckanext/canada/strings.py:14 ckanext/canada/view.py:1131
 msgid "N/A"
 msgstr ""
 
@@ -161,7 +161,7 @@ msgstr ""
 #: ckanext/canada/templates/public/user/edit_user_form.html:8
 #: ckanext/canada/templates/public/user/read_base.html:38
 #: ckanext/canada/templates/public/user/snippets/login_form.html:13
-#: ckanext/canada/view.py:1130
+#: ckanext/canada/view.py:1123
 msgid "Username"
 msgstr ""
 
@@ -171,25 +171,25 @@ msgstr ""
 #: ckanext/canada/templates/public/user/edit_user_form.html:10
 #: ckanext/canada/templates/public/user/read_base.html:45
 #: ckanext/canada/templates/public/user/recover_username.html:15
-#: ckanext/canada/view.py:1130
+#: ckanext/canada/view.py:1123
 msgid "Email"
 msgstr ""
 
 #: ckanext/canada/strings.py:17
 #: ckanext/canada/templates/internal/user/api_tokens.html:5
 #: ckanext/canada/templates/internal/user/list.html:36
-#: ckanext/canada/view.py:1130
+#: ckanext/canada/view.py:1123
 msgid "Name"
 msgstr ""
 
 #: ckanext/canada/strings.py:18
 #: ckanext/canada/templates/internal/user/list.html:37
 #: ckanext/canada/templates/public/organization/member_new.html:63
-#: ckanext/canada/view.py:1130
+#: ckanext/canada/view.py:1123
 msgid "Role"
 msgstr ""
 
-#: ckanext/canada/strings.py:19 ckanext/canada/view.py:1148
+#: ckanext/canada/strings.py:19 ckanext/canada/view.py:1141
 msgid "members"
 msgstr ""
 
@@ -271,8 +271,8 @@ msgid "Request Reset"
 msgstr ""
 
 #: ckanext/canada/strings.py:38
-#: ckanext/canada/templates/internal/user/edit_user_form.html:51
-#: ckanext/canada/templates/public/user/edit_user_form.html:54
+#: ckanext/canada/templates/internal/user/edit_user_form.html:52
+#: ckanext/canada/templates/public/user/edit_user_form.html:55
 msgid "Create API Token"
 msgstr ""
 
@@ -437,117 +437,117 @@ msgid ""
 "field is read-only."
 msgstr ""
 
-#: ckanext/canada/view.py:110
+#: ckanext/canada/view.py:102
 msgid "<strong>Note</strong><br>{0} is now logged in"
 msgstr ""
 
-#: ckanext/canada/view.py:120
+#: ckanext/canada/view.py:112
 msgid "Login failed. Bad username or password."
 msgstr ""
 
-#: ckanext/canada/view.py:167
+#: ckanext/canada/view.py:159
 msgid ""
 "The status has been added/updated for this suggested dataset. This update"
 " will be reflected on open.canada.ca shortly."
 msgstr ""
 
-#: ckanext/canada/view.py:170
+#: ckanext/canada/view.py:162
 #, python-format
 msgid "Your dataset %s has been saved."
 msgstr ""
 
-#: ckanext/canada/view.py:180
+#: ckanext/canada/view.py:172
 msgid "Dataset added."
 msgstr ""
 
-#: ckanext/canada/view.py:189
+#: ckanext/canada/view.py:181
 msgid "Resource updated."
 msgstr ""
 
-#: ckanext/canada/view.py:198
+#: ckanext/canada/view.py:190
 msgid "Resource added."
 msgstr ""
 
-#: ckanext/canada/view.py:252
+#: ckanext/canada/view.py:245
 msgid "Unauthorized to request username recovery."
 msgstr ""
 
-#: ckanext/canada/view.py:257
+#: ckanext/canada/view.py:250
 msgid "Email is required"
 msgstr ""
 
-#: ckanext/canada/view.py:282
+#: ckanext/canada/view.py:275
 msgid ""
 "Error sending the email. Try again later or contact an administrator for "
 "help"
 msgstr ""
 
-#: ckanext/canada/view.py:289
+#: ckanext/canada/view.py:282
 msgid ""
 "An email has been sent to you containing your username(s). (unless the "
 "account specified does not exist)"
 msgstr ""
 
-#: ckanext/canada/view.py:350
+#: ckanext/canada/view.py:343
 msgid "Unauthorized to create a resource for this package"
 msgstr ""
 
-#: ckanext/canada/view.py:391 ckanext/canada/view.py:396
+#: ckanext/canada/view.py:384 ckanext/canada/view.py:389
 msgid "This record already exists"
 msgstr ""
 
-#: ckanext/canada/view.py:412
+#: ckanext/canada/view.py:405
 msgid "Record Created"
 msgstr ""
 
-#: ckanext/canada/view.py:450
+#: ckanext/canada/view.py:443
 msgid "Unauthorized to update dataset"
 msgstr ""
 
-#: ckanext/canada/view.py:466
+#: ckanext/canada/view.py:459
 msgid "Not found"
 msgstr ""
 
-#: ckanext/canada/view.py:468
+#: ckanext/canada/view.py:461
 msgid "Multiple records found"
 msgstr ""
 
-#: ckanext/canada/view.py:518
+#: ckanext/canada/view.py:511
 #, python-format
 msgid "Record %s Updated"
 msgstr ""
 
-#: ckanext/canada/view.py:551
+#: ckanext/canada/view.py:544
 msgid "No organizations found"
 msgstr ""
 
-#: ckanext/canada/view.py:555
+#: ckanext/canada/view.py:548
 msgid "Recombinant resource_name not found"
 msgstr ""
 
-#: ckanext/canada/view.py:598
+#: ckanext/canada/view.py:591
 msgid "Number required"
 msgstr ""
 
-#: ckanext/canada/view.py:603
+#: ckanext/canada/view.py:596
 msgid "Integer required"
 msgstr ""
 
-#: ckanext/canada/view.py:638 ckanext/canada/view.py:646
-#: ckanext/canada/view.py:680
+#: ckanext/canada/view.py:632 ckanext/canada/view.py:640
+#: ckanext/canada/view.py:674
 msgid "Not authorized to see this page"
 msgstr ""
 
-#: ckanext/canada/view.py:666
+#: ckanext/canada/view.py:660
 msgid " record(s) published."
 msgstr ""
 
-#: ckanext/canada/view.py:704
+#: ckanext/canada/view.py:698
 #, python-format
 msgid "Unauthorized to delete resource %s"
 msgstr ""
 
-#: ckanext/canada/view.py:706
+#: ckanext/canada/view.py:700
 #, python-format
 msgid "DataStore table and Data Dictionary deleted for resource %s"
 msgstr ""
@@ -560,19 +560,19 @@ msgstr ""
 #: ckanext/canada/templates/public/organization/snippets/organization_item.html:17
 #: ckanext/canada/templates/public/package/edit.html:4
 #: ckanext/canada/templates/public/package/edit.html:8
-#: ckanext/canada/view.py:848
+#: ckanext/canada/view.py:842
 msgid "Edit"
 msgstr ""
 
-#: ckanext/canada/view.py:973
+#: ckanext/canada/view.py:966
 msgid "Access denied"
 msgstr ""
 
-#: ckanext/canada/view.py:1024
+#: ckanext/canada/view.py:1017
 msgid "Account Created"
 msgstr ""
 
-#: ckanext/canada/view.py:1026
+#: ckanext/canada/view.py:1019
 msgid ""
 "Thank you for creating your account for the Open Government registry. "
 "Although your account is active, it has not yet been linked to your "
@@ -580,7 +580,7 @@ msgid ""
 "be able to create or modify datasets in the registry."
 msgstr ""
 
-#: ckanext/canada/view.py:1033
+#: ckanext/canada/view.py:1026
 msgid ""
 "You should receive an email within the next business day once the account"
 " activation process has been completed. If you require faster processing "
@@ -588,20 +588,20 @@ msgid ""
 ":open-ouvert@tbs-sct.gc.ca\">open-ouvert@tbs-sct.gc.ca</a>"
 msgstr ""
 
-#: ckanext/canada/view.py:1107 ckanext/canada/view.py:1185
+#: ckanext/canada/view.py:1100 ckanext/canada/view.py:1178
 msgid "Organization not found"
 msgstr ""
 
-#: ckanext/canada/view.py:1118
+#: ckanext/canada/view.py:1111
 msgid "Not authorized to access {org_name} members download"
 msgstr ""
 
-#: ckanext/canada/view.py:1188
+#: ckanext/canada/view.py:1181
 #, python-format
 msgid "User %r not authorized to edit members of %s"
 msgstr ""
 
-#: ckanext/canada/view.py:1190
+#: ckanext/canada/view.py:1183
 #, python-format
 msgid "User %r not authorized to view members of %s"
 msgstr ""
@@ -666,8 +666,8 @@ msgid ""
 msgstr ""
 
 #. SQL Trigger String for PD Type: ati
-#: ckanext/canada/tables/ati.yaml:139 ckanext/canada/tables/ati.yaml:248
-msgid "This value must not be negative"
+#: ckanext/canada/tables/ati.yaml:246 ckanext/canada/tables/ati.yaml:375
+msgid "Please enter a valid year"
 msgstr ""
 
 #. SQL Trigger String for PD Type: ati
@@ -678,8 +678,8 @@ msgid "Please enter a month number from 1-12"
 msgstr ""
 
 #. SQL Trigger String for PD Type: ati
-#: ckanext/canada/tables/ati.yaml:246 ckanext/canada/tables/ati.yaml:375
-msgid "Please enter a valid year"
+#: ckanext/canada/tables/ati.yaml:139 ckanext/canada/tables/ati.yaml:248
+msgid "This value must not be negative"
 msgstr ""
 
 #. Resource Title for PD Type: ati
@@ -770,8 +770,22 @@ msgid ""
 msgstr ""
 
 #. SQL Trigger String for PD Type: contracts
-#: ckanext/canada/tables/contracts.yaml:2168
-msgid "The field is limited to eight alpha-numeric digits or less."
+#: ckanext/canada/tables/contracts.yaml:2160
+msgid ""
+"This field must contain the first three digits of a postal code in A1A "
+"format or the value \"NA\""
+msgstr ""
+
+#. SQL Trigger String for PD Type: contracts
+#: ckanext/canada/tables/contracts.yaml:2161
+msgid ""
+"This field must be populated with an NA if an amendment is disclosed "
+"under Instrument Type"
+msgstr ""
+
+#. SQL Trigger String for PD Type: contracts
+#: ckanext/canada/tables/contracts.yaml:2162
+msgid "This field is limited to only 3 or 4 digits."
 msgstr ""
 
 #. SQL Trigger String for PD Type: contracts
@@ -782,12 +796,32 @@ msgid ""
 msgstr ""
 
 #. SQL Trigger String for PD Type: contracts
-#: ckanext/canada/tables/contracts.yaml:2171
+#: ckanext/canada/tables/contracts.yaml:2164
 msgid ""
-"If “TC” (Competitive - Traditional), “TN” (Non-Competitive) or “AC” "
-"(Advanced Contract Award Notice) is selected and trade agreement with a "
-"value other than “XX” (None) is selected, limited tendering cannot have a"
-" value of “0” or “00” (None)."
+"If the value XX (none) is entered, then no other value can be entered in "
+"this field."
+msgstr ""
+
+#. SQL Trigger String for PD Type: contracts
+#: ckanext/canada/tables/contracts.yaml:2165
+msgid "Discontinued as of 2022-01-01"
+msgstr ""
+
+#. SQL Trigger String for PD Type: contracts
+#: ckanext/canada/tables/contracts.yaml:2166
+msgid "Must be left blank when trade agreements specified"
+msgstr ""
+
+#. SQL Trigger String for PD Type: contracts
+#: ckanext/canada/tables/contracts.yaml:2167
+msgid ""
+"If the value NA (not applicable) is entered, then no other value can be "
+"entered in this field."
+msgstr ""
+
+#. SQL Trigger String for PD Type: contracts
+#: ckanext/canada/tables/contracts.yaml:2168
+msgid "The field is limited to eight alpha-numeric digits or less."
 msgstr ""
 
 #. SQL Trigger String for PD Type: contracts
@@ -799,30 +833,20 @@ msgid ""
 msgstr ""
 
 #. SQL Trigger String for PD Type: contracts
-#: ckanext/canada/tables/contracts.yaml:2165
-msgid "Discontinued as of 2022-01-01"
+#: ckanext/canada/tables/contracts.yaml:2170
+msgid ""
+"If TC, TN or AC is selected in the Solicitation Procedure data field with"
+" a value other than XX (None) selected in the Trade Agreement data field,"
+" then a Limited Tendering value other than 00 (none) must be entered."
 msgstr ""
 
 #. SQL Trigger String for PD Type: contracts
-#: ckanext/canada/tables/contracts.yaml:2161
+#: ckanext/canada/tables/contracts.yaml:2171
 msgid ""
-"This field must be populated with an NA if an amendment is disclosed "
-"under Instrument Type"
-msgstr ""
-
-#. SQL Trigger String for PD Type: contracts
-#: ckanext/canada/tables/contracts.yaml:2176
-msgid ""
-"This field may only be populated with “0” if the procurement was "
-"identified as competitive (open bidding (OB), traditional competitive "
-"(TC) or selective tendering (ST))."
-msgstr ""
-
-#. SQL Trigger String for PD Type: contracts
-#: ckanext/canada/tables/contracts.yaml:2164
-msgid ""
-"If the value XX (none) is entered, then no other value can be entered in "
-"this field."
+"If “TC” (Competitive - Traditional), “TN” (Non-Competitive) or “AC” "
+"(Advanced Contract Award Notice) is selected and trade agreement with a "
+"value other than “XX” (None) is selected, limited tendering cannot have a"
+" value of “0” or “00” (None)."
 msgstr ""
 
 #. SQL Trigger String for PD Type: contracts
@@ -840,26 +864,6 @@ msgid ""
 msgstr ""
 
 #. SQL Trigger String for PD Type: contracts
-#: ckanext/canada/tables/contracts.yaml:2166
-msgid "Must be left blank when trade agreements specified"
-msgstr ""
-
-#. SQL Trigger String for PD Type: contracts
-#: ckanext/canada/tables/contracts.yaml:2167
-msgid ""
-"If the value NA (not applicable) is entered, then no other value can be "
-"entered in this field."
-msgstr ""
-
-#. SQL Trigger String for PD Type: contracts
-#: ckanext/canada/tables/contracts.yaml:2170
-msgid ""
-"If TC, TN or AC is selected in the Solicitation Procedure data field with"
-" a value other than XX (None) selected in the Trade Agreement data field,"
-" then a Limited Tendering value other than 00 (none) must be entered."
-msgstr ""
-
-#. SQL Trigger String for PD Type: contracts
 #: ckanext/canada/tables/contracts.yaml:2175
 msgid ""
 "If this field is populated, it must be with a “0” if the procurement was "
@@ -868,15 +872,11 @@ msgid ""
 msgstr ""
 
 #. SQL Trigger String for PD Type: contracts
-#: ckanext/canada/tables/contracts.yaml:2162
-msgid "This field is limited to only 3 or 4 digits."
-msgstr ""
-
-#. SQL Trigger String for PD Type: contracts
-#: ckanext/canada/tables/contracts.yaml:2160
+#: ckanext/canada/tables/contracts.yaml:2176
 msgid ""
-"This field must contain the first three digits of a postal code in A1A "
-"format or the value \"NA\""
+"This field may only be populated with “0” if the procurement was "
+"identified as competitive (open bidding (OB), traditional competitive "
+"(TC) or selective tendering (ST))."
 msgstr ""
 
 #. Resource Title for PD Type: contracts
@@ -1150,19 +1150,25 @@ msgstr ""
 msgid "Open Data Registry"
 msgstr ""
 
-#: ckanext/canada/templates/internal/error_document_template.html:5
+#: ckanext/canada/templates/internal/error_document_template.html:6
+#: ckanext/canada/templates/public/error_document_template.html:6
+#, python-format
+msgid "Error %(error_code)s"
+msgstr ""
+
+#: ckanext/canada/templates/internal/error_document_template.html:8
 #: ckanext/canada/templates/internal/home/quick_links.html:2
 msgid "Open Government Registry"
 msgstr ""
 
-#: ckanext/canada/templates/internal/error_document_template.html:15
+#: ckanext/canada/templates/internal/error_document_template.html:26
 msgid ""
 "You are not logged in to the Open Government Registry.\n"
-"          Note that your login expires after 1 hour of inactivity.\n"
-"          Click on the log in button below to log in."
+"            Note that your login expires after 1 hour of inactivity.\n"
+"            Click on the log in button below to log in."
 msgstr ""
 
-#: ckanext/canada/templates/internal/error_document_template.html:19
+#: ckanext/canada/templates/internal/error_document_template.html:30
 #: ckanext/canada/templates/internal/header.html:36
 #: ckanext/canada/templates/internal/page.html:20
 #: ckanext/canada/templates/internal/user/snippets/login_form.html:22
@@ -1171,12 +1177,12 @@ msgstr ""
 msgid "Log in"
 msgstr ""
 
-#: ckanext/canada/templates/internal/error_document_template.html:23
-#: ckanext/canada/templates/public/error_document_template.html:6
+#: ckanext/canada/templates/internal/error_document_template.html:34
+#: ckanext/canada/templates/public/error_document_template.html:9
 msgid "We couldn't find that Web page"
 msgstr ""
 
-#: ckanext/canada/templates/internal/error_document_template.html:25
+#: ckanext/canada/templates/internal/error_document_template.html:36
 msgid ""
 "We encountered an error and are unable to serve your request. Please try "
 "again in short time or contact <a href=\"mailto:open-ouvert@tbs-sct.gc.ca"
@@ -1185,8 +1191,8 @@ msgid ""
 "inactivity."
 msgstr ""
 
-#: ckanext/canada/templates/internal/error_document_template.html:27
-#: ckanext/canada/templates/public/error_document_template.html:8
+#: ckanext/canada/templates/internal/error_document_template.html:38
+#: ckanext/canada/templates/public/error_document_template.html:11
 msgid "We encountered an error"
 msgstr ""
 
@@ -1936,10 +1942,10 @@ msgid "Are you sure you want to delete this status?"
 msgstr ""
 
 #: ckanext/canada/templates/internal/scheming/snippets/form_field.html:21
-#: ckanext/canada/templates/internal/user/edit_user_form.html:46
+#: ckanext/canada/templates/internal/user/edit_user_form.html:47
 #: ckanext/canada/templates/public/organization/member_new.html:66
 #: ckanext/canada/templates/public/scheming/package/read.html:26
-#: ckanext/canada/templates/public/user/edit_user_form.html:49
+#: ckanext/canada/templates/public/user/edit_user_form.html:50
 msgid "Delete"
 msgstr ""
 
@@ -2042,7 +2048,7 @@ msgid "Subscribe to notification emails"
 msgstr ""
 
 #: ckanext/canada/templates/internal/user/edit_user_form.html:25
-#: ckanext/canada/templates/public/user/edit_user_form.html:38
+#: ckanext/canada/templates/public/user/edit_user_form.html:39
 msgid "Change password"
 msgstr ""
 
@@ -2055,7 +2061,7 @@ msgstr ""
 msgid "Old Password"
 msgstr ""
 
-#: ckanext/canada/templates/internal/user/edit_user_form.html:36
+#: ckanext/canada/templates/internal/user/edit_user_form.html:37
 #: ckanext/canada/templates/internal/user/new_user_form.html:22
 #: ckanext/canada/templates/internal/user/snippets/login_form.html:17
 #: ckanext/canada/templates/public/user/edit_user_form.html:30
@@ -2063,18 +2069,18 @@ msgstr ""
 msgid "Password"
 msgstr ""
 
-#: ckanext/canada/templates/internal/user/edit_user_form.html:38
-#: ckanext/canada/templates/public/user/edit_user_form.html:41
+#: ckanext/canada/templates/internal/user/edit_user_form.html:39
+#: ckanext/canada/templates/public/user/edit_user_form.html:42
 msgid "Confirm Password"
 msgstr ""
 
-#: ckanext/canada/templates/internal/user/edit_user_form.html:46
-#: ckanext/canada/templates/public/user/edit_user_form.html:49
+#: ckanext/canada/templates/internal/user/edit_user_form.html:47
+#: ckanext/canada/templates/public/user/edit_user_form.html:50
 msgid "Are you sure you want to delete this User?"
 msgstr ""
 
-#: ckanext/canada/templates/internal/user/edit_user_form.html:54
-#: ckanext/canada/templates/public/user/edit_user_form.html:57
+#: ckanext/canada/templates/internal/user/edit_user_form.html:55
+#: ckanext/canada/templates/public/user/edit_user_form.html:58
 msgid "Update Profile"
 msgstr ""
 
@@ -3151,6 +3157,10 @@ msgstr ""
 msgid "New activity item"
 msgstr ""
 
+#: ckanext/canada/templates/public/snippets/activity_stream.html:8
+msgid "View the past 30 days of activity."
+msgstr ""
+
 #: ckanext/canada/templates/public/snippets/facet_list.html:49
 #: ckanext/canada/templates/public/snippets/facet_list.html:51
 msgid "Show more"
@@ -3322,7 +3332,7 @@ msgstr ""
 msgid "Profile picture URL"
 msgstr ""
 
-#: ckanext/canada/templates/public/user/edit_user_form.html:39
+#: ckanext/canada/templates/public/user/edit_user_form.html:40
 msgid "New Password"
 msgstr ""
 
@@ -7184,17 +7194,17 @@ msgstr "Keep me logged in"
 #~ " in connection with your GCKey may"
 #~ " be directed to the Access to "
 #~ "Information and Privacy Protection Division"
-#~ " by email to <a href=\"mailto:ATIP-AIPRP"
-#~ "@ssc-spc.gc.ca\">ATIP-AIPRP@ssc-spc.gc.ca</a>, or"
-#~ " by writing to the following "
+#~ " by email to <a href=\"mailto:ATIP-"
+#~ "AIPRP@ssc-spc.gc.ca\">ATIP-AIPRP@ssc-spc.gc.ca</a>,"
+#~ " or by writing to the following "
 #~ "address:</p> <p>Access to Information and "
 #~ "Privacy Directorate<br/> Corporate Secretariat<br/>"
 #~ " Shared Services Canada<br/> PO Box "
 #~ "9808, STN T, CSC<br/> Ottawa ON "
 #~ "K1G 4A8</p> <p>For more information on"
 #~ " privacy issues and the <em>Privacy "
-#~ "Act</em> in general, please consult "
-#~ "the Office of the <a "
+#~ "Act</em> in general, please consult the"
+#~ " Office of the <a "
 #~ "href=\"http://www.priv.gc.ca/index_e.asp\">Privacy Commissioner"
 #~ " of Canada</a> website or call "
 #~ "1-800-282-1376.</p> <p>In return for the "
@@ -7876,5 +7886,11 @@ msgstr "Keep me logged in"
 #~ msgstr ""
 
 #~ msgid "Spatial Feature"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "You are not logged in to the Open Government Registry.\n"
+#~ "          Note that your login expires after 1 hour of inactivity.\n"
+#~ "          Click on the log in button below to log in."
 #~ msgstr ""
 
