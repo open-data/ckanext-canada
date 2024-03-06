@@ -262,7 +262,8 @@ upload-contracts: $(workdir)/filtered/contracts.csv $(workdir)/filtered/contract
 .PHONY: rebuild-contracts
 rebuild-contracts: $(workdir)/filtered/contracts.csv $(workdir)/filtered/contracts-nil.csv
 	@$(echo_date) Rebuilding Contracts...
-	@$(oc_search) import_data_csv --csv "$(workdir)/filtered/contracts.csv" --search contracts --quiet
+	@$(oc_search) contracts_amendments --contracts $(workdir)/filtered/contracts.csv --amendments $(workdir)/filtered/contract-amendments.csv --tmpdir $(workdir)
+	@$(oc_search) import_data_csv --csv "$(workdir)/filtered/contract-amendments.csv" --search contracts --quiet
 
 $(workdir)/contracts.csv:
 	$(paster) $(combine) contracts -d $(workdir) -c $(registry_ini)
