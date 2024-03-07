@@ -128,9 +128,9 @@ filter-all: $(csv_files:%=$(workdir)/filtered/%)
 backup-all: $(backup_dir)/$(yyyy)/pd-$(yyyymmdd)$(_backupsuffix).tar.gz
 
 $(backup_dir)/$(yyyy)/pd-$(yyyymmdd)$(_backupsuffix).tar.gz: \
-                $(csv_files:%=$(workdir)/%)
-              mkdir -p "$(backup_dir)/$(yyyy)"
-              cd "$(workdir)" && tar czvf $@ $(csv_files)
+    $(csv_files:%=$(workdir)/%)
+  mkdir -p "$(backup_dir)/$(yyyy)"
+  cd "$(workdir)" && tar czvf $@ $(csv_files)
 
 .PHONY: restore-all
 restore-all:
