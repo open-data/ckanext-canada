@@ -109,6 +109,10 @@ $(shell mkdir -p $(workdir)/filtered)
 .PHONY: nightly
 nightly: filter-all backup-all upload-all rebuild-all
 
+# no backup-all for staging
+.PHONY: nightly-staging
+nightly: filter-all upload-all rebuild-all
+
 
 .PHONY: dump-all
 dump-all:
@@ -262,7 +266,8 @@ upload-contracts: $(workdir)/filtered/contracts.csv $(workdir)/filtered/contract
 .PHONY: rebuild-contracts
 rebuild-contracts: $(workdir)/filtered/contracts.csv $(workdir)/filtered/contracts-nil.csv
 	@$(echo_date) Rebuilding Contracts...
-	@$(oc_search) import_data_csv --csv "$(workdir)/filtered/contracts.csv" --search contracts --quiet
+	@$(oc_search) contracts_amendments --contracts $(workdir)/filtered/contracts.csv --amendments $(workdir)/filtered/contract-amendments.csv --tmpdir $(workdir)
+	@$(oc_search) import_data_csv --csv "$(workdir)/filtered/contract-amendments.csv" --search contracts --quiet
 
 $(workdir)/contracts.csv:
 	$(ckan_command) -c $(registry_ini) $(combine) contracts -d $(workdir)
@@ -513,8 +518,9 @@ rebuild-nap5: $(workdir)/filtered/nap5.csv $(workdir)/nap5.csv
 $(workdir)/nap5.csv:
 	$(ckan_command) -c $(registry_ini) $(combine) nap5 -d $(workdir)
 
+# use $(registry_python) to execute filter_nap5.py as we need pyyaml from venv
 $(workdir)/filtered/nap5.csv: $(workdir)/nap5.csv
-	$(fdir)/filter_nap5.py < $< > $@
+	$(registry_python) $(fdir)/filter_nap5.py < $< > $@
 
 ###
 ###  Open Data Inventory
