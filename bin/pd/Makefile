@@ -155,7 +155,7 @@ upload-ati: $(workdir)/filtered/ati-nil.csv $(workdir)/filtered/ati-all.csv
 	> /dev/null
 
 .PHONY: rebuild-ati
-rebuild-ati: $(workdir)/filtered/ati.csv $(workdir)/filtered/ati-nil.csv 
+rebuild-ati: $(workdir)/filtered/ati.csv $(workdir)/filtered/ati-nil.csv
 	@$(echo_date) Rebuilding ATI Summaries...
 	@$(paster) --plugin=ckanext-canada ati rebuild --lenient -c $(portal_ini) \
 	-f "$(workdir)/filtered/ati.csv" "$(workdir)/filtered/ati-nil.csv"
@@ -228,7 +228,7 @@ upload-qpnotes: $(workdir)/filtered/qpnotes.csv $(workdir)/filtered/qpnotes-nil.
 rebuild-qpnotes: $(workdir)/filtered/qpnotes.csv $(workdir)/filtered/qpnotes-nil.csv
 	@$(echo_date) Rebuilding Question Period Notes...
 	@$(oc_search) import_data_csv --csv "$(workdir)/filtered/qpnotes.csv" --search qpnotes --quiet
-	
+
 	# @$(oc_search) import_data_csv --csv "$(workdir)/filtered/qpnotes-nil.csv" --search qpnotes --nothing_to_report
 
 $(workdir)/qpnotes.csv:
@@ -300,10 +300,10 @@ $(workdir)/filtered/contractsa.csv: $(workdir)/contractsa.csv
 ###
 ###  Consultations
 ###
-.PHONY: consultations 
+.PHONY: consultations
 consultations: upload-consultations rebuild-consultations
 
-.PHONY: upload-consultations 
+.PHONY: upload-consultations
 upload-consultations: $(workdir)/filtered/consultations.csv \
 		$(workdir)/filtered/consultations.csv \
 		$(workdir)/filtered/current_consultations.csv \
@@ -387,7 +387,7 @@ $(workdir)/experiment.csv:
 
 $(workdir)/filtered/experiment.csv: $(workdir)/experiment.csv
 	$(fdir)/filter_experiment.py < $< > $@
-	
+
 ###
 ###  Grants and Contributions
 ###
@@ -514,8 +514,9 @@ rebuild-nap5: $(workdir)/filtered/nap5.csv $(workdir)/nap5.csv
 $(workdir)/nap5.csv:
 	$(paster) $(combine) nap5 -d $(workdir) -c $(registry_ini)
 
+# use $(registry_python) to execute filter_nap5.py as we need pyyaml from venv
 $(workdir)/filtered/nap5.csv: $(workdir)/nap5.csv
-	$(fdir)/filter_nap5.py < $< > $@
+	$(registry_python) $(fdir)/filter_nap5.py < $< > $@
 
 ###
 ###  Open Data Inventory
@@ -614,7 +615,7 @@ $(workdir)/filtered/service-std.csv: $(workdir)/service-std.csv
 ###  Annual Travel, Hospitality and Conferences
 ###
 .PHONY: travela
-travela: upload-travela rebuild-travela 
+travela: upload-travela rebuild-travela
 
 .PHONY: upload-travela
 upload-travela: $(workdir)/filtered/travela.csv
