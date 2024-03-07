@@ -33,6 +33,7 @@ ckanapi := $(REGISTRY_CKANAPI_COMMAND)
 ogc_search := $(OGC_SEARCH_COMMAND)
 oc_search := $(OC_SEARCH_COMMAND)
 backup_dir := $(PD_BACKUP_DIRECTORY)
+prevent_backups := $(PD_PREVENT_BACKUPS, 0)
 tmp_dir := $(or $(PD_TMP_DIRECTORY),$(TMPDIR),/tmp)
 registry_static := $(REGISTRY_STATIC_SMB_DIRECTORY)
 portal_static := $(PORTAL_STATIC_SMB_DIRECTORY)
@@ -121,12 +122,15 @@ endif
 filter-all: $(csv_files:%=$(workdir)/filtered/%)
 
 .PHONY: backup-all
-backup-all: $(backup_dir)/$(yyyy)/pd-$(yyyymmdd)$(_backupsuffix).tar.gz
+backup-all:
+  ifeq ($(prevent_backups), 0)
+  $(backup_dir)/$(yyyy)/pd-$(yyyymmdd)$(_backupsuffix).tar.gz
 
-$(backup_dir)/$(yyyy)/pd-$(yyyymmdd)$(_backupsuffix).tar.gz: \
-		$(csv_files:%=$(workdir)/%)
-	mkdir -p "$(backup_dir)/$(yyyy)"
-	cd "$(workdir)" && tar czvf $@ $(csv_files)
+  $(backup_dir)/$(yyyy)/pd-$(yyyymmdd)$(_backupsuffix).tar.gz: \
+      $(csv_files:%=$(workdir)/%)
+    mkdir -p "$(backup_dir)/$(yyyy)"
+    cd "$(workdir)" && tar czvf $@ $(csv_files)
+  endif
 
 .PHONY: restore-all
 restore-all:
@@ -155,7 +159,7 @@ upload-ati: $(workdir)/filtered/ati-nil.csv $(workdir)/filtered/ati-all.csv
 	> /dev/null
 
 .PHONY: rebuild-ati
-rebuild-ati: $(workdir)/filtered/ati.csv $(workdir)/filtered/ati-nil.csv 
+rebuild-ati: $(workdir)/filtered/ati.csv $(workdir)/filtered/ati-nil.csv
 	@$(echo_date) Rebuilding ATI Summaries...
 	@$(paster) --plugin=ckanext-canada ati rebuild --lenient -c $(portal_ini) \
 	-f "$(workdir)/filtered/ati.csv" "$(workdir)/filtered/ati-nil.csv"
@@ -228,7 +232,7 @@ upload-qpnotes: $(workdir)/filtered/qpnotes.csv $(workdir)/filtered/qpnotes-nil.
 rebuild-qpnotes: $(workdir)/filtered/qpnotes.csv $(workdir)/filtered/qpnotes-nil.csv
 	@$(echo_date) Rebuilding Question Period Notes...
 	@$(oc_search) import_data_csv --csv "$(workdir)/filtered/qpnotes.csv" --search qpnotes --quiet
-	
+
 	# @$(oc_search) import_data_csv --csv "$(workdir)/filtered/qpnotes-nil.csv" --search qpnotes --nothing_to_report
 
 $(workdir)/qpnotes.csv:
@@ -300,10 +304,10 @@ $(workdir)/filtered/contractsa.csv: $(workdir)/contractsa.csv
 ###
 ###  Consultations
 ###
-.PHONY: consultations 
+.PHONY: consultations
 consultations: upload-consultations rebuild-consultations
 
-.PHONY: upload-consultations 
+.PHONY: upload-consultations
 upload-consultations: $(workdir)/filtered/consultations.csv \
 		$(workdir)/filtered/consultations.csv \
 		$(workdir)/filtered/current_consultations.csv \
@@ -387,7 +391,7 @@ $(workdir)/experiment.csv:
 
 $(workdir)/filtered/experiment.csv: $(workdir)/experiment.csv
 	$(fdir)/filter_experiment.py < $< > $@
-	
+
 ###
 ###  Grants and Contributions
 ###
@@ -614,7 +618,7 @@ $(workdir)/filtered/service-std.csv: $(workdir)/service-std.csv
 ###  Annual Travel, Hospitality and Conferences
 ###
 .PHONY: travela
-travela: upload-travela rebuild-travela 
+travela: upload-travela rebuild-travela
 
 .PHONY: upload-travela
 upload-travela: $(workdir)/filtered/travela.csv
