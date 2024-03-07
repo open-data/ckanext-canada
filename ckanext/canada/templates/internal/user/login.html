@@ -44,6 +44,11 @@
 
 {% block primary_content %}
   <div class="panel">
+    <section class="alert alert-warning mrgn-tp-lg mrgn-bttm-lg" role="alert">
+      <h2 class="h3">{{ _('Important') }}</h2>
+      <p>{{ _('As of March 6, 2024, all contracts and associated amendments will appear as a single contract with their respective amendments linked on the Portal. Please email the Portal team at <a href="mailto:open-ouvert@tbs-sct.gc.ca">open-ouvert@tbs-sct.gc.ca</a> should you have additional questions or concerns.') }}</p>
+    </section>
+
     {% trans %}login welcome text{% endtrans %}
 
     {% block form %}

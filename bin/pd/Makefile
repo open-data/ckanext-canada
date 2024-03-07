@@ -109,6 +109,10 @@ $(shell mkdir -p $(workdir)/filtered)
 .PHONY: nightly
 nightly: filter-all backup-all upload-all rebuild-all
 
+# no backup-all for staging
+.PHONY: nightly-staging
+nightly: filter-all upload-all rebuild-all
+
 
 .PHONY: dump-all
 dump-all:
@@ -520,8 +524,9 @@ rebuild-nap5: $(workdir)/filtered/nap5.csv $(workdir)/nap5.csv
 $(workdir)/nap5.csv:
 	$(ckan_command) -c $(registry_ini) $(combine) nap5 -d $(workdir)
 
+# use $(registry_python) to execute filter_nap5.py as we need pyyaml from venv
 $(workdir)/filtered/nap5.csv: $(workdir)/nap5.csv
-	$(fdir)/filter_modified_created.py < $< > $@
+	$(registry_python) $(fdir)/filter_modified_created.py < $< > $@
 
 ###
 ###  Open Data Inventory
