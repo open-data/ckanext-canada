@@ -33,7 +33,6 @@ ckanapi := $(REGISTRY_CKANAPI_COMMAND)
 ogc_search := $(OGC_SEARCH_COMMAND)
 oc_search := $(OC_SEARCH_COMMAND)
 backup_dir := $(PD_BACKUP_DIRECTORY)
-prevent_backups := $(PD_PREVENT_BACKUPS, 0)
 tmp_dir := $(or $(PD_TMP_DIRECTORY),$(TMPDIR),/tmp)
 registry_static := $(REGISTRY_STATIC_SMB_DIRECTORY)
 portal_static := $(PORTAL_STATIC_SMB_DIRECTORY)
@@ -110,6 +109,10 @@ $(shell mkdir -p $(workdir)/filtered)
 .PHONY: nightly
 nightly: filter-all backup-all upload-all rebuild-all
 
+# no backup-all for staging
+.PHONY: nightly-staging
+nightly: filter-all upload-all rebuild-all
+
 
 .PHONY: dump-all
 dump-all:
@@ -122,15 +125,12 @@ endif
 filter-all: $(csv_files:%=$(workdir)/filtered/%)
 
 .PHONY: backup-all
-backup-all:
-  ifeq ($(prevent_backups), 0)
-  $(backup_dir)/$(yyyy)/pd-$(yyyymmdd)$(_backupsuffix).tar.gz
+backup-all: $(backup_dir)/$(yyyy)/pd-$(yyyymmdd)$(_backupsuffix).tar.gz
 
-  $(backup_dir)/$(yyyy)/pd-$(yyyymmdd)$(_backupsuffix).tar.gz: \
-      $(csv_files:%=$(workdir)/%)
-    mkdir -p "$(backup_dir)/$(yyyy)"
-    cd "$(workdir)" && tar czvf $@ $(csv_files)
-  endif
+$(backup_dir)/$(yyyy)/pd-$(yyyymmdd)$(_backupsuffix).tar.gz: \
+    $(csv_files:%=$(workdir)/%)
+  mkdir -p "$(backup_dir)/$(yyyy)"
+  cd "$(workdir)" && tar czvf $@ $(csv_files)
 
 .PHONY: restore-all
 restore-all:
