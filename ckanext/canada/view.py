@@ -247,6 +247,16 @@ def _get_form_full_text_choices(field_name, chromo):
     return False
 
 
+def _get_choice_fields(resource_name, chromo):
+    separator = ' : ' if h.lang() == 'fr' else ': '
+    return {
+        f['datastore_id']: [
+            {'value': k,
+             'label': k + separator + v if _get_form_full_text_choices(f['datastore_id'], chromo) else v
+             } for (k, v) in f['choices']]
+        for f in h.recombinant_choice_fields(resource_name)}
+
+
 @canada_views.route('/group/bulk_process/<id>', methods=['GET', 'POST'])
 def canada_group_bulk_process(id, group_type='group', is_organization=False, data=None):
     """
@@ -283,13 +293,7 @@ def create_pd_record(owner_org, resource_name):
     except NotAuthorized:
         return abort(403, _('Unauthorized to create a resource for this package'))
 
-    choice_fields = {
-        f['datastore_id']: [
-            {'value': k,
-             'label': k + ': ' + v if _get_form_full_text_choices(f['datastore_id'], chromo) else v
-             } for (k, v) in f['choices']]
-        for f in h.recombinant_choice_fields(resource_name)}
-
+    choice_fields = _get_choice_fields(resource_name, chromo)
     pk_fields = aslist(chromo['datastore_primary_key'])
 
     if request.method == 'POST':
@@ -383,13 +387,7 @@ def update_pd_record(owner_org, resource_name, pk):
     except NotAuthorized:
         abort(403, _('Unauthorized to update dataset'))
 
-    choice_fields = {
-        f['datastore_id']: [
-            {'value': k,
-             'label': k + ': ' + v if _get_form_full_text_choices(f['datastore_id'], chromo) else v
-             } for (k, v) in f['choices']]
-        for f in h.recombinant_choice_fields(resource_name)}
-
+    choice_fields = _get_choice_fields(resource_name, chromo)
     pk_fields = aslist(chromo['datastore_primary_key'])
     pk_filter = dict(zip(pk_fields, pk))
 

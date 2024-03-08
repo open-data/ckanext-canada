@@ -1,3 +1,7 @@
+#
+# This file is managed manually from the datasource:
+# https://www.canada.ca/en/treasury-board-secretariat/services/collective-agreements/occupational-groups.html
+#
 AC:
   en: Actuarial Science
   fr: Actuariat
@@ -440,10 +444,13 @@ SO-MAO:
 SO-RAD:
   en: Ships' Officers - Radio
   fr: Officiers de navire - Radio
-SR-APA:  # 4th year
-  en: Ship Repair - Apprentice
-  fr: Réparation des navires - Apprentissage
-SR-APB:  # 5th year
+SR-APA:
+  en: Ship Repair - Apprentices 4 years
+  fr: Réparation des navires - Apprentissage, 4 ans
+SR-APB:
+  en: Ship Repair - Apprentices 5 years
+  fr: Réparation des navires - Apprentissage, 5 ans
+SR-APP:
   en: Ship Repair - Apprentice
   fr: Réparation des navires - Apprentissage
 SR-BOB:
