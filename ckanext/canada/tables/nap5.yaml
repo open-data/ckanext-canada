@@ -52,7 +52,7 @@ resources:
     form_required: true
     datastore_type: text
     excel_full_text_choices: true
-    form_full_text_choices: true
+    form_choices_prefix_code: true
     choices:
       C01:
         en: Climate Change and Sustainable Growth
@@ -82,7 +82,7 @@ resources:
     form_required: true
     datastore_type: text
     excel_full_text_choices: true
-    form_full_text_choices: true
+    form_choices_prefix_code: true
     excel_column_width: 80
     # choices based on commitments value
     excel_choice_range_formula: 'offset({range_top},countif({range},"<"&trim(left({commitments},find(":",{commitments}&":")-1))),0,countif({range},trim(left({commitments},find(":",{commitments}&":")-1))&"*"),1)'
@@ -162,7 +162,7 @@ resources:
     form_required: true
     datastore_type: text
     excel_full_text_choices: true
-    form_full_text_choices: true
+    form_choices_prefix_code: true
     excel_column_width: 80
     # choices based on milestones value
     excel_choice_range_formula: 'offset({range_top},countif({range},"<"&trim(left({milestones},find(":",{milestones}&":")-1))),0,countif({range},trim(left({milestones},find(":",{milestones}&":")-1))&"*"),1)'
