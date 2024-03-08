@@ -110,7 +110,7 @@ resources:
     format_type: Controlled List
     validation: This field must not be empty
     excel_full_text_choices: True
-    form_full_text_choices: True
+    form_choices_prefix_code: True
     choices_file: choices/classification_group.yaml
     excel_error_formula: 'FALSE'
 
@@ -139,7 +139,7 @@ resources:
     format_type: Controlled List
     validation: This field must not be empty
     excel_full_text_choices: True
-    form_full_text_choices: True
+    form_choices_prefix_code: True
     choices_file: choices/classification_group.yaml
     excel_error_formula: 'FALSE'
 

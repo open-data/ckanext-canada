@@ -239,10 +239,10 @@ def fivehundred():
     raise IntentionalServerError()
 
 
-def _get_form_full_text_choices(field_name, chromo):
+def _form_choices_prefix_code(field_name, chromo):
     for field in chromo['fields']:
         if field['datastore_id'] == field_name and \
-                field.get('form_full_text_choices', False):
+                field.get('form_choices_prefix_code', False):
             return True
     return False
 
@@ -252,7 +252,7 @@ def _get_choice_fields(resource_name, chromo):
     return {
         f['datastore_id']: [
             {'value': k,
-             'label': k + separator + v if _get_form_full_text_choices(f['datastore_id'], chromo) else v
+             'label': k + separator + v if _form_choices_prefix_code(f['datastore_id'], chromo) else v
              } for (k, v) in f['choices']]
         for f in h.recombinant_choice_fields(resource_name)}
 
