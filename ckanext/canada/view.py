@@ -298,12 +298,22 @@ def fivehundred():
     raise IntentionalServerError()
 
 
-def _get_form_full_text_choices(field_name, chromo):
+def _form_choices_prefix_code(field_name, chromo):
     for field in chromo['fields']:
         if field['datastore_id'] == field_name and \
-                field.get('form_full_text_choices', False):
+                field.get('form_choices_prefix_code', False):
             return True
     return False
+
+
+def _get_choice_fields(resource_name, chromo):
+    separator = ' : ' if h.lang() == 'fr' else ': '
+    return {
+        f['datastore_id']: [
+            {'value': k,
+             'label': k + separator + v if _form_choices_prefix_code(f['datastore_id'], chromo) else v
+             } for (k, v) in f['choices']]
+        for f in h.recombinant_choice_fields(resource_name)}
 
 
 @canada_views.route('/group/bulk_process/<id>', methods=['GET', 'POST'])
@@ -342,13 +352,7 @@ def create_pd_record(owner_org, resource_name):
     except NotAuthorized:
         return abort(403, _('Unauthorized to create a resource for this package'))
 
-    choice_fields = {
-        f['datastore_id']: [
-            {'value': k,
-             'label': k + ': ' + v if _get_form_full_text_choices(f['datastore_id'], chromo) else v
-             } for (k, v) in f['choices']]
-        for f in h.recombinant_choice_fields(resource_name)}
-
+    choice_fields = _get_choice_fields(resource_name, chromo)
     pk_fields = aslist(chromo['datastore_primary_key'])
 
     if request.method == 'POST':
@@ -442,13 +446,7 @@ def update_pd_record(owner_org, resource_name, pk):
     except NotAuthorized:
         abort(403, _('Unauthorized to update dataset'))
 
-    choice_fields = {
-        f['datastore_id']: [
-            {'value': k,
-             'label': k + ': ' + v if _get_form_full_text_choices(f['datastore_id'], chromo) else v
-             } for (k, v) in f['choices']]
-        for f in h.recombinant_choice_fields(resource_name)}
-
+    choice_fields = _get_choice_fields(resource_name, chromo)
     pk_fields = aslist(chromo['datastore_primary_key'])
     pk_filter = dict(zip(pk_fields, pk))
 
