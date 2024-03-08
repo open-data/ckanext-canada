@@ -55,6 +55,16 @@
             {%- elif form_snippet == 'scheming/form_snippets/text.html' %}
               {%- set form_snippet = 'scheming/form_snippets/select.html' %}
             {%- endif %}
+            {%- if f.get('form_choices_prefix_code') -%}
+              {# Prefix the choice labels with the choice values #}
+              {%- set separator = ': ' -%}
+              {%- if h.lang() == 'fr' -%}
+                {%- set separator = ' : ' -%}
+              {%- endif -%}
+              {%- for c in choice_fields[f.datastore_id] -%}
+                {%- do choice_fields[f.datastore_id][loop.index0].update({'label': c.value ~ separator ~ c.label}) -%}
+              {%- endfor -%}
+            {%- endif -%}
             {% snippet form_snippet,
               field={
                 'field_name': f.datastore_id,

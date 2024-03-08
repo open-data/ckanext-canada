@@ -152,7 +152,7 @@ GL-AMW:
   en: General Labour and Trades - Ammunition Working
   fr: Manoeuvres et hommes de métier - Fabrication de munitions
 GL-BOB:
-  en: General Labour and Trades - Boiler-making and Blacksmithing
+  en: General Labour and Trades - Boilermaking and Blacksmithing
   fr: Manoeuvres et hommes de métier - Chaudronnerie et forge
 GL-COI:
   en: General Labour and Trades - Construction Inspecting
@@ -304,7 +304,7 @@ NU-EMA:
 NU-HOS:
   en: Nursing - Hospital Nursing
   fr: Sciences infirmières - Infirmières d’hôpital
-#TODO: find OC- archive collective agreements
+#TODO: find OC group/classification/sub-group
 OC-AST:
   en: Governor-in-Council Appointees
   fr: Personnes nommées par le gouverneur en conseil
@@ -440,77 +440,76 @@ SO-MAO:
 SO-RAD:
   en: Ships' Officers - Radio
   fr: Officiers de navire - Radio
-#TODO: find SR- archive collective agreements
-SR-APA:
-  en: Ship Repair
-  fr: Réparation des navires
-SR-APB:
-  en: Ship Repair
-  fr: Réparation des navires
+SR-APA:  # 4th year
+  en: Ship Repair - Apprentice
+  fr: Réparation des navires - Apprentissage
+SR-APB:  # 5th year
+  en: Ship Repair - Apprentice
+  fr: Réparation des navires - Apprentissage
 SR-BOB:
-  en: Ship Repair
-  fr: Réparation des navires
+  en: Ship Repair - Boilermaking and Blacksmithing
+  fr: Réparation des navires - Chaudronnerie et forge
 SR-CPS:
-  en: Ship Repair
-  fr: Réparation des navires
+  en: Ship Repair - Chargehands and Production Supervisors
+  fr: Réparation des navires - Chefs d’équipe et superviseurs et superviseures de la production
 SR-EEW:
-  en: Ship Repair
-  fr: Réparation des navires
+  en: Ship Repair - Electrical and Electronics Working
+  fr: Réparation des navires - Électricité et mécanique
 SR-ELE:
-  en: Ship Repair
-  fr: Réparation des navires
+  en: Ship Repair - Elemental
+  fr: Réparation des navires - Fonctions élémentaires
 SR-EME:
-  en: Ship Repair
-  fr: Réparation des navires
+  en: Ship Repair - Engine and Mechanical Equipment Maintaining
+  fr: Réparation des navires - Entretien des moteurs et de l’équipement mécanique
 SR-INM:
-  en: Ship Repair
-  fr: Réparation des navires
+  en: Ship Repair - Instrument Maintaining
+  fr: Réparation des navires - Entretien des instruments
 SR-MAC:
-  en: Ship Repair
-  fr: Réparation des navires
+  en: Ship Repair - Machining and Toolmaking
+  fr: Réparation des navires - Usinage et taillanderie
 SR-MAM:
-  en: Ship Repair
-  fr: Réparation des navires
+  en: Ship Repair - Machinery Maintaining
+  fr: Réparation des navires - Entretien des machines
 SR-MAN:
-  en: Ship Repair
-  fr: Réparation des navires
+  en: Ship Repair - Manipulating
+  fr: Réparation des navires - Manipulation
 SR-MAT:
-  en: Ship Repair
-  fr: Réparation des navires
+  en: Ship Repair - Machine Tending
+  fr: Réparation des navires - Surveillance des machines
 SR-MDO:
-  en: Ship Repair
-  fr: Réparation des navires
+  en: Ship Repair - Machine Driving-Operating
+  fr: Réparation des navires - Conduite et actionnement des machines
 SR-MGT:
-  en: Ship Repair
-  fr: Réparation des navires
+  en: Ship Repair - Management
+  fr: Réparation des navires - Gestion
 SR-MOC:
-  en: Ship Repair
-  fr: Réparation des navires
+  en: Ship Repair - Machine Operating-Controlling
+  fr: Réparation des navires - Actionnement et contrôle des machines
 SR-PIP:
-  en: Ship Repair
-  fr: Réparation des navires
+  en: Ship Repair - Pipefitting
+  fr: Réparation des navires - Tuyauterie
 SR-PLE:
-  en: Ship Repair
-  fr: Réparation des navires
+  en: Ship Repair - Planning and Estimating
+  fr: Réparation des navires - Planification et évaluation
 SR-PRW:
-  en: Ship Repair
-  fr: Réparation des navires
+  en: Ship Repair - Precision Working
+  fr: Réparation des navires - Travail de précision
 SR-QCW:
-  en: Ship Repair
-  fr: Réparation des navires
+  en: Ship Repair - Quality Control and Weapons Examining
+  fr: Réparation des navires - Contrôle de la qualité et inspection des armes
 SR-SMW:
-  en: Ship Repair
-  fr: Réparation des navires
+  en: Ship Repair - Sheet Metal Working
+  fr: Réparation des navires - Tôlerie
 SR-SPS:
-  en: Ship Repair
-  fr: Réparation des navires
+  en: Ship Repair - Ship Painting and Surface Protecting
+  fr: Réparation des navires - Peinture et protection superficielle des navires
 SR-WOW:
-  en: Ship Repair
-  fr: Réparation des navires
+  en: Ship Repair - Woodworking
+  fr: Réparation des navires - Menuiserie
 ST-COR:
   en: Secretarial, Stenographic and Typing - Court Reporter
   fr: Secrétariat, sténographie et dactylographie - Sténographie de comptes rendus
-#TODO: find ST-DNT archive collective agreements
+#TODO: find ST-DNT group/classification/sub-group
 ST-DNT:
   en: Secretarial, Stenographic and Typing
   fr: Secrétariat, sténographie et dactylographie
