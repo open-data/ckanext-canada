@@ -3568,6 +3568,10 @@ msgstr "La question suivante est liée au dossier {url} qu’on retrouve dans {s
 msgid "New activity item"
 msgstr "Nouveau poste d’activité"
 
+#: ckanext/canada/templates/public/snippets/activity_stream.html:8
+msgid "View the past 30 days of activity."
+msgstr "Consulter les activités des 30 derniers jours."
+
 #: ckanext/canada/templates/public/snippets/facet_list.html:49
 #: ckanext/canada/templates/public/snippets/facet_list.html:51
 msgid "Show more"
