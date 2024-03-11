@@ -303,7 +303,7 @@ def canada_resource_view_show(up_func, context, data_dict):
         # so we can assume that the Resource and View exists here, and that `resource_id` is in view_dict
         resource = model.Resource.get(view_dict.get('resource_id'))
         url_type = getattr(resource, 'url_type', None)
-        if not url_type or url_type != 'upload':
+        if url_type in h.datastore_rw_resource_url_types():
             # we don't want to disable views for TableDesigner or Recombinant
             # as those won't have validation reports.
             return view_dict
@@ -360,7 +360,7 @@ def canada_resource_view_list(up_func, context, data_dict):
     # so we can assume that the Resource exists here, and that `id` is in data_dict
     resource = model.Resource.get(data_dict.get('id'))
     url_type = getattr(resource, 'url_type', None)
-    if not url_type or url_type != 'upload':
+    if url_type in h.datastore_rw_resource_url_types():
         # we don't want to disable views for TableDesigner or Recombinant
         # as those won't have validation reports.
         return view_list
