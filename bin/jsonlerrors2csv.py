@@ -41,4 +41,7 @@ for line in inf:
     try:
         out_csv.writerow(data)
     except ValueError:
-        sys.stderr.write('Wrong columns: ' + line)
+        sys.stderr.write(
+            'Wrong columns: ' + ','.join(data.keys())
+            + '\nvs: ' + repr(colnames) + '\n')
+        sys.exit(1)
