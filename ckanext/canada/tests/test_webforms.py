@@ -879,7 +879,8 @@ class TestRecombinantWebForms(CanadaTestBase):
 
         form_action = h.url_for('recombinant.delete_records',
                                 id=self._lc_get_pd_package_id(),
-                                resource_id=records_to_delete['resource_id'])
+                                resource_id=records_to_delete['resource_id'],
+                                filters={})
         response = app.post(form_action,
                             data=records_to_delete['form'],
                             extra_environ=self.extra_environ_editor,
