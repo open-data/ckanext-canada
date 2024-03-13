@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-03-07 16:48+0000\n"
+"POT-Creation-Date: 2024-03-13 17:28+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: fr\n"
@@ -42,7 +42,7 @@ msgid "Treasury Board of Canada Secretariat"
 msgstr "Secrétariat du Conseil du Trésor du Canada"
 
 #: ckanext/canada/helpers.py:582 ckanext/canada/strings.py:13
-#: ckanext/canada/view.py:1121
+#: ckanext/canada/view.py:1119
 msgid "Members not found"
 msgstr "Membres non trouvés"
 
@@ -154,7 +154,7 @@ msgstr "Créer un jeu de données"
 msgid "Not authorized to access {group} members download"
 msgstr "Non autorisé à accéder au téléchargement des membres du {group}"
 
-#: ckanext/canada/strings.py:14 ckanext/canada/view.py:1131
+#: ckanext/canada/strings.py:14 ckanext/canada/view.py:1129
 msgid "N/A"
 msgstr "N/A"
 
@@ -167,7 +167,7 @@ msgstr "N/A"
 #: ckanext/canada/templates/public/user/edit_user_form.html:8
 #: ckanext/canada/templates/public/user/read_base.html:38
 #: ckanext/canada/templates/public/user/snippets/login_form.html:13
-#: ckanext/canada/view.py:1123
+#: ckanext/canada/view.py:1121
 msgid "Username"
 msgstr "Nom d’utilisateur"
 
@@ -177,25 +177,25 @@ msgstr "Nom d’utilisateur"
 #: ckanext/canada/templates/public/user/edit_user_form.html:10
 #: ckanext/canada/templates/public/user/read_base.html:45
 #: ckanext/canada/templates/public/user/recover_username.html:15
-#: ckanext/canada/view.py:1123
+#: ckanext/canada/view.py:1121
 msgid "Email"
 msgstr "Courriel"
 
 #: ckanext/canada/strings.py:17
 #: ckanext/canada/templates/internal/user/api_tokens.html:5
 #: ckanext/canada/templates/internal/user/list.html:36
-#: ckanext/canada/view.py:1123
+#: ckanext/canada/view.py:1121
 msgid "Name"
 msgstr "Nom"
 
 #: ckanext/canada/strings.py:18
 #: ckanext/canada/templates/internal/user/list.html:37
 #: ckanext/canada/templates/public/organization/member_new.html:63
-#: ckanext/canada/view.py:1123
+#: ckanext/canada/view.py:1121
 msgid "Role"
 msgstr "Rôle"
 
-#: ckanext/canada/strings.py:19 ckanext/canada/view.py:1141
+#: ckanext/canada/strings.py:19 ckanext/canada/view.py:1139
 msgid "members"
 msgstr "membres"
 
@@ -499,6 +499,8 @@ msgid ""
 "Error sending the email. Try again later or contact an administrator for "
 "help"
 msgstr ""
+"Une erreur est survenue lors de l'envoi de l'email. Veuillez réessayer plus "
+"tard ou contacter un administrateur."
 
 #: ckanext/canada/view.py:282
 msgid ""
@@ -508,66 +510,66 @@ msgstr ""
 "Un courriel vous a été envoyé contenant votre (vos) nom(s) d'utilisateur."
 " (sauf si le compte spécifié n'existe pas)"
 
-#: ckanext/canada/view.py:343
+#: ckanext/canada/view.py:353
 msgid "Unauthorized to create a resource for this package"
 msgstr "Non autorisé à créer une ressource pour cet ensemble"
 
-#: ckanext/canada/view.py:384 ckanext/canada/view.py:389
+#: ckanext/canada/view.py:388 ckanext/canada/view.py:393
 msgid "This record already exists"
 msgstr "Cet enregistrement existe déjà."
 
-#: ckanext/canada/view.py:405
+#: ckanext/canada/view.py:409
 msgid "Record Created"
 msgstr "Renregistrement créé"
 
-#: ckanext/canada/view.py:443
+#: ckanext/canada/view.py:447
 msgid "Unauthorized to update dataset"
 msgstr "Vous n'êtes pas autorisé à mettre à jour ce jeu de données"
 
-#: ckanext/canada/view.py:459
+#: ckanext/canada/view.py:457
 msgid "Not found"
 msgstr "Non trouvé"
 
-#: ckanext/canada/view.py:461
+#: ckanext/canada/view.py:459
 msgid "Multiple records found"
 msgstr "Plusieurs enregistrements ont été trouvés"
 
-#: ckanext/canada/view.py:511
+#: ckanext/canada/view.py:509
 #, python-format
 msgid "Record %s Updated"
 msgstr "Dossier %s mis à jour"
 
-#: ckanext/canada/view.py:544
+#: ckanext/canada/view.py:542
 msgid "No organizations found"
 msgstr "Aucune organisation n’a été trouvée"
 
-#: ckanext/canada/view.py:548
+#: ckanext/canada/view.py:546
 msgid "Recombinant resource_name not found"
 msgstr "Le recombinant resource_name n’a pas été trouvé"
 
-#: ckanext/canada/view.py:591
+#: ckanext/canada/view.py:589
 msgid "Number required"
 msgstr "Nombre requis"
 
-#: ckanext/canada/view.py:596
+#: ckanext/canada/view.py:594
 msgid "Integer required"
 msgstr "Entier requis"
 
-#: ckanext/canada/view.py:632 ckanext/canada/view.py:640
-#: ckanext/canada/view.py:674
+#: ckanext/canada/view.py:630 ckanext/canada/view.py:638
+#: ckanext/canada/view.py:672
 msgid "Not authorized to see this page"
 msgstr "Non autorisé à voir cette page"
 
-#: ckanext/canada/view.py:660
+#: ckanext/canada/view.py:658
 msgid " record(s) published."
 msgstr " d’enregistrements publiés."
 
-#: ckanext/canada/view.py:698
+#: ckanext/canada/view.py:696
 #, python-format
 msgid "Unauthorized to delete resource %s"
 msgstr "Vous n'êtes pas autorisé à supprimer la ressource %s"
 
-#: ckanext/canada/view.py:700
+#: ckanext/canada/view.py:698
 #, python-format
 msgid "DataStore table and Data Dictionary deleted for resource %s"
 msgstr ""
@@ -582,19 +584,19 @@ msgstr ""
 #: ckanext/canada/templates/public/organization/snippets/organization_item.html:17
 #: ckanext/canada/templates/public/package/edit.html:4
 #: ckanext/canada/templates/public/package/edit.html:8
-#: ckanext/canada/view.py:842
+#: ckanext/canada/view.py:840
 msgid "Edit"
 msgstr "Modifier"
 
-#: ckanext/canada/view.py:966
+#: ckanext/canada/view.py:964
 msgid "Access denied"
 msgstr "Accès refusé"
 
-#: ckanext/canada/view.py:1017
+#: ckanext/canada/view.py:1015
 msgid "Account Created"
 msgstr "Compte créé"
 
-#: ckanext/canada/view.py:1019
+#: ckanext/canada/view.py:1017
 msgid ""
 "Thank you for creating your account for the Open Government registry. "
 "Although your account is active, it has not yet been linked to your "
@@ -605,7 +607,7 @@ msgstr ""
 "ministère. Vous ne pourrez créer ou modifier de jeux de données dans le "
 "registre tant que votre compte n’aura pas été relié à votre ministère."
 
-#: ckanext/canada/view.py:1026
+#: ckanext/canada/view.py:1024
 msgid ""
 "You should receive an email within the next business day once the account"
 " activation process has been completed. If you require faster processing "
@@ -618,20 +620,20 @@ msgstr ""
 "plus rapidement, veuillez envoyer une demande directement à :<a "
 "href=\"mailto: open-ouvert@tbs-sct.gc.ca\">open-ouvert@tbs-sct.gc.ca.</a"
 
-#: ckanext/canada/view.py:1100 ckanext/canada/view.py:1178
+#: ckanext/canada/view.py:1098 ckanext/canada/view.py:1176
 msgid "Organization not found"
 msgstr "Organisation non trouvée"
 
-#: ckanext/canada/view.py:1111
+#: ckanext/canada/view.py:1109
 msgid "Not authorized to access {org_name} members download"
 msgstr "Non autorisé à accéder au téléchargement des membres du {group}"
 
-#: ckanext/canada/view.py:1181
+#: ckanext/canada/view.py:1179
 #, python-format
 msgid "User %r not authorized to edit members of %s"
 msgstr "L’utilisateur %r n’est pas autorisé à modifier les membres de %s"
 
-#: ckanext/canada/view.py:1183
+#: ckanext/canada/view.py:1181
 #, python-format
 msgid "User %r not authorized to view members of %s"
 msgstr "L’utilisateur %r n’est pas autorisé à voir les membres de %s"
@@ -773,7 +775,7 @@ msgstr ""
 #: ckanext/canada/tables/contractsa.yaml:387
 #: ckanext/canada/tables/hospitalityq.yaml:591
 #: ckanext/canada/tables/qpnotes.yaml:442
-#: ckanext/canada/tables/reclassification.yaml:371
+#: ckanext/canada/tables/reclassification.yaml:373
 #: ckanext/canada/tables/travela.yaml:642
 #: ckanext/canada/tables/travelq.yaml:580
 msgid "This must list the year you are reporting on (not the fiscal year)."
@@ -802,6 +804,8 @@ msgstr ""
 #: ckanext/canada/tables/consultations.yaml:598
 msgid "If Status is set to: Not Going Forward, Publish Record must be set to No"
 msgstr ""
+"Si le statut est établi à : Ne pas aller de l’avant, alors l’option de Publier "
+"le document doit être réglée à Non."
 
 #. Title for PD Type: contracts
 #. Resource Title for PD Type: contracts
@@ -830,6 +834,8 @@ msgid ""
 "This field must contain the first three digits of a postal code in A1A "
 "format or the value \"NA\""
 msgstr ""
+"Ce champ doit contenir les trois premiers chiffres d’un code postal dans "
+"le format A1A ou la valeur « NA. »"
 
 #. SQL Trigger String for PD Type: contracts
 #: ckanext/canada/tables/contracts.yaml:2173
@@ -885,7 +891,7 @@ msgstr ""
 #. SQL Trigger String for PD Type: contracts
 #: ckanext/canada/tables/contracts.yaml:2180
 msgid "The field is limited to eight alpha-numeric digits or less."
-msgstr ""
+msgstr "Ce champ est limité à 8 caractères alphanumériques."
 
 #. SQL Trigger String for PD Type: contracts
 #: ckanext/canada/tables/contracts.yaml:2181
@@ -917,6 +923,11 @@ msgid ""
 "value other than “XX” (None) is selected, limited tendering cannot have a"
 " value of “0” or “00” (None)."
 msgstr ""
+"Si les options « TC » (Concurrentielle - Traditionnelle), « TN » "
+"(non concurrentielle) ou « AC » (préavis d’attribution de contrat) sont "
+"sélectionnées et qu’une entente de marché ayant une valeur autre que "
+"« XX » (nulle) est sélectionnée, le champ Appel d’offres restreint ne "
+"peut avoir la valeur « 0 » ou « 00 » (nulle)."
 
 #. SQL Trigger String for PD Type: contracts
 #: ckanext/canada/tables/contracts.yaml:2185
@@ -1147,7 +1158,7 @@ msgstr "Publication proactive - Reclassifications de postes"
 
 #. Label for PD Type: reclassification
 #: ckanext/canada/tables/reclassification.yaml:4
-#: ckanext/canada/tables/reclassification.yaml:226
+#: ckanext/canada/tables/reclassification.yaml:228
 msgid "Position Reclassification"
 msgstr "Reclassifications de postes"
 
@@ -1161,7 +1172,7 @@ msgstr ""
 "et les subventions pour votre organisation"
 
 #. Resource Title for PD Type: reclassification
-#: ckanext/canada/tables/reclassification.yaml:282
+#: ckanext/canada/tables/reclassification.yaml:284
 msgid "Proactive Publication - Position Reclassification Nothing to Report"
 msgstr "Publication proactive - Reclassifications de postes (Rien à signaler)"
 
@@ -1182,7 +1193,7 @@ msgstr ""
 #. Resource Title for PD Type: service
 #: ckanext/canada/tables/service.yaml:16
 msgid "Service Identification Information & Metrics"
-msgstr ""
+msgstr "Information et paramètres sur l’identification des services"
 
 #. Resource Title for PD Type: service
 #: ckanext/canada/tables/service.yaml:1063
@@ -1192,7 +1203,7 @@ msgstr "Normes de service et résultats du rendement"
 #. SQL Trigger String for PD Type: service
 #: ckanext/canada/tables/service.yaml:1504
 msgid "Please enter a decimal value between zero and one: %"
-msgstr ""
+msgstr "Veuillez entrer une valeur décimale se situant entre zéro et un : %"
 
 #. Title for PD Type: travela
 #. Resource Title for PD Type: travela
@@ -1213,6 +1224,8 @@ msgid ""
 "This dataset includes all of the annual reports on travel expenses "
 "incurred within your organization."
 msgstr ""
+"Ce jeu de données comprend tous les rapports annuels sur les dépenses "
+"de voyage ayant été encourues au sein de votre organisation."
 
 #. Title for PD Type: travelq
 #. Resource Title for PD Type: travelq
@@ -1271,7 +1284,7 @@ msgstr "Registre de données ouvertes"
 #: ckanext/canada/templates/public/error_document_template.html:6
 #, python-format
 msgid "Error %(error_code)s"
-msgstr ""
+msgstr "Erreur %(error_code)s"
 
 #: ckanext/canada/templates/internal/error_document_template.html:8
 #: ckanext/canada/templates/internal/home/quick_links.html:2
@@ -1605,7 +1618,7 @@ msgstr "Description en français"
 #: ckanext/canada/templates/internal/home/quick_links.html:58
 #: ckanext/canada/templates/internal/user/login.html:48
 msgid "Important"
-msgstr ""
+msgstr "Important"
 
 #: ckanext/canada/templates/internal/home/quick_links.html:59
 #: ckanext/canada/templates/internal/user/login.html:49
@@ -2105,7 +2118,7 @@ msgstr "Ajouter"
 
 #: ckanext/canada/templates/internal/scheming/form_snippets/upload_only.html:7
 msgid "http://example.com/my-image.jpg"
-msgstr ""
+msgstr "http://example.com/my-image.jpg"
 
 #: ckanext/canada/templates/internal/scheming/form_snippets/upload_only.html:8
 msgid "Image URL"
@@ -2765,7 +2778,7 @@ msgstr "Au sujet du gouvernement"
 
 #: ckanext/canada/templates/public/footer.html:14
 msgid "Themes and topics"
-msgstr ""
+msgstr "Thèmes et sujets"
 
 #: ckanext/canada/templates/public/footer.html:16
 msgid "https://www.canada.ca/en/services/jobs.html"
@@ -3099,6 +3112,8 @@ msgid ""
 "This view is currently disabled because the Resource has either failed "
 "Validation or failed to be uploaded to the DataStore."
 msgstr ""
+"Cet aperçu est actuellement désactivé puisque la Ressource a soit échoué "
+"à la validation ou a échoué à être téléversées dans le DataStore."
 
 #: ckanext/canada/templates/public/macros/canada_read.html:36
 msgid "Keyword"
@@ -3283,7 +3298,7 @@ msgstr "Retourner à la page de recherche"
 #: ckanext/canada/templates/public/package/edit_view.html:6
 #: ckanext/canada/templates/public/package/snippets/resource_views_list_item.html:18
 msgid "Disabled"
-msgstr ""
+msgstr "Désactivé"
 
 #: ckanext/canada/templates/public/package/read.html:19
 #: ckanext/canada/templates/public/package/read.html:45
@@ -3443,11 +3458,11 @@ msgstr "Lien au format JSON"
 
 #: ckanext/canada/templates/public/package/read_base.html:122
 msgid "DCAT (JSON-LD)"
-msgstr ""
+msgstr "DCAT (JSON-LD)"
 
 #: ckanext/canada/templates/public/package/read_base.html:129
 msgid "DCAT (XML)"
-msgstr ""
+msgstr "DCAT (XML)"
 
 #: ckanext/canada/templates/public/package/read_base.html:137
 msgid "FGP Metadata"
@@ -3531,7 +3546,7 @@ msgstr "URL"
 
 #: ckanext/canada/templates/public/package/snippets/resource_form.html:4
 msgid "http://whatever"
-msgstr ""
+msgstr "http://whatever"
 
 #: ckanext/canada/templates/public/package/snippets/resource_form.html:11
 msgid "Save & add another"

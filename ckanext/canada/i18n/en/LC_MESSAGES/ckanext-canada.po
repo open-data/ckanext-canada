@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  CKAN\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-03-07 16:48+0000\n"
+"POT-Creation-Date: 2024-03-13 17:28+0000\n"
 "PO-Revision-Date: 2014-01-23 13:04+0000\n"
 "Last-Translator: Sean Hammond <sean.hammond@okfn.org>\n"
 "Language: en\n"
@@ -38,7 +38,7 @@ msgid "Treasury Board of Canada Secretariat"
 msgstr ""
 
 #: ckanext/canada/helpers.py:582 ckanext/canada/strings.py:13
-#: ckanext/canada/view.py:1121
+#: ckanext/canada/view.py:1119
 msgid "Members not found"
 msgstr ""
 
@@ -148,7 +148,7 @@ msgstr ""
 msgid "Not authorized to access {group} members download"
 msgstr ""
 
-#: ckanext/canada/strings.py:14 ckanext/canada/view.py:1131
+#: ckanext/canada/strings.py:14 ckanext/canada/view.py:1129
 msgid "N/A"
 msgstr ""
 
@@ -161,7 +161,7 @@ msgstr ""
 #: ckanext/canada/templates/public/user/edit_user_form.html:8
 #: ckanext/canada/templates/public/user/read_base.html:38
 #: ckanext/canada/templates/public/user/snippets/login_form.html:13
-#: ckanext/canada/view.py:1123
+#: ckanext/canada/view.py:1121
 msgid "Username"
 msgstr ""
 
@@ -171,25 +171,25 @@ msgstr ""
 #: ckanext/canada/templates/public/user/edit_user_form.html:10
 #: ckanext/canada/templates/public/user/read_base.html:45
 #: ckanext/canada/templates/public/user/recover_username.html:15
-#: ckanext/canada/view.py:1123
+#: ckanext/canada/view.py:1121
 msgid "Email"
 msgstr ""
 
 #: ckanext/canada/strings.py:17
 #: ckanext/canada/templates/internal/user/api_tokens.html:5
 #: ckanext/canada/templates/internal/user/list.html:36
-#: ckanext/canada/view.py:1123
+#: ckanext/canada/view.py:1121
 msgid "Name"
 msgstr ""
 
 #: ckanext/canada/strings.py:18
 #: ckanext/canada/templates/internal/user/list.html:37
 #: ckanext/canada/templates/public/organization/member_new.html:63
-#: ckanext/canada/view.py:1123
+#: ckanext/canada/view.py:1121
 msgid "Role"
 msgstr ""
 
-#: ckanext/canada/strings.py:19 ckanext/canada/view.py:1141
+#: ckanext/canada/strings.py:19 ckanext/canada/view.py:1139
 msgid "members"
 msgstr ""
 
@@ -488,66 +488,66 @@ msgid ""
 "account specified does not exist)"
 msgstr ""
 
-#: ckanext/canada/view.py:343
+#: ckanext/canada/view.py:353
 msgid "Unauthorized to create a resource for this package"
 msgstr ""
 
-#: ckanext/canada/view.py:384 ckanext/canada/view.py:389
+#: ckanext/canada/view.py:388 ckanext/canada/view.py:393
 msgid "This record already exists"
 msgstr ""
 
-#: ckanext/canada/view.py:405
+#: ckanext/canada/view.py:409
 msgid "Record Created"
 msgstr ""
 
-#: ckanext/canada/view.py:443
+#: ckanext/canada/view.py:447
 msgid "Unauthorized to update dataset"
 msgstr ""
 
-#: ckanext/canada/view.py:459
+#: ckanext/canada/view.py:457
 msgid "Not found"
 msgstr ""
 
-#: ckanext/canada/view.py:461
+#: ckanext/canada/view.py:459
 msgid "Multiple records found"
 msgstr ""
 
-#: ckanext/canada/view.py:511
+#: ckanext/canada/view.py:509
 #, python-format
 msgid "Record %s Updated"
 msgstr ""
 
-#: ckanext/canada/view.py:544
+#: ckanext/canada/view.py:542
 msgid "No organizations found"
 msgstr ""
 
-#: ckanext/canada/view.py:548
+#: ckanext/canada/view.py:546
 msgid "Recombinant resource_name not found"
 msgstr ""
 
-#: ckanext/canada/view.py:591
+#: ckanext/canada/view.py:589
 msgid "Number required"
 msgstr ""
 
-#: ckanext/canada/view.py:596
+#: ckanext/canada/view.py:594
 msgid "Integer required"
 msgstr ""
 
-#: ckanext/canada/view.py:632 ckanext/canada/view.py:640
-#: ckanext/canada/view.py:674
+#: ckanext/canada/view.py:630 ckanext/canada/view.py:638
+#: ckanext/canada/view.py:672
 msgid "Not authorized to see this page"
 msgstr ""
 
-#: ckanext/canada/view.py:660
+#: ckanext/canada/view.py:658
 msgid " record(s) published."
 msgstr ""
 
-#: ckanext/canada/view.py:698
+#: ckanext/canada/view.py:696
 #, python-format
 msgid "Unauthorized to delete resource %s"
 msgstr ""
 
-#: ckanext/canada/view.py:700
+#: ckanext/canada/view.py:698
 #, python-format
 msgid "DataStore table and Data Dictionary deleted for resource %s"
 msgstr ""
@@ -560,19 +560,19 @@ msgstr ""
 #: ckanext/canada/templates/public/organization/snippets/organization_item.html:17
 #: ckanext/canada/templates/public/package/edit.html:4
 #: ckanext/canada/templates/public/package/edit.html:8
-#: ckanext/canada/view.py:842
+#: ckanext/canada/view.py:840
 msgid "Edit"
 msgstr ""
 
-#: ckanext/canada/view.py:966
+#: ckanext/canada/view.py:964
 msgid "Access denied"
 msgstr ""
 
-#: ckanext/canada/view.py:1017
+#: ckanext/canada/view.py:1015
 msgid "Account Created"
 msgstr ""
 
-#: ckanext/canada/view.py:1019
+#: ckanext/canada/view.py:1017
 msgid ""
 "Thank you for creating your account for the Open Government registry. "
 "Although your account is active, it has not yet been linked to your "
@@ -580,7 +580,7 @@ msgid ""
 "be able to create or modify datasets in the registry."
 msgstr ""
 
-#: ckanext/canada/view.py:1026
+#: ckanext/canada/view.py:1024
 msgid ""
 "You should receive an email within the next business day once the account"
 " activation process has been completed. If you require faster processing "
@@ -588,20 +588,20 @@ msgid ""
 ":open-ouvert@tbs-sct.gc.ca\">open-ouvert@tbs-sct.gc.ca</a>"
 msgstr ""
 
-#: ckanext/canada/view.py:1100 ckanext/canada/view.py:1178
+#: ckanext/canada/view.py:1098 ckanext/canada/view.py:1176
 msgid "Organization not found"
 msgstr ""
 
-#: ckanext/canada/view.py:1111
+#: ckanext/canada/view.py:1109
 msgid "Not authorized to access {org_name} members download"
 msgstr ""
 
-#: ckanext/canada/view.py:1181
+#: ckanext/canada/view.py:1179
 #, python-format
 msgid "User %r not authorized to edit members of %s"
 msgstr ""
 
-#: ckanext/canada/view.py:1183
+#: ckanext/canada/view.py:1181
 #, python-format
 msgid "User %r not authorized to view members of %s"
 msgstr ""
@@ -722,7 +722,7 @@ msgstr ""
 #: ckanext/canada/tables/contractsa.yaml:387
 #: ckanext/canada/tables/hospitalityq.yaml:591
 #: ckanext/canada/tables/qpnotes.yaml:442
-#: ckanext/canada/tables/reclassification.yaml:371
+#: ckanext/canada/tables/reclassification.yaml:373
 #: ckanext/canada/tables/travela.yaml:642
 #: ckanext/canada/tables/travelq.yaml:580
 msgid "This must list the year you are reporting on (not the fiscal year)."
@@ -1040,7 +1040,7 @@ msgstr ""
 
 #. Label for PD Type: reclassification
 #: ckanext/canada/tables/reclassification.yaml:4
-#: ckanext/canada/tables/reclassification.yaml:226
+#: ckanext/canada/tables/reclassification.yaml:228
 msgid "Position Reclassification"
 msgstr ""
 
@@ -1052,7 +1052,7 @@ msgid ""
 msgstr ""
 
 #. Resource Title for PD Type: reclassification
-#: ckanext/canada/tables/reclassification.yaml:282
+#: ckanext/canada/tables/reclassification.yaml:284
 msgid "Proactive Publication - Position Reclassification Nothing to Report"
 msgstr ""
 
