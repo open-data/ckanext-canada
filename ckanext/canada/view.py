@@ -23,6 +23,7 @@ from ckan.plugins.toolkit import (
     request,
     render
 )
+import ckan.lib.mailer as mailer
 from ckan.lib.base import model
 import ckan.lib.jsonp as jsonp
 from ckan.lib.helpers import (
@@ -75,6 +76,10 @@ if PY2:
     from cStringIO import StringIO
 else:
     from io import StringIO
+
+from logging import getLogger
+
+log = getLogger(__name__)
 
 MAX_JOB_QUEUE_LIST_SIZE = 25
 
@@ -226,6 +231,67 @@ canada_views.add_url_rule(
     u'/user/register',
     view_func=CanadaUserRegisterView.as_view(str(u'register'))
 )
+
+
+@canada_views.route('/recover-username', methods=['GET', 'POST'])
+def recover_username():
+    if not h.is_registry() or not h.plugin_loaded('gcnotify'):
+        # we only want this route on the Registry, and the email template
+        # is monkey patched in GC Notify so we need that loaded
+        return abort(404)
+
+    context = {
+        'model': model,
+        'session': model.Session,
+        'user': g.user,
+        'auth_user_obj': g.userobj
+    }
+    try:
+        check_access('request_reset', context)
+    except NotAuthorized:
+        abort(403, _('Unauthorized to request username recovery.'))
+
+    if request.method == 'POST':
+        email = request.form.get('email')
+        if email in (None, ''):
+            h.flash_error(_('Email is required'))
+            return h.redirect_to('canada.recover_username')
+
+        log.info('Username recovery requested for email "{}"'.format(email))
+
+        context = {'model': model, 'user': g.user, 'ignore_auth': True}
+        username_list = []
+
+        user_list = get_action('user_list')(context, {'email': email})
+        if user_list:
+            for user_dict in user_list:
+                username_list.append(user_dict['name'])
+
+        if not username_list:
+            log.info('User requested username recovery for unknown email: {}'
+                     .format(email))
+        else:
+            log.info('Emailing username recovery to email: {}'
+                     .format(email))
+            try:
+                # see: ckanext.gcnotify.mailer.send_username_recovery
+                mailer.send_username_recovery(email, username_list)
+            except mailer.MailerException as e:
+                # SMTP is not configured correctly or the server is
+                # temporarily unavailable
+                h.flash_error(_('Error sending the email. Try again later '
+                                'or contact an administrator for help'))
+                log.exception(e)
+                return h.redirect_to('home.index')
+
+        # always tell the user it succeeded, because otherwise we reveal
+        # which accounts exist or not
+        h.flash_success(_('An email has been sent to you containing '
+                          'your username(s). (unless the account specified'
+                          ' does not exist)'))
+        return h.redirect_to('home.index')
+
+    return render('user/recover_username.html', {})
 
 
 def canada_search(package_type):
