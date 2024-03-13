@@ -804,6 +804,8 @@ msgstr ""
 #: ckanext/canada/tables/consultations.yaml:598
 msgid "If Status is set to: Not Going Forward, Publish Record must be set to No"
 msgstr ""
+"Si le statut est établi à : Ne pas aller de l’avant, alors l’option de Publier "
+"le document doit être réglée à Non."
 
 #. Title for PD Type: contracts
 #. Resource Title for PD Type: contracts
@@ -1193,7 +1195,7 @@ msgstr ""
 #. Resource Title for PD Type: service
 #: ckanext/canada/tables/service.yaml:16
 msgid "Service Identification Information & Metrics"
-msgstr ""
+msgstr "Information et paramètres sur l’identification des services"
 
 #. Resource Title for PD Type: service
 #: ckanext/canada/tables/service.yaml:1063
@@ -1203,7 +1205,7 @@ msgstr "Normes de service et résultats du rendement"
 #. SQL Trigger String for PD Type: service
 #: ckanext/canada/tables/service.yaml:1504
 msgid "Please enter a decimal value between zero and one: %"
-msgstr ""
+msgstr "Veuillez entrer une valeur décimale se situant entre zéro et un : %"
 
 #. Title for PD Type: travela
 #. Resource Title for PD Type: travela
@@ -1224,6 +1226,8 @@ msgid ""
 "This dataset includes all of the annual reports on travel expenses "
 "incurred within your organization."
 msgstr ""
+"Ce jeu de données comprend tous les rapports annuels sur les dépenses "
+"de voyage ayant été encourues au sein de votre organisation."
 
 #. Title for PD Type: travelq
 #. Resource Title for PD Type: travelq
@@ -2770,7 +2774,7 @@ msgstr "Au sujet du gouvernement"
 
 #: ckanext/canada/templates/public/footer.html:14
 msgid "Themes and topics"
-msgstr ""
+msgstr "Thèmes et sujets"
 
 #: ckanext/canada/templates/public/footer.html:16
 msgid "https://www.canada.ca/en/services/jobs.html"
@@ -3104,6 +3108,8 @@ msgid ""
 "This view is currently disabled because the Resource has either failed "
 "Validation or failed to be uploaded to the DataStore."
 msgstr ""
+"Cet aperçu est actuellement désactivé puisque la Ressource a soit échoué "
+"à la validation ou a échoué à être téléversées dans le DataStore."
 
 #: ckanext/canada/templates/public/macros/canada_read.html:36
 msgid "Keyword"
@@ -3288,7 +3294,7 @@ msgstr "Retourner à la page de recherche"
 #: ckanext/canada/templates/public/package/edit_view.html:6
 #: ckanext/canada/templates/public/package/snippets/resource_views_list_item.html:18
 msgid "Disabled"
-msgstr ""
+msgstr "Désactivé"
 
 #: ckanext/canada/templates/public/package/read.html:19
 #: ckanext/canada/templates/public/package/read.html:45
