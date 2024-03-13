@@ -499,6 +499,8 @@ msgid ""
 "Error sending the email. Try again later or contact an administrator for "
 "help"
 msgstr ""
+"Une erreur est survenue lors de l'envoi de l'email. Veuillez réessayer plus "
+"tard ou contacter un administrateur."
 
 #: ckanext/canada/view.py:289
 msgid ""
@@ -827,7 +829,7 @@ msgstr ""
 #. SQL Trigger String for PD Type: contracts
 #: ckanext/canada/tables/contracts.yaml:2180
 msgid "The field is limited to eight alpha-numeric digits or less."
-msgstr ""
+msgstr "Ce champ est limité à 8 caractères alphanumériques."
 
 #. SQL Trigger String for PD Type: contracts
 #: ckanext/canada/tables/contracts.yaml:2175
@@ -835,6 +837,8 @@ msgid ""
 "If N/A, then Instrument Type must be identified as a standing "
 "offer/supply arrangement (SOSA)"
 msgstr ""
+"Si N/A, alors le Type d’instrument doit être identifié comme étant une "
+"offre à commandes ou un arrangement en matière d’approvisionnement (SOSA)."
 
 #. SQL Trigger String for PD Type: contracts
 #: ckanext/canada/tables/contracts.yaml:2183
@@ -844,6 +848,11 @@ msgid ""
 "value other than “XX” (None) is selected, limited tendering cannot have a"
 " value of “0” or “00” (None)."
 msgstr ""
+"Si les options « TC » (Concurrentielle - Traditionnelle), « TN » "
+"(non concurrentielle) ou « AC » (préavis d’attribution de contrat) sont "
+"sélectionnées et qu’une entente de marché ayant une valeur autre que "
+"« XX » (nulle) est sélectionnée, le champ Appel d’offres restreint ne "
+"peut avoir la valeur « 0 » ou « 00 » (nulle)."
 
 #. SQL Trigger String for PD Type: contracts
 #: ckanext/canada/tables/contracts.yaml:2181
@@ -852,7 +861,7 @@ msgid ""
 "If the value 00 (none) is entered, then no other value can be entered in "
 "this field."
 msgstr ""
-"Si la valeur 00 (aucun) est saisie, aucune autre valeur ne peut être "
+"Si la valeur 00 (aucun) est saisie, aucune autre valeur ne peut être "
 "saisie dans ce champ."
 
 #. SQL Trigger String for PD Type: contracts
@@ -961,6 +970,8 @@ msgid ""
 "This field must contain the first three digits of a postal code in A1A "
 "format or the value \"NA\""
 msgstr ""
+"Ce champ doit contenir les trois premiers chiffres d’un code postal dans "
+"le format A1A ou la valeur « NA. »"
 
 #. Resource Title for PD Type: contracts
 #: ckanext/canada/tables/contracts.yaml:2239
@@ -1599,7 +1610,7 @@ msgstr "Description en français"
 #: ckanext/canada/templates/internal/home/quick_links.html:58
 #: ckanext/canada/templates/internal/user/login.html:48
 msgid "Important"
-msgstr ""
+msgstr "Important"
 
 #: ckanext/canada/templates/internal/home/quick_links.html:59
 #: ckanext/canada/templates/internal/user/login.html:49
@@ -2099,7 +2110,7 @@ msgstr "Ajouter"
 
 #: ckanext/canada/templates/internal/scheming/form_snippets/upload_only.html:7
 msgid "http://example.com/my-image.jpg"
-msgstr ""
+msgstr "http://example.com/my-image.jpg"
 
 #: ckanext/canada/templates/internal/scheming/form_snippets/upload_only.html:8
 msgid "Image URL"
@@ -3437,11 +3448,11 @@ msgstr "Lien au format JSON"
 
 #: ckanext/canada/templates/public/package/read_base.html:122
 msgid "DCAT (JSON-LD)"
-msgstr ""
+msgstr "DCAT (JSON-LD)"
 
 #: ckanext/canada/templates/public/package/read_base.html:129
 msgid "DCAT (XML)"
-msgstr ""
+msgstr "DCAT (XML)"
 
 #: ckanext/canada/templates/public/package/read_base.html:137
 msgid "FGP Metadata"
@@ -3525,7 +3536,7 @@ msgstr "URL"
 
 #: ckanext/canada/templates/public/package/snippets/resource_form.html:4
 msgid "http://whatever"
-msgstr ""
+msgstr "http://whatever"
 
 #: ckanext/canada/templates/public/package/snippets/resource_form.html:11
 msgid "Save & add another"
