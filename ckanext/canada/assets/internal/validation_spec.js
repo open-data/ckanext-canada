@@ -19,6 +19,8 @@ this.ckan.module('canada-validation-spec', function($){
           "context": "head",
           "weight": 7
         };
+        //TODO: improve description for encoding errors and how to fix them.
+        //goodtablesUI.spec['errors']['encoding-error'].description = "";
       }
     }
   };

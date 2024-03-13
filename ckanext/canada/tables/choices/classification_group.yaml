@@ -1,100 +1,284 @@
-AC: {"en": "Actuarial Science", "fr": "Actuariat"}
-AG: {"en": "Agriculture", "fr": "Agriculture"}
-AI-NOP: {"en": "Air Traffic Control", "fr": "Contrôle de la circulation aérienne"}
-AO-CAI: {"en": "Aircraft Operations", "fr": "Navigation aérienne"}
-AO-ETP: {"en": "Aircraft Operations", "fr": "Navigation aérienne"}
-AO-HPS: {"en": "Aircraft Operations", "fr": "Navigation aérienne"}
-AR: {"en": "Architecture and Town Planning", "fr": "Architecture et urbanisme"}
-AS: {"en": "Administrative Services", "fr": "Services administratifs"}
-AU: {"en": "Auditing", "fr": "Vérification"}
-BI: {"en": "Biological Sciences", "fr": "Sciences biologiques"}
-CH: {"en": "Chemistry", "fr": "Chimie"}
-CI-ASC: {"en": "CIHR Administrative Support", "fr": "IRSC Soutien administratif"}
-CI-PTC: {"en": "CIHR Professional and Technical", "fr": "IRSC Professionnel et technique"}
-CI-SPC: {"en": "CIHR Senior Professional", "fr": "IRSC Haute gestion professionnelle"}
-CI-EXC: {"en": "CIHR Executive", "fr": "IRSC Direction"}
-CM: {"en": "Communications", "fr": "Communications"}
-CO: {"en": "Commerce ", "fr": "Commerce"}
-CR: {"en": "Clerical and Regulatory", "fr": "Commis aux écritures et aux règlements"}
+#
+# This file is managed manually from the datasource:
+# https://www.canada.ca/en/treasury-board-secretariat/services/collective-agreements/occupational-groups.html
+#
+AC:
+  en: Actuarial Science
+  fr: Actuariat
+AG:
+  en: Agriculture
+  fr: Agriculture
+AI-NOP:
+  en: Air Traffic Control - Non-Operational
+  fr: Contrôle de la circulation aérienne - Non-opérationnel
+AO-CAI:
+  en: Aircraft Operations - Civil Aviation Inspection
+  fr: Navigation aérienne - Inspection de l’aviation civile
+AO-ETP:
+  en: Aircraft Operations - Engineering Test Pilots
+  fr: Navigation aérienne - Pilotes ingénieurs d’essai
+AO-HPS:
+  en: Aircraft Operations - Helicopter Pilots and Supervisors
+  fr: Navigation aérienne - Pilotes d’hélicoptère et des superviseurs
+AR:
+  en: Architecture and Town Planning
+  fr: Architecture et urbanisme
+AS:
+  en: Administrative Services
+  fr: Services administratifs
+AU:
+  en: Auditing
+  fr: Vérification
+BI:
+  en: Biological Sciences
+  fr: Sciences biologiques
+CH:
+  en: Chemistry
+  fr: Chimie
+CI-ASC:
+  en: CIHR - Administrative Support
+  fr: IRSC - Soutien administratif
+CI-PTC:
+  en: CIHR - Professional and Technical
+  fr: IRSC - Professionnel et technique
+CI-SPC:
+  en: CIHR - Senior Professional
+  fr: IRSC - Haute gestion professionnelle
+CI-EXC:
+  en: CIHR - Executive
+  fr: IRSC - Direction
+CM:
+  en: Communications
+  fr: Communications
+CO:
+  en: Commerce
+  fr: Commerce
+CR:
+  en: Clerical and Regulatory
+  fr: Commis aux écritures et aux règlements
 CRA-EC:
-  en: Executive Cadre CRA
-  fr: Cadre de direction de l’ARC
-CS: {"en": "Computer Systems", "fr": "Systèmes d'ordinateurs"}
-CX: {"en": "Correctional Services", "fr": "Services correctionnels"}
-DA-CON: {"en": "Data Processing ", "fr": "Traitement mécanique des données"}
-DA-PRO: {"en": "Data Processing ", "fr": "Traitement mécanique des données"}
-DD: {"en": "Drafting and Illustration", "fr": "Dessin et illustrations"}
-DE: {"en": "Dentistry", "fr": "Art dentaire"}
-DM: {"en": "Deputy Ministers", "fr": "Sous-ministres"}
-DS: {"en": "Defence Scientific Service", "fr": "Services scientifiques de la défense"}
-EC: {"en": "Economics and Social Science Services", "fr": "Économique et services de sciences sociales"}
-ED-EDS: {"en": "Education", "fr": "Enseignement"}
-ED-EST: {"en": "Education", "fr": "Enseignement"}
-ED-LAT: {"en": "Education", "fr": "Enseignement"}
-EG: {"en": "Engineering and Scientific Support", "fr": "Soutien technologique et scientifique"}
-EL: {"en": "Electronics", "fr": "Électronique"}
-EN-ENG: {"en": "Engineering and Land Survey", "fr": "Génie et arpentage"}
-EN-SUR: {"en": "Engineering and Land Survey", "fr": "Génie et arpentage"}
-EO: {"en": "Chief Electoral Officer", "fr": "Directeur général des électionscteur"}
+  en: CRA - Senior Executive
+  fr: ARC - Cadre de direction
+CS:
+  en: Computer Systems
+  fr: Systèmes d’ordinateurs
+CT-EAV:
+  en: Comptrollership - External Audit
+  fr: Fonction de contrôleur - Vérification externe
+CT-FIN:
+  en: Comptrollership - Financial Management
+  fr: Fonction de contrôleur - Gestion financière
+CT-IAU:
+  en: Comptrollership - Internal Audit
+  fr: Fonction de contrôleur - Audit interne
+CX:
+  en: Correctional Services
+  fr: Services correctionnels
+DA-CON:
+  en: Data Processing - Data Conversion
+  fr: Traitement mécanique des données - Conversion des données
+DA-PRO:
+  en: Data Processing - Data Production
+  fr: Traitement mécanique des données - Production des données
+DD:
+  en: Drafting and Illustration
+  fr: Dessin et illustrations
+DE:
+  en: Dentistry
+  fr: Art dentaire
+DM:
+  en: Deputy Ministers
+  fr: Sous-ministres
+DS:
+  en: Defence Scientific Service
+  fr: Services scientifiques de la défense
+EC:
+  en: Economics and Social Science Services
+  fr: Économique et services de sciences sociales
+ED-EDS:
+  en: Education - Education Services
+  fr: Enseignement - Services d’éducation
+ED-EST:
+  en: Education - Elementary and Secondary Teaching
+  fr: Enseignement - Enseignement élémentaire et secondaire
+ED-LAT:
+  en: Education - Language Teaching
+  fr: Enseignement - Enseignement des langues
+EG:
+  en: Engineering and Scientific Support
+  fr: Soutien technologique et scientifique
+EL:
+  en: Electronics
+  fr: Électronique
+EN-ENG:
+  en: Engineering and Land Survey - Engineering
+  fr: Génie et arpentage - Génie
+EN-SUR:
+  en: Engineering and Land Survey - Land Survey
+  fr: Génie et arpentage - Arpentage
+EO:
+  en: Chief Electoral Officer
+  fr: Directeur général des électionscteur
 ES:
   en: Economics, Sociology and Statistics
   fr: Économie, sociologie et statistique
-EU-LAI: {"en": "Educational Support", "fr": "Soutien de l'enseignement"}
-EU-PEI: {"en": "Educational Support", "fr": "Soutien de l'enseignement"}
-EU-TEA: {"en": "Educational Support", "fr": "Soutien de l'enseignement"}
-EX: {"en": "Executive Group", "fr": "Groupe de la direction"}
-FB: {"en": "Border Services", "fr": "Services frontaliers"}
-FI: {"en": "Financial Management", "fr": "Gestion financière"}
-FO: {"en": "Forestry", "fr": "Sciences forestières"}
-FR: {"en": "Firefighters", "fr": "Pompiers"}
-FS: {"en": "Foreign Service", "fr": "Service extérieur"}
-GL-AIM: {"en": "General Labour and Trades", "fr": "Manoeuvres et hommes de métier"}
-GL-AMW: {"en": "General Labour and Trades", "fr": "Manoeuvres et hommes de métier"}
-GL-BOB: {"en": "General Labour and Trades", "fr": "Manoeuvres et hommes de métier"}
-GL-COI: {"en": "General Labour and Trades", "fr": "Manoeuvres et hommes de métier"}
-GL-EIM: {"en": "General Labour and Trades", "fr": "Manoeuvres et hommes de métier"}
-GL-ELE: {"en": "General Labour and Trades", "fr": "Manoeuvres et hommes de métier"}
-GL-GHW: {"en": "General Labour and Trades", "fr": "Manoeuvres et hommes de métier"}
-GL-INM: {"en": "General Labour and Trades", "fr": "Manoeuvres et hommes de métier"}
-GL-MAM: {"en": "General Labour and Trades", "fr": "Manoeuvres et hommes de métier"}
-GL-MAM: {"en": "General Labour and Trades", "fr": "Manoeuvres et hommes de métier"}
-GL-MAN: {"en": "General Labour and Trades", "fr": "Manoeuvres et hommes de métier"}
-GL-MDO: {"en": "General Labour and Trades", "fr": "Manoeuvres et hommes de métier"}
-GL-MOC: {"en": "General Labour and Trades", "fr": "Manoeuvres et hommes de métier"}
-GL-MST: {"en": "General Labour and Trades", "fr": "Manoeuvres et hommes de métier"}
-GL-PCF: {"en": "General Labour and Trades", "fr": "Manoeuvres et hommes de métier"}
-GL-PIP: {"en": "General Labour and Trades", "fr": "Manoeuvres et hommes de métier"}
-GL-PRW: {"en": "General Labour and Trades", "fr": "Manoeuvres et hommes de métier"}
-GL-SMW: {"en": "General Labour and Trades", "fr": "Manoeuvres et hommes de métier"}
-GL-VHE: {"en": "General Labour and Trades", "fr": "Manoeuvres et hommes de métier"}
-GL-WOW: {"en": "General Labour and Trades", "fr": "Manoeuvres et hommes de métier"}
-GS-BUS: {"en": "General Services", "fr": "Services divers"}
-GS-FOS: {"en": "General Services", "fr": "Services divers"}
-GS-LAS: {"en": "General Services", "fr": "Services divers"}
-GS-MES: {"en": "General Services", "fr": "Services divers"}
-GS-MPS: {"en": "General Services", "fr": "Services divers"}
-GS-PRC: {"en": "General Services", "fr": "Services divers"}
-GS-STS: {"en": "General Services", "fr": "Services divers"}
-GT: {"en": "General Technical", "fr": "Techniciens divers"}
-GX: {"en": "General Executive Group", "fr": "Groupe de la direction supérieure"}
-HP: {"en": "Heating, Power and Stationary Plant Operations", "fr": "Chauffage, force motrice et opérations de machines fixes"}
-HR: {"en": "Historical Research", "fr": "Recherche historique"}
+EU-LAI:
+  en: Educational Support - Language Instructor
+  fr: Soutien de l’enseignement - Moniteurs de langues
+EU-PEI:
+  en: Educational Support - Physical Education Instructor
+  fr: Soutien de l’enseignement - Moniteurs d’éducation physique
+EU-TEA:
+  en: Educational Support - Teachers' Aide
+  fr: Soutien de l’enseignement - Aides-enseignants
+EX:
+  en: Executive Group
+  fr: Groupe de la direction
+FB:
+  en: Border Services
+  fr: Services frontaliers
+FI:
+  en: Financial Management
+  fr: Gestion financière
+FO:
+  en: Forestry
+  fr: Sciences forestières
+FR:
+  en: Firefighters
+  fr: Pompiers
+FS:
+  en: Foreign Service
+  fr: Service extérieur
+GL-AIM:
+  en: General Labour and Trades - Aircraft Maintaining
+  fr: Manoeuvres et hommes de métier - Entretien d’aéronefs
+GL-AMW:
+  en: General Labour and Trades - Ammunition Working
+  fr: Manoeuvres et hommes de métier - Fabrication de munitions
+GL-BOB:
+  en: General Labour and Trades - Boilermaking and Blacksmithing
+  fr: Manoeuvres et hommes de métier - Chaudronnerie et forge
+GL-COI:
+  en: General Labour and Trades - Construction Inspecting
+  fr: Manoeuvres et hommes de métier - Inspection de la construction
+GL-EIM:
+  en: General Labour and Trades - Electrical Installing and Maintaining
+  fr: Manoeuvres et hommes de métier - Installations électriques et entretien
+GL-ELE:
+  en: General Labour and Trades - Elemental
+  fr: Manoeuvres et hommes de métier - Fonctions élémentaires
+GL-GHW:
+  en: General Labour and Trades - Grain Handling and Weighing
+  fr: Manoeuvres et hommes de métier - Manutention et pesage de céréales
+GL-INM:
+  en: General Labour and Trades - Instrument Maintaining
+  fr: Manoeuvres et hommes de métier - Entretien d’instruments
+GL-MAM:
+  en: General Labour and Trades - Machinery Maintaining
+  fr: Manoeuvres et hommes de métier - Entretien de machines
+GL-MAN:
+  en: General Labour and Trades - Manipulating
+  fr: Manoeuvres et hommes de métier - Manipulation
+GL-MDO:
+  en: General Labour and Trades - Machine Driving-Operating
+  fr: Manoeuvres et hommes de métier - Conduite et fonctionnement de machines
+GL-MOC:
+  en: General Labour and Trades - Machine Operating-Controlling
+  fr: Manoeuvres et hommes de métier - Fonctionnement et surveillance de machines
+GL-MST:
+  en: General Labour and Trades - Metal Machining
+  fr: Manoeuvres et hommes de métier - Usinage des métaux
+GL-PCF:
+  en: General Labour and Trades - Painting and Construction Finishing
+  fr: Manoeuvres et hommes de métier - Peinture et finissage de construction
+GL-PIP:
+  en: General Labour and Trades - Pipefitting
+  fr: Manoeuvres et hommes de métier - Tuyauterie
+GL-PRW:
+  en: General Labour and Trades - Precision Working
+  fr: Manoeuvres et hommes de métier - Travail de précision
+GL-SMW:
+  en: General Labour and Trades - Sheet Metal Working
+  fr: Manoeuvres et hommes de métier - Tôlerie
+GL-VHE:
+  en: General Labour and Trades - Vehicle Heavy Equipment Maintaining
+  fr: Manoeuvres et hommes de métier - Entretien de véhicules et de matériel lourd
+GL-WOW:
+  en: General Labour and Trades - Woodworking
+  fr: Manoeuvres et hommes de métier - Menuiserie
+GS-BUS:
+  en: General Services - Building Services
+  fr: Services divers - Service d’entretien d’immeubles
+GS-FOS:
+  en: General Services - Food Services
+  fr: Services divers - Services alimentaires
+GS-LAS:
+  en: General Services - Laundry Services
+  fr: Services divers - Services de buanderie
+GS-MES:
+  en: General Services - Messenger Services
+  fr: Services divers - Services de messagers
+GS-MPS:
+  en: General Services - Miscellaneous Personal Services
+  fr: Services divers - Services personnels divers
+GS-PRC:
+  en: General Services - Protective and Custodial Services
+  fr: Services divers - Services de protection et de garde
+GS-STS:
+  en: General Services - Stores Services
+  fr: Services divers - Services de magasins
+GT:
+  en: General Technical
+  fr: Techniciens divers
+GX:
+  en: General Executive Group
+  fr: Groupe de la direction supérieure
+HP:
+  en: Heating, Power and Stationary Plant Operations
+  fr: Chauffage, force motrice et opérations de machines fixes
+HR:
+  en: Historical Research
+  fr: Recherche historique
 HR/RH:
   en: Human Resources
   fr: Ressources humaines
-HS-HDO: {"en": "Hospital Services", "fr": "Services hospitaliers"}
-HS-PHS: {"en": "Hospital Services", "fr": "Services hospitaliers"}
-IS: {"en": "Information Services", "fr": "Services d'information"}
-LC: {"en": "Law Management", "fr": "Gestion du droit"}
+HS-HDO:
+  en: Hospital Services - Housekeeping, Dietary and Other Services
+  fr: Services hospitaliers - Services ménagers, diététiques et autres
+HS-PHS:
+  en: Hospital Services - Patient and Health Services
+  fr: Services hospitaliers - Services des malades et de l’hygiène publique
+IS:
+  en: Information Services
+  fr: Services d’information
+IT:
+  en: Information Technology
+  fr: Technologies de l’information
+LC:
+  en: Law Management
+  fr: Gestion du droit
 LE:
   en: Locally Engaged Staff
   fr: Émployés recrutés sur place
-LI: {"en": "Lightkeepers", "fr": "Gardiens de phares"}
-LP: {"en": "Law Practitioner", "fr": "Praticiens du droit"}
-LS: {"en": "Library Science", "fr": "Bibliothéconomie"}
-MA: {"en": "Mathematics", "fr": "Mathématiques"}
-MD-MOF: {"en": "Medicine", "fr": "Médecine"}
-MD-MSP: {"en": "Medicine", "fr": "Médecine"}
+LI:
+  en: Lightkeepers
+  fr: Gardiens de phares
+LP:
+  en: Law Practitioner
+  fr: Praticiens du droit
+LS:
+  en: Library Science
+  fr: Bibliothéconomie
+MA:
+  en: Mathematics
+  fr: Mathématiques
+MD-MOF:
+  en: Medicine - Medical Officer
+  fR: Médecine - Médecins fonctionnaires
+MD-MSP:
+  en: Medicine - Medical Specialist
+  fR: Médecine - Médecins spécialistes
+#TODO: find MD-MDG group/classification/sub-group
 MD-MDG:
   en: Management Development
   fr: Développment en gestion
@@ -104,94 +288,269 @@ MG-AFS:
 MG-SPS:
   en: Management Group
   fr: Groupe de gestion
-MT: {"en": "Meteorology", "fr": "Météorologie"}
-ND-ADV: {"en": "Nutrition and Dietetics", "fr": "Nutrition et diététique"}
-ND-DIT: {"en": "Nutrition and Dietetics", "fr": "Nutrition et diététique"}
-ND-HME: {"en": "Nutrition and Dietetics", "fr": "Nutrition et diététique"}
-NU-CHN: {"en": "Nursing", "fr": "Sciences infirmières "}
-NU-EMA: {"en": "Nursing", "fr": "Sciences infirmières "}
-NU-HOS: {"en": "Nursing", "fr": "Sciences infirmières "}
-OC-AST: {"en": "Governor-in-Council Appointees", "fr": "Personnes nommées par le gouverneur en conseil"}
-OC-GC : {"en": "Governor-in-Council Appointees", "fr": "Personnes nommées par le gouverneur en conseil"}
-OC-GCQ: {"en": "Governor-in-Council Appointees", "fr": "Personnes nommées par le gouverneur en conseil"}
-OC-GIC: {"en": "Governor-in-Council Appointees", "fr": "Personnes nommées par le gouverneur en conseil"}
-OC-GRP: {"en": "Governor-in-Council Appointees", "fr": "Personnes nommées par le gouverneur en conseil"}
-OE-BEO: {"en": "Office Equipment", "fr": "Mécanographie"}
-OE-CEO: {"en": "Office Equipment", "fr": "Mécanographie"}
-OE-DEO: {"en": "Office Equipment", "fr": "Mécanographie"}
-OE-MEO: {"en": "Office Equipment", "fr": "Mécanographie"}
-OE-MSE: {"en": "Office Equipment", "fr": "Mécanographie"}
-OM: {"en": "Organization and Methods", "fr": "Organisation et méthodes"}
-OP: {"en": "Occupational and Physical Therapy", "fr": "Ergothérapie et physiothérapie"}
-PC: {"en": "Physical Sciences", "fr": "Sciences physiques"}
-PE: {"en": "Personnel Administration", "fr": "Gestion du personnel"}
-PG: {"en": "Purchasing and Supply", "fr": "Achat et approvisionnement"}
-PH: {"en": "Pharmacy", "fr": "Pharmacie"}
-PI-CGC: {"en": "Primary Products Inspection", "fr": "Inspection des produits primaires"}
-PM: {"en": "Programme Administration", "fr": "Administration des programmes"}
-PO-IMA: {"en": "Police Operations Support", "fr": "Soutien aux opérations policières"}
-PO-TCO: {"en": "Police Operations Support", "fr": "Soutien aux opérations policières"}
-PR: {"en": "Printing Operations", "fr": "Services d'mprimerie"}
-PR-BIN: {"en": "Printing Operations", "fr": "Services d'mprimerie"}
-PR-COM: {"en": "Printing Operations", "fr": "Services d'mprimerie"}
-PR-MAI: {"en": "Printing Operations", "fr": "Services d'mprimerie"}
-PR-OFE: {"en": "Printing Operations", "fr": "Services d'mprimerie"}
-PR-OFO: {"en": "Printing Operations", "fr": "Services d'mprimerie"}
-PR-PRC: {"en": "Printing Operations", "fr": "Services d'mprimerie"}
-PS: {"en": "Psychology", "fr": "Psychologie"}
-PY: {"en": "Photography", "fr": "Photographie"}
-RO: {"en": "Radio Operations", "fr": "Radiotélégraphie"}
-SC-DED: {"en": "Ships' Crews", "fr": "Équipages de navires"}
-SC-EQO: {"en": "Ships' Crews", "fr": "Équipages de navires"}
-SC-ERD: {"en": "Ships' Crews", "fr": "Équipages de navires"}
-SC-SPT: {"en": "Ships' Crews", "fr": "Équipages de navires"}
-SC-STD: {"en": "Ships' Crews", "fr": "Équipages de navires"}
-SE-REM: {"en": "Scientific Research", "fr": "Recherche scientifique"}
-SE-RES: {"en": "Scientific Research", "fr": "Recherche scientifique"}
-SG-PAT: {"en": "Scientific Regulation and Patent Examination", "fr": "Réglementation scientifique et examen des brevets"}
-SG-SRE: {"en": "Scientific Regulation and Patent Examination", "fr": "Réglementation scientifique et examen des brevets"}
+MT:
+  en: Meteorology
+  fr: Météorologie
+ND-ADV:
+  en: Nutrition and Dietetics - Advisory
+  fr: Nutrition et diététique - Conseillers
+ND-DIT:
+  en: Nutrition and Dietetics - Dietitian
+  fr: Nutrition et diététique - Diététiciens
+ND-HME:
+  en: Nutrition and Dietetics - Home Economist
+  fr: Nutrition et diététique - Économistes ménagères
+NU-CHN:
+  en: Nursing - Community Health
+  fr: Sciences infirmières - Infirmières en santé communautaire
+NU-EMA:
+  en: Nursing - Medical Adjudicator Nursing
+  fr: Sciences infirmières - Évaluateurs médicaux
+NU-HOS:
+  en: Nursing - Hospital Nursing
+  fr: Sciences infirmières - Infirmières d’hôpital
+#TODO: find OC group/classification/sub-group
+OC-AST:
+  en: Governor-in-Council Appointees
+  fr: Personnes nommées par le gouverneur en conseil
+OC-GC:
+  en: Governor-in-Council Appointees
+  fr: Personnes nommées par le gouverneur en conseil
+OC-GCQ:
+  en: Governor-in-Council Appointees
+  fr: Personnes nommées par le gouverneur en conseil
+OC-GIC:
+  en: Governor-in-Council Appointees
+  fr: Personnes nommées par le gouverneur en conseil
+OC-GRP:
+  en: Governor-in-Council Appointees
+  fr: Personnes nommées par le gouverneur en conseil
+OE-BEO:
+  en: Office Equipment - Bookkeeping Equipment Operator
+  fr: Mécanographie - Opérateur de machines comptable
+OE-CEO:
+  en: Office Equipment - Calculating Equipment Operator
+  fr: Mécanographie - Opérateur de machines à calculer
+OE-DEO:
+  en: Office Equipment - Duplicating Equipment Operator
+  fr: Mécanographie - Opérateur de machine à reprographier
+OE-MEO:
+  en: Office Equipment - Microphotography Equipment Operator
+  fr: Mécanographie - Opérateur d’appareils de microphotographie
+OE-MSE:
+  en: Office Equipment - Mailing Service Equipment Operator
+  fr: Mécanographie - Opérateur de machines à courrier
+OM:
+  en: Organization and Methods
+  fr: Organisation et méthodes
+OP:
+  en: Occupational and Physical Therapy
+  fr: Ergothérapie et physiothérapie
+PC:
+  en: Physical Sciences
+  fr: Sciences physiques
+PE:
+  en: Personnel Administration
+  fr: Gestion du personnel
+PG:
+  en: Purchasing and Supply
+  fr: Achat et approvisionnement
+PH:
+  en: Pharmacy
+  fr: Pharmacie
+PI-CGC:
+  en: Primary Products Inspection - Grain Inspection
+  fr: Inspection des produits primaires - Inspection des grains
+PM:
+  en: Programme Administration
+  fr: Administration des programmes
+PO-IMA:
+  en: Police Operations Support - Intercept Monitoring and Analysis
+  fr: Soutien aux opérations policières - Monitorage et analyse des interceptions
+PO-TCO:
+  en: Police Operations Support - Telecommunications Operations
+  fr: Soutien aux opérations policières - Opérations des télécommunications
+PR:
+  en: Printing Operations
+  fr: Services d’imprimerie
+PR-BIN:
+  en: Printing Operations - Bindery
+  fr: Services d’imprimerie - Reliure
+PR-COM:
+  en: Printing Operations - Composition
+  fr: Services d’imprimerie - Composition
+PR-MAI:
+  en: Printing Operations - Maintenance
+  fr: Services d’imprimerie - Entretien
+PR-OFE:
+  en: Printing Operations - Pre-Press Preparation
+  fr: Services d’imprimerie - Prépresse
+PR-OFO:
+  en: Printing Operations - Press Operations
+  fr: Services d’imprimerie - Presses
+PR-PRC:
+  en: Printing Operations - Job Planning and Control
+  fr: Services d’imprimerie - Planification et contrôle des travaux
+PS:
+  en: Psychology
+  fr: Psychologie
+PY:
+  en: Photography
+  fr: Photographie
+RO:
+  en: Radio Operations
+  fr: Radiotélégraphie
+SC-DED:
+  en: Ships' Crews - Deck Department
+  fr: Équipages de navires - Service du pont
+SC-EQO:
+  en: Ships' Crews - Equipment Operation Department
+  fr: Équipages de navires - Service de l’utilisation du matériel
+SC-ERD:
+  en: Ships' Crews - Engine Room Department
+  fr: Équipages de navires - Service de la salle des machines
+SC-SPT:
+  en: Ships' Crews - Specialist Trades Department
+  fr: Équipages de navires - Service des métier spécialisés
+SC-STD:
+  en: Ships' Crews - Supply Department
+  fr: Équipages de navires - Service d’approvisionnement
+SE-REM:
+  en: Scientific Research - Research Manager
+  fr: Recherche scientifique - Directeur de recherche
+SE-RES:
+  en: Scientific Research - Research Scientist
+  fr: Recherche scientifique - Chercheur scientifique
+SG-PAT:
+  en: Scientific Regulation and Patent Examination
+  fr: Réglementation scientifique et examen des brevets
+SG-SRE:
+  en: Scientific Regulation and Patent Examination
+  fr: Réglementation scientifique et examen des brevets
 SI:
   en: Social Science Support
   fr: Soutien des sciences sociales
 SP:
   en: Services and Programs Group
   fr: Groupe de services et programmes
-SO-FLP: {"en": "Ships' Officers", "fr": "Officiers de navire"}
-SO-INS: {"en": "Ships' Officers", "fr": "Officiers de navire"}
-SO-MAO: {"en": "Ships' Officers", "fr": "Officiers de navire"}
-SO-RAD: {"en": "Ships' Officers", "fr": "Officiers de navire"}
-SR-APA: {"en": "Ship Repair", "fr": "Réparation des navires"}
-SR-APB: {"en": "Ship Repair", "fr": "Réparation des navires"}
-SR-BOB: {"en": "Ship Repair", "fr": "Réparation des navires"}
-SR-CPS: {"en": "Ship Repair", "fr": "Réparation des navires"}
-SR-EEW: {"en": "Ship Repair", "fr": "Réparation des navires"}
-SR-ELE: {"en": "Ship Repair", "fr": "Réparation des navires"}
-SR-EME: {"en": "Ship Repair", "fr": "Réparation des navires"}
-SR-INM: {"en": "Ship Repair", "fr": "Réparation des navires"}
-SR-MAC: {"en": "Ship Repair", "fr": "Réparation des navires"}
-SR-MAM: {"en": "Ship Repair", "fr": "Réparation des navires"}
-SR-MAN: {"en": "Ship Repair", "fr": "Réparation des navires"}
-SR-MAT: {"en": "Ship Repair", "fr": "Réparation des navires"}
-SR-MDO: {"en": "Ship Repair", "fr": "Réparation des navires"}
-SR-MGT: {"en": "Ship Repair", "fr": "Réparation des navires"}
-SR-MOC: {"en": "Ship Repair", "fr": "Réparation des navires"}
-SR-PIP: {"en": "Ship Repair", "fr": "Réparation des navires"}
-SR-PLE: {"en": "Ship Repair", "fr": "Réparation des navires"}
-SR-PRW: {"en": "Ship Repair", "fr": "Réparation des navires"}
-SR-QCW: {"en": "Ship Repair", "fr": "Réparation des navires"}
-SR-SMW: {"en": "Ship Repair", "fr": "Réparation des navires"}
-SR-SPS: {"en": "Ship Repair", "fr": "Réparation des navires"}
-SR-WOW: {"en": "Ship Repair", "fr": "Réparation des navires"}
-ST-COR: {"en": "Secretarial, Stenographic and Typing", "fr": "Secrétariat, sténographie et dactylographie"}
-ST-DNT: {"en": "Secretarial, Stenographic and Typing", "fr": "Secrétariat, sténographie et dactylographie"}
-ST-OCE: {"en": "Secretarial, Stenographic and Typing", "fr": "Secrétariat, sténographie et dactylographie"}
-ST-SCY: {"en": "Secretarial, Stenographic and Typing", "fr": "Secrétariat, sténographie et dactylographie"}
-ST-STN: {"en": "Secretarial, Stenographic and Typing", "fr": "Secrétariat, sténographie et dactylographie"}
-ST-TYP: {"en": "Secretarial, Stenographic and Typing", "fr": "Secrétariat, sténographie et dactylographie"}
-SW-CHA: {"en": "Social Work", "fr": "Service social"}
-SW-SCW: {"en": "Social Work", "fr": "Service social"}
-TI: {"en": "Technical Inspection", "fr": "Inspection technique"}
-TR: {"en": "Translation", "fr": "Traduction"}
-UT: {"en": "University Teaching", "fr": "Enseignement universitaire"}
-VM: {"en": "Veterinary Medicine", "fr": "Médecine vétérinaire"}
-WP: {"en": "Welfare Programmes", "fr": "Programmes de bien-être social"}
+SO-FLP:
+  en: Ships' Officers - Floating Plant
+  fr: Officiers de navire - Installations flottantes
+SO-INS:
+  en: Ships' Officers - Instructor
+  fr: Officiers de navire - Instructeur
+SO-MAO:
+  en: Ships' Officers - Marine Operations
+  fr: Officiers de navire - Navigation maritime
+SO-RAD:
+  en: Ships' Officers - Radio
+  fr: Officiers de navire - Radio
+SR-APA:
+  en: Ship Repair - Apprentices 4 years
+  fr: Réparation des navires - Apprentissage, 4 ans
+SR-APB:
+  en: Ship Repair - Apprentices 5 years
+  fr: Réparation des navires - Apprentissage, 5 ans
+SR-APP:
+  en: Ship Repair - Apprentice
+  fr: Réparation des navires - Apprentissage
+SR-BOB:
+  en: Ship Repair - Boilermaking and Blacksmithing
+  fr: Réparation des navires - Chaudronnerie et forge
+SR-CPS:
+  en: Ship Repair - Chargehands and Production Supervisors
+  fr: Réparation des navires - Chefs d’équipe et superviseurs et superviseures de la production
+SR-EEW:
+  en: Ship Repair - Electrical and Electronics Working
+  fr: Réparation des navires - Électricité et mécanique
+SR-ELE:
+  en: Ship Repair - Elemental
+  fr: Réparation des navires - Fonctions élémentaires
+SR-EME:
+  en: Ship Repair - Engine and Mechanical Equipment Maintaining
+  fr: Réparation des navires - Entretien des moteurs et de l’équipement mécanique
+SR-INM:
+  en: Ship Repair - Instrument Maintaining
+  fr: Réparation des navires - Entretien des instruments
+SR-MAC:
+  en: Ship Repair - Machining and Toolmaking
+  fr: Réparation des navires - Usinage et taillanderie
+SR-MAM:
+  en: Ship Repair - Machinery Maintaining
+  fr: Réparation des navires - Entretien des machines
+SR-MAN:
+  en: Ship Repair - Manipulating
+  fr: Réparation des navires - Manipulation
+SR-MAT:
+  en: Ship Repair - Machine Tending
+  fr: Réparation des navires - Surveillance des machines
+SR-MDO:
+  en: Ship Repair - Machine Driving-Operating
+  fr: Réparation des navires - Conduite et actionnement des machines
+SR-MGT:
+  en: Ship Repair - Management
+  fr: Réparation des navires - Gestion
+SR-MOC:
+  en: Ship Repair - Machine Operating-Controlling
+  fr: Réparation des navires - Actionnement et contrôle des machines
+SR-PIP:
+  en: Ship Repair - Pipefitting
+  fr: Réparation des navires - Tuyauterie
+SR-PLE:
+  en: Ship Repair - Planning and Estimating
+  fr: Réparation des navires - Planification et évaluation
+SR-PRW:
+  en: Ship Repair - Precision Working
+  fr: Réparation des navires - Travail de précision
+SR-QCW:
+  en: Ship Repair - Quality Control and Weapons Examining
+  fr: Réparation des navires - Contrôle de la qualité et inspection des armes
+SR-SMW:
+  en: Ship Repair - Sheet Metal Working
+  fr: Réparation des navires - Tôlerie
+SR-SPS:
+  en: Ship Repair - Ship Painting and Surface Protecting
+  fr: Réparation des navires - Peinture et protection superficielle des navires
+SR-WOW:
+  en: Ship Repair - Woodworking
+  fr: Réparation des navires - Menuiserie
+ST-COR:
+  en: Secretarial, Stenographic and Typing - Court Reporter
+  fr: Secrétariat, sténographie et dactylographie - Sténographie de comptes rendus
+#TODO: find ST-DNT group/classification/sub-group
+ST-DNT:
+  en: Secretarial, Stenographic and Typing
+  fr: Secrétariat, sténographie et dactylographie
+ST-OCE:
+  en: Secretarial, Stenographic and Typing - Office Composing Equipment
+  fr: Secrétariat, sténographie et dactylographie - Mécanographie (composition de bureau)
+ST-SCY:
+  en: Secretarial, Stenographic and Typing - Secretary
+  fr: Secrétariat, sténographie et dactylographie - Secrétariat
+ST-STN:
+  en: Secretarial, Stenographic and Typing - Stenographer
+  fr: Secrétariat, sténographie et dactylographie - Sténographie
+ST-TYP:
+  en: Secretarial, Stenographic and Typing - Typist
+  fr: Secrétariat, sténographie et dactylographie - Dactylographie
+SW-CHA:
+  en: Social Work - Chaplain
+  fr: Service social - Aumôniers
+SW-SCW:
+  en: Social Work - Social Welfare
+  fr: Service social - Bien-être social
+TI:
+  en: Technical Inspection
+  fr: Inspection technique
+TR:
+  en: Translation
+  fr: Traduction
+UT:
+  en: University Teaching
+  fr: Enseignement universitaire
+VM:
+  en: Veterinary Medicine
+  fr: Médecine vétérinaire
+WP:
+  en: Welfare Programmes
+  fr: Programmes de bien-être social

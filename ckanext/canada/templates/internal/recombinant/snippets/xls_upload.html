@@ -19,7 +19,7 @@
   {% set geno = h.recombinant_get_geno(pkg.dataset_type) %}
   {% if 'upload_warn' in geno %}
   <div class="col-md-12">
-    <div class="alert alert-danger" style="font-weight:bold;">
+    <div class="alert alert-warning" style="font-weight:bold;">
       <p>{{ h.recombinant_language_text(geno.upload_warn) | safe }}</p>
     </div>
   </div>
