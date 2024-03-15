@@ -1248,7 +1248,7 @@ def _promote_or_demote_sysadmin(username_or_id, sysadmin):
         else:
             h.flash_error(_('Failed to demoted %s from a sysadmin') % user.name)
 
-    return h.redirect_to('user.read', id=username_or_id)
+    return h.redirect_to('user.read', id=user.name)
 
 
 @canada_views.route('/user/promote/<id>', methods=['POST'])
