@@ -1233,21 +1233,15 @@ def _promote_or_demote_sysadmin(username_or_id, sysadmin):
     if not is_sysadmin(g.user) or not tbs_membership or '@tbs-sct.gc.ca' not in user.email:
         return abort(403, _('User %s not authorized to modify sysadmins.') % g.user)
 
-    try:
-        user.sysadmin = sysadmin
-        model.Session.add(user)
-        model.repo.commit_and_remove()
-        if sysadmin:
-            log.info('%s promoted %s to a sysadmin', g.user, user.name)
-            h.flash_success(_('Promoted %s to a sysadmin') % user.name)
-        else:
-            log.info('%s demoted %s from a sysadmin', g.user, user.name)
-            h.flash_success(_('Demoted %s from a sysadmin') % user.name)
-    except Exception:
-        if sysadmin:
-            h.flash_error(_('Failed to promoted %s to a sysadmin') % user.name)
-        else:
-            h.flash_error(_('Failed to demoted %s from a sysadmin') % user.name)
+    user.sysadmin = sysadmin
+    model.Session.add(user)
+    model.repo.commit_and_remove()
+    if sysadmin:
+        log.info('%s promoted %s to a sysadmin', g.user, user.name)
+        h.flash_success(_('Promoted %s to a sysadmin') % user.name)
+    else:
+        log.info('%s demoted %s from a sysadmin', g.user, user.name)
+        h.flash_success(_('Demoted %s from a sysadmin') % user.name)
 
     return h.redirect_to('user.read', id=user.name)
 
