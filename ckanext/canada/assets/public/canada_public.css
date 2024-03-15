@@ -396,6 +396,12 @@ form .form-actions .btn{
 }
 /* END - Action Buttons - END */
 
+/* Fieldsets */
+form#user-edit-form > fieldset:first-of-type{
+  border-top: none !important;
+}
+/* END - Action Buttons - END */
+
 /*#################
 ##      END      ##
 ## Form Elements ##
