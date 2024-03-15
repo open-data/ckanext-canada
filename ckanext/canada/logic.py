@@ -15,8 +15,7 @@ from ckan.plugins.toolkit import (
     g,
     get_action,
     h,
-    asbool,
-    check_access
+    asbool
 )
 from ckan.authz import is_sysadmin
 
@@ -461,25 +460,3 @@ def canada_job_list(up_func, context, data_dict):
         job['status'] = job_obj.get_status()
 
     return job_list
-
-
-def list_sysadmins(context, data_dict):
-
-    check_access('list_sysadmins', context, data_dict)
-
-    # always return the query from user_list
-    # so we can modify it here to filter by sysadmin
-    query = get_action('user_list')(dict(context, return_query=True), data_dict)
-    query = query.filter(model.User.sysadmin == True)
-
-    ## hack for pagination
-    if context.get('return_query'):
-        return query
-
-    users_list = []
-
-    for user in query.all():
-        result_dict = model_dictize.user_dictize(user[0], context)
-        users_list.append(result_dict)
-
-    return users_list

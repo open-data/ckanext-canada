@@ -52,12 +52,5 @@
       {% endif %}
     {% endblock %}
     <button class="btn btn-primary mrgn-lft-md" type="submit" name="save">{{ _('Update Profile') }}</button>
-    {% if is_sysadmin and not is_myself %}
-      {% if data.sysadmin %}
-        <a class="btn btn-danger mrgn-lft-md" href="{{ h.url_for('canada.demote_sysadmin', id=data.id) }}" data-module="confirm-action" data-module-content="{{ _('Are you sure you want to demote this user from a sysadmin?') }}">{{ _('Demote from sysadmin') }}</a>
-      {% else %}
-        <a class="btn btn-success mrgn-lft-md" href="{{ h.url_for('canada.promote_sysadmin', id=data.id) }}" data-module="confirm-action" data-module-content="{{ _('Are you sure you want to promote this user to a sysadmin?') }}">{{ _('Promote to sysadmin') }}</a>
-      {% endif %}
-    {% endif %}
   </div>
 </form>

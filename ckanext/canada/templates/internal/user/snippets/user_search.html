@@ -1,9 +1,9 @@
 <section class="module module-narrow module-shallow simple-input" style="margin-bottom: 15px;">
-    <h2 class="wb-inv">{{ _('Search Users') if not sysadmin_view else _('Search Sysadmins') }}</h2>
-    <form action="{{ h.url_for('user.index') if not sysadmin_view else h.url_for('canada.list_sysadmins') }}" method="get" id="user-search-form">
+    <h2 class="wb-inv">{{ _('Search Users') }}</h2>
+    <form action="{{ h.url_for('user.index') }}" method="get" id="user-search-form">
       <div class="field">
-        <label for="field-user-search">{{ _('Search Users') if not sysadmin_view else _('Search Sysadmins') }}</label>
-        <input id="field-user-search" value="{{ q }}" class="field form-control" name="q" placeholder="{{ _('Search Users') if not sysadmin_view else _('Search Sysadmins') }}" />
+        <label for="field-user-search">{{ _('Search Users') }}</label>
+        <input id="field-user-search" value="{{ q }}" class="field form-control" name="q" placeholder="{{ _('Search Users') }}" />
         <button class="btn-search" type="submit"><i class="fa fa-search"></i></button>
       </div>
     </form>

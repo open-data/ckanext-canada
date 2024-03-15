@@ -24,7 +24,6 @@ from ckan.plugins.toolkit import (
     request,
     render
 )
-from ckan.lib.helpers import Page
 import ckan.lib.mailer as mailer
 from ckan.lib.base import model
 import ckan.lib.jsonp as jsonp
@@ -1244,41 +1243,3 @@ def _promote_or_demote_sysadmin(username_or_id, sysadmin):
         h.flash_success(_('Demoted %s from a sysadmin') % user.name)
 
     return h.redirect_to('user.read', id=user.name)
-
-
-@canada_views.route('/user/promote/<id>', methods=['POST'])
-def promote_sysadmin(id):
-    return _promote_or_demote_sysadmin(username_or_id=id, sysadmin=True)
-
-
-@canada_views.route('/user/demote/<id>', methods=['POST'])
-def demote_sysadmin(id):
-    return _promote_or_demote_sysadmin(username_or_id=id, sysadmin=False)
-
-
-@canada_views.route('/sysadmin', methods=['GET'])
-def list_sysadmins():
-    context = {'model': model, 'session': model.Session,
-               'user': g.user, 'return_query': True}
-
-    try:
-        check_access('list_sysadmins', context, {})
-    except NotAuthorized:
-        return abort(403, _('Not authorized to see this page'))
-
-    page_number = h.get_page_number(request.params)
-    q = request.params.get('q', '')
-    limit = int(
-        request.params.get('limit', config.get('ckan.user_list_limit', 20)))
-
-    users_list = get_action('list_sysadmins')(context, {'q': q})
-
-    page = Page(
-        collection=users_list,
-        page=page_number,
-        url=h.pager_url,
-        item_count=users_list.count(),
-        items_per_page=limit)
-
-    extra_vars = {'page': page, 'q': q, 'sysadmin_view': True}
-    return render('user/list.html', extra_vars)

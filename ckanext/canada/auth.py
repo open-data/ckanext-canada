@@ -26,7 +26,3 @@ def view_org_members(context, data_dict):
     user = context.get('user')
     can_view = has_user_permission_for_group_or_org(data_dict.get(u'id'), user, 'manage_group')
     return {'success': can_view}
-
-
-def list_sysadmins(context, data_dict):
-    return {'success': is_sysadmin(context.get('user'))}

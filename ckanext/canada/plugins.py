@@ -690,7 +690,6 @@ ckanext.canada:schemas/prop.yaml
                 'resource_view_show': logic.canada_resource_view_show,
                 'resource_view_list': logic.canada_resource_view_list,
                 'job_list': logic.canada_job_list,
-                'list_sysadmins': logic.list_sysadmins,
                }
 
     # IAuthFunctions
@@ -700,7 +699,6 @@ ckanext.canada:schemas/prop.yaml
             'datastore_delete': auth.datastore_delete,
             'datastore_upsert': auth.datastore_upsert,
             'view_org_members': auth.view_org_members,
-            'list_sysadmins': auth.list_sysadmins,
         }
 
     # IMiddleware

@@ -27,7 +27,7 @@
     {% endif %}
     {% block users_list %}
       {% block users_search %}
-        {% snippet 'user/snippets/user_search.html', q=q , sysadmin_view=sysadmin_view%}
+        {% snippet 'user/snippets/user_search.html', q=q %}
       {% endblock %}
       <table style="width:100%">
         <thead>
@@ -70,14 +70,14 @@
       <header class="panel-heading">
         <h3 class="panel-title">
           <i class="fa fa-info-circle"></i>
-          {{ _('Users') if not sysadmin_view else _("Admins") }}
+          {{ _('Users') }}
         </h3>
       </header>
       <div class="panel-body">
         {% if c.userobj and not c.userobj.sysadmin %}
-          <p>{{ _("Search and view users.") if not sysadmin_view else _("Search and view admins.") }}</p>
+          <p>{{ _("Search and view users.") }}</p>
         {% else %}
-          <p>{{ _("Search and manage users.") if not sysadmin_view else _("Search and manage admins.") }}</p>
+          <p>{{ _("Search and manage users.") }}</p>
         {% endif %}
       </div>
   </section>
