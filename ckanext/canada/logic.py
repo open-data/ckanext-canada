@@ -467,24 +467,9 @@ def list_sysadmins(context, data_dict):
 
     check_access('list_sysadmins', context, data_dict)
 
-    q = data_dict.get('q', '')
-
-    query = model.Session.query(model.User,
-                model.User.name.label('name'),
-                model.User.fullname.label('fullname'),
-                model.User.about.label('about'),
-                model.User.email.label('email'),
-                model.User.created.label('created'))
-
-    if not asbool(data_dict.get('include_site_user', False)):
-        site_id = config.get('ckan.site_id')
-        query = query.filter(model.User.name != site_id)
-
-    if q:
-        query = model.User.search(q, query, user_name=g.user)
-
-    query = query.order_by(model.User.name)
-    query = query.filter(model.User.state == 'active')
+    # always return the query from user_list
+    # so we can modify it here to filter by sysadmin
+    query = get_action('user_list')(dict(context, return_query=True), data_dict)
     query = query.filter(model.User.sysadmin == True)
 
     ## hack for pagination
