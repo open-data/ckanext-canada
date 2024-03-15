@@ -483,17 +483,13 @@ def canada_user_update(up_func, context, data_dict):
     new_sysadmin_value = data_dict.get('sysadmin', user.sysadmin)
     old_sysadmin_value = user.sysadmin
 
+    # get executing, contextual user info. cannot use toolkit.g
+    # the context userobj is not reliable, just get the object.
+    g_username = context.get('user')
+    g_user = model.User.get(g_username)
+
     if new_sysadmin_value != old_sysadmin_value:
         # the sysadmin value is trying to be changed.
-
-        # cannot change your own sysadmin value
-        if user.name == g.user:
-            raise NotAuthorized(_('Cannot modify your own sysadmin privileges'))
-
-        # cannot change site user sysadmin value
-        site_id = config.get('ckan.site_id')
-        if user.name == site_id:
-            raise NotAuthorized(_('Cannot modify sysadmin privileges for user: %s') % site_id)
 
         # check org membership to tbs-sct, confirm email, and sysadmin
         tbs_membership = (model.Session.query(model.Group).
@@ -501,18 +497,27 @@ def canada_user_update(up_func, context, data_dict):
                                         model.Group.state == 'active',
                                         model.Group.name == 'tbs-sct')).
                             join(model.Member, model.Member.group_id == model.Group.id).
-                            filter(and_(model.Member.table_id == g.userobj.id,
+                            filter(and_(model.Member.table_id == getattr(g_user, 'id', '__'),
                                         model.Member.table_name == 'user',
                                         model.Member.state == 'active')))
 
         # a bit crude, but don't want to be lax on sysadmin controllers.
-        if not is_sysadmin(g.user) or not tbs_membership or '@tbs-sct.gc.ca' not in user.email:
-            raise NotAuthorized(_('User %s not authorized to modify sysadmins.') % g.user)
+        if not is_sysadmin(g_username) or not tbs_membership or '@tbs-sct.gc.ca' not in getattr(g_user, 'email', ''):
+            raise NotAuthorized(_('User %s not authorized to modify sysadmins.') % g_username)
+
+        # cannot change your own sysadmin value
+        if user.name == g_username:
+            raise NotAuthorized(_('Cannot modify your own sysadmin privileges'))
+
+        # cannot change site user sysadmin value
+        site_id = config.get('ckan.site_id')
+        if user.name == site_id:
+            raise NotAuthorized(_('Cannot modify sysadmin privileges for system user'))
 
         # extra logging
         if new_sysadmin_value:
-            log.info('%s promoted %s to a sysadmin', g.user, user.name)
+            log.info('%s promoted %s to a sysadmin', g_username, user.name)
         else:
-            log.info('%s demoted %s from a sysadmin', g.user, user.name)
+            log.info('%s demoted %s from a sysadmin', g_username, user.name)
 
     return up_func(context, data_dict)
