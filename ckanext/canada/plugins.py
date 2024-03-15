@@ -690,6 +690,7 @@ ckanext.canada:schemas/prop.yaml
                 'resource_view_show': logic.canada_resource_view_show,
                 'resource_view_list': logic.canada_resource_view_list,
                 'job_list': logic.canada_job_list,
+                'user_update': logic.canada_user_update,
                }
 
     # IAuthFunctions

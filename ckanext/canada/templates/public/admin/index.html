@@ -1,13 +1,9 @@
 {% ckan_extends %}
 
 {% block primary_content_inner %}
-<div class="col-lg-4 col-md-6 col-sm-12">
-  <ul class="user-list list-group">
-    {% for user in c.sysadmins %}
-      <li class="list-group-item">{{ h.linked_user(user) }}</li>
-    {% endfor %}
-  </ul>
-</div>
+  {% if h.is_registry() %}
+    {{ super() }}
+  {% endif %}
 {% endblock %}
 
 {% block secondary_content %}

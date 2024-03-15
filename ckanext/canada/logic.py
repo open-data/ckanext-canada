@@ -2,6 +2,7 @@ from ckan.logic.action import get as core_get
 from ckan.logic.validators import isodate, Invalid
 from ckan.lib.dictization import model_dictize
 from ckan import model
+from sqlalchemy import and_
 
 from ckan.plugins.toolkit import (
     get_or_bust,
@@ -40,8 +41,10 @@ from rq.job import Job
 from rq.exceptions import NoSuchJobError
 
 from pytz import timezone, utc
+from logging import getLogger
 
 
+log = getLogger(__name__)
 ottawa_tz = timezone('America/Montreal')
 
 JOB_MAPPING = {
@@ -460,3 +463,56 @@ def canada_job_list(up_func, context, data_dict):
         job['status'] = job_obj.get_status()
 
     return job_list
+
+
+@chained_action
+def canada_user_update(up_func, context, data_dict):
+    """
+    Checks if the sysadmin value is being changed.
+
+    We only want sysadmins from TBS to be able to do this.
+
+    We have to do it in this chained action, and not auth method
+    because sysadmins skip auth checks.
+    """
+    user = model.User.get(get_or_bust(data_dict, 'id'))
+
+    if not user:
+        raise ObjectNotFound(_('User not found'))
+
+    new_sysadmin_value = data_dict.get('sysadmin', user.sysadmin)
+    old_sysadmin_value = user.sysadmin
+
+    if new_sysadmin_value != old_sysadmin_value:
+        # the sysadmin value is trying to be changed.
+
+        # cannot change your own sysadmin value
+        if user.name == g.user:
+            raise NotAuthorized(_('Cannot modify your own sysadmin privileges'))
+
+        # cannot change site user sysadmin value
+        site_id = config.get('ckan.site_id')
+        if user.name == site_id:
+            raise NotAuthorized(_('Cannot modify sysadmin privileges for user: %s') % site_id)
+
+        # check org membership to tbs-sct, confirm email, and sysadmin
+        tbs_membership = (model.Session.query(model.Group).
+                            filter(and_(model.Group.type == 'organization',
+                                        model.Group.state == 'active',
+                                        model.Group.name == 'tbs-sct')).
+                            join(model.Member, model.Member.group_id == model.Group.id).
+                            filter(and_(model.Member.table_id == g.userobj.id,
+                                        model.Member.table_name == 'user',
+                                        model.Member.state == 'active')))
+
+        # a bit crude, but don't want to be lax on sysadmin controllers.
+        if not is_sysadmin(g.user) or not tbs_membership or '@tbs-sct.gc.ca' not in user.email:
+            raise NotAuthorized(_('User %s not authorized to modify sysadmins.') % g.user)
+
+        # extra logging
+        if new_sysadmin_value:
+            log.info('%s promoted %s to a sysadmin', g.user, user.name)
+        else:
+            log.info('%s demoted %s from a sysadmin', g.user, user.name)
+
+    return up_func(context, data_dict)

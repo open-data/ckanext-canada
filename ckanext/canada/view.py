@@ -10,7 +10,6 @@ import unicodecsv
 from codecs import BOM_UTF8
 from six import string_types, PY2
 from datetime import datetime, timedelta
-from sqlalchemy import and_
 
 from ckan.plugins.toolkit import (
     abort,
@@ -53,6 +52,7 @@ from ckan.views.api import(
     _get_request_data
 )
 from ckan.views.group import set_org
+from ckan.views.admin import _get_sysadmins
 
 from ckan.authz import is_sysadmin
 from ckan.logic import (
@@ -1203,43 +1203,15 @@ def members(id):
     return render(u'organization/members.html', extra_vars)
 
 
-def _promote_or_demote_sysadmin(username_or_id, sysadmin):
+@canada_views.route('/ckan-admin', methods=['GET'], strict_slashes=False)
+def ckan_admin_index():
     """
-    Promotes or demotes a user to/from a sysadmin.
-
-    Only sysadmins that are members of TBS can do this.
+    Overrides core Admin Index view, to exclude the site user.
     """
-    user = model.User.get(username_or_id)
-
-    if not user:
-        return abort(404, _('User not found'))
-
-    if user.name == g.user:
-        return abort(403, _('Cannot modify your own sysadmin privileges'))
-
-    tbs_membership = (model.Session.query(model.Group).
-                        filter(and_(model.Group.type == 'organization',
-                                    model.Group.state == 'active',
-                                    model.Group.name == 'tbs-sct')).
-                        join(model.Member, model.Member.group_id == model.Group.id).
-                        filter(and_(model.Member.table_id == g.userobj.id,
-                                    model.Member.table_name == 'user',
-                                    model.Member.state == 'active')))
-
-    # have to do mini-auth check here as sysadmins skip auth checks.
-    # we only want sysadmins that are part of TBS org and have TBS email.
-    # a bit crude, but don't want to be lax on sysadmin controllers.
-    if not is_sysadmin(g.user) or not tbs_membership or '@tbs-sct.gc.ca' not in user.email:
-        return abort(403, _('User %s not authorized to modify sysadmins.') % g.user)
-
-    user.sysadmin = sysadmin
-    model.Session.add(user)
-    model.repo.commit_and_remove()
-    if sysadmin:
-        log.info('%s promoted %s to a sysadmin', g.user, user.name)
-        h.flash_success(_('Promoted %s to a sysadmin') % user.name)
-    else:
-        log.info('%s demoted %s from a sysadmin', g.user, user.name)
-        h.flash_success(_('Demoted %s from a sysadmin') % user.name)
-
-    return h.redirect_to('user.read', id=user.name)
+    site_id = config.get('ckan.site_id')
+    sysadmins = []
+    for admin in _get_sysadmins():
+        if admin.name == site_id:
+            continue
+        sysadmins.append(admin.name)
+    return render(u'admin/index.html', extra_vars={'sysadmins': sysadmins})

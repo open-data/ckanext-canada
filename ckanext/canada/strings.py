@@ -53,6 +53,12 @@ _("Assigned %s as an admin.")  # TODO: remove after upstream fix
 _("View deleted.")  # TODO: remove after upstream fix
 _("View updated.")  # TODO: remove after upstream fix
 _("View created.")  # TODO: remove after upstream fix
+_('Promoted {} to sysadmin')
+_('Revoked sysadmin permission from {}')
+_('Current Sysadmins')
+_('Revoke Sysadmin permission')
+_('Promote user to Sysadmin')
+_('Promote')
 
 # strings from security
 _("Please upload a file or link to an external resource")
