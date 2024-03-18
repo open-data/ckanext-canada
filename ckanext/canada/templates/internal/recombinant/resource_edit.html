@@ -55,7 +55,7 @@
 
 {% block primary %}
   {{ super() }}
-  {% if resource and has_datastore_table %}
+  {% if resource and has_datastore_table.get(resource.id) %}
     {{ h.get_datapreview_recombinant(resource.name, resource.id, organization.name, dataset.dataset_type) }}
   {% endif %}
 {% endblock %}
