@@ -13,6 +13,7 @@ class Province(ChoiceColumn):
     )
     example = 'AB'
     design_snippet = None  # disable from parent ChoiceColumn
+    view_snippet = 'province.html'
 
     def choices(self):
         return {
@@ -41,6 +42,7 @@ class CRABusinessNumber(TextColumn):
     label = _('CRA Business Number')
     description = _('9-digit CRA business number (upcoming data standard)')
     example = '987654321'
+    view_snippet = 'cra_business_number.html'
 
     # remove surrounding whitespace and validate
     _SQL_VALIDATE = '''
