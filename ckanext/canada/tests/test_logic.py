@@ -125,3 +125,12 @@ class TestSysadminUpdate(CanadaTestBase):
         # user dict does not contain sysadmin, so go get db object
         user_obj = model.User.get(user_dict.get('id'))
         assert user_obj.sysadmin == True
+
+
+    def test_update_system_sysadmin(self):
+        """system user should be able to update"""
+        user_dict = self.action.user_patch(id=self.tbs_normal_user.get('id'),
+                                           sysadmin=True)
+        # user dict does not contain sysadmin, so go get db object
+        user_obj = model.User.get(user_dict.get('id'))
+        assert user_obj.sysadmin == True
