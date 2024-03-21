@@ -415,6 +415,7 @@ ckanext.canada:schemas/presets.yaml
             },
             resource_view_update=resource_view_update_bilingual,
             resource_view_create=resource_view_create_bilingual,
+            resource_validation_show=logic.canada_resource_validation_show,
         )
 
     # IXloader

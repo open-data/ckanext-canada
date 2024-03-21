@@ -23,6 +23,7 @@ from ckanext.canada.helpers import canada_date_str_to_datetime
 
 import functools
 from flask import has_request_context
+import json
 
 from sqlalchemy import func
 from sqlalchemy import or_
@@ -460,3 +461,30 @@ def canada_job_list(up_func, context, data_dict):
         job['status'] = job_obj.get_status()
 
     return job_list
+
+
+@chained_action
+def canada_resource_validation_show(up_func, context, data_dict):
+    """
+    Modify some of the custom check objects to match
+    some Tabulator Exception error structures.
+
+    And modify Exception error messages, otherwise not
+    modifiable view the JS spec.
+    """
+    validation = up_func(context, data_dict)
+    if validation and validation.get('reports'):
+        for lang in validation.get('reports'):
+            for table in validation['reports'][lang].get('tables'):
+                for error in table.get('errors'):
+                    code = error.get('code')
+                    if (code == 'invalid-dialect'
+                        or code == 'invalid-quote-char'
+                        or code == 'invalid-double-quote') \
+                            and 'row' in error:
+                                del(error['row'])
+                                table['row-count'] = table['row-count'] - 1
+                    if code == 'encoding-error':
+                        error['code'] = 'canada-encoding-error'
+                        error['message'] = _("The data source could not be successfully decoded with utf-8 encoding")
+    return validation
