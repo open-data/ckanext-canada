@@ -797,7 +797,8 @@ body .format-label{
   background-image: url("/data/base/images/sprite-resource-icons.png"), url("/base/images/sprite-resource-icons.png");
 }
 body, body .module-grid, body .media-grid, body .main, body .account-masthead, body .masthead, body .site-footer{
-  background-image: url("/data/base/images/bg.png"), url("/base/images/bg.png");
+  /* background-image: url("/data/base/images/bg.png"), url("/base/images/bg.png"); */
+  background-image: none !important;
 }
 /*##############################
 ##            END             ##
