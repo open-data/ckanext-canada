@@ -19,11 +19,8 @@ from ckan.plugins.toolkit import (
 )
 from ckan.authz import is_sysadmin
 
-from ckanext.canada.helpers import canada_date_str_to_datetime
-
 import functools
 from flask import has_request_context
-import json
 
 from sqlalchemy import func
 from sqlalchemy import or_
@@ -40,7 +37,7 @@ MIMETYPES_AS_DOMAINS = [
 from rq.job import Job
 from rq.exceptions import NoSuchJobError
 
-from pytz import timezone, utc
+from pytz import timezone
 
 
 ottawa_tz = timezone('America/Montreal')
