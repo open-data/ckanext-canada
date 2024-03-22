@@ -5,6 +5,8 @@ Xloader and Validation plugins use these classes
 to use static dialects with Tabulator.
 
 The CSVParser is different from others, and needs some extra mangling.
+
+Note: script cannot be named tabulator! (hence tabulate)
 """
 from tabulator import Stream
 from tabulator.parsers.csv import CSVParser
@@ -40,7 +42,7 @@ class CanadaStream(Stream):
         """
         if self.static_dialect:
             if self.logger:
-                self.logger.info('Using Static Dialect for %s: %r', self.__format, self.static_dialect)
+                self.logger.info('Using Static Dialect for %s: %r', self.format, self.static_dialect)
             return self.static_dialect
         return super(CanadaStream, self).dialect
 
