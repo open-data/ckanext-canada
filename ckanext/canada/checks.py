@@ -38,7 +38,7 @@ def ds_headers_check(cells, sample=None):
     return errors
 
 
-@check('static-dialect', type='custom', context='table')
+@check('static-dialect', type='custom')
 class StaticDialectCheck(object):
 
     validation_options = None
@@ -59,7 +59,12 @@ class StaticDialectCheck(object):
         # always return True so we use this check
         return True
 
-    def check_table(self):
+    def check_file(self):
+        """
+        Custom from canada fork of goodtables.
+
+        Return errors list and bool of fatal error or not
+        """
         if not self.static_dialect:
             return []
 
@@ -83,4 +88,4 @@ class StaticDialectCheck(object):
                                 message_substitutions={'stream_double_quote': self.stream_dialect['doubleQuote'],
                                                        'static_double_quote': self.static_dialect['doublequote'],}))
 
-        return errors
+        return errors, len(errors) > 0

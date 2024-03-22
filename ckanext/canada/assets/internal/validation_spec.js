@@ -44,7 +44,7 @@ this.ckan.module('canada-validation-spec', function($){
           "weight": 7
         };
         goodtablesUI.spec['errors']['canada-encoding-error'] = {
-          "name": this._("Unsupported File Encdoing"),
+          "name": this._("Unsupported File Encoding"),
           "message": this._("The data source could not be successfully decoded with utf-8 encoding"),
           "description": this._("File is not using utf-8 encoding.\n\n How it could be resolved:\n - Save the file with utf-8 encoding."),
           "type": "source-error",
