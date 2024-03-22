@@ -14,8 +14,9 @@ from tabulator.config import CSV_SAMPLE_LINES
 import six
 from csv import Dialect
 from _csv import Dialect as _Dialect
+from csv import QUOTE_MINIMAL
 
-
+#TODO: solve duplicative log messages
 class CanadaStream(Stream):
     """
     This is the stream for all file types (csv and tsv).
@@ -30,7 +31,7 @@ class CanadaStream(Stream):
     def __init__(self, source, *args, **kwargs):
         super(CanadaStream, self).__init__(source, *args, **kwargs)
         self.static_dialect = kwargs.get('static_dialect', None)
-        self.logger = kwargs.get('logger', None)
+        self.logger = kwargs.pop('logger', None)
 
     @property
     def dialect(self):
@@ -43,6 +44,7 @@ class CanadaStream(Stream):
         if self.static_dialect:
             if self.logger:
                 self.logger.info('Using Static Dialect for %s: %r', self.format, self.static_dialect)
+                self.logger = None
             return self.static_dialect
         return super(CanadaStream, self).dialect
 
@@ -52,13 +54,13 @@ class CanadaCSVDialect(Dialect):
     _name = 'csv'
     _valid = False
     # placeholders
-    delimiter = None
-    quotechar = None
+    delimiter = ","
+    quotechar = "\""
     escapechar = None
-    doublequote = None
-    skipinitialspace = None
-    lineterminator = None
-    quoting = None
+    doublequote = True
+    skipinitialspace = False
+    lineterminator = "\r\n"
+    quoting = QUOTE_MINIMAL
 
     def __init__(self, static_dialect):
         """
@@ -101,7 +103,7 @@ class CanadaCSVParser(CSVParser):
     def __init__(self, loader, *args, **kwargs):
         super(CanadaCSVParser, self).__init__(loader, *args, **kwargs)
         self.static_dialect = kwargs.get('static_dialect', None)
-        self.logger = kwargs.get('logger', None)
+        self.logger = kwargs.pop('logger', None)
         # we only want to mangle the parent method if a static dialect
         # is supplied. Otherwise, we want the parent method to be called as normal.
         if self.static_dialect:
@@ -112,6 +114,7 @@ class CanadaCSVParser(CSVParser):
         if self.static_dialect:
             if self.logger:
                 self.logger.info('Using Static Dialect for csv: %r', self.static_dialect)
+                self.logger = None
             return self.static_dialect
         return super(CanadaCSVParser, self).dialect
 
@@ -130,5 +133,6 @@ class CanadaCSVParser(CSVParser):
 
         if self.logger:
             self.logger.info('Using Static Dialect for csv: %r', self.static_dialect)
+            self.logger = None
 
         return sample, CanadaCSVDialect(self.static_dialect)
