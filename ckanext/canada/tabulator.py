@@ -15,6 +15,15 @@ from _csv import Dialect as _Dialect
 
 
 class CanadaStream(Stream):
+    """
+    This is the stream for all file types (csv and tsv).
+
+    TSVParser is fine, and will use the dialect property from here.
+
+    CSVParer is different, and you need to pass:
+        custom_parsers={'csv': CanadaCSVParser}
+    into the Stream instantiation.
+    """
 
     def __init__(self, source, *args, **kwargs):
         super(CanadaStream, self).__init__(source, *args, **kwargs)
@@ -50,6 +59,12 @@ class CanadaCSVDialect(Dialect):
     quoting = None
 
     def __init__(self, static_dialect):
+        """
+        Copied from csv.Dialect
+
+        Adds passing in of static dialect.
+        Needed to add py3/py2 compatibility for static dialect.
+        """
         for k in static_dialect:
             if six.PY2 and isinstance(static_dialect[k], six.text_type):
                 # must be strings and not unicode
@@ -66,7 +81,16 @@ class CanadaCSVDialect(Dialect):
 
 
 class CanadaCSVParser(CSVParser):
+    """
+    CSVParser is different from the other Parsers as it uses
+    __prepare_dialect instead of just the dialect property.
 
+    We supply new options static_dialect and logger.
+
+    We need to mangle __prepare_dialect if there is a static dialect.
+    """
+
+    # custom options, these need to exist for some magic.
     options = [
         'static_dialect',
         'logger',
@@ -90,7 +114,6 @@ class CanadaCSVParser(CSVParser):
         return super(CanadaCSVParser, self).dialect
 
     def __mangle__prepare_dialect(self, stream):
-
         # Get sample
         # Copied from tabulator.pasrers.csv
         # Needed because we cannot call parent private method while mangling.
