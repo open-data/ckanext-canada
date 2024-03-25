@@ -52,6 +52,7 @@ from ckan.views.api import(
     _get_request_data
 )
 from ckan.views.group import set_org
+from ckan.views.admin import _get_sysadmins
 
 from ckan.authz import is_sysadmin
 from ckan.logic import (
@@ -1200,3 +1201,17 @@ def members(id):
         u"group_type": 'organization'
     }
     return render(u'organization/members.html', extra_vars)
+
+
+@canada_views.route('/ckan-admin', methods=['GET'], strict_slashes=False)
+def ckan_admin_index():
+    """
+    Overrides core Admin Index view, to exclude the site user.
+    """
+    site_id = config.get('ckan.site_id')
+    sysadmins = []
+    for admin in _get_sysadmins():
+        if admin.name == site_id:
+            continue
+        sysadmins.append(admin.name)
+    return render(u'admin/index.html', extra_vars={'sysadmins': sysadmins})

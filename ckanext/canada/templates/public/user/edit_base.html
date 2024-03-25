@@ -2,8 +2,14 @@
 
 {% set user = c.userobj %}
 
-{% block subtitle %}{{ _('My Profile') }}{% endblock %}
+{% block subtitle %}
+  {% if is_myself %}
+    {{ _('Edit My Profile') }}
+  {% else %}
+    {{ _('Edit Profile') }}
+  {% endif %}
+{% endblock %}
 
 {% block primary_content %}
-      {% block primary_content_inner %}{% endblock %}
+  {% block primary_content_inner %}{% endblock %}
 {% endblock %}

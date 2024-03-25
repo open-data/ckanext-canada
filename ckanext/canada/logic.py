@@ -15,11 +15,9 @@ from ckan.plugins.toolkit import (
     g,
     get_action,
     h,
-    asbool
+    asbool,
 )
 from ckan.authz import is_sysadmin
-
-from ckanext.canada.helpers import canada_date_str_to_datetime
 
 import functools
 from flask import has_request_context
@@ -39,9 +37,11 @@ MIMETYPES_AS_DOMAINS = [
 from rq.job import Job
 from rq.exceptions import NoSuchJobError
 
-from pytz import timezone, utc
+from pytz import timezone
+from logging import getLogger
 
 
+log = getLogger(__name__)
 ottawa_tz = timezone('America/Montreal')
 
 JOB_MAPPING = {
