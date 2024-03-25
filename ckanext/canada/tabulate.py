@@ -22,8 +22,6 @@ from ckan.plugins.toolkit import config
 from logging import getLogger
 
 
-log = getLogger(__name__)
-
 #TODO: solve duplicative log messages
 class CanadaStream(Stream):
     """
@@ -36,15 +34,21 @@ class CanadaStream(Stream):
     into the Stream instantiation.
     """
 
+    static_dialects = None
+    encoding = None
+    logger = None
+
     def __init__(self, source, *args, **kwargs):
         super(CanadaStream, self).__init__(source, *args, **kwargs)
+        self.logger = _get_logger()  # extra logging
         dialects = _get_dialect()
         if dialects:
             self.static_dialects = dialects
         encoding = _get_encoding()
         if encoding:
             self.encoding = encoding
-        self.logger = log
+        # type_ignore_reason: __custom_parsers used in parent class
+        self.__custom_parsers = {'csv': CanadaCSVParser}  # type: ignore
 
     @property
     def dialect(self):
@@ -56,9 +60,14 @@ class CanadaStream(Stream):
         """
         if self.static_dialects and self.format in self.static_dialects:
             if self.logger:
+                if self.encoding:
+                    self.logger.info('Using static encoding for %s: %s', self.format, self.encoding)
                 self.logger.info('Using Static Dialect for %s: %r', self.format, self.static_dialects[self.format])
+                # remove logger in case the dialect property is accessed more than once.
                 self.logger = None
+
             return self.static_dialects[self.format]
+
         return super(CanadaStream, self).dialect
 
 
@@ -114,6 +123,10 @@ class CanadaCSVParser(CSVParser):
     We need to mangle __prepare_dialect if there is a static dialect.
     """
 
+    static_dialects = None
+    encoding = None
+    logger = None
+
     # custom options, these need to exist for some magic.
     options = [
         'static_dialect',
@@ -123,11 +136,11 @@ class CanadaCSVParser(CSVParser):
 
     def __init__(self, loader, *args, **kwargs):
         super(CanadaCSVParser, self).__init__(loader, *args, **kwargs)
-        self.logger = log
-        # we only want to mangle the parent method if a static dialect
-        # is supplied. Otherwise, we want the parent method to be called as normal.
+        self.logger = _get_logger()  # extra logging
         dialects = _get_dialect()
         if dialects:
+            # we only want to mangle the parent method if a static dialect
+            # is being used. Otherwise, we want the parent method to be called as normal.
             self.static_dialects = dialects
             self._CSVParser__prepare_dialect = self.__mangle__prepare_dialect
         encoding = _get_encoding()
@@ -138,9 +151,14 @@ class CanadaCSVParser(CSVParser):
     def dialect(self):
         if self.static_dialects and 'csv' in self.static_dialects:
             if self.logger:
+                if self.encoding:
+                    self.logger.info('Using static encoding for csv: %s', self.encoding)
                 self.logger.info('Using Static Dialect for csv: %r', self.static_dialects['csv'])
+                # remove logger in the case the __prepare_dialect method is called.
                 self.logger = None
+
             return self.static_dialects['csv']
+
         return super(CanadaCSVParser, self).dialect
 
     def __mangle__prepare_dialect(self, stream):
@@ -157,7 +175,10 @@ class CanadaCSVParser(CSVParser):
                 break
 
         if self.logger:
+            if self.encoding:
+                self.logger.info('Using static encoding for csv: %s', self.encoding)
             self.logger.info('Using Static Dialect for csv: %r', self.static_dialects['csv'])
+            # remove logger in the case the dialect property is accessed.
             self.logger = None
 
         return sample, CanadaCSVDialect(self.static_dialects['csv'])
@@ -172,3 +193,8 @@ def _get_dialect():
 
 def _get_encoding():
     return config.get('ckanext.canada.tabulator_encoding', None)
+
+
+def _get_logger():
+    #TODO: see if in a job, and return `ckanext.canada.jobs`??
+    return getLogger(__name__)

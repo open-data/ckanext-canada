@@ -24,11 +24,13 @@ from ckanext.canada import logic
 from ckanext.canada import auth
 from ckanext.canada import helpers
 from ckanext.canada import activity as act
-from ckanext.canada import tabulate
 # type_ignore_reason: importing to proc decorators
 from ckanext.canada import checks  # type: ignore
 from ckanext.xloader.interfaces import IXloader
 import json
+
+from ckanext.canada.tabulate import CanadaStream
+import tabulator.stream as tabulator_stream
 
 import ckan.lib.formatters as formatters
 from webhelpers.html import literal
@@ -324,16 +326,16 @@ class DataGCCAInternal(p.SingletonPlugin):
         #       throughout the Loader script. Validation passes many options
         #       into Goodtables, which also uses Tabulator. Because Xloader does
         #       not support passing Tabulator Stream and Parser arguments, we
-        #       monkey patch the Stream and CSVParser classes from Tabulator.
-        #       Another reason is that Validation does not call Tabulator directly,
-        #       but through Goodtables, making it trickier to make a universal
-        #       implementation to be used between Xloader, Validation, and Goodtables.
-        #       Ultimately, it is just easier to monkey patch the classes here.
-        from tabulator import Stream
-        from tabulator.parsers.csv import CSVParser
-
-        Stream = tabulate.CanadaStream
-        CSVParser = tabulate.CanadaCSVParser
+        #       monkey patch the Stream class from Tabulator. Another reason is
+        #       that Validation does not call Tabulator directly, but through
+        #       Goodtables, making it trickier to make a universal implementation
+        #       to be used between Xloader, Validation, and Goodtables.
+        #       Ultimately, it is just easier to monkey patch the Stream class here.
+        #
+        # FIXME: We really shouldn't monkey patch, there may be something better
+        #        to do here when we move from Goodtables to Frictionless.
+        #TODO: solve why Stream cannot get monkey patched but CSVParser can...
+        tabulator_stream.Stream = CanadaStream
 
     # IConfigurer
     def update_config(self, config):
