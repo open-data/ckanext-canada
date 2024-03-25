@@ -24,6 +24,7 @@ from ckanext.canada import logic
 from ckanext.canada import auth
 from ckanext.canada import helpers
 from ckanext.canada import activity as act
+from ckanext.canada import tabulate
 # type_ignore_reason: importing to proc decorators
 from ckanext.canada import checks  # type: ignore
 from ckanext.xloader.interfaces import IXloader
@@ -318,6 +319,22 @@ class DataGCCAInternal(p.SingletonPlugin):
     p.implements(p.IBlueprint)
     p.implements(IXloader, inherit=True)
 
+    def _mokey_patch(self):
+        # NOTE: Xloader uses Tabulator directly, calling its Stream class
+        #       throughout the Loader script. Validation passes many options
+        #       into Goodtables, which also uses Tabulator. Because Xloader does
+        #       not support passing Tabulator Stream and Parser arguments, we
+        #       monkey patch the Stream and CSVParser classes from Tabulator.
+        #       Another reason is that Validation does not call Tabulator directly,
+        #       but through Goodtables, making it trickier to make a universal
+        #       implementation to be used between Xloader, Validation, and Goodtables.
+        #       Ultimately, it is just easier to monkey patch the classes here.
+        from tabulator import Stream
+        from tabulator.parsers.csv import CSVParser
+
+        Stream = tabulate.CanadaStream
+        CSVParser = tabulate.CanadaCSVParser
+
     # IConfigurer
     def update_config(self, config):
         p.toolkit.add_template_directory(config, 'templates/internal')
@@ -339,6 +356,8 @@ ckanext.canada:schemas/presets.yaml
 
         # Include private datasets in Feeds
         config['ckan.feeds.include_private'] = True
+
+        self._mokey_patch()
 
 
     # IBlueprint

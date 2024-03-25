@@ -12,9 +12,17 @@ from tabulator import Stream
 from tabulator.parsers.csv import CSVParser
 from tabulator.config import CSV_SAMPLE_LINES
 import six
+import json
 from csv import Dialect
 from _csv import Dialect as _Dialect
 from csv import QUOTE_MINIMAL
+
+from ckan.plugins.toolkit import config
+
+from logging import getLogger
+
+
+log = getLogger(__name__)
 
 #TODO: solve duplicative log messages
 class CanadaStream(Stream):
@@ -30,8 +38,13 @@ class CanadaStream(Stream):
 
     def __init__(self, source, *args, **kwargs):
         super(CanadaStream, self).__init__(source, *args, **kwargs)
-        self.static_dialect = kwargs.get('static_dialect', None)
-        self.logger = kwargs.pop('logger', None)
+        dialects = _get_dialect()
+        if dialects:
+            self.static_dialects = dialects
+        encoding = _get_encoding()
+        if encoding:
+            self.encoding = encoding
+        self.logger = log
 
     @property
     def dialect(self):
@@ -41,15 +54,22 @@ class CanadaStream(Stream):
             dict/None: dialect
 
         """
-        if self.static_dialect:
+        if self.static_dialects and self.format in self.static_dialects:
             if self.logger:
-                self.logger.info('Using Static Dialect for %s: %r', self.format, self.static_dialect)
+                self.logger.info('Using Static Dialect for %s: %r', self.format, self.static_dialects[self.format])
                 self.logger = None
-            return self.static_dialect
+            return self.static_dialects[self.format]
         return super(CanadaStream, self).dialect
 
 
 class CanadaCSVDialect(Dialect):
+    """
+    Class containing a static CSV dialect, with support to pass in
+    different dielect values.
+
+    This class is only called from the mangling of CanadaCSVParser.__prepare_dialect,
+    and thus will never be instantiated if ckanext.canada.tabulator_dialects is not set.
+    """
 
     _name = 'csv'
     _valid = False
@@ -97,25 +117,30 @@ class CanadaCSVParser(CSVParser):
     # custom options, these need to exist for some magic.
     options = [
         'static_dialect',
+        'encoding',
         'logger',
     ]
 
     def __init__(self, loader, *args, **kwargs):
         super(CanadaCSVParser, self).__init__(loader, *args, **kwargs)
-        self.static_dialect = kwargs.get('static_dialect', None)
-        self.logger = kwargs.pop('logger', None)
+        self.logger = log
         # we only want to mangle the parent method if a static dialect
         # is supplied. Otherwise, we want the parent method to be called as normal.
-        if self.static_dialect:
+        dialects = _get_dialect()
+        if dialects:
+            self.static_dialects = dialects
             self._CSVParser__prepare_dialect = self.__mangle__prepare_dialect
+        encoding = _get_encoding()
+        if encoding:
+            self.encoding = encoding
 
     @property
     def dialect(self):
-        if self.static_dialect:
+        if self.static_dialects and 'csv' in self.static_dialects:
             if self.logger:
-                self.logger.info('Using Static Dialect for csv: %r', self.static_dialect)
+                self.logger.info('Using Static Dialect for csv: %r', self.static_dialects['csv'])
                 self.logger = None
-            return self.static_dialect
+            return self.static_dialects['csv']
         return super(CanadaCSVParser, self).dialect
 
     def __mangle__prepare_dialect(self, stream):
@@ -132,7 +157,18 @@ class CanadaCSVParser(CSVParser):
                 break
 
         if self.logger:
-            self.logger.info('Using Static Dialect for csv: %r', self.static_dialect)
+            self.logger.info('Using Static Dialect for csv: %r', self.static_dialects['csv'])
             self.logger = None
 
-        return sample, CanadaCSVDialect(self.static_dialect)
+        return sample, CanadaCSVDialect(self.static_dialects['csv'])
+
+
+def _get_dialect():
+    dialects = config.get('ckanext.canada.tabulator_dialects', None)
+    if dialects:
+        return json.loads(dialects)
+    return None
+
+
+def _get_encoding():
+    return config.get('ckanext.canada.tabulator_encoding', None)
