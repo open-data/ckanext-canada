@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-03-20 13:54+0000\n"
+"POT-Creation-Date: 2024-03-25 15:26+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: fr\n"
@@ -74,37 +74,29 @@ msgstr "La ressource est inactive dans DataStore"
 msgid "DataStore status unknown"
 msgstr "L'état de DataStore est inconnu"
 
-#: ckanext/canada/logic.py:279
+#: ckanext/canada/logic.py:281
 msgid "Could not determine a resource format. Please supply a format."
 msgstr ""
 "Il est impossible de déterminer le format de la ressource. Veuillez "
 "indiquer un format."
 
-#: ckanext/canada/logic.py:440
+#: ckanext/canada/logic.py:442
 msgid "Unknown Job"
 msgstr "Tâche inconnue "
 
-#: ckanext/canada/logic.py:482
+#: ckanext/canada/logic.py:487
 msgid "User not found"
 msgstr "Utilisateur introuvable"
 
-#: ckanext/canada/logic.py:513
-#, python-format
-msgid "User %s not authorized to modify sysadmins."
-msgstr ""
-"L’utilisateur %s n’est pas autorisé à modifier les administrateurs "
-" du système."
-
-#: ckanext/canada/logic.py:518
+#: ckanext/canada/logic.py:508
 msgid "Cannot modify your own sysadmin privileges"
-msgstr ""
-"Impossible de modifier vos propres privilèges d’administrateur de système."
+msgstr "Impossible de modifier vos propres privilèges d’administrateur de système."
 
-#: ckanext/canada/logic.py:522
+#: ckanext/canada/logic.py:512
 msgid "Cannot modify sysadmin privileges for system user"
 msgstr ""
-"Impossible de modifier les privileges des administrateurs du système pour "
-" un utilisateur du système."
+"Impossible de modifier les privileges des administrateurs du système pour"
+"  un utilisateur du système."
 
 #: ckanext/canada/plugins.py:612
 #: ckanext/canada/templates/internal/scheming/package/snippets/package_form.html:26
@@ -6008,4 +6000,9 @@ msgstr "Mémoriser mes informations"
 
 #~ msgid "My Profile"
 #~ msgstr "Mes paramètres"
+
+#~ msgid "User %s not authorized to modify sysadmins."
+#~ msgstr ""
+#~ "L’utilisateur %s n’est pas autorisé à"
+#~ " modifier les administrateurs  du système."
 

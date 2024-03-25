@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  CKAN\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-03-20 13:54+0000\n"
+"POT-Creation-Date: 2024-03-25 15:26+0000\n"
 "PO-Revision-Date: 2014-01-23 13:04+0000\n"
 "Last-Translator: Sean Hammond <sean.hammond@okfn.org>\n"
 "Language: en\n"
@@ -70,28 +70,23 @@ msgstr ""
 msgid "DataStore status unknown"
 msgstr ""
 
-#: ckanext/canada/logic.py:279
+#: ckanext/canada/logic.py:281
 msgid "Could not determine a resource format. Please supply a format."
 msgstr ""
 
-#: ckanext/canada/logic.py:440
+#: ckanext/canada/logic.py:442
 msgid "Unknown Job"
 msgstr ""
 
-#: ckanext/canada/logic.py:482
+#: ckanext/canada/logic.py:487
 msgid "User not found"
 msgstr ""
 
-#: ckanext/canada/logic.py:513
-#, python-format
-msgid "User %s not authorized to modify sysadmins."
-msgstr ""
-
-#: ckanext/canada/logic.py:518
+#: ckanext/canada/logic.py:508
 msgid "Cannot modify your own sysadmin privileges"
 msgstr ""
 
-#: ckanext/canada/logic.py:522
+#: ckanext/canada/logic.py:512
 msgid "Cannot modify sysadmin privileges for system user"
 msgstr ""
 
@@ -7941,5 +7936,8 @@ msgstr "Keep me logged in"
 #~ msgstr ""
 
 #~ msgid "Spatial Feature"
+#~ msgstr ""
+
+#~ msgid "User %s not authorized to modify sysadmins."
 #~ msgstr ""
 

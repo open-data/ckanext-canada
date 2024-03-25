@@ -20,6 +20,8 @@ from ckan.plugins.toolkit import (
     check_access
 )
 from ckan.authz import is_sysadmin
+import ckan.logic.schema as schema_
+from ckan.lib.navl.dictization_functions import validate as _validate
 
 from ckanext.canada.helpers import canada_date_str_to_datetime
 
@@ -476,12 +478,20 @@ def canada_user_update(up_func, context, data_dict):
     We have to do it in this chained action, and not auth method
     because sysadmins skip auth checks.
     """
+    model = context['model']
+    session = context['session']
+    schema = context.get('schema') or schema_.default_update_user_schema()
     user = model.User.get(get_or_bust(data_dict, 'id'))
 
     if not user:
         raise ObjectNotFound(_('User not found'))
 
-    if data_dict.get('sysadmin', user.sysadmin) != user.sysadmin:
+    data, errors = _validate(data_dict, schema, context)
+    if errors:
+        session.rollback()
+        raise ValidationError(errors)
+
+    if data.get('sysadmin', user.sysadmin) != user.sysadmin:
         # the sysadmin value is trying to be changed.
 
         # check if user has access to update users
@@ -493,26 +503,6 @@ def canada_user_update(up_func, context, data_dict):
         if contextual_user.name == site_id:
             return up_func(context, data_dict)
 
-        # check org membership to tbs-sct, confirm email, and sysadmin
-        tbs_membership = (model.Session.query(model.Group).
-                            filter(and_(model.Group.type == 'organization',
-                                        model.Group.state == 'active',
-                                        model.Group.name == 'tbs-sct')).
-                            join(model.Member, model.Member.group_id == model.Group.id).
-                            filter(and_(model.Member.table_id == contextual_user.id,
-                                        model.Member.table_name == 'user',
-                                        model.Member.state == 'active')))
-
-        # a bit crude, but don't want to be lax on sysadmin controllers.
-        # Note: system user does not have an email, use getattr
-        if not is_sysadmin(contextual_user.name) \
-                or not tbs_membership \
-                or not contextual_user.email \
-                or '@tbs-sct.gc.ca' not in contextual_user.email:
-                    raise NotAuthorized(
-                        _('User %s not authorized to modify sysadmins.')
-                        % contextual_user.name)
-
         # cannot change your own sysadmin value
         if user.name == contextual_user.name:
             raise NotAuthorized(_('Cannot modify your own sysadmin privileges'))
@@ -522,7 +512,7 @@ def canada_user_update(up_func, context, data_dict):
             raise NotAuthorized(_('Cannot modify sysadmin privileges for system user'))
 
         # extra logging
-        if data_dict.get('sysadmin'):
+        if data.get('sysadmin'):
             log.info('%s promoted %s to a sysadmin', contextual_user.name, user.name)
         else:
             log.info('%s demoted %s from a sysadmin', contextual_user.name, user.name)
