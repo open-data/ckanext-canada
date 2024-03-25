@@ -433,6 +433,16 @@ ul.resource-list > li.resource-item > div.canada-resource-list-badges a.validati
 ul.resource-list > li.resource-item > div.canada-resource-list-badges{
   align-self: last baseline;
 }
+ul.resource-list > li.resource-item span.format-label[data-format="pbix"]{
+  background-image: url("/data/static/img/power_bi.svg"), url("/static/img/power_bi.svg");
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  background-position: 0 0;
+  width: 33px;
+  height: 36px;
+  transform: none !important;
+  margin: 0 !important;
+}
 .resource-item .resource-action-links{
   display: block !important;
   position: relative !important;
@@ -569,6 +579,26 @@ ul.resource-list > li.resource-item > div.canada-resource-list-badges{
   }
 }
 /* END - Resource Action Buttons - END */
+
+/* Resource Views Lists */
+body ul.nav li.view-item a{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  width: 100%;
+  align-items: center;
+}
+body ul.nav li.view-item a i.icon{
+  position: relative !important;
+}
+body ul.nav li.view-item a i.icon::before{
+  position: absolute !important;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 24px !important;
+}
+/* END - Resource Views Lists - END */
 
 /*#################
 ##      END      ##
@@ -753,3 +783,19 @@ div.canada-job-list-title small{
 ##  Background Job List ##
 ##          END         ##
 ##########################*/
+
+/*##############################
+##  Core CSS URIs w/ Base URL ##
+################################*/
+body .format-label{
+  background-image: url("/data/base/images/sprite-resource-icons.png"), url("/base/images/sprite-resource-icons.png");
+}
+body, body .module-grid, body .media-grid, body .main, body .account-masthead, body .masthead, body .site-footer{
+  /* background-image: url("/data/base/images/bg.png"), url("/base/images/bg.png"); */
+  background-image: none !important;
+}
+/*##############################
+##            END             ##
+##  Core CSS URIs w/ Base URL ##
+##            END             ##
+################################*/

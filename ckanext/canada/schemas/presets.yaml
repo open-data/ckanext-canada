@@ -3457,6 +3457,8 @@ presets:
     - value: ODT
       mimetype: application/vnd.oasis.opendocument.text
       replaces: [odt]
+    - value: PBIX
+      replaces: [pbix]
     - value: PDF
       mimetype: application/pdf
     - value: PDF/A-1
