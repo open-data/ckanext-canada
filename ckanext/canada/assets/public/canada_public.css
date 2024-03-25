@@ -586,25 +586,25 @@ ul.resource-list > li.resource-item span.format-label[data-format="pbix"]{
 }
 /* END - Resource Action Buttons - END */
 
-/* Resource Views List Bar */
-body ul.nav-tabs a[href*="?view_id="]{
+/* Resource Views Lists */
+body ul.nav li.view-item a{
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
   width: 100%;
   align-items: center;
 }
-body ul.nav-tabs a[href*="?view_id="] i.icon{
+body ul.nav li.view-item a i.icon{
   position: relative !important;
 }
-body ul.nav-tabs a[href*="?view_id="] i.icon::before{
+body ul.nav li.view-item a i.icon::before{
   position: absolute !important;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   font-size: 24px !important;
 }
-/* END - Resource Views List Bar - END */
+/* END - Resource Views Lists - END */
 
 /*#################
 ##      END      ##
