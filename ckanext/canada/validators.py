@@ -5,7 +5,7 @@ import unicodedata
 
 from six import text_type
 
-from ckan.plugins.toolkit import _, h, get_action, ValidationError
+from ckan.plugins.toolkit import _, get_action, ValidationError
 from ckan.lib.navl.validators import StopOnError
 from ckan.authz import is_sysadmin
 from ckan import model
