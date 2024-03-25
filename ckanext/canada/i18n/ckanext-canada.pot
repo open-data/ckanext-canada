@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ckanext-canada 0.4.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-03-25 15:26+0000\n"
+"POT-Creation-Date: 2024-03-25 17:51+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -66,24 +66,12 @@ msgstr ""
 msgid "DataStore status unknown"
 msgstr ""
 
-#: ckanext/canada/logic.py:281
+#: ckanext/canada/logic.py:275
 msgid "Could not determine a resource format. Please supply a format."
 msgstr ""
 
-#: ckanext/canada/logic.py:442
+#: ckanext/canada/logic.py:436
 msgid "Unknown Job"
-msgstr ""
-
-#: ckanext/canada/logic.py:487
-msgid "User not found"
-msgstr ""
-
-#: ckanext/canada/logic.py:508
-msgid "Cannot modify your own sysadmin privileges"
-msgstr ""
-
-#: ckanext/canada/logic.py:512
-msgid "Cannot modify sysadmin privileges for system user"
 msgstr ""
 
 #: ckanext/canada/plugins.py:612
@@ -138,12 +126,12 @@ msgstr ""
 msgid "Suggestion Status"
 msgstr ""
 
-#: ckanext/canada/plugins.py:845
+#: ckanext/canada/plugins.py:844
 #: ckanext/canada/templates/public/package/snippets/resource_form.html:8
 msgid "Previous"
 msgstr ""
 
-#: ckanext/canada/plugins.py:845
+#: ckanext/canada/plugins.py:844
 msgid "Next"
 msgstr ""
 
@@ -378,23 +366,31 @@ msgstr ""
 msgid "Promote"
 msgstr ""
 
-#: ckanext/canada/strings.py:64
-msgid "Please upload a file or link to an external resource"
+#: ckanext/canada/strings.py:62
+msgid "Cannot modify your own sysadmin privileges"
 msgstr ""
 
-#: ckanext/canada/strings.py:65
-msgid "Cannot upload files of this type"
+#: ckanext/canada/strings.py:63
+msgid "Cannot modify sysadmin privileges for system user"
 msgstr ""
 
 #: ckanext/canada/strings.py:66
+msgid "Please upload a file or link to an external resource"
+msgstr ""
+
+#: ckanext/canada/strings.py:67
+msgid "Cannot upload files of this type"
+msgstr ""
+
+#: ckanext/canada/strings.py:68
 msgid "Cannot link files of this type"
 msgstr ""
 
-#: ckanext/canada/strings.py:69
+#: ckanext/canada/strings.py:71
 msgid "These fields have been removed, click update below to save your changes."
 msgstr ""
 
-#: ckanext/canada/strings.py:70
+#: ckanext/canada/strings.py:72
 msgid "These fields have been removed."
 msgstr ""
 

@@ -2,7 +2,6 @@ from ckan.logic.action import get as core_get
 from ckan.logic.validators import isodate, Invalid
 from ckan.lib.dictization import model_dictize
 from ckan import model
-from sqlalchemy import and_
 
 from ckan.plugins.toolkit import (
     get_or_bust,
@@ -17,13 +16,8 @@ from ckan.plugins.toolkit import (
     get_action,
     h,
     asbool,
-    check_access
 )
 from ckan.authz import is_sysadmin
-import ckan.logic.schema as schema_
-from ckan.lib.navl.dictization_functions import validate as _validate
-
-from ckanext.canada.helpers import canada_date_str_to_datetime
 
 import functools
 from flask import has_request_context
@@ -43,7 +37,7 @@ MIMETYPES_AS_DOMAINS = [
 from rq.job import Job
 from rq.exceptions import NoSuchJobError
 
-from pytz import timezone, utc
+from pytz import timezone
 from logging import getLogger
 
 
@@ -466,55 +460,3 @@ def canada_job_list(up_func, context, data_dict):
         job['status'] = job_obj.get_status()
 
     return job_list
-
-
-@chained_action
-def canada_user_update(up_func, context, data_dict):
-    """
-    Checks if the sysadmin value is being changed.
-
-    We only want sysadmins from TBS to be able to do this.
-
-    We have to do it in this chained action, and not auth method
-    because sysadmins skip auth checks.
-    """
-    model = context['model']
-    session = context['session']
-    schema = context.get('schema') or schema_.default_update_user_schema()
-    user = model.User.get(get_or_bust(data_dict, 'id'))
-
-    if not user:
-        raise ObjectNotFound(_('User not found'))
-
-    data, errors = _validate(data_dict, schema, context)
-    if errors:
-        session.rollback()
-        raise ValidationError(errors)
-
-    if data.get('sysadmin', user.sysadmin) != user.sysadmin:
-        # the sysadmin value is trying to be changed.
-
-        # check if user has access to update users
-        check_access('user_update', context, data_dict)
-        contextual_user = context.get('auth_user_obj')
-        site_id = config.get('ckan.site_id')
-
-        # system user should be able to do anything still
-        if contextual_user.name == site_id:
-            return up_func(context, data_dict)
-
-        # cannot change your own sysadmin value
-        if user.name == contextual_user.name:
-            raise NotAuthorized(_('Cannot modify your own sysadmin privileges'))
-
-        # cannot change site user sysadmin value
-        if user.name == site_id:
-            raise NotAuthorized(_('Cannot modify sysadmin privileges for system user'))
-
-        # extra logging
-        if data.get('sysadmin'):
-            log.info('%s promoted %s to a sysadmin', contextual_user.name, user.name)
-        else:
-            log.info('%s demoted %s from a sysadmin', contextual_user.name, user.name)
-
-    return up_func(context, data_dict)

@@ -59,6 +59,8 @@ _('Current Sysadmins')
 _('Revoke Sysadmin permission')
 _('Promote user to Sysadmin')
 _('Promote')
+_('Cannot modify your own sysadmin privileges')
+_('Cannot modify sysadmin privileges for system user')
 
 # strings from security
 _("Please upload a file or link to an external resource")

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-03-25 15:26+0000\n"
+"POT-Creation-Date: 2024-03-25 17:51+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: fr\n"
@@ -74,29 +74,15 @@ msgstr "La ressource est inactive dans DataStore"
 msgid "DataStore status unknown"
 msgstr "L'état de DataStore est inconnu"
 
-#: ckanext/canada/logic.py:281
+#: ckanext/canada/logic.py:275
 msgid "Could not determine a resource format. Please supply a format."
 msgstr ""
 "Il est impossible de déterminer le format de la ressource. Veuillez "
 "indiquer un format."
 
-#: ckanext/canada/logic.py:442
+#: ckanext/canada/logic.py:436
 msgid "Unknown Job"
 msgstr "Tâche inconnue "
-
-#: ckanext/canada/logic.py:487
-msgid "User not found"
-msgstr "Utilisateur introuvable"
-
-#: ckanext/canada/logic.py:508
-msgid "Cannot modify your own sysadmin privileges"
-msgstr "Impossible de modifier vos propres privilèges d’administrateur de système."
-
-#: ckanext/canada/logic.py:512
-msgid "Cannot modify sysadmin privileges for system user"
-msgstr ""
-"Impossible de modifier les privileges des administrateurs du système pour"
-"  un utilisateur du système."
 
 #: ckanext/canada/plugins.py:612
 #: ckanext/canada/templates/internal/scheming/package/snippets/package_form.html:26
@@ -150,12 +136,12 @@ msgstr "Juridiction"
 msgid "Suggestion Status"
 msgstr "État de la suggestion"
 
-#: ckanext/canada/plugins.py:845
+#: ckanext/canada/plugins.py:844
 #: ckanext/canada/templates/public/package/snippets/resource_form.html:8
 msgid "Previous"
 msgstr "Précédent"
 
-#: ckanext/canada/plugins.py:845
+#: ckanext/canada/plugins.py:844
 msgid "Next"
 msgstr "Suivant"
 
@@ -394,27 +380,37 @@ msgstr "Promouvoir l’utilisateur à administrateur du système"
 msgid "Promote"
 msgstr "Promouvoir"
 
-#: ckanext/canada/strings.py:64
+#: ckanext/canada/strings.py:62
+msgid "Cannot modify your own sysadmin privileges"
+msgstr "Impossible de modifier vos propres privilèges d’administrateur de système."
+
+#: ckanext/canada/strings.py:63
+msgid "Cannot modify sysadmin privileges for system user"
+msgstr ""
+"Impossible de modifier les privileges des administrateurs du système pour"
+"  un utilisateur du système."
+
+#: ckanext/canada/strings.py:66
 msgid "Please upload a file or link to an external resource"
 msgstr ""
 "Veuillez téléverser un fichier ou donner un lien vers une ressource "
 "externe"
 
-#: ckanext/canada/strings.py:65
+#: ckanext/canada/strings.py:67
 msgid "Cannot upload files of this type"
 msgstr "Impossible de téléverser un fichier de ce type"
 
-#: ckanext/canada/strings.py:66
+#: ckanext/canada/strings.py:68
 msgid "Cannot link files of this type"
 msgstr "Impossible de donner un lien vers un fichier de ce type"
 
-#: ckanext/canada/strings.py:69
+#: ckanext/canada/strings.py:71
 msgid "These fields have been removed, click update below to save your changes."
 msgstr ""
 "Ces champs seront supprimés une fois que vous aurez sauvegardé vos "
 "changements."
 
-#: ckanext/canada/strings.py:70
+#: ckanext/canada/strings.py:72
 msgid "These fields have been removed."
 msgstr "Ces champs ont été supprimés."
 
@@ -6005,4 +6001,7 @@ msgstr "Mémoriser mes informations"
 #~ msgstr ""
 #~ "L’utilisateur %s n’est pas autorisé à"
 #~ " modifier les administrateurs  du système."
+
+#~ msgid "User not found"
+#~ msgstr "Utilisateur introuvable"
 
