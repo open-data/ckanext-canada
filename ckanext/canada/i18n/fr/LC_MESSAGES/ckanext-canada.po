@@ -89,19 +89,22 @@ msgid "User not found"
 msgstr "Utilisateur introuvable"
 
 #: ckanext/canada/logic.py:513
-#, python-format, TODO: add translation
+#, python-format
 msgid "User %s not authorized to modify sysadmins."
 msgstr ""
+"L’utilisateur %s n’est pas autorisé à modifier les administrateurs "
+" du système."
 
 #: ckanext/canada/logic.py:518
-#, TODO: add translation
 msgid "Cannot modify your own sysadmin privileges"
 msgstr ""
+"Impossible de modifier vos propres privilèges d’administrateur de système."
 
 #: ckanext/canada/logic.py:522
-#, TODO: add translation
 msgid "Cannot modify sysadmin privileges for system user"
 msgstr ""
+"Impossible de modifier les privileges des administrateurs du système pour "
+" un utilisateur du système."
 
 #: ckanext/canada/plugins.py:612
 #: ckanext/canada/templates/internal/scheming/package/snippets/package_form.html:26
@@ -376,34 +379,28 @@ msgid "View created."
 msgstr "Aperçu créé."
 
 #: ckanext/canada/strings.py:56
-#, TODO: add translation
 msgid "Promoted {} to sysadmin"
-msgstr ""
+msgstr "Promouvoir {} à administrateur du système"
 
 #: ckanext/canada/strings.py:57
-#, TODO: add translation
 msgid "Revoked sysadmin permission from {}"
-msgstr ""
+msgstr "Révoquer la permission d’administrateur du système pour {}"
 
 #: ckanext/canada/strings.py:58
-#, TODO: add translation
 msgid "Current Sysadmins"
-msgstr ""
+msgstr "Administrateurs du système actuels"
 
 #: ckanext/canada/strings.py:59
-#, TODO: add translation
 msgid "Revoke Sysadmin permission"
-msgstr ""
+msgstr "Révoquer la permission des administrateurs du système"
 
 #: ckanext/canada/strings.py:60
-#, TODO: add translation
 msgid "Promote user to Sysadmin"
-msgstr ""
+msgstr "Promouvoir l’utilisateur à administrateur du système"
 
 #: ckanext/canada/strings.py:61
-#, TODO: add translation
 msgid "Promote"
-msgstr ""
+msgstr "Promouvoir"
 
 #: ckanext/canada/strings.py:64
 msgid "Please upload a file or link to an external resource"
