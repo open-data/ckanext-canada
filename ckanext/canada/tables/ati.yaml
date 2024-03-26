@@ -15,6 +15,9 @@ resources:
 - title: ATI Summaries
 
   resource_name: ati
+
+  published_resource_id: 19383ca2-b01a-487d-88f7-e1ffbc7d39c2
+
   create_form: true
   edit_form: true
 
@@ -275,6 +278,9 @@ resources:
 - title: ATI Nothing to Report
 
   resource_name: ati-nil
+
+  published_resource_id: 5a1386a5-ba69-4725-8338-2f26004d7382
+
   create_form: true
   edit_form: false #edit not possible for nil reports since only stored data is primary key
 

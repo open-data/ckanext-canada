@@ -14,6 +14,9 @@ upload_warn: 'IMPORTANT: New or updated inventories / rows will be published on 
 resources:
 - title: Open Data Inventory
   resource_name: inventory
+
+  published_resource_id: d0df95a8-31a9-46c9-853b-6952819ec7b4
+
   fields:
 
   - datastore_id: ref_number

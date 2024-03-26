@@ -101,6 +101,8 @@ resources:
 - title: Proactive Publication - Contracts over $10,000
   resource_name: contracts
 
+  published_resource_id: fac950c0-00d5-4ec1-a4d3-9cbebf98a305
+
   excel_data_num_rows: 5000
   create_form: true
   edit_form: true
@@ -2238,6 +2240,9 @@ resources:
 
 - title: Proactive Publication - Contracts Nothing to Report
   resource_name: contracts-nil
+
+  published_resource_id: fa4ff6c4-e9af-4491-9d4e-2b468e415a68
+
   create_form: true
   edit_form: false #edit not possible for nil reports since only stored data is primary key
   fields:
