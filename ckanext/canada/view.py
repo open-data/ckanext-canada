@@ -310,11 +310,11 @@ def _form_choices_prefix_code(field_name, chromo):
 def _get_choice_fields(resource_name, chromo):
     separator = ' : ' if h.lang() == 'fr' else ': '
     return {
-        f['datastore_id']: [
+        datastore_id: [
             {'value': k,
              'label': k + separator + v if _form_choices_prefix_code(f['datastore_id'], chromo) else v
-             } for (k, v) in f['choices']]
-        for f in h.recombinant_choice_fields(resource_name)}
+             } for (k, v) in choices]
+        for datastore_id, choices in h.recombinant_choice_fields(resource_name).items()}
 
 
 @canada_views.route('/group/bulk_process/<id>', methods=['GET', 'POST'])

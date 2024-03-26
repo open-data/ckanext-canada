@@ -299,9 +299,7 @@ def update_triggers():
             END;
             ''')
 
-    inventory_choices = dict(
-        (f['datastore_id'], f['choices'])
-        for f in h.recombinant_choice_fields('inventory'))
+    inventory_choices = h.recombinant_choice_fields('inventory')
     lc.action.datastore_function_create(
         name=u'inventory_trigger',
         or_replace=True,
