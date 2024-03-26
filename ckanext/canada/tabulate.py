@@ -8,7 +8,7 @@ The CSVParser is different from others, and needs some extra mangling.
 
 Note: script cannot be named tabulator! (hence tabulate)
 """
-from tabulator import Stream
+from tabulator.stream import Stream
 from tabulator.parsers.csv import CSVParser
 from tabulator.config import CSV_SAMPLE_LINES
 import six
@@ -19,10 +19,26 @@ from csv import QUOTE_MINIMAL
 
 from ckan.plugins.toolkit import config
 
-from logging import getLogger
+from logging import getLogger, Filter
+
+log2 = getLogger('ckanext.canada.dev')
+
+class LimitStreamLogging(Filter):
+    logged_messages = []
+    #TODO: solve duplicative log messages
+    def filter(self, record):
+        # add other fields if you need more granular comparison, depends on your app
+        current_log = (record.module, record.levelno, record.msg)
+        if current_log not in self.logged_messages:
+            self.logged_messages.append(current_log)
+            return True
+        return False
 
 
-#TODO: solve duplicative log messages
+log = getLogger(__name__)
+log.addFilter(LimitStreamLogging())
+
+
 class CanadaStream(Stream):
     """
     This is the stream for all file types (csv and tsv).
@@ -36,19 +52,16 @@ class CanadaStream(Stream):
 
     static_dialects = None
     encoding = None
-    logger = None
 
     def __init__(self, source, *args, **kwargs):
+        kwargs.update({'custom_parsers': {'csv': CanadaCSVParser}})
         super(CanadaStream, self).__init__(source, *args, **kwargs)
-        self.logger = _get_logger()  # extra logging
-        dialects = _get_dialect()
+        dialects = _get_dialects()
         if dialects:
             self.static_dialects = dialects
         encoding = _get_encoding()
         if encoding:
             self.encoding = encoding
-        # type_ignore_reason: __custom_parsers used in parent class
-        self.__custom_parsers = {'csv': CanadaCSVParser}  # type: ignore
 
     @property
     def dialect(self):
@@ -59,12 +72,11 @@ class CanadaStream(Stream):
 
         """
         if self.static_dialects and self.format in self.static_dialects:
-            if self.logger:
-                if self.encoding:
-                    self.logger.info('Using static encoding for %s: %s', self.format, self.encoding)
-                self.logger.info('Using Static Dialect for %s: %r', self.format, self.static_dialects[self.format])
-                # remove logger in case the dialect property is accessed more than once.
-                self.logger = None
+            if self.encoding:
+                log.info('Using static encoding for %s: %s', self.format, self.encoding)
+            log.info('Using Static Dialect for %s: %r', self.format, self.static_dialects[self.format])
+            # remove logger propagation to prevent excess logging
+            log.propagate = False
 
             return self.static_dialects[self.format]
 
@@ -125,19 +137,16 @@ class CanadaCSVParser(CSVParser):
 
     static_dialects = None
     encoding = None
-    logger = None
 
     # custom options, these need to exist for some magic.
     options = [
         'static_dialect',
         'encoding',
-        'logger',
     ]
 
     def __init__(self, loader, *args, **kwargs):
         super(CanadaCSVParser, self).__init__(loader, *args, **kwargs)
-        self.logger = _get_logger()  # extra logging
-        dialects = _get_dialect()
+        dialects = _get_dialects()
         if dialects:
             # we only want to mangle the parent method if a static dialect
             # is being used. Otherwise, we want the parent method to be called as normal.
@@ -150,12 +159,11 @@ class CanadaCSVParser(CSVParser):
     @property
     def dialect(self):
         if self.static_dialects and 'csv' in self.static_dialects:
-            if self.logger:
-                if self.encoding:
-                    self.logger.info('Using static encoding for csv: %s', self.encoding)
-                self.logger.info('Using Static Dialect for csv: %r', self.static_dialects['csv'])
-                # remove logger in the case the __prepare_dialect method is called.
-                self.logger = None
+            if self.encoding:
+                log.info('Using static encoding for csv: %s', self.encoding)
+            log.info('Using Static Dialect for csv: %r', self.static_dialects['csv'])
+            # remove logger propagation to prevent excess logging
+            log.propagate = False
 
             return self.static_dialects['csv']
 
@@ -174,17 +182,16 @@ class CanadaCSVParser(CSVParser):
             if len(sample) >= CSV_SAMPLE_LINES:
                 break
 
-        if self.logger:
-            if self.encoding:
-                self.logger.info('Using static encoding for csv: %s', self.encoding)
-            self.logger.info('Using Static Dialect for csv: %r', self.static_dialects['csv'])
-            # remove logger in the case the dialect property is accessed.
-            self.logger = None
+        if self.encoding:
+            log.info('Using static encoding for csv: %s', self.encoding)
+        log.info('Using Static Dialect for csv: %r', self.static_dialects['csv'])
+        # remove logger propagation to prevent excess logging
+        log.propagate = False
 
         return sample, CanadaCSVDialect(self.static_dialects['csv'])
 
 
-def _get_dialect():
+def _get_dialects():
     dialects = config.get('ckanext.canada.tabulator_dialects', None)
     if dialects:
         return json.loads(dialects)
@@ -193,8 +200,3 @@ def _get_dialect():
 
 def _get_encoding():
     return config.get('ckanext.canada.tabulator_encoding', None)
-
-
-def _get_logger():
-    #TODO: see if in a job, and return `ckanext.canada.jobs`??
-    return getLogger(__name__)

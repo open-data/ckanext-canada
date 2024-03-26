@@ -19,6 +19,7 @@ from ckan.plugins.toolkit import (
     request
 )
 
+from ckanext.canada.tabulate import CanadaStream
 from ckanext.canada import validators
 from ckanext.canada import logic
 from ckanext.canada import auth
@@ -28,9 +29,6 @@ from ckanext.canada import activity as act
 from ckanext.canada import checks  # type: ignore
 from ckanext.xloader.interfaces import IXloader
 import json
-
-from ckanext.canada.tabulate import CanadaStream
-import tabulator.stream as tabulator_stream
 
 import ckan.lib.formatters as formatters
 from webhelpers.html import literal
@@ -307,7 +305,6 @@ class CanadaDatasetsPlugin(SchemingDatasetsPlugin):
 
         return data_dict
 
-
 class DataGCCAInternal(p.SingletonPlugin):
     """
     Plugin for internal version of data.gc.ca site, aka the "registry"
@@ -320,22 +317,6 @@ class DataGCCAInternal(p.SingletonPlugin):
     p.implements(p.IActions)
     p.implements(p.IBlueprint)
     p.implements(IXloader, inherit=True)
-
-    def _mokey_patch(self):
-        # NOTE: Xloader uses Tabulator directly, calling its Stream class
-        #       throughout the Loader script. Validation passes many options
-        #       into Goodtables, which also uses Tabulator. Because Xloader does
-        #       not support passing Tabulator Stream and Parser arguments, we
-        #       monkey patch the Stream class from Tabulator. Another reason is
-        #       that Validation does not call Tabulator directly, but through
-        #       Goodtables, making it trickier to make a universal implementation
-        #       to be used between Xloader, Validation, and Goodtables.
-        #       Ultimately, it is just easier to monkey patch the Stream class here.
-        #
-        # FIXME: We really shouldn't monkey patch, there may be something better
-        #        to do here when we move from Goodtables to Frictionless.
-        #TODO: solve why Stream cannot get monkey patched but CSVParser can...
-        tabulator_stream.Stream = CanadaStream
 
     # IConfigurer
     def update_config(self, config):
@@ -358,8 +339,6 @@ ckanext.canada:schemas/presets.yaml
 
         # Include private datasets in Feeds
         config['ckan.feeds.include_private'] = True
-
-        self._mokey_patch()
 
 
     # IBlueprint
@@ -407,6 +386,29 @@ ckanext.canada:schemas/presets.yaml
                 raise e
         if db.upsert_data.__name__ == 'upsert_data':
             db.upsert_data = patched_upsert_data
+
+        # NOTE: Xloader uses Tabulator directly, calling its Stream class
+        #       throughout the Loader script. Validation passes many options
+        #       into Goodtables, which also uses Tabulator. Because Xloader does
+        #       not support passing Tabulator Stream and Parser arguments, we
+        #       monkey patch the Stream class from Tabulator. Another reason is
+        #       that Validation does not call Tabulator directly, but through
+        #       Goodtables, making it trickier to make a universal implementation
+        #       to be used between Xloader, Validation, and Goodtables.
+        #       Ultimately, it is just easier to monkey patch the Stream class here.
+        #
+        # IMPORTANT: Xloader and Goodtables are the only places currently which use
+        #            Tabulator Streams. Validation uses it via Goodtables. If any
+        #            plugins or features use it in the future, be sure to monkey
+        #            patch them here.
+        #
+        # FIXME: We really shouldn't monkey patch, there may be something better
+        #        to do here when we move from Goodtables to Frictionless.
+        from ckanext.xloader import loader
+        from goodtables.presets import table
+
+        loader.Stream = CanadaStream  # patch Xloader use of Tabulator Stream
+        table.Stream = CanadaStream  # patch Goodtables use of Tabulator Stream
 
     # IPackageController
     def create(self, pkg):
