@@ -238,9 +238,7 @@ def _update_records(records, org_detail, conn, resource_name, unmatched):
 
     out = []
 
-    choice_fields = dict(
-        (f['datastore_id'], dict(f['choices']))
-        for f in recombinant_choice_fields(resource_name, all_languages=True))
+    choice_fields = recombinant_choice_fields(resource_name, all_languages=True)
 
     if any('solr_compare_previous_year' in f for f in chromo['fields']):
         if not unmatched:
