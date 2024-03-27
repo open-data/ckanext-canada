@@ -15,6 +15,9 @@ collection: pd
 resources:
 - title: Proactive Publication - Travel Expenses
   resource_name: travelq
+
+  published_resource_id: 8282db2a-878f-475c-af10-ad56aa8fa72c
+
   create_form: true
   edit_form: true
   fields:
@@ -456,6 +459,9 @@ resources:
 
 - title: Proactive Publication - Travel Expenses Nothing to Report
   resource_name: travelq-nil
+
+  published_resource_id: d3f883ce-4133-48da-bc76-c6b063d257a2
+
   create_form: true
   edit_form: false #edit not possible for nil reports since only stored data is primary key
   fields:
