@@ -312,7 +312,7 @@ def _get_choice_fields(resource_name, chromo):
     return {
         datastore_id: [
             {'value': k,
-             'label': k + separator + v if _form_choices_prefix_code(f['datastore_id'], chromo) else v
+             'label': k + separator + v if _form_choices_prefix_code(datastore_id, chromo) else v
              } for (k, v) in choices]
         for datastore_id, choices in h.recombinant_choice_fields(resource_name).items()}
 
