@@ -29,11 +29,7 @@ class TestDAC(CanadaTestBase):
     def test_example(self):
         record = get_chromo('dac')['examples']['record']
         choices_fields = recombinant_choice_fields('dac')
-        for f in choices_fields:
-            if f['datastore_id'] != 'member_name':
-                continue
-            record['member_name'] = f['choices'][0][0]
-            break
+        record['member_name'] = choices_fields['member_name'][0][0]
         self.lc.action.datastore_upsert(
             resource_id=self.resource_id,
             records=[record])
