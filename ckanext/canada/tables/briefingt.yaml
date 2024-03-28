@@ -49,7 +49,6 @@ resources:
     form_required: true
     format_type: Free text
     validation: This field must not be empty
-    visible_to_public: Yes
     occurrence: Single
     datastore_type: text
     excel_column_width: 28
@@ -69,7 +68,6 @@ resources:
     form_required: true
     format_type: Free text
     validation: This field must not be empty
-    visible_to_public: Yes
     occurrence: Single
     datastore_type: text
     excel_column_width: 28
@@ -89,7 +87,6 @@ resources:
     form_required: true
     format_type: Free text
     validation: This field must not be empty
-    visible_to_public: Yes
     occurrence: Single
     datastore_type: text
     excel_column_width: 28
@@ -109,7 +106,6 @@ resources:
     form_required: true
     format_type: Free text
     validation: This field must not be empty
-    visible_to_public: Yes
     occurrence: Single
     datastore_type: text
     excel_column_width: 28
@@ -129,7 +125,6 @@ resources:
     form_required: true
     format_type: Controlled List
     validation: This field must not be empty
-    visible_to_public: No
     occurrence: Single
     datastore_type: text
     excel_column_width: 20
@@ -158,7 +153,6 @@ resources:
     form_required: true
     format_type: Date (Please format the data as YYYY-MM-DD)
     validation: This field must not be empty
-    visible_to_public: Yes
     occurrence: Single
     datastore_type: date
     excel_column_width: 28
@@ -177,7 +171,6 @@ resources:
     form_required: true
     format_type: Controlled List
     validation: This field must not be empty
-    visible_to_public: No
     occurrence: Single
     datastore_type: text
     excel_column_width: 20
@@ -205,7 +198,6 @@ resources:
     excel_required: false
     format_type: Free text
     validation: None
-    visible_to_public: Yes
     occurrence: Single
     datastore_type: text
     excel_column_width: 35
@@ -225,7 +217,6 @@ resources:
     excel_required: false
     format_type: Free text
     validation: None
-    visible_to_public: Yes
     occurrence: Single
     datastore_type: text
     excel_column_width: 35
