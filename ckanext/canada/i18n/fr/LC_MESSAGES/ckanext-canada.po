@@ -43,13 +43,15 @@ msgstr "Secrétariat du Conseil du Trésor du Canada"
 
 #: ckanext/canada/column_types.py:8
 msgid "Canadian Province or Territory"
-msgstr ""
+msgstr "Province ou territoire du Canada"
 
 #: ckanext/canada/column_types.py:9
 msgid ""
 "based on data reference standard "
 "https://open.canada.ca/data/en/dataset/cd8fad92-b276-4250-972f-2d6c40ca04fa/"
 msgstr ""
+"fondé sur la norme référentielle sur les données "
+"https://ouvert.canada.ca/data/fr/dataset/cd8fad92-b276-4250-972f-2d6c40ca04fa/"
 
 #: ckanext/canada/column_types.py:19
 msgid "Alberta"
@@ -105,15 +107,15 @@ msgstr "Yukon"
 
 #: ckanext/canada/column_types.py:41
 msgid "CRA Business Number"
-msgstr ""
+msgstr "Numéro d’entreprise de l’ARC"
 
 #: ckanext/canada/column_types.py:42
 msgid "9-digit CRA business number (upcoming data standard)"
-msgstr ""
+msgstr "Numéro d’entreprise de l’ARC à 9 chiffres (norme relative aux données à venir)"
 
 #: ckanext/canada/column_types.py:60
 msgid "Invalid business number"
-msgstr ""
+msgstr "Numéro d’entreprise non valide"
 
 #: ckanext/canada/helpers.py:582 ckanext/canada/strings.py:13
 #: ckanext/canada/view.py:1120
