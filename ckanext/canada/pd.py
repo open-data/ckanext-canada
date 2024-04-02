@@ -334,7 +334,11 @@ def _update_records(records, org_detail, conn, resource_name, unmatched):
                         for v in value.split(',')
                         if v in choices)
                 else:
-                    choice = choices.get(value, {})
+                    choice = {}
+                    for k, v in choices:
+                        if k == value:
+                            choice = v
+                            break
                     _add_choice(solrrec, key, r, choice, f)
 
             if f.get('solr_month_names', False):
