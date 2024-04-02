@@ -327,9 +327,9 @@ def _update_records(records, org_detail, conn, resource_name, unmatched):
             if choices:
                 if key.endswith('_code'):
                     key = key[:-5]
-                # index the english and french choice labels in their own field.
-                # this is important for search functionalities to work in Drupal.
-                if f.get('datastore_type') == 'text':
+                if f.get('datastore_type') == '_text':
+                    # index the english and french choice labels in their own field.
+                    # this is important for search functionalities to work in Drupal.
                     solrrec[key + '_en'] = '; '.join(
                         recombinant_language_text(choices[v], 'en')
                         for v in value.split(',')
@@ -338,20 +338,21 @@ def _update_records(records, org_detail, conn, resource_name, unmatched):
                         recombinant_language_text(choices[v], 'fr')
                         for v in value.split(',')
                         if v in choices)
-                # index the actual choice
-                choice = {}
-                for k, v in choices:
-                    if k == value:
-                        choice = v
-                        break
-                if not choice:
-                    if key not in failed_choices:
-                        failed_choices[key] = {}
-                    if value not in failed_choices[key]:
-                        failed_choices[key][value] = 1
-                    else:
-                        failed_choices[key][value] += 1
-                _add_choice(solrrec, key, r, choice, f)
+                else:
+                    # index the actual choice
+                    choice = {}
+                    for _val, _label in choices:
+                        if _val == value:
+                            choice = _label
+                            break
+                    if not choice:
+                        if key not in failed_choices:
+                            failed_choices[key] = {}
+                        if value not in failed_choices[key]:
+                            failed_choices[key][value] = 1
+                        else:
+                            failed_choices[key][value] += 1
+                    _add_choice(solrrec, key, r, choice, f)
 
             if f.get('solr_month_names', False):
                 solrrec[key] = value.zfill(2)
