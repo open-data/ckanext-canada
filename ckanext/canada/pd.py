@@ -205,6 +205,18 @@ def _update_records(records, org_detail, conn, resource_name, unmatched):
     else:
         unmatched = None
 
+    # track failed choice fields for debugging
+    # and cleaning up old data.
+    failed_choices = {}
+
+    def _record_failed_choice(_key, _value):
+        if _key not in failed_choices:
+            failed_choices[_key] = {}
+        if _value not in failed_choices[_key]:
+            failed_choices[_key][_value] = 1
+        else:
+            failed_choices[_key][_value] += 1
+
     for r in records:
         unique, friendly, partial = unique_id(r)
         if chromo.get('solr_legacy_ati_ids', False):
@@ -227,9 +239,6 @@ def _update_records(records, org_detail, conn, resource_name, unmatched):
             for e in org_fields:
                 if e in org_detail:
                     solrrec[e] = org_detail[e]
-
-        # track failed choice fields for debugging
-        failed_choices = {}
 
         for f in chromo['fields']:
             key = f['datastore_id']
@@ -286,8 +295,10 @@ def _update_records(records, org_detail, conn, resource_name, unmatched):
                 if key.endswith('_code'):
                     key = key[:-5]
                 if f.get('datastore_type') == '_text':
-                    # index the english and french choice labels in their own field.
-                    # this is important for search functionalities to work in Drupal.
+                    # special handling for _text types, joining the multiple choices with semicolons (;)
+                    for v in value.split(','):
+                        if v not in choices:
+                            _record_failed_choice(key, v)
                     solrrec[key + '_en'] = '; '.join(
                         recombinant_language_text(choices[v], 'en')
                         for v in value.split(',')
@@ -297,33 +308,19 @@ def _update_records(records, org_detail, conn, resource_name, unmatched):
                         for v in value.split(',')
                         if v in choices)
                 else:
-                    # index the actual choice
                     choice = {}
                     for _val, _label in choices:
                         if _val == value:
                             choice = _label
                             break
                     if not choice:
-                        if key not in failed_choices:
-                            failed_choices[key] = {}
-                        if value not in failed_choices[key]:
-                            failed_choices[key][value] = 1
-                        else:
-                            failed_choices[key][value] += 1
+                        _record_failed_choice(key, value)
                     _add_choice(solrrec, key, r, choice, f)
 
             if f.get('solr_month_names', False):
                 solrrec[key] = value.zfill(2)
                 solrrec[key + '_name_en'] = calendar.month_name[int(value)]
                 solrrec[key + '_name_fr'] = MONTHS_FR[int(value)]
-
-        if failed_choices:
-            for key in failed_choices.items():
-                for value, count in enumerate(key):
-                    print("    %s %s: invalid option %s (%s)" % (org_detail['name'],
-                                                                 key,
-                                                                 value,
-                                                                 count))
 
         solrrec['text'] = u' '.join(str(v) for v in solrrec.values())
 
@@ -343,6 +340,14 @@ def _update_records(records, org_detail, conn, resource_name, unmatched):
             match_compare_output(solrrec, out, unmatched, chromo)
         else:
             out.append(solrrec)
+
+    if failed_choices:
+        for _key, _values in failed_choices.items():
+            for _value, _count in _values.items():
+                print("    %s %s: invalid option %s (%s)" % (org_detail['name'],
+                                                             _key,
+                                                             _value,
+                                                             _count))
 
     if unmatched:
         out.extend(unmatched[1].values())
