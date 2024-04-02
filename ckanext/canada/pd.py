@@ -297,6 +297,8 @@ def _update_records(records, org_detail, conn, resource_name, unmatched):
                         if k == value:
                             choice = v
                             break
+                    if not choice:
+                        print("Choice value '%s' does not exist for key '%s'" % (value, key))
                     _add_choice(solrrec, key, r, choice, f)
 
             if f.get('solr_month_names', False):
