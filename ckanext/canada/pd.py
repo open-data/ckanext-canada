@@ -342,7 +342,7 @@ def _update_records(records, org_detail, conn, resource_name, unmatched):
                     french_choices = []
                     for v in value.split(','):
                         choice = dict(choices).get(v)
-                        if not choice or (not v and (f.get('form_required') or f.get('excel_required'))):
+                        if (not choice and v) or (not v and (f.get('form_required') or f.get('excel_required'))):
                             # not a valid choice, or empty value on a required field
                             _record_failed_choice(key, v)
                         if choice:
@@ -352,7 +352,7 @@ def _update_records(records, org_detail, conn, resource_name, unmatched):
                     solrrec[key + '_fr'] = '; '.join(french_choices)
                 else:
                     choice = dict(choices).get(value, {})
-                    if not choice or (not value and (f.get('form_required') or f.get('excel_required'))):
+                    if (not choice and value) or (not value and (f.get('form_required') or f.get('excel_required'))):
                         # not a valid choice, or empty value on a required field
                         _record_failed_choice(key, value)
                     _add_choice(solrrec, key, r, choice, f)
