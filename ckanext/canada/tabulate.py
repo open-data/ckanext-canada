@@ -11,23 +11,21 @@ Note: script cannot be named tabulator! (hence tabulate)
 from tabulator.stream import Stream
 from tabulator.parsers.csv import CSVParser
 from tabulator.config import CSV_SAMPLE_LINES
+from tabulator.exceptions import TabulatorException
 import six
 import json
 from csv import Dialect
 from _csv import Dialect as _Dialect
 from csv import QUOTE_MINIMAL
 
-from ckan.plugins.toolkit import config
+from ckan.plugins.toolkit import config, _
 
 from logging import getLogger, Filter
 
-log2 = getLogger('ckanext.canada.dev')
 
 class LimitStreamLogging(Filter):
     logged_messages = []
-    #TODO: solve duplicative log messages
     def filter(self, record):
-        # add other fields if you need more granular comparison, depends on your app
         current_log = (record.module, record.levelno, record.msg)
         if current_log not in self.logged_messages:
             self.logged_messages.append(current_log)
@@ -61,6 +59,7 @@ class CanadaStream(Stream):
             self.static_dialects = dialects
         encoding = _get_encoding()
         if encoding:
+            _check_encoding_and_raise(self.encoding, encoding)
             self.encoding = encoding
 
     @property
@@ -73,11 +72,10 @@ class CanadaStream(Stream):
         """
         if self.static_dialects and self.format in self.static_dialects:
             if self.encoding:
-                log.info('Using static encoding for %s: %s', self.format, self.encoding)
-            log.info('Using Static Dialect for %s: %r', self.format, self.static_dialects[self.format])
-            # remove logger propagation to prevent excess logging
-            log.propagate = False
-
+                log.debug('Using static encoding for %s: %s', self.format, self.encoding)
+            log.debug('Using Static Dialect for %s: %r', self.format, self.static_dialects[self.format])
+            #TODO: only check an raise for Xloader
+            _check_dialect_and_raise(super(CanadaStream, self).dialect, self.static_dialects[self.format])
             return self.static_dialects[self.format]
 
         return super(CanadaStream, self).dialect
@@ -154,17 +152,17 @@ class CanadaCSVParser(CSVParser):
             self._CSVParser__prepare_dialect = self.__mangle__prepare_dialect
         encoding = _get_encoding()
         if encoding:
+            _check_encoding_and_raise(self.encoding, encoding)
             self.encoding = encoding
 
     @property
     def dialect(self):
         if self.static_dialects and 'csv' in self.static_dialects:
             if self.encoding:
-                log.info('Using static encoding for csv: %s', self.encoding)
-            log.info('Using Static Dialect for csv: %r', self.static_dialects['csv'])
-            # remove logger propagation to prevent excess logging
-            log.propagate = False
-
+                log.debug('Using static encoding for csv: %s', self.encoding)
+            log.debug('Using Static Dialect for csv: %r', self.static_dialects['csv'])
+            #TODO: only check an raise for Xloader
+            _check_dialect_and_raise(super(CanadaCSVParser, self).dialect, self.static_dialects['csv'])
             return self.static_dialects['csv']
 
         return super(CanadaCSVParser, self).dialect
@@ -183,10 +181,8 @@ class CanadaCSVParser(CSVParser):
                 break
 
         if self.encoding:
-            log.info('Using static encoding for csv: %s', self.encoding)
-        log.info('Using Static Dialect for csv: %r', self.static_dialects['csv'])
-        # remove logger propagation to prevent excess logging
-        log.propagate = False
+            log.debug('Using static encoding for csv: %s', self.encoding)
+        log.debug('Using Static Dialect for csv: %r', self.static_dialects['csv'])
 
         return sample, CanadaCSVDialect(self.static_dialects['csv'])
 
@@ -200,3 +196,26 @@ def _get_dialects():
 
 def _get_encoding():
     return config.get('ckanext.canada.tabulator_encoding', None)
+
+
+def _check_dialect_and_raise(guessed_dialect, static_dialect):
+    if guessed_dialect and static_dialect:
+        if 'delimiter' in guessed_dialect and guessed_dialect['delimiter'] != static_dialect['delimiter']:
+            raise TabulatorException(_("File is using delimeter {stream_delimeter} instead of {static_delimeter}").format(
+                stream_delimeter=guessed_dialect['delimiter'],
+                static_delimeter=static_dialect['delimiter']))
+
+        if 'quoteChar' in guessed_dialect and guessed_dialect['quoteChar'] != static_dialect['quotechar']:
+            raise TabulatorException(_("File is using quoting character {stream_quote_char} instead of {static_quote_char}").format(
+                stream_quote_char=guessed_dialect['quoteChar'],
+                static_quote_char=static_dialect['quotechar']))
+
+        if 'doubleQuote' in guessed_dialect and guessed_dialect['doubleQuote'] != static_dialect['doublequote']:
+            raise TabulatorException(_("File is using double quoting {stream_double_quote} instead of {static_double_quote}").format(
+                stream_double_quote=guessed_dialect['doubleQuote'],
+                static_double_quote=static_dialect['doublequote']))
+
+
+def _check_encoding_and_raise(guessed_encoding, static_encoding):
+    if guessed_encoding != static_encoding:
+        raise TabulatorException(_('File must be encoded with: %s' % static_encoding))
