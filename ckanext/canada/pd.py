@@ -296,24 +296,22 @@ def _update_records(records, org_detail, conn, resource_name, unmatched):
                     key = key[:-5]
                 if f.get('datastore_type') == '_text':
                     # special handling for _text types, joining the multiple choices with semicolons (;)
+                    english_choices = []
+                    french_choices = []
                     for v in value.split(','):
-                        if v not in choices:
+                        choice = dict(choices).get(v)
+                        if not choice and (f.get('form_required') or f.get('excel_required')):
+                            # not a valid choice, and the field is required
                             _record_failed_choice(key, v)
-                    solrrec[key + '_en'] = '; '.join(
-                        recombinant_language_text(choices[v], 'en')
-                        for v in value.split(',')
-                        if v in choices)
-                    solrrec[key + '_fr'] = '; '.join(
-                        recombinant_language_text(choices[v], 'fr')
-                        for v in value.split(',')
-                        if v in choices)
+                        if choice:
+                            english_choices.append(recombinant_language_text(choice, 'en'))
+                            french_choices.append(recombinant_language_text(choice, 'fr'))
+                    solrrec[key + '_en'] = '; '.join(english_choices)
+                    solrrec[key + '_fr'] = '; '.join(french_choices)
                 else:
-                    choice = {}
-                    for _val, _label in choices:
-                        if _val == value:
-                            choice = _label
-                            break
-                    if not choice:
+                    choice = dict(choices).get(value, {})
+                    if not choice and (f.get('form_required') or f.get('excel_required')):
+                        # not a valid choice, and the field is required
                         _record_failed_choice(key, value)
                     _add_choice(solrrec, key, r, choice, f)
 
@@ -344,10 +342,10 @@ def _update_records(records, org_detail, conn, resource_name, unmatched):
     if failed_choices:
         for _key, _values in failed_choices.items():
             for _value, _count in _values.items():
-                print("    %s %s: invalid option %s (%s)" % (org_detail['name'],
-                                                             _key,
-                                                             _value,
-                                                             _count))
+                print("    %s -- WARNING: '%s' invalid option '%s' (%s)" % (org_detail['name'],
+                                                                            _key,
+                                                                            _value or "<empty>",
+                                                                            _count))
 
     if unmatched:
         out.extend(unmatched[1].values())
