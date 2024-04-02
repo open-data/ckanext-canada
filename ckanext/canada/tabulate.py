@@ -49,18 +49,19 @@ class CanadaStream(Stream):
     """
 
     static_dialects = None
+    static_encoding = None
     encoding = None
 
     def __init__(self, source, *args, **kwargs):
         kwargs.update({'custom_parsers': {'csv': CanadaCSVParser}})
+        encoding = _get_encoding()
+        if encoding:
+            kwargs.update({'encoding': encoding})
+            self.static_encoding = encoding
         super(CanadaStream, self).__init__(source, *args, **kwargs)
         dialects = _get_dialects()
         if dialects:
             self.static_dialects = dialects
-        encoding = _get_encoding()
-        if encoding:
-            _check_encoding_and_raise(self.encoding, encoding)
-            self.encoding = encoding
 
     @property
     def dialect(self):
@@ -71,12 +72,34 @@ class CanadaStream(Stream):
 
         """
         if self.static_dialects and self.format in self.static_dialects:
-            if self.encoding:
-                log.debug('Using static encoding for %s: %s', self.format, self.encoding)
+            if self.static_encoding:
+                log.debug('Using static encoding for %s: %s', self.format, self.static_encoding)
             log.debug('Using Static Dialect for %s: %r', self.format, self.static_dialects[self.format])
-            #TODO: only check an raise for Xloader
-            _check_dialect_and_raise(super(CanadaStream, self).dialect, self.static_dialects[self.format])
             return self.static_dialects[self.format]
+
+        return super(CanadaStream, self).dialect
+
+
+class CanadaStreamWithRaises(CanadaStream):
+    """
+    Same as CanadaStream, but will raise TabulatorException(s)
+
+    Should be used when needed to raise exceptions to stop Tabulator during streaming.
+    """
+    @property
+    def encoding(self):
+        if self.static_encoding:
+            _check_encoding_and_raise(super(CanadaStream, self).encoding, self.static_encoding)
+
+        return super(CanadaStreamWithRaises, self).encoding
+
+    @property
+    def dialect(self):
+        if self.static_dialects and self.format in self.static_dialects:
+            if self.static_encoding:
+                log.debug('Using static encoding for %s: %s', self.format, self.static_encoding)
+            log.debug('Using Static Dialect for %s: %r', self.format, self.static_dialects[self.format])
+            _check_dialect_and_raise(super(CanadaStream, self).dialect, self.static_dialects[self.format])
 
         return super(CanadaStream, self).dialect
 
@@ -134,15 +157,21 @@ class CanadaCSVParser(CSVParser):
     """
 
     static_dialects = None
+    static_encoding = None
     encoding = None
 
     # custom options, these need to exist for some magic.
     options = [
         'static_dialect',
+        'static_encoding',
         'encoding',
     ]
 
     def __init__(self, loader, *args, **kwargs):
+        encoding = _get_encoding()
+        if encoding:
+            kwargs.update({'encoding': encoding})
+            self.static_encoding = encoding
         super(CanadaCSVParser, self).__init__(loader, *args, **kwargs)
         dialects = _get_dialects()
         if dialects:
@@ -150,19 +179,13 @@ class CanadaCSVParser(CSVParser):
             # is being used. Otherwise, we want the parent method to be called as normal.
             self.static_dialects = dialects
             self._CSVParser__prepare_dialect = self.__mangle__prepare_dialect
-        encoding = _get_encoding()
-        if encoding:
-            _check_encoding_and_raise(self.encoding, encoding)
-            self.encoding = encoding
 
     @property
     def dialect(self):
         if self.static_dialects and 'csv' in self.static_dialects:
-            if self.encoding:
-                log.debug('Using static encoding for csv: %s', self.encoding)
+            if self.static_encoding:
+                log.debug('Using static encoding for csv: %s', self.static_encoding)
             log.debug('Using Static Dialect for csv: %r', self.static_dialects['csv'])
-            #TODO: only check an raise for Xloader
-            _check_dialect_and_raise(super(CanadaCSVParser, self).dialect, self.static_dialects['csv'])
             return self.static_dialects['csv']
 
         return super(CanadaCSVParser, self).dialect
@@ -180,8 +203,8 @@ class CanadaCSVParser(CSVParser):
             if len(sample) >= CSV_SAMPLE_LINES:
                 break
 
-        if self.encoding:
-            log.debug('Using static encoding for csv: %s', self.encoding)
+        if self.static_encoding:
+            log.debug('Using static encoding for csv: %s', self.static_encoding)
         log.debug('Using Static Dialect for csv: %r', self.static_dialects['csv'])
 
         return sample, CanadaCSVDialect(self.static_dialects['csv'])

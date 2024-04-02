@@ -19,7 +19,7 @@ from ckan.plugins.toolkit import (
     request
 )
 
-from ckanext.canada.tabulate import CanadaStream
+from ckanext.canada.tabulate import CanadaStream, CanadaStreamWithRaises
 from ckanext.canada import validators
 from ckanext.canada import logic
 from ckanext.canada import auth
@@ -407,7 +407,7 @@ ckanext.canada:schemas/presets.yaml
         from ckanext.xloader import loader
         from goodtables.presets import table
 
-        loader.Stream = CanadaStream  # patch Xloader use of Tabulator Stream
+        loader.Stream = CanadaStreamWithRaises  # patch Xloader use of Tabulator Stream
         table.Stream = CanadaStream  # patch Goodtables use of Tabulator Stream
 
     # IPackageController
