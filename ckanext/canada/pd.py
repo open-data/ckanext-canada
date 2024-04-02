@@ -300,8 +300,8 @@ def _update_records(records, org_detail, conn, resource_name, unmatched):
                     french_choices = []
                     for v in value.split(','):
                         choice = dict(choices).get(v)
-                        if not choice and (f.get('form_required') or f.get('excel_required')):
-                            # not a valid choice, and the field is required
+                        if not choice or (not v and (f.get('form_required') or f.get('excel_required'))):
+                            # not a valid choice, or empty value on a required field
                             _record_failed_choice(key, v)
                         if choice:
                             english_choices.append(recombinant_language_text(choice, 'en'))
@@ -310,8 +310,8 @@ def _update_records(records, org_detail, conn, resource_name, unmatched):
                     solrrec[key + '_fr'] = '; '.join(french_choices)
                 else:
                     choice = dict(choices).get(value, {})
-                    if not choice and (f.get('form_required') or f.get('excel_required')):
-                        # not a valid choice, and the field is required
+                    if not choice or (not value and (f.get('form_required') or f.get('excel_required'))):
+                        # not a valid choice, or empty value on a required field
                         _record_failed_choice(key, value)
                     _add_choice(solrrec, key, r, choice, f)
 
@@ -344,7 +344,7 @@ def _update_records(records, org_detail, conn, resource_name, unmatched):
             for _value, _count in _values.items():
                 print("    %s -- WARNING: '%s' invalid option '%s' (%s)" % (org_detail['name'],
                                                                             _key,
-                                                                            _value or "<empty>",
+                                                                            _value,
                                                                             _count))
 
     if unmatched:
