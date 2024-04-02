@@ -247,6 +247,18 @@ def _update_records(records, org_detail, conn, resource_name, unmatched):
     else:
         unmatched = None
 
+    # track failed choice fields for debugging
+    # and cleaning up old data.
+    failed_choices = {}
+
+    def _record_failed_choice(_key, _value):
+        if _key not in failed_choices:
+            failed_choices[_key] = {}
+        if _value not in failed_choices[_key]:
+            failed_choices[_key][_value] = 1
+        else:
+            failed_choices[_key][_value] += 1
+
     for r in records:
         unique, friendly, partial = unique_id(r)
         if chromo.get('solr_legacy_ati_ids', False):
@@ -325,16 +337,24 @@ def _update_records(records, org_detail, conn, resource_name, unmatched):
                 if key.endswith('_code'):
                     key = key[:-5]
                 if f.get('datastore_type') == '_text':
-                    solrrec[key + '_en'] = '; '.join(
-                        recombinant_language_text(choices[v], 'en')
-                        for v in value.split(',')
-                        if v in choices)
-                    solrrec[key + '_fr'] = '; '.join(
-                        recombinant_language_text(choices[v], 'fr')
-                        for v in value.split(',')
-                        if v in choices)
+                    # special handling for _text types, joining the multiple choices with semicolons (;)
+                    english_choices = []
+                    french_choices = []
+                    for v in value.split(','):
+                        choice = dict(choices).get(v)
+                        if not choice or (not v and (f.get('form_required') or f.get('excel_required'))):
+                            # not a valid choice, or empty value on a required field
+                            _record_failed_choice(key, v)
+                        if choice:
+                            english_choices.append(recombinant_language_text(choice, 'en'))
+                            french_choices.append(recombinant_language_text(choice, 'fr'))
+                    solrrec[key + '_en'] = '; '.join(english_choices)
+                    solrrec[key + '_fr'] = '; '.join(french_choices)
                 else:
-                    choice = choices.get(value, {})
+                    choice = dict(choices).get(value, {})
+                    if not choice or (not value and (f.get('form_required') or f.get('excel_required'))):
+                        # not a valid choice, or empty value on a required field
+                        _record_failed_choice(key, value)
                     _add_choice(solrrec, key, r, choice, f)
 
             if f.get('solr_month_names', False):
@@ -360,6 +380,14 @@ def _update_records(records, org_detail, conn, resource_name, unmatched):
             match_compare_output(solrrec, out, unmatched, chromo)
         else:
             out.append(solrrec)
+
+    if failed_choices:
+        for _key, _values in failed_choices.items():
+            for _value, _count in _values.items():
+                print("    %s -- WARNING: '%s' invalid option '%s' (%s)" % (org_detail['name'],
+                                                                            _key,
+                                                                            _value,
+                                                                            _count))
 
     if unmatched:
         out.extend(unmatched[1].values())
