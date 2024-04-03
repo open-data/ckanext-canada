@@ -27,6 +27,8 @@ from ckanext.canada import helpers
 from ckanext.canada import activity as act
 # type_ignore_reason: importing to proc decorators
 from ckanext.canada import checks  # type: ignore
+from ckanext.canada import column_types as coltypes
+from ckanext.tabledesigner.interfaces import IColumnTypes
 from ckanext.xloader.interfaces import IXloader
 import json
 
@@ -552,6 +554,7 @@ class DataGCCAPublic(p.SingletonPlugin, DefaultTranslation):
     p.implements(p.IMiddleware, inherit=True)
     p.implements(p.IActions)
     p.implements(p.IClick)
+    p.implements(IColumnTypes)
 
     # DefaultTranslation, ITranslation
     def i18n_domain(self):
@@ -734,7 +737,14 @@ ckanext.canada:schemas/prop.yaml
     def get_commands(self):
         return [get_script_commands()]
 
+    # IColumnTypes
 
+    def column_types(self, existing_types):
+        return dict(
+            existing_types,
+            province=coltypes.Province,
+            crabusnum=coltypes.CRABusinessNumber,
+        )
 
 
 class DataGCCAForms(p.SingletonPlugin, DefaultDatasetForm):

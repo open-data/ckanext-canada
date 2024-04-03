@@ -15,7 +15,7 @@ from ckan.plugins.toolkit import (
     g,
     get_action,
     h,
-    asbool
+    asbool,
 )
 from ckan.authz import is_sysadmin
 
@@ -38,8 +38,10 @@ from rq.job import Job
 from rq.exceptions import NoSuchJobError
 
 from pytz import timezone
+from logging import getLogger
 
 
+log = getLogger(__name__)
 ottawa_tz = timezone('America/Montreal')
 
 JOB_MAPPING = {

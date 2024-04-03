@@ -52,6 +52,7 @@ from ckan.views.api import(
     _get_request_data
 )
 from ckan.views.group import set_org
+from ckan.views.admin import _get_sysadmins
 
 from ckan.authz import is_sysadmin
 from ckan.logic import (
@@ -316,11 +317,11 @@ def _form_choices_prefix_code(field_name, chromo):
 def _get_choice_fields(resource_name, chromo):
     separator = ' : ' if h.lang() == 'fr' else ': '
     return {
-        f['datastore_id']: [
+        datastore_id: [
             {'value': k,
-             'label': k + separator + v if _form_choices_prefix_code(f['datastore_id'], chromo) else v
-             } for (k, v) in f['choices']]
-        for f in h.recombinant_choice_fields(resource_name)}
+             'label': k + separator + v if _form_choices_prefix_code(datastore_id, chromo) else v
+             } for (k, v) in choices]
+        for datastore_id, choices in h.recombinant_choice_fields(resource_name).items()}
 
 
 @canada_views.route('/group/bulk_process/<id>', methods=['GET', 'POST'])
@@ -1200,3 +1201,17 @@ def members(id):
         u"group_type": 'organization'
     }
     return render(u'organization/members.html', extra_vars)
+
+
+@canada_views.route('/ckan-admin', methods=['GET'], strict_slashes=False)
+def ckan_admin_index():
+    """
+    Overrides core Admin Index view, to exclude the site user.
+    """
+    site_id = config.get('ckan.site_id')
+    sysadmins = []
+    for admin in _get_sysadmins():
+        if admin.name == site_id:
+            continue
+        sysadmins.append(admin.name)
+    return render(u'admin/index.html', extra_vars={'sysadmins': sysadmins})

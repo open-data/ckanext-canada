@@ -13,6 +13,9 @@ collection: pd
 resources:
 - title: Proactive Publication - Position Reclassification
   resource_name: reclassification
+
+  published_resource_id: bdaa5515-3782-4e5c-9d44-c25e032addb7
+
   create_form: true
   edit_form: true
   fields:
@@ -283,6 +286,9 @@ resources:
 
 - title: Proactive Publication - Position Reclassification Nothing to Report
   resource_name: reclassification-nil
+
+  published_resource_id: 1e955e4d-df35-4441-bf38-b7086192ece2
+
   create_form: true
   edit_form: false #edit not possible for nil reports since only stored data is primary key
   fields:

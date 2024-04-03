@@ -5,7 +5,7 @@ import unicodedata
 
 from six import text_type
 
-from ckan.plugins.toolkit import _, h, get_action, ValidationError
+from ckan.plugins.toolkit import _, get_action, ValidationError
 from ckan.lib.navl.validators import StopOnError
 from ckan.authz import is_sysadmin
 from ckan import model
@@ -394,7 +394,6 @@ def canada_output_none(value):
 
 
 def canada_security_upload_type(key, data, errors, context):
-    url_type = data.get(key[:-1] + ('url_type',))
     url = data.get(key[:-1] + ('url',))
     upload = data.get(key[:-1] + ('upload',))
     resource = {
@@ -404,14 +403,14 @@ def canada_security_upload_type(key, data, errors, context):
     try:
         validate_upload_type(resource)
     except ValidationError as e:
-        if url_type == 'tabledesigner':
+        # allow a fully empty Resource
+        if not url and not upload:
             return
         error = e.error_dict['File'][0]
         raise Invalid(_(error))
 
 
 def canada_security_upload_presence(key, data, errors, context):
-    url_type = data.get(key[:-1] + ('url_type',))
     url = data.get(key[:-1] + ('url',))
     upload = data.get(key[:-1] + ('upload',))
     resource = {
@@ -421,7 +420,8 @@ def canada_security_upload_presence(key, data, errors, context):
     try:
         validate_upload_presence(resource)
     except ValidationError as e:
-        if url_type == 'tabledesigner':
+        # allow a fully empty Resource
+        if not url and not upload:
             return
         error = e.error_dict['File'][0]
         raise Invalid(_(error))
