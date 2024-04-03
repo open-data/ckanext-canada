@@ -58,6 +58,10 @@ class CanadaStream(Stream):
     into the Stream instantiation.
     """
 
+    #FIXME: open calls __extract_sample which catches all exceptions
+    #       and eats them, re-raising as stringified SourceError.
+    #       implement and open and try/catch a custom exception.
+
     static_dialects = None
     static_encoding = None
 
@@ -251,25 +255,32 @@ def _get_encoding():
 def _check_dialect_and_raise(guessed_dialect, static_dialect, compare_obj=False):
     errors = []
 
+    guessed_delimiter_var = 'delimiter'
+    guessed_quoteChar_var = 'quoteChar'
+    guessed_doubleQuote_var = 'doubleQuote'
+
     if compare_obj:
         # a bit nasty, but need to compare from __mangle__prepare_dialect
         guessed_dialect = guessed_dialect.__dict__
         static_dialect = static_dialect.__dict__
+        guessed_delimiter_var = 'delimiter'
+        guessed_quoteChar_var = 'quotechar'
+        guessed_doubleQuote_var = 'doublequote'
 
     if guessed_dialect and static_dialect:
-        if 'delimiter' in guessed_dialect and guessed_dialect['delimiter'] != static_dialect['delimiter']:
+        if guessed_delimiter_var in guessed_dialect and guessed_dialect[guessed_delimiter_var] != static_dialect['delimiter']:
             errors.append(('invalid-dialect', _("File is using delimeter {stream_delimeter} instead of {static_delimeter}").format(
-                                                stream_delimeter=guessed_dialect['delimiter'],
+                                                stream_delimeter=guessed_dialect[guessed_delimiter_var],
                                                 static_delimeter=static_dialect['delimiter'])))
 
-        if 'quoteChar' in guessed_dialect and guessed_dialect['quoteChar'] != static_dialect['quotechar']:
+        if guessed_quoteChar_var in guessed_dialect and guessed_dialect[guessed_quoteChar_var] != static_dialect['quotechar']:
             errors.append(('invalid-quote-char', _("File is using quoting character {stream_quote_char} instead of {static_quote_char}").format(
-                                                   stream_quote_char=guessed_dialect['quoteChar'],
+                                                   stream_quote_char=guessed_dialect[guessed_quoteChar_var],
                                                    static_quote_char=static_dialect['quotechar'])))
 
-        if 'doubleQuote' in guessed_dialect and guessed_dialect['doubleQuote'] != static_dialect['doublequote']:
+        if guessed_doubleQuote_var in guessed_dialect and guessed_dialect[guessed_doubleQuote_var] != static_dialect['doublequote']:
             errors.append(('invalid-double-quote', _("File is using double quoting {stream_double_quote} instead of {static_double_quote}").format(
-                                                     stream_double_quote=guessed_dialect['doubleQuote'],
+                                                     stream_double_quote=guessed_dialect[guessed_doubleQuote_var],
                                                      static_double_quote=static_dialect['doublequote'])))
 
     if errors:
