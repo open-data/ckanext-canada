@@ -1,26 +1,25 @@
 .DELETE_ON_ERROR:
 
 targets := ati briefingt qpnotes consultations contracts contractsa dac experiment grants hospitalityq \
-	nap5 reclassification service travela travelq wrongdoing adminaircraft
+	nap5 reclassification travela travelq wrongdoing adminaircraft
 
 csv_files := \
 	ati.csv ati-nil.csv \
 	briefingt.csv briefingt-nil.csv \
 	qpnotes.csv qpnotes-nil.csv \
-        contractsa.csv \
-        contracts.csv contracts-nil.csv \
+	contractsa.csv \
+	contracts.csv contracts-nil.csv \
 	consultations.csv \
 	dac.csv \
 	experiment.csv \
-        grants.csv grants-nil.csv \
-        hospitalityq.csv hospitalityq-nil.csv \
+	grants.csv grants-nil.csv \
+	hospitalityq.csv hospitalityq-nil.csv \
 	nap5.csv \
-        reclassification.csv reclassification-nil.csv \
-	service.csv service-std.csv \
-        travela.csv \
-        travelq.csv travelq-nil.csv \
-        wrongdoing.csv \
-		adminaircraft.csv
+	reclassification.csv reclassification-nil.csv \
+	travela.csv \
+	travelq.csv travelq-nil.csv \
+	wrongdoing.csv \
+	adminaircraft.csv
 
 fdir := $(PD_FILTER_SCRIPT_DIRECTORY)
 paster := $(REGISTRY_PASTER_COMMAND)
@@ -371,6 +370,7 @@ $(workdir)/filtered/dac.csv: $(workdir)/dac.csv
 ###
 ###  Experimental Inventory
 ###
+# NOTE: Experimentation Inventory has no Search. Do not need to rebuild. (2024-04)
 .PHONY: experiment
 experiment: upload-experiment rebuild-experiment
 
@@ -380,10 +380,6 @@ upload-experiment: $(workdir)/filtered/experiment.csv $(workdir)/experiment.csv
 	@$(ckanapi) action resource_patch -c $(registry_ini) \
 	id=07151ad9-52e2-4f99-b4fd-7cd208816a64 upload@"$(workdir)/filtered/experiment.csv" \
 	> /dev/null
-
-.PHONY: rebuild-experiment
-rebuild-experiment: $(workdir)/filtered/experiment.csv $(workdir)/experiment.csv
-	@$(oc_search) import_data_csv --csv "$(workdir)/filtered/experiment.csv" --search experiment --quiet
 
 $(workdir)/experiment.csv:
 	$(paster) $(combine) experiment -d $(workdir) -c $(registry_ini)
@@ -522,6 +518,13 @@ $(workdir)/filtered/nap5.csv: $(workdir)/nap5.csv
 	$(registry_python) $(fdir)/filter_nap5.py < $< > $@
 
 ###
+###  Open Data Inventory
+###
+# NOTE: Open Data InventorySearch deprecated. Do not need to rebuild. (2024-04)
+# NOTE: Open Data Inventory Registry resources exist, but no longer need updating. (2020-06)
+# NOTE: Do not need to keep CSV backups. (2024-04)
+
+###
 ###  Position Reclassification
 ###
 .PHONY: reclassification
@@ -558,36 +561,9 @@ $(workdir)/filtered/reclassification-nil.csv: $(workdir)/reclassification-nil.cs
 ###
 ###  Service Inventory
 ###
-.PHONY: service
-service: upload-service rebuild-service
-
-.PHONY: upload-service
-upload-service: $(workdir)/filtered/service.csv $(workdir)/filtered/service-std.csv
-	# disable publishing service inventory as of 2020-06-08
-	# @$(echo_date) Uploading Service Inventory...
-	# @$(ckanapi) action resource_patch -c $(registry_ini) \
-	# id=3acf79c0-a5f5-4d9a-a30d-fb5ceba4b60a upload@"$(workdir)/filtered/service.csv" \
-	# > /dev/null
-	# @$(ckanapi) action resource_patch -c $(registry_ini) \
-	# id=272143a7-533e-42a1-b72d-622116474a21 upload@"$(workdir)/filtered/service-std.csv" \
-	# > /dev/null
-
-.PHONY: rebuild-service
-rebuild-service: $(workdir)/filtered/service.csv $(workdir)/filtered/service-std.csv
-	# disabled search rebuild like in update_search_cores.sh
-	# $(ogc_search)/load_si_to_solr.py "$(workdir)/filtered/service.csv" "$(workdir)/filtered/service-std.csv"
-
-$(workdir)/service.csv:
-	$(paster) $(combine) service -d $(workdir) -c $(registry_ini)
-
-$(workdir)/service-std.csv:
-	$(paster) $(combine) service-std -d $(workdir) -c $(registry_ini)
-
-$(workdir)/filtered/service.csv: $(workdir)/service.csv
-	$(fdir)/filter_service.py < $< > $@
-
-$(workdir)/filtered/service-std.csv: $(workdir)/service-std.csv
-	$(fdir)/filter_service_std.py < $< > $@
+# NOTE: Service Inventory Search deprecated. Do not need to rebuild. (2020-06)
+# NOTE: Service Inventory Registry resources exist, but no longer need updating. (2020-06)
+# NOTE: Do not need to keep CSV backups. (2024-04)
 
 ###
 ###  Annual Travel, Hospitality and Conferences
