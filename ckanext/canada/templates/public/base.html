@@ -5,12 +5,12 @@
   {{ super() }}
 
   {% block og_meta_title %}
-    <meta property="og:title" content="{{ self.title() }}">
+    <meta property="og:title" content="{{ _(self.title()) }}">
   {% endblock %}
   {% block adobe_analytics_meta %}
     {% if not h.is_registry() %}
       {% block adobe_analytics_title %}
-        <meta property="dcterms:title" content="{{ self.title() }}" />
+        <meta property="dcterms:title" content="{{ _(self.title()) }}" />
       {% endblock %}
       <meta property="dcterms:language" content="{{ h.adobe_analytics_lang() }}" />
       {% block adobe_analytics_creator %}
