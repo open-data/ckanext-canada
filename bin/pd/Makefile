@@ -1,6 +1,6 @@
 .DELETE_ON_ERROR:
 
-targets := ati briefingt qpnotes consultations contracts contractsa dac experiment grants hospitalityq inventory \
+targets := ati briefingt qpnotes consultations contracts contractsa dac experiment grants hospitalityq \
 	nap5 reclassification service travela travelq wrongdoing adminaircraft
 
 csv_files := \
@@ -14,7 +14,6 @@ csv_files := \
 	experiment.csv \
         grants.csv grants-nil.csv \
         hospitalityq.csv hospitalityq-nil.csv \
-	inventory.csv \
 	nap5.csv \
         reclassification.csv reclassification-nil.csv \
 	service.csv service-std.csv \
@@ -521,31 +520,6 @@ $(workdir)/nap5.csv:
 # use $(registry_python) to execute filter_nap5.py as we need pyyaml from venv
 $(workdir)/filtered/nap5.csv: $(workdir)/nap5.csv
 	$(registry_python) $(fdir)/filter_nap5.py < $< > $@
-
-###
-###  Open Data Inventory
-###
-.PHONY: inventory
-inventory: upload-inventory rebuild-inventory
-
-.PHONY: upload-inventory
-upload-inventory: $(workdir)/filtered/inventory.csv
-	@$(echo_date) Uploading Open Data Inventory...
-	@$(ckanapi) action resource_patch -c $(registry_ini) \
-	id=d0df95a8-31a9-46c9-853b-6952819ec7b4 upload@"$(workdir)/filtered/inventory.csv" \
-	> /dev/null
-
-.PHONY: rebuild-inventory
-rebuild-inventory: $(workdir)/filtered/inventory.csv
-	@$(echo_date) Rebuilding Open Data Inventory...
-	$(paster) --plugin=ckanext-canada inventory rebuild --lenient -c $(portal_ini) \
-	-f "$(workdir)/filtered/inventory.csv"
-
-$(workdir)/inventory.csv:
-	$(paster) $(combine) inventory -d $(workdir) -c $(registry_ini)
-
-$(workdir)/filtered/inventory.csv: $(workdir)/inventory.csv
-	$(fdir)/filter_inventory.py < $< > $@
 
 ###
 ###  Position Reclassification
