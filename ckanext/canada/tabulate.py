@@ -23,6 +23,13 @@ from ckan.plugins.toolkit import config, _
 from logging import getLogger, Filter
 
 
+class DialectException(TabulatorException):
+    """
+    Class for all dialect exceptions.
+    """
+    pass
+
+
 class LimitStreamLogging(Filter):
     logged_messages = []
     def filter(self, record):
@@ -284,7 +291,7 @@ def _check_dialect_and_raise(guessed_dialect, static_dialect, compare_obj=False)
                                                      static_double_quote=static_dialect['doublequote'])))
 
     if errors:
-        raise TabulatorException(errors)
+        raise DialectException(errors)
 
 
 def _check_encoding_and_raise(guessed_encoding, static_encoding):
