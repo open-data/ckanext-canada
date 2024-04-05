@@ -1,9 +1,7 @@
 from copy import copy
 from goodtables import check, Error
-from tabulator.exceptions import TabulatorException
-import json
 
-from ckan.plugins.toolkit import _, config
+from ckan.plugins.toolkit import _
 from ckanext.datastore.helpers import is_valid_field_name
 
 
