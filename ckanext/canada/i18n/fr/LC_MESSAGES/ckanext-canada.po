@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-04-02 16:44+0000\n"
+"POT-Creation-Date: 2024-04-05 19:01+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: fr\n"
@@ -502,6 +502,18 @@ msgstr ""
 #: ckanext/canada/strings.py:72
 msgid "These fields have been removed."
 msgstr "Ces champs ont été supprimés."
+
+#: ckanext/canada/strings.py:75
+msgid "Your form submission could not be validated, please re-submit the form."
+msgstr ""
+
+#: ckanext/canada/strings.py:78
+msgid "Open Government Portal"
+msgstr "Portail du gouvernement ouvert"
+
+#: ckanext/canada/strings.py:79
+msgid "Open Government Portal (staging)"
+msgstr "Portail du gouvernement ouvert (stadification)"
 
 #: ckanext/canada/validators.py:119
 #, python-format
@@ -3744,12 +3756,6 @@ msgstr "Données et ressources"
 #: ckanext/canada/templates/public/package/snippets/schemaorg.html:5
 msgid "Government of Canada Open Government Portal"
 msgstr "Gouvernement du Canada site gouvernemental ouvert"
-
-msgid "Open Government Portal"
-msgstr "Portail du gouvernement ouvert"
-
-msgid "Open Government Portal (staging)"
-msgstr "Portail du gouvernement ouvert (stadification)"
 
 #: ckanext/canada/templates/public/package/snippets/schemaorg.html:19
 msgid ""
