@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ckanext-canada 0.4.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-04-02 16:35+0000\n"
+"POT-Creation-Date: 2024-04-05 18:58+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -467,6 +467,18 @@ msgstr ""
 
 #: ckanext/canada/strings.py:72
 msgid "These fields have been removed."
+msgstr ""
+
+#: ckanext/canada/strings.py:75
+msgid "Your form submission could not be validated, please re-submit the form."
+msgstr ""
+
+#: ckanext/canada/strings.py:78
+msgid "Open Government Portal"
+msgstr ""
+
+#: ckanext/canada/strings.py:79
+msgid "Open Government Portal (staging)"
 msgstr ""
 
 #: ckanext/canada/validators.py:119
