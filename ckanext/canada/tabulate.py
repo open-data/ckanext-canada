@@ -11,7 +11,7 @@ Note: script cannot be named tabulator! (hence tabulate)
 from tabulator.stream import Stream
 from tabulator.parsers.csv import CSVParser
 from tabulator.config import CSV_SAMPLE_LINES
-from tabulator.exceptions import TabulatorException, EncodingError
+from tabulator.exceptions import TabulatorException, EncodingError, SourceError
 import six
 import json
 import csv
@@ -22,12 +22,9 @@ from ckan.plugins.toolkit import config, _
 
 from logging import getLogger, Filter
 
-
-class DialectException(TabulatorException):
-    """
-    Class for all dialect exceptions.
-    """
-    pass
+#FIXME: the chances of a user using quad pipes as a
+#       CSV dialect value is low, but never zero...
+ERROR_SPLITTER = '||||'
 
 
 class LimitStreamLogging(Filter):
@@ -65,10 +62,6 @@ class CanadaStream(Stream):
     into the Stream instantiation.
     """
 
-    #FIXME: open calls __extract_sample which catches all exceptions
-    #       and eats them, re-raising as stringified SourceError.
-    #       implement and open and try/catch a custom exception.
-
     static_dialects = None
     static_encoding = None
 
@@ -81,6 +74,20 @@ class CanadaStream(Stream):
         dialects = _get_dialects()
         if dialects:
             self.static_dialects = dialects
+
+    def open(self):
+        """
+        Tabulator Stream.open will catch all Exception types and re-raise them
+        as a SourceError, stringifying the exception messages or dicts.
+        """
+        try:
+            super(CanadaStream, self).open()
+        except SourceError as exception:
+            if ERROR_SPLITTER in exception.message:
+                error = exception.message.split(ERROR_SPLITTER)
+                if isinstance(error, list) and len(error) == 2:
+                    raise TabulatorException((error[0], error[1]))
+            raise SourceError(exception)
 
     @property
     def encoding(self):
@@ -260,8 +267,6 @@ def _get_encoding():
 
 
 def _check_dialect_and_raise(guessed_dialect, static_dialect, compare_obj=False):
-    errors = []
-
     guessed_delimiter_var = 'delimiter'
     guessed_quoteChar_var = 'quoteChar'
     guessed_doubleQuote_var = 'doubleQuote'
@@ -276,22 +281,28 @@ def _check_dialect_and_raise(guessed_dialect, static_dialect, compare_obj=False)
 
     if guessed_dialect and static_dialect:
         if guessed_delimiter_var in guessed_dialect and guessed_dialect[guessed_delimiter_var] != static_dialect['delimiter']:
-            errors.append(('invalid-dialect', _("File is using delimeter {stream_delimeter} instead of {static_delimeter}").format(
-                                                stream_delimeter=guessed_dialect[guessed_delimiter_var],
-                                                static_delimeter=static_dialect['delimiter'])))
+            raise TabulatorException('{0}{1}{2}'.format(
+                'invalid-dialect',
+                ERROR_SPLITTER,
+                _("File is using delimeter {stream_delimeter} instead of {static_delimeter}").format(
+                  stream_delimeter=guessed_dialect[guessed_delimiter_var],
+                  static_delimeter=static_dialect['delimiter'])))
 
         if guessed_quoteChar_var in guessed_dialect and guessed_dialect[guessed_quoteChar_var] != static_dialect['quotechar']:
-            errors.append(('invalid-quote-char', _("File is using quoting character {stream_quote_char} instead of {static_quote_char}").format(
-                                                   stream_quote_char=guessed_dialect[guessed_quoteChar_var],
-                                                   static_quote_char=static_dialect['quotechar'])))
+            raise TabulatorException('{0}{1}{2}'.format(
+                'invalid-quote-char',
+                ERROR_SPLITTER,
+                _("File is using quoting character {stream_quote_char} instead of {static_quote_char}").format(
+                  stream_quote_char=guessed_dialect[guessed_quoteChar_var],
+                  static_quote_char=static_dialect['quotechar'])))
 
         if guessed_doubleQuote_var in guessed_dialect and guessed_dialect[guessed_doubleQuote_var] != static_dialect['doublequote']:
-            errors.append(('invalid-double-quote', _("File is using double quoting {stream_double_quote} instead of {static_double_quote}").format(
-                                                     stream_double_quote=guessed_dialect[guessed_doubleQuote_var],
-                                                     static_double_quote=static_dialect['doublequote'])))
-
-    if errors:
-        raise DialectException(errors)
+            raise TabulatorException('{0}{1}{2}'.format(
+                'invalid-double-quote',
+                ERROR_SPLITTER,
+                _("File is using double quoting {stream_double_quote} instead of {static_double_quote}").format(
+                  stream_double_quote=guessed_dialect[guessed_doubleQuote_var],
+                  static_double_quote=static_dialect['doublequote'])))
 
 
 def _check_encoding_and_raise(guessed_encoding, static_encoding):
