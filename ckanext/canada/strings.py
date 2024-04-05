@@ -71,6 +71,9 @@ _("Cannot link files of this type")
 _('These fields have been removed, click update below to save your changes.')
 _('These fields have been removed.')
 
+# strings from csrf
+_("Your form submission could not be validated, please re-submit the form.")
+
 # strings from configurations
 _('Open Government Portal')
 _('Open Government Portal (staging)')
