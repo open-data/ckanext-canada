@@ -1,7 +1,7 @@
 .DELETE_ON_ERROR:
 
 targets := ati briefingt qpnotes consultations contracts contractsa dac experiment grants hospitalityq \
-	nap5 reclassification travela travelq wrongdoing adminaircraft
+	nap5 reclassification service travela travelq wrongdoing adminaircraft
 
 csv_files := \
 	ati.csv ati-nil.csv \
@@ -16,6 +16,7 @@ csv_files := \
 	hospitalityq.csv hospitalityq-nil.csv \
 	nap5.csv \
 	reclassification.csv reclassification-nil.csv \
+	service.csv service-std.csv \
 	travela.csv \
 	travelq.csv travelq-nil.csv \
 	wrongdoing.csv \
@@ -213,6 +214,7 @@ $(workdir)/filtered/briefingt-nil.csv: $(workdir)/briefingt-nil.csv
 ###
 ###  Question Period Notes
 ###
+# NOTE: qpnotes-nil to come. (2024-04)
 .PHONY: qpnotes
 qpnotes: upload-qpnotes rebuild-qpnotes
 
@@ -563,7 +565,36 @@ $(workdir)/filtered/reclassification-nil.csv: $(workdir)/reclassification-nil.cs
 ###
 # NOTE: Service Inventory Search deprecated. Do not need to rebuild. (2020-06)
 # NOTE: Service Inventory Registry resources exist, but no longer need updating. (2020-06)
-# NOTE: Do not need to keep CSV backups. (2024-04)
+# NOTE: Keep generating CSV backups. (2024-04)
+# NOTE: Service Inventory will be returning soon. (2024-04)
+.PHONY: service
+service: upload-service rebuild-service
+
+.PHONY: upload-service
+upload-service: $(workdir)/filtered/service.csv $(workdir)/filtered/service-std.csv
+	# @$(echo_date) Uploading Service Inventory...
+	# @$(ckanapi) action resource_patch -c $(registry_ini) \
+	# id=3acf79c0-a5f5-4d9a-a30d-fb5ceba4b60a upload@"$(workdir)/filtered/service.csv" \
+	# > /dev/null
+	# @$(ckanapi) action resource_patch -c $(registry_ini) \
+	# id=272143a7-533e-42a1-b72d-622116474a21 upload@"$(workdir)/filtered/service-std.csv" \
+	# > /dev/null
+
+.PHONY: rebuild-service
+rebuild-service: $(workdir)/filtered/service.csv $(workdir)/filtered/service-std.csv
+	# $(ogc_search)/load_si_to_solr.py "$(workdir)/filtered/service.csv" "$(workdir)/filtered/service-std.csv"
+
+$(workdir)/service.csv:
+	$(paster) $(combine) service -d $(workdir) -c $(registry_ini)
+
+$(workdir)/service-std.csv:
+	$(paster) $(combine) service-std -d $(workdir) -c $(registry_ini)
+
+$(workdir)/filtered/service.csv: $(workdir)/service.csv
+	$(fdir)/filter_service.py < $< > $@
+
+$(workdir)/filtered/service-std.csv: $(workdir)/service-std.csv
+	$(fdir)/filter_service_std.py < $< > $@
 
 ###
 ###  Annual Travel, Hospitality and Conferences
