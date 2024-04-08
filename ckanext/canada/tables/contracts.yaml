@@ -1926,8 +1926,11 @@ resources:
         intellectual_property_choices text[] := {intellectual_property};
       BEGIN
         errors := errors || required_error(NEW.reference_number, 'reference_number');
+        NEW.reference_number := trim(both E'\t\n\x0b\x0c\r \xc2\xa0' from NEW.reference_number);
+
         errors := errors || required_error(NEW.contract_date, 'contract_date');
 
+        NEW.procurement_id := trim(both E'\t\n\x0b\x0c\r \xc2\xa0' from NEW.procurement_id);
         IF NEW.contract_date >= '2019-01-01'::date THEN
           errors := errors || required_error(NEW.procurement_id, 'procurement_id');
           errors := errors || required_error(NEW.vendor_name, 'vendor_name');
