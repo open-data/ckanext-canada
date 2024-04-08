@@ -65,7 +65,7 @@ class TestMakePD(CanadaTestBase):
         os.environ['PORTAL_INI'] = ini
 
 
-    def _setup_pd(self, type, nil_type, resource_id, nil_resource_id):
+    def _setup_pd(self, type, nil_type):
         assert type
 
         self.action.recombinant_create(dataset_type=type, owner_org=self.org['name'])
@@ -76,15 +76,14 @@ class TestMakePD(CanadaTestBase):
             resource_id=rval['resources'][0]['id'],
             records=[get_chromo(type)['examples']['record']])
 
-        Resource(id=resource_id)
+        Resource(id=rval['resources'][0]['published_resource_id'])
 
         if nil_type:
             self.action.datastore_upsert(
                 resource_id=rval['resources'][1]['id'],
                 records=[get_chromo(nil_type)['examples']['record']])
 
-        if nil_resource_id:
-            Resource(id=nil_resource_id)
+            Resource(id=rval['resources'][1]['published_resource_id'])
 
 
     def test_enivonment_variables(self):
@@ -111,10 +110,7 @@ class TestMakePD(CanadaTestBase):
         assert self.ckan_ini
         self._setup_ini(self.ckan_ini)
 
-        self._setup_pd(type='ati',
-                       nil_type='ati-nil',
-                       resource_id='19383ca2-b01a-487d-88f7-e1ffbc7d39c2',
-                       nil_resource_id='5a1386a5-ba69-4725-8338-2f26004d7382')
+        self._setup_pd(type='ati', nil_type='ati-nil')
 
         make_process = subprocess.Popen(["make upload-ati"], shell=True, cwd=MAKE_PATH, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
         stdout, stderr = make_process.communicate()
