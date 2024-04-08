@@ -72,18 +72,22 @@ class TestMakePD(CanadaTestBase):
 
         rval = self.action.recombinant_show(dataset_type='ati', owner_org=self.org['name'])
 
+        chromo = get_chromo(type)
+
         self.action.datastore_upsert(
             resource_id=rval['resources'][0]['id'],
-            records=[get_chromo(type)['examples']['record']])
+            records=[chromo['examples']['record']])
 
-        Resource(id=rval['resources'][0]['published_resource_id'])
+        Resource(id=chromo['published_resource_id'])
 
         if nil_type:
+            nil_chromo = get_chromo(type)
+
             self.action.datastore_upsert(
                 resource_id=rval['resources'][1]['id'],
-                records=[get_chromo(nil_type)['examples']['record']])
+                records=[nil_chromo['examples']['record']])
 
-            Resource(id=rval['resources'][1]['published_resource_id'])
+            Resource(id=nil_chromo['published_resource_id'])
 
 
     def test_enivonment_variables(self):
