@@ -6,6 +6,7 @@ import ckan.plugins as p
 from ckan.lib.plugins import DefaultDatasetForm, DefaultTranslation
 import ckan.lib.helpers as hlp
 from ckan.logic import validators as logic_validators
+from ckanext.datastore.interfaces import IDataDictionaryForm
 
 from ckan.plugins.toolkit import (
     c,
@@ -107,6 +108,8 @@ class CanadaDatasetsPlugin(SchemingDatasetsPlugin):
     p.implements(p.IDatasetForm, inherit=True)
     p.implements(p.IPackageController, inherit=True)
     p.implements(p.IBlueprint)
+    p.implements(IDataDictionaryForm, inherit=True)
+
     try:
         from ckanext.validation.interfaces import IDataValidation
     except ImportError:
@@ -305,6 +308,16 @@ class CanadaDatasetsPlugin(SchemingDatasetsPlugin):
                 cr.pop('__extras', None)
 
         return data_dict
+
+    # IDataDictionaryForm
+
+    def update_datastore_info_field(self, field, plugin_data):
+        if 'info' or '_info' in plugin_data and 'info' not in field:
+            if 'info' in plugin_data:
+                field['info'] = plugin_data.get('info', {})
+            elif '_info' in plugin_data:
+                field['info'] = plugin_data.get('_info', {})
+        return field
 
 
 class DataGCCAInternal(p.SingletonPlugin):
