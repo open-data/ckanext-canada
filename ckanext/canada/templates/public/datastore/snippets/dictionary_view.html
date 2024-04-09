@@ -6,10 +6,10 @@
   {{ super() }}
   {% if res.url_type != 'tabledesigner' %}
     {% call dictionary_field(_('Label')) %}
-      {{ field.get('info', {}).get('label_' ~ h.lang()) }}
+      {{ field.get('info', {}).get('label_' ~ h.lang(), '') }}
     {% endcall %}
     {% call dictionary_field(_('Description')) %}
-      {{ field.get('info', {}).get('notes_' ~ h.lang()) }}
+      {{ field.get('info', {}).get('notes_' ~ h.lang(), '') }}
     {% endcall %}
   {% endif %}
 {% endblock %}
