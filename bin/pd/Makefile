@@ -1,27 +1,26 @@
 .DELETE_ON_ERROR:
 
-targets := ati briefingt qpnotes consultations contracts contractsa dac experiment grants hospitalityq inventory \
+targets := ati briefingt qpnotes consultations contracts contractsa dac experiment grants hospitalityq \
 	nap5 reclassification service travela travelq wrongdoing adminaircraft
 
 csv_files := \
 	ati.csv ati-nil.csv \
 	briefingt.csv briefingt-nil.csv \
 	qpnotes.csv qpnotes-nil.csv \
-        contractsa.csv \
-        contracts.csv contracts-nil.csv \
+	contractsa.csv \
+	contracts.csv contracts-nil.csv \
 	consultations.csv \
 	dac.csv \
 	experiment.csv \
-        grants.csv grants-nil.csv \
-        hospitalityq.csv hospitalityq-nil.csv \
-	inventory.csv \
+	grants.csv grants-nil.csv \
+	hospitalityq.csv hospitalityq-nil.csv \
 	nap5.csv \
-        reclassification.csv reclassification-nil.csv \
+	reclassification.csv reclassification-nil.csv \
 	service.csv service-std.csv \
-        travela.csv \
-        travelq.csv travelq-nil.csv \
-        wrongdoing.csv \
-		adminaircraft.csv
+	travela.csv \
+	travelq.csv travelq-nil.csv \
+	wrongdoing.csv \
+	adminaircraft.csv
 
 fdir := $(PD_FILTER_SCRIPT_DIRECTORY)
 paster := $(REGISTRY_PASTER_COMMAND)
@@ -215,6 +214,7 @@ $(workdir)/filtered/briefingt-nil.csv: $(workdir)/briefingt-nil.csv
 ###
 ###  Question Period Notes
 ###
+# NOTE: qpnotes-nil to come. (2024-04)
 .PHONY: qpnotes
 qpnotes: upload-qpnotes rebuild-qpnotes
 
@@ -372,8 +372,9 @@ $(workdir)/filtered/dac.csv: $(workdir)/dac.csv
 ###
 ###  Experimental Inventory
 ###
+# NOTE: Experimentation Inventory has no Search. Do not need to rebuild. (2024-04)
 .PHONY: experiment
-experiment: upload-experiment rebuild-experiment
+experiment: upload-experiment
 
 .PHONY: upload-experiment
 upload-experiment: $(workdir)/filtered/experiment.csv $(workdir)/experiment.csv
@@ -381,10 +382,6 @@ upload-experiment: $(workdir)/filtered/experiment.csv $(workdir)/experiment.csv
 	@$(ckanapi) action resource_patch -c $(registry_ini) \
 	id=07151ad9-52e2-4f99-b4fd-7cd208816a64 upload@"$(workdir)/filtered/experiment.csv" \
 	> /dev/null
-
-.PHONY: rebuild-experiment
-rebuild-experiment: $(workdir)/filtered/experiment.csv $(workdir)/experiment.csv
-	@$(oc_search) import_data_csv --csv "$(workdir)/filtered/experiment.csv" --search experiment --quiet
 
 $(workdir)/experiment.csv:
 	$(paster) $(combine) experiment -d $(workdir) -c $(registry_ini)
@@ -525,27 +522,9 @@ $(workdir)/filtered/nap5.csv: $(workdir)/nap5.csv
 ###
 ###  Open Data Inventory
 ###
-.PHONY: inventory
-inventory: upload-inventory rebuild-inventory
-
-.PHONY: upload-inventory
-upload-inventory: $(workdir)/filtered/inventory.csv
-	@$(echo_date) Uploading Open Data Inventory...
-	@$(ckanapi) action resource_patch -c $(registry_ini) \
-	id=d0df95a8-31a9-46c9-853b-6952819ec7b4 upload@"$(workdir)/filtered/inventory.csv" \
-	> /dev/null
-
-.PHONY: rebuild-inventory
-rebuild-inventory: $(workdir)/filtered/inventory.csv
-	@$(echo_date) Rebuilding Open Data Inventory...
-	$(paster) --plugin=ckanext-canada inventory rebuild --lenient -c $(portal_ini) \
-	-f "$(workdir)/filtered/inventory.csv"
-
-$(workdir)/inventory.csv:
-	$(paster) $(combine) inventory -d $(workdir) -c $(registry_ini)
-
-$(workdir)/filtered/inventory.csv: $(workdir)/inventory.csv
-	$(fdir)/filter_inventory.py < $< > $@
+# NOTE: Open Data InventorySearch deprecated. Do not need to rebuild. (2024-04)
+# NOTE: Open Data Inventory Registry resources exist, but no longer need updating. (2020-06)
+# NOTE: Do not need to keep CSV backups. (2024-04)
 
 ###
 ###  Position Reclassification
@@ -584,12 +563,15 @@ $(workdir)/filtered/reclassification-nil.csv: $(workdir)/reclassification-nil.cs
 ###
 ###  Service Inventory
 ###
+# NOTE: Service Inventory Search deprecated. Do not need to rebuild. (2020-06)
+# NOTE: Service Inventory Registry resources exist, but no longer need updating. (2020-06)
+# NOTE: Keep generating CSV backups. (2024-04)
+# NOTE: Service Inventory will be returning soon. (2024-04)
 .PHONY: service
 service: upload-service rebuild-service
 
 .PHONY: upload-service
 upload-service: $(workdir)/filtered/service.csv $(workdir)/filtered/service-std.csv
-	# disable publishing service inventory as of 2020-06-08
 	# @$(echo_date) Uploading Service Inventory...
 	# @$(ckanapi) action resource_patch -c $(registry_ini) \
 	# id=3acf79c0-a5f5-4d9a-a30d-fb5ceba4b60a upload@"$(workdir)/filtered/service.csv" \
@@ -600,7 +582,6 @@ upload-service: $(workdir)/filtered/service.csv $(workdir)/filtered/service-std.
 
 .PHONY: rebuild-service
 rebuild-service: $(workdir)/filtered/service.csv $(workdir)/filtered/service-std.csv
-	# disabled search rebuild like in update_search_cores.sh
 	# $(ogc_search)/load_si_to_solr.py "$(workdir)/filtered/service.csv" "$(workdir)/filtered/service-std.csv"
 
 $(workdir)/service.csv:
