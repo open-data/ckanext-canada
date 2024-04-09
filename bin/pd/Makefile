@@ -374,7 +374,7 @@ $(workdir)/filtered/dac.csv: $(workdir)/dac.csv
 ###
 # NOTE: Experimentation Inventory has no Search. Do not need to rebuild. (2024-04)
 .PHONY: experiment
-experiment: upload-experiment rebuild-experiment
+experiment: upload-experiment
 
 .PHONY: upload-experiment
 upload-experiment: $(workdir)/filtered/experiment.csv $(workdir)/experiment.csv
