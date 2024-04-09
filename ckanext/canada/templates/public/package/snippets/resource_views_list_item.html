@@ -15,7 +15,7 @@
     <i class="fa icon fa-{{ h.resource_view_icon(view) }}"></i>
     {% if h.lang() == 'fr' %}{{ view.title_fr }}{% else %}{{ view.title }}{% endif %}
     {% if view.get('canada_disabled_view') %}
-      <small class="label label-warning">{{ _('Disabled') }}</small>
+      <small class="label label-warning canada-view-disabled-label">{{ _('Disabled') }}</small>
     {% endif %}
   </a>
 </li>

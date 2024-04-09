@@ -53,6 +53,7 @@ _("Assigned %s as an admin.")  # TODO: remove after upstream fix
 _("View deleted.")  # TODO: remove after upstream fix
 _("View updated.")  # TODO: remove after upstream fix
 _("View created.")  # TODO: remove after upstream fix
+_("The data source could not be successfully decoded with utf-8 encoding")
 _('Promoted {} to sysadmin')
 _('Revoked sysadmin permission from {}')
 _('Current Sysadmins')
