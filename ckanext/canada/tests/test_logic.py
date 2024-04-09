@@ -37,7 +37,11 @@ class TestCanadaLogic(CanadaTestBase):
         assert ds_info['fields'][0]['id'] == 'exampled_id'
         assert 'info' in ds_info['fields'][0]
         assert 'label_en' in ds_info['fields'][0]['info']
+        assert ds_info['fields'][0]['info']['label_en'] == 'Example Label'
         assert 'label_fr' in ds_info['fields'][0]['info']
+        assert ds_info['fields'][0]['info']['label_fr'] == 'Example Label FR'
         assert 'notes_en' in ds_info['fields'][0]['info']
+        assert ds_info['fields'][0]['info']['notes_en'] == 'Example Description'
         assert 'notes_fr' in ds_info['fields'][0]['info']
+        assert ds_info['fields'][0]['info']['notes_fr'] == 'Example Description FR'
 
