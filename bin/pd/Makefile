@@ -372,9 +372,10 @@ $(workdir)/filtered/dac.csv: $(workdir)/dac.csv
 ###
 ###  Experimental Inventory
 ###
-# NOTE: Experimentation Inventory has no Search. Do not need to rebuild. (2024-04)
+# NOTE: Experimentation Inventory has no Search. Do not need to rebuild.
+#       We need the target however for rebuild-all target. (2024-04)
 .PHONY: experiment
-experiment: upload-experiment
+experiment: upload-experiment rebuild-experiment
 
 .PHONY: upload-experiment
 upload-experiment: $(workdir)/filtered/experiment.csv $(workdir)/experiment.csv
@@ -382,6 +383,10 @@ upload-experiment: $(workdir)/filtered/experiment.csv $(workdir)/experiment.csv
 	@$(ckanapi) action resource_patch -c $(registry_ini) \
 	id=07151ad9-52e2-4f99-b4fd-7cd208816a64 upload@"$(workdir)/filtered/experiment.csv" \
 	> /dev/null
+
+.PHONY:
+rebuild-experiment: $(workdir)/filtered/experiment.csv $(workdir)/experiment.csv
+	@$(echo_date) Placeholder for rebuilding Experimentation Inventory...
 
 $(workdir)/experiment.csv:
 	$(paster) $(combine) experiment -d $(workdir) -c $(registry_ini)
