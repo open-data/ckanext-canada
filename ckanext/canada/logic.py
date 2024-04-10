@@ -471,6 +471,11 @@ def canada_job_list(up_func, context, data_dict):
 
 @side_effect_free
 def registry_jobs_running(context, data_dict):
+    """
+    Returns false if the first job in the default queue has not run in the last 18 minutes.
+
+    #TODO: rework this when the Registry moves to public network.
+    """
     registry_redis_url = config.get('ckanext.canada.registry_jobs.url')
 
     if not registry_redis_url:
