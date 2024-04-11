@@ -62,6 +62,7 @@ class TestMakePD(CanadaTestBase):
         os.environ['PD_BACKUP_DIRECTORY'] = self.tmp_dir
         os.environ['REGISTRY_STATIC_SMB_DIRECTORY'] = self.tmp_dir
         os.environ['PORTAL_STATIC_SMB_DIRECTORY'] = self.tmp_dir
+        os.environ['REGISTRY_CKAN_COMMAND'] = 'ckan'
 
 
     @classmethod
@@ -128,6 +129,7 @@ class TestMakePD(CanadaTestBase):
         assert 'PD_BACKUP_DIRECTORY is undefined' not in stdout
         assert 'REGISTRY_STATIC_SMB_DIRECTORY is undefined' not in stdout
         assert 'PORTAL_STATIC_SMB_DIRECTORY is undefined' not in stdout
+        assert 'REGISTRY_CKAN_COMMAND is undefined' not in stdout
 
 
     def test_make_ati(self):
