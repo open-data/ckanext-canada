@@ -143,14 +143,6 @@ class TestMakePD(CanadaTestBase):
         make_process = subprocess.Popen(["make rebuild-ati"], shell=True, cwd=MAKE_PATH, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
         stdout, stderr = make_process.communicate()
 
-        from logging import getLogger
-        log = getLogger(__name__)
-        log.info("    ")
-        log.info("DEBUGGING::test_make_ati")
-        log.info("    ")
-        log.info(stdout)
-        log.info("    ")
-
         # Drupal/Solr, test for record indexing
         assert "Usage:" not in stdout
         assert "rebuild-ati] Error" not in stdout
