@@ -115,6 +115,8 @@ class TestMakePD(CanadaTestBase):
         make_process = subprocess.Popen(["make help"], shell=True, cwd=MAKE_PATH, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
         stdout, stderr = make_process.communicate()
 
+        stdout = stdout.decode("utf-8")
+
         assert 'PD_FILTER_SCRIPT_DIRECTORY is undefined' not in stdout
         assert 'REGISTRY_PASTER_COMMAND is undefined' not in stdout
         assert 'REGISTRY_PYTHON_COMMAND is undefined' not in stdout
@@ -137,11 +139,15 @@ class TestMakePD(CanadaTestBase):
         make_process = subprocess.Popen(["make upload-ati"], shell=True, cwd=MAKE_PATH, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
         stdout, stderr = make_process.communicate()
 
+        stdout = stdout.decode("utf-8")
+
         assert "Usage:" not in stdout
         assert "upload-ati] Error" not in stdout
 
         make_process = subprocess.Popen(["make rebuild-ati"], shell=True, cwd=MAKE_PATH, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
         stdout, stderr = make_process.communicate()
+
+        stdout = stdout.decode("utf-8")
 
         # Drupal/Solr, test for record indexing
         assert "Usage:" not in stdout
@@ -158,11 +164,15 @@ class TestMakePD(CanadaTestBase):
         make_process = subprocess.Popen(["make upload-briefingt"], shell=True, cwd=MAKE_PATH, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
         stdout, stderr = make_process.communicate()
 
+        stdout = stdout.decode("utf-8")
+
         assert "Usage:" not in stdout
         assert "upload-briefingt] Error" not in stdout
 
         make_process = subprocess.Popen(["make rebuild-briefingt"], shell=True, cwd=MAKE_PATH, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
         stdout, stderr = make_process.communicate()
+
+        stdout = stdout.decode("utf-8")
 
         # Django, just test for command output from echo
         assert "Usage:" not in stdout
@@ -179,11 +189,15 @@ class TestMakePD(CanadaTestBase):
         make_process = subprocess.Popen(["make upload-qpnotes"], shell=True, cwd=MAKE_PATH, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
         stdout, stderr = make_process.communicate()
 
+        stdout = stdout.decode("utf-8")
+
         assert "Usage:" not in stdout
         assert "upload-qpnotes] Error" not in stdout
 
         make_process = subprocess.Popen(["make rebuild-qpnotes"], shell=True, cwd=MAKE_PATH, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
         stdout, stderr = make_process.communicate()
+
+        stdout = stdout.decode("utf-8")
 
         # Django, just test for command output from echo
         assert "Usage:" not in stdout
@@ -200,11 +214,15 @@ class TestMakePD(CanadaTestBase):
         make_process = subprocess.Popen(["make upload-contracts"], shell=True, cwd=MAKE_PATH, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
         stdout, stderr = make_process.communicate()
 
+        stdout = stdout.decode("utf-8")
+
         assert "Usage:" not in stdout
         assert "upload-contracts] Error" not in stdout
 
         make_process = subprocess.Popen(["make rebuild-contracts"], shell=True, cwd=MAKE_PATH, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
         stdout, stderr = make_process.communicate()
+
+        stdout = stdout.decode("utf-8")
 
         # Django, just test for command output from echo
         assert "Usage:" not in stdout
@@ -221,11 +239,15 @@ class TestMakePD(CanadaTestBase):
         make_process = subprocess.Popen(["make upload-contractsa"], shell=True, cwd=MAKE_PATH, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
         stdout, stderr = make_process.communicate()
 
+        stdout = stdout.decode("utf-8")
+
         assert "Usage:" not in stdout
         assert "upload-contractsa] Error" not in stdout
 
         make_process = subprocess.Popen(["make rebuild-contractsa"], shell=True, cwd=MAKE_PATH, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
         stdout, stderr = make_process.communicate()
+
+        stdout = stdout.decode("utf-8")
 
         # there is no search for contractsa, just test for no errors
         assert "Usage:" not in stdout
@@ -243,11 +265,15 @@ class TestMakePD(CanadaTestBase):
         make_process = subprocess.Popen(["make upload-consultations"], shell=True, cwd=MAKE_PATH, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
         stdout, stderr = make_process.communicate()
 
+        stdout = stdout.decode("utf-8")
+
         assert "Usage:" not in stdout
         assert "upload-consultations] Error" not in stdout
 
         make_process = subprocess.Popen(["make rebuild-consultations"], shell=True, cwd=MAKE_PATH, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
         stdout, stderr = make_process.communicate()
+
+        stdout = stdout.decode("utf-8")
 
         # there is no search for contractsa, just test for no errors
         assert "Usage:" not in stdout
@@ -263,11 +289,15 @@ class TestMakePD(CanadaTestBase):
         make_process = subprocess.Popen(["make upload-dac"], shell=True, cwd=MAKE_PATH, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
         stdout, stderr = make_process.communicate()
 
+        stdout = stdout.decode("utf-8")
+
         assert "Usage:" not in stdout
         assert "upload-dac] Error" not in stdout
 
         make_process = subprocess.Popen(["make rebuild-dac"], shell=True, cwd=MAKE_PATH, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
         stdout, stderr = make_process.communicate()
+
+        stdout = stdout.decode("utf-8")
 
         # there is no search for contractsa, just test for no errors
         assert "Usage:" not in stdout
@@ -283,11 +313,15 @@ class TestMakePD(CanadaTestBase):
         make_process = subprocess.Popen(["make upload-experiment"], shell=True, cwd=MAKE_PATH, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
         stdout, stderr = make_process.communicate()
 
+        stdout = stdout.decode("utf-8")
+
         assert "Usage:" not in stdout
         assert "upload-experiment] Error" not in stdout
 
         make_process = subprocess.Popen(["make rebuild-experiment"], shell=True, cwd=MAKE_PATH, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
         stdout, stderr = make_process.communicate()
+
+        stdout = stdout.decode("utf-8")
 
         # there is no search for contractsa, just test for no errors
         assert "Usage:" not in stdout
@@ -303,11 +337,15 @@ class TestMakePD(CanadaTestBase):
         make_process = subprocess.Popen(["make upload-grants"], shell=True, cwd=MAKE_PATH, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
         stdout, stderr = make_process.communicate()
 
+        stdout = stdout.decode("utf-8")
+
         assert "Usage:" not in stdout
         assert "upload-grants] Error" not in stdout
 
         make_process = subprocess.Popen(["make rebuild-grants"], shell=True, cwd=MAKE_PATH, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
         stdout, stderr = make_process.communicate()
+
+        stdout = stdout.decode("utf-8")
 
         # Django, just test for command output from echo
         assert "Usage:" not in stdout
@@ -324,11 +362,15 @@ class TestMakePD(CanadaTestBase):
         make_process = subprocess.Popen(["make upload-hospitalityq"], shell=True, cwd=MAKE_PATH, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
         stdout, stderr = make_process.communicate()
 
+        stdout = stdout.decode("utf-8")
+
         assert "Usage:" not in stdout
         assert "upload-hospitalityq] Error" not in stdout
 
         make_process = subprocess.Popen(["make rebuild-hospitalityq"], shell=True, cwd=MAKE_PATH, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
         stdout, stderr = make_process.communicate()
+
+        stdout = stdout.decode("utf-8")
 
         # Drupal/Solr, test for record indexing
         assert "Usage:" not in stdout
@@ -345,11 +387,15 @@ class TestMakePD(CanadaTestBase):
         make_process = subprocess.Popen(["make upload-travelq"], shell=True, cwd=MAKE_PATH, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
         stdout, stderr = make_process.communicate()
 
+        stdout = stdout.decode("utf-8")
+
         assert "Usage:" not in stdout
         assert "upload-travelq] Error" not in stdout
 
         make_process = subprocess.Popen(["make rebuild-travelq"], shell=True, cwd=MAKE_PATH, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
         stdout, stderr = make_process.communicate()
+
+        stdout = stdout.decode("utf-8")
 
         # Django, just test for command output from echo
         assert "Usage:" not in stdout
@@ -366,11 +412,15 @@ class TestMakePD(CanadaTestBase):
         make_process = subprocess.Popen(["make upload-nap5"], shell=True, cwd=MAKE_PATH, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
         stdout, stderr = make_process.communicate()
 
+        stdout = stdout.decode("utf-8")
+
         assert "Usage:" not in stdout
         assert "upload-nap5] Error" not in stdout
 
         make_process = subprocess.Popen(["make rebuild-nap5"], shell=True, cwd=MAKE_PATH, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
         stdout, stderr = make_process.communicate()
+
+        stdout = stdout.decode("utf-8")
 
         # Django, just test for command output from echo
         assert "Usage:" not in stdout
@@ -387,11 +437,15 @@ class TestMakePD(CanadaTestBase):
         make_process = subprocess.Popen(["make upload-reclassification"], shell=True, cwd=MAKE_PATH, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
         stdout, stderr = make_process.communicate()
 
+        stdout = stdout.decode("utf-8")
+
         assert "Usage:" not in stdout
         assert "upload-reclassification] Error" not in stdout
 
         make_process = subprocess.Popen(["make rebuild-reclassification"], shell=True, cwd=MAKE_PATH, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
         stdout, stderr = make_process.communicate()
+
+        stdout = stdout.decode("utf-8")
 
         # Drupal/Solr, test for record indexing
         assert "Usage:" not in stdout
@@ -408,11 +462,15 @@ class TestMakePD(CanadaTestBase):
         make_process = subprocess.Popen(["make upload-service"], shell=True, cwd=MAKE_PATH, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
         stdout, stderr = make_process.communicate()
 
+        stdout = stdout.decode("utf-8")
+
         assert "Usage:" not in stdout
         assert "upload-service] Error" not in stdout
 
         make_process = subprocess.Popen(["make rebuild-service"], shell=True, cwd=MAKE_PATH, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
         stdout, stderr = make_process.communicate()
+
+        stdout = stdout.decode("utf-8")
 
         # there is no search for contractsa, just test for no errors
         assert "Usage:" not in stdout
@@ -428,11 +486,15 @@ class TestMakePD(CanadaTestBase):
         make_process = subprocess.Popen(["make upload-travela"], shell=True, cwd=MAKE_PATH, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
         stdout, stderr = make_process.communicate()
 
+        stdout = stdout.decode("utf-8")
+
         assert "Usage:" not in stdout
         assert "upload-travela] Error" not in stdout
 
         make_process = subprocess.Popen(["make rebuild-travela"], shell=True, cwd=MAKE_PATH, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
         stdout, stderr = make_process.communicate()
+
+        stdout = stdout.decode("utf-8")
 
         # Django, just test for command output from echo
         assert "Usage:" not in stdout
@@ -449,11 +511,15 @@ class TestMakePD(CanadaTestBase):
         make_process = subprocess.Popen(["make upload-wrongdoing"], shell=True, cwd=MAKE_PATH, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
         stdout, stderr = make_process.communicate()
 
+        stdout = stdout.decode("utf-8")
+
         assert "Usage:" not in stdout
         assert "upload-wrongdoing] Error" not in stdout
 
         make_process = subprocess.Popen(["make rebuild-wrongdoing"], shell=True, cwd=MAKE_PATH, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
         stdout, stderr = make_process.communicate()
+
+        stdout = stdout.decode("utf-8")
 
         # Drupal/Solr, test for record indexing
         assert "Usage:" not in stdout
@@ -470,11 +536,15 @@ class TestMakePD(CanadaTestBase):
         make_process = subprocess.Popen(["make upload-adminaircraft"], shell=True, cwd=MAKE_PATH, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
         stdout, stderr = make_process.communicate()
 
+        stdout = stdout.decode("utf-8")
+
         assert "Usage:" not in stdout
         assert "upload-adminaircraft] Error" not in stdout
 
         make_process = subprocess.Popen(["make rebuild-adminaircraft"], shell=True, cwd=MAKE_PATH, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
         stdout, stderr = make_process.communicate()
+
+        stdout = stdout.decode("utf-8")
 
         # Django, just test for command output from echo
         assert "Usage:" not in stdout
