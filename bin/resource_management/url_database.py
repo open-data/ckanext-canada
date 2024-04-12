@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 """
 Fetches URL's from metadata and tests URL status in parallel using
 grequests library.

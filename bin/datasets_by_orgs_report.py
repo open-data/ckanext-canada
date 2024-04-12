@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 """
 Usage:
   datasets_by_orgs_report.py PORTAL_URL REGISTRY_URL MONTHS

@@ -1,8 +1,7 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 import unicodecsv
 import sys
-import codecs
 import sqlite3
 import tempfile
 import json
@@ -11,6 +10,8 @@ assert sys.argv[1] and sys.argv[2], 'usage: amendment_delta_records.py input.csv
 AMENDMENT_COLUMN = 'amendment_number'
 OWNER_ORG = 'owner_org'
 OWNER_ORG_TITLE = 'owner_org_title'
+
+BOM = "\N{bom}"
 
 def batch_owner_org_pk(c):
     'yield groups of records with the same owner_org and pk values'
@@ -42,7 +43,7 @@ with tempfile.NamedTemporaryFile() as dbfile:
         'PRIMARY KEY (owner_org, pk, amendment))')
 
     with open(sys.argv[1], 'rb') as infile:
-        assert infile.read(3) == codecs.BOM_UTF8
+        assert infile.read(1) == BOM  # first code point
         in_csv = unicodecsv.DictReader(infile, encoding='utf-8')
         f0 = in_csv.fieldnames[0]
 
@@ -56,7 +57,7 @@ with tempfile.NamedTemporaryFile() as dbfile:
                 (owner_org, pk, amendment, original))
 
     with open(sys.argv[2], 'wb') as outfile:
-        outfile.write(codecs.BOM_UTF8)
+        outfile.write(BOM)
         out_csv = unicodecsv.DictWriter(
             outfile, fieldnames=in_csv.fieldnames, encoding='utf-8')
         out_csv.writeheader()

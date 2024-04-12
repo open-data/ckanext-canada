@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 """
 read json lines alberta metadata on stdin, output strings for translation on stdout

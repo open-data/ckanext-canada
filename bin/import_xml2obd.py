@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 '''
 Usage:
     import_xml2_obd.py <xml file or directory> <site_url> > <jsonl file>
