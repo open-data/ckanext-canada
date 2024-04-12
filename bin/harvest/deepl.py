@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 """
 Usage: deepl.py strings.csv deepldb.csv SOURCE_LANG TARGET_LANG AUTH_KEY

@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 """
 Script that takes csv on stdin and writes an xlsx file on stdout

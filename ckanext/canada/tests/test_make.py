@@ -55,7 +55,7 @@ class TestMakePD(CanadaTestBase):
 
         os.environ['PD_FILTER_SCRIPT_DIRECTORY'] = PD_FILTER_SCRIPT_DIRECTORY
         os.environ['REGISTRY_PASTER_COMMAND'] = 'paster'
-        os.environ['REGISTRY_PYTHON_COMMAND'] = 'python'
+        os.environ['REGISTRY_PYTHON_COMMAND'] = 'python3'
         os.environ['REGISTRY_CKANAPI_COMMAND'] = 'ckanapi'
         os.environ['OGC_SEARCH_COMMAND'] = 'echo'  # need a command to not fail
         os.environ['OC_SEARCH_COMMAND'] = 'echo'  # need a command to not fail

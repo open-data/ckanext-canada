@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 "generic filter for removing record modified, created fields"
 
 import csv
