@@ -430,6 +430,7 @@ ckanext.canada:schemas/presets.yaml
             },
             resource_view_update=resource_view_update_bilingual,
             resource_view_create=resource_view_create_bilingual,
+            datastore_run_triggers=logic.canada_datastore_run_triggers,
         )
 
     # IXloader
