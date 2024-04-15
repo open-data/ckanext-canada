@@ -385,20 +385,20 @@ ckanext.canada:schemas/presets.yaml
         from ckanext.datastore.backend import postgres as db
         original_upsert_data = db.upsert_data
         def patched_upsert_data(context, data_dict):
-            logic.datastore_create_temp_user_table(context)
-            try:
-                return original_upsert_data(context, data_dict)
-            except ValidationError as e:
-                # reformat tab-delimited error as dict
-                head, sep, rerr = e.error_dict.get('records', [''])[0].partition('\t')
-                rerr = rerr.rstrip('\n')
-                if head == 'TAB-DELIMITED' and sep:
-                    out = {}
-                    it = iter(rerr.split('\t'))
-                    for key, error in zip(it, it):
-                        out.setdefault(key, []).append(error)
-                    e.error_dict['records'] = [out]
-                raise e
+            with logic.datastore_create_temp_user_table(context):
+                try:
+                    return original_upsert_data(context, data_dict)
+                except ValidationError as e:
+                    # reformat tab-delimited error as dict
+                    head, sep, rerr = e.error_dict.get('records', [''])[0].partition('\t')
+                    rerr = rerr.rstrip('\n')
+                    if head == 'TAB-DELIMITED' and sep:
+                        out = {}
+                        it = iter(rerr.split('\t'))
+                        for key, error in zip(it, it):
+                            out.setdefault(key, []).append(error)
+                        e.error_dict['records'] = [out]
+                    raise e
         if db.upsert_data.__name__ == 'upsert_data':
             db.upsert_data = patched_upsert_data
 

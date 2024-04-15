@@ -216,28 +216,40 @@ def _activities_from_user_list_since(since, limit,user_id):
     return q.limit(limit)
 
 
-def datastore_create_temp_user_table(context):
-    '''
-    Create a table to pass the current username and sysadmin
-    state to our triggers for marking modified rows
-    '''
-    if 'user' not in context:
-        return
+class datastore_create_temp_user_table:
+    """
+    Context manager for wrapping DataStore transactions with
+    a temporary user table.
 
-    from ckanext.datastore.backend.postgres import literal_string
-    connection = context['connection']
-    username = context['user']
-    connection.execute(u'''
-        CREATE TEMP TABLE datastore_user (
-            username text NOT NULL,
-            sysadmin boolean NOT NULL
-            ) ON COMMIT DROP;
-        INSERT INTO datastore_user VALUES (
-            {username}, {sysadmin}
-            );
-        '''.format(
-            username=literal_string(username),
-            sysadmin='TRUE' if is_sysadmin(username) else 'FALSE'))
+    The table is to pass the current username and sysadmin
+    state to our triggers for marking modified rows
+    """
+    def __init__(self, context):
+        self.context = context
+
+    def __enter__(self):
+        if 'user' not in self.context:
+            return
+
+        from ckanext.datastore.backend.postgres import literal_string
+        username = self.context['user']
+        self.context['connection'].execute(u'''
+            CREATE TEMP TABLE datastore_user (
+                username text NOT NULL,
+                sysadmin boolean NOT NULL
+                );
+            INSERT INTO datastore_user VALUES (
+                {username}, {sysadmin}
+                );
+            '''.format(
+                username=literal_string(username),
+                sysadmin='TRUE' if is_sysadmin(username) else 'FALSE'))
+
+    def __exit__(self, exc_type, exc_value, trace):
+        if 'user' not in self.context:
+            return
+
+        self.context['connection'].execute(u'''DROP TABLE datastore_user;''')
 
 
 def canada_guess_mimetype(context, data_dict):
@@ -467,10 +479,10 @@ def canada_job_list(up_func, context, data_dict):
 @chained_action
 def canada_datastore_run_triggers(up_func, context, data_dict):
     """
-    Call datastore_create_temp_user_table to create custom temp user table.
+    Wraps datastore_run_triggers action in context manager for DS temp user table.
     """
     if 'connection' not in context:
         backend = DatastoreBackend.get_active_backend()
         context['connection'] = backend._get_write_engine().connect()
-    datastore_create_temp_user_table(context)
-    return up_func(context, data_dict)
+    with datastore_create_temp_user_table(context):
+        return up_func(context, data_dict)
