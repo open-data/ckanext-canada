@@ -460,3 +460,12 @@ def canada_job_list(up_func, context, data_dict):
         job['status'] = job_obj.get_status()
 
     return job_list
+
+
+@chained_action
+def canada_datastore_run_triggers(up_func, context, data_dict):
+    """
+    Call datastore_create_temp_user_table to create custom temp user table.
+    """
+    datastore_create_temp_user_table(context)
+    return up_func(context, data_dict)
