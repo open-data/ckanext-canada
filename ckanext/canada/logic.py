@@ -3,6 +3,12 @@ from ckan.logic.validators import isodate, Invalid
 from ckan.lib.dictization import model_dictize
 from ckan import model
 
+from redis import ConnectionPool, Redis
+from rq import Queue
+from ckan.lib.jobs import add_queue_name_prefix, dictize_job
+
+from datetime import datetime, timedelta
+
 from ckan.plugins.toolkit import (
     get_or_bust,
     ValidationError,
@@ -16,6 +22,7 @@ from ckan.plugins.toolkit import (
     get_action,
     h,
     asbool,
+    check_access,
 )
 from ckan.authz import is_sysadmin
 
@@ -464,6 +471,35 @@ def canada_job_list(up_func, context, data_dict):
     return job_list
 
 
+@side_effect_free
+def registry_jobs_running(context, data_dict):
+    """
+    Returns false if the first job in the default queue has not run in the last 18 minutes.
+
+    #TODO: rework this when the Registry moves to public network.
+    """
+    registry_redis_url = config.get('ckanext.canada.registry_jobs.url')
+
+    if not registry_redis_url:
+        return False
+
+    check_access('registry_jobs_running', context, data_dict)
+
+    _connection_pool = ConnectionPool.from_url(registry_redis_url)
+    redis_conn = Redis(connection_pool=_connection_pool)
+
+    fullname = add_queue_name_prefix('default')
+
+    queue = Queue(fullname, connection=redis_conn)
+
+    jobs = [dictize_job(j) for j in queue.jobs[:1]]
+
+    if jobs and datetime.strptime(jobs[0]['created'], '%Y-%m-%dT%H:%M:%S') < (datetime.now() - timedelta(minutes=18)):
+        return False
+
+    return True
+
+  
 @chained_action
 def canada_datastore_run_triggers(up_func, context, data_dict):
     """
