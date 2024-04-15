@@ -29,6 +29,8 @@ from six.moves.urllib.parse import urlparse
 import mimetypes
 from ckanext.scheming.helpers import scheming_get_preset
 
+from ckanext.datastore.backend import DatastoreBackend
+
 MIMETYPES_AS_DOMAINS = [
     'application/x-msdos-program',  # .com
     'application/vnd.lotus-organizer',  # .org
@@ -467,5 +469,8 @@ def canada_datastore_run_triggers(up_func, context, data_dict):
     """
     Call datastore_create_temp_user_table to create custom temp user table.
     """
+    if 'connection' not in context:
+        backend = DatastoreBackend.get_active_backend()
+        context['connection'] = backend._get_write_engine().connect()
     datastore_create_temp_user_table(context)
     return up_func(context, data_dict)
