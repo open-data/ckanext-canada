@@ -2,6 +2,7 @@ from ckan.logic.action import get as core_get
 from ckan.logic.validators import isodate, Invalid
 from ckan.lib.dictization import model_dictize
 from ckan import model
+from contextlib import contextmanager
 
 from ckan.plugins.toolkit import (
     get_or_bust,
@@ -216,7 +217,8 @@ def _activities_from_user_list_since(since, limit,user_id):
     return q.limit(limit)
 
 
-class datastore_create_temp_user_table:
+@contextmanager
+def datastore_create_temp_user_table(context, drop_on_commit=True):
     """
     Context manager for wrapping DataStore transactions with
     a temporary user table.
@@ -224,32 +226,30 @@ class datastore_create_temp_user_table:
     The table is to pass the current username and sysadmin
     state to our triggers for marking modified rows
     """
-    def __init__(self, context):
-        self.context = context
+    if 'user' not in context:
+        return
 
-    def __enter__(self):
-        if 'user' not in self.context:
-            return
+    from ckanext.datastore.backend.postgres import literal_string
+    username = context['user']
+    context['connection'].execute(u'''
+        CREATE TEMP TABLE datastore_user (
+            username text NOT NULL,
+            sysadmin boolean NOT NULL
+            ){drop_statement};
+        INSERT INTO datastore_user VALUES (
+            {username}, {sysadmin}
+            );
+        '''.format(
+            drop_statement=' ON COMMIT DROP' if drop_on_commit else '',
+            username=literal_string(username),
+            sysadmin='TRUE' if is_sysadmin(username) else 'FALSE'))
+    yield
 
-        from ckanext.datastore.backend.postgres import literal_string
-        username = self.context['user']
-        self.context['connection'].execute(u'''
-            CREATE TEMP TABLE datastore_user (
-                username text NOT NULL,
-                sysadmin boolean NOT NULL
-                );
-            INSERT INTO datastore_user VALUES (
-                {username}, {sysadmin}
-                );
-            '''.format(
-                username=literal_string(username),
-                sysadmin='TRUE' if is_sysadmin(username) else 'FALSE'))
+    if 'user' not in context:
+        return
 
-    def __exit__(self, exc_type, exc_value, trace):
-        if 'user' not in self.context:
-            return
-
-        self.context['connection'].execute(u'''DROP TABLE datastore_user;''')
+    if not drop_on_commit:
+        context['connection'].execute(u'''DROP TABLE datastore_user;''')
 
 
 def canada_guess_mimetype(context, data_dict):
@@ -484,5 +484,5 @@ def canada_datastore_run_triggers(up_func, context, data_dict):
     if 'connection' not in context:
         backend = DatastoreBackend.get_active_backend()
         context['connection'] = backend._get_write_engine().connect()
-    with datastore_create_temp_user_table(context):
+    with datastore_create_temp_user_table(context, drop_on_commit=False):
         return up_func(context, data_dict)
