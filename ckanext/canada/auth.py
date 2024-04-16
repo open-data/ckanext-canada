@@ -2,6 +2,11 @@ from ckan.plugins.toolkit import chained_auth_function, config
 from ckan.authz import has_user_permission_for_group_or_org, is_sysadmin
 
 
+def _is_reporting_user(context):
+    if not context.get('user') or not config.get('ckanext.canada.reporting_user'):
+        return False
+    return context.get('user') == config.get('ckanext.canada.reporting_user')
+
 # block datastore-modifying APIs on the portal
 @chained_auth_function
 def datastore_create(up_func, context, data_dict):
@@ -29,4 +34,4 @@ def view_org_members(context, data_dict):
 
 
 def registry_jobs_running(context, data_dict):
-    return {'success': is_sysadmin(context.get('user'))}
+    return {'success': _is_reporting_user(context)}
