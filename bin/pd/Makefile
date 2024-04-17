@@ -110,7 +110,7 @@ nightly: filter-all backup-all upload-all rebuild-all
 
 # no backup-all for staging
 .PHONY: nightly-staging
-nightly: filter-all upload-all rebuild-all
+nightly-staging: filter-all upload-all rebuild-all
 
 
 .PHONY: dump-all
