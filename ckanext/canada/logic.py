@@ -5,7 +5,6 @@ from ckan import model
 
 from redis import ConnectionPool, Redis
 from rq import Queue
-from ckan.lib.jobs import dictize_job
 
 from datetime import datetime, timedelta
 
@@ -496,10 +495,13 @@ def registry_jobs_running(context, data_dict):
     if not queue:
         return False
 
-    jobs = [dictize_job(j) for j in queue.jobs[:1]]
+    jobs = queue.jobs
 
-    if jobs and datetime.strptime(jobs[0]['created'], '%Y-%m-%dT%H:%M:%S') < (datetime.now() - timedelta(minutes=18)):
-        return False
+    if jobs:
+        first_job = jobs[0]
+        first_created_at = first_job.created_at.strftime(u'%Y-%m-%dT%H:%M:%S')
+        if datetime.strptime(first_created_at, '%Y-%m-%dT%H:%M:%S') < (datetime.now() - timedelta(minutes=18)):
+            return False
 
     return True
 
