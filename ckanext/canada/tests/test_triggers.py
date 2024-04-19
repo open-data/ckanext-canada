@@ -1,6 +1,4 @@
 # -*- coding: UTF-8 -*-
-from time import sleep
-
 from ckanext.canada.tests import CanadaTestBase
 from ckanapi import LocalCKAN
 
@@ -59,55 +57,55 @@ class TestCanadaTriggers(CanadaTestBase):
     def test_update_record_modified_created_trigger(self):
         resource_id, nil_resource_id = self._setup_pd(type='ati', nil_type='ati-nil')
 
-        result = self.sys_action.datastore_search(resource_id=resource_id)
+        #NOTE: we use datastore_search_sql to get nanosecond timestamps
 
-        record = result['records'][0]
+        chromo = get_chromo('ati')
 
-        assert record['user_modified'] == self.editor['name']
-        assert record['record_created'] == record['record_modified']
+        result = self.sys_action.datastore_search_sql(
+            sql="SELECT %s from \"%s\"" % (', '.join(f['datastore_id'] for f in chromo['fields']), resource_id))
+        record_data_dict = result['records'][0]
 
-        record['summary_en'] = 'New English Summary'
-        record['summary_fr'] = 'New French Summary'
+        assert record_data_dict['user_modified'] == self.editor['name']
+        assert record_data_dict['record_created'] == record_data_dict['record_modified']
 
-        current_created_time = record['record_created']
-        current_modified_time = record['record_modified']
-        current_user_modified = record['user_modified']
+        record_data_dict['summary_en'] = 'New English Summary'
+        record_data_dict['summary_fr'] = 'New French Summary'
 
-        # need to wait to upsert to make sure modified timestamps change or not
-        sleep(1)
+        initial_created_time = record_data_dict['record_created']
+        initial_modified_time = record_data_dict['record_modified']
+        initial_user_modified = record_data_dict['user_modified']
 
         # upsert data as system user
         self.sys_action.datastore_upsert(
             resource_id=resource_id,
-            records=[record])
+            records=[record_data_dict])
 
         # return of datastore_upsert does not have triggered values, go get
-        result = self.sys_action.datastore_search(resource_id=resource_id)
+        result = self.sys_action.datastore_search_sql(
+            sql="SELECT record_created, record_modified, user_modified from \"%s\"" % resource_id)
 
         record = result['records'][0]
 
         # sysadmin upserts should not modify these values
-        assert record['record_created'] == current_created_time
-        assert record['user_modified'] == current_user_modified
-        assert record['record_modified'] == current_modified_time
+        assert record['record_created'] == initial_created_time
+        assert record['user_modified'] == initial_user_modified
+        assert record['record_modified'] == initial_modified_time
 
-        record['summary_en'] = 'Even Newer English Summary'
-        record['summary_fr'] = 'Even Newer French Summary'
-
-        # need to wait to upsert to make sure modified timestamps change or not
-        sleep(1)
+        record_data_dict['summary_en'] = 'Even Newer English Summary'
+        record_data_dict['summary_fr'] = 'Even Newer French Summary'
 
         # upsert data as a different editor user
         self.editor2_action.datastore_upsert(
             resource_id=resource_id,
-            records=[record])
+            records=[record_data_dict])
 
         # return of datastore_upsert does not have triggered values, go get
-        result = self.sys_action.datastore_search(resource_id=resource_id)
+        result = self.sys_action.datastore_search_sql(
+            sql="SELECT record_created, record_modified, user_modified from \"%s\"" % resource_id)
 
         record = result['records'][0]
 
         # non-sysadmin upserts should modify user_modified and record_modified
-        assert record['record_created'] == current_created_time
-        assert record['user_modified'] != current_user_modified
-        assert record['record_modified'] != current_modified_time
+        assert record['record_created'] == initial_created_time
+        assert record['user_modified'] != initial_user_modified
+        assert record['record_modified'] != initial_modified_time
