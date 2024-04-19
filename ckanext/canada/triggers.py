@@ -241,6 +241,7 @@ def update_triggers():
         rettype=u'trigger',
         definition=u'''
             DECLARE
+                req_record_modified text := NEW.record_modified;
                 req_user_modified text := NEW.user_modified;
                 username text NOT NULL := (SELECT username
                     FROM datastore_user);
@@ -248,6 +249,7 @@ def update_triggers():
                     FROM datastore_user);
             BEGIN
                 IF NOT sysadmin THEN
+                    req_record_modified := NULL;
                     req_user_modified := NULL;
                 END IF;
                 IF TG_OP = 'INSERT' THEN
@@ -282,21 +284,23 @@ def update_triggers():
                 IF NEW.record_created IS NULL THEN
                     NEW.record_created := OLD.record_created;
                 END IF;
-                IF NOT sysadmin AND NEW.record_modified IS NULL THEN
+                IF NEW.record_modified IS NULL THEN
                     NEW.record_modified := OLD.record_modified;
                 END IF;
-                IF NOT sysadmin AND (req_user_modified = '') IS NOT FALSE THEN
+                IF (req_user_modified = '') IS NOT FALSE THEN
                     NEW.user_modified := OLD.user_modified;
                 END IF;
                 IF OLD = NEW THEN
                     RETURN NULL;
                 END IF;
-                IF NOT sysadmin THEN
+                IF (req_record_modified = '') IS NOT FALSE THEN
                     NEW.record_modified := now() at time zone 'utc';
+                ELSE
+                    NEW.record_modified := req_record_modified;
                 END IF;
-                IF NOT sysadmin AND (req_user_modified = '') IS NOT FALSE THEN
+                IF (req_user_modified = '') IS NOT FALSE THEN
                     NEW.user_modified := username;
-                ELSIF NOT sysadmin THEN
+                ELSE
                     NEW.user_modified := req_user_modified;
                 END IF;
                 RETURN NEW;
