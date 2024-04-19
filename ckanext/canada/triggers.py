@@ -231,7 +231,9 @@ def update_triggers():
     #    set created+modified values to NULL. This is used when restoring
     #    earlier migrated data that had no record of the
     #    user/created/modified values
-    # B: Otherwise update created+modified dates and replace user with
+    # B: If the contextual user is a sysadmin, do not update the modified time
+    #    or the modified user.
+    # C: Otherwise update created+modified dates and replace user with
     #    current user
     lc.action.datastore_function_create(
         name=u'update_record_modified_created_trigger',
@@ -280,19 +282,21 @@ def update_triggers():
                 IF NEW.record_created IS NULL THEN
                     NEW.record_created := OLD.record_created;
                 END IF;
-                IF NEW.record_modified IS NULL THEN
+                IF NOT sysadmin AND NEW.record_modified IS NULL THEN
                     NEW.record_modified := OLD.record_modified;
                 END IF;
-                IF (req_user_modified = '') IS NOT FALSE THEN
+                IF NOT sysadmin AND (req_user_modified = '') IS NOT FALSE THEN
                     NEW.user_modified := OLD.user_modified;
                 END IF;
                 IF OLD = NEW THEN
                     RETURN NULL;
                 END IF;
-                NEW.record_modified := now() at time zone 'utc';
-                IF (req_user_modified = '') IS NOT FALSE THEN
+                IF NOT sysadmin THEN
+                    NEW.record_modified := now() at time zone 'utc';
+                END IF;
+                IF NOT sysadmin AND (req_user_modified = '') IS NOT FALSE THEN
                     NEW.user_modified := username;
-                ELSE
+                ELSIF NOT sysadmin THEN
                     NEW.user_modified := req_user_modified;
                 END IF;
                 RETURN NEW;
