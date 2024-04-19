@@ -241,7 +241,7 @@ def update_triggers():
         rettype=u'trigger',
         definition=u'''
             DECLARE
-                req_record_modified text := NEW.record_modified;
+                req_record_modified timestamp := NEW.record_modified;
                 req_user_modified text := NEW.user_modified;
                 username text NOT NULL := (SELECT username
                     FROM datastore_user);
@@ -293,7 +293,7 @@ def update_triggers():
                 IF OLD = NEW THEN
                     RETURN NULL;
                 END IF;
-                IF (req_record_modified = '') IS NOT FALSE THEN
+                IF req_record_modified IS NULL THEN
                     NEW.record_modified := now() at time zone 'utc';
                 ELSE
                     NEW.record_modified := req_record_modified;
