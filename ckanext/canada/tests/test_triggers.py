@@ -74,7 +74,7 @@ class TestCanadaTriggers(CanadaTestBase):
         current_user_modified = record['user_modified']
 
         # need to wait to upsert to make sure modified timestamps change or not
-        sleep(5)
+        sleep(1)
 
         # upsert data as system user
         self.sys_action.datastore_upsert(
@@ -95,7 +95,7 @@ class TestCanadaTriggers(CanadaTestBase):
         record['summary_fr'] = 'Even Newer French Summary'
 
         # need to wait to upsert to make sure modified timestamps change or not
-        sleep(5)
+        sleep(1)
 
         # upsert data as a different editor user
         self.editor2_action.datastore_upsert(
