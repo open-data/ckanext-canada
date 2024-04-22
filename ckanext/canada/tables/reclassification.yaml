@@ -251,10 +251,10 @@ resources:
           errors := errors || choice_error(NEW.new_class_group_code, {new_class_group_code}, 'new_class_group_code');
           errors := errors || required_error(NEW.old_class_level, 'old_class_level');
           errors := errors || required_error(NEW.new_class_level, 'new_class_level');
-          -- some tables have the wrong type, convert for now, clean the data next
-          errors := errors || choice_error(lpad(NEW.old_class_level::text, 2, '0'), {old_class_level}, 'old_class_level');
-          errors := errors || choice_error(lpad(NEW.new_class_level::text, 2, '0'), {new_class_level}, 'new_class_level');
-          --
+          NEW.old_class_level := lpad(NEW.old_class_level::text, 2, '0');
+          errors := errors || choice_error(NEW.old_class_level, {old_class_level}, 'old_class_level');
+          NEW.new_class_level := lpad(NEW.new_class_level::text, 2, '0');
+          errors := errors || choice_error(NEW.new_class_level, {new_class_level}, 'new_class_level');
           errors := errors || required_error(NEW.reason_en, 'reason_en');
           errors := errors || required_error(NEW.reason_fr, 'reason_fr');
           IF errors = '{{}}' THEN
