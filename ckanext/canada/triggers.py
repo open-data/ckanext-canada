@@ -249,6 +249,7 @@ def update_triggers():
                     FROM datastore_user);
             BEGIN
                 IF NOT sysadmin THEN
+                    NEW.record_created := NULL;
                     req_record_modified := NULL;
                     req_user_modified := NULL;
                 END IF;

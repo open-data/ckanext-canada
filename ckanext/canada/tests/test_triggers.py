@@ -55,6 +55,20 @@ class TestCanadaTriggers(CanadaTestBase):
 
 
     def test_update_record_modified_created_trigger(self):
+        """
+        The update_record_modified_created_trigger has a lot of scenarios
+        regarding creating and updating records in teh DataStore tables.
+
+        This test case tries to check all of those scenarios:
+         - update as sysadmin does not change record_modified when provided
+         - update as sysadmin does not change user_modified when provided
+         - update as sysadmin changes record_created when provided
+         - update as sysadmin does not change record_modified when not provided
+         - update as non-sysadmin changes record_modified always
+         - update as non-sysadmin changes user_modified always
+         - update as non-sysadmin does not change record_created always
+         - update as non-sysadmin changes record_modified when not provided
+        """
         resource_id, nil_resource_id = self._setup_pd(type='ati', nil_type='ati-nil')
 
         #NOTE: we use datastore_search_sql to get nanosecond timestamps
@@ -87,7 +101,6 @@ class TestCanadaTriggers(CanadaTestBase):
         record = result['records'][0]
 
         # sysadmin upserts should not modify these values
-        assert record['record_created'] == initial_created_time
         assert record['user_modified'] == initial_user_modified
         assert record['record_modified'] == initial_modified_time
 
@@ -106,6 +119,77 @@ class TestCanadaTriggers(CanadaTestBase):
         record = result['records'][0]
 
         # non-sysadmin upserts should modify user_modified and record_modified
-        assert record['record_created'] == initial_created_time
         assert record['user_modified'] != initial_user_modified
         assert record['record_modified'] != initial_modified_time
+
+        # try to update record_created
+        record_data_dict['record_created'] = '2022-04-22T12:56:46.916648'
+
+        # upsert data as a different editor user
+        self.editor2_action.datastore_upsert(
+            resource_id=resource_id,
+            records=[record_data_dict])
+
+        # return of datastore_upsert does not have triggered values, go get
+        result = self.sys_action.datastore_search_sql(
+            sql="SELECT record_created, record_modified, user_modified from \"%s\"" % resource_id)
+
+        record = result['records'][0]
+
+        # non-sysadmin upserts should not modify record_created
+        assert record['record_created'] == initial_created_time
+
+        # upsert data as system user
+        self.sys_action.datastore_upsert(
+            resource_id=resource_id,
+            records=[record_data_dict])
+
+        # return of datastore_upsert does not have triggered values, go get
+        result = self.sys_action.datastore_search_sql(
+            sql="SELECT record_created, record_modified, user_modified from \"%s\"" % resource_id)
+
+        record = result['records'][0]
+
+        # sysadmin upserts should modify record_created (for record restorations?)
+        assert record['record_created'] != initial_created_time
+
+        # remove record_modified to get a new value from the trigger
+        record_data_dict.pop('record_modified', None)
+        # need a new value somewhere so trigger knows columns are being updated
+        record_data_dict['summary_en'] = 'Even Even Newerer English Summary'
+        record_data_dict['summary_fr'] = 'Even Even Newerer French Summary'
+
+        # upsert data as a different editor user
+        self.editor2_action.datastore_upsert(
+            resource_id=resource_id,
+            records=[record_data_dict])
+
+        # return of datastore_upsert does not have triggered values, go get
+        result = self.sys_action.datastore_search_sql(
+            sql="SELECT record_created, record_modified, user_modified from \"%s\"" % resource_id)
+
+        record = result['records'][0]
+
+        new_modified_time = record['record_modified']
+
+        # non-sysadmin upserts should get a new record_modified, when it is not supplied
+        assert record['record_modified'] != initial_modified_time
+
+        # need a new value somewhere so trigger knows columns are being updated
+        record_data_dict['summary_en'] = 'Even Even Even Newererer English Summary'
+        record_data_dict['summary_fr'] = 'Even Even Even Newererer French Summary'
+
+        # upsert data as a different editor user
+        self.sys_action.datastore_upsert(
+            resource_id=resource_id,
+            records=[record_data_dict])
+
+        # return of datastore_upsert does not have triggered values, go get
+        result = self.sys_action.datastore_search_sql(
+            sql="SELECT record_created, record_modified, user_modified from \"%s\"" % resource_id)
+
+        record = result['records'][0]
+
+        # sysadmin upserts should  NOT get a new record_modified, when it is not supplied
+        assert record['record_modified'] != initial_modified_time
+        assert record['record_modified'] == new_modified_time
