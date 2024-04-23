@@ -232,29 +232,30 @@ def datastore_create_temp_user_table(context, drop_on_commit=True):
     The table is to pass the current username and sysadmin
     state to our triggers for marking modified rows
     """
-    if 'user' not in context:
-        return
-
-    from ckanext.datastore.backend.postgres import literal_string
-    username = context['user']
-    context['connection'].execute(u'''
-        CREATE TEMP TABLE datastore_user (
-            username text NOT NULL,
-            sysadmin boolean NOT NULL
-            ){drop_statement};
-        INSERT INTO datastore_user VALUES (
-            {username}, {sysadmin}
-            );
-        '''.format(
-            drop_statement=' ON COMMIT DROP' if drop_on_commit else '',
-            username=literal_string(username),
-            sysadmin='TRUE' if is_sysadmin(username) else 'FALSE'))
-    yield
+    # __enter__ of context manager
 
     if 'user' not in context:
-        return
+        yield  # yield here, e.g. return None
+    else:
+        from ckanext.datastore.backend.postgres import literal_string
+        username = context['user']
+        context['connection'].execute(u'''
+            CREATE TEMP TABLE datastore_user (
+                username text NOT NULL,
+                sysadmin boolean NOT NULL
+                ){drop_statement};
+            INSERT INTO datastore_user VALUES (
+                {username}, {sysadmin}
+                );
+            '''.format(
+                drop_statement=' ON COMMIT DROP' if drop_on_commit else '',
+                username=literal_string(username),
+                sysadmin='TRUE' if is_sysadmin(username) else 'FALSE'))
+        yield
 
-    if not drop_on_commit:
+    # __exit__ of context manager
+
+    if 'user' in context and not drop_on_commit:
         context['connection'].execute(u'''DROP TABLE datastore_user;''')
 
 
