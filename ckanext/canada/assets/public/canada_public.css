@@ -606,6 +606,12 @@ body ul.nav li.view-item a i.icon::before{
 }
 /* END - Resource Views Lists - END */
 
+.canada-view-disabled-label{
+  padding-top: 4px !important;
+  padding-bottom: 4px !important;
+  margin-left: 8px !important;
+}
+
 /*#################
 ##      END      ##
 ## Resource Item ##
