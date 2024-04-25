@@ -78,7 +78,7 @@ class CanadaSecurityPlugin(CkanSecurityPlugin):
         # Enable auth settings
         config['ckan.auth.user_delete_groups'] = True
         config['ckan.auth.user_delete_organizations'] = True
-        config['ckan.auth.create_user_via_web'] = True
+        config['ckan.auth.create_user_via_web'] = helpers.is_registry()  # /user/register view only on registry
         # Set auth settings
         config['ckan.auth.roles_that_cascade_to_sub_groups'] = 'admin'
 
