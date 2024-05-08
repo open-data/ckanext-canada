@@ -26,9 +26,6 @@
       <div class="col-md-12">
         <h2 class="mrgn-tp-0 mrgn-bttm-0">
           <label for="search_field" >{{ _('Search Datasets') }}</label>
-          {% block search_suggest_dataset %}
-            <a href="{{ _('/en/suggested-datasets') }}" class="btn btn-success btn-sm pull-right">{{ _('Suggest a Dataset') }}</a>
-          {% endblock %}
         </h2>
       </div>
     </div>
@@ -90,7 +87,9 @@
    and use those presets to get the labels to display #}
 <div class="col-md-12 mrgn-tp-md mrgn-bttm-md">
   <ul class="list-inline">
-  {% for field in c.fields_grouped %}
+  {# copy dict to prevent it from changing size inside loop #}
+  {% set _fields_grouped = c.fields_grouped.copy() %}
+  {% for field in _fields_grouped %}
     {{ cr.filter_buttons(h, c, field, extras) }}
   {% endfor %}
   </ul>

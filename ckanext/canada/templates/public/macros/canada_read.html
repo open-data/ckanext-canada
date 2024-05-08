@@ -175,6 +175,7 @@ Search Facet Formatters
 {% endmacro %}
 
 {% macro filter_buttons(h, c, field, extras) %}
+    {# TODO: move to a helper ??? #}
     {% if field=='portal_type' %}
       {% set preset_choices = [
           {'value': 'dataset', 'label': _('Open Data')},

@@ -36,7 +36,9 @@
         <div class="filter-list">
           {% block filter_list %}
               <ul class="list-inline">
-              {% for field in c.fields_grouped %}
+              {# copy dict to prevent it from changing size inside loop #}
+              {% set _fields_grouped = c.fields_grouped.copy() %}
+              {% for field in _fields_grouped %}
                 {% if field != 'ready_to_publish' and field != 'imso_approval' %}
                   {{ cr.filter_buttons(h, c, field) }}
                 {% endif %}
