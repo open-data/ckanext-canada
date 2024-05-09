@@ -1,6 +1,5 @@
 {% extends 'admin/base.html' %}
 {% import 'macros/form.html' as form %}
-{% import 'macros/canada_read.html' as cr %}
 
 {% block primary_content_inner %}
 
@@ -36,11 +35,9 @@
         <div class="filter-list">
           {% block filter_list %}
               <ul class="list-inline">
-              {# copy dict to prevent it from changing size inside loop #}
-              {% set _fields_grouped = c.fields_grouped.copy() %}
-              {% for field in _fields_grouped %}
+              {% for field in g.fields_grouped %}
                 {% if field != 'ready_to_publish' and field != 'imso_approval' %}
-                  {{ cr.filter_buttons(h, c, field) }}
+                  {{ h.search_filter_input(field, extras) }}
                 {% endif %}
               {% endfor %}
               </ul>

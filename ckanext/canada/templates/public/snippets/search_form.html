@@ -1,6 +1,5 @@
 {# It is not possible to use to ckan_extends due to the very different formatting that WET uses with forms #}
 {% import 'macros/form.html' as form %}
-{% import 'macros/canada_read.html' as cr %}
 
 {% set placeholder = placeholder if placeholder else _('Search...') %}
 {% set sorting = sorting if sorting else [(_('Name Ascending'), 'name asc'), (_('Name Descending'), 'name desc')] %}
@@ -83,17 +82,13 @@
 
 
 {% block filter_list %}
-{# assume that facets will have scheming presets names canada_<something>
-   and use those presets to get the labels to display #}
-<div class="col-md-12 mrgn-tp-md mrgn-bttm-md">
-  <ul class="list-inline">
-  {# copy dict to prevent it from changing size inside loop #}
-  {% set _fields_grouped = c.fields_grouped.copy() %}
-  {% for field in _fields_grouped %}
-    {{ cr.filter_buttons(h, c, field, extras) }}
-  {% endfor %}
-  </ul>
-</div>
+  <div class="col-md-12 mrgn-tp-md mrgn-bttm-md">
+    <ul class="list-inline">
+    {% for field in g.fields_grouped %}
+      {{ h.search_filter_input(field, extras) }}
+    {% endfor %}
+    </ul>
+  </div>
 {% endblock %}
 
 {% block search_form_footer %}{% endblock %}

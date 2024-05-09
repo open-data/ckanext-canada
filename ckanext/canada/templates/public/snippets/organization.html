@@ -11,8 +11,6 @@ Example:
 
 #}
 
-{% import 'macros/canada_read.html' as cr %}
-
 {% with truncate=truncate or 0, url=h.url_for('organization.read', id=organization.name) %}
 <div class="panel panel-info">
   <div class="panel-heading text-center">{{ h.get_translated(organization, 'title') }}</div>

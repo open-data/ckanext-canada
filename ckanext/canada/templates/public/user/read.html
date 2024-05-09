@@ -16,15 +16,12 @@
   {% endblock %}
 {% endblock %}
 
-
-{% import 'macros/canada_read.html' as cr %}
-
 {%- block other_info -%}
   <h3>{{_('Organizations')}}</h3>
   <ul>
 
   {% for org in h.user_organizations(user) %}
-    <li><a href="{{ h.url_for(org.type + '.read', id=org.name) }}">{{cr.split_bilingual_field(org.title, h.lang())}}</a></li>
+    <li><a href="{{ h.url_for(org.type + '.read', id=org.name) }}">{{h.split_piped_bilingual_field(org.title, h.lang())}}</a></li>
   {% endfor %}
   </ul>
 {%- endblock -%}

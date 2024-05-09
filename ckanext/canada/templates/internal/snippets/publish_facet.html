@@ -1,5 +1,3 @@
-{% import 'macros/canada_read.html' as cr %}
-
 {% set facet_name = title + 's' %}
 
 {% with items = items or h.get_facet_items_dict(name, limit=5) %}

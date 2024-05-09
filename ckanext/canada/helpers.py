@@ -10,6 +10,7 @@ import unicodedata
 import ckan as ckan
 import jinja2
 import html
+from six import text_type
 
 from ckanapi import NotFound
 from ckantoolkit import h, aslist
@@ -758,3 +759,86 @@ def fgp_viewer_url(package):
             openmap_uri = 'openmap'
 
         return h.adv_search_url() + '/' + openmap_uri + '/' + package.get('id')
+
+
+def date_field(field, pkg):
+    if pkg[field] and ' ' in pkg[field]:
+        return pkg[field].split(' ')[0]
+    return pkg[field]
+
+
+def split_piped_bilingual_field(field_text, client_lang):
+    if field_text is not None and ' | ' in field_text:
+        return field_text.split(' | ')[1 if client_lang == 'fr' else 0]
+    return field_text
+
+
+def search_filter_input(search_field, search_extras):
+    html_output = ''
+
+    if search_field == 'portal_type':
+
+        # Custom dataset type labels (suggested datasets discontinued - 2024-05-09)
+        preset_choices = [{'value': 'dataset', 'label': _('Open Data')},
+                          {'value': 'info', 'label': _('Open Information')},]
+
+        # Add PD types
+        for pd_type in h.recombinant_get_types():
+            preset_choices.append({'value': pd_type, 'label': _(h.recombinant_get_chromo(pd_type).get('title'))})
+
+    elif search_field == 'status':
+
+        preset_choices = [{'value': 'department_contacted',
+                           'label': _('Request sent to data owner - awaiting response')}]
+
+    else:
+
+        preset_choices = (h.scheming_get_preset('canada_' + search_field) or {}).get('choices', [])
+
+        if search_field == 'collection':
+
+            collection_choices = preset_choices
+            preset_choices = [{'value': 'pd', 'label': _('Proactive Publication')}]
+
+            for collection_type in collection_choices:
+                preset_choices.append(collection_type)
+
+            # Add PD types
+            for pd_type in h.recombinant_get_types():
+                preset_choices.append({'value': pd_type, 'label': _(h.recombinant_get_chromo(pd_type).get('title'))})
+
+    def active_filter_button_html(_field, _value, _extras, _choices):
+
+        link = h.remove_url_param(_field, _value, extras=_extras)
+
+        html = '<a href="{link_href}" class="btn btn-info btn-xs mrgn-lft-sm mrgn-bttm-sm" title="{link_title}">'.format(
+                    link_href=link,
+                    link_title=_("Remove"))
+
+        if _field == 'organization':
+            org = h.get_organization(_value)
+            if org:
+                html += split_piped_bilingual_field(org.get('title'), h.lang())
+            else:
+                html += _value
+        else:
+            html += h.scheming_language_text(h.list_dict_filter(_choices, 'value', 'label', _value))
+
+        html += '<i class="fa fa-times" aria-hidden="true"></i></a>'
+
+        return html
+
+    for value in g.fields_grouped[search_field]:
+        if not isinstance(value, text_type):
+            for v in value:
+                html_output += active_filter_button_html(_field=search_field,
+                                                         _value=value,
+                                                         _extras=search_extras,
+                                                         _choices=preset_choices)
+        else:
+            html_output += active_filter_button_html(_field=search_field,
+                                                     _value=value,
+                                                     _extras=search_extras,
+                                                     _choices=preset_choices)
+
+    return jinja2.Markup(html_output)
