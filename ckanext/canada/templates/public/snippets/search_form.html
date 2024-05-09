@@ -82,12 +82,10 @@
 
 
 {% block filter_list %}
-  <div class="col-md-12 mrgn-tp-md mrgn-bttm-md">
-    <ul class="list-inline">
+  <div class="filter-list">
     {% for field in g.fields_grouped %}
-      {{ h.search_filter_input(field, extras) }}
+      {{ h.search_filter_pill(field, extras) }}
     {% endfor %}
-    </ul>
   </div>
 {% endblock %}
 

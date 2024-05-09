@@ -409,6 +409,28 @@ form#user-edit-form > fieldset:first-of-type{
 ###################*/
 
 
+/*#########################
+## Search Filters/Facets ##
+###########################*/
+
+.filter-list{
+
+  margin-top: 10px !important;
+
+}
+
+.filter-list a.facet-pill{
+  margin-left: 0 !important;
+  margin-right: 8px !important;
+  margin-bottom: 8px !important;
+}
+
+/*#########################
+##           END         ##
+## Search Filters/Facets ##
+##           END         ##
+###########################*/
+
 /*#################
 ## Resource Item ##
 ###################*/

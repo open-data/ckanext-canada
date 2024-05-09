@@ -34,13 +34,11 @@
         </strong>
         <div class="filter-list">
           {% block filter_list %}
-              <ul class="list-inline">
-              {% for field in g.fields_grouped %}
-                {% if field != 'ready_to_publish' and field != 'imso_approval' %}
-                  {{ h.search_filter_input(field, extras) }}
-                {% endif %}
-              {% endfor %}
-              </ul>
+            {% for field in g.fields_grouped %}
+              {% if field != 'ready_to_publish' and field != 'imso_approval' %}
+                {{ h.search_filter_pill(field, extras) }}
+              {% endif %}
+            {% endfor %}
         {% endblock %}
         </div>
         {% if request.params and c.page.item_count == 0 %}
@@ -79,10 +77,7 @@
 <div class="filters">
   <h2>{{ _('Search Filters') }}&nbsp;<small><a href="{{ h.url_for('canada.ckanadmin_publish', q=c.q) }}">{{ _('Clear All') }}</a></small></h2>
   <div>
-    {% snippet 'snippets/dataset_facets.html',
-      organization_facet=h.snippet(
-        'snippets/facet_list.html', title=c.facet_titles['organization'],
-        name='organization') %}
+    {% snippet 'snippets/dataset_facets.html', show_org_facet=true %}
   </div>
 </div>
 {% endblock %}

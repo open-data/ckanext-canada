@@ -42,6 +42,7 @@ WET_JQUERY_OFFLINE_OPTION = 'wet_boew.jquery.offline'
 WET_JQUERY_OFFLINE_DEFAULT = False
 GEO_MAP_TYPE_OPTION = 'wet_theme.geo_map_type'
 GEO_MAP_TYPE_DEFAULT = 'static'
+RELEASE_DATE_FACE_STEP = 100
 
 
 def is_registry():
@@ -356,6 +357,12 @@ def parse_release_date_facet(facet_results):
                       'scheduled': {'count': counts[1], 'url_param': '[' + ranges[1] + ' TO ' + facet_results['end'] + ']'} }
 
     return facet_dict
+
+
+def release_date_facet_start_year():
+    today = int(datetime.datetime.now(EST()).strftime("%Y"))
+    return today - RELEASE_DATE_FACE_STEP
+
 
 def is_ready_to_publish(package):
     portal_release_date = package.get('portal_release_date')
@@ -773,8 +780,10 @@ def split_piped_bilingual_field(field_text, client_lang):
     return field_text
 
 
-def search_filter_input(search_field, search_extras):
+def search_filter_pill(search_field, search_extras):
     html_output = ''
+
+    #TODO: handle fields ready_to_publish and portal_release_date
 
     if search_field == 'portal_type':
 
@@ -807,11 +816,11 @@ def search_filter_input(search_field, search_extras):
             for pd_type in h.recombinant_get_types():
                 preset_choices.append({'value': pd_type, 'label': _(h.recombinant_get_chromo(pd_type).get('title'))})
 
-    def active_filter_button_html(_field, _value, _extras, _choices):
+    def remove_filter_button_html(_field, _value, _extras, _choices):
 
         link = h.remove_url_param(_field, _value, extras=_extras)
 
-        html = '<a href="{link_href}" class="btn btn-info btn-xs mrgn-lft-sm mrgn-bttm-sm" title="{link_title}">'.format(
+        html = '<a href="{link_href}" class="btn btn-info btn-xs mrgn-lft-sm mrgn-bttm-sm facet-pill" title="{link_title}">'.format(
                     link_href=link,
                     link_title=_("Remove"))
 
@@ -824,19 +833,19 @@ def search_filter_input(search_field, search_extras):
         else:
             html += h.scheming_language_text(h.list_dict_filter(_choices, 'value', 'label', _value))
 
-        html += '<i class="fa fa-times" aria-hidden="true"></i></a>'
+        html += '&nbsp;<i class="fa fa-times" aria-hidden="true"></i></a>'
 
         return html
 
     for value in g.fields_grouped[search_field]:
         if not isinstance(value, text_type):
             for v in value:
-                html_output += active_filter_button_html(_field=search_field,
+                html_output += remove_filter_button_html(_field=search_field,
                                                          _value=value,
                                                          _extras=search_extras,
                                                          _choices=preset_choices)
         else:
-            html_output += active_filter_button_html(_field=search_field,
+            html_output += remove_filter_button_html(_field=search_field,
                                                      _value=value,
                                                      _extras=search_extras,
                                                      _choices=preset_choices)
