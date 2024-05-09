@@ -143,13 +143,14 @@ def _get_package_type_from_dict(package_id, package_type='dataset'):
 
 def canada_prevent_pd_views(uri, package_type):
     uri = uri.split('/')
+    id = None
     if uri[0]:
         if uri[0] == 'activity':  # allow activity route
             return dataset_activity(package_type, uri[1])
         id = uri[0]
         package_type = _get_package_type_from_dict(id, package_type)
     if package_type in h.recombinant_get_types():
-        return type_redirect(package_type)
+        return type_redirect(package_type, id)
     return abort(404)
 
 
@@ -298,6 +299,8 @@ def recover_username():
 def canada_search(package_type):
     if h.is_registry() and not g.user:
         return abort(403)
+    if not h.is_registry() and package_type in h.recombinant_get_types():
+        return h.redirect_to('dataset.search', package_type='dataset')
     return dataset_search(package_type)
 
 
@@ -543,7 +546,7 @@ def update_pd_record(owner_org, resource_name, pk):
 
 
 @canada_views.route('/recombinant/<resource_name>', methods=['GET'])
-def type_redirect(resource_name):
+def type_redirect(resource_name, dataset_id=None):
     orgs = h.organizations_available('read')
 
     if not orgs:
@@ -553,12 +556,29 @@ def type_redirect(resource_name):
     except RecombinantException:
         abort(404, _('Recombinant resource_name not found'))
 
-    # custom business logic
     if is_sysadmin(g.user):
-        return h.redirect_to(h.url_for('recombinant.preview_table',
-                                  resource_name=resource_name, owner_org='tbs-sct'))
+        # if sysadmin, always go to tbs-sct
+        owner_org_name = 'tbs-sct'
+    else:
+        # otherwise, go to first org in user's available list
+        owner_org_name = orgs[0]['name']
+
+    if dataset_id:
+        try:
+            dataset = get_action('package_show')({'user': g.user}, {'id': dataset_id})
+        except NotAuthorized:
+            return abort(403)
+        except NotFound:
+            return abort(404)
+
+        if dataset.get('owner_org'):
+            org_obj = model.Group.get(dataset.get('owner_org'))
+            if org_obj:
+                owner_org_name = org_obj.name
+
     return h.redirect_to(h.url_for('recombinant.preview_table',
-                              resource_name=resource_name, owner_org=orgs[0]['name']))
+                                   resource_name=resource_name,
+                                   owner_org=owner_org_name))
 
 
 def _clean_check_type_errors(post_data, fields, pk_fields, choice_fields):
@@ -1208,6 +1228,10 @@ def ckan_admin_index():
     """
     Overrides core Admin Index view, to exclude the site user.
     """
+    try:
+        check_access('sysadmin', {'user': g.user})
+    except NotAuthorized:
+        abort(403)
     site_id = config.get('ckan.site_id')
     sysadmins = []
     for admin in _get_sysadmins():

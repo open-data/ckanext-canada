@@ -35,3 +35,11 @@ def view_org_members(context, data_dict):
 
 def registry_jobs_running(context, data_dict):
     return {'success': _is_reporting_user(context)}
+
+
+def group_list(context, data_dict):
+    return {'success': context.get('user')}
+
+
+def organization_list(context, data_dict):
+    return {'success': context.get('user')}
