@@ -134,6 +134,12 @@ class CanadaDatasetsPlugin(SchemingDatasetsPlugin):
                 url_prefix=u'/%s' % pd_type,
                 url_defaults={u'package_type': pd_type})
             blueprint.add_url_rule(
+                u'/',
+                endpoint='canada_search_%s' % pd_type,
+                view_func=canada_search,
+                methods=['GET']
+            )
+            blueprint.add_url_rule(
                 u'/<path:uri>',
                 endpoint='canada_prevent_%s' % pd_type,
                 view_func=canada_prevent_pd_views,
@@ -332,6 +338,7 @@ class DataGCCAInternal(p.SingletonPlugin):
     p.implements(p.IActions)
     p.implements(p.IBlueprint)
     p.implements(IXloader, inherit=True)
+    p.implements(p.IAuthFunctions)
 
     # IConfigurer
     def update_config(self, config):
@@ -432,6 +439,14 @@ ckanext.canada:schemas/presets.yaml
             resource_view_create=resource_view_create_bilingual,
             datastore_run_triggers=logic.canada_datastore_run_triggers,
         )
+
+    # IAuthFunctions
+
+    def get_auth_functions(self):
+        return {
+            'group_list': auth.group_list,
+            'organization_list': auth.organization_list,
+        }
 
     # IXloader
 
