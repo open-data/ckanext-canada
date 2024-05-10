@@ -38,7 +38,7 @@ def registry_jobs_running(context, data_dict):
 
 
 def group_list(context, data_dict):
-    return {'success': context.get('user')}
+    return {'success': bool(context.get('user'))}
 
 
 def organization_list(context, data_dict):
