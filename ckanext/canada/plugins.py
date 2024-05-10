@@ -708,7 +708,7 @@ ckanext.canada:schemas/prop.yaml
             'fgp_viewer_url',
             'date_field',
             'split_piped_bilingual_field',
-            'search_filter_pill',
+            'search_filter_pill_link_label',
             'release_date_facet_start_year',
         ])
 

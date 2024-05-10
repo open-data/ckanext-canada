@@ -84,7 +84,11 @@
 {% block filter_list %}
   <div class="filter-list">
     {% for field in g.fields_grouped %}
-      {{ h.search_filter_pill(field, extras) }}
+      {% for link_label in h.search_filter_pill_link_label(field, extras) %}
+        <a href="{{ link_label[0] }}" class="btn btn-info btn-xs mrgn-lft-sm mrgn-bttm-sm facet-pill" title="{{ _('Remove') }}">
+          {{ link_label[1] }}&nbsp;<i class="fa fa-times" aria-hidden="true"></i></a>
+        </a>
+      {% endfor %}
     {% endfor %}
   </div>
 {% endblock %}

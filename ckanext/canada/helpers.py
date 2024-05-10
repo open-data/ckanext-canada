@@ -780,8 +780,8 @@ def split_piped_bilingual_field(field_text, client_lang):
     return field_text
 
 
-def search_filter_pill(search_field, search_extras):
-    html_output = ''
+def search_filter_pill_link_label(search_field, search_extras):
+    links_labels = []
 
     if search_field == 'portal_type':
 
@@ -819,45 +819,38 @@ def search_filter_pill(search_field, search_extras):
             for pd_type in h.recombinant_get_types():
                 preset_choices.append({'value': pd_type, 'label': _(h.recombinant_get_chromo(pd_type).get('title'))})
 
-    def remove_filter_button_html(_field, _value, s_extras, _choices):
+    def remove_filter_button_link_label(_field, _value, s_extras, _choices):
 
         extrs = s_extras.copy() if s_extras else {}
         extrs.update(request.view_args)
         link = h.remove_url_param(_field, value=_value, extras=extrs)
-
-        html = '<a href="{link_href}" class="btn btn-info btn-xs mrgn-lft-sm mrgn-bttm-sm facet-pill" title="{link_title}">'.format(
-                    link_href=link,
-                    link_title=_("Remove"))
+        label = _value
 
         if _field == 'organization':
             org = h.get_organization(_value)
             if org:
-                html += split_piped_bilingual_field(org.get('title'), h.lang())
-            else:
-                html += _value
+                label = split_piped_bilingual_field(org.get('title'), h.lang())
         elif _field == 'portal_release_date':
             if _value.startswith('[%s' % release_date_facet_start_year()):
-                html += _('Published')
+                label = _('Published')
             else:
-                html += _('Scheduled')
+                label = _('Scheduled')
         else:
-            html += h.scheming_language_text(h.list_dict_filter(_choices, 'value', 'label', _value))
+            label = h.scheming_language_text(h.list_dict_filter(_choices, 'value', 'label', _value))
 
-        html += '&nbsp;<i class="fa fa-times" aria-hidden="true"></i></a>'
-
-        return html
+        return link, label
 
     for value in g.fields_grouped[search_field]:
         if not isinstance(value, text_type):
             for v in value:
-                html_output += remove_filter_button_html(_field=search_field,
-                                                         _value=v,
-                                                         s_extras=search_extras,
-                                                         _choices=preset_choices)
+                links_labels.append(remove_filter_button_link_label(_field=search_field,
+                                                                    _value=v,
+                                                                    s_extras=search_extras,
+                                                                    _choices=preset_choices))
         else:
-            html_output += remove_filter_button_html(_field=search_field,
-                                                     _value=value,
-                                                     s_extras=search_extras,
-                                                     _choices=preset_choices)
+            links_labels.append(remove_filter_button_link_label(_field=search_field,
+                                                                _value=value,
+                                                                s_extras=search_extras,
+                                                                _choices=preset_choices))
 
-    return jinja2.Markup(html_output)
+    return links_labels
