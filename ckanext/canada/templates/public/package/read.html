@@ -1,5 +1,4 @@
 {% ckan_extends %}
-{% import 'macros/canada_read.html' as cr %}
 
 {% set pkg = c.pkg_dict %}
 {% set client_lang = h.lang() %}
@@ -51,7 +50,7 @@
     {%- endblock -%}
 
     {% if (pkg.organization.name == 'ab' or pkg.organization.name == 'qc' or pkg.organization.name == 'bc-cb' or pkg.organization.name == 'on') %}
-    {% set owner_org_title = cr.split_bilingual_field(pkg.organization.title, h.lang()) %}
+    {% set owner_org_title = h.split_piped_bilingual_field(pkg.organization.title, h.lang()) %}
     <section>
       <details class="alert alert-info" id="alberta-content" open="open">
         <summary class="h4">
@@ -72,7 +71,7 @@
         {# For legacy reasons, organization titles are not stores the same way as
         other multilingual fields, so special case it. #}
         {% set owner_org = h.scheming_field_by_name(schema.dataset_fields, 'owner_org') %}
-        {% set owner_org_title = cr.split_bilingual_field(pkg.organization.title, h.lang()) %}
+        {% set owner_org_title = h.split_piped_bilingual_field(pkg.organization.title, h.lang()) %}
         <li class="list-group-item">
           <strong>{{ h.scheming_language_text(owner_org.label) }}:</strong>
           {{ owner_org_title }}

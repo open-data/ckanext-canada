@@ -1,5 +1,4 @@
 {% ckan_extends %}
-{% import 'macros/canada_read.html' as cr %}
 
 {% set client_lang = h.lang() %}
 
@@ -63,8 +62,10 @@
       {% endblock %}
     {% block publisher_info %}
     <div class="row mrgn-tp-sm">
-      <div class="col-md-3"><em>{{ _('Organization') }}: </em></div>
-      <div class="col-md-9">{{ cr.org_field(package, client_lang) }}</div>
+      {% if package.organization %}
+        <div class="col-md-3"><em>{{ _('Organization') }}: </em></div>
+        <div class="col-md-9">{{ h.split_piped_bilingual_field(package.organization.title, client_lang) }}</div>
+      {% endif %}
     </div>
     {% set issuing_org = h.scheming_language_text(package.get('org_title_at_publication')) %}
     {% if issuing_org and package.jurisdiction != 'federal' %}
