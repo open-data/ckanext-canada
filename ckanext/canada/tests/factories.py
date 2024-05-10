@@ -1,8 +1,13 @@
 # -*- coding: UTF-8 -*-
+import os
 from ckan.tests.factories import User, Organization, Dataset, Resource, ResourceView
 from factory import LazyAttribute, Sequence
 import ckan.tests.helpers as helpers
 from ckan.model import Session
+
+
+def get_sample_filepath(filename):
+    return os.path.abspath(os.path.join(os.path.dirname(__file__), "samples", filename))
 
 
 class CanadaUser(User):
