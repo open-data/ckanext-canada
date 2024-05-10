@@ -2,7 +2,7 @@ import json
 import re
 import inspect
 from ckan.plugins import plugin_loaded
-from ckan.plugins.toolkit import c, config, _, g
+from ckan.plugins.toolkit import c, config, _, g, request
 from ckan.model import User, Package, Activity
 import ckan.model as model
 import datetime
@@ -769,9 +769,9 @@ def fgp_viewer_url(package):
 
 
 def date_field(field, pkg):
-    if pkg[field] and ' ' in pkg[field]:
-        return pkg[field].split(' ')[0]
-    return pkg[field]
+    if pkg.get(field) and ' ' in pkg.get(field):
+        return pkg.get(field).split(' ')[0]
+    return pkg.get(field, None)
 
 
 def split_piped_bilingual_field(field_text, client_lang):
@@ -782,8 +782,6 @@ def split_piped_bilingual_field(field_text, client_lang):
 
 def search_filter_pill(search_field, search_extras):
     html_output = ''
-
-    #TODO: handle fields ready_to_publish and portal_release_date
 
     if search_field == 'portal_type':
 
@@ -799,6 +797,11 @@ def search_filter_pill(search_field, search_extras):
 
         preset_choices = [{'value': 'department_contacted',
                            'label': _('Request sent to data owner - awaiting response')}]
+
+    elif search_field == 'ready_to_publish':
+
+        preset_choices = [{'value': 'true', 'label': _('Pending')},
+                          {'value': 'false', 'label': _('Draft')},]
 
     else:
 
@@ -816,9 +819,11 @@ def search_filter_pill(search_field, search_extras):
             for pd_type in h.recombinant_get_types():
                 preset_choices.append({'value': pd_type, 'label': _(h.recombinant_get_chromo(pd_type).get('title'))})
 
-    def remove_filter_button_html(_field, _value, _extras, _choices):
+    def remove_filter_button_html(_field, _value, s_extras, _choices):
 
-        link = h.remove_url_param(_field, _value, extras=_extras)
+        extrs = s_extras.copy() if s_extras else {}
+        extrs.update(request.view_args)
+        link = h.remove_url_param(_field, value=_value, extras=extrs)
 
         html = '<a href="{link_href}" class="btn btn-info btn-xs mrgn-lft-sm mrgn-bttm-sm facet-pill" title="{link_title}">'.format(
                     link_href=link,
@@ -830,6 +835,11 @@ def search_filter_pill(search_field, search_extras):
                 html += split_piped_bilingual_field(org.get('title'), h.lang())
             else:
                 html += _value
+        elif _field == 'portal_release_date':
+            if _value.startswith('[%s' % release_date_facet_start_year()):
+                html += _('Published')
+            else:
+                html += _('Scheduled')
         else:
             html += h.scheming_language_text(h.list_dict_filter(_choices, 'value', 'label', _value))
 
@@ -841,13 +851,13 @@ def search_filter_pill(search_field, search_extras):
         if not isinstance(value, text_type):
             for v in value:
                 html_output += remove_filter_button_html(_field=search_field,
-                                                         _value=value,
-                                                         _extras=search_extras,
+                                                         _value=v,
+                                                         s_extras=search_extras,
                                                          _choices=preset_choices)
         else:
             html_output += remove_filter_button_html(_field=search_field,
                                                      _value=value,
-                                                     _extras=search_extras,
+                                                     s_extras=search_extras,
                                                      _choices=preset_choices)
 
     return jinja2.Markup(html_output)

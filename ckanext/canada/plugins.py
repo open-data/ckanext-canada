@@ -249,8 +249,9 @@ class CanadaDatasetsPlugin(SchemingDatasetsPlugin):
 
         # CKAN Core search view wraps all fq values with double quotes.
         # We need to remove double quotes from the portal_release_date queries.
-        for release_date_query in re.findall(fq_portal_release_date_match, search_params['fq']):
-            search_params['fq'] = search_params['fq'].replace(release_date_query, release_date_query.replace('"', ''))
+        if 'fq' in search_params:
+            for release_date_query in re.findall(fq_portal_release_date_match, search_params['fq']):
+                search_params['fq'] = search_params['fq'].replace(release_date_query, release_date_query.replace('"', ''))
 
         return search_params
 
