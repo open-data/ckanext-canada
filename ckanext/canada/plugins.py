@@ -222,9 +222,9 @@ class CanadaDatasetsPlugin(SchemingDatasetsPlugin):
         # We're going to group portal_release_date into two bins - to today and
         # after today.
         search_params['facet.range'] = 'portal_release_date'
-        search_params['facet.range.start'] = 'NOW/DAY-%sYEARS' % helpers.RELEASE_DATE_FACE_STEP
-        search_params['facet.range.end'] = 'NOW/DAY+%sYEARS' % helpers.RELEASE_DATE_FACE_STEP
-        search_params['facet.range.gap'] = '+%sYEARS' % helpers.RELEASE_DATE_FACE_STEP
+        search_params['facet.range.start'] = 'NOW/DAY-%sYEARS' % helpers.RELEASE_DATE_FACET_STEP
+        search_params['facet.range.end'] = 'NOW/DAY+%sYEARS' % helpers.RELEASE_DATE_FACET_STEP
+        search_params['facet.range.gap'] = '+%sYEARS' % helpers.RELEASE_DATE_FACET_STEP
 
         # FIXME: so terrible. hack out WET4 wbdisable parameter
         try:

@@ -42,7 +42,7 @@ WET_JQUERY_OFFLINE_OPTION = 'wet_boew.jquery.offline'
 WET_JQUERY_OFFLINE_DEFAULT = False
 GEO_MAP_TYPE_OPTION = 'wet_theme.geo_map_type'
 GEO_MAP_TYPE_DEFAULT = 'static'
-RELEASE_DATE_FACE_STEP = 100
+RELEASE_DATE_FACET_STEP = 100
 
 
 def is_registry():
@@ -361,7 +361,7 @@ def parse_release_date_facet(facet_results):
 
 def release_date_facet_start_year():
     today = int(datetime.datetime.now(EST()).strftime("%Y"))
-    return today - RELEASE_DATE_FACE_STEP
+    return today - RELEASE_DATE_FACET_STEP
 
 
 def is_ready_to_publish(package):
