@@ -1,5 +1,3 @@
-{% import 'macros/canada_read.html' as cr %}
-
     <div vocab="http://schema.org/" typeof="Dataset" style="display:none;">
         <div property="includedInDataCatalog" typeof="DataCatalog">
             <span property="name" value="{{ _('Government of Canada Open Government Portal') }}">
@@ -46,7 +44,7 @@
         {% if date_published in data %}<span property="datePublished">{{ data.date_published[:10] }}</span>{% endif %}
         <span property="dateModified">{{ data.metadata_modified[:10] }}</span>
         <span property="publisher" typeof="Organization">
-    <span property="name">{{ cr.split_bilingual_field(data.organization.title, h.lang()) }}</span>
+    <span property="name">{{ h.split_piped_bilingual_field(data.organization.title, h.lang()) }}</span>
         <span property="email">{{ data.maintainer_email }}</span>
         </span>
         {%- if data.get('time_period_coverage_start') -%}
