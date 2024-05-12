@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 import logging
 import mock
-from cgi import FieldStorage
+import io
 from ckanext.canada.tests import CanadaTestBase
 from ckan import plugins
 from ckan.lib.uploader import ResourceUpload
@@ -67,20 +67,83 @@ class TestDatastoreValidation(CanadaTestBase):
             plugins.load('validation')
 
 
-    @change_config('ckanext.validation.run_on_create_async', False)
-    @change_config('ckanext.validation.run_on_update_async', False)
-    @mock_uploads
-    @mock.patch('ckanext.validation.jobs.get_resource_uploader', mock_get_resource_uploader)
-    def test_validation_report(self, mock_open):
-        csv_filepath = get_sample_filepath("sample.csv")
+    def _setup_fresource_upload(self, filename):
+        csv_filepath = get_sample_filepath(filename)
+
+        fake_file_obj = io.BytesIO()
 
         with open(csv_filepath, 'r') as f:
+            fake_file_obj.write(f.read())
             resource = Resource(url='__upload',
                                 url_type='upload',
                                 format='CSV',
-                                upload=MockFieldStorage(f, 'sample.csv'))
+                                upload=MockFieldStorage(fake_file_obj, filename))
 
-        run_validation_job(resource)
+        fake_stream = io.BufferedReader(fake_file_obj)
+
+        return resource, fake_stream
+
+
+    @change_config('ckanext.validation.run_on_create_async', False)
+    @change_config('ckanext.validation.run_on_update_async', False)
+    @change_config('ckanext.validation.locales_offered', 'en')
+    @mock_uploads
+    @mock.patch('ckanext.validation.jobs.get_resource_uploader', mock_get_resource_uploader)
+    def test_validation_report(self, mock_open):
+        resource, fake_stream = self._setup_fresource_upload('sample.csv')
+
+        with mock.patch('io.open', return_value=fake_stream):
+
+            run_validation_job(resource)
+
+        report = self.action.resource_validation_show(resource_id=resource.get('id'))
+
+        assert report.get('status') == 'success'
+
+
+    @change_config('ckanext.validation.run_on_create_async', False)
+    @change_config('ckanext.validation.run_on_update_async', False)
+    @change_config('ckanext.validation.locales_offered', 'en')
+    @change_config('ckanext.validation.static_validation_options', '{"checks":["structure","schema","ds-headers"]}')
+    @mock_uploads
+    @mock.patch('ckanext.validation.jobs.get_resource_uploader', mock_get_resource_uploader)
+    def test_validation_report_bad_ds_headers(self, mock_open):
+        resource, fake_stream = self._setup_fresource_upload('sample_with_bad_ds_headers.csv')
+
+        with mock.patch('io.open', return_value=fake_stream):
+
+            run_validation_job(resource)
+
+        report = self.action.resource_validation_show(resource_id=resource.get('id'))
+
+        assert report.get('status') == 'failure'
+        assert len(report.get('reports', {})) == 1
+        reports = report.get('reports', {})
+        assert 'en' in reports
+        report = reports.get('en', {})
+        assert report.get('error-count') == 2
+        tables = report.get('tables', [])
+        assert len(tables) == 1
+        errors = tables[0].get('errors')
+        assert  len(errors) == 2
+        assert errors[0].get('code') == 'datastore-invalid-header'
+        assert '_thisisnotallowed' in errors[0].get('message')
+        assert errors[1].get('code') == 'datastore-header-too-long'
+        assert 'thisheaderisgoingtobewaywaywaywaywaywaywaywaywaywaywaywaywaywaywaywaywaywaywaywaywaywaytolongforthedatastore' in errors[1].get('message')
+
+
+    @change_config('ckanext.validation.run_on_create_async', False)
+    @change_config('ckanext.validation.run_on_update_async', False)
+    @change_config('ckanext.validation.locales_offered', 'en')
+    @change_config('ckanext.validation.static_validation_options', '{"skip_checks":["blank-row"]}')
+    @mock_uploads
+    @mock.patch('ckanext.validation.jobs.get_resource_uploader', mock_get_resource_uploader)
+    def test_validation_report_empty_lines(self, mock_open):
+        resource, fake_stream = self._setup_fresource_upload('sample_with_empty_lines.csv')
+
+        with mock.patch('io.open', return_value=fake_stream):
+
+            run_validation_job(resource)
 
         report = self.action.resource_validation_show(resource_id=resource.get('id'))
 
@@ -90,6 +153,8 @@ class TestDatastoreValidation(CanadaTestBase):
         logger.info(report)
         logger.info("    ")
         assert False
+
+        assert report.get('status') == 'success'
 
 
 class TestDatastoreXloader(CanadaTestBase):
@@ -312,13 +377,6 @@ class TestDatastoreXloader(CanadaTestBase):
             {"_id": 5, "date": None, "temperature": None, "place": "Berkeley"},
             {"_id": 6, "date": "2011-01-03", "temperature": "5", "place": None}
         ]
-
-        logger.info("    ")
-        logger.info("DEBUGGING::")
-        logger.info("    ")
-        logger.info(records)
-        logger.info("    ")
-        # assert False
 
         assert fields == expected_fields
         assert records == expected_records

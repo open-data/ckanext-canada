@@ -13,10 +13,6 @@ from ckan.model import Session
 import ckan
 
 
-def get_sample_filepath(filename):
-    return os.path.abspath(os.path.join(os.path.dirname(__file__), "samples", filename))
-
-
 real_open = open
 _fs = fake_filesystem.FakeFilesystem()
 _mock_os = fake_filesystem.FakeOsModule(_fs)
@@ -41,6 +37,10 @@ def mock_uploads(func):
     def wrapper(*args, **kwargs):
         return func(*args, **kwargs)
     return wrapper
+
+
+def get_sample_filepath(filename):
+    return os.path.abspath(os.path.join(os.path.dirname(__file__), "samples", filename))
 
 
 class MockFieldStorage(FieldStorage):
