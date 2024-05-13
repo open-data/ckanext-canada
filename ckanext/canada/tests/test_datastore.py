@@ -67,7 +67,7 @@ class TestDatastoreValidation(CanadaTestBase):
             plugins.load('validation')
 
 
-    def _setup_fresource_upload(self, filename):
+    def _setup_resource_upload(self, filename):
         csv_filepath = get_sample_filepath(filename)
 
         fake_file_obj = io.BytesIO()
@@ -91,7 +91,7 @@ class TestDatastoreValidation(CanadaTestBase):
     @mock_uploads
     @mock.patch('ckanext.validation.jobs.get_resource_uploader', mock_get_resource_uploader)
     def test_validation_report(self, mock_open):
-        resource, fake_stream = self._setup_fresource_upload('sample.csv')
+        resource, fake_stream = self._setup_resource_upload('sample.csv')
 
         with mock.patch('io.open', return_value=fake_stream):
 
@@ -109,7 +109,7 @@ class TestDatastoreValidation(CanadaTestBase):
     @mock_uploads
     @mock.patch('ckanext.validation.jobs.get_resource_uploader', mock_get_resource_uploader)
     def test_validation_report_bad_ds_headers(self, mock_open):
-        resource, fake_stream = self._setup_fresource_upload('sample_with_bad_ds_headers.csv')
+        resource, fake_stream = self._setup_resource_upload('sample_with_bad_ds_headers.csv')
 
         with mock.patch('io.open', return_value=fake_stream):
 
@@ -140,7 +140,7 @@ class TestDatastoreValidation(CanadaTestBase):
     @mock_uploads
     @mock.patch('ckanext.validation.jobs.get_resource_uploader', mock_get_resource_uploader)
     def test_validation_report_empty_lines(self, mock_open):
-        resource, fake_stream = self._setup_fresource_upload('sample_with_empty_lines.csv')
+        resource, fake_stream = self._setup_resource_upload('sample_with_empty_lines.csv')
 
         with mock.patch('io.open', return_value=fake_stream):
 
@@ -158,7 +158,7 @@ class TestDatastoreValidation(CanadaTestBase):
     @mock_uploads
     @mock.patch('ckanext.validation.jobs.get_resource_uploader', mock_get_resource_uploader)
     def test_validation_report_white_space(self, mock_open):
-        resource, fake_stream = self._setup_fresource_upload('sample_with_extra_white_space.csv')
+        resource, fake_stream = self._setup_resource_upload('sample_with_extra_white_space.csv')
 
         with mock.patch('io.open', return_value=fake_stream):
 
@@ -176,7 +176,7 @@ class TestDatastoreValidation(CanadaTestBase):
     @mock_uploads
     @mock.patch('ckanext.validation.jobs.get_resource_uploader', mock_get_resource_uploader)
     def test_validation_report_languages(self, mock_open):
-        resource, fake_stream = self._setup_fresource_upload('sample.csv')
+        resource, fake_stream = self._setup_resource_upload('sample.csv')
 
         with mock.patch('io.open', return_value=fake_stream):
 
