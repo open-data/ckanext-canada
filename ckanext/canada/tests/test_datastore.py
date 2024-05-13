@@ -72,7 +72,7 @@ class TestDatastoreValidation(CanadaTestBase):
 
         fake_file_obj = io.BytesIO()
 
-        with open(csv_filepath, 'r') as f:
+        with open(csv_filepath, 'rb') as f:
             fake_file_obj.write(f.read())
             resource = Resource(url='__upload',
                                 url_type='upload',
