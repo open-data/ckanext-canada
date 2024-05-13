@@ -5,7 +5,7 @@ import unicodedata
 
 from six import text_type
 
-from ckan.plugins.toolkit import _, get_action, ValidationError
+from ckan.plugins.toolkit import _, get_action, ValidationError, ObjectNotFound
 from ckan.lib.navl.validators import StopOnError
 from ckan.authz import is_sysadmin
 from ckan import model
@@ -17,7 +17,6 @@ import json
 import uuid
 from datetime import datetime
 
-from ckanapi import LocalCKAN, NotFound
 from ckan.lib.helpers import date_str_to_datetime
 from ckantoolkit import get_validator, Invalid, missing
 from ckanext.fluent.validators import fluent_text_output, LANG_SUFFIX
@@ -196,8 +195,8 @@ def canada_copy_from_org_name(key, data, errors, context):
     if not org_id:
         return
     try:
-        org = LocalCKAN(username='').action.organization_show(id=org_id)
-    except NotFound:
+        org = get_action('organization_show')(dict(context), {'id': org_id})
+    except ObjectNotFound:
         return
 
     data[key] = json.dumps({
