@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 import logging
+import re
 from flask import has_request_context
 import ckan.plugins as p
 from ckan.lib.plugins import DefaultDatasetForm, DefaultTranslation
@@ -57,6 +58,7 @@ except ImportError:
     pass
 
 log = logging.getLogger(__name__)
+fq_portal_release_date_match = re.compile(r"(portal_release_date:\"\[.*\]\")")
 
 
 class CanadaSecurityPlugin(CkanSecurityPlugin):
@@ -133,6 +135,12 @@ class CanadaDatasetsPlugin(SchemingDatasetsPlugin):
                 __name__,
                 url_prefix=u'/%s' % pd_type,
                 url_defaults={u'package_type': pd_type})
+            blueprint.add_url_rule(
+                u'/',
+                endpoint='canada_search_%s' % pd_type,
+                view_func=canada_search,
+                methods=['GET']
+            )
             blueprint.add_url_rule(
                 u'/<path:uri>',
                 endpoint='canada_prevent_%s' % pd_type,
@@ -220,9 +228,9 @@ class CanadaDatasetsPlugin(SchemingDatasetsPlugin):
         # We're going to group portal_release_date into two bins - to today and
         # after today.
         search_params['facet.range'] = 'portal_release_date'
-        search_params['facet.range.start'] = 'NOW/DAY-100YEARS'
-        search_params['facet.range.end'] = 'NOW/DAY+100YEARS'
-        search_params['facet.range.gap'] = '+100YEARS'
+        search_params['facet.range.start'] = 'NOW/DAY-%sYEARS' % helpers.RELEASE_DATE_FACET_STEP
+        search_params['facet.range.end'] = 'NOW/DAY+%sYEARS' % helpers.RELEASE_DATE_FACET_STEP
+        search_params['facet.range.gap'] = '+%sYEARS' % helpers.RELEASE_DATE_FACET_STEP
 
         # FIXME: so terrible. hack out WET4 wbdisable parameter
         try:
@@ -244,6 +252,12 @@ class CanadaDatasetsPlugin(SchemingDatasetsPlugin):
             search_params['extras']['ready_to_publish'] = u'true'
             search_params['extras']['imso_approval'] = u'true'
             search_params['fq'] += '+ready_to_publish:"true", +imso_approval:"true", -portal_release_date:*'
+
+        # CKAN Core search view wraps all fq values with double quotes.
+        # We need to remove double quotes from the portal_release_date queries.
+        if 'fq' in search_params:
+            for release_date_query in re.findall(fq_portal_release_date_match, search_params['fq']):
+                search_params['fq'] = search_params['fq'].replace(release_date_query, release_date_query.replace('"', ''))
 
         return search_params
 
@@ -332,6 +346,7 @@ class DataGCCAInternal(p.SingletonPlugin):
     p.implements(p.IActions)
     p.implements(p.IBlueprint)
     p.implements(IXloader, inherit=True)
+    p.implements(p.IAuthFunctions)
 
     # IConfigurer
     def update_config(self, config):
@@ -432,6 +447,14 @@ ckanext.canada:schemas/presets.yaml
             resource_view_create=resource_view_create_bilingual,
             datastore_run_triggers=logic.canada_datastore_run_triggers,
         )
+
+    # IAuthFunctions
+
+    def get_auth_functions(self):
+        return {
+            'group_list': auth.group_list,
+            'organization_list': auth.organization_list,
+        }
 
     # IXloader
 
@@ -698,6 +721,10 @@ ckanext.canada:schemas/prop.yaml
             'get_resource_view',
             'resource_view_type',
             'fgp_viewer_url',
+            'date_field',
+            'split_piped_bilingual_field',
+            'search_filter_pill_link_label',
+            'release_date_facet_start_year',
         ])
 
     # IActions

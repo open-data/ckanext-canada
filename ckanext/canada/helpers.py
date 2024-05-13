@@ -2,7 +2,7 @@ import json
 import re
 import inspect
 from ckan.plugins import plugin_loaded
-from ckan.plugins.toolkit import c, config, _, h, g
+from ckan.plugins.toolkit import c, config, _, h, g, request
 from ckan.model import User, Package, Activity
 import ckan.model as model
 import datetime
@@ -10,6 +10,7 @@ import unicodedata
 import ckan as ckan
 import jinja2
 import html
+from six import text_type
 
 from ckanapi import NotFound
 from ckantoolkit import aslist
@@ -41,6 +42,7 @@ WET_JQUERY_OFFLINE_OPTION = 'wet_boew.jquery.offline'
 WET_JQUERY_OFFLINE_DEFAULT = False
 GEO_MAP_TYPE_OPTION = 'wet_theme.geo_map_type'
 GEO_MAP_TYPE_DEFAULT = 'static'
+RELEASE_DATE_FACET_STEP = 100
 
 
 def is_registry():
@@ -355,6 +357,12 @@ def parse_release_date_facet(facet_results):
                       'scheduled': {'count': counts[1], 'url_param': '[' + ranges[1] + ' TO ' + facet_results['end'] + ']'} }
 
     return facet_dict
+
+
+def release_date_facet_start_year():
+    today = int(datetime.datetime.now(EST()).strftime("%Y"))
+    return today - RELEASE_DATE_FACET_STEP
+
 
 def is_ready_to_publish(package):
     portal_release_date = package.get('portal_release_date')
@@ -758,3 +766,91 @@ def fgp_viewer_url(package):
             openmap_uri = 'openmap'
 
         return h.adv_search_url() + '/' + openmap_uri + '/' + package.get('id')
+
+
+def date_field(field, pkg):
+    if pkg.get(field) and ' ' in pkg.get(field):
+        return pkg.get(field).split(' ')[0]
+    return pkg.get(field, None)
+
+
+def split_piped_bilingual_field(field_text, client_lang):
+    if field_text is not None and ' | ' in field_text:
+        return field_text.split(' | ')[1 if client_lang == 'fr' else 0]
+    return field_text
+
+
+def search_filter_pill_link_label(search_field, search_extras):
+    links_labels = []
+
+    if search_field == 'portal_type':
+
+        # Custom dataset type labels (suggested datasets discontinued - 2024-05-09)
+        preset_choices = [{'value': 'dataset', 'label': _('Open Data')},
+                          {'value': 'info', 'label': _('Open Information')},]
+
+        # Add PD types
+        for pd_type in h.recombinant_get_types():
+            preset_choices.append({'value': pd_type, 'label': _(h.recombinant_get_chromo(pd_type).get('title'))})
+
+    elif search_field == 'status':
+
+        preset_choices = [{'value': 'department_contacted',
+                           'label': _('Request sent to data owner - awaiting response')}]
+
+    elif search_field == 'ready_to_publish':
+
+        preset_choices = [{'value': 'true', 'label': _('Pending')},
+                          {'value': 'false', 'label': _('Draft')},]
+
+    else:
+
+        preset_choices = (h.scheming_get_preset('canada_' + search_field) or {}).get('choices', [])
+
+        if search_field == 'collection':
+
+            collection_choices = preset_choices
+            preset_choices = [{'value': 'pd', 'label': _('Proactive Publication')}]
+
+            for collection_type in collection_choices:
+                preset_choices.append(collection_type)
+
+            # Add PD types
+            for pd_type in h.recombinant_get_types():
+                preset_choices.append({'value': pd_type, 'label': _(h.recombinant_get_chromo(pd_type).get('title'))})
+
+    def remove_filter_button_link_label(_field, _value, s_extras, _choices):
+
+        extrs = s_extras.copy() if s_extras else {}
+        extrs.update(request.view_args)
+        link = h.remove_url_param(_field, value=_value, extras=extrs)
+        label = _value
+
+        if _field == 'organization':
+            org = h.get_organization(_value)
+            if org:
+                label = split_piped_bilingual_field(org.get('title'), h.lang())
+        elif _field == 'portal_release_date':
+            if _value.startswith('[%s' % release_date_facet_start_year()):
+                label = _('Published')
+            else:
+                label = _('Scheduled')
+        else:
+            label = h.scheming_language_text(h.list_dict_filter(_choices, 'value', 'label', _value))
+
+        return link, label
+
+    for value in g.fields_grouped[search_field]:
+        if not isinstance(value, text_type):
+            for v in value:
+                links_labels.append(remove_filter_button_link_label(_field=search_field,
+                                                                    _value=v,
+                                                                    s_extras=search_extras,
+                                                                    _choices=preset_choices))
+        else:
+            links_labels.append(remove_filter_button_link_label(_field=search_field,
+                                                                _value=value,
+                                                                s_extras=search_extras,
+                                                                _choices=preset_choices))
+
+    return links_labels

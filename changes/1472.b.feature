@@ -1,0 +1,1 @@
+Recombinant (Proactive Disclosure) dataset types search pages need session to view on Registry. Following a direct link to a Recombinant dataset will redirect you to the correct Owner Organization for that type. The searches will redirect to the default Dataset search on Portal.

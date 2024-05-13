@@ -1,7 +1,5 @@
 {% ckan_extends %}
 
-{% import 'macros/canada_read.html' as cr %}
-
 {% set pkg = c.pkg_dict %}
 {% set client_lang = h.lang() %}
 {% set schema = h.scheming_get_dataset_schema(pkg.type) %}
@@ -52,8 +50,8 @@
             {% endif %}
           {% endif %}
         {% endfor %}
-      {%- set start_date = cr.date_field({"id":"time_period_coverage_start"}, pkg) -%}
-      {%- set end_date = cr.date_field({"id":"time_period_coverage_end"}, pkg) -%}
+      {%- set start_date = h.date_field("time_period_coverage_start", pkg) -%}
+      {%- set end_date = h.date_field("time_period_coverage_end", pkg) -%}
       {% if start_date or end_date %}
       <li class="list-group-item"><b>{{ _('Temporal Coverage') }}:</b>
         <small>
