@@ -2,7 +2,9 @@
     {'value': 'dataset', 'label': _('Open Data')},
     {'value': 'info', 'label': _('Open Information')},
     {'value': 'prop', 'label': _('Suggested Datasets')},
-    ] %}
+  ]
+%}
+
 {% snippet 'snippets/facet_list.html',
   title=c.facet_titles['portal_type'],
   name='portal_type',
@@ -21,7 +23,11 @@
   scheming_choices=h.scheming_get_preset('canada_jurisdiction').choices,
   extras=extras %}
 
-{{ organization_facet }}
+{% if show_org_facet %}
+  {% snippet 'snippets/facet_list.html',
+    title=c.facet_titles['organization'],
+    name='organization' %}
+{% endif %}
 
 {% if h.lang() == 'en' %}
   {% snippet 'snippets/facet_list.html', title=c.facet_titles['keywords'],

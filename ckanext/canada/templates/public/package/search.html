@@ -1,6 +1,5 @@
 {# vim: set filetype=jinja sw=2 sts=2: #}
 {% ckan_extends %}
-{% import 'macros/canada_read.html' as cr %}
 
 {%- block api_access_info -%}
   <!-- We want this block to be empty in the canada extension -->
@@ -16,10 +15,7 @@
 
     <h2>{{ _('Search Filters') }}&nbsp;<small><a href="{{ h.url_for('dataset.search', q=c.q) }}">{{ _('Clear All') }}</a></small></h2>
 
-    {% snippet 'snippets/dataset_facets.html',
-      organization_facet=h.snippet(
-        'snippets/facet_list.html', title=c.facet_titles['organization'],
-        name='organization') %}
+    {% snippet 'snippets/dataset_facets.html', show_org_facet=true %}
 
     {% block extra_facets %}
 

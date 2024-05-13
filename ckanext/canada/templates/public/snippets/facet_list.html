@@ -1,5 +1,4 @@
 {% ckan_extends %}
-{% import 'macros/canada_read.html' as cr %}
 
 {% set facet_name = title + 's' %}
 
@@ -22,7 +21,7 @@
               <ul class="list-unstyled list-facets">
                 {% for item in items %}
                   {% do item.update({'label': h.scheming_choices_label(scheming_choices, item.name)
-                    if scheming_choices else cr.split_bilingual_field(item.display_name, h.lang()) }) %}
+                    if scheming_choices else h.split_piped_bilingual_field(item.display_name, h.lang()) }) %}
                 {% endfor %}
 
                 {%- macro _text_key(d) -%}

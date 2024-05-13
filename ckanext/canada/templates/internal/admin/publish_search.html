@@ -1,6 +1,5 @@
 {% extends 'admin/base.html' %}
 {% import 'macros/form.html' as form %}
-{% import 'macros/canada_read.html' as cr %}
 
 {% block primary_content_inner %}
 
@@ -8,16 +7,39 @@
 
   <section id="search-results">
     <div class="module-poster">
-      <form id="dataset-search" class="dataset-search form-inline mrgn-bttm-lg mrgn-tp-md" method="get" data-module="select-switch" role="search">
+      <form id="dataset-search" class="dataset-search form-inline mrgn-bttm-md mrgn-tp-md" method="get" data-module="select-switch" role="search">
         <div id="search">
-          <label for="q">{{_('Search Datasets')}}</label>
-          <input type="text" class="search" style="width:100%;" name="q" id="q" value="{{ c.q }}" autocomplete="off" placeholder="{{ _('Search...') }}" size="45"/>
+          <h2 class="mrgn-tp-0 mrgn-bttm-0">
+            <label for="search_field"  class="wb-inv">{{ _('Search Datasets') }}</label>
+          </h2>
+          <div class="input-group col-md-12">
+            <input type="text" class="form-control" id="search_field" autocomplete="off" name="q"
+                   value="{{ g.q }}" placeholder="{{ _('Search datasets...') }}">
+            <span class="input-group-btn">
+              {% block search_input_button %}
+              <button class="btn btn-primary btn-small" type="submit">
+                <i class="fa fa-search" aria-hidden="true"></i>
+                <span class="wb-inv">{{ _('Search') }}</span>
+              </button>
+              {% endblock %}
+            </span>
+          </div>
           {% block suggest_a_dataset_button %}{% endblock %}
         </div>
 
-        <div class="pull-right">
-          {{ h.snippet('snippets/sort_by.html', sort=c.sort_by_selected) }}
-          <button type="submit" class="btn btn-large btn-primary" value="{{ _('Search') }}">{{ _('Search') }}</button>
+        <div class="row mrgn-tp-md mrgn-bttm-md">
+          {% if g.page.item_count == 0 %}
+            <div class="col-md-12 text-center text-warning">
+              <strong>{% snippet 'snippets/search_result_text.html', query=g.q, count=g.page.item_count, type='dataset' %}</strong>
+            </div>
+          {% else %}
+            <div class="col-md-6 mrgn-tp-sm text-left text-success">
+              <strong>{% snippet 'snippets/search_result_text.html', query=g.q, count=g.page.item_count, type='dataset' %}</strong>
+            </div>
+            <div class="col-md-6 text-left">
+              {{ h.snippet('snippets/sort_by.html', sort=c.sort_by_selected) }}
+            </div>
+          {% endif %}
         </div>
 
         {% if c.fields -%}
@@ -29,19 +51,17 @@
         <div id="dataset-search-ext">{% block dataset_search_ext %}{% endblock %}</div>
       </form>
       <div class="{% if request.params and c.page.item_count == 0 -%}module-info module-simplify{%- endif -%}">
-        <h3>{{_('Search Results:')}}</h3>
-        <strong>
-          {% snippet 'snippets/search_result_text.html', query=c.q, count=c.page.item_count, type='dataset' %}
-        </strong>
         <div class="filter-list">
           {% block filter_list %}
-              <ul class="list-inline">
-              {% for field in c.fields_grouped %}
-                {% if field != 'ready_to_publish' and field != 'imso_approval' %}
-                  {{ cr.filter_buttons(h, c, field) }}
-                {% endif %}
-              {% endfor %}
-              </ul>
+            {% for field in g.fields_grouped %}
+              {% if field != 'ready_to_publish' and field != 'imso_approval' %}
+                {% for link, label in h.search_filter_pill_link_label(field, extras) %}
+                  <a href="{{ link }}" class="btn btn-info btn-xs mrgn-lft-sm mrgn-bttm-sm facet-pill" title="{{ _('Remove') }}">
+                    {{ label }}&nbsp;<i class="fa fa-times" aria-hidden="true"></i></a>
+                  </a>
+                {% endfor %}
+              {% endif %}
+            {% endfor %}
         {% endblock %}
         </div>
         {% if request.params and c.page.item_count == 0 %}
@@ -80,10 +100,7 @@
 <div class="filters">
   <h2>{{ _('Search Filters') }}&nbsp;<small><a href="{{ h.url_for('canada.ckanadmin_publish', q=c.q) }}">{{ _('Clear All') }}</a></small></h2>
   <div>
-    {% snippet 'snippets/dataset_facets.html',
-      organization_facet=h.snippet(
-        'snippets/facet_list.html', title=c.facet_titles['organization'],
-        name='organization') %}
+    {% snippet 'snippets/dataset_facets.html', show_org_facet=true %}
   </div>
 </div>
 {% endblock %}

@@ -13,8 +13,7 @@
   {% endblock %}
 
   {% block extra_facets %}
-    {{ h.snippet('snippets/publish_facet.html', title=c.facet_titles['ready_to_publish'],
-      name='ready_to_publish', facet_range=facet_ranges['portal_release_date'], facet_range_name='portal_release_date') }}
+    {{ h.snippet('snippets/publish_facet.html', facet_ranges=facet_ranges) }}
   {% endblock %}
 
 {% endif %}

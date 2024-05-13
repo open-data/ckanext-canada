@@ -3,7 +3,7 @@
 {% set client_lang = h.lang() %}
 
 {% block organization_facets %}
-  {% snippet 'snippets/dataset_facets.html', extras={'id':c.group_dict.name} %}
+  {% snippet 'snippets/dataset_facets.html', extras={'id':c.group_dict.name}, show_org_facet=false %}
 {% endblock %}
 
 {% block page_primary_action %}
