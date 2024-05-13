@@ -87,6 +87,7 @@ class TestDatastoreValidation(CanadaTestBase):
     @change_config('ckanext.validation.run_on_create_async', False)
     @change_config('ckanext.validation.run_on_update_async', False)
     @change_config('ckanext.validation.locales_offered', 'en')
+    @change_config('ckanext.validation.static_validation_options', '{"checks":["structure","schema","ds-headers"]}')
     @mock_uploads
     @mock.patch('ckanext.validation.jobs.get_resource_uploader', mock_get_resource_uploader)
     def test_validation_report(self, mock_open):
@@ -135,7 +136,7 @@ class TestDatastoreValidation(CanadaTestBase):
     @change_config('ckanext.validation.run_on_create_async', False)
     @change_config('ckanext.validation.run_on_update_async', False)
     @change_config('ckanext.validation.locales_offered', 'en')
-    @change_config('ckanext.validation.static_validation_options', '{"skip_checks":["blank-row"]}')
+    @change_config('ckanext.validation.static_validation_options', '{"skip_checks":["blank-row"],"checks":["structure","schema","ds-headers"]}')
     @mock_uploads
     @mock.patch('ckanext.validation.jobs.get_resource_uploader', mock_get_resource_uploader)
     def test_validation_report_empty_lines(self, mock_open):
@@ -147,14 +148,45 @@ class TestDatastoreValidation(CanadaTestBase):
 
         report = self.action.resource_validation_show(resource_id=resource.get('id'))
 
-        logger.info("    ")
-        logger.info("DEBUGGING::")
-        logger.info("    ")
-        logger.info(report)
-        logger.info("    ")
-        assert False
+        assert report.get('status') == 'success'
+
+
+    @change_config('ckanext.validation.run_on_create_async', False)
+    @change_config('ckanext.validation.run_on_update_async', False)
+    @change_config('ckanext.validation.locales_offered', 'en')
+    @change_config('ckanext.validation.static_validation_options', '{"checks":["structure","schema","ds-headers"]}')
+    @mock_uploads
+    @mock.patch('ckanext.validation.jobs.get_resource_uploader', mock_get_resource_uploader)
+    def test_validation_report_white_space(self, mock_open):
+        resource, fake_stream = self._setup_fresource_upload('sample_with_extra_white_space.csv')
+
+        with mock.patch('io.open', return_value=fake_stream):
+
+            run_validation_job(resource)
+
+        report = self.action.resource_validation_show(resource_id=resource.get('id'))
 
         assert report.get('status') == 'success'
+
+
+    @change_config('ckanext.validation.run_on_create_async', False)
+    @change_config('ckanext.validation.run_on_update_async', False)
+    @change_config('ckanext.validation.locales_offered', 'en fr')
+    @change_config('ckanext.validation.static_validation_options', '{"checks":["structure","schema","ds-headers"]}')
+    @mock_uploads
+    @mock.patch('ckanext.validation.jobs.get_resource_uploader', mock_get_resource_uploader)
+    def test_validation_report_languages(self, mock_open):
+        resource, fake_stream = self._setup_fresource_upload('sample.csv')
+
+        with mock.patch('io.open', return_value=fake_stream):
+
+            run_validation_job(resource)
+
+        report = self.action.resource_validation_show(resource_id=resource.get('id'))
+
+        assert 'reports' in report
+        assert 'en' in report.get('reports')
+        assert 'fr' in report.get('reports')
 
 
 class TestDatastoreXloader(CanadaTestBase):
