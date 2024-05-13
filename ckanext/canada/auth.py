@@ -41,5 +41,13 @@ def group_list(context, data_dict):
     return {'success': bool(context.get('user'))}
 
 
+def group_show(context, data_dict):
+    return {'success': bool(context.get('user'))}
+
+
 def organization_list(context, data_dict):
-    return {'success': context.get('user')}
+    return {'success': bool(context.get('user'))}
+
+
+def organization_show(context, data_dict):
+    return {'success': bool(context.get('user'))}
