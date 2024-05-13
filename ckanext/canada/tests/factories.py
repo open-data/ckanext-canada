@@ -1,5 +1,5 @@
 # -*- coding: UTF-8 -*-
-import __builtin__ as builtins
+import builtins
 import os
 import mock
 import functools
