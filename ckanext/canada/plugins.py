@@ -453,7 +453,9 @@ ckanext.canada:schemas/presets.yaml
     def get_auth_functions(self):
         return {
             'group_list': auth.group_list,
+            'group_show': auth.group_show,
             'organization_list': auth.organization_list,
+            'organization_show': auth.organization_show,
         }
 
     # IXloader
