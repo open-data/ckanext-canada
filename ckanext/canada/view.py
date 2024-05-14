@@ -916,7 +916,7 @@ def organization_autocomplete():
     organization_list = []
 
     if q:
-        context = {'user': g.user, 'model': model}
+        context = {'user': g.user, 'model': model, 'ignore_auth': True}
         data_dict = {'q': q, 'limit': limit}
         organization_list = get_action(
             'organization_autocomplete'
