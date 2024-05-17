@@ -202,6 +202,15 @@ class CanadaResourceCreateView(ResourceCreateView):
 
 
 class CanadaUserRegisterView(UserRegisterView):
+    def get(self, data=None, errors=None, error_summary=None):
+        # additional check to ensure user can access the Request an Account page
+        # only possible if accessing from GOC network
+        remote_addr = request.headers.get('X-Forwarded-For') or \
+                      request.environ.get('REMOTE_ADDR')
+        if not h.registry_network_access(remote_addr):
+            abort(403, _('Not authorized to see this page'))
+        return super(CanadaUserRegisterView, self).get()
+
     def post(self):
         params = parse_params(request.form)
         email=params.get('email', '')

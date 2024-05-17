@@ -723,6 +723,7 @@ ckanext.canada:schemas/prop.yaml
             'get_resource_view',
             'resource_view_type',
             'fgp_viewer_url',
+            'registry_network_access',
             'date_field',
             'split_piped_bilingual_field',
             'search_filter_pill_link_label',
