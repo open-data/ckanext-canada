@@ -1,5 +1,6 @@
-from ckan.plugins.toolkit import chained_auth_function, config
+from ckan.plugins.toolkit import chained_auth_function, config, request
 from ckan.authz import has_user_permission_for_group_or_org, is_sysadmin
+from ckanext.canada.helpers import registry_network_access
 
 
 def _is_reporting_user(context):
@@ -26,6 +27,17 @@ def datastore_upsert(up_func, context, data_dict):
         return {'success': False}
     return up_func(context, data_dict)
 
+
+@chained_auth_function
+def user_create(up_func, context, data_dict=None):
+    if 'canada_internal' in config.get('ckan.plugins'):
+        # additional check to ensure user can access the Request an Account page
+        # only possible if accessing from GOC network
+        remote_addr = request.headers.get('X-Forwarded-For') or \
+                      request.environ.get('REMOTE_ADDR')
+        if not registry_network_access(remote_addr):
+            return {'success': False}
+    return up_func(context, data_dict)
 
 def view_org_members(context, data_dict):
     user = context.get('user')
