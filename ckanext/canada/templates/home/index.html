@@ -1,2 +1,7 @@
-{# hide CKAN front page on public site #}
-{{ h.redirect_to('dataset.search') }}
+{% ckan_extends %}
+
+{% if not h.is_registry() %}
+  {# Portal #}
+  {# hide CKAN front page on public site #}
+  {{ h.redirect_to('dataset.search') }}
+{% endif %}
