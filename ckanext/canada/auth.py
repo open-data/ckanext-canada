@@ -1,4 +1,7 @@
-from ckan.plugins.toolkit import chained_auth_function, config, request
+from ckan.plugins.toolkit import (chained_auth_function,
+                                  auth_allow_anonymous_access,
+                                  config,
+                                  request)
 from ckan.authz import has_user_permission_for_group_or_org, is_sysadmin
 from ckanext.canada.helpers import registry_network_access
 
@@ -29,6 +32,7 @@ def datastore_upsert(up_func, context, data_dict):
 
 
 @chained_auth_function
+@auth_allow_anonymous_access
 def user_create(up_func, context, data_dict=None):
     # additional check to ensure user can access the Request an Account page
     # only possible if accessing from GOC network
