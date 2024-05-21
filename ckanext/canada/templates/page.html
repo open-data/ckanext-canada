@@ -1,5 +1,7 @@
 {% ckan_extends %}
 
+{% set is_registry = h.is_registry() %}
+
 {% block page %}
 
   {% block skip %}
@@ -20,69 +22,137 @@
   {% set lang = h.lang() %}
 
   {% block content %}
-    <div class="container">
-      <div class="row">
+    {% if is_registry %}
+      {# Registry #}
+      {% if c.userobj and h.get_timeout_length() %}
+        <div class="modal fade" id="timeout" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content overlay-def">
+              <header class="modal-header">
+                <h2 class="modal-title" id="modalLabel">{{ _('Your user sessions has timed out due to inactivity') }}</h2>
+                <button type="button" class="close mfp-close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </header>
+              <div class="modal-body">
+                {{ _('If you are currently entering data on this page, you may lose it when submitted. To avoid this, you can click on the log in button below to log in again in a new tab without losing your progress and you can then keep working on this page. If you have any issues please contact <a href="mailto:open-ouvert@tbs-sct.gc.ca">open-ouvert@tbs-sct.gc.ca</a>.') | safe }}
+              </div>
+              <div class="modal-footer">
+                <a href="{{ h.url_for('user.login') }}" target="_blank" class="btn btn-default btn-sm">
+                  <span class="fa fa-sign-in"></span>
+                  <span class="text">{{ _('Log in') }}</span>
+                </a>
+                <button type="button" class="btn btn-sm btn-primary pull-left" data-dismiss="modal">Close</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      {% endif %}
+
+      <div class="container"><div class="row">
         {% block flash %}
-          <div class="col-md-12 canada-flash-messages">
-            <div class="flash-messages">
-              {% for message in h.flash.pop_messages() | list %}
-                <section class="alert fade in {{ message.category }}">
-                  <p>{{ h.literal(message) }}</p>
-                </section>
-              {% endfor %}
-            </div>
-          </div>
+          {{ super() }}
         {% endblock flash %}
-        <main role="main" property="mainContentOfPage" class="container">
-          {% block page_title %}
-            <h1 property="name" id="wb-cont">
-              {%- block page_heading -%}
-                {% set subtitle_2 = self.subtitle_2()|trim %}
-                {%- block subtitle %}{{ _('About') }}{% endblock -%}
-                {%- if subtitle_2 -%}<span class="wb-inv"> - {{ subtitle_2 }}</span>{%- endif -%}
-              {%- endblock -%}
-            </h1>
+        {% block maintag %}<main role="main" property="mainContentOfPage" class="container">{% endblock %}
+        {% block page_title %}
+        <div id="ie_warning" class="alert alert-warning" style="display: none">
+          <p>{{ _('Internet Explorer is no longer being supported within the Open Government Registry. Some features will not work as expected, including publication of records. Please use MS Edge or Google Chrome, or contact <a href="mailto:open-ouvert@tbs-sct.gc.ca">open-ouvert@tbs-sct.gc.ca</a> for additional support.') | safe }}</p>
+        </div>
+          {{ super() }}
+        {% endblock %}
+        {% block pre_primary %}
+          <div class="row">
+            <div class="col-md-12">
+              {# _site_messaging is handled by aliases in nginx to SMB #}
+              {# has to be below title for a11y H3 after H1 #}
+              <div data-ajax-replace="/static/_site_messaging/header_od_registry.{{ h.lang() }}"></div>
+            </div>
+          </div>
+        {% endblock %}
+        {% block primary %}
+          <div class="row{% if self.secondary_content()|trim != '' %} wb-eqht{% else %}col-md-12{% endif %}">
+            <div class="{% if self.secondary_content()|trim != '' %}col-md-9 col-md-push-3{% endif %}">
+              {% block primary_content %}
+                {{ super() }}
+              {% endblock primary_content %}
+            </div>
+          {% endblock primary %}
+          {% block secondary %}
+            {% if self.secondary_content()|trim != '' %}
+              <aside class="col-md-3 col-md-pull-9 mrgn-tp-xl">
+                {% block secondary_content %}{% endblock %}
+              </aside>
+            {% endif %}
           {% endblock %}
-          {% block pre_primary %}
-            <div class="row">
-              <div class="col-md-12">
-                {# _site_messaging is handled by aliases in nginx to SMB #}
-                {# has to be below title for a11y H3 after H1 #}
-                <div data-ajax-replace="/data/static/_site_messaging/header_od_ckan.{{ h.lang() }}"></div>
+        </div>
+        </main>
+      </div></div>
+    {% else %}
+      {# Portal #}
+      <div class="container">
+        <div class="row">
+          {% block flash %}
+            <div class="col-md-12 canada-flash-messages">
+              <div class="flash-messages">
+                {% for message in h.flash.pop_messages() | list %}
+                  <section class="alert fade in {{ message.category }}">
+                    <p>{{ h.literal(message) }}</p>
+                  </section>
+                {% endfor %}
               </div>
             </div>
-          {% endblock %}
-          {% block primary %}
-            <div class="row{% if self.secondary_content()|trim != '' %} wb-eqht{% else %}col-md-12{% endif %}">
-              <div class="{% if self.secondary_content()|trim != '' %}col-md-9 col-md-push-3{% endif %}">
-                {% block primary_content %}
-                  {% block page_header %}
-                    {{ super() }}
-                  {% endblock %}
-                  <div class="row">
-                      <div class="col-md-12">
-                          {% if self.page_primary_action() | trim %}
-                            <div class="page_primary_action">
-                            {% block page_primary_action %}{% endblock %}
-                            </div>
-                          {% endif %}
-                          {% block primary_content_inner %}{% endblock %}
-                      </div>
-                  </div>
-                {% endblock primary_content %}
-              </div>
-            {% endblock primary %}
-            {% block secondary %}
-              {% if self.secondary_content()|trim != '' %}
-                <aside class="col-md-3 col-md-pull-9 mrgn-tp-xl">
-                  {% block secondary_content %}{% endblock %}
-                </aside>
-              {% endif %}
+          {% endblock flash %}
+          <main role="main" property="mainContentOfPage" class="container">
+            {% block page_title %}
+              <h1 property="name" id="wb-cont">
+                {%- block page_heading -%}
+                  {% set subtitle_2 = self.subtitle_2()|trim %}
+                  {%- block subtitle %}{{ _('About') }}{% endblock -%}
+                  {%- if subtitle_2 -%}<span class="wb-inv"> - {{ subtitle_2 }}</span>{%- endif -%}
+                {%- endblock -%}
+              </h1>
             {% endblock %}
-          </div>
-        </main>
+            {% block pre_primary %}
+              <div class="row">
+                <div class="col-md-12">
+                  {# _site_messaging is handled by aliases in nginx to SMB #}
+                  {# has to be below title for a11y H3 after H1 #}
+                  <div data-ajax-replace="/data/static/_site_messaging/header_od_ckan.{{ h.lang() }}"></div>
+                </div>
+              </div>
+            {% endblock %}
+            {% block primary %}
+              <div class="row{% if self.secondary_content()|trim != '' %} wb-eqht{% else %}col-md-12{% endif %}">
+                <div class="{% if self.secondary_content()|trim != '' %}col-md-9 col-md-push-3{% endif %}">
+                  {% block primary_content %}
+                    {% block page_header %}
+                      {{ super() }}
+                    {% endblock %}
+                    <div class="row">
+                        <div class="col-md-12">
+                            {% if self.page_primary_action() | trim %}
+                              <div class="page_primary_action">
+                              {% block page_primary_action %}{% endblock %}
+                              </div>
+                            {% endif %}
+                            {% block primary_content_inner %}{% endblock %}
+                        </div>
+                    </div>
+                  {% endblock primary_content %}
+                </div>
+              {% endblock primary %}
+              {% block secondary %}
+                {% if self.secondary_content()|trim != '' %}
+                  <aside class="col-md-3 col-md-pull-9 mrgn-tp-xl">
+                    {% block secondary_content %}{% endblock %}
+                  </aside>
+                {% endif %}
+              {% endblock %}
+            </div>
+          </main>
+        </div>
       </div>
-    </div>
+    {% endif %}
   {% endblock %}
 
   {%- block footer %}
@@ -97,8 +167,38 @@
   {% asset 'canada_public/csrf' %}
   {% asset 'canada_public/analytics' %}
   {% block adobe_analytics_footer %}
-    <script type="text/javascript">if( typeof _satellite !== "undefined" ){ _satellite.pageBottom(); }</script>
+    {% if not is_registry %}
+      {# Portal #}
+      <script type="text/javascript">if( typeof _satellite !== "undefined" ){ _satellite.pageBottom(); }</script>
+    {% endif %}
   {%- endblock -%}
-  {% block google_analytics_footer %}{%- endblock -%}
+  {% block google_analytics_footer %}
+      {% if is_registry %}
+        {# Registry #}
+        {% asset 'canada_internal/analytics' %}
+      {% endif %}
+  {%- endblock -%}
+
   {{ super() }}
+
+  {% if is_registry %}
+    {%- block session_timeout -%}
+      {% if c.userobj and h.get_timeout_length() %}
+        <script>
+          setTimeout(function(){ $('#timeout').modal('show'); }, {{ h.get_timeout_length() }} * 1000);
+        </script>
+      {% endif %}
+    {%- endblock -%}
+
+    {% block ie_browser_warning %}
+      <script>
+        if (navigator.appName == 'Microsoft Internet Explorer' ||
+            !!(navigator.userAgent.match(/Trident/) || navigator.userAgent.match(/rv:11/)) ||
+            (typeof $.browser !== "undefined" && $.browser.msie == 1))
+        {
+          document.getElementById("ie_warning").style.display = "block";
+        }
+      </script>
+    {% endblock %}
+  {% endif %}
 {% endblock %}

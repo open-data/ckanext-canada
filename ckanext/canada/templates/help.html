@@ -1,0 +1,13 @@
+{% extends "page.html" %}
+
+{% block primary %}
+  {% if h.is_registry() %}
+    {# Registry #}
+    <h1>{{ _('Frequently Asked Questions (FAQ)') }}</h1>
+    {% block primary_content %}{% endblock primary_content %}
+    {{ faq_html|safe }}
+  {% else %}
+    {# Portal #}
+    {{ super() }}
+  {% endif %}
+{% endblock %}

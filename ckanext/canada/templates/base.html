@@ -1,5 +1,17 @@
 {% ckan_extends %}
 
+{% set is_registry = h.is_registry() %}
+
+{% block site_title %}
+  {% if is_registry %}
+    {# Registry #}
+    <a href="{{ h.url_for('dataset.search') }}">{{ _('Open Data Registry') }}</a>
+  {% else %}
+    {# Portal #}
+    {{ super() }}
+  {% endif %}
+{% endblock %}
+
 {% block meta %}
 
   {{ super() }}
@@ -61,6 +73,11 @@
 {%- block custom_styles -%}
   {% snippet 'snippets/wet-boew/headresources.html' %}
   {% asset 'canada_public/css' %}
+  {% if is_registry %}
+    {# Registry #}
+    {# Remove when WET v4.0.21 is out #}
+    {% asset 'canada_internal/css' %}
+  {% endif %}
 {%- endblock -%}
 
 
