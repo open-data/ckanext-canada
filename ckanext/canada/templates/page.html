@@ -48,50 +48,16 @@
           </div>
         </div>
       {% endif %}
+    {% endif %}
 
-      <div class="container"><div class="row">
+    <div class="container">
+      <div class="row">
         {% block flash %}
-          {{ super() }}
-        {% endblock flash %}
-        {% block maintag %}<main role="main" property="mainContentOfPage" class="container">{% endblock %}
-        {% block page_title %}
-        <div id="ie_warning" class="alert alert-warning" style="display: none">
-          <p>{{ _('Internet Explorer is no longer being supported within the Open Government Registry. Some features will not work as expected, including publication of records. Please use MS Edge or Google Chrome, or contact <a href="mailto:open-ouvert@tbs-sct.gc.ca">open-ouvert@tbs-sct.gc.ca</a> for additional support.') | safe }}</p>
-        </div>
-          {{ super() }}
-        {% endblock %}
-        {% block pre_primary %}
-          <div class="row">
-            <div class="col-md-12">
-              {# _site_messaging is handled by aliases in nginx to SMB #}
-              {# has to be below title for a11y H3 after H1 #}
-              <div data-ajax-replace="/static/_site_messaging/header_od_registry.{{ h.lang() }}"></div>
-            </div>
-          </div>
-        {% endblock %}
-        {% block primary %}
-          <div class="row{% if self.secondary_content()|trim != '' %} wb-eqht{% else %}col-md-12{% endif %}">
-            <div class="{% if self.secondary_content()|trim != '' %}col-md-9 col-md-push-3{% endif %}">
-              {% block primary_content %}
-                {{ super() }}
-              {% endblock primary_content %}
-            </div>
-          {% endblock primary %}
-          {% block secondary %}
-            {% if self.secondary_content()|trim != '' %}
-              <aside class="col-md-3 col-md-pull-9 mrgn-tp-xl">
-                {% block secondary_content %}{% endblock %}
-              </aside>
-            {% endif %}
-          {% endblock %}
-        </div>
-        </main>
-      </div></div>
-    {% else %}
-      {# Portal #}
-      <div class="container">
-        <div class="row">
-          {% block flash %}
+          {% if is_registry %}
+            {# Registry #}
+            {{ super() }}
+          {% else %}
+            {# Portal #}
             <div class="col-md-12 canada-flash-messages">
               <div class="flash-messages">
                 {% for message in h.flash.pop_messages() | list %}
@@ -101,30 +67,56 @@
                 {% endfor %}
               </div>
             </div>
-          {% endblock flash %}
+          {% endif %}
+        {% endblock flash %}
+        {% if is_registry %}
+          {# Registry #}
+          {% block maintag %}
+            <main role="main" property="mainContentOfPage" class="container">
+          {% endblock %}
+        {% else %}
+          {# Portal #}
           <main role="main" property="mainContentOfPage" class="container">
-            {% block page_title %}
-              <h1 property="name" id="wb-cont">
-                {%- block page_heading -%}
-                  {% set subtitle_2 = self.subtitle_2()|trim %}
-                  {%- block subtitle %}{{ _('About') }}{% endblock -%}
-                  {%- if subtitle_2 -%}<span class="wb-inv"> - {{ subtitle_2 }}</span>{%- endif -%}
-                {%- endblock -%}
-              </h1>
-            {% endblock %}
-            {% block pre_primary %}
-              <div class="row">
-                <div class="col-md-12">
-                  {# _site_messaging is handled by aliases in nginx to SMB #}
-                  {# has to be below title for a11y H3 after H1 #}
-                  <div data-ajax-replace="/data/static/_site_messaging/header_od_ckan.{{ h.lang() }}"></div>
-                </div>
+        {% endif %}
+          {% block page_title %}
+            {% if is_registry %}
+              {# Registry #}
+              <div id="ie_warning" class="alert alert-warning" style="display: none">
+                <p>{{ _('Internet Explorer is no longer being supported within the Open Government Registry. Some features will not work as expected, including publication of records. Please use MS Edge or Google Chrome, or contact <a href="mailto:open-ouvert@tbs-sct.gc.ca">open-ouvert@tbs-sct.gc.ca</a> for additional support.') | safe }}</p>
               </div>
-            {% endblock %}
-            {% block primary %}
-              <div class="row{% if self.secondary_content()|trim != '' %} wb-eqht{% else %}col-md-12{% endif %}">
-                <div class="{% if self.secondary_content()|trim != '' %}col-md-9 col-md-push-3{% endif %}">
-                  {% block primary_content %}
+            {% endif %}
+            <h1 property="name" id="wb-cont">
+              {%- block page_heading -%}
+                {% set subtitle_2 = self.subtitle_2()|trim %}
+                {%- block subtitle %}{{ _('About') }}{% endblock -%}
+                {%- if subtitle_2 -%}<span class="wb-inv"> - {{ subtitle_2 }}</span>{%- endif -%}
+              {%- endblock -%}
+            </h1>
+          {% endblock %}
+          {% block pre_primary %}
+            <div class="row">
+              <div class="col-md-12">
+                {# _site_messaging is handled by aliases in nginx to SMB #}
+                {# has to be below title for a11y H3 after H1 #}
+                {% if is_registry %}
+                  {# Registry #}
+                  <div data-ajax-replace="/static/_site_messaging/header_od_registry.{{ h.lang() }}"></div>
+                {% else %}
+                  {# Portal #}
+                  <div data-ajax-replace="/data/static/_site_messaging/header_od_ckan.{{ h.lang() }}"></div>
+                {% endif %}
+              </div>
+            </div>
+          {% endblock %}
+          {% block primary %}
+            <div class="row{% if self.secondary_content()|trim != '' %} wb-eqht{% else %}col-md-12{% endif %}">
+              <div class="{% if self.secondary_content()|trim != '' %}col-md-9 col-md-push-3{% endif %}">
+                {% block primary_content %}
+                  {% if is_registry %}
+                    {# Registry #}
+                    {{ super() }}
+                  {% else %}
+                    {# Portal #}
                     {% block page_header %}
                       {{ super() }}
                     {% endblock %}
@@ -138,21 +130,21 @@
                             {% block primary_content_inner %}{% endblock %}
                         </div>
                     </div>
-                  {% endblock primary_content %}
-                </div>
-              {% endblock primary %}
-              {% block secondary %}
-                {% if self.secondary_content()|trim != '' %}
-                  <aside class="col-md-3 col-md-pull-9 mrgn-tp-xl">
-                    {% block secondary_content %}{% endblock %}
-                  </aside>
-                {% endif %}
-              {% endblock %}
-            </div>
-          </main>
-        </div>
+                  {% endif %}
+                {% endblock primary_content %}
+              </div>
+            {% endblock primary %}
+            {% block secondary %}
+              {% if self.secondary_content()|trim != '' %}
+                <aside class="col-md-3 col-md-pull-9 mrgn-tp-xl">
+                  {% block secondary_content %}{% endblock %}
+                </aside>
+              {% endif %}
+            {% endblock %}
+          </div>
+        </main>
       </div>
-    {% endif %}
+    </div>
   {% endblock %}
 
   {%- block footer %}
