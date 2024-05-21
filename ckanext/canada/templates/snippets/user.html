@@ -1,64 +1,86 @@
+{% set is_registry = h.is_registry() %}
+
 {% block header_user_snippet %}
-<section id="wb-so">
-  <h2 class="wb-inv">Sign-on information</h2>
+  <section id="wb-so" class="{{ 'text-right' if is_registry else '' }}">
+    <h2 class="wb-inv">Sign-on information</h2>
     <div class="container">
-      <div class="row">
-        <div class="col-md-12">
-      <ul class="list-inline">
-{% if c.userobj %}
-    {% block header_account_logged %}
-    <li>
-        {{ _('Signed in as') }}
-        <a href="{{ h.url_for('dashboard.index') }}" class="image" title="{{ _('View profile') }}">
-            <span class="username">{{ c.userobj.display_name }}</span>
-        </a>
-    </li>
-    {% if c.userobj.sysadmin %}
-    <li>
-        <a href="{{ h.url_for('dashboard.index') }}" title="{{ _('Sysadmin settings') }}" class="btn btn-default">
-            <i class="fa fa-gavel"></i>
-            <span class="text">{{ _('Admin') }}</span>
-        </a>
-    </li>
-    {% endif %}
-    <li class="notifications">
-        <a href="{{ h.url_for('user.dashboard') }}" class="btn btn-default">
-            <i class="fa fa-tachometer"></i>
-            <span class="text">{{ _('Dashboard') }}</span>
-            <span class="wb-inv">{{ _(': ') }}</span>
-            <span class="badge">{{ new_activities }}</span>
-        </a>
-    </li>
-        {% block header_account_settings_link %}
-        <li>
-            <a href="{{ h.url_for('user.edit', id=c.userobj.name) }}" title="{{ _('Edit Profile') }}" class="btn btn-default">
-                <span class="fa fa-cog"></span>
-                <span class="text">{{ _('Edit Profile') }}</span>
-            </a>
-        </li>
-        {% endblock %}
-        {% block header_account_log_out_link %}
-        <!-- This code is correct but we have to address a generic login not in the mega menu before we can re-enable
-        <li>
-            <a href="{{ h.url_for('user.logout') }}" title="{{ _('Log out') }}" class="btn btn-primary">
-                <span class="fa fa-sign-out"></span>
-                <span class="text">{{ _('Log out') }}</span>
-            </a>
-        </li>
-        -->
-        {% endblock %}
-    {% endblock %}
-{% else %}
-    {% block header_account_notlogged %}
-    {% if h.check_access('user_create') %}
-    <li><a href="{{ h.url_for('user.register', class_='sub') }}" class="btn btn-default">{{ _('Register') }}</a></li>
-    {% endif %}
-    <li><a href="{{ h.url_for('user.login') }}" class="btn btn-primary">{{ _('Log in') }}</a></li>
-    {% endblock %}
-{% endif %}
-    </ul>
+      <div class="row {{ 'mrgn-tp-md' if is_registry else '' }}">
+        <div class="{{ 'col-md-offset-4 col-md-8' if is_registry else 'col-md-12' }}" id="user_nav">
+          <ul class="list-inline">
+            {% if c.userobj %}
+              {% block header_account_logged %}
+                {% if is_registry %}
+                  {# Registry #}
+                  {% if c.userobj.sysadmin %}
+                    <li>
+                      <a href="{{ h.url_for('admin.index') }}" title="{{ _('Sysadmin settings') }}" class="btn btn-default mrgn-tp-sm">
+                        <i class="fa fa-gavel"></i>
+                        <span class="text">{{ _('Admin') }}</span>
+                      </a>
+                    </li>
+                  {% endif %}
+                  <li class="notifications">
+                    <a href="{{ h.url_for('dashboard.index') }}" class="btn btn-default mrgn-tp-sm">
+                        <i class="fa fa-tachometer"></i>
+                        <span class="text">{{ _('Dashboard') }}</span>
+                    </a>
+                  </li>
+                  <li>
+                    {{ _('Signed in as') }}
+                    <a href="{{ h.url_for('dashboard.index') }}" class="image" title="{{ _('View profile') }}">
+                        <span class="username">{{ c.userobj.display_name }}</span>
+                    </a>
+                  </li>
+                {% endif %}
+                {% block header_account_settings_link %}
+                  {% if is_registry %}
+                    {# Registry #}
+                    <li>
+                      <a href="{{ h.url_for('user.edit', id=c.userobj.name) }}" title="{{ _('Edit Profile') }}" class="btn btn-default mrgn-tp-sm">
+                          <span class="fa fa-cog"></span>
+                          <span class="text">{{ _('Edit Profile') }}</span>
+                      </a>
+                    </li>
+                  {% endif %}
+                {% endblock %}
+                {% block header_get_help %}
+                  {% if is_registry %}
+                    {# Registry #}
+                    <li>
+                      {% if h.lang() == 'fr' %}
+                        {% set help_link = h.portal_url() ~ "/fr/guide-operations-registre/ton-compte" %}
+                      {% else %}
+                        {% set help_link = h.portal_url() ~ "/en/registry-operations-guide/your-account" %}
+                      {% endif %}
+                      <a href="{{ help_link }}"
+                        title="{{ _('Get Help') }}" class="btn btn-warning mrgn-tp-sm get-help-analytics">
+                          <span class="fa fa-question"></span>
+                          <span class="text">{{ _('Get Help') }}</span>
+                      </a>
+                    </li>
+                  {% endif %}
+                {% endblock %}
+                {% block header_account_log_out_link %}
+                    {% if is_registry %}
+                      {# Registry #}
+                      {{ super() }}
+                    {% endif %}
+                {% endblock %}
+              {% endblock %}
+            {% else %}
+              {% block header_account_notlogged %}
+                {% if is_registry %}
+                    {# Registry #}
+                  {% if h.check_access('user_create') %}
+                    <li><a href="{{ h.url_for('user.register', class_='sub') }}" class="btn btn-default">{{ _('Register') }}</a></li>
+                  {% endif %}
+                  <li><a href="{{ h.url_for('user.login') }}" class="btn btn-primary">{{ _('Log in') }}</a></li>
+                {% endif %}
+              {% endblock %}
+            {% endif %}
+          </ul>
+        </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 {% endblock %}

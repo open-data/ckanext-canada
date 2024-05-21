@@ -1,9 +1,23 @@
-{% set type_choices = [
+{% set is_registry = h.is_registry() %}
+
+{% if is_registry %}
+  {# Registry #}
+  {% set type_choices = [
+    {'value': 'dataset', 'label': _('Open Data')},
+    {'value': 'dialogue', 'label': _('Open Dialogue')},
+    {'value': 'info', 'label': _('Open Information')},
+    {'value': 'prop', 'label': _('Suggested Datasets')},
+  ]
+  %}
+{% else %}
+  {# Portal #}
+  {% set type_choices = [
     {'value': 'dataset', 'label': _('Open Data')},
     {'value': 'info', 'label': _('Open Information')},
     {'value': 'prop', 'label': _('Suggested Datasets')},
   ]
-%}
+  %}
+{% endif %}
 
 {% snippet 'snippets/facet_list.html',
   title=c.facet_titles['portal_type'],
@@ -11,17 +25,42 @@
   scheming_choices=type_choices,
   extras=extras %}
 
+{% if is_registry and 'status' in request.params or ('portal_type') in request.params.items() %}
+  {# Registry #}
+  {% snippet 'snippets/facet_list.html',
+    title=c.facet_titles['status'],
+    name='status',
+    scheming_choices=[{'value': 'department_contacted', 'label': _('Request sent to data owner - awaiting response')}],
+    extras=extras %}
+{% endif %}
+
+{% if is_registry %}
+  {# Registry #}
+  {% set collection_choices = h.scheming_get_preset('canada_collection').choices + [{'value': 'pd', 'label': _('Proactive Publication')}] %}
+
+  {% for t in h.recombinant_get_types() %}
+    {% do collection_choices.append({'value': t, 'label': _(h.recombinant_get_chromo(t).title)}) %}
+  {% endfor %}
+{% else %}
+  {# Portal #}
+  {% set collection_choices = h.scheming_get_preset('canada_collection').choices %}
+{% endif %}
+
 {% snippet 'snippets/facet_list.html',
   title=c.facet_titles['collection'],
   name='collection',
-  scheming_choices=h.scheming_get_preset('canada_collection').choices,
-  extras=extras %}
+  scheming_choices=collection_choices,
+  extras=extras,
+  unlimit=is_registry %}
 
-{% snippet 'snippets/facet_list.html',
-  title=c.facet_titles['jurisdiction'],
-  name='jurisdiction',
-  scheming_choices=h.scheming_get_preset('canada_jurisdiction').choices,
-  extras=extras %}
+{% if not is_registry %}
+  {# Portal #}
+  {% snippet 'snippets/facet_list.html',
+    title=c.facet_titles['jurisdiction'],
+    name='jurisdiction',
+    scheming_choices=h.scheming_get_preset('canada_jurisdiction').choices,
+    extras=extras %}
+{% endif %}
 
 {% if show_org_facet %}
   {% snippet 'snippets/facet_list.html',
@@ -37,11 +76,24 @@
   name='keywords_fra', extras=extras %}
 {% endif %}
 
-{% snippet 'snippets/facet_list.html',
-  title=c.facet_titles['subject'],
-  name='subject',
-  scheming_choices=h.scheming_get_preset('canada_subject').choices,
-  extras=extras %}
+{% if is_registry %}
+  {# Registry #}
+  {% if c.facets.collection|length != 1 or 'fgp' not in c.facets.collection %}
+    {# Hide subject on maps search #}
+    {% snippet 'snippets/facet_list.html',
+      title=c.facet_titles['subject'],
+      name='subject',
+      scheming_choices=h.scheming_get_preset('canada_subject').choices,
+      extras=extras %}
+  {% endif %}
+{% else %}
+  {# Portal #}
+  {% snippet 'snippets/facet_list.html',
+    title=c.facet_titles['subject'],
+    name='subject',
+    scheming_choices=h.scheming_get_preset('canada_subject').choices,
+    extras=extras %}
+{% endif %}
 
 {% snippet 'snippets/facet_list.html',
   title=c.facet_titles['res_format'],
