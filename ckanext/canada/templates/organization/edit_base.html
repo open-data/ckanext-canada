@@ -1,2 +1,54 @@
 {% ckan_extends %}
-{% block subtitle %}{{ h.split_piped_bilingual_field(c.group_dict.display_name, client_lang) }}{% endblock %}
+
+{% set is_registry = h.is_registry() %}
+
+{% block subtitle %}
+  {{ h.split_piped_bilingual_field(c.group_dict.display_name, client_lang) }}
+{% endblock %}
+
+{% block content_primary_nav %}
+  {% if is_registry %}
+    {# Registry #}
+    <div class="row">
+      <div class="col-md-12 mrgn-bttm-md">
+        <header>
+          {% if c.action != 'new' %}
+            <ul class="nav nav-pills">
+              <li class="{% if c.action == 'read' %}active{% endif %}">
+                <a href="{{h.url('organization.read', id=c.group_dict.name)}}">{{_('Datasets')}}</a>
+              </li>
+              <li class="{% if c.action == 'activity' %}active{% endif %}">
+                <a href="{{h.url('organization.activity', id=c.group_dict.name, offset=0)}}">{{_('Activity')}}</a>
+              </li>
+              {% if h.check_access('organization_update', {'id': c.group_dict.id}) %}
+                <li class="{% if c.action == 'members' %}active{% endif %}">
+                  <a href="{{h.url('organization.members', id=c.group_dict.name)}}">{{_('Edit Members')}}</a>
+                </li>
+              {% elif h.check_access('view_org_members', {'id': c.group_dict.id}) %}
+                <li class="{% if c.action == 'members' %}active{% endif %}">
+                  <a href="{{h.url('organization.members', id=c.group_dict.name)}}">{{_('View Members')}}</a>
+                </li>
+              {% endif %}
+              {% if h.check_access('group_update', {'id': c.group_dict.id}) %}
+                <li class="{% if c.action == 'edit' %}active{% endif %}">
+                  <a href="{{h.url(('organization' if c.group_dict.is_organization else 'group') + '.edit', id=c.group_dict.name)}}">{{ _('Edit') }}</a>
+                </li>
+              {% endif %}
+          </ul>
+          {% endif %}
+        </header>
+      </div>
+    </div>
+  {% else %}
+    {# Portal #}
+    {{ super() }}
+  {% endif %}
+{% endblock %}
+
+{% block scripts %}
+  {{ super() }}
+  {% if is_registry %}
+    {# Registry #}
+    {% asset 'canada_internal/organization_edit' %}
+  {% endif %}
+{% endblock %}
