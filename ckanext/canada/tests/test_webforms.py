@@ -4,7 +4,8 @@ import mock
 from ckanext.canada.tests import CanadaTestBase
 import pytest
 from urlparse import urlparse
-from io import StringIO
+from cStringIO import StringIO
+from io import StringIO as StringIOWrapper
 from openpyxl.workbook import Workbook
 from ckan.plugins.toolkit import h
 from ckanapi import (
@@ -44,7 +45,7 @@ def _mock_isfile(filename):
 
 def _mock_open_ip_list(*args, **kwargs):
     if args and MOCK_IP_LIST_FILE in args[0]:
-        return StringIO(MOCK_IP_ADDRESS)
+        return StringIOWrapper(MOCK_IP_ADDRESS)
     return _mock_open(*args, **kwargs)
 
 
