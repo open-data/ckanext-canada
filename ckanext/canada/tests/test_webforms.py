@@ -1,8 +1,10 @@
 # -*- coding: UTF-8 -*-
+import os
+import mock
 from ckanext.canada.tests import CanadaTestBase
 import pytest
 from urlparse import urlparse
-from StringIO import StringIO
+from io import StringIO
 from openpyxl.workbook import Workbook
 from ckan.plugins.toolkit import h
 from ckanapi import (
@@ -15,7 +17,8 @@ from ckan.tests.helpers import CKANResponse
 from ckan.tests.factories import Sysadmin
 from ckanext.canada.tests.factories import (
     CanadaOrganization as Organization,
-    CanadaUser as User
+    CanadaUser as User,
+    _mock_open,
 )
 
 from ckanext.recombinant.tables import get_chromo
@@ -26,6 +29,23 @@ from ckanext.recombinant.write_excel import (
     DATA_FIRST_ROW,
     DATA_FIRST_COL_NUM
 )
+
+
+real_isfile = os.path.isfile
+MOCK_IP_ADDRESS = u'174.116.80.148'
+MOCK_IP_LIST_FILE = u'test_ip_list'
+
+
+def _mock_isfile(filename):
+    if MOCK_IP_LIST_FILE in filename:
+        return True
+    return real_isfile(filename)
+
+
+def _mock_open_ip_list(*args, **kwargs):
+    if args and MOCK_IP_LIST_FILE in args[0]:
+        return StringIO(MOCK_IP_ADDRESS)
+    return _mock_open(*args, **kwargs)
 
 
 def _get_relative_offset_from_response(response):
@@ -182,10 +202,13 @@ class TestNewUserWebForms(CanadaTestBase):
         Setup any state specific to the execution of the given class methods.
         """
         super(TestNewUserWebForms, self).setup_method(method)
-        self.extra_environ_tester = {'REMOTE_USER': str(u"")}
+        self.extra_environ_tester = {'REMOTE_USER': str(u""), 'REMOTE_ADDR': MOCK_IP_ADDRESS}
+        self.extra_environ_tester_bad_ip = {'REMOTE_USER': str(u""), 'REMOTE_ADDR': '174.116.80.142'}
         self.org = Organization()
 
 
+    @mock.patch('os.path.isfile', _mock_isfile)
+    @mock.patch('__builtin__.open', _mock_open_ip_list)
     def test_new_user_required_fields(self, app):
         offset = h.url_for('user.register')
         response = app.get(offset, extra_environ=self.extra_environ_tester)
@@ -201,6 +224,8 @@ class TestNewUserWebForms(CanadaTestBase):
         assert 'Thank you for creating your account for the Open Government registry' in response.body
 
 
+    @mock.patch('os.path.isfile', _mock_isfile)
+    @mock.patch('__builtin__.open', _mock_open_ip_list)
     def test_new_user_missing_fields(self, app):
         offset = h.url_for('user.register')
         response = app.get(offset, extra_environ=self.extra_environ_tester)
@@ -222,6 +247,15 @@ class TestNewUserWebForms(CanadaTestBase):
         assert 'Name: Missing value' in response.body
         assert 'Email: Missing value' in response.body
         assert 'Password: Please enter both passwords' in response.body
+
+
+    @mock.patch('os.path.isfile', _mock_isfile)
+    @mock.patch('__builtin__.open', _mock_open_ip_list)
+    def test_new_user_bad_ip_address(self, app):
+        offset = h.url_for('user.register')
+        response = app.get(offset, extra_environ=self.extra_environ_tester_bad_ip)
+
+        assert response.status_code == 403
 
 
     def _filled_new_user_form(self):

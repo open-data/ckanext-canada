@@ -19,7 +19,7 @@ _mock_os = fake_filesystem.FakeOsModule(_fs)
 _mock_file_open = fake_filesystem.FakeFileOpen(_fs)
 
 
-def _mock_open_if_open_fails(*args, **kwargs):
+def _mock_open(*args, **kwargs):
     try:
         return real_open(*args, **kwargs)
     except (OSError, IOError):
@@ -30,7 +30,7 @@ def mock_uploads(func):
     @helpers.change_config('ckan.storage_path', '/doesnt_exist')
     @mock.patch.object(ckan.lib.uploader, 'os', _mock_os)
     @mock.patch.object(builtins, 'open',
-                       side_effect=_mock_open_if_open_fails)
+                       side_effect=_mock_open)
     @mock.patch.object(ckan.lib.uploader, '_storage_path',
                        new='/doesnt_exist')
     @functools.wraps(func)
