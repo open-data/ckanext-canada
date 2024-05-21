@@ -30,13 +30,12 @@ def datastore_upsert(up_func, context, data_dict):
 
 @chained_auth_function
 def user_create(up_func, context, data_dict=None):
-    if 'canada_internal' in config.get('ckan.plugins'):
-        # additional check to ensure user can access the Request an Account page
-        # only possible if accessing from GOC network
-        remote_addr = request.headers.get('X-Forwarded-For') or \
-                      request.environ.get('REMOTE_ADDR')
-        if not registry_network_access(remote_addr):
-            return {'success': False}
+    # additional check to ensure user can access the Request an Account page
+    # only possible if accessing from GOC network
+    remote_addr = request.headers.get('X-Forwarded-For') or \
+                  request.environ.get('REMOTE_ADDR')
+    if not registry_network_access(remote_addr):
+        return {'success': False}
     return up_func(context, data_dict)
 
 def view_org_members(context, data_dict):

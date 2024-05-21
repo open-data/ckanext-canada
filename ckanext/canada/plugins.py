@@ -456,6 +456,7 @@ ckanext.canada:schemas/presets.yaml
             'group_show': auth.group_show,
             'organization_list': auth.organization_list,
             'organization_show': auth.organization_show,
+            'user_create': auth.user_create,
         }
 
     # IXloader
