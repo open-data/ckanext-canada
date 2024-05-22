@@ -25,13 +25,7 @@
 {% block primary %}
   <div class="row">
     <div class="col-md-12">
-      {% if g.debug %}
-        {% if name %}
-          <h1>{{ code }} {{ name }}</h1>
-        {% endif %}
-        <div class="mrgn-tp-lg mrgn-bt-lg"><p><strong>{{ content}}</strong></p></div>
-        {% include 'snippets/debug.html' %}
-      {% elif is_registry %}
+      {% if is_registry %}
         {# Registry #}
         <p class="mrgn-tp-lg"><strong>{{ content }}</strong></p>
         {% if code == 403 %}
@@ -50,6 +44,15 @@
         {% else %}
           <p class="mrgn-tp-lg">{{ _('We encountered an error') }}</p>
         {% endif %}
+      {% endif %}
+      {% if g.debug %}
+        <div class="canada-debug-wrapper">
+          <h3>Debugging Information</h3>
+          <p>Error Code: <em>{{ code }}</em></p>
+          <p>Error Name: <em>{{ name }}</em></p>
+          <p>Error Message: <em>{{ content }}</em></p>
+          {% include 'snippets/debug.html' %}
+        </div>
       {% endif %}
     </div>
   </div>

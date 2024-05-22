@@ -15,6 +15,17 @@ img.openness-rating-stars {
   margin-bottom: 0px !important;
 }
 
+.canada-debug-wrapper{
+  border: 2px solid #af3c43;
+  border-radius: 3px;
+  margin-top: 15px;
+  padding: 15px;
+}
+
+.canada-debug-wrapper > div.container{
+  max-width: 100% !important;
+}
+
 .facet-item {
   padding-bottom: 3px;
   padding-top: 3px;
