@@ -1,15 +1,13 @@
-{% set is_registry = h.is_registry() %}
-
 {% block header_user_snippet %}
   <section class="text-right">
     <h2 class="wb-inv">Sign-on information</h2>
     <div class="container">
-      <div class="row {{ 'mrgn-tp-md' if is_registry else '' }}">
-        <div class="{{ 'col-md-offset-4 col-md-8' if is_registry else 'col-md-12' }}" id="user_nav">
+      <div class="row {{ 'mrgn-tp-md' if g.is_registry else '' }}">
+        <div class="{{ 'col-md-offset-4 col-md-8' if g.is_registry else 'col-md-12' }}" id="user_nav">
           <ul class="list-inline">
             {% if c.userobj %}
               {% block header_account_logged %}
-                {% if is_registry %}
+                {% if g.is_registry %}
                   {# Registry #}
                   {% if c.userobj.sysadmin %}
                     <li>
@@ -27,7 +25,7 @@
                   </li>
                 {% endif %}
                 {% block header_account_settings_link %}
-                  {% if is_registry %}
+                  {% if g.is_registry %}
                     {# Registry #}
                     <li>
                       <a href="{{ h.url_for('user.edit', id=c.userobj.name) }}" title="{{ _('Edit Profile') }}" class="btn btn-default mrgn-tp-sm">
@@ -38,7 +36,7 @@
                   {% endif %}
                 {% endblock %}
                 {% block header_get_help %}
-                  {% if is_registry %}
+                  {% if g.is_registry %}
                     {# Registry #}
                     <li>
                       {% if h.lang() == 'fr' %}
@@ -58,7 +56,7 @@
               {% endblock %}
             {% else %}
               {% block header_account_notlogged %}
-                {% if is_registry %}
+                {% if g.is_registry %}
                   {# Registry #}
                 {% endif %}
               {% endblock %}

@@ -11,7 +11,7 @@
 {% block search_input %}
 
   {% block search_input_label %}
-    {% if h.is_registry() %}
+    {% if g.is_registry %}
       {# Registry #}
       <label for="search_field" class="wb-inv">{{ _('Search Datasets') }}</label>
     {% else %}

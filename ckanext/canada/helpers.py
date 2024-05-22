@@ -1,7 +1,6 @@
 import json
 import re
 import inspect
-from ckan.plugins import plugin_loaded
 from ckan.plugins.toolkit import c, config, _, h, g, request
 from ckan.model import User, Package, Activity
 import ckan.model as model
@@ -43,11 +42,6 @@ WET_JQUERY_OFFLINE_DEFAULT = False
 GEO_MAP_TYPE_OPTION = 'wet_theme.geo_map_type'
 GEO_MAP_TYPE_DEFAULT = 'static'
 RELEASE_DATE_FACET_STEP = 100
-
-
-def is_registry():
-    # type: () -> bool
-    return plugin_loaded('canada_internal')
 
 
 def get_translated_t(data_dict, field):

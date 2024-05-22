@@ -1,13 +1,11 @@
 {% ckan_extends %}
 
-{% set is_registry = h.is_registry() %}
-
 {% block subtitle %}
   {{ h.split_piped_bilingual_field(c.group_dict.display_name, client_lang) }}
 {% endblock %}
 
 {% block content_primary_nav %}
-  {% if is_registry %}
+  {% if g.is_registry %}
     {# Registry #}
     <div class="row">
       <div class="col-md-12 mrgn-bttm-md">
@@ -47,7 +45,7 @@
 
 {% block scripts %}
   {{ super() }}
-  {% if is_registry %}
+  {% if g.is_registry %}
     {# Registry #}
     {% asset 'canada_internal/organization_edit' %}
   {% endif %}

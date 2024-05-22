@@ -6,8 +6,6 @@
 
   {% ckan_extends %}
 
-  {% set is_registry = h.is_registry() %}
-
   {%- block api_access_info -%}
     <!-- We want this block to be empty in the canada extension -->
   {%- endblock -%}
@@ -16,7 +14,7 @@
 
   {% block subtitle %}{{ _('Search Datasets') }}{% endblock %}
   {% block breadcrumb_content %}
-    {% if is_registry %}
+    {% if g.is_registry %}
       {# Registry #}
       <li class="active">{{ h.nav_link(_('Datasets'), named_route='dataset.search', highlight_actions = 'new index') }}</li>
     {% else %}
@@ -31,7 +29,7 @@
     {% snippet 'snippets/dataset_facets.html', show_org_facet=true %}
 
     {% block extra_facets %}
-      {% if is_registry %}
+      {% if g.is_registry %}
         {# Registry #}
         {{ h.snippet('snippets/publish_facet.html', facet_ranges=facet_ranges) }}
       {% endif %}

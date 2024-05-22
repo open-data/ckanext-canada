@@ -5,7 +5,7 @@
 {% block resource_info %}
   {# TODO - add resource details #}
   {{ super() }}
-  {% if h.is_registry() %}
+  {% if g.is_registry %}
     {{- h.get_validation_badge(res)|safe -}}
     <div class="clearfix"></div>
     {{- h.get_loader_status_badge(res) -}}

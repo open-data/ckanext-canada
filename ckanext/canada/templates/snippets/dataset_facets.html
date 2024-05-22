@@ -1,6 +1,4 @@
-{% set is_registry = h.is_registry() %}
-
-{% if is_registry %}
+{% if g.is_registry %}
   {# Registry #}
   {% set type_choices = [
     {'value': 'dataset', 'label': _('Open Data')},
@@ -25,7 +23,7 @@
   scheming_choices=type_choices,
   extras=extras %}
 
-{% if is_registry and 'status' in request.params or ('portal_type') in request.params.items() %}
+{% if g.is_registry and 'status' in request.params or ('portal_type') in request.params.items() %}
   {# Registry #}
   {% snippet 'snippets/facet_list.html',
     title=c.facet_titles['status'],
@@ -34,7 +32,7 @@
     extras=extras %}
 {% endif %}
 
-{% if is_registry %}
+{% if g.is_registry %}
   {# Registry #}
   {% set collection_choices = h.scheming_get_preset('canada_collection').choices + [{'value': 'pd', 'label': _('Proactive Publication')}] %}
 
@@ -53,7 +51,7 @@
   extras=extras,
   unlimit=is_registry %}
 
-{% if not is_registry %}
+{% if not g.is_registry %}
   {# Portal #}
   {% snippet 'snippets/facet_list.html',
     title=c.facet_titles['jurisdiction'],
@@ -76,7 +74,7 @@
   name='keywords_fra', extras=extras %}
 {% endif %}
 
-{% if is_registry %}
+{% if g.is_registry %}
   {# Registry #}
   {% if c.facets.collection|length != 1 or 'fgp' not in c.facets.collection %}
     {# Hide subject on maps search #}

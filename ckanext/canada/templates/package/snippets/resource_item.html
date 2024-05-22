@@ -41,7 +41,7 @@
 {% endblock %}
 
 {% block resource_item_description %}
-  {% if h.is_registry() %}
+  {% if g.is_registry %}
     <div class="canada-resource-list-badges">
       {{- h.get_validation_badge(res, in_listing=True)|safe -}}
       {{- h.get_loader_status_badge(res) -}}

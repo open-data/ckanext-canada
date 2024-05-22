@@ -1,9 +1,7 @@
 {% ckan_extends %}
 
-{% set is_registry = h.is_registry() %}
-
 {% block site_title %}
-  {% if is_registry %}
+  {% if g.is_registry %}
     {# Registry #}
     <a href="{{ h.url_for('dataset.search') }}">{{ _('Open Data Registry') }}</a>
   {% else %}
@@ -20,7 +18,7 @@
     <meta property="og:title" content="{{ self.title() }}">
   {% endblock %}
   {% block adobe_analytics_meta %}
-    {% if not h.is_registry() %}
+    {% if not g.is_registry %}
       {% block adobe_analytics_title %}
         <meta property="dcterms:title" content="{{ self.title() }}" />
       {% endblock %}
@@ -53,7 +51,7 @@
   {% endblock %}
 
   {% block adobe_analytics %}
-    {% if not h.is_registry() and h.adobe_analytics_js() %}
+    {% if not g.is_registry and h.adobe_analytics_js() %}
       <script src="{{ h.adobe_analytics_js() }}"></script>
     {% endif %}
   {% endblock %}
@@ -73,7 +71,7 @@
 {%- block custom_styles -%}
   {% snippet 'snippets/wet-boew/headresources.html' %}
   {% asset 'canada_public/css' %}
-  {% if is_registry %}
+  {% if g.is_registry %}
     {# Registry #}
     {# Remove when WET v4.0.21 is out #}
     {% asset 'canada_internal/css' %}

@@ -1,9 +1,7 @@
 {% ckan_extends %}
 
-{% set is_registry = h.is_registry() %}
-
 {% block primary_content_inner %}
-  {% if is_registry %}
+  {% if g.is_registry %}
     {# Registry #}
     {% if res.datastore_active %}
       <form class="canada-xloader-delete-form">  {# form required for button styling :-| #}
@@ -18,7 +16,7 @@
 {% endblock %}
 
 {% block upload_ds_button %}
-  {% if is_registry %}
+  {% if g.is_registry %}
     {# Registry #}
     {% if h.validation_status(resource_id=res.id) == 'success' %}
       <form method="post" action="{{ action }}" class="datapusher-form">

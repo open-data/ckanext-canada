@@ -9,6 +9,9 @@ import ckan.lib.helpers as hlp
 from ckan.logic import validators as logic_validators
 from ckanext.datastore.interfaces import IDataDictionaryForm
 
+from ckan.lib.app_globals import set_app_global
+from ckan.plugins.core import plugin_loaded
+
 from ckan.plugins.toolkit import (
     c,
     g,
@@ -74,6 +77,7 @@ class CanadaThemePlugin(p.SingletonPlugin):
         p.toolkit.add_resource('assets/internal', 'canada_internal')
         p.toolkit.add_resource('assets/datatables', 'canada_datatables')
         p.toolkit.add_resource('assets/public', 'canada_public')
+        set_app_global('is_registry', plugin_loaded('canada_internal'))
 
     # ITemplateHelpers
     def get_helpers(self):
@@ -120,7 +124,6 @@ class CanadaThemePlugin(p.SingletonPlugin):
             'adobe_analytics_lang',
             'adobe_analytics_js',
             'mail_to_with_params',
-            'is_registry',
             'organization_member_count',
             'flash_notice',
             'flash_error',
@@ -156,7 +159,7 @@ class CanadaSecurityPlugin(CkanSecurityPlugin):
         # Enable auth settings
         config['ckan.auth.user_delete_groups'] = True
         config['ckan.auth.user_delete_organizations'] = True
-        config['ckan.auth.create_user_via_web'] = helpers.is_registry()  # /user/register view only on registry
+        config['ckan.auth.create_user_via_web'] = plugin_loaded('canada_internal')  # /user/register view only on registry
         # Set auth settings
         config['ckan.auth.roles_that_cascade_to_sub_groups'] = 'admin'
 

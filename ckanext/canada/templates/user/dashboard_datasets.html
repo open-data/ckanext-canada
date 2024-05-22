@@ -1,7 +1,7 @@
 {% ckan_extends %}
 
 {% block page_primary_action %}
-  {% if not h.is_registry() %}
+  {% if not g.is_registry %}
     {# Portal #}
     {{ super() }}
   {% endif %}

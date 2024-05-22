@@ -1,23 +1,21 @@
 {% ckan_extends %}
 
-{% set is_registry = h.is_registry() %}
-
 {% block breadcrumb_content %}
-  {% if is_registry %}
+  {% if g.is_registry %}
     {# Registry #}
     {{ h.build_nav('dataset.new', _('Create Dataset')) }}
   {% endif %}
 {% endblock %}
 
 {% block secondary_content %}
-  {% if not is_registry %}
+  {% if not g.is_registry %}
     {# Portal #}
     {{ super() }}
   {% endif %}
 {% endblock %}
 
 {% block page_header %}
-  {% if not is_registry %}
+  {% if not g.is_registry %}
     {# Portal #}
     {{ super() }}
   {% endif %}

@@ -1,5 +1,5 @@
 {# Used to insert the home icon into a breadcrumb #}
-{% if h.is_registry() %}
+{% if g.is_registry %}
   {# Registry #}
   <li><a href="/{{ h.lang() }}/">{{ _('Registry Home') }}</a></li>
 {% else %}

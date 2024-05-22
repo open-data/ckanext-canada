@@ -1,6 +1,5 @@
 {% ckan_extends %}
 
-{% set is_registry = h.is_registry() %}
 {% set lang = h.lang() %}
 
 {% macro menu_link(r_type) %}
@@ -19,7 +18,7 @@
         {% snippet 'snippets/wet-boew/brand.html' %}
       {% endblock %}
       {% block sitesearch %}
-        {% if not is_registry %}
+        {% if not g.is_registry %}
           {# Portal #}
           <section id="wb-srch" class="col-xs-6 text-right visible-md visible-lg">
           <h2>{{ _("Search") }}</h2>
@@ -40,7 +39,7 @@
         {% endif %}
       {% endblock %}
       {% block user_logged %}
-        {% if is_registry %}
+        {% if g.is_registry %}
           {# Registry #}
           {% if c.userobj %}
             <div id="usr-logged" class="col-md-6">
@@ -81,7 +80,7 @@
   </div>
 
   {% block sitemenu %}
-    {% if is_registry %}
+    {% if g.is_registry %}
       {# Registry #}
       <nav class="gcweb-menu" typeof="SiteNavigationElement" id="registry-menu-nav">
         <div class="container">
@@ -164,7 +163,7 @@
   {% endblock %}
 
   {% block signed_on_off %}
-      {% if is_registry %}
+      {% if g.is_registry %}
         {# Registry #}
         {% snippet 'snippets/user.html' %}
       {% endif %}

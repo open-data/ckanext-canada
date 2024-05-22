@@ -4,10 +4,8 @@
   {% extends 'page.html' %}
 {% endif %}
 
-{% set is_registry = h.is_registry() %}
-
 {% block breadcrumb_content %}
-  {% if is_registry %}
+  {% if g.is_registry %}
     {# Registry #}
     {% if c.userobj and not c.userobj.sysadmin %}
       {{ h.build_nav('user.index', _('Users')) }}
@@ -21,7 +19,7 @@
 {% endblock %}
 
 {% block subtitle %}
-  {% if is_registry %}
+  {% if g.is_registry %}
     {# Registry #}
     {% if c.userobj and not c.userobj.sysadmin %}
       {{ _('Users') }}
@@ -35,7 +33,7 @@
 {% endblock %}
 
 {% block primary_content_inner %}
-  {% if is_registry %}
+  {% if g.is_registry %}
     {# Registry #}
     <h2 class="wb-inv">{{ _('Users') }}</h2>
     {% if c.userobj and c.userobj.sysadmin %}
@@ -86,7 +84,7 @@
 {% endblock %}
 
 {% block secondary_content %}
-  {% if is_registry %}
+  {% if g.is_registry %}
     {# Registry #}
     <section class="panel panel-info">
         <header class="panel-heading">
@@ -110,7 +108,7 @@
 {% endblock %}
 
 {% block scripts %}
-  {% if is_registry %}
+  {% if g.is_registry %}
     {# Registry #}
     {% snippet 'snippets/wet-boew/footerresources.html' %}
     {% asset 'canada_public/csrf' %}

@@ -1,7 +1,5 @@
 {% ckan_extends %}
 
-{% set is_registry = h.is_registry() %}
-
 {% block primary_content %}
 <div class="col-md-12 mrgn-tp-md">
   {{ self.form() }}
@@ -9,7 +7,7 @@
 {% endblock %}
 
 {% block scripts %}
-  {% if is_registry %}
+  {% if g.is_registry %}
     <script type="text/javascript" src="{{ h.url_for_static('/registry_resource_edit.js') }}" ></script>
     {% asset 'canada_internal/guess_mimetype' %}
   {% endif %}
@@ -18,7 +16,7 @@
 
 {% block custom_styles %}
   {{ super() }}
-  {% if is_registry %}
+  {% if g.is_registry %}
     {% asset 'vendor/select2-css' %}
   {% endif %}
 {% endblock %}

@@ -1,9 +1,7 @@
 {% ckan_extends %}
 
-{% set is_registry = h.is_registry() %}
-
 {% block primary_content %}
-  {% if is_registry %}
+  {% if g.is_registry %}
     {# Registry #}
     <div class="mrgn-bttm-lg">
       <section class="alert alert-warning mrgn-tp-lg mrgn-bttm-lg" role="alert">
@@ -32,7 +30,7 @@
 {% endblock %}
 
 {% block secondary_content %}
-  {% if is_registry %}
+  {% if g.is_registry %}
     {# Registry #}
     {% set reset_link = h.url_for('user.request_reset') %}
     {% set name_reset_link = h.url_for('canada.recover_username') %}

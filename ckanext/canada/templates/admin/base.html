@@ -1,9 +1,7 @@
 {% ckan_extends %}
 
-{% set is_registry = h.is_registry() %}
-
 {% block breadcrumb_content %}
-  {% if is_registry %}
+  {% if g.is_registry %}
     {# Registry #}
     {{ h.build_nav('admin.index', _('Admin')) }}
   {% else %}
@@ -13,7 +11,7 @@
 {% endblock %}
 
 {% block content_primary_nav %}
-  {% if is_registry %}
+  {% if g.is_registry %}
     {# Registry #}
     {{ h.build_nav_icon('canada.ckan_admin_index', _('Admins'), icon='user-plus') }}
     {{ h.build_nav_icon('user.index', _('Users'), icon='user') }}

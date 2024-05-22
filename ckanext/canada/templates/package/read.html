@@ -2,7 +2,6 @@
 
 {% set pkg = c.pkg_dict %}
 {% set client_lang = h.lang() %}
-{% set is_registry = h.is_registry() %}
 
 {% set title, machine_translated = h.get_translated_t(pkg, 'title') %}
 
@@ -34,7 +33,7 @@
   {% endif %}
   <div class="module">
     {% block internal_actions %}
-      {% if is_registry %}
+      {% if g.is_registry %}
         {# Registry #}
         <section class="resources module-content indent-large">
           {# Package State Messages #}
@@ -264,7 +263,7 @@
 {% endblock %}
 
 {% block more_like_this %}
-  {% if not is_registry %}
+  {% if not g.is_registry %}
     {# Portal #}
     {% if h.adv_search_url() %}
       <section class="panel panel-primary">

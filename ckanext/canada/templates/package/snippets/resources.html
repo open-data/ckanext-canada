@@ -8,7 +8,7 @@
       {% endblock %}
       <div class="panel-body resources-side-panel">
         {% block resources_list %}
-          {% if h.is_registry() %}
+          {% if g.is_registry %}
             {# Registry #}
             <ul class="list-unstyled nav nav-simple">
               {% for resource in resources %}

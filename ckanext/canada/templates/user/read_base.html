@@ -1,9 +1,7 @@
 {% ckan_extends %}
 
-{% set is_registry = h.is_registry() %}
-
 {% block breadcrumb_content %}
-  {% if is_registry %}
+  {% if g.is_registry %}
     {# Registry #}
     {{ h.build_nav('user.index', _('Users')) }}
     {{ h.build_nav('user.read', user.display_name|truncate(35), id=user.name) }}
@@ -11,7 +9,7 @@
 {% endblock %}
 
 {% block content_primary_nav %}
-  {% if is_registry %}
+  {% if g.is_registry %}
     {# Registry #}
     {{ super () }}
     {% if h.check_access('user_update', {'id': user.name}) %}
@@ -97,7 +95,7 @@
           </div>
         </div>
       {% endif %}
-      {% if is_registry %}
+      {% if g.is_registry %}
         {# Registry #}
         <div class="info mrgn-tp-md">
             {% if h.user_organizations(user) %}
