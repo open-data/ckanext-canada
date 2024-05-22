@@ -419,7 +419,6 @@ class DataGCCAInternal(p.SingletonPlugin):
     p.implements(p.IConfigurer)
     p.implements(p.IPackageController, inherit=True)
     p.implements(p.IActions)
-    p.implements(p.IBlueprint)
     p.implements(IXloader, inherit=True)
     p.implements(p.IAuthFunctions)
 
@@ -440,12 +439,6 @@ ckanext.canada:schemas/presets.yaml
 
         # Include private datasets in Feeds
         config['ckan.feeds.include_private'] = True
-
-
-    # IBlueprint
-    def get_blueprint(self):
-        # type: () -> list[Blueprint]
-        return [canada_views]
 
 
     # IConfigurable
@@ -624,6 +617,7 @@ class DataGCCAPublic(p.SingletonPlugin, DefaultTranslation):
     p.implements(p.IActions)
     p.implements(p.IClick)
     p.implements(IColumnTypes)
+    p.implements(p.IBlueprint)
 
     # DefaultTranslation, ITranslation
     def i18n_domain(self):
@@ -766,6 +760,11 @@ ckanext.canada:schemas/prop.yaml
             province=coltypes.Province,
             crabusnum=coltypes.CRABusinessNumber,
         )
+
+    # IBlueprint
+    def get_blueprint(self):
+        # type: () -> list[Blueprint]
+        return [canada_views]
 
 
 class DataGCCAForms(p.SingletonPlugin, DefaultDatasetForm):
