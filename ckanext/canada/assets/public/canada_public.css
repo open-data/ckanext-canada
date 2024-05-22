@@ -12,7 +12,7 @@ body .canada-w10-spacer{
 }
 
 img.openness-rating-stars {
-  margin-bottom: -4px !important;
+  margin-bottom: 0px !important;
 }
 
 .facet-item {
@@ -831,6 +831,23 @@ div.canada-job-list-title small{
 ##  Background Job List ##
 ##          END         ##
 ##########################*/
+
+/*###################
+##  User Dashboard ##
+#####################*/
+.canada-dashboard-nav li a{
+  border-bottom-left-radius: 0 !important;
+  border-bottom-right-radius: 0 !important;
+}
+
+.canada-dashboard-panel{
+  border-top-left-radius: 0 !important;
+}
+/*####################
+##       END        ##
+##  User Dashboard  ##
+##       END        ##
+######################*/
 
 /*##############################
 ##  Core CSS URIs w/ Base URL ##

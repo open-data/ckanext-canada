@@ -8,13 +8,12 @@
 
 {% block primary_content_inner %}
   <div data-module="dashboard" class="col-md-12">
-    {% snippet 'user/snippets/followee_dropdown.html', context=dashboard_activity_stream_context, followees=followee_list %}
-    <div data-module="dashboard" class="panel">
+    <div data-module="dashboard" class="panel panel-default canada-dashboard-panel">
       <div class="panel-heading">
         <h3 class="panel-title">{{ _('News feed') }}</h3>
       </div>
       <div class="panel-body">
-      {{ _('Activity from items that you follow') }}
+      <p>{{ _('Activity from items that you follow') }}</p>
       {% block activity_stream %}
         {% snippet 'snippets/activity_stream.html', activity_stream=activity_stream %}
       {% endblock %}
@@ -65,7 +64,7 @@
 
 {% block page_header %}
   <div class="col-md-12">
-    <ul class="nav nav-pills">
+    <ul class="nav nav-pills canada-dashboard-nav">
       {{ h.build_nav_icon('dashboard.index', _('News feed')) }}
       {{ h.build_nav_icon('dashboard.datasets', _('My Datasets')) }}
     </ul>

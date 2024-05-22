@@ -83,21 +83,22 @@
       {% endif %}
       {% if pkg.type == 'dataset' %}
         {% block openness %}
-        <li class="list-group-item"><a
-           href="{{ '/en/openness-rating' if h.lang() == 'en' else
-            '/fr/cote-degre-douvertrure-des-donnees' }}"><b>{{ _('Openness Rating') }}</b></a>:
-            {%- set openness = h.openness_score(pkg) -%}
-            <img src="{{ h.url_for_static('/static/img/stars/star'
-              ~ openness ~ '.png') }}" alt="{{
-                ['',
-                _('one star'),
-                _('two stars'),
-                _('three stars'),
-                _('four stars'),
-                _('five stars'),
-                ][openness] }}"
-                class="image-actual margin-bottom-none openness-rating-stars" />
-        </li>
+          {% set fr_break = '&nbsp;' if h.lang() == 'fr' else '' %}
+          <li class="list-group-item"><a
+            href="{{ 'https://ouvert.canada.ca//fr/cote-degre-douvertrure-des-donnees' if h.lang() == 'fr' else
+              'https://open.canada.ca/en/openness-rating' }}"><b>{{ _('Openness Rating') }}</b></a>{{ fr_break }}:&nbsp;
+              {%- set openness = h.openness_score(pkg) -%}
+              <img src="{{ h.url_for_static('/static/img/stars/star'
+                ~ openness ~ '.png') }}" alt="{{
+                  ['',
+                  _('one star'),
+                  _('two stars'),
+                  _('three stars'),
+                  _('four stars'),
+                  _('five stars'),
+                  ][openness] }}"
+                  class="image-actual margin-bottom-none openness-rating-stars" />
+          </li>
         {% endblock %}
       {% endif %}
       </ul>

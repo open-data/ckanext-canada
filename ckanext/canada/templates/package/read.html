@@ -263,24 +263,6 @@
   {% endif %}
 {% endblock %}
 
-{% block openness %}
-  <li class="list-group-item"><a
-    href="{{ 'http://open.canada.ca/en/openness-rating' if h.lang() == 'en' else
-      'http://ouvert.canada.ca/fr/cote-degre-douvertrure-des-donnees' }}"><b>{{ _('Openness Rating') }}</b></a>:
-      {%- set openness = h.openness_score(pkg) -%}
-      <img src="{{ h.url_for_static('/static/img/stars/star'
-        ~ openness ~ '.png') }}" alt="{{
-          ['',
-          _('one star'),
-          _('two stars'),
-          _('three stars'),
-          _('four stars'),
-          _('five stars'),
-          ][openness] }}"
-          class="image-actual margin-bottom-none openness-rating-stars" />
-  </li>
-{% endblock %}
-
 {% block more_like_this %}
   {% if not is_registry %}
     {# Portal #}
