@@ -4,23 +4,39 @@
   {% extends 'page.html' %}
 {% endif %}
 
+{% set is_registry = h.is_registry() %}
+
 {% block breadcrumb_content %}
-  {% if c.userobj and not c.userobj.sysadmin %}
-    {{ h.build_nav('user.index', _('Users')) }}
+  {% if is_registry %}
+    {# Registry #}
+    {% if c.userobj and not c.userobj.sysadmin %}
+      {{ h.build_nav('user.index', _('Users')) }}
+    {% else %}
+      {{ super() }}
+    {% endif %}
   {% else %}
+    {# Portal #}
     {{ super() }}
   {% endif %}
 {% endblock %}
 
 {% block subtitle %}
-  {% if c.userobj and not c.userobj.sysadmin %}
-    {{ _('Users') }}
+  {% if is_registry %}
+    {# Registry #}
+    {% if c.userobj and not c.userobj.sysadmin %}
+      {{ _('Users') }}
+    {% else %}
+      {{ super() }}
+    {% endif %}
   {% else %}
+    {# Portal #}
     {{ super() }}
   {% endif %}
 {% endblock %}
 
 {% block primary_content_inner %}
+  {% if is_registry %}
+    {# Registry #}
     <h2 class="wb-inv">{{ _('Users') }}</h2>
     {% if c.userobj and c.userobj.sysadmin %}
       <a class="btn btn-default mrgn-bttm-lg" href="{{ h.url_for('user.register') }}">{{ _('Create an Account') }}</a>
@@ -63,34 +79,47 @@
         {{ page.pager(q=q or '') }}
       {% endif %}
     {% endblock %}
+  {% else %}
+    {# Portal #}
+    {{ super() }}
+  {% endif %}
 {% endblock %}
 
 {% block secondary_content %}
-  <section class="panel panel-info">
-      <header class="panel-heading">
-        <h3 class="panel-title">
-          <i class="fa fa-info-circle"></i>
-          {{ _('Users') }}
-        </h3>
-      </header>
-      <div class="panel-body">
-        {% if c.userobj and not c.userobj.sysadmin %}
-          <p>{{ _("Search and view users.") }}</p>
-        {% else %}
-          <p>{{ _("Search and manage users.") }}</p>
-        {% endif %}
-      </div>
-  </section>
+  {% if is_registry %}
+    {# Registry #}
+    <section class="panel panel-info">
+        <header class="panel-heading">
+          <h3 class="panel-title">
+            <i class="fa fa-info-circle"></i>
+            {{ _('Users') }}
+          </h3>
+        </header>
+        <div class="panel-body">
+          {% if c.userobj and not c.userobj.sysadmin %}
+            <p>{{ _("Search and view users.") }}</p>
+          {% else %}
+            <p>{{ _("Search and manage users.") }}</p>
+          {% endif %}
+        </div>
+    </section>
+  {% else %}
+    {# Portal #}
+    {{ super() }}
+  {% endif %}
 {% endblock %}
 
 {% block scripts %}
-  {% snippet 'snippets/wet-boew/footerresources.html' %}
-  {% asset 'canada_public/csrf' %}
-  {% asset 'canada_public/analytics' %}
-  {% block adobe_analytics_footer %}
-    <script type="text/javascript">if( typeof _satellite !== "undefined" ){ _satellite.pageBottom(); }</script>
-  {%- endblock -%}
-  {% block google_analytics_footer %}{%- endblock -%}
+  {% if is_registry %}
+    {# Registry #}
+    {% snippet 'snippets/wet-boew/footerresources.html' %}
+    {% asset 'canada_public/csrf' %}
+    {% asset 'canada_public/analytics' %}
+    {% block adobe_analytics_footer %}
+      <script type="text/javascript">if( typeof _satellite !== "undefined" ){ _satellite.pageBottom(); }</script>
+    {%- endblock -%}
+    {% block google_analytics_footer %}{%- endblock -%}
+  {% endif %}
   {{ super() }}
 {% endblock %}
 

@@ -70,11 +70,7 @@
             {% else %}
               {% block header_account_notlogged %}
                 {% if is_registry %}
-                    {# Registry #}
-                  {% if h.check_access('user_create') %}
-                    <li><a href="{{ h.url_for('user.register', class_='sub') }}" class="btn btn-default">{{ _('Register') }}</a></li>
-                  {% endif %}
-                  <li><a href="{{ h.url_for('user.login') }}" class="btn btn-primary">{{ _('Log in') }}</a></li>
+                  {# Registry #}
                 {% endif %}
               {% endblock %}
             {% endif %}

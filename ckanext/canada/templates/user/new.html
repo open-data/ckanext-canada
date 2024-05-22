@@ -1,17 +1,72 @@
 {% ckan_extends %}
 
-{% block page_heading %}{% endblock %}
+{% set is_registry = h.is_registry() %}
+
+{% block subtitle %}
+  {% if is_registry %}
+    {# Registry #}
+    {% block page_heading %}{{ _('Request an Account') }}{% endblock %}
+  {% endif %}
+{% endblock %}
+
+{% block breadcrumb_content %}
+  {% if is_registry %}
+    {# Registry #}
+    <li class="active">{{ h.nav_link(_('Registration'), 'user.register') }}</li>
+  {% else %}
+    {# Portal #}
+    {{ super() }}
+  {% endif %}
+{% endblock %}
 
 {% block primary_content %}
-  <div class="row">
-    <div class="panel panel-default">
-    {{ self.primary_content_inner() }}
+  {% if is_registry %}
+    {# Registry #}
+    <div class="row col-md-12">
+      {{ form | safe }}
     </div>
-  </div>
+  {% else %}
+    {# Portal #}
+    <div class="row">
+      <div class="panel panel-default">
+      {{ self.primary_content_inner() }}
+      </div>
+    </div>
+  {% endif %}
 {% endblock %}
 
 {% block help %}
   <section class="panel panel-default">
     {{ self.help_inner() }}
   </section>
+{% endblock %}
+
+{% block secondary_content %}
+  {% if is_registry %}
+    {# Registry #}
+    <div class="panel panel-info">
+      <div class="panel-heading">{{ _('Why Sign Up?') }}</div>
+      <div class="panel-body">
+        <p>{% trans %}An active account linked to your organization is required in order to create or modify records in the registry.{% endtrans %}</p>
+      </div>
+    </div>
+    <div class="panel panel-info">
+      <div class="panel-heading">{{ _('Next Step...') }}</div>
+      <div class="panel-body">
+        <p>{% trans %}Once an account is created you will receive an email confirming your request. Next, the Administrator will link your account to your Organization and send you a notification. At this point, you can start adding records to the Registry.{% endtrans %}</p>
+      </div>
+    </div>
+  {% else %}
+    {# Portal #}
+    {{ super() }}
+  {% endif %}
+{% endblock %}
+
+{% block custom_styles %}
+  {{ super() }}
+  {% if is_registry %}
+    {# Registry #}
+    <link rel="stylesheet" href="{{ h.url_for_static('base/vendor/select2/select2.css') }}" />
+    <link rel="stylesheet" href="{{ h.url_for_static('base/vendor/select2/select2-bootstrap.css') }}" />
+  {% endif %}
 {% endblock %}

@@ -1,5 +1,12 @@
 {% ckan_extends %}
 
+{% block page_primary_action %}
+  {% if not h.is_registry() %}
+    {# Portal #}
+    {{ super() }}
+  {% endif %}
+{% endblock %}
+
 {% block breadcrumb_content %}
     {{ super() }}
     <li class="active">{% link_for _('My Records'), named_route='dashboard.datasets' %}</li>
