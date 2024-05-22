@@ -23,7 +23,14 @@
   <ul class="nav nav-pills">
       {% if h.check_access('package_update', {'id':pkg.id }) %}
         {% block actions_content_inner %}
-        <li>{% link_for _('Delete'), pkg.type + '.delete', pkg_id=pkg.name, class_='btn btn-danger' %}</li>
+          {% if h.is_registry() %}
+            {# Registry #}
+            {# restore the original Edit button replaced on the public site #}
+            {{ super.super() }}
+          {% else %}
+            {# Portal #}
+            <li>{% link_for _('Delete'), pkg.type + '.delete', pkg_id=pkg.name, class_='btn btn-danger' %}</li>
+          {% endif %}
         {% endblock %}
       {% endif %}
   </ul>
