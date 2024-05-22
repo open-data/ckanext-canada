@@ -1,24 +1,40 @@
-{# vim: set filetype=jinja sw=2 sts=2: #}
-{% ckan_extends %}
+{% if 'ckan-admin/publish' in request.url %}
 
-{%- block api_access_info -%}
-  <!-- We want this block to be empty in the canada extension -->
-{%- endblock -%}
+  {% include 'admin/publish_search.html' %}
 
-{% block page_primary_action %}{% endblock %}
-{% block breadcrumb_content %}
-  <li>{% link_for _('Search Open Government'), named_route='dataset_search' %}</li>
-{% endblock %}
+{% else %}
 
+  {% ckan_extends %}
 
-{% block secondary_content %}
+  {% set is_registry = h.is_registry() %}
 
+  {%- block api_access_info -%}
+    <!-- We want this block to be empty in the canada extension -->
+  {%- endblock -%}
+
+  {% block page_primary_action %}{% endblock %}
+
+  {% block subtitle %}{{ _('Search Datasets') }}{% endblock %}
+  {% block breadcrumb_content %}
+    {% if is_registry %}
+      {# Registry #}
+      <li class="active">{{ h.nav_link(_('Datasets'), named_route='dataset.search', highlight_actions = 'new index') }}</li>
+    {% else %}
+      {# Portal #}
+      <li>{% link_for _('Search Open Government'), named_route='dataset_search' %}</li>
+    {% endif %}
+  {% endblock %}
+
+  {% block secondary_content %}
     <h2>{{ _('Search Filters') }}&nbsp;<small><a href="{{ h.url_for('dataset.search', q=c.q) }}">{{ _('Clear All') }}</a></small></h2>
 
     {% snippet 'snippets/dataset_facets.html', show_org_facet=true %}
 
     {% block extra_facets %}
-
+      {% if is_registry %}
+        {# Registry #}
+        {{ h.snippet('snippets/publish_facet.html', facet_ranges=facet_ranges) }}
+      {% endif %}
     {% endblock %}
 
     {% set license = h.get_license('ca-ogl-lgo') %}
@@ -32,8 +48,7 @@
         {% endif %}
     </div>
     {% endif %}
-
-{% endblock %}
+  {% endblock %}
 
   {% block search_title %}
     {% if not no_title %}
@@ -41,52 +56,42 @@
     {% endif %}
   {% endblock %}
 
-{% block try_another_search %}
-<p class="extra">
-{%- trans -%}
-Please review your spelling, or reduce the number of filters selected.
-{%- endtrans -%}
-</p>
-{% endblock %}
+  {% block try_another_search %}
+    <p class="extra">{%- trans -%}Please review your spelling, or reduce the number of filters selected.{%- endtrans -%}</p>
+  {% endblock %}
 
-{% block styles %}
-  {{ super() }}
-  <link href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet">
-{% endblock %}
+  {% block styles %}
+    {{ super() }}
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet">
+  {% endblock %}
 
-{% block scripts %}
-  {{ super() }}
+  {% block scripts %}
+    {{ super() }}
+    {% asset 'canada_public/i18n' %}
+  {% endblock %}
 
-<!-- i18n -->
-{% asset 'canada_public/i18n' %}
+  {% block primary_content %}
+    {{ self.page_primary_action() }}
 
-{% endblock %}
-
-
-{% block primary_content %}
-  {{ self.page_primary_action() }}
-
-  <div class="row">
-    <div class="col-md-12 mrgn-lft-sm mrgn-rght-sm">
-    {{ self.form() }}
+    <div class="row">
+      <div class="col-md-12 mrgn-lft-sm mrgn-rght-sm">
+      {{ self.form() }}
+      </div>
     </div>
-  </div>
 
-  <div class="row">
-    <div class="col-md-12">
-      {{ self.package_search_results_list() }}
+    <div class="row">
+      <div class="col-md-12">
+        {{ self.package_search_results_list() }}
+      </div>
     </div>
-  </div>
-  <div class="col-md-12">{{ self.page_pagination() }}</div>
-  <div class="col-md-12">{{ self.package_search_results_api() }}</div>
-{% endblock %}
+    <div class="col-md-12">{{ self.page_pagination() }}</div>
+    <div class="col-md-12">{{ self.package_search_results_api() }}</div>
+  {% endblock %}
 
-{% block search_form_footer %}{% endblock %}
+  {% block search_form_footer %}{% endblock %}
 
-{% block package_search_results_api %}
-  {{ self.package_search_results_api_inner() }}
-{% endblock %}
+  {% block package_search_results_api %}
+    {{ self.package_search_results_api_inner() }}
+  {% endblock %}
 
-
-
-
+{% endif %}

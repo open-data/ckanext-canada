@@ -2,6 +2,7 @@
 
 {% set pkg = c.pkg_dict %}
 {% set client_lang = h.lang() %}
+{% set is_registry = h.is_registry() %}
 
 {% set title, machine_translated = h.get_translated_t(pkg, 'title') %}
 
@@ -32,7 +33,80 @@
     {%- snippet 'package/snippets/schemaorg.html', data=pkg -%}
   {% endif %}
   <div class="module">
-    {% block internal_actions %}{% endblock %}
+    {% block internal_actions %}
+      {% if is_registry %}
+        {# Registry #}
+        <section class="resources module-content indent-large">
+          {# Package State Messages #}
+          {% set portal_link = h.portal_url() ~ "/data/" ~ client_lang ~ "/" ~ pkg.get('type', 'dataset') ~ "/" ~ pkg.name %}
+          {% set portal_status_alerts = [] %}
+          {% set is_type_for_alerts = pkg.get('type') == 'dataset' or pkg.get('type') == 'info' %}
+          {% set do_not_show_alerts = pkg.state.startswith('draft') or pkg.state.startswith('deleted') %}
+          {% set no_ready_to_publish = pkg['ready_to_publish'] == 'false' or not pkg['ready_to_publish'] %}
+          {% set no_has_approval = pkg['imso_approval'] == 'false' or not pkg['imso_approval'] %}
+          {% set queued_for_publishing = not pkg['portal_release_date'] or h.date_format(pkg['portal_release_date']) > h.today() %}
+
+          {# No Ready to Publish State Message Values (user action) #}
+          {% if no_ready_to_publish %}
+            {% do portal_status_alerts.append({
+                'label': _('Action required:'),
+                'sub_label': _('Draft record has been saved and can be edited. Mark as ready to publish to continue.'),
+                'alert_class': 'warning',
+              })
+            %}
+          {% endif %}
+
+          {# No IMSO Approval State Message Values (user action) #}
+          {% if no_has_approval %}
+            {% do portal_status_alerts.append({
+                'label': _('Action required:'),
+                'sub_label': _('Seek out departmental approval and mark as approved to continue.'),
+                'alert_class': 'warning',
+              })
+            %}
+          {% endif %}
+
+          {# No Portal Release Date State Message Values (open gov biz action) #}
+          {% if not no_ready_to_publish and not no_has_approval and queued_for_publishing %}
+            {% do portal_status_alerts.append({
+                'label': _('Data record is in queue for validation.'),
+                'sub_label': _('Record will be published by the following business day upon validation.'),
+                'alert_class': 'info',
+              })
+            %}
+          {% endif %}
+
+          {# Show State Messages #}
+          {% if not do_not_show_alerts and is_type_for_alerts %}  {# Do not show alerts or button if Draft or Deleted #}
+            {% if portal_status_alerts %}  {# Show all status alerts #}
+              {% for alert in portal_status_alerts %}
+                <div class="module-alert alert alert-{{ alert['alert_class'] }} mrgn-tp-sm">
+                  <p>
+                    {{ alert['label'] }}
+                    {% if alert['sub_label'] %}
+                      <br/><small>{{ alert['sub_label'] }}</small>
+                    {% endif %}
+                  </p>
+                </div>
+              {% endfor %}
+            {% else %}  {# Show the View on Portal button #}
+              <a href="{{ portal_link }}"
+                title="{{ _('View on Portal') }}" class="btn btn-success" target="_blank">
+                <span class="fa fa-arrow-circle-right"></span>
+                <span class="text">{{ _('View on Portal') }}</span>
+              </a>
+            {% endif %}
+          {% endif %}
+          {# END - Package State Messages - END #}
+
+          {% if pkg.state == "deleted" %}
+            <div class="module-alert alert alert-danger mrgn-tp-sm">
+              <p>{{ _('This dataset has been deleted and is no longer accessible') }}.</p>
+            </div>
+          {% endif %}
+        </section>
+      {% endif %}
+    {% endblock %}
 
     {% block package_archive_notice %}{% endblock %}
 
@@ -189,16 +263,36 @@
   {% endif %}
 {% endblock %}
 
+{% block openness %}
+  <li class="list-group-item"><a
+    href="{{ 'http://open.canada.ca/en/openness-rating' if h.lang() == 'en' else
+      'http://ouvert.canada.ca/fr/cote-degre-douvertrure-des-donnees' }}"><b>{{ _('Openness Rating') }}</b></a>:
+      {%- set openness = h.openness_score(pkg) -%}
+      <img src="{{ h.url_for_static('/static/img/stars/star'
+        ~ openness ~ '.png') }}" alt="{{
+          ['',
+          _('one star'),
+          _('two stars'),
+          _('three stars'),
+          _('four stars'),
+          _('five stars'),
+          ][openness] }}"
+          class="image-actual margin-bottom-none openness-rating-stars" />
+  </li>
+{% endblock %}
 
 {% block more_like_this %}
-  {% if h.adv_search_url() %}
-  <section class="panel panel-primary">
-    <header class="panel-heading">
-      <div class="panel-title">{{ _('Similar records') }}</div>
-    </header>
-    <div data-ajax-replace="{{ h.adv_search_mlt_root() }}{{ c.pkg_dict.id }}" class="panel-body" id="related_pkgs">
-    </div>
-  </section>
+  {% if not is_registry %}
+    {# Portal #}
+    {% if h.adv_search_url() %}
+      <section class="panel panel-primary">
+        <header class="panel-heading">
+          <div class="panel-title">{{ _('Similar records') }}</div>
+        </header>
+        <div data-ajax-replace="{{ h.adv_search_mlt_root() }}{{ c.pkg_dict.id }}" class="panel-body" id="related_pkgs">
+        </div>
+      </section>
+    {% endif %}
   {% endif %}
 {% endblock %}
 

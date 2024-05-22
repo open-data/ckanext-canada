@@ -1,7 +1,7 @@
 {% set is_registry = h.is_registry() %}
 
 {% block header_user_snippet %}
-  <section id="wb-so" class="{{ 'text-right' if is_registry else '' }}">
+  <section class="text-right">
     <h2 class="wb-inv">Sign-on information</h2>
     <div class="container">
       <div class="row {{ 'mrgn-tp-md' if is_registry else '' }}">
@@ -23,12 +23,6 @@
                     <a href="{{ h.url_for('dashboard.index') }}" class="btn btn-default mrgn-tp-sm">
                         <i class="fa fa-tachometer"></i>
                         <span class="text">{{ _('Dashboard') }}</span>
-                    </a>
-                  </li>
-                  <li>
-                    {{ _('Signed in as') }}
-                    <a href="{{ h.url_for('dashboard.index') }}" class="image" title="{{ _('View profile') }}">
-                        <span class="username">{{ c.userobj.display_name }}</span>
                     </a>
                   </li>
                 {% endif %}
@@ -60,12 +54,7 @@
                     </li>
                   {% endif %}
                 {% endblock %}
-                {% block header_account_log_out_link %}
-                    {% if is_registry %}
-                      {# Registry #}
-                      {{ super() }}
-                    {% endif %}
-                {% endblock %}
+                {% block header_account_log_out_link %}{% endblock %}
               {% endblock %}
             {% else %}
               {% block header_account_notlogged %}
