@@ -426,7 +426,7 @@ resources:
   datastore_indexes: ""
 
   triggers:
-    - briefingt_nil_trigger: |
+    - qpnotes_nil_trigger: |
         DECLARE
           errors text[][] := '{{}}';
           crval RECORD;
