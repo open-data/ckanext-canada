@@ -395,10 +395,14 @@ def create_pd_record(owner_org, resource_name):
                         for (k, v) in ve.error_dict['records'][0].items()
                     }, **err)
                 except AttributeError:
-                    err = dict({
-                        k: [_("This record already exists")]
-                        for k in pk_fields
-                    }, **err)
+                    if 'duplicate key value violates unique constraint' in ve.error_dict['records'][0]:
+                        err = dict({
+                            k: [_("This record already exists")]
+                            for k in pk_fields
+                        }, **err)
+                    else:
+                        h.flash_error(_('Something went wrong, unable to create your record. Please contact support.'))
+                        err = 'OtherDatabaseError'
             elif ve.error_dict.get('info', {}).get('pgcode', '') == '23505':
                 err = dict({
                     k: [_("This record already exists")]
@@ -414,7 +418,7 @@ def create_pd_record(owner_org, resource_name):
                               'choice_fields': choice_fields,
                               'owner_org': rcomb['owner_org'],
                               'pkg_dict': {},  # prevent rendering error on parent template
-                              'errors': err,
+                              'errors': err if err != 'OtherDatabaseError' else {},
                           })
 
         h.flash_notice(_(u'Record Created'))
@@ -502,7 +506,8 @@ def update_pd_record(owner_org, resource_name, pk):
                     for (k, v) in ve.error_dict['records'][0].items()
                 }, **err)
             except AttributeError as e:
-                raise ve
+                h.flash_error(_('Something went wrong, unable to update your record. Please contact support.'))
+                err = 'OtherDatabaseError'
 
         if err:
             return render('recombinant/update_pd_record.html',
@@ -514,7 +519,7 @@ def update_pd_record(owner_org, resource_name, pk):
                     'pk_fields': pk_fields,
                     'owner_org': rcomb['owner_org'],
                     'pkg_dict': {},  # prevent rendering error on parent template
-                    'errors': err,
+                    'errors': err if err != 'OtherDatabaseError' else {},
                     })
 
         h.flash_notice(_(u'Record %s Updated') % u','.join(pk) )
