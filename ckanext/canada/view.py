@@ -1235,3 +1235,11 @@ def ckan_admin_index():
             continue
         sysadmins.append(admin.name)
     return render(u'admin/index.html', extra_vars={'sysadmins': sysadmins})
+
+
+@canada_views.route('/ckan-admin/config', methods=['GET', 'POST'])
+def ckan_admin_config():
+    """
+    404 this page always.
+    """
+    return abort(404)
