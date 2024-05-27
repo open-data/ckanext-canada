@@ -402,14 +402,14 @@ def create_pd_record(owner_org, resource_name):
                             for k in pk_fields
                         }, **err)
                     else:
-                        error_summary = _('Something went wrong, unable to create your record. Please contact support.')
+                        error_summary = _('Something went wrong, your record was not created. Please contact support.')
             elif ve.error_dict.get('info', {}).get('pgcode', '') == '23505':
                 err = dict({
                     k: [_("This record already exists")]
                     for k in pk_fields
                 }, **err)
             else:
-                error_summary = _('Something went wrong, unable to create your record. Please contact support.')
+                error_summary = _('Something went wrong, your record was not created. Please contact support.')
 
         if err or error_summary:
             return render('recombinant/create_pd_record.html',
@@ -510,7 +510,7 @@ def update_pd_record(owner_org, resource_name, pk):
                     for (k, v) in ve.error_dict['records'][0].items()
                 }, **err)
             except AttributeError:
-                error_summary = _('Something went wrong, unable to update your record. Please contact support.')
+                error_summary = _('Something went wrong, your record was not updated. Please contact support.')
 
         if err or error_summary:
             return render('recombinant/update_pd_record.html',
