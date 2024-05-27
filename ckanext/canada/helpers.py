@@ -1,7 +1,7 @@
 import json
 import re
 import inspect
-from ckan.plugins.toolkit import c, config, _, h, g, request
+from ckan.plugins.toolkit import config, _, h, g, request
 from ckan.model import User, Package, Activity
 import ckan.model as model
 import datetime
@@ -107,7 +107,7 @@ def language_text_t(text, prefer_lang=None):
 
 def may_publish_datasets(userobj=None):
     if not userobj:
-        userobj = c.userobj
+        userobj = g.userobj
     if userobj.sysadmin:
         return True
 

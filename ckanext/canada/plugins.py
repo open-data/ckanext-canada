@@ -13,7 +13,6 @@ from ckan.lib.app_globals import set_app_global
 from ckan.plugins.core import plugin_loaded
 
 from ckan.plugins.toolkit import (
-    c,
     g,
     h,
     chained_action,
@@ -320,7 +319,7 @@ class CanadaDatasetsPlugin(SchemingDatasetsPlugin):
             pass
 
         try:
-            c.fields_grouped.pop('wbdisable', None)
+            g.fields_grouped.pop('wbdisable', None)
         except Exception:
             pass
 
