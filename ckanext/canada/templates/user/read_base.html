@@ -2,7 +2,6 @@
 
 {% block breadcrumb_content %}
   {% if g.is_registry %}
-    {# Registry #}
     {{ h.build_nav('user.index', _('Users')) }}
     {{ h.build_nav('user.read', user.display_name|truncate(35), id=user.name) }}
   {% endif %}
@@ -10,7 +9,6 @@
 
 {% block content_primary_nav %}
   {% if g.is_registry %}
-    {# Registry #}
     {{ super () }}
     {% if h.check_access('user_update', {'id': user.name}) %}
       {{ h.build_nav_icon('user.edit', _('Edit User'), id=user.name) }}
@@ -24,80 +22,78 @@
       <div class="panel-title">{{ _('Details') }}</div>
     </div>
     {% block secondary_content_inner %}
-    {% block user_heading %}{% endblock %}
-    <div class="panel-body">
-    {% block user_about %}
-      {{ super() }}
-    {% endblock %}
-    {% block user_nums %}
-
-    <div class="row">
-      <div class="col-md-8 left-center"><strong>{{ _('Followers') }}: </strong></div>
-      <div class="col-md-4 left-center">{{ h.SI_number_span(user.num_followers) }}</div>
-    </div>
-    <div class="row">
-      <div class="col-md-8 left-center"><strong>{{ _('Edits') }}: </strong></div>
-      <div class="col-md-4 left-center">{{ h.SI_number_span(user.number_of_edits) }}</div>
-    </div>
-    {% endblock %}
-    {% if is_myself == false %}
-      {% block user_follow %}
-      <div class="follow_button">
-        {{ h.follow_button('user', user.id) }}</li>
+      {% block user_heading %}{% endblock %}
+      <div class="panel-body">
+      {% block user_about %}
+        {{ super() }}
+      {% endblock %}
+      {% block user_nums %}
+      <div class="row">
+        <div class="col-md-8 left-center"><strong>{{ _('Followers') }}: </strong></div>
+        <div class="col-md-4 left-center">{{ h.SI_number_span(user.num_followers) }}</div>
+      </div>
+      <div class="row">
+        <div class="col-md-8 left-center"><strong>{{ _('Edits') }}: </strong></div>
+        <div class="col-md-4 left-center">{{ h.SI_number_span(user.number_of_edits) }}</div>
       </div>
       {% endblock %}
-    {% endif %}
-    {% block user_info %}
-      <div class="row mrgn-tp-md">
-        {% if user.name.startswith('http://') or user.name.startswith('https://') %}
-          <div class="col-md-6 left-center"><strong>{{ _('Open ID') }}: </strong></div>
-          <div class="col-md-6 left-center">{{ user.name|urlize(25) }}{# Be great if this just showed the domain #}</div>
-        {% else %}
-          <div class="col-md-6 left-center"><strong>{{ _('Username') }}: </strong></div>
-          <div class="col-md-6 left-center">{{ user.name }}</div>
-        {% endif %}
-      </div>
-      {% set user_email = h.get_user_email(user.id) %}
-      {% if user_email %}
-        <div class="row mrgn-tp-md">
-          <div class="col-md-12 left-center"><strong>{{ _('Email') }} <span
-              class="label" title="{{ _('This means only you can see this') }}">{{ _('Private') }}</span></strong></div>
-          <div class="col-md-12 left-center"><a href="mailto:{{ user_email }}">{{ user_email | truncate(20) }}</a></div>
-        </div>
+      {% if is_myself == false %}
+        {% block user_follow %}
+          <div class="follow_button">
+            {{ h.follow_button('user', user.id) }}</li>
+          </div>
+        {% endblock %}
       {% endif %}
+      {% block user_info %}
+        <div class="row mrgn-tp-md">
+          {% if user.name.startswith('http://') or user.name.startswith('https://') %}
+            <div class="col-md-6 left-center"><strong>{{ _('Open ID') }}: </strong></div>
+            <div class="col-md-6 left-center">{{ user.name|urlize(25) }}{# Be great if this just showed the domain #}</div>
+          {% else %}
+            <div class="col-md-6 left-center"><strong>{{ _('Username') }}: </strong></div>
+            <div class="col-md-6 left-center">{{ user.name }}</div>
+          {% endif %}
+        </div>
+        {% set user_email = h.get_user_email(user.id) %}
+        {% if user_email %}
+          <div class="row mrgn-tp-md">
+            <div class="col-md-12 left-center"><strong>{{ _('Email') }} <span
+                class="label" title="{{ _('This means only you can see this') }}">{{ _('Private') }}</span></strong></div>
+            <div class="col-md-12 left-center"><a href="mailto:{{ user_email }}">{{ user_email | truncate(20) }}</a></div>
+          </div>
+        {% endif %}
         <div class="row mrgn-tp-md">
           <div class="col-md-12 left-center"><strong>{{ _('Member Since') }}</strong></div>
           <div class="col-md-12 left-center">{{ h.render_datetime(user.created) }}</div>
         </div>
-      {% if is_myself and user.apikey %}
-        <div class="row mrgn-tp-md">
-          <div class="col-md-12 left-center">
-            <strong>{{ _('API Key') }} <span class="label" title="{{ _('This means only you can see this') }}">{{ _('Private') }}</span></strong>
-          </div>
-          <div class="col-md-12 left-center">
-            <a href="" data-toggle="modal" data-target="#api_modal">{{ _('Show API Key') }}</a>
-            <div class="modal" id="api_modal" tabindex="-1" role="dialog" aria-labelledby="api_modal_label" aria-hidden="true">
-              <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content overlay-def">
-                  <header class="modal-header">
-                    <h2 class="modal-title" id="api_modal_label">{{ _('API Key') }}</h2>
-                    <button type="button" class="close mfp-close" data-dismiss="modal" aria-label="{{ _('Close') }}"></button>
-                  </header>
-                  <div class="modal-body">
-                    <code>{{ user.apikey }}</code>
-                  </div>
-                  <div class="modal-footer">
-                    <button type="button" class="btn btn-sm btn-primary pull-left" data-dismiss="modal">{{ _('Close') }}</button>
+        {% if is_myself and user.apikey %}
+          <div class="row mrgn-tp-md">
+            <div class="col-md-12 left-center">
+              <strong>{{ _('API Key') }} <span class="label" title="{{ _('This means only you can see this') }}">{{ _('Private') }}</span></strong>
+            </div>
+            <div class="col-md-12 left-center">
+              <a href="" data-toggle="modal" data-target="#api_modal">{{ _('Show API Key') }}</a>
+              <div class="modal" id="api_modal" tabindex="-1" role="dialog" aria-labelledby="api_modal_label" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                  <div class="modal-content overlay-def">
+                    <header class="modal-header">
+                      <h2 class="modal-title" id="api_modal_label">{{ _('API Key') }}</h2>
+                      <button type="button" class="close mfp-close" data-dismiss="modal" aria-label="{{ _('Close') }}"></button>
+                    </header>
+                    <div class="modal-body">
+                      <code>{{ user.apikey }}</code>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-sm btn-primary pull-left" data-dismiss="modal">{{ _('Close') }}</button>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-      {% endif %}
-      {% if g.is_registry %}
-        {# Registry #}
-        <div class="info mrgn-tp-md">
+        {% endif %}
+        {% if g.is_registry %}
+          <div class="info mrgn-tp-md">
             {% if h.user_organizations(user) %}
             <dl>
               <dt>{{ _('Organizations') }}</dt>
@@ -108,9 +104,9 @@
               </ul></dd>
             </dl>
             {% endif %}
-        </div>
-      {% endif %}
+          </div>
+        {% endif %}
+      {% endblock %}
     {% endblock %}
-  {% endblock %}
   </div>
 {% endblock %}

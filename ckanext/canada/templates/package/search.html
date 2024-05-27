@@ -6,45 +6,36 @@
 
   {% ckan_extends %}
 
-  {%- block api_access_info -%}
-    <!-- We want this block to be empty in the canada extension -->
-  {%- endblock -%}
+  {%- block api_access_info -%}{%- endblock -%}
 
   {% block page_primary_action %}{% endblock %}
 
   {% block subtitle %}{{ _('Search Datasets') }}{% endblock %}
   {% block breadcrumb_content %}
     {% if g.is_registry %}
-      {# Registry #}
       <li class="active">{{ h.nav_link(_('Datasets'), named_route='dataset.search', highlight_actions = 'new index') }}</li>
     {% else %}
-      {# Portal #}
       <li>{% link_for _('Search Open Government'), named_route='dataset_search' %}</li>
     {% endif %}
   {% endblock %}
 
   {% block secondary_content %}
     <h2>{{ _('Search Filters') }}&nbsp;<small><a href="{{ h.url_for('dataset.search', q=c.q) }}">{{ _('Clear All') }}</a></small></h2>
-
     {% snippet 'snippets/dataset_facets.html', show_org_facet=true %}
-
     {% block extra_facets %}
       {% if g.is_registry %}
-        {# Registry #}
         {{ h.snippet('snippets/publish_facet.html', facet_ranges=facet_ranges) }}
       {% endif %}
     {% endblock %}
-
     {% set license = h.get_license('ca-ogl-lgo') %}
     {% if license != None %}
-    <div class="well well-sm">
+      <div class="well well-sm">
         {% if h.lang() == 'en' %}
           <a href="{{ license.url }}">View the {{ license.title }}</a>
         {% else %}
-          <a href="{{ license.url_fra }}">Voir la {{
-            license.title_fra[:1].lower() }}{{ license.title_fra[1:] }}</a>
+          <a href="{{ license.url_fra }}">Voir la {{ license.title_fra[:1].lower() }}{{ license.title_fra[1:] }}</a>
         {% endif %}
-    </div>
+      </div>
     {% endif %}
   {% endblock %}
 
@@ -70,13 +61,11 @@
 
   {% block primary_content %}
     {{ self.page_primary_action() }}
-
     <div class="row">
       <div class="col-md-12 mrgn-lft-sm mrgn-rght-sm">
-      {{ self.form() }}
+        {{ self.form() }}
       </div>
     </div>
-
     <div class="row">
       <div class="col-md-12">
         {{ self.package_search_results_list() }}

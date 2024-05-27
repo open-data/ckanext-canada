@@ -8,10 +8,7 @@
 {%- endif -%}
 {%- for c in h.scheming_field_choices(field) -%}
   {%- if not form_restrict_choices_to or c.value in form_restrict_choices_to -%}
-    {%- do options.append({
-      'value': c.value|string,
-      'text': h.scheming_language_text(c.label),
-      'attr': c.attr }) -%}
+    {%- do options.append({'value': c.value|string, 'text': h.scheming_language_text(c.label), 'attr': c.attr }) -%}
   {%- endif -%}
 {%- endfor -%}
 {%- if field.get('sorted_choices') -%}
@@ -27,7 +24,6 @@
 	{%- do attributes.update({'disabled':'disabled'}) -%}
 {%- endif -%}
 
-
 {% call form.select(
     field.field_name,
     id='field-' + field.field_name,
@@ -40,5 +36,5 @@
     is_required=h.scheming_field_required(field)
     )
 %}
-    {%- snippet 'scheming/form_snippets/help_text.html', field=field -%}
+  {%- snippet 'scheming/form_snippets/help_text.html', field=field -%}
 {% endcall %}

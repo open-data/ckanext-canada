@@ -2,7 +2,6 @@
 
 {% block primary_content %}
   {% if g.is_registry %}
-    {# Registry #}
     <div class="row">
       <div class="col-md-12">
         <section class="alert alert-info">
@@ -28,9 +27,6 @@
         </section>
       </div>
     </div>
-  {% else %}
-    {# Portal #}
-    {{ self.primary_content_inner() }}
   {% endif %}
 {% endblock %}
 

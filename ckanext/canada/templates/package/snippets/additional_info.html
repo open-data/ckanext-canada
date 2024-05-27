@@ -14,7 +14,6 @@
           <td>{{ h.link_to(pkg_dict.url, pkg_dict.url, rel='foaf:homepage', target='_blank') }}</td>
         </tr>
       {% endif %}
-
       {% if pkg_dict.author_email %}
         <tr>
           <td>{{ _("Author") }}</td>
@@ -26,7 +25,6 @@
           <td>{{ pkg_dict.author }}</td>
         </tr>
       {% endif %}
-
       {% if pkg_dict.maintainer_email %}
         <tr>
           <td>{{ _('Maintainer') }}</td>
@@ -38,31 +36,27 @@
           <td>{{ pkg_dict.maintainer }}</td>
         </tr>
       {% endif %}
-
       {% if pkg_dict.version %}
         <tr>
           <td>{{ _("Version") }}</td>
           <td>{{ pkg_dict.version }}</td>
         </tr>
       {% endif %}
-
       {% if h.check_access('package_update',{'id':pkg_dict.id}) %}
         <tr>
           <td>{{ _("State") }}</td>
           <td class="dataset-details">{{ pkg_dict.state }}</td>
         </tr>
       {% endif %}
-
-    {% block extras scoped %}
-      {% for extra in h.sorted_extras(pkg_dict.extras) %}
-        {% set key, value = extra %}
-        <tr>
-          <td>{{ _(key) }}</td>
-          <td>{{ value }}</td>
-        </tr>
-      {% endfor %}
+      {% block extras scoped %}
+        {% for extra in h.sorted_extras(pkg_dict.extras) %}
+          {% set key, value = extra %}
+          <tr>
+            <td>{{ _(key) }}</td>
+            <td>{{ value }}</td>
+          </tr>
+        {% endfor %}
+      {% endblock %}
     {% endblock %}
-
-    {% endblock package_additional_info %}
   </tbody>
 </table>

@@ -9,7 +9,7 @@
     <a class="heading resource-heading" href="{{ url }}" title="{{ translated_title or res.description }}">
       {{ translated_title }}<span class="format-label" property="dc:format" data-format="{{ res.format.lower() or 'data' }}">{{ h.get_translated(res, 'format') }}</span>
       {%- if machine_translated -%}
-      <i class="fa fa-language text-muted" style="margin-left: 10px;" title="{{ _("This third party metadata element has been translated using an automated translation tool.  To report any discrepancies please contact open-ouvert@tbs-sct.gc.ca") }}"></i>
+        <i class="fa fa-language text-muted" style="margin-left: 10px;" title="{{ _('This third party metadata element has been translated using an automated translation tool.  To report any discrepancies please contact open-ouvert@tbs-sct.gc.ca') }}"></i>
       {%- endif -%}
       {% if 'tracking_summary' in res %}
         {{ h.popular('views', res.tracking_summary.total, min=10) }}
@@ -20,21 +20,21 @@
     {% for language in res.language %}
       {% for option in language_options %}
         {% if option.value == language %}
-        <span class="badge res-tag res-tag-lang">
+          <span class="badge res-tag res-tag-lang">
             {{ option.label[h.lang()] }}
           </span>
         {% endif %}
       {% endfor %}
     {% endfor %}
     {% if res.resource_type %}
-    <span class="badge res-tag">
-      {{ res.resource_type }}
-    </span>
+      <span class="badge res-tag">
+        {{ res.resource_type }}
+      </span>
     {% endif %}
     {% if res.format %}
-    <span class="badge res-tag">
-      {{ res.format }}
-    </span>
+      <span class="badge res-tag">
+        {{ res.format }}
+      </span>
     {% endif %}
     </div>
   </div>
@@ -51,59 +51,47 @@
 
 {% block resource_item_explore %}
   {% if not url_is_edit %}
-  <div class="dropdown btn-group resource-action-links">
-    <a href="#" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-      <i class="fa fa-share"></i>
-      {{ _('Explore') }}
-      <span class="caret"></span>
-    </a>
-    <ul class="dropdown-menu">
-      {% block resource_item_explore_links %}
-      <li>
-        <a href="{{ url }}">
-          {% if not is_activity_archive and res.has_views %}
-            <i class="fa fa-bar-chart-o"></i>
-            {{ _('Preview') }}
-          {% else %}
-            <i class="fa fa-info-circle"></i>
-            {{ _('More information') }}
+    <div class="dropdown btn-group resource-action-links">
+      <a href="#" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+        <i class="fa fa-share"></i>&nbsp;{{ _('Explore') }}&nbsp;<span class="caret"></span>
+      </a>
+      <ul class="dropdown-menu">
+        {% block resource_item_explore_links %}
+          <li>
+            <a href="{{ url }}">
+              {% if not is_activity_archive and res.has_views %}
+                <i class="fa fa-bar-chart-o"></i>&nbsp;{{ _('Preview') }}
+              {% else %}
+                <i class="fa fa-info-circle"></i>&nbsp;{{ _('More information') }}
+              {% endif %}
+            </a>
+          </li>
+          {% if res.url and h.is_url(res.url) %}
+            <li>
+              <a href="{{ res.url }}" class="resource-url-analytics" target="_blank" data-pkg-id="{{ pkg.id }}" data-res-id="{{ res.id }}" data-org-id="{{ pkg.organization.id }}">
+                {% if res.has_views or res.url_type == 'upload' %}
+                  <i class="fa fa-arrow-circle-o-down"></i>&nbsp;{{ _('Download') }}
+                {% else %}
+                  <i class="fa fa-external-link"></i>&nbsp;{{ _('Go to resource') }}
+                {% endif %}
+              </a>
+            </li>
           {% endif %}
-        </a>
-      </li>
-      {% if res.url and h.is_url(res.url) %}
-      <li>
-        <a href="{{ res.url }}"
-        class="resource-url-analytics"
-        target="_blank"
-        data-pkg-id="{{ pkg.id }}"
-        data-res-id="{{ res.id }}"
-        data-org-id="{{ pkg.organization.id }}">
-          {% if res.has_views or res.url_type == 'upload' %}
-            <i class="fa fa-arrow-circle-o-down"></i>
-            {{ _('Download') }}
-          {% else %}
-            <i class="fa fa-external-link"></i>
-            {{ _('Go to resource') }}
+          {% set fgp_url = h.fgp_viewer_url(pkg) %}
+          {% if fgp_url and res.url and h.is_url(res.url) and res.format not in ['PDF','HTML', 'PNG', 'CSV', 'TXT',] %}
+            <li>
+              <a href="{{ fgp_url }}" class="dropdown-item" target="_blank">
+                <i class="fa fa-map-marker"></i>&nbsp;{{ _('View on Map') }}
+              </a>
+            </li>
           {% endif %}
-        </a>
-      </li>
-      {% endif %}
-      {% set fgp_url = h.fgp_viewer_url(pkg) %}
-      {% if fgp_url and res.url and h.is_url(res.url) and res.format not in ['PDF','HTML', 'PNG', 'CSV', 'TXT',] %}
-        <li>
-          <a href="{{ fgp_url }}" class="dropdown-item" target="_blank">
-              <i class="fa fa-map-marker"></i>
-              {{ _('View on Map') }}
-          </a>
-        </li>
-      {% endif %}
-      {% if can_edit and not is_activity_archive %}
-        <li>{% link_for _('Edit resource'), named_route=pkg.type ~ '_resource.edit', id=pkg.name, resource_id=res.id, class_='dropdown-item', icon='pencil' %}</li>
-        {% block resource_item_explore_inner scoped %}{{ super() }}{% endblock %}
-        <li>{% link_for _('Views'), named_route=pkg.type ~ '_resource.views', id=pkg.name, resource_id=res.id, class_='dropdown-item', icon='chart-bar' %}
-      {% endif %}
-      {% endblock %}
-    </ul>
-  </div>
+          {% if can_edit and not is_activity_archive %}
+            <li>{% link_for _('Edit resource'), named_route=pkg.type ~ '_resource.edit', id=pkg.name, resource_id=res.id, class_='dropdown-item', icon='pencil' %}</li>
+            {% block resource_item_explore_inner scoped %}{{ super() }}{% endblock %}
+            <li>{% link_for _('Views'), named_route=pkg.type ~ '_resource.views', id=pkg.name, resource_id=res.id, class_='dropdown-item', icon='chart-bar' %}
+          {% endif %}
+        {% endblock %}
+      </ul>
+    </div>
   {% endif %}
 {% endblock %}

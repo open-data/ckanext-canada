@@ -4,9 +4,9 @@
     <div class="col-md-12">
       <ul class="list-inline margin-bottom-none">
         {% if h.lang() == 'fr' %}
-        <li><a lang="en" hreflang="en" href="{{ h.url_for(h.current_url(), locale='en') }}">English</a></li>
+          <li><a lang="en" hreflang="en" href="{{ h.url_for(h.current_url(), locale='en') }}">English</a></li>
         {% else %}
-        <li><a lang="fr" hreflang="fr" href="{{ h.url_for(h.current_url(), locale='fr') }}">Français</a></li>
+          <li><a lang="fr" hreflang="fr" href="{{ h.url_for(h.current_url(), locale='fr') }}">Français</a></li>
         {% endif %}
       </ul>
     </div>

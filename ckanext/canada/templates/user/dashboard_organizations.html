@@ -1,8 +1,8 @@
 {% ckan_extends %}
 
 {% block breadcrumb_content %}
-    {{ super() }}
-    <li class="active">{% link_for _('My Organizations'), named_route='dashboard.organizations' %}</li>
+  {{ super() }}
+  <li class="active">{% link_for _('My Organizations'), named_route='dashboard.organizations' %}</li>
 {% endblock %}
 
 {% block page_heading %}
@@ -11,6 +11,6 @@
 
 {% block primary_content_inner %}
   <div class="col-md-12">
-  {{ super() }}
+    {{ super() }}
   </div>
 {% endblock %}

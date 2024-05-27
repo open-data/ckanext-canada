@@ -7,14 +7,11 @@
   {% set placeholder = placeholder if placeholder else _('http://example.com/my-image.jpg') %}
   {% set url_label = url_label or _('Image URL')  %}
   {% set upload_label = upload_label or _('Image')  %}
-
   {% if is_upload_enabled %}
-  <div class="image-upload" data-module="image-upload" data-module-is_url="{{ 'true' if is_url else 'false' }}" data-module-is_upload="{{ 'true' if is_upload else 'false' }}"
+    <div class="image-upload" data-module="image-upload" data-module-is_url="{{ 'true' if is_url else 'false' }}" data-module-is_upload="{{ 'true' if is_upload else 'false' }}"
        data-module-field_url="{{ field_url }}" data-module-field_upload="{{ field_upload }}" data-module-field_clear="{{ field_clear }}" data-module-upload_label="{{ upload_label }}">
   {% endif %}
-
   {{ form.input(field_url, label=url_label, id='field-image-url', placeholder=placeholder, value=data.get(field_url), error=errors.get(field_url), classes=['hide']) }}
-
   {% if is_upload_enabled %}
     {{ form.input(field_upload, label=upload_label, id='field-image-upload', type='file', placeholder='', value='', error=errors.get(field_url), classes=['control-full']) }}
     {#
@@ -23,11 +20,8 @@
     {% endif %}
     #}
   {% endif %}
-
   {% if is_upload_enabled %}</div>{% endif %}
-
 {% endmacro %}
-
 
 {%- set is_upload = (data.url_type == 'upload') -%}
 {{ upload_only(

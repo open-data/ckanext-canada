@@ -1,86 +1,82 @@
-    <div vocab="http://schema.org/" typeof="Dataset" style="display:none;">
-        <div property="includedInDataCatalog" typeof="DataCatalog">
-            <span property="name" value="{{ _('Government of Canada Open Government Portal') }}">
-            {%- if data.get('spatial') -%}
-              <span property="spatialCoverage" typeof="Place">
-                <span property="geo" typeof="GeoShape">
-                  <span property="name" value="Dataset Boundary"></span>
-                  {%- if data.spatial -%}
-                    {%- set wkt, coordinates = h.geojson_to_wkt(data.spatial).split(' ', 1) -%}
-                    <span property="{{ _(wkt) }}" value="{{ coordinates }}"></span>
-                  {%- endif -%}
-                    </span>
-                    </span>
+<div vocab="http://schema.org/" typeof="Dataset" style="display:none;">
+  <div property="includedInDataCatalog" typeof="DataCatalog">
+    <span property="name" value="{{ _('Government of Canada Open Government Portal') }}">
+      {%- if data.get('spatial') -%}
+        <span property="spatialCoverage" typeof="Place">
+          <span property="geo" typeof="GeoShape">
+            <span property="name" value="Dataset Boundary"></span>
+            {%- if data.spatial -%}
+              {%- set wkt, coordinates = h.geojson_to_wkt(data.spatial).split(' ', 1) -%}
+              <span property="{{ _(wkt) }}" value="{{ coordinates }}"></span>
             {%- endif -%}
-            </span>
-
-            <span property="description" value="{{ _('This catalog contains metadata records describing open datasets available from the Government of Canada') }}"></span>
-            <span property="datePublished" value="2013-06-19"></span>
-            <span property="dateModified" value="{{ h.catalogue_last_update_date() }}"></span>
-            <span property="inLanguage" value="{{ h.lang() }}-CA"></span>
-            <span property="sameAs" value="{{ _('http://open.canada.ca') }}"></span>
-
-            <span property="publisher" typeof="Organization">
-      <span property="name" value="{{ _('Government of Canada, Treasury Board of Canada Secretariat') }}"></span>
-            <span property="email" value="open-ouvert@tbs-sct.gc.ca"></span>
-            </span>
-            <span property="genre" value="{{ _('Information and Communications Government and Politics') }}"></span>
-
-            <span property="license" typeof="CreativeWork">
-      {%- if h.lang() == 'fr' -%}
-            {%- set license_url, license_title = c.pkg.license.url_fra, c.pkg.license.title_fra -%}
-          {%- else -%}
-            {%- set license_url, license_title = data.license_url, data.license_title -%}
-          {%- endif -%}
-
-       <span property="name" value="{{ license_title }}"></span>
-            <span property="sameAs" value="{{ license_url }}"></span>
-            <span property="text" value="{{ _('Rights under which the catalog can be reused are outlined in the Open Government Licence - Canada') }}"></span>
-            </span>
-        </div>
-
-        <span property="name">{{ h.get_translated(data, 'title') }}</span>
-        <span property="description">{{ h.get_translated(data, 'notes') }}</span>
-        {% if date_published in data %}<span property="datePublished">{{ data.date_published[:10] }}</span>{% endif %}
-        <span property="dateModified">{{ data.metadata_modified[:10] }}</span>
-        <span property="publisher" typeof="Organization">
-    <span property="name">{{ h.split_piped_bilingual_field(data.organization.title, h.lang()) }}</span>
-        <span property="email">{{ data.maintainer_email }}</span>
+          </span>
         </span>
-        {%- if data.get('time_period_coverage_start') -%}
-          {%- set tempo_coverage= '/'.join([data.get('time_period_coverage_start', '')[:10], data.get('time_period_coverage_end', '')[:10]])  -%}
-          <span property="temporalCoverage" value="{{ tempo_coverage }}"></span>
-        {%- endif -%}
-        {%- set scheming_choices=h.scheming_get_preset('canada_subject').choices -%}
-        {%- for value in data.subject -%}
-          <span property="genre">{{ h.scheming_choices_label(scheming_choices, value) }}</span>
-        {%- endfor -%}
-        {% if data.get('keywords') %}
-          {%- for keyword in h.get_translated(data.get('keywords'), h.lang()) -%}
-              <span property="keywords">{{ keyword }}</span>
-          {%- endfor -%}
-        {% endif %}
-        <span property="sameAs" value="{{ h.url_for(c.pkg.type + '.read', id=data.id) }}"></span>
-          {%- if data.resources -%}
-            {%- set nonapps = [] -%}
-            {%- for resource in data.resources -%}
-              {%- if not resource.related_type -%}
-                {%- do nonapps.append(resource) -%}
-              {%- endif -%}
-            {%- endfor -%}
-            {%- if nonapps -%}
-              {% for res in nonapps %}
-                <span property="distribution" typeof="DataDownload">
-                    <span property="inLanguage" content="{{ ','.join(res.language) }}"> </span>
-                    <span property="name" lang="{{ h.lang() }}">{{ h.get_translated(res, 'name') }}</span>
-                    {%- if res.get('date_published') -%}
-                      <span property="datePublished" value="{{ res.date_published[:10] }}"></span>
-                    {%- endif -%}
-                    <span property="fileFormat">{{ res.format }}</span>
-                    <span property="url">{{ res.url }}</span>
-                </span>
-              {%- endfor -%}
-            {%- endif -%}
+      {%- endif -%}
+    </span>
+    <span property="description" value="{{ _('This catalog contains metadata records describing open datasets available from the Government of Canada') }}"></span>
+    <span property="datePublished" value="2013-06-19"></span>
+    <span property="dateModified" value="{{ h.catalogue_last_update_date() }}"></span>
+    <span property="inLanguage" value="{{ h.lang() }}-CA"></span>
+    <span property="sameAs" value="{{ _('http://open.canada.ca') }}"></span>
+    <span property="publisher" typeof="Organization">
+      <span property="name" value="{{ _('Government of Canada, Treasury Board of Canada Secretariat') }}"></span>
+      <span property="email" value="open-ouvert@tbs-sct.gc.ca"></span>
+    </span>
+    <span property="genre" value="{{ _('Information and Communications Government and Politics') }}"></span>
+    <span property="license" typeof="CreativeWork">
+      {%- if h.lang() == 'fr' -%}
+        {%- set license_url, license_title = c.pkg.license.url_fra, c.pkg.license.title_fra -%}
+      {%- else -%}
+        {%- set license_url, license_title = data.license_url, data.license_title -%}
+      {%- endif -%}
+      <span property="name" value="{{ license_title }}"></span>
+      <span property="sameAs" value="{{ license_url }}"></span>
+      <span property="text" value="{{ _('Rights under which the catalog can be reused are outlined in the Open Government Licence - Canada') }}"></span>
+    </span>
+  </div>
+  <span property="name">{{ h.get_translated(data, 'title') }}</span>
+  <span property="description">{{ h.get_translated(data, 'notes') }}</span>
+  {% if date_published in data %}
+    <span property="datePublished">{{ data.date_published[:10] }}</span>
+  {% endif %}
+  <span property="dateModified">{{ data.metadata_modified[:10] }}</span>
+  <span property="publisher" typeof="Organization">
+    <span property="name">{{ h.split_piped_bilingual_field(data.organization.title, h.lang()) }}</span>
+    <span property="email">{{ data.maintainer_email }}</span>
+  </span>
+  {%- if data.get('time_period_coverage_start') -%}
+    {%- set tempo_coverage= '/'.join([data.get('time_period_coverage_start', '')[:10], data.get('time_period_coverage_end', '')[:10]])  -%}
+    <span property="temporalCoverage" value="{{ tempo_coverage }}"></span>
+  {%- endif -%}
+  {%- set scheming_choices=h.scheming_get_preset('canada_subject').choices -%}
+  {%- for value in data.subject -%}
+    <span property="genre">{{ h.scheming_choices_label(scheming_choices, value) }}</span>
+  {%- endfor -%}
+  {% if data.get('keywords') %}
+    {%- for keyword in h.get_translated(data.get('keywords'), h.lang()) -%}
+      <span property="keywords">{{ keyword }}</span>
+    {%- endfor -%}
+  {% endif %}
+  <span property="sameAs" value="{{ h.url_for(c.pkg.type + '.read', id=data.id) }}"></span>
+  {%- if data.resources -%}
+    {%- set nonapps = [] -%}
+    {%- for resource in data.resources -%}
+      {%- if not resource.related_type -%}
+        {%- do nonapps.append(resource) -%}
+      {%- endif -%}
+    {%- endfor -%}
+    {%- if nonapps -%}
+      {% for res in nonapps %}
+        <span property="distribution" typeof="DataDownload">
+          <span property="inLanguage" content="{{ ','.join(res.language) }}"> </span>
+          <span property="name" lang="{{ h.lang() }}">{{ h.get_translated(res, 'name') }}</span>
+          {%- if res.get('date_published') -%}
+            <span property="datePublished" value="{{ res.date_published[:10] }}"></span>
           {%- endif -%}
-
-    </div>
+          <span property="fileFormat">{{ res.format }}</span>
+          <span property="url">{{ res.url }}</span>
+        </span>
+      {%- endfor -%}
+    {%- endif -%}
+  {%- endif -%}
+</div>

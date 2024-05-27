@@ -15,8 +15,10 @@
 {% block activity_stream_inner %}
   {% if offset > 0 %}
     <li class="list-group-item">
-      <a href="{{ h.url_for(controller + '.' + action, id=id, offset=(offset-30 if offset-30 > 0 else 0)) }}"
-         class="btn btn-rounded"><i class="fa fa-chevron-up" aria-hidden="true"></i>{{ _('Load less') }}</a></li>
+      <a href="{{ h.url_for(controller + '.' + action, id=id, offset=(offset-30 if offset-30 > 0 else 0)) }}" class="btn btn-rounded">
+        <i class="fa fa-chevron-up" aria-hidden="true"></i>&nbsp;{{ _('Load less') }}
+      </a>
+    </li>
   {% endif %}
   {% for activity in activities %}
     {% if loop.index <= has_more_length %}
@@ -25,7 +27,9 @@
   {% endfor %}
   {% if has_more %}
     <li class="list-group-item">
-      <a href="{{ h.url_for(controller + '.' + action, id=id, offset=offset+30) }}"
-         class="btn btn-rounded"><i class="fa fa-chevron-down" aria-hidden="true"></i>{{ _('Load more') }}</a></li>
+      <a href="{{ h.url_for(controller + '.' + action, id=id, offset=offset+30) }}" class="btn btn-rounded">
+        <i class="fa fa-chevron-down" aria-hidden="true"></i>&nbsp;{{ _('Load more') }}
+      </a>
+    </li>
   {% endif %}
 {% endblock %}

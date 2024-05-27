@@ -6,7 +6,6 @@
 
 {% block content_primary_nav %}
   {% if g.is_registry %}
-    {# Registry #}
     <div class="row">
       <div class="col-md-12 mrgn-bttm-md">
         <header>
@@ -38,7 +37,6 @@
       </div>
     </div>
   {% else %}
-    {# Portal #}
     {{ super() }}
   {% endif %}
 {% endblock %}
@@ -46,7 +44,6 @@
 {% block scripts %}
   {{ super() }}
   {% if g.is_registry %}
-    {# Registry #}
     {% asset 'canada_internal/organization_edit' %}
   {% endif %}
 {% endblock %}

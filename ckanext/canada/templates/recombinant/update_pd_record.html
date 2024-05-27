@@ -13,27 +13,30 @@
 
 {% block form %}
   <form method="POST" id="update_pd_record" novalidate>
-
     {% block errors %}
-      {%- if errors -%}
-        {%- set chromo = h.recombinant_get_chromo(resource_name) -%}
+      {%- if errors or error_summary -%}
         <div class="error-explanation alert alert-danger">
-          <p>{{ _('The form contains invalid entries:') }}</p>
-          <ul>
-            {% for field in chromo.fields -%}
-              {%- if field.datastore_id in errors %}
-                <li data-field-label="{{ key }}">{{
-                  h.recombinant_language_text(field.label) }}:
-                  {{ errors[field.datastore_id][0] }}</li>
-              {%- endif -%}
-            {%- endfor %}
-          </ul>
+          {% if error_summary %}
+            <p>{{ error_summary }}</p>
+          {% endif %}
+          {% if errors %}
+            {%- set chromo = h.recombinant_get_chromo(resource_name) -%}
+            <p>{{ _('The form contains invalid entries:') }}</p>
+            <ul>
+              {% for field in chromo.fields -%}
+                {%- if field.datastore_id in errors %}
+                  <li data-field-label="{{ key }}">{{
+                    h.recombinant_language_text(field.label) }}:
+                    {{ errors[field.datastore_id][0] }}</li>
+                {%- endif -%}
+              {%- endfor %}
+            </ul>
+          {% endif %}
         </div>
       {%- endif -%}
     {% endblock %}
 
-    {% block basic_fields %}
-    {% endblock %}
+    {% block basic_fields %}{% endblock %}
 
     {%- set chromo = h.recombinant_get_chromo(resource_name) -%}
     <div class='container-fluid mrgn-bttm-lg'>
@@ -80,8 +83,8 @@
           {%- endif %}
         {%- endif %}
       {%- endfor %}
-      <input class='btn' name='cancel' type='submit' value='{{ _('Cancel') }}' />
-      <input class='btn btn-primary' name='save' type='submit' value='{{ _('Save') }}' />
+      <input class='btn' name='cancel' type='submit' value='{{ _("Cancel") }}' />
+      <input class='btn btn-primary' name='save' type='submit' value='{{ _("Save") }}' />
     </div>
 
   </form>

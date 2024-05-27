@@ -2,18 +2,14 @@
 
 {% block site_title %}
   {% if g.is_registry %}
-    {# Registry #}
     <a href="{{ h.url_for('dataset.search') }}">{{ _('Open Data Registry') }}</a>
   {% else %}
-    {# Portal #}
     {{ super() }}
   {% endif %}
 {% endblock %}
 
 {% block meta %}
-
   {{ super() }}
-
   {% block og_meta_title %}
     <meta property="og:title" content="{{ self.title() }}">
   {% endblock %}
@@ -33,9 +29,7 @@
 {% endblock %}
 
 {% block links %}
-
   {{ super() }}
-
   {% block google_analytics %}
     {% set ga4_id = h.ga4_id() %}
     {% if ga4_id %}
@@ -49,13 +43,11 @@
       </script>
     {% endif %}
   {% endblock %}
-
   {% block adobe_analytics %}
     {% if not g.is_registry and h.adobe_analytics_js() %}
       <script src="{{ h.adobe_analytics_js() }}"></script>
     {% endif %}
   {% endblock %}
-
   {% set loop11_key = h.loop11_key() %}
   {% if loop11_key %}
     <script type="text/javascript">
@@ -65,19 +57,16 @@
   {% endif %}
 {% endblock %}
 
-{%- block wet_scripts -%}
-{%- endblock -%}
+{%- block wet_scripts -%}{%- endblock -%}
 
 {%- block custom_styles -%}
   {% snippet 'snippets/wet-boew/headresources.html' %}
   {% asset 'canada_public/css' %}
   {% if g.is_registry %}
-    {# Registry #}
     {# Remove when WET v4.0.21 is out #}
     {% asset 'canada_internal/css' %}
   {% endif %}
 {%- endblock -%}
-
 
 {%- block htmltag -%}
   {%- set lang = h.lang() -%}

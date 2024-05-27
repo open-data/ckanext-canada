@@ -1,8 +1,8 @@
 {% ckan_extends %}
 
 {% block breadcrumb_content %}
-    {{ super() }}
-    <li class="active">{% link_for _('My Groups'), named_route='dashboard.groups' %}</li>
+  {{ super() }}
+  <li class="active">{% link_for _('My Groups'), named_route='dashboard.groups' %}</li>
 {% endblock %}
 
 {% block page_heading %}

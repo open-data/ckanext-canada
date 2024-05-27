@@ -1,19 +1,15 @@
 {% if g.is_registry %}
-  {# Registry #}
   {% set type_choices = [
     {'value': 'dataset', 'label': _('Open Data')},
     {'value': 'dialogue', 'label': _('Open Dialogue')},
     {'value': 'info', 'label': _('Open Information')},
-    {'value': 'prop', 'label': _('Suggested Datasets')},
-  ]
+    {'value': 'prop', 'label': _('Suggested Datasets')},]
   %}
 {% else %}
-  {# Portal #}
   {% set type_choices = [
     {'value': 'dataset', 'label': _('Open Data')},
     {'value': 'info', 'label': _('Open Information')},
-    {'value': 'prop', 'label': _('Suggested Datasets')},
-  ]
+    {'value': 'prop', 'label': _('Suggested Datasets')},]
   %}
 {% endif %}
 
@@ -24,7 +20,6 @@
   extras=extras %}
 
 {% if g.is_registry and 'status' in request.params or ('portal_type') in request.params.items() %}
-  {# Registry #}
   {% snippet 'snippets/facet_list.html',
     title=c.facet_titles['status'],
     name='status',
@@ -33,14 +28,11 @@
 {% endif %}
 
 {% if g.is_registry %}
-  {# Registry #}
   {% set collection_choices = h.scheming_get_preset('canada_collection').choices + [{'value': 'pd', 'label': _('Proactive Publication')}] %}
-
   {% for t in h.recombinant_get_types() %}
     {% do collection_choices.append({'value': t, 'label': _(h.recombinant_get_chromo(t).title)}) %}
   {% endfor %}
 {% else %}
-  {# Portal #}
   {% set collection_choices = h.scheming_get_preset('canada_collection').choices %}
 {% endif %}
 
@@ -52,7 +44,6 @@
   unlimit=is_registry %}
 
 {% if not g.is_registry %}
-  {# Portal #}
   {% snippet 'snippets/facet_list.html',
     title=c.facet_titles['jurisdiction'],
     name='jurisdiction',
@@ -75,7 +66,6 @@
 {% endif %}
 
 {% if g.is_registry %}
-  {# Registry #}
   {% if c.facets.collection|length != 1 or 'fgp' not in c.facets.collection %}
     {# Hide subject on maps search #}
     {% snippet 'snippets/facet_list.html',
@@ -85,7 +75,6 @@
       extras=extras %}
   {% endif %}
 {% else %}
-  {# Portal #}
   {% snippet 'snippets/facet_list.html',
     title=c.facet_titles['subject'],
     name='subject',

@@ -1,19 +1,20 @@
 {% ckan_extends %}
+
 {% block organization_item %}
   <section class="panel panel-default">
     {% block organization_item_header %}
       <header class="panel-heading">
         <div class="row">
           {% block organization_item_header_image %}
-          <img class="col-sm-4" src="{{ organization.image_display_url or h.url_for_static('/base/images/placeholder-organization.png') }}" />
+            <img class="col-sm-4" src="{{ organization.image_display_url or h.url_for_static('/base/images/placeholder-organization.png') }}" />
           {% endblock %}
           <div class="col-sm-8">
             {% block group_item_header_title %}
-            <h2 style="margin-top:0">
-              <a href="{{ h.url_for('organization.read', id=organization.name) }}">
-                {{ organization.title or organization.name }}
-              </a>
-            </h2>
+              <h2 style="margin-top:0">
+                <a href="{{ h.url_for('organization.read', id=organization.name) }}">
+                  {{ organization.title or organization.name }}
+                </a>
+              </h2>
             {% endblock %}
             {% block organization_item_header_description %}
               {{ super () }}

@@ -33,7 +33,6 @@ Example:
       <a><span class="highlight">{{ _('Add Resource or Related Item') }}</span></a>
     {% else %}
       {% if s1 == 'active' %}
-        {# stage 1 #}
         <a><button class="btn-link highlight" name="save" value="go-resources" type="submit">{{ _('Add Resource Metadata') }}</button></a>
       {% else %}
         {% link_for _('Add data'), dataset_type + '.new', class_="highlight" %}

@@ -1,7 +1,6 @@
 {% ckan_extends %}
 
 {%- block title -%}
-  {# Lets force our title formatting here... #}
   {{- h.resource_view_meta_title(package=package, resource=resource, view=resource_view) -}}
 {%- endblock -%}
 

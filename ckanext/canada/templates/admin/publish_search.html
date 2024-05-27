@@ -2,9 +2,7 @@
 {% import 'macros/form.html' as form %}
 
 {% block primary_content_inner %}
-
   {% asset 'canada_public/check_all' %}
-
   <section id="search-results">
     <div class="module-poster">
       <form id="dataset-search" class="dataset-search form-inline mrgn-bttm-md mrgn-tp-md" method="get" data-module="select-switch" role="search">
@@ -13,20 +11,17 @@
             <label for="search_field"  class="wb-inv">{{ _('Search Datasets') }}</label>
           </h2>
           <div class="input-group col-md-12">
-            <input type="text" class="form-control" id="search_field" autocomplete="off" name="q"
-                   value="{{ g.q }}" placeholder="{{ _('Search datasets...') }}">
+            <input type="text" class="form-control" id="search_field" autocomplete="off" name="q" value="{{ g.q }}" placeholder="{{ _('Search datasets...') }}">
             <span class="input-group-btn">
               {% block search_input_button %}
-              <button class="btn btn-primary btn-small" type="submit">
-                <i class="fa fa-search" aria-hidden="true"></i>
-                <span class="wb-inv">{{ _('Search') }}</span>
-              </button>
+                <button class="btn btn-primary btn-small" type="submit">
+                  <i class="fa fa-search" aria-hidden="true"></i><span class="wb-inv">{{ _('Search') }}</span>
+                </button>
               {% endblock %}
             </span>
           </div>
           {% block suggest_a_dataset_button %}{% endblock %}
         </div>
-
         <div class="row mrgn-tp-md mrgn-bttm-md">
           {% if g.page.item_count == 0 %}
             <div class="col-md-12 text-center text-warning">
@@ -41,13 +36,11 @@
             </div>
           {% endif %}
         </div>
-
         {% if c.fields -%}
           <span>
             {{ form.hidden_from_list(fields=c.fields) }}
           </span>
         {%- endif %}
-
         <div id="dataset-search-ext">{% block dataset_search_ext %}{% endblock %}</div>
       </form>
       <div class="{% if request.params and c.page.item_count == 0 -%}module-info module-simplify{%- endif -%}">
@@ -66,13 +59,12 @@
         </div>
         {% if request.params and c.page.item_count == 0 %}
           {% block try_another_search %}
-          {% trans %}
-            <p class="extra">Please try another search.</p>
-          {% endtrans %}
+            {% trans %}
+              <p class="extra">Please try another search.</p>
+            {% endtrans %}
           {% endblock %}
         {% endif %}
       </div>
-
       {% if c.query_error %}
         {% trans %}
           <p><strong>There was an error while searching.</strong> Please try again.</p>
@@ -80,21 +72,14 @@
       {% endif %}
       {{ h.snippet('admin/snippets/publish_package_list.html', packages=c.page.items) }}
     </div>
-
     {%- block pager -%}
       {{ c.page.pager(q=c.q) }}
     {%- endblock -%}
   </section>
-
-  {%- block api_access_info -%}
-    <!-- We want this block to be empty in the canada extension -->
-  {%- endblock -%}
-
+  {%- block api_access_info -%}{%- endblock -%}
 {% endblock %}
 
-{% block extra_facets %}
-  {# we want this to be empty. we don't want to show the publish/pending facet on the publish interface #}
-{% endblock %}
+{% block extra_facets %}{% endblock %}
 
 {% block secondary_content %}
 <div class="filters">

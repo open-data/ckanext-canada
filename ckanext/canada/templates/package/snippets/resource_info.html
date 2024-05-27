@@ -3,7 +3,7 @@
 {% block page_title %}{% endblock %}
 
 {% block resource_info %}
-  {# TODO - add resource details #}
+  {# TODO: - add resource details #}
   {{ super() }}
   {% if g.is_registry %}
     {{- h.get_validation_badge(res)|safe -}}

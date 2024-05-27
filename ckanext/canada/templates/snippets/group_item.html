@@ -1,19 +1,20 @@
 {% ckan_extends %}
+
 {% block group_item %}
   <section class="panel panel-default">
     {% block group_item_header %}
       <header class="panel-heading">
         <div class="row">
           {% block group_item_header_image %}
-          <img class="col-sm-4" src="{{ group.image_url or h.url_for_static('/base/images/placeholder-group.png') }}" />
+            <img class="col-sm-4" src="{{ group.image_url or h.url_for_static('/base/images/placeholder-group.png') }}" />
           {% endblock %}
           <div class="col-sm-8">
             {% block group_item_header_title %}
-            <h2 style="margin-top:0">
-              <a href="{{ h.url_for('group.read', id=group.name) }}">
-                {{ group.title or group.name }}
-              </a>
-            </h2>
+              <h2 style="margin-top:0">
+                <a href="{{ h.url_for('group.read', id=group.name) }}">
+                  {{ group.title or group.name }}
+                </a>
+              </h2>
             {% endblock %}
             {% block group_item_header_description %}
               {{ super () }}

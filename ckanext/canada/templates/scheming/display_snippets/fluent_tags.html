@@ -1,11 +1,10 @@
-{# slight abuse of scheming_language_text for selecting the desired
-   language version #}
+{# slight abuse of scheming_language_text for selecting the desired language version #}
 {%- set value, machine_translated = h.language_text_t(data[field.field_name]) -%}
 <ul class='list-inline'>
   {%- for tag in value -%}
-  <li class="label label-default mrgn-rght-sm resource-tags">{{ tag }}</li>
+    <li class="label label-default mrgn-rght-sm resource-tags">{{ tag }}</li>
   {%- endfor -%}
   {%- if machine_translated -%}
-    <li><i class="fa fa-language text-muted" title="{{ _("This third party metadata element has been translated using an automated translation tool.  To report any discrepancies please contact open-ouvert@tbs-sct.gc.ca") }}"></i></li>
+    <li><i class="fa fa-language text-muted" title="{{ _('This third party metadata element has been translated using an automated translation tool.  To report any discrepancies please contact open-ouvert@tbs-sct.gc.ca') }}"></i></li>
   {%- endif -%}
 </ul>

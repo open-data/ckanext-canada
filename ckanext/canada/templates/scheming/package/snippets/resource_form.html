@@ -6,67 +6,53 @@
 
 {% block basic_fields %}
   {% set schema = h.scheming_get_dataset_schema(dataset_type) %}
-
   {%- for field in schema.resource_fields -%}
     {%- if not field.form_panel -%}
-      {%- snippet 'scheming/snippets/form_field.html',
-        field=field, data=data, errors=errors,
-        entity_type='dataset', object_type=dataset_type -%}
+      {%- snippet 'scheming/snippets/form_field.html', field=field, data=data, errors=errors, entity_type='dataset', object_type=dataset_type -%}
     {%- endif -%}
   {%- endfor -%}
-
   {%- if c.action=='new_resource' -%}
     <p class="alert alert-info mrgn-tp-md">{{ _("You can add either a Resource or a Related Item per session, i.e. not both:") }}</p>
   {% endif %}
-
   <div class="accordion mrgn-tp-lg mrgn-bttm-lg">
     {%- if (not data.related_type) or c.action.endswith('new') -%}
-    <details class="acc-group" open="open">
-      <summary class="wb-toggle tgl-tab" data-toggle='{"parent": ".accordion", "group": ".acc-group"}'>
-        {{ _("Metadata Fields for Resources Only (Not for Related Items)") }}
-      </summary>
-      <div class="tgl-panel">
-        {%- for field in schema.resource_fields -%}
-          {%- if field.form_panel == 'resource' -%}
-            {%- snippet 'scheming/snippets/form_field.html',
-              field=field, data=data, errors=errors,
-              entity_type='dataset', object_type=dataset_type -%}
-          {%- endif -%}
-        {%- endfor -%}
-      </div>
-    </details>
+      <details class="acc-group" open="open">
+        <summary class="wb-toggle tgl-tab" data-toggle='{"parent": ".accordion", "group": ".acc-group"}'>
+          {{ _("Metadata Fields for Resources Only (Not for Related Items)") }}
+        </summary>
+        <div class="tgl-panel">
+          {%- for field in schema.resource_fields -%}
+            {%- if field.form_panel == 'resource' -%}
+              {%- snippet 'scheming/snippets/form_field.html', field=field, data=data, errors=errors, entity_type='dataset', object_type=dataset_type -%}
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+      </details>
     {% endif %}
     {%- if data.related_type  or c.action.endswith('new') -%}
-    <details class="acc-group" {% if data.related_type %}open="open"{% endif %}>
-      <summary class="wb-toggle tgl-tab" data-toggle='{"parent": ".accordion", "group": ".acc-group"}'>
-        {{ _("Metadata Fields for Related Items Only") }}
-      </summary>
-      <div class="tgl-panel">
-        {%- for field in schema.resource_fields -%}
-          {%- if field.form_panel == 'related' -%}
-            {%- snippet 'scheming/snippets/form_field.html',
-              field=field, data=data, errors=errors,
-              entity_type='dataset', object_type=dataset_type -%}
-          {%- endif -%}
-        {%- endfor -%}
-        <p>
-          {{ _("Use the Download URL field above to link to the related record.") }}
-        </p>
-      </div>
-    </details>
+      <details class="acc-group" {% if data.related_type %}open="open"{% endif %}>
+        <summary class="wb-toggle tgl-tab" data-toggle='{"parent": ".accordion", "group": ".acc-group"}'>
+          {{ _("Metadata Fields for Related Items Only") }}
+        </summary>
+        <div class="tgl-panel">
+          {%- for field in schema.resource_fields -%}
+            {%- if field.form_panel == 'related' -%}
+              {%- snippet 'scheming/snippets/form_field.html', field=field, data=data, errors=errors, entity_type='dataset', object_type=dataset_type -%}
+            {%- endif -%}
+          {%- endfor -%}
+          <p>
+            {{ _("Use the Download URL field above to link to the related record.") }}
+          </p>
+        </div>
+      </details>
     {% endif %}
   </div>
-
   <div class="hidden">
     {%- for field in schema.resource_fields -%}
       {%- if field.form_panel == 'validation' -%}
-        {%- snippet 'scheming/snippets/form_field.html',
-          field=field, data=data, errors=errors,
-          entity_type='dataset', object_type=dataset_type -%}
+        {%- snippet 'scheming/snippets/form_field.html', field=field, data=data, errors=errors, entity_type='dataset', object_type=dataset_type -%}
       {%- endif -%}
     {%- endfor -%}
   </div>
-
   {{ form.required_message() }}
-
 {% endblock %}

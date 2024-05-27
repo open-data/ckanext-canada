@@ -9,46 +9,34 @@
 {% endif %}
 
 <div class="panel panel-primary">
-  <div class="panel-heading"><i class="fa fa-filter" aria-hidden="true"></i> {{ title or h.get_facet_title(name) }}</div>
+  <div class="panel-heading"><i class="fa fa-filter" aria-hidden="true"></i>&nbsp;{{ title or h.get_facet_title(name) }}</div>
   <div class="panel panel-body">
     <nav>
       <ul class="list-unstyled list-facets">
         {% if facet_range != 'False' %}
-
           {% set facet_range_value = request.params.get('portal_release_date') %}
           {% set parsed_facet_range = h.parse_release_date_facet(facet_range) %}
-
-          {# Published #}
           {% if parsed_facet_range['published'] %}
             {% set active = 'check-' if facet_range_value and facet_range_value.startswith('[' ~ h.release_date_facet_start_year()) else '' %}
             {% set href = h.remove_url_param(facet_range_name, facet_range_value, extras=extras, alternative_url=alternative_url) if active else h.add_url_param(new_params={facet_range_name: parsed_facet_range['published'].url_param}, extras=extras, alternative_url=alternative_url) %}
-
             <li class="nav-item facet-item">
               <a href="{{ href }}">
-                <i class="fa fa-{{ active }}square-o"></i>&nbsp;
-                <span>{{ _('Published') }} ({{ parsed_facet_range['published'].count }})</span>
+                <i class="fa fa-{{ active }}square-o"></i>&nbsp;<span>{{ _('Published') }} ({{ parsed_facet_range['published'].count }})</span>
               </a>
             </li>
           {% endif %}
-
-          {# Scheduled #}
           {% if parsed_facet_range['scheduled'] %}
             {% set active = 'check-' if facet_range_value and not facet_range_value.startswith('[' ~ h.release_date_facet_start_year()) else '' %}
             {% set href = h.remove_url_param(facet_range_name, facet_range_value, extras=extras, alternative_url=alternative_url) if active else h.add_url_param(new_params={facet_range_name: parsed_facet_range['scheduled'].url_param}, extras=extras, alternative_url=alternative_url) %}
-
             <li class="nav-item facet-item">
               <a href="{{ href }}">
-                <i class="fa fa-{{ active }}square-o"></i>&nbsp;
-                <span>{{ _('Scheduled') }} ({{ parsed_facet_range['scheduled'].count }})</span>
+                <i class="fa fa-{{ active }}square-o"></i>&nbsp;<span>{{ _('Scheduled') }} ({{ parsed_facet_range['scheduled'].count }})</span>
               </a>
             </li>
           {% endif %}
-
         {% endif %}
-
         {% with items = items or h.get_facet_items_dict(name, limit=5) %}
           {% set items = items[0:5] if h.get_param_int('_%s_limit' % name) else items%}
-
           {% if items %}
             {% for item in items %}
               {% set href = h.remove_url_param(name, item.name, extras=extras, alternative_url=alternative_url) if item.active else h.add_url_param(new_params={name: item.name}, extras=extras, alternative_url=alternative_url) %}
@@ -56,8 +44,7 @@
               {% set count = count_label(item['count']) if count_label else ('(%d)' % item['count']) %}
                 <li class="nav-item{% if item.active %} active{% endif %} facet-item">
                   <a href="{{ href }}">
-                    <i class="fa fa-{{ "check-" if item.active else "" }}square-o"></i>&nbsp;
-                    <span>{{ label }} {{ count }}</span>
+                    <i class="fa fa-{{ 'check-' if item.active else '' }}square-o"></i>&nbsp;<span>{{ label }} {{ count }}</span>
                   </a>
                 </li>
             {% endfor %}
@@ -72,9 +59,9 @@
       {% endif %}
       <ul class="list-unstyled list-facets">
         <li>
-          <a href="{{ clear_uri }}" class="action"
-                title="{{_('Clear All')}} {{facet_name}}">
-          <span class="glyphicon glyphicon-remove"></span> {{ _('Clear All') }}</a>
+          <a href="{{ clear_uri }}" class="action" title="{{_('Clear All')}} {{facet_name}}">
+            <span class="glyphicon glyphicon-remove"></span>&nbsp;{{ _('Clear All') }}
+          </a>
         </li>
       </ul>
     {% else %}

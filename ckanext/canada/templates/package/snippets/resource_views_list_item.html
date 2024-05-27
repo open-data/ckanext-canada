@@ -10,7 +10,6 @@
 {% endif %}
 
 <li class="{% if is_selected %} active{% endif %} view-item view-item-{{ view.view_type }}" data-id="{{ view.id }}">
-
   <a href="{{ url }}" data-id="{{ view.id }}">
     <i class="fa icon fa-{{ h.resource_view_icon(view) }}"></i>
     {% if h.lang() == 'fr' %}{{ view.title_fr }}{% else %}{{ view.title }}{% endif %}

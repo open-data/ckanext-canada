@@ -4,13 +4,9 @@
 
 {% block package_notes %}
   {%- if not dataset_type -%}
-    <p>
-    dataset_type not passed to template. your version of CKAN
-    might not be compatible with ckanext-scheming
-    </p>
+    <p>dataset_type not passed to template. your version of CKAN might not be compatible with ckanext-scheming</p>
   {%- endif -%}
-  {% if h.scheming_field_by_name(schema.dataset_fields, 'notes') and
-    pkg.notes%}
+  {% if h.scheming_field_by_name(schema.dataset_fields, 'notes') and pkg.notes %}
     <div class="notes embedded-content">
       {{ h.render_markdown(pkg.notes) }}
     </div>
@@ -21,17 +17,15 @@
 
 {% block actions_content %}
   <ul class="nav nav-pills">
-      {% if h.check_access('package_update', {'id':pkg.id }) %}
-        {% block actions_content_inner %}
-          {% if g.is_registry %}
-            {# Registry #}
-            {# restore the original Edit button replaced on the public site #}
-            {{ super.super() }}
-          {% else %}
-            {# Portal #}
-            <li>{% link_for _('Delete'), pkg.type + '.delete', pkg_id=pkg.name, class_='btn btn-danger' %}</li>
-          {% endif %}
-        {% endblock %}
-      {% endif %}
+    {% if h.check_access('package_update', {'id':pkg.id }) %}
+      {% block actions_content_inner %}
+        {% if g.is_registry %}
+          {# restore the original Edit button replaced on the public site #}
+          {{ super.super() }}
+        {% else %}
+          <li>{% link_for _('Delete'), pkg.type + '.delete', pkg_id=pkg.name, class_='btn btn-danger' %}</li>
+        {% endif %}
+      {% endblock %}
+    {% endif %}
   </ul>
 {% endblock %}

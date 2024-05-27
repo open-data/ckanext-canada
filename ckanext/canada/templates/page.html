@@ -1,27 +1,19 @@
 {% ckan_extends %}
 
 {% block page %}
-
   {% block skip %}
     {% snippet 'snippets/wet-boew/skip.html' %}
   {% endblock %}
-
-  {# This format only works for a bilingual format #}
-
   {%- block header %}
     {% macro breadcrumb_content() %}
       {% block breadcrumb_content %}{% endblock %}
     {% endmacro %}
     {% include "header.html" with context %}
   {% endblock -%}
-
   {% block toolbar %}{% endblock %}
-
   {% set lang = h.lang() %}
-
   {% block content %}
     {% if g.is_registry %}
-      {# Registry #}
       {% if c.userobj and h.get_timeout_length() %}
         <div class="modal fade" id="timeout" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
           <div class="modal-dialog modal-dialog-centered" role="document">
@@ -37,8 +29,7 @@
               </div>
               <div class="modal-footer">
                 <a href="{{ h.url_for('user.login') }}" target="_blank" class="btn btn-default btn-sm">
-                  <span class="fa fa-sign-in"></span>
-                  <span class="text">{{ _('Log in') }}</span>
+                  <span class="fa fa-sign-in"></span>&nbsp;<span class="text">{{ _('Log in') }}</span>
                 </a>
                 <button type="button" class="btn btn-sm btn-primary pull-left" data-dismiss="modal">Close</button>
               </div>
@@ -47,15 +38,12 @@
         </div>
       {% endif %}
     {% endif %}
-
     <div class="container">
       <div class="row">
         {% block flash %}
           {% if g.is_registry %}
-            {# Registry #}
             {{ super() }}
           {% else %}
-            {# Portal #}
             <div class="col-md-12 canada-flash-messages">
               <div class="flash-messages">
                 {% for message in h.flash.pop_messages() | list %}
@@ -67,18 +55,9 @@
             </div>
           {% endif %}
         {% endblock flash %}
-        {% if g.is_registry %}
-          {# Registry #}
-          {% block maintag %}
-            <main role="main" property="mainContentOfPage" class="container">
-          {% endblock %}
-        {% else %}
-          {# Portal #}
-          <main role="main" property="mainContentOfPage" class="container">
-        {% endif %}
+        <main role="main" property="mainContentOfPage" class="container">
           {% block page_title %}
             {% if g.is_registry %}
-              {# Registry #}
               <div id="ie_warning" class="alert alert-warning" style="display: none">
                 <p>{{ _('Internet Explorer is no longer being supported within the Open Government Registry. Some features will not work as expected, including publication of records. Please use MS Edge or Google Chrome, or contact <a href="mailto:open-ouvert@tbs-sct.gc.ca">open-ouvert@tbs-sct.gc.ca</a> for additional support.') | safe }}</p>
               </div>
@@ -90,43 +69,39 @@
                 {%- if subtitle_2 -%}<span class="wb-inv"> - {{ subtitle_2 }}</span>{%- endif -%}
               {%- endblock -%}
             </h1>
-          {% endblock %}
+          {% endblock page_title %}
           {% block pre_primary %}
             <div class="row">
               <div class="col-md-12">
                 {# _site_messaging is handled by aliases in nginx to SMB #}
                 {# has to be below title for a11y H3 after H1 #}
                 {% if g.is_registry %}
-                  {# Registry #}
                   <div data-ajax-replace="/static/_site_messaging/header_od_registry.{{ h.lang() }}"></div>
                 {% else %}
-                  {# Portal #}
                   <div data-ajax-replace="/data/static/_site_messaging/header_od_ckan.{{ h.lang() }}"></div>
                 {% endif %}
               </div>
             </div>
-          {% endblock %}
-          {% block primary %}
-            <div class="row{% if self.secondary_content()|trim != '' %} wb-eqht{% else %}col-md-12{% endif %}">
+          {% endblock pre_primary %}
+          <div class="row{% if self.secondary_content()|trim != '' %} wb-eqht{% else %}col-md-12{% endif %}">
+            {% block primary %}
               <div class="{% if self.secondary_content()|trim != '' %}col-md-9 col-md-push-3{% endif %}">
                 {% block primary_content %}
                   {% if g.is_registry %}
-                    {# Registry #}
                     {{ super() }}
                   {% else %}
-                    {# Portal #}
                     {% block page_header %}
                       {{ super() }}
                     {% endblock %}
                     <div class="row">
-                        <div class="col-md-12">
-                            {% if self.page_primary_action() | trim %}
-                              <div class="page_primary_action">
-                              {% block page_primary_action %}{% endblock %}
-                              </div>
-                            {% endif %}
-                            {% block primary_content_inner %}{% endblock %}
-                        </div>
+                      <div class="col-md-12">
+                        {% if self.page_primary_action() | trim %}
+                          <div class="page_primary_action">
+                            {% block page_primary_action %}{% endblock %}
+                          </div>
+                        {% endif %}
+                        {% block primary_content_inner %}{% endblock %}
+                      </div>
                     </div>
                   {% endif %}
                 {% endblock primary_content %}
@@ -138,17 +113,15 @@
                   {% block secondary_content %}{% endblock %}
                 </aside>
               {% endif %}
-            {% endblock %}
+            {% endblock secondary %}
           </div>
         </main>
       </div>
     </div>
   {% endblock %}
-
   {%- block footer %}
     {{ super() }}
   {% endblock -%}
-
 {% endblock %}
 
 
@@ -158,19 +131,15 @@
   {% asset 'canada_public/analytics' %}
   {% block adobe_analytics_footer %}
     {% if not g.is_registry %}
-      {# Portal #}
       <script type="text/javascript">if( typeof _satellite !== "undefined" ){ _satellite.pageBottom(); }</script>
     {% endif %}
   {%- endblock -%}
   {% block google_analytics_footer %}
-      {% if g.is_registry %}
-        {# Registry #}
-        {% asset 'canada_internal/analytics' %}
-      {% endif %}
+    {% if g.is_registry %}
+      {% asset 'canada_internal/analytics' %}
+    {% endif %}
   {%- endblock -%}
-
   {{ super() }}
-
   {% if g.is_registry %}
     {%- block session_timeout -%}
       {% if c.userobj and h.get_timeout_length() %}
@@ -179,7 +148,6 @@
         </script>
       {% endif %}
     {%- endblock -%}
-
     {% block ie_browser_warning %}
       <script>
         if (navigator.appName == 'Microsoft Internet Explorer' ||

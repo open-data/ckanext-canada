@@ -4,12 +4,11 @@
   <section class="panel panel-default resources-side-section">
     {% block resources_inner %}
       {% block resources_title %}
-        <div class="panel-heading"><i class="fa fa-bars"></i> {{ _("Resources") }}</div>
+        <div class="panel-heading"><i class="fa fa-bars"></i>&nbsp;{{ _("Resources") }}</div>
       {% endblock %}
       <div class="panel-body resources-side-panel">
         {% block resources_list %}
           {% if g.is_registry %}
-            {# Registry #}
             <ul class="list-unstyled nav nav-simple">
               {% for resource in resources %}
                 {% set url = h.url_for(pkg.type ~ '_resource.read', id=pkg.id if is_activity_archive else pkg.name, resource_id=resource.id, **({'activity_id': request.args['activity_id']} if 'activity_id' in request.args else {})) %}
@@ -33,16 +32,16 @@
                     {% for language in resource.language %}
                       {% for option in language_options %}
                         {% if option.value == language %}
-                        <span class="badge res-tag res-tag-lang">
+                          <span class="badge res-tag res-tag-lang">
                             {{ option.label[h.lang()] }}
                           </span>
                         {% endif %}
                       {% endfor %}
                     {% endfor %}
                     {% if resource.format %}
-                    <span class="badge res-tag">
-                      {{ resource.format }}
-                    </span>
+                      <span class="badge res-tag">
+                        {{ resource.format }}
+                      </span>
                     {% endif %}
                     </div>
                   </li>
@@ -54,7 +53,6 @@
               {% endfor %}
             </ul>
           {% else %}
-            {# Portal #}
             {{ super() }}
           {% endif %}
         {% endblock %}
