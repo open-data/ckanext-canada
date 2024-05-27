@@ -2,12 +2,10 @@
 
 {% block primary %}
   {% if g.is_registry %}
-    {# Registry #}
-    <h1>{{ _('Frequently Asked Questions (FAQ)') }}</h1>
+    <h2>{{ _('Frequently Asked Questions (FAQ)') }}</h2>
     {% block primary_content %}{% endblock primary_content %}
     {{ faq_html|safe }}
   {% else %}
-    {# Portal #}
     {{ super() }}
   {% endif %}
 {% endblock %}

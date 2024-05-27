@@ -739,6 +739,9 @@ def delete_datastore_table(id, resource_id):
 
 @canada_views.route('/help', methods=['GET'])
 def view_help():
+    if not g.is_registry:
+        return abort(404)
+
     def _get_help_text(language):
         return pkg_resources.resource_string(
             __name__,
@@ -785,13 +788,13 @@ def view_help():
         # the tags and just leave the text.
         faq_section.drop_tag()
 
-    # Get FAQ group header and set it as heading 2 to comply with
+    # Get FAQ group header and set it as heading 3 to comply with
     # accessible heading ranks
     for faq_group in h.xpath('//h1'):
-        faq_group.tag = 'h2'
+        faq_group.tag = 'h3'
 
     return render('help.html', extra_vars={
-        'faq_html': html.tostring(h),
+        'faq_html': html.tostring(h).decode('utf-8'),
         # For use with the inline debugger.
         'faq_text': faq_text
     })
