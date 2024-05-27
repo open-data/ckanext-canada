@@ -381,6 +381,7 @@ def create_pd_record(owner_org, resource_name):
             chromo['fields'],
             pk_fields,
             choice_fields)
+        error_summary = None
         try:
             lc.action.datastore_upsert(
                 resource_id=res['id'],
@@ -401,15 +402,16 @@ def create_pd_record(owner_org, resource_name):
                             for k in pk_fields
                         }, **err)
                     else:
-                        h.flash_error(_('Something went wrong, unable to create your record. Please contact support.'))
-                        err = 'OtherDatabaseError'
+                        error_summary = _('Something went wrong, unable to create your record. Please contact support.')
             elif ve.error_dict.get('info', {}).get('pgcode', '') == '23505':
                 err = dict({
                     k: [_("This record already exists")]
                     for k in pk_fields
                 }, **err)
+            else:
+                error_summary = _('Something went wrong, unable to create your record. Please contact support.')
 
-        if err:
+        if err or error_summary:
             return render('recombinant/create_pd_record.html',
                           extra_vars={
                               'data': data,
@@ -418,7 +420,8 @@ def create_pd_record(owner_org, resource_name):
                               'choice_fields': choice_fields,
                               'owner_org': rcomb['owner_org'],
                               'pkg_dict': {},  # prevent rendering error on parent template
-                              'errors': err if err != 'OtherDatabaseError' else {},
+                              'errors': err,
+                              'error_summary': error_summary,
                           })
 
         h.flash_notice(_(u'Record Created'))
@@ -489,6 +492,7 @@ def update_pd_record(owner_org, resource_name, pk):
             chromo['fields'],
             pk_fields,
             choice_fields)
+        error_summary = None
         # can't change pk fields
         for f_id in data:
             if f_id in pk_fields:
@@ -505,11 +509,10 @@ def update_pd_record(owner_org, resource_name, pk):
                     k: [_(e) for e in v]
                     for (k, v) in ve.error_dict['records'][0].items()
                 }, **err)
-            except AttributeError as e:
-                h.flash_error(_('Something went wrong, unable to update your record. Please contact support.'))
-                err = 'OtherDatabaseError'
+            except AttributeError:
+                error_summary = _('Something went wrong, unable to update your record. Please contact support.')
 
-        if err:
+        if err or error_summary:
             return render('recombinant/update_pd_record.html',
                 extra_vars={
                     'data': data,
@@ -519,8 +522,9 @@ def update_pd_record(owner_org, resource_name, pk):
                     'pk_fields': pk_fields,
                     'owner_org': rcomb['owner_org'],
                     'pkg_dict': {},  # prevent rendering error on parent template
-                    'errors': err if err != 'OtherDatabaseError' else {},
-                    })
+                    'errors': err,
+                    'error_summary': error_summary,
+                })
 
         h.flash_notice(_(u'Record %s Updated') % u','.join(pk) )
 
