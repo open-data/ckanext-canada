@@ -6,203 +6,203 @@
 {% macro quick_link_pd(r_type) %}
   {% set label = h.recombinant_get_geno(r_type).shortname or h.recombinant_get_geno(r_type).title %}
   {% set description = h.render_markdown(h.recombinant_language_text(h.recombinant_get_geno(r_type).notes)) %}
-          <li>
-            <a href="{{ h.url_for('canada.type_redirect', resource_name=r_type) }}"><i class="fa fa-upload"></i>{{ _(label) }}</a>
-            <a href="" data-toggle="modal" data-target="#{{ r_type }}"><i class="fa fa-question-circle-o" aria-hidden="true"></i></a>
-            <div class="modal" id="{{ r_type }}" tabindex="-1" role="dialog" aria-labelledby="{{ r_type }}Label" aria-hidden="true">
-              <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content overlay-def">
-                  <header class="modal-header">
-                    <h2 class="modal-title" id="{{ r_type }}Label">{{ _(label) }}</h2>
-                    <button type="button" class="close mfp-close" data-dismiss="modal" aria-label="Close"></button>
-                  </header>
-                  <div class="modal-body">
-                    {{ description }}
-                  </div>
-                  <div class="modal-footer">
-                    <button type="button" class="btn btn-sm btn-primary pull-left" data-dismiss="modal">Close</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </li>
-{% endmacro %}
-
-{% macro quick_link(id, url, icon, title, description) %}
-    <li>
-      <a href="{{ url }}">{% if icon %}<i class="{{icon}}"></i>{% endif %}{{ _(title) }}</a>
-      <a href="" data-toggle="modal" data-target="#{{ id }}"><i class="fa fa-question-circle-o" aria-hidden="true"></i></a>
-      <div class="modal" id="{{ id }}" tabindex="-1" role="dialog" aria-labelledby="{{ id }}Label" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-          <div class="modal-content overlay-def">
-            <header class="modal-header">
-              <h2 class="modal-title" id="{{ id }}Label">{{ title }}</h2>
-              <button type="button" class="close mfp-close" data-dismiss="modal" aria-label="Close"></button>
-            </header>
-            <div class="modal-body">
-              {{ description }}
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-sm btn-primary pull-left" data-dismiss="modal">Close</button>
-            </div>
+  <li>
+    <a href="{{ h.url_for('canada.type_redirect', resource_name=r_type) }}"><i class="fa fa-upload"></i>{{ _(label) }}</a>
+    <a href="" data-toggle="modal" data-target="#{{ r_type }}"><i class="fa fa-question-circle-o" aria-hidden="true"></i></a>
+    <div class="modal" id="{{ r_type }}" tabindex="-1" role="dialog" aria-labelledby="{{ r_type }}Label" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content overlay-def">
+          <header class="modal-header">
+            <h2 class="modal-title" id="{{ r_type }}Label">{{ _(label) }}</h2>
+            <button type="button" class="close mfp-close" data-dismiss="modal" aria-label="Close"></button>
+          </header>
+          <div class="modal-body">
+            {{ description }}
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-sm btn-primary pull-left" data-dismiss="modal">Close</button>
           </div>
         </div>
       </div>
-    </li>
+    </div>
+  </li>
+{% endmacro %}
+
+{% macro quick_link(id, url, icon, title, description) %}
+  <li>
+    <a href="{{ url }}">{% if icon %}<i class="{{icon}}"></i>{% endif %}{{ _(title) }}</a>
+    <a href="" data-toggle="modal" data-target="#{{ id }}"><i class="fa fa-question-circle-o" aria-hidden="true"></i></a>
+    <div class="modal" id="{{ id }}" tabindex="-1" role="dialog" aria-labelledby="{{ id }}Label" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content overlay-def">
+          <header class="modal-header">
+            <h2 class="modal-title" id="{{ id }}Label">{{ title }}</h2>
+            <button type="button" class="close mfp-close" data-dismiss="modal" aria-label="Close"></button>
+          </header>
+          <div class="modal-body">
+            {{ description }}
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-sm btn-primary pull-left" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </li>
 {% endmacro %}
 
 {% block primary_content %}
-<div class="row" id="quick-links">
-  <div class="col-md-12">
-    <section class="alert alert-warning mrgn-tp-lg mrgn-bttm-lg" role="alert">
-      <h2 class="h3">{{ _('Important') }}</h2>
-      <p>{{ _('As of March 6, 2024, all contracts and associated amendments will appear as a single contract with their respective amendments linked on the Portal. Please email the Portal team at <a href="mailto:open-ouvert@tbs-sct.gc.ca">open-ouvert@tbs-sct.gc.ca</a> should you have additional questions or concerns.') }}</p>
-    </section>
-    <section>
-      <p>{{ _('Welcome to the Open Government Registry. Use the Registry to add government resources that will be published on the Open Government Portal. For more information on using the Registry or to report errors, contact <a href="mailto:open-ouvert@tbs-sct.gc.ca">open-ouvert@tbs-sct.gc.ca</a>.') | safe }}</p>
-    </section>
+  <div class="row" id="quick-links">
+    <div class="col-md-12">
+      <section class="alert alert-warning mrgn-tp-lg mrgn-bttm-lg" role="alert">
+        <h2 class="h3">{{ _('Important') }}</h2>
+        <p>{{ _('As of March 6, 2024, all contracts and associated amendments will appear as a single contract with their respective amendments linked on the Portal. Please email the Portal team at <a href="mailto:open-ouvert@tbs-sct.gc.ca">open-ouvert@tbs-sct.gc.ca</a> should you have additional questions or concerns.') }}</p>
+      </section>
+      <section>
+        <p>{{ _('Welcome to the Open Government Registry. Use the Registry to add government resources that will be published on the Open Government Portal. For more information on using the Registry or to report errors, contact <a href="mailto:open-ouvert@tbs-sct.gc.ca">open-ouvert@tbs-sct.gc.ca</a>.') | safe }}</p>
+      </section>
+    </div>
+    {% set orgs = h.organizations_available('read') %}
+    {% if orgs %}
+      <div class="col-md-6">
+        <section id="ql-open-data">
+          <h2 class="h5">{{ _('Open Data') }}</h2>
+          <ul class="list-unstyled">
+            {{ quick_link(
+              'new_od',
+              h.url_for('dataset_new'),
+              'fa fa-folder-open',
+              _('Create an Open Data Record'),
+              _('Add data about Government of Canada services, financials or national demographic information that is relevant to Canadians.')
+            )}}
+            {{ quick_link_pd('experiment') }}
+            {{ quick_link_pd('nap5') }}
+          </ul>
+        </section>
+        <section id="ql-open-info">
+          <h2 class="h5">{{ _('Open Information') }}</h2>
+          <ul class="list-unstyled">
+            {{ quick_link(
+              'new_oi',
+              h.url_for('info_new'),
+              'fa fa-folder-open',
+              _('Create Information Asset'),
+              _('Add information about government programs, activities and publications.')
+            )}}
+          </ul>
+        </section>
+        <section id="ql-open-dialogue">
+          <h2 class="h5">{{ _('Open Dialogue') }}</h2>
+          <ul class="list-unstyled">
+            {{ quick_link_pd('consultations') }}
+            {{ quick_link(
+              'consultations_master',
+              '/static/data/consultations.csv',
+              'fa fa-download',
+              _('Consultations master dataset'),
+              _('Access the dataset that consolidates all the consultations reports submitted by federal institutions.')
+            )}}
+          </ul>
+        </section>
+        <section id="ql-search">
+          <h2 class="h5">{{ _('Search') }}</h2>
+          <ul class="list-unstyled">
+            {{ quick_link(
+              'dataset_search',
+              h.url_for('dataset_search'),
+              'fa fa-search',
+              _('Search All Records'),
+              _('Add all Open Data and Information records in the Registry.')
+            )}}
+            {% set org_name = orgs[0]['name'] if not is_sysadmin else 'tbs-sct' %}
+            {{ quick_link(
+              'search_org',
+              h.url_for('dataset_search', organization=org_name),
+              'fa fa-search',
+              _('Search your Organization Records'),
+              _('Search all records in the Registry, for your Organization.')
+            )}}
+            {{ quick_link(
+              'view_org',
+              h.url_for('organization_members', id=org_name),
+              'fa fa-users',
+              _('View Members of your Organization'),
+              _('View the list of members linked to your organization.')
+            )}}
+          </ul>
+        </section>
+      </div>
+      <div class="col-md-6">
+        <section id="ql-pd">
+          <h2 class="h5">{{ _('Proactive Publication') }}</h2>
+          <ul class="list-unstyled">
+            {{ quick_link_pd('wrongdoing') }}
+            {{ quick_link_pd('contractsa') }}
+            {{ quick_link_pd('ati') }}
+            {{ quick_link_pd('briefingt') }}
+            {{ quick_link_pd('contracts') }}
+            {{ quick_link_pd('dac') }}
+            {{ quick_link_pd('grants') }}
+            {{ quick_link_pd('hospitalityq') }}
+            {{ quick_link_pd('reclassification') }}
+            {{ quick_link_pd('qpnotes') }}
+
+            {% set tab_par_path = h.url_for("info_new") + '?collection=parliament_report' %}
+            {{ quick_link(
+              'tab_par',
+              tab_par_path,
+              'fa fa-folder-open',
+              _('Reports Tabled in Parliament'),
+              _('Access, add or modify your reports tabled in Parliament.')
+            )}}
+            {{ quick_link_pd('travelq') }}
+            {{ quick_link_pd('travela') }}
+
+            <li>
+              <i class="fa fa-folder-open"></i>{{ _('Briefing packages') }}
+              <ul class="small" style="list-style-type: disc">
+                {% set new_min_path = h.url_for("info_new") + '?collection=transition' %}
+                {{ quick_link(
+                  'new_min',
+                  new_min_path,
+                  null,
+                  _('New or incoming ministers'),
+                  _('Access, add or modify briefing package information for your new or incoming minister.')
+                )}}
+                {% set min_dep_path = h.url_for("info_new") + '?collection=transition_deputy' %}
+                {{ quick_link(
+                  'min_dep',
+                  min_dep_path,
+                  null,
+                  _('New or incoming deputy heads'),
+                  _('Access, add or modify briefing package information for your new or incoming deputy head.')
+                )}}
+                {% set par_min_path = h.url_for("info_new") + '?collection=parliament_committee' %}
+                {{ quick_link(
+                  'par_min',
+                  par_min_path,
+                  null,
+                  _('Parliamentary Committee appearances for ministers'),
+                  _('Access, add or modify briefing packages for Parliamentary Committee appearance for your minister.')
+                )}}
+                {% set par_dep_path = h.url_for("info_new") + '?collection=parliament_committee_deputy' %}
+                {{ quick_link(
+                  'par_dep',
+                  par_dep_path,
+                  null,
+                  _('Parliamentary Committee appearances for deputy heads'),
+                  _('Access, add or modify briefing packages for Parliamentary Committee appearance for your deputy head.')
+                )}}
+              </ul>
+            <li>
+
+            {% if h.canada_check_access('98abeb62-7c76-4dfb-a134-1551f55ede55') %}
+              {{ quick_link_pd('adminaircraft') }}
+            {% endif %}
+
+          </ul>
+        </section>
+      </div>
+    {% endif %}
   </div>
-  {% set orgs = h.organizations_available('read') %}
-  {% if orgs %}
-    <div class="col-md-6">
-      <section id="ql-open-data">
-        <h2 class="h5">{{ _('Open Data') }}</h2>
-        <ul class="list-unstyled">
-          {{ quick_link(
-            'new_od',
-            h.url_for('dataset_new'),
-            'fa fa-folder-open',
-            _('Create an Open Data Record'),
-            _('Add data about Government of Canada services, financials or national demographic information that is relevant to Canadians.')
-          )}}
-          {{ quick_link_pd('experiment') }}
-          {{ quick_link_pd('nap5') }}
-        </ul>
-      </section>
-      <section id="ql-open-info">
-        <h2 class="h5">{{ _('Open Information') }}</h2>
-        <ul class="list-unstyled">
-          {{ quick_link(
-            'new_oi',
-            h.url_for('info_new'),
-            'fa fa-folder-open',
-            _('Create Information Asset'),
-            _('Add information about government programs, activities and publications.')
-          )}}
-        </ul>
-      </section>
-      <section id="ql-open-dialogue">
-        <h2 class="h5">{{ _('Open Dialogue') }}</h2>
-        <ul class="list-unstyled">
-          {{ quick_link_pd('consultations') }}
-          {{ quick_link(
-            'consultations_master',
-            '/static/data/consultations.csv',
-            'fa fa-download',
-            _('Consultations master dataset'),
-            _('Access the dataset that consolidates all the consultations reports submitted by federal institutions.')
-          )}}
-        </ul>
-      </section>
-      <section id="ql-search">
-        <h2 class="h5">{{ _('Search') }}</h2>
-        <ul class="list-unstyled">
-          {{ quick_link(
-            'dataset_search',
-            h.url_for('dataset_search'),
-            'fa fa-search',
-            _('Search All Records'),
-            _('Add all Open Data and Information records in the Registry.')
-          )}}
-          {% set org_name = orgs[0]['name'] if not is_sysadmin else 'tbs-sct' %}
-          {{ quick_link(
-            'search_org',
-            h.url_for('dataset_search', organization=org_name),
-            'fa fa-search',
-            _('Search your Organization Records'),
-            _('Search all records in the Registry, for your Organization.')
-          )}}
-          {{ quick_link(
-            'view_org',
-            h.url_for('organization_members', id=org_name),
-            'fa fa-users',
-            _('View Members of your Organization'),
-            _('View the list of members linked to your organization.')
-          )}}
-        </ul>
-      </section>
-    </div>
-    <div class="col-md-6">
-      <section id="ql-pd">
-        <h2 class="h5">{{ _('Proactive Publication') }}</h2>
-        <ul class="list-unstyled">
-          {{ quick_link_pd('wrongdoing') }}
-          {{ quick_link_pd('contractsa') }}
-          {{ quick_link_pd('ati') }}
-          {{ quick_link_pd('briefingt') }}
-          {{ quick_link_pd('contracts') }}
-          {{ quick_link_pd('dac') }}
-          {{ quick_link_pd('grants') }}
-          {{ quick_link_pd('hospitalityq') }}
-          {{ quick_link_pd('reclassification') }}
-          {{ quick_link_pd('qpnotes') }}
-
-          {% set tab_par_path = h.url_for("info_new") + '?collection=parliament_report' %}
-          {{ quick_link(
-            'tab_par',
-            tab_par_path,
-            'fa fa-folder-open',
-            _('Reports Tabled in Parliament'),
-            _('Access, add or modify your reports tabled in Parliament.')
-          )}}
-          {{ quick_link_pd('travelq') }}
-          {{ quick_link_pd('travela') }}
-
-          <li>
-            <i class="fa fa-folder-open"></i>{{ _('Briefing packages') }}
-            <ul class="small" style="list-style-type: disc">
-              {% set new_min_path = h.url_for("info_new") + '?collection=transition' %}
-              {{ quick_link(
-                'new_min',
-                new_min_path,
-                null,
-                _('New or incoming ministers'),
-                _('Access, add or modify briefing package information for your new or incoming minister.')
-              )}}
-              {% set min_dep_path = h.url_for("info_new") + '?collection=transition_deputy' %}
-              {{ quick_link(
-                'min_dep',
-                min_dep_path,
-                null,
-                _('New or incoming deputy heads'),
-                _('Access, add or modify briefing package information for your new or incoming deputy head.')
-              )}}
-              {% set par_min_path = h.url_for("info_new") + '?collection=parliament_committee' %}
-              {{ quick_link(
-                'par_min',
-                par_min_path,
-                null,
-                _('Parliamentary Committee appearances for ministers'),
-                _('Access, add or modify briefing packages for Parliamentary Committee appearance for your minister.')
-              )}}
-              {% set par_dep_path = h.url_for("info_new") + '?collection=parliament_committee_deputy' %}
-              {{ quick_link(
-                'par_dep',
-                par_dep_path,
-                null,
-                _('Parliamentary Committee appearances for deputy heads'),
-                _('Access, add or modify briefing packages for Parliamentary Committee appearance for your deputy head.')
-              )}}
-            </ul>
-          <li>
-
-          {% if h.canada_check_access('98abeb62-7c76-4dfb-a134-1551f55ede55') %}
-            {{ quick_link_pd('adminaircraft') }}
-          {% endif %}
-
-        </ul>
-      </section>
-    </div>
-  {% endif %}
-</div>
 {% endblock %}
