@@ -1,4 +1,4 @@
-{% if c.userobj and c.userobj.sysadmin %}
+{% if g.userobj and g.userobj.sysadmin %}
   {% extends 'admin/base.html' %}
 {% else %}
   {% extends 'page.html' %}
@@ -6,7 +6,7 @@
 
 {% block breadcrumb_content %}
   {% if g.is_registry %}
-    {% if c.userobj and not c.userobj.sysadmin %}
+    {% if g.userobj and not g.userobj.sysadmin %}
       {{ h.build_nav('user.index', _('Users')) }}
     {% else %}
       {{ super() }}
@@ -18,7 +18,7 @@
 
 {% block subtitle %}
   {% if g.is_registry %}
-    {% if c.userobj and not c.userobj.sysadmin %}
+    {% if g.userobj and not g.userobj.sysadmin %}
       {{ _('Users') }}
     {% else %}
       {{ super() }}
@@ -31,7 +31,7 @@
 {% block primary_content_inner %}
   {% if g.is_registry %}
     <h2 class="wb-inv">{{ _('Users') }}</h2>
-    {% if c.userobj and c.userobj.sysadmin %}
+    {% if g.userobj and g.userobj.sysadmin %}
       <a class="btn btn-default mrgn-bttm-lg" href="{{ h.url_for('user.register') }}">{{ _('Create an Account') }}</a>
     {% endif %}
     {% block users_list %}
@@ -86,7 +86,7 @@
         </h3>
       </header>
       <div class="panel-body">
-        {% if c.userobj and not c.userobj.sysadmin %}
+        {% if g.userobj and not g.userobj.sysadmin %}
           <p>{{ _("Search and view users.") }}</p>
         {% else %}
           <p>{{ _("Search and manage users.") }}</p>

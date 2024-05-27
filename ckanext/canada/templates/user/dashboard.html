@@ -35,9 +35,9 @@
       <span class="fa fa-sitemap"></span>&nbsp;{{ _('My Datasets') }}
     </div>
     <div class="panel-body">
-      {% if c.user_dict['datasets'] %}
+      {% if g.user_dict['datasets'] %}
         <ul class="list-group">
-          {% for package in c.user_dict['datasets'][0:10] %}
+          {% for package in g.user_dict['datasets'][0:10] %}
             {% set title = package.title or package.name %}
             <li class="list-group-item">
               {{ h.link_to(h.truncate(title, 80), h.url_for(package.type + '.read', id=package.name)) }}

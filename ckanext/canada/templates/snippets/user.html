@@ -5,10 +5,10 @@
       <div class="row {{ 'mrgn-tp-md' if g.is_registry else '' }}">
         <div class="{{ 'col-md-offset-4 col-md-8' if g.is_registry else 'col-md-12' }}" id="user_nav">
           <ul class="list-inline">
-            {% if c.userobj %}
+            {% if g.userobj %}
               {% block header_account_logged %}
                 {% if g.is_registry %}
-                  {% if c.userobj.sysadmin %}
+                  {% if g.userobj.sysadmin %}
                     <li>
                       <a href="{{ h.url_for('admin.index') }}" title="{{ _('Sysadmin settings') }}" class="btn btn-default mrgn-tp-sm">
                         <i class="fa fa-gavel"></i><span class="text">&nbsp;{{ _('Admin') }}</span>
@@ -24,7 +24,7 @@
                 {% block header_account_settings_link %}
                   {% if g.is_registry %}
                     <li>
-                      <a href="{{ h.url_for('user.edit', id=c.userobj.name) }}" title="{{ _('Edit Profile') }}" class="btn btn-default mrgn-tp-sm">
+                      <a href="{{ h.url_for('user.edit', id=g.userobj.name) }}" title="{{ _('Edit Profile') }}" class="btn btn-default mrgn-tp-sm">
                         <span class="fa fa-cog"></span><span class="text">&nbsp;{{ _('Edit Profile') }}</span>
                       </a>
                     </li>

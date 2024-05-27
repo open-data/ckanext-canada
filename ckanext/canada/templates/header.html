@@ -38,13 +38,13 @@
         {% endblock %}
         {% block user_logged %}
           {% if g.is_registry %}
-            {% if c.userobj %}
+            {% if g.userobj %}
               <div id="usr-logged" class="col-md-6">
                 <ul class="list-inline">
                   <li>
                     {{ _('Signed in as') }}
-                    <a href="{{ h.url_for('user.read', id=c.userobj.name) }}" class="image" title="{{ _('View profile') }}">
-                      <span class="username">{{ c.userobj.display_name }}</span>
+                    <a href="{{ h.url_for('user.read', id=g.userobj.name) }}" class="image" title="{{ _('View profile') }}">
+                      <span class="username">{{ g.userobj.display_name }}</span>
                     </a>
                   </li>
                   {% block header_account_log_out_link %}

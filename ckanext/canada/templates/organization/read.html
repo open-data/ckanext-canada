@@ -3,12 +3,12 @@
 {% set client_lang = h.lang() %}
 
 {% block organization_facets %}
-  {% snippet 'snippets/dataset_facets.html', extras={'id':c.group_dict.name}, show_org_facet=false %}
+  {% snippet 'snippets/dataset_facets.html', extras={'id':g.group_dict.name}, show_org_facet=false %}
 {% endblock %}
 
 {% block page_primary_action %}
   {{ super() }}
-  {% if h.check_access('organization_update', {'id': c.group_dict.id}) %}
-    {% link_for _('Edit Organization'), 'organization.edit', id=c.group_dict.id, class_='btn btn-default', icon='wrench' %}
+  {% if h.check_access('organization_update', {'id': g.group_dict.id}) %}
+    {% link_for _('Edit Organization'), 'organization.edit', id=g.group_dict.id, class_='btn btn-default', icon='wrench' %}
   {% endif %}
 {% endblock %}

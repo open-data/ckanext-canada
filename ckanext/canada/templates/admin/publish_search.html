@@ -32,18 +32,18 @@
               <strong>{% snippet 'snippets/search_result_text.html', query=g.q, count=g.page.item_count, type='dataset' %}</strong>
             </div>
             <div class="col-md-6 text-left">
-              {{ h.snippet('snippets/sort_by.html', sort=c.sort_by_selected) }}
+              {{ h.snippet('snippets/sort_by.html', sort=g.sort_by_selected) }}
             </div>
           {% endif %}
         </div>
-        {% if c.fields -%}
+        {% if g.fields -%}
           <span>
-            {{ form.hidden_from_list(fields=c.fields) }}
+            {{ form.hidden_from_list(fields=g.fields) }}
           </span>
         {%- endif %}
         <div id="dataset-search-ext">{% block dataset_search_ext %}{% endblock %}</div>
       </form>
-      <div class="{% if request.params and c.page.item_count == 0 -%}module-info module-simplify{%- endif -%}">
+      <div class="{% if request.params and g.page.item_count == 0 -%}module-info module-simplify{%- endif -%}">
         <div class="filter-list">
           {% block filter_list %}
             {% for field in g.fields_grouped %}
@@ -57,7 +57,7 @@
             {% endfor %}
         {% endblock %}
         </div>
-        {% if request.params and c.page.item_count == 0 %}
+        {% if request.params and g.page.item_count == 0 %}
           {% block try_another_search %}
             {% trans %}
               <p class="extra">Please try another search.</p>
@@ -65,15 +65,15 @@
           {% endblock %}
         {% endif %}
       </div>
-      {% if c.query_error %}
+      {% if g.query_error %}
         {% trans %}
           <p><strong>There was an error while searching.</strong> Please try again.</p>
         {% endtrans %}
       {% endif %}
-      {{ h.snippet('admin/snippets/publish_package_list.html', packages=c.page.items) }}
+      {{ h.snippet('admin/snippets/publish_package_list.html', packages=g.page.items) }}
     </div>
     {%- block pager -%}
-      {{ c.page.pager(q=c.q) }}
+      {{ g.page.pager(q=g.q) }}
     {%- endblock -%}
   </section>
   {%- block api_access_info -%}{%- endblock -%}
@@ -83,7 +83,7 @@
 
 {% block secondary_content %}
 <div class="filters">
-  <h2>{{ _('Search Filters') }}&nbsp;<small><a href="{{ h.url_for('canada.ckanadmin_publish', q=c.q) }}">{{ _('Clear All') }}</a></small></h2>
+  <h2>{{ _('Search Filters') }}&nbsp;<small><a href="{{ h.url_for('canada.ckanadmin_publish', q=g.q) }}">{{ _('Clear All') }}</a></small></h2>
   <div>
     {% snippet 'snippets/dataset_facets.html', show_org_facet=true %}
   </div>

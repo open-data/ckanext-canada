@@ -14,7 +14,7 @@
   {% set lang = h.lang() %}
   {% block content %}
     {% if g.is_registry %}
-      {% if c.userobj and h.get_timeout_length() %}
+      {% if g.userobj and h.get_timeout_length() %}
         <div class="modal fade" id="timeout" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
           <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content overlay-def">
@@ -142,7 +142,7 @@
   {{ super() }}
   {% if g.is_registry %}
     {%- block session_timeout -%}
-      {% if c.userobj and h.get_timeout_length() %}
+      {% if g.userobj and h.get_timeout_length() %}
         <script>
           setTimeout(function(){ $('#timeout').modal('show'); }, {{ h.get_timeout_length() }} * 1000);
         </script>

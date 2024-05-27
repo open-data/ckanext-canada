@@ -49,7 +49,7 @@
   {% endblock %}
 
   {% block search_search_fields %}
-    {% if c.fields -%}
+    {% if g.fields -%}
       <span>{{ form.hidden_from_list(fields=fields) }}</span>
     {%- endif %}
   {% endblock %}

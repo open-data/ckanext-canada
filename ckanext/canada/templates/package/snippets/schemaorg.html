@@ -25,7 +25,7 @@
     <span property="genre" value="{{ _('Information and Communications Government and Politics') }}"></span>
     <span property="license" typeof="CreativeWork">
       {%- if h.lang() == 'fr' -%}
-        {%- set license_url, license_title = c.pkg.license.url_fra, c.pkg.license.title_fra -%}
+        {%- set license_url, license_title = g.pkg.license.url_fra, g.pkg.license.title_fra -%}
       {%- else -%}
         {%- set license_url, license_title = data.license_url, data.license_title -%}
       {%- endif -%}
@@ -57,7 +57,7 @@
       <span property="keywords">{{ keyword }}</span>
     {%- endfor -%}
   {% endif %}
-  <span property="sameAs" value="{{ h.url_for(c.pkg.type + '.read', id=data.id) }}"></span>
+  <span property="sameAs" value="{{ h.url_for(g.pkg.type + '.read', id=data.id) }}"></span>
   {%- if data.resources -%}
     {%- set nonapps = [] -%}
     {%- for resource in data.resources -%}

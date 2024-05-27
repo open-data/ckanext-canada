@@ -7,8 +7,8 @@
   {%- do options.append({'value': '', 'text': ''}) -%}
 {%- endif -%}
 {%- for c in h.scheming_field_choices(field) -%}
-  {%- if not form_restrict_choices_to or c.value in form_restrict_choices_to -%}
-    {%- do options.append({'value': c.value|string, 'text': h.scheming_language_text(c.label), 'attr': c.attr }) -%}
+  {%- if not form_restrict_choices_to or g.value in form_restrict_choices_to -%}
+    {%- do options.append({'value': g.value|string, 'text': h.scheming_language_text(g.label), 'attr': g.attr }) -%}
   {%- endif -%}
 {%- endfor -%}
 {%- if field.get('sorted_choices') -%}

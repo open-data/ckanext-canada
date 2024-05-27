@@ -1,6 +1,6 @@
 {% ckan_extends %}
 
-{% set pkg = c.pkg_dict %}
+{% set pkg = g.pkg_dict %}
 {% set client_lang = h.lang() %}
 
 {% set title, machine_translated = h.get_translated_t(pkg, 'title') %}
@@ -229,7 +229,7 @@
             <header class="panel-heading">
               <div class="panel-title">{{ _('Similar records') }}</div>
             </header>
-            <div data-ajax-replace="{{ h.adv_search_mlt_root() }}{{ c.pkg_dict.id }}" class="panel-body" id="related_pkgs"></div>
+            <div data-ajax-replace="{{ h.adv_search_mlt_root() }}{{ g.pkg_dict.id }}" class="panel-body" id="related_pkgs"></div>
           </section>
         {% endif %}
       {% endif %}
@@ -237,14 +237,14 @@
     {% block package_rate %}
       {% if not g.is_registry %}
         <a id="rate"></a>
-        <div id="voting-wrapper" data-ajax-replace="/{{ h.lang() }}/vote?uuid={{ c.pkg_dict.id }}"></div>
+        <div id="voting-wrapper" data-ajax-replace="/{{ h.lang() }}/vote?uuid={{ g.pkg_dict.id }}"></div>
       {% endif %}
     {% endblock %}
     {% block package_feedback %}
       {% if not g.is_registry %}
         <a id="feedback"></a>
         <section class="indent-large">
-          <div id="feedback-wrapper" data-ajax-replace="/{{ h.lang() }}/feedback?uuid={{ c.pkg_dict.id }}"></div>
+          <div id="feedback-wrapper" data-ajax-replace="/{{ h.lang() }}/feedback?uuid={{ g.pkg_dict.id }}"></div>
         </section>
       {% endif %}
     {% endblock %}
