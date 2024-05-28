@@ -112,10 +112,10 @@ def may_publish_datasets(userobj=None):
         return True
 
     pub_org = config.get(ORG_MAY_PUBLISH_OPTION, ORG_MAY_PUBLISH_DEFAULT_NAME)
-    for g in userobj.get_groups():
-        if not g.is_organization:
+    for group in userobj.get_groups():
+        if not group.is_organization:
             continue
-        if g.name == pub_org:
+        if group.name == pub_org:
             return True
     return False
 
