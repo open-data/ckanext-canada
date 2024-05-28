@@ -68,6 +68,7 @@ class CanadaSecurityPlugin(CkanSecurityPlugin):
     p.implements(p.IResourceController, inherit=True)
     p.implements(p.IValidators, inherit=True)
     p.implements(p.IConfigurer)
+    p.implements(p.IAuthenticator)
 
     def update_config(self, config):
         # Disable auth settings
@@ -101,6 +102,14 @@ class CanadaSecurityPlugin(CkanSecurityPlugin):
                     validators.canada_security_upload_type,
                 'canada_security_upload_presence':
                     validators.canada_security_upload_presence}
+
+    # IAuthenticator
+    def identify(self):
+        if p.toolkit.request.path == p.toolkit.url_for(u'user.login'):
+            return helpers.goc_auth()
+
+    def logout(self):
+        return
 
 
 class CanadaDatasetsPlugin(SchemingDatasetsPlugin):
@@ -724,7 +733,6 @@ ckanext.canada:schemas/prop.yaml
             'get_resource_view',
             'resource_view_type',
             'fgp_viewer_url',
-            'registry_network_access',
             'date_field',
             'split_piped_bilingual_field',
             'search_filter_pill_link_label',

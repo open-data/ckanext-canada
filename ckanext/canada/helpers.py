@@ -775,13 +775,25 @@ def date_field(field, pkg):
         return pkg.get(field).split(' ')[0]
     return pkg.get(field, None)
 
-def registry_network_access(remote_addr):
+
+def goc_auth():
+    remote_addr = request.headers.get('X-Forwarded-For') or \
+                  request.environ.get('REMOTE_ADDR')
+    if not __registry_network_access(remote_addr):
+        # can't return 403 because it shows the Login button
+        return t.abort(423, _(u'This application is only available to authorized '
+                            u'Government of Canada departments and agencies. '
+                            u'Please contact the support team at '
+                            u'open-ouvert@tbs-sct.gc.ca to request access.'))
+
+
+def __registry_network_access(remote_addr):
     """
     Only allow requests from GOC network to access
     user account registration view
    """
     try:
-        client_ip = ipaddress.ip_address(remote_addr)
+        client_ip = ipaddress.ip_address(unicode(remote_addr))
     except ValueError:
         return False
 
@@ -794,6 +806,7 @@ def registry_network_access(remote_addr):
     with open(netlist_path) as allow_list:
         for line in allow_list:
             # the netlist_path file is a combination of text, ip addresses and subnets
+            line = unicode(line.strip())
             try:
                 ip = ipaddress.ip_address(line)
                 if client_ip == ip:
@@ -802,7 +815,7 @@ def registry_network_access(remote_addr):
                 pass
 
             try:
-                ip_network = ipaddress.ip_network(line)
+                ip_network = ipaddress.ip_network(line, False)
                 if client_ip in ip_network:
                     return True
             except ValueError:
