@@ -111,6 +111,9 @@ class CanadaSecurityPlugin(CkanSecurityPlugin):
     def logout(self):
         return
 
+    def abort(self, status_code, detail, headers, comment):
+        return (status_code, detail, headers, comment)
+
 
 class CanadaDatasetsPlugin(SchemingDatasetsPlugin):
     """
