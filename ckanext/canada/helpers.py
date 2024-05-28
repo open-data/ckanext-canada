@@ -36,9 +36,8 @@ PORTAL_URL_OPTION = 'canada.portal_url'
 PORTAL_URL_DEFAULT_EN = 'https://open.canada.ca'
 PORTAL_URL_DEFAULT_FR = 'https://ouvert.canada.ca'
 DATAPREVIEW_MAX = 500
-WET_URL = config.get('wet_boew.url', '')
-WET_JQUERY_OFFLINE_OPTION = 'wet_boew.jquery.offline'
-WET_JQUERY_OFFLINE_DEFAULT = False
+CDTS_VERSION = config.get('ckanext.canada.cdts_version', 'v4_1_0')
+CDTS_URI = 'https://www.canada.ca/etc/designs/canada/cdts/gcweb'
 GEO_MAP_TYPE_OPTION = 'wet_theme.geo_map_type'
 GEO_MAP_TYPE_DEFAULT = 'static'
 RELEASE_DATE_FACET_STEP = 100
@@ -457,24 +456,8 @@ def geojson_to_wkt(gjson_str):
     return wkt_str
 
 
-def url_for_wet_theme(*args):
-    file = args[0] or ''
-    return h.url_for_wet(file, theme=True)
-
-def url_for_wet(*args, **kw):
-    file = args[0] or ''
-    theme = kw.get('theme', False)
-
-    if not WET_URL:
-        return h.url_for_static_or_external(
-            ('GCWeb' if theme else 'wet-boew') + file
-        )
-
-    return WET_URL + '/' + ('GCWeb' if theme else 'wet-boew') + file
-
-
-def wet_jquery_offline():
-    return t.asbool(config.get(WET_JQUERY_OFFLINE_OPTION, WET_JQUERY_OFFLINE_DEFAULT))
+def cdts_asset(file_path):
+    return CDTS_URI + '/' + CDTS_VERSION + '/wet-boew' + file_path
 
 
 def get_map_type():
