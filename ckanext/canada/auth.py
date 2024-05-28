@@ -3,7 +3,7 @@ from ckan.plugins.toolkit import (chained_auth_function,
                                   config,
                                   request)
 from ckan.authz import has_user_permission_for_group_or_org, is_sysadmin
-from ckanext.canada.helpers import goc_auth
+from ckanext.canada.helpers import registry_network_access
 
 
 def _is_reporting_user(context):
@@ -36,7 +36,8 @@ def datastore_upsert(up_func, context, data_dict):
 def user_create(up_func, context, data_dict=None):
     # additional check to ensure user can access the Request an Account page
     # only possible if accessing from GOC network
-    goc_auth()
+    if not registry_network_access():
+        return {'success': False}
     return up_func(context, data_dict)
 
 def view_org_members(context, data_dict):

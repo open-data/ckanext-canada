@@ -18,7 +18,8 @@ from ckan.plugins.toolkit import (
     ObjectNotFound,
     _,
     get_validator,
-    request
+    request,
+    abort,
 )
 
 from ckanext.canada import validators
@@ -68,7 +69,7 @@ class CanadaSecurityPlugin(CkanSecurityPlugin):
     p.implements(p.IResourceController, inherit=True)
     p.implements(p.IValidators, inherit=True)
     p.implements(p.IConfigurer)
-    p.implements(p.IAuthenticator)
+    p.implements(p.IAuthenticator, inherit=True)
 
     def update_config(self, config):
         # Disable auth settings
@@ -105,14 +106,17 @@ class CanadaSecurityPlugin(CkanSecurityPlugin):
 
     # IAuthenticator
     def identify(self):
-        if p.toolkit.request.path == p.toolkit.url_for(u'user.login'):
-            return helpers.goc_auth()
-
-    def logout(self):
-        return
-
-    def abort(self, status_code, detail, headers, comment):
-        return (status_code, detail, headers, comment)
+        controller, action = p.toolkit.get_endpoint()
+        blueprint = '.'.join((controller, action))
+        restricted_blueprints = [
+            'canada.login',
+            'user.login',
+            'canada.action',
+            'api.action', # change if need to narrow down the scope
+        ]
+        if blueprint in restricted_blueprints:
+            if not helpers.registry_network_access():
+                return abort(403)
 
 
 class CanadaDatasetsPlugin(SchemingDatasetsPlugin):

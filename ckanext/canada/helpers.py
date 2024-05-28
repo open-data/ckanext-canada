@@ -31,6 +31,7 @@ except ImportError:
     XLoaderFormats = None
 import os
 import ipaddress
+from flask import has_request_context
 
 
 ORG_MAY_PUBLISH_OPTION = 'canada.publish_datasets_organization_name'
@@ -776,23 +777,18 @@ def date_field(field, pkg):
     return pkg.get(field, None)
 
 
-def goc_auth():
-    if not registry_network_access():
-        return t.abort(403, _(u'This application is only available to authorized '
-                            u'Government of Canada departments and agencies. '
-                            u'Please contact the support team at '
-                            u'open-ouvert@tbs-sct.gc.ca to request access.'))
-
-
 def registry_network_access():
     """
     Only allow requests from GOC network to access
     user account registration view
    """
+    if not has_request_context():
+        return False
+
     remote_addr = request.headers.get('X-Forwarded-For') or \
                   request.environ.get('REMOTE_ADDR')
     try:
-        client_ip = ipaddress.ip_address(unicode(remote_addr))
+        client_ip = ipaddress.ip_address(text_type(remote_addr))
     except ValueError:
         return False
 
@@ -805,7 +801,7 @@ def registry_network_access():
     with open(netlist_path) as allow_list:
         for line in allow_list:
             # the netlist_path file is a combination of text, ip addresses and subnets
-            line = unicode(line.strip())
+            line = text_type(line.strip())
             try:
                 ip = ipaddress.ip_address(line)
                 if client_ip == ip:
