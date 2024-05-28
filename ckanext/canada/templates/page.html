@@ -41,19 +41,15 @@
     <div class="container">
       <div class="row">
         {% block flash %}
-          {% if g.is_registry %}
-            {{ super() }}
-          {% else %}
-            <div class="col-md-12 canada-flash-messages">
-              <div class="flash-messages">
-                {% for message in h.flash.pop_messages() | list %}
-                  <section class="alert fade in {{ message.category }}">
-                    <p>{{ h.literal(message) }}</p>
-                  </section>
-                {% endfor %}
-              </div>
+          <div class="col-md-12 canada-flash-messages">
+            <div class="flash-messages">
+              {% for message in h.flash.pop_messages() | list %}
+                <section class="alert fade in {{ message.category }}">
+                  <p>{{ h.literal(message) }}</p>
+                </section>
+              {% endfor %}
             </div>
-          {% endif %}
+          </div>
         {% endblock flash %}
         <main role="main" property="mainContentOfPage" class="container">
           {% block page_title %}
