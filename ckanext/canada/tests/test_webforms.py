@@ -256,7 +256,7 @@ class TestNewUserWebForms(CanadaTestBase):
         offset = h.url_for('user.register')
         response = app.get(offset, extra_environ=self.extra_environ_tester_bad_ip)
 
-        assert response.status_code == 423
+        assert response.status_code == 403
 
 
     def _filled_new_user_form(self):

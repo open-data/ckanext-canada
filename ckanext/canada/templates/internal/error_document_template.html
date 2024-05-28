@@ -11,7 +11,7 @@
     <div class="col-md-12">
       <p class="mrgn-tp-lg"><strong>{{ content }}</strong></p>
       {% if code == 403 %}
-        {% if not c.userobj %}
+        {% if not c.userobj and h.registry_network_access() %}
         <p class="mrgn-tp-lg">{{ _('You are not logged in to the Open Government Registry.
           Note that your login expires after 1 hour of inactivity.
           Click on the log in button below to log in.') }}</p>

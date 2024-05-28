@@ -404,6 +404,7 @@ ckanext.canada:schemas/presets.yaml
             'canada_check_access',
             'get_user_email',
             'get_loader_status_badge',
+            'registry_network_access',
         ])
 
     # IConfigurable
