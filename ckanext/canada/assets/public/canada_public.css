@@ -789,6 +789,7 @@ body .alert a.btn-warning{
   top: 0;
   right: 0;
   bottom: 0;
+  margin: 0 !important;
 }
 #wb-srch button#wb-srch-sub{
   position: relative;
@@ -874,4 +875,14 @@ body, body .module-grid, body .media-grid, body .main, body .account-masthead, b
 ##            END             ##
 ##  Core CSS URIs w/ Base URL ##
 ##            END             ##
+################################*/
+
+/*##############################
+##  CDTS Application Template ##
+################################*/
+
+/*##############################
+##             END            ##
+##  CDTS Application Template ##
+##             END            ##
 ################################*/

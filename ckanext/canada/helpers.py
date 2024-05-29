@@ -456,8 +456,8 @@ def geojson_to_wkt(gjson_str):
     return wkt_str
 
 
-def cdts_asset(file_path):
-    return CDTS_URI + '/' + CDTS_VERSION + '/wet-boew' + file_path
+def cdts_asset(file_path, theme=True):
+    return CDTS_URI + '/' + CDTS_VERSION + ('/wet-boew' if theme else '/cdts') + file_path
 
 
 def get_map_type():

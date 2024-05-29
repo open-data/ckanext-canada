@@ -78,7 +78,7 @@ class CanadaThemePlugin(p.SingletonPlugin):
         p.toolkit.add_resource('assets/public', 'canada_public')
         set_app_global('is_registry', plugin_loaded('canada_internal'))
 
-        config['ckan.favicon'] = helpers.cdts_asset('/assets/favicon.ico')
+        # config['ckan.favicon'] = helpers.cdts_asset('/assets/favicon.ico') #TODO: DO NOT COMMIT
 
     # ITemplateHelpers
     def get_helpers(self):

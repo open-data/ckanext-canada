@@ -45,6 +45,7 @@
   {% endblock %}
   {% block adobe_analytics %}
     {% if not g.is_registry and h.adobe_analytics_js() %}
+      {# TODO:  check in the refTop stuff... #}
       <script src="{{ h.adobe_analytics_js() }}"></script>
     {% endif %}
   {% endblock %}
@@ -57,15 +58,13 @@
   {% endif %}
 {% endblock %}
 
-{%- block wet_scripts -%}{%- endblock -%}
-
 {%- block custom_styles -%}
-  {% snippet 'snippets/wet-boew/headresources.html' %}
   {% asset 'canada_public/css' %}
   {% if g.is_registry %}
     {# Remove when WET v4.0.21 is out #}
     {% asset 'canada_internal/css' %}
   {% endif %}
+  {% snippet 'snippets/cdts/head_scripts.html' %}
 {%- endblock -%}
 
 {%- block htmltag -%}
