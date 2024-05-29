@@ -3,6 +3,7 @@ import __builtin__ as builtins
 import os
 import mock
 import functools
+from io import StringIO
 from pyfakefs import fake_filesystem
 from cgi import FieldStorage
 from factory import LazyAttribute, Sequence
@@ -14,6 +15,9 @@ import ckan
 
 
 real_open = open
+real_isfile = os.path.isfile
+MOCK_IP_ADDRESS = u'174.116.80.148'
+MOCK_IP_LIST_FILE = u'test_ip_list'
 _fs = fake_filesystem.FakeFilesystem()
 _mock_os = fake_filesystem.FakeOsModule(_fs)
 _mock_file_open = fake_filesystem.FakeFileOpen(_fs)
@@ -49,6 +53,18 @@ class MockFieldStorage(FieldStorage):
         self.filename = filename
         self.name = 'upload'
         self.list = None
+
+
+def mock_isfile(filename):
+    if MOCK_IP_LIST_FILE in filename:
+        return True
+    return real_isfile(filename)
+
+
+def mock_open_ip_list(*args, **kwargs):
+    if args and MOCK_IP_LIST_FILE in args[0]:
+        return StringIO(MOCK_IP_ADDRESS)
+    return _mock_open(*args, **kwargs)
 
 
 class CanadaUser(User):

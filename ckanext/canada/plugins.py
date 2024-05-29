@@ -114,9 +114,8 @@ class CanadaSecurityPlugin(CkanSecurityPlugin):
             'canada.action',
             'api.action', # change if need to narrow down the scope
         ]
-        if blueprint in restricted_blueprints:
-            if not helpers.registry_network_access():
-                return abort(403)
+        if blueprint in restricted_blueprints and not helpers.registry_network_access():
+            return abort(403)
 
 
 class CanadaDatasetsPlugin(SchemingDatasetsPlugin):

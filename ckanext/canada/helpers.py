@@ -781,9 +781,10 @@ def registry_network_access():
     """
     Only allow requests from GOC network to access
     user account registration view
-   """
+    """
     if not has_request_context():
-        return False
+        # outside of request (system functions), allow
+        return True
 
     remote_addr = request.headers.get('X-Forwarded-For') or \
                   request.environ.get('REMOTE_ADDR')
