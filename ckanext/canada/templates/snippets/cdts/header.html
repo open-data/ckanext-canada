@@ -1,90 +1,5 @@
 {% set lang = h.lang() %}
 
-{% macro menu_link(r_type) %}
-  {% set label = h.recombinant_get_geno(r_type).shortname or h.recombinant_get_geno(r_type).title %}
-  <li role="presentation"><a role="menuitem" tabindex="-1" href="{{ h.url_for('recombinant.type_redirect', resource_name=r_type) }}"><i class="fa fa-upload"></i>{{ _(label) }}</a></li>
-{% endmacro %}
-
-{% macro mega_menu() %}
-  {% if g.is_registry %}
-    <nav class="gcweb-menu" typeof="SiteNavigationElement" id="registry-menu-nav">
-      <div class="container">
-        <h2 class="wb-inv">Menu</h2>
-        <button type="button" aria-haspopup="true" aria-expanded="false" aria-label="Press the SPACEBAR to expand or the escape key to collapse this menu. Use the Up and Down arrow keys to choose a submenu item. Press the Enter or Right arrow key to expand it, or the Left arrow or Escape key to collapse it. Use the Up and Down arrow keys to choose an item on that level and the Enter key to access it.">
-            <span class="wb-inv">Main </span>Menu <i class="fa fa-chevron-down"></i></span>
-        </button>
-        <ul role="menu" aria-orientation="vertical">
-          <li role="presentation"> <a role="menuitem" tabindex="-1" href="/{{ h.lang() }}/">{{ _('Home') }}</a></li>
-          {% if h.check_access('package_create') %}
-            <li role="presentation"> <a id="mn-open-data" role="menuitem" tabindex="-1" aria-haspopup="true" aria-controls="open-data" aria-expanded="false" href="#"><i class="fa fa-chevron-right"></i>{{ _('Open Data') }}</a>
-              <ul id="open-data" role="menu" aria-orientation="vertical">
-                <li class="h3" role="presentation menuitem" tabindex="-1">{{ _('Open Data') }}</li>
-                <li role="separator"></li>
-                <li role="presentation"><a role="menuitem" tabindex="-1" href="{{ h.url_for('dataset_new') }}"><i class="fa fa-folder-open"></i>{{ _('Create an Open Data Record') }}</a></li>
-                {{ menu_link('experiment') }}
-                {{ menu_link('nap5') }}
-                {{ menu_link('inventory') }}
-                <li role="separator" aria-orientation="horizontal"></li>
-                <li role="presentation"></li>
-              </ul>
-            </li>
-            <li role="presentation"> <a id="mn-open-info" role="menuitem" tabindex="-1" href="{{ h.url_for('info_new') }}"><i class="fa fa-folder-open"></i>{{ _('Open Information') }}</a></li>
-            <li role="presentation"> <a id="mn-pd" role="menuitem" tabindex="-1" aria-haspopup="true" aria-controls="pd" aria-expanded="false" href="#"><i class="fa fa-chevron-right"></i>{{ _('Proactive Publication') }}</a>
-              <ul id="pd" role="menu" aria-orientation="vertical">
-                <li class="h3" role="presentation menuitem" tabindex="-1">{{ _('Proactive Publication') }}</li>
-                <li role="separator"></li>
-                {{ menu_link('wrongdoing') }}
-                {{ menu_link('contractsa') }}
-                {{ menu_link('ati') }}
-                {{ menu_link('briefingt') }}
-                {{ menu_link('contracts') }}
-                {{ menu_link('dac') }}
-                {{ menu_link('grants') }}
-                {{ menu_link('hospitalityq') }}
-                {{ menu_link('reclassification') }}
-                {{ menu_link('qpnotes') }}
-                <li role="presentation"><a role="menuitem" tabindex="-1" href="{{ h.url_for('info_new') }}?collection=parliament_report"><i class="fa fa-folder-open"></i>{{ _('Reports Tabled in Parliament') }}</a></li>
-                {{ menu_link('travelq') }}
-                {{ menu_link('travela') }}
-                <li role="separator" aria-orientation="horizontal"></li>
-                <li role="presentation">{{ _('Briefing packages') }}
-                  <ul id="brf-pkg" role="menu" aria-orientation="vertical">
-                    <li role="presentation"><a role="menuitem" tabindex="-1" href="{{ h.url_for('info_new') }}?collection=transition"><i class="fa fa-folder-open"></i>{{ _('New or incoming ministers') }}</a></li>
-                    <li role="presentation"><a role="menuitem" tabindex="-1" href="{{ h.url_for('info_new') }}?collection=transition_deputy"><i class="fa fa-folder-open"></i>{{ _('New or incoming deputy heads') }}</a></li>
-                    <li role="presentation"><a role="menuitem" tabindex="-1" href="{{ h.url_for('info_new') }}?collection=parliament_committee"><i class="fa fa-folder-open"></i>{{ _('Parliamentary Committee appearances for ministers') }}</a></li>
-                    <li role="presentation"><a role="menuitem" tabindex="-1" href="{{ h.url_for('info_new') }}?collection=parliament_committee_deputy"><i class="fa fa-folder-open"></i>{{ _('Parliamentary Committee appearances for deputy heads') }}</a></li>
-                  </ul>
-                </li>
-              </ul>
-            </li>
-            <li role="presentation"> <a id="mn-open-dialogue" role="menuitem" tabindex="-1" aria-haspopup="true" aria-controls="open-dialogue" aria-expanded="false" href="#"><i class="fa fa-chevron-right"></i>{{ _('Open Dialogue') }}</a>
-              <ul id="open-dialogue" role="menu" aria-orientation="vertical">
-                <li class="h3" role="presentation menuitem" tabindex="-1">{{ _('Open Dialogue') }}</li>
-                <li role="separator"></li>
-                {{ menu_link('consultations') }}
-                <li role="presentation"><a role="menuitem" tabindex="-1" href="/static/data/consultations.csv"><i class="fa fa-download"></i>{{ _('Consultations master dataset') }}</a></li>
-                <li role="separator" aria-orientation="horizontal"></li>
-                <li role="presentation"></li>
-              </ul>
-            </li>
-            <li role="presentation"> <a id="mn-search" role="menuitem" tabindex="-1" href="{{ h.url_for('dataset_search') }}"><i class="fa fa-search"></i>{{ _('Search') }}</a></li>
-            <li role="presentation"> <a role="menuitem" tabindex="-1" href="{{ h.url_for('organization.index') }}">{{ _('Organizations') }}</a></li>
-          {% endif %}
-          <li role="presentation"> <a role="menuitem" tabindex="-1" href="{{ h.url_for('canada.view_help') }}">{{ _('FAQ') }}</a></li>
-        </ul>
-      </div>
-    </nav>
-  {% else %}
-    <nav class="gcweb-menu" typeof="SiteNavigationElement">
-      <div class="container">
-        <h2 class="wb-inv">Menu</h2>
-        <button type="button" aria-haspopup="true" aria-expanded="false">Menu<span class="wb-inv"> principal</span> <span class="fa fa-chevron-down"></span></button>
-        <ul role="menu" aria-orientation="vertical" data-ajax-replace="https://www.canada.ca/content/dam/canada/sitemenu/sitemenu-v2-{{lang}}.html"></ul>
-      </div>
-    </nav>
-  {% endif %}
-{% endmacro %}
-
 {% set home_link_title = _('Registry Home') %}
 {% if not g.is_registry %}
   {% set home_link_title = _('Open Government Portal') %}
@@ -110,17 +25,7 @@
           "text": "{{ 'English' if lang == 'fr' else 'Français' }}",
         }
       ],
-      "topSecMenu": true,
-      "menuLinks": [
-        {
-          "text": "{{ _('Home') }}",
-          "href": "/{{ lang or 'en' }}",
-        },
-        {
-          "text": "{{ _('FAQ') }}",
-          "href": "{{ h.url_for('canada.view_help') }}",
-        },
-      ],
+      "menuPath": "{{ h.url_for('canada.site_menu') }}",
       "breadcrumbs": {{ breadcrumbs|tojson }},
     });
   }
