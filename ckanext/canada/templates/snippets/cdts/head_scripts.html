@@ -5,16 +5,20 @@
   //TODO: add Adobe Analytics loading in here with webAnalytics
   document.write(
     wet.builder.refTop({
-      "isApplication": true,
+      "isApplication": "{{ 1 if g.is_registry else 0 }}",
     })
   );
 </script>
 <style>
+  body .app-bar-mb{
+    display: none !important;
+  }
   #wb-sm{
     background: transparent !important;
     border: none !important;
     border-top: 3px solid #38414d !important;
     font-size: 20px;
-    margin-top: 5px;
+    margin: 0 !important;
+    display: block !important;
   }
 </style>

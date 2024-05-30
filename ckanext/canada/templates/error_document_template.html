@@ -1,24 +1,30 @@
 {% ckan_extends %}
 
-{% block page_heading %}
-  {% block subtitle %}
-    {% if g.is_registry %}
-      {{ _("Open Government Registry") }}
-    {% else %}
-      {% if code == 404 or code == 403 %}
-        {{ _('We couldn\'t find that Web page') }}
-      {% else %}
-        {{ _('We encountered an error') }}
-      {% endif %}
-    {% endif %}
-  {% endblock %}
+{# See: https://cdts.service.canada.ca/app/cls/WET/gcweb/v4_1_0/cdts/samples/server-en.html #}
+
+{% block page_title %}
+  <div class="row mrgn-tp-lg">
+    <div class="col-xs-3 col-sm-2 col-md-1 text-center mrgn-tp-md">
+        <span class="glyphicon glyphicon-warning-sign glyphicon-error"></span>
+    </div>
+    <div class="col-xs-9 col-sm-10 col-md-11">
+        <h1 class="mrgn-tp-md">
+          {% if code == 404 or code == 403 %}
+            {{ _('We couldn\'t find that Web page') }}
+          {% else %}
+            {{ _('We encountered an error') }}
+          {% endif %}
+        </h1>
+        <p class="pagetag"><b>Error {{ code }}</b></p>
+    </div>
+  </div>
 {% endblock %}
 
 {% block primary %}
   {% if g.is_registry %}
     <div class="row">
       <div class="col-md-12">
-        <p class="mrgn-tp-lg"><strong>{{ content }}</strong></p>
+        <p>{{ content }}</p>
         {% if code == 403 %}
           {% if not g.userobj %}
             <p class="mrgn-tp-lg">{{ _('You are not logged in to the Open Government Registry. Note that your login expires after 1 hour of inactivity. Click on the log in button below to log in.') }}</p>
@@ -28,12 +34,8 @@
               </a>
             </p>
           {% endif %}
-        {% elif code == 404 %}
-          <p class="mrgn-tp-lg">{{ _('We couldn\'t find that Web page') }}</p>
         {% elif code == 500 %}
           <p class="mrgn-tp-lg">{{ _('We encountered an error and are unable to serve your request. Please try again in short time or contact <a href="mailto:open-ouvert@tbs-sct.gc.ca">open-ouvert@tbs-sct.gc.ca</a> if you need immediate assistance or if this issue persists. Note that your login expires after 1 hour of inactivity.') | safe }}</p>
-        {% else %}
-          <p class="mrgn-tp-lg">{{ _('We encountered an error') }}</p>
         {% endif %}
       </div>
     </div>

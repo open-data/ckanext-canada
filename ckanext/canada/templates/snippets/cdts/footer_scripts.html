@@ -3,7 +3,7 @@
   //TODO: add Adobe Analytics loading in here with webAnalytics
   document.write(
     wet.builder.refFooter({
-      "isApplication": true,
+      "isApplication": "{{ 1 if g.is_registry else 0 }}",
     })
   );
 </script>

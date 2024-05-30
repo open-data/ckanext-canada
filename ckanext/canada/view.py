@@ -1244,7 +1244,9 @@ def ckan_admin_config():
     """
     return abort(404)
 
-#TODO: add some nonce here??
+
 @canada_views.route('/util/site_menu', methods=['GET'])
 def site_menu():
+    if not g.is_registry:
+        return abort(404)
     return render(u'snippets/cdts/site_menu.html')

@@ -13,20 +13,45 @@
 {% endif %}
 
 {# See: https://github.com/wet-boew/cdts-sgdc/blob/v4.1.0/src/gcweb/appTop.ejs #}
+{# See: https://github.com/wet-boew/cdts-sgdc/blob/v4.1.0/src/gcweb/top.ejs #}
 <script>
   let appTop = document.getElementById("app-top");
   if( appTop ){
-    appTop.outerHTML = wet.builder.appTop({
-      "search": "{{ 0 if g.is_registry else 1 }}",
-      "lngLinks": [
-        {
-          "lang": "{{ 'en' if lang == 'fr' else 'fr' }}",
-          "href": "{{ h.url_for(h.current_url(), locale=('en' if lang == 'fr' else 'fr')) }}",
-          "text": "{{ 'English' if lang == 'fr' else 'Français' }}",
-        }
-      ],
-      "menuPath": "{{ h.url_for('canada.site_menu') }}",
-      "breadcrumbs": {{ breadcrumbs|tojson }},
-    });
+    {% if g.is_registry %}
+      appTop.outerHTML = wet.builder.appTop({
+        "search": false,
+        "lngLinks": [
+          {
+            "lang": "{{ 'en' if lang == 'fr' else 'fr' }}",
+            "href": "{{ h.url_for(h.current_url(), locale=('en' if lang == 'fr' else 'fr')) }}",
+            "text": "{{ 'English' if lang == 'fr' else 'Français' }}",
+          }
+        ],
+        "menuPath": "{{ h.url_for('canada.site_menu') }}",
+        "breadcrumbs": {{ breadcrumbs|tojson }},
+      });
+      let nav = document.getElementById("wb-sm");
+      if( nav ){
+        nav.classList.add("visible-xs");
+        nav.classList.add("visible-sm");
+      }
+      let mobileAppBar = document.getElementsByClassName("app-bar-mb");
+      if( mobileAppBar.length > 0 ){
+        mobileAppBar[0].classList.remove("visible-xs-block");
+        mobileAppBar[0].classList.add("hidden");
+      }
+    {% else %}
+      appTop.outerHTML = wet.builder.top({
+        "search": true,
+        "lngLinks": [
+          {
+            "lang": "{{ 'en' if lang == 'fr' else 'fr' }}",
+            "href": "{{ h.url_for(h.current_url(), locale=('en' if lang == 'fr' else 'fr')) }}",
+            "text": "{{ 'English' if lang == 'fr' else 'Français' }}",
+          }
+        ],
+        "breadcrumbs": {{ breadcrumbs|tojson }},
+      });
+    {% endif %}
   }
 </script>
