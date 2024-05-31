@@ -10,6 +10,7 @@ import ckan as ckan
 import jinja2
 import html
 from six import text_type
+from bs4 import BeautifulSoup
 
 from ckanapi import NotFound
 from ckantoolkit import aslist
@@ -831,3 +832,25 @@ def search_filter_pill_link_label(search_field, search_extras):
                                                                 _choices=preset_choices))
 
     return links_labels
+
+
+def ckan_to_cdts_breadcrumbs(breadcrumb_content):
+    """
+    The Wet Builder requires a list of JSON objects.
+
+    There is no good way to get the breadcrumbs from the CKAN template blocks
+    into parsed JSON objects. We need to use an HTML Parser to do it.
+
+    See: https://cdts.service.canada.ca/app/cls/WET/gcweb/v4_1_0/cdts/samples/breadcrumbs-en.html
+    """
+    breadcrumb_html = BeautifulSoup(breadcrumb_content, 'html.parser')
+    cdts_breadcrumbs = [{
+        'title': _('Registry Home') if g.is_registry else _('Open Government Portal'),
+        'href': '/%s' % h.lang(),
+    }]
+    for breadcrumb in breadcrumb_html.find_all('li'):
+        cdts_breadcrumbs.append({
+            'title': breadcrumb.find('a').text or breadcrumb.text,
+            'href': breadcrumb.find('a')['href'] or '',
+        })
+    return cdts_breadcrumbs

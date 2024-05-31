@@ -5,9 +5,6 @@
     {% macro breadcrumb_content() %}
       {% block breadcrumb_content %}{% endblock %}
     {% endmacro %}
-    {% macro page_title() %}
-      {{ self.subtitle() }}
-    {% endmacro %}
     {% include "header.html" with context %}
   {% endblock -%}
   {% block toolbar %}{% endblock %}

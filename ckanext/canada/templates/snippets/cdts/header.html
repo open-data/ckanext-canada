@@ -1,19 +1,9 @@
 {% set lang = h.lang() %}
 
-{% set home_link_title = _('Registry Home') %}
-{% if not g.is_registry %}
-  {% set home_link_title = _('Open Government Portal') %}
-{% endif %}
-
-{% set breadcrumbs = [] %}
-{# TODO: solve the breadcrumbing #}
-{% if breadcrumb_content|trim %}
-  {% do breadcrumbs.append({"title": home_link_title, "href": '/' ~ (lang or 'en')}) %}
-  {% do breadcrumbs.append({"title": page_title, "href": h.current_url()}) %}
-{% endif %}
-
 {# See: https://github.com/wet-boew/cdts-sgdc/blob/v4.1.0/src/gcweb/appTop.ejs #}
 {# See: https://github.com/wet-boew/cdts-sgdc/blob/v4.1.0/src/gcweb/top.ejs #}
+{# TODO: app bar #}
+{# TODO: Adobe Analytics #}
 <script>
   let appTop = document.getElementById("app-top");
   if( appTop ){
@@ -28,7 +18,7 @@
           }
         ],
         "menuPath": "{{ h.url_for('canada.site_menu') }}",
-        "breadcrumbs": {{ breadcrumbs|tojson }},
+        "breadcrumbs": {{ h.ckan_to_cdts_breadcrumbs(breadcrumb_content)|tojson if breadcrumb_content|trim else [] }},
       });
       let nav = document.getElementById("wb-sm");
       if( nav ){
@@ -50,7 +40,7 @@
             "text": "{{ 'English' if lang == 'fr' else 'Français' }}",
           }
         ],
-        "breadcrumbs": {{ breadcrumbs|tojson }},
+        "breadcrumbs": {{ h.ckan_to_cdts_breadcrumbs(breadcrumb_content)|tojson if breadcrumb_content|trim else [] }},
       });
     {% endif %}
   }
