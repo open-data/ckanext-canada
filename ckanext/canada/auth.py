@@ -1,9 +1,5 @@
-from ckan.plugins.toolkit import (chained_auth_function,
-                                  auth_allow_anonymous_access,
-                                  config,
-                                  request)
+from ckan.plugins.toolkit import chained_auth_function, config
 from ckan.authz import has_user_permission_for_group_or_org, is_sysadmin
-from ckanext.canada.helpers import registry_network_access
 
 
 def _is_reporting_user(context):
