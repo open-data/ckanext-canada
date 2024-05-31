@@ -849,8 +849,9 @@ def ckan_to_cdts_breadcrumbs(breadcrumb_content):
         'href': '/%s' % h.lang(),
     }]
     for breadcrumb in breadcrumb_html.find_all('li'):
+        anchor = breadcrumb.find('a')
         cdts_breadcrumbs.append({
-            'title': breadcrumb.find('a').text or breadcrumb.text,
-            'href': breadcrumb.find('a')['href'] or '',
+            'title': breadcrumb.text if not anchor else anchor.text,
+            'href': '' if not anchor else anchor['href'],
         })
     return cdts_breadcrumbs

@@ -1,13 +1,165 @@
 {% set lang = h.lang() %}
 
+{% macro recombinant_menu_text(r_type) %}
+  {{- _(h.recombinant_get_geno(r_type).shortname or h.recombinant_get_geno(r_type).title) -}}
+{% endmacro %}
+
+{% macro recombinant_menu_link(r_type) %}
+  {{- h.url_for('recombinant.type_redirect', resource_name=r_type) -}}
+{% endmacro %}
+
 {# See: https://github.com/wet-boew/cdts-sgdc/blob/v4.1.0/src/gcweb/appTop.ejs #}
 {# See: https://github.com/wet-boew/cdts-sgdc/blob/v4.1.0/src/gcweb/top.ejs #}
-{# TODO: app bar #}
 {# TODO: Adobe Analytics #}
 <script>
   let appTop = document.getElementById("app-top");
   if( appTop ){
     {% if g.is_registry %}
+      const menuLinks = [
+        {% if g.userobj %}
+          {
+            "href": "{{ h.url_for('canada.links') }}",
+            "text": "{{ _('Home') }}",
+          },
+        {% else %}
+          {
+            "href": "{{ h.url_for('user.login') }}",
+            "text": "{{ _('Home') }}",
+          },
+        {% endif %}
+        {% if h.check_access('package_create') %}
+          {
+            "text": "{{ _('Open Data') }}",
+            "id": "open-data",
+            "subLinks": [
+              {
+                "subhref": "{{ h.url_for('dataset_new') }}",
+                "subtext": "{{ _('Create an Open Data Record') }}",
+              },
+              {
+                "subhref": "{{ recombinant_menu_link('experiment') }}",
+                "subtext": "{{ recombinant_menu_text('experiment') }}",
+              },
+              {
+                "subhref": "{{ recombinant_menu_link('nap5') }}",
+                "subtext": "{{ recombinant_menu_text('nap5') }}",
+              },
+              {
+                "subhref": "{{ recombinant_menu_link('inventory') }}",
+                "subtext": "{{ recombinant_menu_text('inventory') }}",
+              },
+            ],
+          },
+          {
+            "href": "{{ h.url_for('info_new') }}",
+            "text": "{{ _('Open Information') }}",
+          },
+          {
+            "text": "{{ _('Proactive Publication') }}",
+            "id": "proactive-publication",
+            "subLinks": [
+              {
+                "subhref": "{{ recombinant_menu_link('wrongdoing') }}",
+                "subtext": "{{ recombinant_menu_text('wrongdoing') }}",
+              },
+              {
+                "subhref": "{{ recombinant_menu_link('contractsa') }}",
+                "subtext": "{{ recombinant_menu_text('contractsa') }}",
+              },
+              {
+                "subhref": "{{ recombinant_menu_link('ati') }}",
+                "subtext": "{{ recombinant_menu_text('ati') }}",
+              },
+              {
+                "subhref": "{{ recombinant_menu_link('briefingt') }}",
+                "subtext": "{{ recombinant_menu_text('briefingt') }}",
+              },
+              {
+                "subhref": "{{ recombinant_menu_link('contracts') }}",
+                "subtext": "{{ recombinant_menu_text('contracts') }}",
+              },
+              {
+                "subhref": "{{ recombinant_menu_link('dac') }}",
+                "subtext": "{{ recombinant_menu_text('dac') }}",
+              },
+              {
+                "subhref": "{{ recombinant_menu_link('grants') }}",
+                "subtext": "{{ recombinant_menu_text('grants') }}",
+              },
+              {
+                "subhref": "{{ recombinant_menu_link('hospitalityq') }}",
+                "subtext": "{{ recombinant_menu_text('hospitalityq') }}",
+              },
+              {
+                "subhref": "{{ recombinant_menu_link('reclassification') }}",
+                "subtext": "{{ recombinant_menu_text('reclassification') }}",
+              },
+              {
+                "subhref": "{{ recombinant_menu_link('qpnotes') }}",
+                "subtext": "{{ recombinant_menu_text('qpnotes') }}",
+              },
+              {
+                "subhref": "{{ h.url_for('info_new') }}?collection=parliament_report",
+                "subtext": "{{ _('Reports Tabled in Parliament') }}",
+              },
+              {
+                "subhref": "{{ recombinant_menu_link('travelq') }}",
+                "subtext": "{{ recombinant_menu_text('travelq') }}",
+              },
+              {
+                "subhref": "{{ recombinant_menu_link('travela') }}",
+                "subtext": "{{ recombinant_menu_text('travela') }}",
+              },
+              {
+                "subhref": "{{ recombinant_menu_link('qpnotes') }}",
+                "subtext": "{{ recombinant_menu_text('qpnotes') }}",
+              },
+              {
+                "subhref": "{{ h.url_for('info_new') }}?collection=transition",
+                "subtext": "{{ _('New or incoming ministers') }}",
+              },
+              {
+                "subhref": "{{ h.url_for('info_new') }}?collection=transition_deputy",
+                "subtext": "{{ _('New or incoming deputy heads') }}",
+              },
+              {
+                "subhref": "{{ h.url_for('info_new') }}?collection=parliament_committee",
+                "subtext": "{{ _('Parliamentary Committee appearances for ministers') }}",
+              },
+              {
+                "subhref": "{{ h.url_for('info_new') }}?collection=parliament_committee_deputy",
+                "subtext": "{{ _('Parliamentary Committee appearances for deputy heads') }}",
+              },
+            ],
+          },
+          {
+            "text": "{{ _('Open Dialogue') }}",
+            "id": "open-dialogue",
+            "subLinks": [
+              {
+                "subhref": "{{ recombinant_menu_link('consultations') }}",
+                "subtext": "{{ recombinant_menu_text('consultations') }}",
+              },
+              {
+                "subhref": "/static/data/consultations.csv",
+                "subtext": "{{ _('Consultations master dataset') }}",
+              },
+            ],
+          },
+          {
+            "href": "{{ h.url_for('dataset_search') }}",
+            "text": "{{ _('Search') }}",
+          },
+          {
+            "href": "{{ h.url_for('organization.index') }}",
+            "text": "{{ _('Organizations') }}",
+          },
+        {% endif %}
+        {
+          "href": "{{ h.url_for('canada.view_help') }}",
+          "text": "{{ _('FAQ') }}",
+        },
+      ];
       appTop.outerHTML = wet.builder.appTop({
         "search": false,
         "lngLinks": [
@@ -17,19 +169,80 @@
             "text": "{{ 'English' if lang == 'fr' else 'Français' }}",
           }
         ],
-        "menuPath": "{{ h.url_for('canada.site_menu') }}",
+        {% if g.userobj %}
+          "appSettings": [{"href": "{{ h.url_for('user.edit', id=g.userobj.name) }}"}],
+          "signOut": [{"href": "{{ h.url_for('user.logout') }}"}],
+        {% else %}
+          "signIn": [{"href": "{{ h.url_for('user.login') }}"}],
+        {% endif %}
+        "menuLinks": menuLinks,
         "breadcrumbs": {{ h.ckan_to_cdts_breadcrumbs(breadcrumb_content)|tojson if breadcrumb_content|trim else [] }},
       });
-      let nav = document.getElementById("wb-sm");
-      if( nav ){
-        nav.classList.add("visible-xs");
-        nav.classList.add("visible-sm");
-      }
-      let mobileAppBar = document.getElementsByClassName("app-bar-mb");
-      if( mobileAppBar.length > 0 ){
-        mobileAppBar[0].classList.remove("visible-xs-block");
-        mobileAppBar[0].classList.add("hidden");
-      }
+      {% if g.userobj %}
+        {# The Wet Builder has no options for custom buttons in the App Bar. Have to JS inject here. #}
+        {% if lang == 'fr' %}
+          {% set help_link = h.portal_url() ~ "/fr/guide-operations-registre/ton-compte" %}
+        {% else %}
+          {% set help_link = h.portal_url() ~ "/en/registry-operations-guide/your-account" %}
+        {% endif %}
+        const extraAppBarButtons = [
+          {
+            "text": "{{ _('Dashboard') }}",
+            "href": "{{ h.url_for('dashboard.index') }}",
+            "icon": "fa-tachometer",
+            "btnClass": "",
+            "location": "before",
+          },
+          {% if g.userobj.sysadmin %}
+            {
+              "text": "{{ _('Admin') }}",
+              "href": "{{ h.url_for('admin.index') }}",
+              "icon": "fa-gavel",
+              "btnClass": "",
+              "location": "before",
+            },
+          {% endif %}
+          {
+            "text": "{{ _('Get Help') }}",
+            "href": "{{ help_link }}",
+            "icon": "fa-question",
+            "btnClass": "btn-warning",
+            "location": "after",
+          }
+        ];
+        function _add_custom_app_bar_buttons(parent_node){
+          for(let _i = 0; _i < extraAppBarButtons.length; _i++){
+            let buttonNode = document.createElement('li');
+            buttonNode.innerHTML = '<a href="' + extraAppBarButtons[_i]["href"] + '" class="btn ' + extraAppBarButtons[_i]["btnClass"] + '"><span class="fa ' + extraAppBarButtons[_i]["icon"] + '" aria-hidden="true"></span>' + extraAppBarButtons[_i]["text"] + '</a>';
+            if( extraAppBarButtons[_i]["location"] == 'before' ){
+              parent_node.prepend(buttonNode);
+            }else if( extraAppBarButtons[_i]["location"] == 'after'){
+              parent_node.append(buttonNode);
+            }
+          }
+        }
+        function _add_sign_in_context_section(parent_node){
+          let signInContextNode = document.createElement('div');
+          signInContextNode.classList.add('canada-sign-in-context')
+          signInContextNode.innerHTML = '<div class="container">{{ _('Signed in as') }}&nbsp;<a href="{{ h.url_for('user.read', id=g.userobj.name) }}" title="{{ _('View profile') }}"><span class="username">{{ g.userobj.display_name }}</span></a></div>';
+          parent_node.append(signInContextNode);
+        }
+        let appBar = document.getElementsByClassName('app-bar');
+        if( appBar.length > 0 ){
+          _add_sign_in_context_section(appBar[0]);
+          let accountBar = appBar[0].getElementsByClassName('app-list-account');
+          if( accountBar.length > 0 ){
+            _add_custom_app_bar_buttons(accountBar[0]);
+          }
+        }
+        let appBarMobile = document.getElementsByClassName('app-bar-mb');
+        if( appBarMobile.length > 0 ){
+          let accountBar = appBarMobile[0].getElementsByClassName('app-list-account');
+          if( accountBar.length > 0 ){
+            _add_custom_app_bar_buttons(accountBar[0]);
+          }
+        }
+      {% endif %}
     {% else %}
       appTop.outerHTML = wet.builder.top({
         "search": true,
