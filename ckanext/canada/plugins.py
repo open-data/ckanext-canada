@@ -111,6 +111,9 @@ class CanadaSecurityPlugin(CkanSecurityPlugin):
         restricted_blueprints = [
             'canada.login',
             'user.login',
+            'user.request_reset',
+            'canada.recover_username',
+            'canada.register',
             'canada.action',
             'api.action', # change if need to narrow down the scope
         ]
@@ -472,7 +475,6 @@ ckanext.canada:schemas/presets.yaml
             'group_show': auth.group_show,
             'organization_list': auth.organization_list,
             'organization_show': auth.organization_show,
-            'user_create': auth.user_create,
         }
 
     # IXloader

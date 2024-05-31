@@ -31,15 +31,6 @@ def datastore_upsert(up_func, context, data_dict):
     return up_func(context, data_dict)
 
 
-@chained_auth_function
-@auth_allow_anonymous_access
-def user_create(up_func, context, data_dict=None):
-    # additional check to ensure user can access the Request an Account page
-    # only possible if accessing from GOC network
-    if not registry_network_access():
-        return {'success': False}
-    return up_func(context, data_dict)
-
 def view_org_members(context, data_dict):
     user = context.get('user')
     can_view = has_user_permission_for_group_or_org(data_dict.get(u'id'), user, 'manage_group')
