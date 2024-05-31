@@ -43,12 +43,6 @@
       </script>
     {% endif %}
   {% endblock %}
-  {% block adobe_analytics %}
-    {% if not g.is_registry and h.adobe_analytics_js() %}
-      {# TODO:  check in the refTop stuff... #}
-      <script src="{{ h.adobe_analytics_js() }}"></script>
-    {% endif %}
-  {% endblock %}
   {% set loop11_key = h.loop11_key() %}
   {% if loop11_key %}
     <script type="text/javascript">

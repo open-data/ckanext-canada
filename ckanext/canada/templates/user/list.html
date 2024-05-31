@@ -103,9 +103,6 @@
     {% snippet 'snippets/cdts/footer_scripts.html' %}
     {% asset 'canada_public/csrf' %}
     {% asset 'canada_public/analytics' %}
-    {% block adobe_analytics_footer %}
-      <script type="text/javascript">if( typeof _satellite !== "undefined" ){ _satellite.pageBottom(); }</script>
-    {%- endblock -%}
     {% block google_analytics_footer %}{%- endblock -%}
   {% endif %}
   {{ super() }}

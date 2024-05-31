@@ -261,7 +261,14 @@ def adobe_analytics_lang():
     return 'eng'
 
 def adobe_analytics_js():
-    return str(config.get('adobe_analytics.js', ''))
+    """
+    Return partial Adobe Analytics JS address.
+
+    Exclude `//assets.adobedtm.com/` prefix and `.js` suffix.
+
+    See: https://github.com/wet-boew/cdts-sgdc/blob/v4.1.0/src/gcweb/refTop.ejs
+    """
+    return str(config.get('ckanext.canada.adobe_analytics.js', ''))
 
 
 def adobe_analytics_creator(organization=None, package=None):

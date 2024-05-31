@@ -2,10 +2,20 @@
 <script src="{{ h.cdts_asset('/compiled/wet-' ~ (h.lang() or 'en') ~ '.js', theme=False) }}"></script>
 {# See: https://github.com/wet-boew/cdts-sgdc/blob/v4.1.0/src/gcweb/refTop.ejs #}
 <script>
-  //TODO: add Adobe Analytics loading in here with webAnalytics
   document.write(
     wet.builder.refTop({
-      "isApplication": "{{ 1 if g.is_registry else 0 }}",
+      {% if g.is_registry %}
+        "isApplication": true,
+      {% else %}
+        "isApplication": false,
+        {% if h.adobe_analytics_js() %}
+          "webAnalytics": [
+            {
+              "custom": "{{ h.adobe_analytics_js() }}",
+            }
+          ],
+        {% endif %}
+      {% endif %}
     })
   );
 </script>
