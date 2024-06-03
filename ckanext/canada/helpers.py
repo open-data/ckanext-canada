@@ -31,7 +31,6 @@ except ImportError:
     XLoaderFormats = None
 import os
 import ipaddress
-from flask import has_request_context
 
 
 ORG_MAY_PUBLISH_OPTION = 'canada.publish_datasets_organization_name'
@@ -782,10 +781,6 @@ def registry_network_access():
     Only allow requests from GOC network to access
     user account registration view
     """
-    if not has_request_context():
-        # outside of request (system functions), allow
-        return True
-
     remote_addr = request.headers.get('X-Forwarded-For') or \
                   request.environ.get('REMOTE_ADDR')
     try:
