@@ -789,9 +789,7 @@ def registry_network_access():
         return False
 
     netlist_path = config.get('ckanext.canada.registry_network_list', '')
-    if not netlist_path:
-        return False
-    if not os.path.isfile(netlist_path):
+    if not netlist_path or not os.path.isfile(netlist_path):
         return False
 
     with open(netlist_path) as allow_list:
