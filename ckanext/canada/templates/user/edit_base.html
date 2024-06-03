@@ -1,0 +1,15 @@
+{% ckan_extends %}
+
+{% set user = g.userobj %}
+
+{% block subtitle %}
+  {% if is_myself %}
+    {{ _('Edit My Profile') }}
+  {% else %}
+    {{ _('Edit Profile') }}
+  {% endif %}
+{% endblock %}
+
+{% block primary_content %}
+  {% block primary_content_inner %}{% endblock %}
+{% endblock %}

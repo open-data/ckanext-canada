@@ -1,0 +1,74 @@
+<script src="{{ h.cdts_asset('/compiled/soyutils.js', theme=False) }}"></script>
+<script src="{{ h.cdts_asset('/compiled/wet-' ~ (h.lang() or 'en') ~ '.js', theme=False) }}"></script>
+{# See: https://github.com/wet-boew/cdts-sgdc/blob/v4.1.0/src/gcweb/refTop.ejs #}
+<script>
+  document.write(
+    wet.builder.refTop({
+      {% if g.is_registry %}
+        "isApplication": true,
+      {% else %}
+        "isApplication": false,
+        {% if h.adobe_analytics_js() %}
+          "webAnalytics": [
+            {
+              "custom": "{{ h.adobe_analytics_js() }}",
+            }
+          ],
+        {% endif %}
+      {% endif %}
+    })
+  );
+</script>
+{# Styles done inline so first paint looks good. #}
+<style>
+  body .app-bar-mb nav#info-pnl{
+    display: none !important;
+  }
+  body .app-bar .row > section{
+    width: 0 !important;
+    display: none !important;
+  }
+  body .app-bar nav{
+    width: 100% !important;
+  }
+  body .app-bar nav ul.app-list-account{
+    margin-top: 9px !important;
+  }
+  body .app-bar nav ul.app-list-account > li:first-of-type{
+    margin-right: 4.15px !important;
+  }
+  body div[class^="app-bar"] nav .btn.btn-warning{
+    color: #000000;
+    background-color: #f2d40d;
+    border-color: #917f08;
+  }
+  body div[class^="app-bar"] nav .btn.btn-warning:hover,
+  body div[class^="app-bar"] nav .btn.btn-warning:active,
+  body div[class^="app-bar"] nav .btn.btn-warning:focus{
+    background-color: #c2aa0a;
+  }
+  body #cdts-signout-btn,
+  body #cdts-signout-btn-mobile,
+  body div[class^="app-bar"] nav .btn.btn-danger{
+    color: #ffffff;
+    background-color: #bc3331;
+    border-color: #6b1d1c;
+  }
+  body #cdts-signout-btn:hover,
+  body #cdts-signout-btn:active,
+  body #cdts-signout-btn:focus,
+  body #cdts-signout-btn-mobile:hover,
+  body #cdts-signout-btn-mobile:active,
+  body #cdts-signout-btn-mobile:focus,
+  body div[class^="app-bar"] nav .btn.btn-danger:hover,
+  body div[class^="app-bar"] nav .btn.btn-danger:active,
+  body div[class^="app-bar"] nav .btn.btn-danger:focus{
+    background-color: #942826;
+  }
+  .canada-sign-in-context{
+    padding-top: 5px;
+    padding-bottom: 5px;
+    text-align: right;
+    background-color: #E1E4E7;
+  }
+</style>

@@ -28,6 +28,7 @@ setup(
     canada_forms=ckanext.canada.plugins:DataGCCAForms
     canada_datasets=ckanext.canada.plugins:CanadaDatasetsPlugin
     canada_security=ckanext.canada.plugins:CanadaSecurityPlugin
+    canada_theme=ckanext.canada.plugins:CanadaThemePlugin
 
     [babel.extractors]
     ckan = ckan.lib.extract:extract_ckan

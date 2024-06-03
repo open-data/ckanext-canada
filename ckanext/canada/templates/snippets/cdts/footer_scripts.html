@@ -1,0 +1,15 @@
+{# See: https://github.com/wet-boew/cdts-sgdc/blob/v4.1.0/src/gcweb/refFooter.ejs #}
+<script>
+  document.write(
+    wet.builder.refFooter({
+      {% if g.is_registry %}
+        "isApplication": true,
+      {% else %}
+        "isApplication": false,
+        {% if h.adobe_analytics_js() %}
+          "webAnalytics": true,
+        {% endif %}
+      {% endif %}
+    })
+  );
+</script>

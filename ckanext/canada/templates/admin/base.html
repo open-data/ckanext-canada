@@ -1,0 +1,22 @@
+{% ckan_extends %}
+
+{% block breadcrumb_content %}
+  {% if g.is_registry %}
+    {{ h.build_nav('admin.index', _('Admin')) }}
+  {% else %}
+    {{ super() }}
+  {% endif  %}
+{% endblock %}
+
+{% block content_primary_nav %}
+  {% if g.is_registry %}
+    {{ h.build_nav_icon('canada.ckan_admin_index', _('Admins'), icon='user-plus') }}
+    {{ h.build_nav_icon('user.index', _('Users'), icon='user') }}
+    {{ h.build_nav_icon('admin.trash', _('Trash'), icon='trash-o') }}
+    {{ h.build_nav_icon('canada.ckanadmin_publish', _('Publish Records'), icon='cloud-upload') }}
+    {{ h.build_nav_icon('canada.ckanadmin_job_queue', _('Job Queue'), icon='tasks') }}
+    {{ h.build_extra_admin_nav() }}
+  {% else %}
+    {{ super() }}
+  {% endif  %}
+{% endblock %}

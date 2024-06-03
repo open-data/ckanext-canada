@@ -1,0 +1,5 @@
+{% call dictionary_field(_('Reference')) %}
+  <a href="{% url_for 'dataset.read', id='cd8fad92-b276-4250-972f-2d6c40ca04fa' %}">{{ _('Canadian Provinces and Territories') }}</a>
+{% endcall %}
+
+{% include 'tabledesigner/view_snippets/choice.html' %}

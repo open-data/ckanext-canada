@@ -1,0 +1,22 @@
+{% ckan_extends %}
+
+{% block primary_content %}
+  <div class="col-md-12 mrgn-tp-md">
+    {{ self.form() }}
+  </div>
+{% endblock %}
+
+{% block scripts %}
+  {% if g.is_registry %}
+    <script type="text/javascript" src="{{ h.url_for_static('/registry_resource_edit.js') }}" ></script>
+    {% asset 'canada_internal/guess_mimetype' %}
+  {% endif %}
+  {{ super() }}
+{% endblock %}
+
+{% block custom_styles %}
+  {{ super() }}
+  {% if g.is_registry %}
+    {% asset 'vendor/select2-css' %}
+  {% endif %}
+{% endblock %}

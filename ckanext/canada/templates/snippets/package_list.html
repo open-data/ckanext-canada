@@ -1,0 +1,11 @@
+{% ckan_extends %}
+
+{% block package_list %}
+  {% if packages %}
+    <ul class="{{ list_class or 'dataset-list list-unstyled' }}">
+      {% block package_list_inner %}
+        {{ super() }}
+      {% endblock %}
+    </ul>
+  {% endif %}
+{% endblock %}

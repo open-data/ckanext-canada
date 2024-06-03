@@ -1,0 +1,10 @@
+<div class="row">
+  <div class="col-md-4">
+    <label>{{ h.scheming_language_text(field.label) }}</label>
+  </div>
+  <div class="col-md-8">
+    {% if data[field.field_name] %}
+      {{ data[field.field_name].split()[0] }}
+    {% endif %}
+  </div>
+</div>

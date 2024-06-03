@@ -230,7 +230,7 @@ canada_views.add_url_rule(
 
 @canada_views.route('/recover-username', methods=['GET', 'POST'])
 def recover_username():
-    if not h.is_registry() or not h.plugin_loaded('gcnotify'):
+    if not g.is_registry or not h.plugin_loaded('gcnotify'):
         # we only want this route on the Registry, and the email template
         # is monkey patched in GC Notify so we need that loaded
         return abort(404)
@@ -290,9 +290,9 @@ def recover_username():
 
 
 def canada_search(package_type):
-    if h.is_registry() and not g.user:
+    if g.is_registry and not g.user:
         return abort(403)
-    if not h.is_registry() and package_type in h.recombinant_get_types():
+    if not g.is_registry and package_type in h.recombinant_get_types():
         return h.redirect_to('dataset.search', package_type='dataset')
     return dataset_search(package_type)
 
@@ -620,7 +620,7 @@ def _clean_check_type_errors(post_data, fields, pk_fields, choice_fields):
 
 @canada_views.route('/', methods=['GET'])
 def home():
-    if not h.is_registry():
+    if not g.is_registry:
         return h.redirect_to('dataset.search')
     if not g.user:
         return h.redirect_to('user.login')
@@ -635,7 +635,7 @@ def home():
 
 @canada_views.route('/links', methods=['GET'])
 def links():
-    if not h.is_registry():
+    if not g.is_registry:
         return h.redirect_to('dataset.search')
     return render('home/quick_links.html', extra_vars={'is_sysadmin': is_sysadmin(g.user)})
 
@@ -739,6 +739,9 @@ def delete_datastore_table(id, resource_id):
 
 @canada_views.route('/help', methods=['GET'])
 def view_help():
+    if not g.is_registry:
+        return abort(404)
+
     def _get_help_text(language):
         return pkg_resources.resource_string(
             __name__,
@@ -785,13 +788,13 @@ def view_help():
         # the tags and just leave the text.
         faq_section.drop_tag()
 
-    # Get FAQ group header and set it as heading 2 to comply with
+    # Get FAQ group header and set it as heading 3 to comply with
     # accessible heading ranks
     for faq_group in h.xpath('//h1'):
-        faq_group.tag = 'h2'
+        faq_group.tag = 'h3'
 
     return render('help.html', extra_vars={
-        'faq_html': html.tostring(h),
+        'faq_html': html.tostring(h).decode('utf-8'),
         # For use with the inline debugger.
         'faq_text': faq_text
     })
@@ -1232,3 +1235,11 @@ def ckan_admin_index():
             continue
         sysadmins.append(admin.name)
     return render(u'admin/index.html', extra_vars={'sysadmins': sysadmins})
+
+
+@canada_views.route('/ckan-admin/config', methods=['GET', 'POST'])
+def ckan_admin_config():
+    """
+    404 this page always.
+    """
+    return abort(404)

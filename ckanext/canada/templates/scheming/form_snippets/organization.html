@@ -1,0 +1,8 @@
+{% ckan_extends %}
+
+{% block organization_option %}
+  {% set title = h.split_piped_bilingual_field(organization.title, h.lang())[:70] %}
+  <option value="{{ organization.id }}" {% if selected_org %} selected="selected" {% endif %}>{{ title }}</option>
+{% endblock %}
+
+{% block package_metadata_fields_visibility %}{% endblock %}

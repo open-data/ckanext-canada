@@ -1,0 +1,25 @@
+{% ckan_extends %}
+
+{% block subtitle %}
+  {{ user.display_name }}
+{% endblock %}
+
+{% block page_heading %}
+  {{ super.super() }}
+{% endblock %}
+
+{% block primary_content_inner %}
+  <h2 class="wb-inv">{{ _('Datasets') }}</h2>
+  {% block package_list %}
+    {{ super() }}
+  {% endblock %}
+{% endblock %}
+
+{%- block other_info -%}
+  <h3>{{_('Organizations')}}</h3>
+  <ul>
+    {% for org in h.user_organizations(user) %}
+      <li><a href="{{ h.url_for(org.type + '.read', id=org.name) }}">{{h.split_piped_bilingual_field(org.title, h.lang())}}</a></li>
+    {% endfor %}
+  </ul>
+{%- endblock -%}
