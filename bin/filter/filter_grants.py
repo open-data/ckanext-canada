@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 "filter for grants.csv and grants-nil.csv"
 
 import csv

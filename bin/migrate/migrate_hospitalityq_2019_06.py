@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 import unicodecsv
 import sys
@@ -62,7 +62,7 @@ if sys.argv[1:]:
 def error(msg, value=''):
     sys.stderr.write(
         line['owner_org'] + ' ' + line['ref_number'] + ' ' + msg
-        + ' ' + unicode(value) + '\n')
+        + ' ' + str(value) + '\n')
     if err_csv:
         err_csv.writerow(original)
 

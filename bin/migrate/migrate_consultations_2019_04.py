@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 """
 This is an "update" script not a migrate script because it only
 outputs records to be updated in-place, not a complete migrated

@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 import unicodecsv
 import sys
@@ -17,7 +17,7 @@ out_csv.writeheader()
 def norm_money(m):
     if '.' not in m and m[-3:-2] == ',' and len(m.split(',')) == 2:
         m = m.replace(',', '.')
-    return unicode(Decimal(m))
+    return str(Decimal(m))
 
 
 for line in in_csv:

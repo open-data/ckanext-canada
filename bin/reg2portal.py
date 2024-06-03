@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 """
 Script uploading input files from registry to portal via CKAN API.
 

@@ -1,8 +1,7 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python3
 
 import csv
 import sys
-import codecs
 
 REMOVE_COLUMNS = [
     'record_created',
@@ -10,13 +9,15 @@ REMOVE_COLUMNS = [
     'user_modified',
 ]
 
+BOM = "\N{bom}"
+
 def main():
-    bom = sys.stdin.read(3)
+    bom = sys.stdin.read(1)  # first code point
     if not bom:
         # empty file -> empty file
         return
-    assert bom == codecs.BOM_UTF8
-    sys.stdout.write(codecs.BOM_UTF8)
+    assert bom == BOM
+    sys.stdout.write(BOM)
 
     reader = csv.DictReader(sys.stdin)
     outnames = ['owner_org'] + [f for f in reader.fieldnames

@@ -1,8 +1,8 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 r'''
 Example usage:
 
-paster recombinant combine ati | ./ati_to_datastore_create.py \
+ckan recombinant combine ati | ./ati_to_datastore_create.py \
  | ckanapi action datastore_create -i -r http://open.canada.ca/data -a ...
 '''
 
@@ -65,7 +65,7 @@ for rec in csv:
     rec['org_title_en'] = title[0]
     rec['org_title_fr'] = title[1]
     rec['ati_email'] = org_dict.get(rec['owner_org'], '')
-    
+
 print json.dumps({
     'resource_id': '19383ca2-b01a-487d-88f7-e1ffbc7d39c2',
     'fields': [

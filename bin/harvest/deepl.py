@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 """
 Usage: deepl.py strings.csv deepldb.csv SOURCE_LANG TARGET_LANG AUTH_KEY
@@ -43,7 +43,7 @@ def deepl_query(b):
     return [(
         s,
         r['text'],
-        unicode(datetime.utcnow()),
+        str(datetime.utcnow()),
         r['detected_source_language'],
         source_lang,
         target_lang) for r, s in zip(resp, b)]

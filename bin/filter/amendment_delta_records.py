@@ -1,11 +1,12 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 import unicodecsv
 import sys
-import codecs
 import sqlite3
 import tempfile
 import json
+
+from codecs import BOM_UTF8
 
 assert sys.argv[1] and sys.argv[2], 'usage: amendment_delta_records.py input.csv output.csv'
 AMENDMENT_COLUMN = 'amendment_number'
@@ -42,7 +43,7 @@ with tempfile.NamedTemporaryFile() as dbfile:
         'PRIMARY KEY (owner_org, pk, amendment))')
 
     with open(sys.argv[1], 'rb') as infile:
-        assert infile.read(3) == codecs.BOM_UTF8
+        assert infile.read(3) == BOM_UTF8  # first 3 bytes, we are in read,bytes mode
         in_csv = unicodecsv.DictReader(infile, encoding='utf-8')
         f0 = in_csv.fieldnames[0]
 
@@ -56,7 +57,7 @@ with tempfile.NamedTemporaryFile() as dbfile:
                 (owner_org, pk, amendment, original))
 
     with open(sys.argv[2], 'wb') as outfile:
-        outfile.write(codecs.BOM_UTF8)
+        outfile.write(BOM_UTF8)  # we are in write,bytes mode
         out_csv = unicodecsv.DictWriter(
             outfile, fieldnames=in_csv.fieldnames, encoding='utf-8')
         out_csv.writeheader()
@@ -76,7 +77,7 @@ with tempfile.NamedTemporaryFile() as dbfile:
             for i, row in iterator:
                 row[AMENDMENT_COLUMN] = "%02d" % i
                 out_csv.writerow({
-                    k: v for (k, v) in row.iteritems()
+                    k: v for (k, v) in row.items()
                     if k in (f0, AMENDMENT_COLUMN, OWNER_ORG, OWNER_ORG_TITLE)
                         or v != prev[k]})
                 prev = row

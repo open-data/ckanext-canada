@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # coding=utf-8
 
 """
@@ -23,9 +23,9 @@ def main(argv):
                 outfile = arg
 
     except Exception:
-        print 'Usage: ckanapi dump organizations --all -c $CONFIG_INI | ' \
+        print('Usage: ckanapi dump organizations --all -c $CONFIG_INI | ' \
               'python bin/migrate-org-to-scheming.py -o/--output ' \
-              'outfile.jsonl '
+              'outfile.jsonl ')
         sys.exit(1)
 
     output = codecs.open(outfile, 'w', encoding='utf-8')

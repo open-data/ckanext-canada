@@ -23,9 +23,9 @@ csv_files := \
 	adminaircraft.csv
 
 fdir := $(PD_FILTER_SCRIPT_DIRECTORY)
-paster := $(REGISTRY_PASTER_COMMAND)
+ckan_command := $(REGISTRY_CKAN_COMMAND)
 registry_python := $(REGISTRY_PYTHON_COMMAND)
-combine := --plugin=ckanext-recombinant recombinant combine
+combine := recombinant combine $(PD_MAKE_VERBOSITY_FLAG)
 registry_ini := $(REGISTRY_INI)
 portal_ini := $(PORTAL_INI)
 ckanapi := $(REGISTRY_CKANAPI_COMMAND)
@@ -68,8 +68,8 @@ help:
 
 ifeq ($(fdir),)
 $(error PD_FILTER_SCRIPT_DIRECTORY is undefined)
-else ifeq ($(paster),)
-$(error REGISTRY_PASTER_COMMAND is undefined)
+else ifeq ($(ckan_command),)
+$(error REGISTRY_CKAN_COMMAND is undefined)
 else ifeq ($(registry_python),)
 $(error REGISTRY_PYTHON_COMMAND is undefined)
 else ifeq ($(registry_ini),)
@@ -117,7 +117,7 @@ nightly-staging: filter-all upload-all rebuild-all
 dump-all:
 # don't generate all at once when running in parallel
 ifeq ($(findstring j,$(MAKEFLAGS)),)
-	$(paster) $(combine) -a -d $(workdir) -c $(registry_ini)
+	$(ckan_command) -c $(registry_ini) $(combine) -a -d $(workdir)
 endif
 
 .PHONY: filter-all
@@ -160,14 +160,14 @@ upload-ati: $(workdir)/filtered/ati-nil.csv $(workdir)/filtered/ati-all.csv
 .PHONY: rebuild-ati
 rebuild-ati: $(workdir)/filtered/ati.csv $(workdir)/filtered/ati-nil.csv
 	@$(echo_date) Rebuilding ATI Summaries...
-	@$(paster) --plugin=ckanext-canada ati rebuild --lenient -c $(portal_ini) \
-	-f "$(workdir)/filtered/ati.csv" "$(workdir)/filtered/ati-nil.csv"
+	@$(ckan_command) -c $(portal_ini) pd rebuild ati --lenient --has-nil \
+	-f "$(workdir)/filtered/ati.csv" -f "$(workdir)/filtered/ati-nil.csv"
 
 $(workdir)/ati.csv:
-	$(paster) $(combine) ati -d $(workdir) -c $(registry_ini)
+	$(ckan_command) -c $(registry_ini) $(combine) ati -d $(workdir)
 
 $(workdir)/ati-nil.csv:
-	$(paster) $(combine) ati-nil -d $(workdir) -c $(registry_ini)
+	$(ckan_command) -c $(registry_ini) $(combine) ati-nil -d $(workdir)
 
 $(workdir)/filtered/ati.csv: $(workdir)/ati.csv
 	$(fdir)/filter_ati.py < $< > $@
@@ -200,10 +200,10 @@ rebuild-briefingt: $(workdir)/filtered/briefingt.csv $(workdir)/filtered/briefin
 	@$(oc_search) import_data_csv --csv "$(workdir)/filtered/briefingt.csv" --search briefingt --quiet
 
 $(workdir)/briefingt.csv:
-	$(paster) $(combine) briefingt -d $(workdir) -c $(registry_ini)
+	$(ckan_command) -c $(registry_ini) $(combine) briefingt -d $(workdir)
 
 $(workdir)/briefingt-nil.csv:
-	$(paster) $(combine) briefingt-nil -d $(workdir) -c $(registry_ini)
+	$(ckan_command) -c $(registry_ini) $(combine) briefingt-nil -d $(workdir)
 
 $(workdir)/filtered/briefingt.csv: $(workdir)/briefingt.csv
 	$(fdir)/filter_modified_created.py < $< > $@
@@ -236,10 +236,10 @@ rebuild-qpnotes: $(workdir)/filtered/qpnotes.csv $(workdir)/filtered/qpnotes-nil
 	# @$(oc_search) import_data_csv --csv "$(workdir)/filtered/qpnotes-nil.csv" --search qpnotes --nothing_to_report
 
 $(workdir)/qpnotes.csv:
-	$(paster) $(combine) qpnotes -d $(workdir) -c $(registry_ini)
+	$(ckan_command) -c $(registry_ini) $(combine) qpnotes -d $(workdir)
 
 $(workdir)/qpnotes-nil.csv:
-	$(paster) $(combine) qpnotes-nil -d $(workdir) -c $(registry_ini)
+	$(ckan_command) -c $(registry_ini) $(combine) qpnotes-nil -d $(workdir)
 
 $(workdir)/filtered/qpnotes.csv: $(workdir)/qpnotes.csv
 	$(fdir)/filter_qpnotes.py < $< > $@
@@ -270,10 +270,10 @@ rebuild-contracts: $(workdir)/filtered/contracts.csv $(workdir)/filtered/contrac
 	@$(oc_search) import_data_csv --csv "$(workdir)/filtered/contract-amendments.csv" --search contracts --quiet
 
 $(workdir)/contracts.csv:
-	$(paster) $(combine) contracts -d $(workdir) -c $(registry_ini)
+	$(ckan_command) -c $(registry_ini) $(combine) contracts -d $(workdir)
 
 $(workdir)/contracts-nil.csv:
-	$(paster) $(combine) contracts-nil -d $(workdir) -c $(registry_ini)
+	$(ckan_command) -c $(registry_ini) $(combine) contracts-nil -d $(workdir)
 
 $(workdir)/filtered/contracts.csv: $(workdir)/contracts.csv
 	$(fdir)/filter_contracts.py < $< > $@
@@ -296,7 +296,7 @@ upload-contractsa: $(workdir)/filtered/contractsa.csv
 	# no search for aggregated contracts
 
 $(workdir)/contractsa.csv:
-	$(paster) $(combine) contractsa -d $(workdir) -c $(registry_ini)
+	$(ckan_command) -c $(registry_ini) $(combine) contractsa -d $(workdir)
 
 $(workdir)/filtered/contractsa.csv: $(workdir)/contractsa.csv
 	$(fdir)/filter_contractsa.py < $< > $@
@@ -334,7 +334,7 @@ rebuild-consultations:
 	# no search for consultations
 
 $(workdir)/consultations.csv:
-	$(paster) $(combine) consultations -d $(workdir) -c $(registry_ini)
+	$(ckan_command) -c $(registry_ini) $(combine) consultations -d $(workdir)
 
 $(workdir)/filtered/consultations.csv: $(workdir)/consultations.csv
 	$(fdir)/filter_consultations.py < $< > $@
@@ -364,7 +364,7 @@ rebuild-dac: $(workdir)/filtered/dac.csv $(workdir)/dac.csv
 	# no search for dac
 
 $(workdir)/dac.csv:
-	$(paster) $(combine) dac -d $(workdir) -c $(registry_ini)
+	$(ckan_command) -c $(registry_ini) $(combine) dac -d $(workdir)
 
 $(workdir)/filtered/dac.csv: $(workdir)/dac.csv
 	$(fdir)/filter_dac.py < $< > $@
@@ -389,7 +389,7 @@ rebuild-experiment: $(workdir)/filtered/experiment.csv $(workdir)/experiment.csv
 	@$(echo_date) Placeholder for rebuilding Experimentation Inventory...
 
 $(workdir)/experiment.csv:
-	$(paster) $(combine) experiment -d $(workdir) -c $(registry_ini)
+	$(ckan_command) -c $(registry_ini) $(combine) experiment -d $(workdir)
 
 $(workdir)/filtered/experiment.csv: $(workdir)/experiment.csv
 	$(fdir)/filter_experiment.py < $< > $@
@@ -420,10 +420,10 @@ rebuild-grants: $(workdir)/filtered/grants.csv $(workdir)/filtered/grants-nil.cs
 	@$(oc_search) import_data_csv --csv "$(workdir)/filtered/grants-nil.csv" --search grants --quiet --nothing_to_report
 
 $(workdir)/grants.csv:
-	$(paster) $(combine) grants -d $(workdir) -c $(registry_ini)
+	$(ckan_command) -c $(registry_ini) $(combine) grants -d $(workdir)
 
 $(workdir)/grants-nil.csv:
-	$(paster) $(combine) grants-nil -d $(workdir) -c $(registry_ini)
+	$(ckan_command) -c $(registry_ini) $(combine) grants-nil -d $(workdir)
 
 $(workdir)/filtered/grants.csv: $(workdir)/grants.csv
 	$(fdir)/filter_grants.py < $< > $@
@@ -450,14 +450,14 @@ upload-hospitalityq: $(workdir)/filtered/hospitalityq.csv $(workdir)/filtered/ho
 .PHONY: rebuild-hospitalityq
 rebuild-hospitalityq: $(workdir)/filtered/hospitalityq.csv $(workdir)/filtered/hospitalityq-nil.csv
 	@$(echo_date) Rebuilding Hospitality Expenses...
-	$(paster) --plugin=ckanext-canada hospitalityq rebuild --lenient -c $(portal_ini) \
-	-f "$(workdir)/filtered/hospitalityq.csv" "$(workdir)/filtered/hospitalityq-nil.csv"
+	$(ckan_command) -c $(portal_ini) pd rebuild hospitalityq --lenient --has-nil \
+	-f "$(workdir)/filtered/hospitalityq.csv" -f "$(workdir)/filtered/hospitalityq-nil.csv"
 
 $(workdir)/hospitalityq.csv:
-	$(paster) $(combine) hospitalityq -d $(workdir) -c $(registry_ini)
+	$(ckan_command) -c $(registry_ini) $(combine) hospitalityq -d $(workdir)
 
 $(workdir)/hospitalityq-nil.csv:
-	$(paster) $(combine) hospitalityq-nil -d $(workdir) -c $(registry_ini)
+	$(ckan_command) -c $(registry_ini) $(combine) hospitalityq-nil -d $(workdir)
 
 $(workdir)/filtered/hospitalityq.csv: $(workdir)/hospitalityq.csv
 	$(fdir)/filter_modified_created.py < $< > $@
@@ -488,10 +488,10 @@ rebuild-travelq: $(workdir)/filtered/travelq.csv $(workdir)/filtered/travelq-nil
 	@$(oc_search) import_data_csv --csv "$(workdir)/filtered/travelq-nil.csv" --search travelq --nothing_to_report
 
 $(workdir)/travelq.csv:
-	$(paster) $(combine) travelq -d $(workdir) -c $(registry_ini)
+	$(ckan_command) -c $(registry_ini) $(combine) travelq -d $(workdir)
 
 $(workdir)/travelq-nil.csv:
-	$(paster) $(combine) travelq-nil -d $(workdir) -c $(registry_ini)
+	$(ckan_command) -c $(registry_ini) $(combine) travelq-nil -d $(workdir)
 
 $(workdir)/filtered/travelq.csv: $(workdir)/travelq.csv
 	$(fdir)/filter_modified_created.py < $< > $@
@@ -518,7 +518,7 @@ rebuild-nap5: $(workdir)/filtered/nap5.csv $(workdir)/nap5.csv
 	@$(oc_search) import_data_csv --csv "$(workdir)/filtered/nap5_search.csv" --search nap5
 
 $(workdir)/nap5.csv:
-	$(paster) $(combine) nap5 -d $(workdir) -c $(registry_ini)
+	$(ckan_command) -c $(registry_ini) $(combine) nap5 -d $(workdir)
 
 # use $(registry_python) to execute filter_nap5.py as we need pyyaml from venv
 $(workdir)/filtered/nap5.csv: $(workdir)/nap5.csv
@@ -550,14 +550,14 @@ upload-reclassification: $(workdir)/filtered/reclassification.csv $(workdir)/fil
 .PHONY: rebuild-reclassification
 rebuild-reclassification: $(workdir)/filtered/reclassification.csv $(workdir)/filtered/reclassification-nil.csv
 	@$(echo_date) Rebuilding Position Reclassification...
-	$(paster) --plugin=ckanext-canada reclassification rebuild --lenient -c $(portal_ini) \
-	-f "$(workdir)/filtered/reclassification.csv" "$(workdir)/filtered/reclassification-nil.csv"
+	$(ckan_command) -c $(portal_ini) pd rebuild reclassification --lenient --has-nil \
+	-f "$(workdir)/filtered/reclassification.csv" -f "$(workdir)/filtered/reclassification-nil.csv"
 
 $(workdir)/reclassification.csv:
-	$(paster) $(combine) reclassification -d $(workdir) -c $(registry_ini)
+	$(ckan_command) -c $(registry_ini) $(combine) reclassification -d $(workdir)
 
 $(workdir)/reclassification-nil.csv:
-	$(paster) $(combine) reclassification-nil -d $(workdir) -c $(registry_ini)
+	$(ckan_command) -c $(registry_ini) $(combine) reclassification-nil -d $(workdir)
 
 $(workdir)/filtered/reclassification.csv: $(workdir)/reclassification.csv
 	$(fdir)/filter_reclassification.py < $< > $@
@@ -590,10 +590,10 @@ rebuild-service: $(workdir)/filtered/service.csv $(workdir)/filtered/service-std
 	# $(ogc_search)/load_si_to_solr.py "$(workdir)/filtered/service.csv" "$(workdir)/filtered/service-std.csv"
 
 $(workdir)/service.csv:
-	$(paster) $(combine) service -d $(workdir) -c $(registry_ini)
+	$(ckan_command) -c $(registry_ini) $(combine) service -d $(workdir)
 
 $(workdir)/service-std.csv:
-	$(paster) $(combine) service-std -d $(workdir) -c $(registry_ini)
+	$(ckan_command) -c $(registry_ini) $(combine) service-std -d $(workdir)
 
 $(workdir)/filtered/service.csv: $(workdir)/service.csv
 	$(fdir)/filter_service.py < $< > $@
@@ -620,7 +620,7 @@ rebuild-travela: $(workdir)/filtered/travela.csv
 	@$(oc_search) import_data_csv --csv "$(workdir)/filtered/travela.csv" --search travela
 
 $(workdir)/travela.csv:
-	$(paster) $(combine) travela -d $(workdir) -c $(registry_ini)
+	$(ckan_command) -c $(registry_ini) $(combine) travela -d $(workdir)
 
 $(workdir)/filtered/travela.csv: $(workdir)/travela.csv
 	$(fdir)/filter_travela.py < $< > $@
@@ -641,11 +641,11 @@ upload-wrongdoing: $(workdir)/filtered/wrongdoing.csv
 .PHONY: rebuild-wrongdoing
 rebuild-wrongdoing: $(workdir)/filtered/wrongdoing.csv
 	@$(echo_date) Rebuilding Acts of Founded Wrongdoing...
-	$(paster) --plugin=ckanext-canada wrongdoing rebuild --lenient -c $(portal_ini) \
+	$(ckan_command) -c $(portal_ini) pd rebuild wrongdoing --lenient \
 	-f "$(workdir)/filtered/wrongdoing.csv"
 
 $(workdir)/wrongdoing.csv:
-	$(paster) $(combine) wrongdoing -d $(workdir) -c $(registry_ini)
+	$(ckan_command) -c $(registry_ini) $(combine) wrongdoing -d $(workdir)
 
 $(workdir)/filtered/wrongdoing.csv: $(workdir)/wrongdoing.csv
 	$(fdir)/filter_wrongdoing.py < $< > $@
@@ -670,7 +670,7 @@ rebuild-adminaircraft: $(workdir)/filtered/adminaircraft.csv
 	@$(oc_search) import_data_csv --csv "$(workdir)/filtered/adminaircraft.csv" --search adminaircraft
 
 $(workdir)/adminaircraft.csv:
-	$(paster) $(combine) adminaircraft -d $(workdir) -c $(registry_ini)
+	$(ckan_command) -c $(registry_ini) $(combine) adminaircraft -d $(workdir)
 
 $(workdir)/filtered/adminaircraft.csv: $(workdir)/adminaircraft.csv
 	$(fdir)/filter_adminaircraft.py < $< > $@

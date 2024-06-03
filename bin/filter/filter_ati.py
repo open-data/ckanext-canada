@@ -1,14 +1,12 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python3
 
 """
 Script that takes csv on stdin with Year, Month as the first two columns
 and outputs the header row and all rows within the past two years on stdout
 """
 
-import datetime
 import csv
 import sys
-import codecs
 
 start_year_month = 2020, 1  # publicly accessible records
 
@@ -18,13 +16,15 @@ REMOVE_COLUMNS = [
     'user_modified',
 ]
 
+BOM = "\N{bom}"
+
 def main():
-    bom = sys.stdin.read(3)
+    bom = sys.stdin.read(1)  # first code point
     if not bom:
         # empty file -> empty file
         return
-    assert bom == codecs.BOM_UTF8
-    sys.stdout.write(codecs.BOM_UTF8)
+    assert bom == BOM
+    sys.stdout.write(BOM)
 
 
     reader = csv.DictReader(sys.stdin)
