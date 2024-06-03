@@ -4,10 +4,10 @@
 {% block subtitle %}{{ _("Create Record") }}{% endblock %}
 
 {% block breadcrumb_content %}
-  <li>{% link_for h.recombinant_language_text(chromo_title),
-    'recombinant.preview_table',
-    resource_name=resource_name,
-    owner_org=owner_org %}</li>
+  <li>{{ h.nav_link(h.recombinant_language_text(chromo_title),
+                    named_route='recombinant.preview_table',
+                    resource_name=resource_name,
+                    owner_org=owner_org) }}</li>
   <li>{{ _("Create Record") }}</li>
 {% endblock %}
 
@@ -87,6 +87,6 @@
 {%- block scripts -%}
   {{ super() }}
   {% if h.recombinant_get_chromo(resource_name).get('cascading_select_fields') %}
-    <script type="text/javascript" src="{{ h.url_for_static('/cascading_select.js') }}" ></script>
+    {% asset 'canada_internal/cascading_select' %}
   {% endif %}
 {%- endblock -%}

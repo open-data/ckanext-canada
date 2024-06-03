@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 '''
 Usage:
@@ -121,7 +121,7 @@ class Records():
                       "Department Name French / Nom du ministère en français",
                       "Openness report (score:count) / Rapport d'ouverture (score: compter)",
                     ])
-        for k,v in self.reports.iteritems():
+        for k,v in self.reports.items():
             names = map(lambda x: x.strip(), k.split('|'))
             line=[names[0], names[1], dict(v)]
             out.writerow(line)

@@ -1,9 +1,6 @@
 # -*- coding: utf-8 -*-
 import sys
-import os
-from unicodecsv import DictReader
 from ckan.plugins.toolkit import config
-from ckanext.recombinant.tables import get_geno, get_dataset_types
 
 BATCH_SIZE = 1000
 MONTHS_FR = [
@@ -63,7 +60,7 @@ def data_batch(org_id, lc, dataset_type):
     result = lc.action.package_search(
         q="type:{0:s} owner_org:{1:s}".format(dataset_type, org_id),
         rows=2)['results']
-        
+
     if not result:
         return
     if len(result) != 1:
@@ -93,5 +90,5 @@ def safe_for_solr(s):
     """
     if s is None:
         return u''
-    assert isinstance(s, unicode)
+    assert isinstance(s, str)
     return s.translate(_REMOVE_CONTROL_CODES)

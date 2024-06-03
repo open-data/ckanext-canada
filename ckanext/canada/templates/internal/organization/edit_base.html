@@ -35,5 +35,5 @@
 
 {% block scripts %}
   {{ super() }}
-  <script type="text/javascript" src="{{ h.url_for_static('/registry_organization_edit.js') }}" ></script>
+  {% asset 'canada_internal/organization_edit' %}
 {% endblock %}

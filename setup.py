@@ -29,20 +29,6 @@ setup(
     canada_datasets=ckanext.canada.plugins:CanadaDatasetsPlugin
     canada_security=ckanext.canada.plugins:CanadaSecurityPlugin
 
-    [paste.paster_command]
-    canada=ckanext.canada.commands:CanadaCommand
-
-    ati=ckanext.canada.pd:PDNilCommand
-    contracts=ckanext.canada.pd:PDNilCommand
-    grants=ckanext.canada.pd:PDNilCommand
-    reclassification=ckanext.canada.pd:PDNilCommand
-    travela=ckanext.canada.pd:PDCommand
-    travelq=ckanext.canada.pd:PDNilCommand
-    hospitalityq=ckanext.canada.pd:PDNilCommand
-    contractsa=ckanext.canada.pd:PDCommand
-    inventory=ckanext.canada.pd:PDCommand
-    wrongdoing=ckanext.canada.pd:PDCommand
-
     [babel.extractors]
     ckan = ckan.lib.extract:extract_ckan
     pd = ckanext.canada.extract:extract_pd

@@ -218,9 +218,9 @@
 {% endblock primary_content_inner %}
 
 {% block scripts %}
-<script src="{{ h.url_for_static('/static/js/more_like_this.js') }}"></script>
-<script src="{{ h.url_for_static('/static/js/voting_fix.js?cv=1') }}"></script>
-{{ super() }}
+  {% asset 'canada_public/more_like_this' %}
+  {% asset 'canada_public/voting_fix' %}
+  {{ super() }}
 {% endblock %}
 
 {% block package_license %}{% endblock %}

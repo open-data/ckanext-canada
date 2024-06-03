@@ -56,7 +56,7 @@ CXC_HOME=$(pwd)
 # Go to ckanext-recombinant, identify bona fide target datasets
 cd "${BIN_HOME}/../../ckanext-recombinant"
 CXR_HOME="$(pwd)"
-TARGET_DATASETS=$(paster recombinant target-datasets -c "${INI_PATH}")
+TARGET_DATASETS=$(ckan -c "${INI_PATH}" recombinant target-datasets)
 
 # Fetch resources per target dataset
 cd "${BIN_HOME}"
@@ -93,8 +93,8 @@ do
     CSV_FILES=${CSV_FILES/ /}
 
     # Rebuild solr core from downloaded .csv files
-    paster "${TARG_DS}" clear -c "${INI_PATH}"
-    paster "${TARG_DS}" rebuild -f ${CSV_FILES} -c "${INI_PATH}"
+    ckan -c "${INI_PATH}" pd clear "${TARG_DS}"
+    ckan -c "${INI_PATH}" pd rebuild "${TARG_DS}" -f ${CSV_FILES}
     log 'INFO' "Cleared and rebuilt [${TARG_DS}] solr core"
 done
 

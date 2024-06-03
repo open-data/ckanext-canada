@@ -6,4 +6,35 @@ css:
 analytics:
   contents:
     - canada_public_analytics.js
-  output: canada_public_analytics/%(version)s_canada_public_analytics.js
+  output: canada_public/%(version)s_canada_public_analytics.js
+
+check_all:
+  contents:
+    - check_all.js
+  output: canada_public/%(version)s_check_all.js
+
+csrf:
+  contents:
+    - csrf.js
+  output: canada_public/%(version)s_csrf.js
+
+geomap_zoom:
+  contents:
+    - geomapzoom.js
+  output: canada_public/%(version)s_geomapzoom.js
+
+i18n:
+  contents:
+    - i18n.js
+  output: canada_public/%(version)s_i18n.js
+
+more_like_this:
+  contents:
+    - more_like_this.js
+  output: canada_public/%(version)s_more_like_this.js
+
+voting_fix:
+  contents:
+    - voting_fix.js
+  output: canada_public/%(version)s_voting_fix.js
+

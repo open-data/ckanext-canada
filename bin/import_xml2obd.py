@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 '''
 Usage:
     import_xml2_obd.py <xml file or directory> <site_url> > <jsonl file>
@@ -240,7 +240,7 @@ def _get_single_choices_value(preset, val):
                 res.append(item['value'])
                 break
     if not res:
-        print ('not found', name, val)
+        print('not found', name, val)
         raise Exception(name)
 
     return name, res[0]
@@ -274,7 +274,7 @@ xml2resource={
 
 def xml_obd_mapping(dict_data, map_dict):
     res = {}
-    for k,f in map_dict.iteritems():
+    for k,f in map_dict.items():
         if k in dict_data:
             v = dict_data[k]
             dict_data.pop(k)
@@ -346,12 +346,12 @@ def read_conf(filename):
 
 
 def _compare_pkgs(rec, pkg):
-    for k,v in rec.iteritems():
+    for k,v in rec.items():
         if k in ['date_published', 'metadata_modified', 'metadata_created', 'resources']:
             continue
         if v != pkg.get(k, None):
             return False
-    for k,v in rec['resources'][0].iteritems():
+    for k,v in rec['resources'][0].items():
         if k in ['created']:
             if v in pkg['resources'][0].get(k, None):
                 continue
@@ -388,7 +388,7 @@ def upload_resources(remote_site, api_key, jsonfile, resource_directory):
                     json.dumps([
                         rec['id'],
                         'target error',
-                        unicode(e.args)
+                        str(e.args)
                     ]) + '\n'
                 )
                 #raise
@@ -525,7 +525,7 @@ def pull_docs(conf_file, local_dir):
     files = xmls + docs
     files_info= {}
 
-    print 'Scanning...'
+    print('Scanning...')
     for fname in files:
         f_basename = fname.split('/')[-1]
         obj = src.get_obj(fname)
@@ -537,18 +537,18 @@ def pull_docs(conf_file, local_dir):
                                       'fname':fname,
                                       'objmd5':objmd5}
         else:
-            print '\t same file name, but older ', fname
+            print('\t same file name, but older %s', fname)
 
-    for f_basename, details in files_info.iteritems():
+    for f_basename, details in files_info.items():
         fname = details['fname']
         objmd5 = details['objmd5']
-        print 'Downloading ',fname
+        print('Downloading %s', fname)
 
         localname = local_dir + '/' + f_basename
         if os.path.isfile(localname) and objmd5 in md5str(localname):
-            print ('\tsame local file exists')
+            print('\tsame local file exists')
         else:
-            print ('\t' + fname + ' --> ' + localname)
+            print('\t' + fname + ' --> ' + localname)
             src.download_blob(fname, localname)
             md5str(localname, objmd5)
 
@@ -556,7 +556,7 @@ def pull_docs(conf_file, local_dir):
     for fname in xmls:
         filename = fname.split('/')[-1]
         localname = local_dir + '/' + filename
-        print 'Uploading ',filename
+        print('Uploading %s', filename)
         remote_name = 'archived-doc-xmls/' + filename
         obj = dest.get_obj(remote_name)
         if obj:
@@ -582,7 +582,7 @@ def read_csv(filename):
 
 def delete_docs(csv_file, file_dir, site_url, api_key):
     ids = read_csv(csv_file)
-    print len(ids), ids[:5]
+    print(len(ids), ids[:5])
     files = glob.glob(file_dir + '/*.xml')
     all_files = []
     for filename in files:
@@ -594,7 +594,7 @@ def delete_docs(csv_file, file_dir, site_url, api_key):
         for [fbase, full] in all_files:
             if s in fbase:
                 to_del.append([fbase, full])
-    print len(to_del), to_del[:5]
+    print(len(to_del), to_del[:5])
     assert( len(to_del)==len(ids))
 
     datasets = []
@@ -602,7 +602,7 @@ def delete_docs(csv_file, file_dir, site_url, api_key):
         id = str(uuid.uuid5(uuid.NAMESPACE_URL,
                    'http://obd.open.canada.ca/' + fbase))
         datasets.append(id)
-    print datasets[:5]
+    print(datasets[:5])
 
     #remote site
     site = ckanapi.RemoteCKAN(
@@ -615,9 +615,9 @@ def delete_docs(csv_file, file_dir, site_url, api_key):
         except ckan.logic.NotAuthorized as e:
             raise Exception('API key error')
         except:
-            print ( id, 'delete failed')
+            print(id, 'delete failed')
         else:
-            print ( id, 'deleted')
+            print(id, 'deleted')
 
 def duplicate_docs(file_dir, site_url):
     raw_files = glob.glob(file_dir + '/*.md5')
@@ -639,7 +639,7 @@ def duplicate_docs(file_dir, site_url):
         apikey=None,
         user_agent='ckanapi-uploader/1.0')
 
-    for md5, flist in md5dict.iteritems():
+    for md5, flist in md5dict.items():
         if len(flist) > 1:
             ids = [ str(uuid.uuid5(uuid.NAMESPACE_URL,
                    'http://obd.open.canada.ca/' + fbase + '.xml')) for fbase in flist]
@@ -657,12 +657,12 @@ def duplicate_docs(file_dir, site_url):
                         json.dumps([
                             rec['id'],
                             'target error',
-                            unicode(e.args)
+                            str(e.args)
                         ]) + '\n'
                     )
                     raise
             if count > 1:
-                print out
+                print(out)
 
 def de_dup2(site_url):
     count =0
@@ -689,11 +689,11 @@ def de_dup2(site_url):
         start += len( p_records['results'] )
         if start >= count:
             break
-    print 'Total records ', count
+    print('Total records %s', count)
 
-    for k, vl in records.iteritems():
+    for k, vl in records.items():
         if len(vl) <=1: continue
-        print vl
+        print(vl)
 
 def main():
     global audience, canada_resource_type,canada_subject

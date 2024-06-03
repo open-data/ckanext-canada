@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 import unicodecsv
 import sys
@@ -54,7 +54,7 @@ def norm_date(d):
 def norm_money(m):
     if len(m.split(',')) == 2:
         m = m.replace(',', '.')
-    return unicode(Decimal(m))
+    return str(Decimal(m))
 
 try:
     for line in in_csv:

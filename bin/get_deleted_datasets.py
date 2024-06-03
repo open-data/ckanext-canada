@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # encoding: utf-8
 '''
 Usage:
@@ -42,7 +42,7 @@ def get_deleted_dataset(conf_file):
     except:
         import traceback
         traceback.print_exce()
-        print ("Opened database failed")
+        print("Opened database failed")
         sys.exit(-1)
     cur = conn.cursor()
     cur.execute('''SELECT a.id, b.timestamp,c.value, d.title from package a,

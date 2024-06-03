@@ -2,7 +2,7 @@ import json
 import re
 import inspect
 from ckan.plugins import plugin_loaded
-from ckan.plugins.toolkit import c, config, _, g, request
+from ckan.plugins.toolkit import c, config, _, h, g, request
 from ckan.model import User, Package, Activity
 import ckan.model as model
 import datetime
@@ -13,7 +13,7 @@ import html
 from six import text_type
 
 from ckanapi import NotFound
-from ckantoolkit import h, aslist
+from ckantoolkit import aslist
 import ckan.plugins.toolkit as t
 from ckanext.scheming.helpers import scheming_get_preset
 import dateutil.parser
@@ -69,7 +69,7 @@ def get_translated_t(data_dict, field):
                 if l.startswith(language + '-t-'):
                     return data_dict[field+'_translated'][l], True
         val = data_dict.get(field, '')
-        return (_(val) if val and isinstance(val, basestring) else val), False
+        return (_(val) if val and isinstance(val, str) else val), False
 
 
 def language_text_t(text, prefer_lang=None):
@@ -107,7 +107,7 @@ def language_text_t(text, prefer_lang=None):
         l, v = sorted(text.items())[0]
         return v, False
 
-    t = gettext(text)
+    t = _(text)
     if isinstance(t, str):
         return t.decode('utf-8'), False
     return t, False

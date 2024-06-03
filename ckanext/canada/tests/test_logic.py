@@ -8,6 +8,8 @@ from ckan.plugins.toolkit import h
 
 from ckanext.canada.tests.factories import (
     CanadaResource as Resource,
+)
+from ckanext.canada.tests.fixtures import (
     mock_isfile,
     mock_open_ip_list,
     MOCK_IP_ADDRESS,
@@ -67,7 +69,7 @@ class TestPublicRegistry(CanadaTestBase):
         self.extra_environ_tester_bad_ip = {'REMOTE_USER': str(u""), 'REMOTE_ADDR': '174.116.80.142'}
 
     @mock.patch('os.path.isfile', mock_isfile)
-    @mock.patch('__builtin__.open', mock_open_ip_list)
+    @mock.patch('builtins.open', mock_open_ip_list)
     def test_register_bad_ip_address(self, app):
         offset = h.url_for('user.register')
         response = app.get(offset, extra_environ=self.extra_environ_tester_bad_ip)
@@ -75,7 +77,7 @@ class TestPublicRegistry(CanadaTestBase):
         assert response.status_code == 403
 
     @mock.patch('os.path.isfile', mock_isfile)
-    @mock.patch('__builtin__.open', mock_open_ip_list)
+    @mock.patch('builtins.open', mock_open_ip_list)
     def test_register_good_ip_address(self, app):
         offset = h.url_for('user.register')
         response = app.get(offset, extra_environ=self.extra_environ_tester)
@@ -83,7 +85,7 @@ class TestPublicRegistry(CanadaTestBase):
         assert response.status_code == 200
 
     @mock.patch('os.path.isfile', mock_isfile)
-    @mock.patch('__builtin__.open', mock_open_ip_list)
+    @mock.patch('builtins.open', mock_open_ip_list)
     @pytest.mark.skip(reason="No mock for repoze handler in tests")
     def test_login_bad_ip_address(self, app):
         offset = h.url_for('canada.login')
@@ -92,7 +94,7 @@ class TestPublicRegistry(CanadaTestBase):
         assert response.status_code == 403
 
     @mock.patch('os.path.isfile', mock_isfile)
-    @mock.patch('__builtin__.open', mock_open_ip_list)
+    @mock.patch('builtins.open', mock_open_ip_list)
     @pytest.mark.skip(reason="No mock for repoze handler in tests")
     def test_login_good_ip_address(self, app):
         offset = h.url_for('canada.login')
@@ -101,7 +103,7 @@ class TestPublicRegistry(CanadaTestBase):
         assert response.status_code == 200
 
     @mock.patch('os.path.isfile', mock_isfile)
-    @mock.patch('__builtin__.open', mock_open_ip_list)
+    @mock.patch('builtins.open', mock_open_ip_list)
     def test_api_bad_ip_address(self, app):
         offset = h.url_for('api.action', logic_function='status_show')
         response = app.get(offset, extra_environ=self.extra_environ_tester_bad_ip)
@@ -109,7 +111,7 @@ class TestPublicRegistry(CanadaTestBase):
         assert response.status_code == 403
 
     @mock.patch('os.path.isfile', mock_isfile)
-    @mock.patch('__builtin__.open', mock_open_ip_list)
+    @mock.patch('builtins.open', mock_open_ip_list)
     def test_api_good_ip_address(self, app):
         offset = h.url_for('api.action', logic_function='status_show')
         response = app.get(offset, extra_environ=self.extra_environ_tester)

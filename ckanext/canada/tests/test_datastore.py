@@ -10,9 +10,14 @@ from ckan.tests.helpers import change_config
 import pytest
 from ckanext.canada.tests.factories import (
     CanadaResource as Resource,
+)
+from ckanext.canada.tests.helpers import (
     MockFieldStorage,
     get_sample_filepath,
-    mock_uploads,
+)
+# type_ignore_reason: custom fixtures
+from ckanext.canada.tests.fixtures import (
+    mock_uploads,  # type: ignore
 )
 from ckanext.xloader import loader
 from ckanext.xloader.job_exceptions import LoaderError
@@ -72,14 +77,16 @@ class TestDatastoreValidation(CanadaTestBase):
 
         fake_file_obj = io.BytesIO()
 
-        with open(csv_filepath, 'r') as f:
-            fake_file_obj.write(f.read())
+        with open(csv_filepath, 'rb') as f:
+            file_data = f.read()
+            fake_file_obj.write(file_data)
+            mock_field_store = MockFieldStorage(fake_file_obj, filename)
             resource = Resource(url='__upload',
                                 url_type='upload',
                                 format='CSV',
-                                upload=MockFieldStorage(fake_file_obj, filename))
+                                upload=mock_field_store)
 
-        fake_stream = io.BufferedReader(fake_file_obj)
+            fake_stream = io.BufferedReader(io.BytesIO(file_data))
 
         return resource, fake_stream
 
@@ -88,9 +95,9 @@ class TestDatastoreValidation(CanadaTestBase):
     @change_config('ckanext.validation.run_on_update_async', False)
     @change_config('ckanext.validation.locales_offered', 'en')
     @change_config('ckanext.validation.static_validation_options', '{"checks":["structure","schema","ds-headers"]}')
-    @mock_uploads
+    @pytest.mark.usefixtures("mock_uploads")
     @mock.patch('ckanext.validation.jobs.get_resource_uploader', mock_get_resource_uploader)
-    def test_validation_report(self, mock_open):
+    def test_validation_report(self, mock_uploads):
         resource, fake_stream = self._setup_resource_upload('sample.csv')
 
         with mock.patch('io.open', return_value=fake_stream):
@@ -106,9 +113,9 @@ class TestDatastoreValidation(CanadaTestBase):
     @change_config('ckanext.validation.run_on_update_async', False)
     @change_config('ckanext.validation.locales_offered', 'en')
     @change_config('ckanext.validation.static_validation_options', '{"checks":["structure","schema","ds-headers"]}')
-    @mock_uploads
+    @pytest.mark.usefixtures("mock_uploads")
     @mock.patch('ckanext.validation.jobs.get_resource_uploader', mock_get_resource_uploader)
-    def test_validation_report_bad_ds_headers(self, mock_open):
+    def test_validation_report_bad_ds_headers(self, mock_uploads):
         resource, fake_stream = self._setup_resource_upload('sample_with_bad_ds_headers.csv')
 
         with mock.patch('io.open', return_value=fake_stream):
@@ -137,9 +144,9 @@ class TestDatastoreValidation(CanadaTestBase):
     @change_config('ckanext.validation.run_on_update_async', False)
     @change_config('ckanext.validation.locales_offered', 'en')
     @change_config('ckanext.validation.static_validation_options', '{"skip_checks":["blank-row"],"checks":["structure","schema","ds-headers"]}')
-    @mock_uploads
+    @pytest.mark.usefixtures("mock_uploads")
     @mock.patch('ckanext.validation.jobs.get_resource_uploader', mock_get_resource_uploader)
-    def test_validation_report_empty_lines(self, mock_open):
+    def test_validation_report_empty_lines(self, mock_uploads):
         resource, fake_stream = self._setup_resource_upload('sample_with_empty_lines.csv')
 
         with mock.patch('io.open', return_value=fake_stream):
@@ -155,9 +162,9 @@ class TestDatastoreValidation(CanadaTestBase):
     @change_config('ckanext.validation.run_on_update_async', False)
     @change_config('ckanext.validation.locales_offered', 'en')
     @change_config('ckanext.validation.static_validation_options', '{"checks":["structure","schema","ds-headers"]}')
-    @mock_uploads
+    @pytest.mark.usefixtures("mock_uploads")
     @mock.patch('ckanext.validation.jobs.get_resource_uploader', mock_get_resource_uploader)
-    def test_validation_report_white_space(self, mock_open):
+    def test_validation_report_white_space(self, mock_uploads):
         resource, fake_stream = self._setup_resource_upload('sample_with_extra_white_space.csv')
 
         with mock.patch('io.open', return_value=fake_stream):
@@ -173,9 +180,9 @@ class TestDatastoreValidation(CanadaTestBase):
     @change_config('ckanext.validation.run_on_update_async', False)
     @change_config('ckanext.validation.locales_offered', 'en fr')
     @change_config('ckanext.validation.static_validation_options', '{"checks":["structure","schema","ds-headers"]}')
-    @mock_uploads
+    @pytest.mark.usefixtures("mock_uploads")
     @mock.patch('ckanext.validation.jobs.get_resource_uploader', mock_get_resource_uploader)
-    def test_validation_report_languages(self, mock_open):
+    def test_validation_report_languages(self, mock_uploads):
         resource, fake_stream = self._setup_resource_upload('sample.csv')
 
         with mock.patch('io.open', return_value=fake_stream):
