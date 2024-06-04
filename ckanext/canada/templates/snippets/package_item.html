@@ -1,6 +1,7 @@
 {% ckan_extends %}
 
 {% set client_lang = h.lang() %}
+{% set colon = ' :' if client_lang == 'fr' else ':' %}
 
 {% block package_item %}
   {% set geno = h.recombinant_get_geno(package.type) %}
@@ -64,7 +65,7 @@
           <div class="row mrgn-tp-sm">
             {% if package.organization %}
               <div class="col-md-3">
-                <em>{{ _('Organization') }}: </em>
+                <em>{{ _('Organization') }}{{ colon }} </em>
               </div>
               <div class="col-md-9">
                 {{ h.split_piped_bilingual_field(package.organization.title, client_lang) }}
@@ -75,7 +76,7 @@
           {% if issuing_org and package.jurisdiction != 'federal' %}
             <div class="row">
               <div class="col-md-3">
-                <em>{{ _('Issued by') }}: </em>
+                <em>{{ _('Issued by') }}{{ colon }} </em>
               </div>
               <div class="col-md-9">
                 {{ issuing_org }}
@@ -88,7 +89,7 @@
             {% set schema = h.scheming_get_dataset_schema(package.type) %}
             <div class="row">
               <div class="col-md-3">
-                <em>{{ h.scheming_language_text(schema.dataset_fields[-3].label) }}:</em>
+                <em>{{ h.scheming_language_text(schema.dataset_fields[-3].label) }}{{ colon }}</em>
               </div>
               <div class="col-md-9">
                 {% snippet 'scheming/snippets/display_field.html', field=schema.dataset_fields[-3], data=package, entity_type='dataset', object_type='prop' %}
@@ -97,7 +98,7 @@
             {% if package.status %}
               <div class="row">
                 <div class="col-md-3">
-                  <em>{{ _('Status') }}:</em>
+                  <em>{{ _('Status') }}{{ colon }}</em>
                 </div>
                 <div class="col-md-9">
                   {% snippet 'scheming/snippets/display_field.html', field=schema.dataset_fields[-1].repeating_subfields[1], data=package.status[-1], entity_type='dataset', object_type='prop' %}
@@ -105,7 +106,7 @@
               </div>
               <div class="row">
                 <div class="col-md-3">
-                  <em>{{ _('Date') }}:</em>
+                  <em>{{ _('Date') }}{{ colon }}</em>
                 </div>
                 <div class="col-md-9">
                   {{ package.status[-1].date }}
@@ -114,7 +115,7 @@
             {% else %}
               <div class="row">
                 <div class="col-md-3">
-                  <em>{{ _('Status') }}:</em>
+                  <em>{{ _('Status') }}{{ colon }}</em>
                 </div>
                 <div class="col-md-9">
                   {{ _('Request sent to data owner – awaiting response') }}
@@ -124,7 +125,7 @@
           {% else %}
             <div class="row">
               <div class="col-md-3">
-                <em>{{ _('Resource Formats') }}:</em>
+                <em>{{ _('Resource Formats') }}{{ colon }}</em>
               </div>
               <div class="col-md-9">
                 <ul class="list-inline list-unstyled">

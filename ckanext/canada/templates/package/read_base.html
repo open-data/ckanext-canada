@@ -2,6 +2,7 @@
 
 {% set pkg = g.pkg_dict %}
 {% set client_lang = h.lang() %}
+{% set colon = ' :' if client_lang == 'fr' else ':' %}
 {% set schema = h.scheming_get_dataset_schema(pkg.type) %}
 
 {% block adobe_analytics_creator %}
@@ -53,7 +54,7 @@
             {% endif %}
             {% if field_value %}
               <li class="list-group-item resource-tags">
-                <strong>{{ field_title }}:</strong>
+                <strong>{{ field_title }}{{ colon }}</strong>
                 {% snippet 'scheming/snippets/display_field.html', field=field, data=pkg, entity_type='dataset', object_type=pkg.type %}
               </li>
             {% endif %}
@@ -62,7 +63,7 @@
         {%- set start_date = h.date_field("time_period_coverage_start", pkg) -%}
         {%- set end_date = h.date_field("time_period_coverage_end", pkg) -%}
         {% if start_date or end_date %}
-          <li class="list-group-item"><b>{{ _('Temporal Coverage') }}:</b>
+          <li class="list-group-item"><b>{{ _('Temporal Coverage') }}{{ colon }}</b>
             <small>
               {% if start_date and end_date and end_date != '9999-09-09' %}
                 {{ start_date }} {{ _('to') }} {{ end_date }}
@@ -79,7 +80,7 @@
             {% set fr_break = '&nbsp;' if h.lang() == 'fr' else '' %}
             <li class="list-group-item"><a
               href="{{ 'https://ouvert.canada.ca//fr/cote-degre-douvertrure-des-donnees' if h.lang() == 'fr' else
-                'https://open.canada.ca/en/openness-rating' }}"><b>{{ _('Openness Rating') }}</b></a>{{ fr_break }}:&nbsp;
+                'https://open.canada.ca/en/openness-rating' }}"><b>{{ _('Openness Rating') }}</b></a>{{ fr_break }}{{ colon }}&nbsp;
                 {%- set openness = h.openness_score(pkg) -%}
                 <img src="{{ h.url_for_static('/static/img/stars/star'
                   ~ openness ~ '.png') }}" alt="{{
@@ -103,19 +104,19 @@
     </div>
     <ul class="list-group">
       <li class="list-group-item">
-        <strong>{{ _('Record Released') }}:</strong>
+        <strong>{{ _('Record Released') }}{{ colon }}</strong>
         {{ h.render_datetime(pkg.metadata_created, '%Y-%m-%d') }}
       </li>
       <li class="list-group-item">
-        <strong>{{ _('Record Modified') }}:</strong>
+        <strong>{{ _('Record Modified') }}{{ colon }}</strong>
         {{ h.render_datetime(pkg.metadata_modified, '%Y-%m-%d') }}
       </li>
       <li class="list-group-item">
-        <strong>{{ _('Record ID') }}:</strong>
+        <strong>{{ _('Record ID') }}{{ colon }}</strong>
         {{ pkg.id }}
       </li>
       <li class="list-group-item">
-        <strong>{{ _('Metadata') }}:</strong>
+        <strong>{{ _('Metadata') }}{{ colon }}</strong>
         <ul class="list-group" style="margin-bottom: 0;">
           <li class="list-group-item">
             <a href="{{h.url_for_static('/', qualified=true)}}api/action/package_show?id={{pkg.id}}" rel="nofollow">
@@ -140,7 +141,7 @@
       </li>
       {% if pkg.collection == 'fgp' %}
         <li class="list-group-item">
-          <strong>{{ _('FGP Metadata') }}:</strong>
+          <strong>{{ _('FGP Metadata') }}{{ colon }}</strong>
           <a href="http://csw.open.canada.ca/geonetwork/srv/csw?service=CSW&version=2.0.2&request=GetRecordById&outputSchema=csw:IsoRecord&ElementSetName=full&id={{ pkg.id }}">
             {{ _("HNAP ISO:19115 Metadata Record") }}
           </a>
@@ -153,7 +154,7 @@
       </li>
       {% if pkg.spatial_representation_type %}
         {% set srep = h.scheming_field_by_name(schema.dataset_fields, 'spatial_representation_type') %}
-        <li class="list-group-item"><b>{{ h.scheming_language_text(srep.label) }}:</b>
+        <li class="list-group-item"><b>{{ h.scheming_language_text(srep.label) }}{{ colon }}</b>
           {% snippet 'scheming/snippets/display_field.html', field=srep, data=pkg, entity_type='dataset', object_type=pkg.type %}
         </li>
       {% endif %}
@@ -185,7 +186,7 @@
           %}
           {% for field in dis_fields %}
             {% if field.field_name in dist %}
-              <li class="list-group-item"><b>{{ _(field.label) }}:</b><br />
+              <li class="list-group-item"><b>{{ _(field.label) }}{{ colon }}</b><br />
                 {% snippet 'scheming/snippets/display_field.html', field=field, data=dist,  entitiy_type='dataset', object_type=pkg.type %}
               </li>
             {% endif %}
