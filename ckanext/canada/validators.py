@@ -566,8 +566,7 @@ def protect_registry_access(key, data, errors, context):
         raise StopOnError
 
 
-def digital_object_identifier(value, contex):
-    #TODO: add ignore_missing to validators??
+def digital_object_identifier(value, context):
     if not value or value is missing:
         return value
     match = re.match(doi_match, value)
