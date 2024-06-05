@@ -1,7 +1,99 @@
 {% extends "page.html" %}
+
+{% block breadcrumb_content %}
+  <li class="active">{% link_for _('About'), 'canada.view_help' %}</li>
+{% endblock %}
+
 {% block primary %}
-<h1>{{ _('Frequently Asked Questions (FAQ)') }}</h1>
-{% block primary_content %}
-{% endblock primary_content %}
-{{ faq_html|safe }}
+  <h2>{{ _('Frequently Asked Questions (FAQ)') }}</h2>
+  {% block primary_content %}
+    <h3>{{ _('General Registry Information') }}</h3>
+    <details>
+      <summary>{{ _("Why can't I create an account?") }}</summary>
+      <p>{{ _('The most common reason is duplicate accounts. If you tried to create an account and you receive this error message "That login name is not available", it means you already have an account with this username, but you either forgot or you are not certain it was already created. If you remember the password, try to log into the Registry using the same username and password. If you forgot the password, refer to the Reset your Password function, and a new one will be emailed to you. For any other reasons, ask for assistance via e-mail to open-ouvert@tbs-sct.gc.ca.') }}</p>
+    </details>
+    <details>
+      <summary>{{ _('Have you forgotten your password?') }}</summary>
+      <p>{{ _('If you failed to login to the Registry and received this error massage "Login failed. Bad username or password\", start by requesting a password reset following these steps:') }}</p>
+      <ol>
+        <li>{{ _('Click the "<strong>Forgotten your password?</strong>" button. The "Reset Your Password" page is displayed.') }}</li>
+        <li>{{ _('Enter your Username, Example: djohn, and click "<strong><a href="https://registry.open.canada.ca/en/user/reset">Request Reset</a></strong>" button.') }}</li>
+        <li>{{ _('If you receive the error message "No such user: djohn", it means your Username is incorrect and you should e-mail open-ouvert@tbs-sct.gc.ca for assistance.') }}</li>
+        <li>{{ _('If you receive the message "Please check your inbox for a reset code", check your e-mail inbox and open the e-mail received from the Registry.') }}</li>
+        <li>{{ _('Click the confirmation link included in the e-mail. The "Reset Your Password" page will then be displayed.') }}</li>
+        <li>{{ _('Enter a new password in both the “Password” and “Confirm” fields, then click "<strong>Update Password</strong>" button. Message "Your password has been reset" is displayed.') }}</li>
+        <li>{{ _('Login again using the new password. The message "{your name} is now logged in" will then be displayed.') }}</li>
+      </ol>
+    </details>
+    <details>
+      <summary>{{ _("I can't find my organization in the Registry?") }}</summary>
+      <p>{{ _('There could be two possible reasons why you cannot find your organization in the registry:') }}</p>
+      <ol>
+        <li>{{ _('The organization went through a name change recently; or') }}</li>
+        <li>{{ _('This is a new organization') }}</li>
+      </ol>
+      <p>{{ _('In both cases, e-mail open-ouvert@tbs-sct.gc.ca with your request, including the organization name.') }}</p>
+    </details>
+    <details>
+      <summary>{{ _('What if I manage the registry for more than one organization?') }}</summary>
+      <p>{{ _('You can use your Registry account to manage additional organizations. In order to do that, e-mail open-ouvert@tbs-sct.gc.ca asking the support team to link your account to additional organizations, and include the organization names in the e-mail.') }}</p>
+    </details>
+    <details>
+      <summary>{{ _("Why can't I access the Registry?") }}</summary>
+      <p>{{ _('There are a number of reasons why you cannot access the Open Government Registry. Try to answer the following questions and perform the proper correction actions. These questions will also be asked by the support team, if you contact them for help:') }}</p>
+      <ol>
+        <li>{{ _('Is the Registry indeed up and running? Can you see the "Open Government Registry" Login page?') }}</li>
+        <li>{{ _('If you cannot see the Login page, did you use the proper link https://registry.open.canada.ca/en/?') }}</li>
+        <li>{{ _('If it was a failed login using your new Username and Password, refer to <a href="https://registry.open.canada.ca/en/user/reset">Forgot your password</a>?') }}</li>
+      </ol>
+      <p>{{ _('For any other access issues you could not resolve yourself, e-mail open-ouvert@tbs-sct.gc.ca for assistance.') }}</p>
+    </details>
+    <details>
+      <summary>{{ _('Why am I getting a server error message?') }}</summary>
+      <p>{{ _('This is a general error message indicating a problem the system cannot determine (usually a network or a communication issue). E-mail to open-ouvert@tbs-sct.gc.ca for assistance, if this error persists.') }}</p>
+    </details>
+    <details>
+      <summary>{{ _('How do I change my Profile (i.e. password, name, e-mail)?') }}</summary>
+      <p>{{ _('While you are logged into the Registry, follow these steps to change your Profile:') }}</p>
+      <ol>
+        <li>{{ _('Click the "<strong>My Account</strong>" tab and select "<strong>Edit Profile</strong>". The "Change your Details" page is displayed.') }}</li>
+        <li>{{ _('Enter your changes. However, it is not recommended to change your Username because you will lose the link to your uploaded data.') }}</li>
+        <li>{{ _('Once you completed your changes, click "<strong>Update Profile</strong>". You may want to Login again, depending on the changes you made.') }}</li>
+      </ol>
+    </details>
+    <details>
+      <summary>{{ _('I have a question that does not appear on this page?') }}</summary>
+      <p>{{ _('For any other questions that you cannot find in the page, e-mail open-ouvert@tbs-sct.gc.ca for assistance.') }}</p>
+    </details>
+    <h3>{{ _('Open Data and Open Information') }}</h3>
+    <details>
+      <summary>{{ _('How do I add an open data or open information record?') }}</summary>
+      <p>{{ _('To add an open data or open information record to the Open Government Portal, you must create a metadata record for that dataset and add it to the Registry. To add a metadata record:') }}</p>
+      <ol>
+        <li>{{ _('Review the instructions outlined in the <a href="https://www.gcpedia.gc.ca/wiki/Open_Government/Resources_Ressources" target="_blank">Open Government Registry Guide<a/>') }}</li>
+        <li>{{ _('Click "Add Open Data" or "Add Open Information",') }}</li>
+        <li>{{ _('Fill out the required metadata elements,') }}</li>
+        <li>{{ _('Select "Yes" for "IMSO Approval" and "Ready to Publish" as appropriate') }}</li>
+        <li>{{ _('Inform the open-ouvert@tbs-sct.gc.ca mailbox that you are ready for your record to be published on the Open Government Portal.') }}</li>
+      </ol>
+    </details>
+    <details>
+      <summary>{{ _('How do I review an open data or open information record department or agency?') }}</summary>
+      <p>{{ _('To review your department\'s open data or open information records or to see the complete list of records, click <strong>"Organization" in the main menu, and then find your organization</strong>.') }}</p>
+    </details>
+    <details>
+      <summary>{{ _('How do I search the Registry?') }}</summary>
+      <p>{{ _('Use Search to find metadata records published in the Registry. This feature is the same as Advanced Search on the Open Government Portal. The Search page can be retrieved by selecting "Search" in the main menu. Then enter a search term, or use the facets on the right hand side to narrow your search. Note, the list of results shows records matching your search query in the order in which they were entered or updated in the Registry (chronological).') }}</p>
+    </details>
+    <details>
+      <summary>{{ _('How do I browse the Registry?') }}</summary>
+      <p>{{ _('Use the Browse feature to find metadata records published in the Registry. This feature is similar to Browse on the Open Government Portal website. You can browse the Registry in three ways:') }}</p>
+      <ol>
+        <li>{{ _('<strong>By department.</strong> Click on a department or agency name to see all records published by that organization.') }}</li>
+        <li>{{ _('<strong>By subject.</strong> Click on a subject to find all records "tagged" with that subject.') }}</li>
+        <li>{{ _('<strong>By format.</strong> Click on a format name to find all records in that format.') }}</li>
+      </ol>
+      <p>{{ _('The list of results displays records in the order in which they were entered or updated in the Registry (chronological).') }}</p>
+    </details>
+  {% endblock primary_content %}
 {% endblock %}
