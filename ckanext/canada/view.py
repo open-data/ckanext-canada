@@ -1,8 +1,5 @@
 import json
 import decimal
-import pkg_resources
-import lxml.etree as ET
-import lxml.html as html
 from pytz import timezone, utc
 from socket import error as socket_error
 from logging import getLogger
@@ -26,7 +23,6 @@ import ckan.lib.mailer as mailer
 from ckan.lib.base import model
 from ckan.lib.helpers import (
     date_str_to_datetime,
-    render_markdown,
     lang
 )
 
