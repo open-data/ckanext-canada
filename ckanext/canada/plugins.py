@@ -97,6 +97,7 @@ class CanadaThemePlugin(p.SingletonPlugin):
             'canada_check_access',
             'get_user_email',
             'get_loader_status_badge',
+            'registry_network_access',
             # Portal
             'user_organizations',
             'openness_score',
@@ -467,24 +468,6 @@ ckanext.canada:schemas/presets.yaml
         # type: () -> list[Blueprint]
         return [canada_views]
 
-
-    # ITemplateHelpers
-    def get_helpers(self):
-        return dict((h, getattr(helpers, h)) for h in [
-            'may_publish_datasets',
-            'today',
-            'date_format',
-            'parse_release_date_facet',
-            'is_ready_to_publish',
-            'get_datapreview_recombinant',
-            'recombinant_description_to_markup',
-            'mail_to_with_params',
-            'get_timeout_length',
-            'canada_check_access',
-            'get_user_email',
-            'get_loader_status_badge',
-            'registry_network_access',
-        ])
 
     # IConfigurable
     def configure(self, config):
