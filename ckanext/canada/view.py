@@ -1,8 +1,5 @@
 import json
 import decimal
-import pkg_resources
-import lxml.etree as ET
-import lxml.html as html
 from pytz import timezone, utc
 from socket import error as socket_error
 from logging import getLogger
@@ -26,7 +23,6 @@ import ckan.lib.mailer as mailer
 from ckan.lib.base import model
 from ckan.lib.helpers import (
     date_str_to_datetime,
-    render_markdown,
     lang
 )
 
@@ -739,62 +735,9 @@ def delete_datastore_table(id, resource_id):
 
 @canada_views.route('/help', methods=['GET'])
 def view_help():
-    def _get_help_text(language):
-        return pkg_resources.resource_string(
-            __name__,
-            '/'.join(['public', 'static', 'faq_{language}.md'.format(
-                language=language
-            )])
-        )
-
-    try:
-        # Try to load FAQ text for the user's language.
-        faq_text = _get_help_text(lang())
-    except IOError:
-        # Fall back to using English if no local language could be found.
-        faq_text = _get_help_text(u'en')
-
-    # Convert the markdown to HTML ...
-    faq_html = render_markdown(faq_text.decode("utf-8"), allow_html=True)
-    h = html.fromstring(faq_html)
-
-    # Get every FAQ point header.
-    for faq_section in h.xpath('.//h2'):
-
-        details = ET.Element('details')
-        summary = ET.Element('summary')
-
-        # Place the new details tag where the FAQ section header used to
-        # be.
-        faq_section.addprevious(details)
-
-        # Get all the text that follows the FAQ header.
-        while True:
-            next_node = faq_section.getnext()
-            if next_node is None or next_node.tag in ('h1', 'h2'):
-                break
-            # ... and add it to the details.
-            details.append(next_node)
-
-        # Move the FAQ header to the top of the summary tag.
-        summary.insert(0, faq_section)
-        # Move the summary tag to the top of the details tag.
-        details.insert(0, summary)
-
-        # We don't actually want the FAQ headers to be headings, so strip
-        # the tags and just leave the text.
-        faq_section.drop_tag()
-
-    # Get FAQ group header and set it as heading 2 to comply with
-    # accessible heading ranks
-    for faq_group in h.xpath('//h1'):
-        faq_group.tag = 'h2'
-
-    return render('help.html', extra_vars={
-        'faq_html': html.tostring(h),
-        # For use with the inline debugger.
-        'faq_text': faq_text
-    })
+    if not h.is_registry():
+        return abort(404)
+    return render('help.html', extra_vars={})
 
 
 @canada_views.route('/datatable/<resource_name>/<resource_id>', methods=['GET', 'POST'])
