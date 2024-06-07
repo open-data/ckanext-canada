@@ -78,6 +78,8 @@ class CanadaThemePlugin(p.SingletonPlugin):
         p.toolkit.add_resource('assets/public', 'canada_public')
         set_app_global('is_registry', plugin_loaded('canada_internal'))
 
+        # config['ckan.favicon'] = helpers.cdts_asset('/assets/favicon.ico') #TODO: DO NOT COMMIT
+
     # ITemplateHelpers
     def get_helpers(self):
         return dict((h, getattr(helpers, h)) for h in [
@@ -115,9 +117,7 @@ class CanadaThemePlugin(p.SingletonPlugin):
             'get_datapreview',
             'iso_to_goctime',
             'geojson_to_wkt',
-            'url_for_wet_theme',
-            'url_for_wet',
-            'wet_jquery_offline',
+            'cdts_asset',
             'get_map_type',
             'adobe_analytics_login_required',
             'adobe_analytics_lang',
@@ -136,6 +136,7 @@ class CanadaThemePlugin(p.SingletonPlugin):
             'split_piped_bilingual_field',
             'search_filter_pill_link_label',
             'release_date_facet_start_year',
+            'ckan_to_cdts_breadcrumbs',
         ])
 
 

@@ -23,36 +23,7 @@
 {% endblock %}
 
 
-{% block secondary_content %}
-  {% if dashboard_activity_stream_context.dict %}
-    <div class="panel panel-info">
-      <span class="arrow"></span>
-      {% snippet 'snippets/context.html', type=dashboard_activity_stream_context.filter_type, dict=dashboard_activity_stream_context.dict %}
-    </div>
-  {% endif %}
-  <div class="panel panel-info mrgn-bttm-md" >
-    <div class="panel-heading">
-      <span class="fa fa-sitemap"></span>&nbsp;{{ _('My Datasets') }}
-    </div>
-    <div class="panel-body">
-      {% if g.user_dict['datasets'] %}
-        <ul class="list-group">
-          {% for package in g.user_dict['datasets'][0:10] %}
-            {% set title = package.title or package.name %}
-            <li class="list-group-item">
-              {{ h.link_to(h.truncate(title, 80), h.url_for(package.type + '.read', id=package.name)) }}
-            </li>
-          {% endfor %}
-        </ul>
-      {% else %}
-        <span>{{ _('You do not have any datasets') }}</span>
-      {% endif %}
-    </div>
-  </div>
-  <a href="{{ h.url_for(package.type + '.new') }}" class="btn btn-primary">
-    {{ _('Add Dataset') }}
-  </a>
-{% endblock %}
+{% block secondary_content %}{% endblock %}
 
 {% block add_action_content %}
   {% if h.check_access('package_create') %}

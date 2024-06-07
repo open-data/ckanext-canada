@@ -1,9 +1,6 @@
 {% ckan_extends %}
 
 {% block page %}
-  {% block skip %}
-    {% snippet 'snippets/wet-boew/skip.html' %}
-  {% endblock %}
   {%- block header %}
     {% macro breadcrumb_content() %}
       {% block breadcrumb_content %}{% endblock %}
@@ -122,14 +119,9 @@
 
 
 {% block scripts %}
-  {% snippet 'snippets/wet-boew/footerresources.html' %}
+  {% snippet 'snippets/cdts/footer_scripts.html' %}
   {% asset 'canada_public/csrf' %}
   {% asset 'canada_public/analytics' %}
-  {% block adobe_analytics_footer %}
-    {% if not g.is_registry %}
-      <script type="text/javascript">if( typeof _satellite !== "undefined" ){ _satellite.pageBottom(); }</script>
-    {% endif %}
-  {%- endblock -%}
   {% block google_analytics_footer %}
     {% if g.is_registry %}
       {% asset 'canada_internal/analytics' %}

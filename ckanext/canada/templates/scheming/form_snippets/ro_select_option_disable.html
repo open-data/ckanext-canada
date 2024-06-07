@@ -6,9 +6,9 @@
     field.get('form_include_blank_choice', false) -%}
   {%- do options.append({'value': '', 'text': ''}) -%}
 {%- endif -%}
-{%- for c in h.scheming_field_choices(field) -%}
-  {%- if not form_restrict_choices_to or g.value in form_restrict_choices_to -%}
-    {%- do options.append({'value': g.value|string, 'text': h.scheming_language_text(g.label), 'attr': g.attr }) -%}
+{%- for choice in h.scheming_field_choices(field) -%}
+  {%- if not form_restrict_choices_to or choice.value in form_restrict_choices_to -%}
+    {%- do options.append({'value': choice.value|string, 'text': h.scheming_language_text(choice.label), 'attr': g.attr }) -%}
   {%- endif -%}
 {%- endfor -%}
 {%- if field.get('sorted_choices') -%}
