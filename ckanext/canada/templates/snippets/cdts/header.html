@@ -171,7 +171,7 @@
         {% if g.userobj %}
           "appSettings": [{"href": "{{ h.url_for('user.edit', id=g.userobj.name) }}"}],
           "signOut": [{"href": "{{ h.url_for('user.logout') }}"}],
-        {% else %}
+        {% elif h.registry_network_access() %}
           "signIn": [{"href": "{{ h.url_for('user.login') }}"}],
         {% endif %}
         "menuLinks": menuLinks,

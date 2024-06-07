@@ -27,12 +27,16 @@
         <p>{{ content }}</p>
         {% if code == 403 %}
           {% if not g.userobj %}
-            <p class="mrgn-tp-lg">{{ _('You are not logged in to the Open Government Registry. Note that your login expires after 1 hour of inactivity. Click on the log in button below to log in.') }}</p>
-            <p>
-              <a href="{{ h.url_for('user.login') }}" class="btn btn-primary">
-                <span class="fa fa-sign-in"></span>&nbsp;<span class="text">{{ _('Log in') }}</span>
-              </a>
-            </p>
+            {% if not h.registry_network_access() %}
+              <p class="mrgn-tp-lg">{{ _('This application is only available to authorized Government of Canada departments and agencies. Please contact the support team at <a href="mailto:open-ouvert@tbs-sct.gc.ca">open-ouvert@tbs-sct.gc.ca</a> to request access.') }}</p>
+            {% else %}
+              <p class="mrgn-tp-lg">{{ _('You are not logged in to the Open Government Registry. Note that your login expires after 1 hour of inactivity. Click on the log in button below to log in.') }}</p>
+              <p>
+                <a href="{{ h.url_for('user.login') }}" class="btn btn-primary">
+                  <span class="fa fa-sign-in"></span>&nbsp;<span class="text">{{ _('Log in') }}</span>
+                </a>
+              </p>
+            {% endif %}
           {% endif %}
         {% elif code == 500 %}
           <p class="mrgn-tp-lg">{{ _('We encountered an error and are unable to serve your request. Please try again in short time or contact <a href="mailto:open-ouvert@tbs-sct.gc.ca">open-ouvert@tbs-sct.gc.ca</a> if you need immediate assistance or if this issue persists. Note that your login expires after 1 hour of inactivity.') | safe }}</p>
