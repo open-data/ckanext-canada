@@ -1,8 +1,19 @@
 # -*- coding: UTF-8 -*-
+import pytest
+import mock
+
 from ckanext.canada.tests import CanadaTestBase
 from ckanapi import LocalCKAN
+from ckan.plugins.toolkit import h
 
-from ckanext.canada.tests.factories import CanadaResource as Resource
+from ckanext.canada.tests.factories import (
+    CanadaResource as Resource,
+)
+from ckanext.canada.tests.fixtures import (
+    mock_isfile,
+    mock_open_ip_list,
+    MOCK_IP_ADDRESS,
+)
 
 
 class TestCanadaLogic(CanadaTestBase):
@@ -45,3 +56,64 @@ class TestCanadaLogic(CanadaTestBase):
         assert 'notes_fr' in ds_info['fields'][0]['info']
         assert ds_info['fields'][0]['info']['notes_fr'] == 'Example Description FR'
 
+
+@pytest.mark.usefixtures('with_request_context')
+class TestPublicRegistry(CanadaTestBase):
+    @classmethod
+    def setup_method(self, method):
+        """Method is called at class level before EACH test methods of the class are called.
+        Setup any state specific to the execution of the given class methods.
+        """
+        super(TestPublicRegistry, self).setup_method(method)
+        self.extra_environ_tester = {'REMOTE_USER': str(u""), 'REMOTE_ADDR': MOCK_IP_ADDRESS}
+        self.extra_environ_tester_bad_ip = {'REMOTE_USER': str(u""), 'REMOTE_ADDR': '174.116.80.142'}
+
+    @mock.patch('os.path.isfile', mock_isfile)
+    @mock.patch('builtins.open', mock_open_ip_list)
+    def test_register_bad_ip_address(self, app):
+        offset = h.url_for('user.register')
+        response = app.get(offset, extra_environ=self.extra_environ_tester_bad_ip)
+
+        assert response.status_code == 403
+
+    @mock.patch('os.path.isfile', mock_isfile)
+    @mock.patch('builtins.open', mock_open_ip_list)
+    def test_register_good_ip_address(self, app):
+        offset = h.url_for('user.register')
+        response = app.get(offset, extra_environ=self.extra_environ_tester)
+
+        assert response.status_code == 200
+
+    @mock.patch('os.path.isfile', mock_isfile)
+    @mock.patch('builtins.open', mock_open_ip_list)
+    @pytest.mark.skip(reason="No mock for repoze handler in tests")
+    def test_login_bad_ip_address(self, app):
+        offset = h.url_for('canada.login')
+        response = app.get(offset, extra_environ=self.extra_environ_tester_bad_ip)
+        #FIXME: repoze handler in tests
+        assert response.status_code == 403
+
+    @mock.patch('os.path.isfile', mock_isfile)
+    @mock.patch('builtins.open', mock_open_ip_list)
+    @pytest.mark.skip(reason="No mock for repoze handler in tests")
+    def test_login_good_ip_address(self, app):
+        offset = h.url_for('canada.login')
+        response = app.get(offset, extra_environ=self.extra_environ_tester)
+        #FIXME: repoze handler in tests
+        assert response.status_code == 200
+
+    @mock.patch('os.path.isfile', mock_isfile)
+    @mock.patch('builtins.open', mock_open_ip_list)
+    def test_api_bad_ip_address(self, app):
+        offset = h.url_for('api.action', logic_function='status_show')
+        response = app.get(offset, extra_environ=self.extra_environ_tester_bad_ip)
+
+        assert response.status_code == 403
+
+    @mock.patch('os.path.isfile', mock_isfile)
+    @mock.patch('builtins.open', mock_open_ip_list)
+    def test_api_good_ip_address(self, app):
+        offset = h.url_for('api.action', logic_function='status_show')
+        response = app.get(offset, extra_environ=self.extra_environ_tester)
+
+        assert response.status_code == 200

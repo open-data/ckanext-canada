@@ -20,7 +20,8 @@ from ckan.plugins.toolkit import (
     ObjectNotFound,
     _,
     get_validator,
-    request
+    request,
+    abort,
 )
 
 from ckanext.canada import validators
@@ -147,6 +148,7 @@ class CanadaSecurityPlugin(CkanSecurityPlugin):
     p.implements(p.IResourceController, inherit=True)
     p.implements(p.IValidators, inherit=True)
     p.implements(p.IConfigurer)
+    p.implements(p.IAuthenticator, inherit=True)
 
     def update_config(self, config):
         # Disable auth settings
@@ -180,6 +182,22 @@ class CanadaSecurityPlugin(CkanSecurityPlugin):
                     validators.canada_security_upload_type,
                 'canada_security_upload_presence':
                     validators.canada_security_upload_presence}
+
+    # IAuthenticator
+    def identify(self):
+        controller, action = p.toolkit.get_endpoint()
+        blueprint = '.'.join((controller, action))
+        restricted_blueprints = [
+            'canada.login',
+            'user.login',
+            'user.request_reset',
+            'canada.recover_username',
+            'canada.register',
+            'canada.action',
+            'api.action', # change if need to narrow down the scope
+        ]
+        if blueprint in restricted_blueprints and not helpers.registry_network_access():
+            return abort(403)
 
 
 class CanadaDatasetsPlugin(SchemingDatasetsPlugin):
@@ -443,6 +461,30 @@ ckanext.canada:schemas/presets.yaml
         # Include private datasets in Feeds
         config['ckan.feeds.include_private'] = True
 
+
+    # IBlueprint
+    def get_blueprint(self):
+        # type: () -> list[Blueprint]
+        return [canada_views]
+
+
+    # ITemplateHelpers
+    def get_helpers(self):
+        return dict((h, getattr(helpers, h)) for h in [
+            'may_publish_datasets',
+            'today',
+            'date_format',
+            'parse_release_date_facet',
+            'is_ready_to_publish',
+            'get_datapreview_recombinant',
+            'recombinant_description_to_markup',
+            'mail_to_with_params',
+            'get_timeout_length',
+            'canada_check_access',
+            'get_user_email',
+            'get_loader_status_badge',
+            'registry_network_access',
+        ])
 
     # IConfigurable
     def configure(self, config):
