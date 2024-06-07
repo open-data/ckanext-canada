@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  CKAN\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-06-06 17:06+0000\n"
+"POT-Creation-Date: 2024-06-07 20:11+0000\n"
 "PO-Revision-Date: 2014-01-23 13:04+0000\n"
 "Last-Translator: Sean Hammond <sean.hammond@okfn.org>\n"
 "Language: en\n"
@@ -1494,579 +1494,316 @@ msgstr ""
 
 #: ckanext/canada/templates/internal/help.html:13
 msgid ""
-"The most common reason is duplicate accounts. If you tried to create an "
-"account and you receive this error message \"That login name is not "
-"available\", it means you already have an account with this username, but"
-" you either forgot or you are not certain it was already created. If you "
+"If you encounter the error message <em>\"That login name is not "
+"available\"</em> while trying to create an account, it typically "
+"indicates that you already have an account with that username. If you "
 "remember the password, try to log into the Registry using the same "
-"username and password. If you forgot the password, refer to the Reset "
-"your Password function, and a new one will be emailed to you. For any "
-"other reasons, ask for assistance via e-mail to open-ouvert@tbs-"
-"sct.gc.ca."
+"username and password."
 msgstr ""
 
-#: ckanext/canada/templates/internal/help.html:16
-msgid "Have you forgotten your password?"
+#: ckanext/canada/templates/internal/help.html:14
+msgid ""
+"If you forgot the password, refer to the Reset your Password function, "
+"and a new one will be emailed to you."
 msgstr ""
 
 #: ckanext/canada/templates/internal/help.html:17
-msgid ""
-"If you failed to login to the Registry and received this error massage "
-"\"Login failed. Bad username or password\", start by requesting a "
-"password reset following these steps:"
+msgid "Have you forgotten your password or username?"
 msgstr ""
 
-#: ckanext/canada/templates/internal/help.html:19
+#: ckanext/canada/templates/internal/help.html:18
 msgid ""
-"Click the \"<strong>Forgotten your password?</strong>\" button. The "
-"\"Reset Your Password\" page is displayed."
+"If you encounter the error message <em>\"Login failed. Bad username or "
+"password\"</em> while trying to log in to the Registry, follow these "
+"steps to resolve the issue:"
 msgstr ""
 
 #: ckanext/canada/templates/internal/help.html:20
 msgid ""
-"Enter your Username, Example: djohn, and click \"<strong><a "
-"href=\"https://registry.open.canada.ca/en/user/reset\">Request "
-"Reset</a></strong>\" button."
+"Click on either the <em>\"Reset Password\"</em> or <em>\"Recover "
+"Username\"</em> option."
 msgstr ""
 
 #: ckanext/canada/templates/internal/help.html:21
-msgid ""
-"If you receive the error message \"No such user: djohn\", it means your "
-"Username is incorrect and you should e-mail open-ouvert@tbs-sct.gc.ca for"
-" assistance."
+msgid "Provide your email address."
 msgstr ""
 
 #: ckanext/canada/templates/internal/help.html:22
-msgid ""
-"If you receive the message \"Please check your inbox for a reset code\", "
-"check your e-mail inbox and open the e-mail received from the Registry."
+msgid "Follow the directions provided in the email sent to you."
 msgstr ""
 
-#: ckanext/canada/templates/internal/help.html:23
-msgid ""
-"Click the confirmation link included in the e-mail. The \"Reset Your "
-"Password\" page will then be displayed."
+#: ckanext/canada/templates/internal/help.html:26
+msgid "What if I manage the registry for more than one organization?"
 msgstr ""
 
-#: ckanext/canada/templates/internal/help.html:24
+#: ckanext/canada/templates/internal/help.html:27
 msgid ""
-"Enter a new password in both the \"Password\" and \"Confirm\" fields, "
-"then click \"<strong>Update Password</strong>\" button. Message \"Your "
-"password has been reset\" is displayed."
+"To manage additional organizations using your Registry account, send an "
+"email to open-ouvert@tbs-sct.gc.ca requesting that your account is linked"
+" to the desired organization. Ensure that you include the name of the "
+"organization in your email."
 msgstr ""
 
-#: ckanext/canada/templates/internal/help.html:25
+#: ckanext/canada/templates/internal/help.html:28
 msgid ""
-"Login again using the new password. The message \"{your name} is now "
-"logged in\" will then be displayed."
+"Once the support team processes your request, you'll be able to manage "
+"those organizations through your Registry account."
 msgstr ""
 
-#: ckanext/canada/templates/internal/help.html:29
-msgid "I can't find my organization in the Registry?"
-msgstr ""
-
-#: ckanext/canada/templates/internal/help.html:30
-msgid ""
-"There could be two possible reasons why you cannot find your organization"
-" in the registry:"
+#: ckanext/canada/templates/internal/help.html:31
+msgid "How do I change my Profile (i.e. password, name, e-mail)?"
 msgstr ""
 
 #: ckanext/canada/templates/internal/help.html:32
-msgid "The organization went through a name change recently; or"
+msgid "To update your profile in the Registry, follow these steps:"
 msgstr ""
 
-#: ckanext/canada/templates/internal/help.html:33
-msgid "This is a new organization"
+#: ckanext/canada/templates/internal/help.html:34
+msgid "Click the <em>\"My Account\"</em> tab."
 msgstr ""
 
 #: ckanext/canada/templates/internal/help.html:35
 msgid ""
-"In both cases, e-mail open-ouvert@tbs-sct.gc.ca with your request, "
-"including the organization name."
+"Select <em>\"Edit Profile\"</em> to access the <em>\"Change "
+"Details\"</em> page."
 msgstr ""
 
-#: ckanext/canada/templates/internal/help.html:38
-msgid "What if I manage the registry for more than one organization?"
-msgstr ""
-
-#: ckanext/canada/templates/internal/help.html:39
+#: ckanext/canada/templates/internal/help.html:36
 msgid ""
-"You can use your Registry account to manage additional organizations. In "
-"order to do that, e-mail open-ouvert@tbs-sct.gc.ca asking the support "
-"team to link your account to additional organizations, and include the "
-"organization names in the e-mail."
+"Make your desired changes. Note that altering your username is not "
+"recommended, as it could disconnect your uploaded data."
+msgstr ""
+
+#: ckanext/canada/templates/internal/help.html:37
+msgid ""
+"After completing your modifications, click <em>\"Update Profile\"</em>. "
+"Depending on the changes, you may need to log in again."
+msgstr ""
+
+#: ckanext/canada/templates/internal/help.html:40
+msgid "Open Data and Open Information"
 msgstr ""
 
 #: ckanext/canada/templates/internal/help.html:42
-msgid "Why can't I access the Registry?"
+msgid "How do I add an open data or open information record?"
 msgstr ""
 
 #: ckanext/canada/templates/internal/help.html:43
 msgid ""
-"There are a number of reasons why you cannot access the Open Government "
-"Registry. Try to answer the following questions and perform the proper "
-"correction actions. These questions will also be asked by the support "
-"team, if you contact them for help:"
-msgstr ""
-
-#: ckanext/canada/templates/internal/help.html:45
-msgid ""
-"Is the Registry indeed up and running? Can you see the \"Open Government "
-"Registry\" Login page?"
+"Please visit the registry operations guide section for <a "
+"href=\"https://open.canada.ca/en/registry-operations-guide/upload-"
+"data\">Uploading open data and information.</a>"
 msgstr ""
 
 #: ckanext/canada/templates/internal/help.html:46
 msgid ""
-"If you cannot see the Login page, did you use the proper link "
-"https://registry.open.canada.ca/en/?"
+"How do I review an open data or open information record for my "
+"organization?"
 msgstr ""
 
 #: ckanext/canada/templates/internal/help.html:47
 msgid ""
-"If it was a failed login using your new Username and Password, refer to "
-"<a href=\"https://registry.open.canada.ca/en/user/reset\">Forgot your "
-"password</a>?"
+"To review your department's open data or open information records or to "
+"see the complete list of records:"
 msgstr ""
 
 #: ckanext/canada/templates/internal/help.html:49
-msgid ""
-"For any other access issues you could not resolve yourself, e-mail open-"
-"ouvert@tbs-sct.gc.ca for assistance."
+msgid "Select Menu, then Organizations."
 msgstr ""
 
-#: ckanext/canada/templates/internal/help.html:52
-msgid "Why am I getting a server error message?"
+#: ckanext/canada/templates/internal/help.html:50
+msgid "Select your organization."
 msgstr ""
 
-#: ckanext/canada/templates/internal/help.html:53
-msgid ""
-"This is a general error message indicating a problem the system cannot "
-"determine (usually a network or a communication issue). E-mail to open-"
-"ouvert@tbs-sct.gc.ca for assistance, if this error persists."
+#: ckanext/canada/templates/internal/help.html:51
+msgid "Your records will appear."
+msgstr ""
+
+#: ckanext/canada/templates/internal/help.html:55
+msgid "How do I search the Registry?"
 msgstr ""
 
 #: ckanext/canada/templates/internal/help.html:56
-msgid "How do I change my Profile (i.e. password, name, e-mail)?"
+msgid "To find metadata records published in the Registry, follow these steps:"
 msgstr ""
 
-#: ckanext/canada/templates/internal/help.html:57
-msgid ""
-"While you are logged into the Registry, follow these steps to change your"
-" Profile:"
+#: ckanext/canada/templates/internal/help.html:58
+msgid "Click on the <em>\"Search\"</em> option in the main menu."
 msgstr ""
 
 #: ckanext/canada/templates/internal/help.html:59
 msgid ""
-"Click the \"<strong>My Account</strong>\" tab and select \"<strong>Edit "
-"Profile</strong>\". The \"Change your Details\" page is displayed."
+"On the Search page, you can either enter a search term directly or use "
+"the facets on the right-hand side to narrow down your search."
 msgstr ""
 
 #: ckanext/canada/templates/internal/help.html:60
 msgid ""
-"Enter your changes. However, it is not recommended to change your "
-"Username because you will lose the link to your uploaded data."
+"The list of results will display records matching your search query in "
+"the order in which they were entered or updated in the Registry."
 msgstr ""
 
-#: ckanext/canada/templates/internal/help.html:61
-msgid ""
-"Once you completed your changes, click \"<strong>Update "
-"Profile</strong>\". You may want to Login again, depending on the changes"
-" you made."
+#: ckanext/canada/templates/internal/help.html:63
+msgid "Proactive Disclosure Information"
 msgstr ""
 
 #: ckanext/canada/templates/internal/help.html:65
-msgid "I have a question that does not appear on this page?"
+msgid "How do I add, modify or delete records in the Registry?"
 msgstr ""
 
 #: ckanext/canada/templates/internal/help.html:66
 msgid ""
-"For any other questions that you cannot find in the page, e-mail open-"
-"ouvert@tbs-sct.gc.ca for assistance."
+"Please visit the registry operations guide section for <a "
+"href=\"https://open.canada.ca/en/registry-operations-guide/upload-"
+"data#manage\">Managing records.</a>"
 msgstr ""
 
-#: ckanext/canada/templates/internal/help.html:68
-msgid "Open Data and Open Information"
+#: ckanext/canada/templates/internal/help.html:69
+msgid "Why can't I see my uploaded data on the portal?"
 msgstr ""
 
 #: ckanext/canada/templates/internal/help.html:70
-msgid "How do I add an open data or open information record?"
+msgid ""
+"When uploading Proactive publication data to the Registry, it's essential"
+" to follow these directives to ensure a successful process:"
 msgstr ""
 
-#: ckanext/canada/templates/internal/help.html:71
+#: ckanext/canada/templates/internal/help.html:72
 msgid ""
-"To add an open data or open information record to the Open Government "
-"Portal, you must create a metadata record for that dataset and add it to "
-"the Registry. To add a metadata record:"
+"Download the Latest Template to ensure that you're using the most up-to-"
+"date format."
 msgstr ""
 
 #: ckanext/canada/templates/internal/help.html:73
 msgid ""
-"Review the instructions outlined in the <a "
-"href=\"https://www.gcpedia.gc.ca/wiki/Open_Government/Resources_Ressources\""
-" target=\"_blank\">Open Government Registry Guide</a>"
+"Prepare Data in the Proper Template: Organize your data in the "
+"appropriate template for the specific organization and Proactive "
+"publication type. Each template corresponds to particular context, so "
+"choose the relevant one."
 msgstr ""
 
 #: ckanext/canada/templates/internal/help.html:74
-msgid "Click \"Add Open Data\" or \"Add Open Information\","
+msgid ""
+"Maintain the Abbreviated Organization Name: In the template, the "
+"abbreviated name of the organization (e.g., \"aandc-aadnc\") must remain "
+"in cell C1 exactly as downloaded."
 msgstr ""
 
 #: ckanext/canada/templates/internal/help.html:75
-msgid "Fill out the required metadata elements,"
+msgid ""
+"Include All Required Fields: Ensure that the template you're uploading "
+"contains all the required fields for the specific Proactive publication "
+"type. Missing fields can lead to issues during the upload process."
 msgstr ""
 
 #: ckanext/canada/templates/internal/help.html:76
 msgid ""
-"Select \"Yes\" for \"IMSO Approval\" and \"Ready to Publish\" as "
-"appropriate"
+"Enter Valid Data: Populate the template with valid and accurate data. "
+"Incorrect or incomplete information may cause errors."
 msgstr ""
 
 #: ckanext/canada/templates/internal/help.html:77
 msgid ""
-"Inform the open-ouvert@tbs-sct.gc.ca mailbox that you are ready for your "
-"record to be published on the Open Government Portal."
+"File Format and Naming: Your completed data template should be an Excel "
+"spreadsheet in either XLS or XLSX format. Do not rename the file, as the "
+"system relies on a unique ID associated with each template. Renaming it "
+"could lead to complications."
 msgstr ""
 
-#: ckanext/canada/templates/internal/help.html:81
+#: ckanext/canada/templates/internal/help.html:78
 msgid ""
-"How do I review an open data or open information record department or "
-"agency?"
+"Troubleshooting Upload Issues: If you encounter an error message during "
+"the upload, carefully review the message text and take corrective "
+"measures based on the specific issue."
 msgstr ""
 
-#: ckanext/canada/templates/internal/help.html:82
+#: ckanext/canada/templates/internal/help.html:79
 msgid ""
-"To review your department's open data or open information records or to "
-"see the complete list of records, click <strong>\"Organization\" in the "
-"main menu, and then find your organization</strong>."
+"If the upload was successful but you don't see the data in the "
+"<em>\"Preview\"</em> section of the page, verify your data file. It might"
+" be a duplicate upload or have other issues."
 msgstr ""
 
-#: ckanext/canada/templates/internal/help.html:85
-msgid "How do I search the Registry?"
+#: ckanext/canada/templates/internal/help.html:83
+msgid "Was everything uploaded correctly?"
+msgstr ""
+
+#: ckanext/canada/templates/internal/help.html:84
+msgid ""
+"A record is not immediately pushed to the portal, it will appear the "
+"following morning. The following are two possible methods for you to "
+"verify your data upload:"
 msgstr ""
 
 #: ckanext/canada/templates/internal/help.html:86
 msgid ""
-"Use Search to find metadata records published in the Registry. This "
-"feature is the same as Advanced Search on the Open Government Portal. The"
-" Search page can be retrieved by selecting \"Search\" in the main menu. "
-"Then enter a search term, or use the facets on the right hand side to "
-"narrow your search. Note, the list of results shows records matching your"
-" search query in the order in which they were entered or updated in the "
-"Registry (chronological)."
+"If you see the message <em>\"Your template has been successfully "
+"uploaded\"</em> after you have hit the <em>\"Submit\"</em> button; or"
 msgstr ""
 
-#: ckanext/canada/templates/internal/help.html:89
-msgid "How do I browse the Registry?"
-msgstr ""
-
-#: ckanext/canada/templates/internal/help.html:90
+#: ckanext/canada/templates/internal/help.html:87
 msgid ""
-"Use the Browse feature to find metadata records published in the "
-"Registry. This feature is similar to Browse on the Open Government Portal"
-" website. You can browse the Registry in three ways:"
+"you can verify the data by looking in the Preview table for one or more "
+"of your template line items."
+msgstr ""
+
+#: ckanext/canada/templates/internal/help.html:91
+msgid "Why didn't I get a confirmation email that my upload was successful?"
 msgstr ""
 
 #: ckanext/canada/templates/internal/help.html:92
 msgid ""
-"<strong>By department.</strong> Click on a department or agency name to "
-"see all records published by that organization."
+"The system only provides an onscreen message <em>\"Your template has been"
+" successfully uploaded\"</em>; it does not send a confirmation email."
 msgstr ""
 
-#: ckanext/canada/templates/internal/help.html:93
-msgid ""
-"<strong>By subject.</strong> Click on a subject to find all records "
-"\"tagged\" with that subject."
-msgstr ""
-
-#: ckanext/canada/templates/internal/help.html:94
-msgid ""
-"<strong>By format.</strong> Click on a format name to find all records in"
-" that format."
+#: ckanext/canada/templates/internal/help.html:95
+msgid "Why don't I see the upload button?"
 msgstr ""
 
 #: ckanext/canada/templates/internal/help.html:96
 msgid ""
-"The list of results displays records in the order in which they were "
-"entered or updated in the Registry (chronological)."
+"The Upload button is accessible only to users associated with an "
+"organization. If you're unable to see the button, consider the following "
+"reasons:"
 msgstr ""
 
 #: ckanext/canada/templates/internal/help.html:98
-msgid "Proactive Disclosure Information"
+msgid "Confirm that you are logged into the Registry."
+msgstr ""
+
+#: ckanext/canada/templates/internal/help.html:99
+msgid "Ensure that your account is linked to your organization."
 msgstr ""
 
 #: ckanext/canada/templates/internal/help.html:100
-msgid "How do I add, modify or delete records in the Registry?"
-msgstr ""
-
-#: ckanext/canada/templates/internal/help.html:101
 msgid ""
-"If you need to add, modify or delete line items for proactive disclosure "
-"or ATI requests, please refer to the training guides on our <a "
-"href=\"https://www.gcpedia.gc.ca/wiki/Proactive_Disclosure_on_Open.Canada.ca\""
-" target=\"_blank\">Proactive Disclosure GCpedia page</a>."
+"If your organization hasn't uploaded data yet for that proactive "
+"disclosure type, your template hasn't been initiated. To access the "
+"Upload button, you'll need to download the template first."
 msgstr ""
 
 #: ckanext/canada/templates/internal/help.html:104
-msgid "How do I know what data and formats to populate the templates with?"
+msgid "Why doesn't all the text I entered in the template appear?"
 msgstr ""
 
 #: ckanext/canada/templates/internal/help.html:105
 msgid ""
-"You can download all the Data Element Profiles for each proactive "
-"disclosure type from our <a "
-"href=\"https://www.gcpedia.gc.ca/wiki/Proactive_Disclosure_on_Open.Canada.ca\""
-" target=\"_blank\">Proactive Disclosure GCpedia page</a>."
+"Excel has a cell display limit of 1024 characters.  However, the complete"
+" text (Maximum of 32767 characters of it) is actually in the cell. You "
+"can view all the text by extending the cell size, or putting the cell in "
+"Edit mode, or looking into the Formula bar, in order to see the complete "
+"text."
 msgstr ""
 
 #: ckanext/canada/templates/internal/help.html:108
-msgid "Why won't the system upload my data?"
+msgid "Who approves the Proactive publication data?"
 msgstr ""
 
 #: ckanext/canada/templates/internal/help.html:109
 msgid ""
-"There are many reasons why you could not upload Proactive Disclosure data"
-" to the Registry. Before uploading, make sure your data is prepared "
-"according to the following directives:"
-msgstr ""
-
-#: ckanext/canada/templates/internal/help.html:111
-msgid ""
-"Always download the latest template from the Registry for each data "
-"upload,"
-msgstr ""
-
-#: ckanext/canada/templates/internal/help.html:112
-msgid ""
-"Prepare your data in the proper template for a given organization and "
-"Proactive Disclosure type,"
-msgstr ""
-
-#: ckanext/canada/templates/internal/help.html:113
-msgid ""
-"The abbreviated name of the organization, i.e. aandc-aadnc, must stay in "
-"cell C1 of the template, as downloaded. This a key info for the system to"
-" identify the uploaded template,"
-msgstr ""
-
-#: ckanext/canada/templates/internal/help.html:114
-msgid ""
-"Make sure the template to be uploaded has all the required fields for "
-"this Proactive Disclosure Type,"
-msgstr ""
-
-#: ckanext/canada/templates/internal/help.html:115
-msgid "Enter only valid data in the template,"
-msgstr ""
-
-#: ckanext/canada/templates/internal/help.html:116
-msgid ""
-"Your completed data template must be an Excel spreadsheet of the XLS or "
-"XLSX format."
-msgstr ""
-
-#: ckanext/canada/templates/internal/help.html:117
-msgid ""
-"Ensure that you do not rename the file. The system requires the Unique ID"
-" that is applied to each template. This ID is the file name applied to "
-"the template in the system. If you rename it, you will experience issues."
-msgstr ""
-
-#: ckanext/canada/templates/internal/help.html:119
-msgid ""
-"If you were not able to successfully upload your template, and an error "
-"message was displayed, check the message text and perform the correction "
-"measures."
-msgstr ""
-
-#: ckanext/canada/templates/internal/help.html:120
-msgid ""
-"If the upload was successful, but you do not see the data in the "
-"\"Preview\" portion of the page, verify your data file before attempting "
-"again. It could be a duplicate upload, among other reasons."
-msgstr ""
-
-#: ckanext/canada/templates/internal/help.html:121
-msgid ""
-"For any other issues you cannot resolve yourself, e-mail to open-ouvert"
-"@tbs-sct.gc.ca for assistance."
-msgstr ""
-
-#: ckanext/canada/templates/internal/help.html:124
-msgid "Why can't I see my uploaded data on the portal?"
-msgstr ""
-
-#: ckanext/canada/templates/internal/help.html:125
-msgid ""
-"When you upload your completed template, you can preview the uploaded "
-"data in to bottom of the page immediately after you click "
-"<strong>Submit</strong>. However, the data will not be published to the "
-"Open Government Portal until the next day. A script runs overnight to "
-"automatically publish your report to the Open Government Portal."
-msgstr ""
-
-#: ckanext/canada/templates/internal/help.html:128
-msgid "Why does the ATI Disposition field require both English and French text?"
-msgstr ""
-
-#: ckanext/canada/templates/internal/help.html:129
-msgid ""
-"Although it would have been ideal to develop a controlled vocabulary for "
-"this element, it was not feasible. Therefore, in the interim we will "
-"capture these elements in both English and French until we are able to "
-"develop a controlled list."
-msgstr ""
-
-#: ckanext/canada/templates/internal/help.html:132
-msgid "What is the order of Proactive Disclosure data displayed on the portal?"
-msgstr ""
-
-#: ckanext/canada/templates/internal/help.html:133
-msgid ""
-"The default sort order of the Proactive Disclosure submissions, on the "
-"Open Information page, is the Date published in descending order. This "
-"means brings the latest submissions will be listed at the top of the "
-"page."
-msgstr ""
-
-#: ckanext/canada/templates/internal/help.html:136
-msgid "Why don't I see any data in the preview of the registry?"
-msgstr ""
-
-#: ckanext/canada/templates/internal/help.html:137
-msgid ""
-"This could be a browser issue that can be resolved by turning on "
-"\"Compatibility View\". Ask your IT Support for help with this issue. It "
-"could also be an error encountered during upload. Please ensure that "
-"valid data and template format are prepared and uploaded to the Registry "
-"by referring to \"Why won't the system upload my data?\"."
-msgstr ""
-
-#: ckanext/canada/templates/internal/help.html:140
-msgid "What am I seeing in the preview screen?"
-msgstr ""
-
-#: ckanext/canada/templates/internal/help.html:141
-msgid ""
-"The preview in the registry always displays the latest 500 records for "
-"that organization and Proactive Disclosure type. If this is not the case,"
-" e-mail open-ouvert@tbs-sct.gc.ca for assistance."
-msgstr ""
-
-#: ckanext/canada/templates/internal/help.html:144
-msgid "Was everything uploaded correctly?"
-msgstr ""
-
-#: ckanext/canada/templates/internal/help.html:145
-msgid ""
-"This question is often asked because the data is not immediately pushed "
-"to the portal for you to confirm. The following are two possible methods "
-"for you to verify your data upload:"
-msgstr ""
-
-#: ckanext/canada/templates/internal/help.html:147
-msgid ""
-"If you see the message \"Your template has been successfully uploaded\" "
-"after you have hit the \"Submit\" button, you can verify the data by "
-"looking in the Preview table for one or more of your template line items;"
-" or"
-msgstr ""
-
-#: ckanext/canada/templates/internal/help.html:148
-msgid ""
-"You can wait until the next morning to verify that the data was published"
-" on the Open Government Portal, since your data will be published "
-"overnight."
-msgstr ""
-
-#: ckanext/canada/templates/internal/help.html:152
-msgid "Why didn't I get a confirmation email that my upload was successful?"
-msgstr ""
-
-#: ckanext/canada/templates/internal/help.html:153
-msgid ""
-"The system only provides an onscreen message (\"Your template has been "
-"successfully uploaded\"); it does not send a confirmation email."
-msgstr ""
-
-#: ckanext/canada/templates/internal/help.html:156
-msgid "Why don't I see the upload button?"
-msgstr ""
-
-#: ckanext/canada/templates/internal/help.html:157
-msgid ""
-"The upload button is available only to users who are associated with an "
-"organization and there are two reasons why the \"Upload\" button is not "
-"available:"
-msgstr ""
-
-#: ckanext/canada/templates/internal/help.html:159
-msgid ""
-"Your Organization needs to be linked to your account before you can "
-"upload data. When you create (register) for your account, the system "
-"automatically sends an e-mail to the Account Management team, who will "
-"manually perform this link."
-msgstr ""
-
-#: ckanext/canada/templates/internal/help.html:160
-msgid ""
-"If you want to manage additional organizations, refer to \"What if I "
-"manage the registry for more than one organization?\" in order to link "
-"those organizations to your account."
-msgstr ""
-
-#: ckanext/canada/templates/internal/help.html:161
-msgid "You may not be logged into the Registry."
-msgstr ""
-
-#: ckanext/canada/templates/internal/help.html:165
-msgid "Are we still required to post our Proactive Disclosure data on our site?"
-msgstr ""
-
-#: ckanext/canada/templates/internal/help.html:166
-msgid ""
-"Once you begin using the registry to upload the Proactive Disclosure data"
-" to the registry, you can stop publishing them to your institutional "
-"page, should you choose. Some organizations are providing a link to the "
-"open.canada portal from their institutional page for all proactive "
-"disclosures point forward. This will not be an issue once all "
-"organizations have migrated their historical data to the open.canada "
-"portal."
-msgstr ""
-
-#: ckanext/canada/templates/internal/help.html:169
-msgid "Why doesn't all the text I entered in the template appear?"
-msgstr ""
-
-#: ckanext/canada/templates/internal/help.html:170
-msgid ""
-"Excel has a cell display limit of 1024 characters. This means no matter "
-"how much text you paste in the cell, it will only show the first 1024 "
-"characters. However, the complete text (or the first 32767 characters of "
-"it) is actually in the cell. You just have to extend the cell size, or "
-"put the cell in Edit mode, or look into the Formula bar, in order to see "
-"the complete text."
-msgstr ""
-
-#: ckanext/canada/templates/internal/help.html:173
-msgid "When can I start uploading Proactive Disclosure data?"
-msgstr ""
-
-#: ckanext/canada/templates/internal/help.html:174
-msgid ""
-"The Proactive Disclosure Registry is now live and ready to use. However, "
-"the mandatory migration for departments to onboard to the new system will"
-" occur in phases and follow each institutions web renewal migration and "
-"onboarding plan."
-msgstr ""
-
-#: ckanext/canada/templates/internal/help.html:177
-msgid "Who approves the proactive disclosure data?"
-msgstr ""
-
-#: ckanext/canada/templates/internal/help.html:178
-msgid ""
-"There is no approval process. It is the organization's responsibility to "
-"verify and approve proactive disclosure data before uploading to the "
-"Registry."
+"It is the organization's responsibility to verify and approve Proactive "
+"publication data before uploading to the Registry."
 msgstr ""
 
 #: ckanext/canada/templates/internal/page.html:9
@@ -8638,5 +8375,602 @@ msgstr "Keep me logged in"
 #~ msgstr ""
 
 #~ msgid "Suggest a Dataset"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "The most common reason is duplicate "
+#~ "accounts. If you tried to create "
+#~ "an account and you receive this "
+#~ "error message \"That login name is "
+#~ "not available\", it means you already"
+#~ " have an account with this username,"
+#~ " but you either forgot or you "
+#~ "are not certain it was already "
+#~ "created. If you remember the password,"
+#~ " try to log into the Registry "
+#~ "using the same username and password."
+#~ " If you forgot the password, refer"
+#~ " to the Reset your Password function,"
+#~ " and a new one will be emailed"
+#~ " to you. For any other reasons, "
+#~ "ask for assistance via e-mail to "
+#~ "open-ouvert@tbs-sct.gc.ca."
+#~ msgstr ""
+
+#~ msgid "Have you forgotten your password?"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "If you failed to login to the "
+#~ "Registry and received this error massage"
+#~ " \"Login failed. Bad username or "
+#~ "password\", start by requesting a "
+#~ "password reset following these steps:"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Click the \"<strong>Forgotten your "
+#~ "password?</strong>\" button. The \"Reset Your"
+#~ " Password\" page is displayed."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Enter your Username, Example: djohn, and"
+#~ " click \"<strong><a "
+#~ "href=\"https://registry.open.canada.ca/en/user/reset\">Request "
+#~ "Reset</a></strong>\" button."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "If you receive the error message "
+#~ "\"No such user: djohn\", it means "
+#~ "your Username is incorrect and you "
+#~ "should e-mail open-ouvert@tbs-sct.gc.ca "
+#~ "for assistance."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "If you receive the message \"Please "
+#~ "check your inbox for a reset "
+#~ "code\", check your e-mail inbox and "
+#~ "open the e-mail received from the "
+#~ "Registry."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Click the confirmation link included in"
+#~ " the e-mail. The \"Reset Your "
+#~ "Password\" page will then be displayed."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Enter a new password in both the"
+#~ " \"Password\" and \"Confirm\" fields, then"
+#~ " click \"<strong>Update Password</strong>\" "
+#~ "button. Message \"Your password has been"
+#~ " reset\" is displayed."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Login again using the new password. "
+#~ "The message \"{your name} is now "
+#~ "logged in\" will then be displayed."
+#~ msgstr ""
+
+#~ msgid "I can't find my organization in the Registry?"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "There could be two possible reasons "
+#~ "why you cannot find your organization"
+#~ " in the registry:"
+#~ msgstr ""
+
+#~ msgid "The organization went through a name change recently; or"
+#~ msgstr ""
+
+#~ msgid "This is a new organization"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "In both cases, e-mail open-ouvert"
+#~ "@tbs-sct.gc.ca with your request, including"
+#~ " the organization name."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "You can use your Registry account "
+#~ "to manage additional organizations. In "
+#~ "order to do that, e-mail open-"
+#~ "ouvert@tbs-sct.gc.ca asking the support "
+#~ "team to link your account to "
+#~ "additional organizations, and include the "
+#~ "organization names in the e-mail."
+#~ msgstr ""
+
+#~ msgid "Why can't I access the Registry?"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "There are a number of reasons why"
+#~ " you cannot access the Open "
+#~ "Government Registry. Try to answer the"
+#~ " following questions and perform the "
+#~ "proper correction actions. These questions "
+#~ "will also be asked by the support"
+#~ " team, if you contact them for "
+#~ "help:"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Is the Registry indeed up and "
+#~ "running? Can you see the \"Open "
+#~ "Government Registry\" Login page?"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "If you cannot see the Login page,"
+#~ " did you use the proper link "
+#~ "https://registry.open.canada.ca/en/?"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "If it was a failed login using "
+#~ "your new Username and Password, refer"
+#~ " to <a "
+#~ "href=\"https://registry.open.canada.ca/en/user/reset\">Forgot "
+#~ "your password</a>?"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "For any other access issues you "
+#~ "could not resolve yourself, e-mail "
+#~ "open-ouvert@tbs-sct.gc.ca for assistance."
+#~ msgstr ""
+
+#~ msgid "Why am I getting a server error message?"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "This is a general error message "
+#~ "indicating a problem the system cannot"
+#~ " determine (usually a network or a"
+#~ " communication issue). E-mail to open-"
+#~ "ouvert@tbs-sct.gc.ca for assistance, if "
+#~ "this error persists."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "While you are logged into the "
+#~ "Registry, follow these steps to change"
+#~ " your Profile:"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Click the \"<strong>My Account</strong>\" tab"
+#~ " and select \"<strong>Edit Profile</strong>\"."
+#~ " The \"Change your Details\" page is"
+#~ " displayed."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Enter your changes. However, it is "
+#~ "not recommended to change your Username"
+#~ " because you will lose the link "
+#~ "to your uploaded data."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Once you completed your changes, click"
+#~ " \"<strong>Update Profile</strong>\". You may "
+#~ "want to Login again, depending on "
+#~ "the changes you made."
+#~ msgstr ""
+
+#~ msgid "I have a question that does not appear on this page?"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "For any other questions that you "
+#~ "cannot find in the page, e-mail "
+#~ "open-ouvert@tbs-sct.gc.ca for assistance."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "To add an open data or open "
+#~ "information record to the Open "
+#~ "Government Portal, you must create a "
+#~ "metadata record for that dataset and "
+#~ "add it to the Registry. To add "
+#~ "a metadata record:"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Review the instructions outlined in the"
+#~ " <a "
+#~ "href=\"https://www.gcpedia.gc.ca/wiki/Open_Government/Resources_Ressources\""
+#~ " target=\"_blank\">Open Government Registry "
+#~ "Guide</a>"
+#~ msgstr ""
+
+#~ msgid "Click \"Add Open Data\" or \"Add Open Information\","
+#~ msgstr ""
+
+#~ msgid "Fill out the required metadata elements,"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Select \"Yes\" for \"IMSO Approval\" and"
+#~ " \"Ready to Publish\" as appropriate"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Inform the open-ouvert@tbs-sct.gc.ca "
+#~ "mailbox that you are ready for "
+#~ "your record to be published on the"
+#~ " Open Government Portal."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "How do I review an open data "
+#~ "or open information record department or"
+#~ " agency?"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "To review your department's open data"
+#~ " or open information records or to"
+#~ " see the complete list of records,"
+#~ " click <strong>\"Organization\" in the main"
+#~ " menu, and then find your "
+#~ "organization</strong>."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Use Search to find metadata records "
+#~ "published in the Registry. This feature"
+#~ " is the same as Advanced Search "
+#~ "on the Open Government Portal. The "
+#~ "Search page can be retrieved by "
+#~ "selecting \"Search\" in the main menu."
+#~ " Then enter a search term, or "
+#~ "use the facets on the right hand"
+#~ " side to narrow your search. Note,"
+#~ " the list of results shows records"
+#~ " matching your search query in the"
+#~ " order in which they were entered "
+#~ "or updated in the Registry "
+#~ "(chronological)."
+#~ msgstr ""
+
+#~ msgid "How do I browse the Registry?"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Use the Browse feature to find "
+#~ "metadata records published in the "
+#~ "Registry. This feature is similar to "
+#~ "Browse on the Open Government Portal "
+#~ "website. You can browse the Registry "
+#~ "in three ways:"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "<strong>By department.</strong> Click on a "
+#~ "department or agency name to see "
+#~ "all records published by that "
+#~ "organization."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "<strong>By subject.</strong> Click on a "
+#~ "subject to find all records \"tagged\""
+#~ " with that subject."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "<strong>By format.</strong> Click on a "
+#~ "format name to find all records in"
+#~ " that format."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "The list of results displays records "
+#~ "in the order in which they were"
+#~ " entered or updated in the Registry"
+#~ " (chronological)."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "If you need to add, modify or "
+#~ "delete line items for proactive "
+#~ "disclosure or ATI requests, please refer"
+#~ " to the training guides on our "
+#~ "<a "
+#~ "href=\"https://www.gcpedia.gc.ca/wiki/Proactive_Disclosure_on_Open.Canada.ca\""
+#~ " target=\"_blank\">Proactive Disclosure GCpedia "
+#~ "page</a>."
+#~ msgstr ""
+
+#~ msgid "How do I know what data and formats to populate the templates with?"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "You can download all the Data "
+#~ "Element Profiles for each proactive "
+#~ "disclosure type from our <a "
+#~ "href=\"https://www.gcpedia.gc.ca/wiki/Proactive_Disclosure_on_Open.Canada.ca\""
+#~ " target=\"_blank\">Proactive Disclosure GCpedia "
+#~ "page</a>."
+#~ msgstr ""
+
+#~ msgid "Why won't the system upload my data?"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "There are many reasons why you "
+#~ "could not upload Proactive Disclosure "
+#~ "data to the Registry. Before uploading,"
+#~ " make sure your data is prepared "
+#~ "according to the following directives:"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Always download the latest template from"
+#~ " the Registry for each data upload,"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Prepare your data in the proper "
+#~ "template for a given organization and"
+#~ " Proactive Disclosure type,"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "The abbreviated name of the "
+#~ "organization, i.e. aandc-aadnc, must "
+#~ "stay in cell C1 of the template,"
+#~ " as downloaded. This a key info "
+#~ "for the system to identify the "
+#~ "uploaded template,"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Make sure the template to be "
+#~ "uploaded has all the required fields "
+#~ "for this Proactive Disclosure Type,"
+#~ msgstr ""
+
+#~ msgid "Enter only valid data in the template,"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Your completed data template must be "
+#~ "an Excel spreadsheet of the XLS or"
+#~ " XLSX format."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Ensure that you do not rename the"
+#~ " file. The system requires the Unique"
+#~ " ID that is applied to each "
+#~ "template. This ID is the file name"
+#~ " applied to the template in the "
+#~ "system. If you rename it, you will"
+#~ " experience issues."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "If you were not able to "
+#~ "successfully upload your template, and "
+#~ "an error message was displayed, check"
+#~ " the message text and perform the "
+#~ "correction measures."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "If the upload was successful, but "
+#~ "you do not see the data in "
+#~ "the \"Preview\" portion of the page, "
+#~ "verify your data file before attempting"
+#~ " again. It could be a duplicate "
+#~ "upload, among other reasons."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "For any other issues you cannot "
+#~ "resolve yourself, e-mail to open-ouvert"
+#~ "@tbs-sct.gc.ca for assistance."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "When you upload your completed template,"
+#~ " you can preview the uploaded data"
+#~ " in to bottom of the page "
+#~ "immediately after you click "
+#~ "<strong>Submit</strong>. However, the data "
+#~ "will not be published to the Open"
+#~ " Government Portal until the next "
+#~ "day. A script runs overnight to "
+#~ "automatically publish your report to the"
+#~ " Open Government Portal."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Why does the ATI Disposition field "
+#~ "require both English and French text?"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Although it would have been ideal "
+#~ "to develop a controlled vocabulary for"
+#~ " this element, it was not feasible."
+#~ " Therefore, in the interim we will"
+#~ " capture these elements in both "
+#~ "English and French until we are "
+#~ "able to develop a controlled list."
+#~ msgstr ""
+
+#~ msgid "What is the order of Proactive Disclosure data displayed on the portal?"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "The default sort order of the "
+#~ "Proactive Disclosure submissions, on the "
+#~ "Open Information page, is the Date "
+#~ "published in descending order. This "
+#~ "means brings the latest submissions will"
+#~ " be listed at the top of the"
+#~ " page."
+#~ msgstr ""
+
+#~ msgid "Why don't I see any data in the preview of the registry?"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "This could be a browser issue that"
+#~ " can be resolved by turning on "
+#~ "\"Compatibility View\". Ask your IT "
+#~ "Support for help with this issue. "
+#~ "It could also be an error "
+#~ "encountered during upload. Please ensure "
+#~ "that valid data and template format "
+#~ "are prepared and uploaded to the "
+#~ "Registry by referring to \"Why won't "
+#~ "the system upload my data?\"."
+#~ msgstr ""
+
+#~ msgid "What am I seeing in the preview screen?"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "The preview in the registry always "
+#~ "displays the latest 500 records for "
+#~ "that organization and Proactive Disclosure "
+#~ "type. If this is not the case, "
+#~ "e-mail open-ouvert@tbs-sct.gc.ca for "
+#~ "assistance."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "This question is often asked because "
+#~ "the data is not immediately pushed "
+#~ "to the portal for you to confirm."
+#~ " The following are two possible "
+#~ "methods for you to verify your "
+#~ "data upload:"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "If you see the message \"Your "
+#~ "template has been successfully uploaded\" "
+#~ "after you have hit the \"Submit\" "
+#~ "button, you can verify the data by"
+#~ " looking in the Preview table for "
+#~ "one or more of your template line"
+#~ " items; or"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "You can wait until the next "
+#~ "morning to verify that the data "
+#~ "was published on the Open Government "
+#~ "Portal, since your data will be "
+#~ "published overnight."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "The system only provides an onscreen "
+#~ "message (\"Your template has been "
+#~ "successfully uploaded\"); it does not "
+#~ "send a confirmation email."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "The upload button is available only "
+#~ "to users who are associated with "
+#~ "an organization and there are two "
+#~ "reasons why the \"Upload\" button is "
+#~ "not available:"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Your Organization needs to be linked "
+#~ "to your account before you can "
+#~ "upload data. When you create (register)"
+#~ " for your account, the system "
+#~ "automatically sends an e-mail to the "
+#~ "Account Management team, who will "
+#~ "manually perform this link."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "If you want to manage additional "
+#~ "organizations, refer to \"What if I "
+#~ "manage the registry for more than "
+#~ "one organization?\" in order to link "
+#~ "those organizations to your account."
+#~ msgstr ""
+
+#~ msgid "You may not be logged into the Registry."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Are we still required to post our"
+#~ " Proactive Disclosure data on our "
+#~ "site?"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Once you begin using the registry "
+#~ "to upload the Proactive Disclosure data"
+#~ " to the registry, you can stop "
+#~ "publishing them to your institutional "
+#~ "page, should you choose. Some "
+#~ "organizations are providing a link to"
+#~ " the open.canada portal from their "
+#~ "institutional page for all proactive "
+#~ "disclosures point forward. This will not"
+#~ " be an issue once all organizations"
+#~ " have migrated their historical data "
+#~ "to the open.canada portal."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Excel has a cell display limit of"
+#~ " 1024 characters. This means no "
+#~ "matter how much text you paste in"
+#~ " the cell, it will only show "
+#~ "the first 1024 characters. However, the"
+#~ " complete text (or the first 32767"
+#~ " characters of it) is actually in "
+#~ "the cell. You just have to extend"
+#~ " the cell size, or put the cell"
+#~ " in Edit mode, or look into the"
+#~ " Formula bar, in order to see "
+#~ "the complete text."
+#~ msgstr ""
+
+#~ msgid "When can I start uploading Proactive Disclosure data?"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "The Proactive Disclosure Registry is now"
+#~ " live and ready to use. However, "
+#~ "the mandatory migration for departments "
+#~ "to onboard to the new system will"
+#~ " occur in phases and follow each "
+#~ "institutions web renewal migration and "
+#~ "onboarding plan."
+#~ msgstr ""
+
+#~ msgid "Who approves the proactive disclosure data?"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "There is no approval process. It "
+#~ "is the organization's responsibility to "
+#~ "verify and approve proactive disclosure "
+#~ "data before uploading to the Registry."
 #~ msgstr ""
 
