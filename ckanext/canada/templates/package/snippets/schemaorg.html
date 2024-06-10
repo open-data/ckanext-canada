@@ -24,10 +24,9 @@
     </span>
     <span property="genre" value="{{ _('Information and Communications Government and Politics') }}"></span>
     <span property="license" typeof="CreativeWork">
+      {%- set license_url, license_title = data.license_url, data.license_title -%}
       {%- if h.lang() == 'fr' -%}
         {%- set license_url, license_title = g.pkg.license.url_fra, g.pkg.license.title_fra -%}
-      {%- else -%}
-        {%- set license_url, license_title = data.license_url, data.license_title -%}
       {%- endif -%}
       <span property="name" value="{{ license_title }}"></span>
       <span property="sameAs" value="{{ license_url }}"></span>
