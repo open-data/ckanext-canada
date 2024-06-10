@@ -69,7 +69,7 @@ RESOURCE_TRIM_FIELDS = ['package_id', 'revision_id',
                 'webstore_last_updated', 'state',
                 'description', 'tracking_summary', 'mimetype_inner',
                 'mimetype', 'cache_url', 'created', 'webstore_url',
-                'position']
+                'position', 'metadata_modified']
 
 
 class PortalUpdater(object):
