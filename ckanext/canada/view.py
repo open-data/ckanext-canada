@@ -20,7 +20,7 @@ from ckan.plugins.toolkit import (
     render
 )
 import ckan.lib.mailer as mailer
-from ckan.lib.base import model
+from ckan import model
 from ckan.lib.helpers import (
     date_str_to_datetime,
     lang
@@ -30,8 +30,8 @@ from ckan.views.dataset import (
     EditView as DatasetEditView,
     search as dataset_search,
     CreateView as DatasetCreateView,
-    activity as dataset_activity
 )
+from ckanext.activity.views import package_activity
 from ckan.views.resource import (
     EditView as ResourceEditView,
     CreateView as ResourceCreateView
@@ -134,7 +134,7 @@ def canada_prevent_pd_views(uri, package_type):
     id = None
     if uri[0]:
         if uri[0] == 'activity':  # allow activity route
-            return dataset_activity(package_type, uri[1])
+            return package_activity(package_type, uri[1])
         id = uri[0]
         package_type = _get_package_type_from_dict(id, package_type)
     if package_type in h.recombinant_get_types():
