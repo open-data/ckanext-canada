@@ -3,7 +3,8 @@ import re
 import inspect
 from ckan.plugins import plugin_loaded
 from ckan.plugins.toolkit import c, config, _, h, g, request
-from ckan.model import User, Package, Activity
+from ckan.model import User, Package
+from ckanext.activity.model import Activity
 import ckan.model as model
 import datetime
 import unicodedata

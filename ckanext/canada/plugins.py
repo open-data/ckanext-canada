@@ -27,7 +27,6 @@ from ckanext.canada import auth
 from ckanext.canada import helpers
 from ckanext.canada import cli
 from ckanext.canada.pd import get_commands as get_pd_commands
-from ckanext.canada import activity as act
 # type_ignore_reason: importing to proc decorators
 from ckanext.canada import checks  # type: ignore
 from ckanext.canada import column_types as coltypes
@@ -732,7 +731,6 @@ ckanext.canada:schemas/prop.yaml
     # IActions
     def get_actions(self):
         return {
-                'recently_changed_packages_activity_list': act.recently_changed_packages_activity_list,  #TODO: Remove this action override in CKAN 2.10 upgrade
                 'resource_view_show': logic.canada_resource_view_show,
                 'resource_view_list': logic.canada_resource_view_list,
                 'job_list': logic.canada_job_list,
