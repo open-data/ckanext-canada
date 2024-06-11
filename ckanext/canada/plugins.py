@@ -8,6 +8,7 @@ from ckan.lib.plugins import DefaultDatasetForm, DefaultTranslation
 import ckan.lib.helpers as hlp
 from ckan.logic import validators as logic_validators
 from ckanext.datastore.interfaces import IDataDictionaryForm
+from ckanext.activity.logic.validators import object_id_validators
 
 from ckan.plugins.toolkit import (
     c,
@@ -356,15 +357,14 @@ class DataGCCAInternal(p.SingletonPlugin):
         config.update({
             "ckan.user_list_limit": 250
         })
-        # registry includes validation so use real validation presets
-        config['scheming.presets'] = """
-ckanext.scheming:presets.json
-ckanext.fluent:presets.json
-ckanext.canada:schemas/presets.yaml
-""" + (
-	"ckanext.validation:presets.json" if "validation" in config['ckan.plugins'] else
-	"ckanext.canada:schemas/validation_placeholder_presets.yaml"
-)
+
+        # CKAN 2.10 plugin loading does not allow us to set the schema
+        # files in update_config in a way that the load order will work fully.
+        scheming_presets = config.get('scheming.presets', '')
+        assert 'ckanext.scheming:presets.json' in scheming_presets
+        assert 'ckanext.fluent:presets.json' in scheming_presets
+        assert 'ckanext.canada:schemas/presets.yaml' in scheming_presets
+        assert 'ckanext.validation:presets.json' in scheming_presets
 
         # Include private datasets in Feeds
         config['ckan.feeds.include_private'] = True
@@ -583,44 +583,47 @@ class DataGCCAPublic(p.SingletonPlugin, DefaultTranslation):
         p.toolkit.add_resource('public/static/js', 'js')
         p.toolkit.add_resource('assets/datatables', 'canada_datatables')
         p.toolkit.add_resource('assets/public', 'canada_public')
-        config['ckan.auth.public_user_details'] = False
-        config['recombinant.definitions'] = """
-ckanext.canada:tables/ati.yaml
-ckanext.canada:tables/briefingt.yaml
-ckanext.canada:tables/qpnotes.yaml
-ckanext.canada:tables/contracts.yaml
-ckanext.canada:tables/contractsa.yaml
-ckanext.canada:tables/grants.yaml
-ckanext.canada:tables/hospitalityq.yaml
-ckanext.canada:tables/reclassification.yaml
-ckanext.canada:tables/travela.yaml
-ckanext.canada:tables/travelq.yaml
-ckanext.canada:tables/wrongdoing.yaml
-ckanext.canada:tables/inventory.yaml
-ckanext.canada:tables/consultations.yaml
-ckanext.canada:tables/service.yaml
-ckanext.canada:tables/dac.yaml
-ckanext.canada:tables/nap5.yaml
-ckanext.canada:tables/experiment.yaml
-ckanext.canada:tables/adminaircraft.yaml
 
-"""
+        config['ckan.auth.public_user_details'] = False
+
+        recombinant_definitions = config.get('recombinant.definitions', '')
+        assert 'ckanext.canada:tables/ati.yaml' in recombinant_definitions
+        assert 'ckanext.canada:tables/briefingt.yaml' in recombinant_definitions
+        assert 'ckanext.canada:tables/qpnotes.yaml' in recombinant_definitions
+        assert 'ckanext.canada:tables/contracts.yaml' in recombinant_definitions
+        assert 'ckanext.canada:tables/contractsa.yaml' in recombinant_definitions
+        assert 'ckanext.canada:tables/grants.yaml' in recombinant_definitions
+        assert 'ckanext.canada:tables/hospitalityq.yaml' in recombinant_definitions
+        assert 'ckanext.canada:tables/reclassification.yaml' in recombinant_definitions
+        assert 'ckanext.canada:tables/travela.yaml' in recombinant_definitions
+        assert 'ckanext.canada:tables/travelq.yaml' in recombinant_definitions
+        assert 'ckanext.canada:tables/wrongdoing.yaml' in recombinant_definitions
+        assert 'ckanext.canada:tables/inventory.yaml' in recombinant_definitions
+        assert 'ckanext.canada:tables/consultations.yaml' in recombinant_definitions
+        assert 'ckanext.canada:tables/service.yaml' in recombinant_definitions
+        assert 'ckanext.canada:tables/dac.yaml' in recombinant_definitions
+        assert 'ckanext.canada:tables/nap5.yaml' in recombinant_definitions
+        assert 'ckanext.canada:tables/experiment.yaml' in recombinant_definitions
+        assert 'ckanext.canada:tables/adminaircraft.yaml' in recombinant_definitions
+
         config['ckan.search.show_all_types'] = True
         config['ckan.gravatar_default'] = 'disabled'
         config['search.facets.limit'] = 200  # because org list
-        if 'validation' not in config.get('scheming.presets', ''):
-            config['scheming.presets'] = """
-ckanext.scheming:presets.json
-ckanext.fluent:presets.json
-ckanext.canada:schemas/presets.yaml
-ckanext.canada:schemas/validation_placeholder_presets.yaml
-"""
-        config['scheming.dataset_schemas'] = """
-ckanext.canada:schemas/dataset.yaml
-ckanext.canada:schemas/info.yaml
-ckanext.canada:schemas/prop.yaml
-"""
-        config['scheming.organization_schemas'] = 'ckanext.canada:schemas/organization.yaml'
+
+        scheming_presets = config.get('scheming.presets', '')
+        if 'validation' not in scheming_presets:
+            assert 'ckanext.scheming:presets.json' in scheming_presets
+            assert 'ckanext.fluent:presets.json' in scheming_presets
+            assert 'ckanext.canada:schemas/presets.yaml' in scheming_presets
+            assert 'ckanext.canada:schemas/validation_placeholder_presets.yaml' in scheming_presets
+
+        scheming_dataset_schemas = config.get('scheming.dataset_schemas', '')
+        assert 'ckanext.canada:schemas/dataset.yaml' in scheming_dataset_schemas
+        assert 'ckanext.canada:schemas/info.yaml' in scheming_dataset_schemas
+        assert 'ckanext.canada:schemas/prop.yaml' in scheming_dataset_schemas
+
+        scheming_organization_schemas = config.get('scheming.organization_schemas', '')
+        assert 'ckanext.canada:schemas/organization.yaml' in scheming_organization_schemas
 
         # Pretty output for Feeds
         config['ckan.feeds.pretty'] = True
@@ -639,7 +642,8 @@ ckanext.canada:schemas/prop.yaml
 
         # migration from `canada_activity` and `ckanext-extendedactivity` - Aug 2022
         # migrated from `ckan` canada fork for resource view activities - Jan 2024
-        logic_validators.object_id_validators.update({
+        # migrated from `activity` for ckan 2.10 upgrade - June 2024
+        object_id_validators.update({
             'new resource view': logic_validators.package_id_exists,
             'changed resource view': logic_validators.package_id_exists,
             'deleted resource view': logic_validators.package_id_exists,
