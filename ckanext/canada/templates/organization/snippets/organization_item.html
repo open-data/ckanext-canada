@@ -1,0 +1,18 @@
+{% set url = h.url_for(organization.type + '.read', id=organization.name) %}
+{% set html_title = _('This organization has no description') %}
+{% if organization.description %}
+  {% set html_title = organization.description|truncate(80, true) %}
+{% endif %}
+<dt style="width:auto;"><a href="{{ url }}" title="{{ html_title }}">
+  {{ h.split_piped_bilingual_field(organization.display_name, h.lang())|truncate(70, true) }}</a>
+</dt>
+<dd class="text-right">
+  {%- if organization.package_count -%}
+    <span>{{ ungettext('{num} Dataset', '{num} Datasets', organization.package_count).format(num=organization.package_count) }}</span>
+  {%- else -%}
+    <span>{{ _('0 Datasets') }}</span>
+  {%- endif -%}
+  {% if h.check_access('group_update', {'id': organization.id}) %}
+  <a href="{{h.url_for(('organization' if organization.is_organization else 'group') + '.edit', id=organization.name)}}" class="btn btn-default">{{ _('Edit') }}</a>
+  {% endif %}
+</dd>

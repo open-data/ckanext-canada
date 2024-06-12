@@ -1,0 +1,11 @@
+{% ckan_extends %}
+
+{% block pre_primary %}
+  {% if g.is_registry %}
+    {% asset 'canada_internal/validation_spec' %}
+    {# load module to modify the goodtablesUI.spec #}
+    {# module required for i18n #}
+    <div data-module="canada-validation-spec"></div>
+  {% endif %}
+  {{ super() }}
+{% endblock %}

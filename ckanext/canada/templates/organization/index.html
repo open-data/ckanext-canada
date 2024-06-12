@@ -1,0 +1,26 @@
+{% ckan_extends %}
+
+{% block primary_content_inner %}
+  <div class="panel mrgn-rght-md">
+    {% block organizations_search_form %}
+      {% snippet 'organization/snippets/organization_search.html', q=q, count=page.item_count %}
+    {% endblock %}
+    {% block organizations_list %}
+    {% if page.items or request.args %}
+      {% snippet "organization/snippets/organization_list.html", organizations=page.items %}
+    {% else %}
+      <p class="empty">
+        {{ _('There are currently no organizations for this site') }}.
+        {% if h.check_access('organization_create') %}
+          {% link_for _('How about creating one?'), 'organization.new' %}</a>.
+        {% endif %}
+      </p>
+    {% endif %}
+    {% endblock %}
+  {% block page_pagination %}
+    {{ super() }}
+  {% endblock %}
+  </div>
+{% endblock %}
+
+{% block page_heading %}{{ _('Organizations') }}{% endblock %}

@@ -226,7 +226,7 @@ canada_views.add_url_rule(
 
 @canada_views.route('/recover-username', methods=['GET', 'POST'])
 def recover_username():
-    if not h.is_registry() or not h.plugin_loaded('gcnotify'):
+    if not g.is_registry or not h.plugin_loaded('gcnotify'):
         # we only want this route on the Registry, and the email template
         # is monkey patched in GC Notify so we need that loaded
         return abort(404)
@@ -286,9 +286,9 @@ def recover_username():
 
 
 def canada_search(package_type):
-    if h.is_registry() and not g.user:
+    if g.is_registry and not g.user:
         return abort(403)
-    if not h.is_registry() and package_type in h.recombinant_get_types():
+    if not g.is_registry and package_type in h.recombinant_get_types():
         return h.redirect_to('dataset.search', package_type='dataset')
     return dataset_search(package_type)
 
@@ -616,7 +616,7 @@ def _clean_check_type_errors(post_data, fields, pk_fields, choice_fields):
 
 @canada_views.route('/', methods=['GET'])
 def home():
-    if not h.is_registry():
+    if not g.is_registry:
         return h.redirect_to('dataset.search')
     if not g.user:
         return h.redirect_to('user.login')
@@ -631,7 +631,7 @@ def home():
 
 @canada_views.route('/links', methods=['GET'])
 def links():
-    if not h.is_registry():
+    if not g.is_registry:
         return h.redirect_to('dataset.search')
     return render('home/quick_links.html', extra_vars={'is_sysadmin': is_sysadmin(g.user)})
 
@@ -1175,3 +1175,11 @@ def ckan_admin_index():
             continue
         sysadmins.append(admin.name)
     return render(u'admin/index.html', extra_vars={'sysadmins': sysadmins})
+
+
+@canada_views.route('/ckan-admin/config', methods=['GET', 'POST'])
+def ckan_admin_config():
+    """
+    404 this page always.
+    """
+    return abort(404)

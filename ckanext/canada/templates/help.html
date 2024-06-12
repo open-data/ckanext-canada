@@ -1,0 +1,11 @@
+{% extends "page.html" %}
+
+{% block primary %}
+  {% if g.is_registry %}
+    <h2>{{ _('Frequently Asked Questions (FAQ)') }}</h2>
+    {% block primary_content %}{% endblock primary_content %}
+    {{ faq_html|safe }}
+  {% else %}
+    {{ super() }}
+  {% endif %}
+{% endblock %}
