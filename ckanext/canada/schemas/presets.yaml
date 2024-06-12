@@ -17,7 +17,7 @@ presets:
 - preset_name: canada_dataset_id
   values:
     create_validators: canada_validate_generate_uuid
-      unicode name_validator package_id_does_not_exist
+      unicode_safe name_validator package_id_does_not_exist
     display_snippet: null
     field_name: id
     form_snippet: null
@@ -31,7 +31,7 @@ presets:
     field_name: name
     form_snippet: null
     validators: if_empty_same_as(id)
-      unicode not_empty canada_validate_generate_uuid
+      unicode_safe not_empty canada_validate_generate_uuid
 
 # Field = Collection Type.
 # Display the English or the French Description from the Collection Type code table (refer to Data Migration), depending on the selected language.
