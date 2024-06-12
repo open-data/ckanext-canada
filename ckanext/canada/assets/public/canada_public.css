@@ -879,11 +879,20 @@ body, body .module-grid, body .media-grid, body .main, body .account-masthead, b
 body .text-info{
   color: #31708f !important;
 }
+body .bg-info{
+  background-color: #d9edf7 !important;
+}
 body .text-warning{
   color: #8a6d3b !important;
 }
+body .bg-warning{
+  background-color: #fcf8e3 !important;
+}
 body .text-danger{
   color: #a94442 !important;
+}
+body .bg-danger{
+  background-color: #f2dede !important;
 }
 /*###########################
 ##           END           ##
