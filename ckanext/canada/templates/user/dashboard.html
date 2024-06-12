@@ -15,7 +15,7 @@
       <div class="panel-body">
       <p>{{ _('Activity from items that you follow') }}</p>
       {% block activity_stream %}
-        {% snippet 'snippets/activity_stream.html', activity_stream=activity_stream %}
+        {% snippet 'snippets/stream.html', activity_stream=activity_stream %}
       {% endblock %}
       </div>
     </div>
@@ -34,7 +34,7 @@
 {% block page_header %}
   <div class="col-md-12">
     <ul class="nav nav-pills canada-dashboard-nav">
-      {{ h.build_nav_icon('dashboard.index', _('News feed')) }}
+      {{ h.build_nav_icon('activity.dashboard', _('News feed')) }}
       {{ h.build_nav_icon('dashboard.datasets', _('My Datasets')) }}
     </ul>
   </div>

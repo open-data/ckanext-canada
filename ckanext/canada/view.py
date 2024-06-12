@@ -735,7 +735,7 @@ def delete_datastore_table(id, resource_id):
 
 @canada_views.route('/help', methods=['GET'])
 def view_help():
-    if not h.is_registry():
+    if not g.is_registry:
         return abort(404)
     return render('help.html', extra_vars={})
 

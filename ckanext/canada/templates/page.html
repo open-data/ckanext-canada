@@ -40,10 +40,10 @@
         {% block flash %}
           <div class="col-md-12 canada-flash-messages">
             <div class="flash-messages">
-              {% for message in h.flash.pop_messages() | list %}
-                <section class="alert fade in {{ message.category }}">
-                  <p>{{ h.literal(message) }}</p>
-                </section>
+              {% for category, message in h.get_flashed_messages(with_categories=true) %}
+                <div class="alert alert-dismissible fade show {{ category }}">
+                  {{ h.literal(message) }}
+                </div>
               {% endfor %}
             </div>
           </div>

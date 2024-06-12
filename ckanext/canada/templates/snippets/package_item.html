@@ -26,10 +26,8 @@
             {% if 'title_translated' not in package %}
               {% set my_title = _(my_title) %}
             {% endif %}
-            {% block heading_private %}
-              {{ super() }}
-            {% endblock %}
-            {{ h.link_to(h.truncate(my_title, truncate_title), h.url_for(package.type ~ '.read', id=package.name)) }}
+            {% block heading_private %}{# Do not show "Private" label #}{% endblock %}
+            {{ h.link_to(my_title|truncate(80), h.url_for(package.type ~ '.read', id=package.name)) }}
             {% block heading_meta %}
               {{ super() }}
             {% endblock %}
@@ -40,9 +38,6 @@
         </h3>
       </header>
       <div class="panel-body">
-        {% block banner %}
-          {{ super() }}
-        {% endblock %}
         {% block notes %}
           {% set notes, machine_translated = h.get_translated_t(package, 'notes') %}
           {% if notes %}

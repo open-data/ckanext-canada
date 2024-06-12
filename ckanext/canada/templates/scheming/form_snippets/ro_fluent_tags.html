@@ -8,7 +8,7 @@
     {% block tag_list %}
       <ul class="tag-list">
         {% for tag in value %}
-          <li>{{ h.truncate(tag, 22) }}</li>
+          <li>{{ tag|truncate(22) }}</li>
         {% endfor %}
       </ul>
     {% endblock %}
