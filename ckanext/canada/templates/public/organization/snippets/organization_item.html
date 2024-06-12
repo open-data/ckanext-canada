@@ -1,10 +1,10 @@
 {% set url = h.url_for(organization.type + '.read', id=organization.name) %}
 <dt style="width:auto;"><a href="{{ url }}" title="{%- if organization.description -%}
-     {{ h.truncate(organization.description, length=80, whole_word=True)}}
+     {{ organization.description|truncate(80, true)}}
    {%- else -%}
      {{ _('This organization has no description') }}
   {%- endif -%}">
-  {{ h.truncate(h.split_piped_bilingual_field(organization.display_name, h.lang()), length=70, whole_word=True) }}</a>
+  {{ h.split_piped_bilingual_field(organization.display_name, h.lang())|truncate(70, true) }}</a>
 </dt>
 <dd class="text-right">
   {%- if organization.package_count -%}
