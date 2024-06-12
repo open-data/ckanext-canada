@@ -879,6 +879,12 @@ body, body .module-grid, body .media-grid, body .main, body .account-masthead, b
 body .text-info{
   color: #31708f !important;
 }
+body .text-warning{
+  color: #8a6d3b !important;
+}
+body .text-danger{
+  color: #a94442 !important;
+}
 /*###########################
 ##           END           ##
 ##  CKAN Base CSS Overrides##
