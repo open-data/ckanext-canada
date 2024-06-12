@@ -716,8 +716,26 @@ body i.fa.fa-arrow-left::before{
   z-index: 2;
 }
 .canada-flash-messages .alert{
-  padding-right: 15px;
+  padding-right: 28px;
   position: relative;
+}
+/* BS4+ Fix. TODO: remove after upgrade to BS4+ */
+@keyframes flash-fade-in-alert{
+  0% {
+    opacity: 0;
+  }
+  33% {
+    opacity: 0.25;
+  }
+  67% {
+    opacity: 0.75;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+.canada-flash-messages .alert.fade.show{
+  animation: flash-fade-in-alert 1.325s ease-in 0.325s forwards !important;
 }
 @keyframes flash-fade-in-close-button{
   0% {
@@ -733,7 +751,7 @@ body i.fa.fa-arrow-left::before{
     opacity: 0.625;
   }
 }
-.canada-flash-messages .flash-messages a.close{
+.canada-flash-messages .flash-messages button.close{
   display: block;
   position: absolute;
   top: 5px;
@@ -741,11 +759,18 @@ body i.fa.fa-arrow-left::before{
   padding-bottom: 0;
   visibility: hidden;
   opacity: 0;
-  animation: flash-fade-in-close-button 2s ease-in 1s forwards;
+  animation: flash-fade-in-close-button 2s ease-in 1s forwards !important;
+  padding: 0 !important;
 }
-.canada-flash-messages .flash-messages a.close:hover,
-.canada-flash-messages .flash-messages a.close:active,
-.canada-flash-messages .flash-messages a.close:focus{
+.canada-flash-messages .flash-messages button.close::after{
+  content: '\f00d';
+  font-family: 'FontAwesome';
+  font-size: 18px;
+  vertical-align: text-top;
+}
+.canada-flash-messages .flash-messages button.close:hover,
+.canada-flash-messages .flash-messages button.close:active,
+.canada-flash-messages .flash-messages button.close:focus{
   color: #335075;
 }
 body .alert a.btn-default{
@@ -847,3 +872,15 @@ body, body .module-grid, body .media-grid, body .main, body .account-masthead, b
 ##  Core CSS URIs w/ Base URL ##
 ##            END             ##
 ################################*/
+
+/*############################
+##  CKAN Base CSS Overrides ##
+##############################*/
+body .text-info{
+  color: #31708f !important;
+}
+/*###########################
+##           END           ##
+##  CKAN Base CSS Overrides##
+##           END           ##
+#############################*/

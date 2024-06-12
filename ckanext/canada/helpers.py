@@ -595,7 +595,7 @@ def organization_member_count(id):
     return len(members)
 
 
-def _build_flash_html_for_ga4(message, category, caller):
+def _build_flash_html_for_ga4(message, category, caller, allow_html=True):
     """
     All flash messages will be given an event name and action attribute.
 
@@ -603,7 +603,7 @@ def _build_flash_html_for_ga4(message, category, caller):
     data-ga-action: CATEGORY in format of notice | error | success
     """
     return '<div class="canada-ga-flash" data-ga-event="%s" data-ga-action="%s">%s</div>' \
-        % (caller, category, message)
+        % (caller, category, escape(message) if not allow_html else Markup(message))
 
 
 def _get_caller_info(stack):
@@ -641,10 +641,9 @@ def flash_notice(message, allow_html=True):
     Adding the view/action caller for GA4 Custom Events
     """
     t.h.flash(_build_flash_html_for_ga4(message, 'notice',
-                                        _get_caller_info(inspect.stack())),
-              category='alert-info',
-              ignore_duplicate=True,
-              allow_html=allow_html)
+                                        _get_caller_info(inspect.stack()),
+                                        allow_html=allow_html),
+              category='alert-info')
 
 
 def flash_error(message, allow_html=True):
@@ -654,10 +653,9 @@ def flash_error(message, allow_html=True):
     Adding the view/action caller for GA4 Custom Events
     """
     t.h.flash(_build_flash_html_for_ga4(message, 'error',
-                                        _get_caller_info(inspect.stack())),
-              category='alert-danger',
-              ignore_duplicate=True,
-              allow_html=allow_html)
+                                        _get_caller_info(inspect.stack()),
+                                        allow_html=allow_html),
+              category='alert-danger')
 
 
 def flash_success(message, allow_html=True):
@@ -667,10 +665,9 @@ def flash_success(message, allow_html=True):
     Adding the view/action caller for GA4 Custom Events
     """
     t.h.flash(_build_flash_html_for_ga4(message, 'success',
-                                        _get_caller_info(inspect.stack())),
-              category='alert-success',
-              ignore_duplicate=True,
-              allow_html=allow_html)
+                                        _get_caller_info(inspect.stack()),
+                                        allow_html=allow_html),
+              category='alert-success')
 
 
 def get_loader_status_badge(resource):
