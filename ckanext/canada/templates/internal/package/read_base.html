@@ -12,5 +12,4 @@
     {% set dataset_label = _(pkg.title) %}
   {% endif %}
   {{ h.build_nav_icon(pkg.type + '.read', dataset_label, id=pkg.name) }}
-  {{ h.build_nav_icon(pkg.type + '.activity', _('Activity Stream'), id=pkg.name) }}
 {% endblock %}
