@@ -8,7 +8,7 @@
       {% snippet 'organization/snippets/organization_search.html', q=q, count=page.item_count %}
     {% endblock %}
     {% block organizations_list %}
-    {% if page.items or request.params %}
+    {% if page.items or request.args %}
       {% snippet "organization/snippets/organization_list.html", organizations=page.items %}
     {% else %}
       <p class="empty">

@@ -50,7 +50,7 @@
 
         <div id="dataset-search-ext">{% block dataset_search_ext %}{% endblock %}</div>
       </form>
-      <div class="{% if request.params and c.page.item_count == 0 -%}module-info module-simplify{%- endif -%}">
+      <div class="{% if request.args and c.page.item_count == 0 -%}module-info module-simplify{%- endif -%}">
         <div class="filter-list">
           {% block filter_list %}
             {% for field in g.fields_grouped %}
@@ -64,7 +64,7 @@
             {% endfor %}
         {% endblock %}
         </div>
-        {% if request.params and c.page.item_count == 0 %}
+        {% if request.args and c.page.item_count == 0 %}
           {% block try_another_search %}
           {% trans %}
             <p class="extra">Please try another search.</p>

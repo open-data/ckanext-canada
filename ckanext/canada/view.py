@@ -88,7 +88,7 @@ class IntentionalServerError(Exception):
 @canada_views.route('/user/logged_in', methods=['GET'])
 def logged_in():
     # redirect if needed
-    came_from = request.params.get(u'came_from', u'')
+    came_from = request.args.get(u'came_from', u'')
     if h.url_is_local(came_from):
         return h.redirect_to(str(came_from))
 

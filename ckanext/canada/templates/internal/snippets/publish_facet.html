@@ -15,7 +15,7 @@
       <ul class="list-unstyled list-facets">
         {% if facet_range != 'False' %}
 
-          {% set facet_range_value = request.params.get('portal_release_date') %}
+          {% set facet_range_value = request.args.get('portal_release_date') %}
           {% set parsed_facet_range = h.parse_release_date_facet(facet_range) %}
 
           {# Published #}

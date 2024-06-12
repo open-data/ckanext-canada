@@ -12,7 +12,7 @@
   scheming_choices=type_choices,
   extras=extras %}
 
-{% if 'status' in request.params or ('portal_type') in request.params.items() %}
+{% if 'status' in request.args or ('portal_type') in request.args.items() %}
   {% snippet 'snippets/facet_list.html',
     title=c.facet_titles['status'],
     name='status',
