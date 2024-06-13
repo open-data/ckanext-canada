@@ -56,15 +56,10 @@ jobs:
       - run:
           name: Set Python Version to 3.9
           command: |
-            apt-get update
-            apt-get install software-properties-common
-            add-apt-repository ppa:deadsnakes/ppa
-            apt-get install python3.9
-            apt-get install python3-pip
-            sudo update-alternatives --install /usr/bin/python python /usr/bin/python3.10
-            sudo update-alternatives --install /usr/bin/python python /usr/bin/python3.9
-            sudo update-alternatives --config python
-            sudo update-alternatives  --set python /usr/bin/python3.9
+            apk add --no-cache python3.9 py3-pip
+            ln -sf python3.9 /usr/local/bin/python
+            python3 -m ensurepip
+            pip3 install --no-cache --upgrade pip setuptools
       - run:
           name: Set CKAN to open-data/ckan@canada-v2.10
           command: |
