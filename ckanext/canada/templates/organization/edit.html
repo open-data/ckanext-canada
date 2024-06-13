@@ -1,0 +1,7 @@
+{% ckan_extends %}
+
+{% block breadcrumb_content_inner %}
+  {%- set translated_title = h.get_translated(g.group_dict, 'title') -%}
+  <li>{% link_for translated_title, named_route=group_type + '.read', id=g.group_dict.name %}</li>
+  <li class="active">{% link_for _('Manage'), named_route=group_type + '.edit', id=g.group_dict.name  %}</li>
+{% endblock %}

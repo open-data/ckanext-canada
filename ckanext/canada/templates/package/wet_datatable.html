@@ -79,8 +79,8 @@
             }));
             form.append($('<input>').attr({
               type: 'hidden',
-              value: "{{request.cookies.token}}",
-              name: 'token'
+              value: "{{- csrf_token() -}}",
+              name: '{{- g.csrf_field_name -}}'
             }));
             form.append($('<input>').attr({
               type: 'hidden',

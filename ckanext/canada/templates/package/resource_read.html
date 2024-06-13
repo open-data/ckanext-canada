@@ -17,13 +17,6 @@
       {% endif %}
     </div>
   </div>
-  {% if is_activity_archive %}
-    <div class="module-alert alert alert-danger mrgn-tp-sm">
-      <p>
-        {% trans url = h.url_for(pkg.type + '.read', id=pkg.id) %}You're currently viewing an old version of this dataset. Some resources may no longer exist or the dataset may not display correctly. To see the current version, click <a href="{{ url }}">here</a>.{% endtrans %}
-      </p>
-    </div>
-  {% endif %}
   {% if g.is_registry %}
     {{- h.get_validation_badge(res)|safe -}}
     <div class="canada-w10-spacer"></div>

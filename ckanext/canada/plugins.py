@@ -13,6 +13,9 @@ from ckanext.activity.logic.validators import object_id_validators
 from ckan.lib.app_globals import set_app_global
 from ckan.plugins.core import plugin_loaded
 
+from ckan.config.middleware.flask_app import csrf
+from ckanext.datatablesview.blueprint import datatablesview
+
 from ckan.plugins.toolkit import (
     g,
     h,
@@ -162,6 +165,8 @@ class CanadaSecurityPlugin(CkanSecurityPlugin):
         config['ckan.auth.create_user_via_web'] = plugin_loaded('canada_internal')  # /user/register view only on registry
         # Set auth settings
         config['ckan.auth.roles_that_cascade_to_sub_groups'] = 'admin'
+
+        csrf.exempt(datatablesview)
 
     def before_create(self, context, resource):
         """

@@ -212,7 +212,7 @@
         function _add_custom_app_bar_buttons(parent_node){
           for(let _i = 0; _i < extraAppBarButtons.length; _i++){
             let buttonNode = document.createElement('li');
-            buttonNode.innerHTML = '<a href="' + extraAppBarButtons[_i]["href"] + '" class="btn ' + extraAppBarButtons[_i]["btnClass"] + '"><span class="fa ' + extraAppBarButtons[_i]["icon"] + '" aria-hidden="true"></span>' + extraAppBarButtons[_i]["text"] + '</a>';
+            buttonNode.innerHTML = '<a href="' + extraAppBarButtons[_i]["href"] + '" class="btn ' + extraAppBarButtons[_i]["btnClass"] + '"><span class="fa ' + extraAppBarButtons[_i]["icon"] + '" aria-hidden="true"></span>&nbsp;' + extraAppBarButtons[_i]["text"] + '</a>';
             if( extraAppBarButtons[_i]["location"] == 'before' ){
               parent_node.prepend(buttonNode);
             }else if( extraAppBarButtons[_i]["location"] == 'after'){

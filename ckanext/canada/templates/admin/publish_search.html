@@ -6,6 +6,7 @@
   <section id="search-results">
     <div class="module-poster">
       <form id="dataset-search" class="dataset-search form-inline mrgn-bttm-md mrgn-tp-md" method="get" data-module="select-switch" role="search">
+        {{ h.csrf_input() }}
         <div id="search">
           <h2 class="mrgn-tp-0 mrgn-bttm-0">
             <label for="search_field"  class="wb-inv">{{ _('Search Datasets') }}</label>

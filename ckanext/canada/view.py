@@ -7,6 +7,8 @@ import csv
 from six import string_types
 from datetime import datetime, timedelta
 
+from ckan.config.middleware.flask_app import csrf
+
 from ckan.plugins.toolkit import (
     abort,
     get_action,
@@ -147,7 +149,7 @@ class CanadaDatasetEditView(DatasetEditView):
         response = super(CanadaDatasetEditView, self).post(package_type, id)
         if hasattr(response, 'status_code'):
             if response.status_code == 200 or response.status_code == 302:
-                context = self._prepare(id)
+                context = self._prepare()
                 pkg_dict = get_action(u'package_show')(
                     dict(context, for_view=True), {
                         u'id': id
@@ -741,6 +743,7 @@ def view_help():
 
 
 @canada_views.route('/datatable/<resource_name>/<resource_id>', methods=['GET', 'POST'])
+@csrf.exempt
 def datatable(resource_name, resource_id):
     params = parse_params(request.form)
     draw = int(params['draw'])

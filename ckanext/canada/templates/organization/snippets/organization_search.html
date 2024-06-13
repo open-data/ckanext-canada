@@ -1,4 +1,5 @@
 <form class="form-inline mrgn-bttm-sm mrgn-tp-md" role="form" method="get" data-module="select-switch">
+  {{ h.csrf_input() }}
   <div class="input-group col-md-12">
     <input type="text" class="form-control" id="field-organization-search" autocomplete="off" name="q" value="{{ q }}" placeholder="{{ _('Search organizations...') }}">
     <span class="input-group-btn">

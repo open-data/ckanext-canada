@@ -8,7 +8,6 @@ import ckan.model as model
 import datetime
 import unicodedata
 import ckan as ckan
-import jinja2
 import html
 from six import text_type
 from bs4 import BeautifulSoup
@@ -508,14 +507,14 @@ def recombinant_description_to_markup(text):
     markup = []
     for i, part in enumerate(re.split(url_pattern, h.recombinant_language_text(text))):
         if i % 2:
-            markup.append(jinja2.Markup('<a href="{0}">{1}</a>'.format(part, jinja2.escape(part))))
+            markup.append(Markup('<a href="{0}">{1}</a>'.format(part, escape(part))))
         else:
-            markup.extend(jinja2.Markup('<br/>'.join(
-               jinja2.escape(t) for t in part.split('\n')
+            markup.extend(Markup('<br/>'.join(
+               escape(t) for t in part.split('\n')
             )))
     # extra dict because language text expected and language text helper
     # will cause plain markup to be escaped
-    return {'en': jinja2.Markup(''.join(markup))}
+    return {'en': Markup(''.join(markup))}
 
 
 def mail_to_with_params(email_address, name, subject, body):

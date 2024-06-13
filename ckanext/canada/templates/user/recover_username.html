@@ -11,6 +11,7 @@
     {% block primary_content_inner %}
       {% block form %}
         <form action="" method="post">
+          {{ h.csrf_input() }}
           <div class="form-group">
             <label for="field-email">{{ _('Email') }}</label>
             <input id="field-email" class="control-medium form-control" size="32" name="email" value="" type="email" />

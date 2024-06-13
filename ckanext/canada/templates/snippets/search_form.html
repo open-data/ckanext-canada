@@ -7,6 +7,7 @@
 {% set sort_arg = request.args.get('sort') %}
 
 <form class="form-inline mrgn-bttm-lg mrgn-tp-md" role="form" method="get" data-module="select-switch">
+  {{ h.csrf_input() }}
   {% block search_input %}
     {% block search_input_label %}
       {% if g.is_registry %}

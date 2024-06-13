@@ -1,5 +1,13 @@
 {% ckan_extends %}
 
+{%- set translated_title = h.get_translated(g.group_dict, 'title') -%}
+
+{% block breadcrumb_content %}
+  <li>{% link_for _('Organizations'), named_route=group_type + '.index' %}</li>
+  <li>{% link_for translated_title, named_route=group_type + '.read', id=g.group_dict.name %}</li>
+  <li class="active">{% link_for _('Manage'), named_route=group_type + '.edit', id=g.group_dict.name  %}</li>
+{% endblock %}
+
 {% block subtitle %}
   {{ h.split_piped_bilingual_field(g.group_dict.display_name, client_lang) }}
 {% endblock %}
@@ -9,25 +17,25 @@
     <div class="row">
       <div class="col-md-12 mrgn-bttm-md">
         <header>
-          {% if g.action != 'new' %}
+          {% if action != 'new' %}
             <ul class="nav nav-pills">
-              <li class="{% if g.action == 'read' %}active{% endif %}">
+              <li class="{% if action == 'read' %}active{% endif %}">
                 <a href="{{h.url_for('organization.read', id=g.group_dict.name)}}">{{_('Datasets')}}</a>
               </li>
-              <li class="{% if g.action == 'activity' %}active{% endif %}">
-                <a href="{{h.url_for('organization.activity', id=g.group_dict.name, offset=0)}}">{{_('Activity')}}</a>
+              <li class="{% if action == 'activity' %}active{% endif %}">
+                <a href="{{h.url_for('activity.organization_activity', id=g.group_dict.name)}}">{{_('Activity')}}</a>
               </li>
               {% if h.check_access('organization_update', {'id': g.group_dict.id}) %}
-                <li class="{% if g.action == 'members' %}active{% endif %}">
+                <li class="{% if action == 'members' %}active{% endif %}">
                   <a href="{{h.url_for('organization.members', id=g.group_dict.name)}}">{{_('Edit Members')}}</a>
                 </li>
               {% elif h.check_access('view_org_members', {'id': g.group_dict.id}) %}
-                <li class="{% if g.action == 'members' %}active{% endif %}">
+                <li class="{% if action == 'members' %}active{% endif %}">
                   <a href="{{h.url_for('organization.members', id=g.group_dict.name)}}">{{_('View Members')}}</a>
                 </li>
               {% endif %}
               {% if h.check_access('group_update', {'id': g.group_dict.id}) %}
-                <li class="{% if g.action == 'edit' %}active{% endif %}">
+                <li class="{% if action == 'edit' %}active{% endif %}">
                   <a href="{{h.url_for(('organization' if g.group_dict.is_organization else 'group') + '.edit', id=g.group_dict.name)}}">{{ _('Edit') }}</a>
                 </li>
               {% endif %}

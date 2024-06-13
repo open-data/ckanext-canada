@@ -259,18 +259,107 @@ a#edit-comment-body-0-format-help-about, button#edit-submit,button#edit-actions-
 /*###################
 ## Activity Stream ##
 #####################*/
-.activity .item {
+.activity {
+  margin: 10px 0;
+  padding: 0;
+  list-style-type: none;
+  background-image: url('/data/dotted.png'), url('/dotted.png');
+  background-repeat: repeat-y;
+  background-position: 17px 0;
+}
+.activity .item{
   position: relative;
   margin: 0 0 15px 0;
-  padding: 0;
+  padding: 0 0 15px 56px !important;
+  font-size: 14px;
+  line-height: 1.5;
 }
-.activity .item .icon {
-  padding-left:0;
+.activity .item::after,
+.activity .item::before{
+  display: table;
+  content: "";
+  line-height: 0;
+  clear: both;
+}
+.activity .item:not(:last-of-type)::after{
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  height: 2px;
+  width: 90%;
+  border-radius: 25px;
+  background: #f6f6f6;
+}
+.activity .item .fa-stack{
+  padding: 0;
+  margin: 0;
+  width: 36px;
+  height: 36px;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+.activity .item .fa-stack i{
+  width: 100%;
+  height: 100%;
+  position: absolute !important;
+  top: 50% !important;
+  left: 50% !important;
+  transform: translate(-50%, -50%) !important;
+  margin: 0 !important;
+  line-height: 1 !important;
+  text-align: initial !important;
+}
+.activity .item .fa-stack i::before{
+  position: absolute !important;
+  top: 50% !important;
+  left: 50% !important;
+  transform: translate(-50%, -50%) !important;
+  font-size: 14px;
+}
+.activity .item .gravatar {
+  display: none !important;
+}
+.activity .item .actor {
+  display: none !important;
+}
+.activity .item .date {
+  color: #999;
+  font-size: 12px;
+  white-space: nowrap
+}
+.activity .item .fa-stack i.icon{
+  border: 4px solid white;
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 30px;
+  height: 30px;
+  line-height: 30px;
+  text-align: center;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  font-weight: normal;
+  margin-right: 10px;
+  -webkit-border-radius: 100px;
+  -moz-border-radius: 100px;
+  border-radius: 100px;
+  -webkit-box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.2);
+  -moz-box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.2);
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.2);
+  padding-left: 0px;
+}
+.activity .item .fa-stack i.icon::before{
+  width: 40px;
+  height: 40px;
+  font-size: 40px;
 }
 .activity .item p {
   font-size: 14px;
   line-height: 1.5;
-  margin: 5px 0 0 40px;
+  margin: 0 0 10px 0;
 }
 .activity .item table{
   font-size: 14px;
@@ -279,6 +368,115 @@ a#edit-comment-body-0-format-help-about, button#edit-submit,button#edit-actions-
 }
 .activity .item table p{
   margin: 0;
+  margin-top: 10px;
+}
+.activity .item h2{
+  margin-top: 0 !important;
+}
+.activity .item .new {
+  display: block;
+  position: absolute;
+  overflow: hidden;
+  top: -3px;
+  left: -3px;
+  width: 10px;
+  height: 10px;
+  background-color: #A35647;
+  border: 1px solid #FFF;
+  text-indent: -1000px;
+  -webkit-border-radius: 100px;
+  -moz-border-radius: 100px;
+  border-radius: 100px;
+  -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  -moz-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2)
+}
+.activity .item.no-avatar p {
+  margin-left: 0;
+}
+.activity .load-less {
+  margin-bottom: 15px;
+}
+.activity .item .icon {
+  background-color: #999999
+}
+.activity .item.failure .icon {
+  background-color: #b95252
+}
+.activity .item.success .icon {
+  background-color: #69a67a
+}
+.activity .item.added-tag .icon {
+  background-color: #6995a6
+}
+.activity .item.changed-group .icon {
+  background-color: #767dce
+}
+.activity .item.changed-package .icon {
+  background-color: #8c76ce
+}
+.activity .item.changed-package_extra .icon {
+  background-color: #769ace
+}
+.activity .item.changed-resource .icon {
+  background-color: #aa76ce
+}
+.activity .item.changed-user .icon {
+  background-color: #76b8ce
+}
+.activity .item.changed-organization .icon {
+  background-color: #699fa6
+}
+.activity .item.deleted-group .icon {
+  background-color: #b95252
+}
+.activity .item.deleted-package .icon {
+  background-color: #b97452
+}
+.activity .item.deleted-package_extra .icon {
+  background-color: #b95274
+}
+.activity .item.deleted-resource .icon {
+    background-color: #b99752
+}
+.activity .item.deleted-organization .icon {
+  background-color: #b95297
+}
+.activity .item.new-group .icon {
+  background-color: #69a67a
+}
+.activity .item.new-package .icon {
+  background-color: #69a68e
+}
+.activity .item.new-package_extra .icon {
+  background-color: #6ca669
+}
+.activity .item.new-resource .icon {
+  background-color: #81a669
+}
+.activity .item.new-user .icon {
+  background-color: #69a6a3
+}
+.activity .item.new-organization .icon {
+  background-color: #81a669
+}
+.activity .item.removed-tag .icon {
+  background-color: #b95297
+}
+.activity .item.deleted-related-item .icon {
+  background-color: #b9b952
+}
+.activity .item.follow-dataset .icon {
+  background-color: #767dce
+}
+.activity .item.follow-user .icon {
+  background-color: #8c76ce
+}
+.activity .item.new-related-item .icon {
+  background-color: #95a669
+}
+.activity .item.follow-group .icon {
+  background-color: #8ba669
 }
 /*###################
 ##       END       ##
@@ -922,6 +1120,92 @@ body .text-danger{
 }
 body .bg-danger{
   background-color: #f2dede !important;
+}
+body .error-block,
+body .error-inline{
+  font-size: 16px !important;
+}
+/* BS4+ Fix. TODO: remove after upgrade to BS4+ */
+body .btn.btn-light{
+  color: #335075 !important;
+  background-color: #eaebed !important;
+  border-color: #dcdee1 !important;
+}
+/* BS4+ Fix. TODO: remove after upgrade to BS4+ */
+body .btn.btn-light:active,
+body .btn.btn-light:focus,
+body .btn.btn-light:hover{
+  background-color: #cfd1d5 !important;
+  border-color: #bbbfc5 !important;
+}
+/* BS4+ Fix. TODO: remove after upgrade to BS4+ */
+body .module-heading{
+  padding: 10px 25px !important;
+  font-size: 14px !important;
+  line-height: 1.3 !important;
+}
+/* BS4+ Fix. TODO: remove after upgrade to BS4+ */
+body .module-narrow .module-heading{
+  padding-left: 15px !important;
+  padding-right: 15px !important;
+}
+/* BS4+ Fix. TODO: remove after upgrade to BS4+ */
+body .accordion-button{
+  font-size: 16px !important;
+  line-height: 1.3 !important;
+}
+/* BS4+ Fix. TODO: remove after upgrade to BS4+ */
+body .accordion-header{
+  margin: 0 !important;
+}
+/* BS4+ Fix. TODO: remove after upgrade to BS4+ */
+body .accordion{
+  margin-bottom: 15px !important;
+}
+body .resource-upload-field i.fa{
+  margin-right: 4px !important;
+}
+body form#form-purge-all a.purge-all{
+  margin-bottom: 15px !important;
+}
+body .canada-admin-trash #accordion-group{
+  display: none !important;
+}
+@keyframes modal-fade-in{
+  0% {
+    opacity: 0;
+  }
+  33% {
+    opacity: 0.25;
+  }
+  67% {
+    opacity: 0.75;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@keyframes modal-fade-out{
+  0% {
+    opacity: 1;
+  }
+  33% {
+    opacity: 0.75;
+  }
+  67% {
+    opacity: 0.25;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+/* BS4+ Fix. TODO: remove after upgrade to BS4+ */
+body .modal.fade{
+  animation: modal-fade-out 0.325s ease-in 0s forwards !important;
+}
+/* BS4+ Fix. TODO: remove after upgrade to BS4+ */
+body .modal.fade.show{
+  animation: modal-fade-in 0.325s ease-in 0s forwards !important;
 }
 /*###########################
 ##           END           ##

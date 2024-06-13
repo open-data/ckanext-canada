@@ -2,7 +2,8 @@
 {% set username_error = true if error_summary %}
 {% set password_error = true if error_summary %}
 
-<form action="{{ action }}" method="post" role="form">
+<form action="{{ action }}?next={{ h.url_for('home.index') }}" method="post" role="form">
+  {{ h.csrf_input() }}
   {% if error_summary %}
     <a href="{{ action }}" id="login-invalid"></a>
   {% endif %}
