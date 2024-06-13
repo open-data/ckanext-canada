@@ -56,9 +56,9 @@ jobs:
       - run:
           name: Set Python Version to 3.9
           command: |
-            apk add --no-cache python3.9 py3-pip
+            apk add --no-cache python3 py3-pip
             ln -sf python3.9 /usr/local/bin/python
-            python3 -m ensurepip
+            python3.9 -m ensurepip
             pip3 install --no-cache --upgrade pip setuptools
       - run:
           name: Set CKAN to open-data/ckan@canada-v2.10
@@ -87,7 +87,7 @@ jobs:
             pip install -e 'git+https://github.com/open-data/ckanext-security.git@canada-v2.10#egg=ckanext-security' -r 'https://raw.githubusercontent.com/open-data/ckanext-security/canada-v2.10/requirements.txt'
             find \/srv\/app\/ -name '*.pyc' -delete
       - run:
-          name: Setup extension (CKAN 2.9 PY3)
+          name: Setup extension (CKAN 2.10 PY3.9)
           command: |
             ln -s \/srv\/app\/src\/ckan\/test-core.ini .\/links\/test-core.ini
             ln -s \/srv\/app\/src\/ckan\/who.ini .\/links\/who.ini
