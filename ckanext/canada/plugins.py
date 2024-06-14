@@ -180,6 +180,18 @@ class CanadaSecurityPlugin(CkanSecurityPlugin):
         Want to use the methods in scheming instead of before_update.
         """
 
+    def before_resource_create(self, context, resource):
+        """
+        Override before_resource_create from CkanSecurityPlugin.
+        Want to use the methods in scheming instead of before_resource_create.
+        """
+
+    def before_resource_update(self, context, current, resource):
+        """
+        Override before_resource_update from CkanSecurityPlugin.
+        Want to use the methods in scheming instead of before_resource_update.
+        """
+
     def get_validators(self):
         return {'canada_security_upload_type':
                     validators.canada_security_upload_type,
