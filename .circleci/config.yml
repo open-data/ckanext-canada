@@ -101,6 +101,8 @@ jobs:
             ckan -c test-core.ini datastore set-permissions | psql -U postgres --set ON_ERROR_STOP=1
             ckan -c test-core.ini canada update-triggers
             ckan -c test-core.ini recombinant create-triggers -a
+            ckan -c test-core.ini db upgrade
+            ckan -c test-core.ini db pending-migrations --apply
             python3 .\/bin\/download_country.py
       - run:
           name: Run all tests
