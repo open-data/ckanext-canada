@@ -61,6 +61,7 @@ _('Promote user to Sysadmin')
 _('Promote')
 _('Cannot modify your own sysadmin privileges')
 _('Cannot modify sysadmin privileges for system user')
+_('Activity type')  # TODO: remove after upstream fix
 
 # strings from security
 _("Please upload a file or link to an external resource")
