@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  CKAN\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-06-10 14:12+0000\n"
+"POT-Creation-Date: 2024-06-14 15:16+0000\n"
 "PO-Revision-Date: 2014-01-23 13:04+0000\n"
 "Last-Translator: Sean Hammond <sean.hammond@okfn.org>\n"
 "Language: en\n"
@@ -113,7 +113,7 @@ msgid "Treasury Board of Canada Secretariat"
 msgstr ""
 
 #: ckanext/canada/helpers.py:575 ckanext/canada/strings.py:13
-#: ckanext/canada/view.py:1143
+#: ckanext/canada/view.py:1083
 msgid "Members not found"
 msgstr ""
 
@@ -285,7 +285,7 @@ msgstr ""
 msgid "Not authorized to access {group} members download"
 msgstr ""
 
-#: ckanext/canada/strings.py:14 ckanext/canada/view.py:1153
+#: ckanext/canada/strings.py:14 ckanext/canada/view.py:1093
 msgid "N/A"
 msgstr ""
 
@@ -296,7 +296,7 @@ msgstr ""
 #: ckanext/canada/templates/user/new_user_form.html:7
 #: ckanext/canada/templates/user/read_base.html:53
 #: ckanext/canada/templates/user/snippets/login_form.html:11
-#: ckanext/canada/view.py:1145
+#: ckanext/canada/view.py:1085
 msgid "Username"
 msgstr ""
 
@@ -305,22 +305,22 @@ msgstr ""
 #: ckanext/canada/templates/user/new_user_form.html:13
 #: ckanext/canada/templates/user/read_base.html:60
 #: ckanext/canada/templates/user/recover_username.html:15
-#: ckanext/canada/view.py:1145
+#: ckanext/canada/view.py:1085
 msgid "Email"
 msgstr ""
 
 #: ckanext/canada/strings.py:17 ckanext/canada/templates/user/api_tokens.html:5
-#: ckanext/canada/templates/user/list.html:45 ckanext/canada/view.py:1145
+#: ckanext/canada/templates/user/list.html:45 ckanext/canada/view.py:1085
 msgid "Name"
 msgstr ""
 
 #: ckanext/canada/strings.py:18
 #: ckanext/canada/templates/organization/member_new.html:57
-#: ckanext/canada/templates/user/list.html:46 ckanext/canada/view.py:1145
+#: ckanext/canada/templates/user/list.html:46 ckanext/canada/view.py:1085
 msgid "Role"
 msgstr ""
 
-#: ckanext/canada/strings.py:19 ckanext/canada/view.py:1163
+#: ckanext/canada/strings.py:19 ckanext/canada/view.py:1103
 msgid "members"
 msgstr ""
 
@@ -606,117 +606,117 @@ msgid ""
 "field is read-only."
 msgstr ""
 
-#: ckanext/canada/view.py:103
+#: ckanext/canada/view.py:99
 msgid "<strong>Note</strong><br>{0} is now logged in"
 msgstr ""
 
-#: ckanext/canada/view.py:113
+#: ckanext/canada/view.py:109
 msgid "Login failed. Bad username or password."
 msgstr ""
 
-#: ckanext/canada/view.py:161
+#: ckanext/canada/view.py:157
 msgid ""
 "The status has been added/updated for this suggested dataset. This update"
 " will be reflected on open.canada.ca shortly."
 msgstr ""
 
-#: ckanext/canada/view.py:164
+#: ckanext/canada/view.py:160
 #, python-format
 msgid "Your dataset %s has been saved."
 msgstr ""
 
-#: ckanext/canada/view.py:174
+#: ckanext/canada/view.py:170
 msgid "Dataset added."
 msgstr ""
 
-#: ckanext/canada/view.py:183
+#: ckanext/canada/view.py:179
 msgid "Resource updated."
 msgstr ""
 
-#: ckanext/canada/view.py:192
+#: ckanext/canada/view.py:188
 msgid "Resource added."
 msgstr ""
 
-#: ckanext/canada/view.py:247
+#: ckanext/canada/view.py:243
 msgid "Unauthorized to request username recovery."
 msgstr ""
 
-#: ckanext/canada/view.py:252
+#: ckanext/canada/view.py:248
 msgid "Email is required"
 msgstr ""
 
-#: ckanext/canada/view.py:277
+#: ckanext/canada/view.py:273
 msgid ""
 "Error sending the email. Try again later or contact an administrator for "
 "help"
 msgstr ""
 
-#: ckanext/canada/view.py:284
+#: ckanext/canada/view.py:280
 msgid ""
 "An email has been sent to you containing your username(s). (unless the "
 "account specified does not exist)"
 msgstr ""
 
-#: ckanext/canada/view.py:357
+#: ckanext/canada/view.py:353
 msgid "Unauthorized to create a resource for this package"
 msgstr ""
 
-#: ckanext/canada/view.py:392 ckanext/canada/view.py:397
+#: ckanext/canada/view.py:388 ckanext/canada/view.py:393
 msgid "This record already exists"
 msgstr ""
 
-#: ckanext/canada/view.py:413
+#: ckanext/canada/view.py:409
 msgid "Record Created"
 msgstr ""
 
-#: ckanext/canada/view.py:451
+#: ckanext/canada/view.py:447
 msgid "Unauthorized to update dataset"
 msgstr ""
 
-#: ckanext/canada/view.py:461
+#: ckanext/canada/view.py:457
 msgid "Not found"
 msgstr ""
 
-#: ckanext/canada/view.py:463
+#: ckanext/canada/view.py:459
 msgid "Multiple records found"
 msgstr ""
 
-#: ckanext/canada/view.py:513
+#: ckanext/canada/view.py:509
 #, python-format
 msgid "Record %s Updated"
 msgstr ""
 
-#: ckanext/canada/view.py:546
+#: ckanext/canada/view.py:542
 msgid "No organizations found"
 msgstr ""
 
-#: ckanext/canada/view.py:550
+#: ckanext/canada/view.py:546
 msgid "Recombinant resource_name not found"
 msgstr ""
 
-#: ckanext/canada/view.py:610
+#: ckanext/canada/view.py:606
 msgid "Number required"
 msgstr ""
 
-#: ckanext/canada/view.py:615
+#: ckanext/canada/view.py:611
 msgid "Integer required"
 msgstr ""
 
-#: ckanext/canada/view.py:651 ckanext/canada/view.py:659
-#: ckanext/canada/view.py:693
+#: ckanext/canada/view.py:647 ckanext/canada/view.py:655
+#: ckanext/canada/view.py:689
 msgid "Not authorized to see this page"
 msgstr ""
 
-#: ckanext/canada/view.py:679
+#: ckanext/canada/view.py:675
 msgid " record(s) published."
 msgstr ""
 
-#: ckanext/canada/view.py:717
+#: ckanext/canada/view.py:713
 #, python-format
 msgid "Unauthorized to delete resource %s"
 msgstr ""
 
-#: ckanext/canada/view.py:719
+#: ckanext/canada/view.py:715
 #, python-format
 msgid "DataStore table and Data Dictionary deleted for resource %s"
 msgstr ""
@@ -729,19 +729,19 @@ msgstr ""
 #: ckanext/canada/templates/package/resource_edit.html:3
 #: ckanext/canada/templates/package/resource_edit_base.html:7
 #: ckanext/canada/templates/package/wet_datatable.html:15
-#: ckanext/canada/view.py:864
+#: ckanext/canada/view.py:804
 msgid "Edit"
 msgstr ""
 
-#: ckanext/canada/view.py:988
+#: ckanext/canada/view.py:928
 msgid "Access denied"
 msgstr ""
 
-#: ckanext/canada/view.py:1039
+#: ckanext/canada/view.py:979
 msgid "Account Created"
 msgstr ""
 
-#: ckanext/canada/view.py:1041
+#: ckanext/canada/view.py:981
 msgid ""
 "Thank you for creating your account for the Open Government registry. "
 "Although your account is active, it has not yet been linked to your "
@@ -749,7 +749,7 @@ msgid ""
 "be able to create or modify datasets in the registry."
 msgstr ""
 
-#: ckanext/canada/view.py:1048
+#: ckanext/canada/view.py:988
 msgid ""
 "You should receive an email within the next business day once the account"
 " activation process has been completed. If you require faster processing "
@@ -757,20 +757,20 @@ msgid ""
 ":open-ouvert@tbs-sct.gc.ca\">open-ouvert@tbs-sct.gc.ca</a>"
 msgstr ""
 
-#: ckanext/canada/view.py:1122 ckanext/canada/view.py:1200
+#: ckanext/canada/view.py:1062 ckanext/canada/view.py:1140
 msgid "Organization not found"
 msgstr ""
 
-#: ckanext/canada/view.py:1133
+#: ckanext/canada/view.py:1073
 msgid "Not authorized to access {org_name} members download"
 msgstr ""
 
-#: ckanext/canada/view.py:1203
+#: ckanext/canada/view.py:1143
 #, python-format
 msgid "User %r not authorized to edit members of %s"
 msgstr ""
 
-#: ckanext/canada/view.py:1205
+#: ckanext/canada/view.py:1145
 #, python-format
 msgid "User %r not authorized to view members of %s"
 msgstr ""
@@ -1353,8 +1353,337 @@ msgid ""
 "inactivity."
 msgstr ""
 
-#: ckanext/canada/templates/help.html:5
+#: ckanext/canada/templates/help.html:4
+#: ckanext/canada/templates/organization/about.html:4
+#: ckanext/canada/templates/page.html:61
+#: ckanext/canada/templates/user/edit_user_form.html:10
+msgid "About"
+msgstr ""
+
+#: ckanext/canada/templates/help.html:8
 msgid "Frequently Asked Questions (FAQ)"
+msgstr ""
+
+#: ckanext/canada/templates/help.html:10
+msgid "General Registry Information"
+msgstr ""
+
+#: ckanext/canada/templates/help.html:12
+msgid "Why can't I create an account?"
+msgstr ""
+
+#: ckanext/canada/templates/help.html:13
+msgid ""
+"If you encounter the error message <em>\"That login name is not "
+"available\"</em> while trying to create an account, it typically "
+"indicates that you already have an account with that username. If you "
+"remember the password, try to log into the Registry using the same "
+"username and password."
+msgstr ""
+
+#: ckanext/canada/templates/help.html:14
+msgid ""
+"If you forgot the password, refer to the Reset your Password function, "
+"and a new one will be emailed to you."
+msgstr ""
+
+#: ckanext/canada/templates/help.html:17
+msgid "Have you forgotten your password or username?"
+msgstr ""
+
+#: ckanext/canada/templates/help.html:18
+msgid ""
+"If you encounter the error message <em>\"Login failed. Bad username or "
+"password\"</em> while trying to log in to the Registry, follow these "
+"steps to resolve the issue:"
+msgstr ""
+
+#: ckanext/canada/templates/help.html:20
+msgid ""
+"Click on either the <em>\"Reset Password\"</em> or <em>\"Recover "
+"Username\"</em> option."
+msgstr ""
+
+#: ckanext/canada/templates/help.html:21
+msgid "Provide your email address."
+msgstr ""
+
+#: ckanext/canada/templates/help.html:22
+msgid "Follow the directions provided in the email sent to you."
+msgstr ""
+
+#: ckanext/canada/templates/help.html:26
+msgid "What if I manage the registry for more than one organization?"
+msgstr ""
+
+#: ckanext/canada/templates/help.html:27
+msgid ""
+"To manage additional organizations using your Registry account, send an "
+"email to open-ouvert@tbs-sct.gc.ca requesting that your account is linked"
+" to the desired organization. Ensure that you include the name of the "
+"organization in your email."
+msgstr ""
+
+#: ckanext/canada/templates/help.html:28
+msgid ""
+"Once the support team processes your request, you'll be able to manage "
+"those organizations through your Registry account."
+msgstr ""
+
+#: ckanext/canada/templates/help.html:31
+msgid "How do I change my Profile (i.e. password, name, e-mail)?"
+msgstr ""
+
+#: ckanext/canada/templates/help.html:32
+msgid "To update your profile in the Registry, follow these steps:"
+msgstr ""
+
+#: ckanext/canada/templates/help.html:34
+msgid "Click the <em>\"My Account\"</em> tab."
+msgstr ""
+
+#: ckanext/canada/templates/help.html:35
+msgid ""
+"Select <em>\"Edit Profile\"</em> to access the <em>\"Change "
+"Details\"</em> page."
+msgstr ""
+
+#: ckanext/canada/templates/help.html:36
+msgid ""
+"Make your desired changes. Note that altering your username is not "
+"recommended, as it could disconnect your uploaded data."
+msgstr ""
+
+#: ckanext/canada/templates/help.html:37
+msgid ""
+"After completing your modifications, click <em>\"Update Profile\"</em>. "
+"Depending on the changes, you may need to log in again."
+msgstr ""
+
+#: ckanext/canada/templates/help.html:40
+msgid "Open Data and Open Information"
+msgstr ""
+
+#: ckanext/canada/templates/help.html:42
+msgid "How do I add an open data or open information record?"
+msgstr ""
+
+#: ckanext/canada/templates/help.html:43
+msgid ""
+"Please visit the registry operations guide section for <a "
+"href=\"https://open.canada.ca/en/registry-operations-guide/upload-"
+"data\">Uploading open data and information.</a>"
+msgstr ""
+
+#: ckanext/canada/templates/help.html:46
+msgid ""
+"How do I review an open data or open information record for my "
+"organization?"
+msgstr ""
+
+#: ckanext/canada/templates/help.html:47
+msgid ""
+"To review your department's open data or open information records or to "
+"see the complete list of records:"
+msgstr ""
+
+#: ckanext/canada/templates/help.html:49
+msgid "Select Menu, then Organizations."
+msgstr ""
+
+#: ckanext/canada/templates/help.html:50
+msgid "Select your organization."
+msgstr ""
+
+#: ckanext/canada/templates/help.html:51
+msgid "Your records will appear."
+msgstr ""
+
+#: ckanext/canada/templates/help.html:55
+msgid "How do I search the Registry?"
+msgstr ""
+
+#: ckanext/canada/templates/help.html:56
+msgid "To find metadata records published in the Registry, follow these steps:"
+msgstr ""
+
+#: ckanext/canada/templates/help.html:58
+msgid "Click on the <em>\"Search\"</em> option in the main menu."
+msgstr ""
+
+#: ckanext/canada/templates/help.html:59
+msgid ""
+"On the Search page, you can either enter a search term directly or use "
+"the facets on the right-hand side to narrow down your search."
+msgstr ""
+
+#: ckanext/canada/templates/help.html:60
+msgid ""
+"The list of results will display records matching your search query in "
+"the order in which they were entered or updated in the Registry."
+msgstr ""
+
+#: ckanext/canada/templates/help.html:63
+msgid "Proactive Disclosure Information"
+msgstr ""
+
+#: ckanext/canada/templates/help.html:65
+msgid "How do I add, modify or delete records in the Registry?"
+msgstr ""
+
+#: ckanext/canada/templates/help.html:66
+msgid ""
+"Please visit the registry operations guide section for <a "
+"href=\"https://open.canada.ca/en/registry-operations-guide/upload-"
+"data#manage\">Managing records.</a>"
+msgstr ""
+
+#: ckanext/canada/templates/help.html:69
+msgid "Why can't I see my uploaded data on the portal?"
+msgstr ""
+
+#: ckanext/canada/templates/help.html:70
+msgid ""
+"When uploading Proactive publication data to the Registry, it's essential"
+" to follow these directives to ensure a successful process:"
+msgstr ""
+
+#: ckanext/canada/templates/help.html:72
+msgid ""
+"Download the Latest Template to ensure that you're using the most up-to-"
+"date format."
+msgstr ""
+
+#: ckanext/canada/templates/help.html:73
+msgid ""
+"Prepare Data in the Proper Template: Organize your data in the "
+"appropriate template for the specific organization and Proactive "
+"publication type. Each template corresponds to particular context, so "
+"choose the relevant one."
+msgstr ""
+
+#: ckanext/canada/templates/help.html:74
+msgid ""
+"Maintain the Abbreviated Organization Name: In the template, the "
+"abbreviated name of the organization (e.g., \"aandc-aadnc\") must remain "
+"in cell C1 exactly as downloaded."
+msgstr ""
+
+#: ckanext/canada/templates/help.html:75
+msgid ""
+"Include All Required Fields: Ensure that the template you're uploading "
+"contains all the required fields for the specific Proactive publication "
+"type. Missing fields can lead to issues during the upload process."
+msgstr ""
+
+#: ckanext/canada/templates/help.html:76
+msgid ""
+"Enter Valid Data: Populate the template with valid and accurate data. "
+"Incorrect or incomplete information may cause errors."
+msgstr ""
+
+#: ckanext/canada/templates/help.html:77
+msgid ""
+"File Format and Naming: Your completed data template should be an Excel "
+"spreadsheet in either XLS or XLSX format. Do not rename the file, as the "
+"system relies on a unique ID associated with each template. Renaming it "
+"could lead to complications."
+msgstr ""
+
+#: ckanext/canada/templates/help.html:78
+msgid ""
+"Troubleshooting Upload Issues: If you encounter an error message during "
+"the upload, carefully review the message text and take corrective "
+"measures based on the specific issue."
+msgstr ""
+
+#: ckanext/canada/templates/help.html:79
+msgid ""
+"If the upload was successful but you don't see the data in the "
+"<em>\"Preview\"</em> section of the page, verify your data file. It might"
+" be a duplicate upload or have other issues."
+msgstr ""
+
+#: ckanext/canada/templates/help.html:83
+msgid "Was everything uploaded correctly?"
+msgstr ""
+
+#: ckanext/canada/templates/help.html:84
+msgid ""
+"A record is not immediately pushed to the portal, it will appear the "
+"following morning. The following are two possible methods for you to "
+"verify your data upload:"
+msgstr ""
+
+#: ckanext/canada/templates/help.html:86
+msgid ""
+"If you see the message <em>\"Your template has been successfully "
+"uploaded\"</em> after you have hit the <em>\"Submit\"</em> button; or"
+msgstr ""
+
+#: ckanext/canada/templates/help.html:87
+msgid ""
+"you can verify the data by looking in the Preview table for one or more "
+"of your template line items."
+msgstr ""
+
+#: ckanext/canada/templates/help.html:91
+msgid "Why didn't I get a confirmation email that my upload was successful?"
+msgstr ""
+
+#: ckanext/canada/templates/help.html:92
+msgid ""
+"The system only provides an onscreen message <em>\"Your template has been"
+" successfully uploaded\"</em>; it does not send a confirmation email."
+msgstr ""
+
+#: ckanext/canada/templates/help.html:95
+msgid "Why don't I see the upload button?"
+msgstr ""
+
+#: ckanext/canada/templates/help.html:96
+msgid ""
+"The Upload button is accessible only to users associated with an "
+"organization. If you're unable to see the button, consider the following "
+"reasons:"
+msgstr ""
+
+#: ckanext/canada/templates/help.html:98
+msgid "Confirm that you are logged into the Registry."
+msgstr ""
+
+#: ckanext/canada/templates/help.html:99
+msgid "Ensure that your account is linked to your organization."
+msgstr ""
+
+#: ckanext/canada/templates/help.html:100
+msgid ""
+"If your organization hasn't uploaded data yet for that proactive "
+"disclosure type, your template hasn't been initiated. To access the "
+"Upload button, you'll need to download the template first."
+msgstr ""
+
+#: ckanext/canada/templates/help.html:104
+msgid "Why doesn't all the text I entered in the template appear?"
+msgstr ""
+
+#: ckanext/canada/templates/help.html:105
+msgid ""
+"Excel has a cell display limit of 1024 characters.  However, the complete"
+" text (Maximum of 32767 characters of it) is actually in the cell. You "
+"can view all the text by extending the cell size, or putting the cell in "
+"Edit mode, or looking into the Formula bar, in order to see the complete "
+"text."
+msgstr ""
+
+#: ckanext/canada/templates/help.html:108
+msgid "Who approves the Proactive publication data?"
+msgstr ""
+
+#: ckanext/canada/templates/help.html:109
+msgid ""
+"It is the organization's responsibility to verify and approve Proactive "
+"publication data before uploading to the Registry."
 msgstr ""
 
 #: ckanext/canada/templates/page.html:19
@@ -1377,12 +1706,6 @@ msgid ""
 " of records. Please use MS Edge or Google Chrome, or contact <a "
 "href=\"mailto:open-ouvert@tbs-sct.gc.ca\">open-ouvert@tbs-sct.gc.ca</a> "
 "for additional support."
-msgstr ""
-
-#: ckanext/canada/templates/organization/about.html:4
-#: ckanext/canada/templates/page.html:61
-#: ckanext/canada/templates/user/edit_user_form.html:10
-msgid "About"
 msgstr ""
 
 #: ckanext/canada/templates/activity_streams/activity_stream_items.html:19
