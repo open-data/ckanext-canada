@@ -5,7 +5,7 @@ from ckanext.validation.model import (
     tables_exist as validation_tables_exist
 )
 from ckanext.security.model import db_setup as security_db_setup
-from ckan.cli.db import pending_migrations
+from ckan.cli.db import _run_migrations
 
 class CanadaTestBase(object):
     @classmethod
@@ -18,4 +18,4 @@ class CanadaTestBase(object):
         if not validation_tables_exist():
             validation_create_tables()
         security_db_setup()
-        pending_migrations(True)
+        _run_migrations('activity')
