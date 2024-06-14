@@ -106,7 +106,7 @@ def base64md5str(val):
 
 def read_presets(filename):
     with open(filename, 'r') as f:
-        _presets = yaml.load(f)
+        _presets = yaml.load(f, yaml.Loader)
     return _presets
 
 
