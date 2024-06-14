@@ -1210,6 +1210,12 @@ body .modal.fade{
 body .modal.fade.show{
   animation: modal-fade-in 0.325s ease-in 0s forwards !important;
 }
+/* BS4+ Fix. TODO: remove after upgrade to BS4+ */
+@media all and (max-width: 768px){
+  body div#wb-bnr > div.row{
+    flex-direction: row-reverse;
+  }
+}
 /*###########################
 ##           END           ##
 ##  CKAN Base CSS Overrides##
