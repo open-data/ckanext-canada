@@ -17,146 +17,146 @@
       const menuLinks = [
         {% if g.userobj %}
           {
-            "href": "{{ h.url_for('canada.links') }}",
-            "text": "{{ _('Home') }}",
+            "href": {{ h.url_for('canada.links') | tojson }},
+            "text": {{ _('Home') | tojson }},
           },
         {% else %}
           {
-            "href": "{{ h.url_for('user.login') }}",
-            "text": "{{ _('Home') }}",
+            "href": {{ h.url_for('user.login') | tojson }},
+            "text": {{ _('Home') | tojson }},
           },
         {% endif %}
         {% if h.check_access('package_create') %}
           {
-            "text": "{{ _('Open Data') }}",
+            "text": {{ _('Open Data') | tojson }},
             "id": "open-data",
             "subLinks": [
               {
-                "subhref": "{{ h.url_for('dataset_new') }}",
-                "subtext": "{{ _('Create an Open Data Record') }}",
+                "subhref": {{ h.url_for('dataset_new') | tojson }},
+                "subtext": {{ _('Create an Open Data Record') | tojson }},
               },
               {
-                "subhref": "{{ recombinant_menu_link('experiment') }}",
-                "subtext": "{{ recombinant_menu_text('experiment') }}",
+                "subhref": {{ recombinant_menu_link('experiment') | tojson }},
+                "subtext": {{ recombinant_menu_text('experiment') | tojson }},
               },
               {
-                "subhref": "{{ recombinant_menu_link('nap5') }}",
-                "subtext": "{{ recombinant_menu_text('nap5') }}",
+                "subhref": {{ recombinant_menu_link('nap5') | tojson }},
+                "subtext": {{ recombinant_menu_text('nap5') | tojson }},
               },
               {
-                "subhref": "{{ recombinant_menu_link('inventory') }}",
-                "subtext": "{{ recombinant_menu_text('inventory') }}",
+                "subhref": {{ recombinant_menu_link('inventory') | tojson }},
+                "subtext": {{ recombinant_menu_text('inventory') | tojson }},
               },
             ],
           },
           {
-            "href": "{{ h.url_for('info_new') }}",
-            "text": "{{ _('Open Information') }}",
+            "href": {{ h.url_for('info_new') | tojson }},
+            "text": {{ _('Open Information') | tojson }},
           },
           {
-            "text": "{{ _('Proactive Publication') }}",
+            "text": {{ _('Proactive Publication') | tojson }},
             "id": "proactive-publication",
             "subLinks": [
               {
-                "subhref": "{{ recombinant_menu_link('wrongdoing') }}",
-                "subtext": "{{ recombinant_menu_text('wrongdoing') }}",
+                "subhref": {{ recombinant_menu_link('wrongdoing') | tojson }},
+                "subtext": {{ recombinant_menu_text('wrongdoing') | tojson }},
               },
               {
-                "subhref": "{{ recombinant_menu_link('contractsa') }}",
-                "subtext": "{{ recombinant_menu_text('contractsa') }}",
+                "subhref": {{ recombinant_menu_link('contractsa') | tojson }},
+                "subtext": {{ recombinant_menu_text('contractsa') | tojson }},
               },
               {
-                "subhref": "{{ recombinant_menu_link('ati') }}",
-                "subtext": "{{ recombinant_menu_text('ati') }}",
+                "subhref": {{ recombinant_menu_link('ati') | tojson }},
+                "subtext": {{ recombinant_menu_text('ati') | tojson }},
               },
               {
-                "subhref": "{{ recombinant_menu_link('briefingt') }}",
-                "subtext": "{{ recombinant_menu_text('briefingt') }}",
+                "subhref": {{ recombinant_menu_link('briefingt') | tojson }},
+                "subtext": {{ recombinant_menu_text('briefingt') | tojson }},
               },
               {
-                "subhref": "{{ recombinant_menu_link('contracts') }}",
-                "subtext": "{{ recombinant_menu_text('contracts') }}",
+                "subhref": {{ recombinant_menu_link('contracts') | tojson }},
+                "subtext": {{ recombinant_menu_text('contracts') | tojson }},
               },
               {
-                "subhref": "{{ recombinant_menu_link('dac') }}",
-                "subtext": "{{ recombinant_menu_text('dac') }}",
+                "subhref": {{ recombinant_menu_link('dac') | tojson }},
+                "subtext": {{ recombinant_menu_text('dac') | tojson }},
               },
               {
-                "subhref": "{{ recombinant_menu_link('grants') }}",
-                "subtext": "{{ recombinant_menu_text('grants') }}",
+                "subhref": {{ recombinant_menu_link('grants') | tojson }},
+                "subtext": {{ recombinant_menu_text('grants') | tojson }},
               },
               {
-                "subhref": "{{ recombinant_menu_link('hospitalityq') }}",
-                "subtext": "{{ recombinant_menu_text('hospitalityq') }}",
+                "subhref": {{ recombinant_menu_link('hospitalityq') | tojson }},
+                "subtext": {{ recombinant_menu_text('hospitalityq') | tojson }},
               },
               {
-                "subhref": "{{ recombinant_menu_link('reclassification') }}",
-                "subtext": "{{ recombinant_menu_text('reclassification') }}",
+                "subhref": {{ recombinant_menu_link('reclassification') | tojson }},
+                "subtext": {{ recombinant_menu_text('reclassification') | tojson }},
               },
               {
-                "subhref": "{{ recombinant_menu_link('qpnotes') }}",
-                "subtext": "{{ recombinant_menu_text('qpnotes') }}",
+                "subhref": {{ recombinant_menu_link('qpnotes') | tojson }},
+                "subtext": {{ recombinant_menu_text('qpnotes') | tojson }},
               },
               {
-                "subhref": "{{ h.url_for('info_new') }}?collection=parliament_report",
-                "subtext": "{{ _('Reports Tabled in Parliament') }}",
+                "subhref": {{ h.url_for('info_new', collection='parliament_report') | tojson }},
+                "subtext": {{ _('Reports Tabled in Parliament') | tojson }},
               },
               {
-                "subhref": "{{ recombinant_menu_link('travelq') }}",
-                "subtext": "{{ recombinant_menu_text('travelq') }}",
+                "subhref": {{ recombinant_menu_link('travelq') | tojson }},
+                "subtext": {{ recombinant_menu_text('travelq') | tojson }},
               },
               {
-                "subhref": "{{ recombinant_menu_link('travela') }}",
-                "subtext": "{{ recombinant_menu_text('travela') }}",
+                "subhref": {{ recombinant_menu_link('travela') | tojson }},
+                "subtext": {{ recombinant_menu_text('travela') | tojson }},
               },
               {
-                "subhref": "{{ recombinant_menu_link('qpnotes') }}",
-                "subtext": "{{ recombinant_menu_text('qpnotes') }}",
+                "subhref": {{ recombinant_menu_link('qpnotes') | tojson }},
+                "subtext": {{ recombinant_menu_text('qpnotes') | tojson }},
               },
               {
-                "subhref": "{{ h.url_for('info_new') }}?collection=transition",
-                "subtext": "{{ _('New or incoming ministers') }}",
+                "subhref": {{ h.url_for('info_new', collection='transition') | tojson }},
+                "subtext": {{ _('New or incoming ministers') | tojson }},
               },
               {
-                "subhref": "{{ h.url_for('info_new') }}?collection=transition_deputy",
-                "subtext": "{{ _('New or incoming deputy heads') }}",
+                "subhref": {{ h.url_for('info_new', collection='transition_deputy')| tojson }},
+                "subtext": {{ _('New or incoming deputy heads') | tojson }},
               },
               {
-                "subhref": "{{ h.url_for('info_new') }}?collection=parliament_committee",
-                "subtext": "{{ _('Parliamentary Committee appearances for ministers') }}",
+                "subhref": {{ h.url_for('info_new', collection='parliament_committee') | tojson }},
+                "subtext": {{ _('Parliamentary Committee appearances for ministers') | tojson }},
               },
               {
-                "subhref": "{{ h.url_for('info_new') }}?collection=parliament_committee_deputy",
-                "subtext": "{{ _('Parliamentary Committee appearances for deputy heads') }}",
+                "subhref": {{ h.url_for('info_new', collection='parliament_committee_deputy') | tojson }},
+                "subtext": {{ _('Parliamentary Committee appearances for deputy heads') | tojson }},
               },
             ],
           },
           {
-            "text": "{{ _('Open Dialogue') }}",
+            "text": {{ _('Open Dialogue') | tojson }},
             "id": "open-dialogue",
             "subLinks": [
               {
-                "subhref": "{{ recombinant_menu_link('consultations') }}",
-                "subtext": "{{ recombinant_menu_text('consultations') }}",
+                "subhref": {{ recombinant_menu_link('consultations') | tojson }},
+                "subtext": {{ recombinant_menu_text('consultations') | tojson }},
               },
               {
                 "subhref": "/static/data/consultations.csv",
-                "subtext": "{{ _('Consultations master dataset') }}",
+                "subtext": {{ _('Consultations master dataset') | tojson }},
               },
             ],
           },
           {
-            "href": "{{ h.url_for('dataset_search') }}",
-            "text": "{{ _('Search') }}",
+            "href": {{ h.url_for('dataset_search') | tojson }},
+            "text": {{ _('Search') | tojson }},
           },
           {
-            "href": "{{ h.url_for('organization.index') }}",
-            "text": "{{ _('Organizations') }}",
+            "href": {{ h.url_for('organization.index') | tojson }},
+            "text": {{ _('Organizations') | tojson }},
           },
         {% endif %}
         {
-          "href": "{{ h.url_for('canada.view_help') }}",
-          "text": "{{ _('FAQ') }}",
+          "href": {{ h.url_for('canada.view_help') | tojson }},
+          "text": {{ _('FAQ') | tojson }},
         },
       ];
       appTop.outerHTML = wet.builder.appTop({
@@ -164,15 +164,15 @@
         "lngLinks": [
           {
             "lang": "{{ 'en' if lang == 'fr' else 'fr' }}",
-            "href": "{{ h.url_for(h.current_url(), locale=('en' if lang == 'fr' else 'fr')) }}",
+            "href": {{ h.url_for(h.current_url(), locale=('en' if lang == 'fr' else 'fr')) | tojson }},
             "text": "{{ 'English' if lang == 'fr' else 'Français' }}",
           }
         ],
         {% if g.userobj %}
-          "appSettings": [{"href": "{{ h.url_for('user.edit', id=g.userobj.name) }}"}],
-          "signOut": [{"href": "{{ h.url_for('user.logout') }}"}],
+          "appSettings": [{"href": {{ h.url_for('user.edit', id=g.userobj.name) | tojson }}}],
+          "signOut": [{"href": {{ h.url_for('user.logout') | tojson }}}],
         {% else %}
-          "signIn": [{"href": "{{ h.url_for('user.login') }}"}],
+          "signIn": [{"href": {{ h.url_for('user.login') | tojson }}}],
         {% endif %}
         "menuLinks": menuLinks,
         "breadcrumbs": {{ h.ckan_to_cdts_breadcrumbs(breadcrumb_content)|tojson if breadcrumb_content|trim else [] }},
@@ -186,24 +186,24 @@
         {% endif %}
         const extraAppBarButtons = [
           {
-            "text": "{{ _('Dashboard') }}",
-            "href": "{{ h.url_for('activity.dashboard') }}",
+            "text": {{ _('Dashboard') | tojson }},
+            "href": {{ h.url_for('activity.dashboard') | tojson }},
             "icon": "fa-tachometer",
             "btnClass": "",
             "location": "before",
           },
           {% if g.userobj.sysadmin %}
             {
-              "text": "{{ _('Admin') }}",
-              "href": "{{ h.url_for('admin.index') }}",
+              "text": {{ _('Admin') | tojson }},
+              "href": {{ h.url_for('admin.index') | tojson }},
               "icon": "fa-gavel",
               "btnClass": "",
               "location": "before",
             },
           {% endif %}
           {
-            "text": "{{ _('Get Help') }}",
-            "href": "{{ help_link }}",
+            "text": {{ _('Get Help') | tojson }},
+            "href": {{ help_link | tojson }},
             "icon": "fa-question",
             "btnClass": "btn-warning",
             "location": "after",
@@ -248,7 +248,7 @@
         "lngLinks": [
           {
             "lang": "{{ 'en' if lang == 'fr' else 'fr' }}",
-            "href": "{{ h.url_for(h.current_url(), locale=('en' if lang == 'fr' else 'fr')) }}",
+            "href": {{ h.url_for(h.current_url(), locale=('en' if lang == 'fr' else 'fr')) | tojson }},
             "text": "{{ 'English' if lang == 'fr' else 'Français' }}",
           }
         ],
