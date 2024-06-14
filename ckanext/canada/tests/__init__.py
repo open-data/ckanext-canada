@@ -18,4 +18,4 @@ class CanadaTestBase(object):
         if not validation_tables_exist():
             validation_create_tables()
         security_db_setup()
-        pending_migrations(apply=True)
+        pending_migrations(True)
