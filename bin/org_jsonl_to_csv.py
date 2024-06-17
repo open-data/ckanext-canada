@@ -12,7 +12,6 @@ Into a simple CSV for publishing on the Open Data Portal
 import sys
 import csv
 import json
-import codecs
 
 COLS = [
     'uuid',
@@ -25,9 +24,11 @@ COLS = [
     'open_canada_id',
 ]
 
+BOM = '\N{bom}'
+
 
 def main():
-    sys.stdout.write(codecs.BOM_UTF8)
+    sys.stdout.write(BOM)
 
     writer = csv.DictWriter(sys.stdout, COLS)
     writer.writeheader()
