@@ -70,6 +70,7 @@ class CanadaSecurityPlugin(CkanSecurityPlugin):
     p.implements(p.IConfigurer)
 
     def update_config(self, config):
+        super(CanadaSecurityPlugin, self).update_config(config)
         # Disable auth settings
         config['ckan.auth.anon_create_dataset'] = False
         config['ckan.auth.create_unowned_dataset'] = False
@@ -97,10 +98,12 @@ class CanadaSecurityPlugin(CkanSecurityPlugin):
         """
 
     def get_validators(self):
-        return {'canada_security_upload_type':
-                    validators.canada_security_upload_type,
-                'canada_security_upload_presence':
-                    validators.canada_security_upload_presence}
+        validator_dict = super(CanadaSecurityPlugin, self).get_validators()
+        validator_dict.update({'canada_security_upload_type':
+                                    validators.canada_security_upload_type,
+                               'canada_security_upload_presence':
+                                    validators.canada_security_upload_presence})
+        return validator_dict
 
 
 class CanadaDatasetsPlugin(SchemingDatasetsPlugin):
