@@ -1,54 +1,9 @@
 # -*- coding: UTF-8 -*-
-import __builtin__ as builtins
-import os
-import mock
-import functools
-from pyfakefs import fake_filesystem
-from cgi import FieldStorage
 from factory import LazyAttribute, Sequence
 
 from ckan.tests.factories import User, Organization, Dataset, Resource, ResourceView
 import ckan.tests.helpers as helpers
 from ckan.model import Session
-import ckan
-
-
-real_open = open
-_fs = fake_filesystem.FakeFilesystem()
-_mock_os = fake_filesystem.FakeOsModule(_fs)
-_mock_file_open = fake_filesystem.FakeFileOpen(_fs)
-
-
-def _mock_open_if_open_fails(*args, **kwargs):
-    try:
-        return real_open(*args, **kwargs)
-    except (OSError, IOError):
-        return _mock_file_open(*args, **kwargs)
-
-
-def mock_uploads(func):
-    @helpers.change_config('ckan.storage_path', '/doesnt_exist')
-    @mock.patch.object(ckan.lib.uploader, 'os', _mock_os)
-    @mock.patch.object(builtins, 'open',
-                       side_effect=_mock_open_if_open_fails)
-    @mock.patch.object(ckan.lib.uploader, '_storage_path',
-                       new='/doesnt_exist')
-    @functools.wraps(func)
-    def wrapper(*args, **kwargs):
-        return func(*args, **kwargs)
-    return wrapper
-
-
-def get_sample_filepath(filename):
-    return os.path.abspath(os.path.join(os.path.dirname(__file__), "samples", filename))
-
-
-class MockFieldStorage(FieldStorage):
-    def __init__(self, fp, filename):
-        self.file = fp
-        self.filename = filename
-        self.name = 'upload'
-        self.list = None
 
 
 class CanadaUser(User):

@@ -25,6 +25,8 @@ from ckanext.canada import validators
 from ckanext.canada import logic
 from ckanext.canada import auth
 from ckanext.canada import helpers
+from ckanext.canada import cli
+from ckanext.canada.pd import get_commands as get_pd_commands
 from ckanext.canada import activity as act
 # type_ignore_reason: importing to proc decorators
 from ckanext.canada import checks  # type: ignore
@@ -34,7 +36,6 @@ from ckanext.xloader.interfaces import IXloader
 import json
 
 import ckan.lib.formatters as formatters
-from webhelpers.html import literal
 from flask import Blueprint
 from ckanext.scheming.plugins import SchemingDatasetsPlugin
 from ckanext.security.plugin import CkanSecurityPlugin
@@ -48,7 +49,6 @@ from ckanext.canada.view import (
     canada_prevent_pd_views,
     _get_package_type_from_dict
 )
-from ckanext.canada.scripts import get_commands as get_script_commands
 
 # XXX Monkey patch to work around libcloud/azure 400 error on get_container
 try:
@@ -757,7 +757,7 @@ ckanext.canada:schemas/prop.yaml
     # IClick
 
     def get_commands(self):
-        return [get_script_commands()]
+        return [cli.get_commands(), get_pd_commands()]
 
     # IColumnTypes
 
@@ -871,16 +871,13 @@ class LogExtraMiddleware(object):
             extra = []
             try:
                 contextual_user = g.user
-            except TypeError:
+            except (TypeError, RuntimeError, AttributeError):
                 contextual_user = None
             if contextual_user:
-                log_extra = g.log_extra if hasattr(g, 'log_extra') else u''
-                extra = [(
-                    'X-LogExtra', u'user={uid} {extra}'.format(
-                        uid=contextual_user,
-                        extra=log_extra).encode('utf-8')
-                    )
-                ]
+                log_extra = g.log_extra if hasattr(g, 'log_extra') else ''
+                #FIXME: make sure username special chars are handled
+                # the values in the tuple HAVE to be str types.
+                extra = [('X-LogExtra', f'user={contextual_user} {log_extra}')]
 
             return start_response(
                 status,
@@ -906,10 +903,10 @@ def _SI_number_span_close(number):
     ''' outputs a span with the number in SI unit eg 14700 -> 14.7k '''
     number = int(number)
     if number < 1000:
-        output = literal('<span>')
+        output = h.literal('<span>')
     else:
-        output = literal('<span title="' + formatters.localised_number(number) + '">')
-    return output + formatters.localised_SI_number(number) + literal('</span>')
+        output = h.literal('<span title="' + formatters.localised_number(number) + '">')
+    return output + formatters.localised_SI_number(number) + h.literal('</span>')
 
 
 # Monkey Patched to inlude the 'list-group-item' class

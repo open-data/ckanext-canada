@@ -389,7 +389,7 @@ resources:
       P02:
         en: July - Dec.
         fr: juil. - déc.
-      
+
 
   - datastore_id: record_created
     label: Record Creation Time
@@ -423,7 +423,7 @@ resources:
   datastore_indexes: ""
 
   triggers:
-    - briefingt_nil_trigger: |
+    - qpnotes_nil_trigger: |
         DECLARE
           errors text[][] := '{{}}';
           crval RECORD;

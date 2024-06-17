@@ -1,0 +1,1 @@
+Ignore the `metadata_modified` Resource field in the "Post to Portal" code. Fixing a major issue where a Dataset's `metadata_modified` field would be updated, and a lot of activities would be created on the Portal.

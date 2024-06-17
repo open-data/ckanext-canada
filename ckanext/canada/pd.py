@@ -1,18 +1,17 @@
-# -*- coding: utf-8 -*-
+import click
 import os
 import hashlib
 import calendar
 import time
 from babel.numbers import format_currency, format_decimal
 
-import paste.script
-from ckan.lib.cli import CkanCommand
-
 from ckanapi import LocalCKAN, NotFound
 
 from ckanext.recombinant.tables import (
     get_geno,
-    get_chromo)
+    get_chromo,
+    get_dataset_types)
+from ckanext.recombinant.errors import RecombinantException
 from ckanext.recombinant.read_csv import csv_data_batch
 from ckanext.recombinant.helpers import (
     recombinant_choice_fields,
@@ -25,133 +24,92 @@ from ckanext.canada.dataset import (
     safe_for_solr)
 
 
-class PDCommand(CkanCommand):
+def get_commands():
+    return pd
+
+
+def _check_pd_type(pd_type):
+    if pd_type not in get_dataset_types():
+        raise RecombinantException(f'PD Type "{pd_type}" does not exist')
+
+
+@click.group(short_help="Proactive Disclosure/Publication management commands")
+def pd():
+    """Proactive Disclosure/Publication management commands.
     """
-    Manage the Proactive Disclosures SOLR indexes + data files
+    pass
 
-    Usage::
 
-        paster <pd-type> clear
-                         rebuild [--lenient] [-f <file>] [-s <solr-url>]
+@pd.command(short_help="List the available PD types.")
+def list_types():
+    for pd_type in get_dataset_types():
+        click.echo(pd_type)
 
-    Options::
 
-        -f/--csv-file <file>       use specified CSV files as contracts input,
-                                   instead of the (default) CKAN database
-        -s/--solr-url <url>        use specified solr URL as output,
-                                   instead of default from ini file.
-        --lenient                  allow rebuild from csv files without checking
-                                   that columns match expected columns
+@pd.command(short_help="Clear all SOLR records.")
+@click.argument("pd_type")
+def clear(pd_type):
+    _check_pd_type(pd_type)
+    clear_index(pd_type)
+
+
+@pd.command(short_help="Rebuilds and reindexes all SOLR records.")
+@click.argument("pd_type")
+@click.option(
+    "--lenient",
+    is_flag=True,
+    help="Allow rebuild from csv files without checking hat columns match expected columns.",
+)
+@click.option(
+    "-f",
+    "--files",
+    default=None,
+    multiple=True,
+    help="CSV file(s) to use as input (or default CKAN DB). Use PD and PD-nil files for NIL types.",
+)
+@click.option(
+    "-s",
+    "--solr-url",
+    default=None,
+    help="Solr URL for output.",
+)
+@click.option(
+    "-n",
+    "--has-nil",
+     is_flag=True,
+    help="If the PD Type is a NIL type.",
+)
+def rebuild(pd_type, files=None, solr_url=None, lenient=False, has_nil=False):
     """
-    summary = __doc__.split('\n')[0]
-    usage = __doc__
+    Rebuilds and reindexes all SOLR records.
 
-    parser = paste.script.command.Command.standard_parser(verbose=True)
-    parser.add_option('-c', '--config', dest='config',
-        default='development.ini', help='Config file to use.')
-    parser.add_option(
-        '-f',
-        '--csv',
-        dest='csv_file',
-        help='CSV file to use as input (or default CKAN DB)')
-    parser.add_option(
-        '-s',
-        '--solr-url',
-        dest='solr_url',
-        help='Solr URL for output')
-    parser.add_option(
-        '--lenient',
-        action='store_false',
-        dest='strict',
-        default=True)
+    Full Usage:\n
+        pd <pd-type> rebuild [--lenient] [-f <file>] [-s <solr-url>]
 
-    def command(self):
-        if not self.args or self.args[0] in ['--help', '-h', 'help']:
-            print self.__doc__
-            return
-
-        cmd = self.args[0]
-        self._load_config()
-
-        if cmd == 'clear':
-            return clear_index(self.command_name)
-        elif cmd == 'rebuild':
-            return rebuild(
-                self.command_name,
-                [self.options.csv_file] if self.options.csv_file else None,
-                self.options.solr_url,
-                self.options.strict,
-                )
-
-
-class PDNilCommand(CkanCommand):
+    For NIL:\n
+        pd <pd-type> rebuild [--lenient] [-f <file> <file>] [-s <solr-url>]
     """
-    Manage the Proactive Disclosures SOLR indexes + data files
-
-    Usage::
-
-        paster <pd-type> clear
-                         rebuild [-f <file> <file>] [-s <solr-url>]
-
-    Options::
-
-        -f/--csv-file <file> <file>     use specified CSV files as PD and
-                                        PD-nil input, instead of the
-                                        (default) CKAN database
-        -s/--solr-url <url>             use specified solr URL as output,
-                                        instead of default from ini file.
-        --lenient                  allow rebuild from csv files without checking
-                                   that columns match expected columns
-    """
-    summary = __doc__.split('\n')[0]
-    usage = __doc__
-
-    parser = paste.script.command.Command.standard_parser(verbose=True)
-    parser.add_option('-c', '--config', dest='config',
-        default='development.ini', help='Config file to use.')
-    parser.add_option(
-        '-f',
-        '--csv',
-        nargs=2,
-        dest='csv_files',
-        help='CSV files to use as input (or default CKAN DB)')
-    parser.add_option(
-        '-s',
-        '--solr-url',
-        dest='solr_url',
-        help='Solr URL for output')
-    parser.add_option(
-        '--lenient',
-        action='store_false',
-        dest='strict',
-        default=True)
-
-    def command(self):
-        if not self.args or self.args[0] in ['--help', '-h', 'help']:
-            print self.__doc__
-            return
-
-        cmd = self.args[0]
-        self._load_config()
-
-        if cmd == 'clear':
-            return clear_index(self.command_name)
-        elif cmd == 'rebuild':
-            return rebuild(
-                self.command_name,
-                self.options.csv_files,
-                self.options.solr_url,
-                self.options.strict,
-                )
+    _check_pd_type(pd_type)
+    if files:
+        if not has_nil and len(files) >= 2:
+            raise ValueError('You may only supply one file for non NIL types')
+        if len(files) > 2:
+            raise ValueError('You may only supply up to two files')
+    strict = True
+    if lenient:
+        strict = False
+    rebuild(pd_type,
+            files,
+            solr_url,
+            strict)
 
 
-def clear_index(command_name, solr_url=None, commit=True):
-    conn = solr_connection(command_name, solr_url)
+def clear_index(pd_type, solr_url=None, commit=True):
+    conn = solr_connection(pd_type, solr_url)
     conn.delete(q="*:*", commit=commit)
 
 
-
-def rebuild(command_name, csv_files=None, solr_url=None, strict=True):
+def rebuild(pd_type, csv_files=None, solr_url=None, strict=True):
     """
     Implement rebuild command
 
@@ -161,13 +119,13 @@ def rebuild(command_name, csv_files=None, solr_url=None, strict=True):
     :return: Nothing
     :rtype: None
     """
-    clear_index(command_name, solr_url, False)
+    clear_index(pd_type, solr_url, False)
 
-    conn = solr_connection(command_name, solr_url)
+    conn = solr_connection(pd_type, solr_url)
     lc = LocalCKAN()
     if csv_files:
         for csv_file in csv_files:
-            print csv_file + ':'
+            print(csv_file + ':')
             prev_org = None
             unmatched = None
             firstpart, filename = os.path.split(csv_file)
@@ -186,7 +144,7 @@ def rebuild(command_name, csv_files=None, solr_url=None, strict=True):
                     org_detail = lc.action.organization_show(id=org_id)
                 except NotFound:
                     continue
-                print "    {0:s} {1}".format(org_id, len(records))
+                print("    {0:s} {1}".format(org_id, len(records)))
                 unmatched = _update_records(
                     records, org_detail, conn, resource_name, unmatched)
     else:
@@ -194,13 +152,13 @@ def rebuild(command_name, csv_files=None, solr_url=None, strict=True):
             count = 0
             org_detail = lc.action.organization_show(id=org)
             unmatched = None
-            for resource_name, records in data_batch(org_detail['id'], lc, command_name):
+            for resource_name, records in data_batch(org_detail['id'], lc, pd_type):
                 unmatched = _update_records(
                     records, org_detail, conn, resource_name, unmatched)
                 count += len(records)
-            print org, count
+            print(org, count)
 
-    print "commit"
+    print("commit")
     conn.commit()
 
 
@@ -222,7 +180,7 @@ def _update_records(records, org_detail, conn, resource_name, unmatched):
         pk = [pk]
 
     org = org_detail['name']
-    orghash = hashlib.md5(org).hexdigest()
+    orghash = hashlib.md5(org.encode('utf-8')).hexdigest()
 
     def unique_id(r):
         "return hash, friendly id, partial id"
@@ -230,10 +188,10 @@ def _update_records(records, org_detail, conn, resource_name, unmatched):
         f = org
         p = org
         for k in pk:
-            s = hashlib.md5(s + r[k].encode('utf-8')).hexdigest()
-            f += u'|' + unicode(r[k])
+            s = hashlib.md5((s + r[k]).encode('utf-8')).hexdigest()
+            f += u'|' + str(r[k])
             if u'|' not in p:
-                p += u'|' + unicode(r[k])
+                p += u'|' + str(r[k])
         return s, f, p
 
     out = []
@@ -263,9 +221,9 @@ def _update_records(records, org_detail, conn, resource_name, unmatched):
         unique, friendly, partial = unique_id(r)
         if chromo.get('solr_legacy_ati_ids', False):
             # for compatibility with existing urls
-            unique = hashlib.md5(orghash
+            unique = hashlib.md5((orghash
                 + r.get('request_number', repr((int(r['year']), int(r['month'])))
-                ).encode('utf-8')).hexdigest()
+                )).encode('utf-8')).hexdigest()
 
         solrrec = {
             'id': unique,
@@ -362,7 +320,7 @@ def _update_records(records, org_detail, conn, resource_name, unmatched):
                 solrrec[key + '_name_en'] = calendar.month_name[int(value)]
                 solrrec[key + '_name_fr'] = MONTHS_FR[int(value)]
 
-        solrrec['text'] = u' '.join(unicode(v) for v in solrrec.values())
+        solrrec['text'] = u' '.join(str(v) for v in solrrec.values())
 
         if 'solr_static_fields' in chromo:
             solrrec.update(chromo['solr_static_fields'])
@@ -401,10 +359,10 @@ def _update_records(records, org_detail, conn, resource_name, unmatched):
         except pysolr.SolrError:
             if not a:
                 raise
-            print "waiting..."
+            print("waiting...")
             import time
             time.sleep((10-a) * 5)
-            print "retrying..."
+            print("retrying...")
     return unmatched
 
 
@@ -483,16 +441,16 @@ def dollar_range_facet(key, facet_range, float_value):
         last_fac = fac
     else:
         return {
-            key + u'_range': unicode(i),
+            key + u'_range': str(i),
             key + u'_en': u'A: ' + en_dollars(fac) + u'+',
             key + u'_fr': u'A: ' + fr_dollars(fac) + u' +'}
 
     if last_fac is None:
         return {}
 
-    prefix = unichr(ord('A') + len(facet_range) - i) + u': '
+    prefix = chr(ord('A') + len(facet_range) - i) + u': '
     return {
-        key + u'_range': unicode(i - 1),
+        key + u'_range': str(i - 1),
         key + u'_en': prefix + en_dollars(last_fac) + u' - ' + en_dollars(fac-0.01),
         key + u'_fr': prefix + fr_dollars(last_fac) + u' - ' + fr_dollars(fac-0.01)}
 
@@ -523,16 +481,16 @@ def numeric_range_facet(key, facet_range, float_value):
         last_fac = fac
     else:
         return {
-            key + u'_range': unicode(i),
+            key + u'_range': str(i),
             key + u'_en': u'A: ' + en_numeric(fac) + u'+',
             key + u'_fr': u'A: ' + fr_numeric(fac) + u' +'}
 
     if last_fac is None:
         return {}
 
-    prefix = unichr(ord('A') + len(facet_range) - i) + u': '
+    prefix = chr(ord('A') + len(facet_range) - i) + u': '
     return {
-        key + u'_range': unicode(i - 1),
+        key + u'_range': str(i - 1),
         key + u'_en': prefix + en_numeric(last_fac) + u' - ' + en_numeric(fac-1),
         key + u'_fr': prefix + fr_numeric(last_fac) + u' - ' + fr_numeric(fac-1)}
 
@@ -542,7 +500,7 @@ def sum_to_field(solrrec, key, value):
     modify solrrec dict in-place to add this value to solrrec[key]
     """
     try:
-        if isinstance(value, basestring):
+        if isinstance(value, str):
             float_value = float(value.replace(',', ''))
         else:
             float_value = float(value)

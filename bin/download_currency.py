@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 import requests
 from lxml import etree
@@ -34,7 +34,7 @@ fr_data = extract_currency_name_dict(DATA_FR_URL)
 en_data = extract_currency_name_dict(DATA_EN_URL)
 
 combined = {}
-for symbol, fr in fr_data.iteritems():
+for symbol, fr in fr_data.items():
     if symbol not in en_data:
         continue
     combined[symbol] = {'en': en_data[symbol], 'fr': fr}

@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 from datetime import datetime
 import simplejson
 import sys
@@ -119,7 +119,7 @@ def main():
                     else:
                         res['resource_type']='dataset'
 
-                print simplejson.dumps(rec)
+                print(simplejson.dumps(rec))
 
         except IOError:
             print >> sys.stderr, 'Error while reading line.'

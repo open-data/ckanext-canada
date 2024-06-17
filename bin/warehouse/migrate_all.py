@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 """
 This script takes proactive disclosure data in the form of a csv file and runs it against the corresponding migration scripts
 """

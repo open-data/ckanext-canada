@@ -1,8 +1,8 @@
 # -*- coding: UTF-8 -*-
 from ckanext.canada.tests import CanadaTestBase
 import pytest
-from urlparse import urlparse
-from StringIO import StringIO
+from urllib.parse import urlparse
+from io import BytesIO
 from openpyxl.workbook import Workbook
 from ckan.plugins.toolkit import h
 from ckanapi import (
@@ -175,6 +175,7 @@ class TestPackageWebForms(CanadaTestBase):
 
 
 @pytest.mark.usefixtures('with_request_context')
+@pytest.mark.ckan_config("ckanext.canada.suppress_user_emails", True)
 class TestNewUserWebForms(CanadaTestBase):
     @classmethod
     def setup_method(self, method):
@@ -541,8 +542,9 @@ class TestRecombinantWebForms(CanadaTestBase):
 
         # members should be able to download template
         response = app.get(offset, extra_environ=self.extra_environ_member)
-        template_file = StringIO()
-        template_file.write(response.body)
+        template_file = BytesIO()
+        # use get_data instead of body to avoid decoding issues. This is a file, we want bytes.
+        template_file.write(response.get_data(as_text=False))
         # produces: (sheet-name, org-name, column_names, data_rows_generator)
         #   note: data_rows_generator excludes the example row
         template_file = list(read_excel(template_file))
@@ -574,8 +576,9 @@ class TestRecombinantWebForms(CanadaTestBase):
                             data={'resource_name': resource_name,
                                   'bulk-template': [self.example_record['request_number']]},
                             extra_environ=self.extra_environ_member)
-        template_file = StringIO()
-        template_file.write(response.body)
+        template_file = BytesIO()
+        # use get_data instead of body to avoid decoding issues. This is a file, we want bytes.
+        template_file.write(response.get_data(as_text=False))
         # produces: (sheet-name, org-name, column_names, data_rows_generator)
         #   note: data_rows_generator excludes the example row
         template_file = list(read_excel(template_file))
@@ -603,8 +606,9 @@ class TestRecombinantWebForms(CanadaTestBase):
                             data={'resource_name': nil_resource_name,
                                   'bulk-template': [self.example_nil_record['year'], self.example_nil_record['month']]},
                             extra_environ=self.extra_environ_member)
-        template_file = StringIO()
-        template_file.write(response.body)
+        template_file = BytesIO()
+        # use get_data instead of body to avoid decoding issues. This is a file, we want bytes.
+        template_file.write(response.get_data(as_text=False))
         # produces: (sheet-name, org-name, column_names, data_rows_generator)
         #   note: data_rows_generator excludes the example row
         template_file = list(read_excel(template_file))
@@ -783,7 +787,7 @@ class TestRecombinantWebForms(CanadaTestBase):
 
 
     def _populate_good_template_file(self, template):
-        # type: (Workbook) -> StringIO
+        # type: (Workbook) -> BytesIO
         for i, v in enumerate(['2023',
                                '7',
                                'B-8019',
@@ -798,14 +802,14 @@ class TestRecombinantWebForms(CanadaTestBase):
                       column=(i + DATA_FIRST_COL_NUM),
                       value=v,
                       style='reco_ref_value')
-        good_template_file = StringIO()
+        good_template_file = BytesIO()
         template.save(good_template_file)
         good_template_file.seek(0, 0)
         return good_template_file
 
 
     def _populate_bad_template_file(self, template):
-        # type: (Workbook) -> StringIO
+        # type: (Workbook) -> BytesIO
         for i, v in enumerate(['1978',
                                '20',
                                'B-8019',
@@ -820,14 +824,14 @@ class TestRecombinantWebForms(CanadaTestBase):
                       column=(i + DATA_FIRST_COL_NUM),
                       value=v,
                       style='reco_ref_value')
-        bad_template_file = StringIO()
+        bad_template_file = BytesIO()
         template.save(bad_template_file)
         bad_template_file.seek(0, 0)
         return bad_template_file
 
 
     def _filled_upload_form(self, filestream, action='upload'):
-        # type: (StringIO, str) -> dict
+        # type: (BytesIO, str) -> dict
         return {
             'xls_update': (filestream, u'{}_en_{}.xlsx'.format(self.pd_type, self.org['name'])),
             action: ''

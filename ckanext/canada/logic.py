@@ -143,7 +143,7 @@ def changed_packages_activity_timestamp_since(context, data_dict):
     since = get_or_bust(data_dict, 'since_time')
     try:
         since_time = isodate(since, None)
-    except Invalid, e:
+    except Invalid as e:
         raise ValidationError({'since_time':e.error})
 
     # hard limit this api to reduce opportunity for abuse
@@ -176,7 +176,7 @@ def activity_list_from_user_since(context, data_dict):
     user_id = get_or_bust(data_dict, 'user_id')
     try:
         since_time = isodate(since, None)
-    except Invalid, e:
+    except Invalid as e:
         raise ValidationError({'since_time':e.error})
 
     # hard limit this api to reduce opportunity for abuse
