@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  CKAN\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-06-14 15:16+0000\n"
+"POT-Creation-Date: 2024-06-17 18:16+0000\n"
 "PO-Revision-Date: 2014-01-23 13:04+0000\n"
 "Last-Translator: Sean Hammond <sean.hammond@okfn.org>\n"
 "Language: en\n"
@@ -222,7 +222,6 @@ msgstr ""
 
 #: ckanext/canada/plugins.py:699
 #: ckanext/canada/templates/package/deleted.html:14
-#: ckanext/canada/templates/snippets/package_item.html:67
 #: ckanext/canada/templates/user/new_user_form.html:17
 msgid "Organization"
 msgstr ""
@@ -294,7 +293,6 @@ msgstr ""
 #: ckanext/canada/templates/user/edit_user_form.html:7
 #: ckanext/canada/templates/user/list.html:44
 #: ckanext/canada/templates/user/new_user_form.html:7
-#: ckanext/canada/templates/user/read_base.html:53
 #: ckanext/canada/templates/user/snippets/login_form.html:11
 #: ckanext/canada/view.py:1085
 msgid "Username"
@@ -2070,7 +2068,7 @@ msgid "Activity Stream"
 msgstr ""
 
 #: ckanext/canada/templates/organization/activity_stream.html:11
-#: ckanext/canada/templates/package/read_base.html:151
+#: ckanext/canada/templates/package/read_base.html:150
 msgid "Atom Feed"
 msgstr ""
 
@@ -2349,8 +2347,23 @@ msgid ""
 msgstr ""
 
 #: ckanext/canada/templates/package/read.html:150
-#: ckanext/canada/templates/snippets/package_item.html:78
 msgid "Issued by"
+msgstr ""
+
+#: ckanext/canada/templates/package/read.html:152
+#: ckanext/canada/templates/package/read_base.html:56
+#: ckanext/canada/templates/package/read_base.html:65
+#: ckanext/canada/templates/package/read_base.html:81
+#: ckanext/canada/templates/package/read_base.html:155
+#: ckanext/canada/templates/package/read_base.html:187
+#: ckanext/canada/templates/recombinant/snippets/xls_upload.html:39
+#: ckanext/canada/templates/recombinant/snippets/xls_upload.html:46
+#: ckanext/canada/templates/recombinant/snippets/xls_upload.html:53
+#: ckanext/canada/templates/recombinant/snippets/xls_upload.html:57
+#: ckanext/canada/templates/recombinant/snippets/xls_upload.html:60
+#: ckanext/canada/templates/recombinant/snippets/xls_upload.html:61
+#: ckanext/canada/templates/snippets/package_item.html:91
+msgid ":"
 msgstr ""
 
 #: ckanext/canada/templates/package/read.html:177
@@ -2362,27 +2375,27 @@ msgid "Contact Information"
 msgstr ""
 
 #: ckanext/canada/templates/package/read.html:193
-msgid "Delivery Point"
+msgid "Delivery Point:"
 msgstr ""
 
 #: ckanext/canada/templates/package/read.html:196
-msgid "City"
+msgid "City:"
 msgstr ""
 
 #: ckanext/canada/templates/package/read.html:199
-msgid "Administrative Area"
+msgid "Administrative Area:"
 msgstr ""
 
 #: ckanext/canada/templates/package/read.html:202
-msgid "Postal Code"
+msgid "Postal Code:"
 msgstr ""
 
 #: ckanext/canada/templates/package/read.html:205
-msgid "Country"
+msgid "Country:"
 msgstr ""
 
 #: ckanext/canada/templates/package/read.html:208
-msgid "Electronic Mail Address"
+msgid "Electronic Mail Address:"
 msgstr ""
 
 #: ckanext/canada/templates/package/read.html:230
@@ -2414,67 +2427,67 @@ msgstr ""
 msgid "undefined to"
 msgstr ""
 
-#: ckanext/canada/templates/package/read_base.html:82
+#: ckanext/canada/templates/package/read_base.html:81
 msgid "Openness Rating"
 msgstr ""
 
-#: ckanext/canada/templates/package/read_base.html:87
+#: ckanext/canada/templates/package/read_base.html:86
 msgid "one star"
 msgstr ""
 
-#: ckanext/canada/templates/package/read_base.html:88
+#: ckanext/canada/templates/package/read_base.html:87
 msgid "two stars"
 msgstr ""
 
-#: ckanext/canada/templates/package/read_base.html:89
+#: ckanext/canada/templates/package/read_base.html:88
 msgid "three stars"
 msgstr ""
 
-#: ckanext/canada/templates/package/read_base.html:90
+#: ckanext/canada/templates/package/read_base.html:89
 msgid "four stars"
 msgstr ""
 
-#: ckanext/canada/templates/package/read_base.html:91
+#: ckanext/canada/templates/package/read_base.html:90
 msgid "five stars"
 msgstr ""
 
-#: ckanext/canada/templates/package/read_base.html:102
+#: ckanext/canada/templates/package/read_base.html:101
 msgid "About this Record"
 msgstr ""
 
-#: ckanext/canada/templates/package/read_base.html:106
-msgid "Record Released"
+#: ckanext/canada/templates/package/read_base.html:105
+msgid "Record Released:"
 msgstr ""
 
-#: ckanext/canada/templates/package/read_base.html:110
-msgid "Record Modified"
+#: ckanext/canada/templates/package/read_base.html:109
+msgid "Record Modified:"
 msgstr ""
 
-#: ckanext/canada/templates/package/read_base.html:114
-msgid "Record ID"
+#: ckanext/canada/templates/package/read_base.html:113
+msgid "Record ID:"
 msgstr ""
 
-#: ckanext/canada/templates/package/read_base.html:118
-msgid "Metadata"
+#: ckanext/canada/templates/package/read_base.html:117
+msgid "Metadata:"
 msgstr ""
 
-#: ckanext/canada/templates/package/read_base.html:122
+#: ckanext/canada/templates/package/read_base.html:121
 msgid "Link to JSON format"
 msgstr ""
 
-#: ckanext/canada/templates/package/read_base.html:128
+#: ckanext/canada/templates/package/read_base.html:127
 msgid "DCAT (JSON-LD)"
 msgstr ""
 
-#: ckanext/canada/templates/package/read_base.html:135
+#: ckanext/canada/templates/package/read_base.html:134
 msgid "DCAT (XML)"
 msgstr ""
 
-#: ckanext/canada/templates/package/read_base.html:143
-msgid "FGP Metadata"
+#: ckanext/canada/templates/package/read_base.html:142
+msgid "FGP Metadata:"
 msgstr ""
 
-#: ckanext/canada/templates/package/read_base.html:145
+#: ckanext/canada/templates/package/read_base.html:144
 msgid "HNAP ISO:19115 Metadata Record"
 msgstr ""
 
@@ -2737,11 +2750,11 @@ msgid "Create and update multiple records"
 msgstr ""
 
 #: ckanext/canada/templates/recombinant/snippets/xls_upload.html:40
-msgid "This field must not be empty"
+msgid "This field must not be empty:"
 msgstr ""
 
 #: ckanext/canada/templates/recombinant/snippets/xls_upload.html:47
-msgid "This field must be empty"
+msgid "This field must be empty:"
 msgstr ""
 
 #: ckanext/canada/templates/recombinant/snippets/xls_upload.html:54
@@ -2924,13 +2937,21 @@ msgstr ""
 msgid "This dataset has no description"
 msgstr "This record has no description"
 
+#: ckanext/canada/templates/snippets/package_item.html:67
+msgid "Organization:"
+msgstr ""
+
+#: ckanext/canada/templates/snippets/package_item.html:78
+msgid "Issued by:"
+msgstr ""
+
 #: ckanext/canada/templates/snippets/package_item.html:100
 #: ckanext/canada/templates/snippets/package_item.html:117
-msgid "Status"
+msgid "Status:"
 msgstr ""
 
 #: ckanext/canada/templates/snippets/package_item.html:108
-msgid "Date"
+msgid "Date:"
 msgstr ""
 
 #: ckanext/canada/templates/snippets/package_item.html:120
@@ -2938,7 +2959,7 @@ msgid "Request sent to data owner – awaiting response"
 msgstr ""
 
 #: ckanext/canada/templates/snippets/package_item.html:127
-msgid "Resource Formats"
+msgid "Resource Formats:"
 msgstr ""
 
 #: ckanext/canada/templates/snippets/search_form.html:4
@@ -3401,15 +3422,19 @@ msgid "Details"
 msgstr ""
 
 #: ckanext/canada/templates/user/read_base.html:32
-msgid "Followers"
+msgid "Followers:"
 msgstr ""
 
 #: ckanext/canada/templates/user/read_base.html:36
-msgid "Edits"
+msgid "Edits:"
 msgstr ""
 
 #: ckanext/canada/templates/user/read_base.html:50
-msgid "Open ID"
+msgid "Open ID:"
+msgstr ""
+
+#: ckanext/canada/templates/user/read_base.html:53
+msgid "Username:"
 msgstr ""
 
 #: ckanext/canada/templates/user/read_base.html:61
@@ -6778,7 +6803,7 @@ msgstr ""
 #~ msgstr ""
 
 #~ msgid "Date"
-#~ msgstr "Total number of Records"
+#~ msgstr ""
 
 #~ msgid "Dataset Revisions per Week"
 #~ msgstr ""
@@ -8253,4 +8278,46 @@ msgstr ""
 
 #~ msgid "Remember me"
 #~ msgstr "Keep me logged in"
+
+#~ msgid "Delivery Point"
+#~ msgstr ""
+
+#~ msgid "City"
+#~ msgstr ""
+
+#~ msgid "Administrative Area"
+#~ msgstr ""
+
+#~ msgid "Postal Code"
+#~ msgstr ""
+
+#~ msgid "Electronic Mail Address"
+#~ msgstr ""
+
+#~ msgid "Record Released"
+#~ msgstr ""
+
+#~ msgid "Record Modified"
+#~ msgstr ""
+
+#~ msgid "Record ID"
+#~ msgstr ""
+
+#~ msgid "FGP Metadata"
+#~ msgstr ""
+
+#~ msgid "This field must not be empty"
+#~ msgstr ""
+
+#~ msgid "This field must be empty"
+#~ msgstr ""
+
+#~ msgid "Followers"
+#~ msgstr ""
+
+#~ msgid "Edits"
+#~ msgstr ""
+
+#~ msgid "Open ID"
+#~ msgstr ""
 

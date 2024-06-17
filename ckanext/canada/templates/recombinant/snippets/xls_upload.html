@@ -1,7 +1,5 @@
 {% ckan_extends %}
 
-{% set colon = ' :' if h.lang() == 'fr' else ':' %}
-
 {% block form %}
   {% set chromo = h.recombinant_get_chromo(resource.name) %}
   {% if chromo.create_form %}
@@ -38,29 +36,29 @@
       {% set error_message = error.partition(': ')[2] %}
       {% if error_message.startswith("This field must not be empty:") %}
         {% set datastore_id = error.split(': ')[-1] %}
-        {{ error.split(':')[0] }}{{ colon }}
-        {{ _("This field must not be empty") }}{{ colon }}
+        {{ error.split(':')[0] }}{{ _(':') }}
+        {{ _("This field must not be empty:") }}
         {{ h.recombinant_language_text(
           h.recombinant_get_field(pkg.dataset_type, datastore_id).label)
           or datastore_id }}
       {% elif error_message.startswith("This field must be empty:") %}
         {% set datastore_id = error.split(': ')[-1] %}
-        {{ error.split(':')[0] }}{{ colon }}
-        {{ _("This field must be empty") }}{{ colon }}
+        {{ error.split(':')[0] }}{{ _(':') }}
+        {{ _("This field must be empty:") }}
         {{ h.recombinant_language_text(
           h.recombinant_get_field(pkg.dataset_type, datastore_id).label)
           or datastore_id }}
       {% elif error_message.startswith("Invalid choice for") %}
         {% set datastore_id = error_message.split(':')[0][19:] %}
-        {{ error.split(':')[0] }}{{ colon }}
+        {{ error.split(':')[0] }}{{ _(':') }}
         {{ _("Invalid choice for") }}
         {{ h.recombinant_language_text(
           h.recombinant_get_field(pkg.dataset_type, datastore_id).label)
-          or datastore_id }}{{ colon }}
+          or datastore_id }}{{ _(':') }}
         {{ error_message.partition(':')[2] }}
       {% elif error_message.startswith("invalid input syntax for") %}
-        {{ error.split(':')[0] }}{{ colon }}
-        {{ _(error_message.split(':')[0]) }}{{ colon }}
+        {{ error.split(':')[0] }}{{ _(':') }}
+        {{ _(error_message.split(':')[0]) }}{{ _(':') }}
         {{ error_message.partition(':')[2] }}
       {% else %}
         {{ error }}
