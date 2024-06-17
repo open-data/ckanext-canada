@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-06-14 15:16+0000\n"
+"POT-Creation-Date: 2024-06-17 18:16+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: fr\n"
@@ -234,7 +234,6 @@ msgstr "Type de portail"
 
 #: ckanext/canada/plugins.py:699
 #: ckanext/canada/templates/package/deleted.html:14
-#: ckanext/canada/templates/snippets/package_item.html:67
 #: ckanext/canada/templates/user/new_user_form.html:17
 msgid "Organization"
 msgstr "Organisation"
@@ -306,7 +305,6 @@ msgstr "N/A"
 #: ckanext/canada/templates/user/edit_user_form.html:7
 #: ckanext/canada/templates/user/list.html:44
 #: ckanext/canada/templates/user/new_user_form.html:7
-#: ckanext/canada/templates/user/read_base.html:53
 #: ckanext/canada/templates/user/snippets/login_form.html:11
 #: ckanext/canada/view.py:1085
 msgid "Username"
@@ -1508,19 +1506,19 @@ msgstr ""
 msgid "About"
 msgstr "À propos"
 
-#: ckanext/canada/templates/internal/help.html:8
+#: ckanext/canada/templates/help.html:8
 msgid "Frequently Asked Questions (FAQ)"
 msgstr "Foire aux questions"
 
-#: ckanext/canada/templates/internal/help.html:10
+#: ckanext/canada/templates/help.html:10
 msgid "General Registry Information"
 msgstr "Renseignements généraux sur le Registre"
 
-#: ckanext/canada/templates/internal/help.html:12
+#: ckanext/canada/templates/help.html:12
 msgid "Why can't I create an account?"
 msgstr "Pourquoi ne puis-je pas créer un compte?"
 
-#: ckanext/canada/templates/internal/help.html:13
+#: ckanext/canada/templates/help.html:13
 msgid ""
 "If you encounter the error message <em>\"That login name is not "
 "available\"</em> while trying to create an account, it typically "
@@ -1534,7 +1532,7 @@ msgstr ""
 "d’utilisateur. Si vous vous rappelez le mot de passe, essayez d’accéder "
 "au Registre à l’aide du même nom d’utilisateur et de ce mot de passe."
 
-#: ckanext/canada/templates/internal/help.html:14
+#: ckanext/canada/templates/help.html:14
 msgid ""
 "If you forgot the password, refer to the Reset your Password function, "
 "and a new one will be emailed to you."
@@ -1543,11 +1541,11 @@ msgstr ""
 "réinitialisation du mot de passe, et un nouveau mot de passe vous sera "
 "envoyé par courriel."
 
-#: ckanext/canada/templates/internal/help.html:17
+#: ckanext/canada/templates/help.html:17
 msgid "Have you forgotten your password or username?"
 msgstr "Avez-vous oublié votre mot de passe ou nom d’utilisateur?"
 
-#: ckanext/canada/templates/internal/help.html:18
+#: ckanext/canada/templates/help.html:18
 msgid ""
 "If you encounter the error message <em>\"Login failed. Bad username or "
 "password\"</em> while trying to log in to the Registry, follow these "
@@ -1558,7 +1556,7 @@ msgstr ""
 "vous connecter au Registre, suivez les étapes suivantes pour résoudre le "
 "problème :"
 
-#: ckanext/canada/templates/internal/help.html:20
+#: ckanext/canada/templates/help.html:20
 msgid ""
 "Click on either the <em>\"Reset Password\"</em> or <em>\"Recover "
 "Username\"</em> option."
@@ -1566,19 +1564,19 @@ msgstr ""
 "Cliquez sur l’option <em>« Réinitialiser le mot de passe »</em> ou <em>« "
 "Récupérer le nom d’utilisateur ».</em>"
 
-#: ckanext/canada/templates/internal/help.html:21
+#: ckanext/canada/templates/help.html:21
 msgid "Provide your email address."
 msgstr "Indiquez votre adresse électronique."
 
-#: ckanext/canada/templates/internal/help.html:22
+#: ckanext/canada/templates/help.html:22
 msgid "Follow the directions provided in the email sent to you."
 msgstr "Suivez les instructions fournies dans le courriel qui vous a été envoyé."
 
-#: ckanext/canada/templates/internal/help.html:26
+#: ckanext/canada/templates/help.html:26
 msgid "What if I manage the registry for more than one organization?"
 msgstr "Puis-je utiliser le Registre pour gérer plusieurs organisations?"
 
-#: ckanext/canada/templates/internal/help.html:27
+#: ckanext/canada/templates/help.html:27
 msgid ""
 "To manage additional organizations using your Registry account, send an "
 "email to open-ouvert@tbs-sct.gc.ca requesting that your account is linked"
@@ -1590,7 +1588,7 @@ msgstr ""
 "que votre compte soit lié à l’organisation souhaitée. Assurez vous que le"
 " nom de l’organisation est inclus dans votre courriel."
 
-#: ckanext/canada/templates/internal/help.html:28
+#: ckanext/canada/templates/help.html:28
 msgid ""
 "Once the support team processes your request, you'll be able to manage "
 "those organizations through your Registry account."
@@ -1598,21 +1596,21 @@ msgstr ""
 "Une fois que l’équipe d’assistance aura traité votre demande, vous "
 "pourrez gérer ces organisations à travers votre compte du registre."
 
-#: ckanext/canada/templates/internal/help.html:31
+#: ckanext/canada/templates/help.html:31
 msgid "How do I change my Profile (i.e. password, name, e-mail)?"
 msgstr ""
 "Comment puis-je modifier mon profil (c.-à-d., mot de passe, nom, "
 "courriel)?"
 
-#: ckanext/canada/templates/internal/help.html:32
+#: ckanext/canada/templates/help.html:32
 msgid "To update your profile in the Registry, follow these steps:"
 msgstr "Pour mettre à jour votre profil dans le registre, suivez ces étapes :"
 
-#: ckanext/canada/templates/internal/help.html:34
+#: ckanext/canada/templates/help.html:34
 msgid "Click the <em>\"My Account\"</em> tab."
 msgstr "Cliquez sur l’onglet <em>« Mon compte ».</em>"
 
-#: ckanext/canada/templates/internal/help.html:35
+#: ckanext/canada/templates/help.html:35
 msgid ""
 "Select <em>\"Edit Profile\"</em> to access the <em>\"Change "
 "Details\"</em> page."
@@ -1620,7 +1618,7 @@ msgstr ""
 "Sélectionnez <em>« Modifier le profil »</em> pour accéder à la page <em>«"
 " Modifier les détails ».</em>"
 
-#: ckanext/canada/templates/internal/help.html:36
+#: ckanext/canada/templates/help.html:36
 msgid ""
 "Make your desired changes. Note that altering your username is not "
 "recommended, as it could disconnect your uploaded data."
@@ -1629,7 +1627,7 @@ msgstr ""
 "de modifier votre nom d’utilisateur, car cela pourrait déconnecter vos "
 "données téléversées."
 
-#: ckanext/canada/templates/internal/help.html:37
+#: ckanext/canada/templates/help.html:37
 msgid ""
 "After completing your modifications, click <em>\"Update Profile\"</em>. "
 "Depending on the changes, you may need to log in again."
@@ -1638,15 +1636,15 @@ msgstr ""
 " profil ».</em> En fonction des modifications apportées, il se peut que "
 "vous deviez vous connecter à nouveau."
 
-#: ckanext/canada/templates/internal/help.html:40
+#: ckanext/canada/templates/help.html:40
 msgid "Open Data and Open Information"
 msgstr "Données et information ouvertes"
 
-#: ckanext/canada/templates/internal/help.html:42
+#: ckanext/canada/templates/help.html:42
 msgid "How do I add an open data or open information record?"
 msgstr "Comment puis-je ajouter un dossier d’information ou de données ouvertes?"
 
-#: ckanext/canada/templates/internal/help.html:43
+#: ckanext/canada/templates/help.html:43
 msgid ""
 "Please visit the registry operations guide section for <a "
 "href=\"https://open.canada.ca/en/registry-operations-guide/upload-"
@@ -1657,7 +1655,7 @@ msgstr ""
 "/telechargement-donnees\">Téléchargement de données et d’informations "
 "ouvertes</a> du guide des opérations du registre."
 
-#: ckanext/canada/templates/internal/help.html:46
+#: ckanext/canada/templates/help.html:46
 msgid ""
 "How do I review an open data or open information record for my "
 "organization?"
@@ -1665,7 +1663,7 @@ msgstr ""
 "Comment puis-je passer en revue les dossiers d’informations ou de données"
 " ouvertes pour mon organisation?"
 
-#: ckanext/canada/templates/internal/help.html:47
+#: ckanext/canada/templates/help.html:47
 msgid ""
 "To review your department's open data or open information records or to "
 "see the complete list of records:"
@@ -1673,33 +1671,33 @@ msgstr ""
 "Pour passer en revue les dossiers d’information ou de données ouvertes de"
 " votre ministère ou pour consulter la liste complète des dossiers :"
 
-#: ckanext/canada/templates/internal/help.html:49
+#: ckanext/canada/templates/help.html:49
 msgid "Select Menu, then Organizations."
 msgstr "Sélectionnez Menu, puis Organisations."
 
-#: ckanext/canada/templates/internal/help.html:50
+#: ckanext/canada/templates/help.html:50
 msgid "Select your organization."
 msgstr "Sélectionnez votre organisation."
 
-#: ckanext/canada/templates/internal/help.html:51
+#: ckanext/canada/templates/help.html:51
 msgid "Your records will appear."
 msgstr "Vos enregistrements vont apparaître."
 
-#: ckanext/canada/templates/internal/help.html:55
+#: ckanext/canada/templates/help.html:55
 msgid "How do I search the Registry?"
 msgstr "Comment puis-je effectuer des recherches dans le Registre?"
 
-#: ckanext/canada/templates/internal/help.html:56
+#: ckanext/canada/templates/help.html:56
 msgid "To find metadata records published in the Registry, follow these steps:"
 msgstr ""
 "Pour trouver les enregistrements de métadonnées publiés dans le Registre,"
 " suivez les étapes suivantes :"
 
-#: ckanext/canada/templates/internal/help.html:58
+#: ckanext/canada/templates/help.html:58
 msgid "Click on the <em>\"Search\"</em> option in the main menu."
 msgstr "Cliquez sur l’option <em>« Recherche »</em> dans le menu principal."
 
-#: ckanext/canada/templates/internal/help.html:59
+#: ckanext/canada/templates/help.html:59
 msgid ""
 "On the Search page, you can either enter a search term directly or use "
 "the facets on the right-hand side to narrow down your search."
@@ -1708,7 +1706,7 @@ msgstr ""
 " recherche, soit utiliser les facettes sur le côté droit pour affiner "
 "votre recherche."
 
-#: ckanext/canada/templates/internal/help.html:60
+#: ckanext/canada/templates/help.html:60
 msgid ""
 "The list of results will display records matching your search query in "
 "the order in which they were entered or updated in the Registry."
@@ -1717,15 +1715,15 @@ msgstr ""
 "recherche dans l’ordre selon lequel ils ont été saisis ou mis à jour dans"
 " le Registre (chronologique)."
 
-#: ckanext/canada/templates/internal/help.html:63
+#: ckanext/canada/templates/help.html:63
 msgid "Proactive Disclosure Information"
 msgstr "Information relative à la divulgation proactive"
 
-#: ckanext/canada/templates/internal/help.html:65
+#: ckanext/canada/templates/help.html:65
 msgid "How do I add, modify or delete records in the Registry?"
 msgstr "Comment puis-je ajouter, modifier ou supprimer des dossiers du Registre?"
 
-#: ckanext/canada/templates/internal/help.html:66
+#: ckanext/canada/templates/help.html:66
 msgid ""
 "Please visit the registry operations guide section for <a "
 "href=\"https://open.canada.ca/en/registry-operations-guide/upload-"
@@ -1736,11 +1734,11 @@ msgstr ""
 "/telechargement-donnees#gestion\">Gestion et modification des "
 "enregistrements</a> du guide des opérations du registre."
 
-#: ckanext/canada/templates/internal/help.html:69
+#: ckanext/canada/templates/help.html:69
 msgid "Why can't I see my uploaded data on the portal?"
 msgstr "Pourquoi les données téléversées ne s’affichent-elles pas dans le Portail?"
 
-#: ckanext/canada/templates/internal/help.html:70
+#: ckanext/canada/templates/help.html:70
 msgid ""
 "When uploading Proactive publication data to the Registry, it's essential"
 " to follow these directives to ensure a successful process:"
@@ -1749,7 +1747,7 @@ msgstr ""
 "Registre, il est essentiel de suivre les directives suivantes afin "
 "d’assurer la réussite du processus :"
 
-#: ckanext/canada/templates/internal/help.html:72
+#: ckanext/canada/templates/help.html:72
 msgid ""
 "Download the Latest Template to ensure that you're using the most up-to-"
 "date format."
@@ -1757,7 +1755,7 @@ msgstr ""
 "Téléchargez le dernier modèle pour vous assurer que vous utilisez le "
 "format le plus récent."
 
-#: ckanext/canada/templates/internal/help.html:73
+#: ckanext/canada/templates/help.html:73
 msgid ""
 "Prepare Data in the Proper Template: Organize your data in the "
 "appropriate template for the specific organization and Proactive "
@@ -1769,7 +1767,7 @@ msgstr ""
 "proactive. Chaque modèle correspond à un contexte particulier ; "
 "choisissez donc celui qui convient."
 
-#: ckanext/canada/templates/internal/help.html:74
+#: ckanext/canada/templates/help.html:74
 msgid ""
 "Maintain the Abbreviated Organization Name: In the template, the "
 "abbreviated name of the organization (e.g., \"aandc-aadnc\") must remain "
@@ -1779,7 +1777,7 @@ msgstr ""
 " de l’organisation (par exemple, « aandc-aadnc ») doit rester dans la "
 "cellule C1 tel qu’il a été téléchargé."
 
-#: ckanext/canada/templates/internal/help.html:75
+#: ckanext/canada/templates/help.html:75
 msgid ""
 "Include All Required Fields: Ensure that the template you're uploading "
 "contains all the required fields for the specific Proactive publication "
@@ -1790,7 +1788,7 @@ msgstr ""
 "publication proactive spécifique. Les champs manquants peuvent entraîner "
 "des problèmes au cours du processus de téléversement."
 
-#: ckanext/canada/templates/internal/help.html:76
+#: ckanext/canada/templates/help.html:76
 msgid ""
 "Enter Valid Data: Populate the template with valid and accurate data. "
 "Incorrect or incomplete information may cause errors."
@@ -1799,7 +1797,7 @@ msgstr ""
 "valides et exactes. Des informations incorrectes ou incomplètes peuvent "
 "entraîner des erreurs."
 
-#: ckanext/canada/templates/internal/help.html:77
+#: ckanext/canada/templates/help.html:77
 msgid ""
 "File Format and Naming: Your completed data template should be an Excel "
 "spreadsheet in either XLS or XLSX format. Do not rename the file, as the "
@@ -1811,7 +1809,7 @@ msgstr ""
 "fichier, car le système repose sur un identifiant unique associé à chaque"
 " modèle. Le renommer pourrait entraîner des complications."
 
-#: ckanext/canada/templates/internal/help.html:78
+#: ckanext/canada/templates/help.html:78
 msgid ""
 "Troubleshooting Upload Issues: If you encounter an error message during "
 "the upload, carefully review the message text and take corrective "
@@ -1822,7 +1820,7 @@ msgstr ""
 "message et prenez des mesures correctives en fonction du problème "
 "spécifique."
 
-#: ckanext/canada/templates/internal/help.html:79
+#: ckanext/canada/templates/help.html:79
 msgid ""
 "If the upload was successful but you don't see the data in the "
 "<em>\"Preview\"</em> section of the page, verify your data file. It might"
@@ -1833,11 +1831,11 @@ msgstr ""
 "données. Il peut s’agir d’un téléversement en double ou d’autres "
 "problèmes."
 
-#: ckanext/canada/templates/internal/help.html:83
+#: ckanext/canada/templates/help.html:83
 msgid "Was everything uploaded correctly?"
 msgstr "Toutes les données ont-elles été correctement téléversées?"
 
-#: ckanext/canada/templates/internal/help.html:84
+#: ckanext/canada/templates/help.html:84
 msgid ""
 "A record is not immediately pushed to the portal, it will appear the "
 "following morning. The following are two possible methods for you to "
@@ -1847,7 +1845,7 @@ msgstr ""
 "apparaîtra le lendemain matin. Les deux méthodes suivantes vous "
 "permettent de vérifier le téléchargement des données :"
 
-#: ckanext/canada/templates/internal/help.html:86
+#: ckanext/canada/templates/help.html:86
 msgid ""
 "If you see the message <em>\"Your template has been successfully "
 "uploaded\"</em> after you have hit the <em>\"Submit\"</em> button; or"
@@ -1855,7 +1853,7 @@ msgstr ""
 "Si vous voyez le message <em>« Votre modèle a été téléversé »</em> après "
 "avoir appuyé sur le bouton <em>« Soumettre »</em> ; ou"
 
-#: ckanext/canada/templates/internal/help.html:87
+#: ckanext/canada/templates/help.html:87
 msgid ""
 "you can verify the data by looking in the Preview table for one or more "
 "of your template line items."
@@ -1863,13 +1861,13 @@ msgstr ""
 "vous pouvez vérifier les données en consultant le tableau d’aperçu pour "
 "l’une ou plusieurs lignes d’enregistrement de votre modèle."
 
-#: ckanext/canada/templates/internal/help.html:91
+#: ckanext/canada/templates/help.html:91
 msgid "Why didn't I get a confirmation email that my upload was successful?"
 msgstr ""
 "Pourquoi n’ai-je pas reçu de courriel de confirmation indiquant que mon "
 "téléversement était réussi?"
 
-#: ckanext/canada/templates/internal/help.html:92
+#: ckanext/canada/templates/help.html:92
 msgid ""
 "The system only provides an onscreen message <em>\"Your template has been"
 " successfully uploaded\"</em>; it does not send a confirmation email."
@@ -1877,11 +1875,11 @@ msgstr ""
 "Le système affiche seulement un message à l’écran <em>« Votre modèle a "
 "été téléversé ».</em> Vous ne recevrez pas de courriel de confirmation."
 
-#: ckanext/canada/templates/internal/help.html:95
+#: ckanext/canada/templates/help.html:95
 msgid "Why don't I see the upload button?"
 msgstr "Pourquoi n’ai-je pas accès au bouton de téléversement?"
 
-#: ckanext/canada/templates/internal/help.html:96
+#: ckanext/canada/templates/help.html:96
 msgid ""
 "The Upload button is accessible only to users associated with an "
 "organization. If you're unable to see the button, consider the following "
@@ -1891,15 +1889,15 @@ msgstr ""
 "à une organisation. Si vous n’arrivez pas à voir le bouton, envisagez les"
 " raisons suivantes :"
 
-#: ckanext/canada/templates/internal/help.html:98
+#: ckanext/canada/templates/help.html:98
 msgid "Confirm that you are logged into the Registry."
 msgstr "Vérifiez que vous êtes bien connecté au registre."
 
-#: ckanext/canada/templates/internal/help.html:99
+#: ckanext/canada/templates/help.html:99
 msgid "Ensure that your account is linked to your organization."
 msgstr "Assurez-vous que votre compte est lié à votre organisation."
 
-#: ckanext/canada/templates/internal/help.html:100
+#: ckanext/canada/templates/help.html:100
 msgid ""
 "If your organization hasn't uploaded data yet for that proactive "
 "disclosure type, your template hasn't been initiated. To access the "
@@ -1909,13 +1907,13 @@ msgstr ""
 " divulgation proactive, votre modèle n’a pas été initié. Pour accéder au "
 "bouton de téléchargement, vous devez d’abord télécharger le modèle."
 
-#: ckanext/canada/templates/internal/help.html:104
+#: ckanext/canada/templates/help.html:104
 msgid "Why doesn't all the text I entered in the template appear?"
 msgstr ""
 "Pourquoi l’ensemble du texte que j’ai saisi dans le modèle ne "
 "s’affiche-t-il pas?"
 
-#: ckanext/canada/templates/internal/help.html:105
+#: ckanext/canada/templates/help.html:105
 msgid ""
 "Excel has a cell display limit of 1024 characters.  However, the complete"
 " text (Maximum of 32767 characters of it) is actually in the cell. You "
@@ -1929,11 +1927,11 @@ msgstr ""
 " taille de la cellule, en mettant la cellule en mode modification ou en "
 "regardant la barre de formule."
 
-#: ckanext/canada/templates/internal/help.html:108
+#: ckanext/canada/templates/help.html:108
 msgid "Who approves the Proactive publication data?"
 msgstr "Qui approuve les données de divulgation proactive?"
 
-#: ckanext/canada/templates/internal/help.html:109
+#: ckanext/canada/templates/help.html:109
 msgid ""
 "It is the organization's responsibility to verify and approve Proactive "
 "publication data before uploading to the Registry."
@@ -2391,7 +2389,7 @@ msgid "Activity Stream"
 msgstr "Flux d’Activités"
 
 #: ckanext/canada/templates/organization/activity_stream.html:11
-#: ckanext/canada/templates/package/read_base.html:151
+#: ckanext/canada/templates/package/read_base.html:150
 msgid "Atom Feed"
 msgstr "Fil de nouvelles Atom"
 
@@ -2711,9 +2709,24 @@ msgstr ""
 "personnels.</p>"
 
 #: ckanext/canada/templates/package/read.html:150
-#: ckanext/canada/templates/snippets/package_item.html:78
 msgid "Issued by"
 msgstr "Publiée par"
+
+#: ckanext/canada/templates/package/read.html:152
+#: ckanext/canada/templates/package/read_base.html:56
+#: ckanext/canada/templates/package/read_base.html:65
+#: ckanext/canada/templates/package/read_base.html:81
+#: ckanext/canada/templates/package/read_base.html:155
+#: ckanext/canada/templates/package/read_base.html:187
+#: ckanext/canada/templates/recombinant/snippets/xls_upload.html:39
+#: ckanext/canada/templates/recombinant/snippets/xls_upload.html:46
+#: ckanext/canada/templates/recombinant/snippets/xls_upload.html:53
+#: ckanext/canada/templates/recombinant/snippets/xls_upload.html:57
+#: ckanext/canada/templates/recombinant/snippets/xls_upload.html:60
+#: ckanext/canada/templates/recombinant/snippets/xls_upload.html:61
+#: ckanext/canada/templates/snippets/package_item.html:91
+msgid ":"
+msgstr ""
 
 #: ckanext/canada/templates/package/read.html:177
 msgid "Related Items"
@@ -2724,28 +2737,28 @@ msgid "Contact Information"
 msgstr "Coordonnées"
 
 #: ckanext/canada/templates/package/read.html:193
-msgid "Delivery Point"
-msgstr "Point de livraison"
+msgid "Delivery Point:"
+msgstr "Point de livraison :"
 
 #: ckanext/canada/templates/package/read.html:196
-msgid "City"
-msgstr "Ville"
+msgid "City:"
+msgstr "Ville :"
 
 #: ckanext/canada/templates/package/read.html:199
-msgid "Administrative Area"
-msgstr "Zone administrative"
+msgid "Administrative Area:"
+msgstr "Zone administrative :"
 
 #: ckanext/canada/templates/package/read.html:202
-msgid "Postal Code"
-msgstr "Code postal"
+msgid "Postal Code:"
+msgstr "Code postal :"
 
 #: ckanext/canada/templates/package/read.html:205
-msgid "Country"
-msgstr "Pays"
+msgid "Country:"
+msgstr "Pays :"
 
 #: ckanext/canada/templates/package/read.html:208
-msgid "Electronic Mail Address"
-msgstr "Adresse de courrier électronique"
+msgid "Electronic Mail Address:"
+msgstr "Adresse de courrier électronique :"
 
 #: ckanext/canada/templates/package/read.html:230
 msgid "Similar records"
@@ -2776,67 +2789,67 @@ msgstr "à non défini"
 msgid "undefined to"
 msgstr "non défini à"
 
-#: ckanext/canada/templates/package/read_base.html:82
+#: ckanext/canada/templates/package/read_base.html:81
 msgid "Openness Rating"
 msgstr "Cote de degrée d’ouverture des données"
 
-#: ckanext/canada/templates/package/read_base.html:87
+#: ckanext/canada/templates/package/read_base.html:86
 msgid "one star"
 msgstr "une étoile"
 
-#: ckanext/canada/templates/package/read_base.html:88
+#: ckanext/canada/templates/package/read_base.html:87
 msgid "two stars"
 msgstr "deux étoiles"
 
-#: ckanext/canada/templates/package/read_base.html:89
+#: ckanext/canada/templates/package/read_base.html:88
 msgid "three stars"
 msgstr "trois étoiles"
 
-#: ckanext/canada/templates/package/read_base.html:90
+#: ckanext/canada/templates/package/read_base.html:89
 msgid "four stars"
 msgstr "quatre étoiles"
 
-#: ckanext/canada/templates/package/read_base.html:91
+#: ckanext/canada/templates/package/read_base.html:90
 msgid "five stars"
 msgstr "cinq étoiles"
 
-#: ckanext/canada/templates/package/read_base.html:102
+#: ckanext/canada/templates/package/read_base.html:101
 msgid "About this Record"
 msgstr "Au sujet de ce dossier"
 
-#: ckanext/canada/templates/package/read_base.html:106
-msgid "Record Released"
-msgstr "Dossier publié"
+#: ckanext/canada/templates/package/read_base.html:105
+msgid "Record Released:"
+msgstr "Dossier publié :"
 
-#: ckanext/canada/templates/package/read_base.html:110
-msgid "Record Modified"
-msgstr "Dossier modifié"
+#: ckanext/canada/templates/package/read_base.html:109
+msgid "Record Modified:"
+msgstr "Dossier modifié :"
 
-#: ckanext/canada/templates/package/read_base.html:114
-msgid "Record ID"
-msgstr "Identificateur du dossier"
+#: ckanext/canada/templates/package/read_base.html:113
+msgid "Record ID:"
+msgstr "Identificateur du dossier :"
 
-#: ckanext/canada/templates/package/read_base.html:118
-msgid "Metadata"
-msgstr "Métadonnées"
+#: ckanext/canada/templates/package/read_base.html:117
+msgid "Metadata:"
+msgstr "Métadonnées :"
 
-#: ckanext/canada/templates/package/read_base.html:122
+#: ckanext/canada/templates/package/read_base.html:121
 msgid "Link to JSON format"
 msgstr "Lien au format JSON"
 
-#: ckanext/canada/templates/package/read_base.html:128
+#: ckanext/canada/templates/package/read_base.html:127
 msgid "DCAT (JSON-LD)"
 msgstr "DCAT (JSON-LD)"
 
-#: ckanext/canada/templates/package/read_base.html:135
+#: ckanext/canada/templates/package/read_base.html:134
 msgid "DCAT (XML)"
 msgstr "DCAT (XML)"
 
-#: ckanext/canada/templates/package/read_base.html:143
-msgid "FGP Metadata"
-msgstr "Métadonnées de la PGF"
+#: ckanext/canada/templates/package/read_base.html:142
+msgid "FGP Metadata:"
+msgstr "Métadonnées de la PGF :"
 
-#: ckanext/canada/templates/package/read_base.html:145
+#: ckanext/canada/templates/package/read_base.html:144
 msgid "HNAP ISO:19115 Metadata Record"
 msgstr "Enregistrement de métadonnées de HNAP ISO:19115"
 
@@ -3117,12 +3130,12 @@ msgid "Create and update multiple records"
 msgstr "Créer et procéder à la mise à jour de plusieurs dossiers"
 
 #: ckanext/canada/templates/recombinant/snippets/xls_upload.html:40
-msgid "This field must not be empty"
-msgstr "Cette zone ne doit pas être vide"
+msgid "This field must not be empty:"
+msgstr "Cette zone ne doit pas être vide :"
 
 #: ckanext/canada/templates/recombinant/snippets/xls_upload.html:47
-msgid "This field must be empty"
-msgstr "Cette zone doit être vide"
+msgid "This field must be empty:"
+msgstr "Cette zone doit être vide :"
 
 #: ckanext/canada/templates/recombinant/snippets/xls_upload.html:54
 msgid "Invalid choice for"
@@ -3361,22 +3374,30 @@ msgstr "en savoir plus"
 msgid "This dataset has no description"
 msgstr "Aucune description disponible pour cet ensemble de données"
 
+#: ckanext/canada/templates/snippets/package_item.html:67
+msgid "Organization:"
+msgstr "Organisation :"
+
+#: ckanext/canada/templates/snippets/package_item.html:78
+msgid "Issued by:"
+msgstr "Publiée par :"
+
 #: ckanext/canada/templates/snippets/package_item.html:100
 #: ckanext/canada/templates/snippets/package_item.html:117
-msgid "Status"
-msgstr "État"
+msgid "Status:"
+msgstr "État :"
 
 #: ckanext/canada/templates/snippets/package_item.html:108
-msgid "Date"
-msgstr "Date"
+msgid "Date:"
+msgstr "Date :"
 
 #: ckanext/canada/templates/snippets/package_item.html:120
 msgid "Request sent to data owner – awaiting response"
 msgstr "Demande envoyée au propriétaire des données, en attente de réponse"
 
 #: ckanext/canada/templates/snippets/package_item.html:127
-msgid "Resource Formats"
-msgstr "Formats des ressources"
+msgid "Resource Formats:"
+msgstr "Formats des ressources :"
 
 #: ckanext/canada/templates/snippets/search_form.html:4
 msgid "Search..."
@@ -3960,16 +3981,20 @@ msgid "Details"
 msgstr "Détails"
 
 #: ckanext/canada/templates/user/read_base.html:32
-msgid "Followers"
-msgstr "Suiveurs"
+msgid "Followers:"
+msgstr "Suiveurs :"
 
 #: ckanext/canada/templates/user/read_base.html:36
-msgid "Edits"
-msgstr "Modifications"
+msgid "Edits:"
+msgstr "Modifications :"
 
 #: ckanext/canada/templates/user/read_base.html:50
-msgid "Open ID"
-msgstr "Identifiant ouvert"
+msgid "Open ID:"
+msgstr "Identifiant ouvert :"
+
+#: ckanext/canada/templates/user/read_base.html:53
+msgid "Username:"
+msgstr "Nom d’utilisateur :"
 
 #: ckanext/canada/templates/user/read_base.html:61
 #: ckanext/canada/templates/user/read_base.html:72
@@ -6418,4 +6443,10 @@ msgstr "Télécharger vers le DataStore"
 
 #~ msgid "Remember me"
 #~ msgstr "Mémoriser mes informations"
+
+#~ msgid "FGP Metadata"
+#~ msgstr "Métadonnées de la PGF"
+
+#~ msgid "Open ID"
+#~ msgstr "Identifiant ouvert"
 
