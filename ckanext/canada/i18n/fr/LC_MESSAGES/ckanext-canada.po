@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-06-14 15:44+0000\n"
+"POT-Creation-Date: 2024-06-17 15:48+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: fr\n"
@@ -122,7 +122,7 @@ msgid "Treasury Board of Canada Secretariat"
 msgstr "Secrétariat du Conseil du Trésor du Canada"
 
 #: ckanext/canada/helpers.py:575 ckanext/canada/strings.py:13
-#: ckanext/canada/view.py:1086
+#: ckanext/canada/view.py:1095
 msgid "Members not found"
 msgstr "Membres non trouvés"
 
@@ -227,64 +227,64 @@ msgstr ""
 msgid "Unknown Job"
 msgstr "Tâche inconnue "
 
-#: ckanext/canada/plugins.py:705
+#: ckanext/canada/plugins.py:717
 #: ckanext/canada/templates/scheming/package/snippets/package_form.html:25
 msgid "Portal Type"
 msgstr "Type de portail"
 
-#: ckanext/canada/plugins.py:706
+#: ckanext/canada/plugins.py:718
 #: ckanext/canada/templates/package/deleted.html:14
 #: ckanext/canada/templates/snippets/package_item.html:62
 #: ckanext/canada/templates/user/new_user_form.html:18
 msgid "Organization"
 msgstr "Organisation"
 
-#: ckanext/canada/plugins.py:707
+#: ckanext/canada/plugins.py:719
 msgid "Collection Type"
 msgstr "Type de collection"
 
-#: ckanext/canada/plugins.py:708 ckanext/canada/plugins.py:709
+#: ckanext/canada/plugins.py:720 ckanext/canada/plugins.py:721
 msgid "Keywords"
 msgstr "Mots clés"
 
-#: ckanext/canada/plugins.py:710
+#: ckanext/canada/plugins.py:722
 msgid "Subject"
 msgstr "Sujet"
 
-#: ckanext/canada/plugins.py:711
+#: ckanext/canada/plugins.py:723
 #: ckanext/canada/templates/tabledesigner/view_snippets/cra_business_number.html:1
 msgid "Format"
 msgstr "Format"
 
-#: ckanext/canada/plugins.py:712
+#: ckanext/canada/plugins.py:724
 msgid "Resource Type"
 msgstr "Type de ressource"
 
-#: ckanext/canada/plugins.py:713
+#: ckanext/canada/plugins.py:725
 msgid "Maintenance and Update Frequency"
 msgstr "Fréquence d’entretien et de mise à jour"
 
-#: ckanext/canada/plugins.py:714
+#: ckanext/canada/plugins.py:726
 msgid "Record Status"
 msgstr "État du dossier"
 
-#: ckanext/canada/plugins.py:715
+#: ckanext/canada/plugins.py:727
 msgid "IMSO Approval"
 msgstr "Approbation du CSGI"
 
-#: ckanext/canada/plugins.py:716
+#: ckanext/canada/plugins.py:728
 msgid "Jurisdiction"
 msgstr "Juridiction"
 
-#: ckanext/canada/plugins.py:717
+#: ckanext/canada/plugins.py:729
 msgid "Suggestion Status"
 msgstr "État de la suggestion"
 
-#: ckanext/canada/plugins.py:903
+#: ckanext/canada/plugins.py:915
 msgid "Previous"
 msgstr "Précédent"
 
-#: ckanext/canada/plugins.py:903
+#: ckanext/canada/plugins.py:915
 msgid "Next"
 msgstr "Suivant"
 
@@ -297,7 +297,7 @@ msgstr "Créer un jeu de données"
 msgid "Not authorized to access {group} members download"
 msgstr "Non autorisé à accéder au téléchargement des membres du {group}"
 
-#: ckanext/canada/strings.py:14 ckanext/canada/view.py:1096
+#: ckanext/canada/strings.py:14 ckanext/canada/view.py:1105
 msgid "N/A"
 msgstr "N/A"
 
@@ -308,7 +308,7 @@ msgstr "N/A"
 #: ckanext/canada/templates/user/new_user_form.html:8
 #: ckanext/canada/templates/user/read_base.html:53
 #: ckanext/canada/templates/user/snippets/login_form.html:12
-#: ckanext/canada/view.py:1088
+#: ckanext/canada/view.py:1097
 msgid "Username"
 msgstr "Nom d’utilisateur"
 
@@ -317,22 +317,22 @@ msgstr "Nom d’utilisateur"
 #: ckanext/canada/templates/user/new_user_form.html:14
 #: ckanext/canada/templates/user/read_base.html:60
 #: ckanext/canada/templates/user/recover_username.html:16
-#: ckanext/canada/view.py:1088
+#: ckanext/canada/view.py:1097
 msgid "Email"
 msgstr "Courriel"
 
 #: ckanext/canada/strings.py:17 ckanext/canada/templates/user/api_tokens.html:5
-#: ckanext/canada/templates/user/list.html:45 ckanext/canada/view.py:1088
+#: ckanext/canada/templates/user/list.html:45 ckanext/canada/view.py:1097
 msgid "Name"
 msgstr "Nom"
 
 #: ckanext/canada/strings.py:18
 #: ckanext/canada/templates/organization/member_new.html:58
-#: ckanext/canada/templates/user/list.html:46 ckanext/canada/view.py:1088
+#: ckanext/canada/templates/user/list.html:46 ckanext/canada/view.py:1097
 msgid "Role"
 msgstr "Rôle"
 
-#: ckanext/canada/strings.py:19 ckanext/canada/view.py:1106
+#: ckanext/canada/strings.py:19 ckanext/canada/view.py:1115
 msgid "members"
 msgstr "membres"
 
@@ -698,62 +698,73 @@ msgstr ""
 msgid "Unauthorized to create a resource for this package"
 msgstr "Non autorisé à créer une ressource pour cet ensemble"
 
-#: ckanext/canada/view.py:390 ckanext/canada/view.py:395
+#: ckanext/canada/view.py:392 ckanext/canada/view.py:399
 msgid "This record already exists"
 msgstr "Cet enregistrement existe déjà."
 
-#: ckanext/canada/view.py:411
+#: ckanext/canada/view.py:396 ckanext/canada/view.py:403
+msgid "Something went wrong, your record was not created. Please contact support."
+"Un problème s’est produit, votre document n’a pas été créé. Veuillez "
+"contacter l’assistance technique."
+
+#: ckanext/canada/view.py:418
 msgid "Record Created"
 msgstr "Renregistrement créé"
 
-#: ckanext/canada/view.py:449
+#: ckanext/canada/view.py:456
 msgid "Unauthorized to update dataset"
 msgstr "Vous n'êtes pas autorisé à mettre à jour ce jeu de données"
 
-#: ckanext/canada/view.py:459
+#: ckanext/canada/view.py:466
 msgid "Not found"
 msgstr "Non trouvé"
 
-#: ckanext/canada/view.py:461
+#: ckanext/canada/view.py:468
 msgid "Multiple records found"
 msgstr "Plusieurs enregistrements ont été trouvés"
 
-#: ckanext/canada/view.py:511
+#: ckanext/canada/view.py:504
+msgid "Something went wrong, your record was not updated. Please contact support."
+msgstr ""
+"Un problème s’est produit, votre document n’a pas été mis à jour. "
+"Veuillez contacter l’assistance technique."
+
+#: ckanext/canada/view.py:520
 #, python-format
 msgid "Record %s Updated"
 msgstr "Dossier %s mis à jour"
 
-#: ckanext/canada/view.py:544
+#: ckanext/canada/view.py:553
 msgid "No organizations found"
 msgstr "Aucune organisation n’a été trouvée"
 
-#: ckanext/canada/view.py:548
+#: ckanext/canada/view.py:557
 msgid "Recombinant resource_name not found"
 msgstr "Le recombinant resource_name n’a pas été trouvé"
 
-#: ckanext/canada/view.py:608
+#: ckanext/canada/view.py:617
 msgid "Number required"
 msgstr "Nombre requis"
 
-#: ckanext/canada/view.py:613
+#: ckanext/canada/view.py:622
 msgid "Integer required"
 msgstr "Entier requis"
 
-#: ckanext/canada/view.py:649 ckanext/canada/view.py:657
-#: ckanext/canada/view.py:691
+#: ckanext/canada/view.py:658 ckanext/canada/view.py:666
+#: ckanext/canada/view.py:700
 msgid "Not authorized to see this page"
 msgstr "Non autorisé à voir cette page"
 
-#: ckanext/canada/view.py:677
+#: ckanext/canada/view.py:686
 msgid " record(s) published."
 msgstr " d’enregistrements publiés."
 
-#: ckanext/canada/view.py:715
+#: ckanext/canada/view.py:724
 #, python-format
 msgid "Unauthorized to delete resource %s"
 msgstr "Vous n'êtes pas autorisé à supprimer la ressource %s"
 
-#: ckanext/canada/view.py:717
+#: ckanext/canada/view.py:726
 #, python-format
 msgid "DataStore table and Data Dictionary deleted for resource %s"
 msgstr ""
@@ -768,19 +779,19 @@ msgstr ""
 #: ckanext/canada/templates/package/resource_edit.html:3
 #: ckanext/canada/templates/package/resource_edit_base.html:7
 #: ckanext/canada/templates/package/wet_datatable.html:15
-#: ckanext/canada/view.py:807
+#: ckanext/canada/view.py:816
 msgid "Edit"
 msgstr "Modifier"
 
-#: ckanext/canada/view.py:931
+#: ckanext/canada/view.py:940
 msgid "Access denied"
 msgstr "Accès refusé"
 
-#: ckanext/canada/view.py:982
+#: ckanext/canada/view.py:991
 msgid "Account Created"
 msgstr "Compte créé"
 
-#: ckanext/canada/view.py:984
+#: ckanext/canada/view.py:993
 msgid ""
 "Thank you for creating your account for the Open Government registry. "
 "Although your account is active, it has not yet been linked to your "
@@ -791,7 +802,7 @@ msgstr ""
 "ministère. Vous ne pourrez créer ou modifier de jeux de données dans le "
 "registre tant que votre compte n’aura pas été relié à votre ministère."
 
-#: ckanext/canada/view.py:991
+#: ckanext/canada/view.py:1000
 msgid ""
 "You should receive an email within the next business day once the account"
 " activation process has been completed. If you require faster processing "
@@ -804,20 +815,20 @@ msgstr ""
 "plus rapidement, veuillez envoyer une demande directement à :<a "
 "href=\"mailto: open-ouvert@tbs-sct.gc.ca\">open-ouvert@tbs-sct.gc.ca.</a"
 
-#: ckanext/canada/view.py:1065 ckanext/canada/view.py:1143
+#: ckanext/canada/view.py:1074 ckanext/canada/view.py:1152
 msgid "Organization not found"
 msgstr "Organisation non trouvée"
 
-#: ckanext/canada/view.py:1076
+#: ckanext/canada/view.py:1085
 msgid "Not authorized to access {org_name} members download"
 msgstr "Non autorisé à accéder au téléchargement des membres du {group}"
 
-#: ckanext/canada/view.py:1146
+#: ckanext/canada/view.py:1155
 #, python-format
 msgid "User %r not authorized to edit members of %s"
 msgstr "L’utilisateur %r n’est pas autorisé à modifier les membres de %s"
 
-#: ckanext/canada/view.py:1148
+#: ckanext/canada/view.py:1157
 #, python-format
 msgid "User %r not authorized to view members of %s"
 msgstr "L’utilisateur %r n’est pas autorisé à voir les membres de %s"
