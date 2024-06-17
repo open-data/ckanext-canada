@@ -62,7 +62,7 @@ MAX_TAG_LENGTH = 140  # because twitter
 #           10.1016.12.31/nature.S0735-1097(98)2000/12/31/34:7-7
 #           10.1002/(SICI)1522-2594(199911)42:5<952::AID-MRM16>3.0.CO;2-S
 #
-doi_match = re.compile(r'\b(10[.][0-9]{3,}(?:[.][0-9]+)*/(?:(?!["&\'\?])\S)+)\b')
+doi_match = re.compile(r'\b(10[.][0-9]{3,}(?:[.][0-9]+)*/(?:(?!["&\'\?])\S)+)$\b')
 
 
 def protect_portal_release_date(key, data, errors, context):
@@ -569,7 +569,6 @@ def protect_registry_access(key, data, errors, context):
 def digital_object_identifier(value, context):
     if not value or value is missing:
         return value
-    match = re.match(doi_match, value)
-    if not match or match.group(0) != value:
+    if not re.match(doi_match, value):
         raise Invalid(_('Invalid value for a digital object identifier.'))
     return value

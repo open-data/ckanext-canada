@@ -515,7 +515,7 @@ class TestNAVLSchema(CanadaTestBase):
         assert 'validation_options' not in resource or resource['validation_options'] == None
 
     def test_digital_object_identifier(self):
-        "DOI values should conform to the standar DOI practices."
+        "DOI values should conform to the standard DOI practices."
         pkg = self.sysadmin_action.package_create(**self.complete_pkg)
 
         # valid DOI
