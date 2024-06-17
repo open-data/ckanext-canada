@@ -370,6 +370,7 @@ def create_pd_record(owner_org, resource_name):
             chromo['fields'],
             pk_fields,
             choice_fields)
+        error_summary = None
         try:
             lc.action.datastore_upsert(
                 resource_id=res['id'],
@@ -384,17 +385,22 @@ def create_pd_record(owner_org, resource_name):
                         for (k, v) in ve.error_dict['records'][0].items()
                     }, **err)
                 except AttributeError:
-                    err = dict({
-                        k: [_("This record already exists")]
-                        for k in pk_fields
-                    }, **err)
+                    if 'duplicate key value violates unique constraint' in ve.error_dict['records'][0]:
+                        err = dict({
+                            k: [_("This record already exists")]
+                            for k in pk_fields
+                        }, **err)
+                    else:
+                        error_summary = _('Something went wrong, your record was not created. Please contact support.')
             elif ve.error_dict.get('info', {}).get('pgcode', '') == '23505':
                 err = dict({
                     k: [_("This record already exists")]
                     for k in pk_fields
                 }, **err)
+            else:
+                error_summary = _('Something went wrong, your record was not created. Please contact support.')
 
-        if err:
+        if err or error_summary:
             return render('recombinant/create_pd_record.html',
                           extra_vars={
                               'data': data,
@@ -404,6 +410,7 @@ def create_pd_record(owner_org, resource_name):
                               'owner_org': rcomb['owner_org'],
                               'pkg_dict': {},  # prevent rendering error on parent template
                               'errors': err,
+                              'error_summary': error_summary,
                           })
 
         h.flash_notice(_(u'Record Created'))
@@ -474,6 +481,7 @@ def update_pd_record(owner_org, resource_name, pk):
             chromo['fields'],
             pk_fields,
             choice_fields)
+        error_summary = None
         # can't change pk fields
         for f_id in data:
             if f_id in pk_fields:
@@ -490,10 +498,10 @@ def update_pd_record(owner_org, resource_name, pk):
                     k: [_(e) for e in v]
                     for (k, v) in ve.error_dict['records'][0].items()
                 }, **err)
-            except AttributeError as e:
-                raise ve
+            except AttributeError:
+                error_summary = _('Something went wrong, your record was not updated. Please contact support.')
 
-        if err:
+        if err or error_summary:
             return render('recombinant/update_pd_record.html',
                 extra_vars={
                     'data': data,
@@ -504,7 +512,8 @@ def update_pd_record(owner_org, resource_name, pk):
                     'owner_org': rcomb['owner_org'],
                     'pkg_dict': {},  # prevent rendering error on parent template
                     'errors': err,
-                    })
+                    'error_summary': error_summary,
+                })
 
         h.flash_notice(_(u'Record %s Updated') % u','.join(pk) )
 
