@@ -514,6 +514,81 @@ class TestNAVLSchema(CanadaTestBase):
         resource = self.sysadmin_action.resource_create(**resource_data)
         assert 'validation_options' not in resource or resource['validation_options'] == None
 
+    def test_digital_object_identifier(self):
+        "DOI values should conform to the standard DOI practices."
+        pkg = self.sysadmin_action.package_create(**self.complete_pkg)
+
+        # valid DOI
+        pkg['digital_object_identifier'] = '10.1000/xyz-123'
+        up_pkg = self.sysadmin_action.package_update(**pkg)
+        assert up_pkg['digital_object_identifier'] == '10.1000/xyz-123'
+
+        # valid DOI
+        pkg['digital_object_identifier'] = '10.1016.12.31/nature.S0735-1097(98)2000/12/31/34:7-7'
+        up_pkg = self.sysadmin_action.package_update(**pkg)
+        assert up_pkg['digital_object_identifier'] == '10.1016.12.31/nature.S0735-1097(98)2000/12/31/34:7-7'
+
+        # valid DOI
+        pkg['digital_object_identifier'] = '10.1002/(SICI)1522-2594(199911)42:5<952::AID-MRM16>3.0.CO;2-S'
+        up_pkg = self.sysadmin_action.package_update(**pkg)
+        assert up_pkg['digital_object_identifier'] == '10.1002/(SICI)1522-2594(199911)42:5<952::AID-MRM16>3.0.CO;2-S'
+
+        # invalid DOI
+        pkg['digital_object_identifier'] = '7.0182/(TBS-SCT)1522-2594'
+        with pytest.raises(ValidationError) as ve:
+            self.normal_action.package_update(**pkg)
+        err = ve.value.error_dict
+        assert 'digital_object_identifier' in err
+        assert err['digital_object_identifier'] == ['Invalid value for a digital object identifier.']
+
+        # invalid DOI
+        pkg['digital_object_identifier'] = '10.01.02/(TBS-SCT)1522-2594'
+        with pytest.raises(ValidationError) as ve:
+            self.normal_action.package_update(**pkg)
+        err = ve.value.error_dict
+        assert 'digital_object_identifier' in err
+        assert err['digital_object_identifier'] == ['Invalid value for a digital object identifier.']
+
+        # invalid DOI
+        pkg['digital_object_identifier'] = '10.1016/(TBS-SCT)152???2-2594'
+        with pytest.raises(ValidationError) as ve:
+            self.normal_action.package_update(**pkg)
+        err = ve.value.error_dict
+        assert 'digital_object_identifier' in err
+        assert err['digital_object_identifier'] == ['Invalid value for a digital object identifier.']
+
+        # invalid DOI
+        pkg['digital_object_identifier'] = '10.1016/(TBS-SCT)152&&&2-2594'
+        with pytest.raises(ValidationError) as ve:
+            self.normal_action.package_update(**pkg)
+        err = ve.value.error_dict
+        assert 'digital_object_identifier' in err
+        assert err['digital_object_identifier'] == ['Invalid value for a digital object identifier.']
+
+        # invalid DOI
+        pkg['digital_object_identifier'] = '10.1016/(TBS-SCT)152"""2-2594'
+        with pytest.raises(ValidationError) as ve:
+            self.normal_action.package_update(**pkg)
+        err = ve.value.error_dict
+        assert 'digital_object_identifier' in err
+        assert err['digital_object_identifier'] == ['Invalid value for a digital object identifier.']
+
+        # invalid DOI
+        pkg['digital_object_identifier'] = "10.1016/(TBS-SCT)152'''2-2594"
+        with pytest.raises(ValidationError) as ve:
+            self.normal_action.package_update(**pkg)
+        err = ve.value.error_dict
+        assert 'digital_object_identifier' in err
+        assert err['digital_object_identifier'] == ['Invalid value for a digital object identifier.']
+
+        # invalid DOI
+        pkg['digital_object_identifier'] = "This is extremely not a DOI number"
+        with pytest.raises(ValidationError) as ve:
+            self.normal_action.package_update(**pkg)
+        err = ve.value.error_dict
+        assert 'digital_object_identifier' in err
+        assert err['digital_object_identifier'] == ['Invalid value for a digital object identifier.']
+
 
 class TestSysadminUpdate(CanadaTestBase):
     @classmethod
