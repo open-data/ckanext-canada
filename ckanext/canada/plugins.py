@@ -98,12 +98,12 @@ class CanadaSecurityPlugin(CkanSecurityPlugin):
         """
 
     def get_validators(self):
-        validator_dict = super(CanadaSecurityPlugin, self).get_validators()
-        validator_dict.update({'canada_security_upload_type':
+        validators_dict = super(CanadaSecurityPlugin, self).get_validators() or {}
+        validators_dict.update({'canada_security_upload_type':
                                     validators.canada_security_upload_type,
                                'canada_security_upload_presence':
                                     validators.canada_security_upload_presence})
-        return validator_dict
+        return validators_dict
 
 
 class CanadaDatasetsPlugin(SchemingDatasetsPlugin):
