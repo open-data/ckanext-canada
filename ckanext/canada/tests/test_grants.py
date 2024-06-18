@@ -45,7 +45,20 @@ class TestGrants(CanadaTestBase):
     def test_empty_string_instead_of_null(self):
         record = dict(get_chromo('grants')['examples']['record'])
         record['foreign_currency_type'] = ''
-        record['foreign_currency_value'] = ''
+        record['foreign_currency_value'] = None
         self.lc.action.datastore_upsert(
             resource_id=self.resource_id,
             records=[record])
+
+
+    def test_money_type(self):
+        record = dict(get_chromo('grants')['examples']['record'])
+        record['foreign_currency_type'] = ''
+        record['foreign_currency_value'] = ''
+        with pytest.raises(ValidationError) as ve:
+            self.lc.action.datastore_upsert(
+                resource_id=self.resource_id,
+                records=[record])
+        err = ve.value.error_dict
+        assert 'records' in err
+        assert 'invalid input syntax for type numeric' in err['records'][0]

@@ -72,7 +72,7 @@ class TestContracts(CanadaTestBase):
             contract_date='2022-01-01',
             vendor_postal_code=None,
             buyer_name='',
-            trade_agreement='',
+            trade_agreement=None,
             agreement_type_code='Z',
             land_claims=None,
             indigenous_business='',
@@ -90,7 +90,7 @@ class TestContracts(CanadaTestBase):
             'land_claims': ['This field must not be empty'],
             'indigenous_business': ['This field must not be empty'],
         }
-        assert isinstance(err, dict), err
+        assert isinstance(err, dict)
         for k in set(err) | set(expected):
             assert k in err
             assert err[k] == expected[k]
