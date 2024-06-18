@@ -834,6 +834,7 @@ class TestRecombinantWebForms(CanadaTestBase):
         # type: (BytesIO, str) -> dict
         return {
             'xls_update': (filestream, u'{}_en_{}.xlsx'.format(self.pd_type, self.org['name'])),
+            'resource_name': self.pd_type,
             action: ''
         }
 
