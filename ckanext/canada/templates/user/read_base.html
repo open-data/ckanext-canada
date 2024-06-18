@@ -29,11 +29,11 @@
       {% endblock %}
       {% block user_nums %}
       <div class="row">
-        <div class="col-md-8 left-center"><strong>{{ _('Followers') }}: </strong></div>
+        <div class="col-md-8 left-center"><strong>{{ _('Followers:') }} </strong></div>
         <div class="col-md-4 left-center">{{ h.SI_number_span(user.num_followers) }}</div>
       </div>
       <div class="row">
-        <div class="col-md-8 left-center"><strong>{{ _('Edits') }}: </strong></div>
+        <div class="col-md-8 left-center"><strong>{{ _('Edits:') }} </strong></div>
         <div class="col-md-4 left-center">{{ h.SI_number_span(user.number_of_edits) }}</div>
       </div>
       {% endblock %}
@@ -47,10 +47,10 @@
       {% block user_info %}
         <div class="row mrgn-tp-md">
           {% if user.name.startswith('http://') or user.name.startswith('https://') %}
-            <div class="col-md-6 left-center"><strong>{{ _('Open ID') }}: </strong></div>
+            <div class="col-md-6 left-center"><strong>{{ _('Open ID:') }} </strong></div>
             <div class="col-md-6 left-center">{{ user.name|urlize(25) }}{# Be great if this just showed the domain #}</div>
           {% else %}
-            <div class="col-md-6 left-center"><strong>{{ _('Username') }}: </strong></div>
+            <div class="col-md-6 left-center"><strong>{{ _('Username:') }} </strong></div>
             <div class="col-md-6 left-center">{{ user.name }}</div>
           {% endif %}
         </div>

@@ -18,11 +18,7 @@
     <fieldset class="admin-publish-date-fieldset mrgn-tp-md">
       <div>
         <label for="publish_date" class="admin-publish-date-label">
-          {% if h.lang() == 'en' %}
-            Publish Date (<abbr title="Four digits year">YYYY</abbr>-<abbr title="Two digits month">MM</abbr>-<abbr title="Two digits day">DD</abbr>):
-          {% else %}
-            Date de publication <abbr title="Quatre chiffres de l'année">(AAAA</abbr>-<abbr title="Deux chiffres du mois">MM</abbr>-<abbr title="Deux chiffres du jour">JJ</abbr>) :
-          {% endif %}
+          {% trans %}Publish Date (<abbr title="Four digits year">YYYY</abbr>-<abbr title="Two digits month">MM</abbr>-<abbr title="Two digits day">DD</abbr>):{% endtrans %}
         </label>
         <input type="date" id="publish_date" name="publish_date" min="{{h.today()}}" value="{{h.today()}}" />
       </div>

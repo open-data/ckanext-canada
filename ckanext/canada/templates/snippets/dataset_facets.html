@@ -57,12 +57,12 @@
     name='organization' %}
 {% endif %}
 
-{% if h.lang() == 'en' %}
-  {% snippet 'snippets/facet_list.html', title=g.facet_titles['keywords'],
-  name='keywords', extras=extras %}
-{% elif h.lang() == 'fr' %}
+{% if h.lang() == 'fr' %}
   {% snippet 'snippets/facet_list.html', title=g.facet_titles['keywords_fra'],
   name='keywords_fra', extras=extras %}
+{% else %}
+  {% snippet 'snippets/facet_list.html', title=g.facet_titles['keywords'],
+  name='keywords', extras=extras %}
 {% endif %}
 
 {% if g.is_registry %}
