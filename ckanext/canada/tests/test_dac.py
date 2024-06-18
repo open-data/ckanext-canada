@@ -26,7 +26,6 @@ class TestDAC(CanadaTestBase):
         self.resource_id = rval['resources'][0]['id']
 
 
-    @pytest.mark.skip(reason="TODO: update for member_name validator (staging only)")
     def test_example(self):
         record = get_chromo('dac')['examples']['record']
         choices_fields = recombinant_choice_fields('dac')
