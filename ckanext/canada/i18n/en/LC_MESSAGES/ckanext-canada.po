@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  CKAN\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-06-17 18:16+0000\n"
+"POT-Creation-Date: 2024-06-18 15:37+0000\n"
 "PO-Revision-Date: 2014-01-23 13:04+0000\n"
 "Last-Translator: Sean Hammond <sean.hammond@okfn.org>\n"
 "Language: en\n"
@@ -108,44 +108,44 @@ msgstr ""
 msgid "Invalid business number"
 msgstr ""
 
-#: ckanext/canada/helpers.py:286 ckanext/canada/helpers.py:287
+#: ckanext/canada/helpers.py:288 ckanext/canada/helpers.py:289
 msgid "Treasury Board of Canada Secretariat"
 msgstr ""
 
-#: ckanext/canada/helpers.py:575 ckanext/canada/strings.py:13
-#: ckanext/canada/view.py:1083
+#: ckanext/canada/helpers.py:577 ckanext/canada/strings.py:13
+#: ckanext/canada/view.py:1092
 msgid "Members not found"
 msgstr ""
 
-#: ckanext/canada/helpers.py:701
+#: ckanext/canada/helpers.py:703
 msgid "Data awaiting load to DataStore"
 msgstr ""
 
-#: ckanext/canada/helpers.py:702
+#: ckanext/canada/helpers.py:704
 msgid "Loading data into DataStore"
 msgstr ""
 
-#: ckanext/canada/helpers.py:703
+#: ckanext/canada/helpers.py:705
 msgid "Data loaded into DataStore"
 msgstr ""
 
-#: ckanext/canada/helpers.py:704
+#: ckanext/canada/helpers.py:706
 msgid "Failed to load data into DataStore"
 msgstr ""
 
-#: ckanext/canada/helpers.py:705
+#: ckanext/canada/helpers.py:707
 msgid "Data available in DataStore"
 msgstr ""
 
-#: ckanext/canada/helpers.py:706
+#: ckanext/canada/helpers.py:708
 msgid "Resource not active in DataStore"
 msgstr ""
 
-#: ckanext/canada/helpers.py:707
+#: ckanext/canada/helpers.py:709
 msgid "DataStore status unknown"
 msgstr ""
 
-#: ckanext/canada/helpers.py:774
+#: ckanext/canada/helpers.py:812
 #: ckanext/canada/templates/home/quick_links.html:69
 #: ckanext/canada/templates/scheming/package/snippets/package_form.html:28
 #: ckanext/canada/templates/snippets/cdts/header.html:31
@@ -155,7 +155,7 @@ msgstr ""
 msgid "Open Data"
 msgstr ""
 
-#: ckanext/canada/helpers.py:775
+#: ckanext/canada/helpers.py:813
 #: ckanext/canada/templates/home/quick_links.html:83
 #: ckanext/canada/templates/scheming/package/snippets/package_form.html:30
 #: ckanext/canada/templates/snippets/cdts/header.html:54
@@ -165,22 +165,22 @@ msgstr ""
 msgid "Open Information"
 msgstr ""
 
-#: ckanext/canada/helpers.py:784
+#: ckanext/canada/helpers.py:822
 #: ckanext/canada/templates/snippets/dataset_facets.html:26
 msgid "Request sent to data owner - awaiting response"
 msgstr ""
 
-#: ckanext/canada/helpers.py:788
+#: ckanext/canada/helpers.py:826
 #: ckanext/canada/templates/snippets/publish_facet.html:43
 msgid "Pending"
 msgstr ""
 
-#: ckanext/canada/helpers.py:789 ckanext/canada/templates/package/read.html:15
+#: ckanext/canada/helpers.py:827 ckanext/canada/templates/package/read.html:15
 #: ckanext/canada/templates/snippets/publish_facet.html:43
 msgid "Draft"
 msgstr ""
 
-#: ckanext/canada/helpers.py:798
+#: ckanext/canada/helpers.py:836
 #: ckanext/canada/templates/home/quick_links.html:137
 #: ckanext/canada/templates/snippets/cdts/header.html:57
 #: ckanext/canada/templates/snippets/dataset_facets.html:31
@@ -189,21 +189,21 @@ msgstr ""
 msgid "Proactive Publication"
 msgstr ""
 
-#: ckanext/canada/helpers.py:820
+#: ckanext/canada/helpers.py:858
 #: ckanext/canada/templates/snippets/publish_facet.html:24
 msgid "Published"
 msgstr ""
 
-#: ckanext/canada/helpers.py:822
+#: ckanext/canada/helpers.py:860
 #: ckanext/canada/templates/snippets/publish_facet.html:33
 msgid "Scheduled"
 msgstr ""
 
-#: ckanext/canada/helpers.py:855
+#: ckanext/canada/helpers.py:893
 msgid "Registry Home"
 msgstr ""
 
-#: ckanext/canada/helpers.py:855 ckanext/canada/strings.py:78
+#: ckanext/canada/helpers.py:893 ckanext/canada/strings.py:78
 msgid "Open Government Portal"
 msgstr ""
 
@@ -215,63 +215,63 @@ msgstr ""
 msgid "Unknown Job"
 msgstr ""
 
-#: ckanext/canada/plugins.py:698
+#: ckanext/canada/plugins.py:723
 #: ckanext/canada/templates/scheming/package/snippets/package_form.html:25
 msgid "Portal Type"
 msgstr ""
 
-#: ckanext/canada/plugins.py:699
+#: ckanext/canada/plugins.py:724
 #: ckanext/canada/templates/package/deleted.html:14
 #: ckanext/canada/templates/user/new_user_form.html:17
 msgid "Organization"
 msgstr ""
 
-#: ckanext/canada/plugins.py:700
+#: ckanext/canada/plugins.py:725
 msgid "Collection Type"
 msgstr ""
 
-#: ckanext/canada/plugins.py:701 ckanext/canada/plugins.py:702
+#: ckanext/canada/plugins.py:726 ckanext/canada/plugins.py:727
 msgid "Keywords"
 msgstr ""
 
-#: ckanext/canada/plugins.py:703
+#: ckanext/canada/plugins.py:728
 msgid "Subject"
 msgstr ""
 
-#: ckanext/canada/plugins.py:704
+#: ckanext/canada/plugins.py:729
 #: ckanext/canada/templates/tabledesigner/view_snippets/cra_business_number.html:1
 msgid "Format"
 msgstr ""
 
-#: ckanext/canada/plugins.py:705
+#: ckanext/canada/plugins.py:730
 msgid "Resource Type"
 msgstr ""
 
-#: ckanext/canada/plugins.py:706
+#: ckanext/canada/plugins.py:731
 msgid "Maintenance and Update Frequency"
 msgstr ""
 
-#: ckanext/canada/plugins.py:707
+#: ckanext/canada/plugins.py:732
 msgid "Record Status"
 msgstr ""
 
-#: ckanext/canada/plugins.py:708
+#: ckanext/canada/plugins.py:733
 msgid "IMSO Approval"
 msgstr ""
 
-#: ckanext/canada/plugins.py:709
+#: ckanext/canada/plugins.py:734
 msgid "Jurisdiction"
 msgstr ""
 
-#: ckanext/canada/plugins.py:710
+#: ckanext/canada/plugins.py:735
 msgid "Suggestion Status"
 msgstr ""
 
-#: ckanext/canada/plugins.py:897
+#: ckanext/canada/plugins.py:924
 msgid "Previous"
 msgstr ""
 
-#: ckanext/canada/plugins.py:897
+#: ckanext/canada/plugins.py:924
 msgid "Next"
 msgstr ""
 
@@ -284,7 +284,7 @@ msgstr ""
 msgid "Not authorized to access {group} members download"
 msgstr ""
 
-#: ckanext/canada/strings.py:14 ckanext/canada/view.py:1093
+#: ckanext/canada/strings.py:14 ckanext/canada/view.py:1102
 msgid "N/A"
 msgstr ""
 
@@ -294,7 +294,7 @@ msgstr ""
 #: ckanext/canada/templates/user/list.html:44
 #: ckanext/canada/templates/user/new_user_form.html:7
 #: ckanext/canada/templates/user/snippets/login_form.html:11
-#: ckanext/canada/view.py:1085
+#: ckanext/canada/view.py:1094
 msgid "Username"
 msgstr ""
 
@@ -303,22 +303,22 @@ msgstr ""
 #: ckanext/canada/templates/user/new_user_form.html:13
 #: ckanext/canada/templates/user/read_base.html:60
 #: ckanext/canada/templates/user/recover_username.html:15
-#: ckanext/canada/view.py:1085
+#: ckanext/canada/view.py:1094
 msgid "Email"
 msgstr ""
 
 #: ckanext/canada/strings.py:17 ckanext/canada/templates/user/api_tokens.html:5
-#: ckanext/canada/templates/user/list.html:45 ckanext/canada/view.py:1085
+#: ckanext/canada/templates/user/list.html:45 ckanext/canada/view.py:1094
 msgid "Name"
 msgstr ""
 
 #: ckanext/canada/strings.py:18
 #: ckanext/canada/templates/organization/member_new.html:57
-#: ckanext/canada/templates/user/list.html:46 ckanext/canada/view.py:1085
+#: ckanext/canada/templates/user/list.html:46 ckanext/canada/view.py:1094
 msgid "Role"
 msgstr ""
 
-#: ckanext/canada/strings.py:19 ckanext/canada/view.py:1103
+#: ckanext/canada/strings.py:19 ckanext/canada/view.py:1112
 msgid "members"
 msgstr ""
 
@@ -535,73 +535,77 @@ msgstr ""
 msgid "Open Government Portal (staging)"
 msgstr ""
 
-#: ckanext/canada/validators.py:118
+#: ckanext/canada/validators.py:151
 #, python-format
 msgid "Tag \"%s\" length is less than minimum %s"
 msgstr ""
 
-#: ckanext/canada/validators.py:122
+#: ckanext/canada/validators.py:155
 #, python-format
 msgid "Tag \"%s\" length is more than maximum %i"
 msgstr ""
 
-#: ckanext/canada/validators.py:126
+#: ckanext/canada/validators.py:159
 #, python-format
 msgid "Tag \"%s\" may not contain consecutive spaces"
 msgstr ""
 
-#: ckanext/canada/validators.py:133
+#: ckanext/canada/validators.py:166
 #, python-format
 msgid "Tag \"%s\" may not contain unprintable character U+%04x"
 msgstr ""
 
-#: ckanext/canada/validators.py:137
+#: ckanext/canada/validators.py:170
 #, python-format
 msgid "Tag \"%s\" may not contain separator charater U+%04x"
 msgstr ""
 
-#: ckanext/canada/validators.py:153
+#: ckanext/canada/validators.py:186
 msgid "Badly formed hexadecimal UUID string"
 msgstr ""
 
 #: ckanext/canada/templates/user/new_user_form.html:6
-#: ckanext/canada/validators.py:165 ckanext/canada/validators.py:167
+#: ckanext/canada/validators.py:198 ckanext/canada/validators.py:200
 msgid "Please enter a valid email address."
 msgstr ""
 
-#: ckanext/canada/validators.py:182
+#: ckanext/canada/validators.py:215
 msgid "Invalid GeoJSON"
 msgstr ""
 
-#: ckanext/canada/validators.py:259
+#: ckanext/canada/validators.py:292
 msgid "Date may not be in the future when this record is marked ready to publish"
 msgstr ""
 
-#: ckanext/canada/validators.py:336
+#: ckanext/canada/validators.py:369
 msgid "Date format incorrect. Expecting YYYY-MM-DD"
 msgstr ""
 
-#: ckanext/canada/validators.py:350 ckanext/canada/validators.py:364
+#: ckanext/canada/validators.py:383 ckanext/canada/validators.py:397
 msgid "Must be a Unicode string value"
 msgstr ""
 
-#: ckanext/canada/validators.py:371 ckanext/canada/validators.py:382
+#: ckanext/canada/validators.py:404 ckanext/canada/validators.py:415
 msgid "Must be a JSON string"
 msgstr ""
 
-#: ckanext/canada/validators.py:378
+#: ckanext/canada/validators.py:411
 msgid "JSON object must contain \"en\" key"
 msgstr ""
 
-#: ckanext/canada/validators.py:380
+#: ckanext/canada/validators.py:413
 msgid "JSON object must contain \"fr\" key"
 msgstr ""
 
-#: ckanext/canada/validators.py:532
+#: ckanext/canada/validators.py:565
 #, python-format
 msgid ""
 "Cannot change value of registry_access field from '%s' to '%s'. This "
 "field is read-only."
+msgstr ""
+
+#: ckanext/canada/validators.py:573
+msgid "Invalid value for a digital object identifier."
 msgstr ""
 
 #: ckanext/canada/view.py:99
@@ -659,62 +663,70 @@ msgstr ""
 msgid "Unauthorized to create a resource for this package"
 msgstr ""
 
-#: ckanext/canada/view.py:388 ckanext/canada/view.py:393
+#: ckanext/canada/view.py:390 ckanext/canada/view.py:397
 msgid "This record already exists"
 msgstr ""
 
-#: ckanext/canada/view.py:409
+#: ckanext/canada/view.py:394 ckanext/canada/view.py:401
+msgid "Something went wrong, your record was not created. Please contact support."
+msgstr ""
+
+#: ckanext/canada/view.py:416
 msgid "Record Created"
 msgstr ""
 
-#: ckanext/canada/view.py:447
+#: ckanext/canada/view.py:454
 msgid "Unauthorized to update dataset"
 msgstr ""
 
-#: ckanext/canada/view.py:457
+#: ckanext/canada/view.py:464
 msgid "Not found"
 msgstr ""
 
-#: ckanext/canada/view.py:459
+#: ckanext/canada/view.py:466
 msgid "Multiple records found"
 msgstr ""
 
-#: ckanext/canada/view.py:509
+#: ckanext/canada/view.py:502
+msgid "Something went wrong, your record was not updated. Please contact support."
+msgstr ""
+
+#: ckanext/canada/view.py:518
 #, python-format
 msgid "Record %s Updated"
 msgstr ""
 
-#: ckanext/canada/view.py:542
+#: ckanext/canada/view.py:551
 msgid "No organizations found"
 msgstr ""
 
-#: ckanext/canada/view.py:546
+#: ckanext/canada/view.py:555
 msgid "Recombinant resource_name not found"
 msgstr ""
 
-#: ckanext/canada/view.py:606
+#: ckanext/canada/view.py:615
 msgid "Number required"
 msgstr ""
 
-#: ckanext/canada/view.py:611
+#: ckanext/canada/view.py:620
 msgid "Integer required"
 msgstr ""
 
-#: ckanext/canada/view.py:647 ckanext/canada/view.py:655
-#: ckanext/canada/view.py:689
+#: ckanext/canada/view.py:656 ckanext/canada/view.py:664
+#: ckanext/canada/view.py:698
 msgid "Not authorized to see this page"
 msgstr ""
 
-#: ckanext/canada/view.py:675
+#: ckanext/canada/view.py:684
 msgid " record(s) published."
 msgstr ""
 
-#: ckanext/canada/view.py:713
+#: ckanext/canada/view.py:722
 #, python-format
 msgid "Unauthorized to delete resource %s"
 msgstr ""
 
-#: ckanext/canada/view.py:715
+#: ckanext/canada/view.py:724
 #, python-format
 msgid "DataStore table and Data Dictionary deleted for resource %s"
 msgstr ""
@@ -727,19 +739,19 @@ msgstr ""
 #: ckanext/canada/templates/package/resource_edit.html:3
 #: ckanext/canada/templates/package/resource_edit_base.html:7
 #: ckanext/canada/templates/package/wet_datatable.html:15
-#: ckanext/canada/view.py:804
+#: ckanext/canada/view.py:813
 msgid "Edit"
 msgstr ""
 
-#: ckanext/canada/view.py:928
+#: ckanext/canada/view.py:937
 msgid "Access denied"
 msgstr ""
 
-#: ckanext/canada/view.py:979
+#: ckanext/canada/view.py:988
 msgid "Account Created"
 msgstr ""
 
-#: ckanext/canada/view.py:981
+#: ckanext/canada/view.py:990
 msgid ""
 "Thank you for creating your account for the Open Government registry. "
 "Although your account is active, it has not yet been linked to your "
@@ -747,7 +759,7 @@ msgid ""
 "be able to create or modify datasets in the registry."
 msgstr ""
 
-#: ckanext/canada/view.py:988
+#: ckanext/canada/view.py:997
 msgid ""
 "You should receive an email within the next business day once the account"
 " activation process has been completed. If you require faster processing "
@@ -755,20 +767,20 @@ msgid ""
 ":open-ouvert@tbs-sct.gc.ca\">open-ouvert@tbs-sct.gc.ca</a>"
 msgstr ""
 
-#: ckanext/canada/view.py:1062 ckanext/canada/view.py:1140
+#: ckanext/canada/view.py:1071 ckanext/canada/view.py:1149
 msgid "Organization not found"
 msgstr ""
 
-#: ckanext/canada/view.py:1073
+#: ckanext/canada/view.py:1082
 msgid "Not authorized to access {org_name} members download"
 msgstr ""
 
-#: ckanext/canada/view.py:1143
+#: ckanext/canada/view.py:1152
 #, python-format
 msgid "User %r not authorized to edit members of %s"
 msgstr ""
 
-#: ckanext/canada/view.py:1145
+#: ckanext/canada/view.py:1154
 #, python-format
 msgid "User %r not authorized to view members of %s"
 msgstr ""
@@ -1329,20 +1341,28 @@ msgstr ""
 msgid "Error"
 msgstr ""
 
-#: ckanext/canada/templates/error_document_template.html:30
+#: ckanext/canada/templates/error_document_template.html:31
+msgid ""
+"This application is only available to authorized Government of Canada "
+"departments and agencies. Please contact the support team at <a "
+"href=\"mailto:open-ouvert@tbs-sct.gc.ca\">open-ouvert@tbs-sct.gc.ca</a> "
+"to request access."
+msgstr ""
+
+#: ckanext/canada/templates/error_document_template.html:33
 msgid ""
 "You are not logged in to the Open Government Registry. Note that your "
 "login expires after 1 hour of inactivity. Click on the log in button "
 "below to log in."
 msgstr ""
 
-#: ckanext/canada/templates/error_document_template.html:33
+#: ckanext/canada/templates/error_document_template.html:36
 #: ckanext/canada/templates/page.html:29
 #: ckanext/canada/templates/user/snippets/login_form.html:16
 msgid "Log in"
 msgstr ""
 
-#: ckanext/canada/templates/error_document_template.html:38
+#: ckanext/canada/templates/error_document_template.html:42
 msgid ""
 "We encountered an error and are unable to serve your request. Please try "
 "again in short time or contact <a href=\"mailto:open-ouvert@tbs-sct.gc.ca"
