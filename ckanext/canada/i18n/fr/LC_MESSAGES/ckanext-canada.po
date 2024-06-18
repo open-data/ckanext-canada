@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-06-18 14:25+0000\n"
+"POT-Creation-Date: 2024-06-18 15:39+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: fr\n"
@@ -710,6 +710,8 @@ msgstr "Cet enregistrement existe déjà."
 #: ckanext/canada/view.py:394 ckanext/canada/view.py:401
 msgid "Something went wrong, your record was not created. Please contact support."
 msgstr ""
+"Un problème s’est produit, votre document n’a pas été créé. Veuillez "
+"contacter l’assistance technique."
 
 #: ckanext/canada/view.py:416
 msgid "Record Created"
@@ -730,6 +732,8 @@ msgstr "Plusieurs enregistrements ont été trouvés"
 #: ckanext/canada/view.py:502
 msgid "Something went wrong, your record was not updated. Please contact support."
 msgstr ""
+"Un problème s’est produit, votre document n’a pas été mis à jour. "
+"Veuillez contacter l’assistance technique."
 
 #: ckanext/canada/view.py:518
 #, python-format
