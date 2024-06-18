@@ -1,0 +1,18 @@
+{% ckan_extends %}
+
+{% block subtitle %}
+  {% if pkg.type != 'prop' %}
+    {{ _('Resources') }} - {{ h.get_translated(pkg, 'title') }}
+  {% endif %}
+{% endblock %}
+
+{% block primary_content_inner %}
+  {% if pkg.type != 'prop' %}
+    {{ super() }}
+  {% endif %}
+{% endblock %}
+
+{% block scripts %}
+  <script src="{{ h.cdts_asset('/js/deps/jquery.dataTables.min.js') }}"> </script>
+  {{ super() }}
+{% endblock %}

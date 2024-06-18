@@ -1,0 +1,19 @@
+{% ckan_extends %}
+
+{%- block title -%}
+  {{- h.resource_view_meta_title(package=package, resource=resource, view=resource_view) -}}
+{%- endblock -%}
+
+{% block adobe_analytics_creator %}
+  {{ h.adobe_analytics_creator(organization=package.organization, package=package) }}
+{% endblock %}
+
+{% block description %}
+<p class="desc">
+  {%- if h.lang() == 'fr' -%}
+    {{ h.render_markdown(resource_view['description_fr']) }}
+  {%- else -%}
+    {{ h.render_markdown(resource_view['description']) }}
+  {%- endif -%}
+</p>
+{% endblock %}

@@ -12,7 +12,18 @@ body .canada-w10-spacer{
 }
 
 img.openness-rating-stars {
-  margin-bottom: -4px !important;
+  margin-bottom: 0px !important;
+}
+
+.canada-debug-wrapper{
+  border: 2px solid #af3c43;
+  border-radius: 3px;
+  margin-top: 15px;
+  padding: 15px;
+}
+
+.canada-debug-wrapper > div.container{
+  max-width: 100% !important;
 }
 
 .facet-item {
@@ -772,6 +783,7 @@ body .alert a.btn-warning{
   top: 0;
   right: 0;
   bottom: 0;
+  margin: 0 !important;
 }
 #wb-srch button#wb-srch-sub{
   position: relative;
@@ -826,6 +838,23 @@ div.canada-job-list-title small{
 ##          END         ##
 ##########################*/
 
+/*###################
+##  User Dashboard ##
+#####################*/
+.canada-dashboard-nav li a{
+  border-bottom-left-radius: 0 !important;
+  border-bottom-right-radius: 0 !important;
+}
+
+.canada-dashboard-panel{
+  border-top-left-radius: 0 !important;
+}
+/*####################
+##       END        ##
+##  User Dashboard  ##
+##       END        ##
+######################*/
+
 /*##############################
 ##  Core CSS URIs w/ Base URL ##
 ################################*/
@@ -840,4 +869,14 @@ body, body .module-grid, body .media-grid, body .main, body .account-masthead, b
 ##            END             ##
 ##  Core CSS URIs w/ Base URL ##
 ##            END             ##
+################################*/
+
+/*##############################
+##  CDTS Application Template ##
+################################*/
+
+/*##############################
+##             END            ##
+##  CDTS Application Template ##
+##             END            ##
 ################################*/

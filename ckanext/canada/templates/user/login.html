@@ -1,0 +1,81 @@
+{% ckan_extends %}
+
+{% block primary_content %}
+  {% if g.is_registry %}
+    <div class="mrgn-bttm-lg">
+      <section class="alert alert-warning mrgn-tp-lg mrgn-bttm-lg" role="alert">
+        <h2 class="h3">{{ _('Important') }}</h2>
+        <p>{{ _('As of March 6, 2024, all contracts and associated amendments will appear as a single contract with their respective amendments linked on the Portal. Please email the Portal team at <a href="mailto:open-ouvert@tbs-sct.gc.ca">open-ouvert@tbs-sct.gc.ca</a> should you have additional questions or concerns.') }}</p>
+      </section>
+      {% trans %}login welcome text{% endtrans %}
+      {% block form %}
+        {{ super() }}
+      {% endblock %}
+      <div class="text-info">
+        {% trans %}NOTE: Username and password are case sensitive.{% endtrans %}
+      </div>
+    </div>
+  {% endif %}
+{% endblock %}
+
+{% block secondary_content %}
+  {% if g.is_registry %}
+    {% set reset_link = h.url_for('user.request_reset') %}
+    {% set name_reset_link = h.url_for('canada.recover_username') %}
+    <div class="panel panel-info">
+      <div class="panel-heading panel-title">
+        {{ _('Need an account') }}
+      </div>
+      <div class="panel-body">
+        <p>{{ _('Then sign right up, it only takes a minute') }}.</p>
+        <p class="action">
+          <a class="btn btn-primary btn-xs" href="{{ h.url_for('user.register') }}" role="button">{{ _('Request an Account') }}</a>
+        </p>
+      </div>
+    </div>
+    <div class="panel panel-warning">
+      <div class="panel-heading panel-title">
+      {{ _('Forgotten your password?') }}</div>
+      <div class="panel-body">
+        <p>{{ _('No problem, use our password recovery form to reset it') }}.</p>
+        <p>
+          <a class="btn btn-warning btn-xs" href="{{ reset_link }}" role="button">{{ _('Reset password') }}</a>
+        </p>
+      </div>
+    </div>
+    {% if h.plugin_loaded('gcnotify') %}
+      {# The email template for username recovery is monkey patched in GC Notify so we need that loaded #}
+      <div class="panel panel-warning">
+        <div class="panel-heading panel-title">
+          {{ _('Forgotten your username?') }}
+        </div>
+        <div class="panel-body">
+          <p>{{ _('No problem, use our username recovery form to recover it') }}.</p>
+          <p>
+            <a class="btn btn-warning btn-xs" href="{{ name_reset_link }}" role="button">{{ _('Recover username') }}</a>
+          </p>
+        </div>
+      </div>
+    {% endif %}
+  {% endif %}
+{% endblock %}
+
+{% block help_register %}
+  <div class="panel panel-default">
+    <div class="panel-body">{{ self.help_register_inner() }}</div>
+  </div>
+{% endblock %}
+
+{% block help_register_button %}
+  <a class="btn btn-default" href="{{ h.url_for('user.register') }}">{{ _(' Create an Account') }}</a>
+{% endblock %}
+
+{% block help_forgotten %}
+  <div class="panel panel-default">
+    <div class="panel-body">{{ self.help_forgotten_inner() }}</div>
+  </div>
+{% endblock %}
+
+{% block help_forgotten_button %}
+  <a class="btn btn-default" href="{{ h.url_for('user.request_reset') }}">{{ _('Forgot your password?') }}</a>
+{% endblock %}

@@ -1,0 +1,35 @@
+{% ckan_extends %}
+
+{% block activity_stream %}
+  {% if activities %}
+    <div class="panel">
+      <ul class="list-group" data-module="activity-stream" data-module-more="{{ has_more }}" data-module-context="{{ controller }}" data-module-id="{{ id }}" data-module-offset="{{ offset }}">
+        {{ self.activity_stream_inner() }}
+      </ul>
+    </div>
+  {% else %}
+    {{ self.activity_stream_empty() }}
+  {% endif %}
+{% endblock %}
+
+{% block activity_stream_inner %}
+  {% if offset > 0 %}
+    <li class="list-group-item">
+      <a href="{{ h.url_for(controller + '.' + action, id=id, offset=(offset-30 if offset-30 > 0 else 0)) }}" class="btn btn-rounded">
+        <i class="fa fa-chevron-up" aria-hidden="true"></i>&nbsp;{{ _('Load less') }}
+      </a>
+    </li>
+  {% endif %}
+  {% for activity in activities %}
+    {% if loop.index <= has_more_length %}
+      {% snippet 'snippets/activity_item.html', activity=activity %}
+    {% endif %}
+  {% endfor %}
+  {% if has_more %}
+    <li class="list-group-item">
+      <a href="{{ h.url_for(controller + '.' + action, id=id, offset=offset+30) }}" class="btn btn-rounded">
+        <i class="fa fa-chevron-down" aria-hidden="true"></i>&nbsp;{{ _('Load more') }}
+      </a>
+    </li>
+  {% endif %}
+{% endblock %}

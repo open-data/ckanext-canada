@@ -15,3 +15,5 @@ configparser>=3.5.0
 grequests==0.6.0
 openpyxl==2.6.4
 requests-ftp==0.3.1
+python-dateutil==2.8.2  # 2.9.0 breaks stuff in PY2 (March 1 2024)
+beautifulsoup4==4.8.2

@@ -1,0 +1,29 @@
+{% ckan_extends %}
+
+{% block page_primary_action %}
+  {% if not g.is_registry %}
+    {{ super() }}
+  {% endif %}
+{% endblock %}
+
+{% block breadcrumb_content %}
+  {{ super() }}
+  <li class="active">{% link_for _('My Records'), named_route='dashboard.datasets' %}</li>
+{% endblock %}
+
+{% block page_heading %}
+  {{ _('Dashboard') }} - {{ _('My Records') }}
+{% endblock %}
+
+{% block primary_content_inner %}
+  <div data-module="dashboard" class="col-md-12">
+    <div data-module="dashboard" class="panel panel-default canada-dashboard-panel">
+      <div class="panel-heading">
+        <h3 class="panel-title">{{ _('My Records') }}</h3>
+      </div>
+      <div class="panel-body">
+        {{ super() }}
+      </div>
+    </div>
+  </div>
+{% endblock %}

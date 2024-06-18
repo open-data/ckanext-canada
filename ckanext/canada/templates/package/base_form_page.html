@@ -1,0 +1,36 @@
+{% ckan_extends %}
+
+{% block breadcrumb_content %}
+  {% if g.is_registry %}
+    {{ h.build_nav('dataset.new', _('Create Dataset')) }}
+  {% endif %}
+{% endblock %}
+
+{% block secondary_content %}
+  {% if not g.is_registry %}
+    {{ super() }}
+  {% endif %}
+{% endblock %}
+
+{% block page_header %}
+  {% if not g.is_registry %}
+    {{ super() }}
+  {% endif %}
+{% endblock %}
+
+{% block info_module %}
+  {% block what_are_datasets %}
+    <div class="panel panel-info">
+      <div class="panel-heading">
+        <div class="panel-title"><span class="glyphicon glyphicon-info-sign"></span>&nbsp;{{ _('What are datasets?') }}</div>
+      </div>
+      <div class="panel-body">
+        {% trans %}
+          Datasets are simply used to group related pieces of data. These
+          can then be found under a single url with a description and
+          licensing information.
+        {% endtrans %}
+      </div>
+    </div>
+  {% endblock %}
+{% endblock %}

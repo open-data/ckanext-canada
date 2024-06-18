@@ -1,0 +1,49 @@
+{% ckan_extends %}
+
+{% block subtitle %}
+  {{ h.split_piped_bilingual_field(g.group_dict.display_name, client_lang) }}
+{% endblock %}
+
+{% block content_primary_nav %}
+  {% if g.is_registry %}
+    <div class="row">
+      <div class="col-md-12 mrgn-bttm-md">
+        <header>
+          {% if g.action != 'new' %}
+            <ul class="nav nav-pills">
+              <li class="{% if g.action == 'read' %}active{% endif %}">
+                <a href="{{h.url('organization.read', id=g.group_dict.name)}}">{{_('Datasets')}}</a>
+              </li>
+              <li class="{% if g.action == 'activity' %}active{% endif %}">
+                <a href="{{h.url('organization.activity', id=g.group_dict.name, offset=0)}}">{{_('Activity')}}</a>
+              </li>
+              {% if h.check_access('organization_update', {'id': g.group_dict.id}) %}
+                <li class="{% if g.action == 'members' %}active{% endif %}">
+                  <a href="{{h.url('organization.members', id=g.group_dict.name)}}">{{_('Edit Members')}}</a>
+                </li>
+              {% elif h.check_access('view_org_members', {'id': g.group_dict.id}) %}
+                <li class="{% if g.action == 'members' %}active{% endif %}">
+                  <a href="{{h.url('organization.members', id=g.group_dict.name)}}">{{_('View Members')}}</a>
+                </li>
+              {% endif %}
+              {% if h.check_access('group_update', {'id': g.group_dict.id}) %}
+                <li class="{% if g.action == 'edit' %}active{% endif %}">
+                  <a href="{{h.url(('organization' if g.group_dict.is_organization else 'group') + '.edit', id=g.group_dict.name)}}">{{ _('Edit') }}</a>
+                </li>
+              {% endif %}
+          </ul>
+          {% endif %}
+        </header>
+      </div>
+    </div>
+  {% else %}
+    {{ super() }}
+  {% endif %}
+{% endblock %}
+
+{% block scripts %}
+  {{ super() }}
+  {% if g.is_registry %}
+    {% asset 'canada_internal/organization_edit' %}
+  {% endif %}
+{% endblock %}

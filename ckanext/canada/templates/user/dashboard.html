@@ -1,0 +1,41 @@
+{% ckan_extends %}
+
+{% block page_heading %}
+  {{ _('Dashboard') }} - {{ _('News feed') }}
+{% endblock %}
+
+{% block font_awesome %}<link href="{{ wet_server }}/font-awesome/css/font-awesome.css" rel="stylesheet">{% endblock %}
+
+{% block primary_content_inner %}
+  <div data-module="dashboard" class="col-md-12">
+    <div data-module="dashboard" class="panel panel-default canada-dashboard-panel">
+      <div class="panel-heading">
+        <h3 class="panel-title">{{ _('News feed') }}</h3>
+      </div>
+      <div class="panel-body">
+      <p>{{ _('Activity from items that you follow') }}</p>
+      {% block activity_stream %}
+        {% snippet 'snippets/activity_stream.html', activity_stream=activity_stream %}
+      {% endblock %}
+      </div>
+    </div>
+  </div>
+{% endblock %}
+
+
+{% block secondary_content %}{% endblock %}
+
+{% block add_action_content %}
+  {% if h.check_access('package_create') %}
+    <li>{% link_for _('Add Dataset'), package.type + '.new', class_="btn btn-primary", icon="plus-square" %}</li>
+  {% endif %}
+{% endblock %}
+
+{% block page_header %}
+  <div class="col-md-12">
+    <ul class="nav nav-pills canada-dashboard-nav">
+      {{ h.build_nav_icon('dashboard.index', _('News feed')) }}
+      {{ h.build_nav_icon('dashboard.datasets', _('My Datasets')) }}
+    </ul>
+  </div>
+{% endblock %}

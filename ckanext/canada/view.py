@@ -226,7 +226,7 @@ canada_views.add_url_rule(
 
 @canada_views.route('/recover-username', methods=['GET', 'POST'])
 def recover_username():
-    if not h.is_registry() or not h.plugin_loaded('gcnotify'):
+    if not g.is_registry or not h.plugin_loaded('gcnotify'):
         # we only want this route on the Registry, and the email template
         # is monkey patched in GC Notify so we need that loaded
         return abort(404)
@@ -286,9 +286,9 @@ def recover_username():
 
 
 def canada_search(package_type):
-    if h.is_registry() and not g.user:
+    if g.is_registry and not g.user:
         return abort(403)
-    if not h.is_registry() and package_type in h.recombinant_get_types():
+    if not g.is_registry and package_type in h.recombinant_get_types():
         return h.redirect_to('dataset.search', package_type='dataset')
     return dataset_search(package_type)
 
@@ -370,6 +370,7 @@ def create_pd_record(owner_org, resource_name):
             chromo['fields'],
             pk_fields,
             choice_fields)
+        error_summary = None
         try:
             lc.action.datastore_upsert(
                 resource_id=res['id'],
@@ -384,17 +385,22 @@ def create_pd_record(owner_org, resource_name):
                         for (k, v) in ve.error_dict['records'][0].items()
                     }, **err)
                 except AttributeError:
-                    err = dict({
-                        k: [_("This record already exists")]
-                        for k in pk_fields
-                    }, **err)
+                    if 'duplicate key value violates unique constraint' in ve.error_dict['records'][0]:
+                        err = dict({
+                            k: [_("This record already exists")]
+                            for k in pk_fields
+                        }, **err)
+                    else:
+                        error_summary = _('Something went wrong, your record was not created. Please contact support.')
             elif ve.error_dict.get('info', {}).get('pgcode', '') == '23505':
                 err = dict({
                     k: [_("This record already exists")]
                     for k in pk_fields
                 }, **err)
+            else:
+                error_summary = _('Something went wrong, your record was not created. Please contact support.')
 
-        if err:
+        if err or error_summary:
             return render('recombinant/create_pd_record.html',
                           extra_vars={
                               'data': data,
@@ -404,6 +410,7 @@ def create_pd_record(owner_org, resource_name):
                               'owner_org': rcomb['owner_org'],
                               'pkg_dict': {},  # prevent rendering error on parent template
                               'errors': err,
+                              'error_summary': error_summary,
                           })
 
         h.flash_notice(_(u'Record Created'))
@@ -474,6 +481,7 @@ def update_pd_record(owner_org, resource_name, pk):
             chromo['fields'],
             pk_fields,
             choice_fields)
+        error_summary = None
         # can't change pk fields
         for f_id in data:
             if f_id in pk_fields:
@@ -490,10 +498,10 @@ def update_pd_record(owner_org, resource_name, pk):
                     k: [_(e) for e in v]
                     for (k, v) in ve.error_dict['records'][0].items()
                 }, **err)
-            except AttributeError as e:
-                raise ve
+            except AttributeError:
+                error_summary = _('Something went wrong, your record was not updated. Please contact support.')
 
-        if err:
+        if err or error_summary:
             return render('recombinant/update_pd_record.html',
                 extra_vars={
                     'data': data,
@@ -504,7 +512,8 @@ def update_pd_record(owner_org, resource_name, pk):
                     'owner_org': rcomb['owner_org'],
                     'pkg_dict': {},  # prevent rendering error on parent template
                     'errors': err,
-                    })
+                    'error_summary': error_summary,
+                })
 
         h.flash_notice(_(u'Record %s Updated') % u','.join(pk) )
 
@@ -616,7 +625,7 @@ def _clean_check_type_errors(post_data, fields, pk_fields, choice_fields):
 
 @canada_views.route('/', methods=['GET'])
 def home():
-    if not h.is_registry():
+    if not g.is_registry:
         return h.redirect_to('dataset.search')
     if not g.user:
         return h.redirect_to('user.login')
@@ -631,7 +640,7 @@ def home():
 
 @canada_views.route('/links', methods=['GET'])
 def links():
-    if not h.is_registry():
+    if not g.is_registry:
         return h.redirect_to('dataset.search')
     return render('home/quick_links.html', extra_vars={'is_sysadmin': is_sysadmin(g.user)})
 
@@ -735,7 +744,7 @@ def delete_datastore_table(id, resource_id):
 
 @canada_views.route('/help', methods=['GET'])
 def view_help():
-    if not h.is_registry():
+    if not g.is_registry:
         return abort(404)
     return render('help.html', extra_vars={})
 
@@ -1175,3 +1184,11 @@ def ckan_admin_index():
             continue
         sysadmins.append(admin.name)
     return render(u'admin/index.html', extra_vars={'sysadmins': sysadmins})
+
+
+@canada_views.route('/ckan-admin/config', methods=['GET', 'POST'])
+def ckan_admin_config():
+    """
+    404 this page always.
+    """
+    return abort(404)
