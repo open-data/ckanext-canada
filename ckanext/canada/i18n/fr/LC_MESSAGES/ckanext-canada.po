@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-06-17 15:48+0000\n"
+"POT-Creation-Date: 2024-06-18 15:21+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: fr\n"
@@ -234,7 +234,6 @@ msgstr "Type de portail"
 
 #: ckanext/canada/plugins.py:718
 #: ckanext/canada/templates/package/deleted.html:14
-#: ckanext/canada/templates/snippets/package_item.html:62
 #: ckanext/canada/templates/user/new_user_form.html:18
 msgid "Organization"
 msgstr "Organisation"
@@ -306,7 +305,6 @@ msgstr "N/A"
 #: ckanext/canada/templates/user/edit_user_form.html:8
 #: ckanext/canada/templates/user/list.html:44
 #: ckanext/canada/templates/user/new_user_form.html:8
-#: ckanext/canada/templates/user/read_base.html:53
 #: ckanext/canada/templates/user/snippets/login_form.html:12
 #: ckanext/canada/view.py:1097
 msgid "Username"
@@ -704,6 +702,7 @@ msgstr "Cet enregistrement existe déjà."
 
 #: ckanext/canada/view.py:396 ckanext/canada/view.py:403
 msgid "Something went wrong, your record was not created. Please contact support."
+msgstr ""
 "Un problème s’est produit, votre document n’a pas été créé. Veuillez "
 "contacter l’assistance technique."
 
@@ -2399,7 +2398,7 @@ msgid "Activity Stream"
 msgstr "Flux d’Activités"
 
 #: ckanext/canada/templates/organization/activity_stream.html:11
-#: ckanext/canada/templates/package/read_base.html:151
+#: ckanext/canada/templates/package/read_base.html:150
 msgid "Atom Feed"
 msgstr "Fil de nouvelles Atom"
 
@@ -2713,9 +2712,24 @@ msgstr ""
 "personnels.</p>"
 
 #: ckanext/canada/templates/package/read.html:142
-#: ckanext/canada/templates/snippets/package_item.html:73
 msgid "Issued by"
 msgstr "Publiée par"
+
+#: ckanext/canada/templates/package/read.html:144
+#: ckanext/canada/templates/package/read_base.html:56
+#: ckanext/canada/templates/package/read_base.html:65
+#: ckanext/canada/templates/package/read_base.html:81
+#: ckanext/canada/templates/package/read_base.html:155
+#: ckanext/canada/templates/package/read_base.html:187
+#: ckanext/canada/templates/recombinant/snippets/xls_upload.html:39
+#: ckanext/canada/templates/recombinant/snippets/xls_upload.html:46
+#: ckanext/canada/templates/recombinant/snippets/xls_upload.html:53
+#: ckanext/canada/templates/recombinant/snippets/xls_upload.html:57
+#: ckanext/canada/templates/recombinant/snippets/xls_upload.html:60
+#: ckanext/canada/templates/recombinant/snippets/xls_upload.html:61
+#: ckanext/canada/templates/snippets/package_item.html:86
+msgid ":"
+msgstr " :"
 
 #: ckanext/canada/templates/package/read.html:169
 msgid "Related Items"
@@ -2726,28 +2740,28 @@ msgid "Contact Information"
 msgstr "Coordonnées"
 
 #: ckanext/canada/templates/package/read.html:185
-msgid "Delivery Point"
-msgstr "Point de livraison"
+msgid "Delivery Point:"
+msgstr "Point de livraison :"
 
 #: ckanext/canada/templates/package/read.html:188
-msgid "City"
-msgstr "Ville"
+msgid "City:"
+msgstr "Ville :"
 
 #: ckanext/canada/templates/package/read.html:191
-msgid "Administrative Area"
-msgstr "Zone administrative"
+msgid "Administrative Area:"
+msgstr "Zone administrative :"
 
 #: ckanext/canada/templates/package/read.html:194
-msgid "Postal Code"
-msgstr "Code postal"
+msgid "Postal Code:"
+msgstr "Code postal :"
 
 #: ckanext/canada/templates/package/read.html:197
-msgid "Country"
-msgstr "Pays"
+msgid "Country:"
+msgstr "Pays :"
 
 #: ckanext/canada/templates/package/read.html:200
-msgid "Electronic Mail Address"
-msgstr "Adresse de courrier électronique"
+msgid "Electronic Mail Address:"
+msgstr "Adresse de courrier électronique :"
 
 #: ckanext/canada/templates/package/read.html:222
 msgid "Similar records"
@@ -2778,67 +2792,67 @@ msgstr "à non défini"
 msgid "undefined to"
 msgstr "non défini à"
 
-#: ckanext/canada/templates/package/read_base.html:82
+#: ckanext/canada/templates/package/read_base.html:81
 msgid "Openness Rating"
 msgstr "Cote de degrée d’ouverture des données"
 
-#: ckanext/canada/templates/package/read_base.html:87
+#: ckanext/canada/templates/package/read_base.html:86
 msgid "one star"
 msgstr "une étoile"
 
-#: ckanext/canada/templates/package/read_base.html:88
+#: ckanext/canada/templates/package/read_base.html:87
 msgid "two stars"
 msgstr "deux étoiles"
 
-#: ckanext/canada/templates/package/read_base.html:89
+#: ckanext/canada/templates/package/read_base.html:88
 msgid "three stars"
 msgstr "trois étoiles"
 
-#: ckanext/canada/templates/package/read_base.html:90
+#: ckanext/canada/templates/package/read_base.html:89
 msgid "four stars"
 msgstr "quatre étoiles"
 
-#: ckanext/canada/templates/package/read_base.html:91
+#: ckanext/canada/templates/package/read_base.html:90
 msgid "five stars"
 msgstr "cinq étoiles"
 
-#: ckanext/canada/templates/package/read_base.html:102
+#: ckanext/canada/templates/package/read_base.html:101
 msgid "About this Record"
 msgstr "Au sujet de ce dossier"
 
-#: ckanext/canada/templates/package/read_base.html:106
-msgid "Record Released"
-msgstr "Dossier publié"
+#: ckanext/canada/templates/package/read_base.html:105
+msgid "Record Released:"
+msgstr "Dossier publié :"
 
-#: ckanext/canada/templates/package/read_base.html:110
-msgid "Record Modified"
-msgstr "Dossier modifié"
+#: ckanext/canada/templates/package/read_base.html:109
+msgid "Record Modified:"
+msgstr "Dossier modifié :"
 
-#: ckanext/canada/templates/package/read_base.html:114
-msgid "Record ID"
-msgstr "Identificateur du dossier"
+#: ckanext/canada/templates/package/read_base.html:113
+msgid "Record ID:"
+msgstr "Identificateur du dossier :"
 
-#: ckanext/canada/templates/package/read_base.html:118
-msgid "Metadata"
-msgstr "Métadonnées"
+#: ckanext/canada/templates/package/read_base.html:117
+msgid "Metadata:"
+msgstr "Métadonnées :"
 
-#: ckanext/canada/templates/package/read_base.html:122
+#: ckanext/canada/templates/package/read_base.html:121
 msgid "Link to JSON format"
 msgstr "Lien au format JSON"
 
-#: ckanext/canada/templates/package/read_base.html:128
+#: ckanext/canada/templates/package/read_base.html:127
 msgid "DCAT (JSON-LD)"
 msgstr "DCAT (JSON-LD)"
 
-#: ckanext/canada/templates/package/read_base.html:135
+#: ckanext/canada/templates/package/read_base.html:134
 msgid "DCAT (XML)"
 msgstr "DCAT (XML)"
 
-#: ckanext/canada/templates/package/read_base.html:143
-msgid "FGP Metadata"
-msgstr "Métadonnées de la PGF"
+#: ckanext/canada/templates/package/read_base.html:142
+msgid "FGP Metadata:"
+msgstr "Métadonnées de la PGF :"
 
-#: ckanext/canada/templates/package/read_base.html:145
+#: ckanext/canada/templates/package/read_base.html:144
 msgid "HNAP ISO:19115 Metadata Record"
 msgstr "Enregistrement de métadonnées de HNAP ISO:19115"
 
@@ -3119,12 +3133,12 @@ msgid "Create and update multiple records"
 msgstr "Créer et procéder à la mise à jour de plusieurs dossiers"
 
 #: ckanext/canada/templates/recombinant/snippets/xls_upload.html:40
-msgid "This field must not be empty"
-msgstr "Cette zone ne doit pas être vide"
+msgid "This field must not be empty:"
+msgstr "Cette zone ne doit pas être vide :"
 
 #: ckanext/canada/templates/recombinant/snippets/xls_upload.html:47
-msgid "This field must be empty"
-msgstr "Cette zone doit être vide"
+msgid "This field must be empty:"
+msgstr "Cette zone doit être vide :"
 
 #: ckanext/canada/templates/recombinant/snippets/xls_upload.html:54
 msgid "Invalid choice for"
@@ -3374,22 +3388,30 @@ msgstr "en savoir plus"
 msgid "This dataset has no description"
 msgstr "Aucune description disponible pour cet ensemble de données"
 
+#: ckanext/canada/templates/snippets/package_item.html:62
+msgid "Organization:"
+msgstr "Organisation :"
+
+#: ckanext/canada/templates/snippets/package_item.html:73
+msgid "Issued by:"
+msgstr "Publiée par :"
+
 #: ckanext/canada/templates/snippets/package_item.html:95
 #: ckanext/canada/templates/snippets/package_item.html:112
-msgid "Status"
-msgstr "État"
+msgid "Status:"
+msgstr "État :"
 
 #: ckanext/canada/templates/snippets/package_item.html:103
-msgid "Date"
-msgstr "Date"
+msgid "Date:"
+msgstr "Date :"
 
 #: ckanext/canada/templates/snippets/package_item.html:115
 msgid "Request sent to data owner – awaiting response"
 msgstr "Demande envoyée au propriétaire des données, en attente de réponse"
 
 #: ckanext/canada/templates/snippets/package_item.html:122
-msgid "Resource Formats"
-msgstr "Formats des ressources"
+msgid "Resource Formats:"
+msgstr "Formats des ressources :"
 
 #: ckanext/canada/templates/snippets/search_form.html:4
 msgid "Search..."
@@ -3973,16 +3995,20 @@ msgid "Details"
 msgstr "Détails"
 
 #: ckanext/canada/templates/user/read_base.html:32
-msgid "Followers"
-msgstr "Suiveurs"
+msgid "Followers:"
+msgstr "Suiveurs :"
 
 #: ckanext/canada/templates/user/read_base.html:36
-msgid "Edits"
-msgstr "Modifications"
+msgid "Edits:"
+msgstr "Modifications :"
 
 #: ckanext/canada/templates/user/read_base.html:50
-msgid "Open ID"
-msgstr "Identifiant ouvert"
+msgid "Open ID:"
+msgstr ""
+
+#: ckanext/canada/templates/user/read_base.html:53
+msgid "Username:"
+msgstr "Nom d’utilisateur :"
 
 #: ckanext/canada/templates/user/read_base.html:61
 #: ckanext/canada/templates/user/read_base.html:72
@@ -7816,4 +7842,10 @@ msgstr "Télécharger vers le DataStore"
 #~ " données ne s’affiche pas correctement. "
 #~ "Pour voir la version actuelle, cliquez"
 #~ " <a href=\"%(url)s\">ici</a>."
+
+#~ msgid "FGP Metadata"
+#~ msgstr "Métadonnées de la PGF"
+
+#~ msgid "Open ID"
+#~ msgstr "Identifiant ouvert"
 

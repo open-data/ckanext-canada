@@ -141,7 +141,7 @@
                 {% if field.field_name == 'org_title_at_publication' and pkg_dict.jurisdiction != 'federal' %}
                   {% set field_title = _('Issued by') %}
                 {% endif %}
-                <li class="list-group-item"><strong>{{ field_title }}:</strong>
+                <li class="list-group-item"><strong>{{ field_title }}{{ _(':') }}</strong>
                   {% snippet 'scheming/snippets/display_field.html', field=field, data=pkg_dict, entity_type='dataset', object_type=pkg_dict.type %}
                 </li>
               {% endif %}
@@ -182,22 +182,22 @@
         <div class="span-6 margin-top-medium clear-both">
           <h4>{{ _('Contact Information') }}</h4>
           {% if 'delivery_point' in info and info['delivery_point'] %}
-            <p>{{ _('Delivery Point') }}: {{ info['delivery_point'] }}</p>
+            <p>{{ _('Delivery Point:') }} {{ info['delivery_point'] }}</p>
           {% endif %}
           {% if 'city' in info and info['city'] %}
-            <p>{{ _('City') }}: {{ info['city'] }}</p>
+            <p>{{ _('City:') }} {{ info['city'] }}</p>
           {% endif %}
           {% if 'administrative_area' in info and info['administrative_area'] %}
-            <p>{{ _('Administrative Area') }}: {{ info['administrative_area'] }}</p>
+            <p>{{ _('Administrative Area:') }} {{ info['administrative_area'] }}</p>
           {% endif %}
           {% if 'postal_code' in info and info['postal_code'] %}
-            <p>{{ _('Postal Code') }}: {{ info['postal_code'] }}</p>
+            <p>{{ _('Postal Code:') }} {{ info['postal_code'] }}</p>
           {% endif %}
           {% if 'country' in info and info['country'] %}
-            <p>{{ _('Country') }}: {{ info['country'] }}</p>
+            <p>{{ _('Country:') }} {{ info['country'] }}</p>
           {% endif %}
           {% if 'electronic_mail_address' in info and info['electronic_mail_address'] %}
-            <p>{{ _('Electronic Mail Address') }}:
+            <p>{{ _('Electronic Mail Address:') }}
               <a href="mailto:{{ info['electronic_mail_address'] }}">{{ info['electronic_mail_address'] }}</a>
             </p>
           {% endif %}
