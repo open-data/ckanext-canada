@@ -1,0 +1,21 @@
+{% ckan_extends %}
+
+{% block repeating_panel_header %}
+  <header class="panel-heading scheming-subfield-group-panel-heading">
+    <span>{{ h.scheming_language_text(field.repeating_label or field.label) }} {{ index1 }}</span>
+    {% block field_removal_button %}
+      <a class="btn btn-danger" name="repeating-remove" href="javascript:;">
+        {% block delete_button_text %}{{ _('Remove') }}{% endblock %}
+      </a>
+    {% endblock %}
+  </header>
+{% endblock %}
+
+{% block add_button %}
+  <a href="javascript:;" name="repeating-add" class="btn btn-success">
+    {% block add_button_text %}
+      <i class="fa fa-plus" aria-hidden="true"></i>&nbsp;{{ _('Add') }}
+    {% endblock %}
+  </a>
+{% endblock %}
+

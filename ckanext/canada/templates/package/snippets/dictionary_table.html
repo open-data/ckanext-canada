@@ -1,0 +1,6 @@
+<tr>
+  <td>{{ field.id }}</td>
+  <td>{{ field.type }}</td>
+  <td>{{ field.get('info', {}).get('label_' + h.lang()) }}</td>
+  <td>{{ h.render_markdown(field.get('info', {}).get('notes_' + h.lang())) }}</td>
+</tr>

@@ -1,0 +1,8 @@
+{% ckan_extends %}
+{%- block organization_list -%}
+  <dl class="dl-horizontal">
+    {%- for organization in organizations -%}
+      {%- snippet "organization/snippets/organization_item.html", organization=organization, position=loop.index -%}
+    {%- endfor -%}
+  </dl>
+{%- endblock -%}

@@ -9,8 +9,10 @@ import ckan.lib.helpers as hlp
 from ckan.logic import validators as logic_validators
 from ckanext.datastore.interfaces import IDataDictionaryForm
 
+from ckan.lib.app_globals import set_app_global
+from ckan.plugins.core import plugin_loaded
+
 from ckan.plugins.toolkit import (
-    c,
     g,
     h,
     chained_action,
@@ -61,6 +63,83 @@ log = logging.getLogger(__name__)
 fq_portal_release_date_match = re.compile(r"(portal_release_date:\"\[.*\]\")")
 
 
+class CanadaThemePlugin(p.SingletonPlugin):
+
+    p.implements(p.IConfigurer)
+    p.implements(p.ITemplateHelpers)
+
+    # IConfigurer
+    def update_config(self, config):
+        p.toolkit.add_template_directory(config, 'templates')
+        p.toolkit.add_public_directory(config, 'public')
+        p.toolkit.add_resource('public/static/js', 'js')
+        p.toolkit.add_resource('assets/internal', 'canada_internal')
+        p.toolkit.add_resource('assets/datatables', 'canada_datatables')
+        p.toolkit.add_resource('assets/public', 'canada_public')
+        set_app_global('is_registry', plugin_loaded('canada_internal'))
+
+        config['ckan.favicon'] = helpers.cdts_asset('/assets/favicon.ico')
+
+    # ITemplateHelpers
+    def get_helpers(self):
+        return dict((h, getattr(helpers, h)) for h in [
+            # Registry
+            'may_publish_datasets',
+            'today',
+            'date_format',
+            'parse_release_date_facet',
+            'is_ready_to_publish',
+            'get_datapreview_recombinant',
+            'recombinant_description_to_markup',
+            'mail_to_with_params',
+            'get_timeout_length',
+            'canada_check_access',
+            'get_user_email',
+            'get_loader_status_badge',
+            # Portal
+            'user_organizations',
+            'openness_score',
+            'remove_duplicates',
+            'get_license',
+            'normalize_strip_accents',
+            'portal_url',
+            'adv_search_url',
+            'adv_search_mlt_root',
+            'ga4_id',
+            'loop11_key',
+            'drupal_session_present',
+            'contact_information',
+            'show_openinfo_facets',
+            'json_loads',
+            'catalogue_last_update_date',
+            'get_translated_t',
+            'language_text_t',
+            'get_datapreview',
+            'iso_to_goctime',
+            'geojson_to_wkt',
+            'cdts_asset',
+            'get_map_type',
+            'adobe_analytics_login_required',
+            'adobe_analytics_lang',
+            'adobe_analytics_js',
+            'mail_to_with_params',
+            'organization_member_count',
+            'flash_notice',
+            'flash_error',
+            'flash_success',
+            'adobe_analytics_creator',
+            'resource_view_meta_title',
+            'get_resource_view',
+            'resource_view_type',
+            'fgp_viewer_url',
+            'date_field',
+            'split_piped_bilingual_field',
+            'search_filter_pill_link_label',
+            'release_date_facet_start_year',
+            'ckan_to_cdts_breadcrumbs',
+        ])
+
+
 class CanadaSecurityPlugin(CkanSecurityPlugin):
     """
     Plugin for extra security
@@ -80,7 +159,7 @@ class CanadaSecurityPlugin(CkanSecurityPlugin):
         # Enable auth settings
         config['ckan.auth.user_delete_groups'] = True
         config['ckan.auth.user_delete_organizations'] = True
-        config['ckan.auth.create_user_via_web'] = helpers.is_registry()  # /user/register view only on registry
+        config['ckan.auth.create_user_via_web'] = plugin_loaded('canada_internal')  # /user/register view only on registry
         # Set auth settings
         config['ckan.auth.roles_that_cascade_to_sub_groups'] = 'admin'
 
@@ -241,7 +320,7 @@ class CanadaDatasetsPlugin(SchemingDatasetsPlugin):
             pass
 
         try:
-            c.fields_grouped.pop('wbdisable', None)
+            g.fields_grouped.pop('wbdisable', None)
         except Exception:
             pass
 
@@ -341,19 +420,13 @@ class DataGCCAInternal(p.SingletonPlugin):
     """
     p.implements(p.IConfigurable)
     p.implements(p.IConfigurer)
-    p.implements(p.ITemplateHelpers)
     p.implements(p.IPackageController, inherit=True)
     p.implements(p.IActions)
-    p.implements(p.IBlueprint)
     p.implements(IXloader, inherit=True)
     p.implements(p.IAuthFunctions)
 
     # IConfigurer
     def update_config(self, config):
-        p.toolkit.add_template_directory(config, 'templates/internal')
-        p.toolkit.add_public_directory(config, 'internal/static')
-        p.toolkit.add_resource('assets/internal', 'canada_internal')
-
         config.update({
             "ckan.user_list_limit": 250
         })
@@ -370,29 +443,6 @@ ckanext.canada:schemas/presets.yaml
         # Include private datasets in Feeds
         config['ckan.feeds.include_private'] = True
 
-
-    # IBlueprint
-    def get_blueprint(self):
-        # type: () -> list[Blueprint]
-        return [canada_views]
-
-
-    # ITemplateHelpers
-    def get_helpers(self):
-        return dict((h, getattr(helpers, h)) for h in [
-            'may_publish_datasets',
-            'today',
-            'date_format',
-            'parse_release_date_facet',
-            'is_ready_to_publish',
-            'get_datapreview_recombinant',
-            'recombinant_description_to_markup',
-            'mail_to_with_params',
-            'get_timeout_length',
-            'canada_check_access',
-            'get_user_email',
-            'get_loader_status_badge',
-        ])
 
     # IConfigurable
     def configure(self, config):
@@ -565,12 +615,12 @@ class DataGCCAPublic(p.SingletonPlugin, DefaultTranslation):
     p.implements(p.IConfigurer)
     p.implements(p.IAuthFunctions)
     p.implements(p.IFacets)
-    p.implements(p.ITemplateHelpers)
     p.implements(p.ITranslation, inherit=True)
     p.implements(p.IMiddleware, inherit=True)
     p.implements(p.IActions)
     p.implements(p.IClick)
     p.implements(IColumnTypes)
+    p.implements(p.IBlueprint)
 
     # DefaultTranslation, ITranslation
     def i18n_domain(self):
@@ -578,12 +628,6 @@ class DataGCCAPublic(p.SingletonPlugin, DefaultTranslation):
 
     # IConfigurer
     def update_config(self, config):
-        # add our templates
-        p.toolkit.add_template_directory(config, 'templates/public')
-        p.toolkit.add_public_directory(config, 'public')
-        p.toolkit.add_resource('public/static/js', 'js')
-        p.toolkit.add_resource('assets/datatables', 'canada_datatables')
-        p.toolkit.add_resource('assets/public', 'canada_public')
         config['ckan.auth.public_user_details'] = False
         config['recombinant.definitions'] = """
 ckanext.canada:tables/ati.yaml
@@ -681,54 +725,6 @@ ckanext.canada:schemas/prop.yaml
                             package_type):
         return self.dataset_facets(facets_dict, package_type)
 
-
-    # ITemplateHelpers
-    def get_helpers(self):
-        return dict((h, getattr(helpers, h)) for h in [
-            'user_organizations',
-            'openness_score',
-            'remove_duplicates',
-            'get_license',
-            'normalize_strip_accents',
-            'portal_url',
-            'adv_search_url',
-            'adv_search_mlt_root',
-            'ga4_id',
-            'loop11_key',
-            'drupal_session_present',
-            'contact_information',
-            'show_openinfo_facets',
-            'json_loads',
-            'catalogue_last_update_date',
-            'get_translated_t',
-            'language_text_t',
-            'get_datapreview',
-            'iso_to_goctime',
-            'geojson_to_wkt',
-            'url_for_wet_theme',
-            'url_for_wet',
-            'wet_jquery_offline',
-            'get_map_type',
-            'adobe_analytics_login_required',
-            'adobe_analytics_lang',
-            'adobe_analytics_js',
-            'mail_to_with_params',
-            'is_registry',
-            'organization_member_count',
-            'flash_notice',
-            'flash_error',
-            'flash_success',
-            'adobe_analytics_creator',
-            'resource_view_meta_title',
-            'get_resource_view',
-            'resource_view_type',
-            'fgp_viewer_url',
-            'date_field',
-            'split_piped_bilingual_field',
-            'search_filter_pill_link_label',
-            'release_date_facet_start_year',
-        ])
-
     # IActions
     def get_actions(self):
         return {
@@ -767,6 +763,11 @@ ckanext.canada:schemas/prop.yaml
             province=coltypes.Province,
             crabusnum=coltypes.CRABusinessNumber,
         )
+
+    # IBlueprint
+    def get_blueprint(self):
+        # type: () -> list[Blueprint]
+        return [canada_views]
 
 
 class DataGCCAForms(p.SingletonPlugin, DefaultDatasetForm):

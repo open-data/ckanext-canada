@@ -1,0 +1,144 @@
+{% ckan_extends %}
+
+{% set client_lang = h.lang() %}
+
+{% block package_item %}
+  {% set geno = h.recombinant_get_geno(package.type) %}
+  <li>
+    <article class="panel panel-default mrgn-bttm-sm relative">
+      <header class="panel-heading">
+        {% if package.type == 'dataset' %}
+          <span class="label label-default lb-open-data">{{ _("Open Data") }}</span>
+        {% elif package.type == 'prop' %}
+          <span class="label label-default lb-sug-datasets">{{ _("Suggested Dataset") }}</span>
+        {% elif package.collection in ('transition', 'transition_deputy', 'parliament_report', 'parliament_committee', 'parliament_committee_deputy') %}
+          <span class="label label-default lb-pd">{{ _("Proactive Publication") }}</span>
+        {% elif package.type == 'info' or geno.portal_type == 'info' %}
+          <span class="label label-default lb-open-info">{{ _("Open Information") }}</span>
+        {% elif geno.portal_type == 'dialogue' %}
+          <span class="label label-default lb-open-dialogue">{{ _("Open Dialogue") }}</span>
+        {% elif geno %}
+          <span class="label label-default lb-pd">{{ _("Proactive Publication") }}</span>
+        {% endif %}
+        <h3 class="panel-title">
+          {% block heading %}
+            {% set my_title, machine_translated = h.get_translated_t(package, 'title') %}
+            {% if 'title_translated' not in package %}
+              {% set my_title = _(my_title) %}
+            {% endif %}
+            {% block heading_private %}
+              {{ super() }}
+            {% endblock %}
+            {{ h.link_to(h.truncate(my_title, truncate_title), h.url_for(package.type ~ '.read', id=package.name)) }}
+            {% block heading_meta %}
+              {{ super() }}
+            {% endblock %}
+            {% if machine_translated %}
+              <i class="fa fa-language text-muted mrgn-lft-sm" title="{{ _('This third party metadata element has been translated using an automated translation tool.  To report any discrepancies please contact open-ouvert@tbs-sct.gc.ca') }}"></i>
+            {% endif %}
+          {% endblock %}
+        </h3>
+      </header>
+      <div class="panel-body">
+        {% block banner %}
+          {{ super() }}
+        {% endblock %}
+        {% block notes %}
+          {% set notes, machine_translated = h.get_translated_t(package, 'notes') %}
+          {% if notes %}
+            <div>
+              {% if 'notes_translated' not in package %}
+                {{ _(h.markdown_extract(notes, extract_length=300)) }}
+              {% else %}
+                {{ h.markdown_extract(notes, extract_length=300) }}
+              {% endif %}
+              {% if machine_translated %}
+                <i class="fa fa-language text-muted mrgn-lft-sm" title="{{ _('This third party metadata element has been translated using an automated translation tool.  To report any discrepancies please contact open-ouvert@tbs-sct.gc.ca') }}"></i>
+              {% endif %}
+            </div>
+          {% else %}
+            <p class="empty">{{ _("This dataset has no description") }}</p>
+          {% endif %}
+        {% endblock %}
+        {% block publisher_info %}
+          <div class="row mrgn-tp-sm">
+            {% if package.organization %}
+              <div class="col-md-3">
+                <em>{{ _('Organization:') }} </em>
+              </div>
+              <div class="col-md-9">
+                {{ h.split_piped_bilingual_field(package.organization.title, client_lang) }}
+              </div>
+            {% endif %}
+          </div>
+          {% set issuing_org = h.scheming_language_text(package.get('org_title_at_publication')) %}
+          {% if issuing_org and package.jurisdiction != 'federal' %}
+            <div class="row">
+              <div class="col-md-3">
+                <em>{{ _('Issued by:') }} </em>
+              </div>
+              <div class="col-md-9">
+                {{ issuing_org }}
+              </div>
+            </div>
+          {% endif %}
+        {% endblock %}
+        {% block resources_outer %}
+          {% if package.type == 'prop' %}
+            {% set schema = h.scheming_get_dataset_schema(package.type) %}
+            <div class="row">
+              <div class="col-md-3">
+                <em>{{ h.scheming_language_text(schema.dataset_fields[-3].label) }}{{ _(':') }}</em>
+              </div>
+              <div class="col-md-9">
+                {% snippet 'scheming/snippets/display_field.html', field=schema.dataset_fields[-3], data=package, entity_type='dataset', object_type='prop' %}
+              </div>
+            </div>
+            {% if package.status %}
+              <div class="row">
+                <div class="col-md-3">
+                  <em>{{ _('Status:') }}</em>
+                </div>
+                <div class="col-md-9">
+                  {% snippet 'scheming/snippets/display_field.html', field=schema.dataset_fields[-1].repeating_subfields[1], data=package.status[-1], entity_type='dataset', object_type='prop' %}
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-3">
+                  <em>{{ _('Date:') }}</em>
+                </div>
+                <div class="col-md-9">
+                  {{ package.status[-1].date }}
+                </div>
+              </div>
+            {% else %}
+              <div class="row">
+                <div class="col-md-3">
+                  <em>{{ _('Status:') }}</em>
+                </div>
+                <div class="col-md-9">
+                  {{ _('Request sent to data owner – awaiting response') }}
+                </div>
+              </div>
+            {% endif %}
+          {% else %}
+            <div class="row">
+              <div class="col-md-3">
+                <em>{{ _('Resource Formats:') }}</em>
+              </div>
+              <div class="col-md-9">
+                <ul class="list-inline list-unstyled">
+                  {% for resource in h.dict_list_reduce(package.resources, 'format') %}
+                    <li><span class="badge">{{ _(resource) }}</span></li>
+                  {% endfor %}
+                </ul>
+              </div>
+            </div>
+          {% endif %}
+        {% endblock %}
+      </div>
+    </article>
+  </li>
+{% endblock %}
+
+

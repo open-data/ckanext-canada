@@ -1,0 +1,47 @@
+{#
+Embeds a organization within the sidebar of a page.
+
+organization    - The organization dict.
+truncate - A max length for the organization description. If not provided the description
+           will be full length.
+
+Example:
+
+    {% snippet 'snippets/organization, organization=g.group_dict %}
+
+#}
+
+{% with truncate=truncate or 0, url=h.url_for('organization.read', id=organization.name) %}
+  <div class="panel panel-info">
+    <div class="panel-heading text-center">
+      {{ h.get_translated(organization, 'title') }}
+    </div>
+    <div class="panel-body">
+      {% if organization.description %}
+        <p>
+          {{ h.markdown_extract(organization.description, 180) }}
+          {% link_for _('read more'), 'organization.about', id=organization.name %}
+        </p>
+      {% endif %}
+      {% if show_nums %}
+        {% set member_count = h.organization_member_count(organization.name) %}
+        {% if member_count >= 0 %}
+          <div class="row">
+            <div class="col-md-6">
+              <h4 class="text-center">{{ _('Members') }}</h4>
+              <p class="font-xlarge text-center">
+                {{ h.SI_number_span(member_count) }}
+              </p>
+            </div>
+            <div class="col-md-6">
+              <h4 class="text-center">{{ _('Datasets') }}</h4>
+              <p class="font-xlarge text-center">
+                {{ h.SI_number_span(organization.package_count) }}
+              </p>
+            </div>
+          </div>
+        {% endif %}
+      {% endif %}
+    </div>
+  </div>
+{% endwith %}
