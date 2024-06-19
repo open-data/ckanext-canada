@@ -6,7 +6,6 @@ from flask import has_request_context
 import ckan.plugins as p
 from ckan.lib.plugins import DefaultDatasetForm, DefaultTranslation
 import ckan.lib.helpers as hlp
-from ckan.logic import validators as logic_validators
 from ckanext.datastore.interfaces import IDataDictionaryForm
 from ckanext.activity.logic.validators import object_id_validators
 
@@ -164,7 +163,7 @@ class CanadaSecurityPlugin(CkanSecurityPlugin):
         config['ckan.auth.user_delete_organizations'] = True
         config['ckan.auth.create_user_via_web'] = plugin_loaded('canada_internal')  # /user/register view only on registry
         # Set auth settings
-        config['ckan.auth.roles_that_cascade_to_sub_groups'] = 'admin'
+        config['ckan.auth.roles_that_cascade_to_sub_groups'] = ['admin']
 
         csrf.exempt(datatablesview)
 
@@ -704,9 +703,9 @@ class DataGCCAPublic(p.SingletonPlugin, DefaultTranslation):
         # migrated from `ckan` canada fork for resource view activities - Jan 2024
         # migrated from `activity` for ckan 2.10 upgrade - June 2024
         object_id_validators.update({
-            'new resource view': logic_validators.package_id_exists,
-            'changed resource view': logic_validators.package_id_exists,
-            'deleted resource view': logic_validators.package_id_exists,
+            'new resource view': 'package_id_exists',
+            'changed resource view': 'package_id_exists',
+            'deleted resource view': 'package_id_exists',
         })
 
     # IFacets
