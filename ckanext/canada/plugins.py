@@ -320,7 +320,7 @@ class CanadaDatasetsPlugin(SchemingDatasetsPlugin):
 
 
     # IPackageController
-    def before_search(self, search_params):
+    def before_dataset_search(self, search_params):
         # We're going to group portal_release_date into two bins - to today and
         # after today.
         search_params['facet.range'] = 'portal_release_date'
@@ -359,7 +359,7 @@ class CanadaDatasetsPlugin(SchemingDatasetsPlugin):
 
 
     # IPackageController
-    def after_search(self, search_results, search_params):
+    def after_dataset_search(self, search_results, search_params):
         for result in search_results.get('results', []):
             for extra in result.get('extras', []):
                 if extra.get('key') in ['title_fra', 'notes_fra']:
@@ -369,7 +369,7 @@ class CanadaDatasetsPlugin(SchemingDatasetsPlugin):
 
 
     # IPackageController
-    def before_index(self, data_dict):
+    def before_dataset_index(self, data_dict):
         kw = json.loads(data_dict.get('extras_keywords', '{}'))
         data_dict['keywords'] = kw.get('en', [])
         data_dict['keywords_fra'] = kw.get('fr', kw.get('fr-t-en', []))
