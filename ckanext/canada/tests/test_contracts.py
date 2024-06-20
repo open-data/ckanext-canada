@@ -72,7 +72,7 @@ class TestContracts(CanadaTestBase):
             contract_date='2022-01-01',
             vendor_postal_code=None,
             buyer_name='',
-            trade_agreement=None,
+            trade_agreement='',
             agreement_type_code='Z',
             land_claims=None,
             indigenous_business='',

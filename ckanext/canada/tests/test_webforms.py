@@ -12,7 +12,7 @@ from ckanapi import (
 
 from ckan.tests.helpers import CKANResponse
 
-from ckan.tests.factories import Sysadmin
+from ckan.tests.factories import SysadminWithToken as Sysadmin
 from ckanext.canada.tests.factories import (
     CanadaOrganization as Organization,
     CanadaUser as User
@@ -44,7 +44,8 @@ class TestPackageWebForms(CanadaTestBase):
         """
         super(TestPackageWebForms, self).setup_method(method)
         self.sysadmin = Sysadmin()
-        self.extra_environ_tester = {'REMOTE_USER': self.sysadmin['name'].encode('ascii')}
+        self.extra_environ_tester = {'REMOTE_USER': self.sysadmin['name'].encode('ascii'),
+                                     'Authorization': self.sysadmin['token']}
         self.org = Organization()
         self.dataset_id = 'f3e4adb9-6e32-4cb4-bf68-1eab9d1288f4'
         self.resource_id = '8b29e2c6-8a12-4537-bf97-fe4e5f0a14c1'
@@ -85,7 +86,7 @@ class TestPackageWebForms(CanadaTestBase):
         incomplete_dataset_form = {
             'id': self.dataset_id,
             'save': '',
-            '_ckan_phase': '1'
+            '_ckan_phase': '1',
         }
         response = app.post(offset,
                             data=incomplete_dataset_form,
@@ -121,7 +122,7 @@ class TestPackageWebForms(CanadaTestBase):
             'id': '',
             'package_id': self.dataset_id,
             'url': 'somewhere',
-            'save': 'go-dataset-complete'
+            'save': 'go-dataset-complete',
         }
         response = app.post(offset,
                             data=incomplete_resource_form,
@@ -155,7 +156,7 @@ class TestPackageWebForms(CanadaTestBase):
             'restrictions': 'unrestricted',
             'imso_approval': 'true',
             'save': '',
-            '_ckan_phase': '1'
+            '_ckan_phase': '1',
         }
 
 
@@ -250,9 +251,12 @@ class TestRecombinantWebForms(CanadaTestBase):
         member = User()
         editor = User()
         sysadmin = Sysadmin()
-        self.extra_environ_member = {'REMOTE_USER': member['name'].encode('ascii')}
-        self.extra_environ_editor = {'REMOTE_USER': editor['name'].encode('ascii')}
-        self.extra_environ_system = {'REMOTE_USER': sysadmin['name'].encode('ascii')}
+        self.extra_environ_member = {'REMOTE_USER': member['name'].encode('ascii'),
+                                     'Authorization': member['token']}
+        self.extra_environ_editor = {'REMOTE_USER': editor['name'].encode('ascii'),
+                                     'Authorization': editor['token']}
+        self.extra_environ_system = {'REMOTE_USER': sysadmin['name'].encode('ascii'),
+                                     'Authorization': sysadmin['token']}
         self.org = Organization(users=[{
             'name': member['name'],
             'capacity': 'member'},
