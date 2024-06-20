@@ -170,7 +170,7 @@ presets:
     required: true
     form_include_blank_choice: true
     form_select_attrs:
-      class: form-control
+      class: form-control form-select
     # copied from dataset_organization preset
     validators: scheming_required string_safe owner_org_validator
     form_snippet: organization.html

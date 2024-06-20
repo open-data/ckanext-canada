@@ -29,7 +29,11 @@
             {% block heading_private %}{# Do not show "Private" label #}{% endblock %}
             {{ h.link_to(my_title|truncate(80), h.url_for(package.type ~ '.read', id=package.name)) }}
             {% block heading_meta %}
-              {{ super() }}
+              {% if package.get('state', '').startswith('draft') %}
+                <span class="label label-info">{{ _('Draft') }}</span>
+              {% elif package.get('state', '').startswith('deleted') %}
+                <span class="label label-danger">{{ _('Deleted') }}</span>
+              {% endif %}
             {% endblock %}
             {% if machine_translated %}
               <i class="fa fa-language text-muted mrgn-lft-sm" title="{{ _('This third party metadata element has been translated using an automated translation tool.  To report any discrepancies please contact open-ouvert@tbs-sct.gc.ca') }}"></i>

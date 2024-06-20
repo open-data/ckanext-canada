@@ -52,8 +52,8 @@
 {% block resource_item_explore %}
   {% if not url_is_edit %}
     <div class="dropdown btn-group resource-action-links">
-      <a href="#" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-        <i class="fa fa-share"></i>&nbsp;{{ _('Explore') }}&nbsp;<span class="caret"></span>
+      <a href="#" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" type="button" id="dropdownExplorer" data-bs-toggle="dropdown" aria-expanded="false">
+        <i class="fa fa-share"></i>&nbsp;{{ _('Explore') }}
       </a>
       <ul class="dropdown-menu">
         {% block resource_item_explore_links %}
@@ -70,7 +70,7 @@
             <li>
               <a href="{{ res.url }}" class="resource-url-analytics" target="_blank" data-pkg-id="{{ pkg.id }}" data-res-id="{{ res.id }}" data-org-id="{{ pkg.organization.id }}">
                 {% if res.has_views or res.url_type == 'upload' %}
-                  <i class="fa fa-arrow-circle-o-down"></i>&nbsp;{{ _('Download') }}
+                  <i class="fa fa-arrow-circle-down"></i>&nbsp;{{ _('Download') }}
                 {% else %}
                   <i class="fa fa-external-link"></i>&nbsp;{{ _('Go to resource') }}
                 {% endif %}

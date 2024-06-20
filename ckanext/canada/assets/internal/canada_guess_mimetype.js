@@ -16,6 +16,7 @@ window.addEventListener('load', function(){
                     .children('#s2id_field-format')
                     .addClass('conrtol-medium')
                     .removeClass('form-control')
+                    .removeClass('form-select')
                     .css({'display': 'block'});
 
     }

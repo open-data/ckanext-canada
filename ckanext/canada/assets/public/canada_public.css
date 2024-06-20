@@ -1126,13 +1126,31 @@ body .bg-danger{
 }
 body .error-block,
 body .error-inline{
-  font-size: 16px !important;
+  font-size: 12px !important;
+  line-height: 23px !important;
 }
 /* BS4+ Fix. TODO: remove after upgrade to BS4+ */
 body .btn.btn-light{
   color: #335075 !important;
   background-color: #eaebed !important;
   border-color: #dcdee1 !important;
+}
+/* BS4+ Fix. TODO: remove after upgrade to BS4+ */
+a[class="btn"],
+button[class="btn"]{
+  color: #335075;
+  background-color: #eaebed;
+  border-color: #dcdee1;
+}
+/* BS4+ Fix. TODO: remove after upgrade to BS4+ */
+a[class="btn"]:hover,
+a[class="btn"]:active,
+a[class="btn"]:focus,
+button[class="btn"]:hover,
+button[class="btn"]:active,
+button[class="btn"]:focus{
+  background-color: #cfd1d5;
+  border-color: #bbbfc5;
 }
 /* BS4+ Fix. TODO: remove after upgrade to BS4+ */
 body .btn.btn-light:active,
@@ -1203,18 +1221,31 @@ body .canada-admin-trash #accordion-group{
   }
 }
 /* BS4+ Fix. TODO: remove after upgrade to BS4+ */
-body .modal.fade{
+body .modal.fade,
+body .popover.fade{
   animation: modal-fade-out 0.325s ease-in 0s forwards !important;
 }
 /* BS4+ Fix. TODO: remove after upgrade to BS4+ */
-body .modal.fade.show{
+body .modal.fade.show,
+body .popover.fade.show{
   animation: modal-fade-in 0.325s ease-in 0s forwards !important;
+}
+body .popover .popover-header{
+  margin: 0 !important;
+  font-size: 16px !important;
+  padding: 8px 14px !important;
 }
 /* BS4+ Fix. TODO: remove after upgrade to BS4+ */
 @media all and (max-width: 768px){
   body div#wb-bnr > div.row{
     flex-direction: row-reverse;
   }
+}
+/* BS4+ Fix. TODO: remove after upgrade to BS4+ */
+body .form-select{
+  appearance: auto !important;
+  -webkit-appearance: auto !important;
+  -moz-appearance: auto !important;
 }
 /*###########################
 ##           END           ##
