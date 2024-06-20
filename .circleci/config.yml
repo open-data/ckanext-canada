@@ -17,7 +17,7 @@ orbs:
 jobs:
   test:
     docker:
-      - image: ckan/ckan-dev:2.10  # primary executor
+      - image: ckan/ckan-dev:2.10.4  # primary executor
         name: ckan
         environment:
           PGHOST: postgres
