@@ -17,7 +17,7 @@
             <div class="modal-content overlay-def">
               <header class="modal-header">
                 <h2 class="modal-title" id="modalLabel">{{ _('Your user sessions has timed out due to inactivity') }}</h2>
-                <button type="button" class="close mfp-close" data-dismiss="modal" aria-label="Close">
+                <button type="button" class="close mfp-close" data-bs-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button>
               </header>
@@ -28,7 +28,7 @@
                 <a href="{{ h.url_for('user.login') }}" target="_blank" class="btn btn-default btn-sm">
                   <span class="fa fa-sign-in"></span>&nbsp;<span class="text">{{ _('Log in') }}</span>
                 </a>
-                <button type="button" class="btn btn-sm btn-primary pull-left" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-sm btn-primary pull-left" data-bs-dismiss="modal">Close</button>
               </div>
             </div>
           </div>

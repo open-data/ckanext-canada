@@ -1247,6 +1247,23 @@ body .form-select{
   -webkit-appearance: auto !important;
   -moz-appearance: auto !important;
 }
+body #timeout{
+  background: rgba(0, 0, 0, 0.15) !important;
+}
+body #timeout > .modal-dialog{
+  position: absolute !important;
+  top: 50% !important;
+  left: 50% !important;
+  transform: translate(-50%, -25%) !important;
+}
+@media all and (max-width: 768px){
+  body #timeout > .modal-dialog{
+    top: 35% !important;
+    max-width: 80% !important;
+    min-width: 80% !important;
+    width: 80% !important;
+  }
+}
 /*###########################
 ##           END           ##
 ##  CKAN Base CSS Overrides##
