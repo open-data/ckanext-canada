@@ -67,6 +67,9 @@ _('Activity type')  # TODO: remove after upstream fix
 _("Please upload a file or link to an external resource")
 _("Cannot upload files of this type")
 _("Cannot link files of this type")
+_('Your password must be {} characters or longer.')
+_('Your password must consist of at least three of the following character sets: '
+  'uppercase characters, lowercase characters, digits, punctuation & special characters.')
 
 # strings from scheming
 _('These fields have been removed, click update below to save your changes.')
