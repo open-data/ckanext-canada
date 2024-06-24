@@ -26,7 +26,7 @@
     {% endif %}
     {{ h.build_nav_icon('activity.organization_activity', _('Activity'), id=organization.name, icon='clock') }}
     {% if h.check_access('organization_update', {'id': organization.id}) %}
-      {{ h.build_nav_icon('organization.members', _('Edit Members'), id=organization.name, icon='users') }}
+      {{ h.build_nav_icon('organization.manage_members', _('Edit Members'), id=organization.name, icon='users') }}
     {% elif h.check_access('view_org_members', {'id': organization.id}) %}
       {{ h.build_nav_icon('organization.members', _('View Members'), id=organization.name, icon='users') }}
     {% endif %}

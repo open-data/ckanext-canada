@@ -5,7 +5,7 @@
 {% set user = g.user_dict %}
 
 {% block primary_content_inner %}
-  <a href="{{ h.url_for('organization.members', id=organization.name) }}" class="btn btn-default pull-right">
+  <a href="{{ h.url_for('organization.manage_members', id=organization.name) }}" class="btn btn-default pull-right">
       <i class="fa fa-arrow-left"></i>&nbsp;{{ _('Back to all members') }}
   </a>
   <h2>{{ _('Edit Member') if user else _('Add Member') }}</h2>
