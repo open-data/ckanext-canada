@@ -9,6 +9,6 @@
 {% block page_primary_action %}
   {{ super() }}
   {% if h.check_access('organization_update', {'id': g.group_dict.id}) %}
-    {% link_for _('Edit Organization'), 'organization.edit', id=g.group_dict.id, class_='btn btn-default', icon='wrench' %}
+    <a class="btn btn-default" href="{{ h.url_for('organization.edit', id=g.group_dict.id) }}"><i class="fa fa-wrench"></i>&nbsp;{{ _('Edit Organization') }}</a>
   {% endif %}
 {% endblock %}

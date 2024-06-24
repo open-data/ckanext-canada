@@ -7,15 +7,6 @@
   {% endif %}
 {% endblock %}
 
-{% block content_primary_nav %}
-  {% if g.is_registry %}
-    {{ super () }}
-    {% if h.check_access('user_update', {'id': user.name}) %}
-      {{ h.build_nav_icon('user.edit', _('Edit User'), id=user.name) }}
-    {% endif %}
-  {% endif %}
-{% endblock %}
-
 {% block secondary_content %}
   <div class="panel panel-default">
     <div class="panel-heading">
@@ -33,8 +24,8 @@
         <div class="col-md-4 left-center">{{ h.SI_number_span(user.num_followers) }}</div>
       </div>
       <div class="row">
-        <div class="col-md-8 left-center"><strong>{{ _('Edits:') }} </strong></div>
-        <div class="col-md-4 left-center">{{ h.SI_number_span(user.number_of_edits) }}</div>
+        <div class="col-md-8 left-center"><strong>{{ _('Datasets:') }} </strong></div>
+        <div class="col-md-4 left-center">{{ h.SI_number_span(user.number_created_packages) }}</div>
       </div>
       {% endblock %}
       {% if is_myself == false %}
