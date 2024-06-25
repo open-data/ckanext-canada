@@ -26,15 +26,15 @@
             {% endblock %}
         </ul>
     </div>
-    {% else %}
+    {% elif h.registry_network_access() %}
     <div id="usr-logged" class="col-md-6">
         <ul class="list-inline">
             {% block header_account_notlogged %}
             <li>
-                <a href="{{ h.url_for('user.login') }}" class="btn btn-primary">
-                    <span class="fa fa-sign-in"></span>
-                    <span class="text">{{ _('Log in') }}</span>
-                </a>
+              <a href="{{ h.url_for('user.login') }}" class="btn btn-primary">
+                  <span class="fa fa-sign-in"></span>
+                  <span class="text">{{ _('Log in') }}</span>
+              </a>
             </li>
             {% endblock %}
         </ul>

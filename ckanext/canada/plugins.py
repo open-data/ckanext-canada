@@ -18,7 +18,8 @@ from ckan.plugins.toolkit import (
     ObjectNotFound,
     _,
     get_validator,
-    request
+    request,
+    abort,
 )
 
 from ckanext.canada import validators
@@ -68,6 +69,7 @@ class CanadaSecurityPlugin(CkanSecurityPlugin):
     p.implements(p.IResourceController, inherit=True)
     p.implements(p.IValidators, inherit=True)
     p.implements(p.IConfigurer)
+    p.implements(p.IAuthenticator, inherit=True)
 
     def update_config(self, config):
         super(CanadaSecurityPlugin, self).update_config(config)
@@ -104,6 +106,22 @@ class CanadaSecurityPlugin(CkanSecurityPlugin):
             canada_security_upload_type=validators.canada_security_upload_type,
             canada_security_upload_presence=validators.canada_security_upload_presence,
         )
+
+    # IAuthenticator
+    def identify(self):
+        controller, action = p.toolkit.get_endpoint()
+        blueprint = '.'.join((controller, action))
+        restricted_blueprints = [
+            'canada.login',
+            'user.login',
+            'user.request_reset',
+            'canada.recover_username',
+            'canada.register',
+            'canada.action',
+            'api.action', # change if need to narrow down the scope
+        ]
+        if blueprint in restricted_blueprints and not helpers.registry_network_access():
+            return abort(403)
 
 
 class CanadaDatasetsPlugin(SchemingDatasetsPlugin):
@@ -395,6 +413,7 @@ ckanext.canada:schemas/presets.yaml
             'canada_check_access',
             'get_user_email',
             'get_loader_status_badge',
+            'registry_network_access',
         ])
 
     # IConfigurable

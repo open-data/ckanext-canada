@@ -29,6 +29,8 @@ try:
     from ckanext.xloader.utils import XLoaderFormats
 except ImportError:
     XLoaderFormats = None
+import os
+import ipaddress
 
 
 ORG_MAY_PUBLISH_OPTION = 'canada.publish_datasets_organization_name'
@@ -772,6 +774,42 @@ def date_field(field, pkg):
     if pkg.get(field) and ' ' in pkg.get(field):
         return pkg.get(field).split(' ')[0]
     return pkg.get(field, None)
+
+
+def registry_network_access():
+    """
+    Only allow requests from GOC network to access
+    user account registration view
+    """
+    remote_addr = request.headers.get('X-Forwarded-For') or \
+                  request.environ.get('REMOTE_ADDR')
+    try:
+        client_ip = ipaddress.ip_address(text_type(remote_addr))
+    except ValueError:
+        return False
+
+    netlist_path = config.get('ckanext.canada.registry_network_list', '')
+    if not netlist_path or not os.path.isfile(netlist_path):
+        return False
+
+    with open(netlist_path) as allow_list:
+        for line in allow_list:
+            # the netlist_path file is a combination of text, ip addresses and subnets
+            line = text_type(line.strip())
+            try:
+                ip = ipaddress.ip_address(line)
+                if client_ip == ip:
+                    return True
+            except ValueError:
+                pass
+
+            try:
+                ip_network = ipaddress.ip_network(line, False)
+                if client_ip in ip_network:
+                    return True
+            except ValueError:
+                pass
+        return False
 
 
 def split_piped_bilingual_field(field_text, client_lang):
