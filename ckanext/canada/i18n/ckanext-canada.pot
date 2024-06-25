@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ckanext-canada 0.4.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-06-25 11:10-0400\n"
+"POT-Creation-Date: 2024-06-25 14:32+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,13 +17,13 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.7.0\n"
 
-#: ckanext/canada/assets/internal/validation_spec.js:9 ckanext/canada/checks.py:25
+#: ckanext/canada/assets/internal/validation_spec.js:8 ckanext/canada/checks.py:25
 msgid ""
 "Column name {value} in column {column_number} is not valid for a DataStore "
 "header"
 msgstr ""
 
-#: ckanext/canada/assets/internal/validation_spec.js:17 ckanext/canada/checks.py:30
+#: ckanext/canada/assets/internal/validation_spec.js:16 ckanext/canada/checks.py:30
 msgid ""
 "Column name {value} in column {column_number} is too long for a DataStore "
 "header"
@@ -202,65 +202,65 @@ msgstr ""
 msgid "Unknown Job"
 msgstr ""
 
-#: ckanext/canada/plugins.py:654
+#: ckanext/canada/plugins.py:657
 #: ckanext/canada/templates/internal/scheming/package/snippets/package_form.html:26
 msgid "Portal Type"
 msgstr ""
 
-#: ckanext/canada/plugins.py:655
+#: ckanext/canada/plugins.py:658
 #: ckanext/canada/templates/internal/user/new_user_form.html:18
 #: ckanext/canada/templates/public/package/deleted.html:14
 #: ckanext/canada/templates/public/snippets/package_item.html:66
 msgid "Organization"
 msgstr ""
 
-#: ckanext/canada/plugins.py:656
+#: ckanext/canada/plugins.py:659
 msgid "Collection Type"
 msgstr ""
 
-#: ckanext/canada/plugins.py:657 ckanext/canada/plugins.py:658
+#: ckanext/canada/plugins.py:660 ckanext/canada/plugins.py:661
 msgid "Keywords"
 msgstr ""
 
-#: ckanext/canada/plugins.py:659
+#: ckanext/canada/plugins.py:662
 msgid "Subject"
 msgstr ""
 
-#: ckanext/canada/plugins.py:660
+#: ckanext/canada/plugins.py:663
 #: ckanext/canada/templates/internal/tabledesigner/view_snippets/cra_business_number.html:1
 msgid "Format"
 msgstr ""
 
-#: ckanext/canada/plugins.py:661
+#: ckanext/canada/plugins.py:664
 msgid "Resource Type"
 msgstr ""
 
-#: ckanext/canada/plugins.py:662
+#: ckanext/canada/plugins.py:665
 msgid "Maintenance and Update Frequency"
 msgstr ""
 
-#: ckanext/canada/plugins.py:663
+#: ckanext/canada/plugins.py:666
 msgid "Record Status"
 msgstr ""
 
-#: ckanext/canada/plugins.py:664
+#: ckanext/canada/plugins.py:667
 msgid "IMSO Approval"
 msgstr ""
 
-#: ckanext/canada/plugins.py:665
+#: ckanext/canada/plugins.py:668
 msgid "Jurisdiction"
 msgstr ""
 
-#: ckanext/canada/plugins.py:666
+#: ckanext/canada/plugins.py:669
 msgid "Suggestion Status"
 msgstr ""
 
-#: ckanext/canada/plugins.py:896
+#: ckanext/canada/plugins.py:899
 #: ckanext/canada/templates/public/package/snippets/resource_form.html:8
 msgid "Previous"
 msgstr ""
 
-#: ckanext/canada/plugins.py:896
+#: ckanext/canada/plugins.py:899
 msgid "Next"
 msgstr ""
 
@@ -515,23 +515,34 @@ msgstr ""
 msgid "Cannot link files of this type"
 msgstr ""
 
-#: ckanext/canada/strings.py:71
+#: ckanext/canada/strings.py:69
+msgid "Your password must be {} characters or longer."
+msgstr ""
+
+#: ckanext/canada/strings.py:70
+msgid ""
+"Your password must consist of at least three of the following character sets:"
+" uppercase characters, lowercase characters, digits, punctuation & special "
+"characters."
+msgstr ""
+
+#: ckanext/canada/strings.py:74
 msgid "These fields have been removed, click update below to save your changes."
 msgstr ""
 
-#: ckanext/canada/strings.py:72
+#: ckanext/canada/strings.py:75
 msgid "These fields have been removed."
 msgstr ""
 
-#: ckanext/canada/strings.py:75
+#: ckanext/canada/strings.py:78
 msgid "Your form submission could not be validated, please re-submit the form."
 msgstr ""
 
-#: ckanext/canada/strings.py:78
+#: ckanext/canada/strings.py:81
 msgid "Open Government Portal"
 msgstr ""
 
-#: ckanext/canada/strings.py:79
+#: ckanext/canada/strings.py:82
 msgid "Open Government Portal (staging)"
 msgstr ""
 
@@ -777,11 +788,11 @@ msgstr ""
 msgid "User %r not authorized to view members of %s"
 msgstr ""
 
-#: ckanext/canada/assets/internal/validation_spec.js:8
+#: ckanext/canada/assets/internal/validation_spec.js:7
 msgid "Invalid Header for DataStore"
 msgstr ""
 
-#: ckanext/canada/assets/internal/validation_spec.js:10
+#: ckanext/canada/assets/internal/validation_spec.js:9
 msgid ""
 "Column name is invalid for a DataStore header.\n"
 "\n"
@@ -792,11 +803,11 @@ msgid ""
 " - Make sure the column name is not blank."
 msgstr ""
 
-#: ckanext/canada/assets/internal/validation_spec.js:16
+#: ckanext/canada/assets/internal/validation_spec.js:15
 msgid "Header Too Long for DataStore"
 msgstr ""
 
-#: ckanext/canada/assets/internal/validation_spec.js:18
+#: ckanext/canada/assets/internal/validation_spec.js:17
 msgid ""
 "Column name is too long for a DataStore header.\n"
 "\n"
@@ -837,8 +848,8 @@ msgid ""
 msgstr ""
 
 #. SQL Trigger String for PD Type: ati
-#: ckanext/canada/tables/ati.yaml:142 ckanext/canada/tables/ati.yaml:251
-msgid "This value must not be negative"
+#: ckanext/canada/tables/ati.yaml:249 ckanext/canada/tables/ati.yaml:381
+msgid "Please enter a valid year"
 msgstr ""
 
 #. SQL Trigger String for PD Type: ati
@@ -849,8 +860,8 @@ msgid "Please enter a month number from 1-12"
 msgstr ""
 
 #. SQL Trigger String for PD Type: ati
-#: ckanext/canada/tables/ati.yaml:249 ckanext/canada/tables/ati.yaml:381
-msgid "Please enter a valid year"
+#: ckanext/canada/tables/ati.yaml:142 ckanext/canada/tables/ati.yaml:251
+msgid "This value must not be negative"
 msgstr ""
 
 #. Resource Title for PD Type: ati
@@ -936,8 +947,22 @@ msgid "Access, upload and modify the Contracts over 10K reports for your organiz
 msgstr ""
 
 #. SQL Trigger String for PD Type: contracts
-#: ckanext/canada/tables/contracts.yaml:2185
-msgid "The field is limited to eight alpha-numeric digits or less."
+#: ckanext/canada/tables/contracts.yaml:2177
+msgid ""
+"This field must contain the first three digits of a postal code in A1A format"
+" or the value \"NA\""
+msgstr ""
+
+#. SQL Trigger String for PD Type: contracts
+#: ckanext/canada/tables/contracts.yaml:2178
+msgid ""
+"This field must be populated with an NA if an amendment is disclosed under "
+"Instrument Type"
+msgstr ""
+
+#. SQL Trigger String for PD Type: contracts
+#: ckanext/canada/tables/contracts.yaml:2179
+msgid "This field is limited to only 3 or 4 digits."
 msgstr ""
 
 #. SQL Trigger String for PD Type: contracts
@@ -948,12 +973,32 @@ msgid ""
 msgstr ""
 
 #. SQL Trigger String for PD Type: contracts
-#: ckanext/canada/tables/contracts.yaml:2188
+#: ckanext/canada/tables/contracts.yaml:2181
 msgid ""
-"If “TC” (Competitive - Traditional), “TN” (Non-Competitive) or “AC” (Advanced"
-" Contract Award Notice) is selected and trade agreement with a value other "
-"than “XX” (None) is selected, limited tendering cannot have a value of “0” or"
-" “00” (None)."
+"If the value XX (none) is entered, then no other value can be entered in this"
+" field."
+msgstr ""
+
+#. SQL Trigger String for PD Type: contracts
+#: ckanext/canada/tables/contracts.yaml:2182
+msgid "Discontinued as of 2022-01-01"
+msgstr ""
+
+#. SQL Trigger String for PD Type: contracts
+#: ckanext/canada/tables/contracts.yaml:2183
+msgid "Must be left blank when trade agreements specified"
+msgstr ""
+
+#. SQL Trigger String for PD Type: contracts
+#: ckanext/canada/tables/contracts.yaml:2184
+msgid ""
+"If the value NA (not applicable) is entered, then no other value can be "
+"entered in this field."
+msgstr ""
+
+#. SQL Trigger String for PD Type: contracts
+#: ckanext/canada/tables/contracts.yaml:2185
+msgid "The field is limited to eight alpha-numeric digits or less."
 msgstr ""
 
 #. SQL Trigger String for PD Type: contracts
@@ -965,30 +1010,20 @@ msgid ""
 msgstr ""
 
 #. SQL Trigger String for PD Type: contracts
-#: ckanext/canada/tables/contracts.yaml:2182
-msgid "Discontinued as of 2022-01-01"
+#: ckanext/canada/tables/contracts.yaml:2187
+msgid ""
+"If TC, TN or AC is selected in the Solicitation Procedure data field with a "
+"value other than XX (None) selected in the Trade Agreement data field, then a"
+" Limited Tendering value other than 00 (none) must be entered."
 msgstr ""
 
 #. SQL Trigger String for PD Type: contracts
-#: ckanext/canada/tables/contracts.yaml:2178
+#: ckanext/canada/tables/contracts.yaml:2188
 msgid ""
-"This field must be populated with an NA if an amendment is disclosed under "
-"Instrument Type"
-msgstr ""
-
-#. SQL Trigger String for PD Type: contracts
-#: ckanext/canada/tables/contracts.yaml:2193
-msgid ""
-"This field may only be populated with “0” if the procurement was identified "
-"as competitive (open bidding (OB), traditional competitive (TC) or selective "
-"tendering (ST))."
-msgstr ""
-
-#. SQL Trigger String for PD Type: contracts
-#: ckanext/canada/tables/contracts.yaml:2181
-msgid ""
-"If the value XX (none) is entered, then no other value can be entered in this"
-" field."
+"If “TC” (Competitive - Traditional), “TN” (Non-Competitive) or “AC” (Advanced"
+" Contract Award Notice) is selected and trade agreement with a value other "
+"than “XX” (None) is selected, limited tendering cannot have a value of “0” or"
+" “00” (None)."
 msgstr ""
 
 #. SQL Trigger String for PD Type: contracts
@@ -1006,26 +1041,6 @@ msgid ""
 msgstr ""
 
 #. SQL Trigger String for PD Type: contracts
-#: ckanext/canada/tables/contracts.yaml:2183
-msgid "Must be left blank when trade agreements specified"
-msgstr ""
-
-#. SQL Trigger String for PD Type: contracts
-#: ckanext/canada/tables/contracts.yaml:2184
-msgid ""
-"If the value NA (not applicable) is entered, then no other value can be "
-"entered in this field."
-msgstr ""
-
-#. SQL Trigger String for PD Type: contracts
-#: ckanext/canada/tables/contracts.yaml:2187
-msgid ""
-"If TC, TN or AC is selected in the Solicitation Procedure data field with a "
-"value other than XX (None) selected in the Trade Agreement data field, then a"
-" Limited Tendering value other than 00 (none) must be entered."
-msgstr ""
-
-#. SQL Trigger String for PD Type: contracts
 #: ckanext/canada/tables/contracts.yaml:2192
 msgid ""
 "If this field is populated, it must be with a “0” if the procurement was "
@@ -1034,15 +1049,11 @@ msgid ""
 msgstr ""
 
 #. SQL Trigger String for PD Type: contracts
-#: ckanext/canada/tables/contracts.yaml:2179
-msgid "This field is limited to only 3 or 4 digits."
-msgstr ""
-
-#. SQL Trigger String for PD Type: contracts
-#: ckanext/canada/tables/contracts.yaml:2177
+#: ckanext/canada/tables/contracts.yaml:2193
 msgid ""
-"This field must contain the first three digits of a postal code in A1A format"
-" or the value \"NA\""
+"This field may only be populated with “0” if the procurement was identified "
+"as competitive (open bidding (OB), traditional competitive (TC) or selective "
+"tendering (ST))."
 msgstr ""
 
 #. Resource Title for PD Type: contracts
@@ -1552,210 +1563,221 @@ msgstr ""
 
 #: ckanext/canada/templates/internal/help.html:36
 msgid ""
+"Make your desired changes. Note that altering your username is not "
+"recommended, as it could disconnect your uploaded data."
+msgstr ""
+
+#: ckanext/canada/templates/internal/help.html:37
+msgid ""
 "After completing your modifications, click <em>\"Update Profile\"</em>. "
 "Depending on the changes, you may need to log in again."
 msgstr ""
 
-#: ckanext/canada/templates/internal/help.html:39
+#: ckanext/canada/templates/internal/help.html:40
 msgid "Open Data and Open Information"
 msgstr ""
 
-#: ckanext/canada/templates/internal/help.html:41
+#: ckanext/canada/templates/internal/help.html:42
 msgid "How do I add an open data or open information record?"
 msgstr ""
 
-#: ckanext/canada/templates/internal/help.html:42
+#: ckanext/canada/templates/internal/help.html:43
 msgid ""
 "Please visit the registry operations guide section for <a "
 "href=\"https://open.canada.ca/en/registry-operations-guide/upload-"
 "data\">Uploading open data and information.</a>"
 msgstr ""
 
-#: ckanext/canada/templates/internal/help.html:45
+#: ckanext/canada/templates/internal/help.html:46
 msgid "How do I review an open data or open information record for my organization?"
 msgstr ""
 
-#: ckanext/canada/templates/internal/help.html:46
+#: ckanext/canada/templates/internal/help.html:47
 msgid ""
 "To review your department's open data or open information records or to see "
 "the complete list of records:"
 msgstr ""
 
-#: ckanext/canada/templates/internal/help.html:48
+#: ckanext/canada/templates/internal/help.html:49
 msgid "Select Menu, then Organizations."
 msgstr ""
 
-#: ckanext/canada/templates/internal/help.html:49
+#: ckanext/canada/templates/internal/help.html:50
 msgid "Select your organization."
 msgstr ""
 
-#: ckanext/canada/templates/internal/help.html:50
+#: ckanext/canada/templates/internal/help.html:51
 msgid "Your records will appear."
 msgstr ""
 
-#: ckanext/canada/templates/internal/help.html:54
+#: ckanext/canada/templates/internal/help.html:55
 msgid "How do I search the Registry?"
 msgstr ""
 
-#: ckanext/canada/templates/internal/help.html:55
+#: ckanext/canada/templates/internal/help.html:56
 msgid "To find metadata records published in the Registry, follow these steps:"
 msgstr ""
 
-#: ckanext/canada/templates/internal/help.html:57
+#: ckanext/canada/templates/internal/help.html:58
 msgid "Click on the <em>\"Search\"</em> option in the main menu."
 msgstr ""
 
-#: ckanext/canada/templates/internal/help.html:58
+#: ckanext/canada/templates/internal/help.html:59
 msgid ""
 "On the Search page, you can either enter a search term directly or use the "
-"facets on the left-hand side to narrow down your search."
+"facets on the right-hand side to narrow down your search."
 msgstr ""
 
-#: ckanext/canada/templates/internal/help.html:59
+#: ckanext/canada/templates/internal/help.html:60
 msgid ""
 "The list of results will display records matching your search query in the "
 "order in which they were entered or updated in the Registry."
 msgstr ""
 
-#: ckanext/canada/templates/internal/help.html:62
+#: ckanext/canada/templates/internal/help.html:63
 msgid "Proactive Disclosure Information"
 msgstr ""
 
-#: ckanext/canada/templates/internal/help.html:64
+#: ckanext/canada/templates/internal/help.html:65
 msgid "How do I add, modify or delete records in the Registry?"
 msgstr ""
 
-#: ckanext/canada/templates/internal/help.html:65
+#: ckanext/canada/templates/internal/help.html:66
 msgid ""
 "Please visit the registry operations guide section for <a "
 "href=\"https://open.canada.ca/en/registry-operations-guide/upload-"
 "data#manage\">Managing records.</a>"
 msgstr ""
 
-#: ckanext/canada/templates/internal/help.html:68
+#: ckanext/canada/templates/internal/help.html:69
 msgid "Why can't I see my uploaded data on the portal?"
 msgstr ""
 
-#: ckanext/canada/templates/internal/help.html:69
+#: ckanext/canada/templates/internal/help.html:70
 msgid ""
 "When uploading Proactive publication data to the Registry, it's essential to "
 "follow these directives to ensure a successful process:"
 msgstr ""
 
-#: ckanext/canada/templates/internal/help.html:71
+#: ckanext/canada/templates/internal/help.html:72
 msgid ""
 "Download the Latest Template to ensure that you're using the most up-to-date "
 "format."
 msgstr ""
 
-#: ckanext/canada/templates/internal/help.html:72
+#: ckanext/canada/templates/internal/help.html:73
 msgid ""
 "Prepare Data in the Proper Template: Organize your data in the appropriate "
 "template for the specific organization and Proactive publication type. Each "
 "template corresponds to particular context, so choose the relevant one."
 msgstr ""
 
-#: ckanext/canada/templates/internal/help.html:73
+#: ckanext/canada/templates/internal/help.html:74
+msgid ""
+"Maintain the Abbreviated Organization Name: In the template, the abbreviated "
+"name of the organization (e.g., \"aandc-aadnc\") must remain in cell C1 "
+"exactly as downloaded."
+msgstr ""
+
+#: ckanext/canada/templates/internal/help.html:75
 msgid ""
 "Include All Required Fields: Ensure that the template you're uploading "
 "contains all the required fields for the specific Proactive publication type."
 " Missing fields can lead to issues during the upload process."
 msgstr ""
 
-#: ckanext/canada/templates/internal/help.html:74
+#: ckanext/canada/templates/internal/help.html:76
 msgid ""
 "Enter Valid Data: Populate the template with valid and accurate data. "
 "Incorrect or incomplete information may cause errors."
 msgstr ""
 
-#: ckanext/canada/templates/internal/help.html:75
+#: ckanext/canada/templates/internal/help.html:77
 msgid ""
 "File Format and Naming: Your completed data template should be an Excel "
-"spreadsheet in either XLS or XLSX format."
+"spreadsheet in either XLS or XLSX format. Do not rename the file, as the "
+"system relies on a unique ID associated with each template. Renaming it could"
+" lead to complications."
 msgstr ""
 
-#: ckanext/canada/templates/internal/help.html:76
+#: ckanext/canada/templates/internal/help.html:78
 msgid ""
 "Troubleshooting Upload Issues: If you encounter an error message during the "
 "upload, carefully review the message text and take corrective measures based "
 "on the specific issue."
 msgstr ""
 
-#: ckanext/canada/templates/internal/help.html:77
+#: ckanext/canada/templates/internal/help.html:79
 msgid ""
 "If the upload was successful but you don't see the data in the "
 "<em>\"Preview\"</em> section of the page, verify your data file. It might be "
 "a duplicate upload or have other issues."
 msgstr ""
 
-#: ckanext/canada/templates/internal/help.html:81
+#: ckanext/canada/templates/internal/help.html:83
 msgid "Was everything uploaded correctly?"
 msgstr ""
 
-#: ckanext/canada/templates/internal/help.html:82
+#: ckanext/canada/templates/internal/help.html:84
 msgid ""
 "A record is not immediately pushed to the portal, it will appear the "
 "following morning. The following are two possible methods for you to verify "
 "your data upload:"
 msgstr ""
 
-#: ckanext/canada/templates/internal/help.html:84
+#: ckanext/canada/templates/internal/help.html:86
 msgid ""
 "If you see the message <em>\"Your template has been successfully "
 "uploaded\"</em> after you have hit the <em>\"Submit\"</em> button; or"
 msgstr ""
 
-#: ckanext/canada/templates/internal/help.html:85
+#: ckanext/canada/templates/internal/help.html:87
 msgid ""
 "you can verify the data by looking in the Preview table for one or more of "
 "your template line items."
 msgstr ""
 
-#: ckanext/canada/templates/internal/help.html:89
+#: ckanext/canada/templates/internal/help.html:91
 msgid "Why didn't I get a confirmation email that my upload was successful?"
 msgstr ""
 
-#: ckanext/canada/templates/internal/help.html:90
+#: ckanext/canada/templates/internal/help.html:92
 msgid ""
 "The system only provides an onscreen message <em>\"Your template has been "
 "successfully uploaded\"</em>; it does not send a confirmation email."
 msgstr ""
 
-#: ckanext/canada/templates/internal/help.html:93
+#: ckanext/canada/templates/internal/help.html:95
 msgid "Why don't I see the upload button?"
 msgstr ""
 
-#: ckanext/canada/templates/internal/help.html:94
+#: ckanext/canada/templates/internal/help.html:96
 msgid ""
 "The Upload button is accessible only to users associated with an "
 "organization. If you're unable to see the button, consider the following "
 "reasons:"
 msgstr ""
 
-#: ckanext/canada/templates/internal/help.html:96
+#: ckanext/canada/templates/internal/help.html:98
 msgid "Confirm that you are logged into the Registry."
 msgstr ""
 
-#: ckanext/canada/templates/internal/help.html:97
+#: ckanext/canada/templates/internal/help.html:99
 msgid "Ensure that your account is linked to your organization."
 msgstr ""
 
-#: ckanext/canada/templates/internal/help.html:98
+#: ckanext/canada/templates/internal/help.html:100
 msgid ""
 "If your organization hasn't uploaded data yet for that proactive disclosure "
 "type, your template hasn't been initiated. To access the Upload button, "
 "you'll need to download the template first."
 msgstr ""
 
-#: ckanext/canada/templates/internal/help.html:99
-msgid "Click the <em>'Get Started'</em> button"
-msgstr ""
-
-#: ckanext/canada/templates/internal/help.html:103
+#: ckanext/canada/templates/internal/help.html:104
 msgid "Why doesn't all the text I entered in the template appear?"
 msgstr ""
 
-#: ckanext/canada/templates/internal/help.html:104
+#: ckanext/canada/templates/internal/help.html:105
 msgid ""
 "Excel has a cell display limit of 1024 characters.  However, the complete "
 "text (Maximum of 32767 characters of it) is actually in the cell. You can "
@@ -1763,11 +1785,11 @@ msgid ""
 "mode, or looking into the Formula bar, in order to see the complete text."
 msgstr ""
 
-#: ckanext/canada/templates/internal/help.html:107
+#: ckanext/canada/templates/internal/help.html:108
 msgid "Who approves the Proactive publication data?"
 msgstr ""
 
-#: ckanext/canada/templates/internal/help.html:108
+#: ckanext/canada/templates/internal/help.html:109
 msgid ""
 "It is the organization's responsibility to verify and approve Proactive "
 "publication data before uploading to the Registry."
@@ -2656,57 +2678,57 @@ msgid ""
 "sites has been detected.</p> <p>Questions, concerns and complaints regarding "
 "this notice, or the administration of the Privacy Act in connection with your"
 " GCKey may be directed to the Access to Information and Privacy Protection "
-"Division by email to <a href=\"mailto:ATIP-AIPRP@ssc-spc.gc.ca\">ATIP-AIPRP"
+"Division by email to <a href=\"mailto:ATIP-AIPRP@ssc-spc.gc.ca\">ATIP-AIPRP"
 "@ssc-spc.gc.ca</a>, or by writing to the following address:</p> <p>Access to "
 "Information and Privacy Directorate<br/> Corporate Secretariat<br/> Shared "
 "Services Canada<br/> PO Box 9808, STN T, CSC<br/> Ottawa ON K1G 4A8</p> "
-"<p>For more information on privacy issues and the <em>Privacy Act</em> in "
-"general, please consult the Office of the <a "
-"href=\"http://www.priv.gc.ca/index_e.asp\">Privacy Commissioner of "
-"Canada</a> website or call 1-800-282-1376.</p> <p>In return for the Treasury "
-"Board of Canada Secretariat (TBS) giving you access to the Open Government "
-"Registry (the Registry), you agree to abide by the following terms and "
-"conditions of use for this and all future uses of the Registry:</p> "
-"<ol><li>You agree to provide all of the required information for the creation"
-" of a registry account<br/> Username<br/> Full Name<br/> Government of Canada"
-" Email<br/> Department Name<br/> Password</li> <li>You agree that any "
-"information you provide is true, accurate, and complete to the best of your "
-"knowledge.</li> <li>You understand and accept that you are at all times "
-"responsible for your login information . This responsibility applies even if "
-"you change your login information. This information must be kept confidential"
-" at all times and must not be shared with or disclosed to others.</li> <li>If"
-" your login information (i.e. username, password) are revealed or if you "
-"suspect that someone else has learned or obtained them, you are responsible "
-"for taking all necessary measures to ensure compliance with the terms and "
-"conditions you agreed to when you created your login information.</li> "
-"<li>You agree not to use your own or another individual's login information "
-"for any improper activities.</li> <li>You agree to provide all of the "
-"required information for the creation of records</li> <li>You agree not to "
-"use the services in a manner that harasses or may harass other parties, or "
-"that will or will have the potential to disrupt, undermine, corrupt, diminish"
-" or otherwise threaten or jeopardize the Registry.</li> <li>The TBS Open "
-"Government Team will monitor access to the Registry to ensure the service is "
-"being used responsibly and in accordance with these terms and "
-"conditions.</li> <li>You understand and accept that the TBS Open Government "
-"Group can suspend or revoke your access to the Registry without notice under "
-"the following circumstances: <ul><li>we suspect unauthorized use of your "
-"personal or login information;</li> <li>you fail to comply with any of the "
-"terms and conditions of use and/or agreements in place with the Treasury "
-"Board of Canada Secretariat;</li> <li>as a security measure;</li> <li>for "
-"operational reasons;</li> <li>for administrative reasons.</li></ul></li> "
-"<li>The TBS Open Government Group has taken all reasonable steps to ensure "
-"the security of this website. We have used sophisticated encryption "
-"technology and incorporated other procedures to protect your personal "
-"information at all times. However, the Internet is a public network and there"
-" is the remote possibility of data security violations.</li> <li>TBS is not "
-"responsible for the failure to meet publication deadlines relating to: "
-"<ul><li>the availability or unavailability, for any reason, of the Internet, "
-"login services or other infrastructure systems;</li> <li>any restriction, "
-"delay, malfunction, or unavailability of the Registry</li></ul></li> "
-"<li>These terms and conditions of use may be amended from time to "
-"time</li></ol> <p>By selecting “I agree” you indicate that you accept these "
-"terms and conditions of use.</p> <p>If you select “I do not agree” you will "
-"not have access to the Registry.</p>"
+"<p>For more information on privacy issues and the <em>Privacy Act</em> in "
+"general, please consult the Office of the <a "
+"href=\"http://www.priv.gc.ca/index_e.asp\">Privacy Commissioner of Canada</a>"
+" website or call 1-800-282-1376.</p> <p>In return for the Treasury Board of "
+"Canada Secretariat (TBS) giving you access to the Open Government Registry "
+"(the Registry), you agree to abide by the following terms and conditions of "
+"use for this and all future uses of the Registry:</p> <ol><li>You agree to "
+"provide all of the required information for the creation of a registry "
+"account<br/> Username<br/> Full Name<br/> Government of Canada Email<br/> "
+"Department Name<br/> Password</li> <li>You agree that any information you "
+"provide is true, accurate, and complete to the best of your knowledge.</li> "
+"<li>You understand and accept that you are at all times responsible for your "
+"login information . This responsibility applies even if you change your login"
+" information. This information must be kept confidential at all times and "
+"must not be shared with or disclosed to others.</li> <li>If your login "
+"information (i.e. username, password) are revealed or if you suspect that "
+"someone else has learned or obtained them, you are responsible for taking all"
+" necessary measures to ensure compliance with the terms and conditions you "
+"agreed to when you created your login information.</li> <li>You agree not to "
+"use your own or another individual's login information for any improper "
+"activities.</li> <li>You agree to provide all of the required information for"
+" the creation of records</li> <li>You agree not to use the services in a "
+"manner that harasses or may harass other parties, or that will or will have "
+"the potential to disrupt, undermine, corrupt, diminish or otherwise threaten "
+"or jeopardize the Registry.</li> <li>The TBS Open Government Team will "
+"monitor access to the Registry to ensure the service is being used "
+"responsibly and in accordance with these terms and conditions.</li> <li>You "
+"understand and accept that the TBS Open Government Group can suspend or "
+"revoke your access to the Registry without notice under the following "
+"circumstances: <ul><li>we suspect unauthorized use of your personal or login "
+"information;</li> <li>you fail to comply with any of the terms and conditions"
+" of use and/or agreements in place with the Treasury Board of Canada "
+"Secretariat;</li> <li>as a security measure;</li> <li>for operational "
+"reasons;</li> <li>for administrative reasons.</li></ul></li> <li>The TBS Open"
+" Government Group has taken all reasonable steps to ensure the security of "
+"this website. We have used sophisticated encryption technology and "
+"incorporated other procedures to protect your personal information at all "
+"times. However, the Internet is a public network and there is the remote "
+"possibility of data security violations.</li> <li>TBS is not responsible for "
+"the failure to meet publication deadlines relating to: <ul><li>the "
+"availability or unavailability, for any reason, of the Internet, login "
+"services or other infrastructure systems;</li> <li>any restriction, delay, "
+"malfunction, or unavailability of the Registry</li></ul></li> <li>These terms"
+" and conditions of use may be amended from time to time</li></ol> <p>By "
+"selecting “I agree” you indicate that you accept these terms and conditions "
+"of use.</p> <p>If you select “I do not agree” you will not have access to the"
+" Registry.</p>"
 msgstr ""
 
 #: ckanext/canada/templates/internal/user/new_user_form.html:71
@@ -2727,7 +2749,7 @@ msgid ""
 "    * Westernised Arabic Numerals: 0, 1, 2, … 9\n"
 "    * Special characters: ({}[],.<>;:'\"?/|\\`~!@#$%%^&*()_-+=).\n"
 "2. No accented characters are permitted.\n"
-"3. All passwords must be at least 8 characters long.\n"
+"3. All passwords must be at least 12 characters long.\n"
 msgstr ""
 
 #: ckanext/canada/templates/internal/user/read_base.html:11
