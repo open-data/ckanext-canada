@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  CKAN\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-06-25 15:45+0000\n"
+"POT-Creation-Date: 2024-06-25 17:26+0000\n"
 "PO-Revision-Date: 2014-01-23 13:04+0000\n"
 "Last-Translator: Sean Hammond <sean.hammond@okfn.org>\n"
 "Language: en\n"
@@ -1784,18 +1784,14 @@ msgstr ""
 msgid ""
 "If your organization hasn't uploaded data yet for that proactive "
 "disclosure type, your template hasn't been initiated. To access the "
-"Upload button, you'll need to download the template first."
+"Upload button, you'll need to click the <em>\"Get Started\"</em> button."
 msgstr ""
 
-#: ckanext/canada/templates/internal/help.html:99
-msgid "Click the <em>\"Get Started\"</em> button"
-msgstr ""
-
-#: ckanext/canada/templates/internal/help.html:103
+#: ckanext/canada/templates/internal/help.html:102
 msgid "Why doesn't all the text I entered in the template appear?"
 msgstr ""
 
-#: ckanext/canada/templates/internal/help.html:104
+#: ckanext/canada/templates/internal/help.html:103
 msgid ""
 "Excel has a cell display limit of 1024 characters.  However, the complete"
 " text (Maximum of 32767 characters of it) is actually in the cell. You "
@@ -1804,11 +1800,11 @@ msgid ""
 "text."
 msgstr ""
 
-#: ckanext/canada/templates/internal/help.html:107
+#: ckanext/canada/templates/internal/help.html:106
 msgid "Who approves the Proactive publication data?"
 msgstr ""
 
-#: ckanext/canada/templates/internal/help.html:108
+#: ckanext/canada/templates/internal/help.html:107
 msgid ""
 "It is the organization's responsibility to verify and approve Proactive "
 "publication data before uploading to the Registry."
@@ -8598,5 +8594,17 @@ msgstr "Keep me logged in"
 #~ msgstr ""
 
 #~ msgid "Click the <em>'Get Started'</em> button"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "If your organization hasn't uploaded "
+#~ "data yet for that proactive disclosure"
+#~ " type, your template hasn't been "
+#~ "initiated. To access the Upload button,"
+#~ " you'll need to download the template"
+#~ " first."
+#~ msgstr ""
+
+#~ msgid "Click the <em>\"Get Started\"</em> button"
 #~ msgstr ""
 

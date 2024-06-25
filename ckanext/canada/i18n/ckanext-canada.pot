@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ckanext-canada 0.4.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-06-25 15:45+0000\n"
+"POT-Creation-Date: 2024-06-25 17:26+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1755,18 +1755,14 @@ msgstr ""
 msgid ""
 "If your organization hasn't uploaded data yet for that proactive disclosure "
 "type, your template hasn't been initiated. To access the Upload button, "
-"you'll need to download the template first."
+"you'll need to click the <em>\"Get Started\"</em> button."
 msgstr ""
 
-#: ckanext/canada/templates/internal/help.html:99
-msgid "Click the <em>\"Get Started\"</em> button"
-msgstr ""
-
-#: ckanext/canada/templates/internal/help.html:103
+#: ckanext/canada/templates/internal/help.html:102
 msgid "Why doesn't all the text I entered in the template appear?"
 msgstr ""
 
-#: ckanext/canada/templates/internal/help.html:104
+#: ckanext/canada/templates/internal/help.html:103
 msgid ""
 "Excel has a cell display limit of 1024 characters.  However, the complete "
 "text (Maximum of 32767 characters of it) is actually in the cell. You can "
@@ -1774,11 +1770,11 @@ msgid ""
 "mode, or looking into the Formula bar, in order to see the complete text."
 msgstr ""
 
-#: ckanext/canada/templates/internal/help.html:107
+#: ckanext/canada/templates/internal/help.html:106
 msgid "Who approves the Proactive publication data?"
 msgstr ""
 
-#: ckanext/canada/templates/internal/help.html:108
+#: ckanext/canada/templates/internal/help.html:107
 msgid ""
 "It is the organization's responsibility to verify and approve Proactive "
 "publication data before uploading to the Registry."

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-06-25 15:45+0000\n"
+"POT-Creation-Date: 2024-06-25 17:26+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: fr\n"
@@ -2031,23 +2031,19 @@ msgstr "Assurez-vous que votre compte est lié à votre organisation."
 msgid ""
 "If your organization hasn't uploaded data yet for that proactive "
 "disclosure type, your template hasn't been initiated. To access the "
-"Upload button, you'll need to download the template first."
+"Upload button, you'll need to click the <em>\"Get Started\"</em> button."
 msgstr ""
 "Si votre organisation n’a pas encore téléversé de données pour ce type de"
 " divulgation proactive, votre modèle n’a pas été initié. Pour accéder au "
-"bouton de téléchargement, vous devez d’abord télécharger le modèle."
+"bouton de téléchargement, vous devez cliquez sur le bouton « Commencer »."
 
-#: ckanext/canada/templates/internal/help.html:99
-msgid "Click the <em>\"Get Started\"</em> button"
-msgstr "Cliquez sur le bouton « Commencer »"
-
-#: ckanext/canada/templates/internal/help.html:103
+#: ckanext/canada/templates/internal/help.html:102
 msgid "Why doesn't all the text I entered in the template appear?"
 msgstr ""
 "Pourquoi l’ensemble du texte que j’ai saisi dans le modèle ne "
 "s’affiche-t-il pas?"
 
-#: ckanext/canada/templates/internal/help.html:104
+#: ckanext/canada/templates/internal/help.html:103
 msgid ""
 "Excel has a cell display limit of 1024 characters.  However, the complete"
 " text (Maximum of 32767 characters of it) is actually in the cell. You "
@@ -2061,11 +2057,11 @@ msgstr ""
 " taille de la cellule, en mettant la cellule en mode modification ou en "
 "regardant la barre de formule."
 
-#: ckanext/canada/templates/internal/help.html:107
+#: ckanext/canada/templates/internal/help.html:106
 msgid "Who approves the Proactive publication data?"
 msgstr "Qui approuve les données de divulgation proactive?"
 
-#: ckanext/canada/templates/internal/help.html:108
+#: ckanext/canada/templates/internal/help.html:107
 msgid ""
 "It is the organization's responsibility to verify and approve Proactive "
 "publication data before uploading to the Registry."
@@ -6604,4 +6600,7 @@ msgstr "Mémoriser mes informations"
 #~ "repose sur un identifiant unique associé"
 #~ " à chaque modèle. Le renommer "
 #~ "pourrait entraîner des complications."
+
+#~ msgid "Click the <em>\"Get Started\"</em> button"
+#~ msgstr "Cliquez sur le bouton « Commencer »"
 
