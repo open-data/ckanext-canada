@@ -31,6 +31,39 @@ ignore_missing = get_validator('ignore_missing')
 MIN_TAG_LENGTH = 2
 MAX_TAG_LENGTH = 140  # because twitter
 
+# DOI Validation
+#
+# See: https://www.doi.org/the-identifier/resources/handbook/
+# As of 2012, assigned registrant codes can be 3 or 4 digits long.
+# NOTE: this does not support ShortDOI (https://shortdoi.org/)
+#
+# <prefix>/<suffix>
+#
+# prefix: refers to the DOI namespace (a namespace is allocated to a given service provider).
+#         The prefix can contain only numeric values and the "." character which is used to
+#         delimit a hierarchical level in the namespace allocation: a one-delimiter prefix
+#         (for example, "10.1000") derives from a zero-delimiter prefix ("10").
+#         The prefix 10 is allocated to the DOI Foundation.
+#
+# suffix: is a unique local name in the namespace. Any Unicode 2.0 character can be used
+#         in the suffix (there is no practical limitation on the length of a DOI name).
+#         This unique string may be an existing identifier, or any unique string chosen
+#         by the Registration Agency or the referent owner (registrant). Some limitations
+#         should be applied due to DOI HTTPS Links.
+#
+# https limitations: double quotes (")
+#                    single quotes (')
+#                    &
+#                    ?
+#
+# Examples: 10.1000/xyz-123
+#           10.1109/5.771073
+#           10.231/JIM.0b013e31820bab4c
+#           10.1016.12.31/nature.S0735-1097(98)2000/12/31/34:7-7
+#           10.1002/(SICI)1522-2594(199911)42:5<952::AID-MRM16>3.0.CO;2-S
+#
+doi_match = re.compile(r'\b(10[.][0-9]{3,}(?:[.][0-9]+)*/(?:(?!["&\'\?])\S)+)$\b')
+
 
 def protect_portal_release_date(key, data, errors, context):
     """
@@ -531,3 +564,11 @@ def protect_registry_access(key, data, errors, context):
                            " from '%s' to '%s'. This field is read-only." %
                            (original, value)))
         raise StopOnError
+
+
+def digital_object_identifier(value, context):
+    if not value or value is missing:
+        return value
+    if not re.match(doi_match, value):
+        raise Invalid(_('Invalid value for a digital object identifier.'))
+    return value
