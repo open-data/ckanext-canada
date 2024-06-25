@@ -1832,10 +1832,10 @@ msgstr "Cliquez sur l’option <em>« Recherche »</em> dans le menu principal."
 #: ckanext/canada/templates/internal/help.html:59
 msgid ""
 "On the Search page, you can either enter a search term directly or use "
-"the facets on the right-hand side to narrow down your search."
+"the facets on the left-hand side to narrow down your search."
 msgstr ""
 "Sur la page de recherche, vous pouvez soit saisir directement un terme de"
-" recherche, soit utiliser les facettes sur le côté droit pour affiner "
+" recherche, soit utiliser les facettes sur le côté gauche pour affiner "
 "votre recherche."
 
 #: ckanext/canada/templates/internal/help.html:60
@@ -1922,14 +1922,10 @@ msgstr ""
 #: ckanext/canada/templates/internal/help.html:77
 msgid ""
 "File Format and Naming: Your completed data template should be an Excel "
-"spreadsheet in either XLS or XLSX format. Do not rename the file, as the "
-"system relies on a unique ID associated with each template. Renaming it "
-"could lead to complications."
+"spreadsheet in either XLS or XLSX format."
 msgstr ""
 "Format et nom du fichier : Votre modèle de données complété doit être une"
-" feuille de calcul Excel au format XLS ou XLSX. Ne renommez pas le "
-"fichier, car le système repose sur un identifiant unique associé à chaque"
-" modèle. Le renommer pourrait entraîner des complications."
+" feuille de calcul Excel au format XLS ou XLSX."
 
 #: ckanext/canada/templates/internal/help.html:78
 msgid ""
