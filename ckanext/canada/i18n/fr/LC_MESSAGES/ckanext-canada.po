@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-06-25 14:32+0000\n"
+"POT-Creation-Date: 2024-06-25 15:33+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: fr\n"
@@ -544,7 +544,6 @@ msgid "Cannot link files of this type"
 msgstr "Impossible de donner un lien vers un fichier de ce type"
 
 #: ckanext/canada/strings.py:69
-#, python-format
 msgid "Your password must be {} characters or longer."
 msgstr "Votre mot de passe doit comporter au moins {} caractères."
 
@@ -1776,15 +1775,6 @@ msgstr ""
 
 #: ckanext/canada/templates/internal/help.html:36
 msgid ""
-"Make your desired changes. Note that altering your username is not "
-"recommended, as it could disconnect your uploaded data."
-msgstr ""
-"Apportez les modifications souhaitées. Notez qu’il n’est pas recommandé "
-"de modifier votre nom d’utilisateur, car cela pourrait déconnecter vos "
-"données téléversées."
-
-#: ckanext/canada/templates/internal/help.html:37
-msgid ""
 "After completing your modifications, click <em>\"Update Profile\"</em>. "
 "Depending on the changes, you may need to log in again."
 msgstr ""
@@ -1792,15 +1782,15 @@ msgstr ""
 " profil ».</em> En fonction des modifications apportées, il se peut que "
 "vous deviez vous connecter à nouveau."
 
-#: ckanext/canada/templates/internal/help.html:40
+#: ckanext/canada/templates/internal/help.html:39
 msgid "Open Data and Open Information"
 msgstr "Données et information ouvertes"
 
-#: ckanext/canada/templates/internal/help.html:42
+#: ckanext/canada/templates/internal/help.html:41
 msgid "How do I add an open data or open information record?"
 msgstr "Comment puis-je ajouter un dossier d’information ou de données ouvertes?"
 
-#: ckanext/canada/templates/internal/help.html:43
+#: ckanext/canada/templates/internal/help.html:42
 msgid ""
 "Please visit the registry operations guide section for <a "
 "href=\"https://open.canada.ca/en/registry-operations-guide/upload-"
@@ -1811,7 +1801,7 @@ msgstr ""
 "/telechargement-donnees\">Téléchargement de données et d’informations "
 "ouvertes</a> du guide des opérations du registre."
 
-#: ckanext/canada/templates/internal/help.html:46
+#: ckanext/canada/templates/internal/help.html:45
 msgid ""
 "How do I review an open data or open information record for my "
 "organization?"
@@ -1819,7 +1809,7 @@ msgstr ""
 "Comment puis-je passer en revue les dossiers d’informations ou de données"
 " ouvertes pour mon organisation?"
 
-#: ckanext/canada/templates/internal/help.html:47
+#: ckanext/canada/templates/internal/help.html:46
 msgid ""
 "To review your department's open data or open information records or to "
 "see the complete list of records:"
@@ -1827,42 +1817,42 @@ msgstr ""
 "Pour passer en revue les dossiers d’information ou de données ouvertes de"
 " votre ministère ou pour consulter la liste complète des dossiers :"
 
-#: ckanext/canada/templates/internal/help.html:49
+#: ckanext/canada/templates/internal/help.html:48
 msgid "Select Menu, then Organizations."
 msgstr "Sélectionnez Menu, puis Organisations."
 
-#: ckanext/canada/templates/internal/help.html:50
+#: ckanext/canada/templates/internal/help.html:49
 msgid "Select your organization."
 msgstr "Sélectionnez votre organisation."
 
-#: ckanext/canada/templates/internal/help.html:51
+#: ckanext/canada/templates/internal/help.html:50
 msgid "Your records will appear."
 msgstr "Vos enregistrements vont apparaître."
 
-#: ckanext/canada/templates/internal/help.html:55
+#: ckanext/canada/templates/internal/help.html:54
 msgid "How do I search the Registry?"
 msgstr "Comment puis-je effectuer des recherches dans le Registre?"
 
-#: ckanext/canada/templates/internal/help.html:56
+#: ckanext/canada/templates/internal/help.html:55
 msgid "To find metadata records published in the Registry, follow these steps:"
 msgstr ""
 "Pour trouver les enregistrements de métadonnées publiés dans le Registre,"
 " suivez les étapes suivantes :"
 
-#: ckanext/canada/templates/internal/help.html:58
+#: ckanext/canada/templates/internal/help.html:57
 msgid "Click on the <em>\"Search\"</em> option in the main menu."
 msgstr "Cliquez sur l’option <em>« Recherche »</em> dans le menu principal."
 
-#: ckanext/canada/templates/internal/help.html:59
+#: ckanext/canada/templates/internal/help.html:58
 msgid ""
 "On the Search page, you can either enter a search term directly or use "
-"the facets on the right-hand side to narrow down your search."
+"the facets on the left-hand side to narrow down your search."
 msgstr ""
-"Sur la page de recherche, vous pouvez soit saisir directement un terme de"
-" recherche, soit utiliser les facettes sur le côté droit pour affiner "
-"votre recherche."
+"Sur la page de recherche, vous pouvez soit saisir directement un terme de "
+"recherche, soit utiliser les facettes sur le côté gauche pour affiner votre "
+"recherche."
 
-#: ckanext/canada/templates/internal/help.html:60
+#: ckanext/canada/templates/internal/help.html:59
 msgid ""
 "The list of results will display records matching your search query in "
 "the order in which they were entered or updated in the Registry."
@@ -1871,15 +1861,15 @@ msgstr ""
 "recherche dans l’ordre selon lequel ils ont été saisis ou mis à jour dans"
 " le Registre (chronologique)."
 
-#: ckanext/canada/templates/internal/help.html:63
+#: ckanext/canada/templates/internal/help.html:62
 msgid "Proactive Disclosure Information"
 msgstr "Information relative à la divulgation proactive"
 
-#: ckanext/canada/templates/internal/help.html:65
+#: ckanext/canada/templates/internal/help.html:64
 msgid "How do I add, modify or delete records in the Registry?"
 msgstr "Comment puis-je ajouter, modifier ou supprimer des dossiers du Registre?"
 
-#: ckanext/canada/templates/internal/help.html:66
+#: ckanext/canada/templates/internal/help.html:65
 msgid ""
 "Please visit the registry operations guide section for <a "
 "href=\"https://open.canada.ca/en/registry-operations-guide/upload-"
@@ -1890,11 +1880,11 @@ msgstr ""
 "/telechargement-donnees#gestion\">Gestion et modification des "
 "enregistrements</a> du guide des opérations du registre."
 
-#: ckanext/canada/templates/internal/help.html:69
+#: ckanext/canada/templates/internal/help.html:68
 msgid "Why can't I see my uploaded data on the portal?"
 msgstr "Pourquoi les données téléversées ne s’affichent-elles pas dans le Portail?"
 
-#: ckanext/canada/templates/internal/help.html:70
+#: ckanext/canada/templates/internal/help.html:69
 msgid ""
 "When uploading Proactive publication data to the Registry, it's essential"
 " to follow these directives to ensure a successful process:"
@@ -1903,7 +1893,7 @@ msgstr ""
 "Registre, il est essentiel de suivre les directives suivantes afin "
 "d’assurer la réussite du processus :"
 
-#: ckanext/canada/templates/internal/help.html:72
+#: ckanext/canada/templates/internal/help.html:71
 msgid ""
 "Download the Latest Template to ensure that you're using the most up-to-"
 "date format."
@@ -1911,7 +1901,7 @@ msgstr ""
 "Téléchargez le dernier modèle pour vous assurer que vous utilisez le "
 "format le plus récent."
 
-#: ckanext/canada/templates/internal/help.html:73
+#: ckanext/canada/templates/internal/help.html:72
 msgid ""
 "Prepare Data in the Proper Template: Organize your data in the "
 "appropriate template for the specific organization and Proactive "
@@ -1923,17 +1913,7 @@ msgstr ""
 "proactive. Chaque modèle correspond à un contexte particulier ; "
 "choisissez donc celui qui convient."
 
-#: ckanext/canada/templates/internal/help.html:74
-msgid ""
-"Maintain the Abbreviated Organization Name: In the template, the "
-"abbreviated name of the organization (e.g., \"aandc-aadnc\") must remain "
-"in cell C1 exactly as downloaded."
-msgstr ""
-"Conserver le nom abrégé de l’organisation : Dans le modèle, le nom abrégé"
-" de l’organisation (par exemple, « aandc-aadnc ») doit rester dans la "
-"cellule C1 tel qu’il a été téléchargé."
-
-#: ckanext/canada/templates/internal/help.html:75
+#: ckanext/canada/templates/internal/help.html:73
 msgid ""
 "Include All Required Fields: Ensure that the template you're uploading "
 "contains all the required fields for the specific Proactive publication "
@@ -1944,7 +1924,7 @@ msgstr ""
 "publication proactive spécifique. Les champs manquants peuvent entraîner "
 "des problèmes au cours du processus de téléversement."
 
-#: ckanext/canada/templates/internal/help.html:76
+#: ckanext/canada/templates/internal/help.html:74
 msgid ""
 "Enter Valid Data: Populate the template with valid and accurate data. "
 "Incorrect or incomplete information may cause errors."
@@ -1953,19 +1933,13 @@ msgstr ""
 "valides et exactes. Des informations incorrectes ou incomplètes peuvent "
 "entraîner des erreurs."
 
-#: ckanext/canada/templates/internal/help.html:77
+#: ckanext/canada/templates/internal/help.html:75
 msgid ""
 "File Format and Naming: Your completed data template should be an Excel "
-"spreadsheet in either XLS or XLSX format. Do not rename the file, as the "
-"system relies on a unique ID associated with each template. Renaming it "
-"could lead to complications."
+"spreadsheet in either XLS or XLSX format."
 msgstr ""
-"Format et nom du fichier : Votre modèle de données complété doit être une"
-" feuille de calcul Excel au format XLS ou XLSX. Ne renommez pas le "
-"fichier, car le système repose sur un identifiant unique associé à chaque"
-" modèle. Le renommer pourrait entraîner des complications."
 
-#: ckanext/canada/templates/internal/help.html:78
+#: ckanext/canada/templates/internal/help.html:76
 msgid ""
 "Troubleshooting Upload Issues: If you encounter an error message during "
 "the upload, carefully review the message text and take corrective "
@@ -1976,7 +1950,7 @@ msgstr ""
 "message et prenez des mesures correctives en fonction du problème "
 "spécifique."
 
-#: ckanext/canada/templates/internal/help.html:79
+#: ckanext/canada/templates/internal/help.html:77
 msgid ""
 "If the upload was successful but you don't see the data in the "
 "<em>\"Preview\"</em> section of the page, verify your data file. It might"
@@ -1987,11 +1961,11 @@ msgstr ""
 "données. Il peut s’agir d’un téléversement en double ou d’autres "
 "problèmes."
 
-#: ckanext/canada/templates/internal/help.html:83
+#: ckanext/canada/templates/internal/help.html:81
 msgid "Was everything uploaded correctly?"
 msgstr "Toutes les données ont-elles été correctement téléversées?"
 
-#: ckanext/canada/templates/internal/help.html:84
+#: ckanext/canada/templates/internal/help.html:82
 msgid ""
 "A record is not immediately pushed to the portal, it will appear the "
 "following morning. The following are two possible methods for you to "
@@ -2001,7 +1975,7 @@ msgstr ""
 "apparaîtra le lendemain matin. Les deux méthodes suivantes vous "
 "permettent de vérifier le téléchargement des données :"
 
-#: ckanext/canada/templates/internal/help.html:86
+#: ckanext/canada/templates/internal/help.html:84
 msgid ""
 "If you see the message <em>\"Your template has been successfully "
 "uploaded\"</em> after you have hit the <em>\"Submit\"</em> button; or"
@@ -2009,7 +1983,7 @@ msgstr ""
 "Si vous voyez le message <em>« Votre modèle a été téléversé »</em> après "
 "avoir appuyé sur le bouton <em>« Soumettre »</em> ; ou"
 
-#: ckanext/canada/templates/internal/help.html:87
+#: ckanext/canada/templates/internal/help.html:85
 msgid ""
 "you can verify the data by looking in the Preview table for one or more "
 "of your template line items."
@@ -2017,13 +1991,13 @@ msgstr ""
 "vous pouvez vérifier les données en consultant le tableau d’aperçu pour "
 "l’une ou plusieurs lignes d’enregistrement de votre modèle."
 
-#: ckanext/canada/templates/internal/help.html:91
+#: ckanext/canada/templates/internal/help.html:89
 msgid "Why didn't I get a confirmation email that my upload was successful?"
 msgstr ""
 "Pourquoi n’ai-je pas reçu de courriel de confirmation indiquant que mon "
 "téléversement était réussi?"
 
-#: ckanext/canada/templates/internal/help.html:92
+#: ckanext/canada/templates/internal/help.html:90
 msgid ""
 "The system only provides an onscreen message <em>\"Your template has been"
 " successfully uploaded\"</em>; it does not send a confirmation email."
@@ -2031,11 +2005,11 @@ msgstr ""
 "Le système affiche seulement un message à l’écran <em>« Votre modèle a "
 "été téléversé ».</em> Vous ne recevrez pas de courriel de confirmation."
 
-#: ckanext/canada/templates/internal/help.html:95
+#: ckanext/canada/templates/internal/help.html:93
 msgid "Why don't I see the upload button?"
 msgstr "Pourquoi n’ai-je pas accès au bouton de téléversement?"
 
-#: ckanext/canada/templates/internal/help.html:96
+#: ckanext/canada/templates/internal/help.html:94
 msgid ""
 "The Upload button is accessible only to users associated with an "
 "organization. If you're unable to see the button, consider the following "
@@ -2045,15 +2019,15 @@ msgstr ""
 "à une organisation. Si vous n’arrivez pas à voir le bouton, envisagez les"
 " raisons suivantes :"
 
-#: ckanext/canada/templates/internal/help.html:98
+#: ckanext/canada/templates/internal/help.html:96
 msgid "Confirm that you are logged into the Registry."
 msgstr "Vérifiez que vous êtes bien connecté au registre."
 
-#: ckanext/canada/templates/internal/help.html:99
+#: ckanext/canada/templates/internal/help.html:97
 msgid "Ensure that your account is linked to your organization."
 msgstr "Assurez-vous que votre compte est lié à votre organisation."
 
-#: ckanext/canada/templates/internal/help.html:100
+#: ckanext/canada/templates/internal/help.html:98
 msgid ""
 "If your organization hasn't uploaded data yet for that proactive "
 "disclosure type, your template hasn't been initiated. To access the "
@@ -2063,13 +2037,17 @@ msgstr ""
 " divulgation proactive, votre modèle n’a pas été initié. Pour accéder au "
 "bouton de téléchargement, vous devez d’abord télécharger le modèle."
 
-#: ckanext/canada/templates/internal/help.html:104
+#: ckanext/canada/templates/internal/help.html:99
+msgid "Click the <em>'Get Started'</em> button"
+msgstr "Cliquez sur le bouton « Commencer »"
+
+#: ckanext/canada/templates/internal/help.html:103
 msgid "Why doesn't all the text I entered in the template appear?"
 msgstr ""
 "Pourquoi l’ensemble du texte que j’ai saisi dans le modèle ne "
 "s’affiche-t-il pas?"
 
-#: ckanext/canada/templates/internal/help.html:105
+#: ckanext/canada/templates/internal/help.html:104
 msgid ""
 "Excel has a cell display limit of 1024 characters.  However, the complete"
 " text (Maximum of 32767 characters of it) is actually in the cell. You "
@@ -2083,11 +2061,11 @@ msgstr ""
 " taille de la cellule, en mettant la cellule en mode modification ou en "
 "regardant la barre de formule."
 
-#: ckanext/canada/templates/internal/help.html:108
+#: ckanext/canada/templates/internal/help.html:107
 msgid "Who approves the Proactive publication data?"
 msgstr "Qui approuve les données de divulgation proactive?"
 
-#: ckanext/canada/templates/internal/help.html:109
+#: ckanext/canada/templates/internal/help.html:108
 msgid ""
 "It is the organization's responsibility to verify and approve Proactive "
 "publication data before uploading to the Registry."
@@ -3128,15 +3106,15 @@ msgid ""
 "attempt to damage the sites has been detected.</p> <p>Questions, concerns"
 " and complaints regarding this notice, or the administration of the "
 "Privacy Act in connection with your GCKey may be directed to the Access "
-"to Information and Privacy Protection Division by email to <a "
+"to Information and Privacy Protection Division by email to <a "
 "href=\"mailto:ATIP-AIPRP@ssc-spc.gc.ca\">ATIP-AIPRP@ssc-spc.gc.ca</a>, or"
 " by writing to the following address:</p> <p>Access to Information and "
 "Privacy Directorate<br/> Corporate Secretariat<br/> Shared Services "
 "Canada<br/> PO Box 9808, STN T, CSC<br/> Ottawa ON K1G 4A8</p> <p>For "
-"more information on privacy issues and the <em>Privacy Act</em> in "
-"general, please consult the Office of the <a "
+"more information on privacy issues and the <em>Privacy Act</em> in "
+"general, please consult the Office of the <a "
 "href=\"http://www.priv.gc.ca/index_e.asp\">Privacy Commissioner of "
-"Canada</a> website or call 1-800-282-1376.</p> <p>In return for the "
+"Canada</a> website or call 1-800-282-1376.</p> <p>In return for the "
 "Treasury Board of Canada Secretariat (TBS) giving you access to the Open "
 "Government Registry (the Registry), you agree to abide by the following "
 "terms and conditions of use for this and all future uses of the "
@@ -6582,4 +6560,48 @@ msgstr "Mémoriser mes informations"
 #~ "Something went wrong, unable to update"
 #~ " your record. Please contact support."
 #~ msgstr ""
+
+#~ msgid ""
+#~ "Make your desired changes. Note that "
+#~ "altering your username is not "
+#~ "recommended, as it could disconnect your"
+#~ " uploaded data."
+#~ msgstr ""
+#~ "Apportez les modifications souhaitées. Notez"
+#~ " qu’il n’est pas recommandé de "
+#~ "modifier votre nom d’utilisateur, car "
+#~ "cela pourrait déconnecter vos données "
+#~ "téléversées."
+
+#~ msgid ""
+#~ "Maintain the Abbreviated Organization Name:"
+#~ " In the template, the abbreviated "
+#~ "name of the organization (e.g., "
+#~ "\"aandc-aadnc\") must remain in cell "
+#~ "C1 exactly as downloaded."
+#~ msgstr ""
+#~ "Conserver le nom abrégé de "
+#~ "l’organisation : Dans le modèle, le "
+#~ "nom abrégé de l’organisation (par "
+#~ "exemple, « aandc-aadnc ») doit "
+#~ "rester dans la cellule C1 tel "
+#~ "qu’il a été téléchargé."
+
+#~ msgid ""
+#~ "File Format and Naming: Your completed"
+#~ " data template should be an Excel "
+#~ "spreadsheet in either XLS or XLSX "
+#~ "format. Do not rename the file, as"
+#~ " the system relies on a unique "
+#~ "ID associated with each template. "
+#~ "Renaming it could lead to complications."
+#~ msgstr ""
+#~ "Format et nom du fichier : Votre"
+#~ " modèle de données complété doit être"
+#~ " une feuille de calcul Excel au "
+#~ "format XLS ou XLSX. Ne renommez "
+#~ "pas le fichier, car le système "
+#~ "repose sur un identifiant unique associé"
+#~ " à chaque modèle. Le renommer "
+#~ "pourrait entraîner des complications."
 

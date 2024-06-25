@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ckanext-canada 0.4.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-06-25 14:32+0000\n"
+"POT-Creation-Date: 2024-06-25 15:33+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1563,221 +1563,210 @@ msgstr ""
 
 #: ckanext/canada/templates/internal/help.html:36
 msgid ""
-"Make your desired changes. Note that altering your username is not "
-"recommended, as it could disconnect your uploaded data."
-msgstr ""
-
-#: ckanext/canada/templates/internal/help.html:37
-msgid ""
 "After completing your modifications, click <em>\"Update Profile\"</em>. "
 "Depending on the changes, you may need to log in again."
 msgstr ""
 
-#: ckanext/canada/templates/internal/help.html:40
+#: ckanext/canada/templates/internal/help.html:39
 msgid "Open Data and Open Information"
 msgstr ""
 
-#: ckanext/canada/templates/internal/help.html:42
+#: ckanext/canada/templates/internal/help.html:41
 msgid "How do I add an open data or open information record?"
 msgstr ""
 
-#: ckanext/canada/templates/internal/help.html:43
+#: ckanext/canada/templates/internal/help.html:42
 msgid ""
 "Please visit the registry operations guide section for <a "
 "href=\"https://open.canada.ca/en/registry-operations-guide/upload-"
 "data\">Uploading open data and information.</a>"
 msgstr ""
 
-#: ckanext/canada/templates/internal/help.html:46
+#: ckanext/canada/templates/internal/help.html:45
 msgid "How do I review an open data or open information record for my organization?"
 msgstr ""
 
-#: ckanext/canada/templates/internal/help.html:47
+#: ckanext/canada/templates/internal/help.html:46
 msgid ""
 "To review your department's open data or open information records or to see "
 "the complete list of records:"
 msgstr ""
 
-#: ckanext/canada/templates/internal/help.html:49
+#: ckanext/canada/templates/internal/help.html:48
 msgid "Select Menu, then Organizations."
 msgstr ""
 
-#: ckanext/canada/templates/internal/help.html:50
+#: ckanext/canada/templates/internal/help.html:49
 msgid "Select your organization."
 msgstr ""
 
-#: ckanext/canada/templates/internal/help.html:51
+#: ckanext/canada/templates/internal/help.html:50
 msgid "Your records will appear."
 msgstr ""
 
-#: ckanext/canada/templates/internal/help.html:55
+#: ckanext/canada/templates/internal/help.html:54
 msgid "How do I search the Registry?"
 msgstr ""
 
-#: ckanext/canada/templates/internal/help.html:56
+#: ckanext/canada/templates/internal/help.html:55
 msgid "To find metadata records published in the Registry, follow these steps:"
 msgstr ""
 
-#: ckanext/canada/templates/internal/help.html:58
+#: ckanext/canada/templates/internal/help.html:57
 msgid "Click on the <em>\"Search\"</em> option in the main menu."
 msgstr ""
 
-#: ckanext/canada/templates/internal/help.html:59
+#: ckanext/canada/templates/internal/help.html:58
 msgid ""
 "On the Search page, you can either enter a search term directly or use the "
-"facets on the right-hand side to narrow down your search."
+"facets on the left-hand side to narrow down your search."
 msgstr ""
 
-#: ckanext/canada/templates/internal/help.html:60
+#: ckanext/canada/templates/internal/help.html:59
 msgid ""
 "The list of results will display records matching your search query in the "
 "order in which they were entered or updated in the Registry."
 msgstr ""
 
-#: ckanext/canada/templates/internal/help.html:63
+#: ckanext/canada/templates/internal/help.html:62
 msgid "Proactive Disclosure Information"
 msgstr ""
 
-#: ckanext/canada/templates/internal/help.html:65
+#: ckanext/canada/templates/internal/help.html:64
 msgid "How do I add, modify or delete records in the Registry?"
 msgstr ""
 
-#: ckanext/canada/templates/internal/help.html:66
+#: ckanext/canada/templates/internal/help.html:65
 msgid ""
 "Please visit the registry operations guide section for <a "
 "href=\"https://open.canada.ca/en/registry-operations-guide/upload-"
 "data#manage\">Managing records.</a>"
 msgstr ""
 
-#: ckanext/canada/templates/internal/help.html:69
+#: ckanext/canada/templates/internal/help.html:68
 msgid "Why can't I see my uploaded data on the portal?"
 msgstr ""
 
-#: ckanext/canada/templates/internal/help.html:70
+#: ckanext/canada/templates/internal/help.html:69
 msgid ""
 "When uploading Proactive publication data to the Registry, it's essential to "
 "follow these directives to ensure a successful process:"
 msgstr ""
 
-#: ckanext/canada/templates/internal/help.html:72
+#: ckanext/canada/templates/internal/help.html:71
 msgid ""
 "Download the Latest Template to ensure that you're using the most up-to-date "
 "format."
 msgstr ""
 
-#: ckanext/canada/templates/internal/help.html:73
+#: ckanext/canada/templates/internal/help.html:72
 msgid ""
 "Prepare Data in the Proper Template: Organize your data in the appropriate "
 "template for the specific organization and Proactive publication type. Each "
 "template corresponds to particular context, so choose the relevant one."
 msgstr ""
 
-#: ckanext/canada/templates/internal/help.html:74
-msgid ""
-"Maintain the Abbreviated Organization Name: In the template, the abbreviated "
-"name of the organization (e.g., \"aandc-aadnc\") must remain in cell C1 "
-"exactly as downloaded."
-msgstr ""
-
-#: ckanext/canada/templates/internal/help.html:75
+#: ckanext/canada/templates/internal/help.html:73
 msgid ""
 "Include All Required Fields: Ensure that the template you're uploading "
 "contains all the required fields for the specific Proactive publication type."
 " Missing fields can lead to issues during the upload process."
 msgstr ""
 
-#: ckanext/canada/templates/internal/help.html:76
+#: ckanext/canada/templates/internal/help.html:74
 msgid ""
 "Enter Valid Data: Populate the template with valid and accurate data. "
 "Incorrect or incomplete information may cause errors."
 msgstr ""
 
-#: ckanext/canada/templates/internal/help.html:77
+#: ckanext/canada/templates/internal/help.html:75
 msgid ""
 "File Format and Naming: Your completed data template should be an Excel "
-"spreadsheet in either XLS or XLSX format. Do not rename the file, as the "
-"system relies on a unique ID associated with each template. Renaming it could"
-" lead to complications."
+"spreadsheet in either XLS or XLSX format."
 msgstr ""
 
-#: ckanext/canada/templates/internal/help.html:78
+#: ckanext/canada/templates/internal/help.html:76
 msgid ""
 "Troubleshooting Upload Issues: If you encounter an error message during the "
 "upload, carefully review the message text and take corrective measures based "
 "on the specific issue."
 msgstr ""
 
-#: ckanext/canada/templates/internal/help.html:79
+#: ckanext/canada/templates/internal/help.html:77
 msgid ""
 "If the upload was successful but you don't see the data in the "
 "<em>\"Preview\"</em> section of the page, verify your data file. It might be "
 "a duplicate upload or have other issues."
 msgstr ""
 
-#: ckanext/canada/templates/internal/help.html:83
+#: ckanext/canada/templates/internal/help.html:81
 msgid "Was everything uploaded correctly?"
 msgstr ""
 
-#: ckanext/canada/templates/internal/help.html:84
+#: ckanext/canada/templates/internal/help.html:82
 msgid ""
 "A record is not immediately pushed to the portal, it will appear the "
 "following morning. The following are two possible methods for you to verify "
 "your data upload:"
 msgstr ""
 
-#: ckanext/canada/templates/internal/help.html:86
+#: ckanext/canada/templates/internal/help.html:84
 msgid ""
 "If you see the message <em>\"Your template has been successfully "
 "uploaded\"</em> after you have hit the <em>\"Submit\"</em> button; or"
 msgstr ""
 
-#: ckanext/canada/templates/internal/help.html:87
+#: ckanext/canada/templates/internal/help.html:85
 msgid ""
 "you can verify the data by looking in the Preview table for one or more of "
 "your template line items."
 msgstr ""
 
-#: ckanext/canada/templates/internal/help.html:91
+#: ckanext/canada/templates/internal/help.html:89
 msgid "Why didn't I get a confirmation email that my upload was successful?"
 msgstr ""
 
-#: ckanext/canada/templates/internal/help.html:92
+#: ckanext/canada/templates/internal/help.html:90
 msgid ""
 "The system only provides an onscreen message <em>\"Your template has been "
 "successfully uploaded\"</em>; it does not send a confirmation email."
 msgstr ""
 
-#: ckanext/canada/templates/internal/help.html:95
+#: ckanext/canada/templates/internal/help.html:93
 msgid "Why don't I see the upload button?"
 msgstr ""
 
-#: ckanext/canada/templates/internal/help.html:96
+#: ckanext/canada/templates/internal/help.html:94
 msgid ""
 "The Upload button is accessible only to users associated with an "
 "organization. If you're unable to see the button, consider the following "
 "reasons:"
 msgstr ""
 
-#: ckanext/canada/templates/internal/help.html:98
+#: ckanext/canada/templates/internal/help.html:96
 msgid "Confirm that you are logged into the Registry."
 msgstr ""
 
-#: ckanext/canada/templates/internal/help.html:99
+#: ckanext/canada/templates/internal/help.html:97
 msgid "Ensure that your account is linked to your organization."
 msgstr ""
 
-#: ckanext/canada/templates/internal/help.html:100
+#: ckanext/canada/templates/internal/help.html:98
 msgid ""
 "If your organization hasn't uploaded data yet for that proactive disclosure "
 "type, your template hasn't been initiated. To access the Upload button, "
 "you'll need to download the template first."
 msgstr ""
 
-#: ckanext/canada/templates/internal/help.html:104
+#: ckanext/canada/templates/internal/help.html:99
+msgid "Click the <em>'Get Started'</em> button"
+msgstr ""
+
+#: ckanext/canada/templates/internal/help.html:103
 msgid "Why doesn't all the text I entered in the template appear?"
 msgstr ""
 
-#: ckanext/canada/templates/internal/help.html:105
+#: ckanext/canada/templates/internal/help.html:104
 msgid ""
 "Excel has a cell display limit of 1024 characters.  However, the complete "
 "text (Maximum of 32767 characters of it) is actually in the cell. You can "
@@ -1785,11 +1774,11 @@ msgid ""
 "mode, or looking into the Formula bar, in order to see the complete text."
 msgstr ""
 
-#: ckanext/canada/templates/internal/help.html:108
+#: ckanext/canada/templates/internal/help.html:107
 msgid "Who approves the Proactive publication data?"
 msgstr ""
 
-#: ckanext/canada/templates/internal/help.html:109
+#: ckanext/canada/templates/internal/help.html:108
 msgid ""
 "It is the organization's responsibility to verify and approve Proactive "
 "publication data before uploading to the Registry."
@@ -2678,14 +2667,14 @@ msgid ""
 "sites has been detected.</p> <p>Questions, concerns and complaints regarding "
 "this notice, or the administration of the Privacy Act in connection with your"
 " GCKey may be directed to the Access to Information and Privacy Protection "
-"Division by email to <a href=\"mailto:ATIP-AIPRP@ssc-spc.gc.ca\">ATIP-AIPRP"
+"Division by email to <a href=\"mailto:ATIP-AIPRP@ssc-spc.gc.ca\">ATIP-AIPRP"
 "@ssc-spc.gc.ca</a>, or by writing to the following address:</p> <p>Access to "
 "Information and Privacy Directorate<br/> Corporate Secretariat<br/> Shared "
 "Services Canada<br/> PO Box 9808, STN T, CSC<br/> Ottawa ON K1G 4A8</p> "
-"<p>For more information on privacy issues and the <em>Privacy Act</em> in "
-"general, please consult the Office of the <a "
+"<p>For more information on privacy issues and the <em>Privacy Act</em> in "
+"general, please consult the Office of the <a "
 "href=\"http://www.priv.gc.ca/index_e.asp\">Privacy Commissioner of Canada</a>"
-" website or call 1-800-282-1376.</p> <p>In return for the Treasury Board of "
+" website or call 1-800-282-1376.</p> <p>In return for the Treasury Board of "
 "Canada Secretariat (TBS) giving you access to the Open Government Registry "
 "(the Registry), you agree to abide by the following terms and conditions of "
 "use for this and all future uses of the Registry:</p> <ol><li>You agree to "
