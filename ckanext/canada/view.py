@@ -707,43 +707,6 @@ def ckanadmin_job_queue():
                                                  'warning': warning,})
 
 
-@canada_views.route('/dataset/<id>/delete-datastore-table/<resource_id>', methods=['GET', 'POST'])
-def delete_datastore_table(id, resource_id):
-    if u'cancel' in request.form:
-        return h.redirect_to(u'xloader.resource_data', id=id, resource_id=resource_id)
-
-    if request.method == 'POST':
-        lc = LocalCKAN(username=g.user)
-
-        try:
-            lc.action.datastore_delete(
-                resource_id=resource_id,
-                force=True,  # FIXME: check url_type first?
-            )
-        except NotAuthorized:
-            return abort(403, _(u'Unauthorized to delete resource %s') % resource_id)
-
-        h.flash_notice(_(u'DataStore table and Data Dictionary deleted for resource %s') % resource_id)
-
-        return h.redirect_to(
-            'xloader.resource_data',
-            id=id,
-            resource_id=resource_id
-        )
-    else:
-        # TODO: Remove
-        # ckan 2.9: Adding variables that were removed from c object for
-        # compatibility with templates in existing extensions
-        g.resource_id = resource_id
-        g.package_id = id
-
-        extra_vars = {
-            u"resource_id": resource_id,
-            u"package_id": id
-        }
-        return render(u'canada/confirm_datastore_delete.html', extra_vars)
-
-
 @canada_views.route('/help', methods=['GET'])
 def view_help():
     if not g.is_registry:

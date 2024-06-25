@@ -81,3 +81,8 @@ _("Your form submission could not be validated, please re-submit the form.")
 # strings from configurations
 _('Open Government Portal')
 _('Open Government Portal (staging)')
+
+# strings from xloader
+_('Delete from DataStore')
+_('Are you sure you want to delete the DataStore and Data Dictionary?')
+_('Confirm Delete')
