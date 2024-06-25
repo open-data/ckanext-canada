@@ -1759,15 +1759,6 @@ msgstr ""
 "Sélectionnez <em>« Modifier le profil »</em> pour accéder à la page <em>«"
 " Modifier les détails ».</em>"
 
-#: ckanext/canada/templates/internal/help.html:36
-msgid ""
-"Make your desired changes. Note that altering your username is not "
-"recommended, as it could disconnect your uploaded data."
-msgstr ""
-"Apportez les modifications souhaitées. Notez qu’il n’est pas recommandé "
-"de modifier votre nom d’utilisateur, car cela pourrait déconnecter vos "
-"données téléversées."
-
 #: ckanext/canada/templates/internal/help.html:37
 msgid ""
 "After completing your modifications, click <em>\"Update Profile\"</em>. "
@@ -1908,16 +1899,6 @@ msgstr ""
 "proactive. Chaque modèle correspond à un contexte particulier ; "
 "choisissez donc celui qui convient."
 
-#: ckanext/canada/templates/internal/help.html:74
-msgid ""
-"Maintain the Abbreviated Organization Name: In the template, the "
-"abbreviated name of the organization (e.g., \"aandc-aadnc\") must remain "
-"in cell C1 exactly as downloaded."
-msgstr ""
-"Conserver le nom abrégé de l’organisation : Dans le modèle, le nom abrégé"
-" de l’organisation (par exemple, « aandc-aadnc ») doit rester dans la "
-"cellule C1 tel qu’il a été téléchargé."
-
 #: ckanext/canada/templates/internal/help.html:75
 msgid ""
 "Include All Required Fields: Ensure that the template you're uploading "
@@ -2047,6 +2028,10 @@ msgstr ""
 "Si votre organisation n’a pas encore téléversé de données pour ce type de"
 " divulgation proactive, votre modèle n’a pas été initié. Pour accéder au "
 "bouton de téléchargement, vous devez d’abord télécharger le modèle."
+
+#: ckanext/canada/templates/internal/help.html:101
+msgid "Click the <em>'Get Started'</em> button"
+msgstr "Cliquez sur le bouton <em>« Commencer »</em>"
 
 #: ckanext/canada/templates/internal/help.html:104
 msgid "Why doesn't all the text I entered in the template appear?"

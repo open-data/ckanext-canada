@@ -1576,12 +1576,6 @@ msgid ""
 "Details\"</em> page."
 msgstr ""
 
-#: ckanext/canada/templates/internal/help.html:36
-msgid ""
-"Make your desired changes. Note that altering your username is not "
-"recommended, as it could disconnect your uploaded data."
-msgstr ""
-
 #: ckanext/canada/templates/internal/help.html:37
 msgid ""
 "After completing your modifications, click <em>\"Update Profile\"</em>. "
@@ -1690,13 +1684,6 @@ msgid ""
 "choose the relevant one."
 msgstr ""
 
-#: ckanext/canada/templates/internal/help.html:74
-msgid ""
-"Maintain the Abbreviated Organization Name: In the template, the "
-"abbreviated name of the organization (e.g., \"aandc-aadnc\") must remain "
-"in cell C1 exactly as downloaded."
-msgstr ""
-
 #: ckanext/canada/templates/internal/help.html:75
 msgid ""
 "Include All Required Fields: Ensure that the template you're uploading "
@@ -1789,6 +1776,10 @@ msgid ""
 "If your organization hasn't uploaded data yet for that proactive "
 "disclosure type, your template hasn't been initiated. To access the "
 "Upload button, you'll need to download the template first."
+msgstr ""
+
+#: ckanext/canada/templates/internal/help.html:101
+msgid "Click the <em>'Get Started'</em> button"
 msgstr ""
 
 #: ckanext/canada/templates/internal/help.html:104
