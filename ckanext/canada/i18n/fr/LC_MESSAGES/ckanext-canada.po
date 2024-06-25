@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-06-18 15:21+0000\n"
+"POT-Creation-Date: 2024-06-25 14:46+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: fr\n"
@@ -122,7 +122,7 @@ msgid "Treasury Board of Canada Secretariat"
 msgstr "Secrétariat du Conseil du Trésor du Canada"
 
 #: ckanext/canada/helpers.py:575 ckanext/canada/strings.py:13
-#: ckanext/canada/view.py:1095
+#: ckanext/canada/view.py:1058
 msgid "Members not found"
 msgstr "Membres non trouvés"
 
@@ -186,6 +186,7 @@ msgid "Pending"
 msgstr "En attente"
 
 #: ckanext/canada/helpers.py:786 ckanext/canada/templates/package/read.html:14
+#: ckanext/canada/templates/snippets/package_item.html:33
 #: ckanext/canada/templates/snippets/publish_facet.html:43
 msgid "Draft"
 msgstr "Ébauche"
@@ -213,7 +214,7 @@ msgstr "Prévu"
 msgid "Registry Home"
 msgstr "Accueil du registre"
 
-#: ckanext/canada/helpers.py:852 ckanext/canada/strings.py:79
+#: ckanext/canada/helpers.py:852 ckanext/canada/strings.py:82
 msgid "Open Government Portal"
 msgstr "Portail du gouvernement ouvert"
 
@@ -227,63 +228,63 @@ msgstr ""
 msgid "Unknown Job"
 msgstr "Tâche inconnue "
 
-#: ckanext/canada/plugins.py:717
+#: ckanext/canada/plugins.py:719
 #: ckanext/canada/templates/scheming/package/snippets/package_form.html:25
 msgid "Portal Type"
 msgstr "Type de portail"
 
-#: ckanext/canada/plugins.py:718
+#: ckanext/canada/plugins.py:720
 #: ckanext/canada/templates/package/deleted.html:14
 #: ckanext/canada/templates/user/new_user_form.html:18
 msgid "Organization"
 msgstr "Organisation"
 
-#: ckanext/canada/plugins.py:719
+#: ckanext/canada/plugins.py:721
 msgid "Collection Type"
 msgstr "Type de collection"
 
-#: ckanext/canada/plugins.py:720 ckanext/canada/plugins.py:721
+#: ckanext/canada/plugins.py:722 ckanext/canada/plugins.py:723
 msgid "Keywords"
 msgstr "Mots clés"
 
-#: ckanext/canada/plugins.py:722
+#: ckanext/canada/plugins.py:724
 msgid "Subject"
 msgstr "Sujet"
 
-#: ckanext/canada/plugins.py:723
+#: ckanext/canada/plugins.py:725
 #: ckanext/canada/templates/tabledesigner/view_snippets/cra_business_number.html:1
 msgid "Format"
 msgstr "Format"
 
-#: ckanext/canada/plugins.py:724
+#: ckanext/canada/plugins.py:726
 msgid "Resource Type"
 msgstr "Type de ressource"
 
-#: ckanext/canada/plugins.py:725
+#: ckanext/canada/plugins.py:727
 msgid "Maintenance and Update Frequency"
 msgstr "Fréquence d’entretien et de mise à jour"
 
-#: ckanext/canada/plugins.py:726
+#: ckanext/canada/plugins.py:728
 msgid "Record Status"
 msgstr "État du dossier"
 
-#: ckanext/canada/plugins.py:727
+#: ckanext/canada/plugins.py:729
 msgid "IMSO Approval"
 msgstr "Approbation du CSGI"
 
-#: ckanext/canada/plugins.py:728
+#: ckanext/canada/plugins.py:730
 msgid "Jurisdiction"
 msgstr "Juridiction"
 
-#: ckanext/canada/plugins.py:729
+#: ckanext/canada/plugins.py:731
 msgid "Suggestion Status"
 msgstr "État de la suggestion"
 
-#: ckanext/canada/plugins.py:915
+#: ckanext/canada/plugins.py:917
 msgid "Previous"
 msgstr "Précédent"
 
-#: ckanext/canada/plugins.py:915
+#: ckanext/canada/plugins.py:917
 msgid "Next"
 msgstr "Suivant"
 
@@ -296,7 +297,7 @@ msgstr "Créer un jeu de données"
 msgid "Not authorized to access {group} members download"
 msgstr "Non autorisé à accéder au téléchargement des membres du {group}"
 
-#: ckanext/canada/strings.py:14 ckanext/canada/view.py:1105
+#: ckanext/canada/strings.py:14 ckanext/canada/view.py:1068
 msgid "N/A"
 msgstr "N/A"
 
@@ -306,31 +307,31 @@ msgstr "N/A"
 #: ckanext/canada/templates/user/list.html:44
 #: ckanext/canada/templates/user/new_user_form.html:8
 #: ckanext/canada/templates/user/snippets/login_form.html:12
-#: ckanext/canada/view.py:1097
+#: ckanext/canada/view.py:1060
 msgid "Username"
 msgstr "Nom d’utilisateur"
 
 #: ckanext/canada/strings.py:16
 #: ckanext/canada/templates/user/edit_user_form.html:10
 #: ckanext/canada/templates/user/new_user_form.html:14
-#: ckanext/canada/templates/user/read_base.html:60
+#: ckanext/canada/templates/user/read_base.html:51
 #: ckanext/canada/templates/user/recover_username.html:16
-#: ckanext/canada/view.py:1097
+#: ckanext/canada/view.py:1060
 msgid "Email"
 msgstr "Courriel"
 
 #: ckanext/canada/strings.py:17 ckanext/canada/templates/user/api_tokens.html:5
-#: ckanext/canada/templates/user/list.html:45 ckanext/canada/view.py:1097
+#: ckanext/canada/templates/user/list.html:45 ckanext/canada/view.py:1060
 msgid "Name"
 msgstr "Nom"
 
 #: ckanext/canada/strings.py:18
 #: ckanext/canada/templates/organization/member_new.html:58
-#: ckanext/canada/templates/user/list.html:46 ckanext/canada/view.py:1097
+#: ckanext/canada/templates/user/list.html:46 ckanext/canada/view.py:1060
 msgid "Role"
 msgstr "Rôle"
 
-#: ckanext/canada/strings.py:19 ckanext/canada/view.py:1115
+#: ckanext/canada/strings.py:19 ckanext/canada/view.py:1078
 msgid "members"
 msgstr "membres"
 
@@ -524,9 +525,8 @@ msgstr ""
 " un utilisateur du système."
 
 #: ckanext/canada/strings.py:64
-#, TODO: add translations
 msgid "Activity type"
-msgstr ""
+msgstr "Type d'activité"
 
 #: ckanext/canada/strings.py:67
 msgid "Please upload a file or link to an external resource"
@@ -542,25 +542,62 @@ msgstr "Impossible de téléverser un fichier de ce type"
 msgid "Cannot link files of this type"
 msgstr "Impossible de donner un lien vers un fichier de ce type"
 
-#: ckanext/canada/strings.py:72
+#: ckanext/canada/strings.py:70
+#, python-format
+msgid "Your password must be {} characters or longer."
+msgstr "Votre mot de passe doit comporter au moins {} caractères."
+
+#: ckanext/canada/strings.py:71
+msgid ""
+"Your password must consist of at least three of the following character "
+"sets: uppercase characters, lowercase characters, digits, punctuation & "
+"special characters."
+msgstr ""
+"Votre mot de passe doit être composé d'au moins trois des caractères "
+"suivants : majuscules, minuscules, chiffres, ponctuation et caractères "
+"spéciaux."
+
+#: ckanext/canada/strings.py:75
 msgid "These fields have been removed, click update below to save your changes."
 msgstr ""
 "Ces champs seront supprimés une fois que vous aurez sauvegardé vos "
 "changements."
 
-#: ckanext/canada/strings.py:73
+#: ckanext/canada/strings.py:76
 msgid "These fields have been removed."
 msgstr "Ces champs ont été supprimés."
 
-#: ckanext/canada/strings.py:76
+#: ckanext/canada/strings.py:79
 msgid "Your form submission could not be validated, please re-submit the form."
 msgstr ""
 "La soumission de votre formulaire n'a pas pu être confirmée. Veuillez le "
 "soumettre de nouveau."
 
-#: ckanext/canada/strings.py:80
+#: ckanext/canada/strings.py:83
 msgid "Open Government Portal (staging)"
 msgstr "Portail du gouvernement ouvert (stadification)"
+
+#: ckanext/canada/strings.py:86
+msgid "Delete from DataStore"
+msgstr "Supprimer la table DataStore"
+
+#: ckanext/canada/strings.py:87
+msgid "Are you sure you want to delete the DataStore and Data Dictionary?"
+msgstr ""
+"Voulez-vous vraiment supprimer cette table DataStore et ce dictionnaire "
+"de données"
+
+#: ckanext/canada/strings.py:88
+#: ckanext/canada/templates/organization/confirm_delete_member.html:3
+#: ckanext/canada/templates/organization/confirm_delete_member.html:14
+#: ckanext/canada/templates/package/confirm_delete.html:3
+#: ckanext/canada/templates/package/confirm_delete.html:13
+#: ckanext/canada/templates/package/confirm_delete_resource.html:3
+#: ckanext/canada/templates/package/confirm_delete_resource.html:13
+#: ckanext/canada/templates/user/confirm_delete.html:3
+#: ckanext/canada/templates/user/confirm_delete.html:14
+msgid "Confirm Delete"
+msgstr "Confirmer la suppression"
 
 #: ckanext/canada/validators.py:118
 #, python-format
@@ -758,39 +795,25 @@ msgstr "Non autorisé à voir cette page"
 msgid " record(s) published."
 msgstr " d’enregistrements publiés."
 
-#: ckanext/canada/view.py:724
-#, python-format
-msgid "Unauthorized to delete resource %s"
-msgstr "Vous n'êtes pas autorisé à supprimer la ressource %s"
-
-#: ckanext/canada/view.py:726
-#, python-format
-msgid "DataStore table and Data Dictionary deleted for resource %s"
-msgstr ""
-"Tableau de stockage de données et dictionnaire de données supprimés pour "
-"la ressource %s"
-
-#: ckanext/canada/templates/organization/edit_base.html:39
-#: ckanext/canada/templates/organization/read_base.html:35
 #: ckanext/canada/templates/organization/snippets/organization_item.html:16
 #: ckanext/canada/templates/package/edit.html:4
 #: ckanext/canada/templates/package/edit.html:8
 #: ckanext/canada/templates/package/resource_edit.html:3
 #: ckanext/canada/templates/package/resource_edit_base.html:7
 #: ckanext/canada/templates/package/wet_datatable.html:15
-#: ckanext/canada/view.py:816
+#: ckanext/canada/view.py:779
 msgid "Edit"
 msgstr "Modifier"
 
-#: ckanext/canada/view.py:940
+#: ckanext/canada/view.py:903
 msgid "Access denied"
 msgstr "Accès refusé"
 
-#: ckanext/canada/view.py:991
+#: ckanext/canada/view.py:954
 msgid "Account Created"
 msgstr "Compte créé"
 
-#: ckanext/canada/view.py:993
+#: ckanext/canada/view.py:956
 msgid ""
 "Thank you for creating your account for the Open Government registry. "
 "Although your account is active, it has not yet been linked to your "
@@ -801,7 +824,7 @@ msgstr ""
 "ministère. Vous ne pourrez créer ou modifier de jeux de données dans le "
 "registre tant que votre compte n’aura pas été relié à votre ministère."
 
-#: ckanext/canada/view.py:1000
+#: ckanext/canada/view.py:963
 msgid ""
 "You should receive an email within the next business day once the account"
 " activation process has been completed. If you require faster processing "
@@ -814,20 +837,20 @@ msgstr ""
 "plus rapidement, veuillez envoyer une demande directement à :<a "
 "href=\"mailto: open-ouvert@tbs-sct.gc.ca\">open-ouvert@tbs-sct.gc.ca.</a"
 
-#: ckanext/canada/view.py:1074 ckanext/canada/view.py:1152
+#: ckanext/canada/view.py:1037 ckanext/canada/view.py:1115
 msgid "Organization not found"
 msgstr "Organisation non trouvée"
 
-#: ckanext/canada/view.py:1085
+#: ckanext/canada/view.py:1048
 msgid "Not authorized to access {org_name} members download"
 msgstr "Non autorisé à accéder au téléchargement des membres du {group}"
 
-#: ckanext/canada/view.py:1155
+#: ckanext/canada/view.py:1118
 #, python-format
 msgid "User %r not authorized to edit members of %s"
 msgstr "L’utilisateur %r n’est pas autorisé à modifier les membres de %s"
 
-#: ckanext/canada/view.py:1157
+#: ckanext/canada/view.py:1120
 #, python-format
 msgid "User %r not authorized to view members of %s"
 msgstr "L’utilisateur %r n’est pas autorisé à voir les membres de %s"
@@ -2125,9 +2148,10 @@ msgid "Clear All"
 msgstr "Effacer tout"
 
 #: ckanext/canada/templates/admin/trash.html:17
-#, TODO: add translations
 msgid "Purge deleted datasets, organizations or groups forever and irreversibly."
 msgstr ""
+"Suppression des ensembles de données, des organismes ou des groupes de "
+"manière définitive et irréversible."
 
 #: ckanext/canada/templates/admin/snippets/package_item.html:8
 msgid "Publish?"
@@ -2147,36 +2171,6 @@ msgstr ""
 #: ckanext/canada/templates/admin/snippets/publish_package_list.html:26
 msgid "Publish Selected Records"
 msgstr "Publier les dossiers sélectionnés"
-
-#: ckanext/canada/templates/canada/confirm_datastore_delete.html:3
-#: ckanext/canada/templates/canada/confirm_datastore_delete.html:14
-#: ckanext/canada/templates/organization/confirm_delete_member.html:3
-#: ckanext/canada/templates/organization/confirm_delete_member.html:14
-#: ckanext/canada/templates/package/confirm_delete.html:3
-#: ckanext/canada/templates/package/confirm_delete.html:13
-#: ckanext/canada/templates/package/confirm_delete_resource.html:3
-#: ckanext/canada/templates/package/confirm_delete_resource.html:13
-#: ckanext/canada/templates/user/confirm_delete.html:3
-#: ckanext/canada/templates/user/confirm_delete.html:14
-msgid "Confirm Delete"
-msgstr "Confirmer la suppression"
-
-#: ckanext/canada/templates/canada/confirm_datastore_delete.html:8
-#: ckanext/canada/templates/xloader/resource_data.html:10
-msgid "Are you sure you want to delete this DataStore table and Data Dictionary?"
-msgstr ""
-"Voulez-vous vraiment supprimer cette table DataStore et ce dictionnaire "
-"de données"
-
-#: ckanext/canada/templates/canada/confirm_datastore_delete.html:13
-#: ckanext/canada/templates/organization/confirm_delete_member.html:13
-#: ckanext/canada/templates/package/confirm_delete.html:12
-#: ckanext/canada/templates/package/confirm_delete_resource.html:12
-#: ckanext/canada/templates/recombinant/create_pd_record.html:84
-#: ckanext/canada/templates/recombinant/update_pd_record.html:87
-#: ckanext/canada/templates/user/confirm_delete.html:13
-msgid "Cancel"
-msgstr "Annuler"
 
 #: ckanext/canada/templates/datastore/snippets/dictionary_form.html:7
 msgid "English Label"
@@ -2406,42 +2400,52 @@ msgstr "Fil de nouvelles Atom"
 msgid "Are you sure you want to delete member - {name}?"
 msgstr "Êtes-vous sûr de vouloir supprimer le membre {name}?"
 
+#: ckanext/canada/templates/organization/confirm_delete_member.html:13
+#: ckanext/canada/templates/package/confirm_delete.html:12
+#: ckanext/canada/templates/package/confirm_delete_resource.html:12
+#: ckanext/canada/templates/recombinant/create_pd_record.html:84
+#: ckanext/canada/templates/recombinant/update_pd_record.html:87
+#: ckanext/canada/templates/user/confirm_delete.html:13
+msgid "Cancel"
+msgstr "Annuler"
+
 #: ckanext/canada/templates/organization/edit.html:6
-#: ckanext/canada/templates/organization/edit_base.html:8
+#: ckanext/canada/templates/organization/edit_base.html:9
 #: ckanext/canada/templates/user/edit.html:7
 msgid "Manage"
 msgstr "Gérer"
 
-#: ckanext/canada/templates/organization/edit_base.html:6
+#: ckanext/canada/templates/organization/edit_base.html:7
 #: ckanext/canada/templates/organization/index.html:26
 #: ckanext/canada/templates/organization/members.html:10
-#: ckanext/canada/templates/organization/read_base.html:6
+#: ckanext/canada/templates/organization/read_base.html:7
 #: ckanext/canada/templates/snippets/cdts/header.html:154
 #: ckanext/canada/templates/user/read.html:19
-#: ckanext/canada/templates/user/read_base.html:99
+#: ckanext/canada/templates/user/read_base.html:90
 msgid "Organizations"
 msgstr "Organisations"
 
-#: ckanext/canada/templates/organization/edit_base.html:23
-#: ckanext/canada/templates/organization/read_base.html:24
-#: ckanext/canada/templates/package/search.html:16
-#: ckanext/canada/templates/snippets/organization.html:37
-#: ckanext/canada/templates/user/read.html:12
-msgid "Datasets"
-msgstr "Dossiers"
+#: ckanext/canada/templates/organization/edit_base.html:18
+msgid "View Organization"
+msgstr "Voir l’organisation"
 
-#: ckanext/canada/templates/organization/edit_base.html:26
-#: ckanext/canada/templates/organization/read_base.html:27
+#: ckanext/canada/templates/organization/edit_base.html:25
+#: ckanext/canada/templates/organization/read.html:12
+msgid "Edit Organization"
+msgstr "Modifier l’organisation"
+
+#: ckanext/canada/templates/organization/edit_base.html:27
+#: ckanext/canada/templates/organization/read_base.html:21
 msgid "Activity"
 msgstr "Activité"
 
-#: ckanext/canada/templates/organization/edit_base.html:30
-#: ckanext/canada/templates/organization/read_base.html:31
+#: ckanext/canada/templates/organization/edit_base.html:29
+#: ckanext/canada/templates/organization/read_base.html:23
 msgid "Edit Members"
 msgstr "Modifier les membres"
 
-#: ckanext/canada/templates/organization/edit_base.html:34
-#: ckanext/canada/templates/organization/read_base.html:40
+#: ckanext/canada/templates/organization/edit_base.html:31
+#: ckanext/canada/templates/organization/read_base.html:25
 msgid "View Members"
 msgstr "Afficher les membres"
 
@@ -2533,9 +2537,12 @@ msgstr ""
 msgid "Members"
 msgstr "Membres"
 
-#: ckanext/canada/templates/organization/read.html:12
-msgid "Edit Organization"
-msgstr "Modifier l’organisation"
+#: ckanext/canada/templates/organization/read_base.html:20
+#: ckanext/canada/templates/package/search.html:16
+#: ckanext/canada/templates/snippets/organization.html:37
+#: ckanext/canada/templates/user/read.html:12
+msgid "Datasets"
+msgstr "Dossiers"
 
 #: ckanext/canada/templates/organization/snippets/helper.html:2
 msgid "What are Organizations?"
@@ -2620,8 +2627,8 @@ msgstr "Désactivé"
 #: ckanext/canada/templates/package/read.html:93
 #: ckanext/canada/templates/package/snippets/resource_item.html:12
 #: ckanext/canada/templates/scheming/display_snippets/fluent_tags.html:8
-#: ckanext/canada/templates/snippets/package_item.html:35
-#: ckanext/canada/templates/snippets/package_item.html:51
+#: ckanext/canada/templates/snippets/package_item.html:39
+#: ckanext/canada/templates/snippets/package_item.html:55
 msgid ""
 "This third party metadata element has been translated using an automated "
 "translation tool.  To report any discrepancies please contact open-ouvert"
@@ -2727,7 +2734,7 @@ msgstr "Publiée par"
 #: ckanext/canada/templates/recombinant/snippets/xls_upload.html:57
 #: ckanext/canada/templates/recombinant/snippets/xls_upload.html:60
 #: ckanext/canada/templates/recombinant/snippets/xls_upload.html:61
-#: ckanext/canada/templates/snippets/package_item.html:86
+#: ckanext/canada/templates/snippets/package_item.html:90
 msgid ":"
 msgstr " :"
 
@@ -2856,9 +2863,13 @@ msgstr "Métadonnées de la PGF :"
 msgid "HNAP ISO:19115 Metadata Record"
 msgstr "Enregistrement de métadonnées de HNAP ISO:19115"
 
-#: ckanext/canada/templates/package/resource_edit.html:12
+#: ckanext/canada/templates/package/resource_edit.html:11
 msgid "Go back"
 msgstr "Retourner"
+
+#: ckanext/canada/templates/package/resource_read.html:44
+msgid "List of downloadable formats"
+msgstr ""
 
 #: ckanext/canada/templates/package/resource_read.html:46
 #: ckanext/canada/templates/package/snippets/resource_item.html:73
@@ -3346,19 +3357,16 @@ msgid "New activity item"
 msgstr "Nouveau poste d’activité"
 
 #: ckanext/canada/templates/snippets/activity_type_selector.html:12
-#, TODO: add translations
 msgid "created datastore"
-msgstr ""
+msgstr "datastore créée"
 
 #: ckanext/canada/templates/snippets/activity_type_selector.html:15
-#, TODO: add translations
 msgid "changed datastore"
-msgstr ""
+msgstr "datastore modifiée"
 
 #: ckanext/canada/templates/snippets/activity_type_selector.html:18
-#, TODO: add translations
 msgid "deleted datastore"
-msgstr ""
+msgstr "datastore supprimée"
 
 #: ckanext/canada/templates/snippets/dataset_facets.html:6
 #: ckanext/canada/templates/snippets/dataset_facets.html:12
@@ -3384,32 +3392,36 @@ msgstr "Aucun filtre sélectionné pour cette recherche"
 msgid "read more"
 msgstr "en savoir plus"
 
-#: ckanext/canada/templates/snippets/package_item.html:55
+#: ckanext/canada/templates/snippets/package_item.html:35
+msgid "Deleted"
+msgstr "Supprimer"
+
+#: ckanext/canada/templates/snippets/package_item.html:59
 msgid "This dataset has no description"
 msgstr "Aucune description disponible pour cet ensemble de données"
 
-#: ckanext/canada/templates/snippets/package_item.html:62
+#: ckanext/canada/templates/snippets/package_item.html:66
 msgid "Organization:"
 msgstr "Organisation :"
 
-#: ckanext/canada/templates/snippets/package_item.html:73
+#: ckanext/canada/templates/snippets/package_item.html:77
 msgid "Issued by:"
 msgstr "Publiée par :"
 
-#: ckanext/canada/templates/snippets/package_item.html:95
-#: ckanext/canada/templates/snippets/package_item.html:112
+#: ckanext/canada/templates/snippets/package_item.html:99
+#: ckanext/canada/templates/snippets/package_item.html:116
 msgid "Status:"
 msgstr "État :"
 
-#: ckanext/canada/templates/snippets/package_item.html:103
+#: ckanext/canada/templates/snippets/package_item.html:107
 msgid "Date:"
 msgstr "Date :"
 
-#: ckanext/canada/templates/snippets/package_item.html:115
+#: ckanext/canada/templates/snippets/package_item.html:119
 msgid "Request sent to data owner – awaiting response"
 msgstr "Demande envoyée au propriétaire des données, en attente de réponse"
 
-#: ckanext/canada/templates/snippets/package_item.html:122
+#: ckanext/canada/templates/snippets/package_item.html:126
 msgid "Resource Formats:"
 msgstr "Formats des ressources :"
 
@@ -3977,64 +3989,60 @@ msgid ""
 "    * Westernised Arabic Numerals: 0, 1, 2, … 9\n"
 "    * Special characters: ({}[],.<>;:'\"?/|\\`~!@#$%%^&*()_-+=).\n"
 "2. No accented characters are permitted.\n"
-"3. All passwords must be at least 8 characters long.\n"
+"3. All passwords must be at least 12 characters long.\n"
 msgstr ""
 "1. Les mots de passe doivent contenir des caractères appartenant à au "
 "moins 3 des 4 catégories suivantes : * Lettres majuscules : A, B, C, … Z "
 "* Lettres minuscules : a, b, c, … z * Chiffres arabes occidentalisés : 0,"
 " 1, 2, … 9 * Caractères spéciaux : ({}[],.<>;:'\"?/|\\`~!@#$%%^&*()_-+=)."
 " 2. Les caractères accentués ne sont pas autorisés. 3. Tous les mots de "
-"passe doivent comporter au moins 8 caractères."
+"passe doivent comporter au moins 12 caractères."
 
-#: ckanext/canada/templates/user/read_base.html:14
-msgid "Edit User"
-msgstr "Modifier l’utilisateur"
-
-#: ckanext/canada/templates/user/read_base.html:22
+#: ckanext/canada/templates/user/read_base.html:13
 msgid "Details"
 msgstr "Détails"
 
-#: ckanext/canada/templates/user/read_base.html:32
+#: ckanext/canada/templates/user/read_base.html:23
 msgid "Followers:"
 msgstr "Suiveurs :"
 
-#: ckanext/canada/templates/user/read_base.html:36
-msgid "Edits:"
-msgstr "Modifications :"
+#: ckanext/canada/templates/user/read_base.html:27
+msgid "Datasets:"
+msgstr "Dossiers :"
 
-#: ckanext/canada/templates/user/read_base.html:50
+#: ckanext/canada/templates/user/read_base.html:41
 msgid "Open ID:"
 msgstr ""
 
-#: ckanext/canada/templates/user/read_base.html:53
+#: ckanext/canada/templates/user/read_base.html:44
 msgid "Username:"
 msgstr "Nom d’utilisateur :"
 
-#: ckanext/canada/templates/user/read_base.html:61
-#: ckanext/canada/templates/user/read_base.html:72
+#: ckanext/canada/templates/user/read_base.html:52
+#: ckanext/canada/templates/user/read_base.html:63
 msgid "This means only you can see this"
 msgstr "Cela signifie que vous êtes le seul à pouvoir le voir"
 
-#: ckanext/canada/templates/user/read_base.html:61
-#: ckanext/canada/templates/user/read_base.html:72
+#: ckanext/canada/templates/user/read_base.html:52
+#: ckanext/canada/templates/user/read_base.html:63
 msgid "Private"
 msgstr "Privé"
 
-#: ckanext/canada/templates/user/read_base.html:66
+#: ckanext/canada/templates/user/read_base.html:57
 msgid "Member Since"
 msgstr "Membre depuis"
 
-#: ckanext/canada/templates/user/read_base.html:72
-#: ckanext/canada/templates/user/read_base.html:80
+#: ckanext/canada/templates/user/read_base.html:63
+#: ckanext/canada/templates/user/read_base.html:71
 msgid "API Key"
 msgstr "Clé API"
 
-#: ckanext/canada/templates/user/read_base.html:75
+#: ckanext/canada/templates/user/read_base.html:66
 msgid "Show API Key"
 msgstr "Afficher la clé API"
 
-#: ckanext/canada/templates/user/read_base.html:81
-#: ckanext/canada/templates/user/read_base.html:87
+#: ckanext/canada/templates/user/read_base.html:72
+#: ckanext/canada/templates/user/read_base.html:78
 msgid "Close"
 msgstr "Fermer"
 
@@ -4056,11 +4064,7 @@ msgstr "Demande de récupération"
 msgid "Search Users"
 msgstr "Rechercher des utilisateurs"
 
-#: ckanext/canada/templates/xloader/resource_data.html:11
-msgid "Delete DataStore table"
-msgstr "Supprimer la table DataStore"
-
-#: ckanext/canada/templates/xloader/resource_data.html:24
+#: ckanext/canada/templates/xloader/resource_data.html:8
 msgid "Upload to DataStore"
 msgstr "Télécharger vers le DataStore"
 
@@ -7848,4 +7852,19 @@ msgstr "Télécharger vers le DataStore"
 
 #~ msgid "Open ID"
 #~ msgstr "Identifiant ouvert"
+
+#~ msgid "Unauthorized to delete resource %s"
+#~ msgstr "Vous n'êtes pas autorisé à supprimer la ressource %s"
+
+#~ msgid "DataStore table and Data Dictionary deleted for resource %s"
+#~ msgstr ""
+#~ "Tableau de stockage de données et "
+#~ "dictionnaire de données supprimés pour "
+#~ "la ressource %s"
+
+#~ msgid "Edit User"
+#~ msgstr "Modifier l’utilisateur"
+
+#~ msgid "Edits:"
+#~ msgstr "Modifications :"
 
