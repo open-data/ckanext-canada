@@ -1,0 +1,7 @@
+{%- set value = data[field.field_name] -%}
+
+{% if value.startswith('10') %}{# backwards compatibility for existing data #}
+  <a href="https://www.doi.org/{{ value }}">{{ value }}</a>
+{% else %}
+  {{ value }}
+{% endif %}

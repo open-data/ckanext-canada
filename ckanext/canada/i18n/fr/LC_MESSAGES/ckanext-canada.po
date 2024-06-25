@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-06-25 17:26+0000\n"
+"POT-Creation-Date: 2024-06-25 18:45+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: fr\n"
@@ -275,12 +275,12 @@ msgstr "Juridiction"
 msgid "Suggestion Status"
 msgstr "État de la suggestion"
 
-#: ckanext/canada/plugins.py:899
+#: ckanext/canada/plugins.py:901
 #: ckanext/canada/templates/public/package/snippets/resource_form.html:8
 msgid "Previous"
 msgstr "Précédent"
 
-#: ckanext/canada/plugins.py:899
+#: ckanext/canada/plugins.py:901
 msgid "Next"
 msgstr "Suivant"
 
@@ -581,71 +581,71 @@ msgstr "Portail du gouvernement ouvert"
 msgid "Open Government Portal (staging)"
 msgstr "Portail du gouvernement ouvert (stadification)"
 
-#: ckanext/canada/validators.py:118
+#: ckanext/canada/validators.py:151
 #, python-format
 msgid "Tag \"%s\" length is less than minimum %s"
 msgstr "La longueur de la balise \"%s\" est inférieure au minimum %s"
 
-#: ckanext/canada/validators.py:122
+#: ckanext/canada/validators.py:155
 #, python-format
 msgid "Tag \"%s\" length is more than maximum %i"
 msgstr "La longueur de la balise \"%s\" est supérieure au maximum %i"
 
-#: ckanext/canada/validators.py:126
+#: ckanext/canada/validators.py:159
 #, python-format
 msgid "Tag \"%s\" may not contain consecutive spaces"
 msgstr "La balise \"%s\" ne peut pas contenir d’espaces consécutifs"
 
-#: ckanext/canada/validators.py:133
+#: ckanext/canada/validators.py:166
 #, python-format
 msgid "Tag \"%s\" may not contain unprintable character U+%04x"
 msgstr "La balise \"%s\" ne peut pas contenir de caractères non imprimables U+%04x"
 
-#: ckanext/canada/validators.py:137
+#: ckanext/canada/validators.py:170
 #, python-format
 msgid "Tag \"%s\" may not contain separator charater U+%04x"
 msgstr "La balise \"%s\"ne peut pas contenir de caractères séparateurs U+%04x"
 
-#: ckanext/canada/validators.py:153
+#: ckanext/canada/validators.py:186
 msgid "Badly formed hexadecimal UUID string"
 msgstr "Chaîne UUID hexadécimale mal formée"
 
 #: ckanext/canada/templates/internal/user/new_user_form.html:6
-#: ckanext/canada/validators.py:165 ckanext/canada/validators.py:167
+#: ckanext/canada/validators.py:198 ckanext/canada/validators.py:200
 msgid "Please enter a valid email address."
 msgstr "S’il vous plaît, mettez une adresse email valide."
 
-#: ckanext/canada/validators.py:182
+#: ckanext/canada/validators.py:215
 msgid "Invalid GeoJSON"
 msgstr "GeoJSON invalide"
 
-#: ckanext/canada/validators.py:259
+#: ckanext/canada/validators.py:292
 msgid "Date may not be in the future when this record is marked ready to publish"
 msgstr ""
 "Une fois que ce document est marqué comme étant prêt à publier, la date "
 "ne peut pas être dans le futur"
 
-#: ckanext/canada/validators.py:336
+#: ckanext/canada/validators.py:369
 msgid "Date format incorrect. Expecting YYYY-MM-DD"
 msgstr "Le format de la date est incorrect. Il devrait être AAAA-MM-JJ"
 
-#: ckanext/canada/validators.py:350 ckanext/canada/validators.py:364
+#: ckanext/canada/validators.py:383 ckanext/canada/validators.py:397
 msgid "Must be a Unicode string value"
 msgstr "Doit être une chaîne de caractères Unicode"
 
-#: ckanext/canada/validators.py:371 ckanext/canada/validators.py:382
+#: ckanext/canada/validators.py:404 ckanext/canada/validators.py:415
 msgid "Must be a JSON string"
 msgstr "Doit être une chaîne JSON"
 
-#: ckanext/canada/validators.py:378
+#: ckanext/canada/validators.py:411
 msgid "JSON object must contain \"en\" key"
 msgstr "L’objet JSON doit contenir la clé \"en\""
 
-#: ckanext/canada/validators.py:380
+#: ckanext/canada/validators.py:413
 msgid "JSON object must contain \"fr\" key"
 msgstr "L’objet JSON doit contenir la clé \"fr\""
 
-#: ckanext/canada/validators.py:532
+#: ckanext/canada/validators.py:565
 #, python-format
 msgid ""
 "Cannot change value of registry_access field from '%s' to '%s'. This "
@@ -653,6 +653,10 @@ msgid ""
 msgstr ""
 "Impossible de modifier la valeur du champ d’accès au registre de '%s' à "
 "'%s'. Ce champ ne sert qu’à des fins de lecture."
+
+#: ckanext/canada/validators.py:573
+msgid "Invalid value for a digital object identifier."
+msgstr "Valeur non valide pour un identifiant d’objet numérique."
 
 #: ckanext/canada/view.py:99
 msgid "<strong>Note</strong><br>{0} is now logged in"

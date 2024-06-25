@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ckanext-canada 0.4.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-06-25 17:26+0000\n"
+"POT-Creation-Date: 2024-06-25 18:45+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -255,12 +255,12 @@ msgstr ""
 msgid "Suggestion Status"
 msgstr ""
 
-#: ckanext/canada/plugins.py:899
+#: ckanext/canada/plugins.py:901
 #: ckanext/canada/templates/public/package/snippets/resource_form.html:8
 msgid "Previous"
 msgstr ""
 
-#: ckanext/canada/plugins.py:899
+#: ckanext/canada/plugins.py:901
 msgid "Next"
 msgstr ""
 
@@ -546,73 +546,77 @@ msgstr ""
 msgid "Open Government Portal (staging)"
 msgstr ""
 
-#: ckanext/canada/validators.py:118
+#: ckanext/canada/validators.py:151
 #, python-format
 msgid "Tag \"%s\" length is less than minimum %s"
 msgstr ""
 
-#: ckanext/canada/validators.py:122
+#: ckanext/canada/validators.py:155
 #, python-format
 msgid "Tag \"%s\" length is more than maximum %i"
 msgstr ""
 
-#: ckanext/canada/validators.py:126
+#: ckanext/canada/validators.py:159
 #, python-format
 msgid "Tag \"%s\" may not contain consecutive spaces"
 msgstr ""
 
-#: ckanext/canada/validators.py:133
+#: ckanext/canada/validators.py:166
 #, python-format
 msgid "Tag \"%s\" may not contain unprintable character U+%04x"
 msgstr ""
 
-#: ckanext/canada/validators.py:137
+#: ckanext/canada/validators.py:170
 #, python-format
 msgid "Tag \"%s\" may not contain separator charater U+%04x"
 msgstr ""
 
-#: ckanext/canada/validators.py:153
+#: ckanext/canada/validators.py:186
 msgid "Badly formed hexadecimal UUID string"
 msgstr ""
 
 #: ckanext/canada/templates/internal/user/new_user_form.html:6
-#: ckanext/canada/validators.py:165 ckanext/canada/validators.py:167
+#: ckanext/canada/validators.py:198 ckanext/canada/validators.py:200
 msgid "Please enter a valid email address."
 msgstr ""
 
-#: ckanext/canada/validators.py:182
+#: ckanext/canada/validators.py:215
 msgid "Invalid GeoJSON"
 msgstr ""
 
-#: ckanext/canada/validators.py:259
+#: ckanext/canada/validators.py:292
 msgid "Date may not be in the future when this record is marked ready to publish"
 msgstr ""
 
-#: ckanext/canada/validators.py:336
+#: ckanext/canada/validators.py:369
 msgid "Date format incorrect. Expecting YYYY-MM-DD"
 msgstr ""
 
-#: ckanext/canada/validators.py:350 ckanext/canada/validators.py:364
+#: ckanext/canada/validators.py:383 ckanext/canada/validators.py:397
 msgid "Must be a Unicode string value"
 msgstr ""
 
-#: ckanext/canada/validators.py:371 ckanext/canada/validators.py:382
+#: ckanext/canada/validators.py:404 ckanext/canada/validators.py:415
 msgid "Must be a JSON string"
 msgstr ""
 
-#: ckanext/canada/validators.py:378
+#: ckanext/canada/validators.py:411
 msgid "JSON object must contain \"en\" key"
 msgstr ""
 
-#: ckanext/canada/validators.py:380
+#: ckanext/canada/validators.py:413
 msgid "JSON object must contain \"fr\" key"
 msgstr ""
 
-#: ckanext/canada/validators.py:532
+#: ckanext/canada/validators.py:565
 #, python-format
 msgid ""
 "Cannot change value of registry_access field from '%s' to '%s'. This field is"
 " read-only."
+msgstr ""
+
+#: ckanext/canada/validators.py:573
+msgid "Invalid value for a digital object identifier."
 msgstr ""
 
 #: ckanext/canada/view.py:99
