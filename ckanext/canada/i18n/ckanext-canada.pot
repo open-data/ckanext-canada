@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ckanext-canada 0.4.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-06-18 15:37+0000\n"
+"POT-Creation-Date: 2024-06-25 14:38+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -195,7 +195,7 @@ msgstr ""
 msgid "Registry Home"
 msgstr ""
 
-#: ckanext/canada/helpers.py:893 ckanext/canada/strings.py:78
+#: ckanext/canada/helpers.py:893 ckanext/canada/strings.py:81
 msgid "Open Government Portal"
 msgstr ""
 
@@ -207,62 +207,62 @@ msgstr ""
 msgid "Unknown Job"
 msgstr ""
 
-#: ckanext/canada/plugins.py:723
+#: ckanext/canada/plugins.py:726
 #: ckanext/canada/templates/scheming/package/snippets/package_form.html:25
 msgid "Portal Type"
 msgstr ""
 
-#: ckanext/canada/plugins.py:724 ckanext/canada/templates/package/deleted.html:14
+#: ckanext/canada/plugins.py:727 ckanext/canada/templates/package/deleted.html:14
 #: ckanext/canada/templates/user/new_user_form.html:17
 msgid "Organization"
 msgstr ""
 
-#: ckanext/canada/plugins.py:725
+#: ckanext/canada/plugins.py:728
 msgid "Collection Type"
 msgstr ""
 
-#: ckanext/canada/plugins.py:726 ckanext/canada/plugins.py:727
+#: ckanext/canada/plugins.py:729 ckanext/canada/plugins.py:730
 msgid "Keywords"
 msgstr ""
 
-#: ckanext/canada/plugins.py:728
+#: ckanext/canada/plugins.py:731
 msgid "Subject"
 msgstr ""
 
-#: ckanext/canada/plugins.py:729
+#: ckanext/canada/plugins.py:732
 #: ckanext/canada/templates/tabledesigner/view_snippets/cra_business_number.html:1
 msgid "Format"
 msgstr ""
 
-#: ckanext/canada/plugins.py:730
+#: ckanext/canada/plugins.py:733
 msgid "Resource Type"
 msgstr ""
 
-#: ckanext/canada/plugins.py:731
+#: ckanext/canada/plugins.py:734
 msgid "Maintenance and Update Frequency"
 msgstr ""
 
-#: ckanext/canada/plugins.py:732
+#: ckanext/canada/plugins.py:735
 msgid "Record Status"
 msgstr ""
 
-#: ckanext/canada/plugins.py:733
+#: ckanext/canada/plugins.py:736
 msgid "IMSO Approval"
 msgstr ""
 
-#: ckanext/canada/plugins.py:734
+#: ckanext/canada/plugins.py:737
 msgid "Jurisdiction"
 msgstr ""
 
-#: ckanext/canada/plugins.py:735
+#: ckanext/canada/plugins.py:738
 msgid "Suggestion Status"
 msgstr ""
 
-#: ckanext/canada/plugins.py:924
+#: ckanext/canada/plugins.py:927
 msgid "Previous"
 msgstr ""
 
-#: ckanext/canada/plugins.py:924
+#: ckanext/canada/plugins.py:927
 msgid "Next"
 msgstr ""
 
@@ -509,19 +509,30 @@ msgstr ""
 msgid "Cannot link files of this type"
 msgstr ""
 
-#: ckanext/canada/strings.py:71
+#: ckanext/canada/strings.py:69
+msgid "Your password must be {} characters or longer."
+msgstr ""
+
+#: ckanext/canada/strings.py:70
+msgid ""
+"Your password must consist of at least three of the following character sets:"
+" uppercase characters, lowercase characters, digits, punctuation & special "
+"characters."
+msgstr ""
+
+#: ckanext/canada/strings.py:74
 msgid "These fields have been removed, click update below to save your changes."
 msgstr ""
 
-#: ckanext/canada/strings.py:72
+#: ckanext/canada/strings.py:75
 msgid "These fields have been removed."
 msgstr ""
 
-#: ckanext/canada/strings.py:75
+#: ckanext/canada/strings.py:78
 msgid "Your form submission could not be validated, please re-submit the form."
 msgstr ""
 
-#: ckanext/canada/strings.py:79
+#: ckanext/canada/strings.py:82
 msgid "Open Government Portal (staging)"
 msgstr ""
 
@@ -3368,7 +3379,7 @@ msgid ""
 "    * Westernised Arabic Numerals: 0, 1, 2, … 9\n"
 "    * Special characters: ({}[],.<>;:'\"?/|\\`~!@#$%%^&*()_-+=).\n"
 "2. No accented characters are permitted.\n"
-"3. All passwords must be at least 8 characters long.\n"
+"3. All passwords must be at least 12 characters long.\n"
 msgstr ""
 
 #: ckanext/canada/templates/user/read_base.html:14
