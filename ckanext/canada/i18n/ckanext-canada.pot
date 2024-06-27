@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ckanext-canada 0.4.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-06-25 14:41+0000\n"
+"POT-Creation-Date: 2024-06-27 19:32-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,13 +17,13 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.7.0\n"
 
-#: ckanext/canada/assets/internal/validation_spec.js:8 ckanext/canada/checks.py:25
+#: ckanext/canada/assets/internal/validation_spec.js:9 ckanext/canada/checks.py:25
 msgid ""
 "Column name {value} in column {column_number} is not valid for a DataStore "
 "header"
 msgstr ""
 
-#: ckanext/canada/assets/internal/validation_spec.js:16 ckanext/canada/checks.py:30
+#: ckanext/canada/assets/internal/validation_spec.js:17 ckanext/canada/checks.py:30
 msgid ""
 "Column name {value} in column {column_number} is too long for a DataStore "
 "header"
@@ -791,11 +791,11 @@ msgstr ""
 msgid "User %r not authorized to view members of %s"
 msgstr ""
 
-#: ckanext/canada/assets/internal/validation_spec.js:7
+#: ckanext/canada/assets/internal/validation_spec.js:8
 msgid "Invalid Header for DataStore"
 msgstr ""
 
-#: ckanext/canada/assets/internal/validation_spec.js:9
+#: ckanext/canada/assets/internal/validation_spec.js:10
 msgid ""
 "Column name is invalid for a DataStore header.\n"
 "\n"
@@ -806,11 +806,11 @@ msgid ""
 " - Make sure the column name is not blank."
 msgstr ""
 
-#: ckanext/canada/assets/internal/validation_spec.js:15
+#: ckanext/canada/assets/internal/validation_spec.js:16
 msgid "Header Too Long for DataStore"
 msgstr ""
 
-#: ckanext/canada/assets/internal/validation_spec.js:17
+#: ckanext/canada/assets/internal/validation_spec.js:18
 msgid ""
 "Column name is too long for a DataStore header.\n"
 "\n"
@@ -1480,221 +1480,206 @@ msgstr ""
 
 #: ckanext/canada/templates/help.html:36
 msgid ""
-"Make your desired changes. Note that altering your username is not "
-"recommended, as it could disconnect your uploaded data."
-msgstr ""
-
-#: ckanext/canada/templates/help.html:37
-msgid ""
 "After completing your modifications, click <em>\"Update Profile\"</em>. "
 "Depending on the changes, you may need to log in again."
 msgstr ""
 
-#: ckanext/canada/templates/help.html:40
+#: ckanext/canada/templates/help.html:39
 msgid "Open Data and Open Information"
 msgstr ""
 
-#: ckanext/canada/templates/help.html:42
+#: ckanext/canada/templates/help.html:41
 msgid "How do I add an open data or open information record?"
 msgstr ""
 
-#: ckanext/canada/templates/help.html:43
+#: ckanext/canada/templates/help.html:42
 msgid ""
 "Please visit the registry operations guide section for <a "
 "href=\"https://open.canada.ca/en/registry-operations-guide/upload-"
 "data\">Uploading open data and information.</a>"
 msgstr ""
 
-#: ckanext/canada/templates/help.html:46
+#: ckanext/canada/templates/help.html:45
 msgid "How do I review an open data or open information record for my organization?"
 msgstr ""
 
-#: ckanext/canada/templates/help.html:47
+#: ckanext/canada/templates/help.html:46
 msgid ""
 "To review your department's open data or open information records or to see "
 "the complete list of records:"
 msgstr ""
 
-#: ckanext/canada/templates/help.html:49
+#: ckanext/canada/templates/help.html:48
 msgid "Select Menu, then Organizations."
 msgstr ""
 
-#: ckanext/canada/templates/help.html:50
+#: ckanext/canada/templates/help.html:49
 msgid "Select your organization."
 msgstr ""
 
-#: ckanext/canada/templates/help.html:51
+#: ckanext/canada/templates/help.html:50
 msgid "Your records will appear."
 msgstr ""
 
-#: ckanext/canada/templates/help.html:55
+#: ckanext/canada/templates/help.html:54
 msgid "How do I search the Registry?"
 msgstr ""
 
-#: ckanext/canada/templates/help.html:56
+#: ckanext/canada/templates/help.html:55
 msgid "To find metadata records published in the Registry, follow these steps:"
 msgstr ""
 
-#: ckanext/canada/templates/help.html:58
+#: ckanext/canada/templates/help.html:57
 msgid "Click on the <em>\"Search\"</em> option in the main menu."
 msgstr ""
 
-#: ckanext/canada/templates/help.html:59
+#: ckanext/canada/templates/help.html:58
 msgid ""
 "On the Search page, you can either enter a search term directly or use the "
-"facets on the right-hand side to narrow down your search."
+"facets on the left-hand side to narrow down your search."
 msgstr ""
 
-#: ckanext/canada/templates/help.html:60
+#: ckanext/canada/templates/help.html:59
 msgid ""
 "The list of results will display records matching your search query in the "
 "order in which they were entered or updated in the Registry."
 msgstr ""
 
-#: ckanext/canada/templates/help.html:63
+#: ckanext/canada/templates/help.html:62
 msgid "Proactive Disclosure Information"
 msgstr ""
 
-#: ckanext/canada/templates/help.html:65
+#: ckanext/canada/templates/help.html:64
 msgid "How do I add, modify or delete records in the Registry?"
 msgstr ""
 
-#: ckanext/canada/templates/help.html:66
+#: ckanext/canada/templates/help.html:65
 msgid ""
 "Please visit the registry operations guide section for <a "
 "href=\"https://open.canada.ca/en/registry-operations-guide/upload-"
 "data#manage\">Managing records.</a>"
 msgstr ""
 
-#: ckanext/canada/templates/help.html:69
+#: ckanext/canada/templates/help.html:68
 msgid "Why can't I see my uploaded data on the portal?"
 msgstr ""
 
-#: ckanext/canada/templates/help.html:70
+#: ckanext/canada/templates/help.html:69
 msgid ""
 "When uploading Proactive publication data to the Registry, it's essential to "
 "follow these directives to ensure a successful process:"
 msgstr ""
 
-#: ckanext/canada/templates/help.html:72
+#: ckanext/canada/templates/help.html:71
 msgid ""
 "Download the Latest Template to ensure that you're using the most up-to-date "
 "format."
 msgstr ""
 
-#: ckanext/canada/templates/help.html:73
+#: ckanext/canada/templates/help.html:72
 msgid ""
 "Prepare Data in the Proper Template: Organize your data in the appropriate "
 "template for the specific organization and Proactive publication type. Each "
 "template corresponds to particular context, so choose the relevant one."
 msgstr ""
 
-#: ckanext/canada/templates/help.html:74
-msgid ""
-"Maintain the Abbreviated Organization Name: In the template, the abbreviated "
-"name of the organization (e.g., \"aandc-aadnc\") must remain in cell C1 "
-"exactly as downloaded."
-msgstr ""
-
-#: ckanext/canada/templates/help.html:75
+#: ckanext/canada/templates/help.html:73
 msgid ""
 "Include All Required Fields: Ensure that the template you're uploading "
 "contains all the required fields for the specific Proactive publication type."
 " Missing fields can lead to issues during the upload process."
 msgstr ""
 
-#: ckanext/canada/templates/help.html:76
+#: ckanext/canada/templates/help.html:74
 msgid ""
 "Enter Valid Data: Populate the template with valid and accurate data. "
 "Incorrect or incomplete information may cause errors."
 msgstr ""
 
-#: ckanext/canada/templates/help.html:77
+#: ckanext/canada/templates/help.html:75
 msgid ""
 "File Format and Naming: Your completed data template should be an Excel "
-"spreadsheet in either XLS or XLSX format. Do not rename the file, as the "
-"system relies on a unique ID associated with each template. Renaming it could"
-" lead to complications."
+"spreadsheet in either XLS or XLSX format."
 msgstr ""
 
-#: ckanext/canada/templates/help.html:78
+#: ckanext/canada/templates/help.html:76
 msgid ""
 "Troubleshooting Upload Issues: If you encounter an error message during the "
 "upload, carefully review the message text and take corrective measures based "
 "on the specific issue."
 msgstr ""
 
-#: ckanext/canada/templates/help.html:79
+#: ckanext/canada/templates/help.html:77
 msgid ""
 "If the upload was successful but you don't see the data in the "
 "<em>\"Preview\"</em> section of the page, verify your data file. It might be "
 "a duplicate upload or have other issues."
 msgstr ""
 
-#: ckanext/canada/templates/help.html:83
+#: ckanext/canada/templates/help.html:81
 msgid "Was everything uploaded correctly?"
 msgstr ""
 
-#: ckanext/canada/templates/help.html:84
+#: ckanext/canada/templates/help.html:82
 msgid ""
 "A record is not immediately pushed to the portal, it will appear the "
 "following morning. The following are two possible methods for you to verify "
 "your data upload:"
 msgstr ""
 
-#: ckanext/canada/templates/help.html:86
+#: ckanext/canada/templates/help.html:84
 msgid ""
 "If you see the message <em>\"Your template has been successfully "
 "uploaded\"</em> after you have hit the <em>\"Submit\"</em> button; or"
 msgstr ""
 
-#: ckanext/canada/templates/help.html:87
+#: ckanext/canada/templates/help.html:85
 msgid ""
 "you can verify the data by looking in the Preview table for one or more of "
 "your template line items."
 msgstr ""
 
-#: ckanext/canada/templates/help.html:91
+#: ckanext/canada/templates/help.html:89
 msgid "Why didn't I get a confirmation email that my upload was successful?"
 msgstr ""
 
-#: ckanext/canada/templates/help.html:92
+#: ckanext/canada/templates/help.html:90
 msgid ""
 "The system only provides an onscreen message <em>\"Your template has been "
 "successfully uploaded\"</em>; it does not send a confirmation email."
 msgstr ""
 
-#: ckanext/canada/templates/help.html:95
+#: ckanext/canada/templates/help.html:93
 msgid "Why don't I see the upload button?"
 msgstr ""
 
-#: ckanext/canada/templates/help.html:96
+#: ckanext/canada/templates/help.html:94
 msgid ""
 "The Upload button is accessible only to users associated with an "
 "organization. If you're unable to see the button, consider the following "
 "reasons:"
 msgstr ""
 
-#: ckanext/canada/templates/help.html:98
+#: ckanext/canada/templates/help.html:96
 msgid "Confirm that you are logged into the Registry."
 msgstr ""
 
-#: ckanext/canada/templates/help.html:99
+#: ckanext/canada/templates/help.html:97
 msgid "Ensure that your account is linked to your organization."
 msgstr ""
 
-#: ckanext/canada/templates/help.html:100
+#: ckanext/canada/templates/help.html:98
 msgid ""
 "If your organization hasn't uploaded data yet for that proactive disclosure "
 "type, your template hasn't been initiated. To access the Upload button, "
-"you'll need to download the template first."
+"you'll need to click the <em>\"Get Started\"</em> button."
 msgstr ""
 
-#: ckanext/canada/templates/help.html:104
+#: ckanext/canada/templates/help.html:102
 msgid "Why doesn't all the text I entered in the template appear?"
 msgstr ""
 
-#: ckanext/canada/templates/help.html:105
+#: ckanext/canada/templates/help.html:103
 msgid ""
 "Excel has a cell display limit of 1024 characters.  However, the complete "
 "text (Maximum of 32767 characters of it) is actually in the cell. You can "
@@ -1702,11 +1687,11 @@ msgid ""
 "mode, or looking into the Formula bar, in order to see the complete text."
 msgstr ""
 
-#: ckanext/canada/templates/help.html:108
+#: ckanext/canada/templates/help.html:106
 msgid "Who approves the Proactive publication data?"
 msgstr ""
 
-#: ckanext/canada/templates/help.html:109
+#: ckanext/canada/templates/help.html:107
 msgid ""
 "It is the organization's responsibility to verify and approve Proactive "
 "publication data before uploading to the Registry."
