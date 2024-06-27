@@ -34,13 +34,15 @@ window.addEventListener('load', function(){
     }
 
     function _guess_mimetype(url){
+      let tokenFieldName = $('meta[name="csrf_field_name"]').attr('content');
+      let tokenValue = $('meta[name="' + tokenFieldName + '"]').attr('content');
+      payload = {'url': url};
+      payload[tokenFieldName] = tokenValue;
       $.ajax({
         'url': '/api/action/canada_guess_mimetype',
         'type': 'POST',
         'dataType': 'JSON',
-        'data': {
-          'url': url,
-        },
+        'data': payload,
         'complete': function(_data){
           if( _data.responseJSON ){  // we have response JSON
             if( _data.responseJSON.success ){  // successful format guess
