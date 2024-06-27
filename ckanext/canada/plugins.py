@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+from typing import Optional, Type
 import logging
 import re
 from flask import has_request_context
@@ -14,6 +15,8 @@ from ckan.plugins.core import plugin_loaded
 
 from ckan.config.middleware.flask_app import csrf
 from ckanext.datatablesview.blueprint import datatablesview
+
+from frictionless import system, Check, Plugin as FrictionlessPlugin
 
 from ckan.plugins.toolkit import (
     g,
@@ -32,8 +35,7 @@ from ckanext.canada import auth
 from ckanext.canada import helpers
 from ckanext.canada import cli
 from ckanext.canada.pd import get_commands as get_pd_commands
-# type_ignore_reason: importing to proc decorators
-from ckanext.canada import checks  # type: ignore
+from ckanext.canada import checks
 from ckanext.canada import column_types as coltypes
 from ckanext.tabledesigner.interfaces import IColumnTypes
 from ckanext.xloader.interfaces import IXloader
@@ -63,6 +65,12 @@ except ImportError:
 
 log = logging.getLogger(__name__)
 fq_portal_release_date_match = re.compile(r"(portal_release_date:\"\[.*\]\")")
+
+
+class CanadaValidationPlugin(FrictionlessPlugin):
+    def select_check_class(self, type: Optional[str] = None) -> Optional[Type[Check]]:
+        if type == 'ds-headers':
+            return checks.DatastoreHeadersCheck()
 
 
 class CanadaThemePlugin(p.SingletonPlugin):
@@ -484,6 +492,9 @@ class DataGCCAInternal(p.SingletonPlugin):
                     raise e
         if db.upsert_data.__name__ == 'upsert_data':
             db.upsert_data = patched_upsert_data
+
+        # register custom frictionless plugin
+        system.register('canada-validation', CanadaValidationPlugin())
 
     # IPackageController
     def create(self, pkg):
