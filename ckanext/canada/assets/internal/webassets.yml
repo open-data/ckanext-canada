@@ -37,8 +37,3 @@ guess_mimetype:
   contents:
     - canada_guess_mimetype.js
   output: canada_guess_mimetype/%(version)s_canada_guess_mimetype.js
-
-validation_spec:
-  contents:
-    - validation_spec.js
-  output: validation_spec/%(version)s_validation_spec.js
