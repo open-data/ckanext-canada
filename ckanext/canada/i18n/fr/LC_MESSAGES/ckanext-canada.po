@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-06-25 17:26+0000\n"
+"POT-Creation-Date: 2024-06-27 18:55-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: fr\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.7.0\n"
 
-#: ckanext/canada/assets/internal/validation_spec.js:8
+#: ckanext/canada/assets/internal/validation_spec.js:9
 #: ckanext/canada/checks.py:25
 msgid ""
 "Column name {value} in column {column_number} is not valid for a "
@@ -28,7 +28,7 @@ msgstr ""
 "Le nom de la colonne {value} dans la colonne {column_number} est invalide"
 " comme en-tête dans DataStore"
 
-#: ckanext/canada/assets/internal/validation_spec.js:16
+#: ckanext/canada/assets/internal/validation_spec.js:17
 #: ckanext/canada/checks.py:30
 msgid ""
 "Column name {value} in column {column_number} is too long for a DataStore"
@@ -851,11 +851,11 @@ msgstr "L’utilisateur %r n’est pas autorisé à modifier les membres de %s"
 msgid "User %r not authorized to view members of %s"
 msgstr "L’utilisateur %r n’est pas autorisé à voir les membres de %s"
 
-#: ckanext/canada/assets/internal/validation_spec.js:7
+#: ckanext/canada/assets/internal/validation_spec.js:8
 msgid "Invalid Header for DataStore"
 msgstr "En-tête invalide dans DataStore"
 
-#: ckanext/canada/assets/internal/validation_spec.js:9
+#: ckanext/canada/assets/internal/validation_spec.js:10
 msgid ""
 "Column name is invalid for a DataStore header.\n"
 "\n"
@@ -874,11 +874,11 @@ msgstr ""
 " - Supprimez les guillemets ('\"') du nom de la colonne.\n"
 " - Veillez à ce que le nom de la colonne soit indiqué."
 
-#: ckanext/canada/assets/internal/validation_spec.js:15
+#: ckanext/canada/assets/internal/validation_spec.js:16
 msgid "Header Too Long for DataStore"
 msgstr "L'en-tête est trop long dans DataStore"
 
-#: ckanext/canada/assets/internal/validation_spec.js:17
+#: ckanext/canada/assets/internal/validation_spec.js:18
 msgid ""
 "Column name is too long for a DataStore header.\n"
 "\n"
@@ -2028,10 +2028,12 @@ msgid "Ensure that your account is linked to your organization."
 msgstr "Assurez-vous que votre compte est lié à votre organisation."
 
 #: ckanext/canada/templates/internal/help.html:98
+#, fuzzy
 msgid ""
 "If your organization hasn't uploaded data yet for that proactive "
 "disclosure type, your template hasn't been initiated. To access the "
-"Upload button, you'll need to click the <em>\"Get Started\"</em> button."
+"Upload button, you'll need to click on the <em>\"Get Started\"</em> "
+"button."
 msgstr ""
 "Si votre organisation n’a pas encore téléversé de données pour ce type de"
 " divulgation proactive, votre modèle n’a pas été initié. Pour accéder au "
@@ -6568,39 +6570,4 @@ msgstr "Mémoriser mes informations"
 #~ "modifier votre nom d’utilisateur, car "
 #~ "cela pourrait déconnecter vos données "
 #~ "téléversées."
-
-#~ msgid ""
-#~ "Maintain the Abbreviated Organization Name:"
-#~ " In the template, the abbreviated "
-#~ "name of the organization (e.g., "
-#~ "\"aandc-aadnc\") must remain in cell "
-#~ "C1 exactly as downloaded."
-#~ msgstr ""
-#~ "Conserver le nom abrégé de "
-#~ "l’organisation : Dans le modèle, le "
-#~ "nom abrégé de l’organisation (par "
-#~ "exemple, « aandc-aadnc ») doit "
-#~ "rester dans la cellule C1 tel "
-#~ "qu’il a été téléchargé."
-
-#~ msgid ""
-#~ "File Format and Naming: Your completed"
-#~ " data template should be an Excel "
-#~ "spreadsheet in either XLS or XLSX "
-#~ "format. Do not rename the file, as"
-#~ " the system relies on a unique "
-#~ "ID associated with each template. "
-#~ "Renaming it could lead to complications."
-#~ msgstr ""
-#~ "Format et nom du fichier : Votre"
-#~ " modèle de données complété doit être"
-#~ " une feuille de calcul Excel au "
-#~ "format XLS ou XLSX. Ne renommez "
-#~ "pas le fichier, car le système "
-#~ "repose sur un identifiant unique associé"
-#~ " à chaque modèle. Le renommer "
-#~ "pourrait entraîner des complications."
-
-#~ msgid "Click the <em>\"Get Started\"</em> button"
-#~ msgstr "Cliquez sur le bouton « Commencer »"
 
