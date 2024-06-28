@@ -121,18 +121,21 @@
               </div>
             {% endif %}
           {% else %}
-            <div class="row">
-              <div class="col-md-3">
-                <em>{{ _('Resource Formats:') }}</em>
+            {% set r_formats = h.dict_list_reduce(package.resources, 'format') %}
+            {% if r_formats %}
+              <div class="row">
+                <div class="col-md-3">
+                  <em>{{ _('Resource Formats:') }}</em>
+                </div>
+                <div class="col-md-9">
+                  <ul class="list-inline list-unstyled">
+                    {% for resource in r_formats %}
+                      <li><span class="badge">{{ _(resource) }}</span></li>
+                    {% endfor %}
+                  </ul>
+                </div>
               </div>
-              <div class="col-md-9">
-                <ul class="list-inline list-unstyled">
-                  {% for resource in h.dict_list_reduce(package.resources, 'format') %}
-                    <li><span class="badge">{{ _(resource) }}</span></li>
-                  {% endfor %}
-                </ul>
-              </div>
-            </div>
+            {% endif %}
           {% endif %}
         {% endblock %}
       </div>

@@ -86,7 +86,7 @@
 <div class="filters">
   <h2>{{ _('Search Filters') }}&nbsp;<small><a href="{{ h.url_for('canada.ckanadmin_publish', q=g.q) }}">{{ _('Clear All') }}</a></small></h2>
   <div>
-    {% snippet 'snippets/dataset_facets.html', show_org_facet=true %}
+    {% snippet 'snippets/dataset_facets.html', show_org_facet=true, search_facets=search_facets, facet_titles=facet_titles %}
   </div>
 </div>
 {% endblock %}

@@ -3,12 +3,12 @@
 {% set client_lang = h.lang() %}
 
 {% block organization_facets %}
-  {% snippet 'snippets/dataset_facets.html', extras={'id':g.group_dict.name}, show_org_facet=false %}
+  {% snippet 'snippets/dataset_facets.html', extras={'id': group_dict.name}, show_org_facet=false, search_facets=search_facets, facet_titles=facet_titles %}
 {% endblock %}
 
 {% block page_primary_action %}
   {{ super() }}
-  {% if h.check_access('organization_update', {'id': g.group_dict.id}) %}
+  {% if h.check_access('organization_update', {'id': group_dict.id}) %}
     <a class="btn btn-default" href="{{ h.url_for('organization.edit', id=g.group_dict.id) }}"><i class="fa fa-wrench"></i>&nbsp;{{ _('Edit Organization') }}</a>
   {% endif %}
 {% endblock %}

@@ -1,6 +1,5 @@
-from typing import List, Any
 import attrs
-from frictionless import Check, Row
+from frictionless import Check
 from frictionless.errors import HeaderError
 
 from ckan.plugins.toolkit import _

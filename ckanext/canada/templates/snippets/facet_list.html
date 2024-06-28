@@ -1,6 +1,7 @@
 {% ckan_extends %}
 
 {% set facet_name = title + 's' %}
+{% set active_facets = [] %}
 
 {% block facet_list_heading %}
   <div class="panel-heading"><i class="fa fa-filter" aria-hidden="true"></i> {{ title or h.get_facet_title(name) }}</div>
@@ -11,7 +12,7 @@
     {{ self.facet_list_heading() }}
     <div class="panel-body">
       {% block facet_list_item_panel_body %}
-        {% with items = items or h.get_facet_items_dict(name, limit=200) %}
+        {% with items = items or h.get_facet_items_dict(name, search_facets=search_facets, limit=200) %}
           {% set item_count = items | length %}
           {% set items = items[0:5] if ( not unlimit) and h.get_param_int('_%s_limit' % name) else items %}
             {% if items %}
@@ -30,9 +31,12 @@
                     {% set count = count_label(item['count']) if count_label else ('(%d)' % item['count']) %}
                       <li class="nav-item{% if item.active %} active{% endif %} facet-item" >
                         <a href="{{ href }}">
-                          <i class="fa fa-{{ 'check-' if item.active else '' }}square-o"></i>&nbsp;<span>{{ item.label }} {{ count }}</span>
+                          <i class="fa{{ 's' if item.active else 'r' }} fa-{{ 'check-' if item.active else '' }}square"></i>&nbsp;<span>{{ item.label }} {{ count }}</span>
                         </a>
                       </li>
+                    {% if item.active %}
+                      {% do active_facets.append(name) %}
+                    {% endif %}
                   {% endfor %}
                 </ul>
               </nav>
@@ -52,11 +56,13 @@
                     </li>
                   {% endif %}
                 {% endif %}
-                <li>
-                  <a href="{{ h.remove_url_param(name, extras=extras, alternative_url=alternative_url) }}" class="action small" title="{{_('Clear All')}} {{facet_name}}">
-                    <i class="fa fa-times" aria-hidden="true"></i>&nbsp;{{ _('Clear All') }}</a></li>
-                  </a>
-                </li>
+                {% if active_facets %}
+                  <li>
+                    <a href="{{ h.remove_url_param(name, extras=extras, alternative_url=alternative_url) }}" class="action small" title="{{_('Clear All')}} {{facet_name}}">
+                      <i class="fa fa-times" aria-hidden="true"></i>&nbsp;{{ _('Clear All') }}</a></li>
+                    </a>
+                  </li>
+                {% endif %}
               </ul>
               {% else %}
                 <p>{{ _('There are no filters for this search') }}</p>
