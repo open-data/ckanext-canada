@@ -567,6 +567,18 @@ a#edit-comment-body-0-format-help-about, button#edit-submit,button#edit-actions-
 
 }
 
+.modal .modal-dialog .modal-content .modal-header > h1,
+.modal .modal-dialog .modal-content .modal-header > h2,
+.modal .modal-dialog .modal-content .modal-header > h3,
+.modal .modal-dialog .modal-content .modal-header > h4,
+.modal .modal-dialog .modal-content .modal-header > h5,
+.modal .modal-dialog .modal-content .modal-header > h6{
+
+  color: white;
+  margin: 0;
+
+}
+
 body #resource-schema-buttons div.form-group > a.btn:nth-of-type(2){
 
   display: none !important;
@@ -1287,6 +1299,19 @@ body .canada-flex{
   body .canada-flex{
     flex-wrap: wrap;
   }
+}
+body .accordion-heading{
+  margin: 0 !important;
+}
+body .accordion-button{
+  padding-right: 25px !important;
+}
+body .accordion-button.no-after{
+  background-color: #f5f5f5 !important;
+  color: #333333 !important;
+}
+body .accordion-button.no-after::after{
+  background-image: none !important;
 }
 /*###########################
 ##           END           ##
