@@ -859,3 +859,13 @@ def ckan_to_cdts_breadcrumbs(breadcrumb_content):
             'href': '' if not anchor else anchor['href'],
         })
     return cdts_breadcrumbs
+
+
+def validation_status(resource_id):
+    try:
+        validation = t.get_action('resource_validation_show')(
+            {'ignore_auth': True},
+            {'resource_id': resource_id})
+        return validation.get('status')
+    except (t.ObjectNotFound, KeyError):
+        return 'unknown'
