@@ -1274,6 +1274,20 @@ body h1 > .label.label-info{
   display: inline-block;
   vertical-align: bottom;
 }
+body .clear-fix{
+  clear: both !important;
+}
+body .canada-flex{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  width: 100%;
+}
+@media all and (max-width: 768px){
+  body .canada-flex{
+    flex-wrap: wrap;
+  }
+}
 /*###########################
 ##           END           ##
 ##  CKAN Base CSS Overrides##
