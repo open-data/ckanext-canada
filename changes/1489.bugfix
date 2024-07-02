@@ -1,0 +1,1 @@
+Trim Proactive Disclosure text fields to 28kB for Solr record indexing. This affects PD types that do not use the Advanced Search (Django) app.
