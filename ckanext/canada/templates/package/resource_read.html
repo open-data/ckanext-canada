@@ -17,22 +17,31 @@
       {% endif %}
     </div>
   </div>
+{% endblock %}
+
+{% block resource_actions %}
+  {% set extra_classes = '' %}
+  {% if not g.is_registry or not h.check_access('package_update', {'id':pkg.id }) %}
+    {% set extra_classes = 'resource-actions-toolbar-portal' %}
+  {% endif %}
+  <div class="resource-actions-toolbar {{ extra_classes }}">{{ super() }}</div>
+{% endblock %}
+
+{% block resources_list %}
+  <div class="resource-view-list">{{ super() }}</div>
+{% endblock %}
+
+{% block action_manage %}
+  {% if not is_activity_archive %}{{ super() }}{% endif %}
+  <div class="resource-actions-toolbar-spacer"></div>
+{% endblock %}
+
+{% block resource_content %}
   {% if g.is_registry %}
     {{- h.get_validation_badge(res)|safe -}}
     <div class="canada-w10-spacer"></div>
     {{- h.get_loader_status_badge(res) -}}
   {% endif %}
-{% endblock %}
-
-{% block resource_actions %}
-  <div class="resource-actions-toolbar">{{ super() }}</div>
-{% endblock %}
-
-{% block action_manage %}
-  {% if not is_activity_archive %}{{ super() }}{% endif %}
-{% endblock %}
-
-{% block resource_content %}
   {% block resource_read_title %}{{ super() }}{% endblock %}
   {% block resource_read_url %}
     {{ super() }}

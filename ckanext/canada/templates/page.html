@@ -77,32 +77,33 @@
             </div>
           {% endblock pre_primary %}
           <div class="row{% if self.secondary_content()|trim != '' %} wb-eqht{% else %}col-md-12{% endif %}">
+            {% block page_header %}
+              {% if self.content_primary_nav() | trim or self.content_action() | trim %}
+                <div class="col-md-12 canada-action-toolbar">
+                  {{ super() }}
+                </div>
+              {% endif %}
+            {% endblock %}
             {% block primary %}
               <div class="{% if self.secondary_content()|trim != '' %}col-md-9 col-md-push-3{% endif %}">
                 {% block primary_content %}
-                  {% if g.is_registry %}
-                    {{ super() }}
-                  {% else %}
-                    {% block page_header %}
-                      {{ super() }}
-                    {% endblock %}
-                    <div class="row">
-                      <div class="col-md-12">
-                        {% if self.page_primary_action() | trim %}
-                          <div class="page_primary_action">
-                            {% block page_primary_action %}{% endblock %}
-                          </div>
-                        {% endif %}
-                        {% block primary_content_inner %}{% endblock %}
-                      </div>
+                  <article class="module">
+                    <div class="module-content">
+                      {% if self.page_primary_action() | trim %}
+                        <div class="page_primary_action">
+                          {% block page_primary_action %}{% endblock %}
+                        </div>
+                      {% endif %}
+                      {% block primary_content_inner %}
+                      {% endblock %}
                     </div>
-                  {% endif %}
+                  </article>
                 {% endblock primary_content %}
               </div>
             {% endblock primary %}
             {% block secondary %}
               {% if self.secondary_content()|trim != '' %}
-                <aside class="col-md-3 col-md-pull-9 mrgn-tp-xl">
+                <aside class="col-md-3 col-md-pull-9">
                   {% block secondary_content %}{% endblock %}
                 </aside>
               {% endif %}

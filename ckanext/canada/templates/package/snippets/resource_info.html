@@ -3,11 +3,22 @@
 {% block page_title %}{% endblock %}
 
 {% block resource_info %}
-  {# TODO: - add resource details #}
-  {{ super() }}
-  {% if g.is_registry %}
-    {{- h.get_validation_badge(res)|safe -}}
-    <div class="clearfix"></div>
-    {{- h.get_loader_status_badge(res) -}}
-  {% endif %}
+  <div class="panel panel-primary canada-edit-resource-panel">
+    <div class="panel-heading">
+      <div class="panel-title">{{ _('Additional Information ')}}</div>
+    </div>
+    <div class="panel-body canada-edit-resource-info">
+      <div class="nums">
+        <dl>
+          <dt>{{ _('Format') }}</dt>
+          <dd>{{ h.get_translated(res, 'format') }}</dd>
+        </dl>
+      </div>
+      {% if g.is_registry %}
+        {{- h.get_validation_badge(res)|safe -}}
+        <div class="clearfix"></div>
+        {{- h.get_loader_status_badge(res) -}}
+      {% endif %}
+    </div>
+  </div>
 {% endblock %}
