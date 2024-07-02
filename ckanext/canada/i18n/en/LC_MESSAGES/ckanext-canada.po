@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  CKAN\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-06-27 19:32-0400\n"
+"POT-Creation-Date: 2024-07-02 17:58+0000\n"
 "PO-Revision-Date: 2014-01-23 13:04+0000\n"
 "Last-Translator: Sean Hammond <sean.hammond@okfn.org>\n"
 "Language: en\n"
@@ -19,14 +19,14 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.7.0\n"
 
-#: ckanext/canada/assets/internal/validation_spec.js:9
+#: ckanext/canada/assets/internal/validation_spec.js:8
 #: ckanext/canada/checks.py:25
 msgid ""
 "Column name {value} in column {column_number} is not valid for a "
 "DataStore header"
 msgstr ""
 
-#: ckanext/canada/assets/internal/validation_spec.js:17
+#: ckanext/canada/assets/internal/validation_spec.js:16
 #: ckanext/canada/checks.py:30
 msgid ""
 "Column name {value} in column {column_number} is too long for a DataStore"
@@ -804,11 +804,11 @@ msgstr ""
 msgid "User %r not authorized to view members of %s"
 msgstr ""
 
-#: ckanext/canada/assets/internal/validation_spec.js:8
+#: ckanext/canada/assets/internal/validation_spec.js:7
 msgid "Invalid Header for DataStore"
 msgstr ""
 
-#: ckanext/canada/assets/internal/validation_spec.js:10
+#: ckanext/canada/assets/internal/validation_spec.js:9
 msgid ""
 "Column name is invalid for a DataStore header.\n"
 "\n"
@@ -819,11 +819,11 @@ msgid ""
 " - Make sure the column name is not blank."
 msgstr ""
 
-#: ckanext/canada/assets/internal/validation_spec.js:16
+#: ckanext/canada/assets/internal/validation_spec.js:15
 msgid "Header Too Long for DataStore"
 msgstr ""
 
-#: ckanext/canada/assets/internal/validation_spec.js:18
+#: ckanext/canada/assets/internal/validation_spec.js:17
 msgid ""
 "Column name is too long for a DataStore header.\n"
 "\n"
@@ -1700,7 +1700,8 @@ msgstr ""
 msgid ""
 "If your organization hasn't uploaded data yet for that proactive "
 "disclosure type, your template hasn't been initiated. To access the "
-"Upload button, you'll need to click the <em>\"Get Started\"</em> button."
+"Upload button, you'll need to click on the <em>\"Get Started\"</em> "
+"button."
 msgstr ""
 
 #: ckanext/canada/templates/help.html:102
@@ -8377,3 +8378,13 @@ msgstr ""
 #~ "2. No accented characters are permitted.\n"
 #~ "3. All passwords must be at least 8 characters long.\n"
 #~ msgstr ""
+
+#~ msgid ""
+#~ "If your organization hasn't uploaded "
+#~ "data yet for that proactive disclosure"
+#~ " type, your template hasn't been "
+#~ "initiated. To access the Upload button,"
+#~ " you'll need to click the <em>\"Get"
+#~ " Started\"</em> button."
+#~ msgstr ""
+
