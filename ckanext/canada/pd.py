@@ -23,6 +23,8 @@ from ckanext.canada.dataset import (
     data_batch,
     safe_for_solr)
 
+SOLR_MAX_TEXT_LENGTH = 28000
+
 
 def get_commands():
     return pd
@@ -288,7 +290,8 @@ def _update_records(records, org_detail, conn, resource_name, unmatched):
                 except ValueError:
                     pass
 
-            solrrec[key] = value
+            # limit text values to 28K for indexing. Solr max 32K minus a threshold for synonym replacements.
+            solrrec[key] = value[:SOLR_MAX_TEXT_LENGTH] if (f.get('datastore_type') == 'text' and len(value) > SOLR_MAX_TEXT_LENGTH) else value
 
             choices = choice_fields.get(f['datastore_id'])
             if choices:
