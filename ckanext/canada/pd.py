@@ -23,7 +23,7 @@ from ckanext.canada.dataset import (
     data_batch,
     safe_for_solr)
 
-SOLR_MAX_TEXT_LENGTH = 28000
+SOLR_MAX_UTF8_LENGTH = 28000
 
 
 def get_commands():
@@ -164,7 +164,7 @@ def rebuild(pd_type, csv_files=None, solr_url=None, strict=True):
     conn.commit()
 
 
-def _update_records(records, org_detail, conn, resource_name, unmatched):
+def _update_records(records, org_detail, conn, resource_name, unmatched, retry=True):
     """
     Update records on solr core
 
@@ -290,8 +290,8 @@ def _update_records(records, org_detail, conn, resource_name, unmatched):
                 except ValueError:
                     pass
 
-            # limit text values to 28K for indexing. Solr max 32K minus a threshold for synonym replacements.
-            solrrec[key] = value[:SOLR_MAX_TEXT_LENGTH] if (f.get('datastore_type') == 'text' and len(value) > SOLR_MAX_TEXT_LENGTH) else value
+            # limit text values to 28kB for indexing. Solr max 32kB minus a threshold for synonym replacements.
+            solrrec[key] = value.encode('utf-8')[:SOLR_MAX_UTF8_LENGTH].decode() if (f.get('datastore_type') == 'text' and len(value.encode('utf-8')) > SOLR_MAX_UTF8_LENGTH) else value
 
             choices = choice_fields.get(f['datastore_id'])
             if choices:
@@ -319,7 +319,7 @@ def _update_records(records, org_detail, conn, resource_name, unmatched):
                     _add_choice(solrrec, key, r, choice, f)
 
             if f.get('solr_month_names', False):
-                solrrec[key] = value.zfill(2)
+                solrrec[key] = str(value).zfill(2)
                 solrrec[key + '_name_en'] = calendar.month_name[int(value)]
                 solrrec[key + '_name_fr'] = MONTHS_FR[int(value)]
 
@@ -360,7 +360,7 @@ def _update_records(records, org_detail, conn, resource_name, unmatched):
                 conn.add(out, commit=False)
             break
         except pysolr.SolrError:
-            if not a:
+            if not a or not retry:
                 raise
             print("waiting...")
             import time
