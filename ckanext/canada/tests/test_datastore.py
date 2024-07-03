@@ -94,7 +94,7 @@ class TestDatastoreValidation(CanadaTestBase):
     @change_config('ckanext.validation.run_on_create_async', False)
     @change_config('ckanext.validation.run_on_update_async', False)
     @change_config('ckanext.validation.locales_offered', 'en')
-    @change_config('ckanext.validation.static_validation_options', '{"checks":["structure","schema","ds-headers"]}')
+    @change_config('ckanext.validation.static_validation_options', '{"checks":[{"type":"baseline"},{"type":"ds-headers"}]}')
     @pytest.mark.usefixtures("mock_uploads")
     @mock.patch('ckanext.validation.jobs.get_resource_uploader', mock_get_resource_uploader)
     def test_validation_report(self, mock_uploads):
@@ -112,7 +112,7 @@ class TestDatastoreValidation(CanadaTestBase):
     @change_config('ckanext.validation.run_on_create_async', False)
     @change_config('ckanext.validation.run_on_update_async', False)
     @change_config('ckanext.validation.locales_offered', 'en')
-    @change_config('ckanext.validation.static_validation_options', '{"checks":["structure","schema","ds-headers"]}')
+    @change_config('ckanext.validation.static_validation_options', '{"checks":[{"type":"baseline"},{"type":"ds-headers"}]}')
     @pytest.mark.usefixtures("mock_uploads")
     @mock.patch('ckanext.validation.jobs.get_resource_uploader', mock_get_resource_uploader)
     def test_validation_report_bad_ds_headers(self, mock_uploads):
@@ -143,7 +143,7 @@ class TestDatastoreValidation(CanadaTestBase):
     @change_config('ckanext.validation.run_on_create_async', False)
     @change_config('ckanext.validation.run_on_update_async', False)
     @change_config('ckanext.validation.locales_offered', 'en')
-    @change_config('ckanext.validation.static_validation_options', '{"skip_checks":["blank-row"],"checks":["structure","schema","ds-headers"]}')
+    @change_config('ckanext.validation.static_validation_options', '{"skip_errors":["blank-row"],"checks":[{"type":"baseline"},{"type":"ds-headers"}]}')
     @pytest.mark.usefixtures("mock_uploads")
     @mock.patch('ckanext.validation.jobs.get_resource_uploader', mock_get_resource_uploader)
     def test_validation_report_empty_lines(self, mock_uploads):
@@ -161,7 +161,7 @@ class TestDatastoreValidation(CanadaTestBase):
     @change_config('ckanext.validation.run_on_create_async', False)
     @change_config('ckanext.validation.run_on_update_async', False)
     @change_config('ckanext.validation.locales_offered', 'en')
-    @change_config('ckanext.validation.static_validation_options', '{"checks":["structure","schema","ds-headers"]}')
+    @change_config('ckanext.validation.static_validation_options', '{"checks":[{"type":"baseline"},{"type":"ds-headers"}]}')
     @pytest.mark.usefixtures("mock_uploads")
     @mock.patch('ckanext.validation.jobs.get_resource_uploader', mock_get_resource_uploader)
     def test_validation_report_white_space(self, mock_uploads):
@@ -179,7 +179,7 @@ class TestDatastoreValidation(CanadaTestBase):
     @change_config('ckanext.validation.run_on_create_async', False)
     @change_config('ckanext.validation.run_on_update_async', False)
     @change_config('ckanext.validation.locales_offered', 'en fr')
-    @change_config('ckanext.validation.static_validation_options', '{"checks":["structure","schema","ds-headers"]}')
+    @change_config('ckanext.validation.static_validation_options', '{"checks":[{"type":"baseline"},{"type":"ds-headers"}]}')
     @pytest.mark.usefixtures("mock_uploads")
     @mock.patch('ckanext.validation.jobs.get_resource_uploader', mock_get_resource_uploader)
     def test_validation_report_languages(self, mock_uploads):
@@ -228,9 +228,13 @@ class TestDatastoreXloader(CanadaTestBase):
             plugins.load('validation')
 
 
-    def _get_ds_records(self):
+    def _get_ds_records(self, exclude_field_schemas=True):
         result = self.action.datastore_search(resource_id=self.resource_id)
-        return result.get('fields'), result.get('records')
+        ds_info = self.action.datastore_info(id=self.resource_id)
+        if exclude_field_schemas:
+            for field in ds_info.get('fields'):
+                field.pop('schema', None)
+        return ds_info.get('fields'), result.get('records')
 
 
     def test_load_csv(self):
@@ -246,7 +250,6 @@ class TestDatastoreXloader(CanadaTestBase):
         fields, records = self._get_ds_records()
 
         expected_fields = [
-            {'type': 'int', 'id': '_id'},
             {'type': 'text', 'id': 'date'},
             {'type': 'text', 'id': 'temperature'},
             {'type': 'text', 'id': 'place'}
@@ -278,7 +281,6 @@ class TestDatastoreXloader(CanadaTestBase):
         fields, records = self._get_ds_records()
 
         expected_fields = [
-            {'type': 'int', 'id': '_id'},
             {'info': {'type_override': 'timestamp'}, 'type': 'timestamp', 'id': 'date'},
             {'type': 'text', 'id': 'temperature'},
             {'type': 'text', 'id': 'place'}
@@ -338,7 +340,6 @@ class TestDatastoreXloader(CanadaTestBase):
         fields, records = self._get_ds_records()
 
         expected_fields = [
-            {'type': 'int', 'id': '_id'},
             {'type': 'text', 'id': 'date'},
             {'type': 'text', 'id': 'temperature'},
             {'type': 'text', 'id': 'place'}
@@ -370,7 +371,6 @@ class TestDatastoreXloader(CanadaTestBase):
         fields, records = self._get_ds_records()
 
         expected_fields = [
-            {'type': 'int', 'id': '_id'},
             {'info': {'type_override': 'timestamp'}, 'type': 'timestamp', 'id': 'date'},
             {'type': 'text', 'id': 'temperature'},
             {'type': 'text', 'id': 'place'}
@@ -402,7 +402,6 @@ class TestDatastoreXloader(CanadaTestBase):
         fields, records = self._get_ds_records()
 
         expected_fields = [
-            {'type': 'int', 'id': '_id'},
             {'type': 'text', 'id': 'date'},
             {'type': 'text', 'id': 'temperature'},
             {'type': 'text', 'id': 'place'}
@@ -434,7 +433,6 @@ class TestDatastoreXloader(CanadaTestBase):
         fields, records = self._get_ds_records()
 
         expected_fields = [
-            {'type': 'int', 'id': '_id'},
             {'info': {'type_override': 'timestamp'}, 'type': 'timestamp', 'id': 'date'},
             {'type': 'text', 'id': 'temperature'},
             {'type': 'text', 'id': 'place'}
