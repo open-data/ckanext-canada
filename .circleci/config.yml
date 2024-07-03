@@ -84,7 +84,7 @@ jobs:
             pip install -e 'git+https://github.com/open-data/ckanext-validation.git@canada-v2.10#egg=ckanext-validation' -r 'https://raw.githubusercontent.com/open-data/ckanext-validation/canada-v2.10/requirements.txt' -r 'https://raw.githubusercontent.com/open-data/ckanext-validation/canada-v2.10/dev-requirements.txt'
             pip install -e 'git+https://github.com/open-data/ckanext-xloader.git@canada-v2.10#egg=ckanext-xloader' -r 'https://raw.githubusercontent.com/open-data/ckanext-xloader/canada-v2.10/requirements.txt' -r 'https://raw.githubusercontent.com/open-data/ckanext-xloader/canada-v2.10/dev-requirements.txt'
             pip install -e 'git+https://github.com/ckan/ckantoolkit.git#egg=ckantoolkit' -r 'https://raw.githubusercontent.com/ckan/ckantoolkit/master/requirements.txt'
-            pip install -e 'git+https://github.com/open-data/goodtables.git@canada-v2.10#egg=goodtables' -r 'https://raw.githubusercontent.com/open-data/goodtables/canada-v2.10/requirements.txt'
+            pip install -e 'git+https://github.com/open-data/fricitonless-py.git@canada-v2.10#egg=fricitonless' -r 'https://raw.githubusercontent.com/open-data/fricitonless-py/canada-v2.10/requirements.txt'
             pip install -e 'git+https://github.com/open-data/ckanext-security.git@canada-v2.10#egg=ckanext-security' -r 'https://raw.githubusercontent.com/open-data/ckanext-security/canada-v2.10/requirements.txt'
             find \/srv\/app\/ -name '*.pyc' -delete
       - run:
