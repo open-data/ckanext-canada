@@ -34,12 +34,16 @@ class DatastoreHeadersCheck(Check):
                 yield DatastoreInvalidHeader(
                     note=_("Column name {value} in column {column_number} is not valid for a DataStore header").format(value=header,
                                                                                                                        column_number=index),
+                    labels=[header],
+                    row_numbers=[index]
                 )
 
             if len(header) > 63:
                 yield DatastoreTooLongHeader(
                     note=_("Column name {value} in column {column_number} is too long for a DataStore header").format(value=header,
                                                                                                                       column_number=index),
+                    labels=[header],
+                    row_numbers=[index]
                 )
 
 
