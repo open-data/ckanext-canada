@@ -18,14 +18,22 @@
     {% set language_options = h.scheming_get_preset('canada_resource_language').choices %}
     <div>
     {% for language in res.language %}
-      {% for option in language_options %}
-        {% if option.value == language %}
-          <span class="badge res-tag res-tag-lang">
-            {{ option.label[h.lang()] }}
-          </span>
-        {% endif %}
-      {% endfor %}
+      {% if loop.index <= 2 %}
+        {% for option in language_options %}
+          {% if option.value == language %}
+            <span class="badge res-tag res-tag-lang">
+              {{ option.label[h.lang()] }}
+            </span>
+          {% endif %}
+        {% endfor %}
+      {% endif %}
     {% endfor %}
+    {% if res.language|length > 2 %}
+      {% set lang_count = res.language|length %}
+      <span class="badge res-tag res-tag-lang">
+        {{ _('+ %s more').format(lang_count - 2) }}
+      </span>
+    {% endif %}
     {% if res.resource_type %}
       <span class="badge res-tag">
         {{ res.resource_type }}
@@ -53,16 +61,16 @@
   {% if not url_is_edit %}
     <div class="dropdown btn-group resource-action-links">
       <a href="#" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" type="button" id="dropdownExplorer" data-bs-toggle="dropdown" aria-expanded="false">
-        <i class="fa fa-share"></i>&nbsp;{{ _('Explore') }}
+        <i class="fa fa-share" aria-hidden="true"></i>&nbsp;{{ _('Explore') }}
       </a>
       <ul class="dropdown-menu">
         {% block resource_item_explore_links %}
           <li>
             <a href="{{ url }}">
               {% if not is_activity_archive and res.has_views %}
-                <i class="fa fa-eye"></i>&nbsp;{{ _('Preview') }}
+                <i class="fa fa-eye" aria-hidden="true"></i>&nbsp;{{ _('Preview') }}
               {% else %}
-                <i class="fa fa-info-circle"></i>&nbsp;{{ _('More information') }}
+                <i class="fa fa-info-circle" aria-hidden="true"></i>&nbsp;{{ _('More information') }}
               {% endif %}
             </a>
           </li>
@@ -70,9 +78,9 @@
             <li>
               <a href="{{ res.url }}" class="resource-url-analytics" target="_blank" data-pkg-id="{{ pkg.id }}" data-res-id="{{ res.id }}" data-org-id="{{ pkg.organization.id }}">
                 {% if res.has_views or res.url_type == 'upload' %}
-                  <i class="fa fa-arrow-circle-down"></i>&nbsp;{{ _('Download') }}
+                  <i class="fa fa-arrow-circle-down" aria-hidden="true"></i>&nbsp;{{ _('Download') }}
                 {% else %}
-                  <i class="fa fa-external-link"></i>&nbsp;{{ _('Go to resource') }}
+                  <i class="fa fa-external-link" aria-hidden="true"></i>&nbsp;{{ _('Go to resource') }}
                 {% endif %}
               </a>
             </li>
@@ -81,7 +89,7 @@
           {% if fgp_url and res.url and h.is_url(res.url) and res.format not in ['PDF','HTML', 'PNG', 'CSV', 'TXT',] %}
             <li>
               <a href="{{ fgp_url }}" class="dropdown-item" target="_blank">
-                <i class="fa fa-map-marker"></i>&nbsp;{{ _('View on Map') }}
+                <i class="fa fa-map-marker" aria-hidden="true"></i>&nbsp;{{ _('View on Map') }}
               </a>
             </li>
           {% endif %}

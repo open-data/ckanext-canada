@@ -20,21 +20,29 @@
   {% endblock %}
 
   {% block secondary_content %}
-    <h2>{{ _('Search Filters') }}&nbsp;<small><a href="{{ h.url_for('dataset.search', q=g.q) }}">{{ _('Clear All') }}</a></small></h2>
+    <div class="canada-search-filters-title">
+      {% set clear_url = h.url_for('dataset.search', q=g.q) if g.q else h.url_for('dataset.search') %}
+      <h2>{{ _('Search Filters') }}</h2><span><a class="btn btn-danger btn-sm" href="{{ clear_url }}"><i class="fa fa-close" aria-hidden="true"></i>&nbsp;{{ _('Clear All') }}</a></span>
+    </div>
     {% snippet 'snippets/dataset_facets.html', show_org_facet=true, search_facets=search_facets, facet_titles=facet_titles %}
     {% block extra_facets %}
       {% if g.is_registry %}
-        {{ h.snippet('snippets/publish_facet.html', facet_ranges=facet_ranges) }}
+        {{ h.snippet('snippets/publish_facet.html', search_facets=search_facets, facet_ranges=facet_ranges) }}
       {% endif %}
     {% endblock %}
     {% set license = h.get_license('ca-ogl-lgo') %}
     {% if license != None %}
-      <div class="well well-sm">
-        {% if h.lang() == 'en' %}
-          <a href="{{ license.url }}">View the {{ license.title }}</a>
-        {% else %}
-          <a href="{{ license.url_fra }}">Voir la {{ license.title_fra[:1].lower() }}{{ license.title_fra[1:] }}</a>
-        {% endif %}
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <i class="fa-solid fa-id-card" aria-hidden="true"></i>&nbsp;{{ _('License') }}
+        </div>
+        <div class="panel-body">
+          {% if h.lang() == 'en' %}
+            <a href="{{ license.url }}">View the {{ license.title }}</a>
+          {% else %}
+            <a href="{{ license.url_fra }}">Voir la {{ license.title_fra[:1].lower() }}{{ license.title_fra[1:] }}</a>
+          {% endif %}
+        </div>
       </div>
     {% endif %}
   {% endblock %}
@@ -61,18 +69,24 @@
 
   {% block primary_content %}
     {{ self.page_primary_action() }}
-    <div class="row">
-      <div class="col-md-12 mrgn-lft-sm mrgn-rght-sm">
-        {{ self.form() }}
+    <div class="mrgn-tp-lg canada-page-main-wrapper">
+      <div class="row">
+        <div class="col-md-12">
+          {{ self.form() }}
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          {{ self.package_search_results_list() }}
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">{{ self.page_pagination() }}</div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">{{ self.package_search_results_api() }}</div>
       </div>
     </div>
-    <div class="row">
-      <div class="col-md-12">
-        {{ self.package_search_results_list() }}
-      </div>
-    </div>
-    <div class="col-md-12">{{ self.page_pagination() }}</div>
-    <div class="col-md-12">{{ self.package_search_results_api() }}</div>
   {% endblock %}
 
   {% block search_form_footer %}{% endblock %}

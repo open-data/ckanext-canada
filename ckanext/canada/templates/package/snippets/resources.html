@@ -4,7 +4,7 @@
   <section class="panel panel-default resources-side-section">
     {% block resources_inner %}
       {% block resources_title %}
-        <div class="panel-heading"><i class="fa fa-bars"></i>&nbsp;{{ _("Resources") }}</div>
+        <div class="panel-heading"><i class="fa fa-bars" aria-hidden="true"></i>&nbsp;{{ _("Resources") }}</div>
       {% endblock %}
       <div class="panel-body resources-side-panel">
         {% block resources_list %}
@@ -12,25 +12,23 @@
             <ul class="list-unstyled nav nav-simple">
               {% for resource in resources %}
                 {% set url = h.url_for(pkg.type ~ '_resource.read', id=pkg.id if is_activity_archive else pkg.name, resource_id=resource.id, **({'activity_id': request.args['activity_id']} if 'activity_id' in request.args else {})) %}
-                {% if active == resource.id %}
-                  {# TODO: fix this template, merge all of these conditions as they are pretty useless. Can just set the URL and is_active #}
-                  <li class="nav-item active">
-                    <a href="#">{{ h.resource_display_name(resource)|truncate(25) }}</a>
-                  </li>
-                {% elif can_edit and not is_activity_archive %}
-                  <li class="nav-item justify-content-between position-relative">
-                    <a class="resources-side-section-item-link" href="{{ url }}" title="{{ h.resource_display_name(resource) }}">{{ h.resource_display_name(resource)|truncate(25) }}</a>
+                {% set is_active = 'active' if active == resource.id else '' %}
+                <li class="nav-item justify-content-between position-relative {{ is_active }}">
+                  <a class="resources-side-section-item-link" tabindex="{{ -1 if is_active else 0 }}" href="{{ url }}" title="{{ h.resource_display_name(resource) }}">{{ h.resource_display_name(resource)|truncate(25) }}</a>
+                  {% if can_edit and not is_activity_archive %}
                     <div class="dropdown position-absolute end-0 me-2">
-                      <button class="btn btn-light btn-sm dropdown-toggle" type="button" id="dropdownRes{{ loop.index }}" data-bs-toggle="dropdown" aria-expanded="false" data-toggle="dropdown"><i class="fa fa-wrench"></i></button>
+                      <button class="btn btn-light btn-sm dropdown-toggle" type="button" id="dropdownRes{{ loop.index }}" data-bs-toggle="dropdown" aria-expanded="false" data-toggle="dropdown"><i class="fa fa-wrench" aria-hidden="true"></i></button>
                       <ul class="dropdown-menu" aria-labelledby="dropdownRes{{ loop.index }}">
                         <li>{% link_for _('Edit resource'), named_route=pkg.type ~ '_resource.edit', id=pkg.name, resource_id=resource.id, class_='dropdown-item', icon='pencil' %}</li>
                         {% block resources_list_edit_dropdown_inner scoped %}{% endblock %}
                         <li>{% link_for _('Views'), named_route=pkg.type ~ '_resource.views', id=pkg.name, resource_id=resource.id, class_='dropdown-item', icon='chart-bar' %}</li>
                       </ul>
                     </div>
-                    {% set language_options = h.scheming_get_preset('canada_resource_language').choices %}
-                    <div class="resources-side-section-item-badges">
-                      {% for language in resource.language %}
+                  {% endif %}
+                  {% set language_options = h.scheming_get_preset('canada_resource_language').choices %}
+                  <div class="resources-side-section-item-badges">
+                    {% for language in resource.language %}
+                      {% if loop.index <= 2 %}
                         {% for option in language_options %}
                           {% if option.value == language %}
                             <span class="badge res-tag res-tag-lang">
@@ -38,19 +36,21 @@
                             </span>
                           {% endif %}
                         {% endfor %}
-                      {% endfor %}
-                      {% if resource.format %}
-                        <span class="badge res-tag">
-                          {{ resource.format }}
-                        </span>
                       {% endif %}
-                    </div>
-                  </li>
-                {% else %}
-                  <li class="nav-item">
-                    <a href="{{ url }}" title="{{ h.resource_display_name(resource) }}">{{ h.resource_display_name(resource)|truncate(25) }}</a>
-                  </li>
-                {% endif %}
+                    {% endfor %}
+                    {% if resource.language|length > 2 %}
+                      {% set lang_count = resource.language|length %}
+                      <span class="badge res-tag res-tag-lang">
+                        {{ _('+ %s more').format(lang_count - 2) }}
+                      </span>
+                    {% endif %}
+                    {% if resource.format %}
+                      <span class="badge res-tag">
+                        {{ resource.format }}
+                      </span>
+                    {% endif %}
+                  </div>
+                </li>
               {% endfor %}
             </ul>
           {% else %}

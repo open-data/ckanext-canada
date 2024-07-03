@@ -31,7 +31,7 @@
                     {% set count = count_label(item['count']) if count_label else ('(%d)' % item['count']) %}
                       <li class="nav-item{% if item.active %} active{% endif %} facet-item" >
                         <a href="{{ href }}">
-                          <i class="fa{{ 's' if item.active else 'r' }} fa-{{ 'check-' if item.active else '' }}square"></i>&nbsp;<span>{{ item.label }} {{ count }}</span>
+                          <i class="fa{{ 's' if item.active else 'r' }} fa-{{ 'check-' if item.active else '' }}square" aria-hidden="true"></i>&nbsp;<span>{{ item.label }} {{ count }}</span>
                         </a>
                       </li>
                     {% if item.active %}

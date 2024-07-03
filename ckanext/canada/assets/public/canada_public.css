@@ -814,20 +814,28 @@ ul.resource-list > li.resource-item span.format-label[data-format="pbix"]{
 .resources-side-panel .nav-item .dropdown.position-absolute{
   position: absolute !important;
   right: 0 !important;
-  top: 50% !important;
-  transform: translateY(-50%) !important;
+  top: 0 !important;
+  bottom: 0 !important;
   margin-right: 0 !important;
 }
 .resources-side-panel .nav-item .dropdown.position-absolute > .btn-light{
-  background-color: #eaebed !important;
+  background-color: #eeeeee !important;
   border-color: #dcdee1 !important;
   color: #335075 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  border: none !important;
+  height: 100%;
+  width: 46px !important;
 }
 .resources-side-panel .nav-item .dropdown.position-absolute > .btn-light:hover,
 .resources-side-panel .nav-item .dropdown.position-absolute > .btn-light:active,
 .resources-side-panel .nav-item .dropdown.position-absolute > .btn-light:focus{
   background-color: #cfd1d5 !important;
   border-color: #bbbfc5 !important;
+}
+.resources-side-panel .nav-item .dropdown.position-absolute > .btn-light:focus{
+  outline: auto !important;
 }
 .resources-side-panel .nav-item .dropdown.position-absolute.open{
   z-index: 100 !important;
@@ -864,14 +872,24 @@ ul.resource-list > li.resource-item span.format-label[data-format="pbix"]{
   flex-direction: row;
   flex-wrap: nowrap;
   align-items: end;
+  background: transparent !important;
 }
 .resources-side-section .panel-body > ul > li:last-of-type,
 .resources-side-section .panel-body > ul > li:last-of-type a{
   border-bottom-left-radius: 3px !important;
   border-bottom-right-radius: 3px !important;
 }
+.resources-side-section .panel-body > ul > li:last-of-type .dropdown.position-absolute > .btn-light{
+  border-bottom-right-radius: 3px !important;
+}
+.resources-side-section .panel-body > ul > li:not(:first-of-type){
+  border-top: 1px dotted #6f6f6f !important;
+}
 .resources-side-section .panel-body > ul > li:not(:last-of-type):not(:first-of-type){
   margin: 8px 0 !important;
+}
+.resources-side-section .panel-body > ul{
+  min-height: 80px;
 }
 .resources-side-section .resources-side-section-item-link{
   position: absolute !important;
@@ -880,8 +898,17 @@ ul.resource-list > li.resource-item span.format-label[data-format="pbix"]{
   right: 0;
   bottom: 0;
   left: 0;
-  width: 100%;
+  width: calc(100% - 46px) !important;
   height: 100%;
+  transition-duration: 0.325s !important;
+  text-decoration: none !important;
+  color: #284162 !important;
+}
+.resources-side-section .resources-side-section-item-link:hover,
+.resources-side-section .resources-side-section-item-link:active,
+.resources-side-section .resources-side-section-item-link:focus{
+  text-decoration: none !important;
+  color: #284162 !important;
 }
 .resources-side-section .resources-side-section-item-title-container{
   position: relative;
@@ -890,10 +917,22 @@ ul.resource-list > li.resource-item span.format-label[data-format="pbix"]{
 .resources-side-section .resources-side-section-item-badges{
   margin-left: 15px;
   margin-bottom: 15px;
+  margin-top: 46px;
+  margin-right: 50px;
   z-index: 2;
   pointer-events: none;
 }
+.resources-side-section .resources-side-section-item-badges .badge{
+  margin-bottom: 3px;
+}
+.resources-side-section .nav-item.active div.dropdown{
+  display: none !important;
+}
 /* END - Side Panel - END */
+
+.canada-reorder-resources-wrapper .resource-list{
+  margin: 0 0 10px 0 !important;
+}
 
 /* Resource Action Buttons */
 .module-resource .actions {
@@ -1093,6 +1132,42 @@ body .alert a.btn-warning{
   min-height: 100%;
   max-height: 100%;
   height: 100%;
+}
+.canada-search-filters-title{
+  margin-bottom: 10px;
+}
+.canada-search-filters-title h2{
+  margin-top: 0 !important;
+}
+.canada-search-filters-title a{
+  text-decoration: none !important;
+}
+.canada-search-field-wrapper{
+  width: 100% !important;
+  display: flex !important;
+  flex-direction: row;
+  flex-wrap: nowrap;
+}
+.canada-search-field-wrapper input#search_field{
+  flex: 1;
+}
+.canada-search-field-wrapper span.input-group-btn{
+  width: 40px;
+  max-width: 40px;
+  min-width: 40px;
+}
+.canada-search-form-options-wrapper{
+  width: 100% !important;
+  display: flex !important;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+}
+.canada-search-form-options-wrapper select{
+  display: inline-block !important;
+}
+.canada-org-result-text{
+  font-size: 16px !important;
 }
 /*#######################
 ##         END         ##
@@ -1374,13 +1449,13 @@ body .accordion-button.no-after::after{
 form[action*="/dictionary/"] h3:first-of-type{
   margin-top: 0 !important;
 }
-.resource-view-list{
-  margin-top: 38px;
-}
 div.btn-group{
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
+}
+footer#wb-info{
+  margin-top: 36px !important;
 }
 /*###########################
 ##           END           ##
@@ -1399,6 +1474,7 @@ div.btn-group{
 
 .canada-action-toolbar header{
   margin-top: 15px;
+  margin-bottom: 0 !important;
   width: 100% !important;
   display: flex;
   flex-direction: row-reverse;

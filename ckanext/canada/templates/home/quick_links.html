@@ -7,7 +7,7 @@
   {% set label = h.recombinant_get_geno(r_type).shortname or h.recombinant_get_geno(r_type).title %}
   {% set description = h.render_markdown(h.recombinant_language_text(h.recombinant_get_geno(r_type).notes)) %}
   <li>
-    <a href="{{ h.url_for('canada.type_redirect', resource_name=r_type) }}"><i class="fa fa-upload"></i>{{ _(label) }}</a>
+    <a href="{{ h.url_for('canada.type_redirect', resource_name=r_type) }}"><i class="fa fa-upload" aria-hidden="true"></i>{{ _(label) }}</a>
     <a href="" data-toggle="modal" data-target="#{{ r_type }}"><i class="fa fa-question-circle-o" aria-hidden="true"></i></a>
     <div class="modal" id="{{ r_type }}" tabindex="-1" role="dialog" aria-labelledby="{{ r_type }}Label" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered" role="document">
@@ -52,7 +52,7 @@
 {% endmacro %}
 
 {% block primary_content %}
-  <div class="row" id="quick-links">
+  <div class="row canada-page-main-wrapper" id="quick-links">
     <div class="col-md-12">
       <section class="alert alert-warning mrgn-tp-lg mrgn-bttm-lg" role="alert">
         <h2 class="h3">{{ _('Important') }}</h2>

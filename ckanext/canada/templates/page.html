@@ -26,7 +26,7 @@
               </div>
               <div class="modal-footer">
                 <a href="{{ h.url_for('user.login') }}" target="_blank" class="btn btn-default btn-sm">
-                  <span class="fa fa-sign-in"></span>&nbsp;<span class="text">{{ _('Log in') }}</span>
+                  <span class="fa fa-sign-in" aria-hidden="true"></span>&nbsp;<span class="text">{{ _('Log in') }}</span>
                 </a>
                 <button type="button" class="btn btn-sm btn-primary pull-left" data-bs-dismiss="modal">Close</button>
               </div>
@@ -88,7 +88,7 @@
               <div class="{% if self.secondary_content()|trim != '' %}col-md-9 col-md-push-3{% endif %}">
                 {% block primary_content %}
                   <article class="module">
-                    <div class="module-content">
+                    <div class="module-content mrgn-tp-lg canada-page-main-wrapper">
                       {% if self.page_primary_action() | trim %}
                         <div class="page_primary_action">
                           {% block page_primary_action %}{% endblock %}
@@ -103,7 +103,7 @@
             {% endblock primary %}
             {% block secondary %}
               {% if self.secondary_content()|trim != '' %}
-                <aside class="col-md-3 col-md-pull-9">
+                <aside class="col-md-3 col-md-pull-9 mrgn-tp-lg canada-page-side-wrapper">
                   {% block secondary_content %}{% endblock %}
                 </aside>
               {% endif %}

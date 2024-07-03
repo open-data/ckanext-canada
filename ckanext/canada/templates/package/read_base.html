@@ -147,7 +147,7 @@
       {% endif %}
       <li class="list-group-item">
         <a href="{{ h.url_for('feeds.dataset', id=pkg.id) }}" title="RSS">
-          <span class="fa fa-rss-square"></span>&nbsp;{{_('Atom Feed')}}
+          <span class="fa fa-rss-square" aria-hidden="true"></span>&nbsp;{{_('Atom Feed')}}
         </a>
       </li>
       {% if pkg.spatial_representation_type %}
