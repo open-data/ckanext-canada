@@ -88,3 +88,9 @@ _('Open Government Portal (staging)')
 _('Delete from DataStore')
 _('Are you sure you want to delete the DataStore and Data Dictionary?')
 _('Confirm Delete')
+
+# strings from validation
+_('Validation Information')
+_('Validation status:')
+_('Validation timestamp:')
+_('Duration:')
