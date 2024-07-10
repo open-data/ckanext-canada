@@ -1,6 +1,7 @@
 # -*- coding: UTF-8 -*-
 from ckanext.canada.tests import CanadaTestBase
 import pytest
+import mock
 from urllib.parse import urlparse
 from io import BytesIO
 from openpyxl.workbook import Workbook
@@ -12,11 +13,12 @@ from ckanapi import (
 
 from ckan.tests.helpers import CKANResponse
 
-from ckan.tests.factories import SysadminWithToken as Sysadmin
+from ckan.tests.factories import SysadminWithToken as Sysadmin, APIToken
 from ckanext.canada.tests.factories import (
     CanadaOrganization as Organization,
     CanadaUser as User
 )
+from ckanext.canada.tests.helpers import MockFlashMessages
 
 from ckanext.recombinant.tables import get_chromo
 from ckanext.recombinant.read_excel import read_excel
@@ -26,6 +28,8 @@ from ckanext.recombinant.write_excel import (
     DATA_FIRST_ROW,
     DATA_FIRST_COL_NUM
 )
+
+flashes = MockFlashMessages()
 
 
 def _get_relative_offset_from_response(response):
@@ -46,11 +50,15 @@ class TestPackageWebForms(CanadaTestBase):
         self.sysadmin = Sysadmin()
         self.extra_environ_tester = {'Authorization': self.sysadmin['token']}
         self.environ_overrides_tester = {'REMOTE_USER': self.sysadmin['name'].encode('ascii')}
-        self.org = Organization()
+        self.org = Organization(users=[{
+            'name': self.sysadmin['name'],
+            'capacity': 'admin'}])
         self.dataset_id = 'f3e4adb9-6e32-4cb4-bf68-1eab9d1288f4'
         self.resource_id = '8b29e2c6-8a12-4537-bf97-fe4e5f0a14c1'
 
 
+    @mock.patch.object(h, 'flash_success', flashes.mock_flash)
+    @mock.patch.object(h, 'get_flashed_messages', flashes.mock_get_flashed_messages)
     def test_new_dataset_required_fields(self, app):
         offset = h.url_for('dataset.new')
         response = app.get(offset, extra_environ=self.extra_environ_tester,
@@ -75,7 +83,11 @@ class TestPackageWebForms(CanadaTestBase):
                             data=self._filled_resource_form(),
                             extra_environ=self.extra_environ_tester,
                             environ_overrides=self.environ_overrides_tester,
-                            follow_redirects=True)
+                            follow_redirects=False)
+
+        offset = _get_relative_offset_from_response(response)
+        response = app.get(offset, extra_environ=self.extra_environ_tester,
+                        environ_overrides=self.environ_overrides_tester)
 
         assert 'Resource added' in response.body
 
@@ -198,6 +210,8 @@ class TestNewUserWebForms(CanadaTestBase):
         self.org = Organization()
 
 
+    @mock.patch.object(h, 'flash_notice', flashes.mock_flash)
+    @mock.patch.object(h, 'get_flashed_messages', flashes.mock_get_flashed_messages)
     def test_new_user_required_fields(self, app):
         offset = h.url_for('user.register')
         response = app.get(offset, extra_environ=self.extra_environ_tester,
@@ -209,7 +223,18 @@ class TestNewUserWebForms(CanadaTestBase):
                             data=self._filled_new_user_form(),
                             extra_environ=self.extra_environ_tester,
                             environ_overrides=self.environ_overrides_tester,
-                            follow_redirects=True)
+                            follow_redirects=False)
+
+        lc = LocalCKAN()
+        new_user = lc.action.user_show(name='newusername')
+        api_token = APIToken(user=new_user['id'])
+        new_user['token'] = api_token['token']
+        self.extra_environ_tester = {'Authorization': new_user['token']}
+        self.environ_overrides_tester = {'REMOTE_USER': new_user['name'].encode('ascii')}
+
+        offset = _get_relative_offset_from_response(response)
+        response = app.get(offset, extra_environ=self.extra_environ_tester,
+                           environ_overrides=self.environ_overrides_tester)
 
         assert 'Account Created' in response.body
         assert 'Thank you for creating your account for the Open Government registry' in response.body
@@ -240,8 +265,8 @@ class TestNewUserWebForms(CanadaTestBase):
         assert 'Password: Please enter both passwords' in response.body
 
 
-    def _filled_new_user_form(self):
-        # type: () -> dict
+    def _filled_new_user_form(self, csrf_token=None):
+        # type: (str|None) -> dict
         return {
             'name': 'newusername',
             'fullname': 'New User',
@@ -250,7 +275,7 @@ class TestNewUserWebForms(CanadaTestBase):
             'phoneno': '1234567890',
             'password1': 'iptkH6kuctURRQadDBM0',  # security extension required good passphrase/password
             'password2': 'iptkH6kuctURRQadDBM0',  # security extension required good passphrase/password
-            'save': ''
+            'save': '',
         }
 
 
@@ -367,7 +392,11 @@ class TestRecombinantWebForms(CanadaTestBase):
                             data=create_pd_form,
                             extra_environ=self.extra_environ_editor,
                             environ_overrides=self.environ_overrides_editor,
-                            follow_redirects=True)
+                            follow_redirects=False)
+
+        offset = _get_relative_offset_from_response(response)
+        response = app.get(offset, extra_environ=self.extra_environ_editor,
+                           environ_overrides=self.environ_overrides_editor)
 
         assert 'Create and update multiple records' in response.body
 
@@ -388,7 +417,11 @@ class TestRecombinantWebForms(CanadaTestBase):
                             data=create_pd_form,
                             extra_environ=self.extra_environ_system,
                             environ_overrides=self.environ_overrides_system,
-                            follow_redirects=True)
+                            follow_redirects=False)
+
+        offset = _get_relative_offset_from_response(response)
+        response = app.get(offset, extra_environ=self.extra_environ_editor,
+                           environ_overrides=self.environ_overrides_editor)
 
         assert 'Create and update multiple records' in response.body
 
@@ -439,6 +472,8 @@ class TestRecombinantWebForms(CanadaTestBase):
         assert 'Unauthorized to create a resource for this package' in response.body
 
 
+    @mock.patch.object(h, 'flash_notice', flashes.mock_flash)
+    @mock.patch.object(h, 'get_flashed_messages', flashes.mock_get_flashed_messages)
     def test_editor_can_create_single_record(self, app):
         self._lc_init_pd()
 
@@ -460,6 +495,8 @@ class TestRecombinantWebForms(CanadaTestBase):
         assert 'Record Created' in response.body
 
 
+    @mock.patch.object(h, 'flash_notice', flashes.mock_flash)
+    @mock.patch.object(h, 'get_flashed_messages', flashes.mock_get_flashed_messages)
     def test_admin_can_create_single_record(self, app):
         self._lc_init_pd()
 
@@ -490,7 +527,7 @@ class TestRecombinantWebForms(CanadaTestBase):
                            pk=self.example_record['request_number'])
         # members should not be able to acces update_pd_record endpoint
         response = app.get(offset, extra_environ=self.extra_environ_member,
-                           environ_overrides=self.environ_overrides_memer, status=403)
+                           environ_overrides=self.environ_overrides_member, status=403)
 
         assert 'Unauthorized to update dataset' in response.body
 
@@ -500,13 +537,15 @@ class TestRecombinantWebForms(CanadaTestBase):
         response = app.post(offset,
                             data=pd_record_form,
                             extra_environ=self.extra_environ_member,
-                            environ_overrides=self.environ_overrides_memer,
+                            environ_overrides=self.environ_overrides_member,
                             status=403,
                             follow_redirects=True)
 
         assert 'Unauthorized to update dataset' in response.body
 
 
+    @mock.patch.object(h, 'flash_notice', flashes.mock_flash)
+    @mock.patch.object(h, 'get_flashed_messages', flashes.mock_get_flashed_messages)
     def test_editor_can_update_single_record(self, app):
         self._lc_create_pd_record()
 
@@ -531,6 +570,8 @@ class TestRecombinantWebForms(CanadaTestBase):
         assert 'Record {} Updated'.format(self.example_record['request_number']) in response.body
 
 
+    @mock.patch.object(h, 'flash_notice', flashes.mock_flash)
+    @mock.patch.object(h, 'get_flashed_messages', flashes.mock_get_flashed_messages)
     def test_admin_can_update_single_record(self, app):
         self._lc_create_pd_record()
 
@@ -692,6 +733,8 @@ class TestRecombinantWebForms(CanadaTestBase):
         assert 'not authorized to update resource' in response.body
 
 
+    @mock.patch.object(h, 'flash_success', flashes.mock_flash)
+    @mock.patch.object(h, 'get_flashed_messages', flashes.mock_get_flashed_messages)
     def test_editor_can_upload_records(self, app):
         template = self._lc_pd_template()
         template_file = self._populate_good_template_file(template)
@@ -716,6 +759,9 @@ class TestRecombinantWebForms(CanadaTestBase):
         assert 'Your file was successfully uploaded into the central system.' in response.body
 
 
+
+    @mock.patch.object(h, 'flash_success', flashes.mock_flash)
+    @mock.patch.object(h, 'get_flashed_messages', flashes.mock_get_flashed_messages)
     def test_admin_can_upload_records(self, app):
         template = self._lc_pd_template()
         template_file = self._populate_good_template_file(template)
@@ -765,6 +811,9 @@ class TestRecombinantWebForms(CanadaTestBase):
         assert 'not authorized to update resource' in response.body
 
 
+    @mock.patch.object(h, 'flash_error', flashes.mock_flash)
+    @mock.patch.object(h, 'flash_success', flashes.mock_flash)
+    @mock.patch.object(h, 'get_flashed_messages', flashes.mock_get_flashed_messages)
     def test_editor_can_validate_upload(self, app):
         template = self._lc_pd_template()
         good_template_file = self._populate_good_template_file(template)
@@ -803,6 +852,9 @@ class TestRecombinantWebForms(CanadaTestBase):
         assert 'No errors found.' in response.body
 
 
+    @mock.patch.object(h, 'flash_error', flashes.mock_flash)
+    @mock.patch.object(h, 'flash_success', flashes.mock_flash)
+    @mock.patch.object(h, 'get_flashed_messages', flashes.mock_get_flashed_messages)
     def test_admin_can_validate_upload(self, app):
         template = self._lc_pd_template()
         good_template_file = self._populate_good_template_file(template)
@@ -930,6 +982,8 @@ class TestRecombinantWebForms(CanadaTestBase):
         assert 'not authorized to update resource' in response.body
 
 
+    @mock.patch.object(h, 'flash_success', flashes.mock_flash)
+    @mock.patch.object(h, 'get_flashed_messages', flashes.mock_get_flashed_messages)
     def test_editor_can_delete_records(self, app):
         records_to_delete = self._prepare_records_to_delete()
 
@@ -963,6 +1017,8 @@ class TestRecombinantWebForms(CanadaTestBase):
         assert '2 deleted.' in response.body
 
 
+    @mock.patch.object(h, 'flash_success', flashes.mock_flash)
+    @mock.patch.object(h, 'get_flashed_messages', flashes.mock_get_flashed_messages)
     def test_admin_can_delete_records(self, app):
         records_to_delete = self._prepare_records_to_delete()
 
