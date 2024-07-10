@@ -36,6 +36,23 @@ div.canada-disabled-view-alert{
   width: 100% !important;
   margin: 0 !important;
 }
+.buttons-collection.buttons-colvis ~ .dt-button-collection.fixed{
+  width: 75%;
+  transform: translate(-50%, -20%);
+  margin-left: 0;
+}
+.buttons-collection.buttons-colvis ~ .dt-button-collection.fixed .dropdown-menu{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 100%;
+}
+.buttons-collection.buttons-colvis ~ .dt-button-collection.fixed a.buttons-columnVisibility{
+  max-width: 50%;
+  min-width: 50%;
+  width: 50%;
+  margin-bottom: 5px;
+}
 /*#####################
 ##       END         ##
 ##  Datatables Views ##
