@@ -3276,6 +3276,7 @@ presets:
       mimetype: audio/mp4
     - value: AIFF
       mimetype: audio/aiff
+    - value: APRX
     - value: ASCII Grid
       label:
         en: ASCII Grid
@@ -3306,6 +3307,7 @@ presets:
       label:
         en: Blackberry Application
         fr: Application Blackberry
+    - value: COG
     - value: CSV
       mimetype: text/csv
       openness_score: 3
@@ -3475,6 +3477,7 @@ presets:
       replaces: [ppt]
     - value: QLR
       mimetype: application/x-qgis-layer-definition
+    - value: PBF
     - value: PPTX
       mimetype: application/vnd.openxmlformats-officedocument.presentationml.presentation
     - value: RDF
