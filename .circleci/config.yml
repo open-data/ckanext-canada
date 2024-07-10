@@ -108,7 +108,7 @@ jobs:
           name: Run all tests
           command: |
             mkdir -p ~/junit/result
-            pytest --ckan-ini=test-core.ini ckanext/canada/tests --junitxml=~/junit/result/junit.xml
+            pytest --ckan-ini=test-core.ini --disable-warnings ckanext/canada/tests --junitxml=~/junit/result/junit.xml
       - store_test_results:
           path: ~/junit
       - slack/notify:
