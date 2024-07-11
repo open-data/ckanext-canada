@@ -39,6 +39,9 @@ guess_mimetype:
   output: canada_guess_mimetype/%(version)s_canada_guess_mimetype.js
 
 validation_spec:
+  extra:
+    preload:
+      - base/main
   contents:
     - validation_spec.js
   output: validation_spec/%(version)s_validation_spec.js
