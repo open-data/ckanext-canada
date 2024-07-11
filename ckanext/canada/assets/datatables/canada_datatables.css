@@ -36,6 +36,56 @@ div.canada-disabled-view-alert{
   width: 100% !important;
   margin: 0 !important;
 }
+.buttons-collection.buttons-colvis ~ .dt-button-collection.fixed{
+  width: 75%;
+  transform: translate(-50%, -20%);
+  margin-left: 0;
+  padding: 18px !important;
+}
+.buttons-collection.buttons-colvis ~ .dt-button-collection.fixed .dropdown-menu{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 100%;
+}
+.buttons-collection.buttons-colvis ~ .dt-button-collection.fixed a{
+  word-break: break-all;
+}
+.buttons-collection.buttons-colvis ~ .dt-button-collection.fixed a.buttons-columnVisibility{
+  max-width: 50%;
+  min-width: 50%;
+  width: 50%;
+  margin-bottom: 5px;
+  padding-left: 16px;
+  padding-right: 10px;
+  position: relative;
+}
+.buttons-collection.buttons-colvis ~ .dt-button-collection.fixed a.buttons-columnVisibility::before{
+  content: '\f096';
+  font: normal normal normal 14px/1 FontAwesome;
+  position: absolute;
+  left: 0;
+  top: 2px;
+}
+.buttons-collection.buttons-colvis ~ .dt-button-collection.fixed a.buttons-columnVisibility.active::before{
+  content: '\f046';
+}
+.buttons-collection.buttons-colvis ~ .dt-button-collection.fixed a:not(.buttons-columnVisibility){
+  flex-basis: 100%;
+  margin-top: 8px;
+}
+.buttons-collection.buttons-colvis ~ .dt-button-collection.fixed a:not(.buttons-columnVisibility):nth-of-type(even){
+  max-width: 51%;
+  min-width: 51%;
+  width: 51%;
+  margin-right: 1%;
+}
+.buttons-collection.buttons-colvis ~ .dt-button-collection.fixed a:not(.buttons-columnVisibility):nth-of-type(odd){
+  max-width: 49%;
+  min-width: 49%;
+  width: 49%;
+  margin-left: -2%;
+}
 /*#####################
 ##       END         ##
 ##  Datatables Views ##
