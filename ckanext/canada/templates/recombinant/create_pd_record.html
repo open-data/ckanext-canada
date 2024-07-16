@@ -26,7 +26,7 @@
               {% for field in chromo.fields -%}
                 {%- if field.datastore_id in errors %}
                   <li data-field-label="{{ key }}">{{
-                    h.recombinant_language_text(field.label) }}:
+                    h.recombinant_language_text(field.label) }}{{ _(':') }}
                     {{ errors[field.datastore_id][0] }}</li>
                 {%- endif -%}
               {%- endfor %}

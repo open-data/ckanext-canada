@@ -126,7 +126,7 @@
           {% set owner_org = h.scheming_field_by_name(schema.dataset_fields, 'owner_org') %}
           {% set owner_org_title = h.split_piped_bilingual_field(pkg.organization.title, h.lang()) %}
           <li class="list-group-item">
-            <strong>{{ h.scheming_language_text(owner_org.label) }}:</strong>
+            <strong>{{ h.scheming_language_text(owner_org.label) }}{{ _(':') }}</strong>
             {{ owner_org_title }}
           </li>
         {% endif %}
