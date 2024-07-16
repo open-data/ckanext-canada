@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-07-15 19:15+0000\n"
+"POT-Creation-Date: 2024-07-16 09:14-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: fr\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.7.0\n"
 
-#: ckanext/canada/assets/internal/validation_spec.js:8
+#: ckanext/canada/assets/internal/validation_spec.js:9
 #: ckanext/canada/checks.py:25
 msgid ""
 "Column name {value} in column {column_number} is not valid for a "
@@ -28,7 +28,7 @@ msgstr ""
 "Le nom de la colonne {value} dans la colonne {column_number} est invalide"
 " comme en-tête dans DataStore"
 
-#: ckanext/canada/assets/internal/validation_spec.js:16
+#: ckanext/canada/assets/internal/validation_spec.js:17
 #: ckanext/canada/checks.py:30
 msgid ""
 "Column name {value} in column {column_number} is too long for a DataStore"
@@ -213,7 +213,7 @@ msgstr "Prévu"
 msgid "Registry Home"
 msgstr "Accueil du registre"
 
-#: ckanext/canada/helpers.py:855 ckanext/canada/strings.py:81
+#: ckanext/canada/helpers.py:855 ckanext/canada/strings.py:82
 msgid "Open Government Portal"
 msgstr "Portail du gouvernement ouvert"
 
@@ -551,23 +551,27 @@ msgstr ""
 "suivants : majuscules, minuscules, chiffres, ponctuation et caractères "
 "spéciaux."
 
-#: ckanext/canada/strings.py:74
+#: ckanext/canada/strings.py:72
+msgid "Your password cannot be the same as your username."
+msgstr "Votre mot de passe ne peut pas être le même que votre nom d'utilisateur."
+
+#: ckanext/canada/strings.py:75
 msgid "These fields have been removed, click update below to save your changes."
 msgstr ""
 "Ces champs seront supprimés une fois que vous aurez sauvegardé vos "
 "changements."
 
-#: ckanext/canada/strings.py:75
+#: ckanext/canada/strings.py:76
 msgid "These fields have been removed."
 msgstr "Ces champs ont été supprimés."
 
-#: ckanext/canada/strings.py:78
+#: ckanext/canada/strings.py:79
 msgid "Your form submission could not be validated, please re-submit the form."
 msgstr ""
 "La soumission de votre formulaire n'a pas pu être confirmée. Veuillez le "
 "soumettre de nouveau."
 
-#: ckanext/canada/strings.py:82
+#: ckanext/canada/strings.py:83
 msgid "Open Government Portal (staging)"
 msgstr "Portail du gouvernement ouvert (stadification)"
 
@@ -841,11 +845,11 @@ msgstr "L’utilisateur %r n’est pas autorisé à modifier les membres de %s"
 msgid "User %r not authorized to view members of %s"
 msgstr "L’utilisateur %r n’est pas autorisé à voir les membres de %s"
 
-#: ckanext/canada/assets/internal/validation_spec.js:7
+#: ckanext/canada/assets/internal/validation_spec.js:8
 msgid "Invalid Header for DataStore"
 msgstr "En-tête invalide dans DataStore"
 
-#: ckanext/canada/assets/internal/validation_spec.js:9
+#: ckanext/canada/assets/internal/validation_spec.js:10
 msgid ""
 "Column name is invalid for a DataStore header.\n"
 "\n"
@@ -864,11 +868,11 @@ msgstr ""
 " - Supprimez les guillemets ('\"') du nom de la colonne.\n"
 " - Veillez à ce que le nom de la colonne soit indiqué."
 
-#: ckanext/canada/assets/internal/validation_spec.js:15
+#: ckanext/canada/assets/internal/validation_spec.js:16
 msgid "Header Too Long for DataStore"
 msgstr "L'en-tête est trop long dans DataStore"
 
-#: ckanext/canada/assets/internal/validation_spec.js:17
+#: ckanext/canada/assets/internal/validation_spec.js:18
 msgid ""
 "Column name is too long for a DataStore header.\n"
 "\n"
