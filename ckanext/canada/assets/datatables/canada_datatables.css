@@ -38,15 +38,22 @@ div.canada-disabled-view-alert{
 }
 .buttons-collection.buttons-colvis ~ .dt-button-collection.fixed{
   width: 75%;
-  transform: translate(-50%, -20%);
+  top: 10% !important;
+  margin-top: 0 !important;
+  transform: translateX(-50%);
   margin-left: 0;
   padding: 18px !important;
+  max-height: 80% !important;
+  overflow-y: scroll !important;
 }
 .buttons-collection.buttons-colvis ~ .dt-button-collection.fixed .dropdown-menu{
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   width: 100%;
+  max-height: 100% !important;
+  min-height: 100% !important;
+  height: 100% !important;
 }
 .buttons-collection.buttons-colvis ~ .dt-button-collection.fixed a{
   word-break: break-all;
@@ -74,17 +81,21 @@ div.canada-disabled-view-alert{
   flex-basis: 100%;
   margin-top: 8px;
 }
-.buttons-collection.buttons-colvis ~ .dt-button-collection.fixed a:not(.buttons-columnVisibility):nth-of-type(even){
+.buttons-collection.buttons-colvis ~ .dt-button-collection.fixed a:not(.buttons-columnVisibility).buttons-colvisRestore{
   max-width: 51%;
   min-width: 51%;
   width: 51%;
-  margin-right: 1%;
 }
-.buttons-collection.buttons-colvis ~ .dt-button-collection.fixed a:not(.buttons-columnVisibility):nth-of-type(odd){
+.buttons-collection.buttons-colvis ~ .dt-button-collection.fixed a:not(.buttons-columnVisibility).buttons-colvisGroup{
+  max-width: 50%;
+  min-width: 50%;
+  width: 50%;
+}
+.buttons-collection.buttons-colvis ~ .dt-button-collection.fixed a:not(.buttons-columnVisibility).buttons-colvisGroup:nth-last-of-type(3){
   max-width: 49%;
   min-width: 49%;
   width: 49%;
-  margin-left: -2%;
+  margin-left: -1%;
 }
 /*#####################
 ##       END         ##
