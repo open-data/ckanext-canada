@@ -1,8 +1,7 @@
 import json
 import re
 import inspect
-from ckan.plugins import plugin_loaded
-from ckan.plugins.toolkit import c, config, _, h, g, request
+from ckan.plugins.toolkit import config, _, h, g, request
 from ckan.model import User, Package, Activity
 import ckan.model as model
 import datetime
@@ -11,6 +10,7 @@ import ckan as ckan
 import jinja2
 import html
 from six import text_type
+from bs4 import BeautifulSoup
 
 from ckanapi import NotFound
 from ckantoolkit import aslist
@@ -37,17 +37,11 @@ PORTAL_URL_OPTION = 'canada.portal_url'
 PORTAL_URL_DEFAULT_EN = 'https://open.canada.ca'
 PORTAL_URL_DEFAULT_FR = 'https://ouvert.canada.ca'
 DATAPREVIEW_MAX = 500
-WET_URL = config.get('wet_boew.url', '')
-WET_JQUERY_OFFLINE_OPTION = 'wet_boew.jquery.offline'
-WET_JQUERY_OFFLINE_DEFAULT = False
+CDTS_VERSION = config.get('ckanext.canada.cdts_version', 'v5_0_1')
+CDTS_URI = 'https://www.canada.ca/etc/designs/canada/cdts/gcweb'
 GEO_MAP_TYPE_OPTION = 'wet_theme.geo_map_type'
 GEO_MAP_TYPE_DEFAULT = 'static'
 RELEASE_DATE_FACET_STEP = 100
-
-
-def is_registry():
-    # type: () -> bool
-    return plugin_loaded('canada_internal')
 
 
 def get_translated_t(data_dict, field):
@@ -113,15 +107,15 @@ def language_text_t(text, prefer_lang=None):
 
 def may_publish_datasets(userobj=None):
     if not userobj:
-        userobj = c.userobj
+        userobj = g.userobj
     if userobj.sysadmin:
         return True
 
     pub_org = config.get(ORG_MAY_PUBLISH_OPTION, ORG_MAY_PUBLISH_DEFAULT_NAME)
-    for g in userobj.get_groups():
-        if not g.is_organization:
+    for group in userobj.get_groups():
+        if not group.is_organization:
             continue
-        if g.name == pub_org:
+        if group.name == pub_org:
             return True
     return False
 
@@ -267,7 +261,14 @@ def adobe_analytics_lang():
     return 'eng'
 
 def adobe_analytics_js():
-    return str(config.get('adobe_analytics.js', ''))
+    """
+    Return partial Adobe Analytics JS address.
+
+    Exclude `//assets.adobedtm.com/` prefix and `.js` suffix.
+
+    See: https://github.com/wet-boew/cdts-sgdc/blob/v4.1.0/src/gcweb/refTop.ejs
+    """
+    return str(config.get('ckanext.canada.adobe_analytics.js', ''))
 
 
 def adobe_analytics_creator(organization=None, package=None):
@@ -463,24 +464,8 @@ def geojson_to_wkt(gjson_str):
     return wkt_str
 
 
-def url_for_wet_theme(*args):
-    file = args[0] or ''
-    return h.url_for_wet(file, theme=True)
-
-def url_for_wet(*args, **kw):
-    file = args[0] or ''
-    theme = kw.get('theme', False)
-
-    if not WET_URL:
-        return h.url_for_static_or_external(
-            ('GCWeb' if theme else 'wet-boew') + file
-        )
-
-    return WET_URL + '/' + ('GCWeb' if theme else 'wet-boew') + file
-
-
-def wet_jquery_offline():
-    return t.asbool(config.get(WET_JQUERY_OFFLINE_OPTION, WET_JQUERY_OFFLINE_DEFAULT))
+def cdts_asset(file_path, theme=True):
+    return CDTS_URI + '/' + CDTS_VERSION + ('/wet-boew' if theme else '/cdts') + file_path
 
 
 def get_map_type():
@@ -854,3 +839,26 @@ def search_filter_pill_link_label(search_field, search_extras):
                                                                 _choices=preset_choices))
 
     return links_labels
+
+
+def ckan_to_cdts_breadcrumbs(breadcrumb_content):
+    """
+    The Wet Builder requires a list of JSON objects.
+
+    There is no good way to get the breadcrumbs from the CKAN template blocks
+    into parsed JSON objects. We need to use an HTML Parser to do it.
+
+    See: https://cdts.service.canada.ca/app/cls/WET/gcweb/v4_1_0/cdts/samples/breadcrumbs-en.html
+    """
+    breadcrumb_html = BeautifulSoup(breadcrumb_content, 'html.parser')
+    cdts_breadcrumbs = [{
+        'title': _('Registry Home') if g.is_registry else _('Open Government Portal'),
+        'href': '/%s' % h.lang(),
+    }]
+    for breadcrumb in breadcrumb_html.find_all('li'):
+        anchor = breadcrumb.find('a')
+        cdts_breadcrumbs.append({
+            'title': breadcrumb.text if not anchor else anchor.text,
+            'href': '' if not anchor else anchor['href'],
+        })
+    return cdts_breadcrumbs

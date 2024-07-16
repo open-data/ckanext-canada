@@ -1,0 +1,34 @@
+{% ckan_extends %}
+
+{% block subfield_display %}
+  {% for field_data in fields %}
+    {% if loop.index == fields|length %}
+      <div class="panel panel-default mrgn-tp-md mrgn-bttm-md">
+        <header class="panel-heading">
+          <p class="panel-title">{{ h.scheming_language_text(field.label) }} {{ loop.index }}</p>
+        </header>
+    {%- else -%}
+      <details class="mrgn-tp-md mrgn-bttm-md">
+        <summary>
+          <p class="panel-title">{{ h.scheming_language_text(field.label) }} {{ loop.index }}</p>
+        </summary>
+    {%- endif -%}
+    <div class="panel-body">
+      <dl class="scheming-subfield-list">
+        {% for subfield in field.repeating_subfields %}
+          <dt class="dataset-label">
+            {{ h.scheming_language_text(subfield.label) }}
+          </dt>
+          <dd>
+            {%- snippet 'scheming/snippets/display_field.html', field=subfield, data=field_data, entity_type=entity_type, object_type=object_type -%}
+          </dd>
+        {% endfor %}
+      </dl>
+    </div>
+    {% if loop.index != fields|length %}
+      </details>
+    {% else %}
+      </div>
+    {%- endif -%}
+  {% endfor %}
+{% endblock %}

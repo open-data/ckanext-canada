@@ -38,6 +38,7 @@ fields:
   form_snippet: fluent_text.html
   form_attrs:
     size: 75
+    class: form-control
   display_snippet: fluent_text.html
   error_snippet: fluent_text.html
   validators: fluent_text unicode scheming_required canada_org_title_translated_save
@@ -66,6 +67,8 @@ fields:
   required: true
   # copied from fluent_text preset
   form_snippet: fluent_text.html
+  form_attrs:
+    class: form-control
   display_snippet: fluent_text.html
   error_snippet: fluent_text.html
   validators: fluent_text scheming_required
@@ -89,6 +92,7 @@ fields:
   form_attrs:
     readonly: true
     size: 45
+    class: form-control
 
 # Field = Department Number.
 # {The organization's Department Number}

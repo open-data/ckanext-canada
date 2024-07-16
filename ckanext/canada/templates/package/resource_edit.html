@@ -1,0 +1,16 @@
+{% ckan_extends %}
+
+{% block subtitle %}{{ _('Edit') }} -
+  {{ h.get_translated(res, 'name') }} -
+  {{ h.get_translated(pkg, 'title') }}
+{% endblock %}
+
+{% block primary_content_inner %}
+  <p>
+    {# FIXME: do not do js to get referrer. check flask? #}
+    <script>
+      document.write('<a class="btn btn-primary" href=\'' + document.referrer + '\';"><i class="fa fa-arrow-left" aria-hidden="true">'+'{{ _("Go back") }}'+'</i></a>');
+    </script>
+  </p>
+  {% block form %}{{ super() }}{% endblock %}
+{% endblock %}
