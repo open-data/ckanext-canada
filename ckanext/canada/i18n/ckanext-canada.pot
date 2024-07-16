@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ckanext-canada 0.4.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-07-16 14:45+0000\n"
+"POT-Creation-Date: 2024-07-16 19:42+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -203,7 +203,7 @@ msgstr ""
 msgid "Registry Home"
 msgstr ""
 
-#: ckanext/canada/helpers.py:862 ckanext/canada/strings.py:81
+#: ckanext/canada/helpers.py:862 ckanext/canada/strings.py:82
 msgid "Open Government Portal"
 msgstr ""
 
@@ -528,19 +528,23 @@ msgid ""
 "characters."
 msgstr ""
 
-#: ckanext/canada/strings.py:74
-msgid "These fields have been removed, click update below to save your changes."
+#: ckanext/canada/strings.py:72
+msgid "Your password cannot be the same as your username."
 msgstr ""
 
 #: ckanext/canada/strings.py:75
+msgid "These fields have been removed, click update below to save your changes."
+msgstr ""
+
+#: ckanext/canada/strings.py:76
 msgid "These fields have been removed."
 msgstr ""
 
-#: ckanext/canada/strings.py:78
+#: ckanext/canada/strings.py:79
 msgid "Your form submission could not be validated, please re-submit the form."
 msgstr ""
 
-#: ckanext/canada/strings.py:82
+#: ckanext/canada/strings.py:83
 msgid "Open Government Portal (staging)"
 msgstr ""
 
@@ -2342,24 +2346,27 @@ msgid ""
 "this non-government website before providing personal information.</p>"
 msgstr ""
 
-#: ckanext/canada/templates/package/read.html:150
-msgid "Issued by"
-msgstr ""
-
+#: ckanext/canada/templates/package/read.html:129
 #: ckanext/canada/templates/package/read.html:152
 #: ckanext/canada/templates/package/read_base.html:56
 #: ckanext/canada/templates/package/read_base.html:65
 #: ckanext/canada/templates/package/read_base.html:81
 #: ckanext/canada/templates/package/read_base.html:155
 #: ckanext/canada/templates/package/read_base.html:187
+#: ckanext/canada/templates/recombinant/create_pd_record.html:29
 #: ckanext/canada/templates/recombinant/snippets/xls_upload.html:39
 #: ckanext/canada/templates/recombinant/snippets/xls_upload.html:46
 #: ckanext/canada/templates/recombinant/snippets/xls_upload.html:53
 #: ckanext/canada/templates/recombinant/snippets/xls_upload.html:57
 #: ckanext/canada/templates/recombinant/snippets/xls_upload.html:60
 #: ckanext/canada/templates/recombinant/snippets/xls_upload.html:61
+#: ckanext/canada/templates/recombinant/update_pd_record.html:29
 #: ckanext/canada/templates/snippets/package_item.html:91
 msgid ":"
+msgstr ""
+
+#: ckanext/canada/templates/package/read.html:150
+msgid "Issued by"
 msgstr ""
 
 #: ckanext/canada/templates/package/read.html:177

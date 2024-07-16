@@ -1,0 +1,1 @@
+Add translations for feature to validate password. The user password cannot be the same as username.
