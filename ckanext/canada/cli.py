@@ -1792,10 +1792,14 @@ def resolve_duplicate_emails(quiet=False, verbose=False):
                 duplicates_found = True
                 _users = sorted(users, key=lambda x: x[1])
                 if verbose:
-                    click.echo('Saving user %s' % _users[0][0])
-                for user, created in _users[:1]:
+                    click.echo('\n- Going to save user %s' % _users[0][0])
+                for user, created in _users[1:]:
                     if user not in users_to_delete:
+                        if verbose:
+                            click.echo('- Going to delete user %s' % user)
                         users_to_delete.append(user)
+                if verbose:
+                    click.echo('\n')
     except Exception as e:
         _error_message(str(e))
         return
