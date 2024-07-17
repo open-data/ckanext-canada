@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-07-16 09:14-0400\n"
+"POT-Creation-Date: 2024-07-17 10:42-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: fr\n"
@@ -156,7 +156,7 @@ msgstr "L'état de DataStore est inconnu"
 
 # Search facets
 #: ckanext/canada/helpers.py:774
-#: ckanext/canada/templates/home/quick_links.html:69
+#: ckanext/canada/templates/home/quick_links.html:65
 #: ckanext/canada/templates/scheming/package/snippets/package_form.html:28
 #: ckanext/canada/templates/snippets/cdts/header.html:31
 #: ckanext/canada/templates/snippets/dataset_facets.html:3
@@ -166,7 +166,7 @@ msgid "Open Data"
 msgstr "Données ouvertes"
 
 #: ckanext/canada/helpers.py:775
-#: ckanext/canada/templates/home/quick_links.html:83
+#: ckanext/canada/templates/home/quick_links.html:79
 #: ckanext/canada/templates/scheming/package/snippets/package_form.html:30
 #: ckanext/canada/templates/snippets/cdts/header.html:54
 #: ckanext/canada/templates/snippets/dataset_facets.html:5
@@ -191,7 +191,7 @@ msgid "Draft"
 msgstr "Ébauche"
 
 #: ckanext/canada/helpers.py:798
-#: ckanext/canada/templates/home/quick_links.html:137
+#: ckanext/canada/templates/home/quick_links.html:133
 #: ckanext/canada/templates/snippets/cdts/header.html:57
 #: ckanext/canada/templates/snippets/dataset_facets.html:31
 #: ckanext/canada/templates/snippets/package_item.html:15
@@ -2075,7 +2075,7 @@ msgid "Search datasets..."
 msgstr "Recherche de dossiers..."
 
 #: ckanext/canada/templates/admin/publish_search.html:18
-#: ckanext/canada/templates/home/quick_links.html:108
+#: ckanext/canada/templates/home/quick_links.html:104
 #: ckanext/canada/templates/organization/snippets/organization_search.html:7
 #: ckanext/canada/templates/snippets/cdts/header.html:150
 #: ckanext/canada/templates/snippets/search_form.html:44
@@ -2213,26 +2213,6 @@ msgid "Open Government Registry"
 msgstr "Registre du gouvernement ouvert"
 
 #: ckanext/canada/templates/home/quick_links.html:58
-#: ckanext/canada/templates/user/login.html:7
-msgid "Important"
-msgstr "Important"
-
-#: ckanext/canada/templates/home/quick_links.html:59
-#: ckanext/canada/templates/user/login.html:8
-msgid ""
-"As of March 6, 2024, all contracts and associated amendments will appear "
-"as a single contract with their respective amendments linked on the "
-"Portal. Please email the Portal team at <a href=\"mailto:open-ouvert@tbs-"
-"sct.gc.ca\">open-ouvert@tbs-sct.gc.ca</a> should you have additional "
-"questions or concerns."
-msgstr ""
-"À partir du 6 mars 2024, tous les contrats et leurs modifications "
-"apparaîtront comme un seul contrat avec leurs modifications respectifs "
-"liés sur le portail. Si vous avez des questions ou préoccupations, "
-"veuillez communiquer avec l'équipe du portail à <a href=\"mailto:open-"
-"ouvert@tbs-sct.gc.ca\">open-ouvert@tbs-sct.gc.ca</a>."
-
-#: ckanext/canada/templates/home/quick_links.html:62
 msgid ""
 "Welcome to the Open Government Registry. Use the Registry to add "
 "government resources that will be published on the Open Government "
@@ -2247,12 +2227,12 @@ msgstr ""
 "erreurs, communiquez avec <a href=\"mailto:open-ouvert@tbs-sct.gc.ca"
 "\">open-ouvert@tbs-sct.gc.ca</a>."
 
-#: ckanext/canada/templates/home/quick_links.html:75
+#: ckanext/canada/templates/home/quick_links.html:71
 #: ckanext/canada/templates/snippets/cdts/header.html:36
 msgid "Create an Open Data Record"
 msgstr "Créer un enregistrement de données ouvert"
 
-#: ckanext/canada/templates/home/quick_links.html:76
+#: ckanext/canada/templates/home/quick_links.html:72
 msgid ""
 "Add data about Government of Canada services, financials or national "
 "demographic information that is relevant to Canadians."
@@ -2261,29 +2241,29 @@ msgstr ""
 "données financières ou de l'information démographique nationale qui sont "
 "pertinentes pour les Canadiens."
 
-#: ckanext/canada/templates/home/quick_links.html:89
+#: ckanext/canada/templates/home/quick_links.html:85
 msgid "Create Information Asset"
 msgstr "Créer un enregistrement d'informations ouvertes"
 
-#: ckanext/canada/templates/home/quick_links.html:90
+#: ckanext/canada/templates/home/quick_links.html:86
 msgid "Add information about government programs, activities and publications."
 msgstr ""
 "Ajouter de l'information sur les programmes, activités et publications du"
 " gouvernement."
 
-#: ckanext/canada/templates/home/quick_links.html:95
+#: ckanext/canada/templates/home/quick_links.html:91
 #: ckanext/canada/templates/snippets/cdts/header.html:135
 #: ckanext/canada/templates/snippets/dataset_facets.html:4
 #: ckanext/canada/templates/snippets/package_item.html:19
 msgid "Open Dialogue"
 msgstr "Dialogue ouvert"
 
-#: ckanext/canada/templates/home/quick_links.html:102
+#: ckanext/canada/templates/home/quick_links.html:98
 #: ckanext/canada/templates/snippets/cdts/header.html:144
 msgid "Consultations master dataset"
 msgstr "Données de consultations principals"
 
-#: ckanext/canada/templates/home/quick_links.html:103
+#: ckanext/canada/templates/home/quick_links.html:99
 msgid ""
 "Access the dataset that consolidates all the consultations reports "
 "submitted by federal institutions."
@@ -2291,53 +2271,53 @@ msgstr ""
 "Ayez accès au jeu de données qui vient consolider tous les rapports de "
 "consultation ayant été soumis par les institutions fédérales."
 
-#: ckanext/canada/templates/home/quick_links.html:114
+#: ckanext/canada/templates/home/quick_links.html:110
 msgid "Search All Records"
 msgstr "Faire une recherche dans tous les dossiers"
 
-#: ckanext/canada/templates/home/quick_links.html:115
+#: ckanext/canada/templates/home/quick_links.html:111
 msgid "Add all Open Data and Information records in the Registry."
 msgstr "Faire une recherche dans tous les dossiers du registre."
 
-#: ckanext/canada/templates/home/quick_links.html:122
+#: ckanext/canada/templates/home/quick_links.html:118
 msgid "Search your Organization Records"
 msgstr "Faire une recherche dans les dossiers de votre organisation"
 
-#: ckanext/canada/templates/home/quick_links.html:123
+#: ckanext/canada/templates/home/quick_links.html:119
 msgid "Search all records in the Registry, for your Organization."
 msgstr ""
 "Faire une recherche dans tous les dossiers du registre, pour votre "
 "organisation."
 
-#: ckanext/canada/templates/home/quick_links.html:129
+#: ckanext/canada/templates/home/quick_links.html:125
 msgid "View Members of your Organization"
 msgstr "Voir les members liés à votre organisation"
 
-#: ckanext/canada/templates/home/quick_links.html:130
+#: ckanext/canada/templates/home/quick_links.html:126
 msgid "View the list of members linked to your organization."
 msgstr "Voir la liste des membres liés à votre organisation."
 
-#: ckanext/canada/templates/home/quick_links.html:155
+#: ckanext/canada/templates/home/quick_links.html:151
 #: ckanext/canada/templates/snippets/cdts/header.html:102
 msgid "Reports Tabled in Parliament"
 msgstr "Rapports déposés au Parlement"
 
-#: ckanext/canada/templates/home/quick_links.html:156
+#: ckanext/canada/templates/home/quick_links.html:152
 msgid "Access, add or modify your reports tabled in Parliament."
 msgstr ""
 "Consultez vos rapports déposés au Parlement, ajoutez-y du contenu ou "
 "modifiez-les."
 
-#: ckanext/canada/templates/home/quick_links.html:162
+#: ckanext/canada/templates/home/quick_links.html:158
 msgid "Briefing packages"
 msgstr "Documents d’information"
 
-#: ckanext/canada/templates/home/quick_links.html:169
+#: ckanext/canada/templates/home/quick_links.html:165
 #: ckanext/canada/templates/snippets/cdts/header.html:118
 msgid "New or incoming ministers"
 msgstr "Documents d’information pour les nouveaux ministres"
 
-#: ckanext/canada/templates/home/quick_links.html:170
+#: ckanext/canada/templates/home/quick_links.html:166
 msgid ""
 "Access, add or modify briefing package information for your new or "
 "incoming minister."
@@ -2345,12 +2325,12 @@ msgstr ""
 "Consultez la trousse d’information pour le nouveau ministre, ajoutez-y du"
 " contenu ou modifiez-la."
 
-#: ckanext/canada/templates/home/quick_links.html:177
+#: ckanext/canada/templates/home/quick_links.html:173
 #: ckanext/canada/templates/snippets/cdts/header.html:122
 msgid "New or incoming deputy heads"
 msgstr "Documents d’information pour les nouveaux administrateurs généraux"
 
-#: ckanext/canada/templates/home/quick_links.html:178
+#: ckanext/canada/templates/home/quick_links.html:174
 msgid ""
 "Access, add or modify briefing package information for your new or "
 "incoming deputy head."
@@ -2358,14 +2338,14 @@ msgstr ""
 "Consultez la trousse d’information pour le nouvel administrateur général,"
 " ajoutez-y du contenu ou modifiez-la."
 
-#: ckanext/canada/templates/home/quick_links.html:185
+#: ckanext/canada/templates/home/quick_links.html:181
 #: ckanext/canada/templates/snippets/cdts/header.html:126
 msgid "Parliamentary Committee appearances for ministers"
 msgstr ""
 "Documents d’information à l’intention des ministres pour les comparutions"
 " devant un comité parlementaire"
 
-#: ckanext/canada/templates/home/quick_links.html:186
+#: ckanext/canada/templates/home/quick_links.html:182
 msgid ""
 "Access, add or modify briefing packages for Parliamentary Committee "
 "appearance for your minister."
@@ -2373,14 +2353,14 @@ msgstr ""
 "Consultez la trousse d’information pour la comparution de votre ministre "
 "devant un comité parlementaire, ajoutez-y du contenu ou modifiez-la."
 
-#: ckanext/canada/templates/home/quick_links.html:193
+#: ckanext/canada/templates/home/quick_links.html:189
 #: ckanext/canada/templates/snippets/cdts/header.html:130
 msgid "Parliamentary Committee appearances for deputy heads"
 msgstr ""
 "Documents d’information à l’intention des administrateurs généraux pour "
 "les comparutions devant un comité parlementaire"
 
-#: ckanext/canada/templates/home/quick_links.html:194
+#: ckanext/canada/templates/home/quick_links.html:190
 msgid ""
 "Access, add or modify briefing packages for Parliamentary Committee "
 "appearance for your deputy head."
@@ -2715,25 +2695,28 @@ msgstr ""
 " Web non gouvernemental avant de fournir leurs renseignements "
 "personnels.</p>"
 
-#: ckanext/canada/templates/package/read.html:150
-msgid "Issued by"
-msgstr "Publiée par"
-
+#: ckanext/canada/templates/package/read.html:129
 #: ckanext/canada/templates/package/read.html:152
 #: ckanext/canada/templates/package/read_base.html:56
 #: ckanext/canada/templates/package/read_base.html:65
 #: ckanext/canada/templates/package/read_base.html:81
 #: ckanext/canada/templates/package/read_base.html:155
 #: ckanext/canada/templates/package/read_base.html:187
+#: ckanext/canada/templates/recombinant/create_pd_record.html:29
 #: ckanext/canada/templates/recombinant/snippets/xls_upload.html:39
 #: ckanext/canada/templates/recombinant/snippets/xls_upload.html:46
 #: ckanext/canada/templates/recombinant/snippets/xls_upload.html:53
 #: ckanext/canada/templates/recombinant/snippets/xls_upload.html:57
 #: ckanext/canada/templates/recombinant/snippets/xls_upload.html:60
 #: ckanext/canada/templates/recombinant/snippets/xls_upload.html:61
+#: ckanext/canada/templates/recombinant/update_pd_record.html:29
 #: ckanext/canada/templates/snippets/package_item.html:91
 msgid ":"
 msgstr " :"
+
+#: ckanext/canada/templates/package/read.html:150
+msgid "Issued by"
+msgstr "Publiée par"
 
 #: ckanext/canada/templates/package/read.html:177
 msgid "Related Items"
@@ -3634,7 +3617,7 @@ msgstr "Rechercher et afficher les utilisateurs."
 msgid "Search and manage users."
 msgstr "Rechercher et gérer les utilisateurs."
 
-#: ckanext/canada/templates/user/login.html:10
+#: ckanext/canada/templates/user/login.html:6
 msgid "login welcome text"
 msgstr ""
 "<h2>Bienvenue au registre du gouvernement ouvert</h2><p>Utilisez le "
@@ -3644,56 +3627,56 @@ msgstr ""
 "registre ou pour signaler des erreurs, communiquez avec open-ouvert@tbs-"
 "sct.gc.ca. </p>"
 
-#: ckanext/canada/templates/user/login.html:15
+#: ckanext/canada/templates/user/login.html:11
 msgid "NOTE: Username and password are case sensitive."
 msgstr "NOTE: Le nom d’utilisateur et mot de passe sont sensibles à la casse."
 
-#: ckanext/canada/templates/user/login.html:27
+#: ckanext/canada/templates/user/login.html:23
 msgid "Need an account"
 msgstr "Besoin d’un compte"
 
-#: ckanext/canada/templates/user/login.html:30
+#: ckanext/canada/templates/user/login.html:26
 msgid "Then sign right up, it only takes a minute"
 msgstr "Inscrivez-vous maintenant, cela ne prend qu’une minute"
 
-#: ckanext/canada/templates/user/login.html:32
+#: ckanext/canada/templates/user/login.html:28
 #: ckanext/canada/templates/user/new.html:5
 msgid "Request an Account"
 msgstr "Demande d’un compte"
 
-#: ckanext/canada/templates/user/login.html:38
+#: ckanext/canada/templates/user/login.html:34
 msgid "Forgotten your password?"
 msgstr "Réinitialiser le mot de passe"
 
-#: ckanext/canada/templates/user/login.html:40
+#: ckanext/canada/templates/user/login.html:36
 msgid "No problem, use our password recovery form to reset it"
 msgstr ""
 "Utilisez notre formulaire de récupération de mot de passe pour rétablir "
 "votre identité"
 
-#: ckanext/canada/templates/user/login.html:42
+#: ckanext/canada/templates/user/login.html:38
 msgid "Reset password"
 msgstr "Réinitialiser le mot de passe"
 
-#: ckanext/canada/templates/user/login.html:50
+#: ckanext/canada/templates/user/login.html:46
 msgid "Forgotten your username?"
 msgstr "Vous avez oublié votre nom d'utilisateur ?"
 
-#: ckanext/canada/templates/user/login.html:53
+#: ckanext/canada/templates/user/login.html:49
 msgid "No problem, use our username recovery form to recover it"
 msgstr ""
 "Pas de problème, utilisez notre formulaire de récupération du nom "
 "d'utilisateur pour le récupérer"
 
-#: ckanext/canada/templates/user/login.html:55
+#: ckanext/canada/templates/user/login.html:51
 msgid "Recover username"
 msgstr "Récupérer le nom d'utilisateur"
 
-#: ckanext/canada/templates/user/login.html:70
+#: ckanext/canada/templates/user/login.html:66
 msgid " Create an Account"
 msgstr "Créer un compte"
 
-#: ckanext/canada/templates/user/login.html:80
+#: ckanext/canada/templates/user/login.html:76
 msgid "Forgot your password?"
 msgstr "Réinitialiser le mot de passe"
 
