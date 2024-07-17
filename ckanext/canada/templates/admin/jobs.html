@@ -31,7 +31,7 @@
                 {% else %}
                   <span>{{ _('Unknown') }}</span>
                 {% endif %}
-                | <a href="{{ h.url_for('api.action', logic_function='job_show', id=job.get('id')) }}">{{ job.get('id') }}</a>
+                | <a href="{{ h.url_for('api.action', ver=3, logic_function='job_show', id=job.get('id')) }}">{{ job.get('id') }}</a>
               </span>
             </p>
           </li>

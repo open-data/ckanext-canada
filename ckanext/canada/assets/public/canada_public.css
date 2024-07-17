@@ -885,9 +885,6 @@ ul.resource-list > li.resource-item span.format-label[data-format="pbix"]{
 .resources-side-section .panel-body > ul > li:not(:first-of-type){
   border-top: 1px dotted #6f6f6f !important;
 }
-.resources-side-section .panel-body > ul > li:not(:last-of-type):not(:first-of-type){
-  margin: 8px 0 !important;
-}
 .resources-side-section .panel-body > ul{
   min-height: 80px;
 }
@@ -1449,7 +1446,7 @@ body .accordion-button.no-after::after{
 form[action*="/dictionary/"] h3:first-of-type{
   margin-top: 0 !important;
 }
-div.btn-group{
+div.btn-group:not(.dropdown){
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
