@@ -72,6 +72,7 @@ _("Cannot link files of this type")
 _('Your password must be {} characters or longer.')
 _('Your password must consist of at least three of the following character sets: '
   'uppercase characters, lowercase characters, digits, punctuation & special characters.')
+_('Your password cannot be the same as your username.')
 
 # strings from scheming
 _('These fields have been removed, click update below to save your changes.')
