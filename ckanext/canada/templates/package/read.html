@@ -251,10 +251,23 @@
   </div>
 {% endblock primary_content_inner %}
 
+{% block links %}
+    {{ super() }}
+    <script>
+    window.imConfigPath = "/public/static/invitation-manager/";
+    </script>
+{% endblock %}
+
 {% block scripts %}
   {% asset 'canada_public/more_like_this' %}
   {% asset 'canada_public/voting_fix' %}
+  {% asset 'invitation_manager/js' %}
   {{ super() }}
+{% endblock %}
+
+{% block custom_styles %}
+  {{ super() }}
+  {% asset 'invitation_manager/css' %}
 {% endblock %}
 
 {% block package_license %}{% endblock %}
