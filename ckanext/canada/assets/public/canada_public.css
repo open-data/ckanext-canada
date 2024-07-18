@@ -267,6 +267,11 @@ a#edit-comment-body-0-format-help-about, button#edit-submit,button#edit-actions-
   background-repeat: repeat-y;
   background-position: 17px 0;
 }
+.activity table{
+  max-width: 100% !important;
+  overflow-x: scroll !important;
+  display: block !important;
+}
 .activity .item{
   position: relative;
   margin: 0 0 15px 0;
@@ -1219,7 +1224,6 @@ div.canada-job-list-title small{
   border-bottom-left-radius: 0 !important;
   border-bottom-right-radius: 0 !important;
 }
-
 .canada-dashboard-panel{
   border-top-left-radius: 0 !important;
 }

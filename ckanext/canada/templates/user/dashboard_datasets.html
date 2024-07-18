@@ -15,15 +15,10 @@
   {{ _('Dashboard') }} - {{ _('My Records') }}
 {% endblock %}
 
+{% block panel_heading %}
+  {{ _('My Records') }}
+{% endblock %}
+
 {% block primary_content_inner %}
-  <div data-module="dashboard" class="col-md-12">
-    <div data-module="dashboard" class="panel panel-default canada-dashboard-panel">
-      <div class="panel-heading">
-        <h3 class="panel-title">{{ _('My Records') }}</h3>
-      </div>
-      <div class="panel-body">
-        {{ super() }}
-      </div>
-    </div>
-  </div>
+  {{ super() }}
 {% endblock %}
