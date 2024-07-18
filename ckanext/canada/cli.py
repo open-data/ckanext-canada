@@ -1770,15 +1770,16 @@ def delete_table_view_from_non_datastore_resources(resource_id=None, verbose=Fal
         _success_message('No datatables_view(s) at this time.')
 
 
-@db.command("resolve_duplicate_emails", short_help="Resolve duplicate emails by deleting all but the first created user.")
+@db.command("resolve_duplicate_emails", short_help="Resolve duplicate emails by deactivating all but the first created user.")
 @click.option("-q", "--quiet", is_flag=True, help="Suppress human interaction.", default=False)
 @click.option("-v", "--verbose", is_flag=True, help="Increase verbosity", default=False)
 def resolve_duplicate_emails(quiet=False, verbose=False):
-    """Resolve duplicate emails by deleting all but the first created user."""
+    """Resolve duplicate emails by deactivating all but the first created user."""
 
     q = model.Session.query(model.User.email,
                             model.User.name,
                             model.User.created) \
+        .filter(model.User.state == "active") \
         .filter(model.User.email != "") \
         .order_by(model.User.email).all()
 
@@ -1792,11 +1793,11 @@ def resolve_duplicate_emails(quiet=False, verbose=False):
                 duplicates_found = True
                 _users = sorted(users, key=lambda x: x[1])
                 if verbose:
-                    click.echo('\n- Going to save user %s' % _users[0][0])
+                    click.echo('\n- Going to keep user %s' % _users[0][0])
                 for user, created in _users[1:]:
                     if user not in users_to_delete:
                         if verbose:
-                            click.echo('- Going to delete user %s' % user)
+                            click.echo('- Going to deactivate user %s' % user)
                         users_to_delete.append(user)
                 if verbose:
                     click.echo('\n')
@@ -1805,12 +1806,17 @@ def resolve_duplicate_emails(quiet=False, verbose=False):
         return
     if users_to_delete:
         if not quiet:
-            click.confirm("\nAre you sure you want to delete {num} duplicate users?"
+            click.confirm("\nAre you sure you want to deactivate {num} duplicate users?"
                             .format(num=len(users_to_delete)), abort=True)
-        model.Session.execute("DELETE FROM public.user WHERE name IN ({usernames});".format(
-            usernames=', '.join(["'{}'".format(u) for u in users_to_delete])))
-        model.Session.commit()
+        for user in users_to_delete:
+            try:
+                get_action('user_delete')({'ignore_auth': True}, {'id': user})
+                if verbose:
+                    click.echo('- Deactivated user %s' % user)
+            except Exception as e:
+                if verbose:
+                    _error_message(str(e))
 
-        click.echo("\nDeleted {num} duplicate users from the database".format(num=len(users_to_delete)))
+        click.echo("\nDeactivated {num} duplicate users".format(num=len(users_to_delete)))
     if not duplicates_found:
         _success_message('No duplicate emails found')
