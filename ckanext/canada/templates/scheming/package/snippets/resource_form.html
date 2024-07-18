@@ -17,7 +17,7 @@
   <div class="accordion mrgn-tp-lg mrgn-bttm-lg">
     {%- if (not data.related_type) or action.endswith('new') -%}
       <details class="acc-group" open="open">
-        <summary class="wb-toggle tgl-tab" data-toggle='{"parent": ".accordion", "group": ".acc-group"}'>
+        <summary class="wb-toggle tgl-tab" data-bs-toggle='{"parent": ".accordion", "group": ".acc-group"}'>
           {{ _("Metadata Fields for Resources Only (Not for Related Items)") }}
         </summary>
         <div class="tgl-panel">
@@ -31,7 +31,7 @@
     {% endif %}
     {%- if data.related_type or action.endswith('new') -%}
       <details class="acc-group" {% if data.related_type %}open="open"{% endif %}>
-        <summary class="wb-toggle tgl-tab" data-toggle='{"parent": ".accordion", "group": ".acc-group"}'>
+        <summary class="wb-toggle tgl-tab" data-bs-toggle='{"parent": ".accordion", "group": ".acc-group"}'>
           {{ _("Metadata Fields for Related Items Only") }}
         </summary>
         <div class="tgl-panel">
