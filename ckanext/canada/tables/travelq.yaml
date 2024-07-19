@@ -418,6 +418,12 @@ resources:
           errors := errors || required_error(NEW.meals, 'meals');
           errors := errors || required_error(NEW.total, 'total');
         END IF;
+        NEW.airfare := round(NEW.airfare, 2);
+        NEW.other_transport := round(NEW.other_transport, 2);
+        NEW.lodging := round(NEW.lodging, 2);
+        NEW.meals := round(NEW.meals, 2);
+        NEW.other_expenses := round(NEW.other_expenses, 2);
+        NEW.total := round(NEW.total, 2);
         IF errors = '{{}}' THEN
           RETURN NEW;
         END IF;
