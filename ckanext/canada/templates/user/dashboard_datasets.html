@@ -6,6 +6,10 @@
   {% endif %}
 {% endblock %}
 
+{% block subtitle %}
+  {{ _('My Records') }}
+{% endblock %}
+
 {% block breadcrumb_content %}
   {{ super() }}
   <li class="active">{% link_for _('My Records'), named_route='dashboard.datasets' %}</li>
