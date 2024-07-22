@@ -30,7 +30,7 @@ import uuid
 
 import csv
 
-from azure.storage.blob import BlockBlobService
+from azure.storage.blob.blockblobservice import BlockBlobService
 from azure.common import AzureMissingResourceHttpError
 from azure.storage.blob import ContentSettings
 
