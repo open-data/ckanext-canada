@@ -30,11 +30,11 @@ import uuid
 
 import csv
 
-from azure.storage.blob.blockblobservice import BlockBlobService
+from azure.storage.blob import BlobServiceClient
 from azure.common import AzureMissingResourceHttpError
 from azure.storage.blob import ContentSettings
 
-import urllib2
+import urllib
 import ckanapi
 import ckan
 from ckanapi.errors import CKANAPIError
@@ -379,7 +379,7 @@ def upload_resources(remote_site, api_key, jsonfile, resource_directory):
                 target_pkg = site.action.package_show(id=rec['id'])
             except (NotFound, NotAuthorized):
                 target_pkg = None
-            except (CKANAPIError, urllib2.URLError), e:
+            except (CKANAPIError, urllib2.URLError) as e:
                 retries -= 1
                 if retries > 0:
                     time.sleep(1)
@@ -517,7 +517,7 @@ def pull_docs(conf_file, local_dir):
     src = RemoteStorage(src_user, src_key, src_container)
 
     all_docs = src.new_docs()
-    print 'total source files ', len(all_docs)
+    print('total source files ', len(all_docs))
     xmls = [x for x in all_docs if x[-4:]=='.xml' and x[:-4] in all_docs and
             x[:-4] + '.ind' in all_docs]
     docs = [x[:-4] for x in xmls]
@@ -652,7 +652,7 @@ def duplicate_docs(file_dir, site_url):
                     count += 1
                 except (NotFound, NotAuthorized):
                     target_pkg = None
-                except (CKANAPIError, urllib2.URLError), e:
+                except (CKANAPIError, urllib2.URLError) as e:
                     sys.stdout.write(
                         json.dumps([
                             rec['id'],
@@ -696,6 +696,8 @@ def de_dup2(site_url):
         print(vl)
 
 def main():
+    sys.exit("This script has been deprecated. Use ckanapi load instead.")
+
     global audience, canada_resource_type,canada_subject
     global canada_resource_language, organizations
     global canada_resource_format
