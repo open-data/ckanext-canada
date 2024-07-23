@@ -45,3 +45,8 @@ validation_spec:
   contents:
     - validation_spec.js
   output: validation_spec/%(version)s_validation_spec.js
+
+user_lock:
+  contents:
+    - canada_internal_users.js
+  output: canada_internal/%(version)s_canada_internal_users.js
