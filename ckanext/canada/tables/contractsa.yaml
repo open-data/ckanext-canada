@@ -378,7 +378,13 @@ resources:
         IF NEW.year > date_part('year', CURRENT_DATE) THEN
           errors := errors || ARRAY[['year', {year_error}]];
         END IF;
-
+        NEW.contracts_goods_original_value := round(NEW.contracts_goods_original_value, 2);
+        NEW.contracts_goods_amendment_value := round(NEW.contracts_goods_amendment_value, 2);
+        NEW.contracts_service_original_value := round(NEW.contracts_service_original_value, 2);
+        NEW.contracts_service_amendment_value := round(NEW.contracts_service_amendment_value, 2);
+        NEW.contracts_construction_original_value := round(NEW.contracts_construction_original_value, 2);
+        NEW.contracts_construction_amendment_value := round(NEW.contracts_construction_amendment_value, 2);
+        NEW.acquisition_card_transactions_total_value := round(NEW.acquisition_card_transactions_total_value, 2);
         IF errors = '{{}}' THEN
           RETURN NEW;
         END IF;
