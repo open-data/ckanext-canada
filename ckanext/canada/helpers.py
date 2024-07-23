@@ -25,6 +25,8 @@ from ckan.plugins.core import plugin_loaded
 from ckan.logic import NotAuthorized
 import ckan.lib.datapreview as datapreview
 
+from ckanext.security.cache.login import max_login_attempts
+
 try:
     from ckanext.xloader.utils import XLoaderFormats
 except ImportError:
@@ -862,3 +864,18 @@ def ckan_to_cdts_breadcrumbs(breadcrumb_content):
             'href': '' if not anchor else anchor['href'],
         })
     return cdts_breadcrumbs
+
+
+def is_user_locked(user_name):
+    """
+    Returns whether the user is locked out of their account or not.
+    """
+    try:
+        throttle = t.get_action('security_throttle_user_show')({'user': g.user}, {'user': user_name})
+    except (NotAuthorized, KeyError):
+        return None
+
+    if throttle and 'count' in throttle and throttle['count'] >= max_login_attempts():
+        return True
+
+    return False
