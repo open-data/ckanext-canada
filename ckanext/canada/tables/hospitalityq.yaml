@@ -434,6 +434,7 @@ resources:
           errors := errors || required_error(NEW.guest_attendees, 'guest_attendees');
           errors := errors || required_error(NEW.total, 'total');
         END IF;
+        NEW.total := round(NEW.total, 2);
         IF errors = '{{}}' THEN
           RETURN NEW;
         END IF;
