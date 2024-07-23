@@ -41,6 +41,9 @@
       <table style="width:100%">
         <thead>
           <tr>
+            {% if g.userobj and g.userobj.sysadmin %}
+              <th></th>
+            {% endif %}
             <th>{{ _('Username') }}</th>
             <th>{{ _('Name') }}</th>
             <th>{{ _('Role') }}</th>
@@ -52,6 +55,13 @@
             {% for user in page.items %}
               {% if user.name %}
                 <tr>
+                  {% if g.userobj and g.userobj.sysadmin %}
+                    {% if h.is_user_locked(user_name=user['name']) %}
+                      <td class="text-warning"><span title="{{ _('Unlock account') }}" aria-label="{{ _('Unlock account') }}" tabindex="0" role="button" class="fa fa-lock canada-security-unlock" data-user="{{ user['name'] }}" data-error="{{ _('Unable to unlock user account.') }}"></span></td>
+                    {% else %}
+                      <td class="text-muted"><span class="fa fa-unlock-alt"></span></td>
+                    {% endif %}
+                  {% endif %}
                   <td>
                     <a href="{{ h.url_for('user.read', id=user.name) }}">
                       {{ user['name'] }}
@@ -103,6 +113,7 @@
     {% snippet 'snippets/cdts/footer_scripts.html' %}
     {% asset 'canada_public/csrf' %}
     {% asset 'canada_public/analytics' %}
+    {% asset 'canada_internal/user_lock' %}
     {% block google_analytics_footer %}{%- endblock -%}
   {% endif %}
   {{ super() }}

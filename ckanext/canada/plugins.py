@@ -98,6 +98,7 @@ class CanadaThemePlugin(p.SingletonPlugin):
             'get_user_email',
             'get_loader_status_badge',
             'registry_network_access',
+            'is_user_locked',
             # Portal
             'user_organizations',
             'openness_score',
