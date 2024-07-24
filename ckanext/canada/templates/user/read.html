@@ -9,9 +9,9 @@
   {% if g.is_registry %}
     {% if g.userobj and g.userobj.sysadmin %}
       {% if h.is_user_locked(user_name=user['name']) %}
-        <span class="text-warning"><span title="{{ _('Unlock account') }}" aria-label="{{ _('Unlock account') }}" tabindex="0" role="button" class="fa fa-lock canada-security-unlock" data-user="{{ user['name'] }}" data-error="{{ _('Unable to unlock user account.') }}"></span></span>
+        &nbsp;<span class="text-warning"><span title="{{ _('Unlock account') }}" aria-label="{{ _('Unlock account') }}" tabindex="0" role="button" class="fa fa-lock canada-security-unlock" data-user="{{ user['name'] }}" data-error="{{ _('Unable to unlock user account.') }}"></span></span>
       {% else %}
-        <span class="text-muted"><span class="fa fa-unlock-alt"></span></span>
+        &nbsp;<span class="text-muted"><span class="fa fa-unlock-alt"></span></span>
       {% endif %}
     {% endif %}
   {% endif %}

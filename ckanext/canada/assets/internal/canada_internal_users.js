@@ -14,8 +14,8 @@ window.addEventListener('load', function(){
               if( _data.responseJSON.result.count == 0 ){
                 $(_element).off('click.unlockAccount');
                 $(_element).off('keyup.unlockAccount');
-                $(_element).parent().removeClass('text-warning').addClass('text-muted');
-                $(_element).parent().html('<span class="fa fa-unlock-alt"></span>');
+                $(_element).parent().removeClass('text-warning').addClass('text-success');
+                $(_element).parent().html('<span class="fa fa-unlock">&nbsp;</span>');
               }
             }else{  // validation error
               alert(_error);
