@@ -1,0 +1,1 @@
+The Makefile no longer falls back to `/tmp` for the temporary directory. It will always use the `PD_TMP_DIRECTORY` or `TMPDIR` environment variables. You can now supply `tmpdir=/path/to/tmp/directory`. The Makefile will fail if no temporary directory is found.
