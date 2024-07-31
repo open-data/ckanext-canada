@@ -1927,6 +1927,9 @@ resources:
         intellectual_property_choices text[] := {intellectual_property};
       BEGIN
         errors := errors || required_error(NEW.reference_number, 'reference_number');
+        IF NEW.reference_number LIKE '%,%' THEN
+          errors := errors || ARRAY[['reference_number', {reference_number_error}]];
+        END IF;
         NEW.reference_number := trim(both E'\t\n\x0b\x0c\r \xc2\xa0' from NEW.reference_number);
 
         errors := errors || required_error(NEW.contract_date, 'contract_date');
@@ -2174,6 +2177,7 @@ resources:
   - update_record_modified_created_trigger
 
   trigger_strings:  # yaml | not supported
+    reference_number_error: Comma is not allowed in Reference Number field
     vendor_postal_code_error: This field must contain the first three digits of a postal code in A1A format or the value "NA"
     buyer_name_error: This field must be populated with an NA if an amendment is disclosed under Instrument Type
     economic_object_code_limit_error: This field is limited to only 3 or 4 digits.
