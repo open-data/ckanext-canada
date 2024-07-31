@@ -129,7 +129,7 @@
               form.append($('<input>').attr({
                 type: 'hidden',
                 value: dt.cells( index, pk_cols ).data().toArray(),
-                name: 'bulk-delete'
+                name: 'select-delete'
               }));
             });
             form.appendTo('body').submit();
