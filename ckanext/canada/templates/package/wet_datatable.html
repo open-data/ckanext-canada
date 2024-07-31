@@ -103,7 +103,7 @@
         {extend:"selected",text:"{{_('Delete records')}}",action: function ( e, dt, button, config ){
             // closing form tag needed for py webtest lib
             var form = $('<form></form>',{
-              action : "{{ h.url_for('recombinant.delete_selected_records', resource_id=resource_id) }}",
+              action : "{{ h.url_for('canada.delete_selected_records', resource_id=resource_id) }}",
               method : "post"
             });
             form.append($('<input>').attr({
