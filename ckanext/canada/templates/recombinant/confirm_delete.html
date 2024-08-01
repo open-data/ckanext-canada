@@ -1,0 +1,20 @@
+{% ckan_extends %}
+
+{% block form %}
+<p>{{ ungettext(
+  'Are you sure you want to delete {num} record? This action cannot be undone.',
+  'Are you sure you want to delete {num} records? This action cannot be undone.',
+  num).format(num=num) }}</p>
+<p class="form-actions">
+  {% if select_delete %}
+  <form id="recombinant-confirm-delete-form" action="{{ h.url_for('canada.delete_selected_records', resource_id=resource.id) }}" method="post">
+    <input type="hidden" name="select-delete" value="{{ select_delete }}" />
+  {% else %}
+  <form id="recombinant-confirm-delete-form" action="{{ h.url_for('recombinant.delete_records',id=dataset.id, resource_id=resource.id) }}" method="post">
+    <input type="hidden" name="bulk-delete" value="{{ bulk_delete }}" />
+  {% endif %}
+    <button class="btn" type="submit" name="cancel" >{{ _('Cancel') }}</button>
+    <button class="btn btn-primary" type="submit" name="confirm" >{{ _('Confirm Delete') }}</button>
+  </form>
+</p>
+{% endblock %}
