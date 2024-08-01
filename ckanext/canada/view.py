@@ -584,7 +584,7 @@ def type_redirect(resource_name, dataset_id=None):
 def delete_selected_records(resource_id):
     lc = LocalCKAN(username=g.user)
 
-    if request.method != 'POST' or not h.check_access('datastore_records_delete',
+    if not h.check_access('datastore_records_delete',
                           {'resource_id': resource_id, 'filters': {}}):
         abort(403, _('User {0} not authorized to update resource {1}'
                      .format(str(g.user), resource_id)))
@@ -595,7 +595,7 @@ def delete_selected_records(resource_id):
         org = lc.action.organization_show(id=pkg['owner_org'])
         dataset = lc.action.recombinant_show(
             dataset_type=pkg['type'], owner_org=org['name'])
-    except NotFound:
+    except (NotFound, NotAuthorized):
         abort(404, _('Not found'))
 
     records = request.form.getlist('select-delete')
