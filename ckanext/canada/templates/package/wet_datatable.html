@@ -118,7 +118,7 @@
             }));
             form.append($('<input>').attr({
               type: 'hidden',
-              value: {{primary_keys}},
+              value: {{primary_keys | tojson}},
               name: 'key_indices'
             }));
             var pk_cols = {{primary_keys}}.map(function(value){
