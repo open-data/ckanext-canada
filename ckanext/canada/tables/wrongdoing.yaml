@@ -222,6 +222,9 @@ resources:
         crval RECORD;
       BEGIN
         errors := errors || required_error(NEW.ref_number, 'ref_number');
+        IF NEW.ref_number LIKE '%,%' THEN
+          errors := errors || ARRAY[['ref_number', {ref_number_error}]];
+        END IF;
         errors := errors || required_error(NEW.file_id_number, 'file_id_number');
         errors := errors || required_error(NEW.case_description_en, 'case_description_en');
         errors := errors || required_error(NEW.case_description_fr, 'case_description_fr');
@@ -239,6 +242,9 @@ resources:
 
 
   - update_record_modified_created_trigger
+
+  trigger_strings:  # yaml | not supported
+    ref_number_error: Comma is not allowed in Reference Number field
 
   examples:
     record:
