@@ -219,6 +219,9 @@ resources:
       DECLARE
         errors text[][] := '{{}}';
       BEGIN
+        IF NEW.request_number LIKE '%,%' THEN
+          errors := errors || ARRAY[['request_number', {request_number_error}]];
+        END IF;
         errors := errors || required_error(NEW.year, 'year');
         IF NEW.year < 2011 OR NEW.year > date_part('year', CURRENT_DATE) THEN
           errors := errors || ARRAY[['year', {year_error}]];
@@ -249,6 +252,7 @@ resources:
     year_error: Please enter a valid year
     month_error: Please enter a month number from 1-12
     pages_error: This value must not be negative
+    request_number_error: Comma is not allowed in Request Number field
 
   examples:
     record:
