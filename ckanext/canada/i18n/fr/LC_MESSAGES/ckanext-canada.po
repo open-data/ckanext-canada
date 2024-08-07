@@ -768,12 +768,10 @@ msgid "Recombinant resource_name not found"
 msgstr "Le recombinant resource_name n’a pas été trouvé"
 
 #: ckanext/canada/view.py:590
-#, fuzzy, python-format
 msgid "User {0} not authorized to update resource {1}"
 msgstr "Vous n'êtes pas autorisé à supprimer la ressource %s"
 
 #: ckanext/canada/view.py:640
-#, fuzzy
 msgid "{num} deleted."
 msgstr "Aperçu supprimé."
 
@@ -2967,7 +2965,6 @@ msgid "Edit in Excel"
 msgstr "Modifier dans Excel"
 
 #: ckanext/canada/templates/package/wet_datatable.html:103
-#, fuzzy
 msgid "Delete records"
 msgstr "Mettre à jour les données"
 
@@ -3133,7 +3130,6 @@ msgid "Description (French)"
 msgstr "Description (français)"
 
 #: ckanext/canada/templates/recombinant/confirm_delete.html:4
-#, fuzzy
 msgid ""
 "Are you sure you want to delete {num} record? This action cannot be "
 "undone."
@@ -3865,7 +3861,6 @@ msgid "Example: 000 000 0000"
 msgstr "Exemplar : 000 000 0000"
 
 #: ckanext/canada/templates/user/new_user_form.html:22
-#, fuzzy
 msgid ""
 "Password must be 12 characters or longer, and must consist of at least "
 "three of the following character sets: uppercase characters, lowercase "
