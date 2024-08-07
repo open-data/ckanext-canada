@@ -59,6 +59,7 @@ from ckan.logic import (
 from ckanext.recombinant.datatypes import canonicalize
 from ckanext.recombinant.tables import get_chromo
 from ckanext.recombinant.errors import RecombinantException
+from ckanext.recombinant.helpers import recombinant_primary_key_fields
 
 from ckanapi import LocalCKAN
 
@@ -577,6 +578,72 @@ def type_redirect(resource_name, dataset_id=None):
     return h.redirect_to(h.url_for('recombinant.preview_table',
                                    resource_name=resource_name,
                                    owner_org=owner_org_name))
+
+
+@canada_views.route('/recombinant/delete-selected-records/<resource_id>', methods=['GET', 'POST'])
+def delete_selected_records(resource_id):
+    lc = LocalCKAN(username=g.user)
+
+    if not h.check_access('datastore_records_delete',
+                          {'resource_id': resource_id, 'filters': {}}):
+        abort(403, _('User {0} not authorized to update resource {1}'
+                     .format(str(g.user), resource_id)))
+
+    try:
+        res = lc.action.resource_show(id=resource_id)
+        pkg = lc.action.package_show(id=res['package_id'])
+        org = lc.action.organization_show(id=pkg['owner_org'])
+        dataset = lc.action.recombinant_show(
+            dataset_type=pkg['type'], owner_org=org['name'])
+    except (NotFound, NotAuthorized):
+        abort(404, _('Not found'))
+
+    records = request.form.getlist('select-delete')
+
+    if 'cancel' in request.form:
+        return render('recombinant/resource_edit.html',
+                      extra_vars={
+                          'delete_errors': [],
+                          'dataset': dataset,
+                          'dataset_type': dataset['dataset_type'],
+                          'resource': res,
+                          'organization': org,
+                          'action': 'edit'})
+    if request.method != 'POST' or 'confirm' not in request.form:
+        return render('recombinant/confirm_delete.html',
+                      extra_vars={
+                          'dataset': dataset,
+                          'resource': res,
+                          'num': len(records),
+                          'select_delete': ';'.join(records) })
+
+    records = ''.join(records).split(';')
+
+    pk_fields = recombinant_primary_key_fields(res['name'])
+    pk = []
+    for f in pk_fields:
+        pk.append(f['datastore_id'])
+
+    records_deleted = 0
+    for r in records:
+        filter = dict(zip(pk, r.split(',')))
+        if filter:
+            try:
+                lc.action.datastore_records_delete(
+                    resource_id=resource_id,
+                    filters=filter
+                )
+                records_deleted += 1
+            except NotFound:
+                h.flash_error(_('Not found') + ' ' + str(filter))
+
+    h.flash_success(_("{num} deleted.").format(num=records_deleted))
+
+    return h.redirect_to(
+        'recombinant.preview_table',
+        resource_name=res['name'],
+        owner_org=org['name'],
+    )
 
 
 def _clean_check_type_errors(post_data, fields, pk_fields, choice_fields):
