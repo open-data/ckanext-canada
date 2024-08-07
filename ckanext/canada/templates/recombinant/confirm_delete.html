@@ -1,20 +1,52 @@
 {% ckan_extends %}
 
 {% block form %}
-<p>{{ ungettext(
-  'Are you sure you want to delete {num} record? This action cannot be undone.',
-  'Are you sure you want to delete {num} records? This action cannot be undone.',
-  num).format(num=num) }}</p>
-<p class="form-actions">
   {% if select_delete %}
-  <form id="recombinant-confirm-delete-form" action="{{ h.url_for('canada.delete_selected_records', resource_id=resource.id) }}" method="post">
-    <input type="hidden" name="select-delete" value="{{ select_delete }}" />
-  {% else %}
-  <form id="recombinant-confirm-delete-form" action="{{ h.url_for('recombinant.delete_records',id=dataset.id, resource_id=resource.id) }}" method="post">
-    <input type="hidden" name="bulk-delete" value="{{ bulk_delete }}" />
+    {% set uri = h.url_for('canada.delete_selected_records', resource_id=resource.id) %}
+    {% set field = 'select-delete' %}
+    {% set value = select_delete %}
+    {% set to_delete = value.split(';') %}
+  {% elif bulk_delete %}
+    {% set uri = h.url_for('recombinant.delete_records',id=dataset.id, resource_id=resource.id) %}
+    {% set field = 'bulk_delete' %}
+    {% set value = bulk_delete %}
+    {% set to_delete = value.split('\n') %}
   {% endif %}
-    <button class="btn" type="submit" name="cancel" >{{ _('Cancel') }}</button>
-    <button class="btn btn-primary" type="submit" name="confirm" >{{ _('Confirm Delete') }}</button>
-  </form>
-</p>
+  {% set primary_keys = h.recombinant_primary_key_fields(resource.name) %}
+  <p>{{ ungettext('Are you sure you want to delete {num} record? This action cannot be undone.',
+                  'Are you sure you want to delete {num} records? This action cannot be undone.',num).format(num=num) }}</p>
+  <div style="margin: 15px 0 15px 0;">
+    <table class="table table-sm table-responsive">
+      <thead>
+        <th style="width: 35px; border-style: hidden;"></th>
+        {% for c in primary_keys %}<th scope="col">{{ c['label'][h.lang()] }}</th>{% endfor %}
+        <th style="width: 35px; border-style: hidden;"></th>
+      </thead>
+      <tbody>
+        {% for r in to_delete %}
+          <tr>
+            <td style="width: 35px; border-style: hidden;" class="text-danger"><i class="fa fa-minus-circle" aria-hidden="true"></i></td>
+            {% for _r in r.split(',') %}
+              <td class="bg-danger text-danger">{{ _r }}</td>
+            {% endfor %}
+            <td style="width: 35px; border-style: hidden;"></td>
+          </tr>
+        {% endfor %}
+        {% if to_delete|count > 12 %}
+          <tr>
+            <td colspan="{{ primary_keys|count }}">
+              ...
+            </td>
+          </tr>
+        {% endif %}
+      </tbody>
+    </table>
+  </div>
+  <p class="form-actions">
+    <form id="recombinant-confirm-delete-form" action="{{ uri }}" method="post">
+      <input type="hidden" name="{{ field }}" value="{{ value }}" />
+      <input class="btn" type="submit" name="cancel" value="{{ _('Cancel') }}"/>
+      <input class="btn btn-primary" type="submit" name="confirm" value="{{ _('Confirm Delete') }}"/>
+    </form>
+  </p>
 {% endblock %}
