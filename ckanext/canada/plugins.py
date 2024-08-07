@@ -76,6 +76,7 @@ class CanadaThemePlugin(p.SingletonPlugin):
         p.toolkit.add_resource('assets/internal', 'canada_internal')
         p.toolkit.add_resource('assets/datatables', 'canada_datatables')
         p.toolkit.add_resource('assets/public', 'canada_public')
+        p.toolkit.add_resource('assets/invitation-manager', 'invitation_manager')
         set_app_global('is_registry', plugin_loaded('canada_internal'))
 
         config['ckan.favicon'] = helpers.cdts_asset('/assets/favicon.ico')
