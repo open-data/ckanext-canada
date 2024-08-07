@@ -822,6 +822,8 @@ resources:
           errors := errors || required_error(NEW.description_en, 'description_en');
           errors := errors || required_error(NEW.description_fr, 'description_fr');
         END IF;
+        NEW.agreement_value := round(NEW.agreement_value, 2);
+        NEW.foreign_currency_value := round(NEW.foreign_currency_value, 2);
         IF errors = '{{}}' THEN
           RETURN NEW;
         END IF;

@@ -193,3 +193,82 @@ class TestCanadaTriggers(CanadaTestBase):
         # sysadmin upserts should  NOT get a new record_modified, when it is not supplied
         assert record['record_modified'] != initial_modified_time
         assert record['record_modified'] == new_modified_time
+
+
+    def test_money_type_rounding(self):
+        """
+        Money datastore fields should be rounded to 2 decimal places.
+
+        Nullish values should be nullified.
+        """
+
+        # contractsa has a lot of money fields, so use it as a sample
+        resource_id, nil_resource_id = self._setup_pd(type='contractsa')
+
+        chromo = get_chromo('contractsa')
+
+        result = self.sys_action.datastore_search_sql(
+            sql="SELECT %s from \"%s\"" % (', '.join(f['datastore_id'] for f in chromo['fields']), resource_id))
+        record_data_dict = result['records'][0]
+
+        assert record_data_dict['contracts_goods_original_value'] == '50000.00'
+        assert record_data_dict['contracts_goods_amendment_value'] == '500.00'
+        assert record_data_dict['contracts_service_original_value'] == '50000.00'
+        assert record_data_dict['contracts_service_amendment_value'] == '500.00'
+        assert record_data_dict['contracts_construction_original_value'] == '50000.00'
+        assert record_data_dict['contracts_construction_amendment_value'] == '500.00'
+        assert record_data_dict['acquisition_card_transactions_total_value'] == '50000.00'
+
+        record_data_dict['contracts_goods_original_value'] = '50000.7892983932'
+        record_data_dict['contracts_goods_amendment_value'] = '500.0'
+        record_data_dict['contracts_service_original_value'] = '50000'
+        record_data_dict['contracts_service_amendment_value'] = '500.001111'
+        record_data_dict['contracts_construction_original_value'] = '50000.0000000'
+        record_data_dict['contracts_construction_amendment_value'] = '500.00999999'
+        record_data_dict['acquisition_card_transactions_total_value'] = '50000.'
+
+        self.sys_action.datastore_upsert(
+            resource_id=resource_id,
+            records=[record_data_dict])
+
+        result = self.sys_action.datastore_search_sql(
+            sql="SELECT %s from \"%s\"" % (', '.join(f['datastore_id'] for f in chromo['fields']), resource_id))
+        record_data_dict = result['records'][0]
+
+        assert record_data_dict['contracts_goods_original_value'] == '50000.79'
+        assert record_data_dict['contracts_goods_amendment_value'] == '500.00'
+        assert record_data_dict['contracts_service_original_value'] == '50000.00'
+        assert record_data_dict['contracts_service_amendment_value'] == '500.00'
+        assert record_data_dict['contracts_construction_original_value'] == '50000.00'
+        assert record_data_dict['contracts_construction_amendment_value'] == '500.01'
+        assert record_data_dict['acquisition_card_transactions_total_value'] == '50000.00'
+
+        # contracts has conditional money fields, so test these for nullish values
+        resource_id, nil_resource_id = self._setup_pd(type='contracts', nil_type='contracts-nil')
+
+        chromo = get_chromo('contracts')
+
+        result = self.sys_action.datastore_search_sql(
+            sql="SELECT %s from \"%s\"" % (', '.join(f['datastore_id'] for f in chromo['fields']), resource_id))
+        record_data_dict = result['records'][0]
+
+        assert record_data_dict['contract_value'] == '10000.00'
+        assert record_data_dict['original_value'] == '10000.00'
+        assert record_data_dict['amendment_value'] == '100000.00'
+
+        record_data_dict['contract_date'] = '2018-12-25'  # old date for conditional amendment_value
+        record_data_dict['contract_value'] = '10000.00999'
+        record_data_dict['original_value'] = None
+        record_data_dict['amendment_value'] = ''
+
+        self.sys_action.datastore_upsert(
+            resource_id=resource_id,
+            records=[record_data_dict])
+
+        result = self.sys_action.datastore_search_sql(
+            sql="SELECT %s from \"%s\"" % (', '.join(f['datastore_id'] for f in chromo['fields']), resource_id))
+        record_data_dict = result['records'][0]
+
+        assert record_data_dict['contract_value'] == '10000.01'
+        assert not record_data_dict['original_value']
+        assert not record_data_dict['amendment_value']
