@@ -7,7 +7,10 @@ import sys
 import subprocess
 import click
 import traceback
-from io import StringIO
+from io import StringIO, BytesIO
+import gzip
+import requests
+from collections import defaultdict
 
 from contextlib import contextmanager
 from urllib.request import URLError
@@ -37,6 +40,8 @@ from ckanapi.cli.utils import completion_stats
 import ckanext.datastore.backend.postgres as datastore
 
 from ckanext.canada import triggers
+
+BOM = "\N{bom}"
 
 PAST_RE = (
     r'^'
@@ -1820,3 +1825,121 @@ def resolve_duplicate_emails(quiet=False, verbose=False):
         click.echo("\nDeactivated {num} duplicate users".format(num=len(users_to_delete)))
     if not duplicates_found:
         _success_message('No duplicate emails found')
+
+
+@canada.command(short_help="Generates the report for dataset Opennes Ratings.")
+@click.option('-v', '--verbose', is_flag=True, type=click.BOOL, help='Increase verbosity.')
+@click.option('-d', '--details', is_flag=True, type=click.BOOL, help='Include more dataset details.')
+@click.option('-D', '--dump', type=click.File('w'), help='Dump results to a CSV file.')
+@click.option('-p', '--package-id', type=click.STRING, default='c4c5c7f1-bfa6-4ff6-b4a0-c164cb2060f7',
+              help='Dataset ID, defaults to c4c5c7f1-bfa6-4ff6-b4a0-c164cb2060f7')
+def openness_report(verbose=False, details=False, dump=False, package_id='c4c5c7f1-bfa6-4ff6-b4a0-c164cb2060f7'):
+    lc = LocalCKAN()
+
+    try:
+        package = lc.action.package_show(id=package_id)
+    except NotFound:
+        click.echo('Could not find dataset: %s' % package_id, err=True)
+        return
+
+    uri = None
+    for res in package['resources']:
+        if res['url'][-3:] == '.gz':
+            uri = res['url']
+            break
+
+    if not uri:
+        click.echo('Could not find GZIP resource', err=True)
+        return
+
+    if verbose:
+        click.echo("Downloading records from %s" % uri)
+
+    r = requests.get(uri, stream=True)
+    zf = BytesIO(r.content)
+
+    def iter_records():
+        _records = []
+        try:
+            with gzip.GzipFile(fileobj=zf, mode='rb') as fd:
+                for line in fd:
+                    _records.append(json.loads(line.decode('utf-8')))
+                    if len(_records) >= 50:
+                        yield (_records)
+                        _records = []
+            if len(_records) >0:
+                yield (_records)
+        except GeneratorExit:
+            pass
+        except:
+            if verbose:
+                traceback.print_exc()
+            click.echo('Error reading downloaded file', err=True)
+
+    if details:
+        reports = defaultdict(list)
+        for records in iter_records():
+            for record in records:
+                id = record['id']
+                score = toolkit.h.openness_score(record)
+                report = reports[record['organization']['title']]
+                title = record["title_translated"]
+                title = title.get('en', title.get('en-t-fr', '')) + ' | ' + title.get('fr', title.get('fr-t-en', ''))
+                url = ''.join(['https://open.canada.ca/data/en/dataset/', id, ' | ',
+                      'https://ouvert.canada.ca/data/fr/dataset/', id])
+                report.append([title, url, score])
+
+        if verbose:
+            click.echo("Dumping detailed openness ratings to %s" % getattr(dump, 'name', 'stdout'))
+
+        orgs = list(reports)
+        orgs.sort()
+        if dump:
+            outf = dump
+        else:
+            outf = sys.stdout
+        outf.write(BOM)
+        out = csv.writer(outf)
+        #Header
+        out.writerow(["Department Name Englist | Nom du ministère en français",
+                      "Title English | Titre en français",
+                      "URL",
+                      "Openness Rating | Cote d'ouverture",])
+        for k in orgs:
+            rlist = reports[k]
+            for r in rlist:
+                line=[k, r[0], r[1], r[2]]
+                out.writerow(line)
+        if dump:
+            outf.close()
+        if verbose:
+            click.echo("Done!")
+        return
+
+    reports = defaultdict(lambda: defaultdict(int))
+    for records in iter_records():
+        for record in records:
+            score = toolkit.h.openness_score(record)
+            report = reports[record['organization']['title']]
+            report[score] += 1
+
+    if verbose:
+        click.echo("Dumping openness ratings to %s" % getattr(dump, 'name', 'stdout'))
+    if dump:
+        outf = dump
+    else:
+        outf = sys.stdout
+    outf.write(BOM)
+    out = csv.writer(outf)
+    #Header
+    out.writerow(["Department Name English / Nom du ministère en anglais",
+                    "Department Name French / Nom du ministère en français",
+                    "Openness report (score:count) / Rapport d'ouverture (score: compter)",])
+    for k,v in reports.items():
+        names = list(map(lambda x: x.strip(), k.split('|')))
+        line=[names[0], names[1], dict(v)]
+        out.writerow(line)
+    if dump:
+        outf.close()
+    if verbose:
+        click.echo("Done!")
