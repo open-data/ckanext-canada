@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-08-07 10:47-0400\n"
+"POT-Creation-Date: 2024-08-08 14:35+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: fr\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.7.0\n"
 
-#: ckanext/canada/assets/internal/validation_spec.js:9
+#: ckanext/canada/assets/internal/validation_spec.js:8
 #: ckanext/canada/checks.py:25
 msgid ""
 "Column name {value} in column {column_number} is not valid for a "
@@ -28,7 +28,7 @@ msgstr ""
 "Le nom de la colonne {value} dans la colonne {column_number} est invalide"
 " comme en-tête dans DataStore"
 
-#: ckanext/canada/assets/internal/validation_spec.js:17
+#: ckanext/canada/assets/internal/validation_spec.js:16
 #: ckanext/canada/checks.py:30
 msgid ""
 "Column name {value} in column {column_number} is too long for a DataStore"
@@ -866,11 +866,11 @@ msgstr "L’utilisateur %r n’est pas autorisé à modifier les membres de %s"
 msgid "User %r not authorized to view members of %s"
 msgstr "L’utilisateur %r n’est pas autorisé à voir les membres de %s"
 
-#: ckanext/canada/assets/internal/validation_spec.js:8
+#: ckanext/canada/assets/internal/validation_spec.js:7
 msgid "Invalid Header for DataStore"
 msgstr "En-tête invalide dans DataStore"
 
-#: ckanext/canada/assets/internal/validation_spec.js:10
+#: ckanext/canada/assets/internal/validation_spec.js:9
 msgid ""
 "Column name is invalid for a DataStore header.\n"
 "\n"
@@ -889,11 +889,11 @@ msgstr ""
 " - Supprimez les guillemets ('\"') du nom de la colonne.\n"
 " - Veillez à ce que le nom de la colonne soit indiqué."
 
-#: ckanext/canada/assets/internal/validation_spec.js:16
+#: ckanext/canada/assets/internal/validation_spec.js:15
 msgid "Header Too Long for DataStore"
 msgstr "L'en-tête est trop long dans DataStore"
 
-#: ckanext/canada/assets/internal/validation_spec.js:18
+#: ckanext/canada/assets/internal/validation_spec.js:17
 msgid ""
 "Column name is too long for a DataStore header.\n"
 "\n"
@@ -6559,3 +6559,4 @@ msgstr "Télécharger vers le DataStore"
 
 #~ msgid "Open ID"
 #~ msgstr "Identifiant ouvert"
+
