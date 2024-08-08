@@ -243,10 +243,29 @@
   </div>
 {% endblock primary_content_inner %}
 
+{% block links %}
+  {{ super() }}
+  {% if not g.is_registry %}
+    <script>
+    window.imConfigPath = "/invitation-manager/";
+    </script>
+  {% endif %}
+{% endblock %}
+
 {% block scripts %}
   {% asset 'canada_public/more_like_this' %}
   {% asset 'canada_public/voting_fix' %}
+  {% if not g.is_registry %}
+    {% asset 'invitation_manager/js' %}
+  {% endif %}
   {{ super() }}
+{% endblock %}
+
+{% block custom_styles %}
+  {{ super() }}
+  {% if not g.is_registry %}
+    {% asset 'invitation_manager/css' %}
+  {% endif %}
 {% endblock %}
 
 {% block package_license %}{% endblock %}

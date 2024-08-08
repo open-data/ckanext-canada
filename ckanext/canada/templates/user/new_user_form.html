@@ -19,8 +19,12 @@
     {% call form.input("phoneno", id="field-phoneno", label=_("Phone Number"), value=data.phoneno, error=errors.phoneno, classes=["control-medium"]) %}
       {{ form.info(_('Example: 000 000 0000')) }}
     {% endcall %}
-    {{ form.input("password1", id="field-password", label=_("Password"), type="password", value=data.password1, error=errors.password1, attrs=valid_dict1, is_required=true, classes=["control-medium"]) }}
-    {{ form.input("password2", id="field-confirm-password", label=_("Confirm"), type="password", value=data.password2, error=errors.password1, attrs=valid_dict1, is_required=true, classes=["control-medium"]) }}
+    {% call form.input("password1", id="field-password", label=_("Password"), value=data.password1, error=errors.password1, type="password", attrs=valid_dict1, is_required=true, classes=["control-medium"]) %}
+      {{ form.info(_('Password must be 12 characters or longer, and must consist of at least three of the following character sets: uppercase characters, lowercase characters, digits, punctuation & special characters')) }}
+    {% endcall %}
+    {% call form.input("password2", id="field-confirm-password", label=_("Confirm Password"), value=data.password2, error=errors.password1, type="password", attrs=valid_dict1, is_required=true, classes=["control-medium"]) %}
+      {{ form.info(_('The password must match')) }}
+    {% endcall %}
     <div class="terms-and-conditions">
       {% trans %}
         <h2>Terms and Conditions for the Open Government Registry</h2>

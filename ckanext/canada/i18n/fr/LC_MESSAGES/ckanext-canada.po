@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-07-17 19:26+0000\n"
+"POT-Creation-Date: 2024-08-08 14:51+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: fr\n"
@@ -154,45 +154,45 @@ msgstr ""
 msgid "Invalid business number"
 msgstr "Numéro d’entreprise non valide"
 
-#: ckanext/canada/helpers.py:286 ckanext/canada/helpers.py:287
+#: ckanext/canada/helpers.py:288 ckanext/canada/helpers.py:289
 msgid "Treasury Board of Canada Secretariat"
 msgstr "Secrétariat du Conseil du Trésor du Canada"
 
-#: ckanext/canada/helpers.py:575 ckanext/canada/strings.py:13
+#: ckanext/canada/helpers.py:577 ckanext/canada/strings.py:13
 #: ckanext/canada/view.py:1058
 msgid "Members not found"
 msgstr "Membres non trouvés"
 
-#: ckanext/canada/helpers.py:698
+#: ckanext/canada/helpers.py:700
 msgid "Data awaiting load to DataStore"
 msgstr "Le versement des données dans DataStore est en attente"
 
-#: ckanext/canada/helpers.py:699
+#: ckanext/canada/helpers.py:701
 msgid "Loading data into DataStore"
 msgstr "Le versement des données dans DataStore est en cours"
 
-#: ckanext/canada/helpers.py:700
+#: ckanext/canada/helpers.py:702
 msgid "Data loaded into DataStore"
 msgstr "Les données ont été versées dans DataStore"
 
-#: ckanext/canada/helpers.py:701
+#: ckanext/canada/helpers.py:703
 msgid "Failed to load data into DataStore"
 msgstr "Les données n'ont pas été versées dans DataStore"
 
-#: ckanext/canada/helpers.py:702
+#: ckanext/canada/helpers.py:704
 msgid "Data available in DataStore"
 msgstr "Les données sont disponibles dans DataStore"
 
-#: ckanext/canada/helpers.py:703
+#: ckanext/canada/helpers.py:705
 msgid "Resource not active in DataStore"
 msgstr "La ressource est inactive dans DataStore"
 
-#: ckanext/canada/helpers.py:704
+#: ckanext/canada/helpers.py:706
 msgid "DataStore status unknown"
 msgstr "L'état de DataStore est inconnu"
 
 # Search facets
-#: ckanext/canada/helpers.py:771
+#: ckanext/canada/helpers.py:773
 #: ckanext/canada/templates/home/quick_links.html:65
 #: ckanext/canada/templates/scheming/package/snippets/package_form.html:28
 #: ckanext/canada/templates/snippets/cdts/header.html:31
@@ -202,7 +202,7 @@ msgstr "L'état de DataStore est inconnu"
 msgid "Open Data"
 msgstr "Données ouvertes"
 
-#: ckanext/canada/helpers.py:772
+#: ckanext/canada/helpers.py:774
 #: ckanext/canada/templates/home/quick_links.html:79
 #: ckanext/canada/templates/scheming/package/snippets/package_form.html:30
 #: ckanext/canada/templates/snippets/cdts/header.html:54
@@ -212,23 +212,23 @@ msgstr "Données ouvertes"
 msgid "Open Information"
 msgstr "Information ouverte"
 
-#: ckanext/canada/helpers.py:781
+#: ckanext/canada/helpers.py:783
 #: ckanext/canada/templates/snippets/dataset_facets.html:27
 msgid "Request sent to data owner - awaiting response"
 msgstr "Demande envoyée au propriétaire des données, en attente de réponse"
 
-#: ckanext/canada/helpers.py:785
+#: ckanext/canada/helpers.py:787
 #: ckanext/canada/templates/snippets/publish_facet.html:44
 msgid "Pending"
 msgstr "En attente"
 
-#: ckanext/canada/helpers.py:786 ckanext/canada/templates/package/read.html:14
+#: ckanext/canada/helpers.py:788 ckanext/canada/templates/package/read.html:14
 #: ckanext/canada/templates/snippets/package_item.html:33
 #: ckanext/canada/templates/snippets/publish_facet.html:44
 msgid "Draft"
 msgstr "Ébauche"
 
-#: ckanext/canada/helpers.py:795
+#: ckanext/canada/helpers.py:797
 #: ckanext/canada/templates/home/quick_links.html:133
 #: ckanext/canada/templates/snippets/cdts/header.html:57
 #: ckanext/canada/templates/snippets/dataset_facets.html:33
@@ -237,21 +237,21 @@ msgstr "Ébauche"
 msgid "Proactive Publication"
 msgstr "Publication proactive"
 
-#: ckanext/canada/helpers.py:817
+#: ckanext/canada/helpers.py:819
 #: ckanext/canada/templates/snippets/publish_facet.html:25
 msgid "Published"
 msgstr "Publié"
 
-#: ckanext/canada/helpers.py:819
+#: ckanext/canada/helpers.py:821
 #: ckanext/canada/templates/snippets/publish_facet.html:34
 msgid "Scheduled"
 msgstr "Prévu"
 
-#: ckanext/canada/helpers.py:852
+#: ckanext/canada/helpers.py:854
 msgid "Registry Home"
 msgstr "Accueil du registre"
 
-#: ckanext/canada/helpers.py:852 ckanext/canada/strings.py:85
+#: ckanext/canada/helpers.py:854 ckanext/canada/strings.py:85
 msgid "Open Government Portal"
 msgstr "Portail du gouvernement ouvert"
 
@@ -265,64 +265,64 @@ msgstr ""
 msgid "Unknown Job"
 msgstr "Tâche inconnue "
 
-#: ckanext/canada/plugins.py:731
+#: ckanext/canada/plugins.py:733
 #: ckanext/canada/templates/scheming/package/snippets/package_form.html:25
 msgid "Portal Type"
 msgstr "Type de portail"
 
-#: ckanext/canada/plugins.py:732
+#: ckanext/canada/plugins.py:734
 #: ckanext/canada/templates/package/deleted.html:14
 #: ckanext/canada/templates/user/new_user_form.html:18
 msgid "Organization"
 msgstr "Organisation"
 
-#: ckanext/canada/plugins.py:733
+#: ckanext/canada/plugins.py:735
 msgid "Collection Type"
 msgstr "Type de collection"
 
-#: ckanext/canada/plugins.py:734 ckanext/canada/plugins.py:735
+#: ckanext/canada/plugins.py:736 ckanext/canada/plugins.py:737
 msgid "Keywords"
 msgstr "Mots clés"
 
-#: ckanext/canada/plugins.py:736
+#: ckanext/canada/plugins.py:738
 msgid "Subject"
 msgstr "Sujet"
 
-#: ckanext/canada/plugins.py:737
+#: ckanext/canada/plugins.py:739
 #: ckanext/canada/templates/package/snippets/resource_info.html:13
 #: ckanext/canada/templates/tabledesigner/view_snippets/cra_business_number.html:1
 msgid "Format"
 msgstr "Format"
 
-#: ckanext/canada/plugins.py:738
+#: ckanext/canada/plugins.py:740
 msgid "Resource Type"
 msgstr "Type de ressource"
 
-#: ckanext/canada/plugins.py:739
+#: ckanext/canada/plugins.py:741
 msgid "Maintenance and Update Frequency"
 msgstr "Fréquence d’entretien et de mise à jour"
 
-#: ckanext/canada/plugins.py:740
+#: ckanext/canada/plugins.py:742
 msgid "Record Status"
 msgstr "État du dossier"
 
-#: ckanext/canada/plugins.py:741
+#: ckanext/canada/plugins.py:743
 msgid "IMSO Approval"
 msgstr "Approbation du CSGI"
 
-#: ckanext/canada/plugins.py:742
+#: ckanext/canada/plugins.py:744
 msgid "Jurisdiction"
 msgstr "Juridiction"
 
-#: ckanext/canada/plugins.py:743
+#: ckanext/canada/plugins.py:745
 msgid "Suggestion Status"
 msgstr "État de la suggestion"
 
-#: ckanext/canada/plugins.py:929
+#: ckanext/canada/plugins.py:931
 msgid "Previous"
 msgstr "Précédent"
 
-#: ckanext/canada/plugins.py:929
+#: ckanext/canada/plugins.py:931
 msgid "Next"
 msgstr "Suivant"
 
@@ -939,6 +939,25 @@ msgstr ""
 "Accès, téléversement et modifications des rapports sur la utilisation des"
 " avions d'affaires"
 
+#. SQL Trigger String for PD Type: adminaircraft
+#. SQL Trigger String for PD Type: contracts
+#. SQL Trigger String for PD Type: grants
+#. SQL Trigger String for PD Type: hospitalityq
+#. SQL Trigger String for PD Type: qpnotes
+#. SQL Trigger String for PD Type: reclassification
+#. SQL Trigger String for PD Type: travelq
+#. SQL Trigger String for PD Type: wrongdoing
+#: ckanext/canada/tables/adminaircraft.yaml:316
+#: ckanext/canada/tables/contracts.yaml:2184
+#: ckanext/canada/tables/grants.yaml:836
+#: ckanext/canada/tables/hospitalityq.yaml:449
+#: ckanext/canada/tables/qpnotes.yaml:332
+#: ckanext/canada/tables/reclassification.yaml:271
+#: ckanext/canada/tables/travelq.yaml:438
+#: ckanext/canada/tables/wrongdoing.yaml:247
+msgid "Comma is not allowed in Reference Number field"
+msgstr "La virgule n’est pas autorisée dans le champ du Numéro de Référence"
+
 #. Title for PD Type: ati
 #. Resource Title for PD Type: ati
 #: ckanext/canada/tables/ati.yaml:4 ckanext/canada/tables/ati.yaml:15
@@ -957,24 +976,29 @@ msgstr ""
 "n’est à signaler pour votre organisation"
 
 #. SQL Trigger String for PD Type: ati
-#: ckanext/canada/tables/ati.yaml:249 ckanext/canada/tables/ati.yaml:381
+#: ckanext/canada/tables/ati.yaml:252 ckanext/canada/tables/ati.yaml:385
 msgid "Please enter a valid year"
 msgstr "Veuillez entrer une année valide"
 
 #. SQL Trigger String for PD Type: ati
 #. SQL Trigger String for PD Type: briefingt
-#: ckanext/canada/tables/ati.yaml:250 ckanext/canada/tables/ati.yaml:382
-#: ckanext/canada/tables/briefingt.yaml:399
+#: ckanext/canada/tables/ati.yaml:253 ckanext/canada/tables/ati.yaml:386
+#: ckanext/canada/tables/briefingt.yaml:405
 msgid "Please enter a month number from 1-12"
 msgstr "Veuillez entrer une valeur comprise entre 1 et 12"
 
 #. SQL Trigger String for PD Type: ati
-#: ckanext/canada/tables/ati.yaml:142 ckanext/canada/tables/ati.yaml:251
+#: ckanext/canada/tables/ati.yaml:142 ckanext/canada/tables/ati.yaml:254
 msgid "This value must not be negative"
 msgstr "Cette valeur ne doit pas être négatif"
 
+#. SQL Trigger String for PD Type: ati
+#: ckanext/canada/tables/ati.yaml:255
+msgid "Comma is not allowed in Request Number field"
+msgstr "La virgule n’est pas autorisée dans le champ du Numero de la demande"
+
 #. Resource Title for PD Type: ati
-#: ckanext/canada/tables/ati.yaml:278
+#: ckanext/canada/tables/ati.yaml:282
 msgid "ATI Nothing to Report"
 msgstr "Accès à l’information rien à signaler"
 
@@ -999,8 +1023,13 @@ msgstr ""
 "Accès, téléversement et modifications des rapports sur les titres at "
 "numéros des notes d’information pour votre organisation"
 
+#. SQL Trigger String for PD Type: briefingt
+#: ckanext/canada/tables/briefingt.yaml:286
+msgid "Comma is not allowed in Briefing Note Number field"
+msgstr "La virgule n’est pas autorisée dans le champ du Numéro de suivi"
+
 #. Resource Title for PD Type: briefingt
-#: ckanext/canada/tables/briefingt.yaml:300
+#: ckanext/canada/tables/briefingt.yaml:306
 msgid "Proactive Publication - Briefing Note Titles and Numbers Nothing to Report"
 msgstr ""
 "Publication proactive - Titres et numéros des notes d’information rien à "
@@ -1013,13 +1042,13 @@ msgstr ""
 #. SQL Trigger String for PD Type: reclassification
 #. SQL Trigger String for PD Type: travela
 #. SQL Trigger String for PD Type: travelq
-#: ckanext/canada/tables/briefingt.yaml:398
-#: ckanext/canada/tables/contractsa.yaml:390
-#: ckanext/canada/tables/hospitalityq.yaml:597
-#: ckanext/canada/tables/qpnotes.yaml:445
-#: ckanext/canada/tables/reclassification.yaml:379
+#: ckanext/canada/tables/briefingt.yaml:404
+#: ckanext/canada/tables/contractsa.yaml:396
+#: ckanext/canada/tables/hospitalityq.yaml:604
+#: ckanext/canada/tables/qpnotes.yaml:451
+#: ckanext/canada/tables/reclassification.yaml:385
 #: ckanext/canada/tables/travela.yaml:645
-#: ckanext/canada/tables/travelq.yaml:586
+#: ckanext/canada/tables/travelq.yaml:598
 msgid "This must list the year you are reporting on (not the fiscal year)."
 msgstr "Veuillez indiquer l’année civile visée par le rapport."
 
@@ -1043,11 +1072,16 @@ msgstr ""
 "pour votre organisation"
 
 #. SQL Trigger String for PD Type: consultations
-#: ckanext/canada/tables/consultations.yaml:601
+#: ckanext/canada/tables/consultations.yaml:604
 msgid "If Status is set to: Not Going Forward, Publish Record must be set to No"
 msgstr ""
 "Si le statut est établi à : Ne pas aller de l’avant, alors l’option de "
 "Publier le document doit être réglée à Non."
+
+#. SQL Trigger String for PD Type: consultations
+#: ckanext/canada/tables/consultations.yaml:605
+msgid "Comma is not allowed in Registration Number field"
+msgstr "La virgule n’est pas autorisée dans le champ du Numéro d’enregistrement"
 
 #. Title for PD Type: contracts
 #. Resource Title for PD Type: contracts
@@ -1071,7 +1105,7 @@ msgstr ""
 "attribués de plus de 10 000 $ pour votre organisation"
 
 #. SQL Trigger String for PD Type: contracts
-#: ckanext/canada/tables/contracts.yaml:2177
+#: ckanext/canada/tables/contracts.yaml:2185
 msgid ""
 "This field must contain the first three digits of a postal code in A1A "
 "format or the value \"NA\""
@@ -1080,7 +1114,7 @@ msgstr ""
 "le format A1A ou la valeur « NA. »"
 
 #. SQL Trigger String for PD Type: contracts
-#: ckanext/canada/tables/contracts.yaml:2178
+#: ckanext/canada/tables/contracts.yaml:2186
 msgid ""
 "This field must be populated with an NA if an amendment is disclosed "
 "under Instrument Type"
@@ -1089,19 +1123,19 @@ msgstr ""
 "divulguée dans le cadre du type d’instrument"
 
 #. SQL Trigger String for PD Type: contracts
-#: ckanext/canada/tables/contracts.yaml:2179
+#: ckanext/canada/tables/contracts.yaml:2187
 msgid "This field is limited to only 3 or 4 digits."
 msgstr "Ce champ a une limite de 3 ou 4 chiffres."
 
 #. SQL Trigger String for PD Type: contracts
-#: ckanext/canada/tables/contracts.yaml:2180
+#: ckanext/canada/tables/contracts.yaml:2188
 msgid ""
 "If N/A, then Instrument Type must be identified as a standing "
 "offer/supply arrangement (SOSA)"
 msgstr ""
 
 #. SQL Trigger String for PD Type: contracts
-#: ckanext/canada/tables/contracts.yaml:2181
+#: ckanext/canada/tables/contracts.yaml:2189
 msgid ""
 "If the value XX (none) is entered, then no other value can be entered in "
 "this field."
@@ -1110,19 +1144,19 @@ msgstr ""
 "saisie dans ce champ."
 
 #. SQL Trigger String for PD Type: contracts
-#: ckanext/canada/tables/contracts.yaml:2182
+#: ckanext/canada/tables/contracts.yaml:2190
 msgid "Discontinued as of 2022-01-01"
 msgstr "Supprimé à compter du 2022-01-01"
 
 #. SQL Trigger String for PD Type: contracts
-#: ckanext/canada/tables/contracts.yaml:2183
+#: ckanext/canada/tables/contracts.yaml:2191
 msgid "Must be left blank when trade agreements specified"
 msgstr ""
 "Ce champ ne doit pas être rempli lorsque des accords commerciaux sont "
 "précisés"
 
 #. SQL Trigger String for PD Type: contracts
-#: ckanext/canada/tables/contracts.yaml:2184
+#: ckanext/canada/tables/contracts.yaml:2192
 msgid ""
 "If the value NA (not applicable) is entered, then no other value can be "
 "entered in this field."
@@ -1131,13 +1165,13 @@ msgstr ""
 "peut être saisie dans ce champ."
 
 #. SQL Trigger String for PD Type: contracts
-#: ckanext/canada/tables/contracts.yaml:2185
+#: ckanext/canada/tables/contracts.yaml:2193
 msgid "The field is limited to eight alpha-numeric digits or less."
 msgstr "Ce champ est limité à 8 caractères alphanumériques."
 
 #. SQL Trigger String for PD Type: contracts
-#: ckanext/canada/tables/contracts.yaml:2186
-#: ckanext/canada/tables/contracts.yaml:2189
+#: ckanext/canada/tables/contracts.yaml:2194
+#: ckanext/canada/tables/contracts.yaml:2197
 msgid ""
 "If the value 00 (none) is entered, then no other value can be entered in "
 "this field."
@@ -1146,7 +1180,7 @@ msgstr ""
 "saisie dans ce champ."
 
 #. SQL Trigger String for PD Type: contracts
-#: ckanext/canada/tables/contracts.yaml:2187
+#: ckanext/canada/tables/contracts.yaml:2195
 msgid ""
 "If TC, TN or AC is selected in the Solicitation Procedure data field with"
 " a value other than XX (None) selected in the Trade Agreement data field,"
@@ -1158,7 +1192,7 @@ msgstr ""
 "une valeur d’appel d’offres limité autre que 00 (aucun) doit être saisie."
 
 #. SQL Trigger String for PD Type: contracts
-#: ckanext/canada/tables/contracts.yaml:2188
+#: ckanext/canada/tables/contracts.yaml:2196
 msgid ""
 "If “TC” (Competitive - Traditional), “TN” (Non-Competitive) or “AC” "
 "(Advanced Contract Award Notice) is selected and trade agreement with a "
@@ -1172,7 +1206,7 @@ msgstr ""
 "avoir la valeur « 0 » ou « 00 » (nulle)."
 
 #. SQL Trigger String for PD Type: contracts
-#: ckanext/canada/tables/contracts.yaml:2190
+#: ckanext/canada/tables/contracts.yaml:2198
 msgid ""
 "This field must be N, No or Non, if the Procurement Strategy for "
 "Aboriginal Business field is MS or VS."
@@ -1182,7 +1216,7 @@ msgstr ""
 "est MS ou VS."
 
 #. SQL Trigger String for PD Type: contracts
-#: ckanext/canada/tables/contracts.yaml:2191
+#: ckanext/canada/tables/contracts.yaml:2199
 msgid ""
 "This field must be populated with a 1 if the solicitation procedure is "
 "identified as non-competitive (TN) or Advance Contract Award Notice (AC)."
@@ -1192,7 +1226,7 @@ msgstr ""
 "d’adjudication de contrat (PAC)."
 
 #. SQL Trigger String for PD Type: contracts
-#: ckanext/canada/tables/contracts.yaml:2192
+#: ckanext/canada/tables/contracts.yaml:2200
 msgid ""
 "If this field is populated, it must be with a “0” if the procurement was "
 "identified as non-competitive (TN) or advance contract award notice (AC) "
@@ -1204,7 +1238,7 @@ msgstr ""
 "une modification (M) dans le champ de données du type d’instrument."
 
 #. SQL Trigger String for PD Type: contracts
-#: ckanext/canada/tables/contracts.yaml:2193
+#: ckanext/canada/tables/contracts.yaml:2201
 msgid ""
 "This field may only be populated with “0” if the procurement was "
 "identified as competitive (open bidding (OB), traditional competitive "
@@ -1216,7 +1250,7 @@ msgstr ""
 "d’offres sélectif [AOS])."
 
 #. Resource Title for PD Type: contracts
-#: ckanext/canada/tables/contracts.yaml:2244
+#: ckanext/canada/tables/contracts.yaml:2252
 msgid "Proactive Publication - Contracts Nothing to Report"
 msgstr "Publication proactive - Contrats (Rien à signaler)"
 
@@ -1298,7 +1332,7 @@ msgstr ""
 "et les subventions pour votre organisation"
 
 #. Resource Title for PD Type: grants
-#: ckanext/canada/tables/grants.yaml:877
+#: ckanext/canada/tables/grants.yaml:885
 msgid "Proactive Publication - Grants and Contributions Nothing to Report"
 msgstr ""
 "Publication proactive – Subventions et contributions, rien à "
@@ -1328,7 +1362,7 @@ msgstr ""
 " à l’accueil pour votre organisation"
 
 #. Resource Title for PD Type: hospitalityq
-#: ckanext/canada/tables/hospitalityq.yaml:474
+#: ckanext/canada/tables/hospitalityq.yaml:481
 msgid "Proactive Publication - Hospitality Nothing to Report"
 msgstr "Publication proactive - Dépenses d'accueil (Rien à signaler)"
 
@@ -1385,7 +1419,7 @@ msgstr ""
 "questions pour votre organisation"
 
 #. Resource Title for PD Type: qpnotes
-#: ckanext/canada/tables/qpnotes.yaml:351
+#: ckanext/canada/tables/qpnotes.yaml:357
 msgid "Proactive Publication - Question Period Notes Nothing to Report"
 msgstr ""
 "Publication proactive - Notes pour la période des questions rien à "
@@ -1414,7 +1448,7 @@ msgstr ""
 "et les subventions pour votre organisation"
 
 #. Resource Title for PD Type: reclassification
-#: ckanext/canada/tables/reclassification.yaml:287
+#: ckanext/canada/tables/reclassification.yaml:293
 msgid "Proactive Publication - Position Reclassification Nothing to Report"
 msgstr "Publication proactive - Reclassifications de postes (Rien à signaler)"
 
@@ -1490,7 +1524,7 @@ msgstr ""
 "de déplacement pour votre organisation"
 
 #. Resource Title for PD Type: travelq
-#: ckanext/canada/tables/travelq.yaml:460
+#: ckanext/canada/tables/travelq.yaml:472
 msgid "Proactive Publication - Travel Expenses Nothing to Report"
 msgstr "Publication proactive - Dépenses de voyage (Rien à signaler)"
 
@@ -2038,7 +2072,7 @@ msgstr "Administrateurs"
 #: ckanext/canada/templates/user/list.html:10
 #: ckanext/canada/templates/user/list.html:22
 #: ckanext/canada/templates/user/list.html:33
-#: ckanext/canada/templates/user/list.html:85
+#: ckanext/canada/templates/user/list.html:92
 #: ckanext/canada/templates/user/read_base.html:5
 msgid "Users"
 msgstr "Utilisateurs"
@@ -2394,42 +2428,42 @@ msgid "Cancel"
 msgstr "Annuler"
 
 #: ckanext/canada/templates/organization/edit.html:6
-#: ckanext/canada/templates/organization/edit_base.html:9
+#: ckanext/canada/templates/organization/edit_base.html:10
 #: ckanext/canada/templates/user/edit.html:7
 msgid "Manage"
 msgstr "Gérer"
 
-#: ckanext/canada/templates/organization/edit_base.html:7
+#: ckanext/canada/templates/organization/edit_base.html:8
 #: ckanext/canada/templates/organization/index.html:26
 #: ckanext/canada/templates/organization/members.html:10
 #: ckanext/canada/templates/organization/read_base.html:7
 #: ckanext/canada/templates/snippets/cdts/header.html:154
-#: ckanext/canada/templates/user/read.html:19
+#: ckanext/canada/templates/user/read.html:28
 #: ckanext/canada/templates/user/read_base.html:12
 #: ckanext/canada/templates/user/read_base.html:98
 msgid "Organizations"
 msgstr "Organisations"
 
-#: ckanext/canada/templates/organization/edit_base.html:18
+#: ckanext/canada/templates/organization/edit_base.html:19
 msgid "View Organization"
 msgstr "Voir l’organisation"
 
-#: ckanext/canada/templates/organization/edit_base.html:25
+#: ckanext/canada/templates/organization/edit_base.html:26
 #: ckanext/canada/templates/organization/read.html:12
 msgid "Edit Organization"
 msgstr "Modifier l’organisation"
 
-#: ckanext/canada/templates/organization/edit_base.html:27
+#: ckanext/canada/templates/organization/edit_base.html:28
 #: ckanext/canada/templates/organization/read_base.html:21
 msgid "Activity"
 msgstr "Activité"
 
-#: ckanext/canada/templates/organization/edit_base.html:29
+#: ckanext/canada/templates/organization/edit_base.html:30
 #: ckanext/canada/templates/organization/read_base.html:23
 msgid "Edit Members"
 msgstr "Modifier les membres"
 
-#: ckanext/canada/templates/organization/edit_base.html:31
+#: ckanext/canada/templates/organization/edit_base.html:32
 #: ckanext/canada/templates/organization/read_base.html:25
 msgid "View Members"
 msgstr "Afficher les membres"
@@ -2525,7 +2559,7 @@ msgstr "Membres"
 #: ckanext/canada/templates/organization/read_base.html:20
 #: ckanext/canada/templates/package/search.html:16
 #: ckanext/canada/templates/snippets/organization.html:37
-#: ckanext/canada/templates/user/read.html:12
+#: ckanext/canada/templates/user/read.html:21
 #: ckanext/canada/templates/user/read_base.html:11
 msgid "Datasets"
 msgstr "Dossiers"
@@ -3514,9 +3548,7 @@ msgstr "FAQ"
 
 #: ckanext/canada/templates/snippets/cdts/header.html:189
 #: ckanext/canada/templates/user/dashboard.html:4
-#: ckanext/canada/templates/user/dashboard_datasets.html:15
-#: ckanext/canada/templates/user/dashboard_groups.html:9
-#: ckanext/canada/templates/user/dashboard_organizations.html:9
+#: ckanext/canada/templates/user/dashboard_datasets.html:19
 msgid "Dashboard"
 msgstr "Tableau de bord"
 
@@ -3549,38 +3581,26 @@ msgid "Are you sure you want to delete user - {name}?"
 msgstr "Êtes-vous sûr de vouloir supprimer le membre - {name}?"
 
 #: ckanext/canada/templates/user/dashboard.html:4
-#: ckanext/canada/templates/user/dashboard.html:13
-#: ckanext/canada/templates/user/dashboard.html:37
-msgid "News feed"
-msgstr "Fil de nouvelles"
+#: ckanext/canada/templates/user/dashboard.html:8
+#: ckanext/canada/templates/user/dashboard.html:20
+#: ckanext/canada/templates/user/dashboard.html:29
+msgid "My Activity"
+msgstr "Mon Activité"
 
-#: ckanext/canada/templates/user/dashboard.html:16
-msgid "Activity from items that you follow"
-msgstr "Activité en lien avec les éléments que vous surveillez"
-
-#: ckanext/canada/templates/user/dashboard.html:30
-msgid "Add Dataset"
-msgstr "Ajouter un jeu de données"
-
-#: ckanext/canada/templates/user/dashboard.html:38
+#: ckanext/canada/templates/user/dashboard.html:21
 msgid "My Datasets"
 msgstr "Mes dossiers"
 
-#: ckanext/canada/templates/user/dashboard_datasets.html:11
+#: ckanext/canada/templates/user/dashboard.html:49
+msgid "Add Dataset"
+msgstr "Ajouter un jeu de données"
+
+#: ckanext/canada/templates/user/dashboard_datasets.html:10
 #: ckanext/canada/templates/user/dashboard_datasets.html:15
-#: ckanext/canada/templates/user/dashboard_datasets.html:22
+#: ckanext/canada/templates/user/dashboard_datasets.html:19
+#: ckanext/canada/templates/user/dashboard_datasets.html:23
 msgid "My Records"
 msgstr "Mes jeux de données"
-
-#: ckanext/canada/templates/user/dashboard_groups.html:5
-#: ckanext/canada/templates/user/dashboard_groups.html:9
-msgid "My Groups"
-msgstr "Mes groupes"
-
-#: ckanext/canada/templates/user/dashboard_organizations.html:5
-#: ckanext/canada/templates/user/dashboard_organizations.html:9
-msgid "My Organizations"
-msgstr "Mes organisations"
 
 #: ckanext/canada/templates/user/edit_base.html:7
 msgid "Edit My Profile"
@@ -3633,6 +3653,7 @@ msgid "Password"
 msgstr "Mot de passe"
 
 #: ckanext/canada/templates/user/edit_user_form.html:32
+#: ckanext/canada/templates/user/new_user_form.html:25
 msgid "Confirm Password"
 msgstr "Confirmer le mot de passe"
 
@@ -3648,19 +3669,29 @@ msgstr "Mettre à jour le profil"
 msgid "Create an Account"
 msgstr "Créer un compte"
 
-#: ckanext/canada/templates/user/list.html:61
+#: ckanext/canada/templates/user/list.html:58
+#: ckanext/canada/templates/user/read.html:12
+msgid "Unlock account"
+msgstr "Besoin d’un compte"
+
+#: ckanext/canada/templates/user/list.html:58
+#: ckanext/canada/templates/user/read.html:12
+msgid "Unable to unlock user account."
+msgstr ""
+
+#: ckanext/canada/templates/user/list.html:68
 msgid "Sysadmin"
 msgstr "Administrateur système"
 
-#: ckanext/canada/templates/user/list.html:61
+#: ckanext/canada/templates/user/list.html:68
 msgid "Member"
 msgstr "Membre"
 
-#: ckanext/canada/templates/user/list.html:90
+#: ckanext/canada/templates/user/list.html:97
 msgid "Search and view users."
 msgstr "Rechercher et afficher les utilisateurs."
 
-#: ckanext/canada/templates/user/list.html:92
+#: ckanext/canada/templates/user/list.html:99
 msgid "Search and manage users."
 msgstr "Rechercher et gérer les utilisateurs."
 
@@ -3798,10 +3829,20 @@ msgid "Example: 000 000 0000"
 msgstr "Exemplar : 000 000 0000"
 
 #: ckanext/canada/templates/user/new_user_form.html:23
-msgid "Confirm"
-msgstr "Confirmer"
+msgid ""
+"Password must be 12 characters or longer, and must consist of at least "
+"three of the following character sets: uppercase characters, lowercase "
+"characters, digits, punctuation & special characters"
+msgstr ""
+"Votre mot de passe doit être composé d'au moins trois des caractères "
+"suivants : majuscules, minuscules, chiffres, ponctuation et caractères "
+"spéciaux"
 
-#: ckanext/canada/templates/user/new_user_form.html:25
+#: ckanext/canada/templates/user/new_user_form.html:26
+msgid "The password must match"
+msgstr "Le mot de passe doit être identique"
+
+#: ckanext/canada/templates/user/new_user_form.html:29
 msgid ""
 "<h2>Terms and Conditions for the Open Government Registry</h2> "
 "<p><em>Privacy Statement</em></p> <p>The Government of Canada is "
@@ -3982,11 +4023,11 @@ msgstr ""
 "que vous acceptez ces conditions d’utilisation.</p> <p>Si vous "
 "sélectionnez \"Je n’accepte pas\" vous n’aurez pas accès au registre.</p>"
 
-#: ckanext/canada/templates/user/new_user_form.html:69
+#: ckanext/canada/templates/user/new_user_form.html:73
 msgid "I agree"
 msgstr "J’accepte"
 
-#: ckanext/canada/templates/user/new_user_form.html:70
+#: ckanext/canada/templates/user/new_user_form.html:74
 msgid "I do not agree"
 msgstr "Je n’accepte pas"
 
@@ -7907,4 +7948,19 @@ msgstr "Télécharger vers le DataStore"
 #~ "communiquer avec l'équipe du portail à"
 #~ " <a href=\"mailto:open-ouvert@tbs-sct.gc.ca"
 #~ "\">open-ouvert@tbs-sct.gc.ca</a>."
+
+#~ msgid "News feed"
+#~ msgstr "Fil de nouvelles"
+
+#~ msgid "Activity from items that you follow"
+#~ msgstr "Activité en lien avec les éléments que vous surveillez"
+
+#~ msgid "My Groups"
+#~ msgstr "Mes groupes"
+
+#~ msgid "My Organizations"
+#~ msgstr "Mes organisations"
+
+#~ msgid "Confirm"
+#~ msgstr "Confirmer"
 
