@@ -53,6 +53,7 @@ class TestMakePD(CanadaTestBase):
 
         self.tmp_dir = mkdtemp()
 
+        os.environ['TMPDIR'] = '/tmp'
         os.environ['PD_FILTER_SCRIPT_DIRECTORY'] = PD_FILTER_SCRIPT_DIRECTORY
         os.environ['REGISTRY_PASTER_COMMAND'] = 'paster'
         os.environ['REGISTRY_PYTHON_COMMAND'] = 'python3'

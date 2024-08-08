@@ -32,7 +32,7 @@ ckanapi := $(REGISTRY_CKANAPI_COMMAND)
 ogc_search := $(OGC_SEARCH_COMMAND)
 oc_search := $(OC_SEARCH_COMMAND)
 backup_dir := $(PD_BACKUP_DIRECTORY)
-tmp_dir := $(or $(PD_TMP_DIRECTORY),$(TMPDIR),/tmp)
+tmp_dir := $(or $(PD_TMP_DIRECTORY),$(TMPDIR))
 registry_static := $(REGISTRY_STATIC_SMB_DIRECTORY)
 portal_static := $(PORTAL_STATIC_SMB_DIRECTORY)
 
@@ -49,7 +49,7 @@ endif
 .PHONY: help
 help:
 	@echo Usage:
-	@echo '    make target ... [workdir=/path/to/working/directory]'
+	@echo '    make target ... [workdir=/path/to/working/directory] [tmpdir=/path/to/tmp/directory]'
 	@echo
 	@echo Targets:
 	@echo '    nightly                  dump, filter, backup, upload, rebuild all targets'
@@ -65,6 +65,10 @@ help:
 	@for t in $(targets); do \
 		printf '    %-24s upload and rebuild search\n' "$$t"; \
 	done
+
+ifdef tmpdir
+tmp_dir := $(tmpdir)
+endif
 
 ifeq ($(fdir),)
 $(error PD_FILTER_SCRIPT_DIRECTORY is undefined)
@@ -88,7 +92,8 @@ else ifeq ($(registry_static),)
 $(error REGISTRY_STATIC_SMB_DIRECTORY is undefined)
 else ifeq ($(portal_static),)
 $(error PORTAL_STATIC_SMB_DIRECTORY is undefined)
-
+else ifeq ($(tmp_dir),)
+$(error PD_TMP_DIRECTORY and TMPDIR are undefined or tmpdir not supplied)
 else ifeq ($(workdir),)
 location = $(CURDIR)/$(word $(words $(MAKEFILE_LIST)),$(MAKEFILE_LIST))
 self := $(location)

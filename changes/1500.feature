@@ -1,0 +1,1 @@
+Show password requirements for "Password" and "Confirm Password" fields on new user registration page.

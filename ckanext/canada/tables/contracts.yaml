@@ -25,14 +25,14 @@ upload_info:
 
 upload_warn:
   en: |
-    As of March 6, 2024, all contracts and associated amendments will appear 
-    as a single contract with their respective amendments linked on the Portal. 
-    Please email the Portal team at <a href="mailto:open-ouvert@tbs-sct.gc.ca">open-ouvert@tbs-sct.gc.ca</a> 
+    As of March 6, 2024, all contracts and associated amendments will appear
+    as a single contract with their respective amendments linked on the Portal.
+    Please email the Portal team at <a href="mailto:open-ouvert@tbs-sct.gc.ca">open-ouvert@tbs-sct.gc.ca</a>
     should you have additional questions or concerns.
   fr: |
-    À partir du 6 mars 2024, tous les contrats et leurs modifications apparaîtront 
-    comme un seul contrat avec leurs modifications respectifs liés sur le portail. 
-    Si vous avez des questions ou préoccupations, veuillez communiquer avec l'équipe 
+    À partir du 6 mars 2024, tous les contrats et leurs modifications apparaîtront
+    comme un seul contrat avec leurs modifications respectifs liés sur le portail.
+    Si vous avez des questions ou préoccupations, veuillez communiquer avec l'équipe
     du portail à <a href="mailto:open-ouvert@tbs-sct.gc.ca">open-ouvert@tbs-sct.gc.ca</a>.
 
 template_version: 3
@@ -1927,6 +1927,9 @@ resources:
         intellectual_property_choices text[] := {intellectual_property};
       BEGIN
         errors := errors || required_error(NEW.reference_number, 'reference_number');
+        IF NEW.reference_number LIKE '%,%' THEN
+          errors := errors || ARRAY[['reference_number', {reference_number_error}]];
+        END IF;
         NEW.reference_number := trim(both E'\t\n\x0b\x0c\r \xc2\xa0' from NEW.reference_number);
 
         errors := errors || required_error(NEW.contract_date, 'contract_date');
@@ -2166,6 +2169,10 @@ resources:
             'reporting_period');
         END IF;
 
+        NEW.contract_value := round(NEW.contract_value, 2);
+        NEW.original_value := round(NEW.original_value, 2);
+        NEW.amendment_value := round(NEW.amendment_value, 2);
+
         IF errors = '{{}}' THEN
           RETURN NEW;
         END IF;
@@ -2174,6 +2181,7 @@ resources:
   - update_record_modified_created_trigger
 
   trigger_strings:  # yaml | not supported
+    reference_number_error: Comma is not allowed in Reference Number field
     vendor_postal_code_error: This field must contain the first three digits of a postal code in A1A format or the value "NA"
     buyer_name_error: This field must be populated with an NA if an amendment is disclosed under Instrument Type
     economic_object_code_limit_error: This field is limited to only 3 or 4 digits.

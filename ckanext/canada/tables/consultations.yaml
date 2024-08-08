@@ -547,6 +547,9 @@ resources:
         crval RECORD;
       BEGIN
         errors := errors || required_error(NEW.registration_number, 'registration_number');
+        IF NEW.registration_number LIKE '%,%' THEN
+          errors := errors || ARRAY[['registration_number', {registration_number_error}]];
+        END IF;
         errors := errors || required_error(NEW.publishable, 'publishable');
         errors := errors || choice_error(NEW.publishable, {publishable}, 'publishable');
         crval := choices_clean_error(NEW.partner_departments, {partner_departments},
@@ -599,6 +602,7 @@ resources:
 
   trigger_strings:  # yaml | not supported
     status_error: "If Status is set to: Not Going Forward, Publish Record must be set to No"
+    registration_number_error: Comma is not allowed in Registration Number field
 
   examples:
     record:

@@ -1,0 +1,10 @@
+css:
+  output: invitation_manager/%(version)s_invitation_manager.css
+  contents:
+    - vendor/Overlay.css
+
+js:
+  output: invitation_manager/%(version)s_invitation_manager.js
+  contents:
+    - vendor/Overlay.js
+    - vendor/InvitationManager.js
