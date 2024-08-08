@@ -528,7 +528,13 @@ def update_pd_record(owner_org, resource_name, pk):
         if not f.get('import_template_include', True):
             continue
         val = record[f['datastore_id']]
-        data[f['datastore_id']] = val
+        if f.get('datastore_type') == 'money':
+            if isinstance(val, str) and '$' in val:
+                data[f['datastore_id']] = val
+            else:
+                data[f['datastore_id']] = '${:,.2f}'.format(val)
+        else:
+            data[f['datastore_id']] = val
 
     return render('recombinant/update_pd_record.html',
         extra_vars={
