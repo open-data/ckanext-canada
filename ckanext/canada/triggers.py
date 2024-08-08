@@ -244,9 +244,9 @@ def update_triggers():
                 req_record_modified timestamp := NEW.record_modified;
                 req_user_modified text := NEW.user_modified;
                 username text NOT NULL := (SELECT username
-                    FROM datastore_user);
+                    FROM datastore_user LIMIT 1);
                 sysadmin boolean NOT NULL := (SELECT sysadmin
-                    FROM datastore_user);
+                    FROM datastore_user LIMIT 1);
             BEGIN
                 IF NOT sysadmin THEN
                     NEW.record_created := NULL;
@@ -352,7 +352,7 @@ def update_triggers():
             DECLARE
                 req_user_votes int := NEW.user_votes;
                 sysadmin boolean NOT NULL := (SELECT sysadmin
-                    FROM datastore_user);
+                    FROM datastore_user LIMIT 1);
             BEGIN
                 IF NOT sysadmin THEN
                     req_user_votes := NULL;
