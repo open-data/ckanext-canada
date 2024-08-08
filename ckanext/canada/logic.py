@@ -240,7 +240,7 @@ def datastore_create_temp_user_table(context, drop_on_commit=True):
         from ckanext.datastore.backend.postgres import literal_string
         username = context['user']
         context['connection'].execute(u'''
-            CREATE TEMP TABLE datastore_user (
+            CREATE TEMP TABLE IF NOT EXISTS datastore_user (
                 username text NOT NULL,
                 sysadmin boolean NOT NULL
                 ){drop_statement};
