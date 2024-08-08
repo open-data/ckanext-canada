@@ -800,7 +800,7 @@ def datatable(resource_name, resource_id):
 
     aadata = [
         [u'<input type="checkbox">'] +
-        [datatablify(row.get(colname, u''), colname) for colname in cols]
+        [datatablify(row.get(colname, u''), colname, chromo) for colname in cols]
         for row in response['records']]
 
     if chromo.get('edit_form', False) and can_edit:
@@ -829,10 +829,15 @@ def datatable(resource_name, resource_id):
     })
 
 
-def datatablify(v, colname):
+def datatablify(v, colname, chromo):
     '''
     format value from datastore v for display in a datatable preview
     '''
+    chromo_field = None
+    for f in chromo['fields']:
+        if f['datastore_id'] == colname:
+            chromo_field = f
+            break
     if v is None:
         return u''
     if v is True:
@@ -844,6 +849,10 @@ def datatablify(v, colname):
     if colname in ('record_created', 'record_modified') and v:
         return canada_date_str_to_datetime(v).replace(tzinfo=utc).astimezone(
             ottawa_tz).strftime('%Y-%m-%d %H:%M:%S %Z')
+    if chromo_field and chromo_field.get('datastore_type') == 'money':
+        if isinstance(v, str) and '$' in v:
+            return v
+        return '${:,.2f}'.format(v)
     return str(v)
 
 
