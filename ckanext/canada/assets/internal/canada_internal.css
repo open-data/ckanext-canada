@@ -676,6 +676,9 @@ label.control-label:has(span.control-required):after {
 label.control-label:has(span.control-required):lang(fr):after {
   content: "(requis)";
 }
+label:lang(fr):after {
+  content: " :";
+}
 .control-required {
   color: #e00;
 }
