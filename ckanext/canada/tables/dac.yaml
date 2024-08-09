@@ -307,8 +307,8 @@ resources:
         errors := errors || required_error(NEW.remuneration, 'remuneration');
         errors := errors || required_error(NEW.travel_expenses, 'travel_expenses');
         errors := errors || required_error(NEW.travel_expenses, 'travel_expenses');
-        NEW.remuneration := round(NEW.remuneration, 2);
-        NEW.travel_expenses := round(NEW.travel_expenses, 2);
+        NEW.remuneration := round(NEW.remuneration::NUMERIC, 2);
+        NEW.travel_expenses := round(NEW.travel_expenses::NUMERIC, 2);
         IF errors = '{{}}' THEN
           RETURN NEW;
         END IF;

@@ -291,6 +291,9 @@ resources:
         crval RECORD;
       BEGIN
         errors := errors || required_error(NEW.reference_number, 'reference_number');
+        IF NEW.reference_number LIKE '%,%' THEN
+          errors := errors || ARRAY[['reference_number', {reference_number_error}]];
+        END IF;
         errors := errors || required_error(NEW.minister, 'minister');
         errors := errors || required_error(NEW.purpose_en, 'purpose_en');
         errors := errors || required_error(NEW.purpose_fr, 'purpose_fr');
@@ -308,6 +311,9 @@ resources:
         RAISE EXCEPTION E'TAB-DELIMITED\t%', array_to_string(errors, E'\t');
       END;
   - update_record_modified_created_trigger
+
+  trigger_strings:  # yaml | not supported
+    reference_number_error: Comma is not allowed in Reference Number field
 
   examples:
     record:
