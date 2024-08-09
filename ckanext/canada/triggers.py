@@ -18,7 +18,7 @@ def update_triggers():
         definition=u'''
             BEGIN
                 IF (value = '') IS NOT FALSE THEN
-                    RETURN ARRAY[[field_name, 'This field must not be empty']];
+                    RETURN ARRAY[[field_name, _('This field must not be empty')]];
                 END IF;
                 RETURN NULL;
             END;
@@ -33,7 +33,7 @@ def update_triggers():
         definition=u'''
             BEGIN
                 IF value IS NULL OR value = '{}' THEN
-                    return ARRAY[[field_name, 'This field must not be empty']];
+                    return ARRAY[[field_name, _('This field must not be empty')]];
                 END IF;
                 RETURN NULL;
             END;
@@ -48,7 +48,7 @@ def update_triggers():
         definition=u'''
             BEGIN
                 IF value IS NULL THEN
-                    RETURN ARRAY[[field_name, 'This field must not be empty']];
+                    RETURN ARRAY[[field_name, _('This field must not be empty')]];
                 END IF;
                 RETURN NULL;
             END;
@@ -63,7 +63,7 @@ def update_triggers():
         definition=u'''
             BEGIN
                 IF value IS NULL THEN
-                    RETURN ARRAY[[field_name, 'This field must not be empty']];
+                    RETURN ARRAY[[field_name, _('This field must not be empty')]];
                 END IF;
                 RETURN NULL;
             END;
@@ -78,7 +78,7 @@ def update_triggers():
         definition=u'''
             BEGIN
                 IF value IS NULL THEN
-                    RETURN ARRAY[[field_name, 'This field must not be empty']];
+                    RETURN ARRAY[[field_name, _('This field must not be empty')]];
                 END IF;
                 RETURN NULL;
             END;
@@ -93,7 +93,7 @@ def update_triggers():
         definition=u'''
             BEGIN
                 IF value IS NULL THEN
-                    RETURN ARRAY[[field_name, 'This field must not be empty']];
+                    RETURN ARRAY[[field_name, _('This field must not be empty')]];
                 END IF;
                 RETURN NULL;
             END;
@@ -155,7 +155,7 @@ def update_triggers():
         definition=u'''
             BEGIN
                 IF value IS NOT NULL THEN
-                    RETURN ARRAY[[field_name, 'This field must be empty']];
+                    RETURN ARRAY[[field_name, _('This field must be empty')]];
                 END IF;
                 RETURN NULL;
             END;
@@ -171,7 +171,7 @@ def update_triggers():
         definition=u'''
             BEGIN
                 IF trim(both E'\t\n\x0b\x0c\r ' from value) <> value THEN
-                    RETURN ARRAY[[field_name, 'This field must not have surrounding whitespace']];
+                    RETURN ARRAY[[field_name, _('This field must not have surrounding whitespace')]];
                 END IF;
                 RETURN NULL;
             END;
@@ -190,17 +190,17 @@ def update_triggers():
                     '(\d\d\d\d)(?:-(\d\d)(?:-(\d\d))?)?');
             BEGIN
                 IF ymd IS NULL THEN
-                    RETURN ARRAY[[field_name, 'Dates must be in YYYY-MM-DD format']];
+                    RETURN ARRAY[[field_name, _('Dates must be in YYYY-MM-DD format')]];
                 END IF;
                 IF ymd[3] IS NOT NULL THEN
                     PERFORM value::date;
                 ELSIF NOT ymd[2]::int BETWEEN 1 AND 12 THEN
-                    RETURN ARRAY[[field_name, 'Dates must be in YYYY-MM-DD format']];
+                    RETURN ARRAY[[field_name, _('Dates must be in YYYY-MM-DD format')]];
                 END IF;
                 RETURN NULL;
             EXCEPTION
                 WHEN others THEN
-                    RETURN ARRAY[[field_name, 'Dates must be in YYYY-MM-DD format']];
+                    RETURN ARRAY[[field_name, _('Dates must be in YYYY-MM-DD format')]];
             END;
         ''')
 
@@ -403,7 +403,7 @@ def update_triggers():
         definition=u'''
             BEGIN
                 IF value <> 'NA' AND value <> 'ND' AND NOT value ~ '^[0-9]+$' THEN
-                    RETURN ARRAY[[field_name, 'This field must be NA or an integer']];
+                    RETURN ARRAY[[field_name, _('This field must be NA or an integer')]];
                 END IF;
                 RETURN NULL;
             END;
@@ -421,10 +421,10 @@ def update_triggers():
         definition=u'''
             BEGIN
                 IF (value_en = '') IS NOT FALSE AND NOT((value_fr = '') IS NOT FALSE) THEN
-                  RETURN ARRAY[[field_name_en, 'This text must be provided in both languages']];
+                  RETURN ARRAY[[field_name_en, _('This text must be provided in both languages')]];
                 END IF;
                 IF (value_fr = '') IS NOT FALSE AND NOT((value_en = '') IS NOT FALSE) THEN
-                  RETURN ARRAY[[field_name_fr, 'This text must be provided in both languages']];
+                  RETURN ARRAY[[field_name_fr, _('This text must be provided in both languages')]];
                 END IF;
                 RETURN NULL;
             END;
