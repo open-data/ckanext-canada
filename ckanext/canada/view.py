@@ -529,7 +529,13 @@ def update_pd_record(owner_org, resource_name, pk):
         if not f.get('import_template_include', True):
             continue
         val = record[f['datastore_id']]
-        data[f['datastore_id']] = val
+        if f.get('datastore_type') == 'money':
+            if isinstance(val, str) and '$' in val:
+                data[f['datastore_id']] = val
+            else:
+                data[f['datastore_id']] = '${:,.2f}'.format(val)
+        else:
+            data[f['datastore_id']] = val
 
     return render('recombinant/update_pd_record.html',
         extra_vars={
@@ -606,7 +612,7 @@ def delete_selected_records(resource_id):
                              owner_org=org['name'],
                              )
     if request.method != 'POST' or 'confirm' not in request.form:
-        return render('recombinant/confirm_delete.html',
+        return render('recombinant/confirm_select_delete.html',
                       extra_vars={
                           'dataset': dataset,
                           'resource': res,
@@ -863,7 +869,7 @@ def datatable(resource_name, resource_id):
 
     aadata = [
         [u'<input type="checkbox">'] +
-        [datatablify(row.get(colname, u''), colname) for colname in cols]
+        [datatablify(row.get(colname, u''), colname, chromo) for colname in cols]
         for row in response['records']]
 
     if chromo.get('edit_form', False) and can_edit:
@@ -892,10 +898,15 @@ def datatable(resource_name, resource_id):
     })
 
 
-def datatablify(v, colname):
+def datatablify(v, colname, chromo):
     '''
     format value from datastore v for display in a datatable preview
     '''
+    chromo_field = None
+    for f in chromo['fields']:
+        if f['datastore_id'] == colname:
+            chromo_field = f
+            break
     if v is None:
         return u''
     if v is True:
@@ -907,6 +918,10 @@ def datatablify(v, colname):
     if colname in ('record_created', 'record_modified') and v:
         return canada_date_str_to_datetime(v).replace(tzinfo=utc).astimezone(
             ottawa_tz).strftime('%Y-%m-%d %H:%M:%S %Z')
+    if chromo_field and chromo_field.get('datastore_type') == 'money':
+        if isinstance(v, str) and '$' in v:
+            return v
+        return '${:,.2f}'.format(v)
     return str(v)
 
 
