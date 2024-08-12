@@ -21,7 +21,9 @@ resources:
   fields:
 
   - datastore_id: ref_number
-    label: Reference Number
+    label:
+      en: Reference Number
+      fr: Numéro de référence
     description:
       en: The unique reference number given to each line item in the spreadsheet. Having a unique identifier for each item will allow departments to locate a specific item in the system if revisions or deletions are required. This element will not be displayed to the public.
       fr: Un identificateur unique est attribué à chaque poste dans la feuille de calcul. Un identificateur unique pour chaque poste permettra aux ministères de trouver un élément précis dans le système, si des modifications ou des suppressions sont nécessaires. Cet élément ne sera pas présenté au public.

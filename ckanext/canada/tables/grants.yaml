@@ -884,7 +884,9 @@ resources:
   fields:
 
   - datastore_id: fiscal_year
-    label: Year
+    label:
+      en: Year
+      fr: Année
     datastore_type: text
     obligation: Mandatory
     excel_required: true
@@ -893,7 +895,9 @@ resources:
     choices_file: choices/fiscal_year.yaml
 
   - datastore_id: quarter
-    label: Quarter
+    label:
+      en: Quarter
+      fr: Trimestre
     datastore_type: text
     obligation: Mandatory
     excel_required: true
