@@ -601,14 +601,10 @@ def delete_selected_records(resource_id):
     records = request.form.getlist('select-delete')
 
     if 'cancel' in request.form:
-        return render('recombinant/resource_edit.html',
-                      extra_vars={
-                          'delete_errors': [],
-                          'dataset': dataset,
-                          'dataset_type': dataset['dataset_type'],
-                          'resource': res,
-                          'organization': org,
-                          'action': 'edit'})
+        return h.redirect_to('recombinant.preview_table',
+                             resource_name=res['name'],
+                             owner_org=org['name'],
+                             )
     if request.method != 'POST' or 'confirm' not in request.form:
         return render('recombinant/confirm_delete.html',
                       extra_vars={
