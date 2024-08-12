@@ -612,7 +612,7 @@ def delete_selected_records(resource_id):
                              owner_org=org['name'],
                              )
     if request.method != 'POST' or 'confirm' not in request.form:
-        return render('recombinant/confirm_delete.html',
+        return render('recombinant/confirm_select_delete.html',
                       extra_vars={
                           'dataset': dataset,
                           'resource': res,
