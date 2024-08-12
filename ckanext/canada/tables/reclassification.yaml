@@ -301,7 +301,9 @@ resources:
 
   - datastore_id: year
     datastore_type: year
-    label: Year
+    label:
+      en: Year
+      fr: Année
     obligation: Mandatory
     excel_required: true
     form_required: true
@@ -312,7 +314,9 @@ resources:
 
   - datastore_id: quarter
     datastore_type: text
-    label: Quarter
+    label:
+      en: Quarter
+      fr: Trimestre
     excel_column_width: 10
     obligation: Mandatory
     excel_required: true
