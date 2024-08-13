@@ -6,6 +6,10 @@
   {% block form %}
     {% set to_delete = select_delete.split(';') %}
     {% set primary_keys = h.recombinant_primary_key_fields(resource.name) %}
+    <p>{{ ungettext(
+      'Are you sure you want to delete {num} record? This action cannot be undone.',
+      'Are you sure you want to delete {num} records? This action cannot be undone.',
+      num).format(num=num) }}</p>
     <div class="mrgn-tp-lg mrgn-bttm-lg col-md-6">
       <table class="table table-responsive">
         <thead>
