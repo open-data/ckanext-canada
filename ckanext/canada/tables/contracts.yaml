@@ -2181,6 +2181,7 @@ resources:
   - update_record_modified_created_trigger
 
   trigger_strings:  # yaml | not supported
+    required_error: This field must not be empty
     reference_number_error: Comma is not allowed in Reference Number field
     vendor_postal_code_error: This field must contain the first three digits of a postal code in A1A format or the value "NA"
     buyer_name_error: This field must be populated with an NA if an amendment is disclosed under Instrument Type
