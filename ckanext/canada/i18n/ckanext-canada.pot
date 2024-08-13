@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ckanext-canada 0.4.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-08-08 14:35+0000\n"
+"POT-Creation-Date: 2024-08-13 12:32-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,13 +17,13 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.7.0\n"
 
-#: ckanext/canada/assets/internal/validation_spec.js:8 ckanext/canada/checks.py:25
+#: ckanext/canada/assets/internal/validation_spec.js:9 ckanext/canada/checks.py:25
 msgid ""
 "Column name {value} in column {column_number} is not valid for a DataStore "
 "header"
 msgstr ""
 
-#: ckanext/canada/assets/internal/validation_spec.js:16 ckanext/canada/checks.py:30
+#: ckanext/canada/assets/internal/validation_spec.js:17 ckanext/canada/checks.py:30
 msgid ""
 "Column name {value} in column {column_number} is too long for a DataStore "
 "header"
@@ -116,7 +116,7 @@ msgid "search.open.canada.ca"
 msgstr ""
 
 #: ckanext/canada/helpers.py:584 ckanext/canada/strings.py:13
-#: ckanext/canada/view.py:1159
+#: ckanext/canada/view.py:1170
 msgid "Members not found"
 msgstr ""
 
@@ -283,7 +283,7 @@ msgstr ""
 msgid "Not authorized to access {group} members download"
 msgstr ""
 
-#: ckanext/canada/strings.py:14 ckanext/canada/view.py:1169
+#: ckanext/canada/strings.py:14 ckanext/canada/view.py:1180
 msgid "N/A"
 msgstr ""
 
@@ -293,7 +293,7 @@ msgstr ""
 #: ckanext/canada/templates/user/list.html:44
 #: ckanext/canada/templates/user/new_user_form.html:7
 #: ckanext/canada/templates/user/snippets/login_form.html:11
-#: ckanext/canada/view.py:1161
+#: ckanext/canada/view.py:1172
 msgid "Username"
 msgstr ""
 
@@ -301,22 +301,22 @@ msgstr ""
 #: ckanext/canada/templates/user/new_user_form.html:13
 #: ckanext/canada/templates/user/read_base.html:60
 #: ckanext/canada/templates/user/recover_username.html:15
-#: ckanext/canada/view.py:1161
+#: ckanext/canada/view.py:1172
 msgid "Email"
 msgstr ""
 
 #: ckanext/canada/strings.py:17 ckanext/canada/templates/user/api_tokens.html:5
-#: ckanext/canada/templates/user/list.html:45 ckanext/canada/view.py:1161
+#: ckanext/canada/templates/user/list.html:45 ckanext/canada/view.py:1172
 msgid "Name"
 msgstr ""
 
 #: ckanext/canada/strings.py:18
 #: ckanext/canada/templates/organization/member_new.html:57
-#: ckanext/canada/templates/user/list.html:46 ckanext/canada/view.py:1161
+#: ckanext/canada/templates/user/list.html:46 ckanext/canada/view.py:1172
 msgid "Role"
 msgstr ""
 
-#: ckanext/canada/strings.py:19 ckanext/canada/view.py:1179
+#: ckanext/canada/strings.py:19 ckanext/canada/view.py:1190
 msgid "members"
 msgstr ""
 
@@ -690,7 +690,7 @@ msgstr ""
 msgid "Unauthorized to update dataset"
 msgstr ""
 
-#: ckanext/canada/view.py:465 ckanext/canada/view.py:599 ckanext/canada/view.py:638
+#: ckanext/canada/view.py:465 ckanext/canada/view.py:605 ckanext/canada/view.py:640
 msgid "Not found"
 msgstr ""
 
@@ -707,44 +707,44 @@ msgstr ""
 msgid "Record %s Updated"
 msgstr ""
 
-#: ckanext/canada/view.py:552
+#: ckanext/canada/view.py:558
 msgid "No organizations found"
 msgstr ""
 
-#: ckanext/canada/view.py:556
+#: ckanext/canada/view.py:562
 msgid "Recombinant resource_name not found"
 msgstr ""
 
-#: ckanext/canada/view.py:590
+#: ckanext/canada/view.py:596
 msgid "User {0} not authorized to update resource {1}"
 msgstr ""
 
-#: ckanext/canada/view.py:640
+#: ckanext/canada/view.py:642
 msgid "{num} deleted."
 msgstr ""
 
-#: ckanext/canada/view.py:682
+#: ckanext/canada/view.py:684
 msgid "Number required"
 msgstr ""
 
-#: ckanext/canada/view.py:687
+#: ckanext/canada/view.py:689
 msgid "Integer required"
 msgstr ""
 
-#: ckanext/canada/view.py:723 ckanext/canada/view.py:731 ckanext/canada/view.py:765
+#: ckanext/canada/view.py:725 ckanext/canada/view.py:733 ckanext/canada/view.py:767
 msgid "Not authorized to see this page"
 msgstr ""
 
-#: ckanext/canada/view.py:751
+#: ckanext/canada/view.py:753
 msgid " record(s) published."
 msgstr ""
 
-#: ckanext/canada/view.py:789
+#: ckanext/canada/view.py:791
 #, python-format
 msgid "Unauthorized to delete resource %s"
 msgstr ""
 
-#: ckanext/canada/view.py:791
+#: ckanext/canada/view.py:793
 #, python-format
 msgid "DataStore table and Data Dictionary deleted for resource %s"
 msgstr ""
@@ -757,19 +757,19 @@ msgstr ""
 #: ckanext/canada/templates/package/resource_edit.html:3
 #: ckanext/canada/templates/package/resource_edit_base.html:7
 #: ckanext/canada/templates/package/wet_datatable.html:15
-#: ckanext/canada/view.py:880
+#: ckanext/canada/view.py:882
 msgid "Edit"
 msgstr ""
 
-#: ckanext/canada/view.py:1004
+#: ckanext/canada/view.py:1015
 msgid "Access denied"
 msgstr ""
 
-#: ckanext/canada/view.py:1055
+#: ckanext/canada/view.py:1066
 msgid "Account Created"
 msgstr ""
 
-#: ckanext/canada/view.py:1057
+#: ckanext/canada/view.py:1068
 msgid ""
 "Thank you for creating your account for the Open Government registry. "
 "Although your account is active, it has not yet been linked to your "
@@ -777,7 +777,7 @@ msgid ""
 "able to create or modify datasets in the registry."
 msgstr ""
 
-#: ckanext/canada/view.py:1064
+#: ckanext/canada/view.py:1075
 msgid ""
 "You should receive an email within the next business day once the account "
 "activation process has been completed. If you require faster processing of "
@@ -785,29 +785,29 @@ msgid ""
 "ouvert@tbs-sct.gc.ca\">open-ouvert@tbs-sct.gc.ca</a>"
 msgstr ""
 
-#: ckanext/canada/view.py:1138 ckanext/canada/view.py:1216
+#: ckanext/canada/view.py:1149 ckanext/canada/view.py:1227
 msgid "Organization not found"
 msgstr ""
 
-#: ckanext/canada/view.py:1149
+#: ckanext/canada/view.py:1160
 msgid "Not authorized to access {org_name} members download"
 msgstr ""
 
-#: ckanext/canada/view.py:1219
+#: ckanext/canada/view.py:1230
 #, python-format
 msgid "User %r not authorized to edit members of %s"
 msgstr ""
 
-#: ckanext/canada/view.py:1221
+#: ckanext/canada/view.py:1232
 #, python-format
 msgid "User %r not authorized to view members of %s"
 msgstr ""
 
-#: ckanext/canada/assets/internal/validation_spec.js:7
+#: ckanext/canada/assets/internal/validation_spec.js:8
 msgid "Invalid Header for DataStore"
 msgstr ""
 
-#: ckanext/canada/assets/internal/validation_spec.js:9
+#: ckanext/canada/assets/internal/validation_spec.js:10
 msgid ""
 "Column name is invalid for a DataStore header.\n"
 "\n"
@@ -818,11 +818,11 @@ msgid ""
 " - Make sure the column name is not blank."
 msgstr ""
 
-#: ckanext/canada/assets/internal/validation_spec.js:15
+#: ckanext/canada/assets/internal/validation_spec.js:16
 msgid "Header Too Long for DataStore"
 msgstr ""
 
-#: ckanext/canada/assets/internal/validation_spec.js:17
+#: ckanext/canada/assets/internal/validation_spec.js:18
 msgid ""
 "Column name is too long for a DataStore header.\n"
 "\n"
@@ -857,7 +857,7 @@ msgstr ""
 #. SQL Trigger String for PD Type: travelq
 #. SQL Trigger String for PD Type: wrongdoing
 #: ckanext/canada/tables/adminaircraft.yaml:316
-#: ckanext/canada/tables/contracts.yaml:2183 ckanext/canada/tables/grants.yaml:836
+#: ckanext/canada/tables/contracts.yaml:2184 ckanext/canada/tables/grants.yaml:836
 #: ckanext/canada/tables/hospitalityq.yaml:449
 #: ckanext/canada/tables/qpnotes.yaml:332
 #: ckanext/canada/tables/reclassification.yaml:271
@@ -887,7 +887,7 @@ msgstr ""
 #. SQL Trigger String for PD Type: ati
 #. SQL Trigger String for PD Type: briefingt
 #: ckanext/canada/tables/ati.yaml:253 ckanext/canada/tables/ati.yaml:386
-#: ckanext/canada/tables/briefingt.yaml:405
+#: ckanext/canada/tables/briefingt.yaml:407
 msgid "Please enter a month number from 1-12"
 msgstr ""
 
@@ -941,12 +941,12 @@ msgstr ""
 #. SQL Trigger String for PD Type: reclassification
 #. SQL Trigger String for PD Type: travela
 #. SQL Trigger String for PD Type: travelq
-#: ckanext/canada/tables/briefingt.yaml:404
+#: ckanext/canada/tables/briefingt.yaml:406
 #: ckanext/canada/tables/contractsa.yaml:396
-#: ckanext/canada/tables/hospitalityq.yaml:604
-#: ckanext/canada/tables/qpnotes.yaml:454
-#: ckanext/canada/tables/reclassification.yaml:385
-#: ckanext/canada/tables/travela.yaml:645 ckanext/canada/tables/travelq.yaml:598
+#: ckanext/canada/tables/hospitalityq.yaml:606
+#: ckanext/canada/tables/qpnotes.yaml:456
+#: ckanext/canada/tables/reclassification.yaml:389
+#: ckanext/canada/tables/travela.yaml:645 ckanext/canada/tables/travelq.yaml:600
 msgid "This must list the year you are reporting on (not the fiscal year)."
 msgstr ""
 
@@ -994,70 +994,75 @@ msgid "Access, upload and modify the Contracts over 10K reports for your organiz
 msgstr ""
 
 #. SQL Trigger String for PD Type: contracts
-#: ckanext/canada/tables/contracts.yaml:2184
+#: ckanext/canada/tables/contracts.yaml:2183
+msgid "This field must not be empty"
+msgstr ""
+
+#. SQL Trigger String for PD Type: contracts
+#: ckanext/canada/tables/contracts.yaml:2185
 msgid ""
 "This field must contain the first three digits of a postal code in A1A format"
 " or the value \"NA\""
 msgstr ""
 
 #. SQL Trigger String for PD Type: contracts
-#: ckanext/canada/tables/contracts.yaml:2185
+#: ckanext/canada/tables/contracts.yaml:2186
 msgid ""
 "This field must be populated with an NA if an amendment is disclosed under "
 "Instrument Type"
 msgstr ""
 
 #. SQL Trigger String for PD Type: contracts
-#: ckanext/canada/tables/contracts.yaml:2186
+#: ckanext/canada/tables/contracts.yaml:2187
 msgid "This field is limited to only 3 or 4 digits."
 msgstr ""
 
 #. SQL Trigger String for PD Type: contracts
-#: ckanext/canada/tables/contracts.yaml:2187
+#: ckanext/canada/tables/contracts.yaml:2188
 msgid ""
 "If N/A, then Instrument Type must be identified as a standing offer/supply "
 "arrangement (SOSA)"
 msgstr ""
 
 #. SQL Trigger String for PD Type: contracts
-#: ckanext/canada/tables/contracts.yaml:2188
+#: ckanext/canada/tables/contracts.yaml:2189
 msgid ""
 "If the value XX (none) is entered, then no other value can be entered in this"
 " field."
 msgstr ""
 
 #. SQL Trigger String for PD Type: contracts
-#: ckanext/canada/tables/contracts.yaml:2189
+#: ckanext/canada/tables/contracts.yaml:2190
 msgid "Discontinued as of 2022-01-01"
 msgstr ""
 
 #. SQL Trigger String for PD Type: contracts
-#: ckanext/canada/tables/contracts.yaml:2190
+#: ckanext/canada/tables/contracts.yaml:2191
 msgid "Must be left blank when trade agreements specified"
 msgstr ""
 
 #. SQL Trigger String for PD Type: contracts
-#: ckanext/canada/tables/contracts.yaml:2191
+#: ckanext/canada/tables/contracts.yaml:2192
 msgid ""
 "If the value NA (not applicable) is entered, then no other value can be "
 "entered in this field."
 msgstr ""
 
 #. SQL Trigger String for PD Type: contracts
-#: ckanext/canada/tables/contracts.yaml:2192
+#: ckanext/canada/tables/contracts.yaml:2193
 msgid "The field is limited to eight alpha-numeric digits or less."
 msgstr ""
 
 #. SQL Trigger String for PD Type: contracts
-#: ckanext/canada/tables/contracts.yaml:2193
-#: ckanext/canada/tables/contracts.yaml:2196
+#: ckanext/canada/tables/contracts.yaml:2194
+#: ckanext/canada/tables/contracts.yaml:2197
 msgid ""
 "If the value 00 (none) is entered, then no other value can be entered in this"
 " field."
 msgstr ""
 
 #. SQL Trigger String for PD Type: contracts
-#: ckanext/canada/tables/contracts.yaml:2194
+#: ckanext/canada/tables/contracts.yaml:2195
 msgid ""
 "If TC, TN or AC is selected in the Solicitation Procedure data field with a "
 "value other than XX (None) selected in the Trade Agreement data field, then a"
@@ -1065,7 +1070,7 @@ msgid ""
 msgstr ""
 
 #. SQL Trigger String for PD Type: contracts
-#: ckanext/canada/tables/contracts.yaml:2195
+#: ckanext/canada/tables/contracts.yaml:2196
 msgid ""
 "If “TC” (Competitive - Traditional), “TN” (Non-Competitive) or “AC” (Advanced"
 " Contract Award Notice) is selected and trade agreement with a value other "
@@ -1074,21 +1079,21 @@ msgid ""
 msgstr ""
 
 #. SQL Trigger String for PD Type: contracts
-#: ckanext/canada/tables/contracts.yaml:2197
+#: ckanext/canada/tables/contracts.yaml:2198
 msgid ""
 "This field must be N, No or Non, if the Procurement Strategy for Aboriginal "
 "Business field is MS or VS."
 msgstr ""
 
 #. SQL Trigger String for PD Type: contracts
-#: ckanext/canada/tables/contracts.yaml:2198
+#: ckanext/canada/tables/contracts.yaml:2199
 msgid ""
 "This field must be populated with a 1 if the solicitation procedure is "
 "identified as non-competitive (TN) or Advance Contract Award Notice (AC)."
 msgstr ""
 
 #. SQL Trigger String for PD Type: contracts
-#: ckanext/canada/tables/contracts.yaml:2199
+#: ckanext/canada/tables/contracts.yaml:2200
 msgid ""
 "If this field is populated, it must be with a “0” if the procurement was "
 "identified as non-competitive (TN) or advance contract award notice (AC) or "
@@ -1096,7 +1101,7 @@ msgid ""
 msgstr ""
 
 #. SQL Trigger String for PD Type: contracts
-#: ckanext/canada/tables/contracts.yaml:2200
+#: ckanext/canada/tables/contracts.yaml:2201
 msgid ""
 "This field may only be populated with “0” if the procurement was identified "
 "as competitive (open bidding (OB), traditional competitive (TC) or selective "
@@ -1104,7 +1109,7 @@ msgid ""
 msgstr ""
 
 #. Resource Title for PD Type: contracts
-#: ckanext/canada/tables/contracts.yaml:2251
+#: ckanext/canada/tables/contracts.yaml:2252
 msgid "Proactive Publication - Contracts Nothing to Report"
 msgstr ""
 
@@ -1918,7 +1923,8 @@ msgstr ""
 #: ckanext/canada/templates/package/confirm_delete.html:12
 #: ckanext/canada/templates/package/confirm_delete_resource.html:3
 #: ckanext/canada/templates/package/confirm_delete_resource.html:12
-#: ckanext/canada/templates/recombinant/confirm_delete.html:17
+#: ckanext/canada/templates/recombinant/confirm_select_delete.html:3
+#: ckanext/canada/templates/recombinant/confirm_select_delete.html:40
 #: ckanext/canada/templates/user/confirm_delete.html:3
 #: ckanext/canada/templates/user/confirm_delete.html:13
 msgid "Confirm Delete"
@@ -1933,7 +1939,7 @@ msgstr ""
 #: ckanext/canada/templates/organization/confirm_delete_member.html:12
 #: ckanext/canada/templates/package/confirm_delete.html:11
 #: ckanext/canada/templates/package/confirm_delete_resource.html:11
-#: ckanext/canada/templates/recombinant/confirm_delete.html:16
+#: ckanext/canada/templates/recombinant/confirm_select_delete.html:39
 #: ckanext/canada/templates/recombinant/create_pd_record.html:83
 #: ckanext/canada/templates/recombinant/update_pd_record.html:86
 #: ckanext/canada/templates/user/confirm_delete.html:12
@@ -2717,7 +2723,7 @@ msgstr ""
 msgid "Description (French)"
 msgstr ""
 
-#: ckanext/canada/templates/recombinant/confirm_delete.html:4
+#: ckanext/canada/templates/recombinant/confirm_select_delete.html:9
 msgid "Are you sure you want to delete {num} record? This action cannot be undone."
 msgid_plural "Are you sure you want to delete {num} records? This action cannot be undone."
 msgstr[0] ""
