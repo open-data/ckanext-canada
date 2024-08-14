@@ -99,6 +99,40 @@
               }));
             });
             form.appendTo('body').submit();
+        }},
+        {extend:"selected",text:"{{_('Delete records')}}",action: function ( e, dt, button, config ){
+            // closing form tag needed for py webtest lib
+            var form = $('<form></form>',{
+              action : "{{ h.url_for('canada.delete_selected_records', resource_id=resource_id) }}",
+              method : "post"
+            });
+            form.append($('<input>').attr({
+              type: 'hidden',
+              value: "{{resource_name}}",
+              name: 'resource_name'
+            }));
+            form.append($('<input>').attr({
+              type: 'hidden',
+              value: "{{request.cookies.token}}",
+              name: 'token'
+            }));
+            form.append($('<input>').attr({
+              type: 'hidden',
+              value: {{primary_keys | tojson}},
+              name: 'key_indices'
+            }));
+            var pk_cols = {{primary_keys}}.map(function(value){
+              return value + {{offset}};
+            });
+            let rows = dt.rows( { selected: true } );
+            rows.eq(0).each(function(index){
+              form.append($('<input>').attr({
+                type: 'hidden',
+                value: dt.cells( index, pk_cols ).data().toArray(),
+                name: 'select-delete'
+              }));
+            });
+            form.appendTo('body').submit();
         }}
       ]
     });

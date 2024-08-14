@@ -688,6 +688,9 @@ label:lang(fr):after {
   border-right-color: #284162;
   z-index: -1;
 }
+.border-0 {
+    border: 0 !important;
+}
 
 .stages li.complete .highlight {
   color: #aeaeae;

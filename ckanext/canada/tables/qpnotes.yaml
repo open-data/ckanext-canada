@@ -362,7 +362,9 @@ resources:
 
   - datastore_id: year
     datastore_type: year
-    label: Year
+    label:
+      en: Year
+      fr: Année
     description:
       en: This tab / field in the template is only populated if there are no question period notes for the reporting period. This field should be populated with the year of the reporting period.
       fr: Cet onglet/champ du modèle n’est rempli que s'il n'y a pas de notes pour la période de questions pour la période d’établissement de rapports. Ce champ doit être rempli avec l’année de la période d’établissement de rapports.
