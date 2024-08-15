@@ -5,8 +5,7 @@ target_dataset: service
 title: Service Inventory
 notes: Access, upload and modify the Service Inventory of external and internal enterprise services for your organization
 
-template_version: 4
-template_updated: 2024-08-14
+template_version: 3
 
 portal_type: dataset
 collection: service
@@ -16,6 +15,12 @@ gcpedia_link: http://www.gcpedia.gc.ca/wiki/GC_Service_Policy_Agenda
 resources:
 - title: Service Identification Information & Metrics
   resource_name: service
+
+  #published_resource_id: TODO: make a resource on all environs
+
+  create_form: true
+  edit_form: true
+
   fields:
 
   # DEP 1-1
@@ -28,6 +33,7 @@ resources:
       fr: Indique l'exercice pour lequel les données sur les services sont déclarées.
     obligation: Mandatory
     excel_required: true
+    form_required: true
     validation: This field must not be empty
     occurrence: Single
     datastore_type: text
@@ -43,6 +49,7 @@ resources:
       fr: Le numéro unique attribué à un service dans le répertoire afin de faciliter le référencement à des services précis.
     obligation: Mandatory
     excel_required: true
+    form_required: true
     format_type: Free text
     validation: This field must not be empty
     occurrence: Single
@@ -62,6 +69,7 @@ resources:
   #     fr: Identifie le titre d'usage du ministère ou de l'organisme.
   #   obligation: Mandatory
   #   excel_required: true
+  #   form_required: true
   #   format_type: Controlled List
   #   validation: This field must not be empty
   #   occurrence: Single
@@ -78,11 +86,21 @@ resources:
       fr: Indique le nom officiel du service.
     obligation: Mandatory
     excel_required: true
+    form_required: true
     format_type: Free text
-    validation: This field must not be empty
+    validation:
+      en: |
+        This field must not be empty.
+        This field has a maximum length of 250 characters.
+      fr: |
+        Cette zone ne doit pas être vide.
+        Ce champ ne peut excéder une longueur maximale de 250 caractères.
     occurrence: Single
     datastore_type: text
     max_chars: 250
+    excel_error_formula: 'LEN(TRIM({cell}))>250'
+    form_attrs:
+      style: "width: 100%; display: block"
 
   # DEP 1-5
   - datastore_id: service_name_fr
@@ -94,11 +112,21 @@ resources:
       fr: Indique le nom officiel du service.
     obligation: Mandatory
     excel_required: true
+    form_required: true
     format_type: Free text
-    validation: This field must not be empty
+    validation:
+      en: |
+        This field must not be empty.
+        This field has a maximum length of 250 characters.
+      fr: |
+        Cette zone ne doit pas être vide.
+        Ce champ ne peut excéder une longueur maximale de 250 caractères.
     occurrence: Single
     datastore_type: text
     max_chars: 250
+    excel_error_formula: 'LEN(TRIM({cell}))>250'
+    form_attrs:
+      style: "width: 100%; display: block"
 
   # DEP 1-6
   - datastore_id: service_description_en
@@ -110,11 +138,20 @@ resources:
       fr: Offre une brève description du service, en langage simple.
     obligation: Mandatory
     excel_required: true
+    form_required: true
     format_type: Free text
-    validation: This field must not be empty
+    validation:
+      en: |
+        This field must not be empty.
+        This field has a maximum length of 1800 characters.
+      fr: |
+        Cette zone ne doit pas être vide.
+        Ce champ ne peut excéder une longueur maximale de 1800 caractères.
     occurrence: Single
     datastore_type: text
     max_chars: 1800
+    excel_error_formula: 'LEN(TRIM({cell}))>1800'
+    form_snippet: scheming/form_snippets/textarea.html
 
   # DEP 1-7
   - datastore_id: service_description_fr
@@ -126,14 +163,23 @@ resources:
       fr: Offre une brève description du service, en langage simple.
     obligation: Mandatory
     excel_required: true
+    form_required: true
     format_type: Free text
-    validation: This field must not be empty
+    validation:
+      en: |
+        This field must not be empty.
+        This field has a maximum length of 1800 characters.
+      fr: |
+        Cette zone ne doit pas être vide.
+        Ce champ ne peut excéder une longueur maximale de 1800 caractères.
     occurrence: Single
     datastore_type: text
     max_chars: 1800
+    excel_error_formula: 'LEN(TRIM({cell}))>1800'
+    form_snippet: scheming/form_snippets/textarea.html
 
   # DEP 1-8
-  # DEP Note: Multiple options can be entered for a record TODO: confirm Repeatable and multi-select
+  # DEP Note: Multiple options can be entered for a record TODO: confirm Repeatable
   - datastore_id: service_type
     label:
       en: Service Type
@@ -143,11 +189,15 @@ resources:
       fr: Indique le type de service tel qu'indiqué dans la Ligne directrice sur les services et le numérique.
     obligation: Mandatory
     excel_required: true
+    form_required: true
     format_type: Controlled List
-    validation: This field must not be empty
+    validation:
+      en: This field must not be empty.
+      fr: Cette zone ne doit pas être vide.
     occurrence: Repeatable
     datastore_type: text
-    excel_full_text_choices: true
+    excel_full_text_choices: false
+    form_snippet: scheming/form_snippets/multiple_select.html
     choices:
       APIR:
         en: Agreements, Permissions, Inspections, Rulings
@@ -180,12 +230,12 @@ resources:
       en: Service Recipient Type
       fr: Type de bénéficiaire du service
     description:
-      en: |
+      en: >
         Targeted, client-based services - service specific clients or groups, such as people, businesses,
         GC employees. Untargeted, Societal-based Service -Serve society, not distinct people or groups,
         such as military, pure science. Untargeted services only fill in static data, they do not fill
         in the service report.
-      fr: |
+      fr: >
         Services ciblés axés sur les clients - Répondent aux besoins de clients ou de groupes particuliers,
         par exemple les personnes, les entreprises ou les employés du GC. Services non ciblés axés sur la
         société -Répondent aux besoins de la société en général et non aux besoins de personnes ou de
@@ -194,11 +244,14 @@ resources:
         des services.
     obligation: Mandatory
     excel_required: true
+    form_required: true
     format_type: Controlled List
-    validation: This field must not be empty
+    validation:
+      en: This field must not be empty.
+      fr: Cette zone ne doit pas être vide.
     occurrence: Single
     datastore_type: text
-    excel_full_text_choices: true
+    excel_full_text_choices: false
     choices:
       CLIENT:
         en: Targeted, Client-based service
@@ -208,7 +261,7 @@ resources:
         fr: Service non-ciblé, axé sur la société
 
   # DEP 1-10
-  # DEP Note: Multiple options can be entered for a record TODO: confirm Repeatable and multi-select
+  # DEP Note: Multiple options can be entered for a record TODO: confirm Repeatable
   - datastore_id: service_scope
     label:
       en: Service Scope
@@ -218,11 +271,15 @@ resources:
       fr: Indique si le service est offert aux clients externes ou internes au gouvernement
     obligation: Mandatory
     excel_required: true
+    form_required: true
     format_type: Controlled List
-    validation: This field must not be empty
+    validation:
+      en: This field must not be empty.
+      fr: Cette zone ne doit pas être vide.
     occurrence: Repeatable
     datastore_type: text
-    excel_full_text_choices: true
+    excel_full_text_choices: false
+    form_snippet: scheming/form_snippets/multiple_select.html
     choices:
       CLUSTER:
         en: Internal Cluster Service
@@ -238,7 +295,7 @@ resources:
         fr: Service interne
 
   # DEP 1-11
-  # DEP Note: Multiple options can be entered for a record TODO: confirm Repeatable and multi-select
+  # DEP Note: Multiple options can be entered for a record TODO: confirm Repeatable
   - datastore_id: client_target_groups
     label:
       en: Client/Target Groups
@@ -248,11 +305,15 @@ resources:
       fr: Identifie les clients ou les groupes de services cibles.
     obligation: Mandatory
     excel_required: true
+    form_required: true
     format_type: Controlled List
-    validation: This field must not be empty
+    validation:
+      en: This field must not be empty.
+      fr: Cette zone ne doit pas être vide.
     occurrence: Repeatable
     datastore_type: text
-    excel_full_text_choices: true
+    excel_full_text_choices: false
+    form_snippet: scheming/form_snippets/multiple_select.html
     choices:
       ECONOM:
         en: Economic Segments (Businesses)
@@ -275,19 +336,19 @@ resources:
 
   # DEP 1-12
   # DEP Note: controlled list from CSV resources https://open.canada.ca/data/en/dataset/3c371e57-d487-49fa-bb0d-352ae8dd6e4e
-  # DEP Note: Multiple options can be entered for a record TODO: confirm Repeatable and multi-select
+  # DEP Note: Multiple options can be entered for a record TODO: confirm Repeatable
   - datastore_id: program_id
     label:
       en: Program ID Code
       fr: Code d'identification du programme
     description:
-      en: |
+      en: >
         Identifies the unique program code associated with program elements for all
         strategic outcomes, programs, sub-programs, and sub-sub-programs. The Program
         codes in the government-wide Chart of Accounts can be used. Corporate planners
         in the department/agency who are responsible for the Policy on Results can
         assist in identifying this, if needed.
-      fr: |
+      fr: >
         Indique le code de programme unique associé aux éléments de programme pour tous
         les résultats stratégiques, les programmes, les sous-programmes et les sous-sous-programmes.
         Les planificateurs ministériels du ministère ou de l'organisme responsables de la
@@ -295,17 +356,23 @@ resources:
         programme, au besoin.
     obligation: Mandatory
     excel_required: true
+    form_required: true
     format_type: Controlled List
-    validation: This field must not be empty
+    validation:
+      en: This field must not be empty.
+      fr: Cette zone ne doit pas être vide.
     occurrence: Repeatable
     datastore_type: text
-    excel_full_text_choices: true
+    excel_full_text_choices: false
+    form_snippet: scheming/form_snippets/multiple_select.html
     choices_file: choices/service_program_ids.yaml
+    form_select_attrs:
+      class: form-control recombinant-select2
 
   # DEP 1-13
   # DEP Note: controlled list from CSV resources https://open.canada.ca/data/en/dataset/3c371e57-d487-49fa-bb0d-352ae8dd6e4e
   # DEP Note: base off of program_id
-  # DEP Note: Multiple options can be entered for a record TODO: confirm Repeatable and multi-select
+  # DEP Note: Multiple options can be entered for a record TODO: confirm Repeatable
   # Dev Note: hidden field?
   - datastore_id: program_name_en
     label:
@@ -319,13 +386,15 @@ resources:
     format_type: Controlled List
     occurrence: Repeatable
     datastore_type: text
-    excel_full_text_choices: true
+    excel_full_text_choices: false
+    form_required: true
+    form_snippet: scheming/form_snippets/multiple_select.html
     choices_file: choices/service_program_names.yaml
 
   # DEP 1-14
   # DEP Note: controlled list from CSV resources https://open.canada.ca/data/en/dataset/3c371e57-d487-49fa-bb0d-352ae8dd6e4e
   # DEP Note: base off of program_id
-  # DEP Note: Multiple options can be entered for a record TODO: confirm Repeatable and multi-select
+  # DEP Note: Multiple options can be entered for a record TODO: confirm Repeatable
   # Dev Note: hidden field?
   - datastore_id: program_name_fr
     label:
@@ -339,11 +408,13 @@ resources:
     format_type: Controlled List
     occurrence: Repeatable
     datastore_type: text
-    excel_full_text_choices: true
+    excel_full_text_choices: false
+    form_required: true
+    form_snippet: scheming/form_snippets/multiple_select.html
     choices_file: choices/service_program_names.yaml
 
   # DEP 1-15
-  # DEP Note: Multiple options can be entered for a record TODO: confirm Repeatable and multi-select
+  # DEP Note: Multiple options can be entered for a record TODO: confirm Repeatable
   - datastore_id: client_feedback_channel
     label:
       en: Client Feedback, by Channel
@@ -353,11 +424,15 @@ resources:
       fr: Détermine quels canaux, s'il y a lieu, offrent aux utilisateurs d'un service l'occasion de donner une rétroaction sur leur niveau de satisfaction à l'égard du service.
     obligation: Mandatory
     excel_required: true
+    form_required: true
     format_type: Controlled List
-    validation: This field must not be empty
+    validation:
+      en: This field must not be empty.
+      fr: Cette zone ne doit pas être vide.
     occurrence: Repeatable
     datastore_type: text
-    excel_full_text_choices: true
+    excel_full_text_choices: false
+    form_snippet: scheming/form_snippets/multiple_select.html
     choices:
       EML:
         en: Email
@@ -390,13 +465,13 @@ resources:
       en: Automated Decision System
       fr: Système décisionnel automatisé
     description:
-      en: |
+      en: >
         An automated decision system is defined in the Directive on Automated Decision-Making
         and means any technology that either assists or replaces the judgment of human
         decision-makers, such as those that draw from fields like statistics, linguistics and
         computer science, and use techniques such as rules-based systems, regression, predictive
         analytics, machine learning, deep learning, and neural networks.
-      fr: |
+      fr: >
         Un système décisionnel automatisé est défini dans la Directive sur la prise de décisions
         automatisée et désigne toute technologie qui assiste ou remplace le jugement des décideurs
         humains, comme ceux qui proviennent de domaines tels que les statistiques, la linguistique
@@ -405,11 +480,14 @@ resources:
         l’apprentissage en profondeur et les réseaux neuronaux.
     obligation: Mandatory
     excel_required: true
+    form_required: true
     format_type: Controlled List
-    validation: This field must not be empty
+    validation:
+      en: This field must not be empty.
+      fr: Cette zone ne doit pas être vide.
     occurrence: Single
     datastore_type: boolean
-    excel_full_text_choices: true
+    excel_full_text_choices: false
     choices_file: choices/boolean.yaml
 
   # DEP 1-17
@@ -420,11 +498,11 @@ resources:
       en: Automated Decision System Description (English)
       fr: Description du système décisionnel automatisé (anglais)
     description:
-      en: |
+      en: >
         Describe what the system does. Include: the name or title of the system,
         the role of the system in the decision, whether it is full or partial
         automation, and how officers use the system to make or inform the decision.
-      fr: |
+      fr: >
         Décrivez ce que fait le système. Inclure : le nom ou titre du système, le
         rôle du système dans la prise de décision, s'il s'agit d'une automatisation
         complète ou partielle, et comment les agents utilisent le système pour
@@ -432,10 +510,19 @@ resources:
     obligation: Optional
     excel_required: false
     format_type: Free text
-    validation: This field is required due to a response in a different field.
+    validation:
+      en: |
+        This field is required due to a response in a different field.
+        This field has a maximum length of 1800 characters.
+      fr: |
+        Ce champ est requis en raison d'une réponse présente dans un autre champ.
+        Ce champ ne peut excéder une longueur maximale de 1800 caractères.
     occurrence: Single
     datastore_type: text
     max_chars: 1800
+    excel_required_formula: 'VALUE({automated_decision_system})>0'
+    excel_error_formula: 'LEN(TRIM({cell}))>1800'
+    form_snippet: scheming/form_snippets/textarea.html
 
   # DEP 1-18
   # DEP Note: if field "Automated Decision system" has "yes / 1" then this field cannot be empty. TODO: confirm logic
@@ -445,11 +532,11 @@ resources:
       en: Automated Decision System Description (French)
       fr: Description du système décisionnel automatisé (français)
     description:
-      en: |
+      en: >
         Describe what the system does. Include: the name or title of the system,
         the role of the system in the decision, whether it is full or partial
         automation, and how officers use the system to make or inform the decision.
-      fr: |
+      fr: >
         Décrivez ce que fait le système. Inclure : le nom ou titre du système, le
         rôle du système dans la prise de décision, s'il s'agit d'une automatisation
         complète ou partielle, et comment les agents utilisent le système pour
@@ -457,10 +544,19 @@ resources:
     obligation: Optional
     excel_required: false
     format_type: Free text
-    validation: This field is required due to a response in a different field.
+    validation:
+      en: |
+        This field is required due to a response in a different field.
+        This field has a maximum length of 1800 characters.
+      fr: |
+        Ce champ est requis en raison d'une réponse présente dans un autre champ.
+        Ce champ ne peut excéder une longueur maximale de 1800 caractères.
     occurrence: Single
     datastore_type: text
     max_chars: 1800
+    excel_required_formula: 'VALUE({automated_decision_system})>0'
+    excel_error_formula: 'LEN(TRIM({cell}))>1800'
+    form_snippet: scheming/form_snippets/textarea.html
 
   # DEP 1-19
   - datastore_id: service_fee
@@ -472,11 +568,14 @@ resources:
       fr: Indique si des frais de service sont perçus pour la prestation du service.
     obligation: Mandatory
     excel_required: true
+    form_required: true
     format_type: Controlled List
-    validation: This field must not be empty
+    validation:
+      en: This field must not be empty.
+      fr: Cette zone ne doit pas être vide.
     occurrence: Single
     datastore_type: boolean
-    excel_full_text_choices: true
+    excel_full_text_choices: false
     choices_file: choices/boolean.yaml
 
   # DEP 1-20
@@ -485,21 +584,24 @@ resources:
       en: "Online Services: Account Registration/Enrollment"
       fr: "Services en ligne : Enregistrement/inscription du compte"
     description:
-      en: |
+      en: >
         Identifies whether a client can register or enroll for a personal account
         where they can make use of other interaction points (applying for services,
         providing information, seeing their status, submitting feedback, etc.).
-      fr: |
+      fr: >
         Indique si un client peut s'inscrire ou s'inscrire à un compte personnel où
         il peut utiliser d'autres points d'interaction (demander des services, fournir
         des renseignements, voir son statut, soumettre des commentaires, etc.).
     obligation: Mandatory
     excel_required: true
+    form_required: true
     format_type: Controlled List
-    validation: This field must not be empty
+    validation:
+      en: This field must not be empty.
+      fr: Cette zone ne doit pas être vide.
     occurrence: Single
     datastore_type: int
-    excel_full_text_choices: true
+    excel_full_text_choices: false
     choices_file: choices/online_service_boolean.yaml
 
   # DEP 1-21
@@ -512,11 +614,14 @@ resources:
       fr: Indique si un client peut confirmer son identité en ligne.
     obligation: Mandatory
     excel_required: true
+    form_required: true
     format_type: Controlled List
-    validation: This field must not be empty
+    validation:
+      en: This field must not be empty.
+      fr: Cette zone ne doit pas être vide.
     occurrence: Single
     datastore_type: int
-    excel_full_text_choices: true
+    excel_full_text_choices: false
     choices_file: choices/online_service_boolean.yaml
 
   # DEP 1-22
@@ -529,11 +634,14 @@ resources:
       fr: Indique si un client peut présenter une demande de service en ligne.
     obligation: Mandatory
     excel_required: true
+    form_required: true
     format_type: Controlled List
-    validation: This field must not be empty
+    validation:
+      en: This field must not be empty.
+      fr: Cette zone ne doit pas être vide.
     occurrence: Single
     datastore_type: int
-    excel_full_text_choices: true
+    excel_full_text_choices: false
     choices_file: choices/online_service_boolean.yaml
 
   # DEP 1-23
@@ -546,11 +654,14 @@ resources:
       fr: Indique si un client peut être informé en ligne du résultat de sa demande de ce service.
     obligation: Mandatory
     excel_required: true
+    form_required: true
     format_type: Controlled List
-    validation: This field must not be empty
+    validation:
+      en: This field must not be empty.
+      fr: Cette zone ne doit pas être vide.
     occurrence: Single
     datastore_type: int
-    excel_full_text_choices: true
+    excel_full_text_choices: false
     choices_file: choices/online_service_boolean.yaml
 
   # DEP 1-24
@@ -563,11 +674,14 @@ resources:
       fr: Indique si un client peut recevoir le service en ligne, peut-être sous forme de permis, de certificats, d'argent ou d'information.
     obligation: Mandatory
     excel_required: true
+    form_required: true
     format_type: Controlled List
-    validation: This field must not be empty
+    validation:
+      en: This field must not be empty.
+      fr: Cette zone ne doit pas être vide.
     occurrence: Single
     datastore_type: int
-    excel_full_text_choices: true
+    excel_full_text_choices: false
     choices_file: choices/online_service_boolean.yaml
 
   # DEP 1-25
@@ -580,11 +694,14 @@ resources:
       fr: Indique si un client peut demander une résolution à leur problèmes avec le service ou fournir de la rétroaction en ligne.
     obligation: Mandatory
     excel_required: true
+    form_required: true
     format_type: Controlled List
-    validation: This field must not be empty
+    validation:
+      en: This field must not be empty.
+      fr: Cette zone ne doit pas être vide.
     occurrence: Single
     datastore_type: int
-    excel_full_text_choices: true
+    excel_full_text_choices: false
     choices_file: choices/online_service_boolean.yaml
 
   # DEP 1-26
@@ -594,20 +711,29 @@ resources:
       en: "Comments on Online Services - Client Interaction Points (English)"
       fr: "Commentaires sur les services électroniques - points d'interaction avec les clients (anglais)"
     description:
-      en: |
+      en: >
         Comments related to online services - client Interaction points (English). For
         any interaction points reported as "Not Applicable", comments have to be provided.
-      fr: |
+      fr: >
         Commentaires en lien avec les services électroniques - points d'interaction avec les
         clients (anglais). Pour tout points d'interaction signalés comme « sans objet »,
         des commentaires doivent être fournis.
     obligation: Optional
     excel_required: false
     format_type: Free text
-    validation: This field is required due to a response in a different field.
+    validation:
+      en: |
+        This field is required due to a response in a different field.
+        This field has a maximum length of 1000 characters.
+      fr: |
+        Ce champ est requis en raison d'une réponse présente dans un autre champ.
+        Ce champ ne peut excéder une longueur maximale de 1000 caractères.
     occurrence: Single
     datastore_type: text
     max_chars: 1000
+    excel_required_formula: 'VALUE({automated_decision_system})>0' # TODO: lots of os_ fields here...
+    excel_error_formula: 'LEN(TRIM({cell}))>1000'
+    form_snippet: scheming/form_snippets/textarea.html
 
   # DEP 1-27
   # DEP Note: if any of the fields  "Online services" has "NA / -1" then this field cannot be empty. TODO: confirm logic
@@ -616,20 +742,29 @@ resources:
       en: "Comments on Online Services - Client Interaction Points (French)"
       fr: "Commentaires sur les services électroniques - points d'interaction avec les clients (français)"
     description:
-      en: |
+      en: >
         Comments related to online services - client Interaction points (French). For any
         interaction points reported as "Not Applicable", comments have to be provided.
-      fr: |
+      fr: >
         Commentaires en lien avec les services électroniques - points d'interaction avec
         les clients (français). Pour tout points d'interaction signalés comme « sans objet »,
         des commentaires doivent être fournis.
     obligation: Optional
     excel_required: false
     format_type: Free text
-    validation: This field is required due to a response in a different field.
+    validation:
+      en: |
+        This field is required due to a response in a different field.
+        This field has a maximum length of 1000 characters.
+      fr: |
+        Ce champ est requis en raison d'une réponse présente dans un autre champ.
+        Ce champ ne peut excéder une longueur maximale de 1000 caractères.
     occurrence: Single
     datastore_type: text
     max_chars: 1000
+    excel_required_formula: 'VALUE({automated_decision_system})>0' # TODO: lots of os_ fields here...
+    excel_error_formula: 'LEN(TRIM({cell}))>1000'
+    form_snippet: scheming/form_snippets/textarea.html
 
   # DEP 1-28
   - datastore_id: last_service_review
@@ -641,9 +776,13 @@ resources:
       fr: Identifie l’exercice lors duquel le plus récent examen de service a été mené.
     obligation: Mandatory
     excel_required: true
-    validation: This field must not be empty
+    form_required: true
+    validation:
+      en: This field must not be empty.
+      fr: Cette zone ne doit pas être vide.
     occurrence: Single
     datastore_type: text
+    excel_full_text_choices: false
     choices_file: choices/fiscal_year.yaml
 
   # DEP 1-29
@@ -656,9 +795,13 @@ resources:
       fr: Quelle a été l'année la plus récente au cours de laquelle ce service a été amélioré en fonction des commentaires des clients?
     obligation: Mandatory
     excel_required: true
-    validation: This field must not be empty
+    form_required: true
+    validation:
+      en: This field must not be empty.
+      fr: Cette zone ne doit pas être vide.
     occurrence: Single
     datastore_type: text
+    excel_full_text_choices: false
     choices_file: choices/fiscal_year.yaml
 
   # DEP 1-30
@@ -671,11 +814,14 @@ resources:
       fr: Indique si le numéro d'assurance sociale (NAS) est utilisé dans la prestation du service.
     obligation: Mandatory
     excel_required: true
+    form_required: true
     format_type: Controlled List
-    validation: This field must not be empty
+    validation:
+      en: This field must not be empty.
+      fr: Cette zone ne doit pas être vide.
     occurrence: Single
     datastore_type: int
-    excel_full_text_choices: true
+    excel_full_text_choices: false
     choices_file: choices/service_boolean.yaml
 
   # DEP 1-31
@@ -684,21 +830,24 @@ resources:
       en: Use of CRA Business Number as Standard Identifier
       fr: Utilisation du numéro d’entreprise de l’ARC en tant qu’identificateur standard
     description:
-      en: |
+      en: >
         Identifies whether the Canada Revenue Agency's Business Number is used in the
         delivery of the service as the standard identifier in accordance with the Directive
         on the Business Number.
-      fr: |
+      fr: >
         Indique si le numéro d’entreprise de l’Agence du revenu du Canada est utilisé dans
         la prestation des services en tant qu’identificateur standard, conformément à la
         Directive sur le numéro d’entreprise.
     obligation: Mandatory
     excel_required: true
+    form_required: true
     format_type: Controlled List
-    validation: This field must not be empty
+    validation:
+      en: This field must not be empty.
+      fr: Cette zone ne doit pas être vide.
     occurrence: Single
     datastore_type: int
-    excel_full_text_choices: true
+    excel_full_text_choices: false
     choices_file: choices/service_boolean.yaml
 
   # DEP 1-32
@@ -708,14 +857,14 @@ resources:
       en: Number of Telephone Enquiries Received
       fr: Nombre des demandes téléphoniques reçus
     description:
-      en: |
+      en: >
         Identifies the number of enquiries about the service received
         in this fiscal year. Note: This field represents only requests
         for information about the service. Report service requests or
         applications submitted by telephone in the "telephone applications"
         field. A value of 0 means no calls were received; ND means no data
         was collected; and NA means it is not possible to submit telephone enquiries.
-      fr: |
+      fr: >
         Indique le nombre de demandes d'information reçues par téléphone au cours
         d'un exercice financier. Remarque : Ce champ indique seulement le nombre
         de demandes d'information au sujet d'un service. Servez-vous du champ
@@ -723,8 +872,15 @@ resources:
         reçues par téléphone.
     obligation: Mandatory
     excel_required: true
+    form_required: true
     format_type: Free text
-    validation: This field must be either a number, "NA", or "ND"
+    validation:
+      en: |
+        This field must not be empty.
+        This field must be either a number, "NA", or "ND"
+      fr: |
+        Cette zone ne doit pas être vide.
+        Ce champ doit être un chiffre, "NA", ou "ND"
     occurrence: Single
     datastore_type: text
 
@@ -735,20 +891,27 @@ resources:
       en: Number of Applications Submitted by Telephone
       fr: Nombre de demandes soumises par téléphone
     description:
-      en: |
+      en: >
         Identifies the number of applications submitted in a fiscal year for the
         telephone channel. A value of 0 means no applications were received for
         this channel; ND means there is no data collected for this channel; and
         NA means no applications can be submitted through this channel.
-      fr: |
+      fr: >
         Indique le nombre de demandes reçues par téléphone au cours d'un exercice.
         La valeur 0 signifie qu'aucune demande n'a été reçue via ce mode de prestation,
         aucune donnée (ND) signifie qu'aucune donnée n’est disponible, et sans objet (NA)
         signifie que le service n’est pas offert au moyen de ce mode de prestation.
     obligation: Mandatory
     excel_required: true
+    form_required: true
     format_type: Free text
-    validation: This field must be either a number, "NA", or "ND"
+    validation:
+      en: |
+        This field must not be empty.
+        This field must be either a number, "NA", or "ND"
+      fr: |
+        Cette zone ne doit pas être vide.
+        Ce champ doit être un chiffre, "NA", ou "ND"
     occurrence: Single
     datastore_type: text
 
@@ -759,19 +922,26 @@ resources:
       en: Number of Website Visits
       fr: Nombre de visites sur le site Web
     description:
-      en: |
+      en: >
         Identifies the number of visits to the service's website in a fiscal year.
         A value of 0 means there were no visits; ND means there is no data collected
         website visits; and NA means there is no associated public website.
-      fr: |
+      fr: >
         Indique le nombre de de visites au site web du service lors d'un exercice
         financier. La valeur 0 signifie qu'aucune visite au site web n’a été enregistrée,
         aucune donnée (ND) signifie que le nombre de visites n’est pas mesuré, et sans
         objet (NA) signifie qu’il n’y a aucune site web à visiter.
     obligation: Mandatory
     excel_required: true
+    form_required: true
     format_type: Free text
-    validation: This field must be either a number, "NA", or "ND"
+    validation:
+      en: |
+        This field must not be empty.
+        This field must be either a number, "NA", or "ND"
+      fr: |
+        Cette zone ne doit pas être vide.
+        Ce champ doit être un chiffre, "NA", ou "ND"
     occurrence: Single
     datastore_type: text
 
@@ -782,13 +952,13 @@ resources:
       en: Number of Applications Submitted Online
       fr: Nombre de demandes soumises en ligne
     description:
-      en: |
+      en: >
         Identifies the number of applications submitted in a fiscal year
         for the online channel. A value of 0 means no applications were
         received for this channel; ND means there is no data collected for
         this channel; and NA means no applications can be submitted through
         this channel.
-      fr: |
+      fr: >
         Indique le nombre de demandes reçues en ligne au cours d'un exercice.
         La valeur 0 signifie qu'aucune demande n'a été reçue via ce mode de
         prestation, aucune donnée (ND) signifie qu'aucune donnée n’est disponible,
@@ -796,8 +966,15 @@ resources:
         ce mode de prestation.
     obligation: Mandatory
     excel_required: true
+    form_required: true
     format_type: Free text
-    validation: This field must be either a number, "NA", or "ND"
+    validation:
+      en: |
+        This field must not be empty.
+        This field must be either a number, "NA", or "ND"
+      fr: |
+        Cette zone ne doit pas être vide.
+        Ce champ doit être un chiffre, "NA", ou "ND"
     occurrence: Single
     datastore_type: text
 
@@ -808,12 +985,12 @@ resources:
       en: Number of Applications Submitted In-Person
       fr: Nombre de demandes soumises en personne
     description:
-      en: |
+      en: >
         Identifies number of applications received in-person in a fiscal year
         for the service. A value of 0 means no applications were received for
         this channel; ND means there is no data collected for this channel;
         and NA means no applications can be submitted through this channel.
-      fr: |
+      fr: >
         Indique le nombre de demandes reçues en personne au cours d'un exercice.
         La valeur 0 signifie qu'aucune demande n'a été reçue via ce mode de
         prestation, aucune donnée (ND) signifie qu'aucune donnée n’est disponible,
@@ -821,8 +998,15 @@ resources:
         ce mode de prestation.
     obligation: Mandatory
     excel_required: true
+    form_required: true
     format_type: Free text
-    validation: This field must be either a number, "NA", or "ND"
+    validation:
+      en: |
+        This field must not be empty.
+        This field must be either a number, "NA", or "ND"
+      fr: |
+        Cette zone ne doit pas être vide.
+        Ce champ doit être un chiffre, "NA", ou "ND"
     occurrence: Single
     datastore_type: text
 
@@ -833,20 +1017,27 @@ resources:
       en: Number of Applications Submitted via Postal Mail
       fr: Nombre de demandes soumises par la poste
     description:
-      en: |
+      en: >
         Identifies the number of applications received through postal mail in a fiscal
         year. A value of 0 means no applications were received for this channel;
         ND means there is no data collected for this channel; and NA means no applications
         can be submitted through this channel.
-      fr: |
+      fr: >
         Indique le nombre de demandes reçues par la poste au cours d'un exercice.
         La valeur 0 signifie qu'aucune demande n'a été reçue via ce mode de prestation,
         aucune donnée (ND) signifie qu'aucune donnée n’est disponible, et sans objet (NA)
         signifie que le service n’est pas offert au moyen de ce mode de prestation.
     obligation: Mandatory
     excel_required: true
+    form_required: true
     format_type: Free text
-    validation: This field must be either a number, "NA", or "ND"
+    validation:
+      en: |
+        This field must not be empty.
+        This field must be either a number, "NA", or "ND"
+      fr: |
+        Cette zone ne doit pas être vide.
+        Ce champ doit être un chiffre, "NA", ou "ND"
     occurrence: Single
     datastore_type: text
 
@@ -857,20 +1048,27 @@ resources:
       en: Number of Applications Submitted by Email
       fr: Nombre de demandes soumises par courriel
     description:
-      en: |
+      en: >
         Identifies the number of applications received through email in a fiscal
         year for the service. A value of 0 means no applications were received for
         this channel; ND means there is no data collected for this channel; and
         NA means no applications can be submitted through this channel.
-      fr: |
+      fr: >
         Indique le nombre de demandes reçues par courriel au cours d'un exercice.
         La valeur 0 signifie qu'aucune demande n'a été reçue via ce mode de prestation,
         aucune donnée (ND) signifie qu'aucune donnée n’est disponible, et sans objet
         (NA) signifie que le service n’est pas offert au moyen de ce mode de prestation.
     obligation: Mandatory
     excel_required: true
+    form_required: true
     format_type: Free text
-    validation: This field must be either a number, "NA", or "ND"
+    validation:
+      en: |
+        This field must not be empty.
+        This field must be either a number, "NA", or "ND"
+      fr: |
+        Cette zone ne doit pas être vide.
+        Ce champ doit être un chiffre, "NA", ou "ND"
     occurrence: Single
     datastore_type: text
 
@@ -881,20 +1079,27 @@ resources:
       en: Number of Applications Submitted by Fax
       fr: Nombre de demandes soumises par fax
     description:
-      en: |
+      en: >
         Identifies the number of applications received through fax in a fiscal
         year for the service. A value of 0 means no applications were received
         for this channel; ND means there is no data collected for this channel;
         and NA means no applications can be submitted through this channel.
-      fr: |
+      fr: >
         Indique le nombre de demandes reçues par télécopieur au cours d'un exercice.
         La valeur 0 signifie qu'aucune demande n'a été reçue via ce mode de prestation,
         aucune donnée (ND) signifie qu'aucune donnée n’est disponible, et sans objet
         (NA) signifie que le service n’est pas offert au moyen de ce mode de prestation.
     obligation: Mandatory
     excel_required: true
+    form_required: true
     format_type: Free text
-    validation: This field must be either a number, "NA", or "ND"
+    validation:
+      en: |
+        This field must not be empty.
+        This field must be either a number, "NA", or "ND"
+      fr: |
+        Cette zone ne doit pas être vide.
+        Ce champ doit être un chiffre, "NA", ou "ND"
     occurrence: Single
     datastore_type: text
 
@@ -905,12 +1110,12 @@ resources:
       en: Number of Applications Submitted via other channels
       fr: Nombre de demandes soumises par les autre modes de prestations
     description:
-      en: |
+      en: >
         Identifies the number of applications received through other channels not
         listed in a fiscal year for the service. A value of 0 means no applications
         were received for this channel; ND means there is no data collected for this
         channel; and NA means no applications can be submitted through this channel.
-      fr: |
+      fr: >
         Indique le nombre de demandes reçues par des modes de prestations qui ne sont
         pas énumérés dans ce gabarit au cours d'un exercice. La valeur 0 signifie
         qu'aucune demande n'a été reçue via ce mode de prestation, aucune donnée (ND)
@@ -918,8 +1123,15 @@ resources:
         service n’est pas offert au moyen de ce mode de prestation.
     obligation: Mandatory
     excel_required: true
+    form_required: true
     format_type: Free text
-    validation: This field must be either a number, "NA", or "ND"
+    validation:
+      en: |
+        This field must not be empty.
+        This field must be either a number, "NA", or "ND"
+      fr: |
+        Cette zone ne doit pas être vide.
+        Ce champ doit être un chiffre, "NA", ou "ND"
     occurrence: Single
     datastore_type: text
 
@@ -929,12 +1141,12 @@ resources:
       en: Special Remarks (English)
       fr: Remarques spéciales (anglais)
     description:
-      en: |
+      en: >
         Provides additional space for comments related to volumetrics information.
         Please refer to associated Field ID, where applicable. For comments related
         to other fields, departments can create and publish an explanatory note on
         their website with a link to the GC Service Inventory dataset.
-      fr: |
+      fr: >
         Fournit de l'espace supplémentaire pour les commentaires relatifs aux
         renseignements sur les volumes. Veuillez vous reporter au code d'identification
         de la zone, s'il y a lieu. Pour les commentaires relatifs à d'autres zones,
@@ -943,9 +1155,14 @@ resources:
     obligation: Optional
     excel_required: false
     format_type: Free text
+    validation:
+      en: This field has a maximum length of 2000 characters.
+      fr: Ce champ ne peut excéder une longueur maximale de 2000 caractères.
     occurrence: Single
     datastore_type: text
     max_chars: 2000
+    excel_error_formula: 'LEN(TRIM({cell}))>2000'
+    form_snippet: scheming/form_snippets/textarea.html
 
   # DEP 1-42
   - datastore_id: special_remarks_fr
@@ -953,12 +1170,12 @@ resources:
       en: Special Remarks (French)
       fr: Remarques spéciales (français)
     description:
-      en: |
+      en: >
         Provides additional space for comments related to volumetrics information.
         Please refer to associated Field ID, where applicable. For comments related
         to other fields, departments can create and publish an explanatory note on
         their website with a link to the GC Service Inventory dataset.
-      fr: |
+      fr: >
         Fournit de l'espace supplémentaire pour les commentaires relatifs aux
         renseignements sur les volumes. Veuillez vous reporter au code d'identification
         de la zone, s'il y a lieu. Pour les commentaires relatifs à d'autres zones,
@@ -967,9 +1184,14 @@ resources:
     obligation: Optional
     excel_required: false
     format_type: Free text
+    validation:
+      en: This field has a maximum length of 2000 characters.
+      fr: Ce champ ne peut excéder une longueur maximale de 2000 caractères.
     occurrence: Single
     datastore_type: text
     max_chars: 2000
+    excel_error_formula: 'LEN(TRIM({cell}))>2000'
+    form_snippet: scheming/form_snippets/textarea.html
 
   # DEP 1-43
   - datastore_id: service_uri_en
@@ -985,6 +1207,8 @@ resources:
     occurrence: Single
     datastore_type: text
     max_chars: 100
+    form_attrs:
+      style: "width: 100%; display: block"
 
   # DEP 1-44
   - datastore_id: service_uri_fr
@@ -1000,6 +1224,8 @@ resources:
     occurrence: Single
     datastore_type: text
     max_chars: 100
+    form_attrs:
+      style: "width: 100%; display: block"
 
   # DEP 1-45
   # DEP Note: this field must be the sum of all application fields TODO: confirm logic
@@ -1095,6 +1321,12 @@ resources:
 
 - title: Service Standards & Performance Results
   resource_name: service-std
+
+  #published_resource_id: TODO: make a resource on all environs
+
+  create_form: true
+  edit_form: true
+
   fields:
 
   # DEP 2-1
@@ -1107,9 +1339,13 @@ resources:
       fr: Indique l'exercice pour lequel les données sur les services sont déclarées.
     obligation: Mandatory
     excel_required: true
-    validation: This field must not be empty
+    form_required: true
+    validation:
+      en: This field must not be empty.
+      fr: Cette zone ne doit pas être vide.
     occurrence: Single
     datastore_type: text
+    excel_full_text_choices: false
     choices_file: choices/fiscal_year.yaml
 
   # DEP 2-2
@@ -1124,7 +1360,10 @@ resources:
       fr: Le numéro unique attribué à un service dans le répertoire afin de faciliter le référencement à des services précis.
     obligation: Mandatory
     excel_required: true
-    validation: This field must not be empty
+    form_required: true
+    validation:
+      en: This field must not be empty.
+      fr: Cette zone ne doit pas être vide.
     format_type: Free text
     occurrence: Single
     datastore_type: text
@@ -1139,11 +1378,21 @@ resources:
       fr: Indique le nom officiel du service.
     obligation: Mandatory
     excel_required: true
-    validation: This field must not be empty
+    form_required: true
+    validation:
+      en: |
+        This field must not be empty.
+        This field has a maximum length of 250 characters.
+      fr: |
+        Cette zone ne doit pas être vide.
+        Ce champ ne peut excéder une longueur maximale de 250 caractères.
     format_type: Free text
     occurrence: Single
     datastore_type: text
     max_chars: 250
+    excel_error_formula: 'LEN(TRIM({cell}))>250'
+    form_attrs:
+      style: "width: 100%; display: block"
 
   # DEP 2-4
   - datastore_id: service_name_fr
@@ -1155,11 +1404,21 @@ resources:
       fr: Indique le nom officiel du service.
     obligation: Mandatory
     excel_required: true
-    validation: This field must not be empty
+    form_required: true
+    validation:
+      en: |
+        This field must not be empty.
+        This field has a maximum length of 250 characters.
+      fr: |
+        Cette zone ne doit pas être vide.
+        Ce champ ne peut excéder une longueur maximale de 250 caractères.
     format_type: Free text
     occurrence: Single
     datastore_type: text
     max_chars: 250
+    excel_error_formula: 'LEN(TRIM({cell}))>250'
+    form_attrs:
+      style: "width: 100%; display: block"
 
   # DEP 2-5
   - datastore_id: service_standard_id
@@ -1167,17 +1426,20 @@ resources:
       en: Service Standard ID
       fr: Numéro d'identification de la norme relative aux services
     description:
-      en: |
+      en: >
         Identifies the unique number assigned to each service standard for that
         service. Makes it easier for reference purposes as one service may have
         multiple standards.
-      fr: |
+      fr: >
         Indique le numéro unique attribué à chaque norme relative aux services
         pour ce service. Facilite le référencement, car un service peut avoir
         de multiples normes.
     obligation: Mandatory
     excel_required: true
-    validation: This field must not be empty
+    form_required: true
+    validation:
+      en: This field must not be empty.
+      fr: Cette zone ne doit pas être vide.
     format_type: Free text
     occurrence: Single
     datastore_type: text
@@ -1188,22 +1450,31 @@ resources:
       en: Service Standard (English)
       fr: Norme relative aux services (anglais)
     description:
-      en: |
+      en: >
         Identifies the service standard related to a particular service. See
         Guideline on Service and Digital for format to be used when defining
         service standards.
-      fr: |
+      fr: >
         Indique la norme relative aux services ayant trait à un service en
         particulier. Voir la Ligne directrice sur les services et le numérique
         afin de connaître le format à utiliser pour définir les normes relatives
         aux services.
     obligation: Mandatory
     excel_required: true
-    validation: This field must not be empty
+    form_required: true
+    validation:
+      en: |
+        This field must not be empty.
+        This field has a maximum length of 500 characters.
+      fr: |
+        Cette zone ne doit pas être vide.
+        Ce champ ne peut excéder une longueur maximale de 500 caractères.
     format_type: Free text
     occurrence: Single
     datastore_type: text
     max_chars: 500
+    excel_error_formula: 'LEN(TRIM({cell}))>500'
+    form_snippet: scheming/form_snippets/textarea.html
 
   # DEP 2-7
   - datastore_id: service_standard_fr
@@ -1211,22 +1482,31 @@ resources:
       en: Service Standard (French)
       fr: Norme relative aux services (français)
     description:
-      en: |
+      en: >
         Identifies the service standard related to a particular service. See
         Guideline on Service and Digital for format to be used when defining
         service standards.
-      fr: |
+      fr: >
         Indique la norme relative aux services ayant trait à un service en
         particulier. Voir la Ligne directrice sur les services et le numérique
         afin de connaître le format à utiliser pour définir les normes relatives
         aux services.
     obligation: Mandatory
     excel_required: true
-    validation: This field must not be empty
+    form_required: true
+    validation:
+      en: |
+        This field must not be empty.
+        This field has a maximum length of 500 characters.
+      fr: |
+        Cette zone ne doit pas être vide.
+        Ce champ ne peut excéder une longueur maximale de 500 caractères.
     format_type: Free text
     occurrence: Single
     datastore_type: text
     max_chars: 500
+    excel_error_formula: 'LEN(TRIM({cell}))>500'
+    form_snippet: scheming/form_snippets/textarea.html
 
   # DEP 2-8
   - datastore_id: type
@@ -1234,14 +1514,14 @@ resources:
       en: Service Standard Type
       fr: Type de norme relative aux services
     description:
-      en: |
+      en: >
         Identifies the type of service standard as defined in the Guideline on Service
         and Digital. Access: a commitment outlining the ease and convenience the client
         should experience when attempting to access a service. Accuracy: a commitment
         stipulating that the client will receive a service that is up to date, free of
         errors, and complete. Timeliness: a commitment stating how long the client should
         expect to wait to receive a service once the service has been accessed.
-      fr: |
+      fr: >
         Indique le type de norme relative aux services défini dans la Ligne directrice
         sur les services et le numérique. Accès: un engagement qui décrit la facilité
         et la convivialité que devrait connaître le client lorsqu'il essaie d'accéder
@@ -1251,11 +1531,14 @@ resources:
         service une fois qu'il y a accédé.
     obligation: Mandatory
     excel_required: true
+    form_required: true
     format_type: Controlled List
-    validation: This field must not be empty
+    validation:
+      en: This field must not be empty.
+      fr: Cette zone ne doit pas être vide.
     occurrence: Single
     datastore_type: text
-    excel_full_text_choices: true
+    excel_full_text_choices: false
     choices:
       ACS:
         en: Access
@@ -1271,7 +1554,7 @@ resources:
         fr: Délai
 
   # DEP 2-9
-  # DEP Note: Multiple options can be entered for a record TODO: confirm Repeatable and multi-select
+  # DEP Note: Multiple options can be entered for a record TODO: confirm Repeatable
   - datastore_id: channel
     label:
       en: Service Standard Channel
@@ -1281,11 +1564,15 @@ resources:
       fr: Identifie à quelle mode de prestation de service la norme de service s'applique
     obligation: Mandatory
     excel_required: true
+    form_required: true
     format_type: Controlled List
-    validation: This field must not be empty
+    validation:
+      en: This field must not be empty.
+      fr: Cette zone ne doit pas être vide.
     occurrence: Repeatable
     datastore_type: text
-    excel_full_text_choices: true
+    excel_full_text_choices: false
+    form_snippet: scheming/form_snippets/multiple_select.html
     choices:
       EML:
         en: Email
@@ -1320,9 +1607,14 @@ resources:
     obligation: Optional
     excel_required: false
     format_type: Free text
+    validation:
+      en: This field has a maximum length of 1500 characters.
+      fr: Ce champ ne peut excéder une longueur maximale de 1500 caractères.
     occurrence: Single
     datastore_type: text
     max_chars: 1500
+    excel_error_formula: 'LEN(TRIM({cell}))>1500'
+    form_snippet: scheming/form_snippets/textarea.html
 
   # DEP 2-11
   - datastore_id: channel_comments_fr
@@ -1335,9 +1627,14 @@ resources:
     obligation: Optional
     excel_required: false
     format_type: Free text
+    validation:
+      en: This field has a maximum length of 1500 characters.
+      fr: Ce champ ne peut excéder une longueur maximale de 1500 caractères.
     occurrence: Single
     datastore_type: text
     max_chars: 1500
+    excel_error_formula: 'LEN(TRIM({cell}))>1500'
+    form_snippet: scheming/form_snippets/textarea.html
 
   # DEP 2-12
   # DEP Note: This value must be between 0 and 1 TODO: confirm logic
@@ -1351,9 +1648,12 @@ resources:
     obligation: Optional
     excel_required: false
     format_type: Free text
-    validation: This field must be a single number between 0 and 1 representing a percentage.
+    validation:
+      en: This field must be a single number between 0 and 1 representing a percentage.
+      fr: Ce champ doit inscrire un seul et unique chiffre entre 0 et 1 représentant un pourcentage.
     occurrence: Single
     datastore_type: numeric
+    excel_error_formula: 'OR({default_formula},{cell}<0,{cell}>1)'
 
   # DEP 2-13
   # DEP Note: This value must not be negative TODO: confirm logic
@@ -1362,12 +1662,12 @@ resources:
       en: Business Volume That Met Service Standard Target
       fr: Volume d'activités qui respectent la cible de la norme relative aux services
     description:
-      en: |
+      en: >
         Identifies the number of final outputs issued appropriate to the service
         (eg. payments issued, requests completed, etc) during the fiscal year that met
         a particular service standard target for a service. Blank indicates no information
         available, while 0 indicates that no final outputs issued met service standard targets.
-      fr: |
+      fr: >
         Indique le nombre d'opérations de service effectuées (p. ex. les appels auxquels on a
         répondu, les paiements émis, les demandes traitées, etc.) au cours de l'exercice qui
         ont respecté une norme relative aux services particulière à un service. Un champ vide
@@ -1376,9 +1676,12 @@ resources:
     obligation: Optional
     excel_required: false
     format_type: Decimal
-    validation: This value must not be negative
+    validation:
+      en: This value must not be negative.
+      fr: Cette valeur ne doit pas être négatif.
     occurrence: Single
     datastore_type: int
+    excel_error_formula: 'OR({default_formula},{cell}<0)'
 
   # DEP 2-14
   # DEP Note: This value must not be negative TODO: confirm logic
@@ -1387,11 +1690,11 @@ resources:
       en: Total Volume
       fr: Volumes totaux
     description:
-      en: |
+      en: >
         Identifies the total number of final outputs issued appropriate to the service
         (eg. payments issued, requests completed, etc) during the fiscal year. Blank
         indicates no information available, while 0 indicates no final outputs issued.
-      fr: |
+      fr: >
         Indique le nombre total d'opérations de service effectuées (p. ex. les paiements
         émis, les demandes traitées, etc.) relativement à un service au cours de l'exercice.
         Un champ vide indique qu'aucune information n'est disponible, tandis que 0 indique
@@ -1399,9 +1702,12 @@ resources:
     obligation: Optional
     excel_required: false
     format_type: Decimal
-    validation: This value must not be negative
+    validation:
+      en: This value must not be negative.
+      fr: Cette valeur ne doit pas être négatif.
     occurrence: Single
     datastore_type: int
+    excel_error_formula: 'OR({default_formula},{cell}<0)'
 
   # DEP 2-15
   # DEP Note: volume_meeting_target / total_volume TODO: confirm logic
@@ -1416,9 +1722,12 @@ resources:
     obligation: Optional
     excel_required: false
     format_type: Decimal
-    validation: This value must not be negative
+    validation:
+      en: This value must not be negative.
+      fr: Cette valeur ne doit pas être négatif.
     occurrence: Single
     datastore_type: numeric
+    excel_error_formula: 'OR({default_formula},{cell}<0)'
 
   # DEP 2-16
   - datastore_id: comments_en
@@ -1431,9 +1740,14 @@ resources:
     obligation: Optional
     excel_required: false
     format_type: Free text
+    validation:
+      en: This field has a maximum length of 2000 characters.
+      fr: Ce champ ne peut excéder une longueur maximale de 2000 caractères.
     occurrence: Single
     datastore_type: text
     max_chars: 2000
+    excel_error_formula: 'LEN(TRIM({cell}))>2000'
+    form_snippet: scheming/form_snippets/textarea.html
 
   # DEP 2-17
   - datastore_id: comments_fr
@@ -1446,9 +1760,14 @@ resources:
     obligation: Optional
     excel_required: false
     format_type: Free text
+    validation:
+      en: This field has a maximum length of 2000 characters.
+      fr: Ce champ ne peut excéder une longueur maximale de 2000 caractères.
     occurrence: Single
     datastore_type: text
     max_chars: 2000
+    excel_error_formula: 'LEN(TRIM({cell}))>2000'
+    form_snippet: scheming/form_snippets/textarea.html
 
   # DEP 2-18
   # DEP Note: calculated field:
@@ -1460,11 +1779,11 @@ resources:
       en: Was the target met
       fr: La cible était-elle atteinte
     description:
-      en: |
+      en: >
         A yes, no or not applicable field that is automatically calculated for target_type "Percentage of outcomes",
         where "Not applicable" is autopopulated when field total_volume is reported as 0. Otherwise the result is
         self-reported by departments for target_type "Other type of target".
-      fr: |
+      fr: >
         Un champ oui, non ou sans objet calculé automatiquement pour target_type « Pourcentage de résultats », où
         « Sans objet » est rempli automatiquement lorsque le champ total_volume est 0. Dans le cas contraire, le
         résultat est autodéclaré par les ministères pour target_type « Autre type de cible ».
@@ -1472,7 +1791,7 @@ resources:
     excel_required: false
     format_type: Controlled List
     occurrence: Single
-    excel_full_text_choices: true
+    excel_full_text_choices: false
     datastore_type: int
     choices:
       -1:
@@ -1495,11 +1814,21 @@ resources:
       fr: Indique la page Web ministérielle (Canada.ca) où les normes relatives aux services et les cibles sont publiées.
     obligation: Mandatory
     excel_required: true
-    validation: This field must not be empty
+    form_required: true
     format_type: Free text
+    validation:
+      en: |
+        This field must not be empty.
+        This field has a maximum length of 100 characters.
+      fr: |
+        Cette zone ne doit pas être vide.
+        Ce champ ne peut excéder une longueur maximale de 100 caractères.
     occurrence: Single
     datastore_type: text
     max_chars: 100
+    excel_error_formula: 'LEN(TRIM({cell}))>100'
+    form_attrs:
+      style: "width: 100%; display: block"
 
   # DEP-20
   - datastore_id: standards_targets_uri_fr
@@ -1511,11 +1840,21 @@ resources:
       fr: Indique la page Web ministérielle (Canada.ca) où les normes relatives aux services et les cibles sont publiées.
     obligation: Mandatory
     excel_required: true
-    validation: This field must not be empty
+    form_required: true
     format_type: Free text
+    validation:
+      en: |
+        This field must not be empty.
+        This field has a maximum length of 100 characters.
+      fr: |
+        Cette zone ne doit pas être vide.
+        Ce champ ne peut excéder une longueur maximale de 100 caractères.
     occurrence: Single
     datastore_type: text
     max_chars: 100
+    excel_error_formula: 'LEN(TRIM({cell}))>100'
+    form_attrs:
+      style: "width: 100%; display: block"
 
   # DEP-21
   - datastore_id: performance_results_uri_en
@@ -1528,9 +1867,15 @@ resources:
     obligation: Optional
     excel_required: false
     format_type: Free text
+    validation:
+      en: This field has a maximum length of 100 characters.
+      fr: Ce champ ne peut excéder une longueur maximale de 100 caractères.
     occurrence: Single
     datastore_type: text
     max_chars: 100
+    excel_error_formula: 'LEN(TRIM({cell}))>100'
+    form_attrs:
+      style: "width: 100%; display: block"
 
   # DEP-22
   - datastore_id: performance_results_uri_fr
@@ -1543,9 +1888,15 @@ resources:
     obligation: Optional
     excel_required: false
     format_type: Free text
+    validation:
+      en: This field has a maximum length of 100 characters.
+      fr: Ce champ ne peut excéder une longueur maximale de 100 caractères.
     occurrence: Single
     datastore_type: text
     max_chars: 100
+    excel_error_formula: 'LEN(TRIM({cell}))>100'
+    form_attrs:
+      style: "width: 100%; display: block"
 
   # DEP-23
   # DEP Note: Must be generated by Open government registry based on org submitting template.
@@ -1561,10 +1912,11 @@ resources:
   #     fr: Identifie le titre d'usage du ministère ou de l'organisme.
   #    obligation: Mandatory
   #   excel_required: true
+  #   form_required: true
   #   validation: This field must not be empty
   #   format_type: Controlled List
   #   occurrence: Single
-  #   excel_full_text_choices: true
+  #   excel_full_text_choices: false
   #   datastore_type: text
   #   choices_file:
 
