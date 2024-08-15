@@ -274,7 +274,7 @@ resources:
         fr: Provinces, territoires et collectivités
 
   # DEP 1-12
-  # DEP Note: controlled list from CSV resources https://open.canada.ca/data/en/dataset/3c371e57-d487-49fa-bb0d-352ae8dd6e4e TODO: build choice file
+  # DEP Note: controlled list from CSV resources https://open.canada.ca/data/en/dataset/3c371e57-d487-49fa-bb0d-352ae8dd6e4e
   # DEP Note: Multiple options can be entered for a record TODO: confirm Repeatable and multi-select
   - datastore_id: program_id
     label:
@@ -303,7 +303,7 @@ resources:
     choices_file: choices/service_program_ids.yaml
 
   # DEP 1-13
-  # DEP Note: controlled list from CSV resources https://open.canada.ca/data/en/dataset/3c371e57-d487-49fa-bb0d-352ae8dd6e4e TODO: build choice file
+  # DEP Note: controlled list from CSV resources https://open.canada.ca/data/en/dataset/3c371e57-d487-49fa-bb0d-352ae8dd6e4e
   # DEP Note: base off of program_id
   # DEP Note: Multiple options can be entered for a record TODO: confirm Repeatable and multi-select
   # Dev Note: hidden field?
@@ -323,7 +323,7 @@ resources:
     choices_file: choices/service_program_names.yaml
 
   # DEP 1-14
-  # DEP Note: controlled list from CSV resources https://open.canada.ca/data/en/dataset/3c371e57-d487-49fa-bb0d-352ae8dd6e4e TODO: build choice file
+  # DEP Note: controlled list from CSV resources https://open.canada.ca/data/en/dataset/3c371e57-d487-49fa-bb0d-352ae8dd6e4e
   # DEP Note: base off of program_id
   # DEP Note: Multiple options can be entered for a record TODO: confirm Repeatable and multi-select
   # Dev Note: hidden field?
