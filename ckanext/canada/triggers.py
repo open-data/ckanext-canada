@@ -116,6 +116,22 @@ def update_triggers():
                 RETURN NULL;
             END;
         ''')
+    lc.action.datastore_function_create(
+        name=u'max_char_error',
+        or_replace=True,
+        arguments=[
+            {u'argname': u'value', u'argtype': u'text'},
+            {u'argname': u'max_chars', u'argtype': u'int'},
+            {u'argname': u'field_name', u'argtype': u'text'}],
+        rettype=u'_text',
+        definition=u'''
+            BEGIN
+                IF value IS NOT NULL AND value <> '' AND LEN(value) > max_chars THEN
+                    RETURN ARRAY[[field_name, 'This field has a maximum length of' || max_chars || 'characters.']];
+                END IF;
+                RETURN NULL;
+            END;
+        ''')
     # return record with .clean (normalized value) and .error
     # (NULL or ARRAY[[field_name, error_message]])
     lc.action.datastore_function_create(

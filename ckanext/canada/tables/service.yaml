@@ -1,4 +1,5 @@
 # NOTE: Service Inventory Search has been deprecated. Records remain in the Registry DB. (2020-06)
+# NOTE: Service Inventory is back in action. (2024-08)
 dataset_type: service
 target_dataset: service
 
@@ -373,7 +374,6 @@ resources:
   # DEP Note: controlled list from CSV resources https://open.canada.ca/data/en/dataset/3c371e57-d487-49fa-bb0d-352ae8dd6e4e
   # DEP Note: base off of program_id
   # DEP Note: Multiple options can be entered for a record TODO: confirm Repeatable
-  # Dev Note: hidden field?
   - datastore_id: program_name_en
     label:
       en: Program Name (English)
@@ -390,12 +390,14 @@ resources:
     form_required: true
     form_snippet: scheming/form_snippets/multiple_select.html
     choices_file: choices/service_program_names.yaml
+    import_template_include: false
+    visible_to_public: false
+    preview_class: bg-primary
 
   # DEP 1-14
   # DEP Note: controlled list from CSV resources https://open.canada.ca/data/en/dataset/3c371e57-d487-49fa-bb0d-352ae8dd6e4e
   # DEP Note: base off of program_id
   # DEP Note: Multiple options can be entered for a record TODO: confirm Repeatable
-  # Dev Note: hidden field?
   - datastore_id: program_name_fr
     label:
       en: Program Name (French)
@@ -412,6 +414,9 @@ resources:
     form_required: true
     form_snippet: scheming/form_snippets/multiple_select.html
     choices_file: choices/service_program_names.yaml
+    import_template_include: false
+    visible_to_public: false
+    preview_class: bg-primary
 
   # DEP 1-15
   # DEP Note: Multiple options can be entered for a record TODO: confirm Repeatable
@@ -492,7 +497,6 @@ resources:
 
   # DEP 1-17
   # DEP Note: if field "Automated Decision system" has "yes / 1" then this field cannot be empty. TODO: confirm logic
-  # Dev Note: if NEW.automated_decision_system required_error(automated_decision_system_description_en)
   - datastore_id: automated_decision_system_description_en
     label:
       en: Automated Decision System Description (English)
@@ -526,7 +530,6 @@ resources:
 
   # DEP 1-18
   # DEP Note: if field "Automated Decision system" has "yes / 1" then this field cannot be empty. TODO: confirm logic
-  # Dev Note: if NEW.automated_decision_system required_error(automated_decision_system_description_fr)
   - datastore_id: automated_decision_system_description_fr
     label:
       en: Automated Decision System Description (French)
@@ -1204,9 +1207,13 @@ resources:
     obligation: Optional
     excel_required: false
     format_type: Free text
+    validation:
+      en: This field has a maximum length of 100 characters.
+      fr: Ce champ ne peut excéder une longueur maximale de 100 caractères.
     occurrence: Single
     datastore_type: text
     max_chars: 100
+    excel_error_formula: 'LEN(TRIM({cell}))>100'
     form_attrs:
       style: "width: 100%; display: block"
 
@@ -1221,15 +1228,18 @@ resources:
     obligation: Optional
     excel_required: false
     format_type: Free text
+    validation:
+      en: This field has a maximum length of 100 characters.
+      fr: Ce champ ne peut excéder une longueur maximale de 100 caractères.
     occurrence: Single
     datastore_type: text
     max_chars: 100
+    excel_error_formula: 'LEN(TRIM({cell}))>100'
     form_attrs:
       style: "width: 100%; display: block"
 
   # DEP 1-45
   # DEP Note: this field must be the sum of all application fields TODO: confirm logic
-  # Dev Note: hidden field?
   - datastore_id: num_applications_total
     label:
       en: Total Number of Applications
@@ -1242,13 +1252,46 @@ resources:
     format_type: Decimal
     occurrence: Single
     datastore_type: int
+    import_template_include: false
+    visible_to_public: false
+    preview_class: bg-primary
+
+  # Dev: req dynamic field
+  - datastore_id: record_created
+    label:
+      en: Record Creation Time
+      fr: Heure de la création du dossier
+    import_template_include: false
+    visible_to_public: false
+    datastore_type: timestamp
+    preview_class: bg-info
+
+  # Dev: req dynamic field
+  - datastore_id: record_modified
+    label:
+      en: Last Record Modification Time
+      fr: Heure de la dernière modification au dossier
+    import_template_include: false
+    visible_to_public: false
+    datastore_type: timestamp
+    preview_class: bg-info
+
+  # Dev: req dynamic field
+  - datastore_id: user_modified
+    label:
+      en: User Last Modified Record
+      fr: Dernier enregistrement modifié par l'utilisateur
+    import_template_include: false
+    visible_to_public: false
+    datastore_type: text
+    preview_class: bg-info
 
   datastore_primary_key: [fiscal_yr, service_id]
   datastore_indexes: ""
 
   default_preview_sort: fiscal_yr, service_id
 
-  #TODO: write new triggers
+  #TODO: confirm new triggers
   triggers:
   - service_trigger: |
       DECLARE
@@ -1257,12 +1300,157 @@ resources:
       BEGIN
         errors := errors || required_error(NEW.fiscal_yr, 'fiscal_yr');
         errors := errors || choice_error(NEW.fiscal_yr, {fiscal_yr}, 'fiscal_yr');
+
+        errors := errors || required_error(NEW.service_id, 'service_id');
+
+        errors := errors || required_error(NEW.service_name_en, 'service_name_en');
+        errors := errors || max_char_error(NEW.service_name_en, 250, 'service_name_en');
+
+        errors := errors || required_error(NEW.service_name_fr, 'service_name_fr');
+        errors := errors || max_char_error(NEW.service_name_fr, 250, 'service_name_fr');
+
+        errors := errors || required_error(NEW.service_description_en, 'service_description_en');
+        errors := errors || max_char_error(NEW.service_description_en, 1800, 'service_description_en');
+
+        errors := errors || required_error(NEW.service_description_fr, 'service_description_fr');
+        errors := errors || max_char_error(NEW.service_description_fr, 1800, 'service_description_fr');
+
+        errors := errors || required_error(NEW.service_type, 'service_type');
+        errors := errors || choice_error(NEW.service_type, {service_type}, 'service_type');
+
+        errors := errors || required_error(NEW.service_recipient_type, 'service_recipient_type');
+        errors := errors || choice_error(NEW.service_recipient_type, {service_recipient_type}, 'service_recipient_type');
+
+        errors := errors || required_error(NEW.service_scope, 'service_scope');
+        errors := errors || choice_error(NEW.service_scope, {service_scope}, 'service_scope');
+
+        errors := errors || required_error(NEW.client_target_groups, 'client_target_groups');
+        errors := errors || choice_error(NEW.client_target_groups, {client_target_groups}, 'client_target_groups');
+
+        errors := errors || required_error(NEW.program_id, 'program_id');
+        errors := errors || choice_error(NEW.program_id, {program_id}, 'program_id');
+
+        #FIXME: how to do reverse save?
+        #TODO: lookup replace for program_name_en and program_name_fr
+
+        errors := errors || required_error(NEW.client_feedback_channel, 'client_feedback_channel');
+        errors := errors || choice_error(NEW.client_feedback_channel, {client_feedback_channel}, 'client_feedback_channel');
+
+        errors := errors || required_error(NEW.automated_decision_system, 'automated_decision_system');
+        errors := errors || choice_error(NEW.automated_decision_system, {automated_decision_system}, 'automated_decision_system');
+
+        IF NEW.automated_decision_system > 0 THEN
+          errors := errors || required_error(NEW.automated_decision_system_description_en, 'automated_decision_system_description_en');
+          errors := errors || required_error(NEW.automated_decision_system_description_fr, 'automated_decision_system_description_fr');
+        END IF;
+
+        errors := errors || max_char_error(NEW.automated_decision_system_description_en, 1800, 'automated_decision_system_description_en');
+        errors := errors || max_char_error(NEW.automated_decision_system_description_fr, 1800, 'automated_decision_system_description_fr');
+
+        errors := errors || required_error(NEW.service_fee, 'service_fee');
+        errors := errors || choice_error(NEW.service_fee, {service_fee}, 'service_fee');
+
+        errors := errors || required_error(NEW.os_account_registration, 'os_account_registration');
+        errors := errors || choice_error(NEW.os_account_registration, {os_account_registration}, 'os_account_registration');
+
+        errors := errors || required_error(NEW.os_authentication, 'os_authentication');
+        errors := errors || choice_error(NEW.os_authentication, {os_authentication}, 'os_authentication');
+
+        errors := errors || required_error(NEW.os_application, 'os_application');
+        errors := errors || choice_error(NEW.os_application, {os_application}, 'os_application');
+
+        errors := errors || required_error(NEW.os_decision, 'os_decision');
+        errors := errors || choice_error(NEW.os_decision, {os_decision}, 'os_decision');
+
+        errors := errors || required_error(NEW.os_issuance, 'os_issuance');
+        errors := errors || choice_error(NEW.os_issuance, {os_issuance}, 'os_issuance');
+
+        errors := errors || required_error(NEW.os_issue_resolution_feedback, 'os_issue_resolution_feedback');
+        errors := errors || choice_error(NEW.os_issue_resolution_feedback, {os_issue_resolution_feedback}, 'os_issue_resolution_feedback');
+
+        IF NEW.os_account_registration < 0 OR NEW.os_authentication < 0 OR NEW.os_application OR NEW.os_decision < 0 OR NEW.os_issuance < 0 OR NEW.os_issue_resolution_feedback < 0 THEN
+          errors := errors || required_error(NEW.os_comments_client_interation_en, 'os_comments_client_interation_en');
+          errors := errors || required_error(NEW.os_comments_client_interation_fr, 'os_comments_client_interation_fr');
+        END IF;
+
+        errors := errors || max_char_error(NEW.os_comments_client_interation_en, 1000, 'os_comments_client_interation_en');
+        errors := errors || max_char_error(NEW.os_comments_client_interation_fr, 1000, 'os_comments_client_interation_fr');
+
+        errors := errors || required_error(NEW.last_service_review, 'last_service_review');
+        errors := errors || choice_error(NEW.last_service_review, {last_service_review}, 'last_service_review');
+
+        errors := errors || required_error(NEW.last_service_improvement, 'last_service_improvement');
+        errors := errors || choice_error(NEW.last_service_improvement, {last_service_improvement}, 'last_service_improvement');
+
+        errors := errors || required_error(NEW.sin_usage, 'sin_usage');
+        errors := errors || choice_error(NEW.sin_usage, {sin_usage}, 'sin_usage');
+
+        errors := errors || required_error(NEW.cra_bn_identifier_usage, 'cra_bn_identifier_usage');
+        errors := errors || choice_error(NEW.cra_bn_identifier_usage, {cra_bn_identifier_usage}, 'cra_bn_identifier_usage');
+
+        errors := errors || required_error(NEW.num_phone_enquiries, 'num_phone_enquiries');
+        IF NOT isNumeric(NEW.num_phone_enquiries) OR NEW.num_phone_enquiries != 'NA' OR NEW.num_phone_enquiries != 'ND' THEN
+          errors := errors || ARRAY[['num_phone_enquiries', {num_na_nd}]];
+        END IF;
+
+        errors := errors || required_error(NEW.num_applications_by_phone, 'num_applications_by_phone');
+        IF NOT isNumeric(NEW.num_applications_by_phone) OR NEW.num_applications_by_phone != 'NA' OR NEW.num_applications_by_phone != 'ND' THEN
+          errors := errors || ARRAY[['num_applications_by_phone', {num_na_nd}]];
+        END IF;
+
+        errors := errors || required_error(NEW.num_website_visits, 'num_website_visits');
+        IF NOT isNumeric(NEW.num_website_visits) OR NEW.num_website_visits != 'NA' OR NEW.num_website_visits != 'ND' THEN
+          errors := errors || ARRAY[['num_website_visits', {num_na_nd}]];
+        END IF;
+
+        errors := errors || required_error(NEW.num_applications_online, 'num_applications_online');
+        IF NOT isNumeric(NEW.num_applications_online) OR NEW.num_applications_online != 'NA' OR NEW.num_applications_online != 'ND' THEN
+          errors := errors || ARRAY[['num_applications_online', {num_na_nd}]];
+        END IF;
+
+        errors := errors || required_error(NEW.num_applications_in_person, 'num_applications_in_person');
+        IF NOT isNumeric(NEW.num_applications_in_person) OR NEW.num_applications_in_person != 'NA' OR NEW.num_applications_in_person != 'ND' THEN
+          errors := errors || ARRAY[['num_applications_in_person', {num_na_nd}]];
+        END IF;
+
+        errors := errors || required_error(NEW.num_applications_by_mail, 'num_applications_by_mail');
+        IF NOT isNumeric(NEW.num_applications_by_mail) OR NEW.num_applications_by_mail != 'NA' OR NEW.num_applications_by_mail != 'ND' THEN
+          errors := errors || ARRAY[['num_applications_by_mail', {num_na_nd}]];
+        END IF;
+
+        errors := errors || required_error(NEW.num_applications_by_email, 'num_applications_by_email');
+        IF NOT isNumeric(NEW.num_applications_by_email) OR NEW.num_applications_by_email != 'NA' OR NEW.num_applications_by_email != 'ND' THEN
+          errors := errors || ARRAY[['num_applications_by_email', {num_na_nd}]];
+        END IF;
+
+        errors := errors || required_error(NEW.num_applications_by_fax, 'num_applications_by_fax');
+        IF NOT isNumeric(NEW.num_applications_by_fax) OR NEW.num_applications_by_fax != 'NA' OR NEW.num_applications_by_fax != 'ND' THEN
+          errors := errors || ARRAY[['num_applications_by_fax', {num_na_nd}]];
+        END IF;
+
+        errors := errors || required_error(NEW.num_applications_by_other, 'num_applications_by_other');
+        IF NOT isNumeric(NEW.num_applications_by_other) OR NEW.num_applications_by_other != 'NA' OR NEW.num_applications_by_other != 'ND' THEN
+          errors := errors || ARRAY[['num_applications_by_other', {num_na_nd}]];
+        END IF;
+
+        errors := errors || max_char_error(NEW.special_remarks_en, 2000, 'special_remarks_en');
+        errors := errors || max_char_error(NEW.special_remarks_fr, 2000, 'special_remarks_fr');
+
+        errors := errors || max_char_error(NEW.service_uri_en, 100, 'service_uri_en');
+        errors := errors || max_char_error(NEW.service_uri_fr, 100, 'service_uri_fr');
+
+        NEW.num_applications_total := NEW.num_applications_by_phone + NEW.num_applications_online + NEW.num_applications_in_person + NEW.num_applications_by_mail + NEW.num_applications_by_email + NEW.num_applications_by_fax + NEW.num_applications_by_other
+
         IF errors = '{{}}' THEN
           RETURN NEW;
         END IF;
+
         RAISE EXCEPTION E'TAB-DELIMITED\t%', array_to_string(errors, E'\t');
       END;
   - update_record_modified_created_trigger
+
+  trigger_strings:  # yaml | not supported
+    num_na_nd: This field must be either a number, "NA", or "ND"
 
   #TODO: Get actual example values from client
   examples:
@@ -1711,7 +1899,6 @@ resources:
 
   # DEP 2-15
   # DEP Note: volume_meeting_target / total_volume TODO: confirm logic
-  # Dev Note: hidden field?
   - datastore_id: performance
     label:
       en: Performance
@@ -1728,6 +1915,9 @@ resources:
     occurrence: Single
     datastore_type: numeric
     excel_error_formula: 'OR({default_formula},{cell}<0)'
+    import_template_include: false
+    visible_to_public: false
+    preview_class: bg-primary
 
   # DEP 2-16
   - datastore_id: comments_en
@@ -1773,7 +1963,6 @@ resources:
   # DEP Note: calculated field:
   #            If total_vol = OR(0, NA, ND), then “NA”,
   #            ElseIf total_vol>0, then If performance>=Service Standard Target, then “Yes”, else “No” TODO: confirm logic
-  # Dev Note: hidden field?
   - datastore_id: target_met
     label:
       en: Was the target met
@@ -1803,6 +1992,9 @@ resources:
       1:
         en: "Yes"
         fr: Oui
+    import_template_include: false
+    visible_to_public: false
+    preview_class: bg-primary
 
   # DEP 2-19
   - datastore_id: standards_targets_uri_en
@@ -1920,12 +2112,42 @@ resources:
   #   datastore_type: text
   #   choices_file:
 
+  # Dev: req dynamic field
+  - datastore_id: record_created
+    label:
+      en: Record Creation Time
+      fr: Heure de la création du dossier
+    import_template_include: false
+    visible_to_public: false
+    datastore_type: timestamp
+    preview_class: bg-info
+
+  # Dev: req dynamic field
+  - datastore_id: record_modified
+    label:
+      en: Last Record Modification Time
+      fr: Heure de la dernière modification au dossier
+    import_template_include: false
+    visible_to_public: false
+    datastore_type: timestamp
+    preview_class: bg-info
+
+  # Dev: req dynamic field
+  - datastore_id: user_modified
+    label:
+      en: User Last Modified Record
+      fr: Dernier enregistrement modifié par l'utilisateur
+    import_template_include: false
+    visible_to_public: false
+    datastore_type: text
+    preview_class: bg-info
+
   datastore_primary_key: [fiscal_yr, service_standard_id]
   datastore_indexes: ""
 
   default_preview_sort: fiscal_yr, service_standard_id
 
-  #TODO: write new triggers
+  #TODO: confirm new triggers
   triggers:
   - service_std_trigger: |
       DECLARE
@@ -1934,15 +2156,83 @@ resources:
       BEGIN
         errors := errors || required_error(NEW.fiscal_yr, 'fiscal_yr');
         errors := errors || choice_error(NEW.fiscal_yr, {fiscal_yr}, 'fiscal_yr');
+
+        errors := errors || required_error(NEW.service_id, 'service_id');
+
+        errors := errors || required_error(NEW.service_name_en, 'service_name_en');
+        errors := errors || max_char_error(NEW.service_name_en, 250, 'service_name_en');
+
+        errors := errors || required_error(NEW.service_name_fr, 'service_name_fr');
+        errors := errors || max_char_error(NEW.service_name_fr, 250, 'service_name_fr');
+
+        errors := errors || required_error(NEW.service_standard_id, 'service_standard_id');
+
+        errors := errors || required_error(NEW.service_standard_en, 'service_standard_en');
+        errors := errors || max_char_error(NEW.service_standard_en, 500, 'service_standard_en');
+
+        errors := errors || required_error(NEW.service_standard_fr, 'service_standard_fr');
+        errors := errors || max_char_error(NEW.service_standard_fr, 500, 'service_standard_fr');
+
+        errors := errors || required_error(NEW.type, 'type');
+        errors := errors || choice_error(NEW.type, {type}, 'type');
+
+        errors := errors || required_error(NEW.channel, 'channel');
+        errors := errors || choice_error(NEW.channel, {channel}, 'channel');
+
+        errors := errors || max_char_error(NEW.channel_comments_en, 1500, 'channel_comments_en');
+        errors := errors || max_char_error(NEW.channel_comments_fr, 1500, 'channel_comments_fr');
+
+        IF NEW.target IS NOT NULL AND NEW.target <> '' AND (NEW.target < 0 OR NEW.target > 1) THEN
+            errors := errors || ARRAY[['target', {target}]];
+        END IF;
+
+        IF NEW.volume_meeting_target IS NOT NULL AND NEW.volume_meeting_target <> '' AND NEW.volume_meeting_target < 0 THEN
+            errors := errors || ARRAY[['volume_meeting_target', {negative_number}]];
+        END IF;
+
+        IF NEW.total_volume IS NOT NULL AND NEW.total_volume <> '' AND NEW.total_volume < 0 THEN
+            errors := errors || ARRAY[['total_volume', {negative_number}]];
+        END IF;
+
+        NEW.performance := NEW.volume_meeting_target / NEW.total_volume
+
+        IF NEW.performance IS NOT NULL AND NEW.performance <> '' AND NEW.performance < 0 THEN
+          errors := errors || ARRAY[['performance', {negative_number}]];
+        END IF;
+
+        errors := errors || max_char_error(NEW.comments_en, 2000, 'comments_en');
+        errors := errors || max_char_error(NEW.comments_fr, 2000, 'comments_fr');
+
+        IF NEW.total_volume = 0 THEN
+          NEW.target_met := -1
+        ELSIF NEW.performance >= NEW.target
+          NEW.target_met := 1
+        ELSE
+          NEW.target_met := 0
+        END IF;
+
+        errors := errors || choice_error(NEW.target_met, {target_met}, 'target_met');
+
+        errors := errors || required_error(NEW.standards_targets_uri_en, 'standards_targets_uri_en');
+        errors := errors || max_char_error(NEW.standards_targets_uri_en, 100, 'standards_targets_uri_en');
+
+        errors := errors || required_error(NEW.standards_targets_uri_fr, 'standards_targets_uri_fr');
+        errors := errors || max_char_error(NEW.standards_targets_uri_fr, 100, 'standards_targets_uri_fr');
+
+        errors := errors || max_char_error(NEW.performance_results_uri_en, 100, 'performance_results_uri_en');
+        errors := errors || max_char_error(NEW.performance_results_uri_fr, 100, 'performance_results_uri_fr');
+
         IF errors = '{{}}' THEN
           RETURN NEW;
         END IF;
+
         RAISE EXCEPTION E'TAB-DELIMITED\t%', array_to_string(errors, E'\t');
       END;
   - update_record_modified_created_trigger
 
   trigger_strings:  # yaml | not supported
     target: This field must be a single number between 0 and 1 representing a percentage.
+    negative_number: This value must not be negative
 
   #TODO: Get actual example values from client
   examples:
