@@ -529,7 +529,7 @@ def update_pd_record(owner_org, resource_name, pk):
         if not f.get('import_template_include', True):
             continue
         val = record[f['datastore_id']]
-        if f.get('datastore_type') == 'money':
+        if val and f.get('datastore_type') == 'money':
             if isinstance(val, str) and '$' in val:
                 data[f['datastore_id']] = val
             else:
