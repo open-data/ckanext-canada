@@ -524,7 +524,7 @@ resources:
     occurrence: Single
     datastore_type: text
     max_chars: 1800
-    excel_required_formula: 'VALUE({automated_decision_system})>0'
+    excel_required_formula: 'VALUE({automated_decision_system})="Yes" OR VALUE({automated_decision_system})="Oui"'
     excel_error_formula: 'LEN(TRIM({cell}))>1800'
     form_snippet: scheming/form_snippets/textarea.html
 
@@ -557,7 +557,7 @@ resources:
     occurrence: Single
     datastore_type: text
     max_chars: 1800
-    excel_required_formula: 'VALUE({automated_decision_system})>0'
+    excel_required_formula: 'VALUE({automated_decision_system})="Yes" OR VALUE({automated_decision_system})="Oui"'
     excel_error_formula: 'LEN(TRIM({cell}))>1800'
     form_snippet: scheming/form_snippets/textarea.html
 
@@ -1339,7 +1339,7 @@ resources:
         errors := errors || required_error(NEW.automated_decision_system, 'automated_decision_system');
         errors := errors || choice_error(NEW.automated_decision_system, {automated_decision_system}, 'automated_decision_system');
 
-        IF NEW.automated_decision_system > 0 THEN
+        IF NEW.automated_decision_system THEN
           errors := errors || required_error(NEW.automated_decision_system_description_en, 'automated_decision_system_description_en');
           errors := errors || required_error(NEW.automated_decision_system_description_fr, 'automated_decision_system_description_fr');
         END IF;
