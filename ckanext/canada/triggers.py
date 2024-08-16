@@ -116,18 +116,20 @@ def update_triggers():
                 RETURN NULL;
             END;
         ''')
+    #TODO: see about double return for replacement values??
     lc.action.datastore_function_create(
         name=u'max_char_error',
         or_replace=True,
         arguments=[
             {u'argname': u'value', u'argtype': u'text'},
-            {u'argname': u'max_chars', u'argtype': u'int'},
+            {u'argname': u'max_chars', u'argtype': u'numeric'},
             {u'argname': u'field_name', u'argtype': u'text'}],
         rettype=u'_text',
+        #FIXME: add trim white to trigger here...
         definition=u'''
             BEGIN
                 IF value IS NOT NULL AND value <> '' AND LEN(value) > max_chars THEN
-                    RETURN ARRAY[[field_name, 'This field has a maximum length of' || max_chars || 'characters.']];
+                    RETURN ARRAY[[field_name, 'This field has a maximum length of {} characters.' || max_chars]];
                 END IF;
                 RETURN NULL;
             END;
@@ -177,6 +179,7 @@ def update_triggers():
             END;
         ''')
 
+    # FIXME: delete from DB
     lc.action.datastore_function_create(
         name=u'no_surrounding_whitespace_error',
         or_replace=True,
@@ -193,6 +196,7 @@ def update_triggers():
             END;
         ''')
 
+    # FIXME: delete from DB
     lc.action.datastore_function_create(
         name=u'year_optional_month_day_error',
         or_replace=True,
@@ -324,6 +328,7 @@ def update_triggers():
             END;
             ''')
 
+    # FIXME: delete from DB
     inventory_choices = h.recombinant_choice_fields('inventory')
     lc.action.datastore_function_create(
         name=u'inventory_trigger',
