@@ -29,7 +29,7 @@
             {% block heading_private %}
               {{ super() }}
             {% endblock %}
-            {{ h.link_to(h.truncate(my_title, truncate_title), h.url_for(package.type ~ '.read', id=package.name), title=my_title) }}
+            {{ h.link_to(h.truncate(my_title, 150), h.url_for(package.type ~ '.read', id=package.name), title=my_title) }}
             {% block heading_meta %}
               {{ super() }}
             {% endblock %}
