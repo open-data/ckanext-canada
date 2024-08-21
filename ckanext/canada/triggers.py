@@ -99,6 +99,21 @@ def update_triggers():
             END;
         ''')
     lc.action.datastore_function_create(
+        name=u'required_error',
+        or_replace=True,
+        arguments=[
+            {u'argname': u'value', u'argtype': u'boolean'},
+            {u'argname': u'field_name', u'argtype': u'text'}],
+        rettype=u'_text',
+        definition=u'''
+            BEGIN
+                IF value IS NULL THEN
+                    RETURN ARRAY[[field_name, 'This field must not be empty']];
+                END IF;
+                RETURN NULL;
+            END;
+        ''')
+    lc.action.datastore_function_create(
         name=u'choice_error',
         or_replace=True,
         arguments=[
@@ -116,22 +131,28 @@ def update_triggers():
                 RETURN NULL;
             END;
         ''')
-    #TODO: see about double return for replacement values??
+    #TODO: see about double return for trimmed value??
     lc.action.datastore_function_create(
         name=u'max_char_error',
         or_replace=True,
         arguments=[
             {u'argname': u'value', u'argtype': u'text'},
             {u'argname': u'max_chars', u'argtype': u'numeric'},
-            {u'argname': u'field_name', u'argtype': u'text'}],
-        rettype=u'_text',
+            {u'argname': u'field_name', u'argtype': u'text'},
+            {u'argname': u'clean', u'argtype': u'_text', u'argmode': u'out'},
+            {u'argname': u'error', u'argtype': u'_text', u'argmode': u'out'}],
+        rettype=u'record',
         #FIXME: add trim white to trigger here...
         definition=u'''
             BEGIN
-                IF value IS NOT NULL AND value <> '' AND LEN(value) > max_chars THEN
-                    RETURN ARRAY[[field_name, 'This field has a maximum length of {} characters.' || max_chars]];
+                IF value IS NOT NULL AND value <> '' AND LENGTH(value) > max_chars THEN
+                    error := ARRAY[[field_name, 'This field has a maximum length of {} characters.' || max_chars]];
                 END IF;
-                RETURN NULL;
+                IF value IS NULL OR value = '' THEN
+                    clean := NULL;
+                ELSE
+                    clean := ARRAY(SELECT trim(both E'\t\n\x0b\x0c\r ' from value))::text;
+                END IF;
             END;
         ''')
     # return record with .clean (normalized value) and .error

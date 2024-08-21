@@ -391,8 +391,12 @@ def create_pd_record(owner_org, resource_name):
                             k: [_("This record already exists")]
                             for k in pk_fields
                         }, **err)
+                    elif 'violates foreign key constraint' in ve.error_dict['records'][0]:
+                        error_message = chromo.get('datastore_constraint_errors', {}).get('upsert', 'Something went wrong, your record was not created. Please contact support.')
+                        error_summary = _(error_message)
                     else:
                         error_summary = _('Something went wrong, your record was not created. Please contact support.')
+                        raise
             elif ve.error_dict.get('info', {}).get('pgcode', '') == '23505':
                 err = dict({
                     k: [_("This record already exists")]
@@ -638,6 +642,15 @@ def delete_selected_records(resource_id):
                 records_deleted += 1
             except NotFound:
                 h.flash_error(_('Not found') + ' ' + str(filter))
+            except ValidationError as e:
+                if 'foreign_constraints' in e.error_dict:
+                    chromo = get_chromo(res['name'])
+                    error_message = chromo.get('datastore_constraint_errors', {}).get('delete', e.error_dict['foreign_constraints'][0])
+                    h.flash_error(_(error_message))
+                    return h.redirect_to('recombinant.preview_table',
+                                         resource_name=res['name'],
+                                         owner_org=org['name'])
+                raise
 
     h.flash_success(_("{num} deleted.").format(num=records_deleted))
 
