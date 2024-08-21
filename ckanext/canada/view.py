@@ -382,7 +382,7 @@ def create_pd_record(owner_org, resource_name):
             if 'records' in ve.error_dict:
                 try:
                     err = dict({
-                        k: [_(e) for e in v]
+                        k: [_(e.split('\uF8FF')[0]).format(e.split('\uF8FF')[1]) if '\uF8FF' in e else _(e) for e in v]
                         for (k, v) in ve.error_dict['records'][0].items()
                     }, **err)
                 except AttributeError:
@@ -396,7 +396,6 @@ def create_pd_record(owner_org, resource_name):
                         error_summary = _(error_message)
                     else:
                         error_summary = _('Something went wrong, your record was not created. Please contact support.')
-                        raise
             elif ve.error_dict.get('info', {}).get('pgcode', '') == '23505':
                 err = dict({
                     k: [_("This record already exists")]
@@ -500,7 +499,7 @@ def update_pd_record(owner_org, resource_name, pk):
         except ValidationError as ve:
             try:
                 err = dict({
-                    k: [_(e) for e in v]
+                    k: [_(e.split('\uF8FF')[0]).format(e.split('\uF8FF')[1]) if '\uF8FF' in e else _(e) for e in v]
                     for (k, v) in ve.error_dict['records'][0].items()
                 }, **err)
             except AttributeError:

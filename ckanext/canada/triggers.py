@@ -125,13 +125,15 @@ def update_triggers():
             BEGIN
                 IF value IS NOT NULL AND value <> '' AND NOT (value = ANY (choices)) THEN
                     -- \t is used when converting errors to string
-                    RETURN ARRAY[[field_name, 'Invalid choice: "'
+                    RETURN ARRAY[[field_name, 'Invalid choice: {}\uF8FF"'
                         || replace(value, E'\t', ' ') || '"']];
                 END IF;
                 RETURN NULL;
             END;
         ''')
-    #TODO: see about double return for trimmed value??
+    # return record with .clean (trimmed value) and .error
+    # (NULL or ARRAY[[value_trimmed]])
+    # .clean must be unnest(.clean) from the return to get the text value
     lc.action.datastore_function_create(
         name=u'max_char_error',
         or_replace=True,
@@ -142,16 +144,17 @@ def update_triggers():
             {u'argname': u'clean', u'argtype': u'_text', u'argmode': u'out'},
             {u'argname': u'error', u'argtype': u'_text', u'argmode': u'out'}],
         rettype=u'record',
-        #FIXME: add trim white to trigger here...
         definition=u'''
+            DECLARE
+                value_trimmed text := trim(both E'\t\n\x0b\x0c\r ' from value);
             BEGIN
-                IF value IS NOT NULL AND value <> '' AND LENGTH(value) > max_chars THEN
-                    error := ARRAY[[field_name, 'This field has a maximum length of {} characters.' || max_chars]];
+                IF value IS NOT NULL AND value <> '' AND LENGTH(value_trimmed) > max_chars THEN
+                    error := ARRAY[[field_name, 'This field has a maximum length of {} characters.\uF8FF' || max_chars]];
                 END IF;
                 IF value IS NULL OR value = '' THEN
                     clean := NULL;
                 ELSE
-                    clean := ARRAY(SELECT trim(both E'\t\n\x0b\x0c\r ' from value))::text;
+                    clean := ARRAY(SELECT value_trimmed);
                 END IF;
             END;
         ''')
@@ -175,7 +178,7 @@ def update_triggers():
             BEGIN
                 IF bad_choices <> '' THEN
                     -- \t is used when converting errors to string
-                    error := ARRAY[[field_name, 'Invalid choice: "'
+                    error := ARRAY[[field_name, 'Invalid choice: {}\uF8FF"'
                         || replace(bad_choices, E'\t', ' ') || '"']];
                 END IF;
                 clean := ARRAY(
@@ -245,6 +248,7 @@ def update_triggers():
             END;
         ''')
 
+    # FIXME: delete from DB
     lc.action.datastore_function_create(
         name=u'choices_from',
         or_replace=True,
@@ -435,6 +439,7 @@ def update_triggers():
             END;
             ''')
 
+    # FIXME: delete from DB
     lc.action.datastore_function_create(
         name=u'integer_or_na_nd_error',
         or_replace=True,
