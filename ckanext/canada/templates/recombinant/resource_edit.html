@@ -1,7 +1,7 @@
 {% ckan_extends %}
 
 {% block organization_display %}
-  {{- h.split_piped_bilingual_field(org.title, h.lang()) | truncate(60) -}}
+  {{- h.split_piped_bilingual_field(org.title, h.lang()) | truncate(80) -}}
 {% endblock %}
 
 {%- block subtitle_2 -%}

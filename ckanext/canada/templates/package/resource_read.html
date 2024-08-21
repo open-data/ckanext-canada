@@ -31,6 +31,11 @@
   {% endif %}
 {% endblock %}
 
+{% block breadcrumb_content %}
+  {{ super.super() }}
+  <li class="active"><a href="" title="{{ h.resource_display_name(res) }}">{{ h.resource_display_name(res)|truncate(80) }}</a></li>
+{% endblock %}
+
 {% block resource_actions %}
   <div class="resource-actions-toolbar">{{ super() }}</div>
 {% endblock %}

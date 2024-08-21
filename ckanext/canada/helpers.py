@@ -868,6 +868,7 @@ def ckan_to_cdts_breadcrumbs(breadcrumb_content):
         anchor = breadcrumb.find('a')
         cdts_breadcrumbs.append({
             'title': breadcrumb.text if not anchor else anchor.text,
+            'acronym': '' if not anchor else anchor.get('title', ''),
             'href': '' if not anchor else anchor['href'],
         })
     return cdts_breadcrumbs
