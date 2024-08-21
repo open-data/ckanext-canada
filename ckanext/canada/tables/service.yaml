@@ -702,7 +702,7 @@ resources:
 
   # DEP 1-26
   # DEP Note: if any of the fields  "Online services" has "NA / -1" then this field cannot be empty. TODO: confirm logic
-  - datastore_id: os_comments_client_interation_en
+  - datastore_id: os_comments_client_interaction_en
     label:
       en: "Comments on Online Services - Client Interaction Points (English)"
       fr: "Commentaires sur les services électroniques - points d'interaction avec les clients (anglais)"
@@ -879,6 +879,8 @@ resources:
         Ce champ doit être un chiffre, "NA", ou "ND"
     occurrence: Single
     datastore_type: text
+    excel_error_formula: >
+      AND(NOT(ISNUMBER(VALUE({cell}))),{cell}<>"NA",{cell}<>"ND")
 
   # DEP 1-33
   # DEP Note: must be a number or NA or ND TODO: figure out Excel validation for this, confirm logic
@@ -910,6 +912,8 @@ resources:
         Ce champ doit être un chiffre, "NA", ou "ND"
     occurrence: Single
     datastore_type: text
+    excel_error_formula: >
+      AND(NOT(ISNUMBER(VALUE({cell}))),{cell}<>"NA",{cell}<>"ND")
 
   # DEP 1-34
   # DEP Note: must be a number or NA or ND TODO: figure out Excel validation for this, confirm logic
@@ -940,6 +944,8 @@ resources:
         Ce champ doit être un chiffre, "NA", ou "ND"
     occurrence: Single
     datastore_type: text
+    excel_error_formula: >
+      AND(NOT(ISNUMBER(VALUE({cell}))),{cell}<>"NA",{cell}<>"ND")
 
   # DEP 1-35
   # DEP Note: must be a number or NA or ND TODO: figure out Excel validation for this, confirm logic
@@ -961,6 +967,8 @@ resources:
         et sans objet (NA) signifie que le service n’est pas offert au moyen de
         ce mode de prestation.
     obligation: Mandatory
+    excel_error_formula: >
+      AND(NOT(ISNUMBER(VALUE({cell}))),{cell}<>"NA",{cell}<>"ND")
     excel_required: true
     form_required: true
     format_type: Free text
@@ -993,6 +1001,8 @@ resources:
         et sans objet (NA) signifie que le service n’est pas offert au moyen de
         ce mode de prestation.
     obligation: Mandatory
+    excel_error_formula: >
+      AND(NOT(ISNUMBER(VALUE({cell}))),{cell}<>"NA",{cell}<>"ND")
     excel_required: true
     form_required: true
     format_type: Free text
@@ -1036,6 +1046,8 @@ resources:
         Ce champ doit être un chiffre, "NA", ou "ND"
     occurrence: Single
     datastore_type: text
+    excel_error_formula: >
+      AND(NOT(ISNUMBER(VALUE({cell}))),{cell}<>"NA",{cell}<>"ND")
 
   # DEP 1-38
   # DEP Note: must be a number or NA or ND TODO: figure out Excel validation for this, confirm logic
@@ -1067,6 +1079,8 @@ resources:
         Ce champ doit être un chiffre, "NA", ou "ND"
     occurrence: Single
     datastore_type: text
+    excel_error_formula: >
+      AND(NOT(ISNUMBER(VALUE({cell}))),{cell}<>"NA",{cell}<>"ND")
 
   # DEP 1-39
   # DEP Note: must be a number or NA or ND TODO: figure out Excel validation for this, confirm logic
@@ -1098,6 +1112,8 @@ resources:
         Ce champ doit être un chiffre, "NA", ou "ND"
     occurrence: Single
     datastore_type: text
+    excel_error_formula: >
+      AND(NOT(ISNUMBER(VALUE({cell}))),{cell}<>"NA",{cell}<>"ND")
 
   # DEP 1-40
   # DEP Note: must be a number or NA or ND TODO: figure out Excel validation for this, confirm logic
@@ -1130,6 +1146,8 @@ resources:
         Ce champ doit être un chiffre, "NA", ou "ND"
     occurrence: Single
     datastore_type: text
+    excel_error_formula: >
+      AND(NOT(ISNUMBER(VALUE({cell}))),{cell}<>"NA",{cell}<>"ND")
 
   # DEP 1-41
   - datastore_id: special_remarks_en
@@ -1469,57 +1487,57 @@ resources:
   #TODO: Get actual example values from client
   examples:
     record:
-      fiscal_yr: 2017-2018
-      service_id: "4"
-      service_name_en: Partner views
-      service_name_fr: Opinions des partenaires
-      service_description_en: Provides matching contributions to producers who make annual deposits to an AgriInvest account, to help manage income declines or make investments to mitigate risks or improve market income.
-      service_description_fr: Offre des contributions de contrepartie aux producteurs qui font des dépôts annuels dans un compte Agri-investissement, afin de gérer les baisses de revenus ou de faire des investissements dans le but d'atténuer les risques ou d'améliorer les revenus tirés du marché.
-      service_type: [APIR, CER]
+      fiscal_yr: 2023-2024
+      service_id: "1"
+      service_name_en: Sasquatch hunting permit
+      service_name_fr: Permis pour la chasse au Sasquatch
+      service_description_en: The Bureau of Cryptozoological Preservation allows a limited number of hunting permits to keep the local sasquatch population in check.
+      service_description_fr: Le Bureau de la protection cryptozoologique offre un nombre limité de permis de chasse au sasquatch afin de garder la population à un niveau raisonnable
+      service_type: [APIR, PPI]
       service_recipient_type: CLIENT
-      service_scope: [CLUSTER, ENTERPRISE]
-      client_target_groups: [ECONOM, NGO]
-      program_id: "77"
+      service_scope: [EXTERN]
+      client_target_groups: [PERSON]
+      program_id: "XYZ01"
       #FIXME: do not store in DS, just do in filter script??
-      # program_name_en: AgriInvest
-      # program_name_fr: Agri-investissement
-      client_feedback_channel: [EML, FAX]
+      # program_name_en: Cryptozoological population control
+      # program_name_fr: Contrôle de la population cryptozoologique
+      client_feedback_channel: [EML, ONL, POST, TEL]
       automated_decision_system: 1
-      automated_decision_system_description_en: Automated decision system description
-      automated_decision_system_description_fr: Automated decision system description FR
-      service_fee: 0
-      os_account_registration: -1
+      automated_decision_system_description_en: The automated decision making system for Sasquatch hunting permits allows for the permits to be assigned by lottery.
+      automated_decision_system_description_fr: Le système de décision automatisé permet la distribution des permis de chasse par lotterie.
+      service_fee: 1  
+      os_account_registration: 1
       os_authentication: -1
       os_application: 1
       os_decision: 1
-      os_issuance: 0
-      os_issue_resolution_feedback: 0
-      os_comments_client_interation_en: There is no authentication and registration for the service programs.
-      os_comments_client_interation_fr: There is no authentication and registration for the service programs FR.
-      last_service_review: 2015-2016
-      last_service_improvement: 2016-2017
-      sin_usage: -1
-      cra_bn_identifier_usage: 0
-      num_phone_enquiries: 200
-      num_applications_by_phone: 80
-      num_website_visits: 8009
-      num_applications_online: 600
-      num_applications_in_person: 400
-      num_applications_by_mail: 50
-      num_applications_by_email: 800
-      num_applications_by_fax: 10
-      num_applications_by_other: 0
-      special_remarks_en: Nothing special of note.
-      special_remarks_fr: Nothing special of note FR.
-      service_uri_en: https://google.com
-      service_uri_fr: https://google.com
+      os_issuance: 1
+      os_issue_resolution_feedback: 1
+      os_comments_client_interation_en: There is no authentication.
+      os_comments_client_interation_fr: There is no authentication FR.
+      last_service_review: 2021-2022
+      last_service_improvement: 2022-2023
+      sin_usage: 1
+      cra_bn_identifier_usage: -1
+      num_phone_enquiries: 30000
+      num_applications_by_phone: "NA"
+      num_website_visits: 12000000
+      num_applications_online: 34000000
+      num_applications_in_person: 45000
+      num_applications_by_mail: 56000
+      num_applications_by_email: 3200000
+      num_applications_by_fax: 12
+      num_applications_by_other: "ND"
+      special_remarks_en: Applications cannot be received by telephone
+      special_remarks_fr: Les demandes de permis ne peuvent pas être soumises par téléphone
+      service_uri_en: https://canada.ca/bcp-bpc/sasquatch-license-en.html
+      service_uri_fr: https://canada.ca/bcp-bpc/sasquatch-license-en.html
       #FIXME: do not store in DS, just do in filter script??
-      # num_applications_total: 1940
+      # num_applications_total: 49331012
     filters:
-      client_target_groups: ECONOM
+      client_target_groups: PERSON
     filter_one:
-      fiscal_yr: 2017-2018
-      sin_usage: -1
+      fiscal_yr: 2023-2024
+      sin_usage: 1
     sort: year, service_id
 
 
@@ -1758,6 +1776,7 @@ resources:
         fr: Délai
 
   # DEP 2-9
+  # GE: Not repeatable, occurrence should be single
   - datastore_id: channel
     label:
       en: Service Standard Channel
@@ -2270,29 +2289,29 @@ resources:
   #TODO: Get actual example values from client
   examples:
     record:
-      fiscal_yr: 2017-2018
-      service_id: "4"
-      service_name_en: A service name
-      service_name_fr: A service name FR
-      service_standard_id: "456"
-      service_standard_en: A service standard name
-      service_standard_fr: A service standard name FR
-      type: OTH
-      channel: [ONL, FAX]
+      fiscal_yr: 2023-2024
+      service_id: "1"
+      service_name_en: Sasquatch hunting permit
+      service_name_fr: Permis pour la chasse au Sasquatch
+      service_standard_id: "12001"
+      service_standard_en: Sasquatch hunting permit application decisions are taken within a reasonable delay after receiving a complete application - 20 business days for applications received by postal mail
+      service_standard_fr: Une décision vis-à-vis l'attribution d'un permis de chasse de sasquatch se fait en un délai raisonnable - 20 jours ouvrables pour une demande reçue par la poste
+      type: TML
+      channel: POST
       channel_comments_en: Some channel comments
       channel_comments_fr: Some channel comments FR
-      target: 0.7
-      volume_meeting_target: 86
+      target: 0.8
+      volume_meeting_target: 55000
       #FIXME: put in pd_filter
-      #total_volume: 142
+      # total_volume: 56000
       #FIXME: put in pd_filter
-      #performance: 0.606
+      # performance: 0.982
       comments_en: General comments
       comments_fr: General comments FR
       #FIXME: put in pd_filter
       #target_met: 1
-      standards_targets_uri_en: https://google.com
-      standards_targets_uri_fr: https://google.com
+      standards_targets_uri_en: https://canada.ca/bcp-bpc/sasquatch-license-en.html
+      standards_targets_uri_fr: https://canada.ca/bcp-bpc/sasquatch-license-fr.html
       performance_results_uri_en: https://google.com
       performance_results_uri_fr: https://google.com
 
