@@ -456,6 +456,40 @@ def update_triggers():
             END;
         ''')
 
+    # return record with .clean (trimmed value) and .error
+    # (NULL or ARRAY[[value_trimmed]])
+    # .clean must be unnest(.clean) from the return to get the text value
+    lc.action.datastore_function_create(
+        name=u'int_na_nd_error',
+        or_replace=True,
+        arguments=[
+            {u'argname': u'value', u'argtype': u'text'},
+            {u'argname': u'field_name', u'argtype': u'text'},
+            {u'argname': u'clean', u'argtype': u'_text', u'argmode': u'out'},
+            {u'argname': u'error', u'argtype': u'_text', u'argmode': u'out'}],
+        rettype=u'record',
+        definition=u'''
+            DECLARE
+                value_upper text := value;
+            BEGIN
+                IF value_upper ~ '^-?[0-9]+$' THEN
+                    IF value_upper::int < 0 THEN
+                        error := ARRAY[[field_name, 'This value must not be negative']];
+                    END IF;
+                ELSE
+                    value_upper := UPPER(value_upper);
+                    IF value_upper != 'NA' AND value_upper != 'ND' THEN
+                        error := ARRAY[[field_name, 'This field must be either a number, "NA", or "ND"']];
+                    END IF;
+                END IF;
+                IF value IS NULL OR value = '' THEN
+                    clean := NULL;
+                ELSE
+                    clean := ARRAY(SELECT value_upper);
+                END IF;
+            END;
+        ''')
+
     lc.action.datastore_function_create(
         name=u'both_languages_error',
         or_replace=True,

@@ -299,22 +299,27 @@ def fivehundred():
     raise IntentionalServerError()
 
 
-def _form_choices_prefix_code(field_name, chromo):
-    for field in chromo['fields']:
-        if field['datastore_id'] == field_name and \
-                field.get('form_choices_prefix_code', False):
-            return True
-    return False
-
-
-def _get_choice_fields(resource_name, chromo):
+def _get_choice_fields(resource_name):
     separator = ' : ' if h.lang() == 'fr' else ': '
-    return {
-        datastore_id: [
-            {'value': k,
-             'label': k + separator + v if _form_choices_prefix_code(datastore_id, chromo) else v
-             } for (k, v) in choices]
-        for datastore_id, choices in h.recombinant_choice_fields(resource_name).items()}
+    choice_fields = {}
+    for datastore_id, choices in h.recombinant_choice_fields(resource_name).items():
+        f = h.recombinant_get_field(resource_name, datastore_id)
+        form_choices_prefix_code = f.get('form_choices_prefix_code', False)
+        form_choice_keys_only = f.get('form_choice_keys_only', False)
+        if datastore_id not in choice_fields:
+            choice_fields[datastore_id] = []
+        for (k, v) in choices:
+            if form_choice_keys_only:
+                choice_fields[datastore_id].append({'value': k,
+                                                    'label': k})
+                continue
+            elif form_choices_prefix_code:
+                choice_fields[datastore_id].append({'value': k,
+                                                    'label': k + separator + v})
+                continue
+            choice_fields[datastore_id].append({'value': k,
+                                                'label': v})
+    return choice_fields
 
 
 @canada_views.route('/group/bulk_process/<id>', methods=['GET', 'POST'])
@@ -353,7 +358,7 @@ def create_pd_record(owner_org, resource_name):
     except NotAuthorized:
         return abort(403, _('Unauthorized to create a resource for this package'))
 
-    choice_fields = _get_choice_fields(resource_name, chromo)
+    choice_fields = _get_choice_fields(resource_name)
     pk_fields = aslist(chromo['datastore_primary_key'])
 
     if request.method == 'POST':
@@ -457,7 +462,7 @@ def update_pd_record(owner_org, resource_name, pk):
     except NotAuthorized:
         abort(403, _('Unauthorized to update dataset'))
 
-    choice_fields = _get_choice_fields(resource_name, chromo)
+    choice_fields = _get_choice_fields(resource_name)
     pk_fields = aslist(chromo['datastore_primary_key'])
     pk_filter = dict(zip(pk_fields, pk))
 

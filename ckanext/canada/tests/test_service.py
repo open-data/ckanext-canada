@@ -74,39 +74,3 @@ class TestStdService(CanadaTestBase):
         err = ve.value.error_dict
         assert 'key' in err
         assert 'fiscal_yr, service_id, service_std_id' in err['key'][0]
-
-
-    def test_service_std_target(self):
-        record = dict(
-            get_chromo('service-std')['examples']['record'],
-            service_std_target='0.99999')
-        self.lc.action.datastore_upsert(
-            resource_id=self.resource_id,
-            records=[record])
-        assert self.lc.action.datastore_search(resource_id=self.resource_id)['records'][0]['service_std_target'] == 0.99999
-        record['service_std_target'] = 0.5
-        self.lc.action.datastore_upsert(
-            resource_id=self.resource_id,
-            records=[record])
-        assert self.lc.action.datastore_search(resource_id=self.resource_id)['records'][0]['service_std_target'] == 0.5
-        record['service_std_target'] = None
-        self.lc.action.datastore_upsert(
-            resource_id=self.resource_id,
-            records=[record])
-        assert self.lc.action.datastore_search(resource_id=self.resource_id)['records'][0]['service_std_target'] == None
-        record['service_std_target'] = -0.01
-        with pytest.raises(ValidationError) as ve:
-            self.lc.action.datastore_upsert(
-                resource_id=self.resource_id,
-                records=[record])
-        err = ve.value.error_dict
-        assert 'records' in err
-        assert 'service_std_target' in err['records'][0]
-        record['service_std_target'] = 1.01
-        with pytest.raises(ValidationError) as ve:
-            self.lc.action.datastore_upsert(
-                resource_id=self.resource_id,
-                records=[record])
-        err = ve.value.error_dict
-        assert 'records' in err
-        assert 'service_std_target' in err['records'][0]

@@ -17,7 +17,7 @@ resources:
 - title: Service Identification Information & Metrics
   resource_name: service
 
-  #published_resource_id: TODO: make a resource on all environs
+  published_resource_id: c0cf9766-b85b-48c3-b295-34f72305aaf6
 
   create_form: true
   edit_form: true
@@ -35,7 +35,9 @@ resources:
     obligation: Mandatory
     excel_required: true
     form_required: true
-    validation: This field must not be empty
+    validation:
+      en: This field must not be empty.
+      fr: Cette zone ne doit pas être vide.
     occurrence: Single
     datastore_type: text
     choices_file: choices/fiscal_year.yaml
@@ -52,7 +54,9 @@ resources:
     excel_required: true
     form_required: true
     format_type: Free text
-    validation: This field must not be empty
+    validation:
+      en: This field must not be empty.
+      fr: Cette zone ne doit pas être vide.
     occurrence: Single
     datastore_type: text
 
@@ -66,6 +70,7 @@ resources:
       fr: Indique le nom officiel du service.
     obligation: Mandatory
     excel_required: true
+    excel_column_width: 40
     form_required: true
     format_type: Free text
     validation:
@@ -93,6 +98,7 @@ resources:
       fr: Indique le nom officiel du service.
     obligation: Mandatory
     excel_required: true
+    excel_column_width: 40
     form_required: true
     format_type: Free text
     validation:
@@ -120,6 +126,7 @@ resources:
       fr: Offre une brève description du service, en langage simple.
     obligation: Mandatory
     excel_required: true
+    excel_column_width: 80
     form_required: true
     format_type: Free text
     validation:
@@ -147,6 +154,7 @@ resources:
       fr: Offre une brève description du service, en langage simple.
     obligation: Mandatory
     excel_required: true
+    excel_column_width: 80
     form_required: true
     format_type: Free text
     validation:
@@ -236,7 +244,7 @@ resources:
       fr: Cette zone ne doit pas être vide.
     occurrence: Single
     datastore_type: text
-    excel_full_text_choices: false
+    excel_full_text_choices: true
     choices:
       CLIENT:
         en: Targeted, Client-based service
@@ -346,7 +354,8 @@ resources:
     datastore_type: _text
     excel_full_text_choices: false
     form_snippet: scheming/form_snippets/multiple_select.html
-    choices_file: choices/service_program_ids.yaml
+    choices_file: choices/service_program_names.yaml
+    form_choice_keys_only: true
     form_select_attrs:
       class: form-control recombinant-select2
 
@@ -423,11 +432,10 @@ resources:
       fr: Cette zone ne doit pas être vide.
     occurrence: Single
     datastore_type: text
-    excel_full_text_choices: false
+    excel_full_text_choices: true
     choices_file: choices/boolean.yaml
 
   # DEP 1-17
-  # DEP Note: if field "Automated Decision system" has "yes / 1" then this field cannot be empty. TODO: confirm logic
   - datastore_id: automated_decision_system_description_en
     label:
       en: Automated Decision System Description (English)
@@ -444,8 +452,10 @@ resources:
         prendre ou informer la décision.
     obligation: Optional
     excel_required: false
+    excel_column_width: 80
     format_type: Free text
     validation:
+    #FIXME: specify if automated_decision_system is Y/YES ??
       en: |
         This field is required due to a response in a different field.
         This field has a maximum length of 1800 characters.
@@ -455,14 +465,13 @@ resources:
     occurrence: Single
     datastore_type: text
     max_chars: 1800
-    excel_required_formula: 'OR({automated_decision_system}="Y",NOT(ISBLANK({automated_decision_system_description_fr})))'
+    excel_required_formula: 'OR(TRIM(LEFT({automated_decision_system},FIND(":",{automated_decision_system}&":")-1))="Y",NOT(ISBLANK({automated_decision_system_description_fr})))'
     excel_error_formula: 'OR({default_formula},LEN(TRIM({cell}))>1800)'
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
       maxlength: 1800
 
   # DEP 1-18
-  # DEP Note: if field "Automated Decision system" has "yes / 1" then this field cannot be empty. TODO: confirm logic
   - datastore_id: automated_decision_system_description_fr
     label:
       en: Automated Decision System Description (French)
@@ -479,8 +488,10 @@ resources:
         prendre ou informer la décision.
     obligation: Optional
     excel_required: false
+    excel_column_width: 80
     format_type: Free text
     validation:
+      #FIXME: specify if automated_decision_system is Y/YES ??
       en: |
         This field is required due to a response in a different field.
         This field has a maximum length of 1800 characters.
@@ -490,7 +501,7 @@ resources:
     occurrence: Single
     datastore_type: text
     max_chars: 1800
-    excel_required_formula: 'OR({automated_decision_system}="Y",NOT(ISBLANK({automated_decision_system_description_en})))'
+    excel_required_formula: 'OR(TRIM(LEFT({automated_decision_system},FIND(":",{automated_decision_system}&":")-1))="Y",NOT(ISBLANK({automated_decision_system_description_en})))'
     excel_error_formula: 'OR({default_formula},LEN(TRIM({cell}))>1800)'
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
@@ -513,11 +524,10 @@ resources:
       fr: Cette zone ne doit pas être vide.
     occurrence: Single
     datastore_type: text
-    excel_full_text_choices: false
+    excel_full_text_choices: true
     choices_file: choices/boolean.yaml
 
   # DEP 1-20
-  #TODO: make sure the online_service_boolean.yaml works in Excel
   - datastore_id: os_account_registration
     label:
       en: "Online Services: Account Registration/Enrollment"
@@ -540,7 +550,7 @@ resources:
       fr: Cette zone ne doit pas être vide.
     occurrence: Single
     datastore_type: text
-    excel_full_text_choices: false
+    excel_full_text_choices: true
     choices_file: choices/online_service_boolean.yaml
 
   # DEP 1-21
@@ -560,7 +570,7 @@ resources:
       fr: Cette zone ne doit pas être vide.
     occurrence: Single
     datastore_type: text
-    excel_full_text_choices: false
+    excel_full_text_choices: true
     choices_file: choices/online_service_boolean.yaml
 
   # DEP 1-22
@@ -580,7 +590,7 @@ resources:
       fr: Cette zone ne doit pas être vide.
     occurrence: Single
     datastore_type: text
-    excel_full_text_choices: false
+    excel_full_text_choices: true
     choices_file: choices/online_service_boolean.yaml
 
   # DEP 1-23
@@ -600,7 +610,7 @@ resources:
       fr: Cette zone ne doit pas être vide.
     occurrence: Single
     datastore_type: text
-    excel_full_text_choices: false
+    excel_full_text_choices: true
     choices_file: choices/online_service_boolean.yaml
 
   # DEP 1-24
@@ -620,7 +630,7 @@ resources:
       fr: Cette zone ne doit pas être vide.
     occurrence: Single
     datastore_type: text
-    excel_full_text_choices: false
+    excel_full_text_choices: true
     choices_file: choices/online_service_boolean.yaml
 
   # DEP 1-25
@@ -640,11 +650,10 @@ resources:
       fr: Cette zone ne doit pas être vide.
     occurrence: Single
     datastore_type: text
-    excel_full_text_choices: false
+    excel_full_text_choices: true
     choices_file: choices/online_service_boolean.yaml
 
   # DEP 1-26
-  # DEP Note: if any of the fields  "Online services" has "NA / -1" then this field cannot be empty. TODO: confirm logic
   - datastore_id: os_comments_client_interaction_en
     label:
       en: "Comments on Online Services - Client Interaction Points (English)"
@@ -659,8 +668,10 @@ resources:
         des commentaires doivent être fournis.
     obligation: Optional
     excel_required: false
+    excel_column_width: 80
     format_type: Free text
     validation:
+      #FIXME: specify if any "Online Service" fields are NA ??
       en: |
         This field is required due to a response in a different field.
         This field has a maximum length of 1000 characters.
@@ -670,14 +681,13 @@ resources:
     occurrence: Single
     datastore_type: text
     max_chars: 1000
-    excel_required_formula: 'OR(VALUE({os_account_registration})="NA",VALUE({os_authentication})="NA",VALUE({os_application})="NA",VALUE({os_decision})="NA",VALUE({os_issuance})="NA",VALUE({os_issue_resolution_feedback})="NA",NOT(ISBLANK({os_comments_client_interaction_fr})))' # TODO: check IFERR in Excel??
+    excel_required_formula: 'OR(TRIM(LEFT({os_account_registration},FIND(":",{os_account_registration}&":")-1))="NA",TRIM(LEFT({os_authentication},FIND(":",{os_authentication}&":")-1))="NA",TRIM(LEFT({os_application},FIND(":",{os_application}&":")-1))="NA",TRIM(LEFT({os_decision},FIND(":",{os_decision}&":")-1))="NA",TRIM(LEFT({os_issuance},FIND(":",{os_issuance}&":")-1))="NA",TRIM(LEFT({os_issue_resolution_feedback},FIND(":",{os_issue_resolution_feedback}&":")-1))="NA",NOT(ISBLANK({os_comments_client_interaction_fr})))'
     excel_error_formula: 'OR({default_formula},LEN(TRIM({cell}))>1000)'
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
       maxlength: 1000
 
   # DEP 1-27
-  # DEP Note: if any of the fields  "Online services" has "NA / -1" then this field cannot be empty. TODO: confirm logic
   - datastore_id: os_comments_client_interaction_fr
     label:
       en: "Comments on Online Services - Client Interaction Points (French)"
@@ -692,8 +702,10 @@ resources:
         des commentaires doivent être fournis.
     obligation: Optional
     excel_required: false
+    excel_column_width: 80
     format_type: Free text
     validation:
+      #FIXME: specify if any "Online Service" fields are NA ??
       en: |
         This field is required due to a response in a different field.
         This field has a maximum length of 1000 characters.
@@ -703,7 +715,7 @@ resources:
     occurrence: Single
     datastore_type: text
     max_chars: 1000
-    excel_required_formula: 'OR(VALUE({os_account_registration})="NA",VALUE({os_authentication})="NA",VALUE({os_application})="NA",VALUE({os_decision})="NA",VALUE({os_issuance})="NA",VALUE({os_issue_resolution_feedback})="NA",NOT(ISBLANK({os_comments_client_interaction_en})))' # TODO: check IFERR in Excel??
+    excel_required_formula: 'OR(TRIM(LEFT({os_account_registration},FIND(":",{os_account_registration}&":")-1))="NA",TRIM(LEFT({os_authentication},FIND(":",{os_authentication}&":")-1))="NA",TRIM(LEFT({os_application},FIND(":",{os_application}&":")-1))="NA",TRIM(LEFT({os_decision},FIND(":",{os_decision}&":")-1))="NA",TRIM(LEFT({os_issuance},FIND(":",{os_issuance}&":")-1))="NA",TRIM(LEFT({os_issue_resolution_feedback},FIND(":",{os_issue_resolution_feedback}&":")-1))="NA",NOT(ISBLANK({os_comments_client_interaction_fr})))'
     excel_error_formula: 'OR({default_formula},LEN(TRIM({cell}))>1000)'
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
@@ -717,12 +729,9 @@ resources:
     description:
       en: Identifies the fiscal year when the most recent service review was completed.
       fr: Identifie l’exercice lors duquel le plus récent examen de service a été mené.
-    obligation: Mandatory
-    excel_required: true
-    form_required: true
-    validation:
-      en: This field must not be empty.
-      fr: Cette zone ne doit pas être vide.
+    obligation: Optional
+    excel_required: false
+    form_required: false
     occurrence: Single
     datastore_type: text
     excel_full_text_choices: false
@@ -736,12 +745,9 @@ resources:
     description:
       en: What was the most recent year in which this service was improved based on client feedback?
       fr: Quelle a été l'année la plus récente au cours de laquelle ce service a été amélioré en fonction des commentaires des clients?
-    obligation: Mandatory
-    excel_required: true
-    form_required: true
-    validation:
-      en: This field must not be empty.
-      fr: Cette zone ne doit pas être vide.
+    obligation: Optional
+    excel_required: false
+    form_required: false
     occurrence: Single
     datastore_type: text
     excel_full_text_choices: false
@@ -764,7 +770,7 @@ resources:
       fr: Cette zone ne doit pas être vide.
     occurrence: Single
     datastore_type: text
-    excel_full_text_choices: false
+    excel_full_text_choices: true
     choices_file: choices/service_boolean.yaml
 
   # DEP 1-31
@@ -790,11 +796,10 @@ resources:
       fr: Cette zone ne doit pas être vide.
     occurrence: Single
     datastore_type: text
-    excel_full_text_choices: false
+    excel_full_text_choices: true
     choices_file: choices/service_boolean.yaml
 
   # DEP 1-32
-  # DEP Note: must be a number or NA or ND TODO: confirm logic
   - datastore_id: num_phone_enquiries
     label:
       en: Number of Telephone Enquiries Received
@@ -821,15 +826,16 @@ resources:
       en: |
         This field must not be empty.
         This field must be either a number, "NA", or "ND"
+        This value must not be negative.
       fr: |
         Cette zone ne doit pas être vide.
         Ce champ doit être un chiffre, "NA", ou "ND"
+        Cette valeur ne doit pas être négatif.
     occurrence: Single
     datastore_type: text
-    excel_error_formula: OR({default_formula},AND(NOT(ISNUMBER(VALUE({cell}))),{cell}!="NA",{cell}!="ND"))
+    excel_error_formula: 'OR({default_formula},AND(NOT(ISNUMBER(VALUE({cell}))),{cell}<>"NA",{cell}<>"ND"),AND(ISNUMBER(VALUE({cell})),VALUE({cell})<0))'
 
   # DEP 1-33
-  # DEP Note: must be a number or NA or ND TODO: confirm logic
   - datastore_id: num_applications_by_phone
     label:
       en: Number of Applications Submitted by Telephone
@@ -853,15 +859,16 @@ resources:
       en: |
         This field must not be empty.
         This field must be either a number, "NA", or "ND"
+        This value must not be negative.
       fr: |
         Cette zone ne doit pas être vide.
         Ce champ doit être un chiffre, "NA", ou "ND"
+        Cette valeur ne doit pas être négatif.
     occurrence: Single
     datastore_type: text
-    excel_error_formula: OR({default_formula},AND(NOT(ISNUMBER(VALUE({cell}))),{cell}!="NA",{cell}!="ND"))
+    excel_error_formula: 'OR({default_formula},AND(NOT(ISNUMBER(VALUE({cell}))),{cell}<>"NA",{cell}<>"ND"),AND(ISNUMBER(VALUE({cell})),VALUE({cell})<0))'
 
   # DEP 1-34
-  # DEP Note: must be a number or NA or ND TODO: confirm logic
   - datastore_id: num_website_visits
     label:
       en: Number of Website Visits
@@ -884,15 +891,16 @@ resources:
       en: |
         This field must not be empty.
         This field must be either a number, "NA", or "ND"
+        This value must not be negative.
       fr: |
         Cette zone ne doit pas être vide.
         Ce champ doit être un chiffre, "NA", ou "ND"
+        Cette valeur ne doit pas être négatif.
     occurrence: Single
     datastore_type: text
-    excel_error_formula: OR({default_formula},AND(NOT(ISNUMBER(VALUE({cell}))),{cell}!="NA",{cell}!="ND"))
+    excel_error_formula: 'OR({default_formula},AND(NOT(ISNUMBER(VALUE({cell}))),{cell}<>"NA",{cell}<>"ND"),AND(ISNUMBER(VALUE({cell})),VALUE({cell})<0))'
 
   # DEP 1-35
-  # DEP Note: must be a number or NA or ND TODO: confirm logic
   - datastore_id: num_applications_online
     label:
       en: Number of Applications Submitted Online
@@ -918,15 +926,16 @@ resources:
       en: |
         This field must not be empty.
         This field must be either a number, "NA", or "ND"
+        This value must not be negative.
       fr: |
         Cette zone ne doit pas être vide.
         Ce champ doit être un chiffre, "NA", ou "ND"
+        Cette valeur ne doit pas être négatif.
     occurrence: Single
     datastore_type: text
-    excel_error_formula: OR({default_formula},AND(NOT(ISNUMBER(VALUE({cell}))),{cell}!="NA",{cell}!="ND"))
+    excel_error_formula: 'OR({default_formula},AND(NOT(ISNUMBER(VALUE({cell}))),{cell}<>"NA",{cell}<>"ND"),AND(ISNUMBER(VALUE({cell})),VALUE({cell})<0))'
 
   # DEP 1-36
-  # DEP Note: must be a number or NA or ND TODO: confirm logic
   - datastore_id: num_applications_in_person
     label:
       en: Number of Applications Submitted In-Person
@@ -951,15 +960,16 @@ resources:
       en: |
         This field must not be empty.
         This field must be either a number, "NA", or "ND"
+        This value must not be negative.
       fr: |
         Cette zone ne doit pas être vide.
         Ce champ doit être un chiffre, "NA", ou "ND"
+        Cette valeur ne doit pas être négatif.
     occurrence: Single
     datastore_type: text
-    excel_error_formula: OR({default_formula},AND(NOT(ISNUMBER(VALUE({cell}))),{cell}!="NA",{cell}!="ND"))
+    excel_error_formula: 'OR({default_formula},AND(NOT(ISNUMBER(VALUE({cell}))),{cell}<>"NA",{cell}<>"ND"),AND(ISNUMBER(VALUE({cell})),VALUE({cell})<0))'
 
   # DEP 1-37
-  # DEP Note: must be a number or NA or ND TODO: confirm logic
   - datastore_id: num_applications_by_mail
     label:
       en: Number of Applications Submitted via Postal Mail
@@ -983,15 +993,16 @@ resources:
       en: |
         This field must not be empty.
         This field must be either a number, "NA", or "ND"
+        This value must not be negative.
       fr: |
         Cette zone ne doit pas être vide.
         Ce champ doit être un chiffre, "NA", ou "ND"
+        Cette valeur ne doit pas être négatif.
     occurrence: Single
     datastore_type: text
-    excel_error_formula: OR({default_formula},AND(NOT(ISNUMBER(VALUE({cell}))),{cell}!="NA",{cell}!="ND"))
+    excel_error_formula: 'OR({default_formula},AND(NOT(ISNUMBER(VALUE({cell}))),{cell}<>"NA",{cell}<>"ND"),AND(ISNUMBER(VALUE({cell})),VALUE({cell})<0))'
 
   # DEP 1-38
-  # DEP Note: must be a number or NA or ND TODO: confirm logic
   - datastore_id: num_applications_by_email
     label:
       en: Number of Applications Submitted by Email
@@ -1015,15 +1026,16 @@ resources:
       en: |
         This field must not be empty.
         This field must be either a number, "NA", or "ND"
+        This value must not be negative.
       fr: |
         Cette zone ne doit pas être vide.
         Ce champ doit être un chiffre, "NA", ou "ND"
+        Cette valeur ne doit pas être négatif.
     occurrence: Single
     datastore_type: text
-    excel_error_formula: OR({default_formula},AND(NOT(ISNUMBER(VALUE({cell}))),{cell}!="NA",{cell}!="ND"))
+    excel_error_formula: 'OR({default_formula},AND(NOT(ISNUMBER(VALUE({cell}))),{cell}<>"NA",{cell}<>"ND"),AND(ISNUMBER(VALUE({cell})),VALUE({cell})<0))'
 
   # DEP 1-39
-  # DEP Note: must be a number or NA or ND TODO: confirm logic
   - datastore_id: num_applications_by_fax
     label:
       en: Number of Applications Submitted by Fax
@@ -1047,15 +1059,16 @@ resources:
       en: |
         This field must not be empty.
         This field must be either a number, "NA", or "ND"
+        This value must not be negative.
       fr: |
         Cette zone ne doit pas être vide.
         Ce champ doit être un chiffre, "NA", ou "ND"
+        Cette valeur ne doit pas être négatif.
     occurrence: Single
     datastore_type: text
-    excel_error_formula: OR({default_formula},AND(NOT(ISNUMBER(VALUE({cell}))),{cell}!="NA",{cell}!="ND"))
+    excel_error_formula: 'OR({default_formula},AND(NOT(ISNUMBER(VALUE({cell}))),{cell}<>"NA",{cell}<>"ND"),AND(ISNUMBER(VALUE({cell})),VALUE({cell})<0))'
 
   # DEP 1-40
-  # DEP Note: must be a number or NA or ND TODO: confirm logic
   - datastore_id: num_applications_by_other
     label:
       en: Number of Applications Submitted via other channels
@@ -1080,12 +1093,14 @@ resources:
       en: |
         This field must not be empty.
         This field must be either a number, "NA", or "ND"
+        This value must not be negative.
       fr: |
         Cette zone ne doit pas être vide.
         Ce champ doit être un chiffre, "NA", ou "ND"
+        Cette valeur ne doit pas être négatif.
     occurrence: Single
     datastore_type: text
-    excel_error_formula: OR({default_formula},AND(NOT(ISNUMBER(VALUE({cell}))),{cell}!="NA",{cell}!="ND"))
+    excel_error_formula: 'OR({default_formula},AND(NOT(ISNUMBER(VALUE({cell}))),{cell}<>"NA",{cell}<>"ND"),AND(ISNUMBER(VALUE({cell})),VALUE({cell})<0))'
 
   # DEP 1-41
   - datastore_id: special_remarks_en
@@ -1106,6 +1121,7 @@ resources:
         d'un lien vers l'ensemble de données du Répertoire des services du GC.
     obligation: Optional
     excel_required: false
+    excel_column_width: 80
     format_type: Free text
     validation:
       en: This field has a maximum length of 2000 characters.
@@ -1138,6 +1154,7 @@ resources:
         d'un lien vers l'ensemble de données du Répertoire des services du GC.
     obligation: Optional
     excel_required: false
+    excel_column_width: 80
     format_type: Free text
     validation:
       en: This field has a maximum length of 2000 characters.
@@ -1163,16 +1180,16 @@ resources:
     excel_required: false
     format_type: Free text
     validation:
-      en: This field has a maximum length of 100 characters.
-      fr: Ce champ ne peut excéder une longueur maximale de 100 caractères.
+      en: This field has a maximum length of 1500 characters.
+      fr: Ce champ ne peut excéder une longueur maximale de 1500 caractères.
     occurrence: Single
     datastore_type: text
-    max_chars: 100
+    max_chars: 1500
     excel_required_formula: NOT(ISBLANK({service_uri_fr}))
-    excel_error_formula: 'OR({default_formula},LEN(TRIM({cell}))>100)'
+    excel_error_formula: 'OR({default_formula},LEN(TRIM({cell}))>1500)'
     form_attrs:
       style: "width: 100%; display: block"
-      maxlength: 100
+      maxlength: 1500
 
   # DEP 1-44
   - datastore_id: service_uri_fr
@@ -1190,12 +1207,12 @@ resources:
       fr: Ce champ ne peut excéder une longueur maximale de 100 caractères.
     occurrence: Single
     datastore_type: text
-    max_chars: 100
+    max_chars: 1500
     excel_required_formula: NOT(ISBLANK({service_uri_en}))
-    excel_error_formula: 'OR({default_formula},LEN(TRIM({cell}))>100)'
+    excel_error_formula: 'OR({default_formula},LEN(TRIM({cell}))>1500)'
     form_attrs:
       style: "width: 100%; display: block"
-      maxlength: 100
+      maxlength: 1500
 
   # Dev: req dynamic field
   - datastore_id: record_created
@@ -1234,7 +1251,6 @@ resources:
 
   default_preview_sort: fiscal_yr, service_id
 
-  #TODO: confirm new triggers
   triggers:
   - service_trigger: |
       DECLARE
@@ -1359,49 +1375,49 @@ resources:
         errors := errors || choice_error(NEW.cra_bn_identifier_usage, {cra_bn_identifier_usage}, 'cra_bn_identifier_usage');
 
         errors := errors || required_error(NEW.num_phone_enquiries, 'num_phone_enquiries');
-        IF NOT NEW.num_phone_enquiries ~ '^[0-9]+$' AND NEW.num_phone_enquiries != 'NA' AND NEW.num_phone_enquiries != 'ND' THEN
-          errors := errors || ARRAY[['num_phone_enquiries', {num_na_nd_error}]];
-        END IF;
+        crval := int_na_nd_error(NEW.num_phone_enquiries, 'num_phone_enquiries');
+        errors := errors || crval.error;
+        NEW.num_phone_enquiries := unnest(crval.clean);
 
         errors := errors || required_error(NEW.num_applications_by_phone, 'num_applications_by_phone');
-        IF NOT NEW.num_applications_by_phone ~ '^[0-9]+$' AND NEW.num_applications_by_phone != 'NA' AND NEW.num_applications_by_phone != 'ND' THEN
-          errors := errors || ARRAY[['num_applications_by_phone', {num_na_nd_error}]];
-        END IF;
+        crval := int_na_nd_error(NEW.num_applications_by_phone, 'num_applications_by_phone');
+        errors := errors || crval.error;
+        NEW.num_applications_by_phone := unnest(crval.clean);
 
         errors := errors || required_error(NEW.num_website_visits, 'num_website_visits');
-        IF NOT NEW.num_website_visits ~ '^[0-9]+$' AND NEW.num_website_visits != 'NA' AND NEW.num_website_visits != 'ND' THEN
-          errors := errors || ARRAY[['num_website_visits', {num_na_nd_error}]];
-        END IF;
+        crval := int_na_nd_error(NEW.num_website_visits, 'num_website_visits');
+        errors := errors || crval.error;
+        NEW.num_website_visits := unnest(crval.clean);
 
         errors := errors || required_error(NEW.num_applications_online, 'num_applications_online');
-        IF NOT NEW.num_applications_online ~ '^[0-9]+$' AND NEW.num_applications_online != 'NA' AND NEW.num_applications_online != 'ND' THEN
-          errors := errors || ARRAY[['num_applications_online', {num_na_nd_error}]];
-        END IF;
+        crval := int_na_nd_error(NEW.num_applications_online, 'num_applications_online');
+        errors := errors || crval.error;
+        NEW.num_applications_online := unnest(crval.clean);
 
         errors := errors || required_error(NEW.num_applications_in_person, 'num_applications_in_person');
-        IF NOT NEW.num_applications_in_person ~ '^[0-9]+$' AND NEW.num_applications_in_person != 'NA' AND NEW.num_applications_in_person != 'ND' THEN
-          errors := errors || ARRAY[['num_applications_in_person', {num_na_nd_error}]];
-        END IF;
+        crval := int_na_nd_error(NEW.num_applications_in_person, 'num_applications_in_person');
+        errors := errors || crval.error;
+        NEW.num_applications_in_person := unnest(crval.clean);
 
         errors := errors || required_error(NEW.num_applications_by_mail, 'num_applications_by_mail');
-        IF NOT NEW.num_applications_by_mail ~ '^[0-9]+$' AND NEW.num_applications_by_mail != 'NA' AND NEW.num_applications_by_mail != 'ND' THEN
-          errors := errors || ARRAY[['num_applications_by_mail', {num_na_nd_error}]];
-        END IF;
+        crval := int_na_nd_error(NEW.num_applications_by_mail, 'num_applications_by_mail');
+        errors := errors || crval.error;
+        NEW.num_applications_by_mail := unnest(crval.clean);
 
         errors := errors || required_error(NEW.num_applications_by_email, 'num_applications_by_email');
-        IF NOT NEW.num_applications_by_email ~ '^[0-9]+$' AND NEW.num_applications_by_email != 'NA' AND NEW.num_applications_by_email != 'ND' THEN
-          errors := errors || ARRAY[['num_applications_by_email', {num_na_nd_error}]];
-        END IF;
+        crval := int_na_nd_error(NEW.num_applications_by_email, 'num_applications_by_email');
+        errors := errors || crval.error;
+        NEW.num_applications_by_email := unnest(crval.clean);
 
         errors := errors || required_error(NEW.num_applications_by_fax, 'num_applications_by_fax');
-        IF NOT NEW.num_applications_by_fax ~ '^[0-9]+$' AND NEW.num_applications_by_fax != 'NA' AND NEW.num_applications_by_fax != 'ND' THEN
-          errors := errors || ARRAY[['num_applications_by_fax', {num_na_nd_error}]];
-        END IF;
+        crval := int_na_nd_error(NEW.num_applications_by_fax, 'num_applications_by_fax');
+        errors := errors || crval.error;
+        NEW.num_applications_by_fax := unnest(crval.clean);
 
         errors := errors || required_error(NEW.num_applications_by_other, 'num_applications_by_other');
-        IF NOT NEW.num_applications_by_other ~ '^[0-9]+$' AND NEW.num_applications_by_other != 'NA' AND NEW.num_applications_by_other != 'ND' THEN
-          errors := errors || ARRAY[['num_applications_by_other', {num_na_nd_error}]];
-        END IF;
+        crval := int_na_nd_error(NEW.num_applications_by_other, 'num_applications_by_other');
+        errors := errors || crval.error;
+        NEW.num_applications_by_other := unnest(crval.clean);
 
         crval := max_char_error(NEW.special_remarks_en, 2000, 'special_remarks_en');
         errors := errors || crval.error;
@@ -1411,10 +1427,10 @@ resources:
         NEW.special_remarks_fr := unnest(crval.clean);
         errors := errors || both_languages_error(NEW.special_remarks_en, 'special_remarks_en', NEW.special_remarks_fr, 'special_remarks_fr');
 
-        crval := max_char_error(NEW.service_uri_en, 100, 'service_uri_en');
+        crval := max_char_error(NEW.service_uri_en, 1500, 'service_uri_en');
         errors := errors || crval.error;
         NEW.service_uri_en := unnest(crval.clean);
-        crval := max_char_error(NEW.service_uri_fr, 100, 'service_uri_fr');
+        crval := max_char_error(NEW.service_uri_fr, 1500, 'service_uri_fr');
         errors := errors || crval.error;
         NEW.service_uri_fr := unnest(crval.clean);
         errors := errors || both_languages_error(NEW.service_uri_en, 'service_uri_en', NEW.service_uri_fr, 'service_uri_fr');
@@ -1429,65 +1445,86 @@ resources:
 
   trigger_strings:  # yaml | not supported
     num_na_nd_error: This field must be either a number, "NA", or "ND"
+    negative_number_error: This value must not be negative
     max_length_error: This field has a maximum length of {} characters.
     invalid_choice_error: 'Invalid choice: {}'
 
-  #TODO: Get actual example values from client
   examples:
     record:
-      fiscal_yr: 2017-2018
-      service_id: "4"
-      service_name_en: Partner views
-      service_name_fr: Opinions des partenaires
-      service_description_en: Provides matching contributions to producers who make annual deposits to an AgriInvest account, to help manage income declines or make investments to mitigate risks or improve market income.
-      service_description_fr: Offre des contributions de contrepartie aux producteurs qui font des dépôts annuels dans un compte Agri-investissement, afin de gérer les baisses de revenus ou de faire des investissements dans le but d'atténuer les risques ou d'améliorer les revenus tirés du marché.
-      service_type: [APIR, CER]
+      fiscal_yr: 2022-2023
+      service_id: '1001'
+      service_name_en: Old Age Security (OAS) Benefits
+      service_name_fr: Prestations de la Sécurité de la vieillesse
+      service_description_en: >
+        The Old Age Security (OAS) pension is a monthly payment available to most Canadians 65 years
+        of age who meet the Canadian legal status and residence requirements. In addition to the Old
+        Age Security pension, there are three types of Old Age Security benefits:  the Guaranteed
+        Income Supplement, Allowance and Allowance for the Survivor. The OAS provides financial
+        support to millions of seniors, including those that are low-income, each year.
+      service_description_fr: >
+        La pension de la Sécurité de la vieillesse (SV) est une prestation mensuelle versée à la
+        plupart des Canadiens âgés de 65 ans et plus qui satisfont aux exigences relatives au statut
+        juridique et à la résidence au Canada. En plus de la pension de la Sécurité de la vieillesse,
+        il existe trois types de prestations de la Sécurité de la vieillesse : le Supplément de revenu
+        garanti, l'Allocation et l'Allocation au survivant. La SV verse chaque année un soutien
+        financier à des millions d'aînés, incluant ceux à faible revenu.
+      service_type: [RES]
       service_recipient_type: CLIENT
-      service_scope: [CLUSTER, ENTERPRISE]
-      client_target_groups: [ECONOM, NGO]
-      program_id: "77"
-      client_feedback_channel: [EML, FAX]
-      automated_decision_system: 1
-      automated_decision_system_description_en: Automated decision system description
-      automated_decision_system_description_fr: Automated decision system description FR
-      service_fee: 0
-      os_account_registration: -1
-      os_authentication: -1
-      os_application: 1
-      os_decision: 1
-      os_issuance: 0
-      os_issue_resolution_feedback: 0
-      os_comments_client_interaction_en: There is no authentication and registration for the service programs.
-      os_comments_client_interaction_fr: There is no authentication and registration for the service programs FR.
-      last_service_review: 2015-2016
-      last_service_improvement: 2016-2017
-      sin_usage: -1
-      cra_bn_identifier_usage: 0
-      num_phone_enquiries: 200
-      num_applications_by_phone: 80
-      num_website_visits: 8009
-      num_applications_online: 600
-      num_applications_in_person: 400
-      num_applications_by_mail: 50
-      num_applications_by_email: 800
-      num_applications_by_fax: 10
-      num_applications_by_other: 0
-      special_remarks_en: Nothing special of note.
-      special_remarks_fr: Nothing special of note FR.
-      service_uri_en: https://google.com
-      service_uri_fr: https://google.com
+      service_scope: [EXTERN]
+      client_target_groups: [PERSON]
+      program_id: [BGN01]
+      client_feedback_channel: [EML, FAX, PERSON, ONL, POST, TEL]
+      automated_decision_system: 'N'
+      automated_decision_system_description_en: ''
+      automated_decision_system_description_fr: ''
+      service_fee: 'N'
+      os_account_registration: 'Y'
+      os_authentication: 'Y'
+      os_application: 'Y'
+      os_decision: 'Y'
+      os_issuance: 'Y'
+      os_issue_resolution_feedback: 'Y'
+      os_comments_client_interaction_en: ''
+      os_comments_client_interaction_fr: ''
+      last_service_review: ''
+      last_service_improvement: 2021-2022
+      sin_usage: 'Y'
+      cra_bn_identifier_usage: 'Y'
+      num_phone_enquiries: 7252346
+      num_applications_by_phone: 0
+      num_website_visits: 5446484
+      num_applications_online: 276390
+      num_applications_in_person: 0
+      num_applications_by_mail: 792026
+      num_applications_by_email: 0
+      num_applications_by_fax: 0
+      num_applications_by_other: 2218002
+      special_remarks_en: |
+        - The volume reflected in the 'Applications by Mail' column include the volume of paper applications for the following OAS pension benefits application types: OAS basic pension; the Guaranteed Income Supplement (GIS); Allowance; Allowance Survivor; Renewal of GIS/Allowance/Allowance Survivor; Options for GIS/Allowance/Allowance Survivor; and foreign benefits.
+        - The volume reflected in the 'Number of Automatic Enrolments' column represents the volume of Automatic Enrolment into the OAS basic pension and the GIS.
+        - The volume reflected in the 'Applications through Other Channels' column represents the volume of the Automatic Renewal of income-tested benefits through the CRA for the GIS.
+        - Applications to OAS pension benefits do not constitute the largest volume of work done by the OAS program. In addition to applications, there were also another 3,143,898 OAS and foreign benefit account revisions in 2022-2023.
+        - OAS and CPP telephone enquiries are managed through the same Pensions Toll-free service, with significant overlap between the two programs on many calls. The metrics reported for CPP and OAS,  such as the volume of calls, are therefore identical and are non-cumulative (i.e. they are not to be added together)."
+      special_remarks_fr: |
+        - Le volume indiqué dans la colonne « Demandes par la poste » comprend le volume de demandes papier pour les types de demandes de prestations de pension de la SV suivants : pension de base de la SV ; le Supplément de revenu garanti (SRG); Allocation ; Allocation de survivant ; Renouvellement du SRG/Allocation/ Allocation de survivant ; options pour le SRG/l'allocation/l'allocation de survivant ; et les prestations étrangères.
+        - Le volume indiqué dans la colonne ""Nombre d'inscriptions automatiques"" représente le volume des inscriptions automatiques à la pension de base de la SV et au SRG.
+        - Le volume reflété dans la colonne « Demandes par d'autres canaux » représente le volume d'adhésion automatique à la pension de base de la SV et du SRG, ainsi que le renouvellement automatique des prestations fondées sur le revenu par l'intermédiaire de l'ARC pour le SRG.
+        - Les demandes de prestations de pension de la SV ne constituent pas le plus gros volume de travail effectué par le programme de la SV. En plus des demandes, il y a eu également 3 143 898 autres révisions des comptes de SV et de prestations étrangères en 2022-2023
+        - Les demandes de renseignements téléphoniques sur la SV et le RPC sont gérées par le même service téléphonique sans frais des pensions, avec un chevauchement important entre les deux programmes pour de nombreux appels. Les mesures rapportées pour le RPC et la SV, comme le volume d'appels, sont donc identiques et non cumulatives (c'est-à-dire qu'elles ne doivent pas être additionnées). "
+      service_uri_en: https://www.canada.ca/en/services/benefits/publicpensions/cpp/old-age-security.html
+      service_uri_fr: https://www.canada.ca/fr/services/prestations/pensionspubliques/rpc/securite-vieillesse.html
     filters:
-      client_target_groups: ECONOM
+      client_target_groups: PERSON
     filter_one:
-      fiscal_yr: 2017-2018
-      sin_usage: -1
+      fiscal_yr: 2022-2023
+      sin_usage: 'Y'
     sort: year, service_id
 
 
 - title: Service Standards & Performance Results
   resource_name: service-std
 
-  #published_resource_id: TODO: make a resource on all environs
+  published_resource_id: 8736cd7e-9bf9-4a45-9eee-a6cb3c43c07e
 
   create_form: true
   edit_form: true
@@ -1543,6 +1580,7 @@ resources:
       fr: Indique le nom officiel du service.
     obligation: Mandatory
     excel_required: true
+    excel_column_width: 40
     form_required: true
     validation:
       en: |
@@ -1570,6 +1608,7 @@ resources:
       fr: Indique le nom officiel du service.
     obligation: Mandatory
     excel_required: true
+    excel_column_width: 40
     form_required: true
     validation:
       en: |
@@ -1628,6 +1667,7 @@ resources:
         aux services.
     obligation: Mandatory
     excel_required: true
+    excel_column_width: 60
     form_required: true
     validation:
       en: |
@@ -1662,6 +1702,7 @@ resources:
         aux services.
     obligation: Mandatory
     excel_required: true
+    excel_column_width: 60
     form_required: true
     validation:
       en: |
@@ -1709,7 +1750,7 @@ resources:
       fr: Cette zone ne doit pas être vide.
     occurrence: Single
     datastore_type: text
-    excel_full_text_choices: false
+    excel_full_text_choices: true
     choices:
       ACS:
         en: Access
@@ -1776,6 +1817,7 @@ resources:
       fr: Commentaires en lien au mode de prestation de la norme de service et fournit une explication de la sélection des modes de prestation « Autre ».
     obligation: Optional
     excel_required: false
+    excel_column_width: 80
     format_type: Free text
     validation:
       en: This field has a maximum length of 1500 characters.
@@ -1799,6 +1841,7 @@ resources:
       fr: Commentaires en lien au mode de prestation de la norme de service et fournit une explication de la sélection des modes de prestation « Autre ».
     obligation: Optional
     excel_required: false
+    excel_column_width: 80
     format_type: Free text
     validation:
       en: This field has a maximum length of 1500 characters.
@@ -1813,7 +1856,6 @@ resources:
       maxlength: 1500
 
   # DEP 2-12
-  # DEP Note: This value must be between 0 and 1 TODO: confirm logic
   - datastore_id: target
     label:
       en: Service Standard Target
@@ -1832,7 +1874,6 @@ resources:
     excel_error_formula: 'OR({default_formula},{cell}<0,{cell}>1)'
 
   # DEP 2-13
-  # DEP Note: This value must not be negative TODO: confirm logic
   - datastore_id: volume_meeting_target
     label:
       en: Business Volume That Met Service Standard Target
@@ -1860,7 +1901,6 @@ resources:
     excel_error_formula: 'OR({default_formula},{cell}<0)'
 
   # DEP 2-14
-  # DEP Note: This value must not be negative TODO: confirm logic
   - datastore_id: total_volume
     label:
       en: Total Volume
@@ -1895,6 +1935,7 @@ resources:
       fr: Commentaires en lien à la norme de service en general.
     obligation: Optional
     excel_required: false
+    excel_column_width: 80
     format_type: Free text
     validation:
       en: This field has a maximum length of 2000 characters.
@@ -1918,6 +1959,7 @@ resources:
       fr: Commentaires en lien à la norme de service en general.
     obligation: Optional
     excel_required: false
+    excel_column_width: 80
     format_type: Free text
     validation:
       en: This field has a maximum length of 2000 characters.
@@ -1946,17 +1988,17 @@ resources:
     validation:
       en: |
         This field must not be empty.
-        This field has a maximum length of 100 characters.
+        This field has a maximum length of 1500 characters.
       fr: |
         Cette zone ne doit pas être vide.
-        Ce champ ne peut excéder une longueur maximale de 100 caractères.
+        Ce champ ne peut excéder une longueur maximale de 1500 caractères.
     occurrence: Single
     datastore_type: text
-    max_chars: 100
-    excel_error_formula: 'OR({default_formula},LEN(TRIM({cell}))>100)'
+    max_chars: 1500
+    excel_error_formula: 'OR({default_formula},LEN(TRIM({cell}))>1500)'
     form_attrs:
       style: "width: 100%; display: block"
-      maxlength: 100
+      maxlength: 1500
 
   # DEP 2-20
   - datastore_id: standards_targets_uri_fr
@@ -1973,17 +2015,17 @@ resources:
     validation:
       en: |
         This field must not be empty.
-        This field has a maximum length of 100 characters.
+        This field has a maximum length of 1500 characters.
       fr: |
         Cette zone ne doit pas être vide.
-        Ce champ ne peut excéder une longueur maximale de 100 caractères.
+        Ce champ ne peut excéder une longueur maximale de 1500 caractères.
     occurrence: Single
     datastore_type: text
-    max_chars: 100
-    excel_error_formula: 'OR({default_formula},LEN(TRIM({cell}))>100)'
+    max_chars: 1500
+    excel_error_formula: 'OR({default_formula},LEN(TRIM({cell}))>1500)'
     form_attrs:
       style: "width: 100%; display: block"
-      maxlength: 100
+      maxlength: 1500
 
   # DEP 2-21
   - datastore_id: performance_results_uri_en
@@ -1997,16 +2039,16 @@ resources:
     excel_required: false
     format_type: Free text
     validation:
-      en: This field has a maximum length of 100 characters.
-      fr: Ce champ ne peut excéder une longueur maximale de 100 caractères.
+      en: This field has a maximum length of 1500 characters.
+      fr: Ce champ ne peut excéder une longueur maximale de 1500 caractères.
     occurrence: Single
     datastore_type: text
-    max_chars: 100
+    max_chars: 1500
     excel_required_formula: NOT(ISBLANK({performance_results_uri_fr}))
-    excel_error_formula: 'OR({default_formula},LEN(TRIM({cell}))>100)'
+    excel_error_formula: 'OR({default_formula},LEN(TRIM({cell}))>1500)'
     form_attrs:
       style: "width: 100%; display: block"
-      maxlength: 100
+      maxlength: 1500
 
   # DEP 2-22
   - datastore_id: performance_results_uri_fr
@@ -2020,16 +2062,16 @@ resources:
     excel_required: false
     format_type: Free text
     validation:
-      en: This field has a maximum length of 100 characters.
-      fr: Ce champ ne peut excéder une longueur maximale de 100 caractères.
+      en: This field has a maximum length of 1500 characters.
+      fr: Ce champ ne peut excéder une longueur maximale de 1500 caractères.
     occurrence: Single
     datastore_type: text
-    max_chars: 100
+    max_chars: 1500
     excel_required_formula: NOT(ISBLANK({performance_results_uri_en}))
-    excel_error_formula: 'OR({default_formula},LEN(TRIM({cell}))>100)'
+    excel_error_formula: 'OR({default_formula},LEN(TRIM({cell}))>1500)'
     form_attrs:
       style: "width: 100%; display: block"
-      maxlength: 100
+      maxlength: 1500
 
   # Dev: req dynamic field
   - datastore_id: record_created
@@ -2069,11 +2111,10 @@ resources:
       service_id: service_id
   datastore_indexes: ""
   datastore_constraint_errors:  # yaml | not supported
-    upsert: Cannot create record because the Fiscal Year, Service ID Number does not exist in the Service Identification Information & Metrics resource.
+    upsert: Cannot create record because the Service ID Number does not exist in the Service Identification Information & Metrics resource for that fiscal year.
 
   default_preview_sort: fiscal_yr, service_id, service_standard_id
 
-  #TODO: confirm new triggers
   triggers:
   - service_std_trigger: |
       DECLARE
@@ -2144,19 +2185,19 @@ resources:
         errors := errors || both_languages_error(NEW.comments_en, 'comments_en', NEW.comments_fr, 'comments_fr');
 
         errors := errors || required_error(NEW.standards_targets_uri_en, 'standards_targets_uri_en');
-        crval := max_char_error(NEW.standards_targets_uri_en, 100, 'standards_targets_uri_en');
+        crval := max_char_error(NEW.standards_targets_uri_en, 1500, 'standards_targets_uri_en');
         errors := errors || crval.error;
         NEW.standards_targets_uri_en := unnest(crval.clean);
 
         errors := errors || required_error(NEW.standards_targets_uri_fr, 'standards_targets_uri_fr');
-        crval := max_char_error(NEW.standards_targets_uri_fr, 100, 'standards_targets_uri_fr');
+        crval := max_char_error(NEW.standards_targets_uri_fr, 1500, 'standards_targets_uri_fr');
         errors := errors || crval.error;
         NEW.standards_targets_uri_fr := unnest(crval.clean);
 
-        crval := max_char_error(NEW.performance_results_uri_en, 100, 'performance_results_uri_en');
+        crval := max_char_error(NEW.performance_results_uri_en, 1500, 'performance_results_uri_en');
         errors := errors || crval.error;
         NEW.performance_results_uri_en := unnest(crval.clean);
-        crval := max_char_error(NEW.performance_results_uri_fr, 100, 'performance_results_uri_fr');
+        crval := max_char_error(NEW.performance_results_uri_fr, 1500, 'performance_results_uri_fr');
         errors := errors || crval.error;
         NEW.performance_results_uri_fr := unnest(crval.clean);
         errors := errors || both_languages_error(NEW.performance_results_uri_en, 'performance_results_uri_en', NEW.performance_results_uri_fr, 'performance_results_uri_fr');
@@ -2176,28 +2217,34 @@ resources:
     invalid_choice_error: 'Invalid choice: {}'
     number_requied_error:  Number required
 
-  #TODO: Get actual example values from client
   examples:
     record:
-      fiscal_yr: 2017-2018
-      service_id: "4"
-      service_name_en: A service name
-      service_name_fr: A service name FR
-      service_standard_id: "456"
-      service_standard_en: A service standard name
-      service_standard_fr: A service standard name FR
-      type: OTH
-      channel: [ONL, FAX]
-      channel_comments_en: Some channel comments
-      channel_comments_fr: Some channel comments FR
-      target: 0.7
-      volume_meeting_target: 86
-      comments_en: General comments
-      comments_fr: General comments FR
-      standards_targets_uri_en: https://google.com
-      standards_targets_uri_fr: https://google.com
-      performance_results_uri_en: https://google.com
-      performance_results_uri_fr: https://google.com
+      fiscal_yr: 2022-2023
+      service_id: '1001'
+      service_name_en: Old Age Security (OAS) Benefits
+      service_name_fr: Prestations de la Sécurité de la vieillesse
+      service_standard_id: '925'
+      service_standard_en: OAS basic benefits are paid within the first month of entitlement
+      service_standard_fr: Les prestations de base de la SV sont versées au cours du premier mois d’admissibilité.
+      type: TML
+      channel: [OTH]
+      channel_comments_en: Mail, Online, Person
+      channel_comments_fr: Courrier, en ligne, personne
+      target: 0.90
+      volume_meeting_target: 315128
+      total_volume: 359919
+      comments_en: >
+        The total volumes assessed against the first month of entitlement service standard
+        excludes 3,550 decisions involving files submitted under international agreements
+        and interactions with foreign governments.
+      comments_fr: >
+        Les volumes totaux évalués par rapport à la norme de service du premier mois de
+        droit excluent 3 550 décisions concernant des dossiers soumis dans le cadre d'accords
+        internationaux et d'interactions avec des gouvernements étrangers.
+      standards_targets_uri_en: https://www.canada.ca/en/employment-social-development/corporate/transparency/service-standards-2018-2019.html#h2.25
+      standards_targets_uri_fr: https://www.canada.ca/fr/emploi-developpement-social/ministere/transparence/normes-service-2018-2019.html#h2.21
+      performance_results_uri_en: Not applicable
+      performance_results_uri_fr: Not applicable
 
 excel_edge_style:
   PatternFill:
