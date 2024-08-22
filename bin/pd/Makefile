@@ -229,16 +229,15 @@ upload-qpnotes: $(workdir)/filtered/qpnotes.csv $(workdir)/filtered/qpnotes-nil.
 	@$(ckanapi) action resource_patch -c $(registry_ini) \
 	id=c55a2862-7ec4-462c-a844-22acab664812 upload@"$(workdir)/filtered/qpnotes.csv" \
 	> /dev/null
-	# @$(ckanapi) action resource_patch -c $(registry_ini) \
-	# id=TBD upload@"$(workdir)/filtered/qpnotes-nil.csv" \
-	# > /dev/null
+	@$(ckanapi) action resource_patch -c $(registry_ini) \
+	id=dba8cc4a-2a57-435c-a270-fa024474e609 upload@"$(workdir)/filtered/qpnotes-nil.csv" \
+	> /dev/null
 
 .PHONY: rebuild-qpnotes
 rebuild-qpnotes: $(workdir)/filtered/qpnotes.csv $(workdir)/filtered/qpnotes-nil.csv
 	@$(echo_date) Rebuilding Question Period Notes...
 	@$(oc_search) import_data_csv --csv "$(workdir)/filtered/qpnotes.csv" --search qpnotes --quiet
-
-	# @$(oc_search) import_data_csv --csv "$(workdir)/filtered/qpnotes-nil.csv" --search qpnotes --nothing_to_report
+    @$(oc_search) import_data_csv --csv "$(workdir)/filtered/qpnotes-nil.csv" --search qpnotes --nothing_to_report
 
 $(workdir)/qpnotes.csv:
 	$(ckan_command) -c $(registry_ini) $(combine) qpnotes -d $(workdir)
