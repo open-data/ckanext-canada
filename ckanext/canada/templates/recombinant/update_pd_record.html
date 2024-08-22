@@ -46,6 +46,7 @@
           {%- set description = h.recombinant_description_to_markup(f.get('description', '')) %}
           {%- set form_placeholder = f.get('form_placeholder', '') %}
           {%- set form_attrs = f.get('form_attrs', {}) %}
+          {%- set form_select_attrs = f.get('form_select_attrs', {}) %}
           {%- set form_snippet = f.get('form_snippet', 'scheming/form_snippets/text.html') %}
           {%- if f.datastore_id in pk_fields %}
             {%- set form_attrs = dict(form_attrs, readonly='') %}
@@ -64,6 +65,7 @@
                 'label': f.label,
                 'form_placeholder': form_placeholder,
                 'form_attrs': form_attrs,
+                'form_select_attrs': form_select_attrs,
                 'required': required,
                 'help_text': description,
                 'choices': choice_fields[f.datastore_id],
@@ -77,6 +79,7 @@
                 'label': f.label,
                 'form_placeholder': form_placeholder,
                 'form_attrs': form_attrs,
+                'form_select_attrs': form_select_attrs,
                 'required': required,
                 'help_text': description,
               }, data=data, errors=errors %}
@@ -95,4 +98,5 @@
   {% if h.recombinant_get_chromo(resource_name).get('cascading_select_fields') %}
     {% asset 'canada_internal/cascading_select' %}
   {% endif %}
+  {% asset 'canada_internal/recombinant_webforms' %}
 {%- endblock -%}

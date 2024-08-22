@@ -71,3 +71,10 @@ def extract_pd(fileobj, keywords, comment_tags, options):
                 if isinstance(v, string_types):
                     for line_number in line_numbers.get(v, [0]):
                         yield (line_number, '', v, ['SQL Trigger String for PD Type: %s' % pd_type])
+
+        datastore_constraint_errors = resource.get('datastore_constraint_errors')  # more user friendly sql constraint error messages
+        if datastore_constraint_errors:
+            for k, v in datastore_constraint_errors.items():
+                if isinstance(v, string_types):
+                    for line_number in line_numbers.get(v, [0]):
+                        yield (line_number, '', v, ['SQL Constraint Error String for PD Type: %s' % pd_type])

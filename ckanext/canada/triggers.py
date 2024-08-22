@@ -99,6 +99,21 @@ def update_triggers():
             END;
         ''')
     lc.action.datastore_function_create(
+        name=u'required_error',
+        or_replace=True,
+        arguments=[
+            {u'argname': u'value', u'argtype': u'boolean'},
+            {u'argname': u'field_name', u'argtype': u'text'}],
+        rettype=u'_text',
+        definition=u'''
+            BEGIN
+                IF value IS NULL THEN
+                    RETURN ARRAY[[field_name, 'This field must not be empty']];
+                END IF;
+                RETURN NULL;
+            END;
+        ''')
+    lc.action.datastore_function_create(
         name=u'choice_error',
         or_replace=True,
         arguments=[
@@ -110,10 +125,37 @@ def update_triggers():
             BEGIN
                 IF value IS NOT NULL AND value <> '' AND NOT (value = ANY (choices)) THEN
                     -- \t is used when converting errors to string
-                    RETURN ARRAY[[field_name, 'Invalid choice: "'
+                    RETURN ARRAY[[field_name, 'Invalid choice: {}\uF8FF"'
                         || replace(value, E'\t', ' ') || '"']];
                 END IF;
                 RETURN NULL;
+            END;
+        ''')
+    # return record with .clean (trimmed value) and .error
+    # (NULL or ARRAY[[value_trimmed]])
+    # .clean must be unnest(.clean) from the return to get the text value
+    lc.action.datastore_function_create(
+        name=u'max_char_error',
+        or_replace=True,
+        arguments=[
+            {u'argname': u'value', u'argtype': u'text'},
+            {u'argname': u'max_chars', u'argtype': u'numeric'},
+            {u'argname': u'field_name', u'argtype': u'text'},
+            {u'argname': u'clean', u'argtype': u'_text', u'argmode': u'out'},
+            {u'argname': u'error', u'argtype': u'_text', u'argmode': u'out'}],
+        rettype=u'record',
+        definition=u'''
+            DECLARE
+                value_trimmed text := trim(both E'\t\n\x0b\x0c\r ' from value);
+            BEGIN
+                IF value IS NOT NULL AND value <> '' AND LENGTH(value_trimmed) > max_chars THEN
+                    error := ARRAY[[field_name, 'This field has a maximum length of {} characters.\uF8FF' || max_chars]];
+                END IF;
+                IF value IS NULL OR value = '' THEN
+                    clean := NULL;
+                ELSE
+                    clean := ARRAY(SELECT value_trimmed);
+                END IF;
             END;
         ''')
     # return record with .clean (normalized value) and .error
@@ -136,7 +178,7 @@ def update_triggers():
             BEGIN
                 IF bad_choices <> '' THEN
                     -- \t is used when converting errors to string
-                    error := ARRAY[[field_name, 'Invalid choice: "'
+                    error := ARRAY[[field_name, 'Invalid choice: {}\uF8FF"'
                         || replace(bad_choices, E'\t', ' ') || '"']];
                 END IF;
                 clean := ARRAY(
@@ -161,6 +203,7 @@ def update_triggers():
             END;
         ''')
 
+    # FIXME: delete from DB
     lc.action.datastore_function_create(
         name=u'no_surrounding_whitespace_error',
         or_replace=True,
@@ -177,6 +220,7 @@ def update_triggers():
             END;
         ''')
 
+    # FIXME: delete from DB
     lc.action.datastore_function_create(
         name=u'year_optional_month_day_error',
         or_replace=True,
@@ -204,6 +248,7 @@ def update_triggers():
             END;
         ''')
 
+    # FIXME: delete from DB
     lc.action.datastore_function_create(
         name=u'choices_from',
         or_replace=True,
@@ -308,6 +353,7 @@ def update_triggers():
             END;
             ''')
 
+    # FIXME: delete from DB
     inventory_choices = h.recombinant_choice_fields('inventory')
     lc.action.datastore_function_create(
         name=u'inventory_trigger',
@@ -393,6 +439,7 @@ def update_triggers():
             END;
             ''')
 
+    # FIXME: delete from DB
     lc.action.datastore_function_create(
         name=u'integer_or_na_nd_error',
         or_replace=True,
@@ -406,6 +453,40 @@ def update_triggers():
                     RETURN ARRAY[[field_name, 'This field must be NA or an integer']];
                 END IF;
                 RETURN NULL;
+            END;
+        ''')
+
+    # return record with .clean (trimmed value) and .error
+    # (NULL or ARRAY[[value_trimmed]])
+    # .clean must be unnest(.clean) from the return to get the text value
+    lc.action.datastore_function_create(
+        name=u'int_na_nd_error',
+        or_replace=True,
+        arguments=[
+            {u'argname': u'value', u'argtype': u'text'},
+            {u'argname': u'field_name', u'argtype': u'text'},
+            {u'argname': u'clean', u'argtype': u'_text', u'argmode': u'out'},
+            {u'argname': u'error', u'argtype': u'_text', u'argmode': u'out'}],
+        rettype=u'record',
+        definition=u'''
+            DECLARE
+                value_upper text := value;
+            BEGIN
+                IF value_upper ~ '^-?[0-9]+$' THEN
+                    IF value_upper::int < 0 THEN
+                        error := ARRAY[[field_name, 'This value must not be negative']];
+                    END IF;
+                ELSE
+                    value_upper := UPPER(value_upper);
+                    IF value_upper != 'NA' AND value_upper != 'ND' THEN
+                        error := ARRAY[[field_name, 'This field must be either a number, "NA", or "ND"']];
+                    END IF;
+                END IF;
+                IF value IS NULL OR value = '' THEN
+                    clean := NULL;
+                ELSE
+                    clean := ARRAY(SELECT value_upper);
+                END IF;
             END;
         ''')
 

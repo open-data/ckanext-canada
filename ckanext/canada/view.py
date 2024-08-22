@@ -299,22 +299,27 @@ def fivehundred():
     raise IntentionalServerError()
 
 
-def _form_choices_prefix_code(field_name, chromo):
-    for field in chromo['fields']:
-        if field['datastore_id'] == field_name and \
-                field.get('form_choices_prefix_code', False):
-            return True
-    return False
-
-
-def _get_choice_fields(resource_name, chromo):
+def _get_choice_fields(resource_name):
     separator = ' : ' if h.lang() == 'fr' else ': '
-    return {
-        datastore_id: [
-            {'value': k,
-             'label': k + separator + v if _form_choices_prefix_code(datastore_id, chromo) else v
-             } for (k, v) in choices]
-        for datastore_id, choices in h.recombinant_choice_fields(resource_name).items()}
+    choice_fields = {}
+    for datastore_id, choices in h.recombinant_choice_fields(resource_name).items():
+        f = h.recombinant_get_field(resource_name, datastore_id)
+        form_choices_prefix_code = f.get('form_choices_prefix_code', False)
+        form_choice_keys_only = f.get('form_choice_keys_only', False)
+        if datastore_id not in choice_fields:
+            choice_fields[datastore_id] = []
+        for (k, v) in choices:
+            if form_choice_keys_only:
+                choice_fields[datastore_id].append({'value': k,
+                                                    'label': k})
+                continue
+            elif form_choices_prefix_code:
+                choice_fields[datastore_id].append({'value': k,
+                                                    'label': k + separator + v})
+                continue
+            choice_fields[datastore_id].append({'value': k,
+                                                'label': v})
+    return choice_fields
 
 
 @canada_views.route('/group/bulk_process/<id>', methods=['GET', 'POST'])
@@ -353,7 +358,7 @@ def create_pd_record(owner_org, resource_name):
     except NotAuthorized:
         return abort(403, _('Unauthorized to create a resource for this package'))
 
-    choice_fields = _get_choice_fields(resource_name, chromo)
+    choice_fields = _get_choice_fields(resource_name)
     pk_fields = aslist(chromo['datastore_primary_key'])
 
     if request.method == 'POST':
@@ -382,7 +387,7 @@ def create_pd_record(owner_org, resource_name):
             if 'records' in ve.error_dict:
                 try:
                     err = dict({
-                        k: [_(e) for e in v]
+                        k: [_(e.split('\uF8FF')[0]).format(e.split('\uF8FF')[1]) if '\uF8FF' in e else _(e) for e in v]
                         for (k, v) in ve.error_dict['records'][0].items()
                     }, **err)
                 except AttributeError:
@@ -391,6 +396,9 @@ def create_pd_record(owner_org, resource_name):
                             k: [_("This record already exists")]
                             for k in pk_fields
                         }, **err)
+                    elif 'violates foreign key constraint' in ve.error_dict['records'][0]:
+                        error_message = chromo.get('datastore_constraint_errors', {}).get('upsert', 'Something went wrong, your record was not created. Please contact support.')
+                        error_summary = _(error_message)
                     else:
                         error_summary = _('Something went wrong, your record was not created. Please contact support.')
             elif ve.error_dict.get('info', {}).get('pgcode', '') == '23505':
@@ -454,7 +462,7 @@ def update_pd_record(owner_org, resource_name, pk):
     except NotAuthorized:
         abort(403, _('Unauthorized to update dataset'))
 
-    choice_fields = _get_choice_fields(resource_name, chromo)
+    choice_fields = _get_choice_fields(resource_name)
     pk_fields = aslist(chromo['datastore_primary_key'])
     pk_filter = dict(zip(pk_fields, pk))
 
@@ -496,7 +504,7 @@ def update_pd_record(owner_org, resource_name, pk):
         except ValidationError as ve:
             try:
                 err = dict({
-                    k: [_(e) for e in v]
+                    k: [_(e.split('\uF8FF')[0]).format(e.split('\uF8FF')[1]) if '\uF8FF' in e else _(e) for e in v]
                     for (k, v) in ve.error_dict['records'][0].items()
                 }, **err)
             except AttributeError:
@@ -638,6 +646,15 @@ def delete_selected_records(resource_id):
                 records_deleted += 1
             except NotFound:
                 h.flash_error(_('Not found') + ' ' + str(filter))
+            except ValidationError as e:
+                if 'foreign_constraints' in e.error_dict:
+                    chromo = get_chromo(res['name'])
+                    error_message = chromo.get('datastore_constraint_errors', {}).get('delete', e.error_dict['foreign_constraints'][0])
+                    h.flash_error(_(error_message))
+                    return h.redirect_to('recombinant.preview_table',
+                                         resource_name=res['name'],
+                                         owner_org=org['name'])
+                raise
 
     h.flash_success(_("{num} deleted.").format(num=records_deleted))
 
