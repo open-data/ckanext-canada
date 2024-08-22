@@ -11,6 +11,7 @@ REMOVE_COLUMNS = [
 
 BOM = "\N{bom}"
 
+
 def main():
     bom = sys.stdin.read(1)  # first code point
     if not bom:
@@ -21,35 +22,43 @@ def main():
 
     reader = csv.DictReader(sys.stdin)
     outnames = ['owner_org'] + [f for f in reader.fieldnames
-        if f not in REMOVE_COLUMNS and f != 'owner_org'
-        ] + ['performance']
+        if f not in REMOVE_COLUMNS and f != 'owner_org'] \
+               + ['performance'] + ['target_met']
     writer = csv.DictWriter(sys.stdout, outnames)
     writer.writeheader()
     for row in reader:
         for rem in REMOVE_COLUMNS:
             del row[rem]
-        num = 0
-        den = 0
-        try:
-            num, den = num + int(row['q1_performance_result']), den + int(row['q1_business_volume'])
-        except ValueError:
-            pass
-        try:
-            num, den = num + int(row['q2_performance_result']), den + int(row['q2_business_volume'])
-        except ValueError:
-            pass
-        try:
-            num, den = num + int(row['q3_performance_result']), den + int(row['q3_business_volume'])
-        except ValueError:
-            pass
-        try:
-            num, den = num + int(row['q4_performance_result']), den + int(row['q4_business_volume'])
-        except ValueError:
-            pass
-        if not den:
-            row['performance'] = 'ND'
+
+        num = int(row['volume_meeting_target']) if row['volume_meeting_target'] else 0
+        den = int(row['total_volume']) if row['total_volume'] else 0
+
+        # performance = volume_meeting_target / total_volume
+        if num <= 0 or den <=0:
+            row['performance'] = 0
         else:
-            row['performance'] = '%0.5f' % (float(num) / den)
+            row['performance'] = num / den
+
+        # negative performance is not possible
+        if row['performance'] < 0:
+            row['performance'] = 0
+
+        try:
+            target = float(row['target'])
+        except ValueError:
+            target = 0
+
+        # if no total_volume then target_met is not possible
+        if den <= 0:
+            row['target_met'] = -1
+
+        # if performance >= target then target is met
+        elif row['performance'] >= target:
+            row['target_met'] = 1
+
+        # otherwise target_met is not met
+        else:
+            row['target_met'] = 0
         writer.writerow(row)
 
 main()
