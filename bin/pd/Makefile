@@ -234,11 +234,6 @@ upload-qpnotes: $(workdir)/filtered/qpnotes.csv $(workdir)/filtered/qpnotes-nil.
 	id=50754b87-f54c-41db-a0cc-590008c5a2fa upload@"$(workdir)/filtered/qpnotes-nil.csv" \
 	> /dev/null
 
-# master comment out no data yet...
-# @$(ckanapi) action resource_patch -c $(registry_ini) \
-# id=TBD upload@"$(workdir)/filtered/qpnotes-nil.csv" \
-# > /dev/null
-
 .PHONY: rebuild-qpnotes
 rebuild-qpnotes: $(workdir)/filtered/qpnotes.csv $(workdir)/filtered/qpnotes-nil.csv
 	@$(echo_date) Rebuilding Question Period Notes...
