@@ -9,6 +9,17 @@ REMOVE_COLUMNS = [
     'user_modified',
 ]
 
+COLUMNS = [
+    'fiscal_yr', 'service_id', 'service_name_en', 'service_name_fr',
+    'service_standard_id', 'service_standard_en', 'service_standard_fr',
+    'type', 'channel', 'channel_comments_en', 'channel_comments_fr',
+    'target', 'volume_meeting_target', 'total_volume', 'performance',
+    'comments_en', 'comments_fr', 'target_met',
+    'standards_targets_uri_en', 'standards_targets_uri_fr',
+    'performance_results_uri_en', 'performance_results_uri_fr',
+    'owner_org', 'owner_org_title',
+]
+
 BOM = "\N{bom}"
 
 
@@ -21,11 +32,9 @@ def main():
     sys.stdout.write(BOM)
 
     reader = csv.DictReader(sys.stdin)
-    outnames = ['owner_org'] + [f for f in reader.fieldnames
-        if f not in REMOVE_COLUMNS and f != 'owner_org'] \
-               + ['performance'] + ['target_met']
-    writer = csv.DictWriter(sys.stdout, outnames)
+    writer = csv.DictWriter(sys.stdout, COLUMNS)
     writer.writeheader()
+
     for row in reader:
         for rem in REMOVE_COLUMNS:
             del row[rem]
