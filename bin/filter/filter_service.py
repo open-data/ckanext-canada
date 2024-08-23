@@ -37,9 +37,7 @@ def main():
 
         # calculate total number of applications
         row['num_applications_total'] = 0
-        num_fields = [ 'num_phone_enquiries',
-                       'num_applications_by_phone',
-                       'num_website_visits',
+        num_fields = [ 'num_applications_by_phone',
                        'num_applications_online',
                        'num_applications_in_person',
                        'num_applications_by_mail',

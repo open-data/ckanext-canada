@@ -35,30 +35,31 @@ def main():
 
         # performance = volume_meeting_target / total_volume
         if num <= 0 or den <=0:
-            row['performance'] = 0
+            row['performance'] = None
         else:
             row['performance'] = num / den
 
         # negative performance is not possible
-        if row['performance'] < 0:
+        if row['performance'] and row['performance'] < 0:
             row['performance'] = 0
 
-        try:
+        # calculate target_met
+        if row['target']:
             target = float(row['target'])
-        except ValueError:
-            target = 0
 
-        # if no total_volume then target_met is not possible
-        if den <= 0:
-            row['target_met'] = -1
+            # if no total_volume then target_met is not possible
+            if den <= 0:
+                row['target_met'] = 'NA'
 
-        # if performance >= target then target is met
-        elif row['performance'] >= target:
-            row['target_met'] = 1
+            # if performance >= target then target is met
+            elif row['performance'] >= target:
+                row['target_met'] = 'Y'
 
-        # otherwise target_met is not met
+            # otherwise target_met is not met
+            else:
+                row['target_met'] = 'N'
         else:
-            row['target_met'] = 0
+            row['target_met'] = None
 
         writer.writerow(row)
 
