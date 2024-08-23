@@ -59,6 +59,7 @@ def main():
         # otherwise target_met is not met
         else:
             row['target_met'] = 0
+
         writer.writerow(row)
 
 main()

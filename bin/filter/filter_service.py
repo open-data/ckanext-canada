@@ -1,7 +1,10 @@
 #!/usr/bin/env python3
 
 import csv
+import os
 import sys
+import yaml
+
 
 REMOVE_COLUMNS = [
     'record_created',
@@ -10,6 +13,9 @@ REMOVE_COLUMNS = [
 ]
 
 BOM = "\N{bom}"
+PROGRAM_NAMES_FILE = os.path.join(os.path.split(__file__)[0],
+                           '../../ckanext/canada/tables/choices/service_program_names.yaml')
+
 
 def main():
     bom = sys.stdin.read(1)  # first code point
@@ -21,15 +27,48 @@ def main():
 
     reader = csv.DictReader(sys.stdin)
     outnames = ['owner_org'] + [f for f in reader.fieldnames
-        if f not in REMOVE_COLUMNS and f != 'owner_org']
+        if f not in REMOVE_COLUMNS and f != 'owner_org'] \
+               + ['num_applications_total'] + ['program_name_en'] + ['program_name_fr']
     writer = csv.DictWriter(sys.stdout, outnames)
     writer.writeheader()
     for row in reader:
-        try:
-            for rem in REMOVE_COLUMNS:
-                del row[rem]
-            writer.writerow(row)
-        except ValueError:
-            pass
+        for rem in REMOVE_COLUMNS:
+            del row[rem]
+
+        # calculate total number of applications
+        row['num_applications_total'] = 0
+        num_fields = [ 'num_phone_enquiries',
+                       'num_applications_by_phone',
+                       'num_website_visits',
+                       'num_applications_online',
+                       'num_applications_in_person',
+                       'num_applications_by_mail',
+                       'num_applications_by_email',
+                       'num_applications_by_fax',
+                       'num_applications_by_other',
+                       ]
+        for field in num_fields:
+            if row[field] in ['NA', 'ND']:
+                count = 0
+            else:
+                count = int(row[field])
+            row['num_applications_total'] += count
+
+        # populate program names from ids
+        row['program_name_en'] = []
+        row['program_name_fr'] = []
+        program_ids = row['program_id'].split(',')
+        with open(PROGRAM_NAMES_FILE, 'r') as file:
+            program_names = yaml.safe_load(file)
+
+        for id in program_ids:
+            if id in program_names:
+                row['program_name_en'].append(program_names[id]['en'])
+                row['program_name_fr'].append(program_names[id]['fr'])
+
+        row['program_name_en'] = str(row['program_name_en'])[1:-1]
+        row['program_name_fr'] = str(row['program_name_fr'])[1:-1]
+
+        writer.writerow(row)
 
 main()
