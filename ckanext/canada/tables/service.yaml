@@ -1551,8 +1551,6 @@ resources:
     choices_file: choices/fiscal_year.yaml
 
   # DEP 2-2
-  # DEP Note: this is a foreign key (FY-ServiceID) to link with table 1
-  # Dev Note: can we do fkeys in Recombinant?
   - datastore_id: service_id
     label:
       en: Service ID Number
