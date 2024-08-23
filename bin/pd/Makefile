@@ -577,18 +577,19 @@ $(workdir)/filtered/reclassification-nil.csv: $(workdir)/reclassification-nil.cs
 # NOTE: Service Inventory Registry resources exist, but no longer need updating. (2020-06)
 # NOTE: Keep generating CSV backups. (2024-04)
 # NOTE: Service Inventory will be returning soon. (2024-04)
+# NOTE: Re-publish Service Inventory to different resources. (2024-08)
 .PHONY: service
 service: upload-service rebuild-service
 
 .PHONY: upload-service
 upload-service: $(workdir)/filtered/service.csv $(workdir)/filtered/service-std.csv
-	# @$(echo_date) Uploading Service Inventory...
-	# @$(ckanapi) action resource_patch -c $(registry_ini) \
-	# id=3acf79c0-a5f5-4d9a-a30d-fb5ceba4b60a upload@"$(workdir)/filtered/service.csv" \
-	# > /dev/null
-	# @$(ckanapi) action resource_patch -c $(registry_ini) \
-	# id=272143a7-533e-42a1-b72d-622116474a21 upload@"$(workdir)/filtered/service-std.csv" \
-	# > /dev/null
+	@$(echo_date) Uploading Service Inventory...
+	@$(ckanapi) action resource_patch -c $(registry_ini) \
+	id=c0cf9766-b85b-48c3-b295-34f72305aaf6 upload@"$(workdir)/filtered/service.csv" \
+	> /dev/null
+	@$(ckanapi) action resource_patch -c $(registry_ini) \
+	id=8736cd7e-9bf9-4a45-9eee-a6cb3c43c07e upload@"$(workdir)/filtered/service-std.csv" \
+	> /dev/null
 
 .PHONY: rebuild-service
 rebuild-service: $(workdir)/filtered/service.csv $(workdir)/filtered/service-std.csv
