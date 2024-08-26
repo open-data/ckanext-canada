@@ -351,8 +351,7 @@ resources:
     excel_full_text_choices: false
     form_snippet: scheming/form_snippets/multiple_select.html
     choices_file: choices/service_program_names.yaml
-    #TODO: nice to have, full text choice (but only key values)
-    form_choice_keys_only: true
+    form_choices_prefix_code: true
     form_select_attrs:
       class: form-control recombinant-select2
 
