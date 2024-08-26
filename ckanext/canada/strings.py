@@ -81,3 +81,7 @@ _("Your form submission could not be validated, please re-submit the form.")
 # strings from configurations
 _('Open Government Portal')
 _('Open Government Portal (staging)')
+
+# strings from misc triggers and recombinant tables
+_('Single')
+_('Repeatable')

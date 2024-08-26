@@ -1882,7 +1882,7 @@ resources:
       fr: Cette valeur ne doit pas être négatif.
     occurrence: Single
     datastore_type: int
-    excel_error_formula: 'OR({default_formula},{cell}<0)'
+    excel_error_formula: 'OR({default_formula},VALUE({cell})<0)'
 
   # DEP 2-14
   - datastore_id: total_volume
@@ -1907,7 +1907,7 @@ resources:
       fr: Cette valeur ne doit pas être négatif.
     occurrence: Single
     datastore_type: int
-    excel_error_formula: 'OR({default_formula},{cell}<0)'
+    excel_error_formula: 'OR({default_formula},VALUE({cell})<0)'
 
   # DEP 2-16
   - datastore_id: comments_en
