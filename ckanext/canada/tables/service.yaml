@@ -708,7 +708,7 @@ resources:
     occurrence: Single
     datastore_type: text
     max_chars: 1000
-    excel_required_formula: 'OR(TRIM(LEFT({os_account_registration},FIND(":",{os_account_registration}&":")-1))="NA",TRIM(LEFT({os_authentication},FIND(":",{os_authentication}&":")-1))="NA",TRIM(LEFT({os_application},FIND(":",{os_application}&":")-1))="NA",TRIM(LEFT({os_decision},FIND(":",{os_decision}&":")-1))="NA",TRIM(LEFT({os_issuance},FIND(":",{os_issuance}&":")-1))="NA",TRIM(LEFT({os_issue_resolution_feedback},FIND(":",{os_issue_resolution_feedback}&":")-1))="NA",NOT(ISBLANK({os_comments_client_interaction_fr})))'
+    excel_required_formula: 'OR(TRIM(LEFT({os_account_registration},FIND(":",{os_account_registration}&":")-1))="NA",TRIM(LEFT({os_authentication},FIND(":",{os_authentication}&":")-1))="NA",TRIM(LEFT({os_application},FIND(":",{os_application}&":")-1))="NA",TRIM(LEFT({os_decision},FIND(":",{os_decision}&":")-1))="NA",TRIM(LEFT({os_issuance},FIND(":",{os_issuance}&":")-1))="NA",TRIM(LEFT({os_issue_resolution_feedback},FIND(":",{os_issue_resolution_feedback}&":")-1))="NA",NOT(ISBLANK({os_comments_client_interaction_en})))'
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
       maxlength: 1000
