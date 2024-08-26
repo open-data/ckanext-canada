@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ckanext-canada 0.4.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-08-22 20:00+0000\n"
+"POT-Creation-Date: 2024-08-26 20:31+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -548,6 +548,14 @@ msgstr ""
 msgid "Open Government Portal (staging)"
 msgstr ""
 
+#: ckanext/canada/strings.py:86
+msgid "Single"
+msgstr ""
+
+#: ckanext/canada/strings.py:87
+msgid "Repeatable"
+msgstr ""
+
 #: ckanext/canada/validators.py:151
 #, python-format
 msgid "Tag \"%s\" length is less than minimum %s"
@@ -724,7 +732,7 @@ msgid "{num} deleted."
 msgstr ""
 
 #. SQL Trigger String for PD Type: service
-#: ckanext/canada/tables/service.yaml:2218 ckanext/canada/view.py:701
+#: ckanext/canada/tables/service.yaml:2190 ckanext/canada/view.py:701
 msgid "Number required"
 msgstr ""
 
@@ -895,7 +903,7 @@ msgstr ""
 #. SQL Trigger String for PD Type: ati
 #. SQL Trigger String for PD Type: service
 #: ckanext/canada/tables/ati.yaml:142 ckanext/canada/tables/ati.yaml:254
-#: ckanext/canada/tables/service.yaml:1448 ckanext/canada/tables/service.yaml:2215
+#: ckanext/canada/tables/service.yaml:1437 ckanext/canada/tables/service.yaml:2187
 msgid "This value must not be negative"
 msgstr ""
 
@@ -1301,39 +1309,54 @@ msgid "Service Identification Information & Metrics"
 msgstr ""
 
 #. SQL Trigger String for PD Type: service
-#: ckanext/canada/tables/service.yaml:1447
+#: ckanext/canada/tables/service.yaml:1436
 msgid "This field must be either a number, \"NA\", or \"ND\""
 msgstr ""
 
 #. SQL Trigger String for PD Type: service
-#: ckanext/canada/tables/service.yaml:1449 ckanext/canada/tables/service.yaml:2216
+#: ckanext/canada/tables/service.yaml:1438 ckanext/canada/tables/service.yaml:2188
 msgid "This field has a maximum length of {} characters."
 msgstr ""
 
 #. SQL Trigger String for PD Type: service
-#: ckanext/canada/tables/service.yaml:1450 ckanext/canada/tables/service.yaml:2217
+#: ckanext/canada/tables/service.yaml:1439 ckanext/canada/tables/service.yaml:2189
 msgid "Invalid choice: {}"
 msgstr ""
 
+#. SQL Trigger String for PD Type: service
+#: ckanext/canada/tables/service.yaml:1440 ckanext/canada/tables/service.yaml:2191
+msgid "Invalid input syntax for type integer: {}"
+msgstr ""
+
+#. SQL Trigger String for PD Type: service
+#: ckanext/canada/tables/service.yaml:1441 ckanext/canada/tables/service.yaml:2192
+msgid "This field is required due to a response in a different field."
+msgstr ""
+
+#. SQL Trigger String for PD Type: service
+#: ckanext/canada/tables/service.yaml:1442 ckanext/canada/tables/service.yaml:2193
+msgid "This text must be provided in both languages"
+msgstr ""
+
 #. SQL Constraint Error String for PD Type: service
-#: ckanext/canada/tables/service.yaml:1250
+#: ckanext/canada/tables/service.yaml:1256
 msgid ""
 "Cannot delete record(s) because the Fiscal Year, Service ID Number is "
 "referenced in at least one Service Standards & Performance Results record."
 msgstr ""
 
 #. Resource Title for PD Type: service
-#: ckanext/canada/tables/service.yaml:1524
+#: ckanext/canada/tables/service.yaml:1516
 msgid "Service Standards & Performance Results"
 msgstr ""
 
 #. SQL Trigger String for PD Type: service
-#: ckanext/canada/tables/service.yaml:1870 ckanext/canada/tables/service.yaml:2214
+#: ckanext/canada/tables/service.yaml:1854 ckanext/canada/tables/service.yaml:2186
 msgid "This field must be a single number between 0 and 1 representing a percentage."
 msgstr ""
 
 #. SQL Constraint Error String for PD Type: service
-#: ckanext/canada/tables/service.yaml:2114
+#: ckanext/canada/tables/service.yaml:2092
 msgid ""
 "Cannot create record because the Service ID Number does not exist in the "
 "Service Identification Information & Metrics resource for that fiscal year."
@@ -2090,49 +2113,49 @@ msgstr ""
 msgid "Access, add or modify your reports tabled in Parliament."
 msgstr ""
 
-#: ckanext/canada/templates/home/quick_links.html:158
+#: ckanext/canada/templates/home/quick_links.html:159
 msgid "Briefing packages"
 msgstr ""
 
-#: ckanext/canada/templates/home/quick_links.html:165
+#: ckanext/canada/templates/home/quick_links.html:166
 #: ckanext/canada/templates/snippets/cdts/header.html:118
 msgid "New or incoming ministers"
 msgstr ""
 
-#: ckanext/canada/templates/home/quick_links.html:166
+#: ckanext/canada/templates/home/quick_links.html:167
 msgid ""
 "Access, add or modify briefing package information for your new or incoming "
 "minister."
 msgstr ""
 
-#: ckanext/canada/templates/home/quick_links.html:173
+#: ckanext/canada/templates/home/quick_links.html:174
 #: ckanext/canada/templates/snippets/cdts/header.html:122
 msgid "New or incoming deputy heads"
 msgstr ""
 
-#: ckanext/canada/templates/home/quick_links.html:174
+#: ckanext/canada/templates/home/quick_links.html:175
 msgid ""
 "Access, add or modify briefing package information for your new or incoming "
 "deputy head."
 msgstr ""
 
-#: ckanext/canada/templates/home/quick_links.html:181
+#: ckanext/canada/templates/home/quick_links.html:182
 #: ckanext/canada/templates/snippets/cdts/header.html:126
 msgid "Parliamentary Committee appearances for ministers"
 msgstr ""
 
-#: ckanext/canada/templates/home/quick_links.html:182
+#: ckanext/canada/templates/home/quick_links.html:183
 msgid ""
 "Access, add or modify briefing packages for Parliamentary Committee "
 "appearance for your minister."
 msgstr ""
 
-#: ckanext/canada/templates/home/quick_links.html:189
+#: ckanext/canada/templates/home/quick_links.html:190
 #: ckanext/canada/templates/snippets/cdts/header.html:130
 msgid "Parliamentary Committee appearances for deputy heads"
 msgstr ""
 
-#: ckanext/canada/templates/home/quick_links.html:190
+#: ckanext/canada/templates/home/quick_links.html:191
 msgid ""
 "Access, add or modify briefing packages for Parliamentary Committee "
 "appearance for your deputy head."
