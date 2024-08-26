@@ -83,7 +83,6 @@ resources:
     occurrence: Single
     datastore_type: text
     max_chars: 250
-    excel_error_formula: 'OR({default_formula},LEN(TRIM({cell}))>250)'
     form_attrs:
       style: "width: 100%; display: block"
       maxlength: 250
@@ -111,7 +110,6 @@ resources:
     occurrence: Single
     datastore_type: text
     max_chars: 250
-    excel_error_formula: 'OR({default_formula},LEN(TRIM({cell}))>250)'
     form_attrs:
       style: "width: 100%; display: block"
       maxlength: 250
@@ -139,7 +137,6 @@ resources:
     occurrence: Single
     datastore_type: text
     max_chars: 1800
-    excel_error_formula: 'OR({default_formula},LEN(TRIM({cell}))>1800)'
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
       maxlength: 1800
@@ -167,7 +164,6 @@ resources:
     occurrence: Single
     datastore_type: text
     max_chars: 1800
-    excel_error_formula: 'OR({default_formula},LEN(TRIM({cell}))>1800)'
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
       maxlength: 1800
@@ -355,6 +351,7 @@ resources:
     excel_full_text_choices: false
     form_snippet: scheming/form_snippets/multiple_select.html
     choices_file: choices/service_program_names.yaml
+    #TODO: nice to have, full text choice (but only key values)
     form_choice_keys_only: true
     form_select_attrs:
       class: form-control recombinant-select2
@@ -466,7 +463,6 @@ resources:
     datastore_type: text
     max_chars: 1800
     excel_required_formula: 'OR(TRIM(LEFT({automated_decision_system},FIND(":",{automated_decision_system}&":")-1))="Y",NOT(ISBLANK({automated_decision_system_description_fr})))'
-    excel_error_formula: 'OR({default_formula},LEN(TRIM({cell}))>1800)'
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
       maxlength: 1800
@@ -502,7 +498,6 @@ resources:
     datastore_type: text
     max_chars: 1800
     excel_required_formula: 'OR(TRIM(LEFT({automated_decision_system},FIND(":",{automated_decision_system}&":")-1))="Y",NOT(ISBLANK({automated_decision_system_description_en})))'
-    excel_error_formula: 'OR({default_formula},LEN(TRIM({cell}))>1800)'
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
       maxlength: 1800
@@ -682,7 +677,6 @@ resources:
     datastore_type: text
     max_chars: 1000
     excel_required_formula: 'OR(TRIM(LEFT({os_account_registration},FIND(":",{os_account_registration}&":")-1))="NA",TRIM(LEFT({os_authentication},FIND(":",{os_authentication}&":")-1))="NA",TRIM(LEFT({os_application},FIND(":",{os_application}&":")-1))="NA",TRIM(LEFT({os_decision},FIND(":",{os_decision}&":")-1))="NA",TRIM(LEFT({os_issuance},FIND(":",{os_issuance}&":")-1))="NA",TRIM(LEFT({os_issue_resolution_feedback},FIND(":",{os_issue_resolution_feedback}&":")-1))="NA",NOT(ISBLANK({os_comments_client_interaction_fr})))'
-    excel_error_formula: 'OR({default_formula},LEN(TRIM({cell}))>1000)'
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
       maxlength: 1000
@@ -716,7 +710,6 @@ resources:
     datastore_type: text
     max_chars: 1000
     excel_required_formula: 'OR(TRIM(LEFT({os_account_registration},FIND(":",{os_account_registration}&":")-1))="NA",TRIM(LEFT({os_authentication},FIND(":",{os_authentication}&":")-1))="NA",TRIM(LEFT({os_application},FIND(":",{os_application}&":")-1))="NA",TRIM(LEFT({os_decision},FIND(":",{os_decision}&":")-1))="NA",TRIM(LEFT({os_issuance},FIND(":",{os_issuance}&":")-1))="NA",TRIM(LEFT({os_issue_resolution_feedback},FIND(":",{os_issue_resolution_feedback}&":")-1))="NA",NOT(ISBLANK({os_comments_client_interaction_fr})))'
-    excel_error_formula: 'OR({default_formula},LEN(TRIM({cell}))>1000)'
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
       maxlength: 1000
@@ -1130,7 +1123,6 @@ resources:
     datastore_type: text
     max_chars: 2000
     excel_required_formula: NOT(ISBLANK({special_remarks_fr}))
-    excel_error_formula: 'OR({default_formula},LEN(TRIM({cell}))>2000)'
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
       maxlength: 2000
@@ -1163,7 +1155,6 @@ resources:
     datastore_type: text
     max_chars: 2000
     excel_required_formula: NOT(ISBLANK({special_remarks_en}))
-    excel_error_formula: 'OR({default_formula},LEN(TRIM({cell}))>2000)'
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
       maxlength: 2000
@@ -1186,7 +1177,6 @@ resources:
     datastore_type: text
     max_chars: 1500
     excel_required_formula: NOT(ISBLANK({service_uri_fr}))
-    excel_error_formula: 'OR({default_formula},LEN(TRIM({cell}))>1500)'
     form_attrs:
       style: "width: 100%; display: block"
       maxlength: 1500
@@ -1209,7 +1199,6 @@ resources:
     datastore_type: text
     max_chars: 1500
     excel_required_formula: NOT(ISBLANK({service_uri_en}))
-    excel_error_formula: 'OR({default_formula},LEN(TRIM({cell}))>1500)'
     form_attrs:
       style: "width: 100%; display: block"
       maxlength: 1500
@@ -1263,24 +1252,20 @@ resources:
         errors := errors || required_error(NEW.service_id, 'service_id');
 
         errors := errors || required_error(NEW.service_name_en, 'service_name_en');
-        crval := max_char_error(NEW.service_name_en, 250, 'service_name_en');
-        errors := errors || crval.error;
-        NEW.service_name_en := unnest(crval.clean);
+        NEW.service_name_en := trim_lead_trailing(NEW.service_name_en);
+        errors := errors || max_char_error(NEW.service_name_en, 250, 'service_name_en');
 
         errors := errors || required_error(NEW.service_name_fr, 'service_name_fr');
-        crval := max_char_error(NEW.service_name_fr, 250, 'service_name_fr');
-        errors := errors || crval.error;
-        NEW.service_name_fr := unnest(crval.clean);
+        NEW.service_name_fr := trim_lead_trailing(NEW.service_name_fr);
+        errors := errors || max_char_error(NEW.service_name_fr, 250, 'service_name_fr');
 
         errors := errors || required_error(NEW.service_description_en, 'service_description_en');
-        crval := max_char_error(NEW.service_description_en, 1800, 'service_description_en');
-        errors := errors || crval.error;
-        NEW.service_description_en := unnest(crval.clean);
+        NEW.service_description_en := trim_lead_trailing(NEW.service_description_en);
+        errors := errors || max_char_error(NEW.service_description_en, 1800, 'service_description_en');
 
         errors := errors || required_error(NEW.service_description_fr, 'service_description_fr');
-        crval := max_char_error(NEW.service_description_fr, 1800, 'service_description_fr');
-        errors := errors || crval.error;
-        NEW.service_description_fr := unnest(crval.clean);
+        NEW.service_description_fr := trim_lead_trailing(NEW.service_description_fr);
+        errors := errors || max_char_error(NEW.service_description_fr, 1800, 'service_description_fr');
 
         errors := errors || required_error(NEW.service_type, 'service_type');
         crval := choices_clean_error(NEW.service_type, {service_type}, 'service_type');
@@ -1320,12 +1305,11 @@ resources:
           errors := errors || both_languages_error(NEW.automated_decision_system_description_en, 'automated_decision_system_description_en', NEW.automated_decision_system_description_fr, 'automated_decision_system_description_fr');
         END IF;
 
-        crval := max_char_error(NEW.automated_decision_system_description_en, 1800, 'automated_decision_system_description_en');
-        errors := errors || crval.error;
-        NEW.automated_decision_system_description_en := unnest(crval.clean);
-        crval := max_char_error(NEW.automated_decision_system_description_fr, 1800, 'automated_decision_system_description_fr');
-        errors := errors || crval.error;
-        NEW.automated_decision_system_description_fr := unnest(crval.clean);
+        NEW.automated_decision_system_description_en := trim_lead_trailing(NEW.automated_decision_system_description_en);
+        errors := errors || max_char_error(NEW.automated_decision_system_description_en, 1800, 'automated_decision_system_description_en');
+
+        NEW.automated_decision_system_description_fr := trim_lead_trailing(NEW.automated_decision_system_description_fr);
+        errors := errors || max_char_error(NEW.automated_decision_system_description_fr, 1800, 'automated_decision_system_description_fr');
 
         errors := errors || required_error(NEW.service_fee, 'service_fee');
         errors := errors || choice_error(NEW.service_fee, {service_fee}, 'service_fee');
@@ -1355,17 +1339,14 @@ resources:
           errors := errors || both_languages_error(NEW.os_comments_client_interaction_en, 'os_comments_client_interaction_en', NEW.os_comments_client_interaction_fr, 'os_comments_client_interaction_fr');
         END IF;
 
-        crval := max_char_error(NEW.os_comments_client_interaction_en, 1000, 'os_comments_client_interaction_en');
-        errors := errors || crval.error;
-        NEW.os_comments_client_interaction_en := unnest(crval.clean);
-        crval := max_char_error(NEW.os_comments_client_interaction_fr, 1000, 'os_comments_client_interaction_fr');
-        errors := errors || crval.error;
-        NEW.os_comments_client_interaction_fr := unnest(crval.clean);
+        NEW.os_comments_client_interaction_en := trim_lead_trailing(NEW.os_comments_client_interaction_en);
+        errors := errors || max_char_error(NEW.os_comments_client_interaction_en, 1000, 'os_comments_client_interaction_en');
 
-        errors := errors || required_error(NEW.last_service_review, 'last_service_review');
+        NEW.os_comments_client_interaction_fr := trim_lead_trailing(NEW.os_comments_client_interaction_fr);
+        errors := errors || max_char_error(NEW.os_comments_client_interaction_fr, 1000, 'os_comments_client_interaction_fr');
+
         errors := errors || choice_error(NEW.last_service_review, {last_service_review}, 'last_service_review');
 
-        errors := errors || required_error(NEW.last_service_improvement, 'last_service_improvement');
         errors := errors || choice_error(NEW.last_service_improvement, {last_service_improvement}, 'last_service_improvement');
 
         errors := errors || required_error(NEW.sin_usage, 'sin_usage');
@@ -1375,64 +1356,55 @@ resources:
         errors := errors || choice_error(NEW.cra_bn_identifier_usage, {cra_bn_identifier_usage}, 'cra_bn_identifier_usage');
 
         errors := errors || required_error(NEW.num_phone_enquiries, 'num_phone_enquiries');
-        crval := int_na_nd_error(NEW.num_phone_enquiries, 'num_phone_enquiries');
-        errors := errors || crval.error;
-        NEW.num_phone_enquiries := unnest(crval.clean);
+        NEW.num_phone_enquiries := UPPER(NEW.num_phone_enquiries);
+        errors := errors || int_na_nd_error(NEW.num_phone_enquiries, 'num_phone_enquiries');
 
         errors := errors || required_error(NEW.num_applications_by_phone, 'num_applications_by_phone');
-        crval := int_na_nd_error(NEW.num_applications_by_phone, 'num_applications_by_phone');
-        errors := errors || crval.error;
-        NEW.num_applications_by_phone := unnest(crval.clean);
+        NEW.num_applications_by_phone := UPPER(NEW.num_applications_by_phone);
+        errors := errors || int_na_nd_error(NEW.num_applications_by_phone, 'num_applications_by_phone');
 
         errors := errors || required_error(NEW.num_website_visits, 'num_website_visits');
-        crval := int_na_nd_error(NEW.num_website_visits, 'num_website_visits');
-        errors := errors || crval.error;
-        NEW.num_website_visits := unnest(crval.clean);
+        NEW.num_website_visits := UPPER(NEW.num_website_visits);
+        errors := errors || int_na_nd_error(NEW.num_website_visits, 'num_website_visits');
 
         errors := errors || required_error(NEW.num_applications_online, 'num_applications_online');
-        crval := int_na_nd_error(NEW.num_applications_online, 'num_applications_online');
-        errors := errors || crval.error;
-        NEW.num_applications_online := unnest(crval.clean);
+        NEW.num_applications_online := UPPER(NEW.num_applications_online);
+        errors := errors || int_na_nd_error(NEW.num_applications_online, 'num_applications_online');
 
         errors := errors || required_error(NEW.num_applications_in_person, 'num_applications_in_person');
-        crval := int_na_nd_error(NEW.num_applications_in_person, 'num_applications_in_person');
-        errors := errors || crval.error;
-        NEW.num_applications_in_person := unnest(crval.clean);
+        NEW.num_applications_in_person := UPPER(NEW.num_applications_in_person);
+        errors := errors || int_na_nd_error(NEW.num_applications_in_person, 'num_applications_in_person');
 
         errors := errors || required_error(NEW.num_applications_by_mail, 'num_applications_by_mail');
-        crval := int_na_nd_error(NEW.num_applications_by_mail, 'num_applications_by_mail');
-        errors := errors || crval.error;
-        NEW.num_applications_by_mail := unnest(crval.clean);
+        NEW.num_applications_by_mail := UPPER(NEW.num_applications_by_mail);
+        errors := errors || int_na_nd_error(NEW.num_applications_by_mail, 'num_applications_by_mail');
 
         errors := errors || required_error(NEW.num_applications_by_email, 'num_applications_by_email');
-        crval := int_na_nd_error(NEW.num_applications_by_email, 'num_applications_by_email');
-        errors := errors || crval.error;
-        NEW.num_applications_by_email := unnest(crval.clean);
+        NEW.num_applications_by_email := UPPER(NEW.num_applications_by_email);
+        errors := errors || int_na_nd_error(NEW.num_applications_by_email, 'num_applications_by_email');
 
         errors := errors || required_error(NEW.num_applications_by_fax, 'num_applications_by_fax');
-        crval := int_na_nd_error(NEW.num_applications_by_fax, 'num_applications_by_fax');
-        errors := errors || crval.error;
-        NEW.num_applications_by_fax := unnest(crval.clean);
+        NEW.num_applications_by_fax := UPPER(NEW.num_applications_by_fax);
+        errors := errors || int_na_nd_error(NEW.num_applications_by_fax, 'num_applications_by_fax');
 
         errors := errors || required_error(NEW.num_applications_by_other, 'num_applications_by_other');
-        crval := int_na_nd_error(NEW.num_applications_by_other, 'num_applications_by_other');
-        errors := errors || crval.error;
-        NEW.num_applications_by_other := unnest(crval.clean);
+        NEW.num_applications_by_other := UPPER(NEW.num_applications_by_other);
+        errors := errors || int_na_nd_error(NEW.num_applications_by_other, 'num_applications_by_other');
 
-        crval := max_char_error(NEW.special_remarks_en, 2000, 'special_remarks_en');
-        errors := errors || crval.error;
-        NEW.special_remarks_en := unnest(crval.clean);
-        crval := max_char_error(NEW.special_remarks_fr, 2000, 'special_remarks_fr');
-        errors := errors || crval.error;
-        NEW.special_remarks_fr := unnest(crval.clean);
+        NEW.special_remarks_en := trim_lead_trailing(NEW.special_remarks_en);
+        errors := errors ||  max_char_error(NEW.special_remarks_en, 2000, 'special_remarks_en');
+
+        NEW.special_remarks_fr := trim_lead_trailing(NEW.special_remarks_fr);
+        errors := errors || max_char_error(NEW.special_remarks_fr, 2000, 'special_remarks_fr');
+
         errors := errors || both_languages_error(NEW.special_remarks_en, 'special_remarks_en', NEW.special_remarks_fr, 'special_remarks_fr');
 
-        crval := max_char_error(NEW.service_uri_en, 1500, 'service_uri_en');
-        errors := errors || crval.error;
-        NEW.service_uri_en := unnest(crval.clean);
-        crval := max_char_error(NEW.service_uri_fr, 1500, 'service_uri_fr');
-        errors := errors || crval.error;
-        NEW.service_uri_fr := unnest(crval.clean);
+        NEW.service_uri_en := trim_lead_trailing(NEW.service_uri_en);
+        errors := errors || max_char_error(NEW.service_uri_en, 1500, 'service_uri_en');
+
+        NEW.service_uri_fr := trim_lead_trailing(NEW.service_uri_fr);
+        errors := errors || max_char_error(NEW.service_uri_fr, 1500, 'service_uri_fr');
+
         errors := errors || both_languages_error(NEW.service_uri_en, 'service_uri_en', NEW.service_uri_fr, 'service_uri_fr');
 
         IF errors = '{{}}' THEN
@@ -1591,7 +1563,6 @@ resources:
     occurrence: Single
     datastore_type: text
     max_chars: 250
-    excel_error_formula: 'OR({default_formula},LEN(TRIM({cell}))>250)'
     form_attrs:
       style: "width: 100%; display: block"
       maxlength: 250
@@ -1619,7 +1590,6 @@ resources:
     occurrence: Single
     datastore_type: text
     max_chars: 250
-    excel_error_formula: 'OR({default_formula},LEN(TRIM({cell}))>250)'
     form_attrs:
       style: "width: 100%; display: block"
       maxlength: 250
@@ -1678,7 +1648,6 @@ resources:
     occurrence: Single
     datastore_type: text
     max_chars: 500
-    excel_error_formula: 'OR({default_formula},LEN(TRIM({cell}))>500)'
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
       maxlength: 500
@@ -1713,7 +1682,6 @@ resources:
     occurrence: Single
     datastore_type: text
     max_chars: 500
-    excel_error_formula: 'OR({default_formula},LEN(TRIM({cell}))>500)'
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
       maxlength: 500
@@ -1824,7 +1792,6 @@ resources:
     datastore_type: text
     max_chars: 1500
     excel_required_formula: NOT(ISBLANK({channel_comments_fr}))
-    excel_error_formula: 'OR({default_formula},LEN(TRIM({cell}))>1500)'
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
       maxlength: 1500
@@ -1848,7 +1815,6 @@ resources:
     datastore_type: text
     max_chars: 1500
     excel_required_formula: NOT(ISBLANK({channel_comments_en}))
-    excel_error_formula: 'OR({default_formula},LEN(TRIM({cell}))>1500)'
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
       maxlength: 1500
@@ -1942,7 +1908,6 @@ resources:
     datastore_type: text
     max_chars: 2000
     excel_required_formula: NOT(ISBLANK({comments_fr}))
-    excel_error_formula: 'OR({default_formula},LEN(TRIM({cell}))>2000)'
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
       maxlength: 2000
@@ -1966,7 +1931,6 @@ resources:
     datastore_type: text
     max_chars: 2000
     excel_required_formula: NOT(ISBLANK({comments_en}))
-    excel_error_formula: 'OR({default_formula},LEN(TRIM({cell}))>2000)'
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
       maxlength: 2000
@@ -1993,7 +1957,6 @@ resources:
     occurrence: Single
     datastore_type: text
     max_chars: 1500
-    excel_error_formula: 'OR({default_formula},LEN(TRIM({cell}))>1500)'
     form_attrs:
       style: "width: 100%; display: block"
       maxlength: 1500
@@ -2020,7 +1983,6 @@ resources:
     occurrence: Single
     datastore_type: text
     max_chars: 1500
-    excel_error_formula: 'OR({default_formula},LEN(TRIM({cell}))>1500)'
     form_attrs:
       style: "width: 100%; display: block"
       maxlength: 1500
@@ -2043,7 +2005,6 @@ resources:
     datastore_type: text
     max_chars: 1500
     excel_required_formula: NOT(ISBLANK({performance_results_uri_fr}))
-    excel_error_formula: 'OR({default_formula},LEN(TRIM({cell}))>1500)'
     form_attrs:
       style: "width: 100%; display: block"
       maxlength: 1500
@@ -2066,7 +2027,6 @@ resources:
     datastore_type: text
     max_chars: 1500
     excel_required_formula: NOT(ISBLANK({performance_results_uri_en}))
-    excel_error_formula: 'OR({default_formula},LEN(TRIM({cell}))>1500)'
     form_attrs:
       style: "width: 100%; display: block"
       maxlength: 1500
@@ -2125,26 +2085,22 @@ resources:
         errors := errors || required_error(NEW.service_id, 'service_id');
 
         errors := errors || required_error(NEW.service_name_en, 'service_name_en');
-        crval := max_char_error(NEW.service_name_en, 250, 'service_name_en');
-        errors := errors || crval.error;
-        NEW.service_name_en := unnest(crval.clean);
+        NEW.service_name_en := trim_lead_trailing(NEW.service_name_en);
+        errors := errors || max_char_error(NEW.service_name_en, 250, 'service_name_en');
 
         errors := errors || required_error(NEW.service_name_fr, 'service_name_fr');
-        crval := max_char_error(NEW.service_name_fr, 250, 'service_name_fr');
-        errors := errors || crval.error;
-        NEW.service_name_fr := unnest(crval.clean);
+        NEW.service_name_fr := trim_lead_trailing(NEW.service_name_fr);
+        errors := errors || max_char_error(NEW.service_name_fr, 250, 'service_name_fr');
 
         errors := errors || required_error(NEW.service_standard_id, 'service_standard_id');
 
         errors := errors || required_error(NEW.service_standard_en, 'service_standard_en');
-        crval := max_char_error(NEW.service_standard_en, 500, 'service_standard_en');
-        errors := errors || crval.error;
-        NEW.service_standard_en := unnest(crval.clean);
+        NEW.service_standard_en := trim_lead_trailing(NEW.service_standard_en);
+        errors := errors || max_char_error(NEW.service_standard_en, 500, 'service_standard_en');
 
         errors := errors || required_error(NEW.service_standard_fr, 'service_standard_fr');
-        crval := max_char_error(NEW.service_standard_fr, 500, 'service_standard_fr');
-        errors := errors || crval.error;
-        NEW.service_standard_fr := unnest(crval.clean);
+        NEW.service_standard_fr := trim_lead_trailing(NEW.service_standard_fr);
+        errors := errors || max_char_error(NEW.service_standard_fr, 500, 'service_standard_fr');
 
         errors := errors || required_error(NEW.type, 'type');
         errors := errors || choice_error(NEW.type, {type}, 'type');
@@ -2154,12 +2110,12 @@ resources:
         errors := errors || crval.error;
         NEW.channel := crval.clean;
 
-        crval := max_char_error(NEW.channel_comments_en, 1500, 'channel_comments_en');
-        errors := errors || crval.error;
-        NEW.channel_comments_en := unnest(crval.clean);
-        crval := max_char_error(NEW.channel_comments_fr, 1500, 'channel_comments_fr');
-        errors := errors || crval.error;
-        NEW.channel_comments_fr := unnest(crval.clean);
+        NEW.channel_comments_en := trim_lead_trailing(NEW.channel_comments_en);
+        errors := errors || max_char_error(NEW.channel_comments_en, 1500, 'channel_comments_en');
+
+        NEW.channel_comments_fr := trim_lead_trailing(NEW.channel_comments_fr);
+        errors := errors || max_char_error(NEW.channel_comments_fr, 1500, 'channel_comments_fr');
+
         errors := errors || both_languages_error(NEW.channel_comments_en, 'channel_comments_en', NEW.channel_comments_fr, 'channel_comments_fr');
 
         IF NEW.target IS NOT NULL AND (NEW.target < 0 OR NEW.target > 1) THEN
@@ -2174,30 +2130,28 @@ resources:
             errors := errors || ARRAY[['total_volume', {negative_number_error}]];
         END IF;
 
-        crval := max_char_error(NEW.comments_en, 2000, 'comments_en');
-        errors := errors || crval.error;
-        NEW.comments_en := unnest(crval.clean);
-        crval := max_char_error(NEW.comments_fr, 2000, 'comments_fr');
-        errors := errors || crval.error;
-        NEW.comments_fr := unnest(crval.clean);
+        NEW.comments_en := trim_lead_trailing(NEW.comments_en);
+        errors := errors || max_char_error(NEW.comments_en, 2000, 'comments_en');
+
+        NEW.comments_fr := trim_lead_trailing(NEW.comments_fr);
+        errors := errors || max_char_error(NEW.comments_fr, 2000, 'comments_fr');
+
         errors := errors || both_languages_error(NEW.comments_en, 'comments_en', NEW.comments_fr, 'comments_fr');
 
         errors := errors || required_error(NEW.standards_targets_uri_en, 'standards_targets_uri_en');
-        crval := max_char_error(NEW.standards_targets_uri_en, 1500, 'standards_targets_uri_en');
-        errors := errors || crval.error;
-        NEW.standards_targets_uri_en := unnest(crval.clean);
+        NEW.standards_targets_uri_en := trim_lead_trailing(NEW.standards_targets_uri_en);
+        errors := errors || max_char_error(NEW.standards_targets_uri_en, 1500, 'standards_targets_uri_en');
 
         errors := errors || required_error(NEW.standards_targets_uri_fr, 'standards_targets_uri_fr');
-        crval := max_char_error(NEW.standards_targets_uri_fr, 1500, 'standards_targets_uri_fr');
-        errors := errors || crval.error;
-        NEW.standards_targets_uri_fr := unnest(crval.clean);
+        NEW.standards_targets_uri_fr := trim_lead_trailing(NEW.standards_targets_uri_fr);
+        errors := errors || max_char_error(NEW.standards_targets_uri_fr, 1500, 'standards_targets_uri_fr');
 
-        crval := max_char_error(NEW.performance_results_uri_en, 1500, 'performance_results_uri_en');
-        errors := errors || crval.error;
-        NEW.performance_results_uri_en := unnest(crval.clean);
-        crval := max_char_error(NEW.performance_results_uri_fr, 1500, 'performance_results_uri_fr');
-        errors := errors || crval.error;
-        NEW.performance_results_uri_fr := unnest(crval.clean);
+        NEW.performance_results_uri_en := trim_lead_trailing(NEW.performance_results_uri_en);
+        errors := errors || max_char_error(NEW.performance_results_uri_en, 1500, 'performance_results_uri_en');
+
+        NEW.performance_results_uri_fr := trim_lead_trailing(NEW.performance_results_uri_fr);
+        errors := errors || max_char_error(NEW.performance_results_uri_fr, 1500, 'performance_results_uri_fr');
+
         errors := errors || both_languages_error(NEW.performance_results_uri_en, 'performance_results_uri_en', NEW.performance_results_uri_fr, 'performance_results_uri_fr');
 
         IF errors = '{{}}' THEN
