@@ -763,7 +763,16 @@ resources:
     occurrence: Single
     datastore_type: text
     excel_full_text_choices: true
-    choices_file: choices/service_boolean.yaml
+    choices:
+      'NA':
+        en: N/A (not a service to individuals)
+        fr: S.O. (N'est pas un service aux particuliers)
+      'N':
+        en: "No"
+        fr: Non
+      'Y':
+        en: "Yes"
+        fr: Oui
 
   # DEP 1-31
   - datastore_id: cra_bn_identifier_usage
@@ -789,7 +798,16 @@ resources:
     occurrence: Single
     datastore_type: text
     excel_full_text_choices: true
-    choices_file: choices/service_boolean.yaml
+    choices:
+      'NA':
+        en: N/A (not a service to businesses)
+        fr: S.O. (N'est pas un service aux entreprises)
+      'N':
+        en: "No"
+        fr: Non
+      'Y':
+        en: "Yes"
+        fr: Oui
 
   # DEP 1-32
   - datastore_id: num_phone_enquiries
@@ -1298,8 +1316,8 @@ resources:
         errors := errors || choice_error(NEW.automated_decision_system, {automated_decision_system}, 'automated_decision_system');
 
         IF NEW.automated_decision_system = 'Y' THEN
-          errors := errors || required_error(NEW.automated_decision_system_description_en, 'automated_decision_system_description_en');
-          errors := errors || required_error(NEW.automated_decision_system_description_fr, 'automated_decision_system_description_fr');
+          errors := errors || conditional_required_error(NEW.automated_decision_system_description_en, 'automated_decision_system_description_en');
+          errors := errors || conditional_required_error(NEW.automated_decision_system_description_fr, 'automated_decision_system_description_fr');
         ELSE
           errors := errors || both_languages_error(NEW.automated_decision_system_description_en, 'automated_decision_system_description_en', NEW.automated_decision_system_description_fr, 'automated_decision_system_description_fr');
         END IF;
@@ -1332,8 +1350,8 @@ resources:
         errors := errors || choice_error(NEW.os_issue_resolution_feedback, {os_issue_resolution_feedback}, 'os_issue_resolution_feedback');
 
         IF NEW.os_account_registration = 'NA' OR NEW.os_authentication = 'NA' OR NEW.os_application = 'NA' OR NEW.os_decision = 'NA' OR NEW.os_issuance = 'NA' OR NEW.os_issue_resolution_feedback = 'NA' THEN
-          errors := errors || required_error(NEW.os_comments_client_interaction_en, 'os_comments_client_interaction_en');
-          errors := errors || required_error(NEW.os_comments_client_interaction_fr, 'os_comments_client_interaction_fr');
+          errors := errors || conditional_required_error(NEW.os_comments_client_interaction_en, 'os_comments_client_interaction_en');
+          errors := errors || conditional_required_error(NEW.os_comments_client_interaction_fr, 'os_comments_client_interaction_fr');
         ELSE
           errors := errors || both_languages_error(NEW.os_comments_client_interaction_en, 'os_comments_client_interaction_en', NEW.os_comments_client_interaction_fr, 'os_comments_client_interaction_fr');
         END IF;
@@ -1419,6 +1437,9 @@ resources:
     negative_number_error: This value must not be negative
     max_length_error: This field has a maximum length of {} characters.
     invalid_choice_error: 'Invalid choice: {}'
+    integer_type_error: 'Invalid input syntax for type integer: {}'
+    conditional_required_error: This field is required due to a response in a different field.
+    both_lang_error: This text must be provided in both languages
 
   examples:
     record:
@@ -2167,6 +2188,9 @@ resources:
     max_length_error: This field has a maximum length of {} characters.
     invalid_choice_error: 'Invalid choice: {}'
     number_requied_error:  Number required
+    integer_type_error: 'Invalid input syntax for type integer: {}'
+    conditional_required_error: This field is required due to a response in a different field.
+    both_lang_error: This text must be provided in both languages
 
   examples:
     record:

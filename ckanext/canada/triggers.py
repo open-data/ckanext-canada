@@ -7,6 +7,7 @@ def update_triggers():
     lc = LocalCKAN()
 
     # *_error functions return NULL or ARRAY[[field_name, error_message]]
+    # required_error
     lc.action.datastore_function_create(
         name=u'required_error',
         or_replace=True,
@@ -112,6 +113,114 @@ def update_triggers():
                 RETURN NULL;
             END;
         ''')
+    # END required_error
+    # conditional_required_error
+    lc.action.datastore_function_create(
+        name=u'conditional_required_error',
+        or_replace=True,
+        arguments=[
+            {u'argname': u'value', u'argtype': u'text'},
+            {u'argname': u'field_name', u'argtype': u'text'}],
+        rettype=u'_text',
+        definition=u'''
+            BEGIN
+                IF (value = '') IS NOT FALSE THEN
+                    RETURN ARRAY[[field_name, 'This field is required due to a response in a different field.']];
+                END IF;
+                RETURN NULL;
+            END;
+        ''')
+    lc.action.datastore_function_create(
+        name=u'conditional_required_error',
+        or_replace=True,
+        arguments=[
+            {u'argname': u'value', u'argtype': u'_text'},
+            {u'argname': u'field_name', u'argtype': u'text'}],
+        rettype=u'_text',
+        definition=u'''
+            BEGIN
+                IF value IS NULL OR value = '{}' THEN
+                    RETURN ARRAY[[field_name, 'This field is required due to a response in a different field.']];
+                END IF;
+                RETURN NULL;
+            END;
+        ''')
+    lc.action.datastore_function_create(
+        name=u'conditional_required_error',
+        or_replace=True,
+        arguments=[
+            {u'argname': u'value', u'argtype': u'date'},
+            {u'argname': u'field_name', u'argtype': u'text'}],
+        rettype=u'_text',
+        definition=u'''
+            BEGIN
+                IF value IS NULL THEN
+                    RETURN ARRAY[[field_name, 'This field is required due to a response in a different field.']];
+                END IF;
+                RETURN NULL;
+            END;
+        ''')
+    lc.action.datastore_function_create(
+        name=u'conditional_required_error',
+        or_replace=True,
+        arguments=[
+            {u'argname': u'value', u'argtype': u'numeric'},
+            {u'argname': u'field_name', u'argtype': u'text'}],
+        rettype=u'_text',
+        definition=u'''
+            BEGIN
+                IF value IS NULL THEN
+                    RETURN ARRAY[[field_name, 'This field is required due to a response in a different field.']];
+                END IF;
+                RETURN NULL;
+            END;
+        ''')
+    lc.action.datastore_function_create(
+        name=u'conditional_required_error',
+        or_replace=True,
+        arguments=[
+            {u'argname': u'value', u'argtype': u'int4'},
+            {u'argname': u'field_name', u'argtype': u'text'}],
+        rettype=u'_text',
+        definition=u'''
+            BEGIN
+                IF value IS NULL THEN
+                    RETURN ARRAY[[field_name, 'This field is required due to a response in a different field.']];
+                END IF;
+                RETURN NULL;
+            END;
+        ''')
+    lc.action.datastore_function_create(
+        name=u'conditional_required_error',
+        or_replace=True,
+        arguments=[
+            {u'argname': u'value', u'argtype': u'money'},
+            {u'argname': u'field_name', u'argtype': u'text'}],
+        rettype=u'_text',
+        definition=u'''
+            BEGIN
+                IF value IS NULL THEN
+                    RETURN ARRAY[[field_name, 'This field is required due to a response in a different field.']];
+                END IF;
+                RETURN NULL;
+            END;
+        ''')
+    lc.action.datastore_function_create(
+        name=u'conditional_required_error',
+        or_replace=True,
+        arguments=[
+            {u'argname': u'value', u'argtype': u'boolean'},
+            {u'argname': u'field_name', u'argtype': u'text'}],
+        rettype=u'_text',
+        definition=u'''
+            BEGIN
+                IF value IS NULL THEN
+                    RETURN ARRAY[[field_name, 'This field is required due to a response in a different field.']];
+                END IF;
+                RETURN NULL;
+            END;
+        ''')
+    # END conditional_required_error
     lc.action.datastore_function_create(
         name=u'choice_error',
         or_replace=True,
