@@ -58,7 +58,7 @@ from ckan.logic import (
 
 from ckanext.recombinant.datatypes import canonicalize
 from ckanext.recombinant.tables import get_chromo
-from ckanext.recombinant.errors import RecombinantException
+from ckanext.recombinant.errors import RecombinantException, format_trigger_error
 from ckanext.recombinant.helpers import recombinant_primary_key_fields
 
 from ckanapi import LocalCKAN
@@ -387,7 +387,7 @@ def create_pd_record(owner_org, resource_name):
             if 'records' in ve.error_dict:
                 try:
                     err = dict({
-                        k: [_(e.split('\uF8FF')[0]).format(e.split('\uF8FF')[1]) if '\uF8FF' in e else _(e) for e in v]
+                        k: list(format_trigger_error(v))
                         for (k, v) in ve.error_dict['records'][0].items()
                     }, **err)
                 except AttributeError:
@@ -504,7 +504,7 @@ def update_pd_record(owner_org, resource_name, pk):
         except ValidationError as ve:
             try:
                 err = dict({
-                    k: [_(e.split('\uF8FF')[0]).format(e.split('\uF8FF')[1]) if '\uF8FF' in e else _(e) for e in v]
+                    k: list(format_trigger_error(v))
                     for (k, v) in ve.error_dict['records'][0].items()
                 }, **err)
             except AttributeError:
