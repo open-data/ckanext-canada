@@ -46,7 +46,7 @@ def main():
         if num <= 0 or den <=0:
             row['performance'] = None
         else:
-            row['performance'] = max(num / den, 0)
+            row['performance'] = max( round(num / den, 4), 0)
 
         # calculate target_met
         if row['target']:
