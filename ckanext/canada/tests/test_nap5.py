@@ -50,6 +50,11 @@ class TestNap5(CanadaTestBase):
             progress_en='',
             progress_fr='',
         )
+        with pytest.raises(ValidationError) as ve:
+            self.lc.action.datastore_upsert(
+                resource_id=self.resource_id,
+                records=[record])
+        err = ve.value.error_dict['records'][0]
         expected = {
             'commitments': ['This field must not be empty'],
             'milestones': ['This field must not be empty'],
@@ -57,11 +62,6 @@ class TestNap5(CanadaTestBase):
             'progress_en': ['This field must not be empty'],
             'progress_fr': ['This field must not be empty'],
         }
-        with pytest.raises(ValidationError) as ve:
-            self.lc.action.datastore_upsert(
-                resource_id=self.resource_id,
-                records=[{}])
-        err = ve.value.error_dict
         assert isinstance(err, dict), err
         for k in set(err) | set(expected):
             assert k in err
