@@ -39,3 +39,30 @@ class TestNap5(CanadaTestBase):
                 records=[{}])
         err = ve.value.error_dict
         assert 'key' in err, err
+
+
+    def test_required(self):
+        record = dict(
+            get_chromo('nap5')['examples']['record'],
+            commitments='',
+            milestones='',
+            status='',
+            progress_en='',
+            progress_fr='',
+        )
+        expected = {
+            'commitments': ['This field must not be empty'],
+            'milestones': ['This field must not be empty'],
+            'status': ['This field must not be empty'],
+            'progress_en': ['This field must not be empty'],
+            'progress_fr': ['This field must not be empty'],
+        }
+        with pytest.raises(ValidationError) as ve:
+            self.lc.action.datastore_upsert(
+                resource_id=self.resource_id,
+                records=[{}])
+        err = ve.value.error_dict
+        assert isinstance(err, dict), err
+        for k in set(err) | set(expected):
+            assert k in err
+            assert err[k] == expected[k]
