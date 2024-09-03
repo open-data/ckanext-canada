@@ -1304,6 +1304,10 @@ resources:
         errors := errors || choice_error(NEW.indicators,
           array(SELECT unnest from unnest({indicators}) where left(unnest, length(NEW.milestones)) = NEW.milestones),
           'indicators');
+        errors := errors || required_error(NEW.status, 'status');
+        errors := errors || choice_error(NEW.status, {status}, 'status');
+        errors := errors || required_error(NEW.progress_en, 'progress_en');
+        errors := errors || required_error(NEW.progress_fr, 'progress_fr');
         IF errors = '{{}}' THEN
           RETURN NEW;
         END IF;
