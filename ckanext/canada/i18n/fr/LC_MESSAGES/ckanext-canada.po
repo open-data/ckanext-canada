@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-08-26 20:31+0000\n"
+"POT-Creation-Date: 2024-09-09 16:25-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: fr\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.7.0\n"
 
-#: ckanext/canada/assets/internal/validation_spec.js:8
+#: ckanext/canada/assets/internal/validation_spec.js:9
 #: ckanext/canada/checks.py:25
 msgid ""
 "Column name {value} in column {column_number} is not valid for a "
@@ -28,7 +28,7 @@ msgstr ""
 "Le nom de la colonne {value} dans la colonne {column_number} est invalide"
 " comme en-tête dans DataStore"
 
-#: ckanext/canada/assets/internal/validation_spec.js:16
+#: ckanext/canada/assets/internal/validation_spec.js:17
 #: ckanext/canada/checks.py:30
 msgid ""
 "Column name {value} in column {column_number} is too long for a DataStore"
@@ -217,13 +217,22 @@ msgstr "Publié"
 msgid "Scheduled"
 msgstr "Prévu"
 
-#: ckanext/canada/helpers.py:864
+#: ckanext/canada/helpers.py:866
 msgid "Registry Home"
 msgstr "Accueil du registre"
 
-#: ckanext/canada/helpers.py:864 ckanext/canada/strings.py:82
-msgid "Open Government Portal"
-msgstr "Portail du gouvernement ouvert"
+#: ckanext/canada/helpers.py:871
+msgid "Open Government"
+msgstr "Gouvernement ouvert"
+
+#: ckanext/canada/helpers.py:874
+#: ckanext/canada/templates/admin/publish_search.html:18
+#: ckanext/canada/templates/home/quick_links.html:104
+#: ckanext/canada/templates/organization/snippets/organization_search.html:7
+#: ckanext/canada/templates/snippets/cdts/header.html:150
+#: ckanext/canada/templates/snippets/search_form.html:44
+msgid "Search"
+msgstr "Rechercher"
 
 #: ckanext/canada/logic.py:296
 msgid "Could not determine a resource format. Please supply a format."
@@ -579,6 +588,10 @@ msgstr ""
 "La soumission de votre formulaire n'a pas pu être confirmée. Veuillez le "
 "soumettre de nouveau."
 
+#: ckanext/canada/strings.py:82
+msgid "Open Government Portal"
+msgstr "Portail du gouvernement ouvert"
+
 #: ckanext/canada/strings.py:83
 msgid "Open Government Portal (staging)"
 msgstr "Portail du gouvernement ouvert (stadification)"
@@ -875,11 +888,11 @@ msgstr "L’utilisateur %r n’est pas autorisé à modifier les membres de %s"
 msgid "User %r not authorized to view members of %s"
 msgstr "L’utilisateur %r n’est pas autorisé à voir les membres de %s"
 
-#: ckanext/canada/assets/internal/validation_spec.js:7
+#: ckanext/canada/assets/internal/validation_spec.js:8
 msgid "Invalid Header for DataStore"
 msgstr "En-tête invalide dans DataStore"
 
-#: ckanext/canada/assets/internal/validation_spec.js:9
+#: ckanext/canada/assets/internal/validation_spec.js:10
 msgid ""
 "Column name is invalid for a DataStore header.\n"
 "\n"
@@ -898,11 +911,11 @@ msgstr ""
 " - Supprimez les guillemets ('\"') du nom de la colonne.\n"
 " - Veillez à ce que le nom de la colonne soit indiqué."
 
-#: ckanext/canada/assets/internal/validation_spec.js:15
+#: ckanext/canada/assets/internal/validation_spec.js:16
 msgid "Header Too Long for DataStore"
 msgstr "L'en-tête est trop long dans DataStore"
 
-#: ckanext/canada/assets/internal/validation_spec.js:17
+#: ckanext/canada/assets/internal/validation_spec.js:18
 msgid ""
 "Column name is too long for a DataStore header.\n"
 "\n"
@@ -2234,14 +2247,6 @@ msgstr "Recherche de dossiers"
 #: ckanext/canada/templates/admin/publish_search.html:14
 msgid "Search datasets..."
 msgstr "Recherche de dossiers..."
-
-#: ckanext/canada/templates/admin/publish_search.html:18
-#: ckanext/canada/templates/home/quick_links.html:104
-#: ckanext/canada/templates/organization/snippets/organization_search.html:7
-#: ckanext/canada/templates/snippets/cdts/header.html:150
-#: ckanext/canada/templates/snippets/search_form.html:44
-msgid "Search"
-msgstr "Rechercher"
 
 #: ckanext/canada/templates/admin/publish_search.html:52
 #: ckanext/canada/templates/scheming/form_snippets/repeating_subfields.html:8

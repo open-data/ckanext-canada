@@ -2,3 +2,6 @@
 - show title in breadcrumbs
 - increase breadcrumb length to 80 for package and resource
 - increase title length from ckan's default 80 to 150 before truncating
+- use the breadcrumb trail guidance to not display the current page
+at the end of the breadcrumb trail (linked or unlinked) for the Portal only
+https://design.canada.ca/common-design-patterns/breadcrumb-trail.html

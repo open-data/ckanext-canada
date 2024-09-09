@@ -860,17 +860,35 @@ def ckan_to_cdts_breadcrumbs(breadcrumb_content):
     See: https://cdts.service.canada.ca/app/cls/WET/gcweb/v4_1_0/cdts/samples/breadcrumbs-en.html
     """
     breadcrumb_html = BeautifulSoup(breadcrumb_content, 'html.parser')
-    cdts_breadcrumbs = [{
-        'title': _('Registry Home') if g.is_registry else _('Open Government Portal'),
-        'href': '/%s' % h.lang(),
-    }]
+    cdts_breadcrumbs = []
+    if g.is_registry:
+        cdts_breadcrumbs.append({
+            'title': _('Registry Home'),
+            'href': '/%s' % h.lang(),
+        })
+    else:
+        cdts_breadcrumbs.extend([{
+            'title': _('Open Government'),
+            'href': '/%s' % h.lang(),
+        },{
+            'title': _('Search'),
+            'href': adv_search_url(),
+        }])
+
     for breadcrumb in breadcrumb_html.find_all('li'):
         anchor = breadcrumb.find('a')
-        cdts_breadcrumbs.append({
+        link = {
             'title': breadcrumb.text if not anchor else anchor.text,
-            'acronym': '' if not anchor else anchor.get('title', ''),
             'href': '' if not anchor else anchor['href'],
-        })
+        }
+        if anchor and anchor.get('title'):
+            link['acronym'] = anchor.get('title')
+
+        if g.is_registry:
+            cdts_breadcrumbs.append(link)
+        elif 'active' not in breadcrumb.get('class', []):
+            cdts_breadcrumbs.append(link)
+
     return cdts_breadcrumbs
 
 
