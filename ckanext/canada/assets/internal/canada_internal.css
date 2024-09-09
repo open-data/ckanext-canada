@@ -12,6 +12,14 @@
 ol.breadcrumb {
   margin-bottom: 0px;
 }
+.breadcrumb li:last-child a {
+  background: transparent !important;
+  color: black;
+  pointer-events: none;
+  cursor: default;
+  text-decoration: none;
+}
+
 #wb-info a {
   text-decoration: none;
 }

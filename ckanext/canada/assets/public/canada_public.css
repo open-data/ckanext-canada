@@ -83,14 +83,6 @@ details.alert-error {
   color: #295376;
 }
 
-.breadcrumb li:last-child a {
-  background: transparent !important;
-  color: black;
-  pointer-events: none;
-  cursor: default;
-  text-decoration: none;
-}
-
 .fgpv {
   height: 700px;
   border: 1px solid black;
