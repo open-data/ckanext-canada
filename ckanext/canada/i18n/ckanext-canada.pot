@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ckanext-canada 0.4.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-09-10 15:33-0400\n"
+"POT-Creation-Date: 2024-09-10 16:17-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -3201,52 +3201,56 @@ msgstr ""
 msgid "login welcome text"
 msgstr ""
 
-#: ckanext/canada/templates/user/login.html:11
+#: ckanext/canada/templates/user/login.html:7
+msgid "password requirements"
+msgstr ""
+
+#: ckanext/canada/templates/user/login.html:12
 msgid "NOTE: Username and password are case sensitive."
 msgstr ""
 
-#: ckanext/canada/templates/user/login.html:23
+#: ckanext/canada/templates/user/login.html:24
 msgid "Need an account"
 msgstr ""
 
-#: ckanext/canada/templates/user/login.html:26
+#: ckanext/canada/templates/user/login.html:27
 msgid "Then sign right up, it only takes a minute"
 msgstr ""
 
-#: ckanext/canada/templates/user/login.html:28
+#: ckanext/canada/templates/user/login.html:29
 #: ckanext/canada/templates/user/new.html:5
 msgid "Request an Account"
 msgstr ""
 
-#: ckanext/canada/templates/user/login.html:34
+#: ckanext/canada/templates/user/login.html:35
 msgid "Forgotten your password?"
 msgstr ""
 
-#: ckanext/canada/templates/user/login.html:36
+#: ckanext/canada/templates/user/login.html:37
 msgid "No problem, use our password recovery form to reset it"
 msgstr ""
 
-#: ckanext/canada/templates/user/login.html:38
+#: ckanext/canada/templates/user/login.html:39
 msgid "Reset password"
 msgstr ""
 
-#: ckanext/canada/templates/user/login.html:46
+#: ckanext/canada/templates/user/login.html:47
 msgid "Forgotten your username?"
 msgstr ""
 
-#: ckanext/canada/templates/user/login.html:49
+#: ckanext/canada/templates/user/login.html:50
 msgid "No problem, use our username recovery form to recover it"
 msgstr ""
 
-#: ckanext/canada/templates/user/login.html:51
+#: ckanext/canada/templates/user/login.html:52
 msgid "Recover username"
 msgstr ""
 
-#: ckanext/canada/templates/user/login.html:66
+#: ckanext/canada/templates/user/login.html:67
 msgid " Create an Account"
 msgstr ""
 
-#: ckanext/canada/templates/user/login.html:76
+#: ckanext/canada/templates/user/login.html:77
 msgid "Forgot your password?"
 msgstr ""
 
