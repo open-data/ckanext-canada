@@ -16,7 +16,10 @@
     {% endif %}
   </fieldset>
   <fieldset>
-    <legend>{{ _('Change password') }}</legend>
+    <legend>
+        {{ _('Change password') }}
+        {% trans %}password requirements{% endtrans %}
+    </legend>
     {{ form.input('old_password',
                   type='password',
                   label=_('Sysadmin Password') if is_sysadmin and not is_myself else _('Old Password'),

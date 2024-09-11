@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-09-09 16:25-0400\n"
+"POT-Creation-Date: 2024-09-11 08:14-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: fr\n"
@@ -430,7 +430,7 @@ msgid "Request Reset"
 msgstr "Demander une réinitialisation"
 
 #: ckanext/canada/strings.py:38
-#: ckanext/canada/templates/user/edit_user_form.html:42
+#: ckanext/canada/templates/user/edit_user_form.html:45
 msgid "Create API Token"
 msgstr "Créer un jeton d’API"
 
@@ -2641,7 +2641,7 @@ msgstr "Êtes-vous sûr de vouloir supprimer ce membre?"
 #: ckanext/canada/templates/organization/member_new.html:60
 #: ckanext/canada/templates/scheming/package/read.html:26
 #: ckanext/canada/templates/scheming/snippets/form_field.html:21
-#: ckanext/canada/templates/user/edit_user_form.html:37
+#: ckanext/canada/templates/user/edit_user_form.html:40
 msgid "Delete"
 msgstr "Supprimer"
 
@@ -3736,34 +3736,56 @@ msgstr "Un peu d’information vous concernant"
 msgid "Subscribe to notification emails"
 msgstr "S’abonner aux courriels de notification"
 
-#: ckanext/canada/templates/user/edit_user_form.html:19
+#: ckanext/canada/templates/user/edit_user_form.html:20
 msgid "Change password"
 msgstr "Changer le mot de passe"
 
-#: ckanext/canada/templates/user/edit_user_form.html:22
+#: ckanext/canada/templates/user/edit_user_form.html:21
+#: ckanext/canada/templates/user/login.html:7
+msgid "password requirements"
+msgstr ""
+"<div class=\"alert alert-info\"><details><summary>Nouvelles exigences en "
+"matière de sécurité des mots de passe</summary><p>Le registre du "
+"gouvernement ouvert applique désormais de nouvelles exigences en matière "
+"de mots de passe afin d'assurer la conformité aux meilleures pratiques "
+"décrites dans le guide des mots de passe du gouvernement du Canada "
+":</p><ul><li>La longueur minimale est de 12 caractères</li><li>Doit être "
+"composé d'au moins trois des caractères suivants : majuscules, "
+"minuscules, chiffres, ponctuation et caractères spéciaux</li><li>Le mot "
+"de passe n'égale pas au nom d'utilisateur</li></ul><p>Les utilisateurs "
+"dont les mots de passe ne répondent pas aux nouvelles exigences peuvent "
+"les mettre à jour dans section <i>Modifier le mot de passe</i> dans la "
+"page Mon profil ou en utilisant la fonction de <i>réinitialisation du mot"
+" de passe</i>.</p><p><strong>Remarque :</strong> si les mots de passe ne "
+"sont pas mis à jour avant la fin de l'année 2024, nous mettrons en œuvre "
+"un processus obligeant les utilisateurs à modifier leur mot de passe pour"
+" répondre aux nouvelles exigences avant de pouvoir accéder au "
+"registre.</p></details></div>"
+
+#: ckanext/canada/templates/user/edit_user_form.html:25
 msgid "Sysadmin Password"
 msgstr "Mot de passe administrateur système"
 
-#: ckanext/canada/templates/user/edit_user_form.html:22
+#: ckanext/canada/templates/user/edit_user_form.html:25
 msgid "Old Password"
 msgstr "Ancien mot de passe"
 
-#: ckanext/canada/templates/user/edit_user_form.html:30
+#: ckanext/canada/templates/user/edit_user_form.html:33
 #: ckanext/canada/templates/user/new_user_form.html:21
 #: ckanext/canada/templates/user/snippets/login_form.html:12
 msgid "Password"
 msgstr "Mot de passe"
 
-#: ckanext/canada/templates/user/edit_user_form.html:31
+#: ckanext/canada/templates/user/edit_user_form.html:34
 #: ckanext/canada/templates/user/new_user_form.html:24
 msgid "Confirm Password"
 msgstr "Confirmer le mot de passe"
 
-#: ckanext/canada/templates/user/edit_user_form.html:37
+#: ckanext/canada/templates/user/edit_user_form.html:40
 msgid "Are you sure you want to delete this User?"
 msgstr "Êtes-vous sûr de vouloir supprimer cet utilisateur?"
 
-#: ckanext/canada/templates/user/edit_user_form.html:45
+#: ckanext/canada/templates/user/edit_user_form.html:48
 msgid "Update Profile"
 msgstr "Mettre à jour le profil"
 
@@ -3807,56 +3829,56 @@ msgstr ""
 "registre ou pour signaler des erreurs, communiquez avec open-ouvert@tbs-"
 "sct.gc.ca. </p>"
 
-#: ckanext/canada/templates/user/login.html:11
+#: ckanext/canada/templates/user/login.html:12
 msgid "NOTE: Username and password are case sensitive."
 msgstr "NOTE: Le nom d’utilisateur et mot de passe sont sensibles à la casse."
 
-#: ckanext/canada/templates/user/login.html:23
+#: ckanext/canada/templates/user/login.html:24
 msgid "Need an account"
 msgstr "Besoin d’un compte"
 
-#: ckanext/canada/templates/user/login.html:26
+#: ckanext/canada/templates/user/login.html:27
 msgid "Then sign right up, it only takes a minute"
 msgstr "Inscrivez-vous maintenant, cela ne prend qu’une minute"
 
-#: ckanext/canada/templates/user/login.html:28
+#: ckanext/canada/templates/user/login.html:29
 #: ckanext/canada/templates/user/new.html:5
 msgid "Request an Account"
 msgstr "Demande d’un compte"
 
-#: ckanext/canada/templates/user/login.html:34
+#: ckanext/canada/templates/user/login.html:35
 msgid "Forgotten your password?"
 msgstr "Réinitialiser le mot de passe"
 
-#: ckanext/canada/templates/user/login.html:36
+#: ckanext/canada/templates/user/login.html:37
 msgid "No problem, use our password recovery form to reset it"
 msgstr ""
 "Utilisez notre formulaire de récupération de mot de passe pour rétablir "
 "votre identité"
 
-#: ckanext/canada/templates/user/login.html:38
+#: ckanext/canada/templates/user/login.html:39
 msgid "Reset password"
 msgstr "Réinitialiser le mot de passe"
 
-#: ckanext/canada/templates/user/login.html:46
+#: ckanext/canada/templates/user/login.html:47
 msgid "Forgotten your username?"
 msgstr "Vous avez oublié votre nom d'utilisateur ?"
 
-#: ckanext/canada/templates/user/login.html:49
+#: ckanext/canada/templates/user/login.html:50
 msgid "No problem, use our username recovery form to recover it"
 msgstr ""
 "Pas de problème, utilisez notre formulaire de récupération du nom "
 "d'utilisateur pour le récupérer"
 
-#: ckanext/canada/templates/user/login.html:51
+#: ckanext/canada/templates/user/login.html:52
 msgid "Recover username"
 msgstr "Récupérer le nom d'utilisateur"
 
-#: ckanext/canada/templates/user/login.html:66
+#: ckanext/canada/templates/user/login.html:67
 msgid " Create an Account"
 msgstr "Créer un compte"
 
-#: ckanext/canada/templates/user/login.html:76
+#: ckanext/canada/templates/user/login.html:77
 msgid "Forgot your password?"
 msgstr "Réinitialiser le mot de passe"
 
