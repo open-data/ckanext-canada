@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ckanext-canada 0.4.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-09-11 08:14-0400\n"
+"POT-Creation-Date: 2024-09-12 10:29-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -406,7 +406,7 @@ msgid "Request Reset"
 msgstr ""
 
 #: ckanext/canada/strings.py:38
-#: ckanext/canada/templates/user/edit_user_form.html:45
+#: ckanext/canada/templates/user/edit_user_form.html:47
 msgid "Create API Token"
 msgstr ""
 
@@ -2265,7 +2265,7 @@ msgstr ""
 #: ckanext/canada/templates/organization/member_new.html:60
 #: ckanext/canada/templates/scheming/package/read.html:26
 #: ckanext/canada/templates/scheming/snippets/form_field.html:21
-#: ckanext/canada/templates/user/edit_user_form.html:40
+#: ckanext/canada/templates/user/edit_user_form.html:42
 msgid "Delete"
 msgstr ""
 
@@ -3216,39 +3216,39 @@ msgstr ""
 msgid "Subscribe to notification emails"
 msgstr ""
 
-#: ckanext/canada/templates/user/edit_user_form.html:20
+#: ckanext/canada/templates/user/edit_user_form.html:19
 msgid "Change password"
 msgstr ""
 
-#: ckanext/canada/templates/user/edit_user_form.html:21
-#: ckanext/canada/templates/user/login.html:7
-msgid "password requirements"
+#: ckanext/canada/templates/user/edit_user_form.html:22
+#: ckanext/canada/templates/user/perform_reset.html:8
+msgid "password reset requirements"
 msgstr ""
 
-#: ckanext/canada/templates/user/edit_user_form.html:25
+#: ckanext/canada/templates/user/edit_user_form.html:27
 msgid "Sysadmin Password"
 msgstr ""
 
-#: ckanext/canada/templates/user/edit_user_form.html:25
+#: ckanext/canada/templates/user/edit_user_form.html:27
 msgid "Old Password"
 msgstr ""
 
-#: ckanext/canada/templates/user/edit_user_form.html:33
+#: ckanext/canada/templates/user/edit_user_form.html:35
 #: ckanext/canada/templates/user/new_user_form.html:21
 #: ckanext/canada/templates/user/snippets/login_form.html:12
 msgid "Password"
 msgstr ""
 
-#: ckanext/canada/templates/user/edit_user_form.html:34
+#: ckanext/canada/templates/user/edit_user_form.html:36
 #: ckanext/canada/templates/user/new_user_form.html:24
 msgid "Confirm Password"
 msgstr ""
 
-#: ckanext/canada/templates/user/edit_user_form.html:40
+#: ckanext/canada/templates/user/edit_user_form.html:42
 msgid "Are you sure you want to delete this User?"
 msgstr ""
 
-#: ckanext/canada/templates/user/edit_user_form.html:48
+#: ckanext/canada/templates/user/edit_user_form.html:50
 msgid "Update Profile"
 msgstr ""
 
@@ -3284,6 +3284,10 @@ msgstr ""
 
 #: ckanext/canada/templates/user/login.html:6
 msgid "login welcome text"
+msgstr ""
+
+#: ckanext/canada/templates/user/login.html:7
+msgid "password reset alert"
 msgstr ""
 
 #: ckanext/canada/templates/user/login.html:12
@@ -3494,19 +3498,6 @@ msgstr ""
 
 #: ckanext/canada/templates/user/new_user_form.html:73
 msgid "I do not agree"
-msgstr ""
-
-#: ckanext/canada/templates/user/perform_reset.html:9
-#, python-format
-msgid ""
-"1. Passwords must contain characters from at least 3 of the following 4 "
-"classes:\n"
-"    * Upper Case Letters: A, B, C, … Z\n"
-"    * Lower Case Letters: a, b, c, … z\n"
-"    * Westernised Arabic Numerals: 0, 1, 2, … 9\n"
-"    * Special characters: ({}[],.<>;:'\"?/|\\`~!@#$%%^&*()_-+=).\n"
-"2. No accented characters are permitted.\n"
-"3. All passwords must be at least 12 characters long.\n"
 msgstr ""
 
 #: ckanext/canada/templates/user/read_base.html:14
