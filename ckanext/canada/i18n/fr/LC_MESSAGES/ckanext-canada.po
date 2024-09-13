@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-09-12 09:58-0400\n"
+"POT-Creation-Date: 2024-09-13 10:55-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: fr\n"
@@ -209,13 +209,22 @@ msgstr "Publié"
 msgid "Scheduled"
 msgstr "Prévu"
 
-#: ckanext/canada/helpers.py:857
+#: ckanext/canada/helpers.py:859
 msgid "Registry Home"
 msgstr "Accueil du registre"
 
-#: ckanext/canada/helpers.py:857 ckanext/canada/strings.py:82
-msgid "Open Government Portal"
-msgstr "Portail du gouvernement ouvert"
+#: ckanext/canada/helpers.py:864
+msgid "Open Government"
+msgstr "Gouvernement ouvert"
+
+#: ckanext/canada/helpers.py:867
+#: ckanext/canada/templates/admin/publish_search.html:18
+#: ckanext/canada/templates/home/quick_links.html:104
+#: ckanext/canada/templates/organization/snippets/organization_search.html:7
+#: ckanext/canada/templates/snippets/cdts/header.html:146
+#: ckanext/canada/templates/snippets/search_form.html:44
+msgid "Search"
+msgstr "Rechercher"
 
 #: ckanext/canada/logic.py:296
 msgid "Could not determine a resource format. Please supply a format."
@@ -413,7 +422,7 @@ msgid "Request Reset"
 msgstr "Demander une réinitialisation"
 
 #: ckanext/canada/strings.py:38
-#: ckanext/canada/templates/user/edit_user_form.html:45
+#: ckanext/canada/templates/user/edit_user_form.html:47
 msgid "Create API Token"
 msgstr "Créer un jeton d’API"
 
@@ -570,6 +579,10 @@ msgid "Your form submission could not be validated, please re-submit the form."
 msgstr ""
 "La soumission de votre formulaire n'a pas pu être confirmée. Veuillez le "
 "soumettre de nouveau."
+
+#: ckanext/canada/strings.py:82
+msgid "Open Government Portal"
+msgstr "Portail du gouvernement ouvert"
 
 #: ckanext/canada/strings.py:83
 msgid "Open Government Portal (staging)"
@@ -2037,7 +2050,7 @@ msgid "Load more"
 msgstr "En charger davantage"
 
 #: ckanext/canada/templates/admin/base.html:5
-#: ckanext/canada/templates/snippets/cdts/header.html:197
+#: ckanext/canada/templates/snippets/cdts/header.html:193
 msgid "Admin"
 msgstr "Administrateur"
 
@@ -2120,14 +2133,6 @@ msgstr "Recherche de dossiers"
 #: ckanext/canada/templates/admin/publish_search.html:14
 msgid "Search datasets..."
 msgstr "Recherche de dossiers..."
-
-#: ckanext/canada/templates/admin/publish_search.html:18
-#: ckanext/canada/templates/home/quick_links.html:104
-#: ckanext/canada/templates/organization/snippets/organization_search.html:7
-#: ckanext/canada/templates/snippets/cdts/header.html:150
-#: ckanext/canada/templates/snippets/search_form.html:44
-msgid "Search"
-msgstr "Rechercher"
 
 #: ckanext/canada/templates/admin/publish_search.html:52
 #: ckanext/canada/templates/scheming/form_snippets/repeating_subfields.html:8
@@ -2302,14 +2307,14 @@ msgstr ""
 " gouvernement."
 
 #: ckanext/canada/templates/home/quick_links.html:91
-#: ckanext/canada/templates/snippets/cdts/header.html:135
+#: ckanext/canada/templates/snippets/cdts/header.html:131
 #: ckanext/canada/templates/snippets/dataset_facets.html:4
 #: ckanext/canada/templates/snippets/package_item.html:19
 msgid "Open Dialogue"
 msgstr "Dialogue ouvert"
 
 #: ckanext/canada/templates/home/quick_links.html:98
-#: ckanext/canada/templates/snippets/cdts/header.html:144
+#: ckanext/canada/templates/snippets/cdts/header.html:140
 msgid "Consultations master dataset"
 msgstr "Données de consultations principals"
 
@@ -2363,7 +2368,7 @@ msgid "Briefing packages"
 msgstr "Documents d’information"
 
 #: ckanext/canada/templates/home/quick_links.html:165
-#: ckanext/canada/templates/snippets/cdts/header.html:118
+#: ckanext/canada/templates/snippets/cdts/header.html:114
 msgid "New or incoming ministers"
 msgstr "Documents d’information pour les nouveaux ministres"
 
@@ -2376,7 +2381,7 @@ msgstr ""
 " contenu ou modifiez-la."
 
 #: ckanext/canada/templates/home/quick_links.html:173
-#: ckanext/canada/templates/snippets/cdts/header.html:122
+#: ckanext/canada/templates/snippets/cdts/header.html:118
 msgid "New or incoming deputy heads"
 msgstr "Documents d’information pour les nouveaux administrateurs généraux"
 
@@ -2389,7 +2394,7 @@ msgstr ""
 " ajoutez-y du contenu ou modifiez-la."
 
 #: ckanext/canada/templates/home/quick_links.html:181
-#: ckanext/canada/templates/snippets/cdts/header.html:126
+#: ckanext/canada/templates/snippets/cdts/header.html:122
 msgid "Parliamentary Committee appearances for ministers"
 msgstr ""
 "Documents d’information à l’intention des ministres pour les comparutions"
@@ -2404,7 +2409,7 @@ msgstr ""
 "devant un comité parlementaire, ajoutez-y du contenu ou modifiez-la."
 
 #: ckanext/canada/templates/home/quick_links.html:189
-#: ckanext/canada/templates/snippets/cdts/header.html:130
+#: ckanext/canada/templates/snippets/cdts/header.html:126
 msgid "Parliamentary Committee appearances for deputy heads"
 msgstr ""
 "Documents d’information à l’intention des administrateurs généraux pour "
@@ -2468,7 +2473,7 @@ msgstr "Pourquoi ne pas en créer une?"
 #: ckanext/canada/templates/organization/index.html:26
 #: ckanext/canada/templates/organization/members.html:10
 #: ckanext/canada/templates/organization/read_base.html:6
-#: ckanext/canada/templates/snippets/cdts/header.html:154
+#: ckanext/canada/templates/snippets/cdts/header.html:150
 #: ckanext/canada/templates/user/read.html:28
 #: ckanext/canada/templates/user/read_base.html:99
 msgid "Organizations"
@@ -2522,7 +2527,7 @@ msgstr "Êtes-vous sûr de vouloir supprimer ce membre?"
 #: ckanext/canada/templates/organization/member_new.html:60
 #: ckanext/canada/templates/scheming/package/read.html:26
 #: ckanext/canada/templates/scheming/snippets/form_field.html:21
-#: ckanext/canada/templates/user/edit_user_form.html:40
+#: ckanext/canada/templates/user/edit_user_form.html:42
 msgid "Delete"
 msgstr "Supprimer"
 
@@ -2897,7 +2902,7 @@ msgstr "Enregistrement de métadonnées de HNAP ISO:19115"
 msgid "Go back"
 msgstr "Retourner"
 
-#: ckanext/canada/templates/package/resource_read.html:53
+#: ckanext/canada/templates/package/resource_read.html:58
 #: ckanext/canada/templates/package/snippets/resource_item.html:73
 msgid "Download"
 msgstr "Télécharger"
@@ -3525,11 +3530,11 @@ msgstr "{actor} a ajouté le {view_type} de l'affichage {view}"
 msgid "Home"
 msgstr "Accueil"
 
-#: ckanext/canada/templates/snippets/cdts/header.html:159
+#: ckanext/canada/templates/snippets/cdts/header.html:155
 msgid "FAQ"
 msgstr "FAQ"
 
-#: ckanext/canada/templates/snippets/cdts/header.html:189
+#: ckanext/canada/templates/snippets/cdts/header.html:185
 #: ckanext/canada/templates/user/dashboard.html:4
 #: ckanext/canada/templates/user/dashboard_datasets.html:15
 #: ckanext/canada/templates/user/dashboard_groups.html:9
@@ -3537,15 +3542,15 @@ msgstr "FAQ"
 msgid "Dashboard"
 msgstr "Tableau de bord"
 
-#: ckanext/canada/templates/snippets/cdts/header.html:205
+#: ckanext/canada/templates/snippets/cdts/header.html:201
 msgid "Get Help"
 msgstr "Obtenez de l’aide"
 
-#: ckanext/canada/templates/snippets/cdts/header.html:226
+#: ckanext/canada/templates/snippets/cdts/header.html:222
 msgid "Signed in as"
 msgstr "Connecté en tant que"
 
-#: ckanext/canada/templates/snippets/cdts/header.html:226
+#: ckanext/canada/templates/snippets/cdts/header.html:222
 msgid "View profile"
 msgstr "Afficher le profil"
 
@@ -3635,11 +3640,11 @@ msgstr "Un peu d’information vous concernant"
 msgid "Subscribe to notification emails"
 msgstr "S’abonner aux courriels de notification"
 
-#: ckanext/canada/templates/user/edit_user_form.html:20
+#: ckanext/canada/templates/user/edit_user_form.html:19
 msgid "Change password"
 msgstr "Changer le mot de passe"
 
-#: ckanext/canada/templates/user/edit_user_form.html:21
+#: ckanext/canada/templates/user/edit_user_form.html:22
 #: ckanext/canada/templates/user/perform_reset.html:8
 msgid "password reset requirements"
 msgstr ""
@@ -3652,30 +3657,30 @@ msgstr ""
 "comporter au moins 12 caractères.</li><li>Le mot de passe n'égale pas au "
 "nom d'utilisateur.</li></ol>"
 
-#: ckanext/canada/templates/user/edit_user_form.html:25
+#: ckanext/canada/templates/user/edit_user_form.html:27
 msgid "Sysadmin Password"
 msgstr "Mot de passe administrateur système"
 
-#: ckanext/canada/templates/user/edit_user_form.html:25
+#: ckanext/canada/templates/user/edit_user_form.html:27
 msgid "Old Password"
 msgstr "Ancien mot de passe"
 
-#: ckanext/canada/templates/user/edit_user_form.html:33
+#: ckanext/canada/templates/user/edit_user_form.html:35
 #: ckanext/canada/templates/user/new_user_form.html:21
 #: ckanext/canada/templates/user/snippets/login_form.html:12
 msgid "Password"
 msgstr "Mot de passe"
 
-#: ckanext/canada/templates/user/edit_user_form.html:34
+#: ckanext/canada/templates/user/edit_user_form.html:36
 #: ckanext/canada/templates/user/new_user_form.html:24
 msgid "Confirm Password"
 msgstr "Confirmer le mot de passe"
 
-#: ckanext/canada/templates/user/edit_user_form.html:40
+#: ckanext/canada/templates/user/edit_user_form.html:42
 msgid "Are you sure you want to delete this User?"
 msgstr "Êtes-vous sûr de vouloir supprimer cet utilisateur?"
 
-#: ckanext/canada/templates/user/edit_user_form.html:48
+#: ckanext/canada/templates/user/edit_user_form.html:50
 msgid "Update Profile"
 msgstr "Mettre à jour le profil"
 
