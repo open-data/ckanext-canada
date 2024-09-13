@@ -3,7 +3,7 @@
 <form id="user-edit-form" class="dataset-form" method="post" action="{{ action }}" enctype="multipart/form-data">
   {{ form.errors(error_summary) }}
   <fieldset>
-    <legend>{{ _('Change details') }}</legend>
+    <legend class="h2">{{ _('Change details') }}</legend>
     {{ form.input('name', label=_('Username'), id='field-username', value=data.name, error=errors.name, classes=['control-medium'], attrs={'readonly': '', 'class': 'form-control'}) }}
     {{ form.input('fullname', label=_('Full name'), id='field-fullname', value=data.fullname, error=errors.fullname, placeholder=_('eg. Joe Bloggs'), classes=['control-medium']) }}
     {{ form.input('email', label=_('Email'), id='field-email', type='email', value=data.email, error=errors.email, placeholder=_('eg. joe@example.com'), classes=['control-medium'], is_required=true) }}
@@ -16,7 +16,12 @@
     {% endif %}
   </fieldset>
   <fieldset>
-    <legend>{{ _('Change password') }}</legend>
+      <legend class="h2">{{ _('Change password') }}</legend>
+      <legend>
+        <section class="alert alert-info">
+          <p>{% trans %}password reset requirements{% endtrans %}</p>
+        </section>
+      </legend>
     {{ form.input('old_password',
                   type='password',
                   label=_('Sysadmin Password') if is_sysadmin and not is_myself else _('Old Password'),
