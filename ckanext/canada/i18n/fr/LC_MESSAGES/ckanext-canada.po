@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-09-09 14:43-0400\n"
+"POT-Creation-Date: 2024-09-13 10:55-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: fr\n"
@@ -422,7 +422,7 @@ msgid "Request Reset"
 msgstr "Demander une réinitialisation"
 
 #: ckanext/canada/strings.py:38
-#: ckanext/canada/templates/user/edit_user_form.html:42
+#: ckanext/canada/templates/user/edit_user_form.html:47
 msgid "Create API Token"
 msgstr "Créer un jeton d’API"
 
@@ -770,11 +770,11 @@ msgstr "Le recombinant resource_name n’a pas été trouvé"
 
 #: ckanext/canada/view.py:596
 msgid "User {0} not authorized to update resource {1}"
-msgstr "Vous n'êtes pas autorisé à supprimer la ressource %s"
+msgstr "L'utilisateur {0} n'est pas autorisé à mettre à jour la ressource {1}"
 
 #: ckanext/canada/view.py:642
 msgid "{num} deleted."
-msgstr "Aperçu supprimé."
+msgstr "{num} supprimé"
 
 #: ckanext/canada/view.py:684
 msgid "Number required"
@@ -1032,7 +1032,7 @@ msgstr ""
 #: ckanext/canada/tables/briefingt.yaml:406
 #: ckanext/canada/tables/contractsa.yaml:396
 #: ckanext/canada/tables/hospitalityq.yaml:606
-#: ckanext/canada/tables/qpnotes.yaml:453
+#: ckanext/canada/tables/qpnotes.yaml:456
 #: ckanext/canada/tables/reclassification.yaml:389
 #: ckanext/canada/tables/travela.yaml:645
 #: ckanext/canada/tables/travelq.yaml:600
@@ -1970,9 +1970,9 @@ msgid ""
 "Upload button, you'll need to click on the <em>\"Get Started\"</em> "
 "button."
 msgstr ""
-"Si votre organisation n’a pas encore téléversé de données pour ce type de"
-" divulgation proactive, votre modèle n’a pas été initié. Pour accéder au "
-"bouton de téléchargement, vous devez d’abord télécharger le modèle."
+"Si votre organisation n'a pas encore téléversé de données pour ce type de"
+" divulgation proactive, votre modèle n'a pas été initié. Pour accéder au "
+"bouton de téléversement, vous devez cliquez sur le bouton « Commencer »."
 
 #: ckanext/canada/templates/help.html:102
 msgid "Why doesn't all the text I entered in the template appear?"
@@ -2527,7 +2527,7 @@ msgstr "Êtes-vous sûr de vouloir supprimer ce membre?"
 #: ckanext/canada/templates/organization/member_new.html:60
 #: ckanext/canada/templates/scheming/package/read.html:26
 #: ckanext/canada/templates/scheming/snippets/form_field.html:21
-#: ckanext/canada/templates/user/edit_user_form.html:37
+#: ckanext/canada/templates/user/edit_user_form.html:42
 msgid "Delete"
 msgstr "Supprimer"
 
@@ -2937,7 +2937,7 @@ msgstr "Modifier dans Excel"
 
 #: ckanext/canada/templates/package/wet_datatable.html:103
 msgid "Delete records"
-msgstr "Mettre à jour les données"
+msgstr "Supprimer un dossier"
 
 #: ckanext/canada/templates/package/snippets/additional_info.html:1
 msgid "Additional Info"
@@ -3107,8 +3107,12 @@ msgid ""
 msgid_plural ""
 "Are you sure you want to delete {num} records? This action cannot be "
 "undone."
-msgstr[0] "Êtes-vous certain de vouloir supprimer cet état?"
+msgstr[0] ""
+"Souhaitez-vous vraiment supprimer {num} demande? Cette action ne peut pas"
+" être annulée."
 msgstr[1] ""
+"Souhaitez-vous vraiment supprimer {num} demandes? Cette action ne peut "
+"pas être annulée."
 
 #: ckanext/canada/templates/recombinant/create_pd_record.html:3
 #: ckanext/canada/templates/recombinant/create_pd_record.html:4
@@ -3641,29 +3645,42 @@ msgid "Change password"
 msgstr "Changer le mot de passe"
 
 #: ckanext/canada/templates/user/edit_user_form.html:22
+#: ckanext/canada/templates/user/perform_reset.html:8
+msgid "password reset requirements"
+msgstr ""
+"<ol><li>Les mots de passe doivent contenir des caractères appartenant à "
+"au moins 3 des 4 catégories suivantes :</li><ul><li>Lettres majuscules : "
+"A, B, C, … Z</li><li>Lettres minuscules : a, b, c, … z</li><li>Chiffres "
+"arabes occidentalisés : 0, 1, 2, … 9</li><li>Caractères spéciaux : "
+"({}[],.<>;:'\"?/|\\`~!@#$%%^&*()_-+=).</li></ul><li>Les caractères "
+"accentués ne sont pas autorisés.</li><li>Tous les mots de passe doivent "
+"comporter au moins 12 caractères.</li><li>Le mot de passe n'égale pas au "
+"nom d'utilisateur.</li></ol>"
+
+#: ckanext/canada/templates/user/edit_user_form.html:27
 msgid "Sysadmin Password"
 msgstr "Mot de passe administrateur système"
 
-#: ckanext/canada/templates/user/edit_user_form.html:22
+#: ckanext/canada/templates/user/edit_user_form.html:27
 msgid "Old Password"
 msgstr "Ancien mot de passe"
 
-#: ckanext/canada/templates/user/edit_user_form.html:30
+#: ckanext/canada/templates/user/edit_user_form.html:35
 #: ckanext/canada/templates/user/new_user_form.html:21
 #: ckanext/canada/templates/user/snippets/login_form.html:12
 msgid "Password"
 msgstr "Mot de passe"
 
-#: ckanext/canada/templates/user/edit_user_form.html:31
+#: ckanext/canada/templates/user/edit_user_form.html:36
 #: ckanext/canada/templates/user/new_user_form.html:24
 msgid "Confirm Password"
 msgstr "Confirmer le mot de passe"
 
-#: ckanext/canada/templates/user/edit_user_form.html:37
+#: ckanext/canada/templates/user/edit_user_form.html:42
 msgid "Are you sure you want to delete this User?"
 msgstr "Êtes-vous sûr de vouloir supprimer cet utilisateur?"
 
-#: ckanext/canada/templates/user/edit_user_form.html:45
+#: ckanext/canada/templates/user/edit_user_form.html:50
 msgid "Update Profile"
 msgstr "Mettre à jour le profil"
 
@@ -3707,56 +3724,78 @@ msgstr ""
 "registre ou pour signaler des erreurs, communiquez avec open-ouvert@tbs-"
 "sct.gc.ca. </p>"
 
-#: ckanext/canada/templates/user/login.html:11
+#: ckanext/canada/templates/user/login.html:7
+msgid "password reset alert"
+msgstr ""
+"<div class=\"alert alert-info\"><details><summary>Nouvelles exigences en "
+"matière de sécurité des mots de passe</summary><p>Le registre du "
+"gouvernement ouvert applique désormais de nouvelles exigences en matière "
+"de mots de passe afin d'assurer la conformité aux meilleures pratiques "
+"décrites dans le guide des mots de passe du gouvernement du Canada "
+":</p><ul><li>La longueur minimale est de 12 caractères</li><li>Doit être "
+"composé d'au moins trois des caractères suivants : majuscules, "
+"minuscules, chiffres, ponctuation et caractères spéciaux</li><li>Le mot "
+"de passe n'égale pas au nom d'utilisateur</li></ul><p>Les utilisateurs "
+"dont les mots de passe ne répondent pas aux nouvelles exigences peuvent "
+"les mettre à jour dans section <i>Modifier le mot de passe</i> dans la "
+"page Mon profil ou en utilisant la fonction de <a "
+"href=\"/fr/user/reset\">réinitialisation du mot de "
+"passe</a>.</p><p><strong>Remarque :</strong> si les mots de passe ne sont"
+" pas mis à jour avant la fin de l'année 2024, nous mettrons en œuvre un "
+"processus obligeant les utilisateurs à modifier leur mot de passe pour "
+"répondre aux nouvelles exigences avant de pouvoir accéder au "
+"registre.</p></details></div>"
+
+#: ckanext/canada/templates/user/login.html:12
 msgid "NOTE: Username and password are case sensitive."
 msgstr "NOTE: Le nom d’utilisateur et mot de passe sont sensibles à la casse."
 
-#: ckanext/canada/templates/user/login.html:23
+#: ckanext/canada/templates/user/login.html:24
 msgid "Need an account"
 msgstr "Besoin d’un compte"
 
-#: ckanext/canada/templates/user/login.html:26
+#: ckanext/canada/templates/user/login.html:27
 msgid "Then sign right up, it only takes a minute"
 msgstr "Inscrivez-vous maintenant, cela ne prend qu’une minute"
 
-#: ckanext/canada/templates/user/login.html:28
+#: ckanext/canada/templates/user/login.html:29
 #: ckanext/canada/templates/user/new.html:5
 msgid "Request an Account"
 msgstr "Demande d’un compte"
 
-#: ckanext/canada/templates/user/login.html:34
+#: ckanext/canada/templates/user/login.html:35
 msgid "Forgotten your password?"
 msgstr "Réinitialiser le mot de passe"
 
-#: ckanext/canada/templates/user/login.html:36
+#: ckanext/canada/templates/user/login.html:37
 msgid "No problem, use our password recovery form to reset it"
 msgstr ""
 "Utilisez notre formulaire de récupération de mot de passe pour rétablir "
 "votre identité"
 
-#: ckanext/canada/templates/user/login.html:38
+#: ckanext/canada/templates/user/login.html:39
 msgid "Reset password"
 msgstr "Réinitialiser le mot de passe"
 
-#: ckanext/canada/templates/user/login.html:46
+#: ckanext/canada/templates/user/login.html:47
 msgid "Forgotten your username?"
 msgstr "Vous avez oublié votre nom d'utilisateur ?"
 
-#: ckanext/canada/templates/user/login.html:49
+#: ckanext/canada/templates/user/login.html:50
 msgid "No problem, use our username recovery form to recover it"
 msgstr ""
 "Pas de problème, utilisez notre formulaire de récupération du nom "
 "d'utilisateur pour le récupérer"
 
-#: ckanext/canada/templates/user/login.html:51
+#: ckanext/canada/templates/user/login.html:52
 msgid "Recover username"
 msgstr "Récupérer le nom d'utilisateur"
 
-#: ckanext/canada/templates/user/login.html:66
+#: ckanext/canada/templates/user/login.html:67
 msgid " Create an Account"
 msgstr "Créer un compte"
 
-#: ckanext/canada/templates/user/login.html:76
+#: ckanext/canada/templates/user/login.html:77
 msgid "Forgot your password?"
 msgstr "Réinitialiser le mot de passe"
 
@@ -4032,25 +4071,6 @@ msgstr "J’accepte"
 #: ckanext/canada/templates/user/new_user_form.html:73
 msgid "I do not agree"
 msgstr "Je n’accepte pas"
-
-#: ckanext/canada/templates/user/perform_reset.html:9
-#, python-format
-msgid ""
-"1. Passwords must contain characters from at least 3 of the following 4 "
-"classes:\n"
-"    * Upper Case Letters: A, B, C, … Z\n"
-"    * Lower Case Letters: a, b, c, … z\n"
-"    * Westernised Arabic Numerals: 0, 1, 2, … 9\n"
-"    * Special characters: ({}[],.<>;:'\"?/|\\`~!@#$%%^&*()_-+=).\n"
-"2. No accented characters are permitted.\n"
-"3. All passwords must be at least 12 characters long.\n"
-msgstr ""
-"1. Les mots de passe doivent contenir des caractères appartenant à au "
-"moins 3 des 4 catégories suivantes : * Lettres majuscules : A, B, C, … Z "
-"* Lettres minuscules : a, b, c, … z * Chiffres arabes occidentalisés : 0,"
-" 1, 2, … 9 * Caractères spéciaux : ({}[],.<>;:'\"?/|\\`~!@#$%%^&*()_-+=)."
-" 2. Les caractères accentués ne sont pas autorisés. 3. Tous les mots de "
-"passe doivent comporter au moins 12 caractères."
 
 #: ckanext/canada/templates/user/read_base.html:14
 msgid "Edit User"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  CKAN\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-09-09 14:43-0400\n"
+"POT-Creation-Date: 2024-09-13 10:55-0400\n"
 "PO-Revision-Date: 2014-01-23 13:04+0000\n"
 "Last-Translator: Sean Hammond <sean.hammond@okfn.org>\n"
 "Language: en\n"
@@ -408,7 +408,7 @@ msgid "Request Reset"
 msgstr ""
 
 #: ckanext/canada/strings.py:38
-#: ckanext/canada/templates/user/edit_user_form.html:42
+#: ckanext/canada/templates/user/edit_user_form.html:47
 msgid "Create API Token"
 msgstr ""
 
@@ -962,7 +962,7 @@ msgstr ""
 #: ckanext/canada/tables/briefingt.yaml:406
 #: ckanext/canada/tables/contractsa.yaml:396
 #: ckanext/canada/tables/hospitalityq.yaml:606
-#: ckanext/canada/tables/qpnotes.yaml:453
+#: ckanext/canada/tables/qpnotes.yaml:456
 #: ckanext/canada/tables/reclassification.yaml:389
 #: ckanext/canada/tables/travela.yaml:645
 #: ckanext/canada/tables/travelq.yaml:600
@@ -2210,7 +2210,7 @@ msgstr ""
 #: ckanext/canada/templates/organization/member_new.html:60
 #: ckanext/canada/templates/scheming/package/read.html:26
 #: ckanext/canada/templates/scheming/snippets/form_field.html:21
-#: ckanext/canada/templates/user/edit_user_form.html:37
+#: ckanext/canada/templates/user/edit_user_form.html:42
 msgid "Delete"
 msgstr ""
 
@@ -2747,7 +2747,7 @@ msgid ""
 msgid_plural ""
 "Are you sure you want to delete {num} records? This action cannot be "
 "undone."
-msgstr[0] "Are you sure you want to delete record - {name}?"
+msgstr[0] ""
 msgstr[1] ""
 
 #: ckanext/canada/templates/recombinant/create_pd_record.html:3
@@ -3206,29 +3206,41 @@ msgid "Change password"
 msgstr ""
 
 #: ckanext/canada/templates/user/edit_user_form.html:22
+#: ckanext/canada/templates/user/perform_reset.html:8
+msgid "password reset requirements"
+msgstr ""
+"<ol><li>Passwords must contain characters from at least 3 of the "
+"following 4 classes:<ul><li>Upper Case Letters: A, B, C, … "
+"Z</li><li>Lower Case Letters: a, b, c, … z</li><li>Westernised Arabic "
+"Numerals: 0, 1, 2, … 9</li><li>Special characters: "
+"({}[],.<>;:'\"?/|\\`~!@#$%%^&*()_-+=).</li></ul></li><li>No accented "
+"characters are permitted.</li><li>All passwords must be at least 8 "
+"characters long.</li><li>Password does not equal username.</li></ol>"
+
+#: ckanext/canada/templates/user/edit_user_form.html:27
 msgid "Sysadmin Password"
 msgstr ""
 
-#: ckanext/canada/templates/user/edit_user_form.html:22
+#: ckanext/canada/templates/user/edit_user_form.html:27
 msgid "Old Password"
 msgstr ""
 
-#: ckanext/canada/templates/user/edit_user_form.html:30
+#: ckanext/canada/templates/user/edit_user_form.html:35
 #: ckanext/canada/templates/user/new_user_form.html:21
 #: ckanext/canada/templates/user/snippets/login_form.html:12
 msgid "Password"
 msgstr ""
 
-#: ckanext/canada/templates/user/edit_user_form.html:31
+#: ckanext/canada/templates/user/edit_user_form.html:36
 #: ckanext/canada/templates/user/new_user_form.html:24
 msgid "Confirm Password"
 msgstr ""
 
-#: ckanext/canada/templates/user/edit_user_form.html:37
+#: ckanext/canada/templates/user/edit_user_form.html:42
 msgid "Are you sure you want to delete this User?"
 msgstr ""
 
-#: ckanext/canada/templates/user/edit_user_form.html:45
+#: ckanext/canada/templates/user/edit_user_form.html:50
 msgid "Update Profile"
 msgstr ""
 
@@ -3270,52 +3282,70 @@ msgstr ""
 " information on using the Registry or to report errors, contact open-"
 "ouvert@tbs-sct.gc.ca.</p>"
 
-#: ckanext/canada/templates/user/login.html:11
+#: ckanext/canada/templates/user/login.html:7
+msgid "password reset alert"
+msgstr ""
+"<div class=\"alert alert-info\"><details><summary>New password security "
+"requirements</summary><p>The Open Government Registry is now enforcing "
+"new password requirements to align with the best practices outlined in "
+"the Government of Canada's Password Guidance:</p><ul><li>Minimum length "
+"equals 12 characters</li><li>Includes at least three of the following "
+"character sets: uppercase characters, lowercase characters, digits, "
+"punctuation & special characters</li><li>Does not equal "
+"username</li></ul><p>Users with passwords that do not currently meet the "
+"new requirements can update their passwords, through <i>Change "
+"password</i> section of My Profile page or the <a "
+"href=\"/user/reset\">Reset password</a> function.</p><p><strong>Please "
+"note:</strong> if passwords are not updated by the end of 2024, we will "
+"implement a process to force users to change their password to meet the "
+"new requirements before they can access the Registry.</p></details></div>"
+
+#: ckanext/canada/templates/user/login.html:12
 msgid "NOTE: Username and password are case sensitive."
 msgstr ""
 
-#: ckanext/canada/templates/user/login.html:23
+#: ckanext/canada/templates/user/login.html:24
 msgid "Need an account"
 msgstr ""
 
-#: ckanext/canada/templates/user/login.html:26
+#: ckanext/canada/templates/user/login.html:27
 msgid "Then sign right up, it only takes a minute"
 msgstr ""
 
-#: ckanext/canada/templates/user/login.html:28
+#: ckanext/canada/templates/user/login.html:29
 #: ckanext/canada/templates/user/new.html:5
 msgid "Request an Account"
 msgstr ""
 
-#: ckanext/canada/templates/user/login.html:34
+#: ckanext/canada/templates/user/login.html:35
 msgid "Forgotten your password?"
 msgstr ""
 
-#: ckanext/canada/templates/user/login.html:36
+#: ckanext/canada/templates/user/login.html:37
 msgid "No problem, use our password recovery form to reset it"
 msgstr ""
 
-#: ckanext/canada/templates/user/login.html:38
+#: ckanext/canada/templates/user/login.html:39
 msgid "Reset password"
 msgstr ""
 
-#: ckanext/canada/templates/user/login.html:46
+#: ckanext/canada/templates/user/login.html:47
 msgid "Forgotten your username?"
 msgstr ""
 
-#: ckanext/canada/templates/user/login.html:49
+#: ckanext/canada/templates/user/login.html:50
 msgid "No problem, use our username recovery form to recover it"
 msgstr ""
 
-#: ckanext/canada/templates/user/login.html:51
+#: ckanext/canada/templates/user/login.html:52
 msgid "Recover username"
 msgstr ""
 
-#: ckanext/canada/templates/user/login.html:66
+#: ckanext/canada/templates/user/login.html:67
 msgid " Create an Account"
 msgstr ""
 
-#: ckanext/canada/templates/user/login.html:76
+#: ckanext/canada/templates/user/login.html:77
 msgid "Forgot your password?"
 msgstr ""
 
@@ -3483,19 +3513,6 @@ msgstr ""
 
 #: ckanext/canada/templates/user/new_user_form.html:73
 msgid "I do not agree"
-msgstr ""
-
-#: ckanext/canada/templates/user/perform_reset.html:9
-#, python-format
-msgid ""
-"1. Passwords must contain characters from at least 3 of the following 4 "
-"classes:\n"
-"    * Upper Case Letters: A, B, C, … Z\n"
-"    * Lower Case Letters: a, b, c, … z\n"
-"    * Westernised Arabic Numerals: 0, 1, 2, … 9\n"
-"    * Special characters: ({}[],.<>;:'\"?/|\\`~!@#$%%^&*()_-+=).\n"
-"2. No accented characters are permitted.\n"
-"3. All passwords must be at least 12 characters long.\n"
 msgstr ""
 
 #: ckanext/canada/templates/user/read_base.html:14
@@ -8426,37 +8443,6 @@ msgstr ""
 #~ "name of the organization (e.g., "
 #~ "\"aandc-aadnc\") must remain in cell "
 #~ "C1 exactly as downloaded."
-#~ msgstr ""
-
-#~ msgid ""
-#~ "File Format and Naming: Your completed"
-#~ " data template should be an Excel "
-#~ "spreadsheet in either XLS or XLSX "
-#~ "format. Do not rename the file, as"
-#~ " the system relies on a unique "
-#~ "ID associated with each template. "
-#~ "Renaming it could lead to complications."
-#~ msgstr ""
-
-#~ msgid ""
-#~ "If your organization hasn't uploaded "
-#~ "data yet for that proactive disclosure"
-#~ " type, your template hasn't been "
-#~ "initiated. To access the Upload button,"
-#~ " you'll need to download the template"
-#~ " first."
-#~ msgstr ""
-
-#~ msgid ""
-#~ "1. Passwords must contain characters "
-#~ "from at least 3 of the following"
-#~ " 4 classes:\n"
-#~ "    * Upper Case Letters: A, B, C, … Z\n"
-#~ "    * Lower Case Letters: a, b, c, … z\n"
-#~ "    * Westernised Arabic Numerals: 0, 1, 2, … 9\n"
-#~ "    * Special characters: ({}[],.<>;:'\"?/|\\`~!@#$%%^&*()_-+=).\n"
-#~ "2. No accented characters are permitted.\n"
-#~ "3. All passwords must be at least 8 characters long.\n"
 #~ msgstr ""
 
 #~ msgid "this field must not be empty"
