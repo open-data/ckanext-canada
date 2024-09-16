@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  CKAN\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-09-16 15:27+0000\n"
+"POT-Creation-Date: 2024-09-16 19:50+0000\n"
 "PO-Revision-Date: 2014-01-23 13:04+0000\n"
 "Last-Translator: Sean Hammond <sean.hammond@okfn.org>\n"
 "Language: en\n"
@@ -571,6 +571,10 @@ msgstr ""
 msgid "Repeatable"
 msgstr ""
 
+#: ckanext/canada/strings.py:88
+msgid "Optional"
+msgstr ""
+
 #: ckanext/canada/validators.py:118
 #, python-format
 msgid "Tag \"%s\" length is less than minimum %s"
@@ -746,7 +750,7 @@ msgid "{num} deleted."
 msgstr ""
 
 #. SQL Trigger String for PD Type: service
-#: ckanext/canada/tables/service.yaml:2190 ckanext/canada/view.py:701
+#: ckanext/canada/tables/service.yaml:2210 ckanext/canada/view.py:701
 msgid "Number required"
 msgstr ""
 
@@ -920,8 +924,8 @@ msgstr ""
 #. SQL Trigger String for PD Type: ati
 #. SQL Trigger String for PD Type: service
 #: ckanext/canada/tables/ati.yaml:142 ckanext/canada/tables/ati.yaml:254
-#: ckanext/canada/tables/service.yaml:1437
-#: ckanext/canada/tables/service.yaml:2187
+#: ckanext/canada/tables/service.yaml:1456
+#: ckanext/canada/tables/service.yaml:2207
 msgid "This value must not be negative"
 msgstr ""
 
@@ -1337,42 +1341,42 @@ msgid "Service Identification Information & Metrics"
 msgstr ""
 
 #. SQL Trigger String for PD Type: service
-#: ckanext/canada/tables/service.yaml:1436
+#: ckanext/canada/tables/service.yaml:1455
 msgid "This field must be either a number, \"NA\", or \"ND\""
 msgstr ""
 
 #. SQL Trigger String for PD Type: service
-#: ckanext/canada/tables/service.yaml:1438
-#: ckanext/canada/tables/service.yaml:2188
+#: ckanext/canada/tables/service.yaml:1457
+#: ckanext/canada/tables/service.yaml:2208
 msgid "This field has a maximum length of {} characters."
 msgstr ""
 
 #. SQL Trigger String for PD Type: service
-#: ckanext/canada/tables/service.yaml:1439
-#: ckanext/canada/tables/service.yaml:2189
+#: ckanext/canada/tables/service.yaml:1458
+#: ckanext/canada/tables/service.yaml:2209
 msgid "Invalid choice: {}"
 msgstr ""
 
 #. SQL Trigger String for PD Type: service
-#: ckanext/canada/tables/service.yaml:1440
-#: ckanext/canada/tables/service.yaml:2191
+#: ckanext/canada/tables/service.yaml:1459
+#: ckanext/canada/tables/service.yaml:2211
 msgid "Invalid input syntax for type integer: {}"
 msgstr ""
 
 #. SQL Trigger String for PD Type: service
-#: ckanext/canada/tables/service.yaml:1441
-#: ckanext/canada/tables/service.yaml:2192
+#: ckanext/canada/tables/service.yaml:1460
+#: ckanext/canada/tables/service.yaml:2212
 msgid "This field is required due to a response in a different field."
 msgstr ""
 
 #. SQL Trigger String for PD Type: service
-#: ckanext/canada/tables/service.yaml:1442
-#: ckanext/canada/tables/service.yaml:2193
+#: ckanext/canada/tables/service.yaml:1461
+#: ckanext/canada/tables/service.yaml:2213
 msgid "This text must be provided in both languages"
 msgstr ""
 
 #. SQL Constraint Error String for PD Type: service
-#: ckanext/canada/tables/service.yaml:1256
+#: ckanext/canada/tables/service.yaml:1270
 msgid ""
 "Cannot delete record(s) because the Fiscal Year, Service ID Number is "
 "referenced in at least one Service Standards & Performance Results "
@@ -1380,20 +1384,20 @@ msgid ""
 msgstr ""
 
 #. Resource Title for PD Type: service
-#: ckanext/canada/tables/service.yaml:1516
+#: ckanext/canada/tables/service.yaml:1535
 msgid "Service Standards & Performance Results"
 msgstr ""
 
 #. SQL Trigger String for PD Type: service
-#: ckanext/canada/tables/service.yaml:1854
-#: ckanext/canada/tables/service.yaml:2186
+#: ckanext/canada/tables/service.yaml:1872
+#: ckanext/canada/tables/service.yaml:2206
 msgid ""
 "This field must be a single number between 0 and 1 representing a "
 "percentage."
 msgstr ""
 
 #. SQL Constraint Error String for PD Type: service
-#: ckanext/canada/tables/service.yaml:2092
+#: ckanext/canada/tables/service.yaml:2112
 msgid ""
 "Cannot create record because the Service ID Number does not exist in the "
 "Service Identification Information & Metrics resource for that fiscal "
