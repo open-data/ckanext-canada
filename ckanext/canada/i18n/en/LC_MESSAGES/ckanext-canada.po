@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  CKAN\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-08-26 20:26+0000\n"
+"POT-Creation-Date: 2024-09-16 15:27+0000\n"
 "PO-Revision-Date: 2014-01-23 13:04+0000\n"
 "Last-Translator: Sean Hammond <sean.hammond@okfn.org>\n"
 "Language: en\n"
@@ -199,12 +199,21 @@ msgstr ""
 msgid "Scheduled"
 msgstr ""
 
-#: ckanext/canada/helpers.py:857
+#: ckanext/canada/helpers.py:859
 msgid "Registry Home"
 msgstr ""
 
-#: ckanext/canada/helpers.py:857 ckanext/canada/strings.py:82
-msgid "Open Government Portal"
+#: ckanext/canada/helpers.py:864
+msgid "Open Government"
+msgstr ""
+
+#: ckanext/canada/helpers.py:867
+#: ckanext/canada/templates/admin/publish_search.html:18
+#: ckanext/canada/templates/home/quick_links.html:104
+#: ckanext/canada/templates/organization/snippets/organization_search.html:7
+#: ckanext/canada/templates/snippets/cdts/header.html:150
+#: ckanext/canada/templates/snippets/search_form.html:44
+msgid "Search"
 msgstr ""
 
 #: ckanext/canada/logic.py:296
@@ -399,7 +408,7 @@ msgid "Request Reset"
 msgstr ""
 
 #: ckanext/canada/strings.py:38
-#: ckanext/canada/templates/user/edit_user_form.html:42
+#: ckanext/canada/templates/user/edit_user_form.html:47
 msgid "Create API Token"
 msgstr ""
 
@@ -544,6 +553,10 @@ msgstr ""
 
 #: ckanext/canada/strings.py:79
 msgid "Your form submission could not be validated, please re-submit the form."
+msgstr ""
+
+#: ckanext/canada/strings.py:82
+msgid "Open Government Portal"
 msgstr ""
 
 #: ckanext/canada/strings.py:83
@@ -961,7 +974,7 @@ msgstr ""
 #: ckanext/canada/tables/briefingt.yaml:406
 #: ckanext/canada/tables/contractsa.yaml:396
 #: ckanext/canada/tables/hospitalityq.yaml:606
-#: ckanext/canada/tables/qpnotes.yaml:453
+#: ckanext/canada/tables/qpnotes.yaml:456
 #: ckanext/canada/tables/reclassification.yaml:389
 #: ckanext/canada/tables/travela.yaml:645
 #: ckanext/canada/tables/travelq.yaml:600
@@ -1838,7 +1851,7 @@ msgid "Load more"
 msgstr ""
 
 #: ckanext/canada/templates/admin/base.html:5
-#: ckanext/canada/templates/snippets/cdts/header.html:201
+#: ckanext/canada/templates/snippets/cdts/header.html:197
 msgid "Admin"
 msgstr ""
 
@@ -1914,14 +1927,6 @@ msgstr "Search Records"
 #: ckanext/canada/templates/admin/publish_search.html:14
 msgid "Search datasets..."
 msgstr "Search records..."
-
-#: ckanext/canada/templates/admin/publish_search.html:18
-#: ckanext/canada/templates/home/quick_links.html:104
-#: ckanext/canada/templates/organization/snippets/organization_search.html:7
-#: ckanext/canada/templates/snippets/cdts/header.html:154
-#: ckanext/canada/templates/snippets/search_form.html:44
-msgid "Search"
-msgstr ""
 
 #: ckanext/canada/templates/admin/publish_search.html:52
 #: ckanext/canada/templates/scheming/form_snippets/repeating_subfields.html:8
@@ -2074,14 +2079,14 @@ msgid "Add information about government programs, activities and publications."
 msgstr ""
 
 #: ckanext/canada/templates/home/quick_links.html:91
-#: ckanext/canada/templates/snippets/cdts/header.html:139
+#: ckanext/canada/templates/snippets/cdts/header.html:135
 #: ckanext/canada/templates/snippets/dataset_facets.html:4
 #: ckanext/canada/templates/snippets/package_item.html:19
 msgid "Open Dialogue"
 msgstr ""
 
 #: ckanext/canada/templates/home/quick_links.html:98
-#: ckanext/canada/templates/snippets/cdts/header.html:148
+#: ckanext/canada/templates/snippets/cdts/header.html:144
 msgid "Consultations master dataset"
 msgstr ""
 
@@ -2129,7 +2134,7 @@ msgid "Briefing packages"
 msgstr ""
 
 #: ckanext/canada/templates/home/quick_links.html:166
-#: ckanext/canada/templates/snippets/cdts/header.html:122
+#: ckanext/canada/templates/snippets/cdts/header.html:118
 msgid "New or incoming ministers"
 msgstr ""
 
@@ -2140,7 +2145,7 @@ msgid ""
 msgstr ""
 
 #: ckanext/canada/templates/home/quick_links.html:174
-#: ckanext/canada/templates/snippets/cdts/header.html:126
+#: ckanext/canada/templates/snippets/cdts/header.html:122
 msgid "New or incoming deputy heads"
 msgstr ""
 
@@ -2151,7 +2156,7 @@ msgid ""
 msgstr ""
 
 #: ckanext/canada/templates/home/quick_links.html:182
-#: ckanext/canada/templates/snippets/cdts/header.html:130
+#: ckanext/canada/templates/snippets/cdts/header.html:126
 msgid "Parliamentary Committee appearances for ministers"
 msgstr ""
 
@@ -2162,7 +2167,7 @@ msgid ""
 msgstr ""
 
 #: ckanext/canada/templates/home/quick_links.html:190
-#: ckanext/canada/templates/snippets/cdts/header.html:134
+#: ckanext/canada/templates/snippets/cdts/header.html:130
 msgid "Parliamentary Committee appearances for deputy heads"
 msgstr ""
 
@@ -2221,7 +2226,7 @@ msgstr ""
 #: ckanext/canada/templates/organization/index.html:26
 #: ckanext/canada/templates/organization/members.html:10
 #: ckanext/canada/templates/organization/read_base.html:6
-#: ckanext/canada/templates/snippets/cdts/header.html:158
+#: ckanext/canada/templates/snippets/cdts/header.html:154
 #: ckanext/canada/templates/user/read.html:28
 #: ckanext/canada/templates/user/read_base.html:99
 msgid "Organizations"
@@ -2271,7 +2276,7 @@ msgstr ""
 #: ckanext/canada/templates/organization/member_new.html:60
 #: ckanext/canada/templates/scheming/package/read.html:26
 #: ckanext/canada/templates/scheming/snippets/form_field.html:21
-#: ckanext/canada/templates/user/edit_user_form.html:37
+#: ckanext/canada/templates/user/edit_user_form.html:42
 msgid "Delete"
 msgstr ""
 
@@ -2603,7 +2608,7 @@ msgstr ""
 msgid "Go back"
 msgstr ""
 
-#: ckanext/canada/templates/package/resource_read.html:53
+#: ckanext/canada/templates/package/resource_read.html:58
 #: ckanext/canada/templates/package/snippets/resource_item.html:73
 msgid "Download"
 msgstr ""
@@ -3134,11 +3139,11 @@ msgstr ""
 msgid "Home"
 msgstr ""
 
-#: ckanext/canada/templates/snippets/cdts/header.html:163
+#: ckanext/canada/templates/snippets/cdts/header.html:159
 msgid "FAQ"
 msgstr ""
 
-#: ckanext/canada/templates/snippets/cdts/header.html:193
+#: ckanext/canada/templates/snippets/cdts/header.html:189
 #: ckanext/canada/templates/user/dashboard.html:4
 #: ckanext/canada/templates/user/dashboard_datasets.html:15
 #: ckanext/canada/templates/user/dashboard_groups.html:9
@@ -3146,15 +3151,15 @@ msgstr ""
 msgid "Dashboard"
 msgstr ""
 
-#: ckanext/canada/templates/snippets/cdts/header.html:209
+#: ckanext/canada/templates/snippets/cdts/header.html:205
 msgid "Get Help"
 msgstr ""
 
-#: ckanext/canada/templates/snippets/cdts/header.html:230
+#: ckanext/canada/templates/snippets/cdts/header.html:226
 msgid "Signed in as"
 msgstr ""
 
-#: ckanext/canada/templates/snippets/cdts/header.html:230
+#: ckanext/canada/templates/snippets/cdts/header.html:226
 msgid "View profile"
 msgstr ""
 
@@ -3249,29 +3254,41 @@ msgid "Change password"
 msgstr ""
 
 #: ckanext/canada/templates/user/edit_user_form.html:22
+#: ckanext/canada/templates/user/perform_reset.html:8
+msgid "password reset requirements"
+msgstr ""
+"<ol><li>Passwords must contain characters from at least 3 of the "
+"following 4 classes:<ul><li>Upper Case Letters: A, B, C, … "
+"Z</li><li>Lower Case Letters: a, b, c, … z</li><li>Westernised Arabic "
+"Numerals: 0, 1, 2, … 9</li><li>Special characters: "
+"({}[],.<>;:'\"?/|\\`~!@#$%%^&*()_-+=).</li></ul></li><li>No accented "
+"characters are permitted.</li><li>All passwords must be at least 8 "
+"characters long.</li><li>Password does not equal username.</li></ol>"
+
+#: ckanext/canada/templates/user/edit_user_form.html:27
 msgid "Sysadmin Password"
 msgstr ""
 
-#: ckanext/canada/templates/user/edit_user_form.html:22
+#: ckanext/canada/templates/user/edit_user_form.html:27
 msgid "Old Password"
 msgstr ""
 
-#: ckanext/canada/templates/user/edit_user_form.html:30
+#: ckanext/canada/templates/user/edit_user_form.html:35
 #: ckanext/canada/templates/user/new_user_form.html:21
 #: ckanext/canada/templates/user/snippets/login_form.html:12
 msgid "Password"
 msgstr ""
 
-#: ckanext/canada/templates/user/edit_user_form.html:31
+#: ckanext/canada/templates/user/edit_user_form.html:36
 #: ckanext/canada/templates/user/new_user_form.html:24
 msgid "Confirm Password"
 msgstr ""
 
-#: ckanext/canada/templates/user/edit_user_form.html:37
+#: ckanext/canada/templates/user/edit_user_form.html:42
 msgid "Are you sure you want to delete this User?"
 msgstr ""
 
-#: ckanext/canada/templates/user/edit_user_form.html:45
+#: ckanext/canada/templates/user/edit_user_form.html:50
 msgid "Update Profile"
 msgstr ""
 
@@ -3313,52 +3330,70 @@ msgstr ""
 " information on using the Registry or to report errors, contact open-"
 "ouvert@tbs-sct.gc.ca.</p>"
 
-#: ckanext/canada/templates/user/login.html:11
+#: ckanext/canada/templates/user/login.html:7
+msgid "password reset alert"
+msgstr ""
+"<div class=\"alert alert-info\"><details><summary>New password security "
+"requirements</summary><p>The Open Government Registry is now enforcing "
+"new password requirements to align with the best practices outlined in "
+"the Government of Canada's Password Guidance:</p><ul><li>Minimum length "
+"equals 12 characters</li><li>Includes at least three of the following "
+"character sets: uppercase characters, lowercase characters, digits, "
+"punctuation & special characters</li><li>Does not equal "
+"username</li></ul><p>Users with passwords that do not currently meet the "
+"new requirements can update their passwords, through <i>Change "
+"password</i> section of My Profile page or the <a "
+"href=\"/user/reset\">Reset password</a> function.</p><p><strong>Please "
+"note:</strong> if passwords are not updated by the end of 2024, we will "
+"implement a process to force users to change their password to meet the "
+"new requirements before they can access the Registry.</p></details></div>"
+
+#: ckanext/canada/templates/user/login.html:12
 msgid "NOTE: Username and password are case sensitive."
 msgstr ""
 
-#: ckanext/canada/templates/user/login.html:23
+#: ckanext/canada/templates/user/login.html:24
 msgid "Need an account"
 msgstr ""
 
-#: ckanext/canada/templates/user/login.html:26
+#: ckanext/canada/templates/user/login.html:27
 msgid "Then sign right up, it only takes a minute"
 msgstr ""
 
-#: ckanext/canada/templates/user/login.html:28
+#: ckanext/canada/templates/user/login.html:29
 #: ckanext/canada/templates/user/new.html:5
 msgid "Request an Account"
 msgstr ""
 
-#: ckanext/canada/templates/user/login.html:34
+#: ckanext/canada/templates/user/login.html:35
 msgid "Forgotten your password?"
 msgstr ""
 
-#: ckanext/canada/templates/user/login.html:36
+#: ckanext/canada/templates/user/login.html:37
 msgid "No problem, use our password recovery form to reset it"
 msgstr ""
 
-#: ckanext/canada/templates/user/login.html:38
+#: ckanext/canada/templates/user/login.html:39
 msgid "Reset password"
 msgstr ""
 
-#: ckanext/canada/templates/user/login.html:46
+#: ckanext/canada/templates/user/login.html:47
 msgid "Forgotten your username?"
 msgstr ""
 
-#: ckanext/canada/templates/user/login.html:49
+#: ckanext/canada/templates/user/login.html:50
 msgid "No problem, use our username recovery form to recover it"
 msgstr ""
 
-#: ckanext/canada/templates/user/login.html:51
+#: ckanext/canada/templates/user/login.html:52
 msgid "Recover username"
 msgstr ""
 
-#: ckanext/canada/templates/user/login.html:66
+#: ckanext/canada/templates/user/login.html:67
 msgid " Create an Account"
 msgstr ""
 
-#: ckanext/canada/templates/user/login.html:76
+#: ckanext/canada/templates/user/login.html:77
 msgid "Forgot your password?"
 msgstr ""
 
@@ -3526,19 +3561,6 @@ msgstr ""
 
 #: ckanext/canada/templates/user/new_user_form.html:73
 msgid "I do not agree"
-msgstr ""
-
-#: ckanext/canada/templates/user/perform_reset.html:9
-#, python-format
-msgid ""
-"1. Passwords must contain characters from at least 3 of the following 4 "
-"classes:\n"
-"    * Upper Case Letters: A, B, C, … Z\n"
-"    * Lower Case Letters: a, b, c, … z\n"
-"    * Westernised Arabic Numerals: 0, 1, 2, … 9\n"
-"    * Special characters: ({}[],.<>;:'\"?/|\\`~!@#$%%^&*()_-+=).\n"
-"2. No accented characters are permitted.\n"
-"3. All passwords must be at least 12 characters long.\n"
 msgstr ""
 
 #: ckanext/canada/templates/user/read_base.html:14
@@ -8515,5 +8537,17 @@ msgstr ""
 #~ msgstr ""
 
 #~ msgid "invalid input syntax for type integer: {}"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "1. Passwords must contain characters "
+#~ "from at least 3 of the following"
+#~ " 4 classes:\n"
+#~ "    * Upper Case Letters: A, B, C, … Z\n"
+#~ "    * Lower Case Letters: a, b, c, … z\n"
+#~ "    * Westernised Arabic Numerals: 0, 1, 2, … 9\n"
+#~ "    * Special characters: ({}[],.<>;:'\"?/|\\`~!@#$%%^&*()_-+=).\n"
+#~ "2. No accented characters are permitted.\n"
+#~ "3. All passwords must be at least 12 characters long.\n"
 #~ msgstr ""
 

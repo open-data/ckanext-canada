@@ -356,6 +356,9 @@ resources:
 
 - title: Proactive Publication - Question Period Notes Nothing to Report
   resource_name: qpnotes-nil
+
+  published_resource_id: dba8cc4a-2a57-435c-a270-fa024474e609
+  
   create_form: true
   edit_form: false #edit not possible for nil reports since only stored data is primary key
   fields:
