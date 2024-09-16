@@ -1849,7 +1849,7 @@ resources:
       fr: Fréquence à laquelle l'organisation s'attend à respecter sa norme de service (exprimée en pourcentage).
     obligation: Optional
     excel_required: false
-    format_type: Free text
+    format_type: Decimal
     validation:
       en: This field must be a single number between 0 and 1 representing a percentage.
       fr: Ce champ doit inscrire un seul et unique chiffre entre 0 et 1 représentant un pourcentage.
@@ -1882,6 +1882,7 @@ resources:
       fr: Cette valeur ne doit pas être négatif.
     occurrence: Single
     datastore_type: int
+    #FIXME: int types allow alpha in excel??
     excel_error_formula: 'OR({default_formula},VALUE({cell})<0)'
 
   # DEP 2-14
@@ -1907,6 +1908,7 @@ resources:
       fr: Cette valeur ne doit pas être négatif.
     occurrence: Single
     datastore_type: int
+    #FIXME: int types allow alpha in excel??
     excel_error_formula: 'OR({default_formula},VALUE({cell})<0)'
 
   # DEP 2-16
