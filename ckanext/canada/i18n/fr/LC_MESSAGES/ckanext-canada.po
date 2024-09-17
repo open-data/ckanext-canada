@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-09-16 19:50+0000\n"
+"POT-Creation-Date: 2024-09-17 17:43+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: fr\n"
@@ -532,25 +532,35 @@ msgstr ""
 "Impossible de modifier les privileges des administrateurs du système pour"
 " un utilisateur du système."
 
-#: ckanext/canada/strings.py:66
+#: ckanext/canada/strings.py:64
+#: ckanext/canada/templates/snippets/facet_list.html:43
+#: ckanext/canada/templates/snippets/facet_list.html:44
+msgid "Show more"
+msgstr "Afficher plus"
+
+#: ckanext/canada/strings.py:65
+msgid "Hide"
+msgstr "Cacher"
+
+#: ckanext/canada/strings.py:68
 msgid "Please upload a file or link to an external resource"
 msgstr ""
 "Veuillez téléverser un fichier ou donner un lien vers une ressource "
 "externe"
 
-#: ckanext/canada/strings.py:67
+#: ckanext/canada/strings.py:69
 msgid "Cannot upload files of this type"
 msgstr "Impossible de téléverser un fichier de ce type"
 
-#: ckanext/canada/strings.py:68
+#: ckanext/canada/strings.py:70
 msgid "Cannot link files of this type"
 msgstr "Impossible de donner un lien vers un fichier de ce type"
 
-#: ckanext/canada/strings.py:69
+#: ckanext/canada/strings.py:71
 msgid "Your password must be {} characters or longer."
 msgstr "Votre mot de passe doit comporter au moins {} caractères."
 
-#: ckanext/canada/strings.py:70
+#: ckanext/canada/strings.py:72
 msgid ""
 "Your password must consist of at least three of the following character "
 "sets: uppercase characters, lowercase characters, digits, punctuation & "
@@ -560,43 +570,43 @@ msgstr ""
 "suivants : majuscules, minuscules, chiffres, ponctuation et caractères "
 "spéciaux."
 
-#: ckanext/canada/strings.py:72
+#: ckanext/canada/strings.py:74
 msgid "Your password cannot be the same as your username."
 msgstr "Votre mot de passe ne peut pas être le même que votre nom d'utilisateur."
 
-#: ckanext/canada/strings.py:75
+#: ckanext/canada/strings.py:77
 msgid "These fields have been removed, click update below to save your changes."
 msgstr ""
 "Ces champs seront supprimés une fois que vous aurez sauvegardé vos "
 "changements."
 
-#: ckanext/canada/strings.py:76
+#: ckanext/canada/strings.py:78
 msgid "These fields have been removed."
 msgstr "Ces champs ont été supprimés."
 
-#: ckanext/canada/strings.py:79
+#: ckanext/canada/strings.py:81
 msgid "Your form submission could not be validated, please re-submit the form."
 msgstr ""
 "La soumission de votre formulaire n'a pas pu être confirmée. Veuillez le "
 "soumettre de nouveau."
 
-#: ckanext/canada/strings.py:82
+#: ckanext/canada/strings.py:84
 msgid "Open Government Portal"
 msgstr "Portail du gouvernement ouvert"
 
-#: ckanext/canada/strings.py:83
+#: ckanext/canada/strings.py:85
 msgid "Open Government Portal (staging)"
 msgstr "Portail du gouvernement ouvert (stadification)"
 
-#: ckanext/canada/strings.py:86
+#: ckanext/canada/strings.py:88
 msgid "Single"
 msgstr "Une seule"
 
-#: ckanext/canada/strings.py:87
+#: ckanext/canada/strings.py:89
 msgid "Repeatable"
 msgstr "Répétable"
 
-#: ckanext/canada/strings.py:88
+#: ckanext/canada/strings.py:90
 msgid "Optional"
 msgstr "Facultatif"
 
@@ -3473,11 +3483,6 @@ msgstr "Consulter les activités des 30 derniers jours."
 #: ckanext/canada/templates/snippets/dataset_facets.html:12
 msgid "Suggested Datasets"
 msgstr "Jeux de données suggérés"
-
-#: ckanext/canada/templates/snippets/facet_list.html:43
-#: ckanext/canada/templates/snippets/facet_list.html:44
-msgid "Show more"
-msgstr "Afficher plus"
 
 #: ckanext/canada/templates/snippets/facet_list.html:49
 #: ckanext/canada/templates/snippets/facet_list.html:50
