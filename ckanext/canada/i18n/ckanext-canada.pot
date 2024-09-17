@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ckanext-canada 0.4.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-09-12 10:29-0400\n"
+"POT-Creation-Date: 2024-09-17 18:17+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,13 +17,13 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.7.0\n"
 
-#: ckanext/canada/assets/internal/validation_spec.js:9 ckanext/canada/checks.py:25
+#: ckanext/canada/assets/internal/validation_spec.js:8 ckanext/canada/checks.py:25
 msgid ""
 "Column name {value} in column {column_number} is not valid for a DataStore "
 "header"
 msgstr ""
 
-#: ckanext/canada/assets/internal/validation_spec.js:17 ckanext/canada/checks.py:30
+#: ckanext/canada/assets/internal/validation_spec.js:16 ckanext/canada/checks.py:30
 msgid ""
 "Column name {value} in column {column_number} is too long for a DataStore "
 "header"
@@ -514,59 +514,73 @@ msgstr ""
 msgid "Cannot modify sysadmin privileges for system user"
 msgstr ""
 
-#: ckanext/canada/strings.py:66
-msgid "Please upload a file or link to an external resource"
+#: ckanext/canada/strings.py:64
+#: ckanext/canada/templates/snippets/facet_list.html:43
+#: ckanext/canada/templates/snippets/facet_list.html:44
+msgid "Show more"
 msgstr ""
 
-#: ckanext/canada/strings.py:67
-msgid "Cannot upload files of this type"
+#: ckanext/canada/strings.py:65
+msgid "Hide"
 msgstr ""
 
 #: ckanext/canada/strings.py:68
-msgid "Cannot link files of this type"
+msgid "Please upload a file or link to an external resource"
 msgstr ""
 
 #: ckanext/canada/strings.py:69
-msgid "Your password must be {} characters or longer."
+msgid "Cannot upload files of this type"
 msgstr ""
 
 #: ckanext/canada/strings.py:70
+msgid "Cannot link files of this type"
+msgstr ""
+
+#: ckanext/canada/strings.py:71
+msgid "Your password must be {} characters or longer."
+msgstr ""
+
+#: ckanext/canada/strings.py:72
 msgid ""
 "Your password must consist of at least three of the following character sets:"
 " uppercase characters, lowercase characters, digits, punctuation & special "
 "characters."
 msgstr ""
 
-#: ckanext/canada/strings.py:72
+#: ckanext/canada/strings.py:74
 msgid "Your password cannot be the same as your username."
 msgstr ""
 
-#: ckanext/canada/strings.py:75
+#: ckanext/canada/strings.py:77
 msgid "These fields have been removed, click update below to save your changes."
 msgstr ""
 
-#: ckanext/canada/strings.py:76
+#: ckanext/canada/strings.py:78
 msgid "These fields have been removed."
 msgstr ""
 
-#: ckanext/canada/strings.py:79
+#: ckanext/canada/strings.py:81
 msgid "Your form submission could not be validated, please re-submit the form."
 msgstr ""
 
-#: ckanext/canada/strings.py:82
+#: ckanext/canada/strings.py:84
 msgid "Open Government Portal"
 msgstr ""
 
-#: ckanext/canada/strings.py:83
+#: ckanext/canada/strings.py:85
 msgid "Open Government Portal (staging)"
 msgstr ""
 
-#: ckanext/canada/strings.py:86
+#: ckanext/canada/strings.py:88
 msgid "Single"
 msgstr ""
 
-#: ckanext/canada/strings.py:87
+#: ckanext/canada/strings.py:89
 msgid "Repeatable"
+msgstr ""
+
+#: ckanext/canada/strings.py:90
+msgid "Optional"
 msgstr ""
 
 #: ckanext/canada/validators.py:151
@@ -745,7 +759,7 @@ msgid "{num} deleted."
 msgstr ""
 
 #. SQL Trigger String for PD Type: service
-#: ckanext/canada/tables/service.yaml:2190 ckanext/canada/view.py:701
+#: ckanext/canada/tables/service.yaml:2210 ckanext/canada/view.py:701
 msgid "Number required"
 msgstr ""
 
@@ -825,11 +839,11 @@ msgstr ""
 msgid "User %r not authorized to view members of %s"
 msgstr ""
 
-#: ckanext/canada/assets/internal/validation_spec.js:8
+#: ckanext/canada/assets/internal/validation_spec.js:7
 msgid "Invalid Header for DataStore"
 msgstr ""
 
-#: ckanext/canada/assets/internal/validation_spec.js:10
+#: ckanext/canada/assets/internal/validation_spec.js:9
 msgid ""
 "Column name is invalid for a DataStore header.\n"
 "\n"
@@ -840,11 +854,11 @@ msgid ""
 " - Make sure the column name is not blank."
 msgstr ""
 
-#: ckanext/canada/assets/internal/validation_spec.js:16
+#: ckanext/canada/assets/internal/validation_spec.js:15
 msgid "Header Too Long for DataStore"
 msgstr ""
 
-#: ckanext/canada/assets/internal/validation_spec.js:18
+#: ckanext/canada/assets/internal/validation_spec.js:17
 msgid ""
 "Column name is too long for a DataStore header.\n"
 "\n"
@@ -916,7 +930,7 @@ msgstr ""
 #. SQL Trigger String for PD Type: ati
 #. SQL Trigger String for PD Type: service
 #: ckanext/canada/tables/ati.yaml:142 ckanext/canada/tables/ati.yaml:254
-#: ckanext/canada/tables/service.yaml:1437 ckanext/canada/tables/service.yaml:2187
+#: ckanext/canada/tables/service.yaml:1456 ckanext/canada/tables/service.yaml:2207
 msgid "This value must not be negative"
 msgstr ""
 
@@ -1322,54 +1336,54 @@ msgid "Service Identification Information & Metrics"
 msgstr ""
 
 #. SQL Trigger String for PD Type: service
-#: ckanext/canada/tables/service.yaml:1436
+#: ckanext/canada/tables/service.yaml:1455
 msgid "This field must be either a number, \"NA\", or \"ND\""
 msgstr ""
 
 #. SQL Trigger String for PD Type: service
-#: ckanext/canada/tables/service.yaml:1438 ckanext/canada/tables/service.yaml:2188
+#: ckanext/canada/tables/service.yaml:1457 ckanext/canada/tables/service.yaml:2208
 msgid "This field has a maximum length of {} characters."
 msgstr ""
 
 #. SQL Trigger String for PD Type: service
-#: ckanext/canada/tables/service.yaml:1439 ckanext/canada/tables/service.yaml:2189
+#: ckanext/canada/tables/service.yaml:1458 ckanext/canada/tables/service.yaml:2209
 msgid "Invalid choice: {}"
 msgstr ""
 
 #. SQL Trigger String for PD Type: service
-#: ckanext/canada/tables/service.yaml:1440 ckanext/canada/tables/service.yaml:2191
+#: ckanext/canada/tables/service.yaml:1459 ckanext/canada/tables/service.yaml:2211
 msgid "Invalid input syntax for type integer: {}"
 msgstr ""
 
 #. SQL Trigger String for PD Type: service
-#: ckanext/canada/tables/service.yaml:1441 ckanext/canada/tables/service.yaml:2192
+#: ckanext/canada/tables/service.yaml:1460 ckanext/canada/tables/service.yaml:2212
 msgid "This field is required due to a response in a different field."
 msgstr ""
 
 #. SQL Trigger String for PD Type: service
-#: ckanext/canada/tables/service.yaml:1442 ckanext/canada/tables/service.yaml:2193
+#: ckanext/canada/tables/service.yaml:1461 ckanext/canada/tables/service.yaml:2213
 msgid "This text must be provided in both languages"
 msgstr ""
 
 #. SQL Constraint Error String for PD Type: service
-#: ckanext/canada/tables/service.yaml:1256
+#: ckanext/canada/tables/service.yaml:1270
 msgid ""
 "Cannot delete record(s) because the Fiscal Year, Service ID Number is "
 "referenced in at least one Service Standards & Performance Results record."
 msgstr ""
 
 #. Resource Title for PD Type: service
-#: ckanext/canada/tables/service.yaml:1516
+#: ckanext/canada/tables/service.yaml:1535
 msgid "Service Standards & Performance Results"
 msgstr ""
 
 #. SQL Trigger String for PD Type: service
-#: ckanext/canada/tables/service.yaml:1854 ckanext/canada/tables/service.yaml:2186
+#: ckanext/canada/tables/service.yaml:1872 ckanext/canada/tables/service.yaml:2206
 msgid "This field must be a single number between 0 and 1 representing a percentage."
 msgstr ""
 
 #. SQL Constraint Error String for PD Type: service
-#: ckanext/canada/tables/service.yaml:2092
+#: ckanext/canada/tables/service.yaml:2112
 msgid ""
 "Cannot create record because the Service ID Number does not exist in the "
 "Service Identification Information & Metrics resource for that fiscal year."
@@ -2994,11 +3008,6 @@ msgstr ""
 #: ckanext/canada/templates/snippets/dataset_facets.html:6
 #: ckanext/canada/templates/snippets/dataset_facets.html:12
 msgid "Suggested Datasets"
-msgstr ""
-
-#: ckanext/canada/templates/snippets/facet_list.html:43
-#: ckanext/canada/templates/snippets/facet_list.html:44
-msgid "Show more"
 msgstr ""
 
 #: ckanext/canada/templates/snippets/facet_list.html:49

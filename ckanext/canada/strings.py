@@ -61,6 +61,8 @@ _('Promote user to Sysadmin')
 _('Promote')
 _('Cannot modify your own sysadmin privileges')
 _('Cannot modify sysadmin privileges for system user')
+_('Show more')
+_('Hide')
 
 # strings from security
 _("Please upload a file or link to an external resource")
@@ -85,3 +87,4 @@ _('Open Government Portal (staging)')
 # strings from misc triggers and recombinant tables
 _('Single')
 _('Repeatable')
+_('Optional')

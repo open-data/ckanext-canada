@@ -30,8 +30,8 @@ resources:
       en: Fiscal Year
       fr: Année financière
     description:
-      en: Identifies the fiscal year for which service data is reported.
-      fr: Indique l'exercice pour lequel les données sur les services sont déclarées.
+      en: Identifies the fiscal year (April-March) for which service data is reported.
+      fr: Indique l'exercice financier (avril-mars) pour lequel les données sur les services sont déclarées.
     obligation: Mandatory
     excel_required: true
     form_required: true
@@ -174,8 +174,8 @@ resources:
       en: Service Type
       fr: Type de service
     description:
-      en: Identifies the service type as outlined in the Guideline on Service and Digital.
-      fr: Indique le type de service tel qu'indiqué dans la Ligne directrice sur les services et le numérique.
+      en: Identifies the service type as outlined in the Guideline on Service and Digital. Multiple values must be separated by a comma (,).
+      fr: Indique le type de service tel qu'indiqué dans la Ligne directrice sur les services et le numérique. Séparez les entrées par une virgule (,) s’il y en a plusieurs qui s’appliquent.
     obligation: Mandatory
     excel_required: true
     form_required: true
@@ -220,17 +220,14 @@ resources:
       fr: Type de bénéficiaire du service
     description:
       en: >
-        Targeted, client-based services - service specific clients or groups, such as people, businesses,
-        GC employees. Untargeted, Societal-based Service -Serve society, not distinct people or groups,
-        such as military, pure science. Untargeted services only fill in static data, they do not fill
-        in the service report.
+        Targeted, client-based services: service specific clients or groups, such as people, businesses,
+        GC employees. Untargeted, Societal-based Service: serve society, not distinct people or groups,
+        such as military, pure science.
       fr: >
-        Services ciblés axés sur les clients - Répondent aux besoins de clients ou de groupes particuliers,
+        Services ciblés axés sur les clients: Répondent aux besoins de clients ou de groupes particuliers,
         par exemple les personnes, les entreprises ou les employés du GC. Services non ciblés axés sur la
-        société -Répondent aux besoins de la société en général et non aux besoins de personnes ou de
-        groupes distincts, par exemple les militaires ou la science pure. Les données sur les services non
-        ciblés figurent uniquement dans les champs de données statiques et ne figurent pas dans le rapport
-        des services.
+        société: Répondent aux besoins de la société en général et non aux besoins de personnes ou de
+        groupes distincts, par exemple les forces armées ou la science pure.
     obligation: Mandatory
     excel_required: true
     form_required: true
@@ -255,8 +252,8 @@ resources:
       en: Service Scope
       fr: Étendue du service
     description:
-      en: Indicates whether the service is external or internal to government.
-      fr: Indique si le service est offert aux clients externes ou internes au gouvernement
+      en: Indicates whether the service is external or internal to government. Multiple values must be separated by a comma (,).
+      fr: Indique si le service est offert aux clients externes ou internes au gouvernement. Séparez les entrées par une virgule (,) s’il y en a plusieurs qui s’appliquent.
     obligation: Mandatory
     excel_required: true
     form_required: true
@@ -288,8 +285,8 @@ resources:
       en: Client/Target Groups
       fr: Clients/groupes cibles
     description:
-      en: Identifies the clients or target groups of the service.
-      fr: Identifie les clients ou les groupes de services cibles.
+      en: Identifies the clients or target groups of the service. Multiple values must be separated by a comma (,).
+      fr: Identifie les clients ou les groupes de services cibles. Séparez les entrées par une virgule (,) s’il y en a plusieurs qui s’appliquent.
     obligation: Mandatory
     excel_required: true
     form_required: true
@@ -332,13 +329,13 @@ resources:
         strategic outcomes, programs, sub-programs, and sub-sub-programs. The Program
         codes in the government-wide Chart of Accounts can be used. Corporate planners
         in the department/agency who are responsible for the Policy on Results can
-        assist in identifying this, if needed.
+        assist in identifying this, if needed. Multiple values must be separated by a comma (,).
       fr: >
         Indique le code de programme unique associé aux éléments de programme pour tous
         les résultats stratégiques, les programmes, les sous-programmes et les sous-sous-programmes.
         Les planificateurs ministériels du ministère ou de l'organisme responsables de la
         Politique sur les résultats peuvent aider à déterminer le code d'identification du
-        programme, au besoin.
+        programme, au besoin. Séparez les entrées par une virgule (,) s’il y en a plusieurs qui s’appliquent.
     obligation: Mandatory
     excel_required: true
     form_required: true
@@ -361,8 +358,13 @@ resources:
       en: Client Feedback, by Channel
       fr: Commentaires des clients, par canal
     description:
-      en: Identifies which channels, if any, provide users of a service an opportunity to provide feedback on their level of satisfaction with the service.
-      fr: Détermine quels canaux, s'il y a lieu, offrent aux utilisateurs d'un service l'occasion de donner une rétroaction sur leur niveau de satisfaction à l'égard du service.
+      en: >
+        Identifies which channels, if any, provide users of a service an opportunity to provide feedback
+        on their level of satisfaction with the service. Multiple values must be separated by a comma (,).
+      fr: >
+        Détermine quels canaux, s'il y a lieu, offrent aux utilisateurs d'un service l'occasion de donner
+        une rétroaction sur leur niveau de satisfaction à l'égard du service. Séparez les entrées par une
+        virgule (,) s’il y en a plusieurs qui s’appliquent.
     obligation: Mandatory
     excel_required: true
     form_required: true
@@ -446,12 +448,12 @@ resources:
         rôle du système dans la prise de décision, s'il s'agit d'une automatisation
         complète ou partielle, et comment les agents utilisent le système pour
         prendre ou informer la décision.
+    #FIXME: specify if automated_decision_system is Y/YES ??
     obligation: Optional
     excel_required: false
     excel_column_width: 80
     format_type: Free text
     validation:
-    #FIXME: specify if automated_decision_system is Y/YES ??
       en: |
         This field is required due to a response in a different field.
         This field has a maximum length of 1800 characters.
@@ -481,12 +483,12 @@ resources:
         rôle du système dans la prise de décision, s'il s'agit d'une automatisation
         complète ou partielle, et comment les agents utilisent le système pour
         prendre ou informer la décision.
+    #FIXME: specify if automated_decision_system is Y/YES ??
     obligation: Optional
     excel_required: false
     excel_column_width: 80
     format_type: Free text
     validation:
-      #FIXME: specify if automated_decision_system is Y/YES ??
       en: |
         This field is required due to a response in a different field.
         This field has a maximum length of 1800 characters.
@@ -660,12 +662,12 @@ resources:
         Commentaires en lien avec les services électroniques - points d'interaction avec les
         clients (anglais). Pour tout points d'interaction signalés comme « sans objet »,
         des commentaires doivent être fournis.
+    #FIXME: specify if any "Online Service" fields are NA ??
     obligation: Optional
     excel_required: false
     excel_column_width: 80
     format_type: Free text
     validation:
-      #FIXME: specify if any "Online Service" fields are NA ??
       en: |
         This field is required due to a response in a different field.
         This field has a maximum length of 1000 characters.
@@ -693,12 +695,12 @@ resources:
         Commentaires en lien avec les services électroniques - points d'interaction avec
         les clients (français). Pour tout points d'interaction signalés comme « sans objet »,
         des commentaires doivent être fournis.
+    #FIXME: specify if any "Online Service" fields are NA ??
     obligation: Optional
     excel_required: false
     excel_column_width: 80
     format_type: Free text
     validation:
-      #FIXME: specify if any "Online Service" fields are NA ??
       en: |
         This field is required due to a response in a different field.
         This field has a maximum length of 1000 characters.
@@ -1122,14 +1124,20 @@ resources:
         Provides additional space for comments related to volumetrics information.
         Please refer to associated Field ID, where applicable. For comments related
         to other fields, departments can create and publish an explanatory note on
-        their website with a link to the GC Service Inventory dataset.
+        their website with a link to the GC Service Inventory dataset. This field is
+        mandatory if there is an amount reported under “Number of applications
+        submitted via other channels”
       fr: >
         Fournit de l'espace supplémentaire pour les commentaires relatifs aux
         renseignements sur les volumes. Veuillez vous reporter au code d'identification
         de la zone, s'il y a lieu. Pour les commentaires relatifs à d'autres zones,
         les ministères peuvent publier une note explicative sur leur site Web suivi
         d'un lien vers l'ensemble de données du Répertoire des services du GC.
-    obligation: Optional
+        Ce champ est requis s’il y a un montant rapporté sous le champ « Nombre de
+        demandes soumises par les autres modes de prestation »
+    obligation:
+      en: This field is mandatory if there is an amount reported under “Number of applications submitted via other channels”
+      fr: Ce champ est requis s’il y a un montant rapporté sous le champ « Nombre de demandes soumises par les autres modes de prestation »
     excel_required: false
     excel_column_width: 80
     format_type: Free text
@@ -1139,7 +1147,7 @@ resources:
     occurrence: Single
     datastore_type: text
     max_chars: 2000
-    excel_required_formula: NOT(ISBLANK({special_remarks_fr}))
+    excel_required_formula: 'OR(AND(NOT(ISBLANK({num_applications_by_other})),ISNUMBER(VALUE({num_applications_by_other})),VALUE({cell})>0),NOT(ISBLANK({special_remarks_fr})))'
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
       maxlength: 2000
@@ -1154,14 +1162,20 @@ resources:
         Provides additional space for comments related to volumetrics information.
         Please refer to associated Field ID, where applicable. For comments related
         to other fields, departments can create and publish an explanatory note on
-        their website with a link to the GC Service Inventory dataset.
+        their website with a link to the GC Service Inventory dataset. This field is
+        mandatory if there is an amount reported under “Number of applications
+        submitted via other channels”
       fr: >
         Fournit de l'espace supplémentaire pour les commentaires relatifs aux
         renseignements sur les volumes. Veuillez vous reporter au code d'identification
         de la zone, s'il y a lieu. Pour les commentaires relatifs à d'autres zones,
         les ministères peuvent publier une note explicative sur leur site Web suivi
         d'un lien vers l'ensemble de données du Répertoire des services du GC.
-    obligation: Optional
+        Ce champ est requis s’il y a un montant rapporté sous le champ « Nombre de
+        demandes soumises par les autres modes de prestation »
+    obligation:
+      en: This field is mandatory if there is an amount reported under “Number of applications submitted via other channels”
+      fr: Ce champ est requis s’il y a un montant rapporté sous le champ « Nombre de demandes soumises par les autres modes de prestation »
     excel_required: false
     excel_column_width: 80
     format_type: Free text
@@ -1171,7 +1185,7 @@ resources:
     occurrence: Single
     datastore_type: text
     max_chars: 2000
-    excel_required_formula: NOT(ISBLANK({special_remarks_en}))
+    excel_required_formula: 'OR(AND(NOT(ISBLANK({num_applications_by_other})),ISNUMBER(VALUE({num_applications_by_other})),VALUE({cell})>0),NOT(ISBLANK({special_remarks_en})))'
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
       maxlength: 2000
@@ -1408,6 +1422,11 @@ resources:
         NEW.num_applications_by_other := UPPER(NEW.num_applications_by_other);
         errors := errors || int_na_nd_error(NEW.num_applications_by_other, 'num_applications_by_other');
 
+        IF NEW.num_applications_by_other != 'NA' AND NEW.num_applications_by_other != 'ND' AND NEW.num_applications_by_other::int > 0 THEN
+          errors := errors || required_error(NEW.special_remarks_en, 'special_remarks_en');
+          errors := errors || required_error(NEW.special_remarks_fr, 'special_remarks_fr');
+        END IF;
+
         NEW.special_remarks_en := trim_lead_trailing(NEW.special_remarks_en);
         errors := errors ||  max_char_error(NEW.special_remarks_en, 2000, 'special_remarks_en');
 
@@ -1529,8 +1548,8 @@ resources:
       en: Fiscal Year
       fr: Année financière
     description:
-      en: Identifies the fiscal year for which service data is reported.
-      fr: Indique l'exercice pour lequel les données sur les services sont déclarées.
+      en: Identifies the fiscal year (April-March) for which service data is reported.
+      fr: Indique l'exercice financier (avril-mars) pour lequel les données sur les services sont déclarées.
     obligation: Mandatory
     excel_required: true
     form_required: true
@@ -1766,10 +1785,9 @@ resources:
     validation:
       en: This field must not be empty.
       fr: Cette zone ne doit pas être vide.
-    occurrence: Repeatable
-    datastore_type: _text
+    occurrence: Single
+    datastore_type: text
     excel_full_text_choices: false
-    form_snippet: scheming/form_snippets/multiple_select.html
     choices:
       EML:
         en: Email
@@ -1849,7 +1867,7 @@ resources:
       fr: Fréquence à laquelle l'organisation s'attend à respecter sa norme de service (exprimée en pourcentage).
     obligation: Optional
     excel_required: false
-    format_type: Free text
+    format_type: Decimal
     validation:
       en: This field must be a single number between 0 and 1 representing a percentage.
       fr: Ce champ doit inscrire un seul et unique chiffre entre 0 et 1 représentant un pourcentage.
@@ -1882,6 +1900,7 @@ resources:
       fr: Cette valeur ne doit pas être négatif.
     occurrence: Single
     datastore_type: int
+    #FIXME: int types allow alpha in excel??
     excel_error_formula: 'OR({default_formula},VALUE({cell})<0)'
 
   # DEP 2-14
@@ -1907,6 +1926,7 @@ resources:
       fr: Cette valeur ne doit pas être négatif.
     occurrence: Single
     datastore_type: int
+    #FIXME: int types allow alpha in excel??
     excel_error_formula: 'OR({default_formula},VALUE({cell})<0)'
 
   # DEP 2-16
