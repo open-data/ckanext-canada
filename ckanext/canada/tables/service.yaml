@@ -2146,9 +2146,7 @@ resources:
         errors := errors || choice_error(NEW.type, {type}, 'type');
 
         errors := errors || required_error(NEW.channel, 'channel');
-        crval := choices_clean_error(NEW.channel, {channel}, 'channel');
-        errors := errors || crval.error;
-        NEW.channel := crval.clean;
+        errors := errors || choice_error(NEW.channel, {channel}, 'channel');
 
         NEW.channel_comments_en := trim_lead_trailing(NEW.channel_comments_en);
         errors := errors || max_char_error(NEW.channel_comments_en, 1500, 'channel_comments_en');
