@@ -6,6 +6,7 @@ from logging import getLogger
 import csv
 from six import string_types
 from datetime import datetime, timedelta
+import traceback
 
 from ckan.plugins.toolkit import (
     abort,
@@ -400,6 +401,7 @@ def create_pd_record(owner_org, resource_name):
                         error_message = chromo.get('datastore_constraint_errors', {}).get('upsert', 'Something went wrong, your record was not created. Please contact support.')
                         error_summary = _(error_message)
                     else:
+                        log.warning('Failed to create %s record for org %s:\n%s', resource_name, owner_org, traceback.format_exc())
                         error_summary = _('Something went wrong, your record was not created. Please contact support.')
             elif ve.error_dict.get('info', {}).get('pgcode', '') == '23505':
                 err = dict({
@@ -407,6 +409,7 @@ def create_pd_record(owner_org, resource_name):
                     for k in pk_fields
                 }, **err)
             else:
+                log.warning('Failed to create %s record for org %s:\n%s', resource_name, owner_org, traceback.format_exc())
                 error_summary = _('Something went wrong, your record was not created. Please contact support.')
 
         if err or error_summary:
@@ -508,6 +511,7 @@ def update_pd_record(owner_org, resource_name, pk):
                     for (k, v) in ve.error_dict['records'][0].items()
                 }, **err)
             except AttributeError:
+                log.warning('Failed to update %s record for org %s:\n%s', resource_name, owner_org, traceback.format_exc())
                 error_summary = _('Something went wrong, your record was not updated. Please contact support.')
 
         if err or error_summary:
