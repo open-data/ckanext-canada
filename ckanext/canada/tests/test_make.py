@@ -475,7 +475,7 @@ class TestMakePD(CanadaTestBase):
 
         stdout = stdout.decode("utf-8")
 
-        # there is no search for contractsa, just test for no errors
+        # there is no search for service inventory, just test for no errors
         assert "Usage:" not in stdout
         assert "rebuild-service] Error" not in stdout
 

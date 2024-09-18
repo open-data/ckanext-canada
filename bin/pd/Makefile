@@ -591,8 +591,7 @@ upload-service: $(workdir)/filtered/service.csv $(workdir)/filtered/service-std.
 	> /dev/null
 
 .PHONY: rebuild-service
-rebuild-service: $(workdir)/filtered/service.csv $(workdir)/filtered/service-std.csv
-	# $(ogc_search)/load_si_to_solr.py "$(workdir)/filtered/service.csv" "$(workdir)/filtered/service-std.csv"
+	# no search for service inventory
 
 $(workdir)/service.csv:
 	$(ckan_command) -c $(registry_ini) $(combine) service -d $(workdir)

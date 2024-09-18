@@ -1422,7 +1422,7 @@ resources:
         NEW.num_applications_by_other := UPPER(NEW.num_applications_by_other);
         errors := errors || int_na_nd_error(NEW.num_applications_by_other, 'num_applications_by_other');
 
-        IF NEW.num_applications_by_other != 'NA' AND NEW.num_applications_by_other != 'ND' AND NEW.num_applications_by_other::int > 0 THEN
+        IF NEW.num_applications_by_other != 'NA' AND NEW.num_applications_by_other != 'ND' AND NEW.num_applications_by_other ~ '^-?[0-9]+$' AND NEW.num_applications_by_other::int > 0 THEN
           errors := errors || required_error(NEW.special_remarks_en, 'special_remarks_en');
           errors := errors || required_error(NEW.special_remarks_fr, 'special_remarks_fr');
         END IF;
@@ -2220,7 +2220,7 @@ resources:
       service_standard_en: OAS basic benefits are paid within the first month of entitlement
       service_standard_fr: Les prestations de base de la SV sont versées au cours du premier mois d’admissibilité.
       type: TML
-      channel: [OTH]
+      channel: OTH
       channel_comments_en: Mail, Online, Person
       channel_comments_fr: Courrier, en ligne, personne
       target: 0.90
