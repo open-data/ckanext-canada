@@ -516,6 +516,7 @@ class TestMakePD(CanadaTestBase):
 
         pd_record = chromo['examples']['record']
         published_fields, published_records = self._get_ds_records('service')
+        published_record = published_records[0]
 
         expected_fields = ['_id']
         removed_fields = ['record_created', 'record_modified', 'user_modified']
@@ -527,11 +528,17 @@ class TestMakePD(CanadaTestBase):
         published_fields = [f['id'] for f in published_fields]
 
         expected_record = pd_record.copy()
-        expected_record['_id'] = 1
+        expected_record['_id'] = published_record['_id']
         expected_record['owner_org'] = self.org['id']
         expected_record['owner_org_title'] = self.org['title']
-        expected_record['program_name_en'] = ['Old Age Security']
-        expected_record['program_name_fr'] = ['Sécurité de la vieillesse']
+        expected_record['program_name_en'] = "'Old Age Security'"
+        expected_record['program_name_fr'] = "'Sécurité de la vieillesse'"
+        #TODO: transform some types
+        expected_record['automated_decision_system_description_en'] = None
+        expected_record['automated_decision_system_description_fr'] = None
+        expected_record['client_feedback_channel'] = 'EML,FAX,ONL,PERSON,POST,TEL'
+        expected_record['client_target_groups'] = 'PERSON'
+        expected_record['last_service_review'] = None
 
         num_fields = ['num_applications_by_phone',
                       'num_applications_online',
@@ -543,10 +550,12 @@ class TestMakePD(CanadaTestBase):
 
         expected_record['num_applications_total'] = 0
         for num_field in num_fields:
+            expected_record[num_field] = str(expected_record[num_field])
             expected_record['num_applications_total'] += int(expected_record[num_field])
+        expected_record['num_applications_total'] = str(expected_record['num_applications_total'])
 
-        #TODO: assert expected_record and published_records
         assert expected_fields == published_fields
+        assert expected_record == published_record
 
         # test the published service-std resource
         chromo = get_chromo('service-std')
@@ -561,6 +570,7 @@ class TestMakePD(CanadaTestBase):
 
         pd_record = chromo['examples']['record']
         published_fields, published_records = self._get_ds_records('service-std')
+        published_record = published_records[0]
 
         expected_fields = ['_id']
         removed_fields = ['record_created', 'record_modified', 'user_modified']
@@ -572,14 +582,15 @@ class TestMakePD(CanadaTestBase):
         published_fields = [f['id'] for f in published_fields]
 
         expected_record = pd_record.copy()
-        expected_record['_id'] = 1
+        expected_record['_id'] = published_record['_id']
         expected_record['owner_org'] = self.org['id']
         expected_record['owner_org_title'] = self.org['title']
+        #TODO: transform some types
 
         num = int(expected_record['volume_meeting_target']) if expected_record['volume_meeting_target'] else 0
         den = int(expected_record['total_volume']) if expected_record['total_volume'] else 0
 
-        expected_record['performance'] = max( round(num / den, 4), 0)
+        expected_record['performance'] = str(max( round(num / den, 4), 0))
 
         if expected_record['target']:
             target = float(expected_record['target'])
@@ -590,10 +601,10 @@ class TestMakePD(CanadaTestBase):
             else:
                 expected_record['target_met'] = 'N'
         else:
-            expected_record['target_met'] = None
+            expected_record['target_met'] = ''
 
-        #TODO: assert expected_record and published_records
         assert expected_fields == published_fields
+        assert expected_record == published_record
 
 
     def test_make_travela(self):
