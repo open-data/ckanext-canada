@@ -56,8 +56,10 @@
           {"className": "bg-info", "orderable": false, "targets": "no-sort"},
         {% endif %}
         {% for f in chromo.fields %}
-          {{- "null" if 'preview_class' not in f else '{"className":"' | safe ~ f['preview_class'] ~ '"}' | safe }}
-          {%- if not loop.last %},{% endif %}
+          {% if not f.get('published_resource_computed_field', false) %}
+            {{- "null" if 'preview_class' not in f else '{"className":"' | safe ~ f['preview_class'] ~ '"}' | safe }}
+            {%- if not loop.last %},{% endif %}
+          {% endif %}
         {% endfor %}
       ],
       dom: "Blfrtip",

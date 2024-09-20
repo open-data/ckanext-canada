@@ -352,6 +352,34 @@ resources:
     form_select_attrs:
       class: form-control recombinant-select2
 
+  # DEP 1-13
+  # Dev: Published Resource Field
+  - datastore_id: program_name_en
+    label:
+      en: Program Name (English)
+      fr: Désignation du programme (en anglais)
+    description:
+      en: Identifies the name of the program under which the service is delivered.
+      fr: Indique le nom du programme sous lequel le service est offert.
+    obligation: Mandatory
+    occurrence: Repeatable
+    datastore_type: _text
+    published_resource_computed_field: true
+
+  # DEP 1-14
+  # Dev: Published Resource Field
+  - datastore_id: program_name_fr
+    label:
+      en: Program Name (French)
+      fr: Désignation du programme (en français)
+    description:
+      en: Identifies the name of the program under which the service is delivered.
+      fr: Indique le nom du programme sous lequel le service est offert.
+    obligation: Mandatory
+    occurrence: Repeatable
+    datastore_type: _text
+    published_resource_computed_field: true
+
   # DEP 1-15
   - datastore_id: client_feedback_channel
     label:
@@ -1114,6 +1142,19 @@ resources:
     datastore_type: text
     excel_error_formula: 'OR({default_formula},AND(NOT(ISNUMBER(VALUE({cell}))),{cell}<>"NA",{cell}<>"ND"),AND(ISNUMBER(VALUE({cell})),VALUE({cell})<0))'
 
+  # DEP 1-45
+  # Dev: Published Resource Field
+  - datastore_id: num_applications_total
+    label:
+      en: Total Number of Applications
+      fr: Nombre total de demandes soumises
+    description:
+      en: Identifies the total number of applications submitted in a fiscal year for all application channels.
+      fr: Indique le nombre total de demandes reçues au cours d'un exercice pour tous les modes de prestation.
+    obligation: Mandatory
+    datastore_type: int
+    published_resource_computed_field: true
+
   # DEP 1-41
   - datastore_id: special_remarks_en
     label:
@@ -1263,6 +1304,31 @@ resources:
     visible_to_public: false
     datastore_type: text
     preview_class: bg-info
+
+  # Dev: Published Resource Field
+  - datastore_id: owner_org
+    label:
+      en: Department ID
+      fr: ID du ministère
+    description:
+      en: Identifies the applied title of the department or agency.
+      fr: Identifie la ID d'usage du ministère ou de l'organisme.
+    obligation: Mandatory
+    datastore_type: text
+    published_resource_computed_field: true
+
+  # DEP 1-3
+  # Dev: Published Resource Field
+  - datastore_id: owner_org_title
+    label:
+      en: Department Name
+      fr: Nom du ministère
+    description:
+      en: Identifies the applied title of the department or agency.
+      fr: Identifie le titre d'usage du ministère ou de l'organisme.
+    obligation: Mandatory
+    datastore_type: text
+    published_resource_computed_field: true
 
   datastore_primary_key: [fiscal_yr, service_id]
   datastore_indexes: ""
@@ -1929,6 +1995,23 @@ resources:
     #FIXME: int types allow alpha in excel??
     excel_error_formula: 'OR({default_formula},VALUE({cell})<0)'
 
+  # DEP 2-15
+  # Dev: Published Resource Field
+  - datastore_id: performance
+    label:
+      en: Performance
+      fr: Performance
+    description:
+      en: >
+        Identifies the result achieved for this service standard. This is the "Business Volume That Met Service Standard Target"
+        divided by the "Total Volume".
+      fr: >
+        Identifie les résultats atteints pour cette norme de service. Il s'agit du "Volume d'activités qui respectent la cible
+        de la norme relative aux services" divisé par le "Volumes totaux".
+    obligation: Optional
+    datastore_type: numeric
+    published_resource_computed_field: true
+
   # DEP 2-16
   - datastore_id: comments_en
     label:
@@ -1974,6 +2057,30 @@ resources:
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
       maxlength: 2000
+
+  # DEP 2-18
+  # Dev: Published Resource Field
+  - datastore_id: target_met
+    label:
+      en: Was the target met
+      fr: La cible était-elle atteinte
+    description:
+      #TODO: get a description
+      en:
+      fr:
+    obligation: Optional
+    datastore_type: text
+    published_resource_computed_field: true
+    choices:
+      'NA':
+        en: N/A (not a service to businesses)
+        fr: S.O. (N'est pas un service aux entreprises)
+      'N':
+        en: "No"
+        fr: Non
+      'Y':
+        en: "Yes"
+        fr: Oui
 
   # DEP 2-19
   - datastore_id: standards_targets_uri_en
@@ -2100,6 +2207,31 @@ resources:
     visible_to_public: false
     datastore_type: text
     preview_class: bg-info
+
+  # Dev: Published Resource Field
+  - datastore_id: owner_org
+    label:
+      en: Department ID
+      fr: ID du ministère
+    description:
+      en: Identifies the applied title of the department or agency.
+      fr: Identifie la ID d'usage du ministère ou de l'organisme.
+    obligation: Mandatory
+    datastore_type: text
+    published_resource_computed_field: true
+
+  # DEP 2-24
+  # Dev: Published Resource Field
+  - datastore_id: owner_org_title
+    label:
+      en: Department Name
+      fr: Nom du ministère
+    description:
+      en: Identifies the applied title of the department or agency.
+      fr: Identifie le titre d'usage du ministère ou de l'organisme.
+    obligation: Mandatory
+    datastore_type: text
+    published_resource_computed_field: true
 
   datastore_primary_key: [fiscal_yr, service_id, service_standard_id]
   datastore_reference_table_only: true
