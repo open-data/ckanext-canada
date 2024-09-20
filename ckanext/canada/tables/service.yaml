@@ -1311,7 +1311,7 @@ resources:
       en: Department ID
       fr: ID du ministère
     description:
-      en: Identifies the applied title of the department or agency.
+      en: Identifies the applied ID of the department or agency.
       fr: Identifie la ID d'usage du ministère ou de l'organisme.
     obligation: Mandatory
     datastore_type: text
@@ -2214,7 +2214,7 @@ resources:
       en: Department ID
       fr: ID du ministère
     description:
-      en: Identifies the applied title of the department or agency.
+      en: Identifies the applied ID of the department or agency.
       fr: Identifie la ID d'usage du ministère ou de l'organisme.
     obligation: Mandatory
     datastore_type: text

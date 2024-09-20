@@ -5,7 +5,10 @@ import os
 import subprocess
 import pytest
 import shutil
+import logging
 from tempfile import mkdtemp
+from ckan import plugins
+from ckan.lib.uploader import get_resource_uploader
 from ckanext.canada.tests.factories import (
     CanadaOrganization as Organization,
     CanadaResource as Resource,
@@ -14,6 +17,9 @@ from ckanext.canada.tests.factories import (
 from ckanapi import LocalCKAN
 
 from ckanext.recombinant.tables import get_chromo
+from ckanext.xloader import loader
+
+logger = logging.getLogger(__name__)
 
 
 MAKE_PATH = path = '{0}/{1}'.format(os.path.dirname(os.path.realpath(__file__)), '../../../bin/pd')
@@ -46,6 +52,12 @@ class TestMakePD(CanadaTestBase):
         """
         super(TestMakePD, self).setup_method(method)
 
+        if not plugins.plugin_loaded('xloader'):
+            plugins.load('xloader')
+
+        if plugins.plugin_loaded('validation'):
+            plugins.unload('validation')
+
         self.org = Organization(umd_number='example_umd',
                                 department_number='example_department')
 
@@ -71,7 +83,19 @@ class TestMakePD(CanadaTestBase):
         """Method is called at class level after EACH test methods of the class are called.
         Remove any state specific to the execution of the given class methods.
         """
+        if plugins.plugin_loaded('xloader'):
+            plugins.unload('xloader')
+
+        if not plugins.plugin_loaded('validation'):
+            plugins.load('validation')
+
         shutil.rmtree(self.tmp_dir)
+
+
+    def _get_ds_records(self, type):
+        chromo = get_chromo(type)
+        result = self.action.datastore_search(resource_id=chromo['published_resource_id'])
+        return result.get('fields'), result.get('records')
 
 
     def _setup_ini(self, ini):
@@ -478,6 +502,98 @@ class TestMakePD(CanadaTestBase):
         # there is no search for service inventory, just test for no errors
         assert "Usage:" not in stdout
         assert "rebuild-service] Error" not in stdout
+
+        # test the published service resource
+        chromo = get_chromo('service')
+        resource_filepath = get_resource_uploader(self.action.resource_show(id=chromo['published_resource_id'])).get_path(chromo['published_resource_id'])
+
+        loader.load_csv(
+            resource_filepath,
+            resource_id=chromo['published_resource_id'],
+            mimetype="text/csv",
+            logger=logger,
+        )
+
+        pd_record = chromo['examples']['record']
+        published_fields, published_records = self._get_ds_records('service')
+
+        expected_fields = ['_id']
+        removed_fields = ['record_created', 'record_modified', 'user_modified']
+        for field in chromo['fields']:
+            if field['datastore_id'] in removed_fields:
+                continue
+            expected_fields.append(field['datastore_id'])
+
+        published_fields = [f['id'] for f in published_fields]
+
+        expected_record = pd_record.copy()
+        expected_record['_id'] = 1
+        expected_record['owner_org'] = self.org['id']
+        expected_record['owner_org_title'] = self.org['title']
+        expected_record['program_name_en'] = ['Old Age Security']
+        expected_record['program_name_fr'] = ['Sécurité de la vieillesse']
+
+        num_fields = ['num_applications_by_phone',
+                      'num_applications_online',
+                      'num_applications_in_person',
+                      'num_applications_by_mail',
+                      'num_applications_by_email',
+                      'num_applications_by_fax',
+                      'num_applications_by_other']
+
+        expected_record['num_applications_total'] = 0
+        for num_field in num_fields:
+            expected_record['num_applications_total'] += int(expected_record[num_field])
+
+        #TODO: assert expected_record and published_records
+        assert expected_fields == published_fields
+
+        # test the published service-std resource
+        chromo = get_chromo('service-std')
+        resource_filepath = get_resource_uploader(self.action.resource_show(id=chromo['published_resource_id'])).get_path(chromo['published_resource_id'])
+
+        loader.load_csv(
+            resource_filepath,
+            resource_id=chromo['published_resource_id'],
+            mimetype="text/csv",
+            logger=logger,
+        )
+
+        pd_record = chromo['examples']['record']
+        published_fields, published_records = self._get_ds_records('service-std')
+
+        expected_fields = ['_id']
+        removed_fields = ['record_created', 'record_modified', 'user_modified']
+        for field in chromo['fields']:
+            if field['datastore_id'] in removed_fields:
+                continue
+            expected_fields.append(field['datastore_id'])
+
+        published_fields = [f['id'] for f in published_fields]
+
+        expected_record = pd_record.copy()
+        expected_record['_id'] = 1
+        expected_record['owner_org'] = self.org['id']
+        expected_record['owner_org_title'] = self.org['title']
+
+        num = int(expected_record['volume_meeting_target']) if expected_record['volume_meeting_target'] else 0
+        den = int(expected_record['total_volume']) if expected_record['total_volume'] else 0
+
+        expected_record['performance'] = max( round(num / den, 4), 0)
+
+        if expected_record['target']:
+            target = float(expected_record['target'])
+            if den <= 0:
+                expected_record['target_met'] = 'NA'
+            elif expected_record['performance'] >= target:
+                expected_record['target_met'] = 'Y'
+            else:
+                expected_record['target_met'] = 'N'
+        else:
+            expected_record['target_met'] = None
+
+        #TODO: assert expected_record and published_records
+        assert expected_fields == published_fields
 
 
     def test_make_travela(self):
