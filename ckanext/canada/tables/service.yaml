@@ -1853,7 +1853,7 @@ resources:
       fr: Cette zone ne doit pas être vide.
     occurrence: Single
     datastore_type: text
-    excel_full_text_choices: false
+    excel_full_text_choices: true
     choices:
       EML:
         en: Email
