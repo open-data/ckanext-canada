@@ -73,6 +73,8 @@ _('Your password must be {} characters or longer.')
 _('Your password must consist of at least three of the following character sets: '
   'uppercase characters, lowercase characters, digits, punctuation & special characters.')
 _('Your password cannot be the same as your username.')
+# FIXME: revise flash message
+_('Your current password is too weak. Please create a new password before logging in again.')
 
 # strings from scheming
 _('These fields have been removed, click update below to save your changes.')
