@@ -383,7 +383,10 @@ def get_datapreview_recombinant(resource_name, resource_id, owner_org, dataset_t
     priority = len(chromo['datastore_primary_key'])
     pk_priority = 0
     fields = []
+    fids = []
     for f in chromo['fields']:
+        if f.get('published_resource_computed_field'):
+            continue
         out = {
             'type': f['datastore_type'],
             'id': f['datastore_id'],
@@ -395,8 +398,8 @@ def get_datapreview_recombinant(resource_name, resource_id, owner_org, dataset_t
             out['priority'] = priority
             priority += 1
         fields.append(out)
+        fids.append(f['datastore_id'])
 
-    fids = [f['datastore_id'] for f in chromo['fields']]
     pkids = [fids.index(k) for k in aslist(chromo['datastore_primary_key'])]
     return h.snippet('package/wet_datatable.html',
         resource_name=resource_name,

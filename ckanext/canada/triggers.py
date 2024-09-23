@@ -229,12 +229,12 @@ def update_triggers():
             {u'argname': u'choices', u'argtype': u'_text'},
             {u'argname': u'field_name', u'argtype': u'text'}],
         rettype=u'_text',
-        definition=r'''
+        definition='''
             BEGIN
                 IF value IS NOT NULL AND value <> '' AND NOT (value = ANY (choices)) THEN
-                    -- \t is used when converting errors to string
+                    -- \\t is used when converting errors to string
                     RETURN ARRAY[[field_name, 'Invalid choice: {}\uF8FF"'
-                        || replace(value, E'\t', ' ') || '"']];
+                        || replace(value, E'\\t', ' ') || '"']];
                 END IF;
                 RETURN NULL;
             END;
@@ -280,16 +280,16 @@ def update_triggers():
             {u'argname': u'clean', u'argtype': u'_text', u'argmode': u'out'},
             {u'argname': u'error', u'argtype': u'_text', u'argmode': u'out'}],
         rettype=u'record',
-        definition=r'''
+        definition='''
             DECLARE
                 bad_choices text := array_to_string(ARRAY(
                     SELECT c FROM(SELECT unnest(value) as c) u
                     WHERE NOT c = ANY(choices)), ',');
             BEGIN
                 IF bad_choices <> '' THEN
-                    -- \t is used when converting errors to string
+                    -- \\t is used when converting errors to string
                     error := ARRAY[[field_name, 'Invalid choice: {}\uF8FF"'
-                        || replace(bad_choices, E'\t', ' ') || '"']];
+                        || replace(bad_choices, E'\\t', ' ') || '"']];
                 END IF;
                 clean := ARRAY(
                     SELECT c FROM(SELECT unnest(choices) as c) u

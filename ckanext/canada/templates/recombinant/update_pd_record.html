@@ -41,7 +41,7 @@
     {%- set chromo = h.recombinant_get_chromo(resource_name) -%}
     <div class='container-fluid mrgn-bttm-lg'>
       {%- for f in chromo.fields %}
-        {%- if f.get('import_template_include', True) %}
+        {%- if f.get('import_template_include', True) and not f.get('published_resource_computed_field', false) %}
           {%- set required = f.get('form_required', False) %}
           {%- set description = h.recombinant_description_to_markup(f.get('description', '')) %}
           {%- set form_placeholder = f.get('form_placeholder', '') %}

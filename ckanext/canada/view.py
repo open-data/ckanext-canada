@@ -538,7 +538,7 @@ def update_pd_record(owner_org, resource_name, pk):
 
     data = {}
     for f in chromo['fields']:
-        if not f.get('import_template_include', True):
+        if not f.get('import_template_include', True) or f.get('published_resource_computed_field', False):
             continue
         val = record[f['datastore_id']]
         if val and f.get('datastore_type') == 'money':
@@ -686,7 +686,7 @@ def _clean_check_type_errors(post_data, fields, pk_fields, choice_fields):
 
     for f in fields:
         f_id = f['datastore_id']
-        if not f.get('import_template_include', True):
+        if not f.get('import_template_include', True) or f.get('published_resource_computed_field', False):
             continue
         else:
             val = post_data.get(f['datastore_id'], '')
@@ -865,7 +865,13 @@ def datatable(resource_name, resource_id):
         })
 
     can_edit = h.check_access('resource_update', {'id': resource_id})
-    cols = [f['datastore_id'] for f in chromo['fields']]
+    cols = []
+    fids = []
+    for f in chromo['fields']:
+        if f.get('published_resource_computed_field', False):
+            continue
+        cols.append(f['datastore_id'])
+        fids.append(f['datastore_id'])
     prefix_cols = 2 if chromo.get('edit_form', False) and can_edit else 1  # Select | (Edit) | ...
 
     sort_list = []
@@ -896,7 +902,6 @@ def datatable(resource_name, resource_id):
     if chromo.get('edit_form', False) and can_edit:
         res = lc.action.resource_show(id=resource_id)
         pkg = lc.action.package_show(id=res['package_id'])
-        fids = [f['datastore_id'] for f in chromo['fields']]
         pkids = [fids.index(k) for k in aslist(chromo['datastore_primary_key'])]
         for row in aadata:
             row.insert(1, (
