@@ -514,7 +514,6 @@ class TestMakePD(CanadaTestBase):
             logger=logger,
         )
 
-        pd_record = chromo['examples']['record']
         published_fields, published_records = self._get_ds_records('service')
         published_record = published_records[0]
 
@@ -527,32 +526,55 @@ class TestMakePD(CanadaTestBase):
 
         published_fields = [f['id'] for f in published_fields]
 
-        expected_record = pd_record.copy()
-        expected_record['_id'] = published_record['_id']
-        expected_record['owner_org'] = self.org['id']
-        expected_record['owner_org_title'] = self.org['title']
-        expected_record['program_name_en'] = "'Old Age Security'"
-        expected_record['program_name_fr'] = "'Sécurité de la vieillesse'"
-        #TODO: transform some types
-        expected_record['automated_decision_system_description_en'] = None
-        expected_record['automated_decision_system_description_fr'] = None
-        expected_record['client_feedback_channel'] = 'EML,FAX,ONL,PERSON,POST,TEL'
-        expected_record['client_target_groups'] = 'PERSON'
-        expected_record['last_service_review'] = None
-
-        num_fields = ['num_applications_by_phone',
-                      'num_applications_online',
-                      'num_applications_in_person',
-                      'num_applications_by_mail',
-                      'num_applications_by_email',
-                      'num_applications_by_fax',
-                      'num_applications_by_other']
-
-        expected_record['num_applications_total'] = 0
-        for num_field in num_fields:
-            expected_record[num_field] = str(expected_record[num_field])
-            expected_record['num_applications_total'] += int(expected_record[num_field])
-        expected_record['num_applications_total'] = str(expected_record['num_applications_total'])
+        expected_record = {
+            '_id': published_record['_id'],
+            'fiscal_yr': '2022-2023',
+            'service_id': '1001',
+            'service_name_en': 'Old Age Security (OAS) Benefits',
+            'service_name_fr': 'Prestations de la Sécurité de la vieillesse',
+            'service_description_en': 'The Old Age Security (OAS) pension is a monthly payment available to most Canadians 65 years of age who meet the Canadian legal status and residence requirements. In addition to the Old Age Security pension, there are three types of Old Age Security benefits:  the Guaranteed Income Supplement, Allowance and Allowance for the Survivor. The OAS provides financial support to millions of seniors, including those that are low-income, each year.',
+            'service_description_fr': "La pension de la Sécurité de la vieillesse (SV) est une prestation mensuelle versée à la plupart des Canadiens âgés de 65 ans et plus qui satisfont aux exigences relatives au statut juridique et à la résidence au Canada. En plus de la pension de la Sécurité de la vieillesse, il existe trois types de prestations de la Sécurité de la vieillesse : le Supplément de revenu garanti, l'Allocation et l'Allocation au survivant. La SV verse chaque année un soutien financier à des millions d'aînés, incluant ceux à faible revenu.",
+            'service_type': 'RES',
+            'service_recipient_type': 'CLIENT',
+            'service_scope': 'EXTERN',
+            'client_target_groups': 'PERSON',
+            'program_id': 'BGN01',
+            'program_name_en': "'Old Age Security'",
+            'program_name_fr': "'Sécurité de la vieillesse'",
+            'client_feedback_channel': 'EML,FAX,ONL,PERSON,POST,TEL',
+            'automated_decision_system': 'N',
+            'automated_decision_system_description_en': None,
+            'automated_decision_system_description_fr': None,
+            'service_fee': 'N',
+            'os_account_registration': 'Y',
+            'os_authentication': 'Y',
+            'os_application': 'Y',
+            'os_decision': 'Y',
+            'os_issuance': 'Y',
+            'os_issue_resolution_feedback': 'Y',
+            'os_comments_client_interaction_en': None,
+            'os_comments_client_interaction_fr': None,
+            'last_service_review': None,
+            'last_service_improvement': '2021-2022',
+            'sin_usage': 'Y',
+            'cra_bn_identifier_usage': 'Y',
+            'num_phone_enquiries': '7252346',
+            'num_applications_by_phone': '0',
+            'num_website_visits': '5446484',
+            'num_applications_online': '276390',
+            'num_applications_in_person': '0',
+            'num_applications_by_mail': '792026',
+            'num_applications_by_email': '0',
+            'num_applications_by_fax': '0',
+            'num_applications_by_other': '2218002',
+            'num_applications_total': '3286418',
+            'special_remarks_en': "- The volume reflected in the 'Applications by Mail' column include the volume of paper applications for the following OAS pension benefits application types: OAS basic pension; the Guaranteed Income Supplement (GIS); Allowance; Allowance Survivor; Renewal of GIS/Allowance/Allowance Survivor; Options for GIS/Allowance/Allowance Survivor; and foreign benefits.\n- The volume reflected in the 'Number of Automatic Enrolments' column represents the volume of Automatic Enrolment into the OAS basic pension and the GIS.\n- The volume reflected in the 'Applications through Other Channels' column represents the volume of the Automatic Renewal of income-tested benefits through the CRA for the GIS.\n- Applications to OAS pension benefits do not constitute the largest volume of work done by the OAS program. In addition to applications, there were also another 3,143,898 OAS and foreign benefit account revisions in 2022-2023.\n- OAS and CPP telephone enquiries are managed through the same Pensions Toll-free service, with significant overlap between the two programs on many calls. The metrics reported for CPP and OAS,  such as the volume of calls, are therefore identical and are non-cumulative (i.e. they are not to be added together).\"",
+            'special_remarks_fr': "- Le volume indiqué dans la colonne « Demandes par la poste » comprend le volume de demandes papier pour les types de demandes de prestations de pension de la SV suivants : pension de base de la SV ; le Supplément de revenu garanti (SRG); Allocation ; Allocation de survivant ; Renouvellement du SRG/Allocation/ Allocation de survivant ; options pour le SRG/l'allocation/l'allocation de survivant ; et les prestations étrangères.\n- Le volume indiqué dans la colonne \"\"Nombre d'inscriptions automatiques\"\" représente le volume des inscriptions automatiques à la pension de base de la SV et au SRG.\n- Le volume reflété dans la colonne « Demandes par d'autres canaux » représente le volume d'adhésion automatique à la pension de base de la SV et du SRG, ainsi que le renouvellement automatique des prestations fondées sur le revenu par l'intermédiaire de l'ARC pour le SRG.\n- Les demandes de prestations de pension de la SV ne constituent pas le plus gros volume de travail effectué par le programme de la SV. En plus des demandes, il y a eu également 3 143 898 autres révisions des comptes de SV et de prestations étrangères en 2022-2023\n- Les demandes de renseignements téléphoniques sur la SV et le RPC sont gérées par le même service téléphonique sans frais des pensions, avec un chevauchement important entre les deux programmes pour de nombreux appels. Les mesures rapportées pour le RPC et la SV, comme le volume d'appels, sont donc identiques et non cumulatives (c'est-à-dire qu'elles ne doivent pas être additionnées). \"",
+            'service_uri_en': 'https://www.canada.ca/en/services/benefits/publicpensions/cpp/old-age-security.html',
+            'service_uri_fr': 'https://www.canada.ca/fr/services/prestations/pensionspubliques/rpc/securite-vieillesse.html',
+            'owner_org': self.org['name'],
+            'owner_org_title': self.org['title'],
+        }
 
         assert expected_fields == published_fields
         assert expected_record == published_record
@@ -568,7 +590,6 @@ class TestMakePD(CanadaTestBase):
             logger=logger,
         )
 
-        pd_record = chromo['examples']['record']
         published_fields, published_records = self._get_ds_records('service-std')
         published_record = published_records[0]
 
@@ -581,27 +602,33 @@ class TestMakePD(CanadaTestBase):
 
         published_fields = [f['id'] for f in published_fields]
 
-        expected_record = pd_record.copy()
-        expected_record['_id'] = published_record['_id']
-        expected_record['owner_org'] = self.org['id']
-        expected_record['owner_org_title'] = self.org['title']
-        #TODO: transform some types
-
-        num = int(expected_record['volume_meeting_target']) if expected_record['volume_meeting_target'] else 0
-        den = int(expected_record['total_volume']) if expected_record['total_volume'] else 0
-
-        expected_record['performance'] = str(max( round(num / den, 4), 0))
-
-        if expected_record['target']:
-            target = float(expected_record['target'])
-            if den <= 0:
-                expected_record['target_met'] = 'NA'
-            elif expected_record['performance'] >= target:
-                expected_record['target_met'] = 'Y'
-            else:
-                expected_record['target_met'] = 'N'
-        else:
-            expected_record['target_met'] = ''
+        expected_record = {
+            '_id': published_record['_id'],
+            'fiscal_yr': '2022-2023',
+            'service_id': '1001',
+            'service_name_en': 'Old Age Security (OAS) Benefits',
+            'service_name_fr': 'Prestations de la Sécurité de la vieillesse',
+            'service_standard_id': '925',
+            'service_standard_en': 'OAS basic benefits are paid within the first month of entitlement',
+            'service_standard_fr': 'Les prestations de base de la SV sont versées au cours du premier mois d’admissibilité.',
+            'type': 'TML',
+            'channel': 'OTH',
+            'channel_comments_en': 'Mail, Online, Person',
+            'channel_comments_fr': 'Courrier, en ligne, personne',
+            'target': '0.9',
+            'volume_meeting_target': '315128',
+            'total_volume': '359919',
+            'performance': '0.8756',
+            'comments_en': 'The total volumes assessed against the first month of entitlement service standard excludes 3,550 decisions involving files submitted under international agreements and interactions with foreign governments.',
+            'comments_fr': "Les volumes totaux évalués par rapport à la norme de service du premier mois de droit excluent 3 550 décisions concernant des dossiers soumis dans le cadre d'accords internationaux et d'interactions avec des gouvernements étrangers.",
+            'target_met': 'N',
+            'standards_targets_uri_en': 'https://www.canada.ca/en/employment-social-development/corporate/transparency/service-standards-2018-2019.html#h2.25',
+            'standards_targets_uri_fr': 'https://www.canada.ca/fr/emploi-developpement-social/ministere/transparence/normes-service-2018-2019.html#h2.21',
+            'performance_results_uri_en': 'Not applicable',
+            'performance_results_uri_fr': 'Not applicable',
+            'owner_org': self.org['name'],
+            'owner_org_title': self.org['title'],
+        }
 
         assert expected_fields == published_fields
         assert expected_record == published_record

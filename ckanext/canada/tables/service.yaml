@@ -459,7 +459,8 @@ resources:
     occurrence: Single
     datastore_type: text
     excel_full_text_choices: true
-    choices_file: choices/boolean.yaml
+    choices_file: choices/yes_no.yaml
+    form_snippet: scheming/form_snippets/radio.html
 
   # DEP 1-17
   - datastore_id: automated_decision_system_description_en
@@ -549,7 +550,8 @@ resources:
     occurrence: Single
     datastore_type: text
     excel_full_text_choices: true
-    choices_file: choices/boolean.yaml
+    choices_file: choices/yes_no.yaml
+    form_snippet: scheming/form_snippets/radio.html
 
   # DEP 1-20
   - datastore_id: os_account_registration
@@ -575,7 +577,8 @@ resources:
     occurrence: Single
     datastore_type: text
     excel_full_text_choices: true
-    choices_file: choices/online_service_boolean.yaml
+    choices_file: choices/online_service_yes_no.yaml
+    form_snippet: scheming/form_snippets/radio.html
 
   # DEP 1-21
   - datastore_id: os_authentication
@@ -595,7 +598,8 @@ resources:
     occurrence: Single
     datastore_type: text
     excel_full_text_choices: true
-    choices_file: choices/online_service_boolean.yaml
+    choices_file: choices/online_service_yes_no.yaml
+    form_snippet: scheming/form_snippets/radio.html
 
   # DEP 1-22
   - datastore_id: os_application
@@ -615,7 +619,8 @@ resources:
     occurrence: Single
     datastore_type: text
     excel_full_text_choices: true
-    choices_file: choices/online_service_boolean.yaml
+    choices_file: choices/online_service_yes_no.yaml
+    form_snippet: scheming/form_snippets/radio.html
 
   # DEP 1-23
   - datastore_id: os_decision
@@ -635,7 +640,8 @@ resources:
     occurrence: Single
     datastore_type: text
     excel_full_text_choices: true
-    choices_file: choices/online_service_boolean.yaml
+    choices_file: choices/online_service_yes_no.yaml
+    form_snippet: scheming/form_snippets/radio.html
 
   # DEP 1-24
   - datastore_id: os_issuance
@@ -655,7 +661,8 @@ resources:
     occurrence: Single
     datastore_type: text
     excel_full_text_choices: true
-    choices_file: choices/online_service_boolean.yaml
+    choices_file: choices/online_service_yes_no.yaml
+    form_snippet: scheming/form_snippets/radio.html
 
   # DEP 1-25
   - datastore_id: os_issue_resolution_feedback
@@ -675,7 +682,8 @@ resources:
     occurrence: Single
     datastore_type: text
     excel_full_text_choices: true
-    choices_file: choices/online_service_boolean.yaml
+    choices_file: choices/online_service_yes_no.yaml
+    form_snippet: scheming/form_snippets/radio.html
 
   # DEP 1-26
   - datastore_id: os_comments_client_interaction_en
@@ -803,6 +811,7 @@ resources:
       'Y':
         en: "Yes"
         fr: Oui
+    form_snippet: scheming/form_snippets/radio.html
 
   # DEP 1-31
   - datastore_id: cra_bn_identifier_usage
@@ -838,6 +847,7 @@ resources:
       'Y':
         en: "Yes"
         fr: Oui
+    form_snippet: scheming/form_snippets/radio.html
 
   # DEP 1-32
   - datastore_id: num_phone_enquiries

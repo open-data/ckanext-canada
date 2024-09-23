@@ -221,6 +221,42 @@ class TestService(CanadaTestBase):
         assert 'service_uri_en' in err['records'][0]
 
 
+    def test_choice_fields(self):
+        """
+        Fields with choices should expect those values
+        """
+        chromo = get_chromo('service')
+        record = chromo['examples']['record'].copy()
+
+        expected_choice_fields = ['fiscal_yr', 'service_type', 'service_recipient_type',
+                                  'service_scope', 'client_target_groups', 'program_id',
+                                  'client_feedback_channel', 'automated_decision_system',
+                                  'service_fee', 'os_account_registration',
+                                  'os_authentication', 'os_application', 'os_decision',
+                                  'os_issuance', 'os_issue_resolution_feedback',
+                                  'last_service_review', 'last_service_improvement',
+                                  'sin_usage', 'cra_bn_identifier_usage']
+
+        for field in chromo['fields']:
+            if field.get('published_resource_computed_field'):
+                continue
+            if 'choices_file' in field or 'choices' in field:
+                assert field['datastore_id'] in expected_choice_fields
+                if field['datastore_type'] == '_text':
+                    record[field['datastore_id']] = ['zzz']
+                else:
+                    record[field['datastore_id']] = 'zzz'
+
+        with pytest.raises(ValidationError) as ve:
+            self.lc.action.datastore_upsert(
+                resource_id=self.resource_id,
+                records=[record])
+        err = ve.value.error_dict
+        assert 'records' in err
+        for expected_choice_field in expected_choice_fields:
+            assert expected_choice_field in err['records'][0]
+
+
     def test_max_chars(self):
         """
         Over max character field values should raise an exception
@@ -428,6 +464,35 @@ class TestStdService(CanadaTestBase):
         assert 'channel_comments_en' in err['records'][0]
         assert 'comments_en' in err['records'][0]
         assert 'performance_results_uri_en' in err['records'][0]
+
+
+    def test_choice_fields(self):
+        """
+        Fields with choices should expect those values
+        """
+        chromo = get_chromo('service-std')
+        record = chromo['examples']['record'].copy()
+
+        expected_choice_fields = ['fiscal_yr', 'type', 'channel']
+
+        for field in chromo['fields']:
+            if field.get('published_resource_computed_field'):
+                continue
+            if 'choices_file' in field or 'choices' in field:
+                assert field['datastore_id'] in expected_choice_fields
+                if field['datastore_type'] == '_text':
+                    record[field['datastore_id']] = ['zzz']
+                else:
+                    record[field['datastore_id']] = 'zzz'
+
+        with pytest.raises(ValidationError) as ve:
+            self.lc.action.datastore_upsert(
+                resource_id=self.resource_id,
+                records=[record])
+        err = ve.value.error_dict
+        assert 'records' in err
+        for expected_choice_field in expected_choice_fields:
+            assert expected_choice_field in err['records'][0]
 
 
     def test_max_chars(self):
