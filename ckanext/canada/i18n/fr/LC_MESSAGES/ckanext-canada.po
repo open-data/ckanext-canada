@@ -1003,7 +1003,7 @@ msgstr "Veuillez entrer une valeur comprise entre 1 et 12"
 #: ckanext/canada/tables/service.yaml:1456
 #: ckanext/canada/tables/service.yaml:2207
 msgid "This value must not be negative"
-msgstr "Cette valeur ne doit pas être négatif"
+msgstr "Cette valeur ne doit être négative"
 
 #. SQL Trigger String for PD Type: ati
 #: ckanext/canada/tables/ati.yaml:255
@@ -1120,7 +1120,7 @@ msgstr ""
 #. SQL Trigger String for PD Type: contracts
 #: ckanext/canada/tables/contracts.yaml:2184
 msgid "This field must not be empty"
-msgstr "Cette zone ne doit pas être vide"
+msgstr "Ce champ ne doit pas être vide"
 
 #. SQL Trigger String for PD Type: contracts
 #: ckanext/canada/tables/contracts.yaml:2186
