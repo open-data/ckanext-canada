@@ -1106,6 +1106,10 @@ body .alert a.btn-danger{
 body .alert a.btn-warning{
   color: black !important;
 }
+.canada-flash-messages .flash-messages .alert:not(.alert-dismissible) button.close{
+  display: none !important;
+  pointer-events: none !important;
+}
 /*###################
 ##       END       ##
 ##  Flash Messages ##

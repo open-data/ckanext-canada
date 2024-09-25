@@ -13,6 +13,9 @@
   {% if h.check_access('api_token_list', {'user': user['name']}) %}
     {{ h.build_nav_icon('user.api_tokens', _('API Tokens'), id=user.name, icon='key') }}
   {% endif %}
+  {% if h.security_enable_totp() and h.check_access('user_update', user) %}
+    {{ h.build_nav_icon('mfa_user.configure_mfa', _('MFA'), id=user.name, icon='shield-alt') }}
+  {% endif %}
 {% endblock %}
 
 {% block secondary_content %}
