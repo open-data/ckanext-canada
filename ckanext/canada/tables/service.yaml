@@ -883,7 +883,7 @@ resources:
         Cette valeur ne doit être négative.
     occurrence: Single
     datastore_type: text
-    excel_error_formula: 'OR({default_formula},AND(NOT(ISNUMBER(--LEFT({cell},LEN({cell})))),{cell}<>"NA",{cell}<>"ND"),AND(ISNUMBER(VALUE(LEFT({cell},LEN({cell})))),VALUE(LEFT({cell},LEN({cell})))<0))'
+    excel_error_formula: 'OR({default_formula},IFERROR(VALUE({cell})<0,AND({cell}<>"NA",{cell}<>"ND")))'
 
   # DEP 1-33
   - datastore_id: num_applications_by_phone
@@ -916,9 +916,7 @@ resources:
         Cette valeur ne doit être négative.
     occurrence: Single
     datastore_type: text
-    #'OR({default_formula},AND(NOT(ISNUMBER(--LEFT({cell},LEN({cell})))),{cell}<>"NA",{cell}<>"ND"),AND(ISNUMBER(VALUE(LEFT({cell},LEN({cell})))),VALUE(LEFT({cell},LEN({cell})))<0))'
-    #FIXME: alpha check to NOT ND or NOT NA not working...
-    excel_error_formula: 'OR({default_formula},AND(NOT(ISNUMBER(--LEFT({cell},LEN({cell})))),{cell}<>"NA",{cell}<>"ND"),AND(ISNUMBER(VALUE(LEFT({cell},LEN({cell})))),VALUE(LEFT({cell},LEN({cell})))<0))'
+    excel_error_formula: 'OR({default_formula},IFERROR(VALUE({cell})<0,AND({cell}<>"NA",{cell}<>"ND")))'
 
   # DEP 1-34
   - datastore_id: num_website_visits
@@ -950,7 +948,7 @@ resources:
         Cette valeur ne doit être négative.
     occurrence: Single
     datastore_type: text
-    excel_error_formula: 'OR({default_formula},AND(NOT(ISNUMBER(--LEFT({cell},LEN({cell})))),{cell}<>"NA",{cell}<>"ND"),AND(ISNUMBER(VALUE(LEFT({cell},LEN({cell})))),VALUE(LEFT({cell},LEN({cell})))<0))'
+    excel_error_formula: 'OR({default_formula},IFERROR(VALUE({cell})<0,AND({cell}<>"NA",{cell}<>"ND")))'
 
   # DEP 1-35
   - datastore_id: num_applications_online
@@ -985,7 +983,7 @@ resources:
         Cette valeur ne doit être négative.
     occurrence: Single
     datastore_type: text
-    excel_error_formula: 'OR({default_formula},AND(NOT(ISNUMBER(--LEFT({cell},LEN({cell})))),{cell}<>"NA",{cell}<>"ND"),AND(ISNUMBER(VALUE(LEFT({cell},LEN({cell})))),VALUE(LEFT({cell},LEN({cell})))<0))'
+    excel_error_formula: 'OR({default_formula},IFERROR(VALUE({cell})<0,AND({cell}<>"NA",{cell}<>"ND")))'
 
   # DEP 1-36
   - datastore_id: num_applications_in_person
@@ -1019,7 +1017,7 @@ resources:
         Cette valeur ne doit être négative.
     occurrence: Single
     datastore_type: text
-    excel_error_formula: 'OR({default_formula},AND(NOT(ISNUMBER(--LEFT({cell},LEN({cell})))),{cell}<>"NA",{cell}<>"ND"),AND(ISNUMBER(VALUE(LEFT({cell},LEN({cell})))),VALUE(LEFT({cell},LEN({cell})))<0))'
+    excel_error_formula: 'OR({default_formula},IFERROR(VALUE({cell})<0,AND({cell}<>"NA",{cell}<>"ND")))'
 
   # DEP 1-37
   - datastore_id: num_applications_by_mail
@@ -1052,7 +1050,7 @@ resources:
         Cette valeur ne doit être négative.
     occurrence: Single
     datastore_type: text
-    excel_error_formula: 'OR({default_formula},AND(NOT(ISNUMBER(--LEFT({cell},LEN({cell})))),{cell}<>"NA",{cell}<>"ND"),AND(ISNUMBER(VALUE(LEFT({cell},LEN({cell})))),VALUE(LEFT({cell},LEN({cell})))<0))'
+    excel_error_formula: 'OR({default_formula},IFERROR(VALUE({cell})<0,AND({cell}<>"NA",{cell}<>"ND")))'
 
   # DEP 1-38
   - datastore_id: num_applications_by_email
@@ -1085,7 +1083,7 @@ resources:
         Cette valeur ne doit être négative.
     occurrence: Single
     datastore_type: text
-    excel_error_formula: 'OR({default_formula},AND(NOT(ISNUMBER(--LEFT({cell},LEN({cell})))),{cell}<>"NA",{cell}<>"ND"),AND(ISNUMBER(VALUE(LEFT({cell},LEN({cell})))),VALUE(LEFT({cell},LEN({cell})))<0))'
+    excel_error_formula: 'OR({default_formula},IFERROR(VALUE({cell})<0,AND({cell}<>"NA",{cell}<>"ND")))'
 
   # DEP 1-39
   - datastore_id: num_applications_by_fax
@@ -1118,7 +1116,7 @@ resources:
         Cette valeur ne doit être négative.
     occurrence: Single
     datastore_type: text
-    excel_error_formula: 'OR({default_formula},AND(NOT(ISNUMBER(--LEFT({cell},LEN({cell})))),{cell}<>"NA",{cell}<>"ND"),AND(ISNUMBER(VALUE(LEFT({cell},LEN({cell})))),VALUE(LEFT({cell},LEN({cell})))<0))'
+    excel_error_formula: 'OR({default_formula},IFERROR(VALUE({cell})<0,AND({cell}<>"NA",{cell}<>"ND")))'
 
   # DEP 1-40
   - datastore_id: num_applications_by_other
@@ -1152,7 +1150,7 @@ resources:
         Cette valeur ne doit être négative.
     occurrence: Single
     datastore_type: text
-    excel_error_formula: 'OR({default_formula},AND(NOT(ISNUMBER(--LEFT({cell},LEN({cell})))),{cell}<>"NA",{cell}<>"ND"),AND(ISNUMBER(VALUE(LEFT({cell},LEN({cell})))),VALUE(LEFT({cell},LEN({cell})))<0))'
+    excel_error_formula: 'OR({default_formula},IFERROR(VALUE({cell})<0,AND({cell}<>"NA",{cell}<>"ND")))'
 
   # DEP 1-45
   # Dev: Published Resource Field
