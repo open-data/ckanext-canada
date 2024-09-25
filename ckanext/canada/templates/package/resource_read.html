@@ -42,9 +42,21 @@
     <div class="canada-w10-spacer"></div>
     {{- h.get_loader_status_badge(res) -}}
   {% endif %}
+{% endblock %}
+
+{% block breadcrumb_content %}
+  {{ super.super() }}
+  <li class="active"><a href="#" title="{{ h.resource_display_name(res) }}">{{ h.resource_display_name(res)|truncate(80) }}</a></li>
+{% endblock %}
+
+{% block action_manage %}
+  {% if not is_activity_archive %}{{ super() }}{% endif %}
+{% endblock %}
+
+{% block resource_content %}
   {% block resource_read_title %}{{ super() }}{% endblock %}
   {% block resource_read_url %}
-    {{ super() }}
+    <p class="mrgn-bttm-lg">&nbsp;</p>
   {% endblock %}
 {% endblock %}
 

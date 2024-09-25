@@ -37,8 +37,8 @@ def main():
         org = json.loads(line)
         row = {
             u'uuid': org[u'id'].lower(),
-            u'title_en': org[u'title_translated'][u'en'].encode('utf-8').strip(),
-            u'title_fr': org[u'title_translated'][u'fr'].encode('utf-8').strip(),
+            u'title_en': org[u'title_translated'][u'en'].strip(),
+            u'title_fr': org[u'title_translated'][u'fr'].strip(),
             u'short_form_en': org[u'shortform'][u'en'].strip(),
             u'short_form_fr': org[u'shortform'][u'fr'].strip(),
             u'department_number': org[u'department_number'].strip(),

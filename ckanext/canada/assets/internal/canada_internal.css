@@ -12,6 +12,14 @@
 ol.breadcrumb {
   margin-bottom: 0px;
 }
+.breadcrumb li:last-child a {
+  background: transparent !important;
+  color: black;
+  pointer-events: none;
+  cursor: default;
+  text-decoration: none;
+}
+
 #wb-info a {
   text-decoration: none;
 }
@@ -470,6 +478,9 @@ label.control-label:has(span.control-required):after {
 label.control-label:has(span.control-required):lang(fr):after {
   content: "(requis)";
 }
+label:lang(fr):after {
+  content: " :";
+}
 .control-required {
   color: #e00;
 }
@@ -478,6 +489,9 @@ label.control-label:has(span.control-required):lang(fr):after {
   border-bottom-color: #EDEDED;
   border-right-color: #284162;
   z-index: -1;
+}
+.border-0 {
+    border: 0 !important;
 }
 
 .stages li.complete .highlight {

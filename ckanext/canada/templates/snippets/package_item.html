@@ -27,7 +27,7 @@
               {% set my_title = _(my_title) %}
             {% endif %}
             {% block heading_private %}{# Do not show "Private" label #}{% endblock %}
-            {{ h.link_to(my_title|truncate(80), h.url_for(package.type ~ '.read', id=package.name)) }}
+            {{ h.link_to(my_title|truncate(150), h.url_for(package.type ~ '.read', id=package.name), title=my_title) }}
             {% block heading_meta %}
               {% if package.get('state', '').startswith('draft') %}
                 <span class="label label-info">{{ _('Draft') }}</span>

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-08-08 14:51+0000\n"
+"POT-Creation-Date: 2024-09-25 16:34+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: fr\n"
@@ -159,7 +159,7 @@ msgid "Treasury Board of Canada Secretariat"
 msgstr "Secrétariat du Conseil du Trésor du Canada"
 
 #: ckanext/canada/helpers.py:577 ckanext/canada/strings.py:13
-#: ckanext/canada/view.py:1058
+#: ckanext/canada/view.py:1136
 msgid "Members not found"
 msgstr "Membres non trouvés"
 
@@ -247,13 +247,23 @@ msgstr "Publié"
 msgid "Scheduled"
 msgstr "Prévu"
 
-#: ckanext/canada/helpers.py:854
+#: ckanext/canada/helpers.py:856
 msgid "Registry Home"
 msgstr "Accueil du registre"
 
-#: ckanext/canada/helpers.py:854 ckanext/canada/strings.py:85
-msgid "Open Government Portal"
-msgstr "Portail du gouvernement ouvert"
+#: ckanext/canada/helpers.py:861
+msgid "Open Government"
+msgstr "Gouvernement ouvert"
+
+#: ckanext/canada/helpers.py:864
+#: ckanext/canada/templates/admin/publish_search.html:19
+#: ckanext/canada/templates/home/quick_links.html:104
+#: ckanext/canada/templates/organization/snippets/organization_search.html:8
+#: ckanext/canada/templates/snippets/cdts/header.html:146
+#: ckanext/canada/templates/snippets/search_form.html:45
+#: ckanext/canada/templates/user/snippets/user_search.html:10
+msgid "Search"
+msgstr "Rechercher"
 
 #: ckanext/canada/logic.py:297
 msgid "Could not determine a resource format. Please supply a format."
@@ -335,7 +345,7 @@ msgstr "Créer un jeu de données"
 msgid "Not authorized to access {group} members download"
 msgstr "Non autorisé à accéder au téléchargement des membres du {group}"
 
-#: ckanext/canada/strings.py:14 ckanext/canada/view.py:1068
+#: ckanext/canada/strings.py:14 ckanext/canada/view.py:1146
 msgid "N/A"
 msgstr "N/A"
 
@@ -344,32 +354,32 @@ msgstr "N/A"
 #: ckanext/canada/templates/user/edit_user_form.html:8
 #: ckanext/canada/templates/user/list.html:44
 #: ckanext/canada/templates/user/new_user_form.html:8
-#: ckanext/canada/templates/user/snippets/login_form.html:12
-#: ckanext/canada/view.py:1060
+#: ckanext/canada/templates/user/snippets/login_form.html:32
+#: ckanext/canada/view.py:1138
 msgid "Username"
 msgstr "Nom d’utilisateur"
 
 #: ckanext/canada/strings.py:16
 #: ckanext/canada/templates/user/edit_user_form.html:10
 #: ckanext/canada/templates/user/new_user_form.html:14
-#: ckanext/canada/templates/user/read_base.html:59
+#: ckanext/canada/templates/user/read_base.html:62
 #: ckanext/canada/templates/user/recover_username.html:17
-#: ckanext/canada/view.py:1060
+#: ckanext/canada/view.py:1138
 msgid "Email"
 msgstr "Courriel"
 
-#: ckanext/canada/strings.py:17 ckanext/canada/templates/user/api_tokens.html:5
-#: ckanext/canada/templates/user/list.html:45 ckanext/canada/view.py:1060
+#: ckanext/canada/strings.py:17 ckanext/canada/templates/user/api_tokens.html:7
+#: ckanext/canada/templates/user/list.html:45 ckanext/canada/view.py:1138
 msgid "Name"
 msgstr "Nom"
 
 #: ckanext/canada/strings.py:18
 #: ckanext/canada/templates/organization/member_new.html:58
-#: ckanext/canada/templates/user/list.html:46 ckanext/canada/view.py:1060
+#: ckanext/canada/templates/user/list.html:46 ckanext/canada/view.py:1138
 msgid "Role"
 msgstr "Rôle"
 
-#: ckanext/canada/strings.py:19 ckanext/canada/view.py:1078
+#: ckanext/canada/strings.py:19 ckanext/canada/view.py:1156
 msgid "members"
 msgstr "membres"
 
@@ -439,6 +449,7 @@ msgid "Choose format"
 msgstr "Choisir le format"
 
 #: ckanext/canada/strings.py:35
+#: ckanext/canada/templates/user/snippets/login_form.html:48
 msgid "Submit"
 msgstr "Soumettre"
 
@@ -459,7 +470,7 @@ msgid "Request Reset"
 msgstr "Demander une réinitialisation"
 
 #: ckanext/canada/strings.py:40
-#: ckanext/canada/templates/user/edit_user_form.html:43
+#: ckanext/canada/templates/user/edit_user_form.html:48
 msgid "Create API Token"
 msgstr "Créer un jeton d’API"
 
@@ -605,61 +616,73 @@ msgstr ""
 msgid "Your password cannot be the same as your username."
 msgstr "Votre mot de passe ne peut pas être le même que votre nom d'utilisateur."
 
-#: ckanext/canada/strings.py:78
+#: ckanext/canada/strings.py:77
+msgid ""
+"Your current password is too weak. Please create a new password before "
+"logging in again."
+msgstr ""
+
+#: ckanext/canada/strings.py:80
 msgid "These fields have been removed, click update below to save your changes."
 msgstr ""
 "Ces champs seront supprimés une fois que vous aurez sauvegardé vos "
 "changements."
 
-#: ckanext/canada/strings.py:79
+#: ckanext/canada/strings.py:81
 msgid "These fields have been removed."
 msgstr "Ces champs ont été supprimés."
 
-#: ckanext/canada/strings.py:82
+#: ckanext/canada/strings.py:84
 msgid "Your form submission could not be validated, please re-submit the form."
 msgstr ""
 "La soumission de votre formulaire n'a pas pu être confirmée. Veuillez le "
 "soumettre de nouveau."
 
-#: ckanext/canada/strings.py:86
+#: ckanext/canada/strings.py:87
+msgid "Open Government Portal"
+msgstr "Portail du gouvernement ouvert"
+
+#: ckanext/canada/strings.py:88
 msgid "Open Government Portal (staging)"
 msgstr "Portail du gouvernement ouvert (stadification)"
 
-#: ckanext/canada/strings.py:89
+#: ckanext/canada/strings.py:91
 msgid "Delete from DataStore"
 msgstr "Supprimer la table DataStore"
 
-#: ckanext/canada/strings.py:90
+#: ckanext/canada/strings.py:92
 msgid "Are you sure you want to delete the DataStore and Data Dictionary?"
 msgstr ""
 "Voulez-vous vraiment supprimer cette table DataStore et ce dictionnaire "
 "de données"
 
-#: ckanext/canada/strings.py:91
+#: ckanext/canada/strings.py:93
 #: ckanext/canada/templates/organization/confirm_delete_member.html:3
 #: ckanext/canada/templates/organization/confirm_delete_member.html:14
 #: ckanext/canada/templates/package/confirm_delete.html:3
 #: ckanext/canada/templates/package/confirm_delete.html:13
 #: ckanext/canada/templates/package/confirm_delete_resource.html:3
 #: ckanext/canada/templates/package/confirm_delete_resource.html:13
+#: ckanext/canada/templates/recombinant/confirm_select_delete.html:3
+#: ckanext/canada/templates/recombinant/confirm_select_delete.html:40
 #: ckanext/canada/templates/user/confirm_delete.html:3
 #: ckanext/canada/templates/user/confirm_delete.html:14
 msgid "Confirm Delete"
 msgstr "Confirmer la suppression"
 
-#: ckanext/canada/strings.py:94
+#: ckanext/canada/strings.py:96
 msgid "Validation Information"
 msgstr ""
 
-#: ckanext/canada/strings.py:95
+#: ckanext/canada/strings.py:97
 msgid "Validation status:"
 msgstr ""
 
-#: ckanext/canada/strings.py:96
+#: ckanext/canada/strings.py:98
 msgid "Validation timestamp:"
 msgstr ""
 
-#: ckanext/canada/strings.py:97
+#: ckanext/canada/strings.py:99
 msgid "Duration:"
 msgstr ""
 
@@ -736,15 +759,15 @@ msgstr ""
 "Impossible de modifier la valeur du champ d’accès au registre de '%s' à "
 "'%s'. Ce champ ne sert qu’à des fins de lecture."
 
-#: ckanext/canada/view.py:101
+#: ckanext/canada/view.py:102
 msgid "<strong>Note</strong><br>{0} is now logged in"
 msgstr "<strong>Note</strong><br />{0} est maintenant connecté"
 
-#: ckanext/canada/view.py:111
+#: ckanext/canada/view.py:112
 msgid "Login failed. Bad username or password."
 msgstr "L’authentification a échoué. Mauvais nom d’utilisateur ou mot de passe."
 
-#: ckanext/canada/view.py:159
+#: ckanext/canada/view.py:160
 msgid ""
 "The status has been added/updated for this suggested dataset. This update"
 " will be reflected on open.canada.ca shortly."
@@ -752,32 +775,32 @@ msgstr ""
 "L’état a été ajouté/mis à jour pour cet ensemble de données suggéré. "
 "Cette mise à jour sera bientôt effectuée dans ouvert.canada.ca."
 
-#: ckanext/canada/view.py:162
+#: ckanext/canada/view.py:163
 #, python-format
 msgid "Your dataset %s has been saved."
 msgstr "Votre jeu de données %s a été sauvegardé."
 
-#: ckanext/canada/view.py:172
+#: ckanext/canada/view.py:173
 msgid "Dataset added."
 msgstr "Jeu de données ajouté."
 
-#: ckanext/canada/view.py:181
+#: ckanext/canada/view.py:182
 msgid "Resource updated."
 msgstr "Ressource mise à jour."
 
-#: ckanext/canada/view.py:190
+#: ckanext/canada/view.py:191
 msgid "Resource added."
 msgstr "Une ressource a été ajoutée."
 
-#: ckanext/canada/view.py:245
+#: ckanext/canada/view.py:246
 msgid "Unauthorized to request username recovery."
 msgstr "Non autorisé à demander la récupération du nom d'utilisateur."
 
-#: ckanext/canada/view.py:250
+#: ckanext/canada/view.py:251
 msgid "Email is required"
 msgstr "L'adresse électronique est requise"
 
-#: ckanext/canada/view.py:275
+#: ckanext/canada/view.py:276
 msgid ""
 "Error sending the email. Try again later or contact an administrator for "
 "help"
@@ -785,7 +808,7 @@ msgstr ""
 "Une erreur est survenue lors de l'envoi de l'email. Veuillez réessayer "
 "plus tard ou contacter un administrateur."
 
-#: ckanext/canada/view.py:282
+#: ckanext/canada/view.py:283
 msgid ""
 "An email has been sent to you containing your username(s). (unless the "
 "account specified does not exist)"
@@ -793,69 +816,78 @@ msgstr ""
 "Un courriel vous a été envoyé contenant votre (vos) nom(s) d'utilisateur."
 " (sauf si le compte spécifié n'existe pas)"
 
-#: ckanext/canada/view.py:355
+#: ckanext/canada/view.py:356
 msgid "Unauthorized to create a resource for this package"
 msgstr "Non autorisé à créer une ressource pour cet ensemble"
 
-#: ckanext/canada/view.py:392 ckanext/canada/view.py:399
+#: ckanext/canada/view.py:393 ckanext/canada/view.py:400
 msgid "This record already exists"
 msgstr "Cet enregistrement existe déjà."
 
-#: ckanext/canada/view.py:396 ckanext/canada/view.py:403
+#: ckanext/canada/view.py:397 ckanext/canada/view.py:404
 msgid "Something went wrong, your record was not created. Please contact support."
 msgstr ""
 "Un problème s’est produit, votre document n’a pas été créé. Veuillez "
 "contacter l’assistance technique."
 
-#: ckanext/canada/view.py:418
+#: ckanext/canada/view.py:419
 msgid "Record Created"
 msgstr "Renregistrement créé"
 
-#: ckanext/canada/view.py:456
+#: ckanext/canada/view.py:457
 msgid "Unauthorized to update dataset"
 msgstr "Vous n'êtes pas autorisé à mettre à jour ce jeu de données"
 
-#: ckanext/canada/view.py:466
+#: ckanext/canada/view.py:467 ckanext/canada/view.py:607
+#: ckanext/canada/view.py:642
 msgid "Not found"
 msgstr "Non trouvé"
 
-#: ckanext/canada/view.py:468
+#: ckanext/canada/view.py:469
 msgid "Multiple records found"
 msgstr "Plusieurs enregistrements ont été trouvés"
 
-#: ckanext/canada/view.py:504
+#: ckanext/canada/view.py:505
 msgid "Something went wrong, your record was not updated. Please contact support."
 msgstr ""
 "Un problème s’est produit, votre document n’a pas été mis à jour. "
 "Veuillez contacter l’assistance technique."
 
-#: ckanext/canada/view.py:520
+#: ckanext/canada/view.py:521
 #, python-format
 msgid "Record %s Updated"
 msgstr "Dossier %s mis à jour"
 
-#: ckanext/canada/view.py:553
+#: ckanext/canada/view.py:560
 msgid "No organizations found"
 msgstr "Aucune organisation n’a été trouvée"
 
-#: ckanext/canada/view.py:557
+#: ckanext/canada/view.py:564
 msgid "Recombinant resource_name not found"
 msgstr "Le recombinant resource_name n’a pas été trouvé"
 
-#: ckanext/canada/view.py:617
+#: ckanext/canada/view.py:598
+msgid "User {0} not authorized to update resource {1}"
+msgstr ""
+
+#: ckanext/canada/view.py:644
+msgid "{num} deleted."
+msgstr "{num} supprimé."
+
+#: ckanext/canada/view.py:686
 msgid "Number required"
 msgstr "Nombre requis"
 
-#: ckanext/canada/view.py:622
+#: ckanext/canada/view.py:691
 msgid "Integer required"
 msgstr "Entier requis"
 
-#: ckanext/canada/view.py:658 ckanext/canada/view.py:666
-#: ckanext/canada/view.py:700
+#: ckanext/canada/view.py:727 ckanext/canada/view.py:735
+#: ckanext/canada/view.py:769
 msgid "Not authorized to see this page"
 msgstr "Non autorisé à voir cette page"
 
-#: ckanext/canada/view.py:686
+#: ckanext/canada/view.py:755
 msgid " record(s) published."
 msgstr " d’enregistrements publiés."
 
@@ -865,19 +897,19 @@ msgstr " d’enregistrements publiés."
 #: ckanext/canada/templates/package/resource_edit.html:3
 #: ckanext/canada/templates/package/resource_edit_base.html:7
 #: ckanext/canada/templates/package/wet_datatable.html:15
-#: ckanext/canada/view.py:779
+#: ckanext/canada/view.py:848
 msgid "Edit"
 msgstr "Modifier"
 
-#: ckanext/canada/view.py:903
+#: ckanext/canada/view.py:981
 msgid "Access denied"
 msgstr "Accès refusé"
 
-#: ckanext/canada/view.py:954
+#: ckanext/canada/view.py:1032
 msgid "Account Created"
 msgstr "Compte créé"
 
-#: ckanext/canada/view.py:956
+#: ckanext/canada/view.py:1034
 msgid ""
 "Thank you for creating your account for the Open Government registry. "
 "Although your account is active, it has not yet been linked to your "
@@ -888,7 +920,7 @@ msgstr ""
 "ministère. Vous ne pourrez créer ou modifier de jeux de données dans le "
 "registre tant que votre compte n’aura pas été relié à votre ministère."
 
-#: ckanext/canada/view.py:963
+#: ckanext/canada/view.py:1041
 msgid ""
 "You should receive an email within the next business day once the account"
 " activation process has been completed. If you require faster processing "
@@ -901,20 +933,20 @@ msgstr ""
 "plus rapidement, veuillez envoyer une demande directement à :<a "
 "href=\"mailto: open-ouvert@tbs-sct.gc.ca\">open-ouvert@tbs-sct.gc.ca.</a"
 
-#: ckanext/canada/view.py:1037 ckanext/canada/view.py:1115
+#: ckanext/canada/view.py:1115 ckanext/canada/view.py:1193
 msgid "Organization not found"
 msgstr "Organisation non trouvée"
 
-#: ckanext/canada/view.py:1048
+#: ckanext/canada/view.py:1126
 msgid "Not authorized to access {org_name} members download"
 msgstr "Non autorisé à accéder au téléchargement des membres du {group}"
 
-#: ckanext/canada/view.py:1118
+#: ckanext/canada/view.py:1196
 #, python-format
 msgid "User %r not authorized to edit members of %s"
 msgstr "L’utilisateur %r n’est pas autorisé à modifier les membres de %s"
 
-#: ckanext/canada/view.py:1120
+#: ckanext/canada/view.py:1198
 #, python-format
 msgid "User %r not authorized to view members of %s"
 msgstr "L’utilisateur %r n’est pas autorisé à voir les membres de %s"
@@ -948,7 +980,7 @@ msgstr ""
 #. SQL Trigger String for PD Type: travelq
 #. SQL Trigger String for PD Type: wrongdoing
 #: ckanext/canada/tables/adminaircraft.yaml:316
-#: ckanext/canada/tables/contracts.yaml:2184
+#: ckanext/canada/tables/contracts.yaml:2185
 #: ckanext/canada/tables/grants.yaml:836
 #: ckanext/canada/tables/hospitalityq.yaml:449
 #: ckanext/canada/tables/qpnotes.yaml:332
@@ -983,7 +1015,7 @@ msgstr "Veuillez entrer une année valide"
 #. SQL Trigger String for PD Type: ati
 #. SQL Trigger String for PD Type: briefingt
 #: ckanext/canada/tables/ati.yaml:253 ckanext/canada/tables/ati.yaml:386
-#: ckanext/canada/tables/briefingt.yaml:405
+#: ckanext/canada/tables/briefingt.yaml:407
 msgid "Please enter a month number from 1-12"
 msgstr "Veuillez entrer une valeur comprise entre 1 et 12"
 
@@ -1042,13 +1074,13 @@ msgstr ""
 #. SQL Trigger String for PD Type: reclassification
 #. SQL Trigger String for PD Type: travela
 #. SQL Trigger String for PD Type: travelq
-#: ckanext/canada/tables/briefingt.yaml:404
+#: ckanext/canada/tables/briefingt.yaml:406
 #: ckanext/canada/tables/contractsa.yaml:396
-#: ckanext/canada/tables/hospitalityq.yaml:604
-#: ckanext/canada/tables/qpnotes.yaml:451
-#: ckanext/canada/tables/reclassification.yaml:385
+#: ckanext/canada/tables/hospitalityq.yaml:606
+#: ckanext/canada/tables/qpnotes.yaml:456
+#: ckanext/canada/tables/reclassification.yaml:389
 #: ckanext/canada/tables/travela.yaml:645
-#: ckanext/canada/tables/travelq.yaml:598
+#: ckanext/canada/tables/travelq.yaml:600
 msgid "This must list the year you are reporting on (not the fiscal year)."
 msgstr "Veuillez indiquer l’année civile visée par le rapport."
 
@@ -1105,7 +1137,12 @@ msgstr ""
 "attribués de plus de 10 000 $ pour votre organisation"
 
 #. SQL Trigger String for PD Type: contracts
-#: ckanext/canada/tables/contracts.yaml:2185
+#: ckanext/canada/tables/contracts.yaml:2184
+msgid "This field must not be empty"
+msgstr "Ce champ ne doit pas être vide"
+
+#. SQL Trigger String for PD Type: contracts
+#: ckanext/canada/tables/contracts.yaml:2186
 msgid ""
 "This field must contain the first three digits of a postal code in A1A "
 "format or the value \"NA\""
@@ -1114,7 +1151,7 @@ msgstr ""
 "le format A1A ou la valeur « NA. »"
 
 #. SQL Trigger String for PD Type: contracts
-#: ckanext/canada/tables/contracts.yaml:2186
+#: ckanext/canada/tables/contracts.yaml:2187
 msgid ""
 "This field must be populated with an NA if an amendment is disclosed "
 "under Instrument Type"
@@ -1123,19 +1160,19 @@ msgstr ""
 "divulguée dans le cadre du type d’instrument"
 
 #. SQL Trigger String for PD Type: contracts
-#: ckanext/canada/tables/contracts.yaml:2187
+#: ckanext/canada/tables/contracts.yaml:2188
 msgid "This field is limited to only 3 or 4 digits."
 msgstr "Ce champ a une limite de 3 ou 4 chiffres."
 
 #. SQL Trigger String for PD Type: contracts
-#: ckanext/canada/tables/contracts.yaml:2188
+#: ckanext/canada/tables/contracts.yaml:2189
 msgid ""
 "If N/A, then Instrument Type must be identified as a standing "
 "offer/supply arrangement (SOSA)"
 msgstr ""
 
 #. SQL Trigger String for PD Type: contracts
-#: ckanext/canada/tables/contracts.yaml:2189
+#: ckanext/canada/tables/contracts.yaml:2190
 msgid ""
 "If the value XX (none) is entered, then no other value can be entered in "
 "this field."
@@ -1144,19 +1181,19 @@ msgstr ""
 "saisie dans ce champ."
 
 #. SQL Trigger String for PD Type: contracts
-#: ckanext/canada/tables/contracts.yaml:2190
+#: ckanext/canada/tables/contracts.yaml:2191
 msgid "Discontinued as of 2022-01-01"
 msgstr "Supprimé à compter du 2022-01-01"
 
 #. SQL Trigger String for PD Type: contracts
-#: ckanext/canada/tables/contracts.yaml:2191
+#: ckanext/canada/tables/contracts.yaml:2192
 msgid "Must be left blank when trade agreements specified"
 msgstr ""
 "Ce champ ne doit pas être rempli lorsque des accords commerciaux sont "
 "précisés"
 
 #. SQL Trigger String for PD Type: contracts
-#: ckanext/canada/tables/contracts.yaml:2192
+#: ckanext/canada/tables/contracts.yaml:2193
 msgid ""
 "If the value NA (not applicable) is entered, then no other value can be "
 "entered in this field."
@@ -1165,13 +1202,13 @@ msgstr ""
 "peut être saisie dans ce champ."
 
 #. SQL Trigger String for PD Type: contracts
-#: ckanext/canada/tables/contracts.yaml:2193
+#: ckanext/canada/tables/contracts.yaml:2194
 msgid "The field is limited to eight alpha-numeric digits or less."
 msgstr "Ce champ est limité à 8 caractères alphanumériques."
 
 #. SQL Trigger String for PD Type: contracts
-#: ckanext/canada/tables/contracts.yaml:2194
-#: ckanext/canada/tables/contracts.yaml:2197
+#: ckanext/canada/tables/contracts.yaml:2195
+#: ckanext/canada/tables/contracts.yaml:2198
 msgid ""
 "If the value 00 (none) is entered, then no other value can be entered in "
 "this field."
@@ -1180,7 +1217,7 @@ msgstr ""
 "saisie dans ce champ."
 
 #. SQL Trigger String for PD Type: contracts
-#: ckanext/canada/tables/contracts.yaml:2195
+#: ckanext/canada/tables/contracts.yaml:2196
 msgid ""
 "If TC, TN or AC is selected in the Solicitation Procedure data field with"
 " a value other than XX (None) selected in the Trade Agreement data field,"
@@ -1192,7 +1229,7 @@ msgstr ""
 "une valeur d’appel d’offres limité autre que 00 (aucun) doit être saisie."
 
 #. SQL Trigger String for PD Type: contracts
-#: ckanext/canada/tables/contracts.yaml:2196
+#: ckanext/canada/tables/contracts.yaml:2197
 msgid ""
 "If “TC” (Competitive - Traditional), “TN” (Non-Competitive) or “AC” "
 "(Advanced Contract Award Notice) is selected and trade agreement with a "
@@ -1206,7 +1243,7 @@ msgstr ""
 "avoir la valeur « 0 » ou « 00 » (nulle)."
 
 #. SQL Trigger String for PD Type: contracts
-#: ckanext/canada/tables/contracts.yaml:2198
+#: ckanext/canada/tables/contracts.yaml:2199
 msgid ""
 "This field must be N, No or Non, if the Procurement Strategy for "
 "Aboriginal Business field is MS or VS."
@@ -1216,7 +1253,7 @@ msgstr ""
 "est MS ou VS."
 
 #. SQL Trigger String for PD Type: contracts
-#: ckanext/canada/tables/contracts.yaml:2199
+#: ckanext/canada/tables/contracts.yaml:2200
 msgid ""
 "This field must be populated with a 1 if the solicitation procedure is "
 "identified as non-competitive (TN) or Advance Contract Award Notice (AC)."
@@ -1226,7 +1263,7 @@ msgstr ""
 "d’adjudication de contrat (PAC)."
 
 #. SQL Trigger String for PD Type: contracts
-#: ckanext/canada/tables/contracts.yaml:2200
+#: ckanext/canada/tables/contracts.yaml:2201
 msgid ""
 "If this field is populated, it must be with a “0” if the procurement was "
 "identified as non-competitive (TN) or advance contract award notice (AC) "
@@ -1238,7 +1275,7 @@ msgstr ""
 "une modification (M) dans le champ de données du type d’instrument."
 
 #. SQL Trigger String for PD Type: contracts
-#: ckanext/canada/tables/contracts.yaml:2201
+#: ckanext/canada/tables/contracts.yaml:2202
 msgid ""
 "This field may only be populated with “0” if the procurement was "
 "identified as competitive (open bidding (OB), traditional competitive "
@@ -1250,7 +1287,7 @@ msgstr ""
 "d’offres sélectif [AOS])."
 
 #. Resource Title for PD Type: contracts
-#: ckanext/canada/tables/contracts.yaml:2252
+#: ckanext/canada/tables/contracts.yaml:2253
 msgid "Proactive Publication - Contracts Nothing to Report"
 msgstr "Publication proactive - Contrats (Rien à signaler)"
 
@@ -1580,7 +1617,7 @@ msgstr ""
 
 #: ckanext/canada/templates/error_document_template.html:33
 #: ckanext/canada/templates/page.html:29
-#: ckanext/canada/templates/user/snippets/login_form.html:17
+#: ckanext/canada/templates/user/snippets/login_form.html:37
 msgid "Log in"
 msgstr "Connexion"
 
@@ -2060,7 +2097,7 @@ msgid "Load more"
 msgstr "En charger davantage"
 
 #: ckanext/canada/templates/admin/base.html:5
-#: ckanext/canada/templates/snippets/cdts/header.html:197
+#: ckanext/canada/templates/snippets/cdts/header.html:193
 msgid "Admin"
 msgstr "Administrateur"
 
@@ -2143,15 +2180,6 @@ msgstr "Recherche de dossiers"
 #: ckanext/canada/templates/admin/publish_search.html:15
 msgid "Search datasets..."
 msgstr "Recherche de dossiers..."
-
-#: ckanext/canada/templates/admin/publish_search.html:19
-#: ckanext/canada/templates/home/quick_links.html:104
-#: ckanext/canada/templates/organization/snippets/organization_search.html:8
-#: ckanext/canada/templates/snippets/cdts/header.html:150
-#: ckanext/canada/templates/snippets/search_form.html:45
-#: ckanext/canada/templates/user/snippets/user_search.html:10
-msgid "Search"
-msgstr "Rechercher"
 
 #: ckanext/canada/templates/admin/publish_search.html:58
 #: ckanext/canada/templates/scheming/form_snippets/repeating_subfields.html:8
@@ -2286,14 +2314,14 @@ msgstr ""
 " gouvernement."
 
 #: ckanext/canada/templates/home/quick_links.html:91
-#: ckanext/canada/templates/snippets/cdts/header.html:135
+#: ckanext/canada/templates/snippets/cdts/header.html:131
 #: ckanext/canada/templates/snippets/dataset_facets.html:4
 #: ckanext/canada/templates/snippets/package_item.html:19
 msgid "Open Dialogue"
 msgstr "Dialogue ouvert"
 
 #: ckanext/canada/templates/home/quick_links.html:98
-#: ckanext/canada/templates/snippets/cdts/header.html:144
+#: ckanext/canada/templates/snippets/cdts/header.html:140
 msgid "Consultations master dataset"
 msgstr "Données de consultations principals"
 
@@ -2347,7 +2375,7 @@ msgid "Briefing packages"
 msgstr "Documents d’information"
 
 #: ckanext/canada/templates/home/quick_links.html:165
-#: ckanext/canada/templates/snippets/cdts/header.html:118
+#: ckanext/canada/templates/snippets/cdts/header.html:114
 msgid "New or incoming ministers"
 msgstr "Documents d’information pour les nouveaux ministres"
 
@@ -2360,7 +2388,7 @@ msgstr ""
 " contenu ou modifiez-la."
 
 #: ckanext/canada/templates/home/quick_links.html:173
-#: ckanext/canada/templates/snippets/cdts/header.html:122
+#: ckanext/canada/templates/snippets/cdts/header.html:118
 msgid "New or incoming deputy heads"
 msgstr "Documents d’information pour les nouveaux administrateurs généraux"
 
@@ -2373,7 +2401,7 @@ msgstr ""
 " ajoutez-y du contenu ou modifiez-la."
 
 #: ckanext/canada/templates/home/quick_links.html:181
-#: ckanext/canada/templates/snippets/cdts/header.html:126
+#: ckanext/canada/templates/snippets/cdts/header.html:122
 msgid "Parliamentary Committee appearances for ministers"
 msgstr ""
 "Documents d’information à l’intention des ministres pour les comparutions"
@@ -2388,7 +2416,7 @@ msgstr ""
 "devant un comité parlementaire, ajoutez-y du contenu ou modifiez-la."
 
 #: ckanext/canada/templates/home/quick_links.html:189
-#: ckanext/canada/templates/snippets/cdts/header.html:130
+#: ckanext/canada/templates/snippets/cdts/header.html:126
 msgid "Parliamentary Committee appearances for deputy heads"
 msgstr ""
 "Documents d’information à l’intention des administrateurs généraux pour "
@@ -2421,6 +2449,7 @@ msgstr "Êtes-vous sûr de vouloir supprimer le membre {name}?"
 #: ckanext/canada/templates/organization/confirm_delete_member.html:13
 #: ckanext/canada/templates/package/confirm_delete.html:12
 #: ckanext/canada/templates/package/confirm_delete_resource.html:12
+#: ckanext/canada/templates/recombinant/confirm_select_delete.html:39
 #: ckanext/canada/templates/recombinant/create_pd_record.html:84
 #: ckanext/canada/templates/recombinant/update_pd_record.html:87
 #: ckanext/canada/templates/user/confirm_delete.html:13
@@ -2437,10 +2466,10 @@ msgstr "Gérer"
 #: ckanext/canada/templates/organization/index.html:26
 #: ckanext/canada/templates/organization/members.html:10
 #: ckanext/canada/templates/organization/read_base.html:7
-#: ckanext/canada/templates/snippets/cdts/header.html:154
+#: ckanext/canada/templates/snippets/cdts/header.html:150
 #: ckanext/canada/templates/user/read.html:28
 #: ckanext/canada/templates/user/read_base.html:12
-#: ckanext/canada/templates/user/read_base.html:98
+#: ckanext/canada/templates/user/read_base.html:101
 msgid "Organizations"
 msgstr "Organisations"
 
@@ -2524,7 +2553,7 @@ msgstr "Êtes-vous sûr de vouloir supprimer ce membre?"
 #: ckanext/canada/templates/organization/member_new.html:61
 #: ckanext/canada/templates/scheming/package/read.html:26
 #: ckanext/canada/templates/scheming/snippets/form_field.html:21
-#: ckanext/canada/templates/user/edit_user_form.html:38
+#: ckanext/canada/templates/user/edit_user_form.html:43
 msgid "Delete"
 msgstr "Supprimer"
 
@@ -2898,11 +2927,11 @@ msgstr ""
 msgid "View resource"
 msgstr ""
 
-#: ckanext/canada/templates/package/resource_read.html:53
+#: ckanext/canada/templates/package/resource_read.html:65
 msgid "List of downloadable formats"
 msgstr ""
 
-#: ckanext/canada/templates/package/resource_read.html:55
+#: ckanext/canada/templates/package/resource_read.html:67
 #: ckanext/canada/templates/package/snippets/resource_item.html:81
 msgid "Download"
 msgstr "Télécharger"
@@ -2946,6 +2975,10 @@ msgstr "Sélectionner"
 #: ckanext/canada/templates/package/wet_datatable.html:69
 msgid "Edit in Excel"
 msgstr "Modifier dans Excel"
+
+#: ckanext/canada/templates/package/wet_datatable.html:103
+msgid "Delete records"
+msgstr "Supprimer des dossiers"
 
 #: ckanext/canada/templates/package/snippets/additional_info.html:1
 msgid "Additional Info"
@@ -3117,6 +3150,20 @@ msgstr "Description (anglais)"
 #: ckanext/canada/templates/package/snippets/view_form.html:11
 msgid "Description (French)"
 msgstr "Description (français)"
+
+#: ckanext/canada/templates/recombinant/confirm_select_delete.html:9
+msgid ""
+"Are you sure you want to delete {num} record? This action cannot be "
+"undone."
+msgid_plural ""
+"Are you sure you want to delete {num} records? This action cannot be "
+"undone."
+msgstr[0] ""
+"Souhaitez-vous vraiment supprimer {num} demande? Cette action ne peut pas"
+" être annulée."
+msgstr[1] ""
+"Souhaitez-vous vraiment supprimer {num} demandes? Cette action ne peut "
+"pas être annulée."
 
 #: ckanext/canada/templates/recombinant/create_pd_record.html:3
 #: ckanext/canada/templates/recombinant/create_pd_record.html:4
@@ -3542,25 +3589,25 @@ msgstr "Consulter les activités des 30 derniers jours."
 msgid "Home"
 msgstr "Accueil"
 
-#: ckanext/canada/templates/snippets/cdts/header.html:159
+#: ckanext/canada/templates/snippets/cdts/header.html:155
 msgid "FAQ"
 msgstr "FAQ"
 
-#: ckanext/canada/templates/snippets/cdts/header.html:189
+#: ckanext/canada/templates/snippets/cdts/header.html:185
 #: ckanext/canada/templates/user/dashboard.html:4
 #: ckanext/canada/templates/user/dashboard_datasets.html:19
 msgid "Dashboard"
 msgstr "Tableau de bord"
 
-#: ckanext/canada/templates/snippets/cdts/header.html:205
+#: ckanext/canada/templates/snippets/cdts/header.html:201
 msgid "Get Help"
 msgstr "Obtenez de l’aide"
 
-#: ckanext/canada/templates/snippets/cdts/header.html:226
+#: ckanext/canada/templates/snippets/cdts/header.html:222
 msgid "Signed in as"
 msgstr "Connecté en tant que"
 
-#: ckanext/canada/templates/snippets/cdts/header.html:226
+#: ckanext/canada/templates/snippets/cdts/header.html:222
 msgid "View profile"
 msgstr "Afficher le profil"
 
@@ -3639,29 +3686,42 @@ msgid "Change password"
 msgstr "Changer le mot de passe"
 
 #: ckanext/canada/templates/user/edit_user_form.html:23
+#: ckanext/canada/templates/user/perform_reset.html:8
+msgid "password reset requirements"
+msgstr ""
+"<ol><li>Les mots de passe doivent contenir des caractères appartenant à "
+"au moins 3 des 4 catégories suivantes :</li><ul><li>Lettres majuscules : "
+"A, B, C, … Z</li><li>Lettres minuscules : a, b, c, … z</li><li>Chiffres "
+"arabes occidentalisés : 0, 1, 2, … 9</li><li>Caractères spéciaux : "
+"({}[],.<>;:'\"?/|\\`~!@#$%%^&*()_-+=).</li></ul><li>Les caractères "
+"accentués ne sont pas autorisés.</li><li>Tous les mots de passe doivent "
+"comporter au moins 12 caractères.</li><li>Le mot de passe n'égale pas au "
+"nom d'utilisateur.</li></ol>"
+
+#: ckanext/canada/templates/user/edit_user_form.html:28
 msgid "Sysadmin Password"
 msgstr "Mot de passe administrateur système"
 
-#: ckanext/canada/templates/user/edit_user_form.html:23
+#: ckanext/canada/templates/user/edit_user_form.html:28
 msgid "Old Password"
 msgstr "Ancien mot de passe"
 
-#: ckanext/canada/templates/user/edit_user_form.html:31
+#: ckanext/canada/templates/user/edit_user_form.html:36
 #: ckanext/canada/templates/user/new_user_form.html:22
-#: ckanext/canada/templates/user/snippets/login_form.html:13
+#: ckanext/canada/templates/user/snippets/login_form.html:33
 msgid "Password"
 msgstr "Mot de passe"
 
-#: ckanext/canada/templates/user/edit_user_form.html:32
+#: ckanext/canada/templates/user/edit_user_form.html:37
 #: ckanext/canada/templates/user/new_user_form.html:25
 msgid "Confirm Password"
 msgstr "Confirmer le mot de passe"
 
-#: ckanext/canada/templates/user/edit_user_form.html:38
+#: ckanext/canada/templates/user/edit_user_form.html:43
 msgid "Are you sure you want to delete this User?"
 msgstr "Êtes-vous sûr de vouloir supprimer cet utilisateur?"
 
-#: ckanext/canada/templates/user/edit_user_form.html:46
+#: ckanext/canada/templates/user/edit_user_form.html:51
 msgid "Update Profile"
 msgstr "Mettre à jour le profil"
 
@@ -3705,56 +3765,74 @@ msgstr ""
 "registre ou pour signaler des erreurs, communiquez avec open-ouvert@tbs-"
 "sct.gc.ca. </p>"
 
-#: ckanext/canada/templates/user/login.html:11
-msgid "NOTE: Username and password are case sensitive."
-msgstr "NOTE: Le nom d’utilisateur et mot de passe sont sensibles à la casse."
+#: ckanext/canada/templates/user/login.html:7
+msgid "password reset alert"
+msgstr ""
+"<div class=\"alert alert-info\"><details><summary>Nouvelles exigences en "
+"matière de sécurité des mots de passe</summary><p>Le registre du "
+"gouvernement ouvert applique désormais de nouvelles exigences en matière "
+"de mots de passe afin d'assurer la conformité aux meilleures pratiques "
+"décrites dans le guide des mots de passe du gouvernement du Canada "
+":</p><ul><li>La longueur minimale est de 12 caractères</li><li>Doit être "
+"composé d'au moins trois des caractères suivants : majuscules, "
+"minuscules, chiffres, ponctuation et caractères spéciaux</li><li>Le mot "
+"de passe n'égale pas au nom d'utilisateur</li></ul><p>Les utilisateurs "
+"dont les mots de passe ne répondent pas aux nouvelles exigences peuvent "
+"les mettre à jour dans section <i>Modifier le mot de passe</i> dans la "
+"page Mon profil ou en utilisant la fonction de <a "
+"href=\"/fr/user/reset\">réinitialisation du mot de "
+"passe</a>.</p><p><strong>Remarque :</strong> si les mots de passe ne sont"
+" pas mis à jour avant la fin de l'année 2024, nous mettrons en œuvre un "
+"processus obligeant les utilisateurs à modifier leur mot de passe pour "
+"répondre aux nouvelles exigences avant de pouvoir accéder au "
+"registre.</p></details></div>"
 
-#: ckanext/canada/templates/user/login.html:23
+#: ckanext/canada/templates/user/login.html:21
 msgid "Need an account"
 msgstr "Besoin d’un compte"
 
-#: ckanext/canada/templates/user/login.html:26
+#: ckanext/canada/templates/user/login.html:24
 msgid "Then sign right up, it only takes a minute"
 msgstr "Inscrivez-vous maintenant, cela ne prend qu’une minute"
 
-#: ckanext/canada/templates/user/login.html:28
+#: ckanext/canada/templates/user/login.html:26
 #: ckanext/canada/templates/user/new.html:5
 msgid "Request an Account"
 msgstr "Demande d’un compte"
 
-#: ckanext/canada/templates/user/login.html:34
+#: ckanext/canada/templates/user/login.html:32
 msgid "Forgotten your password?"
 msgstr "Réinitialiser le mot de passe"
 
-#: ckanext/canada/templates/user/login.html:36
+#: ckanext/canada/templates/user/login.html:34
 msgid "No problem, use our password recovery form to reset it"
 msgstr ""
 "Utilisez notre formulaire de récupération de mot de passe pour rétablir "
 "votre identité"
 
-#: ckanext/canada/templates/user/login.html:38
+#: ckanext/canada/templates/user/login.html:36
 msgid "Reset password"
 msgstr "Réinitialiser le mot de passe"
 
-#: ckanext/canada/templates/user/login.html:46
+#: ckanext/canada/templates/user/login.html:44
 msgid "Forgotten your username?"
 msgstr "Vous avez oublié votre nom d'utilisateur ?"
 
-#: ckanext/canada/templates/user/login.html:49
+#: ckanext/canada/templates/user/login.html:47
 msgid "No problem, use our username recovery form to recover it"
 msgstr ""
 "Pas de problème, utilisez notre formulaire de récupération du nom "
 "d'utilisateur pour le récupérer"
 
-#: ckanext/canada/templates/user/login.html:51
+#: ckanext/canada/templates/user/login.html:49
 msgid "Recover username"
 msgstr "Récupérer le nom d'utilisateur"
 
-#: ckanext/canada/templates/user/login.html:66
+#: ckanext/canada/templates/user/login.html:64
 msgid " Create an Account"
 msgstr "Créer un compte"
 
-#: ckanext/canada/templates/user/login.html:76
+#: ckanext/canada/templates/user/login.html:74
 msgid "Forgot your password?"
 msgstr "Réinitialiser le mot de passe"
 
@@ -4031,74 +4109,59 @@ msgstr "J’accepte"
 msgid "I do not agree"
 msgstr "Je n’accepte pas"
 
-#: ckanext/canada/templates/user/perform_reset.html:9
-#, python-format
-msgid ""
-"1. Passwords must contain characters from at least 3 of the following 4 "
-"classes:\n"
-"    * Upper Case Letters: A, B, C, … Z\n"
-"    * Lower Case Letters: a, b, c, … z\n"
-"    * Westernised Arabic Numerals: 0, 1, 2, … 9\n"
-"    * Special characters: ({}[],.<>;:'\"?/|\\`~!@#$%%^&*()_-+=).\n"
-"2. No accented characters are permitted.\n"
-"3. All passwords must be at least 12 characters long.\n"
-msgstr ""
-"1. Les mots de passe doivent contenir des caractères appartenant à au "
-"moins 3 des 4 catégories suivantes : * Lettres majuscules : A, B, C, … Z "
-"* Lettres minuscules : a, b, c, … z * Chiffres arabes occidentalisés : 0,"
-" 1, 2, … 9 * Caractères spéciaux : ({}[],.<>;:'\"?/|\\`~!@#$%%^&*()_-+=)."
-" 2. Les caractères accentués ne sont pas autorisés. 3. Tous les mots de "
-"passe doivent comporter au moins 12 caractères."
-
 #: ckanext/canada/templates/user/read_base.html:14
 msgid "API Tokens"
 msgstr ""
 
-#: ckanext/canada/templates/user/read_base.html:21
+#: ckanext/canada/templates/user/read_base.html:17
+msgid "MFA"
+msgstr ""
+
+#: ckanext/canada/templates/user/read_base.html:24
 msgid "Details"
 msgstr "Détails"
 
-#: ckanext/canada/templates/user/read_base.html:31
+#: ckanext/canada/templates/user/read_base.html:34
 msgid "Followers:"
 msgstr "Suiveurs :"
 
-#: ckanext/canada/templates/user/read_base.html:35
+#: ckanext/canada/templates/user/read_base.html:38
 msgid "Datasets:"
 msgstr "Dossiers :"
 
-#: ckanext/canada/templates/user/read_base.html:49
+#: ckanext/canada/templates/user/read_base.html:52
 msgid "Open ID:"
 msgstr ""
 
-#: ckanext/canada/templates/user/read_base.html:52
+#: ckanext/canada/templates/user/read_base.html:55
 msgid "Username:"
 msgstr "Nom d’utilisateur :"
 
-#: ckanext/canada/templates/user/read_base.html:60
-#: ckanext/canada/templates/user/read_base.html:71
+#: ckanext/canada/templates/user/read_base.html:63
+#: ckanext/canada/templates/user/read_base.html:74
 msgid "This means only you can see this"
 msgstr "Cela signifie que vous êtes le seul à pouvoir le voir"
 
-#: ckanext/canada/templates/user/read_base.html:60
-#: ckanext/canada/templates/user/read_base.html:71
+#: ckanext/canada/templates/user/read_base.html:63
+#: ckanext/canada/templates/user/read_base.html:74
 msgid "Private"
 msgstr "Privé"
 
-#: ckanext/canada/templates/user/read_base.html:65
+#: ckanext/canada/templates/user/read_base.html:68
 msgid "Member Since"
 msgstr "Membre depuis"
 
-#: ckanext/canada/templates/user/read_base.html:71
-#: ckanext/canada/templates/user/read_base.html:79
+#: ckanext/canada/templates/user/read_base.html:74
+#: ckanext/canada/templates/user/read_base.html:82
 msgid "API Key"
 msgstr "Clé API"
 
-#: ckanext/canada/templates/user/read_base.html:74
+#: ckanext/canada/templates/user/read_base.html:77
 msgid "Show API Key"
 msgstr "Afficher la clé API"
 
-#: ckanext/canada/templates/user/read_base.html:80
-#: ckanext/canada/templates/user/read_base.html:86
+#: ckanext/canada/templates/user/read_base.html:83
+#: ckanext/canada/templates/user/read_base.html:89
 msgid "Close"
 msgstr "Fermer"
 
@@ -4113,6 +4176,34 @@ msgstr "Récupération du nom d'utilisateur"
 #: ckanext/canada/templates/user/recover_username.html:22
 msgid "Request Recovery"
 msgstr "Demande de récupération"
+
+#: ckanext/canada/templates/user/snippets/login_form.html:10
+msgid "Login failed. Incorrect username or password."
+msgstr "L’authentification a échoué. Mauvais nom d’utilisateur ou mot de passe."
+
+#: ckanext/canada/templates/user/snippets/login_form.html:13
+msgid "Invalid code, please try again."
+msgstr ""
+
+#: ckanext/canada/templates/user/snippets/login_form.html:16
+msgid "An unknown error occurred."
+msgstr ""
+
+#: ckanext/canada/templates/user/snippets/login_form.html:30
+msgid "NOTE: Username and password are case sensitive."
+msgstr "NOTE: Le nom d’utilisateur et mot de passe sont sensibles à la casse."
+
+#: ckanext/canada/templates/user/snippets/login_form.html:42
+msgid "Please enter your authenticator app generated 6-digit verification code."
+msgstr ""
+
+#: ckanext/canada/templates/user/snippets/login_form.html:43
+msgid "Verification code"
+msgstr ""
+
+#: ckanext/canada/templates/user/snippets/login_form.html:47
+msgid "Need help?"
+msgstr ""
 
 #: ckanext/canada/templates/user/snippets/user_search.html:2
 msgid "Search Users"
@@ -7963,4 +8054,29 @@ msgstr "Télécharger vers le DataStore"
 
 #~ msgid "Confirm"
 #~ msgstr "Confirmer"
+
+#~ msgid ""
+#~ "1. Passwords must contain characters "
+#~ "from at least 3 of the following"
+#~ " 4 classes:\n"
+#~ "    * Upper Case Letters: A, B, C, … Z\n"
+#~ "    * Lower Case Letters: a, b, c, … z\n"
+#~ "    * Westernised Arabic Numerals: 0, 1, 2, … 9\n"
+#~ "    * Special characters: ({}[],.<>;:'\"?/|\\`~!@#$%%^&*()_-+=).\n"
+#~ "2. No accented characters are permitted.\n"
+#~ "3. All passwords must be at least 12 characters long.\n"
+#~ msgstr ""
+#~ "1. Les mots de passe doivent "
+#~ "contenir des caractères appartenant à au"
+#~ " moins 3 des 4 catégories suivantes"
+#~ " : * Lettres majuscules : A, B,"
+#~ " C, … Z * Lettres minuscules :"
+#~ " a, b, c, … z * Chiffres "
+#~ "arabes occidentalisés : 0, 1, 2, …"
+#~ " 9 * Caractères spéciaux : "
+#~ "({}[],.<>;:'\"?/|\\`~!@#$%%^&*()_-+=). 2. Les "
+#~ "caractères accentués ne sont pas "
+#~ "autorisés. 3. Tous les mots de "
+#~ "passe doivent comporter au moins 12 "
+#~ "caractères."
 

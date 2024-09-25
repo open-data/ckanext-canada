@@ -4,7 +4,7 @@
   {% set html_title = organization.description|truncate(80, true) %}
 {% endif %}
 <dt style="width:auto;"><a href="{{ url }}" title="{{ html_title }}">
-  {{ h.split_piped_bilingual_field(organization.display_name, h.lang())|truncate(70, true) }}</a>
+  {{ h.split_piped_bilingual_field(organization.display_name, h.lang())|truncate(80, true) }}</a>
 </dt>
 <dd class="text-right">
   {%- if organization.package_count -%}
