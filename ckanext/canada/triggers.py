@@ -1,5 +1,4 @@
 from ckanapi import LocalCKAN
-from ckantoolkit import h
 
 
 def update_triggers():
@@ -8,6 +7,7 @@ def update_triggers():
     lc = LocalCKAN()
 
     # *_error functions return NULL or ARRAY[[field_name, error_message]]
+    # required_error
     lc.action.datastore_function_create(
         name=u'required_error',
         or_replace=True,
@@ -99,6 +99,129 @@ def update_triggers():
             END;
         ''')
     lc.action.datastore_function_create(
+        name=u'required_error',
+        or_replace=True,
+        arguments=[
+            {u'argname': u'value', u'argtype': u'boolean'},
+            {u'argname': u'field_name', u'argtype': u'text'}],
+        rettype=u'_text',
+        definition=u'''
+            BEGIN
+                IF value IS NULL THEN
+                    RETURN ARRAY[[field_name, 'This field must not be empty']];
+                END IF;
+                RETURN NULL;
+            END;
+        ''')
+    # END required_error
+    # conditional_required_error
+    lc.action.datastore_function_create(
+        name=u'conditional_required_error',
+        or_replace=True,
+        arguments=[
+            {u'argname': u'value', u'argtype': u'text'},
+            {u'argname': u'field_name', u'argtype': u'text'}],
+        rettype=u'_text',
+        definition=u'''
+            BEGIN
+                IF (value = '') IS NOT FALSE THEN
+                    RETURN ARRAY[[field_name, 'This field is required due to a response in a different field.']];
+                END IF;
+                RETURN NULL;
+            END;
+        ''')
+    lc.action.datastore_function_create(
+        name=u'conditional_required_error',
+        or_replace=True,
+        arguments=[
+            {u'argname': u'value', u'argtype': u'_text'},
+            {u'argname': u'field_name', u'argtype': u'text'}],
+        rettype=u'_text',
+        definition=u'''
+            BEGIN
+                IF value IS NULL OR value = '{}' THEN
+                    RETURN ARRAY[[field_name, 'This field is required due to a response in a different field.']];
+                END IF;
+                RETURN NULL;
+            END;
+        ''')
+    lc.action.datastore_function_create(
+        name=u'conditional_required_error',
+        or_replace=True,
+        arguments=[
+            {u'argname': u'value', u'argtype': u'date'},
+            {u'argname': u'field_name', u'argtype': u'text'}],
+        rettype=u'_text',
+        definition=u'''
+            BEGIN
+                IF value IS NULL THEN
+                    RETURN ARRAY[[field_name, 'This field is required due to a response in a different field.']];
+                END IF;
+                RETURN NULL;
+            END;
+        ''')
+    lc.action.datastore_function_create(
+        name=u'conditional_required_error',
+        or_replace=True,
+        arguments=[
+            {u'argname': u'value', u'argtype': u'numeric'},
+            {u'argname': u'field_name', u'argtype': u'text'}],
+        rettype=u'_text',
+        definition=u'''
+            BEGIN
+                IF value IS NULL THEN
+                    RETURN ARRAY[[field_name, 'This field is required due to a response in a different field.']];
+                END IF;
+                RETURN NULL;
+            END;
+        ''')
+    lc.action.datastore_function_create(
+        name=u'conditional_required_error',
+        or_replace=True,
+        arguments=[
+            {u'argname': u'value', u'argtype': u'int4'},
+            {u'argname': u'field_name', u'argtype': u'text'}],
+        rettype=u'_text',
+        definition=u'''
+            BEGIN
+                IF value IS NULL THEN
+                    RETURN ARRAY[[field_name, 'This field is required due to a response in a different field.']];
+                END IF;
+                RETURN NULL;
+            END;
+        ''')
+    lc.action.datastore_function_create(
+        name=u'conditional_required_error',
+        or_replace=True,
+        arguments=[
+            {u'argname': u'value', u'argtype': u'money'},
+            {u'argname': u'field_name', u'argtype': u'text'}],
+        rettype=u'_text',
+        definition=u'''
+            BEGIN
+                IF value IS NULL THEN
+                    RETURN ARRAY[[field_name, 'This field is required due to a response in a different field.']];
+                END IF;
+                RETURN NULL;
+            END;
+        ''')
+    lc.action.datastore_function_create(
+        name=u'conditional_required_error',
+        or_replace=True,
+        arguments=[
+            {u'argname': u'value', u'argtype': u'boolean'},
+            {u'argname': u'field_name', u'argtype': u'text'}],
+        rettype=u'_text',
+        definition=u'''
+            BEGIN
+                IF value IS NULL THEN
+                    RETURN ARRAY[[field_name, 'This field is required due to a response in a different field.']];
+                END IF;
+                RETURN NULL;
+            END;
+        ''')
+    # END conditional_required_error
+    lc.action.datastore_function_create(
         name=u'choice_error',
         or_replace=True,
         arguments=[
@@ -106,14 +229,43 @@ def update_triggers():
             {u'argname': u'choices', u'argtype': u'_text'},
             {u'argname': u'field_name', u'argtype': u'text'}],
         rettype=u'_text',
-        definition=r'''
+        definition='''
             BEGIN
                 IF value IS NOT NULL AND value <> '' AND NOT (value = ANY (choices)) THEN
-                    -- \t is used when converting errors to string
-                    RETURN ARRAY[[field_name, 'Invalid choice: "'
-                        || replace(value, E'\t', ' ') || '"']];
+                    -- \\t is used when converting errors to string
+                    RETURN ARRAY[[field_name, 'Invalid choice: {}\uF8FF"'
+                        || replace(value, E'\\t', ' ') || '"']];
                 END IF;
                 RETURN NULL;
+            END;
+        ''')
+    lc.action.datastore_function_create(
+        name=u'max_char_error',
+        or_replace=True,
+        arguments=[
+            {u'argname': u'value', u'argtype': u'text'},
+            {u'argname': u'max_chars', u'argtype': u'numeric'},
+            {u'argname': u'field_name', u'argtype': u'text'}],
+        rettype=u'_text',
+        definition=u'''
+            BEGIN
+                IF value IS NOT NULL AND value <> '' AND LENGTH(value) > max_chars THEN
+                    RETURN ARRAY[[field_name, 'This field has a maximum length of {} characters.\uF8FF' || max_chars]];
+                END IF;
+                RETURN NULL;
+            END;
+        ''')
+    lc.action.datastore_function_create(
+        name=u'trim_lead_trailing',
+        or_replace=True,
+        arguments=[
+            {u'argname': u'value', u'argtype': u'text'}],
+        rettype=u'text',
+        definition=u'''
+            DECLARE
+                value_trimmed text := trim(both E'\t\n\x0b\x0c\r ' from value);
+            BEGIN
+                RETURN value_trimmed;
             END;
         ''')
     # return record with .clean (normalized value) and .error
@@ -128,16 +280,16 @@ def update_triggers():
             {u'argname': u'clean', u'argtype': u'_text', u'argmode': u'out'},
             {u'argname': u'error', u'argtype': u'_text', u'argmode': u'out'}],
         rettype=u'record',
-        definition=r'''
+        definition='''
             DECLARE
                 bad_choices text := array_to_string(ARRAY(
                     SELECT c FROM(SELECT unnest(value) as c) u
                     WHERE NOT c = ANY(choices)), ',');
             BEGIN
                 IF bad_choices <> '' THEN
-                    -- \t is used when converting errors to string
-                    error := ARRAY[[field_name, 'Invalid choice: "'
-                        || replace(bad_choices, E'\t', ' ') || '"']];
+                    -- \\t is used when converting errors to string
+                    error := ARRAY[[field_name, 'Invalid choice: {}\uF8FF"'
+                        || replace(bad_choices, E'\\t', ' ') || '"']];
                 END IF;
                 clean := ARRAY(
                     SELECT c FROM(SELECT unnest(choices) as c) u
@@ -158,72 +310,6 @@ def update_triggers():
                     RETURN ARRAY[[field_name, 'This field must be empty']];
                 END IF;
                 RETURN NULL;
-            END;
-        ''')
-
-    lc.action.datastore_function_create(
-        name=u'no_surrounding_whitespace_error',
-        or_replace=True,
-        arguments=[
-            {u'argname': u'value', u'argtype': u'text'},
-            {u'argname': u'field_name', u'argtype': u'text'}],
-        rettype=u'_text',
-        definition=u'''
-            BEGIN
-                IF trim(both E'\t\n\x0b\x0c\r ' from value) <> value THEN
-                    RETURN ARRAY[[field_name, 'This field must not have surrounding whitespace']];
-                END IF;
-                RETURN NULL;
-            END;
-        ''')
-
-    lc.action.datastore_function_create(
-        name=u'year_optional_month_day_error',
-        or_replace=True,
-        arguments=[
-            {u'argname': u'value', u'argtype': u'text'},
-            {u'argname': u'field_name', u'argtype': u'text'}],
-        rettype=u'_text',
-        definition=u'''
-            DECLARE
-                ymd _text := regexp_matches(value,
-                    '(\d\d\d\d)(?:-(\d\d)(?:-(\d\d))?)?');
-            BEGIN
-                IF ymd IS NULL THEN
-                    RETURN ARRAY[[field_name, 'Dates must be in YYYY-MM-DD format']];
-                END IF;
-                IF ymd[3] IS NOT NULL THEN
-                    PERFORM value::date;
-                ELSIF NOT ymd[2]::int BETWEEN 1 AND 12 THEN
-                    RETURN ARRAY[[field_name, 'Dates must be in YYYY-MM-DD format']];
-                END IF;
-                RETURN NULL;
-            EXCEPTION
-                WHEN others THEN
-                    RETURN ARRAY[[field_name, 'Dates must be in YYYY-MM-DD format']];
-            END;
-        ''')
-
-    lc.action.datastore_function_create(
-        name=u'choices_from',
-        or_replace=True,
-        arguments=[
-            {u'argname': u'value', u'argtype': u'_text'},
-            {u'argname': u'choices', u'argtype': u'_text'},
-            {u'argname': u'field_name', u'argtype': u'text'}],
-        rettype=u'_text',
-        definition=u'''
-            DECLARE
-                bad_choices text := array_to_string(ARRAY(
-                    SELECT c FROM(SELECT unnest(value) as c) u
-                    WHERE NOT c = ANY(choices)), ',');
-            BEGIN
-                IF bad_choices <> '' THEN
-                    RAISE EXCEPTION 'Invalid choice for %: "%"', field_name, bad_choices;
-                END IF;
-                RETURN ARRAY(
-                    SELECT c FROM(SELECT unnest(choices) as c) u
-                    WHERE c = ANY(value));
             END;
         ''')
 
@@ -308,42 +394,6 @@ def update_triggers():
             END;
             ''')
 
-    inventory_choices = h.recombinant_choice_fields('inventory')
-    lc.action.datastore_function_create(
-        name=u'inventory_trigger',
-        or_replace=True,
-        rettype=u'trigger',
-        definition=u'''
-            DECLARE
-                errors text[][] := '{{}}';
-                crval RECORD;
-            BEGIN
-                errors := errors || required_error(NEW.ref_number, 'ref_number');
-                errors := errors || no_surrounding_whitespace_error(NEW.ref_number, 'ref_number');
-                errors := errors || required_error(NEW.title_en, 'title_en');
-                errors := errors || required_error(NEW.title_fr, 'title_fr');
-                -- errors := errors || required_error(NEW.description_en, 'description_en');
-                -- errors := errors || required_error(NEW.description_fr, 'description_fr');
-                -- errors := errors || required_error(NEW.date_published, 'date_published');
-                -- errors := errors || year_optional_month_day_error(NEW.date_published, 'date_published');
-                -- errors := errors || required_error(NEW.language, 'language');
-                -- errors := errors || choice_error(NEW.language, {language}, 'language');
-                -- errors := errors || required_error(NEW.size, 'size');
-                NEW.eligible_for_release := truthy_to_yn(NEW.eligible_for_release);
-                -- errors := errors || required_error(NEW.eligible_for_release, 'eligible_for_release');
-                -- errors := errors || choice_error(NEW.eligible_for_release, {eligible_for_release}, 'eligible_for_release');
-                -- errors := errors || required_error(NEW.program_alignment_architecture_en, 'program_alignment_architecture_en');
-                -- errors := errors || required_error(NEW.program_alignment_architecture_fr, 'program_alignment_architecture_fr');
-                -- errors := errors || required_error(NEW.date_released, 'date_released');
-                -- errors := errors || year_optional_month_day_error(NEW.date_released, 'date_released');
-                IF errors = '{{}}' THEN
-                    RETURN NEW;
-                END IF;
-                RAISE EXCEPTION E'TAB-DELIMITED\t%', array_to_string(errors, E'\t');
-            END;
-            ''',
-        )
-
     lc.action.datastore_function_create(
         name=u'protect_user_votes_trigger',
         or_replace=True,
@@ -394,16 +444,24 @@ def update_triggers():
             ''')
 
     lc.action.datastore_function_create(
-        name=u'integer_or_na_nd_error',
+        name=u'int_na_nd_error',
         or_replace=True,
         arguments=[
             {u'argname': u'value', u'argtype': u'text'},
             {u'argname': u'field_name', u'argtype': u'text'}],
         rettype=u'_text',
         definition=u'''
+            DECLARE
+                value text := value;
             BEGIN
-                IF value <> 'NA' AND value <> 'ND' AND NOT value ~ '^[0-9]+$' THEN
-                    RETURN ARRAY[[field_name, 'This field must be NA or an integer']];
+                IF value ~ '^-?[0-9]+$' THEN
+                    IF value::int < 0 THEN
+                        RETURN ARRAY[[field_name, 'This value must not be negative']];
+                    END IF;
+                ELSE
+                    IF value != 'NA' AND value != 'ND' THEN
+                        RETURN ARRAY[[field_name, 'This field must be either a number, "NA", or "ND"']];
+                    END IF;
                 END IF;
                 RETURN NULL;
             END;

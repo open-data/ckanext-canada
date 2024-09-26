@@ -50,3 +50,8 @@ user_lock:
   contents:
     - canada_internal_users.js
   output: canada_internal/%(version)s_canada_internal_users.js
+
+recombinant_webforms:
+  contents:
+    - recombinant_webform.js
+  output: canada_internal/%(version)s_recombinant_webform.js

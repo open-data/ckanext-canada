@@ -6,6 +6,7 @@ from logging import getLogger
 import csv
 from six import string_types
 from datetime import datetime, timedelta
+import traceback
 
 from ckan.plugins.toolkit import (
     abort,
@@ -58,7 +59,7 @@ from ckan.logic import (
 
 from ckanext.recombinant.datatypes import canonicalize
 from ckanext.recombinant.tables import get_chromo
-from ckanext.recombinant.errors import RecombinantException
+from ckanext.recombinant.errors import RecombinantException, format_trigger_error
 from ckanext.recombinant.helpers import recombinant_primary_key_fields
 
 from ckanapi import LocalCKAN
@@ -299,22 +300,27 @@ def fivehundred():
     raise IntentionalServerError()
 
 
-def _form_choices_prefix_code(field_name, chromo):
-    for field in chromo['fields']:
-        if field['datastore_id'] == field_name and \
-                field.get('form_choices_prefix_code', False):
-            return True
-    return False
-
-
-def _get_choice_fields(resource_name, chromo):
+def _get_choice_fields(resource_name):
     separator = ' : ' if h.lang() == 'fr' else ': '
-    return {
-        datastore_id: [
-            {'value': k,
-             'label': k + separator + v if _form_choices_prefix_code(datastore_id, chromo) else v
-             } for (k, v) in choices]
-        for datastore_id, choices in h.recombinant_choice_fields(resource_name).items()}
+    choice_fields = {}
+    for datastore_id, choices in h.recombinant_choice_fields(resource_name).items():
+        f = h.recombinant_get_field(resource_name, datastore_id)
+        form_choices_prefix_code = f.get('form_choices_prefix_code', False)
+        form_choice_keys_only = f.get('form_choice_keys_only', False)
+        if datastore_id not in choice_fields:
+            choice_fields[datastore_id] = []
+        for (k, v) in choices:
+            if form_choice_keys_only:
+                choice_fields[datastore_id].append({'value': k,
+                                                    'label': k})
+                continue
+            elif form_choices_prefix_code:
+                choice_fields[datastore_id].append({'value': k,
+                                                    'label': k + separator + v})
+                continue
+            choice_fields[datastore_id].append({'value': k,
+                                                'label': v})
+    return choice_fields
 
 
 @canada_views.route('/group/bulk_process/<id>', methods=['GET', 'POST'])
@@ -353,7 +359,7 @@ def create_pd_record(owner_org, resource_name):
     except NotAuthorized:
         return abort(403, _('Unauthorized to create a resource for this package'))
 
-    choice_fields = _get_choice_fields(resource_name, chromo)
+    choice_fields = _get_choice_fields(resource_name)
     pk_fields = aslist(chromo['datastore_primary_key'])
 
     if request.method == 'POST':
@@ -382,7 +388,7 @@ def create_pd_record(owner_org, resource_name):
             if 'records' in ve.error_dict:
                 try:
                     err = dict({
-                        k: [_(e) for e in v]
+                        k: list(format_trigger_error(v))
                         for (k, v) in ve.error_dict['records'][0].items()
                     }, **err)
                 except AttributeError:
@@ -391,7 +397,11 @@ def create_pd_record(owner_org, resource_name):
                             k: [_("This record already exists")]
                             for k in pk_fields
                         }, **err)
+                    elif 'violates foreign key constraint' in ve.error_dict['records'][0]:
+                        error_message = chromo.get('datastore_constraint_errors', {}).get('upsert', 'Something went wrong, your record was not created. Please contact support.')
+                        error_summary = _(error_message)
                     else:
+                        log.warning('Failed to create %s record for org %s:\n%s', resource_name, owner_org, traceback.format_exc())
                         error_summary = _('Something went wrong, your record was not created. Please contact support.')
             elif ve.error_dict.get('info', {}).get('pgcode', '') == '23505':
                 err = dict({
@@ -399,6 +409,7 @@ def create_pd_record(owner_org, resource_name):
                     for k in pk_fields
                 }, **err)
             else:
+                log.warning('Failed to create %s record for org %s:\n%s', resource_name, owner_org, traceback.format_exc())
                 error_summary = _('Something went wrong, your record was not created. Please contact support.')
 
         if err or error_summary:
@@ -454,7 +465,7 @@ def update_pd_record(owner_org, resource_name, pk):
     except NotAuthorized:
         abort(403, _('Unauthorized to update dataset'))
 
-    choice_fields = _get_choice_fields(resource_name, chromo)
+    choice_fields = _get_choice_fields(resource_name)
     pk_fields = aslist(chromo['datastore_primary_key'])
     pk_filter = dict(zip(pk_fields, pk))
 
@@ -496,10 +507,11 @@ def update_pd_record(owner_org, resource_name, pk):
         except ValidationError as ve:
             try:
                 err = dict({
-                    k: [_(e) for e in v]
+                    k: list(format_trigger_error(v))
                     for (k, v) in ve.error_dict['records'][0].items()
                 }, **err)
             except AttributeError:
+                log.warning('Failed to update %s record for org %s:\n%s', resource_name, owner_org, traceback.format_exc())
                 error_summary = _('Something went wrong, your record was not updated. Please contact support.')
 
         if err or error_summary:
@@ -526,7 +538,7 @@ def update_pd_record(owner_org, resource_name, pk):
 
     data = {}
     for f in chromo['fields']:
-        if not f.get('import_template_include', True):
+        if not f.get('import_template_include', True) or f.get('published_resource_computed_field', False):
             continue
         val = record[f['datastore_id']]
         if val and f.get('datastore_type') == 'money':
@@ -638,6 +650,15 @@ def delete_selected_records(resource_id):
                 records_deleted += 1
             except NotFound:
                 h.flash_error(_('Not found') + ' ' + str(filter))
+            except ValidationError as e:
+                if 'foreign_constraints' in e.error_dict:
+                    chromo = get_chromo(res['name'])
+                    error_message = chromo.get('datastore_constraint_errors', {}).get('delete', e.error_dict['foreign_constraints'][0])
+                    h.flash_error(_(error_message))
+                    return h.redirect_to('recombinant.preview_table',
+                                         resource_name=res['name'],
+                                         owner_org=org['name'])
+                raise
 
     h.flash_success(_("{num} deleted.").format(num=records_deleted))
 
@@ -665,7 +686,7 @@ def _clean_check_type_errors(post_data, fields, pk_fields, choice_fields):
 
     for f in fields:
         f_id = f['datastore_id']
-        if not f.get('import_template_include', True):
+        if not f.get('import_template_include', True) or f.get('published_resource_computed_field', False):
             continue
         else:
             val = post_data.get(f['datastore_id'], '')
@@ -844,7 +865,13 @@ def datatable(resource_name, resource_id):
         })
 
     can_edit = h.check_access('resource_update', {'id': resource_id})
-    cols = [f['datastore_id'] for f in chromo['fields']]
+    cols = []
+    fids = []
+    for f in chromo['fields']:
+        if f.get('published_resource_computed_field', False):
+            continue
+        cols.append(f['datastore_id'])
+        fids.append(f['datastore_id'])
     prefix_cols = 2 if chromo.get('edit_form', False) and can_edit else 1  # Select | (Edit) | ...
 
     sort_list = []
@@ -875,7 +902,6 @@ def datatable(resource_name, resource_id):
     if chromo.get('edit_form', False) and can_edit:
         res = lc.action.resource_show(id=resource_id)
         pkg = lc.action.package_show(id=res['package_id'])
-        fids = [f['datastore_id'] for f in chromo['fields']]
         pkids = [fids.index(k) for k in aslist(chromo['datastore_primary_key'])]
         for row in aadata:
             row.insert(1, (
