@@ -1275,8 +1275,8 @@ resources:
     excel_required: false
     format_type: Free text
     validation:
-      en: This field has a maximum length of 100 characters.
-      fr: Ce champ ne peut excéder une longueur maximale de 100 caractères.
+      en: This field has a maximum length of 1500 characters.
+      fr: Ce champ ne peut excéder une longueur maximale de 1500 caractères.
     occurrence: Single
     datastore_type: text
     max_chars: 1500
