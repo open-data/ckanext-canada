@@ -737,9 +737,9 @@ class TestRecombinantWebForms(CanadaTestBase):
                             extra_environ=self.extra_environ_editor,
                             follow_redirects=True)
 
-        assert 'year: Please enter a valid year' in response.body
-        assert 'month: Please enter a month number from 1-12' in response.body
-        assert 'pages: This value must not be negative' in response.body
+        assert 'Year: Please enter a valid year' in response.body
+        assert 'Month (1-12): Please enter a month number from 1-12' in response.body
+        assert 'Number of Pages: This value must not be negative' in response.body
 
         dataset_form = self._filled_upload_form(filestream=good_template_file,
                                                 action='validate')
@@ -772,9 +772,9 @@ class TestRecombinantWebForms(CanadaTestBase):
                             extra_environ=self.extra_environ_system,
                             follow_redirects=True)
 
-        assert 'year: Please enter a valid year' in response.body
-        assert 'month: Please enter a month number from 1-12' in response.body
-        assert 'pages: This value must not be negative' in response.body
+        assert 'Year: Please enter a valid year' in response.body
+        assert 'Month (1-12): Please enter a month number from 1-12' in response.body
+        assert 'Number of Pages: This value must not be negative' in response.body
 
         dataset_form = self._filled_upload_form(filestream=good_template_file,
                                                 action='validate')
