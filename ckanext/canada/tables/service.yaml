@@ -2072,10 +2072,10 @@ resources:
     label:
       en: Was the target met
       fr: La cible était-elle atteinte
-    description:
+    # description:
       #TODO: get a description
-      en:
-      fr:
+      # en:
+      # fr:
     obligation: Optional
     datastore_type: text
     published_resource_computed_field: true
