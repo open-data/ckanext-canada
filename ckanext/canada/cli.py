@@ -355,17 +355,43 @@ def _copy_datasets(source, user, mirror=False, verbose=False):
             elif target_deleted:
                 action = 'updated'
                 reason = 'undeleting on target'
-                portal.action.package_update(**source_pkg)
-                for r in source_pkg['resources']:
-                    target_hash[r['id']] = r.get('hash')
-                action += _add_datastore_and_views(source_pkg, portal, target_hash, source, verbose=verbose)
+                try:
+                    portal.action.package_update(**source_pkg)
+                except ValidationError as e:
+                    #TODO: flag source package with failure
+                    #TODO: report errors to sysadmins??
+                    action += '\n package-update-failed for ' + package_id + ' ' + str(e)
+                    if verbose:
+                        action += '\n    Failed with ValidationError: %s' % traceback.format_exc()
+                    pass
+                else:
+                    for r in source_pkg['resources']:
+                        target_hash[r['id']] = r.get('hash')
+                    action += _add_datastore_and_views(source_pkg, portal, target_hash, source, verbose=verbose)
             elif target_pkg is None:
                 action = 'created'
-                portal.action.package_create(**source_pkg)
-                action += _add_datastore_and_views(source_pkg, portal, target_hash, source, verbose=verbose)
+                try:
+                    portal.action.package_create(**source_pkg)
+                except ValidationError as e:
+                    #TODO: flag source package with failure
+                    #TODO: report errors to sysadmins??
+                    action += '\n package-create-failed for ' + package_id + ' ' + str(e)
+                    if verbose:
+                        action += '\n    Failed with ValidationError: %s' % traceback.format_exc()
+                    pass
+                else:
+                    action += _add_datastore_and_views(source_pkg, portal, target_hash, source, verbose=verbose)
             elif source_pkg is None:
                 action = 'deleted'
-                portal.action.package_delete(id=package_id)
+                try:
+                    portal.action.package_delete(id=package_id)
+                except ValidationError as e:
+                    #TODO: flag source package with failure
+                    #TODO: report errors to sysadmins??
+                    action += '\n package-delete-failed for ' + package_id + ' ' + str(e)
+                    if verbose:
+                        action += '\n    Failed with ValidationError: %s' % traceback.format_exc()
+                    pass
             elif source_pkg == target_pkg:
                 action = 'unchanged'
                 reason = 'no difference found'
@@ -373,8 +399,17 @@ def _copy_datasets(source, user, mirror=False, verbose=False):
                 action = 'updated'
                 for r in target_pkg['resources']:
                     target_hash[r['id']] = r.get('hash')
-                portal.action.package_update(**source_pkg)
-                action += _add_datastore_and_views(source_pkg, portal, target_hash, source, verbose=verbose)
+                try:
+                    portal.action.package_update(**source_pkg)
+                except ValidationError as e:
+                    #TODO: flag source package with failure
+                    #TODO: report errors to sysadmins??
+                    action += '\n package-update-failed for ' + package_id + ' ' + str(e)
+                    if verbose:
+                        action += '\n    Failed with ValidationError: %s' % traceback.format_exc()
+                    pass
+                else:
+                    action += _add_datastore_and_views(source_pkg, portal, target_hash, source, verbose=verbose)
 
             sys.stdout.write(json.dumps([package_id, action, reason]) + '\n')
             sys.stdout.flush()
@@ -749,26 +784,36 @@ def _add_to_datastore(portal, resource, resource_details, t_hash, source_ds_url,
             action += '\n  DataStore does not exist for resource %s...trying to create it...' % resource['id']
         pass
 
-    portal.call_action('datastore_create',
-                       {"resource_id": resource['id'],
-                        "fields": resource_details['data_dict'],
-                        "force": True})
+    try:
+        portal.call_action('datastore_create',
+                        {"resource_id": resource['id'],
+                            "fields": resource_details['data_dict'],
+                            "force": True})
 
-    action += '\n  datastore-created for ' + resource['id']
+        action += '\n  datastore-created for ' + resource['id']
 
-    # load data
-    target_ds_url = str(datastore.get_write_engine().url)
-    cmd1 = subprocess.Popen(['pg_dump', source_ds_url, '-a', '-t', resource['id']], stdout=subprocess.PIPE)
-    cmd2 = subprocess.Popen(['psql', target_ds_url], stdin=cmd1.stdout, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-    out, err = cmd2.communicate()
-    action += ' data-loaded' if not err else ' data-load-failed'
-    if verbose:
-        if resource_details['data_dict']:
-            action += '\n    Using DataStore fields:'
-            for field in resource_details['data_dict']:
-                action += '\n      %s' % field['id']
-        else:
-            action += '\n    There are no DataStore fields!!!'
+        # load data
+        target_ds_url = str(datastore.get_write_engine().url)
+        cmd1 = subprocess.Popen(['pg_dump', source_ds_url, '-a', '-t', resource['id']], stdout=subprocess.PIPE)
+        cmd2 = subprocess.Popen(['psql', target_ds_url], stdin=cmd1.stdout, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        out, err = cmd2.communicate()
+        action += ' data-loaded' if not err else ' data-load-failed'
+        if verbose:
+            if resource_details['data_dict']:
+                action += '\n    Using DataStore fields:'
+                for field in resource_details['data_dict']:
+                    action += '\n      %s' % field['id']
+            else:
+                action += '\n    There are no DataStore fields!!!'
+
+    except ValidationError as e:
+        #TODO: flag source package with failure
+        #TODO: report errors to sysadmins??
+        action += '\n  datastore-create-failed for ' + resource['id'] + ' ' + str(e)
+        if verbose:
+            action += '\n    Failed with ValidationError: %s' % traceback.format_exc()
+        pass
+
     return action
 
 
@@ -786,6 +831,8 @@ def _add_views(portal, resource, resource_details, verbose=False):
                 portal.call_action(view_action, src_view)
                 action += '\n  ' + view_action + ' ' + src_view['id'] + ' for resource ' + resource['id']
             except ValidationError as e:
+                #TODO: flag source package with failure
+                #TODO: report errors to sysadmins??
                 action += '\n  ' + view_action + ' failed for view ' + src_view['id'] + ' for resource ' + resource['id']
                 if verbose:
                     action += '\n    Failed with ValidationError: %s' % e.error_dict
