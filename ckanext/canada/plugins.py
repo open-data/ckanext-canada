@@ -865,6 +865,8 @@ class DataGCCAForms(p.SingletonPlugin, DefaultDatasetForm):
                 validators.canada_output_none,
             'protect_registry_access':
                 validators.protect_registry_access,
+            'output_boolean_validator':
+                validators.output_boolean_validator,
             }
 
 

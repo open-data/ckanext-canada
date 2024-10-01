@@ -109,6 +109,11 @@
         <strong>{{ _('Record Modified:') }}</strong>
         {{ h.render_datetime(pkg.metadata_modified, '%Y-%m-%d') }}
       </li>
+      {# FIXME: pkg.out_of_sync output validator to real bool #}
+      <li class="list-group-item text-{{ 'success' if not pkg.out_of_sync else 'danger' }}">
+        <strong>{{ _('Last Sync:') }}</strong>
+        {{ h.render_datetime(pkg.last_sync_date, '%Y-%m-%d %H:%M') }}
+      </li>
       <li class="list-group-item">
         <strong>{{ _('Record ID:') }}</strong>
         {{ pkg.id }}
