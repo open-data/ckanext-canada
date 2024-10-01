@@ -5,7 +5,7 @@ import unicodedata
 
 from six import text_type
 
-from ckan.plugins.toolkit import _, get_action, ValidationError, ObjectNotFound
+from ckan.plugins.toolkit import _, get_action, ValidationError, ObjectNotFound, asbool
 from ckan.lib.navl.validators import StopOnError
 from ckan.authz import is_sysadmin
 from ckan import model
@@ -531,3 +531,8 @@ def protect_registry_access(key, data, errors, context):
                            " from '%s' to '%s'. This field is read-only." %
                            (original, value)))
         raise StopOnError
+
+
+def output_boolean_validator(value):
+    """Returns a boolean value"""
+    return asbool(value)

@@ -38,6 +38,7 @@ from ckanapi.cli.utils import completion_stats
 import ckanext.datastore.backend.postgres as datastore
 
 from ckanext.canada import triggers
+from ckanext.canada import model as canada_model
 
 BOM = "\N{bom}"
 
@@ -67,7 +68,10 @@ PACKAGE_TRIM_FIELDS = ['extras', 'metadata_modified', 'metadata_created',
             # FIXME: remove these when we can:
             'resource_type',
             # new in 2.3:
-            'creator_user_id']
+            'creator_user_id',
+            'last_sync_date',  # custom system field
+            'out_of_sync',  # custom system field
+            ]
 
 RESOURCE_TRIM_FIELDS = ['package_id', 'revision_id',
                 'revision_timestamp', 'cache_last_updated',
@@ -347,6 +351,10 @@ def _copy_datasets(source, user, mirror=False, verbose=False):
 
             target_hash = {}
 
+            failure_reason = ''
+            failure_trace = ''
+            update_sync_time = False
+
             if action == 'skip':
                 pass
             elif target_pkg is None and source_pkg is None:
@@ -355,17 +363,56 @@ def _copy_datasets(source, user, mirror=False, verbose=False):
             elif target_deleted:
                 action = 'updated'
                 reason = 'undeleting on target'
-                portal.action.package_update(**source_pkg)
-                for r in source_pkg['resources']:
-                    target_hash[r['id']] = r.get('hash')
-                action += _add_datastore_and_views(source_pkg, portal, target_hash, source, verbose=verbose)
+                try:
+                    portal.action.package_update(**source_pkg)
+                    update_sync_time = True
+                except ValidationError as e:
+                    failure_reason = 'package_update'
+                    failure_trace = traceback.format_exc()
+                    #TODO: test this
+                    action += '\n package-update-failed for ' + package_id + ' ' + str(e)
+                    if verbose:
+                        action += '\n    Failed with ValidationError: %s' % failure_trace
+                    pass
+                else:
+                    for r in source_pkg['resources']:
+                        target_hash[r['id']] = r.get('hash')
+                    #TODO: test this
+                    _action, failure_reason, failure_trace = _add_datastore_and_views(source_pkg, portal, target_hash, source, verbose=verbose)
+                    action += _action
+                    if failure_reason:
+                        update_sync_time = False
             elif target_pkg is None:
                 action = 'created'
-                portal.action.package_create(**source_pkg)
-                action += _add_datastore_and_views(source_pkg, portal, target_hash, source, verbose=verbose)
+                try:
+                    portal.action.package_create(**source_pkg)
+                    update_sync_time = True
+                except ValidationError as e:
+                    failure_reason = 'package_create'
+                    failure_trace = traceback.format_exc()
+                    #TODO: test this
+                    action += '\n package-create-failed for ' + package_id + ' ' + str(e)
+                    if verbose:
+                        action += '\n    Failed with ValidationError: %s' % failure_trace
+                    pass
+                else:
+                    #TODO: test this
+                    _action, failure_reason, failure_trace = _add_datastore_and_views(source_pkg, portal, target_hash, source, verbose=verbose)
+                    action += _action
+                    if failure_reason:
+                        update_sync_time = False
             elif source_pkg is None:
                 action = 'deleted'
-                portal.action.package_delete(id=package_id)
+                try:
+                    portal.action.package_delete(id=package_id)
+                except ValidationError as e:
+                    failure_reason = 'package_delete'
+                    failure_trace = traceback.format_exc()
+                    #TODO: test this
+                    action += '\n package-delete-failed for ' + package_id + ' ' + str(e)
+                    if verbose:
+                        action += '\n    Failed with ValidationError: %s' % failure_trace
+                    pass
             elif source_pkg == target_pkg:
                 action = 'unchanged'
                 reason = 'no difference found'
@@ -373,8 +420,45 @@ def _copy_datasets(source, user, mirror=False, verbose=False):
                 action = 'updated'
                 for r in target_pkg['resources']:
                     target_hash[r['id']] = r.get('hash')
-                portal.action.package_update(**source_pkg)
-                action += _add_datastore_and_views(source_pkg, portal, target_hash, source, verbose=verbose)
+                try:
+                    portal.action.package_update(**source_pkg)
+                    update_sync_time = True
+                except ValidationError as e:
+                    failure_reason = 'package_update'
+                    failure_trace = traceback.format_exc()
+                    #TODO: test this
+                    action += '\n package-update-failed for ' + package_id + ' ' + str(e)
+                    if verbose:
+                        action += '\n    Failed with ValidationError: %s' % failure_trace
+                    pass
+                else:
+                    #TODO: test this
+                    _action, failure_reason, failure_trace = _add_datastore_and_views(source_pkg, portal, target_hash, source, verbose=verbose)
+                    action += _action
+                    if failure_reason:
+                        update_sync_time = False
+
+            if failure_reason:
+                canada_model.PackageSync.upsert(package_id=package_id, reason_code=failure_reason, error=failure_trace)
+                action += '\n tagged-out-of-sync'
+                pkg_sync = {
+                    'id': package_id,
+                    'out_of_sync': True,
+                }
+                #TODO: how to get the source local CKAN here??
+                # get_action('package_patch')(_get_site_user_context(), pkg_sync)
+            elif update_sync_time:
+                canada_model.PackageSync.delete(package_id=package_id)
+                sync_time = datetime.now()
+                action += '\n synced %s' % sync_time
+                pkg_sync = {
+                    'id': package_id,
+                    'last_sync_date': sync_time,
+                    'out_of_sync': False,
+                }
+                portal.action.package_patch(**pkg_sync)
+                #TODO: how to get the source local CKAN here??
+                # get_action('package_patch')(_get_site_user_context(), pkg_sync)
 
             sys.stdout.write(json.dumps([package_id, action, reason]) + '\n')
             sys.stdout.flush()
@@ -702,14 +786,30 @@ def _trim_package(pkg):
 def _add_datastore_and_views(package, portal, res_hash, ds, verbose=False):
     # create datastore table and views for each resource of the package
     action = ''
+    failure_reason = ''
+    failure_trace = ''
     for resource in package['resources']:
         res_id = resource['id']
         if res_id in package.keys():
             if 'data_dict' in package[res_id].keys():
-                action += _add_to_datastore(portal, resource, package[res_id], res_hash, ds, verbose=verbose)
+                _action, _failure_reason, _failure_trace = _add_to_datastore(portal, resource, package[res_id], res_hash, ds, verbose=verbose)
+                action += _action
+                if not failure_reason:
+                    failure_reason = _failure_reason
+                    failure_trace = _failure_trace
+                else:
+                    failure_reason += ',%s' % _failure_reason
+                    failure_trace += '\n\n%s' % _failure_trace
             if 'views' in package[res_id].keys():
-                action += _add_views(portal, resource, package[res_id], verbose=verbose)
-    return action
+                _action, _failure_reason, _failure_trace = _add_views(portal, resource, package[res_id], verbose=verbose)
+                action += _action
+                if not failure_reason:
+                    failure_reason = _failure_reason
+                    failure_trace = _failure_trace
+                else:
+                    failure_reason += ',%s' % _failure_reason
+                    failure_trace += '\n\n%s' % _failure_trace
+    return action, failure_reason, failure_trace
 
 
 def _delete_datastore_and_views(package, portal):
@@ -732,6 +832,8 @@ def _delete_datastore_and_views(package, portal):
 
 def _add_to_datastore(portal, resource, resource_details, t_hash, source_ds_url, verbose=False):
     action = ''
+    failure_reason = ''
+    failure_trace = ''
     try:
         portal.call_action('datastore_search', {'resource_id': resource['id'], 'limit': 0})
         if t_hash.get(resource['id']) \
@@ -741,39 +843,61 @@ def _add_to_datastore(portal, resource, resource_details, t_hash, source_ds_url,
                 action += '\n  File hash and Data Dictionary has not changed, skipping DataStore for %s...' % resource['id']
             return action
         else:
-            portal.call_action('datastore_delete', {"id": resource['id'], "force": True})
-            action += '\n  datastore-deleted for ' + resource['id']
+            try:
+                portal.call_action('datastore_delete', {"id": resource['id'], "force": True})
+                action += '\n  datastore-deleted for ' + resource['id']
+            except ValidationError as e:
+                failure_reason = 'datastore_delete[resource_id=%s]' % resource['id']
+                failure_trace = traceback.format_exc()
+                #TODO: test this
+                action += '\n  datastore-create-failed for ' + resource['id'] + ' ' + str(e)
+                if verbose:
+                    action += '\n    Failed with ValidationError: %s' % failure_trace
+                pass
     except NotFound:
         # not an issue, resource does not exist in datastore
         if verbose:
             action += '\n  DataStore does not exist for resource %s...trying to create it...' % resource['id']
         pass
 
-    portal.call_action('datastore_create',
-                       {"resource_id": resource['id'],
-                        "fields": resource_details['data_dict'],
-                        "force": True})
+    try:
+        portal.call_action('datastore_create',
+                        {"resource_id": resource['id'],
+                            "fields": resource_details['data_dict'],
+                            "force": True})
 
-    action += '\n  datastore-created for ' + resource['id']
+        action += '\n  datastore-created for ' + resource['id']
 
-    # load data
-    target_ds_url = str(datastore.get_write_engine().url)
-    cmd1 = subprocess.Popen(['pg_dump', source_ds_url, '-a', '-t', resource['id']], stdout=subprocess.PIPE)
-    cmd2 = subprocess.Popen(['psql', target_ds_url], stdin=cmd1.stdout, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-    out, err = cmd2.communicate()
-    action += ' data-loaded' if not err else ' data-load-failed'
-    if verbose:
-        if resource_details['data_dict']:
-            action += '\n    Using DataStore fields:'
-            for field in resource_details['data_dict']:
-                action += '\n      %s' % field['id']
-        else:
-            action += '\n    There are no DataStore fields!!!'
-    return action
+        # load data
+        target_ds_url = str(datastore.get_write_engine().url)
+        cmd1 = subprocess.Popen(['pg_dump', source_ds_url, '-a', '-t', resource['id']], stdout=subprocess.PIPE)
+        cmd2 = subprocess.Popen(['psql', target_ds_url], stdin=cmd1.stdout, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        out, err = cmd2.communicate()
+        action += ' data-loaded' if not err else ' data-load-failed'
+        if verbose:
+            if resource_details['data_dict']:
+                action += '\n    Using DataStore fields:'
+                for field in resource_details['data_dict']:
+                    action += '\n      %s' % field['id']
+            else:
+                action += '\n    There are no DataStore fields!!!'
+
+    except ValidationError as e:
+        failure_reason = 'datastore_create[resource_id=%s]' % resource['id']
+        failure_trace = traceback.format_exc()
+        #TODO: test this
+        action += '\n  datastore-create-failed for ' + resource['id'] + ' ' + str(e)
+        if verbose:
+            action += '\n    Failed with ValidationError: %s' % failure_trace
+        pass
+
+    return action, failure_reason, failure_trace
 
 
 def _add_views(portal, resource, resource_details, verbose=False):
     action = ''
+    failure_reason = ''
+    failure_trace = ''
     target_views = portal.call_action('resource_view_list', {'id': resource['id']})
     for src_view in resource_details['views']:
         view_action = 'resource_view_create'
@@ -786,9 +910,12 @@ def _add_views(portal, resource, resource_details, verbose=False):
                 portal.call_action(view_action, src_view)
                 action += '\n  ' + view_action + ' ' + src_view['id'] + ' for resource ' + resource['id']
             except ValidationError as e:
-                action += '\n  ' + view_action + ' failed for view ' + src_view['id'] + ' for resource ' + resource['id']
+                failure_reason = view_action + '[resource_id=%s][view_id=%s]' % (resource['id'], src_view['id'])
+                failure_trace = traceback.format_exc()
+                #TODO: test this
+                action += '\n  ' + view_action + ' failed for view ' + src_view['id'] + ' for resource ' + resource['id'] + ' ' + str(e)
                 if verbose:
-                    action += '\n    Failed with ValidationError: %s' % e.error_dict
+                    action += '\n    Failed with ValidationError: %s' % failure_trace
                 pass
 
     for target_view in target_views:
@@ -799,10 +926,19 @@ def _add_views(portal, resource, resource_details, verbose=False):
                 break
         if to_delete:
             view_action = 'resource_view_delete'
-            portal.call_action(view_action, {'id':target_view['id']})
-            action += '\n  ' + view_action + ' ' + src_view['id'] + ' for resource ' + resource['id']
+            try:
+                portal.call_action(view_action, {'id':target_view['id']})
+                action += '\n  ' + view_action + ' ' + src_view['id'] + ' for resource ' + resource['id']
+            except ValidationError as e:
+                failure_reason = view_action + '[resource_id=%s][view_id=%s]' % (resource['id'], src_view['id'])
+                failure_trace = traceback.format_exc()
+                #TODO: test this
+                action += '\n  ' + view_action + ' failed for view ' + src_view['id'] + ' for resource ' + resource['id'] + ' ' + str(e)
+                if verbose:
+                    action += '\n    Failed with ValidationError: %s' % failure_trace
+                pass
 
-    return action
+    return action, failure_reason, failure_trace
 
 
 def get_datastore_and_views(package, ckan_instance, verbose=False):
@@ -1900,3 +2036,76 @@ def _drop_function(name, verbose=False):
             click.echo('Failed to drop function: {0}\n{1}'.format(
                 name, str(datastore._programming_error_summary(pe))), err=True)
         pass
+
+
+@canada.command(short_help="Sets the last_sync_date field on the Registry.")
+@click.option(
+    "-p",
+    "--portal",
+    help="Remote URI to the CKAN Portal",
+    required=True,
+)
+@click.option(
+    "-v",
+    "--verbose",
+    is_flag=True,
+    help="Increase verbosity",
+)
+def set_last_sync_date(portal, verbose=False):
+    """Fetches latest metadata_modified date from the Portal source, and sets the Registry last_sync_date."""
+    results = True
+    counter = 0
+    batch_size = 1000
+    registry_ckan = LocalCKAN()
+    portal_ckan = RemoteCKAN(portal)
+    while results:
+        _packages = portal_ckan.action.package_search(**{"q": "*:*",
+                                                        "start": counter,
+                                                        "rows": batch_size,
+                                                        "include_private": False})['results']
+        if _packages:
+            if verbose:
+                click.echo("Traversing %s packages to set last_sync_date." % len(_packages))
+            counter += len(_packages)
+            for _package in _packages:
+                package_modified = datetime.strptime(_package.get('metadata_modified'), "%Y-%m-%dT%H:%M:%S.%f")
+                modified = package_modified
+                for _resource in _package.get('resources', []):
+                    resource_modified = datetime.strptime(_resource.get('metadata_modified'), "%Y-%m-%dT%H:%M:%S.%f")
+                    modified = max([modified, resource_modified])
+                last_sync_date = datetime.strftime(modified, "%Y-%m-%dT%H:%M:%S.%f") if modified else None
+                pkg_sync = {
+                    'id': _package['id'],
+                    'last_sync_date': last_sync_date,
+                    'out_of_sync': False,
+                    'metadata_modified': _package.get('metadata_modified'),
+                }
+                try:
+                    #FIXME: prevent activity creation and metadata_modified??
+                    context = _get_site_user_context()
+                    context['_validation_performed'] = True
+                    registry_ckan.call_action('package_patch', data_dict=pkg_sync, context=context)
+                    if verbose:
+                        click.echo('Set Package %s last_sync_date to %s.' % (_package['id'], last_sync_date))
+                except NotFound:
+                    if verbose:
+                        click.echo('Package %s does not exist on Registry. Skipping...' % _package['id'])
+                    pass
+        else:
+            results = False
+    click.echo('Done!')
+
+
+@canada.command(short_help="Reinitalize database tables.")
+def init_db():
+    """Reinitalize database tables."""
+    no_exist = canada_model.tables_no_exist()
+    if not no_exist:
+        for table in canada_model.tables_exist():
+            click.echo("%s table already exist" % table.__tablename__)
+        sys.exit(0)
+
+    canada_model.create_tables(no_exist)
+
+    for table in no_exist:
+        click.echo("%s table created" % table.__tablename__)

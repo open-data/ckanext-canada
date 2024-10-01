@@ -56,6 +56,25 @@ sidebar_show_fields:
 #
 dataset_fields:
 
+# System Fields
+- field_name: last_sync_date
+  label:
+    en: Last Sync Date
+    fr: FR Last Sync Date FR
+  form_snippet: null
+  display_snippet: date.html
+  validators: ignore_missing ignore_not_sysadmin string_safe isodate no_future_date
+
+- field_name: out_of_sync
+  label:
+    en: Out of Sync with Portal
+    fr: FR Out of Sync with Portal FR
+  form_snippet: null
+  display_snippet: null
+  validators: ignore_missing ignore_not_sysadmin boolean_validator
+  #FIXME: output_validators not working...
+  output_validators: output_boolean_validator
+
 # our id + name fields are uuids and always equal
 - preset: canada_dataset_id
 - preset: canada_dataset_name
