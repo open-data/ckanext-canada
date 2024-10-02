@@ -531,3 +531,28 @@ def protect_registry_access(key, data, errors, context):
                            " from '%s' to '%s'. This field is read-only." %
                            (original, value)))
         raise StopOnError
+
+
+def canada_harvester_id(value):
+    """Forces value for singular harvester for Portal Sync."""
+    return 'portal_sync_harvester'
+
+
+def canada_harvester_type(value):
+    """Forces value for singular harvester for Portal Sync."""
+    return 'harvest'
+
+
+def canada_harvester_source_type(value):
+    """Forces value for singular harvester for Portal Sync."""
+    return 'portal_sync'
+
+
+def canada_harvester_url(value):
+    """Forces value for singular harvester for Portal Sync."""
+    return 'registry'
+
+
+def canada_harvester_title(value):
+    """Forces value for singular harvester for Portal Sync."""
+    return _('Portal Sync')

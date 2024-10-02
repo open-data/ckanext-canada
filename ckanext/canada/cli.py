@@ -11,6 +11,7 @@ from io import StringIO, BytesIO
 import gzip
 import requests
 from collections import defaultdict
+from sqlalchemy.exc import ProgrammingError
 
 from contextlib import contextmanager
 from urllib.request import URLError
@@ -28,6 +29,10 @@ from ckanapi import (
     NotAuthorized,
     CKANAPIError
 )
+
+from ckan.plugins import plugin_loaded, load, unload
+from ckan.cli.db import _run_migrations
+from ckanext.harvest.model import HarvestObject
 
 import ckan.plugins.toolkit as toolkit
 from ckan.logic.validators import isodate
@@ -1899,4 +1904,46 @@ def _drop_function(name, verbose=False):
         if verbose:
             click.echo('Failed to drop function: {0}\n{1}'.format(
                 name, str(datastore._programming_error_summary(pe))), err=True)
+        pass
+
+
+@canada.command(short_help="Creates the Portal Sync Harvester if it does not already exist.")
+def init_portal_harvester():
+    """Creates the Portal Sync Harvester if it does not already exist."""
+
+    # check to see if the harvet_object table exists.
+    # bad workaround, but subclassing a plugin does not allow
+    # us to run migrations on the parent plugin.
+    try:
+        model.Session.query(HarvestObject).first()
+        _success_message('Harvest database tables already exist.')
+    except ProgrammingError as e:
+        _error_message('Harvest database tables not initialized, creating them now...')
+        if 'psycopg2.errors.UndefinedTable' in str(e):
+            if plugin_loaded('canada_harvest'):
+                unload('canada_harvest')
+            if not plugin_loaded('harvest'):
+                load('harvest')
+
+            _run_migrations(plugin='harvest', version='head')
+
+            if plugin_loaded('harvest'):
+                unload('harvest')
+            if not plugin_loaded('canada_harvest'):
+                load('canada_harvest')
+            _success_message('Harvest database tables initialized.')
+        pass
+
+    try:
+        get_action('package_show')(_get_site_user_context(), {'id': 'portal_sync_harvester'})
+        _success_message('Portal Sync Harvester already exists.')
+    except NotFound:
+        _error_message('Portal Sync Harvester does not exist, creating it now...')
+        get_action('package_create')(_get_site_user_context(),
+                                     {'id': 'portal_sync_harvester',
+                                      'name': 'portal_sync_harvester',
+                                      'type': 'harvest',
+                                      'source_type': 'portal_sync',
+                                      'url': 'registry',})
+        _success_message('Created the Portal Sync Harvester.')
         pass

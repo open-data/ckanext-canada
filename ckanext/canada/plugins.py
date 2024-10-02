@@ -8,6 +8,7 @@ from ckan.lib.plugins import DefaultDatasetForm, DefaultTranslation
 import ckan.lib.helpers as hlp
 from ckan.logic import validators as logic_validators
 from ckanext.datastore.interfaces import IDataDictionaryForm
+from ckan.authz import is_sysadmin
 
 from ckan.lib.app_globals import set_app_global
 from ckan.plugins.core import plugin_loaded
@@ -20,7 +21,8 @@ from ckan.plugins.toolkit import (
     ObjectNotFound,
     _,
     get_validator,
-    request
+    request,
+    abort,
 )
 
 from ckanext.canada import validators
@@ -41,6 +43,7 @@ import ckan.lib.formatters as formatters
 from flask import Blueprint
 from ckanext.scheming.plugins import SchemingDatasetsPlugin
 from ckanext.security.plugin import CkanSecurityPlugin
+from ckanext.harvest.plugin import Harvest
 from ckanext.canada.view import (
     canada_views,
     CanadaDatasetEditView,
@@ -185,6 +188,114 @@ class CanadaSecurityPlugin(CkanSecurityPlugin):
             canada_security_upload_type=validators.canada_security_upload_type,
             canada_security_upload_presence=validators.canada_security_upload_presence,
         )
+
+
+class CanadaHarvestPlugin(Harvest):
+    """
+    Subclass ckanext.harvest.plugin:Harvest to modify Harvest plugin.
+    """
+    p.implements(p.IValidators, inherit=True)
+
+
+    # IValidators
+    def get_validators(self):
+        return {'canada_harvester_id':
+                    validators.canada_harvester_id,
+                'canada_harvester_type':
+                    validators.canada_harvester_type,
+                'canada_harvester_source_type':
+                    validators.canada_harvester_source_type,
+                'canada_harvester_url':
+                    validators.canada_harvester_url,
+                'canada_harvester_title':
+                    validators.canada_harvester_title,}
+
+
+    #IBlueprint
+    def get_blueprint(self):
+        if self._not_sysadmin():
+            return []
+        return super(CanadaHarvestPlugin, self).get_blueprint()
+
+
+    def _not_sysadmin(self, contextual_user=None):
+        if not contextual_user and has_request_context():
+            contextual_user = g.user if hasattr(g, 'user') else None
+        return not contextual_user or not is_sysadmin(contextual_user)
+
+
+    def _redirect_harvest_dataset_endpoints(self):
+        if self._not_sysadmin():
+            return abort(404)
+
+
+    #IDatasetForm
+    def prepare_dataset_blueprint(self, package_type, blueprint):
+        # type: (str,Blueprint) -> Blueprint
+        # redirect Harvest endpoints accessed from /harvest/
+        if package_type == 'harvest':
+            blueprint.before_request(self._redirect_harvest_dataset_endpoints)
+        return blueprint
+
+
+    #IDatasetForm
+    def prepare_resource_blueprint(self, package_type, blueprint):
+        # type: (str,Blueprint) -> Blueprint
+        # redirect Harvest endpoints accessed from /harvest/
+        if package_type == 'harvest':
+            blueprint.before_request(self._redirect_harvest_dataset_endpoints)
+        return blueprint
+
+
+    #IDatasetForm
+    def validate(self, context, data_dict, schema, action):
+        if data_dict.get('type') == 'harvest' and self._not_sysadmin(context.get('user')):
+            return data_dict, {'type': [
+                "Unsupported dataset type: {t}".format(t=data_dict.get('type'))]}
+
+
+    #IDatasetForm
+    def create_package_schema(self):
+        canada_harvester_id = get_validator('canada_harvester_id')
+        canada_harvester_type = get_validator('canada_harvester_type')
+        canada_harvester_source_type = get_validator('canada_harvester_id')
+        canada_harvester_url = get_validator('canada_harvester_url')
+
+        return {
+            'id': [canada_harvester_id],
+            'name': [canada_harvester_id],
+            'type': [canada_harvester_type],
+            'source_type': [canada_harvester_source_type],
+            'url': [canada_harvester_url],
+        }
+
+
+    #IDatasetForm
+    def update_package_schema(self):
+        return self.create_package_schema()
+
+
+    #IDatasetForm
+    def show_package_schema(self):
+        ignore = get_validator('ignore')
+        not_empty = get_validator('not_empty')
+        package_id_exists = get_validator('package_id_exists')
+        canada_harvester_title = get_validator('canada_harvester_title')
+        #TODO: chained package_show and return only the fields we need
+        return {
+            'id': [not_empty, package_id_exists],
+            'name': [not_empty],
+            'type': [not_empty],
+            'source_type': [not_empty],
+            'url': [not_empty],
+            'title': [canada_harvester_title],
+            '__extras': [ignore],
+            'resources': [ignore],
+            'tags': [ignore],
+            'groups': [ignore],
+            'relationships_as_subject': [ignore],
+            'relationships_as_object': [ignore],
+        }
 
 
 class CanadaDatasetsPlugin(SchemingDatasetsPlugin):
