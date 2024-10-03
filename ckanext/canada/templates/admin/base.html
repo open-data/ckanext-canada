@@ -15,6 +15,9 @@
     {{ h.build_nav_icon('admin.trash', _('Trash'), icon='trash-o') }}
     {{ h.build_nav_icon('canada.ckanadmin_publish', _('Publish Records'), icon='cloud-upload') }}
     {{ h.build_nav_icon('canada.ckanadmin_job_queue', _('Job Queue'), icon='tasks') }}
+    {% if h.plugin_loaded('canada_harvest') %}
+      {{ h.build_nav_icon('harvester.admin', _('Portal Sync'), id='portal_sync_harvester', icon='refresh') }}
+    {% endif %}
     {{ h.build_extra_admin_nav() }}
   {% else %}
     {{ super() }}

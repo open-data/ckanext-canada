@@ -68,6 +68,7 @@ from flask import Blueprint, make_response
 
 from ckanext.canada.urlsafe import url_part_unescape, url_part_escape
 from ckanext.canada.helpers import canada_date_str_to_datetime
+from ckanext.canada.harvesters import PORTAL_SYNC_ID
 
 from io import StringIO
 

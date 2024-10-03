@@ -4,6 +4,8 @@ from ckan import plugins
 
 from ckanext.harvest.interfaces import IHarvester
 
+PORTAL_SYNC_ID = 'portal_sync_harvester'
+
 
 class PortalSync(plugins.SingletonPlugin):
     """

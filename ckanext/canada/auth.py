@@ -51,3 +51,8 @@ def organization_list(context, data_dict):
 
 def organization_show(context, data_dict):
     return {'success': bool(context.get('user'))}
+
+
+def harvest_log_list(context, data_dict):
+    """Only sysadmins can view harvest logs."""
+    return {'success': False}

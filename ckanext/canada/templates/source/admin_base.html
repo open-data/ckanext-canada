@@ -1,0 +1,19 @@
+{% ckan_extends %}
+
+{% block secondary_content %}
+  <section class="panel panel-info">
+    <header class="panel-heading">
+      <h3 class="panel-title">
+        <i class="fa fa-info-circle"></i>&nbsp;{{ _('Portal Sync') }}
+      </h3>
+    </header>
+    <div class="panel-body">
+      <p>{{ _("View the current Portal Sync queue, running jobs, and failed syncs.") }}</p>
+    </div>
+  </section>
+{% endblock %}
+
+{% block page_header_tabs %}
+  {{ h.build_nav_icon('harvester.admin', _('Dashboard'), id=harvest_source.name, icon='dashboard') }}
+  {{ h.build_nav_icon('harvester.job_list', _('Jobs'), source=harvest_source.name, icon='reorder') }}
+{% endblock %}

@@ -32,7 +32,7 @@ from ckanapi import (
 
 from ckan.plugins import plugin_loaded, load, unload
 from ckan.cli.db import _run_migrations
-from ckanext.harvest.model import HarvestObject
+from ckanext.harvest.model import HarvestObject, HarvestSource
 
 import ckan.plugins.toolkit as toolkit
 from ckan.logic.validators import isodate
@@ -43,6 +43,7 @@ from ckanapi.cli.utils import completion_stats
 import ckanext.datastore.backend.postgres as datastore
 
 from ckanext.canada import triggers
+from ckanext.canada.harvesters import PORTAL_SYNC_ID
 
 BOM = "\N{bom}"
 
@@ -1908,7 +1909,9 @@ def _drop_function(name, verbose=False):
 
 
 @canada.command(short_help="Creates the Portal Sync Harvester if it does not already exist.")
-def init_portal_harvester():
+@click.option('-f', '--refresh', is_flag=True, type=click.BOOL, help='Forces the refresh of all the source objects in the database.')
+@click.option('-q', '--quiet', is_flag=True, type=click.BOOL, help='Suppresses human inspection.')
+def init_portal_harvester(refresh=False, quiet=False):
     """Creates the Portal Sync Harvester if it does not already exist."""
 
     # check to see if the harvet_object table exists.
@@ -1934,16 +1937,47 @@ def init_portal_harvester():
             _success_message('Harvest database tables initialized.')
         pass
 
+    if refresh:
+        if not quiet:
+            click.confirm("\nAre you sure you want purge the existing Portal Sync Harvester? "
+                          "This will permanently delete everything relating to the harvester from the database", abort=True)
+
+        _success_message('Refreshing harvest source objects in the database...')
+        context = _get_site_user_context()
+        context['clear_source'] = True
+        try:
+            get_action('harvest_source_delete')(context, {'id': PORTAL_SYNC_ID})
+            _success_message('Successfully trashed harvest source objects.')
+        except NotFound:
+            _error_message('Portal Sync Harvester does not exist. Skipping attempted trashing...')
+            pass
+
+        # purge remaining objects from the database
+        model.Session.query(HarvestObject).filter(HarvestObject.id == PORTAL_SYNC_ID).delete()
+        model.Session.query(HarvestSource).filter(HarvestSource.id == PORTAL_SYNC_ID).delete()
+        # harvest_source_delete calls package_delete
+        model.Session.query(model.PackageExtra).filter(model.PackageExtra.package_id == PORTAL_SYNC_ID).delete()
+        model.Session.query(model.Package).filter(model.Package.id == PORTAL_SYNC_ID).delete()
+        model.Session.commit()
+        _success_message('Successfully purged harvest source objects.')
+
     try:
-        get_action('package_show')(_get_site_user_context(), {'id': 'portal_sync_harvester'})
+        package = get_action('package_show')(_get_site_user_context(), {'id': PORTAL_SYNC_ID})
+        if package.get('state') != 'active':
+            raise NotFound
         _success_message('Portal Sync Harvester already exists.')
     except NotFound:
         _error_message('Portal Sync Harvester does not exist, creating it now...')
-        get_action('package_create')(_get_site_user_context(),
-                                     {'id': 'portal_sync_harvester',
-                                      'name': 'portal_sync_harvester',
-                                      'type': 'harvest',
-                                      'source_type': 'portal_sync',
-                                      'url': 'registry',})
+        pkg_dict = {
+            'type': 'harvest',
+            'id': PORTAL_SYNC_ID,
+            'name': PORTAL_SYNC_ID,
+            'title': 'Portal Sync',
+            'source_type': 'portal_sync',
+            'url': toolkit.config.get('ckan.site_url', 'registry'),
+            'source': 'registry',
+            'target': 'portal',
+        }
+        get_action('package_create')(_get_site_user_context(), pkg_dict)
         _success_message('Created the Portal Sync Harvester.')
         pass
