@@ -556,6 +556,9 @@ rebuild-reclassification: $(workdir)/filtered/reclassification.csv $(workdir)/fi
 	@$(echo_date) Rebuilding Position Reclassification...
 	$(ckan_command) -c $(portal_ini) pd rebuild reclassification --lenient --has-nil \
 	-f "$(workdir)/filtered/reclassification.csv" -f "$(workdir)/filtered/reclassification-nil.csv"
+	@$(echo_date) Rebuilding Advanced Search...
+	@$(oc_search) import_data_csv --csv "$(workdir)/filtered/reclassification.csv" --search reclassification
+	@$(oc_search) import_data_csv --csv "$(workdir)/filtered/reclassification-nil.csv" --search reclassification --nothing_to_report	
 
 $(workdir)/reclassification.csv:
 	$(ckan_command) -c $(registry_ini) $(combine) reclassification -d $(workdir)
