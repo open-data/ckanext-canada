@@ -43,7 +43,7 @@ from ckanapi.cli.utils import completion_stats
 import ckanext.datastore.backend.postgres as datastore
 
 from ckanext.canada import triggers
-from ckanext.canada.harvesters import PORTAL_SYNC_ID
+from ckanext.canada.harvesters import PORTAL_SYNC_ID, HARVESTER_ID
 
 BOM = "\N{bom}"
 
@@ -1908,11 +1908,11 @@ def _drop_function(name, verbose=False):
         pass
 
 
-@canada.command(short_help="Creates the Portal Sync Harvester if it does not already exist.")
+@canada.command(short_help="Creates harvest database tables.")
 @click.option('-f', '--refresh', is_flag=True, type=click.BOOL, help='Forces the refresh of all the source objects in the database.')
 @click.option('-q', '--quiet', is_flag=True, type=click.BOOL, help='Suppresses human inspection.')
-def init_portal_harvester(refresh=False, quiet=False):
-    """Creates the Portal Sync Harvester if it does not already exist."""
+def init_harvest_plugin(refresh=False, quiet=False):
+    """Creates harvest database tables."""
 
     # check to see if the harvet_object table exists.
     # bad workaround, but subclassing a plugin does not allow
@@ -1960,24 +1960,3 @@ def init_portal_harvester(refresh=False, quiet=False):
         model.Session.query(model.Package).filter(model.Package.id == PORTAL_SYNC_ID).delete()
         model.Session.commit()
         _success_message('Successfully purged harvest source objects.')
-
-    try:
-        package = get_action('package_show')(_get_site_user_context(), {'id': PORTAL_SYNC_ID})
-        if package.get('state') != 'active':
-            raise NotFound
-        _success_message('Portal Sync Harvester already exists.')
-    except NotFound:
-        _error_message('Portal Sync Harvester does not exist, creating it now...')
-        pkg_dict = {
-            'type': 'harvest',
-            'id': PORTAL_SYNC_ID,
-            'name': PORTAL_SYNC_ID,
-            'title': 'Portal Sync',
-            'source_type': 'portal_sync',
-            'url': toolkit.config.get('ckan.site_url', 'registry'),
-            'source': 'registry',
-            'target': 'portal',
-        }
-        get_action('package_create')(_get_site_user_context(), pkg_dict)
-        _success_message('Created the Portal Sync Harvester.')
-        pass

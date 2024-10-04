@@ -1,0 +1,18 @@
+<div class="harvest-types form-group control-group">
+  {% if field.required %}<span title="{{ _('This field is required') }}" class="control-required">*</span> {% endif %}
+  <label class="control-label">{{ h.scheming_language_text(field.label) }}</label>
+  <div class="controls">
+    {% for harvester in h.harvesters_info() %}
+      {% set checked = False %}
+      {# select first option if nothing in data #}
+      {% if data.get(field.field_name) == harvester['name'] or (not data.get(field.field_name) and loop.first) %}
+         {% set checked = True %}
+      {% endif %}
+      <label class="radio">
+        <input type="radio" name="{{ field.field_name }}" value="{{ harvester['name'] }}" {{ "checked " if checked }} data-module="harvest-type-change">
+        {{ h.get_translated(harvester, 'title') }}
+        <i class="fa fa-question-circle icon-question-sign muted" title="{{ h.get_translated(harvester, 'description') }}" data-bs-toggle="tooltip" data-toggle="tooltip"></i>
+      </label>
+    {% endfor %}
+  </div>
+</div>

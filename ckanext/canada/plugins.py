@@ -13,9 +13,6 @@ from ckan.authz import is_sysadmin
 from ckan.lib.app_globals import set_app_global
 from ckan.plugins.core import plugin_loaded
 
-from ckan.logic.schema import default_extras_schema
-from ckan.logic.converters import convert_to_extras, convert_from_extras
-
 from ckan.plugins.toolkit import (
     g,
     h,
@@ -48,6 +45,7 @@ from ckanext.scheming.plugins import SchemingDatasetsPlugin
 from ckanext.security.plugin import CkanSecurityPlugin
 from ckanext.harvest.plugin import Harvest
 from ckanext.harvest.views import harvester
+from ckanext.harvest.logic import validators as harvest_validators
 from ckanext.canada.view import (
     canada_views,
     CanadaDatasetEditView,
@@ -201,46 +199,72 @@ class CanadaHarvestPlugin(Harvest):
     """
     p.implements(p.IValidators, inherit=True)
 
-    disallow_views = ['harvester.edit',
-                      'harvester.delete']
+    disabled_endpoints = ['harvester.about']
+
+
+    # IDatasetForm
+    def package_types(self):
+        """Use ckanext-scheming"""
+        return []
+
+
+    # ITemplateHelpers
+    def get_helpers(self):
+        helper_functions = super(CanadaHarvestPlugin, self).get_helpers()
+        helper_functions['get_harvester_info'] = helpers.get_harvester_info
+        return helper_functions
+
+
+    # IFacets
+    def dataset_facets(self, facets_dict, package_type):
+        if package_type != 'harvest':
+            return facets_dict
+
+        return {'frequency': _('Frequency'),
+                'source_type': _('Source Type'),
+                'organization': _('Organization'),}
 
 
     # IValidators
     def get_validators(self):
-        return {'canada_harvester_id':
-                    validators.canada_harvester_id,
-                'canada_harvester_type':
-                    validators.canada_harvester_type,
-                'canada_harvester_source_type':
-                    validators.canada_harvester_source_type,
-                'canada_harvester_url':
-                    validators.canada_harvester_url,
-                'canada_harvester_source':
-                    validators.canada_harvester_source,
-                'canada_harvester_target':
-                    validators.canada_harvester_target,
-                'canada_harvester_title':
-                    validators.canada_harvester_title,}
-
-
-    # IActions
-    def get_actions(self):
-        action_functions = super(CanadaHarvestPlugin, self).get_actions()
-        action_functions['package_show'] = logic.portal_sync_package_show
-        return action_functions
+        return {'portal_sync_id':
+                    validators.portal_sync_id,
+                'portal_sync_limit':
+                    validators.portal_sync_limit,
+                'harvest_source_url_validator':
+                    harvest_validators.harvest_source_url_validator,
+                'harvest_source_type_exists':
+                    harvest_validators.harvest_source_type_exists,
+                'harvest_source_config_validator':
+                    harvest_validators.harvest_source_config_validator,
+                'harvest_source_extra_validator':
+                    harvest_validators.harvest_source_extra_validator,
+                'harvest_source_frequency_exists':
+                    harvest_validators.harvest_source_frequency_exists,
+                'dataset_type_exists':
+                    harvest_validators.dataset_type_exists,
+                'harvest_source_convert_from_config':
+                    harvest_validators.harvest_source_convert_from_config,
+                'harvest_source_id_exists':
+                    harvest_validators.harvest_source_id_exists,
+                'harvest_job_exists':
+                    harvest_validators.harvest_job_exists,
+                'harvest_object_extras_validator':
+                    harvest_validators.harvest_object_extras_validator,}
 
 
     # IAuthFunctions
     def get_auth_functions(self):
         auth_functions = super(CanadaHarvestPlugin, self).get_auth_functions()
         auth_functions['harvest_log_list'] = auth.harvest_log_list
+        #TODO: check other auth functions from ckanext-harvest that need limitations??
         return auth_functions
 
 
     #IBlueprint
     def get_blueprint(self):
         """Custom blueprints for the Portal Sync single harvest source."""
-        harvester.before_request(self._redirect_harvest_dataset_endpoints)
+        harvester.before_request(self._redirect_harvest_endpoints)
         return [harvester]
 
 
@@ -250,94 +274,10 @@ class CanadaHarvestPlugin(Harvest):
         return not contextual_user or not is_sysadmin(contextual_user)
 
 
-    def _redirect_harvest_dataset_endpoints(self):
-        if self._not_sysadmin():
+    def _redirect_harvest_endpoints(self):
+        if self._not_sysadmin() or request.endpoint in self.disabled_endpoints:
             return abort(404)
-        #FIXME: redirect loop!! based on self.disallow_views??
-        # return h.redirect_to('harvester.admin', id=PORTAL_SYNC_ID)
 
-
-    def _redirect_harvest_views(self):
-        if self._not_sysadmin():
-            return abort(404)
-        #FIXME: redirect loop!! based on self.disallow_views??
-        # return h.redirect_to('harvester.admin', id=PORTAL_SYNC_ID)
-
-
-    #IDatasetForm
-    def prepare_dataset_blueprint(self, package_type, blueprint):
-        # type: (str,Blueprint) -> Blueprint
-        """Redirect Harvest endpoints accessed from /harvest/"""
-        if package_type == 'harvest':
-            blueprint.before_request(self._redirect_harvest_dataset_endpoints)
-        return blueprint
-
-
-    #IDatasetForm
-    def prepare_resource_blueprint(self, package_type, blueprint):
-        # type: (str,Blueprint) -> Blueprint
-        """Redirect Harvest endpoints accessed from /harvest/"""
-        if package_type == 'harvest':
-            blueprint.before_request(self._redirect_harvest_dataset_endpoints)
-        return blueprint
-
-
-    #IDatasetForm
-    def validate(self, context, data_dict, schema, action):
-        """Only sysadmins can create a harvest source."""
-        if data_dict.get('type') == 'harvest' and self._not_sysadmin(context.get('user')):
-            return data_dict, {'type': [
-                "Unsupported dataset type: {t}".format(t=data_dict.get('type'))]}
-
-
-    #IDatasetForm
-    def create_package_schema(self):
-        ignore = get_validator('ignore')
-        canada_harvester_id = get_validator('canada_harvester_id')
-        canada_harvester_type = get_validator('canada_harvester_type')
-        canada_harvester_source_type = get_validator('canada_harvester_source_type')
-        canada_harvester_url = get_validator('canada_harvester_url')
-        canada_harvester_source = get_validator('canada_harvester_source')
-        canada_harvester_target = get_validator('canada_harvester_target')
-        canada_harvester_title = get_validator('canada_harvester_title')
-
-        return {
-            'id': [canada_harvester_id],
-            'name': [canada_harvester_id],
-            'type': [canada_harvester_type],
-            'source_type': [canada_harvester_source_type, convert_to_extras],
-            'url': [canada_harvester_url],
-            'source': [canada_harvester_source, convert_to_extras],
-            'target': [canada_harvester_target, convert_to_extras],
-            'title': [canada_harvester_title],
-            'extras': default_extras_schema(),
-            '__extras': [ignore],
-        }
-
-
-    #IDatasetForm
-    def update_package_schema(self):
-        return self.create_package_schema()
-
-
-    #IDatasetForm
-    def show_package_schema(self):
-        not_empty = get_validator('not_empty')
-        ignore = get_validator('ignore')
-        package_id_exists = get_validator('package_id_exists')
-
-        return {
-            'id': [not_empty, package_id_exists],
-            'name': [not_empty],
-            'type': [not_empty],
-            'source_type': [convert_from_extras, not_empty],
-            'url': [not_empty],
-            'source': [convert_from_extras, not_empty],
-            'target': [convert_from_extras, not_empty],
-            'title': [not_empty],
-            'extras': default_extras_schema(),
-            '__extras': [ignore],
-        }
 
 
 class CanadaDatasetsPlugin(SchemingDatasetsPlugin):
@@ -388,7 +328,7 @@ class CanadaDatasetsPlugin(SchemingDatasetsPlugin):
         return blueprints
 
 
-    def _redirect_pd_dataset_endpoints(blueprint):
+    def _redirect_dataset_endpoints(blueprint):
         """
         Runs before request for /dataset and /dataset/<pkg id>/resource
 
@@ -404,7 +344,8 @@ class CanadaDatasetsPlugin(SchemingDatasetsPlugin):
                 return h.redirect_to('canada.type_redirect',
                                         resource_name=package_type)
             if package_type == 'harvest':
-                return abort(404)
+                if '_resource.' in request.endpoint or '.resources' in request.endpoint or not is_sysadmin(g.user):
+                    return abort(404)
 
 
     #IDatasetForm
@@ -430,7 +371,7 @@ class CanadaDatasetsPlugin(SchemingDatasetsPlugin):
             strict_slashes=False
         )
         # redirect PD endpoints accessed from /dataset/<pd pkg id>
-        blueprint.before_request(self._redirect_pd_dataset_endpoints)
+        blueprint.before_request(self._redirect_dataset_endpoints)
         return blueprint
 
 
@@ -450,7 +391,7 @@ class CanadaDatasetsPlugin(SchemingDatasetsPlugin):
             methods=['GET', 'POST']
         )
         # redirect PD endpoints accessed from /dataset/<pd pkg id>/resource
-        blueprint.before_request(self._redirect_pd_dataset_endpoints)
+        blueprint.before_request(self._redirect_dataset_endpoints)
         return blueprint
 
     # IDataValidation
@@ -824,7 +765,9 @@ ckanext.canada:schemas/validation_placeholder_presets.yaml
 ckanext.canada:schemas/dataset.yaml
 ckanext.canada:schemas/info.yaml
 ckanext.canada:schemas/prop.yaml
-"""
+""" + (
+	"ckanext.canada:schemas/harvest.yaml" if plugin_loaded('canada_harvest') else ""
+)
         config['scheming.organization_schemas'] = 'ckanext.canada:schemas/organization.yaml'
 
         # Pretty output for Feeds
@@ -853,6 +796,9 @@ ckanext.canada:schemas/prop.yaml
     # IFacets
     def dataset_facets(self, facets_dict, package_type):
         ''' Update the facets_dict and return it. '''
+
+        if package_type == 'harvest':
+            return facets_dict
 
         facets_dict.update({
             'portal_type': _('Portal Type'),

@@ -1,9 +1,16 @@
 {% ckan_extends %}
 
 {% block content_primary_nav %}
-  {% if pkg.type != 'prop' %}  {# suggested datasets have no resources #}
+  {% if pkg.type != 'prop' and pkg.type != 'harvest' %}  {# suggested datasets have no resources #}
     {{ super() }}
   {% endif %}
+  {% if pkg.type == 'harvest' %}
+    {{ h.build_nav_icon(pkg.type ~ '.edit', _('Edit metadata'), id=pkg.name, icon='pencil') }}
+  {% endif %}
+{% endblock %}
+
+{% block content_action %}
+  {% link_for _('View Harvest Source') if pkg.type == 'harvest' else _('View dataset'), named_route=pkg.type ~ '.read', id=pkg.name, class_='btn btn-default', icon='eye' %}
 {% endblock %}
 
 {% block secondary_content %}

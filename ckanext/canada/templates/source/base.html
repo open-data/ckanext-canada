@@ -1,0 +1,6 @@
+{% ckan_extends %}
+
+{% block breadcrumb_content %}
+    <li>{% link_for _('Harvest Sources'), named_route='harvest.search' %}</li>
+    <li class="active">{% link_for h.get_translated(harvest_source, 'title')|truncate(80), named_route='harvest.read', id=harvest_source.id %}</li>
+{% endblock %}

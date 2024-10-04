@@ -19,14 +19,23 @@
     {% if pkg.type in h.recombinant_get_types() %}
       {% set dataset_label = _(pkg.title) %}
     {% endif %}
+    {% if pkg.type == 'harvest' %}
+      {% set dataset_label = _('Harvest Source') %}
+    {% endif %}
     {{ h.build_nav_icon(pkg.type + '.read', dataset_label, id=pkg.name) }}
     {{ h.build_nav_icon(pkg.type + '.activity', _('Activity Stream'), id=pkg.name) }}
   {% endif %}
 {% endblock %}
 
 {% block content_action %}
-  {% if pkg.type not in h.recombinant_get_types() %}
+  {% if pkg.type not in h.recombinant_get_types() and pkg.type != 'harvest' %}
     {{ super() }}
+  {% endif %}
+  {% if h.plugin_loaded('canada_harvest') %}
+    {% set harvest_source = harvest_source or h.get_harvest_source() %}
+    {% if pkg.type == 'harvest' and h.check_access('harvest_source_update', {'id': harvest_source.id }) %}
+      {{ h.nav_link(_('Admin'), named_route='harvester.admin', id=harvest_source.name, class_='btn btn-default', icon='wrench')}}
+    {% endif %}
   {% endif %}
 {% endblock %}
 
@@ -59,6 +68,17 @@
             {% endif %}
           {% endif %}
         {% endfor %}
+        {% if pkg.type == 'harvest'and h.plugin_loaded('canada_harvest') %}
+          {% set harvest_source = harvest_source or h.get_harvest_source() %}
+          <li class="list-group-item resource-tags">
+            <div class="nums">
+              <dl>
+                  <dt>{{ _('Harvested Datasets:') }}</dt>
+                  <dd>{{ h.package_count_for_source(harvest_source.id) }}</dd>
+              </dl>
+            </div>
+          </li>
+        {% endif %}
         {%- set start_date = h.date_field("time_period_coverage_start", pkg) -%}
         {%- set end_date = h.date_field("time_period_coverage_end", pkg) -%}
         {% if start_date or end_date %}
@@ -145,11 +165,13 @@
           </a>
         </li>
       {% endif %}
-      <li class="list-group-item">
-        <a href="{{ h.url_for('feeds.dataset', id=pkg.id) }}" title="RSS">
-          <span class="fa fa-rss-square"></span>&nbsp;{{_('Atom Feed')}}
-        </a>
-      </li>
+      {% if pkg.type != 'harvest' %}
+        <li class="list-group-item">
+          <a href="{{ h.url_for('feeds.dataset', id=pkg.id) }}" title="RSS">
+            <span class="fa fa-rss-square"></span>&nbsp;{{_('Atom Feed')}}
+          </a>
+        </li>
+      {% endif %}
       {% if pkg.spatial_representation_type %}
         {% set srep = h.scheming_field_by_name(schema.dataset_fields, 'spatial_representation_type') %}
         <li class="list-group-item"><b>{{ h.scheming_language_text(srep.label) }}{{ _(':') }}</b>

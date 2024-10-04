@@ -535,36 +535,16 @@ def protect_registry_access(key, data, errors, context):
         raise StopOnError
 
 
-def canada_harvester_id(value):
-    """Forces value for singular harvester for Portal Sync."""
-    return PORTAL_SYNC_ID
+def portal_sync_id(key, data, errors, context):
+    """Forces singular Package ID for portal_sync source type. Only one is allowed."""
+    source_type = data.get(key[:-1] + ('source_type',))
+    if source_type == 'portal_sync':
+        data[key] = PORTAL_SYNC_ID
 
 
-def canada_harvester_type(value):
-    """Forces value for singular harvester for Portal Sync."""
-    return 'harvest'
-
-
-def canada_harvester_source_type(value):
-    """Forces value for singular harvester for Portal Sync."""
-    return 'portal_sync'
-
-
-def canada_harvester_url(value):
-    """Forces value for singular harvester for Portal Sync."""
-    return config.get('ckan.site_url', 'registry')
-
-
-def canada_harvester_source(value):
-    """Forces value for singular harvester for Portal Sync."""
-    return 'registry'
-
-
-def canada_harvester_target(value):
-    """Forces value for singular harvester for Portal Sync."""
-    return 'portal'
-
-
-def canada_harvester_title(value):
-    """Forces value for singular harvester for Portal Sync."""
-    return 'Portal Sync'
+def portal_sync_limit(value, context):
+    if value == PORTAL_SYNC_ID:
+        existing = model.Package.get(PORTAL_SYNC_ID)
+        if existing:
+            raise Invalid(_('There is already a Portal Sync harvester. Only one is allowed.'))
+    return value

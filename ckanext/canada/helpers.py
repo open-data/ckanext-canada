@@ -901,3 +901,10 @@ def is_user_locked(user_name):
         return True
 
     return False
+
+
+def get_harvester_info(source_type=None):
+    harvesters_info = t.get_action('harvesters_info_show')({'user': g.user}, {})
+    for harvester_info in harvesters_info:
+        if harvester_info.get('name') == source_type:
+            return harvester_info

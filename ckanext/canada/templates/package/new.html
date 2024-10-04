@@ -1,0 +1,9 @@
+{% ckan_extends %}
+
+{% block subtitle %}
+  {% if dataset_type != 'harvest' %}
+    {{ super() }}
+  {% else %}
+    {{ _('Create Harvest Source') }}
+  {% endif %}
+{% endblock %}
