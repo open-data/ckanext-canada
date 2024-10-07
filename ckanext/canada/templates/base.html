@@ -76,4 +76,19 @@
   {{- _(g.site_title) | trim -}}
 {%- endblock -%}
 
-{% block bodytag %}{{super()}} vocab="https://schema.org/" typeof="WebPage"{% endblock %}
+{% block bodytag %}
+  {{super()}}
+  vocab="https://schema.org/"
+  typeof="WebPage"
+  {% if dataset_type %}
+    data-package-type="{{ dataset_type }}"
+  {% elif harvest_source %}
+    data-package-type="{{ harvest_source.get('type') }}"
+  {% elif pkg %}
+    data-package-type="{{ pkg.get('type') }}"
+  {% elif pkg_dict %}
+    data-package-type="{{ pkg_dict.get('type') }}"
+  {% elif package %}
+    data-package-type="{{ package.get('type') }}"
+  {% endif %}
+{% endblock %}

@@ -878,3 +878,40 @@ body, body .module-grid, body .media-grid, body .main, body .account-masthead, b
 ##  CDTS Application Template ##
 ##             END            ##
 ################################*/
+
+/*#########################
+##  Harvest Package Type ##
+###########################*/
+body[data-package-type="harvest"] main.container .panel-primary{
+  border-color: #892f34 !important;
+}
+body[data-package-type="harvest"] main.container .panel-primary .panel-heading{
+  background-color: #892f34 !important;
+  border-color: #892f34 !important;
+}
+body[data-package-type="harvest"] main.container .panel-primary .panel-heading .panel-title a{
+  color: white !important;
+}
+body[data-package-type="harvest"] main.container .btn.btn-primary{
+  background-color: #892f34 !important;
+  border-color: #892f34 !important;
+}
+body[data-package-type="harvest"] main.container .btn.btn-primary:hover,
+body[data-package-type="harvest"] main.container .btn.btn-primary:active,
+body[data-package-type="harvest"] main.container .btn.btn-primary:focus{
+  background-color: #af3c43 !important;
+}
+body[data-package-type="harvest"] main.container .btn.btn-default{
+  color: #892f34 !important;
+}
+body[data-package-type="harvest"] main.container .nav.nav-tabs li.active a{
+  background-color: #892f34 !important;
+}
+body[data-package-type="harvest"] main.container .nav.nav-tabs li:not(.active) a{
+  color: #892f34 !important;
+}
+/*#########################
+##          END          ##
+##  Harvest Package Type ##
+##          END          ##
+###########################*/

@@ -201,6 +201,8 @@ class CanadaHarvestPlugin(Harvest):
 
     disabled_endpoints = ['harvester.about']
 
+    #TODO: figure out how to extract messages from parent...
+
 
     # IDatasetForm
     def package_types(self):
