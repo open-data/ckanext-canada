@@ -1,7 +1,8 @@
 from __future__ import absolute_import
 
-from typing import Union
+from typing import Union, Optional
 
+from os.path import isfile
 import subprocess
 import datetime
 import json
@@ -12,6 +13,9 @@ from sqlalchemy.orm import contains_eager
 from ckan import plugins
 from ckan import model
 from ckan.logic.validators import isodate
+from ckan.cli import CKANConfigLoader
+from ckan.config.middleware import make_app
+from logging.config import fileConfig as loggingFileConfig
 
 import ckanext.datastore.backend.postgres as datastore
 
@@ -63,20 +67,40 @@ class PortalSync(plugins.SingletonPlugin):
     _save_object_error = HarvestObjectError.create
 
 
-    def _init_config(self):
-        self.registry_ini = plugins.toolkit.config.get('ckanext.canada.portal_sync.registry_ini')
-        self.portal_ini = plugins.toolkit.config.get('ckanext.canada.portal_sync.portal_ini')
+    def _init_registry(self):
+        #FIXME: this seems just bad...
+        registry_ini = plugins.toolkit.config.get('ckanext.canada.portal_sync.registry_ini')
+
+        if not registry_ini:
+            raise Exception('ckanext.canada.portal_sync.registry_ini not defined')
+
+        if not isfile(registry_ini):
+            raise Exception('Cannot find file %s, defined from ckanext.canada.portal_sync.registry_ini' % registry_ini)
+
+        loggingFileConfig(registry_ini)
+        log.info('Loading Registry config: %s', registry_ini)
+        registry_config = CKANConfigLoader(registry_ini).get_config()
+        make_app(registry_config)
         self.registry = LocalCKAN()
+        self.registry_datastore_url = str(datastore.get_write_engine().url)
+
+
+    def _init_portal(self):
+        #FIXME: this seems just bad...
+        portal_ini = plugins.toolkit.config.get('ckanext.canada.portal_sync.portal_ini')
+
+        if not portal_ini:
+            raise Exception('ckanext.canada.portal_sync.portal_ini not defined')
+
+        if not isfile(portal_ini):
+            raise Exception('Cannot find file %s, defined from ckanext.canada.portal_sync.portal_ini' % portal_ini)
+
+        loggingFileConfig(portal_ini)
+        log.info('Loading Portal config: %s', portal_ini)
+        portal_config = CKANConfigLoader(portal_ini).get_config()
+        make_app(portal_config)
         self.portal = LocalCKAN()
-        self.registry_user = plugins.toolkit.config.get('ckanext.canada.portal_sync.registry_user')
-        self.portal_user = plugins.toolkit.config.get('ckanext.canada.portal_sync.portal_user')
-
-
-    def _get_user(user):
-        if user is not None:
-            return user
-        #TODO: just do below whenever needed...
-        return plugins.toolkit.get_action('get_site_user')({'ignore_auth': True}).get('name')
+        self.portal_datastore_url = str(datastore.get_write_engine().url)
 
 
     @classmethod
@@ -148,13 +172,14 @@ class PortalSync(plugins.SingletonPlugin):
         :param harvest_job: HarvestJob object
         :returns: A list of HarvestObject ids
         '''
-        log.debug('In PortalSync gather_stage (%s)', harvest_job.source.url)
+        log.info('In PortalSync gather_stage (%s)', harvest_job.source.url)
 
-        self._init_config()
+        # FIXME: anyway to just supply the gather_stage with the registry.ini directly?? and assert some config to make sure it is the registry??
+        self._init_registry()
 
         # Request only the activity since last successful run
         last_error_free_job = self.last_error_free_job(harvest_job)
-        log.debug('Last error-free job: %r', last_error_free_job)
+        log.info('Last error-free job: %r', last_error_free_job)
         last_time = last_error_free_job.gather_started
 
         # Note: SOLR works in UTC, and gather_started is also UTC, so
@@ -179,7 +204,7 @@ class PortalSync(plugins.SingletonPlugin):
                 self._save_gather_error("Package (%s) not found in Registry database.", package_id)
                 pass
             else:
-                source_package = self._get_datastore_and_views(source_package, ckan_instance=self.registry)
+                source_package = self._get_datastore_and_views(source_package, ckan_instance=self.registry, stage='GATHER')
                 registry_packages.append(source_package)
 
         harvest_object_ids = []
@@ -208,8 +233,13 @@ class PortalSync(plugins.SingletonPlugin):
                     # Portal packages are public, do this to match
                     source_package['private'] = False
 
-            log.debug('Creating HarvestObject for %s %s', registry_package['name'], registry_package['id'])
-            obj = HarvestObject(guid=registry_package['id'], job=harvest_job, content=json.dumps(source_package) if source_package else None)
+            log.info('Creating HarvestObject for package %s', registry_package['id'])
+            obj = HarvestObject(guid=registry_package['id'],
+                                harvest_source_id=harvest_job.source.id,
+                                harvest_job_id=harvest_job.id,
+                                job=harvest_job,
+                                package_id=registry_package['id'],
+                                content=json.dumps(source_package) if source_package else None)
             obj.save()
             harvest_object_ids.append(obj.id)
 
@@ -238,9 +268,11 @@ class PortalSync(plugins.SingletonPlugin):
         :returns: True if successful, 'unchanged' if nothing to import after
                   all, False if not successful
         '''
-        log.debug('In PortalSync fetch_stage (%s)', harvest_object.guid)
+        log.info('In PortalSync fetch_stage (%s)', harvest_object.guid)
 
-        self._init_config()
+        # FIXME: anyway to just supply the fetch_stage with the portal.ini directly?? and assert some config to make sure it is the portal??
+        # this is very important as the fetch_stage gets called on each gathered object...
+        self._init_portal()
 
         source_package_id = harvest_object.guid
         source_package = None
@@ -265,7 +297,7 @@ class PortalSync(plugins.SingletonPlugin):
             target_package = None
             target_deleted = True
 
-        target_package = self._get_datastore_and_views(target_package, self.portal)
+        target_package = self._get_datastore_and_views(target_package, self.portal, stage='FETCH')
         _trim_package_for_sync(target_package)
 
         if target_package is None and source_package is None:
@@ -275,20 +307,20 @@ class PortalSync(plugins.SingletonPlugin):
             log.info('Package %s deleted on Portal. Going to undelete it on Portal.', source_package_id)
             obj = HarvestObjectExtra(harvest_object_id=harvest_object.id, key='sync_action', value='package_update')
             obj.save()
+            # Use Registry resource file hashes
+            file_hashes = {}
+            for _resource in source_package['resources']:
+                file_hashes[_resource['id']] = _resource.get('hash')
+            obj = HarvestObjectExtra(harvest_object_id=harvest_object.id, key='resource_file_hashes', value=json.dumps(file_hashes))
+            obj.save()
             return True  # True if successful
-            # portal.action.package_update(**source_pkg)
-            # for r in source_pkg['resources']:
-            #     target_hash[r['id']] = r.get('hash')
-            # action += _add_datastore_and_views(source_pkg, portal, target_hash, source, verbose=verbose)
         elif target_package is None:
             log.info('Package %s not found on Portal. Going to create it on Portal.', source_package_id)
             obj = HarvestObjectExtra(harvest_object_id=harvest_object.id, key='sync_action', value='package_create')
             obj.save()
             return True  # True if successful
-            # portal.action.package_create(**source_pkg)
-            # action += _add_datastore_and_views(source_pkg, portal, target_hash, source, verbose=verbose)
         elif source_package is None:
-            log.info('Package %s delete on Registry or is not a Portal Package Type. Going to delete it on Portal.', source_package_id)
+            log.info('Package %s deleted on Registry or is not a Portal Package Type. Going to delete it on Portal.', source_package_id)
             obj = HarvestObjectExtra(harvest_object_id=harvest_object.id, key='sync_action', value='package_delete')
             obj.save()
             return True  # True if successful
@@ -296,14 +328,16 @@ class PortalSync(plugins.SingletonPlugin):
             log.info('Package %s has no differences between Registry and Portal. No Change.', source_package_id)
             return 'unchanged'  # 'unchanged' if nothing to import
         else:
-            log.info('Package %s not found on Registry or Portal. No Change.', source_package_id)
+            log.info('Package %s needs updating Portal. Going to update it on Portal.', source_package_id)
             obj = HarvestObjectExtra(harvest_object_id=harvest_object.id, key='sync_action', value='package_update')
             obj.save()
-            return True
-            # for r in target_pkg['resources']:
-            #     target_hash[r['id']] = r.get('hash')
-            # portal.action.package_update(**source_pkg)
-            # action += _add_datastore_and_views(source_pkg, portal, target_hash, source, verbose=verbose)
+            # Use Portal resource file hashes
+            file_hashes = {}
+            for _resource in target_package['resources']:
+                file_hashes[_resource['id']] = _resource.get('hash')
+            obj = HarvestObjectExtra(harvest_object_id=harvest_object.id, key='resource_file_hashes', value=json.dumps(file_hashes))
+            obj.save()
+            return True  # True if successful
 
 
     def import_stage(self, harvest_object):
@@ -335,9 +369,11 @@ class PortalSync(plugins.SingletonPlugin):
         :returns: True if the action was done, "unchanged" if the object didn't
                   need harvesting after all or False if there were errors.
         '''
-        log.debug('In PortalSync import_stage (%s)', harvest_object.guid)
+        log.info('In PortalSync import_stage (%s)', harvest_object.guid)
 
-        self._init_config()
+        # FIXME: anyway to just supply the fetch_stage with the portal.ini directly?? and assert some config to make sure it is the portal??
+        # this is very important as the fetch_stage gets called on each gathered object...
+        self._init_portal()
 
         source_package_id = harvest_object.guid
         source_package = None
@@ -350,10 +386,16 @@ class PortalSync(plugins.SingletonPlugin):
                 return False  # False if there were errors
 
         action = None
+        resource_file_hashes = {}
         for extra in harvest_object.extras:
             if extra.key == 'sync_action':
                 action = extra.value
-                break
+            if extra.key == 'resource_file_hashes':
+                try:
+                    resource_file_hashes = json.loads(extra.value)
+                except (TypeError, ValueError):
+                    resource_file_hashes = {}
+                    pass
 
         if not action:
             self._save_object_error('Could not find action for package %s' % harvest_object.guid)
@@ -363,28 +405,37 @@ class PortalSync(plugins.SingletonPlugin):
             # is delete action at this point
             try:
                 self.portal.call_action(action, {'id': source_package_id})
+                # Flag the other objects linking to this package as not current anymore
+                model.Session.query(HarvestObject).filter(
+                    HarvestObject.package_id == source_package_id).update({"current": False})
+                harvest_object.package_id = source_package_id
+                harvest_object.current = False  # False if successfully deleted
+                harvest_object.save()
+                model.Session.commit()
                 return True  # True if the action was done
             except Exception as e:
                 self._save_object_error('Could not delete package (%s) from the Portal with error: %s' % (harvest_object.guid, str(e)))
                 return False  # False if there were errors
 
-        portal_resource_hashes = {}
-        #TODO: figure this out, put them in a HarvestObjectExtra??
-        # if action == 'package_update':
-        #     for r in target_pkg['resources']:
-        #         target_hash[r['id']] = r.get('hash')
-
         try:
             self.portal.call_action(action, source_package)
-            self._sync_datastore_and_views(source_package, portal_resource_hashes)
+            # "Note: if this stage creates or updates a package, a reference to the package should be added to the HarvestObject."
+            # NOTE: because the package is on the Portal, we are not adding the database reference here.
+            self._sync_datastore_and_views(source_package, resource_file_hashes)
+            # Flag the other objects linking to this package as not current anymore
+            model.Session.query(HarvestObject).filter(
+                HarvestObject.package_id == source_package_id).update({"current": False})
+            harvest_object.package_id = source_package_id
+            harvest_object.current = True  # True if successfully created/updated
+            harvest_object.save()
+            model.Session.commit()
+            return True  # True if the action was done
         except Exception as e:
             self._save_object_error('Could not %s package (%s) on the Portal with error: %s' % (action, harvest_object.guid, str(e)))
             return False  # False if there were errors
 
-        return True  # True if the action was done
 
-
-    def _get_datastore_and_views(self, package: Union[dict, None], ckan_instance: LocalCKAN):
+    def _get_datastore_and_views(self, package: Union[dict, None], ckan_instance: LocalCKAN, stage: Optional[Union[str, None]]=None):
         """
         Adds DataDictionaries, Views Lists, and File Hashes to the package's resources.
 
@@ -409,15 +460,23 @@ class PortalSync(plugins.SingletonPlugin):
                                 "data_dict": self._get_datastore_dictionary(ckan_instance, resource['id']),
                             }
                     except plugins.toolkit.ObjectNotFound:
+                        # we can consider this an error as datastore_search SHOULD return something if datastore_active
+                        # and resource_view_list should always return something or empty list if the resource exists.
                         log.info("  WARNING: Did not find resource views or DataStore fields...")
+                        if stage == 'GATHER':
+                            self._save_gather_error('Could not find resource views or DataStore fields on the Registry for resource %s (pkg: %s)' % (resource['id'], package['id']))
+                        elif stage == 'FETCH':
+                            self._save_object_error('Could not find resource views or DataStore fields on the Portal for resource %s (pkg: %s)' % (resource['id'], package['id']))
                         pass
                     except plugins.toolkit.ValidationError as e:
-                        #TODO: self._save_gather_error
-                        raise plugins.toolkit.ValidationError({
-                            'original_error': repr(e),
-                            'original_error_dict': e.error_dict,
-                            'resource_id': resource['id'],
-                        })
+                        # this is absolutely an error as we should not be getting ValidationError, but it can happen
+                        # sometimes because of our ckanext-validation and xloader workflow on the Registry.
+                        log.info("  WARNING: Invalid DataStore or Resource View, with error: %s" % str(e))
+                        if stage == 'GATHER':
+                            self._save_gather_error('Failed to get resource views or DataStore fields on the Registry for resource %s (pkg: %s) with error: %s' % (resource['id'], package['id'], str(e)))
+                        elif stage == 'FETCH':
+                            self._save_object_error('Failed to get resource views or DataStore fields on the Portal for resource %s (pkg: %s) with error: %s' % (resource['id'], package['id'], str(e)))
+                        pass
                 else:
                     log.info("DataStore is inactive for %s" % resource['id'])
                     log.info("  Only getting resource views...")
@@ -443,14 +502,14 @@ class PortalSync(plugins.SingletonPlugin):
         return action
 
 
-    def _sync_datastore(self, source_resource: Union[dict, None], source_resource_details: Union[dict, None], target_resource_hashes: dict):
+    def _sync_datastore(self, source_resource: Union[dict, None], source_resource_details: Union[dict, None], resource_hashes: dict):
         """
         Syncs Registry DataStore and DataDictionary to the Portal.
         """
         try:
             self.portal.call_action('datastore_search', {'resource_id': source_resource['id'], 'limit': 0})
-            if target_resource_hashes.get(source_resource['id']) \
-                    and target_resource_hashes.get(source_resource['id']) == source_resource.get('hash')\
+            if resource_hashes.get(source_resource['id']) \
+                    and resource_hashes.get(source_resource['id']) == source_resource.get('hash')\
                     and self._get_datastore_dictionary(self.portal, source_resource['id']) == source_resource_details['data_dict']:
                 log.info('  File hash and Data Dictionary has not changed, skipping DataStore for %s...', source_resource['id'])
                 return
@@ -470,11 +529,8 @@ class PortalSync(plugins.SingletonPlugin):
         log.info('  datastore-created for ', source_resource['id'])
 
         # load data
-        #TODO: get registry write engine, and get portal write engine from configs...
-        registry_datastore_url = str(datastore.get_write_engine().url)
-        portal_datastore_url = str(datastore.get_write_engine().url)
-        cmd1 = subprocess.Popen(['pg_dump', registry_datastore_url, '-a', '-t', source_resource['id']], stdout=subprocess.PIPE)
-        cmd2 = subprocess.Popen(['psql', portal_datastore_url], stdin=cmd1.stdout, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        cmd1 = subprocess.Popen(['pg_dump', self.registry_datastore_url, '-a', '-t', source_resource['id']], stdout=subprocess.PIPE)
+        cmd2 = subprocess.Popen(['psql', self.portal_datastore_url], stdin=cmd1.stdout, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         out, err = cmd2.communicate()
         log.info('  data-loaded' if not err else ' data-load-failed')
         if source_resource_details['data_dict']:
