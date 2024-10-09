@@ -31,9 +31,9 @@
   {%- set label = 'label_' + h.lang() -%}
   {%- set description = 'notes_' + h.lang() -%}
   {%- if data_dictionary_labels and field.info is defined and field.info[label]|length -%}
-    {{ field.info[label]|replace(" ", nbspval) | trim }}
+    {{ field.info[label] | trim }}
   {%- else -%}
-    {{ field.id|replace(" ", nbspval) }}
+    {{ field.id }}
   {%- endif -%}
   &nbsp;
   {%- if data_dictionary_labels and field.info is defined and field.info[description]|length -%}
