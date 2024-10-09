@@ -8,6 +8,6 @@
     {{ field.get('info', {}).get('label_' ~ h.lang(), '') }}
   {% endcall %}
   {% call dictionary_field(_('Description')) %}
-    {{ field.get('info', {}).get('notes_' ~ h.lang(), '') }}
+    {{ h.render_markdown(field.get('info', {}).get('notes_' ~ h.lang(), '')) }}
   {% endcall %}
 {% endblock %}

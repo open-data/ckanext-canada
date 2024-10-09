@@ -64,6 +64,8 @@ _('Promote')
 _('Cannot modify your own sysadmin privileges')
 _('Cannot modify sysadmin privileges for system user')
 _('Activity type')  # TODO: remove after upstream fix
+_('Show more')
+_('Hide')
 
 # strings from security
 _("Please upload a file or link to an external resource")
@@ -97,3 +99,8 @@ _('Validation Information')
 _('Validation status:')
 _('Validation timestamp:')
 _('Duration:')
+
+# strings from misc triggers and recombinant tables
+_('Single')
+_('Repeatable')
+_('Optional')

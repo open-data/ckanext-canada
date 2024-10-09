@@ -1943,3 +1943,30 @@ def openness_report(verbose=False, details=False, dump=False, package_id='c4c5c7
         outf.close()
     if verbose:
         click.echo("Done!")
+
+
+@canada.command(short_help="Deletes old database triggers.")
+@click.option('-v', '--verbose', is_flag=True, type=click.BOOL, help='Increase verbosity.')
+def delete_old_triggers(verbose=False):
+    """
+    Delete old, unused database triggers.
+    """
+    _drop_function('no_surrounding_whitespace_error', verbose)
+    _drop_function('year_optional_month_day_error', verbose)
+    _drop_function('choices_from', verbose)
+    _drop_function('integer_or_na_nd_error', verbose)
+    _drop_function('inventory_trigger', verbose)
+
+
+def _drop_function(name, verbose=False):
+    sql = u'''
+        DROP FUNCTION {name};
+        '''.format(name=datastore.identifier(name))
+
+    try:
+        datastore._write_engine_execute(sql)
+    except datastore.ProgrammingError as pe:
+        if verbose:
+            click.echo('Failed to drop function: {0}\n{1}'.format(
+                name, str(datastore._programming_error_summary(pe))), err=True)
+        pass
