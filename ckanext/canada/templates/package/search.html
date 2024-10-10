@@ -8,34 +8,42 @@
 
   {%- block api_access_info -%}{%- endblock -%}
 
-  {% block page_primary_action %}{% endblock %}
+  {% block page_primary_action %}
+    {% if dataset_type == 'harvest' %}
+      <div class="page_primary_action">
+        {{ h.snippet('snippets/add_source_button.html', dataset_type=dataset_type) }}
+      </div>
+    {% endif %}
+  {% endblock %}
 
-  {% block subtitle %}{{ _('Search Datasets') }}{% endblock %}
+  {% block subtitle %}{{ _('Search Datasets') if dataset_type != 'harvest' else _('Search Harvest Sources') }}{% endblock %}
   {% block breadcrumb_content %}
     {% if g.is_registry %}
-      <li class="active">{{ h.nav_link(_('Datasets'), named_route='dataset.search', highlight_actions = 'new index') }}</li>
+      <li class="active">{{ h.nav_link(_('Datasets') if dataset_type != 'harvest' else _('Harvest Sources'), named_route=dataset_type ~ '.search', highlight_actions = 'new index') }}</li>
     {% else %}
       <li>{% link_for _('Search Open Government'), named_route='dataset_search' %}</li>
     {% endif %}
   {% endblock %}
 
   {% block secondary_content %}
-    <h2>{{ _('Search Filters') }}&nbsp;<small><a href="{{ h.url_for('dataset.search', q=g.q) }}">{{ _('Clear All') }}</a></small></h2>
-    {% snippet 'snippets/dataset_facets.html', show_org_facet=true %}
+    <h2>{{ _('Search Filters') }}&nbsp;<small><a href="{{ h.url_for(dataset_type ~ '.search', q=g.q) }}">{{ _('Clear All') }}</a></small></h2>
+    {% snippet 'snippets/dataset_facets.html', show_org_facet=true, dataset_type=dataset_type %}
     {% block extra_facets %}
-      {% if g.is_registry %}
+      {% if g.is_registry and dataset_type != 'harvest' %}
         {{ h.snippet('snippets/publish_facet.html', facet_ranges=facet_ranges) }}
       {% endif %}
     {% endblock %}
-    {% set license = h.get_license('ca-ogl-lgo') %}
-    {% if license != None %}
-      <div class="well well-sm">
-        {% if h.lang() == 'en' %}
-          <a href="{{ license.url }}">View the {{ license.title }}</a>
-        {% else %}
-          <a href="{{ license.url_fra }}">Voir la {{ license.title_fra[:1].lower() }}{{ license.title_fra[1:] }}</a>
-        {% endif %}
-      </div>
+    {% if dataset_type != 'harvest' %}
+      {% set license = h.get_license('ca-ogl-lgo') %}
+      {% if license != None  %}
+        <div class="well well-sm">
+          {% if h.lang() == 'en' %}
+            <a href="{{ license.url }}">View the {{ license.title }}</a>
+          {% else %}
+            <a href="{{ license.url_fra }}">Voir la {{ license.title_fra[:1].lower() }}{{ license.title_fra[1:] }}</a>
+          {% endif %}
+        </div>
+      {% endif %}
     {% endif %}
   {% endblock %}
 

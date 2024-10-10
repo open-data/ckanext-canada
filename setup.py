@@ -23,16 +23,18 @@ setup(
     ],
     entry_points="""
     [ckan.plugins]
-    canada_internal=ckanext.canada.plugins:DataGCCAInternal
-    canada_public=ckanext.canada.plugins:DataGCCAPublic
-    canada_forms=ckanext.canada.plugins:DataGCCAForms
-    canada_datasets=ckanext.canada.plugins:CanadaDatasetsPlugin
-    canada_security=ckanext.canada.plugins:CanadaSecurityPlugin
-    canada_theme=ckanext.canada.plugins:CanadaThemePlugin
+        canada_internal=ckanext.canada.plugins:DataGCCAInternal
+        canada_public=ckanext.canada.plugins:DataGCCAPublic
+        canada_forms=ckanext.canada.plugins:DataGCCAForms
+        canada_datasets=ckanext.canada.plugins:CanadaDatasetsPlugin
+        canada_security=ckanext.canada.plugins:CanadaSecurityPlugin
+        canada_theme=ckanext.canada.plugins:CanadaThemePlugin
+        canada_harvest=ckanext.canada.plugins:CanadaHarvestPlugin
+        harvest_portal_sync=ckanext.canada.harvesters:PortalSync
 
     [babel.extractors]
-    ckan = ckan.lib.extract:extract_ckan
-    pd = ckanext.canada.extract:extract_pd
+        ckan = ckan.lib.extract:extract_ckan
+        pd = ckanext.canada.extract:extract_pd
     """,
     message_extractors={
         'ckanext': [

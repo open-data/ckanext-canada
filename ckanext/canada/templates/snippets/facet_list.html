@@ -18,8 +18,16 @@
               <nav>
                 <ul class="list-unstyled list-facets">
                   {% for item in items %}
-                    {% do item.update({'label': h.scheming_choices_label(scheming_choices, item.name)
-                      if scheming_choices else h.split_piped_bilingual_field(item.display_name, h.lang()) }) %}
+                    {% if harvesters %}
+                      {% for harvester in harvesters %}
+                        {% if harvester.get('name') == item.name %}
+                          {% do item.update({'label': h.get_translated(harvester, 'title')}) %}
+                        {% endif %}
+                      {% endfor %}
+                    {% else %}
+                      {% do item.update({'label': h.scheming_choices_label(scheming_choices, item.name)
+                        if scheming_choices else h.split_piped_bilingual_field(item.display_name, h.lang()) }) %}
+                    {% endif %}
                   {% endfor %}
                   {%- macro _text_key(d) -%}
                     {{- h.normalize_strip_accents(d.label) -}}

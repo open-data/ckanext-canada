@@ -2,7 +2,19 @@
 
 {% block breadcrumb_content %}
   {% if g.is_registry %}
-    {{ h.build_nav('dataset.new', _('Create Dataset')) }}
+    {% if dataset_type != 'harvest' %}
+      {{ h.build_nav('dataset.new', _('Create Dataset')) }}
+    {% else %}
+      {{ h.build_nav('harvest.new', _('Create Harvest Source')) }}
+    {% endif %}
+  {% endif %}
+{% endblock %}
+
+{% block subtitle %}
+  {% if dataset_type != 'harvest' %}
+    {{ super() }}
+  {% else %}
+    {{ _('Create Harvest Source') }}
   {% endif %}
 {% endblock %}
 

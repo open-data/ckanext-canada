@@ -5,7 +5,7 @@ import unicodedata
 
 from six import text_type
 
-from ckan.plugins.toolkit import _, get_action, ValidationError, ObjectNotFound
+from ckan.plugins.toolkit import _, get_action, ValidationError, ObjectNotFound, config
 from ckan.lib.navl.validators import StopOnError
 from ckan.authz import is_sysadmin
 from ckan import model
@@ -24,6 +24,8 @@ from ckan.logic import ValidationError
 from ckanext.security.resource_upload_validator import (
     validate_upload_type, validate_upload_presence
 )
+
+from ckanext.canada.harvesters import PORTAL_SYNC_ID
 
 not_empty = get_validator('not_empty')
 ignore_missing = get_validator('ignore_missing')
@@ -531,3 +533,18 @@ def protect_registry_access(key, data, errors, context):
                            " from '%s' to '%s'. This field is read-only." %
                            (original, value)))
         raise StopOnError
+
+
+def portal_sync_id(key, data, errors, context):
+    """Forces singular Package ID for portal_sync source type. Only one is allowed."""
+    source_type = data.get(key[:-1] + ('source_type',))
+    if source_type == 'portal_sync':
+        data[key] = PORTAL_SYNC_ID
+
+
+def portal_sync_limit(value, context):
+    if value == PORTAL_SYNC_ID:
+        existing = model.Package.get(PORTAL_SYNC_ID)
+        if existing:
+            raise Invalid(_('There is already a Portal Sync harvester. Only one is allowed.'))
+    return value

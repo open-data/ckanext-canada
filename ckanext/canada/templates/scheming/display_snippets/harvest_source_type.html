@@ -1,0 +1,5 @@
+{% set harvester = h.get_harvester_info(data[field.field_name]) %}
+
+{% if harvester %}
+  {{ h.get_translated(harvester, 'title') }}
+{% endif %}

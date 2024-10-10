@@ -121,7 +121,7 @@
                 </div>
               </div>
             {% endif %}
-          {% else %}
+          {% elif package.type not in h.recombinant_get_types() and package.type != 'harvest' %}
             <div class="row">
               <div class="col-md-3">
                 <em>{{ _('Resource Formats:') }}</em>
@@ -132,6 +132,16 @@
                     <li><span class="badge">{{ _(resource) }}</span></li>
                   {% endfor %}
                 </ul>
+              </div>
+            </div>
+          {% elif package.type == 'harvest' %}
+            <div class="row">
+              <div class="col-md-3">
+                <em>{{ _('Source Type:') }}</em>
+              </div>
+              <div class="col-md-9">
+                {% set harvester = h.get_harvester_info(package.source_type) %}
+                <p>{{ h.get_translated(harvester, 'title') }}</p>
               </div>
             </div>
           {% endif %}
