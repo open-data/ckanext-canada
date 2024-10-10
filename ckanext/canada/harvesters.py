@@ -68,6 +68,9 @@ class PortalSync(plugins.SingletonPlugin):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
+        if not plugins.plugin_loaded('canada_harvest') or not plugins.plugin_loaded('harvest_portal_sync'):
+            return
+
         registry_ini = plugins.toolkit.config.get('ckanext.canada.portal_sync.registry_ini')
         portal_ini = plugins.toolkit.config.get('ckanext.canada.portal_sync.portal_ini')
         if not registry_ini:
