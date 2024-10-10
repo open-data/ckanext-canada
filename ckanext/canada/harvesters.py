@@ -6,6 +6,7 @@ from os.path import isfile
 import subprocess
 import datetime
 import json
+from configparser import ConfigParser, NoOptionError
 
 from sqlalchemy import exists, and_
 from sqlalchemy.orm import contains_eager
@@ -13,11 +14,8 @@ from sqlalchemy.orm import contains_eager
 from ckan import plugins
 from ckan import model
 from ckan.logic.validators import isodate
-from ckan.cli import CKANConfigLoader
-from ckan.config.middleware import make_app
-from logging.config import fileConfig as loggingFileConfig
 
-import ckanext.datastore.backend.postgres as datastore
+from ckanext.datastore.backend.postgres import _get_engine_from_url
 
 from ckanext.harvest.interfaces import IHarvester
 from ckanext.harvest.model import HarvestJob, HarvestObject, HarvestObjectExtra, HarvestGatherError, HarvestObjectError
@@ -67,40 +65,38 @@ class PortalSync(plugins.SingletonPlugin):
     _save_object_error = HarvestObjectError.create
 
 
-    def _init_registry(self):
-        #FIXME: this seems just bad...
-        registry_ini = plugins.toolkit.config.get('ckanext.canada.portal_sync.registry_ini')
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
 
+        registry_ini = plugins.toolkit.config.get('ckanext.canada.portal_sync.registry_ini')
+        portal_ini = plugins.toolkit.config.get('ckanext.canada.portal_sync.portal_ini')
         if not registry_ini:
             raise Exception('ckanext.canada.portal_sync.registry_ini not defined')
-
         if not isfile(registry_ini):
             raise Exception('Cannot find file %s, defined from ckanext.canada.portal_sync.registry_ini' % registry_ini)
-
-        loggingFileConfig(registry_ini)
-        log.info('Loading Registry config: %s', registry_ini)
-        registry_config = CKANConfigLoader(registry_ini).get_config()
-        make_app(registry_config)
-        self.registry = LocalCKAN()
-        self.registry_datastore_url = str(datastore.get_write_engine().url)
-
-
-    def _init_portal(self):
-        #FIXME: this seems just bad...
-        portal_ini = plugins.toolkit.config.get('ckanext.canada.portal_sync.portal_ini')
-
         if not portal_ini:
             raise Exception('ckanext.canada.portal_sync.portal_ini not defined')
-
         if not isfile(portal_ini):
             raise Exception('Cannot find file %s, defined from ckanext.canada.portal_sync.portal_ini' % portal_ini)
 
-        loggingFileConfig(portal_ini)
-        log.info('Loading Portal config: %s', portal_ini)
-        portal_config = CKANConfigLoader(portal_ini).get_config()
-        make_app(portal_config)
+        registry_config = ConfigParser()
+        registry_config.read(registry_ini)
+        try:
+            registry_datastore_url = registry_config.get('app:main', 'ckan.datastore.write_url')
+        except NoOptionError:
+            raise Exception('Cannot find ckan.datastore.write_url in app:main section of Registry INI')
+        self.registry_datastore_url = str(_get_engine_from_url(registry_datastore_url).url)  # ensure that this is actually a DS database
+        portal_config = ConfigParser()
+        portal_config.read(portal_ini)
+        try:
+            portal_datastore_url = portal_config.get('app:main', 'ckan.datastore.write_url')
+        except NoOptionError:
+            raise Exception('Cannot find ckan.datastore.write_url in app:main section of Portal INI')
+        self.portal_datastore_url = str(_get_engine_from_url(portal_datastore_url).url)  # ensure that this is actually a DS database
+
+        #FIXME: figure out how to get the data from and to the Portal in fetch_stage and import_stage
+        self.registry = LocalCKAN()
         self.portal = LocalCKAN()
-        self.portal_datastore_url = str(datastore.get_write_engine().url)
 
 
     @classmethod
@@ -173,9 +169,6 @@ class PortalSync(plugins.SingletonPlugin):
         :returns: A list of HarvestObject ids
         '''
         log.info('In PortalSync gather_stage (%s)', harvest_job.source.url)
-
-        # FIXME: anyway to just supply the gather_stage with the registry.ini directly?? and assert some config to make sure it is the registry??
-        self._init_registry()
 
         # Request only the activity since last successful run
         last_error_free_job = self.last_error_free_job(harvest_job)
@@ -270,9 +263,8 @@ class PortalSync(plugins.SingletonPlugin):
         '''
         log.info('In PortalSync fetch_stage (%s)', harvest_object.guid)
 
-        # FIXME: anyway to just supply the fetch_stage with the portal.ini directly?? and assert some config to make sure it is the portal??
-        # this is very important as the fetch_stage gets called on each gathered object...
-        self._init_portal()
+        # FIXME: in this stage, we have to get the package from the Portal (if it exists).
+        #        but we have to save the HarvestObjectErrors to the Registry DB. HOW??
 
         source_package_id = harvest_object.guid
         source_package = None
@@ -371,9 +363,8 @@ class PortalSync(plugins.SingletonPlugin):
         '''
         log.info('In PortalSync import_stage (%s)', harvest_object.guid)
 
-        # FIXME: anyway to just supply the fetch_stage with the portal.ini directly?? and assert some config to make sure it is the portal??
-        # this is very important as the fetch_stage gets called on each gathered object...
-        self._init_portal()
+        # FIXME: in this stage, we have to post the package to the Portal.
+        #        but we have to save the HarvestObjectErrors to the Registry DB. HOW??
 
         source_package_id = harvest_object.guid
         source_package = None
