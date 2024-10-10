@@ -52,8 +52,8 @@ def main():
         if row['target']:
             target = float(row['target'])
 
-            # if no total_volume then target_met is not possible
-            if den <= 0:
+            # if no performance(volume_meeting_target/total_volume) then target_met is not possible
+            if row['performance'] is None:
                 row['target_met'] = 'NA'
 
             # if performance >= target then target is met
