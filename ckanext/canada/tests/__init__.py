@@ -5,6 +5,7 @@ from ckanext.validation.model import (
     tables_exist as validation_tables_exist
 )
 from ckanext.security.model import db_setup as security_db_setup
+from ckanext.canada.cli import init_harvest_plugin
 
 class CanadaTestBase(object):
     @classmethod
@@ -12,8 +13,10 @@ class CanadaTestBase(object):
         """Method is called at class level before EACH test methods of the class are called.
         Setup any state specific to the execution of the given class methods.
         """
+        init_harvest_plugin()
         reset_db()
         clear_all()
         if not validation_tables_exist():
             validation_create_tables()
         security_db_setup()
+        init_harvest_plugin()
