@@ -1165,20 +1165,17 @@ def _drop_function(name, verbose=False):
         pass
 
 
-@canada.command(short_help="Creates harvest database tables.")
-@click.option('-f', '--refresh', is_flag=True, type=click.BOOL, help='Forces the refresh of all the source objects in the database.')
-@click.option('-q', '--quiet', is_flag=True, type=click.BOOL, help='Suppresses human inspection.')
-def init_harvest_plugin(refresh=False, quiet=False):
-    """Creates harvest database tables."""
-
+def _maybe_init_harvest_db(verbose=True):
     # check to see if the harvet_object table exists.
     # bad workaround, but subclassing a plugin does not allow
     # us to run migrations on the parent plugin.
     try:
         model.Session.query(HarvestObject).first()
-        _success_message('Harvest database tables already exist.')
+        if verbose:
+            _success_message('Harvest database tables already exist.')
     except ProgrammingError as e:
-        _error_message('Harvest database tables not initialized, creating them now...')
+        if verbose:
+            _error_message('Harvest database tables not initialized, creating them now...')
         if 'psycopg2.errors.UndefinedTable' in str(e):
             if plugin_loaded('canada_harvest'):
                 unload('canada_harvest')
@@ -1191,8 +1188,18 @@ def init_harvest_plugin(refresh=False, quiet=False):
                 unload('harvest')
             if not plugin_loaded('canada_harvest'):
                 load('canada_harvest')
-            _success_message('Harvest database tables initialized.')
+            if verbose:
+                _success_message('Harvest database tables initialized.')
         pass
+
+
+@canada.command(short_help="Creates harvest database tables.")
+@click.option('-f', '--refresh', is_flag=True, type=click.BOOL, help='Forces the refresh of all the source objects in the database.')
+@click.option('-q', '--quiet', is_flag=True, type=click.BOOL, help='Suppresses human inspection.')
+def init_harvest_plugin(refresh=False, quiet=False):
+    """Creates harvest database tables."""
+
+    _maybe_init_harvest_db()
 
     if refresh:
         if not quiet:
