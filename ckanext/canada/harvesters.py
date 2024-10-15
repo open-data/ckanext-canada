@@ -297,11 +297,11 @@ class PortalSync(plugins.SingletonPlugin):
                                             'resource_file_hashes': file_hashes}  # (fetch_stage) True if successful
 
                 log.info('Creating HarvestObject for package %s', registry_package['id'])
+                # NOTE: because the package is on the Portal, we are not adding the database reference here as package_id.
                 obj = HarvestObject(guid=registry_package['id'],
                                     harvest_source_id=harvest_job.source.id,
                                     harvest_job_id=harvest_job.id,
                                     job=harvest_job,
-                                    package_id=registry_package['id'],
                                     content=json.dumps(harvest_object_content) if harvest_object_content else None)
                 # save to Registry database after Portal app context
                 harvest_objects.append(obj)
@@ -457,7 +457,7 @@ class PortalSync(plugins.SingletonPlugin):
                 portal.call_action(action, source_package)
                 self._sync_datastore_and_views(portal, source_package, resource_file_hashes)
                 # "Note: if this stage creates or updates a package, a reference to the package should be added to the HarvestObject."
-                # NOTE: because the package is on the Portal, we are not adding the database reference here.
+                # NOTE: because the package is on the Portal, we are not adding the database reference here as package or package_id.
                 # Flag the other objects linking to this package as not current anymore
                 model.Session.query(HarvestObject).filter(
                     HarvestObject.package_id == source_package_id).update({"current": False})
