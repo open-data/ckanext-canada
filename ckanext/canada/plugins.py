@@ -214,6 +214,7 @@ class CanadaHarvestPlugin(Harvest):
     def get_helpers(self):
         helper_functions = super(CanadaHarvestPlugin, self).get_helpers()
         helper_functions['get_harvester_info'] = helpers.get_harvester_info
+        helper_functions['get_packages_from_harvest_job'] = helpers.get_packages_from_harvest_job
         return helper_functions
 
 
@@ -255,10 +256,18 @@ class CanadaHarvestPlugin(Harvest):
                     harvest_validators.harvest_object_extras_validator,}
 
 
+    # IActions
+    def get_actions(self):
+        action_functions = super(CanadaHarvestPlugin, self).get_actions()
+        action_functions['harvest_source_clear'] = logic.harvest_source_clear
+        return action_functions
+
+
     # IAuthFunctions
     def get_auth_functions(self):
         auth_functions = super(CanadaHarvestPlugin, self).get_auth_functions()
         auth_functions['harvest_log_list'] = auth.harvest_log_list
+        auth_functions['harvest_source_update'] = auth.harvest_source_update
         #TODO: check other auth functions from ckanext-harvest that need limitations??
         return auth_functions
 
@@ -491,7 +500,9 @@ class CanadaDatasetsPlugin(SchemingDatasetsPlugin):
         if 'fgp_viewer' in data_dict.get('display_flags', []):
             data_dict['fgp_viewer'] = 'map_view'
 
-        titles = json.loads(data_dict.get('title_translated', '{}'))
+        titles = data_dict.get('title_translated', '{}')
+        if not isinstance(titles, dict):
+            titles = json.loads(titles)
         data_dict['title_fr'] = titles.get('fr', '')
         data_dict['title_string'] = titles.get('en', '')
 

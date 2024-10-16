@@ -26,6 +26,7 @@ from ckan.logic import NotAuthorized
 import ckan.lib.datapreview as datapreview
 
 from ckanext.security.cache.login import max_login_attempts
+from ckanext.harvest.model import HarvestObject
 
 try:
     from ckanext.xloader.utils import XLoaderFormats
@@ -908,3 +909,23 @@ def get_harvester_info(source_type=None):
     for harvester_info in harvesters_info:
         if harvester_info.get('name') == source_type:
             return harvester_info
+
+
+def get_packages_from_harvest_job(job, action):
+    """
+    Returns a list of detailed Package info for HarvestObjects
+    from a given action state and HarvestJob.
+    """
+    results = model.Session.query(HarvestObject.guid)\
+                .filter(HarvestObject.harvest_job_id == job.get('id'))\
+                .filter(HarvestObject.report_status == action).all()
+    if not results:
+        return []
+    harvested_packages = []
+    for package_id in results:
+        try:
+            pkg_dict = t.get_action('package_show')({'user': g.user}, {'id': package_id})
+        except (t.ObjectNotFound, t.NotAuthorized):
+            continue
+        harvested_packages.append(pkg_dict)
+    return harvested_packages

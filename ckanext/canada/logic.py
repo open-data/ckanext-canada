@@ -37,7 +37,9 @@ import mimetypes
 from ckanext.scheming.helpers import scheming_get_preset
 
 from ckanext.datastore.backend import DatastoreBackend
-from ckanext.canada.harvesters import PORTAL_SYNC_ID
+from ckanext.canada.harvesters import PORTAL_SYNC_ID, HARVESTER_ID
+from ckanext.harvest.model import HarvestSource
+from ckanext.harvest.logic.action.update import harvest_source_clear as super__harvest_source_clear
 
 MIMETYPES_AS_DOMAINS = [
     'application/x-msdos-program',  # .com
@@ -567,3 +569,27 @@ def portal_sync_package_show(up_func, context, data_dict):
             }
 
     return package
+
+
+def harvest_source_clear(context, data_dict):
+    """
+    Wraps the harvest_source_clear from the Harvest plugin to prevent
+    Dataset deletion/purging for the PortalSync source type.
+
+    Switches the harvest_source_clear action to the harvest_source_job_history_clear action.
+    """
+    check_access('harvest_source_clear', context, data_dict)
+
+    harvest_source_id = data_dict.get('id')
+
+    source = HarvestSource.get(harvest_source_id)
+    if not source:
+        log.error('Harvest source %s does not exist', harvest_source_id)
+        raise ObjectNotFound('Harvest source %s does not exist' % harvest_source_id)
+
+    harvest_source_id = source.id
+
+    if source.type == HARVESTER_ID:
+        return get_action('harvest_source_job_history_clear')({'user': g.user}, {'id': harvest_source_id, 'keep_current': False})
+
+    return super__harvest_source_clear(context, data_dict)

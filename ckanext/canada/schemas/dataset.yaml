@@ -60,6 +60,9 @@ dataset_fields:
 - preset: canada_dataset_id
 - preset: canada_dataset_name
 
+- preset: canada_harvest_date
+- preset: canada_harvest_current
+
 - preset: canada_collection
   form_restrict_choices_to:
     - primary

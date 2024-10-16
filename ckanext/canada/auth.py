@@ -56,3 +56,12 @@ def organization_show(context, data_dict):
 def harvest_log_list(context, data_dict):
     """Only sysadmins can view harvest logs."""
     return {'success': False}
+
+
+def harvest_source_update(context, data_dict):
+    """
+    Only sysadmins can update harvest sources.
+
+    A fair amount of harvest auth actions cascade to this one.
+    """
+    return {'success': False}

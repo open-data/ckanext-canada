@@ -33,6 +33,23 @@ presets:
     validators: if_empty_same_as(id)
       unicode not_empty canada_validate_generate_uuid
 
+# We store the last successfuly sync datetime from ckanext.canada.harvesters:PortalSync
+- preset_name: canada_harvest_date
+  values:
+    create_validators: ignore_missing ignore_not_sysadmin string_safe isodate
+    display_snippet: null
+    field_name: last_sync_time
+    form_snippet: null
+
+# We store a flag if the package is current or not from ckanext.canada.harvesters:PortalSync
+# NOTE: boolean_validator may be False if value is missing, so check for last_sync_time
+- preset_name: canada_harvest_current
+  values:
+    create_validators: ignore_missing ignore_not_sysadmin string_safe boolean_validator
+    display_snippet: null
+    field_name: up_to_date
+    form_snippet: null
+
 # Field = Collection Type.
 # Display the English or the French Description from the Collection Type code table (refer to Data Migration), depending on the selected language.
 # {The collection (domain specific) to which the metadata record belongs, Example: Non-Spatial}
