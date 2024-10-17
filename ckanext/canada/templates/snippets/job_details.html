@@ -1,0 +1,127 @@
+{#
+NOTE: copied from ckanext-harvest for lack of blocks.
+      Adds expansion to show what was modified. TODO: upstream contrib??
+
+Displays information for a particular harvest job, including:
+
+  * counts for added, updated, deleted or errored datasets
+  * table with general details
+  * table with a summary of the most common errors on this job
+
+job        - dictized harvest job object
+
+Example:
+
+  {% snippet 'snippets/job_details.html', job=job %}
+
+#}
+
+{% set stats = job.stats %}
+
+{% if job.status == 'Finished' %}
+  <p>
+    {# Add link to custom view to show what was modified #}
+    {% if 'errored' in stats and stats['errored'] > 0 %}
+      <a href="javascript:void(0);" class="harvest-state-button errored" data-toggle="collapse" data-target="#info-errored" aria-controlls="info-errored">
+    {% endif %}
+      <span class="label label-important" data-diff="error">
+        {% if 'errored' in stats and stats['errored'] > 0 %}
+          {{ stats['errored'] }}
+        {% else %}
+          0
+        {% endif %}
+        {{ _('errors') }}
+      </span>
+    {% if 'errored' in stats and stats['errored'] > 0 %}
+      </a>
+    {% endif %}
+    {% for action in ['added', 'updated', 'deleted', 'not modified'] %}
+      {# Add link to custom view to show what was modified #}
+      {% if action in stats and stats[action] > 0 %}
+        <a href="javascript:void(0);" class="harvest-state-button {{ action.replace(' ', '-') }}" data-toggle="collapse" data-target="#info-{{ action.replace(' ', '-') }}" aria-controlls="info-{{ action.replace(' ', '-') }}">
+      {% endif %}
+        <span class="label" data-diff="{{ action }}">
+          {% if action in stats and stats[action] > 0 %}
+            {{ stats[action] }}
+          {% else %}
+            0
+          {% endif %}
+          {{ _(action) }}
+        </span>
+      {% if action in stats and stats[action] > 0 %}
+        </a>
+      {% endif %}
+    {% endfor %}
+  </p>
+  {# Add expand sections for above buttons #}
+  {% if 'errored' in stats and stats['errored'] > 0 %}
+    <div class="panel panel-primary collapse harvest-state-details" id="info-errored" aria-labelledby="info-errored">
+      <div class="panel-heading">
+        <div class="panel-title">{{ stats['errored'] }}&nbsp;{{ _('errors') }}</div>
+      </div>
+      {% set _packages = h.get_packages_from_harvest_job(job, 'errored') %}
+      <ul class="list-group">
+        <li class="list-group-item"></li>
+      </ul>
+    </div>
+  {% endif %}
+  {% for action in ['added', 'updated', 'deleted', 'not modified'] %}
+    {% if action in stats and stats[action] > 0 %}
+      <div class="panel panel-primary collapse harvest-state-details" id="info-{{ action.replace(' ', '-') }}" aria-labelledby="info-{{ action.replace(' ', '-') }}">
+        <div class="panel-heading">
+          <div class="panel-title">{{ stats[action] }}&nbsp;{{ _(action) }}</div>
+        </div>
+        {% set _packages = h.get_packages_from_harvest_job(job, action) %}
+        <ul class="list-group">
+          {% for _package in _packages %}
+            <li class="list-group-item">
+              <strong>{% link_for h.get_translated(_package, 'title'), named_route=_package.type + '.read', id=_package.id %}</strong><br />
+              <small><i class="fa fa-building-o" aria-hidden="true"></i>&nbsp;{{ h.split_piped_bilingual_field(_package.organization.title, h.lang()) }}</small><br />
+              <small><i class="fa fa-file-code-o" aria-hidden="true"></i>&nbsp;{% link_for _package.id, named_route='api.action', logic_function='package_show', id=_package.id %}</small>
+            </li>
+          {% endfor %}
+        </ul>
+      </div>
+    {% endif %}
+  {% endfor %}
+{% endif %}
+
+<h3 class="hide-heading">{{ _('Details') }}</h3>
+<table class="table table-striped table-bordered table-condensed">
+  <colgroup>
+    <col width="15">
+    <col width="85">
+  </colgroup>
+  <tr>
+    <th>{{ _('Id') }}</th>
+    <td>{{ job.id }}</td>
+  </tr>
+  <tr>
+    <th>{{ _('Created') }}</th>
+    <td>
+        <span class="automatic-local-datetime" data-datetime="{{ h.render_datetime(job.created, date_format='%Y-%m-%dT%H:%M:%S%z') }}">
+            {{ h.render_datetime(job.created, with_hours=True) }}
+        </span>
+    </td>
+  </tr>
+  <tr>
+    <th>{{ _('Started') }}</th>
+    <td>
+        <span class="automatic-local-datetime" data-datetime="{{ h.render_datetime(job.gather_started, date_format='%Y-%m-%dT%H:%M:%S%z') }}">
+            {{ h.render_datetime(job.gather_started, with_hours=True) }}
+        </span>
+    </td>
+  </tr>
+  <tr>
+    <th>{{ _('Finished') }}</th>
+    <td>
+        <span class="automatic-local-datetime" data-datetime="{{ h.render_datetime(job.finished, date_format='%Y-%m-%dT%H:%M:%S%z') }}">
+            {{ h.render_datetime(job.finished, with_hours=True) }}
+        </span>
+    </td>
+  </tr>
+  <tr>
+    <th>{{ _('Status') }}</th>
+    <td>{{ _(job.status) }}</td>
+  </tr>
+</table>

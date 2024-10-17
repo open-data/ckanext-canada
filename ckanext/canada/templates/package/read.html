@@ -159,8 +159,15 @@
       </ul>
     </section>
     {% block package_resources %}
-      {% if pkg.type != 'prop' %}
+      {% if pkg.type != 'prop' and pkg.type != 'harvest' %}
         {{ super() }}
+      {% endif %}
+      {% if pkg.type == 'harvest' %}
+        {% set harvest_source = harvest_source or h.get_harvest_source() %}
+        <section class="module-content">
+          <h2>{{ _('Harvested Datasets') }}</h2>
+          {{ h.package_list_for_source(harvest_source.id)  }}
+        </section>
       {% endif %}
     {% endblock %}
     {% block package_item_apps %}

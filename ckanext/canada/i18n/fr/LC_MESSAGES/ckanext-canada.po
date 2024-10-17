@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-10-10 13:20+0000\n"
+"POT-Creation-Date: 2024-10-17 12:56+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: fr\n"
@@ -117,107 +117,108 @@ msgstr ""
 msgid "Invalid business number"
 msgstr "Numéro d’entreprise non valide"
 
-#: ckanext/canada/helpers.py:288 ckanext/canada/helpers.py:289
+#: ckanext/canada/helpers.py:289 ckanext/canada/helpers.py:290
 msgid "Treasury Board of Canada Secretariat"
 msgstr "Secrétariat du Conseil du Trésor du Canada"
 
-#: ckanext/canada/helpers.py:580 ckanext/canada/strings.py:13
+#: ckanext/canada/helpers.py:581 ckanext/canada/strings.py:13
 #: ckanext/canada/view.py:1196
 msgid "Members not found"
 msgstr "Membres non trouvés"
 
-#: ckanext/canada/helpers.py:706
+#: ckanext/canada/helpers.py:707
 msgid "Data awaiting load to DataStore"
 msgstr "Le versement des données dans DataStore est en attente"
 
-#: ckanext/canada/helpers.py:707
+#: ckanext/canada/helpers.py:708
 msgid "Loading data into DataStore"
 msgstr "Le versement des données dans DataStore est en cours"
 
-#: ckanext/canada/helpers.py:708
+#: ckanext/canada/helpers.py:709
 msgid "Data loaded into DataStore"
 msgstr "Les données ont été versées dans DataStore"
 
-#: ckanext/canada/helpers.py:709
+#: ckanext/canada/helpers.py:710
 msgid "Failed to load data into DataStore"
 msgstr "Les données n'ont pas été versées dans DataStore"
 
-#: ckanext/canada/helpers.py:710
+#: ckanext/canada/helpers.py:711
 msgid "Data available in DataStore"
 msgstr "Les données sont disponibles dans DataStore"
 
-#: ckanext/canada/helpers.py:711
+#: ckanext/canada/helpers.py:712
 msgid "Resource not active in DataStore"
 msgstr "La ressource est inactive dans DataStore"
 
-#: ckanext/canada/helpers.py:712
+#: ckanext/canada/helpers.py:713
 msgid "DataStore status unknown"
 msgstr "L'état de DataStore est inconnu"
 
 # Search facets
-#: ckanext/canada/helpers.py:779
+#: ckanext/canada/helpers.py:780
 #: ckanext/canada/templates/home/quick_links.html:65
-#: ckanext/canada/templates/scheming/package/snippets/package_form.html:28
+#: ckanext/canada/templates/scheming/package/snippets/package_form.html:29
 #: ckanext/canada/templates/snippets/cdts/header.html:31
-#: ckanext/canada/templates/snippets/dataset_facets.html:3
-#: ckanext/canada/templates/snippets/dataset_facets.html:10
+#: ckanext/canada/templates/snippets/dataset_facets.html:7
+#: ckanext/canada/templates/snippets/dataset_facets.html:14
 #: ckanext/canada/templates/snippets/package_item.html:11
 msgid "Open Data"
 msgstr "Données ouvertes"
 
-#: ckanext/canada/helpers.py:780
+#: ckanext/canada/helpers.py:781
 #: ckanext/canada/templates/home/quick_links.html:79
-#: ckanext/canada/templates/scheming/package/snippets/package_form.html:30
+#: ckanext/canada/templates/scheming/package/snippets/package_form.html:31
 #: ckanext/canada/templates/snippets/cdts/header.html:54
-#: ckanext/canada/templates/snippets/dataset_facets.html:5
-#: ckanext/canada/templates/snippets/dataset_facets.html:11
+#: ckanext/canada/templates/snippets/dataset_facets.html:9
+#: ckanext/canada/templates/snippets/dataset_facets.html:15
 #: ckanext/canada/templates/snippets/package_item.html:17
 msgid "Open Information"
 msgstr "Information ouverte"
 
-#: ckanext/canada/helpers.py:789
-#: ckanext/canada/templates/snippets/dataset_facets.html:26
+#: ckanext/canada/helpers.py:790
+#: ckanext/canada/templates/snippets/dataset_facets.html:30
 msgid "Request sent to data owner - awaiting response"
 msgstr "Demande envoyée au propriétaire des données, en attente de réponse"
 
-#: ckanext/canada/helpers.py:793
+#: ckanext/canada/helpers.py:794
 #: ckanext/canada/templates/snippets/publish_facet.html:43
 msgid "Pending"
 msgstr "En attente"
 
-#: ckanext/canada/helpers.py:794 ckanext/canada/templates/package/read.html:15
+#: ../ckanext-harvest/ckanext/harvest/templates/snippets/source_item.html:33
+#: ckanext/canada/helpers.py:795 ckanext/canada/templates/package/read.html:15
 #: ckanext/canada/templates/snippets/publish_facet.html:43
 msgid "Draft"
 msgstr "Ébauche"
 
-#: ckanext/canada/helpers.py:803
+#: ckanext/canada/helpers.py:804
 #: ckanext/canada/templates/home/quick_links.html:133
 #: ckanext/canada/templates/snippets/cdts/header.html:57
-#: ckanext/canada/templates/snippets/dataset_facets.html:31
+#: ckanext/canada/templates/snippets/dataset_facets.html:35
 #: ckanext/canada/templates/snippets/package_item.html:15
 #: ckanext/canada/templates/snippets/package_item.html:21
 msgid "Proactive Publication"
 msgstr "Publication proactive"
 
-#: ckanext/canada/helpers.py:825
+#: ckanext/canada/helpers.py:826
 #: ckanext/canada/templates/snippets/publish_facet.html:24
 msgid "Published"
 msgstr "Publié"
 
-#: ckanext/canada/helpers.py:827
+#: ckanext/canada/helpers.py:828
 #: ckanext/canada/templates/snippets/publish_facet.html:33
 msgid "Scheduled"
 msgstr "Prévu"
 
-#: ckanext/canada/helpers.py:862
+#: ckanext/canada/helpers.py:863
 msgid "Registry Home"
 msgstr "Accueil du registre"
 
-#: ckanext/canada/helpers.py:867
+#: ckanext/canada/helpers.py:868
 msgid "Open Government"
 msgstr "Gouvernement ouvert"
 
-#: ckanext/canada/helpers.py:870
+#: ckanext/canada/helpers.py:871
 #: ckanext/canada/templates/admin/publish_search.html:18
 #: ckanext/canada/templates/home/quick_links.html:104
 #: ckanext/canada/templates/organization/snippets/organization_search.html:7
@@ -226,78 +227,88 @@ msgstr "Gouvernement ouvert"
 msgid "Search"
 msgstr "Rechercher"
 
-#: ckanext/canada/logic.py:296
+#: ckanext/canada/logic.py:299
 msgid "Could not determine a resource format. Please supply a format."
 msgstr ""
 "Il est impossible de déterminer le format de la ressource. Veuillez "
 "indiquer un format."
 
-#: ckanext/canada/logic.py:457
+#: ckanext/canada/logic.py:460
 msgid "Unknown Job"
 msgstr "Tâche inconnue "
 
-#: ckanext/canada/plugins.py:703
-#: ckanext/canada/templates/scheming/package/snippets/package_form.html:25
-msgid "Portal Type"
-msgstr "Type de portail"
+#: ckanext/canada/plugins.py:226
+msgid "Frequency"
+msgstr ""
 
-#: ckanext/canada/plugins.py:704
+#: ckanext/canada/plugins.py:227
+msgid "Source Type"
+msgstr ""
+
+#: ../ckanext-harvest/ckanext/harvest/templates/snippets/source_item.html:50
+#: ../ckanext-harvest/ckanext/harvest/templates/source/new_source_form.html:66
+#: ckanext/canada/plugins.py:228 ckanext/canada/plugins.py:818
 #: ckanext/canada/templates/package/deleted.html:14
 #: ckanext/canada/templates/user/new_user_form.html:17
 msgid "Organization"
 msgstr "Organisation"
 
-#: ckanext/canada/plugins.py:705
+#: ckanext/canada/plugins.py:817
+#: ckanext/canada/templates/scheming/package/snippets/package_form.html:26
+msgid "Portal Type"
+msgstr "Type de portail"
+
+#: ckanext/canada/plugins.py:819
 msgid "Collection Type"
 msgstr "Type de collection"
 
-#: ckanext/canada/plugins.py:706 ckanext/canada/plugins.py:707
+#: ckanext/canada/plugins.py:820 ckanext/canada/plugins.py:821
 msgid "Keywords"
 msgstr "Mots clés"
 
-#: ckanext/canada/plugins.py:708
+#: ckanext/canada/plugins.py:822
 msgid "Subject"
 msgstr "Sujet"
 
-#: ckanext/canada/plugins.py:709
+#: ckanext/canada/plugins.py:823
 #: ckanext/canada/templates/tabledesigner/view_snippets/cra_business_number.html:1
 msgid "Format"
 msgstr "Format"
 
-#: ckanext/canada/plugins.py:710
+#: ckanext/canada/plugins.py:824
 msgid "Resource Type"
 msgstr "Type de ressource"
 
-#: ckanext/canada/plugins.py:711
+#: ckanext/canada/plugins.py:825
 msgid "Maintenance and Update Frequency"
 msgstr "Fréquence d’entretien et de mise à jour"
 
-#: ckanext/canada/plugins.py:712
+#: ckanext/canada/plugins.py:826
 msgid "Record Status"
 msgstr "État du dossier"
 
-#: ckanext/canada/plugins.py:713
+#: ckanext/canada/plugins.py:827
 msgid "IMSO Approval"
 msgstr "Approbation du CSGI"
 
-#: ckanext/canada/plugins.py:714
+#: ckanext/canada/plugins.py:828
 msgid "Jurisdiction"
 msgstr "Juridiction"
 
-#: ckanext/canada/plugins.py:715
+#: ckanext/canada/plugins.py:829
 msgid "Suggestion Status"
 msgstr "État de la suggestion"
 
-#: ckanext/canada/plugins.py:902
+#: ckanext/canada/plugins.py:1016
 msgid "Previous"
 msgstr "Précédent"
 
-#: ckanext/canada/plugins.py:902
+#: ckanext/canada/plugins.py:1016
 msgid "Next"
 msgstr "Suivant"
 
 #: ckanext/canada/strings.py:11
-#: ckanext/canada/templates/package/base_form_page.html:5
+#: ckanext/canada/templates/package/base_form_page.html:6
 msgid "Create Dataset"
 msgstr "Créer un jeu de données"
 
@@ -328,6 +339,7 @@ msgstr "Nom d’utilisateur"
 msgid "Email"
 msgstr "Courriel"
 
+#: ../ckanext-harvest/ckanext/harvest/templates/source/new_source_form.html:24
 #: ckanext/canada/strings.py:17 ckanext/canada/templates/user/api_tokens.html:5
 #: ckanext/canada/templates/user/list.html:45 ckanext/canada/view.py:1198
 msgid "Name"
@@ -533,8 +545,8 @@ msgstr ""
 " un utilisateur du système."
 
 #: ckanext/canada/strings.py:64
-#: ckanext/canada/templates/snippets/facet_list.html:43
-#: ckanext/canada/templates/snippets/facet_list.html:44
+#: ckanext/canada/templates/snippets/facet_list.html:51
+#: ckanext/canada/templates/snippets/facet_list.html:52
 msgid "Show more"
 msgstr "Afficher plus"
 
@@ -636,71 +648,71 @@ msgstr "Répétable"
 msgid "Optional"
 msgstr "Facultatif"
 
-#: ckanext/canada/validators.py:118
+#: ckanext/canada/validators.py:120
 #, python-format
 msgid "Tag \"%s\" length is less than minimum %s"
 msgstr "La longueur de la balise \"%s\" est inférieure au minimum %s"
 
-#: ckanext/canada/validators.py:122
+#: ckanext/canada/validators.py:124
 #, python-format
 msgid "Tag \"%s\" length is more than maximum %i"
 msgstr "La longueur de la balise \"%s\" est supérieure au maximum %i"
 
-#: ckanext/canada/validators.py:126
+#: ckanext/canada/validators.py:128
 #, python-format
 msgid "Tag \"%s\" may not contain consecutive spaces"
 msgstr "La balise \"%s\" ne peut pas contenir d’espaces consécutifs"
 
-#: ckanext/canada/validators.py:133
+#: ckanext/canada/validators.py:135
 #, python-format
 msgid "Tag \"%s\" may not contain unprintable character U+%04x"
 msgstr "La balise \"%s\" ne peut pas contenir de caractères non imprimables U+%04x"
 
-#: ckanext/canada/validators.py:137
+#: ckanext/canada/validators.py:139
 #, python-format
 msgid "Tag \"%s\" may not contain separator charater U+%04x"
 msgstr "La balise \"%s\"ne peut pas contenir de caractères séparateurs U+%04x"
 
-#: ckanext/canada/validators.py:153
+#: ckanext/canada/validators.py:155
 msgid "Badly formed hexadecimal UUID string"
 msgstr "Chaîne UUID hexadécimale mal formée"
 
 #: ckanext/canada/templates/user/new_user_form.html:6
-#: ckanext/canada/validators.py:165 ckanext/canada/validators.py:167
+#: ckanext/canada/validators.py:167 ckanext/canada/validators.py:169
 msgid "Please enter a valid email address."
 msgstr "S’il vous plaît, mettez une adresse email valide."
 
-#: ckanext/canada/validators.py:182
+#: ckanext/canada/validators.py:184
 msgid "Invalid GeoJSON"
 msgstr "GeoJSON invalide"
 
-#: ckanext/canada/validators.py:259
+#: ckanext/canada/validators.py:261
 msgid "Date may not be in the future when this record is marked ready to publish"
 msgstr ""
 "Une fois que ce document est marqué comme étant prêt à publier, la date "
 "ne peut pas être dans le futur"
 
-#: ckanext/canada/validators.py:336
+#: ckanext/canada/validators.py:338
 msgid "Date format incorrect. Expecting YYYY-MM-DD"
 msgstr "Le format de la date est incorrect. Il devrait être AAAA-MM-JJ"
 
-#: ckanext/canada/validators.py:350 ckanext/canada/validators.py:364
+#: ckanext/canada/validators.py:352 ckanext/canada/validators.py:366
 msgid "Must be a Unicode string value"
 msgstr "Doit être une chaîne de caractères Unicode"
 
-#: ckanext/canada/validators.py:371 ckanext/canada/validators.py:382
+#: ckanext/canada/validators.py:373 ckanext/canada/validators.py:384
 msgid "Must be a JSON string"
 msgstr "Doit être une chaîne JSON"
 
-#: ckanext/canada/validators.py:378
+#: ckanext/canada/validators.py:380
 msgid "JSON object must contain \"en\" key"
 msgstr "L’objet JSON doit contenir la clé \"en\""
 
-#: ckanext/canada/validators.py:380
+#: ckanext/canada/validators.py:382
 msgid "JSON object must contain \"fr\" key"
 msgstr "L’objet JSON doit contenir la clé \"fr\""
 
-#: ckanext/canada/validators.py:532
+#: ckanext/canada/validators.py:534
 #, python-format
 msgid ""
 "Cannot change value of registry_access field from '%s' to '%s'. This "
@@ -708,6 +720,10 @@ msgid ""
 msgstr ""
 "Impossible de modifier la valeur du champ d’accès au registre de '%s' à "
 "'%s'. Ce champ ne sert qu’à des fins de lecture."
+
+#: ckanext/canada/validators.py:549
+msgid "There is already a Portal Sync harvester. Only one is allowed."
+msgstr ""
 
 #: ckanext/canada/view.py:101
 msgid "<strong>Note</strong><br>{0} is now logged in"
@@ -833,8 +849,8 @@ msgstr "Nombre requis"
 msgid "Integer required"
 msgstr "Entier requis"
 
-#: ckanext/canada/view.py:746 ckanext/canada/view.py:754
-#: ckanext/canada/view.py:788
+#: ../ckanext-harvest/ckanext/harvest/utils.py:490 ckanext/canada/view.py:746
+#: ckanext/canada/view.py:754 ckanext/canada/view.py:788
 msgid "Not authorized to see this page"
 msgstr "Non autorisé à voir cette page"
 
@@ -854,6 +870,7 @@ msgstr ""
 "Tableau de stockage de données et dictionnaire de données supprimés pour "
 "la ressource %s"
 
+#: ../ckanext-harvest/ckanext/harvest/templates/source/admin_base.html:43
 #: ckanext/canada/templates/organization/edit_base.html:31
 #: ckanext/canada/templates/organization/read_base.html:35
 #: ckanext/canada/templates/organization/snippets/organization_item.html:16
@@ -1704,9 +1721,12 @@ msgstr ""
 "si votre demande est urgente ou si ce problème persiste. Veuillez noter "
 "que votre connexion expire après une heure d’inactivité."
 
+#: ../ckanext-harvest/ckanext/harvest/templates/source/read_base.html:39
 #: ckanext/canada/templates/help.html:4
 #: ckanext/canada/templates/organization/about.html:4
 #: ckanext/canada/templates/page.html:61
+#: ckanext/canada/templates/source/admin.html:6
+#: ckanext/canada/templates/source/job/list.html:6
 #: ckanext/canada/templates/user/edit_user_form.html:10
 msgid "About"
 msgstr "À propos"
@@ -2163,7 +2183,10 @@ msgstr "Moins de charge"
 msgid "Load more"
 msgstr "En charger davantage"
 
+#: ../ckanext-harvest/ckanext/harvest/templates/source/admin_base.html:7
+#: ../ckanext-harvest/ckanext/harvest/templates/source/read_base.html:32
 #: ckanext/canada/templates/admin/base.html:5
+#: ckanext/canada/templates/package/read_base.html:37
 #: ckanext/canada/templates/snippets/cdts/header.html:197
 msgid "Admin"
 msgstr "Administrateur"
@@ -2194,6 +2217,10 @@ msgstr "Publier des dossiers"
 #: ckanext/canada/templates/admin/jobs.html:52
 msgid "Job Queue"
 msgstr "File d'attente des tâches"
+
+#: ckanext/canada/templates/admin/base.html:19
+msgid "Harvesters"
+msgstr ""
 
 #: ckanext/canada/templates/admin/index.html:7
 msgid "Administer CKAN"
@@ -2238,7 +2265,7 @@ msgid "View the current job queue and running jobs."
 msgstr "Affichez les tâches dans la file d'attente et en cours d'exécution."
 
 #: ckanext/canada/templates/admin/publish_search.html:11
-#: ckanext/canada/templates/package/search.html:13
+#: ckanext/canada/templates/package/search.html:19
 #: ckanext/canada/templates/snippets/search_form.html:13
 #: ckanext/canada/templates/snippets/search_form.html:27
 msgid "Search Datasets"
@@ -2267,14 +2294,14 @@ msgstr ""
 "Veuillez réessayer.</p> "
 
 #: ckanext/canada/templates/admin/publish_search.html:86
-#: ckanext/canada/templates/package/search.html:23
+#: ckanext/canada/templates/package/search.html:29
 msgid "Search Filters"
 msgstr "Filtres de recherche"
 
 #: ckanext/canada/templates/admin/publish_search.html:86
-#: ckanext/canada/templates/package/search.html:23
-#: ckanext/canada/templates/snippets/facet_list.html:56
-#: ckanext/canada/templates/snippets/facet_list.html:57
+#: ckanext/canada/templates/package/search.html:29
+#: ckanext/canada/templates/snippets/facet_list.html:64
+#: ckanext/canada/templates/snippets/facet_list.html:65
 #: ckanext/canada/templates/snippets/publish_facet.html:62
 #: ckanext/canada/templates/snippets/publish_facet.html:63
 msgid "Clear All"
@@ -2365,6 +2392,7 @@ msgstr "Description en français"
 msgid "Label"
 msgstr ""
 
+#: ../ckanext-harvest/ckanext/harvest/templates/source/new_source_form.html:26
 #: ckanext/canada/templates/datastore/snippets/dictionary_view.html:10
 msgid "Description"
 msgstr "Description"
@@ -2422,7 +2450,7 @@ msgstr ""
 
 #: ckanext/canada/templates/home/quick_links.html:91
 #: ckanext/canada/templates/snippets/cdts/header.html:135
-#: ckanext/canada/templates/snippets/dataset_facets.html:4
+#: ckanext/canada/templates/snippets/dataset_facets.html:8
 #: ckanext/canada/templates/snippets/package_item.html:19
 msgid "Open Dialogue"
 msgstr "Dialogue ouvert"
@@ -2539,13 +2567,13 @@ msgstr ""
 "contenu ou modifiez-la."
 
 #: ckanext/canada/templates/organization/activity_stream.html:4
-#: ckanext/canada/templates/package/read_base.html:23
+#: ckanext/canada/templates/package/read_base.html:26
 #: ckanext/canada/templates/user/activity_stream.html:12
 msgid "Activity Stream"
 msgstr "Flux d’Activités"
 
 #: ckanext/canada/templates/organization/activity_stream.html:11
-#: ckanext/canada/templates/package/read_base.html:150
+#: ckanext/canada/templates/package/read_base.html:171
 msgid "Atom Feed"
 msgstr "Fil de nouvelles Atom"
 
@@ -2553,9 +2581,13 @@ msgstr "Fil de nouvelles Atom"
 msgid "Are you sure you want to delete member - {name}?"
 msgstr "Êtes-vous sûr de vouloir supprimer le membre {name}?"
 
+#: ../ckanext-harvest/ckanext/harvest/templates/snippets/source_item.html:47
+#: ../ckanext-harvest/ckanext/harvest/templates/source/read.html:5
+#: ../ckanext-harvest/ckanext/harvest/templates/source/read_base.html:17
+#: ../ckanext-harvest/ckanext/harvest/templates/source/read_base.html:38
 #: ckanext/canada/templates/organization/edit_base.html:15
 #: ckanext/canada/templates/organization/read_base.html:24
-#: ckanext/canada/templates/package/search.html:16
+#: ckanext/canada/templates/package/search.html:22
 #: ckanext/canada/templates/snippets/organization.html:37
 #: ckanext/canada/templates/user/read.html:21
 msgid "Datasets"
@@ -2584,6 +2616,7 @@ msgstr "Il n’y a actuellement aucune organisation pour ce site"
 msgid "How about creating one?"
 msgstr "Pourquoi ne pas en créer une?"
 
+#: ../ckanext-harvest/ckanext/harvest/templates/source/base.html:16
 #: ckanext/canada/templates/organization/index.html:26
 #: ckanext/canada/templates/organization/members.html:10
 #: ckanext/canada/templates/organization/read_base.html:6
@@ -2638,6 +2671,7 @@ msgstr "Adresse électronique"
 msgid "Are you sure you want to delete this member?"
 msgstr "Êtes-vous sûr de vouloir supprimer ce membre?"
 
+#: ../ckanext-harvest/ckanext/harvest/templates/source/new_source_form.html:99
 #: ckanext/canada/templates/organization/member_new.html:60
 #: ckanext/canada/templates/scheming/package/read.html:26
 #: ckanext/canada/templates/scheming/snippets/form_field.html:21
@@ -2712,11 +2746,28 @@ msgstr "0 dossiers"
 msgid "Search organizations..."
 msgstr "Rechercher les organisations..."
 
-#: ckanext/canada/templates/package/base_form_page.html:25
+#: ../ckanext-harvest/ckanext/harvest/templates/source/base.html:18
+#: ../ckanext-harvest/ckanext/harvest/templates/source/base.html:21
+#: ../ckanext-harvest/ckanext/harvest/templates/source/new.html:4
+#: ../ckanext-harvest/ckanext/harvest/templates/source/search.html:7
+#: ckanext/canada/templates/package/base.html:8
+#: ckanext/canada/templates/package/search.html:22
+#: ckanext/canada/templates/source/base.html:4
+msgid "Harvest Sources"
+msgstr ""
+
+#: ../ckanext-harvest/ckanext/harvest/templates/source/new.html:5
+#: ckanext/canada/templates/package/base_form_page.html:8
+#: ckanext/canada/templates/package/base_form_page.html:17
+#: ckanext/canada/templates/package/new.html:7
+msgid "Create Harvest Source"
+msgstr ""
+
+#: ckanext/canada/templates/package/base_form_page.html:37
 msgid "What are datasets?"
 msgstr "Qu’est-ce qu’un ensemble de données?"
 
-#: ckanext/canada/templates/package/base_form_page.html:28
+#: ckanext/canada/templates/package/base_form_page.html:40
 msgid ""
 "Datasets are simply used to group related pieces of data. These can then "
 "be found under a single url with a description and licensing information."
@@ -2742,6 +2793,7 @@ msgstr "Ce dossier a été supprimé de %s."
 msgid "Open.canada.ca"
 msgstr "ouvert.canada.ca"
 
+#: ../ckanext-harvest/ckanext/harvest/templates/source/search.html:31
 #: ckanext/canada/templates/package/deleted.html:11
 #: ckanext/canada/templates/snippets/sort_by.html:22
 msgid "Last Modified"
@@ -2750,6 +2802,18 @@ msgstr "Date de modification"
 #: ckanext/canada/templates/package/deleted.html:20
 msgid "Return to Index"
 msgstr "Retourner à la page de recherche"
+
+#: ckanext/canada/templates/package/edit_base.html:8
+msgid "Edit metadata"
+msgstr "Editer les métadonnées"
+
+#: ckanext/canada/templates/package/edit_base.html:13
+msgid "View Harvest Source"
+msgstr ""
+
+#: ckanext/canada/templates/package/edit_base.html:13
+msgid "View dataset"
+msgstr "Voir le jeu de données"
 
 #: ckanext/canada/templates/package/edit_view.html:6
 #: ckanext/canada/templates/package/snippets/resource_views_list_item.html:17
@@ -2866,11 +2930,11 @@ msgstr ""
 
 #: ckanext/canada/templates/package/read.html:129
 #: ckanext/canada/templates/package/read.html:152
-#: ckanext/canada/templates/package/read_base.html:56
 #: ckanext/canada/templates/package/read_base.html:65
-#: ckanext/canada/templates/package/read_base.html:81
-#: ckanext/canada/templates/package/read_base.html:155
-#: ckanext/canada/templates/package/read_base.html:187
+#: ckanext/canada/templates/package/read_base.html:85
+#: ckanext/canada/templates/package/read_base.html:101
+#: ckanext/canada/templates/package/read_base.html:177
+#: ckanext/canada/templates/package/read_base.html:209
 #: ckanext/canada/templates/recombinant/create_pd_record.html:29
 #: ckanext/canada/templates/recombinant/update_pd_record.html:29
 #: ckanext/canada/templates/snippets/package_item.html:91
@@ -2881,39 +2945,43 @@ msgstr " :"
 msgid "Issued by"
 msgstr "Publiée par"
 
-#: ckanext/canada/templates/package/read.html:177
+#: ckanext/canada/templates/package/read.html:168
+msgid "Harvested Datasets"
+msgstr ""
+
+#: ckanext/canada/templates/package/read.html:184
 msgid "Related Items"
 msgstr "Articles connexes"
 
-#: ckanext/canada/templates/package/read.html:191
+#: ckanext/canada/templates/package/read.html:198
 msgid "Contact Information"
 msgstr "Coordonnées"
 
-#: ckanext/canada/templates/package/read.html:193
+#: ckanext/canada/templates/package/read.html:200
 msgid "Delivery Point:"
 msgstr "Point de livraison :"
 
-#: ckanext/canada/templates/package/read.html:196
+#: ckanext/canada/templates/package/read.html:203
 msgid "City:"
 msgstr "Ville :"
 
-#: ckanext/canada/templates/package/read.html:199
+#: ckanext/canada/templates/package/read.html:206
 msgid "Administrative Area:"
 msgstr "Zone administrative :"
 
-#: ckanext/canada/templates/package/read.html:202
+#: ckanext/canada/templates/package/read.html:209
 msgid "Postal Code:"
 msgstr "Code postal :"
 
-#: ckanext/canada/templates/package/read.html:205
+#: ckanext/canada/templates/package/read.html:212
 msgid "Country:"
 msgstr "Pays :"
 
-#: ckanext/canada/templates/package/read.html:208
+#: ckanext/canada/templates/package/read.html:215
 msgid "Electronic Mail Address:"
 msgstr "Adresse de courrier électronique :"
 
-#: ckanext/canada/templates/package/read.html:230
+#: ckanext/canada/templates/package/read.html:237
 msgid "Similar records"
 msgstr "Dossiers similaires"
 
@@ -2921,88 +2989,98 @@ msgstr "Dossiers similaires"
 msgid "Dataset"
 msgstr "Jeu de données"
 
-#: ckanext/canada/templates/package/read_base.html:41
+#: ckanext/canada/templates/package/read_base.html:23
+msgid "Harvest Source"
+msgstr ""
+
+#: ckanext/canada/templates/package/read_base.html:50
 #: ckanext/canada/templates/scheming/package/resource_read.html:9
+#: ckanext/canada/templates/source/read_base.html:7
 msgid "Additional Information"
 msgstr "Informations complémentaires"
 
-#: ckanext/canada/templates/package/read_base.html:65
+#: ckanext/canada/templates/package/read_base.html:76
+#: ckanext/canada/templates/source/read_base.html:29
+msgid "Harvested Datasets:"
+msgstr ""
+
+#: ckanext/canada/templates/package/read_base.html:85
 msgid "Temporal Coverage"
 msgstr "Couverture temporelle"
 
-#: ckanext/canada/templates/package/read_base.html:68
+#: ckanext/canada/templates/package/read_base.html:88
 msgid "to"
 msgstr "à"
 
-#: ckanext/canada/templates/package/read_base.html:70
+#: ckanext/canada/templates/package/read_base.html:90
 msgid "to undefined"
 msgstr "à non défini"
 
-#: ckanext/canada/templates/package/read_base.html:72
+#: ckanext/canada/templates/package/read_base.html:92
 msgid "undefined to"
 msgstr "non défini à"
 
-#: ckanext/canada/templates/package/read_base.html:81
+#: ckanext/canada/templates/package/read_base.html:101
 msgid "Openness Rating"
 msgstr "Cote de degrée d’ouverture des données"
 
-#: ckanext/canada/templates/package/read_base.html:86
+#: ckanext/canada/templates/package/read_base.html:106
 msgid "one star"
 msgstr "une étoile"
 
-#: ckanext/canada/templates/package/read_base.html:87
+#: ckanext/canada/templates/package/read_base.html:107
 msgid "two stars"
 msgstr "deux étoiles"
 
-#: ckanext/canada/templates/package/read_base.html:88
+#: ckanext/canada/templates/package/read_base.html:108
 msgid "three stars"
 msgstr "trois étoiles"
 
-#: ckanext/canada/templates/package/read_base.html:89
+#: ckanext/canada/templates/package/read_base.html:109
 msgid "four stars"
 msgstr "quatre étoiles"
 
-#: ckanext/canada/templates/package/read_base.html:90
+#: ckanext/canada/templates/package/read_base.html:110
 msgid "five stars"
 msgstr "cinq étoiles"
 
-#: ckanext/canada/templates/package/read_base.html:101
+#: ckanext/canada/templates/package/read_base.html:121
 msgid "About this Record"
 msgstr "Au sujet de ce dossier"
 
-#: ckanext/canada/templates/package/read_base.html:105
+#: ckanext/canada/templates/package/read_base.html:125
 msgid "Record Released:"
 msgstr "Dossier publié :"
 
-#: ckanext/canada/templates/package/read_base.html:109
+#: ckanext/canada/templates/package/read_base.html:129
 msgid "Record Modified:"
 msgstr "Dossier modifié :"
 
-#: ckanext/canada/templates/package/read_base.html:113
+#: ckanext/canada/templates/package/read_base.html:133
 msgid "Record ID:"
 msgstr "Identificateur du dossier :"
 
-#: ckanext/canada/templates/package/read_base.html:117
+#: ckanext/canada/templates/package/read_base.html:137
 msgid "Metadata:"
 msgstr "Métadonnées :"
 
-#: ckanext/canada/templates/package/read_base.html:121
+#: ckanext/canada/templates/package/read_base.html:141
 msgid "Link to JSON format"
 msgstr "Lien au format JSON"
 
-#: ckanext/canada/templates/package/read_base.html:127
+#: ckanext/canada/templates/package/read_base.html:147
 msgid "DCAT (JSON-LD)"
 msgstr "DCAT (JSON-LD)"
 
-#: ckanext/canada/templates/package/read_base.html:134
+#: ckanext/canada/templates/package/read_base.html:154
 msgid "DCAT (XML)"
 msgstr "DCAT (XML)"
 
-#: ckanext/canada/templates/package/read_base.html:142
+#: ckanext/canada/templates/package/read_base.html:162
 msgid "FGP Metadata:"
 msgstr "Métadonnées de la PGF :"
 
-#: ckanext/canada/templates/package/read_base.html:144
+#: ckanext/canada/templates/package/read_base.html:164
 msgid "HNAP ISO:19115 Metadata Record"
 msgstr "Enregistrement de métadonnées de HNAP ISO:19115"
 
@@ -3020,11 +3098,15 @@ msgstr "Télécharger"
 msgid "Resources"
 msgstr "Ressources"
 
-#: ckanext/canada/templates/package/search.html:18
+#: ckanext/canada/templates/package/search.html:19
+msgid "Search Harvest Sources"
+msgstr ""
+
+#: ckanext/canada/templates/package/search.html:24
 msgid "Search Open Government"
 msgstr "Recherche du Gouvernement ouvert"
 
-#: ckanext/canada/templates/package/search.html:49
+#: ckanext/canada/templates/package/search.html:57
 msgid "Please review your spelling, or reduce the number of filters selected."
 msgstr ""
 "S’il vous plaît vérifier l’orthographe, ou réduire le nombre de filtres "
@@ -3083,6 +3165,7 @@ msgstr "Responsable de la maintenance"
 msgid "Version"
 msgstr "Version"
 
+#: ../ckanext-harvest/ckanext/harvest/templates/source/new_source_form.html:82
 #: ckanext/canada/templates/package/snippets/additional_info.html:47
 #: ckanext/canada/templates/package/snippets/additional_info2.html:41
 msgid "State"
@@ -3241,7 +3324,7 @@ msgstr "Vous pouvez sélectionner ou désélectionner de multiples entrées."
 
 #: ckanext/canada/templates/recombinant/create_pd_record.html:87
 #: ckanext/canada/templates/recombinant/update_pd_record.html:90
-#: ckanext/canada/templates/scheming/package/snippets/package_form.html:63
+#: ckanext/canada/templates/scheming/package/snippets/package_form.html:76
 msgid "Save"
 msgstr "Enregistrer"
 
@@ -3303,6 +3386,10 @@ msgstr "Créer et procéder à la mise à jour de plusieurs dossiers"
 #: ckanext/canada/templates/scheming/display_snippets/email_with_parameters.html:7
 msgid "The following is a question related to the record {url} found on {site}"
 msgstr "La question suivante est liée au dossier {url} qu’on retrouve dans {site}"
+
+#: ckanext/canada/templates/scheming/form_snippets/harvest_sources.html:2
+msgid "This field is required"
+msgstr "Ce champ est requis"
 
 #: ckanext/canada/templates/scheming/form_snippets/imso_approval_select.html:33
 msgid ""
@@ -3403,19 +3490,19 @@ msgstr "URL de l’image"
 msgid "Image"
 msgstr "Image"
 
-#: ckanext/canada/templates/scheming/package/snippets/package_form.html:14
+#: ckanext/canada/templates/scheming/package/snippets/package_form.html:15
 msgid "Catalogue Metadata"
 msgstr "Métadonnées de catalogue"
 
-#: ckanext/canada/templates/scheming/package/snippets/package_form.html:16
+#: ckanext/canada/templates/scheming/package/snippets/package_form.html:17
 msgid "Open Data Metadata Element Set"
 msgstr "Ensemble d’éléments de métadonnées de données ouvertes"
 
-#: ckanext/canada/templates/scheming/package/snippets/package_form.html:18
+#: ckanext/canada/templates/scheming/package/snippets/package_form.html:19
 msgid "Open Information Metadata Element Set"
 msgstr "Ensemble d’éléments de métadonnées d’information ouverte"
 
-#: ckanext/canada/templates/scheming/package/snippets/package_form.html:22
+#: ckanext/canada/templates/scheming/package/snippets/package_form.html:23
 msgid ""
 "This section of the form only displays system-populated data elements "
 "used to describe the record type and the placement in the registry"
@@ -3424,12 +3511,12 @@ msgstr ""
 "alimentés par le système utilisés pour décrire le type et l’emplacement "
 "du dossier dans le registre"
 
-#: ckanext/canada/templates/scheming/package/snippets/package_form.html:32
+#: ckanext/canada/templates/scheming/package/snippets/package_form.html:33
 #: ckanext/canada/templates/snippets/package_item.html:13
 msgid "Suggested Dataset"
 msgstr "Jeu de données suggéré"
 
-#: ckanext/canada/templates/scheming/package/snippets/package_form.html:35
+#: ckanext/canada/templates/scheming/package/snippets/package_form.html:36
 msgid ""
 "The portal to which the metadata record belongs (Open Data or Open "
 "Information)"
@@ -3437,33 +3524,41 @@ msgstr ""
 "Portail auquel le dossier de métadonnées appartient (Données ouvertes ou "
 "Information ouverte)"
 
-#: ckanext/canada/templates/scheming/package/snippets/package_form.html:38
+#: ckanext/canada/templates/scheming/package/snippets/package_form.html:39
 msgid "Metadata Scheme"
 msgstr "Schéma de métadonnée"
 
-#: ckanext/canada/templates/scheming/package/snippets/package_form.html:40
+#: ckanext/canada/templates/scheming/package/snippets/package_form.html:41
 msgid "The name of the metadata scheme used (including profile name)"
 msgstr "Nom anglais du schéma de métadonnées utilisé (y compris le nom du profil)"
 
-#: ckanext/canada/templates/scheming/package/snippets/package_form.html:43
+#: ckanext/canada/templates/scheming/package/snippets/package_form.html:44
 msgid "Metadata Scheme Version"
 msgstr "Version du schéma de métadonnées"
 
-#: ckanext/canada/templates/scheming/package/snippets/package_form.html:45
+#: ckanext/canada/templates/scheming/package/snippets/package_form.html:46
 msgid "The version of the metadata scheme used (version of the profile)"
 msgstr "Version du schéma de métadonnées utilisé (version du profil)"
 
-#: ckanext/canada/templates/scheming/package/snippets/package_form.html:48
+#: ckanext/canada/templates/scheming/package/snippets/package_form.html:49
 msgid "Metadata Record Identifier"
 msgstr "Identificateur du dossier de métadonnées"
 
-#: ckanext/canada/templates/scheming/package/snippets/package_form.html:50
+#: ckanext/canada/templates/scheming/package/snippets/package_form.html:51
 msgid ""
 "A unique phrase or string which identifies the metadata record within the"
 " Open Government Portal"
 msgstr ""
 "Expression ou chaîne unique désignant le dossier de métadonnées dans le "
 "Portail du gouvernement ouvert"
+
+#: ckanext/canada/templates/scheming/package/snippets/package_form.html:80
+msgid "Create"
+msgstr "Créer"
+
+#: ckanext/canada/templates/scheming/package/snippets/package_form.html:80
+msgid "Update"
+msgstr "Mise à jour"
 
 #: ckanext/canada/templates/scheming/package/snippets/resource_form.html:15
 msgid ""
@@ -3505,21 +3600,61 @@ msgstr "Nouveau poste d’activité"
 msgid "View the past 30 days of activity."
 msgstr "Consulter les activités des 30 derniers jours."
 
-#: ckanext/canada/templates/snippets/dataset_facets.html:6
-#: ckanext/canada/templates/snippets/dataset_facets.html:12
+#: ckanext/canada/templates/snippets/dataset_facets.html:10
+#: ckanext/canada/templates/snippets/dataset_facets.html:16
 msgid "Suggested Datasets"
 msgstr "Jeux de données suggérés"
 
-#: ckanext/canada/templates/snippets/facet_list.html:49
-#: ckanext/canada/templates/snippets/facet_list.html:50
+#: ckanext/canada/templates/snippets/facet_list.html:57
+#: ckanext/canada/templates/snippets/facet_list.html:58
 msgid "Show less"
 msgstr "Afficher moins"
 
-#: ckanext/canada/templates/snippets/facet_list.html:62
+#: ckanext/canada/templates/snippets/facet_list.html:70
 #: ckanext/canada/templates/snippets/publish_facet.html:68
 msgid "There are no filters for this search"
 msgstr "Aucun filtre sélectionné pour cette recherche"
 
+#: ../ckanext-harvest/ckanext/harvest/templates/snippets/job_details.html:26
+#: ../ckanext-harvest/ckanext/harvest/templates/source/job/list.html:43
+#: ckanext/canada/templates/snippets/job_details.html:33
+#: ckanext/canada/templates/snippets/job_details.html:60
+#: ckanext/canada/templates/source/job/list.html:43
+msgid "errors"
+msgstr ""
+
+#: ../ckanext-harvest/ckanext/harvest/templates/snippets/job_details.html:41
+#: ckanext/canada/templates/snippets/job_details.html:89
+#: ckanext/canada/templates/user/read_base.html:22
+msgid "Details"
+msgstr "Détails"
+
+#: ../ckanext-harvest/ckanext/harvest/templates/snippets/job_details.html:48
+#: ckanext/canada/templates/snippets/job_details.html:96
+msgid "Id"
+msgstr "ID"
+
+#: ../ckanext-harvest/ckanext/harvest/templates/snippets/job_details.html:52
+#: ckanext/canada/templates/snippets/job_details.html:100
+msgid "Created"
+msgstr "Créé le"
+
+#: ../ckanext-harvest/ckanext/harvest/templates/snippets/job_details.html:60
+#: ckanext/canada/templates/snippets/job_details.html:108
+msgid "Started"
+msgstr ""
+
+#: ../ckanext-harvest/ckanext/harvest/templates/snippets/job_details.html:68
+#: ckanext/canada/templates/snippets/job_details.html:116
+msgid "Finished"
+msgstr ""
+
+#: ../ckanext-harvest/ckanext/harvest/templates/snippets/job_details.html:76
+#: ckanext/canada/templates/snippets/job_details.html:124
+msgid "Status"
+msgstr "Statut"
+
+#: ../ckanext-harvest/ckanext/harvest/templates/source/read_base.html:10
 #: ckanext/canada/templates/snippets/organization.html:23
 msgid "read more"
 msgstr "en savoir plus"
@@ -3553,16 +3688,23 @@ msgstr "Demande envoyée au propriétaire des données, en attente de réponse"
 msgid "Resource Formats:"
 msgstr "Formats des ressources :"
 
+#: ckanext/canada/templates/snippets/package_item.html:140
+#: ckanext/canada/templates/source/read_base.html:17
+msgid "Source Type:"
+msgstr ""
+
 #: ckanext/canada/templates/snippets/search_form.html:4
 msgid "Search..."
 msgstr "Recherche..."
 
+#: ../ckanext-harvest/ckanext/harvest/templates/source/search.html:29
 #: ckanext/canada/templates/snippets/search_form.html:5
 #: ckanext/canada/templates/snippets/sort_by.html:16
 #: ckanext/canada/templates/snippets/sort_by.html:19
 msgid "Name Ascending"
 msgstr "alphabétique croissant"
 
+#: ../ckanext-harvest/ckanext/harvest/templates/source/search.html:30
 #: ckanext/canada/templates/snippets/search_form.html:5
 #: ckanext/canada/templates/snippets/sort_by.html:17
 #: ckanext/canada/templates/snippets/sort_by.html:20
@@ -3604,6 +3746,7 @@ msgstr "Social"
 msgid "Order by"
 msgstr "Trier par"
 
+#: ../ckanext-harvest/ckanext/harvest/templates/source/search.html:28
 #: ckanext/canada/templates/snippets/sort_by.html:14
 msgid "Relevance"
 msgstr "pertinence"
@@ -3625,6 +3768,7 @@ msgstr "Accueil"
 msgid "FAQ"
 msgstr "FAQ"
 
+#: ../ckanext-harvest/ckanext/harvest/templates/source/admin_base.html:41
 #: ckanext/canada/templates/snippets/cdts/header.html:189
 #: ckanext/canada/templates/user/dashboard.html:4
 #: ckanext/canada/templates/user/dashboard_datasets.html:15
@@ -3644,6 +3788,116 @@ msgstr "Connecté en tant que"
 #: ckanext/canada/templates/snippets/cdts/header.html:226
 msgid "View profile"
 msgstr "Afficher le profil"
+
+#: ../ckanext-harvest/ckanext/harvest/templates/source/admin.html:5
+#: ckanext/canada/templates/source/admin.html:9
+msgid "Last Harvest Job"
+msgstr ""
+
+#: ../ckanext-harvest/ckanext/harvest/templates/source/admin.html:11
+#: ckanext/canada/templates/source/admin.html:15
+msgid "View full job report"
+msgstr ""
+
+#: ../ckanext-harvest/ckanext/harvest/templates/source/admin.html:15
+#: ../ckanext-harvest/ckanext/harvest/templates/source/job/list.html:12
+#: ../ckanext-harvest/ckanext/harvest/utils.py:530
+#: ckanext/canada/templates/source/admin.html:19
+#: ckanext/canada/templates/source/job/list.html:12
+msgid "No jobs yet for this source"
+msgstr ""
+
+#: ../ckanext-harvest/ckanext/harvest/templates/source/admin_base.html:15
+#: ckanext/canada/templates/source/admin_base.html:8
+msgid ""
+"This will re-run the harvesting for this source. Any updates at the "
+"source will overwrite the local datasets. Sources with a large number of "
+"datasets may take a significant amount of time to finish harvesting. "
+"Please confirm you would like us to start reharvesting."
+msgstr ""
+
+#: ../ckanext-harvest/ckanext/harvest/templates/source/admin_base.html:17
+#: ckanext/canada/templates/source/admin_base.html:10
+msgid "Start a new harvesting job for this harvest source now"
+msgstr ""
+
+#: ../ckanext-harvest/ckanext/harvest/templates/source/admin_base.html:19
+#: ckanext/canada/templates/source/admin_base.html:12
+msgid "Reharvest"
+msgstr ""
+
+#: ../ckanext-harvest/ckanext/harvest/templates/source/admin_base.html:25
+#: ckanext/canada/templates/source/admin_base.html:18
+msgid "Stop"
+msgstr ""
+
+#: ckanext/canada/templates/source/admin_base.html:22
+msgid ""
+"Warning: This will remove all previous job reports for this source. Are "
+"you sure you want to continue?"
+msgstr ""
+
+#: ckanext/canada/templates/source/admin_base.html:23
+msgid "Delete all harvest jobs and reports from this source"
+msgstr ""
+
+#: ../ckanext-harvest/ckanext/harvest/templates/source/admin_base.html:28
+#: ckanext/canada/templates/source/admin_base.html:25
+msgid ""
+"Warning: This will remove all datasets for this source, as well as all "
+"previous job reports. Are you sure you want to continue?"
+msgstr ""
+
+#: ../ckanext-harvest/ckanext/harvest/templates/source/admin_base.html:30
+#: ckanext/canada/templates/source/admin_base.html:26
+msgid "Delete all harvest jobs and existing datasets from this source"
+msgstr ""
+
+#: ../ckanext-harvest/ckanext/harvest/templates/source/admin_base.html:31
+#: ckanext/canada/templates/source/admin_base.html:30
+msgid "Clear"
+msgstr ""
+
+#: ../ckanext-harvest/ckanext/harvest/templates/source/admin_base.html:35
+#: ckanext/canada/templates/source/admin_base.html:34
+msgid "View harvest source"
+msgstr ""
+
+#: ckanext/canada/templates/source/read_base.html:12
+msgid "Source URL:"
+msgstr ""
+
+#: ckanext/canada/templates/source/read_base.html:23
+msgid "Harvesting Frequency:"
+msgstr ""
+
+#: ../ckanext-harvest/ckanext/harvest/templates/source/job/list.html:4
+#: ../ckanext-harvest/ckanext/harvest/templates/source/job/list.html:9
+#: ckanext/canada/templates/source/job/list.html:9
+msgid "Harvest Jobs"
+msgstr ""
+
+#: ../ckanext-harvest/ckanext/harvest/templates/source/job/list.html:20
+#: ckanext/canada/templates/source/job/list.html:20
+msgid "Job: "
+msgstr ""
+
+#: ../ckanext-harvest/ckanext/harvest/templates/source/job/list.html:27
+#: ckanext/canada/templates/source/job/list.html:27
+msgid "Started:"
+msgstr ""
+
+#: ../ckanext-harvest/ckanext/harvest/templates/source/job/list.html:29
+#: ../ckanext-harvest/ckanext/harvest/templates/source/job/list.html:34
+#: ckanext/canada/templates/source/job/list.html:29
+#: ckanext/canada/templates/source/job/list.html:34
+msgid "Not yet"
+msgstr ""
+
+#: ../ckanext-harvest/ckanext/harvest/templates/source/job/list.html:32
+#: ckanext/canada/templates/source/job/list.html:32
+msgid "Finished:"
+msgstr ""
 
 #: ckanext/canada/templates/tabledesigner/view_snippets/cra_business_number.html:2
 msgid "9-digit number"
@@ -4167,10 +4421,6 @@ msgstr "Je n’accepte pas"
 msgid "Edit User"
 msgstr "Modifier l’utilisateur"
 
-#: ckanext/canada/templates/user/read_base.html:22
-msgid "Details"
-msgstr "Détails"
-
 #: ckanext/canada/templates/user/read_base.html:32
 msgid "Followers:"
 msgstr "Suiveurs :"
@@ -4240,6 +4490,306 @@ msgstr "Supprimer la table DataStore"
 #: ckanext/canada/templates/xloader/resource_data.html:22
 msgid "Upload to DataStore"
 msgstr "Télécharger vers le DataStore"
+
+#: ../ckanext-harvest/ckanext/harvest/helpers.py:107
+msgid "title"
+msgstr "titre"
+
+#: ../ckanext-harvest/ckanext/harvest/logic/auth/create.py:34
+#: ../ckanext-harvest/ckanext/harvest/logic/auth/delete.py:18
+#: ../ckanext-harvest/ckanext/harvest/logic/auth/get.py:32
+#: ../ckanext-harvest/ckanext/harvest/logic/auth/update.py:19
+#: ../ckanext-harvest/ckanext/harvest/utils.py:501
+#: ../ckanext-harvest/ckanext/harvest/utils.py:521
+#: ../ckanext-harvest/ckanext/harvest/utils.py:591
+#: ../ckanext-harvest/ckanext/harvest/utils.py:609
+#: ../ckanext-harvest/ckanext/harvest/utils.py:643
+#: ../ckanext-harvest/ckanext/harvest/utils.py:669
+#: ../ckanext-harvest/ckanext/harvest/utils.py:696
+msgid "Harvest source not found"
+msgstr ""
+
+#: ../ckanext-harvest/ckanext/harvest/utils.py:563
+#: ../ckanext-harvest/ckanext/harvest/utils.py:622
+msgid "Harvest job not found"
+msgstr ""
+
+#: ../ckanext-harvest/ckanext/harvest/utils.py:619
+msgid "Harvest job stopped"
+msgstr ""
+
+#: ../ckanext-harvest/ckanext/harvest/utils.py:641
+msgid "Harvest will start shortly. Refresh this page for updates."
+msgstr ""
+
+#: ../ckanext-harvest/ckanext/harvest/utils.py:648
+msgid ""
+"Cannot create new harvest jobs on inactive sources. First, please change "
+"the source status to \"active\"."
+msgstr ""
+
+#: ../ckanext-harvest/ckanext/harvest/utils.py:653
+msgid "A harvest job has already been scheduled for this source"
+msgstr ""
+
+#: ../ckanext-harvest/ckanext/harvest/utils.py:667
+msgid "Harvest source cleared"
+msgstr ""
+
+#: ../ckanext-harvest/ckanext/harvest/utils.py:689
+msgid "Harvesting source successfully cleared"
+msgstr ""
+
+#: ../ckanext-harvest/ckanext/harvest/utils.py:691
+msgid "Harvesting source successfully inactivated"
+msgstr ""
+
+#: ../ckanext-harvest/ckanext/harvest/utils.py:720
+msgid "No content found"
+msgstr ""
+
+#: ../ckanext-harvest/ckanext/harvest/logic/action/update.py:777
+#: ../ckanext-harvest/ckanext/harvest/templates/source/job/read.html:18
+#: ../ckanext-harvest/ckanext/harvest/templates/source/job/read.html:22
+msgid "Error Summary"
+msgstr ""
+
+#: ../ckanext-harvest/ckanext/harvest/logic/action/update.py:778
+msgid "Document Error"
+msgstr ""
+
+#: ../ckanext-harvest/ckanext/harvest/logic/action/update.py:779
+#: ../ckanext-harvest/ckanext/harvest/templates/source/job/read.html:26
+#: ../ckanext-harvest/ckanext/harvest/templates/source/job/read.html:40
+msgid "Job Errors"
+msgstr ""
+
+#: ../ckanext-harvest/ckanext/harvest/logic/auth/create.py:19
+msgid "User {0} not authorized to create harvest sources"
+msgstr ""
+
+#: ../ckanext-harvest/ckanext/harvest/logic/auth/create.py:42
+msgid "User not authorized to create a job for source {0}"
+msgstr ""
+
+#: ../ckanext-harvest/ckanext/harvest/logic/auth/create.py:52
+msgid "Only sysadmins can create harvest jobs for all sources"
+msgstr ""
+
+#: ../ckanext-harvest/ckanext/harvest/logic/auth/create.py:64
+msgid "Only the sysadmins can create harvest objects"
+msgstr ""
+
+#: ../ckanext-harvest/ckanext/harvest/logic/auth/delete.py:27
+msgid "User {0} not authorized to delete harvest source {1}"
+msgstr ""
+
+#: ../ckanext-harvest/ckanext/harvest/logic/auth/get.py:41
+msgid "User {0} not authorized to read harvest source {1}"
+msgstr ""
+
+#: ../ckanext-harvest/ckanext/harvest/logic/auth/get.py:83
+msgid "User {0} not authorized to see jobs from source {1}"
+msgstr ""
+
+#: ../ckanext-harvest/ckanext/harvest/logic/auth/get.py:105
+msgid "User {0} not authorized to list jobs for source {1}"
+msgstr ""
+
+#: ../ckanext-harvest/ckanext/harvest/logic/auth/update.py:28
+msgid "User {0} not authorized to update harvest source {1}"
+msgstr ""
+
+#: ../ckanext-harvest/ckanext/harvest/logic/auth/update.py:38
+msgid "Only sysadmins can clear history for all harvest jobs"
+msgstr ""
+
+#: ../ckanext-harvest/ckanext/harvest/logic/auth/update.py:59
+msgid "Only sysadmins can reimport all harvest objects"
+msgstr ""
+
+#: ../ckanext-harvest/ckanext/harvest/logic/auth/update.py:71
+msgid "Only sysadmins can run the pending harvest jobs"
+msgstr ""
+
+#: ../ckanext-harvest/ckanext/harvest/logic/auth/update.py:103
+msgid "Only sysadmins can reindex all harvest sources"
+msgstr ""
+
+#: ../ckanext-harvest/ckanext/harvest/templates/snippets/add_source_button.html:6
+msgid "Add Harvest Source"
+msgstr ""
+
+#: ../ckanext-harvest/ckanext/harvest/templates/snippets/job_error_summary.html:18
+msgid "Count"
+msgstr ""
+
+#: ../ckanext-harvest/ckanext/harvest/templates/snippets/job_error_summary.html:19
+msgid "Message"
+msgstr ""
+
+#: ../ckanext-harvest/ckanext/harvest/templates/snippets/package_list_empty.html:1
+msgid "There are no datasets associated to this harvest source."
+msgstr ""
+
+#: ../ckanext-harvest/ckanext/harvest/templates/snippets/search_result_text.html:4
+msgid "{number} harvest source found for \"{query}\""
+msgid_plural "{number} harvest sources found for \"{query}\""
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../ckanext-harvest/ckanext/harvest/templates/snippets/search_result_text.html:5
+msgid "Sorry no harvest sources found for \"{query}\""
+msgstr ""
+
+#: ../ckanext-harvest/ckanext/harvest/templates/snippets/search_result_text.html:6
+msgid "{number} harvest source found"
+msgid_plural "{number} harvest sources found"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../ckanext-harvest/ckanext/harvest/templates/snippets/search_result_text.html:7
+msgid "Sorry no harvest sources found"
+msgstr ""
+
+#: ../ckanext-harvest/ckanext/harvest/templates/snippets/source_item.html:35
+#: ../ckanext-harvest/ckanext/harvest/templates/source/new_source_form.html:86
+msgid "Deleted"
+msgstr "Supprimé"
+
+#: ../ckanext-harvest/ckanext/harvest/templates/snippets/source_item.html:42
+#: ../ckanext-harvest/ckanext/harvest/templates/source/about.html:9
+#: ../ckanext-harvest/ckanext/harvest/templates/source/read_base.html:13
+msgid "There is no description for this harvest source"
+msgstr ""
+
+#: ../ckanext-harvest/ckanext/harvest/templates/source/admin_base.html:42
+msgid "Jobs"
+msgstr ""
+
+#: ../ckanext-harvest/ckanext/harvest/templates/source/edit.html:3
+msgid "Edit harvest source"
+msgstr ""
+
+#: ../ckanext-harvest/ckanext/harvest/templates/source/new.html:11
+msgid "Create harvest source"
+msgstr ""
+
+#: ../ckanext-harvest/ckanext/harvest/templates/source/new.html:23
+#: ../ckanext-harvest/ckanext/harvest/templates/source/search.html:3
+msgid "Harvest sources"
+msgstr ""
+
+#: ../ckanext-harvest/ckanext/harvest/templates/source/new.html:26
+msgid ""
+"Harvest sources allow importing remote metadata into this catalog. Remote"
+" sources can be other catalogs such as other CKAN instances, CSW servers "
+"or Web Accessible Folders (WAF) (depending on the actual harvesters "
+"enabled for this instance)."
+msgstr ""
+
+#: ../ckanext-harvest/ckanext/harvest/templates/source/new_source_form.html:9
+msgid "URL"
+msgstr ""
+
+#: ../ckanext-harvest/ckanext/harvest/templates/source/new_source_form.html:11
+msgid "This should include the http:// part of the URL"
+msgstr ""
+
+#: ../ckanext-harvest/ckanext/harvest/templates/source/new_source_form.html:17
+msgid "Title"
+msgstr "Titre"
+
+#: ../ckanext-harvest/ckanext/harvest/templates/source/new_source_form.html:17
+msgid "eg. A descriptive title"
+msgstr ""
+
+#: ../ckanext-harvest/ckanext/harvest/templates/source/new_source_form.html:24
+msgid "eg. my-dataset"
+msgstr ""
+
+#: ../ckanext-harvest/ckanext/harvest/templates/source/new_source_form.html:46
+msgid "Update frequency"
+msgstr ""
+
+#: ../ckanext-harvest/ckanext/harvest/templates/source/new_source_form.html:49
+msgid "Configuration"
+msgstr ""
+
+#: ../ckanext-harvest/ckanext/harvest/templates/source/new_source_form.html:69
+msgid "No organization"
+msgstr ""
+
+#: ../ckanext-harvest/ckanext/harvest/templates/source/new_source_form.html:85
+msgid "Active"
+msgstr "Actif"
+
+#: ../ckanext-harvest/ckanext/harvest/templates/source/new_source_form.html:95
+msgid ""
+"This will flag the source as deleted but keep all its datasets and "
+"previous jobs. Are you sure you want to delete this harvest source?"
+msgstr ""
+
+#: ../ckanext-harvest/ckanext/harvest/templates/source/new_source_form.html:96
+msgid ""
+"Warning: Apart from deleting this source, this command will remove all "
+"its datasets, as well as all previous job reports. Are you sure you want "
+"to continue?"
+msgstr ""
+
+#: ../ckanext-harvest/ckanext/harvest/templates/source/new_source_form.html:105
+msgid "Delete source"
+msgstr ""
+
+#: ../ckanext-harvest/ckanext/harvest/templates/source/new_source_form.html:110
+msgid "Delete and clear source"
+msgstr ""
+
+#: ../ckanext-harvest/ckanext/harvest/templates/source/search.html:32
+msgid "Popular"
+msgstr ""
+
+#: ../ckanext-harvest/ckanext/harvest/templates/source/search.html:34
+msgid "Search harvest sources..."
+msgstr ""
+
+#: ../ckanext-harvest/ckanext/harvest/templates/source/job/read.html:3
+#: ../ckanext-harvest/ckanext/harvest/templates/source/job/read.html:12
+msgid "Job Report"
+msgstr ""
+
+#: ../ckanext-harvest/ckanext/harvest/templates/source/job/read.html:9
+msgid "Back to job list"
+msgstr ""
+
+#: ../ckanext-harvest/ckanext/harvest/templates/source/job/read.html:19
+msgid "No errors for this job"
+msgstr ""
+
+#: ../ckanext-harvest/ckanext/harvest/templates/source/job/read.html:23
+msgid "Only the 20 most frequent errors are shown"
+msgstr ""
+
+#: ../ckanext-harvest/ckanext/harvest/templates/source/job/read.html:30
+#: ../ckanext-harvest/ckanext/harvest/templates/source/job/read.html:57
+msgid "Document Errors"
+msgstr ""
+
+#: ../ckanext-harvest/ckanext/harvest/templates/source/job/read.html:37
+msgid "Error Report"
+msgstr ""
+
+#: ../ckanext-harvest/ckanext/harvest/templates/source/job/read.html:58
+msgid "documents with errors"
+msgstr ""
+
+#: ../ckanext-harvest/ckanext/harvest/templates/source/job/read.html:69
+msgid "Remote content"
+msgstr ""
+
+#: ../ckanext-harvest/ckanext/harvest/templates/source/job/read.html:73
+msgid "Local content"
+msgstr ""
 
 #~ msgid "Plot Cart Items on a Map"
 #~ msgstr "Tracer les article due panier sur une carte"

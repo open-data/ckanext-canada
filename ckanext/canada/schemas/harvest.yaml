@@ -1,0 +1,112 @@
+scheming_version: 2
+dataset_type: harvest
+
+
+form_languages:
+- en
+- fr
+# machine translated metadata:
+alternate_languages:
+  en:
+    - en-t-fr
+  fr:
+    - fr-t-en
+
+
+sidebar_show_fields:
+- url
+- source_type
+- frequency
+
+
+#
+#   DATASET FIELDS
+#
+dataset_fields:
+
+
+- field_name: id
+  create_validators: canada_validate_generate_uuid
+      unicode name_validator package_id_does_not_exist portal_sync_id portal_sync_limit
+  display_snippet: null
+  form_snippet: null
+
+
+- field_name: name
+  form_snippet: null
+  validators: canada_output_none if_empty_same_as(id) unicode not_empty portal_sync_id
+
+
+- preset: canada_title
+- preset: canada_notes
+
+
+- field_name: url
+  label:
+    en: Source URL
+    fr: FR Source URL FR
+  help_text:
+    en: The URL of the remote source to harvest from.
+    fr: FR The URL of the remote source to harvest from. FR
+  required: true
+  validators: scheming_required not_empty unicode_safe harvest_source_url_validator
+  form_attrs:
+      size: 110
+      class: form-control
+
+
+- field_name: source_type
+  label:
+    en: Source Type
+    fr: FR Source Type FR
+  form_snippet: harvest_sources.html
+  display_snippet: harvest_source_type.html
+  required: true
+  validators: scheming_required not_empty unicode_safe harvest_source_type_exists
+
+
+- field_name: frequency
+  label:
+    en: Harvesting Frequency
+    fr: FR Harvesting Frequency FR
+  help_text:
+    en: Frequency in which the source is harvested.
+    fr: FR Frequency in which the source is harvested. FR
+  required: true
+  form_snippet: select.html
+  display_snippet: select.html
+  validators: scheming_required scheming_choices unicode_safe harvest_source_frequency_exists
+  choices:
+  - label:
+      en: Manual
+      fr: FR Manual FR
+    value: MANUAL
+  - label:
+      en: Monthly
+      fr: FR Monthly FR
+    value: MONTHLY
+  - label:
+      en: Weekly
+      fr: FR Weekly FR
+    value: WEEKLY
+  - label:
+      en: BiWeekly
+      fr: FR BiWeekly FR
+    value: BIWEEKLY
+  - label:
+      en: Daily
+      fr: FR Daily FR
+    value: DAILY
+  - label:
+      en: Always Run
+      fr: FR Always Run FR
+    value: ALWAYS
+
+
+- preset: canada_owner_org
+
+
+#
+#   RESOURCE FIELDS
+#
+resource_fields: []

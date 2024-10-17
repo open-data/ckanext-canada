@@ -37,6 +37,9 @@ import mimetypes
 from ckanext.scheming.helpers import scheming_get_preset
 
 from ckanext.datastore.backend import DatastoreBackend
+from ckanext.canada.harvesters import PORTAL_SYNC_ID, HARVESTER_ID
+from ckanext.harvest.model import HarvestSource
+from ckanext.harvest.logic.action.update import harvest_source_clear as super__harvest_source_clear
 
 MIMETYPES_AS_DOMAINS = [
     'application/x-msdos-program',  # .com
@@ -529,3 +532,64 @@ def canada_datastore_run_triggers(up_func, context, data_dict):
         context['connection'] = backend._get_write_engine().connect()
     with datastore_create_temp_user_table(context, drop_on_commit=False):
         return up_func(context, data_dict)
+
+
+@chained_action
+@side_effect_free
+def portal_sync_package_show(up_func, context, data_dict):
+    """
+    Wraps package_show to customize the return of the Portal Sync harvest source package.
+    """
+    package = up_func(context, data_dict)
+
+    if package.get('type') == 'harvest':
+        if package.get('id') != PORTAL_SYNC_ID:
+            # we only allow the single harvest source
+            raise ObjectNotFound
+        else:
+            # custom return dict for our harvest source
+            _extras = {}
+            for _extra in package.get('extras', []):
+                _extras[_extra.get('key')] = _extra.get('value')
+            return {
+                'id': package.get('id'),
+                'name': package.get('name'),
+                'title': _(package.get('title')),
+                'source_type': package.get('source_type', _extras.get('source_type', None)),
+                'type': package.get('type'),
+                'url': package.get('url'),
+                'source': package.get('source', _extras.get('source', None)),
+                'target': package.get('target', _extras.get('target', None)),
+                'metadata_created': package.get('metadata_created'),
+                'metadata_modified': package.get('metadata_modified'),
+                'private': package.get('private'),
+                'state': package.get('state'),
+                'status': package.get('status'),
+                'resources': [],  # required for core
+            }
+
+    return package
+
+
+def harvest_source_clear(context, data_dict):
+    """
+    Wraps the harvest_source_clear from the Harvest plugin to prevent
+    Dataset deletion/purging for the PortalSync source type.
+
+    Switches the harvest_source_clear action to the harvest_source_job_history_clear action.
+    """
+    check_access('harvest_source_clear', context, data_dict)
+
+    harvest_source_id = data_dict.get('id')
+
+    source = HarvestSource.get(harvest_source_id)
+    if not source:
+        log.error('Harvest source %s does not exist', harvest_source_id)
+        raise ObjectNotFound('Harvest source %s does not exist' % harvest_source_id)
+
+    harvest_source_id = source.id
+
+    if source.type == HARVESTER_ID:
+        return get_action('harvest_source_job_history_clear')({'user': g.user}, {'id': harvest_source_id, 'keep_current': False})
+
+    return super__harvest_source_clear(context, data_dict)

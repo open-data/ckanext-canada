@@ -1074,7 +1074,7 @@ def _get_package_from_api_request(logic_function, id, context):
 def _log_api_access(request_data, pkg_dict):
     org = model.Group.get(pkg_dict.get('owner_org'))
     g.log_extra = u'org={o} type={t} id={i}'.format(
-        o=org.name,
+        o=getattr(org, 'name', None),
         t=pkg_dict.get('type'),
         i=pkg_dict.get('id'))
     if 'resource_id' in request_data:

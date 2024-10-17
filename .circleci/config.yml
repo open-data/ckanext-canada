@@ -71,6 +71,7 @@ jobs:
             pip install -e 'git+https://github.com/ckan/ckanapi.git#egg=ckanapi' -r 'https://raw.githubusercontent.com/ckan/ckanapi/master/requirements.txt'
             pip install -e . -r .\/requirements.txt -r .\/test-requirements.txt
             pip install -e 'git+https://github.com/ckan/ckanext-fluent.git#egg=ckanext-fluent' -r 'https://raw.githubusercontent.com/ckan/ckanext-fluent/master/requirements.txt'
+            pip install -e 'git+https://github.com/ckan/ckanext-harvest.git#egg=ckanext-harvest' -r 'https://raw.githubusercontent.com/ckan/ckanext-harvest/master/requirements.txt'
             pip install -e 'git+https://github.com/open-data/ckanext-recombinant.git#egg=ckanext-recombinant' -r 'https://raw.githubusercontent.com/open-data/ckanext-recombinant/master/requirements.txt'
             pip install -e 'git+https://github.com/ckan/ckanext-scheming.git#egg=ckanext-scheming'
             pip install -e 'git+https://github.com/open-data/ckanext-validation.git@canada-py3#egg=ckanext-validation' -r 'https://raw.githubusercontent.com/open-data/ckanext-validation/canada-py3/requirements.txt' -r 'https://raw.githubusercontent.com/open-data/ckanext-validation/canada-py3/dev-requirements.txt'

@@ -1,0 +1,36 @@
+{% ckan_extends %}
+
+{% block secondary_content %}
+  <div class="panel panel-primary">
+    <div class="panel-heading">
+      <div class="panel-title">
+        {{ _('Additional Information') }}
+      </div>
+    </div>
+    <ul class="list-group">
+      <li class="list-group-item resource-tags">
+        <strong>{{ _('Source URL:') }}</strong>&nbsp;
+          {{- harvest_source.url -}}
+      </li>
+      {% set harvester = h.get_harvester_info(harvest_source.source_type) %}
+      <li class="list-group-item resource-tags">
+        <strong>{{ _('Source Type:') }}</strong>&nbsp;
+          {{- h.get_translated(harvester, 'title') -}}
+      </li>
+      {% set schema = h.scheming_get_dataset_schema('harvest') %}
+      {% set frequency_field = h.scheming_field_by_name(schema.dataset_fields, 'frequency') %}
+      <li class="list-group-item resource-tags">
+        <strong>{{ _('Harvesting Frequency:') }}</strong>&nbsp;
+          {{- h.scheming_choices_label(h.scheming_field_choices(frequency_field), harvest_source.frequency) -}}
+      </li>
+      <li class="list-group-item resource-tags">
+        <div class="nums">
+          <dl>
+              <dt>{{ _('Harvested Datasets:') }}</dt>
+              <dd>{{ h.package_count_for_source(harvest_source.id) }}</dd>
+          </dl>
+        </div>
+      </li>
+    </ul>
+  </div>
+{% endblock %}
