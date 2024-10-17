@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-10-09 16:52+0000\n"
+"POT-Creation-Date: 2024-10-17 14:05+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: fr\n"
@@ -2518,6 +2518,32 @@ msgstr ""
 "Consultez la trousse d’information pour la comparution de votre "
 "administrateur général devant un comité parlementaire, ajoutez-y du "
 "contenu ou modifiez-la."
+
+#: ckanext/canada/templates/macros/form/markdown.html:27
+msgid ""
+"<pre><p>__bold text__</p><p>_italic text_</p><p>* list<br>* of<br>* "
+"items</p><p>1. numbered<br>2. list<br>3. of "
+"items</p><p>https://auto.link.ed/</p><p>[Formatted "
+"Link](https://formatted.link)</p><p>> block quote</p></pre><p class"
+"='text-muted'><b>Please note:</b> HTML tags are stripped out for security"
+" reasons</p>"
+msgstr ""
+"<pre><p>__texte en gras__</p><p>_texte en italique_</p><p>* liste<br>* "
+"d'éléments</p><p>1. liste<br>2. d'éléments<br>3. "
+"numérotés</p><p>https://lien.automatique/</p><p>[Lien "
+"formaté](https://lien.formaté)</p><p>> bloc de citation</p></pre><p class"
+"='text-muted'><b>Remarque :</b> les balises HTML sont supprimées pour des"
+" raisons de sécurité</p>"
+
+#: ckanext/canada/templates/macros/form/markdown.html:33
+msgid ""
+"You can use <a href=\"javascript:void(0);\" title=\"Markdown quick "
+"reference\" data-bs-toggle=\"popover\" data-bs-content=\"{}\" data-bs-"
+"html=\"true\">Markdown formatting</a> here"
+msgstr ""
+"Vous pouvez utiliser <a href=\"javascript:void(0);\" title=\"Référence rapide "
+"Markdown\" data-bs-toggle=\"popover\" data-bs-content=\"{}\" data-bs-"
+"html=\"true\">le formatage du texte dans Markdown</a> ici"
 
 #: ckanext/canada/templates/organization/activity_stream.html:4
 #: ckanext/canada/templates/package/read_base.html:23
@@ -8150,4 +8176,11 @@ msgstr "Télécharger vers le DataStore"
 
 #~ msgid "This field must be empty:"
 #~ msgstr "Cette zone doit être vide :"
+
+#~ msgid ""
+#~ "You can use <a href=\"#markdown\" "
+#~ "title=\"Markdown quick reference\" data-"
+#~ "target=\"popover\" data-content=\"{}\" data-"
+#~ "html=\"true\">Markdown formatting</a> here"
+#~ msgstr ""
 

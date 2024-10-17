@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ckanext-canada 0.4.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-10-09 16:52+0000\n"
+"POT-Creation-Date: 2024-10-17 14:05+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2153,6 +2153,23 @@ msgstr ""
 msgid ""
 "Access, add or modify briefing packages for Parliamentary Committee "
 "appearance for your deputy head."
+msgstr ""
+
+#: ckanext/canada/templates/macros/form/markdown.html:27
+msgid ""
+"<pre><p>__bold text__</p><p>_italic text_</p><p>* list<br>* of<br>* "
+"items</p><p>1. numbered<br>2. list<br>3. of "
+"items</p><p>https://auto.link.ed/</p><p>[Formatted "
+"Link](https://formatted.link)</p><p>> block quote</p></pre><p class='text-"
+"muted'><b>Please note:</b> HTML tags are stripped out for security "
+"reasons</p>"
+msgstr ""
+
+#: ckanext/canada/templates/macros/form/markdown.html:33
+msgid ""
+"You can use <a href=\"javascript:void(0);\" title=\"Markdown quick "
+"reference\" data-bs-toggle=\"popover\" data-bs-content=\"{}\" data-bs-"
+"html=\"true\">Markdown formatting</a> here"
 msgstr ""
 
 #: ckanext/canada/templates/organization/activity_stream.html:4

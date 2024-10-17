@@ -726,16 +726,6 @@ ul.resource-list > li.resource-item > div.canada-resource-list-badges a.validati
 ul.resource-list > li.resource-item > div.canada-resource-list-badges{
   align-self: last baseline;
 }
-ul.resource-list > li.resource-item span.format-label[data-format="pbix"]{
-  background-image: url("/data/static/img/power_bi.svg"), url("/static/img/power_bi.svg");
-  background-repeat: no-repeat;
-  background-size: 100% 100%;
-  background-position: 0 0;
-  width: 33px;
-  height: 36px;
-  transform: none !important;
-  margin: 0 !important;
-}
 .resource-item .resource-action-links{
   display: block !important;
   position: relative !important;
@@ -981,6 +971,39 @@ body ul.nav li.view-item a i.icon::before{
 ## Resource Item ##
 ##      END      ##
 ###################*/
+
+
+/*############################
+##  Custom Resource Sprites ##
+##############################*/
+ul.resource-list > li.resource-item span.format-label[data-format="pbix"]{
+  background-image: url("/data/static/img/sprite-resource-additional-icons.png"), url("/static/img/sprite-resource-additional-icons.png");
+  background-repeat: no-repeat;
+  width: 60px;
+  height: 65px;
+  background-position: -120px -220px;
+  transform: scale(0.53);
+  margin: -14px 0 0 -14px;
+}
+ul.resource-list > li.resource-item span.format-label[data-format="mp4"],
+ul.resource-list > li.resource-item span.format-label[data-format="flv"],
+ul.resource-list > li.resource-item span.format-label[data-format="mov"],
+ul.resource-list > li.resource-item span.format-label[data-format="avi"],
+ul.resource-list > li.resource-item span.format-label[data-format="mkv"],
+ul.resource-list > li.resource-item span.format-label[data-format="wmv"]{
+  background-image: url("/data/static/img/sprite-resource-additional-icons.png"), url("/static/img/sprite-resource-additional-icons.png");
+  background-repeat: no-repeat;
+  width: 60px;
+  height: 65px;
+  background-position: -220px -220px;
+  transform: scale(0.53);
+  margin: -14px 0 0 -14px;
+}
+/*############################
+##            END           ##
+##  Custom Resource Sprites ##
+##            END           ##
+##############################*/
 
 
 /*###############################
