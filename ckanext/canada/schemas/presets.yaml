@@ -3375,6 +3375,9 @@ presets:
         en: Flat raster binary
         fr: Binaire raster plat
       replaces: [flat raster binary]
+    - value: FLV
+      mimetype: video/x-flv
+      replaces: ["fla", "f4v", "f4a", "f4b", "f4p"]
     - value: GDB
       mimetype: application/x-filegdb
       label: GeoSoftDatabases
@@ -3454,13 +3457,20 @@ presets:
     - value: MFX
       mimetype: application/mxf
     - value: MOV
-      mimetype: video/mov
+      mimetype: video/quicktime
+      replaces: ["movie", "qt"]
+    - value: MKV
+      mimetype: video/matroska
+      replaces: ["mk3d", "mka", "mks"]
     - value: MPEG
       mimetype: video/mpeg
     - value: MPEG-1
       mimetype: video/mpeg
     - value: MP3
       mimetype: audio/mpeg
+    - value: MP4
+      mimetype: video/mp4
+      replaces: ["m4a", "m4p", "m4b", "m4r", "m4v"]
     - value: MXD
     - value: NetCDF
       mimetype: application/x-netcdf

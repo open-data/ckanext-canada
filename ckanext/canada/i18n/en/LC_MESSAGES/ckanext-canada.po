@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  CKAN\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-10-17 12:48+0000\n"
+"POT-Creation-Date: 2024-10-17 12:56+0000\n"
 "PO-Revision-Date: 2014-01-23 13:04+0000\n"
 "Last-Translator: Sean Hammond <sean.hammond@okfn.org>\n"
 "Language: en\n"
@@ -538,62 +538,79 @@ msgstr ""
 msgid "Hide"
 msgstr ""
 
-#: ckanext/canada/strings.py:68
-msgid "Please upload a file or link to an external resource"
+#: ckanext/canada/strings.py:66
+msgid ""
+"You can use <a href=\"#markdown\" title=\"Markdown quick reference\" "
+"data-target=\"popover\" data-content=\"{}\" data-html=\"true\">Markdown "
+"formatting</a> here"
 msgstr ""
 
-#: ckanext/canada/strings.py:69
-msgid "Cannot upload files of this type"
+#: ckanext/canada/strings.py:67
+msgid ""
+"<pre><p>__bold text__</p><p>_italic text_</p><p>* list<br>* of<br>* "
+"items</p><p>1. numbered<br>2. list<br>3. of "
+"items</p><p>https://auto.link.ed/</p><p>[Formatted "
+"Link](https://formatted.link)</p><p>> block quote</p></pre><p class"
+"='text-muted'><b>Please note:</b> HTML tags are stripped out for security"
+" reasons</p>"
 msgstr ""
 
 #: ckanext/canada/strings.py:70
-msgid "Cannot link files of this type"
+msgid "Please upload a file or link to an external resource"
 msgstr ""
 
 #: ckanext/canada/strings.py:71
-msgid "Your password must be {} characters or longer."
+msgid "Cannot upload files of this type"
 msgstr ""
 
 #: ckanext/canada/strings.py:72
+msgid "Cannot link files of this type"
+msgstr ""
+
+#: ckanext/canada/strings.py:73
+msgid "Your password must be {} characters or longer."
+msgstr ""
+
+#: ckanext/canada/strings.py:74
 msgid ""
 "Your password must consist of at least three of the following character "
 "sets: uppercase characters, lowercase characters, digits, punctuation & "
 "special characters."
 msgstr ""
 
-#: ckanext/canada/strings.py:74
+#: ckanext/canada/strings.py:76
 msgid "Your password cannot be the same as your username."
 msgstr ""
 
-#: ckanext/canada/strings.py:77
+#: ckanext/canada/strings.py:79
 msgid "These fields have been removed, click update below to save your changes."
 msgstr "These fields will be removed once you save your changes."
 
-#: ckanext/canada/strings.py:78
+#: ckanext/canada/strings.py:80
 msgid "These fields have been removed."
 msgstr ""
 
-#: ckanext/canada/strings.py:81
+#: ckanext/canada/strings.py:83
 msgid "Your form submission could not be validated, please re-submit the form."
 msgstr ""
 
-#: ckanext/canada/strings.py:84
+#: ckanext/canada/strings.py:86
 msgid "Open Government Portal"
 msgstr ""
 
-#: ckanext/canada/strings.py:85
+#: ckanext/canada/strings.py:87
 msgid "Open Government Portal (staging)"
 msgstr ""
 
-#: ckanext/canada/strings.py:88
+#: ckanext/canada/strings.py:90
 msgid "Single"
 msgstr ""
 
-#: ckanext/canada/strings.py:89
+#: ckanext/canada/strings.py:91
 msgid "Repeatable"
 msgstr ""
 
-#: ckanext/canada/strings.py:90
+#: ckanext/canada/strings.py:92
 msgid "Optional"
 msgstr ""
 
@@ -2456,9 +2473,8 @@ msgid "View Harvest Source"
 msgstr ""
 
 #: ckanext/canada/templates/package/edit_base.html:13
-#, fuzzy
 msgid "View dataset"
-msgstr "0 Records"
+msgstr ""
 
 #: ckanext/canada/templates/package/edit_view.html:6
 #: ckanext/canada/templates/package/snippets/resource_views_list_item.html:17
@@ -2559,9 +2575,8 @@ msgid "Issued by"
 msgstr ""
 
 #: ckanext/canada/templates/package/read.html:168
-#, fuzzy
 msgid "Harvested Datasets"
-msgstr "What are records?"
+msgstr ""
 
 #: ckanext/canada/templates/package/read.html:184
 msgid "Related Items"
@@ -2615,9 +2630,8 @@ msgstr ""
 
 #: ckanext/canada/templates/package/read_base.html:76
 #: ckanext/canada/templates/source/read_base.html:29
-#, fuzzy
 msgid "Harvested Datasets:"
-msgstr "What are records?"
+msgstr ""
 
 #: ckanext/canada/templates/package/read_base.html:85
 msgid "Temporal Coverage"
@@ -4162,9 +4176,8 @@ msgid "Popular"
 msgstr ""
 
 #: ../ckanext-harvest/ckanext/harvest/templates/source/search.html:34
-#, fuzzy
 msgid "Search harvest sources..."
-msgstr "Search records..."
+msgstr ""
 
 #: ../ckanext-harvest/ckanext/harvest/templates/source/job/read.html:3
 #: ../ckanext-harvest/ckanext/harvest/templates/source/job/read.html:12
