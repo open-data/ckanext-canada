@@ -43,5 +43,10 @@ setup(
             ('**.js', 'javascript', None),
             ('**/templates/**.html', 'ckan', None),
         ],
+        '../ckanext-harvest/ckanext': [  # no need to fork just for i18n TODO: upstream contrib French translations!!
+            ('**.py', 'python', None),
+            ('**.js', 'javascript', None),
+            ('**/templates/**.html', 'ckan', None),
+        ],
     }
 )
