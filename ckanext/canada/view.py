@@ -24,7 +24,8 @@ import ckan.lib.mailer as mailer
 from ckan.lib.base import model
 from ckan.lib.helpers import (
     date_str_to_datetime,
-    lang
+    lang,
+    Page,
 )
 
 from ckan.views.dataset import (
@@ -1296,3 +1297,37 @@ def ckan_admin_config():
     404 this page always.
     """
     return abort(404)
+
+
+@canada_views.route('/ckan-admin/portal-sync', methods=['GET'])
+def ckan_admin_portal_sync():
+    """
+    Lists any packages that are out of date with the Portal.
+    """
+    try:
+        check_access('list_out_of_sync_packages', {'user': g.user})
+    except NotAuthorized:
+        abort(403)
+
+    page = h.get_page_number(request.args)
+    limit = 25
+    extra_vars = {}
+
+    out_of_sync_packages = get_action('list_out_of_sync_packages')({'user': g.user}, {'limit': limit})
+    extra_vars['out_of_sync_packages'] = out_of_sync_packages
+
+    #FIXME: figure out pager...
+    pager_url = h.url_for('canada.ckan_admin_portal_sync', page=page)
+    extra_vars['page'] = Page(
+        collection=out_of_sync_packages,
+        page=page,
+        url=pager_url,
+        item_count=len(out_of_sync_packages),
+        items_per_page=limit
+    )
+    extra_vars['page'].items = out_of_sync_packages
+
+    # TODO: remove in CKAN 2.11??
+    setattr(g, 'page', extra_vars['page'])
+
+    return render('admin/portal_sync.html', extra_vars=extra_vars)

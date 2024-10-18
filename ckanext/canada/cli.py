@@ -12,10 +12,12 @@ import gzip
 import requests
 from collections import defaultdict
 
+from typing import Optional, Union, Tuple
+
 from contextlib import contextmanager
 from urllib.request import URLError
 from urllib.parse import urlparse
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 
 from ckan.logic import get_action
 from ckan import model
@@ -38,6 +40,7 @@ from ckanapi.cli.utils import completion_stats
 import ckanext.datastore.backend.postgres as datastore
 
 from ckanext.canada import triggers
+from ckanext.canada import model as canada_model
 
 BOM = "\N{bom}"
 
@@ -143,9 +146,9 @@ class PortalUpdater(object):
             log = open(self.log, 'a')
 
         registry = LocalCKAN()
-        source_ds = str(datastore.get_write_engine().url)
+        source_datastore_uri = str(datastore.get_write_engine().url)
 
-        def changed_package_id_runs(start_date, verbose=False):
+        def changed_package_id_runs(start_date, verbose:Optional[bool]=False):
             # retrieve a list of changed packages from the registry
             while True:
                 packages, next_date = _changed_packages_since(
@@ -163,7 +166,7 @@ class PortalUpdater(object):
             'canada',
             'copy-datasets',
             '-o',
-            source_ds,
+            source_datastore_uri,
             '-u',
             self.ckan_user
         ]
@@ -183,7 +186,7 @@ class PortalUpdater(object):
         # Advance generator so we may call send() below
         next(pool)
 
-        def append_log(finished, package_id, action, reason):
+        def append_log(finished, package_id, action, reason, error: Optional[Union[str, None]]=None):
             if not log:
                 return
             log.write(json.dumps([
@@ -193,6 +196,8 @@ class PortalUpdater(object):
                 action,
                 reason,
                 ]) + '\n')
+            if error:
+                log.write(error + '\n')
             log.flush()
 
         with _quiet_int_pipe():
@@ -209,16 +214,33 @@ class PortalUpdater(object):
                 stats = completion_stats(self.processes)
                 while result is not None:
                     try:
-                        package_id, action, reason = json.loads(result)
+                        package_id, action, reason, error, failure_reason, failure_trace, do_update_sync_success_time = json.loads(result)
                     except Exception as e:
                         if self.verbose:
                             print("Worker proccess failed on:")
                             print(result)
                         raise Exception(e)
-                    print(job_ids, next(stats), finished, package_id, \
-                        action, reason)
-                    append_log(finished, package_id, action, reason)
+                    _stats = next(stats)
+                    print(job_ids, _stats, finished, package_id, action, reason)
+                    if error:
+                        print(job_ids, _stats, finished, package_id, error)
+                    append_log(finished, package_id, action, reason, error)
                     job_ids, finished, result = next(pool)
+
+                    #TODO: need to actually output error to stderr!!!
+
+                    # save the sync state in the database
+                    last_successful_sync = None
+                    if do_update_sync_success_time:
+                        last_successful_sync = datetime.now(timezone.utc)
+                    else:
+                        sync_obj = canada_model.PackageSync.get(package_id=package_id)
+                        if sync_obj:
+                            last_successful_sync = sync_obj.last_successful_sync
+                    canada_model.PackageSync.upsert(package_id=package_id,
+                                                    last_successful_sync=last_successful_sync,
+                                                    error_on=failure_reason or None,
+                                                    error=failure_trace or None)
 
                 print(" --- next batch starting at: " + next_date.isoformat())
                 append_log(
@@ -231,8 +253,11 @@ class PortalUpdater(object):
             self._portal_update_completed = True
 
 
-def _changed_packages_since(registry, since_time, ids_only=False, verbose=False):
+def _changed_packages_since(registry: LocalCKAN, since_time: str,
+                            ids_only: Optional[bool]=False, verbose: Optional[bool]=False):
     """
+    PortalUpdater member: Gathers packages based on activity.
+
     Query source ckan instance for packages changed since_time.
     returns (packages, next since_time to query) or (None, None)
     when no more changes are found.
@@ -278,13 +303,14 @@ def _changed_packages_since(registry, since_time, ids_only=False, verbose=False)
     return packages, since_time
 
 
-def _copy_datasets(source, user, mirror=False, verbose=False):
+def _copy_datasets(source_datastore_uri: Optional[Union[str, None]], user: Optional[Union[str, None]]=None,
+                   mirror: Optional[bool]=False, verbose: Optional[bool]=False):
     """
-    A process that accepts packages on stdin which are compared
-    to the local version of the same package.  The local package is
-    then created, updated, deleted or left unchanged.  This process
-    outputs that action as a string 'created', 'updated', 'deleted'
-    or 'unchanged'
+    PortalUpdater member: Syncs package dicts from the stdin (valid JSON).
+
+    A process that accepts packages on stdin which are compared o the local version of the same package.
+    The local package is hen created, updated, deleted or left unchanged. This process outputs that
+    action as a string 'created', 'updated', 'deleted' or 'unchanged'.
     """
     with _quiet_int_pipe():
         portal = LocalCKAN(username = user)
@@ -345,38 +371,111 @@ def _copy_datasets(source, user, mirror=False, verbose=False):
                 target_pkg = get_datastore_and_views(target_pkg, portal, verbose=verbose)
                 _trim_package(target_pkg)
 
-            target_hash = {}
+            resource_file_hashes = {}
+
+            failure_reason = ''
+            failure_trace = ''
+            do_update_sync_success_time = False
+            error = ''  # will output to stderr, while action gets outputted to stdout
 
             if action == 'skip':
                 pass
             elif target_pkg is None and source_pkg is None:
                 action = 'unchanged'
                 reason = reason or 'deleted on registry'
+                do_update_sync_success_time = False  # do not update sync time if nothing changed
             elif target_deleted:
                 action = 'updated'
                 reason = 'undeleting on target'
-                portal.action.package_update(**source_pkg)
-                for r in source_pkg['resources']:
-                    target_hash[r['id']] = r.get('hash')
-                action += _add_datastore_and_views(source_pkg, portal, target_hash, source, verbose=verbose)
+                try:
+                    portal.action.package_update(**source_pkg)
+                    do_update_sync_success_time = True
+                except Exception as e:
+                    failure_reason = 'package_update'
+                    failure_trace = traceback.format_exc()
+                    do_update_sync_success_time = False
+                    error += 'package-update-failed for %s %s' % (package_id, str(e))
+                    if verbose:
+                        error += '\n    Failed with Error: %s' % failure_trace
+                    pass
+                else:  # no need to attempt to update datastore and views if the base package failed
+                    for r in source_pkg['resources']:
+                        # use Registry file hashes for force undelete
+                        resource_file_hashes[r['id']] = r.get('hash')
+                    _action, _error, failure_reason, failure_trace = _add_datastore_and_views(source_pkg, portal,
+                                                                                              resource_file_hashes,
+                                                                                              source_datastore_uri,
+                                                                                              verbose=verbose)
+                    action += _action
+                    error += _error
+                    if failure_reason:
+                        do_update_sync_success_time = False
             elif target_pkg is None:
                 action = 'created'
-                portal.action.package_create(**source_pkg)
-                action += _add_datastore_and_views(source_pkg, portal, target_hash, source, verbose=verbose)
+                try:
+                    portal.action.package_create(**source_pkg)
+                    do_update_sync_success_time = True
+                except Exception as e:
+                    failure_reason = 'package_create'
+                    failure_trace = traceback.format_exc()
+                    do_update_sync_success_time = False
+                    error += 'package-create-failed for %s %s' % (package_id, str(e))
+                    if verbose:
+                        error += '\n    Failed with Error: %s' % failure_trace
+                    pass
+                else:  # no need to attempt to update datastore and views if the base package failed
+                    _action, _error, failure_reason, failure_trace = _add_datastore_and_views(source_pkg, portal,
+                                                                                              resource_file_hashes,
+                                                                                              source_datastore_uri,
+                                                                                              verbose=verbose)
+                    action += _action
+                    error += _error
+                    if failure_reason:
+                        do_update_sync_success_time = False
             elif source_pkg is None:
                 action = 'deleted'
-                portal.action.package_delete(id=package_id)
+                try:
+                    portal.action.package_delete(id=package_id)
+                    do_update_sync_success_time = True
+                except Exception as e:
+                    failure_reason = 'package_delete'
+                    failure_trace = traceback.format_exc()
+                    do_update_sync_success_time = False
+                    error += 'package-delete-failed for %s %s' % (package_id, str(e))
+                    if verbose:
+                        error += '\n    Failed with Error: %s' % failure_trace
+                    pass
             elif source_pkg == target_pkg:
                 action = 'unchanged'
                 reason = 'no difference found'
+                do_update_sync_success_time = False  # do not update sync time if nothing changed
             else:
                 action = 'updated'
                 for r in target_pkg['resources']:
-                    target_hash[r['id']] = r.get('hash')
-                portal.action.package_update(**source_pkg)
-                action += _add_datastore_and_views(source_pkg, portal, target_hash, source, verbose=verbose)
+                    # use Portal file hashes
+                    resource_file_hashes[r['id']] = r.get('hash')
+                try:
+                    portal.action.package_update(**source_pkg)
+                    do_update_sync_success_time = True
+                except Exception as e:
+                    failure_reason = 'package_update'
+                    failure_trace = traceback.format_exc()
+                    do_update_sync_success_time = False
+                    error += 'package-update-failed for %s %s' % (package_id, str(e))
+                    if verbose:
+                        error += '\n    Failed with ValidationError: %s' % failure_trace
+                    pass
+                else:  # no need to attempt to update datastore and views if the base package failed
+                    _action, _error, failure_reason, failure_trace = _add_datastore_and_views(source_pkg, portal,
+                                                                                              resource_file_hashes,
+                                                                                              source_datastore_uri,
+                                                                                              verbose=verbose)
+                    error += _error
+                    action += _action
+                    if failure_reason:
+                        do_update_sync_success_time = False
 
-            sys.stdout.write(json.dumps([package_id, action, reason]) + '\n')
+            sys.stdout.write(json.dumps([package_id, action, reason, error, failure_reason, failure_trace, do_update_sync_success_time]) + '\n')
             sys.stdout.flush()
 
 
@@ -664,8 +763,10 @@ def _bulk_validate():
     log.close()
 
 
-def _trim_package(pkg):
+def _trim_package(pkg: Optional[Union[dict, None]]=None):
     """
+    PortalUpdater member: removes keys from provided package dict.
+
     remove keys from pkg that we don't care about when comparing
     or updating/creating packages.  Also try to convert types and
     create missing fields that will be present in package_show.
@@ -699,81 +800,140 @@ def _trim_package(pkg):
             pkg[k] = ''
 
 
-def _add_datastore_and_views(package, portal, res_hash, ds, verbose=False):
+def _add_datastore_and_views(package: dict, portal: LocalCKAN, resource_file_hashes: dict,
+                             source_datastore_uri: str, verbose: Optional[bool]=False) -> Tuple[str, str, str, str]:
+    """
+    PortalUpdater member: Syncs DataDictionaries, Resource Views, and DataStore tables.
+    """
     # create datastore table and views for each resource of the package
     action = ''
+    error = ''
+    failure_reason = ''
+    failure_trace = ''
     for resource in package['resources']:
         res_id = resource['id']
         if res_id in package.keys():
             if 'data_dict' in package[res_id].keys():
-                action += _add_to_datastore(portal, resource, package[res_id], res_hash, ds, verbose=verbose)
+                _action, _error, _failure_reason, _failure_trace = _add_to_datastore(portal, resource,
+                                                                                     package[res_id], resource_file_hashes,
+                                                                                     source_datastore_uri, verbose=verbose)
+                action += _action
+                error += _error
+                if failure_reason:
+                    failure_reason += ',%s' % _failure_reason  # comma separate multiple failure reasons
+                    failure_trace += '\n\n%s' % _failure_trace  # separate multiple failure traces with newlines
+                else:
+                    failure_reason = _failure_reason
+                    failure_trace = _failure_trace
             if 'views' in package[res_id].keys():
-                action += _add_views(portal, resource, package[res_id], verbose=verbose)
-    return action
+                _action, _error, _failure_reason, _failure_trace = _add_views(portal, resource, package[res_id], verbose=verbose)
+                action += _action
+                error += _error
+                if failure_reason:
+                    failure_reason += ',%s' % _failure_reason  # comma separate multiple failure reasons
+                    failure_trace += '\n\n%s' % _failure_trace  # separate multiple failure traces with newlines
+                else:
+                    failure_reason = _failure_reason
+                    failure_trace = _failure_trace
+    return action, error, failure_reason, failure_trace
 
 
-def _delete_datastore_and_views(package, portal):
-    # remove datastore table and views for each resource of the package
+def _add_to_datastore(portal: LocalCKAN, resource: dict, resource_details: dict,
+                      resource_file_hashes: dict, source_datastore_uri: str, verbose: Optional[bool]=False) -> Tuple[str, str, str, str]:
+    """
+    PortalUpdater member: Syncs DataDictionaries and DataStore tables.
+    """
     action = ''
-    for resource in package['resources']:
-        res_id = resource['id']
-        try:
-            portal.call_action('datastore_delete', {"id": resource['id'], "force": True})
-            action += '\n  datastore-deleted for ' + resource['id']
-        except NotFound:
-            action += '\n  failed to delete datastore for ' + resource['id']
-        try:
-            portal.call_action('resource_view_clear', {"id": resource['id'], "force": True})
-            action += '\n  views-deleted for ' + resource['id']
-        except NotFound:
-            action += '\n  failed to delete all views for ' + resource['id']
-    return action
-
-
-def _add_to_datastore(portal, resource, resource_details, t_hash, source_ds_url, verbose=False):
-    action = ''
+    error = ''
+    failure_reason = ''
+    failure_trace = ''
     try:
         portal.call_action('datastore_search', {'resource_id': resource['id'], 'limit': 0})
-        if t_hash.get(resource['id']) \
-                and t_hash.get(resource['id']) == resource.get('hash')\
+        if resource_file_hashes.get(resource['id']) \
+                and resource_file_hashes.get(resource['id']) == resource.get('hash')\
                 and _datastore_dictionary(portal, resource['id']) == resource_details['data_dict']:
             if verbose:
                 action += '\n  File hash and Data Dictionary has not changed, skipping DataStore for %s...' % resource['id']
             return action
         else:
-            portal.call_action('datastore_delete', {"id": resource['id'], "force": True})
-            action += '\n  datastore-deleted for ' + resource['id']
+            try:
+                portal.call_action('datastore_delete', {"id": resource['id'], "force": True})
+                action += '\n  datastore-deleted for ' + resource['id']
+            except Exception as e:
+                failure_reason = 'datastore_delete[resource_id=%s]' % resource['id']
+                failure_trace = traceback.format_exc()
+                error += '\n  datastore-create-failed for %s %s' % (resource['id'], str(e))
+                if verbose:
+                    error += '\n    Failed with Error: %s' % failure_trace
+                pass
     except NotFound:
         # not an issue, resource does not exist in datastore
         if verbose:
             action += '\n  DataStore does not exist for resource %s...trying to create it...' % resource['id']
         pass
 
-    portal.call_action('datastore_create',
-                       {"resource_id": resource['id'],
-                        "fields": resource_details['data_dict'],
-                        "force": True})
+    datastore_created = False
+    try:
+        portal.call_action('datastore_create',
+                           {"resource_id": resource['id'],
+                            "fields": resource_details['data_dict'],
+                            "force": True})
 
-    action += '\n  datastore-created for ' + resource['id']
-
-    # load data
-    target_ds_url = str(datastore.get_write_engine().url)
-    cmd1 = subprocess.Popen(['pg_dump', source_ds_url, '-a', '-t', resource['id']], stdout=subprocess.PIPE)
-    cmd2 = subprocess.Popen(['psql', target_ds_url], stdin=cmd1.stdout, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-    out, err = cmd2.communicate()
-    action += ' data-loaded' if not err else ' data-load-failed'
-    if verbose:
-        if resource_details['data_dict']:
-            action += '\n    Using DataStore fields:'
-            for field in resource_details['data_dict']:
-                action += '\n      %s' % field['id']
+        action += '\n  datastore-created for ' + resource['id']
+        datastore_created = True
+    except Exception as e:
+        _failure_reason = 'datastore_create[resource_id=%s]' % resource['id']
+        _failure_trace = traceback.format_exc()
+        if failure_reason:
+            failure_reason += ',%s' % _failure_reason  # comma separate multiple failure reasons
+            failure_trace += '\n\n%s' % _failure_trace  # separate multiple failure traces with newlines
         else:
-            action += '\n    There are no DataStore fields!!!'
-    return action
+            failure_reason = _failure_reason
+            failure_trace = _failure_trace
+        error += '\n  datastore-create-failed for %s %s' % (resource['id'], str(e))
+        if verbose:
+            error += '\n    Failed with Error: %s' % failure_trace
+        pass
+
+    if datastore_created:
+        # load data
+        target_datastore_uri = str(datastore.get_write_engine().url)
+        cmd1 = subprocess.Popen(['pg_dump', source_datastore_uri, '-a', '-t', resource['id']], stdout=subprocess.PIPE)
+        cmd2 = subprocess.Popen(['psql', target_datastore_uri], stdin=cmd1.stdout, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        out, err = cmd2.communicate()
+        if not err:
+            action += ' data-loaded'
+            if verbose:
+                if resource_details['data_dict']:
+                    action += '\n    Using DataStore fields:'
+                    for field in resource_details['data_dict']:
+                        action += '\n      %s' % field['id']
+                else:
+                    action += '\n    There are no DataStore fields!!!'
+        else:
+            _failure_reason = 'datastore_load[resource_id=%s]' % resource['id']
+            _failure_trace = err
+            if failure_reason:
+                failure_reason += ',%s' % _failure_reason  # comma separate multiple failure reasons
+                failure_trace += '\n\n%s' % _failure_trace  # separate multiple failure traces with newlines
+            else:
+                failure_reason = _failure_reason
+                failure_trace = _failure_trace
+            error += '\n  datastore-load-failed for %s %s' % (resource['id'], str(e))
+            if verbose:
+                error += '\n    Failed with Error: %s' % failure_trace
+
+    return action, error, failure_reason, failure_trace
 
 
-def _add_views(portal, resource, resource_details, verbose=False):
+def _add_views(portal: LocalCKAN, resource: dict, resource_details: dict, verbose: Optional[bool]=False) -> Tuple[str, str, str, str]:
+    """
+    PortalUpdater member: Syncs Resource Views.
+    """
     action = ''
+    error = ''
+    failure_reason = ''
+    failure_trace = ''
     target_views = portal.call_action('resource_view_list', {'id': resource['id']})
     for src_view in resource_details['views']:
         view_action = 'resource_view_create'
@@ -784,11 +944,19 @@ def _add_views(portal, resource, resource_details, verbose=False):
         if view_action:
             try:
                 portal.call_action(view_action, src_view)
-                action += '\n  ' + view_action + ' ' + src_view['id'] + ' for resource ' + resource['id']
-            except ValidationError as e:
-                action += '\n  ' + view_action + ' failed for view ' + src_view['id'] + ' for resource ' + resource['id']
+                action += '\n  %s %s for resource %s' % (view_action, src_view['id'], resource['id'])
+            except Exception as e:
+                _failure_reason = '%s[resource_id=%s][view_id=%s]' % (view_action, resource['id'], src_view['id'])
+                _failure_trace = traceback.format_exc()
+                if failure_reason:
+                    failure_reason += ',%s' % _failure_reason  # comma separate multiple failure reasons
+                    failure_trace += '\n\n%s' % _failure_trace  # separate multiple failure traces with newlines
+                else:
+                    failure_reason = _failure_reason
+                    failure_trace = _failure_trace
+                error += '\n  %s failed for view %s for resource %s %s' % (view_action, src_view['id'], resource['id'], str(e))
                 if verbose:
-                    action += '\n    Failed with ValidationError: %s' % e.error_dict
+                    error += '\n    Failed with Error: %s' % str(e)
                 pass
 
     for target_view in target_views:
@@ -799,10 +967,24 @@ def _add_views(portal, resource, resource_details, verbose=False):
                 break
         if to_delete:
             view_action = 'resource_view_delete'
-            portal.call_action(view_action, {'id':target_view['id']})
-            action += '\n  ' + view_action + ' ' + src_view['id'] + ' for resource ' + resource['id']
+            try:
+                portal.call_action(view_action, {'id':target_view['id']})
+                action += '\n  %s %s for resource %s' % (view_action, src_view['id'], resource['id'])
+            except Exception as e:
+                _failure_reason =  '%s[resource_id=%s][view_id=%s]' % (view_action, resource['id'], src_view['id'])
+                _failure_trace = traceback.format_exc()
+                if failure_reason:
+                    failure_reason += ',%s' % _failure_reason  # comma separate multiple failure reasons
+                    failure_trace += '\n\n%s' % _failure_trace  # separate multiple failure traces with newlines
+                else:
+                    failure_reason = _failure_reason
+                    failure_trace = _failure_trace
+                error += '\n  %s failed for view %s for resource %s %s' % (view_action, src_view['id'], resource['id'], str(e))
+                if verbose:
+                    error += '\n    Failed with Error: %s' % failure_trace
+                pass
 
-    return action
+    return action, error, failure_reason, failure_trace
 
 
 def get_datastore_and_views(package, ckan_instance, verbose=False):
@@ -908,7 +1090,7 @@ def _quiet_int_pipe():
             raise
 
 
-def _get_user(user):
+def _get_user(user:Optional[Union[str, None]]=None) -> str:
     if user is not None:
         return user
     return get_action('get_site_user')({'ignore_auth': True}).get('name')
@@ -980,6 +1162,8 @@ def portal_update(portal_ini,
                   delay=60,
                   verbose=False):
     """
+    PortalUpdater member: CKAN cli command entrance to run the PortalUpdater stack.
+
     Collect batches of packages modified at local CKAN since activity_date
     and apply the package updates to the portal instance for all
     packages with published_date set to any time in the past.
@@ -1029,13 +1213,14 @@ def portal_update(portal_ini,
     is_flag=True,
     help="Increase verbosity",
 )
-def copy_datasets(mirror=False, ckan_user=None, source=None, verbose=False):
+def copy_datasets(mirror: Optional[bool]=False, ckan_user: Optional[Union[str, None]]=None,
+                  source: Optional[Union[str, None]]=None, verbose: Optional[bool]=False):
     """
-    A process that accepts packages on stdin which are compared
-    to the local version of the same package.  The local package is
-    then created, updated, deleted or left unchanged.  This process
-    outputs that action as a string 'created', 'updated', 'deleted'
-    or 'unchanged'
+    PortalUpdater member: CKAN cli command entrance to sync packages from stdin (valid JSON).
+
+    A process that accepts packages on stdin which are compared to the local version of the same package.
+    The local package is then created, updated, deleted or left unchanged. This process outputs that
+    action as a string 'created', 'updated', 'deleted' or 'unchanged'.
 
     Full Usage:\n
         canada copy-datasets [-m] [-o <source url>]
