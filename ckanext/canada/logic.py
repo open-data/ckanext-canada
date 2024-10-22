@@ -37,6 +37,7 @@ import mimetypes
 from ckanext.scheming.helpers import scheming_get_preset
 
 from ckanext.datastore.backend import DatastoreBackend
+from ckanext.canada import model as canada_model
 
 MIMETYPES_AS_DOMAINS = [
     'application/x-msdos-program',  # .com
@@ -529,3 +530,58 @@ def canada_datastore_run_triggers(up_func, context, data_dict):
         context['connection'] = backend._get_write_engine().connect()
     with datastore_create_temp_user_table(context, drop_on_commit=False):
         return up_func(context, data_dict)
+
+
+@side_effect_free
+def portal_sync_info(context, data_dict):
+    """
+    Returns PackageSync object for a given package_id if it exists.
+    """
+    package_id = get_or_bust(data_dict, 'id')
+
+    check_access('portal_sync_info', context, data_dict)
+
+    sync_info = canada_model.PackageSync.get(package_id=package_id)
+
+    if not sync_info:
+        raise ObjectNotFound(_('No Portal Sync information found for package %s') % package_id)
+
+    # NOTE: never show sync_info.error as it contains stack traces and system information
+    return {
+        'package_id': sync_info.package_id,
+        'last_run': sync_info.last_run,
+        'last_successful_sync': sync_info.last_successful_sync,
+        'error_on': sync_info.error_on,
+    }
+
+
+@side_effect_free
+def list_out_of_sync_packages(context, data_dict):
+    """
+    Returns a list of out of sync packages on the Portal.
+
+    Based on PackageSync model.
+    """
+    check_access('list_out_of_sync_packages', context, data_dict)
+
+    sync_infos_count = model.Session.query(canada_model.PackageSync.package_id).filter(canada_model.PackageSync.error_on != None).count()
+
+    out_of_sync_packages = {'count': sync_infos_count, 'results': []}
+
+    if not sync_infos_count:
+        return out_of_sync_packages
+
+    limit = data_dict.get('limit', 25)
+    offset = data_dict.get('start', 0)
+    sync_infos = model.Session.query(canada_model.PackageSync).filter(canada_model.PackageSync.error_on != None).limit(limit).offset(offset)
+
+    for sync_info in sync_infos:
+        try:
+            pkg_dict = get_action('package_show')({'user': context.get('user')}, {'id': sync_info.package_id})
+        except (ObjectNotFound, NotAuthorized):
+            continue
+        # NOTE: never show sync_info.error as it contains stack traces and system information
+        out_of_sync_packages['results'].append({'pkg_dict': pkg_dict, 'last_successful_sync': sync_info.last_successful_sync,
+                                                'error_on': sync_info.error_on, 'last_run': sync_info.last_run})
+
+    return out_of_sync_packages

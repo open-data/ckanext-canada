@@ -1,0 +1,37 @@
+{% extends 'admin/base.html' %}
+
+{% block primary_content_inner %}
+  <h2>{{ _('Out of Sync Packages') }}</h2>
+  <div class="row mrgn-tp-md mrgn-bttm-md">
+    {% if g.page.item_count == 0 %}
+      <div class="col-md-12 text-center text-warning">
+        <strong>{% snippet 'snippets/search_result_text.html', count=g.page.item_count, type='dataset' %}</strong>
+      </div>
+    {% else %}
+      <div class="col-md-6 mrgn-tp-sm text-left text-success">
+        <strong>{% snippet 'snippets/search_result_text.html', count=g.page.item_count, type='dataset' %}</strong>
+      </div>
+    {% endif %}
+  </div>
+  <ul class="list-unstyled">
+    {% for sync_info in g.page.items %}
+      {% snippet 'admin/snippets/portal_sync_package_item.html', package=sync_info['pkg_dict'], sync_info=sync_info %}
+    {% endfor %}
+  </ul>
+  {%- block pager -%}
+    {{ g.page.pager() }}
+  {%- endblock -%}
+{% endblock %}
+
+{% block secondary_content %}
+  <section class="panel panel-info">
+    <header class="panel-heading">
+      <h3 class="panel-title">
+        <i class="fa fa-info-circle"></i>&nbsp;{{ _('View Out of Sync Packages') }}
+      </h3>
+    </header>
+    <div class="panel-body">
+      <p>{{ _('View packages that are out of sync on the Portal and why they have not been synced.') }}</p>
+    </div>
+  </section>
+{% endblock %}
