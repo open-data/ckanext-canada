@@ -39,8 +39,6 @@ from ckanext.scheming.helpers import scheming_get_preset
 from ckanext.datastore.backend import DatastoreBackend
 from ckanext.canada import model as canada_model
 
-from ckanapi import RemoteCKAN
-
 MIMETYPES_AS_DOMAINS = [
     'application/x-msdos-program',  # .com
     'application/vnd.lotus-organizer',  # .org
