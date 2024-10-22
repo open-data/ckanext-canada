@@ -279,7 +279,7 @@ class PortalUpdater(object):
                     print(job_ids, _stats, finished, package_id, action, reason)
                     if error:
                         # NOTE: you can pipe stderr from the portal-update command to be able to tell if there are any errors
-                        print(job_ids, _stats, finished, package_id, error, file=sys.stderr)
+                        print(job_ids, _stats, finished, package_id, 'ERROR', error, file=sys.stderr)
 
                     append_log(finished, package_id, action, reason, error)
                     job_ids, finished, result = next(pool)
@@ -377,7 +377,7 @@ def _copy_datasets(source_datastore_uri: Optional[Union[str, None]], user: Optio
         for package in packages:
             source_pkg = json.loads(package)
             package_id = source_pkg['id']
-            reason = None
+            reason = ''
             target_deleted = False
             if source_pkg and source_pkg['state'] == 'deleted':
                 source_pkg = None
@@ -458,8 +458,10 @@ def _copy_datasets(source_datastore_uri: Optional[Union[str, None]], user: Optio
                     action += _action
                     error += _error
                     if failure_reason:
+                        reason += ' ERRORED'
                         do_update_sync_success_time = False
                 else:
+                    reason += ' ERRORED'
                     failure_reason = exception_details.failure_reason
                     failure_trace = exception_details.failure_trace
                     error += exception_details.error
@@ -478,8 +480,10 @@ def _copy_datasets(source_datastore_uri: Optional[Union[str, None]], user: Optio
                     action += _action
                     error += _error
                     if failure_reason:
+                        reason += ' ERRORED'
                         do_update_sync_success_time = False
                 else:
+                    reason += ' ERRORED'
                     failure_reason = exception_details.failure_reason
                     failure_trace = exception_details.failure_trace
                     error += exception_details.error
@@ -492,6 +496,7 @@ def _copy_datasets(source_datastore_uri: Optional[Union[str, None]], user: Optio
                 if not exception_details.has_exceptions:
                     do_update_sync_success_time = True
                 else:
+                    reason += ' ERRORED'
                     failure_reason = exception_details.failure_reason
                     failure_trace = exception_details.failure_trace
                     error += exception_details.error
@@ -517,8 +522,10 @@ def _copy_datasets(source_datastore_uri: Optional[Union[str, None]], user: Optio
                     error += _error
                     action += _action
                     if failure_reason:
+                        reason += ' ERRORED'
                         do_update_sync_success_time = False
                 else:
+                    reason += ' ERRORED'
                     failure_reason = exception_details.failure_reason
                     failure_trace = exception_details.failure_trace
                     error += exception_details.error
