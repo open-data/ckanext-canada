@@ -7,6 +7,7 @@ import csv
 from six import string_types
 from datetime import datetime, timedelta
 import traceback
+from functools import partial
 
 from ckan.plugins.toolkit import (
     abort,
@@ -1309,23 +1310,26 @@ def ckan_admin_portal_sync():
     except NotAuthorized:
         abort(403)
 
-    page = h.get_page_number(request.args)
+    page_number = h.get_page_number(request.args) or 1
     limit = 25
+    start = limit * (page_number - 1)
     extra_vars = {}
 
-    out_of_sync_packages = get_action('list_out_of_sync_packages')({'user': g.user}, {'limit': limit})
+    out_of_sync_packages = get_action('list_out_of_sync_packages')({'user': g.user}, {'limit': limit, 'start': start})
     extra_vars['out_of_sync_packages'] = out_of_sync_packages
 
-    #FIXME: figure out pager...
-    pager_url = h.url_for('canada.ckan_admin_portal_sync', page=page)
+    def _basic_pager_uri(page, text):
+        return  h.url_for('canada.ckan_admin_portal_sync', page=page)
+    pager_url = partial(_basic_pager_uri, page=page_number, text='')
+
     extra_vars['page'] = Page(
-        collection=out_of_sync_packages,
-        page=page,
+        collection=out_of_sync_packages['results'],
+        page=page_number,
         url=pager_url,
-        item_count=len(out_of_sync_packages),
+        item_count=out_of_sync_packages.get('count', 0),
         items_per_page=limit
     )
-    extra_vars['page'].items = out_of_sync_packages
+    extra_vars['page'].items = out_of_sync_packages['results']
 
     # TODO: remove in CKAN 2.11??
     setattr(g, 'page', extra_vars['page'])

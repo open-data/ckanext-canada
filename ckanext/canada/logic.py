@@ -551,7 +551,7 @@ def portal_sync_info(context, data_dict):
     # NOTE: never show sync_info.error as it contains stack traces and system information
     return {
         'package_id': sync_info.package_id,
-        'created': sync_info.created,
+        'last_run': sync_info.last_run,
         'last_successful_sync': sync_info.last_successful_sync,
         'error_on': sync_info.error_on,
     }
@@ -564,16 +564,18 @@ def list_out_of_sync_packages(context, data_dict):
 
     Based on PackageSync model.
     """
-    check_access('portal_sync_info', context, data_dict)
+    check_access('list_out_of_sync_packages', context, data_dict)
+
+    sync_infos_count = model.Session.query(canada_model.PackageSync.package_id).filter(canada_model.PackageSync.error_on != None).count()
+
+    out_of_sync_packages = {'count': sync_infos_count, 'results': []}
+
+    if not sync_infos_count:
+        return out_of_sync_packages
 
     limit = data_dict.get('limit', 25)
-
-    sync_infos = model.Session.query(canada_model.PackageSync).filter(canada_model.PackageSync.error_on != None).limit(limit)
-
-    if not sync_infos:
-        return []
-
-    out_of_sync_packages = []
+    offset = data_dict.get('start', 0)
+    sync_infos = model.Session.query(canada_model.PackageSync).filter(canada_model.PackageSync.error_on != None).limit(limit).offset(offset)
 
     for sync_info in sync_infos:
         try:
@@ -581,7 +583,7 @@ def list_out_of_sync_packages(context, data_dict):
         except (ObjectNotFound, NotAuthorized):
             continue
         # NOTE: never show sync_info.error as it contains stack traces and system information
-        out_of_sync_packages.append({'pkg_dict': pkg_dict, 'last_successful_sync': sync_info.last_successful_sync,
-                                     'error_on': sync_info.error_on})
+        out_of_sync_packages['results'].append({'pkg_dict': pkg_dict, 'last_successful_sync': sync_info.last_successful_sync,
+                                                'error_on': sync_info.error_on, 'last_run': sync_info.last_run})
 
     return out_of_sync_packages

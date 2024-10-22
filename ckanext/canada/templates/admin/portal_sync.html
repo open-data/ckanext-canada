@@ -5,21 +5,21 @@
   <div class="row mrgn-tp-md mrgn-bttm-md">
     {% if g.page.item_count == 0 %}
       <div class="col-md-12 text-center text-warning">
-        <strong>{% snippet 'snippets/search_result_text.html', query=g.q, count=g.page.item_count, type='dataset' %}</strong>
+        <strong>{% snippet 'snippets/search_result_text.html', count=g.page.item_count, type='dataset' %}</strong>
       </div>
     {% else %}
       <div class="col-md-6 mrgn-tp-sm text-left text-success">
-        <strong>{% snippet 'snippets/search_result_text.html', query=g.q, count=g.page.item_count, type='dataset' %}</strong>
+        <strong>{% snippet 'snippets/search_result_text.html', count=g.page.item_count, type='dataset' %}</strong>
       </div>
     {% endif %}
   </div>
   <ul class="list-unstyled">
     {% for sync_info in g.page.items %}
-      {% snippet 'admin/snippets/portal_sync_package_item.html', package=sync_info['pkg_dict'], sync_info=sync_info, item_class=item_class, hide_resources=hide_resources, banner=banner, truncate=truncate, truncate_title=truncate_title %}
+      {% snippet 'admin/snippets/portal_sync_package_item.html', package=sync_info['pkg_dict'], sync_info=sync_info %}
     {% endfor %}
   </ul>
   {%- block pager -%}
-    {{ g.page.pager(q=g.q) }}
+    {{ g.page.pager() }}
   {%- endblock -%}
 {% endblock %}
 

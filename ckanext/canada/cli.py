@@ -80,6 +80,61 @@ RESOURCE_TRIM_FIELDS = ['package_id', 'revision_id',
                 'position', 'metadata_modified']
 
 
+class CaptureExceptionDetails(object):
+    failure_reason = ''
+    failure_trace = ''
+    error = ''
+    has_exceptions = False
+    __reason = None
+    __verbose = False
+    __package_id = None
+    __resource_id = None
+    __view_id = None
+
+
+    def __init__(self, reason: str, verbose: Optional[bool]=False,
+                 package_id: Optional[Union[str, None]]=None,
+                 resource_id: Optional[Union[str, None]]=None,
+                 view_id: Optional[Union[str, None]]=None):
+        self.__reason = reason
+        self.__verbose = verbose
+        self.__package_id = package_id
+        self.__resource_id = resource_id
+        self.__view_id = view_id
+
+
+    def __enter__(self):
+        self.failure_reason = ''
+        self.failure_trace = ''
+        self.error = ''
+        self.has_exceptions = False
+        return
+
+
+    def __exit__(self, exc_type, exc_value, trace):
+        if exc_type:
+            self.has_exceptions = True
+            self.failure_reason = self.__reason
+            if self.__resource_id:
+                self.failure_reason += "[resource_id=%s]" % self.__resource_id
+            if self.__view_id:
+                self.failure_reason += "[view_id=%s]" % self.__view_id
+            self.failure_trace = traceback.format_exc()
+            self.error = '\n  %s failed for ' % self.__reason
+            if self.__package_id:
+                self.error += '%s ' % self.__package_id
+            elif self.__resource_id and not self.__view_id:
+                self.error += 'resource %s ' % self.__resource_id
+            elif self.__resource_id and self.__view_id:
+                self.error += 'for view %s for resource %s ' % (self.__view_id, self.__resource_id)
+            else:
+                self.error += 'unknown'
+            self.error += str(exc_value)
+            if self.__verbose:
+                self.error += '\n    Failed with Error: %s' % self.failure_trace
+        return True
+
+
 class PortalUpdater(object):
     """
     Class to update Portal records with Registry ones.
@@ -223,11 +278,11 @@ class PortalUpdater(object):
                     _stats = next(stats)
                     print(job_ids, _stats, finished, package_id, action, reason)
                     if error:
-                        print(job_ids, _stats, finished, package_id, error)
+                        # NOTE: you can pipe stderr from the portal-update command to be able to tell if there are any errors
+                        print(job_ids, _stats, finished, package_id, error, file=sys.stderr)
+
                     append_log(finished, package_id, action, reason, error)
                     job_ids, finished, result = next(pool)
-
-                    #TODO: need to actually output error to stderr!!!
 
                     # save the sync state in the database
                     last_successful_sync = None
@@ -237,6 +292,7 @@ class PortalUpdater(object):
                         sync_obj = canada_model.PackageSync.get(package_id=package_id)
                         if sync_obj:
                             last_successful_sync = sync_obj.last_successful_sync
+
                     canada_model.PackageSync.upsert(package_id=package_id,
                                                     last_successful_sync=last_successful_sync,
                                                     error_on=failure_reason or None,
@@ -387,18 +443,11 @@ def _copy_datasets(source_datastore_uri: Optional[Union[str, None]], user: Optio
             elif target_deleted:
                 action = 'updated'
                 reason = 'undeleting on target'
-                try:
+                exception_details = CaptureExceptionDetails('package_update', verbose=verbose, package_id=package_id)
+                with exception_details:
                     portal.action.package_update(**source_pkg)
+                if not exception_details.has_exceptions:  # only try adding datastores and views if no errors
                     do_update_sync_success_time = True
-                except Exception as e:
-                    failure_reason = 'package_update'
-                    failure_trace = traceback.format_exc()
-                    do_update_sync_success_time = False
-                    error += 'package-update-failed for %s %s' % (package_id, str(e))
-                    if verbose:
-                        error += '\n    Failed with Error: %s' % failure_trace
-                    pass
-                else:  # no need to attempt to update datastore and views if the base package failed
                     for r in source_pkg['resources']:
                         # use Registry file hashes for force undelete
                         resource_file_hashes[r['id']] = r.get('hash')
@@ -410,20 +459,18 @@ def _copy_datasets(source_datastore_uri: Optional[Union[str, None]], user: Optio
                     error += _error
                     if failure_reason:
                         do_update_sync_success_time = False
+                else:
+                    failure_reason = exception_details.failure_reason
+                    failure_trace = exception_details.failure_trace
+                    error += exception_details.error
+                    do_update_sync_success_time = False
             elif target_pkg is None:
                 action = 'created'
-                try:
+                exception_details = CaptureExceptionDetails('package_create', verbose=verbose, package_id=package_id)
+                with exception_details:
                     portal.action.package_create(**source_pkg)
+                if not exception_details.has_exceptions:  # only try adding datastores and views if no errors
                     do_update_sync_success_time = True
-                except Exception as e:
-                    failure_reason = 'package_create'
-                    failure_trace = traceback.format_exc()
-                    do_update_sync_success_time = False
-                    error += 'package-create-failed for %s %s' % (package_id, str(e))
-                    if verbose:
-                        error += '\n    Failed with Error: %s' % failure_trace
-                    pass
-                else:  # no need to attempt to update datastore and views if the base package failed
                     _action, _error, failure_reason, failure_trace = _add_datastore_and_views(source_pkg, portal,
                                                                                               resource_file_hashes,
                                                                                               source_datastore_uri,
@@ -432,19 +479,23 @@ def _copy_datasets(source_datastore_uri: Optional[Union[str, None]], user: Optio
                     error += _error
                     if failure_reason:
                         do_update_sync_success_time = False
+                else:
+                    failure_reason = exception_details.failure_reason
+                    failure_trace = exception_details.failure_trace
+                    error += exception_details.error
+                    do_update_sync_success_time = False
             elif source_pkg is None:
                 action = 'deleted'
-                try:
+                exception_details = CaptureExceptionDetails('package_delete', verbose=verbose, package_id=package_id)
+                with exception_details:
                     portal.action.package_delete(id=package_id)
+                if not exception_details.has_exceptions:
                     do_update_sync_success_time = True
-                except Exception as e:
-                    failure_reason = 'package_delete'
-                    failure_trace = traceback.format_exc()
+                else:
+                    failure_reason = exception_details.failure_reason
+                    failure_trace = exception_details.failure_trace
+                    error += exception_details.error
                     do_update_sync_success_time = False
-                    error += 'package-delete-failed for %s %s' % (package_id, str(e))
-                    if verbose:
-                        error += '\n    Failed with Error: %s' % failure_trace
-                    pass
             elif source_pkg == target_pkg:
                 action = 'unchanged'
                 reason = 'no difference found'
@@ -454,26 +505,24 @@ def _copy_datasets(source_datastore_uri: Optional[Union[str, None]], user: Optio
                 for r in target_pkg['resources']:
                     # use Portal file hashes
                     resource_file_hashes[r['id']] = r.get('hash')
-                try:
+                exception_details = CaptureExceptionDetails('package_update', verbose=verbose, package_id=package_id)
+                with exception_details:
                     portal.action.package_update(**source_pkg)
+                if not exception_details.has_exceptions:  # only try adding datastores and views if no errors
                     do_update_sync_success_time = True
-                except Exception as e:
-                    failure_reason = 'package_update'
-                    failure_trace = traceback.format_exc()
-                    do_update_sync_success_time = False
-                    error += 'package-update-failed for %s %s' % (package_id, str(e))
-                    if verbose:
-                        error += '\n    Failed with ValidationError: %s' % failure_trace
-                    pass
-                else:  # no need to attempt to update datastore and views if the base package failed
                     _action, _error, failure_reason, failure_trace = _add_datastore_and_views(source_pkg, portal,
-                                                                                              resource_file_hashes,
-                                                                                              source_datastore_uri,
-                                                                                              verbose=verbose)
+                                                                                            resource_file_hashes,
+                                                                                            source_datastore_uri,
+                                                                                            verbose=verbose)
                     error += _error
                     action += _action
                     if failure_reason:
                         do_update_sync_success_time = False
+                else:
+                    failure_reason = exception_details.failure_reason
+                    failure_trace = exception_details.failure_trace
+                    error += exception_details.error
+                    do_update_sync_success_time = False
 
             sys.stdout.write(json.dumps([package_id, action, reason, error, failure_reason, failure_trace, do_update_sync_success_time]) + '\n')
             sys.stdout.flush()
@@ -856,16 +905,14 @@ def _add_to_datastore(portal: LocalCKAN, resource: dict, resource_details: dict,
                 action += '\n  File hash and Data Dictionary has not changed, skipping DataStore for %s...' % resource['id']
             return action
         else:
-            try:
+            exception_details = CaptureExceptionDetails('datastore_delete', verbose=verbose, resource_id=resource['id'])
+            with exception_details:
                 portal.call_action('datastore_delete', {"id": resource['id'], "force": True})
                 action += '\n  datastore-deleted for ' + resource['id']
-            except Exception as e:
-                failure_reason = 'datastore_delete[resource_id=%s]' % resource['id']
-                failure_trace = traceback.format_exc()
-                error += '\n  datastore-create-failed for %s %s' % (resource['id'], str(e))
-                if verbose:
-                    error += '\n    Failed with Error: %s' % failure_trace
-                pass
+            if exception_details.has_exceptions:
+                failure_reason = exception_details.failure_reason
+                failure_trace = exception_details.failure_trace
+                error += exception_details.error
     except NotFound:
         # not an issue, resource does not exist in datastore
         if verbose:
@@ -873,7 +920,8 @@ def _add_to_datastore(portal: LocalCKAN, resource: dict, resource_details: dict,
         pass
 
     datastore_created = False
-    try:
+    exception_details = CaptureExceptionDetails('datastore_create', verbose=verbose, resource_id=resource['id'])
+    with exception_details:
         portal.call_action('datastore_create',
                            {"resource_id": resource['id'],
                             "fields": resource_details['data_dict'],
@@ -881,19 +929,14 @@ def _add_to_datastore(portal: LocalCKAN, resource: dict, resource_details: dict,
 
         action += '\n  datastore-created for ' + resource['id']
         datastore_created = True
-    except Exception as e:
-        _failure_reason = 'datastore_create[resource_id=%s]' % resource['id']
-        _failure_trace = traceback.format_exc()
+    if exception_details.has_exceptions:
         if failure_reason:
-            failure_reason += ',%s' % _failure_reason  # comma separate multiple failure reasons
-            failure_trace += '\n\n%s' % _failure_trace  # separate multiple failure traces with newlines
+            failure_reason += ',%s' % exception_details.failure_reason  # comma separate multiple failure reasons
+            failure_trace += '\n\n%s' % exception_details.failure_trace  # separate multiple failure traces with newlines
         else:
-            failure_reason = _failure_reason
-            failure_trace = _failure_trace
-        error += '\n  datastore-create-failed for %s %s' % (resource['id'], str(e))
-        if verbose:
-            error += '\n    Failed with Error: %s' % failure_trace
-        pass
+            failure_reason = exception_details.failure_reason
+            failure_trace = exception_details.failure_trace
+        error += exception_details.error
 
     if datastore_created:
         # load data
@@ -911,17 +954,19 @@ def _add_to_datastore(portal: LocalCKAN, resource: dict, resource_details: dict,
                 else:
                     action += '\n    There are no DataStore fields!!!'
         else:
-            _failure_reason = 'datastore_load[resource_id=%s]' % resource['id']
-            _failure_trace = err
-            if failure_reason:
-                failure_reason += ',%s' % _failure_reason  # comma separate multiple failure reasons
-                failure_trace += '\n\n%s' % _failure_trace  # separate multiple failure traces with newlines
-            else:
-                failure_reason = _failure_reason
-                failure_trace = _failure_trace
-            error += '\n  datastore-load-failed for %s %s' % (resource['id'], str(e))
-            if verbose:
-                error += '\n    Failed with Error: %s' % failure_trace
+            exception_details = CaptureExceptionDetails('datastore_load', verbose=verbose, resource_id=resource['id'])
+            with exception_details:
+                raise datastore.DataError('Failed to dump and load datastore data from the Registry to the Portal')
+            if exception_details.has_exceptions:
+                if failure_reason:
+                    failure_reason += ',%s' % exception_details.failure_reason  # comma separate multiple failure reasons
+                    failure_trace += '\n\n%s' % exception_details.failure_trace  # separate multiple failure traces with newlines
+                    failure_trace += '\n\npsql command error: %s' % err  # output pg_dump and psql load command errors
+                else:
+                    failure_reason = exception_details.failure_reason
+                    failure_trace = exception_details.failure_trace
+                    failure_trace += '\n\npsql command error: %s' % err  # output pg_dump and psql load command errors
+                error += exception_details.error
 
     return action, error, failure_reason, failure_trace
 
@@ -942,22 +987,18 @@ def _add_views(portal: LocalCKAN, resource: dict, resource_details: dict, verbos
                 view_action = None if target_view == src_view else 'resource_view_update'
 
         if view_action:
-            try:
+            exception_details = CaptureExceptionDetails(view_action, verbose=verbose, resource_id=resource['id'], view_id=src_view['id'])
+            with exception_details:
                 portal.call_action(view_action, src_view)
                 action += '\n  %s %s for resource %s' % (view_action, src_view['id'], resource['id'])
-            except Exception as e:
-                _failure_reason = '%s[resource_id=%s][view_id=%s]' % (view_action, resource['id'], src_view['id'])
-                _failure_trace = traceback.format_exc()
+            if exception_details.has_exceptions:
                 if failure_reason:
-                    failure_reason += ',%s' % _failure_reason  # comma separate multiple failure reasons
-                    failure_trace += '\n\n%s' % _failure_trace  # separate multiple failure traces with newlines
+                    failure_reason += ',%s' % exception_details.failure_reason  # comma separate multiple failure reasons
+                    failure_trace += '\n\n%s' % exception_details.failure_trace  # separate multiple failure traces with newlines
                 else:
-                    failure_reason = _failure_reason
-                    failure_trace = _failure_trace
-                error += '\n  %s failed for view %s for resource %s %s' % (view_action, src_view['id'], resource['id'], str(e))
-                if verbose:
-                    error += '\n    Failed with Error: %s' % str(e)
-                pass
+                    failure_reason = exception_details.failure_reason
+                    failure_trace = exception_details.failure_trace
+                error += exception_details.error
 
     for target_view in target_views:
         to_delete = True
@@ -967,22 +1008,18 @@ def _add_views(portal: LocalCKAN, resource: dict, resource_details: dict, verbos
                 break
         if to_delete:
             view_action = 'resource_view_delete'
-            try:
+            exception_details = CaptureExceptionDetails(view_action, verbose=verbose, resource_id=resource['id'], view_id=src_view['id'])
+            with exception_details:
                 portal.call_action(view_action, {'id':target_view['id']})
                 action += '\n  %s %s for resource %s' % (view_action, src_view['id'], resource['id'])
-            except Exception as e:
-                _failure_reason =  '%s[resource_id=%s][view_id=%s]' % (view_action, resource['id'], src_view['id'])
-                _failure_trace = traceback.format_exc()
+            if exception_details.has_exceptions:
                 if failure_reason:
-                    failure_reason += ',%s' % _failure_reason  # comma separate multiple failure reasons
-                    failure_trace += '\n\n%s' % _failure_trace  # separate multiple failure traces with newlines
+                    failure_reason += ',%s' % exception_details.failure_reason  # comma separate multiple failure reasons
+                    failure_trace += '\n\n%s' % exception_details.failure_trace  # separate multiple failure traces with newlines
                 else:
-                    failure_reason = _failure_reason
-                    failure_trace = _failure_trace
-                error += '\n  %s failed for view %s for resource %s %s' % (view_action, src_view['id'], resource['id'], str(e))
-                if verbose:
-                    error += '\n    Failed with Error: %s' % failure_trace
-                pass
+                    failure_reason = exception_details.failure_reason
+                    failure_trace = exception_details.failure_trace
+                error += exception_details.error
 
     return action, error, failure_reason, failure_trace
 

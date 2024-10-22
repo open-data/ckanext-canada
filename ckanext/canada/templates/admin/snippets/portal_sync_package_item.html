@@ -8,7 +8,11 @@
       <span>
         <i class="fa fa-exclamation-triangle text-danger" aria-hidden="true"></i>&nbsp;
         <em>{{ _('Last Successful Sync:') }}</em>&nbsp;
-        {{ h.render_datetime(sync_info['last_successful_sync'], '%Y-%m-%d %H:%M:%S %Z') }}
+        {% if sync_info['last_successful_sync'] %}
+          {{ h.render_datetime(sync_info['last_successful_sync'], '%Y-%m-%d %H:%M:%S %Z') }}
+        {% else %}
+          {{ _('N/A') }}
+        {% endif %}
       </span>
     </div>
   </div>
