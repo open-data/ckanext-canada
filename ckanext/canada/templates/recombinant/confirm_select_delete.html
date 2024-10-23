@@ -35,6 +35,7 @@
 
     <p class="form-actions">
       <form id="recombinant-confirm-select-delete-form" action="{{ h.url_for('canada.delete_selected_records', resource_id=resource.id) }}" method="post">
+        {{ h.csrf_input() }}
         <input type="hidden" name="select-delete" value="{{ select_delete }}" />
         <button class="btn" type="submit" name="cancel" >{{ _('Cancel') }}</button>
         <button class="btn btn-primary" type="submit" name="confirm" >{{ _('Confirm Delete') }}</button>
