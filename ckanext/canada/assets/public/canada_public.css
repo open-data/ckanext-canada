@@ -1522,10 +1522,16 @@ footer#wb-info{
   transition-duration: 0.325s !important;
 }
 
-.canada-action-toolbar header .nav a:hover,
-.canada-action-toolbar header .nav a:active,
-.canada-action-toolbar header .nav a:focus{
-  background: #EEEFF1;
+.canada-action-toolbar header .nav li:not(.active) a:hover,
+.canada-action-toolbar header .nav li:not(.active) a:active,
+.canada-action-toolbar header .nav li:not(.active) a:focus{
+  background: #EEEFF1 !important;
+}
+
+.canada-action-toolbar header .nav li.active a{
+  background-color: #335075 !important;
+  color: white !important;
+  pointer-events: none !important;
 }
 
 .canada-action-toolbar header .content_action a{

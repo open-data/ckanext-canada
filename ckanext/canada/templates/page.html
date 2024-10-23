@@ -80,7 +80,19 @@
             {% block page_header %}
               {% if self.content_primary_nav() | trim or self.content_action() | trim %}
                 <div class="col-md-12 canada-action-toolbar">
-                  {{ super() }}
+                  <header class="module-content page-header">
+                    {% if self.content_action() | trim %}
+                      <div class="content_action">
+                        {% block content_action %}{% endblock %}
+                      </div>
+                    {% else %}
+                      {# required for flex layout #}
+                      <div></div>
+                    {% endif %}
+                    <ul class="nav nav-tabs">
+                      {% block content_primary_nav %}{% endblock %}
+                    </ul>
+                  </header>
                 </div>
               {% endif %}
             {% endblock %}

@@ -8,11 +8,6 @@
   {% endif  %}
 {% endblock %}
 
-{% block content_action %}
-  {# required for flex layout #}
-  <div></div>
-{% endblock %}
-
 {% block content_primary_nav %}
   {% if g.is_registry %}
     {{ h.build_nav_icon('canada.ckan_admin_index', _('Admins'), icon='user-plus') }}
