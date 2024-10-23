@@ -777,6 +777,7 @@ class DataGCCAPublic(p.SingletonPlugin, DefaultTranslation):
             'datastore_upsert': auth.datastore_upsert,
             'view_org_members': auth.view_org_members,
             'registry_jobs_running': auth.registry_jobs_running,
+            'recently_changed_packages_activity_list': auth.recently_changed_packages_activity_list,
         }
 
     # IMiddleware
