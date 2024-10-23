@@ -66,6 +66,8 @@ _('Cannot modify sysadmin privileges for system user')
 _('Activity type')  # TODO: remove after upstream fix
 _('Show more')
 _('Hide')
+_('User %s deleted. You are now logged out.')  # TODO: remove after upstream fix
+_('User %s deleted.')  # TODO: remove after upstream fix
 
 # strings from security
 _("Please upload a file or link to an external resource")
