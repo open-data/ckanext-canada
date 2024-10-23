@@ -39,10 +39,7 @@ from ckan.views.resource import (
     EditView as ResourceEditView,
     CreateView as ResourceCreateView
 )
-from ckan.views.user import (
-    RegisterView as UserRegisterView,
-    api_token_revoke
-)
+from ckan.views.user import RegisterView as UserRegisterView
 from ckan.views.api import(
     API_DEFAULT_VERSION,
     API_MAX_VERSION,
@@ -1265,24 +1262,3 @@ def ckan_admin_config():
     404 this page always.
     """
     return abort(404)
-
-
-@canada_views.route('/user/<id>/api-tokens/<jti>/revoke', methods=['POST'])
-def canada_api_token_revoke(id: str, jti: str):
-    """
-    Wraps core api_token_revoke view to add flash message.
-    """
-    try:
-        tokens = get_action('api_token_list')({'user': g.user}, {'user': id})
-        for token in tokens:
-            if jti == token.get('id'):
-                message = _('API Token "%s" revoked.') % token.get('name')
-                break
-    except NotAuthorized:
-        message = _('API Token revoked.')
-        pass
-    response = api_token_revoke(id, jti)
-    if hasattr(response, 'status_code'):
-        if response.status_code == 200 or response.status_code == 302:
-            h.flash_notice(message)
-    return response
