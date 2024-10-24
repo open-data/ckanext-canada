@@ -76,7 +76,7 @@
               </div>
             </div>
           {% endblock pre_primary %}
-          <div class="row{% if self.secondary_content()|trim != '' %} wb-eqht{% else %}col-md-12{% endif %}">
+          <div class="row {% if self.secondary_content()|trim != '' %} wb-eqht {% else %} row-gutterless {% endif %}">
             {% block page_header %}
               {% if self.content_primary_nav() | trim or self.content_action() | trim %}
                 <div class="col-md-12 canada-action-toolbar">
@@ -97,7 +97,7 @@
               {% endif %}
             {% endblock %}
             {% block primary %}
-              <div class="{% if self.secondary_content()|trim != '' %}col-md-9 col-md-push-3{% endif %}">
+              <div class="{% if self.secondary_content()|trim != '' %} col-md-9 col-md-push-3 {% else %} col-md-12 {% endif %}">
                 {% block primary_content %}
                   <article class="module">
                     <div class="module-content mrgn-tp-lg canada-page-main-wrapper">
