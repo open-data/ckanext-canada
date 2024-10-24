@@ -13,6 +13,11 @@
   {{ _('My Activity') }}
 {% endblock %}
 
+{% block breadcrumb_content %}
+  {{ super() }}
+  <li class="active">{% link_for _('My Activity'), named_route='activity.dashboard' %}</li>
+{% endblock %}
+
 {% block content_primary_nav %}
   {{ h.build_nav_icon('activity.dashboard', _('My Activity'), icon='clock') }}
   {{ h.build_nav_icon('dashboard.datasets', _('My Datasets'), icon='sitemap') }}
