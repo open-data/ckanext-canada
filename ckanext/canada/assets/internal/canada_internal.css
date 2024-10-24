@@ -622,3 +622,140 @@ body ul.xloader-log li.item.failure > i::after{
 ##  CKAN Base CSS Overrides##
 ##           END           ##
 #############################*/
+
+
+/*####################################
+##  Recombinaant Base CSS Overrides ##
+######################################*/
+@keyframes fade-opacity-in{
+  from{
+    opacity: 0;
+    pointer-events: none;
+  }
+  to{
+    opacity: 1;
+    pointer-events: all;
+  }
+}
+.canada-pd-org-select-wrapper > .module-content.canada-no-marg{
+  margin-top: 0 !important;
+}
+.canada-pd-org-select-wrapper .recombinant-org-select-container{
+  display: flex !important;
+  width: 100% !important;
+  flex-wrap: nowrap !important;
+  flex-direction: row;
+  min-height: 38px;
+  max-height: 38px;
+  height: 38px;
+}
+.canada-pd-org-select-wrapper .recombinant-org-select-label-wrapper{
+  display: block;
+  flex: 0;
+  padding-left: 15px !important;
+}
+.canada-pd-org-select-wrapper .recombinant-org-select-label-wrapper label{
+  font-weight: bold !important;
+  font-size: 16px !important;
+  line-height: 1.4375 !important;
+  border-radius: 0 !important;
+  border: none !important;
+  margin: 0 !important;
+  transition-duration: 0.325s !important;
+  color: #295376 !important;
+}
+.canada-pd-org-select-wrapper .recombinant-org-select-wrapper{
+  display: flex;
+  flex: 1;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+  width: 100%;
+  opacity: 0;
+  pointer-events: none;
+  animation: fade-opacity-in 0.5s ease-in 1s 1 normal forwards;
+}
+.canada-pd-org-select-wrapper .recombinant-org-select-wrapper .select2-container{
+  vertical-align: initial !important;
+  flex: 1;
+  width: auto !important;
+}
+.canada-pd-org-select-wrapper .recombinant-org-select-wrapper .select2-container,
+.canada-pd-org-select-wrapper .recombinant-org-select-wrapper .select2-container .select2-choice,
+.canada-pd-org-select-wrapper .recombinant-org-select-wrapper .select2-container .select2-chosen{
+  height: 100% !important;
+  border-radius: 0 !important;
+}
+.canada-pd-org-select-wrapper .recombinant-org-select-wrapper .select2-container .select2-choice{
+  background: #335075 !important;
+  border-color: #335075 !important;
+  box-shadow: none !important;
+}
+.canada-pd-org-select-wrapper .recombinant-org-select-wrapper .select2-container .select2-chosen{
+  vertical-align: middle;
+  display: inline-block;
+  width: 95%;
+  height: initial !important;
+  overflow: visible !important;
+  font-weight: bold !important;
+  font-size: 16px !important;
+  line-height: 1.4375 !important;
+  border-radius: 0 !important;
+  border: none !important;
+  margin: 0 !important;
+  margin-top: 4px !important;
+  transition-duration: 0.325s !important;
+  color: white !important;
+}
+.canada-pd-org-select-wrapper .recombinant-org-select-wrapper .select2-container .select2-arrow{
+  border-radius: 0 !important;
+  background: #335075 !important;
+  border-color: #335075 !important;
+}
+.canada-pd-org-select-wrapper .recombinant-org-select-wrapper .select2-container .select2-arrow b{
+  background-position-y: -100%;
+  color: white !important;
+  border-color: white !important;
+  background-image: url("/data/static/img/select2x2_white.png"), url("/static/img/select2x2_white.png") !important;
+}
+.recombinant-action-panels-container .tabpanels > details{
+  padding: 0 20px 20px 20px !important;
+}
+.canada-wet-datatable-btn-primary{
+  color: white !important;
+  background: #26374a !important;
+  border-color: #1d2a39 !important;
+  transition-duration: 0.325s !important;
+}
+.canada-wet-datatable-btn-primary.disabled{
+  color: white !important;
+  background: #adc0d5 !important;
+  border-color: #9cb3cd !important;
+}
+.canada-wet-datatable-btn-primary:not(.disabled):hover,
+.canada-wet-datatable-btn-primary:not(.disabled):active,
+.canada-wet-datatable-btn-primary:not(.disabled):focus{
+  background: #1c578a !important;
+  border-color: #091c2d !important;
+}
+.canada-wet-datatable-btn-danger{
+  color: white !important;
+  background: #bc3331 !important;
+  border-color: #6b1d1c !important;
+  transition-duration: 0.325s !important;
+}
+.canada-wet-datatable-btn-danger.disabled{
+  color: white !important;
+  background: #ebb3b2 !important;
+  border-color: #e6a1a0 !important;
+}
+.canada-wet-datatable-btn-danger:not(.disabled):hover,
+.canada-wet-datatable-btn-danger:not(.disabled):active,
+.canada-wet-datatable-btn-danger:not(.disabled):focus{
+  background: #942826 !important;
+  border-color: #3b100f !important;
+}
+/*###################################
+##               END               ##
+##  Recombinaant Base CSS Overrides##
+##               END               ##
+#####################################*/

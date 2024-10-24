@@ -1,0 +1,28 @@
+{% ckan_extends %}
+
+{% import 'macros/form.html' as form %}
+
+{% block container_classes %}{{ super() }} recombinant-org-select-container{% endblock %}
+
+{% block label_classes %}recombinant-org-select-label-wrapper{% endblock %}
+
+{% block select_classes %}recombinant-org-select-wrapper{% endblock %}
+
+{% block select_field %}
+    <input id="org-select"
+           type="text"
+           name="org_select"
+           value="{{ h.split_piped_bilingual_field(selected.title, h.lang()) }}"
+           placeholder="{{ _('Search organizations...') }}"
+           onchange="window.location.href=this.value"
+           data-module="autocomplete"
+           data-module-source="/organization/autocomplete?q=?"
+           data-module-key="name"
+           data-module-label="title"
+           data-module-dropdownClass="recombinant-org-select2-dropdown"
+           data-module-containerClass="recombinant-org-select2-container"
+           data-module-tags="false"
+           data-module-createtags="false"
+           class="control-medium"
+           />
+{% endblock %}

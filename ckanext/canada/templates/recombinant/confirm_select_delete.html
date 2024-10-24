@@ -38,7 +38,7 @@
         {{ h.csrf_input() }}
         <input type="hidden" name="select-delete" value="{{ select_delete }}" />
         <button class="btn" type="submit" name="cancel" >{{ _('Cancel') }}</button>
-        <button class="btn btn-primary" type="submit" name="confirm" >{{ _('Confirm Delete') }}</button>
+        <button class="btn btn-danger" type="submit" name="confirm" >{{ _('Confirm Delete') }}</button>
       </form>
     </p>
   {% endblock %}

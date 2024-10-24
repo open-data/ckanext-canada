@@ -942,7 +942,7 @@ def organization_autocomplete():
 
     return_list = [{
         'id': o['id'],
-        'name': _org_key(o),
+        'name': o['name'],
         'title': _org_key(o)
     } for o in organization_list]
 

@@ -47,3 +47,8 @@ recombinant_webforms:
   contents:
     - recombinant_webform.js
   output: canada_internal/%(version)s_recombinant_webform.js
+
+recombinant_preview:
+  contents:
+    - recombinant_preview.js
+  output: canada_internal/%(version)s_recombinant_preview.js
