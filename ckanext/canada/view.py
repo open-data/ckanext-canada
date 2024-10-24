@@ -606,7 +606,7 @@ def delete_selected_records(resource_id):
 
     if not h.check_access('datastore_records_delete',
                           {'resource_id': resource_id, 'filters': {}}):
-        abort(403, _('User {0} not authorized to update resource {1}'
+        return abort(403, _('User {0} not authorized to update resource {1}'
                      .format(str(g.user), resource_id)))
 
     try:
@@ -616,7 +616,7 @@ def delete_selected_records(resource_id):
         dataset = lc.action.recombinant_show(
             dataset_type=pkg['type'], owner_org=org['name'])
     except (NotFound, NotAuthorized):
-        abort(404, _('Not found'))
+        return abort(404, _('Not found'))
 
     records = request.form.getlist('select-delete')
 
