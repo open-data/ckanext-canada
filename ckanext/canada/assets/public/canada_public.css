@@ -1480,6 +1480,14 @@ footer#wb-info{
 .canada-resource-dropdown-explore a{
   text-decoration: none !important;
 }
+.canada-resource-read-title{
+  display: inline-block !important;
+  margin-top: 0 !important;
+}
+.canada-resource-read-lang-badge{
+  vertical-align: top !important;
+  display: inline-block !important;
+}
 /*###########################
 ##           END           ##
 ##  CKAN Base CSS Overrides##
