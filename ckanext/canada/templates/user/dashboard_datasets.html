@@ -19,10 +19,8 @@
   {{ _('Dashboard') }} - {{ _('My Records') }}
 {% endblock %}
 
-{% block panel_heading %}
-  {{ _('My Records') }}
-{% endblock %}
-
 {% block primary_content_inner %}
-  {{ super() }}
+  <div class="mrgn-tp-md">
+    {{ super() }}
+  </div>
 {% endblock %}

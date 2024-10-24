@@ -1,4 +1,9 @@
-{% ckan_extends %}
+{% extends "user/edit_base.html" %}
+
+{% set user = current_user %}
+{% set org_type = h.default_group_type('organization') %}
+{% set group_type = h.default_group_type('group') %}
+{% set dataset_type = h.default_package_type() %}
 
 {% block page_heading %}
   {{ _('Dashboard') }} - {{ _('My Activity') }}
@@ -8,44 +13,18 @@
   {{ _('My Activity') }}
 {% endblock %}
 
-{% block font_awesome %}<link href="{{ wet_server }}/font-awesome/css/font-awesome.css" rel="stylesheet">{% endblock %}
+{% block content_primary_nav %}
+  {{ h.build_nav_icon('activity.dashboard', _('My Activity'), icon='clock') }}
+  {{ h.build_nav_icon('dashboard.datasets', _('My Datasets'), icon='sitemap') }}
+{% endblock %}
 
-{% block page_header %}{% endblock %}
-
-{% block primary %}
-  <article class="module mrgn-tp-md">
-    <div class="row">
-      <div class="col-md-12">
-        <ul class="nav nav-pills canada-dashboard-nav">
-          {{ h.build_nav_icon('activity.dashboard', _('My Activity')) }}
-          {{ h.build_nav_icon('dashboard.datasets', _('My Datasets')) }}
-        </ul>
-      </div>
-    </div>
-    <div class="row">
-      <div data-module="dashboard" class="col-md-12">
-        <div data-module="dashboard" class="panel panel-default canada-dashboard-panel">
-          <div class="panel-heading">
-            <h3 class="panel-title">{% block panel_heading %}{{ _('My Activity') }}{% endblock %}</h3>
-          </div>
-          <div class="panel-body">
-            {% block primary_content_inner %}
-              {% block activity_stream %}
-                {% snippet 'snippets/stream.html', activity_stream=dashboard_activity_stream %}
-              {% endblock %}
-              {% snippet 'snippets/pagination.html', newer_activities_url=newer_activities_url, older_activities_url=older_activities_url %}
-            {% endblock %}
-          </div>
-        </div>
-      </div>
-    </div>
-  </article>
+{% block primary_content_inner %}
+  <div class="mrgn-tp-md">
+    {% block activity_stream %}
+      {% snippet 'snippets/stream.html', activity_stream=dashboard_activity_stream %}
+    {% endblock %}
+    {% snippet 'snippets/pagination.html', newer_activities_url=newer_activities_url, older_activities_url=older_activities_url %}
+  </div>
 {% endblock %}
 
 {% block secondary_content %}{% endblock %}
-
-{% block add_action_content %}
-  {% if h.check_access('package_create') %}
-    <li>{% link_for _('Add Dataset'), package.type + '.new', class_="btn btn-primary", icon="plus-square" %}</li>
-  {% endif %}
-{% endblock %}
