@@ -173,7 +173,7 @@ presets:
       class: form-control form-select
     # copied from dataset_organization preset
     validators: scheming_required string_safe owner_org_validator
-    form_snippet: organization.html
+    form_snippet: organization_autocomplete.html
 
 # Field = Publisher - Organization Name at Publication (English).
 # {The organization Title at publication Time}

@@ -9,6 +9,8 @@
 {% block select_classes %}recombinant-org-select-wrapper{% endblock %}
 
 {% block select_field %}
+  {% set organizations_available = h.organizations_available('create_dataset') %}
+  {% if organizations_available|length > 12 %}
     <input id="org-select"
            type="text"
            name="org_select"
@@ -25,4 +27,7 @@
            data-module-createtags="false"
            class="control-medium"
            />
+  {% else %}
+    <div class="recombinant-org-select1-wrapper">{{ super() }}</div>
+  {% endif %}
 {% endblock %}

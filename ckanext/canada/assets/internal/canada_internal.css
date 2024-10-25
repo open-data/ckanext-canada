@@ -617,6 +617,33 @@ body ul.xloader-log li.item.failure > i{
 body ul.xloader-log li.item.failure > i::after{
   background-color: #B95252 !important;
 }
+#s2id_field-department,
+#s2id_field-organizations{
+  min-height: 37px !important;
+}
+#s2id_field-department.select2-container,
+#s2id_field-organizations.select2-container{
+  vertical-align: initial !important;
+  width: 100% !important;
+}
+#s2id_field-department.select2-container,
+#s2id_field-department.select2-container .select2-choice,
+#s2id_field-department.select2-container .select2-chosen,
+#s2id_field-organizations.select2-container,
+#s2id_field-organizations.select2-container .select2-choice,
+#s2id_field-organizations.select2-container .select2-chosen{
+  height: 100% !important;
+}
+#s2id_field-department.select2-container .select2-choice,
+#s2id_field-organizations.select2-container .select2-choice{
+  font-size: 16px !important;
+  line-height: 1.4375 !important;
+  padding: 6px 12px !important;
+}
+#s2id_field-department.select2-container .select2-arrow b,
+#s2id_field-organizations.select2-container .select2-arrow b{
+  background-position-y: -100%;
+}
 /*###########################
 ##           END           ##
 ##  CKAN Base CSS Overrides##
@@ -674,18 +701,21 @@ body ul.xloader-log li.item.failure > i::after{
   pointer-events: none;
   animation: fade-opacity-in 0.5s ease-in 1s 1 normal forwards;
 }
-.canada-pd-org-select-wrapper .recombinant-org-select-wrapper .select2-container{
+.canada-pd-org-select-wrapper .recombinant-org-select-wrapper .select2-container,
+.canada-pd-org-select-wrapper .recombinant-org-select-wrapper .recombinant-org-select1-wrapper select{
   vertical-align: initial !important;
   flex: 1;
   width: auto !important;
 }
 .canada-pd-org-select-wrapper .recombinant-org-select-wrapper .select2-container,
 .canada-pd-org-select-wrapper .recombinant-org-select-wrapper .select2-container .select2-choice,
-.canada-pd-org-select-wrapper .recombinant-org-select-wrapper .select2-container .select2-chosen{
+.canada-pd-org-select-wrapper .recombinant-org-select-wrapper .select2-container .select2-chosen,
+.canada-pd-org-select-wrapper .recombinant-org-select-wrapper .recombinant-org-select1-wrapper select{
   height: 100% !important;
   border-radius: 0 !important;
 }
-.canada-pd-org-select-wrapper .recombinant-org-select-wrapper .select2-container .select2-choice{
+.canada-pd-org-select-wrapper .recombinant-org-select-wrapper .select2-container .select2-choice,
+.canada-pd-org-select-wrapper .recombinant-org-select-wrapper .recombinant-org-select1-wrapper select{
   background: #335075 !important;
   border-color: #335075 !important;
   box-shadow: none !important;
@@ -705,6 +735,13 @@ body ul.xloader-log li.item.failure > i::after{
   margin-top: 4px !important;
   transition-duration: 0.325s !important;
   color: white !important;
+}
+.canada-pd-org-select-wrapper .recombinant-org-select-wrapper .recombinant-org-select1-wrapper{
+  width: 100% !important;
+}
+.canada-pd-org-select-wrapper .recombinant-org-select-wrapper .recombinant-org-select1-wrapper select{
+  color: white !important;
+  width: 100% !important;
 }
 .canada-pd-org-select-wrapper .recombinant-org-select-wrapper .select2-container .select2-arrow{
   border-radius: 0 !important;
