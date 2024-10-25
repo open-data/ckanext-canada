@@ -150,6 +150,7 @@ class CanadaThemePlugin(p.SingletonPlugin):
             'search_filter_pill_link_label',
             'release_date_facet_start_year',
             'ckan_to_cdts_breadcrumbs',
+            'available_purge_types',
         ])
 
 

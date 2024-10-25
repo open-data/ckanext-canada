@@ -11,6 +11,7 @@ import ckan as ckan
 import html
 from six import text_type
 from bs4 import BeautifulSoup
+from ckan import plugins
 
 from ckanapi import NotFound
 from ckantoolkit import aslist
@@ -908,3 +909,19 @@ def is_user_locked(user_name):
         return True
 
     return False
+
+
+def available_purge_types():
+    """
+    Returns a list of available purge types.
+    """
+    types = []
+    for plugin in plugins.PluginImplementations(plugins.IDatasetForm):
+        for package_type in plugin.package_types():
+            if package_type not in types:
+                types.append(package_type)
+    for plugin in plugins.PluginImplementations(plugins.IGroupForm):
+        for group_types in plugin.group_types():
+            if group_types not in types:
+                types.append(group_types)
+    return types
