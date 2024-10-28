@@ -1308,7 +1308,7 @@ def ckan_admin_portal_sync():
     try:
         check_access('list_out_of_sync_packages', {'user': g.user})
     except NotAuthorized:
-        abort(403)
+        return abort(403)
 
     page_number = h.get_page_number(request.args) or 1
     limit = 25
