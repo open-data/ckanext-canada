@@ -644,6 +644,13 @@ body ul.xloader-log li.item.failure > i::after{
 #s2id_field-organizations.select2-container .select2-arrow b{
   background-position-y: -100%;
 }
+.s2id_field-organizations_wrapper{
+  margin-bottom: 0 !important;
+}
+.s2id_field-organizations_wrapper .error-block{
+  margin-top: -8px;
+  padding-top: 8px !important;
+}
 /*###########################
 ##           END           ##
 ##  CKAN Base CSS Overrides##
