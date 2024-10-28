@@ -769,7 +769,7 @@ ul.resource-list > li.resource-item > div.canada-resource-list-badges{
 }
 .resources-side-panel .nav-item > a{
   padding-left: 15px;
-  padding-right: 65px;
+  padding-right: 35px;
   margin-left: 0 !important;
   margin-right: 0 !important;
   position: relative;
@@ -788,7 +788,6 @@ ul.resource-list > li.resource-item > div.canada-resource-list-badges{
   }
 }
 .resources-side-panel .nav-item.active a{
-  pointer-events: none !important;
   cursor: default !important;
   color: #295376 !important;
 }
@@ -901,16 +900,31 @@ ul.resource-list > li.resource-item > div.canada-resource-list-badges{
 .resources-side-section .resources-side-section-item-badges{
   margin-left: 15px;
   margin-bottom: 15px;
-  margin-top: 46px;
+  margin-top: 52px;
   margin-right: 50px;
   z-index: 2;
   pointer-events: none;
+}
+@media all and (max-width: 992px){
+  .resources-side-section .resources-side-section-item-badges{
+    margin-top: 60px;
+  }
+}
+@media all and (max-width: 768px){
+  .resources-side-section .resources-side-section-item-badges{
+    margin-top: 52px;
+  }
 }
 .resources-side-section .resources-side-section-item-badges .badge{
   margin-bottom: 3px;
 }
 .resources-side-section .nav-item.active div.dropdown{
   display: none !important;
+}
+.resources-side-panel.resources-side-panel-no-edit .nav-item > a,
+.resources-side-panel .nav-item.active > a{
+  padding-right: 15px !important;
+  width: 100% !important;
 }
 /* END - Side Panel - END */
 
@@ -1479,14 +1493,6 @@ footer#wb-info{
 }
 .canada-resource-dropdown-explore a{
   text-decoration: none !important;
-}
-.canada-resource-read-title{
-  display: inline-block !important;
-  margin-top: 0 !important;
-}
-.canada-resource-read-lang-badge{
-  vertical-align: top !important;
-  display: inline-block !important;
 }
 /*###########################
 ##           END           ##

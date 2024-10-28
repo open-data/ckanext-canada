@@ -5,30 +5,11 @@
 {% endblock %}
 
 {% block page_title %}
-  <div style="margin-top: 38px;"></div>
-  <h1 property="name" id="wb-cont" class="canada-resource-read-title">
+  <h1 property="name" id="wb-cont">
     {% block page_heading %}
       {{ super() }}
     {% endblock %}
   </h1>
-  {% set language_options = h.scheming_get_preset('canada_resource_language').choices %}
-  {% for language in res.language %}
-    {% if loop.index <= 2 %}
-      {% for option in language_options %}
-        {% if option.value == language %}
-          <span class="badge res-tag res-tag-lang canada-resource-read-lang-badge">
-            {{ option.label[h.lang()] }}
-          </span>
-        {% endif %}
-      {% endfor %}
-    {% endif %}
-  {% endfor %}
-  {% if res.language|length > 2 %}
-    {% set lang_count = res.language|length %}
-    <span class="badge res-tag res-tag-lang canada-resource-read-lang-badge">
-      {{ _('+ %s more').format(lang_count - 2) }}
-    </span>
-  {% endif %}
   <div class="row">
     <div class="col-md-12">
       {# _site_messaging is handled by aliases in nginx to SMB #}

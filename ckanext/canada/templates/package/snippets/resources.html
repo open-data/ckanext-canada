@@ -6,14 +6,14 @@
       {% block resources_title %}
         <div class="panel-heading"><i class="fa fa-bars" aria-hidden="true"></i>&nbsp;{{ _("Resources") }}</div>
       {% endblock %}
-      <div class="panel-body resources-side-panel">
+      <div class="panel-body resources-side-panel {% if not can_edit or is_activity_archive %} resources-side-panel-no-edit {% endif %}">
         {% block resources_list %}
           <ul class="list-unstyled nav nav-simple">
             {% for resource in resources %}
               {% set url = h.url_for(pkg.type ~ '_resource.read', id=pkg.id if is_activity_archive else pkg.name, resource_id=resource.id, **({'activity_id': request.args['activity_id']} if 'activity_id' in request.args else {})) %}
               {% set is_active = 'active' if active == resource.id else '' %}
               <li class="nav-item justify-content-between position-relative {{ is_active }}">
-                <a class="resources-side-section-item-link" tabindex="{{ -1 if is_active else 0 }}" href="{{ url }}" title="{{ h.resource_display_name(resource) }}">{{ h.resource_display_name(resource)|truncate(25) }}</a>
+                <a class="resources-side-section-item-link" tabindex="{{ -1 if is_active else 0 }}" href="{{ 'javascript:void(0);' if is_active else url }}" title="{{ h.resource_display_name(resource) }}">{{ h.resource_display_name(resource)|truncate(45) }}</a>
                 {% if g.is_registry and can_edit and not is_activity_archive %}
                   <div class="dropdown position-absolute end-0 me-2">
                     <button class="btn btn-light btn-sm dropdown-toggle" type="button" id="dropdownRes{{ loop.index }}" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa fa-wrench" aria-hidden="true"></i></button>
