@@ -38,10 +38,11 @@
       <div class="panel panel-primary">
         <div class="panel-heading">{{ _("Guide") }}</div>
         <div class="panel-body">
-          {% set gcpedialink = h.recombinant_language_text(h.recombinant_get_geno(dataset_type).get('gcpedia_link', 'http://www.gcpedia.gc.ca/wiki/Proactive_Disclosure_on_Open.Canada.ca') ) %}
+          {% set default_guidelink = 'https://ouvert.canada.ca/fr/guide-operations-registre/publication-proactive' if h.lang() == 'fr' else 'https://open.canada.ca/en/registry-operations-guide/proactive-publication' %}
+          {% set guide_link = h.recombinant_language_text(h.recombinant_get_geno(dataset_type).get('guide_link', default_guidelink) ) %}
           <p>
-            {% trans gclink=gcpedialink %}
-              For information on how to prepare, maintain and upload templates to the Registry, refer to the appropriate documentation posted on <a href="{{ gclink }}">GCPEDIA</a>
+            {% trans guide_link=guide_link %}
+              For information on how to prepare, maintain and upload templates to the Registry, refer to the appropriate documentation posted on the <a href="{{ guide_link }}">Operations Guide.</a>
             {% endtrans %}
           </p>
           {{ h.render_markdown(h.recombinant_language_text(h.recombinant_get_geno(dataset_type).get('sidebar_extra_content', ''))) }}
