@@ -641,6 +641,7 @@ ckanext.canada:tables/qpnotes.yaml
 ckanext.canada:tables/contracts.yaml
 ckanext.canada:tables/contractsa.yaml
 ckanext.canada:tables/grants.yaml
+ckanext.canada:tables/grantsmonthly.yaml
 ckanext.canada:tables/hospitalityq.yaml
 ckanext.canada:tables/reclassification.yaml
 ckanext.canada:tables/travela.yaml
