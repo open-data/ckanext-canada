@@ -1,0 +1,28 @@
+{% extends 'snippets/package_item.html' %}
+
+{% block resources_outer %}
+  {{ super() }}
+  <hr>
+  <div class="row">
+    <div class="col-md-12">
+      <span>
+        <i class="fa fa-exclamation-triangle text-danger" aria-hidden="true"></i>&nbsp;
+        <em>{{ _('Last Successful Sync:') }}</em>&nbsp;
+        {% if sync_info['last_successful_sync'] %}
+          {{ h.render_datetime(sync_info['last_successful_sync'], '%Y-%m-%d %H:%M:%S %Z') }}
+        {% else %}
+          {{ _('N/A') }}
+        {% endif %}
+      </span>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <span>
+        <i class="fa fa-exclamation-triangle text-danger" aria-hidden="true"></i>&nbsp;
+        <em>{{ _('Failure Reason:') }}</em>&nbsp;
+        {{ sync_info['error_on'] }}
+      </span>
+    </div>
+  </div>
+{% endblock %}

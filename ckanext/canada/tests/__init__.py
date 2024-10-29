@@ -15,6 +15,9 @@ class CanadaTestBase(object):
         """Method is called at class level before EACH test methods of the class are called.
         Setup any state specific to the execution of the given class methods.
         """
+        #FIXME: DB head for migartions in our test environment setup.
+        #       HEAD of CKAN db Docker image is always ahead??
+        _run_migrations('canada_public')
         reset_db()
         clear_all()
         if not validation_tables_exist():
@@ -23,3 +26,4 @@ class CanadaTestBase(object):
         _run_migrations('activity')
         update_triggers()
         _create_triggers(dataset_types=[], all_types=True)
+        _run_migrations('canada_public')
