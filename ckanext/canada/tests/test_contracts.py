@@ -90,7 +90,7 @@ class TestContracts(CanadaTestBase):
             'land_claims': ['This field must not be empty'],
             'indigenous_business': ['This field must not be empty'],
         }
-        assert isinstance(err, dict), err
+        assert isinstance(err, dict)
         for k in set(err) | set(expected):
             assert k in err
             assert err[k] == expected[k]

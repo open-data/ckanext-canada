@@ -26,12 +26,14 @@
             {% if 'title_translated' not in package %}
               {% set my_title = _(my_title) %}
             {% endif %}
-            {% block heading_private %}
-              {{ super() }}
-            {% endblock %}
-            {{ h.link_to(h.truncate(my_title, 150), h.url_for(package.type ~ '.read', id=package.name), title=my_title) }}
+            {% block heading_private %}{# Do not show "Private" label #}{% endblock %}
+            {{ h.link_to(my_title|truncate(150), h.url_for(package.type ~ '.read', id=package.name), title=my_title) }}
             {% block heading_meta %}
-              {{ super() }}
+              {% if package.get('state', '').startswith('draft') %}
+                <span class="label label-info">{{ _('Draft') }}</span>
+              {% elif package.get('state', '').startswith('deleted') %}
+                <span class="label label-danger">{{ _('Deleted') }}</span>
+              {% endif %}
             {% endblock %}
             {% if machine_translated %}
               <i class="fa fa-language text-muted mrgn-lft-sm" title="{{ _('This third party metadata element has been translated using an automated translation tool.  To report any discrepancies please contact open-ouvert@tbs-sct.gc.ca') }}"></i>
@@ -40,9 +42,6 @@
         </h3>
       </header>
       <div class="panel-body">
-        {% block banner %}
-          {{ super() }}
-        {% endblock %}
         {% block notes %}
           {% set notes, machine_translated = h.get_translated_t(package, 'notes') %}
           {% if notes %}
@@ -122,18 +121,21 @@
               </div>
             {% endif %}
           {% else %}
-            <div class="row">
-              <div class="col-md-3">
-                <em>{{ _('Resource Formats:') }}</em>
+            {% set r_formats = h.dict_list_reduce(package.resources, 'format') %}
+            {% if r_formats %}
+              <div class="row">
+                <div class="col-md-3">
+                  <em>{{ _('Resource Formats:') }}</em>
+                </div>
+                <div class="col-md-9">
+                  <ul class="list-inline list-unstyled">
+                    {% for resource in r_formats %}
+                      <li><span class="badge">{{ _(resource) }}</span></li>
+                    {% endfor %}
+                  </ul>
+                </div>
               </div>
-              <div class="col-md-9">
-                <ul class="list-inline list-unstyled">
-                  {% for resource in h.dict_list_reduce(package.resources, 'format') %}
-                    <li><span class="badge">{{ _(resource) }}</span></li>
-                  {% endfor %}
-                </ul>
-              </div>
-            </div>
+            {% endif %}
           {% endif %}
         {% endblock %}
       </div>

@@ -17,7 +17,7 @@
             <div class="modal-content overlay-def">
               <header class="modal-header">
                 <h2 class="modal-title" id="modalLabel">{{ _('Your user sessions has timed out due to inactivity') }}</h2>
-                <button type="button" class="close mfp-close" data-dismiss="modal" aria-label="Close">
+                <button type="button" class="close mfp-close" data-bs-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button>
               </header>
@@ -26,9 +26,9 @@
               </div>
               <div class="modal-footer">
                 <a href="{{ h.url_for('user.login') }}" target="_blank" class="btn btn-default btn-sm">
-                  <span class="fa fa-sign-in"></span>&nbsp;<span class="text">{{ _('Log in') }}</span>
+                  <span class="fa fa-sign-in" aria-hidden="true"></span>&nbsp;<span class="text">{{ _('Log in') }}</span>
                 </a>
-                <button type="button" class="btn btn-sm btn-primary pull-left" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-sm btn-primary pull-left" data-bs-dismiss="modal">Close</button>
               </div>
             </div>
           </div>
@@ -40,10 +40,10 @@
         {% block flash %}
           <div class="col-md-12 canada-flash-messages">
             <div class="flash-messages">
-              {% for message in h.flash.pop_messages() | list %}
-                <section class="alert fade in {{ message.category }}">
-                  <p>{{ h.literal(message) }}</p>
-                </section>
+              {% for category, message in h.get_flashed_messages(with_categories=true) %}
+                <div class="alert alert-dismissible fade show {{ category }}">
+                  {{ h.literal(message) }}
+                </div>
               {% endfor %}
             </div>
           </div>
@@ -76,33 +76,46 @@
               </div>
             </div>
           {% endblock pre_primary %}
-          <div class="row{% if self.secondary_content()|trim != '' %} wb-eqht{% else %}col-md-12{% endif %}">
-            {% block primary %}
-              <div class="{% if self.secondary_content()|trim != '' %}col-md-9 col-md-push-3{% endif %}">
-                {% block primary_content %}
-                  {% if g.is_registry %}
-                    {{ super() }}
-                  {% else %}
-                    {% block page_header %}
-                      {{ super() }}
-                    {% endblock %}
-                    <div class="row">
-                      <div class="col-md-12">
-                        {% if self.page_primary_action() | trim %}
-                          <div class="page_primary_action">
-                            {% block page_primary_action %}{% endblock %}
-                          </div>
-                        {% endif %}
-                        {% block primary_content_inner %}{% endblock %}
+          <div class="row {% if self.secondary_content()|trim != '' %} wb-eqht {% else %} row-gutterless {% endif %}">
+            {% block page_header %}
+              {% if self.content_primary_nav() | trim or self.content_action() | trim %}
+                <div class="col-md-12 canada-action-toolbar">
+                  <header class="module-content page-header">
+                    {% if self.content_action() | trim %}
+                      <div class="content_action">
+                        {% block content_action %}{% endblock %}
                       </div>
+                    {% else %}
+                      {# required for flex layout #}
+                      <div></div>
+                    {% endif %}
+                    <ul class="nav nav-tabs">
+                      {% block content_primary_nav %}{% endblock %}
+                    </ul>
+                  </header>
+                </div>
+              {% endif %}
+            {% endblock %}
+            {% block primary %}
+              <div class="{% if self.secondary_content()|trim != '' %} col-md-9 col-md-push-3 {% else %} col-md-12 {% endif %}">
+                {% block primary_content %}
+                  <article class="module">
+                    <div class="module-content mrgn-tp-lg canada-page-main-wrapper">
+                      {% if self.page_primary_action() | trim %}
+                        <div class="page_primary_action">
+                          {% block page_primary_action %}{% endblock %}
+                        </div>
+                      {% endif %}
+                      {% block primary_content_inner %}
+                      {% endblock %}
                     </div>
-                  {% endif %}
+                  </article>
                 {% endblock primary_content %}
               </div>
             {% endblock primary %}
             {% block secondary %}
               {% if self.secondary_content()|trim != '' %}
-                <aside class="col-md-3 col-md-pull-9 mrgn-tp-xl">
+                <aside class="col-md-3 col-md-pull-9 mrgn-tp-lg canada-page-side-wrapper">
                   {% block secondary_content %}{% endblock %}
                 </aside>
               {% endif %}
@@ -120,7 +133,6 @@
 
 {% block scripts %}
   {% snippet 'snippets/cdts/footer_scripts.html' %}
-  {% asset 'canada_public/csrf' %}
   {% asset 'canada_public/analytics' %}
   {% block google_analytics_footer %}
     {% if g.is_registry %}

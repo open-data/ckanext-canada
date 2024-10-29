@@ -2,15 +2,16 @@ import json
 import re
 import inspect
 from ckan.plugins.toolkit import config, _, h, g, request
-from ckan.model import User, Package, Activity
+from ckan.model import User, Package
+from ckanext.activity.model import Activity
 import ckan.model as model
 import datetime
 import unicodedata
 import ckan as ckan
-import jinja2
 import html
 from six import text_type
 from bs4 import BeautifulSoup
+from ckan import plugins
 
 from ckanapi import NotFound
 from ckantoolkit import aslist
@@ -513,14 +514,14 @@ def recombinant_description_to_markup(text):
     markup = []
     for i, part in enumerate(re.split(url_pattern, h.recombinant_language_text(text))):
         if i % 2:
-            markup.append(jinja2.Markup('<a href="{0}">{1}</a>'.format(part, jinja2.escape(part))))
+            markup.append(Markup('<a href="{0}">{1}</a>'.format(part, escape(part))))
         else:
-            markup.extend(jinja2.Markup('<br/>'.join(
-               jinja2.escape(t) for t in part.split('\n')
+            markup.extend(Markup('<br/>'.join(
+               escape(t) for t in part.split('\n')
             )))
     # extra dict because language text expected and language text helper
     # will cause plain markup to be escaped
-    return {'en': jinja2.Markup(''.join(markup))}
+    return {'en': Markup(''.join(markup))}
 
 
 def mail_to_with_params(email_address, name, subject, body):
@@ -591,7 +592,7 @@ def organization_member_count(id):
     return len(members)
 
 
-def _build_flash_html_for_ga4(message, category, caller):
+def _build_flash_html_for_ga4(message, category, caller, allow_html=True):
     """
     All flash messages will be given an event name and action attribute.
 
@@ -599,7 +600,7 @@ def _build_flash_html_for_ga4(message, category, caller):
     data-ga-action: CATEGORY in format of notice | error | success
     """
     return '<div class="canada-ga-flash" data-ga-event="%s" data-ga-action="%s">%s</div>' \
-        % (caller, category, message)
+        % (caller, category, escape(message) if not allow_html else Markup(message))
 
 
 def _get_caller_info(stack):
@@ -637,10 +638,9 @@ def flash_notice(message, allow_html=True):
     Adding the view/action caller for GA4 Custom Events
     """
     t.h.flash(_build_flash_html_for_ga4(message, 'notice',
-                                        _get_caller_info(inspect.stack())),
-              category='alert-info',
-              ignore_duplicate=True,
-              allow_html=allow_html)
+                                        _get_caller_info(inspect.stack()),
+                                        allow_html=allow_html),
+              category='alert-info')
 
 
 def flash_error(message, allow_html=True):
@@ -650,10 +650,9 @@ def flash_error(message, allow_html=True):
     Adding the view/action caller for GA4 Custom Events
     """
     t.h.flash(_build_flash_html_for_ga4(message, 'error',
-                                        _get_caller_info(inspect.stack())),
-              category='alert-danger',
-              ignore_duplicate=True,
-              allow_html=allow_html)
+                                        _get_caller_info(inspect.stack()),
+                                        allow_html=allow_html),
+              category='alert-danger')
 
 
 def flash_success(message, allow_html=True):
@@ -663,10 +662,9 @@ def flash_success(message, allow_html=True):
     Adding the view/action caller for GA4 Custom Events
     """
     t.h.flash(_build_flash_html_for_ga4(message, 'success',
-                                        _get_caller_info(inspect.stack())),
-              category='alert-success',
-              ignore_duplicate=True,
-              allow_html=allow_html)
+                                        _get_caller_info(inspect.stack()),
+                                        allow_html=allow_html),
+              category='alert-success')
 
 
 def get_loader_status_badge(resource):
@@ -895,6 +893,16 @@ def ckan_to_cdts_breadcrumbs(breadcrumb_content):
     return cdts_breadcrumbs
 
 
+def validation_status(resource_id):
+    try:
+        validation = t.get_action('resource_validation_show')(
+            {'ignore_auth': True},
+            {'resource_id': resource_id})
+        return validation.get('status')
+    except (t.ObjectNotFound, KeyError):
+        return 'unknown'
+
+
 def is_user_locked(user_name):
     """
     Returns whether the user is locked out of their account or not.
@@ -908,3 +916,19 @@ def is_user_locked(user_name):
         return True
 
     return False
+
+
+def available_purge_types():
+    """
+    Returns a list of available purge types.
+    """
+    types = []
+    for plugin in plugins.PluginImplementations(plugins.IDatasetForm):
+        for package_type in plugin.package_types():
+            if package_type not in types:
+                types.append(package_type)
+    for plugin in plugins.PluginImplementations(plugins.IGroupForm):
+        for group_types in plugin.group_types():
+            if group_types not in types:
+                types.append(group_types)
+    return types

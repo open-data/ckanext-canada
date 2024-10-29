@@ -51,3 +51,10 @@ def organization_list(context, data_dict):
 
 def organization_show(context, data_dict):
     return {'success': bool(context.get('user'))}
+
+
+def recently_changed_packages_activity_list(context, data_dict):
+    """
+    Legacy, anyone can view.
+    """
+    return {'success': True}

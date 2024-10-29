@@ -1,0 +1,20 @@
+{% ckan_extends %}
+
+{%- block activity_form_classes -%}form-inline{%- endblock -%}
+
+{%- block activity_label_classes %}control-label{% endblock -%}
+
+{%- block activity_select_classes %}form-control input-sm form-select{% endblock -%}
+
+{% block activity_options %}
+  {{ super() }}
+  <option {% if activity_type == 'created datastore' %}selected{% endif %} data-url="{{ h.url_for(blueprint, id=id, activity_type='created datastore') }}">
+    {{ _('created datastore') }}
+  </option>
+  <option {% if activity_type == 'changed datastore' %}selected{% endif %} data-url="{{ h.url_for(blueprint, id=id, activity_type='changed datastore') }}">
+    {{ _('changed datastore') }}
+  </option>
+  <option {% if activity_type == 'deleted datastore' %}selected{% endif %} data-url="{{ h.url_for(blueprint, id=id, activity_type='deleted datastore') }}">
+    {{ _('deleted datastore') }}
+  </option>
+{% endblock %}

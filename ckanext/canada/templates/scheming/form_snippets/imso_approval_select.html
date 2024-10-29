@@ -27,7 +27,7 @@
   selected=option_selected,
   error=errors[field.field_name],
   classes=['control-medium'],
-  attrs=dict({"class": "form-control"}, **(field.get('form_attrs', {}))),
+  attrs=dict({"class": "form-control form-select"}, **(field.get('form_attrs', {}))),
   is_required=h.scheming_field_required(field))
 %}
   {% trans %}

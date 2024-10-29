@@ -14,17 +14,19 @@
 {% endif %}
 
 {% snippet 'snippets/facet_list.html',
-  title=g.facet_titles['portal_type'],
+  title=facet_titles['portal_type'],
   name='portal_type',
   scheming_choices=type_choices,
-  extras=extras %}
+  extras=extras,
+  search_facets=search_facets %}
 
-{% if g.is_registry and 'status' in request.params or ('portal_type') in request.params.items() %}
+{% if g.is_registry and 'status' in request.args or ('portal_type') in request.args.items() %}
   {% snippet 'snippets/facet_list.html',
-    title=g.facet_titles['status'],
+    title=facet_titles['status'],
     name='status',
     scheming_choices=[{'value': 'department_contacted', 'label': _('Request sent to data owner - awaiting response')}],
-    extras=extras %}
+    extras=extras,
+    search_facets=search_facets %}
 {% endif %}
 
 {% if g.is_registry %}
@@ -37,65 +39,75 @@
 {% endif %}
 
 {% snippet 'snippets/facet_list.html',
-  title=g.facet_titles['collection'],
+  title=facet_titles['collection'],
   name='collection',
   scheming_choices=collection_choices,
   extras=extras,
-  unlimit=is_registry %}
+  unlimit=is_registry,
+  search_facets=search_facets %}
 
 {% if not g.is_registry %}
   {% snippet 'snippets/facet_list.html',
-    title=g.facet_titles['jurisdiction'],
+    title=facet_titles['jurisdiction'],
     name='jurisdiction',
     scheming_choices=h.scheming_get_preset('canada_jurisdiction').choices,
-    extras=extras %}
+    extras=extras,
+    search_facets=search_facets %}
 {% endif %}
 
 {% if show_org_facet %}
   {% snippet 'snippets/facet_list.html',
-    title=g.facet_titles['organization'],
-    name='organization' %}
+    title=facet_titles['organization'],
+    name='organization',
+    search_facets=search_facets %}
 {% endif %}
 
 {% if h.lang() == 'fr' %}
-  {% snippet 'snippets/facet_list.html', title=g.facet_titles['keywords_fra'],
-  name='keywords_fra', extras=extras %}
+  {% snippet 'snippets/facet_list.html', title=facet_titles['keywords_fra'],
+  name='keywords_fra', extras=extras,
+  search_facets=search_facets %}
 {% else %}
-  {% snippet 'snippets/facet_list.html', title=g.facet_titles['keywords'],
-  name='keywords', extras=extras %}
+  {% snippet 'snippets/facet_list.html', title=facet_titles['keywords'],
+  name='keywords', extras=extras,
+  search_facets=search_facets %}
 {% endif %}
 
 {% if g.is_registry %}
-  {% if g.facets.collection|length != 1 or 'fgp' not in g.facets.collection %}
+  {% if facet_titles.collection|length != 1 or 'fgp' not in facet_titles.collection %}
     {# Hide subject on maps search #}
     {% snippet 'snippets/facet_list.html',
-      title=g.facet_titles['subject'],
+      title=facet_titles['subject'],
       name='subject',
       scheming_choices=h.scheming_get_preset('canada_subject').choices,
-      extras=extras %}
+      extras=extras,
+      search_facets=search_facets %}
   {% endif %}
 {% else %}
   {% snippet 'snippets/facet_list.html',
-    title=g.facet_titles['subject'],
+    title=facet_titles['subject'],
     name='subject',
     scheming_choices=h.scheming_get_preset('canada_subject').choices,
-    extras=extras %}
+    extras=extras,
+    search_facets=search_facets %}
 {% endif %}
 
 {% snippet 'snippets/facet_list.html',
-  title=g.facet_titles['res_format'],
+  title=facet_titles['res_format'],
   name='res_format',
   scheming_choices=h.scheming_get_preset('canada_resource_format').choices,
-  extras=extras %}
+  extras=extras,
+  search_facets=search_facets %}
 
 {% snippet 'snippets/facet_list.html',
-  title=g.facet_titles['res_type'],
+  title=facet_titles['res_type'],
   name='res_type',
   scheming_choices=h.scheming_get_preset('canada_resource_type').choices,
-  extras=extras %}
+  extras=extras,
+  search_facets=search_facets %}
 
 {% snippet 'snippets/facet_list.html',
-  title=g.facet_titles['frequency'],
+  title=facet_titles['frequency'],
   name='frequency',
   scheming_choices=h.scheming_get_preset('canada_frequency').choices,
-  extras=extras %}
+  extras=extras,
+  search_facets=search_facets %}

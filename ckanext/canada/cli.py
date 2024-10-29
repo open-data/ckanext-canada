@@ -19,6 +19,8 @@ from datetime import datetime, timedelta
 
 from ckan.logic import get_action
 from ckan import model
+from ckan.cli.db import db
+from itertools import groupby
 
 from ckanapi import (
     RemoteCKAN,
@@ -1407,7 +1409,13 @@ def set_datastore_false_for_invalid_resources(resource_id=None, delete_table_vie
               help='Submits the resources to Xloader instead of Validation. Will Xloader even if file hash has not changed.')
 @click.option('-f', '--failed', is_flag=True, type=click.BOOL,
               help='Only re-submit resources that failed. Mutually exclusive with --empty-only.')
-def resubmit_datastore_resources(resource_id=None, empty_only=False, verbose=False, quiet=False, list=False, xloader=False, failed=False):
+@click.option('-s', '--sync', is_flag=True, type=click.BOOL,
+              help='Run validation jobs in sync mode.')
+@click.option('-i', '--skip-xloader', is_flag=True, type=click.BOOL,
+              help='Skip submitting to Xloader after Validation.')
+def resubmit_datastore_resources(resource_id=None, empty_only=False, verbose=False, quiet=False,
+                                 list=False, xloader=False, failed=False, sync=False,
+                                 skip_xloader=False):
     """
     Re-submits valid DataStore Resources to Validation OR Xloader (use --xloader).
     """
@@ -1561,6 +1569,7 @@ def resubmit_datastore_resources(resource_id=None, empty_only=False, verbose=Fal
 
     status = 1
     max = len(resource_ids_to_submit)
+    async_mode = False if sync else True
     for id in resource_ids_to_submit:
         if list:
             click.echo(id)
@@ -1570,8 +1579,11 @@ def resubmit_datastore_resources(resource_id=None, empty_only=False, verbose=Fal
                     get_action('xloader_submit')(context, {"resource_id": id, "ignore_hash": True})
                     msg = "%s/%s -- Submitted Resource %s to Xloader" % (status, max, id)
                 else:
-                    get_action('resource_validation_run')(context, {"resource_id": id, "async": True})
-                    msg = "%s/%s -- Submitted Resource %s to Validation" % (status, max, id)
+                    get_action('resource_validation_run')(context, {"resource_id": id, "async": async_mode, "skip_xloader": skip_xloader})
+                    if async_mode:
+                        msg = "%s/%s -- Submitted Resource %s to Validation" % (status, max, id)
+                    else:
+                        msg = "%s/%s -- Ran Resource %s through Validation" % (status, max, id)
                 if verbose:
                     click.echo(msg)
             except Exception as e:
@@ -1579,7 +1591,10 @@ def resubmit_datastore_resources(resource_id=None, empty_only=False, verbose=Fal
                     if xloader:
                         errors.write('Failed to submit Resource %s to Xloader with errors:\n\n%s' % (id, e))
                     else:
-                        errors.write('Failed to submit Resource %s to Validation with errors:\n\n%s' % (id, e))
+                        if async_mode:
+                            errors.write('Failed to submit Resource %s to Validation with errors:\n\n%s' % (id, e))
+                        else:
+                            errors.write('Failed to run Resource %s through Validation with errors:\n\n%s' % (id, e))
                     errors.write('\n')
                     traceback.print_exc(file=errors)
                 pass
@@ -1593,7 +1608,10 @@ def resubmit_datastore_resources(resource_id=None, empty_only=False, verbose=Fal
         if xloader:
             _success_message('Re-submitted %s Resources to Xloader.' % len(resource_ids_to_submit))
         else:
-            _success_message('Re-submitted %s Resources to Validation.' % len(resource_ids_to_submit))
+            if async_mode:
+                _success_message('Re-submitted %s Resources to Validation.' % len(resource_ids_to_submit))
+            else:
+                _success_message('Ran %s Resources through Validation.' % len(resource_ids_to_submit))
     elif not resource_ids_to_submit:
         _success_message('No valid, empty DataStore Resources to re-submit at this time.')
 
@@ -1755,6 +1773,58 @@ def delete_table_view_from_non_datastore_resources(resource_id=None, verbose=Fal
         _success_message('Deleted %s datatables_view(s).' % len(view_ids_to_delete))
     elif not view_ids_to_delete:
         _success_message('No datatables_view(s) at this time.')
+
+
+@db.command("resolve_duplicate_emails", short_help="Resolve duplicate emails by deactivating all but the first created user.")
+@click.option("-q", "--quiet", is_flag=True, help="Suppress human interaction.", default=False)
+@click.option("-v", "--verbose", is_flag=True, help="Increase verbosity", default=False)
+def resolve_duplicate_emails(quiet=False, verbose=False):
+    """Resolve duplicate emails by deactivating all but the first created user."""
+
+    q = model.Session.query(model.User.email,
+                            model.User.name,
+                            model.User.created) \
+        .filter(model.User.state == "active") \
+        .filter(model.User.email != "") \
+        .order_by(model.User.email).all()
+
+    duplicates_found = False
+    users_to_delete = []
+    try:
+        for k, grp in groupby(q, lambda x: x[0]):
+            users = [(user[1], user[2]) for user in grp]
+            _users = sorted(users, key=lambda x: x[1])
+            if len(users) > 1:
+                duplicates_found = True
+                _users = sorted(users, key=lambda x: x[1])
+                if verbose:
+                    click.echo('\n- Going to keep user %s' % _users[0][0])
+                for user, created in _users[1:]:
+                    if user not in users_to_delete:
+                        if verbose:
+                            click.echo('- Going to deactivate user %s' % user)
+                        users_to_delete.append(user)
+                if verbose:
+                    click.echo('\n')
+    except Exception as e:
+        _error_message(str(e))
+        return
+    if users_to_delete:
+        if not quiet:
+            click.confirm("\nAre you sure you want to deactivate {num} duplicate users?"
+                            .format(num=len(users_to_delete)), abort=True)
+        for user in users_to_delete:
+            try:
+                get_action('user_delete')({'ignore_auth': True}, {'id': user})
+                if verbose:
+                    click.echo('- Deactivated user %s' % user)
+            except Exception as e:
+                if verbose:
+                    _error_message(str(e))
+
+        click.echo("\nDeactivated {num} duplicate users".format(num=len(users_to_delete)))
+    if not duplicates_found:
+        _success_message('No duplicate emails found')
 
 
 @canada.command(short_help="Generates the report for dataset Opennes Ratings.")

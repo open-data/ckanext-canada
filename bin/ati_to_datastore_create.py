@@ -28,23 +28,23 @@ def org_info():
             break
         except ckanapi.errors.CKANAPIError:
             count += 1
-            print >> sys.stderr, 'Error read org list from open.canada.ca'
+            print('Error read org list from open.canada.ca', file=sys.stderr)
             time.sleep(2)
     res = {}
     for rec in orgs:
         count = 0
         while count <=50:
             try:
-                print >> sys.stderr, 'read org ' + rec['name']
+                print('read org ' + rec['name'], file=sys.stderr)
                 org = site.action.organization_show(id=rec['id'])
                 break
             except ckanapi.errors.CKANAPIError:
                 count += 1
                 org = None
-                print >> sys.stderr, 'Error read org ' + rec['name']
+                print('Error read org ' + rec['name'], file=sys.stderr)
                 time.sleep(2)
         if not org:
-            print >> sys.stderr, 'Network error'
+            print('Network error', file=sys.stderr)
             sys.exit(-1)
         extras = org['extras']
         ati_email = None
@@ -66,7 +66,7 @@ for rec in csv:
     rec['org_title_fr'] = title[1]
     rec['ati_email'] = org_dict.get(rec['owner_org'], '')
 
-print json.dumps({
+print(json.dumps({
     'resource_id': '19383ca2-b01a-487d-88f7-e1ffbc7d39c2',
     'fields': [
         {'id':'year', 'type':'int'},
@@ -85,4 +85,4 @@ print json.dumps({
     'indexes': ['year', 'month'],
     'force': True,
     'records': list(csv),
-})
+}))

@@ -8,6 +8,8 @@ from six import string_types
 from datetime import datetime, timedelta
 import traceback
 
+from ckan.config.middleware.flask_app import csrf
+
 from ckan.plugins.toolkit import (
     abort,
     get_action,
@@ -21,7 +23,7 @@ from ckan.plugins.toolkit import (
     render
 )
 import ckan.lib.mailer as mailer
-from ckan.lib.base import model
+from ckan import model
 from ckan.lib.helpers import (
     date_str_to_datetime,
     lang
@@ -31,8 +33,8 @@ from ckan.views.dataset import (
     EditView as DatasetEditView,
     search as dataset_search,
     CreateView as DatasetCreateView,
-    activity as dataset_activity
 )
+from ckanext.activity.views import package_activity
 from ckan.views.resource import (
     EditView as ResourceEditView,
     CreateView as ResourceCreateView
@@ -90,7 +92,7 @@ class IntentionalServerError(Exception):
 @canada_views.route('/user/logged_in', methods=['GET'])
 def logged_in():
     # redirect if needed
-    came_from = request.params.get(u'came_from', u'')
+    came_from = request.args.get(u'came_from', u'')
     if h.url_is_local(came_from):
         return h.redirect_to(str(came_from))
 
@@ -136,7 +138,7 @@ def canada_prevent_pd_views(uri, package_type):
     id = None
     if uri[0]:
         if uri[0] == 'activity':  # allow activity route
-            return dataset_activity(package_type, uri[1])
+            return package_activity(package_type, uri[1])
         id = uri[0]
         package_type = _get_package_type_from_dict(id, package_type)
     if package_type in h.recombinant_get_types():
@@ -149,7 +151,7 @@ class CanadaDatasetEditView(DatasetEditView):
         response = super(CanadaDatasetEditView, self).post(package_type, id)
         if hasattr(response, 'status_code'):
             if response.status_code == 200 or response.status_code == 302:
-                context = self._prepare(id)
+                context = self._prepare()
                 pkg_dict = get_action(u'package_show')(
                     dict(context, for_view=True), {
                         u'id': id
@@ -604,7 +606,7 @@ def delete_selected_records(resource_id):
 
     if not h.check_access('datastore_records_delete',
                           {'resource_id': resource_id, 'filters': {}}):
-        abort(403, _('User {0} not authorized to update resource {1}'
+        return abort(403, _('User {0} not authorized to update resource {1}'
                      .format(str(g.user), resource_id)))
 
     try:
@@ -614,7 +616,7 @@ def delete_selected_records(resource_id):
         dataset = lc.action.recombinant_show(
             dataset_type=pkg['type'], owner_org=org['name'])
     except (NotFound, NotAuthorized):
-        abort(404, _('Not found'))
+        return abort(404, _('Not found'))
 
     records = request.form.getlist('select-delete')
 
@@ -795,43 +797,6 @@ def ckanadmin_job_queue():
                                                  'warning': warning,})
 
 
-@canada_views.route('/dataset/<id>/delete-datastore-table/<resource_id>', methods=['GET', 'POST'])
-def delete_datastore_table(id, resource_id):
-    if u'cancel' in request.form:
-        return h.redirect_to(u'xloader.resource_data', id=id, resource_id=resource_id)
-
-    if request.method == 'POST':
-        lc = LocalCKAN(username=g.user)
-
-        try:
-            lc.action.datastore_delete(
-                resource_id=resource_id,
-                force=True,  # FIXME: check url_type first?
-            )
-        except NotAuthorized:
-            return abort(403, _(u'Unauthorized to delete resource %s') % resource_id)
-
-        h.flash_notice(_(u'DataStore table and Data Dictionary deleted for resource %s') % resource_id)
-
-        return h.redirect_to(
-            'xloader.resource_data',
-            id=id,
-            resource_id=resource_id
-        )
-    else:
-        # TODO: Remove
-        # ckan 2.9: Adding variables that were removed from c object for
-        # compatibility with templates in existing extensions
-        g.resource_id = resource_id
-        g.package_id = id
-
-        extra_vars = {
-            u"resource_id": resource_id,
-            u"package_id": id
-        }
-        return render(u'canada/confirm_datastore_delete.html', extra_vars)
-
-
 @canada_views.route('/help', methods=['GET'])
 def view_help():
     if not g.is_registry:
@@ -840,6 +805,7 @@ def view_help():
 
 
 @canada_views.route('/datatable/<resource_name>/<resource_id>', methods=['GET', 'POST'])
+@csrf.exempt
 def datatable(resource_name, resource_id):
     params = parse_params(request.form)
     draw = int(params['draw'])
@@ -976,7 +942,7 @@ def organization_autocomplete():
 
     return_list = [{
         'id': o['id'],
-        'name': _org_key(o),
+        'name': o['name'],
         'title': _org_key(o)
     } for o in organization_list]
 

@@ -20,7 +20,7 @@
       <ul class="canada-job-list activity">
         {% for job in job_list %}
           <li class="item rq-job-{{ job.get('status') }}">
-            <i class="fa icon {{ job.get('icon') }}"></i>
+            <i class="fa icon {{ job.get('icon') }}" aria-hidden="true"></i>
             <p>
               <span class="canada-job-item-title">{{ job.get('type') }}</span>
               <br/>
@@ -31,7 +31,7 @@
                 {% else %}
                   <span>{{ _('Unknown') }}</span>
                 {% endif %}
-                | <a href="{{ h.url_for('api.action', logic_function='job_show', id=job.get('id')) }}">{{ job.get('id') }}</a>
+                | <a href="{{ h.url_for('api.action', ver=3, logic_function='job_show', id=job.get('id')) }}">{{ job.get('id') }}</a>
               </span>
             </p>
           </li>
@@ -49,7 +49,7 @@
   <section class="panel panel-info">
     <header class="panel-heading">
       <h3 class="panel-title">
-        <i class="fa fa-info-circle"></i>&nbsp;{{ _('Job Queue') }}
+        <i class="fa fa-info-circle" aria-hidden="true"></i>&nbsp;{{ _('Job Queue') }}
       </h3>
     </header>
     <div class="panel-body">

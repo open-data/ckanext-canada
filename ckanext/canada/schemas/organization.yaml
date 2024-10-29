@@ -41,7 +41,7 @@ fields:
     class: form-control
   display_snippet: fluent_text.html
   error_snippet: fluent_text.html
-  validators: fluent_text unicode scheming_required canada_org_title_translated_save
+  validators: fluent_text unicode_safe scheming_required canada_org_title_translated_save
   output_validators: canada_org_title_translated_output
 
 # Field = Short Form.
@@ -88,7 +88,7 @@ fields:
         Si le ministère a une abréviation commune pour l'anglais et le français
         langues puis l'utiliser une fois, par ex. pour "statcan", l'URL est créée sous la forme https://registry.open.canada.ca/en/organization/statcan
   required: true
-  validators: not_empty unicode name_validator group_name_validator
+  validators: not_empty unicode_only name_validator group_name_validator
   form_attrs:
     readonly: true
     size: 45

@@ -210,7 +210,7 @@ class Records():
                 urls = {}
         if new_url:
             self.test_links(new_url, urls)
-        print ('total record count: ', count)
+        print('total record count: ', count)
 
     def dumpBrokenLink(self, csvfile):
         outf=open(csvfile, 'wb')

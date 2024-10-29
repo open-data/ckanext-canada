@@ -5,6 +5,9 @@ from ckanext.validation.model import (
     tables_exist as validation_tables_exist
 )
 from ckanext.security.model import db_setup as security_db_setup
+from ckanext.canada.triggers import update_triggers
+from ckanext.recombinant.cli import _create_triggers
+from ckan.cli.db import _run_migrations
 
 class CanadaTestBase(object):
     @classmethod
@@ -17,3 +20,6 @@ class CanadaTestBase(object):
         if not validation_tables_exist():
             validation_create_tables()
         security_db_setup()
+        _run_migrations('activity')
+        update_triggers()
+        _create_triggers(dataset_types=[], all_types=True)
