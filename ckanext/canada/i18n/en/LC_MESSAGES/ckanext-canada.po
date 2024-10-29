@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  CKAN\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-10-29 13:54+0000\n"
+"POT-Creation-Date: 2024-10-29 19:42+0000\n"
 "PO-Revision-Date: 2014-01-23 13:04+0000\n"
 "Last-Translator: Sean Hammond <sean.hammond@okfn.org>\n"
 "Language: en\n"
@@ -262,7 +262,7 @@ msgstr ""
 #: ckanext/canada/logic.py:548
 #, python-format
 msgid "No Portal Sync information found for package %s"
-msgstr ""
+msgstr "No Portal Sync information found for dataset %s"
 
 #: ckanext/canada/plugins.py:738
 #: ckanext/canada/templates/scheming/package/snippets/package_form.html:25
@@ -2001,7 +2001,7 @@ msgstr ""
 #: ckanext/canada/templates/admin/base.html:18
 #: ckanext/canada/templates/admin/portal_sync.html:4
 msgid "Out of Sync Packages"
-msgstr ""
+msgstr "Out of Sync Datasets"
 
 #: ckanext/canada/templates/admin/index.html:7
 msgid "Administer CKAN"
@@ -2040,13 +2040,15 @@ msgstr ""
 
 #: ckanext/canada/templates/admin/portal_sync.html:30
 msgid "View Out of Sync Packages"
-msgstr ""
+msgstr "View Out of Sync Datasets"
 
 #: ckanext/canada/templates/admin/portal_sync.html:34
 msgid ""
 "View packages that are out of sync on the Portal and why they have not "
 "been synced."
 msgstr ""
+"View datasets that are out of sync on the Portal and why they have not "
+"been synced."
 
 #: ckanext/canada/templates/admin/publish_search.html:11
 #: ckanext/canada/templates/package/search.html:13

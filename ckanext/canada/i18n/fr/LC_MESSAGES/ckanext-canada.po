@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-10-29 13:54+0000\n"
+"POT-Creation-Date: 2024-10-29 19:42+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: fr\n"
@@ -287,6 +287,8 @@ msgstr "Tâche inconnue "
 #, python-format
 msgid "No Portal Sync information found for package %s"
 msgstr ""
+"Aucune information de synchronisation du portail n'a été trouvée pour "
+"le jeu de données %s."
 
 #: ckanext/canada/plugins.py:738
 #: ckanext/canada/templates/scheming/package/snippets/package_form.html:25
@@ -2276,7 +2278,7 @@ msgstr "File d'attente des tâches"
 #: ckanext/canada/templates/admin/base.html:18
 #: ckanext/canada/templates/admin/portal_sync.html:4
 msgid "Out of Sync Packages"
-msgstr ""
+msgstr "Jeux de données non synchronisés"
 
 #: ckanext/canada/templates/admin/index.html:7
 msgid "Administer CKAN"
@@ -2322,13 +2324,15 @@ msgstr "Affichez les tâches dans la file d'attente et en cours d'exécution."
 
 #: ckanext/canada/templates/admin/portal_sync.html:30
 msgid "View Out of Sync Packages"
-msgstr ""
+msgstr "Voir les jeux de données non synchronisés"
 
 #: ckanext/canada/templates/admin/portal_sync.html:34
 msgid ""
 "View packages that are out of sync on the Portal and why they have not "
 "been synced."
 msgstr ""
+"Visualiser les jeux de données qui ne sont pas synchronisés sur le portail"
+" et la raison pour laquelle ils n'ont pas été synchronisés."
 
 #: ckanext/canada/templates/admin/publish_search.html:11
 #: ckanext/canada/templates/package/search.html:13
@@ -2385,11 +2389,11 @@ msgstr "Publier?"
 
 #: ckanext/canada/templates/admin/snippets/portal_sync_package_item.html:10
 msgid "Last Successful Sync:"
-msgstr ""
+msgstr "Dernière synchronisation réussie :"
 
 #: ckanext/canada/templates/admin/snippets/portal_sync_package_item.html:23
 msgid "Failure Reason:"
-msgstr ""
+msgstr "Raison de l'échec :"
 
 #: ckanext/canada/templates/admin/snippets/publish_package_list.html:8
 msgid "Select All for Publishing"
