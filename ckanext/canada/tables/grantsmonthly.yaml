@@ -4,7 +4,7 @@ title: Proactive Publication - Grants and Contributions (Monthly)
 shortname: Grants and Contributions (Monthly)
 notes: Access, upload and modify the Grants and Contributions monthly reports for your organization
 
-template_version: 1
+template_version: 3
 template_updated: 2024-10-25
 
 portal_type: info
@@ -20,7 +20,7 @@ resources:
   edit_form: true
   fields:
 
-  # 1.1 Reference Number
+  # 3.1 Reference Number
   - datastore_id: ref_number
     label:
       en: Reference Number
@@ -52,7 +52,7 @@ resources:
     format_type: Free text
     datastore_type: text
 
-  # 1.2 Amendment Number 
+  # 3.2 Amendment Number
   - datastore_id: amendment_number
     label:
       en: Amendment Number
@@ -66,7 +66,7 @@ resources:
     format_type: Numeric only
     datastore_type: int
 
-  # 1.3 Amendment Date 
+  # 3.3 Amendment Date
   - datastore_id: amendment_date
     label:
       en: Amendment Date
@@ -82,7 +82,7 @@ resources:
     excel_cell_required_formula: 'and({column}{row}="",{column_before}{row}<>0)'
     form_snippet: scheming/form_snippets/date.html
 
-  # 1.4 Agreement Type
+  # 3.4 Agreement Type
   - datastore_id: agreement_type
     label:
       en: Agreement Type
@@ -106,7 +106,7 @@ resources:
         en: Other transfer payment
         fr: autre
 
-  # 1.5 Recipient Type 
+  # 3.5 Recipient Type
   - datastore_id: recipient_type
     label:
       en: Recipient Type
@@ -143,7 +143,7 @@ resources:
         en: Other
         fr: autre
 
-  # 1.6 Recipient Business Number
+  # 3.6 Recipient Business Number
   - datastore_id: recipient_business_number
     label:
       en: Recipient Business Number
@@ -171,7 +171,7 @@ resources:
     format_type: Free text
     datastore_type: text
 
-  # 1.7 Recipient Legal Name
+  # 3.7 Recipient Legal Name
   - datastore_id: recipient_legal_name
     label:
       en: Recipient Legal Name (English|French)
@@ -193,7 +193,7 @@ resources:
     form_attrs:
       size: 60
 
-  # 1.8 Recipient Operating Name 
+  # 3.8 Recipient Operating Name
   - datastore_id: recipient_operating_name
     label:
       en: Recipient Operating Name (English|French)
@@ -212,7 +212,7 @@ resources:
     form_attrs:
       size: 60
 
-  # 1.9 Recipient Country
+  # 3.9 Recipient Country
   - datastore_id: recipient_country
     label:
       en: Recipient Country
@@ -227,7 +227,7 @@ resources:
     datastore_type: text
     choices_file: choices/country.json
 
-  # 1.10 Recipient Province or Territory 
+  # 3.10 Recipient Province or Territory
   - datastore_id: recipient_province
     label:
       en: Recipient Province or Territory
@@ -280,7 +280,7 @@ resources:
         en: Nova Scotia
         fr: Nouvelle-Écosse
 
-  # 1.11 Recipient City
+  # 3.11 Recipient City
   - datastore_id: recipient_city
     label:
       en: Recipient City (English|French)
@@ -306,7 +306,7 @@ resources:
     form_attrs:
       size: 60
 
-  # 1.12 Recipient Postal Code 
+  # 3.12 Recipient Postal Code
   - datastore_id: recipient_postal_code
     label:
       en: Recipient Postal Code
@@ -324,7 +324,7 @@ resources:
     format_type: "Text format locked to (X#X #X#)"
     datastore_type: text
 
-  # 1.13 Federal Riding Number 
+  # 3.13 Federal Riding Number
   - datastore_id: federal_riding_number
     label:
       en: Federal Riding Number
@@ -336,7 +336,7 @@ resources:
     format_type: Free text
     datastore_type: text
 
-  # 1.14 Program Name (English)
+  # 3.14 Program Name (English)
   - datastore_id: prog_name_en
     label:
       en: Program Name (English)
@@ -350,7 +350,7 @@ resources:
     form_attrs:
       size: 60
 
-  # 1.15 Program Name (French)
+  # 3.15 Program Name (French)
   - datastore_id: prog_name_fr
     label:
       en: Program Name (French)
@@ -364,7 +364,7 @@ resources:
     form_attrs:
       size: 60
 
-  # 1.16 Program Purpose (English)
+  # 3.16 Program Purpose (English)
   - datastore_id: prog_purpose_en
     label:
       en: Program Purpose (English)
@@ -379,7 +379,7 @@ resources:
     form_attrs:
       style: "width: 100%; display: block"
 
-  # 1.17 Program Purpose (French)
+  # 3.17 Program Purpose (French)
   - datastore_id: prog_purpose_fr
     label:
       en: Program Purpose (French)
@@ -394,7 +394,7 @@ resources:
     form_attrs:
       style: "width: 100%; display: block"
 
-  # 1.18 Agreement Number
+  # 3.18 Agreement Number
   - datastore_id: agreement_number
     label:
       en: Agreement Number
@@ -406,7 +406,7 @@ resources:
     format_type: Free text
     datastore_type: text
 
-  # 1.19 Agreement Value in CAD
+  # 3.19 Agreement Value in CAD
   - datastore_id: agreement_value
     label:
       en: Agreement Value in CAD
@@ -426,7 +426,7 @@ resources:
      - 1000000
      - 5000000
 
-  # 1.20 Agreement Start Date
+  # 3.20 Agreement Start Date
   - datastore_id: agreement_start_date
     label:
       en: Agreement Start Date
@@ -444,7 +444,7 @@ resources:
     extract_date_month: true
     extract_date_clean: true
 
-  # 1.21 Projected Agreement End Date 
+  # 3.21 Projected Agreement End Date
   - datastore_id: agreement_end_date
     label:
       en: Projected Agreement End Date
@@ -457,7 +457,7 @@ resources:
     datastore_type: date
     form_snippet: scheming/form_snippets/date.html
 
-  # 1.22 Description (English) 
+  # 3.22 Description (English)
   - datastore_id: description_en
     label:
       en: Description (English)
@@ -474,7 +474,7 @@ resources:
     form_attrs:
       style: "width: 100%; display: block"
 
-  # 1.23 Description (French) 
+  # 3.23 Description (French)
   - datastore_id: description_fr
     label:
       en: Description (French)
@@ -491,7 +491,7 @@ resources:
     form_attrs:
       style: "width: 100%; display: block"
 
-  # 1.24 Expected Results or Intended Outcome (English) 
+  # 3.24 Expected Results or Intended Outcome (English)
   - datastore_id: expected_results_en
     label:
       en: Expected Results or Intended Outcome (English)
@@ -506,7 +506,7 @@ resources:
     form_attrs:
       style: "width: 100%; display: block"
 
-  # 1.25 Expected Results or Intended Outcome (French) 
+  # 3.25 Expected Results or Intended Outcome (French)
   - datastore_id: expected_results_fr
     label:
       en: Expected Results or Intended Outcome (French)
@@ -521,7 +521,7 @@ resources:
     form_attrs:
       style: "width: 100%; display: block"
 
-  # 1.26 Demographic of the intended beneficiary
+  # 3.26 Demographic of the intended beneficiary
   - datastore_id: dem_intended_beneficiary
     label:
       en: Intended Beneficiary demographic group
@@ -579,7 +579,7 @@ resources:
         fr: Aucun
         order: 9
 
-  # 1.27 Other Demographic of intended beneficiary Description (English)
+  # 3.27 Other Demographic of intended beneficiary Description (English)
   - datastore_id: other_dem_intended_beneficiary_description_en
     label:
       en: Demographic of intended beneficiary Description (English)
@@ -612,7 +612,7 @@ resources:
       style: "width: 100%; display: block"
       maxlength: 1800
 
-  # 1.28 Other Demographic of intended beneficiary Description (French)
+  # 3.28 Other Demographic of intended beneficiary Description (French)
   - datastore_id: other_dem_intended_beneficiary_description_fr
     label:
       en: Demographic of intended beneficiary Description (French)
@@ -645,7 +645,7 @@ resources:
       style: "width: 100%; display: block"
       maxlength: 1800
 
-  # 1.29 Reason for the amendment
+  # 3.29 Reason for the amendment
   - datastore_id: reason_amendment
     label:
       en: Reason for the amendment
@@ -825,3 +825,16 @@ resources:
       ref_number: "001-2018-2019-Q2-00045"
       amendment_number: "0"
     sort: agreement_date desc
+
+excel_edge_style:
+  PatternFill:
+    patternType: solid
+    fgColor: FF024571
+excel_header_style:
+  PatternFill:
+    patternType: solid
+    fgColor: FFEDDB7C
+excel_column_heading_style:
+  PatternFill:
+    patternType: solid
+    fgColor: FFEDDB7C

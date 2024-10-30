@@ -15,7 +15,7 @@ between the two templates are:
     - 3.35 additional_information_en
     - 3.36 additional_information_fr
 * The following fields are new in the Grants (monthly) template:
-    - 1.26 dem_intended_beneficiary
-    - 1.27 other_dem_intended_beneficiary_description_en
-    - 1.28 other_dem_intended_beneficiary_description_fr
-    - 1.29 reason_amendment
+    - 3.26 dem_intended_beneficiary
+    - 3.27 other_dem_intended_beneficiary_description_en
+    - 3.28 other_dem_intended_beneficiary_description_fr
+    - 3.29 reason_amendment
