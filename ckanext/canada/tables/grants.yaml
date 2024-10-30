@@ -1,20 +1,20 @@
-dataset_type: grants
-target_dataset: grants
-title: Proactive Publication - Grants and Contributions
-shortname: Grants and Contributions
-notes: Access, upload and modify the Grants and Contributions reports for your organization
+dataset_type: grantsmonthly
+target_dataset: grantsmonthly
+title: Proactive Publication - Grants and Contributions (Monthly)
+shortname: Grants and Contributions (Monthly)
+notes: Access, upload and modify the Grants and Contributions monthly reports for your organization
 
 template_version: 3
-template_updated: 2019-11-15
+template_updated: 2024-10-25
 
 portal_type: info
 collection: pd
 
 resources:
-- title: Proactive Publication - Grants and Contributions
-  resource_name: grants
+- title: Proactive Publication - Grants and Contributions (Monthly)
+  resource_name: grantsmonthly
 
-  published_resource_id: 1d15a62f-5656-49ad-8c88-f40ce689d831
+  published_resource_id: TBD
 
   create_form: true
   edit_form: true
@@ -52,7 +52,7 @@ resources:
     format_type: Free text
     datastore_type: text
 
-  # 3.2 Amendment Number (New Field)
+  # 3.2 Amendment Number
   - datastore_id: amendment_number
     label:
       en: Amendment Number
@@ -66,7 +66,7 @@ resources:
     format_type: Numeric only
     datastore_type: int
 
-  # 3.3 Amendment Date (New Field)
+  # 3.3 Amendment Date
   - datastore_id: amendment_date
     label:
       en: Amendment Date
@@ -82,7 +82,7 @@ resources:
     excel_cell_required_formula: 'and({column}{row}="",{column_before}{row}<>0)'
     form_snippet: scheming/form_snippets/date.html
 
-  # 3.4 Agreement Type (Formerly “Type”- 3.16)
+  # 3.4 Agreement Type
   - datastore_id: agreement_type
     label:
       en: Agreement Type
@@ -106,7 +106,7 @@ resources:
         en: Other transfer payment
         fr: autre
 
-  # 3.5 Recipient Type (New field)
+  # 3.5 Recipient Type
   - datastore_id: recipient_type
     label:
       en: Recipient Type
@@ -171,7 +171,7 @@ resources:
     format_type: Free text
     datastore_type: text
 
-  # 3.7 Recipient Legal Name (formerly recipient_name_en, recipient_name_fr)
+  # 3.7 Recipient Legal Name
   - datastore_id: recipient_legal_name
     label:
       en: Recipient Legal Name (English|French)
@@ -193,7 +193,7 @@ resources:
     form_attrs:
       size: 60
 
-  # 3.8 Recipient Operating Name (New Field)
+  # 3.8 Recipient Operating Name
   - datastore_id: recipient_operating_name
     label:
       en: Recipient Operating Name (English|French)
@@ -212,27 +212,7 @@ resources:
     form_attrs:
       size: 60
 
-  # 3.9 Research Organization (New Field)
-  - datastore_id: research_organization_name
-    label:
-      en: Research Organization (English|French)
-      fr: Organisme de recherche (anglais|français)
-    description:
-      en: |
-        The “Research organization” is an optional field for including information about the organization that the recipient represents. This field will be used mainly to highlight academic organizations that researchers have partnered with.
-
-        Only translated if the organization name is provided in both official languages by the recipient in the following format: name English|name French.
-      fr: |
-        Le champ « Organisme de recherche » est facultatif. Il sert à inclure les renseignements sur l'organisation que le bénéficiaire représente. Ce champ sera surtout utilisé pour mettre en évidence les organisations avec lesquelles les chercheurs ont formé un partenariat.
-
-        Traduction seulement si le nom de l'organisme est fourni dans les deux langues officielles par le bénéficiaire. Fournir dans le format suivant : nom anglais|nom français.
-    obligation: Optional
-    format_type: Free text
-    datastore_type: text
-    form_attrs:
-      size: 60
-
-  # 3.10 Recipient Country
+  # 3.9 Recipient Country
   - datastore_id: recipient_country
     label:
       en: Recipient Country
@@ -247,7 +227,7 @@ resources:
     datastore_type: text
     choices_file: choices/country.json
 
-  # 3.11 Recipient Province or Territory (New Field)
+  # 3.10 Recipient Province or Territory
   - datastore_id: recipient_province
     label:
       en: Recipient Province or Territory
@@ -300,7 +280,7 @@ resources:
         en: Nova Scotia
         fr: Nouvelle-Écosse
 
-  # 3.12 Recipient City (previously recipient_region_en, recipient_region_fr)
+  # 3.11 Recipient City
   - datastore_id: recipient_city
     label:
       en: Recipient City (English|French)
@@ -326,7 +306,7 @@ resources:
     form_attrs:
       size: 60
 
-  # 3.13 Recipient Postal Code (New Field)
+  # 3.12 Recipient Postal Code
   - datastore_id: recipient_postal_code
     label:
       en: Recipient Postal Code
@@ -344,35 +324,7 @@ resources:
     format_type: "Text format locked to (X#X #X#)"
     datastore_type: text
 
-  # 3.14 Federal Riding Name (English) (New Field)
-  - datastore_id: federal_riding_name_en
-    label:
-      en: Federal Riding Name (English)
-      fr: Nom de la circonscription fédérale (anglais)
-    description:
-      en: The federal riding name is the name of the riding in which the recipient resides.
-      fr: Le nom de la circonscription fédérale où réside le bénéficiaire.
-    obligation: Optional
-    format_type: Free text
-    datastore_type: text
-    form_attrs:
-      size: 60
-
-  # 3.15 Federal Riding Name (French) (New Field)
-  - datastore_id: federal_riding_name_fr
-    label:
-      en: Federal Riding Name (French)
-      fr: Nom de la circonscription fédérale (français)
-    description:
-      en: The federal riding name is the name of the riding in which the recipient resides.
-      fr: Le nom de la circonscription fédérale où réside le bénéficiaire.
-    obligation: Optional
-    format_type: Free text
-    datastore_type: text
-    form_attrs:
-      size: 60
-
-  # 3.16 Federal Riding Number (New Field)
+  # 3.13 Federal Riding Number
   - datastore_id: federal_riding_number
     label:
       en: Federal Riding Number
@@ -384,7 +336,7 @@ resources:
     format_type: Free text
     datastore_type: text
 
-  # 3.17 Program Name (English)
+  # 3.14 Program Name (English)
   - datastore_id: prog_name_en
     label:
       en: Program Name (English)
@@ -398,7 +350,7 @@ resources:
     form_attrs:
       size: 60
 
-  # 3.18 Program Name (French)
+  # 3.15 Program Name (French)
   - datastore_id: prog_name_fr
     label:
       en: Program Name (French)
@@ -412,7 +364,7 @@ resources:
     form_attrs:
       size: 60
 
-  # 3.19 Program Purpose (English) (formerly purpose_en)
+  # 3.16 Program Purpose (English)
   - datastore_id: prog_purpose_en
     label:
       en: Program Purpose (English)
@@ -427,7 +379,7 @@ resources:
     form_attrs:
       style: "width: 100%; display: block"
 
-  # 3.20 Program Purpose (French) (formerly purpose_fr)
+  # 3.17 Program Purpose (French)
   - datastore_id: prog_purpose_fr
     label:
       en: Program Purpose (French)
@@ -442,35 +394,7 @@ resources:
     form_attrs:
       style: "width: 100%; display: block"
 
-  # 3.21 Agreement Title (English) (formerly proj_name_en)
-  - datastore_id: agreement_title_en
-    label:
-      en: Agreement Title (English)
-      fr: Titre de l’entente (anglais)
-    description:
-      en: The agreement title is the title of the project or agreement that the recipient is undertaking. In cases where there is no title, the agreement number will be duplicated here.
-      fr: Le nom de l'entente est le titre du projet ou de l'entente à l'égard duquel s'engage le bénéficiaire. S'il n'y a pas de titre, le numéro de l'entente peut être réinscrit ici.
-    obligation: Optional
-    format_type: Free text
-    datastore_type: text
-    form_attrs:
-      size: 60
-
-  # 3.22 Agreement Title (French) (formerly proj_name_fr)
-  - datastore_id: agreement_title_fr
-    label:
-      en: Agreement Title (French)
-      fr: Titre de l’entente (français)
-    description:
-      en: The agreement title is the title of the project or agreement that the recipient is undertaking. In cases where there is no title, the agreement number will be duplicated here.
-      fr: Le nom de l'entente est le titre du projet ou de l'entente à l'égard duquel s'engage le bénéficiaire. S'il n'y a pas de titre, le numéro de l'entente peut être réinscrit ici.
-    obligation: Optional
-    format_type: Free text
-    datastore_type: text
-    form_attrs:
-      size: 60
-
-  # 3.23 Agreement Number (formerly prog_number, proj_number)
+  # 3.18 Agreement Number
   - datastore_id: agreement_number
     label:
       en: Agreement Number
@@ -482,7 +406,7 @@ resources:
     format_type: Free text
     datastore_type: text
 
-  # 3.24 Agreement Value in CAD (Formerly Field 3.15 - Value)
+  # 3.19 Agreement Value in CAD
   - datastore_id: agreement_value
     label:
       en: Agreement Value in CAD
@@ -502,40 +426,7 @@ resources:
      - 1000000
      - 5000000
 
-  # 3.25 Foreign Currency Type (New field)
-  - datastore_id: foreign_currency_type
-    label:
-      en: Foreign Currency Type
-      fr: Type de monnaie étrangère
-    description:
-      en: |
-        The foreign currency type should be selected if a recipient is paid in a currency other than Canadian dollars. Select the type of foreign currency in this field (for example, US dollar (USD), Australian dollar (AUD), British pound (GBP)). This field is mandatory if the agreement is awarded in foreign currency.'
-
-        Foreign currency type is populated using the ISO 4217 alphabetic codes for foreign currency. This list can be found on the XE website. Entry is selected from a drop-down list.
-
-      fr: |
-        Le champ Type de monnaie étrangère doit être rempli si le bénéficiaire est payé dans une devise autre que le dollar canadien. Il faut sélectionner le type de monnaie étrangère; par exemple, dollar américain (USD), dollar australien (AUD), livre sterling (GBP). Ce champ est obligatoire si l'entente est en devise étrangère.
-
-        Le type de monnaie étrangère est complété à l'aide des codes alphabétiques ISO 4217 pour les monnaie étrangères. Cette liste se trouve sur le site Web XE. L'entrée est sélectionnée dans une liste déroulante.
-    obligation: Optional (Mandatory when funding provided in foreign currency)
-    format_type: Controlled List
-    datastore_type: text
-    excel_cell_required_formula: 'and({column}{row}="",{column_after}{row}<>"")'
-    choices_file: choices/currency.json
-
-  # 3.26 Foreign Currency Value (New field)
-  - datastore_id: foreign_currency_value
-    label:
-      en: Foreign Currency Value
-      fr: Valeur de la monnaie étrangère
-    description:
-      en: The foreign currency value is the amount as signed in the grant or contribution agreement with the recipient. This field should be populated with a monetary value in the foreign currency. This field is mandatory if the agreement is awarded in a foreign currency.
-      fr: La valeur en monnaie étrangère est le montant convenu aux termes de l'entente de subvention ou de contribution avec le bénéficiaire. Ce champ doit être rempli en inscrivant la valeur dans la monnaie étrangère. Ce champ est obligatoire si l'entente est en devise étrangère.
-    obligation: Mandatory if foreign currency type is selected
-    datastore_type: money
-    excel_cell_required_formula: 'and({column}{row}="",{column_before}{row}<>"")'
-
-  # 3.27 Agreement Start Date (Formerly 3.14 "date")
+  # 3.20 Agreement Start Date
   - datastore_id: agreement_start_date
     label:
       en: Agreement Start Date
@@ -553,7 +444,7 @@ resources:
     extract_date_month: true
     extract_date_clean: true
 
-  # 3.28 Projected Agreement End Date (New Field)
+  # 3.21 Projected Agreement End Date
   - datastore_id: agreement_end_date
     label:
       en: Projected Agreement End Date
@@ -566,21 +457,7 @@ resources:
     datastore_type: date
     form_snippet: scheming/form_snippets/date.html
 
-  # 3.29 Coverage (New Field)
-  - datastore_id: coverage
-    label:
-      en: Coverage (English|French; ...)
-      fr: Portée (anglais|français; ...)
-    description:
-      en: Coverage provides information about what will benefit from the project or agreement. Departments should populate this with any information they have available.
-      fr: Le champ « Portée » fournit des renseignements sur l'incidence générale prévue du projet ou de l'entente. Les ministères peuvent entrer ici tout renseignement dont ils disposent.
-    obligation: Optional
-    format_type: Free text; separate entries with a “;” and include bilingual entries, where applicable, separated with a “│”
-    datastore_type: text
-    form_attrs:
-      size: 60
-
-  # 3.30 Description (English) (New Field)
+  # 3.22 Description (English)
   - datastore_id: description_en
     label:
       en: Description (English)
@@ -597,7 +474,7 @@ resources:
     form_attrs:
       style: "width: 100%; display: block"
 
-  # 3.31 Description (French) (New Field)
+  # 3.23 Description (French)
   - datastore_id: description_fr
     label:
       en: Description (French)
@@ -614,29 +491,7 @@ resources:
     form_attrs:
       style: "width: 100%; display: block"
 
-  # 3.32 NAICS Identifier (New Field)
-  - datastore_id: naics_identifier
-    label:
-      en: NAICS Identifier
-      fr: Identificateur du SCIAN
-    description:
-      en: The North American Industry Classification System (NAICS) is an industry classification system developed by the statistical agencies of Canada, Mexico and the United States.
-      fr: Le Système de classification des industries de l'Amérique du Nord (SCIAN) est un système de classification des industries conçu par les organismes statistiques du Canada, du Mexique et des États-Unis.
-    obligation: Optional
-    format_type: |
-      Free text based on controlled list from Statistics Canada; This list is available to users on the Statistics Canada website. http://www.statcan.gc.ca/eng/subjects/standard/naics/2012/index
-
-      The “NAICS identifier” field should be populated with the most appropriate choice in the selection list. Departments should consult the Statistics Canada website and populate at their own discretion. At least 3 digits should be entered to allow for broad coding when specificity is not possible.
-
-      For example, if Employment and Social Development Canada is signing an agreement with an educational support services organization, the NAICS identifier would be 611710. The identifier is broken down as follows:
-      * sector: 61 (educational services)
-      * subsector: 1 (educational services)
-      * industry group: 7 (educational support services)
-      * industry: 10 (educational support services)
-
-    datastore_type: text
-
-  # 3.33 Expected Results or Intended Outcome (English) (New Field)
+  # 3.24 Expected Results or Intended Outcome (English)
   - datastore_id: expected_results_en
     label:
       en: Expected Results or Intended Outcome (English)
@@ -651,7 +506,7 @@ resources:
     form_attrs:
       style: "width: 100%; display: block"
 
-  # 3.34 Expected Results or Intended Outcome (French) (New Field)
+  # 3.25 Expected Results or Intended Outcome (French)
   - datastore_id: expected_results_fr
     label:
       en: Expected Results or Intended Outcome (French)
@@ -666,84 +521,173 @@ resources:
     form_attrs:
       style: "width: 100%; display: block"
 
-  # 3.35 Additional Information (English) (Formerly comments_en, additional_info_en)
-  - datastore_id: additional_information_en
+  # 3.26 Demographic of the intended beneficiary
+  - datastore_id: dem_intended_beneficiary
     label:
-      en: Additional Information (English)
-      fr: Renseignements supplémentaires (anglais)
+      en: Intended Beneficiary demographic group
+      fr: Groupe démographique des bénéficiaires visés
     description:
-      en: |
-        Additional information is information that departments are required to enter under the guidance instructions for exceptions but that is not captured in any of the aforementioned fields. It may contain information on:
-        •additional funding departments
-        •funding through a third party
-        •ministerial announcements
-        •research fields
-        •joint funding
-        •collaborators and partners
-        •keywords
-        •belated reporting
-        •novation agreements
-        •terminations
-        •repayability
-      fr: |
-        Lorsqu'ils sont tenus de le faire conformément aux « Indications » qui traitent des exceptions, les ministères doivent entrer ici les renseignements supplémentaires qui ne sont pas saisis dans les champs précédents. Il peut s'agir de renseignements comme ceux-ci :
-        •autres ministères participent au financement;
-        •financement par l'intermédiaire d'un tiers;
-        •annonces ministérielles;
-        •domaines de recherche;
-        •financement conjoint;
-        •collaborateurs et partenaires;
-        •mots-clés;
-        •divulgation tardive;
-        •entente d'innovation;
-        •résiliations;
-        •remboursement.
-    obligation: Optional
+      en: The field indicates whether the intended beneficiaries belong to a specific demographic group.
+      fr: Le champ indique si les bénéficiaires visés font partie d’un groupe démographique identifié.
+    obligation: Mandatory
+    occurrence: Repeatable
+    excel_required: true
+    form_required: true
+    excel_full_text_choices: true
+    format_type: Controlled List
+    validation:
+      en: This field must not be empty.
+      fr: Ce champ ne doit pas être vide.
+    datastore_type: _text
+    form_snippet: scheming/form_snippets/text.html
+    choice_order_expression: 'value.get("order", False), code'
+    choices:
+      Y:
+        en: Youth
+        fr: Jeunes
+        order: 1
+      S:
+        en: Senior
+        fr: Personnes âgées
+        order: 2
+      D:
+        en: Persons with disability
+        fr: Personnes handicappées
+        order: 3
+      I:
+        en: Indigenous people
+        fr: Personnes autochtones
+        order: 4
+      V:
+        en: Visible minority
+        fr: Minorités visibles
+        order: 5
+      W:
+        en: Women
+        fr: Femmes
+        order: 6
+      L:
+        en: 2SLGBTQI+
+        fr: 2ELGBTQI+
+        order: 7
+      O:
+        en: Other
+        fr: Autre
+        order: 8
+      N:
+        en: None
+        fr: Aucun
+        order: 9
+
+  # 3.27 Other Demographic of intended beneficiary Description (English)
+  - datastore_id: other_dem_intended_beneficiary_description_en
+    label:
+      en: Demographic of intended beneficiary Description (English)
+      fr: Description du groupe démographique des bénéficiaires visés (anglais)
+    description:
+      en: >
+        This field is mandatory if “Other” is chosen as an
+        option for the field “Intended Beneficiary demographic
+        group”. This field has a maximum length of 1800
+        characters. This text must be provided in both languages.
+      fr: >
+        TBD
+        Ce champ ne peut excéder une longueur maximale de 1800
+        caractères. Ce texte doit être fourni en anglais et en français.
+    obligation:
+      en: This field is mandatory if “Other” is chosen as an option for the field “Intended Beneficiary demographic group”.
+      fr: TBD
+    excel_required: false
+    form_required: false
+    excel_column_width: 80
+    validation:
+      en: This field has a maximum length of 1800 characters. This text must be provided in both languages.
+      fr: Ce champ ne peut excéder une longueur maximale de 1800 caractères. Ce texte doit être fourni en anglais et en français.
+    occurrence: Single
     format_type: Free text
     datastore_type: text
-    form_snippet: scheming/form_snippets/textarea.html
+    max_chars: 1800
+    excel_required_formula: 'OR(TRIM(LEFT({dem_intended_beneficiary},FIND(":",{dem_intended_beneficiary}&":")-1))="O",NOT(ISBLANK({other_dem_intended_beneficiary_description_fr})))'
     form_attrs:
       style: "width: 100%; display: block"
+      maxlength: 1800
 
-  # 3.36 Additional Information (French) (Formerly comments_fr, additional_info_fr)
-  - datastore_id: additional_information_fr
+  # 3.28 Other Demographic of intended beneficiary Description (French)
+  - datastore_id: other_dem_intended_beneficiary_description_fr
     label:
-      en: Additional Information (French)
-      fr: Renseignements supplémentaires (français)
+      en: Demographic of intended beneficiary Description (French)
+      fr: Description du groupe démographique des bénéficiaires visés (français)
     description:
-      en: |
-        Additional information is information that departments are required to enter under the guidance instructions for exceptions but that is not captured in any of the aforementioned fields. It may contain information on:
-        •additional funding departments
-        •funding through a third party
-        •ministerial announcements
-        •research fields
-        •joint funding
-        •collaborators and partners
-        •keywords
-        •belated reporting
-        •novation agreements
-        •terminations
-        •repayability
-      fr: |
-        Lorsqu'ils sont tenus de le faire conformément aux « Indications » qui traitent des exceptions, les ministères doivent entrer ici les renseignements supplémentaires qui ne sont pas saisis dans les champs précédents. Il peut s'agir de renseignements comme ceux-ci :
-        •autres ministères participent au financement;
-        •financement par l'intermédiaire d'un tiers;
-        •annonces ministérielles;
-        •domaines de recherche;
-        •financement conjoint;
-        •collaborateurs et partenaires;
-        •mots-clés;
-        •divulgation tardive;
-        •entente d'innovation;
-        •résiliations;
-        •remboursement.
-    obligation: Optional
+      en: >
+        This field is mandatory if “Other” is chosen as an
+        option for the field “Intended Beneficiary demographic
+        group”. This field has a maximum length of 1800
+        characters. This text must be provided in both languages.
+      fr: >
+        TBD
+        Ce champ ne peut excéder une longueur maximale de 1800
+        caractères. Ce texte doit être fourni en anglais et en français.
+    obligation:
+      en: This field is mandatory if “Other” is chosen as an option for the field “Intended Beneficiary demographic group”.
+      fr: TBD
+    excel_required: false
+    form_required: false
+    excel_column_width: 80
+    validation:
+      en: This field has a maximum length of 1800 characters. This text must be provided in both languages.
+      fr: Ce champ ne peut excéder une longueur maximale de 1800 caractères. Ce texte doit être fourni en anglais et en français.
+    occurrence: Single
     format_type: Free text
     datastore_type: text
-    form_snippet: scheming/form_snippets/textarea.html
+    max_chars: 1800
+    excel_required_formula: 'OR(TRIM(LEFT({dem_intended_beneficiary},FIND(":",{dem_intended_beneficiary}&":")-1))="O",NOT(ISBLANK({other_dem_intended_beneficiary_description_en})))'
     form_attrs:
       style: "width: 100%; display: block"
+      maxlength: 1800
 
+  # 3.29 Reason for the amendment
+  - datastore_id: reason_amendment
+    label:
+      en: Reason for the amendment
+      fr: Raison pour changement
+    description:
+      en: The field indicates the reason for the amendment to the project.
+      fr: Le champ indique la raison pour le changement au projet.
+    obligation: Mandatory
+    occurrence: Single
+    excel_required: true
+    form_required: true
+    format_type: Controlled List
+    validation:
+      en: This field must not be empty.
+      fr: Ce champ ne doit pas être vide.
+    occurrence: Single
+    datastore_type: text
+    excel_full_text_choices: true
+    choice_order_expression: 'value.get("order", False), code'
+    choices:
+      S:
+        en: Change of start date of agreement
+        fr: Changement de date de debut de l’entente
+        order: 1
+      E:
+        en: Change of end date of agreement
+        fr: Changement de date de fin de l’entente
+        order: 2
+      A:
+        en: Change of amount of agreement
+        fr: Changement du montant de l’entente
+        order: 3
+      O:
+        en: Other
+        fr: Autre
+        order: 4
+      N:
+        en: No amendment
+        fr: Pas de changement
+        order: 5
+
+  # System fields for audit trail
   - datastore_id: record_created
     label: Record Creation Time
     import_template_include: false
@@ -780,7 +724,7 @@ resources:
       fgColor: FFc09a77
 
   triggers:
-  - grants_trigger: |
+  - grantsmonthly_trigger: |
       DECLARE
         errors text[][] := '{{}}';
         crval RECORD;
@@ -795,14 +739,20 @@ resources:
           errors := errors || required_error(NEW.amendment_date, 'amendment_date');
         END IF;
 
-        IF NOT ((NEW.foreign_currency_type = '') IS NOT FALSE) OR
-                NEW.foreign_currency_value IS NOT NULL THEN
-          errors := errors || required_error(NEW.foreign_currency_type, 'foreign_currency_type');
-          errors := errors || choice_error(NEW.foreign_currency_type, {foreign_currency_type}, 'foreign_currency_type');
-          errors := errors || required_error(NEW.foreign_currency_value, 'foreign_currency_value');
-        END IF;
-
         errors := errors || required_error(NEW.agreement_value, 'agreement_value');
+
+        errors := errors || required_error(NEW.dem_intended_beneficiary, 'dem_intended_beneficiary');
+        crval := choices_clean_error(NEW.dem_intended_beneficiary, {dem_intended_beneficiary}, 'dem_intended_beneficiary');
+        errors := errors || crval.error;
+        NEW.dem_intended_beneficiary := crval.clean;
+        IF 'O' = ANY(NEW.dem_intended_beneficiary) THEN
+          errors := errors || conditional_required_error(NEW.other_dem_intended_beneficiary_description_en, 'other_dem_intended_beneficiary_description_en');
+          errors := errors || conditional_required_error(NEW.other_dem_intended_beneficiary_description_fr, 'other_dem_intended_beneficiary_description_fr');
+        ELSE
+          errors := errors || both_languages_error(NEW.other_dem_intended_beneficiary_description_en, 'other_dem_intended_beneficiary_description_en', NEW.other_dem_intended_beneficiary_description_fr, 'other_dem_intended_beneficiary_description_fr');
+        END IF;
+        errors := errors || required_error(NEW.reason_amendment, 'reason_amendment');
+        errors := errors || choice_error(NEW.reason_amendment, {reason_amendment}, 'reason_amendment');
 
         errors := errors || required_error(NEW.agreement_start_date, 'agreement_start_date');
         IF NEW.agreement_start_date >= '2018-04-01'::date THEN
@@ -823,7 +773,7 @@ resources:
           errors := errors || required_error(NEW.description_fr, 'description_fr');
         END IF;
         NEW.agreement_value := round(NEW.agreement_value, 2);
-        NEW.foreign_currency_value := round(NEW.foreign_currency_value, 2);
+
         IF errors = '{{}}' THEN
           RETURN NEW;
         END IF;
@@ -834,6 +784,10 @@ resources:
 
   trigger_strings:  # yaml | not supported
     ref_number_error: Comma is not allowed in Reference Number field
+    max_length_error: This field has a maximum length of {} characters.
+    invalid_choice_error: 'Invalid choice: {}'
+    conditional_required_error: This field is required due to a response in a different field.
+    both_lang_error: This text must be provided in both languages
 
   examples:
     record:
@@ -845,34 +799,25 @@ resources:
       recipient_business_number: "123456789"
       recipient_legal_name: "ACME Services Limited|Services ACME Limitée"
       recipient_operating_name: "ACME"
-      research_organization_name: "York University|Université York"
       recipient_country: "CA"
       recipient_province: "ON"
       recipient_city: "Grand Falls|Grand-Sault"
       recipient_postal_code: "A1A 1A1"
-      federal_riding_name_en: "Winnipeg South Centre"
-      federal_riding_name_fr: "Winnipeg-Centre-Sud"
       federal_riding_number: "46014"
       prog_name_en: "Canada Granting Program"
       prog_name_fr: "Le programme de subvention du Canada"
       prog_purpose_en: "The Canada Granting Program encourage Canadians to learn about Canada’s geography, history, and economy. The Program provides networking opportunities to enhance recipients’ understanding of Canada."
       prog_purpose_fr: "Le programme de subventions du Canada incite les Canadiens à se renseigner sur la géographie, l’histoire et l’économie du Canada. Le programme offre des opportunités de réseautage pour aider les bénéficiaires d’améliorer leur compréhension du Canada."
-      agreement_title_en: "Building better buildings"
-      agreement_title_fr: "Construire des meilleurs bâtiments"
       agreement_number: "F1580-140737"
       agreement_value: "500000"
-      foreign_currency_type: "USD"
-      foreign_currency_value: "450000"
       agreement_start_date: "2019-04-01"
       agreement_end_date: "2020-04-30"
-      coverage: "Canada; Mexico|Mexique; United States|États-Unis"
       description_en: "Developing models and other tools to predict the safety performance of buildings."
       description_fr: "Met au point des modèles et d'autres outils pour prévoir la sécurité des bâtiments."
-      naics_identifier: "611710"
       expected_results_en: "Develop highly qualified personnel available to pursue various careers within industry, academia, government and other sectors of the economy."
       expected_results_fr: "Développé un personnel hautement qualifié prêt à mener une carrière variée au sein de l’industrie, du milieu académique, de la fonction publique ou dans d’autres secteurs de l’économie."
-      additional_information_en: "Recipient reallocates or redistributes grant or contribution awarded to third-party beneficiaries"
-      additional_information_fr: "Le bénéficiaire réaffecte ou redistribue la subvention ou la contribution octroyée à des tiers"
+      dem_intended_beneficiary: "Y"
+      reason_amendment: "S"
 
     filters:
       recipient_province: "ON"
@@ -881,107 +826,6 @@ resources:
       amendment_number: "0"
     sort: agreement_date desc
 
-
-- title: Proactive Publication - Grants and Contributions Nothing to Report
-  resource_name: grants-nil
-
-  published_resource_id: 4e4db232-f5e8-43c7-b8b2-439eb7d55475
-
-  create_form: true
-  edit_form: false #edit not possible for nil reports since only stored data is primary key
-  fields:
-
-  - datastore_id: fiscal_year
-    label:
-      en: Year
-      fr: Année
-    datastore_type: text
-    obligation: Mandatory
-    excel_required: true
-    form_required: true
-    extract_date_year: true
-    choices_file: choices/fiscal_year.yaml
-
-  - datastore_id: quarter
-    label:
-      en: Quarter
-      fr: Trimestre
-    datastore_type: text
-    obligation: Mandatory
-    excel_required: true
-    form_required: true
-    choices:
-      Q1:
-        en: April 1 - June 30
-        fr: 1 avril - 30 juin
-      Q2:
-        en: July 1 - September 30
-        fr: 1 juillet - 30 septembre
-      Q3:
-        en: October 1 - December 31
-        fr: 1 octobre - 31 décembre
-      Q4:
-        en: January 1 - March 31
-        fr: 1 janvier - 31 mars
-
-  - datastore_id: record_created
-    label: Record Creation Time
-    import_template_include: false
-    visible_to_public: false
-    datastore_type: timestamp
-    preview_class: bg-info
-
-  - datastore_id: record_modified
-    label: Last Record Modification Time
-    import_template_include: false
-    visible_to_public: false
-    datastore_type: timestamp
-    preview_class: bg-info
-
-  - datastore_id: user_modified
-    label: User Last Modified Record
-    import_template_include: false
-    visible_to_public: false
-    datastore_type: text
-    preview_class: bg-info
-
-  solr_static_fields:
-    nothing_to_report_en: Nothing to report for this period
-    nothing_to_report_fr: Rien à signaler pour cette période
-    amendment_number: current
-
-  datastore_primary_key: [fiscal_year, quarter]
-  datastore_indexes: ""
-
-  triggers:
-  - grants_nil_trigger: |
-      DECLARE
-        errors text[][] := '{{}}';
-        crval RECORD;
-      BEGIN
-        errors := errors || required_error(NEW.fiscal_year, 'fiscal_year');
-        errors := errors || choice_error(NEW.fiscal_year, {fiscal_year}, 'fiscal_year');
-        errors := errors || required_error(NEW.quarter, 'quarter');
-        errors := errors || choice_error(NEW.quarter, {quarter}, 'quarter');
-        IF errors = '{{}}' THEN
-          RETURN NEW;
-        END IF;
-        RAISE EXCEPTION E'TAB-DELIMITED\t%', array_to_string(errors, E'\t');
-      END;
-  - update_record_modified_created_trigger
-
-  examples:
-    record:
-      fiscal_year: 2016-2017
-      quarter: Q2
-    filters:
-      fiscal_year: 2016-2017
-    filter_one:
-      fiscal_year: 2016-2017
-      quarter: Q2
-    sort: fiscal_year desc, quarter desc
-
-# https://design.gccollab.ca/component/colour "Triad" colours 2, 5
 excel_edge_style:
   PatternFill:
     patternType: solid
