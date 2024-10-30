@@ -895,7 +895,7 @@ def _add_to_datastore(portal: LocalCKAN, resource: dict, resource_details: dict,
                 and _datastore_dictionary(portal, resource['id']) == resource_details['data_dict']:
             if verbose:
                 action += '\n  File hash and Data Dictionary has not changed, skipping DataStore for %s...' % resource['id']
-            return action
+            return action, error, failure_reason, failure_trace
         else:
             with _capture_exception_details('datastore_delete', resource['id']):
                 portal.call_action('datastore_delete', {"id": resource['id'], "force": True})
