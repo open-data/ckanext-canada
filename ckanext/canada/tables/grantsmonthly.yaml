@@ -533,7 +533,7 @@ resources:
     occurrence: Repeatable
     excel_required: true
     form_required: true
-    excel_full_text_choices: true    
+    excel_full_text_choices: true
     format_type: Controlled List
     validation:
       en: This field must not be empty.
@@ -578,6 +578,14 @@ resources:
         en: None
         fr: Aucun
         order: 9
+      U:
+        en: Not collected
+        fr: Non collecté
+        order: 10
+      C:
+        en: Collected but confidential
+        fr: Collecté mais confidentiel
+        order: 11
 
   # 3.27 Other Demographic of intended beneficiary Description (English)
   - datastore_id: other_dem_intended_beneficiary_description_en
@@ -599,7 +607,7 @@ resources:
       fr: TBD
     excel_required: false
     form_required: false
-    excel_column_width: 80
+    excel_column_width: 40
     validation:
       en: This field has a maximum length of 1800 characters. This text must be provided in both languages.
       fr: Ce champ ne peut excéder une longueur maximale de 1800 caractères. Ce texte doit être fourni en anglais et en français.
@@ -632,7 +640,7 @@ resources:
       fr: TBD
     excel_required: false
     form_required: false
-    excel_column_width: 80
+    excel_column_width: 40
     validation:
       en: This field has a maximum length of 1800 characters. This text must be provided in both languages.
       fr: Ce champ ne peut excéder une longueur maximale de 1800 caractères. Ce texte doit être fourni en anglais et en français.
@@ -686,6 +694,10 @@ resources:
         en: No amendment
         fr: Pas de changement
         order: 5
+      U:
+        en: Unknown
+        fr: Inconnu
+        order: 6
 
   # System fields for audit trail
   - datastore_id: record_created
