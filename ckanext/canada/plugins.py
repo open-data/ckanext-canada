@@ -674,6 +674,7 @@ class DataGCCAPublic(p.SingletonPlugin, DefaultTranslation):
         assert 'ckanext.canada:tables/contracts.yaml' in recombinant_definitions
         assert 'ckanext.canada:tables/contractsa.yaml' in recombinant_definitions
         assert 'ckanext.canada:tables/grants.yaml' in recombinant_definitions
+        assert 'ckanext.canada:tables/grantsmonthly.yaml' in recombinant_definitions
         assert 'ckanext.canada:tables/hospitalityq.yaml' in recombinant_definitions
         assert 'ckanext.canada:tables/reclassification.yaml' in recombinant_definitions
         assert 'ckanext.canada:tables/travela.yaml' in recombinant_definitions

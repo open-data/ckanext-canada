@@ -70,7 +70,7 @@
                 'required': required,
                 'help_text': description,
                 'choices': choice_fields[f.datastore_id],
-                'sorted_choices': true,
+                'sorted_choices': false if f.choice_order_expression else true,
                 'form_include_blank_choice': true,
               }, data=data, errors=errors %}
           {%- else %}
