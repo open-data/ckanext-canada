@@ -456,6 +456,8 @@ rebuild-hospitalityq: $(workdir)/filtered/hospitalityq.csv $(workdir)/filtered/h
 	@$(echo_date) Rebuilding Hospitality Expenses...
 	$(ckan_command) -c $(portal_ini) pd rebuild hospitalityq --lenient --has-nil \
 	-f "$(workdir)/filtered/hospitalityq.csv" -f "$(workdir)/filtered/hospitalityq-nil.csv"
+	@$(oc_search) import_data_csv --csv "$(workdir)/filtered/hospitalityq.csv" --search hospitalityq --quiet
+	@$(oc_search) import_data_csv --csv "$(workdir)/filtered/hospitalityq-nil.csv" --search hospitalityq --quiet --nothing_to_report
 
 $(workdir)/hospitalityq.csv:
 	$(ckan_command) -c $(registry_ini) $(combine) hospitalityq -d $(workdir)
