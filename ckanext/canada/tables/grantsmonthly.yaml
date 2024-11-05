@@ -633,12 +633,13 @@ resources:
         group”. This field has a maximum length of 1800 
         characters. This text must be provided in both languages.
       fr: >
-        TBD
+        Ce champ est obligatoire si l'option « Autre » est choisie 
+        pour le champ « Groupe démographique des bénéficiaires visés ».
         Ce champ ne peut excéder une longueur maximale de 1800 
         caractères. Ce texte doit être fourni en anglais et en français.
     obligation:
-      en: This field is mandatory if “Other” is chosen as an option for the field “Intended Beneficiary demographic group”.
-      fr: TBD
+      en: Mandatory if “Other” is chosen as an option for the field “Intended Beneficiary demographic group”.
+      fr: Obligatoire si l'option « Autre » est choisie pour le champ « Groupe démographique des bénéficiaires visés ».
     excel_required: false
     form_required: false
     excel_column_width: 40
