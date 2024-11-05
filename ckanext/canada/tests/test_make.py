@@ -400,10 +400,10 @@ class TestMakePD(CanadaTestBase):
 
         stdout = stdout.decode("utf-8")
 
-        # Drupal/Solr, test for record indexing
+        # Django, just test for command output from echo
         assert "Usage:" not in stdout
         assert "rebuild-hospitalityq] Error" not in stdout
-        assert '%s 1' % self.org['name'] in stdout
+        assert 'import_data_csv' in stdout
 
 
     def test_make_travelq(self):
@@ -475,10 +475,10 @@ class TestMakePD(CanadaTestBase):
 
         stdout = stdout.decode("utf-8")
 
-        # Drupal/Solr, test for record indexing
+        # Django, just test for command output from echo
         assert "Usage:" not in stdout
         assert "rebuild-reclassification] Error" not in stdout
-        assert '%s 1' % self.org['name'] in stdout
+        assert 'import_data_csv' in stdout
 
 
     def test_make_service(self):
