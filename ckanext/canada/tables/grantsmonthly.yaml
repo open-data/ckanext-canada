@@ -1,8 +1,8 @@
 dataset_type: grantsmonthly
 target_dataset: grantsmonthly
-title: Proactive Publication - Grants and Contributions (Monthly)
-shortname: Grants and Contributions (Monthly)
-notes: Access, upload and modify the Grants and Contributions monthly reports for your organization
+title: Proactive Publication - Grants and Contributions Data Sharing Pilot
+shortname: Grants and Contributions Data Sharing Pilot
+notes: Access, upload and modify the Grants and Contributions Data Sharing Pilot reports for your organization
 
 template_version: 3
 template_updated: 2024-10-25
@@ -11,7 +11,7 @@ portal_type: info
 collection: pd
 
 resources:
-- title: Proactive Publication - Grants and Contributions (Monthly)
+- title: Proactive Publication - Grants and Contributions Data Sharing Pilot
   resource_name: grantsmonthly
 
   published_resource_id: TBD
@@ -599,12 +599,13 @@ resources:
         group”. This field has a maximum length of 1800 
         characters. This text must be provided in both languages.
       fr: >
-        TBD
+        Ce champ est obligatoire si l'option « Autre » est choisie 
+        pour le champ « Groupe démographique des bénéficiaires visés ».
         Ce champ ne peut excéder une longueur maximale de 1800 
         caractères. Ce texte doit être fourni en anglais et en français.
     obligation:
-      en: This field is mandatory if “Other” is chosen as an option for the field “Intended Beneficiary demographic group”.
-      fr: TBD
+      en: Mandatory if “Other” is chosen as an option for the field “Intended Beneficiary demographic group”.
+      fr: Obligatoire si l'option « Autre » est choisie pour le champ « Groupe démographique des bénéficiaires visés ».
     excel_required: false
     form_required: false
     excel_column_width: 40
@@ -829,6 +830,8 @@ resources:
       expected_results_en: "Develop highly qualified personnel available to pursue various careers within industry, academia, government and other sectors of the economy."
       expected_results_fr: "Développé un personnel hautement qualifié prêt à mener une carrière variée au sein de l’industrie, du milieu académique, de la fonction publique ou dans d’autres secteurs de l’économie."
       dem_intended_beneficiary: "Y"
+      other_dem_intended_beneficiary_description_en: "immigrant owned"
+      other_dem_intended_beneficiary_description_fr: "appartenant à des immigrés"
       reason_amendment: "S"
 
     filters:
