@@ -454,8 +454,6 @@ upload-hospitalityq: $(workdir)/filtered/hospitalityq.csv $(workdir)/filtered/ho
 .PHONY: rebuild-hospitalityq
 rebuild-hospitalityq: $(workdir)/filtered/hospitalityq.csv $(workdir)/filtered/hospitalityq-nil.csv
 	@$(echo_date) Rebuilding Hospitality Expenses...
-	$(ckan_command) -c $(portal_ini) pd rebuild hospitalityq --lenient --has-nil \
-	-f "$(workdir)/filtered/hospitalityq.csv" -f "$(workdir)/filtered/hospitalityq-nil.csv"
 	@$(oc_search) import_data_csv --csv "$(workdir)/filtered/hospitalityq.csv" --search hospitalityq --quiet
 	@$(oc_search) import_data_csv --csv "$(workdir)/filtered/hospitalityq-nil.csv" --search hospitalityq --quiet --nothing_to_report
 
@@ -556,9 +554,6 @@ upload-reclassification: $(workdir)/filtered/reclassification.csv $(workdir)/fil
 .PHONY: rebuild-reclassification
 rebuild-reclassification: $(workdir)/filtered/reclassification.csv $(workdir)/filtered/reclassification-nil.csv
 	@$(echo_date) Rebuilding Position Reclassification...
-	$(ckan_command) -c $(portal_ini) pd rebuild reclassification --lenient --has-nil \
-	-f "$(workdir)/filtered/reclassification.csv" -f "$(workdir)/filtered/reclassification-nil.csv"
-	@$(echo_date) Rebuilding Advanced Search...
 	@$(oc_search) import_data_csv --csv "$(workdir)/filtered/reclassification.csv" --search reclassification
 	@$(oc_search) import_data_csv --csv "$(workdir)/filtered/reclassification-nil.csv" --search reclassification --nothing_to_report	
 
