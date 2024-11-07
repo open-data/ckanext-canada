@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  CKAN\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-10-10 13:20+0000\n"
+"POT-Creation-Date: 2024-11-07 13:22+0000\n"
 "PO-Revision-Date: 2014-01-23 13:04+0000\n"
 "Last-Translator: Sean Hammond <sean.hammond@okfn.org>\n"
 "Language: en\n"
@@ -3052,7 +3052,9 @@ msgid "New activity item"
 msgstr ""
 
 #: ckanext/canada/templates/snippets/activity_stream.html:8
-msgid "View the past 30 days of activity."
+msgid ""
+"View the past 60 days of metadata activity and the past 150 days of "
+"DataStore activity."
 msgstr ""
 
 #: ckanext/canada/templates/snippets/dataset_facets.html:6
@@ -8575,5 +8577,8 @@ msgstr ""
 #~ "    * Special characters: ({}[],.<>;:'\"?/|\\`~!@#$%%^&*()_-+=).\n"
 #~ "2. No accented characters are permitted.\n"
 #~ "3. All passwords must be at least 12 characters long.\n"
+#~ msgstr ""
+
+#~ msgid "View the past 30 days of activity."
 #~ msgstr ""
 
