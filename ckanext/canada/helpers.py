@@ -901,3 +901,9 @@ def is_user_locked(user_name):
         return True
 
     return False
+
+
+def max_resources_per_dataset():
+    max_resource_count = config.get('ckanext.canada.max_resources_per_dataset', None)
+    if max_resource_count:
+        return int(max_resource_count)

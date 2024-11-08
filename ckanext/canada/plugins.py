@@ -139,6 +139,7 @@ class CanadaThemePlugin(p.SingletonPlugin):
             'search_filter_pill_link_label',
             'release_date_facet_start_year',
             'ckan_to_cdts_breadcrumbs',
+            'max_resources_per_dataset',
         ])
 
 
@@ -865,6 +866,8 @@ class DataGCCAForms(p.SingletonPlugin, DefaultDatasetForm):
                 validators.canada_output_none,
             'protect_registry_access':
                 validators.protect_registry_access,
+            'limit_resources_per_dataset':
+                validators.limit_resources_per_dataset,
             }
 
 

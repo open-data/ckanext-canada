@@ -5,7 +5,7 @@ import unicodedata
 
 from six import text_type
 
-from ckan.plugins.toolkit import _, get_action, ValidationError, ObjectNotFound
+from ckan.plugins.toolkit import _, get_action, ValidationError, ObjectNotFound, config
 from ckan.lib.navl.validators import StopOnError
 from ckan.authz import is_sysadmin
 from ckan import model
@@ -530,4 +530,36 @@ def protect_registry_access(key, data, errors, context):
         errors[key].append(_("Cannot change value of registry_access field"
                            " from '%s' to '%s'. This field is read-only." %
                            (original, value)))
+        raise StopOnError
+
+
+def limit_resources_per_dataset(key, data, errors, context):
+    """
+    Limits the number of resources per dataset.
+    """
+    package_id = data.get(key[:-1] + ('id',))
+
+    max_resource_count = config.get('ckanext.canada.max_resources_per_dataset', None)
+    if not max_resource_count:
+        return
+
+    new_resource_count = len(set(k[1] for k in data.keys() if k[0] == 'resources'))
+    if not new_resource_count:
+        return
+
+    current_resource_count = model.Session.query(model.Resource.id)\
+        .filter(model.Resource.package_id == package_id)\
+        .filter(model.Resource.state == 'active').count()
+    if not current_resource_count:
+        return
+
+    if new_resource_count == current_resource_count:
+        # no resources are being added, allow for metadata updates
+        return
+
+    if new_resource_count > int(max_resource_count):
+        errors[('resource_count',)] = [_(f'You can only add up to {max_resource_count} resources to a dataset. '
+                                          'You can segment your resources across multiple datasets or merge your '
+                                          'data to limit the number of resources. Please contact '
+                                          'open-ouvert@tbs-sct.gc.ca if you need further assistance.')]
         raise StopOnError
