@@ -197,6 +197,7 @@ resources:
       fr: Note, use the format {City Name}, {Country Name} (e.g. Ottawa, Canada or New York City, United States of America)
     obligation: Mandatory
     excel_required: true
+    #TODO: figure out Excel formula for this...
     excel_error_formula: 'AND(NOT(ISBLANK({cell})),IFERROR(REGEX({cell},"^\s*([^,]+?)\s*,\s*([^,]+?)\s*$"),1))'
     form_required: true
     validation:
@@ -590,6 +591,13 @@ resources:
           NEW.destination_3_fr := crval.clean;
 
           errors := errors || both_languages_error(NEW.destination_other_en, 'destination_other_en', NEW.destination_other_fr, 'destination_other_fr');
+          crval := multi_destination_clean_error(NEW.destination_other_en, 'destination_other_en');
+          errors := errors || crval.error;
+          NEW.destination_other_en := crval.clean;
+
+          crval := multi_destination_clean_error(NEW.destination_other_fr, 'destination_other_fr');
+          errors := errors || crval.error;
+          NEW.destination_other_fr := crval.clean;
 
           errors := errors || required_error(NEW.lodging, 'lodging');
           errors := errors || required_error(NEW.meals, 'meals');
@@ -611,6 +619,7 @@ resources:
   trigger_strings:  # yaml | not supported
     ref_number_error: Comma is not allowed in Reference Number field
     destination_format_error: Invalid format for destination. Use {City Name}, {Country Name} (e.g. Ottawa, Canada or New York City, United States of America)
+    multi_destination_format_error: Invalid format for multiple destinations. Use {City Name}, {Country Name};{City 2 Name}, {Country 2 Name} (e.g. Ottawa, Canada;New York City, United States of America)
 
   examples:
     record:

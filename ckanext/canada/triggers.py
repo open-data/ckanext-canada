@@ -310,13 +310,42 @@ def update_triggers():
         rettype='record',
         definition='''
             DECLARE
-                destination_match text := array_to_string(regexp_match(value, '^\s*([^,]+?)\s*,\s*([^,]+?)\s*$'), ', ');
+                destination_match text := array_to_string(regexp_match(value, '^\s*([A-Za-zÀ-ÿ''\s\-\.]+?)\s*,\s*([A-Za-zÀ-ÿ''\s\-\.]+?)\s*$'), ', ');
             BEGIN
                 IF value <> '' AND destination_match IS NULL THEN
                     error := ARRAY[[field_name, 'Invalid format for destination. Use {City Name}, {Country Name} (e.g. Ottawa, Canada or New York City, United States of America)']];
                 END IF;
                 IF destination_match IS NOT NULL THEN
                     clean := destination_match;
+                END IF;
+            END;
+        ''')
+
+    # return record with .clean (normalized value) and .error
+    # (NULL or ARRAY[[field_name, error_message]])
+    lc.action.datastore_function_create(
+        name='multi_destination_clean_error',
+        or_replace=True,
+        arguments=[
+            {'argname': 'value', 'argtype': 'text'},
+            {'argname': 'field_name', 'argtype': 'text'},
+            {'argname': 'clean', 'argtype': 'text', 'argmode': 'out'},
+            {'argname': 'error', 'argtype': '_text', 'argmode': 'out'}],
+        rettype='record',
+        definition='''
+            DECLARE
+                destination_matches text[] := regexp_match(value, '^([A-Za-zÀ-ÿ''\s\-\.]+,\s*[A-Za-zÀ-ÿ''\s\-\.]+)(?:;\s*([A-Za-zÀ-ÿ''\s\-\.]+,\s*[A-Za-zÀ-ÿ''\s\-\.]+))*$');
+                destination_match text;
+                clean_val text := NULL;
+            BEGIN
+                IF value <> '' AND destination_matches IS NULL THEN
+                    error := ARRAY[[field_name, 'Invalid format for multiple destinations. Use {City Name}, {Country Name};{City 2 Name}, {Country 2 Name} (e.g. Ottawa, Canada;New York City, United States of America)']];
+                END IF;
+                IF destination_matches IS NOT NULL THEN
+                    FOREACH destination_match IN ARRAY destination_matches LOOP
+                        clean_val := array_to_string(ARRAY[clean_val, array_to_string(regexp_match(destination_match, '^\s*([A-Za-zÀ-ÿ''\s\-\.]+?)\s*,\s*([A-Za-zÀ-ÿ''\s\-\.]+?)\s*$'), ', ')], ';');
+                    END LOOP;
+                    clean := clean_val;
                 END IF;
             END;
         ''')
