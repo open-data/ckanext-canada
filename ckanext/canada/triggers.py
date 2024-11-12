@@ -297,6 +297,30 @@ def update_triggers():
             END;
         ''')
 
+    # return record with .clean (normalized value) and .error
+    # (NULL or ARRAY[[field_name, error_message]])
+    lc.action.datastore_function_create(
+        name='destination_clean_error',
+        or_replace=True,
+        arguments=[
+            {'argname': 'value', 'argtype': 'text'},
+            {'argname': 'field_name', 'argtype': 'text'},
+            {'argname': 'clean', 'argtype': 'text', 'argmode': 'out'},
+            {'argname': 'error', 'argtype': '_text', 'argmode': 'out'}],
+        rettype='record',
+        definition='''
+            DECLARE
+                destination_match text := array_to_string(regexp_match(value, '^\s*([^,]+?)\s*,\s*([^,]+?)\s*$'), ', ');
+            BEGIN
+                IF value <> '' AND destination_match IS NULL THEN
+                    error := ARRAY[[field_name, 'Invalid format for destination. Use {City Name}, {Country Name} (e.g. Ottawa, Canada or New York City, United States of America)']];
+                END IF;
+                IF destination_match IS NOT NULL THEN
+                    clean := destination_match;
+                END IF;
+            END;
+        ''')
+
     lc.action.datastore_function_create(
         name=u'must_be_empty_error',
         or_replace=True,

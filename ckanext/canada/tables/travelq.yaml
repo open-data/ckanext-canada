@@ -197,8 +197,15 @@ resources:
       fr: Note, use the format {City Name}, {Country Name} (e.g. Ottawa, Canada or New York City, United States of America)
     obligation: Mandatory
     excel_required: true
+    excel_error_formula: 'AND(NOT(ISBLANK({cell})),IFERROR(REGEX({cell},"^\s*([^,]+?)\s*,\s*([^,]+?)\s*$"),1))'
     form_required: true
-    validation: This field must not be empty
+    validation:
+      en: |
+        This field must not be empty
+        Must be in the format of {City Name}, {Country Name}
+      fr: |
+        This field must not be empty
+        Must be in the format of {City Name}, {Country Name}
     format_type:
       en: Free text – Note, use the format {City Name}, {Country Name} (e.g. Ottawa, Canada or New York City, United States of America)
       fr: Free text – Note, use the format {City Name}, {Country Name} (e.g. Ottawa, Canada or New York City, United States of America)
@@ -553,18 +560,37 @@ resources:
           errors := errors || required_error(NEW.purpose_en, 'purpose_en');
           errors := errors || required_error(NEW.purpose_fr, 'purpose_fr');
           errors := errors || required_error(NEW.end_date, 'end_date');
+
           errors := errors || required_error(NEW.destination_en, 'destination_en');
-          NEW.destination_en := array_to_string(regexp_match(NEW.destination_en, '^\s*([^,]+?)\s*,\s*([^,]+?)\s*$'), ', ');
-          IF NEW.destination_en !~ '^\s*([^,]+)\s*,\s*([^,]+)\s*$' THEN
-            errors := errors || ARRAY[['destination_en', {destination_format_error}]];
-          END IF;
+          crval := destination_clean_error(NEW.destination_en, 'destination_en');
+          errors := errors || crval.error;
+          NEW.destination_en := crval.clean;
+
           errors := errors || required_error(NEW.destination_fr, 'destination_fr');
-          IF NEW.destination_fr !~ '^\s*([^,]+)\s*,\s*([^,]+)\s*$' THEN
-            errors := errors || ARRAY[['destination_fr', {destination_format_error}]];
-          END IF;
+          crval := destination_clean_error(NEW.destination_fr, 'destination_fr');
+          errors := errors || crval.error;
+          NEW.destination_fr := crval.clean;
+
           errors := errors || both_languages_error(NEW.destination_2_en, 'destination_2_en', NEW.destination_2_fr, 'destination_2_fr');
+          crval := destination_clean_error(NEW.destination_2_en, 'destination_2_en');
+          errors := errors || crval.error;
+          NEW.destination_2_en := crval.clean;
+
+          crval := destination_clean_error(NEW.destination_2_fr, 'destination_2_fr');
+          errors := errors || crval.error;
+          NEW.destination_2_fr := crval.clean;
+
           errors := errors || both_languages_error(NEW.destination_3_en, 'destination_3_en', NEW.destination_3_fr, 'destination_3_fr');
+          crval := destination_clean_error(NEW.destination_3_en, 'destination_3_en');
+          errors := errors || crval.error;
+          NEW.destination_3_en := crval.clean;
+
+          crval := destination_clean_error(NEW.destination_3_fr, 'destination_3_fr');
+          errors := errors || crval.error;
+          NEW.destination_3_fr := crval.clean;
+
           errors := errors || both_languages_error(NEW.destination_other_en, 'destination_other_en', NEW.destination_other_fr, 'destination_other_fr');
+
           errors := errors || required_error(NEW.lodging, 'lodging');
           errors := errors || required_error(NEW.meals, 'meals');
           errors := errors || required_error(NEW.total, 'total');
