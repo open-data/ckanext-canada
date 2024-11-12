@@ -8,7 +8,7 @@
 
 {% block form %}
   {% set max_resource_count = h.max_resources_per_dataset() %}
-  {% if g.is_registry and max_resource_count and (pkg_dict.resources|length + 1) > max_resource_count %}
+  {% if g.is_registry and max_resource_count and pkg_dict.resources|length >= max_resource_count %}
     <div class="row">
       <div class="col-md-12 canada-flash-messages">
         <div>

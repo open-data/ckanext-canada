@@ -35,7 +35,7 @@
     {% block internal_actions %}
       {% if g.is_registry %}
         {% set max_resource_count = h.max_resources_per_dataset() %}
-        {% if max_resource_count and (pkg.resources|length + 1) > max_resource_count %}
+        {% if max_resource_count and pkg.resources|length >= max_resource_count %}
           <div class="row">
             <div class="col-md-12 canada-flash-messages">
               <div>
