@@ -227,7 +227,7 @@ msgstr ""
 #: ckanext/canada/logic.py:547
 #, python-format
 msgid "No Portal Sync information found for package %s"
-msgstr ""
+msgstr "No Portal Sync information found for dataset %s"
 
 #: ckanext/canada/plugins.py:709
 #: ckanext/canada/templates/scheming/package/snippets/package_form.html:25
@@ -1934,7 +1934,7 @@ msgstr ""
 #: ckanext/canada/templates/admin/base.html:18
 #: ckanext/canada/templates/admin/portal_sync.html:4
 msgid "Out of Sync Packages"
-msgstr ""
+msgstr "Out of Sync Datasets"
 
 #: ckanext/canada/templates/admin/index.html:7
 msgid "Administer CKAN"
@@ -1973,13 +1973,15 @@ msgstr ""
 
 #: ckanext/canada/templates/admin/portal_sync.html:30
 msgid "View Out of Sync Packages"
-msgstr ""
+msgstr "View Out of Sync Datasets"
 
 #: ckanext/canada/templates/admin/portal_sync.html:34
 msgid ""
 "View packages that are out of sync on the Portal and why they have not "
 "been synced."
 msgstr ""
+"View datasets that are out of sync on the Portal and why they have not "
+"been synced."
 
 #: ckanext/canada/templates/admin/publish_search.html:11
 #: ckanext/canada/templates/package/search.html:13
