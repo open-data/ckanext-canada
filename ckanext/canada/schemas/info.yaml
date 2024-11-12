@@ -2,6 +2,8 @@
 scheming_version: 1
 dataset_type: info
 
+before_validators: limit_resources_per_dataset
+
 about: 'open.canada.ca: open information metadata definition'
 about_url: http://github.com/open-data/ckanext-canada
 catalog_type_label:
@@ -70,13 +72,13 @@ dataset_fields:
 # Field = Title French.
 # {The French name by which the asset is known}
 - preset: canada_title
- 
+
 # Field = Publisher - Current Organization Name.
 # List box Source: Publisher - Current Organization Name code table (refer to Data Migration).
 # Populate the list box with the Titles of all the organizations the currently logged-in user is linked to.
 # {The Title of the current Organization (GC Department or Agency) primarily responsible for publishing the asset}
 - preset: canada_owner_org
-  
+
 # Field = Publisher - Organization Name at Publication (English).
 # {The organization Title at publication Time}
 # Field = Publisher - Organization Name at Publication (French).
@@ -88,17 +90,17 @@ dataset_fields:
 # Field = Publisher - Organization Section Name French.
 # {The French names of the work groups, units of work, business units, etc. of the organization that publishes the asset (separate multiple names by commas).}
 - preset: canada_org_section_name
-  
+
 # Field = Creator.
 # { Individual entities (persons) primarily responsible for making the asset (separate multiple entities by commas).}
 - preset: canada_creator
- 
+
 # Field = Contributor English.
 # {The English names of entities (persons, groups, GC Departments or Agencies) that contributed to the asset (separate multiple entities by commas).}
 # Field = Contributor French.
 # {The French names of entities (persons, groups, GC Departments or Agencies) that contributed to the asset (separate multiple entities by commas).}
 - preset: canada_contributor
-  
+
 # Field = Contact Email.
 # {The contact person's email for the information asset}
 - preset: canada_maintainer_email
@@ -116,7 +118,7 @@ dataset_fields:
 # Markdown formatting Property = http://daringfireball.net/projects/markdown/syntax
 # {An account of the information asset, in French. A description may include abstract, table of contents or a free-text.}
 - preset: canada_notes
-  
+
 # Field = Note English.
 # { General information relating to an asset, in English }
 # Field = Note English.
@@ -150,17 +152,17 @@ dataset_fields:
 # Field = Keywords French.
 # {Commonly used words or phrases which describe the asset, in French}
 - preset: canada_keywords
-  
+
 # Field = Subject.
 # List box Source: Subject code table (refer to Data Migration).
 # {The topic of the content of the information asset. You may select or deselect multiple subjects (Ctrl+Click).}
 - preset: canada_subject
- 
+
 # Field = Audience.
 # List box Source: Audience code table (refer to Data Migration).
 # {A description of the audience or group of people for whom the described asset is intended or useful. You may select or deselect multiple options (Ctrl+Click).}
 - preset: canada_audience
- 
+
 # Field = Place pf Publication.
 # List box Source: Geographic Region Name code table (refer to Data Migration).
 # {The region where the asset was originally published}
@@ -182,17 +184,17 @@ dataset_fields:
 # Format: {Province – Region}, e.g. Ontario – Sudbury.
 # {The geographic region of an asset. You may or deselect multiple regions (Ctrl+Click).}
 - preset: canada_geographic_region
-  
+
 # Field = Time Period Coverage Start Date.
 # Add a Calendar control to select a Date.
 # {The start date of the period covered by the asset (YYYY-MM-DD)}
 - preset: canada_time_period_coverage_start
-  
+
 # Field = Time Period Coverage End Date.
 # Add a Calendar control to select a Date.
 # {The end date of the period covered by the asset (YYYY-MM-DD)}
 - preset: canada_time_period_coverage_end
-  
+
 # Field = Issuance.
 # List box Source: Issuance code table (refer to Data Migration).
 # { A term that designates how the resource is issued }
@@ -324,12 +326,12 @@ dataset_fields:
 # Add a Calendar control to select a Date.
 # {The date of issuance (e.g., publication) of the information asset (YYYY-MM-DD)}
 - preset: canada_date_published
- 
+
 # Field = Date Modified.
 # Add a Calendar control to select a Date.
 # {The date on which the information asset was updated (YYYY-MM-DD)}
 - preset: canada_date_modified
- 
+
 # Field = Date Created.
 # Add a Calendar control to select a Date.
 # {The date of creation of the asset (YYYY-MM-DD)}
@@ -391,19 +393,19 @@ dataset_fields:
 # Field = Homepage French.
 # {A program or homepage that can benavigated to gain additional or contextual information about the asset.}
 - preset: canada_program_page_url
-  
+
 # Field = Series Title English.
 # {The English name of the series, or aggregate asset, of which the asset is a part}
 # Field = Series Title French.
 # {The French name of the series, or aggregate asset, of which the asset is a part}
 - preset: canada_data_series_name
-  
+
 # Field = Series Issue ID English.
 # {English identification of the series’ issue information}
 # Field = Series Issue ID French.
 # {French identification of the series’ issue information}
 - preset: canada_data_series_issue_identification
-  
+
 # Field = ISBN.
 # {The identification of the asset’s - International Standard Book Number, a unique identifier assigned to many types of publications except serials by a registration agency.}
 - field_name: isbn
@@ -454,38 +456,38 @@ dataset_fields:
 # Field = Digital Object Identifier DOI.
 # {The Digital Object Identifier assigned to the asset. For more information visit: http://cisti-icist.nrc-cnrc.gc.ca/eng/services/cisti/datacite-canada/index.html}
 - preset: canada_digital_object_identifier
-  
+
 # Field = Jurisdiction.
 # {The extent or range of judicial, law enforcement or other authority. Example: Level of government that contributed the asset.}
 - preset: canada_jurisdiction
-  
+
 # Field = Licence.
 # Populate the list box with the licence options from the Registry.
 # {The licence applied to the information asset}
 - preset: canada_license_id
-  
+
 # Field = Access Restrictions.
 # Default Value = Unrestricted.
 # {These are the access restrictions of the asset}
 - preset: canada_restrictions
-  
+
 # Field = IMSO Approval.
 # List box options are Yes and No.
 # {Has IMSO approval been obtained for this asset? By selecting yes, you agree to release this asset under the Open Government Licence - Canada}
 # http://open.canada.ca/en/open-government-licence-canada
 - preset: canada_imso_approval
-  
+
 # Field = Ready to Publish.
 # List box options are Yes and No.
 # {Selecting ‘Yes’ will set this asset as ready to publish on the Open Government Portal. Selecting ‘No’ will saved it as a ‘draft’}
 - preset: canada_ready_to_publish
-  
+
 # Field = Date Released.
 # Available only for an Admin user.
 # Add a Calendar control to select a Date.
 # {The date the asset may be published on the Portal (YYYY-MM-DD)}
 - preset: canada_portal_release_date
-  
+
 
 #
 #   RESOURCE FIELDS
@@ -528,16 +530,16 @@ resource_fields:
 - preset: canada_resource_size
 
 # Field = Character Set.
-# {This is the character set of the dataset} 
+# {This is the character set of the dataset}
 - preset: canada_resource_character_set
 
 # Field = Language.
 # List box Source: Language code table (refer to Data Migration).
-# Order: Blank, English and French first, followed by all other language options in alphabetic order. 
+# Order: Blank, English and French first, followed by all other language options in alphabetic order.
 # {The language of the resource}
 - preset: canada_resource_language
 
-# This control opens a file selection dialogue in order to find and select a file to upload as a resource.  
+# This control opens a file selection dialogue in order to find and select a file to upload as a resource.
 # Label = Upload URL.
 # {The location for online access to the distribution of the resource}
 # Field = Location.
