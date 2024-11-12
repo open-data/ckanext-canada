@@ -547,17 +547,20 @@ def limit_resources_per_dataset(key, data, errors, context):
     if not new_resource_count:
         return
 
-    current_resource_count = model.Session.query(model.Resource.id)\
-        .filter(model.Resource.package_id == package_id)\
-        .filter(model.Resource.state == 'active').count()
-    if not current_resource_count:
-        return
-
-    if new_resource_count == current_resource_count:
-        # no resources are being added, allow for metadata updates
-        return
-
     if new_resource_count > int(max_resource_count):
+
+        # check if a new resource is being added or not, as we need to allow
+        # for metadata updates still.
+        current_resource_count = model.Session.query(model.Resource.id)\
+            .filter(model.Resource.package_id == package_id)\
+            .filter(model.Resource.state == 'active').count()
+        if not current_resource_count:
+            return
+
+        if new_resource_count == current_resource_count:
+            # no resources are being added, allow for metadata updates
+            return
+
         errors[('resource_count',)] = [_(f'You can only add up to {max_resource_count} resources to a dataset. '
                                           'You can segment your resources across multiple datasets or merge your '
                                           'data to limit the number of resources. Please contact '
