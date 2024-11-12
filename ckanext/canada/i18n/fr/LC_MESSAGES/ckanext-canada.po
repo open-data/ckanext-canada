@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-11-12 14:26+0000\n"
+"POT-Creation-Date: 2024-11-12 15:06+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: fr\n"
@@ -117,45 +117,45 @@ msgstr ""
 msgid "Invalid business number"
 msgstr "Numéro d’entreprise non valide"
 
-#: ckanext/canada/helpers.py:288 ckanext/canada/helpers.py:289
+#: ckanext/canada/helpers.py:290 ckanext/canada/helpers.py:291
 msgid "Treasury Board of Canada Secretariat"
 msgstr "Secrétariat du Conseil du Trésor du Canada"
 
-#: ckanext/canada/helpers.py:580 ckanext/canada/strings.py:13
+#: ckanext/canada/helpers.py:582 ckanext/canada/strings.py:13
 #: ckanext/canada/view.py:1198
 msgid "Members not found"
 msgstr "Membres non trouvés"
 
-#: ckanext/canada/helpers.py:706
+#: ckanext/canada/helpers.py:708
 msgid "Data awaiting load to DataStore"
 msgstr "Le versement des données dans DataStore est en attente"
 
-#: ckanext/canada/helpers.py:707
+#: ckanext/canada/helpers.py:709
 msgid "Loading data into DataStore"
 msgstr "Le versement des données dans DataStore est en cours"
 
-#: ckanext/canada/helpers.py:708
+#: ckanext/canada/helpers.py:710
 msgid "Data loaded into DataStore"
 msgstr "Les données ont été versées dans DataStore"
 
-#: ckanext/canada/helpers.py:709
+#: ckanext/canada/helpers.py:711
 msgid "Failed to load data into DataStore"
 msgstr "Les données n'ont pas été versées dans DataStore"
 
-#: ckanext/canada/helpers.py:710
+#: ckanext/canada/helpers.py:712
 msgid "Data available in DataStore"
 msgstr "Les données sont disponibles dans DataStore"
 
-#: ckanext/canada/helpers.py:711
+#: ckanext/canada/helpers.py:713
 msgid "Resource not active in DataStore"
 msgstr "La ressource est inactive dans DataStore"
 
-#: ckanext/canada/helpers.py:712
+#: ckanext/canada/helpers.py:714
 msgid "DataStore status unknown"
 msgstr "L'état de DataStore est inconnu"
 
 # Search facets
-#: ckanext/canada/helpers.py:779
+#: ckanext/canada/helpers.py:781
 #: ckanext/canada/templates/home/quick_links.html:65
 #: ckanext/canada/templates/scheming/package/snippets/package_form.html:28
 #: ckanext/canada/templates/snippets/cdts/header.html:31
@@ -165,7 +165,7 @@ msgstr "L'état de DataStore est inconnu"
 msgid "Open Data"
 msgstr "Données ouvertes"
 
-#: ckanext/canada/helpers.py:780
+#: ckanext/canada/helpers.py:782
 #: ckanext/canada/templates/home/quick_links.html:79
 #: ckanext/canada/templates/scheming/package/snippets/package_form.html:30
 #: ckanext/canada/templates/snippets/cdts/header.html:54
@@ -175,22 +175,22 @@ msgstr "Données ouvertes"
 msgid "Open Information"
 msgstr "Information ouverte"
 
-#: ckanext/canada/helpers.py:789
+#: ckanext/canada/helpers.py:791
 #: ckanext/canada/templates/snippets/dataset_facets.html:26
 msgid "Request sent to data owner - awaiting response"
 msgstr "Demande envoyée au propriétaire des données, en attente de réponse"
 
-#: ckanext/canada/helpers.py:793
+#: ckanext/canada/helpers.py:795
 #: ckanext/canada/templates/snippets/publish_facet.html:43
 msgid "Pending"
 msgstr "En attente"
 
-#: ckanext/canada/helpers.py:794 ckanext/canada/templates/package/read.html:15
+#: ckanext/canada/helpers.py:796 ckanext/canada/templates/package/read.html:15
 #: ckanext/canada/templates/snippets/publish_facet.html:43
 msgid "Draft"
 msgstr "Ébauche"
 
-#: ckanext/canada/helpers.py:803
+#: ckanext/canada/helpers.py:805
 #: ckanext/canada/templates/home/quick_links.html:133
 #: ckanext/canada/templates/snippets/cdts/header.html:57
 #: ckanext/canada/templates/snippets/dataset_facets.html:31
@@ -199,25 +199,25 @@ msgstr "Ébauche"
 msgid "Proactive Publication"
 msgstr "Publication proactive"
 
-#: ckanext/canada/helpers.py:825
+#: ckanext/canada/helpers.py:827
 #: ckanext/canada/templates/snippets/publish_facet.html:24
 msgid "Published"
 msgstr "Publié"
 
-#: ckanext/canada/helpers.py:827
+#: ckanext/canada/helpers.py:829
 #: ckanext/canada/templates/snippets/publish_facet.html:33
 msgid "Scheduled"
 msgstr "Prévu"
 
-#: ckanext/canada/helpers.py:862
+#: ckanext/canada/helpers.py:864
 msgid "Registry Home"
 msgstr "Accueil du registre"
 
-#: ckanext/canada/helpers.py:867
+#: ckanext/canada/helpers.py:869
 msgid "Open Government"
 msgstr "Gouvernement ouvert"
 
-#: ckanext/canada/helpers.py:870
+#: ckanext/canada/helpers.py:872
 #: ckanext/canada/templates/admin/publish_search.html:18
 #: ckanext/canada/templates/home/quick_links.html:104
 #: ckanext/canada/templates/organization/snippets/organization_search.html:7
@@ -241,63 +241,63 @@ msgstr "Tâche inconnue "
 msgid "No Portal Sync information found for package %s"
 msgstr ""
 
-#: ckanext/canada/plugins.py:707
+#: ckanext/canada/plugins.py:709
 #: ckanext/canada/templates/scheming/package/snippets/package_form.html:25
 msgid "Portal Type"
 msgstr "Type de portail"
 
-#: ckanext/canada/plugins.py:708
+#: ckanext/canada/plugins.py:710
 #: ckanext/canada/templates/package/deleted.html:14
 #: ckanext/canada/templates/user/new_user_form.html:17
 msgid "Organization"
 msgstr "Organisation"
 
-#: ckanext/canada/plugins.py:709
+#: ckanext/canada/plugins.py:711
 msgid "Collection Type"
 msgstr "Type de collection"
 
-#: ckanext/canada/plugins.py:710 ckanext/canada/plugins.py:711
+#: ckanext/canada/plugins.py:712 ckanext/canada/plugins.py:713
 msgid "Keywords"
 msgstr "Mots clés"
 
-#: ckanext/canada/plugins.py:712
+#: ckanext/canada/plugins.py:714
 msgid "Subject"
 msgstr "Sujet"
 
-#: ckanext/canada/plugins.py:713
+#: ckanext/canada/plugins.py:715
 #: ckanext/canada/templates/tabledesigner/view_snippets/cra_business_number.html:1
 msgid "Format"
 msgstr "Format"
 
-#: ckanext/canada/plugins.py:714
+#: ckanext/canada/plugins.py:716
 msgid "Resource Type"
 msgstr "Type de ressource"
 
-#: ckanext/canada/plugins.py:715
+#: ckanext/canada/plugins.py:717
 msgid "Maintenance and Update Frequency"
 msgstr "Fréquence d’entretien et de mise à jour"
 
-#: ckanext/canada/plugins.py:716
+#: ckanext/canada/plugins.py:718
 msgid "Record Status"
 msgstr "État du dossier"
 
-#: ckanext/canada/plugins.py:717
+#: ckanext/canada/plugins.py:719
 msgid "IMSO Approval"
 msgstr "Approbation du CSGI"
 
-#: ckanext/canada/plugins.py:718
+#: ckanext/canada/plugins.py:720
 msgid "Jurisdiction"
 msgstr "Juridiction"
 
-#: ckanext/canada/plugins.py:719
+#: ckanext/canada/plugins.py:721
 msgid "Suggestion Status"
 msgstr "État de la suggestion"
 
-#: ckanext/canada/plugins.py:906
+#: ckanext/canada/plugins.py:910
 msgid "Previous"
 msgstr "Précédent"
 
-#: ckanext/canada/plugins.py:906
+#: ckanext/canada/plugins.py:910
 msgid "Next"
 msgstr "Suivant"
 
@@ -715,6 +715,17 @@ msgid ""
 msgstr ""
 "Impossible de modifier la valeur du champ d’accès au registre de '%s' à "
 "'%s'. Ce champ ne sert qu’à des fins de lecture."
+
+#: ckanext/canada/templates/package/new_resource.html:17
+#: ckanext/canada/templates/package/new_resource_not_draft.html:11
+#: ckanext/canada/templates/package/read.html:44
+#: ckanext/canada/validators.py:564
+msgid ""
+"You can only add up to {max_resource_count} resources to a dataset. You "
+"can segment your resources across multiple datasets or merge your data to"
+" limit the number of resources. Please contact open-ouvert@tbs-sct.gc.ca "
+"if you need further assistance."
+msgstr ""
 
 #: ckanext/canada/view.py:103
 msgid "<strong>Note</strong><br>{0} is now logged in"
@@ -2258,8 +2269,8 @@ msgid ""
 "View packages that are out of sync on the Portal and why they have not "
 "been synced."
 msgstr ""
-"Visualiser les jeux de données qui ne sont pas synchronisés sur le portail"
-" et la raison pour laquelle ils n'ont pas été synchronisés."
+"Visualiser les jeux de données qui ne sont pas synchronisés sur le "
+"portail et la raison pour laquelle ils n'ont pas été synchronisés."
 
 #: ckanext/canada/templates/admin/publish_search.html:11
 #: ckanext/canada/templates/package/search.html:13
@@ -2788,8 +2799,14 @@ msgstr "Retourner à la page de recherche"
 msgid "Disabled"
 msgstr "Désactivé"
 
+#: ckanext/canada/templates/package/new_resource.html:16
+#: ckanext/canada/templates/package/new_resource_not_draft.html:10
+#: ckanext/canada/templates/package/read.html:43
+msgid "Resource Limit Reached"
+msgstr ""
+
 #: ckanext/canada/templates/package/read.html:18
-#: ckanext/canada/templates/package/read.html:101
+#: ckanext/canada/templates/package/read.html:117
 #: ckanext/canada/templates/package/snippets/resource_item.html:12
 #: ckanext/canada/templates/scheming/display_snippets/fluent_tags.html:8
 #: ckanext/canada/templates/snippets/package_item.html:37
@@ -2816,12 +2833,12 @@ msgstr ""
 "données ne s’affiche pas correctement. Pour voir la version actuelle, "
 "cliquez <a href=\"%(url)s\">ici</a>."
 
-#: ckanext/canada/templates/package/read.html:47
-#: ckanext/canada/templates/package/read.html:55
+#: ckanext/canada/templates/package/read.html:63
+#: ckanext/canada/templates/package/read.html:71
 msgid "Action required:"
 msgstr "Mesure requise :"
 
-#: ckanext/canada/templates/package/read.html:48
+#: ckanext/canada/templates/package/read.html:64
 msgid ""
 "Draft record has been saved and can be edited. Mark as ready to publish "
 "to continue."
@@ -2829,36 +2846,36 @@ msgstr ""
 "Une ébauche du document a été sauvegardée et peut-être modifiée. Marquer "
 "en tant que prête à publier pour poursuivre."
 
-#: ckanext/canada/templates/package/read.html:56
+#: ckanext/canada/templates/package/read.html:72
 msgid "Seek out departmental approval and mark as approved to continue."
 msgstr ""
 "Chercher à obtenir l'approbation du ministère et marquer en tant "
 "qu'approuvé pour poursuivre."
 
-#: ckanext/canada/templates/package/read.html:63
+#: ckanext/canada/templates/package/read.html:79
 msgid "Data record is in queue for validation."
 msgstr "La fiche est dans la file d'attente à des fins de validation."
 
-#: ckanext/canada/templates/package/read.html:64
+#: ckanext/canada/templates/package/read.html:80
 msgid "Record will be published by the following business day upon validation."
 msgstr ""
 "Le document sera publié d'ici le prochain jour ouvrable une fois qu'il "
 "aura été validé."
 
-#: ckanext/canada/templates/package/read.html:82
-#: ckanext/canada/templates/package/read.html:83
+#: ckanext/canada/templates/package/read.html:98
+#: ckanext/canada/templates/package/read.html:99
 msgid "View on Portal"
 msgstr "Consulter le Portail"
 
-#: ckanext/canada/templates/package/read.html:89
+#: ckanext/canada/templates/package/read.html:105
 msgid "This dataset has been deleted and is no longer accessible"
 msgstr "Cet ensemble de données a été supprimé et n’est plus accessible"
 
-#: ckanext/canada/templates/package/read.html:112
+#: ckanext/canada/templates/package/read.html:128
 msgid "Made available by the "
 msgstr "Rendus disponibles par l’entremise du "
 
-#: ckanext/canada/templates/package/read.html:114
+#: ckanext/canada/templates/package/read.html:130
 msgid ""
 "<p>These resources are not under the control of the Government of Canada "
 "and the link is provided solely for the convenience of our website "
@@ -2896,8 +2913,8 @@ msgstr ""
 " Web non gouvernemental avant de fournir leurs renseignements "
 "personnels.</p>"
 
-#: ckanext/canada/templates/package/read.html:129
-#: ckanext/canada/templates/package/read.html:152
+#: ckanext/canada/templates/package/read.html:145
+#: ckanext/canada/templates/package/read.html:168
 #: ckanext/canada/templates/package/read_base.html:56
 #: ckanext/canada/templates/package/read_base.html:65
 #: ckanext/canada/templates/package/read_base.html:81
@@ -2909,43 +2926,43 @@ msgstr ""
 msgid ":"
 msgstr " :"
 
-#: ckanext/canada/templates/package/read.html:150
+#: ckanext/canada/templates/package/read.html:166
 msgid "Issued by"
 msgstr "Publiée par"
 
-#: ckanext/canada/templates/package/read.html:177
+#: ckanext/canada/templates/package/read.html:193
 msgid "Related Items"
 msgstr "Articles connexes"
 
-#: ckanext/canada/templates/package/read.html:191
+#: ckanext/canada/templates/package/read.html:207
 msgid "Contact Information"
 msgstr "Coordonnées"
 
-#: ckanext/canada/templates/package/read.html:193
+#: ckanext/canada/templates/package/read.html:209
 msgid "Delivery Point:"
 msgstr "Point de livraison :"
 
-#: ckanext/canada/templates/package/read.html:196
+#: ckanext/canada/templates/package/read.html:212
 msgid "City:"
 msgstr "Ville :"
 
-#: ckanext/canada/templates/package/read.html:199
+#: ckanext/canada/templates/package/read.html:215
 msgid "Administrative Area:"
 msgstr "Zone administrative :"
 
-#: ckanext/canada/templates/package/read.html:202
+#: ckanext/canada/templates/package/read.html:218
 msgid "Postal Code:"
 msgstr "Code postal :"
 
-#: ckanext/canada/templates/package/read.html:205
+#: ckanext/canada/templates/package/read.html:221
 msgid "Country:"
 msgstr "Pays :"
 
-#: ckanext/canada/templates/package/read.html:208
+#: ckanext/canada/templates/package/read.html:224
 msgid "Electronic Mail Address:"
 msgstr "Adresse de courrier électronique :"
 
-#: ckanext/canada/templates/package/read.html:230
+#: ckanext/canada/templates/package/read.html:246
 msgid "Similar records"
 msgstr "Dossiers similaires"
 
@@ -3306,17 +3323,17 @@ msgstr ""
 msgid "Guide"
 msgstr "Guide"
 
-#: ckanext/canada/templates/recombinant/resource_edit.html:43
+#: ckanext/canada/templates/recombinant/resource_edit.html:44
 #, python-format
 msgid ""
 "For information on how to prepare, maintain and upload templates to the "
-"Registry, refer to the appropriate documentation posted on <a "
-"href=\"%(gclink)s\">GCPEDIA</a>"
+"Registry, refer to the appropriate documentation posted on the <a "
+"href=\"%(guide_link)s\">Operations Guide.</a>"
 msgstr ""
 "Pour obtenir des renseignements sur la façon de préparer, de tenir à jour"
 " et de verser des modèles de données pour le registre, consultez la "
-"documentation appropriée qui est publiée dans <a "
-"href='%(gclink)s'>Gcpédia</a>"
+"documentation appropriée qui est publiée dans le <a "
+"href='%(guide_link)s'>guide des opérations</a>"
 
 #: ckanext/canada/templates/recombinant/update_pd_record.html:3
 #: ckanext/canada/templates/recombinant/update_pd_record.html:4

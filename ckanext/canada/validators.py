@@ -561,8 +561,9 @@ def limit_resources_per_dataset(key, data, errors, context):
             # no resources are being added, allow for metadata updates
             return
 
-        errors[('resource_count',)] = [_(f'You can only add up to {max_resource_count} resources to a dataset. '
-                                          'You can segment your resources across multiple datasets or merge your '
-                                          'data to limit the number of resources. Please contact '
-                                          'open-ouvert@tbs-sct.gc.ca if you need further assistance.')]
+        errors[('resource_count',)] = [_('You can only add up to {max_resource_count} resources to a dataset. '
+                                         'You can segment your resources across multiple datasets or merge your '
+                                         'data to limit the number of resources. Please contact '
+                                         'open-ouvert@tbs-sct.gc.ca if you need further assistance.')
+                                        .format(max_resource_count=max_resource_count)]
         raise StopOnError
