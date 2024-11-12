@@ -1,0 +1,4 @@
+Remove rebuilding the following searches from the Makefike:
+- reclassification
+- hospitalityq
+The above searches are now rebuilt using the Django search.

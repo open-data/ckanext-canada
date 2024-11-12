@@ -2,6 +2,8 @@
 scheming_version: 1
 dataset_type: doc
 
+before_validators: limit_resources_per_dataset
+
 about: 'open.canada.ca: Open By Default metadata schema'
 about_url: http://github.com/open-data/ckanext-canada
 catalog_type_label:
