@@ -919,3 +919,9 @@ def operations_guide_link(stub: Optional[Union[str, None]]=None) -> str:
         landing = 'ton-compte' if h.lang() == 'fr' else 'your-account'
         return f'{guide_link}/{landing}'
     return f'{guide_link}/{stub}'
+
+
+def max_resources_per_dataset():
+    max_resource_count = config.get('ckanext.canada.max_resources_per_dataset', None)
+    if max_resource_count:
+        return int(max_resource_count)
