@@ -151,6 +151,8 @@ class CanadaThemePlugin(p.SingletonPlugin):
             'release_date_facet_start_year',
             'ckan_to_cdts_breadcrumbs',
             'available_purge_types',
+            'operations_guide_link',
+            'max_resources_per_dataset',
         ])
 
 
@@ -903,6 +905,8 @@ class DataGCCAForms(p.SingletonPlugin, DefaultDatasetForm):
                 validators.protect_registry_access,
             'digital_object_identifier':
                 validators.digital_object_identifier,
+            'limit_resources_per_dataset':
+                validators.limit_resources_per_dataset,
             }
 
 

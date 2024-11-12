@@ -1,5 +1,5 @@
 from ckan.plugins.toolkit import chained_auth_function, config
-from ckan.authz import has_user_permission_for_group_or_org, is_sysadmin
+from ckan.authz import has_user_permission_for_group_or_org
 from ckan.plugins import plugin_loaded
 
 

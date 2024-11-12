@@ -1379,14 +1379,39 @@ def bulk_validate():
     help=u"Number of days to go back. E.g. 120 will keep 120 days of activities. Default: 90",
     default=90
 )
+@click.option(
+    "-i",
+    "--include-types",
+    help="Activity types to include in the deletion. E.g. 'resource create' (MULTIPLE)",
+    default=None,
+    multiple=True
+)
+@click.option(
+    "-e",
+    "--exclude-types",
+    help="Activity types to exclude in the deletion. E.g. 'datastore create' (MULTIPLE)",
+    default=None,
+    multiple=True
+)
 @click.option(u"-q", u"--quiet", is_flag=True, help=u"Suppress human interaction.", default=False)
-def delete_activities(days=90, quiet=False):
+def delete_activities(days=90, include_types=None, exclude_types=None, quiet=False):
     """Delete rows from the activity table past a certain number of days.
     """
+    if len(include_types) == 1:
+        include_types = f"('{include_types[0]}')"
+    if len(exclude_types) == 1:
+        exclude_types = f"('{exclude_types[0]}')"
+    if include_types:
+        click.echo(f'Including activity_type {include_types}')
+    if exclude_types:
+        click.echo(f'Excluding activity_type {exclude_types}')
     activity_count = model.Session.execute(
-                        u"SELECT count(*) FROM activity "
-                        "WHERE timestamp < NOW() - INTERVAL '{d} days';"
-                        .format(d=days)) \
+                        "SELECT count(*) FROM activity "
+                        "WHERE timestamp < NOW() - INTERVAL '{d} days' {i} {e};"
+                        .format(
+                            d=days,
+                            i="AND activity_type IN {i}".format(i=include_types) if include_types else "",
+                            e="AND activity_type NOT IN {e}".format(e=exclude_types) if exclude_types else "")) \
                         .fetchall()[0][0]
 
     if not bool(activity_count):
@@ -1397,7 +1422,13 @@ def delete_activities(days=90, quiet=False):
         click.confirm(u"\nAre you sure you want to delete {num} activities?"
                           .format(num=activity_count), abort=True)
 
-    model.Session.execute(u"DELETE FROM activity WHERE timestamp < NOW() - INTERVAL '{d} days';".format(d=days))
+    model.Session.execute(
+        "DELETE FROM activity "
+        "WHERE timestamp < NOW() - INTERVAL '{d} days' {i} {e};"
+        .format(
+            d=days,
+            i="AND activity_type IN {i}".format(i=include_types) if include_types else "",
+            e="AND activity_type NOT IN {e}".format(e=exclude_types) if exclude_types else ""))
     model.Session.commit()
 
     click.echo(u"\nDeleted {num} rows from the activity table".format(num=activity_count))

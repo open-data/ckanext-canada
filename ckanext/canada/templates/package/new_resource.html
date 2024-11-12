@@ -8,6 +8,27 @@
   </div>
 {% endblock %}
 
+{% block form %}
+  {% set max_resource_count = h.max_resources_per_dataset() %}
+  {% if g.is_registry and max_resource_count and pkg_dict.resources|length >= max_resource_count %}
+    <div class="row">
+      <div class="col-md-12 canada-flash-messages">
+        <div>
+          <section class="alert fade in alert-danger">
+            <strong>{{ _("Resource Limit Reached") }}</strong>
+            <p>{{ _("You can only add up to {max_resource_count} resources to a dataset. "
+                    "You can segment your resources across multiple datasets or merge your "
+                    "data to limit the number of resources. Please contact "
+                    "open-ouvert@tbs-sct.gc.ca if you need further assistance.").format(max_resource_count=max_resource_count) }}</p>
+          </section>
+        </div>
+      </div>
+    </div>
+  {% else %}
+    {{ super() }}
+  {% endif %}
+{% endblock %}
+
 {% block scripts %}
   {% if g.is_registry %}
     <script type="text/javascript" src="{{ h.url_for_static('/registry_resource_edit.js') }}" ></script>

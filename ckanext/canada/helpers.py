@@ -1,3 +1,5 @@
+from typing import Optional, Union
+
 import json
 import re
 import inspect
@@ -932,3 +934,25 @@ def available_purge_types():
             if group_types not in types:
                 types.append(group_types)
     return types
+
+
+def operations_guide_link(stub: Optional[Union[str, None]]=None) -> str:
+    """
+    Return a string for a link to the Registry Operations Guide.
+    """
+    try:
+        return json.loads(config.get('ckanext.canada.operations_guide_link'))
+    except Exception:
+        guide_link = {'en': 'https://open.canada.ca/en/registry-operations-guide',
+                      'fr': 'https://ouvert.canada.ca/fr/guide-operations-registre'}
+    guide_link = guide_link.get(h.lang(), guide_link.get('en'))
+    if not stub:
+        landing = 'ton-compte' if h.lang() == 'fr' else 'your-account'
+        return f'{guide_link}/{landing}'
+    return f'{guide_link}/{stub}'
+
+
+def max_resources_per_dataset():
+    max_resource_count = config.get('ckanext.canada.max_resources_per_dataset', None)
+    if max_resource_count:
+        return int(max_resource_count)
