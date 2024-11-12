@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ckanext-canada 0.4.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-10-29 19:35+0000\n"
+"POT-Creation-Date: 2024-11-12 14:26+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -3011,7 +3011,9 @@ msgid "New activity item"
 msgstr ""
 
 #: ckanext/canada/templates/snippets/activity_stream.html:8
-msgid "View the past 30 days of activity."
+msgid ""
+"View the past 60 days of metadata activity and the past 150 days of DataStore"
+" activity."
 msgstr ""
 
 #: ckanext/canada/templates/snippets/dataset_facets.html:6

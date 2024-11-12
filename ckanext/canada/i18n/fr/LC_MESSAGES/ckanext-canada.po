@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-10-29 19:35+0000\n"
+"POT-Creation-Date: 2024-11-12 14:26+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: fr\n"
@@ -240,8 +240,6 @@ msgstr "Tâche inconnue "
 #, python-format
 msgid "No Portal Sync information found for package %s"
 msgstr ""
-"Aucune information de synchronisation du portail n'a été trouvée pour "
-"le jeu de données %s."
 
 #: ckanext/canada/plugins.py:707
 #: ckanext/canada/templates/scheming/package/snippets/package_form.html:25
@@ -3536,8 +3534,12 @@ msgid "New activity item"
 msgstr "Nouveau poste d’activité"
 
 #: ckanext/canada/templates/snippets/activity_stream.html:8
-msgid "View the past 30 days of activity."
-msgstr "Consulter les activités des 30 derniers jours."
+msgid ""
+"View the past 60 days of metadata activity and the past 150 days of "
+"DataStore activity."
+msgstr ""
+"Consulter les 60 derniers jours d'activités des métadonnées et les 150 "
+"derniers jours d'activités du DataStore."
 
 #: ckanext/canada/templates/snippets/dataset_facets.html:6
 #: ckanext/canada/templates/snippets/dataset_facets.html:12
@@ -6752,4 +6754,7 @@ msgstr "Télécharger vers le DataStore"
 #~ "autorisés. 3. Tous les mots de "
 #~ "passe doivent comporter au moins 12 "
 #~ "caractères."
+
+#~ msgid "View the past 30 days of activity."
+#~ msgstr "Consulter les activités des 30 derniers jours."
 

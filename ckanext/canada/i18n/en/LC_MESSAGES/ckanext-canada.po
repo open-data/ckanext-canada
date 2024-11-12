@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  CKAN\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-10-29 19:35+0000\n"
+"POT-Creation-Date: 2024-11-12 14:26+0000\n"
 "PO-Revision-Date: 2014-01-23 13:04+0000\n"
 "Last-Translator: Sean Hammond <sean.hammond@okfn.org>\n"
 "Language: en\n"
@@ -227,7 +227,7 @@ msgstr ""
 #: ckanext/canada/logic.py:547
 #, python-format
 msgid "No Portal Sync information found for package %s"
-msgstr "No Portal Sync information found for dataset %s"
+msgstr ""
 
 #: ckanext/canada/plugins.py:707
 #: ckanext/canada/templates/scheming/package/snippets/package_form.html:25
@@ -1923,7 +1923,7 @@ msgstr ""
 #: ckanext/canada/templates/admin/base.html:18
 #: ckanext/canada/templates/admin/portal_sync.html:4
 msgid "Out of Sync Packages"
-msgstr "Out of Sync Datasets"
+msgstr ""
 
 #: ckanext/canada/templates/admin/index.html:7
 msgid "Administer CKAN"
@@ -1962,15 +1962,13 @@ msgstr ""
 
 #: ckanext/canada/templates/admin/portal_sync.html:30
 msgid "View Out of Sync Packages"
-msgstr "View Out of Sync Datasets"
+msgstr ""
 
 #: ckanext/canada/templates/admin/portal_sync.html:34
 msgid ""
 "View packages that are out of sync on the Portal and why they have not "
 "been synced."
 msgstr ""
-"View datasets that are out of sync on the Portal and why they have not "
-"been synced."
 
 #: ckanext/canada/templates/admin/publish_search.html:11
 #: ckanext/canada/templates/package/search.html:13
@@ -3084,7 +3082,9 @@ msgid "New activity item"
 msgstr ""
 
 #: ckanext/canada/templates/snippets/activity_stream.html:8
-msgid "View the past 30 days of activity."
+msgid ""
+"View the past 60 days of metadata activity and the past 150 days of "
+"DataStore activity."
 msgstr ""
 
 #: ckanext/canada/templates/snippets/dataset_facets.html:6
@@ -8607,5 +8607,8 @@ msgstr ""
 #~ "    * Special characters: ({}[],.<>;:'\"?/|\\`~!@#$%%^&*()_-+=).\n"
 #~ "2. No accented characters are permitted.\n"
 #~ "3. All passwords must be at least 12 characters long.\n"
+#~ msgstr ""
+
+#~ msgid "View the past 30 days of activity."
 #~ msgstr ""
 
