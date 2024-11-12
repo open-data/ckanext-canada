@@ -502,6 +502,8 @@ ckanext.canada:schemas/presets.yaml
             resource_view_update=resource_view_update_bilingual,
             resource_view_create=resource_view_create_bilingual,
             datastore_run_triggers=logic.canada_datastore_run_triggers,
+            portal_sync_info=logic.portal_sync_info,
+            list_out_of_sync_packages=logic.list_out_of_sync_packages,
         )
 
     # IAuthFunctions
@@ -512,6 +514,8 @@ ckanext.canada:schemas/presets.yaml
             'group_show': auth.group_show,
             'organization_list': auth.organization_list,
             'organization_show': auth.organization_show,
+            'portal_sync_info': auth.portal_sync_info,
+            'list_out_of_sync_packages': auth.list_out_of_sync_packages,
         }
 
     # IXloader
