@@ -197,8 +197,7 @@ resources:
       fr: Note, use the format {City Name}, {Country Name} (e.g. Ottawa, Canada or New York City, United States of America)
     obligation: Mandatory
     excel_required: true
-    #TODO: figure out Excel formula for this...
-    excel_error_formula: AND(NOT(ISBLANK({cell})), ISNA(REGEX({cell}, "^\s*([A-Za-zÀ-ÿ''\s\-\.]+?)\s*,\s*([A-Za-zÀ-ÿ''\s\-\.]+?)\s*$"))
+    # Dev NOTE: excel_error_formula: Excel and Open Office Calc parity issues with REGEX. REGEX does not exist in Excel, and sheetname references in OOC work differently.
     form_required: true
     validation:
       en: |
@@ -227,8 +226,8 @@ resources:
       fr: Note, use the format {City Name}, {Country Name} (e.g. Ottawa, Canada or New York City, United States of America)
     obligation: Optional
     excel_required: false
-    #TODO: figure out Excel formula for this...
-    excel_required_formula: OR(NOT(ISBLANK({destination_2_fr})), AND(NOT(ISBLANK({cell})), IFERROR(REGEX({cell}, "^\s*([A-Za-zÀ-ÿ''\s\-\.]+?)\s*,\s*([A-Za-zÀ-ÿ''\s\-\.]+?)\s*$"))))
+    # Dev NOTE: excel_error_formula: Excel and Open Office Calc parity issues with REGEX. REGEX does not exist in Excel, and sheetname references in OOC work differently.
+    excel_required_formula: NOT(ISBLANK({destination_2_fr}))
     form_required: false
     format_type:
       en: Free text – Note, use the format {City Name}, {Country Name} (e.g. Ottawa, Canada or New York City, United States of America)
@@ -250,8 +249,8 @@ resources:
       fr: Note, use the format {City Name}, {Country Name} (e.g. Ottawa, Canada or New York City, United States of America)
     obligation: Optional
     excel_required: false
-    #TODO: figure out Excel formula for this...
-    excel_required_formula: OR(NOT(ISBLANK({destination_3_fr})), AND(NOT(ISBLANK({cell})), IFERROR(REGEX({cell}, "^\s*([A-Za-zÀ-ÿ''\s\-\.]+?)\s*,\s*([A-Za-zÀ-ÿ''\s\-\.]+?)\s*$"))))
+    # Dev NOTE: excel_error_formula: Excel and Open Office Calc parity issues with REGEX. REGEX does not exist in Excel, and sheetname references in OOC work differently.
+    excel_required_formula: NOT(ISBLANK({destination_3_fr}))
     form_required: false
     format_type:
       en: Free text – Note, use the format {City Name}, {Country Name} (e.g. Ottawa, Canada or New York City, United States of America)
@@ -273,8 +272,8 @@ resources:
       fr: Note, use the format {City Name}, {Country Name};{City 2 Name}, {Country 2 Name} (e.g. Ottawa, Canada;New York City, United States of America)
     obligation: Optional
     excel_required: false
-    #TODO: figure out Excel formula for this...
-    excel_required_formula: OR(NOT(ISBLANK({destination_other_fr})), AND(NOT(ISBLANK({cell})), IFERROR(REGEX({cell}, "^([A-Za-zÀ-ÿ''\s\-\.]+,\s*[A-Za-zÀ-ÿ''\s\-\.]+)(?:;\s*([A-Za-zÀ-ÿ''\s\-\.]+,\s*[A-Za-zÀ-ÿ''\s\-\.]+))*$"))))
+    # Dev NOTE: excel_error_formula: Excel and Open Office Calc parity issues with REGEX. REGEX does not exist in Excel, and sheetname references in OOC work differently.
+    excel_required_formula: NOT(ISBLANK({destination_other_fr}))
     form_required: false
     format_type:
       en: Free text – Note, use the format {City Name}, {Country Name};{City 2 Name}, {Country 2 Name} (e.g. Ottawa, Canada;New York City, United States of America)
@@ -296,8 +295,7 @@ resources:
       fr: Note, use the format {City Name}, {Country Name} (e.g. Ottawa, Canada or New York City, United States of America)
     obligation: Mandatory
     excel_required: true
-    #TODO: figure out Excel formula for this...
-    excel_error_formula: AND(NOT(ISBLANK({cell})), IFERROR(REGEX({cell}, "^\s*([A-Za-zÀ-ÿ''\s\-\.]+?)\s*,\s*([A-Za-zÀ-ÿ''\s\-\.]+?)\s*$")))
+    # Dev NOTE: excel_error_formula: Excel and Open Office Calc parity issues with REGEX. REGEX does not exist in Excel, and sheetname references in OOC work differently.
     form_required: true
     validation: This field must not be empty
     format_type:
@@ -320,8 +318,8 @@ resources:
       fr: Note, use the format {City Name}, {Country Name} (e.g. Ottawa, Canada or New York City, United States of America)
     obligation: Optional
     excel_required: false
-    #TODO: figure out Excel formula for this...
-    excel_required_formula: OR(NOT(ISBLANK({destination_2_en})), AND(NOT(ISBLANK({cell})), IFERROR(REGEX({cell}, "^\s*([A-Za-zÀ-ÿ''\s\-\.]+?)\s*,\s*([A-Za-zÀ-ÿ''\s\-\.]+?)\s*$"))))
+    # Dev NOTE: excel_error_formula: Excel and Open Office Calc parity issues with REGEX. REGEX does not exist in Excel, and sheetname references in OOC work differently.
+    excel_required_formula: NOT(ISBLANK({destination_2_en}))
     form_required: false
     format_type:
       en: Free text – Note, use the format {City Name}, {Country Name} (e.g. Ottawa, Canada or New York City, United States of America)
@@ -343,8 +341,8 @@ resources:
       fr: Note, use the format {City Name}, {Country Name} (e.g. Ottawa, Canada or New York City, United States of America)
     obligation: Optional
     excel_required: false
-    #TODO: figure out Excel formula for this...
-    excel_required_formula: OR(NOT(ISBLANK({destination_3_en})), AND(NOT(ISBLANK({cell})), IFERROR(REGEX({cell}, "^\s*([A-Za-zÀ-ÿ''\s\-\.]+?)\s*,\s*([A-Za-zÀ-ÿ''\s\-\.]+?)\s*$"))))
+    # Dev NOTE: excel_error_formula: Excel and Open Office Calc parity issues with REGEX. REGEX does not exist in Excel, and sheetname references in OOC work differently.
+    excel_required_formula: NOT(ISBLANK({destination_3_en}))
     form_required: false
     format_type:
       en: Free text – Note, use the format {City Name}, {Country Name} (e.g. Ottawa, Canada or New York City, United States of America)
@@ -366,8 +364,8 @@ resources:
       fr: Note, use the format {City Name}, {Country Name};{City 2 Name}, {Country 2 Name} (e.g. Ottawa, Canada;New York City, United States of America)
     obligation: Optional
     excel_required: false
-    #TODO: figure out Excel formula for this...
-    excel_required_formula: OR(NOT(ISBLANK({destination_other_en})), AND(NOT(ISBLANK({cell})), IFERROR(REGEX({cell}, "^([A-Za-zÀ-ÿ''\s\-\.]+,\s*[A-Za-zÀ-ÿ''\s\-\.]+)(?:;\s*([A-Za-zÀ-ÿ''\s\-\.]+,\s*[A-Za-zÀ-ÿ''\s\-\.]+))*$"))))
+    # Dev NOTE: excel_error_formula: Excel and Open Office Calc parity issues with REGEX. REGEX does not exist in Excel, and sheetname references in OOC work differently.
+    excel_required_formula: NOT(ISBLANK({destination_other_en}))
     form_required: false
     format_type:
       en: Free text – Note, use the format {City Name}, {Country Name};{City 2 Name}, {Country 2 Name} (e.g. Ottawa, Canada;New York City, United States of America)

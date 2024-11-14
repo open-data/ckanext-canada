@@ -299,6 +299,7 @@ def update_triggers():
 
     # return record with .clean (normalized value) and .error
     # (NULL or ARRAY[[field_name, error_message]])
+    # Dev NOTE: \p{} regex does not work in PSQL, need to use the [:alpha:] from POSIX
     lc.action.datastore_function_create(
         name='destination_clean_error',
         or_replace=True,
@@ -310,7 +311,7 @@ def update_triggers():
         rettype='record',
         definition='''
             DECLARE
-                destination_match text := array_to_string(regexp_match(value::text, '^\s*([A-Za-zÀ-ÿ''\s\-\.]+?)\s*,\s*([A-Za-zÀ-ÿ''\s\-\.]+?)\s*$'), ', ');
+                destination_match text := array_to_string(regexp_match(value::text, '^\s*([[:alpha:]''\s\-\.\(\)]+?)\s*,\s*([[:alpha:]''\s\-\.\(\)]+?)\s*$'::text), ', ');
             BEGIN
                 IF value <> '' AND destination_match IS NULL THEN
                     error := ARRAY[[field_name, 'Invalid format for destination. Use {City Name}, {Country Name} (e.g. Ottawa, Canada or New York City, United States of America)']];
@@ -323,6 +324,7 @@ def update_triggers():
 
     # return record with .clean (normalized value) and .error
     # (NULL or ARRAY[[field_name, error_message]])
+    # Dev NOTE: \p{} regex does not work in PSQL, need to use the [:alpha:] from POSIX
     lc.action.datastore_function_create(
         name='multi_destination_clean_error',
         or_replace=True,
@@ -334,7 +336,7 @@ def update_triggers():
         rettype='record',
         definition='''
             DECLARE
-                destination_matches text[] := regexp_match(value::text, '^([A-Za-zÀ-ÿ''\s\-\.]+,\s*[A-Za-zÀ-ÿ''\s\-\.]+)(?:;\s*([A-Za-zÀ-ÿ''\s\-\.]+,\s*[A-Za-zÀ-ÿ''\s\-\.]+))*$');
+                destination_matches text[] := regexp_match(value::text, '^([[:alpha:]''\s\-\.\(\)]+,\s*[[:alpha:]''\s\-\.\(\)]+)(?:;\s*([[:alpha:]''\s\-\.\(\)]+,\s*[[:alpha:]''\s\-\.\(\)]+))*$'::text);
                 destination_match text;
                 clean_val text := NULL;
             BEGIN
@@ -343,7 +345,7 @@ def update_triggers():
                 END IF;
                 IF destination_matches IS NOT NULL THEN
                     FOREACH destination_match IN ARRAY destination_matches LOOP
-                        clean_val := array_to_string(ARRAY[clean_val, array_to_string(regexp_match(destination_match::text, '^\s*([A-Za-zÀ-ÿ''\s\-\.]+?)\s*,\s*([A-Za-zÀ-ÿ''\s\-\.]+?)\s*$'), ', ')], ';');
+                        clean_val := array_to_string(ARRAY[clean_val, array_to_string(regexp_match(destination_match::text, '^\s*([[:alpha:]''\s\-\.\(\)]+?)\s*,\s*([[:alpha:]''\s\-\.\(\)]+?)\s*$'::text), ', ')], ';');
                     END LOOP;
                     clean := clean_val;
                 END IF;
