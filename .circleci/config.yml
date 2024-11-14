@@ -39,7 +39,7 @@ jobs:
           CKAN_REDIS_URL: redis://redis:6379/1
       - image: opendatacanada/solr  # dependency service
         name: solr
-      - image: postgres:9.6  # dependency service
+      - image: postgres:13.14  # dependency service
         name: postgres
         environment:
           POSTGRES_USER: postgres

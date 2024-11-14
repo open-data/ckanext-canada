@@ -54,7 +54,7 @@ class TestTravelQ(CanadaTestBase):
         destinations = requests.get(DESTINATION_ENDPOINT, stream=True)
         destinations = json.loads(destinations.content)
         for destination in destinations:
-            _destination = self._insert_random_spaces((destination.get('capital', ['NaNd'])[0] if destination.get('capital') else 'NaNd').replace(',', '') + ', ' + destination.get('name', {}).get('common', 'NaNd').replace(',', ''))
+            _destination = (destination.get('capital', ['NaNd'])[0] if destination.get('capital') else 'NaNd').replace(',', '') + ', ' + destination.get('name', {}).get('common', 'NaNd').replace(',', '')
             record['destination_en'] = _destination
             record['destination_fr'] = _destination
             record['destination_2_en'] = _destination
@@ -150,13 +150,61 @@ class TestTravelQ(CanadaTestBase):
                 assert k in err
                 assert err[k] == expected[k]
 
+        # test surrounding white space stripping
+        raw_values_expected_values = {
+            ' Kingston  , Canada ': 'Kingston, Canada',
+            'Ottawa,Canada': 'Ottawa, Canada',
+            'Toronto,    Canada   ': 'Toronto, Canada',
+            '   Montreal   ,Canada': 'Montreal, Canada',
+        }
+        for raw_value, excpected_value in raw_values_expected_values.items():
+            record['destination_en'] = raw_value
+            record['destination_fr'] = raw_value
+            record['destination_2_en'] = raw_value
+            record['destination_2_fr'] = raw_value
+            record['destination_3_en'] = raw_value
+            record['destination_3_fr'] = raw_value
+            record['destination_other_en'] = raw_value
+            record['destination_other_fr'] = raw_value
+            self.lc.action.datastore_upsert(
+                resource_id=self.resource_id,
+                records=[record])
+            result = self.lc.action.datastore_search(resource_id=self.resource_id)
+            records = result.get('records')
+            assert len(records) > 0
+            assert records[0]['destination_en'] == excpected_value
+            assert records[0]['destination_fr'] == excpected_value
+            assert records[0]['destination_2_en'] == excpected_value
+            assert records[0]['destination_2_fr'] == excpected_value
+            assert records[0]['destination_3_en'] == excpected_value
+            assert records[0]['destination_3_fr'] == excpected_value
+            assert records[0]['destination_other_en'] == excpected_value
+            assert records[0]['destination_other_fr'] == excpected_value
 
-    def _insert_random_spaces(self, s):
-        s = list(s)
-        for i in range(len(s)-1):
-            while random.randrange(2):
-                s[i] = s[i] + ' '
-        return ''.join(s)
+        # test surrounding white space stripping for multi-destination formats
+        raw_values_expected_values = {
+            ' Montreal  , Canada ;Toronto  ,  Canada;   New York, United States (USA)  ; St. John\'s,Canada': 'Montreal, Canada;Toronto, Canada;New York, United States (USA);St. John\'s, Canada',
+            'Montreal,Canada  ;  Toronto,Canada  ;  New York,United States (USA)  ;  St. John\'s,Canada': 'Montreal, Canada;Toronto, Canada;New York, United States (USA);St. John\'s, Canada',
+            ' Montreal  ,  Canada  ;  Toronto  , Canada  ;  New York ,United States (USA);  St. John\'s,Canada   ': 'Montreal, Canada;Toronto, Canada;New York, United States (USA);St. John\'s, Canada',
+            'Montreal,Canada ;   Toronto  , Canada;  New York   , United States (USA) ; St. John\'s,Canada  ': 'Montreal, Canada;Toronto, Canada;New York, United States (USA);St. John\'s, Canada',
+        }
+        for raw_value, excpected_value in raw_values_expected_values.items():
+            record['destination_en'] = 'Ottawa, Canada'
+            record['destination_fr'] = 'Ottawa, Canada'
+            record['destination_2_en'] = 'Ottawa, Canada'
+            record['destination_2_fr'] = 'Ottawa, Canada'
+            record['destination_3_en'] = 'Ottawa, Canada'
+            record['destination_3_fr'] = 'Ottawa, Canada'
+            record['destination_other_en'] = raw_value
+            record['destination_other_fr'] = raw_value
+            self.lc.action.datastore_upsert(
+                resource_id=self.resource_id,
+                records=[record])
+            result = self.lc.action.datastore_search(resource_id=self.resource_id)
+            records = result.get('records')
+            assert len(records) > 0
+            assert records[0]['destination_other_en'] == excpected_value
+            assert records[0]['destination_other_fr'] == excpected_value
 
 
 class TestTravelQNil(CanadaTestBase):
