@@ -407,6 +407,16 @@ class CanadaDatasetsPlugin(SchemingDatasetsPlugin):
             for cr in data_dict['credit']:
                 cr.pop('__extras', None)
 
+        if data_dict.get('relationship'):
+            related_relationships = []
+            related_types = []
+            for rel in data_dict['relationship']:
+                related_relationships.append(rel.get('related_relationship'))
+                related_types.append(rel.get('related_type'))
+            data_dict['related_relationship'] = related_relationships
+            data_dict['related_type'] = related_types
+        data_dict.pop('relationship', None)
+
         return data_dict
 
     # IDataDictionaryForm

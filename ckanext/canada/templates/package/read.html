@@ -180,7 +180,13 @@
       {% endif %}
     {% endblock %}
     {% block related_items %}
-      {# todo, output related items... #}
+      {% if pkg.get('relationship') %}
+        <div class="span-6 margin-top-medium clear-both">
+          <h2>{{ _('Dataset Relationships') }}</h2>
+          {% set relation_field = h.scheming_field_by_name(schema.dataset_fields, 'relationship') %}
+          {% snippet 'scheming/snippets/display_field.html', field=relation_field, data=pkg, entity_type='dataset', object_type=pkg.type %}
+        </div>
+      {% endif %}
     {% endblock related_items %}
     {% block contact_information %}
       {% set info = h.contact_information(pkg.get('contact_information')) %}
