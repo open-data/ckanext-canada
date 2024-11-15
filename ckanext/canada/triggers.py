@@ -314,7 +314,7 @@ def update_triggers():
                 destination_match text := array_to_string(regexp_match(value::text, '^\s*([[:alpha:]''\s\-\.\(\)]+?)\s*,\s*([[:alpha:]''\s\-\.\(\)]+?)\s*$'::text), ', ');
             BEGIN
                 IF value <> '' AND destination_match IS NULL THEN
-                    error := ARRAY[[field_name, 'Invalid format for destination. Use {City Name}, {Country Name} (e.g. Ottawa, Canada or New York City, United States of America)']];
+                    error := ARRAY[[field_name, 'Invalid format for destination. Use {City Name}, {Country Name} (e.g. Ottawa, Canada or New York City, USA)']];
                 END IF;
                 IF destination_match IS NOT NULL THEN
                     clean := destination_match;
@@ -344,7 +344,7 @@ def update_triggers():
                 clean_val text := NULL;
             BEGIN
                 IF value <> '' AND destination_matches IS NULL THEN
-                    error := ARRAY[[field_name, 'Invalid format for multiple destinations. Use {City Name}, {Country Name};{City 2 Name}, {Country 2 Name} (e.g. Ottawa, Canada;New York City, United States of America)']];
+                    error := ARRAY[[field_name, 'Invalid format for multiple destinations. Use {City Name}, {Country Name};{City 2 Name}, {Country 2 Name} (e.g. Ottawa, Canada;New York City, USA)']];
                 END IF;
                 IF destination_matches IS NOT NULL THEN
                     destination_matches := regexp_split_to_array(value::text, '(;|$)'::text);
