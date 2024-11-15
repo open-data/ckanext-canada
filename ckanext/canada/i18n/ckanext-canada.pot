@@ -8,14 +8,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ckanext-canada 0.4.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-11-12 15:47+0000\n"
+"POT-Creation-Date: 2024-11-15 10:35-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.10.3\n"
+"Generated-By: Babel 2.7.0\n"
 
 #: ckanext/canada/checks.py:11
 msgid "Invalid Header for DataStore"
@@ -972,7 +972,7 @@ msgstr ""
 #. SQL Trigger String for PD Type: wrongdoing
 #: ckanext/canada/tables/adminaircraft.yaml:316
 #: ckanext/canada/tables/contracts.yaml:2184 ckanext/canada/tables/grants.yaml:836
-#: ckanext/canada/tables/grantsmonthly.yaml:800
+#: ckanext/canada/tables/grantsmonthly.yaml:877
 #: ckanext/canada/tables/hospitalityq.yaml:449
 #: ckanext/canada/tables/qpnotes.yaml:332
 #: ckanext/canada/tables/reclassification.yaml:271
@@ -1321,28 +1321,28 @@ msgstr ""
 
 #. SQL Trigger String for PD Type: grantsmonthly
 #. SQL Trigger String for PD Type: service
-#: ckanext/canada/tables/grantsmonthly.yaml:801
+#: ckanext/canada/tables/grantsmonthly.yaml:878
 #: ckanext/canada/tables/service.yaml:1533 ckanext/canada/tables/service.yaml:2346
 msgid "This field has a maximum length of {} characters."
 msgstr ""
 
 #. SQL Trigger String for PD Type: grantsmonthly
 #. SQL Trigger String for PD Type: service
-#: ckanext/canada/tables/grantsmonthly.yaml:802
+#: ckanext/canada/tables/grantsmonthly.yaml:879
 #: ckanext/canada/tables/service.yaml:1534 ckanext/canada/tables/service.yaml:2347
 msgid "Invalid choice: {}"
 msgstr ""
 
 #. SQL Trigger String for PD Type: grantsmonthly
 #. SQL Trigger String for PD Type: service
-#: ckanext/canada/tables/grantsmonthly.yaml:803
+#: ckanext/canada/tables/grantsmonthly.yaml:880
 #: ckanext/canada/tables/service.yaml:1536 ckanext/canada/tables/service.yaml:2350
 msgid "This field is required due to a response in a different field."
 msgstr ""
 
 #. SQL Trigger String for PD Type: grantsmonthly
 #. SQL Trigger String for PD Type: service
-#: ckanext/canada/tables/grantsmonthly.yaml:804
+#: ckanext/canada/tables/grantsmonthly.yaml:881
 #: ckanext/canada/tables/service.yaml:1537 ckanext/canada/tables/service.yaml:2351
 msgid "This text must be provided in both languages"
 msgstr ""
