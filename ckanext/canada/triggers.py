@@ -325,6 +325,9 @@ def update_triggers():
     # return record with .clean (normalized value) and .error
     # (NULL or ARRAY[[field_name, error_message]])
     # Dev NOTE: \p{} regex does not work in PSQL, need to use the [:alpha:] from POSIX
+    # Dev NOTE: First regexp_match to enforce semi-colon list of city name, country name comma separation.
+    #           Then do a regexp_split_to_array to split the original value by semi-colons, as the PSQL regex cannot do dynamic grouping.
+    #           At that point, we can assuming that the regex for city name, country name will succeed from the first regexp_match.
     lc.action.datastore_function_create(
         name='multi_destination_clean_error',
         or_replace=True,
@@ -344,6 +347,7 @@ def update_triggers():
                     error := ARRAY[[field_name, 'Invalid format for multiple destinations. Use {City Name}, {Country Name};{City 2 Name}, {Country 2 Name} (e.g. Ottawa, Canada;New York City, United States of America)']];
                 END IF;
                 IF destination_matches IS NOT NULL THEN
+                    destination_matches := regexp_split_to_array(value::text, '(;|$)'::text);
                     FOREACH destination_match IN ARRAY destination_matches LOOP
                         clean_val := array_to_string(ARRAY[clean_val, array_to_string(regexp_match(destination_match::text, '^\s*([[:alpha:]''\s\-\.\(\)]+?)\s*,\s*([[:alpha:]''\s\-\.\(\)]+?)\s*$'::text), ', ')], ';');
                     END LOOP;
