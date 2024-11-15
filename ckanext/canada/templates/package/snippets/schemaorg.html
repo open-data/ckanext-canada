@@ -58,14 +58,14 @@
   {% endif %}
   <span property="sameAs" value="{{ h.url_for(g.pkg.type + '.read', id=data.id) }}"></span>
   {%- if data.resources -%}
-    {%- set nonapps = [] -%}
+    {%- set non_related_resource = [] -%}
     {%- for resource in data.resources -%}
-      {%- if not resource.related_type -%}
-        {%- do nonapps.append(resource) -%}
+      {%- if data.url_type != 'related' -%}
+        {%- do non_related_resource.append(resource) -%}
       {%- endif -%}
     {%- endfor -%}
-    {%- if nonapps -%}
-      {% for res in nonapps %}
+    {%- if non_related_resource -%}
+      {% for res in non_related_resource %}
         <span property="distribution" typeof="DataDownload">
           <span property="inLanguage" content="{{ ','.join(res.language) }}"> </span>
           <span property="name" lang="{{ h.lang() }}">{{ h.get_translated(res, 'name') }}</span>

@@ -179,27 +179,25 @@
         {{ super() }}
       {% endif %}
     {% endblock %}
-    {% block package_item_apps %}
-      <div class="span-6 margin-top-medium clear-both">
-        {% set apps = [] %}
-        {% for resource in pkg.resources %}
-          {% if resource.format == 'app' %}
-            {% do apps.append(resource) %}
-          {% endif %}
-        {% endfor %}
-      </div>
-      {% if apps|length > 0 %}
+    {% block related_items %}
+      {% set related_resources = [] %}
+      {% for resource in pkg.resources %}
+        {% if resource.url_type == 'related' %}
+          {% do related_resources.append(resource) %}
+        {% endif %}
+      {% endfor %}
+      {% if related_resources|length > 0 %}
         <div class="span-6 margin-top-medium clear-both">
-          <h4>{{ _('Related Items') }}</h4>
-          <ul class="list-unstyled">
-          {% for resource in apps %}
-            {% snippet 'package/snippets/app_item.html', pkg=pkg, res=resource, res_num=loop.index, client_lang=client_lang %}
-          {% endfor %}
+          <h3>{{ _('Related Items') }}</h3>
+          <ul class="resource-list">
+            {% for resource in related_resources %}
+              {% set can_edit = h.check_access('package_update', {'id':pkg.id }) and not is_activity_archive %}
+              {% snippet 'package/snippets/resource_item.html', pkg=pkg, res=resource, can_edit=can_edit, is_activity_archive=is_activity_archive %}
+            {% endfor %}
           </ul>
         </div>
       {% endif %}
-    {% endblock %}
-    {% block related_items %}{% endblock related_items %}
+    {% endblock related_items %}
     {% block contact_information %}
       {% set info = h.contact_information(pkg.get('contact_information')) %}
       {% if info %}

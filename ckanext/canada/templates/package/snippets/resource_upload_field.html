@@ -1,0 +1,50 @@
+{% ckan_extends %}
+
+{% block url_type_select %}
+  {{ super() }}
+  <button type="button" class="btn btn-default" id="resource-related-button"
+    title="{{ _('Link to a related record.') }}"
+      onclick="
+        let nrmg = document.getElementById('normal-resource-meta-group');
+        if( nrmg ){
+          nrmg.hidden = true;
+          nrmg.removeAttribute('open');
+        }
+        let rrmg = document.getElementById('related-resource-meta-group');
+        if( rrmg ){
+          rrmg.hidden = false;
+          rrmg.setAttribute('open', 'open');
+        }
+        document.getElementById('resource-url-related').checked = true;
+      "><i class="fa fa-link"></i>{{ _('Related Record') }}</button>
+{% endblock %}
+
+{% block url_type_fields %}
+  {{ super() }}
+  <input type="radio" id="resource-url-related" name="url_type" value="related" {{
+    'checked' if data['url_type'] == 'related' else '' }}>
+  <div class="select-type">
+    {{ remove_button(
+      js="$('#field-resource-related').val('');
+          let nrmg = document.getElementById('normal-resource-meta-group');
+          if( nrmg ){
+            nrmg.hidden = false;
+            nrmg.setAttribute('open', 'open');
+          }
+          let rrmg = document.getElementById('related-resource-meta-group');
+          if( rrmg ){
+            rrmg.hidden = true;
+            rrmg.removeAttribute('open');
+          }") }}
+    {{ form.input(
+      'related_url',
+      label=_('Related Record URL'),
+      id='field-resource-related',
+      type='url',
+      placeholder=placeholder,
+      value=data.get('related_url'),
+      error=errors.get('related_url'),
+      is_required=true,
+      classes=['control-full']) }}
+  </div>
+{% endblock %}

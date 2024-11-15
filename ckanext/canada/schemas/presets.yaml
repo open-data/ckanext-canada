@@ -2703,6 +2703,14 @@ presets:
     form_panel: related
     choices:
     - label:
+        en: Defines
+        fr: Defines FR FR
+      value: defines
+    - label:
+        en: Defined by
+        fr: Defined by FR FR
+      value: defined_by
+    - label:
         en: Continues
         fr: Se poursuit
       value: continues
@@ -2798,6 +2806,10 @@ presets:
         en: Application
         fr: Application
       value: application
+    - label:
+        en: Schema
+        fr: Schema
+      value: schema
     - label:
         en: Other
         fr: Autre
@@ -4065,16 +4077,20 @@ presets:
     upload_field: upload
     upload_clear: clear_upload
 
-# XXX This is a copy of the resource URL field to be displayed only in the
-#     related item panel but is not used directly in any schemas
-- preset_name: _canada_related_resource_url
+# Field = Related Record URL.
+- preset_name: canada_related_resource_url
   values:
-    field_name: url
+    field_name: related_url
     label:
-      en: Record URL
+      en: Related Record URL
+      fr: Related Record URL
     help_text:
       en: The URL for online access to the related record
-    required: true
+      fr: The URL for online access to the related record
+    required: false
+    form_snippet: null
+    form_panel: _exclude_from_form
+    validators: scheming_required unicode_safe remove_whitespace
 
 # Field = Data Includes URI.
 # Default Value = Unchecked.

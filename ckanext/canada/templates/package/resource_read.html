@@ -52,7 +52,7 @@
 {% endblock %}
 
 {% block download_resource_button %}
-  {%if res.datastore_active %}
+  {% if res.datastore_active %}
     <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
       {% if not res.url or not h.is_url(res.url) %}
         {{ _('Download') }}&nbsp;
@@ -75,5 +75,7 @@
            data-pkg-id="{{ pkg.id }}" data-res-id="{{ res.id }}" data-org-id="{{ pkg.organization.id }}"><span>XML</span></a>
         </li>
     </ul>
-  {%endif%}
+  {% elif res.url_type == 'related' %}
+    <a href="{{ res.related_url }}" class="btn btn-primary"><i class="fa fa-external-link" aria-hidden="true"></i>&nbsp;{{ _('Go to Related Record') }}</a>
+  {% endif %}
 {% endblock %}
