@@ -58,24 +58,16 @@
   {% endif %}
   <span property="sameAs" value="{{ h.url_for(g.pkg.type + '.read', id=data.id) }}"></span>
   {%- if data.resources -%}
-    {%- set non_related_resource = [] -%}
-    {%- for resource in data.resources -%}
-      {%- if data.url_type != 'related' -%}
-        {%- do non_related_resource.append(resource) -%}
-      {%- endif -%}
+    {% for res in data.resources %}
+      <span property="distribution" typeof="DataDownload">
+        <span property="inLanguage" content="{{ ','.join(res.language) }}"> </span>
+        <span property="name" lang="{{ h.lang() }}">{{ h.get_translated(res, 'name') }}</span>
+        {%- if res.get('date_published') -%}
+          <span property="datePublished" value="{{ res.date_published[:10] }}"></span>
+        {%- endif -%}
+        <span property="fileFormat">{{ res.format }}</span>
+        <span property="url">{{ res.url }}</span>
+      </span>
     {%- endfor -%}
-    {%- if non_related_resource -%}
-      {% for res in non_related_resource %}
-        <span property="distribution" typeof="DataDownload">
-          <span property="inLanguage" content="{{ ','.join(res.language) }}"> </span>
-          <span property="name" lang="{{ h.lang() }}">{{ h.get_translated(res, 'name') }}</span>
-          {%- if res.get('date_published') -%}
-            <span property="datePublished" value="{{ res.date_published[:10] }}"></span>
-          {%- endif -%}
-          <span property="fileFormat">{{ res.format }}</span>
-          <span property="url">{{ res.url }}</span>
-        </span>
-      {%- endfor -%}
-    {%- endif -%}
   {%- endif -%}
 </div>

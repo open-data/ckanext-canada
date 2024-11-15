@@ -12,9 +12,9 @@
     {%- endif -%}
   {%- endfor -%}
   <div class="accordion mrgn-tp-lg mrgn-bttm-lg">
-    <details id="normal-resource-meta-group" class="acc-group" {% if data.url_type == 'related' %}hidden=""{% endif %} {% if data.url_type != 'related' %}open="open"{% endif %}>
+    <details id="normal-resource-meta-group" class="acc-group" open="open">
       <summary class="wb-toggle tgl-tab" data-toggle='{"parent": ".accordion", "group": ".acc-group"}'>
-        {{ _("Metadata Fields for Resources Only (Not for Related Items)") }}
+        {{ _("Metadata Fields for Resources") }}
       </summary>
       <div class="tgl-panel">
         {%- for field in schema.resource_fields -%}
@@ -24,19 +24,17 @@
         {%- endfor -%}
       </div>
     </details>
-    <details id="related-resource-meta-group" {% if data.url_type != 'related' %}hidden=""{% endif %} class="acc-group" {% if data.url_type == 'related' %}open="open"{% endif %}>
+    <details id="related-resource-meta-group" class="acc-group" open="open">
       <summary class="wb-toggle tgl-tab" data-toggle='{"parent": ".accordion", "group": ".acc-group"}'>
-        {{ _("Metadata Fields for Related Items Only") }}
+        {{ _("Metadata Fields for Resource Relationships") }}
       </summary>
       <div class="tgl-panel">
+        {# TODO: make sure repeater fields work here... #}
         {%- for field in schema.resource_fields -%}
-          {%- if field.form_panel == 'related' -%}
+          {%- if field.form_panel == 'resource_relationships' -%}
             {%- snippet 'scheming/snippets/form_field.html', field=field, data=data, errors=errors, entity_type='dataset', object_type=dataset_type -%}
           {%- endif -%}
         {%- endfor -%}
-        <p>
-          {{ _("Use the Download URL field above to link to the related record.") }}
-        </p>
       </div>
     </details>
   </div>

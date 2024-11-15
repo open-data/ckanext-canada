@@ -36,26 +36,6 @@
         {{ res.format }}
       </span>
     {% endif %}
-    {% if res.url_type == 'related' %}
-      {% if res.related_relationship %}
-        {% set related_relationship_options = h.scheming_get_preset('canada_resource_related_relationship').choices %}
-        {% for option in related_relationship_options %}
-          {% if option.value == res.related_relationship %}
-            <span class="badge res-tag res-tag-related-rel">
-              {{ option.label[h.lang()] }}
-            </span>
-          {% endif %}
-        {% endfor %}
-      {% endif %}
-      {% set related_type_options = h.scheming_get_preset('canada_resource_related_type').choices %}
-      {% for option in related_type_options %}
-        {% if option.value == res.related_type %}
-          <span class="badge res-tag res-tag-related-type">
-            {{ option.label[h.lang()] }}
-          </span>
-        {% endif %}
-      {% endfor %}
-    {% endif %}
     </div>
   </div>
 {% endblock %}
@@ -95,11 +75,6 @@
                   <i class="fa fa-external-link"></i>&nbsp;{{ _('Go to resource') }}
                 {% endif %}
               </a>
-            </li>
-          {% endif %}
-          {% if res.url_type == 'related' and h.is_url(res.related_url) %}
-            <li>
-              <a href="{{ res.related_url }}"><i class="fa fa-external-link" aria-hidden="true"></i>&nbsp;{{ _('Go to Related Record') }}</a>
             </li>
           {% endif %}
           {% set fgp_url = h.fgp_viewer_url(pkg) %}
