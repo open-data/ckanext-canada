@@ -509,8 +509,7 @@ resource_fields:
 # {A French name given to the resource}
 - preset: canada_resource_name
 
-# - preset: canada_resource_related_relationship
-# - preset: canada_resource_related_type
+- preset: canada_resource_relationship
 
 # Field = Date Published.
 # Add a Calendar control to select a Date.

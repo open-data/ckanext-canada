@@ -31,7 +31,7 @@
       <div class="tgl-panel">
         {# TODO: make sure repeater fields work here... #}
         {%- for field in schema.resource_fields -%}
-          {%- if field.form_panel == 'resource_relationships' -%}
+          {%- if field.form_panel == 'relationships' -%}
             {%- snippet 'scheming/snippets/form_field.html', field=field, data=data, errors=errors, entity_type='dataset', object_type=dataset_type -%}
           {%- endif -%}
         {%- endfor -%}

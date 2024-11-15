@@ -841,8 +841,6 @@ class DataGCCAForms(p.SingletonPlugin, DefaultDatasetForm):
                 validators.protect_portal_release_date,
             'canada_copy_from_org_name':
                 validators.canada_copy_from_org_name,
-            'canada_non_related_required':
-                validators.canada_non_related_required,
             'canada_maintainer_email_default':
                 validators.canada_maintainer_email_default,
             'user_read_only':

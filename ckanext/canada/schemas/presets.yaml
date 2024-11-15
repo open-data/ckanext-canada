@@ -2768,7 +2768,7 @@ presets:
     display_snippet: select.html
     validators: scheming_required scheming_choices
     required: true
-    form_panel: dataset_relationships
+    form_panel: relationships
 
 # Field = Related Record URL.
 - preset_name: canada_dataset_related_url
@@ -2803,7 +2803,7 @@ presets:
     validators: fluent_text
     output_validators: fluent_core_translated_output
     required: true
-    form_panel: dataset_relationships
+    form_panel: relationships
     form_attrs:
       style: "width: 100%;"
       class: form-control
@@ -2840,7 +2840,32 @@ presets:
     form_snippet: select.html
     display_snippet: select.html
     validators: scheming_required scheming_choices
-    form_panel: dataset_relationships
+    form_panel: relationships
+
+- preset_name: canada_resource_related_relationship
+  values:
+    field_name: related_relationship
+    label:
+      en: Relationship Type
+      fr: Type de relation
+    help_text:
+      en: The Related Record’s relationship with the resource
+      fr: Relation du dossier connexe avec le jeu de données
+    choices:
+    - label:
+        en: Defines
+        fr: FR Defines FR
+      value: defines
+    - label:
+        en: Defined by
+        fr: FR Defined par FR
+      value: defined_by
+    form_include_blank_choice: true
+    form_snippet: select.html
+    display_snippet: select.html
+    validators: scheming_required scheming_choices
+    required: true
+    form_panel: relationships
 
 # Field = Date Published.
 # Add a Calendar control to select a Date.
@@ -2875,7 +2900,7 @@ presets:
     field_name: resource_type
     form_snippet: select.html
     display_snippet: select.html
-    validators: canada_non_related_required canada_static_rtype_tabledesigner scheming_choices
+    validators: scheming_required canada_static_rtype_tabledesigner scheming_choices
     required: true
     form_include_blank_choice: true
     form_panel: resource
@@ -3301,7 +3326,7 @@ presets:
     form_placeholder:
       en: "eg. CSV, XML or JSON"
       fr: "par exemple CSV, XML ou JSON"
-    validators: canada_guess_resource_format scheming_required unicode_safe canada_non_related_required scheming_choices
+    validators: canada_guess_resource_format scheming_required unicode_safe scheming_required scheming_choices
     required: false
     form_include_blank_choice: true
     form_panel: resource
@@ -4167,6 +4192,7 @@ presets:
 - preset_name: canada_dataset_relationship
   values:
     field_name: relationship
+    form_panel: relationships
     label:
       en: Relationship
       fr: FR Relationship FR
@@ -4177,4 +4203,31 @@ presets:
 
     - preset: canada_dataset_related_relationship
     - preset: canada_dataset_related_type
+    - preset: canada_dataset_related_url
+
+
+- preset_name: canada_resource_relationship
+  values:
+    field_name: relationship
+    form_panel: relationships
+    label:
+      en: Relationship
+      fr: FR Relationship FR
+    display_snippet: resource_relationship.html
+    form_blanks: 0
+
+    repeating_subfields:
+
+    - preset: canada_resource_related_relationship
+    - preset: canada_resource_type
+      form_restrict_choices_to:
+      - application
+      - api
+      - dataset
+      - guide
+      - faq
+      - specification
+      - terminology
+      - tool
+      - website
     - preset: canada_dataset_related_url

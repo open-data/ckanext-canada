@@ -463,8 +463,7 @@ resource_fields:
 
 - preset: canada_resource_unique_identifier
 - preset: canada_resource_name
-# - preset: canada_resource_related_relationship
-# - preset: canada_resource_related_type
+- preset: canada_resource_relationship
 - preset: canada_resource_date_published
 - preset: canada_resource_type
   form_restrict_choices_to:
@@ -483,7 +482,6 @@ resource_fields:
 - preset: canada_resource_format
 - preset: canada_resource_language
 - preset: canada_resource_url
-- preset: canada_related_resource_url
 - preset: canada_resource_data_quality
 
 - preset: canada_resource_validation_schema
