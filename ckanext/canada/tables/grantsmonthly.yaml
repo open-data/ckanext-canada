@@ -706,43 +706,22 @@ resources:
       en: Risk rating
       fr: Evaluation du risque
     description:
-      en: >
-        The field indicates the risk rating for the 
-        organization as determined by the department.
-        A Low rating suggests the department has identified 
-        minimal risk in funding this recipient, indicating strong 
-        financial stability, compliance history, and organizational 
-        capacity. The recipient is considered trustworthy in terms 
-        of their ability to manage the funds and achieve the 
-        intended outcomes.
-        A Medium rating suggests the department has identified a 
-        moderate level of risk, where additional monitoring or 
-        support may be needed to ensure compliance and program success.
-        A High rating suggests the department has identified a 
-        substantial level of risk, with significant concerns regarding 
-        the recipient's financial situation, organizational capacity, 
-        and compliance with previous agreement. As a result, intensive 
-        oversight or specific conditions may be necessary to mitigate 
-        potential issues.
-      fr: >
-        Le champ indique l'évaluation du risque pour l'organisation 
-        telle qu'elle a été déterminée par le département. 
-        Une évaluation faible suggère que le département a identifié 
-        un risque minimal dans le financement de ce bénéficiaire, 
-        indiquant une forte stabilité financière, des antécédents 
-        de conformité et une capacité organisationnelle. Le bénéficiaire 
-        est considéré comme digne de confiance en ce qui concerne sa 
-        capacité à gérer les fonds et à atteindre les résultats escomptés.
-        Une évaluation moyenne indique que le département a identifié un 
-        niveau de risque modéré, pour lequel un suivi ou un soutien 
-        supplémentaire peut être nécessaire afin de garantir la conformité 
-        et la réussite du programme.
-        Une évaluation élevée indique que le département a identifié un 
-        niveau de risque substantiel, avec des préoccupations importantes 
-        concernant la situation financière du bénéficiaire, sa capacite 
-        organisationnelle et sa conformité aux accords précédents. En 
-        conséquence, une surveillance intensive ou des conditions 
-        spécifiques peuvent nécessiter pour atténuer les problèmes potentiels.
+      en: |
+        The field indicates the risk rating for the organization as determined by the department.
+
+        A “Low” rating suggests the department has identified minimal risk in funding this recipient, indicating strong financial stability, compliance history, and organizational capacity. The recipient is considered trustworthy in terms of their ability to manage the funds and achieve the intended outcomes.
+
+        A “Medium” rating suggests the department has identified a moderate level of risk, where additional monitoring or support may be needed to ensure compliance and program success.
+
+        A “High” rating suggests the department has identified a substantial level of risk, with significant concerns regarding the recipient's financial situation, organizational capacity, and compliance with previous agreement. As a result, intensive oversight or specific conditions may be necessary to mitigate potential issues.
+      fr: |
+        Le champ indique l'évaluation du risque pour l'organisation telle qu'elle a été déterminée par le département. 
+
+        Une évaluation « faible » suggère que le département a identifié un risque minimal dans le financement de ce bénéficiaire, indiquant une forte stabilité financière, des antécédents de conformité et une capacité organisationnelle. Le bénéficiaire est considéré comme digne de confiance en ce qui concerne sa capacité à gérer les fonds et à atteindre les résultats escomptés.
+
+        Une évaluation « moyenne » indique que le département a identifié un niveau de risque modéré, pour lequel un suivi ou un soutien supplémentaire peut être nécessaire afin de garantir la conformité et la réussite du programme.
+
+        Une évaluation « élevée » indique que le département a identifié un niveau de risque substantiel, avec des préoccupations importantes concernant la situation financière du bénéficiaire, sa capacite organisationnelle et sa conformité aux accords précédents. En conséquence, une surveillance intensive ou des conditions spécifiques peuvent nécessiter pour atténuer les problèmes potentiels.
     obligation: Mandatory
     occurrence: Single
     excel_required: true
