@@ -72,7 +72,7 @@ class TestHospitalityQ(CanadaTestBase):
         raw_values_expected_values = {
             ' Les Impertinentes ; Les Street Monkeys ': 'Les Impertinentes;Les Street Monkeys',
             'Les Impertinentes ; Les Street Monkeys ;  Starbucks ': 'Les Impertinentes;Les Street Monkeys;Starbucks',
-            'Les Impertinentes;Les Street Monkeys;Tim Hortons': 'Les Impertinentes;Les Street Monkeys;Tim Hortons',
+            '  Les Impertinentes  ;  Les Street Monkeys  ;  Tim Hortons  ': 'Les Impertinentes;Les Street Monkeys;Tim Hortons',
         }
         for raw_value, excpected_value in raw_values_expected_values.items():
             record['vendor_other_en'] = raw_value
