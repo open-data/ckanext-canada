@@ -212,6 +212,29 @@ resources:
     form_attrs:
       size: 60
 
+  # 3.11
+  - datastore_id: destination_fr
+    datastore_type: text
+    label:
+      en: Place visited (French)
+      fr: Endroits visités (français)
+    description:
+      en: To include name of the first place visited during the trip in question, in French.
+      fr: Cette zone indique, en français, le nom de tous les endroits visités pendant le voyage.
+    form_help:
+      en: Note, use the format {City Name}, {Country Name} (e.g. Ottawa, Canada or New York City, USA)
+      fr: Note, use the format {City Name}, {Country Name} (e.g. Ottawa, Canada or New York City, USA)
+    obligation: Mandatory
+    excel_required: true
+    # Dev NOTE: excel_error_formula: Excel and Open Office Calc parity issues with REGEX. REGEX does not exist in Excel.
+    form_required: true
+    validation: This field must not be empty
+    format_type:
+      en: Free text – Note, use the format {City Name}, {Country Name} (e.g. Ottawa, Canada or New York City, USA)
+      fr: Free text – Note, use the format {City Name}, {Country Name} (e.g. Ottawa, Canada or New York City, USA)
+    form_attrs:
+      size: 60
+
   # 3.10.2
   - datastore_id: destination_2_en
     datastore_type: text
@@ -228,6 +251,29 @@ resources:
     excel_required: false
     # Dev NOTE: excel_error_formula: Excel and Open Office Calc parity issues with REGEX. REGEX does not exist in Excel.
     excel_required_formula: NOT(ISBLANK({destination_2_fr}))
+    form_required: false
+    format_type:
+      en: Free text – Note, use the format {City Name}, {Country Name} (e.g. Ottawa, Canada or New York City, USA)
+      fr: Free text – Note, use the format {City Name}, {Country Name} (e.g. Ottawa, Canada or New York City, USA)
+    form_attrs:
+      size: 60
+
+  # 3.11.2
+  - datastore_id: destination_2_fr
+    datastore_type: text
+    label:
+      en: Second places visited (French)
+      fr: Endroits visités (français)
+    description:
+      en: To include name of second place visited during the trip in question, in French.
+      fr: Cette zone indique, en français, le nom de tous les endroits visités pendant le voyage.
+    form_help:
+      en: Note, use the format {City Name}, {Country Name} (e.g. Ottawa, Canada or New York City, USA)
+      fr: Note, use the format {City Name}, {Country Name} (e.g. Ottawa, Canada or New York City, USA)
+    obligation: Optional
+    excel_required: false
+    # Dev NOTE: excel_error_formula: Excel and Open Office Calc parity issues with REGEX. REGEX does not exist in Excel.
+    excel_required_formula: NOT(ISBLANK({destination_2_en}))
     form_required: false
     format_type:
       en: Free text – Note, use the format {City Name}, {Country Name} (e.g. Ottawa, Canada or New York City, USA)
@@ -258,75 +304,6 @@ resources:
     form_attrs:
       size: 60
 
-  # 3.10.x
-  - datastore_id: destination_other_en
-    datastore_type: text
-    label:
-      en: Other places visited (English)
-      fr: Endroits visités (anglais)
-    description:
-      en: To include names of all other places visited during the trip in question, in English.
-      fr: Cette zone indique, en anglais, le nom de tous les endroits visités pendant le voyage.
-    form_help:
-      en: Note, use the format {City Name}, {Country Name};{City 2 Name}, {Country 2 Name} (e.g. Ottawa, Canada;New York City, USA)
-      fr: Note, use the format {City Name}, {Country Name};{City 2 Name}, {Country 2 Name} (e.g. Ottawa, Canada;New York City, USA)
-    obligation: Optional
-    excel_required: false
-    # Dev NOTE: excel_error_formula: Excel and Open Office Calc parity issues with REGEX. REGEX does not exist in Excel.
-    excel_required_formula: NOT(ISBLANK({destination_other_fr}))
-    form_required: false
-    format_type:
-      en: Free text – Note, use the format {City Name}, {Country Name};{City 2 Name}, {Country 2 Name} (e.g. Ottawa, Canada;New York City, USA)
-      fr: Free text – Note, use the format {City Name}, {Country Name};{City 2 Name}, {Country 2 Name} (e.g. Ottawa, Canada;New York City, USA)
-    form_attrs:
-      size: 60
-
-  # 3.11
-  - datastore_id: destination_fr
-    datastore_type: text
-    label:
-      en: Place visited (French)
-      fr: Endroits visités (français)
-    description:
-      en: To include name of the first place visited during the trip in question, in French.
-      fr: Cette zone indique, en français, le nom de tous les endroits visités pendant le voyage.
-    form_help:
-      en: Note, use the format {City Name}, {Country Name} (e.g. Ottawa, Canada or New York City, USA)
-      fr: Note, use the format {City Name}, {Country Name} (e.g. Ottawa, Canada or New York City, USA)
-    obligation: Mandatory
-    excel_required: true
-    # Dev NOTE: excel_error_formula: Excel and Open Office Calc parity issues with REGEX. REGEX does not exist in Excel.
-    form_required: true
-    validation: This field must not be empty
-    format_type:
-      en: Free text – Note, use the format {City Name}, {Country Name} (e.g. Ottawa, Canada or New York City, USA)
-      fr: Free text – Note, use the format {City Name}, {Country Name} (e.g. Ottawa, Canada or New York City, USA)
-    form_attrs:
-      size: 60
-
-  # 3.11.2
-  - datastore_id: destination_2_fr
-    datastore_type: text
-    label:
-      en: Second places visited (French)
-      fr: Endroits visités (français)
-    description:
-      en: To include name of second place visited during the trip in question, in French.
-      fr: Cette zone indique, en français, le nom de tous les endroits visités pendant le voyage.
-    form_help:
-      en: Note, use the format {City Name}, {Country Name} (e.g. Ottawa, Canada or New York City, USA)
-      fr: Note, use the format {City Name}, {Country Name} (e.g. Ottawa, Canada or New York City, USA)
-    obligation: Optional
-    excel_required: false
-    # Dev NOTE: excel_error_formula: Excel and Open Office Calc parity issues with REGEX. REGEX does not exist in Excel.
-    excel_required_formula: NOT(ISBLANK({destination_2_en}))
-    form_required: false
-    format_type:
-      en: Free text – Note, use the format {City Name}, {Country Name} (e.g. Ottawa, Canada or New York City, USA)
-      fr: Free text – Note, use the format {City Name}, {Country Name} (e.g. Ottawa, Canada or New York City, USA)
-    form_attrs:
-      size: 60
-
   # 3.11.3
   - datastore_id: destination_3_fr
     datastore_type: text
@@ -347,6 +324,29 @@ resources:
     format_type:
       en: Free text – Note, use the format {City Name}, {Country Name} (e.g. Ottawa, Canada or New York City, USA)
       fr: Free text – Note, use the format {City Name}, {Country Name} (e.g. Ottawa, Canada or New York City, USA)
+    form_attrs:
+      size: 60
+
+  # 3.10.x
+  - datastore_id: destination_other_en
+    datastore_type: text
+    label:
+      en: Other places visited (English)
+      fr: Endroits visités (anglais)
+    description:
+      en: To include names of all other places visited during the trip in question, in English.
+      fr: Cette zone indique, en anglais, le nom de tous les endroits visités pendant le voyage.
+    form_help:
+      en: Note, use the format {City Name}, {Country Name};{City 2 Name}, {Country 2 Name} (e.g. Ottawa, Canada;New York City, USA)
+      fr: Note, use the format {City Name}, {Country Name};{City 2 Name}, {Country 2 Name} (e.g. Ottawa, Canada;New York City, USA)
+    obligation: Optional
+    excel_required: false
+    # Dev NOTE: excel_error_formula: Excel and Open Office Calc parity issues with REGEX. REGEX does not exist in Excel.
+    excel_required_formula: NOT(ISBLANK({destination_other_fr}))
+    form_required: false
+    format_type:
+      en: Free text – Note, use the format {City Name}, {Country Name};{City 2 Name}, {Country 2 Name} (e.g. Ottawa, Canada;New York City, USA)
+      fr: Free text – Note, use the format {City Name}, {Country Name};{City 2 Name}, {Country 2 Name} (e.g. Ottawa, Canada;New York City, USA)
     form_attrs:
       size: 60
 
