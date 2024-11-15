@@ -193,8 +193,8 @@ resources:
       en: To include name of the place visited during the trip in question, in English.
       fr: Cette zone indique, en anglais, le nom de tous les endroits visités pendant le voyage.
     form_help:
-      en: Note, use the format {City Name}, {Country Name} (e.g. Ottawa, Canada or New York City, United States of America)
-      fr: Note, use the format {City Name}, {Country Name} (e.g. Ottawa, Canada or New York City, United States of America)
+      en: Note, use the format {City Name}, {Country Name} (e.g. Ottawa, Canada or New York City, USA)
+      fr: Note, use the format {City Name}, {Country Name} (e.g. Ottawa, Canada or New York City, USA)
     obligation: Mandatory
     excel_required: true
     # Dev NOTE: excel_error_formula: Excel and Open Office Calc parity issues with REGEX. REGEX does not exist in Excel, and sheetname references in OOC work differently.
@@ -207,8 +207,8 @@ resources:
         This field must not be empty
         Must be in the format of {City Name}, {Country Name}
     format_type:
-      en: Free text – Note, use the format {City Name}, {Country Name} (e.g. Ottawa, Canada or New York City, United States of America)
-      fr: Free text – Note, use the format {City Name}, {Country Name} (e.g. Ottawa, Canada or New York City, United States of America)
+      en: Free text – Note, use the format {City Name}, {Country Name} (e.g. Ottawa, Canada or New York City, USA)
+      fr: Free text – Note, use the format {City Name}, {Country Name} (e.g. Ottawa, Canada or New York City, USA)
     form_attrs:
       size: 60
 
@@ -222,16 +222,16 @@ resources:
       en: To include name of second place visited during the trip in question, in English.
       fr: Cette zone indique, en anglais, le nom de tous les endroits visités pendant le voyage.
     form_help:
-      en: Note, use the format {City Name}, {Country Name} (e.g. Ottawa, Canada or New York City, United States of America)
-      fr: Note, use the format {City Name}, {Country Name} (e.g. Ottawa, Canada or New York City, United States of America)
+      en: Note, use the format {City Name}, {Country Name} (e.g. Ottawa, Canada or New York City, USA)
+      fr: Note, use the format {City Name}, {Country Name} (e.g. Ottawa, Canada or New York City, USA)
     obligation: Optional
     excel_required: false
     # Dev NOTE: excel_error_formula: Excel and Open Office Calc parity issues with REGEX. REGEX does not exist in Excel, and sheetname references in OOC work differently.
     excel_required_formula: NOT(ISBLANK({destination_2_fr}))
     form_required: false
     format_type:
-      en: Free text – Note, use the format {City Name}, {Country Name} (e.g. Ottawa, Canada or New York City, United States of America)
-      fr: Free text – Note, use the format {City Name}, {Country Name} (e.g. Ottawa, Canada or New York City, United States of America)
+      en: Free text – Note, use the format {City Name}, {Country Name} (e.g. Ottawa, Canada or New York City, USA)
+      fr: Free text – Note, use the format {City Name}, {Country Name} (e.g. Ottawa, Canada or New York City, USA)
     form_attrs:
       size: 60
 
@@ -245,16 +245,16 @@ resources:
       en: To include name of third place visited during the trip in question, in English.
       fr: Cette zone indique, en anglais, le nom de tous les endroits visités pendant le voyage.
     form_help:
-      en: Note, use the format {City Name}, {Country Name} (e.g. Ottawa, Canada or New York City, United States of America)
-      fr: Note, use the format {City Name}, {Country Name} (e.g. Ottawa, Canada or New York City, United States of America)
+      en: Note, use the format {City Name}, {Country Name} (e.g. Ottawa, Canada or New York City, USA)
+      fr: Note, use the format {City Name}, {Country Name} (e.g. Ottawa, Canada or New York City, USA)
     obligation: Optional
     excel_required: false
     # Dev NOTE: excel_error_formula: Excel and Open Office Calc parity issues with REGEX. REGEX does not exist in Excel, and sheetname references in OOC work differently.
     excel_required_formula: NOT(ISBLANK({destination_3_fr}))
     form_required: false
     format_type:
-      en: Free text – Note, use the format {City Name}, {Country Name} (e.g. Ottawa, Canada or New York City, United States of America)
-      fr: Free text – Note, use the format {City Name}, {Country Name} (e.g. Ottawa, Canada or New York City, United States of America)
+      en: Free text – Note, use the format {City Name}, {Country Name} (e.g. Ottawa, Canada or New York City, USA)
+      fr: Free text – Note, use the format {City Name}, {Country Name} (e.g. Ottawa, Canada or New York City, USA)
     form_attrs:
       size: 60
 
@@ -268,16 +268,16 @@ resources:
       en: To include names of all other places visited during the trip in question, in English.
       fr: Cette zone indique, en anglais, le nom de tous les endroits visités pendant le voyage.
     form_help:
-      en: Note, use the format {City Name}, {Country Name};{City 2 Name}, {Country 2 Name} (e.g. Ottawa, Canada;New York City, United States of America)
-      fr: Note, use the format {City Name}, {Country Name};{City 2 Name}, {Country 2 Name} (e.g. Ottawa, Canada;New York City, United States of America)
+      en: Note, use the format {City Name}, {Country Name};{City 2 Name}, {Country 2 Name} (e.g. Ottawa, Canada;New York City, USA)
+      fr: Note, use the format {City Name}, {Country Name};{City 2 Name}, {Country 2 Name} (e.g. Ottawa, Canada;New York City, USA)
     obligation: Optional
     excel_required: false
     # Dev NOTE: excel_error_formula: Excel and Open Office Calc parity issues with REGEX. REGEX does not exist in Excel, and sheetname references in OOC work differently.
     excel_required_formula: NOT(ISBLANK({destination_other_fr}))
     form_required: false
     format_type:
-      en: Free text – Note, use the format {City Name}, {Country Name};{City 2 Name}, {Country 2 Name} (e.g. Ottawa, Canada;New York City, United States of America)
-      fr: Free text – Note, use the format {City Name}, {Country Name};{City 2 Name}, {Country 2 Name} (e.g. Ottawa, Canada;New York City, United States of America)
+      en: Free text – Note, use the format {City Name}, {Country Name};{City 2 Name}, {Country 2 Name} (e.g. Ottawa, Canada;New York City, USA)
+      fr: Free text – Note, use the format {City Name}, {Country Name};{City 2 Name}, {Country 2 Name} (e.g. Ottawa, Canada;New York City, USA)
     form_attrs:
       size: 60
 
@@ -291,16 +291,16 @@ resources:
       en: To include name of the place visited during the trip in question, in French.
       fr: Cette zone indique, en français, le nom de tous les endroits visités pendant le voyage.
     form_help:
-      en: Note, use the format {City Name}, {Country Name} (e.g. Ottawa, Canada or New York City, United States of America)
-      fr: Note, use the format {City Name}, {Country Name} (e.g. Ottawa, Canada or New York City, United States of America)
+      en: Note, use the format {City Name}, {Country Name} (e.g. Ottawa, Canada or New York City, USA)
+      fr: Note, use the format {City Name}, {Country Name} (e.g. Ottawa, Canada or New York City, USA)
     obligation: Mandatory
     excel_required: true
     # Dev NOTE: excel_error_formula: Excel and Open Office Calc parity issues with REGEX. REGEX does not exist in Excel, and sheetname references in OOC work differently.
     form_required: true
     validation: This field must not be empty
     format_type:
-      en: Free text – Note, use the format {City Name}, {Country Name} (e.g. Ottawa, Canada or New York City, United States of America)
-      fr: Free text – Note, use the format {City Name}, {Country Name} (e.g. Ottawa, Canada or New York City, United States of America)
+      en: Free text – Note, use the format {City Name}, {Country Name} (e.g. Ottawa, Canada or New York City, USA)
+      fr: Free text – Note, use the format {City Name}, {Country Name} (e.g. Ottawa, Canada or New York City, USA)
     form_attrs:
       size: 60
 
@@ -314,16 +314,16 @@ resources:
       en: To include name of second place visited during the trip in question, in French.
       fr: Cette zone indique, en français, le nom de tous les endroits visités pendant le voyage.
     form_help:
-      en: Note, use the format {City Name}, {Country Name} (e.g. Ottawa, Canada or New York City, United States of America)
-      fr: Note, use the format {City Name}, {Country Name} (e.g. Ottawa, Canada or New York City, United States of America)
+      en: Note, use the format {City Name}, {Country Name} (e.g. Ottawa, Canada or New York City, USA)
+      fr: Note, use the format {City Name}, {Country Name} (e.g. Ottawa, Canada or New York City, USA)
     obligation: Optional
     excel_required: false
     # Dev NOTE: excel_error_formula: Excel and Open Office Calc parity issues with REGEX. REGEX does not exist in Excel, and sheetname references in OOC work differently.
     excel_required_formula: NOT(ISBLANK({destination_2_en}))
     form_required: false
     format_type:
-      en: Free text – Note, use the format {City Name}, {Country Name} (e.g. Ottawa, Canada or New York City, United States of America)
-      fr: Free text – Note, use the format {City Name}, {Country Name} (e.g. Ottawa, Canada or New York City, United States of America)
+      en: Free text – Note, use the format {City Name}, {Country Name} (e.g. Ottawa, Canada or New York City, USA)
+      fr: Free text – Note, use the format {City Name}, {Country Name} (e.g. Ottawa, Canada or New York City, USA)
     form_attrs:
       size: 60
 
@@ -337,16 +337,16 @@ resources:
       en: To include name of third place visited during the trip in question, in French.
       fr: Cette zone indique, en français, le nom de tous les endroits visités pendant le voyage.
     form_help:
-      en: Note, use the format {City Name}, {Country Name} (e.g. Ottawa, Canada or New York City, United States of America)
-      fr: Note, use the format {City Name}, {Country Name} (e.g. Ottawa, Canada or New York City, United States of America)
+      en: Note, use the format {City Name}, {Country Name} (e.g. Ottawa, Canada or New York City, USA)
+      fr: Note, use the format {City Name}, {Country Name} (e.g. Ottawa, Canada or New York City, USA)
     obligation: Optional
     excel_required: false
     # Dev NOTE: excel_error_formula: Excel and Open Office Calc parity issues with REGEX. REGEX does not exist in Excel, and sheetname references in OOC work differently.
     excel_required_formula: NOT(ISBLANK({destination_3_en}))
     form_required: false
     format_type:
-      en: Free text – Note, use the format {City Name}, {Country Name} (e.g. Ottawa, Canada or New York City, United States of America)
-      fr: Free text – Note, use the format {City Name}, {Country Name} (e.g. Ottawa, Canada or New York City, United States of America)
+      en: Free text – Note, use the format {City Name}, {Country Name} (e.g. Ottawa, Canada or New York City, USA)
+      fr: Free text – Note, use the format {City Name}, {Country Name} (e.g. Ottawa, Canada or New York City, USA)
     form_attrs:
       size: 60
 
@@ -360,16 +360,16 @@ resources:
       en: To include names of all other places visited during the trip in question, in French.
       fr: Cette zone indique, en français, le nom de tous les endroits visités pendant le voyage.
     form_help:
-      en: Note, use the format {City Name}, {Country Name};{City 2 Name}, {Country 2 Name} (e.g. Ottawa, Canada;New York City, United States of America)
-      fr: Note, use the format {City Name}, {Country Name};{City 2 Name}, {Country 2 Name} (e.g. Ottawa, Canada;New York City, United States of America)
+      en: Note, use the format {City Name}, {Country Name};{City 2 Name}, {Country 2 Name} (e.g. Ottawa, Canada;New York City, USA)
+      fr: Note, use the format {City Name}, {Country Name};{City 2 Name}, {Country 2 Name} (e.g. Ottawa, Canada;New York City, USA)
     obligation: Optional
     excel_required: false
     # Dev NOTE: excel_error_formula: Excel and Open Office Calc parity issues with REGEX. REGEX does not exist in Excel, and sheetname references in OOC work differently.
     excel_required_formula: NOT(ISBLANK({destination_other_en}))
     form_required: false
     format_type:
-      en: Free text – Note, use the format {City Name}, {Country Name};{City 2 Name}, {Country 2 Name} (e.g. Ottawa, Canada;New York City, United States of America)
-      fr: Free text – Note, use the format {City Name}, {Country Name};{City 2 Name}, {Country 2 Name} (e.g. Ottawa, Canada;New York City, United States of America)
+      en: Free text – Note, use the format {City Name}, {Country Name};{City 2 Name}, {Country 2 Name} (e.g. Ottawa, Canada;New York City, USA)
+      fr: Free text – Note, use the format {City Name}, {Country Name};{City 2 Name}, {Country 2 Name} (e.g. Ottawa, Canada;New York City, USA)
     form_attrs:
       size: 60
 
@@ -624,8 +624,8 @@ resources:
 
   trigger_strings:  # yaml | not supported
     ref_number_error: Comma is not allowed in Reference Number field
-    destination_format_error: Invalid format for destination. Use {City Name}, {Country Name} (e.g. Ottawa, Canada or New York City, United States of America)
-    multi_destination_format_error: Invalid format for multiple destinations. Use {City Name}, {Country Name};{City 2 Name}, {Country 2 Name} (e.g. Ottawa, Canada;New York City, United States of America)
+    destination_format_error: Invalid format for destination. Use {City Name}, {Country Name} (e.g. Ottawa, Canada or New York City, USA)
+    multi_destination_format_error: Invalid format for multiple destinations. Use {City Name}, {Country Name};{City 2 Name}, {Country 2 Name} (e.g. Ottawa, Canada;New York City, USA)
 
   examples:
     record:

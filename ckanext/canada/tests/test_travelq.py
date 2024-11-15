@@ -92,14 +92,14 @@ class TestTravelQ(CanadaTestBase):
                     records=[record])
             err = ve.value.error_dict['records'][0]
             expected = {
-                'destination_en': ["Invalid format for destination. Use {City Name}, {Country Name} (e.g. Ottawa, Canada or New York City, United States of America)"],
-                'destination_fr': ["Invalid format for destination. Use {City Name}, {Country Name} (e.g. Ottawa, Canada or New York City, United States of America)"],
-                'destination_2_en': ["Invalid format for destination. Use {City Name}, {Country Name} (e.g. Ottawa, Canada or New York City, United States of America)"],
-                'destination_2_fr': ["Invalid format for destination. Use {City Name}, {Country Name} (e.g. Ottawa, Canada or New York City, United States of America)"],
-                'destination_3_en': ["Invalid format for destination. Use {City Name}, {Country Name} (e.g. Ottawa, Canada or New York City, United States of America)"],
-                'destination_3_fr': ["Invalid format for destination. Use {City Name}, {Country Name} (e.g. Ottawa, Canada or New York City, United States of America)"],
-                'destination_other_en': ["Invalid format for multiple destinations. Use {City Name}, {Country Name};{City 2 Name}, {Country 2 Name} (e.g. Ottawa, Canada;New York City, United States of America)"],
-                'destination_other_fr': ["Invalid format for multiple destinations. Use {City Name}, {Country Name};{City 2 Name}, {Country 2 Name} (e.g. Ottawa, Canada;New York City, United States of America)"],
+                'destination_en': ["Invalid format for destination. Use {City Name}, {Country Name} (e.g. Ottawa, Canada or New York City, USA)"],
+                'destination_fr': ["Invalid format for destination. Use {City Name}, {Country Name} (e.g. Ottawa, Canada or New York City, USA)"],
+                'destination_2_en': ["Invalid format for destination. Use {City Name}, {Country Name} (e.g. Ottawa, Canada or New York City, USA)"],
+                'destination_2_fr': ["Invalid format for destination. Use {City Name}, {Country Name} (e.g. Ottawa, Canada or New York City, USA)"],
+                'destination_3_en': ["Invalid format for destination. Use {City Name}, {Country Name} (e.g. Ottawa, Canada or New York City, USA)"],
+                'destination_3_fr': ["Invalid format for destination. Use {City Name}, {Country Name} (e.g. Ottawa, Canada or New York City, USA)"],
+                'destination_other_en': ["Invalid format for multiple destinations. Use {City Name}, {Country Name};{City 2 Name}, {Country 2 Name} (e.g. Ottawa, Canada;New York City, USA)"],
+                'destination_other_fr': ["Invalid format for multiple destinations. Use {City Name}, {Country Name};{City 2 Name}, {Country 2 Name} (e.g. Ottawa, Canada;New York City, USA)"],
             }
             for k in set(err) | set(expected):
                 assert k in err
@@ -143,8 +143,8 @@ class TestTravelQ(CanadaTestBase):
                     records=[record])
             err = ve.value.error_dict['records'][0]
             expected = {
-                'destination_other_en': ["Invalid format for multiple destinations. Use {City Name}, {Country Name};{City 2 Name}, {Country 2 Name} (e.g. Ottawa, Canada;New York City, United States of America)"],
-                'destination_other_fr': ["Invalid format for multiple destinations. Use {City Name}, {Country Name};{City 2 Name}, {Country 2 Name} (e.g. Ottawa, Canada;New York City, United States of America)"],
+                'destination_other_en': ["Invalid format for multiple destinations. Use {City Name}, {Country Name};{City 2 Name}, {Country 2 Name} (e.g. Ottawa, Canada;New York City, USA)"],
+                'destination_other_fr': ["Invalid format for multiple destinations. Use {City Name}, {Country Name};{City 2 Name}, {Country 2 Name} (e.g. Ottawa, Canada;New York City, USA)"],
             }
             for k in set(err) | set(expected):
                 assert k in err
