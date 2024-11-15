@@ -313,6 +313,38 @@ def update_triggers():
             END;
         ''')
 
+    # return record with .clean (normalized value) and .error
+    # (NULL or ARRAY[[field_name, error_message]])
+    # Dev NOTE: \p{} regex does not work in PSQL, need to use the [:alpha:] from POSIX
+    #FIXME: do not capture spaces in loop...
+    lc.action.datastore_function_create(
+        name='multi_vendor_clean_error',
+        or_replace=True,
+        arguments=[
+            {'argname': 'value', 'argtype': 'text'},
+            {'argname': 'field_name', 'argtype': 'text'},
+            {'argname': 'clean', 'argtype': 'text', 'argmode': 'out'},
+            {'argname': 'error', 'argtype': '_text', 'argmode': 'out'}],
+        rettype='record',
+        definition='''
+            DECLARE
+                vendor_matches text[] := regexp_match(value::text, '^([^;]+?)(?:;\s*([^;]+?))*$'::text);
+                vendor_match text;
+                clean_val text := NULL;
+            BEGIN
+                IF value <> '' AND vendor_matches IS NULL THEN
+                    error := ARRAY[[field_name, 'Invalid format for multiple commercial establishments or vendors. Use {Vendor Name};{Vendor 2 Name} (e.g. Les Impertinentes;Les Street Monkeys)']];
+                END IF;
+                IF vendor_matches IS NOT NULL THEN
+                    vendor_matches := regexp_split_to_array(value::text, '(;|$)'::text);
+                    FOREACH vendor_match IN ARRAY vendor_matches LOOP
+                        clean_val := array_to_string(ARRAY[clean_val, array_to_string(regexp_match(vendor_match::text, '^\s*([^;]+?)\s*$'::text), '')], ';');
+                    END LOOP;
+                    clean := clean_val;
+                END IF;
+            END;
+        ''')
+
     # A: When sysadmin passes '*' as user_modified, replace with '' and
     #    set created+modified values to NULL. This is used when restoring
     #    earlier migrated data that had no record of the
