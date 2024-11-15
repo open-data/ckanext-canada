@@ -2860,6 +2860,14 @@ presets:
         en: Defined by
         fr: FR Defined par FR
       value: defined_by
+    - label:
+        en: References
+        fr: FR References FR
+      value: references
+    - label:
+        en: Referenced by
+        fr: FR Referenced par FR
+      value: referenced_by
     form_include_blank_choice: true
     form_snippet: select.html
     display_snippet: select.html
@@ -4221,13 +4229,13 @@ presets:
     - preset: canada_resource_related_relationship
     - preset: canada_resource_type
       form_restrict_choices_to:
-      - application
-      - api
-      - dataset
-      - guide
-      - faq
-      - specification
-      - terminology
-      - tool
-      - website
+        - application
+        - api
+        - dataset
+        - guide
+        - faq
+        - specification
+        - terminology
+        - tool
+        - website
     - preset: canada_dataset_related_url
