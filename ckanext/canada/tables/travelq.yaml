@@ -190,14 +190,14 @@ resources:
       en: Place visited (English)
       fr: Endroits visités (anglais)
     description:
-      en: To include name of the place visited during the trip in question, in English.
+      en: To include name of the first place visited during the trip in question, in English.
       fr: Cette zone indique, en anglais, le nom de tous les endroits visités pendant le voyage.
     form_help:
       en: Note, use the format {City Name}, {Country Name} (e.g. Ottawa, Canada or New York City, USA)
       fr: Note, use the format {City Name}, {Country Name} (e.g. Ottawa, Canada or New York City, USA)
     obligation: Mandatory
     excel_required: true
-    # Dev NOTE: excel_error_formula: Excel and Open Office Calc parity issues with REGEX. REGEX does not exist in Excel, and sheetname references in OOC work differently.
+    # Dev NOTE: excel_error_formula: Excel and Open Office Calc parity issues with REGEX. REGEX does not exist in Excel.
     form_required: true
     validation:
       en: |
@@ -226,7 +226,7 @@ resources:
       fr: Note, use the format {City Name}, {Country Name} (e.g. Ottawa, Canada or New York City, USA)
     obligation: Optional
     excel_required: false
-    # Dev NOTE: excel_error_formula: Excel and Open Office Calc parity issues with REGEX. REGEX does not exist in Excel, and sheetname references in OOC work differently.
+    # Dev NOTE: excel_error_formula: Excel and Open Office Calc parity issues with REGEX. REGEX does not exist in Excel.
     excel_required_formula: NOT(ISBLANK({destination_2_fr}))
     form_required: false
     format_type:
@@ -249,7 +249,7 @@ resources:
       fr: Note, use the format {City Name}, {Country Name} (e.g. Ottawa, Canada or New York City, USA)
     obligation: Optional
     excel_required: false
-    # Dev NOTE: excel_error_formula: Excel and Open Office Calc parity issues with REGEX. REGEX does not exist in Excel, and sheetname references in OOC work differently.
+    # Dev NOTE: excel_error_formula: Excel and Open Office Calc parity issues with REGEX. REGEX does not exist in Excel.
     excel_required_formula: NOT(ISBLANK({destination_3_fr}))
     form_required: false
     format_type:
@@ -272,7 +272,7 @@ resources:
       fr: Note, use the format {City Name}, {Country Name};{City 2 Name}, {Country 2 Name} (e.g. Ottawa, Canada;New York City, USA)
     obligation: Optional
     excel_required: false
-    # Dev NOTE: excel_error_formula: Excel and Open Office Calc parity issues with REGEX. REGEX does not exist in Excel, and sheetname references in OOC work differently.
+    # Dev NOTE: excel_error_formula: Excel and Open Office Calc parity issues with REGEX. REGEX does not exist in Excel.
     excel_required_formula: NOT(ISBLANK({destination_other_fr}))
     form_required: false
     format_type:
@@ -288,14 +288,14 @@ resources:
       en: Place visited (French)
       fr: Endroits visités (français)
     description:
-      en: To include name of the place visited during the trip in question, in French.
+      en: To include name of the first place visited during the trip in question, in French.
       fr: Cette zone indique, en français, le nom de tous les endroits visités pendant le voyage.
     form_help:
       en: Note, use the format {City Name}, {Country Name} (e.g. Ottawa, Canada or New York City, USA)
       fr: Note, use the format {City Name}, {Country Name} (e.g. Ottawa, Canada or New York City, USA)
     obligation: Mandatory
     excel_required: true
-    # Dev NOTE: excel_error_formula: Excel and Open Office Calc parity issues with REGEX. REGEX does not exist in Excel, and sheetname references in OOC work differently.
+    # Dev NOTE: excel_error_formula: Excel and Open Office Calc parity issues with REGEX. REGEX does not exist in Excel.
     form_required: true
     validation: This field must not be empty
     format_type:
@@ -318,7 +318,7 @@ resources:
       fr: Note, use the format {City Name}, {Country Name} (e.g. Ottawa, Canada or New York City, USA)
     obligation: Optional
     excel_required: false
-    # Dev NOTE: excel_error_formula: Excel and Open Office Calc parity issues with REGEX. REGEX does not exist in Excel, and sheetname references in OOC work differently.
+    # Dev NOTE: excel_error_formula: Excel and Open Office Calc parity issues with REGEX. REGEX does not exist in Excel.
     excel_required_formula: NOT(ISBLANK({destination_2_en}))
     form_required: false
     format_type:
@@ -341,7 +341,7 @@ resources:
       fr: Note, use the format {City Name}, {Country Name} (e.g. Ottawa, Canada or New York City, USA)
     obligation: Optional
     excel_required: false
-    # Dev NOTE: excel_error_formula: Excel and Open Office Calc parity issues with REGEX. REGEX does not exist in Excel, and sheetname references in OOC work differently.
+    # Dev NOTE: excel_error_formula: Excel and Open Office Calc parity issues with REGEX. REGEX does not exist in Excel.
     excel_required_formula: NOT(ISBLANK({destination_3_en}))
     form_required: false
     format_type:
@@ -364,7 +364,7 @@ resources:
       fr: Note, use the format {City Name}, {Country Name};{City 2 Name}, {Country 2 Name} (e.g. Ottawa, Canada;New York City, USA)
     obligation: Optional
     excel_required: false
-    # Dev NOTE: excel_error_formula: Excel and Open Office Calc parity issues with REGEX. REGEX does not exist in Excel, and sheetname references in OOC work differently.
+    # Dev NOTE: excel_error_formula: Excel and Open Office Calc parity issues with REGEX. REGEX does not exist in Excel.
     excel_required_formula: NOT(ISBLANK({destination_other_en}))
     form_required: false
     format_type:
