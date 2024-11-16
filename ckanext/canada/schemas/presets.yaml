@@ -4132,21 +4132,6 @@ presets:
     upload_field: upload
     upload_clear: clear_upload
 
-# Field = Related Record URL.
-- preset_name: canada_related_resource_url
-  values:
-    field_name: related_url
-    label:
-      en: Related Record URL
-      fr: Related Record URL
-    help_text:
-      en: The URL for online access to the related record
-      fr: The URL for online access to the related record
-    required: false
-    form_snippet: null
-    form_panel: _exclude_from_form
-    validators: scheming_required unicode_safe remove_whitespace
-
 # Field = Data Includes URI.
 # Default Value = Unchecked.
 # {The most important data items in this resource have a URI, e.g. data in RDF format.}
