@@ -1,7 +1,6 @@
 # -*- coding: UTF-8 -*-
-import requests
+import os
 import json
-import random
 from ckanext.canada.tests import CanadaTestBase
 from ckanapi import LocalCKAN, ValidationError
 
@@ -10,7 +9,7 @@ from ckanext.canada.tests.factories import CanadaOrganization as Organization
 
 from ckanext.recombinant.tables import get_chromo
 
-DESTINATION_ENDPOINT = 'https://restcountries.com/v3.1/all?fields=name,capital'
+COUNTRY_FILE = os.path.dirname(__file__) + '/../tables/choices/country.json'
 
 
 class TestTravelQ(CanadaTestBase):
@@ -50,11 +49,12 @@ class TestTravelQ(CanadaTestBase):
     def test_destination_format(self):
         record = get_chromo('travelq')['examples']['record']
 
+        with open(COUNTRY_FILE) as f:
+            countries = json.load(f)
+
         # tests correct formats
-        destinations = requests.get(DESTINATION_ENDPOINT, stream=True)
-        destinations = json.loads(destinations.content)
-        for destination in destinations:
-            _destination = (destination.get('capital', ['NaNd'])[0] if destination.get('capital') else 'NaNd').replace(',', '') + ', ' + destination.get('name', {}).get('common', 'NaNd').replace(',', '')
+        for _code, country_names in countries.items():
+            _destination = country_names['en'].replace(',', '') + ', ' + country_names['fr'].replace(',', '')
             record['destination_en'] = _destination
             record['destination_fr'] = _destination
             record['destination_2_en'] = _destination
