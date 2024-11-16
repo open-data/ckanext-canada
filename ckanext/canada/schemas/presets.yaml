@@ -2801,7 +2801,7 @@ presets:
       style: "word-wrap: break-word"
     error_snippet: fluent_text.html
     validators: fluent_text
-    output_validators: fluent_core_translated_output
+    output_validators: fluent_text_output
     required: true
     form_panel: relationships
     form_attrs:
