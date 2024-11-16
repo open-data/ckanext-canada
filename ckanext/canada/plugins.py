@@ -408,13 +408,8 @@ class CanadaDatasetsPlugin(SchemingDatasetsPlugin):
                 cr.pop('__extras', None)
 
         if data_dict.get('relationship'):
-            related_relationships = []
-            related_types = []
-            for rel in data_dict['relationship']:
-                related_relationships.append(rel.get('related_relationship'))
-                related_types.append(rel.get('related_type'))
-            data_dict['related_relationship'] = related_relationships
-            data_dict['related_type'] = related_types
+            related_relationships = [rel['related_relationship'] for rel in data_dict['relationship']]
+            related_types = [rel['related_type'] for rel in data_dict['relationship']]
         data_dict.pop('relationship', None)
 
         return data_dict
