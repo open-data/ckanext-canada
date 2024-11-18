@@ -237,17 +237,13 @@ resources:
   - datastore_id: vendor_en
     datastore_type: text
     label:
-      en: Name of commercial establishment or vendor involved in the hospitality activity  (English)
+      en: Name of the first commercial establishment or vendor involved in the hospitality activity  (English)
       fr: Nom des établissements commerciaux ou des fournisseurs concernés (anglais)
     excel_heading:
-      en: |
-        Name of commercial establishment or vendor
-        involved in the hospitality activity (English)
-      fr: |
-        Nom des établissements commerciaux ou des
-        fournisseurs concernés (anglais)
+      en: Name of the first commercial establishment or vendor involved in the hospitality activity (English)
+      fr: Nom des établissements commerciaux ou des fournisseurs concernés (anglais)
     description:
-      en: Must include the name of the commercial establishment or vendor that provided the hospitality (for example, restaurant, hotel or other location) and/or vendor (for example, a caterer), in English
+      en: Must include the name of the first commercial establishment or vendor that provided the hospitality (for example, restaurant, hotel or other location) and/or vendor (for example, a caterer), in English
       fr: Comprend le nom de l’établissement commercial qui a fourni l’accueil (par exemple, restaurant, hôtel ou autre lieu) et/ou du fournisseur (par exemple, un traiteur), en anglais.
     obligation: Mandatory
     excel_required: true
@@ -261,22 +257,146 @@ resources:
   - datastore_id: vendor_fr
     datastore_type: text
     label:
-      en: Name of commercial establishment or vendor involved in the hospitality activity  (French)
+      en: Name of the first commercial establishment or vendor involved in the hospitality activity (French)
       fr: Nom des établissements commerciaux ou des fournisseurs concernés (français)
     excel_heading:
-      en: |
-        Name of commercial establishment or vendor
-        involved in the hospitality activity (French)
-      fr: |
-        Nom des établissements commerciaux ou
-        des fournisseurs concernés (français)
+      en: Name of the first commercial establishment or vendor involved in the hospitality activity (French)
+      fr: Nom des établissements commerciaux ou des fournisseurs concernés (français)
     description:
-      en: Must include the name of the commercial establishment or vendor that provided the hospitality (for example, restaurant, hotel or other location) and/or vendor (for example, a caterer), in French.
+      en: Must include the name of the first commercial establishment or vendor that provided the hospitality (for example, restaurant, hotel or other location) and/or vendor (for example, a caterer), in French.
       fr: Comprend le nom de l’établissement commercial qui a fourni l’accueil (par exemple, restaurant, hôtel ou autre lieu) et/ou du fournisseur (par exemple, un traiteur), en français.
     obligation: Mandatory
     excel_required: true
     form_required: true
     validation: This field must not be empty
+    format_type: Free text
+    form_attrs:
+      size: 60
+
+  # 3.12.2
+  - datastore_id: vendor_2_en
+    datastore_type: text
+    label:
+      en: Name of the second commercial establishment or vendor involved in the hospitality activity (English)
+      fr: Nom des établissements commerciaux ou des fournisseurs concernés (anglais)
+    excel_heading:
+      en: Name of the second commercial establishment or vendor involved in the hospitality activity (English)
+      fr: Nom des établissements commerciaux ou des fournisseurs concernés (anglais)
+    description:
+      en: Must include the name of the second commercial establishment or vendor that provided the hospitality (for example, restaurant, hotel or other location) and/or vendor (for example, a caterer), in English
+      fr: Comprend le nom de l’établissement commercial qui a fourni l’accueil (par exemple, restaurant, hôtel ou autre lieu) et/ou du fournisseur (par exemple, un traiteur), en anglais.
+    obligation: Optional
+    excel_required: false
+    excel_required_formula: NOT(ISBLANK({vendor_2_fr}))
+    form_required: false
+    format_type: Free text
+    form_attrs:
+      size: 60
+
+  # 3.13.2
+  - datastore_id: vendor_2_fr
+    datastore_type: text
+    label:
+      en: Name of the second commercial establishment or vendor involved in the hospitality activity (French)
+      fr: Nom des établissements commerciaux ou des fournisseurs concernés (français)
+    excel_heading:
+      en: Name of the second commercial establishment or vendor involved in the hospitality activity (French)
+      fr: Nom des établissements commerciaux ou des fournisseurs concernés (français)
+    description:
+      en: Must include the name of the second commercial establishment or vendor that provided the hospitality (for example, restaurant, hotel or other location) and/or vendor (for example, a caterer), in French.
+      fr: Comprend le nom de l’établissement commercial qui a fourni l’accueil (par exemple, restaurant, hôtel ou autre lieu) et/ou du fournisseur (par exemple, un traiteur), en français.
+    obligation: Optional
+    excel_required: false
+    excel_required_formula: NOT(ISBLANK({vendor_2_en}))
+    form_required: false
+    format_type: Free text
+    form_attrs:
+      size: 60
+
+  # 3.12.3
+  - datastore_id: vendor_3_en
+    datastore_type: text
+    label:
+      en: Name of the third commercial establishment or vendor involved in the hospitality activity (English)
+      fr: Nom des établissements commerciaux ou des fournisseurs concernés (anglais)
+    excel_heading:
+      en: Name of the third commercial establishment or vendor involved in the hospitality activity (English)
+      fr: Nom des établissements commerciaux ou des fournisseurs concernés (anglais)
+    description:
+      en: Must include the name of the third commercial establishment or vendor that provided the hospitality (for example, restaurant, hotel or other location) and/or vendor (for example, a caterer), in English
+      fr: Comprend le nom de l’établissement commercial qui a fourni l’accueil (par exemple, restaurant, hôtel ou autre lieu) et/ou du fournisseur (par exemple, un traiteur), en anglais.
+    obligation: Optional
+    excel_required: false
+    excel_required_formula: NOT(ISBLANK({vendor_3_fr}))
+    form_required: false
+    format_type: Free text
+    form_attrs:
+      size: 60
+
+  # 3.13.3
+  - datastore_id: vendor_3_fr
+    datastore_type: text
+    label:
+      en: Name of the third commercial establishment or vendor involved in the hospitality activity (French)
+      fr: Nom des établissements commerciaux ou des fournisseurs concernés (français)
+    excel_heading:
+      en: Name of the third commercial establishment or vendor involved in the hospitality activity (French)
+      fr: Nom des établissements commerciaux ou des fournisseurs concernés (français)
+    description:
+      en: Must include the name of the third commercial establishment or vendor that provided the hospitality (for example, restaurant, hotel or other location) and/or vendor (for example, a caterer), in French.
+      fr: Comprend le nom de l’établissement commercial qui a fourni l’accueil (par exemple, restaurant, hôtel ou autre lieu) et/ou du fournisseur (par exemple, un traiteur), en français.
+    obligation: Optional
+    excel_required: false
+    excel_required_formula: NOT(ISBLANK({vendor_3_en}))
+    form_required: false
+    format_type: Free text
+    form_attrs:
+      size: 60
+
+  # 3.12.x
+  - datastore_id: vendor_other_en
+    datastore_type: text
+    label:
+      en: Name of any other commercial establishments or vendors involved in the hospitality activity (English)
+      fr: Nom des établissements commerciaux ou des fournisseurs concernés (anglais)
+    excel_heading:
+      en: Name of any other commercial establishments or vendors involved in the hospitality activity (English)
+      fr: Nom des établissements commerciaux ou des fournisseurs concernés (anglais)
+    description:
+      en: Must include the names of any other commercial establishments or vendors that provided the hospitality (for example, restaurant, hotel or other location) and/or vendor (for example, a caterer), in English. Note, use the format {Vendor Name};{Vendor 2 Name} (e.g. Les Impertinentes;Les Street Monkeys)
+      fr: Comprend le nom de l’établissement commercial qui a fourni l’accueil (par exemple, restaurant, hôtel ou autre lieu) et/ou du fournisseur (par exemple, un traiteur), en anglais. Note, use the format {Vendor Name};{Vendor 2 Name} (e.g. Les Impertinentes;Les Street Monkeys)
+    form_help:
+      en: Note, use the format {Vendor Name};{Vendor 2 Name} (e.g. Les Impertinentes;Les Street Monkeys)
+      fr: Note, use the format {Vendor Name};{Vendor 2 Name} (e.g. Les Impertinentes;Les Street Monkeys)
+    obligation: Optional
+    excel_required: false
+    # Dev NOTE: excel_error_formula: Excel and Open Office Calc parity issues with REGEX. REGEX does not exist in Excel.
+    excel_required_formula: NOT(ISBLANK({vendor_other_fr}))
+    form_required: false
+    format_type: Free text
+    form_attrs:
+      size: 60
+
+  # 3.13.x
+  - datastore_id: vendor_other_fr
+    datastore_type: text
+    label:
+      en: Name of any other commercial establishments or vendors involved in the hospitality activity (French)
+      fr: Nom des établissements commerciaux ou des fournisseurs concernés (français)
+    excel_heading:
+      en: Name of any other commercial establishments or vendors involved in the hospitality activity (French)
+      fr: Nom des établissements commerciaux ou des fournisseurs concernés (français)
+    description:
+      en: Must include the name of any other commercial establishments or vendors that provided the hospitality (for example, restaurant, hotel or other location) and/or vendor (for example, a caterer), in French. Note, use the format {Vendor Name};{Vendor 2 Name} (e.g. Les Impertinentes;Les Street Monkeys)
+      fr: Comprend le nom de l’établissement commercial qui a fourni l’accueil (par exemple, restaurant, hôtel ou autre lieu) et/ou du fournisseur (par exemple, un traiteur), en français. Note, use the format {Vendor Name};{Vendor 2 Name} (e.g. Les Impertinentes;Les Street Monkeys)
+    form_help:
+      en: Note, use the format {Vendor Name};{Vendor 2 Name} (e.g. Les Impertinentes;Les Street Monkeys)
+      fr: Note, use the format {Vendor Name};{Vendor 2 Name} (e.g. Les Impertinentes;Les Street Monkeys)
+    obligation: Optional
+    excel_required: false
+    # Dev NOTE: excel_error_formula: Excel and Open Office Calc parity issues with REGEX. REGEX does not exist in Excel.
+    excel_required_formula: NOT(ISBLANK({vendor_other_en}))
+    form_required: false
     format_type: Free text
     form_attrs:
       size: 60
@@ -431,8 +551,21 @@ resources:
           errors := errors || required_error(NEW.end_date, 'end_date');
           errors := errors || required_error(NEW.location_en, 'location_en');
           errors := errors || required_error(NEW.location_fr, 'location_fr');
+
           errors := errors || required_error(NEW.vendor_en, 'vendor_en');
           errors := errors || required_error(NEW.vendor_fr, 'vendor_fr');
+          errors := errors || both_languages_error(NEW.vendor_2_en, 'vendor_2_en', NEW.vendor_2_fr, 'vendor_2_fr');
+          errors := errors || both_languages_error(NEW.vendor_3_en, 'vendor_3_en', NEW.vendor_3_fr, 'vendor_3_fr');
+          errors := errors || both_languages_error(NEW.vendor_other_en, 'vendor_other_en', NEW.vendor_other_fr, 'vendor_other_fr');
+
+          crval := multi_vendor_clean_error(NEW.vendor_other_en, 'vendor_other_en');
+          errors := errors || crval.error;
+          NEW.vendor_other_en := crval.clean;
+
+          crval := multi_vendor_clean_error(NEW.vendor_other_fr, 'vendor_other_fr');
+          errors := errors || crval.error;
+          NEW.vendor_other_fr := crval.clean;
+
           errors := errors || required_error(NEW.employee_attendees, 'employee_attendees');
           errors := errors || required_error(NEW.guest_attendees, 'guest_attendees');
           errors := errors || required_error(NEW.total, 'total');
@@ -447,6 +580,7 @@ resources:
 
   trigger_strings:  # yaml | not supported
     ref_number_error: Comma is not allowed in Reference Number field
+    multi_vendor_format_error: Invalid format for multiple commercial establishments or vendors. Use {Vendor Name};{Vendor 2 Name} (e.g. Les Impertinentes;Les Street Monkeys)
 
   examples:
     record:
@@ -456,13 +590,19 @@ resources:
       title_fr: Vice-président, sous-ministre, secrétaire parlementaire, sous-ministre adjoint, Direction générale des programmes
       name: Smith, John
       description_en: "Refreshments: information management and policies committee meeting; reception: Maltese delegation, etc"
-      description_fr: "Rafraîchissements : Réunion du Comité de gestion de l’information et des politiques, Réception : Délégation maltaise, etc"
+      description_fr: "Rafraîchissements : Réunion du Comité de gestion de l’information et des politiques, Réception : Délégation maltaise, etc"
       start_date: "2019-06-25"
       end_date: "2019-06-25"
       location_en: Montreal, Quebec, Canada
       location_fr: Montréal, Québec, Canada
       vendor_en: Le Centre Sheraton
       vendor_fr: Le Centre Sheraton
+      vendor_2_en: Tim Hortons
+      vendor_2_fr: Tim Hortons
+      vendor_3_en: Starbucks
+      vendor_3_fr: Starbucks
+      vendor_other_en: Les Impertinentes;Les Street Monkeys
+      vendor_other_fr: Les Impertinentes;Les Street Monkeys
       employee_attendees: 150
       guest_attendees: 4
       total: "7710.55"
