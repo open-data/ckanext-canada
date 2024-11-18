@@ -237,14 +237,6 @@ def canada_copy_from_org_name(key, data, errors, context):
         'fr': org['title'].split(' | ')[-1],
     })
 
-def canada_non_related_required(key, data, errors, context):
-    """
-    Required resource field *if* this resource is not a related item
-    """
-    if not data.get(key[:-1] + ('related_type',)):
-        return not_empty(key, data, errors, context)
-    return ignore_missing(key, data, errors, context)
-
 
 def canada_maintainer_email_default(key, data, errors, context):
     """

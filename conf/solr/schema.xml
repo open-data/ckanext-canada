@@ -187,6 +187,8 @@ attribute with the form `ckan-X.Y` -->
     <field name="ratings_average" type="float" indexed="true" stored="false" />
     <field name="credit" type="string" indexed="true" stored="true" multiValued="true"/>
     <field name="res_resource_type" type="string" indexed="true" stored="true" multiValued="true"/>
+    <field name="related_relationship" type="string" indexed="true" stored="true" multiValued="true"/>
+    <field name="related_type" type="string" indexed="true" stored="true" multiValued="true"/>
     <!-- END: Extra Canada fields :END -->
 </fields>
 

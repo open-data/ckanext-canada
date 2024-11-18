@@ -146,6 +146,9 @@ dataset_fields:
   error_snippet: fluent_text.html
   validators: fluent_text
   output_validators: fluent_text_output
+  form_attrs:
+      size: 100
+      class: form-control
 
 # Field = Keywords English.
 # {Commonly used words or phrases which describe the asset, in English}
@@ -488,6 +491,8 @@ dataset_fields:
 # {The date the asset may be published on the Portal (YYYY-MM-DD)}
 - preset: canada_portal_release_date
 
+- preset: canada_dataset_relationship
+
 
 #
 #   RESOURCE FIELDS
@@ -504,8 +509,7 @@ resource_fields:
 # {A French name given to the resource}
 - preset: canada_resource_name
 
-- preset: canada_resource_related_relationship
-- preset: canada_resource_related_type
+- preset: canada_resource_relationship
 
 # Field = Date Published.
 # Add a Calendar control to select a Date.

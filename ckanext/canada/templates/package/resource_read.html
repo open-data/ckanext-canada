@@ -58,7 +58,7 @@
 {% endblock %}
 
 {% block download_resource_button %}
-  {%if res.datastore_active %}
+  {% if res.datastore_active %}
     <button class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" role="button" data-bs-toggle="dropdown" id="dropdownDownloadFormat" aria-label="{{ _('List of downloadable formats') }}">
       {% if not res.url or not h.is_url(res.url) %}
         {{ _('Download') }}&nbsp;
@@ -80,5 +80,5 @@
            data-pkg-id="{{ pkg.id }}" data-res-id="{{ res.id }}" data-org-id="{{ pkg.organization.id }}"><span>XML</span></a>
         </li>
     </ul>
-  {%endif%}
+  {% endif %}
 {% endblock %}
