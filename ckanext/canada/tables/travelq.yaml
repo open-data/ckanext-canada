@@ -262,7 +262,7 @@ resources:
   - datastore_id: destination_2_fr
     datastore_type: text
     label:
-      en: Second places visited (French)
+      en: Second place visited (French)
       fr: Endroits visités (français)
     description:
       en: To include name of second place visited during the trip in question, in French.
@@ -274,52 +274,6 @@ resources:
     excel_required: false
     # Dev NOTE: excel_error_formula: Excel and Open Office Calc parity issues with REGEX. REGEX does not exist in Excel.
     excel_required_formula: NOT(ISBLANK({destination_2_en}))
-    form_required: false
-    format_type:
-      en: Free text – Note, use the format {City Name}, {Country Name} (e.g. Ottawa, Canada or New York City, USA)
-      fr: Free text – Note, use the format {City Name}, {Country Name} (e.g. Ottawa, Canada or New York City, USA)
-    form_attrs:
-      size: 60
-
-  # 3.10.3
-  - datastore_id: destination_3_en
-    datastore_type: text
-    label:
-      en: Third place visited (English)
-      fr: Endroits visités (anglais)
-    description:
-      en: To include name of third place visited during the trip in question, in English.
-      fr: Cette zone indique, en anglais, le nom de tous les endroits visités pendant le voyage.
-    form_help:
-      en: Note, use the format {City Name}, {Country Name} (e.g. Ottawa, Canada or New York City, USA)
-      fr: Note, use the format {City Name}, {Country Name} (e.g. Ottawa, Canada or New York City, USA)
-    obligation: Optional
-    excel_required: false
-    # Dev NOTE: excel_error_formula: Excel and Open Office Calc parity issues with REGEX. REGEX does not exist in Excel.
-    excel_required_formula: NOT(ISBLANK({destination_3_fr}))
-    form_required: false
-    format_type:
-      en: Free text – Note, use the format {City Name}, {Country Name} (e.g. Ottawa, Canada or New York City, USA)
-      fr: Free text – Note, use the format {City Name}, {Country Name} (e.g. Ottawa, Canada or New York City, USA)
-    form_attrs:
-      size: 60
-
-  # 3.11.3
-  - datastore_id: destination_3_fr
-    datastore_type: text
-    label:
-      en: Third place visited (French)
-      fr: Endroits visités (français)
-    description:
-      en: To include name of third place visited during the trip in question, in French.
-      fr: Cette zone indique, en français, le nom de tous les endroits visités pendant le voyage.
-    form_help:
-      en: Note, use the format {City Name}, {Country Name} (e.g. Ottawa, Canada or New York City, USA)
-      fr: Note, use the format {City Name}, {Country Name} (e.g. Ottawa, Canada or New York City, USA)
-    obligation: Optional
-    excel_required: false
-    # Dev NOTE: excel_error_formula: Excel and Open Office Calc parity issues with REGEX. REGEX does not exist in Excel.
-    excel_required_formula: NOT(ISBLANK({destination_3_en}))
     form_required: false
     format_type:
       en: Free text – Note, use the format {City Name}, {Country Name} (e.g. Ottawa, Canada or New York City, USA)
@@ -586,15 +540,6 @@ resources:
           crval := destination_clean_error(NEW.destination_2_fr, 'destination_2_fr');
           errors := errors || crval.error;
           NEW.destination_2_fr := crval.clean;
-
-          errors := errors || both_languages_error(NEW.destination_3_en, 'destination_3_en', NEW.destination_3_fr, 'destination_3_fr');
-          crval := destination_clean_error(NEW.destination_3_en, 'destination_3_en');
-          errors := errors || crval.error;
-          NEW.destination_3_en := crval.clean;
-
-          crval := destination_clean_error(NEW.destination_3_fr, 'destination_3_fr');
-          errors := errors || crval.error;
-          NEW.destination_3_fr := crval.clean;
 
           errors := errors || both_languages_error(NEW.destination_other_en, 'destination_other_en', NEW.destination_other_fr, 'destination_other_fr');
           crval := multi_destination_clean_error(NEW.destination_other_en, 'destination_other_en');
