@@ -69,8 +69,19 @@ fq_portal_release_date_match = re.compile(r"(portal_release_date:\"\[.*\]\")")
 
 class CanadaValidationPlugin(FrictionlessPlugin):
     def select_check_class(self, type: Optional[str] = None) -> Optional[Type[Check]]:
+        """
+        Load custom check classes.
+        """
         if type == 'ds-headers':
             return checks.DatastoreHeadersCheck()
+
+    def detect_field_candidates(self, field_candidates: list):
+        """
+        Set list of available types for Resource table fields.
+        """
+        if p.toolkit.asbool(p.toolkit.config.get('ckanext.validation.use_type_guessing', False)):
+            return field_candidates
+        return [{'type':'string'}]
 
 
 class CanadaThemePlugin(p.SingletonPlugin):

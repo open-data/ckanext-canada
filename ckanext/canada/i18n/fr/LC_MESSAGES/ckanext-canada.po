@@ -824,6 +824,10 @@ msgid ""
 " limit the number of resources. Please contact open-ouvert@tbs-sct.gc.ca "
 "if you need further assistance."
 msgstr ""
+"Vous ne pouvez ajouter que {max_resource_count} ressources à un ensemble "
+"de données. Vous pouvez segmenter vos ressources sur plusieurs ensembles "
+"de données ou fusionner vos données pour limiter le nombre de ressources. "
+"Pour du support veuillez contacter open-ouvert@tbs-sct.gc.ca."
 
 #: ckanext/canada/view.py:105
 msgid "<strong>Note</strong><br>{0} is now logged in"
@@ -934,7 +938,7 @@ msgstr "Le recombinant resource_name n’a pas été trouvé"
 
 #: ckanext/canada/view.py:612
 msgid "User {0} not authorized to update resource {1}"
-msgstr "Vous n'êtes pas autorisé à supprimer la ressource %s"
+msgstr "L'utilisateur {0} n'est pas autorisé à mettre à jour la ressource {1}"
 
 #: ckanext/canada/view.py:667
 msgid "{num} deleted."
@@ -1797,7 +1801,7 @@ msgstr "Nous rencontrons une erreur"
 
 #: ckanext/canada/templates/error_document_template.html:18
 msgid "Error"
-msgstr ""
+msgstr "Erreur"
 
 #: ckanext/canada/templates/error_document_template.html:30
 msgid ""
@@ -2478,7 +2482,7 @@ msgstr "Description en français"
 
 #: ckanext/canada/templates/datastore/snippets/dictionary_view.html:7
 msgid "Label"
-msgstr ""
+msgstr "Label"
 
 #: ckanext/canada/templates/datastore/snippets/dictionary_view.html:10
 msgid "Description"
@@ -2926,7 +2930,7 @@ msgstr "Désactivé"
 #: ckanext/canada/templates/package/new_resource_not_draft.html:10
 #: ckanext/canada/templates/package/read.html:35
 msgid "Resource Limit Reached"
-msgstr ""
+msgstr "Limite de ressources atteinte"
 
 #: ckanext/canada/templates/package/read.html:17
 #: ckanext/canada/templates/package/read.html:109
@@ -3171,11 +3175,11 @@ msgstr "Retourner"
 
 #: ckanext/canada/templates/package/resource_edit_base.html:12
 msgid "All resources"
-msgstr ""
+msgstr "Toutes les ressources"
 
 #: ckanext/canada/templates/package/resource_edit_base.html:14
 msgid "View resource"
-msgstr ""
+msgstr "Afficher la ressource"
 
 #: ckanext/canada/templates/package/resource_read.html:62
 msgid "List of downloadable formats"
@@ -3197,7 +3201,7 @@ msgstr "Recherche du Gouvernement ouvert"
 
 #: ckanext/canada/templates/package/search.html:37
 msgid "License"
-msgstr ""
+msgstr "Licence"
 
 #: ckanext/canada/templates/package/search.html:57
 msgid "Please review your spelling, or reduce the number of filters selected."
@@ -3207,11 +3211,11 @@ msgstr ""
 
 #: ckanext/canada/templates/package/view_edit_base.html:4
 msgid "All views"
-msgstr ""
+msgstr "Toutes les vues"
 
 #: ckanext/canada/templates/package/view_edit_base.html:7
 msgid "View view"
-msgstr ""
+msgstr "Afficher"
 
 #: ckanext/canada/templates/package/snippets/resource_item.html:71
 #: ckanext/canada/templates/package/wet_datatable.html:9
@@ -3288,7 +3292,7 @@ msgstr "Informations complémentaires"
 #: ckanext/canada/templates/package/snippets/resources.html:55
 #, python-format
 msgid "+ %s more"
-msgstr ""
+msgstr "+ %s plus"
 
 #: ckanext/canada/templates/package/snippets/resource_item.html:64
 msgid "Explore"
@@ -3330,7 +3334,7 @@ msgstr ""
 
 #: ckanext/canada/templates/package/snippets/resources.html:25
 msgid "DataStore"
-msgstr ""
+msgstr "DataStore"
 
 #: ckanext/canada/templates/package/snippets/resources.html:26
 msgid "Data Dictionary"
