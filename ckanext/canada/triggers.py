@@ -297,6 +297,65 @@ def update_triggers():
             END;
         ''')
 
+    # return record with .clean (normalized value) and .error
+    # (NULL or ARRAY[[field_name, error_message]])
+    # Dev NOTE: \p{} regex does not work in PSQL, need to use the [:alpha:] from POSIX
+    lc.action.datastore_function_create(
+        name='destination_clean_error',
+        or_replace=True,
+        arguments=[
+            {'argname': 'value', 'argtype': 'text'},
+            {'argname': 'field_name', 'argtype': 'text'},
+            {'argname': 'clean', 'argtype': 'text', 'argmode': 'out'},
+            {'argname': 'error', 'argtype': '_text', 'argmode': 'out'}],
+        rettype='record',
+        definition='''
+            DECLARE
+                destination_match text := array_to_string(regexp_match(value::text, '^\s*([[:alpha:]''\s\-\.\(\)]+?)\s*,\s*([[:alpha:]''\s\-\.\(\)]+?)\s*$'::text), ', ');
+            BEGIN
+                IF value <> '' AND destination_match IS NULL THEN
+                    error := ARRAY[[field_name, 'Invalid format for destination. Use {City Name}, {Country Name} (e.g. Ottawa, Canada or New York City, USA)']];
+                END IF;
+                IF destination_match IS NOT NULL THEN
+                    clean := destination_match;
+                END IF;
+            END;
+        ''')
+
+    # return record with .clean (normalized value) and .error
+    # (NULL or ARRAY[[field_name, error_message]])
+    # Dev NOTE: \p{} regex does not work in PSQL, need to use the [:alpha:] from POSIX
+    # Dev NOTE: First regexp_match to enforce semi-colon list of city name, country name comma separation.
+    #           Then do a regexp_split_to_array to split the original value by semi-colons, as the PSQL regex cannot do dynamic grouping.
+    #           At that point, we can assuming that the regex for city name, country name will succeed from the first regexp_match.
+    lc.action.datastore_function_create(
+        name='multi_destination_clean_error',
+        or_replace=True,
+        arguments=[
+            {'argname': 'value', 'argtype': 'text'},
+            {'argname': 'field_name', 'argtype': 'text'},
+            {'argname': 'clean', 'argtype': 'text', 'argmode': 'out'},
+            {'argname': 'error', 'argtype': '_text', 'argmode': 'out'}],
+        rettype='record',
+        definition='''
+            DECLARE
+                destination_matches text[] := regexp_match(value::text, '^([[:alpha:]''\s\-\.\(\)]+,\s*[[:alpha:]''\s\-\.\(\)]+)(?:;\s*([[:alpha:]''\s\-\.\(\)]+,\s*[[:alpha:]''\s\-\.\(\)]+))*$'::text);
+                destination_match text;
+                clean_val text := NULL;
+            BEGIN
+                IF value <> '' AND destination_matches IS NULL THEN
+                    error := ARRAY[[field_name, 'Invalid format for multiple destinations. Use {City Name}, {Country Name};{City 2 Name}, {Country 2 Name} (e.g. Ottawa, Canada;New York City, USA)']];
+                END IF;
+                IF destination_matches IS NOT NULL THEN
+                    destination_matches := regexp_split_to_array(value::text, '(;|$)'::text);
+                    FOREACH destination_match IN ARRAY destination_matches LOOP
+                        clean_val := array_to_string(ARRAY[clean_val, array_to_string(regexp_match(destination_match::text, '^\s*([[:alpha:]''\s\-\.\(\)]+?)\s*,\s*([[:alpha:]''\s\-\.\(\)]+?)\s*$'::text), ', ')], ';');
+                    END LOOP;
+                    clean := clean_val;
+                END IF;
+            END;
+        ''')
+
     lc.action.datastore_function_create(
         name=u'must_be_empty_error',
         or_replace=True,

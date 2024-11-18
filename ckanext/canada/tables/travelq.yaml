@@ -187,18 +187,28 @@ resources:
   - datastore_id: destination_en
     datastore_type: text
     label:
-      en: Places visited (English)
+      en: Place visited (English)
       fr: Endroits visités (anglais)
     description:
-      en: To include names of all places visited during the trip in question, in English
+      en: To include name of the first place visited during the trip in question, in English.
       fr: Cette zone indique, en anglais, le nom de tous les endroits visités pendant le voyage.
+    form_help:
+      en: Note, use the format {City Name}, {Country Name} (e.g. Ottawa, Canada or New York City, USA)
+      fr: Note, use the format {City Name}, {Country Name} (e.g. Ottawa, Canada or New York City, USA)
     obligation: Mandatory
     excel_required: true
+    # Dev NOTE: excel_error_formula: Excel and Open Office Calc parity issues with REGEX. REGEX does not exist in Excel.
     form_required: true
-    validation: This field must not be empty
+    validation:
+      en: |
+        This field must not be empty
+        Must be in the format of {City Name}, {Country Name}
+      fr: |
+        This field must not be empty
+        Must be in the format of {City Name}, {Country Name}
     format_type:
-      en: "Free text – Note, use full city/region, province/state and country name where possible (i.e.: Ottawa, Ontario, Canada or New York City, New York, United States)"
-      fr: Texte narratif – indiquez les noms complets de la ville, de la région, de la province, de l’État et du pays, le cas échéant (c’est-à-dire Ottawa (Ontario) Canada OU Ville de New York (New York) États-Unis)
+      en: Free text – Note, use the format {City Name}, {Country Name} (e.g. Ottawa, Canada or New York City, USA)
+      fr: Free text – Note, use the format {City Name}, {Country Name} (e.g. Ottawa, Canada or New York City, USA)
     form_attrs:
       size: 60
 
@@ -206,18 +216,160 @@ resources:
   - datastore_id: destination_fr
     datastore_type: text
     label:
-      en: Places visited (French)
+      en: Place visited (French)
       fr: Endroits visités (français)
     description:
-      en: To include names of all places visited during the trip in question, in French
+      en: To include name of the first place visited during the trip in question, in French.
       fr: Cette zone indique, en français, le nom de tous les endroits visités pendant le voyage.
+    form_help:
+      en: Note, use the format {City Name}, {Country Name} (e.g. Ottawa, Canada or New York City, USA)
+      fr: Note, use the format {City Name}, {Country Name} (e.g. Ottawa, Canada or New York City, USA)
     obligation: Mandatory
     excel_required: true
+    # Dev NOTE: excel_error_formula: Excel and Open Office Calc parity issues with REGEX. REGEX does not exist in Excel.
     form_required: true
     validation: This field must not be empty
     format_type:
-      en: "Free text – Note, use full city/region, province/state and country name where possible (i.e.: Ottawa, Ontario, Canada or New York City, New York, United States)"
-      fr: Texte narratif – indiquez les noms complets de la ville, de la région, de la province, de l’État et du pays, le cas échéant (c’est-à-dire Ottawa (Ontario) Canada OU Ville de New York (New York) États-Unis)
+      en: Free text – Note, use the format {City Name}, {Country Name} (e.g. Ottawa, Canada or New York City, USA)
+      fr: Free text – Note, use the format {City Name}, {Country Name} (e.g. Ottawa, Canada or New York City, USA)
+    form_attrs:
+      size: 60
+
+  # 3.10.2
+  - datastore_id: destination_2_en
+    datastore_type: text
+    label:
+      en: Second place visited (English)
+      fr: Endroits visités (anglais)
+    description:
+      en: To include name of second place visited during the trip in question, in English.
+      fr: Cette zone indique, en anglais, le nom de tous les endroits visités pendant le voyage.
+    form_help:
+      en: Note, use the format {City Name}, {Country Name} (e.g. Ottawa, Canada or New York City, USA)
+      fr: Note, use the format {City Name}, {Country Name} (e.g. Ottawa, Canada or New York City, USA)
+    obligation: Optional
+    excel_required: false
+    # Dev NOTE: excel_error_formula: Excel and Open Office Calc parity issues with REGEX. REGEX does not exist in Excel.
+    excel_required_formula: NOT(ISBLANK({destination_2_fr}))
+    form_required: false
+    format_type:
+      en: Free text – Note, use the format {City Name}, {Country Name} (e.g. Ottawa, Canada or New York City, USA)
+      fr: Free text – Note, use the format {City Name}, {Country Name} (e.g. Ottawa, Canada or New York City, USA)
+    form_attrs:
+      size: 60
+
+  # 3.11.2
+  - datastore_id: destination_2_fr
+    datastore_type: text
+    label:
+      en: Second places visited (French)
+      fr: Endroits visités (français)
+    description:
+      en: To include name of second place visited during the trip in question, in French.
+      fr: Cette zone indique, en français, le nom de tous les endroits visités pendant le voyage.
+    form_help:
+      en: Note, use the format {City Name}, {Country Name} (e.g. Ottawa, Canada or New York City, USA)
+      fr: Note, use the format {City Name}, {Country Name} (e.g. Ottawa, Canada or New York City, USA)
+    obligation: Optional
+    excel_required: false
+    # Dev NOTE: excel_error_formula: Excel and Open Office Calc parity issues with REGEX. REGEX does not exist in Excel.
+    excel_required_formula: NOT(ISBLANK({destination_2_en}))
+    form_required: false
+    format_type:
+      en: Free text – Note, use the format {City Name}, {Country Name} (e.g. Ottawa, Canada or New York City, USA)
+      fr: Free text – Note, use the format {City Name}, {Country Name} (e.g. Ottawa, Canada or New York City, USA)
+    form_attrs:
+      size: 60
+
+  # 3.10.3
+  - datastore_id: destination_3_en
+    datastore_type: text
+    label:
+      en: Third place visited (English)
+      fr: Endroits visités (anglais)
+    description:
+      en: To include name of third place visited during the trip in question, in English.
+      fr: Cette zone indique, en anglais, le nom de tous les endroits visités pendant le voyage.
+    form_help:
+      en: Note, use the format {City Name}, {Country Name} (e.g. Ottawa, Canada or New York City, USA)
+      fr: Note, use the format {City Name}, {Country Name} (e.g. Ottawa, Canada or New York City, USA)
+    obligation: Optional
+    excel_required: false
+    # Dev NOTE: excel_error_formula: Excel and Open Office Calc parity issues with REGEX. REGEX does not exist in Excel.
+    excel_required_formula: NOT(ISBLANK({destination_3_fr}))
+    form_required: false
+    format_type:
+      en: Free text – Note, use the format {City Name}, {Country Name} (e.g. Ottawa, Canada or New York City, USA)
+      fr: Free text – Note, use the format {City Name}, {Country Name} (e.g. Ottawa, Canada or New York City, USA)
+    form_attrs:
+      size: 60
+
+  # 3.11.3
+  - datastore_id: destination_3_fr
+    datastore_type: text
+    label:
+      en: Third place visited (French)
+      fr: Endroits visités (français)
+    description:
+      en: To include name of third place visited during the trip in question, in French.
+      fr: Cette zone indique, en français, le nom de tous les endroits visités pendant le voyage.
+    form_help:
+      en: Note, use the format {City Name}, {Country Name} (e.g. Ottawa, Canada or New York City, USA)
+      fr: Note, use the format {City Name}, {Country Name} (e.g. Ottawa, Canada or New York City, USA)
+    obligation: Optional
+    excel_required: false
+    # Dev NOTE: excel_error_formula: Excel and Open Office Calc parity issues with REGEX. REGEX does not exist in Excel.
+    excel_required_formula: NOT(ISBLANK({destination_3_en}))
+    form_required: false
+    format_type:
+      en: Free text – Note, use the format {City Name}, {Country Name} (e.g. Ottawa, Canada or New York City, USA)
+      fr: Free text – Note, use the format {City Name}, {Country Name} (e.g. Ottawa, Canada or New York City, USA)
+    form_attrs:
+      size: 60
+
+  # 3.10.x
+  - datastore_id: destination_other_en
+    datastore_type: text
+    label:
+      en: Other places visited (English)
+      fr: Endroits visités (anglais)
+    description:
+      en: To include names of all other places visited during the trip in question, in English.
+      fr: Cette zone indique, en anglais, le nom de tous les endroits visités pendant le voyage.
+    form_help:
+      en: Note, use the format {City Name}, {Country Name};{City 2 Name}, {Country 2 Name} (e.g. Ottawa, Canada;New York City, USA)
+      fr: Note, use the format {City Name}, {Country Name};{City 2 Name}, {Country 2 Name} (e.g. Ottawa, Canada;New York City, USA)
+    obligation: Optional
+    excel_required: false
+    # Dev NOTE: excel_error_formula: Excel and Open Office Calc parity issues with REGEX. REGEX does not exist in Excel.
+    excel_required_formula: NOT(ISBLANK({destination_other_fr}))
+    form_required: false
+    format_type:
+      en: Free text – Note, use the format {City Name}, {Country Name};{City 2 Name}, {Country 2 Name} (e.g. Ottawa, Canada;New York City, USA)
+      fr: Free text – Note, use the format {City Name}, {Country Name};{City 2 Name}, {Country 2 Name} (e.g. Ottawa, Canada;New York City, USA)
+    form_attrs:
+      size: 60
+
+  # 3.11.x
+  - datastore_id: destination_other_fr
+    datastore_type: text
+    label:
+      en: Other places visited (French)
+      fr: Endroits visités (français)
+    description:
+      en: To include names of all other places visited during the trip in question, in French.
+      fr: Cette zone indique, en français, le nom de tous les endroits visités pendant le voyage.
+    form_help:
+      en: Note, use the format {City Name}, {Country Name};{City 2 Name}, {Country 2 Name} (e.g. Ottawa, Canada;New York City, USA)
+      fr: Note, use the format {City Name}, {Country Name};{City 2 Name}, {Country 2 Name} (e.g. Ottawa, Canada;New York City, USA)
+    obligation: Optional
+    excel_required: false
+    # Dev NOTE: excel_error_formula: Excel and Open Office Calc parity issues with REGEX. REGEX does not exist in Excel.
+    excel_required_formula: NOT(ISBLANK({destination_other_en}))
+    form_required: false
+    format_type:
+      en: Free text – Note, use the format {City Name}, {Country Name};{City 2 Name}, {Country 2 Name} (e.g. Ottawa, Canada;New York City, USA)
+      fr: Free text – Note, use the format {City Name}, {Country Name};{City 2 Name}, {Country 2 Name} (e.g. Ottawa, Canada;New York City, USA)
     form_attrs:
       size: 60
 
@@ -415,8 +567,44 @@ resources:
           errors := errors || required_error(NEW.purpose_en, 'purpose_en');
           errors := errors || required_error(NEW.purpose_fr, 'purpose_fr');
           errors := errors || required_error(NEW.end_date, 'end_date');
+
           errors := errors || required_error(NEW.destination_en, 'destination_en');
+          crval := destination_clean_error(NEW.destination_en, 'destination_en');
+          errors := errors || crval.error;
+          NEW.destination_en := crval.clean;
+
           errors := errors || required_error(NEW.destination_fr, 'destination_fr');
+          crval := destination_clean_error(NEW.destination_fr, 'destination_fr');
+          errors := errors || crval.error;
+          NEW.destination_fr := crval.clean;
+
+          errors := errors || both_languages_error(NEW.destination_2_en, 'destination_2_en', NEW.destination_2_fr, 'destination_2_fr');
+          crval := destination_clean_error(NEW.destination_2_en, 'destination_2_en');
+          errors := errors || crval.error;
+          NEW.destination_2_en := crval.clean;
+
+          crval := destination_clean_error(NEW.destination_2_fr, 'destination_2_fr');
+          errors := errors || crval.error;
+          NEW.destination_2_fr := crval.clean;
+
+          errors := errors || both_languages_error(NEW.destination_3_en, 'destination_3_en', NEW.destination_3_fr, 'destination_3_fr');
+          crval := destination_clean_error(NEW.destination_3_en, 'destination_3_en');
+          errors := errors || crval.error;
+          NEW.destination_3_en := crval.clean;
+
+          crval := destination_clean_error(NEW.destination_3_fr, 'destination_3_fr');
+          errors := errors || crval.error;
+          NEW.destination_3_fr := crval.clean;
+
+          errors := errors || both_languages_error(NEW.destination_other_en, 'destination_other_en', NEW.destination_other_fr, 'destination_other_fr');
+          crval := multi_destination_clean_error(NEW.destination_other_en, 'destination_other_en');
+          errors := errors || crval.error;
+          NEW.destination_other_en := crval.clean;
+
+          crval := multi_destination_clean_error(NEW.destination_other_fr, 'destination_other_fr');
+          errors := errors || crval.error;
+          NEW.destination_other_fr := crval.clean;
+
           errors := errors || required_error(NEW.lodging, 'lodging');
           errors := errors || required_error(NEW.meals, 'meals');
           errors := errors || required_error(NEW.total, 'total');
@@ -436,6 +624,8 @@ resources:
 
   trigger_strings:  # yaml | not supported
     ref_number_error: Comma is not allowed in Reference Number field
+    destination_format_error: Invalid format for destination. Use {City Name}, {Country Name} (e.g. Ottawa, Canada or New York City, USA)
+    multi_destination_format_error: Invalid format for multiple destinations. Use {City Name}, {Country Name};{City 2 Name}, {Country 2 Name} (e.g. Ottawa, Canada;New York City, USA)
 
   examples:
     record:
@@ -448,8 +638,14 @@ resources:
       purpose_fr: "Participer à une mission commerciale dans le cadre de l’Accord de libre-échange nord-américain, donner une présentation à la chambre de commerce de l’Ontario, etc"
       start_date: "2019-06-22"
       end_date: "2019-06-23"
-      destination_en: "Montreal, Quebec, Canada"
-      destination_fr: "Montréal, Québec, Canada"
+      destination_en: "Montreal, Canada"
+      destination_2_en: "Toronto, Canada"
+      destination_3_en: "New York, USA"
+      destination_other_en: "San Fransisco, USA;Los Angeles, USA"
+      destination_fr: "Montréal, Canada"
+      destination_2_fr: "Toronto, Canada"
+      destination_3_fr: "New York, USA"
+      destination_other_fr: "San Fransisco, USA;Los Angeles, USA"
       airfare: "1000.00"
       other_transport: "50.00"
       lodging: "300.00"
