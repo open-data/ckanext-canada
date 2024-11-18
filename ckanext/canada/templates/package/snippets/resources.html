@@ -23,6 +23,7 @@
                       <button class="btn btn-light btn-sm dropdown-toggle" type="button" id="dropdownRes{{ loop.index }}" data-bs-toggle="dropdown" aria-expanded="false" data-toggle="dropdown"><i class="fa fa-wrench"></i></button>
                       <ul class="dropdown-menu" aria-labelledby="dropdownRes{{ loop.index }}">
                         <li>{% link_for _('Edit resource'), named_route=pkg.type ~ '_resource.edit', id=pkg.name, resource_id=resource.id, class_='dropdown-item', icon='pencil' %}</li>
+                        {% block resources_list_edit_dropdown_inner scoped %}{% endblock %}
                         <li>{% link_for _('Views'), named_route=pkg.type ~ '_resource.views', id=pkg.name, resource_id=resource.id, class_='dropdown-item', icon='chart-bar' %}</li>
                       </ul>
                     </div>
