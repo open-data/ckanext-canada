@@ -80,8 +80,9 @@ class CanadaValidationPlugin(FrictionlessPlugin):
         Set list of available types for Resource table fields.
         """
         if p.toolkit.asbool(p.toolkit.config.get('ckanext.validation.use_type_guessing', False)):
-            return field_candidates
-        return [{'type':'string'}]
+            return
+        field_candidates.clear()
+        field_candidates.append({'type':'string'})
 
 
 class CanadaThemePlugin(p.SingletonPlugin):
