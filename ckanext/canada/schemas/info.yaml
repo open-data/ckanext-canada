@@ -390,6 +390,8 @@ dataset_fields:
       en: The beginning/ending date(s) of publication and/or sequential designations used on items in a series, in French
       fr: Dates de début/fin de la publication et/ou de désignation séquentielle utilisées pour les articles d’une série, en français
   preset: fluent_text
+  form_attrs:
+    class: form-control
 
 # Field = Homepage English.
 # {A program or homepage that can be navigated to gain additional or contextual information about the asset.}
@@ -549,3 +551,7 @@ resource_fields:
 # Field = Location.
 # {The location for online access to the distribution of the resource, if the file resides elsewhere.}
 - preset: canada_resource_url
+
+# LEGACY FIELDS
+- preset: _legacy_canada_related_type
+- preset: _legacy_canada_related_relationship

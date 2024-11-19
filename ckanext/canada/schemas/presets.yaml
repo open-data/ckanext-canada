@@ -3046,6 +3046,10 @@ presets:
         fr: Correspondance - note de service
       value: memorandum
     - label:
+        en: Data Dictionary
+        fr: Dictionnaire de données
+      value: data_dictionary
+    - label:
         en: Dataset
         fr: Jeu de données
       value: dataset
@@ -3257,6 +3261,10 @@ presets:
         en: Routing Slip
         fr: Bordereau d’acheminement
       value: routing_slip
+    - label:
+        en: Schema
+        fr: Schéma
+      value: schema
     - label:
         en: Social Media Resource - Blog Entry
         fr: Ressources des médias sociaux - entrée de blogue
@@ -4213,14 +4221,30 @@ presets:
 
     - preset: canada_resource_related_relationship
     - preset: canada_resource_type
-      form_restrict_choices_to:
-        - application
-        - api
-        - dataset
-        - guide
-        - faq
-        - specification
-        - terminology
-        - tool
-        - website
     - preset: canada_dataset_related_url
+
+
+###
+# LEGACY FIELDS
+###
+
+- preset_name: _legacy_canada_related_type
+  values:
+    field_name: related_type
+    form_snippet: null
+    display_snippet: null
+    required: false
+    validators: ignore
+    form_panel: _exclude_from_form
+    output_validators: canada_output_none
+
+- preset_name: _legacy_canada_related_relationship
+  values:
+    field_name: related_relationship
+    form_snippet: null
+    display_snippet: null
+    required: false
+    validators: ignore
+    required: true
+    form_panel: _exclude_from_form
+    output_validators: canada_output_none

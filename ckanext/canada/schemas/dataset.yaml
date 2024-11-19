@@ -469,9 +469,11 @@ resource_fields:
   form_restrict_choices_to:
   - application
   - api
+  - data_dictionary
   - dataset
   - guide
   - faq
+  - schema
   - specification
   - terminology
   - tool
@@ -497,3 +499,7 @@ resource_fields:
   preset: hidden_in_form
   display_snippet: validation_timestamp.html
   form_panel: validation
+
+# LEGACY FIELDS
+- preset: _legacy_canada_related_type
+- preset: _legacy_canada_related_relationship
