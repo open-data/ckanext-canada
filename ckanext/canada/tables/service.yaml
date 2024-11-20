@@ -53,10 +53,15 @@ resources:
     obligation: Mandatory
     excel_required: true
     form_required: true
+    excel_error_formula: 'OR({default_formula},LEN({cell})-LEN(SUBSTITUTE({cell},",",""))>0)'
     format_type: Free text
     validation:
-      en: This field must not be empty.
-      fr: Ce champ ne doit pas être vide.
+      en: |
+        This field must not be empty.
+        This field cannot contain commas.
+      fr: |
+        Ce champ ne doit pas être vide.
+        Ce champ ne peut pas contenir de virgules.
     occurrence: Single
     datastore_type: text
 
@@ -1357,6 +1362,9 @@ resources:
         errors := errors || choice_error(NEW.fiscal_yr, {fiscal_yr}, 'fiscal_yr');
 
         errors := errors || required_error(NEW.service_id, 'service_id');
+        IF NEW.service_id LIKE '%,%' THEN
+          errors := errors || ARRAY[['service_id', {service_id_comma_error}]];
+        END IF;
 
         errors := errors || required_error(NEW.service_name_en, 'service_name_en');
         NEW.service_name_en := trim_lead_trailing(NEW.service_name_en);
@@ -1535,6 +1543,7 @@ resources:
     integer_type_error: 'Invalid input syntax for type integer: {}'
     conditional_required_error: This field is required due to a response in a different field.
     both_lang_error: This text must be provided in both languages
+    service_id_comma_error: Comma is not allowed in Service ID Number field
 
   examples:
     record:
@@ -1648,9 +1657,14 @@ resources:
     obligation: Mandatory
     excel_required: true
     form_required: true
+    excel_error_formula: 'OR({default_formula},LEN({cell})-LEN(SUBSTITUTE({cell},",",""))>0)'
     validation:
-      en: This field must not be empty.
-      fr: Ce champ ne doit pas être vide.
+      en: |
+        This field must not be empty.
+        This field cannot contain commas.
+      fr: |
+        Ce champ ne doit pas être vide.
+        Ce champ ne peut pas contenir de virgules.
     format_type: Free text
     occurrence: Single
     datastore_type: text
@@ -1726,9 +1740,14 @@ resources:
     obligation: Mandatory
     excel_required: true
     form_required: true
+    excel_error_formula: 'OR({default_formula},LEN({cell})-LEN(SUBSTITUTE({cell},",",""))>0)'
     validation:
-      en: This field must not be empty.
-      fr: Ce champ ne doit pas être vide.
+      en: |
+        This field must not be empty.
+        This field cannot contain commas.
+      fr: |
+        Ce champ ne doit pas être vide.
+        Ce champ ne peut pas contenir de virgules.
     format_type: Free text
     occurrence: Single
     datastore_type: text
@@ -2263,6 +2282,9 @@ resources:
         errors := errors || choice_error(NEW.fiscal_yr, {fiscal_yr}, 'fiscal_yr');
 
         errors := errors || required_error(NEW.service_id, 'service_id');
+        IF NEW.service_id LIKE '%,%' THEN
+          errors := errors || ARRAY[['service_id', {service_id_comma_error}]];
+        END IF;
 
         errors := errors || required_error(NEW.service_name_en, 'service_name_en');
         NEW.service_name_en := trim_lead_trailing(NEW.service_name_en);
@@ -2273,6 +2295,9 @@ resources:
         errors := errors || max_char_error(NEW.service_name_fr, 250, 'service_name_fr');
 
         errors := errors || required_error(NEW.service_standard_id, 'service_standard_id');
+        IF NEW.service_standard_id LIKE '%,%' THEN
+          errors := errors || ARRAY[['service_standard_id', {service_standard_id_comma_error}]];
+        END IF;
 
         errors := errors || required_error(NEW.service_standard_en, 'service_standard_en');
         NEW.service_standard_en := trim_lead_trailing(NEW.service_standard_en);
@@ -2349,6 +2374,8 @@ resources:
     integer_type_error: 'Invalid input syntax for type integer: {}'
     conditional_required_error: This field is required due to a response in a different field.
     both_lang_error: This text must be provided in both languages
+    service_id_comma_error: Comma is not allowed in Service ID Number field
+    service_standard_id_comma_error: Comma is not allowed in Service Standard ID field
 
   examples:
     record:

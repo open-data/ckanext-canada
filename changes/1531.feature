@@ -1,0 +1,1 @@
+Add new Indigenous language "Innu-Aimun" to presets.yaml.
