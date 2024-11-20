@@ -57,7 +57,7 @@ ottawa_tz = timezone('America/Montreal')
 
 JOB_MAPPING = {
     'ckanext.validation.jobs.run_validation_job': {
-        'icon': 'fa-check-circle',
+        'icon': 'fa-check',
         'rid': lambda job_args: job_args.get('id'),
     },
     'ckanext.validation.plugin._remove_unsupported_resource_validation_reports': {
@@ -65,7 +65,7 @@ JOB_MAPPING = {
         'rid': lambda job_args: job_args,
     },
     'ckanext.xloader.jobs.xloader_data_into_datastore': {
-        'icon': 'fa-cloud-upload',
+        'icon': 'fa-cloud-arrow-up',
         'rid': lambda job_args: job_args.get('metadata', {}).get('resource_id'),
     },
     'ckanext.xloader.plugin._remove_unsupported_resource_from_datastore': {
@@ -457,7 +457,7 @@ def canada_job_list(up_func, context, data_dict):
         else:
             rid = None
             job_title = _('Unknown Job')
-            icon = 'fa-circle-o-notch'
+            icon = 'fa-circle-notch'
 
         job_info = {}
         if rid:
