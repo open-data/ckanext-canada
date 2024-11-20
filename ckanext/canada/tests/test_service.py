@@ -36,6 +36,22 @@ class TestService(CanadaTestBase):
             records=[record])
 
 
+    def test_primary_key_commas(self):
+        """
+        Commas in primary keys should error
+        """
+        record = get_chromo('service')['examples']['record']
+        record['service_id'] = 'this,is,a,failure'
+        with pytest.raises(ValidationError) as ve:
+            self.lc.action.datastore_upsert(
+                resource_id=self.resource_id,
+                records=[record])
+        err = ve.value.error_dict
+        assert 'records' in err
+        assert 'service_id' in err['records'][0]
+        assert err['records'][0]['service_id'] == ['Comma is not allowed in Service ID Number field']
+
+
     def test_foreign_constraint(self):
         """
         Trying to delete a Service record when there are Standard records referencing it should raise an exception
@@ -361,6 +377,25 @@ class TestStdService(CanadaTestBase):
         self.lc.action.datastore_upsert(
             resource_id=self.resource_id,
             records=[record])
+
+
+    def test_primary_key_commas(self):
+        """
+        Commas in primary keys should error
+        """
+        record = get_chromo('service-std')['examples']['record']
+        record['service_id'] = 'this,is,a,failure'
+        record['service_standard_id'] = 'this,is,a,failure'
+        with pytest.raises(ValidationError) as ve:
+            self.lc.action.datastore_upsert(
+                resource_id=self.resource_id,
+                records=[record])
+        err = ve.value.error_dict
+        assert 'records' in err
+        assert 'service_id' in err['records'][0]
+        assert 'service_standard_id' in err['records'][0]
+        assert err['records'][0]['service_id'] == ['Comma is not allowed in Service ID Number field']
+        assert err['records'][0]['service_standard_id'] == ['Comma is not allowed in Service Standard ID field']
 
 
     def test_foreign_constraint(self):

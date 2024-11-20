@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ckanext-canada 0.4.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-11-12 15:06+0000\n"
+"POT-Creation-Date: 2024-11-20 16:24+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -781,7 +781,7 @@ msgid "{num} deleted."
 msgstr ""
 
 #. SQL Trigger String for PD Type: service
-#: ckanext/canada/tables/service.yaml:2348 ckanext/canada/view.py:707
+#: ckanext/canada/tables/service.yaml:2373 ckanext/canada/view.py:707
 msgid "Number required"
 msgstr ""
 
@@ -952,7 +952,7 @@ msgstr ""
 #. SQL Trigger String for PD Type: ati
 #. SQL Trigger String for PD Type: service
 #: ckanext/canada/tables/ati.yaml:142 ckanext/canada/tables/ati.yaml:254
-#: ckanext/canada/tables/service.yaml:1532 ckanext/canada/tables/service.yaml:2345
+#: ckanext/canada/tables/service.yaml:1540 ckanext/canada/tables/service.yaml:2370
 msgid "This value must not be negative"
 msgstr ""
 
@@ -1358,54 +1358,64 @@ msgid "Service Identification Information & Metrics"
 msgstr ""
 
 #. SQL Trigger String for PD Type: service
-#: ckanext/canada/tables/service.yaml:1531
+#: ckanext/canada/tables/service.yaml:1539
 msgid "This field must be either a number, \"NA\", or \"ND\""
 msgstr ""
 
 #. SQL Trigger String for PD Type: service
-#: ckanext/canada/tables/service.yaml:1533 ckanext/canada/tables/service.yaml:2346
+#: ckanext/canada/tables/service.yaml:1541 ckanext/canada/tables/service.yaml:2371
 msgid "This field has a maximum length of {} characters."
 msgstr ""
 
 #. SQL Trigger String for PD Type: service
-#: ckanext/canada/tables/service.yaml:1534 ckanext/canada/tables/service.yaml:2347
+#: ckanext/canada/tables/service.yaml:1542 ckanext/canada/tables/service.yaml:2372
 msgid "Invalid choice: {}"
 msgstr ""
 
 #. SQL Trigger String for PD Type: service
-#: ckanext/canada/tables/service.yaml:1535 ckanext/canada/tables/service.yaml:2349
+#: ckanext/canada/tables/service.yaml:1543 ckanext/canada/tables/service.yaml:2374
 msgid "Invalid input syntax for type integer: {}"
 msgstr ""
 
 #. SQL Trigger String for PD Type: service
-#: ckanext/canada/tables/service.yaml:1536 ckanext/canada/tables/service.yaml:2350
+#: ckanext/canada/tables/service.yaml:1544 ckanext/canada/tables/service.yaml:2375
 msgid "This field is required due to a response in a different field."
 msgstr ""
 
 #. SQL Trigger String for PD Type: service
-#: ckanext/canada/tables/service.yaml:1537 ckanext/canada/tables/service.yaml:2351
+#: ckanext/canada/tables/service.yaml:1545 ckanext/canada/tables/service.yaml:2376
 msgid "This text must be provided in both languages"
 msgstr ""
 
+#. SQL Trigger String for PD Type: service
+#: ckanext/canada/tables/service.yaml:1546 ckanext/canada/tables/service.yaml:2377
+msgid "Comma is not allowed in Service ID Number field"
+msgstr ""
+
 #. SQL Constraint Error String for PD Type: service
-#: ckanext/canada/tables/service.yaml:1346
+#: ckanext/canada/tables/service.yaml:1351
 msgid ""
 "Cannot delete record(s) because the Fiscal Year, Service ID Number is "
 "referenced in at least one Service Standards & Performance Results record."
 msgstr ""
 
 #. Resource Title for PD Type: service
-#: ckanext/canada/tables/service.yaml:1611
+#: ckanext/canada/tables/service.yaml:1620
 msgid "Service Standards & Performance Results"
 msgstr ""
 
 #. SQL Trigger String for PD Type: service
-#: ckanext/canada/tables/service.yaml:1948 ckanext/canada/tables/service.yaml:2344
+#: ckanext/canada/tables/service.yaml:1967 ckanext/canada/tables/service.yaml:2369
 msgid "This field must be a single number between 0 and 1 representing a percentage."
 msgstr ""
 
+#. SQL Trigger String for PD Type: service
+#: ckanext/canada/tables/service.yaml:2378
+msgid "Comma is not allowed in Service Standard ID field"
+msgstr ""
+
 #. SQL Constraint Error String for PD Type: service
-#: ckanext/canada/tables/service.yaml:2252
+#: ckanext/canada/tables/service.yaml:2271
 msgid ""
 "Cannot create record because the Service ID Number does not exist in the "
 "Service Identification Information & Metrics resource for that fiscal year."
