@@ -1213,29 +1213,91 @@ body .alert a.btn-warning{
 /*########################
 ##  Background Job List ##
 ##########################*/
-ul.canada-job-list.activity li.item i.fa.icon::before{
+body ul.canada-job-list.activity li.item i.fa::before{
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  font-weight: 700 !important;
+}
+ul.canada-job-list li.item i.fa.icon{
+  color: #999999;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  -webkit-box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.2);
+  -moz-box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.2);
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.2);
+  width: 30px !important;
+  height: 30px !important;
+}
+ul.canada-job-list li.item i.fa.main-icon{
+  border-radius: 50% !important;
+  width: 32px !important;
+  height: 32px !important;
+  -webkit-box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.2);
+  -moz-box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.2);
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.2);
+  background-color: white !important;
+}
+ul.canada-job-list li.item i.fa.main-icon::before{
+  font-size: 14px !important;
+  width: 24px;
+  height: 24px;
+  line-height: 24px !important;
+  color: white !important;
+  stroke: white !important;
+  border-radius: 50%;
+  text-align: center;
+}
+ul.canada-job-list li.item i.fa.main-icon::after{
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  line-height: 1 !important;
+  -webkit-box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.2);
+  -moz-box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.2);
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+ul.canada-job-list li.item.rq-job-deferred i.fa.main-icon::before{
+  color: white !important;
 }
 ul.canada-job-list li.item.rq-job-queued i.fa.icon{
+  color: #999999;
+}
+ul.canada-job-list li.item.rq-job-queued i.fa.main-icon::before{
   background-color: #999999;
 }
 ul.canada-job-list li.item.rq-job-started i.fa.icon{
+  color: #28a745;
+}
+ul.canada-job-list li.item.rq-job-started i.fa.main-icon::before{
   background-color: #28a745;
 }
 ul.canada-job-list li.item.rq-job-finished i.fa.icon{
+  color: #17a2b8;
+}
+ul.canada-job-list li.item.rq-job-finished i.fa.main-icon::before{
   background-color: #17a2b8;
 }
 ul.canada-job-list li.item.rq-job-failed i.fa.icon{
+  color: #dc3545;
+}
+ul.canada-job-list li.item.rq-job-failed i.fa.main-icon::before{
   background-color: #dc3545;
 }
 ul.canada-job-list li.item.rq-job-deferred i.fa.icon{
+  color: #ffc107;
+}
+ul.canada-job-list li.item.rq-job-deferred i.fa.main-icon::before{
   background-color: #ffc107;
 }
 ul.canada-job-list .canada-job-item-title{
   font-size: 115%;
+  font-weight: 600;
 }
 div.canada-job-list-title strong{
   font-size: 16px;
