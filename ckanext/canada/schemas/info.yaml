@@ -552,6 +552,12 @@ resource_fields:
 # {The location for online access to the distribution of the resource, if the file resides elsewhere.}
 - preset: canada_resource_url
 
+# Validation Fields.
+- preset: canada_resource_validation_schema
+- preset: canada_resource_validation_options
+- preset: canada_resource_validation_status
+- preset: canada_resource_validation_timestamp
+
 # LEGACY FIELDS
 - preset: _legacy_canada_related_type
 - preset: _legacy_canada_related_relationship
