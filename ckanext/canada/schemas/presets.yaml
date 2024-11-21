@@ -4124,3 +4124,24 @@ presets:
     display_snippet: null
     validators: ignore
     output_validators: canada_output_none
+
+# Field = Validation Status.
+- preset_name: canada_resource_validation_status
+  values:
+    field_name: validation_status
+    label:
+      en: Validation status
+      fr: Statut de validation
+    preset: hidden_in_form
+    form_panel: validation
+
+# Field = Validation Timestamp.
+- preset_name: canada_resource_validation_timestamp
+  values:
+    field_name: validation_timestamp
+    label:
+      en: Validation timestamp
+      fr: Horodatage de la validation
+    preset: hidden_in_form
+    display_snippet: validation_timestamp.html
+    form_panel: validation

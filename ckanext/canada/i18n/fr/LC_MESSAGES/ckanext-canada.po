@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-11-20 16:24+0000\n"
+"POT-Creation-Date: 2024-11-21 09:39-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: fr\n"
@@ -644,6 +644,14 @@ msgstr "Répétable"
 #: ckanext/canada/strings.py:92
 msgid "Optional"
 msgstr "Facultatif"
+
+#: ckanext/canada/strings.py:95
+msgid "Validation status"
+msgstr "Statut de validation"
+
+#: ckanext/canada/strings.py:96
+msgid "Validation timestamp"
+msgstr "Horodatage de la validation"
 
 #: ckanext/canada/validators.py:118
 #, python-format
@@ -1574,7 +1582,9 @@ msgstr "Ce texte doit être fourni dans les deux langues"
 #: ckanext/canada/tables/service.yaml:1546
 #: ckanext/canada/tables/service.yaml:2377
 msgid "Comma is not allowed in Service ID Number field"
-msgstr "La virgule n’est pas autorisée dans le champ du Numéro d'identification du service"
+msgstr ""
+"La virgule n’est pas autorisée dans le champ du Numéro d'identification "
+"du service"
 
 #. SQL Constraint Error String for PD Type: service
 #: ckanext/canada/tables/service.yaml:1351
@@ -1605,7 +1615,9 @@ msgstr ""
 #. SQL Trigger String for PD Type: service
 #: ckanext/canada/tables/service.yaml:2378
 msgid "Comma is not allowed in Service Standard ID field"
-msgstr "La virgule n’est pas autorisée dans le champ du Numéro d'identification de la norme relative aux services"
+msgstr ""
+"La virgule n’est pas autorisée dans le champ du Numéro d'identification "
+"de la norme relative aux services"
 
 #. SQL Constraint Error String for PD Type: service
 #: ckanext/canada/tables/service.yaml:2271
