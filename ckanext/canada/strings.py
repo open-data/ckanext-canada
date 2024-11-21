@@ -92,5 +92,5 @@ _('Repeatable')
 _('Optional')
 
 # strings from validation
-_('Validation status:')
-_('Validation timestamp:')
+_('Validation status')
+_('Validation timestamp')
