@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  CKAN\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-11-20 16:24+0000\n"
+"POT-Creation-Date: 2024-11-21 09:30-0500\n"
 "PO-Revision-Date: 2014-01-23 13:04+0000\n"
 "Last-Translator: Sean Hammond <sean.hammond@okfn.org>\n"
 "Language: en\n"
@@ -607,6 +607,14 @@ msgstr ""
 
 #: ckanext/canada/strings.py:92
 msgid "Optional"
+msgstr ""
+
+#: ckanext/canada/strings.py:95
+msgid "Validation status:"
+msgstr ""
+
+#: ckanext/canada/strings.py:96
+msgid "Validation timestamp:"
 msgstr ""
 
 #: ckanext/canada/validators.py:118

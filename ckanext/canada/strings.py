@@ -90,3 +90,7 @@ _('Open Government Portal (staging)')
 _('Single')
 _('Repeatable')
 _('Optional')
+
+# strings from validation
+_('Validation status:')
+_('Validation timestamp:')
