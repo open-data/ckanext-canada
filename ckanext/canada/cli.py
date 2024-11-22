@@ -1006,9 +1006,9 @@ def _add_views(portal: LocalCKAN, resource: dict, resource_details: dict, verbos
                 break
         if to_delete:
             view_action = 'resource_view_delete'
-            with _capture_exception_details(view_action, resource['id'], src_view['id']):
+            with _capture_exception_details(view_action, resource['id'], target_view['id']):
                 portal.call_action(view_action, {'id':target_view['id']})
-                action += '\n  %s %s for resource %s' % (view_action, src_view['id'], resource['id'])
+                action += '\n  %s %s for resource %s' % (view_action, target_view['id'], resource['id'])
 
     return action, error, failure_reason, failure_trace
 
