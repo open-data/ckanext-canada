@@ -43,7 +43,8 @@
       {%- for f in chromo.fields %}
         {%- if f.get('import_template_include', True) and not f.get('published_resource_computed_field', false) %}
           {%- set required = f.get('form_required', False) %}
-          {%- set description = h.recombinant_description_to_markup(f.get('description', '')) %}
+          {%- set description = h.recombinant_language_text(h.recombinant_description_to_markup(f.get('description', ''))) %}
+          {%- set description = description + ' ' + h.recombinant_language_text(h.recombinant_description_to_markup(f.get('form_help', ''))) -%}
           {%- set form_placeholder = f.get('form_placeholder', '') %}
           {%- set form_attrs = f.get('form_attrs', {}) %}
           {%- set form_select_attrs = f.get('form_select_attrs', {}) %}
@@ -52,7 +53,7 @@
             {%- if f.get('datastore_type') == '_text' and form_snippet == 'scheming/form_snippets/text.html' %}
               {%- set form_snippet = 'scheming/form_snippets/multiple_select.html' %}
               {%- set description = _('You may select or deselect multiple entries (Ctrl+Click).') +
-                ' ' + h.recombinant_language_text(description) %}
+                ' ' + description %}
             {%- elif form_snippet == 'scheming/form_snippets/text.html' %}
               {%- set form_snippet = 'scheming/form_snippets/select.html' %}
             {%- endif %}
