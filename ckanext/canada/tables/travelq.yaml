@@ -569,8 +569,7 @@ resources:
 
   trigger_strings:  # yaml | not supported
     ref_number_error: Comma is not allowed in Reference Number field
-    destination_format_error: Invalid format for destination. Use {City Name}, {Country Name} (e.g. Ottawa, Canada or New York City, USA)
-    multi_destination_format_error: Invalid format for multiple destinations. Use {City Name}, {Country Name};{City 2 Name}, {Country 2 Name} (e.g. Ottawa, Canada;New York City, USA)
+    destination_format_error: 'Invalid format for destination: "{}". Use <City Name>, <State/Province Name>, <Country Name> for Canada and US, or <City Name>, <Country Name> for international (e.g. Ottawa, Ontario, Canada or London, England)'
 
   examples:
     record:
@@ -585,11 +584,9 @@ resources:
       end_date: "2019-06-23"
       destination_en: "Montreal, Canada"
       destination_2_en: "Toronto, Canada"
-      destination_3_en: "New York, USA"
       destination_other_en: "San Fransisco, USA;Los Angeles, USA"
       destination_fr: "Montréal, Canada"
       destination_2_fr: "Toronto, Canada"
-      destination_3_fr: "New York, USA"
       destination_other_fr: "San Fransisco, USA;Los Angeles, USA"
       airfare: "1000.00"
       other_transport: "50.00"

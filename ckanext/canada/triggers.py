@@ -300,6 +300,7 @@ def update_triggers():
     # return record with .clean (normalized value) and .error
     # (NULL or ARRAY[[field_name, error_message]])
     # Dev NOTE: \p{} regex does not work in PSQL, need to use the [:alpha:] from POSIX
+    #FIXME: blanks E.g. Ottawa, , Canada or Ottawa, Canada,
     lc.action.datastore_function_create(
         name='destination_clean_error',
         or_replace=True,
@@ -316,11 +317,11 @@ def update_triggers():
                 clean_val text := NULL;
             BEGIN
                 IF value <> '' AND (array_length(destination_match, 1) <= 1 OR array_length(destination_match, 1) > 3) THEN
-                    error := ARRAY[[field_name, 'Invalid format for destination: "{}". Use <City Name>, <Country Name> (e.g. Ottawa, Canada or New York City, USA)\uF8FF' || value]];
+                    error := ARRAY[[field_name, 'Invalid format for destination: "{}". Use <City Name>, <State/Province Name>, <Country Name> for Canada and US, or <City Name>, <Country Name> for international (e.g. Ottawa, Ontario, Canada or London, England)\uF8FF' || value]];
                 END IF;
                 IF value <> '' AND array_length(destination_match, 1) > 1 AND array_length(destination_match, 1) <= 3 THEN
                     FOREACH destination_match_group IN ARRAY destination_match LOOP
-                        clean_val := array_to_string(ARRAY[clean_val, array_to_string(regexp_match(destination_match::text, '^\s*(.+?)\s*$'::text), ''::text)], ', '::text);
+                        clean_val := array_to_string(ARRAY[clean_val, array_to_string(regexp_match(destination_match_group::text, '^\s*(.+?)\s*$'::text), ''::text)], ', '::text);
                     END LOOP;
                     clean := clean_val;
                 END IF;
@@ -330,9 +331,7 @@ def update_triggers():
     # return record with .clean (normalized value) and .error
     # (NULL or ARRAY[[field_name, error_message]])
     # Dev NOTE: \p{} regex does not work in PSQL, need to use the [:alpha:] from POSIX
-    # Dev NOTE: First regexp_match to enforce semi-colon list of city name, country name comma separation.
-    #           Then do a regexp_split_to_array to split the original value by semi-colons, as the PSQL regex cannot do dynamic grouping.
-    #           At that point, we can assuming that the regex for city name, country name will succeed from the first regexp_match.
+    #FIXME: blanks E.g. Ottawa, , Canada or Ottawa, Canada,
     lc.action.datastore_function_create(
         name='multi_destination_clean_error',
         or_replace=True,
@@ -344,17 +343,25 @@ def update_triggers():
         rettype='record',
         definition='''
             DECLARE
-                destination_matches text[] := regexp_match(value::text, '^([[:alpha:]''\s\-\.\(\)]+,\s*[[:alpha:]''\s\-\.\(\)]+)(?:;\s*([[:alpha:]''\s\-\.\(\)]+,\s*[[:alpha:]''\s\-\.\(\)]+))*$'::text);
-                destination_match text;
+                destination_matches text[] := regexp_split_to_array(value::text, ';'::text);
+                destination_matches_group text;
+                destination_match text[];
+                destination_match_group text;
                 clean_val text := NULL;
+                clean_inner_val text := NULL;
             BEGIN
-                IF value <> '' AND destination_matches IS NULL THEN
-                    error := ARRAY[[field_name, 'Invalid format for multiple destinations. Use {City Name}, {Country Name};{City 2 Name}, {Country 2 Name} (e.g. Ottawa, Canada;New York City, USA)']];
-                END IF;
-                IF destination_matches IS NOT NULL THEN
-                    destination_matches := regexp_split_to_array(value::text, '(;|$)'::text);
-                    FOREACH destination_match IN ARRAY destination_matches LOOP
-                        clean_val := array_to_string(ARRAY[clean_val, array_to_string(regexp_match(destination_match::text, '^\s*([[:alpha:]''\s\-\.\(\)]+?)\s*,\s*([[:alpha:]''\s\-\.\(\)]+?)\s*$'::text), ', ')], ';');
+                IF value <> '' THEN
+                    FOREACH destination_matches_group IN ARRAY destination_matches LOOP
+                        destination_match := regexp_split_to_array(destination_matches_group, ','::text);
+                        IF array_length(destination_match, 1) <= 1 OR array_length(destination_match, 1) > 3 THEN
+                            error := error || ARRAY[[field_name, 'Invalid format for destination: "{}". Use <City Name>, <State/Province Name>, <Country Name> for Canada and US, or <City Name>, <Country Name> for international (e.g. Ottawa, Ontario, Canada or London, England)\uF8FF' || destination_matches_group]];
+                        ELSE
+                            clean_inner_val := NULL;
+                            FOREACH destination_match_group IN ARRAY destination_match LOOP
+                                clean_inner_val := array_to_string(ARRAY[clean_inner_val, array_to_string(regexp_match(destination_match_group::text, '^\s*(.+?)\s*$'::text), ''::text)], ', '::text);
+                            END LOOP;
+                        END IF;
+                        clean_val := array_to_string(ARRAY[clean_val, clean_inner_val], ';'::text);
                     END LOOP;
                     clean := clean_val;
                 END IF;
