@@ -2,11 +2,8 @@
     'success': _('Valid data'),
     'failure': _('Invalid data'),
     'error': _('Error during validation'),
-    'unknown': _('Data validation unknown'),
 }
 -%}
-{%- if data[field.field_name] in ['success', 'failure', 'error'] -%}
-    {{ _(messages[data[field.field_name]]) }}
-{% else %}
-    {{ _(messages['unknown']) }}
-{% endif %}
+{%- if data[field.field_name] not in ['created', 'running'] -%}
+    {{ messages.get(data[field.field_name], _('Data validation unknown')) }}
+{%- endif -%}
