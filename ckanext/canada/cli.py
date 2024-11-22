@@ -328,9 +328,6 @@ def _copy_datasets(source_datastore_uri: Optional[Union[str, None]], user: Optio
 
         packages = iter(sys.stdin.readline, '')
         for package in packages:
-            sys.stdout.write(json.dumps(['package_id', 'action', 'reason', 'error', 'failure_reason', 'failure_trace', False]) + '\n')
-            sys.stdout.flush()
-            continue
 
             failure_reason = ''
             failure_trace = ''
