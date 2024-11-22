@@ -311,13 +311,18 @@ def update_triggers():
         rettype='record',
         definition='''
             DECLARE
-                destination_match text := array_to_string(regexp_match(value::text, '^\s*([[:alpha:]''\s\-\.\(\)]+?)\s*,\s*([[:alpha:]''\s\-\.\(\)]+?)\s*$'::text), ', ');
+                destination_match text[] := regexp_split_to_array(value::text, ','::text);
+                destination_match_group text;
+                clean_val text := NULL;
             BEGIN
-                IF value <> '' AND destination_match IS NULL THEN
-                    error := ARRAY[[field_name, 'Invalid format for destination. Use {City Name}, {Country Name} (e.g. Ottawa, Canada or New York City, USA)']];
+                IF value <> '' AND (array_length(destination_match, 1) <= 1 OR array_length(destination_match, 1) > 3) THEN
+                    error := ARRAY[[field_name, 'Invalid format for destination: "{}". Use <City Name>, <Country Name> (e.g. Ottawa, Canada or New York City, USA)\uF8FF' || value]];
                 END IF;
-                IF destination_match IS NOT NULL THEN
-                    clean := destination_match;
+                IF value <> '' AND array_length(destination_match, 1) > 1 AND array_length(destination_match, 1) <= 3 THEN
+                    FOREACH destination_match_group IN ARRAY destination_match LOOP
+                        clean_val := array_to_string(ARRAY[clean_val, array_to_string(regexp_match(destination_match::text, '^\s*(.+?)\s*$'::text), ''::text)], ', '::text);
+                    END LOOP;
+                    clean := clean_val;
                 END IF;
             END;
         ''')
