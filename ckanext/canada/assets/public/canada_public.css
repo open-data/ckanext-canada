@@ -901,3 +901,8 @@ body, body .module-grid, body .media-grid, body .main, body .account-masthead, b
 ##  CDTS Application Template ##
 ##             END            ##
 ################################*/
+
+.canada-abbr[title]{
+  cursor: help;
+  text-decoration: underline dotted;
+}
