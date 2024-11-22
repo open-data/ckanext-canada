@@ -208,6 +208,8 @@ class PortalUpdater(object):
                 activity_date.isoformat()
             )
 
+            has_errored = False
+
             for packages, next_date in (
                     changed_package_id_runs(activity_date, verbose=self.verbose)):
                 job_ids, finished, result = pool.send(enumerate(packages))
@@ -225,6 +227,7 @@ class PortalUpdater(object):
                     if error:
                         # NOTE: you can pipe stderr from the portal-update command to be able to tell if there are any errors
                         print(job_ids, _stats, finished, package_id, 'ERROR', error, file=sys.stderr)
+                        has_errored = True
 
                     append_log(finished, package_id, action, reason, error)
                     job_ids, finished, result = next(pool)
@@ -252,6 +255,11 @@ class PortalUpdater(object):
                 )
                 self._portal_update_activity_date = next_date.isoformat()
             self._portal_update_completed = True
+
+            if has_errored:
+                if self.verbose:
+                    print("Worker proccess failed to fully sync some package(s). See stderr or log file.")
+                raise click.ClickException("Worker proccess failed to fully sync some package(s). See stderr or log file.")
 
 
 def _changed_packages_since(registry: LocalCKAN, since_time: str,
@@ -1006,9 +1014,9 @@ def _add_views(portal: LocalCKAN, resource: dict, resource_details: dict, verbos
                 break
         if to_delete:
             view_action = 'resource_view_delete'
-            with _capture_exception_details(view_action, resource['id'], src_view['id']):
+            with _capture_exception_details(view_action, resource['id'], target_view['id']):
                 portal.call_action(view_action, {'id':target_view['id']})
-                action += '\n  %s %s for resource %s' % (view_action, src_view['id'], resource['id'])
+                action += '\n  %s %s for resource %s' % (view_action, target_view['id'], resource['id'])
 
     return action, error, failure_reason, failure_trace
 
