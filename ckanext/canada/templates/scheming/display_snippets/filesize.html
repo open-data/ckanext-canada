@@ -1,1 +1,1 @@
-<span title="{{ data[field.field_name] }} bytes" class="canada-abbr">{{ data[field.field_name]|filesizeformat }}</span>
+<span title="{{ '{:,.0f}'.format(data[field.field_name]) }} bytes" class="canada-abbr">{{ data[field.field_name]|filesizeformat }}<small class="visible-xs-inline">&nbsp;({{ '{:,.0f}'.format(data[field.field_name]) }} bytes)</small></span>
