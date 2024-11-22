@@ -73,7 +73,7 @@ class TestTravelQ(CanadaTestBase):
             'Toronto Canada',
             'Toronto,',
             ',Canada',
-            # 'Ottawa, Canada,',  #FIXME: should fail...
+            'Ottawa, Canada,',
         ]
         for incorrect_format in incorrect_formats:
             record['destination_en'] = incorrect_format
@@ -133,8 +133,8 @@ class TestTravelQ(CanadaTestBase):
                     resource_id=self.resource_id,
                     records=[record])
             err = ve.value.error_dict['records'][0]
-            #FIXME: expected
             # NOTE: have to do partial because \uF8FF split formatting does not happen at this level
+            #TODO: add error depth, multi-destination can have multiple errors from exploded incorrect formats.
             expected = {
                 'destination_other_en': [partial_err_msg],
                 'destination_other_fr': [partial_err_msg],

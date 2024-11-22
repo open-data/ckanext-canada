@@ -300,7 +300,6 @@ def update_triggers():
     # return record with .clean (normalized value) and .error
     # (NULL or ARRAY[[field_name, error_message]])
     # Dev NOTE: \p{} regex does not work in PSQL, need to use the [:alpha:] from POSIX
-    #FIXME: blanks E.g. Ottawa, , Canada or Ottawa, Canada,
     lc.action.datastore_function_create(
         name='destination_clean_error',
         or_replace=True,
@@ -314,6 +313,7 @@ def update_triggers():
             DECLARE
                 destination_match text[] := regexp_split_to_array(value::text, ','::text);
                 destination_match_group text;
+                clean_val_match text[] := NULL;
                 clean_val text := NULL;
             BEGIN
                 IF value <> '' AND (array_length(destination_match, 1) <= 1 OR array_length(destination_match, 1) > 3) THEN
@@ -321,9 +321,16 @@ def update_triggers():
                 END IF;
                 IF value <> '' AND array_length(destination_match, 1) > 1 AND array_length(destination_match, 1) <= 3 THEN
                     FOREACH destination_match_group IN ARRAY destination_match LOOP
-                        clean_val := array_to_string(ARRAY[clean_val, array_to_string(regexp_match(destination_match_group::text, '^\s*(.+?)\s*$'::text), ''::text)], ', '::text);
+                        clean_val_match := regexp_match(destination_match_group::text, '^\s*([^\s].+?)\s*$'::text);
+                        IF clean_val_match IS NULL THEN
+                            error := ARRAY[[field_name, 'Invalid format for destination: "{}". Use <City Name>, <State/Province Name>, <Country Name> for Canada and US, or <City Name>, <Country Name> for international (e.g. Ottawa, Ontario, Canada or London, England)\uF8FF' || value]];
+                        ELSE
+                            clean_val := array_to_string(ARRAY[clean_val, array_to_string(clean_val_match, ''::text)], ', '::text);
+                        END IF;
                     END LOOP;
-                    clean := clean_val;
+                    IF clean_val IS NOT NULL THEN
+                        clean := clean_val;
+                    END IF;
                 END IF;
             END;
         ''')
@@ -331,7 +338,6 @@ def update_triggers():
     # return record with .clean (normalized value) and .error
     # (NULL or ARRAY[[field_name, error_message]])
     # Dev NOTE: \p{} regex does not work in PSQL, need to use the [:alpha:] from POSIX
-    #FIXME: blanks E.g. Ottawa, , Canada or Ottawa, Canada,
     lc.action.datastore_function_create(
         name='multi_destination_clean_error',
         or_replace=True,
@@ -348,6 +354,7 @@ def update_triggers():
                 destination_match text[];
                 destination_match_group text;
                 clean_val text := NULL;
+                clean_inner_val_match text[] := NULL;
                 clean_inner_val text := NULL;
             BEGIN
                 IF value <> '' THEN
@@ -358,12 +365,21 @@ def update_triggers():
                         ELSE
                             clean_inner_val := NULL;
                             FOREACH destination_match_group IN ARRAY destination_match LOOP
-                                clean_inner_val := array_to_string(ARRAY[clean_inner_val, array_to_string(regexp_match(destination_match_group::text, '^\s*(.+?)\s*$'::text), ''::text)], ', '::text);
+                                clean_inner_val_match := regexp_match(destination_match_group::text, '^\s*([^\s].+?)\s*$'::text);
+                                IF clean_inner_val_match IS NULL THEN
+                                    error := error || ARRAY[[field_name, 'Invalid format for destination: "{}". Use <City Name>, <State/Province Name>, <Country Name> for Canada and US, or <City Name>, <Country Name> for international (e.g. Ottawa, Ontario, Canada or London, England)\uF8FF' || destination_matches_group]];
+                                ELSE
+                                    clean_inner_val := array_to_string(ARRAY[clean_inner_val, array_to_string(clean_inner_val_match, ''::text)], ', '::text);
+                                END IF;
                             END LOOP;
                         END IF;
-                        clean_val := array_to_string(ARRAY[clean_val, clean_inner_val], ';'::text);
+                        IF clean_inner_val IS NOT NULL THEN
+                            clean_val := array_to_string(ARRAY[clean_val, clean_inner_val], ';'::text);
+                        END IF;
                     END LOOP;
-                    clean := clean_val;
+                    IF clean_val IS NOT NULL THEN
+                        clean := clean_val;
+                    END IF;
                 END IF;
             END;
         ''')
