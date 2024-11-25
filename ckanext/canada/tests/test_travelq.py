@@ -112,16 +112,18 @@ class TestTravelQ(CanadaTestBase):
             records=[record])
 
         # tests some incorrect formats
-        incorrect_formats = [
-            'St. John, New Brunswick, Canada, Canada; USA, ;',
-            'New York; New Hampshire',
-            'Toronto Canada; New York (USA)',
-            'Toronto,;New York,',
-            ',Canada; Halifax, Canada; New Jersey',
-            'Ottawa, Canada,; Vancouver; New York',
-            'Ottawa, Canada; Mexico City;'
-        ]
-        for incorrect_format in incorrect_formats:
+        incorrect_formats_error_count = {
+            'St. John, New Brunswick, Canada, Canada; USA, ;': 3,
+            'New York; New Hampshire': 2,
+            'Toronto Canada; New York (USA)': 2,
+            'Toronto,;New York,': 2,
+            ',Canada; Halifax, Canada; New Jersey': 2,
+            'Ottawa, Canada,; Vancouver; New York': 3,
+            'Ottawa, Canada; Mexico City;': 2,
+            'Ottawa': 1,
+            'Ottawa,': 1,
+        }
+        for incorrect_format, error_count in incorrect_formats_error_count.items():
             record['destination_en'] = 'Ottawa, Canada'
             record['destination_fr'] = 'Ottawa, Canada'
             record['destination_2_en'] = 'Ottawa, Canada'
@@ -134,14 +136,15 @@ class TestTravelQ(CanadaTestBase):
                     records=[record])
             err = ve.value.error_dict['records'][0]
             # NOTE: have to do partial because \uF8FF split formatting does not happen at this level
-            #TODO: add error depth, multi-destination can have multiple errors from exploded incorrect formats.
             expected = {
                 'destination_other_en': [partial_err_msg],
                 'destination_other_fr': [partial_err_msg],
             }
             for k in set(err) | set(expected):
                 assert k in err
-                assert expected[k][0] in err[k][0]
+                assert len(err[k]) == error_count
+                for _i in range(0, error_count):
+                    assert expected[k][0] in err[k][_i]
 
         # test surrounding white space stripping
         raw_values_expected_values = {
