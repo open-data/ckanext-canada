@@ -1,0 +1,9 @@
+{%- set messages = {
+    'success': _('Valid data'),
+    'failure': _('Invalid data'),
+    'error': _('Error during validation'),
+}
+-%}
+{%- if data[field.field_name] not in ['created', 'running'] -%}
+    {{ messages.get(data[field.field_name], _('Data validation unknown')) }}
+{%- endif -%}

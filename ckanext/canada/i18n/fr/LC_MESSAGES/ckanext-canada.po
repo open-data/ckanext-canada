@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-11-20 20:59+0000\n"
+"POT-Creation-Date: 2024-11-25 19:33+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: fr\n"
@@ -707,11 +707,11 @@ msgstr ""
 
 #: ckanext/canada/strings.py:101
 msgid "Validation status:"
-msgstr ""
+msgstr "Statut de validation :"
 
 #: ckanext/canada/strings.py:102
 msgid "Validation timestamp:"
-msgstr ""
+msgstr "Horodatage de la validation :"
 
 #: ckanext/canada/strings.py:103
 msgid "Duration:"
@@ -728,6 +728,14 @@ msgstr "Répétable"
 #: ckanext/canada/strings.py:108
 msgid "Optional"
 msgstr "Facultatif"
+
+#: ckanext/canada/strings.py:111
+msgid "Validation status"
+msgstr "Statut de validation"
+
+#: ckanext/canada/strings.py:112
+msgid "Validation timestamp"
+msgstr "Horodatage de la validation"
 
 #: ckanext/canada/validators.py:118
 #, python-format
@@ -1609,7 +1617,9 @@ msgstr "Ce texte doit être fourni dans les deux langues"
 #: ckanext/canada/tables/service.yaml:1546
 #: ckanext/canada/tables/service.yaml:2377
 msgid "Comma is not allowed in Service ID Number field"
-msgstr "La virgule n’est pas autorisée dans le champ du Numéro d'identification du service"
+msgstr ""
+"La virgule n’est pas autorisée dans le champ du Numéro d'identification "
+"du service"
 
 #. SQL Constraint Error String for PD Type: service
 #: ckanext/canada/tables/service.yaml:1351
@@ -1640,7 +1650,9 @@ msgstr ""
 #. SQL Trigger String for PD Type: service
 #: ckanext/canada/tables/service.yaml:2378
 msgid "Comma is not allowed in Service Standard ID field"
-msgstr "La virgule n’est pas autorisée dans le champ du Numéro d'identification de la norme relative aux services"
+msgstr ""
+"La virgule n’est pas autorisée dans le champ du Numéro d'identification "
+"de la norme relative aux services"
 
 #. SQL Constraint Error String for PD Type: service
 #: ckanext/canada/tables/service.yaml:2271
@@ -3465,6 +3477,22 @@ msgstr "Créer et procéder à la mise à jour de plusieurs dossiers"
 #: ckanext/canada/templates/scheming/display_snippets/email_with_parameters.html:7
 msgid "The following is a question related to the record {url} found on {site}"
 msgstr "La question suivante est liée au dossier {url} qu’on retrouve dans {site}"
+
+#: ckanext/canada/templates/scheming/display_snippets/validation_status.html:2
+msgid "Valid data"
+msgstr "Donnée valide"
+
+#: ckanext/canada/templates/scheming/display_snippets/validation_status.html:3
+msgid "Invalid data"
+msgstr "Donnée invalide"
+
+#: ckanext/canada/templates/scheming/display_snippets/validation_status.html:4
+msgid "Error during validation"
+msgstr "Erreur lors de la validation"
+
+#: ckanext/canada/templates/scheming/display_snippets/validation_status.html:8
+msgid "Data validation unknown"
+msgstr "Validation des données inconnue"
 
 #: ckanext/canada/templates/scheming/form_snippets/imso_approval_select.html:33
 msgid ""
