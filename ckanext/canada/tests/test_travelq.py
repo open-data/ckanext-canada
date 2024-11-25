@@ -48,6 +48,7 @@ class TestTravelQ(CanadaTestBase):
 
     def test_destination_format(self):
         record = get_chromo('travelq')['examples']['record']
+        partial_err_msg = 'Invalid format for destination'
 
         with open(COUNTRY_FILE) as f:
             countries = json.load(f)
@@ -59,8 +60,6 @@ class TestTravelQ(CanadaTestBase):
             record['destination_fr'] = _destination
             record['destination_2_en'] = _destination
             record['destination_2_fr'] = _destination
-            record['destination_3_en'] = _destination
-            record['destination_3_fr'] = _destination
             record['destination_other_en'] = _destination
             record['destination_other_fr'] = _destination
             self.lc.action.datastore_upsert(
@@ -69,21 +68,18 @@ class TestTravelQ(CanadaTestBase):
 
         # tests some incorrect formats
         incorrect_formats = [
-            'St. John, New Brunswick, Canada',
+            'St. John, New Brunswick, Canada, Canada',
             'New York',
             'Toronto Canada',
             'Toronto,',
             ',Canada',
             'Ottawa, Canada,',
-            'Ottawa, Canada;'
         ]
         for incorrect_format in incorrect_formats:
             record['destination_en'] = incorrect_format
             record['destination_fr'] = incorrect_format
             record['destination_2_en'] = incorrect_format
             record['destination_2_fr'] = incorrect_format
-            record['destination_3_en'] = incorrect_format
-            record['destination_3_fr'] = incorrect_format
             record['destination_other_en'] = incorrect_format
             record['destination_other_fr'] = incorrect_format
             with pytest.raises(ValidationError) as ve:
@@ -91,50 +87,47 @@ class TestTravelQ(CanadaTestBase):
                     resource_id=self.resource_id,
                     records=[record])
             err = ve.value.error_dict['records'][0]
+            # NOTE: have to do partial because \uF8FF split formatting does not happen at this level
             expected = {
-                'destination_en': ["Invalid format for destination. Use {City Name}, {Country Name} (e.g. Ottawa, Canada or New York City, USA)"],
-                'destination_fr': ["Invalid format for destination. Use {City Name}, {Country Name} (e.g. Ottawa, Canada or New York City, USA)"],
-                'destination_2_en': ["Invalid format for destination. Use {City Name}, {Country Name} (e.g. Ottawa, Canada or New York City, USA)"],
-                'destination_2_fr': ["Invalid format for destination. Use {City Name}, {Country Name} (e.g. Ottawa, Canada or New York City, USA)"],
-                'destination_3_en': ["Invalid format for destination. Use {City Name}, {Country Name} (e.g. Ottawa, Canada or New York City, USA)"],
-                'destination_3_fr': ["Invalid format for destination. Use {City Name}, {Country Name} (e.g. Ottawa, Canada or New York City, USA)"],
-                'destination_other_en': ["Invalid format for multiple destinations. Use {City Name}, {Country Name};{City 2 Name}, {Country 2 Name} (e.g. Ottawa, Canada;New York City, USA)"],
-                'destination_other_fr': ["Invalid format for multiple destinations. Use {City Name}, {Country Name};{City 2 Name}, {Country 2 Name} (e.g. Ottawa, Canada;New York City, USA)"],
+                'destination_en': [partial_err_msg],
+                'destination_fr': [partial_err_msg],
+                'destination_2_en': [partial_err_msg],
+                'destination_2_fr': [partial_err_msg],
+                'destination_other_en': [partial_err_msg],
+                'destination_other_fr': [partial_err_msg],
             }
             for k in set(err) | set(expected):
                 assert k in err
-                assert err[k] == expected[k]
+                assert expected[k][0] in err[k][0]
 
         # test multi-destination formats
-        record['destination_en'] = 'Ottawa, Canada'
-        record['destination_fr'] = 'Ottawa, Canada'
-        record['destination_2_en'] = 'Ottawa, Canada'
-        record['destination_2_fr'] = 'Ottawa, Canada'
-        record['destination_3_en'] = 'Ottawa, Canada'
-        record['destination_3_fr'] = 'Ottawa, Canada'
-        record['destination_other_en'] = 'Montreal, Canada; Toronto, Canada; New York, United States (USA); St. John\'s, Canada'
-        record['destination_other_fr'] = 'Montreal, Canada; Toronto, Canada; New York, United States (USA); St. John\'s, Canada'
+        record['destination_en'] = 'Ottawa, Ontario, Canada'
+        record['destination_fr'] = 'Ottawa, Ontario, Canada'
+        record['destination_2_en'] = 'Ottawa, Ontario, Canada'
+        record['destination_2_fr'] = 'Ottawa, Ontario, Canada'
+        record['destination_other_en'] = 'Montreal, Quebec, Canada; Toronto, Ontario, Canada; New York, United States (USA); London, England'
+        record['destination_other_fr'] = 'Montreal, Quebec, Canada; Toronto, Ontario, Canada; New York, United States (USA); London, England'
         self.lc.action.datastore_upsert(
             resource_id=self.resource_id,
             records=[record])
 
         # tests some incorrect formats
-        incorrect_formats = [
-            'St. John, New Brunswick, Canada; USA, ;',
-            'New York; New Hampshire',
-            'Toronto Canada; New York (USA)',
-            'Toronto,;New York,',
-            ',Canada; Halifax, Canada; New Jersey',
-            'Ottawa, Canada,; Vancouver; New York',
-            'Ottawa, Canada; Mexico City;'
-        ]
-        for incorrect_format in incorrect_formats:
+        incorrect_formats_error_count = {
+            'St. John, New Brunswick, Canada, Canada; USA, ;': 3,
+            'New York; New Hampshire': 2,
+            'Toronto Canada; New York (USA)': 2,
+            'Toronto,;New York,': 2,
+            ',Canada; Halifax, Canada; New Jersey': 2,
+            'Ottawa, Canada,; Vancouver; New York': 3,
+            'Ottawa, Canada; Mexico City;': 2,
+            'Ottawa': 1,
+            'Ottawa,': 1,
+        }
+        for incorrect_format, error_count in incorrect_formats_error_count.items():
             record['destination_en'] = 'Ottawa, Canada'
             record['destination_fr'] = 'Ottawa, Canada'
             record['destination_2_en'] = 'Ottawa, Canada'
             record['destination_2_fr'] = 'Ottawa, Canada'
-            record['destination_3_en'] = 'Ottawa, Canada'
-            record['destination_3_fr'] = 'Ottawa, Canada'
             record['destination_other_en'] = incorrect_format
             record['destination_other_fr'] = incorrect_format
             with pytest.raises(ValidationError) as ve:
@@ -142,28 +135,29 @@ class TestTravelQ(CanadaTestBase):
                     resource_id=self.resource_id,
                     records=[record])
             err = ve.value.error_dict['records'][0]
+            # NOTE: have to do partial because \uF8FF split formatting does not happen at this level
             expected = {
-                'destination_other_en': ["Invalid format for multiple destinations. Use {City Name}, {Country Name};{City 2 Name}, {Country 2 Name} (e.g. Ottawa, Canada;New York City, USA)"],
-                'destination_other_fr': ["Invalid format for multiple destinations. Use {City Name}, {Country Name};{City 2 Name}, {Country 2 Name} (e.g. Ottawa, Canada;New York City, USA)"],
+                'destination_other_en': [partial_err_msg],
+                'destination_other_fr': [partial_err_msg],
             }
             for k in set(err) | set(expected):
                 assert k in err
-                assert err[k] == expected[k]
+                assert len(err[k]) == error_count
+                for _i in range(0, error_count):
+                    assert expected[k][0] in err[k][_i]
 
         # test surrounding white space stripping
         raw_values_expected_values = {
             ' Kingston  , Canada ': 'Kingston, Canada',
             'Ottawa,Canada': 'Ottawa, Canada',
             'Toronto,    Canada   ': 'Toronto, Canada',
-            '   Montreal   ,Canada': 'Montreal, Canada',
+            '   Montreal ,  Quebec   ,Canada': 'Montreal, Quebec, Canada',
         }
         for raw_value, excpected_value in raw_values_expected_values.items():
             record['destination_en'] = raw_value
             record['destination_fr'] = raw_value
             record['destination_2_en'] = raw_value
             record['destination_2_fr'] = raw_value
-            record['destination_3_en'] = raw_value
-            record['destination_3_fr'] = raw_value
             record['destination_other_en'] = raw_value
             record['destination_other_fr'] = raw_value
             self.lc.action.datastore_upsert(
@@ -176,25 +170,21 @@ class TestTravelQ(CanadaTestBase):
             assert records[0]['destination_fr'] == excpected_value
             assert records[0]['destination_2_en'] == excpected_value
             assert records[0]['destination_2_fr'] == excpected_value
-            assert records[0]['destination_3_en'] == excpected_value
-            assert records[0]['destination_3_fr'] == excpected_value
             assert records[0]['destination_other_en'] == excpected_value
             assert records[0]['destination_other_fr'] == excpected_value
 
         # test surrounding white space stripping for multi-destination formats
         raw_values_expected_values = {
-            ' Montreal  , Canada ;Toronto  ,  Canada;   New York, United States (USA)  ; St. John\'s,Canada': 'Montreal, Canada;Toronto, Canada;New York, United States (USA);St. John\'s, Canada',
-            'Montreal,Canada  ;  Toronto,Canada  ;  New York,United States (USA)  ;  St. John\'s,Canada': 'Montreal, Canada;Toronto, Canada;New York, United States (USA);St. John\'s, Canada',
-            ' Montreal  ,  Canada  ;  Toronto  , Canada  ;  New York ,United States (USA);  St. John\'s,Canada   ': 'Montreal, Canada;Toronto, Canada;New York, United States (USA);St. John\'s, Canada',
-            'Montreal,Canada ;   Toronto  , Canada;  New York   , United States (USA) ; St. John\'s,Canada  ': 'Montreal, Canada;Toronto, Canada;New York, United States (USA);St. John\'s, Canada',
+            ' Montreal  ,  Quebec  , Canada ;Toronto  ,  Canada;   New York, United States (USA)  ; St. John\'s,Canada': 'Montreal, Quebec, Canada;Toronto, Canada;New York, United States (USA);St. John\'s, Canada',
+            'Montreal,Quebec,Canada  ;  Toronto,Canada  ;  New York,United States (USA)  ;  St. John\'s,Canada': 'Montreal, Quebec, Canada;Toronto, Canada;New York, United States (USA);St. John\'s, Canada',
+            ' Montreal,Quebec  ,  Canada  ;  Toronto  , Canada  ;  New York ,United States (USA);  St. John\'s,Canada   ': 'Montreal, Quebec, Canada;Toronto, Canada;New York, United States (USA);St. John\'s, Canada',
+            'Montreal,  Quebec,Canada ;   Toronto  , Canada;  New York   , United States (USA) ; St. John\'s,Canada  ': 'Montreal, Quebec, Canada;Toronto, Canada;New York, United States (USA);St. John\'s, Canada',
         }
         for raw_value, excpected_value in raw_values_expected_values.items():
             record['destination_en'] = 'Ottawa, Canada'
             record['destination_fr'] = 'Ottawa, Canada'
             record['destination_2_en'] = 'Ottawa, Canada'
             record['destination_2_fr'] = 'Ottawa, Canada'
-            record['destination_3_en'] = 'Ottawa, Canada'
-            record['destination_3_fr'] = 'Ottawa, Canada'
             record['destination_other_en'] = raw_value
             record['destination_other_fr'] = raw_value
             self.lc.action.datastore_upsert(
