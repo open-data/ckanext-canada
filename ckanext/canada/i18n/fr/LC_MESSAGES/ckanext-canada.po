@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-11-12 15:06+0000\n"
+"POT-Creation-Date: 2024-11-25 14:41+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: fr\n"
@@ -239,8 +239,9 @@ msgstr "Tâche inconnue "
 #: ckanext/canada/logic.py:547
 #, python-format
 msgid "No Portal Sync information found for package %s"
-msgstr "Aucune information de synchronisation du portail n'a été "
-"trouvée pour le jeu de données %s"
+msgstr ""
+"Aucune information de synchronisation du portail n'a été trouvée pour le "
+"jeu de données %s"
 
 #: ckanext/canada/plugins.py:709
 #: ckanext/canada/templates/scheming/package/snippets/package_form.html:25
@@ -1008,7 +1009,7 @@ msgstr ""
 #: ckanext/canada/tables/hospitalityq.yaml:449
 #: ckanext/canada/tables/qpnotes.yaml:332
 #: ckanext/canada/tables/reclassification.yaml:271
-#: ckanext/canada/tables/travelq.yaml:438
+#: ckanext/canada/tables/travelq.yaml:571
 #: ckanext/canada/tables/wrongdoing.yaml:247
 msgid "Comma is not allowed in Reference Number field"
 msgstr "La virgule n’est pas autorisée dans le champ du Numéro de Référence"
@@ -1106,7 +1107,7 @@ msgstr ""
 #: ckanext/canada/tables/qpnotes.yaml:456
 #: ckanext/canada/tables/reclassification.yaml:389
 #: ckanext/canada/tables/travela.yaml:645
-#: ckanext/canada/tables/travelq.yaml:600
+#: ckanext/canada/tables/travelq.yaml:738
 msgid "This must list the year you are reporting on (not the fiscal year)."
 msgstr "Veuillez indiquer l’année civile visée par le rapport."
 
@@ -1635,7 +1636,7 @@ msgid "Proactive Publication - Travel Expenses"
 msgstr "Publication proactive - Dépenses de voyage"
 
 #. Label for PD Type: travelq
-#: ckanext/canada/tables/travelq.yaml:5 ckanext/canada/tables/travelq.yaml:391
+#: ckanext/canada/tables/travelq.yaml:5 ckanext/canada/tables/travelq.yaml:497
 msgid "Travel Expenses"
 msgstr "Dépenses de voyage"
 
@@ -1648,8 +1649,16 @@ msgstr ""
 "Accès, téléversement et modification des rapports mensuels sur les frais "
 "de déplacement pour votre organisation"
 
+#. SQL Trigger String for PD Type: travelq
+#: ckanext/canada/tables/travelq.yaml:572
+msgid ""
+"Invalid format for destination: \"{}\". Use <City Name>, <State/Province "
+"Name>, <Country Name> for Canada and US, or <City Name>, <Country Name> "
+"for international (e.g. Ottawa, Ontario, Canada or London, England)"
+msgstr ""
+
 #. Resource Title for PD Type: travelq
-#: ckanext/canada/tables/travelq.yaml:472
+#: ckanext/canada/tables/travelq.yaml:610
 msgid "Proactive Publication - Travel Expenses Nothing to Report"
 msgstr "Publication proactive - Dépenses de voyage (Rien à signaler)"
 
@@ -2383,8 +2392,8 @@ msgstr ""
 #: ckanext/canada/templates/package/confirm_delete.html:11
 #: ckanext/canada/templates/package/confirm_delete_resource.html:11
 #: ckanext/canada/templates/recombinant/confirm_select_delete.html:39
-#: ckanext/canada/templates/recombinant/create_pd_record.html:86
-#: ckanext/canada/templates/recombinant/update_pd_record.html:89
+#: ckanext/canada/templates/recombinant/create_pd_record.html:87
+#: ckanext/canada/templates/recombinant/update_pd_record.html:90
 #: ckanext/canada/templates/user/confirm_delete.html:12
 msgid "Cancel"
 msgstr "Annuler"
@@ -3284,13 +3293,13 @@ msgstr "Créer un dossier"
 msgid "The form contains invalid entries:"
 msgstr "Le formulaire contient des entrées non valides :"
 
-#: ckanext/canada/templates/recombinant/create_pd_record.html:54
-#: ckanext/canada/templates/recombinant/update_pd_record.html:57
+#: ckanext/canada/templates/recombinant/create_pd_record.html:55
+#: ckanext/canada/templates/recombinant/update_pd_record.html:58
 msgid "You may select or deselect multiple entries (Ctrl+Click)."
 msgstr "Vous pouvez sélectionner ou désélectionner de multiples entrées."
 
-#: ckanext/canada/templates/recombinant/create_pd_record.html:87
-#: ckanext/canada/templates/recombinant/update_pd_record.html:90
+#: ckanext/canada/templates/recombinant/create_pd_record.html:88
+#: ckanext/canada/templates/recombinant/update_pd_record.html:91
 #: ckanext/canada/templates/scheming/package/snippets/package_form.html:63
 msgid "Save"
 msgstr "Enregistrer"

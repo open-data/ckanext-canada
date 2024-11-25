@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  CKAN\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-11-12 15:06+0000\n"
+"POT-Creation-Date: 2024-11-25 14:41+0000\n"
 "PO-Revision-Date: 2014-01-23 13:04+0000\n"
 "Last-Translator: Sean Hammond <sean.hammond@okfn.org>\n"
 "Language: en\n"
@@ -935,7 +935,7 @@ msgstr ""
 #: ckanext/canada/tables/hospitalityq.yaml:449
 #: ckanext/canada/tables/qpnotes.yaml:332
 #: ckanext/canada/tables/reclassification.yaml:271
-#: ckanext/canada/tables/travelq.yaml:438
+#: ckanext/canada/tables/travelq.yaml:571
 #: ckanext/canada/tables/wrongdoing.yaml:247
 msgid "Comma is not allowed in Reference Number field"
 msgstr ""
@@ -1026,7 +1026,7 @@ msgstr ""
 #: ckanext/canada/tables/qpnotes.yaml:456
 #: ckanext/canada/tables/reclassification.yaml:389
 #: ckanext/canada/tables/travela.yaml:645
-#: ckanext/canada/tables/travelq.yaml:600
+#: ckanext/canada/tables/travelq.yaml:738
 msgid "This must list the year you are reporting on (not the fiscal year)."
 msgstr ""
 
@@ -1474,7 +1474,7 @@ msgid "Proactive Publication - Travel Expenses"
 msgstr ""
 
 #. Label for PD Type: travelq
-#: ckanext/canada/tables/travelq.yaml:5 ckanext/canada/tables/travelq.yaml:391
+#: ckanext/canada/tables/travelq.yaml:5 ckanext/canada/tables/travelq.yaml:497
 msgid "Travel Expenses"
 msgstr ""
 
@@ -1485,8 +1485,16 @@ msgid ""
 "organization"
 msgstr ""
 
+#. SQL Trigger String for PD Type: travelq
+#: ckanext/canada/tables/travelq.yaml:572
+msgid ""
+"Invalid format for destination: \"{}\". Use <City Name>, <State/Province "
+"Name>, <Country Name> for Canada and US, or <City Name>, <Country Name> "
+"for international (e.g. Ottawa, Ontario, Canada or London, England)"
+msgstr ""
+
 #. Resource Title for PD Type: travelq
-#: ckanext/canada/tables/travelq.yaml:472
+#: ckanext/canada/tables/travelq.yaml:610
 msgid "Proactive Publication - Travel Expenses Nothing to Report"
 msgstr ""
 
@@ -2084,8 +2092,8 @@ msgstr ""
 #: ckanext/canada/templates/package/confirm_delete.html:11
 #: ckanext/canada/templates/package/confirm_delete_resource.html:11
 #: ckanext/canada/templates/recombinant/confirm_select_delete.html:39
-#: ckanext/canada/templates/recombinant/create_pd_record.html:86
-#: ckanext/canada/templates/recombinant/update_pd_record.html:89
+#: ckanext/canada/templates/recombinant/create_pd_record.html:87
+#: ckanext/canada/templates/recombinant/update_pd_record.html:90
 #: ckanext/canada/templates/user/confirm_delete.html:12
 msgid "Cancel"
 msgstr ""
@@ -2902,13 +2910,13 @@ msgstr ""
 msgid "The form contains invalid entries:"
 msgstr ""
 
-#: ckanext/canada/templates/recombinant/create_pd_record.html:54
-#: ckanext/canada/templates/recombinant/update_pd_record.html:57
+#: ckanext/canada/templates/recombinant/create_pd_record.html:55
+#: ckanext/canada/templates/recombinant/update_pd_record.html:58
 msgid "You may select or deselect multiple entries (Ctrl+Click)."
 msgstr ""
 
-#: ckanext/canada/templates/recombinant/create_pd_record.html:87
-#: ckanext/canada/templates/recombinant/update_pd_record.html:90
+#: ckanext/canada/templates/recombinant/create_pd_record.html:88
+#: ckanext/canada/templates/recombinant/update_pd_record.html:91
 #: ckanext/canada/templates/scheming/package/snippets/package_form.html:63
 msgid "Save"
 msgstr ""
