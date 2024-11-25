@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ckanext-canada 0.4.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-11-21 09:39-0500\n"
+"POT-Creation-Date: 2024-11-25 19:40+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -689,11 +689,11 @@ msgstr ""
 msgid "Optional"
 msgstr ""
 
-#: ckanext/canada/strings.py:95
+#: ckanext/canada/strings.py:111
 msgid "Validation status"
 msgstr ""
 
-#: ckanext/canada/strings.py:96
+#: ckanext/canada/strings.py:112
 msgid "Validation timestamp"
 msgstr ""
 
@@ -3102,6 +3102,22 @@ msgstr ""
 
 #: ckanext/canada/templates/scheming/display_snippets/email_with_parameters.html:7
 msgid "The following is a question related to the record {url} found on {site}"
+msgstr ""
+
+#: ckanext/canada/templates/scheming/display_snippets/validation_status.html:2
+msgid "Valid data"
+msgstr ""
+
+#: ckanext/canada/templates/scheming/display_snippets/validation_status.html:3
+msgid "Invalid data"
+msgstr ""
+
+#: ckanext/canada/templates/scheming/display_snippets/validation_status.html:4
+msgid "Error during validation"
+msgstr ""
+
+#: ckanext/canada/templates/scheming/display_snippets/validation_status.html:8
+msgid "Data validation unknown"
 msgstr ""
 
 #: ckanext/canada/templates/scheming/form_snippets/imso_approval_select.html:33
