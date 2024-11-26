@@ -3595,6 +3595,7 @@ presets:
       fr: Taille [estimative] d’une distribution en octets
     form_panel: resource
     validators: ignore_missing int_validator
+    display_snippet: filesize.html
 
 # Field = Character Set.
 # {This is the character set of the dataset}
