@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-11-12 15:06+0000\n"
+"POT-Creation-Date: 2024-11-26 17:13+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: fr\n"
@@ -239,8 +239,9 @@ msgstr "Tâche inconnue "
 #: ckanext/canada/logic.py:547
 #, python-format
 msgid "No Portal Sync information found for package %s"
-msgstr "Aucune information de synchronisation du portail n'a été "
-"trouvée pour le jeu de données %s"
+msgstr ""
+"Aucune information de synchronisation du portail n'a été trouvée pour le "
+"jeu de données %s"
 
 #: ckanext/canada/plugins.py:709
 #: ckanext/canada/templates/scheming/package/snippets/package_form.html:25
@@ -1005,7 +1006,7 @@ msgstr ""
 #: ckanext/canada/tables/adminaircraft.yaml:316
 #: ckanext/canada/tables/contracts.yaml:2185
 #: ckanext/canada/tables/grants.yaml:836
-#: ckanext/canada/tables/hospitalityq.yaml:449
+#: ckanext/canada/tables/hospitalityq.yaml:575
 #: ckanext/canada/tables/qpnotes.yaml:332
 #: ckanext/canada/tables/reclassification.yaml:271
 #: ckanext/canada/tables/travelq.yaml:438
@@ -1102,7 +1103,7 @@ msgstr ""
 #. SQL Trigger String for PD Type: travelq
 #: ckanext/canada/tables/briefingt.yaml:406
 #: ckanext/canada/tables/contractsa.yaml:396
-#: ckanext/canada/tables/hospitalityq.yaml:606
+#: ckanext/canada/tables/hospitalityq.yaml:737
 #: ckanext/canada/tables/qpnotes.yaml:456
 #: ckanext/canada/tables/reclassification.yaml:389
 #: ckanext/canada/tables/travela.yaml:645
@@ -1411,7 +1412,7 @@ msgstr "Publication proactive - Dépenses d'accueil"
 
 #. Label for PD Type: hospitalityq
 #: ckanext/canada/tables/hospitalityq.yaml:5
-#: ckanext/canada/tables/hospitalityq.yaml:405
+#: ckanext/canada/tables/hospitalityq.yaml:519
 msgid "Hospitality Expenses"
 msgstr "Dépenses d'accueil"
 
@@ -1424,8 +1425,18 @@ msgstr ""
 "Accès, téléversement et modification des dépenses trimestriellement liées"
 " à l’accueil pour votre organisation"
 
+#. SQL Trigger String for PD Type: hospitalityq
+#: ckanext/canada/tables/hospitalityq.yaml:576
+msgid ""
+"Invalid format for multiple commercial establishments or vendors. Use "
+"<Vendor Name>;<Vendor 2 Name> (e.g. Les Impertinentes;Les Street Monkeys)"
+msgstr ""
+"Format non valide pour plusieurs établissements commerciaux ou fournisseurs. "
+"Utilisez le format <nom du fournisseur>;<nom du fournisseur 2> (p. ex. Les "
+"Impertinentes;Les Street Monkeys)"
+
 #. Resource Title for PD Type: hospitalityq
-#: ckanext/canada/tables/hospitalityq.yaml:481
+#: ckanext/canada/tables/hospitalityq.yaml:612
 msgid "Proactive Publication - Hospitality Nothing to Report"
 msgstr "Publication proactive - Dépenses d'accueil (Rien à signaler)"
 
