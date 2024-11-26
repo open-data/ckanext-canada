@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  CKAN\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-11-26 18:26+0000\n"
+"POT-Creation-Date: 2024-11-26 18:28+0000\n"
 "PO-Revision-Date: 2014-01-23 13:04+0000\n"
 "Last-Translator: Sean Hammond <sean.hammond@okfn.org>\n"
 "Language: en\n"
@@ -997,7 +997,7 @@ msgstr ""
 #: ckanext/canada/tables/hospitalityq.yaml:575
 #: ckanext/canada/tables/qpnotes.yaml:332
 #: ckanext/canada/tables/reclassification.yaml:271
-#: ckanext/canada/tables/travelq.yaml:597
+#: ckanext/canada/tables/travelq.yaml:645
 #: ckanext/canada/tables/wrongdoing.yaml:247
 msgid "Comma is not allowed in Reference Number field"
 msgstr ""
@@ -1088,7 +1088,7 @@ msgstr ""
 #: ckanext/canada/tables/qpnotes.yaml:456
 #: ckanext/canada/tables/reclassification.yaml:389
 #: ckanext/canada/tables/travela.yaml:645
-#: ckanext/canada/tables/travelq.yaml:764
+#: ckanext/canada/tables/travelq.yaml:812
 msgid "This must list the year you are reporting on (not the fiscal year)."
 msgstr ""
 
@@ -1607,7 +1607,7 @@ msgid "Proactive Publication - Travel Expenses"
 msgstr ""
 
 #. Label for PD Type: travelq
-#: ckanext/canada/tables/travelq.yaml:5 ckanext/canada/tables/travelq.yaml:523
+#: ckanext/canada/tables/travelq.yaml:5 ckanext/canada/tables/travelq.yaml:571
 msgid "Travel Expenses"
 msgstr ""
 
@@ -1619,7 +1619,7 @@ msgid ""
 msgstr ""
 
 #. SQL Trigger String for PD Type: travelq
-#: ckanext/canada/tables/travelq.yaml:598
+#: ckanext/canada/tables/travelq.yaml:646
 msgid ""
 "Invalid format for destination: \"{}\". Use <City Name>, <State/Province "
 "Name>, <Country Name> for Canada and US, or <City Name>, <Country Name> "
@@ -1627,7 +1627,7 @@ msgid ""
 msgstr ""
 
 #. Resource Title for PD Type: travelq
-#: ckanext/canada/tables/travelq.yaml:636
+#: ckanext/canada/tables/travelq.yaml:684
 msgid "Proactive Publication - Travel Expenses Nothing to Report"
 msgstr ""
 
