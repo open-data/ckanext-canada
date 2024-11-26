@@ -61,8 +61,8 @@ class TestHospitalityQ(CanadaTestBase):
                     records=[record])
             err = ve.value.error_dict['records'][0]
             expected = {
-                'vendor_other_en': ["Invalid format for multiple commercial establishments or vendors. Use {Vendor Name};{Vendor 2 Name} (e.g. Les Impertinentes;Les Street Monkeys)"],
-                'vendor_other_fr': ["Invalid format for multiple commercial establishments or vendors. Use {Vendor Name};{Vendor 2 Name} (e.g. Les Impertinentes;Les Street Monkeys)"],
+                'vendor_other_en': ["Invalid format for multiple commercial establishments or vendors. Use <Vendor Name>;<Vendor 2 Name> (e.g. Les Impertinentes;Les Street Monkeys)"],
+                'vendor_other_fr': ["Invalid format for multiple commercial establishments or vendors. Use <Vendor Name>;<Vendor 2 Name> (e.g. Les Impertinentes;Les Street Monkeys)"],
             }
             for k in set(err) | set(expected):
                 assert k in err
@@ -73,6 +73,7 @@ class TestHospitalityQ(CanadaTestBase):
             ' Les Impertinentes ; Les Street Monkeys ': 'Les Impertinentes;Les Street Monkeys',
             'Les Impertinentes ; Les Street Monkeys ;  Starbucks ': 'Les Impertinentes;Les Street Monkeys;Starbucks',
             '  Les Impertinentes  ;  Les Street Monkeys  ;  Tim Hortons  ': 'Les Impertinentes;Les Street Monkeys;Tim Hortons',
+            '  Les Impertinentes  ': 'Les Impertinentes',
         }
         for raw_value, excpected_value in raw_values_expected_values.items():
             record['vendor_other_en'] = raw_value
