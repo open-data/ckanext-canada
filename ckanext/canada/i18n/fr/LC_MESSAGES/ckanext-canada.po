@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-11-25 14:41+0000\n"
+"POT-Creation-Date: 2024-11-26 18:19+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: fr\n"
@@ -1009,7 +1009,7 @@ msgstr ""
 #: ckanext/canada/tables/hospitalityq.yaml:449
 #: ckanext/canada/tables/qpnotes.yaml:332
 #: ckanext/canada/tables/reclassification.yaml:271
-#: ckanext/canada/tables/travelq.yaml:571
+#: ckanext/canada/tables/travelq.yaml:645
 #: ckanext/canada/tables/wrongdoing.yaml:247
 msgid "Comma is not allowed in Reference Number field"
 msgstr "La virgule n’est pas autorisée dans le champ du Numéro de Référence"
@@ -1107,7 +1107,7 @@ msgstr ""
 #: ckanext/canada/tables/qpnotes.yaml:456
 #: ckanext/canada/tables/reclassification.yaml:389
 #: ckanext/canada/tables/travela.yaml:645
-#: ckanext/canada/tables/travelq.yaml:738
+#: ckanext/canada/tables/travelq.yaml:812
 msgid "This must list the year you are reporting on (not the fiscal year)."
 msgstr "Veuillez indiquer l’année civile visée par le rapport."
 
@@ -1636,7 +1636,7 @@ msgid "Proactive Publication - Travel Expenses"
 msgstr "Publication proactive - Dépenses de voyage"
 
 #. Label for PD Type: travelq
-#: ckanext/canada/tables/travelq.yaml:5 ckanext/canada/tables/travelq.yaml:497
+#: ckanext/canada/tables/travelq.yaml:5 ckanext/canada/tables/travelq.yaml:571
 msgid "Travel Expenses"
 msgstr "Dépenses de voyage"
 
@@ -1650,15 +1650,19 @@ msgstr ""
 "de déplacement pour votre organisation"
 
 #. SQL Trigger String for PD Type: travelq
-#: ckanext/canada/tables/travelq.yaml:572
+#: ckanext/canada/tables/travelq.yaml:646
 msgid ""
 "Invalid format for destination: \"{}\". Use <City Name>, <State/Province "
 "Name>, <Country Name> for Canada and US, or <City Name>, <Country Name> "
 "for international (e.g. Ottawa, Ontario, Canada or London, England)"
 msgstr ""
+"Format non valide pour la destination : \"{}\". Utilisez <Nom de la ville>, "
+"<Nom de l'État/de la province>, <Nom du pays> pour le Canada et les États-Unis, "
+"ou <Nom de la ville>, <Nom du pays> pour l'international (p. ex. Ottawa, Ontario, "
+"Canada ou Londres, Angleterre)"
 
 #. Resource Title for PD Type: travelq
-#: ckanext/canada/tables/travelq.yaml:610
+#: ckanext/canada/tables/travelq.yaml:684
 msgid "Proactive Publication - Travel Expenses Nothing to Report"
 msgstr "Publication proactive - Dépenses de voyage (Rien à signaler)"
 

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ckanext-canada 0.4.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-11-25 14:41+0000\n"
+"POT-Creation-Date: 2024-11-26 18:19+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -919,7 +919,7 @@ msgstr ""
 #: ckanext/canada/tables/hospitalityq.yaml:449
 #: ckanext/canada/tables/qpnotes.yaml:332
 #: ckanext/canada/tables/reclassification.yaml:271
-#: ckanext/canada/tables/travelq.yaml:571 ckanext/canada/tables/wrongdoing.yaml:247
+#: ckanext/canada/tables/travelq.yaml:645 ckanext/canada/tables/wrongdoing.yaml:247
 msgid "Comma is not allowed in Reference Number field"
 msgstr ""
 
@@ -1006,7 +1006,7 @@ msgstr ""
 #: ckanext/canada/tables/hospitalityq.yaml:606
 #: ckanext/canada/tables/qpnotes.yaml:456
 #: ckanext/canada/tables/reclassification.yaml:389
-#: ckanext/canada/tables/travela.yaml:645 ckanext/canada/tables/travelq.yaml:738
+#: ckanext/canada/tables/travela.yaml:645 ckanext/canada/tables/travelq.yaml:812
 msgid "This must list the year you are reporting on (not the fiscal year)."
 msgstr ""
 
@@ -1436,7 +1436,7 @@ msgid "Proactive Publication - Travel Expenses"
 msgstr ""
 
 #. Label for PD Type: travelq
-#: ckanext/canada/tables/travelq.yaml:5 ckanext/canada/tables/travelq.yaml:497
+#: ckanext/canada/tables/travelq.yaml:5 ckanext/canada/tables/travelq.yaml:571
 msgid "Travel Expenses"
 msgstr ""
 
@@ -1448,7 +1448,7 @@ msgid ""
 msgstr ""
 
 #. SQL Trigger String for PD Type: travelq
-#: ckanext/canada/tables/travelq.yaml:572
+#: ckanext/canada/tables/travelq.yaml:646
 msgid ""
 "Invalid format for destination: \"{}\". Use <City Name>, <State/Province "
 "Name>, <Country Name> for Canada and US, or <City Name>, <Country Name> for "
@@ -1456,7 +1456,7 @@ msgid ""
 msgstr ""
 
 #. Resource Title for PD Type: travelq
-#: ckanext/canada/tables/travelq.yaml:610
+#: ckanext/canada/tables/travelq.yaml:684
 msgid "Proactive Publication - Travel Expenses Nothing to Report"
 msgstr ""
 

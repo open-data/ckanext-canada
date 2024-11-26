@@ -191,10 +191,14 @@ resources:
       fr: Endroits visités (anglais)
     description:
       en: To include name of the first place visited during the trip in question, in English.
-      fr: Cette zone indique, en anglais, le nom de tous les endroits visités pendant le voyage.
+      fr: Inclure le nom du premier lieu visité lors du voyage en question, en anglais.
     form_help:
-      en: Note, use the format <City Name>, <State/Province Name>, <Country Name> for Canada and US, or <City Name>, <Country Name> for international (e.g. Ottawa, Ontario, Canada or London, England)
-      fr: Note, use the format <City Name>, <State/Province Name>, <Country Name> for Canada and US, or <City Name>, <Country Name> for international (e.g. Ottawa, Ontario, Canada or London, England)
+      en: >
+        Note, use the format <City Name>, <State/Province Name>, <Country Name> for Canada and US,
+        or <City Name>, <Country Name> for international (e.g. Ottawa, Ontario, Canada or London, England)
+      fr: >
+        Note : utilisez le format <Nom de la ville>, <Nom de l'État/de la province>, <Nom du pays> pour le Canada
+        et les États-Unis, ou <Nom de la ville>, <Nom du pays> pour l'international (p. ex. Ottawa, Ontario, Canada ou Londres, Angleterre)
     obligation: Mandatory
     excel_required: true
     # Dev NOTE: excel_error_formula: Excel and Open Office Calc parity issues with REGEX. REGEX does not exist in Excel.
@@ -204,11 +208,15 @@ resources:
         This field must not be empty
         Must be in the format of <City Name>, <State/Province Name>, <Country Name> for Canada and US, or <City Name>, <Country Name> for international
       fr: |
-        This field must not be empty
-        Must be in the format of <City Name>, <State/Province Name>, <Country Name> for Canada and US, or <City Name>, <Country Name> for international
+        Ce champ ne doit pas être vide
+        Doit être au format <Nom de la ville>, <Nom de l'État/de la province>, <Nom du pays> pour le Canada et les États-Unis, ou <Nom de la ville>, <Nom du pays> pour l'international (p. ex. Ottawa, Ontario, Canada ou Londres, Angleterre)
     format_type:
-      en: Free text – Note, use the format <City Name>, <State/Province Name>, <Country Name> for Canada and US, or <City Name>, <Country Name> for international (e.g. Ottawa, Ontario, Canada or London, England)
-      fr: Free text – Note, use the format <City Name>, <State/Province Name>, <Country Name> for Canada and US, or <City Name>, <Country Name> for international (e.g. Ottawa, Ontario, Canada or London, England)
+      en: >
+        Free text – Note, use the format <City Name>, <State/Province Name>, <Country Name> for Canada and US,
+        or <City Name>, <Country Name> for international (e.g. Ottawa, Ontario, Canada or London, England)
+      fr: >
+        Texte libre – Note : utilisez le format <Nom de la ville>, <Nom de l'État/de la province>, <Nom du pays> pour le Canada
+        et les États-Unis, ou <Nom de la ville>, <Nom du pays> pour l'international (p. ex. Ottawa, Ontario, Canada ou Londres, Angleterre)
     form_attrs:
       size: 60
 
@@ -220,10 +228,14 @@ resources:
       fr: Endroits visités (français)
     description:
       en: To include name of the first place visited during the trip in question, in French.
-      fr: Cette zone indique, en français, le nom de tous les endroits visités pendant le voyage.
+      fr: Inclure le nom du premier lieu visité lors du voyage en question, en français.
     form_help:
-      en: Note, use the format <City Name>, <State/Province Name>, <Country Name> for Canada and US, or <City Name>, <Country Name> for international (e.g. Ottawa, Ontario, Canada or London, England)
-      fr: Note, use the format <City Name>, <State/Province Name>, <Country Name> for Canada and US, or <City Name>, <Country Name> for international (e.g. Ottawa, Ontario, Canada or London, England)
+      en: >
+        Note, use the format <City Name>, <State/Province Name>, <Country Name> for Canada and US,
+        or <City Name>, <Country Name> for international (e.g. Ottawa, Ontario, Canada or London, England)
+      fr: >
+        Note : utilisez le format <Nom de la ville>, <Nom de l'État/de la province>, <Nom du pays> pour le Canada
+        et les États-Unis, ou <Nom de la ville>, <Nom du pays> pour l'international (p. ex. Ottawa, Ontario, Canada ou Londres, Angleterre)
     obligation: Mandatory
     excel_required: true
     # Dev NOTE: excel_error_formula: Excel and Open Office Calc parity issues with REGEX. REGEX does not exist in Excel.
@@ -233,11 +245,15 @@ resources:
         This field must not be empty
         Must be in the format of <City Name>, <State/Province Name>, <Country Name> for Canada and US, or <City Name>, <Country Name> for international
       fr: |
-        This field must not be empty
-        Must be in the format of <City Name>, <State/Province Name>, <Country Name> for Canada and US, or <City Name>, <Country Name> for international
+        Ce champ ne doit pas être vide
+        Doit être au format <Nom de la ville>, <Nom de l'État/de la province>, <Nom du pays> pour le Canada et les États-Unis, ou <Nom de la ville>, <Nom du pays> pour l'international
     format_type:
-      en: Free text – Note, use the format <City Name>, <State/Province Name>, <Country Name> for Canada and US, or <City Name>, <Country Name> for international (e.g. Ottawa, Ontario, Canada or London, England)
-      fr: Free text – Note, use the format <City Name>, <State/Province Name>, <Country Name> for Canada and US, or <City Name>, <Country Name> for international (e.g. Ottawa, Ontario, Canada or London, England)
+      en: >
+        Free text – Note, use the format <City Name>, <State/Province Name>, <Country Name> for Canada and US,
+        or <City Name>, <Country Name> for international (e.g. Ottawa, Ontario, Canada or London, England)
+      fr: >
+        Texte libre – Note : utilisez le format <Nom de la ville>, <Nom de l'État/de la province>, <Nom du pays> pour le Canada
+        et les États-Unis, ou <Nom de la ville>, <Nom du pays> pour l'international (p. ex. Ottawa, Ontario, Canada ou Londres, Angleterre)
     form_attrs:
       size: 60
 
@@ -246,13 +262,17 @@ resources:
     datastore_type: text
     label:
       en: Second place visited (English)
-      fr: Endroits visités (anglais)
+      fr: Deuxième lieu visité (anglais)
     description:
       en: To include name of second place visited during the trip in question, in English.
-      fr: Cette zone indique, en anglais, le nom de tous les endroits visités pendant le voyage.
+      fr: Inclure le nom du deuxième lieu visité au cours du voyage en question, en anglais.
     form_help:
-      en: Note, use the format <City Name>, <State/Province Name>, <Country Name> for Canada and US, or <City Name>, <Country Name> for international (e.g. Ottawa, Ontario, Canada or London, England)
-      fr: Note, use the format <City Name>, <State/Province Name>, <Country Name> for Canada and US, or <City Name>, <Country Name> for international (e.g. Ottawa, Ontario, Canada or London, England)
+      en: >
+        Note, use the format <City Name>, <State/Province Name>, <Country Name> for Canada and US,
+        or <City Name>, <Country Name> for international (e.g. Ottawa, Ontario, Canada or London, England)
+      fr: >
+        Note : utilisez le format <Nom de la ville>, <Nom de l'État/de la province>, <Nom du pays> pour le Canada
+        et les États-Unis, ou <Nom de la ville>, <Nom du pays> pour l'international (p. ex. Ottawa, Ontario, Canada ou Londres, Angleterre)
     obligation: Optional
     excel_required: false
     # Dev NOTE: excel_error_formula: Excel and Open Office Calc parity issues with REGEX. REGEX does not exist in Excel.
@@ -262,10 +282,14 @@ resources:
       en: |
         Must be in the format of <City Name>, <State/Province Name>, <Country Name> for Canada and US, or <City Name>, <Country Name> for international
       fr: |
-        Must be in the format of <City Name>, <State/Province Name>, <Country Name> for Canada and US, or <City Name>, <Country Name> for international
+        Doit être au format <Nom de la ville>, <Nom de l'État/de la province>, <Nom du pays> pour le Canada et les États-Unis, ou <Nom de la ville>, <Nom du pays> pour l'international
     format_type:
-      en: Free text – Note, use the format <City Name>, <State/Province Name>, <Country Name> for Canada and US, or <City Name>, <Country Name> for international (e.g. Ottawa, Ontario, Canada or London, England)
-      fr: Free text – Note, use the format <City Name>, <State/Province Name>, <Country Name> for Canada and US, or <City Name>, <Country Name> for international (e.g. Ottawa, Ontario, Canada or London, England)
+      en: >
+        Free text – Note, use the format <City Name>, <State/Province Name>, <Country Name> for Canada and US,
+        or <City Name>, <Country Name> for international (e.g. Ottawa, Ontario, Canada or London, England)
+      fr: >
+        Texte libre – Note : utilisez le format <Nom de la ville>, <Nom de l'État/de la province>, <Nom du pays> pour le Canada
+        et les États-Unis, ou <Nom de la ville>, <Nom du pays> pour l'international (p. ex. Ottawa, Ontario, Canada ou Londres, Angleterre)
     form_attrs:
       size: 60
 
@@ -274,13 +298,17 @@ resources:
     datastore_type: text
     label:
       en: Second place visited (French)
-      fr: Endroits visités (français)
+      fr: Deuxième lieu visité (français)
     description:
       en: To include name of second place visited during the trip in question, in French.
-      fr: Cette zone indique, en français, le nom de tous les endroits visités pendant le voyage.
+      fr: Inclure le nom du deuxième lieu visité au cours du voyage en question, en français.
     form_help:
-      en: Note, use the format <City Name>, <State/Province Name>, <Country Name> for Canada and US, or <City Name>, <Country Name> for international (e.g. Ottawa, Ontario, Canada or London, England)
-      fr: Note, use the format <City Name>, <State/Province Name>, <Country Name> for Canada and US, or <City Name>, <Country Name> for international (e.g. Ottawa, Ontario, Canada or London, England)
+      en: >
+        Note, use the format <City Name>, <State/Province Name>, <Country Name> for Canada and US,
+        or <City Name>, <Country Name> for international (e.g. Ottawa, Ontario, Canada or London, England)
+      fr: >
+        Note : utilisez le format <Nom de la ville>, <Nom de l'État/de la province>, <Nom du pays> pour le Canada
+        et les États-Unis, ou <Nom de la ville>, <Nom du pays> pour l'international (p. ex. Ottawa, Ontario, Canada ou Londres, Angleterre)
     obligation: Optional
     excel_required: false
     # Dev NOTE: excel_error_formula: Excel and Open Office Calc parity issues with REGEX. REGEX does not exist in Excel.
@@ -290,10 +318,14 @@ resources:
       en: |
         Must be in the format of <City Name>, <State/Province Name>, <Country Name> for Canada and US, or <City Name>, <Country Name> for international
       fr: |
-        Must be in the format of <City Name>, <State/Province Name>, <Country Name> for Canada and US, or <City Name>, <Country Name> for international
+        Doit être au format <Nom de la ville>, <Nom de l'État/de la province>, <Nom du pays> pour le Canada et les États-Unis, ou <Nom de la ville>, <Nom du pays> pour l'international
     format_type:
-      en: Free text – Note, use the format <City Name>, <State/Province Name>, <Country Name> for Canada and US, or <City Name>, <Country Name> for international (e.g. Ottawa, Ontario, Canada or London, England)
-      fr: Free text – Note, use the format <City Name>, <State/Province Name>, <Country Name> for Canada and US, or <City Name>, <Country Name> for international (e.g. Ottawa, Ontario, Canada or London, England)
+      en: >
+        Free text – Note, use the format <City Name>, <State/Province Name>, <Country Name> for Canada and US,
+        or <City Name>, <Country Name> for international (e.g. Ottawa, Ontario, Canada or London, England)
+      fr: >
+        Texte libre – Note : utilisez le format <Nom de la ville>, <Nom de l'État/de la province>, <Nom du pays> pour le Canada
+        et les États-Unis, ou <Nom de la ville>, <Nom du pays> pour l'international (p. ex. Ottawa, Ontario, Canada ou Londres, Angleterre)
     form_attrs:
       size: 60
 
@@ -302,13 +334,17 @@ resources:
     datastore_type: text
     label:
       en: Other places visited (English)
-      fr: Endroits visités (anglais)
+      fr: Autres lieux visités (anglais)
     description:
       en: To include names of all other places visited during the trip in question, in English.
-      fr: Cette zone indique, en anglais, le nom de tous les endroits visités pendant le voyage.
+      fr: Inclure les noms de tous les autres lieux visités au cours du voyage en question, en anglais.
     form_help:
-      en: Note, use the format <City Name>, <State/Province Name>, <Country Name>;<City 2 Name>, <Country 2 Name> (e.g. Ottawa, Ontario, Canada;London, England)
-      fr: Note, use the format <City Name>, <State/Province Name>, <Country Name>;<City 2 Name>, <Country 2 Name> (e.g. Ottawa, Ontario, Canada;London, England)
+      en: >
+        Note, use the format <City Name>, <State/Province Name>, <Country Name>;<City 2 Name>, <Country 2 Name>
+        (e.g. Ottawa, Ontario, Canada;London, England)
+      fr: >
+        Note : utilisez le format <Nom de la ville>, <Nom de l'État/de la province>, <Nom du pays>;<Nom de la ville 2>, <Nom du pays 2>
+        (p. ex. Ottawa, Ontario, Canada;Londres, Angleterre)
     obligation: Optional
     excel_required: false
     # Dev NOTE: excel_error_formula: Excel and Open Office Calc parity issues with REGEX. REGEX does not exist in Excel.
@@ -318,10 +354,14 @@ resources:
       en: |
         Must be in the format of <City Name>, <State/Province Name>, <Country Name>;<City 2 Name>, <Country 2 Name>
       fr: |
-        Must be in the format of <City Name>, <State/Province Name>, <Country Name>;<City 2 Name>, <Country 2 Name>
+        Doit être au format <Nom de la ville>, <Nom de l'État/de la province>, <Nom du pays>;<Nom de la ville 2>, <Nom du pays 2>
     format_type:
-      en: Free text – Note, use the format <City Name>, <State/Province Name>, <Country Name>;<City 2 Name>, <Country 2 Name> (e.g. Ottawa, Ontario, Canada;London, England)
-      fr: Free text – Note, use the format <City Name>, <State/Province Name>, <Country Name>;<City 2 Name>, <Country 2 Name> (e.g. Ottawa, Ontario, Canada;London, England)
+      en: >
+        Free text – Note, use the format <City Name>, <State/Province Name>, <Country Name>;<City 2 Name>, <Country 2 Name>
+        (e.g. Ottawa, Ontario, Canada;London, England)
+      fr: >
+        Texte libre – Note : utilisez le format <Nom de la ville>, <Nom de l'État/de la province>, <Nom du pays>;
+        <Nom de la ville 2>, <Nom du pays 2> (p. ex. Ottawa, Ontario, Canada;Londres, Angleterre)
     form_attrs:
       size: 60
 
@@ -330,13 +370,17 @@ resources:
     datastore_type: text
     label:
       en: Other places visited (French)
-      fr: Endroits visités (français)
+      fr: Autres lieux visités (français)
     description:
       en: To include names of all other places visited during the trip in question, in French.
-      fr: Cette zone indique, en français, le nom de tous les endroits visités pendant le voyage.
+      fr: Inclure les noms de tous les autres lieux visités au cours du voyage en question, en français.
     form_help:
-      en: Note, use the format <City Name>, <State/Province Name>, <Country Name>;<City 2 Name>, <Country 2 Name> (e.g. Ottawa, Ontario, Canada;London, England)
-      fr: Note, use the format <City Name>, <State/Province Name>, <Country Name>;<City 2 Name>, <Country 2 Name> (e.g. Ottawa, Ontario, Canada;London, England)
+      en: >
+        Note, use the format <City Name>, <State/Province Name>, <Country Name>;<City 2 Name>, <Country 2 Name>
+        (e.g. Ottawa, Ontario, Canada;London, England)
+      fr: >
+        Note : utilisez le format <Nom de la ville>, <Nom de l'État/de la province>, <Nom du pays>;<Nom de la ville 2>, <Nom du pays 2>
+        (p. ex. Ottawa, Ontario, Canada;Londres, Angleterre)
     obligation: Optional
     excel_required: false
     # Dev NOTE: excel_error_formula: Excel and Open Office Calc parity issues with REGEX. REGEX does not exist in Excel.
@@ -346,10 +390,14 @@ resources:
       en: |
         Must be in the format of <City Name>, <State/Province Name>, <Country Name>;<City 2 Name>, <Country 2 Name>
       fr: |
-        Must be in the format of <City Name>, <State/Province Name>, <Country Name>;<City 2 Name>, <Country 2 Name>
+        Doit être au format <Nom de la ville>, <Nom de l'État/de la province>, <Nom du pays>;<Nom de la ville 2>, <Nom du pays 2>
     format_type:
-      en: Free text – Note, use the format <City Name>, <State/Province Name>, <Country Name>;<City 2 Name>, <Country 2 Name> (e.g. Ottawa, Ontario, Canada;London, England)
-      fr: Free text – Note, use the format <City Name>, <State/Province Name>, <Country Name>;<City 2 Name>, <Country 2 Name> (e.g. Ottawa, Ontario, Canada;London, England)
+      en: >
+        Free text – Note, use the format <City Name>, <State/Province Name>, <Country Name>;<City 2 Name>, <Country 2 Name>
+        (e.g. Ottawa, Ontario, Canada;London, England)
+      fr: >
+        Texte libre – Note : utilisez le format <Nom de la ville>, <Nom de l'État/de la province>, <Nom du pays>;
+        <Nom de la ville 2>, <Nom du pays 2> (p. ex. Ottawa, Ontario, Canada;Londres, Angleterre)
     form_attrs:
       size: 60
 
