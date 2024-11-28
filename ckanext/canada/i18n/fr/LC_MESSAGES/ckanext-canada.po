@@ -652,6 +652,8 @@ msgid ""
 "Your current password is too weak. Please create a new password before "
 "logging in again."
 msgstr ""
+"Votre mot de passe actuel est trop faible. Veuillez créer un nouveau mot "
+"de passe avant de vous connecter à nouveau."
 
 #: ckanext/canada/strings.py:84
 msgid "These fields have been removed, click update below to save your changes."
@@ -703,11 +705,11 @@ msgstr "Confirmer la suppression"
 
 #: ckanext/canada/strings.py:100
 msgid "Validation Information"
-msgstr ""
+msgstr "Renseignements de validation"
 
 #: ckanext/canada/strings.py:101
 msgid "Validation status:"
-msgstr "Statut de validation :"
+msgstr "État de la validation :"
 
 #: ckanext/canada/strings.py:102
 msgid "Validation timestamp:"
@@ -715,7 +717,7 @@ msgstr "Horodatage de la validation :"
 
 #: ckanext/canada/strings.py:103
 msgid "Duration:"
-msgstr ""
+msgstr "Durée :"
 
 #: ckanext/canada/strings.py:106
 msgid "Single"
@@ -731,7 +733,7 @@ msgstr "Facultatif"
 
 #: ckanext/canada/strings.py:111
 msgid "Validation status"
-msgstr "Statut de validation"
+msgstr "État de la validation"
 
 #: ckanext/canada/strings.py:112
 msgid "Validation timestamp"
@@ -1240,6 +1242,8 @@ msgid ""
 "If N/A, then Instrument Type must be identified as a standing "
 "offer/supply arrangement (SOSA)"
 msgstr ""
+"Si N/A, le type d'instrument doit être indiqué comme une offre "
+"à commandes et d’arrangements en matière d’approvisionnement (OCAA)"
 
 #. SQL Trigger String for PD Type: contracts
 #: ckanext/canada/tables/contracts.yaml:2190
@@ -2405,6 +2409,9 @@ msgid ""
 "title=\"Two digits month\">MM</abbr>-<abbr title=\"Two digits "
 "day\">DD</abbr>):"
 msgstr ""
+"Date de publication (<abbr title=\"Four digits year\">YYYY</abbr>-<abbr "
+"title=\"Two digits month\">MM</abbr>-<abbr title=\"Two digits "
+"day\">DD</abbr>) :"
 
 #: ckanext/canada/templates/admin/snippets/publish_package_list.html:26
 msgid "Publish Selected Records"
@@ -3129,7 +3136,7 @@ msgstr "Afficher la ressource"
 
 #: ckanext/canada/templates/package/resource_read.html:62
 msgid "List of downloadable formats"
-msgstr ""
+msgstr "Liste des formats téléchargeables"
 
 #: ckanext/canada/templates/package/resource_read.html:64
 #: ckanext/canada/templates/package/snippets/resource_item.html:81
@@ -3976,7 +3983,7 @@ msgstr "Besoin d’un compte"
 #: ckanext/canada/templates/user/list.html:58
 #: ckanext/canada/templates/user/read.html:12
 msgid "Unable to unlock user account."
-msgstr ""
+msgstr "Impossible de déverrouiller le compte de l’utilisateur."
 
 #: ckanext/canada/templates/user/list.html:68
 msgid "Sysadmin"
@@ -4350,11 +4357,11 @@ msgstr "Je n’accepte pas"
 
 #: ckanext/canada/templates/user/read_base.html:14
 msgid "API Tokens"
-msgstr ""
+msgstr "Jetons API"
 
 #: ckanext/canada/templates/user/read_base.html:17
 msgid "MFA"
-msgstr ""
+msgstr "AMF"
 
 #: ckanext/canada/templates/user/read_base.html:24
 msgid "Details"
@@ -4370,7 +4377,7 @@ msgstr "Dossiers :"
 
 #: ckanext/canada/templates/user/read_base.html:48
 msgid "Open ID:"
-msgstr ""
+msgstr "Ouvrir ID :"
 
 #: ckanext/canada/templates/user/read_base.html:51
 msgid "Username:"
@@ -4422,11 +4429,11 @@ msgstr "L’authentification a échoué. Mauvais nom d’utilisateur ou mot de p
 
 #: ckanext/canada/templates/user/snippets/login_form.html:13
 msgid "Invalid code, please try again."
-msgstr ""
+msgstr "Code invalide, veuillez réessayer."
 
 #: ckanext/canada/templates/user/snippets/login_form.html:16
 msgid "An unknown error occurred."
-msgstr ""
+msgstr "Une erreur inconnue s'est produite."
 
 #: ckanext/canada/templates/user/snippets/login_form.html:30
 msgid "NOTE: Username and password are case sensitive."
@@ -4434,15 +4441,17 @@ msgstr "NOTE: Le nom d’utilisateur et mot de passe sont sensibles à la casse.
 
 #: ckanext/canada/templates/user/snippets/login_form.html:42
 msgid "Please enter your authenticator app generated 6-digit verification code."
-msgstr ""
+msgstr """
+"Veuillez saisir le code de vérification à 6 chiffres généré par votre "
+"application d’authentification."
 
 #: ckanext/canada/templates/user/snippets/login_form.html:43
 msgid "Verification code"
-msgstr ""
+msgstr "Code de vérification"
 
 #: ckanext/canada/templates/user/snippets/login_form.html:47
 msgid "Need help?"
-msgstr ""
+msgstr "Besoin d’aide?"
 
 #: ckanext/canada/templates/user/snippets/user_search.html:2
 msgid "Search Users"
