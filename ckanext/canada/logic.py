@@ -73,7 +73,7 @@ JOB_MAPPING = {
     },
     'ckan.lib.search.rebuild': {
         'icon': 'fa-database',
-        'gid': lambda job_kwargs: job_kwargs.get('group_id')
+        'gid': lambda job_kwargs: job_kwargs.get('group_id', config.get('ckan.site_id'))
     }
 }
 
@@ -490,22 +490,26 @@ def canada_job_list(up_func, context, data_dict):
                                             id=resource.get('package_id'),
                                             resource_id=rid)}
             if gid:
-                try:
-                    group = get_action('organization_show')({'user': current_user}, {'id': gid})
-                except (ObjectNotFound, NotAuthorized):
+                if gid == config.get('ckan.site_id'):
+                    job_info = {'name': _('Entire Site')}
+                else:
                     try:
-                        group = get_action('group_show')({'user': current_user}, {'id': gid})
+                        group = get_action('organization_show')({'user': current_user}, {'id': gid})
                     except (ObjectNotFound, NotAuthorized):
-                        continue
-                job_info = {'name_translated': group.get('title_translated'),
-                            'group_id': gid,
-                            'url': h.url_for('%s.read' % group.get('type'),
-                                            id=group.get('name'))}
+                        try:
+                            group = get_action('group_show')({'user': current_user}, {'id': gid})
+                        except (ObjectNotFound, NotAuthorized):
+                            continue
+                    job_info = {'name_translated': group.get('title_translated'),
+                                'group_id': gid,
+                                'url': h.url_for('%s.read' % group.get('type'),
+                                                id=group.get('name'))}
 
         job['info'] = job_info
         job['type'] = job_title
         job['icon'] = icon
         job['status'] = job_obj.get_status()
+        job['queue_name'] = job.get('queue', 'default')
 
     return job_list
 
