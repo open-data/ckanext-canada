@@ -73,7 +73,7 @@ JOB_MAPPING = {
     },
     'ckan.lib.search.jobs.reindex': {
         'icon': 'fa-database',
-        'gid': lambda job_kwargs: job_kwargs.get('group_id', config.get('ckan.site_id'))
+        'gid': lambda job_kwargs: job_kwargs.get('group_id')
     }
 }
 
