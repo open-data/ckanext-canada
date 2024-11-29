@@ -71,7 +71,7 @@ JOB_MAPPING = {
         'icon': 'fa-trash',
         'rid': lambda job_args: job_args,
     },
-    'ckan.lib.search.jobs.reindex': {
+    'ckan.lib.search.jobs.reindex_packages': {
         'icon': 'fa-database',
         'gid': lambda job_kwargs: job_kwargs.get('group_id')
     }
@@ -472,7 +472,7 @@ def canada_job_list(up_func, context, data_dict):
             icon = 'fa-circle-o-notch'
 
         job_info = {}
-        if not job_kwargs and job_obj.func_name == 'ckan.lib.search.jobs.reindex':
+        if not job_kwargs and job_obj.func_name == 'ckan.lib.search.jobs.reindex_packages':
             job_info = {'name': _('Entire Site')}
         if rid or gid:
             current_user = get_action('get_site_user')({'ignore_auth': True}, {})['name']
