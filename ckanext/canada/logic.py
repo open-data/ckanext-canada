@@ -71,7 +71,7 @@ JOB_MAPPING = {
         'icon': 'fa-trash',
         'rid': lambda job_args: job_args,
     },
-    'ckan.lib.search.rebuild': {
+    'ckan.lib.search.jobs.reindex': {
         'icon': 'fa-database',
         'gid': lambda job_kwargs: job_kwargs.get('group_id', config.get('ckan.site_id'))
     }
@@ -472,6 +472,8 @@ def canada_job_list(up_func, context, data_dict):
             icon = 'fa-circle-o-notch'
 
         job_info = {}
+        if not job_kwargs and job_obj.func_name == 'ckan.lib.search.jobs.reindex':
+            job_info = {'name': _('Entire Site')}
         if rid or gid:
             current_user = get_action('get_site_user')({'ignore_auth': True}, {})['name']
             if has_request_context():
@@ -490,20 +492,17 @@ def canada_job_list(up_func, context, data_dict):
                                             id=resource.get('package_id'),
                                             resource_id=rid)}
             if gid:
-                if gid == config.get('ckan.site_id'):
-                    job_info = {'name': _('Entire Site')}
-                else:
+                try:
+                    group = get_action('organization_show')({'user': current_user}, {'id': gid})
+                except (ObjectNotFound, NotAuthorized):
                     try:
-                        group = get_action('organization_show')({'user': current_user}, {'id': gid})
+                        group = get_action('group_show')({'user': current_user}, {'id': gid})
                     except (ObjectNotFound, NotAuthorized):
-                        try:
-                            group = get_action('group_show')({'user': current_user}, {'id': gid})
-                        except (ObjectNotFound, NotAuthorized):
-                            continue
-                    job_info = {'name_translated': group.get('title_translated'),
-                                'group_id': gid,
-                                'url': h.url_for('%s.read' % group.get('type'),
-                                                id=group.get('name'))}
+                        continue
+                job_info = {'name_translated': group.get('title_translated'),
+                            'group_id': gid,
+                            'url': h.url_for('%s.read' % group.get('type'),
+                                            id=group.get('name'))}
 
         job['info'] = job_info
         job['type'] = job_title
