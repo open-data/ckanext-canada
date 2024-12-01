@@ -2006,7 +2006,7 @@ resources:
       en: This value must not be negative.
       fr: Cette valeur ne doit être négative.
     occurrence: Single
-    datastore_type: int
+    datastore_type: bigint
     excel_error_formula: 'OR({default_formula},NOT(ISNUMBER({cell})),{cell}<0)'
 
   # DEP 2-14
@@ -2031,7 +2031,7 @@ resources:
       en: This value must not be negative.
       fr: Cette valeur ne doit être négative.
     occurrence: Single
-    datastore_type: int
+    datastore_type: bigint
     excel_error_formula: 'OR({default_formula},NOT(ISNUMBER({cell})),{cell}<0)'
 
   # DEP 2-15
