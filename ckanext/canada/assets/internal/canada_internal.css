@@ -687,6 +687,7 @@ body ul.xloader-log li.item.failure > i::after{
   display: block;
   flex: 0;
   padding-left: 15px !important;
+  white-space: nowrap;
 }
 .canada-pd-org-select-wrapper .recombinant-org-select-label-wrapper label{
   font-weight: bold !important;
