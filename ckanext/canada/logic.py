@@ -499,7 +499,8 @@ def canada_job_list(up_func, context, data_dict):
                         group = get_action('group_show')({'user': current_user}, {'id': gid})
                     except (ObjectNotFound, NotAuthorized):
                         continue
-                job_info = {'name_translated': group.get('title_translated'),
+                job_info = {'name_translated': group.get('title_translated', {}),
+                            'name': group.get('title'),
                             'group_id': gid,
                             'url': h.url_for('%s.read' % group.get('type'),
                                             id=group.get('name'))}
