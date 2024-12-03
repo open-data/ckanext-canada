@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-12-03 17:42+0000\n"
+"POT-Creation-Date: 2024-12-03 20:39+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: fr\n"
@@ -742,25 +742,29 @@ msgstr "Réindexation actuelle des enregistrements"
 msgid "All records indexed"
 msgstr "Tous les enregistrements indexés"
 
-#: ckanext/canada/strings.py:91
+#: ckanext/canada/strings.py:89
+msgid "Error indexing records"
+msgstr "Erreur d'indexation des enregistrements"
+
+#: ckanext/canada/strings.py:92
 msgid "Please upload a file or link to an external resource"
 msgstr ""
 "Veuillez téléverser un fichier ou donner un lien vers une ressource "
 "externe"
 
-#: ckanext/canada/strings.py:92
+#: ckanext/canada/strings.py:93
 msgid "Cannot upload files of this type"
 msgstr "Impossible de téléverser un fichier de ce type"
 
-#: ckanext/canada/strings.py:93
+#: ckanext/canada/strings.py:94
 msgid "Cannot link files of this type"
 msgstr "Impossible de donner un lien vers un fichier de ce type"
 
-#: ckanext/canada/strings.py:94
+#: ckanext/canada/strings.py:95
 msgid "Your password must be {} characters or longer."
 msgstr "Votre mot de passe doit comporter au moins {} caractères."
 
-#: ckanext/canada/strings.py:95
+#: ckanext/canada/strings.py:96
 msgid ""
 "Your password must consist of at least three of the following character "
 "sets: uppercase characters, lowercase characters, digits, punctuation & "
@@ -770,11 +774,11 @@ msgstr ""
 "suivants : majuscules, minuscules, chiffres, ponctuation et caractères "
 "spéciaux."
 
-#: ckanext/canada/strings.py:97
+#: ckanext/canada/strings.py:98
 msgid "Your password cannot be the same as your username."
 msgstr "Votre mot de passe ne peut pas être le même que votre nom d'utilisateur."
 
-#: ckanext/canada/strings.py:99
+#: ckanext/canada/strings.py:100
 msgid ""
 "Your current password is too weak. Please create a new password before "
 "logging in again."
@@ -782,41 +786,41 @@ msgstr ""
 "Votre mot de passe actuel est trop faible. Veuillez créer un nouveau mot "
 "de passe avant de vous connecter à nouveau."
 
-#: ckanext/canada/strings.py:102
+#: ckanext/canada/strings.py:103
 msgid "These fields have been removed, click update below to save your changes."
 msgstr ""
 "Ces champs seront supprimés une fois que vous aurez sauvegardé vos "
 "changements."
 
-#: ckanext/canada/strings.py:103
+#: ckanext/canada/strings.py:104
 msgid "These fields have been removed."
 msgstr "Ces champs ont été supprimés."
 
-#: ckanext/canada/strings.py:106
+#: ckanext/canada/strings.py:107
 msgid "Your form submission could not be validated, please re-submit the form."
 msgstr ""
 "La soumission de votre formulaire n'a pas pu être confirmée. Veuillez le "
 "soumettre de nouveau."
 
-#: ckanext/canada/strings.py:109
+#: ckanext/canada/strings.py:110
 msgid "Open Government Portal"
 msgstr "Portail du gouvernement ouvert"
 
-#: ckanext/canada/strings.py:110
+#: ckanext/canada/strings.py:111
 msgid "Open Government Portal (staging)"
 msgstr "Portail du gouvernement ouvert (stadification)"
 
-#: ckanext/canada/strings.py:113
+#: ckanext/canada/strings.py:114
 msgid "Delete from DataStore"
 msgstr "Supprimer la table DataStore"
 
-#: ckanext/canada/strings.py:114
+#: ckanext/canada/strings.py:115
 msgid "Are you sure you want to delete the DataStore and Data Dictionary?"
 msgstr ""
 "Voulez-vous vraiment supprimer cette table DataStore et ce dictionnaire "
 "de données"
 
-#: ckanext/canada/strings.py:115
+#: ckanext/canada/strings.py:116
 #: ckanext/canada/templates/organization/confirm_delete_member.html:3
 #: ckanext/canada/templates/organization/confirm_delete_member.html:14
 #: ckanext/canada/templates/package/confirm_delete.html:3
@@ -830,39 +834,39 @@ msgstr ""
 msgid "Confirm Delete"
 msgstr "Confirmer la suppression"
 
-#: ckanext/canada/strings.py:118
+#: ckanext/canada/strings.py:119
 msgid "Validation Information"
 msgstr "Renseignements de validation"
 
-#: ckanext/canada/strings.py:119
+#: ckanext/canada/strings.py:120
 msgid "Validation status:"
 msgstr "État de la validation :"
 
-#: ckanext/canada/strings.py:120
+#: ckanext/canada/strings.py:121
 msgid "Validation timestamp:"
 msgstr "Horodatage de la validation :"
 
-#: ckanext/canada/strings.py:121
+#: ckanext/canada/strings.py:122
 msgid "Duration:"
 msgstr "Durée :"
 
-#: ckanext/canada/strings.py:124
+#: ckanext/canada/strings.py:125
 msgid "Single"
 msgstr "Une seule"
 
-#: ckanext/canada/strings.py:125
+#: ckanext/canada/strings.py:126
 msgid "Repeatable"
 msgstr "Répétable"
 
-#: ckanext/canada/strings.py:126
+#: ckanext/canada/strings.py:127
 msgid "Optional"
 msgstr "Facultatif"
 
-#: ckanext/canada/strings.py:129
+#: ckanext/canada/strings.py:130
 msgid "Validation status"
 msgstr "État de la validation"
 
-#: ckanext/canada/strings.py:130
+#: ckanext/canada/strings.py:131
 msgid "Validation timestamp"
 msgstr "Horodatage de la validation"
 
@@ -1182,7 +1186,7 @@ msgstr ""
 #. SQL Trigger String for PD Type: wrongdoing
 #: ckanext/canada/tables/adminaircraft.yaml:316
 #: ckanext/canada/tables/contracts.yaml:2184
-#: ckanext/canada/tables/grants.yaml:836
+#: ckanext/canada/tables/grants.yaml:838
 #: ckanext/canada/tables/grantsmonthly.yaml:856
 #: ckanext/canada/tables/hospitalityq.yaml:575
 #: ckanext/canada/tables/qpnotes.yaml:332
@@ -1576,7 +1580,7 @@ msgstr ""
 "et les subventions pour votre organisation"
 
 #. Resource Title for PD Type: grants
-#: ckanext/canada/tables/grants.yaml:885
+#: ckanext/canada/tables/grants.yaml:887
 msgid "Proactive Publication - Grants and Contributions Nothing to Report"
 msgstr ""
 "Publication proactive – Subventions et contributions, rien à "
@@ -3018,17 +3022,17 @@ msgid ""
 "<strong>name,</strong> it's datasets in the SOLR Index will not have the "
 "new title or name."
 msgstr ""
-"Si vous mettez à jour <strong>le titre</strong> ou <strong>le nom</strong> "
-"d'une organisation, ses ensembles de données dans l'index SOLR n'auront pas "
-"le nouveau titre ou le nouveau nom."
+"Si vous mettez à jour <strong>le titre</strong> ou <strong>le "
+"nom</strong> d'une organisation, ses ensembles de données dans l'index "
+"SOLR n'auront pas le nouveau titre ou le nouveau nom."
 
 #: ckanext/canada/templates/organization/search_rebuild.html:10
 msgid ""
 "To solve this, you can re-index all of the Organization's records in a "
 "background job."
 msgstr ""
-"Pour résoudre ce problème, vous pouvez réindexer tous les enregistrements "
-"de l'organisation dans une tâche en arrière-plan."
+"Pour résoudre ce problème, vous pouvez réindexer tous les enregistrements"
+" de l'organisation dans une tâche en arrière-plan."
 
 #: ckanext/canada/templates/organization/snippets/helper.html:2
 msgid "What are Organizations?"
