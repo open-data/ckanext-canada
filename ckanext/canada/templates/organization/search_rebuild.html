@@ -1,0 +1,13 @@
+{% ckan_extends %}
+
+{% block secondary_help %}
+  <div class="panel panel-info">
+    <div class="panel-heading">
+      <i class="fa fa-lg fa-info-circle"></i>&nbsp;{{ _('Why re-index?') }}
+    </div>
+    <div class="panel-body">
+        <p>{{ _("If you update an Organization's <strong>title</strong> or <strong>name,</strong> it's datasets in the SOLR Index will not have the new title or name.") }}</p>
+        <p>{{ _("To solve this, you can re-index all of the Organization's records in a background job.") }}</p>
+    </div>
+  </div>
+{% endblock %}
