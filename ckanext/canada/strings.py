@@ -86,6 +86,7 @@ _('There are no records to index.')  # TODO: remove after upstream contrib
 _('In queue to re-index records')  # TODO: remove after upstream contrib
 _('Currently re-indexing records')  # TODO: remove after upstream contrib
 _('All records indexed')  # TODO: remove after upstream contrib
+_('Error indexing records')  # TODO: remove after upstream contrib
 
 # strings from security
 _("Please upload a file or link to an external resource")
