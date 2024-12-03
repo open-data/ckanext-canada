@@ -2861,15 +2861,15 @@ msgid ""
 msgstr ""
 "Si vous mettez à jour <strong>le titre</strong> ou <strong>le nom</strong> "
 "d'une organisation, ses ensembles de données dans l'index SOLR n'auront pas "
-"le nouveau titre ou le nouveau nom. Pour résoudre ce problème, vous pouvez "
-"réindexer tous les enregistrements de l'organisation dans une tâche en "
-"arrière-plan."
+"le nouveau titre ou le nouveau nom."
 
 #: ckanext/canada/templates/organization/search_rebuild.html:10
 msgid ""
 "To solve this, you can re-index all of the Organization's records in a "
 "background job."
 msgstr ""
+"Pour résoudre ce problème, vous pouvez réindexer tous les enregistrements "
+"de l'organisation dans une tâche en arrière-plan."
 
 #: ckanext/canada/templates/organization/snippets/helper.html:2
 msgid "What are Organizations?"
