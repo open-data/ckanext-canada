@@ -31,6 +31,9 @@
     {% elif h.check_access('view_org_members', {'id': organization.id}) %}
       {{ h.build_nav_icon('organization.members', _('View Members'), id=organization.name, icon='users') }}
     {% endif %}
+    {% if h.check_access('sysadmin') %}
+      {{ h.build_nav_icon('organization.search_rebuild', _('Rebuild Search Index'), id=organization.name, icon='database') }}
+    {% endif %}
   {% else %}
     {{ super() }}
   {% endif %}
@@ -38,7 +41,7 @@
 
 {% block secondary_content %}
   {% if organization %}
-  {% snippet 'snippets/organization.html', organization=group_dict, show_nums=true, group_type=group_type, org_member_count=org_member_count %}
+    {% snippet 'snippets/organization.html', organization=group_dict, show_nums=true, group_type=group_type, org_member_count=org_member_count %}
   {% else %}
     {{ super() }}
   {% endif %}

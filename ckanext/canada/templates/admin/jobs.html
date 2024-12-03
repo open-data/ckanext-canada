@@ -29,11 +29,16 @@
               <span class="date">
                 {{ h.time_ago_from_timestamp(job.get('created')) }} ({{ h.render_datetime(job.get('created'), '%Y-%m-%d %H:%M:%S %Z') }}) |
                 {% if job.get('info') %}
-                  <a href="{{ job.get('info', {}).get('url') }}">{{ h.get_translated(job.get('info'), 'name') }}</a>
+                  {% if job.get('info', {}).get('url') %}
+                    <a href="{{ job.get('info', {}).get('url') }}">{{ h.get_translated(job.get('info'), 'name') }}</a>
+                  {% else %}
+                    <span>{{ h.get_translated(job.get('info'), 'name') }}</span>
+                  {% endif %}
                 {% else %}
                   <span>{{ _('Unknown') }}</span>
                 {% endif %}
                 | <a href="{{ h.url_for('api.action', ver=3, logic_function='job_show', id=job.get('id')) }}">{{ job.get('id') }}</a>
+                | <span>{{ job.get('queue_name') }}</span>
               </span>
             </p>
           </li>

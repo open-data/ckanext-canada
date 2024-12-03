@@ -24,4 +24,7 @@
   {% elif h.check_access('view_org_members', {'id': organization.id}) %}
     {{ h.build_nav_icon('organization.members', _('View Members'), id=organization.name, icon='users') }}
   {% endif %}
+  {% if h.check_access('sysadmin') %}
+    {{ h.build_nav_icon('organization.search_rebuild', _('Rebuild Search Index'), id=organization.name, icon='database') }}
+  {% endif %}
 {% endblock %}

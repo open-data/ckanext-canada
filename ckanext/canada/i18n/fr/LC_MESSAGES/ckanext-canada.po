@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-11-26 18:28+0000\n"
+"POT-Creation-Date: 2024-12-03 17:42+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: fr\n"
@@ -273,17 +273,21 @@ msgstr "Gouvernement ouvert"
 msgid "Search"
 msgstr "Rechercher"
 
-#: ckanext/canada/logic.py:298
+#: ckanext/canada/logic.py:302
 msgid "Could not determine a resource format. Please supply a format."
 msgstr ""
 "Il est impossible de déterminer le format de la ressource. Veuillez "
 "indiquer un format."
 
-#: ckanext/canada/logic.py:459
+#: ckanext/canada/logic.py:472
 msgid "Unknown Job"
 msgstr "Tâche inconnue "
 
-#: ckanext/canada/logic.py:548
+#: ckanext/canada/logic.py:477
+msgid "Entire Site"
+msgstr ""
+
+#: ckanext/canada/logic.py:578
 #, python-format
 msgid "No Portal Sync information found for package %s"
 msgstr ""
@@ -623,25 +627,140 @@ msgstr "Utilisateur %s supprimé. Vous êtes maintenant déconnecté"
 msgid "User %s deleted."
 msgstr "Utilisateur %s supprimé."
 
+#: ckanext/canada/strings.py:71
+msgid ""
+"You can use <a href=\"#markdown\" title=\"Markdown quick reference\" "
+"data-target=\"popover\" data-content=\"{}\" data-html=\"true\">Markdown "
+"formatting</a> here"
+msgstr ""
+"Vous pouvez utiliser <a href=\"javascript:void(0);\" title=\"Référence "
+"rapide Markdown\" data-bs-toggle=\"popover\" data-bs-content=\"{}\" data-"
+"bs-html=\"true\">le formatage du texte dans Markdown</a> ici"
+
+#: ckanext/canada/strings.py:72
+#: ckanext/canada/templates/macros/form/markdown.html:27
+msgid ""
+"<pre><p>__bold text__</p><p>_italic text_</p><p>* list<br>* of<br>* "
+"items</p><p>1. numbered<br>2. list<br>3. of "
+"items</p><p>https://auto.link.ed/</p><p>[Formatted "
+"Link](https://formatted.link)</p><p>> block quote</p></pre><p class"
+"='text-muted'><b>Please note:</b> HTML tags are stripped out for security"
+" reasons</p>"
+msgstr ""
+"<pre><p>__texte en gras__</p><p>_texte en italique_</p><p>* liste<br>* "
+"d'éléments</p><p>1. liste<br>2. d'éléments<br>3. "
+"numérotés</p><p>https://lien.automatique/</p><p>[Lien "
+"formaté](https://lien.formaté)</p><p>> bloc de citation</p></pre><p class"
+"='text-muted'><b>Remarque :</b> les balises HTML sont supprimées pour des"
+" raisons de sécurité</p>"
+
 #: ckanext/canada/strings.py:73
+msgid "Rebuild Dataset Indices"
+msgstr "Reconstruire les index des ensembles de données"
+
+#: ckanext/canada/strings.py:74 ckanext/canada/templates/admin/base.html:19
+#: ckanext/canada/templates/organization/edit_base.html:35
+#: ckanext/canada/templates/organization/read_base.html:28
+msgid "Rebuild Search Index"
+msgstr "Reconstruire l'index de recherche"
+
+#: ckanext/canada/strings.py:75
+msgid ""
+"Are you sure you want to re-index all the records for this site? This can"
+" take a long time if the site has a lot of records."
+msgstr ""
+"Êtes-vous certain de vouloir réindexer tous les enregistrements de ce "
+"site ? Ceci peut prendre beaucoup de temps si le site contient plusieurs "
+"enregistrements."
+
+#: ckanext/canada/strings.py:76
+msgid "Re-index Site's Records"
+msgstr "Réindexer les enregistrements du site"
+
+#: ckanext/canada/strings.py:77
+msgid ""
+"Are you sure you want to re-index all the records for this group? This "
+"can take a long time if the group has a lot of records."
+msgstr ""
+"Êtes-vous certain de vouloir réindexer tous les enregistrements de ce "
+"groupe ? Ça peut prendre beaucoup de temps si le groupe a plusieurs "
+"disques."
+
+#: ckanext/canada/strings.py:78
+msgid ""
+"Are you sure you want to re-index all the records for this organization? "
+"This can take a long time if the organization has a lot of records."
+msgstr ""
+"Êtes-vous certain de vouloir réindexer tous les enregistrements de cette "
+"organisation ? Cela peut demander beaucoup de temps si l'organisation a "
+"plusieurs de dossiers."
+
+#: ckanext/canada/strings.py:79
+msgid "Re-index Group's Record."
+msgstr "Réindexer les enregistrements du groupe"
+
+#: ckanext/canada/strings.py:80
+msgid "Re-index Organization's Records"
+msgstr "Réindexer les dossiers de l'organisation"
+
+#: ckanext/canada/strings.py:81
+msgid ""
+"If you update an Group's title or name, it's datasets in the SOLR Index "
+"will not have the new title or name. To solve this, you can re-index all "
+"of the Group's records in a background job."
+msgstr ""
+"Si vous mettez à jour le titre ou le nom d'un groupe, ses ensembles de "
+"données dans l'index SOLR n'aura pas le nouveau titre ou le nouveau nom. "
+"Pour résoudre ce problème, vous pouvez réindexer tous les enregistrements"
+" du Groupe dans un travail en arrière-plan."
+
+#: ckanext/canada/strings.py:82
+msgid "Records are in queue to be re-indexed."
+msgstr "Les enregistrements sont en file d'attente pour être réindexés."
+
+#: ckanext/canada/strings.py:83
+msgid "Records already in queue to be re-indexed."
+msgstr "Les enregistrements déjà en file d'attente doivent être réindexés."
+
+#: ckanext/canada/strings.py:84
+msgid "Unable to re-index records."
+msgstr "Impossible de réindexer les enregistrements."
+
+#: ckanext/canada/strings.py:85
+msgid "There are no records to index."
+msgstr "Aucuns enregistrements à indexer."
+
+#: ckanext/canada/strings.py:86
+msgid "In queue to re-index records"
+msgstr "En file d'attente pour réindexer les enregistrements"
+
+#: ckanext/canada/strings.py:87
+msgid "Currently re-indexing records"
+msgstr "Réindexation actuelle des enregistrements"
+
+#: ckanext/canada/strings.py:88
+msgid "All records indexed"
+msgstr "Tous les enregistrements indexés"
+
+#: ckanext/canada/strings.py:91
 msgid "Please upload a file or link to an external resource"
 msgstr ""
 "Veuillez téléverser un fichier ou donner un lien vers une ressource "
 "externe"
 
-#: ckanext/canada/strings.py:74
+#: ckanext/canada/strings.py:92
 msgid "Cannot upload files of this type"
 msgstr "Impossible de téléverser un fichier de ce type"
 
-#: ckanext/canada/strings.py:75
+#: ckanext/canada/strings.py:93
 msgid "Cannot link files of this type"
 msgstr "Impossible de donner un lien vers un fichier de ce type"
 
-#: ckanext/canada/strings.py:76
+#: ckanext/canada/strings.py:94
 msgid "Your password must be {} characters or longer."
 msgstr "Votre mot de passe doit comporter au moins {} caractères."
 
-#: ckanext/canada/strings.py:77
+#: ckanext/canada/strings.py:95
 msgid ""
 "Your password must consist of at least three of the following character "
 "sets: uppercase characters, lowercase characters, digits, punctuation & "
@@ -651,11 +770,11 @@ msgstr ""
 "suivants : majuscules, minuscules, chiffres, ponctuation et caractères "
 "spéciaux."
 
-#: ckanext/canada/strings.py:79
+#: ckanext/canada/strings.py:97
 msgid "Your password cannot be the same as your username."
 msgstr "Votre mot de passe ne peut pas être le même que votre nom d'utilisateur."
 
-#: ckanext/canada/strings.py:81
+#: ckanext/canada/strings.py:99
 msgid ""
 "Your current password is too weak. Please create a new password before "
 "logging in again."
@@ -663,41 +782,41 @@ msgstr ""
 "Votre mot de passe actuel est trop faible. Veuillez créer un nouveau mot "
 "de passe avant de vous connecter à nouveau."
 
-#: ckanext/canada/strings.py:84
+#: ckanext/canada/strings.py:102
 msgid "These fields have been removed, click update below to save your changes."
 msgstr ""
 "Ces champs seront supprimés une fois que vous aurez sauvegardé vos "
 "changements."
 
-#: ckanext/canada/strings.py:85
+#: ckanext/canada/strings.py:103
 msgid "These fields have been removed."
 msgstr "Ces champs ont été supprimés."
 
-#: ckanext/canada/strings.py:88
+#: ckanext/canada/strings.py:106
 msgid "Your form submission could not be validated, please re-submit the form."
 msgstr ""
 "La soumission de votre formulaire n'a pas pu être confirmée. Veuillez le "
 "soumettre de nouveau."
 
-#: ckanext/canada/strings.py:91
+#: ckanext/canada/strings.py:109
 msgid "Open Government Portal"
 msgstr "Portail du gouvernement ouvert"
 
-#: ckanext/canada/strings.py:92
+#: ckanext/canada/strings.py:110
 msgid "Open Government Portal (staging)"
 msgstr "Portail du gouvernement ouvert (stadification)"
 
-#: ckanext/canada/strings.py:95
+#: ckanext/canada/strings.py:113
 msgid "Delete from DataStore"
 msgstr "Supprimer la table DataStore"
 
-#: ckanext/canada/strings.py:96
+#: ckanext/canada/strings.py:114
 msgid "Are you sure you want to delete the DataStore and Data Dictionary?"
 msgstr ""
 "Voulez-vous vraiment supprimer cette table DataStore et ce dictionnaire "
 "de données"
 
-#: ckanext/canada/strings.py:97
+#: ckanext/canada/strings.py:115
 #: ckanext/canada/templates/organization/confirm_delete_member.html:3
 #: ckanext/canada/templates/organization/confirm_delete_member.html:14
 #: ckanext/canada/templates/package/confirm_delete.html:3
@@ -711,39 +830,39 @@ msgstr ""
 msgid "Confirm Delete"
 msgstr "Confirmer la suppression"
 
-#: ckanext/canada/strings.py:100
+#: ckanext/canada/strings.py:118
 msgid "Validation Information"
 msgstr "Renseignements de validation"
 
-#: ckanext/canada/strings.py:101
+#: ckanext/canada/strings.py:119
 msgid "Validation status:"
 msgstr "État de la validation :"
 
-#: ckanext/canada/strings.py:102
+#: ckanext/canada/strings.py:120
 msgid "Validation timestamp:"
 msgstr "Horodatage de la validation :"
 
-#: ckanext/canada/strings.py:103
+#: ckanext/canada/strings.py:121
 msgid "Duration:"
 msgstr "Durée :"
 
-#: ckanext/canada/strings.py:106
+#: ckanext/canada/strings.py:124
 msgid "Single"
 msgstr "Une seule"
 
-#: ckanext/canada/strings.py:107
+#: ckanext/canada/strings.py:125
 msgid "Repeatable"
 msgstr "Répétable"
 
-#: ckanext/canada/strings.py:108
+#: ckanext/canada/strings.py:126
 msgid "Optional"
 msgstr "Facultatif"
 
-#: ckanext/canada/strings.py:111
+#: ckanext/canada/strings.py:129
 msgid "Validation status"
 msgstr "État de la validation"
 
-#: ckanext/canada/strings.py:112
+#: ckanext/canada/strings.py:130
 msgid "Validation timestamp"
 msgstr "Horodatage de la validation"
 
@@ -1256,8 +1375,8 @@ msgid ""
 "If N/A, then Instrument Type must be identified as a standing "
 "offer/supply arrangement (SOSA)"
 msgstr ""
-"Si N/A, le type d'instrument doit être indiqué comme une offre "
-"à commandes et d’arrangements en matière d’approvisionnement (OCAA)"
+"Si N/A, le type d'instrument doit être indiqué comme une offre à "
+"commandes et d’arrangements en matière d’approvisionnement (OCAA)"
 
 #. SQL Trigger String for PD Type: contracts
 #: ckanext/canada/tables/contracts.yaml:2189
@@ -1802,10 +1921,10 @@ msgid ""
 "Name>, <Country Name> for Canada and US, or <City Name>, <Country Name> "
 "for international (e.g. Ottawa, Ontario, Canada or London, England)"
 msgstr ""
-"Format non valide pour la destination : \"{}\". Utilisez <Nom de la ville>, "
-"<Nom de l'État/de la province>, <Nom du pays> pour le Canada et les États-Unis, "
-"ou <Nom de la ville>, <Nom du pays> pour l'international (p. ex. Ottawa, Ontario, "
-"Canada ou Londres, Angleterre)"
+"Format non valide pour la destination : \"{}\". Utilisez <Nom de la "
+"ville>, <Nom de l'État/de la province>, <Nom du pays> pour le Canada et "
+"les États-Unis, ou <Nom de la ville>, <Nom du pays> pour l'international "
+"(p. ex. Ottawa, Ontario, Canada ou Londres, Angleterre)"
 
 #. Resource Title for PD Type: travelq
 #: ckanext/canada/tables/travelq.yaml:684
@@ -2371,7 +2490,7 @@ msgid "Publish Records"
 msgstr "Publier des dossiers"
 
 #: ckanext/canada/templates/admin/base.html:17
-#: ckanext/canada/templates/admin/jobs.html:54
+#: ckanext/canada/templates/admin/jobs.html:59
 msgid "Job Queue"
 msgstr "File d'attente des tâches"
 
@@ -2410,15 +2529,15 @@ msgstr ""
 msgid " job(s) in queue."
 msgstr " tâche(s) dans la file d'attente."
 
-#: ckanext/canada/templates/admin/jobs.html:34
+#: ckanext/canada/templates/admin/jobs.html:38
 msgid "Unknown"
 msgstr "Inconnue"
 
-#: ckanext/canada/templates/admin/jobs.html:44
+#: ckanext/canada/templates/admin/jobs.html:49
 msgid "There are currently no queued or running jobs."
 msgstr "Aucune tâche n'est dans la file d'attente ou en cours d'exécution."
 
-#: ckanext/canada/templates/admin/jobs.html:58
+#: ckanext/canada/templates/admin/jobs.html:63
 msgid "View the current job queue and running jobs."
 msgstr "Affichez les tâches dans la file d'attente et en cours d'exécution."
 
@@ -2476,6 +2595,22 @@ msgstr "Filtres de recherche"
 #: ckanext/canada/templates/snippets/publish_facet.html:61
 msgid "Clear All"
 msgstr "Effacer tout"
+
+#: ckanext/canada/templates/admin/search_rebuild.html:6
+#: ckanext/canada/templates/organization/search_rebuild.html:6
+msgid "Why re-index?"
+msgstr "Pourquoi réindexer ?"
+
+#: ckanext/canada/templates/admin/search_rebuild.html:9
+msgid ""
+"The SOLR index is used for searching datasets and search facets. In the "
+"case that some datasets are not showing in the search or a search facet "
+"is not working, you can try to re-index the site."
+msgstr ""
+"L'index SOLR est utilisé pour rechercher des ensembles de données et des "
+"facettes de recherche. Dans le cas où certains ensembles de données "
+"n'apparaissent pas dans la recherche ou qu'une facette de recherche ne "
+"fonctionne pas, vous pouvez essayer de réindexer le site."
 
 #: ckanext/canada/templates/admin/trash.html:17
 msgid "Purge deleted datasets, organizations or groups forever and irreversibly."
@@ -2706,22 +2841,6 @@ msgstr ""
 "administrateur général devant un comité parlementaire, ajoutez-y du "
 "contenu ou modifiez-la."
 
-#: ckanext/canada/templates/macros/form/markdown.html:27
-msgid ""
-"<pre><p>__bold text__</p><p>_italic text_</p><p>* list<br>* of<br>* "
-"items</p><p>1. numbered<br>2. list<br>3. of "
-"items</p><p>https://auto.link.ed/</p><p>[Formatted "
-"Link](https://formatted.link)</p><p>> block quote</p></pre><p class"
-"='text-muted'><b>Please note:</b> HTML tags are stripped out for security"
-" reasons</p>"
-msgstr ""
-"<pre><p>__texte en gras__</p><p>_texte en italique_</p><p>* liste<br>* "
-"d'éléments</p><p>1. liste<br>2. d'éléments<br>3. "
-"numérotés</p><p>https://lien.automatique/</p><p>[Lien "
-"formaté](https://lien.formaté)</p><p>> bloc de citation</p></pre><p class"
-"='text-muted'><b>Remarque :</b> les balises HTML sont supprimées pour des"
-" raisons de sécurité</p>"
-
 #: ckanext/canada/templates/macros/form/markdown.html:33
 msgid ""
 "You can use <a href=\"javascript:void(0);\" title=\"Markdown quick "
@@ -2892,6 +3011,24 @@ msgstr "Membres"
 #: ckanext/canada/templates/user/read_base.html:11
 msgid "Datasets"
 msgstr "Dossiers"
+
+#: ckanext/canada/templates/organization/search_rebuild.html:9
+msgid ""
+"If you update an Organization's <strong>title</strong> or "
+"<strong>name,</strong> it's datasets in the SOLR Index will not have the "
+"new title or name."
+msgstr ""
+"Si vous mettez à jour <strong>le titre</strong> ou <strong>le nom</strong> "
+"d'une organisation, ses ensembles de données dans l'index SOLR n'auront pas "
+"le nouveau titre ou le nouveau nom."
+
+#: ckanext/canada/templates/organization/search_rebuild.html:10
+msgid ""
+"To solve this, you can re-index all of the Organization's records in a "
+"background job."
+msgstr ""
+"Pour résoudre ce problème, vous pouvez réindexer tous les enregistrements "
+"de l'organisation dans une tâche en arrière-plan."
 
 #: ckanext/canada/templates/organization/snippets/helper.html:2
 msgid "What are Organizations?"
@@ -3425,7 +3562,7 @@ msgstr "Gouvernement du Canada, Secrétariat du Conseil du Trésor du Canada"
 msgid "Information and Communications Government and Politics"
 msgstr "Information et communications Gouvernement et politique"
 
-#: ckanext/canada/templates/package/snippets/schemaorg.html:33
+#: ckanext/canada/templates/package/snippets/schemaorg.html:34
 msgid ""
 "Rights under which the catalog can be reused are outlined in the Open "
 "Government Licence - Canada"
@@ -4521,8 +4658,8 @@ msgstr "NOTE: Le nom d’utilisateur et mot de passe sont sensibles à la casse.
 
 #: ckanext/canada/templates/user/snippets/login_form.html:42
 msgid "Please enter your authenticator app generated 6-digit verification code."
-msgstr """
-"Veuillez saisir le code de vérification à 6 chiffres généré par votre "
+msgstr ""
+"\"Veuillez saisir le code de vérification à 6 chiffres généré par votre "
 "application d’authentification."
 
 #: ckanext/canada/templates/user/snippets/login_form.html:43
