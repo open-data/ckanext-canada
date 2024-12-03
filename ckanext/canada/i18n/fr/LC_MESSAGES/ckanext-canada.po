@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-12-03 16:46+0000\n"
+"POT-Creation-Date: 2024-12-03 20:35+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: fr\n"
@@ -669,25 +669,29 @@ msgstr "Réindexation actuelle des enregistrements"
 msgid "All records indexed"
 msgstr "Tous les enregistrements indexés"
 
-#: ckanext/canada/strings.py:86
+#: ckanext/canada/strings.py:84
+msgid "Error indexing records"
+msgstr "Erreur d'indexation des enregistrements"
+
+#: ckanext/canada/strings.py:87
 msgid "Please upload a file or link to an external resource"
 msgstr ""
 "Veuillez téléverser un fichier ou donner un lien vers une ressource "
 "externe"
 
-#: ckanext/canada/strings.py:87
+#: ckanext/canada/strings.py:88
 msgid "Cannot upload files of this type"
 msgstr "Impossible de téléverser un fichier de ce type"
 
-#: ckanext/canada/strings.py:88
+#: ckanext/canada/strings.py:89
 msgid "Cannot link files of this type"
 msgstr "Impossible de donner un lien vers un fichier de ce type"
 
-#: ckanext/canada/strings.py:89
+#: ckanext/canada/strings.py:90
 msgid "Your password must be {} characters or longer."
 msgstr "Votre mot de passe doit comporter au moins {} caractères."
 
-#: ckanext/canada/strings.py:90
+#: ckanext/canada/strings.py:91
 msgid ""
 "Your password must consist of at least three of the following character "
 "sets: uppercase characters, lowercase characters, digits, punctuation & "
@@ -697,51 +701,51 @@ msgstr ""
 "suivants : majuscules, minuscules, chiffres, ponctuation et caractères "
 "spéciaux."
 
-#: ckanext/canada/strings.py:92
+#: ckanext/canada/strings.py:93
 msgid "Your password cannot be the same as your username."
 msgstr "Votre mot de passe ne peut pas être le même que votre nom d'utilisateur."
 
-#: ckanext/canada/strings.py:95
+#: ckanext/canada/strings.py:96
 msgid "These fields have been removed, click update below to save your changes."
 msgstr ""
 "Ces champs seront supprimés une fois que vous aurez sauvegardé vos "
 "changements."
 
-#: ckanext/canada/strings.py:96
+#: ckanext/canada/strings.py:97
 msgid "These fields have been removed."
 msgstr "Ces champs ont été supprimés."
 
-#: ckanext/canada/strings.py:99
+#: ckanext/canada/strings.py:100
 msgid "Your form submission could not be validated, please re-submit the form."
 msgstr ""
 "La soumission de votre formulaire n'a pas pu être confirmée. Veuillez le "
 "soumettre de nouveau."
 
-#: ckanext/canada/strings.py:102
+#: ckanext/canada/strings.py:103
 msgid "Open Government Portal"
 msgstr "Portail du gouvernement ouvert"
 
-#: ckanext/canada/strings.py:103
+#: ckanext/canada/strings.py:104
 msgid "Open Government Portal (staging)"
 msgstr "Portail du gouvernement ouvert (stadification)"
 
-#: ckanext/canada/strings.py:106
+#: ckanext/canada/strings.py:107
 msgid "Single"
 msgstr "Une seule"
 
-#: ckanext/canada/strings.py:107
+#: ckanext/canada/strings.py:108
 msgid "Repeatable"
 msgstr "Répétable"
 
-#: ckanext/canada/strings.py:108
+#: ckanext/canada/strings.py:109
 msgid "Optional"
 msgstr "Facultatif"
 
-#: ckanext/canada/strings.py:111
+#: ckanext/canada/strings.py:112
 msgid "Validation status"
 msgstr "Statut de validation"
 
-#: ckanext/canada/strings.py:112
+#: ckanext/canada/strings.py:113
 msgid "Validation timestamp"
 msgstr "Horodatage de la validation"
 
@@ -2859,17 +2863,17 @@ msgid ""
 "<strong>name,</strong> it's datasets in the SOLR Index will not have the "
 "new title or name."
 msgstr ""
-"Si vous mettez à jour <strong>le titre</strong> ou <strong>le nom</strong> "
-"d'une organisation, ses ensembles de données dans l'index SOLR n'auront pas "
-"le nouveau titre ou le nouveau nom."
+"Si vous mettez à jour <strong>le titre</strong> ou <strong>le "
+"nom</strong> d'une organisation, ses ensembles de données dans l'index "
+"SOLR n'auront pas le nouveau titre ou le nouveau nom."
 
 #: ckanext/canada/templates/organization/search_rebuild.html:10
 msgid ""
 "To solve this, you can re-index all of the Organization's records in a "
 "background job."
 msgstr ""
-"Pour résoudre ce problème, vous pouvez réindexer tous les enregistrements "
-"de l'organisation dans une tâche en arrière-plan."
+"Pour résoudre ce problème, vous pouvez réindexer tous les enregistrements"
+" de l'organisation dans une tâche en arrière-plan."
 
 #: ckanext/canada/templates/organization/snippets/helper.html:2
 msgid "What are Organizations?"

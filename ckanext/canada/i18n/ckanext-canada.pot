@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ckanext-canada 0.4.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-12-03 16:46+0000\n"
+"POT-Creation-Date: 2024-12-03 20:35+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -619,70 +619,74 @@ msgstr ""
 msgid "All records indexed"
 msgstr ""
 
-#: ckanext/canada/strings.py:86
-msgid "Please upload a file or link to an external resource"
+#: ckanext/canada/strings.py:84
+msgid "Error indexing records"
 msgstr ""
 
 #: ckanext/canada/strings.py:87
-msgid "Cannot upload files of this type"
+msgid "Please upload a file or link to an external resource"
 msgstr ""
 
 #: ckanext/canada/strings.py:88
-msgid "Cannot link files of this type"
+msgid "Cannot upload files of this type"
 msgstr ""
 
 #: ckanext/canada/strings.py:89
-msgid "Your password must be {} characters or longer."
+msgid "Cannot link files of this type"
 msgstr ""
 
 #: ckanext/canada/strings.py:90
+msgid "Your password must be {} characters or longer."
+msgstr ""
+
+#: ckanext/canada/strings.py:91
 msgid ""
 "Your password must consist of at least three of the following character sets:"
 " uppercase characters, lowercase characters, digits, punctuation & special "
 "characters."
 msgstr ""
 
-#: ckanext/canada/strings.py:92
+#: ckanext/canada/strings.py:93
 msgid "Your password cannot be the same as your username."
 msgstr ""
 
-#: ckanext/canada/strings.py:95
+#: ckanext/canada/strings.py:96
 msgid "These fields have been removed, click update below to save your changes."
 msgstr ""
 
-#: ckanext/canada/strings.py:96
+#: ckanext/canada/strings.py:97
 msgid "These fields have been removed."
 msgstr ""
 
-#: ckanext/canada/strings.py:99
+#: ckanext/canada/strings.py:100
 msgid "Your form submission could not be validated, please re-submit the form."
 msgstr ""
 
-#: ckanext/canada/strings.py:102
+#: ckanext/canada/strings.py:103
 msgid "Open Government Portal"
 msgstr ""
 
-#: ckanext/canada/strings.py:103
+#: ckanext/canada/strings.py:104
 msgid "Open Government Portal (staging)"
 msgstr ""
 
-#: ckanext/canada/strings.py:106
+#: ckanext/canada/strings.py:107
 msgid "Single"
 msgstr ""
 
-#: ckanext/canada/strings.py:107
+#: ckanext/canada/strings.py:108
 msgid "Repeatable"
 msgstr ""
 
-#: ckanext/canada/strings.py:108
+#: ckanext/canada/strings.py:109
 msgid "Optional"
 msgstr ""
 
-#: ckanext/canada/strings.py:111
+#: ckanext/canada/strings.py:112
 msgid "Validation status"
 msgstr ""
 
-#: ckanext/canada/strings.py:112
+#: ckanext/canada/strings.py:113
 msgid "Validation timestamp"
 msgstr ""
 
