@@ -448,8 +448,8 @@ class CanadaDatasetsPlugin(SchemingDatasetsPlugin):
                 data_dict['credit'][i] = json.dumps(cr)
 
         if data_dict.get('relationship'):
-            related_relationships = [rel['related_relationship'] for rel in data_dict['relationship']]
-            related_types = [rel['related_type'] for rel in data_dict['relationship']]
+            data_dict['related_relationship'] = [rel['related_relationship'] for rel in data_dict['relationship']]
+            data_dict['related_type'] = [rel['related_type'] for rel in data_dict['relationship']]
         data_dict.pop('relationship', None)
 
         return data_dict
