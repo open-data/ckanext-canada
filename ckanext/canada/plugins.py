@@ -442,8 +442,10 @@ class CanadaDatasetsPlugin(SchemingDatasetsPlugin):
             data_dict['status'] = status[-1]['reason'] if status else 'department_contacted'
 
         if data_dict.get('credit'):
-            for cr in data_dict['credit']:
+            for i, cr in enumerate(data_dict['credit']):
                 cr.pop('__extras', None)
+                # credit is a string multiValue in SOLR, need to json stringify for SOLR 9+
+                data_dict['credit'][i] = json.dumps(cr)
 
         return data_dict
 
