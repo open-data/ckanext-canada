@@ -407,6 +407,11 @@ class CanadaDatasetsPlugin(SchemingDatasetsPlugin):
             for cr in data_dict['credit']:
                 cr.pop('__extras', None)
 
+        if data_dict.get('relationship'):
+            data_dict['related_relationship'] = [rel['related_relationship'] for rel in data_dict['relationship']]
+            data_dict['related_type'] = [rel['related_type'] for rel in data_dict['relationship']]
+        data_dict.pop('relationship', None)
+
         return data_dict
 
     # IDataDictionaryForm
@@ -831,8 +836,6 @@ class DataGCCAForms(p.SingletonPlugin, DefaultDatasetForm):
                 validators.protect_portal_release_date,
             'canada_copy_from_org_name':
                 validators.canada_copy_from_org_name,
-            'canada_non_related_required':
-                validators.canada_non_related_required,
             'canada_maintainer_email_default':
                 validators.canada_maintainer_email_default,
             'user_read_only':
