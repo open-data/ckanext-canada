@@ -71,6 +71,10 @@ JOB_MAPPING = {
         'icon': 'fa-trash',
         'rid': lambda job_args: job_args,
     },
+    'ckan.lib.search.jobs.reindex_packages': {
+        'icon': 'fa-database',
+        'gid': lambda job_kwargs: job_kwargs.get('group_id')
+    }
 }
 
 
@@ -442,44 +446,70 @@ def canada_job_list(up_func, context, data_dict):
     job_list = up_func(context, data_dict)
 
     for job in job_list:
+        job_args = None
+        job_kwargs = None
         try:
             job_obj = Job.fetch(job.get('id'))
-            job_args = job_obj.args[0]
+            if job_obj.args:
+                job_args = job_obj.args[0]
+            if job_obj.kwargs:
+                job_kwargs = job_obj.kwargs
         except (NoSuchJobError, KeyError):
             continue
 
         job_title = _(job.get('title', 'Unknown Job'))
+        rid = None
+        gid = None
 
         if job_obj.func_name in JOB_MAPPING:
-            rid = JOB_MAPPING[job_obj.func_name]['rid'](job_args)
+            if job_args:
+                rid = JOB_MAPPING[job_obj.func_name]['rid'](job_args)
+            if job_kwargs:
+                gid = JOB_MAPPING[job_obj.func_name]['gid'](job_kwargs)
             icon = JOB_MAPPING[job_obj.func_name]['icon']
         else:
-            rid = None
             job_title = _('Unknown Job')
             icon = 'fa-circle-o-notch'
 
         job_info = {}
-        if rid:
+        if not job_kwargs and job_obj.func_name == 'ckan.lib.search.jobs.reindex_packages':
+            job_info = {'name': _('Entire Site')}
+        if rid or gid:
             current_user = get_action('get_site_user')({'ignore_auth': True}, {})['name']
             if has_request_context():
                 try:
                     current_user = g.user
                 except (TypeError, AttributeError):
                     pass
-            try:
-                resource = get_action('resource_show')({'user': current_user}, {'id': rid})
-            except (ObjectNotFound, NotAuthorized):
-                continue
-            job_info = {'name_translated': resource.get('name_translated'),
-                        'resource_id': rid,
-                        'url': h.url_for('dataset_resource.read',
-                                         id=resource.get('package_id'),
-                                         resource_id=rid)}
+            if rid:
+                try:
+                    resource = get_action('resource_show')({'user': current_user}, {'id': rid})
+                except (ObjectNotFound, NotAuthorized):
+                    continue
+                job_info = {'name_translated': resource.get('name_translated'),
+                            'resource_id': rid,
+                            'url': h.url_for('dataset_resource.read',
+                                            id=resource.get('package_id'),
+                                            resource_id=rid)}
+            if gid:
+                try:
+                    group = get_action('organization_show')({'user': current_user}, {'id': gid})
+                except (ObjectNotFound, NotAuthorized):
+                    try:
+                        group = get_action('group_show')({'user': current_user}, {'id': gid})
+                    except (ObjectNotFound, NotAuthorized):
+                        continue
+                job_info = {'name_translated': group.get('title_translated', {}),
+                            'name': group.get('title'),
+                            'group_id': gid,
+                            'url': h.url_for('%s.read' % group.get('type'),
+                                            id=group.get('name'))}
 
         job['info'] = job_info
         job['type'] = job_title
         job['icon'] = icon
         job['status'] = job_obj.get_status()
+        job['queue_name'] = job.get('queue', 'default')
 
     return job_list
 

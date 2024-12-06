@@ -31,6 +31,11 @@
                   <a href="{{h.url(('organization' if g.group_dict.is_organization else 'group') + '.edit', id=g.group_dict.name)}}">{{ _('Edit') }}</a>
                 </li>
               {% endif %}
+              {% if h.check_access('sysadmin') %}
+                <li class="{% if g.action == 'search_rebuild' %}active{% endif %}">
+                  <a href="{{h.url('organization.search_rebuild', id=g.group_dict.name)}}">{{_('Rebuild Search Index')}}</a>
+                </li>
+              {% endif %}
           </ul>
           {% endif %}
         </header>

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ckanext-canada 0.4.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-11-12 15:06+0000\n"
+"POT-Creation-Date: 2024-12-03 20:35+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -208,15 +208,19 @@ msgstr ""
 msgid "Search"
 msgstr ""
 
-#: ckanext/canada/logic.py:297
+#: ckanext/canada/logic.py:301
 msgid "Could not determine a resource format. Please supply a format."
 msgstr ""
 
-#: ckanext/canada/logic.py:458
+#: ckanext/canada/logic.py:471
 msgid "Unknown Job"
 msgstr ""
 
-#: ckanext/canada/logic.py:547
+#: ckanext/canada/logic.py:476
+msgid "Entire Site"
+msgstr ""
+
+#: ckanext/canada/logic.py:577
 #, python-format
 msgid "No Portal Sync information found for package %s"
 msgstr ""
@@ -540,63 +544,150 @@ msgid ""
 "reasons</p>"
 msgstr ""
 
+#: ckanext/canada/strings.py:68
+msgid "Rebuild Dataset Indices"
+msgstr ""
+
+#: ckanext/canada/strings.py:69 ckanext/canada/templates/admin/base.html:19
+#: ckanext/canada/templates/organization/edit_base.html:36
+#: ckanext/canada/templates/organization/read_base.html:40
+msgid "Rebuild Search Index"
+msgstr ""
+
 #: ckanext/canada/strings.py:70
-msgid "Please upload a file or link to an external resource"
+msgid ""
+"Are you sure you want to re-index all the records for this site? This can "
+"take a long time if the site has a lot of records."
 msgstr ""
 
 #: ckanext/canada/strings.py:71
-msgid "Cannot upload files of this type"
+msgid "Re-index Site's Records"
 msgstr ""
 
 #: ckanext/canada/strings.py:72
-msgid "Cannot link files of this type"
+msgid ""
+"Are you sure you want to re-index all the records for this group? This can "
+"take a long time if the group has a lot of records."
 msgstr ""
 
 #: ckanext/canada/strings.py:73
-msgid "Your password must be {} characters or longer."
+msgid ""
+"Are you sure you want to re-index all the records for this organization? This"
+" can take a long time if the organization has a lot of records."
 msgstr ""
 
 #: ckanext/canada/strings.py:74
+msgid "Re-index Group's Record."
+msgstr ""
+
+#: ckanext/canada/strings.py:75
+msgid "Re-index Organization's Records"
+msgstr ""
+
+#: ckanext/canada/strings.py:76
+msgid ""
+"If you update an Group's title or name, it's datasets in the SOLR Index will "
+"not have the new title or name. To solve this, you can re-index all of the "
+"Group's records in a background job."
+msgstr ""
+
+#: ckanext/canada/strings.py:77
+msgid "Records are in queue to be re-indexed."
+msgstr ""
+
+#: ckanext/canada/strings.py:78
+msgid "Records already in queue to be re-indexed."
+msgstr ""
+
+#: ckanext/canada/strings.py:79
+msgid "Unable to re-index records."
+msgstr ""
+
+#: ckanext/canada/strings.py:80
+msgid "There are no records to index."
+msgstr ""
+
+#: ckanext/canada/strings.py:81
+msgid "In queue to re-index records"
+msgstr ""
+
+#: ckanext/canada/strings.py:82
+msgid "Currently re-indexing records"
+msgstr ""
+
+#: ckanext/canada/strings.py:83
+msgid "All records indexed"
+msgstr ""
+
+#: ckanext/canada/strings.py:84
+msgid "Error indexing records"
+msgstr ""
+
+#: ckanext/canada/strings.py:87
+msgid "Please upload a file or link to an external resource"
+msgstr ""
+
+#: ckanext/canada/strings.py:88
+msgid "Cannot upload files of this type"
+msgstr ""
+
+#: ckanext/canada/strings.py:89
+msgid "Cannot link files of this type"
+msgstr ""
+
+#: ckanext/canada/strings.py:90
+msgid "Your password must be {} characters or longer."
+msgstr ""
+
+#: ckanext/canada/strings.py:91
 msgid ""
 "Your password must consist of at least three of the following character sets:"
 " uppercase characters, lowercase characters, digits, punctuation & special "
 "characters."
 msgstr ""
 
-#: ckanext/canada/strings.py:76
+#: ckanext/canada/strings.py:93
 msgid "Your password cannot be the same as your username."
 msgstr ""
 
-#: ckanext/canada/strings.py:79
+#: ckanext/canada/strings.py:96
 msgid "These fields have been removed, click update below to save your changes."
 msgstr ""
 
-#: ckanext/canada/strings.py:80
+#: ckanext/canada/strings.py:97
 msgid "These fields have been removed."
 msgstr ""
 
-#: ckanext/canada/strings.py:83
+#: ckanext/canada/strings.py:100
 msgid "Your form submission could not be validated, please re-submit the form."
 msgstr ""
 
-#: ckanext/canada/strings.py:86
+#: ckanext/canada/strings.py:103
 msgid "Open Government Portal"
 msgstr ""
 
-#: ckanext/canada/strings.py:87
+#: ckanext/canada/strings.py:104
 msgid "Open Government Portal (staging)"
 msgstr ""
 
-#: ckanext/canada/strings.py:90
+#: ckanext/canada/strings.py:107
 msgid "Single"
 msgstr ""
 
-#: ckanext/canada/strings.py:91
+#: ckanext/canada/strings.py:108
 msgid "Repeatable"
 msgstr ""
 
-#: ckanext/canada/strings.py:92
+#: ckanext/canada/strings.py:109
 msgid "Optional"
+msgstr ""
+
+#: ckanext/canada/strings.py:112
+msgid "Validation status"
+msgstr ""
+
+#: ckanext/canada/strings.py:113
+msgid "Validation timestamp"
 msgstr ""
 
 #: ckanext/canada/validators.py:118
@@ -781,7 +872,7 @@ msgid "{num} deleted."
 msgstr ""
 
 #. SQL Trigger String for PD Type: service
-#: ckanext/canada/tables/service.yaml:2348 ckanext/canada/view.py:707
+#: ckanext/canada/tables/service.yaml:2385 ckanext/canada/view.py:707
 msgid "Number required"
 msgstr ""
 
@@ -952,7 +1043,7 @@ msgstr ""
 #. SQL Trigger String for PD Type: ati
 #. SQL Trigger String for PD Type: service
 #: ckanext/canada/tables/ati.yaml:142 ckanext/canada/tables/ati.yaml:254
-#: ckanext/canada/tables/service.yaml:1532 ckanext/canada/tables/service.yaml:2345
+#: ckanext/canada/tables/service.yaml:1546 ckanext/canada/tables/service.yaml:2382
 msgid "This value must not be negative"
 msgstr ""
 
@@ -1358,54 +1449,64 @@ msgid "Service Identification Information & Metrics"
 msgstr ""
 
 #. SQL Trigger String for PD Type: service
-#: ckanext/canada/tables/service.yaml:1531
+#: ckanext/canada/tables/service.yaml:1545
 msgid "This field must be either a number, \"NA\", or \"ND\""
 msgstr ""
 
 #. SQL Trigger String for PD Type: service
-#: ckanext/canada/tables/service.yaml:1533 ckanext/canada/tables/service.yaml:2346
+#: ckanext/canada/tables/service.yaml:1547 ckanext/canada/tables/service.yaml:2383
 msgid "This field has a maximum length of {} characters."
 msgstr ""
 
 #. SQL Trigger String for PD Type: service
-#: ckanext/canada/tables/service.yaml:1534 ckanext/canada/tables/service.yaml:2347
+#: ckanext/canada/tables/service.yaml:1548 ckanext/canada/tables/service.yaml:2384
 msgid "Invalid choice: {}"
 msgstr ""
 
 #. SQL Trigger String for PD Type: service
-#: ckanext/canada/tables/service.yaml:1535 ckanext/canada/tables/service.yaml:2349
+#: ckanext/canada/tables/service.yaml:1549 ckanext/canada/tables/service.yaml:2386
 msgid "Invalid input syntax for type integer: {}"
 msgstr ""
 
 #. SQL Trigger String for PD Type: service
-#: ckanext/canada/tables/service.yaml:1536 ckanext/canada/tables/service.yaml:2350
+#: ckanext/canada/tables/service.yaml:1550 ckanext/canada/tables/service.yaml:2387
 msgid "This field is required due to a response in a different field."
 msgstr ""
 
 #. SQL Trigger String for PD Type: service
-#: ckanext/canada/tables/service.yaml:1537 ckanext/canada/tables/service.yaml:2351
+#: ckanext/canada/tables/service.yaml:1551 ckanext/canada/tables/service.yaml:2388
 msgid "This text must be provided in both languages"
 msgstr ""
 
+#. SQL Trigger String for PD Type: service
+#: ckanext/canada/tables/service.yaml:1552 ckanext/canada/tables/service.yaml:2389
+msgid "Comma is not allowed in Service ID Number field"
+msgstr ""
+
 #. SQL Constraint Error String for PD Type: service
-#: ckanext/canada/tables/service.yaml:1346
+#: ckanext/canada/tables/service.yaml:1357
 msgid ""
 "Cannot delete record(s) because the Fiscal Year, Service ID Number is "
 "referenced in at least one Service Standards & Performance Results record."
 msgstr ""
 
 #. Resource Title for PD Type: service
-#: ckanext/canada/tables/service.yaml:1611
+#: ckanext/canada/tables/service.yaml:1626
 msgid "Service Standards & Performance Results"
 msgstr ""
 
 #. SQL Trigger String for PD Type: service
-#: ckanext/canada/tables/service.yaml:1948 ckanext/canada/tables/service.yaml:2344
+#: ckanext/canada/tables/service.yaml:1979 ckanext/canada/tables/service.yaml:2381
 msgid "This field must be a single number between 0 and 1 representing a percentage."
 msgstr ""
 
+#. SQL Trigger String for PD Type: service
+#: ckanext/canada/tables/service.yaml:2390
+msgid "Comma is not allowed in Service Standard ID field"
+msgstr ""
+
 #. SQL Constraint Error String for PD Type: service
-#: ckanext/canada/tables/service.yaml:2252
+#: ckanext/canada/tables/service.yaml:2283
 msgid ""
 "Cannot create record because the Service ID Number does not exist in the "
 "Service Identification Information & Metrics resource for that fiscal year."
@@ -1882,7 +1983,7 @@ msgid "Publish Records"
 msgstr ""
 
 #: ckanext/canada/templates/admin/base.html:17
-#: ckanext/canada/templates/admin/jobs.html:52
+#: ckanext/canada/templates/admin/jobs.html:57
 msgid "Job Queue"
 msgstr ""
 
@@ -1913,15 +2014,15 @@ msgstr ""
 msgid " job(s) in queue."
 msgstr ""
 
-#: ckanext/canada/templates/admin/jobs.html:32
+#: ckanext/canada/templates/admin/jobs.html:36
 msgid "Unknown"
 msgstr ""
 
-#: ckanext/canada/templates/admin/jobs.html:42
+#: ckanext/canada/templates/admin/jobs.html:47
 msgid "There are currently no queued or running jobs."
 msgstr ""
 
-#: ckanext/canada/templates/admin/jobs.html:56
+#: ckanext/canada/templates/admin/jobs.html:61
 msgid "View the current job queue and running jobs."
 msgstr ""
 
@@ -1972,6 +2073,18 @@ msgstr ""
 #: ckanext/canada/templates/snippets/publish_facet.html:62
 #: ckanext/canada/templates/snippets/publish_facet.html:63
 msgid "Clear All"
+msgstr ""
+
+#: ckanext/canada/templates/admin/search_rebuild.html:6
+#: ckanext/canada/templates/organization/search_rebuild.html:6
+msgid "Why re-index?"
+msgstr ""
+
+#: ckanext/canada/templates/admin/search_rebuild.html:9
+msgid ""
+"The SOLR index is used for searching datasets and search facets. In the case "
+"that some datasets are not showing in the search or a search facet is not "
+"working, you can try to re-index the site."
 msgstr ""
 
 #: ckanext/canada/templates/admin/trash.html:20
@@ -2233,7 +2346,7 @@ msgid "Edit Members"
 msgstr ""
 
 #: ckanext/canada/templates/organization/edit_base.html:26
-#: ckanext/canada/templates/organization/read_base.html:40
+#: ckanext/canada/templates/organization/read_base.html:45
 msgid "View Members"
 msgstr ""
 
@@ -2326,6 +2439,19 @@ msgstr ""
 
 #: ckanext/canada/templates/organization/read.html:12
 msgid "Edit Organization"
+msgstr ""
+
+#: ckanext/canada/templates/organization/search_rebuild.html:9
+msgid ""
+"If you update an Organization's <strong>title</strong> or "
+"<strong>name,</strong> it's datasets in the SOLR Index will not have the new "
+"title or name."
+msgstr ""
+
+#: ckanext/canada/templates/organization/search_rebuild.html:10
+msgid ""
+"To solve this, you can re-index all of the Organization's records in a "
+"background job."
 msgstr ""
 
 #: ckanext/canada/templates/organization/snippets/helper.html:2
@@ -2889,6 +3015,22 @@ msgstr ""
 
 #: ckanext/canada/templates/scheming/display_snippets/email_with_parameters.html:7
 msgid "The following is a question related to the record {url} found on {site}"
+msgstr ""
+
+#: ckanext/canada/templates/scheming/display_snippets/validation_status.html:2
+msgid "Valid data"
+msgstr ""
+
+#: ckanext/canada/templates/scheming/display_snippets/validation_status.html:3
+msgid "Invalid data"
+msgstr ""
+
+#: ckanext/canada/templates/scheming/display_snippets/validation_status.html:4
+msgid "Error during validation"
+msgstr ""
+
+#: ckanext/canada/templates/scheming/display_snippets/validation_status.html:8
+msgid "Data validation unknown"
 msgstr ""
 
 #: ckanext/canada/templates/scheming/form_snippets/imso_approval_select.html:33
