@@ -29,7 +29,7 @@ jobs:
           fullfile=$(ls ./changes/${{ github.event.number }}.*)
           filename=$(basename -- "$fullfile")
           extension="${filename##*.}"
-          allowed_types='[ "fix", "bugfix", "hotfix", "feature", "misc", "changes", "migration", "removal" ]'
+          allowed_types='[ "fix", "bugfix", "hotfix", "feature", "misc", "changes", "migration", "removal", "release" ]'
           if [[ $allowed_types =~ "\"$extension\"" ]]; then
             echo -e "\n"
             echo -e "\033[0;36mINFO: extension ${extension} accepted.\033[0;0m"
