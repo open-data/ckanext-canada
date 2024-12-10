@@ -3,6 +3,7 @@
 from typing import Optional, Type
 import logging
 import re
+from urllib.parse import urlsplit
 from flask import has_request_context
 import ckan.plugins as p
 from ckan.lib.plugins import DefaultDatasetForm, DefaultTranslation
@@ -342,9 +343,19 @@ class CanadaDatasetsPlugin(SchemingDatasetsPlugin):
 
     def can_validate(self, context, resource):
         """
-        Only uploaded resources are allowed to be validated
+        Only uploaded resources are allowed to be validated, or white listed sources.
         """
-        return resource.get(u'url_type') == u'upload'
+        if resource.get('url_type') == 'upload':
+            return True
+
+        if not resource.get('url_type'):
+            allowed_domains = p.toolkit.config.get('ckanext.canada.datastore_source_domain_white_list', '').split()
+            url = resource.get('url')
+            url_parts = urlsplit(url)
+            if url_parts.netloc in allowed_domains:
+                return True
+
+        return False
 
 
     # IPackageController
@@ -564,16 +575,28 @@ class DataGCCAInternal(p.SingletonPlugin):
     # IXloader
 
     def can_upload(self, resource_id):
+        """
+        Only uploaded resources are allowed to be xloadered, or white listed sources.
+        """
 
         # check if file is uploded
         try:
             res = p.toolkit.get_action(u'resource_show')({'ignore_auth': True},
                                                          {'id': resource_id})
 
-            if res.get('url_type', None) != 'upload':
+            if res.get('url_type') != 'upload' and res.get('url_type') != '' and res.get('url_type') is not None:
                 log.error(
-                    'Only uploaded resources can be added to the Data Store.')
+                    'Only uploaded resources and white listed sources can be added to the Data Store.')
                 return False
+
+            if not res.get('url_type'):
+                allowed_domains = p.toolkit.config.get('ckanext.canada.datastore_source_domain_white_list', '').split()
+                url = res.get('url')
+                url_parts = urlsplit(url)
+                if url_parts.netloc not in allowed_domains:
+                    log.error(
+                        'Only uploaded resources and white listed sources can be added to the Data Store.')
+                    return False
 
         except ObjectNotFound:
             log.error('Resource %s does not exist.' % resource_id)
