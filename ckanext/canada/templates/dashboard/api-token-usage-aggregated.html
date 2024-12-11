@@ -1,0 +1,60 @@
+{% extends "dashboard/base.html" %}
+
+{% block breadcrumb_content %}
+  {{ h.build_nav('admin.index', _('Admin')) }}
+  {{ h.build_nav('tracking_dashboard.api_token_usage_aggregated', _('Aggregated API Usage')) }}
+{% endblock %}
+
+{% block subtitle %}{{ _("Aggregated API Usage") }} {{ g.template_title_delimiter }} {{ super() }}{% endblock %}
+
+{% block primary_content %}
+  <article class="module">
+
+    <section id="stats-latest-api" class="module-content tab-content active">
+      <h2>{{ _('API token usage by token name') }}</h2>
+      <p>
+        <a class="btn btn-primary" href="{{ links.download_by_token_csv }}">{{ _('Download as CSV') }}</a>
+        <a class="btn btn-primary" href="{{ links.json_by_token }}" target="_blank">{{ _('View API') }}</a>
+      </p>
+      <table class="table table-chunky table-bordered table-striped">
+        <thead>
+          <tr>
+            <th>{{ _("Token") }}</th>
+            <th>{{ _("User") }}</th>
+            <th>{{ _("Total requests") }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for row in by_token_name %}
+            <tr>
+              <th>{{ row.token_name }}</th>
+              <th>
+                {% if row.user_name %}
+                  <a href="{{ row.user_url }}">{{ row.user_name }}</a>
+                {% else %}
+                  <span title="User ID {{ row.user_id }}"></span>
+                {% endif %}
+              </th>
+              <td>{{ row.total }}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+
+    </section>
+
+  </article>
+{% endblock %}
+
+{% block secondary_content %}
+  {{ super() }}
+  <div class="canada-action-toolbar canada-action-toolbar--side">
+    <header class="module-content page-header">
+      <div></div>
+      <ul class="nav nav-tabs">
+        <li><a href="{{ h.url_for('tracking_dashboard.latest_api_token_usage') }}"><i class="fa fa-cloud-meatball"></i> {{  _('Latest API Usage') }}</a></li>
+        <li class="active"><a href="{{ h.url_for('tracking_dashboard.api_token_usage_aggregated') }}"><i class="fa fa-clock"></i> {{ _('Aggregated API Usage') }}</a></li>
+        </ul>
+      </header>
+  </div>
+{% endblock %}

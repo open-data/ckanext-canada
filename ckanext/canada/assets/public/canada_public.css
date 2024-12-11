@@ -1645,6 +1645,15 @@ footer#wb-info{
   margin: 0 !important;
 }
 
+.canada-action-toolbar.canada-action-toolbar--side  ul.nav.nav-tabs{
+  flex: 1;
+}
+
+.canada-action-toolbar.canada-action-toolbar--side li{
+  display: block;
+  width: 100%;
+}
+
 .module-resource .module-content > .actions{
   float: none !important;
   margin-top: 0 !important;

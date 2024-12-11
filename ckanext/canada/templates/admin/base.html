@@ -17,7 +17,7 @@
     {{ h.build_nav_icon('canada.ckanadmin_job_queue', _('Job Queue'), icon='tasks') }}
     {{ h.build_nav_icon('canada.ckan_admin_portal_sync', _('Out of Sync Packages'), icon='exclamation-triangle') }}
     {{ h.build_nav_icon('admin.search_rebuild', _('Rebuild Search Index'), icon='database') }}
-    {{ h.build_extra_admin_nav() }}
+    {{ h.build_nav_icon('tracking_dashboard.latest_api_token_usage', _('API Usage'), icon='cloud-meatball') }}
   {% else %}
     {{ super() }}
   {% endif  %}

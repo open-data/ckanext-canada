@@ -1,0 +1,17 @@
+{% extends "admin/base.html" %}
+
+{% block breadcrumb_content %}
+  {{ h.build_nav('admin.index', _('Admin')) }}
+  {{ h.build_nav('tracking_dashboard.latest_api_token_usage', _('Latest API Usage')) }}
+{% endblock %}
+
+{% block secondary_content %}
+  <div class="panel panel-info">
+    <div class="panel-heading">
+      <i class="fa fa-lg fa-info-circle"></i>&nbsp;{{ _('Tracked API Usage') }}
+    </div>
+    <div class="panel-body">
+      <p>{{ _('Explore the past 150 days of API usage.') }}</p>
+    </div>
+  </div>
+{% endblock %}

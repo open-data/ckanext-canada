@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-from typing import Optional, Type
+from typing import Optional, Type, Union
+from io import BytesIO
 import logging
 import re
 from flask import has_request_context
@@ -39,6 +40,8 @@ from ckanext.canada import checks
 from ckanext.canada import column_types as coltypes
 from ckanext.tabledesigner.interfaces import IColumnTypes
 from ckanext.xloader.interfaces import IXloader
+from ckanext.api_tracking.interfaces import IUsage
+from ckanext.api_tracking.models import CKANURL
 import json
 
 import ckan.lib.formatters as formatters
@@ -669,11 +672,11 @@ class DataGCCAPublic(p.SingletonPlugin, DefaultTranslation):
     p.implements(p.IAuthFunctions)
     p.implements(p.IFacets)
     p.implements(p.ITranslation, inherit=True)
-    p.implements(p.IMiddleware, inherit=True)
     p.implements(p.IActions)
     p.implements(p.IClick)
     p.implements(IColumnTypes)
     p.implements(p.IBlueprint)
+    p.implements(IUsage, inherit=True)
 
     # DefaultTranslation, ITranslation
     def i18n_domain(self):
@@ -801,11 +804,6 @@ class DataGCCAPublic(p.SingletonPlugin, DefaultTranslation):
             'recently_changed_packages_activity_list': auth.recently_changed_packages_activity_list,
         }
 
-    # IMiddleware
-
-    def make_middleware(self, app, config):
-        return LogExtraMiddleware(app, config)
-
     # IClick
 
     def get_commands(self):
@@ -824,6 +822,59 @@ class DataGCCAPublic(p.SingletonPlugin, DefaultTranslation):
     def get_blueprint(self):
         # type: () -> list[Blueprint]
         return [canada_views]
+
+    # IUsage
+
+    def define_paths(self, paths):
+        """
+        Only track API action endpoint usage.
+        """
+        return {'canada_api_action': [
+                    '^(?:en|fr)?/?api/action/[^/]+$',
+                    '^(?:en|fr)?/?api/[0-9]/action/[^/]+$']}
+
+
+    def _track_canada_api_action(self, method: Union[str, None], ckan_url: Union[CKANURL, None]) -> dict:
+        api_version, action_name = ckan_url.get_api_action()
+        method = method.lower()
+        object_id = ckan_url.get_query_param('id')
+
+        extras = {}
+
+        # FIXME: this is database logging, yet we have not sanitized any of the args or body here yet...
+
+        if method == 'get':
+            request_args = ckan_url.get_query_string()
+            extras['REQUEST_ARGS'] = request_args
+        elif method == 'post':
+            length = int(ckan_url.environ.get('CONTENT_LENGTH') or 0)
+            request_body = ckan_url.environ['wsgi.input'].read(length)
+            # replace the stream since it was exhausted by read()
+            ckan_url.environ['wsgi.input'] = BytesIO(request_body)
+
+            try:
+                request_body = json.loads(request_body)
+            except (ValueError, TypeError):
+                log.warning('Could not parse request body.')
+                pass
+
+            extras['REQUEST_BODY'] = request_body
+
+        return {
+            'tracking_type': 'api',
+            'tracking_sub_type': api_version,
+            'object_type': action_name,
+            'object_id': object_id,
+            'extras': extras,
+        }
+
+
+    def track_get_canada_api_action(self, ckan_url):
+        return self._track_canada_api_action('get', ckan_url)
+
+
+    def track_post_canada_api_action(self, ckan_url):
+        return self._track_canada_api_action('post', ckan_url)
 
 
 class DataGCCAForms(p.SingletonPlugin, DefaultDatasetForm):
@@ -919,31 +970,6 @@ class DataGCCAForms(p.SingletonPlugin, DefaultDatasetForm):
             'limit_resources_per_dataset':
                 validators.limit_resources_per_dataset,
             }
-
-
-class LogExtraMiddleware(object):
-    def __init__(self, app, config):
-        self.app = app
-
-    def __call__(self, environ, start_response):
-        def _start_response(status, response_headers, exc_info=None):
-            extra = []
-            try:
-                contextual_user = g.user
-            except (TypeError, RuntimeError, AttributeError):
-                contextual_user = None
-            if contextual_user:
-                log_extra = g.log_extra if hasattr(g, 'log_extra') else ''
-                #FIXME: make sure username special chars are handled
-                # the values in the tuple HAVE to be str types.
-                extra = [('X-LogExtra', f'user={contextual_user} {log_extra}')]
-
-            return start_response(
-                status,
-                response_headers + extra,
-                exc_info)
-
-        return self.app(environ, _start_response)
 
 
 def _wet_pager(self, *args, **kwargs):

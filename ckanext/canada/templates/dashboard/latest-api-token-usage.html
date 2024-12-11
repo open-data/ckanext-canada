@@ -1,0 +1,71 @@
+{% extends "dashboard/base.html" %}
+
+{% block breadcrumb_content %}
+  {{ h.build_nav('admin.index', _('Admin')) }}
+  {{ h.build_nav('tracking_dashboard.latest_api_token_usage', _('Latest API Usage')) }}
+{% endblock %}
+
+{% block subtitle %}{{ _("Latest API Usage") }} {{ g.template_title_delimiter }} {{ super() }}{% endblock %}
+
+{% block primary_content %}
+  <article class="module">
+    <section id="stats-latest-api" class="module-content tab-content active">
+      <h2>{{ _('Latest API token usage') }}</h2>
+      <p>
+        <a class="btn btn-primary" href="{{ links.download_csv }}">{{ _('Download as CSV') }}</a>
+        <a class="btn btn-primary" href="{{ links.view_json }}" target="_blank">{{ _('View API') }}</a>
+      </p>
+      <table class="table table-chunky table-bordered table-striped">
+        <thead>
+          <tr>
+            <th>{{ _("Date API accessed") }}</th>
+            <th>{{ _("User") }}</th>
+            <th>{{ _("Token name") }}</th>
+            <th>{{ _("Object type") }}</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for row in latest_api_usage %}
+            <tr>
+              <td>
+                <span title="{{ h.render_datetime(row.timestamp, with_hours=True, with_seconds=True) }}">
+                  {{ h.render_datetime(row.timestamp, with_hours=False, with_seconds=False) }}
+                </span>
+              </td>
+              <th>
+                {% if row.user_id %}
+                  <a href="{{ h.url_for('user.read', id=row.user_id) }}">
+                    {{ row.user_name }}
+                  </a>
+                {% else %}
+                  <span>{{ _('Anonymous') }}</span>
+                {% endif %}
+              </th>
+              <td>{{ row.token_name }}</td>
+              <td>{{ row.object_type }}</td>
+              <td>
+                <a class="btn btn-default" href="javascript:void(0);">{{ _('View Payload') }}</a>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+
+    </section>
+
+  </article>
+{% endblock %}
+
+{% block secondary_content %}
+  {{ super() }}
+  <div class="canada-action-toolbar canada-action-toolbar--side">
+    <header class="module-content page-header">
+      <div></div>
+      <ul class="nav nav-tabs">
+        <li class="active"><a href="{{ h.url_for('tracking_dashboard.latest_api_token_usage') }}"><i class="fa fa-cloud-meatball"></i> {{  _('Latest API Usage') }}</a></li>
+        <li><a href="{{ h.url_for('tracking_dashboard.api_token_usage_aggregated') }}"><i class="fa fa-clock"></i> {{ _('Aggregated API Usage') }}</a></li>
+        </ul>
+      </header>
+  </div>
+{% endblock %}
