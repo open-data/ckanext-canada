@@ -8,6 +8,7 @@ from six import string_types
 from datetime import datetime, timedelta
 import traceback
 from functools import partial
+from urllib.parse import urlsplit
 
 from ckan.config.middleware.flask_app import csrf
 
@@ -102,10 +103,11 @@ DISABLED_ROUTES = [
 
 
 def _disable_route():
-    if has_request_context() and hasattr(request, 'view_args'):
-        #TODO: check if the blueprint route matches any of the disabled routes...might be easier to disable by blueprint.action
-        return
-    return abort(404)
+    if has_request_context() and hasattr(request, 'url'):
+        url_parts = urlsplit(request.url)
+        if url_parts.path in DISABLED_ROUTES:
+            log.debug('Reached disabled route %s. Returning 404' % request.url)
+            return abort(404)
 
 
 tracking_dashboard_blueprint.before_request(_disable_route)
