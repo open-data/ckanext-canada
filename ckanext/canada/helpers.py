@@ -1,5 +1,7 @@
 from typing import Optional, Union
 
+import os
+from cryptography.fernet import Fernet
 import json
 import re
 import inspect
@@ -949,3 +951,15 @@ def max_resources_per_dataset():
     max_resource_count = config.get('ckanext.canada.max_resources_per_dataset', None)
     if max_resource_count:
         return int(max_resource_count)
+
+
+def api_tracking_extras(id: str):
+    fernet_key = os.environ.get('CKAN_API_TRACKING_SECRET')
+    if not fernet_key:
+        return
+
+    fernet_key = fernet_key if isinstance(fernet_key, bytes) else fernet_key.encode()
+    fernet = Fernet(fernet_key)
+
+    #TODO: get the extras from TrackingUsage model.
+    #      decrypt and json loads.

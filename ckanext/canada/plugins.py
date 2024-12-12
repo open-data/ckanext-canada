@@ -4,7 +4,9 @@ from typing import Optional, Type, Union
 from io import BytesIO
 import logging
 import re
+import os
 from flask import has_request_context
+from cryptography.fernet import Fernet
 import ckan.plugins as p
 from ckan.lib.plugins import DefaultDatasetForm, DefaultTranslation
 import ckan.lib.helpers as hlp
@@ -841,24 +843,26 @@ class DataGCCAPublic(p.SingletonPlugin, DefaultTranslation):
 
         extras = {}
 
-        # FIXME: this is database logging, yet we have not sanitized any of the args or body here yet...
+        # this happens before any schema and validation happens. In theory anything can be put
+        # into a request arg or body. So we need to make sure that any sensitive data or injection
+        # is safely handled. We do a simple symmetric encryption to accomplish this.
+        fernet_key = os.environ.get('CKAN_API_TRACKING_SECRET')
 
-        if method == 'get':
-            request_args = ckan_url.get_query_string()
-            extras['REQUEST_ARGS'] = request_args
-        elif method == 'post':
-            length = int(ckan_url.environ.get('CONTENT_LENGTH') or 0)
-            request_body = ckan_url.environ['wsgi.input'].read(length)
-            # replace the stream since it was exhausted by read()
-            ckan_url.environ['wsgi.input'] = BytesIO(request_body)
-
-            try:
-                request_body = json.loads(request_body)
-            except (ValueError, TypeError):
-                log.warning('Could not parse request body.')
-                pass
-
-            extras['REQUEST_BODY'] = request_body
+        if fernet_key:
+            fernet_key = fernet_key if isinstance(fernet_key, bytes) else fernet_key.encode()
+            fernet = Fernet(fernet_key)
+            if method == 'get':
+                request_args = ckan_url.get_query_string()
+                request_args = json.dumps(request_args)
+                request_args = request_args if isinstance(request_args, bytes) else request_args.encode()
+                extras['REQUEST_ARGS'] = str(fernet.encrypt(request_args))
+            elif method == 'post':
+                length = int(ckan_url.environ.get('CONTENT_LENGTH') or 0)
+                request_body = ckan_url.environ['wsgi.input'].read(length)
+                # replace the stream since it was exhausted by read()
+                ckan_url.environ['wsgi.input'] = BytesIO(request_body)
+                request_body = request_body if isinstance(request_body, bytes) else request_body.encode()
+                extras['REQUEST_BODY'] = str(fernet.encrypt(request_body))
 
         return {
             'tracking_type': 'api',
