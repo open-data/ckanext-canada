@@ -45,7 +45,9 @@
               <td>{{ row.token_name }}</td>
               <td>{{ row.object_type }}</td>
               <td>
-                <a class="btn btn-default" href="javascript:void(0);">{{ _('View Payload') }}</a>
+                {% set loading_text = _('Loading...') %}
+                {% set api_tracking_info_url = h.url_for('api.snippet', ver=1, snippet_path='api_tracking_info.html', id=row.id) %}
+                <a class="btn btn-default" href="{{ api_tracking_info_url }}" data-module="api-info" data-module-template="{{ api_tracking_info_url }}" data-loading-text="{{ loading_text }}"><i class="fa fa-code"></i>&nbsp;{{ _('More Info') }}</a>
               </td>
             </tr>
           {% endfor %}
@@ -68,4 +70,9 @@
         </ul>
       </header>
   </div>
+{% endblock %}
+
+{% block scripts %}
+  {{ super() }}
+  {% asset "ckanext_datastore/datastore" %}
 {% endblock %}

@@ -1,0 +1,56 @@
+{#
+Displays information about the payload of a tracke API call.
+
+id - The id of the API tracking object.
+embedded - If true will not include the "modal" classes on the snippet.
+
+Example
+
+    {% snippet 'ajax_snippets/api_tracking_info.html', id=id, embedded=true %}
+
+#}
+
+{% set id = h.sanitize_id(id) %}
+{% if id and h.check_access('sysadmin') %}
+  {% set api_tracking_info = h.canada_api_tracking_info(id) %}
+  <div {% if not embedded %} class="modal"{% endif %} tabindex="-1">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3>
+            {{ api_tracking_info.get('method') }}&nbsp;::&nbsp;{{ api_tracking_info.get('object_type') }}
+          </h3>
+        </div>
+        <div {% if not embedded %} class="modal-body"{% endif %}>
+          <div>
+            <span>
+              <em>{{ _('Timestamp:') }}</em>&nbsp;{{ h.render_datetime(api_tracking_info.get('timestamp'), with_hours=True, with_seconds=True) }}
+            </span>
+          </div>
+          <div>
+            <em>{{ _('User:') }}</em>&nbsp;
+            {% if api_tracking_info.get('user_id') %}
+              <a href="{{ h.url_for('user.read', id=api_tracking_info.get('user_id')) }}">
+                {% if api_tracking_info.get('user_fullname') %}
+                  {{ api_tracking_info.get('user_fullname') }}&nbsp;<small>({{ api_tracking_info.get('user_name') }})</small>
+                {% else %}
+                  {{ api_tracking_info.get('user_name') }}
+                {% endif %}
+              </a>
+            {% else %}
+              <span>{{ _('Anonymous') }}</span>
+            {% endif %}
+          </div>
+          <div>
+            <span>
+              <em>{{ _('Token Name:') }}</em>&nbsp;{{ api_tracking_info.get('token_name') }}
+            </span>
+          </div>
+          <div class="mrgn-tp-md">
+            <pre>{{ api_tracking_info.get('payload') }}</pre>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endif %}

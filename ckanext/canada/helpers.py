@@ -8,6 +8,7 @@ import inspect
 from ckan.plugins.toolkit import config, _, h, g, request
 from ckan.model import User, Package
 from ckanext.activity.model import Activity
+from ckanext.api_tracking.models import TrackingUsage
 import ckan.model as model
 import datetime
 import unicodedata
@@ -953,13 +954,40 @@ def max_resources_per_dataset():
         return int(max_resource_count)
 
 
-def api_tracking_extras(id: str):
+def canada_api_tracking_info(id: str):
     fernet_key = os.environ.get('CKAN_API_TRACKING_SECRET')
     if not fernet_key:
         return
 
-    fernet_key = fernet_key if isinstance(fernet_key, bytes) else fernet_key.encode()
-    fernet = Fernet(fernet_key)
+    tracking_obj = model.Session.query(TrackingUsage).filter(TrackingUsage.id == id).first()
+    if not tracking_obj:
+        return
 
-    #TODO: get the extras from TrackingUsage model.
-    #      decrypt and json loads.
+    return_dict = {'method': tracking_obj.extras.get('method') if tracking_obj.extras else None,
+                   'timestamp': tracking_obj.timestamp,
+                   'object_type': tracking_obj.object_type,
+                   'token_name': tracking_obj.token_name,
+                   'user_id': tracking_obj.user_id}
+
+    if tracking_obj.user_id:
+        user_obj = model.User.get(tracking_obj.user_id)
+        if user_obj:
+            return_dict['user_name'] = user_obj.name
+            return_dict['user_fullname'] = user_obj.fullname
+
+    if tracking_obj.extras and (tracking_obj.extras.get('REQUEST_ARGS') or tracking_obj.extras.get('REQUEST_BODY')):
+        fernet_key = fernet_key if isinstance(fernet_key, bytes) else fernet_key.encode()
+        fernet = Fernet(fernet_key)
+
+        value = tracking_obj.extras.get('REQUEST_ARGS', tracking_obj.extras.get('REQUEST_BODY'))
+        value = value if isinstance(value, bytes) else value.encode()
+        value = fernet.decrypt(value)
+        value = value if isinstance(value, str) else value.decode()
+        try:
+            value = json.loads(value)
+        except (ValueError, TypeError):
+            pass
+
+        return_dict['payload'] = value
+
+    return return_dict

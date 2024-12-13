@@ -16,6 +16,7 @@ from ckanext.activity.logic.validators import object_id_validators
 from ckan.lib.app_globals import set_app_global
 from ckan.plugins.core import plugin_loaded
 
+from ckan import model
 from ckan.config.middleware.flask_app import csrf
 from ckanext.datatablesview.blueprint import datatablesview
 
@@ -43,7 +44,7 @@ from ckanext.canada import column_types as coltypes
 from ckanext.tabledesigner.interfaces import IColumnTypes
 from ckanext.xloader.interfaces import IXloader
 from ckanext.api_tracking.interfaces import IUsage
-from ckanext.api_tracking.models import CKANURL
+from ckanext.api_tracking.models import CKANURL, TrackingUsage
 import json
 
 import ckan.lib.formatters as formatters
@@ -126,6 +127,7 @@ class CanadaThemePlugin(p.SingletonPlugin):
             'get_loader_status_badge',
             'validation_status',
             'is_user_locked',
+            'canada_api_tracking_info',
             # Portal
             'user_organizations',
             'openness_score',
@@ -836,6 +838,40 @@ class DataGCCAPublic(p.SingletonPlugin, DefaultTranslation):
                     '^(?:en|fr)?/?api/[0-9]/action/[^/]+$']}
 
 
+    def after_track_usage_save(self, tracking_obj: TrackingUsage):
+        """
+        Log to syslog for LogAnalytics.
+        """
+        fernet_key = os.environ.get('CKAN_API_TRACKING_SECRET')
+        payload = None
+        if fernet_key:
+            if tracking_obj.extras and (tracking_obj.extras.get('REQUEST_ARGS') or tracking_obj.extras.get('REQUEST_BODY')):
+                fernet_key = fernet_key if isinstance(fernet_key, bytes) else fernet_key.encode()
+                fernet = Fernet(fernet_key)
+
+                value = tracking_obj.extras.get('REQUEST_ARGS', tracking_obj.extras.get('REQUEST_BODY'))
+                value = value if isinstance(value, bytes) else value.encode()
+                value = fernet.decrypt(value)
+                payload = value if isinstance(value, str) else value.decode()
+                try:
+                    payload = json.loads(payload)
+                except (ValueError, TypeError):
+                    pass
+
+        user = tracking_obj.user_id
+        if tracking_obj.user_id:
+            user_obj = model.User.get(tracking_obj.user_id)
+            if user_obj:
+                user += f" {user_obj.name}"
+
+        log.info('[API TRACKING] User: %s, Token: %s, Action: %s, Method: %s, Payload: %r' % (
+            user,
+            tracking_obj.token_name,
+            tracking_obj.object_type,
+            tracking_obj.extras.get('method') if tracking_obj.extras else None,
+            payload))
+
+
     def _track_canada_api_action(self, method: Union[str, None], ckan_url: Union[CKANURL, None]) -> dict:
         api_version, action_name = ckan_url.get_api_action()
         method = method.lower()
@@ -853,16 +889,20 @@ class DataGCCAPublic(p.SingletonPlugin, DefaultTranslation):
             fernet = Fernet(fernet_key)
             if method == 'get':
                 request_args = ckan_url.get_query_string()
+                if action_name == 'datastore_search_sql' and request_args.get('sql') == 'SELECT%20%27uptime%27':
+                    # special case to not log uptime monitor
+                    log.debug('[API TRACKING] Skip tracking uptime monitor')
+                    return
                 request_args = json.dumps(request_args)
                 request_args = request_args if isinstance(request_args, bytes) else request_args.encode()
-                extras['REQUEST_ARGS'] = str(fernet.encrypt(request_args))
+                extras['REQUEST_ARGS'] = fernet.encrypt(request_args).decode()
             elif method == 'post':
                 length = int(ckan_url.environ.get('CONTENT_LENGTH') or 0)
                 request_body = ckan_url.environ['wsgi.input'].read(length)
                 # replace the stream since it was exhausted by read()
                 ckan_url.environ['wsgi.input'] = BytesIO(request_body)
                 request_body = request_body if isinstance(request_body, bytes) else request_body.encode()
-                extras['REQUEST_BODY'] = str(fernet.encrypt(request_body))
+                extras['REQUEST_BODY'] = fernet.encrypt(request_body).decode()
 
         return {
             'tracking_type': 'api',
