@@ -86,6 +86,7 @@ class CanadaValidationPlugin(FrictionlessPlugin):
         field_candidates.append({'type':'string'})
 
 
+@p.toolkit.blanket.config_declarations
 class CanadaThemePlugin(p.SingletonPlugin):
 
     p.implements(p.IConfigurer)
@@ -349,7 +350,7 @@ class CanadaDatasetsPlugin(SchemingDatasetsPlugin):
             return True
 
         if not resource.get('url_type'):
-            allowed_domains = p.toolkit.config.get('ckanext.canada.datastore_source_domain_white_list', '').split()
+            allowed_domains = p.toolkit.config.get('ckanext.canada.datastore_source_domain_allow_list', [])
             url = resource.get('url')
             url_parts = urlsplit(url)
             if url_parts.netloc in allowed_domains:
@@ -590,7 +591,7 @@ class DataGCCAInternal(p.SingletonPlugin):
                 return False
 
             if not res.get('url_type'):
-                allowed_domains = p.toolkit.config.get('ckanext.canada.datastore_source_domain_white_list', '').split()
+                allowed_domains = p.toolkit.config.get('ckanext.canada.datastore_source_domain_allow_list', [])
                 url = res.get('url')
                 url_parts = urlsplit(url)
                 if url_parts.netloc not in allowed_domains:

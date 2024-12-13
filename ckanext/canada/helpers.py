@@ -675,7 +675,7 @@ def get_loader_status_badge(resource):
     if not XLoaderFormats:
         return ''
 
-    allowed_domains = config.get('ckanext.canada.datastore_source_domain_white_list', '').split()
+    allowed_domains = config.get('ckanext.canada.datastore_source_domain_allow_list', [])
     url = resource.get('url')
     url_parts = urlsplit(url)
 
