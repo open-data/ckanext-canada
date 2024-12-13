@@ -99,6 +99,7 @@ DISABLED_ROUTES = [
     '/tracking-dashboard/largest-groups',
     '/tracking-dashboard/most-create',
     '/tracking-csv/most-accessed-dataset-with-token.csv',
+    '/tracking-csv/most-accessed-resource-with-token.csv'
 ]
 
 

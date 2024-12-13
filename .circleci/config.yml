@@ -86,7 +86,7 @@ jobs:
             pip install -e 'git+https://github.com/ckan/ckantoolkit.git#egg=ckantoolkit' -r 'https://raw.githubusercontent.com/ckan/ckantoolkit/master/requirements.txt'
             pip install -e 'git+https://github.com/open-data/frictionless-py.git@canada-v2.10#egg=frictionless' -r 'https://raw.githubusercontent.com/open-data/frictionless-py/canada-v2.10/requirements.txt'
             pip install -e 'git+https://github.com/open-data/ckanext-security.git@canada-v2.10#egg=ckanext-security' -r 'https://raw.githubusercontent.com/open-data/ckanext-security/canada-v2.10/requirements.txt'
-            pip install -e 'git+https://github.com/NorwegianRefugeeCouncil/ckanext-api-tracking.git#egg=ckanext-api-tracking' -r 'https://raw.githubusercontent.com/NorwegianRefugeeCouncil/ckanext-api-tracking/main/requirements.txt'
+            pip install -e 'git+https://github.com/open-data/ckanext-api-tracking.git@canada-v2.10#egg=ckanext-api-tracking' -r 'https://raw.githubusercontent.com/open-data/ckanext-api-tracking/canada-v2.10/requirements.txt'
             find \/srv\/app\/ -name '*.pyc' -delete
       - run:
           name: Setup extension (CKAN 2.10 PY3.9)
