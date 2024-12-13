@@ -22,7 +22,8 @@ from ckan.plugins.toolkit import (
     check_access,
     aslist,
     request,
-    render
+    render,
+    Invalid
 )
 import ckan.lib.mailer as mailer
 from ckan import model
@@ -1315,3 +1316,23 @@ def ckan_admin_portal_sync():
     setattr(g, 'page', extra_vars['page'])
 
     return render('admin/portal_sync.html', extra_vars=extra_vars)
+
+
+@canada_views.route('/util/api-tracking-info/<id>', methods=['GET'])
+def api_tracking_info(id: str):
+    """
+    Returns additional information about an API tracking object,
+    including the decrypted request payload.
+    """
+    try:
+        api_tracking_info = get_action('api_tracking_info_show')({'user': g.user}, {'id': id})
+    except Invalid:
+        return abort(400)
+    except NotFound:
+        return abort(404)
+    except NotAuthorized:
+        return abort(403)
+
+    extra_vars = {'api_tracking_info': api_tracking_info}
+
+    # TODO: make a template, render it here...

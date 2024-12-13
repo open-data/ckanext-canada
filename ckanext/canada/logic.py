@@ -1,3 +1,8 @@
+import os
+import json
+from cryptography.fernet import Fernet, InvalidToken
+from ckanext.api_tracking.models import TrackingUsage
+
 from ckan.logic.action import get as core_get
 from ckan.logic.validators import isodate, Invalid
 from ckan.lib.dictization import model_dictize
@@ -616,3 +621,58 @@ def list_out_of_sync_packages(context, data_dict):
                                                 'error_on': sync_info.error_on, 'last_run': sync_info.last_run})
 
     return out_of_sync_packages
+
+
+def api_tracking_info_show(context, data_dict):
+    """
+    Returns additional information about an API tracking object,
+    including the decrypted request payload.
+    """
+
+    check_access('api_tracking_info_show', context, data_dict)
+
+    id = data_dict.pop('id', None)
+    if not id:
+        raise Invalid('Required parameter `id` not provided')
+
+    fernet_key = os.environ.get('CKAN_API_TRACKING_SECRET')
+    if not fernet_key:
+        log.debug('Missing API tracking secret')
+        return
+
+    tracking_obj = model.Session.query(TrackingUsage).filter(TrackingUsage.id == id).first()
+    if not tracking_obj:
+        log.debug('Could not find API tracking object with ID %s' % id)
+        raise ObjectNotFound
+
+    return_dict = {'method': tracking_obj.extras.get('method') if tracking_obj.extras else None,
+                   'timestamp': tracking_obj.timestamp,
+                   'object_type': tracking_obj.object_type,
+                   'token_name': tracking_obj.token_name,
+                   'user_id': tracking_obj.user_id}
+
+    if tracking_obj.user_id:
+        user_obj = model.User.get(tracking_obj.user_id)
+        if user_obj:
+            return_dict['user_name'] = user_obj.name
+            return_dict['user_fullname'] = user_obj.fullname
+
+    if tracking_obj.extras and (tracking_obj.extras.get('REQUEST_ARGS') or tracking_obj.extras.get('REQUEST_BODY')):
+        fernet = Fernet(fernet_key)
+
+        value = tracking_obj.extras.get('REQUEST_ARGS', tracking_obj.extras.get('REQUEST_BODY'))
+        value = value.encode('utf-8')  # REQUEST_ARGS and REQUEST_BODY are always saved as str
+        try:
+            value = fernet.decrypt(value)
+        except InvalidToken:
+            log.debug('Invalid API tracking secret')
+            return
+        value = value.decode()
+        try:
+            value = json.loads(value)
+        except (ValueError, TypeError):
+            pass
+
+        return_dict['payload'] = value
+
+    return return_dict

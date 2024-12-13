@@ -1,14 +1,11 @@
 from typing import Optional, Union
 
-import os
-from cryptography.fernet import Fernet
 import json
 import re
 import inspect
 from ckan.plugins.toolkit import config, _, h, g, request
 from ckan.model import User, Package
 from ckanext.activity.model import Activity
-from ckanext.api_tracking.models import TrackingUsage
 import ckan.model as model
 import datetime
 import unicodedata
@@ -952,41 +949,3 @@ def max_resources_per_dataset():
     max_resource_count = config.get('ckanext.canada.max_resources_per_dataset', None)
     if max_resource_count:
         return int(max_resource_count)
-
-
-def canada_api_tracking_info(id: str):
-    fernet_key = os.environ.get('CKAN_API_TRACKING_SECRET')
-    if not fernet_key:
-        return
-
-    tracking_obj = model.Session.query(TrackingUsage).filter(TrackingUsage.id == id).first()
-    if not tracking_obj:
-        return
-
-    return_dict = {'method': tracking_obj.extras.get('method') if tracking_obj.extras else None,
-                   'timestamp': tracking_obj.timestamp,
-                   'object_type': tracking_obj.object_type,
-                   'token_name': tracking_obj.token_name,
-                   'user_id': tracking_obj.user_id}
-
-    if tracking_obj.user_id:
-        user_obj = model.User.get(tracking_obj.user_id)
-        if user_obj:
-            return_dict['user_name'] = user_obj.name
-            return_dict['user_fullname'] = user_obj.fullname
-
-    if tracking_obj.extras and (tracking_obj.extras.get('REQUEST_ARGS') or tracking_obj.extras.get('REQUEST_BODY')):
-        fernet = Fernet(fernet_key)
-
-        value = tracking_obj.extras.get('REQUEST_ARGS', tracking_obj.extras.get('REQUEST_BODY'))
-        value = value.encode('utf-8')  # REQUEST_ARGS and REQUEST_BODY are always saved as str
-        value = fernet.decrypt(value)
-        value = value.decode()
-        try:
-            value = json.loads(value)
-        except (ValueError, TypeError):
-            pass
-
-        return_dict['payload'] = value
-
-    return return_dict

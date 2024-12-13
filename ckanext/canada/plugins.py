@@ -6,7 +6,7 @@ import logging
 import re
 import os
 from flask import has_request_context
-from cryptography.fernet import Fernet
+from cryptography.fernet import Fernet, InvalidToken
 import ckan.plugins as p
 from ckan.lib.plugins import DefaultDatasetForm, DefaultTranslation
 import ckan.lib.helpers as hlp
@@ -127,7 +127,6 @@ class CanadaThemePlugin(p.SingletonPlugin):
             'get_loader_status_badge',
             'validation_status',
             'is_user_locked',
-            'canada_api_tracking_info',
             # Portal
             'user_organizations',
             'openness_score',
@@ -795,6 +794,7 @@ class DataGCCAPublic(p.SingletonPlugin, DefaultTranslation):
                 'resource_view_list': logic.canada_resource_view_list,
                 'job_list': logic.canada_job_list,
                 'registry_jobs_running': logic.registry_jobs_running,
+                'api_tracking_info_show': logic.api_tracking_info_show,
                }
 
     # IAuthFunctions
@@ -806,6 +806,7 @@ class DataGCCAPublic(p.SingletonPlugin, DefaultTranslation):
             'view_org_members': auth.view_org_members,
             'registry_jobs_running': auth.registry_jobs_running,
             'recently_changed_packages_activity_list': auth.recently_changed_packages_activity_list,
+            'api_tracking_info_show': auth.api_tracking_info_show,
         }
 
     # IClick
@@ -850,11 +851,15 @@ class DataGCCAPublic(p.SingletonPlugin, DefaultTranslation):
 
                 value = tracking_obj.extras.get('REQUEST_ARGS', tracking_obj.extras.get('REQUEST_BODY'))
                 value = value.encode('utf-8')  # REQUEST_ARGS and REQUEST_BODY are always saved as str
-                value = fernet.decrypt(value)
-                payload = value.decode()
                 try:
-                    payload = json.loads(payload)
-                except (ValueError, TypeError):
+                    value = fernet.decrypt(value)
+                    payload = value.decode()
+                    try:
+                        payload = json.loads(payload)
+                    except (ValueError, TypeError):
+                        pass
+                except InvalidToken:
+                    log.debug('Invalid API tracking secret')
                     pass
 
         user = tracking_obj.user_id
