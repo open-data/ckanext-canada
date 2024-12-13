@@ -1,10 +1,17 @@
-<section class="module module-narrow module-shallow simple-input" style="margin-bottom: 15px;">
+<section class="module module-narrow module-shallow" style="margin-bottom: 15px;">
   <h2 class="wb-inv">{{ _('Search Users') }}</h2>
   <form action="{{ h.url_for('user.index') }}" method="get" id="user-search-form">
-    <div class="field">
-      <label for="field-user-search">{{ _('Search Users') }}</label>
-      <input id="field-user-search" value="{{ q }}" class="field form-control" name="q" placeholder="{{ _('Search Users') }}" />
-      <button class="btn-search" type="submit"><i class="fa fa-search"></i></button>
+    <div class="input-group col-md-12">
+      <div class="canada-search-field-wrapper">
+        <input type="text" class="field form-control" id="field-user-search" autocomplete="off" name="q" value="{{ q }}" placeholder="{{ _('Search users...') }}">
+        <span class="input-group-btn">
+          {% block search_input_button %}
+          <button class="btn btn-primary btn-small" type="submit">
+            <i class="fa fa-search" aria-hidden="true"></i><span class="wb-inv">{{ _('Search') }}</span>
+          </button>
+          {% endblock %}
+        </span>
+      </div>
     </div>
   </form>
 </section>

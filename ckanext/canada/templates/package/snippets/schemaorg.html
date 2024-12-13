@@ -24,9 +24,10 @@
     </span>
     <span property="genre" value="{{ _('Information and Communications Government and Politics') }}"></span>
     <span property="license" typeof="CreativeWork">
-      {%- set license_url, license_title = data.license_url, data.license_title -%}
+      {% set license = h.get_license(data.license_id) %}
+      {%- set license_url, license_title = license.url, license.title -%}
       {%- if h.lang() == 'fr' -%}
-        {%- set license_url, license_title = g.pkg.license.url_fra, g.pkg.license.title_fra -%}
+        {%- set license_url, license_title = license.url_fra, license.title_fra -%}
       {%- endif -%}
       <span property="name" value="{{ license_title }}"></span>
       <span property="sameAs" value="{{ license_url }}"></span>
@@ -56,7 +57,7 @@
       <span property="keywords">{{ keyword }}</span>
     {%- endfor -%}
   {% endif %}
-  <span property="sameAs" value="{{ h.url_for(g.pkg.type + '.read', id=data.id) }}"></span>
+  <span property="sameAs" value="{{ h.url_for(data.type + '.read', id=data.id) }}"></span>
   {%- if data.resources -%}
     {% for res in data.resources %}
       <span property="distribution" typeof="DataDownload">

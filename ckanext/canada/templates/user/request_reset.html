@@ -1,12 +1,14 @@
 {% ckan_extends %}
 
 {% block primary_content %}
-  <div class="mrgn-bttm-lg mrgn-tp-md">
-    {% block primary_content_inner %}
-      {% block form %}
-        {{ super() }}
+  <div class="row mrgn-bttm-lg mrgn-tp-md canada-page-main-wrapper">
+    <div class="col-md-12">
+      {% block primary_content_inner %}
+        {% block form %}
+          {{ super() }}
+        {% endblock %}
       {% endblock %}
-    {% endblock %}
+    </div>
   </div>
 {% endblock %}
 

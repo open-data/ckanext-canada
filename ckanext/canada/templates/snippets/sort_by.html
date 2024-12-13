@@ -10,7 +10,7 @@ Example:
 #}
 <div class="form-group">
   <label for="field-order-by" class="control-label">{{ _('Order by') }}</label>
-  <select id="field-order-by" name="sort" class="form-control input-sm" onchange="this.form.submit()">
+  <select id="field-order-by" name="sort" class="form-control input-sm form-select" onchange="this.form.submit()">
     <option value="" >{{ _('Relevance') }}</option>
     {% if h.lang() == 'fr' %}
       <option value="title_fr asc"{% if sort=="title_fr asc" %} selected="selected"{% endif %}>{{ _('Name Ascending') }}</option>

@@ -8,11 +8,13 @@
 {% endblock %}
 
 {% block content_primary_nav %}
-  {% if g.is_registry %}
-    {{ super () }}
-    {% if h.check_access('user_update', {'id': user.name}) %}
-      {{ h.build_nav_icon('user.edit', _('Edit User'), id=user.name) }}
-    {% endif %}
+  {{ h.build_nav_icon('user.read', h.humanize_entity_type('package', dataset_type, 'content tab') or _('Datasets'), id=user.name, icon='sitemap') }}
+  {{ h.build_nav_icon('user.read_organizations', h.humanize_entity_type('organization', org_type, 'content tab') or _('Organizations'), id=user.name, icon='building') }}
+  {% if h.check_access('api_token_list', {'user': user['name']}) %}
+    {{ h.build_nav_icon('user.api_tokens', _('API Tokens'), id=user.name, icon='key') }}
+  {% endif %}
+  {% if h.security_enable_totp() and h.check_access('user_update', user) %}
+    {{ h.build_nav_icon('mfa_user.configure_mfa', _('MFA'), id=user.name, icon='shield-alt') }}
   {% endif %}
 {% endblock %}
 
@@ -25,46 +27,42 @@
       {% block user_heading %}{% endblock %}
       <div class="panel-body">
       {% block user_about %}
-        {{ super() }}
+        {% if about_formatted %}
+          {{ about_formatted }}
+        {% endif %}
       {% endblock %}
       {% block user_nums %}
       <div class="row">
-        <div class="col-md-8 left-center"><strong>{{ _('Followers:') }} </strong></div>
-        <div class="col-md-4 left-center">{{ h.SI_number_span(user.num_followers) }}</div>
+        <div class="col-md-8 left-center text-break text-wrap"><strong>{{ _('Followers:') }} </strong></div>
+        <div class="col-md-4 left-center text-break text-wrap">{{ h.SI_number_span(user.num_followers) }}</div>
       </div>
       <div class="row">
-        <div class="col-md-8 left-center"><strong>{{ _('Edits:') }} </strong></div>
-        <div class="col-md-4 left-center">{{ h.SI_number_span(user.number_of_edits) }}</div>
+        <div class="col-md-8 left-center text-break text-wrap"><strong>{{ _('Datasets:') }} </strong></div>
+        <div class="col-md-4 left-center text-break text-wrap">{{ h.SI_number_span(user.number_created_packages) }}</div>
       </div>
       {% endblock %}
-      {% if is_myself == false %}
-        {% block user_follow %}
-          <div class="follow_button">
-            {{ h.follow_button('user', user.id) }}</li>
-          </div>
-        {% endblock %}
-      {% endif %}
+      {% block user_follow %}{% endblock %}  {# disallow following, not fully fleshed out in Canada setup #}
       {% block user_info %}
         <div class="row mrgn-tp-md">
           {% if user.name.startswith('http://') or user.name.startswith('https://') %}
-            <div class="col-md-6 left-center"><strong>{{ _('Open ID:') }} </strong></div>
-            <div class="col-md-6 left-center">{{ user.name|urlize(25) }}{# Be great if this just showed the domain #}</div>
+            <div class="col-md-12 left-center text-break text-wrap"><strong>{{ _('Open ID:') }} </strong></div>
+            <div class="col-md-12 left-center text-break text-wrap">{{ user.name|urlize(25) }}{# Be great if this just showed the domain #}</div>
           {% else %}
-            <div class="col-md-6 left-center"><strong>{{ _('Username:') }} </strong></div>
-            <div class="col-md-6 left-center">{{ user.name }}</div>
+            <div class="col-md-12 left-center text-break text-wrap"><strong>{{ _('Username:') }} </strong></div>
+            <div class="col-md-12 left-center text-break text-wrap">{{ user.name }}</div>
           {% endif %}
         </div>
         {% set user_email = h.get_user_email(user.id) %}
         {% if user_email %}
           <div class="row mrgn-tp-md">
-            <div class="col-md-12 left-center"><strong>{{ _('Email') }} <span
+            <div class="col-md-12 left-center text-break text-wrap"><strong>{{ _('Email') }} <span
                 class="label" title="{{ _('This means only you can see this') }}">{{ _('Private') }}</span></strong></div>
-            <div class="col-md-12 left-center"><a href="mailto:{{ user_email }}">{{ user_email | truncate(20) }}</a></div>
+            <div class="col-md-12 left-center text-break text-wrap"><a href="mailto:{{ user_email }}">{{ user_email | truncate(20) }}</a></div>
           </div>
         {% endif %}
         <div class="row mrgn-tp-md">
-          <div class="col-md-12 left-center"><strong>{{ _('Member Since') }}</strong></div>
-          <div class="col-md-12 left-center">{{ h.render_datetime(user.created) }}</div>
+          <div class="col-md-12 left-center text-break text-wrap"><strong>{{ _('Member Since') }}</strong></div>
+          <div class="col-md-12 left-center text-break text-wrap">{{ h.render_datetime(user.created) }}</div>
         </div>
         {% if is_myself and user.apikey %}
           <div class="row mrgn-tp-md">
@@ -72,19 +70,19 @@
               <strong>{{ _('API Key') }} <span class="label" title="{{ _('This means only you can see this') }}">{{ _('Private') }}</span></strong>
             </div>
             <div class="col-md-12 left-center">
-              <a href="" data-toggle="modal" data-target="#api_modal">{{ _('Show API Key') }}</a>
+              <a href="" data-bs-toggle="modal" data-bs-target="#api_modal">{{ _('Show API Key') }}</a>
               <div class="modal" id="api_modal" tabindex="-1" role="dialog" aria-labelledby="api_modal_label" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered" role="document">
                   <div class="modal-content overlay-def">
                     <header class="modal-header">
                       <h2 class="modal-title" id="api_modal_label">{{ _('API Key') }}</h2>
-                      <button type="button" class="close mfp-close" data-dismiss="modal" aria-label="{{ _('Close') }}"></button>
+                      <button type="button" class="close mfp-close" data-bs-dismiss="modal" aria-label="{{ _('Close') }}"></button>
                     </header>
                     <div class="modal-body">
                       <code>{{ user.apikey }}</code>
                     </div>
                     <div class="modal-footer">
-                      <button type="button" class="btn btn-sm btn-primary pull-left" data-dismiss="modal">{{ _('Close') }}</button>
+                      <button type="button" class="btn btn-sm btn-primary pull-left" data-bs-dismiss="modal">{{ _('Close') }}</button>
                     </div>
                   </div>
                 </div>
@@ -99,7 +97,7 @@
               <dt>{{ _('Organizations') }}</dt>
               <dd><ul>
                 {% for org in h.user_organizations(user) %}
-                  <li><a href="{{ h.url_for(org.type + '.read', id=org.name) }}">{{h.split_piped_bilingual_field(org.title, h.lang())}}</a></li>
+                  <li><a class="text-break text-wrap" href="{{ h.url_for(org.type + '.read', id=org.name) }}">{{h.split_piped_bilingual_field(org.title, h.lang())}}</a></li>
                 {% endfor %}
               </ul></dd>
             </dl>

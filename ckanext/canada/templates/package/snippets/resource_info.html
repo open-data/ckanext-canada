@@ -3,11 +3,44 @@
 {% block page_title %}{% endblock %}
 
 {% block resource_info %}
-  {# TODO: - add resource details #}
-  {{ super() }}
-  {% if g.is_registry %}
-    {{- h.get_validation_badge(res)|safe -}}
-    <div class="clearfix"></div>
-    {{- h.get_loader_status_badge(res) -}}
-  {% endif %}
+  <div class="panel panel-primary canada-edit-resource-panel">
+    <div class="panel-heading">
+      <div class="panel-title">{{ _('Additional Information ')}}</div>
+    </div>
+    <div class="panel-body canada-edit-resource-info">
+      <div class="nums">
+        <dl>
+          <dt>{{ _('Format') }}</dt>
+          <dd>{{ h.get_translated(res, 'format') }}</dd>
+        </dl>
+      </div>
+      {% if g.is_registry %}
+        <div class="mrgn-bttm-md">
+          {{- h.get_validation_badge(res)|safe -}}
+          <div class="clearfix"></div>
+          {{- h.get_loader_status_badge(res) -}}
+        </div>
+      {% endif %}
+      <div>
+        {% set language_options = h.scheming_get_preset('canada_resource_language').choices %}
+        {% for language in res.language %}
+          {% if loop.index <= 2 %}
+            {% for option in language_options %}
+              {% if option.value == language %}
+                <span class="badge res-tag res-tag-lang">
+                  {{ option.label[h.lang()] }}
+                </span>
+              {% endif %}
+            {% endfor %}
+          {% endif %}
+        {% endfor %}
+        {% if res.language|length > 2 %}
+          {% set lang_count = res.language|length %}
+          <span class="badge res-tag res-tag-lang">
+            {{ _('+ %s more').format(lang_count - 2) }}
+          </span>
+        {% endif %}
+      </div>
+    </div>
+  </div>
 {% endblock %}
