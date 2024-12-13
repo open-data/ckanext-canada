@@ -846,13 +846,12 @@ class DataGCCAPublic(p.SingletonPlugin, DefaultTranslation):
         payload = None
         if fernet_key:
             if tracking_obj.extras and (tracking_obj.extras.get('REQUEST_ARGS') or tracking_obj.extras.get('REQUEST_BODY')):
-                fernet_key = fernet_key if isinstance(fernet_key, bytes) else fernet_key.encode()
                 fernet = Fernet(fernet_key)
 
                 value = tracking_obj.extras.get('REQUEST_ARGS', tracking_obj.extras.get('REQUEST_BODY'))
-                value = value if isinstance(value, bytes) else value.encode()
+                value = value.encode('utf-8')  # REQUEST_ARGS and REQUEST_BODY are always saved as str
                 value = fernet.decrypt(value)
-                payload = value if isinstance(value, str) else value.decode()
+                payload = value.decode()
                 try:
                     payload = json.loads(payload)
                 except (ValueError, TypeError):
@@ -885,7 +884,6 @@ class DataGCCAPublic(p.SingletonPlugin, DefaultTranslation):
         fernet_key = os.environ.get('CKAN_API_TRACKING_SECRET')
 
         if fernet_key:
-            fernet_key = fernet_key if isinstance(fernet_key, bytes) else fernet_key.encode()
             fernet = Fernet(fernet_key)
             if method == 'get':
                 request_args = ckan_url.get_query_string()
@@ -893,15 +891,14 @@ class DataGCCAPublic(p.SingletonPlugin, DefaultTranslation):
                     # special case to not log uptime monitor
                     log.debug('[API TRACKING] Skip tracking uptime monitor')
                     return
-                request_args = json.dumps(request_args)
-                request_args = request_args if isinstance(request_args, bytes) else request_args.encode()
+                request_args = json.dumps(request_args)  # dumps is always str
+                request_args = request_args.encode('utf-8')
                 extras['REQUEST_ARGS'] = fernet.encrypt(request_args).decode()
             elif method == 'post':
                 length = int(ckan_url.environ.get('CONTENT_LENGTH') or 0)
-                request_body = ckan_url.environ['wsgi.input'].read(length)
+                request_body = ckan_url.environ['wsgi.input'].read(length)  # should always be bytes
                 # replace the stream since it was exhausted by read()
                 ckan_url.environ['wsgi.input'] = BytesIO(request_body)
-                request_body = request_body if isinstance(request_body, bytes) else request_body.encode()
                 extras['REQUEST_BODY'] = fernet.encrypt(request_body).decode()
 
         return {

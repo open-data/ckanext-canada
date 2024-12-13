@@ -976,13 +976,12 @@ def canada_api_tracking_info(id: str):
             return_dict['user_fullname'] = user_obj.fullname
 
     if tracking_obj.extras and (tracking_obj.extras.get('REQUEST_ARGS') or tracking_obj.extras.get('REQUEST_BODY')):
-        fernet_key = fernet_key if isinstance(fernet_key, bytes) else fernet_key.encode()
         fernet = Fernet(fernet_key)
 
         value = tracking_obj.extras.get('REQUEST_ARGS', tracking_obj.extras.get('REQUEST_BODY'))
-        value = value if isinstance(value, bytes) else value.encode()
+        value = value.encode('utf-8')  # REQUEST_ARGS and REQUEST_BODY are always saved as str
         value = fernet.decrypt(value)
-        value = value if isinstance(value, str) else value.decode()
+        value = value.decode()
         try:
             value = json.loads(value)
         except (ValueError, TypeError):
