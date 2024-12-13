@@ -1,9 +1,12 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-from typing import Optional, Type
+from typing import Optional, Type, Union
+from io import BytesIO
 import logging
 import re
+import os
 from flask import has_request_context
+from cryptography.fernet import Fernet, InvalidToken
 import ckan.plugins as p
 from ckan.lib.plugins import DefaultDatasetForm, DefaultTranslation
 import ckan.lib.helpers as hlp
@@ -13,6 +16,7 @@ from ckanext.activity.logic.validators import object_id_validators
 from ckan.lib.app_globals import set_app_global
 from ckan.plugins.core import plugin_loaded
 
+from ckan import model
 from ckan.config.middleware.flask_app import csrf
 from ckanext.datatablesview.blueprint import datatablesview
 
@@ -39,6 +43,8 @@ from ckanext.canada import checks
 from ckanext.canada import column_types as coltypes
 from ckanext.tabledesigner.interfaces import IColumnTypes
 from ckanext.xloader.interfaces import IXloader
+from ckanext.api_tracking.interfaces import IUsage
+from ckanext.api_tracking.models import CKANURL, TrackingUsage
 import json
 
 import ckan.lib.formatters as formatters
@@ -669,11 +675,11 @@ class DataGCCAPublic(p.SingletonPlugin, DefaultTranslation):
     p.implements(p.IAuthFunctions)
     p.implements(p.IFacets)
     p.implements(p.ITranslation, inherit=True)
-    p.implements(p.IMiddleware, inherit=True)
     p.implements(p.IActions)
     p.implements(p.IClick)
     p.implements(IColumnTypes)
     p.implements(p.IBlueprint)
+    p.implements(IUsage, inherit=True)
 
     # DefaultTranslation, ITranslation
     def i18n_domain(self):
@@ -788,6 +794,7 @@ class DataGCCAPublic(p.SingletonPlugin, DefaultTranslation):
                 'resource_view_list': logic.canada_resource_view_list,
                 'job_list': logic.canada_job_list,
                 'registry_jobs_running': logic.registry_jobs_running,
+                'api_tracking_info_show': logic.api_tracking_info_show,
                }
 
     # IAuthFunctions
@@ -799,12 +806,8 @@ class DataGCCAPublic(p.SingletonPlugin, DefaultTranslation):
             'view_org_members': auth.view_org_members,
             'registry_jobs_running': auth.registry_jobs_running,
             'recently_changed_packages_activity_list': auth.recently_changed_packages_activity_list,
+            'api_tracking_info_show': auth.api_tracking_info_show,
         }
-
-    # IMiddleware
-
-    def make_middleware(self, app, config):
-        return LogExtraMiddleware(app, config)
 
     # IClick
 
@@ -824,6 +827,100 @@ class DataGCCAPublic(p.SingletonPlugin, DefaultTranslation):
     def get_blueprint(self):
         # type: () -> list[Blueprint]
         return [canada_views]
+
+    # IUsage
+
+    def define_paths(self, paths):
+        """
+        Only track API action endpoint usage.
+        """
+        return {'canada_api_action': [
+                    '^(?:en|fr)?/?api/action/[^/]+$',
+                    '^(?:en|fr)?/?api/[0-9]/action/[^/]+$']}
+
+
+    def after_track_usage_save(self, tracking_obj: TrackingUsage):
+        """
+        Log to syslog for LogAnalytics.
+        """
+        fernet_key = os.environ.get('CKAN_API_TRACKING_SECRET')
+        payload = None
+        if fernet_key:
+            if tracking_obj.extras and (tracking_obj.extras.get('REQUEST_ARGS') or tracking_obj.extras.get('REQUEST_BODY')):
+                fernet = Fernet(fernet_key)
+
+                value = tracking_obj.extras.get('REQUEST_ARGS', tracking_obj.extras.get('REQUEST_BODY'))
+                value = value.encode('utf-8')  # REQUEST_ARGS and REQUEST_BODY are always saved as str
+                try:
+                    value = fernet.decrypt(value)
+                    payload = value.decode()
+                    try:
+                        payload = json.loads(payload)
+                    except (ValueError, TypeError):
+                        pass
+                except InvalidToken:
+                    log.debug('Invalid API tracking secret')
+                    pass
+
+        user = tracking_obj.user_id
+        if tracking_obj.user_id:
+            user_obj = model.User.get(tracking_obj.user_id)
+            if user_obj:
+                user += f" {user_obj.name}"
+
+        log.info('[API TRACKING] User: %s, Token: %s, Action: %s, Method: %s, Payload: %r' % (
+            user,
+            tracking_obj.token_name,
+            tracking_obj.object_type,
+            tracking_obj.extras.get('method') if tracking_obj.extras else None,
+            payload))
+
+
+    def _track_canada_api_action(self, method: Union[str, None], ckan_url: Union[CKANURL, None]) -> dict:
+        api_version, action_name = ckan_url.get_api_action()
+        method = method.lower()
+        object_id = ckan_url.get_query_param('id')
+
+        extras = {}
+
+        # this happens before any schema and validation happens. In theory anything can be put
+        # into a request arg or body. So we need to make sure that any sensitive data or injection
+        # is safely handled. We do a simple symmetric encryption to accomplish this.
+        fernet_key = os.environ.get('CKAN_API_TRACKING_SECRET')
+
+        if fernet_key:
+            fernet = Fernet(fernet_key)
+            if method == 'get':
+                request_args = ckan_url.get_query_string()
+                if action_name == 'datastore_search_sql' and request_args.get('sql') == 'SELECT%20%27uptime%27':
+                    # special case to not log uptime monitor
+                    log.debug('[API TRACKING] Skip tracking uptime monitor')
+                    return
+                request_args = json.dumps(request_args)  # dumps is always str
+                request_args = request_args.encode('utf-8')
+                extras['REQUEST_ARGS'] = fernet.encrypt(request_args).decode()
+            elif method == 'post':
+                length = int(ckan_url.environ.get('CONTENT_LENGTH') or 0)
+                request_body = ckan_url.environ['wsgi.input'].read(length)  # should always be bytes
+                # replace the stream since it was exhausted by read()
+                ckan_url.environ['wsgi.input'] = BytesIO(request_body)
+                extras['REQUEST_BODY'] = fernet.encrypt(request_body).decode()
+
+        return {
+            'tracking_type': 'api',
+            'tracking_sub_type': api_version,
+            'object_type': action_name,
+            'object_id': object_id,
+            'extras': extras,
+        }
+
+
+    def track_get_canada_api_action(self, ckan_url):
+        return self._track_canada_api_action('get', ckan_url)
+
+
+    def track_post_canada_api_action(self, ckan_url):
+        return self._track_canada_api_action('post', ckan_url)
 
 
 class DataGCCAForms(p.SingletonPlugin, DefaultDatasetForm):
@@ -919,31 +1016,6 @@ class DataGCCAForms(p.SingletonPlugin, DefaultDatasetForm):
             'limit_resources_per_dataset':
                 validators.limit_resources_per_dataset,
             }
-
-
-class LogExtraMiddleware(object):
-    def __init__(self, app, config):
-        self.app = app
-
-    def __call__(self, environ, start_response):
-        def _start_response(status, response_headers, exc_info=None):
-            extra = []
-            try:
-                contextual_user = g.user
-            except (TypeError, RuntimeError, AttributeError):
-                contextual_user = None
-            if contextual_user:
-                log_extra = g.log_extra if hasattr(g, 'log_extra') else ''
-                #FIXME: make sure username special chars are handled
-                # the values in the tuple HAVE to be str types.
-                extra = [('X-LogExtra', f'user={contextual_user} {log_extra}')]
-
-            return start_response(
-                status,
-                response_headers + extra,
-                exc_info)
-
-        return self.app(environ, _start_response)
 
 
 def _wet_pager(self, *args, **kwargs):

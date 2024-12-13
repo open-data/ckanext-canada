@@ -77,3 +77,10 @@ def list_out_of_sync_packages(context, data_dict):
     Only sysadmins can list the out of sync packages.
     """
     return {'success': False}
+
+
+def api_tracking_info_show(context, data_dict):
+    """
+    Only sysadmins can see API tracking info.
+    """
+    return {'success': False}

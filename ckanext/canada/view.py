@@ -8,6 +8,7 @@ from six import string_types
 from datetime import datetime, timedelta
 import traceback
 from functools import partial
+from urllib.parse import urlsplit
 
 from ckan.config.middleware.flask_app import csrf
 
@@ -21,7 +22,8 @@ from ckan.plugins.toolkit import (
     check_access,
     aslist,
     request,
-    render
+    render,
+    Invalid
 )
 import ckan.lib.mailer as mailer
 from ckan import model
@@ -68,10 +70,13 @@ from ckanext.recombinant.helpers import recombinant_primary_key_fields
 
 from ckanapi import LocalCKAN
 
-from flask import Blueprint, make_response
+from flask import Blueprint, make_response, has_request_context
 
 from ckanext.canada.urlsafe import url_part_unescape, url_part_escape
 from ckanext.canada.helpers import canada_date_str_to_datetime
+
+from ckanext.api_tracking.blueprints.csv import tracking_csv_blueprint
+from ckanext.api_tracking.blueprints.dashboard import tracking_dashboard_blueprint
 
 from io import StringIO
 
@@ -85,6 +90,30 @@ MAX_JOB_QUEUE_LIST_SIZE = 25
 
 canada_views = Blueprint('canada', __name__)
 ottawa_tz = timezone('America/Montreal')
+
+DISABLED_ROUTES = [
+    '/tracking-dashboard/dataset-unique-views',
+    '/tracking-dashboard/dataset-views',
+    '/tracking-dashboard/resource-downloads',
+    '/tracking-dashboard/total-datasets',
+    '/tracking-dashboard/edited-datasets',
+    '/tracking-dashboard/largest-groups',
+    '/tracking-dashboard/most-create',
+    '/tracking-csv/most-accessed-dataset-with-token.csv',
+    '/tracking-csv/most-accessed-resource-with-token.csv'
+]
+
+
+def _disable_route():
+    if has_request_context() and hasattr(request, 'url'):
+        url_parts = urlsplit(request.url)
+        if url_parts.path in DISABLED_ROUTES:
+            log.debug('Reached disabled route %s. Returning 404' % request.url)
+            return abort(404)
+
+
+tracking_dashboard_blueprint.before_request(_disable_route)
+tracking_csv_blueprint.before_request(_disable_route)
 
 
 class IntentionalServerError(Exception):
@@ -968,7 +997,6 @@ def action(logic_function, ver=API_DEFAULT_VERSION):
 
     Canada Fork:
         We keep version 1 and 2 endpoints just incase any systems are still using that.
-        We also have -1 to version to return the context and request_data for extra logging.
         And if the request is a POST request, we want to not authorize any PD type.
     '''
     try:
@@ -977,7 +1005,7 @@ def action(logic_function, ver=API_DEFAULT_VERSION):
         return api_view_action(logic_function, ver)
 
     try:
-        side_effect_free = getattr(function, u'side_effect_free', False)
+        side_effect_free = getattr(function, 'side_effect_free', False)
         request_data = _get_request_data(try_url_params=side_effect_free)
     except Exception:
         return api_view_action(logic_function, ver)
@@ -985,25 +1013,22 @@ def action(logic_function, ver=API_DEFAULT_VERSION):
     if not isinstance(request_data, dict):
         return api_view_action(logic_function, ver)
 
-    context = {u'model': model, u'session': model.Session, u'user': g.user,
-               u'api_version': ver, u'auth_user_obj': g.userobj}
-
-    return_dict = {u'help': h.url_for(u'api.action',
-                                      logic_function=u'help_show',
-                                      ver=ver,
-                                      name=logic_function,
-                                      _external=True,)}
-
-    # extra logging here
-    id = request_data.get('id', request_data.get('package_id', request_data.get('resource_id')))
-    pkg_dict = _get_package_from_api_request(logic_function, id, context)
-    if pkg_dict:
-        _log_api_access(request_data, pkg_dict)
-
     # prevent PD types from being POSTed to via the API, but allow DataStore POSTing
     if request.method == 'POST' and not logic_function.startswith('datastore'):
-        package_type = pkg_dict.get('type') if pkg_dict \
-            else request_data.get('package_type', request_data.get('type'))
+
+        return_dict = {'help': h.url_for('api.action',
+                                         logic_function='help_show',
+                                         ver=ver,
+                                         name=logic_function,
+                                         _external=True,)}
+
+        context = {'model': model, 'session': model.Session, 'user': g.user,
+                   'api_version': ver, 'auth_user_obj': g.userobj}
+
+        id = request_data.get('id', request_data.get('package_id', request_data.get('resource_id')))
+        pkg_dict = _get_package_from_api_request(logic_function, id, context)
+
+        package_type = pkg_dict.get('type') if pkg_dict else request_data.get('package_type', request_data.get('type'))
         if package_type and package_type in h.recombinant_get_types():
             return_dict[u'error'] = {u'__type': u'Authorization Error',
                                     u'message': _(u'Access denied')}
@@ -1037,16 +1062,6 @@ def _get_package_from_api_request(logic_function, id, context):
         return pkg_dict
     except (NotAuthorized, NotFound):
         return None
-
-
-def _log_api_access(request_data, pkg_dict):
-    org = model.Group.get(pkg_dict.get('owner_org'))
-    g.log_extra = u'org={o} type={t} id={i}'.format(
-        o=org.name,
-        t=pkg_dict.get('type'),
-        i=pkg_dict.get('id'))
-    if 'resource_id' in request_data:
-        g.log_extra += u' rid={0}'.format(request_data['resource_id'])
 
 
 def notice_no_access():
@@ -1301,3 +1316,23 @@ def ckan_admin_portal_sync():
     setattr(g, 'page', extra_vars['page'])
 
     return render('admin/portal_sync.html', extra_vars=extra_vars)
+
+
+@canada_views.route('/util/api-tracking-info/<id>', methods=['GET'])
+def api_tracking_info(id: str):
+    """
+    Returns additional information about an API tracking object,
+    including the decrypted request payload.
+    """
+    try:
+        api_tracking_info = get_action('api_tracking_info_show')({'user': g.user}, {'id': id})
+    except Invalid:
+        return abort(400)
+    except NotFound:
+        return abort(404)
+    except NotAuthorized:
+        return abort(403)
+
+    extra_vars = {'api_tracking_info': api_tracking_info}
+
+    # TODO: make a template, render it here...
