@@ -3,6 +3,7 @@ from typing import Optional, Union
 import json
 import re
 import inspect
+from urllib.parse import urlsplit
 from ckan.plugins.toolkit import config, _, h, g, request
 from ckan.model import User, Package
 from ckanext.activity.model import Activity
@@ -674,7 +675,11 @@ def get_loader_status_badge(resource):
     if not XLoaderFormats:
         return ''
 
-    if not resource.get('url_type') == 'upload' or \
+    allowed_domains = config.get('ckanext.canada.datastore_source_domain_allow_list', [])
+    url = resource.get('url')
+    url_parts = urlsplit(url)
+
+    if (resource.get('url_type') != 'upload' and url_parts.netloc not in allowed_domains) or \
     not XLoaderFormats.is_it_an_xloader_format(resource.get('format')):
         # we only want to show badges for uploads of supported xloader formats
         return ''
