@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-12-03 20:37+0000\n"
+"POT-Creation-Date: 2024-12-16 20:27+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: fr\n"
@@ -286,64 +286,64 @@ msgstr ""
 "Aucune information de synchronisation du portail n'a été trouvée pour le "
 "jeu de données %s"
 
-#: ckanext/canada/plugins.py:752
+#: ckanext/canada/plugins.py:759
 #: ckanext/canada/templates/scheming/package/snippets/package_form.html:25
 msgid "Portal Type"
 msgstr "Type de portail"
 
-#: ckanext/canada/plugins.py:753
+#: ckanext/canada/plugins.py:760
 #: ckanext/canada/templates/package/deleted.html:14
 #: ckanext/canada/templates/user/new_user_form.html:18
 msgid "Organization"
 msgstr "Organisation"
 
-#: ckanext/canada/plugins.py:754
+#: ckanext/canada/plugins.py:761
 msgid "Collection Type"
 msgstr "Type de collection"
 
-#: ckanext/canada/plugins.py:755 ckanext/canada/plugins.py:756
+#: ckanext/canada/plugins.py:762 ckanext/canada/plugins.py:763
 msgid "Keywords"
 msgstr "Mots clés"
 
-#: ckanext/canada/plugins.py:757
+#: ckanext/canada/plugins.py:764
 msgid "Subject"
 msgstr "Sujet"
 
-#: ckanext/canada/plugins.py:758
+#: ckanext/canada/plugins.py:765
 #: ckanext/canada/templates/package/snippets/resource_info.html:13
 #: ckanext/canada/templates/tabledesigner/view_snippets/cra_business_number.html:1
 msgid "Format"
 msgstr "Format"
 
-#: ckanext/canada/plugins.py:759
+#: ckanext/canada/plugins.py:766
 msgid "Resource Type"
 msgstr "Type de ressource"
 
-#: ckanext/canada/plugins.py:760
+#: ckanext/canada/plugins.py:767
 msgid "Maintenance and Update Frequency"
 msgstr "Fréquence d’entretien et de mise à jour"
 
-#: ckanext/canada/plugins.py:761
+#: ckanext/canada/plugins.py:768
 msgid "Record Status"
 msgstr "État du dossier"
 
-#: ckanext/canada/plugins.py:762
+#: ckanext/canada/plugins.py:769
 msgid "IMSO Approval"
 msgstr "Approbation du CSGI"
 
-#: ckanext/canada/plugins.py:763
+#: ckanext/canada/plugins.py:770
 msgid "Jurisdiction"
 msgstr "Juridiction"
 
-#: ckanext/canada/plugins.py:764
+#: ckanext/canada/plugins.py:771
 msgid "Suggestion Status"
 msgstr "État de la suggestion"
 
-#: ckanext/canada/plugins.py:953
+#: ckanext/canada/plugins.py:958
 msgid "Previous"
 msgstr "Précédent"
 
-#: ckanext/canada/plugins.py:953
+#: ckanext/canada/plugins.py:958
 msgid "Next"
 msgstr "Suivant"
 
@@ -900,33 +900,33 @@ msgstr "S’il vous plaît, mettez une adresse email valide."
 msgid "Invalid GeoJSON"
 msgstr "GeoJSON invalide"
 
-#: ckanext/canada/validators.py:259
+#: ckanext/canada/validators.py:251
 msgid "Date may not be in the future when this record is marked ready to publish"
 msgstr ""
 "Une fois que ce document est marqué comme étant prêt à publier, la date "
 "ne peut pas être dans le futur"
 
-#: ckanext/canada/validators.py:336
+#: ckanext/canada/validators.py:328
 msgid "Date format incorrect. Expecting YYYY-MM-DD"
 msgstr "Le format de la date est incorrect. Il devrait être AAAA-MM-JJ"
 
-#: ckanext/canada/validators.py:350 ckanext/canada/validators.py:364
+#: ckanext/canada/validators.py:342 ckanext/canada/validators.py:356
 msgid "Must be a Unicode string value"
 msgstr "Doit être une chaîne de caractères Unicode"
 
-#: ckanext/canada/validators.py:371 ckanext/canada/validators.py:382
+#: ckanext/canada/validators.py:363 ckanext/canada/validators.py:374
 msgid "Must be a JSON string"
 msgstr "Doit être une chaîne JSON"
 
-#: ckanext/canada/validators.py:378
+#: ckanext/canada/validators.py:370
 msgid "JSON object must contain \"en\" key"
 msgstr "L’objet JSON doit contenir la clé \"en\""
 
-#: ckanext/canada/validators.py:380
+#: ckanext/canada/validators.py:372
 msgid "JSON object must contain \"fr\" key"
 msgstr "L’objet JSON doit contenir la clé \"fr\""
 
-#: ckanext/canada/validators.py:532
+#: ckanext/canada/validators.py:524
 #, python-format
 msgid ""
 "Cannot change value of registry_access field from '%s' to '%s'. This "
@@ -938,7 +938,7 @@ msgstr ""
 #: ckanext/canada/templates/package/new_resource.html:19
 #: ckanext/canada/templates/package/new_resource_not_draft.html:11
 #: ckanext/canada/templates/package/read.html:36
-#: ckanext/canada/validators.py:564
+#: ckanext/canada/validators.py:556
 msgid ""
 "You can only add up to {max_resource_count} resources to a dataset. You "
 "can segment your resources across multiple datasets or merge your data to"
@@ -1173,7 +1173,7 @@ msgstr ""
 #. SQL Trigger String for PD Type: wrongdoing
 #: ckanext/canada/tables/adminaircraft.yaml:316
 #: ckanext/canada/tables/contracts.yaml:2185
-#: ckanext/canada/tables/grants.yaml:836
+#: ckanext/canada/tables/grants.yaml:838
 #: ckanext/canada/tables/hospitalityq.yaml:449
 #: ckanext/canada/tables/qpnotes.yaml:332
 #: ckanext/canada/tables/reclassification.yaml:271
@@ -1566,7 +1566,7 @@ msgstr ""
 "et les subventions pour votre organisation"
 
 #. Resource Title for PD Type: grants
-#: ckanext/canada/tables/grants.yaml:885
+#: ckanext/canada/tables/grants.yaml:887
 msgid "Proactive Publication - Grants and Contributions Nothing to Report"
 msgstr ""
 "Publication proactive – Subventions et contributions, rien à "
@@ -3138,39 +3138,39 @@ msgstr " :"
 msgid "Issued by"
 msgstr "Publiée par"
 
-#: ckanext/canada/templates/package/read.html:185
-msgid "Related Items"
-msgstr "Articles connexes"
+#: ckanext/canada/templates/package/read.html:177
+msgid "Dataset Relationships"
+msgstr "Relations entre ensembles de données"
 
-#: ckanext/canada/templates/package/read.html:199
+#: ckanext/canada/templates/package/read.html:187
 msgid "Contact Information"
 msgstr "Coordonnées"
 
-#: ckanext/canada/templates/package/read.html:201
+#: ckanext/canada/templates/package/read.html:189
 msgid "Delivery Point:"
 msgstr "Point de livraison :"
 
-#: ckanext/canada/templates/package/read.html:204
+#: ckanext/canada/templates/package/read.html:192
 msgid "City:"
 msgstr "Ville :"
 
-#: ckanext/canada/templates/package/read.html:207
+#: ckanext/canada/templates/package/read.html:195
 msgid "Administrative Area:"
 msgstr "Zone administrative :"
 
-#: ckanext/canada/templates/package/read.html:210
+#: ckanext/canada/templates/package/read.html:198
 msgid "Postal Code:"
 msgstr "Code postal :"
 
-#: ckanext/canada/templates/package/read.html:213
+#: ckanext/canada/templates/package/read.html:201
 msgid "Country:"
 msgstr "Pays :"
 
-#: ckanext/canada/templates/package/read.html:216
+#: ckanext/canada/templates/package/read.html:204
 msgid "Electronic Mail Address:"
 msgstr "Adresse de courrier électronique :"
 
-#: ckanext/canada/templates/package/read.html:238
+#: ckanext/canada/templates/package/read.html:226
 msgid "Similar records"
 msgstr "Dossiers similaires"
 
@@ -3813,29 +3813,14 @@ msgstr ""
 "Expression ou chaîne unique désignant le dossier de métadonnées dans le "
 "Portail du gouvernement ouvert"
 
-#: ckanext/canada/templates/scheming/package/snippets/resource_form.html:15
-msgid ""
-"You can add either a Resource or a Related Item per session, i.e. not "
-"both:"
-msgstr ""
-"Vous pouvez ajouter une ressource ou un article connexe par séance, mais "
-"pas les deux:"
+#: ckanext/canada/templates/scheming/package/snippets/resource_form.html:17
+msgid "Metadata Fields for Resources"
+msgstr "Champs de métadonnées pour les ressources"
 
-#: ckanext/canada/templates/scheming/package/snippets/resource_form.html:21
-msgid "Metadata Fields for Resources Only (Not for Related Items)"
+#: ckanext/canada/templates/scheming/package/snippets/resource_form.html:29
+msgid "Metadata Fields for Resource Relationships"
 msgstr ""
-"Champs de métadonnées pour les ressources seulement (non pour les "
-"éléments connexes)"
-
-#: ckanext/canada/templates/scheming/package/snippets/resource_form.html:35
-msgid "Metadata Fields for Related Items Only"
-msgstr "Champs de métadonnées pour les éléments connexes seulement"
-
-#: ckanext/canada/templates/scheming/package/snippets/resource_form.html:44
-msgid "Use the Download URL field above to link to the related record."
-msgstr ""
-"Utilisez le champ URL de téléchargement ci-dessus pour créer un lien vers"
-" le dossier connexe."
+"Champs de métadonnées pour les relations entre ressources"
 
 #: ckanext/canada/templates/scheming/snippets/errors.html:5
 msgid "Errors in form"
@@ -8487,4 +8472,22 @@ msgstr "Télécharger vers le DataStore"
 
 #~ msgid "Add Dataset"
 #~ msgstr "Ajouter un jeu de données"
+
+#~ msgid "Related Items"
+#~ msgstr "Articles connexes"
+
+#~ msgid ""
+#~ "You can add either a Resource or"
+#~ " a Related Item per session, i.e. "
+#~ "not both:"
+#~ msgstr ""
+#~ "Vous pouvez ajouter une ressource ou "
+#~ "un article connexe par séance, mais "
+#~ "pas les deux:"
+
+#~ msgid "Use the Download URL field above to link to the related record."
+#~ msgstr ""
+#~ "Utilisez le champ URL de téléchargement"
+#~ " ci-dessus pour créer un lien "
+#~ "vers le dossier connexe."
 
