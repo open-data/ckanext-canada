@@ -586,7 +586,7 @@ class DataGCCAInternal(p.SingletonPlugin):
                                                          {'id': resource_id})
 
             if res.get('url_type') != 'upload' and res.get('url_type') != '' and res.get('url_type') is not None:
-                log.error(
+                log.debug(
                     'Only uploaded resources and white listed sources can be added to the Data Store.')
                 return False
 
@@ -595,7 +595,7 @@ class DataGCCAInternal(p.SingletonPlugin):
                 url = res.get('url')
                 url_parts = urlsplit(url)
                 if url_parts.netloc not in allowed_domains:
-                    log.error(
+                    log.debug(
                         'Only uploaded resources and white listed sources can be added to the Data Store.')
                     return False
 
