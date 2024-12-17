@@ -18,6 +18,7 @@ REMOVE_COLUMNS = [
 
 BOM = "\N{bom}"
 
+
 def main():
     bom = sys.stdin.read(1)  # first code point
     if not bom:
@@ -25,7 +26,6 @@ def main():
         return
     assert bom == BOM
     sys.stdout.write(BOM)
-
 
     reader = csv.DictReader(sys.stdin)
     outnames = [f for f in reader.fieldnames if f not in REMOVE_COLUMNS]
@@ -40,5 +40,6 @@ def main():
                 writer.writerow(row)
         except ValueError:
             pass
+
 
 main()
