@@ -344,7 +344,7 @@ class CanadaDatasetsPlugin(SchemingDatasetsPlugin):
 
     def can_validate(self, context, resource):
         """
-        Only uploaded resources are allowed to be validated, or white listed sources.
+        Only uploaded resources are allowed to be validated, or allowed domain sources.
         """
         if resource.get('url_type') == 'upload':
             return True
@@ -582,7 +582,7 @@ class DataGCCAInternal(p.SingletonPlugin):
 
     def can_upload(self, resource_id):
         """
-        Only uploaded resources are allowed to be xloadered, or white listed sources.
+        Only uploaded resources are allowed to be xloadered, or allowed domain sources.
         """
 
         # check if file is uploded
@@ -592,7 +592,7 @@ class DataGCCAInternal(p.SingletonPlugin):
 
             if res.get('url_type') != 'upload' and res.get('url_type') != '' and res.get('url_type') is not None:
                 log.debug(
-                    'Only uploaded resources and white listed sources can be added to the Data Store.')
+                    'Only uploaded resources and allowed domain sources can be added to the Data Store.')
                 return False
 
             if not res.get('url_type'):
@@ -601,7 +601,7 @@ class DataGCCAInternal(p.SingletonPlugin):
                 url_parts = urlsplit(url)
                 if url_parts.netloc not in allowed_domains:
                     log.debug(
-                        'Only uploaded resources and white listed sources can be added to the Data Store.')
+                        'Only uploaded resources and allowed domain sources can be added to the Data Store.')
                     return False
 
         except ObjectNotFound:
