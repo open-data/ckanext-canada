@@ -2774,27 +2774,27 @@ presets:
 # Field = Related Record URL.
 - preset_name: canada_dataset_related_url
   values:
-    field_name: related_url_translated
+    field_name: related_url
     label:
       en: Related Record URL
-      fr: FR Related Record URL FR
+      fr: URL de l'enregistrement connexe
     help_text:
       en: The URL for online access to the related record
-      fr: FR The URL for online access to the related record FR
+      fr: L'URL pour l'accès en ligne à la fiche connexe
     fluent_form_label:
       en:
-        en: "Related Record URL (English)"
-        fr: "FR Related Record URL (anglais) FR"
+        en: Related Record URL (English)
+        fr: URL de l'enregistrement connexe (anglais)
       fr:
-        en: "Related Record URL (French)"
-        fr: "FR Related Record URL (français) FR"
+        en: Related Record URL (French)
+        fr: URL de l'enregistrement connexe (français)
     fluent_help_text:
       en:
-        en: The URL for online access to the related record
-        fr: FR The URL for online access to the related record FR
+        en: The URL for online access to the related record in English
+        fr: L'URL pour l'accès en ligne à la fiche connexe en anglais
       fr:
-        en: The URL for online access to the related record
-        fr: FR The URL for online access to the related record FR
+        en: The URL for online access to the related record in French
+        fr: L'URL pour l'accès en ligne à la fiche connexe en français
     # copied from fluent_text preset
     form_snippet: fluent_text.html
     display_snippet: fluent_link.html
@@ -2855,19 +2855,19 @@ presets:
     choices:
     - label:
         en: Defines
-        fr: FR Defines FR
+        fr: Définit
       value: defines
     - label:
         en: Defined by
-        fr: FR Defined par FR
+        fr: Défini par
       value: defined_by
     - label:
         en: References
-        fr: FR References FR
+        fr: Références
       value: references
     - label:
         en: Referenced by
-        fr: FR Referenced par FR
+        fr: Référencé par
       value: referenced_by
     form_include_blank_choice: true
     form_snippet: select.html
@@ -4219,7 +4219,7 @@ presets:
     form_panel: relationships
     label:
       en: Relationship
-      fr: FR Relationship FR
+      fr: Relation
     display_snippet: dataset_relationship.html
     form_blanks: 0
 
@@ -4236,7 +4236,7 @@ presets:
     form_panel: relationships
     label:
       en: Relationship
-      fr: FR Relationship FR
+      fr: Relation
     display_snippet: resource_relationship.html
     form_blanks: 0
 

@@ -172,11 +172,11 @@
       {% endif %}
     {% endblock %}
     {% block related_items %}
-      {% if pkg.get('relationship') %}
+      {% if pkg_dict.get('relationship') %}
         <div class="span-6 margin-top-medium clear-both">
           <h2>{{ _('Dataset Relationships') }}</h2>
           {% set relation_field = h.scheming_field_by_name(schema.dataset_fields, 'relationship') %}
-          {% snippet 'scheming/snippets/display_field.html', field=relation_field, data=pkg, entity_type='dataset', object_type=pkg.type %}
+          {% snippet 'scheming/snippets/display_field.html', field=relation_field, data=pkg_dict, entity_type='dataset', object_type=pkg_dict.type %}
         </div>
       {% endif %}
     {% endblock related_items %}
