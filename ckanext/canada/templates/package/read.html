@@ -171,27 +171,15 @@
         {{ super() }}
       {% endif %}
     {% endblock %}
-    {% block package_item_apps %}
-      <div class="span-6 margin-top-medium clear-both">
-        {% set apps = [] %}
-        {% for resource in pkg_dict.resources %}
-          {% if resource.format == 'app' %}
-            {% do apps.append(resource) %}
-          {% endif %}
-        {% endfor %}
-      </div>
-      {% if apps|length > 0 %}
+    {% block related_items %}
+      {% if pkg_dict.get('relationship') %}
         <div class="span-6 margin-top-medium clear-both">
-          <h4>{{ _('Related Items') }}</h4>
-          <ul class="list-unstyled">
-          {% for resource in apps %}
-            {% snippet 'package/snippets/app_item.html', pkg=pkg_dict, res=resource, res_num=loop.index, client_lang=client_lang %}
-          {% endfor %}
-          </ul>
+          <h2>{{ _('Dataset Relationships') }}</h2>
+          {% set relation_field = h.scheming_field_by_name(schema.dataset_fields, 'relationship') %}
+          {% snippet 'scheming/snippets/display_field.html', field=relation_field, data=pkg_dict, entity_type='dataset', object_type=pkg_dict.type %}
         </div>
       {% endif %}
-    {% endblock %}
-    {% block related_items %}{% endblock related_items %}
+    {% endblock related_items %}
     {% block contact_information %}
       {% set info = h.contact_information(pkg_dict.get('contact_information')) %}
       {% if info %}

@@ -344,7 +344,7 @@ class CanadaDatasetsPlugin(SchemingDatasetsPlugin):
 
     def can_validate(self, context, resource):
         """
-        Only uploaded resources are allowed to be validated, or white listed sources.
+        Only uploaded resources are allowed to be validated, or allowed domain sources.
         """
         if resource.get('url_type') == 'upload':
             return True
@@ -458,6 +458,11 @@ class CanadaDatasetsPlugin(SchemingDatasetsPlugin):
                 cr.pop('__extras', None)
                 # credit is a string multiValue in SOLR, need to json stringify for SOLR 9+
                 data_dict['credit'][i] = json.dumps(cr)
+
+        if data_dict.get('relationship'):
+            data_dict['related_relationship'] = [rel['related_relationship'] for rel in data_dict['relationship']]
+            data_dict['related_type'] = [rel['related_type'] for rel in data_dict['relationship']]
+        data_dict.pop('relationship', None)
 
         return data_dict
 
@@ -577,7 +582,7 @@ class DataGCCAInternal(p.SingletonPlugin):
 
     def can_upload(self, resource_id):
         """
-        Only uploaded resources are allowed to be xloadered, or white listed sources.
+        Only uploaded resources are allowed to be xloadered, or allowed domain sources.
         """
 
         # check if file is uploded
@@ -587,7 +592,7 @@ class DataGCCAInternal(p.SingletonPlugin):
 
             if res.get('url_type') != 'upload' and res.get('url_type') != '' and res.get('url_type') is not None:
                 log.debug(
-                    'Only uploaded resources and white listed sources can be added to the Data Store.')
+                    'Only uploaded resources and allowed domain sources can be added to the Data Store.')
                 return False
 
             if not res.get('url_type'):
@@ -596,7 +601,7 @@ class DataGCCAInternal(p.SingletonPlugin):
                 url_parts = urlsplit(url)
                 if url_parts.netloc not in allowed_domains:
                     log.debug(
-                        'Only uploaded resources and white listed sources can be added to the Data Store.')
+                        'Only uploaded resources and allowed domain sources can be added to the Data Store.')
                     return False
 
         except ObjectNotFound:
@@ -900,8 +905,6 @@ class DataGCCAForms(p.SingletonPlugin, DefaultDatasetForm):
                 validators.protect_portal_release_date,
             'canada_copy_from_org_name':
                 validators.canada_copy_from_org_name,
-            'canada_non_related_required':
-                validators.canada_non_related_required,
             'canada_maintainer_email_default':
                 validators.canada_maintainer_email_default,
             'user_read_only':

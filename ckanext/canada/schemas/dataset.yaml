@@ -453,6 +453,7 @@ dataset_fields:
       en: FGP viewer is supported
     value: fgp_viewer
 
+- preset: canada_dataset_relationship
 
 
 #
@@ -462,16 +463,17 @@ resource_fields:
 
 - preset: canada_resource_unique_identifier
 - preset: canada_resource_name
-- preset: canada_resource_related_relationship
-- preset: canada_resource_related_type
+- preset: canada_resource_relationship
 - preset: canada_resource_date_published
 - preset: canada_resource_type
   form_restrict_choices_to:
   - application
   - api
+  - data_dictionary
   - dataset
   - guide
   - faq
+  - schema
   - specification
   - terminology
   - tool
@@ -489,3 +491,7 @@ resource_fields:
 - preset: canada_resource_validation_options
 - preset: canada_resource_validation_status
 - preset: canada_resource_validation_timestamp
+
+# LEGACY FIELDS
+- preset: _legacy_canada_related_type
+- preset: _legacy_canada_related_relationship

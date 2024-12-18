@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ckanext-canada 0.4.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-12-03 20:37+0000\n"
+"POT-Creation-Date: 2024-12-16 20:27+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -254,63 +254,63 @@ msgstr ""
 msgid "No Portal Sync information found for package %s"
 msgstr ""
 
-#: ckanext/canada/plugins.py:752
+#: ckanext/canada/plugins.py:759
 #: ckanext/canada/templates/scheming/package/snippets/package_form.html:25
 msgid "Portal Type"
 msgstr ""
 
-#: ckanext/canada/plugins.py:753 ckanext/canada/templates/package/deleted.html:14
+#: ckanext/canada/plugins.py:760 ckanext/canada/templates/package/deleted.html:14
 #: ckanext/canada/templates/user/new_user_form.html:18
 msgid "Organization"
 msgstr ""
 
-#: ckanext/canada/plugins.py:754
+#: ckanext/canada/plugins.py:761
 msgid "Collection Type"
 msgstr ""
 
-#: ckanext/canada/plugins.py:755 ckanext/canada/plugins.py:756
+#: ckanext/canada/plugins.py:762 ckanext/canada/plugins.py:763
 msgid "Keywords"
 msgstr ""
 
-#: ckanext/canada/plugins.py:757
+#: ckanext/canada/plugins.py:764
 msgid "Subject"
 msgstr ""
 
-#: ckanext/canada/plugins.py:758
+#: ckanext/canada/plugins.py:765
 #: ckanext/canada/templates/package/snippets/resource_info.html:13
 #: ckanext/canada/templates/tabledesigner/view_snippets/cra_business_number.html:1
 msgid "Format"
 msgstr ""
 
-#: ckanext/canada/plugins.py:759
+#: ckanext/canada/plugins.py:766
 msgid "Resource Type"
 msgstr ""
 
-#: ckanext/canada/plugins.py:760
+#: ckanext/canada/plugins.py:767
 msgid "Maintenance and Update Frequency"
 msgstr ""
 
-#: ckanext/canada/plugins.py:761
+#: ckanext/canada/plugins.py:768
 msgid "Record Status"
 msgstr ""
 
-#: ckanext/canada/plugins.py:762
+#: ckanext/canada/plugins.py:769
 msgid "IMSO Approval"
 msgstr ""
 
-#: ckanext/canada/plugins.py:763
+#: ckanext/canada/plugins.py:770
 msgid "Jurisdiction"
 msgstr ""
 
-#: ckanext/canada/plugins.py:764
+#: ckanext/canada/plugins.py:771
 msgid "Suggestion Status"
 msgstr ""
 
-#: ckanext/canada/plugins.py:953
+#: ckanext/canada/plugins.py:958
 msgid "Previous"
 msgstr ""
 
-#: ckanext/canada/plugins.py:953
+#: ckanext/canada/plugins.py:958
 msgid "Next"
 msgstr ""
 
@@ -828,31 +828,31 @@ msgstr ""
 msgid "Invalid GeoJSON"
 msgstr ""
 
-#: ckanext/canada/validators.py:259
+#: ckanext/canada/validators.py:251
 msgid "Date may not be in the future when this record is marked ready to publish"
 msgstr ""
 
-#: ckanext/canada/validators.py:336
+#: ckanext/canada/validators.py:328
 msgid "Date format incorrect. Expecting YYYY-MM-DD"
 msgstr ""
 
-#: ckanext/canada/validators.py:350 ckanext/canada/validators.py:364
+#: ckanext/canada/validators.py:342 ckanext/canada/validators.py:356
 msgid "Must be a Unicode string value"
 msgstr ""
 
-#: ckanext/canada/validators.py:371 ckanext/canada/validators.py:382
+#: ckanext/canada/validators.py:363 ckanext/canada/validators.py:374
 msgid "Must be a JSON string"
 msgstr ""
 
-#: ckanext/canada/validators.py:378
+#: ckanext/canada/validators.py:370
 msgid "JSON object must contain \"en\" key"
 msgstr ""
 
-#: ckanext/canada/validators.py:380
+#: ckanext/canada/validators.py:372
 msgid "JSON object must contain \"fr\" key"
 msgstr ""
 
-#: ckanext/canada/validators.py:532
+#: ckanext/canada/validators.py:524
 #, python-format
 msgid ""
 "Cannot change value of registry_access field from '%s' to '%s'. This field is"
@@ -861,7 +861,7 @@ msgstr ""
 
 #: ckanext/canada/templates/package/new_resource.html:19
 #: ckanext/canada/templates/package/new_resource_not_draft.html:11
-#: ckanext/canada/templates/package/read.html:36 ckanext/canada/validators.py:564
+#: ckanext/canada/templates/package/read.html:36 ckanext/canada/validators.py:556
 msgid ""
 "You can only add up to {max_resource_count} resources to a dataset. You can "
 "segment your resources across multiple datasets or merge your data to limit "
@@ -1067,7 +1067,7 @@ msgstr ""
 #. SQL Trigger String for PD Type: travelq
 #. SQL Trigger String for PD Type: wrongdoing
 #: ckanext/canada/tables/adminaircraft.yaml:316
-#: ckanext/canada/tables/contracts.yaml:2185 ckanext/canada/tables/grants.yaml:836
+#: ckanext/canada/tables/contracts.yaml:2185 ckanext/canada/tables/grants.yaml:838
 #: ckanext/canada/tables/hospitalityq.yaml:449
 #: ckanext/canada/tables/qpnotes.yaml:332
 #: ckanext/canada/tables/reclassification.yaml:271
@@ -1391,7 +1391,7 @@ msgid ""
 msgstr ""
 
 #. Resource Title for PD Type: grants
-#: ckanext/canada/tables/grants.yaml:885
+#: ckanext/canada/tables/grants.yaml:887
 msgid "Proactive Publication - Grants and Contributions Nothing to Report"
 msgstr ""
 
@@ -2670,39 +2670,39 @@ msgstr ""
 msgid "Issued by"
 msgstr ""
 
-#: ckanext/canada/templates/package/read.html:185
-msgid "Related Items"
+#: ckanext/canada/templates/package/read.html:177
+msgid "Dataset Relationships"
 msgstr ""
 
-#: ckanext/canada/templates/package/read.html:199
+#: ckanext/canada/templates/package/read.html:187
 msgid "Contact Information"
 msgstr ""
 
-#: ckanext/canada/templates/package/read.html:201
+#: ckanext/canada/templates/package/read.html:189
 msgid "Delivery Point:"
 msgstr ""
 
-#: ckanext/canada/templates/package/read.html:204
+#: ckanext/canada/templates/package/read.html:192
 msgid "City:"
 msgstr ""
 
-#: ckanext/canada/templates/package/read.html:207
+#: ckanext/canada/templates/package/read.html:195
 msgid "Administrative Area:"
 msgstr ""
 
-#: ckanext/canada/templates/package/read.html:210
+#: ckanext/canada/templates/package/read.html:198
 msgid "Postal Code:"
 msgstr ""
 
-#: ckanext/canada/templates/package/read.html:213
+#: ckanext/canada/templates/package/read.html:201
 msgid "Country:"
 msgstr ""
 
-#: ckanext/canada/templates/package/read.html:216
+#: ckanext/canada/templates/package/read.html:204
 msgid "Electronic Mail Address:"
 msgstr ""
 
-#: ckanext/canada/templates/package/read.html:238
+#: ckanext/canada/templates/package/read.html:226
 msgid "Similar records"
 msgstr ""
 
@@ -3264,20 +3264,12 @@ msgid ""
 "Open Government Portal"
 msgstr ""
 
-#: ckanext/canada/templates/scheming/package/snippets/resource_form.html:15
-msgid "You can add either a Resource or a Related Item per session, i.e. not both:"
+#: ckanext/canada/templates/scheming/package/snippets/resource_form.html:17
+msgid "Metadata Fields for Resources"
 msgstr ""
 
-#: ckanext/canada/templates/scheming/package/snippets/resource_form.html:21
-msgid "Metadata Fields for Resources Only (Not for Related Items)"
-msgstr ""
-
-#: ckanext/canada/templates/scheming/package/snippets/resource_form.html:35
-msgid "Metadata Fields for Related Items Only"
-msgstr ""
-
-#: ckanext/canada/templates/scheming/package/snippets/resource_form.html:44
-msgid "Use the Download URL field above to link to the related record."
+#: ckanext/canada/templates/scheming/package/snippets/resource_form.html:29
+msgid "Metadata Fields for Resource Relationships"
 msgstr ""
 
 #: ckanext/canada/templates/scheming/snippets/errors.html:5
