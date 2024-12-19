@@ -1,6 +1,7 @@
 import pytest
 from ckan.lib import uploader
 
+
 @pytest.fixture
 def mock_uploads(ckan_config, monkeypatch, tmp_path):
     def mock_get_storage_path():

@@ -23,8 +23,8 @@ def main(argv):
                 outfile = arg
 
     except Exception:
-        print('Usage: ckanapi dump organizations --all -c $CONFIG_INI | ' \
-              'python bin/migrate-org-to-scheming.py -o/--output ' \
+        print('Usage: ckanapi dump organizations --all -c $CONFIG_INI | '
+              'python bin/migrate-org-to-scheming.py -o/--output '
               'outfile.jsonl ')
         sys.exit(1)
 

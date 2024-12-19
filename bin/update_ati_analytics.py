@@ -35,20 +35,31 @@ def get_smb_file():
     check_paths = [
         '/opt/tbs/ckan/smb_portal/portal/public/ati-informal-requests-analytics.csv',
         '/opt/tbs/ckan/smb/portal/public/ati-informal-requests-analytics.csv',
-        '/opt/tbs/ckan/smb_portal/portal/public/static/ati-informal-requests-analytics.csv',
-        '/opt/tbs/ckan/smb/portal/public/static/ati-informal-requests-analytics.csv',]
+        '/opt/tbs/ckan/smb_portal/portal/public/static/'
+        'ati-informal-requests-analytics.csv',
+        '/opt/tbs/ckan/smb/portal/public/static/'
+        'ati-informal-requests-analytics.csv',]
     for file in check_paths:
         if os.path.isfile(file):
             return file
-    error_message('/opt/tbs/ckan/[smb_portal|smb]/portal/public/[static/]ati-informal-requests-analytics.csv does not exist.')
+    error_message(
+        '/opt/tbs/ckan/[smb_portal|smb]/portal/public/[static/]'
+        'ati-informal-requests-analytics.csv does not exist.')
 
 
-@click.command(short_help="Filters ATI Informal Analytics CSV and uploads to Registry Resource.")
-@click.option('-c', '--config', required=True, envvar='REGISTRY_INI', type=click.File('r'),
-              help='CKAN config INI file. Defaults to the $REGISTRY_INI environment variable.')
-@click.option('-r', '--resource-id', required=False, type=click.STRING, default='e664cf3d-6cb7-4aaa-adfa-e459c2552e3e',
-              help='Resource ID to patch the file to. Defaults to e664cf3d-6cb7-4aaa-adfa-e459c2552e3e.')
-@click.option('-v', '--verbose', is_flag=True, type=click.BOOL, help='Increase verbosity.')
+@click.command(
+        short_help="Filters ATI Informal Analytics CSV "
+                   "and uploads to Registry Resource.")
+@click.option('-c', '--config', required=True,
+              envvar='REGISTRY_INI', type=click.File('r'),
+              help='CKAN config INI file. Defaults to the '
+                   '$REGISTRY_INI environment variable.')
+@click.option('-r', '--resource-id', required=False,
+              type=click.STRING, default='e664cf3d-6cb7-4aaa-adfa-e459c2552e3e',
+              help='Resource ID to patch the file to. '
+                   'Defaults to e664cf3d-6cb7-4aaa-adfa-e459c2552e3e.')
+@click.option('-v', '--verbose', is_flag=True,
+              type=click.BOOL, help='Increase verbosity.')
 def update(config, resource_id, verbose):
     """
     Filters ATI Informal Analytics CSV and uploads to Registry Resource.
@@ -65,6 +76,7 @@ def update(config, resource_id, verbose):
     skipped_rows = 0
     command = ['ckanapi', 'action', 'resource_patch', '--config=%s' % config.name,
                'id=%s' % resource_id, 'upload@%s' % temp_file]
+
     try:
         with open(generated_file, 'r') as df:
             reader = csv.DictReader(df)
@@ -81,27 +93,36 @@ def update(config, resource_id, verbose):
                         elif '%sYear' % BOM in row:
                             year_key = '%sYear' % BOM
                         else:
-                            errors.write('Failed to patch resource %s with errors:\n\nCannot find Year header.' % resource_id)
+                            errors.write('Failed to patch resource %s '
+                                         'with errors:\n\nCannot find Year header.'
+                                         % resource_id)
                             raise LookupError
-                        if int(row[year_key]) == int(today.year) and int(row['Month']) == int(today.month):
+                        if (
+                          int(row[year_key]) == int(today.year) and
+                          int(row['Month']) == int(today.month)):
                             skipped_rows += 1
                             if verbose:
-                                click.echo('Skipping row %s, excluding Y,M: %s,%s' % (row_index, int(row[year_key]), int(row['Month'])))
+                                click.echo('Skipping row %s, excluding Y,M: %s,%s' %
+                                           (row_index, int(row[year_key]),
+                                            int(row['Month'])))
                             continue
                         writer.writerow(row)
                     except ValueError:
                         pass
                     row_index += 1
         if skipped_rows:
-            success_message('Filtered %s rows, excluded Y,M: %s,%s' % (skipped_rows, today.year, today.month))
+            success_message('Filtered %s rows, excluded Y,M: %s,%s' %
+                            (skipped_rows, today.year, today.month))
         if verbose:
-            success_message('Executing command:\n\n%s\n' % subprocess.list2cmdline(command))
+            success_message('Executing command:\n\n%s\n' %
+                            subprocess.list2cmdline(command))
         p = subprocess.run(command)
         p.check_returncode()
     except LookupError:
         pass
     except Exception as e:
-        errors.write('Failed to patch resource %s with errors:\n\n%s' % (resource_id, e))
+        errors.write('Failed to patch resource %s with errors:\n\n%s' %
+                     (resource_id, e))
         if verbose:
             errors.write('\n')
             traceback.print_exc(file=errors)

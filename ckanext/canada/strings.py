@@ -1,8 +1,9 @@
 # coding=UTF-8
 """
-Copies of strings that need translations but babel can't find, e.g. text embedded in triggers
+Copies of strings that need translations
+but babel can't find, e.g. text embedded in triggers
 """
-_ = lambda x: x
+_ = lambda x: x  # noqa: E731
 
 # CKAN Core
 # Include any custom strings put into our CKAN fork.

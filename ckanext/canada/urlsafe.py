@@ -3,6 +3,7 @@
 import codecs
 import re
 
+
 def url_part_escape(orig):
     """
     simple encoding for url-parts where all non-alphanumerics are
@@ -14,9 +15,10 @@ def url_part_escape(orig):
     return '_'.join(
         codecs.encode(s.encode('utf-8'), 'hex').decode('ascii') if i % 2 else s
         for i, s in enumerate(
-            re.split(u'([^-a-zA-Z0-9]+)', orig)
+            re.split(r'([^-a-zA-Z0-9]+)', orig)
         )
     )
+
 
 def url_part_unescape(urlpart):
     """

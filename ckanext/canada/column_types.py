@@ -1,8 +1,10 @@
 from ckanext.tabledesigner.column_types import ChoiceColumn, TextColumn
 from ckanext.datastore.backend.postgres import literal_string, identifier
 
+
 def _(x):
     return x
+
 
 class Province(ChoiceColumn):
     label = _("Canadian Province or Territory")

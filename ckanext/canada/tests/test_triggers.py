@@ -31,7 +31,6 @@ class TestCanadaTriggers(CanadaTestBase):
         self.editor2_action = LocalCKAN(username=self.editor2['name']).action
         self.sys_action = LocalCKAN().action
 
-
     def _setup_pd(self, type, nil_type=None):
         assert type
 
@@ -54,7 +53,6 @@ class TestCanadaTriggers(CanadaTestBase):
 
         return rval['resources'][0]['id'], rval['resources'][1]['id'] if nil_type else None
 
-
     def test_update_record_modified_created_trigger(self):
         """
         The update_record_modified_created_trigger has a lot of scenarios
@@ -72,7 +70,7 @@ class TestCanadaTriggers(CanadaTestBase):
         """
         resource_id, nil_resource_id = self._setup_pd(type='ati', nil_type='ati-nil')
 
-        #NOTE: we use datastore_search_sql to get nanosecond timestamps
+        # NOTE: we use datastore_search_sql to get nanosecond timestamps
 
         chromo = get_chromo('ati')
 
@@ -194,7 +192,6 @@ class TestCanadaTriggers(CanadaTestBase):
         # sysadmin upserts should  NOT get a new record_modified, when it is not supplied
         assert record['record_modified'] != initial_modified_time
         assert record['record_modified'] == new_modified_time
-
 
     def test_money_type_rounding(self):
         """

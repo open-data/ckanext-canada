@@ -10,6 +10,7 @@ import sys
 
 FILTER_COLUMN = "eligible_for_release"
 
+
 def main():
     reader = csv.DictReader(sys.stdin)
     writer = csv.DictWriter(sys.stdout, reader.fieldnames)

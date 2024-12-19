@@ -11,6 +11,7 @@ import sys
 
 FILTER_COLUMN = "disclosure_group"
 
+
 def main():
     reader = csv.DictReader(sys.stdin)
     writer = csv.DictWriter(sys.stdout, reader.fieldnames)
@@ -21,5 +22,6 @@ def main():
                 writer.writerow(row)
         except ValueError:
             pass
+
 
 main()

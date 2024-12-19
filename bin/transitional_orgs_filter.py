@@ -7,7 +7,8 @@ to another ckan instance.
 
 Usage:
 
-ckanapi dump organizations --all -r http://registry.data.gc.ca | bin/transitional_orgs_filter.py > transitional_orgs.jsonl
+ckanapi dump organizations --all -r http://registry.data.gc.ca |
+    bin/transitional_orgs_filter.py > transitional_orgs.jsonl
 """
 
 import sys
@@ -17,15 +18,15 @@ from logging import getLogger
 
 log = getLogger(__name__)
 
-filtered_fields = {u'id', u'name', u'title', u'title_translated',
-                   u'department_number', u'umd_number', u'shortform',
-                   u'ati_email', u'opengov_email', u'faa_schedule',
-                   u'registry_access',}
+filtered_fields = {'id', 'name', 'title', 'title_translated',
+                   'department_number', 'umd_number', 'shortform',
+                   'ati_email', 'opengov_email', 'faa_schedule',
+                   'registry_access'}
 
 users = '--users' in sys.argv
 
-for l in sys.stdin:
-    o = json.loads(l)
+for stdline in sys.stdin:
+    o = json.loads(stdline)
     line = {}
     for key in o:
         if key in filtered_fields:

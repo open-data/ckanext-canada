@@ -8,10 +8,12 @@ import json
 
 from codecs import BOM_UTF8
 
-assert sys.argv[1] and sys.argv[2], 'usage: amendment_delta_records.py input.csv output.csv'
+assert sys.argv[1] and sys.argv[2], \
+       'usage: amendment_delta_records.py input.csv output.csv'
 AMENDMENT_COLUMN = 'amendment_number'
 OWNER_ORG = 'owner_org'
 OWNER_ORG_TITLE = 'owner_org_title'
+
 
 def batch_owner_org_pk(c):
     'yield groups of records with the same owner_org and pk values'
@@ -54,7 +56,7 @@ with tempfile.NamedTemporaryFile() as dbfile:
             original = json.dumps(line)
 
             c.execute('INSERT INTO records VALUES (?,?,?,?)',
-                (owner_org, pk, amendment, original))
+                      (owner_org, pk, amendment, original))
 
     with open(sys.argv[2], 'wb') as outfile:
         outfile.write(BOM_UTF8)  # we are in write,bytes mode
@@ -77,9 +79,11 @@ with tempfile.NamedTemporaryFile() as dbfile:
             for i, row in iterator:
                 row[AMENDMENT_COLUMN] = "%02d" % i
                 out_csv.writerow({
-                    k: v for (k, v) in row.items()
-                    if k in (f0, AMENDMENT_COLUMN, OWNER_ORG, OWNER_ORG_TITLE)
-                        or v != prev[k]})
+                    k:
+                        v for (k, v) in row.items() if
+                        k in (f0, AMENDMENT_COLUMN, OWNER_ORG, OWNER_ORG_TITLE) or
+                        v != prev[k]
+                })
                 prev = row
 
             row[AMENDMENT_COLUMN] = 'current'

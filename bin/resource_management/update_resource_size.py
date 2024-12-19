@@ -14,7 +14,7 @@ import csv
 import ckanapi
 import ckan
 
-source = ckanapi.RemoteCKAN(sys.argv[1],apikey=sys.argv[2])
+source = ckanapi.RemoteCKAN(sys.argv[1], apikey=sys.argv[2])
 file_report = sys.argv[3]
 print("Updating resource file sizes")
 with open(file_report) as csvfile:
@@ -28,7 +28,7 @@ with open(file_report) as csvfile:
                 continue
             s = source.action.resource_show(id=resource_id)
             s = source.action.resource_patch(id=resource_id, size=new_size)
-            print("Updated: ",[uuid, resource_id,s.get("size")])
-        except ckan.logic.NotFound as e:
+            print("Updated: ", [uuid, resource_id, s.get("size")])
+        except ckan.logic.NotFound:
             print("{0} dataset not found".format(uuid))
 print("done")

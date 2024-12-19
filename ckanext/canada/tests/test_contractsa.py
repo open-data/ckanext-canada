@@ -24,13 +24,11 @@ class TestContractsA(CanadaTestBase):
 
         self.resource_id = rval['resources'][0]['id']
 
-
     def test_example(self):
         record = get_chromo('contractsa')['examples']['record']
         self.lc.action.datastore_upsert(
             resource_id=self.resource_id,
             records=[record])
-
 
     def test_blank(self):
         with pytest.raises(ValidationError) as ve:
@@ -40,7 +38,6 @@ class TestContractsA(CanadaTestBase):
         err = ve.value.error_dict
         assert 'key' in err
         assert 'year' in err['key'][0]
-
 
     def test_year(self):
         record = dict(
