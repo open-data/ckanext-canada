@@ -7,7 +7,7 @@ from ckan.plugins.toolkit import ValidationError, ObjectNotFound
 
 from ckanext.datastore.backend import postgres as db
 from ckanext.xloader.interfaces import IXloader
-from ckanext.canada.plugin import CanadaValidationPlugin
+from ckanext.canada.plugin.validation_plugin import CanadaValidationPlugin
 from ckanext.canada import logic
 from ckanext.canada import auth
 
