@@ -151,7 +151,8 @@ class PortalUpdater(object):
         registry = LocalCKAN()
         source_datastore_uri = str(datastore.get_write_engine().url)
 
-        def changed_package_id_runs(start_date, verbose: Optional[bool] = False):
+        def changed_package_id_runs(start_date: str,
+                                    verbose: Optional[bool] = False):
             # retrieve a list of changed packages from the registry
             while True:
                 packages, next_date = _changed_packages_since(
@@ -361,8 +362,10 @@ def _copy_datasets(source_datastore_uri: Optional[Union[str, None]],
                 """
                 Context manager to handle exceptions for Package actions.
                 """
-                nonlocal failure_reason, failure_trace, error, \
-                do_update_sync_success_time
+                nonlocal failure_reason, \
+                    failure_trace, \
+                    error, \
+                    do_update_sync_success_time
                 try:
                     yield
                 except Exception as e:
@@ -736,8 +739,8 @@ def _load_suggested(use_created_date, filename):
                 if (
                   record['owner_org'] != existing_suggestions
                   [uuid]['organization']['name']):
-                    existing_org = existing_suggestions[uuid]\
-                    ['organization']['title'].split(' | ')
+                    existing_org = existing_suggestions[uuid]['organization']['title']\
+                        .split(' | ')
                     updated_status = {
                         "reason": 'transferred',
                         "date": today,
@@ -1406,7 +1409,8 @@ def changed_datasets(since_date: str,
     help="Use date_created field for date forwarded to "
          "data owner and other statuses instead of today's date",
 )
-def load_suggested(suggested_datasets_csv, use_created_date = False):
+def load_suggested(suggested_datasets_csv: str,
+                   use_created_date: Optional[bool] = False):
     """
     A process that loads suggested datasets from Drupal into CKAN
 
@@ -1625,9 +1629,10 @@ def _get_datastore_resources(valid: Optional[bool] = True,
                     if _resource.get('id') in datastore_resources:
                         continue
                     # we only want upload or link types
-                    if _resource.get('url_type') != 'upload' and \
-                        _resource.get('url_type') != '':
-                            continue
+                    if (
+                      _resource.get('url_type') != 'upload' and
+                      _resource.get('url_type') != ''):
+                        continue
                     if is_datastore_active and not _resource.get('datastore_active'):
                         continue
                     if not is_datastore_active and _resource.get('datastore_active'):
@@ -1841,15 +1846,15 @@ def set_datastore_false_for_invalid_resources(
               help='Run validation jobs in sync mode.')
 @click.option('-i', '--skip-xloader', is_flag=True, type=click.BOOL,
               help='Skip submitting to Xloader after Validation.')
-def resubmit_datastore_resources(resource_id = None,
-                                 empty_only = False,
-                                 verbose = False,
-                                 quiet = False,
-                                 list = False,
-                                 xloader = False,
-                                 failed = False,
-                                 sync = False,
-                                 skip_xloader = False):
+def resubmit_datastore_resources(resource_id: Optional[Union[str, None]] = None,
+                                 empty_only: Optional[bool] = False,
+                                 verbose: Optional[bool] = False,
+                                 quiet: Optional[bool] = False,
+                                 list: Optional[bool] = False,
+                                 xloader: Optional[bool] = False,
+                                 failed: Optional[bool] = False,
+                                 sync: Optional[bool] = False,
+                                 skip_xloader: Optional[bool] = False):
     """
     Re-submits valid DataStore Resources to Validation OR Xloader (use --xloader).
     """
@@ -2119,9 +2124,12 @@ def resubmit_datastore_resources(resource_id = None,
 @click.option('-e', '--any-empty', is_flag=True,
               type=click.BOOL,
               help='Deletes any empty DataStore tables, valid or invalid Resources.')
-def delete_invalid_datastore_tables(resource_id = None, delete_table_views = False,
-                                    verbose = False, quiet = False, list = False,
-                                    any_empty = False):
+def delete_invalid_datastore_tables(resource_id: Optional[Union[str, None]] = None,
+                                    delete_table_views: Optional[bool] = False,
+                                    verbose: Optional[bool] = False,
+                                    quiet: Optional[bool] = False,
+                                    list: Optional[bool] = False,
+                                    any_empty: Optional[bool] = False):
     """
     Deletes Invalid Resources DataStore tables. Even if the table is not empty.
     """
@@ -2203,8 +2211,11 @@ def delete_invalid_datastore_tables(resource_id = None, delete_table_views = Fal
 @click.option('-l', '--list', is_flag=True,
               type=click.BOOL,
               help='List the Resource IDs instead of deleting their table views.')
-def delete_table_view_from_non_datastore_resources(resource_id = None, verbose = False,
-                                                   quiet = False, list = False):
+def delete_table_view_from_non_datastore_resources(
+        resource_id: Optional[Union[str, None]] = None,
+        verbose: Optional[bool] = False,
+        quiet: Optional[bool] = False,
+        list: Optional[bool] = False):
     """
     Deletes all datatable views from Resources that are not datastore_active.
     """
@@ -2315,7 +2326,8 @@ def delete_table_view_from_non_datastore_resources(resource_id = None, verbose =
               help="Suppress human interaction.", default=False)
 @click.option("-v", "--verbose", is_flag=True,
               help="Increase verbosity", default=False)
-def resolve_duplicate_emails(quiet = False, verbose = False):
+def resolve_duplicate_emails(quiet: Optional[bool] = False,
+                             verbose: Optional[bool] = False):
     """
     Resolve duplicate emails by deactivating all but the first created user.
     """
@@ -2378,8 +2390,12 @@ def resolve_duplicate_emails(quiet = False, verbose = False):
 @click.option('-p', '--package-id', type=click.STRING,
               default='c4c5c7f1-bfa6-4ff6-b4a0-c164cb2060f7',
               help='Dataset ID, defaults to c4c5c7f1-bfa6-4ff6-b4a0-c164cb2060f7')
-def openness_report(verbose = False, details = False, dump = False,
-                    package_id = 'c4c5c7f1-bfa6-4ff6-b4a0-c164cb2060f7'):
+def openness_report(
+        verbose: Optional[bool] = False,
+        details: Optional[bool] = False,
+        dump: Optional[bool] = False,
+        package_id: Optional[str] = 'c4c5c7f1-bfa6-4ff6-b4a0-c164cb2060f7'):
+
     lc = LocalCKAN()
 
     try:
@@ -2452,7 +2468,7 @@ def openness_report(verbose = False, details = False, dump = False,
         out.writerow(["Department Name Englist | Nom du ministère en français",
                       "Title English | Titre en français",
                       "URL",
-                      "Openness Rating | Cote d'ouverture",])
+                      "Openness Rating | Cote d'ouverture"])
         for k in orgs:
             rlist = reports[k]
             for r in rlist:
@@ -2483,7 +2499,7 @@ def openness_report(verbose = False, details = False, dump = False,
     out.writerow([
         "Department Name English / Nom du ministère en anglais",
         "Department Name French / Nom du ministère en français",
-        "Openness report (score:count) / Rapport d'ouverture (score: compter)",])
+        "Openness report (score:count) / Rapport d'ouverture (score: compter)"])
     for k, v in reports.items():
         names = list(map(lambda x: x.strip(), k.split('|')))
         line = [names[0], names[1], dict(v)]
@@ -2497,7 +2513,7 @@ def openness_report(verbose = False, details = False, dump = False,
 @canada.command(short_help="Deletes old database triggers.")
 @click.option('-v', '--verbose', is_flag=True,
               type=click.BOOL, help='Increase verbosity.')
-def delete_old_triggers(verbose = False):
+def delete_old_triggers(verbose: Optional[bool] = False):
     """
     Delete old, unused database triggers.
     """
@@ -2508,7 +2524,7 @@ def delete_old_triggers(verbose = False):
     _drop_function('inventory_trigger', verbose)
 
 
-def _drop_function(name, verbose = False):
+def _drop_function(name: str, verbose: Optional[bool] = False):
     sql = '''
         DROP FUNCTION {name};
         '''.format(name=datastore.identifier(name))

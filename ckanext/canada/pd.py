@@ -1,14 +1,18 @@
+# NOTE: used to connect to the SOLR cores for Drupal PD Searches
+# TODO: remove once all PDs are in Django
+from typing import Optional, Union
+
 import click
 import os
 import hashlib
 import calendar
 import time
+from pysolr import Solr
 from babel.numbers import format_currency, format_decimal
 
 from ckanapi import LocalCKAN, NotFound
 
 from ckanext.recombinant.tables import (
-    get_geno,
     get_chromo,
     get_dataset_types)
 from ckanext.recombinant.errors import RecombinantException
@@ -30,7 +34,7 @@ def get_commands():
     return pd
 
 
-def _check_pd_type(pd_type):
+def _check_pd_type(pd_type: str):
     if pd_type not in get_dataset_types():
         raise RecombinantException(f'PD Type "{pd_type}" does not exist')
 
@@ -50,7 +54,7 @@ def list_types():
 
 @pd.command(short_help="Clear all SOLR records.")
 @click.argument("pd_type")
-def clear(pd_type):
+def clear(pd_type: str):
     _check_pd_type(pd_type)
     clear_index(pd_type)
 
@@ -60,14 +64,16 @@ def clear(pd_type):
 @click.option(
     "--lenient",
     is_flag=True,
-    help="Allow rebuild from csv files without checking hat columns match expected columns.",
+    help="Allow rebuild from csv files without "
+         "checking hat columns match expected columns.",
 )
 @click.option(
     "-f",
     "--files",
     default=None,
     multiple=True,
-    help="CSV file(s) to use as input (or default CKAN DB). Use PD and PD-nil files for NIL types.",
+    help="CSV file(s) to use as input (or default CKAN DB). "
+         "Use PD and PD-nil files for NIL types.",
 )
 @click.option(
     "-s",
@@ -78,10 +84,14 @@ def clear(pd_type):
 @click.option(
     "-n",
     "--has-nil",
-     is_flag=True,
+    is_flag=True,
     help="If the PD Type is a NIL type.",
 )
-def rebuild(pd_type, files=None, solr_url=None, lenient=False, has_nil=False):
+def rebuild(pd_type: str,
+            files: Optional[Union[list, None]] = None,
+            solr_url: Optional[Union[str, None]] = None,
+            lenient: Optional[bool] = False,
+            has_nil: Optional[bool] = False):
     """
     Rebuilds and reindexes all SOLR records.
 
@@ -100,18 +110,21 @@ def rebuild(pd_type, files=None, solr_url=None, lenient=False, has_nil=False):
     strict = True
     if lenient:
         strict = False
-    rebuild(pd_type,
-            files,
-            solr_url,
-            strict)
+    _rebuild(pd_type,
+             files,
+             solr_url,
+             strict)
 
 
-def clear_index(pd_type, solr_url=None, commit=True):
+def clear_index(pd_type: str, solr_url: Optional[Union[str, None]] = None,
+                commit: Optional[bool] = True):
     conn = solr_connection(pd_type, solr_url)
     conn.delete(q="*:*", commit=commit)
 
 
-def rebuild(pd_type, csv_files=None, solr_url=None, strict=True):
+def _rebuild(pd_type: str, csv_files: Optional[Union[list, None]] = None,
+             solr_url: Optional[Union[str, None]] = None,
+             strict: Optional[bool] = True):
     """
     Implement rebuild command
 
@@ -135,11 +148,10 @@ def rebuild(pd_type, csv_files=None, solr_url=None, strict=True):
             resource_name = filename[:-4]
 
             chromo = get_chromo(resource_name)
-            geno = get_geno(chromo['dataset_type'])
 
             for org_id, records in csv_data_batch(csv_file, chromo, strict=strict):
                 records = [dict((k, safe_for_solr(v)) for k, v in
-                            row_dict.items()) for row_dict in records]
+                           row_dict.items()) for row_dict in records]
                 if org_id != prev_org:
                     unmatched = None
                 try:
@@ -164,7 +176,12 @@ def rebuild(pd_type, csv_files=None, solr_url=None, strict=True):
     conn.commit()
 
 
-def _update_records(records, org_detail, conn, resource_name, unmatched, retry=True):
+def _update_records(records: list,
+                    org_detail: dict,
+                    conn: Solr,
+                    resource_name: str,
+                    unmatched: Union[tuple, None],
+                    retry: Optional[bool] = True):
     """
     Update records on solr core
 
@@ -223,9 +240,9 @@ def _update_records(records, org_detail, conn, resource_name, unmatched, retry=T
         unique, friendly, partial = unique_id(r)
         if chromo.get('solr_legacy_ati_ids', False):
             # for compatibility with existing urls
-            unique = hashlib.md5((orghash
-                + r.get('request_number', repr((int(r['year']), int(r['month'])))
-                )).encode('utf-8')).hexdigest()
+            unique = hashlib.md5((orghash + r.get(
+                'request_number', repr((int(r['year']), int(r['month'])))))
+                    .encode('utf-8')).hexdigest()
 
         solrrec = {
             'id': unique,
@@ -249,7 +266,7 @@ def _update_records(records, org_detail, conn, resource_name, unmatched, retry=T
             facet_range = f.get('solr_dollar_range_facet')
             if facet_range:
                 try:
-                    float_value = float(value.replace('$','').replace(',',''))
+                    float_value = float(value.replace('$', '').replace(',', ''))
                 except ValueError:
                     pass
                 else:
@@ -290,30 +307,42 @@ def _update_records(records, org_detail, conn, resource_name, unmatched, retry=T
                 except ValueError:
                     pass
 
-            # limit text values to 28kB for indexing. Solr max 32kB minus a threshold for synonym replacements.
-            solrrec[key] = value.encode('utf-8')[:SOLR_MAX_UTF8_LENGTH].decode() if (f.get('datastore_type') == 'text' and len(value.encode('utf-8')) > SOLR_MAX_UTF8_LENGTH) else value
+            # limit text values to 28kB for indexing.
+            # Solr max 32kB minus a threshold for synonym replacements.
+            solrrec[key] = value.encode('utf-8')[:SOLR_MAX_UTF8_LENGTH].decode() if (
+                f.get('datastore_type') == 'text' and
+                len(value.encode('utf-8')) > SOLR_MAX_UTF8_LENGTH) else value
 
             choices = choice_fields.get(f['datastore_id'])
             if choices:
                 if key.endswith('_code'):
                     key = key[:-5]
                 if f.get('datastore_type') == '_text':
-                    # special handling for _text types, joining the multiple choices with semicolons (;)
+                    # special handling for _text types, joining
+                    # the multiple choices with semicolons (;)
                     english_choices = []
                     french_choices = []
                     for v in value.split(','):
                         choice = dict(choices).get(v)
-                        if (not choice and v) or (not v and (f.get('form_required') or f.get('excel_required'))):
+                        if (
+                          (not choice and v) or
+                          (not v and (f.get('form_required')
+                                      or f.get('excel_required')))):
                             # not a valid choice, or empty value on a required field
                             _record_failed_choice(key, v)
                         if choice:
-                            english_choices.append(recombinant_language_text(choice, 'en'))
-                            french_choices.append(recombinant_language_text(choice, 'fr'))
+                            english_choices.append(
+                                recombinant_language_text(choice, 'en'))
+                            french_choices.append(
+                                recombinant_language_text(choice, 'fr'))
                     solrrec[key + '_en'] = '; '.join(english_choices)
                     solrrec[key + '_fr'] = '; '.join(french_choices)
                 else:
                     choice = dict(choices).get(value, {})
-                    if (not choice and value) or (not value and (f.get('form_required') or f.get('excel_required'))):
+                    if (
+                      (not choice and value) or
+                      (not value and (f.get('form_required') or
+                                      f.get('excel_required')))):
                         # not a valid choice, or empty value on a required field
                         _record_failed_choice(key, value)
                     _add_choice(solrrec, key, r, choice, f)
@@ -345,10 +374,8 @@ def _update_records(records, org_detail, conn, resource_name, unmatched, retry=T
     if failed_choices:
         for _key, _values in failed_choices.items():
             for _value, _count in _values.items():
-                print("    %s -- WARNING: '%s' invalid option '%s' (%s)" % (org_detail['name'],
-                                                                            _key,
-                                                                            _value,
-                                                                            _count))
+                print("    %s -- WARNING: '%s' invalid option '%s' (%s)" % (
+                    org_detail['name'], _key, _value, _count))
 
     if unmatched:
         out.extend(unmatched[1].values())
@@ -403,6 +430,7 @@ def date2zulu(yyyy_mm_dd):
         time.gmtime(time.mktime(time.strptime(
             '{0:s} 00:00:00'.format(yyyy_mm_dd),
             "%Y-%m-%d %H:%M:%S"))))
+
 
 def list_or_none(v):
     """
@@ -512,7 +540,7 @@ def sum_to_field(solrrec, key, value):
     try:
         solrrec[key] = float_value + solrrec.get(key, 0)
     except TypeError:
-        pass # None can stay as None
+        pass  # None can stay as None
 
 
 def match_compare_output(solrrec, out, unmatched, chromo):

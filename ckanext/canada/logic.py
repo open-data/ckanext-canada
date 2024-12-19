@@ -1,8 +1,13 @@
-from ckan.logic.action import get as core_get
+from typing import Optional
+from ckan.types import Context, DataDict, ChainedAction
+
 from ckan.logic.validators import isodate, Invalid
-from ckan.lib.dictization import model_dictize
 from ckan import model
 from ckanext.activity.model import Activity, activity
+from ckan.logic.schema import (
+    default_create_resource_view_schema_filtered,
+    default_update_resource_view_schema_changes,
+)
 from contextlib import contextmanager
 
 from redis import ConnectionPool, Redis
@@ -24,10 +29,10 @@ from ckan.plugins.toolkit import (
     h,
     asbool,
     check_access,
+    get_validator,
 )
 from ckan.authz import is_sysadmin
 
-import functools
 from flask import has_request_context
 
 from sqlalchemy import func
@@ -40,11 +45,6 @@ from ckanext.scheming.helpers import scheming_get_preset
 from ckanext.datastore.backend import DatastoreBackend
 from ckanext.canada import model as canada_model
 
-MIMETYPES_AS_DOMAINS = [
-    'application/x-msdos-program',  # .com
-    'application/vnd.lotus-organizer',  # .org
-]
-
 from rq.job import Job
 from rq.exceptions import NoSuchJobError
 
@@ -52,8 +52,10 @@ from pytz import timezone
 from logging import getLogger
 
 
-log = getLogger(__name__)
-ottawa_tz = timezone('America/Montreal')
+MIMETYPES_AS_DOMAINS = [
+    'application/x-msdos-program',  # .com
+    'application/vnd.lotus-organizer',  # .org
+]
 
 JOB_MAPPING = {
     'ckanext.validation.jobs.run_validation_job': {
@@ -78,6 +80,68 @@ JOB_MAPPING = {
     }
 }
 
+log = getLogger(__name__)
+ottawa_tz = timezone('America/Montreal')
+
+
+@chained_action
+def disabled_anon_action(up_func: ChainedAction, context: Context,
+                         data_dict: DataDict):
+    if (
+      not context.get('ignore_auth', False) and
+      context.get('user', 'visitor') in ('', 'visitor')):
+        return []
+    return up_func(context, data_dict)
+disabled_anon_action.side_effect_free = True
+disabled_anon_action.auth_audit_exempt = True
+
+
+@chained_action
+def resource_view_create_bilingual(up_func: ChainedAction,
+                                   context: Context, data_dict: DataDict):
+    # assuming all resource views we used are filtered
+    # filter_fields and filter_values have ignore_missing validator
+    # so using the filtered schema should be fine here.
+    s = default_create_resource_view_schema_filtered()
+    return up_func(
+        dict(
+            context,
+            schema=dict(
+                s,
+                title=[get_validator('default')('View'),
+                       get_validator('unicode_safe')],
+                title_fr=[get_validator('default')('Vue'),
+                          get_validator('unicode_safe')],
+                description=[get_validator('default')(''),
+                             get_validator('unicode_safe')],
+                description_fr=[get_validator('default')(''),
+                                get_validator('unicode_safe')],
+            ),
+        ),
+        data_dict
+    )
+
+
+@chained_action
+def resource_view_update_bilingual(up_func: ChainedAction,
+                                   context: Context, data_dict: DataDict):
+    # assuming all resource views we used are filtered
+    # filter_fields and filter_values have ignore_missing validator
+    # so using the filtered schema should be fine here.
+    s = default_create_resource_view_schema_filtered()
+    s.update(default_update_resource_view_schema_changes())
+    return up_func(
+        dict(
+            context,
+            schema=dict(
+                s,
+                title_fr=list(s['title']),
+                description_fr=list(s['description']),
+            ),
+        ),
+        data_dict
+    )
+
 
 def limit_api_logic():
     """
@@ -85,56 +149,10 @@ def limit_api_logic():
     existing api calls to set new default limits and hard limits
     """
     return {}
-    context_limit_packages = {
-        'group_show': (5, 20),
-        'organization_show': (5, 20),
-    }
-    data_dict_limit = {
-        'package_search': (int(config.get('ckan.datasets_per_page', 20)), 300),
-        'package_activity_list': (20, 100),
-        'recently_changed_packages_activity_list': (20, 100),
-        'package_activity_list_html': (20, 100),
-        'dashboard_activity_list': (20, 100),
-        'dashboard_activity_list_html': (20, 100),
-        }
-
-    out = {}
-    for name, (default, limit) in context_limit_packages.items():
-        action = getattr(core_get, name)
-        @functools.wraps(action)
-        def wrapper(context, data_dict,
-                default=default, limit=limit, action=action):
-            #value = int(context.get('limits', {}).get('packages', default))
-            #context.setdefault('limits', {})['packages'] = min(value, limit)
-            return action(context, data_dict)
-        if hasattr(action, 'side_effect_free'):
-            wrapper.side_effect_free = action.side_effect_free
-        out[name] = wrapper
-
-    for name, (default, limit) in data_dict_limit.items():
-        action = getattr(core_get, name)
-        # package_search is special... :-(
-        param = 'rows' if name == 'package_search' else 'limit'
-        @functools.wraps(action)
-        def wrapper(context, data_dict,
-                default=default, limit=limit, action=action, param=param):
-            try:
-                if int(data_dict.get('offset', '0')) > 1000:
-                    return []  # no.
-                value = int(data_dict.get(param, default))
-            except ValueError:
-                return []
-            data_dict[param] = min(value, limit)
-            return action(context, data_dict)
-        if hasattr(action, 'side_effect_free'):
-            wrapper.side_effect_free = action.side_effect_free
-        out[name] = wrapper
-
-    return out
 
 
 @side_effect_free
-def changed_packages_activity_timestamp_since(context, data_dict):
+def changed_packages_activity_timestamp_since(context: Context, data_dict: DataDict):
     '''Return the package_id and timestamp of all recently added or changed packages.
 
     :param since_time: starting date/time
@@ -150,7 +168,7 @@ def changed_packages_activity_timestamp_since(context, data_dict):
     try:
         since_time = isodate(since, None)
     except Invalid as e:
-        raise ValidationError({'since_time':e.error})
+        raise ValidationError({'since_time': e.error})
 
     # hard limit this api to reduce opportunity for abuse
     limit = int(config.get('ckan.activity_timestamp_since_limit', 10000))
@@ -164,7 +182,7 @@ def changed_packages_activity_timestamp_since(context, data_dict):
 
 
 @side_effect_free
-def activity_list_from_user_since(context, data_dict):
+def activity_list_from_user_since(context: Context, data_dict: DataDict):
     '''Return the activity stream of all recently added or changed packages.
 
     :param since_time: starting date/time
@@ -183,14 +201,14 @@ def activity_list_from_user_since(context, data_dict):
     try:
         since_time = isodate(since, None)
     except Invalid as e:
-        raise ValidationError({'since_time':e.error})
+        raise ValidationError({'since_time': e.error})
 
     # hard limit this api to reduce opportunity for abuse
     limit = int(config.get('ckan.activity_list_hard_limit', 63))
 
     activity_objects = _activities_from_user_list_since(
-        since_time, limit,user_id)
-    return model_dictize.activity_list_dictize(activity_objects, context)
+        since_time, limit, user_id)
+    return activity.activity_list_dictize(activity_objects, context)
 
 
 def _changed_packages_activity_timestamp_since(since, limit):
@@ -205,16 +223,23 @@ def _changed_packages_activity_timestamp_since(since, limit):
     q = model.Session.query(Activity.object_id.label('object_id'),
                             func.max(Activity.timestamp).label(
                                 'timestamp'))
-    q = q.filter(or_(Activity.activity_type.endswith('package'),  # Package create, update, delete
-                     Activity.activity_type.endswith('view'),  # Resource View create, update, delete
-                     Activity.activity_type.endswith('created datastore')))  # DataStore create & Data Dictionary update
+    q = q.filter(
+            or_(
+                # Package create, update, delete
+                Activity.activity_type.endswith('package'),
+                # Resource View create, update, delete
+                Activity.activity_type.endswith('view'),
+                # DataStore create & Data Dictionary update
+                Activity.activity_type.endswith('created datastore')
+            )
+        )
     q = q.filter(Activity.timestamp > since)
     q = q.group_by(Activity.object_id)
     q = q.order_by('timestamp')
     return q.limit(limit)
 
 
-def _activities_from_user_list_since(since, limit,user_id):
+def _activities_from_user_list_since(since, limit, user_id):
     '''Return the site-wide stream of changed package activities since a given
     date for a particular user.
 
@@ -222,7 +247,6 @@ def _activities_from_user_list_since(since, limit,user_id):
     'deleted package' activities for that user.
 
     '''
-
     q = activity._activities_from_user_query(user_id)
     q = q.order_by(Activity.timestamp)
     q = q.filter(Activity.timestamp > since)
@@ -230,7 +254,8 @@ def _activities_from_user_list_since(since, limit,user_id):
 
 
 @contextmanager
-def datastore_create_temp_user_table(context, drop_on_commit=True):
+def datastore_create_temp_user_table(context: Context,
+                                     drop_on_commit: Optional[bool] = True):
     """
     Context manager for wrapping DataStore transactions with
     a temporary user table.
@@ -245,7 +270,7 @@ def datastore_create_temp_user_table(context, drop_on_commit=True):
     else:
         from ckanext.datastore.backend.postgres import literal_string
         username = context['user']
-        context['connection'].execute(u'''
+        context['connection'].execute('''
             CREATE TEMP TABLE IF NOT EXISTS datastore_user (
                 username text NOT NULL,
                 sysadmin boolean NOT NULL
@@ -265,7 +290,7 @@ def datastore_create_temp_user_table(context, drop_on_commit=True):
         context['connection'].execute(u'''DROP TABLE datastore_user;''')
 
 
-def canada_guess_mimetype(context, data_dict):
+def canada_guess_mimetype(context: Context, data_dict: DataDict) -> str:
     """
     Returns mimetype based on url, similar to the Core code,
     but will respect the Schema and choice replacements such
@@ -276,8 +301,9 @@ def canada_guess_mimetype(context, data_dict):
 
     if not mimetype or mimetype in MIMETYPES_AS_DOMAINS:
         # if we cannot guess the mimetype, check if it is an actual web address
-        # and we can set the mimetype to text/html. Uploaded files have only the filename as url,
-        # so check scheme to determine if it's an actual web address.
+        # and we can set the mimetype to text/html. Uploaded files
+        # have only the filename as url, so check scheme to determine if it's
+        # an actual web address.
         parsed = urlparse(url)
         if parsed.scheme:
             mimetype = 'text/html'
@@ -298,14 +324,18 @@ def canada_guess_mimetype(context, data_dict):
                         mimetype = f['value']
 
     if not mimetype:
-        # raise the ValidationError here so that the front-end and back-end will have it.
-        raise ValidationError({'format': _('Could not determine a resource format. Please supply a format.')})
+        # raise the ValidationError here so that the
+        # front-end and back-end will have it.
+        raise ValidationError({
+            'format': _('Could not determine a resource '
+                        'format. Please supply a format.')})
 
     return mimetype
 
 
 @chained_action
-def canada_resource_view_show(up_func, context, data_dict):
+def canada_resource_view_show(up_func: ChainedAction,
+                              context: Context, data_dict: DataDict) -> dict:
     """
     Return the metadata of a resource_view.
 
@@ -317,17 +347,22 @@ def canada_resource_view_show(up_func, context, data_dict):
     Canada Fork: extends the resource_view_show action method
     to prevent showing datatable_views for invalid and inactive Resources
 
-    We need this method to 404 the resource_view page (e.g. viewing in full screen)
+    We need this method to 404 the resource_view page
+    (e.g. viewing in full screen)
 
-    If a user is logged in, we want them to be able to see and edit the datatables_view
-    views still. We will just add a key to the view dict to be used within templates for visuals.
+    If a user is logged in, we want them to be able
+    to see and edit the datatables_view views still.
+    We will just add a key to the view dict to be used
+    within templates for visuals.
     """
     view_dict = up_func(context, data_dict)
     if not asbool(config.get('ckanext.canada.disable_failed_ds_views', False)):
         return view_dict
     if view_dict.get('view_type') == 'datatables_view':
-        # at this point, the core function has been called, calling resource_view_show etc.
-        # so we can assume that the Resource and View exists here, and that `resource_id` is in view_dict
+        # at this point, the core function has been called,
+        # calling resource_view_show etc.
+        # so we can assume that the Resource and View exists here,
+        # and that `resource_id` is in view_dict
         resource = model.Resource.get(view_dict.get('resource_id'))
         url_type = getattr(resource, 'url_type', None)
         if url_type in h.datastore_rw_resource_url_types():
@@ -346,8 +381,9 @@ def canada_resource_view_show(up_func, context, data_dict):
             current_user = None
             is_system_process = True
 
-        if not res_extras.get('datastore_active', False) or \
-        res_extras.get('validation_status') != 'success':
+        if (
+          not res_extras.get('datastore_active', False) or
+          res_extras.get('validation_status') != 'success'):
             # if the Resource is not active in the DataStore or has not
             # passed validation, we do not want to show its datatables_view views
 
@@ -363,7 +399,8 @@ def canada_resource_view_show(up_func, context, data_dict):
 
 
 @chained_action
-def canada_resource_view_list(up_func, context, data_dict):
+def canada_resource_view_list(up_func: ChainedAction,
+                              context: Context, data_dict: DataDict) -> list:
     """
     Return the list of resource views for a particular resource.
 
@@ -377,8 +414,10 @@ def canada_resource_view_list(up_func, context, data_dict):
 
     This will delete any datatables_view from the list of views.
 
-    If a user is logged in, we want them to be able to see and edit the datatables_view
-    views still. We will just add a key to the view dict to be used within templates for visuals.
+    If a user is logged in, we want them to be able
+    to see and edit the datatables_view views still.
+    We will just add a key to the view dict to be used
+    within templates for visuals.
     """
     view_list = up_func(context, data_dict)
     if not asbool(config.get('ckanext.canada.disable_failed_ds_views', False)):
@@ -405,9 +444,10 @@ def canada_resource_view_list(up_func, context, data_dict):
     disabled_views_indexes = []
     for i, view_dict in enumerate(view_list):
 
-        if view_dict.get('view_type') == 'datatables_view' and \
-        ( not res_extras.get('datastore_active', False) or
-          res_extras.get('validation_status') != 'success'):
+        if (
+          view_dict.get('view_type') == 'datatables_view' and
+          (not res_extras.get('datastore_active', False) or
+           res_extras.get('validation_status') != 'success')):
             # if the Resource is not active in the DataStore or has not
             # passed validation, we do not want to show its datatables_view views
 
@@ -423,7 +463,8 @@ def canada_resource_view_list(up_func, context, data_dict):
 
 
 @chained_action
-def canada_job_list(up_func, context, data_dict):
+def canada_job_list(up_func: ChainedAction, context: Context,
+                    data_dict: DataDict) -> list:
     """List enqueued background jobs.
 
     :param list queues: Queues to list jobs from. If not given then the
@@ -473,10 +514,13 @@ def canada_job_list(up_func, context, data_dict):
             icon = 'fa-circle-notch'
 
         job_info = {}
-        if not job_kwargs and job_obj.func_name == 'ckan.lib.search.jobs.reindex_packages':
+        if (
+          not job_kwargs and
+          job_obj.func_name == 'ckan.lib.search.jobs.reindex_packages'):
             job_info = {'name': _('Entire Site')}
         if rid or gid:
-            current_user = get_action('get_site_user')({'ignore_auth': True}, {})['name']
+            current_user = get_action('get_site_user')(
+                {'ignore_auth': True}, {})['name']
             if has_request_context():
                 try:
                     current_user = g.user
@@ -484,27 +528,31 @@ def canada_job_list(up_func, context, data_dict):
                     pass
             if rid:
                 try:
-                    resource = get_action('resource_show')({'user': current_user}, {'id': rid})
+                    resource = get_action('resource_show')(
+                        {'user': current_user}, {'id': rid})
                 except (ObjectNotFound, NotAuthorized):
                     continue
-                job_info = {'name_translated': resource.get('name_translated'),
-                            'resource_id': rid,
-                            'url': h.url_for('dataset_resource.read',
-                                            id=resource.get('package_id'),
-                                            resource_id=rid)}
+                job_info = {
+                    'name_translated': resource.get('name_translated'),
+                    'resource_id': rid,
+                    'url': h.url_for('dataset_resource.read',
+                                     id=resource.get('package_id'),
+                                     resource_id=rid)}
             if gid:
                 try:
-                    group = get_action('organization_show')({'user': current_user}, {'id': gid})
+                    group = get_action('organization_show')(
+                        {'user': current_user}, {'id': gid})
                 except (ObjectNotFound, NotAuthorized):
                     try:
-                        group = get_action('group_show')({'user': current_user}, {'id': gid})
+                        group = get_action('group_show')(
+                            {'user': current_user}, {'id': gid})
                     except (ObjectNotFound, NotAuthorized):
                         continue
                 job_info = {'name_translated': group.get('title_translated', {}),
                             'name': group.get('title'),
                             'group_id': gid,
                             'url': h.url_for('%s.read' % group.get('type'),
-                                            id=group.get('name'))}
+                                             id=group.get('name'))}
 
         job['info'] = job_info
         job['type'] = job_title
@@ -516,9 +564,10 @@ def canada_job_list(up_func, context, data_dict):
 
 
 @side_effect_free
-def registry_jobs_running(context, data_dict):
+def registry_jobs_running(context: Context, data_dict: DataDict) -> bool:
     """
-    Returns false if the first job in the default queue has not run in the last 18 minutes.
+    Returns false if the first job in the default
+    queue has not run in the last 18 minutes.
 
     #TODO: rework this when the Registry moves to public network.
     """
@@ -545,14 +594,18 @@ def registry_jobs_running(context, data_dict):
     if jobs:
         first_job = jobs[0]
         first_created_at = first_job.created_at.strftime(u'%Y-%m-%dT%H:%M:%S')
-        if datetime.strptime(first_created_at, '%Y-%m-%dT%H:%M:%S') < (datetime.now() - timedelta(minutes=18)):
+        if (
+          datetime.strptime(first_created_at, '%Y-%m-%dT%H:%M:%S') <
+          (datetime.now() - timedelta(minutes=18))):
             return False
 
     return True
 
 
 @chained_action
-def canada_datastore_run_triggers(up_func, context, data_dict):
+def canada_datastore_run_triggers(up_func: ChainedAction,
+                                  context: Context,
+                                  data_dict: DataDict) -> ChainedAction:
     """
     Wraps datastore_run_triggers action in context manager for DS temp user table.
     """
@@ -564,7 +617,7 @@ def canada_datastore_run_triggers(up_func, context, data_dict):
 
 
 @side_effect_free
-def portal_sync_info(context, data_dict):
+def portal_sync_info(context: Context, data_dict: DataDict) -> dict:
     """
     Returns PackageSync object for a given package_id if it exists.
     """
@@ -575,9 +628,11 @@ def portal_sync_info(context, data_dict):
     sync_info = canada_model.PackageSync.get(package_id=package_id)
 
     if not sync_info:
-        raise ObjectNotFound(_('No Portal Sync information found for package %s') % package_id)
+        raise ObjectNotFound(
+            _('No Portal Sync information found for package %s') % package_id)
 
-    # NOTE: never show sync_info.error as it contains stack traces and system information
+    # NOTE: never show sync_info.error as it
+    # contains stack traces and system information
     return {
         'package_id': sync_info.package_id,
         'last_run': sync_info.last_run,
@@ -587,7 +642,7 @@ def portal_sync_info(context, data_dict):
 
 
 @side_effect_free
-def list_out_of_sync_packages(context, data_dict):
+def list_out_of_sync_packages(context: Context, data_dict: DataDict) -> dict:
     """
     Returns a list of out of sync packages on the Portal.
 
@@ -595,7 +650,9 @@ def list_out_of_sync_packages(context, data_dict):
     """
     check_access('list_out_of_sync_packages', context, data_dict)
 
-    sync_infos_count = model.Session.query(canada_model.PackageSync.package_id).filter(canada_model.PackageSync.error_on != None).count()
+    sync_infos_count = model.Session.query(
+        canada_model.PackageSync.package_id).filter(
+            canada_model.PackageSync.error_on is not None).count()
 
     out_of_sync_packages = {'count': sync_infos_count, 'results': []}
 
@@ -604,15 +661,22 @@ def list_out_of_sync_packages(context, data_dict):
 
     limit = data_dict.get('limit', 25)
     offset = data_dict.get('start', 0)
-    sync_infos = model.Session.query(canada_model.PackageSync).filter(canada_model.PackageSync.error_on != None).limit(limit).offset(offset)
+    sync_infos = model.Session.query(
+        canada_model.PackageSync).filter(
+            canada_model.PackageSync.error_on is not None).limit(limit).offset(offset)
 
     for sync_info in sync_infos:
         try:
-            pkg_dict = get_action('package_show')({'user': context.get('user')}, {'id': sync_info.package_id})
+            pkg_dict = get_action('package_show')(
+                {'user': context.get('user')}, {'id': sync_info.package_id})
         except (ObjectNotFound, NotAuthorized):
             continue
-        # NOTE: never show sync_info.error as it contains stack traces and system information
-        out_of_sync_packages['results'].append({'pkg_dict': pkg_dict, 'last_successful_sync': sync_info.last_successful_sync,
-                                                'error_on': sync_info.error_on, 'last_run': sync_info.last_run})
+        # NOTE: never show sync_info.error as it
+        # contains stack traces and system information
+        out_of_sync_packages['results'].append(
+            {'pkg_dict': pkg_dict,
+             'last_successful_sync': sync_info.last_successful_sync,
+             'error_on': sync_info.error_on,
+             'last_run': sync_info.last_run})
 
     return out_of_sync_packages

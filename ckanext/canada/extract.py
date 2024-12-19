@@ -1,3 +1,5 @@
+# NOTE: custom Babel extrcators
+
 from yaml import load
 from yaml.loader import SafeLoader
 from six import string_types
@@ -35,7 +37,8 @@ def extract_pd(fileobj, keywords, comment_tags, options):
     :rtype: ``iterator``
     """
     encoding = options.get('encoding', 'utf-8')
-    line_numbers, chromo = load(fileobj.read().decode(encoding), Loader=SafeLineLoader)
+    line_numbers, chromo = load(fileobj.read().decode(encoding),
+                                Loader=SafeLineLoader)
 
     pd_type = chromo.get('dataset_type', 'unknown')
 
@@ -43,38 +46,48 @@ def extract_pd(fileobj, keywords, comment_tags, options):
     title = chromo.get('title')
     if isinstance(title, string_types):
         for line_number in line_numbers.get(title, [0]):
-            yield (line_number, '', title, ['Title for PD Type: %s' % pd_type])
+            yield (line_number, '', title,
+                   ['Title for PD Type: %s' % pd_type])
 
     # PD Type Short Label
     label = chromo.get('shortname')
     if isinstance(label, string_types):
         for line_number in line_numbers.get(label, [0]):
-            yield (line_number, '', label, ['Label for PD Type: %s' % pd_type])
+            yield (line_number, '', label,
+                   ['Label for PD Type: %s' % pd_type])
 
     # PD Type Description
     notes = chromo.get('notes')
     if isinstance(notes, string_types):
         for line_number in line_numbers.get(notes, [0]):
-            yield (line_number, '', notes, ['Description for PD Type: %s' % pd_type])
+            yield (line_number, '', notes,
+                   ['Description for PD Type: %s' % pd_type])
 
     # PD Type Resources
     resources = chromo.get('resources', [])
     for resource in resources:
-        resource_title = resource.get('title')  # resource title
+        # resource title
+        resource_title = resource.get('title')
         if isinstance(resource_title, string_types):
             for line_number in line_numbers.get(resource_title, [0]):
-                yield (line_number, '', resource_title, ['Resource Title for PD Type: %s' % pd_type])
+                yield (line_number, '', resource_title,
+                       ['Resource Title for PD Type: %s' % pd_type])
 
-        resource_trigger_strings = resource.get('trigger_strings')  # resource sql error messages
+        # resource sql error messages
+        resource_trigger_strings = resource.get('trigger_strings')
         if resource_trigger_strings:
             for k, v in resource_trigger_strings.items():
                 if isinstance(v, string_types):
                     for line_number in line_numbers.get(v, [0]):
-                        yield (line_number, '', v, ['SQL Trigger String for PD Type: %s' % pd_type])
+                        yield (line_number, '', v,
+                               ['SQL Trigger String for PD Type: %s' % pd_type])
 
-        datastore_constraint_errors = resource.get('datastore_constraint_errors')  # more user friendly sql constraint error messages
+        # more user friendly sql constraint error messages
+        datastore_constraint_errors = resource.get('datastore_constraint_errors')
         if datastore_constraint_errors:
             for k, v in datastore_constraint_errors.items():
                 if isinstance(v, string_types):
                     for line_number in line_numbers.get(v, [0]):
-                        yield (line_number, '', v, ['SQL Constraint Error String for PD Type: %s' % pd_type])
+                        yield (line_number, '', v,
+                               ['SQL Constraint Error String for PD Type: %s' %
+                                pd_type])
