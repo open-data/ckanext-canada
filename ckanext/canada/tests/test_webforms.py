@@ -4,14 +4,14 @@ import pytest
 import mock
 from urllib.parse import urlparse
 from io import BytesIO
-from openpyxl.workbook import Workbook
+from openpyxl.workbook import Workbook  # noqa: F401
 from ckan.plugins.toolkit import h
 from ckanapi import (
     LocalCKAN,
     ValidationError
 )
 
-from ckan.tests.helpers import CKANResponse
+from ckan.tests.helpers import CKANResponse  # noqa: F401
 
 from ckan.tests.factories import SysadminWithToken as Sysadmin, APIToken
 from ckanext.canada.tests.factories import (
@@ -56,7 +56,6 @@ class TestPackageWebForms(CanadaTestBase):
         self.dataset_id = 'f3e4adb9-6e32-4cb4-bf68-1eab9d1288f4'
         self.resource_id = '8b29e2c6-8a12-4537-bf97-fe4e5f0a14c1'
 
-
     @mock.patch.object(h, 'flash_success', flashes.mock_flash)
     @mock.patch.object(h, 'get_flashed_messages', flashes.mock_get_flashed_messages)
     def test_new_dataset_required_fields(self, app):
@@ -87,10 +86,9 @@ class TestPackageWebForms(CanadaTestBase):
 
         offset = _get_relative_offset_from_response(response)
         response = app.get(offset, extra_environ=self.extra_environ_tester,
-                        environ_overrides=self.environ_overrides_tester)
+                           environ_overrides=self.environ_overrides_tester)
 
         assert 'Resource added' in response.body
-
 
     def test_new_dataset_missing_fields(self, app):
         offset = h.url_for('dataset.new')
@@ -155,7 +153,6 @@ class TestPackageWebForms(CanadaTestBase):
         assert 'Title (French):' in response.body
         assert 'Resource Type:' in response.body
 
-
     def _filled_dataset_form(self):
         # type: () -> dict
         return {
@@ -168,7 +165,7 @@ class TestPackageWebForms(CanadaTestBase):
             'notes_translated-fr': 'french description',
             'subject': 'arts_music_literature',
             'keywords-en': 'english keywords',
-            'keywords-fr' : 'french keywords',
+            'keywords-fr': 'french keywords',
             'date_published': '2000-01-01',
             'ready_to_publish': 'false',
             'frequency': 'as_needed',
@@ -179,7 +176,6 @@ class TestPackageWebForms(CanadaTestBase):
             'save': '',
             '_ckan_phase': '1',
         }
-
 
     def _filled_resource_form(self):
         # type: () -> dict
@@ -208,7 +204,6 @@ class TestNewUserWebForms(CanadaTestBase):
         self.extra_environ_tester = {'Authorization': str(u"")}
         self.environ_overrides_tester = {'REMOTE_USER': str(u"")}
         self.org = Organization()
-
 
     @mock.patch.object(h, 'flash_notice', flashes.mock_flash)
     @mock.patch.object(h, 'get_flashed_messages', flashes.mock_get_flashed_messages)
@@ -239,7 +234,6 @@ class TestNewUserWebForms(CanadaTestBase):
         assert 'Account Created' in response.body
         assert 'Thank you for creating your account for the Open Government registry' in response.body
 
-
     def test_new_user_missing_fields(self, app):
         offset = h.url_for('user.register')
         response = app.get(offset, extra_environ=self.extra_environ_tester,
@@ -263,7 +257,6 @@ class TestNewUserWebForms(CanadaTestBase):
         assert 'Name: Missing value' in response.body
         assert 'Email: Missing value' in response.body
         assert 'Password: Please enter both passwords' in response.body
-
 
     def _filled_new_user_form(self, csrf_token=None):
         # type: (str|None) -> dict
@@ -313,7 +306,6 @@ class TestRecombinantWebForms(CanadaTestBase):
         self.example_record = self.chromo['examples']['record']
         self.example_nil_record = self.nil_chromo['examples']['record']
 
-
     def _lc_init_pd(self, org=None):
         # type: (Organization|None) -> None
         lc = LocalCKAN()
@@ -322,7 +314,6 @@ class TestRecombinantWebForms(CanadaTestBase):
             lc.action.recombinant_create(dataset_type=self.pd_type, owner_org=org['name'])
         except ValidationError:
             pass
-
 
     def _lc_create_pd_record(self, org=None, is_nil=False, return_field='name'):
         # type: (Organization|None, bool, str) -> str
@@ -335,14 +326,12 @@ class TestRecombinantWebForms(CanadaTestBase):
         lc.action.datastore_upsert(resource_id=resource_id, records=[record])
         return rval['resources'][1][return_field] if is_nil else rval['resources'][0][return_field]
 
-
     def _lc_pd_template(self, org=None):
         # type: (Organization|None) -> Workbook
         org = org if org else self.org
         self._lc_create_pd_record(org=org)
         self._lc_create_pd_record(org=org, is_nil=True)
         return excel_template(dataset_type=self.pd_type, org=org)
-
 
     def _lc_get_pd_package_id(self, org=None):
         # type: (Organization|None) -> str
@@ -351,7 +340,6 @@ class TestRecombinantWebForms(CanadaTestBase):
         self._lc_init_pd(org=org)
         rval = lc.action.recombinant_show(dataset_type=self.pd_type, owner_org=org['name'])
         return rval['id']
-
 
     def test_member_cannot_init_pd(self, app):
         offset = h.url_for('recombinant.preview_table',
@@ -374,7 +362,6 @@ class TestRecombinantWebForms(CanadaTestBase):
 
         assert 'not authorized to add dataset' in response.body or \
                'not authorized to create packages' in response.body
-
 
     def test_editor_can_init_pd(self, app):
         offset = h.url_for('recombinant.preview_table',
@@ -400,7 +387,6 @@ class TestRecombinantWebForms(CanadaTestBase):
 
         assert 'Create and update multiple records' in response.body
 
-
     def test_admin_can_init_pd(self, app):
         offset = h.url_for('recombinant.preview_table',
                            resource_name=self.pd_type,
@@ -425,7 +411,6 @@ class TestRecombinantWebForms(CanadaTestBase):
 
         assert 'Create and update multiple records' in response.body
 
-
     def test_ati_email_notice(self, app):
         no_ati_email_org = Organization(ati_email=None)
         self._lc_init_pd(org=no_ati_email_org)
@@ -447,7 +432,6 @@ class TestRecombinantWebForms(CanadaTestBase):
 
         assert 'Your organization does not have an Access to Information email on file' not in response.body
         assert 'Informal Requests for ATI Records Previously Released are being sent to' in response.body
-
 
     def test_member_cannot_create_single_record(self, app):
         self._lc_init_pd()
@@ -471,7 +455,6 @@ class TestRecombinantWebForms(CanadaTestBase):
 
         assert 'Unauthorized to create a resource for this package' in response.body
 
-
     @mock.patch.object(h, 'flash_notice', flashes.mock_flash)
     @mock.patch.object(h, 'get_flashed_messages', flashes.mock_get_flashed_messages)
     def test_editor_can_create_single_record(self, app):
@@ -494,7 +477,6 @@ class TestRecombinantWebForms(CanadaTestBase):
 
         assert 'Record Created' in response.body
 
-
     @mock.patch.object(h, 'flash_notice', flashes.mock_flash)
     @mock.patch.object(h, 'get_flashed_messages', flashes.mock_get_flashed_messages)
     def test_admin_can_create_single_record(self, app):
@@ -516,7 +498,6 @@ class TestRecombinantWebForms(CanadaTestBase):
                             follow_redirects=True)
 
         assert 'Record Created' in response.body
-
 
     def test_member_cannot_update_single_record(self, app):
         self._lc_create_pd_record()
@@ -543,7 +524,6 @@ class TestRecombinantWebForms(CanadaTestBase):
 
         assert 'Unauthorized to update dataset' in response.body
 
-
     @mock.patch.object(h, 'flash_notice', flashes.mock_flash)
     @mock.patch.object(h, 'get_flashed_messages', flashes.mock_get_flashed_messages)
     def test_editor_can_update_single_record(self, app):
@@ -568,7 +548,6 @@ class TestRecombinantWebForms(CanadaTestBase):
                             follow_redirects=True)
 
         assert 'Record {} Updated'.format(self.example_record['request_number']) in response.body
-
 
     @mock.patch.object(h, 'flash_notice', flashes.mock_flash)
     @mock.patch.object(h, 'get_flashed_messages', flashes.mock_get_flashed_messages)
@@ -595,7 +574,6 @@ class TestRecombinantWebForms(CanadaTestBase):
 
         assert 'Record {} Updated'.format(self.example_record['request_number']) in response.body
 
-
     def _filled_create_single_record_form(self):
         # type: () -> dict
         return {
@@ -608,7 +586,6 @@ class TestRecombinantWebForms(CanadaTestBase):
             'pages': self.example_record['pages'],
             'save': ''
         }
-
 
     def test_download_template(self, app):
         self._lc_create_pd_record()
@@ -640,7 +617,6 @@ class TestRecombinantWebForms(CanadaTestBase):
         for f in self.nil_fields:
             if f.get('import_template_include', True):  # only check fields included in template
                 assert f['datastore_id'] in template_file[1][2]  # check each field id is in column names
-
 
     def test_selected_download_template(self, app):
         resource_name = self._lc_create_pd_record()
@@ -706,7 +682,6 @@ class TestRecombinantWebForms(CanadaTestBase):
             assert int(v[1]) == int(self.example_nil_record['month'])
             break
 
-
     def test_member_cannot_upload_records(self, app):
         template = self._lc_pd_template()
         template_file = self._populate_good_template_file(template)
@@ -724,14 +699,13 @@ class TestRecombinantWebForms(CanadaTestBase):
                                 id=self._lc_get_pd_package_id())
         dataset_form = self._filled_upload_form(filestream=template_file)
         response = app.post(form_action,
-                     data=dataset_form,
-                     extra_environ=self.extra_environ_member,
-                     environ_overrides=self.environ_overrides_member,
-                     status=403,
-                     follow_redirects=True)
+                            data=dataset_form,
+                            extra_environ=self.extra_environ_member,
+                            environ_overrides=self.environ_overrides_member,
+                            status=403,
+                            follow_redirects=True)
 
         assert 'not authorized to update resource' in response.body
-
 
     @mock.patch.object(h, 'flash_success', flashes.mock_flash)
     @mock.patch.object(h, 'get_flashed_messages', flashes.mock_get_flashed_messages)
@@ -758,8 +732,6 @@ class TestRecombinantWebForms(CanadaTestBase):
 
         assert 'Your file was successfully uploaded into the central system.' in response.body
 
-
-
     @mock.patch.object(h, 'flash_success', flashes.mock_flash)
     @mock.patch.object(h, 'get_flashed_messages', flashes.mock_get_flashed_messages)
     def test_admin_can_upload_records(self, app):
@@ -785,7 +757,6 @@ class TestRecombinantWebForms(CanadaTestBase):
 
         assert 'Your file was successfully uploaded into the central system.' in response.body
 
-
     def test_member_cannot_validate_upload(self, app):
         template = self._lc_pd_template()
         good_template_file = self._populate_good_template_file(template)
@@ -809,7 +780,6 @@ class TestRecombinantWebForms(CanadaTestBase):
                             follow_redirects=True)
 
         assert 'not authorized to update resource' in response.body
-
 
     @mock.patch.object(h, 'flash_error', flashes.mock_flash)
     @mock.patch.object(h, 'flash_success', flashes.mock_flash)
@@ -851,7 +821,6 @@ class TestRecombinantWebForms(CanadaTestBase):
 
         assert 'No errors found.' in response.body
 
-
     @mock.patch.object(h, 'flash_error', flashes.mock_flash)
     @mock.patch.object(h, 'flash_success', flashes.mock_flash)
     @mock.patch.object(h, 'get_flashed_messages', flashes.mock_get_flashed_messages)
@@ -892,7 +861,6 @@ class TestRecombinantWebForms(CanadaTestBase):
 
         assert 'No errors found.' in response.body
 
-
     def _populate_good_template_file(self, template):
         # type: (Workbook) -> BytesIO
         for i, v in enumerate(['2023',
@@ -913,7 +881,6 @@ class TestRecombinantWebForms(CanadaTestBase):
         template.save(good_template_file)
         good_template_file.seek(0, 0)
         return good_template_file
-
 
     def _populate_bad_template_file(self, template):
         # type: (Workbook) -> BytesIO
@@ -936,15 +903,13 @@ class TestRecombinantWebForms(CanadaTestBase):
         bad_template_file.seek(0, 0)
         return bad_template_file
 
-
     def _filled_upload_form(self, filestream, action='upload'):
         # type: (BytesIO, str) -> dict
         return {
-            'xls_update': (filestream, u'{}_en_{}.xlsx'.format(self.pd_type, self.org['name'])),
+            'xls_update': (filestream, '{}_en_{}.xlsx'.format(self.pd_type, self.org['name'])),
             'resource_name': self.pd_type,
             action: ''
         }
-
 
     def test_member_cannot_delete_records(self, app):
         records_to_delete = self._prepare_records_to_delete()
@@ -981,7 +946,6 @@ class TestRecombinantWebForms(CanadaTestBase):
 
         assert 'not authorized to update resource' in response.body
 
-
     @mock.patch.object(h, 'flash_success', flashes.mock_flash)
     @mock.patch.object(h, 'get_flashed_messages', flashes.mock_get_flashed_messages)
     def test_editor_can_delete_records(self, app):
@@ -1016,7 +980,6 @@ class TestRecombinantWebForms(CanadaTestBase):
 
         assert '2 deleted.' in response.body
 
-
     @mock.patch.object(h, 'flash_success', flashes.mock_flash)
     @mock.patch.object(h, 'get_flashed_messages', flashes.mock_get_flashed_messages)
     def test_admin_can_delete_records(self, app):
@@ -1050,7 +1013,6 @@ class TestRecombinantWebForms(CanadaTestBase):
                             follow_redirects=True)
 
         assert '2 deleted.' in response.body
-
 
     def _prepare_records_to_delete(self):
         # type: () -> dict

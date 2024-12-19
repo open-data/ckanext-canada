@@ -84,6 +84,17 @@ log = getLogger(__name__)
 ottawa_tz = timezone('America/Montreal')
 
 
+def disabled_action(context: Context, data_dict: DataDict):
+    """
+    Raises a NotFound exception to disable a logic action method.
+    """
+    raise ObjectNotFound
+
+
+disabled_action.side_effect_free = True
+disabled_action.auth_audit_exempt = True
+
+
 @chained_action
 def disabled_anon_action(up_func: ChainedAction, context: Context,
                          data_dict: DataDict):
@@ -92,6 +103,8 @@ def disabled_anon_action(up_func: ChainedAction, context: Context,
       context.get('user', 'visitor') in ('', 'visitor')):
         return []
     return up_func(context, data_dict)
+
+
 disabled_anon_action.side_effect_free = True
 disabled_anon_action.auth_audit_exempt = True
 
@@ -287,7 +300,7 @@ def datastore_create_temp_user_table(context: Context,
     # __exit__ of context manager
 
     if 'user' in context and not drop_on_commit:
-        context['connection'].execute(u'''DROP TABLE datastore_user;''')
+        context['connection'].execute('''DROP TABLE datastore_user;''')
 
 
 def canada_guess_mimetype(context: Context, data_dict: DataDict) -> str:
@@ -582,7 +595,7 @@ def registry_jobs_running(context: Context, data_dict: DataDict) -> bool:
     _connection_pool = ConnectionPool.from_url(registry_redis_url)
     redis_conn = Redis(connection_pool=_connection_pool)
 
-    fullname = u'ckan:{}:default'.format(registry_redis_prefix)
+    fullname = 'ckan:{}:default'.format(registry_redis_prefix)
 
     queue = Queue(fullname, connection=redis_conn)
 
@@ -593,7 +606,7 @@ def registry_jobs_running(context: Context, data_dict: DataDict) -> bool:
 
     if jobs:
         first_job = jobs[0]
-        first_created_at = first_job.created_at.strftime(u'%Y-%m-%dT%H:%M:%S')
+        first_created_at = first_job.created_at.strftime('%Y-%m-%dT%H:%M:%S')
         if (
           datetime.strptime(first_created_at, '%Y-%m-%dT%H:%M:%S') <
           (datetime.now() - timedelta(minutes=18))):

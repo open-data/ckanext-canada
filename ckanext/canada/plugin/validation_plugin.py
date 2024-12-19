@@ -21,4 +21,4 @@ class CanadaValidationPlugin(FrictionlessPlugin):
         if asbool(config.get('ckanext.validation.use_type_guessing', False)):
             return
         field_candidates.clear()
-        field_candidates.append({'type':'string'})
+        field_candidates.append({'type': 'string'})

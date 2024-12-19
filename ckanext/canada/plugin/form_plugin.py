@@ -1,42 +1,11 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-import logging
-import re
-
 import ckan.plugins as p
 from ckan.lib.plugins import DefaultDatasetForm
-
-from ckan.plugins.toolkit import (
-    ObjectNotFound,
-)
 
 from ckanext.canada import validators
 from ckanext.canada import logic
 
-# XXX Monkey patch to work around libcloud/azure 400 error on get_container
-try:
-    import libcloud.common.azure
-    libcloud.common.azure.API_VERSION = '2014-02-14'
-except ImportError:
-    pass
 
-log = logging.getLogger(__name__)
-fq_portal_release_date_match = re.compile(r"(portal_release_date:\"\[.*\]\")")
-
-
-def _disabled_action(context, data_dict):
-    """
-    Raises a NotFound exception to disable a logic action method.
-    """
-    raise ObjectNotFound
-_disabled_action.side_effect_free = True
-_disabled_action.auth_audit_exempt = True
-
-
-
-
-
-class DataGCCAForms(p.SingletonPlugin, DefaultDatasetForm):
+class CanadaFormsPlugin(p.SingletonPlugin, DefaultDatasetForm):
     """
     Plugin for dataset forms for Canada's metadata schema
     """
@@ -44,19 +13,18 @@ class DataGCCAForms(p.SingletonPlugin, DefaultDatasetForm):
     p.implements(p.IValidators, inherit=True)
 
     # IActions
-
     def get_actions(self):
         actions = logic.limit_api_logic()
         actions.update((h, getattr(logic, h)) for h in [
             'changed_packages_activity_timestamp_since',
             'canada_guess_mimetype',
             ])
-        actions.update({k: disabled_anon_action for k in [
+        actions.update({k: logic.disabled_anon_action for k in [
             'current_package_list_with_resources',
             'user_list',
             'user_activity_list',
             'member_list',
-            #'user_show',  FIXME: required for password reset
+            # 'user_show',  FIXME: required for password reset
             'package_autocomplete',
             'format_autocomplete',
             'user_autocomplete',
@@ -66,7 +34,7 @@ class DataGCCAForms(p.SingletonPlugin, DefaultDatasetForm):
             ]})
         # disable group & organization bulk actions as they do not support
         # IPackageController and IResourceController implementations.
-        actions.update({k: _disabled_action for k in [
+        actions.update({k: logic.disabled_action for k in [
             'bulk_update_private',
             'bulk_update_public',
             'bulk_update_delete',
@@ -74,7 +42,6 @@ class DataGCCAForms(p.SingletonPlugin, DefaultDatasetForm):
         return actions
 
     # IValidators
-
     def get_validators(self):
         return {
             'canada_validate_generate_uuid':
@@ -127,4 +94,3 @@ class DataGCCAForms(p.SingletonPlugin, DefaultDatasetForm):
             'limit_resources_per_dataset':
                 validators.limit_resources_per_dataset,
             }
-

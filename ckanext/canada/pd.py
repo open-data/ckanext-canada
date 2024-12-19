@@ -208,9 +208,9 @@ def _update_records(records: list,
         p = org
         for k in pk:
             s = hashlib.md5((s + r[k]).encode('utf-8')).hexdigest()
-            f += u'|' + str(r[k])
-            if u'|' not in p:
-                p += u'|' + str(r[k])
+            f += '|' + str(r[k])
+            if '|' not in p:
+                p += '|' + str(r[k])
         return s, f, p
 
     out = []
@@ -352,7 +352,7 @@ def _update_records(records: list,
                 solrrec[key + '_name_en'] = calendar.month_name[int(value)]
                 solrrec[key + '_name_fr'] = MONTHS_FR[int(value)]
 
-        solrrec['text'] = u' '.join(str(v) for v in solrrec.values())
+        solrrec['text'] = ' '.join(str(v) for v in solrrec.values())
 
         if 'solr_static_fields' in chromo:
             solrrec.update(chromo['solr_static_fields'])
@@ -472,18 +472,18 @@ def dollar_range_facet(key, facet_range, float_value):
         last_fac = fac
     else:
         return {
-            key + u'_range': str(i),
-            key + u'_en': u'A: ' + en_dollars(fac) + u'+',
-            key + u'_fr': u'A: ' + fr_dollars(fac) + u' +'}
+            key + '_range': str(i),
+            key + '_en': 'A: ' + en_dollars(fac) + '+',
+            key + '_fr': 'A: ' + fr_dollars(fac) + ' +'}
 
     if last_fac is None:
         return {}
 
-    prefix = chr(ord('A') + len(facet_range) - i) + u': '
+    prefix = chr(ord('A') + len(facet_range) - i) + ': '
     return {
-        key + u'_range': str(i - 1),
-        key + u'_en': prefix + en_dollars(last_fac) + u' - ' + en_dollars(fac-0.01),
-        key + u'_fr': prefix + fr_dollars(last_fac) + u' - ' + fr_dollars(fac-0.01)}
+        key + '_range': str(i - 1),
+        key + '_en': prefix + en_dollars(last_fac) + ' - ' + en_dollars(fac-0.01),
+        key + '_fr': prefix + fr_dollars(last_fac) + ' - ' + fr_dollars(fac-0.01)}
 
 
 def en_numeric(v):
@@ -512,18 +512,18 @@ def numeric_range_facet(key, facet_range, float_value):
         last_fac = fac
     else:
         return {
-            key + u'_range': str(i),
-            key + u'_en': u'A: ' + en_numeric(fac) + u'+',
-            key + u'_fr': u'A: ' + fr_numeric(fac) + u' +'}
+            key + '_range': str(i),
+            key + '_en': 'A: ' + en_numeric(fac) + '+',
+            key + '_fr': 'A: ' + fr_numeric(fac) + ' +'}
 
     if last_fac is None:
         return {}
 
-    prefix = chr(ord('A') + len(facet_range) - i) + u': '
+    prefix = chr(ord('A') + len(facet_range) - i) + ': '
     return {
-        key + u'_range': str(i - 1),
-        key + u'_en': prefix + en_numeric(last_fac) + u' - ' + en_numeric(fac-1),
-        key + u'_fr': prefix + fr_numeric(last_fac) + u' - ' + fr_numeric(fac-1)}
+        key + '_range': str(i - 1),
+        key + '_en': prefix + en_numeric(last_fac) + ' - ' + en_numeric(fac-1),
+        key + '_fr': prefix + fr_numeric(last_fac) + ' - ' + fr_numeric(fac-1)}
 
 
 def sum_to_field(solrrec, key, value):

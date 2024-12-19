@@ -42,7 +42,7 @@ from ckan.views.resource import (
     CreateView as ResourceCreateView
 )
 from ckan.views.user import RegisterView as UserRegisterView
-from ckan.views.api import(
+from ckan.views.api import (
     API_DEFAULT_VERSION,
     API_MAX_VERSION,
     _finish_ok,
@@ -75,13 +75,12 @@ from ckanext.canada.helpers import canada_date_str_to_datetime
 
 from io import StringIO
 
-BOM = "\N{bom}"
 
-from logging import getLogger
+BOM = "\N{bom}"
+MAX_JOB_QUEUE_LIST_SIZE = 25
+
 
 log = getLogger(__name__)
-
-MAX_JOB_QUEUE_LIST_SIZE = 25
 
 canada_views = Blueprint('canada', __name__)
 ottawa_tz = timezone('America/Montreal')
@@ -94,7 +93,7 @@ class IntentionalServerError(Exception):
 @canada_views.route('/user/logged_in', methods=['GET'])
 def logged_in():
     # redirect if needed
-    came_from = request.args.get(u'came_from', u'')
+    came_from = request.args.get('came_from', '')
     if h.url_is_local(came_from):
         return h.redirect_to(str(came_from))
 
@@ -112,7 +111,7 @@ def logged_in():
 
         return h.redirect_to('canada.home')
     else:
-        err = _(u'Login failed. Bad username or password.')
+        err = _('Login failed. Bad username or password.')
         h.flash_error(err)
         return h.redirect_to('user.login')
 
@@ -120,14 +119,14 @@ def logged_in():
 def _get_package_type_from_dict(package_id, package_type='dataset'):
     try:
         context = {
-            u'model': model,
-            u'session': model.Session,
-            u'user': g.user,
-            u'auth_user_obj': g.userobj
+            'model': model,
+            'session': model.Session,
+            'user': g.user,
+            'auth_user_obj': g.userobj
         }
-        pkg_dict = get_action(u'package_show')(
+        pkg_dict = get_action('package_show')(
             dict(context, for_view=True), {
-                u'id': package_id
+                'id': package_id
             }
         )
         return pkg_dict['type']
@@ -154,13 +153,15 @@ class CanadaDatasetEditView(DatasetEditView):
         if hasattr(response, 'status_code'):
             if response.status_code == 200 or response.status_code == 302:
                 context = self._prepare()
-                pkg_dict = get_action(u'package_show')(
+                pkg_dict = get_action('package_show')(
                     dict(context, for_view=True), {
-                        u'id': id
+                        'id': id
                     }
                 )
                 if pkg_dict['type'] == 'prop':
-                    h.flash_success(_(u'The status has been added/updated for this suggested dataset. This update will be reflected on open.canada.ca shortly.'))
+                    h.flash_success(_('The status has been added/updated for this '
+                                      'suggested dataset. This update will be '
+                                      'reflected on open.canada.ca shortly.'))
                 else:
                     h.flash_success(
                         _("Your dataset %s has been saved.")
@@ -173,16 +174,17 @@ class CanadaDatasetCreateView(DatasetCreateView):
         response = super(CanadaDatasetCreateView, self).post(package_type)
         if hasattr(response, 'status_code'):
             if response.status_code == 200 or response.status_code == 302:
-                h.flash_success(_(u'Dataset added.'))
+                h.flash_success(_('Dataset added.'))
         return response
 
 
 class CanadaResourceEditView(ResourceEditView):
     def post(self, package_type, id, resource_id):
-        response = super(CanadaResourceEditView, self).post(package_type, id, resource_id)
+        response = super(CanadaResourceEditView, self).post(
+            package_type, id, resource_id)
         if hasattr(response, 'status_code'):
             if response.status_code == 200 or response.status_code == 302:
-                h.flash_success(_(u'Resource updated.'))
+                h.flash_success(_('Resource updated.'))
         return response
 
 
@@ -191,25 +193,26 @@ class CanadaResourceCreateView(ResourceCreateView):
         response = super(CanadaResourceCreateView, self).post(package_type, id)
         if hasattr(response, 'status_code'):
             if response.status_code == 200 or response.status_code == 302:
-                h.flash_success(_(u'Resource added.'))
+                h.flash_success(_('Resource added.'))
         return response
 
 
 class CanadaUserRegisterView(UserRegisterView):
     def post(self):
         params = parse_params(request.form)
-        email=params.get('email', '')
-        fullname=params.get('fullname', '')
-        username=params.get('name', '')
-        phoneno=params.get('phoneno', '')
-        dept=params.get('department', '')
+        email = params.get('email', '')
+        fullname = params.get('fullname', '')
+        username = params.get('name', '')
+        phoneno = params.get('phoneno', '')
+        dept = params.get('department', '')
         response = super(CanadaUserRegisterView, self).post()
         if hasattr(response, 'status_code'):
             if response.status_code == 200 or response.status_code == 302:
                 if not config.get('ckanext.canada.suppress_user_emails', False):
                     # redirected after successful user create
                     import ckan.lib.mailer
-                    # checks if there is a custom function "notify_ckan_user_create" in the mailer (added by ckanext-gcnotify)
+                    # checks if there is a custom function "notify_ckan_user_create"
+                    # in the mailer (added by ckanext-gcnotify)
                     getattr(
                         ckan.lib.mailer,
                         "notify_ckan_user_create",
@@ -225,8 +228,8 @@ class CanadaUserRegisterView(UserRegisterView):
 
 
 canada_views.add_url_rule(
-    u'/user/register',
-    view_func=CanadaUserRegisterView.as_view(str(u'register'))
+    '/user/register',
+    view_func=CanadaUserRegisterView.as_view(str('register'))
 )
 
 
@@ -337,7 +340,8 @@ def canada_group_bulk_process(id, group_type='group', is_organization=False, dat
 
 
 @canada_views.route('/organization/bulk_process/<id>', methods=['GET', 'POST'])
-def canada_organization_bulk_process(id, group_type='organization', is_organization=True, data=None):
+def canada_organization_bulk_process(id, group_type='organization',
+                                     is_organization=True, data=None):
     """
     Redirects the Organization bulk action endpoint as it does not support
     the IPackageController and IResourceController implementations.
@@ -345,7 +349,8 @@ def canada_organization_bulk_process(id, group_type='organization', is_organizat
     return h.redirect_to('%s.read' % group_type, id=id)
 
 
-@canada_views.route('/create-pd-record/<owner_org>/<resource_name>', methods=['GET', 'POST'])
+@canada_views.route('/create-pd-record/<owner_org>/<resource_name>',
+                    methods=['GET', 'POST'])
 def create_pd_record(owner_org, resource_name):
     lc = LocalCKAN(username=g.user)
 
@@ -396,25 +401,37 @@ def create_pd_record(owner_org, resource_name):
                         for (k, v) in ve.error_dict['records'][0].items()
                     }, **err)
                 except AttributeError:
-                    if 'duplicate key value violates unique constraint' in ve.error_dict['records'][0]:
+                    if (
+                      'duplicate key value violates unique constraint' in
+                      ve.error_dict['records'][0]):
                         err = dict({
                             k: [_("This record already exists")]
                             for k in pk_fields
                         }, **err)
-                    elif 'violates foreign key constraint' in ve.error_dict['records'][0]:
-                        error_message = chromo.get('datastore_constraint_errors', {}).get('upsert', 'Something went wrong, your record was not created. Please contact support.')
+                    elif (
+                      'violates foreign key constraint' in
+                      ve.error_dict['records'][0]):
+                        error_message = chromo.get(
+                            'datastore_constraint_errors', {}).get(
+                                'upsert', 'Something went wrong, your '
+                                          'record was not created. Please '
+                                          'contact support.')
                         error_summary = _(error_message)
                     else:
-                        log.warning('Failed to create %s record for org %s:\n%s', resource_name, owner_org, traceback.format_exc())
-                        error_summary = _('Something went wrong, your record was not created. Please contact support.')
+                        log.warning('Failed to create %s record for org %s:\n%s',
+                                    resource_name, owner_org, traceback.format_exc())
+                        error_summary = _('Something went wrong, your record '
+                                          'was not created. Please contact support.')
             elif ve.error_dict.get('info', {}).get('pgcode', '') == '23505':
                 err = dict({
                     k: [_("This record already exists")]
                     for k in pk_fields
                 }, **err)
             else:
-                log.warning('Failed to create %s record for org %s:\n%s', resource_name, owner_org, traceback.format_exc())
-                error_summary = _('Something went wrong, your record was not created. Please contact support.')
+                log.warning('Failed to create %s record for org %s:\n%s',
+                            resource_name, owner_org, traceback.format_exc())
+                error_summary = _('Something went wrong, your record '
+                                  'was not created. Please contact support.')
 
         if err or error_summary:
             return render('recombinant/create_pd_record.html',
@@ -424,12 +441,13 @@ def create_pd_record(owner_org, resource_name):
                               'chromo_title': chromo['title'],
                               'choice_fields': choice_fields,
                               'owner_org': rcomb['owner_org'],
-                              'pkg_dict': {},  # prevent rendering error on parent template
+                              # prevent rendering error on parent template
+                              'pkg_dict': {},
                               'errors': err,
                               'error_summary': error_summary,
                           })
 
-        h.flash_notice(_(u'Record Created'))
+        h.flash_notice(_('Record Created'))
 
         return h.redirect_to(
             'recombinant.preview_table',
@@ -449,7 +467,8 @@ def create_pd_record(owner_org, resource_name):
                   })
 
 
-@canada_views.route('/update-pd-record/<owner_org>/<resource_name>/<pk>', methods=['GET', 'POST'])
+@canada_views.route('/update-pd-record/<owner_org>/<resource_name>/<pk>',
+                    methods=['GET', 'POST'])
 def update_pd_record(owner_org, resource_name, pk):
     pk = [url_part_unescape(p) for p in pk.split(',')]
 
@@ -505,7 +524,7 @@ def update_pd_record(owner_org, resource_name, pk):
         try:
             lc.action.datastore_upsert(
                 resource_id=res['id'],
-                #method='update',    FIXME not raising ValidationErrors
+                # method='update',    FIXME not raising ValidationErrors
                 records=[{k: None if k in err else v for (k, v) in data.items()}],
                 dry_run=bool(err))
         except ValidationError as ve:
@@ -515,24 +534,26 @@ def update_pd_record(owner_org, resource_name, pk):
                     for (k, v) in ve.error_dict['records'][0].items()
                 }, **err)
             except AttributeError:
-                log.warning('Failed to update %s record for org %s:\n%s', resource_name, owner_org, traceback.format_exc())
-                error_summary = _('Something went wrong, your record was not updated. Please contact support.')
+                log.warning('Failed to update %s record for org %s:\n%s',
+                            resource_name, owner_org, traceback.format_exc())
+                error_summary = _('Something went wrong, your record '
+                                  'was not updated. Please contact support.')
 
         if err or error_summary:
             return render('recombinant/update_pd_record.html',
-                extra_vars={
-                    'data': data,
-                    'resource_name': resource_name,
-                    'chromo_title': chromo['title'],
-                    'choice_fields': choice_fields,
-                    'pk_fields': pk_fields,
-                    'owner_org': rcomb['owner_org'],
-                    'pkg_dict': {},  # prevent rendering error on parent template
-                    'errors': err,
-                    'error_summary': error_summary,
-                })
+                          extra_vars={
+                              'data': data,
+                              'resource_name': resource_name,
+                              'chromo_title': chromo['title'],
+                              'choice_fields': choice_fields,
+                              'pk_fields': pk_fields,
+                              'owner_org': rcomb['owner_org'],
+                              # prevent rendering error on parent template
+                              'pkg_dict': {},
+                              'errors': err,
+                              'error_summary': error_summary})
 
-        h.flash_notice(_(u'Record %s Updated') % u','.join(pk) )
+        h.flash_notice(_('Record %s Updated') % ','.join(pk))
 
         return h.redirect_to(
             'recombinant.preview_table',
@@ -542,7 +563,9 @@ def update_pd_record(owner_org, resource_name, pk):
 
     data = {}
     for f in chromo['fields']:
-        if not f.get('import_template_include', True) or f.get('published_resource_computed_field', False):
+        if (
+          not f.get('import_template_include', True) or
+          f.get('published_resource_computed_field', False)):
             continue
         val = record[f['datastore_id']]
         if val and f.get('datastore_type') == 'money':
@@ -554,16 +577,17 @@ def update_pd_record(owner_org, resource_name, pk):
             data[f['datastore_id']] = val
 
     return render('recombinant/update_pd_record.html',
-        extra_vars={
-            'data': data,
-            'resource_name': resource_name,
-            'chromo_title': chromo['title'],
-            'choice_fields': choice_fields,
-            'pk_fields': pk_fields,
-            'owner_org': rcomb['owner_org'],
-            'pkg_dict': {},  # prevent rendering error on parent template
-            'errors': {},
-            })
+                  extra_vars={
+                      'data': data,
+                      'resource_name': resource_name,
+                      'chromo_title': chromo['title'],
+                      'choice_fields': choice_fields,
+                      'pk_fields': pk_fields,
+                      'owner_org': rcomb['owner_org'],
+                      # prevent rendering error on parent template
+                      'pkg_dict': {},
+                      'errors': {},
+                  })
 
 
 @canada_views.route('/recombinant/<resource_name>', methods=['GET'])
@@ -573,7 +597,7 @@ def type_redirect(resource_name, dataset_id=None):
     if not orgs:
         abort(404, _('No organizations found'))
     try:
-        chromo = get_chromo(resource_name)
+        get_chromo(resource_name)
     except RecombinantException:
         abort(404, _('Recombinant resource_name not found'))
 
@@ -586,7 +610,8 @@ def type_redirect(resource_name, dataset_id=None):
 
     if dataset_id:
         try:
-            dataset = get_action('package_show')({'user': g.user}, {'id': dataset_id})
+            dataset = get_action('package_show')(
+                {'user': g.user}, {'id': dataset_id})
         except NotAuthorized:
             return abort(403)
         except NotFound:
@@ -602,7 +627,8 @@ def type_redirect(resource_name, dataset_id=None):
                                    owner_org=owner_org_name))
 
 
-@canada_views.route('/recombinant/delete-selected-records/<resource_id>', methods=['GET', 'POST'])
+@canada_views.route('/recombinant/delete-selected-records/<resource_id>',
+                    methods=['GET', 'POST'])
 def delete_selected_records(resource_id):
     lc = LocalCKAN(username=g.user)
 
@@ -633,7 +659,7 @@ def delete_selected_records(resource_id):
                           'dataset': dataset,
                           'resource': res,
                           'num': len(records),
-                          'select_delete': ';'.join(records) })
+                          'select_delete': ';'.join(records)})
 
     records = ''.join(records).split(';')
 
@@ -657,7 +683,9 @@ def delete_selected_records(resource_id):
             except ValidationError as e:
                 if 'foreign_constraints' in e.error_dict:
                     chromo = get_chromo(res['name'])
-                    error_message = chromo.get('datastore_constraint_errors', {}).get('delete', e.error_dict['foreign_constraints'][0])
+                    error_message = chromo.get(
+                        'datastore_constraint_errors', {}).get(
+                            'delete', e.error_dict['foreign_constraints'][0])
                     h.flash_error(_(error_message))
                     return h.redirect_to('recombinant.preview_table',
                                          resource_name=res['name'],
@@ -690,12 +718,14 @@ def _clean_check_type_errors(post_data, fields, pk_fields, choice_fields):
 
     for f in fields:
         f_id = f['datastore_id']
-        if not f.get('import_template_include', True) or f.get('published_resource_computed_field', False):
+        if (
+          not f.get('import_template_include', True) or
+          f.get('published_resource_computed_field', False)):
             continue
         else:
             val = post_data.get(f['datastore_id'], '')
             if isinstance(val, list):
-                val = u','.join(val)
+                val = ','.join(val)
             val = canonicalize(
                 val,
                 f['datastore_type'],
@@ -706,12 +736,12 @@ def _clean_check_type_errors(post_data, fields, pk_fields, choice_fields):
                     try:
                         decimal.Decimal(val)
                     except decimal.InvalidOperation:
-                        err[f['datastore_id']] = [_(u'Number required')]
+                        err[f['datastore_id']] = [_('Number required')]
                 elif f['datastore_type'] == 'int':
                     try:
                         int(val)
                     except ValueError:
-                        err[f['datastore_id']] = [_(u'Integer required')]
+                        err[f['datastore_id']] = [_('Integer required')]
             data[f['datastore_id']] = val
 
     return data, err
@@ -736,7 +766,8 @@ def home():
 def links():
     if not g.is_registry:
         return h.redirect_to('dataset.search')
-    return render('home/quick_links.html', extra_vars={'is_sysadmin': is_sysadmin(g.user)})
+    return render('home/quick_links.html',
+                  extra_vars={'is_sysadmin': is_sysadmin(g.user)})
 
 
 @canada_views.route('/ckan-admin/publish', methods=['GET', 'POST'])
@@ -775,7 +806,7 @@ def ckanadmin_publish_datasets():
         )
 
     # flash notice that records are published
-    h.flash_notice(str(count) + _(u' record(s) published.'))
+    h.flash_notice(str(count) + _(' record(s) published.'))
 
     # return us to the publishing interface
     return h.redirect_to('canada.ckanadmin_publish')
@@ -792,11 +823,13 @@ def ckanadmin_job_queue():
         abort(403, _('Not authorized to see this page'))
 
     warning = False
-    if jobs and datetime.strptime(jobs[0]['created'], '%Y-%m-%dT%H:%M:%S') < (datetime.now() - timedelta(minutes=18)):
+    if (
+      jobs and datetime.strptime(jobs[0]['created'], '%Y-%m-%dT%H:%M:%S') <
+      (datetime.now() - timedelta(minutes=18))):
         warning = True
 
     return render('admin/jobs.html', extra_vars={'job_list': jobs,
-                                                 'warning': warning,})
+                                                 'warning': warning})
 
 
 @canada_views.route('/help', methods=['GET'])
@@ -806,7 +839,8 @@ def view_help():
     return render('help.html', extra_vars={})
 
 
-@canada_views.route('/datatable/<resource_name>/<resource_id>', methods=['GET', 'POST'])
+@canada_views.route('/datatable/<resource_name>/<resource_id>',
+                    methods=['GET', 'POST'])
 @csrf.exempt
 def datatable(resource_name, resource_id):
     params = parse_params(request.form)
@@ -840,18 +874,20 @@ def datatable(resource_name, resource_id):
             continue
         cols.append(f['datastore_id'])
         fids.append(f['datastore_id'])
-    prefix_cols = 2 if chromo.get('edit_form', False) and can_edit else 1  # Select | (Edit) | ...
+    # Select | (Edit) | ...
+    prefix_cols = 2 if chromo.get('edit_form', False) and can_edit else 1
 
     sort_list = []
     i = 0
     while True:
-        if u'order[%d][column]' % i not in params:
+        if 'order[%d][column]' % i not in params:
             break
-        sort_by_num = int(params[u'order[%d][column]' % i])
+        sort_by_num = int(params['order[%d][column]' % i])
         sort_order = (
-            u'desc' if params[u'order[%d][dir]' % i] == u'desc'
-            else u'asc')
-        sort_list.append(cols[sort_by_num - prefix_cols] + u' ' + sort_order + u' nulls last')
+            'desc' if params['order[%d][dir]' % i] == 'desc'
+            else 'asc')
+        sort_list.append(
+            cols[sort_by_num - prefix_cols] + ' ' + sort_order + ' nulls last')
         i += 1
 
     response = lc.action.datastore_search(
@@ -859,12 +895,12 @@ def datatable(resource_name, resource_id):
         resource_id=resource_id,
         offset=offset,
         limit=limit,
-        sort=u', '.join(sort_list),
+        sort=', '.join(sort_list),
     )
 
     aadata = [
-        [u'<input type="checkbox">'] +
-        [datatablify(row.get(colname, u''), colname, chromo) for colname in cols]
+        ['<input type="checkbox">'] +
+        [datatablify(row.get(colname, ''), colname, chromo) for colname in cols]
         for row in response['records']]
 
     if chromo.get('edit_form', False) and can_edit:
@@ -873,8 +909,8 @@ def datatable(resource_name, resource_id):
         pkids = [fids.index(k) for k in aslist(chromo['datastore_primary_key'])]
         for row in aadata:
             row.insert(1, (
-                    u'<a href="{0}" aria-label="' + _("Edit") + '">'
-                    u'<i class="fa fa-lg fa-edit" aria-hidden="true"></i></a>').format(
+                    '<a href="{0}" aria-label="' + _("Edit") + '">'
+                    '<i class="fa fa-lg fa-edit" aria-hidden="true"></i></a>').format(
                     h.url_for(
                         'canada.update_pd_record',
                         owner_org=pkg['organization']['name'],
@@ -902,13 +938,13 @@ def datatablify(v, colname, chromo):
             chromo_field = f
             break
     if v is None:
-        return u''
+        return ''
     if v is True:
-        return u'TRUE'
+        return 'TRUE'
     if v is False:
-        return u'FALSE'
+        return 'FALSE'
     if isinstance(v, list):
-        return u', '.join(str(e) for e in v)
+        return ', '.join(str(e) for e in v)
     if colname in ('record_created', 'record_modified') and v:
         return canada_date_str_to_datetime(v).replace(tzinfo=utc).astimezone(
             ottawa_tz).strftime('%Y-%m-%d %H:%M:%S %Z')
@@ -951,12 +987,13 @@ def organization_autocomplete():
     return _finish_ok(return_list)
 
 
-@canada_views.route('/api/<int(min=1, max=2):ver>/action/<logic_function>', methods=['GET', 'POST'])
-@canada_views.route('/api/action/<logic_function>', methods=[u'GET', u'POST'])
+@canada_views.route('/api/<int(min=1, max=2):ver>/action/<logic_function>',
+                    methods=['GET', 'POST'])
+@canada_views.route('/api/action/<logic_function>', methods=['GET', 'POST'])
 @canada_views.route('/api/<int(min=3, max={0}):ver>/action/<logic_function>'.format(
-                    API_MAX_VERSION), methods=[u'GET', u'POST'])
+                    API_MAX_VERSION), methods=['GET', 'POST'])
 def action(logic_function, ver=API_DEFAULT_VERSION):
-    u'''Main endpoint for the action API (v3)
+    '''Main endpoint for the action API (v3)
 
     Creates a dict with the incoming request data and calls the appropiate
     logic function. Returns a JSON response with the following keys:
@@ -967,9 +1004,10 @@ def action(logic_function, ver=API_DEFAULT_VERSION):
         * ``result``: The output of the action, generally an Object or an Array
 
     Canada Fork:
-        We keep version 1 and 2 endpoints just incase any systems are still using that.
-        We also have -1 to version to return the context and request_data for extra logging.
-        And if the request is a POST request, we want to not authorize any PD type.
+        We keep version 1 and 2 endpoints just incase any systems
+        are still using that. We also have -1 to version to return the
+        context and request_data for extra logging. And if the request is a
+        POST request, we want to not authorize any PD type.
     '''
     try:
         function = get_action(logic_function)
@@ -977,7 +1015,7 @@ def action(logic_function, ver=API_DEFAULT_VERSION):
         return api_view_action(logic_function, ver)
 
     try:
-        side_effect_free = getattr(function, u'side_effect_free', False)
+        side_effect_free = getattr(function, 'side_effect_free', False)
         request_data = _get_request_data(try_url_params=side_effect_free)
     except Exception:
         return api_view_action(logic_function, ver)
@@ -985,17 +1023,18 @@ def action(logic_function, ver=API_DEFAULT_VERSION):
     if not isinstance(request_data, dict):
         return api_view_action(logic_function, ver)
 
-    context = {u'model': model, u'session': model.Session, u'user': g.user,
-               u'api_version': ver, u'auth_user_obj': g.userobj}
+    context = {'model': model, 'session': model.Session, 'user': g.user,
+               'api_version': ver, 'auth_user_obj': g.userobj}
 
-    return_dict = {u'help': h.url_for(u'api.action',
-                                      logic_function=u'help_show',
-                                      ver=ver,
-                                      name=logic_function,
-                                      _external=True,)}
+    return_dict = {'help': h.url_for('api.action',
+                                     logic_function='help_show',
+                                     ver=ver,
+                                     name=logic_function,
+                                     _external=True)}
 
     # extra logging here
-    id = request_data.get('id', request_data.get('package_id', request_data.get('resource_id')))
+    id = request_data.get('id', request_data.get(
+        'package_id', request_data.get('resource_id')))
     pkg_dict = _get_package_from_api_request(logic_function, id, context)
     if pkg_dict:
         _log_api_access(request_data, pkg_dict)
@@ -1005,11 +1044,11 @@ def action(logic_function, ver=API_DEFAULT_VERSION):
         package_type = pkg_dict.get('type') if pkg_dict \
             else request_data.get('package_type', request_data.get('type'))
         if package_type and package_type in h.recombinant_get_types():
-            return_dict[u'error'] = {u'__type': u'Authorization Error',
-                                    u'message': _(u'Access denied')}
-            return_dict[u'success'] = False
+            return_dict['error'] = {'__type': 'Authorization Error',
+                                    'message': _('Access denied')}
+            return_dict['success'] = False
 
-            return _finish(403, return_dict, content_type=u'json')
+            return _finish(403, return_dict, content_type='json')
 
     return api_view_action(logic_function, ver)
 
@@ -1021,19 +1060,21 @@ def _get_package_from_api_request(logic_function, id, context):
     """
     if not id:
         return None
-    if logic_function.startswith('group') \
-    or logic_function.startswith('organization') \
-    or logic_function.startswith('urser'):
+    if (
+      logic_function.startswith('group') or
+      logic_function.startswith('organization') or
+      logic_function.startswith('urser')):
         return None
-    if logic_function.startswith('resource') \
-    or logic_function.startswith('datastore'):
+    if (
+      logic_function.startswith('resource') or
+      logic_function.startswith('datastore')):
         try:
-            res_dict = get_action(u'resource_show')(context, {u'id': id})
+            res_dict = get_action('resource_show')(context, {'id': id})
             id = res_dict['package_id']
         except (NotAuthorized, NotFound):
             pass
     try:
-        pkg_dict = get_action(u'package_show')(context, {u'id': id})
+        pkg_dict = get_action('package_show')(context, {'id': id})
         return pkg_dict
     except (NotAuthorized, NotFound):
         return None
@@ -1041,12 +1082,12 @@ def _get_package_from_api_request(logic_function, id, context):
 
 def _log_api_access(request_data, pkg_dict):
     org = model.Group.get(pkg_dict.get('owner_org'))
-    g.log_extra = u'org={o} type={t} id={i}'.format(
+    g.log_extra = 'org={o} type={t} id={i}'.format(
         o=org.name,
         t=pkg_dict.get('type'),
         i=pkg_dict.get('id'))
     if 'resource_id' in request_data:
-        g.log_extra += u' rid={0}'.format(request_data['resource_id'])
+        g.log_extra += ' rid={0}'.format(request_data['resource_id'])
 
 
 def notice_no_access():
@@ -1097,8 +1138,8 @@ def notify_ckan_user_create(email, fullname, username, phoneno, dept):
                 ),
                 config['canada.notification_new_user_email'],
                 (
-                    u'New Registry Account Created / Nouveau compte'
-                    u' cr\u00e9\u00e9 dans le registre de Gouvernement ouvert'
+                    'New Registry Account Created / Nouveau compte'
+                    ' cr\u00e9\u00e9 dans le registre de Gouvernement ouvert'
                 ),
                 render(
                     'user/new_user_email.html',
@@ -1121,8 +1162,8 @@ def notify_ckan_user_create(email, fullname, username, phoneno, dept):
             fullname or email,
             email,
             (
-                u'Welcome to the Open Government Registry / '
-                u'Bienvenue au Registre de Gouvernement Ouvert'
+                'Welcome to the Open Government Registry / '
+                'Bienvenue au Registre de Gouvernement Ouvert'
             ),
             render(
                 'user/user_welcome_email.html',
@@ -1136,29 +1177,28 @@ def notify_ckan_user_create(email, fullname, username, phoneno, dept):
 
 @canada_views.route('/organization/member_dump/<id>', methods=['GET'])
 def organization_member_dump(id):
-    records_format = u'csv'
+    records_format = 'csv'
 
     org_dict = model.Group.get(id)
     if not org_dict:
-        abort(404, _(u'Organization not found'))
+        abort(404, _('Organization not found'))
 
-    context = {u'model': model,
-                u'session': model.Session,
-                u'user': g.user}
+    context = {'model': model,
+               'session': model.Session,
+               'user': g.user}
 
     try:
-        check_access('organization_member_create', context, {u'id': id})
+        check_access('organization_member_create', context, {'id': id})
     except NotAuthorized:
-        abort(404,
-             _(u'Not authorized to access {org_name} members download'
-                .format(org_name=org_dict.title)))
+        abort(404, _('Not authorized to access {org_name} members download'.format(
+            org_name=org_dict.title)))
 
     try:
-        members = get_action(u'member_list')(context, {
-            u'id': id,
-            u'object_type': u'user',
-            u'records_format': records_format,
-            u'include_total': False,
+        members = get_action('member_list')(context, {
+            'id': id,
+            'object_type': 'user',
+            'records_format': records_format,
+            'include_total': False,
         })
     except NotFound:
         abort(404, _('Members not found'))
@@ -1179,14 +1219,14 @@ def organization_member_dump(id):
     output_stream.write(BOM)
     csv.writer(output_stream).writerows(results)
 
-    file_name = u'{org_id}-{members}'.format(
+    file_name = '{org_id}-{members}'.format(
             org_id=org_dict.name,
-            members=_(u'members'))
+            members=_('members'))
 
     output_stream.seek(0)
     response = make_response(output_stream.read())
     output_stream.close()
-    content_disposition = u'attachment; filename="{name}.csv"'.format(
+    content_disposition = 'attachment; filename="{name}.csv"'.format(
                                     name=file_name)
     content_type = b'text/csv; charset=utf-8'
     response.headers['Content-Type'] = content_type
@@ -1202,28 +1242,30 @@ def members(id):
     """
     extra_vars = {}
     set_org(True)
-    context = {u'model': model, u'session': model.Session, u'user': g.user}
+    context = {'model': model, 'session': model.Session, 'user': g.user}
 
     try:
-        data_dict = {u'id': id}
+        data_dict = {'id': id}
         if request.method == 'POST':
-            auth_action = u'group_edit_permissions'
+            auth_action = 'group_edit_permissions'
         else:
-            auth_action = u'view_org_members'
+            auth_action = 'view_org_members'
         check_access(auth_action, context, data_dict)
-        members = get_action(u'member_list')(context, {
-            u'id': id,
-            u'object_type': u'user'
+        members = get_action('member_list')(context, {
+            'id': id,
+            'object_type': 'user'
         })
         data_dict['include_datasets'] = False
-        group_dict = get_action(u'organization_show')(context, data_dict)
+        group_dict = get_action('organization_show')(context, data_dict)
     except NotFound:
-        abort(404, _(u'Organization not found'))
+        abort(404, _('Organization not found'))
     except NotAuthorized:
         if request.method == 'POST':
-            error_message = _(u'User %r not authorized to edit members of %s') % (g.user, id)
+            error_message = _('User %r not authorized to edit members of %s') % \
+                (g.user, id)
         else:
-            error_message = _(u'User %r not authorized to view members of %s') % (g.user, id)
+            error_message = _('User %r not authorized to view members of %s') % \
+                (g.user, id)
         abort(403, error_message)
 
     # TODO: Remove
@@ -1233,11 +1275,11 @@ def members(id):
     g.group_dict = group_dict
 
     extra_vars = {
-        u"members": members,
-        u"group_dict": group_dict,
-        u"group_type": 'organization'
+        "members": members,
+        "group_dict": group_dict,
+        "group_type": 'organization'
     }
-    return render(u'organization/members.html', extra_vars)
+    return render('organization/members.html', extra_vars)
 
 
 @canada_views.route('/ckan-admin', methods=['GET'], strict_slashes=False)
@@ -1255,7 +1297,7 @@ def ckan_admin_index():
         if admin.name == site_id:
             continue
         sysadmins.append(admin.name)
-    return render(u'admin/index.html', extra_vars={'sysadmins': sysadmins})
+    return render('admin/index.html', extra_vars={'sysadmins': sysadmins})
 
 
 @canada_views.route('/ckan-admin/config', methods=['GET', 'POST'])
@@ -1281,11 +1323,12 @@ def ckan_admin_portal_sync():
     start = limit * (page_number - 1)
     extra_vars = {}
 
-    out_of_sync_packages = get_action('list_out_of_sync_packages')({'user': g.user}, {'limit': limit, 'start': start})
+    out_of_sync_packages = get_action('list_out_of_sync_packages')(
+        {'user': g.user}, {'limit': limit, 'start': start})
     extra_vars['out_of_sync_packages'] = out_of_sync_packages
 
     def _basic_pager_uri(page, text):
-        return  h.url_for('canada.ckan_admin_portal_sync', page=page)
+        return h.url_for('canada.ckan_admin_portal_sync', page=page)
     pager_url = partial(_basic_pager_uri, page=page_number, text='')
 
     extra_vars['page'] = Page(

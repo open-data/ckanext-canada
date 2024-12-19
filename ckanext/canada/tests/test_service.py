@@ -25,7 +25,6 @@ class TestService(CanadaTestBase):
         self.resource_id = rval['resources'][0]['id']
         self.resource_cid = rval['resources'][1]['id']
 
-
     def test_example(self):
         """
         Example data should load
@@ -34,7 +33,6 @@ class TestService(CanadaTestBase):
         self.lc.action.datastore_upsert(
             resource_id=self.resource_id,
             records=[record])
-
 
     def test_primary_key_commas(self):
         """
@@ -50,7 +48,6 @@ class TestService(CanadaTestBase):
         assert 'records' in err
         assert 'service_id' in err['records'][0]
         assert err['records'][0]['service_id'] == ['Comma is not allowed in Service ID Number field']
-
 
     def test_foreign_constraint(self):
         """
@@ -72,7 +69,6 @@ class TestService(CanadaTestBase):
         assert 'foreign_constraints' in err
         assert 'Cannot delete records or table because of a reference to another table' in err['foreign_constraints'][0]
 
-
     def test_blank(self):
         """
         Should raise a Database key error
@@ -84,7 +80,6 @@ class TestService(CanadaTestBase):
         err = ve.value.error_dict
         assert 'key' in err
         assert 'fiscal_yr, service_id' in err['key'][0]
-
 
     def test_required_fields(self):
         """
@@ -123,7 +118,6 @@ class TestService(CanadaTestBase):
         assert 'records' in err
         for required_field in expected_required_fields:
             assert required_field in err['records'][0]
-
 
     def test_conditional_fields(self):
         """
@@ -180,7 +174,6 @@ class TestService(CanadaTestBase):
         assert 'special_remarks_en' in err['records'][0]
         assert 'special_remarks_fr' in err['records'][0]
 
-
     def test_duolang_fields(self):
         """
         Fields with both _en and _fr should require eachother
@@ -236,7 +229,6 @@ class TestService(CanadaTestBase):
         assert 'special_remarks_en' in err['records'][0]
         assert 'service_uri_en' in err['records'][0]
 
-
     def test_choice_fields(self):
         """
         Fields with choices should expect those values
@@ -272,7 +264,6 @@ class TestService(CanadaTestBase):
         for expected_choice_field in expected_choice_fields:
             assert expected_choice_field in err['records'][0]
 
-
     def test_max_chars(self):
         """
         Over max character field values should raise an exception
@@ -302,7 +293,6 @@ class TestService(CanadaTestBase):
         assert 'records' in err
         for maxchar_field in expect_maxchar_fields:
             assert maxchar_field in err['records'][0]
-
 
     def test_int_na_nd(self):
         """
@@ -360,13 +350,11 @@ class TestStdService(CanadaTestBase):
         self.resource_pid = rval['resources'][0]['id']
         self.resource_id = rval['resources'][1]['id']
 
-
     def _make_parent_record(self):
         record = get_chromo('service')['examples']['record'].copy()
         self.lc.action.datastore_upsert(
             resource_id=self.resource_pid,
             records=[record])
-
 
     def test_example(self):
         """
@@ -377,7 +365,6 @@ class TestStdService(CanadaTestBase):
         self.lc.action.datastore_upsert(
             resource_id=self.resource_id,
             records=[record])
-
 
     def test_primary_key_commas(self):
         """
@@ -397,7 +384,6 @@ class TestStdService(CanadaTestBase):
         assert err['records'][0]['service_id'] == ['Comma is not allowed in Service ID Number field']
         assert err['records'][0]['service_standard_id'] == ['Comma is not allowed in Service Standard ID field']
 
-
     def test_foreign_constraint(self):
         """
         Trying to create a Standard record referencing a nonexistent Service record should raise an exception
@@ -411,7 +397,6 @@ class TestStdService(CanadaTestBase):
         assert 'records' in err
         assert 'violates foreign key constraint' in err['records'][0]
 
-
     def test_blank(self):
         """
         Should raise a Database key error
@@ -423,7 +408,6 @@ class TestStdService(CanadaTestBase):
         err = ve.value.error_dict
         assert 'key' in err
         assert 'fiscal_yr, service_id, service_standard_id' in err['key'][0]
-
 
     def test_required_fields(self):
         """
@@ -453,7 +437,6 @@ class TestStdService(CanadaTestBase):
         assert 'records' in err
         for required_field in expected_required_fields:
             assert required_field in err['records'][0]
-
 
     def test_duolang_fields(self):
         """
@@ -500,7 +483,6 @@ class TestStdService(CanadaTestBase):
         assert 'comments_en' in err['records'][0]
         assert 'performance_results_uri_en' in err['records'][0]
 
-
     def test_choice_fields(self):
         """
         Fields with choices should expect those values
@@ -528,7 +510,6 @@ class TestStdService(CanadaTestBase):
         assert 'records' in err
         for expected_choice_field in expected_choice_fields:
             assert expected_choice_field in err['records'][0]
-
 
     def test_max_chars(self):
         """
@@ -560,7 +541,6 @@ class TestStdService(CanadaTestBase):
         assert 'records' in err
         for maxchar_field in expect_maxchar_fields:
             assert maxchar_field in err['records'][0]
-
 
     def test_integers(self):
         """

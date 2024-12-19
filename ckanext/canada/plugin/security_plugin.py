@@ -23,11 +23,13 @@ class CanadaSecurityPlugin(CkanSecurityPlugin):
         config['ckan.auth.create_dataset_if_not_in_organization'] = False
         config['ckan.auth.user_create_groups'] = False
         config['ckan.auth.user_create_organizations'] = False
-        config['ckan.auth.create_user_via_api'] = config.get('ckan.auth.create_user_via_api', False)  # allow setting in INI file
+        config['ckan.auth.create_user_via_api'] = config.get(
+            'ckan.auth.create_user_via_api', False)  # allow setting in INI file
         # Enable auth settings
         config['ckan.auth.user_delete_groups'] = True
         config['ckan.auth.user_delete_organizations'] = True
-        config['ckan.auth.create_user_via_web'] = plugin_loaded('canada_internal')  # /user/register view only on registry
+        config['ckan.auth.create_user_via_web'] = plugin_loaded(
+            'canada_internal')  # /user/register view only on registry
         # Set auth settings
         config['ckan.auth.roles_that_cascade_to_sub_groups'] = ['admin']
 

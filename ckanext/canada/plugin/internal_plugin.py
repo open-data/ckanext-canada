@@ -48,13 +48,15 @@ class CanadaInternalPlugin(p.SingletonPlugin):
     def configure(self, config):
         # FIXME: monkey-patch datastore upsert_data
         original_upsert_data = db.upsert_data
+
         def patched_upsert_data(context, data_dict):
             with logic.datastore_create_temp_user_table(context):
                 try:
                     return original_upsert_data(context, data_dict)
                 except ValidationError as e:
                     # reformat tab-delimited error as dict
-                    head, sep, rerr = e.error_dict.get('records', [''])[0].partition('\t')
+                    head, sep, rerr = e.error_dict.get(
+                        'records', [''])[0].partition('\t')
                     rerr = rerr.rstrip('\n')
                     if head == 'TAB-DELIMITED' and sep:
                         out = {}
@@ -120,21 +122,27 @@ class CanadaInternalPlugin(p.SingletonPlugin):
 
         # check if file is uploded
         try:
-            res = p.toolkit.get_action(u'resource_show')({'ignore_auth': True},
-                                                         {'id': resource_id})
+            res = p.toolkit.get_action('resource_show')(
+                {'ignore_auth': True}, {'id': resource_id})
 
-            if res.get('url_type') != 'upload' and res.get('url_type') != '' and res.get('url_type') is not None:
+            if (
+              res.get('url_type') != 'upload' and
+              res.get('url_type') != '' and
+              res.get('url_type') is not None):
                 log.debug(
-                    'Only uploaded resources and allowed domain sources can be added to the Data Store.')
+                    'Only uploaded resources and allowed domain '
+                    'sources can be added to the Data Store.')
                 return False
 
             if not res.get('url_type'):
-                allowed_domains = p.toolkit.config.get('ckanext.canada.datastore_source_domain_allow_list', [])
+                allowed_domains = p.toolkit.config.get(
+                    'ckanext.canada.datastore_source_domain_allow_list', [])
                 url = res.get('url')
                 url_parts = urlsplit(url)
                 if url_parts.netloc not in allowed_domains:
                     log.debug(
-                        'Only uploaded resources and allowed domain sources can be added to the Data Store.')
+                        'Only uploaded resources and allowed domain '
+                        'sources can be added to the Data Store.')
                     return False
 
         except ObjectNotFound:
@@ -143,7 +151,7 @@ class CanadaInternalPlugin(p.SingletonPlugin):
 
         # check if validation report exists
         try:
-            validation = p.toolkit.get_action(u'resource_validation_show')(
+            validation = p.toolkit.get_action('resource_validation_show')(
                 {'ignore_auth': True},
                 {'resource_id': res['id']})
             if validation.get('status', None) != 'success':

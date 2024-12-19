@@ -24,13 +24,11 @@ class TestNap5(CanadaTestBase):
 
         self.resource_id = rval['resources'][0]['id']
 
-
     def test_example(self):
         record = get_chromo('nap5')['examples']['record']
         self.lc.action.datastore_upsert(
             resource_id=self.resource_id,
             records=[record])
-
 
     def test_blank(self):
         with pytest.raises(ValidationError) as ve:
@@ -39,7 +37,6 @@ class TestNap5(CanadaTestBase):
                 records=[{}])
         err = ve.value.error_dict
         assert 'key' in err, err
-
 
     def test_required(self):
         record = dict(

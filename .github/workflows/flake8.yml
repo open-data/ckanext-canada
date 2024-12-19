@@ -16,7 +16,7 @@ jobs:
         run: pip install flake8 pycodestyle
       - name: Check syntax
         # Stop the build if there are Python syntax errors or undefined names
-        run: flake8 --count --statistics --show-source
+        run: flake8 --show-source
 
       - name: Warnings
-        run: flake8 . --count --exit-zero --max-complexity=10 --max-line-length=88 --statistics --extend-exclude=""
+        run: flake8

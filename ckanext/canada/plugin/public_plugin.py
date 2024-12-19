@@ -66,7 +66,8 @@ class CanadaPublicPlugin(p.SingletonPlugin, DefaultTranslation):
             assert 'ckanext.scheming:presets.json' in scheming_presets
             assert 'ckanext.fluent:presets.json' in scheming_presets
             assert 'ckanext.canada:schemas/presets.yaml' in scheming_presets
-            assert 'ckanext.canada:schemas/validation_placeholder_presets.yaml' in scheming_presets
+            assert 'ckanext.canada:schemas/validation_placeholder_presets.yaml' in \
+                scheming_presets
 
         scheming_dataset_schemas = config.get('scheming.dataset_schemas', '')
         assert 'ckanext.canada:schemas/dataset.yaml' in scheming_dataset_schemas
@@ -74,7 +75,8 @@ class CanadaPublicPlugin(p.SingletonPlugin, DefaultTranslation):
         assert 'ckanext.canada:schemas/prop.yaml' in scheming_dataset_schemas
 
         scheming_organization_schemas = config.get('scheming.organization_schemas', '')
-        assert 'ckanext.canada:schemas/organization.yaml' in scheming_organization_schemas
+        assert 'ckanext.canada:schemas/organization.yaml' in \
+            scheming_organization_schemas
 
         # Pretty output for Feeds
         config['ckan.feeds.pretty'] = True
@@ -123,7 +125,8 @@ class CanadaPublicPlugin(p.SingletonPlugin, DefaultTranslation):
         return facets_dict
 
     # IFacets
-    #FIXME: remove `group_facets` method once issue https://github.com/ckan/ckan/issues/7017 is patched into <2.9
+    # FIXME: remove `group_facets` method once issue
+    # https://github.com/ckan/ckan/issues/7017 is patched into <2.9
     def group_facets(self, facets_dict, group_type, package_type):
         ''' Update the facets_dict and return it. '''
         if group_type == 'organization':
@@ -152,21 +155,19 @@ class CanadaPublicPlugin(p.SingletonPlugin, DefaultTranslation):
             'datastore_upsert': auth.datastore_upsert,
             'view_org_members': auth.view_org_members,
             'registry_jobs_running': auth.registry_jobs_running,
-            'recently_changed_packages_activity_list': auth.recently_changed_packages_activity_list,
+            'recently_changed_packages_activity_list':
+                auth.recently_changed_packages_activity_list,
         }
 
     # IMiddleware
-
     def make_middleware(self, app, config):
         return LogExtraMiddleware(app, config)
 
     # IClick
-
     def get_commands(self):
         return [cli.get_commands(), get_pd_commands()]
 
     # IColumnTypes
-
     def column_types(self, existing_types):
         return dict(
             existing_types,
@@ -193,7 +194,7 @@ class LogExtraMiddleware(object):
                 contextual_user = None
             if contextual_user:
                 log_extra = g.log_extra if hasattr(g, 'log_extra') else ''
-                #FIXME: make sure username special chars are handled
+                # FIXME: make sure username special chars are handled
                 # the values in the tuple HAVE to be str types.
                 extra = [('X-LogExtra', f'user={contextual_user} {log_extra}')]
 
@@ -211,8 +212,9 @@ def _wet_pager(self, *args, **kwargs):
     # and instead hardcodes the pagination html in helpers.py
 
     kwargs.update(
-        format=u"<ul class='pagination'>$link_previous ~2~ $link_next</ul>",
-        symbol_previous=core_helpers._('Previous'), symbol_next=core_helpers._('Next'),
+        format="<ul class='pagination'>$link_previous ~2~ $link_next</ul>",
+        symbol_previous=core_helpers._('Previous'),
+        symbol_next=core_helpers._('Next'),
         curpage_attr={'class': 'active'}
     )
 
@@ -225,7 +227,8 @@ def _SI_number_span_close(number):
     if number < 1000:
         output = h.literal('<span>')
     else:
-        output = h.literal('<span title="' + formatters.localised_number(number) + '">')
+        output = h.literal(
+            '<span title="' + formatters.localised_number(number) + '">')
     return output + formatters.localised_SI_number(number) + h.literal('</span>')
 
 
@@ -242,5 +245,6 @@ def build_nav_main(*args):
         menu_item, title = item[:2]
         if len(item) == 3 and not core_helpers.check_access(item[2]):
             continue
-        output += core_helpers._make_menu_item(menu_item, title, class_='list-group-item')
+        output += core_helpers._make_menu_item(
+            menu_item, title, class_='list-group-item')
     return output
