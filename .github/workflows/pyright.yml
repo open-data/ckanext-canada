@@ -19,7 +19,7 @@ jobs:
         with:
           node-version: ${{ env.NODE_VERSION }}
       - name: Install python deps
-        run: pip install -r requirements.txt -r dev-requirements.txt -e.
+        run: pip install -e . -r requirements.txt -r test-requirements.txt
       - name: Install node deps
         run: npm ci
       - name: Check types
