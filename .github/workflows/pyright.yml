@@ -12,6 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+        id: gitcheckout
       - uses: actions/setup-python@v2
         with:
           python-version: ${{ env.PYTHON_VERSION }}
@@ -19,10 +20,12 @@ jobs:
         with:
           node-version: ${{ env.NODE_VERSION }}
       - name: Install python deps
+        id: pydepends
+        if: steps.gitcheckout.outcome == 'success'
         run: |
             python3 -m venv /home/runner/work/app
             mkdir -p /home/runner/work/app/src/ckanext-canada
-            mv . /home/runner/work/app/src/ckanext-canada
+            cp -R . /home/runner/work/app/src/ckanext-canada
             cd /home/runner/work/app
             source /srv/app/bin/activate
             pip install --upgrade setuptools==70.0.0
@@ -40,6 +43,12 @@ jobs:
             pip install -e 'git+https://github.com/open-data/ckanext-security.git@canada-v2.10#egg=ckanext-security' -r 'https://raw.githubusercontent.com/open-data/ckanext-security/canada-v2.10/requirements.txt'
             find /home/runner/work/app -name '*.pyc' -delete
       - name: Install node deps
-        run: npm ci
+        if: steps.pydepends.outcome == 'success'
+        run: |
+          cd /home/runner/work/app/src/ckanext-canada
+          npm ci
       - name: Check types
-        run: npx pyright
+        if: steps.pydepends.outcome == 'success'
+        run: |
+          cd /home/runner/work/app/src/ckanext-canada
+          npx pyright
