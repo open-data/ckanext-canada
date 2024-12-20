@@ -1,3 +1,5 @@
+from ckan.types import Config, Callable, Any
+
 import ckan.plugins as p
 from ckan.lib.app_globals import set_app_global
 from ckan.plugins.core import plugin_loaded
@@ -11,7 +13,7 @@ class CanadaThemePlugin(p.SingletonPlugin):
     p.implements(p.ITemplateHelpers)
 
     # IConfigurer
-    def update_config(self, config):
+    def update_config(self, config: Config):
         p.toolkit.add_template_directory(config, 'templates')
         p.toolkit.add_public_directory(config, 'public')
         p.toolkit.add_resource('public/static/js', 'js')
@@ -19,12 +21,12 @@ class CanadaThemePlugin(p.SingletonPlugin):
         p.toolkit.add_resource('assets/datatables', 'canada_datatables')
         p.toolkit.add_resource('assets/public', 'canada_public')
         p.toolkit.add_resource('assets/invitation-manager', 'invitation_manager')
-        set_app_global('is_registry', plugin_loaded('canada_internal'))
+        set_app_global('is_registry', str(plugin_loaded('canada_internal')))
 
         config['ckan.favicon'] = helpers.cdts_asset('/assets/favicon.ico')
 
     # ITemplateHelpers
-    def get_helpers(self):
+    def get_helpers(self) -> dict[str, Callable[..., Any]]:
         return dict((h, getattr(helpers, h)) for h in [
             # Registry
             'may_publish_datasets',

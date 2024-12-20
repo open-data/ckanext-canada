@@ -2,7 +2,10 @@ import logging
 from urllib.parse import urlsplit
 from frictionless import system
 
+from ckan.types import Config, Action, AuthFunction
+
 import ckan.plugins as p
+from ckan import model
 from ckan.plugins.toolkit import ValidationError, ObjectNotFound
 
 from ckanext.datastore.backend import postgres as db
@@ -28,7 +31,7 @@ class CanadaInternalPlugin(p.SingletonPlugin):
     p.implements(p.IAuthFunctions)
 
     # IConfigurer
-    def update_config(self, config):
+    def update_config(self, config: Config):
         config.update({
             "ckan.user_list_limit": 250
         })
@@ -45,7 +48,7 @@ class CanadaInternalPlugin(p.SingletonPlugin):
         config['ckan.feeds.include_private'] = True
 
     # IConfigurable
-    def configure(self, config):
+    def configure(self, config: Config):
         # FIXME: monkey-patch datastore upsert_data
         original_upsert_data = db.upsert_data
 
@@ -72,21 +75,21 @@ class CanadaInternalPlugin(p.SingletonPlugin):
         system.register('canada-validation', CanadaValidationPlugin())
 
     # IPackageController
-    def create(self, pkg):
+    def create(self, pkg: 'model.Package'):
         """
         All datasets on registry should now be marked private
         """
         pkg.private = True
 
     # IPackageController
-    def edit(self, pkg):
+    def edit(self, pkg: 'model.Package'):
         """
         All datasets on registry should now be marked private
         """
         pkg.private = True
 
     # IActions
-    def get_actions(self):
+    def get_actions(self) -> dict[str, Action]:
         return dict(
             {
                 k: logic.disabled_anon_action for k in [
@@ -104,7 +107,7 @@ class CanadaInternalPlugin(p.SingletonPlugin):
         )
 
     # IAuthFunctions
-    def get_auth_functions(self):
+    def get_auth_functions(self) -> dict[str, AuthFunction]:
         return {
             'group_list': auth.group_list,
             'group_show': auth.group_show,
@@ -115,7 +118,7 @@ class CanadaInternalPlugin(p.SingletonPlugin):
         }
 
     # IXloader
-    def can_upload(self, resource_id):
+    def can_upload(self, resource_id: str) -> bool:
         """
         Only uploaded resources are allowed to be xloadered, or allowed domain sources.
         """

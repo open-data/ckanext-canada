@@ -1,4 +1,4 @@
-from typing import Optional, Type
+from typing import Optional, Type, Any, List
 
 from frictionless import Check, Plugin as FrictionlessPlugin
 
@@ -14,7 +14,7 @@ class CanadaValidationPlugin(FrictionlessPlugin):
         if type == 'ds-headers':
             return checks.DatastoreHeadersCheck()
 
-    def detect_field_candidates(self, field_candidates: list):
+    def detect_field_candidates(self, field_candidates: List[dict[str, Any]]):
         """
         Set list of available types for Resource table fields.
         """

@@ -1,3 +1,9 @@
+from typing import Any, Union, List, TYPE_CHECKING, Type
+from ckan.types import Config, Action, AuthFunction, CKANApp
+
+from flask import Blueprint
+from click import Command
+
 import ckan.plugins as p
 from ckan.lib.plugins import DefaultTranslation
 from ckan.plugins.toolkit import _, g, h
@@ -6,12 +12,16 @@ import ckan.lib.formatters as formatters
 
 from ckanext.activity.logic.validators import object_id_validators
 from ckanext.tabledesigner.interfaces import IColumnTypes
+from ckanext.tabledesigner.column_types import ColumnType
 from ckanext.canada import column_types as coltypes
 from ckanext.canada.pd import get_commands as get_pd_commands
 from ckanext.canada.view import canada_views
 from ckanext.canada import cli
 from ckanext.canada import logic
 from ckanext.canada import auth
+
+if TYPE_CHECKING:
+    from collections import OrderedDict
 
 
 class CanadaPublicPlugin(p.SingletonPlugin, DefaultTranslation):
@@ -34,7 +44,7 @@ class CanadaPublicPlugin(p.SingletonPlugin, DefaultTranslation):
         return 'ckanext-canada'
 
     # IConfigurer
-    def update_config(self, config):
+    def update_config(self, config: Config):
         config['ckan.auth.public_user_details'] = False
 
         recombinant_definitions = config.get('recombinant.definitions', '')
@@ -103,7 +113,8 @@ class CanadaPublicPlugin(p.SingletonPlugin, DefaultTranslation):
         })
 
     # IFacets
-    def dataset_facets(self, facets_dict, package_type):
+    def dataset_facets(self, facets_dict: 'OrderedDict[str, Any]',
+                       package_type: str) -> 'OrderedDict[str, Any]':
         ''' Update the facets_dict and return it. '''
 
         facets_dict.update({
@@ -127,28 +138,30 @@ class CanadaPublicPlugin(p.SingletonPlugin, DefaultTranslation):
     # IFacets
     # FIXME: remove `group_facets` method once issue
     # https://github.com/ckan/ckan/issues/7017 is patched into <2.9
-    def group_facets(self, facets_dict, group_type, package_type):
+    def group_facets(self, facets_dict: 'OrderedDict[str, Any]',
+                     group_type: str, package_type: str) -> 'OrderedDict[str, Any]':
         ''' Update the facets_dict and return it. '''
         if group_type == 'organization':
             return self.dataset_facets(facets_dict, package_type)
         return facets_dict
 
     # IFacets
-    def organization_facets(self, facets_dict, organization_type,
-                            package_type):
+    def organization_facets(self, facets_dict: 'OrderedDict[str, Any]',
+                            organization_type: str, package_type: str)\
+                                -> 'OrderedDict[str, Any]':
         return self.dataset_facets(facets_dict, package_type)
 
     # IActions
-    def get_actions(self):
+    def get_actions(self) -> dict[str, Action]:
         return {
-                'resource_view_show': logic.canada_resource_view_show,
-                'resource_view_list': logic.canada_resource_view_list,
-                'job_list': logic.canada_job_list,
-                'registry_jobs_running': logic.registry_jobs_running,
-               }
+            'resource_view_show': logic.canada_resource_view_show,
+            'resource_view_list': logic.canada_resource_view_list,
+            'job_list': logic.canada_job_list,
+            'registry_jobs_running': logic.registry_jobs_running,
+        }
 
     # IAuthFunctions
-    def get_auth_functions(self):
+    def get_auth_functions(self) -> dict[str, AuthFunction]:
         return {
             'datastore_create': auth.datastore_create,
             'datastore_delete': auth.datastore_delete,
@@ -160,15 +173,15 @@ class CanadaPublicPlugin(p.SingletonPlugin, DefaultTranslation):
         }
 
     # IMiddleware
-    def make_middleware(self, app, config):
+    def make_middleware(self, app: CKANApp, config: Config) -> CKANApp:
         return LogExtraMiddleware(app, config)
 
     # IClick
-    def get_commands(self):
+    def get_commands(self) -> List[Command]:
         return [cli.get_commands(), get_pd_commands()]
 
     # IColumnTypes
-    def column_types(self, existing_types):
+    def column_types(self, existing_types: dict[str, Type[ColumnType]]):
         return dict(
             existing_types,
             province=coltypes.Province,
@@ -176,7 +189,7 @@ class CanadaPublicPlugin(p.SingletonPlugin, DefaultTranslation):
         )
 
     # IBlueprint
-    def get_blueprint(self):
+    def get_blueprint(self) -> List[Blueprint]:
         # type: () -> list[Blueprint]
         return [canada_views]
 
@@ -206,11 +219,10 @@ class LogExtraMiddleware(object):
         return self.app(environ, _start_response)
 
 
-def _wet_pager(self, *args, **kwargs):
+def _wet_pager(self: core_helpers.Page, *args: Any, **kwargs: Any):
     # a custom pagination method, because CKAN doesn't
     # expose the pagination to the templates,
     # and instead hardcodes the pagination html in helpers.py
-
     kwargs.update(
         format="<ul class='pagination'>$link_previous ~2~ $link_next</ul>",
         symbol_previous=core_helpers._('Previous'),
@@ -221,7 +233,7 @@ def _wet_pager(self, *args, **kwargs):
     return super(core_helpers.Page, self).pager(*args, **kwargs)
 
 
-def _SI_number_span_close(number):
+def _SI_number_span_close(number: Union[str, int]):
     ''' outputs a span with the number in SI unit eg 14700 -> 14.7k '''
     number = int(number)
     if number < 1000:
@@ -234,7 +246,7 @@ def _SI_number_span_close(number):
 
 # Monkey Patched to inlude the 'list-group-item' class
 # TODO: Clean up and convert to proper HTML templates
-def build_nav_main(*args):
+def build_nav_main(*args: Any):
     ''' build a set of menu items.
 
     args: tuples of (menu type, title) eg ('login', _('Login'))

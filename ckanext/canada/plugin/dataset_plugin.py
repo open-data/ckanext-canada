@@ -4,6 +4,9 @@ from flask import has_request_context, Blueprint
 from urllib.parse import urlsplit
 import logging
 
+from typing import List, Union
+from ckan.types import Response, Context, Any
+
 import ckan.plugins as p
 from ckan.plugins.toolkit import g, h, request
 
@@ -37,12 +40,12 @@ class CanadaDatasetsPlugin(SchemingDatasetsPlugin):
     try:
         from ckanext.validation.interfaces import IDataValidation
     except ImportError:
-        log.warn('failed to import ckanext-validation interface')
+        log.warning('failed to import ckanext-validation interface')
     else:
         p.implements(IDataValidation, inherit=True)
 
     # IBlueprint
-    def get_blueprint(self):
+    def get_blueprint(self) -> List[Blueprint]:
         """
         Prevents all Core Dataset and Resources Views
         for all the PD types. Will type_redirect them
@@ -71,7 +74,7 @@ class CanadaDatasetsPlugin(SchemingDatasetsPlugin):
             blueprints.append(blueprint)
         return blueprints
 
-    def _redirect_pd_dataset_endpoints(blueprint):
+    def _redirect_pd_dataset_endpoints(blueprint: Blueprint) -> Union[Response, None]:
         """
         Runs before request for /dataset and /dataset/<pkg id>/resource
 
@@ -88,7 +91,8 @@ class CanadaDatasetsPlugin(SchemingDatasetsPlugin):
                                      resource_name=package_type)
 
     # IDatasetForm
-    def prepare_dataset_blueprint(self, package_type, blueprint):
+    def prepare_dataset_blueprint(self, package_type: str,
+                                  blueprint: Blueprint) -> Blueprint:
         # type: (str,Blueprint) -> Blueprint
         blueprint.add_url_rule(
             '/edit/<id>',
@@ -114,7 +118,8 @@ class CanadaDatasetsPlugin(SchemingDatasetsPlugin):
         return blueprint
 
     # IDatasetForm
-    def prepare_resource_blueprint(self, package_type, blueprint):
+    def prepare_resource_blueprint(self, package_type: str,
+                                   blueprint: Blueprint) -> Blueprint:
         # type: (str,Blueprint) -> Blueprint
         blueprint.add_url_rule(
             '/<resource_id>/edit',
@@ -133,7 +138,7 @@ class CanadaDatasetsPlugin(SchemingDatasetsPlugin):
         return blueprint
 
     # IDataValidation
-    def can_validate(self, context, resource):
+    def can_validate(self, context: Context, resource: dict[str, Any]):
         """
         Only uploaded resources are allowed to be
         validated, or allowed domain sources.
@@ -152,7 +157,7 @@ class CanadaDatasetsPlugin(SchemingDatasetsPlugin):
         return False
 
     # IPackageController
-    def before_dataset_search(self, search_params):
+    def before_dataset_search(self, search_params: dict[str, Any]) -> dict[str, Any]:
         # We're going to group portal_release_date into two bins - to today and
         # after today.
         search_params['facet.range'] = 'portal_release_date'
@@ -196,7 +201,8 @@ class CanadaDatasetsPlugin(SchemingDatasetsPlugin):
         return search_params
 
     # IPackageController
-    def after_dataset_search(self, search_results, search_params):
+    def after_dataset_search(self, search_results: dict[str, Any],
+                             search_params: dict[str, Any]) -> dict[str, Any]:
         for result in search_results.get('results', []):
             for extra in result.get('extras', []):
                 if extra.get('key') in ['title_fra', 'notes_fra']:
@@ -205,7 +211,7 @@ class CanadaDatasetsPlugin(SchemingDatasetsPlugin):
         return search_results
 
     # IPackageController
-    def before_dataset_index(self, data_dict):
+    def before_dataset_index(self, data_dict: dict[str, Any]) -> dict[str, Any]:
         kw = json.loads(data_dict.get('extras_keywords', '{}'))
         data_dict['keywords'] = kw.get('en', [])
         data_dict['keywords_fra'] = kw.get('fr', kw.get('fr-t-en', []))
@@ -267,7 +273,8 @@ class CanadaDatasetsPlugin(SchemingDatasetsPlugin):
         return data_dict
 
     # IDataDictionaryForm
-    def update_datastore_info_field(self, field, plugin_data):
+    def update_datastore_info_field(self, field: dict[str, Any],
+                                    plugin_data: dict[str, Any]) -> dict[str, Any]:
         if 'info' or '_info' in plugin_data and 'info' not in field:
             if 'info' in plugin_data:
                 field['info'] = plugin_data.get('info', {})
