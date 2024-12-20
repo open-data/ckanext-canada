@@ -6,7 +6,7 @@ exclude = [
     "**/migration",
 ]
 extraPaths = [
-  "/srv/app/lib",
+  "/srv/app/lib/python3.9/site-packages",
   "/srv/app/src",
   "/srv/app/src/ckan",
   "/srv/app/src/ckanapi",
