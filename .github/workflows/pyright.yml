@@ -20,10 +20,10 @@ jobs:
           node-version: ${{ env.NODE_VERSION }}
       - name: Install python deps
         run: |
-            python3 -m venv /srv/app
-            mkdir -p /srv/app/src/ckanext-canada
-            mv . /srv/app/src/ckanext-canada
-            cd /srv/app
+            python3 -m venv /home/runner/work/app
+            mkdir -p /home/runner/work/app/src/ckanext-canada
+            mv . /home/runner/work/app/src/ckanext-canada
+            cd /home/runner/work/app
             source /srv/app/bin/activate
             pip install --upgrade setuptools==70.0.0
             pip install --upgrade pip==23.2.1
@@ -38,7 +38,7 @@ jobs:
             pip install -e 'git+https://github.com/ckan/ckantoolkit.git#egg=ckantoolkit' -r 'https://raw.githubusercontent.com/ckan/ckantoolkit/master/requirements.txt'
             pip install -e 'git+https://github.com/open-data/frictionless-py.git@canada-v2.10#egg=frictionless' -r 'https://raw.githubusercontent.com/open-data/frictionless-py/canada-v2.10/requirements.txt'
             pip install -e 'git+https://github.com/open-data/ckanext-security.git@canada-v2.10#egg=ckanext-security' -r 'https://raw.githubusercontent.com/open-data/ckanext-security/canada-v2.10/requirements.txt'
-            find /srv/app -name '*.pyc' -delete
+            find /home/runner/work/app -name '*.pyc' -delete
       - name: Install node deps
         run: npm ci
       - name: Check types
