@@ -22,7 +22,7 @@ jobs:
         run: |
             pip install --upgrade setuptools==70.0.0
             pip install --upgrade pip==23.2.1
-            pip install -e 'git+https://github.com/open-data/ckan@canada-v2.10#ckan' -r 'https://raw.githubusercontent.com/open-data/ckan/canada-v2.10/requirements.txt' -r 'https://raw.githubusercontent.com/open-data/ckan/canada-v2.10/dev-requirements.txt'
+            pip install -e 'git+https://github.com/open-data/ckan@canada-v2.10#egg=ckan' -r 'https://raw.githubusercontent.com/open-data/ckan/canada-v2.10/requirements.txt' -r 'https://raw.githubusercontent.com/open-data/ckan/canada-v2.10/dev-requirements.txt'
             pip install -e 'git+https://github.com/ckan/ckanapi.git#egg=ckanapi' -r 'https://raw.githubusercontent.com/ckan/ckanapi/master/requirements.txt'
             pip install -e . -r requirements.txt -r test-requirements.txt
             pip install -e 'git+https://github.com/ckan/ckanext-fluent.git#egg=ckanext-fluent' -r 'https://raw.githubusercontent.com/ckan/ckanext-fluent/master/requirements.txt'
