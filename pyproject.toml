@@ -5,6 +5,24 @@ exclude = [
     "**/tests",
     "**/migration",
 ]
+extraPaths = [
+  "/srv/app/lib",
+  "/srv/app/src",
+  "/srv/app/src/ckan",
+  "/srv/app/src/ckanapi",
+  "/srv/app/src/ckantoolkit",
+  "/srv/app/src/frictionless-py",
+  "/srv/app/src/ckanext-cloudstorage",
+  "/srv/app/src/ckanext-dcat",
+  "/srv/app/src/ckanext-dsaudit",
+  "/srv/app/src/ckanext-fluent",
+  "/srv/app/src/ckanext-gcnotify",
+  "/srv/app/src/ckanext-recombinant",
+  "/srv/app/src/ckanext-scheming",
+  "/srv/app/src/ckanext-security",
+  "/srv/app/src/ckanext-validation",
+  "/srv/app/src/ckanext-xloader",
+]
 strict = []
 strictParameterNoneValue = true
 reportFunctionMemberAccess = true

@@ -3,7 +3,7 @@
 # NOTE: used to connect to the SOLR cores for Drupal PD Searches
 # TODO: remove once all PDs are in Django
 
-from typing import Optional, Union
+from typing import Optional, Union, Generator, Tuple, List, Any
 
 import sys
 from pysolr import Solr
@@ -28,7 +28,8 @@ MONTHS_FR = [
 ]
 
 
-def solr_connection(ini_prefix: str, solr_url: Optional[Union[str, None]] = None):
+def solr_connection(ini_prefix: str,
+                    solr_url: Optional[Union[str, None]] = None) -> Solr:
     """
     Set up solr connection
     :param ini_prefix: prefix to use in specifying .ini file keys (e.g.,
@@ -49,11 +50,13 @@ def solr_connection(ini_prefix: str, solr_url: Optional[Union[str, None]] = None
     if url is None:
         raise KeyError('{0:s}.solr_url'.format(ini_prefix))
     if user is not None and password is not None:
-        return Solr(url, http_user=user, http_pass=password)
+        # type_ignore_reason: solr user pass may be required for Drupal PD searches
+        return Solr(url, http_user=user, http_pass=password)  # type: ignore
     return Solr(url)
 
 
-def data_batch(org_id: str, lc: LocalCKAN, dataset_type: str):
+def data_batch(org_id: str, lc: LocalCKAN,
+               dataset_type: str) -> Union[Generator[Tuple[str, List[Any]]], None]:
     """
     Generator of dataset dicts for organization with name org
 

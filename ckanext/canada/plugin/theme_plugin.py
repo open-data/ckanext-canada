@@ -14,13 +14,13 @@ class CanadaThemePlugin(p.SingletonPlugin):
 
     # IConfigurer
     def update_config(self, config: Config):
-        p.toolkit.add_template_directory(config, 'templates')
-        p.toolkit.add_public_directory(config, 'public')
-        p.toolkit.add_resource('public/static/js', 'js')
-        p.toolkit.add_resource('assets/internal', 'canada_internal')
-        p.toolkit.add_resource('assets/datatables', 'canada_datatables')
-        p.toolkit.add_resource('assets/public', 'canada_public')
-        p.toolkit.add_resource('assets/invitation-manager', 'invitation_manager')
+        p.toolkit.add_template_directory(config, '../templates')
+        p.toolkit.add_public_directory(config, '../public')
+        p.toolkit.add_resource('../public/static/js', 'js')
+        p.toolkit.add_resource('../assets/internal', 'canada_internal')
+        p.toolkit.add_resource('../assets/datatables', 'canada_datatables')
+        p.toolkit.add_resource('../assets/public', 'canada_public')
+        p.toolkit.add_resource('../assets/invitation-manager', 'invitation_manager')
         set_app_global('is_registry', str(plugin_loaded('canada_internal')))
 
         config['ckan.favicon'] = helpers.cdts_asset('/assets/favicon.ico')

@@ -1,28 +1,32 @@
 # NOTE: custom Babel extrcators
+from typing import BinaryIO, Any, List, Generator, Tuple, Dict
 
-from yaml import load
+from yaml import load, ScalarNode
 from yaml.loader import SafeLoader
 from six import string_types
 
 
 class SafeLineLoader(SafeLoader):
-    def __init__(self, stream):
+    def __init__(self, stream: BinaryIO):
         super(SafeLineLoader, self).__init__(stream)
         self.line_numbers = {}
 
-    def construct_scalar(self, node):
+    def construct_scalar(self, node: ScalarNode) -> Any:
         if node.value in self.line_numbers:
             self.line_numbers[node.value].append(node.start_mark.line + 1)
         else:
             self.line_numbers[node.value] = [node.start_mark.line + 1]
         return super(SafeLineLoader, self).construct_scalar(node)
 
-    def get_single_data(self):
+    def get_single_data(self) -> Any:
         data = super(SafeLineLoader, self).get_single_data()
         return self.line_numbers, data
 
 
-def extract_pd(fileobj, keywords, comment_tags, options):
+def extract_pd(fileobj: BinaryIO,
+               keywords: List[str],
+               comment_tags: List[str],
+               options: Dict[str, Any]) -> Generator[Tuple[int, str, str, List[str]]]:
     """Extract messages from XXX files.
 
     :param fileobj: the file-like object the messages should be extracted
@@ -76,7 +80,7 @@ def extract_pd(fileobj, keywords, comment_tags, options):
         # resource sql error messages
         resource_trigger_strings = resource.get('trigger_strings')
         if resource_trigger_strings:
-            for k, v in resource_trigger_strings.items():
+            for _k, v in resource_trigger_strings.items():
                 if isinstance(v, string_types):
                     for line_number in line_numbers.get(v, [0]):
                         yield (line_number, '', v,
@@ -85,7 +89,7 @@ def extract_pd(fileobj, keywords, comment_tags, options):
         # more user friendly sql constraint error messages
         datastore_constraint_errors = resource.get('datastore_constraint_errors')
         if datastore_constraint_errors:
-            for k, v in datastore_constraint_errors.items():
+            for _k, v in datastore_constraint_errors.items():
                 if isinstance(v, string_types):
                     for line_number in line_numbers.get(v, [0]):
                         yield (line_number, '', v,

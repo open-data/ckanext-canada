@@ -1,4 +1,4 @@
-from ckan.types import Context, ChainedAction, DataDict
+from ckan.types import Context, AuthFunction, DataDict, AuthResult
 
 from ckan.plugins.toolkit import chained_auth_function, config
 from ckan.authz import has_user_permission_for_group_or_org
@@ -13,66 +13,66 @@ def _is_reporting_user(context: Context):
 
 # block datastore-modifying APIs on the portal
 @chained_auth_function
-def datastore_create(up_func: ChainedAction, context: Context,
-                     data_dict: DataDict) -> dict[str, bool]:
+def datastore_create(up_func: AuthFunction, context: Context,
+                     data_dict: DataDict) -> AuthResult:
     if not plugin_loaded('canada_internal'):
         return {'success': False}
     return up_func(context, data_dict)
 
 
 @chained_auth_function
-def datastore_delete(up_func: ChainedAction, context: Context,
-                     data_dict: DataDict) -> dict[str, bool]:
+def datastore_delete(up_func: AuthFunction, context: Context,
+                     data_dict: DataDict) -> AuthResult:
     if not plugin_loaded('canada_internal'):
         return {'success': False}
     return up_func(context, data_dict)
 
 
 @chained_auth_function
-def datastore_upsert(up_func: ChainedAction, context: Context,
-                     data_dict: DataDict) -> dict[str, bool]:
+def datastore_upsert(up_func: AuthFunction, context: Context,
+                     data_dict: DataDict) -> AuthResult:
     if not plugin_loaded('canada_internal'):
         return {'success': False}
     return up_func(context, data_dict)
 
 
-def view_org_members(context: Context, data_dict: DataDict) -> dict[str, bool]:
+def view_org_members(context: Context, data_dict: DataDict) -> AuthResult:
     user = context.get('user')
     can_view = has_user_permission_for_group_or_org(
         data_dict.get('id'), user, 'manage_group')
     return {'success': can_view}
 
 
-def registry_jobs_running(context: Context, data_dict: DataDict) -> dict[str, bool]:
+def registry_jobs_running(context: Context, data_dict: DataDict) -> AuthResult:
     return {'success': _is_reporting_user(context)}
 
 
-def group_list(context: Context, data_dict: DataDict) -> dict[str, bool]:
+def group_list(context: Context, data_dict: DataDict) -> AuthResult:
     return {'success': bool(context.get('user'))}
 
 
-def group_show(context: Context, data_dict: DataDict) -> dict[str, bool]:
+def group_show(context: Context, data_dict: DataDict) -> AuthResult:
     return {'success': bool(context.get('user'))}
 
 
-def organization_list(context: Context, data_dict: DataDict) -> dict[str, bool]:
+def organization_list(context: Context, data_dict: DataDict) -> AuthResult:
     return {'success': bool(context.get('user'))}
 
 
-def organization_show(context: Context, data_dict: DataDict) -> dict[str, bool]:
+def organization_show(context: Context, data_dict: DataDict) -> AuthResult:
     return {'success': bool(context.get('user'))}
 
 
 def recently_changed_packages_activity_list(
         context: Context,
-        data_dict: DataDict) -> dict[str, bool]:
+        data_dict: DataDict) -> AuthResult:
     """
     Legacy, anyone can view.
     """
     return {'success': True}
 
 
-def portal_sync_info(context: Context, data_dict: DataDict):
+def portal_sync_info(context: Context, data_dict: DataDict) -> AuthResult:
     """
     Registry users have to be logged in.
 
@@ -84,7 +84,7 @@ def portal_sync_info(context: Context, data_dict: DataDict):
 
 
 def list_out_of_sync_packages(context: Context,
-                              data_dict: DataDict) -> dict[str, bool]:
+                              data_dict: DataDict) -> AuthResult:
     """
     Only sysadmins can list the out of sync packages.
     """

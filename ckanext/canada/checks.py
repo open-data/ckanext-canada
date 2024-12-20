@@ -41,7 +41,8 @@ class DatastoreHeadersCheck(Check):
     # Validate
     def validate_start(self):
         index = 0
-        for header in self.resource.labels:
+        # type_ignore_reason: custom check classes
+        for header in self.resource.labels:  # type: ignore
             if not is_valid_field_name(header):
                 yield DatastoreInvalidHeader(
                     note=_("Column name {value} in column {column_number} "

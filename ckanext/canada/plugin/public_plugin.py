@@ -1,6 +1,7 @@
 from typing import Any, Union, List, TYPE_CHECKING, Type
 from ckan.types import Config, Action, AuthFunction, CKANApp
 
+import os
 from flask import Blueprint
 from click import Command
 
@@ -40,8 +41,11 @@ class CanadaPublicPlugin(p.SingletonPlugin, DefaultTranslation):
     p.implements(p.IBlueprint)
 
     # DefaultTranslation, ITranslation
-    def i18n_domain(self):
+    def i18n_domain(self) -> str:
         return 'ckanext-canada'
+
+    def i18n_directory(self) -> str:
+        return os.path.join(os.path.dirname(str(__file__)), '../i18n')
 
     # IConfigurer
     def update_config(self, config: Config):
@@ -147,8 +151,8 @@ class CanadaPublicPlugin(p.SingletonPlugin, DefaultTranslation):
 
     # IFacets
     def organization_facets(self, facets_dict: 'OrderedDict[str, Any]',
-                            organization_type: str, package_type: str)\
-                                -> 'OrderedDict[str, Any]':
+                            organization_type: str, package_type: str
+                            ) -> 'OrderedDict[str, Any]':
         return self.dataset_facets(facets_dict, package_type)
 
     # IActions

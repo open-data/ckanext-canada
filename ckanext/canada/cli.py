@@ -15,7 +15,7 @@ from collections import defaultdict
 from typing import Optional, Union, Tuple
 
 from contextlib import contextmanager
-from urllib.request import URLError
+from urllib.error import URLError
 from urllib.parse import urlparse
 from datetime import datetime, timedelta, timezone
 
@@ -89,15 +89,15 @@ class PortalUpdater(object):
     Class to update Portal records with Registry ones.
     """
     def __init__(self,
-                 portal_ini,
-                 ckan_user,
-                 last_activity_date,
-                 processes,
-                 mirror,
-                 log,
-                 tries,
-                 delay,
-                 verbose):
+                 portal_ini: str,
+                 ckan_user: str,
+                 last_activity_date: Union[str, None],
+                 processes: int,
+                 mirror: bool,
+                 log: Union[str, None],
+                 tries: int,
+                 delay: int,
+                 verbose: bool):
         self.portal_ini = portal_ini
         self.ckan_user = ckan_user
         self.last_activity_date = last_activity_date
@@ -127,7 +127,7 @@ class PortalUpdater(object):
                 return
             time.sleep(self.delay)
 
-    def _portal_update(self, activity_date):
+    def _portal_update(self, activity_date: Union[str, None]):
         # determine activity date
         if activity_date:
             past = re.match(PAST_RE, activity_date)
@@ -190,7 +190,10 @@ class PortalUpdater(object):
         # Advance generator so we may call send() below
         next(pool)
 
-        def append_log(finished, package_id, action, reason,
+        def append_log(finished: Union[bool, None],
+                       package_id: Union[str, None],
+                       action: str,
+                       reason: str,
                        error: Optional[Union[str, None]] = None):
 
             if not log:

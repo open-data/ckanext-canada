@@ -1,4 +1,4 @@
-from typing import Optional, Union
+from typing import Optional, Union, Any, Tuple, List, Set, Dict
 
 import json
 import re
@@ -8,6 +8,7 @@ from ckan.plugins.toolkit import config, _, h, g, request
 from ckan.model import User, Package
 from ckanext.activity.model import Activity
 import ckan.model as model
+from ckan.model.license import License
 import datetime
 import unicodedata
 import ckan as ckan
@@ -17,7 +18,6 @@ from bs4 import BeautifulSoup
 from ckan import plugins
 
 from ckanapi import NotFound
-from ckantoolkit import aslist
 import ckan.plugins.toolkit as t
 from ckanext.scheming.helpers import scheming_get_preset
 import dateutil.parser
@@ -50,7 +50,8 @@ GEO_MAP_TYPE_DEFAULT = 'static'
 RELEASE_DATE_FACET_STEP = 100
 
 
-def get_translated_t(data_dict, field):
+def get_translated_t(data_dict: Dict[str, Any],
+                     field: str) -> Tuple[str, bool]:
     '''
     customized version of core get_translated helper that also looks
     for machine translated values (e.g. en-t-fr and fr-t-en)
@@ -70,7 +71,9 @@ def get_translated_t(data_dict, field):
         return (_(val) if val and isinstance(val, str) else val), False
 
 
-def language_text_t(text, prefer_lang=None):
+def language_text_t(text: Union[Dict[str, Any], str],
+                    prefer_lang: Optional[Union[str, None]] = None) -> \
+                        Tuple[Union[str, None], bool]:
     '''
     customized version of scheming_language_text helper that also looks
     for machine translated values (e.g. en-t-fr and fr-t-en)
@@ -91,9 +94,10 @@ def language_text_t(text, prefer_lang=None):
             try:
                 return text[prefer_lang], False
             except KeyError:
-                for line in text:
-                    if line.startswith(prefer_lang + '-t-'):
-                        return text[line], True
+                if prefer_lang:
+                    for line in text:
+                        if line.startswith(prefer_lang + '-t-'):
+                            return text[line], True
                 pass
 
         default_locale = config.get('ckan.locale_default', 'en')
@@ -106,14 +110,18 @@ def language_text_t(text, prefer_lang=None):
         return v, False
 
     t = _(text)
-    if isinstance(t, str):
+    if isinstance(t, bytes):
         return t.decode('utf-8'), False
     return t, False
 
 
-def may_publish_datasets(userobj=None):
+def may_publish_datasets(userobj: Optional[Union['model.User', None]] = None) -> bool:
     if not userobj:
         userobj = g.userobj
+
+    if not userobj:
+        return False
+
     if userobj.sysadmin:
         return True
 
@@ -123,10 +131,11 @@ def may_publish_datasets(userobj=None):
             continue
         if group.name == pub_org:
             return True
+
     return False
 
 
-def openness_score(pkg):
+def openness_score(pkg: Dict[str, Any]) -> int:
     score = 1
     fmt_choices = scheming_get_preset('canada_resource_format')['choices']
     resource_formats = set(r['format'] for r in pkg['resources'])
@@ -145,12 +154,12 @@ def openness_score(pkg):
     return score
 
 
-def user_organizations(user):
+def user_organizations(user: Dict[str, Any]) -> List['model.Group']:
     u = User.get(user['name'])
     return u.get_groups(group_type="organization")
 
 
-def catalogue_last_update_date():
+def catalogue_last_update_date() -> str:
     return ''  # FIXME: cache this value or add an index to the DB for query below
     q = model.Session.query(Activity.timestamp).filter(
         Activity.activity_type.endswith('package')).order_by(
@@ -158,12 +167,12 @@ def catalogue_last_update_date():
     return q[0].replace(microsecond=0).isoformat() if q else ''
 
 
-def today():
+def today() -> str:
     return datetime.datetime.now(EST()).strftime("%Y-%m-%d")
 
 
 # Return the Date format that the WET datepicker requires to function properly
-def date_format(date_string):
+def date_format(date_string: Union[str, None]) -> Union[str, None]:
     if not date_string:
         return None
     try:
@@ -174,17 +183,17 @@ def date_format(date_string):
 
 
 class EST(datetime.tzinfo):
-    def utcoffset(self, dt):
+    def utcoffset(self, dt: 'datetime.datetime') -> 'datetime.timedelta':
         return datetime.timedelta(hours=-5)
 
-    def dst(self, dt):
+    def dst(self, dt: 'datetime.datetime') -> 'datetime.timedelta':
         return datetime.timedelta(0)
 
 
 # copied from ckan 2.6 branch
 # https://github.com/open-data/ckan
 # /blob/ee0a94c97f8988e78c9b1f92f92adb5c26884841/ckan/lib/helpers.py#L1245
-def canada_date_str_to_datetime(date_str):
+def canada_date_str_to_datetime(date_str: str) -> 'datetime.datetime':
     '''
     Convert ISO-like formatted datestring to datetime object.
 
@@ -216,7 +225,7 @@ def canada_date_str_to_datetime(date_str):
     return datetime.datetime(*map(int, time_tuple))
 
 
-def remove_duplicates(a_list):
+def remove_duplicates(a_list: List[Any]) -> Set[Any]:
     s = set()
     for i in a_list:
         s.add(i)
@@ -224,11 +233,11 @@ def remove_duplicates(a_list):
     return s
 
 
-def get_license(license_id):
+def get_license(license_id: str) -> License:
     return Package.get_license_register().get(license_id)
 
 
-def normalize_strip_accents(s):
+def normalize_strip_accents(s: Union[str, bytes]) -> str:
     """
     utility function to help with sorting our French strings
     """
@@ -240,17 +249,17 @@ def normalize_strip_accents(s):
     return s.encode('ascii', 'ignore').decode('ascii').lower()
 
 
-def portal_url():
+def portal_url() -> str:
     url = PORTAL_URL_DEFAULT_FR if h.lang() == 'fr' else PORTAL_URL_DEFAULT_EN
     return str(config.get(PORTAL_URL_OPTION, url))
 
 
-def adv_search_url():
+def adv_search_url() -> str:
     return config.get('ckanext.canada.adv_search_url_fr') if \
         h.lang() == 'fr' else config.get('ckanext.canada.adv_search_url_en')
 
 
-def adv_search_mlt_root():
+def adv_search_mlt_root() -> str:
     return "{0}/donneesouvertes/similaire/".format(
         config.get('ckanext.canada.adv_search_url_fr')) if \
             h.lang() == 'fr' else "{0}/opendata/similar/".format(
@@ -455,7 +464,7 @@ def get_datapreview_recombinant(resource_name: str,
         fields.append(out)
         fids.append(f['datastore_id'])
 
-    pkids = [fids.index(k) for k in aslist(chromo['datastore_primary_key'])]
+    pkids = [fids.index(k) for k in t.aslist(chromo['datastore_primary_key'])]
     return h.snippet('package/wet_datatable.html',
                      resource_name=resource_name,
                      resource_id=resource_id,
@@ -465,7 +474,7 @@ def get_datapreview_recombinant(resource_name: str,
                      ds_fields=fields)
 
 
-def contact_information(info: str) -> dict:
+def contact_information(info: str) -> Dict[str, Any]:
     """
     produce label, value pairs from contact info
     """
@@ -488,7 +497,7 @@ def show_openinfo_facets():
     return False
 
 
-def json_loads(value: str) -> dict:
+def json_loads(value: str) -> Dict[str, Any]:
     try:
         return json.loads(value)
     except Exception:
@@ -508,7 +517,7 @@ def iso_to_goctime(isodatestr) -> str:
     return dateobj.strftime('%Y-%m-%d')
 
 
-def geojson_to_wkt(gjson_str):
+def geojson_to_wkt(gjson_str: str):
     # Ths GeoJSON string should look something like:
     #  '{"type": "Polygon",
     #    "coordinates": [[[-54, 46], [-54, 47], [-52, 47], [-52, 46], [-54, 46]]]}']
@@ -540,7 +549,7 @@ def get_map_type() -> str:
     return str(config.get(GEO_MAP_TYPE_OPTION, GEO_MAP_TYPE_DEFAULT))
 
 
-def _add_extra_longitude_points(gjson):
+def _add_extra_longitude_points(gjson: Dict[str, Any]) -> Dict[str, Any]:
     """
     Assume that sides of a polygon with the same latitude should
     be rendered as curves following that latitude instead of
@@ -565,7 +574,7 @@ def _add_extra_longitude_points(gjson):
     return {'coordinates': [out], 'type': 'Polygon'}
 
 
-def recombinant_description_to_markup(text):
+def recombinant_description_to_markup(text: str) -> Dict[str, Markup]:
     """
     Return text as HTML escaped strings joined with '<br/>, links enabled'
     """
@@ -667,7 +676,7 @@ def _build_flash_html_for_ga4(message: str, category: str,
             not allow_html else Markup(message))
 
 
-def _get_caller_info(stack):
+def _get_caller_info(stack: List['inspect.FrameInfo']) -> str:
     parentframe = stack[1][0]
     module_info = inspect.getmodule(parentframe)
 
@@ -695,7 +704,7 @@ def _get_caller_info(stack):
     return '%s.%s' % (caller_module, caller_method)
 
 
-def flash_notice(message, allow_html=True):
+def flash_notice(message: str, allow_html: Optional[bool] = True):
     """
     Show a flash message of type notice
 
@@ -707,7 +716,7 @@ def flash_notice(message, allow_html=True):
               category='alert-info')
 
 
-def flash_error(message, allow_html=True):
+def flash_error(message: str, allow_html: Optional[bool] = True):
     """
     Show a flash message of type error
 
@@ -719,7 +728,7 @@ def flash_error(message, allow_html=True):
               category='alert-danger')
 
 
-def flash_success(message, allow_html=True):
+def flash_success(message: str, allow_html: Optional[bool] = True):
     """
     Show a flash message of type success
 
@@ -731,7 +740,7 @@ def flash_success(message, allow_html=True):
               category='alert-success')
 
 
-def get_loader_status_badge(resource: dict) -> Markup:
+def get_loader_status_badge(resource: Dict[str, Any]) -> Markup:
     # type: (dict) -> str
     """
     Displays a custom badge for the status of Xloader and DataStore
@@ -810,7 +819,7 @@ def get_loader_status_badge(resource: dict) -> Markup:
             title=html.escape(title, quote=True)))
 
 
-def get_resource_view(resource_view_id: str) -> Union[dict, None]:
+def get_resource_view(resource_view_id: str) -> Union[Dict[str, Any], None]:
     """
     Returns a resource view dict for the resource_view_id
     """
@@ -821,12 +830,12 @@ def get_resource_view(resource_view_id: str) -> Union[dict, None]:
         return None
 
 
-def resource_view_type(resource_view: dict) -> str:
+def resource_view_type(resource_view: Dict[str, Any]) -> str:
     view_plugin = datapreview.get_view_plugin(resource_view['view_type'])
     return view_plugin.info().get('title')
 
 
-def fgp_viewer_url(package: dict) -> str:
+def fgp_viewer_url(package: Dict[str, Any]) -> str:
     """
     Returns a link to fgp viewer for the package
     """
@@ -840,19 +849,20 @@ def fgp_viewer_url(package: dict) -> str:
         return h.adv_search_url() + '/' + openmap_uri + '/' + package.get('id')
 
 
-def date_field(field, pkg):
+def date_field(field: str, pkg: Dict[str, Any]) -> Any:
     if pkg.get(field) and ' ' in pkg.get(field):
         return pkg.get(field).split(' ')[0]
     return pkg.get(field, None)
 
 
-def split_piped_bilingual_field(field_text, client_lang):
+def split_piped_bilingual_field(field_text: str, client_lang: str) -> str:
     if field_text is not None and ' | ' in field_text:
         return field_text.split(' | ')[1 if client_lang == 'fr' else 0]
     return field_text
 
 
-def search_filter_pill_link_label(search_field, search_extras):
+def search_filter_pill_link_label(search_field: str,
+                                  search_extras: Dict[str, Any]) -> List[Any]:
     links_labels = []
 
     if search_field == 'portal_type':
@@ -899,7 +909,10 @@ def search_filter_pill_link_label(search_field, search_extras):
                     {'value': pd_type,
                      'label': _(h.recombinant_get_chromo(pd_type).get('title'))})
 
-    def remove_filter_button_link_label(_field, _value, s_extras, _choices):
+    def remove_filter_button_link_label(_field: str,
+                                        _value: str,
+                                        s_extras: Dict[str, Any],
+                                        _choices: List[Any]):
 
         extrs = s_extras.copy() if s_extras else {}
         extrs.update(request.view_args)
@@ -939,7 +952,7 @@ def search_filter_pill_link_label(search_field, search_extras):
     return links_labels
 
 
-def ckan_to_cdts_breadcrumbs(breadcrumb_content):
+def ckan_to_cdts_breadcrumbs(breadcrumb_content: str) -> List[Dict[str, Any]]:
     """
     The Wet Builder requires a list of JSON objects.
 
@@ -1010,7 +1023,7 @@ def is_user_locked(user_name: str) -> Union[bool, None]:
     return False
 
 
-def available_purge_types():
+def available_purge_types() -> List[str]:
     """
     Returns a list of available purge types.
     """
@@ -1042,7 +1055,7 @@ def operations_guide_link(stub: Optional[Union[str, None]] = None) -> str:
     return f'{guide_link}/{stub}'
 
 
-def max_resources_per_dataset():
+def max_resources_per_dataset() -> Union[int, None]:
     max_resource_count = config.get('ckanext.canada.max_resources_per_dataset', None)
     if max_resource_count:
         return int(max_resource_count)

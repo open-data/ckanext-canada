@@ -1,8 +1,11 @@
+from typing import Dict
+from ckan.types import Schema, Validator
+
 from ckanext.tabledesigner.column_types import ChoiceColumn, TextColumn
 from ckanext.datastore.backend.postgres import literal_string, identifier
 
 
-def _(x):
+def _(x: str) -> str:
     return x
 
 
@@ -17,7 +20,7 @@ class Province(ChoiceColumn):
     design_snippet = None  # disable from parent ChoiceColumn
     view_snippet = 'province.html'
 
-    def choices(self):
+    def choices(self) -> Dict[str, str]:
         return {
             'AB': _('Alberta'),
             'BC': _('British Columbia'),
@@ -35,7 +38,8 @@ class Province(ChoiceColumn):
         }
 
     @classmethod
-    def datastore_field_schema(cls, td_ignore, td_pd):
+    def datastore_field_schema(cls, td_ignore: Validator,
+                               td_pd: Validator) -> Schema:
         # Remove tdchoices from parent ChoiceColumn
         return {}
 
@@ -56,7 +60,7 @@ class CRABusinessNumber(TextColumn):
 
     _BUSINESS_NUMBER_PATTERN = r'\d{9}'
 
-    def sql_validate_rule(self):
+    def sql_validate_rule(self) -> str:
         return self._SQL_VALIDATE.format(
             value='NEW.' + identifier(self.colname),
             pattern=literal_string(self._BUSINESS_NUMBER_PATTERN),
@@ -64,7 +68,7 @@ class CRABusinessNumber(TextColumn):
             error=literal_string(_('Invalid business number')),
         )
 
-    def excel_validate_rule(self):
+    def excel_validate_rule(self) -> str:
         # COUNT(FIND(...)) lets us accept single-quote-prefixed values
         # like "'012345678" as a business number
         return (
