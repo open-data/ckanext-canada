@@ -2,7 +2,16 @@ import logging
 from urllib.parse import urlsplit
 from frictionless import system
 
-from ckan.types import Config, Action, AuthFunction
+from ckan.types import (
+    Action,
+    ChainedAction,
+    AuthFunction,
+    ChainedAuthFunction,
+    Context,
+    DataDict
+)
+from typing import Dict, Union, Any
+from ckan.common import CKANConfig
 
 import ckan.plugins as p
 from ckan import model
@@ -31,7 +40,7 @@ class CanadaInternalPlugin(p.SingletonPlugin):
     p.implements(p.IAuthFunctions)
 
     # IConfigurer
-    def update_config(self, config: Config):
+    def update_config(self, config: 'CKANConfig'):
         config.update({
             "ckan.user_list_limit": 250
         })
@@ -48,18 +57,19 @@ class CanadaInternalPlugin(p.SingletonPlugin):
         config['ckan.feeds.include_private'] = True
 
     # IConfigurable
-    def configure(self, config: Config):
+    def configure(self, config: 'CKANConfig'):
         # FIXME: monkey-patch datastore upsert_data
         original_upsert_data = db.upsert_data
 
-        def patched_upsert_data(context, data_dict):
+        def patched_upsert_data(context: Context, data_dict: DataDict) -> Any:
             with logic.datastore_create_temp_user_table(context):
                 try:
                     return original_upsert_data(context, data_dict)
                 except ValidationError as e:
                     # reformat tab-delimited error as dict
-                    head, sep, rerr = e.error_dict.get(
-                        'records', [''])[0].partition('\t')
+                    # type_ignore_reason: incomplete typing in 2.10
+                    head, sep, rerr = e.error_dict.get(  # type: ignore
+                        'records', [''])[0].partition('\t')  # type: ignore
                     rerr = rerr.rstrip('\n')
                     if head == 'TAB-DELIMITED' and sep:
                         out = {}
@@ -89,7 +99,7 @@ class CanadaInternalPlugin(p.SingletonPlugin):
         pkg.private = True
 
     # IActions
-    def get_actions(self) -> dict[str, Action]:
+    def get_actions(self) -> Dict[str, Union[Action, ChainedAction]]:
         return dict(
             {
                 k: logic.disabled_anon_action for k in [
@@ -107,7 +117,8 @@ class CanadaInternalPlugin(p.SingletonPlugin):
         )
 
     # IAuthFunctions
-    def get_auth_functions(self) -> dict[str, AuthFunction]:
+    def get_auth_functions(self) -> Dict[str, Union[AuthFunction,
+                                                    ChainedAuthFunction]]:
         return {
             'group_list': auth.group_list,
             'group_show': auth.group_show,

@@ -271,7 +271,6 @@ def ga4_id() -> str:
 
 
 def adobe_analytics_login_required(current_url: str) -> int:
-    # type: (str) -> int
     """
     1: login required
     2: public
@@ -284,7 +283,6 @@ def adobe_analytics_login_required(current_url: str) -> int:
 
 
 def adobe_analytics_lang() -> str:
-    # type: () -> str
     """
     Return Adobe Analytics expected language codes.
 
@@ -308,7 +306,6 @@ def adobe_analytics_js() -> str:
 
 def adobe_analytics_creator(organization: Optional[Union[dict, None]] = None,
                             package: Optional[Union[dict, None]] = None) -> Markup:
-    # type: (dict|None, dict|None) -> str
     """
     Generates HTML Meta Tag for Adobe Analytics, along with extra GoC
     page ownership HTML attribute.
@@ -361,7 +358,6 @@ def resource_view_meta_title(package: dict,
                              resource: dict,
                              view: dict,
                              is_subtitle: Optional[bool] = False) -> Markup:
-    # type: (dict, dict, dict, bool) -> str
     """
     Generates the string for the title meta tag for Resource Views.
 
@@ -741,7 +737,6 @@ def flash_success(message: str, allow_html: Optional[bool] = True):
 
 
 def get_loader_status_badge(resource: Dict[str, Any]) -> Markup:
-    # type: (dict) -> str
     """
     Displays a custom badge for the status of Xloader and DataStore
     for the specified resource.

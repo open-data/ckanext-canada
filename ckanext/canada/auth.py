@@ -1,4 +1,4 @@
-from ckan.types import Context, AuthFunction, DataDict, AuthResult
+from ckan.types import Context, AuthFunction, ChainedAuthFunction, DataDict, AuthResult
 
 from ckan.plugins.toolkit import chained_auth_function, config
 from ckan.authz import has_user_permission_for_group_or_org
@@ -14,7 +14,7 @@ def _is_reporting_user(context: Context):
 # block datastore-modifying APIs on the portal
 @chained_auth_function
 def datastore_create(up_func: AuthFunction, context: Context,
-                     data_dict: DataDict) -> AuthResult:
+                     data_dict: DataDict) -> ChainedAuthFunction:
     if not plugin_loaded('canada_internal'):
         return {'success': False}
     return up_func(context, data_dict)
@@ -22,7 +22,7 @@ def datastore_create(up_func: AuthFunction, context: Context,
 
 @chained_auth_function
 def datastore_delete(up_func: AuthFunction, context: Context,
-                     data_dict: DataDict) -> AuthResult:
+                     data_dict: DataDict) -> ChainedAuthFunction:
     if not plugin_loaded('canada_internal'):
         return {'success': False}
     return up_func(context, data_dict)
@@ -30,7 +30,7 @@ def datastore_delete(up_func: AuthFunction, context: Context,
 
 @chained_auth_function
 def datastore_upsert(up_func: AuthFunction, context: Context,
-                     data_dict: DataDict) -> AuthResult:
+                     data_dict: DataDict) -> ChainedAuthFunction:
     if not plugin_loaded('canada_internal'):
         return {'success': False}
     return up_func(context, data_dict)

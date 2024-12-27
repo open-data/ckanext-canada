@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from typing import Any
+from typing import Any, cast
 from ckan.types import Context, FlattenKey, FlattenDataDict, FlattenErrorDict
 
 import re
@@ -112,8 +112,9 @@ def user_read_only_json(key: FlattenKey,
 
     if hasattr(package, key[0]):
         data[key] = json.loads(getattr(package, key[0]))
-    else:
-        data[key] = json.loads(package.extras.get(key[0], 'None'))
+    elif hasattr(package, 'extras'):
+        # type_ignore_reason: checking attribute
+        data[key] = json.loads(package.extras.get(key[0], 'None'))  # type: ignore
 
 
 def canada_tags(value: Any, context: Context):
@@ -216,7 +217,8 @@ def canada_copy_from_org_name(key: FlattenKey,
     if not org_id:
         return
     try:
-        org = get_action('organization_show')(dict(context), {'id': org_id})
+        org = get_action('organization_show')(cast(Context, dict(context)),
+                                              {'id': org_id})
     except ObjectNotFound:
         return
 
@@ -398,14 +400,17 @@ def string_safe_stop(key: FlattenKey,
                      context: Context):
     value = data.get(key)
     if isinstance(value, text_type):
-        return value
+        data[key] = value
+        return
     elif isinstance(value, bytes):
         # bytes only arrive when core ckan or plugins call
         # actions from Python code
         try:
-            return value.decode('utf8')
+            data[key] = value.decode('utf8')
+            return
         except UnicodeDecodeError:
-            return value.decode('cp1252')
+            data[key] = value.decode('cp1252')
+            return
     else:
         errors[key].append(_('Must be a Unicode string value'))
         raise StopOnError
@@ -456,7 +461,8 @@ def canada_security_upload_type(key: FlattenKey,
         # allow a fully empty Resource
         if not url and not upload:
             return
-        error = e.error_dict['File'][0]
+        # type_ignore_reason: incomplete typing
+        error = e.error_dict['File'][0]  # type: ignore
         raise Invalid(_(error))
 
 
@@ -476,7 +482,8 @@ def canada_security_upload_presence(key: FlattenKey,
         # allow a fully empty Resource
         if not url and not upload:
             return
-        error = e.error_dict['File'][0]
+        # type_ignore_reason: incomplete typing
+        error = e.error_dict['File'][0]  # type: ignore
         raise Invalid(_(error))
 
 
@@ -582,6 +589,7 @@ def protect_registry_access(key: FlattenKey,
 
     original = ''
     org_id = data.get(key[:-1] + ('id',))
+    org = None
     if org_id:
         org = model.Group.get(org_id)
     if org:

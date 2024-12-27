@@ -4,8 +4,9 @@ from flask import has_request_context, Blueprint
 from urllib.parse import urlsplit
 import logging
 
-from typing import List, Union
-from ckan.types import Response, Context, Any
+from typing import Union, List, Dict, cast
+from flask.typing import BeforeRequestCallable
+from ckan.types import Context, Response, Any
 
 import ckan.plugins as p
 from ckan.plugins.toolkit import g, h, request
@@ -51,7 +52,6 @@ class CanadaDatasetsPlugin(SchemingDatasetsPlugin):
         for all the PD types. Will type_redirect them
         to the pd_type. Will allow /<pd_type>/activity
         """
-        # type: () -> list[Blueprint]
         blueprints = []
         for pd_type in h.recombinant_get_types():
             blueprint = Blueprint(
@@ -74,13 +74,16 @@ class CanadaDatasetsPlugin(SchemingDatasetsPlugin):
             blueprints.append(blueprint)
         return blueprints
 
-    def _redirect_pd_dataset_endpoints(blueprint: Blueprint) -> Union[Response, None]:
+    def _redirect_pd_dataset_endpoints(self,
+                                       blueprint: Blueprint) -> Union[Response, None]:
         """
         Runs before request for /dataset and /dataset/<pkg id>/resource
 
         Checks if the actual package type is a PD type and redirects it.
         """
         if has_request_context() and hasattr(request, 'view_args'):
+            if not request.view_args:
+                return
             id = request.view_args.get('id')
             if not id:
                 return
@@ -93,7 +96,6 @@ class CanadaDatasetsPlugin(SchemingDatasetsPlugin):
     # IDatasetForm
     def prepare_dataset_blueprint(self, package_type: str,
                                   blueprint: Blueprint) -> Blueprint:
-        # type: (str,Blueprint) -> Blueprint
         blueprint.add_url_rule(
             '/edit/<id>',
             endpoint='canada_edit_%s' % package_type,
@@ -114,13 +116,13 @@ class CanadaDatasetsPlugin(SchemingDatasetsPlugin):
             strict_slashes=False
         )
         # redirect PD endpoints accessed from /dataset/<pd pkg id>
-        blueprint.before_request(self._redirect_pd_dataset_endpoints)
+        blueprint.before_request(cast(BeforeRequestCallable,
+                                      self._redirect_pd_dataset_endpoints))
         return blueprint
 
     # IDatasetForm
     def prepare_resource_blueprint(self, package_type: str,
                                    blueprint: Blueprint) -> Blueprint:
-        # type: (str,Blueprint) -> Blueprint
         blueprint.add_url_rule(
             '/<resource_id>/edit',
             endpoint='canada_resource_edit_%s' % package_type,
@@ -134,11 +136,12 @@ class CanadaDatasetsPlugin(SchemingDatasetsPlugin):
             methods=['GET', 'POST']
         )
         # redirect PD endpoints accessed from /dataset/<pd pkg id>/resource
-        blueprint.before_request(self._redirect_pd_dataset_endpoints)
+        blueprint.before_request(cast(BeforeRequestCallable,
+                                      self._redirect_pd_dataset_endpoints))
         return blueprint
 
     # IDataValidation
-    def can_validate(self, context: Context, resource: dict[str, Any]):
+    def can_validate(self, context: Context, resource: Dict[str, Any]):
         """
         Only uploaded resources are allowed to be
         validated, or allowed domain sources.
@@ -157,7 +160,7 @@ class CanadaDatasetsPlugin(SchemingDatasetsPlugin):
         return False
 
     # IPackageController
-    def before_dataset_search(self, search_params: dict[str, Any]) -> dict[str, Any]:
+    def before_dataset_search(self, search_params: Dict[str, Any]) -> Dict[str, Any]:
         # We're going to group portal_release_date into two bins - to today and
         # after today.
         search_params['facet.range'] = 'portal_release_date'
@@ -201,8 +204,8 @@ class CanadaDatasetsPlugin(SchemingDatasetsPlugin):
         return search_params
 
     # IPackageController
-    def after_dataset_search(self, search_results: dict[str, Any],
-                             search_params: dict[str, Any]) -> dict[str, Any]:
+    def after_dataset_search(self, search_results: Dict[str, Any],
+                             search_params: Dict[str, Any]) -> Dict[str, Any]:
         for result in search_results.get('results', []):
             for extra in result.get('extras', []):
                 if extra.get('key') in ['title_fra', 'notes_fra']:
@@ -211,7 +214,7 @@ class CanadaDatasetsPlugin(SchemingDatasetsPlugin):
         return search_results
 
     # IPackageController
-    def before_dataset_index(self, data_dict: dict[str, Any]) -> dict[str, Any]:
+    def before_dataset_index(self, data_dict: Dict[str, Any]) -> Dict[str, Any]:
         kw = json.loads(data_dict.get('extras_keywords', '{}'))
         data_dict['keywords'] = kw.get('en', [])
         data_dict['keywords_fra'] = kw.get('fr', kw.get('fr-t-en', []))
@@ -220,12 +223,15 @@ class CanadaDatasetsPlugin(SchemingDatasetsPlugin):
         data_dict['subject'] = json.loads(data_dict.get('subject', '[]'))
         data_dict['topic_category'] = json.loads(data_dict.get(
             'topic_category', '[]'))
-        try:
-            data_dict['spatial_representation_type'] = json.loads(
-                data_dict.get('spatial_representation_type')
-            )
-        except (TypeError, ValueError):
-            data_dict['spatial_representation_type'] = []
+        data_dict['spatial_representation_type'] = []
+        if (
+          data_dict.get('spatial_representation_type') and
+          isinstance(data_dict.get('spatial_representation_type'), str)):
+            rep_type: str = data_dict.get('spatial_representation_type', '')
+            try:
+                data_dict['spatial_representation_type'] = json.loads(rep_type)
+            except (TypeError, ValueError):
+                data_dict['spatial_representation_type'] = []
 
         if data_dict.get('portal_release_date'):
             data_dict.pop('ready_to_publish', None)
@@ -273,8 +279,8 @@ class CanadaDatasetsPlugin(SchemingDatasetsPlugin):
         return data_dict
 
     # IDataDictionaryForm
-    def update_datastore_info_field(self, field: dict[str, Any],
-                                    plugin_data: dict[str, Any]) -> dict[str, Any]:
+    def update_datastore_info_field(self, field: Dict[str, Any],
+                                    plugin_data: Dict[str, Any]) -> Dict[str, Any]:
         if 'info' or '_info' in plugin_data and 'info' not in field:
             if 'info' in plugin_data:
                 field['info'] = plugin_data.get('info', {})

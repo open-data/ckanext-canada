@@ -1,3 +1,5 @@
+import re
+import codecs
 import json
 import decimal
 from pytz import timezone, utc
@@ -8,6 +10,9 @@ from six import string_types
 from datetime import datetime, timedelta
 import traceback
 from functools import partial
+
+from typing import Optional, Union, Any, cast, Dict, List, Tuple
+from ckan.types import Context, Response
 
 from ckan.config.middleware.flask_app import csrf
 
@@ -70,7 +75,6 @@ from ckanapi import LocalCKAN
 
 from flask import Blueprint, make_response
 
-from ckanext.canada.urlsafe import url_part_unescape, url_part_escape
 from ckanext.canada.helpers import canada_date_str_to_datetime
 
 from io import StringIO
@@ -90,6 +94,32 @@ class IntentionalServerError(Exception):
     pass
 
 
+def _url_part_escape(orig: str) -> str:
+    """
+    simple encoding for url-parts where all non-alphanumerics are
+    wrapped in e.g. _xxyyzz_ blocks w/hex UTF-8 xx, yy, zz values
+
+    used for safely including arbitrary unicode as part of a url path
+    all returned characters will be in [a-zA-Z0-9_-]
+    """
+    return '_'.join(
+        codecs.encode(s.encode('utf-8'), 'hex').decode('ascii') if i % 2 else s
+        for i, s in enumerate(
+            re.split(r'([^-a-zA-Z0-9]+)', orig)
+        )
+    )
+
+
+def _url_part_unescape(urlpart: str) -> str:
+    """
+    reverse url_part_escape
+    """
+    return ''.join(
+        codecs.decode(s, 'hex').decode('utf-8') if i % 2 else s
+        for i, s in enumerate(urlpart.split('_'))
+    )
+
+
 @canada_views.route('/user/logged_in', methods=['GET'])
 def logged_in():
     # redirect if needed
@@ -98,7 +128,7 @@ def logged_in():
         return h.redirect_to(str(came_from))
 
     if g.user:
-        user_dict = get_action('user_show')(None, {'id': g.user})
+        user_dict = get_action('user_show')(cast(Context, {}), {'id': g.user})
 
         h.flash_success(
             _('<strong>Note</strong><br>{0} is now logged in').format(
@@ -116,31 +146,28 @@ def logged_in():
         return h.redirect_to('user.login')
 
 
-def _get_package_type_from_dict(package_id, package_type='dataset'):
+def _get_package_type_from_dict(package_id: str,
+                                package_type:
+                                    Union[str, Any, None] = 'dataset') -> str:
     try:
-        context = {
-            'model': model,
-            'session': model.Session,
-            'user': g.user,
-            'auth_user_obj': g.userobj
-        }
-        pkg_dict = get_action('package_show')(
-            dict(context, for_view=True), {
-                'id': package_id
-            }
-        )
+        context = cast(Context, {'model': model,
+                                 'session': model.Session,
+                                 'user': g.user,
+                                 'auth_user_obj': g.userobj,
+                                 'for_view': True})
+        pkg_dict = get_action('package_show')(context, {'id': package_id})
         return pkg_dict['type']
     except (NotAuthorized, NotFound):
-        return package_type
+        return package_type  # type: ignore
 
 
-def canada_prevent_pd_views(uri, package_type):
-    uri = uri.split('/')
+def canada_prevent_pd_views(uri: str, package_type: str) -> Union[Response, str]:
+    uri_parts = uri.split('/')
     id = None
-    if uri[0]:
-        if uri[0] == 'activity':  # allow activity route
-            return package_activity(package_type, uri[1])
-        id = uri[0]
+    if uri_parts[0]:
+        if uri_parts[0] == 'activity':  # allow activity route
+            return package_activity(package_type)
+        id = uri_parts[0]
         package_type = _get_package_type_from_dict(id, package_type)
     if package_type in h.recombinant_get_types():
         return type_redirect(package_type, id)
@@ -148,13 +175,16 @@ def canada_prevent_pd_views(uri, package_type):
 
 
 class CanadaDatasetEditView(DatasetEditView):
-    def post(self, package_type, id):
+    def post(self, package_type: str, id: str):
         response = super(CanadaDatasetEditView, self).post(package_type, id)
         if hasattr(response, 'status_code'):
-            if response.status_code == 200 or response.status_code == 302:
+            # type_ignore_reason: checking attribute
+            if (
+              response.status_code == 200 or  # type: ignore
+              response.status_code == 302):  # type: ignore
                 context = self._prepare()
                 pkg_dict = get_action('package_show')(
-                    dict(context, for_view=True), {
+                    cast(Context, dict(context, for_view=True)), {
                         'id': id
                     }
                 )
@@ -170,29 +200,38 @@ class CanadaDatasetEditView(DatasetEditView):
 
 
 class CanadaDatasetCreateView(DatasetCreateView):
-    def post(self, package_type):
+    def post(self, package_type: str):
         response = super(CanadaDatasetCreateView, self).post(package_type)
         if hasattr(response, 'status_code'):
-            if response.status_code == 200 or response.status_code == 302:
+            # type_ignore_reason: checking attribute
+            if (
+              response.status_code == 200 or  # type: ignore
+              response.status_code == 302):  # type: ignore
                 h.flash_success(_('Dataset added.'))
         return response
 
 
 class CanadaResourceEditView(ResourceEditView):
-    def post(self, package_type, id, resource_id):
+    def post(self, package_type: str, id: str, resource_id: str):
         response = super(CanadaResourceEditView, self).post(
             package_type, id, resource_id)
         if hasattr(response, 'status_code'):
-            if response.status_code == 200 or response.status_code == 302:
+            # type_ignore_reason: checking attribute
+            if (
+              response.status_code == 200 or  # type: ignore
+              response.status_code == 302):  # type: ignore
                 h.flash_success(_('Resource updated.'))
         return response
 
 
 class CanadaResourceCreateView(ResourceCreateView):
-    def post(self, package_type, id):
+    def post(self, package_type: str, id: str):
         response = super(CanadaResourceCreateView, self).post(package_type, id)
         if hasattr(response, 'status_code'):
-            if response.status_code == 200 or response.status_code == 302:
+            # type_ignore_reason: checking attribute
+            if (
+              response.status_code == 200 or  # type: ignore
+              response.status_code == 302):  # type: ignore
                 h.flash_success(_('Resource added.'))
         return response
 
@@ -201,13 +240,26 @@ class CanadaUserRegisterView(UserRegisterView):
     def post(self):
         params = parse_params(request.form)
         email = params.get('email', '')
+        if isinstance(email, list):
+            email = email[0]
         fullname = params.get('fullname', '')
+        if isinstance(fullname, list):
+            fullname = fullname[0]
         username = params.get('name', '')
+        if isinstance(username, list):
+            username = username[0]
         phoneno = params.get('phoneno', '')
+        if isinstance(phoneno, list):
+            phoneno = phoneno[0]
         dept = params.get('department', '')
+        if isinstance(dept, list):
+            dept = dept[0]
         response = super(CanadaUserRegisterView, self).post()
         if hasattr(response, 'status_code'):
-            if response.status_code == 200 or response.status_code == 302:
+            # type_ignore_reason: checking attribute
+            if (
+              response.status_code == 200 or  # type: ignore
+              response.status_code == 302):  # type: ignore
                 if not config.get('ckanext.canada.suppress_user_emails', False):
                     # redirected after successful user create
                     import ckan.lib.mailer
@@ -240,12 +292,10 @@ def recover_username():
         # is monkey patched in GC Notify so we need that loaded
         return abort(404)
 
-    context = {
-        'model': model,
-        'session': model.Session,
-        'user': g.user,
-        'auth_user_obj': g.userobj
-    }
+    context = cast(Context, {'model': model,
+                             'session': model.Session,
+                             'user': g.user,
+                             'auth_user_obj': g.userobj})
     try:
         check_access('request_reset', context)
     except NotAuthorized:
@@ -259,7 +309,7 @@ def recover_username():
 
         log.info('Username recovery requested for email "{}"'.format(email))
 
-        context = {'model': model, 'user': g.user, 'ignore_auth': True}
+        context = cast(Context, {'model': model, 'user': g.user, 'ignore_auth': True})
         username_list = []
 
         user_list = get_action('user_list')(context, {'email': email})
@@ -275,7 +325,9 @@ def recover_username():
                      .format(email))
             try:
                 # see: ckanext.gcnotify.mailer.send_username_recovery
-                mailer.send_username_recovery(email, username_list)
+                if hasattr(mailer, 'send_username_recovery'):
+                    # type_ignore_reason: checking attribute
+                    mailer.send_username_recovery(email, username_list)  # type: ignore
             except mailer.MailerException as e:
                 # SMTP is not configured correctly or the server is
                 # temporarily unavailable
@@ -294,7 +346,7 @@ def recover_username():
     return render('user/recover_username.html', {})
 
 
-def canada_search(package_type):
+def canada_search(package_type: str):
     if g.is_registry and not g.user:
         return abort(403)
     if not g.is_registry and package_type in h.recombinant_get_types():
@@ -307,7 +359,7 @@ def fivehundred():
     raise IntentionalServerError()
 
 
-def _get_choice_fields(resource_name):
+def _get_choice_fields(resource_name: str) -> Dict[str, Any]:
     separator = ' : ' if h.lang() == 'fr' else ': '
     choice_fields = {}
     for datastore_id, choices in h.recombinant_choice_fields(resource_name).items():
@@ -331,7 +383,9 @@ def _get_choice_fields(resource_name):
 
 
 @canada_views.route('/group/bulk_process/<id>', methods=['GET', 'POST'])
-def canada_group_bulk_process(id, group_type='group', is_organization=False, data=None):
+def canada_group_bulk_process(id: str, group_type: str = 'group',
+                              is_organization: Optional[bool] = False,
+                              data: Optional[Union[Dict[str, Any], None]] = None):
     """
     Redirects the Group bulk action endpoint as it does not support
     the IPackageController and IResourceController implementations.
@@ -340,8 +394,10 @@ def canada_group_bulk_process(id, group_type='group', is_organization=False, dat
 
 
 @canada_views.route('/organization/bulk_process/<id>', methods=['GET', 'POST'])
-def canada_organization_bulk_process(id, group_type='organization',
-                                     is_organization=True, data=None):
+def canada_organization_bulk_process(id: str, group_type: str = 'organization',
+                                     is_organization: Optional[bool] = True,
+                                     data: Optional[Union[Dict[str, Any],
+                                                          None]] = None):
     """
     Redirects the Organization bulk action endpoint as it does not support
     the IPackageController and IResourceController implementations.
@@ -351,7 +407,7 @@ def canada_organization_bulk_process(id, group_type='organization',
 
 @canada_views.route('/create-pd-record/<owner_org>/<resource_name>',
                     methods=['GET', 'POST'])
-def create_pd_record(owner_org, resource_name):
+def create_pd_record(owner_org: str, resource_name: str):
     lc = LocalCKAN(username=g.user)
 
     try:
@@ -396,21 +452,25 @@ def create_pd_record(owner_org, resource_name):
         except ValidationError as ve:
             if 'records' in ve.error_dict:
                 try:
+                    # type_ignore_reason: incomplete typing
                     err = dict({
                         k: list(format_trigger_error(v))
-                        for (k, v) in ve.error_dict['records'][0].items()
+                        for (k, v) in
+                        ve.error_dict['records'][0].items()  # type: ignore
                     }, **err)
                 except AttributeError:
+                    # type_ignore_reason: incomplete typing
                     if (
                       'duplicate key value violates unique constraint' in
-                      ve.error_dict['records'][0]):
+                      ve.error_dict['records'][0]):  # type: ignore
                         err = dict({
                             k: [_("This record already exists")]
                             for k in pk_fields
                         }, **err)
+                    # type_ignore_reason: incomplete typing
                     elif (
                       'violates foreign key constraint' in
-                      ve.error_dict['records'][0]):
+                      ve.error_dict['records'][0]):  # type: ignore
                         error_message = chromo.get(
                             'datastore_constraint_errors', {}).get(
                                 'upsert', 'Something went wrong, your '
@@ -422,7 +482,9 @@ def create_pd_record(owner_org, resource_name):
                                     resource_name, owner_org, traceback.format_exc())
                         error_summary = _('Something went wrong, your record '
                                           'was not created. Please contact support.')
-            elif ve.error_dict.get('info', {}).get('pgcode', '') == '23505':
+            # type_ignore_reason: incomplete typing
+            elif ve.error_dict.get(
+                    'info', {}).get('pgcode', '') == '23505':  # type: ignore
                 err = dict({
                     k: [_("This record already exists")]
                     for k in pk_fields
@@ -469,8 +531,8 @@ def create_pd_record(owner_org, resource_name):
 
 @canada_views.route('/update-pd-record/<owner_org>/<resource_name>/<pk>',
                     methods=['GET', 'POST'])
-def update_pd_record(owner_org, resource_name, pk):
-    pk = [url_part_unescape(p) for p in pk.split(',')]
+def update_pd_record(owner_org: str, resource_name: str, pk: str):
+    pk_list = [_url_part_unescape(p) for p in pk.split(',')]
 
     lc = LocalCKAN(username=g.user)
 
@@ -490,7 +552,7 @@ def update_pd_record(owner_org, resource_name, pk):
 
     choice_fields = _get_choice_fields(resource_name)
     pk_fields = aslist(chromo['datastore_primary_key'])
-    pk_filter = dict(zip(pk_fields, pk))
+    pk_filter = dict(zip(pk_fields, pk_list))
 
     records = lc.action.datastore_search(
         resource_id=res['id'],
@@ -529,9 +591,10 @@ def update_pd_record(owner_org, resource_name, pk):
                 dry_run=bool(err))
         except ValidationError as ve:
             try:
+                # type_ignore_reason: incomplete typing
                 err = dict({
                     k: list(format_trigger_error(v))
-                    for (k, v) in ve.error_dict['records'][0].items()
+                    for (k, v) in ve.error_dict['records'][0].items()  # type: ignore
                 }, **err)
             except AttributeError:
                 log.warning('Failed to update %s record for org %s:\n%s',
@@ -553,7 +616,7 @@ def update_pd_record(owner_org, resource_name, pk):
                               'errors': err,
                               'error_summary': error_summary})
 
-        h.flash_notice(_('Record %s Updated') % ','.join(pk))
+        h.flash_notice(_('Record %s Updated') % ','.join(pk_list))
 
         return h.redirect_to(
             'recombinant.preview_table',
@@ -591,7 +654,7 @@ def update_pd_record(owner_org, resource_name, pk):
 
 
 @canada_views.route('/recombinant/<resource_name>', methods=['GET'])
-def type_redirect(resource_name, dataset_id=None):
+def type_redirect(resource_name: str, dataset_id: Optional[Union[str, None]] = None):
     orgs = h.organizations_available('read')
 
     if not orgs:
@@ -629,7 +692,7 @@ def type_redirect(resource_name, dataset_id=None):
 
 @canada_views.route('/recombinant/delete-selected-records/<resource_id>',
                     methods=['GET', 'POST'])
-def delete_selected_records(resource_id):
+def delete_selected_records(resource_id: str):
     lc = LocalCKAN(username=g.user)
 
     if not h.check_access('datastore_records_delete',
@@ -683,9 +746,11 @@ def delete_selected_records(resource_id):
             except ValidationError as e:
                 if 'foreign_constraints' in e.error_dict:
                     chromo = get_chromo(res['name'])
+                    # type_ignore_reason: no typing from chromo yamls
                     error_message = chromo.get(
                         'datastore_constraint_errors', {}).get(
-                            'delete', e.error_dict['foreign_constraints'][0])
+                            'delete',
+                            e.error_dict['foreign_constraints'][0])  # type: ignore
                     h.flash_error(_(error_message))
                     return h.redirect_to('recombinant.preview_table',
                                          resource_name=res['name'],
@@ -701,7 +766,11 @@ def delete_selected_records(resource_id):
     )
 
 
-def _clean_check_type_errors(post_data, fields, pk_fields, choice_fields):
+def _clean_check_type_errors(post_data: Dict[str, Any],
+                             fields: List[Dict[str, Any]],
+                             pk_fields: List[str],
+                             choice_fields: Dict[str, Any]) -> \
+                                Tuple[Dict[str, Any], Dict[str, Any]]:
     """
     clean posted data and check type errors, add type error messages
     to errors dict returned. This is required because type errors on any
@@ -791,7 +860,12 @@ def ckanadmin_publish_datasets():
     lc = LocalCKAN(username=g.user)
     params = parse_params(request.form)
 
-    publish_date = params.get('publish_date')
+    publish_date = params.get('publish_date', '')
+    if isinstance(publish_date, list):
+        publish_date = publish_date[0]
+    if not publish_date:
+        h.flash_error(_('Invalid publish date'))
+        return h.redirect_to('canada.ckanadmin_publish')
     publish_date = date_str_to_datetime(publish_date).strftime("%Y-%m-%d %H:%M:%S")
 
     # get a list of package id's from the for POST data
@@ -842,12 +916,15 @@ def view_help():
 @canada_views.route('/datatable/<resource_name>/<resource_id>',
                     methods=['GET', 'POST'])
 @csrf.exempt
-def datatable(resource_name, resource_id):
+def datatable(resource_name: str, resource_id: str):
     params = parse_params(request.form)
-    draw = int(params['draw'])
+    # type_ignore_reason: datatable param draw is int
+    draw = int(params['draw'])  # type: ignore
     search_text = str(params['search[value]'])
-    offset = int(params['start'])
-    limit = int(params['length'])
+    # type_ignore_reason: datatable param start is int
+    offset = int(params['start'])  # type: ignore
+    # type_ignore_reason: datatable param length is int
+    limit = int(params['length'])  # type: ignore
 
     chromo = h.recombinant_get_chromo(resource_name)
     lc = LocalCKAN(username=g.user)
@@ -882,7 +959,8 @@ def datatable(resource_name, resource_id):
     while True:
         if 'order[%d][column]' % i not in params:
             break
-        sort_by_num = int(params['order[%d][column]' % i])
+        # type_ignore_reason: datatable param 'order[%d][column] is int
+        sort_by_num = int(params['order[%d][column]' % i])  # type: ignore
         sort_order = (
             'desc' if params['order[%d][dir]' % i] == 'desc'
             else 'asc')
@@ -915,7 +993,7 @@ def datatable(resource_name, resource_id):
                         'canada.update_pd_record',
                         owner_org=pkg['organization']['name'],
                         resource_name=resource_name,
-                        pk=','.join(url_part_escape(row[i+1]) for i in pkids)
+                        pk=','.join(_url_part_escape(row[i+1]) for i in pkids)
                     )
                 )
             )
@@ -928,7 +1006,7 @@ def datatable(resource_name, resource_id):
     })
 
 
-def datatablify(v, colname, chromo):
+def datatablify(v: Any, colname: str, chromo: Dict[str, Any]) -> str:
     '''
     format value from datastore v for display in a datatable preview
     '''
@@ -956,7 +1034,7 @@ def datatablify(v, colname, chromo):
 
 
 @canada_views.route('/fgpv-vpgf/<pkg_id>', methods=['GET'])
-def fgpv_vpgf(pkg_id):
+def fgpv_vpgf(pkg_id: str):
     return render('fgpv_vpgf/index.html', extra_vars={
         'pkg_id': pkg_id,
     })
@@ -969,13 +1047,13 @@ def organization_autocomplete():
     organization_list = []
 
     if q:
-        context = {'user': g.user, 'model': model, 'ignore_auth': True}
+        context = cast(Context, {'user': g.user, 'model': model, 'ignore_auth': True})
         data_dict = {'q': q, 'limit': limit}
         organization_list = get_action(
             'organization_autocomplete'
         )(context, data_dict)
 
-    def _org_key(org):
+    def _org_key(org: Dict[str, Any]) -> str:
         return org['title'].split(' | ')[-1 if lang() == 'fr' else 0]
 
     return_list = [{
@@ -992,7 +1070,8 @@ def organization_autocomplete():
 @canada_views.route('/api/action/<logic_function>', methods=['GET', 'POST'])
 @canada_views.route('/api/<int(min=3, max={0}):ver>/action/<logic_function>'.format(
                     API_MAX_VERSION), methods=['GET', 'POST'])
-def action(logic_function, ver=API_DEFAULT_VERSION):
+def action(logic_function: str,
+           ver: int = API_DEFAULT_VERSION):
     '''Main endpoint for the action API (v3)
 
     Creates a dict with the incoming request data and calls the appropiate
@@ -1020,11 +1099,12 @@ def action(logic_function, ver=API_DEFAULT_VERSION):
     except Exception:
         return api_view_action(logic_function, ver)
 
-    if not isinstance(request_data, dict):
+    if not request_data:
         return api_view_action(logic_function, ver)
 
-    context = {'model': model, 'session': model.Session, 'user': g.user,
-               'api_version': ver, 'auth_user_obj': g.userobj}
+    context = cast(Context, {'model': model, 'session': model.Session,
+                             'user': g.user, 'api_version': ver,
+                             'auth_user_obj': g.userobj})
 
     return_dict = {'help': h.url_for('api.action',
                                      logic_function='help_show',
@@ -1053,8 +1133,9 @@ def action(logic_function, ver=API_DEFAULT_VERSION):
     return api_view_action(logic_function, ver)
 
 
-def _get_package_from_api_request(logic_function, id, context):
-    # type: (str, str, dict) -> dict|None
+def _get_package_from_api_request(logic_function: str,
+                                  id: str,
+                                  context: Context) -> Union[Dict[str, Any], None]:
     """
     Tries to return the package for an API request
     """
@@ -1080,10 +1161,14 @@ def _get_package_from_api_request(logic_function, id, context):
         return None
 
 
-def _log_api_access(request_data, pkg_dict):
+def _log_api_access(request_data: Dict[str, Any], pkg_dict: Dict[str, Any]):
     org = model.Group.get(pkg_dict.get('owner_org'))
+    if not org:
+        org_name = 'Unknown'
+    else:
+        org_name = org.name
     g.log_extra = 'org={o} type={t} id={i}'.format(
-        o=org.name,
+        o=org_name,
         t=pkg_dict.get('type'),
         i=pkg_dict.get('id'))
     if 'resource_id' in request_data:
@@ -1115,7 +1200,11 @@ def notice_no_access():
           'open-ouvert@tbs-sct.gc.ca</a>'), True)
 
 
-def notify_ckan_user_create(email, fullname, username, phoneno, dept):
+def notify_ckan_user_create(email: str,
+                            fullname: str,
+                            username: str,
+                            phoneno: str,
+                            dept: str):
     """
     Send an e-mail notification about new users that register on the site to
     the configured recipient and to the new user
@@ -1148,7 +1237,7 @@ def notify_ckan_user_create(email, fullname, username, phoneno, dept):
             )
     except ckan.lib.mailer.MailerException as m:
         log = getLogger('ckanext')
-        log.error(m.message)
+        log.error(getattr(m, 'message', None))
 
     try:
         xtra_vars = {
@@ -1172,20 +1261,20 @@ def notify_ckan_user_create(email, fullname, username, phoneno, dept):
         )
     except (ckan.lib.mailer.MailerException, socket_error) as m:
         log = getLogger('ckanext')
-        log.error(m.message)
+        log.error(getattr(m, 'message', None))
 
 
 @canada_views.route('/organization/member_dump/<id>', methods=['GET'])
-def organization_member_dump(id):
+def organization_member_dump(id: str):
     records_format = 'csv'
 
     org_dict = model.Group.get(id)
     if not org_dict:
         abort(404, _('Organization not found'))
 
-    context = {'model': model,
-               'session': model.Session,
-               'user': g.user}
+    context = cast(Context, {'model': model,
+                             'session': model.Session,
+                             'user': g.user})
 
     try:
         check_access('organization_member_create', context, {'id': id})
@@ -1229,23 +1318,24 @@ def organization_member_dump(id):
     content_disposition = 'attachment; filename="{name}.csv"'.format(
                                     name=file_name)
     content_type = b'text/csv; charset=utf-8'
-    response.headers['Content-Type'] = content_type
+    # type_ignore_reason: bytes allowed and expected in CKAN
+    response.headers['Content-Type'] = content_type  # type: ignore
     response.headers['Content-Disposition'] = content_disposition
 
     return response
 
 
 @canada_views.route('/organization/members/<id>', methods=['GET', 'POST'])
-def members(id):
+def members(id: str):
     """
     Copied from core. Permissions for Editors to view members in GET.
     """
     extra_vars = {}
     set_org(True)
-    context = {'model': model, 'session': model.Session, 'user': g.user}
+    context = cast(Context, {'model': model, 'session': model.Session, 'user': g.user})
 
     try:
-        data_dict = {'id': id}
+        data_dict: Dict[str, Any] = {'id': id}
         if request.method == 'POST':
             auth_action = 'group_edit_permissions'
         else:
@@ -1327,7 +1417,7 @@ def ckan_admin_portal_sync():
         {'user': g.user}, {'limit': limit, 'start': start})
     extra_vars['out_of_sync_packages'] = out_of_sync_packages
 
-    def _basic_pager_uri(page, text):
+    def _basic_pager_uri(page: Union[int, str], text: str):
         return h.url_for('canada.ckan_admin_portal_sync', page=page)
     pager_url = partial(_basic_pager_uri, page=page_number, text='')
 

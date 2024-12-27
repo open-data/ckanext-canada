@@ -1,4 +1,5 @@
-from ckan.types import Config, Callable, Any
+from ckan.types import Callable, Any, Dict
+from ckan.common import CKANConfig
 
 import ckan.plugins as p
 from ckan.lib.app_globals import set_app_global
@@ -13,7 +14,7 @@ class CanadaThemePlugin(p.SingletonPlugin):
     p.implements(p.ITemplateHelpers)
 
     # IConfigurer
-    def update_config(self, config: Config):
+    def update_config(self, config: 'CKANConfig'):
         p.toolkit.add_template_directory(config, '../templates')
         p.toolkit.add_public_directory(config, '../public')
         p.toolkit.add_resource('../public/static/js', 'js')
@@ -26,7 +27,7 @@ class CanadaThemePlugin(p.SingletonPlugin):
         config['ckan.favicon'] = helpers.cdts_asset('/assets/favicon.ico')
 
     # ITemplateHelpers
-    def get_helpers(self) -> dict[str, Callable[..., Any]]:
+    def get_helpers(self) -> Dict[str, Callable[..., Any]]:
         return dict((h, getattr(helpers, h)) for h in [
             # Registry
             'may_publish_datasets',

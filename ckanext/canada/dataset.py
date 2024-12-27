@@ -56,7 +56,7 @@ def solr_connection(ini_prefix: str,
 
 
 def data_batch(org_id: str, lc: LocalCKAN,
-               dataset_type: str) -> Union[Generator[Tuple[str, List[Any]]], None]:
+               dataset_type: str) -> Generator[Tuple[str, List[Any]]]:
     """
     Generator of dataset dicts for organization with name org
 

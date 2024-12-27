@@ -1,6 +1,6 @@
 # NOTE: used to connect to the SOLR cores for Drupal PD Searches
 # TODO: remove once all PDs are in Django
-from typing import Optional, Union
+from typing import Optional, Union, Dict, Any, List, Tuple
 
 import click
 import os
@@ -88,7 +88,7 @@ def clear(pd_type: str):
     help="If the PD Type is a NIL type.",
 )
 def rebuild(pd_type: str,
-            files: Optional[Union[list, None]] = None,
+            files: Optional[Union[List[str], None]] = None,
             solr_url: Optional[Union[str, None]] = None,
             lenient: Optional[bool] = False,
             has_nil: Optional[bool] = False):
@@ -122,9 +122,9 @@ def clear_index(pd_type: str, solr_url: Optional[Union[str, None]] = None,
     conn.delete(q="*:*", commit=commit)
 
 
-def _rebuild(pd_type: str, csv_files: Optional[Union[list, None]] = None,
+def _rebuild(pd_type: str, csv_files: Optional[Union[List[str], None]] = None,
              solr_url: Optional[Union[str, None]] = None,
-             strict: Optional[bool] = True):
+             strict: bool = True):
     """
     Implement rebuild command
 
@@ -143,7 +143,7 @@ def _rebuild(pd_type: str, csv_files: Optional[Union[list, None]] = None,
             print(csv_file + ':')
             prev_org = None
             unmatched = None
-            firstpart, filename = os.path.split(csv_file)
+            _firstpart, filename = os.path.split(csv_file)
             assert filename.endswith('.csv')
             resource_name = filename[:-4]
 
@@ -176,11 +176,12 @@ def _rebuild(pd_type: str, csv_files: Optional[Union[list, None]] = None,
     conn.commit()
 
 
-def _update_records(records: list,
-                    org_detail: dict,
+def _update_records(records: List[Any],
+                    org_detail: Dict[str, Any],
                     conn: Solr,
                     resource_name: str,
-                    unmatched: Union[tuple, None],
+                    unmatched: Union[Tuple[
+                        Dict[Any, Any], Dict[Any, Any]], None],
                     retry: Optional[bool] = True):
     """
     Update records on solr core
@@ -201,7 +202,7 @@ def _update_records(records: list,
     org = org_detail['name']
     orghash = hashlib.md5(org.encode('utf-8')).hexdigest()
 
-    def unique_id(r):
+    def unique_id(r: List[Any]):
         "return hash, friendly id, partial id"
         s = orghash
         f = org
@@ -228,7 +229,7 @@ def _update_records(records: list,
     # and cleaning up old data.
     failed_choices = {}
 
-    def _record_failed_choice(_key, _value):
+    def _record_failed_choice(_key: str, _value: str):
         if _key not in failed_choices:
             failed_choices[_key] = {}
         if _value not in failed_choices[_key]:
@@ -396,7 +397,11 @@ def _update_records(records: list,
     return unmatched
 
 
-def _add_choice(solrrec, key, record, choice, field):
+def _add_choice(solrrec: Dict[str, Any],
+                key: str,
+                record: Dict[str, Any],
+                choice: Dict[str, Any],
+                field: Dict[str, Any]):
     """
     add the english+french values for choice to solrrec
     """
@@ -404,6 +409,7 @@ def _add_choice(solrrec, key, record, choice, field):
     solrrec[key + '_fr'] = recombinant_language_text(choice, 'fr')
 
     # lookups used for choices that expand to multiple values
+    lookup = []
     if 'lookup' in choice:
         lookup = choice['lookup']
     elif 'conditional_lookup' in choice:
@@ -424,7 +430,7 @@ def _add_choice(solrrec, key, record, choice, field):
         for cl in lookup]
 
 
-def date2zulu(yyyy_mm_dd):
+def date2zulu(yyyy_mm_dd: str) -> str:
     return time.strftime(
         "%Y-%m-%dT%H:%M:%SZ",
         time.gmtime(time.mktime(time.strptime(
@@ -432,7 +438,7 @@ def date2zulu(yyyy_mm_dd):
             "%Y-%m-%d %H:%M:%S"))))
 
 
-def list_or_none(v):
+def list_or_none(v: Any) -> Union[List[str], None]:
     """
     None -> None
     "str" -> ["str"]
@@ -446,15 +452,17 @@ def list_or_none(v):
     return v
 
 
-def en_dollars(v):
+def en_dollars(v: Any) -> str:
     return format_currency(v, 'CAD', locale='en_CA')
 
 
-def fr_dollars(v):
+def fr_dollars(v: Any) -> str:
     return format_currency(v, 'CAD', locale='fr_CA')
 
 
-def dollar_range_facet(key, facet_range, float_value):
+def dollar_range_facet(key: str,
+                       facet_range: List[float],
+                       float_value: float) -> Dict[str, Any]:
     """
     return solr range fields for dollar float_value in ranges
     given by facet_range, in English and French
@@ -466,6 +474,8 @@ def dollar_range_facet(key, facet_range, float_value):
     in English
     """
     last_fac = None
+    i = None
+    fac = None
     for i, fac in enumerate(facet_range):
         if float_value < fac:
             break
@@ -486,15 +496,17 @@ def dollar_range_facet(key, facet_range, float_value):
         key + '_fr': prefix + fr_dollars(last_fac) + ' - ' + fr_dollars(fac-0.01)}
 
 
-def en_numeric(v):
+def en_numeric(v: Any) -> str:
     return format_decimal(v, locale='en_CA')
 
 
-def fr_numeric(v):
+def fr_numeric(v: Any) -> str:
     return format_decimal(v, locale='fr_CA')
 
 
-def numeric_range_facet(key, facet_range, float_value):
+def numeric_range_facet(key: str,
+                        facet_range: List[float],
+                        float_value: float) -> Dict[str, Any]:
     """
     return solr range fields for numeric float_value in ranges
     given by facet_range, in English and French
@@ -506,6 +518,8 @@ def numeric_range_facet(key, facet_range, float_value):
     in English
     """
     last_fac = None
+    i = None
+    fac = None
     for i, fac in enumerate(facet_range):
         if float_value < fac:
             break
@@ -526,7 +540,9 @@ def numeric_range_facet(key, facet_range, float_value):
         key + '_fr': prefix + fr_numeric(last_fac) + ' - ' + fr_numeric(fac-1)}
 
 
-def sum_to_field(solrrec, key, value):
+def sum_to_field(solrrec: Dict[str, Any],
+                 key: str,
+                 value: Any):
     """
     modify solrrec dict in-place to add this value to solrrec[key]
     """
@@ -543,7 +559,10 @@ def sum_to_field(solrrec, key, value):
         pass  # None can stay as None
 
 
-def match_compare_output(solrrec, out, unmatched, chromo):
+def match_compare_output(solrrec: Dict[str, Any],
+                         out: List[Dict[str, Any]],
+                         unmatched: Tuple[Dict[Any, Any], Dict[Any, Any]],
+                         chromo: Dict[str, Any]):
     """
     pop matching prev/next records from unmatched, create compare fields
     and append on out
@@ -562,7 +581,9 @@ def match_compare_output(solrrec, out, unmatched, chromo):
         prev_years[year] = solrrec
 
 
-def compare_output(prev_solrrec, solrrec, chromo):
+def compare_output(prev_solrrec: Dict[str, Any],
+                   solrrec: Dict[str, Any],
+                   chromo: Dict[str, Any]):
     """
     process solr_compare_previous_year fields and return solrrec with
     extra sum and change fields added
@@ -591,11 +612,15 @@ def compare_output(prev_solrrec, solrrec, chromo):
         out[comp['change']] = change
 
         if 'sum_previous_year' in comp:
-            for sp in list_or_none(comp['sum_previous_year']):
-                sum_to_field(out, sp, float_prev)
+            sp_list = list_or_none(comp['sum_previous_year'])
+            if sp_list:
+                for sp in sp_list:
+                    sum_to_field(out, sp, float_prev)
         if 'sum_change' in comp:
             sum_change = (float_cur or 0) - (float_prev or 0)
-            for sc in list_or_none(comp['sum_change']):
-                sum_to_field(out, sc, sum_change)
+            sc_list = list_or_none(comp['sum_change'])
+            if sc_list:
+                for sc in sc_list:
+                    sum_to_field(out, sc, sum_change)
 
     return out

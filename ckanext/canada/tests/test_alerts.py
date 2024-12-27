@@ -87,7 +87,6 @@ class TestPackageAlerts(CanadaTestBase):
         assert 'Draft record has been saved and can be edited. Mark as ready to publish to continue' not in response.body
 
     def _filled_dataset_data(self):
-        # type: () -> dict
         return {
             'type': 'dataset',
             'collection': 'primary',

@@ -33,7 +33,6 @@ flashes = MockFlashMessages()
 
 
 def _get_relative_offset_from_response(response):
-    # type: (CKANResponse) -> str
     assert response.headers
     assert 'Location' in response.headers
     return urlparse(response.headers['Location'])._replace(scheme='', netloc='').geturl()
@@ -154,7 +153,6 @@ class TestPackageWebForms(CanadaTestBase):
         assert 'Resource Type:' in response.body
 
     def _filled_dataset_form(self):
-        # type: () -> dict
         return {
             'id': self.dataset_id,
             'owner_org': self.org['id'],
@@ -178,7 +176,6 @@ class TestPackageWebForms(CanadaTestBase):
         }
 
     def _filled_resource_form(self):
-        # type: () -> dict
         return {
             'id': '',
             'package_id': self.dataset_id,
@@ -259,7 +256,6 @@ class TestNewUserWebForms(CanadaTestBase):
         assert 'Password: Please enter both passwords' in response.body
 
     def _filled_new_user_form(self, csrf_token=None):
-        # type: (str|None) -> dict
         return {
             'name': 'newusername',
             'fullname': 'New User',
@@ -307,7 +303,6 @@ class TestRecombinantWebForms(CanadaTestBase):
         self.example_nil_record = self.nil_chromo['examples']['record']
 
     def _lc_init_pd(self, org=None):
-        # type: (Organization|None) -> None
         lc = LocalCKAN()
         org = org if org else self.org
         try:
@@ -316,7 +311,6 @@ class TestRecombinantWebForms(CanadaTestBase):
             pass
 
     def _lc_create_pd_record(self, org=None, is_nil=False, return_field='name'):
-        # type: (Organization|None, bool, str) -> str
         lc = LocalCKAN()
         org = org if org else self.org
         self._lc_init_pd(org=org)
@@ -327,14 +321,12 @@ class TestRecombinantWebForms(CanadaTestBase):
         return rval['resources'][1][return_field] if is_nil else rval['resources'][0][return_field]
 
     def _lc_pd_template(self, org=None):
-        # type: (Organization|None) -> Workbook
         org = org if org else self.org
         self._lc_create_pd_record(org=org)
         self._lc_create_pd_record(org=org, is_nil=True)
         return excel_template(dataset_type=self.pd_type, org=org)
 
     def _lc_get_pd_package_id(self, org=None):
-        # type: (Organization|None) -> str
         lc = LocalCKAN()
         org = org if org else self.org
         self._lc_init_pd(org=org)
@@ -575,7 +567,6 @@ class TestRecombinantWebForms(CanadaTestBase):
         assert 'Record {} Updated'.format(self.example_record['request_number']) in response.body
 
     def _filled_create_single_record_form(self):
-        # type: () -> dict
         return {
             'year': self.example_record['year'],
             'month': self.example_record['month'],
@@ -862,7 +853,6 @@ class TestRecombinantWebForms(CanadaTestBase):
         assert 'No errors found.' in response.body
 
     def _populate_good_template_file(self, template):
-        # type: (Workbook) -> BytesIO
         for i, v in enumerate(['2023',
                                '7',
                                'B-8019',
@@ -883,7 +873,6 @@ class TestRecombinantWebForms(CanadaTestBase):
         return good_template_file
 
     def _populate_bad_template_file(self, template):
-        # type: (Workbook) -> BytesIO
         for i, v in enumerate(['1978',
                                '20',
                                'B-8019',
@@ -904,7 +893,6 @@ class TestRecombinantWebForms(CanadaTestBase):
         return bad_template_file
 
     def _filled_upload_form(self, filestream, action='upload'):
-        # type: (BytesIO, str) -> dict
         return {
             'xls_update': (filestream, '{}_en_{}.xlsx'.format(self.pd_type, self.org['name'])),
             'resource_name': self.pd_type,
@@ -1015,7 +1003,6 @@ class TestRecombinantWebForms(CanadaTestBase):
         assert '2 deleted.' in response.body
 
     def _prepare_records_to_delete(self):
-        # type: () -> dict
         original_request_number = self.example_record['request_number']
         self.example_record['request_number'] = 'B-8019'
         self._lc_create_pd_record()

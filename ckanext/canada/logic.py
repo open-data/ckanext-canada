@@ -1,5 +1,5 @@
-from typing import Optional
-from ckan.types import Context, DataDict, ChainedAction
+from typing import Optional, Any, cast, Dict
+from ckan.types import Context, DataDict, Action, ChainedAction
 
 from ckan.logic.validators import isodate, Invalid
 from ckan import model
@@ -84,7 +84,7 @@ log = getLogger(__name__)
 ottawa_tz = timezone('America/Montreal')
 
 
-def disabled_action(context: Context, data_dict: DataDict):
+def disabled_action(context: Context, data_dict: DataDict) -> Any:
     """
     Raises a NotFound exception to disable a logic action method.
     """
@@ -97,7 +97,7 @@ disabled_action.auth_audit_exempt = True
 
 @chained_action
 def disabled_anon_action(up_func: ChainedAction, context: Context,
-                         data_dict: DataDict):
+                         data_dict: DataDict) -> Any:
     if (
       not context.get('ignore_auth', False) and
       context.get('user', 'visitor') in ('', 'visitor')):
@@ -347,8 +347,9 @@ def canada_guess_mimetype(context: Context, data_dict: DataDict) -> str:
 
 
 @chained_action
-def canada_resource_view_show(up_func: ChainedAction,
-                              context: Context, data_dict: DataDict) -> dict:
+def canada_resource_view_show(up_func: Action,
+                              context: Context,
+                              data_dict: DataDict) -> ChainedAction:
     """
     Return the metadata of a resource_view.
 
@@ -412,8 +413,9 @@ def canada_resource_view_show(up_func: ChainedAction,
 
 
 @chained_action
-def canada_resource_view_list(up_func: ChainedAction,
-                              context: Context, data_dict: DataDict) -> list:
+def canada_resource_view_list(up_func: Action,
+                              context: Context,
+                              data_dict: DataDict) -> ChainedAction:
     """
     Return the list of resource views for a particular resource.
 
@@ -476,8 +478,8 @@ def canada_resource_view_list(up_func: ChainedAction,
 
 
 @chained_action
-def canada_job_list(up_func: ChainedAction, context: Context,
-                    data_dict: DataDict) -> list:
+def canada_job_list(up_func: Action, context: Context,
+                    data_dict: DataDict) -> ChainedAction:
     """List enqueued background jobs.
 
     :param list queues: Queues to list jobs from. If not given then the
@@ -616,7 +618,7 @@ def registry_jobs_running(context: Context, data_dict: DataDict) -> bool:
 
 
 @chained_action
-def canada_datastore_run_triggers(up_func: ChainedAction,
+def canada_datastore_run_triggers(up_func: Action,
                                   context: Context,
                                   data_dict: DataDict) -> ChainedAction:
     """
@@ -630,7 +632,7 @@ def canada_datastore_run_triggers(up_func: ChainedAction,
 
 
 @side_effect_free
-def portal_sync_info(context: Context, data_dict: DataDict) -> dict:
+def portal_sync_info(context: Context, data_dict: DataDict) -> Dict[str, Any]:
     """
     Returns PackageSync object for a given package_id if it exists.
     """
@@ -655,7 +657,7 @@ def portal_sync_info(context: Context, data_dict: DataDict) -> dict:
 
 
 @side_effect_free
-def list_out_of_sync_packages(context: Context, data_dict: DataDict) -> dict:
+def list_out_of_sync_packages(context: Context, data_dict: DataDict) -> Dict[str, Any]:
     """
     Returns a list of out of sync packages on the Portal.
 
@@ -681,7 +683,8 @@ def list_out_of_sync_packages(context: Context, data_dict: DataDict) -> dict:
     for sync_info in sync_infos:
         try:
             pkg_dict = get_action('package_show')(
-                {'user': context.get('user')}, {'id': sync_info.package_id})
+                cast(Context, {'user': context.get('user')}),
+                {'id': sync_info.package_id})
         except (ObjectNotFound, NotAuthorized):
             continue
         # NOTE: never show sync_info.error as it

@@ -15,7 +15,8 @@ log = logging.getLogger(__name__)
 Base = declarative_base(metadata=meta.metadata)
 
 
-class PackageSync(Base):
+# type_ignore_reason: incomplete typing
+class PackageSync(Base):  # type: ignore
     __tablename__ = 'package_sync'
 
     package_id = Column(Unicode, primary_key=True)

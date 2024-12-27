@@ -1,5 +1,12 @@
-from typing import Any, Union, List, TYPE_CHECKING, Type
-from ckan.types import Config, Action, AuthFunction, CKANApp
+from typing import Any, Union, Optional, List, TYPE_CHECKING, Type, Dict, Tuple
+from ckan.types import (
+    Action,
+    ChainedAction,
+    AuthFunction,
+    ChainedAuthFunction,
+    CKANApp
+)
+from ckan.common import CKANConfig
 
 import os
 from flask import Blueprint
@@ -48,7 +55,7 @@ class CanadaPublicPlugin(p.SingletonPlugin, DefaultTranslation):
         return os.path.join(os.path.dirname(str(__file__)), '../i18n')
 
     # IConfigurer
-    def update_config(self, config: Config):
+    def update_config(self, config: 'CKANConfig'):
         config['ckan.auth.public_user_details'] = False
 
         recombinant_definitions = config.get('recombinant.definitions', '')
@@ -156,7 +163,7 @@ class CanadaPublicPlugin(p.SingletonPlugin, DefaultTranslation):
         return self.dataset_facets(facets_dict, package_type)
 
     # IActions
-    def get_actions(self) -> dict[str, Action]:
+    def get_actions(self) -> Dict[str, Union[Action, ChainedAction]]:
         return {
             'resource_view_show': logic.canada_resource_view_show,
             'resource_view_list': logic.canada_resource_view_list,
@@ -165,7 +172,8 @@ class CanadaPublicPlugin(p.SingletonPlugin, DefaultTranslation):
         }
 
     # IAuthFunctions
-    def get_auth_functions(self) -> dict[str, AuthFunction]:
+    def get_auth_functions(self) -> Dict[str, Union[AuthFunction,
+                                                    ChainedAuthFunction]]:
         return {
             'datastore_create': auth.datastore_create,
             'datastore_delete': auth.datastore_delete,
@@ -177,7 +185,7 @@ class CanadaPublicPlugin(p.SingletonPlugin, DefaultTranslation):
         }
 
     # IMiddleware
-    def make_middleware(self, app: CKANApp, config: Config) -> CKANApp:
+    def make_middleware(self, app: CKANApp, config: 'CKANConfig') -> CKANApp:
         return LogExtraMiddleware(app, config)
 
     # IClick
@@ -185,7 +193,7 @@ class CanadaPublicPlugin(p.SingletonPlugin, DefaultTranslation):
         return [cli.get_commands(), get_pd_commands()]
 
     # IColumnTypes
-    def column_types(self, existing_types: dict[str, Type[ColumnType]]):
+    def column_types(self, existing_types: Dict[str, Type[ColumnType]]):
         return dict(
             existing_types,
             province=coltypes.Province,
@@ -194,16 +202,17 @@ class CanadaPublicPlugin(p.SingletonPlugin, DefaultTranslation):
 
     # IBlueprint
     def get_blueprint(self) -> List[Blueprint]:
-        # type: () -> list[Blueprint]
         return [canada_views]
 
 
 class LogExtraMiddleware(object):
-    def __init__(self, app, config):
+    def __init__(self, app: Any, config: 'CKANConfig'):
         self.app = app
 
-    def __call__(self, environ, start_response):
-        def _start_response(status, response_headers, exc_info=None):
+    def __call__(self, environ: Any, start_response: Any) -> Any:
+        def _start_response(status: str,
+                            response_headers: List[Tuple[str, str]],
+                            exc_info: Optional[Union[Any, None]] = None):
             extra = []
             try:
                 contextual_user = g.user

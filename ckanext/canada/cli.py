@@ -1573,7 +1573,6 @@ def _get_site_user_context():
 
 
 def _get_datastore_tables(verbose: Optional[bool] = False):
-    # type: (bool) -> list
     """
     Returns a list of resource ids (table names) from
     the DataStore database.
@@ -1593,7 +1592,6 @@ def _get_datastore_tables(verbose: Optional[bool] = False):
 def _get_datastore_resources(valid: Optional[bool] = True,
                              is_datastore_active: Optional[bool] = True,
                              verbose: Optional[bool] = False) -> list:
-    # type: (bool, bool, bool) -> list
     """
     Returns a list of resource ids that are DataStore
     enabled and that are of upload url_type.
@@ -1667,7 +1665,6 @@ def _get_datastore_count(context,
                          verbose: Optional[bool] = False,
                          status: Optional[int] = 1,
                          max: Optional[int] = 1):
-    # type: (dict, str, bool, int, int) -> int|None
     """
     Returns the count of rows in the DataStore table for a given resource ID.
     """

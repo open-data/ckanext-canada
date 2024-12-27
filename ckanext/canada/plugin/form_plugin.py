@@ -1,4 +1,5 @@
-from ckan.types import Action, Validator
+from typing import Dict, Union
+from ckan.types import Action, ChainedAction, Validator
 
 import ckan.plugins as p
 from ckan.lib.plugins import DefaultDatasetForm
@@ -15,7 +16,7 @@ class CanadaFormsPlugin(p.SingletonPlugin, DefaultDatasetForm):
     p.implements(p.IValidators, inherit=True)
 
     # IActions
-    def get_actions(self) -> dict[str, Action]:
+    def get_actions(self) -> Dict[str, Union[Action, ChainedAction]]:
         actions = logic.limit_api_logic()
         actions.update((h, getattr(logic, h)) for h in [
             'changed_packages_activity_timestamp_since',
@@ -44,7 +45,7 @@ class CanadaFormsPlugin(p.SingletonPlugin, DefaultDatasetForm):
         return actions
 
     # IValidators
-    def get_validators(self) -> dict[str, Validator]:
+    def get_validators(self) -> Dict[str, Validator]:
         return {
             'canada_validate_generate_uuid':
                 validators.canada_validate_generate_uuid,

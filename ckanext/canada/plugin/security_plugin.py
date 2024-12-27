@@ -1,5 +1,6 @@
-from typing import Any
-from ckan.types import Context, Config, Validator
+from typing import Any, Dict
+from ckan.types import Context, Validator
+from ckan.common import CKANConfig
 
 import ckan.plugins as p
 from ckan.plugins.core import plugin_loaded
@@ -18,7 +19,7 @@ class CanadaSecurityPlugin(CkanSecurityPlugin):
     p.implements(p.IValidators, inherit=True)
     p.implements(p.IConfigurer)
 
-    def update_config(self, config: Config):
+    def update_config(self, config: 'CKANConfig'):
         super(CanadaSecurityPlugin, self).update_config(config)
         # Disable auth settings
         config['ckan.auth.anon_create_dataset'] = False
@@ -38,33 +39,33 @@ class CanadaSecurityPlugin(CkanSecurityPlugin):
 
         csrf.exempt(datatablesview)
 
-    def before_create(self, context: Context, resource: dict[str, Any]):
+    def before_create(self, context: Context, resource: Dict[str, Any]):
         """
         Override before_create from CkanSecurityPlugin.
         Want to use the methods in scheming instead of before_create.
         """
 
     def before_update(self, context: Context,
-                      current: dict[str, Any], resource: dict[str, Any]):
+                      current: Dict[str, Any], resource: Dict[str, Any]):
         """
         Override before_update from CkanSecurityPlugin.
         Want to use the methods in scheming instead of before_update.
         """
 
-    def before_resource_create(self, context: Context, resource: dict[str, Any]):
+    def before_resource_create(self, context: Context, resource: Dict[str, Any]):
         """
         Override before_resource_create from CkanSecurityPlugin.
         Want to use the methods in scheming instead of before_resource_create.
         """
 
     def before_resource_update(self, context: Context,
-                               current: dict[str, Any], resource: dict[str, Any]):
+                               current: Dict[str, Any], resource: Dict[str, Any]):
         """
         Override before_resource_update from CkanSecurityPlugin.
         Want to use the methods in scheming instead of before_resource_update.
         """
 
-    def get_validators(self) -> dict[str, Validator]:
+    def get_validators(self) -> Dict[str, Validator]:
         validators_dict = super(CanadaSecurityPlugin, self).get_validators() or {}
         return dict(
             validators_dict,
