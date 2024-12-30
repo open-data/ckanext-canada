@@ -67,7 +67,7 @@ class CanadaInternalPlugin(p.SingletonPlugin):
                     return original_upsert_data(context, data_dict)
                 except ValidationError as e:
                     # reformat tab-delimited error as dict
-                    # type_ignore_reason: incomplete typing in 2.10
+                    # type_ignore_reason: incomplete typing
                     head, sep, rerr = e.error_dict.get(  # type: ignore
                         'records', [''])[0].partition('\t')  # type: ignore
                     rerr = rerr.rstrip('\n')

@@ -1,4 +1,5 @@
-from typing import Optional, Union, Any, Tuple, List, Set, Dict
+from typing import Optional, Union, Any, Tuple, List, Set, Dict, cast
+from ckan.types import Context
 
 import json
 import re
@@ -11,7 +12,6 @@ import ckan.model as model
 from ckan.model.license import License
 import datetime
 import unicodedata
-import ckan as ckan
 import html
 from six import text_type
 from bs4 import BeautifulSoup
@@ -71,6 +71,7 @@ def get_translated_t(data_dict: Dict[str, Any],
         return (_(val) if val and isinstance(val, str) else val), False
 
 
+# FIXME: this is only for fluent tags...try to fix??
 def language_text_t(text: Union[Dict[str, Any], str],
                     prefer_lang: Optional[Union[str, None]] = None) -> \
                         Tuple[Union[str, None], bool]:
@@ -92,12 +93,14 @@ def language_text_t(text: Union[Dict[str, Any], str],
             pass  # lang() call will fail when no user language available
         else:
             try:
-                return text[prefer_lang], False
+                # type_ignore_reason: incomplete typing
+                return text[prefer_lang], False  # type: ignore
             except KeyError:
                 if prefer_lang:
                     for line in text:
                         if line.startswith(prefer_lang + '-t-'):
-                            return text[line], True
+                            # type_ignore_reason: incomplete typing
+                            return text[line], True  # type: ignore
                 pass
 
         default_locale = config.get('ckan.locale_default', 'en')
@@ -106,7 +109,8 @@ def language_text_t(text: Union[Dict[str, Any], str],
         except KeyError:
             pass
 
-        _l, v = sorted(text.items())[0]
+        # type_ignore_reason: incomplete typing
+        _l, v = sorted(text.items())[0]  # type: ignore
         return v, False
 
     t = _(text)
@@ -137,7 +141,10 @@ def may_publish_datasets(userobj: Optional[Union['model.User', None]] = None) ->
 
 def openness_score(pkg: Dict[str, Any]) -> int:
     score = 1
-    fmt_choices = scheming_get_preset('canada_resource_format')['choices']
+    field_preset = scheming_get_preset('canada_resource_format')
+    fmt_choices = []
+    if field_preset:
+        fmt_choices = field_preset['choices']
     resource_formats = set(r['format'] for r in pkg['resources'])
     for f in fmt_choices:
         if 'openness_score' not in f:
@@ -154,8 +161,10 @@ def openness_score(pkg: Dict[str, Any]) -> int:
     return score
 
 
-def user_organizations(user: Dict[str, Any]) -> List['model.Group']:
+def user_organizations(user: Dict[str, Any]) -> List[Union['model.Group', Any]]:
     u = User.get(user['name'])
+    if not u:
+        return []
     return u.get_groups(group_type="organization")
 
 
@@ -218,11 +227,13 @@ def canada_date_str_to_datetime(date_str: str) -> 'datetime.datetime':
         if not m:
             raise ValueError('Unable to parse %s as seconds.microseconds' %
                              time_tuple[5])
-        seconds = int(m.groupdict().get('seconds'))
+        # type_ignore_reason: incomplete typing
+        seconds = int(m.groupdict().get('seconds'))  # type: ignore
         microseconds = int((str(m.groupdict(0).get('microseconds')) + '00000')[0:6])
         time_tuple = time_tuple[:5] + [seconds, microseconds]
 
-    return datetime.datetime(*map(int, time_tuple))
+    # type_ignore_reason: typchecker can't guess number of arguments
+    return datetime.datetime(*map(int, time_tuple))  # type: ignore
 
 
 def remove_duplicates(a_list: List[Any]) -> Set[Any]:
@@ -243,6 +254,7 @@ def normalize_strip_accents(s: Union[str, bytes]) -> str:
     """
     if isinstance(s, str):
         return s
+    s = s.decode('utf-8')
     if not s:
         s = ''
     s = unicodedata.normalize('NFD', s)
@@ -304,8 +316,9 @@ def adobe_analytics_js() -> str:
     return str(config.get('ckanext.canada.adobe_analytics.js', ''))
 
 
-def adobe_analytics_creator(organization: Optional[Union[dict, None]] = None,
-                            package: Optional[Union[dict, None]] = None) -> Markup:
+def adobe_analytics_creator(organization: Optional[Union[Dict[str, Any], None]] = None,
+                            package: Optional[Union[Dict[str, Any], None]] = None) -> \
+                                Markup:
     """
     Generates HTML Meta Tag for Adobe Analytics, along with extra GoC
     page ownership HTML attribute.
@@ -328,9 +341,10 @@ def adobe_analytics_creator(organization: Optional[Union[dict, None]] = None,
     # set creator and owner_1 to the package's
     # organization title (language respective)
     if organization:
-        if ' | ' in organization.get('title'):
-            creator = organization.get('title')\
-                .split(' | ')[1 if h.lang() == 'fr' else 0].strip()
+        org_title = organization.get('title')
+        if org_title and ' | ' in org_title:
+            creator = org_title.split(' | ')[
+                1 if h.lang() == 'fr' else 0].strip()
         else:
             creator = h.get_translated(organization, h.lang()).strip()
         owner_1 = creator
@@ -354,10 +368,11 @@ def adobe_analytics_creator(organization: Optional[Union[dict, None]] = None,
                     html.escape(owner_4)))
 
 
-def resource_view_meta_title(package: dict,
-                             resource: dict,
-                             view: dict,
-                             is_subtitle: Optional[bool] = False) -> Markup:
+def resource_view_meta_title(package: Dict[str, Any],
+                             resource: Dict[str, Any],
+                             view: Dict[str, Any],
+                             is_subtitle: Optional[bool] = False) -> \
+                                Union[Markup, str]:
     """
     Generates the string for the title meta tag for Resource Views.
 
@@ -379,15 +394,7 @@ def loop11_key() -> str:
     return str(config.get('loop11.key', ''))
 
 
-def drupal_session_present(request) -> bool:
-    for name in request.cookies.keys():
-        if name.startswith("SESS"):
-            return True
-
-    return False
-
-
-def parse_release_date_facet(facet_results: dict) -> dict:
+def parse_release_date_facet(facet_results: Dict[str, Any]) -> Dict[str, Any]:
     counts = facet_results['counts'][1::2]
     ranges = facet_results['counts'][0::2]
     facet_dict = dict()
@@ -425,7 +432,7 @@ def release_date_facet_start_year() -> int:
     return today - RELEASE_DATE_FACET_STEP
 
 
-def is_ready_to_publish(package: dict) -> bool:
+def is_ready_to_publish(package: Dict[str, Any]) -> bool:
     portal_release_date = package.get('portal_release_date')
     ready_to_publish = package.get('ready_to_publish')
 
@@ -501,19 +508,19 @@ def json_loads(value: str) -> Dict[str, Any]:
 
 
 def get_datapreview(res_id: str) -> str:
-    dsq_results = ckan.logic.get_action('datastore_search')(
-        {}, {'resource_id': res_id, 'limit': 100})
+    dsq_results = t.get_action('datastore_search')(
+        cast(Context, {}), {'resource_id': res_id, 'limit': 100})
     return h.snippet('package/wet_datatable.html',
                      ds_fields=dsq_results['fields'],
                      ds_records=dsq_results['records'])
 
 
-def iso_to_goctime(isodatestr) -> str:
+def iso_to_goctime(isodatestr: str) -> str:
     dateobj = dateutil.parser.parse(isodatestr)
     return dateobj.strftime('%Y-%m-%d')
 
 
-def geojson_to_wkt(gjson_str: str):
+def geojson_to_wkt(gjson_str: str) -> Any:
     # Ths GeoJSON string should look something like:
     #  '{"type": "Polygon",
     #    "coordinates": [[[-54, 46], [-54, 47], [-52, 47], [-52, 46], [-54, 46]]]}']
@@ -621,16 +628,16 @@ def get_user_email(user_id: str) -> str:
     orgs = h.organizations_available()
     org_ids = [o['id'] for o in orgs]
 
-    if not u.is_in_groups(org_ids):
+    if not u or not u.is_in_groups(org_ids):
         return ""
 
-    context = {'model': model,
-               'session': model.Session,
-               'keep_email': True}
+    context = cast(Context, {'model': model,
+                             'session': model.Session,
+                             'keep_email': True})
 
     try:
         data_dict = {'id': user_id}
-        user_dict = ckan.logic.get_action('user_show')(context, data_dict)
+        user_dict = t.get_action('user_show')(context, data_dict)
 
         if 'email' in user_dict:
             return user_dict['email']
@@ -645,11 +652,13 @@ core_helper(plugin_loaded)
 
 def organization_member_count(id: str) -> int:
     try:
-        members = ckan.logic.get_action('member_list')({}, {
-            'id': id,
-            'object_type': 'user',
-            'include_total': True,
-        })
+        members = t.get_action('member_list')(
+            cast(Context, {}),
+            {
+                'id': id,
+                'object_type': 'user',
+                'include_total': True
+            })
     except NotFound:
         raise NotFound(_('Members not found'))
     except NotAuthorized:
@@ -677,6 +686,7 @@ def _get_caller_info(stack: List['inspect.FrameInfo']) -> str:
     module_info = inspect.getmodule(parentframe)
 
     # module name
+    caller_module = None
     if module_info:
         caller_module = module_info.__name__
 
@@ -736,7 +746,7 @@ def flash_success(message: str, allow_html: Optional[bool] = True):
               category='alert-success')
 
 
-def get_loader_status_badge(resource: Dict[str, Any]) -> Markup:
+def get_loader_status_badge(resource: Dict[str, Any]) -> Union[Markup, str]:
     """
     Displays a custom badge for the status of Xloader and DataStore
     for the specified resource.
@@ -763,7 +773,7 @@ def get_loader_status_badge(resource: Dict[str, Any]) -> Markup:
 
     try:
         xloader_job = t.get_action("xloader_status")(
-            None, {"resource_id": resource.get('id')})
+            cast(Context, {}), {"resource_id": resource.get('id')})
     except (t.ObjectNotFound, t.NotAuthorized):
         xloader_job = {}
 
@@ -805,12 +815,15 @@ def get_loader_status_badge(resource: Dict[str, Any]) -> Markup:
     title = t.h.render_datetime(xloader_job.get('last_updated'), with_hours=True) \
         if xloader_job.get('last_updated') else ''
 
+    # type_ignore_reason: incomplete typing
+    alt_text = messages[status]  # type: ignore
+
     return Markup(
         '<a href="{pusher_url}" class="loader-badge">'
         '<img src="{badge_url}" alt="{alt}" title="{title}"/></a>'.format(
             pusher_url=pusher_url,
             badge_url=badge_url,
-            alt=html.escape(messages[status], quote=True),
+            alt=html.escape(alt_text, quote=True),
             title=html.escape(title, quote=True)))
 
 
@@ -825,12 +838,14 @@ def get_resource_view(resource_view_id: str) -> Union[Dict[str, Any], None]:
         return None
 
 
-def resource_view_type(resource_view: Dict[str, Any]) -> str:
+def resource_view_type(resource_view: Dict[str, Any]) -> Union[str, None]:
     view_plugin = datapreview.get_view_plugin(resource_view['view_type'])
+    if not view_plugin:
+        return
     return view_plugin.info().get('title')
 
 
-def fgp_viewer_url(package: Dict[str, Any]) -> str:
+def fgp_viewer_url(package: Dict[str, Any]) -> Union[str, None]:
     """
     Returns a link to fgp viewer for the package
     """
@@ -845,12 +860,14 @@ def fgp_viewer_url(package: Dict[str, Any]) -> str:
 
 
 def date_field(field: str, pkg: Dict[str, Any]) -> Any:
-    if pkg.get(field) and ' ' in pkg.get(field):
-        return pkg.get(field).split(' ')[0]
-    return pkg.get(field, None)
+    field_value = pkg.get(field, None)
+    if field_value and ' ' in field_value:
+        return field_value.split(' ')[0]
+    return field_value
 
 
-def split_piped_bilingual_field(field_text: str, client_lang: str) -> str:
+def split_piped_bilingual_field(field_text: Union[str, None],
+                                client_lang: str) -> Union[str, None]:
     if field_text is not None and ' | ' in field_text:
         return field_text.split(' | ')[1 if client_lang == 'fr' else 0]
     return field_text
@@ -910,7 +927,9 @@ def search_filter_pill_link_label(search_field: str,
                                         _choices: List[Any]):
 
         extrs = s_extras.copy() if s_extras else {}
-        extrs.update(request.view_args)
+        view_args = request.view_args
+        if view_args:
+            extrs.update(view_args)
         link = h.remove_url_param(_field, value=_value, extras=extrs)
         label = _value
 

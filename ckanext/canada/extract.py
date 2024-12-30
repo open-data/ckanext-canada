@@ -13,9 +13,13 @@ class SafeLineLoader(SafeLoader):
 
     def construct_scalar(self, node: ScalarNode) -> Any:
         if node.value in self.line_numbers:
-            self.line_numbers[node.value].append(node.start_mark.line + 1)
+            # type_ignore_reason: incomplete typing
+            self.line_numbers[node.value].append(
+                node.start_mark.line + 1)  # type: ignore
         else:
-            self.line_numbers[node.value] = [node.start_mark.line + 1]
+            # type_ignore_reason: incomplete typing
+            self.line_numbers[node.value] = [
+                node.start_mark.line + 1]  # type: ignore
         return super(SafeLineLoader, self).construct_scalar(node)
 
     def get_single_data(self) -> Any:

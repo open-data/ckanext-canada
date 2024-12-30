@@ -55,7 +55,6 @@ class CanadaThemePlugin(p.SingletonPlugin):
             'adv_search_mlt_root',
             'ga4_id',
             'loop11_key',
-            'drupal_session_present',
             'contact_information',
             'show_openinfo_facets',
             'json_loads',

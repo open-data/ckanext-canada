@@ -97,7 +97,7 @@ def data_batch(org_id: str, lc: LocalCKAN,
 _REMOVE_CONTROL_CODES = dict((x, None) for x in range(32) if x != 10 and x != 13)
 
 
-def safe_for_solr(s: str) -> str:
+def safe_for_solr(s: Union[str, None]) -> str:
     """
     return a string that is safe for solr to ingest by removing all
     control characters except for CR and LF

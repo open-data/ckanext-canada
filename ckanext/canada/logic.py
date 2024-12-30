@@ -1,5 +1,6 @@
-from typing import Optional, Any, cast, Dict
-from ckan.types import Context, DataDict, Action, ChainedAction
+from typing import Optional, Any, cast, Dict, List, Union
+from ckan.types import Context, DataDict, Action, ChainedAction, Schema, ErrorDict
+from sqlalchemy.orm import Query
 
 from ckan.logic.validators import isodate, Invalid
 from ckan import model
@@ -38,7 +39,7 @@ from flask import has_request_context
 from sqlalchemy import func
 from sqlalchemy import or_
 
-from six.moves.urllib.parse import urlparse
+from urllib.parse import urlparse
 import mimetypes
 from ckanext.scheming.helpers import scheming_get_preset
 
@@ -84,20 +85,23 @@ log = getLogger(__name__)
 ottawa_tz = timezone('America/Montreal')
 
 
-def disabled_action(context: Context, data_dict: DataDict) -> Any:
+def disabled_action(context: Context,
+                    data_dict: DataDict) -> Dict[str, Any]:
     """
     Raises a NotFound exception to disable a logic action method.
     """
     raise ObjectNotFound
 
 
-disabled_action.side_effect_free = True
-disabled_action.auth_audit_exempt = True
+# type_ignore_reason: incomplete typing
+disabled_action.side_effect_free = True  # type: ignore
+disabled_action.auth_audit_exempt = True  # type: ignore
 
 
 @chained_action
-def disabled_anon_action(up_func: ChainedAction, context: Context,
-                         data_dict: DataDict) -> Any:
+def disabled_anon_action(up_func: Action,
+                         context: Context,
+                         data_dict: DataDict) -> Union[ChainedAction, List[Any]]:
     if (
       not context.get('ignore_auth', False) and
       context.get('user', 'visitor') in ('', 'visitor')):
@@ -105,58 +109,62 @@ def disabled_anon_action(up_func: ChainedAction, context: Context,
     return up_func(context, data_dict)
 
 
-disabled_anon_action.side_effect_free = True
-disabled_anon_action.auth_audit_exempt = True
+# type_ignore_reason: incomplete typing
+disabled_anon_action.side_effect_free = True  # type: ignore
+disabled_anon_action.auth_audit_exempt = True  # type: ignore
 
 
 @chained_action
-def resource_view_create_bilingual(up_func: ChainedAction,
-                                   context: Context, data_dict: DataDict):
+def resource_view_create_bilingual(up_func: Action,
+                                   context: Context,
+                                   data_dict: DataDict) -> ChainedAction:
     # assuming all resource views we used are filtered
     # filter_fields and filter_values have ignore_missing validator
     # so using the filtered schema should be fine here.
     s = default_create_resource_view_schema_filtered()
+    # type_ignore_reason: incomplete typing for Schema overload
     return up_func(
-        dict(
+        cast(Context, dict(
             context,
-            schema=dict(
-                s,
-                title=[get_validator('default')('View'),
+            schema=cast(Schema, dict(
+                s,  # type: ignore
+                title=[get_validator('default')('View'),  # type: ignore
                        get_validator('unicode_safe')],
-                title_fr=[get_validator('default')('Vue'),
+                title_fr=[get_validator('default')('Vue'),  # type: ignore
                           get_validator('unicode_safe')],
-                description=[get_validator('default')(''),
+                description=[get_validator('default')(''),  # type: ignore
                              get_validator('unicode_safe')],
-                description_fr=[get_validator('default')(''),
+                description_fr=[get_validator('default')(''),  # type: ignore
                                 get_validator('unicode_safe')],
-            ),
-        ),
+            )),
+        )),
         data_dict
     )
 
 
 @chained_action
-def resource_view_update_bilingual(up_func: ChainedAction,
-                                   context: Context, data_dict: DataDict):
+def resource_view_update_bilingual(up_func: Action,
+                                   context: Context,
+                                   data_dict: DataDict) -> ChainedAction:
     # assuming all resource views we used are filtered
     # filter_fields and filter_values have ignore_missing validator
     # so using the filtered schema should be fine here.
     s = default_create_resource_view_schema_filtered()
     s.update(default_update_resource_view_schema_changes())
     return up_func(
-        dict(
+        cast(Context, dict(
             context,
-            schema=dict(
+            schema=cast(Schema, dict(
                 s,
                 title_fr=list(s['title']),
                 description_fr=list(s['description']),
-            ),
-        ),
+            )),
+        )),
         data_dict
     )
 
 
-def limit_api_logic():
+def limit_api_logic() -> Dict[str, Any]:
     """
     Return a dict of logic function names -> wrappers that override
     existing api calls to set new default limits and hard limits
@@ -165,7 +173,9 @@ def limit_api_logic():
 
 
 @side_effect_free
-def changed_packages_activity_timestamp_since(context: Context, data_dict: DataDict):
+def changed_packages_activity_timestamp_since(context: Context,
+                                              data_dict: DataDict) -> \
+                                                List[Dict[str, Any]]:
     '''Return the package_id and timestamp of all recently added or changed packages.
 
     :param since_time: starting date/time
@@ -179,9 +189,9 @@ def changed_packages_activity_timestamp_since(context: Context, data_dict: DataD
 
     since = get_or_bust(data_dict, 'since_time')
     try:
-        since_time = isodate(since, None)
+        since_time = isodate(since, cast(Context, {}))
     except Invalid as e:
-        raise ValidationError({'since_time': e.error})
+        raise ValidationError(cast(ErrorDict, {'since_time': e.error}))
 
     # hard limit this api to reduce opportunity for abuse
     limit = int(config.get('ckan.activity_timestamp_since_limit', 10000))
@@ -212,9 +222,9 @@ def activity_list_from_user_since(context: Context, data_dict: DataDict):
     since = get_or_bust(data_dict, 'since_time')
     user_id = get_or_bust(data_dict, 'user_id')
     try:
-        since_time = isodate(since, None)
+        since_time = isodate(since, cast(Context, {}))
     except Invalid as e:
-        raise ValidationError({'since_time': e.error})
+        raise ValidationError(cast(ErrorDict, {'since_time': e.error}))
 
     # hard limit this api to reduce opportunity for abuse
     limit = int(config.get('ckan.activity_list_hard_limit', 63))
@@ -224,7 +234,8 @@ def activity_list_from_user_since(context: Context, data_dict: DataDict):
     return activity.activity_list_dictize(activity_objects, context)
 
 
-def _changed_packages_activity_timestamp_since(since, limit):
+def _changed_packages_activity_timestamp_since(since: str,
+                                               limit: int) -> Query[Any]:
     '''Return package_ids and last activity date of changed package
     activities since a given date.
 
@@ -233,7 +244,8 @@ def _changed_packages_activity_timestamp_since(since, limit):
     'deleted resource view' activities for the whole site.
 
     '''
-    q = model.Session.query(Activity.object_id.label('object_id'),
+    # type_ignore_reason: incomplete typing
+    q = model.Session.query(Activity.object_id.label('object_id'),  # type: ignore
                             func.max(Activity.timestamp).label(
                                 'timestamp'))
     q = q.filter(
@@ -246,13 +258,16 @@ def _changed_packages_activity_timestamp_since(since, limit):
                 Activity.activity_type.endswith('created datastore')
             )
         )
-    q = q.filter(Activity.timestamp > since)
+    # type_ignore_reason: incomplete typing
+    q = q.filter(Activity.timestamp > since)  # type: ignore
     q = q.group_by(Activity.object_id)
     q = q.order_by('timestamp')
     return q.limit(limit)
 
 
-def _activities_from_user_list_since(since, limit, user_id):
+def _activities_from_user_list_since(since: str,
+                                     limit: int,
+                                     user_id: str) -> List[Activity]:
     '''Return the site-wide stream of changed package activities since a given
     date for a particular user.
 
@@ -262,7 +277,8 @@ def _activities_from_user_list_since(since, limit, user_id):
     '''
     q = activity._activities_from_user_query(user_id)
     q = q.order_by(Activity.timestamp)
-    q = q.filter(Activity.timestamp > since)
+    # type_ignore_reason: incomplete typing
+    q = q.filter(Activity.timestamp > since)  # type: ignore
     return q.limit(limit)
 
 
@@ -310,7 +326,7 @@ def canada_guess_mimetype(context: Context, data_dict: DataDict) -> str:
     as ["jpg", "jpeg"] and returns value JPG.
     """
     url = data_dict.pop('url', None)
-    mimetype, encoding = mimetypes.guess_type(url)
+    mimetype, _encoding = mimetypes.guess_type(url)
 
     if not mimetype or mimetype in MIMETYPES_AS_DOMAINS:
         # if we cannot guess the mimetype, check if it is an actual web address
@@ -325,23 +341,27 @@ def canada_guess_mimetype(context: Context, data_dict: DataDict) -> str:
         # run mimetype through core helper to clean format, then
         # check replacements in the scheming choices.
         mimetype = h.unified_resource_format(mimetype)
-        fmt_choices = scheming_get_preset('canada_resource_format')['choices']
-        for f in fmt_choices:
-            if 'mimetype' in f and mimetype == f['mimetype']:
-                # core unified_resource_format may not have all of our
-                # scheming mimetype choices.
-                mimetype = f['value']
-            if 'replaces' in f:
-                for r in f['replaces']:
-                    if mimetype.lower() == r.lower():
-                        mimetype = f['value']
+        preset_field = scheming_get_preset('canada_resource_format')
+        fmt_choices = []
+        if preset_field and 'choices' in preset_field:
+            fmt_choices = preset_field['choices']
+        if fmt_choices:
+            for f in fmt_choices:
+                if 'mimetype' in f and mimetype == f['mimetype']:
+                    # core unified_resource_format may not have all of our
+                    # scheming mimetype choices.
+                    mimetype = f['value']
+                if 'replaces' in f:
+                    for r in f['replaces']:
+                        if mimetype.lower() == r.lower():
+                            mimetype = f['value']
 
     if not mimetype:
         # raise the ValidationError here so that the
         # front-end and back-end will have it.
-        raise ValidationError({
+        raise ValidationError(cast(ErrorDict, {
             'format': _('Could not determine a resource '
-                        'format. Please supply a format.')})
+                        'format. Please supply a format.')}))
 
     return mimetype
 
@@ -415,7 +435,7 @@ def canada_resource_view_show(up_func: Action,
 @chained_action
 def canada_resource_view_list(up_func: Action,
                               context: Context,
-                              data_dict: DataDict) -> ChainedAction:
+                              data_dict: DataDict) -> List[Dict[str, Any]]:
     """
     Return the list of resource views for a particular resource.
 
@@ -439,7 +459,10 @@ def canada_resource_view_list(up_func: Action,
         return view_list
     # at this point, the core function has been called, calling resource_show etc.
     # so we can assume that the Resource exists here, and that `id` is in data_dict
-    resource = model.Resource.get(data_dict.get('id'))
+    if not data_dict.get('id') or not isinstance(data_dict.get('id'), str):
+        return view_list
+    # type_ignore_reason: checking str existance
+    resource = model.Resource.get(data_dict.get('id'))  # type: ignore
     url_type = getattr(resource, 'url_type', None)
     if url_type in h.datastore_rw_resource_url_types():
         # we don't want to disable views for TableDesigner or Recombinant
@@ -626,7 +649,8 @@ def canada_datastore_run_triggers(up_func: Action,
     """
     if 'connection' not in context:
         backend = DatastoreBackend.get_active_backend()
-        context['connection'] = backend._get_write_engine().connect()
+        # type_ignore_reason: incomplete typing
+        context['connection'] = backend._get_write_engine().connect()  # type: ignore
     with datastore_create_temp_user_table(context, drop_on_commit=False):
         return up_func(context, data_dict)
 

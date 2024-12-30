@@ -12,7 +12,8 @@ import gzip
 import requests
 from collections import defaultdict
 
-from typing import Optional, Union, Tuple
+from typing import Optional, Union, Tuple, cast, Generator, Dict, Any, List
+from ckan.types import Context, ErrorDict
 
 from contextlib import contextmanager
 from urllib.error import URLError
@@ -90,7 +91,7 @@ class PortalUpdater(object):
     """
     def __init__(self,
                  portal_ini: str,
-                 ckan_user: str,
+                 ckan_user: Union[str, None],
                  last_activity_date: Union[str, None],
                  processes: int,
                  mirror: bool,
@@ -354,10 +355,10 @@ def _copy_datasets(source_datastore_uri: Optional[Union[str, None]],
         packages = iter(sys.stdin.readline, '')
         for package in packages:
 
-            failure_reason = ''
-            failure_trace = ''
+            failure_reason: str = ''
+            failure_trace: str = ''
             # will output to stderr, while action gets outputted to stdout
-            error = ''
+            error: str = ''
             do_update_sync_success_time = False
 
             @contextmanager
@@ -540,7 +541,8 @@ def _copy_datasets(source_datastore_uri: Optional[Union[str, None]],
             sys.stdout.flush()
 
 
-def _changed_datasets(since_date, server, brief):
+def _changed_datasets(since_date: str, server: Optional[bool],
+                      brief: Optional[bool]):
     """
     Produce a list of dataset ids and requested dates. Each package
     id will appear at most once, showing the activity date closest
@@ -565,7 +567,7 @@ def _changed_datasets(since_date, server, brief):
             print("# {0}".format(since_date.isoformat()))
 
 
-def _resource_size_update(size_report):
+def _resource_size_update(size_report: str):
     registry = LocalCKAN()
     size_report = open(size_report, "r")
     reader = csv.DictReader(size_report)
@@ -586,7 +588,7 @@ def _resource_size_update(size_report):
     size_report.close()
 
 
-def _resource_https_update(https_report, https_alt_report):
+def _resource_https_update(https_report: str, https_alt_report: str):
     """
     This function updates all broken http links into https links.
     https_report: the report with all of the links (a .json file)
@@ -605,7 +607,9 @@ def _resource_https_update(https_report, https_alt_report):
     data = json.load(https_file)
     log = open("error.log", "w")
 
-    def check_https(check_url, check_org, check_data):
+    def check_https(check_url: str,
+                    check_org: str,
+                    check_data: Any):
         for organization in check_data:
             if organization['org'] == check_org:
                 for url in organization['urls']:
@@ -643,7 +647,7 @@ def _resource_https_update(https_report, https_alt_report):
     log.close()
 
 
-def _load_suggested(use_created_date, filename):
+def _load_suggested(use_created_date: bool, filename: str):
     """
     A process that loads suggested datasets from Drupal into CKAN
     """
@@ -668,7 +672,7 @@ def _load_suggested(use_created_date, filename):
 
     # load data from csv
     csv_file = io.open(filename, "r", encoding='utf-8-sig')
-    csv_reader = csv.DictReader((line.encode('utf-8') for line in csv_file))
+    csv_reader = csv.DictReader((line for line in csv_file))
     today = datetime.now().strftime('%Y-%m-%d')
 
     for row in csv_reader:
@@ -712,9 +716,11 @@ def _load_suggested(use_created_date, filename):
                 "date": row['dataset_released_date'] if
                 row['dataset_released_date'] else today,
                 "comments": {
-                    'en': str(row['dataset_suggestion_status_link'], 'utf-8') or
+                    'en': str(row['dataset_suggestion_status_link'], 'utf-8') if
+                    row['dataset_suggestion_status_link'] else
                     'Status imported from previous ‘suggest a dataset’ system',
-                    'fr': str(row['dataset_suggestion_status_link'], 'utf-8') or
+                    'fr': str(row['dataset_suggestion_status_link'], 'utf-8') if
+                    row['dataset_suggestion_status_link'] else
                     'État importé du système précédent « Proposez un jeu de données »',
                 }
             }]
@@ -836,7 +842,7 @@ def _bulk_validate():
     log.close()
 
 
-def _trim_package(pkg: Optional[Union[dict, None]] = None):
+def _trim_package(pkg: Optional[Union[Dict[str, Any], None]] = None):
     """
     PortalUpdater member: removes keys from provided package dict.
 
@@ -873,8 +879,8 @@ def _trim_package(pkg: Optional[Union[dict, None]] = None):
             pkg[k] = ''
 
 
-def _add_datastore_and_views(package: dict, portal: LocalCKAN,
-                             resource_file_hashes: dict,
+def _add_datastore_and_views(package: Dict[str, Any], portal: LocalCKAN,
+                             resource_file_hashes: Dict[str, Any],
                              source_datastore_uri: str,
                              verbose: Optional[bool] = False) \
                              -> Tuple[str, str, str, str]:
@@ -882,10 +888,10 @@ def _add_datastore_and_views(package: dict, portal: LocalCKAN,
     PortalUpdater member: Syncs DataDictionaries, Resource Views, and DataStore tables.
     """
     # create datastore table and views for each resource of the package
-    action = ''
-    error = ''
-    failure_reason = ''
-    failure_trace = ''
+    action: str = ''
+    error: str = ''
+    failure_reason: str = ''
+    failure_trace: str = ''
     for resource in package['resources']:
         res_id = resource['id']
         if res_id in package.keys():
@@ -920,18 +926,18 @@ def _add_datastore_and_views(package: dict, portal: LocalCKAN,
     return action, error, failure_reason, failure_trace
 
 
-def _add_to_datastore(portal: LocalCKAN, resource: dict,
-                      resource_details: dict,
-                      resource_file_hashes: dict,
+def _add_to_datastore(portal: LocalCKAN, resource: Dict[str, Any],
+                      resource_details: Dict[str, Any],
+                      resource_file_hashes: Dict[str, Any],
                       source_datastore_uri: str,
                       verbose: Optional[bool] = False) -> Tuple[str, str, str, str]:
     """
     PortalUpdater member: Syncs DataDictionaries and DataStore tables.
     """
-    action = ''
-    error = ''
-    failure_reason = ''
-    failure_trace = ''
+    action: str = ''
+    error: str = ''
+    failure_reason: str = ''
+    failure_trace: str = ''
 
     @contextmanager
     def _capture_exception_details(_reason: str, _resource_id: str):
@@ -945,8 +951,11 @@ def _add_to_datastore(portal: LocalCKAN, resource: dict,
             if failure_reason:
                 # comma separate multiple failure reasons
                 failure_reason += ',%s' % _reason
-            else:
+            elif _reason:
                 failure_reason = _reason
+            else:
+                failure_reason = 'unknown'
+                _reason = 'unknown'
             if _resource_id:
                 failure_reason += "[resource_id=%s]" % _resource_id
             if failure_trace:
@@ -1011,7 +1020,7 @@ def _add_to_datastore(portal: LocalCKAN, resource: dict,
         cmd2 = subprocess.Popen(
             ['psql', target_datastore_uri], stdin=cmd1.stdout,
             stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-        out, err = cmd2.communicate()
+        _out, err = cmd2.communicate()
         if not err:
             action += ' data-loaded'
             if verbose:
@@ -1024,7 +1033,8 @@ def _add_to_datastore(portal: LocalCKAN, resource: dict,
         else:
             with _capture_exception_details('datastore_load', resource['id']):
                 raise datastore.DataError('Failed to dump and load datastore '
-                                          'data from the Registry to the Portal')
+                                          'data from the Registry to the Portal',
+                                          {}, {})
             # special addition of subprocess error output,
             # we know that an error has occurred
             if failure_reason:
@@ -1037,16 +1047,16 @@ def _add_to_datastore(portal: LocalCKAN, resource: dict,
     return action, error, failure_reason, failure_trace
 
 
-def _add_views(portal: LocalCKAN, resource: dict,
-               resource_details: dict,
+def _add_views(portal: LocalCKAN, resource: Dict[str, Any],
+               resource_details: Dict[str, Any],
                verbose: Optional[bool] = False) -> Tuple[str, str, str, str]:
     """
     PortalUpdater member: Syncs Resource Views.
     """
-    action = ''
-    error = ''
-    failure_reason = ''
-    failure_trace = ''
+    action: str = ''
+    error: str = ''
+    failure_reason: str = ''
+    failure_trace: str = ''
 
     @contextmanager
     def _capture_exception_details(_reason: Union[str, None],
@@ -1061,8 +1071,11 @@ def _add_views(portal: LocalCKAN, resource: dict,
             if failure_reason:
                 # comma separate multiple failure reasons
                 failure_reason += ',%s' % _reason
-            else:
+            elif _reason:
                 failure_reason = _reason
+            else:
+                failure_reason = 'unknown'
+                _reason = 'unknown'
             if _resource_id:
                 failure_reason += "[resource_id=%s]" % _resource_id
             if _view_id:
@@ -1119,7 +1132,9 @@ def _add_views(portal: LocalCKAN, resource: dict,
     return action, error, failure_reason, failure_trace
 
 
-def get_datastore_and_views(package, ckan_instance, verbose: Optional[bool] = False):
+def get_datastore_and_views(package: Dict[str, Any],
+                            ckan_instance: LocalCKAN,
+                            verbose: Optional[bool] = False) -> Dict[str, Any]:
     if package and 'resources' in package:
         for resource in package['resources']:
             # check if resource exists in datastore
@@ -1149,11 +1164,11 @@ def get_datastore_and_views(package, ckan_instance, verbose: Optional[bool] = Fa
                               file=sys.stderr)
                     pass
                 except ValidationError as e:
-                    raise ValidationError({
+                    raise ValidationError(cast(ErrorDict, {
                         'original_error': repr(e),
                         'original_error_dict': e.error_dict,
                         'resource_id': resource['id'],
-                    })
+                    }))
             else:
                 if verbose:
                     print("DataStore is inactive for %s" % resource['id'],
@@ -1168,7 +1183,7 @@ def get_datastore_and_views(package, ckan_instance, verbose: Optional[bool] = Fa
     return package
 
 
-def _update_inventory_votes(json_name):
+def _update_inventory_votes(json_name: str):
     with open(json_name) as j:
         votes = json.load(j)
 
@@ -1200,7 +1215,8 @@ def _update_inventory_votes(json_name):
                 records=update)
 
 
-def _datastore_dictionary(ckan_instance, resource_id):
+def _datastore_dictionary(ckan_instance: LocalCKAN,
+                          resource_id: str) -> List[Dict[str, Any]]:
     """
     Return the data dictionary info for a resource
     """
@@ -1232,7 +1248,8 @@ def _quiet_int_pipe():
 def _get_user(user: Optional[Union[str, None]] = None) -> str:
     if user is not None:
         return user
-    return get_action('get_site_user')({'ignore_auth': True}).get('name')
+    return get_action('get_site_user')(cast(Context, {'ignore_auth': True}),
+                                       {}).get('name')
 
 
 def get_commands():
@@ -1292,14 +1309,14 @@ def canada():
     help="Increase verbosity",
 )
 def portal_update(portal_ini: str,
-                  ckan_user: str,
-                  last_activity_date: Optional[Union[str, None]] = None,
-                  processes: Optional[int] = 1,
-                  mirror: Optional[bool] = False,
-                  log: Optional[Union[str, None]] = None,
-                  tries: Optional[int] = 1,
-                  delay: Optional[int] = 60,
-                  verbose: Optional[bool] = False):
+                  ckan_user: Union[str, None],
+                  last_activity_date: Union[str, None] = None,
+                  processes: int = 1,
+                  mirror: bool = False,
+                  log: Union[str, None] = None,
+                  tries: int = 1,
+                  delay: int = 60,
+                  verbose: bool = False):
     """
     PortalUpdater member: CKAN cli command entrance to run the PortalUpdater stack.
 
@@ -1413,7 +1430,7 @@ def changed_datasets(since_date: str,
          "data owner and other statuses instead of today's date",
 )
 def load_suggested(suggested_datasets_csv: str,
-                   use_created_date: Optional[bool] = False):
+                   use_created_date: bool = False):
     """
     A process that loads suggested datasets from Drupal into CKAN
 
@@ -1519,15 +1536,15 @@ def bulk_validate():
 @click.option("-q", "--quiet", is_flag=True,
               help="Suppress human interaction.", default=False)
 def delete_activities(days: Optional[int] = 90,
-                      include_types: Optional[Union[str, list, None]] = None,
-                      exclude_types: Optional[Union[str, list, None]] = None,
+                      include_types: Optional[Union[str, List[str], None]] = None,
+                      exclude_types: Optional[Union[str, List[str], None]] = None,
                       quiet: Optional[bool] = False):
     """
     Delete rows from the activity table past a certain number of days.
     """
-    if len(include_types) == 1:
+    if include_types and len(include_types) == 1:
         include_types = f"('{include_types[0]}')"
-    if len(exclude_types) == 1:
+    if exclude_types and len(exclude_types) == 1:
         exclude_types = f"('{exclude_types[0]}')"
     if include_types:
         click.echo(f'Including activity_type {include_types}')
@@ -1567,12 +1584,12 @@ def delete_activities(days: Optional[int] = 90,
         num=activity_count))
 
 
-def _get_site_user_context():
+def _get_site_user_context() -> Context:
     user = get_action('get_site_user')({'ignore_auth': True}, {})
-    return {"user": user['name'], "ignore_auth": True}
+    return cast(Context, {"user": user['name'], "ignore_auth": True})
 
 
-def _get_datastore_tables(verbose: Optional[bool] = False):
+def _get_datastore_tables(verbose: Optional[bool] = False) -> List[str]:
     """
     Returns a list of resource ids (table names) from
     the DataStore database.
@@ -1591,7 +1608,7 @@ def _get_datastore_tables(verbose: Optional[bool] = False):
 
 def _get_datastore_resources(valid: Optional[bool] = True,
                              is_datastore_active: Optional[bool] = True,
-                             verbose: Optional[bool] = False) -> list:
+                             verbose: Optional[bool] = False) -> List[str]:
     """
     Returns a list of resource ids that are DataStore
     enabled and that are of upload url_type.
@@ -1660,7 +1677,7 @@ def _get_datastore_resources(valid: Optional[bool] = True,
     return datastore_resources
 
 
-def _get_datastore_count(context,
+def _get_datastore_count(context: Context,
                          resource_id: str,
                          verbose: Optional[bool] = False,
                          status: Optional[int] = 1,
@@ -1676,11 +1693,11 @@ def _get_datastore_count(context,
     return info.get('total')
 
 
-def _error_message(message):
+def _error_message(message: Any):
     click.echo("\n\033[1;33m%s\033[0;0m\n\n" % message)
 
 
-def _success_message(message):
+def _success_message(message: Any):
     click.echo("\n\033[0;36m\033[1m%s\033[0;0m\n\n" % message)
 
 
@@ -1730,7 +1747,8 @@ def set_datastore_false_for_invalid_resources(
             if resource_id in datastore_tables:
                 try:
                     count = _get_datastore_count(
-                        context, resource_id, verbose=verbose, status=status, max=max)
+                        context, resource_id,
+                        verbose=verbose, status=status, max=max)
                     if int(count) == 0:
                         if verbose:
                             click.echo("%s/%s -- Resource %s has %s "
@@ -1784,7 +1802,8 @@ def set_datastore_false_for_invalid_resources(
             click.echo(id)
         else:
             try:
-                set_datastore_active_flag(model, {"resource_id": id}, False)
+                set_datastore_active_flag(cast(Context, {'model': model}),
+                                          {"resource_id": id}, False)
                 if verbose:
                     click.echo("%s/%s -- Set datastore_active "
                                "flag to False for Invalid Resource %s" % (
@@ -2342,7 +2361,7 @@ def resolve_duplicate_emails(quiet: Optional[bool] = False,
     duplicates_found = False
     users_to_delete = []
     try:
-        for k, grp in groupby(q, lambda x: x[0]):
+        for _k, grp in groupby(q, lambda x: x[0]):
             users = [(user[1], user[2]) for user in grp]
             _users = sorted(users, key=lambda x: x[1])
             if len(users) > 1:
@@ -2350,7 +2369,7 @@ def resolve_duplicate_emails(quiet: Optional[bool] = False,
                 _users = sorted(users, key=lambda x: x[1])
                 if verbose:
                     click.echo('\n- Going to keep user %s' % _users[0][0])
-                for user, created in _users[1:]:
+                for user, _created in _users[1:]:
                     if user not in users_to_delete:
                         if verbose:
                             click.echo('- Going to deactivate user %s' % user)
@@ -2393,7 +2412,7 @@ def resolve_duplicate_emails(quiet: Optional[bool] = False,
 def openness_report(
         verbose: Optional[bool] = False,
         details: Optional[bool] = False,
-        dump: Optional[bool] = False,
+        dump: Optional[Union['click.File', bool]] = False,
         package_id: Optional[str] = 'c4c5c7f1-bfa6-4ff6-b4a0-c164cb2060f7'):
 
     lc = LocalCKAN()
@@ -2420,7 +2439,7 @@ def openness_report(
     r = requests.get(uri, stream=True)
     zf = BytesIO(r.content)
 
-    def iter_records():
+    def iter_records() -> Generator[List[Dict[str, Any]], None, None]:
         _records = []
         try:
             with gzip.GzipFile(fileobj=zf, mode='rb') as fd:
@@ -2462,8 +2481,9 @@ def openness_report(
             outf = dump
         else:
             outf = sys.stdout
-        outf.write(BOM)
-        out = csv.writer(outf)
+        # type_ignore_reason: incomplete click typing
+        outf.write(BOM)  # type: ignore
+        out = csv.writer(outf)  # type: ignore
         # Header
         out.writerow(["Department Name Englist | Nom du ministère en français",
                       "Title English | Titre en français",
@@ -2475,7 +2495,8 @@ def openness_report(
                 line = [k, r[0], r[1], r[2]]
                 out.writerow(line)
         if dump:
-            outf.close()
+            # type_ignore_reason: incomplete click typing
+            outf.close()  # type: ignore
         if verbose:
             click.echo("Done!")
         return
@@ -2493,8 +2514,9 @@ def openness_report(
         outf = dump
     else:
         outf = sys.stdout
-    outf.write(BOM)
-    out = csv.writer(outf)
+    # type_ignore_reason: incomplete click typing
+    outf.write(BOM)  # type: ignore
+    out = csv.writer(outf)  # type: ignore
     # Header
     out.writerow([
         "Department Name English / Nom du ministère en anglais",
@@ -2505,7 +2527,8 @@ def openness_report(
         line = [names[0], names[1], dict(v)]
         out.writerow(line)
     if dump:
-        outf.close()
+        # type_ignore_reason: incomplete click typing
+        outf.close()  # type: ignore
     if verbose:
         click.echo("Done!")
 
