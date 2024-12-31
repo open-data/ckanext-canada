@@ -4,7 +4,7 @@ from flask import has_request_context, Blueprint
 from urllib.parse import urlsplit
 import logging
 
-from typing import Union, List, Dict, cast
+from typing import Optional, List, Dict, cast
 from flask.typing import BeforeRequestCallable
 from ckan.types import Context, Response, Any
 
@@ -75,7 +75,7 @@ class CanadaDatasetsPlugin(SchemingDatasetsPlugin):
         return blueprints
 
     def _redirect_pd_dataset_endpoints(self,
-                                       blueprint: Blueprint) -> Union[Response, None]:
+                                       blueprint: Blueprint) -> Optional[Response]:
         """
         Runs before request for /dataset and /dataset/<pkg id>/resource
 

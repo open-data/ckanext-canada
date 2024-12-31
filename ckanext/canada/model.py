@@ -1,5 +1,5 @@
 # encoding: utf-8
-from typing import Optional, Union
+from typing import Optional
 
 import datetime
 import logging
@@ -50,9 +50,9 @@ class PackageSync(Base):  # type: ignore
 
     @classmethod
     def upsert(cls, package_id: str,
-               last_successful_sync: Optional[Union[datetime.datetime, None]] = None,
-               error_on: Optional[Union[str, None]] = None,
-               error: Optional[Union[str, None]] = None):
+               last_successful_sync: Optional[datetime.datetime] = None,
+               error_on: Optional[str] = None,
+               error: Optional[str] = None):
         """
         Sets and returns a package_sync object referenced by its package_id.
         """

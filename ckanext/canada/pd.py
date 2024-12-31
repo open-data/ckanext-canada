@@ -88,8 +88,8 @@ def clear(pd_type: str):
     help="If the PD Type is a NIL type.",
 )
 def rebuild(pd_type: str,
-            files: Optional[Union[List[str], None]] = None,
-            solr_url: Optional[Union[str, None]] = None,
+            files: Optional[List[str]] = None,
+            solr_url: Optional[str] = None,
             lenient: Optional[bool] = False,
             has_nil: Optional[bool] = False):
     """
@@ -116,14 +116,14 @@ def rebuild(pd_type: str,
              strict)
 
 
-def clear_index(pd_type: str, solr_url: Optional[Union[str, None]] = None,
+def clear_index(pd_type: str, solr_url: Optional[str] = None,
                 commit: Optional[bool] = True):
     conn = solr_connection(pd_type, solr_url)
     conn.delete(q="*:*", commit=commit)
 
 
-def _rebuild(pd_type: str, csv_files: Optional[Union[List[str], None]] = None,
-             solr_url: Optional[Union[str, None]] = None,
+def _rebuild(pd_type: str, csv_files: Optional[List[str]] = None,
+             solr_url: Optional[str] = None,
              strict: bool = True):
     """
     Implement rebuild command
@@ -438,7 +438,7 @@ def date2zulu(yyyy_mm_dd: str) -> str:
             "%Y-%m-%d %H:%M:%S"))))
 
 
-def list_or_none(v: Any) -> Union[List[str], None]:
+def list_or_none(v: Any) -> Optional[List[str]]:
     """
     None -> None
     "str" -> ["str"]

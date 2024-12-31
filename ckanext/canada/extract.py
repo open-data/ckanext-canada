@@ -30,7 +30,8 @@ class SafeLineLoader(SafeLoader):
 def extract_pd(fileobj: BinaryIO,
                keywords: List[str],
                comment_tags: List[str],
-               options: Dict[str, Any]) -> Generator[Tuple[int, str, str, List[str]]]:
+               options: Dict[str, Any]) -> Generator[
+                   Tuple[int, str, str, List[str]], None, None]:
     """Extract messages from XXX files.
 
     :param fileobj: the file-like object the messages should be extracted

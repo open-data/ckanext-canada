@@ -73,8 +73,8 @@ def get_translated_t(data_dict: Dict[str, Any],
 
 # FIXME: this is only for fluent tags...try to fix??
 def language_text_t(text: Union[Dict[str, Any], str],
-                    prefer_lang: Optional[Union[str, None]] = None) -> \
-                        Tuple[Union[str, None], bool]:
+                    prefer_lang: Optional[str] = None) -> \
+                        Tuple[Optional[str], bool]:
     '''
     customized version of scheming_language_text helper that also looks
     for machine translated values (e.g. en-t-fr and fr-t-en)
@@ -119,7 +119,7 @@ def language_text_t(text: Union[Dict[str, Any], str],
     return t, False
 
 
-def may_publish_datasets(userobj: Optional[Union['model.User', None]] = None) -> bool:
+def may_publish_datasets(userobj: Optional['model.User'] = None) -> bool:
     if not userobj:
         userobj = g.userobj
 
@@ -181,7 +181,7 @@ def today() -> str:
 
 
 # Return the Date format that the WET datepicker requires to function properly
-def date_format(date_string: Union[str, None]) -> Union[str, None]:
+def date_format(date_string: Optional[str]) -> Optional[str]:
     if not date_string:
         return None
     try:
@@ -316,8 +316,8 @@ def adobe_analytics_js() -> str:
     return str(config.get('ckanext.canada.adobe_analytics.js', ''))
 
 
-def adobe_analytics_creator(organization: Optional[Union[Dict[str, Any], None]] = None,
-                            package: Optional[Union[Dict[str, Any], None]] = None) -> \
+def adobe_analytics_creator(organization: Optional[Dict[str, Any]] = None,
+                            package: Optional[Dict[str, Any]] = None) -> \
                                 Markup:
     """
     Generates HTML Meta Tag for Adobe Analytics, along with extra GoC
@@ -827,7 +827,7 @@ def get_loader_status_badge(resource: Dict[str, Any]) -> Union[Markup, str]:
             title=html.escape(title, quote=True)))
 
 
-def get_resource_view(resource_view_id: str) -> Union[Dict[str, Any], None]:
+def get_resource_view(resource_view_id: str) -> Optional[Dict[str, Any]]:
     """
     Returns a resource view dict for the resource_view_id
     """
@@ -838,14 +838,14 @@ def get_resource_view(resource_view_id: str) -> Union[Dict[str, Any], None]:
         return None
 
 
-def resource_view_type(resource_view: Dict[str, Any]) -> Union[str, None]:
+def resource_view_type(resource_view: Dict[str, Any]) -> Optional[str]:
     view_plugin = datapreview.get_view_plugin(resource_view['view_type'])
     if not view_plugin:
         return
     return view_plugin.info().get('title')
 
 
-def fgp_viewer_url(package: Dict[str, Any]) -> Union[str, None]:
+def fgp_viewer_url(package: Dict[str, Any]) -> Optional[str]:
     """
     Returns a link to fgp viewer for the package
     """
@@ -866,8 +866,8 @@ def date_field(field: str, pkg: Dict[str, Any]) -> Any:
     return field_value
 
 
-def split_piped_bilingual_field(field_text: Union[str, None],
-                                client_lang: str) -> Union[str, None]:
+def split_piped_bilingual_field(field_text: Optional[str],
+                                client_lang: str) -> Optional[str]:
     if field_text is not None and ' | ' in field_text:
         return field_text.split(' | ')[1 if client_lang == 'fr' else 0]
     return field_text
@@ -1019,7 +1019,7 @@ def validation_status(resource_id: str) -> str:
         return 'unknown'
 
 
-def is_user_locked(user_name: str) -> Union[bool, None]:
+def is_user_locked(user_name: str) -> Optional[bool]:
     """
     Returns whether the user is locked out of their account or not.
     """
@@ -1053,7 +1053,7 @@ def available_purge_types() -> List[str]:
     return types
 
 
-def operations_guide_link(stub: Optional[Union[str, None]] = None) -> str:
+def operations_guide_link(stub: Optional[str] = None) -> str:
     """
     Return a string for a link to the Registry Operations Guide.
     """
@@ -1069,7 +1069,7 @@ def operations_guide_link(stub: Optional[Union[str, None]] = None) -> str:
     return f'{guide_link}/{stub}'
 
 
-def max_resources_per_dataset() -> Union[int, None]:
+def max_resources_per_dataset() -> Optional[int]:
     max_resource_count = config.get('ckanext.canada.max_resources_per_dataset', None)
     if max_resource_count:
         return int(max_resource_count)

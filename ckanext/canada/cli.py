@@ -91,11 +91,11 @@ class PortalUpdater(object):
     """
     def __init__(self,
                  portal_ini: str,
-                 ckan_user: Union[str, None],
-                 last_activity_date: Union[str, None],
+                 ckan_user: Optional[str],
+                 last_activity_date: Optional[str],
                  processes: int,
                  mirror: bool,
-                 log: Union[str, None],
+                 log: Optional[str],
                  tries: int,
                  delay: int,
                  verbose: bool):
@@ -128,7 +128,7 @@ class PortalUpdater(object):
                 return
             time.sleep(self.delay)
 
-    def _portal_update(self, activity_date: Union[str, None]):
+    def _portal_update(self, activity_date: Optional[str]):
         # determine activity date
         if activity_date:
             past = re.match(PAST_RE, activity_date)
@@ -136,14 +136,14 @@ class PortalUpdater(object):
                 days, hours, minutes = (
                     int(x) if x else 0 for x in past.groups()
                 )
-                activity_date = datetime.now() - timedelta(
+                activity_datetime = datetime.now() - timedelta(
                     days=days,
                     seconds=(hours * 60 + minutes) * 60
                 )
             else:
-                activity_date = isodate(activity_date, None)
+                activity_datetime = isodate(activity_date, cast(Context, {}))
         else:
-            activity_date = datetime.now() - timedelta(days=7)
+            activity_datetime = datetime.now() - timedelta(days=7)
 
         log = None
         if self.log is not None:
@@ -152,13 +152,17 @@ class PortalUpdater(object):
         registry = LocalCKAN()
         source_datastore_uri = str(datastore.get_write_engine().url)
 
-        def changed_package_id_runs(start_date: str,
-                                    verbose: Optional[bool] = False):
+        def changed_package_id_runs(start_date: datetime,
+                                    verbose: Optional[bool] = False) -> \
+            Generator[Union[
+                Tuple[List[bytes], datetime],
+                Tuple[None, None]],
+                None, None]:
             # retrieve a list of changed packages from the registry
             while True:
                 packages, next_date = _changed_packages_since(
                     registry, start_date, verbose=verbose)
-                if next_date is None:
+                if next_date is None or packages is None:
                     return
                 yield packages, next_date
                 start_date = next_date
@@ -191,11 +195,11 @@ class PortalUpdater(object):
         # Advance generator so we may call send() below
         next(pool)
 
-        def append_log(finished: Union[bool, None],
-                       package_id: Union[str, None],
+        def append_log(finished: Optional[bool],
+                       package_id: Optional[str],
                        action: str,
                        reason: str,
-                       error: Optional[Union[str, None]] = None):
+                       error: Optional[str] = None):
 
             if not log:
                 return
@@ -215,13 +219,15 @@ class PortalUpdater(object):
                 None,
                 None,
                 "started updating from:",
-                activity_date.isoformat()
+                activity_datetime.isoformat()
             )
 
             has_errored = False
 
             for packages, next_date in (
-                    changed_package_id_runs(activity_date, verbose=self.verbose)):
+                    changed_package_id_runs(activity_datetime, verbose=self.verbose)):
+                if not packages:
+                    continue
                 job_ids, finished, result = pool.send(enumerate(packages))
                 stats = completion_stats(self.processes)
                 while result is not None:
@@ -261,14 +267,15 @@ class PortalUpdater(object):
                         error_on=failure_reason or None,
                         error=failure_trace or None)
 
-                print(" --- next batch starting at: " + next_date.isoformat())
-                append_log(
-                    None,
-                    None,
-                    "next batch starting at:",
-                    next_date.isoformat()
-                )
-                self._portal_update_activity_date = next_date.isoformat()
+                if next_date:
+                    print(" --- next batch starting at: " + next_date.isoformat())
+                    append_log(
+                        None,
+                        None,
+                        "next batch starting at:",
+                        next_date.isoformat()
+                    )
+                    self._portal_update_activity_date = next_date.isoformat()
             self._portal_update_completed = True
 
             if has_errored:
@@ -280,9 +287,12 @@ class PortalUpdater(object):
                     "sync some package(s). See stderr or log file.")
 
 
-def _changed_packages_since(registry: LocalCKAN, since_time: str,
+def _changed_packages_since(registry: Union[LocalCKAN, RemoteCKAN],
+                            since_time: Optional[datetime],
                             ids_only: Optional[bool] = False,
-                            verbose: Optional[bool] = False):
+                            verbose: Optional[bool] = False) -> \
+                                Union[Tuple[List[bytes], datetime],
+                                      Tuple[None, None]]:
     """
     PortalUpdater member: Gathers packages based on activity.
 
@@ -298,6 +308,8 @@ def _changed_packages_since(registry: LocalCKAN, since_time: str,
     this is different than when no more changes found and (None, None)
     is returned.
     """
+    if not since_time:
+        return None, None
 
     data = registry.action.changed_packages_activity_timestamp_since(
         since_time=since_time.isoformat())
@@ -305,7 +317,7 @@ def _changed_packages_since(registry: LocalCKAN, since_time: str,
     if not data:
         return None, None
 
-    packages = []
+    packages: List[bytes] = []
     if verbose:
         if ids_only:
             print("Only retrieving changed package IDs...", file=sys.stderr)
@@ -329,13 +341,14 @@ def _changed_packages_since(registry: LocalCKAN, since_time: str,
                 packages.append(json.dumps(source_package).encode('utf-8'))
 
     if data:
-        since_time = isodate(data[-1]['timestamp'], None)
+        next_time: datetime = isodate(data[-1]['timestamp'], cast(Context, {}))
+        return packages, next_time
 
-    return packages, since_time
+    return None, None
 
 
-def _copy_datasets(source_datastore_uri: Optional[Union[str, None]],
-                   user: Optional[Union[str, None]] = None,
+def _copy_datasets(source_datastore_uri: Optional[str],
+                   user: Optional[str] = None,
                    mirror: Optional[bool] = False,
                    verbose: Optional[bool] = False):
     """
@@ -388,8 +401,8 @@ def _copy_datasets(source_datastore_uri: Optional[Union[str, None]],
                     do_update_sync_success_time = False
                     pass
 
-            source_pkg = json.loads(package)
-            package_id = source_pkg['id']
+            source_pkg: Optional[Dict[str, Any]] = json.loads(package)
+            package_id = source_pkg['id'] if source_pkg else 'unknown'
             reason = ''
             target_deleted = False
             if source_pkg and source_pkg['state'] == 'deleted':
@@ -401,7 +414,7 @@ def _copy_datasets(source_datastore_uri: Optional[Union[str, None]],
 
             _trim_package(source_pkg)
 
-            action = None
+            action = ''
             if source_pkg and not mirror:
                 if source_pkg.get('ready_to_publish') == 'false':
                     source_pkg = None
@@ -409,15 +422,17 @@ def _copy_datasets(source_datastore_uri: Optional[Union[str, None]],
                 elif not source_pkg.get('portal_release_date'):
                     source_pkg = None
                     reason = 'release date not set'
-                elif isodate(source_pkg['portal_release_date'], None) > now:
+                elif isodate(source_pkg['portal_release_date'],
+                             cast(Context, {})) > now:
                     source_pkg = None
                     reason = 'release date in future'
                 else:
                     # portal packages published public
                     source_pkg['private'] = False
 
-            target_pkg = None
-            if action != 'skip':
+            target_pkg: Optional[Dict[str, Any]] = None
+            # type_ignore_reason: future skip capabilities
+            if action != 'skip':  # type: ignore
                 try:
                     target_pkg = portal.call_action('package_show', {
                         'id': package_id
@@ -443,14 +458,15 @@ def _copy_datasets(source_datastore_uri: Optional[Union[str, None]],
 
             resource_file_hashes = {}
 
-            if action == 'skip':
+            # type_ignore_reason: future skip capabilities
+            if action == 'skip':  # type: ignore
                 pass
             elif target_pkg is None and source_pkg is None:
                 action = 'unchanged'
                 reason = reason or 'deleted on registry'
                 # do not update sync time if nothing changed
                 do_update_sync_success_time = False
-            elif target_deleted:
+            elif target_deleted and source_pkg is not None:
                 action = 'updated'
                 reason = 'undeleting on target'
                 with _capture_exception_details('package_update', package_id):
@@ -474,7 +490,7 @@ def _copy_datasets(source_datastore_uri: Optional[Union[str, None]],
                 else:
                     reason += ' ERRORED'
                     do_update_sync_success_time = False
-            elif target_pkg is None:
+            elif target_pkg is None and source_pkg is not None:
                 action = 'created'
                 with _capture_exception_details('package_create', package_id):
                     portal.action.package_create(**source_pkg)
@@ -507,7 +523,7 @@ def _copy_datasets(source_datastore_uri: Optional[Union[str, None]],
                 reason = 'no difference found'
                 # do not update sync time if nothing changed
                 do_update_sync_success_time = False
-            else:
+            elif target_pkg is not None:
                 action = 'updated'
                 for r in target_pkg['resources']:
                     # use Portal file hashes
@@ -530,6 +546,15 @@ def _copy_datasets(source_datastore_uri: Optional[Union[str, None]],
                 else:
                     reason += ' ERRORED'
                     do_update_sync_success_time = False
+            else:
+                action = 'unknown'
+                reason = 'could not determine a sync condition ERRORED'
+                error += 'Could not determine a sync condition for package %s' % \
+                    package_id
+                failure_reason += '%s[sync_condition]' % package_id
+                failure_trace = error
+                # do not update sync time if we could not match a condition
+                do_update_sync_success_time = False
 
             sys.stdout.write(json.dumps([package_id,
                                          action,
@@ -541,14 +566,14 @@ def _copy_datasets(source_datastore_uri: Optional[Union[str, None]],
             sys.stdout.flush()
 
 
-def _changed_datasets(since_date: str, server: Optional[bool],
+def _changed_datasets(since_date: str, server: Optional[str],
                       brief: Optional[bool]):
     """
     Produce a list of dataset ids and requested dates. Each package
     id will appear at most once, showing the activity date closest
     to since_date. Requested dates are preceeded with a "#"
     """
-    since_date = isodate(since_date, None)
+    since_datetime: Optional[datetime] = isodate(since_date, cast(Context, {}))
 
     if server:
         registry = RemoteCKAN(server)
@@ -556,21 +581,22 @@ def _changed_datasets(since_date: str, server: Optional[bool],
         registry = LocalCKAN()
 
     while True:
-        ids, since_date = _changed_packages_since(registry,
-                                                  since_date,
-                                                  ids_only=True)
+        ids, since_datetime = _changed_packages_since(registry,
+                                                      since_datetime,
+                                                      ids_only=True)
         if not ids:
             return
         for i in ids:
             print(i)
         if not brief:
-            print("# {0}".format(since_date.isoformat()))
+            print("# {0}".format(since_datetime.isoformat() if
+                                 since_datetime else 'N/A'))
 
 
 def _resource_size_update(size_report: str):
     registry = LocalCKAN()
-    size_report = open(size_report, "r")
-    reader = csv.DictReader(size_report)
+    size_report_file = open(size_report, "r")
+    reader = csv.DictReader(size_report_file)
     for row in reader:
         uuid = row["uuid"]
         resource_id = row["resource_id"]
@@ -585,7 +611,7 @@ def _resource_size_update(size_report: str):
             print("Updated: ", [uuid, resource_id, resource.get("size")])
         except NotFound:
             print("{0} dataset not found".format(uuid))
-    size_report.close()
+    size_report_file.close()
 
 
 def _resource_https_update(https_report: str, https_alt_report: str):
@@ -687,25 +713,45 @@ def _load_suggested(use_created_date: bool, filename: str):
             "state": "active",
             "id": uuid,
             "title_translated": {
-                'en': str(row['title_en'], 'utf-8'),
-                'fr': str(row['title_fr'], 'utf-8')
+                # type_ignore_reason: checking existance
+                'en': str(row['title_en'],  # type: ignore
+                          'utf-8') if row['title_en'] else '',
+                # type_ignore_reason: checking existance
+                'fr': str(row['title_fr'],  # type: ignore
+                          'utf-8') if row['title_fr'] else ''
             },
             "owner_org": row['organization'],
             "notes_translated": {
-                'en': str(row['description_en'], 'utf-8'),
-                'fr': str(row['description_fr'], 'utf-8')
+                # type_ignore_reason: checking existance
+                'en': str(row['description_en'],  # type: ignore
+                          'utf-8') if
+                row['description_en'] else '',
+                # type_ignore_reason: checking existance
+                'fr': str(row['description_fr'],  # type: ignore
+                          'utf-8') if
+                row['description_fr'] else ''
             },
             "comments": {
-                'en': str(row['additional_comments_and_feedback_en'], 'utf-8'),
-                'fr': str(row['additional_comments_and_feedback_fr'], 'utf-8')
+                # type_ignore_reason: checking existance
+                'en': str(row['additional_comments_and_feedback_en'],  # type: ignore
+                          'utf-8') if
+                row['additional_comments_and_feedback_en'] else '',
+                # type_ignore_reason: checking existance
+                'fr': str(row['additional_comments_and_feedback_fr'],  # type: ignore
+                          'utf-8') if
+                row['additional_comments_and_feedback_fr'] else ''
             },
             "reason": row['reason'],
             "subject": row['subject'].split(',') if
             row['subject'] else ['information_and_communications'],
             "keywords": {
-                'en': str(row['keywords_en'], 'utf-8').split(',') if
+                # type_ignore_reason: checking existance
+                'en': str(row['keywords_en'],  # type: ignore
+                          'utf-8').split(',') if
                 row['keywords_en'] else ['dataset'],
-                'fr': str(row['keywords_fr'], 'utf-8').split(',') if
+                # type_ignore_reason: checking existance
+                'fr': str(row['keywords_fr'],  # type: ignore
+                          'utf-8').split(',') if
                 row['keywords_fr'] else ['Jeu de données'],
             },
             "date_submitted": row['date_created'],
@@ -716,10 +762,14 @@ def _load_suggested(use_created_date: bool, filename: str):
                 "date": row['dataset_released_date'] if
                 row['dataset_released_date'] else today,
                 "comments": {
-                    'en': str(row['dataset_suggestion_status_link'], 'utf-8') if
+                    # type_ignore_reason: checking existance
+                    'en': str(row['dataset_suggestion_status_link'],  # type: ignore
+                              'utf-8') if
                     row['dataset_suggestion_status_link'] else
                     'Status imported from previous ‘suggest a dataset’ system',
-                    'fr': str(row['dataset_suggestion_status_link'], 'utf-8') if
+                    # type_ignore_reason: checking existance
+                    'fr': str(row['dataset_suggestion_status_link'],  # type: ignore
+                              'utf-8') if
                     row['dataset_suggestion_status_link'] else
                     'État importé du système précédent « Proposez un jeu de données »',
                 }
@@ -842,7 +892,7 @@ def _bulk_validate():
     log.close()
 
 
-def _trim_package(pkg: Optional[Union[Dict[str, Any], None]] = None):
+def _trim_package(pkg: Optional[Dict[str, Any]] = None):
     """
     PortalUpdater member: removes keys from provided package dict.
 
@@ -881,7 +931,7 @@ def _trim_package(pkg: Optional[Union[Dict[str, Any], None]] = None):
 
 def _add_datastore_and_views(package: Dict[str, Any], portal: LocalCKAN,
                              resource_file_hashes: Dict[str, Any],
-                             source_datastore_uri: str,
+                             source_datastore_uri: Optional[str],
                              verbose: Optional[bool] = False) \
                              -> Tuple[str, str, str, str]:
     """
@@ -929,7 +979,7 @@ def _add_datastore_and_views(package: Dict[str, Any], portal: LocalCKAN,
 def _add_to_datastore(portal: LocalCKAN, resource: Dict[str, Any],
                       resource_details: Dict[str, Any],
                       resource_file_hashes: Dict[str, Any],
-                      source_datastore_uri: str,
+                      source_datastore_uri: Optional[str],
                       verbose: Optional[bool] = False) -> Tuple[str, str, str, str]:
     """
     PortalUpdater member: Syncs DataDictionaries and DataStore tables.
@@ -1013,6 +1063,12 @@ def _add_to_datastore(portal: LocalCKAN, resource: Dict[str, Any],
 
     if datastore_created:
         # load data only if datastore_create was successful
+        if not source_datastore_uri:
+            with _capture_exception_details('datastore_load', resource['id']):
+                raise datastore.DataError('Failed to dump and load datastore '
+                                          'data from the Registry to the Portal. '
+                                          'No source database URI was specified.',
+                                          {}, {})
         target_datastore_uri = str(datastore.get_write_engine().url)
         cmd1 = subprocess.Popen(
             ['pg_dump', source_datastore_uri, '-a', '-t', resource['id']],
@@ -1059,7 +1115,7 @@ def _add_views(portal: LocalCKAN, resource: Dict[str, Any],
     failure_trace: str = ''
 
     @contextmanager
-    def _capture_exception_details(_reason: Union[str, None],
+    def _capture_exception_details(_reason: Optional[str],
                                    _resource_id: str, _view_id: str):
         """
         Context manager to handle exceptions for Resource View actions.
@@ -1132,9 +1188,10 @@ def _add_views(portal: LocalCKAN, resource: Dict[str, Any],
     return action, error, failure_reason, failure_trace
 
 
-def get_datastore_and_views(package: Dict[str, Any],
-                            ckan_instance: LocalCKAN,
-                            verbose: Optional[bool] = False) -> Dict[str, Any]:
+def get_datastore_and_views(package: Optional[Dict[str, Any]],
+                            ckan_instance: Union[LocalCKAN, RemoteCKAN],
+                            verbose: Optional[bool] = False) -> \
+                                Optional[Dict[str, Any]]:
     if package and 'resources' in package:
         for resource in package['resources']:
             # check if resource exists in datastore
@@ -1215,7 +1272,7 @@ def _update_inventory_votes(json_name: str):
                 records=update)
 
 
-def _datastore_dictionary(ckan_instance: LocalCKAN,
+def _datastore_dictionary(ckan_instance: Union[LocalCKAN, RemoteCKAN],
                           resource_id: str) -> List[Dict[str, Any]]:
     """
     Return the data dictionary info for a resource
@@ -1245,7 +1302,7 @@ def _quiet_int_pipe():
             raise
 
 
-def _get_user(user: Optional[Union[str, None]] = None) -> str:
+def _get_user(user: Optional[str] = None) -> str:
     if user is not None:
         return user
     return get_action('get_site_user')(cast(Context, {'ignore_auth': True}),
@@ -1309,11 +1366,11 @@ def canada():
     help="Increase verbosity",
 )
 def portal_update(portal_ini: str,
-                  ckan_user: Union[str, None],
-                  last_activity_date: Union[str, None] = None,
+                  ckan_user: Optional[str],
+                  last_activity_date: Optional[str] = None,
                   processes: int = 1,
                   mirror: bool = False,
-                  log: Union[str, None] = None,
+                  log: Optional[str] = None,
                   tries: int = 1,
                   delay: int = 60,
                   verbose: bool = False):
@@ -1370,8 +1427,8 @@ def portal_update(portal_ini: str,
     help="Increase verbosity",
 )
 def copy_datasets(mirror: Optional[bool] = False,
-                  ckan_user: Optional[Union[str, None]] = None,
-                  source: Optional[Union[str, None]] = None,
+                  ckan_user: Optional[str] = None,
+                  source: Optional[str] = None,
                   verbose: Optional[bool] = False):
     """
     PortalUpdater member: CKAN cli command entrance
@@ -1406,7 +1463,7 @@ def copy_datasets(mirror: Optional[bool] = False,
     help="Don't output requested dates",
 )
 def changed_datasets(since_date: str,
-                     server: Optional[Union[str, None]] = None,
+                     server: Optional[str] = None,
                      brief: Optional[bool] = False):
     """
     Produce a list of dataset ids and requested dates. Each package
@@ -1536,8 +1593,8 @@ def bulk_validate():
 @click.option("-q", "--quiet", is_flag=True,
               help="Suppress human interaction.", default=False)
 def delete_activities(days: Optional[int] = 90,
-                      include_types: Optional[Union[str, List[str], None]] = None,
-                      exclude_types: Optional[Union[str, List[str], None]] = None,
+                      include_types: Optional[Union[str, List[str]]] = None,
+                      exclude_types: Optional[Union[str, List[str]]] = None,
                       quiet: Optional[bool] = False):
     """
     Delete rows from the activity table past a certain number of days.
@@ -1714,7 +1771,7 @@ def _success_message(message: Any):
               type=click.BOOL,
               help='List the Resource IDs instead of setting the flags to false.')
 def set_datastore_false_for_invalid_resources(
-        resource_id: Optional[Union[str, None]] = None,
+        resource_id: Optional[str] = None,
         delete_table_views: Optional[bool] = False,
         verbose: Optional[bool] = False,
         quiet: Optional[bool] = False,
@@ -1865,7 +1922,7 @@ def set_datastore_false_for_invalid_resources(
               help='Run validation jobs in sync mode.')
 @click.option('-i', '--skip-xloader', is_flag=True, type=click.BOOL,
               help='Skip submitting to Xloader after Validation.')
-def resubmit_datastore_resources(resource_id: Optional[Union[str, None]] = None,
+def resubmit_datastore_resources(resource_id: Optional[str] = None,
                                  empty_only: Optional[bool] = False,
                                  verbose: Optional[bool] = False,
                                  quiet: Optional[bool] = False,
@@ -2143,7 +2200,7 @@ def resubmit_datastore_resources(resource_id: Optional[Union[str, None]] = None,
 @click.option('-e', '--any-empty', is_flag=True,
               type=click.BOOL,
               help='Deletes any empty DataStore tables, valid or invalid Resources.')
-def delete_invalid_datastore_tables(resource_id: Optional[Union[str, None]] = None,
+def delete_invalid_datastore_tables(resource_id: Optional[str] = None,
                                     delete_table_views: Optional[bool] = False,
                                     verbose: Optional[bool] = False,
                                     quiet: Optional[bool] = False,
@@ -2231,7 +2288,7 @@ def delete_invalid_datastore_tables(resource_id: Optional[Union[str, None]] = No
               type=click.BOOL,
               help='List the Resource IDs instead of deleting their table views.')
 def delete_table_view_from_non_datastore_resources(
-        resource_id: Optional[Union[str, None]] = None,
+        resource_id: Optional[str] = None,
         verbose: Optional[bool] = False,
         quiet: Optional[bool] = False,
         list: Optional[bool] = False):

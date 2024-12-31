@@ -3,7 +3,7 @@
 # NOTE: used to connect to the SOLR cores for Drupal PD Searches
 # TODO: remove once all PDs are in Django
 
-from typing import Optional, Union, Generator, Tuple, List, Any
+from typing import Optional, Generator, Tuple, List, Any
 
 import sys
 from pysolr import Solr
@@ -29,7 +29,7 @@ MONTHS_FR = [
 
 
 def solr_connection(ini_prefix: str,
-                    solr_url: Optional[Union[str, None]] = None) -> Solr:
+                    solr_url: Optional[str] = None) -> Solr:
     """
     Set up solr connection
     :param ini_prefix: prefix to use in specifying .ini file keys (e.g.,
@@ -56,7 +56,7 @@ def solr_connection(ini_prefix: str,
 
 
 def data_batch(org_id: str, lc: LocalCKAN,
-               dataset_type: str) -> Generator[Tuple[str, List[Any]]]:
+               dataset_type: str) -> Generator[Tuple[str, List[Any]], None, None]:
     """
     Generator of dataset dicts for organization with name org
 
@@ -97,7 +97,7 @@ def data_batch(org_id: str, lc: LocalCKAN,
 _REMOVE_CONTROL_CODES = dict((x, None) for x in range(32) if x != 10 and x != 13)
 
 
-def safe_for_solr(s: Union[str, None]) -> str:
+def safe_for_solr(s: Optional[str]) -> str:
     """
     return a string that is safe for solr to ingest by removing all
     control characters except for CR and LF

@@ -148,7 +148,7 @@ def logged_in():
 
 def _get_package_type_from_dict(package_id: str,
                                 package_type:
-                                    Union[str, Any, None] = 'dataset') -> str:
+                                    Optional[Union[str, Any]] = 'dataset') -> str:
     try:
         context = cast(Context, {'model': model,
                                  'session': model.Session,
@@ -385,7 +385,7 @@ def _get_choice_fields(resource_name: str) -> Dict[str, Any]:
 @canada_views.route('/group/bulk_process/<id>', methods=['GET', 'POST'])
 def canada_group_bulk_process(id: str, group_type: str = 'group',
                               is_organization: Optional[bool] = False,
-                              data: Optional[Union[Dict[str, Any], None]] = None):
+                              data: Optional[Dict[str, Any]] = None):
     """
     Redirects the Group bulk action endpoint as it does not support
     the IPackageController and IResourceController implementations.
@@ -396,8 +396,7 @@ def canada_group_bulk_process(id: str, group_type: str = 'group',
 @canada_views.route('/organization/bulk_process/<id>', methods=['GET', 'POST'])
 def canada_organization_bulk_process(id: str, group_type: str = 'organization',
                                      is_organization: Optional[bool] = True,
-                                     data: Optional[Union[Dict[str, Any],
-                                                          None]] = None):
+                                     data: Optional[Dict[str, Any]] = None):
     """
     Redirects the Organization bulk action endpoint as it does not support
     the IPackageController and IResourceController implementations.
@@ -654,7 +653,7 @@ def update_pd_record(owner_org: str, resource_name: str, pk: str):
 
 
 @canada_views.route('/recombinant/<resource_name>', methods=['GET'])
-def type_redirect(resource_name: str, dataset_id: Optional[Union[str, None]] = None):
+def type_redirect(resource_name: str, dataset_id: Optional[str] = None):
     orgs = h.organizations_available('read')
 
     if not orgs:
@@ -1135,7 +1134,7 @@ def action(logic_function: str,
 
 def _get_package_from_api_request(logic_function: str,
                                   id: str,
-                                  context: Context) -> Union[Dict[str, Any], None]:
+                                  context: Context) -> Optional[Dict[str, Any]]:
     """
     Tries to return the package for an API request
     """

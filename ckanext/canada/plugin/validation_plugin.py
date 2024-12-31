@@ -1,4 +1,4 @@
-from typing import Optional, Union, Any, List, Dict
+from typing import Optional, Any, List, Dict
 
 from frictionless import Plugin as FrictionlessPlugin
 
@@ -9,7 +9,7 @@ from ckanext.canada import checks
 class CanadaValidationPlugin(FrictionlessPlugin):
     def select_check_class(self,
                            type: Optional[str] = None) -> \
-          Optional[Union['checks.DatastoreHeadersCheck', None]]:
+          Optional['checks.DatastoreHeadersCheck']:
         """
         Load custom check classes.
         """

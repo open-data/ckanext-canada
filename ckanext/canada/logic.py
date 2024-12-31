@@ -1,6 +1,5 @@
 from typing import Optional, Any, cast, Dict, List, Union
 from ckan.types import Context, DataDict, Action, ChainedAction, Schema, ErrorDict
-from sqlalchemy.orm import Query
 
 from ckan.logic.validators import isodate, Invalid
 from ckan import model
@@ -235,7 +234,7 @@ def activity_list_from_user_since(context: Context, data_dict: DataDict):
 
 
 def _changed_packages_activity_timestamp_since(since: str,
-                                               limit: int) -> Query[Any]:
+                                               limit: int) -> List[Activity]:
     '''Return package_ids and last activity date of changed package
     activities since a given date.
 

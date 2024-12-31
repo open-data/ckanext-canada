@@ -40,7 +40,7 @@ class CanadaPublicPlugin(p.SingletonPlugin, DefaultTranslation):
     p.implements(p.IConfigurer)
     p.implements(p.IAuthFunctions)
     p.implements(p.IFacets)
-    p.implements(p.ITranslation, inherit=True)
+    p.implements(p.ITranslation)
     p.implements(p.IMiddleware, inherit=True)
     p.implements(p.IActions)
     p.implements(p.IClick)
@@ -48,11 +48,17 @@ class CanadaPublicPlugin(p.SingletonPlugin, DefaultTranslation):
     p.implements(p.IBlueprint)
 
     # DefaultTranslation, ITranslation
+    @classmethod
     def i18n_domain(self) -> str:
         return 'ckanext-canada'
 
+    @classmethod
     def i18n_directory(self) -> str:
         return os.path.join(os.path.dirname(str(__file__)), '../i18n')
+
+    @classmethod
+    def i18n_locales(self) -> List[str]:
+        return ['en', 'fr']
 
     # IConfigurer
     def update_config(self, config: 'CKANConfig'):
@@ -212,7 +218,7 @@ class LogExtraMiddleware(object):
     def __call__(self, environ: Any, start_response: Any) -> Any:
         def _start_response(status: str,
                             response_headers: List[Tuple[str, str]],
-                            exc_info: Optional[Union[Any, None]] = None):
+                            exc_info: Optional[Any] = None):
             extra = []
             try:
                 contextual_user = g.user
