@@ -74,8 +74,9 @@ class CanadaDatasetsPlugin(SchemingDatasetsPlugin):
             blueprints.append(blueprint)
         return blueprints
 
-    def _redirect_pd_dataset_endpoints(self,
-                                       blueprint: Blueprint) -> Optional[Response]:
+    # type_ignore_reason: incomplete typing
+    def _redirect_pd_dataset_endpoints(blueprint: Blueprint  # type: ignore
+                                       ) -> Optional[Response]:
         """
         Runs before request for /dataset and /dataset/<pkg id>/resource
 

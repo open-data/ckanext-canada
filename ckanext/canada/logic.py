@@ -261,7 +261,8 @@ def _changed_packages_activity_timestamp_since(since: str,
     q = q.filter(Activity.timestamp > since)  # type: ignore
     q = q.group_by(Activity.object_id)
     q = q.order_by('timestamp')
-    return q.limit(limit)
+    # type_ignore_reason: incomplete typing
+    return q.limit(limit)  # type: ignore
 
 
 def _activities_from_user_list_since(since: str,

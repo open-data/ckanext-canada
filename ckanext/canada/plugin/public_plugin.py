@@ -49,15 +49,15 @@ class CanadaPublicPlugin(p.SingletonPlugin, DefaultTranslation):
 
     # DefaultTranslation, ITranslation
     @classmethod
-    def i18n_domain(self) -> str:
+    def i18n_domain(cls) -> str:
         return 'ckanext-canada'
 
     @classmethod
-    def i18n_directory(self) -> str:
+    def i18n_directory(cls) -> str:
         return os.path.join(os.path.dirname(str(__file__)), '../i18n')
 
     @classmethod
-    def i18n_locales(self) -> List[str]:
+    def i18n_locales(cls) -> List[str]:
         return ['en', 'fr']
 
     # IConfigurer
