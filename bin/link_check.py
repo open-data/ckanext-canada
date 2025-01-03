@@ -3,9 +3,7 @@
 import argparse
 import os
 import time
-import datetime
 import sys
-import logging
 import tempfile
 import gzip
 import json
@@ -26,10 +24,11 @@ import traceback
 import unicodecsv
 import codecs
 
-proxy= os.environ['http_proxy']
+proxy = os.environ['http_proxy']
 temp_db = '/tmp/od_linkcheker2.db'
-USER_AGENT="open.canada.ca dataset link checker; abuse report open-ouvert@tbs-sct.gc.ca"
-URL_TIMEOUT=20
+USER_AGENT = "open.canada.ca dataset link checker; "\
+             "abuse report open-ouvert@tbs-sct.gc.ca"
+URL_TIMEOUT = 20
 
 ''' Check the resource links of datasets on open.canada.ca
 dataset http://open.canada.ca/data/en/dataset/c4c5c7f1-bfa6-4ff6-b4a0-c164cb2060f7
@@ -70,15 +69,17 @@ def get_a_byte(response, *args, **kwargs):
 @asyncio.coroutine
 def test_urls(urls, results):
     loop = asyncio.get_event_loop()
-    futures =[]
+    futures = []
     with concurrent.futures.ThreadPoolExecutor(max_workers=50) as e:
         for url in urls:
-            if url[:6].lower() =='ftp://':
-                future = loop.run_in_executor(e, test_ftp,url)
+            if url[:6].lower() == 'ftp://':
+                future = loop.run_in_executor(e, test_ftp, url)
             else:
-                future = loop.run_in_executor(e, partial(requests.get, headers={"user-agent":USER_AGENT},
-                                              hooks={'response': get_a_byte}, verify=False,
-                                              timeout=URL_TIMEOUT, stream=True), url)
+                future = loop.run_in_executor(
+                    e, partial(requests.get, headers={"user-agent": USER_AGENT},
+                               hooks={'response': get_a_byte}, verify=False,
+                               timeout=URL_TIMEOUT, stream=True),
+                    url)
             futures.append(future)
     for future in futures:
         try:
@@ -86,17 +87,19 @@ def test_urls(urls, results):
         except requests.exceptions.ProxyError:
             print('proxy error', urls[futures.index(future)])
             res = Exception()
-        except (requests.exceptions.ReadTimeout, requests.packages.urllib3.exceptions.MaxRetryError,
-                requests.exceptions.ConnectTimeout, requests.packages.urllib3.exceptions.ConnectTimeoutError,
+        except (requests.exceptions.ReadTimeout,
+                requests.packages.urllib3.exceptions.MaxRetryError,
+                requests.exceptions.ConnectTimeout,
+                requests.packages.urllib3.exceptions.ConnectTimeoutError,
                 socket.timeout):
             print('timeout', urls[futures.index(future)])
             res = Exception()
-        except (requests.exceptions.InvalidSchema, requests.exceptions.InvalidURL):
+        except (requests.exceptions.InvalidSchema,
+                requests.exceptions.InvalidURL):
             print('invalidURL', urls[futures.index(future)])
             res = Response()
             res.status_code = 404
-        except:
-            import traceback
+        except Exception:
             traceback.print_exc()
             res = Exception()
         results.append(res)
@@ -121,13 +124,14 @@ class Records():
 
     def download(self):
         if not self.file:
-            # dataset http://open.canada.ca/data/en/dataset/c4c5c7f1-bfa6-4ff6-b4a0-c164cb2060f7
-            url='http://open.canada.ca/static/od-do-canada.jl.gz'
+            # dataset
+            # /data/en/dataset/c4c5c7f1-bfa6-4ff6-b4a0-c164cb2060f7
+            url = 'http://open.canada.ca/static/od-do-canada.jl.gz'
             r = requests.get(url, stream=True)
 
             f = tempfile.NamedTemporaryFile(delete=False)
             for chunk in r.iter_content(1024 * 64):
-                    f.write(chunk)
+                f.write(chunk)
             f.close()
             self.download_file = f.name
 
@@ -140,19 +144,18 @@ class Records():
                     if len(records) >= 50:
                         yield (records)
                         records = []
-            if len(records) >0:
+            if len(records) > 0:
                 yield (records)
         except GeneratorExit:
             pass
-        except:
-            import traceback
+        except Exception:
             traceback.print_exc()
             print('error reading downloaded file')
 
     def test_links(self, new_url, urls):
         links = []
         results = []
-        for k,v in new_url.items():
+        for k, v in new_url.items():
             links.append(k)
         loop = asyncio.get_event_loop()
         loop.run_until_complete(test_urls(links, results))
@@ -161,20 +164,20 @@ class Records():
             results = zip(links, results)
             for url, response in results:
                 if type(response) is Exception:
-                    res={'timestamp': now,
-                         'status': -1,
-                         'resources': new_url[url]}
+                    res = {'timestamp': now,
+                           'status': -1,
+                           'resources': new_url[url]}
                 else:
                     try:
-                        res={'timestamp': now,
-                             'status':response.status_code}
+                        res = {'timestamp': now,
+                               'status': response.status_code}
                         if response.status_code != requests.codes.ok:
                             res['resources'] = new_url[url]
                             res['org'] = urls.get(url, None)
                     except AttributeError:
-                        res={'timestamp': now,
-                             'status': -1,
-                             'resources': new_url[url]}
+                        res = {'timestamp': now,
+                               'status': -1,
+                               'resources': new_url[url]}
 
                 txn.put(url.encode('utf-8'), json.dumps(res).encode('utf-8'))
         if links:
@@ -192,19 +195,23 @@ class Records():
                     id = record['id']
                     for res in record['resources']:
                         if (not res['url_type']) and res.get('url'):
-                            url= res['url']
-                            details =txn.get(url.encode('utf-8'))
+                            url = res['url']
+                            details = txn.get(url.encode('utf-8'))
                             if details:
                                 details = json.loads(details.decode('utf-8'))
-                                if self.quick and now - details.get('timestamp', 0) < 34 * 3600:  # short re-run test
-                                    if  details['status'] == requests.codes.ok or (
-                                        details['status'] == 404):
+                                # short re-run test
+                                if (
+                                  self.quick and
+                                  now - details.get('timestamp', 0) < 34 * 3600):
+                                    if (
+                                      details['status'] == requests.codes.ok or
+                                      details['status'] == 404):
                                         continue
                             new_url[url].append('/'.join([id, res['id']]))
                             if record.get('organization'):
-                                urls[url]={'name': record['organization']['name'],
-                                           'title': record['organization']['title']}
-            if len(new_url) >=5000:
+                                urls[url] = {'name': record['organization']['name'],
+                                             'title': record['organization']['title']}
+            if len(new_url) >= 5000:
                 self.test_links(new_url, urls)
                 new_url = defaultdict(list)
                 urls = {}
@@ -213,38 +220,40 @@ class Records():
         print('total record count: ', count)
 
     def dumpBrokenLink(self, csvfile):
-        outf=open(csvfile, 'wb')
+        outf = open(csvfile, 'wb')
         outf.write(codecs.BOM_UTF8)
         out = unicodecsv.writer(outf)
-        #Header
+        # Header
         out.writerow([
-                      'English URL / URL en anglais',
-                      'French URL / URL en français',
-                      'Metadata Record Portal Type / Type de portail de la record de métadonnées',
-                      'Metadata Record Name English / Nom de la record de la métadonnées anglais',
-                      'Metadata Record Name French / Nom de la record de la métadonnées français',
-                      "Department Name English / Nom du ministère en anglais",
-                      "Department Name French / Nom du ministère en français",
-                      "Resource Name English/ Nom de la resource en angalis",
-                      "Resource Name French/ Nom de la resource en français",
-                      "Broken Link / Lien brisé",
-                      "Status / Statut",
-                    ])
+            'English URL / URL en anglais',
+            'French URL / URL en français',
+            'Metadata Record Portal Type / '
+            'Type de portail de la record de métadonnées',
+            'Metadata Record Name English / '
+            'Nom de la record de la métadonnées anglais',
+            'Metadata Record Name French / '
+            'Nom de la record de la métadonnées français',
+            "Department Name English / Nom du ministère en anglais",
+            "Department Name French / Nom du ministère en français",
+            "Resource Name English/ Nom de la resource en angalis",
+            "Resource Name French/ Nom de la resource en français",
+            "Broken Link / Lien brisé",
+            "Status / Statut",
+        ])
         data = {}
         with self.env.begin() as txn:
             for url, value in txn.cursor():
                 details = json.loads(value.decode('utf-8'))
                 if details['status'] != requests.codes.ok:
                     for res_id in details['resources']:
-                        data[res_id] = {'status':details['status']}
+                        data[res_id] = {'status': details['status']}
 
         for records in self.download():
             for record in records:
                 id = record['id']
                 for res in record['resources']:
-                    if (not res['url_type']) and res.get('url'):
-                        #print(res)
-                        url= res['url']
+                    if not res['url_type'] and res.get('url'):
+                        url = res['url']
                         full_id = '/'.join([id, res['id']])
                         detail = data.get(full_id, None)
                         if not detail:
@@ -252,34 +261,42 @@ class Records():
                         time_str = res.get('last_modified')
                         if not time_str:
                             time_str = res.get('created')
-                        try:
-                            timestamp = datetime.datetime.strptime(time_str, "%Y-%m-%dT%H:%M:%S.%f")
-                        except:
-                            timestamp = None
                         detail.update({
-                                       'url_en':'/'.join(['http://open.canada.ca/data/en/dataset',id,'resource',res['id']]),
-                                       'url_fr':'/'.join(['http://open.canada.ca/data/fr/dataset',id,'resource',res['id']]),
-                                       'portal_type': record['type'],  # record['collection'],
-                                       'record_name_en': record['title_translated']['en'],
-                                       'record_name_fr': record['title_translated']['fr'],
-                                       'org_name_en': record['organization']['title'].split('|')[0],
-                                       'org_name_fr': record['organization']['title'].split('|')[-1],
-                                       'name_en': res['name_translated']['en'],
-                                       'name_fr': res['name_translated']['fr'],
-                                       'link': url,
-                                     })
+                            'url_en': '/'.join(
+                                ['http://open.canada.ca/data/en/dataset',
+                                 id,
+                                 'resource',
+                                 res['id']]),
+                            'url_fr': '/'.join(
+                                ['http://open.canada.ca/data/fr/dataset',
+                                 id,
+                                 'resource',
+                                 res['id']]),
+                            'portal_type': record['type'],
+                            'record_name_en': record['title_translated']['en'],
+                            'record_name_fr': record['title_translated']['fr'],
+                            'org_name_en':
+                                record['organization']['title'].split('|')[0],
+                            'org_name_fr':
+                                record['organization']['title'].split('|')[-1],
+                            'name_en': res['name_translated']['en'],
+                            'name_fr': res['name_translated']['fr'],
+                            'link': url})
 
-        #write to csv
+        # write to csv
         count, count2 = 0, 0
-        portal_type_dict = {'dataset': "Open Data / Données ouvertes",
-                            'info': "Open Information / Information ouverte",
-                            }
+        portal_type_dict = {
+            'dataset': "Open Data / Données ouvertes",
+            'info': "Open Information / Information ouverte",
+        }
         for id, res in data.items():
-            status = res['status'] if res['status']!= -1 else 'timeout / temps libre'
+            status = res['status'] if \
+                res['status'] != -1 else 'timeout / temps libre'
             portal_type = portal_type_dict.get(res['portal_type'], None)
-            line=[res['url_en'], res['url_fr'], portal_type, res['record_name_en'], res['record_name_fr'],
-                  res['org_name_en'], res['org_name_fr'], res['name_en'], res['name_fr'],
-                  res['link'], status]
+            line = [res['url_en'], res['url_fr'],
+                    portal_type, res['record_name_en'], res['record_name_fr'],
+                    res['org_name_en'], res['org_name_fr'], res['name_en'],
+                    res['name_fr'],  res['link'], status]
             out.writerow(line)
             count += 1
             if status == 'timeout / temps libre':
@@ -290,18 +307,17 @@ class Records():
         print('total {0} dumped, timeout_count {1}'.format(count, count2))
 
 
-
 def main():
-    parser = argparse.ArgumentParser(description='''Search portal records broken resource link''')
-    parser.add_argument("--file", dest="file", required=True, help='''site gz file contains links.
-                         download from http://open.canada.ca/static/od-do-canada.jl.gz.''')
+    parser = argparse.ArgumentParser(
+        description='''Search portal records broken resource link''')
+    parser.add_argument("--file", dest="file", required=True,
+                        help='''site gz file contains links. download from
+                                http://open.canada.ca/static/od-do-canada.jl.gz.''')
     parser.add_argument("--quick", dest="quick", action='store_true',
                         help="skip testing recent failed links", default=False)
     parser.add_argument("--dump", dest="dump", help="dump to csv file")
 
     options = parser.parse_args()
-
-    user_agent = None
 
     site = Records(options.file, options.quick)
     if options.dump:

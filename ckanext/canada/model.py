@@ -1,4 +1,5 @@
 # encoding: utf-8
+from typing import Optional
 
 import datetime
 import logging
@@ -14,20 +15,21 @@ log = logging.getLogger(__name__)
 Base = declarative_base(metadata=meta.metadata)
 
 
-class PackageSync(Base):
+# type_ignore_reason: incomplete typing
+class PackageSync(Base):  # type: ignore
     __tablename__ = 'package_sync'
 
     package_id = Column(Unicode, primary_key=True)
-    last_run = Column(DateTime, nullable=False, default=datetime.datetime.now(datetime.timezone.utc))
+    last_run = Column(DateTime, nullable=False,
+                      default=datetime.datetime.now(datetime.timezone.utc))
     last_successful_sync = Column(DateTime, nullable=True)
     error_on = Column(Unicode, nullable=True)
     error = Column(Unicode, nullable=True)
 
     Session = meta.Session
 
-
     @classmethod
-    def get(cls, package_id, for_update=False):
+    def get(cls, package_id: str, for_update: Optional[bool] = False):
         """
         Returns a package_sync object referenced by its package_id.
         """
@@ -39,7 +41,6 @@ class PackageSync(Base):
             q = q.with_for_update()
         return q.first()
 
-
     @classmethod
     def save(cls):
         """
@@ -47,9 +48,11 @@ class PackageSync(Base):
         """
         cls.Session.add(cls)
 
-
     @classmethod
-    def upsert(cls, package_id, last_successful_sync=None, error_on=None, error=None):
+    def upsert(cls, package_id: str,
+               last_successful_sync: Optional[datetime.datetime] = None,
+               error_on: Optional[str] = None,
+               error: Optional[str] = None):
         """
         Sets and returns a package_sync object referenced by its package_id.
         """
@@ -59,9 +62,11 @@ class PackageSync(Base):
             package_sync.error_on = error_on
             package_sync.error = error
             package_sync.last_run = datetime.datetime.now(datetime.timezone.utc)
-            package_sync.last_successful_sync = last_successful_sync if last_successful_sync else package_sync.last_successful_sync
+            package_sync.last_successful_sync = last_successful_sync if \
+                last_successful_sync else package_sync.last_successful_sync
         else:
-            package_sync = cls(package_id=package_id, last_successful_sync=last_successful_sync,
+            package_sync = cls(package_id=package_id,
+                               last_successful_sync=last_successful_sync,
                                error_on=error_on, error=error)
 
         cls.Session.add(package_sync)
@@ -69,9 +74,8 @@ class PackageSync(Base):
 
         return cls.get(package_id)
 
-
     @classmethod
-    def delete(cls, package_id):
+    def delete(cls, package_id: str):
         """
         Deletes a pacage_sync object referenced by its package_id.
         """

@@ -13,30 +13,26 @@ class TestDollarRangeFacet(object):
     def test_too_low(self):
         assert dollar_range_facet('foo', [100, 500, 1000], 50) == {}
 
-
     def test_negative(self):
         assert dollar_range_facet('foo', [100, 500, 1000], -500) == {}
 
-
     def test_top_bucket(self):
         assert dollar_range_facet('foo', [100, 500, 1000], 5000) == {
-            'foo_range': u'2',
-            'foo_en': u'A: $1,000.00+',
-            'foo_fr': u'A: 1\xa0000,00\xa0$ +'}
-
+            'foo_range': '2',
+            'foo_en': 'A: $1,000.00+',
+            'foo_fr': 'A: 1\xa0000,00\xa0$ +'}
 
     def test_bucket_0_bottom_edge(self):
         assert dollar_range_facet('foo', [100, 500, 1000], 100) == {
-            'foo_range': u'0',
-            'foo_en': u'C: $100.00 - $499.99',
-            'foo_fr': u'C: 100,00\xa0$ - 499,99\xa0$'}
-
+            'foo_range': '0',
+            'foo_en': 'C: $100.00 - $499.99',
+            'foo_fr': 'C: 100,00\xa0$ - 499,99\xa0$'}
 
     def test_bucket_1_top_edge(self):
         assert dollar_range_facet('foo', [100, 500, 1000], 999.999) == {
-           'foo_range': u'1',
-            'foo_en': u'B: $500.00 - $999.99',
-            'foo_fr': u'B: 500,00\xa0$ - 999,99\xa0$'}
+            'foo_range': '1',
+            'foo_en': 'B: $500.00 - $999.99',
+            'foo_fr': 'B: 500,00\xa0$ - 999,99\xa0$'}
 
 
 class TestIndex(CanadaTestBase):
@@ -58,7 +54,6 @@ class TestIndex(CanadaTestBase):
 
         self.resource_id = rval['resources'][0]['id']
 
-
     def get_records(self):
         rval = self.lc.action.datastore_search(
             resource_id=self.resource_id,
@@ -66,7 +61,6 @@ class TestIndex(CanadaTestBase):
             offset=0)
         records = rval['records']
         return records
-
 
     def test_max_text_length(self):
         record = get_chromo(self.ds_type)['examples']['record']

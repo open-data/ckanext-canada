@@ -10,6 +10,7 @@ REMOVE_COLUMNS = [
     'user_modified',
 ]
 
+
 def main():
     reader = csv.DictReader(sys.stdin)
     if not reader.fieldnames:
@@ -29,5 +30,6 @@ def main():
             writer.writerow(row)
         except ValueError:
             pass
+
 
 main()

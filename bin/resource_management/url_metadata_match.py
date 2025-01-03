@@ -13,7 +13,6 @@ broken_links_report.csv
 incorrect_file_types_report.csv
 """
 import sys
-import fileinput
 import json
 import csv
 
@@ -53,8 +52,8 @@ file_length_flag = 0
 for dataset in open(metadata):
     line = json.loads(dataset, 'utf-8')
     resources = line["resources"]
-    for l, x in enumerate(resources):
-        file_url = resources[l]["url"].encode('utf-8')
+    for rline, x in enumerate(resources):
+        file_url = resources[rline]["url"].encode('utf-8')
         if file_url in broken_links:
             data = broken_links.pop(file_url)
             broken_links_data.append(
@@ -62,17 +61,20 @@ for dataset in open(metadata):
                  line["organization"]["title"].encode('utf-8').strip(),
                  line["organization"]["name"].encode('utf-8').strip(),
                  line["title"].encode('utf-8').strip(), line["id"].strip(),
-                 resources[l]["name_translated"]["en"].strip(), resources[l]["id"].strip()])
+                 resources[rline]["name_translated"]["en"].strip(),
+                 resources[rline]["id"].strip()])
             if len(broken_links) == 0:
                 broken_links_flag = 1
             continue
         if file_url in file_sizes:
             data = file_sizes.pop(file_url)
-            if not resources[l].has_key("size") or resources[l]["size"] != data[1]:
+            if (
+              not resources[rline].has_key("size")
+              or resources[rline]["size"] != data[1]):
                 file_length_data.append(
                     [file_url, data[0], line["organization"]["title"].encode('utf-8'),
-                    line["title"].encode('utf-8'), line["id"], resources[l]["id"],
-                    data[1]])
+                     line["title"].encode('utf-8'), line["id"], resources[rline]["id"],
+                     data[1]])
                 if len(file_sizes) == 0:
                     file_length_flag = 1
             continue
@@ -86,7 +88,8 @@ print("Exporting to csv...")
 # Export tp CSV
 with open('broken_links_report.csv', "w") as f:
     writer = csv.writer(f)
-    writer.writerow(("url", "date", "response", "organization_name", "org_code", "title", "uuid", "resource_name", "resource_id"))
+    writer.writerow(("url", "date", "response", "organization_name",
+                     "org_code", "title", "uuid", "resource_name", "resource_id"))
     for row in broken_links_data:
         writer.writerow(row)
 f.close()

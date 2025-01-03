@@ -1,21 +1,25 @@
 
 import argparse
 from ckanapi import RemoteCKAN, NotFound
-from ConfigParser import ConfigParser
-from sys import stdout
+from configparser import ConfigParser
 import unicodecsv
 
 
 argparser = argparse.ArgumentParser(
     description='Populate the top 100 datasets csv with dataset and organization name'
 )
-argparser.add_argument('-f', '--file', action='store', default='', dest='csvfile',
+argparser.add_argument('-f', '--file', action='store',
+                       default='', dest='csvfile',
                        help='Empty CSV file from TBS')
-argparser.add_argument('-c', '--config', action='store', default='development.ini', dest='configfile',
+argparser.add_argument('-c', '--config', action='store',
+                       default='development.ini',
+                       dest='configfile',
                        help='Config file')
-argparser.add_argument('-o', '--outfile', action='store', default='output.csv', dest='outfile',
+argparser.add_argument('-o', '--outfile', action='store',
+                       default='output.csv', dest='outfile',
                        help='CSV file to write out to')
-argparser.add_argument('-l', '--lang', action='store', default='en', dest='lang',
+argparser.add_argument('-l', '--lang', action='store',
+                       default='en', dest='lang',
                        help='language [en|fr]')
 args = argparser.parse_args()
 
@@ -42,8 +46,8 @@ def main():
             row[2] = pkg['org_title_at_publication'][args.lang]
             row[1] = pkg['title_translated'][args.lang]
             csv_out.writerow(row)
-        except NotFound, e:
+        except NotFound:
             pass
 
-main()
 
+main()

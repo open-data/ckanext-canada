@@ -16,7 +16,7 @@ from ckanext.canada.tests.factories import (
 from ckanext.recombinant.tables import get_chromo, get_geno
 from ckanext.recombinant.views import _process_upload_file
 from ckanext.recombinant.write_excel import excel_template, append_data
-from ckanext.recombinant.errors import  BadExcelData
+from ckanext.recombinant.errors import BadExcelData
 
 
 # testing the upload of PD template files
@@ -45,7 +45,6 @@ class TestXlsUpload(CanadaTestBase):
         self.pkg_id = rval['id']
         self.resource_id = rval['resources'][0]['id']
 
-
     def test_upload_empty(self):
         current_user = model.User.get(self.editor['name'])
         with mock.patch('ckan.lib.helpers.current_user', current_user):
@@ -61,7 +60,6 @@ class TestXlsUpload(CanadaTestBase):
                     get_geno('wrongdoing'),
                     True)
             assert e.value.message == 'The template uploaded is empty'
-
 
     def test_upload_example(self):
         current_user = model.User.get(self.editor['name'])
@@ -98,9 +96,9 @@ class TestXlsUpload(CanadaTestBase):
            "findings_conclusions": ["b"],
            "recommendations_corrective_measures_en": "Recommendations and Corrective Measures",
            "recommendations_corrective_measures_fr": "Recommandations et mesures correctives",
-           #"record_created": "2024-07-10T19:57:55",
-           #"record_modified": "2024-07-10T19:57:55",
-           #"user_modified": "registry"
+           # "record_created": "2024-07-10T19:57:55",
+           # "record_modified": "2024-07-10T19:57:55",
+           # "user_modified": "registry"
         }]
         for record in records:
             record.pop('record_created', None)
@@ -108,7 +106,6 @@ class TestXlsUpload(CanadaTestBase):
             record.pop('user_modified', None)
 
         assert records == expected_records
-
 
     def test_upload_example_dry_run(self):
         current_user = model.User.get(self.editor['name'])
@@ -132,7 +129,6 @@ class TestXlsUpload(CanadaTestBase):
         result = self.lc.action.datastore_search(resource_id=self.resource_id)
         records = result.get('records')
         assert records == []
-
 
     def test_upload_wrong_type(self):
         flask.g.user = self.editor['name']

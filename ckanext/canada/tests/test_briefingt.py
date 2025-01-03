@@ -24,13 +24,11 @@ class TestBriefingT(CanadaTestBase):
 
         self.resource_id = rval['resources'][0]['id']
 
-
     def test_example(self):
         record = get_chromo('briefingt')['examples']['record']
         self.lc.action.datastore_upsert(
             resource_id=self.resource_id,
             records=[record])
-
 
     def test_blank(self):
         with pytest.raises(ValidationError) as ve:
@@ -40,6 +38,7 @@ class TestBriefingT(CanadaTestBase):
         err = ve.value.error_dict
         assert 'key' in err
         assert 'tracking_number' in err['key'][0]
+
 
 class TestBriefingTNil(CanadaTestBase):
     @classmethod
@@ -57,13 +56,11 @@ class TestBriefingTNil(CanadaTestBase):
 
         self.resource_id = rval['resources'][1]['id']
 
-
     def test_example(self):
         record = get_chromo('briefingt-nil')['examples']['record']
         self.lc.action.datastore_upsert(
             resource_id=self.resource_id,
             records=[record])
-
 
     def test_blank(self):
         with pytest.raises(ValidationError) as ve:

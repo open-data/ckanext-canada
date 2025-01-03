@@ -1,0 +1,87 @@
+[tool.pyright]
+pythonVersion = "3.7"
+include = ["ckanext"]
+exclude = [
+    "**/tests",
+    "**/migration",
+]
+extraPaths = [
+  "../../lib/python3.9/site-packages",
+  "../.",
+  "../ckan",
+  "../ckanapi",
+  "../ckantoolkit",
+  "../frictionless-py",
+  "../frictionless",
+  "../ckanext-cloudstorage",
+  "../ckanext-dcat",
+  "../ckanext-dsaudit",
+  "../ckanext-fluent",
+  "../ckanext-gcnotify",
+  "../ckanext-recombinant",
+  "../ckanext-scheming",
+  "../ckanext-security",
+  "../ckanext-validation",
+  "../ckanext-xloader",
+]
+strict = []
+strictParameterNoneValue = true
+reportFunctionMemberAccess = true
+reportMissingImports = true
+reportMissingModuleSource = true
+reportMissingTypeStubs = false
+reportImportCycles = false
+reportUnusedImport = true
+reportUnusedClass = true
+reportUnusedFunction = true
+reportUnusedVariable = true
+reportDuplicateImport = true
+reportOptionalSubscript = true
+reportOptionalMemberAccess = true
+reportOptionalCall = true
+reportOptionalIterable = true
+reportOptionalContextManager = true
+reportOptionalOperand = true
+reportTypedDictNotRequiredAccess = false
+reportConstantRedefinition = true
+reportIncompatibleMethodOverride = false
+reportIncompatibleVariableOverride = true
+reportOverlappingOverload = true
+reportUntypedFunctionDecorator = false
+reportUnknownParameterType = true
+reportUnknownArgumentType = false
+reportUnknownLambdaType = false
+reportUnknownMemberType = false
+reportMissingTypeArgument = true
+reportInvalidTypeVarUse = true
+reportCallInDefaultInitializer = true
+reportUnknownVariableType = false
+reportUntypedBaseClass = true
+reportUnnecessaryIsInstance = true
+reportUnnecessaryCast = true
+reportUnnecessaryComparison = true
+reportAssertAlwaysTrue = true
+reportSelfClsParameterName = true
+reportUnusedCallResult = false
+useLibraryCodeForTypes = true
+reportGeneralTypeIssues = true
+reportPropertyTypeMismatch = true
+reportWildcardImportFromLibrary = true
+reportUntypedClassDecorator = false
+reportUntypedNamedTuple = true
+reportPrivateUsage = false
+reportPrivateImportUsage = true
+reportInconsistentConstructor = true
+reportMissingSuperCall = false
+reportUninitializedInstanceVariable = false
+reportInvalidStringEscapeSequence = true
+reportMissingParameterType = true
+reportImplicitStringConcatenation = false
+reportUndefinedVariable = true
+reportUnboundVariable = true
+reportInvalidStubStatement = true
+reportIncompleteStub = true
+reportUnsupportedDunderAll = true
+reportUnusedCoroutine = true
+reportUnnecessaryTypeIgnoreComment = true
+reportMatchNotExhaustive = true

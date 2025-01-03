@@ -21,9 +21,11 @@ def main():
     opts = docopt(__doc__)
 
     num_months = int(opts['MONTHS'])
-    portal = ckanapi.RemoteCKAN(opts['PORTAL_URL'],
+    portal = ckanapi.RemoteCKAN(
+        opts['PORTAL_URL'],
         user_agent='datasets_by_orgs_report.py (ckanext-canada)')
-    registry = ckanapi.RemoteCKAN(opts['REGISTRY_URL'],
+    registry = ckanapi.RemoteCKAN(
+        opts['REGISTRY_URL'],
         user_agent='datasets_by_orgs_report.py (ckanext-canada)')
 
     sys.stderr.write('getting org list...\n')
@@ -34,7 +36,6 @@ def main():
     sys.stderr.write('getting published datasets...\n')
     published_datasets = set(portal.action.package_list())
 
-    orgs = {o['id']: o for o in org_list}
     now = datetime.utcnow()
     months = [(now.year, now.month)]
     counts = {o['id']: [0] for o in org_list}
@@ -51,7 +52,7 @@ def main():
                 for c in counts:
                     counts[c].append(0)
                 sys.stderr.write(str(processed) + u'\n'
-                    + ym_head(months[-1]) + u':')
+                                 + ym_head(months[-1]) + u':')
                 processed = 0
                 if months[-1] == act_ym:
                     break
@@ -88,10 +89,9 @@ def main():
             o['id'],
             o['title'].split(' | ')[0],
             o['title'].split(' | ')[-1],
-            opts['PORTAL_URL'].rstrip('/')
-                + u'/organization/' + o['name'],
+            opts['PORTAL_URL'].rstrip('/') + u'/organization/' + o['name'],
             o['package_count']
-            ] + counts[o['id']])
+        ] + counts[o['id']])
 
 
 def prior_month(ym):
@@ -117,5 +117,6 @@ def activities(registry):
             yield act
         offset += len(batch)
     sys.stderr.write(u'activity list ended at %d\n' % offset)
+
 
 main()

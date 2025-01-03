@@ -3,16 +3,17 @@
 import requests
 from lxml import etree
 import json
-import sys
 import os.path
 
-OUTPUT_FILE = os.path.join(os.path.split(__file__)[0],
-    '../ckanext/canada/tables/choices/currency.json')
+OUTPUT_FILE = os.path.join(
+                os.path.split(__file__)[0],
+                '../ckanext/canada/tables/choices/currency.json')
 
 DATA_FR_URL = 'https://fr.iban.com/currency-codes.html'
 DATA_EN_URL = 'https://iban.com/currency-codes.html'
 
 choices = {}
+
 
 def extract_currency_name_dict(url):
     """
@@ -29,6 +30,7 @@ def extract_currency_name_dict(url):
             continue
         out[symbol.strip()] = full_name.strip()
     return out
+
 
 fr_data = extract_currency_name_dict(DATA_FR_URL)
 en_data = extract_currency_name_dict(DATA_EN_URL)

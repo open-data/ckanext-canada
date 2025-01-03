@@ -12,8 +12,8 @@ ckanapi dump users --all | ./user_import_filter.py > users.jsonl
 import sys
 import json
 
-for l in sys.stdin.readlines():
-    o = json.loads(l)
+for line in sys.stdin.readlines():
+    o = json.loads(line)
     if o["display_name"] == 'visitor':
         continue
     print(json.dumps({
@@ -26,4 +26,3 @@ for l in sys.stdin.readlines():
         "password_hash": o["password_hash"],
         "sysadmin": o["sysadmin"],
         }))
-

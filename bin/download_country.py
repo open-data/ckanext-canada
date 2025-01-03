@@ -6,12 +6,15 @@ import json
 import sys
 import os.path
 
-OUTPUT_FILE = os.path.join(os.path.split(__file__)[0],
-    '../ckanext/canada/tables/choices/country.json')
+OUTPUT_FILE = os.path.join(
+                os.path.split(__file__)[0],
+                '../ckanext/canada/tables/choices/country.json')
 
-DATA_URL = 'https://raw.githubusercontent.com/datasets/country-codes/master/data/country-codes.csv'
+DATA_URL = 'https://raw.githubusercontent.com/datasets/'\
+           'country-codes/master/data/country-codes.csv'
 
 choices = {}
+
 
 def download_csv_filter_output(url):
     """

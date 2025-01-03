@@ -13,8 +13,10 @@ REMOVE_COLUMNS = [
 ]
 
 BOM = "\N{bom}"
-PROGRAM_NAMES_FILE = os.path.join(os.path.split(__file__)[0],
-                           '../../ckanext/canada/tables/choices/service_program_names.yaml')
+PROGRAM_NAMES_FILE = os.path.join(
+                        os.path.split(__file__)[0],
+                        '../../ckanext/canada/tables/choices'
+                        '/service_program_names.yaml')
 
 COLUMNS = [
     'fiscal_yr', 'service_id', 'service_name_en', 'service_name_fr',
@@ -56,14 +58,13 @@ def main():
 
         # calculate total number of applications
         row['num_applications_total'] = 0
-        num_fields = [ 'num_applications_by_phone',
-                       'num_applications_online',
-                       'num_applications_in_person',
-                       'num_applications_by_mail',
-                       'num_applications_by_email',
-                       'num_applications_by_fax',
-                       'num_applications_by_other',
-                       ]
+        num_fields = ['num_applications_by_phone',
+                      'num_applications_online',
+                      'num_applications_in_person',
+                      'num_applications_by_mail',
+                      'num_applications_by_email',
+                      'num_applications_by_fax',
+                      'num_applications_by_other',]
         for field in num_fields:
             if row[field] in ['NA', 'ND']:
                 count = 0
@@ -87,5 +88,6 @@ def main():
         row['program_name_fr'] = str(row['program_name_fr'])[1:-1]
 
         writer.writerow(row)
+
 
 main()

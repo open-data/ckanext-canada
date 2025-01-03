@@ -16,23 +16,25 @@ from datetime import datetime
 import argparse
 
 
-
-parser = argparse.ArgumentParser(description="Run warehouse script. By default, it runs on the last 2 backups.")
+parser = argparse.ArgumentParser(
+    description="Run warehouse script. By default, it runs on the last 2 backups.")
 parser.add_argument("fname", help="directory of archived backups")
 parser.add_argument("-a", "--all", action='store_true', help="compare all backups.")
 args = parser.parse_args()
 
 tar_array = sorted(os.listdir(args.fname))
-if args.all == False:
+if args.all is False:
     tar_array = tar_array[-2:]
 
 prev = ''
 curr = ''
 
+
 def get_base(tfile):
     base = os.path.basename(tfile)
     pd_name = os.path.splitext(os.path.splitext(base)[0])[0]
     return pd_name
+
 
 def extract(tfile, dest):
     fpath = './' + dest
@@ -41,21 +43,26 @@ def extract(tfile, dest):
     tar.close()
     return fpath
 
+
 def run_migrations(fpath, temp_dir):
 
     for csvfile in os.listdir(fpath):
         print("Migrating {0} from directory {1}".format(csvfile, fpath))
-        proc = subprocess.Popen(['python', 'migrate_all.py', fpath+'/'+csvfile, temp_dir+'/'+fpath+'m_'+csvfile])
+        proc = subprocess.Popen(
+            ['python', 'migrate_all.py',
+             fpath+'/' + csvfile, temp_dir + '/' + fpath + 'm_' + csvfile])
         if proc.wait():
             sys.exit(1)
+
 
 def csv_diff(prev_csv, curr_csv, endpoint, outfile):
     now = datetime.now()
     dt_string = now.strftime("%Y-%m-%d")
 
     print("Getting difference between {0} and {1}".format(prev_csv, curr_csv))
-    proc = subprocess.Popen(['python', 'csv_diff.py', temp_dir+'/'+prev_csv, temp_dir+'/'+curr_csv, endpoint,
-                             dt_string, outfile])
+    proc = subprocess.Popen(
+        ['python', 'csv_diff.py', temp_dir + '/' + prev_csv, temp_dir + '/' + curr_csv,
+         endpoint, dt_string, outfile])
     if proc.wait():
         sys.exit(1)
 
@@ -97,7 +104,7 @@ while tar_array:
         for curr_csv in curr_array:
             now = datetime.now()
             dt_string = now.strftime("%H:%M:%s")
-            print(dt_string,'\n')
+            print(dt_string, '\n')
             pdfile = curr_csv.split('_')[1]
             pdtype = pdfile.split('.')[0]
             schema = pdtype
@@ -105,8 +112,9 @@ while tar_array:
                 schema = schema.split('-')[0]
             prev_csv_matches = [string for string in prev_array if pdfile in string]
             if prev_csv_matches:
-                csv_diff(prev_csv_matches[0], curr_csv,
-                    'http://open.canada.ca/data/en/recombinant-schema/{0}.json'.format(schema),
+                csv_diff(
+                    prev_csv_matches[0],
+                    curr_csv,
+                    'http://open.canada.ca/data/'
+                    'en/recombinant-schema/{0}.json'.format(schema),
                     'warehouse_reports/{0}_warehouse.csv'.format(pdtype))
-
-
