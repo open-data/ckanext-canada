@@ -13,11 +13,6 @@ check_all:
     - check_all.js
   output: canada_public/%(version)s_check_all.js
 
-csrf:
-  contents:
-    - csrf.js
-  output: canada_public/%(version)s_csrf.js
-
 geomap_zoom:
   contents:
     - geomapzoom.js

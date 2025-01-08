@@ -1,0 +1,19 @@
+{# NOTE: Required for inline white spacing #}
+
+{% set fields = data[field.field_name] %}
+
+{% block subfield_display %}
+  <div>
+    {%- for field_data in fields -%}
+      <p><i class="fa fa-external-link" aria-hidden="true"></i>&nbsp;
+        {%- for subfield in field.repeating_subfields -%}
+          {%- snippet 'scheming/snippets/display_field.html',
+            field=subfield,
+            data=field_data,
+            entity_type=entity_type,
+            object_type=object_type -%}&nbsp;
+        {%- endfor -%}
+      </p>
+    {%- endfor -%}
+  </div>
+{% endblock %}

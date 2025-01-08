@@ -1,5 +1,6 @@
+{% set license = h.get_license(data.license_id) %}
 {% if h.lang() == 'fr' %}
-  <a href="{{ g.pkg.license.url_fra }}">{{ g.pkg.license.title_fra }}</a>
+  <a href="{{ license.url_fra }}">{{ license.title_fra }}</a>
 {% else %}
-  <a href="{{ g.pkg_dict.license_url }}">{{ g.pkg_dict.license_title }}</a>
+  <a href="{{ license.url }}">{{ license.title }}</a>
 {% endif %}

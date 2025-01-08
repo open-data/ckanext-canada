@@ -1,16 +1,23 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+from typing import Optional, Type
 import logging
 import re
+from urllib.parse import urlsplit
 from flask import has_request_context
 import ckan.plugins as p
 from ckan.lib.plugins import DefaultDatasetForm, DefaultTranslation
 import ckan.lib.helpers as hlp
-from ckan.logic import validators as logic_validators
 from ckanext.datastore.interfaces import IDataDictionaryForm
+from ckanext.activity.logic.validators import object_id_validators
 
 from ckan.lib.app_globals import set_app_global
 from ckan.plugins.core import plugin_loaded
+
+from ckan.config.middleware.flask_app import csrf
+from ckanext.datatablesview.blueprint import datatablesview
+
+from frictionless import system, Check, Plugin as FrictionlessPlugin
 
 from ckan.plugins.toolkit import (
     g,
@@ -29,9 +36,7 @@ from ckanext.canada import auth
 from ckanext.canada import helpers
 from ckanext.canada import cli
 from ckanext.canada.pd import get_commands as get_pd_commands
-from ckanext.canada import activity as act
-# type_ignore_reason: importing to proc decorators
-from ckanext.canada import checks  # type: ignore
+from ckanext.canada import checks
 from ckanext.canada import column_types as coltypes
 from ckanext.tabledesigner.interfaces import IColumnTypes
 from ckanext.xloader.interfaces import IXloader
@@ -63,6 +68,25 @@ log = logging.getLogger(__name__)
 fq_portal_release_date_match = re.compile(r"(portal_release_date:\"\[.*\]\")")
 
 
+class CanadaValidationPlugin(FrictionlessPlugin):
+    def select_check_class(self, type: Optional[str] = None) -> Optional[Type[Check]]:
+        """
+        Load custom check classes.
+        """
+        if type == 'ds-headers':
+            return checks.DatastoreHeadersCheck()
+
+    def detect_field_candidates(self, field_candidates: list):
+        """
+        Set list of available types for Resource table fields.
+        """
+        if p.toolkit.asbool(p.toolkit.config.get('ckanext.validation.use_type_guessing', False)):
+            return
+        field_candidates.clear()
+        field_candidates.append({'type':'string'})
+
+
+@p.toolkit.blanket.config_declarations
 class CanadaThemePlugin(p.SingletonPlugin):
 
     p.implements(p.IConfigurer)
@@ -97,6 +121,7 @@ class CanadaThemePlugin(p.SingletonPlugin):
             'canada_check_access',
             'get_user_email',
             'get_loader_status_badge',
+            'validation_status',
             'is_user_locked',
             # Portal
             'user_organizations',
@@ -139,6 +164,7 @@ class CanadaThemePlugin(p.SingletonPlugin):
             'search_filter_pill_link_label',
             'release_date_facet_start_year',
             'ckan_to_cdts_breadcrumbs',
+            'available_purge_types',
             'operations_guide_link',
             'max_resources_per_dataset',
         ])
@@ -166,7 +192,9 @@ class CanadaSecurityPlugin(CkanSecurityPlugin):
         config['ckan.auth.user_delete_organizations'] = True
         config['ckan.auth.create_user_via_web'] = plugin_loaded('canada_internal')  # /user/register view only on registry
         # Set auth settings
-        config['ckan.auth.roles_that_cascade_to_sub_groups'] = 'admin'
+        config['ckan.auth.roles_that_cascade_to_sub_groups'] = ['admin']
+
+        csrf.exempt(datatablesview)
 
     def before_create(self, context, resource):
         """
@@ -178,6 +206,18 @@ class CanadaSecurityPlugin(CkanSecurityPlugin):
         """
         Override before_update from CkanSecurityPlugin.
         Want to use the methods in scheming instead of before_update.
+        """
+
+    def before_resource_create(self, context, resource):
+        """
+        Override before_resource_create from CkanSecurityPlugin.
+        Want to use the methods in scheming instead of before_resource_create.
+        """
+
+    def before_resource_update(self, context, current, resource):
+        """
+        Override before_resource_update from CkanSecurityPlugin.
+        Want to use the methods in scheming instead of before_resource_update.
         """
 
     def get_validators(self):
@@ -304,13 +344,23 @@ class CanadaDatasetsPlugin(SchemingDatasetsPlugin):
 
     def can_validate(self, context, resource):
         """
-        Only uploaded resources are allowed to be validated
+        Only uploaded resources are allowed to be validated, or allowed domain sources.
         """
-        return resource.get(u'url_type') == u'upload'
+        if resource.get('url_type') == 'upload':
+            return True
+
+        if not resource.get('url_type'):
+            allowed_domains = p.toolkit.config.get('ckanext.canada.datastore_source_domain_allow_list', [])
+            url = resource.get('url')
+            url_parts = urlsplit(url)
+            if url_parts.netloc in allowed_domains:
+                return True
+
+        return False
 
 
     # IPackageController
-    def before_search(self, search_params):
+    def before_dataset_search(self, search_params):
         # We're going to group portal_release_date into two bins - to today and
         # after today.
         search_params['facet.range'] = 'portal_release_date'
@@ -349,7 +399,7 @@ class CanadaDatasetsPlugin(SchemingDatasetsPlugin):
 
 
     # IPackageController
-    def after_search(self, search_results, search_params):
+    def after_dataset_search(self, search_results, search_params):
         for result in search_results.get('results', []):
             for extra in result.get('extras', []):
                 if extra.get('key') in ['title_fra', 'notes_fra']:
@@ -359,7 +409,7 @@ class CanadaDatasetsPlugin(SchemingDatasetsPlugin):
 
 
     # IPackageController
-    def before_index(self, data_dict):
+    def before_dataset_index(self, data_dict):
         kw = json.loads(data_dict.get('extras_keywords', '{}'))
         data_dict['keywords'] = kw.get('en', [])
         data_dict['keywords_fra'] = kw.get('fr', kw.get('fr-t-en', []))
@@ -404,8 +454,15 @@ class CanadaDatasetsPlugin(SchemingDatasetsPlugin):
             data_dict['status'] = status[-1]['reason'] if status else 'department_contacted'
 
         if data_dict.get('credit'):
-            for cr in data_dict['credit']:
+            for i, cr in enumerate(data_dict['credit']):
                 cr.pop('__extras', None)
+                # credit is a string multiValue in SOLR, need to json stringify for SOLR 9+
+                data_dict['credit'][i] = json.dumps(cr)
+
+        if data_dict.get('relationship'):
+            data_dict['related_relationship'] = [rel['related_relationship'] for rel in data_dict['relationship']]
+            data_dict['related_type'] = [rel['related_type'] for rel in data_dict['relationship']]
+        data_dict.pop('relationship', None)
 
         return data_dict
 
@@ -437,15 +494,14 @@ class DataGCCAInternal(p.SingletonPlugin):
         config.update({
             "ckan.user_list_limit": 250
         })
-        # registry includes validation so use real validation presets
-        config['scheming.presets'] = """
-ckanext.scheming:presets.json
-ckanext.fluent:presets.json
-ckanext.canada:schemas/presets.yaml
-""" + (
-	"ckanext.validation:presets.json" if "validation" in config['ckan.plugins'] else
-	"ckanext.canada:schemas/validation_placeholder_presets.yaml"
-)
+
+        # CKAN 2.10 plugin loading does not allow us to set the schema
+        # files in update_config in a way that the load order will work fully.
+        scheming_presets = config.get('scheming.presets', '')
+        assert 'ckanext.scheming:presets.json' in scheming_presets
+        assert 'ckanext.fluent:presets.json' in scheming_presets
+        assert 'ckanext.canada:schemas/presets.yaml' in scheming_presets
+        assert 'ckanext.validation:presets.json' in scheming_presets
 
         # Include private datasets in Feeds
         config['ckan.feeds.include_private'] = True
@@ -473,6 +529,9 @@ ckanext.canada:schemas/presets.yaml
                     raise e
         if db.upsert_data.__name__ == 'upsert_data':
             db.upsert_data = patched_upsert_data
+
+        # register custom frictionless plugin
+        system.register('canada-validation', CanadaValidationPlugin())
 
     # IPackageController
     def create(self, pkg):
@@ -522,16 +581,28 @@ ckanext.canada:schemas/presets.yaml
     # IXloader
 
     def can_upload(self, resource_id):
+        """
+        Only uploaded resources are allowed to be xloadered, or allowed domain sources.
+        """
 
         # check if file is uploded
         try:
             res = p.toolkit.get_action(u'resource_show')({'ignore_auth': True},
                                                          {'id': resource_id})
 
-            if res.get('url_type', None) != 'upload':
-                log.error(
-                    'Only uploaded resources can be added to the Data Store.')
+            if res.get('url_type') != 'upload' and res.get('url_type') != '' and res.get('url_type') is not None:
+                log.debug(
+                    'Only uploaded resources and allowed domain sources can be added to the Data Store.')
                 return False
+
+            if not res.get('url_type'):
+                allowed_domains = p.toolkit.config.get('ckanext.canada.datastore_source_domain_allow_list', [])
+                url = res.get('url')
+                url_parts = urlsplit(url)
+                if url_parts.netloc not in allowed_domains:
+                    log.debug(
+                        'Only uploaded resources and allowed domain sources can be added to the Data Store.')
+                    return False
 
         except ObjectNotFound:
             log.error('Resource %s does not exist.' % resource_id)
@@ -640,43 +711,45 @@ class DataGCCAPublic(p.SingletonPlugin, DefaultTranslation):
     # IConfigurer
     def update_config(self, config):
         config['ckan.auth.public_user_details'] = False
-        config['recombinant.definitions'] = """
-ckanext.canada:tables/ati.yaml
-ckanext.canada:tables/briefingt.yaml
-ckanext.canada:tables/qpnotes.yaml
-ckanext.canada:tables/contracts.yaml
-ckanext.canada:tables/contractsa.yaml
-ckanext.canada:tables/grants.yaml
-ckanext.canada:tables/hospitalityq.yaml
-ckanext.canada:tables/reclassification.yaml
-ckanext.canada:tables/travela.yaml
-ckanext.canada:tables/travelq.yaml
-ckanext.canada:tables/wrongdoing.yaml
-ckanext.canada:tables/inventory.yaml
-ckanext.canada:tables/consultations.yaml
-ckanext.canada:tables/service.yaml
-ckanext.canada:tables/dac.yaml
-ckanext.canada:tables/nap5.yaml
-ckanext.canada:tables/experiment.yaml
-ckanext.canada:tables/adminaircraft.yaml
 
-"""
+        recombinant_definitions = config.get('recombinant.definitions', '')
+        assert 'ckanext.canada:tables/ati.yaml' in recombinant_definitions
+        assert 'ckanext.canada:tables/briefingt.yaml' in recombinant_definitions
+        assert 'ckanext.canada:tables/qpnotes.yaml' in recombinant_definitions
+        assert 'ckanext.canada:tables/contracts.yaml' in recombinant_definitions
+        assert 'ckanext.canada:tables/contractsa.yaml' in recombinant_definitions
+        assert 'ckanext.canada:tables/grants.yaml' in recombinant_definitions
+        assert 'ckanext.canada:tables/hospitalityq.yaml' in recombinant_definitions
+        assert 'ckanext.canada:tables/reclassification.yaml' in recombinant_definitions
+        assert 'ckanext.canada:tables/travela.yaml' in recombinant_definitions
+        assert 'ckanext.canada:tables/travelq.yaml' in recombinant_definitions
+        assert 'ckanext.canada:tables/wrongdoing.yaml' in recombinant_definitions
+        assert 'ckanext.canada:tables/inventory.yaml' in recombinant_definitions
+        assert 'ckanext.canada:tables/consultations.yaml' in recombinant_definitions
+        assert 'ckanext.canada:tables/service.yaml' in recombinant_definitions
+        assert 'ckanext.canada:tables/dac.yaml' in recombinant_definitions
+        assert 'ckanext.canada:tables/nap5.yaml' in recombinant_definitions
+        assert 'ckanext.canada:tables/experiment.yaml' in recombinant_definitions
+        assert 'ckanext.canada:tables/adminaircraft.yaml' in recombinant_definitions
+
         config['ckan.search.show_all_types'] = True
         config['ckan.gravatar_default'] = 'disabled'
         config['search.facets.limit'] = 200  # because org list
-        if 'validation' not in config.get('scheming.presets', ''):
-            config['scheming.presets'] = """
-ckanext.scheming:presets.json
-ckanext.fluent:presets.json
-ckanext.canada:schemas/presets.yaml
-ckanext.canada:schemas/validation_placeholder_presets.yaml
-"""
-        config['scheming.dataset_schemas'] = """
-ckanext.canada:schemas/dataset.yaml
-ckanext.canada:schemas/info.yaml
-ckanext.canada:schemas/prop.yaml
-"""
-        config['scheming.organization_schemas'] = 'ckanext.canada:schemas/organization.yaml'
+
+        scheming_presets = config.get('scheming.presets', '')
+        if 'validation' not in scheming_presets:
+            assert 'ckanext.scheming:presets.json' in scheming_presets
+            assert 'ckanext.fluent:presets.json' in scheming_presets
+            assert 'ckanext.canada:schemas/presets.yaml' in scheming_presets
+            assert 'ckanext.canada:schemas/validation_placeholder_presets.yaml' in scheming_presets
+
+        scheming_dataset_schemas = config.get('scheming.dataset_schemas', '')
+        assert 'ckanext.canada:schemas/dataset.yaml' in scheming_dataset_schemas
+        assert 'ckanext.canada:schemas/info.yaml' in scheming_dataset_schemas
+        assert 'ckanext.canada:schemas/prop.yaml' in scheming_dataset_schemas
+
+        scheming_organization_schemas = config.get('scheming.organization_schemas', '')
+        assert 'ckanext.canada:schemas/organization.yaml' in scheming_organization_schemas
 
         # Pretty output for Feeds
         config['ckan.feeds.pretty'] = True
@@ -695,10 +768,11 @@ ckanext.canada:schemas/prop.yaml
 
         # migration from `canada_activity` and `ckanext-extendedactivity` - Aug 2022
         # migrated from `ckan` canada fork for resource view activities - Jan 2024
-        logic_validators.object_id_validators.update({
-            'new resource view': logic_validators.package_id_exists,
-            'changed resource view': logic_validators.package_id_exists,
-            'deleted resource view': logic_validators.package_id_exists,
+        # migrated from `activity` for ckan 2.10 upgrade - June 2024
+        object_id_validators.update({
+            'new resource view': 'package_id_exists',
+            'changed resource view': 'package_id_exists',
+            'deleted resource view': 'package_id_exists',
         })
 
     # IFacets
@@ -739,7 +813,6 @@ ckanext.canada:schemas/prop.yaml
     # IActions
     def get_actions(self):
         return {
-                'recently_changed_packages_activity_list': act.recently_changed_packages_activity_list,  #TODO: Remove this action override in CKAN 2.10 upgrade
                 'resource_view_show': logic.canada_resource_view_show,
                 'resource_view_list': logic.canada_resource_view_list,
                 'job_list': logic.canada_job_list,
@@ -754,6 +827,7 @@ ckanext.canada:schemas/prop.yaml
             'datastore_upsert': auth.datastore_upsert,
             'view_org_members': auth.view_org_members,
             'registry_jobs_running': auth.registry_jobs_running,
+            'recently_changed_packages_activity_list': auth.recently_changed_packages_activity_list,
         }
 
     # IMiddleware
@@ -831,8 +905,6 @@ class DataGCCAForms(p.SingletonPlugin, DefaultDatasetForm):
                 validators.protect_portal_release_date,
             'canada_copy_from_org_name':
                 validators.canada_copy_from_org_name,
-            'canada_non_related_required':
-                validators.canada_non_related_required,
             'canada_maintainer_email_default':
                 validators.canada_maintainer_email_default,
             'user_read_only':

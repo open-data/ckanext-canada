@@ -2,6 +2,7 @@ from ckan.logic.action import get as core_get
 from ckan.logic.validators import isodate, Invalid
 from ckan.lib.dictization import model_dictize
 from ckan import model
+from ckanext.activity.model import Activity, activity
 from contextlib import contextmanager
 
 from redis import ConnectionPool, Redis
@@ -56,7 +57,7 @@ ottawa_tz = timezone('America/Montreal')
 
 JOB_MAPPING = {
     'ckanext.validation.jobs.run_validation_job': {
-        'icon': 'fa-check-circle',
+        'icon': 'fa-check',
         'rid': lambda job_args: job_args.get('id'),
     },
     'ckanext.validation.plugin._remove_unsupported_resource_validation_reports': {
@@ -64,7 +65,7 @@ JOB_MAPPING = {
         'rid': lambda job_args: job_args,
     },
     'ckanext.xloader.jobs.xloader_data_into_datastore': {
-        'icon': 'fa-cloud-upload',
+        'icon': 'fa-cloud-arrow-up',
         'rid': lambda job_args: job_args.get('metadata', {}).get('resource_id'),
     },
     'ckanext.xloader.plugin._remove_unsupported_resource_from_datastore': {
@@ -201,14 +202,14 @@ def _changed_packages_activity_timestamp_since(since, limit):
     'deleted resource view' activities for the whole site.
 
     '''
-    q = model.Session.query(model.Activity.object_id.label('object_id'),
-                            func.max(model.Activity.timestamp).label(
+    q = model.Session.query(Activity.object_id.label('object_id'),
+                            func.max(Activity.timestamp).label(
                                 'timestamp'))
-    q = q.filter(or_(model.Activity.activity_type.endswith('package'),  # Package create, update, delete
-                     model.Activity.activity_type.endswith('view'),  # Resource View create, update, delete
-                     model.Activity.activity_type.endswith('created datastore')))  # DataStore create & Data Dictionary update
-    q = q.filter(model.Activity.timestamp > since)
-    q = q.group_by(model.Activity.object_id)
+    q = q.filter(or_(Activity.activity_type.endswith('package'),  # Package create, update, delete
+                     Activity.activity_type.endswith('view'),  # Resource View create, update, delete
+                     Activity.activity_type.endswith('created datastore')))  # DataStore create & Data Dictionary update
+    q = q.filter(Activity.timestamp > since)
+    q = q.group_by(Activity.object_id)
     q = q.order_by('timestamp')
     return q.limit(limit)
 
@@ -222,9 +223,9 @@ def _activities_from_user_list_since(since, limit,user_id):
 
     '''
 
-    q = model.activity._activities_from_user_query(user_id)
-    q = q.order_by(model.Activity.timestamp)
-    q = q.filter(model.Activity.timestamp > since)
+    q = activity._activities_from_user_query(user_id)
+    q = q.order_by(Activity.timestamp)
+    q = q.filter(Activity.timestamp > since)
     return q.limit(limit)
 
 
@@ -469,7 +470,7 @@ def canada_job_list(up_func, context, data_dict):
             icon = JOB_MAPPING[job_obj.func_name]['icon']
         else:
             job_title = _('Unknown Job')
-            icon = 'fa-circle-o-notch'
+            icon = 'fa-circle-notch'
 
         job_info = {}
         if not job_kwargs and job_obj.func_name == 'ckan.lib.search.jobs.reindex_packages':

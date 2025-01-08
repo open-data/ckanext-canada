@@ -68,7 +68,7 @@
       },
       buttons: [
         'colvis',
-        {extend:"selected",text:"{{_('Edit in Excel')}}",action: function ( e, dt, button, config ){
+        {extend:"selected",text:"{{_('Edit in Excel')}}",className:"canada-wet-datatable-btn-primary",action: function ( e, dt, button, config ){
             // closing form tag needed for py webtest lib
             var form = $('<form></form>',{
               action : "{{ h.url_for('recombinant.template', dataset_type=dataset_type, lang=h.lang(), owner_org=owner_org) }}",
@@ -81,8 +81,8 @@
             }));
             form.append($('<input>').attr({
               type: 'hidden',
-              value: "{{request.cookies.token}}",
-              name: 'token'
+              value: "{{- csrf_token() -}}",
+              name: '{{- g.csrf_field_name -}}'
             }));
             form.append($('<input>').attr({
               type: 'hidden',
@@ -102,7 +102,7 @@
             });
             form.appendTo('body').submit();
         }},
-        {extend:"selected",text:"{{_('Delete records')}}",action: function ( e, dt, button, config ){
+        {extend:"selected",text:"{{_('Delete records')}}",className:"canada-wet-datatable-btn-danger",action: function ( e, dt, button, config ){
             // closing form tag needed for py webtest lib
             var form = $('<form></form>',{
               action : "{{ h.url_for('canada.delete_selected_records', resource_id=resource_id) }}",
@@ -115,8 +115,8 @@
             }));
             form.append($('<input>').attr({
               type: 'hidden',
-              value: "{{request.cookies.token}}",
-              name: 'token'
+              value: "{{- csrf_token() -}}",
+              name: '{{- g.csrf_field_name -}}'
             }));
             form.append($('<input>').attr({
               type: 'hidden',
