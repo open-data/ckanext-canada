@@ -79,7 +79,7 @@ jobs:
             pip install -e 'git+https://github.com/ckan/ckanapi.git#egg=ckanapi' -r 'https://raw.githubusercontent.com/ckan/ckanapi/master/requirements.txt'
             pip install -e . -r .\/requirements.txt -r .\/test-requirements.txt
             pip install -e 'git+https://github.com/ckan/ckanext-fluent.git#egg=ckanext-fluent' -r 'https://raw.githubusercontent.com/ckan/ckanext-fluent/master/requirements.txt'
-            pip install -e 'git+https://github.com/open-data/ckanext-recombinant.git@canada-v2.10#egg=ckanext-recombinant' -r 'https://raw.githubusercontent.com/open-data/ckanext-recombinant/canada-v2.10/requirements.txt'
+            pip install -e 'git+https://github.com/open-data/ckanext-recombinant.git@master#egg=ckanext-recombinant' -r 'https://raw.githubusercontent.com/open-data/ckanext-recombinant/master/requirements.txt'
             pip install -e 'git+https://github.com/ckan/ckanext-scheming.git#egg=ckanext-scheming'
             pip install -e 'git+https://github.com/open-data/ckanext-validation.git@canada-v2.10#egg=ckanext-validation' -r 'https://raw.githubusercontent.com/open-data/ckanext-validation/canada-v2.10/requirements.txt' -r 'https://raw.githubusercontent.com/open-data/ckanext-validation/canada-v2.10/dev-requirements.txt'
             pip install -e 'git+https://github.com/open-data/ckanext-xloader.git@canada-v2.10#egg=ckanext-xloader' -r 'https://raw.githubusercontent.com/open-data/ckanext-xloader/canada-v2.10/requirements.txt' -r 'https://raw.githubusercontent.com/open-data/ckanext-xloader/canada-v2.10/dev-requirements.txt'
