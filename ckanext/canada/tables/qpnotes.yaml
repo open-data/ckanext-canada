@@ -6,6 +6,7 @@ shortname: Question Period Notes
 notes: Access, upload and modify Question Period notes for your organization
 
 template_version: 3
+template_updated: 2025-01-10
 
 portal_type: info
 collection: qpnotes
@@ -95,6 +96,8 @@ resources:
     datastore_type: text
     excel_full_text_choices: True
     choices_file: choices/minister.json
+    choices_filter:
+    - GG
     excel_error_formula: 'FALSE'
 
   # 3.5
