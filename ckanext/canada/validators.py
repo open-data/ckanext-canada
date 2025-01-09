@@ -112,9 +112,9 @@ def user_read_only_json(key: FlattenKey,
 
     if hasattr(package, key[0]):
         data[key] = json.loads(getattr(package, key[0]))
-    elif hasattr(package, 'extras'):
+    elif package and hasattr(package, 'extras'):
         # type_ignore_reason: checking attribute
-        data[key] = json.loads(package.extras.get(key[0], 'None'))  # type: ignore
+        data[key] = json.loads(package.extras.get(key[0], 'null'))
 
 
 def canada_tags(value: Any, context: Context):

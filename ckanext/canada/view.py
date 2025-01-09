@@ -61,10 +61,13 @@ from ckan.views.admin import _get_sysadmins
 from ckan.authz import is_sysadmin
 from ckan.logic import (
     parse_params,
+    tuplize_dict,
+    clean_dict,
     ValidationError,
     NotFound,
     NotAuthorized
 )
+from ckan.lib.navl.dictization_functions import unflatten
 
 from ckanext.recombinant.datatypes import canonicalize
 from ckanext.recombinant.tables import get_chromo
@@ -238,22 +241,12 @@ class CanadaResourceCreateView(ResourceCreateView):
 
 class CanadaUserRegisterView(UserRegisterView):
     def post(self):
-        params = parse_params(request.form)
-        email = params.get('email', '')
-        if isinstance(email, list):
-            email = email[0]
-        fullname = params.get('fullname', '')
-        if isinstance(fullname, list):
-            fullname = fullname[0]
-        username = params.get('name', '')
-        if isinstance(username, list):
-            username = username[0]
-        phoneno = params.get('phoneno', '')
-        if isinstance(phoneno, list):
-            phoneno = phoneno[0]
-        dept = params.get('department', '')
-        if isinstance(dept, list):
-            dept = dept[0]
+        data = clean_dict(unflatten(tuplize_dict(parse_params(request.form))))
+        email = data.get('email', '')
+        fullname = data.get('fullname', '')
+        username = data.get('name', '')
+        phoneno = data.get('phoneno', '')
+        dept = data.get('department', '')
         response = super(CanadaUserRegisterView, self).post()
         if hasattr(response, 'status_code'):
             # type_ignore_reason: checking attribute
@@ -857,18 +850,16 @@ def ckanadmin_publish_datasets():
         abort(403, _('Not authorized to see this page'))
 
     lc = LocalCKAN(username=g.user)
-    params = parse_params(request.form)
+    data = clean_dict(unflatten(tuplize_dict(parse_params(request.form))))
 
-    publish_date = params.get('publish_date', '')
-    if isinstance(publish_date, list):
-        publish_date = publish_date[0]
+    publish_date = data.get('publish_date', '')
     if not publish_date:
         h.flash_error(_('Invalid publish date'))
         return h.redirect_to('canada.ckanadmin_publish')
     publish_date = date_str_to_datetime(publish_date).strftime("%Y-%m-%d %H:%M:%S")
 
     # get a list of package id's from the for POST data
-    publish_packages = params.get('publish', [])
+    publish_packages = data.get('publish', [])
     if isinstance(publish_packages, string_types):
         publish_packages = [publish_packages]
     count = len(publish_packages)

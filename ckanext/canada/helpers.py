@@ -5,7 +5,18 @@ import json
 import re
 import inspect
 from urllib.parse import urlsplit
-from ckan.plugins.toolkit import config, _, h, g, request
+from ckan.plugins.toolkit import (
+    config,
+    asbool,
+    aslist,
+    get_action,
+    _,
+    h,
+    g,
+    request,
+    ObjectNotFound,
+    NotAuthorized
+)
 from ckan.model import User, Package
 from ckanext.activity.model import Activity
 import ckan.model as model
@@ -17,15 +28,12 @@ from six import text_type
 from bs4 import BeautifulSoup
 from ckan import plugins
 
-from ckanapi import NotFound
-import ckan.plugins.toolkit as t
 from ckanext.scheming.helpers import scheming_get_preset
 import dateutil.parser
 import geomet.wkt as wkt
 from markupsafe import Markup, escape
 from ckan.lib.helpers import core_helper
 from ckan.plugins.core import plugin_loaded
-from ckan.logic import NotAuthorized
 import ckan.lib.datapreview as datapreview
 
 from ckanext.recombinant.tables import get_chromo
@@ -227,8 +235,7 @@ def canada_date_str_to_datetime(date_str: str) -> 'datetime.datetime':
         if not m:
             raise ValueError('Unable to parse %s as seconds.microseconds' %
                              time_tuple[5])
-        # type_ignore_reason: incomplete typing
-        seconds = int(m.groupdict().get('seconds'))  # type: ignore
+        seconds = int(m.groupdict()['seconds'])
         microseconds = int((str(m.groupdict(0).get('microseconds')) + '00000')[0:6])
         time_tuple = time_tuple[:5] + [seconds, microseconds]
 
@@ -250,11 +257,10 @@ def get_license(license_id: str) -> License:
 
 def normalize_strip_accents(s: Union[str, bytes]) -> str:
     """
-    utility function to help with sorting our French strings
+    Utility function to help with sorting our French strings
     """
-    if isinstance(s, str):
-        return s
-    s = s.decode('utf-8')
+    if isinstance(s, bytes):
+        s = s.decode('utf-8')
     if not s:
         s = ''
     s = unicodedata.normalize('NFD', s)
@@ -467,7 +473,7 @@ def get_datapreview_recombinant(resource_name: str,
         fields.append(out)
         fids.append(f['datastore_id'])
 
-    pkids = [fids.index(k) for k in t.aslist(chromo['datastore_primary_key'])]
+    pkids = [fids.index(k) for k in aslist(chromo['datastore_primary_key'])]
     return h.snippet('package/wet_datatable.html',
                      resource_name=resource_name,
                      resource_id=resource_id,
@@ -508,7 +514,7 @@ def json_loads(value: str) -> Dict[str, Any]:
 
 
 def get_datapreview(res_id: str) -> str:
-    dsq_results = t.get_action('datastore_search')(
+    dsq_results = get_action('datastore_search')(
         cast(Context, {}), {'resource_id': res_id, 'limit': 100})
     return h.snippet('package/wet_datatable.html',
                      ds_fields=dsq_results['fields'],
@@ -616,7 +622,7 @@ def get_timeout_length() -> int:
 def canada_check_access(package_id: str) -> bool:
     try:
         return h.check_access('package_update', {'id': package_id})
-    except NotFound:
+    except ObjectNotFound:
         return False
 
 
@@ -637,13 +643,13 @@ def get_user_email(user_id: str) -> str:
 
     try:
         data_dict = {'id': user_id}
-        user_dict = t.get_action('user_show')(context, data_dict)
+        user_dict = get_action('user_show')(context, data_dict)
 
         if 'email' in user_dict:
             return user_dict['email']
         else:
             return ""
-    except NotFound:
+    except ObjectNotFound:
         return ""
 
 
@@ -652,15 +658,15 @@ core_helper(plugin_loaded)
 
 def organization_member_count(id: str) -> int:
     try:
-        members = t.get_action('member_list')(
+        members = get_action('member_list')(
             cast(Context, {}),
             {
                 'id': id,
                 'object_type': 'user',
                 'include_total': True
             })
-    except NotFound:
-        raise NotFound(_('Members not found'))
+    except ObjectNotFound:
+        raise ObjectNotFound(_('Members not found'))
     except NotAuthorized:
         return -1
 
@@ -716,10 +722,10 @@ def flash_notice(message: str, allow_html: Optional[bool] = True):
 
     Adding the view/action caller for GA4 Custom Events
     """
-    t.h.flash(_build_flash_html_for_ga4(message, 'notice',
-                                        _get_caller_info(inspect.stack()),
-                                        allow_html=allow_html),
-              category='alert-info')
+    h.flash(_build_flash_html_for_ga4(message, 'notice',
+                                      _get_caller_info(inspect.stack()),
+                                      allow_html=allow_html),
+            category='alert-info')
 
 
 def flash_error(message: str, allow_html: Optional[bool] = True):
@@ -728,10 +734,10 @@ def flash_error(message: str, allow_html: Optional[bool] = True):
 
     Adding the view/action caller for GA4 Custom Events
     """
-    t.h.flash(_build_flash_html_for_ga4(message, 'error',
-                                        _get_caller_info(inspect.stack()),
-                                        allow_html=allow_html),
-              category='alert-danger')
+    h.flash(_build_flash_html_for_ga4(message, 'error',
+                                      _get_caller_info(inspect.stack()),
+                                      allow_html=allow_html),
+            category='alert-danger')
 
 
 def flash_success(message: str, allow_html: Optional[bool] = True):
@@ -740,10 +746,10 @@ def flash_success(message: str, allow_html: Optional[bool] = True):
 
     Adding the view/action caller for GA4 Custom Events
     """
-    t.h.flash(_build_flash_html_for_ga4(message, 'success',
-                                        _get_caller_info(inspect.stack()),
-                                        allow_html=allow_html),
-              category='alert-success')
+    h.flash(_build_flash_html_for_ga4(message, 'success',
+                                      _get_caller_info(inspect.stack()),
+                                      allow_html=allow_html),
+            category='alert-success')
 
 
 def get_loader_status_badge(resource: Dict[str, Any]) -> Union[Markup, str]:
@@ -751,7 +757,7 @@ def get_loader_status_badge(resource: Dict[str, Any]) -> Union[Markup, str]:
     Displays a custom badge for the status of Xloader and DataStore
     for the specified resource.
     """
-    if not t.asbool(config.get('ckanext.canada.show_loader_badges', False)):
+    if not asbool(config.get('ckanext.canada.show_loader_badges', False)):
         return ''
 
     if not XLoaderFormats:
@@ -772,9 +778,9 @@ def get_loader_status_badge(resource: Dict[str, Any]) -> Union[Markup, str]:
     is_datastore_active = resource.get('datastore_active', False)
 
     try:
-        xloader_job = t.get_action("xloader_status")(
+        xloader_job = get_action("xloader_status")(
             cast(Context, {}), {"resource_id": resource.get('id')})
-    except (t.ObjectNotFound, t.NotAuthorized):
+    except (ObjectNotFound, NotAuthorized):
         xloader_job = {}
 
     if xloader_job.get('status') == 'complete':
@@ -804,15 +810,15 @@ def get_loader_status_badge(resource: Dict[str, Any]) -> Union[Markup, str]:
         'unknown': _('DataStore status unknown'),
     }
 
-    pusher_url = t.h.url_for('xloader.resource_data',
-                             id=resource.get('package_id'),
-                             resource_id=resource.get('id'))
+    pusher_url = h.url_for('xloader.resource_data',
+                           id=resource.get('package_id'),
+                           resource_id=resource.get('id'))
 
-    badge_url = t.h.url_for_static(
+    badge_url = h.url_for_static(
         '/static/img/badges/{lang}/datastore-{status}.svg'.format(
-            lang=t.h.lang(), status=status))
+            lang=h.lang(), status=status))
 
-    title = t.h.render_datetime(xloader_job.get('last_updated'), with_hours=True) \
+    title = h.render_datetime(xloader_job.get('last_updated'), with_hours=True) \
         if xloader_job.get('last_updated') else ''
 
     # type_ignore_reason: incomplete typing
@@ -832,9 +838,9 @@ def get_resource_view(resource_view_id: str) -> Optional[Dict[str, Any]]:
     Returns a resource view dict for the resource_view_id
     """
     try:
-        return t.get_action('resource_view_show')(
+        return get_action('resource_view_show')(
             {}, {'id': resource_view_id})
-    except t.ObjectNotFound:
+    except ObjectNotFound:
         return None
 
 
@@ -1011,11 +1017,11 @@ def ckan_to_cdts_breadcrumbs(breadcrumb_content: str) -> List[Dict[str, Any]]:
 
 def validation_status(resource_id: str) -> str:
     try:
-        validation = t.get_action('resource_validation_show')(
+        validation = get_action('resource_validation_show')(
             {'ignore_auth': True},
             {'resource_id': resource_id})
         return validation.get('status')
-    except (t.ObjectNotFound, KeyError):
+    except (ObjectNotFound, KeyError):
         return 'unknown'
 
 
@@ -1024,7 +1030,7 @@ def is_user_locked(user_name: str) -> Optional[bool]:
     Returns whether the user is locked out of their account or not.
     """
     try:
-        throttle = t.get_action('security_throttle_user_show')(
+        throttle = get_action('security_throttle_user_show')(
             {'user': g.user}, {'user': user_name})
     except (NotAuthorized, KeyError):
         return None

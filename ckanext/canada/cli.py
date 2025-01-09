@@ -713,45 +713,25 @@ def _load_suggested(use_created_date: bool, filename: str):
             "state": "active",
             "id": uuid,
             "title_translated": {
-                # type_ignore_reason: checking existance
-                'en': str(row['title_en'],  # type: ignore
-                          'utf-8') if row['title_en'] else '',
-                # type_ignore_reason: checking existance
-                'fr': str(row['title_fr'],  # type: ignore
-                          'utf-8') if row['title_fr'] else ''
+                'en': row['title_en'],
+                'fr': row['title_fr']
             },
             "owner_org": row['organization'],
             "notes_translated": {
-                # type_ignore_reason: checking existance
-                'en': str(row['description_en'],  # type: ignore
-                          'utf-8') if
-                row['description_en'] else '',
-                # type_ignore_reason: checking existance
-                'fr': str(row['description_fr'],  # type: ignore
-                          'utf-8') if
-                row['description_fr'] else ''
+                'en': row['description_en'],
+                'fr': row['description_fr'],
             },
             "comments": {
-                # type_ignore_reason: checking existance
-                'en': str(row['additional_comments_and_feedback_en'],  # type: ignore
-                          'utf-8') if
-                row['additional_comments_and_feedback_en'] else '',
-                # type_ignore_reason: checking existance
-                'fr': str(row['additional_comments_and_feedback_fr'],  # type: ignore
-                          'utf-8') if
-                row['additional_comments_and_feedback_fr'] else ''
+                'en': row['additional_comments_and_feedback_en'],
+                'fr': row['additional_comments_and_feedback_fr'],
             },
             "reason": row['reason'],
             "subject": row['subject'].split(',') if
             row['subject'] else ['information_and_communications'],
             "keywords": {
-                # type_ignore_reason: checking existance
-                'en': str(row['keywords_en'],  # type: ignore
-                          'utf-8').split(',') if
+                'en': row['keywords_en'].split(',') if
                 row['keywords_en'] else ['dataset'],
-                # type_ignore_reason: checking existance
-                'fr': str(row['keywords_fr'],  # type: ignore
-                          'utf-8').split(',') if
+                'fr': row['keywords_fr'].split(',') if
                 row['keywords_fr'] else ['Jeu de données'],
             },
             "date_submitted": row['date_created'],
@@ -762,14 +742,10 @@ def _load_suggested(use_created_date: bool, filename: str):
                 "date": row['dataset_released_date'] if
                 row['dataset_released_date'] else today,
                 "comments": {
-                    # type_ignore_reason: checking existance
-                    'en': str(row['dataset_suggestion_status_link'],  # type: ignore
-                              'utf-8') if
+                    'en': row['dataset_suggestion_status_link'] if
                     row['dataset_suggestion_status_link'] else
                     'Status imported from previous ‘suggest a dataset’ system',
-                    # type_ignore_reason: checking existance
-                    'fr': str(row['dataset_suggestion_status_link'],  # type: ignore
-                              'utf-8') if
+                    'fr': row['dataset_suggestion_status_link'] if
                     row['dataset_suggestion_status_link'] else
                     'État importé du système précédent « Proposez un jeu de données »',
                 }
@@ -1449,7 +1425,7 @@ def copy_datasets(mirror: Optional[bool] = False,
 
 
 @canada.command(short_help="Lists changed records.")
-@click.argument("since_date")
+@click.argument("since_date", required=True)
 @click.option(
     "-s",
     "--server",

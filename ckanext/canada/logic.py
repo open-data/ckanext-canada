@@ -345,16 +345,15 @@ def canada_guess_mimetype(context: Context, data_dict: DataDict) -> str:
         fmt_choices = []
         if preset_field and 'choices' in preset_field:
             fmt_choices = preset_field['choices']
-        if fmt_choices:
-            for f in fmt_choices:
-                if 'mimetype' in f and mimetype == f['mimetype']:
-                    # core unified_resource_format may not have all of our
-                    # scheming mimetype choices.
-                    mimetype = f['value']
-                if 'replaces' in f:
-                    for r in f['replaces']:
-                        if mimetype.lower() == r.lower():
-                            mimetype = f['value']
+        for f in fmt_choices:
+            if 'mimetype' in f and mimetype == f['mimetype']:
+                # core unified_resource_format may not have all of our
+                # scheming mimetype choices.
+                mimetype = f['value']
+            if 'replaces' in f:
+                for r in f['replaces']:
+                    if mimetype.lower() == r.lower():
+                        mimetype = f['value']
 
     if not mimetype:
         # raise the ValidationError here so that the
