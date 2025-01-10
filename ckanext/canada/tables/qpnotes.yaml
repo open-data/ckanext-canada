@@ -96,7 +96,7 @@ resources:
     datastore_type: text
     excel_full_text_choices: True
     choices_file: choices/minister.json
-    choices_filter:
+    exclude_choices:
     - GG
     excel_error_formula: 'FALSE'
 
