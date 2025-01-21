@@ -18,7 +18,7 @@ import uuid
 from datetime import datetime
 
 from ckan.lib.helpers import date_str_to_datetime
-from ckantoolkit import get_validator, Invalid, missing
+from ckan.plugins.toolkit import get_validator, Invalid, missing
 from ckanext.fluent.validators import fluent_text_output, LANG_SUFFIX
 from ckan.logic import ValidationError
 from ckanext.security.resource_upload_validator import (

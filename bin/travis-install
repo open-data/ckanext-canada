@@ -26,7 +26,6 @@ pip install -e git+https://github.com/open-data/ckanext-scheming#egg=ckanext-sch
 pip install -e git+https://github.com/open-data/ckanext-fluent#egg=ckanext-fluent
 pip install -e git+https://github.com/open-data/ckanext-recombinant#egg=ckanext-recombinant
 pip install -e git+https://github.com/open-data/ckanext-extendedactivity#egg=ckanext-extendedactivity
-pip install -e git+https://github.com/ckan/ckantoolkit#egg=ckantoolkit
 pip install -r requirements.txt
 
 python setup.py develop

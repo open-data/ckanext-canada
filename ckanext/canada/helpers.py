@@ -17,7 +17,7 @@ from bs4 import BeautifulSoup
 from ckan import plugins
 
 from ckanapi import NotFound
-from ckantoolkit import aslist
+from ckan.plugins.toolkit import aslist
 import ckan.plugins.toolkit as t
 from ckanext.scheming.helpers import scheming_get_preset
 import dateutil.parser
