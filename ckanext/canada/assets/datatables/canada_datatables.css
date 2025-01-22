@@ -63,7 +63,7 @@ div.canada-disabled-view-alert{
   min-width: 50%;
   width: 50%;
   margin-bottom: 5px;
-  padding-left: 16px;
+  padding-left: 24px;
   padding-right: 10px;
   position: relative;
 }
@@ -71,8 +71,8 @@ div.canada-disabled-view-alert{
   content: '\f096';
   font: normal normal normal 14px/1 FontAwesome;
   position: absolute;
-  left: 0;
-  top: 2px;
+  left: 6px;
+  top: 6px;
 }
 .buttons-collection.buttons-colvis ~ .dt-button-collection.fixed a.buttons-columnVisibility.active::before{
   content: '\f046';

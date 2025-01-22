@@ -1,0 +1,12 @@
+{% ckan_extends %}
+
+{% block secondary_help %}
+  <div class="panel panel-info">
+    <div class="panel-heading">
+      <i class="fa fa-lg fa-info-circle"></i>&nbsp;{{ _('Why re-index?') }}
+    </div>
+    <div class="panel-body">
+      <p>{{ _('The SOLR index is used for searching datasets and search facets. In the case that some datasets are not showing in the search or a search facet is not working, you can try to re-index the site.') }}</p>
+    </div>
+  </div>
+{% endblock %}

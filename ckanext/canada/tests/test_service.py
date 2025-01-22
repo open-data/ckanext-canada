@@ -30,21 +30,37 @@ class TestService(CanadaTestBase):
         """
         Example data should load
         """
-        record = get_chromo('service')['examples']['record']
+        record = get_chromo('service')['examples']['record'].copy()
         self.lc.action.datastore_upsert(
             resource_id=self.resource_id,
             records=[record])
+
+
+    def test_primary_key_commas(self):
+        """
+        Commas in primary keys should error
+        """
+        record = get_chromo('service')['examples']['record'].copy()
+        record['service_id'] = 'this,is,a,failure'
+        with pytest.raises(ValidationError) as ve:
+            self.lc.action.datastore_upsert(
+                resource_id=self.resource_id,
+                records=[record])
+        err = ve.value.error_dict
+        assert 'records' in err
+        assert 'service_id' in err['records'][0]
+        assert err['records'][0]['service_id'] == ['Comma is not allowed in Service ID Number field']
 
 
     def test_foreign_constraint(self):
         """
         Trying to delete a Service record when there are Standard records referencing it should raise an exception
         """
-        record = get_chromo('service')['examples']['record']
+        record = get_chromo('service')['examples']['record'].copy()
         self.lc.action.datastore_upsert(
             resource_id=self.resource_id,
             records=[record])
-        record = get_chromo('service-std')['examples']['record']
+        record = get_chromo('service-std')['examples']['record'].copy()
         self.lc.action.datastore_upsert(
             resource_id=self.resource_cid,
             records=[record])
@@ -346,7 +362,7 @@ class TestStdService(CanadaTestBase):
 
 
     def _make_parent_record(self):
-        record = get_chromo('service')['examples']['record']
+        record = get_chromo('service')['examples']['record'].copy()
         self.lc.action.datastore_upsert(
             resource_id=self.resource_pid,
             records=[record])
@@ -357,17 +373,36 @@ class TestStdService(CanadaTestBase):
         Example data should load
         """
         self._make_parent_record()
-        record = get_chromo('service-std')['examples']['record']
+        record = get_chromo('service-std')['examples']['record'].copy()
         self.lc.action.datastore_upsert(
             resource_id=self.resource_id,
             records=[record])
+
+
+    def test_primary_key_commas(self):
+        """
+        Commas in primary keys should error
+        """
+        record = get_chromo('service-std')['examples']['record'].copy().copy()
+        record['service_id'] = 'this,is,a,failure'
+        record['service_standard_id'] = 'this,is,a,failure'
+        with pytest.raises(ValidationError) as ve:
+            self.lc.action.datastore_upsert(
+                resource_id=self.resource_id,
+                records=[record])
+        err = ve.value.error_dict
+        assert 'records' in err
+        assert 'service_id' in err['records'][0]
+        assert 'service_standard_id' in err['records'][0]
+        assert err['records'][0]['service_id'] == ['Comma is not allowed in Service ID Number field']
+        assert err['records'][0]['service_standard_id'] == ['Comma is not allowed in Service Standard ID field']
 
 
     def test_foreign_constraint(self):
         """
         Trying to create a Standard record referencing a nonexistent Service record should raise an exception
         """
-        record = get_chromo('service-std')['examples']['record']
+        record = get_chromo('service-std')['examples']['record'].copy()
         with pytest.raises(ValidationError) as ve:
             self.lc.action.datastore_upsert(
                 resource_id=self.resource_id,
@@ -425,7 +460,7 @@ class TestStdService(CanadaTestBase):
         Fields with both _en and _fr should require eachother
         """
         self._make_parent_record()
-        record = get_chromo('service-std')['examples']['record'].copy()
+        record = get_chromo('service-std')['examples']['record'].copy().copy()
 
         record['channel_comments_en'] = 'Not Blank'
         record['channel_comments_fr'] = None

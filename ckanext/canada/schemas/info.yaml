@@ -146,6 +146,9 @@ dataset_fields:
   error_snippet: fluent_text.html
   validators: fluent_text
   output_validators: fluent_text_output
+  form_attrs:
+      size: 100
+      class: form-control
 
 # Field = Keywords English.
 # {Commonly used words or phrases which describe the asset, in English}
@@ -387,6 +390,8 @@ dataset_fields:
       en: The beginning/ending date(s) of publication and/or sequential designations used on items in a series, in French
       fr: Dates de début/fin de la publication et/ou de désignation séquentielle utilisées pour les articles d’une série, en français
   preset: fluent_text
+  form_attrs:
+    class: form-control
 
 # Field = Homepage English.
 # {A program or homepage that can be navigated to gain additional or contextual information about the asset.}
@@ -488,6 +493,8 @@ dataset_fields:
 # {The date the asset may be published on the Portal (YYYY-MM-DD)}
 - preset: canada_portal_release_date
 
+- preset: canada_dataset_relationship
+
 
 #
 #   RESOURCE FIELDS
@@ -504,8 +511,7 @@ resource_fields:
 # {A French name given to the resource}
 - preset: canada_resource_name
 
-- preset: canada_resource_related_relationship
-- preset: canada_resource_related_type
+- preset: canada_resource_relationship
 
 # Field = Date Published.
 # Add a Calendar control to select a Date.
@@ -545,3 +551,13 @@ resource_fields:
 # Field = Location.
 # {The location for online access to the distribution of the resource, if the file resides elsewhere.}
 - preset: canada_resource_url
+
+# Validation Fields.
+- preset: canada_resource_validation_schema
+- preset: canada_resource_validation_options
+- preset: canada_resource_validation_status
+- preset: canada_resource_validation_timestamp
+
+# LEGACY FIELDS
+- preset: _legacy_canada_related_type
+- preset: _legacy_canada_related_relationship

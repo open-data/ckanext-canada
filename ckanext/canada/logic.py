@@ -2,6 +2,7 @@ from ckan.logic.action import get as core_get
 from ckan.logic.validators import isodate, Invalid
 from ckan.lib.dictization import model_dictize
 from ckan import model
+from ckanext.activity.model import Activity, activity
 from contextlib import contextmanager
 
 from redis import ConnectionPool, Redis
@@ -25,6 +26,7 @@ from ckan.plugins.toolkit import (
     check_access,
 )
 from ckan.authz import is_sysadmin
+from ckan.lib.navl.dictization_functions import validate
 
 import functools
 from flask import has_request_context
@@ -37,6 +39,7 @@ import mimetypes
 from ckanext.scheming.helpers import scheming_get_preset
 
 from ckanext.datastore.backend import DatastoreBackend
+from ckanext.datastore.logic.schema import datastore_search_schema
 from ckanext.canada import model as canada_model
 
 MIMETYPES_AS_DOMAINS = [
@@ -56,7 +59,7 @@ ottawa_tz = timezone('America/Montreal')
 
 JOB_MAPPING = {
     'ckanext.validation.jobs.run_validation_job': {
-        'icon': 'fa-check-circle',
+        'icon': 'fa-check',
         'rid': lambda job_args: job_args.get('id'),
     },
     'ckanext.validation.plugin._remove_unsupported_resource_validation_reports': {
@@ -64,13 +67,17 @@ JOB_MAPPING = {
         'rid': lambda job_args: job_args,
     },
     'ckanext.xloader.jobs.xloader_data_into_datastore': {
-        'icon': 'fa-cloud-upload',
+        'icon': 'fa-cloud-arrow-up',
         'rid': lambda job_args: job_args.get('metadata', {}).get('resource_id'),
     },
     'ckanext.xloader.plugin._remove_unsupported_resource_from_datastore': {
         'icon': 'fa-trash',
         'rid': lambda job_args: job_args,
     },
+    'ckan.lib.search.jobs.reindex_packages': {
+        'icon': 'fa-database',
+        'gid': lambda job_kwargs: job_kwargs.get('group_id')
+    }
 }
 
 
@@ -197,14 +204,14 @@ def _changed_packages_activity_timestamp_since(since, limit):
     'deleted resource view' activities for the whole site.
 
     '''
-    q = model.Session.query(model.Activity.object_id.label('object_id'),
-                            func.max(model.Activity.timestamp).label(
+    q = model.Session.query(Activity.object_id.label('object_id'),
+                            func.max(Activity.timestamp).label(
                                 'timestamp'))
-    q = q.filter(or_(model.Activity.activity_type.endswith('package'),  # Package create, update, delete
-                     model.Activity.activity_type.endswith('view'),  # Resource View create, update, delete
-                     model.Activity.activity_type.endswith('created datastore')))  # DataStore create & Data Dictionary update
-    q = q.filter(model.Activity.timestamp > since)
-    q = q.group_by(model.Activity.object_id)
+    q = q.filter(or_(Activity.activity_type.endswith('package'),  # Package create, update, delete
+                     Activity.activity_type.endswith('view'),  # Resource View create, update, delete
+                     Activity.activity_type.endswith('created datastore')))  # DataStore create & Data Dictionary update
+    q = q.filter(Activity.timestamp > since)
+    q = q.group_by(Activity.object_id)
     q = q.order_by('timestamp')
     return q.limit(limit)
 
@@ -218,9 +225,9 @@ def _activities_from_user_list_since(since, limit,user_id):
 
     '''
 
-    q = model.activity._activities_from_user_query(user_id)
-    q = q.order_by(model.Activity.timestamp)
-    q = q.filter(model.Activity.timestamp > since)
+    q = activity._activities_from_user_query(user_id)
+    q = q.order_by(Activity.timestamp)
+    q = q.filter(Activity.timestamp > since)
     return q.limit(limit)
 
 
@@ -442,44 +449,70 @@ def canada_job_list(up_func, context, data_dict):
     job_list = up_func(context, data_dict)
 
     for job in job_list:
+        job_args = None
+        job_kwargs = None
         try:
             job_obj = Job.fetch(job.get('id'))
-            job_args = job_obj.args[0]
+            if job_obj.args:
+                job_args = job_obj.args[0]
+            if job_obj.kwargs:
+                job_kwargs = job_obj.kwargs
         except (NoSuchJobError, KeyError):
             continue
 
         job_title = _(job.get('title', 'Unknown Job'))
+        rid = None
+        gid = None
 
         if job_obj.func_name in JOB_MAPPING:
-            rid = JOB_MAPPING[job_obj.func_name]['rid'](job_args)
+            if job_args:
+                rid = JOB_MAPPING[job_obj.func_name]['rid'](job_args)
+            if job_kwargs:
+                gid = JOB_MAPPING[job_obj.func_name]['gid'](job_kwargs)
             icon = JOB_MAPPING[job_obj.func_name]['icon']
         else:
-            rid = None
             job_title = _('Unknown Job')
-            icon = 'fa-circle-o-notch'
+            icon = 'fa-circle-notch'
 
         job_info = {}
-        if rid:
+        if not job_kwargs and job_obj.func_name == 'ckan.lib.search.jobs.reindex_packages':
+            job_info = {'name': _('Entire Site')}
+        if rid or gid:
             current_user = get_action('get_site_user')({'ignore_auth': True}, {})['name']
             if has_request_context():
                 try:
                     current_user = g.user
                 except (TypeError, AttributeError):
                     pass
-            try:
-                resource = get_action('resource_show')({'user': current_user}, {'id': rid})
-            except (ObjectNotFound, NotAuthorized):
-                continue
-            job_info = {'name_translated': resource.get('name_translated'),
-                        'resource_id': rid,
-                        'url': h.url_for('dataset_resource.read',
-                                         id=resource.get('package_id'),
-                                         resource_id=rid)}
+            if rid:
+                try:
+                    resource = get_action('resource_show')({'user': current_user}, {'id': rid})
+                except (ObjectNotFound, NotAuthorized):
+                    continue
+                job_info = {'name_translated': resource.get('name_translated'),
+                            'resource_id': rid,
+                            'url': h.url_for('dataset_resource.read',
+                                            id=resource.get('package_id'),
+                                            resource_id=rid)}
+            if gid:
+                try:
+                    group = get_action('organization_show')({'user': current_user}, {'id': gid})
+                except (ObjectNotFound, NotAuthorized):
+                    try:
+                        group = get_action('group_show')({'user': current_user}, {'id': gid})
+                    except (ObjectNotFound, NotAuthorized):
+                        continue
+                job_info = {'name_translated': group.get('title_translated', {}),
+                            'name': group.get('title'),
+                            'group_id': gid,
+                            'url': h.url_for('%s.read' % group.get('type'),
+                                            id=group.get('name'))}
 
         job['info'] = job_info
         job['type'] = job_title
         job['icon'] = icon
         job['status'] = job_obj.get_status()
+        job['queue_name'] = job.get('queue', 'default')
 
     return job_list
 
@@ -585,3 +618,31 @@ def list_out_of_sync_packages(context, data_dict):
                                                 'error_on': sync_info.error_on, 'last_run': sync_info.last_run})
 
     return out_of_sync_packages
+
+
+@chained_action
+@side_effect_free
+def canada_datastore_search(up_func, context, data_dict):
+    """
+    Limit datastore search logic to prevent FTS searches for data
+    over the maximum rows for FTS index.
+    """
+    schema = context.get('schema', datastore_search_schema())
+    _data_dict, errors = validate(dict(data_dict), schema, dict(context))
+    if errors:
+        raise ValidationError(errors)
+    try:
+        ds_result = up_func(context, {'resource_id': _data_dict.get('resource_id'),
+                                      'limit': 0})
+    except Exception:
+        return up_func(context, data_dict)
+    res = get_action('resource_show')(
+        dict(context), {'id': _data_dict.get('resource_id')})
+    if not res.get('url_type') or res.get('url_type') == 'upload':
+        # only limit FTS for links and uploads
+        record_count = ds_result.get('total', 0)
+        max_rows_for_fts = int(config.get('ckanext.canada.max_ds_fts_rows', 100000))
+        if (_data_dict.get('full_text') or (_data_dict.get('q') and isinstance(_data_dict.get('q'), str))) and record_count > max_rows_for_fts:
+            raise ValidationError(_('Invalid request. Full text search is '
+                                    'not supported for data with more than {} rows.').format(max_rows_for_fts))
+    return up_func(context, data_dict)

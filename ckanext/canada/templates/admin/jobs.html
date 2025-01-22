@@ -20,18 +20,25 @@
       <ul class="canada-job-list activity">
         {% for job in job_list %}
           <li class="item rq-job-{{ job.get('status') }}">
-            <i class="fa icon {{ job.get('icon') }}"></i>
+            <span class="fa-stack fa-lg">
+              <i class="fa icon {{ job.get('icon') }}" aria-hidden="true"></i>
+            </span>
             <p>
               <span class="canada-job-item-title">{{ job.get('type') }}</span>
               <br/>
               <span class="date">
                 {{ h.time_ago_from_timestamp(job.get('created')) }} ({{ h.render_datetime(job.get('created'), '%Y-%m-%d %H:%M:%S %Z') }}) |
                 {% if job.get('info') %}
-                  <a href="{{ job.get('info', {}).get('url') }}">{{ h.get_translated(job.get('info'), 'name') }}</a>
+                  {% if job.get('info', {}).get('url') %}
+                    <a href="{{ job.get('info', {}).get('url') }}">{{ h.get_translated(job.get('info'), 'name') }}</a>
+                  {% else %}
+                    <span>{{ h.get_translated(job.get('info'), 'name') }}</span>
+                  {% endif %}
                 {% else %}
                   <span>{{ _('Unknown') }}</span>
                 {% endif %}
-                | <a href="{{ h.url_for('api.action', logic_function='job_show', id=job.get('id')) }}">{{ job.get('id') }}</a>
+                | <a href="{{ h.url_for('api.action', ver=3, logic_function='job_show', id=job.get('id')) }}">{{ job.get('id') }}</a>
+                | <span>{{ job.get('queue_name') }}</span>
               </span>
             </p>
           </li>
@@ -49,7 +56,7 @@
   <section class="panel panel-info">
     <header class="panel-heading">
       <h3 class="panel-title">
-        <i class="fa fa-info-circle"></i>&nbsp;{{ _('Job Queue') }}
+        <i class="fa fa-info-circle" aria-hidden="true"></i>&nbsp;{{ _('Job Queue') }}
       </h3>
     </header>
     <div class="panel-body">

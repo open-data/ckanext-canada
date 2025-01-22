@@ -146,7 +146,7 @@
     <dynamicField name="res_extras_*" type="text" indexed="true" stored="true" multiValued="true"/>
     <dynamicField name="vocab_*" type="string" indexed="true" stored="true" multiValued="true"/>
     <dynamicField name="*" type="string" indexed="true"  stored="false"/>
-    
+
     <!-- Extra Canada fields -->
     <field name="catalog_type" type="string" indexed="true" stored="true" multiValued="true"/>
     <field name="keywords" type="string" indexed="true" stored="true" multiValued="true"/>
@@ -155,6 +155,8 @@
     <field name="topic_category" type="string" indexed="true" stored="true" multiValued="true"/>
     <field name="spatial_representation_type" type="string" indexed="true" stored="true" multiValued="true"/>
     <field name="ready_to_publish" type="boolean" indexed="true" stored="true"/>
+    <field name="related_relationship" type="string" indexed="true" stored="true" multiValued="true"/>
+    <field name="related_type" type="string" indexed="true" stored="true" multiValued="true"/>
 </fields>
 
 <uniqueKey>index_id</uniqueKey>

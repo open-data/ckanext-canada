@@ -1,5 +1,5 @@
 from ckan.plugins.toolkit import chained_auth_function, config
-from ckan.authz import has_user_permission_for_group_or_org, is_sysadmin
+from ckan.authz import has_user_permission_for_group_or_org
 from ckan.plugins import plugin_loaded
 
 
@@ -52,6 +52,13 @@ def organization_list(context, data_dict):
 
 def organization_show(context, data_dict):
     return {'success': bool(context.get('user'))}
+
+
+def recently_changed_packages_activity_list(context, data_dict):
+    """
+    Legacy, anyone can view.
+    """
+    return {'success': True}
 
 
 def portal_sync_info(context, data_dict):
