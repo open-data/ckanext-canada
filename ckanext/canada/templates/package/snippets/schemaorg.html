@@ -24,9 +24,10 @@
     </span>
     <span property="genre" value="{{ _('Information and Communications Government and Politics') }}"></span>
     <span property="license" typeof="CreativeWork">
-      {%- set license_url, license_title = data.license_url, data.license_title -%}
+      {% set license = h.get_license(data.license_id) %}
+      {%- set license_url, license_title = license.url, license.title -%}
       {%- if h.lang() == 'fr' -%}
-        {%- set license_url, license_title = g.pkg.license.url_fra, g.pkg.license.title_fra -%}
+        {%- set license_url, license_title = license.url_fra, license.title_fra -%}
       {%- endif -%}
       <span property="name" value="{{ license_title }}"></span>
       <span property="sameAs" value="{{ license_url }}"></span>
@@ -56,26 +57,18 @@
       <span property="keywords">{{ keyword }}</span>
     {%- endfor -%}
   {% endif %}
-  <span property="sameAs" value="{{ h.url_for(g.pkg.type + '.read', id=data.id) }}"></span>
+  <span property="sameAs" value="{{ h.url_for(data.type + '.read', id=data.id) }}"></span>
   {%- if data.resources -%}
-    {%- set nonapps = [] -%}
-    {%- for resource in data.resources -%}
-      {%- if not resource.related_type -%}
-        {%- do nonapps.append(resource) -%}
-      {%- endif -%}
+    {% for res in data.resources %}
+      <span property="distribution" typeof="DataDownload">
+        <span property="inLanguage" content="{{ ','.join(res.language) }}"> </span>
+        <span property="name" lang="{{ h.lang() }}">{{ h.get_translated(res, 'name') }}</span>
+        {%- if res.get('date_published') -%}
+          <span property="datePublished" value="{{ res.date_published[:10] }}"></span>
+        {%- endif -%}
+        <span property="fileFormat">{{ res.format }}</span>
+        <span property="url">{{ res.url }}</span>
+      </span>
     {%- endfor -%}
-    {%- if nonapps -%}
-      {% for res in nonapps %}
-        <span property="distribution" typeof="DataDownload">
-          <span property="inLanguage" content="{{ ','.join(res.language) }}"> </span>
-          <span property="name" lang="{{ h.lang() }}">{{ h.get_translated(res, 'name') }}</span>
-          {%- if res.get('date_published') -%}
-            <span property="datePublished" value="{{ res.date_published[:10] }}"></span>
-          {%- endif -%}
-          <span property="fileFormat">{{ res.format }}</span>
-          <span property="url">{{ res.url }}</span>
-        </span>
-      {%- endfor -%}
-    {%- endif -%}
   {%- endif -%}
 </div>

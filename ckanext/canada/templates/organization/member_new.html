@@ -5,12 +5,13 @@
 {% set user = g.user_dict %}
 
 {% block primary_content_inner %}
-  <a href="{{ h.url_for('organization.members', id=organization.name) }}" class="btn btn-default pull-right">
-      <i class="fa fa-arrow-left"></i>&nbsp;{{ _('Back to all members') }}
+  <a href="{{ h.url_for('organization.manage_members', id=organization.name) }}" class="btn btn-default pull-right">
+      <i class="fa fa-arrow-left" aria-hidden="true"></i>&nbsp;{{ _('Back to all members') }}
   </a>
   <h2>{{ _('Edit Member') if user else _('Add Member') }}</h2>
   {% block form %}
     <form class="dataset-form add-member-form" method='post'>
+      {{ h.csrf_input() }}
       <div class="row">
         <div class="col-md-5">
           <div class="form-group control-medium">
@@ -75,7 +76,7 @@
   {{ super() }}
   <div class="panel panel-info">
     <div class="panel-heading">
-      <i class="fa fa-lg fa-info-circle"></i>&nbsp;{{ _('What are roles?') }}
+      <i class="fa fa-lg fa-info-circle" aria-hidden="true"></i>&nbsp;{{ _('What are roles?') }}
     </div>
     <div class="panel-body">
       {% trans %}

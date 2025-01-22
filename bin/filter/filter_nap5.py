@@ -28,7 +28,8 @@ COPY_INDICATORS = [
 ]
 
 def main():
-    table = yaml.load(open(TABLE_YAML, 'r'))
+    with open(TABLE_YAML, 'r') as f:
+        table = yaml.load(f, yaml.Loader)
     for field in table['resources'][0]['fields']:
         if field['datastore_id'] == 'indicators':
             break

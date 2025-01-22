@@ -66,7 +66,7 @@ def main():
                     if rec["subject"] in subject_replacements:
                         rec["subject"] = subject_replacements[rec["subject"]]
                     else:
-                        print >> sys.stderr, 'Invalid subject "{0}" for {1}'.format(rec["subject"], rec["id"])
+                        print('Invalid subject "{0}" for {1}'.format(rec["subject"], rec["id"]), file=sys.stderr)
                         continue
                 rec['author_email'] = 'statcan.infostats-infostats.statcan@canada.ca'
                 rec['maintainer_email'] = 'statcan.infostats-infostats.statcan@canada.ca'
@@ -122,7 +122,7 @@ def main():
                 print(simplejson.dumps(rec))
 
         except IOError:
-            print >> sys.stderr, 'Error while reading line.'
+            print('Error while reading line.', file=sys.stderr)
 
     except KeyError:
         if 'warehouse' in sys.argv:

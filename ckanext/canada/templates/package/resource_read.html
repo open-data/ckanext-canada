@@ -5,7 +5,11 @@
 {% endblock %}
 
 {% block page_title %}
-  {{ super() }}
+  <h1 property="name" id="wb-cont">
+    {% block page_heading %}
+      {{ super() }}
+    {% endblock %}
+  </h1>
   <div class="row">
     <div class="col-md-12">
       {# _site_messaging is handled by aliases in nginx to SMB #}
@@ -17,18 +21,35 @@
       {% endif %}
     </div>
   </div>
-  {% if is_activity_archive %}
-    <div class="module-alert alert alert-danger mrgn-tp-sm">
-      <p>
-        {% trans url = h.url_for(pkg.type + '.read', id=pkg.id) %}You're currently viewing an old version of this dataset. Some resources may no longer exist or the dataset may not display correctly. To see the current version, click <a href="{{ url }}">here</a>.{% endtrans %}
-      </p>
-    </div>
+{% endblock %}
+
+{% block resource_actions %}
+  {% set extra_classes = '' %}
+  {% if not g.is_registry or not h.check_access('package_update', {'id':pkg.id }) %}
+    {% set extra_classes = 'resource-actions-toolbar-portal' %}
   {% endif %}
+  <div class="resource-actions-toolbar {{ extra_classes }}">{{ super() }}</div>
+{% endblock %}
+
+{% block resources_list %}
+  <div class="mrgn-tp-md">{{ super() }}</div>
+{% endblock %}
+
+{% block action_manage %}
+  {% if not is_activity_archive %}{{ super() }}{% endif %}
+  <div class="resource-actions-toolbar-spacer"></div>
+{% endblock %}
+
+{% block resource_content %}
   {% if g.is_registry %}
     {{- h.get_validation_badge(res)|safe -}}
     <div class="canada-w10-spacer"></div>
     {{- h.get_loader_status_badge(res) -}}
   {% endif %}
+  {% block resource_read_title %}{{ super() }}{% endblock %}
+  {% block resource_read_url %}
+    <p class="mrgn-bttm-lg">&nbsp;</p>
+  {% endblock %}
 {% endblock %}
 
 {% block breadcrumb_content %}
@@ -36,28 +57,12 @@
   <li class="active"><a href="#" title="{{ h.resource_display_name(res) }}">{{ h.resource_display_name(res)|truncate(80) }}</a></li>
 {% endblock %}
 
-{% block resource_actions %}
-  <div class="resource-actions-toolbar">{{ super() }}</div>
-{% endblock %}
-
-{% block action_manage %}
-  {% if not is_activity_archive %}{{ super() }}{% endif %}
-{% endblock %}
-
-{% block resource_content %}
-  {% block resource_read_title %}{{ super() }}{% endblock %}
-  {% block resource_read_url %}
-    <p class="mrgn-bttm-lg">&nbsp;</p>
-  {% endblock %}
-{% endblock %}
-
 {% block download_resource_button %}
   {%if res.datastore_active %}
-    <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+    <button class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" role="button" data-bs-toggle="dropdown" id="dropdownDownloadFormat" aria-label="{{ _('List of downloadable formats') }}">
       {% if not res.url or not h.is_url(res.url) %}
         {{ _('Download') }}&nbsp;
       {% endif %}
-    <span class="caret"></span>
     </button>
     <ul class="dropdown-menu">
       <li>
@@ -75,5 +80,5 @@
            data-pkg-id="{{ pkg.id }}" data-res-id="{{ res.id }}" data-org-id="{{ pkg.organization.id }}"><span>XML</span></a>
         </li>
     </ul>
-  {%endif%}
+  {% endif %}
 {% endblock %}

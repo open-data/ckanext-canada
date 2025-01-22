@@ -7,20 +7,20 @@
   {% set label = h.recombinant_get_geno(r_type).shortname or h.recombinant_get_geno(r_type).title %}
   {% set description = h.render_markdown(h.recombinant_language_text(h.recombinant_get_geno(r_type).notes)) %}
   <li>
-    <a href="{{ h.url_for('canada.type_redirect', resource_name=r_type) }}"><i class="fa fa-upload"></i>{{ _(label) }}</a>
-    <a href="" data-toggle="modal" data-target="#{{ r_type }}"><i class="fa fa-question-circle-o" aria-hidden="true"></i></a>
+    <a href="{{ h.url_for('canada.type_redirect', resource_name=r_type) }}"><i class="fa fa-upload" aria-hidden="true"></i>{{ _(label) }}</a>
+    <a href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#{{ r_type }}"><i class="fa fa-question-circle-o" aria-hidden="true"></i></a>
     <div class="modal" id="{{ r_type }}" tabindex="-1" role="dialog" aria-labelledby="{{ r_type }}Label" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content overlay-def">
           <header class="modal-header">
             <h2 class="modal-title" id="{{ r_type }}Label">{{ _(label) }}</h2>
-            <button type="button" class="close mfp-close" data-dismiss="modal" aria-label="Close"></button>
+            <button type="button" class="close mfp-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </header>
           <div class="modal-body">
             {{ description }}
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-sm btn-primary pull-left" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-sm btn-primary pull-left" data-bs-dismiss="modal">Close</button>
           </div>
         </div>
       </div>
@@ -31,19 +31,19 @@
 {% macro quick_link(id, url, icon, title, description) %}
   <li>
     <a href="{{ url }}">{% if icon %}<i class="{{icon}}"></i>{% endif %}{{ _(title) }}</a>
-    <a href="" data-toggle="modal" data-target="#{{ id }}"><i class="fa fa-question-circle-o" aria-hidden="true"></i></a>
+    <a href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#{{ id }}"><i class="fa fa-question-circle-o" aria-hidden="true"></i></a>
     <div class="modal" id="{{ id }}" tabindex="-1" role="dialog" aria-labelledby="{{ id }}Label" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content overlay-def">
           <header class="modal-header">
             <h2 class="modal-title" id="{{ id }}Label">{{ title }}</h2>
-            <button type="button" class="close mfp-close" data-dismiss="modal" aria-label="Close"></button>
+            <button type="button" class="close mfp-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </header>
           <div class="modal-body">
             {{ description }}
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-sm btn-primary pull-left" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-sm btn-primary pull-left" data-bs-dismiss="modal">Close</button>
           </div>
         </div>
       </div>
@@ -52,7 +52,7 @@
 {% endmacro %}
 
 {% block primary_content %}
-  <div class="row" id="quick-links">
+  <div class="row canada-page-main-wrapper" id="quick-links">
     <div class="col-md-12">
       <section>
         <p>{{ _('Welcome to the Open Government Registry. Use the Registry to add government resources that will be published on the Open Government Portal. For more information on using the Registry or to report errors, contact <a href="mailto:open-ouvert@tbs-sct.gc.ca">open-ouvert@tbs-sct.gc.ca</a>.') | safe }}</p>

@@ -1,0 +1,1 @@
+Fixed a reference assignment error in the deleting views code block of PortalUpdater. PortalUpdater will now give a system exit code 1 if there are any errors in the process.

@@ -1,12 +1,12 @@
 # -*- coding: UTF-8 -*-
 from factory import LazyAttribute, Sequence
 
-from ckan.tests.factories import User, Organization, Dataset, Resource, ResourceView
+from ckan.tests.factories import UserWithToken, Organization, Dataset, Resource, ResourceView
 import ckan.tests.helpers as helpers
 from ckan.model import Session
 
 
-class CanadaUser(User):
+class CanadaUser(UserWithToken):
     @classmethod
     def _create(self, target_class, *args, **kwargs):
         if args:

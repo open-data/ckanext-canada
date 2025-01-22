@@ -189,6 +189,23 @@ def get_end_date(name, position):
 
 # get choices and write to OUTPUT file as JSON
 minister_choices = get_filter_output()
+
+# add Governor General to the list to make a combined
+# list for admin_aircraft and qpnotes
+minister_choices['GG'] = {
+    "en":"The Governor General of Canada",
+    "fr":"La gouverneure générale du Canada",
+    "ministers":[
+        {
+            "end_date":"",
+            "name":"Mary Simon",
+            "name_en":"Simon, Mary (Right Hon.)",
+            "name_fr":"Simon, Mary (Le très hon.)",
+            "start_date":"2021-07-26T08:00:00"
+        }
+        ]
+    }
+
 if minister_choices:
     open(OUTPUT_FILE, 'wb').write(json.dumps(
         minister_choices,

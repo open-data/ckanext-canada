@@ -11,41 +11,31 @@
       {%- snippet 'scheming/snippets/form_field.html', field=field, data=data, errors=errors, entity_type='dataset', object_type=dataset_type -%}
     {%- endif -%}
   {%- endfor -%}
-  {%- if g.action=='new_resource' -%}
-    <p class="alert alert-info mrgn-tp-md">{{ _("You can add either a Resource or a Related Item per session, i.e. not both:") }}</p>
-  {% endif %}
   <div class="accordion mrgn-tp-lg mrgn-bttm-lg">
-    {%- if (not data.related_type) or g.action.endswith('new') -%}
-      <details class="acc-group" open="open">
-        <summary class="wb-toggle tgl-tab" data-toggle='{"parent": ".accordion", "group": ".acc-group"}'>
-          {{ _("Metadata Fields for Resources Only (Not for Related Items)") }}
-        </summary>
-        <div class="tgl-panel">
-          {%- for field in schema.resource_fields -%}
-            {%- if field.form_panel == 'resource' -%}
-              {%- snippet 'scheming/snippets/form_field.html', field=field, data=data, errors=errors, entity_type='dataset', object_type=dataset_type -%}
-            {%- endif -%}
-          {%- endfor -%}
-        </div>
-      </details>
-    {% endif %}
-    {%- if data.related_type or g.action.endswith('new') -%}
-      <details class="acc-group" {% if data.related_type %}open="open"{% endif %}>
-        <summary class="wb-toggle tgl-tab" data-toggle='{"parent": ".accordion", "group": ".acc-group"}'>
-          {{ _("Metadata Fields for Related Items Only") }}
-        </summary>
-        <div class="tgl-panel">
-          {%- for field in schema.resource_fields -%}
-            {%- if field.form_panel == 'related' -%}
-              {%- snippet 'scheming/snippets/form_field.html', field=field, data=data, errors=errors, entity_type='dataset', object_type=dataset_type -%}
-            {%- endif -%}
-          {%- endfor -%}
-          <p>
-            {{ _("Use the Download URL field above to link to the related record.") }}
-          </p>
-        </div>
-      </details>
-    {% endif %}
+    <details id="normal-resource-meta-group" class="acc-group-res" open="open">
+      <summary class="wb-toggle tgl-tab" data-bs-toggle='{"parent": ".accordion", "group": ".acc-group-res"}'>
+        {{ _("Metadata Fields for Resources") }}
+      </summary>
+      <div class="tgl-panel">
+        {%- for field in schema.resource_fields -%}
+          {%- if field.form_panel == 'resource' -%}
+            {%- snippet 'scheming/snippets/form_field.html', field=field, data=data, errors=errors, entity_type='dataset', object_type=dataset_type -%}
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    </details>
+    <details id="related-resource-meta-group" class="acc-group-rel" open="open">
+      <summary class="wb-toggle tgl-tab" data-bs-toggle='{"parent": ".accordion", "group": ".acc-group-rel"}'>
+        {{ _("Metadata Fields for Resource Relationships") }}
+      </summary>
+      <div class="tgl-panel">
+        {%- for field in schema.resource_fields -%}
+          {%- if field.form_panel == 'relationships' -%}
+            {%- snippet 'scheming/snippets/form_field.html', field=field, data=data, errors=errors, entity_type='dataset', object_type=dataset_type -%}
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    </details>
   </div>
   <div class="hidden">
     {%- for field in schema.resource_fields -%}
