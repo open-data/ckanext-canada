@@ -725,7 +725,9 @@ def list_out_of_sync_packages(context: Context, data_dict: DataDict) -> Dict[str
 
 @chained_action
 @side_effect_free
-def canada_datastore_search(up_func, context, data_dict):
+def canada_datastore_search(up_func: Action,
+                            context: Context,
+                            data_dict: DataDict) -> ChainedAction:
     """
     Limit datastore search logic to prevent FTS searches for data
     over the maximum rows for FTS index.
@@ -745,7 +747,10 @@ def canada_datastore_search(up_func, context, data_dict):
         # only limit FTS for links and uploads
         record_count = ds_result.get('total', 0)
         max_rows_for_fts = int(config.get('ckanext.canada.max_ds_fts_rows', 100000))
-        if (_data_dict.get('full_text') or (_data_dict.get('q') and isinstance(_data_dict.get('q'), str))) and record_count > max_rows_for_fts:
+        if (_data_dict.get('full_text') or
+            (_data_dict.get('q') and isinstance(_data_dict.get('q'), str))) and \
+                record_count > max_rows_for_fts:
             raise ValidationError(_('Invalid request. Full text search is '
-                                    'not supported for data with more than {} rows.').format(max_rows_for_fts))
+                                    'not supported for data with '
+                                    'more than {} rows.').format(max_rows_for_fts))
     return up_func(context, data_dict)
