@@ -733,7 +733,8 @@ def canada_datastore_search(up_func: Action,
     over the maximum rows for FTS index.
     """
     schema = context.get('schema', datastore_search_schema())
-    _data_dict, errors = validate(dict(data_dict), schema, dict(context))
+    _data_dict, errors = validate(dict(data_dict), schema,
+                                  cast(Context, dict(context)))
     if errors:
         raise ValidationError(errors)
     try:
@@ -742,7 +743,7 @@ def canada_datastore_search(up_func: Action,
     except Exception:
         return up_func(context, data_dict)
     res = get_action('resource_show')(
-        dict(context), {'id': _data_dict.get('resource_id')})
+        cast(Context, dict(context)), {'id': _data_dict.get('resource_id')})
     if not res.get('url_type') or res.get('url_type') == 'upload':
         # only limit FTS for links and uploads
         record_count = ds_result.get('total', 0)
