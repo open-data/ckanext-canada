@@ -32,6 +32,7 @@ from ckan.plugins.toolkit import (
     get_validator,
 )
 from ckan.authz import is_sysadmin
+from ckan.lib.navl.dictization_functions import validate
 
 from flask import has_request_context
 
@@ -43,6 +44,7 @@ import mimetypes
 from ckanext.scheming.helpers import scheming_get_preset
 
 from ckanext.datastore.backend import DatastoreBackend
+from ckanext.datastore.logic.schema import datastore_search_schema
 from ckanext.canada import model as canada_model
 
 from rq.job import Job
@@ -719,3 +721,31 @@ def list_out_of_sync_packages(context: Context, data_dict: DataDict) -> Dict[str
              'last_run': sync_info.last_run})
 
     return out_of_sync_packages
+
+
+@chained_action
+@side_effect_free
+def canada_datastore_search(up_func, context, data_dict):
+    """
+    Limit datastore search logic to prevent FTS searches for data
+    over the maximum rows for FTS index.
+    """
+    schema = context.get('schema', datastore_search_schema())
+    _data_dict, errors = validate(dict(data_dict), schema, dict(context))
+    if errors:
+        raise ValidationError(errors)
+    try:
+        ds_result = up_func(context, {'resource_id': _data_dict.get('resource_id'),
+                                      'limit': 0})
+    except Exception:
+        return up_func(context, data_dict)
+    res = get_action('resource_show')(
+        dict(context), {'id': _data_dict.get('resource_id')})
+    if not res.get('url_type') or res.get('url_type') == 'upload':
+        # only limit FTS for links and uploads
+        record_count = ds_result.get('total', 0)
+        max_rows_for_fts = int(config.get('ckanext.canada.max_ds_fts_rows', 100000))
+        if (_data_dict.get('full_text') or (_data_dict.get('q') and isinstance(_data_dict.get('q'), str))) and record_count > max_rows_for_fts:
+            raise ValidationError(_('Invalid request. Full text search is '
+                                    'not supported for data with more than {} rows.').format(max_rows_for_fts))
+    return up_func(context, data_dict)

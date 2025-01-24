@@ -175,6 +175,7 @@ class CanadaPublicPlugin(p.SingletonPlugin, DefaultTranslation):
             'resource_view_list': logic.canada_resource_view_list,
             'job_list': logic.canada_job_list,
             'registry_jobs_running': logic.registry_jobs_running,
+            'datastore_search': logic.canada_datastore_search,
         }
 
     # IAuthFunctions

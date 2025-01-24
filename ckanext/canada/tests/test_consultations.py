@@ -61,13 +61,13 @@ class TestConsultations(CanadaTestBase):
                     }])
         err = ve.value.error_dict['records'][0]
         expected = {
-            'publishable': ['Invalid choice: {}\uf8ff"Q"'],
-            'subjects': ['Invalid choice: {}\uf8ff"GEO,MATH"'],
+            'publishable': ['Invalid choice: "Q"'],
+            'subjects': ['Invalid choice: "GEO,MATH"'],
             'title_en': ['This field must not be empty'],
             'description_fr': ['This field must not be empty'],
-            'target_participants_and_audience': ['Invalid choice: {}\uf8ff"ZOMBIES"'],
+            'target_participants_and_audience': ['Invalid choice: "ZOMBIES"'],
             'start_date': ['This field must not be empty'],
-            'partner_departments': ['Invalid choice: {}\uf8ff"DARN"'],
+            'partner_departments': ['Invalid choice: "DARN"'],
             'rationale': ['This field must not be empty'],
         }
         for k in set(err) | set(expected):
