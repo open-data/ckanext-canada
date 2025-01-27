@@ -1,4 +1,0 @@
-#!/bin/sh
-
-nosetests --with-pylons=test-core.ini --nologcapture ckanext/canada/tests $@
-

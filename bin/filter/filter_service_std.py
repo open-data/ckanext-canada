@@ -43,16 +43,17 @@ def main():
         den = int(row['total_volume']) if row['total_volume'] else 0
 
         # performance = volume_meeting_target / total_volume
-        if num <= 0 or den <=0:
+        if num <= 0 or den <= 0:
             row['performance'] = None
         else:
-            row['performance'] = max( round(num / den, 4), 0)
+            row['performance'] = max(round(num / den, 4), 0)
 
         # calculate target_met
         if row['target']:
             target = float(row['target'])
 
-            # if no performance(volume_meeting_target/total_volume) then target_met is not possible
+            # if no performance(volume_meeting_target/total_volume)
+            # then target_met is not possible
             if row['performance'] is None:
                 row['target_met'] = 'NA'
 
@@ -67,5 +68,6 @@ def main():
             row['target_met'] = None
 
         writer.writerow(row)
+
 
 main()

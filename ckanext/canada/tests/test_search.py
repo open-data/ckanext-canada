@@ -46,10 +46,10 @@ class TestRegistrySearch(CanadaTestBase):
                 title_translated={
                     'en': 'Test Dataset %s' % i,
                     'fr': 'Test FR Dataset %s' % i},
-                notes_translated = {
+                notes_translated={
                     'en': 'Test Notes %s' % i,
                     'fr': 'Test FR Notes %s' % i},
-                keywords = {
+                keywords={
                     'en': ['Test %s' % i, 'Keywords'],
                     'fr': ['Test %s' % i, 'FR', 'Keywords']},
                 ready_to_publish=str(i == 1 or i == 3).lower(),
@@ -65,15 +65,14 @@ class TestRegistrySearch(CanadaTestBase):
                 title_translated={
                     'en': 'Test Dataset %s' % i,
                     'fr': 'Test FR Dataset %s' % i},
-                notes_translated = {
+                notes_translated={
                     'en': 'Test Notes %s' % i,
                     'fr': 'Test FR Notes %s' % i},
-                keywords = {
+                keywords={
                     'en': ['Test %s' % i, 'Keywords'],
                     'fr': ['Test %s' % i, 'FR', 'Keywords']},
                 ready_to_publish='true',
                 portal_release_date='2000-01-01')
-
 
     def test_portal_release_date_facet(self):
         response = self.system_lc.action.package_search(
@@ -85,7 +84,6 @@ class TestRegistrySearch(CanadaTestBase):
         assert 'counts' in response['facet_ranges']['portal_release_date']
         assert 5 in response['facet_ranges']['portal_release_date']['counts']
 
-
     def test_sysadmin_package_search(self):
         "A sysadmin should have access to all packages."
         response = self.system_lc.action.package_search(
@@ -94,7 +92,6 @@ class TestRegistrySearch(CanadaTestBase):
 
         assert 'count' in response
         assert response['count'] == 6
-
 
     def test_user_package_search(self):
         "A user with no access to Orgs should not see any packages."
@@ -105,7 +102,6 @@ class TestRegistrySearch(CanadaTestBase):
         assert 'count' in response
         assert response['count'] == 0
 
-
     def test_editor_package_search(self):
         "A user with editor access to an Org should see those organization's packages."
         response = self.editor_lc.action.package_search(
@@ -114,7 +110,6 @@ class TestRegistrySearch(CanadaTestBase):
 
         assert 'count' in response
         assert response['count'] == 4
-
 
     def test_editor_package_search_another_org(self):
         "A user with editor access to an Org should NOT be able to see another organization's packages."
@@ -148,10 +143,10 @@ class TestPortalSearch(CanadaTestBase):
                 title_translated={
                     'en': 'Test Dataset %s' % i,
                     'fr': 'Test FR Dataset %s' % i},
-                notes_translated = {
+                notes_translated={
                     'en': 'Test Notes %s' % i,
                     'fr': 'Test FR Notes %s' % i},
-                keywords = {
+                keywords={
                     'en': ['Test %s' % i, 'Keywords'],
                     'fr': ['Test %s' % i, 'FR', 'Keywords']},
                 ready_to_publish='true',
@@ -163,15 +158,14 @@ class TestPortalSearch(CanadaTestBase):
                 title_translated={
                     'en': 'Test Dataset %s' % i,
                     'fr': 'Test FR Dataset %s' % i},
-                notes_translated = {
+                notes_translated={
                     'en': 'Test Notes %s' % i,
                     'fr': 'Test FR Notes %s' % i},
-                keywords = {
+                keywords={
                     'en': ['Test %s' % i, 'Keywords'],
                     'fr': ['Test %s' % i, 'FR', 'Keywords']},
                 ready_to_publish='true',
                 portal_release_date='2000-01-01')
-
 
     @classmethod
     def teardown_method(self, method):
@@ -181,7 +175,6 @@ class TestPortalSearch(CanadaTestBase):
         if not p.plugin_loaded('canada_internal'):
             p.load('canada_internal')
 
-
     def test_user_package_search(self):
         response = self.lc.action.package_search(
             q='*:*',
@@ -189,7 +182,6 @@ class TestPortalSearch(CanadaTestBase):
 
         assert 'count' in response
         assert response['count'] == 6
-
 
     def test_user_package_search_by_owner_org(self):
         response = self.lc.action.package_search(
@@ -205,7 +197,6 @@ class TestPortalSearch(CanadaTestBase):
 
         assert 'count' in response
         assert response['count'] == 2
-
 
     def test_user_package_search_by_keywords(self):
         response = self.lc.action.package_search(

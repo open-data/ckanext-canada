@@ -24,23 +24,20 @@ class TestContracts(CanadaTestBase):
 
         self.resource_id = rval['resources'][0]['id']
 
-
     def test_example(self):
         record = get_chromo('contracts')['examples']['record']
         self.lc.action.datastore_upsert(
             resource_id=self.resource_id,
             records=[record])
 
-
     def test_blank(self):
         with pytest.raises(ValidationError) as ve:
             self.lc.action.datastore_upsert(
                 resource_id=self.resource_id,
-            records=[{}])
+                records=[{}])
         err = ve.value.error_dict
         assert 'key' in err
         assert 'reference_number' in err['key'][0]
-
 
     def test_ministers_office_missing(self):
         record = dict(
@@ -55,7 +52,6 @@ class TestContracts(CanadaTestBase):
         assert 'records' in err
         assert 'ministers_office' in err['records'][0]
 
-
     def test_ministers_office(self):
         record = dict(
             get_chromo('contracts')['examples']['record'],
@@ -64,7 +60,6 @@ class TestContracts(CanadaTestBase):
         self.lc.action.datastore_upsert(
             resource_id=self.resource_id,
             records=[record])
-
 
     def test_2022_fields(self):
         record = dict(
@@ -95,7 +90,6 @@ class TestContracts(CanadaTestBase):
             assert k in err
             assert err[k] == expected[k]
 
-
     def test_multi_field_errors(self):
         record = dict(
             get_chromo('contracts')['examples']['record'],
@@ -120,7 +114,6 @@ class TestContracts(CanadaTestBase):
             assert k in err
             assert err[k] == expected[k]
 
-
     def test_inter_field_errors(self):
         record = dict(
             get_chromo('contracts')['examples']['record'],
@@ -141,13 +134,12 @@ class TestContracts(CanadaTestBase):
         expected = {
             'buyer_name': ['This field must be populated with an NA if an amendment is disclosed under Instrument Type'],
             'economic_object_code': ['If N/A, then Instrument Type must be identified as a standing offer/supply arrangement (SOSA)'],
-            'number_of_bids':['This field must be populated with a 1 if the solicitation procedure is identified as non-competitive (TN) or Advance Contract Award Notice (AC).'],
+            'number_of_bids': ['This field must be populated with a 1 if the solicitation procedure is identified as non-competitive (TN) or Advance Contract Award Notice (AC).'],
         }
         assert isinstance(err, dict), err
         for k in set(err) | set(expected):
             assert k in err
             assert err[k] == expected[k]
-
 
     def test_field_length_errors(self):
         record = dict(
@@ -168,7 +160,6 @@ class TestContracts(CanadaTestBase):
         for k in set(err) | set(expected):
             assert k in err
             assert err[k] == expected[k]
-
 
     def test_postal_code(self):
         record = dict(

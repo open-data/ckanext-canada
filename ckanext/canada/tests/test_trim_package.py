@@ -23,14 +23,12 @@ class TestTrimPackage(CanadaTestBase):
         self.example_pkg['resources'] = resources
         _trim_package(self.example_pkg)
 
-
     def test_trimmed_dataset(self):
         for field in PACKAGE_TRIM_FIELDS:
             assert field not in self.example_pkg
         assert 'type' in self.example_pkg
         assert 'name' in self.example_pkg and self.example_pkg['name'] is not None
         assert 'state' in self.example_pkg
-
 
     def test_trimmed_resources(self):
         for resource in self.example_pkg['resources']:

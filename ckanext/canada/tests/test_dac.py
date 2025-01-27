@@ -25,7 +25,6 @@ class TestDAC(CanadaTestBase):
 
         self.resource_id = rval['resources'][0]['id']
 
-
     def test_example(self):
         record = get_chromo('dac')['examples']['record']
         choices_fields = recombinant_choice_fields('dac')
@@ -33,7 +32,6 @@ class TestDAC(CanadaTestBase):
         self.lc.action.datastore_upsert(
             resource_id=self.resource_id,
             records=[record])
-
 
     def test_blank(self):
         with pytest.raises(ValidationError) as ve:
