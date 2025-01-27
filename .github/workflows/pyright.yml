@@ -1,0 +1,54 @@
+name: Check types
+on: [pull_request]
+env:
+  NODE_VERSION: '18'
+  PYTHON_VERSION: '3.9'
+
+permissions:
+  contents: read
+
+jobs:
+  typecheck:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        id: gitcheckout
+      - uses: actions/setup-python@v2
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+      - uses: actions/setup-node@v3
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+      - name: Install python deps
+        id: pydepends
+        if: steps.gitcheckout.outcome == 'success'
+        run: |
+            python3 -m venv /home/runner/work/app
+            mkdir -p /home/runner/work/app/src/ckanext-canada
+            cp -R . /home/runner/work/app/src/ckanext-canada
+            source /home/runner/work/app/bin/activate
+            pip install --upgrade setuptools==70.0.0
+            pip install --upgrade pip==23.2.1
+            pip install -e 'git+https://github.com/open-data/ckan@canada-v2.10#egg=ckan' -r 'https://raw.githubusercontent.com/open-data/ckan/canada-v2.10/requirement-setuptools.txt' -r 'https://raw.githubusercontent.com/open-data/ckan/canada-v2.10/requirements.txt' -r 'https://raw.githubusercontent.com/open-data/ckan/canada-v2.10/dev-requirements.txt'
+            pip install -e 'git+https://github.com/ckan/ckanapi.git#egg=ckanapi' -r 'https://raw.githubusercontent.com/ckan/ckanapi/master/requirements.txt'
+            pip install -e /home/runner/work/app/src/ckanext-canada/. -r /home/runner/work/app/src/ckanext-canada/requirements.txt -r /home/runner/work/app/src/ckanext-canada/test-requirements.txt
+            pip install -e 'git+https://github.com/open-data/ckanext-cloudstorage.git@canada-v2.10#egg=ckanext-cloudstorage' -r 'https://raw.githubusercontent.com/open-data/ckanext-cloudstorage/canada-v2.10/requirements.txt'
+            pip install -e 'git+https://github.com/ckan/ckanext-fluent.git#egg=ckanext-fluent' -r 'https://raw.githubusercontent.com/ckan/ckanext-fluent/master/requirements.txt'
+            pip install -e 'git+https://github.com/open-data/ckanext-recombinant.git@master#egg=ckanext-recombinant' -r 'https://raw.githubusercontent.com/open-data/ckanext-recombinant/master/requirements.txt'
+            pip install -e 'git+https://github.com/ckan/ckanext-scheming.git#egg=ckanext-scheming'
+            pip install -e 'git+https://github.com/open-data/ckanext-validation.git@canada-v2.10#egg=ckanext-validation' -r 'https://raw.githubusercontent.com/open-data/ckanext-validation/canada-v2.10/requirements.txt' -r 'https://raw.githubusercontent.com/open-data/ckanext-validation/canada-v2.10/dev-requirements.txt'
+            pip install -e 'git+https://github.com/open-data/ckanext-xloader.git@canada-v2.10#egg=ckanext-xloader' -r 'https://raw.githubusercontent.com/open-data/ckanext-xloader/canada-v2.10/requirements.txt' -r 'https://raw.githubusercontent.com/open-data/ckanext-xloader/canada-v2.10/dev-requirements.txt'
+            pip install -e 'git+https://github.com/ckan/ckantoolkit.git#egg=ckantoolkit' -r 'https://raw.githubusercontent.com/ckan/ckantoolkit/master/requirements.txt'
+            pip install -e 'git+https://github.com/open-data/frictionless-py.git@canada-v2.10#egg=frictionless' -r 'https://raw.githubusercontent.com/open-data/frictionless-py/canada-v2.10/requirements.txt'
+            pip install -e 'git+https://github.com/open-data/ckanext-security.git@canada-v2.10#egg=ckanext-security' -r 'https://raw.githubusercontent.com/open-data/ckanext-security/canada-v2.10/requirements.txt'
+            find /home/runner/work/app -name '*.pyc' -delete
+      - name: Install node deps
+        if: steps.pydepends.outcome == 'success'
+        run: |
+          cd /home/runner/work/app/src/ckanext-canada
+          npm ci
+      - name: Check types
+        if: steps.pydepends.outcome == 'success'
+        run: |
+          cd /home/runner/work/app/src/ckanext-canada
+          npx pyright

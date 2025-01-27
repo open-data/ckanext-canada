@@ -9,14 +9,15 @@ from ckanext.canada.triggers import update_triggers
 from ckanext.recombinant.cli import _create_triggers
 from ckan.cli.db import _run_migrations
 
+
 class CanadaTestBase(object):
     @classmethod
     def setup_method(self, method):
         """Method is called at class level before EACH test methods of the class are called.
         Setup any state specific to the execution of the given class methods.
         """
-        #FIXME: DB head for migartions in our test environment setup.
-        #       HEAD of CKAN db Docker image is always ahead??
+        # FIXME: DB head for migartions in our test environment setup.
+        #        HEAD of CKAN db Docker image is always ahead??
         _run_migrations('canada_public')
         reset_db()
         clear_all()

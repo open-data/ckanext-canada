@@ -9,8 +9,9 @@ from urllib.request import urlopen
 from bs4 import BeautifulSoup
 import re
 
-OUTPUT_FILE = os.path.join(os.path.split(__file__)[0],
-                           '../ckanext/canada/tables/choices/minister.json')
+OUTPUT_FILE = os.path.join(
+                os.path.split(__file__)[0],
+                '../ckanext/canada/tables/choices/minister.json')
 lang_codes = ["en", "fr"]
 all_mp_urls = []
 
@@ -46,24 +47,39 @@ def get_filter_output():
                 if existing_choices[row]['en'] == choices[row]['en']:
                     # position found in both
                     if existing_choices[row] != choices[row]:
-                        # case: same position with new minister in choices, then add new minister to existing position
+                        # case: same position with new minister in choices,
+                        # then add new minister to existing position
                         # and update end date for existing ministers
                         for minister in existing_choices[row]['ministers']:
-                            if minister['name'] != choices[row]['ministers'][0]['name'] and not minister['end_date']:
-                                minister['end_date'] = get_end_date(minister['name'], existing_choices[row]['en'])
+                            if (
+                              minister['name'] != choices[row]['ministers'][0]['name']
+                              and not minister['end_date']):
+
+                                minister['end_date'] = get_end_date(
+                                                        minister['name'],
+                                                        existing_choices[row]['en'])
                         else:
-                            if existing_choices[row]['ministers'][0] != choices[row]['ministers'][0]:
-                                existing_choices[row]['ministers'].insert(0, choices[row]['ministers'][0])
+                            if (
+                              existing_choices[row]['ministers'][0] !=
+                              choices[row]['ministers'][0]):
+
+                                existing_choices[row]['ministers'].insert(
+                                    0,
+                                    choices[row]['ministers'][0])
             else:
-                # case: position found in existing choices but not in choices,
+                # case: position found in existing
+                # choices but not in choices,
                 # update end date for all ministers
                 for minister in existing_choices[row]['ministers']:
                     if not minister['end_date']:
-                        minister['end_date'] = get_end_date(minister['name'], existing_choices[row]['en'])
+                        minister['end_date'] = get_end_date(minister['name'],
+                                                            existing_choices[row]['en'])
 
         for row in choices:
-            if not [d for d in existing_choices if existing_choices[d]['en'] == choices[row]['en']]:
-                # case: new position in choices, add new position to existing choices
+            if not [d for d in existing_choices
+                    if existing_choices[d]['en'] == choices[row]['en']]:
+                # case: new position in choices,
+                # add new position to existing choices
                 # and resolve duplicate codes, if required
                 position_code = row
                 i = 0
@@ -125,7 +141,9 @@ def get_ministries_list():
         for position in positions:
             minister_positions.append(position.text)
         minister_positions = filter(None, minister_positions)
-        current_positions = get_parliamentary_position_roles('https://www.ourcommons.ca' + minister_url + '/roles/xml', minister_positions)
+        current_positions = get_parliamentary_position_roles(
+            'https://www.ourcommons.ca' + minister_url + '/roles/xml',
+            minister_positions)
         cabinet_ministers_list.extend(current_positions)
     return cabinet_ministers_list
 
@@ -162,7 +180,8 @@ def get_parliamentary_position_roles(url, positions=None):
         i += 1
 
     if positions:
-        current_positions = [p for p in member_roles if p['title_en'] in positions and not p['end_date']]
+        current_positions = [p for p in member_roles
+                             if p['title_en'] in positions and not p['end_date']]
         return current_positions
 
     return member_roles
@@ -173,14 +192,16 @@ def get_end_date(name, position):
     if not len(all_mp_urls):
         # get url for all mps
         all_mps_page = urlopen(
-            'https://www.ourcommons.ca/Members/en/search?parliament=all&caucusId=all&province=all&gender=all')
+            'https://www.ourcommons.ca/Members/en/search'
+            '?parliament=all&caucusId=all&province=all&gender=all')
         all_mps_html = all_mps_page.read().decode('utf-8')
         all_mps_soup = BeautifulSoup(all_mps_html, 'html.parser')
         all_mp_urls = all_mps_soup.find_all(class_='ce-mip-mp-tile')
 
     for m in all_mp_urls:
         if m.find(class_='ce-mip-mp-name', text=name):
-            roles = get_parliamentary_position_roles('https://www.ourcommons.ca' + m['href'] + '/roles/xml')
+            roles = get_parliamentary_position_roles(
+                'https://www.ourcommons.ca' + m['href'] + '/roles/xml')
             for r in roles:
                 if r['title_en'] == position:
                     return r['end_date']
@@ -193,18 +214,18 @@ minister_choices = get_filter_output()
 # add Governor General to the list to make a combined
 # list for admin_aircraft and qpnotes
 minister_choices['GG'] = {
-    "en":"The Governor General of Canada",
-    "fr":"La gouverneure générale du Canada",
-    "ministers":[
+    "en": "The Governor General of Canada",
+    "fr": "La gouverneure générale du Canada",
+    "ministers": [
         {
-            "end_date":"",
-            "name":"Mary Simon",
-            "name_en":"Simon, Mary (Right Hon.)",
-            "name_fr":"Simon, Mary (Le très hon.)",
-            "start_date":"2021-07-26T08:00:00"
+            "end_date": "",
+            "name": "Mary Simon",
+            "name_en": "Simon, Mary (Right Hon.)",
+            "name_fr": "Simon, Mary (Le très hon.)",
+            "start_date": "2021-07-26T08:00:00"
         }
-        ]
-    }
+    ]
+}
 
 if minister_choices:
     open(OUTPUT_FILE, 'wb').write(json.dumps(

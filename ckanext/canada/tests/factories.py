@@ -1,7 +1,13 @@
 # -*- coding: UTF-8 -*-
 from factory import LazyAttribute, Sequence
 
-from ckan.tests.factories import UserWithToken, Organization, Dataset, Resource, ResourceView
+from ckan.tests.factories import (
+    UserWithToken,
+    Organization,
+    Dataset,
+    Resource,
+    ResourceView
+)
 import ckan.tests.helpers as helpers
 from ckan.model import Session
 
@@ -78,4 +84,3 @@ class CanadaDataset(Dataset):
     jurisdiction = 'federal'
     restrictions = 'unrestricted'
     imso_approval = 'true'
-
