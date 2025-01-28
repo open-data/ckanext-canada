@@ -176,7 +176,7 @@ class PortalUpdater(object):
             'copy-datasets',
             '-o',
             source_datastore_uri,
-            '-',
+            '-u',
             self.ckan_user
         ]
         if self.mirror:
