@@ -5,7 +5,7 @@
   {% set offset = 2 %}
 {% endif %}
 
-<section>
+<section id="dt-preview">
   <h2 id="prtable">{{_("Preview")}}</h2>
   <table id="dtprv" class="table table-striped" data-role="table" data-mode="columntoggle" >
     <thead>
@@ -39,6 +39,11 @@
 
   window.onload = function() {
     window.document.body.onload = previewdatatable();
+    if( searchParams.has('dt_query') ){
+      $([document.documentElement, document.body]).animate({
+          scrollTop: $("#dt-preview").offset().top
+      }, 0);
+    }
   };
 
   function previewdatatable(){
@@ -60,6 +65,20 @@
       initComplete: function(){
         if( searchParams.has('dt_query') ){
           table.search(searchParams.get('dt_query'));
+        }
+        let select_cell = this.find('th.checkboxes');
+        if( select_cell.length > 0 ){
+          $(select_cell).append('<input aria-label="Select All" id="dt-select-all" name="dt-select-all" type="checkbox"/>');
+          let select_all = $(select_cell).find('#dt-select-all');
+          if( select_all.length > 0 ){
+            $(select_all).on("click", function(_event) {
+              if( $(select_all).is( ":checked" ) ){
+                table.rows().select();
+              } else {
+                table.rows().deselect();
+              }
+            });
+          }
         }
       },
       select: {style: 'multi'},
