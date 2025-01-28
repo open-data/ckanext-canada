@@ -2280,7 +2280,7 @@ resources:
       service_id: service_id
   datastore_indexes: ""
   datastore_constraint_errors:  # yaml | not supported
-    upsert: Cannot create record because the Service ID Number does not exist in the Service Identification Information & Metrics resource for that fiscal year.
+    upsert: Cannot create record (<strong><em>{refValues}</em></strong>) because the Service ID Number does not exist in the <a target="_blank" href="{refTable}">Service Identification Information & Metrics resource</a> for that fiscal year.
 
   default_preview_sort: fiscal_yr, service_id, service_standard_id
 
