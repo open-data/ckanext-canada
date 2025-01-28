@@ -1354,7 +1354,7 @@ resources:
   datastore_primary_key: [fiscal_yr, service_id]
   datastore_indexes: ""
   datastore_constraint_errors:  # yaml | not supported
-    delete: Cannot delete record(s) because the Fiscal Year, Service ID Number is referenced in at least one Service Standards & Performance Results record.
+    delete: Cannot delete record(s) because the Fiscal Year, Service ID Number (<strong><em>{refValues}</em></strong>) is referenced in at least one <a target="_blank" href="{refTable}">Service Standards & Performance Results record.</a>
 
   default_preview_sort: fiscal_yr, service_id
 

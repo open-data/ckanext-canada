@@ -35,6 +35,8 @@
 <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.colVis.min.js" defer></script>
 <script type="text/javascript" src="https://cdn.datatables.net/select/1.3.1/js/dataTables.select.min.js" defer></script>
 <script type="text/javascript">
+  const searchParams = new URLSearchParams(document.location.search);
+
   window.onload = function() {
     window.document.body.onload = previewdatatable();
   };
@@ -46,7 +48,19 @@
       "processing": true,
       "ajax": {
         "url": "{{ h.url_for('canada.datatable', resource_name=resource_name, resource_id=resource_id,) }}",
-        "type": "POST"
+        "type": "POST",
+        "data": function(data){
+          if( searchParams.has('dt_query') ){
+            data.dt_query = searchParams.get('dt_query');
+          }else{
+            data.dt_query = '';
+          }
+        }
+      },
+      initComplete: function(){
+        if( searchParams.has('dt_query') ){
+          table.search(searchParams.get('dt_query'));
+        }
       },
       select: {style: 'multi'},
       "order": [[1, "asc"]],
