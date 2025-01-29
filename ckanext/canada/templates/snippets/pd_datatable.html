@@ -72,7 +72,7 @@
           let select_all = $(select_cell).find('#dt-select-all');
           if( select_all.length > 0 ){
             $(select_all).on("click", function(_event) {
-              if( $(select_all).is( ":checked" ) ){
+              if( $(select_all).is(":checked") ){
                 table.rows().select();
               } else {
                 table.rows().deselect();
