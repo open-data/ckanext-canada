@@ -469,7 +469,9 @@ def create_pd_record(owner_org: str, resource_name: str):
                                 'upsert', 'Something went wrong, your '
                                           'record was not created. Please '
                                           'contact support.')
-                        sql_error_string = ve.error_dict['upsert_info']['orig']
+                        # type_ignore_reason: incomplete typing
+                        sql_error_string = \
+                            ve.error_dict['upsert_info']['orig']  # type: ignore
                         error_message = get_constraint_error_from_psql_error(
                             lc, sql_error_string, error_message)
                         error_summary = error_message
@@ -747,7 +749,8 @@ def delete_selected_records(resource_id: str):
                         'datastore_constraint_errors', {}).get(
                             'delete',
                             e.error_dict['foreign_constraints'][0])  # type: ignore
-                    sql_error_string = e.error_dict['info']['orig']
+                    # type_ignore_reason: incomplete typing
+                    sql_error_string = e.error_dict['info']['orig']  # type: ignore
                     error_message = get_constraint_error_from_psql_error(
                         lc, sql_error_string, error_message)
                     h.flash_error(error_message)
