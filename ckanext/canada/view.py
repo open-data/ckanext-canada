@@ -73,6 +73,7 @@ from ckanext.recombinant.datatypes import canonicalize
 from ckanext.recombinant.tables import get_chromo
 from ckanext.recombinant.errors import RecombinantException, format_trigger_error
 from ckanext.recombinant.helpers import recombinant_primary_key_fields
+from ckanext.recombinant.utils import get_constraint_error_from_psql_error
 
 from ckanapi import LocalCKAN
 
@@ -468,7 +469,10 @@ def create_pd_record(owner_org: str, resource_name: str):
                                 'upsert', 'Something went wrong, your '
                                           'record was not created. Please '
                                           'contact support.')
-                        error_summary = _(error_message)
+                        sql_error_string = ve.error_dict['upsert_info']['orig']
+                        error_message = get_constraint_error_from_psql_error(
+                            lc, sql_error_string, error_message)
+                        error_summary = error_message
                     else:
                         log.warning('Failed to create %s record for org %s:\n%s',
                                     resource_name, owner_org, traceback.format_exc())
@@ -743,7 +747,10 @@ def delete_selected_records(resource_id: str):
                         'datastore_constraint_errors', {}).get(
                             'delete',
                             e.error_dict['foreign_constraints'][0])  # type: ignore
-                    h.flash_error(_(error_message))
+                    sql_error_string = e.error_dict['info']['orig']
+                    error_message = get_constraint_error_from_psql_error(
+                        lc, sql_error_string, error_message)
+                    h.flash_error(error_message)
                     return h.redirect_to('recombinant.preview_table',
                                          resource_name=res['name'],
                                          owner_org=org['name'])

@@ -68,7 +68,7 @@
         }
         let select_cell = this.find('th.checkboxes');
         if( select_cell.length > 0 ){
-          $(select_cell).append('<input aria-label="Select All" id="dt-select-all" name="dt-select-all" type="checkbox"/>');
+          $(select_cell).append('<input aria-label="{{ _('Select All') }}" id="dt-select-all" name="dt-select-all" type="checkbox"/>');
           let select_all = $(select_cell).find('#dt-select-all');
           if( select_all.length > 0 ){
             $(select_all).on("click", function(_event) {
