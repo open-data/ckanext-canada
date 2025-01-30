@@ -20,8 +20,10 @@ sub_orgs = [
     'ql-lq',
     'srp-rsp',
     ]
-PCO = { 'owner_org': 'pco-bcp',
-        'owner_org_title': 'Privy Council Office | Bureau du Conseil privé' }
+PCO = {
+    'owner_org': 'pco-bcp',
+    'owner_org_title': 'Privy Council Office | Bureau du Conseil privé',
+    }
 
 assert sys.stdin.read(3) == codecs.BOM_UTF8
 
