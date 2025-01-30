@@ -1,0 +1,259 @@
+{% set lang = h.lang() %}
+
+{% macro recombinant_menu_text(r_type) %}
+  {{- _(h.recombinant_get_geno(r_type).shortname or h.recombinant_get_geno(r_type).title) -}}
+{% endmacro %}
+
+{% macro recombinant_menu_link(r_type) %}
+  {{- h.url_for('recombinant.type_redirect', resource_name=r_type) -}}
+{% endmacro %}
+
+{# See: https://github.com/wet-boew/cdts-sgdc/blob/v4.1.0/src/gcweb/appTop.ejs #}
+{# See: https://github.com/wet-boew/cdts-sgdc/blob/v4.1.0/src/gcweb/top.ejs #}
+<script>
+  let appTop = document.getElementById("app-top");
+  if( appTop ){
+    {% if g.is_registry %}
+      const menuLinks = [
+        {% if g.userobj %}
+          {
+            "href": {{ h.url_for('canada.links') | tojson }},
+            "text": {{ _('Home') | tojson }},
+          },
+        {% else %}
+          {
+            "href": {{ h.url_for('user.login') | tojson }},
+            "text": {{ _('Home') | tojson }},
+          },
+        {% endif %}
+        {% if h.check_access('package_create') %}
+          {
+            "text": {{ _('Open Data') | tojson }},
+            "id": "open-data",
+            "subLinks": [
+              {
+                "subhref": {{ h.url_for('dataset_new') | tojson }},
+                "subtext": {{ _('Create an Open Data Record') | tojson }},
+              },
+              {
+                "subhref": {{ recombinant_menu_link('experiment') | tojson }},
+                "subtext": {{ recombinant_menu_text('experiment') | tojson }},
+              },
+              {
+                "subhref": {{ recombinant_menu_link('nap5') | tojson }},
+                "subtext": {{ recombinant_menu_text('nap5') | tojson }},
+              },
+              {
+                "subhref": {{ recombinant_menu_link('inventory') | tojson }},
+                "subtext": {{ recombinant_menu_text('inventory') | tojson }},
+              },
+            ],
+          },
+          {
+            "href": {{ h.url_for('info_new') | tojson }},
+            "text": {{ _('Open Information') | tojson }},
+          },
+          {
+            "text": {{ _('Proactive Publication') | tojson }},
+            "id": "proactive-publication",
+            "subLinks": [
+              {
+                "subhref": {{ recombinant_menu_link('wrongdoing') | tojson }},
+                "subtext": {{ recombinant_menu_text('wrongdoing') | tojson }},
+              },
+              {
+                "subhref": {{ recombinant_menu_link('contractsa') | tojson }},
+                "subtext": {{ recombinant_menu_text('contractsa') | tojson }},
+              },
+              {
+                "subhref": {{ recombinant_menu_link('ati') | tojson }},
+                "subtext": {{ recombinant_menu_text('ati') | tojson }},
+              },
+              {
+                "subhref": {{ recombinant_menu_link('briefingt') | tojson }},
+                "subtext": {{ recombinant_menu_text('briefingt') | tojson }},
+              },
+              {
+                "subhref": {{ recombinant_menu_link('contracts') | tojson }},
+                "subtext": {{ recombinant_menu_text('contracts') | tojson }},
+              },
+              {
+                "subhref": {{ recombinant_menu_link('dac') | tojson }},
+                "subtext": {{ recombinant_menu_text('dac') | tojson }},
+              },
+              {
+                "subhref": {{ recombinant_menu_link('grants') | tojson }},
+                "subtext": {{ recombinant_menu_text('grants') | tojson }},
+              },
+              {
+                "subhref": {{ recombinant_menu_link('hospitalityq') | tojson }},
+                "subtext": {{ recombinant_menu_text('hospitalityq') | tojson }},
+              },
+              {
+                "subhref": {{ recombinant_menu_link('reclassification') | tojson }},
+                "subtext": {{ recombinant_menu_text('reclassification') | tojson }},
+              },
+              {
+                "subhref": {{ recombinant_menu_link('service') | tojson }},
+                "subtext": {{ recombinant_menu_text('service') | tojson }},
+              },
+              {
+                "subhref": {{ recombinant_menu_link('qpnotes') | tojson }},
+                "subtext": {{ recombinant_menu_text('qpnotes') | tojson }},
+              },
+              {
+                "subhref": {{ h.url_for('info_new', collection='parliament_report') | tojson }},
+                "subtext": {{ _('Reports Tabled in Parliament') | tojson }},
+              },
+              {
+                "subhref": {{ recombinant_menu_link('travelq') | tojson }},
+                "subtext": {{ recombinant_menu_text('travelq') | tojson }},
+              },
+              {
+                "subhref": {{ recombinant_menu_link('travela') | tojson }},
+                "subtext": {{ recombinant_menu_text('travela') | tojson }},
+              },
+              {
+                "subhref": {{ h.url_for('info_new', collection='transition') | tojson }},
+                "subtext": {{ _('New or incoming ministers') | tojson }},
+              },
+              {
+                "subhref": {{ h.url_for('info_new', collection='transition_deputy')| tojson }},
+                "subtext": {{ _('New or incoming deputy heads') | tojson }},
+              },
+              {
+                "subhref": {{ h.url_for('info_new', collection='parliament_committee') | tojson }},
+                "subtext": {{ _('Parliamentary Committee appearances for ministers') | tojson }},
+              },
+              {
+                "subhref": {{ h.url_for('info_new', collection='parliament_committee_deputy') | tojson }},
+                "subtext": {{ _('Parliamentary Committee appearances for deputy heads') | tojson }},
+              },
+            ],
+          },
+          {
+            "text": {{ _('Open Dialogue') | tojson }},
+            "id": "open-dialogue",
+            "subLinks": [
+              {
+                "subhref": {{ recombinant_menu_link('consultations') | tojson }},
+                "subtext": {{ recombinant_menu_text('consultations') | tojson }},
+              },
+              {
+                "subhref": "/static/data/consultations.csv",
+                "subtext": {{ _('Consultations master dataset') | tojson }},
+              },
+            ],
+          },
+          {
+            "href": {{ h.url_for('dataset_search') | tojson }},
+            "text": {{ _('Search') | tojson }},
+          },
+          {
+            "href": {{ h.url_for('organization.index') | tojson }},
+            "text": {{ _('Organizations') | tojson }},
+          },
+        {% endif %}
+        {
+          "href": {{ h.url_for('canada.view_help') | tojson }},
+          "text": {{ _('FAQ') | tojson }},
+        },
+      ];
+      appTop.outerHTML = wet.builder.appTop({
+        "search": false,
+        "lngLinks": [
+          {
+            "lang": "{{ 'en' if lang == 'fr' else 'fr' }}",
+            "href": {{ h.url_for(h.current_url(), locale=('en' if lang == 'fr' else 'fr')) | tojson }},
+            "text": "{{ 'English' if lang == 'fr' else 'Français' }}",
+          }
+        ],
+        {% if g.userobj %}
+          "appSettings": [{"href": {{ h.url_for('user.edit', id=g.userobj.name) | tojson }}}],
+          "signOut": [{"href": {{ h.url_for('user.logout') | tojson }}}],
+        {% else %}
+          "signIn": [{"href": {{ h.url_for('user.login') | tojson }}}],
+        {% endif %}
+        "menuLinks": menuLinks,
+        "breadcrumbs": {{ h.ckan_to_cdts_breadcrumbs(breadcrumb_content)|tojson if breadcrumb_content|trim else [] }},
+      });
+      {% if g.userobj %}
+        {# The Wet Builder has no options for custom buttons in the App Bar. Have to JS inject here. #}
+        {% if lang == 'fr' %}
+          {% set help_link = h.portal_url() ~ "/fr/guide-operations-registre/ton-compte" %}
+        {% else %}
+          {% set help_link = h.portal_url() ~ "/en/registry-operations-guide/your-account" %}
+        {% endif %}
+        const extraAppBarButtons = [
+          {
+            "text": {{ _('Dashboard') | tojson }},
+            "href": {{ h.url_for('activity.dashboard') | tojson }},
+            "icon": "fa-tachometer",
+            "btnClass": "",
+            "location": "before",
+          },
+          {% if g.userobj.sysadmin %}
+            {
+              "text": {{ _('Admin') | tojson }},
+              "href": {{ h.url_for('admin.index') | tojson }},
+              "icon": "fa-gavel",
+              "btnClass": "",
+              "location": "before",
+            },
+          {% endif %}
+          {
+            "text": {{ _('Get Help') | tojson }},
+            "href": {{ help_link | tojson }},
+            "icon": "fa-question",
+            "btnClass": "btn-warning",
+            "location": "after",
+          }
+        ];
+        function _add_custom_app_bar_buttons(parent_node){
+          for(let _i = 0; _i < extraAppBarButtons.length; _i++){
+            let buttonNode = document.createElement('li');
+            buttonNode.innerHTML = '<a href="' + extraAppBarButtons[_i]["href"] + '" class="btn ' + extraAppBarButtons[_i]["btnClass"] + '"><span class="fa ' + extraAppBarButtons[_i]["icon"] + '" aria-hidden="true"></span>&nbsp;' + extraAppBarButtons[_i]["text"] + '</a>';
+            if( extraAppBarButtons[_i]["location"] == 'before' ){
+              parent_node.prepend(buttonNode);
+            }else if( extraAppBarButtons[_i]["location"] == 'after'){
+              parent_node.append(buttonNode);
+            }
+          }
+        }
+        function _add_sign_in_context_section(parent_node){
+          let signInContextNode = document.createElement('div');
+          signInContextNode.classList.add('canada-sign-in-context')
+          signInContextNode.innerHTML = '<div class="container">{{ _('Signed in as') }}&nbsp;<a href="{{ h.url_for('user.read', id=g.userobj.name) }}" title="{{ _('View profile') }}"><span class="username">{{ g.userobj.display_name }}</span></a></div>';
+          parent_node.append(signInContextNode);
+        }
+        let appBar = document.getElementsByClassName('app-bar');
+        if( appBar.length > 0 ){
+          _add_sign_in_context_section(appBar[0]);
+          let accountBar = appBar[0].getElementsByClassName('app-list-account');
+          if( accountBar.length > 0 ){
+            _add_custom_app_bar_buttons(accountBar[0]);
+          }
+        }
+        let appBarMobile = document.getElementsByClassName('app-bar-mb');
+        if( appBarMobile.length > 0 ){
+          let accountBar = appBarMobile[0].getElementsByClassName('app-list-account');
+          if( accountBar.length > 0 ){
+            _add_custom_app_bar_buttons(accountBar[0]);
+          }
+        }
+      {% endif %}
+    {% else %}
+      appTop.outerHTML = wet.builder.top({
+        "search": true,
+        "lngLinks": [
+          {
+            "lang": "{{ 'en' if lang == 'fr' else 'fr' }}",
+            "href": {{ h.url_for(h.current_url(), locale=('en' if lang == 'fr' else 'fr')) | tojson }},
+            "text": "{{ 'English' if lang == 'fr' else 'Français' }}",
+          }
+        ],
+        "breadcrumbs": {{ h.ckan_to_cdts_breadcrumbs(breadcrumb_content)|tojson if breadcrumb_content|trim else [] }},
+      });
+    {% endif %}
+  }
+</script>

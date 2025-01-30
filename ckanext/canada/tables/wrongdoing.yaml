@@ -1,6 +1,7 @@
 dataset_type: wrongdoing
 target_dataset: wrongdoing
-title: Proactive Disclosure - Acts of Founded Wrongdoing
+title: Proactive Publication - Acts of Founded Wrongdoing
+shortname: Acts of Founded Wrongdoing
 notes: Access, upload and modify the Acts of Founded Wrongdoing reports for your organization
 
 template_version: 3
@@ -10,8 +11,11 @@ portal_type: info
 collection: pd
 
 resources:
-- title: Proactive Disclosure - Founded Wrongdoing
+- title: Proactive Publication - Founded Wrongdoing
   resource_name: wrongdoing
+
+  published_resource_id: 84a77a58-6bce-4bfb-ad67-bbe452523b14
+
   create_form: true
   edit_form: true
   fields:
@@ -218,6 +222,9 @@ resources:
         crval RECORD;
       BEGIN
         errors := errors || required_error(NEW.ref_number, 'ref_number');
+        IF NEW.ref_number LIKE '%,%' THEN
+          errors := errors || ARRAY[['ref_number', {ref_number_error}]];
+        END IF;
         errors := errors || required_error(NEW.file_id_number, 'file_id_number');
         errors := errors || required_error(NEW.case_description_en, 'case_description_en');
         errors := errors || required_error(NEW.case_description_fr, 'case_description_fr');
@@ -235,6 +242,9 @@ resources:
 
 
   - update_record_modified_created_trigger
+
+  trigger_strings:  # yaml | not supported
+    ref_number_error: Comma is not allowed in Reference Number field
 
   examples:
     record:

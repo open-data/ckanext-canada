@@ -1,0 +1,34 @@
+{% ckan_extends %}
+
+{% block resource_read_title %}{% endblock %}
+
+{% block resource_license %}{% endblock %}
+
+{% block additional_info_heading %}
+  <a href="#additional-info">
+    <h2 id="additional-info">{{ _('Additional Information') }}</h2>
+  </a>
+{% endblock %}
+
+{% block additional_info_table_head %}{% endblock %}
+
+{% block resource_more_items %}{% endblock %}
+
+{%- block resource_fields -%}
+  {%- for field in schema.resource_fields -%}
+    {%- if field.field_name not in exclude_fields
+        and field.display_snippet is not none
+        and res[field.field_name] -%}
+      <tr>
+        <th scope="row">
+          {{- h.scheming_language_text(field.label) -}}
+        </th>
+        <td>
+          {%- snippet 'scheming/snippets/display_field.html',
+              field=field, data=res, entity_type='dataset',
+              object_type=dataset_type -%}
+        </td>
+      </tr>
+    {%- endif -%}
+  {%- endfor -%}
+{%- endblock -%}

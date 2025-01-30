@@ -1,0 +1,84 @@
+{% ckan_extends %}
+
+{% block adobe_analytics_creator %}
+  {{ h.adobe_analytics_creator(organization=pkg.organization, package=pkg) }}
+{% endblock %}
+
+{% block page_title %}
+  <h1 property="name" id="wb-cont">
+    {% block page_heading %}
+      {{ super() }}
+    {% endblock %}
+  </h1>
+  <div class="row">
+    <div class="col-md-12">
+      {# _site_messaging is handled by aliases in nginx to SMB #}
+      {# has to be below title for a11y H3 after H1 #}
+      {% if g.is_registry %}
+        <div data-ajax-replace="/static/_site_messaging/header_od_registry.{{ h.lang() }}"></div>
+      {% else %}
+        <div data-ajax-replace="/data/static/_site_messaging/header_od_ckan.{{ h.lang() }}"></div>
+      {% endif %}
+    </div>
+  </div>
+{% endblock %}
+
+{% block resource_actions %}
+  {% set extra_classes = '' %}
+  {% if not g.is_registry or not h.check_access('package_update', {'id':pkg.id }) %}
+    {% set extra_classes = 'resource-actions-toolbar-portal' %}
+  {% endif %}
+  <div class="resource-actions-toolbar {{ extra_classes }}">{{ super() }}</div>
+{% endblock %}
+
+{% block resources_list %}
+  <div class="mrgn-tp-md">{{ super() }}</div>
+{% endblock %}
+
+{% block action_manage %}
+  {% if not is_activity_archive %}{{ super() }}{% endif %}
+  <div class="resource-actions-toolbar-spacer"></div>
+{% endblock %}
+
+{% block resource_content %}
+  {% if g.is_registry %}
+    {{- h.get_validation_badge(res)|safe -}}
+    <div class="canada-w10-spacer"></div>
+    {{- h.get_loader_status_badge(res) -}}
+  {% endif %}
+  {% block resource_read_title %}{{ super() }}{% endblock %}
+  {% block resource_read_url %}
+    <p class="mrgn-bttm-lg">&nbsp;</p>
+  {% endblock %}
+{% endblock %}
+
+{% block breadcrumb_content %}
+  {{ super.super() }}
+  <li class="active"><a href="#" title="{{ h.resource_display_name(res) }}">{{ h.resource_display_name(res)|truncate(80) }}</a></li>
+{% endblock %}
+
+{% block download_resource_button %}
+  {%if res.datastore_active %}
+    <button class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" role="button" data-bs-toggle="dropdown" id="dropdownDownloadFormat" aria-label="{{ _('List of downloadable formats') }}">
+      {% if not res.url or not h.is_url(res.url) %}
+        {{ _('Download') }}&nbsp;
+      {% endif %}
+    </button>
+    <ul class="dropdown-menu">
+      <li>
+        <a href="{{ h.url_for('datastore.dump', resource_id=res.id, bom=True) }}"
+           target="_blank" class="resource-url-analytics" data-gc-analytics="manualDownload"
+           data-pkg-id="{{ pkg.id }}" data-res-id="{{ res.id }}" data-org-id="{{ pkg.organization.id }}"><span>CSV</span></a>
+        <a href="{{ h.url_for('datastore.dump', resource_id=res.id, format='tsv', bom=True) }}"
+           target="_blank" class="resource-url-analytics" data-gc-analytics="manualDownload"
+           data-pkg-id="{{ pkg.id }}" data-res-id="{{ res.id }}" data-org-id="{{ pkg.organization.id }}"><span>TSV</span></a>
+        <a href="{{ h.url_for('datastore.dump', resource_id=res.id, format='json') }}"
+           target="_blank" class="resource-url-analytics" data-gc-analytics="manualDownload"
+           data-pkg-id="{{ pkg.id }}" data-res-id="{{ res.id }}" data-org-id="{{ pkg.organization.id }}"><span>JSON</span></a>
+        <a href="{{ h.url_for('datastore.dump', resource_id=res.id, format='xml')}}"
+           target="_blank" class="resource-url-analytics" data-gc-analytics="manualDownload"
+           data-pkg-id="{{ pkg.id }}" data-res-id="{{ res.id }}" data-org-id="{{ pkg.organization.id }}"><span>XML</span></a>
+        </li>
+    </ul>
+  {% endif %}
+{% endblock %}

@@ -1,0 +1,58 @@
+{% ckan_extends %}
+
+{% block bodytag %}
+  {{- super() -}}
+  {% if resource_view.get('canada_disabled_view') %}
+    data-disabled-view="true"
+  {% endif %}
+{% endblock %}
+
+{%- block title -%}
+  {{- h.resource_view_meta_title(package=package, resource=resource, view=resource_view) -}}
+{%- endblock -%}
+
+{% block page %}
+  {% if resource_view.get('canada_disabled_view') %}
+    <div class="canada-disabled-view-alert">
+      <div class="module-alert alert alert-warning mrgn-tp-md mrgn-bttm-md">
+        <p>{{ _('This view is currently disabled because the Resource has either failed Validation or failed to be uploaded to the DataStore.') }}</p>
+      </div>
+    </div>
+  {% endif %}
+  {{ super() }}
+  <div id="dtprv_processing" class="dataTables_processing card">
+    <div>
+      <div></div><div></div><div></div><div></div>
+    </div>
+  </div>
+{% endblock %}
+
+{%- block datatable_column_label -%}
+  {%- set label = 'label_' + h.lang() -%}
+  {%- set description = 'notes_' + h.lang() -%}
+  {%- if data_dictionary_labels and field.info is defined and field.info[label]|length -%}
+    {{ field.info[label] | trim }}
+  {%- else -%}
+    {{ field.id }}
+  {%- endif -%}
+  &nbsp;
+  {%- if data_dictionary_labels and field.info is defined and field.info[description]|length -%}
+    <i class="fa fa-info-circle" title="{{ h.markdown_extract(field.info[description], 300) }}"></i>
+  {%- endif -%}
+  &nbsp;
+{%- endblock -%}
+
+{% block adobe_analytics_creator %}
+  {{ h.adobe_analytics_creator(organization=package.organization, package=package) }}
+{% endblock %}
+
+{% block scripts %}
+  {% block google_analytics_footer %}{% endblock %}
+  {{ super() }}
+  {% asset 'canada_datatables/js' %}
+{% endblock %}
+
+{% block styles %}
+  {{ super() }}
+  {% asset 'canada_datatables/css' %}
+{% endblock %}

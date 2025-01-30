@@ -2,6 +2,7 @@ dataset_type: consultations
 target_dataset: consultations
 
 title: Open Dialogue - Consultations
+shortname: Consultations
 notes: Access, upload and modify consultation reports for your organization
 
 template_version: 3
@@ -14,11 +15,14 @@ sidebar_extra_content:
   en: 'Description and guidance are being developed. If you have questions, please email [consultation@pco-bcp.gc.ca](mailto:consultation@pco-bcp.gc.ca).'
   fr: 'La description et les directives sont en développement. Si vous avez des questions, veuillez écrire à [consultation@pco-bcp.gc.ca](mailto:consultation@pco-bcp.gc.ca).'
 
-gcpedia_link: http://www.gcpedia.gc.ca/wiki/Consultations_Registry_on_Open.Canada.ca
+guide_link: http://www.gcpedia.gc.ca/wiki/Consultations_Registry_on_Open.Canada.ca
 
 resources:
 - title: Open Dialogue - Consultations
   resource_name: consultations
+
+  published_resource_id: 92bec4b7-6feb-4215-a5f7-61da342b2354
+
   create_form: true
   edit_form: true
   fields:
@@ -543,6 +547,9 @@ resources:
         crval RECORD;
       BEGIN
         errors := errors || required_error(NEW.registration_number, 'registration_number');
+        IF NEW.registration_number LIKE '%,%' THEN
+          errors := errors || ARRAY[['registration_number', {registration_number_error}]];
+        END IF;
         errors := errors || required_error(NEW.publishable, 'publishable');
         errors := errors || choice_error(NEW.publishable, {publishable}, 'publishable');
         crval := choices_clean_error(NEW.partner_departments, {partner_departments},
@@ -580,7 +587,7 @@ resources:
           errors := errors || required_error(NEW.rationale, 'rationale');
         END IF;
         IF NEW.status = 'NF' AND NEW.publishable = 'Y' THEN
-          errors := errors || ARRAY[['status', 'If Status is set to: Not Going Forward, Publish Record must be set to No']];
+          errors := errors || ARRAY[['status', {status_error}]];
         END IF;
         crval := choices_clean_error(NEW.rationale, {rationale}, 'rationale');
         errors := errors || crval.error;
@@ -592,6 +599,10 @@ resources:
         RAISE EXCEPTION E'TAB-DELIMITED\t%', array_to_string(errors, E'\t');
       END;
   - update_record_modified_created_trigger
+
+  trigger_strings:  # yaml | not supported
+    status_error: "If Status is set to: Not Going Forward, Publish Record must be set to No"
+    registration_number_error: Comma is not allowed in Registration Number field
 
   examples:
     record:

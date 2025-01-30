@@ -1,0 +1,45 @@
+{% extends "page.html" %}
+
+{% block subtitle %}{{ _("Confirm Delete") }}{% endblock %}
+
+{% block primary_content_inner %}
+  {% block form %}
+    {% set to_delete = select_delete.split(';') %}
+    {% set primary_keys = h.recombinant_primary_key_fields(resource.name) %}
+    <p>{{ ungettext(
+      'Are you sure you want to delete {num} record? This action cannot be undone.',
+      'Are you sure you want to delete {num} records? This action cannot be undone.',
+      num).format(num=num) }}</p>
+    <div class="mrgn-tp-lg mrgn-bttm-lg col-md-6">
+      <table class="table table-responsive">
+        <thead>
+          <th scope="col" class="col-sm-1 border-0"></th>
+          {% for c in primary_keys %}
+            <th scope="col">{{ c['label'][h.lang()] }}</th>
+          {% endfor %}
+        </thead>
+        <tbody>
+          {% for r in to_delete %}
+            <tr>
+              <td class="text-danger border-0"><i class="fa fa-minus-circle" aria-hidden="true"></i></td>
+              {% for _r in r.split(',') %}
+                <td class="bg-danger text-danger">{{ _r }}</td>
+              {% endfor %}
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+    <div class="clearfix"></div>
+
+    <p class="form-actions">
+      <form id="recombinant-confirm-select-delete-form" action="{{ h.url_for('canada.delete_selected_records', resource_id=resource.id) }}" method="post">
+        {{ h.csrf_input() }}
+        <input type="hidden" name="select-delete" value="{{ select_delete }}" />
+        <button class="btn" type="submit" name="cancel" >{{ _('Cancel') }}</button>
+        <button class="btn btn-danger" type="submit" name="confirm" >{{ _('Confirm Delete') }}</button>
+      </form>
+    </p>
+  {% endblock %}
+{% endblock %}

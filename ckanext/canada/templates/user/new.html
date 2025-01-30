@@ -1,0 +1,52 @@
+{% ckan_extends %}
+
+{% block subtitle %}
+  {% if g.is_registry %}
+    {% block page_heading %}{{ _('Request an Account') }}{% endblock %}
+  {% endif %}
+{% endblock %}
+
+{% block breadcrumb_content %}
+  {% if g.is_registry %}
+    <li class="active">{{ h.nav_link(_('Registration'), 'user.register') }}</li>
+  {% endif %}
+{% endblock %}
+
+{% block primary_content %}
+  {% if g.is_registry %}
+    <div class="row col-md-12 mrgn-tp-lg canada-page-main-wrapper">
+      {{ form | safe }}
+    </div>
+  {% endif %}
+{% endblock %}
+
+{% block help %}
+  <section class="panel panel-default">
+    {{ self.help_inner() }}
+  </section>
+{% endblock %}
+
+{% block secondary_content %}
+  {% if g.is_registry %}
+    <div class="panel panel-info">
+      <div class="panel-heading">{{ _('Why Sign Up?') }}</div>
+      <div class="panel-body">
+        <p>{% trans %}An active account linked to your organization is required in order to create or modify records in the registry.{% endtrans %}</p>
+      </div>
+    </div>
+    <div class="panel panel-info">
+      <div class="panel-heading">{{ _('Next Step...') }}</div>
+      <div class="panel-body">
+        <p>{% trans %}Once an account is created you will receive an email confirming your request. Next, the Administrator will link your account to your Organization and send you a notification. At this point, you can start adding records to the Registry.{% endtrans %}</p>
+      </div>
+    </div>
+  {% endif %}
+{% endblock %}
+
+{% block custom_styles %}
+  {{ super() }}
+  {% if g.is_registry %}
+    <link rel="stylesheet" href="{{ h.url_for_static('base/vendor/select2/select2.css') }}" />
+    <link rel="stylesheet" href="{{ h.url_for_static('base/vendor/select2/select2-bootstrap.css') }}" />
+  {% endif %}
+{% endblock %}

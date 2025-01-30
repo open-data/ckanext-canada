@@ -1,0 +1,6 @@
+{% set license = h.get_license(data.license_id) %}
+{% if h.lang() == 'fr' %}
+  <a href="{{ license.url_fra }}">{{ license.title_fra }}</a>
+{% else %}
+  <a href="{{ license.url }}">{{ license.title }}</a>
+{% endif %}

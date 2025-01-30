@@ -1,0 +1,18 @@
+{% ckan_extends %}
+
+{% block secondary_content %}
+  <section class="panel panel-info">
+    <header class="panel-heading">
+      <h3 class="panel-title">
+        <i class="fa fa-info-circle" aria-hidden="true"></i>&nbsp;{{ _('Administer CKAN') }}
+      </h3>
+    </header>
+    <div class="panel-body">
+      {% set docs_url = "http://docs.ckan.org/en/{0}/sysadmin-guide.html".format(g.ckan_doc_version) %}
+      {% trans %}
+        <p>As a sysadmin user you have full control over this CKAN instance. Proceed with care!</p>
+        <p>For guidance on using sysadmin features, see the CKAN  <a href="{{ docs_url }}" target="_blank">sysadmin guide</a></p>
+      {% endtrans %}
+    </div>
+  </section>
+{% endblock %}

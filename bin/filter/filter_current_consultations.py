@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 """
 Script that takes csv on stdin with Year, Month as the first two columns
@@ -9,6 +9,7 @@ from datetime import datetime, timedelta
 import csv
 import sys
 
+
 def main():
     current = datetime.today() - timedelta(365 * 2)
 
@@ -18,5 +19,6 @@ def main():
     for row in reader:
         if datetime.strptime(row['end_date'], '%Y-%m-%d') > current:
             writer.writerow(row)
+
 
 main()

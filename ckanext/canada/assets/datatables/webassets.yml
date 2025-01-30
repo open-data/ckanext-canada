@@ -1,0 +1,9 @@
+css:
+  contents:
+    - canada_datatables.css
+  output: canada_datatables/%(version)s_canada_datatables.css
+
+js:
+  contents:
+    - canada_datatables.js
+  output: canada_datatables/%(version)s_canada_datatables.js

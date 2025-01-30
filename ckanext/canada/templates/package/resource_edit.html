@@ -1,0 +1,15 @@
+{% ckan_extends %}
+
+{% block subtitle %}{{ _('Edit') }} -
+  {{ h.get_translated(res, 'name') }} -
+  {{ h.get_translated(pkg, 'title') }}
+{% endblock %}
+
+{% block primary_content_inner %}
+  <p>
+    <script>
+      document.write('<a class="btn btn-primary" href=\'' + document.referrer + '\';"><i class="fa fa-arrow-left" aria-hidden="true"></i>'+'{{ _("Go back") }}'+'</a>');
+    </script>
+  </p>
+  {% block form %}{{ super() }}{% endblock %}
+{% endblock %}

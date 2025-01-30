@@ -2,22 +2,27 @@ dataset_type: adminaircraft
 target_dataset: adminaircraft
 
 
-title: Proactive Disclosure - Use of Administrative Aircraft
+title: Proactive Publication - Use of Administrative Aircraft
+shortname: Use of Administrative Aircraft
 notes: Access, upload and modify government administrative aircraft use
 
 
 template_version: 3
+template_updated: 2025-01-10
 
 portal_type: info
 
 resources:
-- title: Proactive Disclosure - Use of Administrative Aircraft
+- title: Proactive Publication - Use of Administrative Aircraft
 
 collection: pd
 
 resources:
-- title: Proactive Disclosure - Use of Administrative Aircraft
+- title: Proactive Publication - Use of Administrative Aircraft
   resource_name: adminaircraft
+
+  published_resource_id: 1495406e-338c-43ec-9995-ec8d8c90d17e
+
   create_form: true
   edit_form: true
   fields:
@@ -56,7 +61,7 @@ resources:
     occurrence: Single
     datastore_type: text
     excel_full_text_choices: True
-    choices_file: choices/aircraft_minister.json
+    choices_file: choices/minister.json
     excel_error_formula: 'FALSE'
 
   # 3.3
@@ -182,7 +187,7 @@ resources:
       en: Number of hours flown
       fr: Le nombre d’heures de vol
     description:
-      en: The number of hours flown. 
+      en: The number of hours flown.
       fr: Le nombre d’heures de vol.
     obligation: Mandatory
     excel_required: true
@@ -287,6 +292,9 @@ resources:
         crval RECORD;
       BEGIN
         errors := errors || required_error(NEW.reference_number, 'reference_number');
+        IF NEW.reference_number LIKE '%,%' THEN
+          errors := errors || ARRAY[['reference_number', {reference_number_error}]];
+        END IF;
         errors := errors || required_error(NEW.minister, 'minister');
         errors := errors || required_error(NEW.purpose_en, 'purpose_en');
         errors := errors || required_error(NEW.purpose_fr, 'purpose_fr');
@@ -304,6 +312,9 @@ resources:
         RAISE EXCEPTION E'TAB-DELIMITED\t%', array_to_string(errors, E'\t');
       END;
   - update_record_modified_created_trigger
+
+  trigger_strings:  # yaml | not supported
+    reference_number_error: Comma is not allowed in Reference Number field
 
   examples:
     record:

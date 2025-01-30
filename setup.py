@@ -23,35 +23,20 @@ setup(
     ],
     entry_points="""
     [ckan.plugins]
-    canada_internal=ckanext.canada.plugins:DataGCCAInternal
-    canada_public=ckanext.canada.plugins:DataGCCAPublic
-    canada_forms=ckanext.canada.plugins:DataGCCAForms
-    canada_package=ckanext.canada.plugins:DataGCCAPackageController
-    canada_activity=ckanext.canada.plugins:CanadaActivity
-    canada_obd=ckanext.canada.plugins:CanadaOpenByDefault
-
-    [paste.paster_command]
-    canada=ckanext.canada.commands:CanadaCommand
-
-    ati=ckanext.canada.pd:PDNilCommand
-    contracts=ckanext.canada.pd:PDNilCommand
-    grants=ckanext.canada.pd:PDNilCommand
-    reclassification=ckanext.canada.pd:PDNilCommand
-    travela=ckanext.canada.pd:PDCommand
-    travelq=ckanext.canada.pd:PDNilCommand
-    hospitalityq=ckanext.canada.pd:PDNilCommand
-    contractsa=ckanext.canada.pd:PDCommand
-    inventory=ckanext.canada.pd:PDCommand
-    wrongdoing=ckanext.canada.pd:PDCommand
-
-    [ckan.rdf.profiles]
-    canada_dcat=ckanext.canada.dcat:CanadaDCATProfile
+    canada_internal=ckanext.canada.plugin:CanadaInternalPlugin
+    canada_public=ckanext.canada.plugin:CanadaPublicPlugin
+    canada_forms=ckanext.canada.plugin:CanadaFormsPlugin
+    canada_datasets=ckanext.canada.plugin:CanadaDatasetsPlugin
+    canada_security=ckanext.canada.plugin:CanadaSecurityPlugin
+    canada_theme=ckanext.canada.plugin:CanadaThemePlugin
 
     [babel.extractors]
     ckan = ckan.lib.extract:extract_ckan
+    pd = ckanext.canada.extract:extract_pd
     """,
     message_extractors={
         'ckanext': [
+            ('**/tables/**.yaml', 'pd', None),
             ('**.py', 'python', None),
             ('**.js', 'javascript', None),
             ('**/templates/**.html', 'ckan', None),

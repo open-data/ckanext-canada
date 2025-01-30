@@ -1,0 +1,8 @@
+{% ckan_extends %}
+
+{% block subtitle %}
+  {{ super() }}
+  {% if resource_view.get('canada_disabled_view') %}
+    <small class="label label-warning canada-view-disabled-label">{{ _('Disabled') }}</small>
+  {% endif %}
+{% endblock %}

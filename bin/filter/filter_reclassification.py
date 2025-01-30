@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 "filter for reclassification.csv and reclassification-nil.csv"
 
 import csv

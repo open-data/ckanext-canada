@@ -1,0 +1,16 @@
+{# slight abuse of scheming_language_text for selecting the desired language version #}
+{%- set value = h.scheming_language_text(data[field.field_name]) -%}
+<div class="row">
+  <div class="col-md-4">
+    <label>{{ h.scheming_language_text(field.label) }}</label>
+  </div>
+  <div class="col-md-8">
+    {% block tag_list %}
+      <ul class="tag-list">
+        {% for tag in value %}
+          <li>{{ tag|truncate(22) }}</li>
+        {% endfor %}
+      </ul>
+    {% endblock %}
+  </div>
+</div>

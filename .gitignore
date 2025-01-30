@@ -8,6 +8,7 @@ dist
 development.ini
 .DS_Store
 .idea
+.eggs/**
 
 *.prefs
 ckan.log
@@ -17,3 +18,6 @@ links/test-core.ini
 links/who.ini
 ckanext/canada/templates/public/snippets/site_message_*
 ckanext/canada/download/*.jsonl
+**.mo
+*.xcf
+node_modules/**

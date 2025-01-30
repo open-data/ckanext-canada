@@ -1,0 +1,21 @@
+{% ckan_extends %}
+
+{% block primary_content %}
+  <div class="row mrgn-bttm-lg mrgn-tp-md canada-page-main-wrapper">
+    <div class="col-md-12">
+      {% block primary_content_inner %}
+        {% block form %}
+          {{ super() }}
+        {% endblock %}
+      {% endblock %}
+    </div>
+  </div>
+{% endblock %}
+
+{% block secondary_content %}{% endblock %}
+
+{% block help %}
+  <section class="module module-info span-2">
+    {{ self.help_inner() }}
+  </section>
+{% endblock %}

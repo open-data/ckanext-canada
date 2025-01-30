@@ -1,0 +1,18 @@
+{% extends "page.html" %}
+
+{% block subtitle %}{{ _("Confirm Delete") }}{% endblock %}
+
+{% block primary_content_inner %}
+  <div class="col-md-12">
+    {% block form %}
+      <p>{{ _('Are you sure you want to delete dataset - {name}?').format(name=pkg_dict.name) }}</p>
+      <p class="form-actions">
+        <form action="{{ h.url_for(pkg_dict.type + '.delete', id=pkg_dict.name) }}" method="post">
+          {{ h.csrf_input() }}
+          <button class="btn btn-primary" type="submit" name="cancel" >{{ _('Cancel') }}</button>
+          <button class="btn btn-danger" type="submit" name="delete" >{{ _('Confirm Delete') }}</button>
+        </form>
+      </p>
+    {% endblock %}
+  </div>
+{% endblock %}

@@ -1,0 +1,5 @@
+{% if resource.datastore_active %}
+  {% set loading_text = _('Loading...') %}
+  {% set api_info_url = h.url_for('api.snippet', ver=1, snippet_path='api_info.html', resource_id=resource.id, api_version=3) %}
+  <a class="btn btn-success" href="{{ api_info_url }}" data-module="api-info" data-module-template="{{ api_info_url }}" data-loading-text="{{ loading_text }}"><i class="fa fa-flask fa-lg" aria-hidden="true"></i>&nbsp;{{ _('Data API') }}</a>
+{% endif %}

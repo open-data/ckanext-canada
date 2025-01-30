@@ -1,0 +1,20 @@
+<form class="mrgn-bttm-sm mrgn-tp-md" role="form" method="get" data-module="select-switch">
+  <div class="input-group col-md-12">
+    <div class="canada-search-field-wrapper">
+      <input type="text" class="field form-control" id="field-organization-search" autocomplete="off" name="q" value="{{ q }}" placeholder="{{ _('Search organizations...') }}">
+      <span class="input-group-btn">
+        {% block search_input_button %}
+        <button class="btn btn-primary btn-small" type="submit">
+          <i class="fa fa-search" aria-hidden="true"></i><span class="wb-inv">{{ _('Search') }}</span>
+        </button>
+        {% endblock %}
+      </span>
+    </div>
+  </div>
+</form>
+
+<div class="row mrgn-bttm-lg">
+  <div class="canada-org-result-text {{ 'col-md-12 text-center text-warning' if not count else 'col-md-6 mrgn-tp-sm text-left text-success' }}">
+    <strong>{% snippet 'snippets/search_result_text.html', query=q, count=count, type="organization" %}</strong>
+  </div>
+</div>

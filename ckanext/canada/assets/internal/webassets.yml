@@ -1,0 +1,49 @@
+css:
+  contents:
+    - canada_internal.css
+  output: canada_internal/%(version)s_canada_internal.css
+
+analytics:
+  contents:
+    - canada_internal_analytics.js
+  output: canada_internal_analytics/%(version)s_canada_internal_analytics.js
+
+cascading_select:
+  contents:
+    - cascading_select.js
+  output: canada_internal/%(version)s_cascading_select.js
+
+geomap_zoom:
+  contents:
+    - geomapzoom.js
+  output: canada_internal/%(version)s_geomapzoom.js
+
+organization_edit:
+  contents:
+    - registry_organization_edit.js
+  output: canada_internal/%(version)s_registry_organization_edit.js
+
+package_edit:
+  contents:
+    - registry_package_edit.js
+  output: canada_internal/%(version)s_registry_package_edit.js
+
+resource_edit:
+  contents:
+    - registry_resource_edit.js
+  output: canada_internal/%(version)s_registry_resource_edit.js
+
+guess_mimetype:
+  contents:
+    - canada_guess_mimetype.js
+  output: canada_guess_mimetype/%(version)s_canada_guess_mimetype.js
+
+user_lock:
+  contents:
+    - canada_internal_users.js
+  output: canada_internal/%(version)s_canada_internal_users.js
+
+recombinant_webforms:
+  contents:
+    - recombinant_webform.js
+  output: canada_internal/%(version)s_recombinant_webform.js

@@ -1,3 +1,4 @@
+# NOTE: Open Data Inventory Search has been deprecated. Records remain in the Registry DB. (2024-04)
 dataset_type: inventory
 target_dataset: inventory
 target_dataset_id: 4ed351cf-95d8-4c10-97ac-6b3511f359b7
@@ -8,16 +9,21 @@ notes: This dataset houses your departmental open data inventory. This is where 
 portal_type: dataset
 collection: inventory
 
-gcpedia_link: http://www.gcpedia.gc.ca/wiki/Open_Data_Inventory_/_l%E2%80%99inventaire_de_donn%C3%A9es_ouvertes
+guide_link: http://www.gcpedia.gc.ca/wiki/Open_Data_Inventory_/_l%E2%80%99inventaire_de_donn%C3%A9es_ouvertes
 upload_warn: 'IMPORTANT: New or updated inventories / rows will be published on open.canada.ca daily. IMSO approval must be obtained and sent to <a href="mailto:open-ouvert@tbs-sct.gc.ca">open-ouvert@tbs-sct.gc.ca</a> before uploading your inventory data. By clicking the Submit button, you are confirming IMSO approval.'
 
 resources:
 - title: Open Data Inventory
   resource_name: inventory
+
+  published_resource_id: d0df95a8-31a9-46c9-853b-6952819ec7b4
+
   fields:
 
   - datastore_id: ref_number
-    label: Reference Number
+    label:
+      en: Reference Number
+      fr: Numéro de référence
     description:
       en: The unique reference number given to each line item in the spreadsheet. Having a unique identifier for each item will allow departments to locate a specific item in the system if revisions or deletions are required. This element will not be displayed to the public.
       fr: Un identificateur unique est attribué à chaque poste dans la feuille de calcul. Un identificateur unique pour chaque poste permettra aux ministères de trouver un élément précis dans le système, si des modifications ou des suppressions sont nécessaires. Cet élément ne sera pas présenté au public.

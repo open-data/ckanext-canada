@@ -1,0 +1,26 @@
+{% ckan_extends %}
+
+{% block page_primary_action %}
+  {% if not g.is_registry %}
+    {{ super() }}
+  {% endif %}
+{% endblock %}
+
+{% block subtitle %}
+  {{ _('My Records') }}
+{% endblock %}
+
+{% block breadcrumb_content %}
+  {{ super() }}
+  <li class="active">{% link_for _('My Records'), named_route='dashboard.datasets' %}</li>
+{% endblock %}
+
+{% block page_heading %}
+  {{ _('Dashboard') }} - {{ _('My Records') }}
+{% endblock %}
+
+{% block primary_content_inner %}
+  <div class="mrgn-tp-md">
+    {{ super() }}
+  </div>
+{% endblock %}

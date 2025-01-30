@@ -1,0 +1,15 @@
+{% block ds_socialmedia %}
+  {% if not g.is_registry %}
+    <div class="panel panel-primary">
+      {% set pkg = pkg_dict %}
+      <div class="panel-heading"><div class="panel-title">{{ _('Have your say') }}</div></div>
+      <div class="panel-body">
+        <ul class="list-unstyled">
+          <div data-ajax-replace="/{{ h.lang() }}/vote-result/vote/{{ pkg_dict.id }}"></div>
+          <li><a href="#rate">{{ _('Rate this dataset') }}</a></li>
+          <li><a href="#feedback">{{ _('Provide feedback') }}</a></li>
+        </ul>
+      </div>
+    </div>
+  {% endif %}
+{% endblock ds_socialmedia %}

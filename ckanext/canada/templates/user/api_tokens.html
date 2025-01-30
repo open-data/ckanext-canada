@@ -1,0 +1,9 @@
+{% ckan_extends %}
+
+{% block page_heading %}{{ user_dict.display_name }} {{ g.template_title_delimiter }} {{ super() }}{% endblock %}
+
+{% block base_fields %}
+  <div class="form-group ">
+    {{ form.input('name', label=_('Name'), is_required=True, value=data.name, error=errors.name) }}
+  </div>
+{% endblock base_fields %}

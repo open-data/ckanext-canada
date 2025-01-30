@@ -1,0 +1,19 @@
+{% extends "page.html" %}
+
+{% block subtitle %}{{ _("Confirm Delete") }}{% endblock %}
+
+{% block primary_content_inner %}
+  <div class="col-md-12">
+    {% block form %}
+      <p>{{ _('Are you sure you want to delete user - {name}?').format(name=user_dict.name) }}</p>
+      <p class="form-actions">
+        <form action="{{ h.url_for('user.delete', id=user_dict.id) }}" method="post">
+          {{ h.csrf_input() }}
+          <input type="hidden" name="id" value="{{ user_dict.id }}" />
+          <button class="btn" type="submit" name="cancel" >{{ _('Cancel') }}</button>
+          <button class="btn btn-primary" type="submit" name="delete" >{{ _('Confirm Delete') }}</button>
+        </form>
+      </p>
+    {% endblock %}
+  </div>
+{% endblock %}

@@ -1,0 +1,100 @@
+{% extends 'admin/base.html' %}
+{% import 'macros/form.html' as form %}
+
+{% block primary_content_inner %}
+  {% asset 'canada_public/check_all' %}
+  <section id="search-results">
+    <div class="module-poster">
+      <form id="dataset-search" class="dataset-search mrgn-bttm-md mrgn-tp-md" method="get" data-module="select-switch" role="search">
+        <div id="search">
+          <h2 class="mrgn-tp-0 mrgn-bttm-0">
+            <label for="search_field"  class="wb-inv">{{ _('Search Datasets') }}</label>
+          </h2>
+          <div class="input-group col-md-12">
+            <div class="canada-search-field-wrapper">
+              <input type="text" class="field form-control" id="search_field" autocomplete="off" name="q" value="{{ g.q }}" placeholder="{{ _('Search datasets...') }}">
+              <span class="input-group-btn">
+                {% block search_input_button %}
+                  <button class="btn btn-primary btn-small" type="submit">
+                    <i class="fa fa-search" aria-hidden="true"></i><span class="wb-inv">{{ _('Search') }}</span>
+                  </button>
+                {% endblock %}
+              </span>
+            </div>
+          </div>
+          {% block suggest_a_dataset_button %}{% endblock %}
+        </div>
+        <div class="row mrgn-tp-md mrgn-bttm-md">
+          <div class="col-md-12">
+            <div class="canada-search-form-options-wrapper">
+              {% if g.page.item_count == 0 %}
+                <div class="text-center text-warning">
+                  <strong>{% snippet 'snippets/search_result_text.html', query=g.q, count=g.page.item_count, type='dataset' %}</strong>
+                </div>
+              {% else %}
+                <div class="mrgn-tp-sm text-left text-success">
+                  <strong>{% snippet 'snippets/search_result_text.html', query=g.q, count=g.page.item_count, type='dataset' %}</strong>
+                </div>
+                <div class="text-left">
+                  {{ h.snippet('snippets/sort_by.html', sort=g.sort_by_selected) }}
+                </div>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+        {% if g.fields -%}
+          <span>
+            {{ form.hidden_from_list(fields=g.fields) }}
+          </span>
+        {%- endif %}
+        <div id="dataset-search-ext">{% block dataset_search_ext %}{% endblock %}</div>
+      </form>
+      <div class="{% if request.args and g.page.item_count == 0 -%}module-info module-simplify{%- endif -%}">
+        <div class="filter-list">
+          {% block filter_list %}
+            {% for field in g.fields_grouped %}
+              {% if field != 'ready_to_publish' and field != 'imso_approval' %}
+                {% for link, label in h.search_filter_pill_link_label(field, extras) %}
+                  <a href="{{ link }}" class="btn btn-info btn-xs mrgn-lft-sm mrgn-bttm-sm facet-pill" title="{{ _('Remove') }}">
+                    {{ label }}&nbsp;<i class="fa fa-times" aria-hidden="true"></i></a>
+                  </a>
+                {% endfor %}
+              {% endif %}
+            {% endfor %}
+        {% endblock %}
+        </div>
+        {% if request.args and g.page.item_count == 0 %}
+          {% block try_another_search %}
+            {% trans %}
+              <p class="extra">Please try another search.</p>
+            {% endtrans %}
+          {% endblock %}
+        {% endif %}
+      </div>
+      {% if g.query_error %}
+        {% trans %}
+          <p><strong>There was an error while searching.</strong> Please try again.</p>
+        {% endtrans %}
+      {% endif %}
+      {{ h.snippet('admin/snippets/publish_package_list.html', packages=g.page.items) }}
+    </div>
+    {%- block pager -%}
+      {{ g.page.pager(q=g.q) }}
+    {%- endblock -%}
+  </section>
+  {%- block api_access_info -%}{%- endblock -%}
+{% endblock %}
+
+{% block extra_facets %}{% endblock %}
+
+{% block secondary_content %}
+<div class="filters">
+  <div class="canada-search-filters-title">
+    {% set clear_url = h.url_for('canada.ckanadmin_publish', q=g.q) if g.q else h.url_for('canada.ckanadmin_publish') %}
+    <h2>{{ _('Search Filters') }}</h2><span><a class="btn btn-danger btn-sm" href="{{ clear_url }}"><i class="fa fa-close" aria-hidden="true"></i>&nbsp;{{ _('Clear All') }}</a></span>
+  </div>
+  <div>
+    {% snippet 'snippets/dataset_facets.html', show_org_facet=true, search_facets=search_facets, facet_titles=facet_titles %}
+  </div>
+</div>
+{% endblock %}

@@ -4,7 +4,7 @@ import gzip
 import json
 import hashlib
 from pathlib import Path
-from sys import stderr, stdout, argv
+from sys import stderr, stdout
 from csv import DictReader
 from collections import Counter
 
@@ -45,6 +45,7 @@ ROWS_PD_TYPE_COLUMNS = {
     'wrongdoing.csv': 'rows:wrongdoing',
     'dac.csv': 'rows:dac',
     'briefingt.csv': 'rows:briefingt',
+    'briefingt-nil.csv': 'rows:briefingt',
     'qpnotes.csv': 'rows:qpnotes',
 }
 
@@ -52,6 +53,7 @@ COLUMNS = sorted(
     set(METADATA_COLLECTION_COLUMNS.values()) |
     set(ROWS_PD_TYPE_COLUMNS.values())
 )
+
 
 @click.command(help='''
 Generate report to stdout by comparing PREVIOUS_DIR and CURRENT_DIR data
@@ -70,18 +72,18 @@ def cli(header, period_label, previous_dir, current_dir):
         )
 
     # active_count, total_count = counts[col]
-    counts = {col:(Counter(), Counter()) for col in COLUMNS}
+    counts = {col: (Counter(), Counter()) for col in COLUMNS}
 
     stderr.write('[» ] metadata…\r')
     existing_metadata = collect_existing_metadata(previous_dir)
-    stderr.write(f'[»»\r\n')
+    stderr.write('[»»\r\n')
     count_metadata(current_dir, existing_metadata, counts)
     del existing_metadata
 
     for csv_name, col in sorted(ROWS_PD_TYPE_COLUMNS.items()):
         stderr.write(f'[» ] {csv_name} rows…\r')
         existing_rows = collect_existing_rows(previous_dir, csv_name)
-        stderr.write(f'[»»\r\n')
+        stderr.write('[»»\r\n')
         count_rows(current_dir, csv_name, existing_rows, counts[col])
 
     sum_active = Counter()
@@ -213,5 +215,6 @@ def count_rows(current_dir, csv_name, existing_rows, col_counts):
             h = hashlib.md5(repr(list(row.values())).encode('utf8')).digest()
             if h not in existing_rows:
                 active_count[org] += 1
+
 
 cli()

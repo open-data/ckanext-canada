@@ -1,7 +1,8 @@
 dataset_type: travelq
 target_dataset: travelq
 
-title: Proactive Disclosure - Travel Expenses
+title: Proactive Publication - Travel Expenses
+shortname: Travel Expenses
 notes: Access, upload and modify the monthly travel expense reports for your organization
 
 template_version: 3
@@ -12,8 +13,11 @@ collection: pd
 
 
 resources:
-- title: Proactive Disclosure - Travel Expenses
+- title: Proactive Publication - Travel Expenses
   resource_name: travelq
+
+  published_resource_id: 8282db2a-878f-475c-af10-ad56aa8fa72c
+
   create_form: true
   edit_form: true
   fields:
@@ -203,7 +207,7 @@ resources:
     datastore_type: text
     label:
       en: Places visited (French)
-      fr: Endroits visités (français) 
+      fr: Endroits visités (français)
     description:
       en: To include names of all places visited during the trip in question, in French
       fr: Cette zone indique, en français, le nom de tous les endroits visités pendant le voyage.
@@ -399,6 +403,9 @@ resources:
         crval RECORD;
       BEGIN
         errors := errors || required_error(NEW.ref_number, 'ref_number');
+        IF NEW.ref_number LIKE '%,%' THEN
+          errors := errors || ARRAY[['ref_number', {ref_number_error}]];
+        END IF;
         errors := errors || required_error(NEW.start_date, 'start_date');
         IF NEW.start_date >= '2019-06-21'::date THEN
           errors := errors || choice_error(NEW.disclosure_group, {disclosure_group}, 'disclosure_group');
@@ -414,12 +421,21 @@ resources:
           errors := errors || required_error(NEW.meals, 'meals');
           errors := errors || required_error(NEW.total, 'total');
         END IF;
+        NEW.airfare := round(NEW.airfare, 2);
+        NEW.other_transport := round(NEW.other_transport, 2);
+        NEW.lodging := round(NEW.lodging, 2);
+        NEW.meals := round(NEW.meals, 2);
+        NEW.other_expenses := round(NEW.other_expenses, 2);
+        NEW.total := round(NEW.total, 2);
         IF errors = '{{}}' THEN
           RETURN NEW;
         END IF;
         RAISE EXCEPTION E'TAB-DELIMITED\t%', array_to_string(errors, E'\t');
       END;
   - update_record_modified_created_trigger
+
+  trigger_strings:  # yaml | not supported
+    ref_number_error: Comma is not allowed in Reference Number field
 
   examples:
     record:
@@ -453,15 +469,20 @@ resources:
   - ati_email
 
 
-- title: Proactive Disclosure - Travel Expenses Nothing to Report
+- title: Proactive Publication - Travel Expenses Nothing to Report
   resource_name: travelq-nil
+
+  published_resource_id: d3f883ce-4133-48da-bc76-c6b063d257a2
+
   create_form: true
   edit_form: false #edit not possible for nil reports since only stored data is primary key
   fields:
 
   - datastore_id: year
     datastore_type: year
-    label: Year
+    label:
+      en: Year
+      fr: Année
     description:
       en: This tab / field in the template is only populated if there are no travel expenses for the reporting period. This field should be populated with the year of the reporting period.
       fr: Cet onglet/champ du modèle n’est rempli que s'il n'y a pas de frais de voyage pour la période d’établissement de rapports. Ce champ doit être rempli avec l’année de la période d’établissement de rapports.
@@ -566,7 +587,7 @@ resources:
           errors := errors || required_error(NEW.month, 'month');
           errors := errors || choice_error(NEW.month, {month}, 'month');
           IF NEW.year > date_part('year', CURRENT_DATE) THEN
-            errors := errors || ARRAY[['year', 'This must list the year you are reporting on (not the fiscal year).']];
+            errors := errors || ARRAY[['year', {year_error}]];
           END IF;
           IF errors = '{{}}' THEN
             RETURN NEW;
@@ -574,6 +595,9 @@ resources:
           RAISE EXCEPTION E'TAB-DELIMITED\t%', array_to_string(errors, E'\t');
         END;
     - update_record_modified_created_trigger
+
+  trigger_strings:  # yaml | not supported
+    year_error: This must list the year you are reporting on (not the fiscal year).
 
   examples:
     record:

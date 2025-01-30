@@ -1,0 +1,68 @@
+{% ckan_extends %}
+
+{% block stages %}
+  {% if form_style != 'edit' %}
+    {{ h.snippet('package/snippets/stages.html', stages=stage, dataset_type=dataset_type) }}
+  {% endif %}
+{% endblock %}
+
+{% block basic_fields %}
+  <ul class="list-unstyled">
+    <li class="bg-info">
+      <details>
+        <summary>
+          {{_('Catalogue Metadata')}}
+        </summary>
+        {% set m1 = _('Open Data Metadata Element Set') %}
+        {% if dataset_type == 'info' %}
+          {% set m1 = _('Open Information Metadata Element Set') %}
+        {% endif %}
+        <div class="mrgn-lft-md mrgn-rght-md">
+          <div class="form-group control-medium">
+            <small class="text-info">{{_('This section of the form only displays system-populated data elements used to describe the record type and the placement in the registry')}}</small>
+          </div>
+          <div class="form-group control-medium">
+            <label>{{_('Portal Type')}}</label>
+            {% set f_value = '' %}
+            {%- if dataset_type == 'dataset' -%}
+              {% set f_value = _('Open Data') %}
+            {%- elif dataset_type == 'info' -%}
+              {% set f_value = _('Open Information') %}
+            {%- elif dataset_type == 'prop' -%}\
+              {% set f_value = _('Suggested Dataset') %}
+            {%- endif -%}
+            <input class="form-control" readonly value="{{ f_value }}" />
+            <small class="text-info">{{_('The portal to which the metadata record belongs (Open Data or Open Information)')}}</small>
+          </div>
+          <div class="form-group control-medium">
+            <label>{{_('Metadata Scheme')}}</label>
+            <input class="form-control" readonly value="{{ m1 }}" size='60'/>
+            <small class="text-info">{{_('The name of the metadata scheme used (including profile name)')}}</small>
+          </div>
+          <div class="form-group control-medium">
+            <label>{{_('Metadata Scheme Version')}}</label>
+            <input class="form-control" readonly value="2.0" />
+            <small class="text-info">{{_('The version of the metadata scheme used (version of the profile)')}}</small>
+          </div>
+          <div class="form-group control-medium">
+            <label>{{_('Metadata Record Identifier')}}</label>
+            <input class="form-control" readonly value="{{ data.name if data else '' }}" />
+            <small class="text-info">{{_('A unique phrase or string which identifies the metadata record within the Open Government Portal')}}</small>
+          </div>
+        </div>
+      </details>
+    </li>
+  </ul>
+  {{ super() }}
+{% endblock %}
+
+{% block form_actions %}
+  {# custom hack for suggested datasets #}
+  {% if dataset_type == 'prop' %}
+    <div class="form-actions mrgn-tp-lg">
+      <button class="btn btn-primary" type="submit" name="save">{{ _('Save') }}</button>
+    </div>
+  {% else %}
+    {{ super() }}
+  {% endif %}
+{% endblock %}

@@ -1,0 +1,41 @@
+{% ckan_extends %}
+
+{% block subtitle %}
+  {{ user.display_name }}
+{% endblock %}
+
+{% block page_heading %}
+  {{ super.super() }}
+  {% if g.is_registry %}
+    {% if g.userobj and g.userobj.sysadmin %}
+      {% if h.is_user_locked(user_name=user['name']) %}
+        &nbsp;<span class="text-warning"><span title="{{ _('Unlock account') }}" aria-label="{{ _('Unlock account') }}" tabindex="0" role="button" class="fa fa-lock canada-security-unlock" data-user="{{ user['name'] }}" data-error="{{ _('Unable to unlock user account.') }}"></span></span>
+      {% else %}
+        &nbsp;<span class="text-muted"><span class="fa fa-unlock-alt"></span></span>
+      {% endif %}
+    {% endif %}
+  {% endif %}
+{% endblock %}
+
+{% block primary_content_inner %}
+  <h2 class="wb-inv">{{ _('Datasets') }}</h2>
+  {% block package_list %}
+    {{ super() }}
+  {% endblock %}
+{% endblock %}
+
+{%- block other_info -%}
+  <h3>{{_('Organizations')}}</h3>
+  <ul>
+    {% for org in h.user_organizations(user) %}
+      <li><a href="{{ h.url_for(org.type + '.read', id=org.name) }}">{{h.split_piped_bilingual_field(org.title, h.lang())}}</a></li>
+    {% endfor %}
+  </ul>
+{%- endblock -%}
+
+{% block scripts %}
+  {% if g.is_registry %}
+    {% asset 'canada_internal/user_lock' %}
+  {% endif %}
+  {{ super() }}
+{% endblock %}

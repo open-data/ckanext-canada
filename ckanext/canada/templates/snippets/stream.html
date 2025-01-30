@@ -1,0 +1,14 @@
+{% ckan_extends %}
+
+{% block activity_stream %}
+  <div class="row">
+    <div class="col-md-12 canada-flash-messages">
+      <div>
+        <section class="alert fade in alert-info">
+          <p>{{ _("View the past 60 days of metadata activity and the past 150 days of DataStore activity.") }}</p>
+        </section>
+      </div>
+    </div>
+  </div>
+  {{ super() }}
+{% endblock %}

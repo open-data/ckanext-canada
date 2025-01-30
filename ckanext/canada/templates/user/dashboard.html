@@ -1,0 +1,35 @@
+{% extends "user/edit_base.html" %}
+
+{% set user = current_user %}
+{% set org_type = h.default_group_type('organization') %}
+{% set group_type = h.default_group_type('group') %}
+{% set dataset_type = h.default_package_type() %}
+
+{% block page_heading %}
+  {{ _('Dashboard') }} - {{ _('My Activity') }}
+{% endblock %}
+
+{% block subtitle %}
+  {{ _('My Activity') }}
+{% endblock %}
+
+{% block breadcrumb_content %}
+  {{ super() }}
+  <li class="active">{% link_for _('My Activity'), named_route='activity.dashboard' %}</li>
+{% endblock %}
+
+{% block content_primary_nav %}
+  {{ h.build_nav_icon('activity.dashboard', _('My Activity'), icon='clock') }}
+  {{ h.build_nav_icon('dashboard.datasets', _('My Datasets'), icon='sitemap') }}
+{% endblock %}
+
+{% block primary_content_inner %}
+  <div class="mrgn-tp-md">
+    {% block activity_stream %}
+      {% snippet 'snippets/stream.html', activity_stream=dashboard_activity_stream %}
+    {% endblock %}
+    {% snippet 'snippets/pagination.html', newer_activities_url=newer_activities_url, older_activities_url=older_activities_url %}
+  </div>
+{% endblock %}
+
+{% block secondary_content %}{% endblock %}

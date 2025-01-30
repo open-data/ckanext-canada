@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 "filter for travela.csv"
 
 import csv
@@ -20,6 +20,7 @@ DRUPAL_SEARCH_HACK = [
     'internal_governance_kdollars',
 ]
 
+
 def main():
     reader = csv.DictReader(sys.stdin)
     outnames = [f for f in reader.fieldnames if f not in REMOVE_COLUMNS]
@@ -39,5 +40,6 @@ def main():
             writer.writerow(row)
         except ValueError:
             pass
+
 
 main()

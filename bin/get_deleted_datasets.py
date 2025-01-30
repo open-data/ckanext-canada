@@ -1,14 +1,13 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # encoding: utf-8
 '''
 Usage:
     get_deleted_datasets.py <ckan ini file> <xxx.csv>
 '''
 import json
-import os
 import sys
 import unicodecsv
-from unicodecsv import DictReader
+import traceback
 import codecs
 
 import configparser
@@ -39,17 +38,21 @@ def get_deleted_dataset(conf_file):
         conn = psycopg2.connect(
             database=db, user=user,
             password=passwd, host=host, port="5432")
-    except:
-        import traceback
+    except Exception:
         traceback.print_exce()
-        print ("Opened database failed")
+        print("Opened database failed")
         sys.exit(-1)
     cur = conn.cursor()
-    cur.execute('''SELECT a.id, b.timestamp,c.value, d.title from package a,
-                activity b, package_extra c, public.group d
-                where a.state='deleted' and a.id=b.object_id and b.activity_type='deleted package'
-                    and a.owner_org=d.id
-                    and a.id=c.package_id and c.key='title_translated'; ''')
+    cur.execute('''
+        SELECT a.id, b.timestamp,c.value, d.title from package a,
+        activity b, package_extra c, public.group d
+        where a.state='deleted'
+            and a.id=b.object_id
+            and b.activity_type='deleted package'
+            and a.owner_org=d.id
+            and a.id=c.package_id
+            and c.key='title_translated';
+    ''')
     rows = cur.fetchall()
     ds = {}
     for row in rows:
@@ -68,11 +71,13 @@ def dump_dataset(headers, ds, csvfile):
     for id, [ts, title, org] in ds:
         try:
             title = json.loads(title)
-        except:
+        except Exception:
             title = None
         if title:
-            title_en = ([title[k] for k in sorted(title) if k.startswith('en')] + [''])[0]
-            title_fr = ([title[k] for k in sorted(title) if k.startswith('fr')] + [''])[0]
+            title_en = ([title[k] for k in sorted(title)
+                         if k.startswith('en')] + [''])[0]
+            title_fr = ([title[k] for k in sorted(title)
+                         if k.startswith('fr')] + [''])[0]
             rows.append([title_en, title_fr, org, id, ts])
         else:
             rows.append(['n/a', 'n/a', org, id, ts])
@@ -82,13 +87,13 @@ def dump_dataset(headers, ds, csvfile):
 def main():
     ds = get_deleted_dataset(sys.argv[1])
     csvfile = sys.argv[2]
-    headers= [u'Title (English) / Titre (anglais)',
-              u'Title (French) / Titre (français)',
-              u'Organization / Organisation',
-              u'Record ID / Identificateur du dossier',
-              u'Date and Time Deleted/ Date et heure de suppression'
-              ]
+    headers = ['Title (English) / Titre (anglais)',
+               'Title (French) / Titre (français)',
+               'Organization / Organisation',
+               'Record ID / Identificateur du dossier',
+               'Date and Time Deleted/ Date et heure de suppression']
     dump_dataset(headers, ds, csvfile)
 
-if __name__=='__main__':
+
+if __name__ == '__main__':
     main()

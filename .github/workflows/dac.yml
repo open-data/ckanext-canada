@@ -1,0 +1,36 @@
+name: Download DAC members list 
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v3
+        with:
+          python-version: '2.7'
+  
+      - name: Install dependencies
+        run: pip install pyyaml
+          
+      - name: download DAC members list
+        run: |
+          python bin/download_dac.py -o ckanext/canada/tables/choices/dac_members.yaml -v 0
+          cat ckanext/canada/tables/choices/dac_members.yaml
+
+      - name: set git config
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email 'github-actions[bot]@users.noreply.github.com'
+          git status
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v4
+        with:
+          commit-message: "Update DAC members list"
+          title: "Update DAC members list"
+          branch: create-pull-request/patch
+          branch-suffix: timestamp
+          reviewers: rabiasajjad

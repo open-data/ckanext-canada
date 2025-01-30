@@ -1,0 +1,57 @@
+<div class="col-md-12">
+  <table class="table table-condensed">
+    <tbody>
+      {% block package_additional_info %}
+        {% if pkg_dict.url %}
+          <tr>
+            <td>{{ _('Source') }}</td>
+            <td>{{ h.link_to(pkg_dict.url, pkg_dict.url, rel='foaf:homepage', target='_blank') }}</td>
+          </tr>
+        {% endif %}
+        {% if pkg_dict.author_email %}
+          <tr>
+            <td>{{ _("Author") }}</td>
+            <td>{{ h.mail_to(email_address=pkg_dict.author_email, name=pkg_dict.author) }}</td>
+          </tr>
+        {% elif pkg_dict.author %}
+          <tr>
+            <td>{{ _("Author") }}</td>
+            <td>{{ pkg_dict.author }}</td>
+          </tr>
+        {% endif %}
+        {% if pkg_dict.maintainer_email %}
+          <tr>
+            <td>{{ _('Maintainer') }}</td>
+            <td>{{ h.mail_to(email_address=pkg_dict.maintainer_email, name=pkg_dict.maintainer) }}</td>
+          </tr>
+        {% elif pkg_dict.maintainer %}
+          <tr>
+            <td>{{ _('Maintainer') }}</td>
+            <td>{{ pkg_dict.maintainer }}</td>
+          </tr>
+        {% endif %}
+        {% if pkg_dict.version %}
+          <tr>
+            <td>{{ _("Version") }}</td>
+            <td class="dataset-details">{{ pkg_dict.version }}</td>
+          </tr>
+        {% endif %}
+        {% if h.check_access('package_update',{'id':pkg_dict.id}) %}
+          <tr>
+            <td>{{ _("State") }}</td>
+            <td class="dataset-details">{{ pkg_dict.state }}</td>
+          </tr>
+        {% endif %}
+        {% block extras scoped %}
+          {% for extra in h.sorted_extras(pkg_dict.extras) %}
+            {% set key, value = extra %}
+            <tr rel="dc:relation" resource="_:extra{{ i }}">
+              <td>{{ _(key) }}</td>
+              <td class="dataset-details" property="rdf:value">{{ value }}</td>
+            </tr>
+          {% endfor %}
+        {% endblock %}
+      {% endblock %}
+    </tbody>
+  </table>
+</div>

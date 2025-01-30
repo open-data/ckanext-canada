@@ -2,6 +2,8 @@
 scheming_version: 1
 dataset_type: dataset
 
+before_validators: limit_resources_per_dataset
+
 about: 'open.canada.ca: raw open data metadata definition'
 about_url: http://github.com/open-data/ckanext-canada
 catalog_type_label:
@@ -451,6 +453,7 @@ dataset_fields:
       en: FGP viewer is supported
     value: fgp_viewer
 
+- preset: canada_dataset_relationship
 
 
 #
@@ -460,16 +463,17 @@ resource_fields:
 
 - preset: canada_resource_unique_identifier
 - preset: canada_resource_name
-- preset: canada_resource_related_relationship
-- preset: canada_resource_related_type
+- preset: canada_resource_relationship
 - preset: canada_resource_date_published
 - preset: canada_resource_type
   form_restrict_choices_to:
   - application
   - api
+  - data_dictionary
   - dataset
   - guide
   - faq
+  - schema
   - specification
   - terminology
   - tool
@@ -482,23 +486,12 @@ resource_fields:
 - preset: canada_resource_url
 - preset: canada_resource_data_quality
 
-- field_name: schema
-  label: Schema
-  preset: resource_schema
-  form_panel: validation
+# Validation Fields.
+- preset: canada_resource_validation_schema
+- preset: canada_resource_validation_options
+- preset: canada_resource_validation_status
+- preset: canada_resource_validation_timestamp
 
-- field_name: validation_options
-  label: Validation options
-  preset: validation_options
-  form_panel: validation
-
-- field_name: validation_status
-  label: Validation status
-  preset: hidden_in_form
-  form_panel: validation
-
-- field_name: validation_timestamp
-  label: Validation timestamp
-  preset: hidden_in_form
-  display_snippet: validation_timestamp.html
-  form_panel: validation
+# LEGACY FIELDS
+- preset: _legacy_canada_related_type
+- preset: _legacy_canada_related_relationship

@@ -1,0 +1,100 @@
+{% extends "package/base_form_page.html" %}
+
+{% block page_title %}<h3>{{ _("Create Record") }}</h3>{% endblock %}
+{% block subtitle %}{{ _("Create Record") }}{% endblock %}
+
+{% block breadcrumb_content %}
+  <li>{{ h.nav_link(h.recombinant_language_text(chromo_title),
+                    named_route='recombinant.preview_table',
+                    resource_name=resource_name,
+                    owner_org=owner_org) }}</li>
+  <li>{{ _("Create Record") }}</li>
+{% endblock %}
+
+{% block form %}
+  <form method="POST" id="create_pd_record" novalidate>
+    {{ h.csrf_input() }}
+    {% block errors %}
+      {%- if errors or error_summary -%}
+        <div class="error-explanation alert alert-danger">
+          {% if error_summary %}
+            <p>{{ error_summary }}</p>
+          {% endif %}
+          {% if errors %}
+            {%- set chromo = h.recombinant_get_chromo(resource_name) -%}
+            <p>{{ _('The form contains invalid entries:') }}</p>
+            <ul>
+              {% for field in chromo.fields -%}
+                {%- if field.datastore_id in errors %}
+                  <li data-field-label="{{ key }}">{{
+                    h.recombinant_language_text(field.label) }}{{ _(':') }}
+                    {{ errors[field.datastore_id][0] }}</li>
+                {%- endif -%}
+              {%- endfor %}
+            </ul>
+          {% endif %}
+        </div>
+      {%- endif -%}
+    {% endblock %}
+
+    {% block basic_fields %}{% endblock %}
+
+    {%- set chromo = h.recombinant_get_chromo(resource_name) -%}
+    <div class='container-fluid mrgn-bttm-lg'>
+      {%- for f in chromo.fields %}
+        {%- if f.get('import_template_include', True) and not f.get('published_resource_computed_field', false) %}
+          {%- set required = f.get('form_required', False) %}
+          {%- set description = h.recombinant_description_to_markup(f.get('description', '')) %}
+          {%- set form_placeholder = f.get('form_placeholder', '') %}
+          {%- set form_attrs = f.get('form_attrs', {}) %}
+          {%- set form_select_attrs = f.get('form_select_attrs', {}) %}
+          {%- set form_snippet = f.get('form_snippet', 'scheming/form_snippets/text.html') %}
+          {%- if f.datastore_id in choice_fields %}
+            {%- if f.get('datastore_type') == '_text' and form_snippet == 'scheming/form_snippets/text.html' %}
+              {%- set form_snippet = 'scheming/form_snippets/multiple_select.html' %}
+              {%- set description = _('You may select or deselect multiple entries (Ctrl+Click).') +
+                ' ' + h.recombinant_language_text(description) %}
+            {%- elif form_snippet == 'scheming/form_snippets/text.html' %}
+              {%- set form_snippet = 'scheming/form_snippets/select.html' %}
+            {%- endif %}
+            {% snippet form_snippet,
+              field={
+                'field_name': f.datastore_id,
+                'label': f.label,
+                'form_placeholder': form_placeholder,
+                'form_attrs': form_attrs,
+                'form_select_attrs': form_select_attrs,
+                'required': required,
+                'help_text': description,
+                'choices': choice_fields[f.datastore_id],
+                'sorted_choices': true,
+                'form_include_blank_choice': true,
+              }, data=data, errors=errors %}
+          {%- else %}
+            {% snippet form_snippet,
+              field={
+                'field_name': f.datastore_id,
+                'label': f.label,
+                'form_placeholder': form_placeholder,
+                'form_attrs': form_attrs,
+                'form_select_attrs': form_select_attrs,
+                'required': required,
+                'help_text': description,
+              }, data=data, errors=errors %}
+          {%- endif %}
+        {%- endif %}
+      {%- endfor %}
+      <input class='btn btn-default' name='cancel' type='submit' value='{{ _("Cancel") }}' />
+      <input class='btn btn-primary' name='save' type='submit' value='{{ _("Save") }}' />
+    </div>
+
+  </form>
+{% endblock %}
+
+{%- block scripts -%}
+  {{ super() }}
+  {% if h.recombinant_get_chromo(resource_name).get('cascading_select_fields') %}
+    {% asset 'canada_internal/cascading_select' %}
+  {% endif %}
+  {% asset 'canada_internal/recombinant_webforms' %}
+{%- endblock -%}

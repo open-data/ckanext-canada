@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # coding=utf-8
 
 """
@@ -12,7 +12,6 @@ Into a simple CSV for publishing on the Open Data Portal
 import sys
 import csv
 import json
-import codecs
 
 COLS = [
     'uuid',
@@ -25,9 +24,11 @@ COLS = [
     'open_canada_id',
 ]
 
+BOM = '\N{bom}'
+
 
 def main():
-    sys.stdout.write(codecs.BOM_UTF8)
+    sys.stdout.write(BOM)
 
     writer = csv.DictWriter(sys.stdout, COLS)
     writer.writeheader()
@@ -36,8 +37,8 @@ def main():
         org = json.loads(line)
         row = {
             u'uuid': org[u'id'].lower(),
-            u'title_en': org[u'title_translated'][u'en'].encode('utf-8').strip(),
-            u'title_fr': org[u'title_translated'][u'fr'].encode('utf-8').strip(),
+            u'title_en': org[u'title_translated'][u'en'].strip(),
+            u'title_fr': org[u'title_translated'][u'fr'].strip(),
             u'short_form_en': org[u'shortform'][u'en'].strip(),
             u'short_form_fr': org[u'shortform'][u'fr'].strip(),
             u'department_number': org[u'department_number'].strip(),

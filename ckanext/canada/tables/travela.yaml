@@ -1,6 +1,7 @@
 dataset_type: travela
 target_dataset: travela
-title: Proactive Disclosure - Annual Travel, Hospitality and Conferences
+title: Proactive Publication - Annual Travel, Hospitality and Conferences
+shortname: Annual Travel, Hospitality and Conferences
 notes: This dataset includes all of the annual reports on travel expenses
        incurred within your organization.
 upload_info:
@@ -13,8 +14,11 @@ portal_type: info
 collection: pd
 
 resources:
-- title: Proactive Disclosure - Annual Travel, Hospitality and Conferences
+- title: Proactive Publication - Annual Travel, Hospitality and Conferences
   resource_name: travela
+
+  published_resource_id: a811cac0-2a2a-4440-8a81-2994fc753171
+
   create_form: true
   edit_form: true
   fields:
@@ -628,7 +632,7 @@ resources:
         errors := errors || required_error(NEW.conference_fees_kdollars, 'conference_fees_kdollars');
         errors := errors || required_error(NEW.minister_kdollars, 'minister_kdollars');
         IF NEW.year > date_part('year', CURRENT_DATE) THEN
-          errors := errors || ARRAY[['year', 'This must list the year you are reporting on (not the fiscal year).']];
+          errors := errors || ARRAY[['year', {year_error}]];
         END IF;
         IF errors = '{{}}' THEN
           RETURN NEW;
@@ -636,6 +640,9 @@ resources:
         RAISE EXCEPTION E'TAB-DELIMITED\t%', array_to_string(errors, E'\t');
       END;
   - update_record_modified_created_trigger
+
+  trigger_strings:  # yaml | not supported
+    year_error: This must list the year you are reporting on (not the fiscal year).
 
   examples:
     record:

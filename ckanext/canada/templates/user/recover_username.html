@@ -1,0 +1,32 @@
+{% extends "page.html" %}
+
+{% block subtitle %}{{ _('Recover your username') }}{% endblock %}
+
+{% block breadcrumb_content %}
+  <li class="active">{% link_for _('Username Recovery'), named_route='canada.recover_username' %}</li>
+{% endblock %}
+
+{% block primary_content %}
+  <div class="row mrgn-bttm-lg mrgn-tp-md canada-page-main-wrapper">
+    <div class="col-md-12">
+      {% block primary_content_inner %}
+        {% block form %}
+          <form action="" method="post">
+            {{ h.csrf_input() }}
+            <div class="form-group">
+              <label for="field-email">{{ _('Email') }}</label>
+              <input id="field-email" class="control-medium form-control" size="32" name="email" value="" type="email" />
+            </div>
+            <div class="form-actions">
+              {% block form_button %}
+              <button class="btn btn-primary" type="submit" name="recover">{{ _("Request Recovery") }}</button>
+              {% endblock %}
+            </div>
+          </form>
+        {% endblock %}
+      {% endblock %}
+    </div>
+  </div>
+{% endblock %}
+
+{% block secondary_content %}{% endblock %}

@@ -1,0 +1,20 @@
+{% ckan_extends %}
+
+{% block primary_content_inner %}
+  <div class="canada-admin-trash">
+    {{ super() }}
+  </div>
+{% endblock %}
+
+{% block secondary_content %}
+  <section class="panel panel-info">
+    <header class="panel-heading">
+      <h3 class="panel-title">
+        <i class="fa fa-info-circle" aria-hidden="true"></i>&nbsp;{{ _('Trash') }}
+      </h3>
+    </header>
+    <div class="panel-body">
+      <p>{{ _('Purge deleted datasets, organizations or groups forever and irreversibly.') }}</p>
+    </div>
+  </section>
+{% endblock %}

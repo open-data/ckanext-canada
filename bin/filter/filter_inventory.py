@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 """
 Script that takes csv on stdin with an eligible_for_release column
@@ -9,6 +9,7 @@ import csv
 import sys
 
 FILTER_COLUMN = "eligible_for_release"
+
 
 def main():
     reader = csv.DictReader(sys.stdin)

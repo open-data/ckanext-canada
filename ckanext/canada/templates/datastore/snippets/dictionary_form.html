@@ -1,0 +1,21 @@
+{% ckan_extends %}
+
+{% import 'macros/form.html' as form %}
+
+{% block standard_fields %}
+  {{ form.input('info__' ~ position ~ '__label_en',
+    label=_('English Label'), id='field-f' ~ position ~ 'label_en',
+    value=field.get('info', {}).get('label_en', ''), classes=['control-full']) }}
+
+  {{ form.input('info__' ~ position ~ '__label_fr',
+    label=_('French Label'), id='field-f' ~ position ~ 'label_fr',
+    value=field.get('info', {}).get('label_fr', ''), classes=['control-full']) }}
+
+  {{ form.markdown('info__' ~ position ~ '__notes_en',
+    label=_('English Description'), id='field-d' ~ position ~ 'notes_en',
+    value=field.get('info', {}).get('notes_en', '')) }}
+
+  {{ form.markdown('info__' ~ position ~ '__notes_fr',
+    label=_('French Description'), id='field-d' ~ position ~ 'notes_fr',
+    value=field.get('info', {}).get('notes_fr', '')) }}
+{% endblock %}

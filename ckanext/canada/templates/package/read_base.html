@@ -1,0 +1,212 @@
+{% ckan_extends %}
+
+{% set pkg = pkg_dict %}
+{% set client_lang = h.lang() %}
+{% set schema = h.scheming_get_dataset_schema(pkg.type) %}
+
+{% block adobe_analytics_creator %}
+  {{ h.adobe_analytics_creator(organization=pkg.organization, package=pkg) }}
+{% endblock %}
+
+{%- block subtitle -%}
+  {% set title, mt = h.get_translated_t(pkg, 'title') %}
+  {% if g.is_registry and pkg.type in h.recombinant_get_types() %}
+    {{ (title or pkg.name) ~ ' - ' ~ h.split_piped_bilingual_field(pkg.organization.title, h.lang()) | trim }}
+  {% else %}
+    {{ (title or pkg.name) | trim }}
+  {% endif %}
+{%- endblock -%}
+
+{% block content_primary_nav %}
+  {% if g.is_registry %}
+    {% set dataset_label = _('Dataset') %}
+    {% if pkg.type in h.recombinant_get_types() %}
+      {% set dataset_label = _(pkg.title) ~ ' - ' ~ h.split_piped_bilingual_field(pkg.organization.title, h.lang()) %}
+    {% endif %}
+    {{ h.build_nav_icon(pkg.type + '.read', dataset_label, id=pkg.name, icon='sitemap') }}
+    {{ h.build_nav_icon('activity.package_activity', _('Activity Stream'), id=pkg.name, icon='clock') }}
+  {% endif %}
+{% endblock %}
+
+{% block content_action %}
+  {% if pkg.type not in h.recombinant_get_types() %}
+    {{ super() }}
+  {% endif %}
+{% endblock %}
+
+{% block secondary_content %}
+  {% block ds_socialmedia %}
+    {% include "package/snippets/socialmedia.html" %}
+  {% endblock ds_socialmedia %}
+  {% if schema %}
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <div class="panel-title">
+          {{ _('Additional Information') }}
+        </div>
+      </div>
+      <ul class="list-group">
+        {% set include_labels = schema.get('sidebar_show_fields', []) %}
+        {% for field_to_show in include_labels %}
+          {% set field = h.scheming_field_by_name(schema.dataset_fields, field_to_show) %}
+          {% set field_title = h.scheming_language_text(field.label) %}
+          {% if field_title %}
+            {% set field_value = pkg[field.field_name] %}
+            {% if pkg[field.field_name] is mapping %}
+              {% set field_value = h.scheming_language_text(field_value) %}
+            {% endif %}
+            {% if field_value %}
+              <li class="list-group-item resource-tags">
+                <strong>{{ field_title }}{{ _(':') }}</strong>
+                {% snippet 'scheming/snippets/display_field.html', field=field, data=pkg, entity_type='dataset', object_type=pkg.type %}
+              </li>
+            {% endif %}
+          {% endif %}
+        {% endfor %}
+        {%- set start_date = h.date_field("time_period_coverage_start", pkg) -%}
+        {%- set end_date = h.date_field("time_period_coverage_end", pkg) -%}
+        {% if start_date or end_date %}
+          <li class="list-group-item"><b>{{ _('Temporal Coverage') }}{{ _(':') }}</b>
+            <small>
+              {% if start_date and end_date and end_date != '9999-09-09' %}
+                {{ start_date }} {{ _('to') }} {{ end_date }}
+              {% elif start_date %}
+                {{ start_date }} {{ _('to undefined') }}
+              {% elif end_date %}
+                {{ _('undefined to') }} {{ end_date }}
+              {% endif %}
+            </small>
+          </li>
+        {% endif %}
+        {% if pkg.type == 'dataset' %}
+          {% block openness %}
+            <li class="list-group-item"><a
+              href="{{ 'https://ouvert.canada.ca//fr/cote-degre-douvertrure-des-donnees' if h.lang() == 'fr' else
+                'https://open.canada.ca/en/openness-rating' }}"><b>{{ _('Openness Rating') }}</b></a>{{ _(':') }}&nbsp;
+                {%- set openness = h.openness_score(pkg) -%}
+                <img src="{{ h.url_for_static('/static/img/stars/star'
+                  ~ openness ~ '.png') }}" alt="{{
+                    ['',
+                    _('one star'),
+                    _('two stars'),
+                    _('three stars'),
+                    _('four stars'),
+                    _('five stars'),
+                    ][openness] }}"
+                    class="image-actual margin-bottom-none openness-rating-stars" />
+            </li>
+          {% endblock %}
+        {% endif %}
+      </ul>
+    </div>
+  {% endif %}
+  <div class="panel panel-primary">
+    <div class="panel-heading">
+      <div class="panel-title">{{_('About this Record')}}</div>
+    </div>
+    <ul class="list-group">
+      <li class="list-group-item">
+        <strong>{{ _('Record Released:') }}</strong>
+        {{ h.render_datetime(pkg.metadata_created, '%Y-%m-%d') }}
+      </li>
+      <li class="list-group-item">
+        <strong>{{ _('Record Modified:') }}</strong>
+        {{ h.render_datetime(pkg.metadata_modified, '%Y-%m-%d') }}
+      </li>
+      <li class="list-group-item">
+        <strong>{{ _('Record ID:') }}</strong>
+        {{ pkg.id }}
+      </li>
+      <li class="list-group-item">
+        <strong>{{ _('Metadata:') }}</strong>
+        <ul class="list-group" style="margin-bottom: 0;">
+          <li class="list-group-item">
+            <a href="{{h.url_for_static('/', qualified=true)}}api/action/package_show?id={{pkg.id}}" rel="nofollow">
+              {{ _('Link to JSON format') }}
+            </a>
+          </li>
+          {% if h.plugin_loaded('dcat_json_interface') and pkg.type not in h.recombinant_get_types() %}
+            <li class="list-group-item" style="border: none;">
+              <a href="{{ h.url_for(pkg.type + '.read', id=pkg.id) }}.jsonld" rel="nofollow">
+                {{ _('DCAT (JSON-LD)') }}
+              </a>
+            </li>
+          {% endif %}
+          {% if h.plugin_loaded('dcat') and pkg.type not in h.recombinant_get_types() %}
+            <li class="list-group-item" style="border: none;">
+              <a href="{{ h.url_for(pkg.type + '.read', id=pkg.id) }}.xml" rel="nofollow">
+                {{ _('DCAT (XML)') }}
+              </a>
+            </li>
+          {% endif %}
+        </ul>
+      </li>
+      {% if pkg.collection == 'fgp' %}
+        <li class="list-group-item">
+          <strong>{{ _('FGP Metadata:') }}</strong>
+          <a href="http://csw.open.canada.ca/geonetwork/srv/csw?service=CSW&version=2.0.2&request=GetRecordById&outputSchema=csw:IsoRecord&ElementSetName=full&id={{ pkg.id }}">
+            {{ _("HNAP ISO:19115 Metadata Record") }}
+          </a>
+        </li>
+      {% endif %}
+      <li class="list-group-item">
+        <a href="{{ h.url_for('feeds.dataset', id=pkg.id) }}" title="RSS">
+          <span class="fa fa-rss-square" aria-hidden="true"></span>&nbsp;{{_('Atom Feed')}}
+        </a>
+      </li>
+      {% if pkg.spatial_representation_type %}
+        {% set srep = h.scheming_field_by_name(schema.dataset_fields, 'spatial_representation_type') %}
+        <li class="list-group-item"><b>{{ h.scheming_language_text(srep.label) }}{{ _(':') }}</b>
+          {% snippet 'scheming/snippets/display_field.html', field=srep, data=pkg, entity_type='dataset', object_type=pkg.type %}
+        </li>
+      {% endif %}
+    </ul>
+  </div>
+
+  {% set iso19115_blocks = (('contact_information', 'Data Contact'), ('distributor', 'Distributor Contact')) %}
+  {% for block_name, block_label in iso19115_blocks %}
+    {% if block_name in pkg %}
+      {% set dist = h.json_loads(pkg[block_name])[h.lang()] %}
+      <div class="panel panel-primary">
+        <div class="panel-heading">
+          <div class="panel-title">{{ _(block_label) }}</div>
+        </div>
+        <ul class="list-group">
+          {# FIXME: Use scheming subfields to validate and enforce this schema. #}
+          {% set dis_fields = (
+            {'field_name': 'organization_name', 'label': 'Organization Name'},
+            {'field_name': 'phone', 'label': 'Telephone Number'},
+            {'field_name': 'electronic_mail_address', 'label': 'Email', 'display_snippet': 'email.html'},
+            {'field_name': 'contact_form', 'label': 'Contact Form', 'display_snippet': 'link.html'},
+            {'field_name': 'address', 'label': 'Address'},
+            {'field_name': 'city', 'label': 'City'},
+            {'field_name': 'country', 'label': 'Country'},
+            {'field_name': 'postal_code', 'label': 'Postal Code'},
+            {'field_name': 'administrative_area', 'label': 'Administrative Area'},
+            {'field_name': 'role', 'label': 'Role'}
+          )
+          %}
+          {% for field in dis_fields %}
+            {% if field.field_name in dist %}
+              <li class="list-group-item"><b>{{ _(field.label) }}{{ _(':') }}</b><br />
+                {% snippet 'scheming/snippets/display_field.html', field=field, data=dist,  entitiy_type='dataset', object_type=pkg.type %}
+              </li>
+            {% endif %}
+          {% endfor %}
+        </ul>
+      </div>
+    {% endif %}
+  {% endfor %}
+{% endblock %}
+
+
+{% block package_groups %}
+  {% if pkg.groups %}
+    <p>
+      <div class="module-related">
+        {{ self.package_groups_title() }}
+        {{ self.package_groups_nav() }}
+      </div>
+    </p>
+  {% endif %}
+{% endblock %}

@@ -1,7 +1,8 @@
 dataset_type: hospitalityq
 target_dataset: hospitalityq
 
-title: Proactive Disclosure - Hospitality Expenses
+title: Proactive Publication - Hospitality Expenses
+shortname: Hospitality Expenses
 notes: Access, upload and modify the quarterly hospitality expenses for your organization
 
 template_version: 3
@@ -12,8 +13,11 @@ collection: pd
 
 
 resources:
-- title: Proactive Disclosure - Hospitality Expenses
+- title: Proactive Publication - Hospitality Expenses
   resource_name: hospitalityq
+
+  published_resource_id: 7b301f1a-2a7a-48bd-9ea9-e0ac4a5313ed
+
   create_form: true
   edit_form: true
   fields:
@@ -413,6 +417,9 @@ resources:
         crval RECORD;
       BEGIN
         errors := errors || required_error(NEW.ref_number, 'ref_number');
+        IF NEW.ref_number LIKE '%,%' THEN
+          errors := errors || ARRAY[['ref_number', {ref_number_error}]];
+        END IF;
         errors := errors || required_error(NEW.start_date, 'start_date');
         IF NEW.start_date >= '2019-06-21'::date THEN
           errors := errors || choice_error(NEW.disclosure_group, {disclosure_group}, 'disclosure_group');
@@ -430,12 +437,16 @@ resources:
           errors := errors || required_error(NEW.guest_attendees, 'guest_attendees');
           errors := errors || required_error(NEW.total, 'total');
         END IF;
+        NEW.total := round(NEW.total, 2);
         IF errors = '{{}}' THEN
           RETURN NEW;
         END IF;
         RAISE EXCEPTION E'TAB-DELIMITED\t%', array_to_string(errors, E'\t');
       END;
   - update_record_modified_created_trigger
+
+  trigger_strings:  # yaml | not supported
+    ref_number_error: Comma is not allowed in Reference Number field
 
   examples:
     record:
@@ -467,15 +478,20 @@ resources:
   - ati_email
 
 
-- title: Proactive Disclosure - Hospitality Nothing to Report
+- title: Proactive Publication - Hospitality Nothing to Report
   resource_name: hospitalityq-nil
+
+  published_resource_id: 36a3b6cc-4f45-4081-8dbd-2340ca487041
+
   create_form: true
   edit_form: false #edit not possible for nil reports since only stored data is primary key
   fields:
 
   - datastore_id: year
     datastore_type: year
-    label: Year
+    label:
+      en: Year
+      fr: Année
     description:
       en: "This tab / field in the template is only populated if there are no hospitality expenses for the reporting period. This field should be populated with the year of the reporting period."
       fr: "Cet onglet/champ du modèle n’est rempli que s'il n'y a pas de frais d'accueil pour la période d’établissement de rapports. Ce champ doit être rempli avec l’année de la période d’établissement de rapports."
@@ -577,7 +593,7 @@ resources:
           errors := errors || required_error(NEW.month, 'month');
           errors := errors || choice_error(NEW.month, {month}, 'month');
           IF NEW.year > date_part('year', CURRENT_DATE) THEN
-            errors := errors || ARRAY[['year', 'This must list the year you are reporting on (not the fiscal year).']];
+            errors := errors || ARRAY[['year', {year_error}]];
           END IF;
           IF errors = '{{}}' THEN
             RETURN NEW;
@@ -585,6 +601,9 @@ resources:
           RAISE EXCEPTION E'TAB-DELIMITED\t%', array_to_string(errors, E'\t');
         END;
     - update_record_modified_created_trigger
+
+  trigger_strings:  # yaml | not supported
+    year_error: This must list the year you are reporting on (not the fiscal year).
 
   examples:
     record:

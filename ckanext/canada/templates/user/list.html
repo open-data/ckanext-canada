@@ -1,0 +1,117 @@
+{% if g.userobj and g.userobj.sysadmin %}
+  {% extends 'admin/base.html' %}
+{% else %}
+  {% extends 'page.html' %}
+{% endif %}
+
+{% block breadcrumb_content %}
+  {% if g.is_registry %}
+    {% if g.userobj and not g.userobj.sysadmin %}
+      {{ h.build_nav('user.index', _('Users')) }}
+    {% else %}
+      {{ super() }}
+    {% endif %}
+  {% else %}
+    {{ super() }}
+  {% endif %}
+{% endblock %}
+
+{% block subtitle %}
+  {% if g.is_registry %}
+    {% if g.userobj and not g.userobj.sysadmin %}
+      {{ _('Users') }}
+    {% else %}
+      {{ super() }}
+    {% endif %}
+  {% else %}
+    {{ super() }}
+  {% endif %}
+{% endblock %}
+
+{% block primary_content_inner %}
+  {% if g.is_registry %}
+    <h2 class="wb-inv">{{ _('Users') }}</h2>
+    {% if g.userobj and g.userobj.sysadmin %}
+      <a class="btn btn-default mrgn-bttm-lg" href="{{ h.url_for('user.register') }}">{{ _('Create an Account') }}</a>
+    {% endif %}
+    {% block users_list %}
+      {% block users_search %}
+        {% snippet 'user/snippets/user_search.html', q=q %}
+      {% endblock %}
+      <table style="width:100%">
+        <thead>
+          <tr>
+            <th>{{ _('Username') }}</th>
+            <th>{{ _('Name') }}</th>
+            <th>{{ _('Role') }}</th>
+          </tr>
+        </thead>
+        <tbody>
+        {% block users_list_inner %}
+          {% if page.items %}
+            {% for user in page.items %}
+              {% if user.name %}
+                <tr>
+                  <td>
+                    {% if g.userobj and g.userobj.sysadmin %}
+                      {% if h.is_user_locked(user_name=user['name']) %}
+                        <span class="text-warning"><span title="{{ _('Unlock account') }}" aria-label="{{ _('Unlock account') }}" tabindex="0" role="button" class="fa fa-lock canada-security-unlock" data-user="{{ user['name'] }}" data-error="{{ _('Unable to unlock user account.') }}">&nbsp;</span></span>
+                      {% else %}
+                        <span class="text-muted"><span class="fa fa-unlock-alt">&nbsp;</span></span>
+                      {% endif %}
+                    {% endif %}
+                    <a href="{{ h.url_for('user.read', id=user.name) }}">
+                      {{- user['name'] -}}
+                    </a>
+                  </td>
+                  <td>{{ user['fullname'] or ' ' }}</td>
+                  <td>{{ _('Sysadmin') if user[0].sysadmin else _('Member') }}</td>
+                </tr>
+              {% endif %}
+            {% endfor %}
+          {% endif %}
+        {% endblock %}
+        </tbody>
+      </table>
+    {% endblock %}
+    {% block page_pagination %}
+      {% if page.pager %}
+        {{ page.pager(q=q or '') }}
+      {% endif %}
+    {% endblock %}
+  {% else %}
+    {{ super() }}
+  {% endif %}
+{% endblock %}
+
+{% block secondary_content %}
+  {% if g.is_registry %}
+    <section class="panel panel-info">
+      <header class="panel-heading">
+        <h3 class="panel-title">
+          <i class="fa fa-info-circle" aria-hidden="true"></i>&nbsp;{{ _('Users') }}
+        </h3>
+      </header>
+      <div class="panel-body">
+        {% if g.userobj and not g.userobj.sysadmin %}
+          <p>{{ _("Search and view users.") }}</p>
+        {% else %}
+          <p>{{ _("Search and manage users.") }}</p>
+        {% endif %}
+      </div>
+    </section>
+  {% else %}
+    {{ super() }}
+  {% endif %}
+{% endblock %}
+
+{% block scripts %}
+  {% if g.is_registry %}
+    {% snippet 'snippets/cdts/footer_scripts.html' %}
+    {% asset 'canada_public/analytics' %}
+    {% asset 'canada_internal/user_lock' %}
+    {% block google_analytics_footer %}{%- endblock -%}
+  {% endif %}
+  {{ super() }}
+{% endblock %}
+

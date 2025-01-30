@@ -1,0 +1,21 @@
+{% ckan_extends %}
+
+{% block resource_list_title %}
+  <h2>{{ _('Data and Resources') }}
+    {% set fgp_url = h.fgp_viewer_url(pkg) %}
+    {% if fgp_url %}
+      <div class="pull-right mrgn-bttm-md">
+        <a href="{{ fgp_url }}" class="btn btn-success" target="_blank">
+          <span class="fa fa-map-marker" aria-hidden="true"></span>&nbsp;{{ _('View on Map') }}
+        </a>
+      </div>
+    {% endif %}
+    {% if g.is_registry and h.check_access('package_update', {'id': pkg.id}) %}
+      <div class="pull-right mrgn-bttm-md {{ 'mrgn-lft-md' if fgp_url else '' }}">
+        <a href="{{ h.url_for(pkg.type ~ '_resource.new', id=pkg.id) }}" class="btn btn-light btn-sm">
+          <i class="fa fa-plus" aria-hidden="true"></i>&nbsp;{{ _('Add new resource') }}
+        </a>
+      </div>
+    {% endif %}
+  </h2>
+{% endblock %}

@@ -1,0 +1,8 @@
+{% set page_url = h.url_for('dataset.read', id=data['id'], qualified=True) %}
+{{
+   h.mail_to_with_params(email_address=data[field.field_name],
+   name=data[field.display_email_name_field] if field.display_email_name_field and data[field.display_email_name_field]
+	else data[field.field_name],
+   subject=h.get_translated(data, 'title'),
+   body=_('The following is a question related to the record {url} found on {site}').format(url=page_url, site=h.portal_url()))
+}}

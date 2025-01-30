@@ -1,0 +1,21 @@
+{% set action = 'resource.edit_view' if is_edit and h.check_access('resource_view_update', view) else 'resource.read' %}
+
+{% if current_filters %}
+  {% set url = h.url_for(action, id=pkg.name,
+                         resource_id=view.resource_id, view_id=view.id,
+                         filters=current_filters) %}
+{% else %}
+  {% set url = h.url_for(action, id=pkg.name,
+                         resource_id=view.resource_id, view_id=view.id) %}
+{% endif %}
+
+<li class="{% if is_selected %} active{% endif %} view-item view-item-{{ view.view_type }}" data-id="{{ view.id }}">
+  <a href="{{ url }}" data-id="{{ view.id }}">
+    <i class="fa icon fa-{{ h.resource_view_icon(view) }}" aria-hidden="true"></i>
+    {% if h.lang() == 'fr' %}{{ view.title_fr }}{% else %}{{ view.title }}{% endif %}
+    {% if view.get('canada_disabled_view') %}
+      <small class="label label-warning canada-view-disabled-label">{{ _('Disabled') }}</small>
+    {% endif %}
+  </a>
+</li>
+

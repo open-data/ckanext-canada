@@ -1,0 +1,7 @@
+{% ckan_extends %}
+
+{% set client_lang = h.lang() %}
+
+{% block organization_facets %}
+  {% snippet 'snippets/dataset_facets.html', extras={'id': group_dict.name}, show_org_facet=false, search_facets=search_facets, facet_titles=facet_titles %}
+{% endblock %}

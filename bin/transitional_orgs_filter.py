@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # coding=utf-8
 
 """
@@ -7,20 +7,26 @@ to another ckan instance.
 
 Usage:
 
-ckanapi dump organizations --all -r http://registry.data.gc.ca | bin/transitional_orgs_filter.py > transitional_orgs.jsonl
+ckanapi dump organizations --all -r http://registry.data.gc.ca |
+    bin/transitional_orgs_filter.py > transitional_orgs.jsonl
 """
 
 import sys
 import json
+from logging import getLogger
 
-filtered_fields = {u'id', u'name', u'title', u'title_translated',
-                   u'department_number', u'umd_number', u'shortform',
-                   u'ati_email', u'opengov_email', u'faa_schedule'}
+
+log = getLogger(__name__)
+
+filtered_fields = {'id', 'name', 'title', 'title_translated',
+                   'department_number', 'umd_number', 'shortform',
+                   'ati_email', 'opengov_email', 'faa_schedule',
+                   'registry_access'}
 
 users = '--users' in sys.argv
 
-for l in sys.stdin:
-    o = json.loads(l)
+for stdline in sys.stdin:
+    o = json.loads(stdline)
     line = {}
     for key in o:
         if key in filtered_fields:
@@ -31,4 +37,9 @@ for l in sys.stdin:
             {"name": u["name"], "capacity": u["capacity"]}
             for u in o["users"]]
 
-    print json.dumps(line, ensure_ascii=False).encode('utf-8')
+    try:
+        print(json.dumps(line, ensure_ascii=False))
+    except Exception as e:
+        log.error("Failed on Organization:")
+        log.error(line)
+        raise Exception(e)

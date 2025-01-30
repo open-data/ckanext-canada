@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 "generic filter for removing record modified, created fields"
 
 import os.path
@@ -27,8 +27,10 @@ COPY_INDICATORS = [
     's4d',
 ]
 
+
 def main():
-    table = yaml.load(open(TABLE_YAML, 'r'))
+    with open(TABLE_YAML, 'r') as f:
+        table = yaml.load(f, yaml.Loader)
     for field in table['resources'][0]['fields']:
         if field['datastore_id'] == 'indicators':
             break
@@ -52,12 +54,14 @@ def main():
         for ind in COPY_INDICATORS:
             if ind.startswith('deadline_'):
                 # special case, this one has an en/fr sub-dict
-                row['indicator_' + ind] = ind_src.get('deadline', {}).get(ind.split('_')[1], '').encode('utf-8')
+                row['indicator_' + ind] = ind_src.get('deadline', {}).\
+                    get(ind.split('_')[1], '').encode('utf-8')
             elif isinstance(ind_src.get(ind), bool):
                 row['indicator_' + ind] = 'true' if ind_src.get(ind) else 'false'
             else:
                 row['indicator_' + ind] = ind_src.get(ind, '').encode('utf-8')
 
         writer.writerow(row)
+
 
 main()

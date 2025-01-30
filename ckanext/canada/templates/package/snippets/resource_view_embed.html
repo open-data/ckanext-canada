@@ -1,0 +1,9 @@
+{% ckan_extends %}
+
+{%- block subtitle -%}
+  {{- h.resource_view_meta_title(package=package, resource=resource, view=resource_view, is_subtitle=True) -}}
+{%- endblock -%}
+
+{% block adobe_analytics_creator %}
+  {{ h.adobe_analytics_creator(organization=package.organization, package=package) }}
+{% endblock %}

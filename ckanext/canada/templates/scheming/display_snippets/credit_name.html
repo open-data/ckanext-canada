@@ -1,0 +1,18 @@
+{% set fields = data[field.field_name] %}
+
+{% block subfield_display %}
+  <ul>
+    {% for field_data in fields %}
+      {% for subfield in field.repeating_subfields %}
+        <li>
+        {%- snippet 'scheming/snippets/display_field.html',
+          field=subfield,
+          data=field_data,
+          entity_type=entity_type,
+          object_type=object_type
+        -%}
+        </li>
+      {% endfor %}
+    {% endfor %}
+  </ul>
+{% endblock %}

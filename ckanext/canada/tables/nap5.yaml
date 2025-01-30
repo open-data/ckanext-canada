@@ -1,9 +1,7 @@
 dataset_type: nap5
 
 title: 5th National Action Plan on Open Government Tracker
-notes: |
-  Access, upload and modify the National Action Plan on Open Government Tracker for your organization
-
+notes: Access, upload and modify the National Action Plan on Open Government Tracker for your organization
 template_version: 3
 template_updated: 2022-07-29
 
@@ -13,6 +11,9 @@ collection: pd
 resources:
 - title: 5th National Action Plan on Open Government Tracker
   resource_name: nap5
+
+  published_resource_id: 0305a157-9d10-4ec2-8ca4-e39ab2b34396
+
   create_form: true
   edit_form: true
 
@@ -54,7 +55,7 @@ resources:
     form_required: true
     datastore_type: text
     excel_full_text_choices: true
-    form_full_text_choices: true
+    form_choices_prefix_code: true
     choices:
       C01:
         en: Climate Change and Sustainable Growth
@@ -71,7 +72,7 @@ resources:
       C05:
         en: Open Data for Results
         fr: Données ouvertes aux fins des résultats
-      
+
   - datastore_id: milestones
     label:
       en: Milestones
@@ -84,7 +85,7 @@ resources:
     form_required: true
     datastore_type: text
     excel_full_text_choices: true
-    form_full_text_choices: true
+    form_choices_prefix_code: true
     excel_column_width: 80
     # choices based on commitments value
     excel_choice_range_formula: 'offset({range_top},countif({range},"<"&trim(left({commitments},find(":",{commitments}&":")-1))),0,countif({range},trim(left({commitments},find(":",{commitments}&":")-1))&"*"),1)'
@@ -150,7 +151,7 @@ resources:
       C05.3:
         en: Create a roadmap toward a more inclusive barrier-free Canada
         fr: Créer une feuille de route vers un Canada plus inclusif et exempt d’obstacles
-      
+
 
   - datastore_id: indicators
     label:
@@ -164,7 +165,7 @@ resources:
     form_required: true
     datastore_type: text
     excel_full_text_choices: true
-    form_full_text_choices: true
+    form_choices_prefix_code: true
     excel_column_width: 80
     # choices based on milestones value
     excel_choice_range_formula: 'offset({range_top},countif({range},"<"&trim(left({milestones},find(":",{milestones}&":")-1))),0,countif({range},trim(left({milestones},find(":",{milestones}&":")-1))&"*"),1)'
@@ -208,7 +209,7 @@ resources:
           en: "By June 2024"
           fr: "D'ici juin 2024"
         lead_dept: "statcan"
-        s4d: false 
+        s4d: false
       C01.2.2:
         en: Develop an “Energy and Environment” webpage for the Canadian Centre for Energy Information portal that will include detailed GHG information from both Statistics Canada and Environment and Climate Change Canada, including several data visualization dashboards and indicators
         fr: Créer une page Web « Énergie et environnement » pour le portail du CCEI, qui comprendra de l’information détaillée sur les GES provenant de StatCan et d’ECCC, y compris plusieurs indicateurs et tableaux de bord de visualisation des données
@@ -596,7 +597,7 @@ resources:
         lead_dept: "jus"
         s4d: false
       C04.1.2:
-        en: Completion and sharing of findings of Qualitative Studies on LGBTQ2S+ populations, Black Canadians, persons with disabilities, immigrants and Indigenous peoples, to complement the CLPS quantitative data 
+        en: Completion and sharing of findings of Qualitative Studies on LGBTQ2S+ populations, Black Canadians, persons with disabilities, immigrants and Indigenous peoples, to complement the CLPS quantitative data
         fr: Mener à bien des études qualitatives sur les populations LGBTQ2S, les Canadiens noirs, les personnes en situation de handicap, les immigrants et les peuples autochtones, et en partager les résultats, afin de compléter les données quantitatives de l’ECPJ
         due_date: 2022-05
         deadline:
@@ -632,7 +633,7 @@ resources:
         lead_dept: "rcmp-grc"
         s4d: false
       C04.2.1:
-        en: Collaboration with Council of Canadian Administrative Tribunals (CCAT) to support delivery of workshops to better understand and promote good practices 
+        en: Collaboration with Council of Canadian Administrative Tribunals (CCAT) to support delivery of workshops to better understand and promote good practices
         fr: Collaborer avec le Conseil des tribunaux administratifs canadiens (CTAC) pour appuyer la tenue d’ateliers ayant pour but d’assurer une meilleure compréhension des bonnes pratiques et d’en faire la promotion
         due_date: 2022-06
         deadline:
@@ -785,7 +786,7 @@ resources:
         lead_dept: "rcmp-grc"
         s4d: false
       C05.1.1:
-        en: Develop a roadmap identifying and prioritizing federal data standards 
+        en: Develop a roadmap identifying and prioritizing federal data standards
         fr: Élaborer une feuille de route indiquant, en ordre de priorité, les normes de données fédérales
         due_date: 2022-12
         deadline:
@@ -812,7 +813,7 @@ resources:
         lead_dept: "tbs-sct"
         s4d: false
       C05.1.4:
-        en: Define a federal data quality framework to build a common understanding of data quality and harmonize approaches to optimizing the quality of data assets in the Government of Canada 
+        en: Define a federal data quality framework to build a common understanding of data quality and harmonize approaches to optimizing the quality of data assets in the Government of Canada
         fr: Définir un cadre fédéral sur la qualité des données afin de parvenir à une compréhension commune de la qualité des données et d’harmoniser les approches visant à optimiser la qualité des ressources de données au sein du gouvernement du Canada
         due_date: 2023-08
         deadline:
@@ -821,7 +822,7 @@ resources:
         lead_dept: "tbs-sct"
         s4d: false
       C05.1.5:
-        en: Develop a new standard for systems that manage information and data in the Government of Canada, anchored in principles and business outcomes, to provide an enterprise approach for all federal records management and business systems 
+        en: Develop a new standard for systems that manage information and data in the Government of Canada, anchored in principles and business outcomes, to provide an enterprise approach for all federal records management and business systems
         fr: Élaborer une nouvelle norme relative aux systèmes qui gèrent l’information et les données au sein du gouvernement du Canada, qui repose sur les principes et les résultats opérationnels, afin de fournir une approche intégrée pour tous les systèmes de gestion des documents et les systèmes opérationnels fédéraux
         due_date: 2022-12
         deadline:
@@ -839,7 +840,7 @@ resources:
         lead_dept: "tbs-sct"
         s4d: false
       C05.2.01:
-        en: As part of the development of an Open Government Strategy, include a robust open data pillar 
+        en: As part of the development of an Open Government Strategy, include a robust open data pillar
         fr: Prévoir un pilier solide en matière de données ouvertes lors de l’élaboration d’une stratégie pour un gouvernement ouvert
         due_date: 2024-12
         deadline:
@@ -893,7 +894,7 @@ resources:
         lead_dept: "tbs-sct"
         s4d: false
       C05.2.07:
-        en: Expand the federated open data search to include open data from all thirteen jurisdictions thereby providing Canadians with access to open and discoverable data in one place 
+        en: Expand the federated open data search to include open data from all thirteen jurisdictions thereby providing Canadians with access to open and discoverable data in one place
         fr: Élargir la capacité de recherche fédérée de données ouvertes pour tenir compte des données ouvertes des treize administrations, offrant ainsi aux Canadiens un accès aux données ouvertes et repérables en un seul endroit
         due_date: 2024-03
         deadline:
@@ -921,8 +922,8 @@ resources:
         lead_dept: "hc-sc"
         s4d: false
       C05.2.10:
-        en: Support the Global Data Barometer and disclose comparative analysis on data in 100+ countries 
-        fr: Appuyer le Baromètre mondial des données et communiquer des analyses comparatives sur les données dans plus de 100 pays 
+        en: Support the Global Data Barometer and disclose comparative analysis on data in 100+ countries
+        fr: Appuyer le Baromètre mondial des données et communiquer des analyses comparatives sur les données dans plus de 100 pays
         due_date: 2022-05
         deadline:
           en: "By spring 2022"
@@ -939,16 +940,16 @@ resources:
         lead_dept: "idrc-crdi"
         s4d: false
       C05.2.12:
-        en: Support organizations in at least 15 OGP countries in developing regions to advance open, fair and efficient use of data to strengthen their democracies 
+        en: Support organizations in at least 15 OGP countries in developing regions to advance open, fair and efficient use of data to strengthen their democracies
         fr: Soutenir les organisations d’au moins 15 pays membres du PGO dans les régions en développement afin de promouvoir l’utilisation ouverte, équitable et efficace des données pour renforcer leur démocratie
         due_date: 2022-12
         deadline:
           en: "By December 2022"
           fr: "D’ici décembre 2022"
         lead_dept: "idrc-crdi"
-        s4d: false        
+        s4d: false
       C05.2.13:
-        en: Produce a series of synthesis reports, case studies and in-person events that support the global open data community, including the work with the Government of Kenya to co-host the International Open Data Conference 
+        en: Produce a series of synthesis reports, case studies and in-person events that support the global open data community, including the work with the Government of Kenya to co-host the International Open Data Conference
         fr: Produire une série de rapports de synthèse, d’études de cas et d’activités en personne qui soutiennent la communauté mondiale des données ouvertes, notamment le travail accompli avec le gouvernement du Kenya pour co-organiser la Conférence internationale sur les données ouvertes
         due_date: 2023-06
         deadline:
@@ -958,7 +959,7 @@ resources:
         s4d: false
       C05.2.14:
         en: Plan and develop a central online hub to facilitate public access to GBA Plus data, information and resources, and to provide a space for learning and participation
-        fr: Planifier et développer une plateforme centrale en ligne pour faciliter l’accès du public aux données, à l’information et aux ressources sur l’ACS+, et offrir un espace d’apprentissage et de participation 
+        fr: Planifier et développer une plateforme centrale en ligne pour faciliter l’accès du public aux données, à l’information et aux ressources sur l’ACS+, et offrir un espace d’apprentissage et de participation
         due_date: 2023-12
         deadline:
           en: "By December 2023"
@@ -966,7 +967,7 @@ resources:
         lead_dept: "wage"
         s4d: false
       C05.3.01:
-        en: Disaggregated Data Action Plan Developmental Phase - Develop a collection strategy for major surveys, survey design for new surveys, terms and conditions for collaborations with partners on the acquisition of new data, establishment and promotion of statistical standards for disaggregated data, exploration of existing data sources, start of release of new data and new indicators 
+        en: Disaggregated Data Action Plan Developmental Phase - Develop a collection strategy for major surveys, survey design for new surveys, terms and conditions for collaborations with partners on the acquisition of new data, establishment and promotion of statistical standards for disaggregated data, exploration of existing data sources, start of release of new data and new indicators
         fr: Phase d’élaboration du plan d’action sur les données désagrégées - élaborer une stratégie de collecte pour les grands sondages et une conception pour les nouveaux sondages; définir des modalités de collaboration avec les partenaires pour l’acquisition de nouvelles données; établir des normes statistiques pour les données désagrégées, et en faire la promotion; explorer les sources de données existantes; lancer la publication de nouvelles données et de nouveaux indicateurs
         due_date: 2024-12
         deadline:
@@ -976,7 +977,7 @@ resources:
         supt_sept: "statcan"
         s4d: false
       C05.3.02:
-        en: Disaggregated Data Action Plan Implementation Phase I - Launch of enhanced surveys, a collaborative analysis space, and an intersectional, population-level platform; further exploration of existing data sources and release of survey data, new indicators, and new analytical studies 
+        en: Disaggregated Data Action Plan Implementation Phase I - Launch of enhanced surveys, a collaborative analysis space, and an intersectional, population-level platform; further exploration of existing data sources and release of survey data, new indicators, and new analytical studies
         fr: Phase I de la mise en œuvre du plan d’action sur les données désagrégées - lancer les sondages améliorés, un espace d’analyse collaborative et une plateforme intersectionnelle au niveau de la population; poursuivre l’exploration des sources de données existantes et la publication des données des sondages, des nouveaux indicateurs et des résultats des nouvelles analyses
         due_date: 2023-03
         deadline:
@@ -986,7 +987,7 @@ resources:
         supt_sept: "statcan"
         s4d: false
       C05.3.03:
-        en: Disaggregated Data Action Plan Implementation Phase II - Continued release of new indicators, survey data, and analyses; enhancement of the portal of the Centre for Gender, Diversity and Inclusion Statistics, enhanced data integration 
+        en: Disaggregated Data Action Plan Implementation Phase II - Continued release of new indicators, survey data, and analyses; enhancement of the portal of the Centre for Gender, Diversity and Inclusion Statistics, enhanced data integration
         fr: Phase II de la mise en œuvre du plan d’action sur les données désagrégées - publier de façon continue de nouveaux indicateurs, des données de sondages et des résultats d’analyses; améliorer le portail du Centre pour les statistiques sur le genre, la diversité et l’inclusion, et l’intégration des données
         due_date: 2024-03
         deadline:
@@ -996,7 +997,7 @@ resources:
         supt_sept: "statcan"
         s4d: false
       C05.3.04:
-        en: Disaggregated Data Action Plan Monitoring Phase - Continued release of new indicators, survey data, and analyses; completion of the evaluation framework; course correction 
+        en: Disaggregated Data Action Plan Monitoring Phase - Continued release of new indicators, survey data, and analyses; completion of the evaluation framework; course correction
         fr: Phase de suivi du plan d’action sur les données désagrégées - publier de façon continue de nouveaux indicateurs, des données de sondages et des résultats d’analyses; achever le cadre d’évaluation; apporter des corrections, au besoin
         due_date: 2024-12
         deadline:
@@ -1016,7 +1017,7 @@ resources:
         supt_sept: "statcan"
         s4d: false
       C05.3.06:
-        en: Disaggregated Data Action Plan Continuous Improvement and Monitoring Phase - Continued release of new indicators, survey data, and analyses; monitoring of data gaps and emerging needs that should be covered, adherence to diversity data standards (in collaboration with TBS where appropriate) at the agency and all levels of government, flow of data to the agency and statistics from the agency and use of statistics in policymaking 
+        en: Disaggregated Data Action Plan Continuous Improvement and Monitoring Phase - Continued release of new indicators, survey data, and analyses; monitoring of data gaps and emerging needs that should be covered, adherence to diversity data standards (in collaboration with TBS where appropriate) at the agency and all levels of government, flow of data to the agency and statistics from the agency and use of statistics in policymaking
         fr: Phase de suivi et d’amélioration continue du plan d’action sur les données désagrégées - publier de façon continue de nouveaux indicateurs, des données de sondages et des résultats d’analyses; faire un suivi des lacunes dans les données et des besoins émergents qui devraient être pris en considération; satisfaire aux normes de données sur la diversité (en collaboration avec le SCT, le cas échéant) au sein de l’organisation et à tous les ordres de gouvernement; gérer le flux de données vers l’organisation et les statistiques provenant de celle-ci; utiliser les statistiques dans l’élaboration des politiques
         due_date: 2024-12
         deadline:
@@ -1026,7 +1027,7 @@ resources:
         supt_sept: "statcan"
         s4d: false
       C05.3.07:
-        en: 2022 Canadian Survey on Disability data collection 
+        en: 2022 Canadian Survey on Disability data collection
         fr: Collecter les données de l’Enquête canadienne sur l’incapacité 2022
         due_date: 2022-09
         deadline:
@@ -1086,7 +1087,7 @@ resources:
         supt_sept: "statcan"
         s4d: false
       C05.3.13:
-        en: Development of a new survey on children with disabilities 
+        en: Development of a new survey on children with disabilities
         fr: Élaborer une nouvelle enquête sur les enfants en situation de handicap
         due_date: 2023-11
         deadline:
@@ -1303,6 +1304,10 @@ resources:
         errors := errors || choice_error(NEW.indicators,
           array(SELECT unnest from unnest({indicators}) where left(unnest, length(NEW.milestones)) = NEW.milestones),
           'indicators');
+        errors := errors || required_error(NEW.status, 'status');
+        errors := errors || choice_error(NEW.status, {status}, 'status');
+        errors := errors || required_error(NEW.progress_en, 'progress_en');
+        errors := errors || required_error(NEW.progress_fr, 'progress_fr');
         IF errors = '{{}}' THEN
           RETURN NEW;
         END IF;

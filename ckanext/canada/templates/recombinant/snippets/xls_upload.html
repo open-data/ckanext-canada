@@ -1,0 +1,31 @@
+{% ckan_extends %}
+
+{% block form %}
+  {% set chromo = h.recombinant_get_chromo(resource.name) %}
+  {% if chromo.create_form %}
+    <a class="btn btn-default" href="{{ h.url_for('canada.create_pd_record', owner_org=pkg.owner_org, resource_name=resource.name) }}">
+      <i class="glyphicon glyphicon-plus-sign"></i>&nbsp;{{ _("Create Single Record") }}
+    </a>
+    <h4>{{ _("Create and update multiple records") }}</h4>
+  {% endif %}
+  {{ super() }}
+{% endblock %}
+
+{% block messages %}
+  {{ super() }}
+  {% set geno = h.recombinant_get_geno(pkg.dataset_type) %}
+  {% if 'upload_warn' in geno %}
+    <div class="col-md-12">
+      <div class="alert alert-warning" style="font-weight:bold;">
+        <p>{{ h.recombinant_language_text(geno.upload_warn) | safe }}</p>
+      </div>
+    </div>
+  {% endif %}
+  {% if 'upload_info' in geno %}
+    <div class="col-md-12">
+      <div class="alert alert-info" role="alert">
+        <p>{{ h.recombinant_language_text(geno.upload_info) | safe }}</p>
+      </div>
+    </div>
+  {% endif %}
+{% endblock %}

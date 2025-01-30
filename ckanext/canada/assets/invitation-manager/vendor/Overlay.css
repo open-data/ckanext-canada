@@ -1,0 +1,282 @@
+
+
+
+/***********************************************************/
+/*********************** Overlay CSS************************/
+/***********************************************************/
+
+
+.gc-im-wb-disable .gc-im-wb-overlay {
+	 display: block !important;
+}
+
+ .gc-im-wb-overlay.wb-inview {
+	 display: block;
+}
+
+ .gc-im-wb-overlay.open {
+	 display: inline-block;
+	 position: fixed;		
+}
+
+ .gc-im-overlay-def {
+	 overflow-y: auto;
+}
+
+ .gc-im-overlay-def header {
+	 background-color: #2e5274;
+	 color: #fff;
+	 display: block;
+	 padding: 0 44px 0 1em;
+}
+
+ .gc-im-overlay-def .gc-im-modal-title {
+	 font-size: 1.15em;
+	 padding: 10px 0;
+}
+
+
+/**********************************************************************/
+/******* Custom css specific to Invitation Manager ******* ************/
+/**********************************************************************/
+
+ 
+.gc-im-wb-popup-mid { 
+	border-radius: 6px;
+	left: auto;
+	margin: 0 25px;
+	right: 0;
+	top: auto;
+	width: 35%;
+	bottom: 5%;
+		
+	/* flexible height */
+	max-height: 70%;
+	
+}
+
+@media screen and (min-width: 992px) and (max-width: 1199px) {
+	.gc-im-wb-popup-mid {
+		width: 40%;
+	}
+}
+
+@media screen and (min-width: 768px) and (max-width: 991px) {
+	.gc-im-wb-popup-mid {
+		width: 60%;
+	}
+}
+
+@media screen and (max-width: 767px) {
+	.gc-im-wb-popup-mid {
+		width: 90%;
+	}
+}
+
+.gc-im-modal-body {
+	padding: 15px;
+}
+
+.gc-im-wb-overlay {
+	background-clip: border-box;
+	background-color: #fff;
+	border: 0;
+	border-radius: 5px;
+	display: block;
+	-webkit-transform: translateZ(0);
+	transform: translateZ(0);
+	z-index: 1050;
+	float: right; 	
+}
+
+.gc-im-modal-content{ 
+	position: fixed; 
+	outline: 0;
+}
+
+#gc-im-popup .list-inline {
+	padding-left: 0;
+	list-style: none;
+}
+
+#gc-im-popup .mrgn-sm { 
+	margin: 5px; 
+}
+
+
+.closeIcon {
+	float: right; 
+	font-size: 1em; 
+	font-weight: 700; 
+	line-height: 0.8; 
+	color: #fff; 
+	background-color: transparent; 
+	border : transparent;
+	/* Fixes for close icon 
+	margin-right: 0; */
+	margin-right: 0 5px 0 0;
+	padding: 0;	
+}
+
+
+.gc-im-overlay-def header { 
+	background-color: #2e5274;
+	color: #fff;
+	display: block;
+	padding: 0 8px;
+}
+				
+.zoomX {
+	font-size: 1.8em;
+	color: #FFFFFF;
+}
+
+.zoomX:hover {
+	color: #C6C2D2; /*rgba(225,228,231,1); */ 	
+}
+
+
+.wb-inv {
+	height: 1px;
+	margin: 0;
+	overflow: hidden;
+	position: absolute;
+	width: 1px;
+}
+
+.asideBody {	
+	font-family:  “Helvetica Neue”, Helvetica, Arial, sans-serif;
+	font-size: 16px;
+	line-height:  1.4375;
+	color: #333;
+	background-color: #F9F9F9;
+	-webkit-tap-highlight-color: rgba(0,0,0,0);	
+}
+
+.gc-im-btn{
+	cursor: pointer;
+	border: 1px outset #E1E4E7;
+	padding: 6px 12px;
+	line-height: 1.4375;
+	border-radius: 4px;	
+	display: inline-block;
+	font-weight: 500;
+	font-size: 1em;
+}
+
+.gc-im-btn-primary:visited {
+	color: #FFFFFF;
+}
+
+a.gc-im-btn {
+	text-decoration: none;
+	
+}
+
+.gc-im-btn:focus {
+	border: 1px solid black;
+}
+
+.gc-im-btn-primary {
+	background-color: #26374A;
+	/*color: #FFFFFF;*/
+	color: #FFFFFF !important;
+}
+.gc-im-btn-primary:focus {
+	background-color: #1C578A;
+	border: 1px solid black;
+	color: #FFFFFF;
+}
+
+.gc-im-btn-primary:hover{
+	background-color: #1C578A;
+	color: #FFFFFF;
+}
+
+.gc-im-btn-secondary {
+	color: #26374A;
+	background-color: #C2CDD2; /*#E1E4E7;*/
+}
+
+.gc-im-btn-secondary:hover {
+	background-color: #F1F1F1;
+}
+
+#gc-im-popup {
+	border-color: #F0F0F0;
+    border-style: outset; 
+    border-width: 2px;
+}
+
+#gc-im-popup:focus {
+	border-color: black;
+    border-style: outset; 
+    border-width: 3px;
+}
+
+#gc-im-popup p{
+	/*margin:0 0 0 0;*/
+	color: #000000;
+}
+
+#gc-im-popup h2 {
+	font-weight: 700;
+}
+
+#gc-im-popup ul.list-inline li{ 
+	display: inline; 
+	padding-left: 5px;
+	padding-right: 5px;	
+}
+				
+#gc-im-popup ul li {
+	float: left;
+}
+
+#gc-im-popup ul li.marginBottom-yes {
+	margin-bottom: 5px;
+}
+				
+#gc-im-popup ul li.marginBottom-no {
+	margin-bottom: 15px;
+}
+
+.gc-skipLink {
+	clip: rect(1px, 1px, 1px, 1px);
+	height: 1px;
+	margin: 0;
+	overflow: hidden;
+	position: absolute;
+	width: 1px; 
+ }
+ 
+ .gc-skipLink:focus {
+	clip: rect(auto, auto, auto, auto);
+	height: inherit;
+	margin: inherit;
+	overflow: inherit;
+	position: static;
+	width: inherit; 
+}
+
+.im-mrgn {
+	margin-top: 350px;
+}
+
+/* Fixes for Iphone7 close button */
+.gc-im-modal-title-fix1 {
+	width: 90%;
+	float: left;
+	margin-bottom: 0px;
+}
+
+.gc-im-modal-title-fix2 {
+	width: 10%;
+	float: right;
+}
+
+#gc-im-popup div.clearfix::after {
+	content: " ";
+	clear: both;
+	display: table;
+}

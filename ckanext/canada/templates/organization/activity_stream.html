@@ -1,0 +1,16 @@
+{% ckan_extends %}
+
+{% block subtitle %}{{ super.super() }}{% endblock %}
+{% block subtitle_2 %}{{ _('Activity Stream') }}{% endblock %}
+{% block page_heading %}{{ super() }}{% endblock %}
+
+{% block primary_content_inner %}
+  {% block activity_stream %}
+    <div align="right">
+      <a href="{{ h.url_for('feeds.organization', id=group_dict['id']) }}" title="RSS">
+        <span class="fa fa-rss-square" aria-hidden="true"></span>&nbsp;{{ _('Atom Feed') }}
+      </a>
+    </div>
+    {% snippet 'snippets/stream.html', activity_stream=activity_stream %}
+  {% endblock %}
+{% endblock %}

@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 "generic filter for removing record modified, created fields"
 
 import csv
@@ -9,6 +9,7 @@ REMOVE_COLUMNS = [
     'record_modified',
     'user_modified',
 ]
+
 
 def main():
     reader = csv.DictReader(sys.stdin)
@@ -29,5 +30,6 @@ def main():
             writer.writerow(row)
         except ValueError:
             pass
+
 
 main()

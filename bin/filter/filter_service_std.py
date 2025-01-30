@@ -1,8 +1,7 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python3
 
 import csv
 import sys
-import codecs
 
 REMOVE_COLUMNS = [
     'record_created',
@@ -10,45 +9,65 @@ REMOVE_COLUMNS = [
     'user_modified',
 ]
 
+COLUMNS = [
+    'fiscal_yr', 'service_id', 'service_name_en', 'service_name_fr',
+    'service_standard_id', 'service_standard_en', 'service_standard_fr',
+    'type', 'channel', 'channel_comments_en', 'channel_comments_fr',
+    'target', 'volume_meeting_target', 'total_volume', 'performance',
+    'comments_en', 'comments_fr', 'target_met',
+    'standards_targets_uri_en', 'standards_targets_uri_fr',
+    'performance_results_uri_en', 'performance_results_uri_fr',
+    'owner_org', 'owner_org_title',
+]
+
+BOM = "\N{bom}"
+
+
 def main():
-    bom = sys.stdin.read(3)
+    bom = sys.stdin.read(1)  # first code point
     if not bom:
         # empty file -> empty file
         return
-    assert bom == codecs.BOM_UTF8
-    sys.stdout.write(codecs.BOM_UTF8)
+    assert bom == BOM
+    sys.stdout.write(BOM)
 
     reader = csv.DictReader(sys.stdin)
-    outnames = ['owner_org'] + [f for f in reader.fieldnames
-        if f not in REMOVE_COLUMNS and f != 'owner_org'
-        ] + ['performance']
-    writer = csv.DictWriter(sys.stdout, outnames)
+    writer = csv.DictWriter(sys.stdout, COLUMNS)
     writer.writeheader()
+
     for row in reader:
         for rem in REMOVE_COLUMNS:
             del row[rem]
-        num = 0
-        den = 0
-        try:
-            num, den = num + int(row['q1_performance_result']), den + int(row['q1_business_volume'])
-        except ValueError:
-            pass
-        try:
-            num, den = num + int(row['q2_performance_result']), den + int(row['q2_business_volume'])
-        except ValueError:
-            pass
-        try:
-            num, den = num + int(row['q3_performance_result']), den + int(row['q3_business_volume'])
-        except ValueError:
-            pass
-        try:
-            num, den = num + int(row['q4_performance_result']), den + int(row['q4_business_volume'])
-        except ValueError:
-            pass
-        if not den:
-            row['performance'] = 'ND'
+
+        num = int(row['volume_meeting_target']) if row['volume_meeting_target'] else 0
+        den = int(row['total_volume']) if row['total_volume'] else 0
+
+        # performance = volume_meeting_target / total_volume
+        if num <= 0 or den <= 0:
+            row['performance'] = None
         else:
-            row['performance'] = '%0.5f' % (float(num) / den)
+            row['performance'] = max(round(num / den, 4), 0)
+
+        # calculate target_met
+        if row['target']:
+            target = float(row['target'])
+
+            # if no performance(volume_meeting_target/total_volume)
+            # then target_met is not possible
+            if row['performance'] is None:
+                row['target_met'] = 'NA'
+
+            # if performance >= target then target is met
+            elif row['performance'] >= target:
+                row['target_met'] = 'Y'
+
+            # otherwise target_met is not met
+            else:
+                row['target_met'] = 'N'
+        else:
+            row['target_met'] = None
+
         writer.writerow(row)
+
 
 main()

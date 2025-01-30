@@ -1,0 +1,98 @@
+{% if 'ckan-admin/publish' in request.url %}
+
+  {% include 'admin/publish_search.html' %}
+
+{% else %}
+
+  {% ckan_extends %}
+
+  {%- block api_access_info -%}{%- endblock -%}
+
+  {% block page_primary_action %}{% endblock %}
+
+  {% block subtitle %}{{ _('Search Datasets') }}{% endblock %}
+  {% block breadcrumb_content %}
+    {% if g.is_registry %}
+      <li class="active">{{ h.nav_link(_('Datasets'), named_route='dataset.search', highlight_actions = 'new index') }}</li>
+    {% else %}
+      <li>{% link_for _('Search Open Government'), named_route='dataset_search' %}</li>
+    {% endif %}
+  {% endblock %}
+
+  {% block secondary_content %}
+    <div class="canada-search-filters-title">
+      {% set clear_url = h.url_for('dataset.search', q=g.q) if g.q else h.url_for('dataset.search') %}
+      <h2>{{ _('Search Filters') }}</h2><span><a class="btn btn-danger btn-sm" href="{{ clear_url }}"><i class="fa fa-close" aria-hidden="true"></i>&nbsp;{{ _('Clear All') }}</a></span>
+    </div>
+    {% snippet 'snippets/dataset_facets.html', show_org_facet=true, search_facets=search_facets, facet_titles=facet_titles %}
+    {% block extra_facets %}
+      {% if g.is_registry %}
+        {{ h.snippet('snippets/publish_facet.html', search_facets=search_facets, facet_ranges=facet_ranges) }}
+      {% endif %}
+    {% endblock %}
+    {% set license = h.get_license('ca-ogl-lgo') %}
+    {% if license != None %}
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <i class="fa-solid fa-id-card" aria-hidden="true"></i>&nbsp;{{ _('License') }}
+        </div>
+        <div class="panel-body">
+          {% if h.lang() == 'en' %}
+            <a href="{{ license.url }}">View the {{ license.title }}</a>
+          {% else %}
+            <a href="{{ license.url_fra }}">Voir la {{ license.title_fra[:1].lower() }}{{ license.title_fra[1:] }}</a>
+          {% endif %}
+        </div>
+      </div>
+    {% endif %}
+  {% endblock %}
+
+  {% block search_title %}
+    {% if not no_title %}
+      {% snippet 'snippets/search_result_text.html', query=query, count=count, type=type %}
+    {% endif %}
+  {% endblock %}
+
+  {% block try_another_search %}
+    <p class="extra">{%- trans -%}Please review your spelling, or reduce the number of filters selected.{%- endtrans -%}</p>
+  {% endblock %}
+
+  {% block styles %}
+    {{ super() }}
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet">
+  {% endblock %}
+
+  {% block scripts %}
+    {{ super() }}
+    {% asset 'canada_public/i18n' %}
+  {% endblock %}
+
+  {% block primary_content %}
+    {{ self.page_primary_action() }}
+    <div class="mrgn-tp-lg canada-page-main-wrapper">
+      <div class="row">
+        <div class="col-md-12">
+          {{ self.form() }}
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          {{ self.package_search_results_list() }}
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">{{ self.page_pagination() }}</div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">{{ self.package_search_results_api() }}</div>
+      </div>
+    </div>
+  {% endblock %}
+
+  {% block search_form_footer %}{% endblock %}
+
+  {% block package_search_results_api %}
+    {{ self.package_search_results_api_inner() }}
+  {% endblock %}
+
+{% endif %}

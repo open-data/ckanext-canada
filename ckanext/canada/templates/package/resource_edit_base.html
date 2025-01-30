@@ -1,0 +1,27 @@
+{% ckan_extends %}
+
+{% block breadcrumb_content %}
+  {{ super.super() }}
+  {% if res %}
+    <li>{{ h.link_to(h.truncate(h.resource_display_name(res), 80), h.url_for(pkg.type + '_resource.read', id=pkg.name, resource_id=res.id), title=h.resource_display_name(res)) }}</li>
+    <li {% block breadcrumb_edit_selected %} class="active"{% endblock %}><a href="#">{{ _('Edit') }}</a></li>
+  {% endif %}
+{% endblock %}
+
+{% block content_action %}
+  {%- link_for _('All resources'), named_route=pkg.type ~ '.resources', id=pkg.name, class_='btn btn-default', icon='arrow-left' -%}
+  {% if res %}
+	  {%- link_for _('View resource'), named_route=pkg.type ~ '_resource.read', id=pkg.name, resource_id=res.id, class_='btn btn-default', icon='eye' -%}
+  {% endif %}
+{% endblock %}
+
+{% block scripts %}
+  {% asset 'canada_internal/resource_edit' %}
+  {% asset 'canada_internal/guess_mimetype' %}
+  {{ super() }}
+{% endblock %}
+
+{% block custom_styles %}
+  {{ super() }}
+  {% asset 'vendor/select2-css' %}
+{% endblock %}

@@ -1,0 +1,13 @@
+{% set current_url = h.full_current_url() %}
+{% set pkg = pkg_dict %}
+
+<section>
+  <div class="module-related">
+    <h3>{{_('Social')}}</h3>
+    <ul>
+      <li><a href="https://plus.google.com/share?url={{ current_url }}" target="_blank"><i class="ckan-icon ckan-icon-gplus"></i> Google+</a></li>
+      <li><a href="https://twitter.com/share?url={{ current_url }}" target="_blank"><i class="ckan-icon ckan-icon-twitter"></i> Twitter</a></li>
+      <li><a href="https://www.facebook.com/sharer.php?u={{ current_url }}" target="_blank"><i class="ckan-icon ckan-icon-fb"></i> Facebook</a></li>
+    </ul>
+  </div>
+</section>

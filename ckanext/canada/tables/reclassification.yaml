@@ -1,6 +1,7 @@
 dataset_type: reclassification
 target_dataset: reclassification
-title: Proactive Disclosure - Position Reclassification
+title: Proactive Publication - Position Reclassification
+shortname: Position Reclassification
 notes: Access, upload and modify the position reclassification reports for your organization
 
 template_version: 3
@@ -10,8 +11,11 @@ portal_type: info
 collection: pd
 
 resources:
-- title: Proactive Disclosure - Position Reclassification
+- title: Proactive Publication - Position Reclassification
   resource_name: reclassification
+
+  published_resource_id: bdaa5515-3782-4e5c-9d44-c25e032addb7
+
   create_form: true
   edit_form: true
   fields:
@@ -109,6 +113,7 @@ resources:
     format_type: Controlled List
     validation: This field must not be empty
     excel_full_text_choices: True
+    form_choices_prefix_code: True
     choices_file: choices/classification_group.yaml
     excel_error_formula: 'FALSE'
 
@@ -137,6 +142,7 @@ resources:
     format_type: Controlled List
     validation: This field must not be empty
     excel_full_text_choices: True
+    form_choices_prefix_code: True
     choices_file: choices/classification_group.yaml
     excel_error_formula: 'FALSE'
 
@@ -235,6 +241,9 @@ resources:
           crval RECORD;
         BEGIN
           errors := errors || required_error(NEW.ref_number, 'ref_number');
+          IF NEW.ref_number LIKE '%,%' THEN
+            errors := errors || ARRAY[['ref_number', {ref_number_error}]];
+          END IF;
           errors := errors || required_error(NEW.pos_number, 'pos_number');
           errors := errors || required_error(NEW.date, 'date');
           errors := errors || required_error(NEW.pos_title_en, 'pos_title_en');
@@ -245,10 +254,10 @@ resources:
           errors := errors || choice_error(NEW.new_class_group_code, {new_class_group_code}, 'new_class_group_code');
           errors := errors || required_error(NEW.old_class_level, 'old_class_level');
           errors := errors || required_error(NEW.new_class_level, 'new_class_level');
-          -- some tables have the wrong type, convert for now, clean the data next
-          errors := errors || choice_error(lpad(NEW.old_class_level::text, 2, '0'), {old_class_level}, 'old_class_level');
-          errors := errors || choice_error(lpad(NEW.new_class_level::text, 2, '0'), {new_class_level}, 'new_class_level');
-          --
+          NEW.old_class_level := lpad(NEW.old_class_level::text, 2, '0');
+          errors := errors || choice_error(NEW.old_class_level, {old_class_level}, 'old_class_level');
+          NEW.new_class_level := lpad(NEW.new_class_level::text, 2, '0');
+          errors := errors || choice_error(NEW.new_class_level, {new_class_level}, 'new_class_level');
           errors := errors || required_error(NEW.reason_en, 'reason_en');
           errors := errors || required_error(NEW.reason_fr, 'reason_fr');
           IF errors = '{{}}' THEN
@@ -257,6 +266,9 @@ resources:
           RAISE EXCEPTION E'TAB-DELIMITED\t%', array_to_string(errors, E'\t');
         END;
     - update_record_modified_created_trigger
+
+  trigger_strings:  # yaml | not supported
+    ref_number_error: Comma is not allowed in Reference Number field
 
   examples:
     record:
@@ -278,15 +290,20 @@ resources:
     sort: date desc
 
 
-- title: Proactive Disclosure - Position Reclassification Nothing to Report
+- title: Proactive Publication - Position Reclassification Nothing to Report
   resource_name: reclassification-nil
+
+  published_resource_id: 1e955e4d-df35-4441-bf38-b7086192ece2
+
   create_form: true
   edit_form: false #edit not possible for nil reports since only stored data is primary key
   fields:
 
   - datastore_id: year
     datastore_type: year
-    label: Year
+    label:
+      en: Year
+      fr: Année
     obligation: Mandatory
     excel_required: true
     form_required: true
@@ -297,7 +314,9 @@ resources:
 
   - datastore_id: quarter
     datastore_type: text
-    label: Quarter
+    label:
+      en: Quarter
+      fr: Trimestre
     excel_column_width: 10
     obligation: Mandatory
     excel_required: true
@@ -356,7 +375,7 @@ resources:
         errors := errors || required_error(NEW.quarter, 'quarter');
         errors := errors || choice_error(NEW.quarter, {quarter}, 'quarter');
         IF NEW.year > date_part('year', CURRENT_DATE) THEN
-          errors := errors || ARRAY[['year', 'This must list the year you are reporting on (not the fiscal year).']];
+          errors := errors || ARRAY[['year', {year_error}]];
         END IF;
 
         IF errors = '{{}}' THEN
@@ -366,6 +385,8 @@ resources:
       END;
   - update_record_modified_created_trigger
 
+  trigger_strings:  # yaml | not supported
+    year_error: This must list the year you are reporting on (not the fiscal year).
 
   examples:
     record:
