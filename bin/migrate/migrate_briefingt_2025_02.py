@@ -2,7 +2,7 @@
 # coding=utf-8
 
 """
-migration script to copy all travela records
+migration script to copy all briefingt records
 for PCO sub-organizations into PCO organization
 """
 
@@ -11,20 +11,15 @@ import sys
 import codecs
 
 
-sub_orgs = [ 'ghl-lgc',
-             'iga-aig',
-             'mdi-mid',
-             'miga-maig',
-             'dpm-vpm',
-             'pkcc-pcprc',
-             'ql-lq',
-             'srp-rsp',
-             'nsira-ossnr',
-             'ocsec-bccst',
-             'snsicp-scpssnr',
-             'sirc-csars',
-             'jfpc-cfp',
-             ]
+sub_orgs = [
+    'dpm-vpm',
+    'iga-aig',
+    'miga-maig',
+    'ghl-lgc',
+    'mdi-mid',
+    'ql-lq',
+    'srp-rsp',
+    ]
 PCO = { 'owner_org': 'pco-bcp',
         'owner_org_title': 'Privy Council Office | Bureau du Conseil privé' }
 
