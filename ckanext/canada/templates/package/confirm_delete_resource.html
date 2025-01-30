@@ -1,10 +1,13 @@
 {% extends "page.html" %}
 
+{% import 'macros/form.html' as form %}
+
 {% block subtitle %}{{ _("Confirm Delete") }}{% endblock %}
 
 {% block primary_content_inner %}
   <div class="col-md-12">
     {% block form %}
+      {% block errors %}{{ form.errors(errors=errors, error_summary=error_summary) }}{% endblock %}
       <p>{{ _('Are you sure you want to delete resource - {name}?').format(name=h.resource_display_name(g.resource_dict)) }}</p>
       <p class="form-actions">
         <form action="{{ h.url_for('dataset_resource.delete', resource_id=g.resource_dict.id, id=pkg_id) }}" method="post">

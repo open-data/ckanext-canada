@@ -88,6 +88,8 @@ _('In queue to re-index records')  # TODO: remove after upstream contrib
 _('Currently re-indexing records')  # TODO: remove after upstream contrib
 _('All records indexed')  # TODO: remove after upstream contrib
 _('Error indexing records')  # TODO: remove after upstream contrib
+_('Could not delete resource because other resources in this dataset have errors:')
+_('Could not create or update resource because other resources in this dataset have errors:')
 
 # strings from security
 _("Please upload a file or link to an external resource")
