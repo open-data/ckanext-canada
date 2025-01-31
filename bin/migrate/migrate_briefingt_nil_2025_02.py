@@ -36,12 +36,14 @@ out_csv.writeheader()
 
 data = []
 
+
 def report_exists(reporting_period, owner_org):
     for row in data:
         if row['reporting_period'] == reporting_period and \
                 row['owner_org'] == owner_org:
             return True
     return False
+
 
 for line in in_csv:
     if line['owner_org'] in sub_orgs:
