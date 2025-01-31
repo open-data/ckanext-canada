@@ -28,7 +28,7 @@ PCO = {
     'owner_org_title': 'Privy Council Office | Bureau du Conseil privé',
     }
 
-assert sys.stdin.buffer.read(3) == codecs.BOM_UTF8, "Input file does not contain the UTF-8 BOM."
+assert sys.stdin.buffer.read(3) == codecs.BOM_UTF8
 
 in_csv = csv.DictReader(sys.stdin)
 out_csv = csv.DictWriter(sys.stdout, fieldnames=in_csv.fieldnames)
