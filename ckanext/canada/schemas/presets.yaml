@@ -3371,7 +3371,11 @@ presets:
     - value: BMP
       mimetype: image/bmp
       replaces: [bmp]
+    - value: BUFR
+      replaces: [bufr]
     - value: BWF
+    - value: CAP
+      replaces: [cap]
     - value: CCT
     - value: CDED ASCII
       replaces: [cded ascii]
@@ -3465,7 +3469,9 @@ presets:
       mimetype: application/x-filegrd
       label: GeoSoftGrids
     - value: GRIB1
+      replaces: ["grib1", "grb1", "gb1"]
     - value: GRIB2
+      replaces: ["grib2", "grb2", "gb2"]
     - value: GZ
       mimetype: application/gzip
       label: Gzip
@@ -3619,6 +3625,12 @@ presets:
       mimetype: text/plain
       replaces: ["ASCII", "text", "TXT"]
     - value: VPF
+    - value: WATERML1
+      label: WaterML 1.0
+      replace: ["waterml1.0", "waterml1"]
+    - value: WATERML2
+      label: WaterML 2.0
+      replace: ["waterml2.0", "waterml2"]
     - value: WAV
       mimetype: audio/wav
     - value: WCS

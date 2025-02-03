@@ -235,11 +235,18 @@ class PortalUpdater(object):
                         package_id, action, reason, error, \
                             failure_reason, failure_trace, \
                             do_update_sync_success_time = json.loads(result)
-                    except Exception as e:
+                    except Exception:
+                        error_stack = traceback.format_exc()
+                        append_log(None,
+                                   None,
+                                   'ERROR',
+                                   'Error when processing worker pool',
+                                   error_stack)
                         if self.verbose:
-                            print("Worker proccess failed on:")
-                            print(result)
-                        raise Exception(e)
+                            print('ERROR', 'Error when processing worker pool',
+                                  error_stack, file=sys.stderr)
+                        raise click.ClickException(
+                            "Worker proccess failed. See stderr or log file.")
                     _stats = next(stats)
                     print(job_ids, _stats, finished, package_id, action, reason)
                     if error:
