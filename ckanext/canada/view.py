@@ -75,8 +75,6 @@ from ckanext.recombinant.errors import RecombinantException, format_trigger_erro
 from ckanext.recombinant.helpers import recombinant_primary_key_fields
 from ckanext.recombinant.views import _render_recombinant_constraint_errors
 
-from ckanext.datastore.backend.postgres import _parse_constraint_error_from_psql_error
-
 from ckanapi import LocalCKAN
 
 from flask import Blueprint, make_response
