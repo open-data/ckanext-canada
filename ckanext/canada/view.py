@@ -462,9 +462,8 @@ def create_pd_record(owner_org: str, resource_name: str):
                             k: [_("This record already exists")]
                             for k in pk_fields
                         }, **err)
-                    # type_ignore_reason: incomplete typing
                     elif (
-                      'constraint_info' in ve.error_dict):  # type: ignore
+                      'constraint_info' in ve.error_dict):
                         error_summary = _render_recombinant_constraint_errors(
                             lc, ve, chromo, 'upsert')
                     else:
