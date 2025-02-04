@@ -1353,8 +1353,10 @@ resources:
 
   datastore_primary_key: [fiscal_yr, service_id]
   datastore_indexes: ""
+  datastore_constraint_error_templates:
+    delete: recombinant/snippets/service_delete_fk_error.html
   datastore_constraint_errors:  # yaml | not supported
-    delete: Cannot delete record(s) because the Fiscal Year, Service ID Number (<strong><em>{refValues}</em></strong>) is referenced in at least one <a target="_blank" href="{refTable}">Service Standards & Performance Results record.</a>
+    delete: Cannot delete record(s) because the Fiscal Year, Service ID Number ({refValues}) is referenced in at least one Service Standards & Performance Results record.
 
   default_preview_sort: fiscal_yr, service_id
 
@@ -2279,8 +2281,10 @@ resources:
       fiscal_yr: fiscal_yr
       service_id: service_id
   datastore_indexes: ""
+  datastore_constraint_error_templates:
+    upsert: recombinant/snippets/service_std_upsert_fk_error.html
   datastore_constraint_errors:  # yaml | not supported
-    upsert: Cannot create record (<strong><em>{refValues}</em></strong>) because the Service ID Number does not exist in the <a target="_blank" href="{refTable}">Service Identification Information & Metrics resource</a> for that fiscal year.
+    upsert: Cannot create record ({refValues}) because the Service ID Number does not exist in the Service Identification Information & Metrics resource for that fiscal year.
 
   default_preview_sort: fiscal_yr, service_id, service_standard_id
 

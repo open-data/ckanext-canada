@@ -73,7 +73,9 @@ from ckanext.recombinant.datatypes import canonicalize
 from ckanext.recombinant.tables import get_chromo
 from ckanext.recombinant.errors import RecombinantException, format_trigger_error
 from ckanext.recombinant.helpers import recombinant_primary_key_fields
-from ckanext.recombinant.utils import get_constraint_error_from_psql_error
+from ckanext.recombinant.views import _render_recombinant_constraint_errors
+
+from ckanext.datastore.backend.postgres import _parse_constraint_error_from_psql_error
 
 from ckanapi import LocalCKAN
 
@@ -462,19 +464,9 @@ def create_pd_record(owner_org: str, resource_name: str):
                         }, **err)
                     # type_ignore_reason: incomplete typing
                     elif (
-                      'violates foreign key constraint' in
-                      ve.error_dict['records'][0]):  # type: ignore
-                        error_message = chromo.get(
-                            'datastore_constraint_errors', {}).get(
-                                'upsert', 'Something went wrong, your '
-                                          'record was not created. Please '
-                                          'contact support.')
-                        # type_ignore_reason: incomplete typing
-                        sql_error_string = \
-                            ve.error_dict['upsert_info']['orig']  # type: ignore
-                        error_message = get_constraint_error_from_psql_error(
-                            lc, sql_error_string, error_message)
-                        error_summary = error_message
+                      'constraint_info' in ve.error_dict):  # type: ignore
+                        error_summary = _render_recombinant_constraint_errors(
+                            lc, ve, chromo, 'upsert')
                     else:
                         log.warning('Failed to create %s record for org %s:\n%s',
                                     resource_name, owner_org, traceback.format_exc())
@@ -742,17 +734,9 @@ def delete_selected_records(resource_id: str):
             except NotFound:
                 h.flash_error(_('Not found') + ' ' + str(filter))
             except ValidationError as e:
-                if 'foreign_constraints' in e.error_dict:
-                    chromo = get_chromo(res['name'])
-                    # type_ignore_reason: no typing from chromo yamls
-                    error_message = chromo.get(
-                        'datastore_constraint_errors', {}).get(
-                            'delete',
-                            e.error_dict['foreign_constraints'][0])  # type: ignore
-                    # type_ignore_reason: incomplete typing
-                    sql_error_string = e.error_dict['info']['orig']  # type: ignore
-                    error_message = get_constraint_error_from_psql_error(
-                        lc, sql_error_string, error_message)
+                if 'constraint_info' in e.error_dict:
+                    error_message = _render_recombinant_constraint_errors(
+                        lc, e, get_chromo(res['name']), 'delete')
                     h.flash_error(error_message)
                     return h.redirect_to('recombinant.preview_table',
                                          resource_name=res['name'],
