@@ -2,19 +2,12 @@
 
 {% block errors_list %}
   <section class="alert alert-danger{{ ' ' ~ classes | join(' ') }}">
-    {% if not errors.other_resource %}
-      <h3>{{_('Errors in form')}}</h3>
-        <p>{{ _('The form contains invalid entries:') }}</p>
-        <ul>
-          {% block all_errors %}
-            {{ super() }}
-          {% endblock %}
-        </ul>
-      </h3>
-    {% else %}
-      <h3>{{_('Errors in dataset')}}</h3>
-      <p>{{ _('The dataset contains invalid resources:') }}</p>
-      {# TODO: loop errors and output HTML #}
-    {% endif %}
+    <h3>{{_('Errors in form')}}</h3>
+      <p>{{ _('The form contains invalid entries:') }}</p>
+      <ul>
+        {% block all_errors %}
+          {{ super() }}
+        {% endblock %}
+      </ul>
   </section>
 {% endblock %}

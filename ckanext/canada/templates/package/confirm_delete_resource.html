@@ -7,7 +7,19 @@
 {% block primary_content_inner %}
   <div class="col-md-12">
     {% block form %}
-      {% block errors %}{{ form.errors(errors=errors, error_summary=error_summary) }}{% endblock %}
+      {% block errors %}
+        {%- set schema = h.scheming_get_dataset_schema(dataset_type) -%}
+        {% if dataset_errors %}
+          {%- snippet 'scheming/snippets/dataset_errors.html',
+            errors=dataset_errors, resource_fields=schema.resource_fields,
+            dataset_fields=schema.dataset_fields, pkg_name=pkg_id,
+            entity_type='dataset', object_type=dataset_type -%}
+        {% else %}
+          {%- snippet 'scheming/snippets/errors.html',
+            errors=errors, fields=schema.resource_fields,
+            entity_type='dataset', object_type=dataset_type -%}
+        {% endif %}
+      {% endblock %}
       <p>{{ _('Are you sure you want to delete resource - {name}?').format(name=h.resource_display_name(g.resource_dict)) }}</p>
       <p class="form-actions">
         <form action="{{ h.url_for('dataset_resource.delete', resource_id=g.resource_dict.id, id=pkg_id) }}" method="post">

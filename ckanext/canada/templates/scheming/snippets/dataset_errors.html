@@ -1,0 +1,146 @@
+{# shallow copy errors so we can remove processed keys #}
+{%- set unprocessed = errors.copy() -%}
+
+{% block errors_list %}
+<section class="alert alert-danger{{ ' ' ~ classes | join(' ') }}">
+  <h3>{{_('Errors in dataset')}}</h3>
+  {% if 'dataset' in unprocessed and unprocessed.dataset %}
+    {% set dataset_link = h.url_for('dataset.read', id=pkg_name) %}
+    {% set dataset_name = h.get_dataset_title_translated(pkg_name) %}
+    <p>{{ _('The dataset <a href="{0}" target="_blank">{1}</a> contains errors:').format(dataset_link, dataset_name) }}</p>
+    <ul>
+      {%- for field in dataset_fields -%}
+        {%- if 'error_snippet' in field -%}
+          {%- set error_snippet = field.error_snippet -%}
+
+          {%- if '/' not in error_snippet -%}
+            {%- set error_snippet = 'scheming/error_snippets/' +
+              error_snippet -%}
+          {%- endif -%}
+
+          {%- snippet error_snippet, unprocessed=unprocessed.dataset,
+            field=field, fields=dataset_fields,
+            entity_type=entity_type, object_type=object_type -%}
+        {%- endif -%}
+
+        {%- if field.field_name in unprocessed.dataset -%}
+          {%- set errors = unprocessed.dataset.pop(field.field_name) -%}
+          {%- if 'repeating_subfields' in field %}
+            {%- for se in errors -%}
+              {%- if se -%}
+                <li data-field-label="{{ field.field_name }}-{{ loop.index }}">{{
+                  h.scheming_language_text(field.repeating_label or field.label) }} {{ loop.index }}:
+                  <ul>
+                    {%- for sf in field.repeating_subfields -%}
+                      {%- set se_unprocessed = se.copy() -%}
+
+                      {%- if 'error_snippet' in sf -%}
+                        {%- set sfe_snippet = sf.error_snippet -%}
+
+                        {%- if '/' not in sfe_snippet -%}
+                          {%- set sfe_snippet = 'scheming/error_snippets/' +
+                            sfe_snippet -%}
+                        {%- endif -%}
+
+                        {%- snippet sfe_snippet, unprocessed=se_unprocessed,
+                          field=sf, fields=field.repeating_subfileds,
+                          entity_type=entity_type, object_type=object_type -%}
+                      {%- endif -%}
+
+                      {%- if sf.field_name in se_unprocessed -%}
+                        <li data-field-label="{{ field.field_name }}-{{ loop.index }}-{{ sf.field_name }}">{{
+                          h.scheming_language_text(sf.label) }}:
+                          {{ se_unprocessed[sf.field_name][0] }}</li>
+                      {%- endif -%}
+                    {%- endfor -%}
+                  </ul>
+                </li>
+              {%- endif -%}
+            {%- endfor -%}
+          {%- else -%}
+            <li data-field-label="{{ field.field_name }}">{{
+              h.scheming_language_text(field.label) }}:
+              {{ errors[0] }}</li>
+          {%- endif -%}
+        {%- endif -%}
+      {%- endfor -%}
+
+      {%- for key, errors in unprocessed.dataset.items() | sort -%}
+        <li data-field-label="{{ key }}">{{ _(key) }}: {{ errors[0] }}</li>
+      {%- endfor -%}
+    </ul>
+  {% endif %}
+  {% if 'resources' in unprocessed and unprocessed.resources %}
+    <p>{{ _('The dataset contains invalid resources:') }}</p>
+    <ul>
+      {% for res_id, errs in unprocessed.resources.items() %}
+        {% if not errs %}
+          {% continue %}
+        {% endif %}
+        <li><a href="{{ h.url_for('resource.read', id=pkg_name, resource_id=res_id) }}" target="_blank">{{ h.get_resource_name_translated(res_id) }}</a></li>
+        <ul>
+          {%- for field in resource_fields -%}
+            {%- if 'error_snippet' in field -%}
+              {%- set error_snippet = field.error_snippet -%}
+
+              {%- if '/' not in error_snippet -%}
+                {%- set error_snippet = 'scheming/error_snippets/' +
+                  error_snippet -%}
+              {%- endif -%}
+
+              {%- snippet error_snippet, unprocessed=unprocessed.resources[res_id],
+                field=field, fields=resource_fields,
+                entity_type=entity_type, object_type=object_type -%}
+            {%- endif -%}
+
+            {%- if field.field_name in unprocessed.resources[res_id] -%}
+              {%- set errors = unprocessed.resources[res_id].pop(field.field_name) -%}
+              {%- if 'repeating_subfields' in field %}
+                {%- for se in errors -%}
+                  {%- if se -%}
+                    <li data-field-label="{{ field.field_name }}-{{ loop.index }}">{{
+                      h.scheming_language_text(field.repeating_label or field.label) }} {{ loop.index }}:
+                      <ul>
+                        {%- for sf in field.repeating_subfields -%}
+                          {%- set se_unprocessed = se.copy() -%}
+
+                          {%- if 'error_snippet' in sf -%}
+                            {%- set sfe_snippet = sf.error_snippet -%}
+
+                            {%- if '/' not in sfe_snippet -%}
+                              {%- set sfe_snippet = 'scheming/error_snippets/' +
+                                sfe_snippet -%}
+                            {%- endif -%}
+
+                            {%- snippet sfe_snippet, unprocessed=se_unprocessed,
+                              field=sf, fields=field.repeating_subfileds,
+                              entity_type=entity_type, object_type=object_type -%}
+                          {%- endif -%}
+
+                          {%- if sf.field_name in se_unprocessed -%}
+                            <li data-field-label="{{ field.field_name }}-{{ loop.index }}-{{ sf.field_name }}">{{
+                              h.scheming_language_text(sf.label) }}:
+                              {{ se_unprocessed[sf.field_name][0] }}</li>
+                          {%- endif -%}
+                        {%- endfor -%}
+                      </ul>
+                    </li>
+                  {%- endif -%}
+                {%- endfor -%}
+              {%- else -%}
+                <li data-field-label="{{ field.field_name }}">{{
+                  h.scheming_language_text(field.label) }}:
+                  {{ errors[0] }}</li>
+              {%- endif -%}
+            {%- endif -%}
+          {%- endfor -%}
+
+          {%- for key, errors in unprocessed.resources[res_id].items() | sort -%}
+            <li data-field-label="{{ key }}">{{ _(key) }}: {{ errors[0] }}</li>
+          {%- endfor -%}
+        </ul>
+      {% endfor %}
+    </ul>
+  {% endif %}
+</section>
+{% endblock %}
