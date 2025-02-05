@@ -35,4 +35,4 @@ out_csv.writeheader()
 for line in in_csv:
     if line['owner_org'] in sub_orgs:
         line.update(PCO)
-    out_csv.writerow(line)
+        out_csv.writerow(line)

@@ -50,8 +50,6 @@ for line in in_csv:
         if not report_exists(line['reporting_period'], PCO['owner_org']):
             line.update(PCO)
             data.append(line)
-    else:
-        data.append(line)
 
 for line in data:
     out_csv.writerow(line)
