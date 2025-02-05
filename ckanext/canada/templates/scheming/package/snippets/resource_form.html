@@ -3,7 +3,6 @@
 {% import 'macros/form.html' as form %}
 
 {% block errors %}
-  {# handle all errors in resource actions #}
   {%- if dataset_errors -%}
     {%- set schema = h.scheming_get_dataset_schema(dataset_type) -%}
     {%- snippet 'scheming/snippets/dataset_errors.html',
