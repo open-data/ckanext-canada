@@ -52,13 +52,14 @@ def main():
         if row['target'] is not None:  # target can be 0
             target = float(row['target'])
 
-            if row['volume_meeting_target'] is None or row['total_volume'] is None:
+            if row['performance'] is None or row['volume_meeting_target'] is None or row['total_volume'] is None:
+                # performance is NaN, or
                 # volume_meeting_target or total_volume are not defined,
                 # target_met is not possible
                 row['target_met'] = 'NA'
 
             # if performance >= target then target is met
-            elif row['performance'] is not None and row['performance'] >= target:
+            elif row['performance'] >= target:
                 row['target_met'] = 'Y'
 
             # otherwise target_met is not met
