@@ -1079,21 +1079,3 @@ def max_resources_per_dataset() -> Optional[int]:
     max_resource_count = config.get('ckanext.canada.max_resources_per_dataset', None)
     if max_resource_count:
         return int(max_resource_count)
-
-
-def get_dataset_title_translated(id: str) -> Optional[str]:
-    try:
-        dataset_dict = get_action('package_show')(
-            {'ignore_auth': True}, {'id': id})
-    except Exception:
-        return
-    return h.get_translated(dataset_dict, 'title')
-
-
-def get_resource_name_translated(id: str) -> Optional[str]:
-    try:
-        res_dict = get_action('resource_show')(
-            {'ignore_auth': True}, {'id': id})
-    except Exception:
-        return
-    return h.get_translated(res_dict, 'name')

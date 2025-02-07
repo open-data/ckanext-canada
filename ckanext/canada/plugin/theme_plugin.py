@@ -44,8 +44,6 @@ class CanadaThemePlugin(p.SingletonPlugin):
             'get_loader_status_badge',
             'validation_status',
             'is_user_locked',
-            'get_dataset_title_translated',
-            'get_resource_name_translated',
             # Portal
             'user_organizations',
             'openness_score',

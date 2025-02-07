@@ -5,8 +5,8 @@
 <section class="alert alert-danger{{ ' ' ~ classes | join(' ') }}">
   <h3>{{_('Errors in dataset')}}</h3>
   {% if 'dataset' in unprocessed and unprocessed.dataset %}
-    {% set dataset_link = h.url_for('dataset.read', id=pkg_name) %}
-    {% set dataset_name = h.get_dataset_title_translated(pkg_name) %}
+    {% set dataset_link = h.url_for('dataset.read', id=pkg_dict.id) %}
+    {% set dataset_name = h.get_translated(pkg_dict, 'title') %}
     <p>{{ _('The dataset <a href="{0}" target="_blank">{1}</a> contains errors:').format(dataset_link, dataset_name) }}</p>
     <ul>
       {%- for field in dataset_fields -%}
@@ -74,10 +74,14 @@
     <p>{{ _('The dataset contains invalid resources:') }}</p>
     <ul>
       {% for res_id, errs in unprocessed.resources.items() %}
-        {% if not errs %}
-          {% continue %}
-        {% endif %}
-        <li><a href="{{ h.url_for('resource.read', id=pkg_name, resource_id=res_id) }}" target="_blank">{{ h.get_resource_name_translated(res_id) }}</a></li>
+        {% set ns = namespace(resource_name=res_id) %}
+        {% for r in pkg_dict.resources %}
+          {% if r.id == res_id %}
+            {% set ns.resource_name = h.get_translated(r, 'name') %}
+            {% break %}
+          {% endif %}
+        {% endfor %}
+        <li><a href="{{ h.url_for('resource.read', id=pkg_dict.id, resource_id=res_id) }}" target="_blank">{{ ns.resource_name }}</a></li>
         <ul>
           {%- for field in resource_fields -%}
             {%- if 'error_snippet' in field -%}
