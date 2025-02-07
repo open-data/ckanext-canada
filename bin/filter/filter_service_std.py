@@ -43,8 +43,8 @@ def main():
         den = int(row['total_volume']) if row['total_volume'] else 0
 
         # performance = volume_meeting_target / total_volume
-        if num <= 0 or den <= 0:
-            row['performance'] = None  # nand division of zeros
+        if den <= 0:  # NaN calculation
+            row['performance'] = None
         else:
             row['performance'] = max(round(num / den, 4), 0)
 
@@ -52,11 +52,11 @@ def main():
         if row['target'] is not None:  # target can be 0
             target = float(row['target'])
 
-            # no performance calculated
-            if row['performance'] is None:
+            # NaN or 0
+            if not row['performance']:
                 if row['volume_meeting_target'] is not None and row['total_volume'] is not None:
-                    # volume_meeting_target and total_volume are defined but
-                    # performance calculation was not possible, target_met is not met
+                    # volume_meeting_target and total_volume are defined,
+                    # either can be 0, target_met is not met
                     row['target_met'] = 'N'
                 else:
                     # volume_meeting_target or total_volume are not defined,
