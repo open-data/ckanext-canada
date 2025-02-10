@@ -2,6 +2,18 @@
 
 {% import 'macros/form.html' as form %}
 
+{% block errors %}
+  {%- if resource_validation_errors -%}
+    {%- set schema = h.scheming_get_dataset_schema(dataset_type) -%}
+    {%- snippet 'scheming/snippets/resource_validation_errors.html',
+      errors=resource_validation_errors, resource_fields=schema.resource_fields,
+      dataset_fields=schema.dataset_fields, pkg_dict=pkg_dict,
+      entity_type='dataset', object_type=dataset_type -%}
+  {%- else -%}
+    {{ super() }}
+  {%- endif -%}
+{% endblock %}
+
 {# Separate our resource fields into common and resource/related-specific panels #}
 
 {% block basic_fields %}
