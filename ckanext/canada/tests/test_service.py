@@ -66,8 +66,8 @@ class TestService(CanadaTestBase):
                 resource_id=self.resource_id,
                 filters={})
         err = ve.value.error_dict
-        assert 'foreign_constraints' in err
-        assert 'Cannot delete records or table because of a reference to another table' in err['foreign_constraints'][0]
+        assert 'constraint_info' in err
+        assert err['constraint_info']['ref_keys'] == 'fiscal_yr, service_id'
 
     def test_blank(self):
         """
@@ -394,8 +394,8 @@ class TestStdService(CanadaTestBase):
                 resource_id=self.resource_id,
                 records=[record])
         err = ve.value.error_dict
-        assert 'records' in err
-        assert 'violates foreign key constraint' in err['records'][0]
+        assert 'constraint_info' in err
+        assert err['constraint_info']['ref_keys'] == 'fiscal_yr, service_id'
 
     def test_blank(self):
         """
