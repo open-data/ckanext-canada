@@ -1,4 +1,8 @@
 # -*- coding: UTF-8 -*-
+import sys
+import os
+from importlib import util
+
 from ckanext.canada.tests import CanadaTestBase
 from ckanapi import LocalCKAN, ValidationError
 
@@ -6,6 +10,12 @@ import pytest
 from ckanext.canada.tests.factories import CanadaOrganization as Organization
 
 from ckanext.recombinant.tables import get_chromo
+
+filter_service_std_path = os.path.join(os.path.dirname(str(__file__)), '../../../bin/filter/filter_service_std.py')
+spec = util.spec_from_file_location("canada.bin.filters.service_std", filter_service_std_path)
+filter_service_std = util.module_from_spec(spec)
+sys.modules["canada.bin.filters.service_std"] = filter_service_std
+spec.loader.exec_module(filter_service_std)
 
 
 class TestService(CanadaTestBase):
@@ -586,3 +596,111 @@ class TestStdService(CanadaTestBase):
         assert 'records' in err
         assert 'volume_meeting_target' in err['records'][0]
         assert 'total_volume' in err['records'][0]
+
+    def test_filter_script(self):
+        """
+        The calculations for performance and target_met
+        should be correct for the required Business Logic
+        """
+        self._make_parent_record()
+        chromo = get_chromo('service-std')
+        record = chromo['examples']['record'].copy()
+
+        record['target'] = '0.2'
+        record['volume_meeting_target'] = '0'
+        record['total_volume'] = '50'
+        test_record = filter_service_std.test(dict(record))
+        assert test_record['performance'] == 0.0
+        assert test_record['target_met'] == 'N'
+
+
+        record['target'] = '0.2'
+        record['volume_meeting_target'] = '5'
+        record['total_volume'] = '50'
+        test_record = filter_service_std.test(dict(record))
+        assert test_record['performance'] == 0.1
+        assert test_record['target_met'] == 'N'
+
+        record['target'] = '0.2'
+        record['volume_meeting_target'] = '10'
+        record['total_volume'] = '50'
+        test_record = filter_service_std.test(dict(record))
+        assert test_record['performance'] == 0.2
+        assert test_record['target_met'] == 'Y'
+
+        record['target'] = '0.2'
+        record['volume_meeting_target'] = '30'
+        record['total_volume'] = '50'
+        test_record = filter_service_std.test(dict(record))
+        assert test_record['performance'] == 0.6
+        assert test_record['target_met'] == 'Y'
+
+        record['target'] = '0'
+        record['volume_meeting_target'] = '10'
+        record['total_volume'] = '50'
+        test_record = filter_service_std.test(dict(record))
+        assert test_record['performance'] == 0.2
+        assert test_record['target_met'] == 'NA'
+
+        record['target'] = '0.0'
+        record['volume_meeting_target'] = '10'
+        record['total_volume'] = '50'
+        test_record = filter_service_std.test(dict(record))
+        assert test_record['performance'] == 0.2
+        assert test_record['target_met'] == 'NA'
+
+        record['target'] = None
+        record['volume_meeting_target'] = '10'
+        record['total_volume'] = '50'
+        test_record = filter_service_std.test(dict(record))
+        assert test_record['performance'] == 0.2
+        assert test_record['target_met'] == 'NA'
+
+        record['target'] = 0.2
+        record['volume_meeting_target'] = None
+        record['total_volume'] = '50'
+        test_record = filter_service_std.test(dict(record))
+        assert test_record['performance'] is None
+        assert test_record['target_met'] == 'NA'
+
+        record['target'] = None
+        record['volume_meeting_target'] = None
+        record['total_volume'] = '50'
+        test_record = filter_service_std.test(dict(record))
+        assert test_record['performance'] is None
+        assert test_record['target_met'] == 'NA'
+
+        record['target'] = None
+        record['volume_meeting_target'] = None
+        record['total_volume'] = None
+        test_record = filter_service_std.test(dict(record))
+        assert test_record['performance'] is None
+        assert test_record['target_met'] == 'NA'
+
+        record['target'] = 0.2
+        record['volume_meeting_target'] = 10
+        record['total_volume'] = None
+        test_record = filter_service_std.test(dict(record))
+        assert test_record['performance'] is None
+        assert test_record['target_met'] == 'NA'
+
+        record['target'] = 0.2
+        record['volume_meeting_target'] = None
+        record['total_volume'] = None
+        test_record = filter_service_std.test(dict(record))
+        assert test_record['performance'] is None
+        assert test_record['target_met'] == 'NA'
+
+        record['target'] = 0.2
+        record['volume_meeting_target'] = 10
+        record['total_volume'] = 0
+        test_record = filter_service_std.test(dict(record))
+        assert test_record['performance'] is None
+        assert test_record['target_met'] == 'NA'
+
+        record['target'] = 0.2
+        record['volume_meeting_target'] = 0
+        record['total_volume'] = 0
+        test_record = filter_service_std.test(dict(record))
+        assert test_record['performance'] is None
+        assert test_record['target_met'] == 'NA'
