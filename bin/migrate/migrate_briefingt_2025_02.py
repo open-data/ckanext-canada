@@ -6,9 +6,9 @@ migration script to copy all briefingt records
 for PCO sub-organizations into PCO organization
 """
 
-import unicodecsv
-import sys
 import codecs
+import csv
+import sys
 
 
 sub_orgs = [
@@ -20,16 +20,19 @@ sub_orgs = [
     'ql-lq',
     'srp-rsp',
     ]
-PCO = { 'owner_org': 'pco-bcp',
-        'owner_org_title': 'Privy Council Office | Bureau du Conseil privé' }
 
-assert sys.stdin.read(3) == codecs.BOM_UTF8
+PCO = {
+    'owner_org': 'pco-bcp',
+    'owner_org_title': 'Privy Council Office | Bureau du Conseil privé',
+    }
 
-in_csv = unicodecsv.DictReader(sys.stdin, encoding='utf-8')
-out_csv = unicodecsv.DictWriter(sys.stdout, fieldnames=in_csv.fieldnames, encoding='utf-8')
+assert sys.stdin.buffer.read(3) == codecs.BOM_UTF8
+
+in_csv = csv.DictReader(sys.stdin)
+out_csv = csv.DictWriter(sys.stdout, fieldnames=in_csv.fieldnames)
 out_csv.writeheader()
 
 for line in in_csv:
     if line['owner_org'] in sub_orgs:
         line.update(PCO)
-    out_csv.writerow(line)
+        out_csv.writerow(line)
