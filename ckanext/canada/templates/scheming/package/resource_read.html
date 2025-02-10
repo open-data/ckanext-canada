@@ -14,6 +14,15 @@
 
 {% block resource_more_items %}{% endblock %}
 
+{%- block resource_format -%}
+<tr>
+  <th scope="row">{{ _('Format') }}</th>
+  <td>{% set res_format = h.scheming_choices_label(h.scheming_get_preset('canada_resource_format').choices, res.format) %}
+    {{- res_format or res.mimetype_inner or res.mimetype or _('unknown') -}}
+  </td>
+</tr>
+{%- endblock -%}
+
 {%- block resource_fields -%}
   {%- for field in schema.resource_fields -%}
     {%- if field.field_name not in exclude_fields
