@@ -127,12 +127,16 @@ _('Validation Information')
 _('Validation status:')
 _('Validation timestamp:')
 _('Duration:')
+_('Validation status')
+_('Validation timestamp')
 
 # strings from misc triggers and recombinant tables
 _('Single')
 _('Repeatable')
 _('Optional')
 
-# strings from validation
-_('Validation status')
-_('Validation timestamp')
+# strings from recombinant
+_('Errors in Recombinant Resource')
+_('Refresh Recombinant Resource')
+_('The Recombinant resource is out of date')
+
