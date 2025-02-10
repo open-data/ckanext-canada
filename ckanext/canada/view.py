@@ -73,6 +73,7 @@ from ckanext.recombinant.datatypes import canonicalize
 from ckanext.recombinant.tables import get_chromo
 from ckanext.recombinant.errors import RecombinantException, format_trigger_error
 from ckanext.recombinant.helpers import recombinant_primary_key_fields
+from ckanext.recombinant.views import _render_recombinant_constraint_errors
 
 from ckanapi import LocalCKAN
 
@@ -459,16 +460,10 @@ def create_pd_record(owner_org: str, resource_name: str):
                             k: [_("This record already exists")]
                             for k in pk_fields
                         }, **err)
-                    # type_ignore_reason: incomplete typing
                     elif (
-                      'violates foreign key constraint' in
-                      ve.error_dict['records'][0]):  # type: ignore
-                        error_message = chromo.get(
-                            'datastore_constraint_errors', {}).get(
-                                'upsert', 'Something went wrong, your '
-                                          'record was not created. Please '
-                                          'contact support.')
-                        error_summary = _(error_message)
+                      'constraint_info' in ve.error_dict):
+                        error_summary = _render_recombinant_constraint_errors(
+                            lc, ve, chromo, 'upsert')
                     else:
                         log.warning('Failed to create %s record for org %s:\n%s',
                                     resource_name, owner_org, traceback.format_exc())
@@ -736,14 +731,10 @@ def delete_selected_records(resource_id: str):
             except NotFound:
                 h.flash_error(_('Not found') + ' ' + str(filter))
             except ValidationError as e:
-                if 'foreign_constraints' in e.error_dict:
-                    chromo = get_chromo(res['name'])
-                    # type_ignore_reason: no typing from chromo yamls
-                    error_message = chromo.get(
-                        'datastore_constraint_errors', {}).get(
-                            'delete',
-                            e.error_dict['foreign_constraints'][0])  # type: ignore
-                    h.flash_error(_(error_message))
+                if 'constraint_info' in e.error_dict:
+                    error_message = _render_recombinant_constraint_errors(
+                        lc, e, get_chromo(res['name']), 'delete')
+                    h.flash_error(error_message)
                     return h.redirect_to('recombinant.preview_table',
                                          resource_name=res['name'],
                                          owner_org=org['name'])
@@ -911,6 +902,9 @@ def datatable(resource_name: str, resource_id: str):
     # type_ignore_reason: datatable param draw is int
     draw = int(params['draw'])  # type: ignore
     search_text = str(params['search[value]'])
+    dt_query = str(params['dt_query'])
+    if dt_query and not search_text:
+        search_text = dt_query
     # type_ignore_reason: datatable param start is int
     offset = int(params['start'])  # type: ignore
     # type_ignore_reason: datatable param length is int

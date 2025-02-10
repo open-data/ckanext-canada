@@ -474,7 +474,7 @@ def get_datapreview_recombinant(resource_name: str,
         fids.append(f['datastore_id'])
 
     pkids = [fids.index(k) for k in aslist(chromo['datastore_primary_key'])]
-    return h.snippet('package/wet_datatable.html',
+    return h.snippet('snippets/pd_datatable.html',
                      resource_name=resource_name,
                      resource_id=resource_id,
                      owner_org=owner_org,
@@ -516,7 +516,7 @@ def json_loads(value: str) -> Dict[str, Any]:
 def get_datapreview(res_id: str) -> str:
     dsq_results = get_action('datastore_search')(
         cast(Context, {}), {'resource_id': res_id, 'limit': 100})
-    return h.snippet('package/wet_datatable.html',
+    return h.snippet('snippets/pd_datatable.html',
                      ds_fields=dsq_results['fields'],
                      ds_records=dsq_results['records'])
 

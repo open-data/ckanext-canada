@@ -692,8 +692,8 @@ def list_out_of_sync_packages(context: Context, data_dict: DataDict) -> Dict[str
 
     sync_infos_count = model.Session.query(
         canada_model.PackageSync.package_id).filter(
-            # type_ignore_reason: incomplete typing
-            canada_model.PackageSync.error_on != None).count()  # type: ignore
+            # noqa_reason: just how sqlalchemy works
+            canada_model.PackageSync.error_on != None).count()  # noqa: E711
 
     out_of_sync_packages = {'count': sync_infos_count, 'results': []}
 
@@ -704,8 +704,8 @@ def list_out_of_sync_packages(context: Context, data_dict: DataDict) -> Dict[str
     offset = data_dict.get('start', 0)
     sync_infos = model.Session.query(
         canada_model.PackageSync).filter(
-            # type_ignore_reason: incomplete typing
-            canada_model.PackageSync.error_on != None).limit(  # type: ignore
+            # noqa_reason: just how sqlalchemy works
+            canada_model.PackageSync.error_on != None).limit(  # noqa: E711
                 limit).offset(offset)
 
     for sync_info in sync_infos:
