@@ -620,7 +620,6 @@ class TestStdService(CanadaTestBase):
         assert test_record['performance'] == 0.0
         assert test_record['target_met'] == 'N'
 
-
         record['target'] = '0.2'
         record['volume_meeting_target'] = '5'
         record['total_volume'] = '50'
