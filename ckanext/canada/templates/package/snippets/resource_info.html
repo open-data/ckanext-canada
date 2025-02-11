@@ -11,7 +11,7 @@
       <div class="nums">
         <dl>
           <dt>{{ _('Format') }}</dt>
-          <dd>{{ h.get_translated(res, 'format') }}</dd>
+          <dd>{{ h.scheming_choices_label(h.scheming_get_preset('canada_resource_format').choices, res.format) }}</dd>
         </dl>
       </div>
       {% if g.is_registry %}
