@@ -31,6 +31,14 @@ def test(record: Dict[str, Any]) -> Dict[str, Any]:
 
 
 def process_row(row: Dict[str, Any]) -> Dict[str, Any]:
+    """
+    Add dynamic, calculated fields to the row.
+
+    NOTE: csv.DictReader treats every dict value as a string,
+          thus we need to do any number and falsy conversion.
+          e.g. "0" in a `not` will be False,
+               "" in a `not` will be True.
+    """
     for rem in REMOVE_COLUMNS:
         if rem in row:
             del row[rem]
@@ -39,7 +47,7 @@ def process_row(row: Dict[str, Any]) -> Dict[str, Any]:
     den = int(row['total_volume']) if row['total_volume'] else 0
 
     # performance = volume_meeting_target / total_volume
-    if den <= 0 or row['volume_meeting_target'] is None:
+    if den <= 0 or not row['volume_meeting_target']:
         # denominator is 0 so calculation is NaN, or
         # volume_meeting_target is empty,
         # performance is not possible
@@ -49,7 +57,7 @@ def process_row(row: Dict[str, Any]) -> Dict[str, Any]:
 
     target = float(row['target']) if row['target'] else 0.0
 
-    if not target or row['performance'] is None or row['volume_meeting_target'] is None or row['total_volume'] is None:
+    if not target or row['performance'] is None or not row['volume_meeting_target'] or not row['total_volume']:
         # target is None or 0, or
         # performance is NaN, or
         # volume_meeting_target or total_volume are not defined,
