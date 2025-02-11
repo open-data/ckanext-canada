@@ -130,7 +130,9 @@
                 <div class="col-md-9">
                   <ul class="list-inline list-unstyled">
                     {% for resource in r_formats %}
-                      <li><span class="badge">{{ _(resource) }}</span></li>
+                      <li><span class="badge">
+                        {{ h.scheming_choices_label(h.scheming_get_preset('canada_resource_format').choices, resource) }}
+                      </span></li>
                     {% endfor %}
                   </ul>
                 </div>
