@@ -2109,13 +2109,13 @@ resources:
       #TODO: get a description
       # en:
       # fr:
-    obligation: Optional
+    obligation: Mandatory
     datastore_type: text
     published_resource_computed_field: true
     choices:
       'NA':
-        en: N/A (not a service to businesses)
-        fr: S.O. (N'est pas un service aux entreprises)
+        en: N/A
+        fr: S.O.
       'N':
         en: "No"
         fr: Non

@@ -3,6 +3,9 @@
 import csv
 import sys
 
+from typing import Dict, Any
+
+
 REMOVE_COLUMNS = [
     'record_created',
     'record_modified',
@@ -23,6 +26,55 @@ COLUMNS = [
 BOM = "\N{bom}"
 
 
+def test(record: Dict[str, Any]) -> Dict[str, Any]:
+    return process_row(record)
+
+
+def process_row(row: Dict[str, Any]) -> Dict[str, Any]:
+    """
+    Add dynamic, calculated fields to the row.
+
+    NOTE: csv.DictReader treats every dict value as a string,
+          thus we need to do any number and falsy conversion.
+          e.g. "0" in a `not` will be False,
+               "" in a `not` will be True.
+    """
+    for rem in REMOVE_COLUMNS:
+        if rem in row:
+            del row[rem]
+
+    num = int(row['volume_meeting_target']) if row['volume_meeting_target'] else 0
+    den = int(row['total_volume']) if row['total_volume'] else 0
+
+    # performance = volume_meeting_target / total_volume
+    if den <= 0 or not row['volume_meeting_target']:
+        # denominator is 0 so calculation is NaN, or
+        # volume_meeting_target is empty,
+        # performance is not possible
+        row['performance'] = None
+    else:
+        row['performance'] = max(round(num / den, 4), 0)
+
+    target = float(row['target']) if row['target'] else 0.0
+
+    if not target or row['performance'] is None or not row['volume_meeting_target'] or not row['total_volume']:
+        # target is None or 0, or
+        # performance is NaN, or
+        # volume_meeting_target or total_volume are not defined,
+        # target_met is not possible
+        row['target_met'] = 'NA'
+
+    # if performance >= target then target is met
+    elif row['performance'] >= target:
+        row['target_met'] = 'Y'
+
+    # otherwise target_met is not met
+    else:
+        row['target_met'] = 'N'
+
+    return row
+
+
 def main():
     bom = sys.stdin.read(1)  # first code point
     if not bom:
@@ -36,38 +88,9 @@ def main():
     writer.writeheader()
 
     for row in reader:
-        for rem in REMOVE_COLUMNS:
-            del row[rem]
-
-        num = int(row['volume_meeting_target']) if row['volume_meeting_target'] else 0
-        den = int(row['total_volume']) if row['total_volume'] else 0
-
-        # performance = volume_meeting_target / total_volume
-        if num <= 0 or den <= 0:
-            row['performance'] = None
-        else:
-            row['performance'] = max(round(num / den, 4), 0)
-
-        # calculate target_met
-        if row['target']:
-            target = float(row['target'])
-
-            # if no performance(volume_meeting_target/total_volume)
-            # then target_met is not possible
-            if row['performance'] is None:
-                row['target_met'] = 'NA'
-
-            # if performance >= target then target is met
-            elif row['performance'] >= target:
-                row['target_met'] = 'Y'
-
-            # otherwise target_met is not met
-            else:
-                row['target_met'] = 'N'
-        else:
-            row['target_met'] = None
-
+        row = process_row(row)
         writer.writerow(row)
 
 
-main()
+if __name__ == '__main__':
+    main()
