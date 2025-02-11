@@ -906,6 +906,11 @@ def search_filter_pill_link_label(search_field: str,
         preset_choices = [{'value': 'true', 'label': _('Pending')},
                           {'value': 'false', 'label': _('Draft')},]
 
+    elif search_field == 'res_format':
+
+        preset_choices = h.scheming_get_preset('canada_resource_format').get(
+                'choices', [])
+
     else:
 
         preset_choices = (
