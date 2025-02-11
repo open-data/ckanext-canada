@@ -601,6 +601,13 @@ class TestStdService(CanadaTestBase):
         """
         The calculations for performance and target_met
         should be correct for the required Business Logic
+
+        NOTE: csv.DictReader treats every dict value as a string,
+              so we need to use Strings here for target, volume_meeting_target,
+              and total_volume. Empty strings ("") is None.
+
+        NOTE: the filter test returns a Dict, not a csv.DictWriter,
+              so we can assert on object types here.
         """
         self._make_parent_record()
         chromo = get_chromo('service-std')
@@ -649,7 +656,7 @@ class TestStdService(CanadaTestBase):
         assert test_record['performance'] == 0.2
         assert test_record['target_met'] == 'NA'
 
-        record['target'] = None
+        record['target'] = ''
         record['volume_meeting_target'] = '10'
         record['total_volume'] = '50'
         test_record = filter_service_std.test(dict(record))
@@ -657,36 +664,36 @@ class TestStdService(CanadaTestBase):
         assert test_record['target_met'] == 'NA'
 
         record['target'] = 0.2
-        record['volume_meeting_target'] = None
+        record['volume_meeting_target'] = ''
         record['total_volume'] = '50'
         test_record = filter_service_std.test(dict(record))
         assert test_record['performance'] is None
         assert test_record['target_met'] == 'NA'
 
-        record['target'] = None
-        record['volume_meeting_target'] = None
+        record['target'] = ''
+        record['volume_meeting_target'] = ''
         record['total_volume'] = '50'
         test_record = filter_service_std.test(dict(record))
         assert test_record['performance'] is None
         assert test_record['target_met'] == 'NA'
 
-        record['target'] = None
-        record['volume_meeting_target'] = None
-        record['total_volume'] = None
+        record['target'] = ''
+        record['volume_meeting_target'] = ''
+        record['total_volume'] = ''
         test_record = filter_service_std.test(dict(record))
         assert test_record['performance'] is None
         assert test_record['target_met'] == 'NA'
 
         record['target'] = 0.2
         record['volume_meeting_target'] = 10
-        record['total_volume'] = None
+        record['total_volume'] = ''
         test_record = filter_service_std.test(dict(record))
         assert test_record['performance'] is None
         assert test_record['target_met'] == 'NA'
 
         record['target'] = 0.2
-        record['volume_meeting_target'] = None
-        record['total_volume'] = None
+        record['volume_meeting_target'] = ''
+        record['total_volume'] = ''
         test_record = filter_service_std.test(dict(record))
         assert test_record['performance'] is None
         assert test_record['target_met'] == 'NA'
