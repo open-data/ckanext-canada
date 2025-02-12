@@ -57,7 +57,11 @@ def process_row(row: Dict[str, Any]) -> Dict[str, Any]:
 
     target = float(row['target']) if row['target'] else 0.0
 
-    if not target or row['performance'] is None or not row['volume_meeting_target'] or not row['total_volume']:
+    if (
+      not target or
+      row['performance'] is None or
+      not row['volume_meeting_target'] or
+      not row['total_volume']):
         # target is None or 0, or
         # performance is NaN, or
         # volume_meeting_target or total_volume are not defined,
