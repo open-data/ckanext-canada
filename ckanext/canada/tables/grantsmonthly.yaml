@@ -29,23 +29,23 @@ resources:
       en: |
         The Reference number is populated by departments. It is a unique reference number given to each entry. Having a unique identifier for each item will allow departments to locate a specific item in the registry should they need to modify or delete.
 
-        Controlled format; This field is populated in the following format DDD-YYYY-YYYY-QX-XXXXX
+        Controlled format; This field is populated in the following format DDD-YYYY-YYYY-MX-XXXXX
          1. DDD represents the department number – See annex A for list of department numbers
          2. YYYY-YYYY represents the fiscal year
-         3. QX represents the fiscal quarter
+         3. MX represents the fiscal month
          4. XXXXX represents the unique number assigned by the department for each entry.
 
-        For example, entries in the 2018-2019 Q1 fiscal year should be assigned numbers as follows: 001-2018-2019-Q1-00001, 001-2018-2019-Q1-00002, 001-2018-2019-Q1-00003, etc.'
+        For example, entries in the 2018-2019 M1 fiscal year should be assigned numbers as follows: 001-2018-2019-M1-00001, 001-2018-2019-M1-00002, 001-2018-2019-M1-00003, etc.'
       fr: |
         Ce champ est rempli par l’utilisateur. L’identificateur de projet ministériel permet aux ministères d’identifier rapidement les rapports produits dans leur propre système. Les ministères devraient utiliser un chiffre qui est logique pour le ministère. Ces renseignements seront publiés dans le cadre du rapport.
 
-        Format contrôlé; Ce champ est rempli au format suivant: DDD-YYYY-YYYY-QX-XXXXX
+        Format contrôlé; Ce champ est rempli au format suivant: DDD-YYYY-YYYY-MX-XXXXX
          1.	DDD représente le numéro de département - Voir l’annexe A pour la liste des numéros de département.
          2.	AAAA-AAAA représente l'année fiscale
-         3.	QX représente le trimestre fiscal
+         3.	MX représente le mois fiscal
          4.	XXXXX représente le numéro unique attribué par le département pour chaque entrée.
 
-        Par exemple, les numéros de l'exercice 2018-2019 du T1 devraient recevoir les numéros suivants: 001-2018-2019-Q1-00001, 001-2018-2019-Q1-00002, 001-2018-2019-Q1-00003, etc.'
+        Par exemple, les numéros de l'exercice 2018-2019 du T1 devraient recevoir les numéros suivants: 001-2018-2019-M1-00001, 001-2018-2019-M1-00002, 001-2018-2019-M1-00003, etc.'
     obligation: Mandatory
     excel_required: true
     form_required: true
@@ -861,7 +861,7 @@ resources:
 
   examples:
     record:
-      ref_number: "001-2018-2019-Q2-00045"
+      ref_number: "001-2018-2019-M2-00045"
       amendment_number: "3"
       amendment_date: "2018-04-01"
       agreement_type: "G"
@@ -895,7 +895,7 @@ resources:
     filters:
       recipient_province: "ON"
     filter_one:
-      ref_number: "001-2018-2019-Q2-00045"
+      ref_number: "001-2018-2019-M2-00045"
       amendment_number: "0"
     sort: agreement_date desc
 
