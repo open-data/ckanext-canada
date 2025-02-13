@@ -1,4 +1,8 @@
 # -*- coding: UTF-8 -*-
+import sys
+import os
+from importlib import util
+
 from ckanext.canada.tests import CanadaTestBase
 from ckanapi import LocalCKAN, ValidationError
 
@@ -6,6 +10,12 @@ import pytest
 from ckanext.canada.tests.factories import CanadaOrganization as Organization
 
 from ckanext.recombinant.tables import get_chromo
+
+filter_service_std_path = os.path.join(os.path.dirname(str(__file__)), '../../../bin/filter/filter_service_std.py')
+spec = util.spec_from_file_location("canada.bin.filters.service_std", filter_service_std_path)
+filter_service_std = util.module_from_spec(spec)
+sys.modules["canada.bin.filters.service_std"] = filter_service_std
+spec.loader.exec_module(filter_service_std)
 
 
 class TestService(CanadaTestBase):
@@ -25,26 +35,39 @@ class TestService(CanadaTestBase):
         self.resource_id = rval['resources'][0]['id']
         self.resource_cid = rval['resources'][1]['id']
 
-
     def test_example(self):
         """
         Example data should load
         """
-        record = get_chromo('service')['examples']['record']
+        record = get_chromo('service')['examples']['record'].copy()
         self.lc.action.datastore_upsert(
             resource_id=self.resource_id,
             records=[record])
 
+    def test_primary_key_commas(self):
+        """
+        Commas in primary keys should error
+        """
+        record = get_chromo('service')['examples']['record'].copy()
+        record['service_id'] = 'this,is,a,failure'
+        with pytest.raises(ValidationError) as ve:
+            self.lc.action.datastore_upsert(
+                resource_id=self.resource_id,
+                records=[record])
+        err = ve.value.error_dict
+        assert 'records' in err
+        assert 'service_id' in err['records'][0]
+        assert err['records'][0]['service_id'] == ['Comma is not allowed in Service ID Number field']
 
     def test_foreign_constraint(self):
         """
         Trying to delete a Service record when there are Standard records referencing it should raise an exception
         """
-        record = get_chromo('service')['examples']['record']
+        record = get_chromo('service')['examples']['record'].copy()
         self.lc.action.datastore_upsert(
             resource_id=self.resource_id,
             records=[record])
-        record = get_chromo('service-std')['examples']['record']
+        record = get_chromo('service-std')['examples']['record'].copy()
         self.lc.action.datastore_upsert(
             resource_id=self.resource_cid,
             records=[record])
@@ -53,9 +76,8 @@ class TestService(CanadaTestBase):
                 resource_id=self.resource_id,
                 filters={})
         err = ve.value.error_dict
-        assert 'foreign_constraints' in err
-        assert 'Cannot delete records or table because of a reference to another table' in err['foreign_constraints'][0]
-
+        assert 'constraint_info' in err
+        assert err['constraint_info']['ref_keys'] == 'fiscal_yr, service_id'
 
     def test_blank(self):
         """
@@ -68,7 +90,6 @@ class TestService(CanadaTestBase):
         err = ve.value.error_dict
         assert 'key' in err
         assert 'fiscal_yr, service_id' in err['key'][0]
-
 
     def test_required_fields(self):
         """
@@ -107,7 +128,6 @@ class TestService(CanadaTestBase):
         assert 'records' in err
         for required_field in expected_required_fields:
             assert required_field in err['records'][0]
-
 
     def test_conditional_fields(self):
         """
@@ -164,7 +184,6 @@ class TestService(CanadaTestBase):
         assert 'special_remarks_en' in err['records'][0]
         assert 'special_remarks_fr' in err['records'][0]
 
-
     def test_duolang_fields(self):
         """
         Fields with both _en and _fr should require eachother
@@ -220,7 +239,6 @@ class TestService(CanadaTestBase):
         assert 'special_remarks_en' in err['records'][0]
         assert 'service_uri_en' in err['records'][0]
 
-
     def test_choice_fields(self):
         """
         Fields with choices should expect those values
@@ -256,7 +274,6 @@ class TestService(CanadaTestBase):
         for expected_choice_field in expected_choice_fields:
             assert expected_choice_field in err['records'][0]
 
-
     def test_max_chars(self):
         """
         Over max character field values should raise an exception
@@ -286,7 +303,6 @@ class TestService(CanadaTestBase):
         assert 'records' in err
         for maxchar_field in expect_maxchar_fields:
             assert maxchar_field in err['records'][0]
-
 
     def test_int_na_nd(self):
         """
@@ -344,38 +360,52 @@ class TestStdService(CanadaTestBase):
         self.resource_pid = rval['resources'][0]['id']
         self.resource_id = rval['resources'][1]['id']
 
-
     def _make_parent_record(self):
-        record = get_chromo('service')['examples']['record']
+        record = get_chromo('service')['examples']['record'].copy()
         self.lc.action.datastore_upsert(
             resource_id=self.resource_pid,
             records=[record])
-
 
     def test_example(self):
         """
         Example data should load
         """
         self._make_parent_record()
-        record = get_chromo('service-std')['examples']['record']
+        record = get_chromo('service-std')['examples']['record'].copy()
         self.lc.action.datastore_upsert(
             resource_id=self.resource_id,
             records=[record])
 
-
-    def test_foreign_constraint(self):
+    def test_primary_key_commas(self):
         """
-        Trying to create a Standard record referencing a nonexistent Service record should raise an exception
+        Commas in primary keys should error
         """
-        record = get_chromo('service-std')['examples']['record']
+        record = get_chromo('service-std')['examples']['record'].copy().copy()
+        record['service_id'] = 'this,is,a,failure'
+        record['service_standard_id'] = 'this,is,a,failure'
         with pytest.raises(ValidationError) as ve:
             self.lc.action.datastore_upsert(
                 resource_id=self.resource_id,
                 records=[record])
         err = ve.value.error_dict
         assert 'records' in err
-        assert 'violates foreign key constraint' in err['records'][0]
+        assert 'service_id' in err['records'][0]
+        assert 'service_standard_id' in err['records'][0]
+        assert err['records'][0]['service_id'] == ['Comma is not allowed in Service ID Number field']
+        assert err['records'][0]['service_standard_id'] == ['Comma is not allowed in Service Standard ID field']
 
+    def test_foreign_constraint(self):
+        """
+        Trying to create a Standard record referencing a nonexistent Service record should raise an exception
+        """
+        record = get_chromo('service-std')['examples']['record'].copy()
+        with pytest.raises(ValidationError) as ve:
+            self.lc.action.datastore_upsert(
+                resource_id=self.resource_id,
+                records=[record])
+        err = ve.value.error_dict
+        assert 'constraint_info' in err
+        assert err['constraint_info']['ref_keys'] == 'fiscal_yr, service_id'
 
     def test_blank(self):
         """
@@ -388,7 +418,6 @@ class TestStdService(CanadaTestBase):
         err = ve.value.error_dict
         assert 'key' in err
         assert 'fiscal_yr, service_id, service_standard_id' in err['key'][0]
-
 
     def test_required_fields(self):
         """
@@ -419,13 +448,12 @@ class TestStdService(CanadaTestBase):
         for required_field in expected_required_fields:
             assert required_field in err['records'][0]
 
-
     def test_duolang_fields(self):
         """
         Fields with both _en and _fr should require eachother
         """
         self._make_parent_record()
-        record = get_chromo('service-std')['examples']['record'].copy()
+        record = get_chromo('service-std')['examples']['record'].copy().copy()
 
         record['channel_comments_en'] = 'Not Blank'
         record['channel_comments_fr'] = None
@@ -465,7 +493,6 @@ class TestStdService(CanadaTestBase):
         assert 'comments_en' in err['records'][0]
         assert 'performance_results_uri_en' in err['records'][0]
 
-
     def test_choice_fields(self):
         """
         Fields with choices should expect those values
@@ -493,7 +520,6 @@ class TestStdService(CanadaTestBase):
         assert 'records' in err
         for expected_choice_field in expected_choice_fields:
             assert expected_choice_field in err['records'][0]
-
 
     def test_max_chars(self):
         """
@@ -525,7 +551,6 @@ class TestStdService(CanadaTestBase):
         assert 'records' in err
         for maxchar_field in expect_maxchar_fields:
             assert maxchar_field in err['records'][0]
-
 
     def test_integers(self):
         """
@@ -571,3 +596,117 @@ class TestStdService(CanadaTestBase):
         assert 'records' in err
         assert 'volume_meeting_target' in err['records'][0]
         assert 'total_volume' in err['records'][0]
+
+    def test_filter_script(self):
+        """
+        The calculations for performance and target_met
+        should be correct for the required Business Logic
+
+        NOTE: csv.DictReader treats every dict value as a string,
+              so we need to use Strings here for target, volume_meeting_target,
+              and total_volume. Empty strings ("") is None.
+
+        NOTE: the filter test returns a Dict, not a csv.DictWriter,
+              so we can assert on object types here.
+        """
+        self._make_parent_record()
+        chromo = get_chromo('service-std')
+        record = chromo['examples']['record'].copy()
+
+        record['target'] = '0.2'
+        record['volume_meeting_target'] = '0'
+        record['total_volume'] = '50'
+        test_record = filter_service_std.test(dict(record))
+        assert test_record['performance'] == 0.0
+        assert test_record['target_met'] == 'N'
+
+        record['target'] = '0.2'
+        record['volume_meeting_target'] = '5'
+        record['total_volume'] = '50'
+        test_record = filter_service_std.test(dict(record))
+        assert test_record['performance'] == 0.1
+        assert test_record['target_met'] == 'N'
+
+        record['target'] = '0.2'
+        record['volume_meeting_target'] = '10'
+        record['total_volume'] = '50'
+        test_record = filter_service_std.test(dict(record))
+        assert test_record['performance'] == 0.2
+        assert test_record['target_met'] == 'Y'
+
+        record['target'] = '0.2'
+        record['volume_meeting_target'] = '30'
+        record['total_volume'] = '50'
+        test_record = filter_service_std.test(dict(record))
+        assert test_record['performance'] == 0.6
+        assert test_record['target_met'] == 'Y'
+
+        record['target'] = '0'
+        record['volume_meeting_target'] = '10'
+        record['total_volume'] = '50'
+        test_record = filter_service_std.test(dict(record))
+        assert test_record['performance'] == 0.2
+        assert test_record['target_met'] == 'NA'
+
+        record['target'] = '0.0'
+        record['volume_meeting_target'] = '10'
+        record['total_volume'] = '50'
+        test_record = filter_service_std.test(dict(record))
+        assert test_record['performance'] == 0.2
+        assert test_record['target_met'] == 'NA'
+
+        record['target'] = ''
+        record['volume_meeting_target'] = '10'
+        record['total_volume'] = '50'
+        test_record = filter_service_std.test(dict(record))
+        assert test_record['performance'] == 0.2
+        assert test_record['target_met'] == 'NA'
+
+        record['target'] = 0.2
+        record['volume_meeting_target'] = ''
+        record['total_volume'] = '50'
+        test_record = filter_service_std.test(dict(record))
+        assert test_record['performance'] is None
+        assert test_record['target_met'] == 'NA'
+
+        record['target'] = ''
+        record['volume_meeting_target'] = ''
+        record['total_volume'] = '50'
+        test_record = filter_service_std.test(dict(record))
+        assert test_record['performance'] is None
+        assert test_record['target_met'] == 'NA'
+
+        record['target'] = ''
+        record['volume_meeting_target'] = ''
+        record['total_volume'] = ''
+        test_record = filter_service_std.test(dict(record))
+        assert test_record['performance'] is None
+        assert test_record['target_met'] == 'NA'
+
+        record['target'] = 0.2
+        record['volume_meeting_target'] = 10
+        record['total_volume'] = ''
+        test_record = filter_service_std.test(dict(record))
+        assert test_record['performance'] is None
+        assert test_record['target_met'] == 'NA'
+
+        record['target'] = 0.2
+        record['volume_meeting_target'] = ''
+        record['total_volume'] = ''
+        test_record = filter_service_std.test(dict(record))
+        assert test_record['performance'] is None
+        assert test_record['target_met'] == 'NA'
+
+        record['target'] = 0.2
+        record['volume_meeting_target'] = 10
+        record['total_volume'] = 0
+        test_record = filter_service_std.test(dict(record))
+        assert test_record['performance'] is None
+        assert test_record['target_met'] == 'NA'
+
+        record['target'] = 0.2
+        record['volume_meeting_target'] = 0
+        record['total_volume'] = 0
+        test_record = filter_service_std.test(dict(record))
+        assert test_record['performance'] is None
+        assert test_record['target_met'] == 'NA'

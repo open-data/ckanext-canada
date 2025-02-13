@@ -4,9 +4,9 @@
 {% set placeholder = placeholder if placeholder else _('Search...') %}
 {% set sorting = sorting if sorting else [(_('Name Ascending'), 'name asc'), (_('Name Descending'), 'name desc')] %}
 {% set search_class = search_class if search_class else 'search-giant' %}
-{% set sort_arg = request.params.get('sort') %}
+{% set sort_arg = request.args.get('sort') %}
 
-<form class="form-inline mrgn-bttm-lg mrgn-tp-md" role="form" method="get" data-module="select-switch">
+<form class="form-inline mrgn-bttm-lg" role="form" method="get" data-module="select-switch">
   {% block search_input %}
     {% block search_input_label %}
       {% if g.is_registry %}
@@ -30,21 +30,23 @@
         </div>
         <div class="ogscartwrapper mrgn-bttm-md" style="display:none;visibility:hidden;">
           <span class="ogscarttally fa fa-shopping-cart"> {{ _('Tally of Cart Items') }}</span>
-          <a id="OGSCartListItems" class="ogscartlistbtn btn btn-primary btn-xs" href="#"><span class="fa fa-list-alt"></span>&nbsp;{{ _('List Cart Items') }}</a>
-          <a id="OGSCartPlotItems" class="ogscartplotbtn btn btn-primary btn-xs" href="#"><span class="fa fa-globe"></span>&nbsp;{{ _('View on Map') }}</a>
-          <a id="OGSCartDumpItems" class="ogscartplotbtn btn btn-danger btn-xs" href="#"><span class="fa fa-trash-o"></span>&nbsp;{{ _('Empty Cart') }}</a>
+          <a id="OGSCartListItems" class="ogscartlistbtn btn btn-primary btn-xs" href="#"><span class="fa fa-list-alt" aria-hidden="true"></span>&nbsp;{{ _('List Cart Items') }}</a>
+          <a id="OGSCartPlotItems" class="ogscartplotbtn btn btn-primary btn-xs" href="#"><span class="fa fa-globe" aria-hidden="true"></span>&nbsp;{{ _('View on Map') }}</a>
+          <a id="OGSCartDumpItems" class="ogscartplotbtn btn btn-danger btn-xs" href="#"><span class="fa fa-trash-o" aria-hidden="true"></span>&nbsp;{{ _('Empty Cart') }}</a>
         </div>
       {% endif %}
     {% endblock %}
     <div class="input-group col-md-12">
-      <input type="text" class="form-control" id="search_field" autocomplete="off" name="q" value="{{ query }}" placeholder="{{ placeholder }}">
-      <span class="input-group-btn">
-        {% block search_input_button %}
-          <button class="btn btn-primary btn-small" type="submit">
-            <i class="fa fa-search" aria-hidden="true"></i><span class="wb-inv">{{ _('Search') }}</span>
-          </button>
-        {% endblock %}
-      </span>
+      <div class="canada-search-field-wrapper">
+        <input type="text" class="form-control" id="search_field" autocomplete="off" name="q" value="{{ query }}" placeholder="{{ placeholder }}">
+        <span class="input-group-btn">
+          {% block search_input_button %}
+            <button class="btn btn-primary btn-small" type="submit">
+              <i class="fa fa-search" aria-hidden="true"></i><span class="wb-inv">{{ _('Search') }}</span>
+            </button>
+          {% endblock %}
+        </span>
+      </div>
     </div>
   {% endblock %}
 
@@ -58,19 +60,23 @@
 
   {% block search_title %}
     {% if not no_title %}
-      <div class="row mrgn-tp-md ">
-        {% if count==0 %}
-          <div class="col-md-12 text-center text-warning">
-            <strong>{% snippet 'snippets/search_result_text.html', query=query, count=count, type=type %}</strong>
+      <div class="row mrgn-tp-md">
+        <div class="col-md-12">
+          <div class="canada-search-form-options-wrapper">
+            {% if count==0 %}
+              <div class="text-center text-warning">
+                <strong>{% snippet 'snippets/search_result_text.html', query=query, count=count, type=type %}</strong>
+              </div>
+            {% else %}
+              <div class="mrgn-tp-sm text-left text-success">
+                <strong>{% snippet 'snippets/search_result_text.html', query=query, count=count, type=type %}</strong>
+              </div>
+              <div class="text-left">
+                {% snippet "snippets/sort_by.html", sort=sort_arg %}
+              </div>
+            {% endif %}
           </div>
-        {% else %}
-          <div class="col-md-6 mrgn-tp-sm text-left text-success">
-            <strong>{% snippet 'snippets/search_result_text.html', query=query, count=count, type=type %}</strong>
-          </div>
-          <div class="col-md-6 text-left">
-            {% snippet "snippets/sort_by.html", sort=sort_arg %}
-          </div>
-        {% endif %}
+        </div>
       </div>
     {% endif %}
   {% endblock %}

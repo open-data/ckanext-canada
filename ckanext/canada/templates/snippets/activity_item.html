@@ -2,7 +2,7 @@
 	{% if activity.is_new %}
 	  <span class="badge" title="{{ _('New activity item') }}">{{ _('New activity item') }}</span>
 	{% endif %}
-	<span class="fa fa-{{ activity.icon }}"></span>
+	<span class="fa fa-{{ activity.icon }}" aria-hidden="true"></span>
   {{ h.literal(activity.msg.format(**activity.data)) }}
   <span class="date" title="{{ h.render_datetime(activity.timestamp, with_hours=True) }}">{{ h.time_ago_from_timestamp(activity.timestamp)  }}</span>
 </li>

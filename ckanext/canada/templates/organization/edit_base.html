@@ -1,41 +1,47 @@
 {% ckan_extends %}
 
+{% set organization = group_dict if action != 'new' else {} %}
+{%- set translated_title = h.get_translated(organization, 'title') -%}
+{% set org_member_count = member_count %}
+
+{% block breadcrumb_content %}
+  <li>{% link_for _('Organizations'), named_route=group_type + '.index' %}</li>
+  <li>{% link_for translated_title, named_route=group_type + '.read', id=organization.name %}</li>
+  <li class="active">{% link_for _('Manage'), named_route=group_type + '.edit', id=organization.name  %}</li>
+{% endblock %}
+
 {% block subtitle %}
-  {{ h.split_piped_bilingual_field(g.group_dict.display_name, client_lang) }}
+  {{ h.split_piped_bilingual_field(organization.display_name, client_lang) }}
+{% endblock %}
+
+{% block content_action %}
+  {% if organization and h.check_access('organization_update', {'id': organization.id}) %}
+    {% link_for _('View Organization'), named_route='organization.read', id=organization.name, class_='btn btn-default', icon='eye'%}
+  {% endif %}
 {% endblock %}
 
 {% block content_primary_nav %}
   {% if g.is_registry %}
-    <div class="row">
-      <div class="col-md-12 mrgn-bttm-md">
-        <header>
-          {% if g.action != 'new' %}
-            <ul class="nav nav-pills">
-              <li class="{% if g.action == 'read' %}active{% endif %}">
-                <a href="{{h.url('organization.read', id=g.group_dict.name)}}">{{_('Datasets')}}</a>
-              </li>
-              <li class="{% if g.action == 'activity' %}active{% endif %}">
-                <a href="{{h.url('organization.activity', id=g.group_dict.name, offset=0)}}">{{_('Activity')}}</a>
-              </li>
-              {% if h.check_access('organization_update', {'id': g.group_dict.id}) %}
-                <li class="{% if g.action == 'members' %}active{% endif %}">
-                  <a href="{{h.url('organization.members', id=g.group_dict.name)}}">{{_('Edit Members')}}</a>
-                </li>
-              {% elif h.check_access('view_org_members', {'id': g.group_dict.id}) %}
-                <li class="{% if g.action == 'members' %}active{% endif %}">
-                  <a href="{{h.url('organization.members', id=g.group_dict.name)}}">{{_('View Members')}}</a>
-                </li>
-              {% endif %}
-              {% if h.check_access('group_update', {'id': g.group_dict.id}) %}
-                <li class="{% if g.action == 'edit' %}active{% endif %}">
-                  <a href="{{h.url(('organization' if g.group_dict.is_organization else 'group') + '.edit', id=g.group_dict.name)}}">{{ _('Edit') }}</a>
-                </li>
-              {% endif %}
-          </ul>
-          {% endif %}
-        </header>
-      </div>
-    </div>
+    {% if h.check_access('group_update', {'id': organization.id}) %}
+      {{ h.build_nav_icon('organization.edit', _('Edit Organization'), id=organization.name, icon='pencil-square') }}
+    {% endif %}
+    {{ h.build_nav_icon('activity.organization_activity', _('Activity'), id=organization.name, icon='clock') }}
+    {% if h.check_access('organization_update', {'id': organization.id}) %}
+      {{ h.build_nav_icon('organization.manage_members', _('Edit Members'), id=organization.name, icon='users') }}
+    {% elif h.check_access('view_org_members', {'id': organization.id}) %}
+      {{ h.build_nav_icon('organization.members', _('View Members'), id=organization.name, icon='users') }}
+    {% endif %}
+    {% if h.check_access('sysadmin') %}
+      {{ h.build_nav_icon('organization.search_rebuild', _('Rebuild Search Index'), id=organization.name, icon='database') }}
+    {% endif %}
+  {% else %}
+    {{ super() }}
+  {% endif %}
+{% endblock %}
+
+{% block secondary_content %}
+  {% if organization %}
+    {% snippet 'snippets/organization.html', organization=group_dict, show_nums=true, group_type=group_type, org_member_count=org_member_count %}
   {% else %}
     {{ super() }}
   {% endif %}

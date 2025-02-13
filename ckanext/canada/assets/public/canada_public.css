@@ -251,18 +251,112 @@ a#edit-comment-body-0-format-help-about, button#edit-submit,button#edit-actions-
 /*###################
 ## Activity Stream ##
 #####################*/
-.activity .item {
+.activity {
+  margin: 10px 0;
+  padding: 0;
+  list-style-type: none;
+  background-image: url('/data/dotted.png'), url('/dotted.png');
+  background-repeat: repeat-y;
+  background-position: 17px 0;
+}
+.activity table{
+  max-width: 100% !important;
+  overflow-x: scroll !important;
+  display: block !important;
+}
+.activity .item{
   position: relative;
   margin: 0 0 15px 0;
-  padding: 0;
+  padding: 0 0 15px 56px !important;
+  font-size: 14px;
+  line-height: 1.5;
 }
-.activity .item .icon {
-  padding-left:0;
+.activity .item::after,
+.activity .item::before{
+  display: table;
+  content: "";
+  line-height: 0;
+  clear: both;
+}
+.activity .item:not(:last-of-type)::after{
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  height: 2px;
+  width: 90%;
+  border-radius: 25px;
+  background: #f6f6f6;
+}
+.activity .item .fa-stack{
+  padding: 0;
+  margin: 0;
+  width: 36px;
+  height: 36px;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+.activity .item .fa-stack i{
+  width: 100%;
+  height: 100%;
+  position: absolute !important;
+  top: 50% !important;
+  left: 50% !important;
+  transform: translate(-50%, -50%) !important;
+  margin: 0 !important;
+  line-height: 1 !important;
+  text-align: initial !important;
+}
+.activity .item .fa-stack i::before{
+  position: absolute !important;
+  top: 50% !important;
+  left: 50% !important;
+  transform: translate(-50%, -50%) !important;
+  font-size: 14px;
+}
+.activity .item .gravatar {
+  display: none !important;
+}
+.activity .item .actor {
+  display: none !important;
+}
+.activity .item .date {
+  color: #999;
+  font-size: 12px;
+  white-space: nowrap
+}
+.activity .item .fa-stack i.icon{
+  border: 4px solid white;
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 30px;
+  height: 30px;
+  line-height: 30px;
+  text-align: center;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  font-weight: normal;
+  margin-right: 10px;
+  -webkit-border-radius: 100px;
+  -moz-border-radius: 100px;
+  border-radius: 100px;
+  -webkit-box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.2);
+  -moz-box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.2);
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.2);
+  padding-left: 0px;
+}
+.activity .item .fa-stack i.icon::before{
+  width: 40px;
+  height: 40px;
+  font-size: 40px;
 }
 .activity .item p {
   font-size: 14px;
   line-height: 1.5;
-  margin: 5px 0 0 40px;
+  margin: 0 0 10px 0;
 }
 .activity .item table{
   font-size: 14px;
@@ -271,6 +365,139 @@ a#edit-comment-body-0-format-help-about, button#edit-submit,button#edit-actions-
 }
 .activity .item table p{
   margin: 0;
+  margin-top: 10px;
+}
+.activity .item h2{
+  margin-top: 0 !important;
+}
+.activity .item > div{
+  margin: 0 !important;
+}
+.activity .item .new {
+  display: block;
+  position: absolute;
+  overflow: hidden;
+  top: -3px;
+  left: -3px;
+  width: 10px;
+  height: 10px;
+  background-color: #A35647;
+  border: 1px solid #FFF;
+  text-indent: -1000px;
+  -webkit-border-radius: 100px;
+  -moz-border-radius: 100px;
+  border-radius: 100px;
+  -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  -moz-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2)
+}
+.activity .item.no-avatar p {
+  margin-left: 0;
+}
+.activity .load-less {
+  margin-bottom: 15px;
+}
+.activity .item .icon {
+  background-color: #999999
+}
+.activity .item.failure .icon {
+  background-color: #b95252
+}
+.activity .item.success .icon {
+  background-color: #69a67a
+}
+.activity .item.added-tag .icon {
+  background-color: #6995a6
+}
+.activity .item.changed-group .icon {
+  background-color: #767dce
+}
+.activity .item.changed-package .icon {
+  background-color: #8c76ce
+}
+.activity .item.changed-package_extra .icon {
+  background-color: #769ace
+}
+.activity .item.changed-resource .icon {
+  background-color: #aa76ce
+}
+.activity .item.changed-user .icon {
+  background-color: #76b8ce
+}
+.activity .item.changed-organization .icon {
+  background-color: #699fa6
+}
+.activity .item.changed-resource-view .icon {
+  background-color: #9c89d5
+}
+.activity .item.deleted-group .icon {
+  background-color: #b95252
+}
+.activity .item.deleted-package .icon {
+  background-color: #b97452
+}
+.activity .item.deleted-package_extra .icon {
+  background-color: #b95274
+}
+.activity .item.deleted-resource .icon {
+  background-color: #b99752
+}
+.activity .item.deleted-organization .icon {
+  background-color: #b95297
+}
+.activity .item.deleted-resource-view .icon {
+  background-color: #c06483
+}
+.activity .item.new-group .icon {
+  background-color: #69a67a
+}
+.activity .item.new-package .icon {
+  background-color: #69a68e
+}
+.activity .item.new-package_extra .icon {
+  background-color: #6ca669
+}
+.activity .item.new-resource .icon {
+  background-color: #81a669
+}
+.activity .item.new-user .icon {
+  background-color: #69a6a3
+}
+.activity .item.new-organization .icon {
+  background-color: #81a669
+}
+.activity .item.new-resource-view .icon {
+  background-color: #7caf79
+}
+.activity .item.removed-tag .icon {
+  background-color: #b95297
+}
+.activity .item.deleted-related-item .icon {
+  background-color: #b9b952
+}
+.activity .item.follow-dataset .icon {
+  background-color: #767dce
+}
+.activity .item.follow-user .icon {
+  background-color: #8c76ce
+}
+.activity .item.new-related-item .icon {
+  background-color: #95a669
+}
+.activity .item.follow-group .icon {
+  background-color: #8ba669
+}
+.activity .item.created-datastore .icon{
+  color: #749a5b;
+  background-color: #749a5b;
+}
+.activity .item.changed-datastore .icon{
+  color: #5b939a;
+  background-color: #5b939a;
+}
+.activity .item.deleted-datastore .icon{
+  color: #ac468a;
+  background-color: #ac468a;
 }
 /*###################
 ##       END       ##
@@ -355,6 +582,18 @@ a#edit-comment-body-0-format-help-about, button#edit-submit,button#edit-actions-
 .modal .modal-dialog .modal-content .modal-header{
 
   background-color: #2e5274;
+
+}
+
+.modal .modal-dialog .modal-content .modal-header > h1,
+.modal .modal-dialog .modal-content .modal-header > h2,
+.modal .modal-dialog .modal-content .modal-header > h3,
+.modal .modal-dialog .modal-content .modal-header > h4,
+.modal .modal-dialog .modal-content .modal-header > h5,
+.modal .modal-dialog .modal-content .modal-header > h6{
+
+  color: white;
+  margin: 0;
 
 }
 
@@ -446,6 +685,15 @@ form#user-edit-form > fieldset:first-of-type{
 ## Resource Item ##
 ###################*/
 
+.canada-edit-resource-panel{
+  margin: -15px -15px 8px -15px !important;
+}
+
+.canada-edit-resource-info div.nums{
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
 /* Dataset Index */
 ul.resource-list > li.resource-item{
   display: flex;
@@ -521,7 +769,7 @@ ul.resource-list > li.resource-item > div.canada-resource-list-badges{
 }
 .resources-side-panel .nav-item > a{
   padding-left: 15px;
-  padding-right: 65px;
+  padding-right: 35px;
   margin-left: 0 !important;
   margin-right: 0 !important;
   position: relative;
@@ -540,7 +788,6 @@ ul.resource-list > li.resource-item > div.canada-resource-list-badges{
   }
 }
 .resources-side-panel .nav-item.active a{
-  pointer-events: none !important;
   cursor: default !important;
   color: #295376 !important;
 }
@@ -553,20 +800,28 @@ ul.resource-list > li.resource-item > div.canada-resource-list-badges{
 .resources-side-panel .nav-item .dropdown.position-absolute{
   position: absolute !important;
   right: 0 !important;
-  top: 50% !important;
-  transform: translateY(-50%) !important;
+  top: 0 !important;
+  bottom: 0 !important;
   margin-right: 0 !important;
 }
 .resources-side-panel .nav-item .dropdown.position-absolute > .btn-light{
-  background-color: #eaebed !important;
+  background-color: #eeeeee !important;
   border-color: #dcdee1 !important;
   color: #335075 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  border: none !important;
+  height: 100%;
+  width: 46px !important;
 }
 .resources-side-panel .nav-item .dropdown.position-absolute > .btn-light:hover,
 .resources-side-panel .nav-item .dropdown.position-absolute > .btn-light:active,
 .resources-side-panel .nav-item .dropdown.position-absolute > .btn-light:focus{
   background-color: #cfd1d5 !important;
   border-color: #bbbfc5 !important;
+}
+.resources-side-panel .nav-item .dropdown.position-absolute > .btn-light:focus{
+  outline: auto !important;
 }
 .resources-side-panel .nav-item .dropdown.position-absolute.open{
   z-index: 100 !important;
@@ -591,7 +846,91 @@ ul.resource-list > li.resource-item > div.canada-resource-list-badges{
   background-color: #cfd1d5 !important;
   border-color: #bbbfc5 !important;
 }
+.resources-side-section .panel-body.resources-side-panel{
+  padding: 0 !important;
+}
+.resources-side-section .panel-body > ul > li{
+  position: relative !important;
+  min-height: 80px;
+  padding: 0 !important;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: end;
+  background: transparent !important;
+}
+.resources-side-section .panel-body > ul > li:last-of-type,
+.resources-side-section .panel-body > ul > li:last-of-type a{
+  border-bottom-left-radius: 3px !important;
+  border-bottom-right-radius: 3px !important;
+}
+.resources-side-section .panel-body > ul > li:last-of-type .dropdown.position-absolute > .btn-light{
+  border-bottom-right-radius: 3px !important;
+}
+.resources-side-section .panel-body > ul > li:not(:first-of-type){
+  border-top: 1px dotted #6f6f6f !important;
+}
+.resources-side-section .panel-body > ul{
+  min-height: 80px;
+}
+.resources-side-section .resources-side-section-item-link{
+  position: absolute !important;
+  display: block !important;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: calc(100% - 46px) !important;
+  height: 100%;
+  transition-duration: 0.325s !important;
+  text-decoration: none !important;
+  color: #284162 !important;
+}
+.resources-side-section .resources-side-section-item-link:hover,
+.resources-side-section .resources-side-section-item-link:active,
+.resources-side-section .resources-side-section-item-link:focus{
+  text-decoration: none !important;
+  color: #284162 !important;
+}
+.resources-side-section .resources-side-section-item-title-container{
+  position: relative;
+  overflow: clip;
+}
+.resources-side-section .resources-side-section-item-badges{
+  margin-left: 15px;
+  margin-bottom: 15px;
+  margin-top: 52px;
+  margin-right: 50px;
+  z-index: 2;
+  pointer-events: none;
+}
+@media all and (max-width: 992px){
+  .resources-side-section .resources-side-section-item-badges{
+    margin-top: 60px;
+  }
+}
+@media all and (max-width: 768px){
+  .resources-side-section .resources-side-section-item-badges{
+    margin-top: 52px;
+  }
+}
+.resources-side-section .resources-side-section-item-badges .badge{
+  margin-bottom: 3px;
+}
+.resources-side-section .nav-item.active div.dropdown{
+  display: none !important;
+}
+.resources-side-panel.resources-side-panel-no-edit .nav-item > a,
+.resources-side-panel .nav-item.active > a{
+  padding-right: 15px !important;
+  width: 100% !important;
+}
 /* END - Side Panel - END */
+
+.canada-reorder-resources-wrapper .resource-list{
+  margin: 0 0 10px 0 !important;
+}
 
 /* Resource Action Buttons */
 .module-resource .actions {
@@ -722,19 +1061,6 @@ body i.fa.fa-arrow-left::before{
 ##              END               ##
 ####################################*/
 
-
-/*##################################
-##  Resource Actions Toolbar Area ##
-###################################*/
-.resource-actions-toolbar ul.gap-1 > li{
-  margin-right: 5px !important;
-}
-/*##################################
-##              END               ##
-##  Resource Actions Toolbar Area ##
-##              END               ##
-####################################*/
-
 /*###################
 ##  Flash Messages ##
 #####################*/
@@ -742,8 +1068,26 @@ body i.fa.fa-arrow-left::before{
   z-index: 2;
 }
 .canada-flash-messages .alert{
-  padding-right: 15px;
+  padding-right: 28px;
   position: relative;
+}
+/* BS4+ Fix. TODO: remove after upgrade to BS4+ */
+@keyframes flash-fade-in-alert{
+  0% {
+    opacity: 0;
+  }
+  33% {
+    opacity: 0.25;
+  }
+  67% {
+    opacity: 0.75;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+.canada-flash-messages .alert.fade.show{
+  animation: flash-fade-in-alert 1.325s ease-in 0.325s forwards !important;
 }
 @keyframes flash-fade-in-close-button{
   0% {
@@ -759,7 +1103,7 @@ body i.fa.fa-arrow-left::before{
     opacity: 0.625;
   }
 }
-.canada-flash-messages .flash-messages a.close{
+.canada-flash-messages .flash-messages button.close{
   display: block;
   position: absolute;
   top: 5px;
@@ -767,11 +1111,18 @@ body i.fa.fa-arrow-left::before{
   padding-bottom: 0;
   visibility: hidden;
   opacity: 0;
-  animation: flash-fade-in-close-button 2s ease-in 1s forwards;
+  animation: flash-fade-in-close-button 2s ease-in 1s forwards !important;
+  padding: 0 !important;
 }
-.canada-flash-messages .flash-messages a.close:hover,
-.canada-flash-messages .flash-messages a.close:active,
-.canada-flash-messages .flash-messages a.close:focus{
+.canada-flash-messages .flash-messages button.close::after{
+  content: '\f00d';
+  font-family: 'FontAwesome';
+  font-size: 18px;
+  vertical-align: text-top;
+}
+.canada-flash-messages .flash-messages button.close:hover,
+.canada-flash-messages .flash-messages button.close:active,
+.canada-flash-messages .flash-messages button.close:focus{
   color: #335075;
 }
 body .alert a.btn-default{
@@ -783,6 +1134,10 @@ body .alert a.btn-danger{
 }
 body .alert a.btn-warning{
   color: black !important;
+}
+.canada-flash-messages .flash-messages .alert:not(.alert-dismissible) button.close{
+  display: none !important;
+  pointer-events: none !important;
 }
 /*###################
 ##       END       ##
@@ -813,6 +1168,42 @@ body .alert a.btn-warning{
   max-height: 100%;
   height: 100%;
 }
+.canada-search-filters-title{
+  margin-bottom: 10px;
+}
+.canada-search-filters-title h2{
+  margin-top: 0 !important;
+}
+.canada-search-filters-title a{
+  text-decoration: none !important;
+}
+.canada-search-field-wrapper{
+  width: 100% !important;
+  display: flex !important;
+  flex-direction: row;
+  flex-wrap: nowrap;
+}
+.canada-search-field-wrapper input#search_field{
+  flex: 1;
+}
+.canada-search-field-wrapper span.input-group-btn{
+  width: 40px;
+  max-width: 40px;
+  min-width: 40px;
+}
+.canada-search-form-options-wrapper{
+  width: 100% !important;
+  display: flex !important;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+}
+.canada-search-form-options-wrapper select{
+  display: inline-block !important;
+}
+.canada-org-result-text{
+  font-size: 16px !important;
+}
 /*#######################
 ##         END         ##
 ##  Header Search Form ##
@@ -822,29 +1213,91 @@ body .alert a.btn-warning{
 /*########################
 ##  Background Job List ##
 ##########################*/
-ul.canada-job-list.activity li.item i.fa.icon::before{
+body ul.canada-job-list.activity li.item i.fa::before{
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  font-weight: 700 !important;
+}
+ul.canada-job-list li.item i.fa.icon{
+  color: #999999;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  -webkit-box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.2);
+  -moz-box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.2);
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.2);
+  width: 30px !important;
+  height: 30px !important;
+}
+ul.canada-job-list li.item i.fa.main-icon{
+  border-radius: 50% !important;
+  width: 32px !important;
+  height: 32px !important;
+  -webkit-box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.2);
+  -moz-box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.2);
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.2);
+  background-color: white !important;
+}
+ul.canada-job-list li.item i.fa.main-icon::before{
+  font-size: 14px !important;
+  width: 24px;
+  height: 24px;
+  line-height: 24px !important;
+  color: white !important;
+  stroke: white !important;
+  border-radius: 50%;
+  text-align: center;
+}
+ul.canada-job-list li.item i.fa.main-icon::after{
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  line-height: 1 !important;
+  -webkit-box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.2);
+  -moz-box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.2);
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+ul.canada-job-list li.item.rq-job-deferred i.fa.main-icon::before{
+  color: white !important;
 }
 ul.canada-job-list li.item.rq-job-queued i.fa.icon{
+  color: #999999;
+}
+ul.canada-job-list li.item.rq-job-queued i.fa.main-icon::before{
   background-color: #999999;
 }
 ul.canada-job-list li.item.rq-job-started i.fa.icon{
+  color: #28a745;
+}
+ul.canada-job-list li.item.rq-job-started i.fa.main-icon::before{
   background-color: #28a745;
 }
 ul.canada-job-list li.item.rq-job-finished i.fa.icon{
+  color: #17a2b8;
+}
+ul.canada-job-list li.item.rq-job-finished i.fa.main-icon::before{
   background-color: #17a2b8;
 }
 ul.canada-job-list li.item.rq-job-failed i.fa.icon{
+  color: #dc3545;
+}
+ul.canada-job-list li.item.rq-job-failed i.fa.main-icon::before{
   background-color: #dc3545;
 }
 ul.canada-job-list li.item.rq-job-deferred i.fa.icon{
+  color: #ffc107;
+}
+ul.canada-job-list li.item.rq-job-deferred i.fa.main-icon::before{
   background-color: #ffc107;
 }
 ul.canada-job-list .canada-job-item-title{
   font-size: 115%;
+  font-weight: 600;
 }
 div.canada-job-list-title strong{
   font-size: 16px;
@@ -866,7 +1319,6 @@ div.canada-job-list-title small{
   border-bottom-left-radius: 0 !important;
   border-bottom-right-radius: 0 !important;
 }
-
 .canada-dashboard-panel{
   border-top-left-radius: 0 !important;
 }
@@ -892,6 +1344,399 @@ body, body .module-grid, body .media-grid, body .main, body .account-masthead, b
 ##            END             ##
 ################################*/
 
+/*############################
+##  CKAN Base CSS Overrides ##
+##############################*/
+body .text-info{
+  color: #31708f !important;
+}
+body .bg-info{
+  background-color: #d9edf7 !important;
+}
+body .text-warning{
+  color: #8a6d3b !important;
+}
+body .bg-warning{
+  background-color: #fcf8e3 !important;
+}
+body .text-danger{
+  color: #a94442 !important;
+}
+body .bg-danger{
+  background-color: #f2dede !important;
+}
+body .error-block,
+body .error-inline{
+  font-size: 12px !important;
+  line-height: 23px !important;
+}
+/* BS4+ Fix. TODO: remove after upgrade to BS4+ */
+body .btn.btn-light{
+  color: #335075 !important;
+  background-color: #eaebed !important;
+  border-color: #dcdee1 !important;
+}
+/* BS4+ Fix. TODO: remove after upgrade to BS4+ */
+a[class="btn"],
+button[class="btn"]{
+  color: #335075;
+  background-color: #eaebed;
+  border-color: #dcdee1;
+}
+/* BS4+ Fix. TODO: remove after upgrade to BS4+ */
+a[class="btn"]:hover,
+a[class="btn"]:active,
+a[class="btn"]:focus,
+button[class="btn"]:hover,
+button[class="btn"]:active,
+button[class="btn"]:focus{
+  background-color: #cfd1d5;
+  border-color: #bbbfc5;
+}
+/* BS4+ Fix. TODO: remove after upgrade to BS4+ */
+body .btn.btn-light:active,
+body .btn.btn-light:focus,
+body .btn.btn-light:hover{
+  background-color: #cfd1d5 !important;
+  border-color: #bbbfc5 !important;
+}
+/* BS4+ Fix. TODO: remove after upgrade to BS4+ */
+body .module-heading{
+  padding: 10px 25px !important;
+  font-size: 14px !important;
+  line-height: 1.3 !important;
+}
+/* BS4+ Fix. TODO: remove after upgrade to BS4+ */
+body .module-narrow .module-heading{
+  padding-left: 15px !important;
+  padding-right: 15px !important;
+}
+/* BS4+ Fix. TODO: remove after upgrade to BS4+ */
+body .accordion-button{
+  font-size: 16px !important;
+  line-height: 1.3 !important;
+}
+/* BS4+ Fix. TODO: remove after upgrade to BS4+ */
+body .accordion-header{
+  margin: 0 !important;
+}
+/* BS4+ Fix. TODO: remove after upgrade to BS4+ */
+body .accordion{
+  margin-bottom: 15px !important;
+}
+body .resource-upload-field i.fa{
+  margin-right: 4px !important;
+}
+body form#form-purge-all a.purge-all{
+  margin-bottom: 15px !important;
+}
+body .canada-admin-trash #accordion-group{
+  display: none !important;
+}
+@keyframes modal-fade-in{
+  0% {
+    opacity: 0;
+  }
+  33% {
+    opacity: 0.25;
+  }
+  67% {
+    opacity: 0.75;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@keyframes modal-fade-out{
+  0% {
+    opacity: 1;
+  }
+  33% {
+    opacity: 0.75;
+  }
+  67% {
+    opacity: 0.25;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+/* BS4+ Fix. TODO: remove after upgrade to BS4+ */
+body .modal.fade,
+body .popover.fade{
+  animation: modal-fade-out 0.325s ease-in 0s forwards !important;
+}
+/* BS4+ Fix. TODO: remove after upgrade to BS4+ */
+body .modal.fade.show,
+body .popover.fade.show{
+  animation: modal-fade-in 0.325s ease-in 0s forwards !important;
+}
+body .popover .popover-header{
+  margin: 0 !important;
+  font-size: 16px !important;
+  padding: 8px 14px !important;
+}
+/* BS4+ Fix. TODO: remove after upgrade to BS4+ */
+@media all and (max-width: 768px){
+  body div#wb-bnr > div.row{
+    flex-direction: row-reverse;
+  }
+}
+/* BS4+ Fix. TODO: remove after upgrade to BS4+ */
+body .form-select{
+  appearance: auto !important;
+  -webkit-appearance: auto !important;
+  -moz-appearance: auto !important;
+}
+body #timeout,
+body .modal{
+  background: rgba(0, 0, 0, 0.15) !important;
+}
+body #timeout > .modal-dialog{
+  position: absolute !important;
+  top: 50% !important;
+  left: 50% !important;
+  transform: translate(-50%, -25%) !important;
+}
+@media all and (max-width: 768px){
+  body #timeout > .modal-dialog{
+    top: 35% !important;
+    max-width: 80% !important;
+    min-width: 80% !important;
+    width: 80% !important;
+  }
+}
+/* BS4+ Fix. TODO: remove after upgrade to BS4+ */
+body .modal .modal-dialog .modal-content button.btn-close{
+  background: transparent url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23fff'><path d='M.293.293a1 1 0 011.414 0L8 6.586 14.293.293a1 1 0 111.414 1.414L9.414 8l6.293 6.293a1 1 0 01-1.414 1.414L8 9.414l-6.293 6.293a1 1 0 01-1.414-1.414L6.586 8 .293 1.707a1 1 0 010-1.414z'/></svg>") center/1em auto no-repeat;
+}
+body .panel-title > .label.label-info,
+body h1 > .label.label-info{
+  display: inline-block;
+  vertical-align: bottom;
+}
+body .clear-fix{
+  clear: both !important;
+}
+body .canada-flex{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  width: 100%;
+}
+@media all and (max-width: 768px){
+  body .canada-flex{
+    flex-wrap: wrap;
+  }
+}
+body .accordion-heading{
+  margin: 0 !important;
+}
+body .accordion-button{
+  padding-right: 25px !important;
+}
+body .accordion-button.no-after{
+  background-color: #f5f5f5 !important;
+  color: #333333 !important;
+}
+body .accordion-button.no-after::after{
+  background-image: none !important;
+}
+form[action*="/dictionary/"] h3:first-of-type{
+  margin-top: 0 !important;
+}
+div.btn-group:not(.dropdown){
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+}
+footer#wb-info{
+  margin-top: 36px !important;
+}
+.canada-resource-dropdown-explore a{
+  text-decoration: none !important;
+}
+/*###########################
+##           END           ##
+##  CKAN Base CSS Overrides##
+##           END           ##
+#############################*/
+
+/*########################
+##  Page Action Toolbar ##
+##########################*/
+.canada-action-toolbar{
+  margin-top: 0;
+  min-height: auto !important;
+  width: 100% !important;
+}
+
+.canada-action-toolbar header{
+  margin-top: 15px;
+  margin-bottom: 0 !important;
+  width: 100% !important;
+  display: flex;
+  flex-direction: row-reverse;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  border-radius: 0 !important;
+  background: #E1E4E7 !important;
+  border-bottom: 1px solid #D3D4D8;
+  border-top: 1px solid #D3D4D8;
+}
+
+@media all and (max-width: 992px){
+  .canada-action-toolbar header{
+    flex-wrap: wrap;
+  }
+}
+
+.canada-action-toolbar header .nav a{
+  font-weight: bold !important;
+  font-size: 16px !important;
+  line-height: 1.4375 !important;
+  border-radius: 0 !important;
+  border: none !important;
+  margin: 0 !important;
+  transition-duration: 0.325s !important;
+}
+
+.canada-action-toolbar header .nav li:not(.active) a:hover,
+.canada-action-toolbar header .nav li:not(.active) a:active,
+.canada-action-toolbar header .nav li:not(.active) a:focus{
+  background: #EEEFF1 !important;
+}
+
+.canada-action-toolbar header .nav li.active a{
+  background-color: #335075 !important;
+  color: white !important;
+  pointer-events: none !important;
+}
+
+.canada-action-toolbar header .content_action a{
+  font-weight: bold !important;
+  font-size: 16px !important;
+  line-height: 1.4375 !important;
+  border-radius: 0 !important;
+  border: none !important;
+  background: #f6f6f6 !important;
+  transition-duration: 0.325s !important;
+}
+
+.canada-action-toolbar header .content_action a:not(:last-of-type){
+  margin-right: 5px !important;
+}
+
+.canada-action-toolbar header .content_action a:hover,
+.canada-action-toolbar header .content_action a:active,
+.canada-action-toolbar header .content_action a:focus{
+  background: #335075 !important;
+  color: white !important;
+}
+
+.canada-action-toolbar header::after{
+  content: none !important;
+}
+
+.canada-action-toolbar header > *{
+  position: relative !important;
+  display: block !important;
+  float: none !important;
+  margin: 0 !important;
+}
+
+.module-resource .module-content > .actions{
+  float: none !important;
+  margin-top: 0 !important;
+  min-height: auto !important;
+  width: 100% !important;
+  display: block !important;
+}
+
+.resource-actions-toolbar{
+  float: none !important;
+  margin-top: 15px !important;
+  min-height: auto !important;
+  width: 100% !important;
+  display: block !important;
+  background: #E1E4E7 !important;
+  border-bottom: 1px solid #D3D4D8;
+  border-top: 1px solid #D3D4D8;
+  border-radius: 0 !important;
+  margin-bottom: 15px !important;
+}
+
+.resource-actions-toolbar.resource-actions-toolbar-portal{
+  background: transparent !important;
+  border-top-color: transparent !important;
+  border-bottom-color: transparent !important;
+}
+
+.resource-actions-toolbar > ul{
+  width: 100% !important;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+@media all and (max-width: 992px){
+  .resource-actions-toolbar > ul{
+    flex-wrap: wrap;
+  }
+}
+
+.resource-actions-toolbar >ul >li{
+  margin: 0 !important;
+}
+
+.resource-actions-toolbar >ul a.btn-default{
+  font-weight: bold !important;
+  font-size: 16px !important;
+  line-height: 1.4375 !important;
+  border-radius: 0 !important;
+  border: none !important;
+  background: #E1E4E7 !important;
+  transition-duration: 0.325s !important;
+  min-height: auto !important;
+  box-shadow: none !important;
+}
+
+.resource-actions-toolbar >ul a.btn-default:hover,
+.resource-actions-toolbar >ul a.btn-default:active,
+.resource-actions-toolbar >ul a.btn-default:focus{
+  background: #EEEFF1 !important;
+}
+
+.resource-actions-toolbar >ul a.btn-default:focus{
+  outline: auto !important;
+}
+
+.resource-actions-toolbar .resource-actions-toolbar-spacer{
+  flex: 1;
+}
+
+.resource-actions-toolbar .resource-actions-toolbar-spacer ~ li a{
+  border-radius: 0 !important;
+  border: none !important;
+}
+
+.resource-actions-toolbar .resource-actions-toolbar-spacer ~ li button.dropdown-toggle{
+  border-radius: 0 !important;
+  border: none !important;
+}
+
+.resource-actions-toolbar .resource-actions-toolbar-spacer ~ li:not(:last-of-type){
+  margin-right: 5px !important;
+}
+/*########################
+##          END         ##
+##  Page Action Toolbar ##
+##          END         ##
+##########################*/
+
+
 /*##############################
 ##  CDTS Application Template ##
 ################################*/
@@ -901,3 +1746,31 @@ body, body .module-grid, body .media-grid, body .main, body .account-masthead, b
 ##  CDTS Application Template ##
 ##             END            ##
 ################################*/
+
+body details.canada-abbr{
+  margin: 0;
+  padding: 0;
+  display: inline !important;
+  color: inherit;
+  border: none !important;
+  outline: none !important;
+}
+
+body details.canada-abbr summary{
+  color: inherit;
+  margin: 0;
+  padding: 0;
+  cursor: pointer !important;
+  border: none !important;
+  text-decoration: underline dotted !important;
+  outline: none !important;
+}
+
+body details.canada-abbr summary::marker{
+  display: none !important;
+  content: none !important;
+}
+
+body details.canada-abbr summary i{
+  opacity: 0.75;
+}

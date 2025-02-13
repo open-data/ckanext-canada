@@ -1,25 +1,35 @@
 # -*- coding: utf-8 -*-
+
+# NOTE: used to connect to the SOLR cores for Drupal PD Searches
+# TODO: remove once all PDs are in Django
+
+from typing import Optional, Generator, Tuple, List, Any
+
 import sys
+from pysolr import Solr
 from ckan.plugins.toolkit import config
+from ckanapi import LocalCKAN
 
 BATCH_SIZE = 1000
 MONTHS_FR = [
-    u'', # "month 0"
-    u'janvier',
-    u'février',
-    u'mars',
-    u'avril',
-    u'mai',
-    u'juin',
-    u'juillet',
-    u'août',
-    u'septembre',
-    u'octobre',
-    u'novembre',
-    u'décembre',
-    ]
+    '',  # "month 0"
+    'janvier',
+    'février',
+    'mars',
+    'avril',
+    'mai',
+    'juin',
+    'juillet',
+    'août',
+    'septembre',
+    'octobre',
+    'novembre',
+    'décembre',
+]
 
-def solr_connection(ini_prefix, solr_url=None):
+
+def solr_connection(ini_prefix: str,
+                    solr_url: Optional[str] = None) -> Solr:
     """
     Set up solr connection
     :param ini_prefix: prefix to use in specifying .ini file keys (e.g.,
@@ -29,7 +39,6 @@ def solr_connection(ini_prefix, solr_url=None):
     :return a solr connection from configured URL, user, password settings
     :rtype object
     """
-    from pysolr import Solr
     if not solr_url:
         url = config.get('{0:s}.solr_url'.format(ini_prefix))
         user = config.get('{0:s}.solr_user'.format(ini_prefix))
@@ -41,10 +50,13 @@ def solr_connection(ini_prefix, solr_url=None):
     if url is None:
         raise KeyError('{0:s}.solr_url'.format(ini_prefix))
     if user is not None and password is not None:
-        return Solr(url, http_user=user, http_pass=password)
+        # type_ignore_reason: solr user pass may be required for Drupal PD searches
+        return Solr(url, http_user=user, http_pass=password)  # type: ignore
     return Solr(url)
 
-def data_batch(org_id, lc, dataset_type):
+
+def data_batch(org_id: str, lc: LocalCKAN,
+               dataset_type: str) -> Generator[Tuple[str, List[Any]], None, None]:
     """
     Generator of dataset dicts for organization with name org
 
@@ -64,8 +76,8 @@ def data_batch(org_id, lc, dataset_type):
     if not result:
         return
     if len(result) != 1:
-       sys.stderr.write('1 record expected for %s %s, found %d' %
-            (dataset_type, org_id, len(result)))
+        sys.stderr.write('1 record expected for %s %s, found %d' %
+                         (dataset_type, org_id, len(result)))
 
     dataset = result[0]
     for resource in dataset['resources']:
@@ -81,14 +93,16 @@ def data_batch(org_id, lc, dataset_type):
             offset += len(records)
             yield (resource['name'], records)
 
+
 _REMOVE_CONTROL_CODES = dict((x, None) for x in range(32) if x != 10 and x != 13)
 
-def safe_for_solr(s):
+
+def safe_for_solr(s: Optional[str]) -> str:
     """
     return a string that is safe for solr to ingest by removing all
     control characters except for CR and LF
     """
     if s is None:
-        return u''
+        return ''
     assert isinstance(s, str)
     return s.translate(_REMOVE_CONTROL_CODES)

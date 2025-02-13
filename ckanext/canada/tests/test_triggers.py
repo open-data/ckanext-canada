@@ -1,6 +1,7 @@
 # -*- coding: UTF-8 -*-
 from ckanext.canada.tests import CanadaTestBase
 from ckanapi import LocalCKAN
+from decimal import Decimal
 
 from ckanext.canada.tests.factories import (
     CanadaOrganization as Organization,
@@ -30,7 +31,6 @@ class TestCanadaTriggers(CanadaTestBase):
         self.editor2_action = LocalCKAN(username=self.editor2['name']).action
         self.sys_action = LocalCKAN().action
 
-
     def _setup_pd(self, type, nil_type=None):
         assert type
 
@@ -53,7 +53,6 @@ class TestCanadaTriggers(CanadaTestBase):
 
         return rval['resources'][0]['id'], rval['resources'][1]['id'] if nil_type else None
 
-
     def test_update_record_modified_created_trigger(self):
         """
         The update_record_modified_created_trigger has a lot of scenarios
@@ -71,7 +70,7 @@ class TestCanadaTriggers(CanadaTestBase):
         """
         resource_id, nil_resource_id = self._setup_pd(type='ati', nil_type='ati-nil')
 
-        #NOTE: we use datastore_search_sql to get nanosecond timestamps
+        # NOTE: we use datastore_search_sql to get nanosecond timestamps
 
         chromo = get_chromo('ati')
 
@@ -194,7 +193,6 @@ class TestCanadaTriggers(CanadaTestBase):
         assert record['record_modified'] != initial_modified_time
         assert record['record_modified'] == new_modified_time
 
-
     def test_money_type_rounding(self):
         """
         Money datastore fields should be rounded to 2 decimal places.
@@ -211,13 +209,13 @@ class TestCanadaTriggers(CanadaTestBase):
             sql="SELECT %s from \"%s\"" % (', '.join(f['datastore_id'] for f in chromo['fields']), resource_id))
         record_data_dict = result['records'][0]
 
-        assert record_data_dict['contracts_goods_original_value'] == '50000.00'
-        assert record_data_dict['contracts_goods_amendment_value'] == '500.00'
-        assert record_data_dict['contracts_service_original_value'] == '50000.00'
-        assert record_data_dict['contracts_service_amendment_value'] == '500.00'
-        assert record_data_dict['contracts_construction_original_value'] == '50000.00'
-        assert record_data_dict['contracts_construction_amendment_value'] == '500.00'
-        assert record_data_dict['acquisition_card_transactions_total_value'] == '50000.00'
+        assert record_data_dict['contracts_goods_original_value'] == Decimal('50000.00')
+        assert record_data_dict['contracts_goods_amendment_value'] == Decimal('500.00')
+        assert record_data_dict['contracts_service_original_value'] == Decimal('50000.00')
+        assert record_data_dict['contracts_service_amendment_value'] == Decimal('500.00')
+        assert record_data_dict['contracts_construction_original_value'] == Decimal('50000.00')
+        assert record_data_dict['contracts_construction_amendment_value'] == Decimal('500.00')
+        assert record_data_dict['acquisition_card_transactions_total_value'] == Decimal('50000.00')
 
         record_data_dict['contracts_goods_original_value'] = '50000.7892983932'
         record_data_dict['contracts_goods_amendment_value'] = '500.0'
@@ -235,13 +233,13 @@ class TestCanadaTriggers(CanadaTestBase):
             sql="SELECT %s from \"%s\"" % (', '.join(f['datastore_id'] for f in chromo['fields']), resource_id))
         record_data_dict = result['records'][0]
 
-        assert record_data_dict['contracts_goods_original_value'] == '50000.79'
-        assert record_data_dict['contracts_goods_amendment_value'] == '500.00'
-        assert record_data_dict['contracts_service_original_value'] == '50000.00'
-        assert record_data_dict['contracts_service_amendment_value'] == '500.00'
-        assert record_data_dict['contracts_construction_original_value'] == '50000.00'
-        assert record_data_dict['contracts_construction_amendment_value'] == '500.01'
-        assert record_data_dict['acquisition_card_transactions_total_value'] == '50000.00'
+        assert record_data_dict['contracts_goods_original_value'] == Decimal('50000.79')
+        assert record_data_dict['contracts_goods_amendment_value'] == Decimal('500.00')
+        assert record_data_dict['contracts_service_original_value'] == Decimal('50000.00')
+        assert record_data_dict['contracts_service_amendment_value'] == Decimal('500.00')
+        assert record_data_dict['contracts_construction_original_value'] == Decimal('50000.00')
+        assert record_data_dict['contracts_construction_amendment_value'] == Decimal('500.01')
+        assert record_data_dict['acquisition_card_transactions_total_value'] == Decimal('50000.00')
 
         # contracts has conditional money fields, so test these for nullish values
         resource_id, nil_resource_id = self._setup_pd(type='contracts', nil_type='contracts-nil')
@@ -252,9 +250,9 @@ class TestCanadaTriggers(CanadaTestBase):
             sql="SELECT %s from \"%s\"" % (', '.join(f['datastore_id'] for f in chromo['fields']), resource_id))
         record_data_dict = result['records'][0]
 
-        assert record_data_dict['contract_value'] == '10000.00'
-        assert record_data_dict['original_value'] == '10000.00'
-        assert record_data_dict['amendment_value'] == '100000.00'
+        assert record_data_dict['contract_value'] == Decimal('10000.00')
+        assert record_data_dict['original_value'] == Decimal('10000.00')
+        assert record_data_dict['amendment_value'] == Decimal('100000.00')
 
         record_data_dict['contract_date'] = '2018-12-25'  # old date for conditional amendment_value
         record_data_dict['contract_value'] = '10000.00999'
@@ -269,6 +267,6 @@ class TestCanadaTriggers(CanadaTestBase):
             sql="SELECT %s from \"%s\"" % (', '.join(f['datastore_id'] for f in chromo['fields']), resource_id))
         record_data_dict = result['records'][0]
 
-        assert record_data_dict['contract_value'] == '10000.01'
+        assert record_data_dict['contract_value'] == Decimal('10000.01')
         assert not record_data_dict['original_value']
         assert not record_data_dict['amendment_value']

@@ -654,8 +654,7 @@ upload-wrongdoing: $(workdir)/filtered/wrongdoing.csv
 .PHONY: rebuild-wrongdoing
 rebuild-wrongdoing: $(workdir)/filtered/wrongdoing.csv
 	@$(echo_date) Rebuilding Acts of Founded Wrongdoing...
-	$(ckan_command) -c $(portal_ini) pd rebuild wrongdoing --lenient \
-	-f "$(workdir)/filtered/wrongdoing.csv"
+	@$(oc_search) import_data_csv --csv "$(workdir)/filtered/wrongdoing.csv" --search wrongdoing
 
 $(workdir)/wrongdoing.csv:
 	$(ckan_command) -c $(registry_ini) $(combine) wrongdoing -d $(workdir)

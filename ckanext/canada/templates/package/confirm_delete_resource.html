@@ -5,9 +5,23 @@
 {% block primary_content_inner %}
   <div class="col-md-12">
     {% block form %}
+      {% block errors %}
+        {%- set schema = h.scheming_get_dataset_schema(dataset_type) -%}
+        {% if resource_validation_errors %}
+          {%- snippet 'scheming/snippets/resource_validation_errors.html',
+            errors=resource_validation_errors, resource_fields=schema.resource_fields,
+            dataset_fields=schema.dataset_fields, pkg_dict=pkg_dict,
+            entity_type='dataset', object_type=dataset_type -%}
+        {% else %}
+          {%- snippet 'scheming/snippets/errors.html',
+            errors=errors, fields=schema.resource_fields,
+            entity_type='dataset', object_type=dataset_type -%}
+        {% endif %}
+      {% endblock %}
       <p>{{ _('Are you sure you want to delete resource - {name}?').format(name=h.resource_display_name(g.resource_dict)) }}</p>
       <p class="form-actions">
-        <form action="{{ h.url_for('dataset_resource.delete', resource_id=g.resource_dict.id, id=g.pkg_id) }}" method="post">
+        <form action="{{ h.url_for('dataset_resource.delete', resource_id=g.resource_dict.id, id=pkg_id) }}" method="post">
+          {{ h.csrf_input() }}
           <button class="btn btn-danger" type="submit" name="cancel" >{{ _('Cancel') }}</button>
           <button class="btn btn-primary" type="submit" name="delete" >{{ _('Confirm Delete') }}</button>
         </form>
