@@ -12,7 +12,7 @@ csv_files := \
 	consultations.csv \
 	dac.csv \
 	experiment.csv \
-	grants.csv grants-nil.csv \
+	grants.csv grants-nil.csv grantsmonthly.csv \
 	hospitalityq.csv hospitalityq-nil.csv \
 	nap5.csv \
 	reclassification.csv reclassification-nil.csv \
@@ -414,9 +414,12 @@ upload-grants: $(workdir)/filtered/grants.csv $(workdir)/filtered/grants-nil.csv
 	@$(ckanapi) action resource_patch -c $(registry_ini) \
 	id=4e4db232-f5e8-43c7-b8b2-439eb7d55475 upload@"$(workdir)/filtered/grants-nil.csv" \
 	> /dev/null
+	@$(ckanapi) action resource_patch -c $(registry_ini) \
+	id=a4fa27d7-0c7c-4e31-bc0a-2d1cf249f749 upload@"$(workdir)/filtered/grantsmonthly.csv" \
+	> /dev/null
 
 .PHONY: rebuild-grants
-rebuild-grants: $(workdir)/filtered/grants.csv $(workdir)/filtered/grants-nil.csv
+rebuild-grants: $(workdir)/filtered/grants.csv $(workdir)/filtered/grants-nil.csv $(workdir)/filtered/grantsmonthly.csv
 	@$(echo_date) Rebuilding Grants and Contributions...
 	mkdir -p $(workdir)/amendments
 	$(registry_python) $(fdir)/amendment_delta_records.py \
@@ -430,11 +433,17 @@ $(workdir)/grants.csv:
 $(workdir)/grants-nil.csv:
 	$(ckan_command) -c $(registry_ini) $(combine) grants-nil -d $(workdir)
 
+$(workdir)/grantsmonthly.csv:
+	$(ckan_command) -c $(registry_ini) $(combine) grantsmonthly -d $(workdir)
+
 $(workdir)/filtered/grants.csv: $(workdir)/grants.csv
 	$(fdir)/filter_grants.py < $< > $@
 
 $(workdir)/filtered/grants-nil.csv: $(workdir)/grants-nil.csv
 	$(fdir)/filter_grants.py < $< > $@
+
+$(workdir)/filtered/grantsmonthly.csv: $(workdir)/grantsmonthly.csv
+	$(fdir)/filter_grants_monthly.py < $< > $@
 
 ###
 ###  Hospitality Expenses

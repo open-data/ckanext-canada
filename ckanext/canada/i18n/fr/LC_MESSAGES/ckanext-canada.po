@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-02-10 20:57+0000\n"
+"POT-Creation-Date: 2025-02-13 14:17-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: fr\n"
@@ -228,7 +228,7 @@ msgstr "En attente"
 msgid "Draft"
 msgstr "Ébauche"
 
-#: ckanext/canada/helpers.py:919
+#: ckanext/canada/helpers.py:924
 #: ckanext/canada/templates/home/quick_links.html:133
 #: ckanext/canada/templates/snippets/cdts/header.html:57
 #: ckanext/canada/templates/snippets/dataset_facets.html:33
@@ -237,25 +237,25 @@ msgstr "Ébauche"
 msgid "Proactive Publication"
 msgstr "Publication proactive"
 
-#: ckanext/canada/helpers.py:948
+#: ckanext/canada/helpers.py:953
 #: ckanext/canada/templates/snippets/publish_facet.html:25
 msgid "Published"
 msgstr "Publié"
 
-#: ckanext/canada/helpers.py:950
+#: ckanext/canada/helpers.py:955
 #: ckanext/canada/templates/snippets/publish_facet.html:34
 msgid "Scheduled"
 msgstr "Prévu"
 
-#: ckanext/canada/helpers.py:989
+#: ckanext/canada/helpers.py:994
 msgid "Registry Home"
 msgstr "Accueil du registre"
 
-#: ckanext/canada/helpers.py:994
+#: ckanext/canada/helpers.py:999
 msgid "Open Government"
 msgstr "Gouvernement ouvert"
 
-#: ckanext/canada/helpers.py:997
+#: ckanext/canada/helpers.py:1002
 #: ckanext/canada/templates/admin/publish_search.html:19
 #: ckanext/canada/templates/home/quick_links.html:104
 #: ckanext/canada/templates/organization/snippets/organization_search.html:8
@@ -291,6 +291,70 @@ msgid ""
 "Invalid request. Full text search is not supported for data with more "
 "than {} rows."
 msgstr ""
+
+#: ckanext/canada/plugin/public_plugin.py:139 ckanext/canada/plugins.py:710
+#: ckanext/canada/templates/scheming/package/snippets/package_form.html:25
+msgid "Portal Type"
+msgstr "Type de portail"
+
+#: ckanext/canada/plugin/public_plugin.py:140 ckanext/canada/plugins.py:711
+#: ckanext/canada/templates/package/deleted.html:14
+#: ckanext/canada/templates/user/new_user_form.html:18
+msgid "Organization"
+msgstr "Organisation"
+
+#: ckanext/canada/plugin/public_plugin.py:141 ckanext/canada/plugins.py:712
+msgid "Collection Type"
+msgstr "Type de collection"
+
+#: ckanext/canada/plugin/public_plugin.py:142
+#: ckanext/canada/plugin/public_plugin.py:143 ckanext/canada/plugins.py:713
+#: ckanext/canada/plugins.py:714
+msgid "Keywords"
+msgstr "Mots clés"
+
+#: ckanext/canada/plugin/public_plugin.py:144 ckanext/canada/plugins.py:715
+msgid "Subject"
+msgstr "Sujet"
+
+#: ckanext/canada/plugin/public_plugin.py:145 ckanext/canada/plugins.py:716
+#: ckanext/canada/templates/package/snippets/resource_info.html:13
+#: ckanext/canada/templates/scheming/package/resource_read.html:19
+#: ckanext/canada/templates/tabledesigner/view_snippets/cra_business_number.html:1
+msgid "Format"
+msgstr "Format"
+
+#: ckanext/canada/plugin/public_plugin.py:146 ckanext/canada/plugins.py:717
+msgid "Resource Type"
+msgstr "Type de ressource"
+
+#: ckanext/canada/plugin/public_plugin.py:147 ckanext/canada/plugins.py:718
+msgid "Maintenance and Update Frequency"
+msgstr "Fréquence d’entretien et de mise à jour"
+
+#: ckanext/canada/plugin/public_plugin.py:148 ckanext/canada/plugins.py:719
+msgid "Record Status"
+msgstr "État du dossier"
+
+#: ckanext/canada/plugin/public_plugin.py:149 ckanext/canada/plugins.py:720
+msgid "IMSO Approval"
+msgstr "Approbation du CSGI"
+
+#: ckanext/canada/plugin/public_plugin.py:150 ckanext/canada/plugins.py:721
+msgid "Jurisdiction"
+msgstr "Juridiction"
+
+#: ckanext/canada/plugin/public_plugin.py:151 ckanext/canada/plugins.py:722
+msgid "Suggestion Status"
+msgstr "État de la suggestion"
+
+#: ckanext/canada/plugin/public_plugin.py:249 ckanext/canada/plugins.py:911
+msgid "Previous"
+msgstr "Précédent"
+
+#: ckanext/canada/plugin/public_plugin.py:250 ckanext/canada/plugins.py:911
+msgid "Next"
+msgstr "Suivant"
 
 #: ckanext/canada/strings.py:12
 #: ckanext/canada/templates/package/base_form_page.html:5
@@ -710,17 +774,20 @@ msgstr ""
 #: ckanext/canada/strings.py:94
 msgid "Could not create or update resource because the dataset has errors"
 msgstr ""
-"Impossible de créer ou de mettre à jour la ressource car l'ensemble de données comporte des erreurs"
+"Impossible de créer ou de mettre à jour la ressource car l'ensemble de "
+"données comporte des erreurs"
 
 #: ckanext/canada/strings.py:95
 msgid "Could not delete resource because the dataset has errors"
 msgstr ""
-"Impossible de supprimer la ressource car l'ensemble de données comporte des erreurs"
+"Impossible de supprimer la ressource car l'ensemble de données comporte "
+"des erreurs"
 
 #: ckanext/canada/strings.py:96
 msgid "Could not reorder resources because the dataset has errors"
 msgstr ""
-"Impossible de réorganiser les ressources car l'ensemble de données comporte des erreurs"
+"Impossible de réorganiser les ressources car l'ensemble de données "
+"comporte des erreurs"
 
 #: ckanext/canada/strings.py:99
 msgid "Please upload a file or link to an external resource"
@@ -1150,69 +1217,6 @@ msgstr "L’utilisateur %r n’est pas autorisé à modifier les membres de %s"
 #, python-format
 msgid "User %r not authorized to view members of %s"
 msgstr "L’utilisateur %r n’est pas autorisé à voir les membres de %s"
-
-#: ckanext/canada/plugin/public_plugin.py:140
-#: ckanext/canada/templates/scheming/package/snippets/package_form.html:25
-msgid "Portal Type"
-msgstr "Type de portail"
-
-#: ckanext/canada/plugin/public_plugin.py:141
-#: ckanext/canada/templates/package/deleted.html:14
-#: ckanext/canada/templates/user/new_user_form.html:18
-msgid "Organization"
-msgstr "Organisation"
-
-#: ckanext/canada/plugin/public_plugin.py:142
-msgid "Collection Type"
-msgstr "Type de collection"
-
-#: ckanext/canada/plugin/public_plugin.py:143
-#: ckanext/canada/plugin/public_plugin.py:144
-msgid "Keywords"
-msgstr "Mots clés"
-
-#: ckanext/canada/plugin/public_plugin.py:145
-msgid "Subject"
-msgstr "Sujet"
-
-#: ckanext/canada/plugin/public_plugin.py:146
-#: ckanext/canada/templates/package/snippets/resource_info.html:13
-#: ckanext/canada/templates/scheming/package/resource_read.html:19
-#: ckanext/canada/templates/tabledesigner/view_snippets/cra_business_number.html:1
-msgid "Format"
-msgstr "Format"
-
-#: ckanext/canada/plugin/public_plugin.py:147
-msgid "Resource Type"
-msgstr "Type de ressource"
-
-#: ckanext/canada/plugin/public_plugin.py:148
-msgid "Maintenance and Update Frequency"
-msgstr "Fréquence d’entretien et de mise à jour"
-
-#: ckanext/canada/plugin/public_plugin.py:149
-msgid "Record Status"
-msgstr "État du dossier"
-
-#: ckanext/canada/plugin/public_plugin.py:150
-msgid "IMSO Approval"
-msgstr "Approbation du CSGI"
-
-#: ckanext/canada/plugin/public_plugin.py:151
-msgid "Jurisdiction"
-msgstr "Juridiction"
-
-#: ckanext/canada/plugin/public_plugin.py:152
-msgid "Suggestion Status"
-msgstr "État de la suggestion"
-
-#: ckanext/canada/plugin/public_plugin.py:250
-msgid "Previous"
-msgstr "Précédent"
-
-#: ckanext/canada/plugin/public_plugin.py:251
-msgid "Next"
-msgstr "Suivant"
 
 #. Title for PD Type: adminaircraft
 #. Resource Title for PD Type: adminaircraft
@@ -1873,8 +1877,8 @@ msgid ""
 "Performance Results record."
 msgstr ""
 "L'entrée de service ne peut être supprimée parce qu’il existe une ou "
-"plusieurs normes de service ({refValues}) qui y font référence dans la ressource  "
-"\"Normes de service et résultats du rendement\""
+"plusieurs normes de service ({refValues}) qui y font référence dans la "
+"ressource  \"Normes de service et résultats du rendement\""
 
 #. Resource Title for PD Type: service
 #: ckanext/canada/tables/service.yaml:1628
@@ -1905,9 +1909,9 @@ msgid ""
 " exist in the Service Identification Information & Metrics resource for "
 "that fiscal year."
 msgstr ""
-"L'entrée ({refValues}) ne peut être créé parce que le numéro de service n'existe pas "
-"dans la ressource \"Information et paramètres sur l’identification des "
-"services\" pour cet exercice financier."
+"L'entrée ({refValues}) ne peut être créé parce que le numéro de service "
+"n'existe pas dans la ressource \"Information et paramètres sur "
+"l’identification des services\" pour cet exercice financier."
 
 #. Title for PD Type: suppliervax
 #: ckanext/canada/tables/suppliervax.yaml:4
@@ -3766,8 +3770,10 @@ msgid ""
 "Performance Results record.</a>"
 msgstr ""
 "L'entrée de service ne peut être supprimée parce qu’il existe une ou "
-"plusieurs normes de service (<strong><em>%(ref_values)s</em></strong>) qui y font référence dans la ressource  "
-"<a target=\"_blank\" href=\"%(ref_table_link)s\">\"Normes de service et résultats du rendement\"</a>"
+"plusieurs normes de service (<strong><em>%(ref_values)s</em></strong>) "
+"qui y font référence dans la ressource  <a target=\"_blank\" "
+"href=\"%(ref_table_link)s\">\"Normes de service et résultats du "
+"rendement\"</a>"
 
 #: ckanext/canada/templates/recombinant/snippets/service_std_upsert_fk_error.html:6
 #, python-format
@@ -3777,10 +3783,10 @@ msgid ""
 "href=\"%(ref_table_link)s\">Service Identification Information & Metrics "
 "resource</a> for that fiscal year."
 msgstr ""
-"L'entrée (<strong><em>%(ref_values)s</em></strong>) ne peut être créé parce que le numéro de service n'existe pas "
-"dans la ressource <a target=\"_blank\" href=\"%(ref_table_link)s\">\"Information et paramètres sur l’identification des "
-"services\"</a> pour cet exercice financier."
-
+"L'entrée (<strong><em>%(ref_values)s</em></strong>) ne peut être créé "
+"parce que le numéro de service n'existe pas dans la ressource <a "
+"target=\"_blank\" href=\"%(ref_table_link)s\">\"Information et paramètres"
+" sur l’identification des services\"</a> pour cet exercice financier."
 
 #: ckanext/canada/templates/recombinant/snippets/xls_upload.html:7
 msgid "Create Single Record"
@@ -4008,7 +4014,8 @@ msgstr "Erreurs dans l'ensemble de données"
 #: ckanext/canada/templates/scheming/snippets/resource_validation_errors.html:10
 msgid "The dataset <a href=\"{0}\" target=\"_blank\">{1}</a> contains errors:"
 msgstr ""
-"L'ensemble de données <a href=\"{0}\" target=\"_blank\">{1}</a> comporte des erreurs :"
+"L'ensemble de données <a href=\"{0}\" target=\"_blank\">{1}</a> comporte "
+"des erreurs :"
 
 #: ckanext/canada/templates/scheming/snippets/resource_validation_errors.html:74
 msgid "The dataset contains invalid resources:"
@@ -4090,11 +4097,11 @@ msgstr "Sélectionner"
 msgid "Select All"
 msgstr "Sélectionner tout"
 
-#: ckanext/canada/templates/snippets/pd_datatable.html:104
+#: ckanext/canada/templates/snippets/pd_datatable.html:106
 msgid "Edit in Excel"
 msgstr "Modifier dans Excel"
 
-#: ckanext/canada/templates/snippets/pd_datatable.html:138
+#: ckanext/canada/templates/snippets/pd_datatable.html:140
 msgid "Delete records"
 msgstr "Supprimer des dossiers"
 
