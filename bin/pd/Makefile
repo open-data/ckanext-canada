@@ -405,7 +405,7 @@ $(workdir)/filtered/experiment.csv: $(workdir)/experiment.csv
 grants: upload-grants rebuild-grants
 
 .PHONY: upload-grants
-upload-grants: $(workdir)/filtered/grants.csv $(workdir)/filtered/grants-nil.csv
+upload-grants: $(workdir)/filtered/grants.csv $(workdir)/filtered/grants-nil.csv $(workdir)/filtered/grantsmonthly.csv
 	@$(echo_date) Uploading Grants and Contributions...
 	@$(ckanapi) action resource_patch -c $(registry_ini) \
 	id=1d15a62f-5656-49ad-8c88-f40ce689d831 upload@"$(workdir)/filtered/grants.csv" \
