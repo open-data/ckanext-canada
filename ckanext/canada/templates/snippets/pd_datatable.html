@@ -4,6 +4,10 @@
 {% if chromo.edit_form and can_edit %}
   {% set offset = 2 %}
 {% endif %}
+{% set fk_links = {} %}
+{% for _res_name, _fkeys in foreign_keys.items() %}
+  {% do fk_links.update({_res_name: h.url_for('recombinant.preview_table', resource_name=_res_name, owner_org=owner_org)}) %}
+{% endfor  %}
 
 <section id="dt-preview">
   <h2 id="prtable">{{_("Preview")}}</h2>
@@ -16,7 +20,7 @@
         {% endif %}
         {% set magic_priority_no_field_should_be_below = 2 %}
         {% for field in ds_fields %}
-          <th scope="col" data-priority="dtprv-{{field.priority + magic_priority_no_field_should_be_below}}">
+          <th scope="col" data-datastore-id="{{ field.id }}" data-priority="dtprv-{{field.priority + magic_priority_no_field_should_be_below}}">
             {{field.label}}<span class="sorting-cnt"><span class="sorting-icons"></span></span>
           </th>
         {% endfor %}
@@ -47,11 +51,13 @@
   };
 
   function previewdatatable(){
+    const foreign_keys = {{ foreign_keys|tojson }};
+    const foreign_links = {{ fk_links|tojson }};
     var table = $('#dtprv').DataTable({
-      "paging": true,
-      "serverSide": true,
-      "processing": true,
-      "ajax": {
+      paging: true,
+      serverSide: true,
+      processing: true,
+      ajax: {
         "url": "{{ h.url_for('canada.datatable', resource_name=resource_name, resource_id=resource_id,) }}",
         "type": "POST",
         "data": function(data){
@@ -74,17 +80,70 @@
             $(select_all).on("click", function(_event) {
               if( $(select_all).is(":checked") ){
                 table.rows().select();
-                $('#dtprv').find('td.checkboxes').find('input[type="checkbox"]').attr("checked", true);
               } else {
                 table.rows().deselect();
-                $('#dtprv').find('td.checkboxes').find('input[type="checkbox"]').attr("checked", false);
               }
             });
           }
         }
       },
+      drawCallback: function(_settings){
+        $('#dtprv').find('.ref-link').remove();
+        if( $.isEmptyObject(foreign_keys) ){
+          return;
+        }
+        let dt_queries = {};
+        for(let [_table, _keys] of Object.entries(foreign_keys)){
+          dt_queries[_table] = {}
+          for(let [_this_key, _that_key] of Object.entries(_keys)){
+            let header = $('#dtprv').find('th[data-datastore-id="' + _this_key + '"]');
+            if( header.length > 0 ){
+              let header_index = $(header).index() + 1;
+              let data_cells = $('#dtprv').find('td:nth-child(' + header_index + ')');
+              if( data_cells.length > 0 ){
+                $(data_cells).each(function(_index, _cell){
+                  $(_cell).attr('data-datastore-id', _this_key);
+                  let parent_row = $(_cell).parent('tr');
+                  if( parent_row.length > 0 ){
+                    let row_index = $(parent_row).index();
+                    let this_value = $(_cell).text();
+                    if( typeof dt_queries[_table][row_index] == 'undefined' ){
+                      dt_queries[_table][row_index] = {
+                        'this_keys': [],
+                        'dt_query': {}
+                      };
+                    }
+                    dt_queries[_table][row_index]['this_keys'].push(_this_key);
+                    dt_queries[_table][row_index]['dt_query'][_that_key] = this_value;
+                  }
+                });
+              }
+            }
+          }
+        }
+        let table_rows = $('#dtprv').find('tr');
+        if( table_rows.length > 0 ){
+          $(table_rows).each(function(_index, _row){
+            for(let [_table, _rows] of Object.entries(dt_queries)){
+              let ref_uri = foreign_links[_table];
+              for(let [_row_index, _dt_query_info] of Object.entries(_rows)){
+                if( _index - 1 == _row_index ){
+                  let encoded_query = encodeURIComponent(JSON.stringify(_dt_query_info['dt_query']));
+                  ref_uri += '?dt_query=' +  encoded_query;
+                  for( _i = 0; _i < _dt_query_info['this_keys'].length; _i++ ){
+                    let fk_cell = $(_row).find('td[data-datastore-id="' + _dt_query_info['this_keys'][_i] + '"]');
+                    if( fk_cell.length > 0 ){
+                      $(fk_cell).append('<sup class="ref-link" style="opacity:0.65;"><small><a target="_blank" href="' + ref_uri + '"><i class="fas fa-link"></i></a></small></sup>');
+                    }
+                  }
+                }
+              }
+            }
+          });
+        }
+      },
       select: {style: 'multi'},
-      "order": [[1, "asc"]],
+      order: [[1, "asc"]],
       columns: [
         {"className":"checkboxes","orderable":false,"targets":0},
         {% if chromo.edit_form and can_edit %}
@@ -175,11 +234,13 @@
     });
 
     table.on('select', function(e, dt, type, indexes){
-      var checkbox = dt.cell(indexes,0 ).node().getElementsByTagName('INPUT');
-      checkbox[0].checked = true;
+      for( let _i = 0; _i < indexes.length; _i++){
+        $($('#dtprv').find('tr')[indexes[_i] + 1]).find('td.checkboxes').find('input[type="checkbox"]').attr("checked", true).trigger('change').blur();
+      }
     }).on('deselect', function(e, dt, type, indexes){
-      var checkbox = dt.cell(indexes,0 ).node().getElementsByTagName('INPUT');
-      checkbox[0].checked = false;
+      for( let _i = 0; _i < indexes.length; _i++){
+        $($('#dtprv').find('tr')[indexes[_i] + 1]).find('td.checkboxes').find('input[type="checkbox"]').attr("checked", false).trigger('change').blur();
+      }
     });
   };
 </script>

@@ -474,11 +474,40 @@ def get_datapreview_recombinant(resource_name: str,
         fids.append(f['datastore_id'])
 
     pkids = [fids.index(k) for k in aslist(chromo['datastore_primary_key'])]
+
+    fkids = {}
+    ds_info = get_action('datastore_info')(
+        cast(Context, {'ignore_auth': True}), {'id': resource_id})
+    if 'foreignkeys' in ds_info['meta']:
+        dataset = get_action('recombinant_show')(
+            cast(Context, {'ignore_auth': True}),
+            {'dataset_type': dataset_type,
+             'owner_org': owner_org})
+        resource_names = dict((r['id'], r['name']) for r in dataset['resources'])
+        for fk in ds_info['meta']['foreignkeys']:
+            if resource_id == fk['child_table']:
+                if fk['parent_table'] not in resource_names:
+                    # do not include refs from resources not in this dataset
+                    continue
+                if resource_names[fk['parent_table']] not in fkids:
+                    fkids[resource_names[fk['parent_table']]] = dict(
+                        (fk['child_columns'][fk_pi], fk_pc)
+                        for fk_pi, fk_pc in enumerate(fk['parent_columns']))
+            elif resource_id == fk['parent_table']:
+                if fk['child_table'] not in resource_names:
+                    # do not include records from resources not in this dataset
+                    continue
+                if resource_names[fk['child_table']] not in fkids:
+                    fkids[resource_names[fk['child_table']]] = dict(
+                        (fk['parent_columns'][fk_ci], fk_cc)
+                        for fk_ci, fk_cc in enumerate(fk['child_columns']))
+
     return h.snippet('snippets/pd_datatable.html',
                      resource_name=resource_name,
                      resource_id=resource_id,
                      owner_org=owner_org,
                      primary_keys=pkids,
+                     foreign_keys=fkids,
                      dataset_type=dataset_type,
                      ds_fields=fields)
 
