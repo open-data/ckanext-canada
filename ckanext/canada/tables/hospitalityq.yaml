@@ -630,6 +630,7 @@ resources:
     negative_number_error: This value must not be negative
     zero_number_error: Zero is an invalid entry. Please enter a different number
     start_end_date_error: Start date cannot be after the end date
+    future_date_error: Date can’t be in the future
 
   examples:
     record:
