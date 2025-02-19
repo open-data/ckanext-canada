@@ -48,7 +48,10 @@ resources:
     description:
       en: This field will display the group to which the individual belongs.
       fr: Ce champ indique le groupe auquel appartient l’individu.
-    obligation: Optional
+    obligation: Mandatory
+    excel_required: true
+    form_required: true
+    validation: This field must not be empty
     format_type: Controlled List
     choices:
       MPSES:
@@ -160,7 +163,14 @@ resources:
     obligation: Mandatory
     excel_required: true
     form_required: true
-    validation: This field must not be empty
+    excel_error_formula: 'OR({default_formula},{cell}>TODAY(),{start_date}>{end_date})'
+    validation:
+      en: |
+        This field must not be empty.
+        Date can’t be in the future.
+      fr: |
+        Ce champ ne doit pas être vide.
+        La date ne doit pas être dans le futur.
     format_type: Date (Please format the data as YYYY-MM-DD)
     excel_column_width: 20
     extract_date_year: true
@@ -180,7 +190,14 @@ resources:
     obligation: Mandatory
     excel_required: true
     form_required: true
-    validation: This field must not be empty
+    excel_error_formula: 'OR({default_formula},{cell}>TODAY(),{end_date}<{start_date})'
+    validation:
+      en: |
+        This field must not be empty.
+        Date can’t be in the future.
+      fr: |
+        Ce champ ne doit pas être vide.
+        La date ne doit pas être dans le futur.
     format_type: Date (Please format the data as YYYY-MM-DD)
     excel_column_width: 20
     form_snippet: scheming/form_snippets/date.html
@@ -409,12 +426,27 @@ resources:
         Participants (Nombre de représentants
         du gouvernement du Canada)
     description:
-      en: The total number of attendees (Government of Canada Officials)
-      fr: Nombre total de participants (représentants du gouvernement du Canada).
+      en: >
+        The total number of attendees (Government of Canada Officials). For any clarification
+        regarding Government of Canada Officials, please refer to Table 2 of the Guide to the
+        Proactive Publication of Travel and Hospitality Expenses-
+        Canada.ca (https://www.tbs-sct.canada.ca/pol/doc-eng.aspx?id=32660).
+      fr: >
+        Nombre total de participants (représentants du gouvernement du Canada). Pour toute
+        clarification concernant les représentants du gouvernement du Canada, veuillez référer
+        au table 2 du Guide de publication proactive des frais de voyage et d’accueil-
+        Canada.ca (https://www.tbs-sct.canada.ca/pol/doc-fra.aspx?id=32660).
     obligation: Mandatory
     excel_required: true
     form_required: true
-    validation: This field must not be empty
+    excel_error_formula: 'OR({default_formula},VALUE({cell})<=0)'
+    validation:
+      en: |
+        This field must not be empty.
+        Zero is an invalid entry.
+      fr: |
+        Ce champ ne doit pas être vide.
+        Zéro est une entrée invalide.
     format_type: Free text
     form_attrs:
       size: 40
@@ -431,6 +463,7 @@ resources:
     obligation: Mandatory
     excel_required: true
     form_required: true
+    excel_error_formula: 'OR({default_formula},VALUE({cell})<0)'
     validation: This field must not be empty
     format_type: Free text
     form_attrs:
@@ -563,6 +596,26 @@ resources:
           errors := errors || required_error(NEW.guest_attendees, 'guest_attendees');
           errors := errors || required_error(NEW.total, 'total');
         END IF;
+
+        errors := errors || future_date_error(NEW.start_date, 'start_date');
+        errors := errors || future_date_error(NEW.end_date, 'end_date');
+
+        IF NEW.start_date::timestamp > NEW.end_date::timestamp THEN
+          errors := errors || ARRAY[['start_date', {start_end_date_error}]];
+        END IF;
+
+        IF NEW.employee_attendees IS NOT NULL AND NEW.employee_attendees::int < 0 THEN
+          errors := errors || ARRAY[['employee_attendees', {negative_number_error}]];
+        END IF;
+
+        IF NEW.guest_attendees IS NOT NULL AND NEW.guest_attendees::int < 0 THEN
+          errors := errors || ARRAY[['guest_attendees', {negative_number_error}]];
+        END IF;
+
+        IF NEW.employee_attendees IS NOT NULL AND NEW.employee_attendees::int = 0 THEN
+          errors := errors || ARRAY[['employee_attendees', {zero_number_error}]];
+        END IF;
+
         NEW.total := round(NEW.total, 2);
         IF errors = '{{}}' THEN
           RETURN NEW;
@@ -574,6 +627,10 @@ resources:
   trigger_strings:  # yaml | not supported
     ref_number_error: Comma is not allowed in Reference Number field
     multi_vendor_format_error: Invalid format for multiple commercial establishments or vendors. Use <Vendor Name>;<Vendor 2 Name> (e.g. Les Impertinentes;Les Street Monkeys)
+    negative_number_error: This value must not be negative
+    zero_number_error: Zero is an invalid entry. Please enter a different number
+    start_end_date_error: Start date cannot be after the end date
+    future_date_error: Date can’t be in the future
 
   examples:
     record:
@@ -646,43 +703,7 @@ resources:
     form_required: true
     validation: This field must not be empty
     excel_full_text_choices: true
-    choices:
-      P01:
-        en: April
-        fr: avril
-      P02:
-        en: May
-        fr: mai
-      P03:
-        en: June
-        fr: juin
-      P04:
-        en: July
-        fr: juillet
-      P05:
-        en: August
-        fr: août
-      P06:
-        en: September
-        fr: septembre
-      P07:
-        en: October
-        fr: octobre
-      P08:
-        en: November
-        fr: novembre
-      P09:
-        en: December
-        fr: décembre
-      P10:
-        en: January
-        fr: janvier
-      P11:
-        en: February
-        fr: février
-      P12:
-        en: March
-        fr: mars
+    choices_file: choices/gregor_month.yaml
 
   - datastore_id: record_created
     label: Record Creation Time
@@ -739,12 +760,12 @@ resources:
   examples:
     record:
       year: 2019
-      month: P01
+      month: '01'
     filters:
       year: 2019
     filter_one:
       year: 2019
-      month: P01
+      month: '01'
     sort: year desc, month desc
 
 excel_edge_style:
