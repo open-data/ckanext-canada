@@ -6,7 +6,7 @@ shortname: Question Period Notes
 notes: Access, upload and modify Question Period notes for your organization
 
 template_version: 3
-template_updated: 2025-01-10
+template_updated: 2025-01-10  # last qa confirmed: 2025-02-19
 
 portal_type: info
 collection: qpnotes
@@ -360,6 +360,7 @@ resources:
 - title: Proactive Publication - Question Period Notes Nothing to Report
   resource_name: qpnotes-nil
 
+  # (staging branch only): published_resource_id is different in staging??
   published_resource_id: 50754b87-f54c-41db-a0cc-590008c5a2fa
 
   create_form: true

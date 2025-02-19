@@ -7,6 +7,14 @@
       <i class="glyphicon glyphicon-plus-sign"></i>&nbsp;{{ _("Create Single Record") }}
     </a>
     <h4>{{ _("Create and update multiple records") }}</h4>
+    {% set geno = h.recombinant_get_geno(pkg.dataset_type) %}
+    {% if 'template_warning' in geno %}
+      <div class="col-md-12">
+        <div class="alert alert-warning">
+          <p>{{ h.recombinant_language_text(geno.template_warning) | safe }}</p>
+        </div>
+      </div>
+    {% endif %}
   {% endif %}
   {{ super() }}
 {% endblock %}
