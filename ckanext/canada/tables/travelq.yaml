@@ -29,8 +29,16 @@ resources:
       en: Reference Number
       fr: Numéro de référence
     description:
-      en: This field is populated by the organization. It is a unique reference number given to each line item in the spreadsheet. Having a unique identifier for each item will allow users locate a specific item in the registry should they need to modify or delete.
-      fr: Cette zone est remplie par chaque organisation. Un identificateur unique est attribué à chaque poste dans le tableur. Un identificateur unique pour chaque poste permettra aux utilisateurs de repérer un article en particulier s’ils doivent le modifier ou le supprimer.
+      en: >
+        This field is populated by the organization. It is a unique reference number
+        given to each line item in the spreadsheet. Having a unique identifier for
+        each item will allow users locate a specific item in the registry should
+        they need to modify or delete.
+      fr: >
+        Cette zone est remplie par chaque organisation. Un identificateur unique
+        est attribué à chaque poste dans le tableur. Un identificateur unique pour
+        chaque poste permettra aux utilisateurs de repérer un article en particulier
+        s’ils doivent le modifier ou le supprimer.
     obligation: Mandatory
     excel_required: true
     form_required: true
@@ -48,7 +56,10 @@ resources:
     description:
       en: This field will display the group to which the individual belongs.
       fr: Ce champ indique le groupe auquel appartient l’individu.
-    obligation: Optional
+    obligation: Mandatory
+    excel_required: true
+    form_required: true
+    validation: This field must not be empty
     format_type: Controlled List
     choices:
       MPSES:
@@ -119,8 +130,14 @@ resources:
       en: Purpose of Travel (English)
       fr: But du déplacement (anglais)
     description:
-      en: A short description, in English, of the reason for the trip. The description should be succinct (one line if possible) and provide users with a general sense of the trip's purpose. Use of acronyms should be avoided.
-      fr: Brève description de la raison du voyage, en anglais. La description doit être brève (une ligne dans la mesure du possible) et donner une indication générale aux utilisateurs du but du voyage. Il faut éviter d’utiliser des acronymes.
+      en: >
+        A short description, in English, of the reason for the trip. The description
+        should be succinct (one line if possible) and provide users with a general
+        sense of the trip's purpose. Use of acronyms should be avoided.
+      fr: >
+        Brève description de la raison du voyage, en anglais. La description doit
+        être brève (une ligne dans la mesure du possible) et donner une indication
+        générale aux utilisateurs du but du voyage. Il faut éviter d’utiliser des acronymes.
     obligation: Mandatory
     excel_required: true
     form_required: true
@@ -136,8 +153,14 @@ resources:
       en: Purpose of Travel (French)
       fr: But du déplacement (français)
     description:
-      en: A short description, in French, of the reason for the trip. The description should be succinct (one line if possible) and provide users with a general sense of the trip's purpose. Use of acronyms should be avoided.
-      fr: Brève description de la raison du voyage, en français. La description doit être brève (une ligne dans la mesure du possible) et donner une indication générale aux utilisateurs du but du voyage. Il faut éviter d’utiliser des acronymes.
+      en: >
+        A short description, in French, of the reason for the trip. The description
+        should be succinct (one line if possible) and provide users with a general
+        sense of the trip's purpose. Use of acronyms should be avoided.
+      fr: >
+        Brève description de la raison du voyage, en français. La description doit
+        être brève (une ligne dans la mesure du possible) et donner une indication
+        générale aux utilisateurs du but du voyage. Il faut éviter d’utiliser des acronymes.
     obligation: Mandatory
     excel_required: true
     form_required: true
@@ -158,7 +181,14 @@ resources:
     obligation: Mandatory
     excel_required: true
     form_required: true
-    validation: This field must not be empty
+    excel_error_formula: 'OR({default_formula},{cell}>TODAY(),{start_date}>{end_date})'
+    validation:
+      en: |
+        This field must not be empty.
+        Date can’t be in the future.
+      fr: |
+        Ce champ ne doit pas être vide.
+        La date ne doit pas être dans le futur.
     format_type: Date (Please format the data as YYYY-MM-DD)
     excel_column_width: 20
     extract_date_year: true
@@ -178,7 +208,14 @@ resources:
     obligation: Mandatory
     excel_required: true
     form_required: true
-    validation: This field must not be empty
+    excel_error_formula: 'OR({default_formula},{cell}>TODAY(),{end_date}<{start_date})'
+    validation:
+      en: |
+        This field must not be empty.
+        Date can’t be in the future.
+      fr: |
+        Ce champ ne doit pas être vide.
+        La date ne doit pas être dans le futur.
     format_type: Date (Please format the data as YYYY-MM-DD)
     excel_column_width: 20
     form_snippet: scheming/form_snippets/date.html
@@ -628,6 +665,14 @@ resources:
           errors := errors || required_error(NEW.meals, 'meals');
           errors := errors || required_error(NEW.total, 'total');
         END IF;
+
+        errors := errors || future_date_error(NEW.start_date, 'start_date');
+        errors := errors || future_date_error(NEW.end_date, 'end_date');
+
+        IF NEW.start_date::timestamp > NEW.end_date::timestamp THEN
+          errors := errors || ARRAY[['start_date', {start_end_date_error}]];
+        END IF;
+
         NEW.airfare := round(NEW.airfare, 2);
         NEW.other_transport := round(NEW.other_transport, 2);
         NEW.lodging := round(NEW.lodging, 2);
@@ -644,6 +689,8 @@ resources:
   trigger_strings:  # yaml | not supported
     ref_number_error: Comma is not allowed in Reference Number field
     destination_format_error: 'Invalid format for destination: "{}". Use <City Name>, <State/Province Name>, <Country Name> for Canada and US, or <City Name>, <Country Name> for international (e.g. Ottawa, Ontario, Canada or London, England)'
+    start_end_date_error: Start date cannot be after the end date
+    future_date_error: Date can’t be in the future
 
   examples:
     record:
@@ -696,8 +743,14 @@ resources:
       en: Year
       fr: Année
     description:
-      en: This tab / field in the template is only populated if there are no travel expenses for the reporting period. This field should be populated with the year of the reporting period.
-      fr: Cet onglet/champ du modèle n’est rempli que s'il n'y a pas de frais de voyage pour la période d’établissement de rapports. Ce champ doit être rempli avec l’année de la période d’établissement de rapports.
+      en: >
+        This tab / field in the template is only populated if there are no travel
+        expenses for the reporting period. This field should be populated with the
+        year of the reporting period.
+      fr: >
+        Cet onglet/champ du modèle n’est rempli que s'il n'y a pas de frais de
+        voyage pour la période d’établissement de rapports. Ce champ doit être
+        rempli avec l’année de la période d’établissement de rapports.
     obligation: Mandatory
     excel_required: true
     form_required: true
@@ -713,50 +766,20 @@ resources:
       en: Month
       fr: mois
     description:
-      en: This tab / field in the template is only populated if there are no travel expenses for the reporting period. This field should be populated with the month of the reporting period.
-      fr: Cet onglet/champ du modèle n’est rempli que s'il n'y a pas de frais de voyage pour la période d’établissement de rapports. Ce champ doit être rempli avec le mois de la période d’établissement de rapports.
+      en: >
+        This tab / field in the template is only populated if there are no travel expenses
+        for the reporting period. This field should be populated with the month
+        of the reporting period.
+      fr: >
+        Cet onglet/champ du modèle n’est rempli que s'il n'y a pas de frais de voyage pour la
+        période d’établissement de rapports. Ce champ doit être rempli avec le mois de la
+        période d’établissement de rapports.
     obligation: Mandatory
     excel_required: true
     form_required: true
     validation: This field must not be empty
     excel_full_text_choices: true
-    choices:
-      P01:
-        en: April
-        fr: avril
-      P02:
-        en: May
-        fr: mai
-      P03:
-        en: June
-        fr: juin
-      P04:
-        en: July
-        fr: juillet
-      P05:
-        en: August
-        fr: août
-      P06:
-        en: September
-        fr: septembre
-      P07:
-        en: October
-        fr: octobre
-      P08:
-        en: November
-        fr: novembre
-      P09:
-        en: December
-        fr: décembre
-      P10:
-        en: January
-        fr: janvier
-      P11:
-        en: February
-        fr: février
-      P12:
-        en: March
-        fr: mars
+    choices_file: choices/gregor_month.yaml
 
   - datastore_id: record_created
     label: Record Creation Time
