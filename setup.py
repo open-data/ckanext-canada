@@ -23,12 +23,12 @@ setup(
     ],
     entry_points="""
     [ckan.plugins]
-    canada_internal=ckanext.canada.plugins:DataGCCAInternal
-    canada_public=ckanext.canada.plugins:DataGCCAPublic
-    canada_forms=ckanext.canada.plugins:DataGCCAForms
-    canada_datasets=ckanext.canada.plugins:CanadaDatasetsPlugin
-    canada_security=ckanext.canada.plugins:CanadaSecurityPlugin
-    canada_theme=ckanext.canada.plugins:CanadaThemePlugin
+    canada_internal=ckanext.canada.plugin:CanadaInternalPlugin
+    canada_public=ckanext.canada.plugin:CanadaPublicPlugin
+    canada_forms=ckanext.canada.plugin:CanadaFormsPlugin
+    canada_datasets=ckanext.canada.plugin:CanadaDatasetsPlugin
+    canada_security=ckanext.canada.plugin:CanadaSecurityPlugin
+    canada_theme=ckanext.canada.plugin:CanadaThemePlugin
 
     [babel.extractors]
     ckan = ckan.lib.extract:extract_ckan

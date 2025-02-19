@@ -24,13 +24,11 @@ class TestTravelQ(CanadaTestBase):
 
         self.resource_id = rval['resources'][0]['id']
 
-
     def test_example(self):
         record = get_chromo('travelq')['examples']['record']
         self.lc.action.datastore_upsert(
             resource_id=self.resource_id,
             records=[record])
-
 
     def test_blank(self):
         with pytest.raises(ValidationError) as ve:
@@ -58,13 +56,11 @@ class TestTravelQNil(CanadaTestBase):
 
         self.resource_id = rval['resources'][1]['id']
 
-
     def test_example(self):
         record = get_chromo('travelq-nil')['examples']['record']
         self.lc.action.datastore_upsert(
             resource_id=self.resource_id,
             records=[record])
-
 
     def test_blank(self):
         with pytest.raises(ValidationError) as ve:

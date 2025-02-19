@@ -41,7 +41,7 @@
     {% endif %}
     {% if res.format %}
       <span class="badge res-tag">
-        {{ res.format }}
+        {{ h.scheming_choices_label(h.scheming_get_preset('canada_resource_format').choices, res.format) }}
       </span>
     {% endif %}
     </div>

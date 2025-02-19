@@ -4,7 +4,6 @@ geojson==2.3.0
 geomet==0.2.0.post2
 docopt
 pyyaml==6.0.1
-ckantoolkit
 pytz
 babel
 rdflib-jsonld
@@ -13,3 +12,4 @@ configparser>=3.5.0
 openpyxl==2.6.4
 python-dateutil==2.8.2  # 2.9.0 breaks stuff in PY2 (March 1 2024)
 beautifulsoup4==4.8.2
+typing_extensions==4.12.2
