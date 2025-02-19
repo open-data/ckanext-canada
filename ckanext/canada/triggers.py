@@ -328,6 +328,38 @@ def update_triggers():
     END;
         ''')
 
+    # not in future data
+    lc.action.datastore_function_create(
+        name='future_date_error',
+        or_replace=True,
+        arguments=[
+            {'argname': 'value', 'argtype': 'text'},
+            {'argname': 'field_name', 'argtype': 'text'}],
+        rettype='_text',
+        definition='''
+    BEGIN
+        IF (value = '') IS NOT FALSE AND value::timestamp > NOW() THEN
+            RETURN ARRAY[[field_name, 'Date can’t be in the future']];
+        END IF;
+        RETURN NULL;
+    END;
+        ''')
+    lc.action.datastore_function_create(
+        name='future_date_error',
+        or_replace=True,
+        arguments=[
+            {'argname': 'value', 'argtype': 'date'},
+            {'argname': 'field_name', 'argtype': 'text'}],
+        rettype='_text',
+        definition='''
+    BEGIN
+        IF value IS NOT NULL AND value::timestamp > NOW() THEN
+            RETURN ARRAY[[field_name, 'Date can’t be in the future']];
+        END IF;
+        RETURN NULL;
+    END;
+        ''')
+
     # return record with .clean (normalized value) and .error
     # (NULL or ARRAY[[field_name, error_message]])
     # Dev NOTE: \p{} regex does not work in PSQL, need to use the [:alpha:] from POSIX
