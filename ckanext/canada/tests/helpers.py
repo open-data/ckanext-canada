@@ -26,7 +26,7 @@ class MockFlashMessages(object):
     def mock_flash(self, message: str, category: str = "message") -> None:
         self.__flashes.append((category, message))
 
-    def mock_get_flashed_messages(self, with_categories: bool = False, category_filter = ()):
+    def mock_get_flashed_messages(self, with_categories: bool = False, category_filter: set = ()):
         flashes = self.__flashes
         if category_filter:
             flashes = list(filter(lambda f: f[0] in category_filter, flashes))

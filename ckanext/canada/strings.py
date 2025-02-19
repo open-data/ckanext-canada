@@ -1,8 +1,9 @@
 # coding=UTF-8
 """
-Copies of strings that need translations but babel can't find, e.g. text embedded in triggers
+Copies of strings that need translations
+but babel can't find, e.g. text embedded in triggers
 """
-_ = lambda x: x
+_ = lambda x: x  # noqa: E731
 
 # CKAN Core
 # Include any custom strings put into our CKAN fork.
@@ -87,6 +88,12 @@ _('In queue to re-index records')  # TODO: remove after upstream contrib
 _('Currently re-indexing records')  # TODO: remove after upstream contrib
 _('All records indexed')  # TODO: remove after upstream contrib
 _('Error indexing records')  # TODO: remove after upstream contrib
+_('Could not create or update resource because another resource in this dataset has errors: {}')
+_('Could not delete resource because another resource in this dataset has errors: {}')
+_('Could not reorder resources because a resource in this dataset has errors: {}')
+_('Could not create or update resource because the dataset has errors')
+_('Could not delete resource because the dataset has errors')
+_('Could not reorder resources because the dataset has errors')
 
 # strings from security
 _("Please upload a file or link to an external resource")
@@ -120,12 +127,16 @@ _('Validation Information')
 _('Validation status:')
 _('Validation timestamp:')
 _('Duration:')
+_('Validation status')
+_('Validation timestamp')
 
 # strings from misc triggers and recombinant tables
 _('Single')
 _('Repeatable')
 _('Optional')
 
-# strings from validation
-_('Validation status')
-_('Validation timestamp')
+# strings from recombinant
+_('Errors in Recombinant Resource')
+_('Refresh Recombinant Resource')
+_('The Recombinant resource is out of date')
+_('The Recombinant resource is out of date:')

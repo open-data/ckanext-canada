@@ -34,7 +34,8 @@ def main(argv):
             raise ValueError
 
     except (ValueError, getopt.GetoptError):
-        print("USAGE: python download_dac.py -o/--output outfile.yaml [-v/--verify 1|0]")
+        print("USAGE: python download_dac.py "
+              "-o/--output outfile.yaml [-v/--verify 1|0]")
         sys.exit(1)
 
     # Extract member names from API endpoint and publish as yaml
@@ -56,7 +57,9 @@ def main(argv):
                      key=lambda k: k['CONTACT_NAME'].lower())
     for record in records:
         contact = {record['CONTACT_NAME']: record['CONTACT_NAME']}
-        output.write(yaml.safe_dump(contact, encoding='utf-8', allow_unicode=True).decode('utf-8'))
+        output.write(yaml.safe_dump(contact,
+                                    encoding='utf-8',
+                                    allow_unicode=True).decode('utf-8'))
     output.close()
 
 
