@@ -837,12 +837,12 @@ resources:
   examples:
     record:
       year: 2019
-      month: P01
+      month: '01'
     filters:
       year: 2019
     filter_one:
       year: 2019
-      month: P01
+      month: '01'
     sort: year desc, month desc
 
 excel_edge_style:
