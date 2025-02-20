@@ -185,7 +185,7 @@ resources:
     obligation: Mandatory
     excel_required: true
     form_required: true
-    excel_error_formula: 'OR({default_formula},{cell}>TODAY(),{start_date}>{end_date})'
+    excel_error_formula: 'OR({default_formula},{cell}>TODAY(),AND(NOT(ISBLANK({end_date})),{start_date}>{end_date}))'
     validation:
       en: |
         This field must not be empty.
@@ -212,7 +212,7 @@ resources:
     obligation: Mandatory
     excel_required: true
     form_required: true
-    excel_error_formula: 'OR({default_formula},{cell}>TODAY(),{end_date}<{start_date})'
+    excel_error_formula: 'OR({default_formula},{cell}>TODAY(),AND(NOT(ISBLANK({start_date})),{end_date}<{start_date}))'
     validation:
       en: |
         This field must not be empty.
