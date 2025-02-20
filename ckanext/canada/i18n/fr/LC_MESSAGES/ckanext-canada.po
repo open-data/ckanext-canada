@@ -1751,7 +1751,7 @@ msgstr "Zéro est une entrée invalide. Veuillez saisir un autre nombre."
 #: ckanext/canada/tables/hospitalityq.yaml:632
 #: ckanext/canada/tables/travelq.yaml:692
 msgid "Start date cannot be after the end date"
-msgstr ""
+msgstr "La date de début ne peut pas être postérieure à la date de fin"
 
 #. SQL Trigger String for PD Type: hospitalityq
 #. SQL Trigger String for PD Type: travelq
