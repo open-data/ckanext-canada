@@ -5,6 +5,10 @@ title: Proactive Publication - Travel Expenses
 shortname: Travel Expenses
 notes: Access, upload and modify the monthly travel expense reports for your organization
 
+template_warning:
+  en: The template has been updated. Please download the latest version.
+  fr: Le modèle a été mis à jour. Veuillez télécharger la dernière version.
+
 template_version: 3
 template_updated: 2024-08-14  # last qa confirmed: 2025-02-19
 
@@ -29,8 +33,16 @@ resources:
       en: Reference Number
       fr: Numéro de référence
     description:
-      en: This field is populated by the organization. It is a unique reference number given to each line item in the spreadsheet. Having a unique identifier for each item will allow users locate a specific item in the registry should they need to modify or delete.
-      fr: Cette zone est remplie par chaque organisation. Un identificateur unique est attribué à chaque poste dans le tableur. Un identificateur unique pour chaque poste permettra aux utilisateurs de repérer un article en particulier s’ils doivent le modifier ou le supprimer.
+      en: >
+        This field is populated by the organization. It is a unique reference number
+        given to each line item in the spreadsheet. Having a unique identifier for
+        each item will allow users locate a specific item in the registry should
+        they need to modify or delete.
+      fr: >
+        Cette zone est remplie par chaque organisation. Un identificateur unique
+        est attribué à chaque poste dans le tableur. Un identificateur unique pour
+        chaque poste permettra aux utilisateurs de repérer un article en particulier
+        s’ils doivent le modifier ou le supprimer.
     obligation: Mandatory
     excel_required: true
     form_required: true
@@ -48,7 +60,10 @@ resources:
     description:
       en: This field will display the group to which the individual belongs.
       fr: Ce champ indique le groupe auquel appartient l’individu.
-    obligation: Optional
+    obligation: Mandatory
+    excel_required: true
+    form_required: true
+    validation: This field must not be empty
     format_type: Controlled List
     choices:
       MPSES:
@@ -119,8 +134,14 @@ resources:
       en: Purpose of Travel (English)
       fr: But du déplacement (anglais)
     description:
-      en: A short description, in English, of the reason for the trip. The description should be succinct (one line if possible) and provide users with a general sense of the trip's purpose. Use of acronyms should be avoided.
-      fr: Brève description de la raison du voyage, en anglais. La description doit être brève (une ligne dans la mesure du possible) et donner une indication générale aux utilisateurs du but du voyage. Il faut éviter d’utiliser des acronymes.
+      en: >
+        A short description, in English, of the reason for the trip. The description
+        should be succinct (one line if possible) and provide users with a general
+        sense of the trip's purpose. Use of acronyms should be avoided.
+      fr: >
+        Brève description de la raison du voyage, en anglais. La description doit
+        être brève (une ligne dans la mesure du possible) et donner une indication
+        générale aux utilisateurs du but du voyage. Il faut éviter d’utiliser des acronymes.
     obligation: Mandatory
     excel_required: true
     form_required: true
@@ -136,8 +157,14 @@ resources:
       en: Purpose of Travel (French)
       fr: But du déplacement (français)
     description:
-      en: A short description, in French, of the reason for the trip. The description should be succinct (one line if possible) and provide users with a general sense of the trip's purpose. Use of acronyms should be avoided.
-      fr: Brève description de la raison du voyage, en français. La description doit être brève (une ligne dans la mesure du possible) et donner une indication générale aux utilisateurs du but du voyage. Il faut éviter d’utiliser des acronymes.
+      en: >
+        A short description, in French, of the reason for the trip. The description
+        should be succinct (one line if possible) and provide users with a general
+        sense of the trip's purpose. Use of acronyms should be avoided.
+      fr: >
+        Brève description de la raison du voyage, en français. La description doit
+        être brève (une ligne dans la mesure du possible) et donner une indication
+        générale aux utilisateurs du but du voyage. Il faut éviter d’utiliser des acronymes.
     obligation: Mandatory
     excel_required: true
     form_required: true
@@ -158,7 +185,14 @@ resources:
     obligation: Mandatory
     excel_required: true
     form_required: true
-    validation: This field must not be empty
+    excel_error_formula: 'OR({default_formula},{cell}>TODAY(),AND(NOT(ISBLANK({end_date})),{start_date}>{end_date}))'
+    validation:
+      en: |
+        This field must not be empty.
+        Date can’t be in the future.
+      fr: |
+        Ce champ ne doit pas être vide.
+        La date ne doit pas être dans le futur.
     format_type: Date (Please format the data as YYYY-MM-DD)
     excel_column_width: 20
     extract_date_year: true
@@ -178,7 +212,14 @@ resources:
     obligation: Mandatory
     excel_required: true
     form_required: true
-    validation: This field must not be empty
+    excel_error_formula: 'OR({default_formula},{cell}>TODAY(),AND(NOT(ISBLANK({start_date})),{end_date}<{start_date}))'
+    validation:
+      en: |
+        This field must not be empty.
+        Date can’t be in the future.
+      fr: |
+        Ce champ ne doit pas être vide.
+        La date ne doit pas être dans le futur.
     format_type: Date (Please format the data as YYYY-MM-DD)
     excel_column_width: 20
     form_snippet: scheming/form_snippets/date.html
@@ -187,18 +228,36 @@ resources:
   - datastore_id: destination_en
     datastore_type: text
     label:
-      en: Places visited (English)
+      en: Place visited (English)
       fr: Endroits visités (anglais)
     description:
-      en: To include names of all places visited during the trip in question, in English
-      fr: Cette zone indique, en anglais, le nom de tous les endroits visités pendant le voyage.
+      en: To include name of the first place visited during the trip in question, in English.
+      fr: Inclure le nom du premier lieu visité lors du voyage en question, en anglais.
+    form_help:
+      en: >
+        Note, use the format <City Name>, <State/Province Name>, <Country Name> for Canada and US,
+        or <City Name>, <Country Name> for international (e.g. Ottawa, Ontario, Canada or London, England)
+      fr: >
+        Note : utilisez le format <Nom de la ville>, <Nom de l'État/de la province>, <Nom du pays> pour le Canada
+        et les États-Unis, ou <Nom de la ville>, <Nom du pays> pour l'international (p. ex. Ottawa, Ontario, Canada ou Londres, Angleterre)
     obligation: Mandatory
     excel_required: true
+    # Dev NOTE: excel_error_formula: Excel and Open Office Calc parity issues with REGEX. REGEX does not exist in Excel.
     form_required: true
-    validation: This field must not be empty
+    validation:
+      en: |
+        This field must not be empty
+        Must be in the format of <City Name>, <State/Province Name>, <Country Name> for Canada and US, or <City Name>, <Country Name> for international
+      fr: |
+        Ce champ ne doit pas être vide
+        Doit être au format <Nom de la ville>, <Nom de l'État/de la province>, <Nom du pays> pour le Canada et les États-Unis, ou <Nom de la ville>, <Nom du pays> pour l'international (p. ex. Ottawa, Ontario, Canada ou Londres, Angleterre)
     format_type:
-      en: "Free text – Note, use full city/region, province/state and country name where possible (i.e.: Ottawa, Ontario, Canada or New York City, New York, United States)"
-      fr: Texte narratif – indiquez les noms complets de la ville, de la région, de la province, de l’État et du pays, le cas échéant (c’est-à-dire Ottawa (Ontario) Canada OU Ville de New York (New York) États-Unis)
+      en: >
+        Free text – Note, use the format <City Name>, <State/Province Name>, <Country Name> for Canada and US,
+        or <City Name>, <Country Name> for international (e.g. Ottawa, Ontario, Canada or London, England)
+      fr: >
+        Texte libre – Note : utilisez le format <Nom de la ville>, <Nom de l'État/de la province>, <Nom du pays> pour le Canada
+        et les États-Unis, ou <Nom de la ville>, <Nom du pays> pour l'international (p. ex. Ottawa, Ontario, Canada ou Londres, Angleterre)
     form_attrs:
       size: 60
 
@@ -206,18 +265,180 @@ resources:
   - datastore_id: destination_fr
     datastore_type: text
     label:
-      en: Places visited (French)
+      en: Place visited (French)
       fr: Endroits visités (français)
     description:
-      en: To include names of all places visited during the trip in question, in French
-      fr: Cette zone indique, en français, le nom de tous les endroits visités pendant le voyage.
+      en: To include name of the first place visited during the trip in question, in French.
+      fr: Inclure le nom du premier lieu visité lors du voyage en question, en français.
+    form_help:
+      en: >
+        Note, use the format <City Name>, <State/Province Name>, <Country Name> for Canada and US,
+        or <City Name>, <Country Name> for international (e.g. Ottawa, Ontario, Canada or London, England)
+      fr: >
+        Note : utilisez le format <Nom de la ville>, <Nom de l'État/de la province>, <Nom du pays> pour le Canada
+        et les États-Unis, ou <Nom de la ville>, <Nom du pays> pour l'international (p. ex. Ottawa, Ontario, Canada ou Londres, Angleterre)
     obligation: Mandatory
     excel_required: true
+    # Dev NOTE: excel_error_formula: Excel and Open Office Calc parity issues with REGEX. REGEX does not exist in Excel.
     form_required: true
-    validation: This field must not be empty
+    validation:
+      en: |
+        This field must not be empty
+        Must be in the format of <City Name>, <State/Province Name>, <Country Name> for Canada and US, or <City Name>, <Country Name> for international
+      fr: |
+        Ce champ ne doit pas être vide
+        Doit être au format <Nom de la ville>, <Nom de l'État/de la province>, <Nom du pays> pour le Canada et les États-Unis, ou <Nom de la ville>, <Nom du pays> pour l'international
     format_type:
-      en: "Free text – Note, use full city/region, province/state and country name where possible (i.e.: Ottawa, Ontario, Canada or New York City, New York, United States)"
-      fr: Texte narratif – indiquez les noms complets de la ville, de la région, de la province, de l’État et du pays, le cas échéant (c’est-à-dire Ottawa (Ontario) Canada OU Ville de New York (New York) États-Unis)
+      en: >
+        Free text – Note, use the format <City Name>, <State/Province Name>, <Country Name> for Canada and US,
+        or <City Name>, <Country Name> for international (e.g. Ottawa, Ontario, Canada or London, England)
+      fr: >
+        Texte libre – Note : utilisez le format <Nom de la ville>, <Nom de l'État/de la province>, <Nom du pays> pour le Canada
+        et les États-Unis, ou <Nom de la ville>, <Nom du pays> pour l'international (p. ex. Ottawa, Ontario, Canada ou Londres, Angleterre)
+    form_attrs:
+      size: 60
+
+  # 3.10.2
+  - datastore_id: destination_2_en
+    datastore_type: text
+    label:
+      en: Second place visited (English)
+      fr: Deuxième lieu visité (anglais)
+    description:
+      en: To include name of second place visited during the trip in question, in English.
+      fr: Inclure le nom du deuxième lieu visité au cours du voyage en question, en anglais.
+    form_help:
+      en: >
+        Note, use the format <City Name>, <State/Province Name>, <Country Name> for Canada and US,
+        or <City Name>, <Country Name> for international (e.g. Ottawa, Ontario, Canada or London, England)
+      fr: >
+        Note : utilisez le format <Nom de la ville>, <Nom de l'État/de la province>, <Nom du pays> pour le Canada
+        et les États-Unis, ou <Nom de la ville>, <Nom du pays> pour l'international (p. ex. Ottawa, Ontario, Canada ou Londres, Angleterre)
+    obligation: Optional
+    excel_required: false
+    # Dev NOTE: excel_error_formula: Excel and Open Office Calc parity issues with REGEX. REGEX does not exist in Excel.
+    excel_required_formula: NOT(ISBLANK({destination_2_fr}))
+    form_required: false
+    validation:
+      en: |
+        Must be in the format of <City Name>, <State/Province Name>, <Country Name> for Canada and US, or <City Name>, <Country Name> for international
+      fr: |
+        Doit être au format <Nom de la ville>, <Nom de l'État/de la province>, <Nom du pays> pour le Canada et les États-Unis, ou <Nom de la ville>, <Nom du pays> pour l'international
+    format_type:
+      en: >
+        Free text – Note, use the format <City Name>, <State/Province Name>, <Country Name> for Canada and US,
+        or <City Name>, <Country Name> for international (e.g. Ottawa, Ontario, Canada or London, England)
+      fr: >
+        Texte libre – Note : utilisez le format <Nom de la ville>, <Nom de l'État/de la province>, <Nom du pays> pour le Canada
+        et les États-Unis, ou <Nom de la ville>, <Nom du pays> pour l'international (p. ex. Ottawa, Ontario, Canada ou Londres, Angleterre)
+    form_attrs:
+      size: 60
+
+  # 3.11.2
+  - datastore_id: destination_2_fr
+    datastore_type: text
+    label:
+      en: Second place visited (French)
+      fr: Deuxième lieu visité (français)
+    description:
+      en: To include name of second place visited during the trip in question, in French.
+      fr: Inclure le nom du deuxième lieu visité au cours du voyage en question, en français.
+    form_help:
+      en: >
+        Note, use the format <City Name>, <State/Province Name>, <Country Name> for Canada and US,
+        or <City Name>, <Country Name> for international (e.g. Ottawa, Ontario, Canada or London, England)
+      fr: >
+        Note : utilisez le format <Nom de la ville>, <Nom de l'État/de la province>, <Nom du pays> pour le Canada
+        et les États-Unis, ou <Nom de la ville>, <Nom du pays> pour l'international (p. ex. Ottawa, Ontario, Canada ou Londres, Angleterre)
+    obligation: Optional
+    excel_required: false
+    # Dev NOTE: excel_error_formula: Excel and Open Office Calc parity issues with REGEX. REGEX does not exist in Excel.
+    excel_required_formula: NOT(ISBLANK({destination_2_en}))
+    form_required: false
+    validation:
+      en: |
+        Must be in the format of <City Name>, <State/Province Name>, <Country Name> for Canada and US, or <City Name>, <Country Name> for international
+      fr: |
+        Doit être au format <Nom de la ville>, <Nom de l'État/de la province>, <Nom du pays> pour le Canada et les États-Unis, ou <Nom de la ville>, <Nom du pays> pour l'international
+    format_type:
+      en: >
+        Free text – Note, use the format <City Name>, <State/Province Name>, <Country Name> for Canada and US,
+        or <City Name>, <Country Name> for international (e.g. Ottawa, Ontario, Canada or London, England)
+      fr: >
+        Texte libre – Note : utilisez le format <Nom de la ville>, <Nom de l'État/de la province>, <Nom du pays> pour le Canada
+        et les États-Unis, ou <Nom de la ville>, <Nom du pays> pour l'international (p. ex. Ottawa, Ontario, Canada ou Londres, Angleterre)
+    form_attrs:
+      size: 60
+
+  # 3.10.x
+  - datastore_id: destination_other_en
+    datastore_type: text
+    label:
+      en: Other places visited (English)
+      fr: Autres lieux visités (anglais)
+    description:
+      en: To include names of all other places visited during the trip in question, in English.
+      fr: Inclure les noms de tous les autres lieux visités au cours du voyage en question, en anglais.
+    form_help:
+      en: >
+        Note, use the format <City Name>, <State/Province Name>, <Country Name>;<City 2 Name>, <Country 2 Name>
+        (e.g. Ottawa, Ontario, Canada;London, England)
+      fr: >
+        Note : utilisez le format <Nom de la ville>, <Nom de l'État/de la province>, <Nom du pays>;<Nom de la ville 2>, <Nom du pays 2>
+        (p. ex. Ottawa, Ontario, Canada;Londres, Angleterre)
+    obligation: Optional
+    excel_required: false
+    # Dev NOTE: excel_error_formula: Excel and Open Office Calc parity issues with REGEX. REGEX does not exist in Excel.
+    excel_required_formula: NOT(ISBLANK({destination_other_fr}))
+    form_required: false
+    validation:
+      en: |
+        Must be in the format of <City Name>, <State/Province Name>, <Country Name>;<City 2 Name>, <Country 2 Name>
+      fr: |
+        Doit être au format <Nom de la ville>, <Nom de l'État/de la province>, <Nom du pays>;<Nom de la ville 2>, <Nom du pays 2>
+    format_type:
+      en: >
+        Free text – Note, use the format <City Name>, <State/Province Name>, <Country Name>;<City 2 Name>, <Country 2 Name>
+        (e.g. Ottawa, Ontario, Canada;London, England)
+      fr: >
+        Texte libre – Note : utilisez le format <Nom de la ville>, <Nom de l'État/de la province>, <Nom du pays>;
+        <Nom de la ville 2>, <Nom du pays 2> (p. ex. Ottawa, Ontario, Canada;Londres, Angleterre)
+    form_attrs:
+      size: 60
+
+  # 3.11.x
+  - datastore_id: destination_other_fr
+    datastore_type: text
+    label:
+      en: Other places visited (French)
+      fr: Autres lieux visités (français)
+    description:
+      en: To include names of all other places visited during the trip in question, in French.
+      fr: Inclure les noms de tous les autres lieux visités au cours du voyage en question, en français.
+    form_help:
+      en: >
+        Note, use the format <City Name>, <State/Province Name>, <Country Name>;<City 2 Name>, <Country 2 Name>
+        (e.g. Ottawa, Ontario, Canada;London, England)
+      fr: >
+        Note : utilisez le format <Nom de la ville>, <Nom de l'État/de la province>, <Nom du pays>;<Nom de la ville 2>, <Nom du pays 2>
+        (p. ex. Ottawa, Ontario, Canada;Londres, Angleterre)
+    obligation: Optional
+    excel_required: false
+    # Dev NOTE: excel_error_formula: Excel and Open Office Calc parity issues with REGEX. REGEX does not exist in Excel.
+    excel_required_formula: NOT(ISBLANK({destination_other_en}))
+    form_required: false
+    validation:
+      en: |
+        Must be in the format of <City Name>, <State/Province Name>, <Country Name>;<City 2 Name>, <Country 2 Name>
+      fr: |
+        Doit être au format <Nom de la ville>, <Nom de l'État/de la province>, <Nom du pays>;<Nom de la ville 2>, <Nom du pays 2>
+    format_type:
+      en: >
+        Free text – Note, use the format <City Name>, <State/Province Name>, <Country Name>;<City 2 Name>, <Country 2 Name>
+        (e.g. Ottawa, Ontario, Canada;London, England)
+      fr: >
+        Texte libre – Note : utilisez le format <Nom de la ville>, <Nom de l'État/de la province>, <Nom du pays>;
+        <Nom de la ville 2>, <Nom du pays 2> (p. ex. Ottawa, Ontario, Canada;Londres, Angleterre)
     form_attrs:
       size: 60
 
@@ -415,12 +636,47 @@ resources:
           errors := errors || required_error(NEW.purpose_en, 'purpose_en');
           errors := errors || required_error(NEW.purpose_fr, 'purpose_fr');
           errors := errors || required_error(NEW.end_date, 'end_date');
+
           errors := errors || required_error(NEW.destination_en, 'destination_en');
+          crval := destination_clean_error(NEW.destination_en, 'destination_en');
+          errors := errors || crval.error;
+          NEW.destination_en := crval.clean;
+
           errors := errors || required_error(NEW.destination_fr, 'destination_fr');
+          crval := destination_clean_error(NEW.destination_fr, 'destination_fr');
+          errors := errors || crval.error;
+          NEW.destination_fr := crval.clean;
+
+          errors := errors || both_languages_error(NEW.destination_2_en, 'destination_2_en', NEW.destination_2_fr, 'destination_2_fr');
+          crval := destination_clean_error(NEW.destination_2_en, 'destination_2_en');
+          errors := errors || crval.error;
+          NEW.destination_2_en := crval.clean;
+
+          crval := destination_clean_error(NEW.destination_2_fr, 'destination_2_fr');
+          errors := errors || crval.error;
+          NEW.destination_2_fr := crval.clean;
+
+          errors := errors || both_languages_error(NEW.destination_other_en, 'destination_other_en', NEW.destination_other_fr, 'destination_other_fr');
+          crval := multi_destination_clean_error(NEW.destination_other_en, 'destination_other_en');
+          errors := errors || crval.error;
+          NEW.destination_other_en := crval.clean;
+
+          crval := multi_destination_clean_error(NEW.destination_other_fr, 'destination_other_fr');
+          errors := errors || crval.error;
+          NEW.destination_other_fr := crval.clean;
+
           errors := errors || required_error(NEW.lodging, 'lodging');
           errors := errors || required_error(NEW.meals, 'meals');
           errors := errors || required_error(NEW.total, 'total');
         END IF;
+
+        errors := errors || future_date_error(NEW.start_date, 'start_date');
+        errors := errors || future_date_error(NEW.end_date, 'end_date');
+
+        IF NEW.start_date::timestamp > NEW.end_date::timestamp THEN
+          errors := errors || ARRAY[['start_date', {start_end_date_error}]];
+        END IF;
+
         NEW.airfare := round(NEW.airfare, 2);
         NEW.other_transport := round(NEW.other_transport, 2);
         NEW.lodging := round(NEW.lodging, 2);
@@ -436,6 +692,9 @@ resources:
 
   trigger_strings:  # yaml | not supported
     ref_number_error: Comma is not allowed in Reference Number field
+    destination_format_error: 'Invalid format for destination: "{}". Use <City Name>, <State/Province Name>, <Country Name> for Canada and US, or <City Name>, <Country Name> for international (e.g. Ottawa, Ontario, Canada or London, England)'
+    start_end_date_error: Start date cannot be after the end date
+    future_date_error: Date can’t be in the future
 
   examples:
     record:
@@ -450,6 +709,10 @@ resources:
       end_date: "2019-06-23"
       destination_en: "Montreal, Quebec, Canada"
       destination_fr: "Montréal, Québec, Canada"
+      destination_2_en: "Toronto, Ontario, Canada"
+      destination_2_fr: "Toronto, Ontario, Canada"
+      destination_other_en: "San Francisco, California, USA;London, England"
+      destination_other_fr: "San Francisco, California, USA;London, England"
       airfare: "1000.00"
       other_transport: "50.00"
       lodging: "300.00"
@@ -484,8 +747,14 @@ resources:
       en: Year
       fr: Année
     description:
-      en: This tab / field in the template is only populated if there are no travel expenses for the reporting period. This field should be populated with the year of the reporting period.
-      fr: Cet onglet/champ du modèle n’est rempli que s'il n'y a pas de frais de voyage pour la période d’établissement de rapports. Ce champ doit être rempli avec l’année de la période d’établissement de rapports.
+      en: >
+        This tab / field in the template is only populated if there are no travel
+        expenses for the reporting period. This field should be populated with the
+        year of the reporting period.
+      fr: >
+        Cet onglet/champ du modèle n’est rempli que s'il n'y a pas de frais de
+        voyage pour la période d’établissement de rapports. Ce champ doit être
+        rempli avec l’année de la période d’établissement de rapports.
     obligation: Mandatory
     excel_required: true
     form_required: true
@@ -501,50 +770,20 @@ resources:
       en: Month
       fr: mois
     description:
-      en: This tab / field in the template is only populated if there are no travel expenses for the reporting period. This field should be populated with the month of the reporting period.
-      fr: Cet onglet/champ du modèle n’est rempli que s'il n'y a pas de frais de voyage pour la période d’établissement de rapports. Ce champ doit être rempli avec le mois de la période d’établissement de rapports.
+      en: >
+        This tab / field in the template is only populated if there are no travel expenses
+        for the reporting period. This field should be populated with the month
+        of the reporting period.
+      fr: >
+        Cet onglet/champ du modèle n’est rempli que s'il n'y a pas de frais de voyage pour la
+        période d’établissement de rapports. Ce champ doit être rempli avec le mois de la
+        période d’établissement de rapports.
     obligation: Mandatory
     excel_required: true
     form_required: true
     validation: This field must not be empty
     excel_full_text_choices: true
-    choices:
-      P01:
-        en: April
-        fr: avril
-      P02:
-        en: May
-        fr: mai
-      P03:
-        en: June
-        fr: juin
-      P04:
-        en: July
-        fr: juillet
-      P05:
-        en: August
-        fr: août
-      P06:
-        en: September
-        fr: septembre
-      P07:
-        en: October
-        fr: octobre
-      P08:
-        en: November
-        fr: novembre
-      P09:
-        en: December
-        fr: décembre
-      P10:
-        en: January
-        fr: janvier
-      P11:
-        en: February
-        fr: février
-      P12:
-        en: March
-        fr: mars
+    choices_file: choices/gregor_month.yaml
 
   - datastore_id: record_created
     label: Record Creation Time
@@ -602,12 +841,12 @@ resources:
   examples:
     record:
       year: 2019
-      month: P01
+      month: '01'
     filters:
       year: 2019
     filter_one:
       year: 2019
-      month: P01
+      month: '01'
     sort: year desc, month desc
 
 excel_edge_style:
