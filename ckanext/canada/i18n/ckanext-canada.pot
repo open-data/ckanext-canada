@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ckanext-canada 0.4.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-02-10 20:39+0000\n"
+"POT-Creation-Date: 2025-02-19 15:59+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -134,40 +134,40 @@ msgstr ""
 msgid "Treasury Board of Canada Secretariat"
 msgstr ""
 
-#: ckanext/canada/helpers.py:669 ckanext/canada/strings.py:14
+#: ckanext/canada/helpers.py:698 ckanext/canada/strings.py:14
 #: ckanext/canada/view.py:1277
 msgid "Members not found"
 msgstr ""
 
-#: ckanext/canada/helpers.py:804
+#: ckanext/canada/helpers.py:833
 msgid "Data awaiting load to DataStore"
 msgstr ""
 
-#: ckanext/canada/helpers.py:805
+#: ckanext/canada/helpers.py:834
 msgid "Loading data into DataStore"
 msgstr ""
 
-#: ckanext/canada/helpers.py:806
+#: ckanext/canada/helpers.py:835
 msgid "Data loaded into DataStore"
 msgstr ""
 
-#: ckanext/canada/helpers.py:807
+#: ckanext/canada/helpers.py:836
 msgid "Failed to load data into DataStore"
 msgstr ""
 
-#: ckanext/canada/helpers.py:808
+#: ckanext/canada/helpers.py:837
 msgid "Data available in DataStore"
 msgstr ""
 
-#: ckanext/canada/helpers.py:809
+#: ckanext/canada/helpers.py:838
 msgid "Resource not active in DataStore"
 msgstr ""
 
-#: ckanext/canada/helpers.py:810
+#: ckanext/canada/helpers.py:839
 msgid "DataStore status unknown"
 msgstr ""
 
-#: ckanext/canada/helpers.py:889 ckanext/canada/templates/home/quick_links.html:65
+#: ckanext/canada/helpers.py:918 ckanext/canada/templates/home/quick_links.html:65
 #: ckanext/canada/templates/scheming/package/snippets/package_form.html:28
 #: ckanext/canada/templates/snippets/cdts/header.html:31
 #: ckanext/canada/templates/snippets/dataset_facets.html:3
@@ -176,7 +176,7 @@ msgstr ""
 msgid "Open Data"
 msgstr ""
 
-#: ckanext/canada/helpers.py:890 ckanext/canada/templates/home/quick_links.html:79
+#: ckanext/canada/helpers.py:919 ckanext/canada/templates/home/quick_links.html:79
 #: ckanext/canada/templates/scheming/package/snippets/package_form.html:30
 #: ckanext/canada/templates/snippets/cdts/header.html:54
 #: ckanext/canada/templates/snippets/dataset_facets.html:5
@@ -185,23 +185,23 @@ msgstr ""
 msgid "Open Information"
 msgstr ""
 
-#: ckanext/canada/helpers.py:902
+#: ckanext/canada/helpers.py:931
 #: ckanext/canada/templates/snippets/dataset_facets.html:27
 msgid "Request sent to data owner - awaiting response"
 msgstr ""
 
-#: ckanext/canada/helpers.py:906
+#: ckanext/canada/helpers.py:935
 #: ckanext/canada/templates/snippets/publish_facet.html:44
 msgid "Pending"
 msgstr ""
 
-#: ckanext/canada/helpers.py:907 ckanext/canada/templates/package/read.html:14
+#: ckanext/canada/helpers.py:936 ckanext/canada/templates/package/read.html:14
 #: ckanext/canada/templates/snippets/package_item.html:33
 #: ckanext/canada/templates/snippets/publish_facet.html:44
 msgid "Draft"
 msgstr ""
 
-#: ckanext/canada/helpers.py:919 ckanext/canada/templates/home/quick_links.html:133
+#: ckanext/canada/helpers.py:953 ckanext/canada/templates/home/quick_links.html:133
 #: ckanext/canada/templates/snippets/cdts/header.html:57
 #: ckanext/canada/templates/snippets/dataset_facets.html:33
 #: ckanext/canada/templates/snippets/package_item.html:15
@@ -209,25 +209,25 @@ msgstr ""
 msgid "Proactive Publication"
 msgstr ""
 
-#: ckanext/canada/helpers.py:948
+#: ckanext/canada/helpers.py:982
 #: ckanext/canada/templates/snippets/publish_facet.html:25
 msgid "Published"
 msgstr ""
 
-#: ckanext/canada/helpers.py:950
+#: ckanext/canada/helpers.py:984
 #: ckanext/canada/templates/snippets/publish_facet.html:34
 msgid "Scheduled"
 msgstr ""
 
-#: ckanext/canada/helpers.py:989
+#: ckanext/canada/helpers.py:1023
 msgid "Registry Home"
 msgstr ""
 
-#: ckanext/canada/helpers.py:994
+#: ckanext/canada/helpers.py:1028
 msgid "Open Government"
 msgstr ""
 
-#: ckanext/canada/helpers.py:997
+#: ckanext/canada/helpers.py:1031
 #: ckanext/canada/templates/admin/publish_search.html:19
 #: ckanext/canada/templates/home/quick_links.html:104
 #: ckanext/canada/templates/organization/snippets/organization_search.html:8
@@ -987,7 +987,7 @@ msgstr ""
 #: ckanext/canada/templates/package/edit.html:8
 #: ckanext/canada/templates/package/resource_edit.html:3
 #: ckanext/canada/templates/package/resource_edit_base.html:7
-#: ckanext/canada/templates/snippets/pd_datatable.html:15
+#: ckanext/canada/templates/snippets/pd_datatable.html:19
 #: ckanext/canada/view.py:974
 msgid "Edit"
 msgstr ""
@@ -1060,6 +1060,7 @@ msgstr ""
 
 #: ckanext/canada/plugin/public_plugin.py:144
 #: ckanext/canada/templates/package/snippets/resource_info.html:13
+#: ckanext/canada/templates/scheming/package/resource_read.html:19
 #: ckanext/canada/templates/tabledesigner/view_snippets/cra_business_number.html:1
 msgid "Format"
 msgstr ""
@@ -1124,7 +1125,7 @@ msgstr ""
 #. SQL Trigger String for PD Type: wrongdoing
 #: ckanext/canada/tables/adminaircraft.yaml:317
 #: ckanext/canada/tables/contracts.yaml:2185 ckanext/canada/tables/grants.yaml:838
-#: ckanext/canada/tables/hospitalityq.yaml:449
+#: ckanext/canada/tables/hospitalityq.yaml:628
 #: ckanext/canada/tables/qpnotes.yaml:335
 #: ckanext/canada/tables/reclassification.yaml:271
 #: ckanext/canada/tables/travelq.yaml:438 ckanext/canada/tables/wrongdoing.yaml:247
@@ -1158,8 +1159,10 @@ msgid "Please enter a month number from 1-12"
 msgstr ""
 
 #. SQL Trigger String for PD Type: ati
+#. SQL Trigger String for PD Type: hospitalityq
 #. SQL Trigger String for PD Type: service
 #: ckanext/canada/tables/ati.yaml:142 ckanext/canada/tables/ati.yaml:254
+#: ckanext/canada/tables/hospitalityq.yaml:630
 #: ckanext/canada/tables/service.yaml:1548 ckanext/canada/tables/service.yaml:2386
 msgid "This value must not be negative"
 msgstr ""
@@ -1211,7 +1214,7 @@ msgstr ""
 #. SQL Trigger String for PD Type: travelq
 #: ckanext/canada/tables/briefingt.yaml:406
 #: ckanext/canada/tables/contractsa.yaml:396
-#: ckanext/canada/tables/hospitalityq.yaml:606
+#: ckanext/canada/tables/hospitalityq.yaml:758
 #: ckanext/canada/tables/qpnotes.yaml:459
 #: ckanext/canada/tables/reclassification.yaml:389
 #: ckanext/canada/tables/travela.yaml:645 ckanext/canada/tables/travelq.yaml:600
@@ -1460,7 +1463,7 @@ msgstr ""
 
 #. Label for PD Type: hospitalityq
 #: ckanext/canada/tables/hospitalityq.yaml:5
-#: ckanext/canada/tables/hospitalityq.yaml:405
+#: ckanext/canada/tables/hospitalityq.yaml:552
 msgid "Hospitality Expenses"
 msgstr ""
 
@@ -1471,8 +1474,30 @@ msgid ""
 "organization"
 msgstr ""
 
+#. SQL Trigger String for PD Type: hospitalityq
+#: ckanext/canada/tables/hospitalityq.yaml:629
+msgid ""
+"Invalid format for multiple commercial establishments or vendors. Use <Vendor"
+" Name>;<Vendor 2 Name> (e.g. Les Impertinentes;Les Street Monkeys)"
+msgstr ""
+
+#. SQL Trigger String for PD Type: hospitalityq
+#: ckanext/canada/tables/hospitalityq.yaml:631
+msgid "Zero is an invalid entry. Please enter a different number"
+msgstr ""
+
+#. SQL Trigger String for PD Type: hospitalityq
+#: ckanext/canada/tables/hospitalityq.yaml:632
+msgid "Start date cannot be after the end date"
+msgstr ""
+
+#. SQL Trigger String for PD Type: hospitalityq
+#: ckanext/canada/tables/hospitalityq.yaml:633
+msgid "Date can’t be in the future"
+msgstr ""
+
 #. Resource Title for PD Type: hospitalityq
-#: ckanext/canada/tables/hospitalityq.yaml:481
+#: ckanext/canada/tables/hospitalityq.yaml:669
 msgid "Proactive Publication - Hospitality Nothing to Report"
 msgstr ""
 
@@ -2964,7 +2989,7 @@ msgid "Explore"
 msgstr ""
 
 #: ckanext/canada/templates/package/snippets/resource_item.html:71
-#: ckanext/canada/templates/snippets/pd_datatable.html:9
+#: ckanext/canada/templates/snippets/pd_datatable.html:13
 msgid "Preview"
 msgstr ""
 
@@ -3273,6 +3298,10 @@ msgstr ""
 msgid "Create Organization"
 msgstr ""
 
+#: ckanext/canada/templates/scheming/package/resource_read.html:21
+msgid "unknown"
+msgstr ""
+
 #: ckanext/canada/templates/scheming/package/snippets/package_form.html:14
 msgid "Catalogue Metadata"
 msgstr ""
@@ -3424,19 +3453,19 @@ msgstr ""
 msgid "Resource Formats:"
 msgstr ""
 
-#: ckanext/canada/templates/snippets/pd_datatable.html:13
+#: ckanext/canada/templates/snippets/pd_datatable.html:17
 msgid "Select"
 msgstr ""
 
-#: ckanext/canada/templates/snippets/pd_datatable.html:71
+#: ckanext/canada/templates/snippets/pd_datatable.html:78
 msgid "Select All"
 msgstr ""
 
-#: ckanext/canada/templates/snippets/pd_datatable.html:104
+#: ckanext/canada/templates/snippets/pd_datatable.html:172
 msgid "Edit in Excel"
 msgstr ""
 
-#: ckanext/canada/templates/snippets/pd_datatable.html:138
+#: ckanext/canada/templates/snippets/pd_datatable.html:206
 msgid "Delete records"
 msgstr ""
 
