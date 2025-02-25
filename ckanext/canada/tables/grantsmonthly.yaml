@@ -594,14 +594,14 @@ resources:
       fr: Description du groupe démographique des bénéficiaires visés (anglais)
     description:
       en: >
-        This field is mandatory if “Other” is chosen as an 
-        option for the field “Intended Beneficiary demographic 
-        group”. This field has a maximum length of 1800 
+        This field is mandatory if “Other” is chosen as an
+        option for the field “Intended Beneficiary demographic
+        group”. This field has a maximum length of 1800
         characters. This text must be provided in both languages.
       fr: >
-        Ce champ est obligatoire si l'option « Autre » est choisie 
+        Ce champ est obligatoire si l'option « Autre » est choisie
         pour le champ « Groupe démographique des bénéficiaires visés ».
-        Ce champ ne peut excéder une longueur maximale de 1800 
+        Ce champ ne peut excéder une longueur maximale de 1800
         caractères. Ce texte doit être fourni en anglais et en français.
     obligation:
       en: Mandatory if “Other” is chosen as an option for the field “Intended Beneficiary demographic group”.
@@ -628,14 +628,14 @@ resources:
       fr: Description du groupe démographique des bénéficiaires visés (français)
     description:
       en: >
-        This field is mandatory if “Other” is chosen as an 
-        option for the field “Intended Beneficiary demographic 
-        group”. This field has a maximum length of 1800 
+        This field is mandatory if “Other” is chosen as an
+        option for the field “Intended Beneficiary demographic
+        group”. This field has a maximum length of 1800
         characters. This text must be provided in both languages.
       fr: >
-        Ce champ est obligatoire si l'option « Autre » est choisie 
+        Ce champ est obligatoire si l'option « Autre » est choisie
         pour le champ « Groupe démographique des bénéficiaires visés ».
-        Ce champ ne peut excéder une longueur maximale de 1800 
+        Ce champ ne peut excéder une longueur maximale de 1800
         caractères. Ce texte doit être fourni en anglais et en français.
     obligation:
       en: Mandatory if “Other” is chosen as an option for the field “Intended Beneficiary demographic group”.
@@ -715,7 +715,7 @@ resources:
 
         A “High” rating suggests the department has identified a substantial level of risk, with significant concerns regarding the recipient's financial situation, organizational capacity, and compliance with previous agreement. As a result, intensive oversight or specific conditions may be necessary to mitigate potential issues.
       fr: |
-        Le champ indique l'évaluation du risque pour l'organisation telle qu'elle a été déterminée par le département. 
+        Le champ indique l'évaluation du risque pour l'organisation telle qu'elle a été déterminée par le département.
 
         Une évaluation « faible » suggère que le département a identifié un risque minimal dans le financement de ce bénéficiaire, indiquant une forte stabilité financière, des antécédents de conformité et une capacité organisationnelle. Le bénéficiaire est considéré comme digne de confiance en ce qui concerne sa capacité à gérer les fonds et à atteindre les résultats escomptés.
 
@@ -886,7 +886,7 @@ resources:
       description_fr: "Met au point des modèles et d'autres outils pour prévoir la sécurité des bâtiments."
       expected_results_en: "Develop highly qualified personnel available to pursue various careers within industry, academia, government and other sectors of the economy."
       expected_results_fr: "Développé un personnel hautement qualifié prêt à mener une carrière variée au sein de l’industrie, du milieu académique, de la fonction publique ou dans d’autres secteurs de l’économie."
-      dem_intended_beneficiary: "Y"
+      dem_intended_beneficiary: ["Y"]
       other_dem_intended_beneficiary_description_en: "immigrant owned"
       other_dem_intended_beneficiary_description_fr: "appartenant à des immigrés"
       reason_amendment: "S"
