@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-02-10 20:39+0000\n"
+"POT-Creation-Date: 2025-02-13 13:28-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: fr\n"
@@ -228,7 +228,7 @@ msgstr "En attente"
 msgid "Draft"
 msgstr "Ébauche"
 
-#: ckanext/canada/helpers.py:919
+#: ckanext/canada/helpers.py:924
 #: ckanext/canada/templates/home/quick_links.html:133
 #: ckanext/canada/templates/snippets/cdts/header.html:57
 #: ckanext/canada/templates/snippets/dataset_facets.html:33
@@ -237,29 +237,29 @@ msgstr "Ébauche"
 msgid "Proactive Publication"
 msgstr "Publication proactive"
 
-#: ckanext/canada/helpers.py:948
+#: ckanext/canada/helpers.py:953
 #: ckanext/canada/templates/snippets/publish_facet.html:25
 msgid "Published"
 msgstr "Publié"
 
-#: ckanext/canada/helpers.py:950
+#: ckanext/canada/helpers.py:955
 #: ckanext/canada/templates/snippets/publish_facet.html:34
 msgid "Scheduled"
 msgstr "Prévu"
 
-#: ckanext/canada/helpers.py:989
+#: ckanext/canada/helpers.py:994
 msgid "Registry Home"
 msgstr "Accueil du registre"
 
-#: ckanext/canada/helpers.py:994
+#: ckanext/canada/helpers.py:999
 msgid "Open Government"
 msgstr "Gouvernement ouvert"
 
-#: ckanext/canada/helpers.py:997
+#: ckanext/canada/helpers.py:1002
 #: ckanext/canada/templates/admin/publish_search.html:19
 #: ckanext/canada/templates/home/quick_links.html:104
 #: ckanext/canada/templates/organization/snippets/organization_search.html:8
-#: ckanext/canada/templates/snippets/cdts/header.html:150
+#: ckanext/canada/templates/snippets/cdts/header.html:154
 #: ckanext/canada/templates/snippets/search_form.html:45
 #: ckanext/canada/templates/user/snippets/user_search.html:10
 msgid "Search"
@@ -291,6 +291,70 @@ msgid ""
 "Invalid request. Full text search is not supported for data with more "
 "than {} rows."
 msgstr ""
+
+#: ckanext/canada/plugin/public_plugin.py:139 ckanext/canada/plugins.py:710
+#: ckanext/canada/templates/scheming/package/snippets/package_form.html:25
+msgid "Portal Type"
+msgstr "Type de portail"
+
+#: ckanext/canada/plugin/public_plugin.py:140 ckanext/canada/plugins.py:711
+#: ckanext/canada/templates/package/deleted.html:14
+#: ckanext/canada/templates/user/new_user_form.html:18
+msgid "Organization"
+msgstr "Organisation"
+
+#: ckanext/canada/plugin/public_plugin.py:141 ckanext/canada/plugins.py:712
+msgid "Collection Type"
+msgstr "Type de collection"
+
+#: ckanext/canada/plugin/public_plugin.py:142
+#: ckanext/canada/plugin/public_plugin.py:143 ckanext/canada/plugins.py:713
+#: ckanext/canada/plugins.py:714
+msgid "Keywords"
+msgstr "Mots clés"
+
+#: ckanext/canada/plugin/public_plugin.py:144 ckanext/canada/plugins.py:715
+msgid "Subject"
+msgstr "Sujet"
+
+#: ckanext/canada/plugin/public_plugin.py:145 ckanext/canada/plugins.py:716
+#: ckanext/canada/templates/package/snippets/resource_info.html:13
+#: ckanext/canada/templates/scheming/package/resource_read.html:19
+#: ckanext/canada/templates/tabledesigner/view_snippets/cra_business_number.html:1
+msgid "Format"
+msgstr "Format"
+
+#: ckanext/canada/plugin/public_plugin.py:146 ckanext/canada/plugins.py:717
+msgid "Resource Type"
+msgstr "Type de ressource"
+
+#: ckanext/canada/plugin/public_plugin.py:147 ckanext/canada/plugins.py:718
+msgid "Maintenance and Update Frequency"
+msgstr "Fréquence d’entretien et de mise à jour"
+
+#: ckanext/canada/plugin/public_plugin.py:148 ckanext/canada/plugins.py:719
+msgid "Record Status"
+msgstr "État du dossier"
+
+#: ckanext/canada/plugin/public_plugin.py:149 ckanext/canada/plugins.py:720
+msgid "IMSO Approval"
+msgstr "Approbation du CSGI"
+
+#: ckanext/canada/plugin/public_plugin.py:150 ckanext/canada/plugins.py:721
+msgid "Jurisdiction"
+msgstr "Juridiction"
+
+#: ckanext/canada/plugin/public_plugin.py:151 ckanext/canada/plugins.py:722
+msgid "Suggestion Status"
+msgstr "État de la suggestion"
+
+#: ckanext/canada/plugin/public_plugin.py:249 ckanext/canada/plugins.py:911
+msgid "Previous"
+msgstr "Précédent"
+
+#: ckanext/canada/plugin/public_plugin.py:250 ckanext/canada/plugins.py:911
+msgid "Next"
+msgstr "Suivant"
 
 #: ckanext/canada/strings.py:12
 #: ckanext/canada/templates/package/base_form_page.html:5
@@ -710,17 +774,20 @@ msgstr ""
 #: ckanext/canada/strings.py:94
 msgid "Could not create or update resource because the dataset has errors"
 msgstr ""
-"Impossible de créer ou de mettre à jour la ressource car l'ensemble de données comporte des erreurs"
+"Impossible de créer ou de mettre à jour la ressource car l'ensemble de "
+"données comporte des erreurs"
 
 #: ckanext/canada/strings.py:95
 msgid "Could not delete resource because the dataset has errors"
 msgstr ""
-"Impossible de supprimer la ressource car l'ensemble de données comporte des erreurs"
+"Impossible de supprimer la ressource car l'ensemble de données comporte "
+"des erreurs"
 
 #: ckanext/canada/strings.py:96
 msgid "Could not reorder resources because the dataset has errors"
 msgstr ""
-"Impossible de réorganiser les ressources car l'ensemble de données comporte des erreurs"
+"Impossible de réorganiser les ressources car l'ensemble de données "
+"comporte des erreurs"
 
 #: ckanext/canada/strings.py:99
 msgid "Please upload a file or link to an external resource"
@@ -1147,68 +1214,6 @@ msgstr "L’utilisateur %r n’est pas autorisé à modifier les membres de %s"
 msgid "User %r not authorized to view members of %s"
 msgstr "L’utilisateur %r n’est pas autorisé à voir les membres de %s"
 
-#: ckanext/canada/plugin/public_plugin.py:138
-#: ckanext/canada/templates/scheming/package/snippets/package_form.html:25
-msgid "Portal Type"
-msgstr "Type de portail"
-
-#: ckanext/canada/plugin/public_plugin.py:139
-#: ckanext/canada/templates/package/deleted.html:14
-#: ckanext/canada/templates/user/new_user_form.html:18
-msgid "Organization"
-msgstr "Organisation"
-
-#: ckanext/canada/plugin/public_plugin.py:140
-msgid "Collection Type"
-msgstr "Type de collection"
-
-#: ckanext/canada/plugin/public_plugin.py:141
-#: ckanext/canada/plugin/public_plugin.py:142
-msgid "Keywords"
-msgstr "Mots clés"
-
-#: ckanext/canada/plugin/public_plugin.py:143
-msgid "Subject"
-msgstr "Sujet"
-
-#: ckanext/canada/plugin/public_plugin.py:144
-#: ckanext/canada/templates/package/snippets/resource_info.html:13
-#: ckanext/canada/templates/tabledesigner/view_snippets/cra_business_number.html:1
-msgid "Format"
-msgstr "Format"
-
-#: ckanext/canada/plugin/public_plugin.py:145
-msgid "Resource Type"
-msgstr "Type de ressource"
-
-#: ckanext/canada/plugin/public_plugin.py:146
-msgid "Maintenance and Update Frequency"
-msgstr "Fréquence d’entretien et de mise à jour"
-
-#: ckanext/canada/plugin/public_plugin.py:147
-msgid "Record Status"
-msgstr "État du dossier"
-
-#: ckanext/canada/plugin/public_plugin.py:148
-msgid "IMSO Approval"
-msgstr "Approbation du CSGI"
-
-#: ckanext/canada/plugin/public_plugin.py:149
-msgid "Jurisdiction"
-msgstr "Juridiction"
-
-#: ckanext/canada/plugin/public_plugin.py:150
-msgid "Suggestion Status"
-msgstr "État de la suggestion"
-
-#: ckanext/canada/plugin/public_plugin.py:248
-msgid "Previous"
-msgstr "Précédent"
-
-#: ckanext/canada/plugin/public_plugin.py:249
-msgid "Next"
-msgstr "Suivant"
-
 #. Title for PD Type: adminaircraft
 #. Resource Title for PD Type: adminaircraft
 #: ckanext/canada/tables/adminaircraft.yaml:5
@@ -1232,6 +1237,7 @@ msgstr ""
 #. SQL Trigger String for PD Type: adminaircraft
 #. SQL Trigger String for PD Type: contracts
 #. SQL Trigger String for PD Type: grants
+#. SQL Trigger String for PD Type: grantsmonthly
 #. SQL Trigger String for PD Type: hospitalityq
 #. SQL Trigger String for PD Type: qpnotes
 #. SQL Trigger String for PD Type: reclassification
@@ -1240,6 +1246,7 @@ msgstr ""
 #: ckanext/canada/tables/adminaircraft.yaml:317
 #: ckanext/canada/tables/contracts.yaml:2185
 #: ckanext/canada/tables/grants.yaml:838
+#: ckanext/canada/tables/grantsmonthly.yaml:856
 #: ckanext/canada/tables/hospitalityq.yaml:449
 #: ckanext/canada/tables/qpnotes.yaml:335
 #: ckanext/canada/tables/reclassification.yaml:271
@@ -1639,6 +1646,64 @@ msgstr ""
 "signalerPublication proactive - Subventions et les contributions  (Rien à"
 " signaler)"
 
+#. Title for PD Type: grantsmonthly
+#. Resource Title for PD Type: grantsmonthly
+#: ckanext/canada/tables/grantsmonthly.yaml:3
+#: ckanext/canada/tables/grantsmonthly.yaml:14
+msgid "Proactive Publication - Grants and Contributions Data Sharing Pilot"
+msgstr ""
+"Publication proactive – Projet pilote de partage des données sur les "
+"subventions et les contributions"
+
+#. Label for PD Type: grantsmonthly
+#: ckanext/canada/tables/grantsmonthly.yaml:4
+msgid "Grants and Contributions Data Sharing Pilot"
+msgstr ""
+"Projet pilote de partage des données sur les subventions et les "
+"contributions"
+
+#. Description for PD Type: grantsmonthly
+#: ckanext/canada/tables/grantsmonthly.yaml:5
+msgid ""
+"Access, upload and modify the Grants and Contributions Data Sharing Pilot"
+" reports for your organization"
+msgstr ""
+"Accès, téléversement et modifications des rapports sur les Projet pilote "
+"de partage des données sur les subventions et les contributions pour "
+"votre organisation"
+
+#. SQL Trigger String for PD Type: grantsmonthly
+#. SQL Trigger String for PD Type: service
+#: ckanext/canada/tables/grantsmonthly.yaml:857
+#: ckanext/canada/tables/service.yaml:1549
+#: ckanext/canada/tables/service.yaml:2387
+msgid "This field has a maximum length of {} characters."
+msgstr "Ce champ ne peut excéder une longueur maximale de {} caractères."
+
+#. SQL Trigger String for PD Type: grantsmonthly
+#. SQL Trigger String for PD Type: service
+#: ckanext/canada/tables/grantsmonthly.yaml:858
+#: ckanext/canada/tables/service.yaml:1550
+#: ckanext/canada/tables/service.yaml:2388
+msgid "Invalid choice: {}"
+msgstr "Choix non valide : {}"
+
+#. SQL Trigger String for PD Type: grantsmonthly
+#. SQL Trigger String for PD Type: service
+#: ckanext/canada/tables/grantsmonthly.yaml:859
+#: ckanext/canada/tables/service.yaml:1552
+#: ckanext/canada/tables/service.yaml:2391
+msgid "This field is required due to a response in a different field."
+msgstr "Ce champ est requis en raison d'une réponse présente dans un autre champ."
+
+#. SQL Trigger String for PD Type: grantsmonthly
+#. SQL Trigger String for PD Type: service
+#: ckanext/canada/tables/grantsmonthly.yaml:860
+#: ckanext/canada/tables/service.yaml:1553
+#: ckanext/canada/tables/service.yaml:2392
+msgid "This text must be provided in both languages"
+msgstr "Ce texte doit être fourni dans les deux langues"
+
 #. Title for PD Type: hospitalityq
 #. Resource Title for PD Type: hospitalityq
 #: ckanext/canada/tables/hospitalityq.yaml:4
@@ -1777,34 +1842,10 @@ msgid "This field must be either a number, \"NA\", or \"ND\""
 msgstr "Ce champ doit être un chiffre, \"NA\", ou \"ND\""
 
 #. SQL Trigger String for PD Type: service
-#: ckanext/canada/tables/service.yaml:1549
-#: ckanext/canada/tables/service.yaml:2387
-msgid "This field has a maximum length of {} characters."
-msgstr "Ce champ ne peut excéder une longueur maximale de {} caractères."
-
-#. SQL Trigger String for PD Type: service
-#: ckanext/canada/tables/service.yaml:1550
-#: ckanext/canada/tables/service.yaml:2388
-msgid "Invalid choice: {}"
-msgstr "Choix non valide : {}"
-
-#. SQL Trigger String for PD Type: service
 #: ckanext/canada/tables/service.yaml:1551
 #: ckanext/canada/tables/service.yaml:2390
 msgid "Invalid input syntax for type integer: {}"
 msgstr "Syntaxe d'entrée invalide pour le type entier : {}"
-
-#. SQL Trigger String for PD Type: service
-#: ckanext/canada/tables/service.yaml:1552
-#: ckanext/canada/tables/service.yaml:2391
-msgid "This field is required due to a response in a different field."
-msgstr "Ce champ est requis en raison d'une réponse présente dans un autre champ."
-
-#. SQL Trigger String for PD Type: service
-#: ckanext/canada/tables/service.yaml:1553
-#: ckanext/canada/tables/service.yaml:2392
-msgid "This text must be provided in both languages"
-msgstr "Ce texte doit être fourni dans les deux langues"
 
 #. SQL Trigger String for PD Type: service
 #: ckanext/canada/tables/service.yaml:1554
@@ -1822,8 +1863,8 @@ msgid ""
 "Performance Results record."
 msgstr ""
 "L'entrée de service ne peut être supprimée parce qu’il existe une ou "
-"plusieurs normes de service ({refValues}) qui y font référence dans la ressource  "
-"\"Normes de service et résultats du rendement\""
+"plusieurs normes de service ({refValues}) qui y font référence dans la "
+"ressource  \"Normes de service et résultats du rendement\""
 
 #. Resource Title for PD Type: service
 #: ckanext/canada/tables/service.yaml:1628
@@ -1854,9 +1895,9 @@ msgid ""
 " exist in the Service Identification Information & Metrics resource for "
 "that fiscal year."
 msgstr ""
-"L'entrée ({refValues}) ne peut être créé parce que le numéro de service n'existe pas "
-"dans la ressource \"Information et paramètres sur l’identification des "
-"services\" pour cet exercice financier."
+"L'entrée ({refValues}) ne peut être créé parce que le numéro de service "
+"n'existe pas dans la ressource \"Information et paramètres sur "
+"l’identification des services\" pour cet exercice financier."
 
 #. Title for PD Type: travela
 #. Resource Title for PD Type: travela
@@ -2437,7 +2478,7 @@ msgid "Load more"
 msgstr "En charger davantage"
 
 #: ckanext/canada/templates/admin/base.html:5
-#: ckanext/canada/templates/snippets/cdts/header.html:197
+#: ckanext/canada/templates/snippets/cdts/header.html:201
 msgid "Admin"
 msgstr "Administrateur"
 
@@ -2698,14 +2739,14 @@ msgstr ""
 " gouvernement."
 
 #: ckanext/canada/templates/home/quick_links.html:91
-#: ckanext/canada/templates/snippets/cdts/header.html:135
+#: ckanext/canada/templates/snippets/cdts/header.html:139
 #: ckanext/canada/templates/snippets/dataset_facets.html:4
 #: ckanext/canada/templates/snippets/package_item.html:19
 msgid "Open Dialogue"
 msgstr "Dialogue ouvert"
 
 #: ckanext/canada/templates/home/quick_links.html:98
-#: ckanext/canada/templates/snippets/cdts/header.html:144
+#: ckanext/canada/templates/snippets/cdts/header.html:148
 msgid "Consultations master dataset"
 msgstr "Données de consultations principals"
 
@@ -2743,27 +2784,27 @@ msgstr "Voir les members liés à votre organisation"
 msgid "View the list of members linked to your organization."
 msgstr "Voir la liste des membres liés à votre organisation."
 
-#: ckanext/canada/templates/home/quick_links.html:151
-#: ckanext/canada/templates/snippets/cdts/header.html:106
+#: ckanext/canada/templates/home/quick_links.html:152
+#: ckanext/canada/templates/snippets/cdts/header.html:110
 msgid "Reports Tabled in Parliament"
 msgstr "Rapports déposés au Parlement"
 
-#: ckanext/canada/templates/home/quick_links.html:152
+#: ckanext/canada/templates/home/quick_links.html:153
 msgid "Access, add or modify your reports tabled in Parliament."
 msgstr ""
 "Consultez vos rapports déposés au Parlement, ajoutez-y du contenu ou "
 "modifiez-les."
 
-#: ckanext/canada/templates/home/quick_links.html:159
+#: ckanext/canada/templates/home/quick_links.html:160
 msgid "Briefing packages"
 msgstr "Documents d’information"
 
-#: ckanext/canada/templates/home/quick_links.html:166
-#: ckanext/canada/templates/snippets/cdts/header.html:118
+#: ckanext/canada/templates/home/quick_links.html:167
+#: ckanext/canada/templates/snippets/cdts/header.html:122
 msgid "New or incoming ministers"
 msgstr "Documents d’information pour les nouveaux ministres"
 
-#: ckanext/canada/templates/home/quick_links.html:167
+#: ckanext/canada/templates/home/quick_links.html:168
 msgid ""
 "Access, add or modify briefing package information for your new or "
 "incoming minister."
@@ -2771,12 +2812,12 @@ msgstr ""
 "Consultez la trousse d’information pour le nouveau ministre, ajoutez-y du"
 " contenu ou modifiez-la."
 
-#: ckanext/canada/templates/home/quick_links.html:174
-#: ckanext/canada/templates/snippets/cdts/header.html:122
+#: ckanext/canada/templates/home/quick_links.html:175
+#: ckanext/canada/templates/snippets/cdts/header.html:126
 msgid "New or incoming deputy heads"
 msgstr "Documents d’information pour les nouveaux administrateurs généraux"
 
-#: ckanext/canada/templates/home/quick_links.html:175
+#: ckanext/canada/templates/home/quick_links.html:176
 msgid ""
 "Access, add or modify briefing package information for your new or "
 "incoming deputy head."
@@ -2784,14 +2825,14 @@ msgstr ""
 "Consultez la trousse d’information pour le nouvel administrateur général,"
 " ajoutez-y du contenu ou modifiez-la."
 
-#: ckanext/canada/templates/home/quick_links.html:182
-#: ckanext/canada/templates/snippets/cdts/header.html:126
+#: ckanext/canada/templates/home/quick_links.html:183
+#: ckanext/canada/templates/snippets/cdts/header.html:130
 msgid "Parliamentary Committee appearances for ministers"
 msgstr ""
 "Documents d’information à l’intention des ministres pour les comparutions"
 " devant un comité parlementaire"
 
-#: ckanext/canada/templates/home/quick_links.html:183
+#: ckanext/canada/templates/home/quick_links.html:184
 msgid ""
 "Access, add or modify briefing packages for Parliamentary Committee "
 "appearance for your minister."
@@ -2799,14 +2840,14 @@ msgstr ""
 "Consultez la trousse d’information pour la comparution de votre ministre "
 "devant un comité parlementaire, ajoutez-y du contenu ou modifiez-la."
 
-#: ckanext/canada/templates/home/quick_links.html:190
-#: ckanext/canada/templates/snippets/cdts/header.html:130
+#: ckanext/canada/templates/home/quick_links.html:191
+#: ckanext/canada/templates/snippets/cdts/header.html:134
 msgid "Parliamentary Committee appearances for deputy heads"
 msgstr ""
 "Documents d’information à l’intention des administrateurs généraux pour "
 "les comparutions devant un comité parlementaire"
 
-#: ckanext/canada/templates/home/quick_links.html:191
+#: ckanext/canada/templates/home/quick_links.html:192
 msgid ""
 "Access, add or modify briefing packages for Parliamentary Committee "
 "appearance for your deputy head."
@@ -2860,7 +2901,7 @@ msgstr "Gérer"
 #: ckanext/canada/templates/organization/index.html:26
 #: ckanext/canada/templates/organization/members.html:10
 #: ckanext/canada/templates/organization/read_base.html:7
-#: ckanext/canada/templates/snippets/cdts/header.html:154
+#: ckanext/canada/templates/snippets/cdts/header.html:158
 #: ckanext/canada/templates/user/read.html:28
 #: ckanext/canada/templates/user/read_base.html:12
 #: ckanext/canada/templates/user/read_base.html:71
@@ -3677,8 +3718,10 @@ msgid ""
 "Performance Results record.</a>"
 msgstr ""
 "L'entrée de service ne peut être supprimée parce qu’il existe une ou "
-"plusieurs normes de service (<strong><em>%(ref_values)s</em></strong>) qui y font référence dans la ressource  "
-"<a target=\"_blank\" href=\"%(ref_table_link)s\">\"Normes de service et résultats du rendement\"</a>"
+"plusieurs normes de service (<strong><em>%(ref_values)s</em></strong>) "
+"qui y font référence dans la ressource  <a target=\"_blank\" "
+"href=\"%(ref_table_link)s\">\"Normes de service et résultats du "
+"rendement\"</a>"
 
 #: ckanext/canada/templates/recombinant/snippets/service_std_upsert_fk_error.html:6
 #, python-format
@@ -3688,9 +3731,10 @@ msgid ""
 "href=\"%(ref_table_link)s\">Service Identification Information & Metrics "
 "resource</a> for that fiscal year."
 msgstr ""
-"L'entrée (<strong><em>%(ref_values)s</em></strong>) ne peut être créé parce que le numéro de service n'existe pas "
-"dans la ressource <a target=\"_blank\" href=\"%(ref_table_link)s\">\"Information et paramètres sur l’identification des "
-"services\"</a> pour cet exercice financier."
+"L'entrée (<strong><em>%(ref_values)s</em></strong>) ne peut être créé "
+"parce que le numéro de service n'existe pas dans la ressource <a "
+"target=\"_blank\" href=\"%(ref_table_link)s\">\"Information et paramètres"
+" sur l’identification des services\"</a> pour cet exercice financier."
 
 #: ckanext/canada/templates/recombinant/snippets/xls_upload.html:7
 msgid "Create Single Record"
@@ -3829,6 +3873,10 @@ msgstr "Mise à jour de l'Organisation"
 msgid "Create Organization"
 msgstr "Créer une Organisation"
 
+#: ckanext/canada/templates/scheming/package/resource_read.html:21
+msgid "unknown"
+msgstr "Inconnue"
+
 #: ckanext/canada/templates/scheming/package/snippets/package_form.html:14
 msgid "Catalogue Metadata"
 msgstr "Métadonnées de catalogue"
@@ -3914,7 +3962,8 @@ msgstr "Erreurs dans l'ensemble de données"
 #: ckanext/canada/templates/scheming/snippets/resource_validation_errors.html:10
 msgid "The dataset <a href=\"{0}\" target=\"_blank\">{1}</a> contains errors:"
 msgstr ""
-"L'ensemble de données <a href=\"{0}\" target=\"_blank\">{1}</a> comporte des erreurs :"
+"L'ensemble de données <a href=\"{0}\" target=\"_blank\">{1}</a> comporte "
+"des erreurs :"
 
 #: ckanext/canada/templates/scheming/snippets/resource_validation_errors.html:74
 msgid "The dataset contains invalid resources:"
@@ -3996,11 +4045,11 @@ msgstr "Sélectionner"
 msgid "Select All"
 msgstr "Sélectionner tout"
 
-#: ckanext/canada/templates/snippets/pd_datatable.html:104
+#: ckanext/canada/templates/snippets/pd_datatable.html:106
 msgid "Edit in Excel"
 msgstr "Modifier dans Excel"
 
-#: ckanext/canada/templates/snippets/pd_datatable.html:138
+#: ckanext/canada/templates/snippets/pd_datatable.html:140
 msgid "Delete records"
 msgstr "Supprimer des dossiers"
 
@@ -4072,25 +4121,25 @@ msgstr ""
 msgid "Home"
 msgstr "Accueil"
 
-#: ckanext/canada/templates/snippets/cdts/header.html:159
+#: ckanext/canada/templates/snippets/cdts/header.html:163
 msgid "FAQ"
 msgstr "FAQ"
 
-#: ckanext/canada/templates/snippets/cdts/header.html:189
+#: ckanext/canada/templates/snippets/cdts/header.html:193
 #: ckanext/canada/templates/user/dashboard.html:9
 #: ckanext/canada/templates/user/dashboard_datasets.html:19
 msgid "Dashboard"
 msgstr "Tableau de bord"
 
-#: ckanext/canada/templates/snippets/cdts/header.html:205
+#: ckanext/canada/templates/snippets/cdts/header.html:209
 msgid "Get Help"
 msgstr "Obtenez de l’aide"
 
-#: ckanext/canada/templates/snippets/cdts/header.html:226
+#: ckanext/canada/templates/snippets/cdts/header.html:230
 msgid "Signed in as"
 msgstr "Connecté en tant que"
 
-#: ckanext/canada/templates/snippets/cdts/header.html:226
+#: ckanext/canada/templates/snippets/cdts/header.html:230
 msgid "View profile"
 msgstr "Afficher le profil"
 
