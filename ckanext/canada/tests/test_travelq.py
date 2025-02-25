@@ -43,7 +43,6 @@ class TestTravelQ(CanadaTestBase):
         assert 'key' in err
         assert 'ref_number' in err['key'][0]
 
-
     def test_destination_format(self):
         record = get_chromo('travelq')['examples']['record']
         partial_err_msg = 'Invalid format for destination'
