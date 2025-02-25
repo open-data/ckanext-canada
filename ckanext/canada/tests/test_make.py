@@ -346,6 +346,8 @@ class TestMakePD(CanadaTestBase):
         self._setup_ini(self.ckan_ini)
 
         self._setup_pd(type='grants', nil_type='grants-nil')
+        # (staging branch only): grantsmonthly is included in make-grants
+        self._setup_pd(type='grantsmonthly')
 
         make_process = subprocess.Popen(["make upload-grants"], shell=True, cwd=MAKE_PATH, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
         stdout, stderr = make_process.communicate()
