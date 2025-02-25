@@ -39,7 +39,6 @@ class TestHospitalityQ(CanadaTestBase):
         assert 'key' in err
         assert 'ref_number' in err['key'][0]
 
-
     def test_vendor_format(self):
         record = get_chromo('hospitalityq')['examples']['record']
 

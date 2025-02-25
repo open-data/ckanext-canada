@@ -524,29 +524,37 @@ def update_triggers():
             {'argname': 'error', 'argtype': '_text', 'argmode': 'out'}],
         rettype='record',
         definition='''
-            DECLARE
-                vendor_matches text[] := regexp_split_to_array(value::text, ';'::text);
-                vendor_matches_group text;
-                clean_val_match text[] := NULL;
-                clean_val text := NULL;
-            BEGIN
-                IF value <> '' AND array_length(vendor_matches, 1) < 1 THEN
-                    error := ARRAY[[field_name, 'Invalid format for multiple commercial establishments or vendors. Use <Vendor Name>;<Vendor 2 Name> (e.g. Les Impertinentes;Les Street Monkeys)']];
+    DECLARE
+        vendor_matches text[] := regexp_split_to_array(value::text, ';'::text);
+        vendor_matches_group text;
+        clean_val_match text[] := NULL;
+        clean_val text := NULL;
+    BEGIN
+        IF value <> '' AND array_length(vendor_matches, 1) < 1 THEN
+            error := ARRAY[[field_name,
+            'Invalid format for multiple commercial establishments or '
+            'vendors. Use <Vendor Name>;<Vendor 2 Name> (e.g. Les '
+            'Impertinentes;Les Street Monkeys)']];
+        END IF;
+        IF value <> '' AND array_length(vendor_matches, 1) >= 1 THEN
+            FOREACH vendor_matches_group IN ARRAY vendor_matches LOOP
+                clean_val_match := regexp_match(
+                vendor_matches_group::text, '^\s*([^\s].+?)\s*$'::text);
+                IF clean_val_match IS NULL THEN
+                    error := ARRAY[[field_name,
+                    'Invalid format for multiple commercial establishments '
+                    'or vendors. Use <Vendor Name>;<Vendor 2 Name> (e.g. '
+                    'Les Impertinentes;Les Street Monkeys)']];
+                ELSE
+                    clean_val := array_to_string(ARRAY[clean_val,
+                    array_to_string(clean_val_match, '')], ';');
                 END IF;
-                IF value <> '' AND array_length(vendor_matches, 1) >= 1 THEN
-                    FOREACH vendor_matches_group IN ARRAY vendor_matches LOOP
-                        clean_val_match := regexp_match(vendor_matches_group::text, '^\s*([^\s].+?)\s*$'::text);
-                        IF clean_val_match IS NULL THEN
-                            error := ARRAY[[field_name, 'Invalid format for multiple commercial establishments or vendors. Use <Vendor Name>;<Vendor 2 Name> (e.g. Les Impertinentes;Les Street Monkeys)']];
-                        ELSE
-                            clean_val := array_to_string(ARRAY[clean_val, array_to_string(clean_val_match, '')], ';');
-                        END IF;
-                    END LOOP;
-                    IF clean_val IS NOT NULL THEN
-                        clean := clean_val;
-                    END IF;
-                END IF;
-            END;
+            END LOOP;
+            IF clean_val IS NOT NULL THEN
+                clean := clean_val;
+            END IF;
+        END IF;
+    END;
         ''')
 
     # A: When sysadmin passes '*' as user_modified, replace with '' and
