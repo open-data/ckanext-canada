@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-02-10 20:39+0000\n"
+"POT-Creation-Date: 2025-02-19 16:23+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: fr\n"
@@ -158,41 +158,41 @@ msgstr "Numéro d’entreprise non valide"
 msgid "Treasury Board of Canada Secretariat"
 msgstr "Secrétariat du Conseil du Trésor du Canada"
 
-#: ckanext/canada/helpers.py:669 ckanext/canada/strings.py:14
+#: ckanext/canada/helpers.py:698 ckanext/canada/strings.py:14
 #: ckanext/canada/view.py:1277
 msgid "Members not found"
 msgstr "Membres non trouvés"
 
-#: ckanext/canada/helpers.py:804
+#: ckanext/canada/helpers.py:833
 msgid "Data awaiting load to DataStore"
 msgstr "Le versement des données dans DataStore est en attente"
 
-#: ckanext/canada/helpers.py:805
+#: ckanext/canada/helpers.py:834
 msgid "Loading data into DataStore"
 msgstr "Le versement des données dans DataStore est en cours"
 
-#: ckanext/canada/helpers.py:806
+#: ckanext/canada/helpers.py:835
 msgid "Data loaded into DataStore"
 msgstr "Les données ont été versées dans DataStore"
 
-#: ckanext/canada/helpers.py:807
+#: ckanext/canada/helpers.py:836
 msgid "Failed to load data into DataStore"
 msgstr "Les données n'ont pas été versées dans DataStore"
 
-#: ckanext/canada/helpers.py:808
+#: ckanext/canada/helpers.py:837
 msgid "Data available in DataStore"
 msgstr "Les données sont disponibles dans DataStore"
 
-#: ckanext/canada/helpers.py:809
+#: ckanext/canada/helpers.py:838
 msgid "Resource not active in DataStore"
 msgstr "La ressource est inactive dans DataStore"
 
-#: ckanext/canada/helpers.py:810
+#: ckanext/canada/helpers.py:839
 msgid "DataStore status unknown"
 msgstr "L'état de DataStore est inconnu"
 
 # Search facets
-#: ckanext/canada/helpers.py:889
+#: ckanext/canada/helpers.py:918
 #: ckanext/canada/templates/home/quick_links.html:65
 #: ckanext/canada/templates/scheming/package/snippets/package_form.html:28
 #: ckanext/canada/templates/snippets/cdts/header.html:31
@@ -202,7 +202,7 @@ msgstr "L'état de DataStore est inconnu"
 msgid "Open Data"
 msgstr "Données ouvertes"
 
-#: ckanext/canada/helpers.py:890
+#: ckanext/canada/helpers.py:919
 #: ckanext/canada/templates/home/quick_links.html:79
 #: ckanext/canada/templates/scheming/package/snippets/package_form.html:30
 #: ckanext/canada/templates/snippets/cdts/header.html:54
@@ -212,23 +212,23 @@ msgstr "Données ouvertes"
 msgid "Open Information"
 msgstr "Information ouverte"
 
-#: ckanext/canada/helpers.py:902
+#: ckanext/canada/helpers.py:931
 #: ckanext/canada/templates/snippets/dataset_facets.html:27
 msgid "Request sent to data owner - awaiting response"
 msgstr "Demande envoyée au propriétaire des données, en attente de réponse"
 
-#: ckanext/canada/helpers.py:906
+#: ckanext/canada/helpers.py:935
 #: ckanext/canada/templates/snippets/publish_facet.html:44
 msgid "Pending"
 msgstr "En attente"
 
-#: ckanext/canada/helpers.py:907 ckanext/canada/templates/package/read.html:14
+#: ckanext/canada/helpers.py:936 ckanext/canada/templates/package/read.html:14
 #: ckanext/canada/templates/snippets/package_item.html:33
 #: ckanext/canada/templates/snippets/publish_facet.html:44
 msgid "Draft"
 msgstr "Ébauche"
 
-#: ckanext/canada/helpers.py:919
+#: ckanext/canada/helpers.py:953
 #: ckanext/canada/templates/home/quick_links.html:133
 #: ckanext/canada/templates/snippets/cdts/header.html:57
 #: ckanext/canada/templates/snippets/dataset_facets.html:33
@@ -237,25 +237,25 @@ msgstr "Ébauche"
 msgid "Proactive Publication"
 msgstr "Publication proactive"
 
-#: ckanext/canada/helpers.py:948
+#: ckanext/canada/helpers.py:982
 #: ckanext/canada/templates/snippets/publish_facet.html:25
 msgid "Published"
 msgstr "Publié"
 
-#: ckanext/canada/helpers.py:950
+#: ckanext/canada/helpers.py:984
 #: ckanext/canada/templates/snippets/publish_facet.html:34
 msgid "Scheduled"
 msgstr "Prévu"
 
-#: ckanext/canada/helpers.py:989
+#: ckanext/canada/helpers.py:1023
 msgid "Registry Home"
 msgstr "Accueil du registre"
 
-#: ckanext/canada/helpers.py:994
+#: ckanext/canada/helpers.py:1028
 msgid "Open Government"
 msgstr "Gouvernement ouvert"
 
-#: ckanext/canada/helpers.py:997
+#: ckanext/canada/helpers.py:1031
 #: ckanext/canada/templates/admin/publish_search.html:19
 #: ckanext/canada/templates/home/quick_links.html:104
 #: ckanext/canada/templates/organization/snippets/organization_search.html:8
@@ -710,17 +710,20 @@ msgstr ""
 #: ckanext/canada/strings.py:94
 msgid "Could not create or update resource because the dataset has errors"
 msgstr ""
-"Impossible de créer ou de mettre à jour la ressource car l'ensemble de données comporte des erreurs"
+"Impossible de créer ou de mettre à jour la ressource car l'ensemble de "
+"données comporte des erreurs"
 
 #: ckanext/canada/strings.py:95
 msgid "Could not delete resource because the dataset has errors"
 msgstr ""
-"Impossible de supprimer la ressource car l'ensemble de données comporte des erreurs"
+"Impossible de supprimer la ressource car l'ensemble de données comporte "
+"des erreurs"
 
 #: ckanext/canada/strings.py:96
 msgid "Could not reorder resources because the dataset has errors"
 msgstr ""
-"Impossible de réorganiser les ressources car l'ensemble de données comporte des erreurs"
+"Impossible de réorganiser les ressources car l'ensemble de données "
+"comporte des erreurs"
 
 #: ckanext/canada/strings.py:99
 msgid "Please upload a file or link to an external resource"
@@ -1092,7 +1095,7 @@ msgstr " d’enregistrements publiés."
 #: ckanext/canada/templates/package/edit.html:8
 #: ckanext/canada/templates/package/resource_edit.html:3
 #: ckanext/canada/templates/package/resource_edit_base.html:7
-#: ckanext/canada/templates/snippets/pd_datatable.html:15
+#: ckanext/canada/templates/snippets/pd_datatable.html:19
 #: ckanext/canada/view.py:974
 msgid "Edit"
 msgstr "Modifier"
@@ -1173,6 +1176,7 @@ msgstr "Sujet"
 
 #: ckanext/canada/plugin/public_plugin.py:144
 #: ckanext/canada/templates/package/snippets/resource_info.html:13
+#: ckanext/canada/templates/scheming/package/resource_read.html:19
 #: ckanext/canada/templates/tabledesigner/view_snippets/cra_business_number.html:1
 msgid "Format"
 msgstr "Format"
@@ -1243,7 +1247,7 @@ msgstr ""
 #: ckanext/canada/tables/hospitalityq.yaml:449
 #: ckanext/canada/tables/qpnotes.yaml:335
 #: ckanext/canada/tables/reclassification.yaml:271
-#: ckanext/canada/tables/travelq.yaml:438
+#: ckanext/canada/tables/travelq.yaml:690
 #: ckanext/canada/tables/wrongdoing.yaml:247
 msgid "Comma is not allowed in Reference Number field"
 msgstr "La virgule n’est pas autorisée dans le champ du Numéro de Référence"
@@ -1341,7 +1345,7 @@ msgstr ""
 #: ckanext/canada/tables/qpnotes.yaml:459
 #: ckanext/canada/tables/reclassification.yaml:389
 #: ckanext/canada/tables/travela.yaml:645
-#: ckanext/canada/tables/travelq.yaml:600
+#: ckanext/canada/tables/travelq.yaml:835
 msgid "This must list the year you are reporting on (not the fiscal year)."
 msgstr "Veuillez indiquer l’année civile visée par le rapport."
 
@@ -1409,7 +1413,7 @@ msgid ""
 "format or the value \"NA\""
 msgstr ""
 "Ce champ doit contenir les trois premiers chiffres d’un code postal dans "
-"le format A1A ou la valeur « NA. »"
+"le format A1A ou la valeur « NA. »"
 
 #. SQL Trigger String for PD Type: contracts
 #: ckanext/canada/tables/contracts.yaml:2187
@@ -1423,7 +1427,7 @@ msgstr ""
 #. SQL Trigger String for PD Type: contracts
 #: ckanext/canada/tables/contracts.yaml:2188
 msgid "This field is limited to only 3 or 4 digits."
-msgstr "Ce champ a une limite de 3 ou 4 chiffres."
+msgstr "Ce champ a une limite de 3 ou 4 chiffres."
 
 #. SQL Trigger String for PD Type: contracts
 #: ckanext/canada/tables/contracts.yaml:2189
@@ -1440,7 +1444,7 @@ msgid ""
 "If the value XX (none) is entered, then no other value can be entered in "
 "this field."
 msgstr ""
-"Si la valeur XX (aucun) est saisie, aucune autre valeur ne peut être "
+"Si la valeur XX (aucun) est saisie, aucune autre valeur ne peut être "
 "saisie dans ce champ."
 
 #. SQL Trigger String for PD Type: contracts
@@ -1476,7 +1480,7 @@ msgid ""
 "If the value 00 (none) is entered, then no other value can be entered in "
 "this field."
 msgstr ""
-"Si la valeur 00 (aucun) est saisie, aucune autre valeur ne peut être "
+"Si la valeur 00 (aucun) est saisie, aucune autre valeur ne peut être "
 "saisie dans ce champ."
 
 #. SQL Trigger String for PD Type: contracts
@@ -1486,9 +1490,9 @@ msgid ""
 " a value other than XX (None) selected in the Trade Agreement data field,"
 " then a Limited Tendering value other than 00 (none) must be entered."
 msgstr ""
-"Lorsque « AOTC », « AON » ou « PAC » est sélectionné dans le champ de "
-"données « Procédure d’appel d’offres » et qu’une valeur autre que XX "
-"(aucun) est sélectionnée dans le champ de données « Accord commercial », "
+"Lorsque « AOTC », « AON » ou « PAC » est sélectionné dans le champ de "
+"données « Procédure d’appel d’offres » et qu’une valeur autre que XX "
+"(aucun) est sélectionnée dans le champ de données « Accord commercial », "
 "une valeur d’appel d’offres limité autre que 00 (aucun) doit être saisie."
 
 #. SQL Trigger String for PD Type: contracts
@@ -1499,11 +1503,11 @@ msgid ""
 "value other than “XX” (None) is selected, limited tendering cannot have a"
 " value of “0” or “00” (None)."
 msgstr ""
-"Si les options « TC » (Concurrentielle - Traditionnelle), « TN » (non "
-"concurrentielle) ou « AC » (préavis d’attribution de contrat) sont "
-"sélectionnées et qu’une entente de marché ayant une valeur autre que « XX"
-" » (nulle) est sélectionnée, le champ Appel d’offres restreint ne peut "
-"avoir la valeur « 0 » ou « 00 » (nulle)."
+"Si les options « TC » (Concurrentielle - Traditionnelle), « TN » (non "
+"concurrentielle) ou « AC » (préavis d’attribution de contrat) sont "
+"sélectionnées et qu’une entente de marché ayant une valeur autre que « XX"
+" » (nulle) est sélectionnée, le champ Appel d’offres restreint ne peut "
+"avoir la valeur « 0 » ou « 00 » (nulle)."
 
 #. SQL Trigger String for PD Type: contracts
 #: ckanext/canada/tables/contracts.yaml:2199
@@ -1511,7 +1515,7 @@ msgid ""
 "This field must be N, No or Non, if the Procurement Strategy for "
 "Aboriginal Business field is MS or VS."
 msgstr ""
-"Ce champ doit correspondre à « Nul », « Non » ou « Aucun », lorsque le "
+"Ce champ doit correspondre à « Nul », « Non » ou « Aucun », lorsque le "
 "champ Stratégie d’approvisionnement auprès des entreprises autochtones "
 "est MS ou VS."
 
@@ -1521,7 +1525,7 @@ msgid ""
 "This field must be populated with a 1 if the solicitation procedure is "
 "identified as non-competitive (TN) or Advance Contract Award Notice (AC)."
 msgstr ""
-"Ce champ doit être rempli par un « 1 », lorsque la procédure d’appel "
+"Ce champ doit être rempli par un « 1 », lorsque la procédure d’appel "
 "d’offres est identifiée comme non concurrentielle (AON) ou comme préavis "
 "d’adjudication de contrat (PAC)."
 
@@ -1532,7 +1536,7 @@ msgid ""
 "identified as non-competitive (TN) or advance contract award notice (AC) "
 "or was identified as an Amendment (A) in the Instrument type data field."
 msgstr ""
-"Lorsque ce champ est rempli, il doit être rempli par un « 0 », si "
+"Lorsque ce champ est rempli, il doit être rempli par un « 0 », si "
 "l’approvisionnement a été identifié comme non concurrentiel (AON) ou "
 "comme préavis d’adjudication de contrat (PAC) ou a été identifié comme "
 "une modification (M) dans le champ de données du type d’instrument."
@@ -1544,7 +1548,7 @@ msgid ""
 "identified as competitive (open bidding (OB), traditional competitive "
 "(TC) or selective tendering (ST))."
 msgstr ""
-"Ce champ peut être uniquement rempli par un « 0 », lorsque "
+"Ce champ peut être uniquement rempli par un « 0 », lorsque "
 "l’approvisionnement a été identifié comme concurrentiel (appel d’offres "
 "ouvert [APO], appel d’offres traditionnel, concurrentiel [AOTC] ou appel "
 "d’offres sélectif [AOS])."
@@ -1822,8 +1826,8 @@ msgid ""
 "Performance Results record."
 msgstr ""
 "L'entrée de service ne peut être supprimée parce qu’il existe une ou "
-"plusieurs normes de service ({refValues}) qui y font référence dans la ressource  "
-"\"Normes de service et résultats du rendement\""
+"plusieurs normes de service ({refValues}) qui y font référence dans la "
+"ressource  \"Normes de service et résultats du rendement\""
 
 #. Resource Title for PD Type: service
 #: ckanext/canada/tables/service.yaml:1628
@@ -1854,9 +1858,9 @@ msgid ""
 " exist in the Service Identification Information & Metrics resource for "
 "that fiscal year."
 msgstr ""
-"L'entrée ({refValues}) ne peut être créé parce que le numéro de service n'existe pas "
-"dans la ressource \"Information et paramètres sur l’identification des "
-"services\" pour cet exercice financier."
+"L'entrée ({refValues}) ne peut être créé parce que le numéro de service "
+"n'existe pas dans la ressource \"Information et paramètres sur "
+"l’identification des services\" pour cet exercice financier."
 
 #. Title for PD Type: travela
 #. Resource Title for PD Type: travela
@@ -1887,7 +1891,7 @@ msgid "Proactive Publication - Travel Expenses"
 msgstr "Publication proactive - Dépenses de voyage"
 
 #. Label for PD Type: travelq
-#: ckanext/canada/tables/travelq.yaml:5 ckanext/canada/tables/travelq.yaml:391
+#: ckanext/canada/tables/travelq.yaml:5 ckanext/canada/tables/travelq.yaml:608
 msgid "Travel Expenses"
 msgstr "Dépenses de voyage"
 
@@ -1900,8 +1904,30 @@ msgstr ""
 "Accès, téléversement et modification des rapports mensuels sur les frais "
 "de déplacement pour votre organisation"
 
+#. SQL Trigger String for PD Type: travelq
+#: ckanext/canada/tables/travelq.yaml:691
+msgid ""
+"Invalid format for destination: \"{}\". Use <City Name>, <State/Province "
+"Name>, <Country Name> for Canada and US, or <City Name>, <Country Name> "
+"for international (e.g. Ottawa, Ontario, Canada or London, England)"
+msgstr ""
+"Format non valide pour la destination : \"{}\". Utilisez <Nom de la "
+"ville>, <Nom de l'État/de la province>, <Nom du pays> pour le Canada et "
+"les États-Unis, ou <Nom de la ville>, <Nom du pays> pour l'international "
+"(p. ex. Ottawa, Ontario, Canada ou Londres, Angleterre)"
+
+#. SQL Trigger String for PD Type: travelq
+#: ckanext/canada/tables/travelq.yaml:692
+msgid "Start date cannot be after the end date"
+msgstr "La date de début ne peut pas être postérieure à la date de fin"
+
+#. SQL Trigger String for PD Type: travelq
+#: ckanext/canada/tables/travelq.yaml:693
+msgid "Date can’t be in the future"
+msgstr "La date ne doit pas être dans le futur"
+
 #. Resource Title for PD Type: travelq
-#: ckanext/canada/tables/travelq.yaml:472
+#: ckanext/canada/tables/travelq.yaml:731
 msgid "Proactive Publication - Travel Expenses Nothing to Report"
 msgstr "Publication proactive - Dépenses de voyage (Rien à signaler)"
 
@@ -2844,8 +2870,8 @@ msgstr "Êtes-vous sûr de vouloir supprimer le membre {name}?"
 #: ckanext/canada/templates/package/confirm_delete.html:12
 #: ckanext/canada/templates/package/confirm_delete_resource.html:25
 #: ckanext/canada/templates/recombinant/confirm_select_delete.html:40
-#: ckanext/canada/templates/recombinant/create_pd_record.html:87
-#: ckanext/canada/templates/recombinant/update_pd_record.html:90
+#: ckanext/canada/templates/recombinant/create_pd_record.html:88
+#: ckanext/canada/templates/recombinant/update_pd_record.html:91
 #: ckanext/canada/templates/user/confirm_delete.html:13
 msgid "Cancel"
 msgstr "Annuler"
@@ -3442,7 +3468,7 @@ msgid "Explore"
 msgstr "Explorer"
 
 #: ckanext/canada/templates/package/snippets/resource_item.html:71
-#: ckanext/canada/templates/snippets/pd_datatable.html:9
+#: ckanext/canada/templates/snippets/pd_datatable.html:13
 msgid "Preview"
 msgstr "Aperçu"
 
@@ -3606,13 +3632,13 @@ msgstr "Créer un dossier"
 msgid "The form contains invalid entries:"
 msgstr "Le formulaire contient des entrées non valides :"
 
-#: ckanext/canada/templates/recombinant/create_pd_record.html:55
-#: ckanext/canada/templates/recombinant/update_pd_record.html:58
+#: ckanext/canada/templates/recombinant/create_pd_record.html:56
+#: ckanext/canada/templates/recombinant/update_pd_record.html:59
 msgid "You may select or deselect multiple entries (Ctrl+Click)."
 msgstr "Vous pouvez sélectionner ou désélectionner de multiples entrées."
 
-#: ckanext/canada/templates/recombinant/create_pd_record.html:88
-#: ckanext/canada/templates/recombinant/update_pd_record.html:91
+#: ckanext/canada/templates/recombinant/create_pd_record.html:89
+#: ckanext/canada/templates/recombinant/update_pd_record.html:92
 #: ckanext/canada/templates/scheming/package/snippets/package_form.html:63
 msgid "Save"
 msgstr "Enregistrer"
@@ -3677,8 +3703,10 @@ msgid ""
 "Performance Results record.</a>"
 msgstr ""
 "L'entrée de service ne peut être supprimée parce qu’il existe une ou "
-"plusieurs normes de service (<strong><em>%(ref_values)s</em></strong>) qui y font référence dans la ressource  "
-"<a target=\"_blank\" href=\"%(ref_table_link)s\">\"Normes de service et résultats du rendement\"</a>"
+"plusieurs normes de service (<strong><em>%(ref_values)s</em></strong>) "
+"qui y font référence dans la ressource  <a target=\"_blank\" "
+"href=\"%(ref_table_link)s\">\"Normes de service et résultats du "
+"rendement\"</a>"
 
 #: ckanext/canada/templates/recombinant/snippets/service_std_upsert_fk_error.html:6
 #, python-format
@@ -3688,9 +3716,10 @@ msgid ""
 "href=\"%(ref_table_link)s\">Service Identification Information & Metrics "
 "resource</a> for that fiscal year."
 msgstr ""
-"L'entrée (<strong><em>%(ref_values)s</em></strong>) ne peut être créé parce que le numéro de service n'existe pas "
-"dans la ressource <a target=\"_blank\" href=\"%(ref_table_link)s\">\"Information et paramètres sur l’identification des "
-"services\"</a> pour cet exercice financier."
+"L'entrée (<strong><em>%(ref_values)s</em></strong>) ne peut être créé "
+"parce que le numéro de service n'existe pas dans la ressource <a "
+"target=\"_blank\" href=\"%(ref_table_link)s\">\"Information et paramètres"
+" sur l’identification des services\"</a> pour cet exercice financier."
 
 #: ckanext/canada/templates/recombinant/snippets/xls_upload.html:7
 msgid "Create Single Record"
@@ -3829,6 +3858,11 @@ msgstr "Mise à jour de l'Organisation"
 msgid "Create Organization"
 msgstr "Créer une Organisation"
 
+#: ckanext/canada/templates/scheming/package/resource_read.html:21
+#, fuzzy
+msgid "unknown"
+msgstr "Inconnue"
+
 #: ckanext/canada/templates/scheming/package/snippets/package_form.html:14
 msgid "Catalogue Metadata"
 msgstr "Métadonnées de catalogue"
@@ -3914,7 +3948,8 @@ msgstr "Erreurs dans l'ensemble de données"
 #: ckanext/canada/templates/scheming/snippets/resource_validation_errors.html:10
 msgid "The dataset <a href=\"{0}\" target=\"_blank\">{1}</a> contains errors:"
 msgstr ""
-"L'ensemble de données <a href=\"{0}\" target=\"_blank\">{1}</a> comporte des erreurs :"
+"L'ensemble de données <a href=\"{0}\" target=\"_blank\">{1}</a> comporte "
+"des erreurs :"
 
 #: ckanext/canada/templates/scheming/snippets/resource_validation_errors.html:74
 msgid "The dataset contains invalid resources:"
@@ -3988,19 +4023,19 @@ msgstr "Demande envoyée au propriétaire des données, en attente de réponse"
 msgid "Resource Formats:"
 msgstr "Formats des ressources :"
 
-#: ckanext/canada/templates/snippets/pd_datatable.html:13
+#: ckanext/canada/templates/snippets/pd_datatable.html:17
 msgid "Select"
 msgstr "Sélectionner"
 
-#: ckanext/canada/templates/snippets/pd_datatable.html:71
+#: ckanext/canada/templates/snippets/pd_datatable.html:78
 msgid "Select All"
 msgstr "Sélectionner tout"
 
-#: ckanext/canada/templates/snippets/pd_datatable.html:104
+#: ckanext/canada/templates/snippets/pd_datatable.html:172
 msgid "Edit in Excel"
 msgstr "Modifier dans Excel"
 
-#: ckanext/canada/templates/snippets/pd_datatable.html:138
+#: ckanext/canada/templates/snippets/pd_datatable.html:206
 msgid "Delete records"
 msgstr "Supprimer des dossiers"
 
@@ -4399,6 +4434,7 @@ msgid "The password must match"
 msgstr "Le mot de passe doit être identique"
 
 #: ckanext/canada/templates/user/new_user_form.html:29
+#, fuzzy
 msgid ""
 "<h2>Terms and Conditions for the Open Government Registry</h2> "
 "<p><em>Privacy Statement</em></p> <p>The Government of Canada is "
@@ -4707,10 +4743,10 @@ msgstr "Télécharger vers le DataStore"
 #~ msgstr "Modifier ensemble de données "
 
 #~ msgid "Next: Add Data"
-#~ msgstr "Suivant : Ajouter une ressource ou un connexe"
+#~ msgstr "Suivant : Ajouter une ressource ou un connexe"
 
 #~ msgid "Next: Additional Info"
-#~ msgstr "Suivant : renseignements supplémentaires"
+#~ msgstr "Suivant : renseignements supplémentaires"
 
 #~ msgid "Data and Resources"
 #~ msgstr "Données et ressources"
@@ -5087,40 +5123,40 @@ msgstr "Télécharger vers le DataStore"
 #~ msgstr "Importer"
 
 #~ msgid "Goods Contracts $10K and under - Total Value ($ 000)"
-#~ msgstr "Marchés de biens de 10 000 $ et moins - Valeur totale (000 $)"
+#~ msgstr "Marchés de biens de 10 000 $ et moins - Valeur totale (000 $)"
 
 #~ msgid "Number of Service Contracts $10K and under"
-#~ msgstr "Nombre de marchés de services de 10 000 $ et moins"
+#~ msgstr "Nombre de marchés de services de 10 000 $ et moins"
 
 #~ msgid "Service Contracts $10K and under – Original Value ($ 000)"
-#~ msgstr "Marchés de services de 10 000 $ et moins – Valeur initiale (000 $)"
+#~ msgstr "Marchés de services de 10 000 $ et moins – Valeur initiale (000 $)"
 
 #~ msgid "Service Contracts $10K and under - Total Value ($ 000)"
-#~ msgstr "Marchés de services de 10 000 $ et moins - Valeur totale (000 $)"
+#~ msgstr "Marchés de services de 10 000 $ et moins - Valeur totale (000 $)"
 
 #~ msgid "Number of Construction Contracts $10K and under"
-#~ msgstr "Nombre de marchés de services de construction de 10 000 $ et moins"
+#~ msgstr "Nombre de marchés de services de construction de 10 000 $ et moins"
 
 #~ msgid "Construction Contracts $10K and under – Original Value ($ 000)"
 #~ msgstr ""
 #~ "Marchés de services de construction de"
-#~ " 10 000 $ et moins - Valeur "
+#~ " 10 000 $ et moins - Valeur "
 #~ "initiale (000 $)"
 
 #~ msgid "Construction Contracts $10K and under - Total Value ($ 000)"
 #~ msgstr ""
 #~ "Marchés de services de construction de"
-#~ " 10 000 $ et moins - Valeur "
+#~ " 10 000 $ et moins - Valeur "
 #~ "totale (000 $)"
 
 #~ msgid "Total Number of Contracts $10K and under"
-#~ msgstr "Nombre total de marchés de 10 000 $ et moins"
+#~ msgstr "Nombre total de marchés de 10 000 $ et moins"
 
 #~ msgid "Total Original Value of All Contracts $10K and under ($ 000)"
-#~ msgstr "Valeur initiale totale de tous les marchés de 10 000 $ et moins (000 $)"
+#~ msgstr "Valeur initiale totale de tous les marchés de 10 000 $ et moins (000 $)"
 
 #~ msgid "Total Value of All Contracts $10K and under ($ 000)"
-#~ msgstr "Valeur totale de tous les marchés de 10 000 $ et moins (000 $)"
+#~ msgstr "Valeur totale de tous les marchés de 10 000 $ et moins (000 $)"
 
 #~ msgid "Number of Acquisition Card Transactions for all Dollar Values"
 #~ msgstr ""
@@ -5993,7 +6029,7 @@ msgstr "Télécharger vers le DataStore"
 #~ "000)"
 #~ msgstr ""
 #~ "Modifications de marchés de biens de "
-#~ "-10 000 $ à 10 000 $ - "
+#~ "-10 000 $ à 10 000 $ - "
 #~ "Valeur nette des modifications (000 $)"
 
 #~ msgid ""
@@ -6001,8 +6037,8 @@ msgstr "Télécharger vers le DataStore"
 #~ "to $10K – Net Amendment Value ($"
 #~ " 000)"
 #~ msgstr ""
-#~ "Marchés de services de -10 000 $"
-#~ " à 10 000 $ - Valeur nette "
+#~ "Marchés de services de -10 000 $"
+#~ " à 10 000 $ - Valeur nette "
 #~ "des modifications (000 $)"
 
 #~ msgid ""
@@ -6011,7 +6047,7 @@ msgstr "Télécharger vers le DataStore"
 #~ "($ 000)"
 #~ msgstr ""
 #~ "Modifications de marchés de construction "
-#~ "de -10 000 $ à 10 000 $ "
+#~ "de -10 000 $ à 10 000 $ "
 #~ "- Valeur nette des modifications (000"
 #~ " $)"
 
@@ -6022,7 +6058,7 @@ msgstr "Télécharger vers le DataStore"
 #~ msgstr ""
 #~ "Valeur totale des modifications nettes "
 #~ "de toutes les modifications de marchés"
-#~ " de -10 000 $ à 10 000 $"
+#~ " de -10 000 $ à 10 000 $"
 #~ " (000 $)"
 
 #~ msgid ""
@@ -6231,7 +6267,7 @@ msgstr "Télécharger vers le DataStore"
 #~ msgstr "Aucun rapport n’est disponible"
 
 #~ msgid "Open by Default Portal"
-#~ msgstr "Portail « Ouvert par défaut »"
+#~ msgstr "Portail « Ouvert par défaut »"
 
 #~ msgid "Comment(s)"
 #~ msgstr "Commentaire(s)"
@@ -6253,7 +6289,7 @@ msgstr "Télécharger vers le DataStore"
 #~ " <a href=\"http://open.canada.ca/en/forms/contact-"
 #~ "us\">contact us</a>."
 #~ msgstr ""
-#~ "L’initiative « Ouvert par défaut » "
+#~ "L’initiative « Ouvert par défaut » "
 #~ "donne accès aux documents de travail "
 #~ "utilisés par le gouvernement du Canada."
 #~ " La plupart de ces renseignements ne"
@@ -8430,7 +8466,7 @@ msgstr "Télécharger vers le DataStore"
 #~ msgstr "Créer un compte"
 
 #~ msgid "Activity from:"
-#~ msgstr "Activité de :"
+#~ msgstr "Activité de :"
 
 #~ msgid "Search list..."
 #~ msgstr "Liste de recherche..."
