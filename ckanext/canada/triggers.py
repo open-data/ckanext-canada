@@ -314,6 +314,155 @@ def update_triggers():
     END;
         ''')
 
+    # not in future data
+    lc.action.datastore_function_create(
+        name='future_date_error',
+        or_replace=True,
+        arguments=[
+            {'argname': 'value', 'argtype': 'text'},
+            {'argname': 'field_name', 'argtype': 'text'}],
+        rettype='_text',
+        definition='''
+    BEGIN
+        IF (value = '') IS NOT FALSE AND value::timestamp > NOW() THEN
+            RETURN ARRAY[[field_name, 'Date can’t be in the future']];
+        END IF;
+        RETURN NULL;
+    END;
+        ''')
+    lc.action.datastore_function_create(
+        name='future_date_error',
+        or_replace=True,
+        arguments=[
+            {'argname': 'value', 'argtype': 'date'},
+            {'argname': 'field_name', 'argtype': 'text'}],
+        rettype='_text',
+        definition='''
+    BEGIN
+        IF value IS NOT NULL AND value::timestamp > NOW() THEN
+            RETURN ARRAY[[field_name, 'Date can’t be in the future']];
+        END IF;
+        RETURN NULL;
+    END;
+        ''')
+
+    # return record with .clean (normalized value) and .error
+    # (NULL or ARRAY[[field_name, error_message]])
+    # Dev NOTE: \p{} regex does not work in PSQL, need to use the [:alpha:] from POSIX
+    lc.action.datastore_function_create(
+        name='destination_clean_error',
+        or_replace=True,
+        arguments=[
+            {'argname': 'value', 'argtype': 'text'},
+            {'argname': 'field_name', 'argtype': 'text'},
+            {'argname': 'clean', 'argtype': 'text', 'argmode': 'out'},
+            {'argname': 'error', 'argtype': '_text', 'argmode': 'out'}],
+        rettype='record',
+        definition='''
+    DECLARE
+        destination_match text[] := regexp_split_to_array(value::text, ','::text);
+        destination_match_group text;
+        clean_val_match text[] := NULL;
+        clean_val text := NULL;
+    BEGIN
+        IF value <> '' AND (
+        array_length(destination_match, 1) <= 1 OR
+        array_length(destination_match, 1) > 3) THEN
+            error := ARRAY[[field_name,
+            'Invalid format for destination: "{}". Use <City Name>, '
+            '<State/Province Name>, <Country Name> for Canada and US, '
+            'or <City Name>, <Country Name> for international (e.g. '
+            'Ottawa, Ontario, Canada or London, England)\uF8FF' || value]];
+        END IF;
+        IF value <> '' AND array_length(
+        destination_match, 1) > 1 AND
+        array_length(destination_match, 1) <= 3 THEN
+            FOREACH destination_match_group IN ARRAY destination_match LOOP
+                clean_val_match := regexp_match(
+                destination_match_group::text, '^\s*([^\s].+?)\s*$'::text);
+                IF clean_val_match IS NULL THEN
+                    error := ARRAY[[field_name,
+                    'Invalid format for destination: "{}". Use <City Name>, '
+                    '<State/Province Name>, <Country Name> for Canada and US, '
+                    'or <City Name>, <Country Name> for international (e.g. '
+                    'Ottawa, Ontario, Canada or London, England)\uF8FF' || value]];
+                ELSE
+                    clean_val := array_to_string(ARRAY[clean_val,
+                    array_to_string(clean_val_match, ''::text)], ', '::text);
+                END IF;
+            END LOOP;
+            IF clean_val IS NOT NULL THEN
+                clean := clean_val;
+            END IF;
+        END IF;
+    END;
+        ''')
+
+    # return record with .clean (normalized value) and .error
+    # (NULL or ARRAY[[field_name, error_message]])
+    # Dev NOTE: \p{} regex does not work in PSQL, need to use the [:alpha:] from POSIX
+    lc.action.datastore_function_create(
+        name='multi_destination_clean_error',
+        or_replace=True,
+        arguments=[
+            {'argname': 'value', 'argtype': 'text'},
+            {'argname': 'field_name', 'argtype': 'text'},
+            {'argname': 'clean', 'argtype': 'text', 'argmode': 'out'},
+            {'argname': 'error', 'argtype': '_text', 'argmode': 'out'}],
+        rettype='record',
+        definition='''
+    DECLARE
+        destination_matches text[] := regexp_split_to_array(value::text, ';'::text);
+        destination_matches_group text;
+        destination_match text[];
+        destination_match_group text;
+        clean_val text := NULL;
+        clean_inner_val_match text[] := NULL;
+        clean_inner_val text := NULL;
+    BEGIN
+        IF value <> '' THEN
+            FOREACH destination_matches_group IN ARRAY destination_matches LOOP
+                destination_match := regexp_split_to_array(
+                destination_matches_group, ','::text);
+                IF array_length(destination_match, 1) <= 1 OR
+                array_length(destination_match, 1) > 3 THEN
+                    error := error || ARRAY[[field_name,
+                    'Invalid format for destination: "{}". Use <City Name>, '
+                    '<State/Province Name>, <Country Name> for Canada and US, '
+                    'or <City Name>, <Country Name> for international (e.g. '
+                    'Ottawa, Ontario, Canada or London, '
+                    'England)\uF8FF' || destination_matches_group]];
+                ELSE
+                    clean_inner_val := NULL;
+                    FOREACH destination_match_group IN ARRAY destination_match LOOP
+                        clean_inner_val_match := regexp_match(
+                        destination_match_group::text, '^\s*([^\s].+?)\s*$'::text);
+                        IF clean_inner_val_match IS NULL THEN
+                            error := error || ARRAY[[field_name,
+                            'Invalid format for destination: "{}". Use <City Name>, '
+                            '<State/Province Name>, <Country Name> for Canada and US,'
+                            ' or <City Name>, <Country Name> for international (e.g. '
+                            'Ottawa, Ontario, Canada or London, '
+                            'England)\uF8FF' || destination_matches_group]];
+                        ELSE
+                            clean_inner_val := array_to_string(
+                            ARRAY[clean_inner_val,array_to_string(
+                            clean_inner_val_match, ''::text)], ', '::text);
+                        END IF;
+                    END LOOP;
+                END IF;
+                IF clean_inner_val IS NOT NULL THEN
+                    clean_val := array_to_string(
+                    ARRAY[clean_val, clean_inner_val], ';'::text);
+                END IF;
+            END LOOP;
+            IF clean_val IS NOT NULL THEN
+                clean := clean_val;
+            END IF;
+        END IF;
+    END;
+        ''')
+
     lc.action.datastore_function_create(
         name='must_be_empty_error',
         or_replace=True,
