@@ -221,7 +221,7 @@ class CanadaPublicPlugin(p.SingletonPlugin, DefaultTranslation):
         if has_request_context():
             lang = h.lang()
 
-        if(
+        if (
           pkg_dict.get('org_section') and
           lang in pkg_dict['org_section']
           and pkg_dict['org_section'][lang]):
