@@ -63,6 +63,7 @@ class CanadaPublicPlugin(p.SingletonPlugin, DefaultTranslation):
     # IConfigurer
     def update_config(self, config: 'CKANConfig'):
         config['ckan.auth.public_user_details'] = False
+        config['ckan.auth.public_activity_stream_detail'] = False
 
         recombinant_definitions = config.get('recombinant.definitions', '')
         assert 'ckanext.canada:tables/ati.yaml' in recombinant_definitions
