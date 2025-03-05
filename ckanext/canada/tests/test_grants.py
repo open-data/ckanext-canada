@@ -47,6 +47,7 @@ class TestGrants(CanadaTestBase):
             resource_id=self.resource_id,
             records=[record])
 
+
 # (staging fork only): grants monthly
 class TestGrantsMonthly(CanadaTestBase):
     @classmethod
