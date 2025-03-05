@@ -4,12 +4,13 @@ from ckan.types import (
     ChainedAction,
     AuthFunction,
     ChainedAuthFunction,
-    CKANApp
+    CKANApp,
+    DataDict
 )
 from ckan.common import CKANConfig
 
 import os
-from flask import Blueprint
+from flask import Blueprint, has_request_context
 from click import Command
 
 import ckan.plugins as p
@@ -18,6 +19,7 @@ from ckan.plugins.toolkit import _, g, h
 import ckan.lib.helpers as core_helpers
 import ckan.lib.formatters as formatters
 
+from ckanext.citeproc.interfaces import ICiteProcMappings
 from ckanext.activity.logic.validators import object_id_validators
 from ckanext.tabledesigner.interfaces import IColumnTypes
 from ckanext.tabledesigner.column_types import ColumnType
@@ -46,6 +48,7 @@ class CanadaPublicPlugin(p.SingletonPlugin, DefaultTranslation):
     p.implements(p.IClick)
     p.implements(IColumnTypes)
     p.implements(p.IBlueprint)
+    p.implements(ICiteProcMappings)
 
     # DefaultTranslation, ITranslation
     @classmethod
@@ -212,6 +215,48 @@ class CanadaPublicPlugin(p.SingletonPlugin, DefaultTranslation):
     # IBlueprint
     def get_blueprint(self) -> List[Blueprint]:
         return [canada_views]
+
+    def _canada_cite_map(self, cite_data: DataDict,
+                         pkg_dict: DataDict) -> Dict[str, Any]:
+        lang = 'en'
+        if has_request_context():
+            lang = h.lang()
+
+        if pkg_dict.get('org_section'):
+            cite_data['publisher'] += ' - ' + pkg_dict['org_section'][lang]
+
+        cite_data['author'] = []
+        if pkg_dict.get('creator'):
+            cite_data['author'].append({
+                'family': pkg_dict['creator']
+            })
+        if pkg_dict.get('contributor'):
+            cite_data['author'].append({
+                'family': pkg_dict['contributor'][lang]
+            })
+        if pkg_dict.get('credit'):
+            for e in pkg_dict['credit']:
+                cite_data['author'].append({
+                    'family': e['credit_name'][lang]
+                })
+        if not cite_data['author']:
+            cite_data.pop('author', None)
+
+        return cite_data
+
+    # ICiteProcMappings
+    def dataset_citation_map(self, cite_data: DataDict,
+                             pkg_dict: DataDict) -> Tuple[bool, Dict[str, Any]]:
+        cite_data['container_title'] = _(cite_data['container_title'])
+        cite_data = self._canada_cite_map(cite_data, pkg_dict)
+        return False, cite_data
+
+    def resource_citation_map(self, cite_data: DataDict,
+                              pkg_dict: DataDict,
+                              res_dict: DataDict) -> Tuple[bool, Dict[str, Any]]:
+        cite_data['container_title'] = _(cite_data['container_title'])
+        cite_data = self._canada_cite_map(cite_data, pkg_dict)
+        return False, cite_data
 
 
 class LogExtraMiddleware(object):

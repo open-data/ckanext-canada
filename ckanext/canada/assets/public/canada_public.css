@@ -1477,6 +1477,10 @@ body .popover .popover-header{
   padding: 8px 14px !important;
 }
 /* BS4+ Fix. TODO: remove after upgrade to BS4+ */
+.btn.btn-secondary{
+  color: white !important;
+}
+/* BS4+ Fix. TODO: remove after upgrade to BS4+ */
 @media all and (max-width: 768px){
   body div#wb-bnr > div.row{
     flex-direction: row-reverse;
