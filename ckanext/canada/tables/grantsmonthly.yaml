@@ -671,7 +671,7 @@ resources:
     validation:
       en: This field must not be empty.
       fr: Ce champ ne doit pas être vide.
-    datastore_type: text
+    datastore_type: _text
     excel_full_text_choices: true
     form_snippet: scheming/form_snippets/multiple_select.html
     choice_order_expression: 'value.get("order", False), code'
@@ -708,15 +708,15 @@ resources:
       fr: Description du raison pour changement (anglais)
     description:
       en: >
-        This field is mandatory if “Other” is chosen as 
-        an option for the field “Reason for amendment”. 
-        This field has a maximum length of 1800  characters. 
+        This field is mandatory if “Other” is chosen as
+        an option for the field “Reason for amendment”.
+        This field has a maximum length of 1800  characters.
         This text must be provided in both languages.
       fr: >
-        Ce champ est obligatoire si l'option « Autre » est 
-        choisie  pour le champ « Raison pour changement ». 
-        Ce champ ne peut excéder une longueur maximale de 
-        1800 caractères. Ce texte doit être fourni en anglais 
+        Ce champ est obligatoire si l'option « Autre » est
+        choisie  pour le champ « Raison pour changement ».
+        Ce champ ne peut excéder une longueur maximale de
+        1800 caractères. Ce texte doit être fourni en anglais
         et en français.
     obligation:
       en: Mandatory if “Other” is chosen as an option for the field “Reason for amendment”.
@@ -743,15 +743,15 @@ resources:
       fr: Description du raison pour changement (français)
     description:
       en: >
-        This field is mandatory if “Other” is chosen as 
-        an option for the field “Reason for amendment”. 
-        This field has a maximum length of 1800  characters. 
+        This field is mandatory if “Other” is chosen as
+        an option for the field “Reason for amendment”.
+        This field has a maximum length of 1800  characters.
         This text must be provided in both languages.
       fr: >
-        Ce champ est obligatoire si l'option « Autre » est 
-        choisie  pour le champ « Raison pour changement ». 
-        Ce champ ne peut excéder une longueur maximale de 
-        1800 caractères. Ce texte doit être fourni en anglais 
+        Ce champ est obligatoire si l'option « Autre » est
+        choisie  pour le champ « Raison pour changement ».
+        Ce champ ne peut excéder une longueur maximale de
+        1800 caractères. Ce texte doit être fourni en anglais
         et en français.
     obligation:
       en: Mandatory if “Other” is chosen as an option for the field “Reason for amendment”.
