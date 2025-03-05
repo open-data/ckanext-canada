@@ -215,13 +215,16 @@ class CanadaPublicPlugin(p.SingletonPlugin, DefaultTranslation):
     def get_blueprint(self) -> List[Blueprint]:
         return [canada_views]
 
-    def _canada_cite_map(self, cite_data: DataDict,
-                         pkg_dict: DataDict) -> Dict[str, Any]:
+    def _canada_citation_map(self, cite_data: DataDict,
+                             pkg_dict: DataDict) -> Dict[str, Any]:
         lang = 'en'
         if has_request_context():
             lang = h.lang()
 
-        if pkg_dict.get('org_section'):
+        if(
+          pkg_dict.get('org_section') and
+          lang in pkg_dict['org_section']
+          and pkg_dict['org_section'][lang]):
             cite_data['publisher'] += ' - ' + pkg_dict['org_section'][lang]
 
         cite_data['author'] = []
@@ -229,12 +232,17 @@ class CanadaPublicPlugin(p.SingletonPlugin, DefaultTranslation):
             cite_data['author'].append({
                 'family': pkg_dict['creator']
             })
-        if pkg_dict.get('contributor'):
+        if (
+          pkg_dict.get('contributor') and
+          lang in pkg_dict['contributor'] and
+          pkg_dict['contributor'][lang]):
             cite_data['author'].append({
                 'family': pkg_dict['contributor'][lang]
             })
         if pkg_dict.get('credit'):
             for e in pkg_dict['credit']:
+                if lang not in e['credit_name'] or not e['credit_name'][lang]:
+                    continue
                 cite_data['author'].append({
                     'family': e['credit_name'][lang]
                 })
@@ -247,14 +255,14 @@ class CanadaPublicPlugin(p.SingletonPlugin, DefaultTranslation):
     def dataset_citation_map(self, cite_data: DataDict,
                              pkg_dict: DataDict) -> Tuple[bool, Dict[str, Any]]:
         cite_data['container_title'] = _(cite_data['container_title'])
-        cite_data = self._canada_cite_map(cite_data, pkg_dict)
+        cite_data = self._canada_citation_map(cite_data, pkg_dict)
         return False, cite_data
 
     def resource_citation_map(self, cite_data: DataDict,
                               pkg_dict: DataDict,
                               res_dict: DataDict) -> Tuple[bool, Dict[str, Any]]:
         cite_data['container_title'] = _(cite_data['container_title'])
-        cite_data = self._canada_cite_map(cite_data, pkg_dict)
+        cite_data = self._canada_citation_map(cite_data, pkg_dict)
         return False, cite_data
 
 
