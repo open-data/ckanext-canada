@@ -521,14 +521,14 @@ resources:
     form_attrs:
       style: "width: 100%; display: block"
 
-  # 3.26 Demographic of the intended beneficiary
+  # 3.26 Demographic of the ultimate beneficiary
   - datastore_id: dem_intended_beneficiary
     label:
-      en: Intended Beneficiary demographic group
-      fr: Groupe démographique des bénéficiaires visés
+      en: Ultimate Beneficiary demographic group
+      fr: Groupe démographique des bénéficiaires ultimes
     description:
-      en: The field indicates whether the intended beneficiaries belong to a specific demographic group.
-      fr: Le champ indique si les bénéficiaires visés font partie d’un groupe démographique identifié.
+      en: The field indicates whether the ultimate beneficiaries belong to a specific demographic group.
+      fr: Le champ indique si les bénéficiaires ultimes font partie d’un groupe démographique identifié.
     obligation: Mandatory
     occurrence: Repeatable
     excel_required: true
@@ -539,7 +539,7 @@ resources:
       en: This field must not be empty.
       fr: Ce champ ne doit pas être vide.
     datastore_type: _text
-    form_snippet: scheming/form_snippets/text.html
+    form_snippet: scheming/form_snippets/multiple_select.html
     choice_order_expression: 'value.get("order", False), code'
     choices:
       Y:
@@ -587,25 +587,25 @@ resources:
         fr: Collecté mais confidentiel
         order: 11
 
-  # 3.27 Other Demographic of intended beneficiary Description (English)
+  # 3.27 Other Demographic of ultimate beneficiary Description (English)
   - datastore_id: other_dem_intended_beneficiary_description_en
     label:
-      en: Demographic of intended beneficiary Description (English)
-      fr: Description du groupe démographique des bénéficiaires visés (anglais)
+      en: Demographic of ultimate beneficiary Description (English)
+      fr: Description du groupe démographique des bénéficiaires ultimes (anglais)
     description:
       en: >
         This field is mandatory if “Other” is chosen as an
-        option for the field “Intended Beneficiary demographic
+        option for the field “Ultimate Beneficiary demographic
         group”. This field has a maximum length of 1800
         characters. This text must be provided in both languages.
       fr: >
         Ce champ est obligatoire si l'option « Autre » est choisie
-        pour le champ « Groupe démographique des bénéficiaires visés ».
+        pour le champ « Groupe démographique des bénéficiaires ultimes ».
         Ce champ ne peut excéder une longueur maximale de 1800
         caractères. Ce texte doit être fourni en anglais et en français.
     obligation:
-      en: Mandatory if “Other” is chosen as an option for the field “Intended Beneficiary demographic group”.
-      fr: Obligatoire si l'option « Autre » est choisie pour le champ « Groupe démographique des bénéficiaires visés ».
+      en: Mandatory if “Other” is chosen as an option for the field “Ultimate Beneficiary demographic group”.
+      fr: Obligatoire si l'option « Autre » est choisie pour le champ « Groupe démographique des bénéficiaires ultimes ».
     excel_required: false
     form_required: false
     excel_column_width: 40
@@ -621,25 +621,25 @@ resources:
       style: "width: 100%; display: block"
       maxlength: 1800
 
-  # 3.28 Other Demographic of intended beneficiary Description (French)
+  # 3.28 Other Demographic of ultimate beneficiary Description (French)
   - datastore_id: other_dem_intended_beneficiary_description_fr
     label:
-      en: Demographic of intended beneficiary Description (French)
-      fr: Description du groupe démographique des bénéficiaires visés (français)
+      en: Demographic of ultimate beneficiary Description (French)
+      fr: Description du groupe démographique des bénéficiaires ultimes (français)
     description:
       en: >
         This field is mandatory if “Other” is chosen as an
-        option for the field “Intended Beneficiary demographic
+        option for the field “Ultimate Beneficiary demographic
         group”. This field has a maximum length of 1800
         characters. This text must be provided in both languages.
       fr: >
         Ce champ est obligatoire si l'option « Autre » est choisie
-        pour le champ « Groupe démographique des bénéficiaires visés ».
+        pour le champ « Groupe démographique des bénéficiaires ultimes ».
         Ce champ ne peut excéder une longueur maximale de 1800
         caractères. Ce texte doit être fourni en anglais et en français.
     obligation:
-      en: Mandatory if “Other” is chosen as an option for the field “Intended Beneficiary demographic group”.
-      fr: Obligatoire si l'option « Autre » est choisie pour le champ « Groupe démographique des bénéficiaires visés ».
+      en: Mandatory if “Other” is chosen as an option for the field “Ultimate Beneficiary demographic group”.
+      fr: Obligatoire si l'option « Autre » est choisie pour le champ « Groupe démographique des bénéficiaires ultimes ».
     excel_required: false
     form_required: false
     excel_column_width: 40
@@ -664,15 +664,16 @@ resources:
       en: The field indicates the reason for the amendment to the project.
       fr: Le champ indique la raison pour le changement au projet.
     obligation: Mandatory
-    occurrence: Single
+    occurrence: Repeatable
     excel_required: true
     form_required: true
     format_type: Controlled List
     validation:
       en: This field must not be empty.
       fr: Ce champ ne doit pas être vide.
-    datastore_type: text
+    datastore_type: _text
     excel_full_text_choices: true
+    form_snippet: scheming/form_snippets/multiple_select.html
     choice_order_expression: 'value.get("order", False), code'
     choices:
       S:
@@ -700,7 +701,77 @@ resources:
         fr: Inconnu
         order: 6
 
-  # 3.30 Risk rating
+  # 3.30 Reason for amendment Description (English)
+  - datastore_id: other_reason_amendment_en
+    label:
+      en: Reason for amendment Description (English)
+      fr: Description du raison pour changement (anglais)
+    description:
+      en: >
+        This field is mandatory if “Other” is chosen as
+        an option for the field “Reason for amendment”.
+        This field has a maximum length of 1800  characters.
+        This text must be provided in both languages.
+      fr: >
+        Ce champ est obligatoire si l'option « Autre » est
+        choisie  pour le champ « Raison pour changement ».
+        Ce champ ne peut excéder une longueur maximale de
+        1800 caractères. Ce texte doit être fourni en anglais
+        et en français.
+    obligation:
+      en: Mandatory if “Other” is chosen as an option for the field “Reason for amendment”.
+      fr: Obligatoire si l'option « Autre » est choisie pour le champ « Raison pour changement ».
+    excel_required: false
+    form_required: false
+    excel_column_width: 40
+    validation:
+      en: This field has a maximum length of 1800 characters. This text must be provided in both languages.
+      fr: Ce champ ne peut excéder une longueur maximale de 1800 caractères. Ce texte doit être fourni en anglais et en français.
+    occurrence: Single
+    format_type: Free text
+    datastore_type: text
+    max_chars: 1800
+    excel_required_formula: 'OR(TRIM(LEFT({reason_amendment},FIND(":",{reason_amendment}&":")-1))="O",NOT(ISBLANK({other_reason_amendment_fr})))'
+    form_attrs:
+      style: "width: 100%; display: block"
+      maxlength: 1800
+
+  # 3.31 Reason for amendment Description (French)
+  - datastore_id: other_reason_amendment_fr
+    label:
+      en: Reason for amendment Description (French)
+      fr: Description du raison pour changement (français)
+    description:
+      en: >
+        This field is mandatory if “Other” is chosen as
+        an option for the field “Reason for amendment”.
+        This field has a maximum length of 1800  characters.
+        This text must be provided in both languages.
+      fr: >
+        Ce champ est obligatoire si l'option « Autre » est
+        choisie  pour le champ « Raison pour changement ».
+        Ce champ ne peut excéder une longueur maximale de
+        1800 caractères. Ce texte doit être fourni en anglais
+        et en français.
+    obligation:
+      en: Mandatory if “Other” is chosen as an option for the field “Reason for amendment”.
+      fr: Obligatoire si l'option « Autre » est choisie pour le champ « Raison pour changement ».
+    excel_required: false
+    form_required: false
+    excel_column_width: 40
+    validation:
+      en: This field has a maximum length of 1800 characters. This text must be provided in both languages.
+      fr: Ce champ ne peut excéder une longueur maximale de 1800 caractères. Ce texte doit être fourni en anglais et en français.
+    occurrence: Single
+    format_type: Free text
+    datastore_type: text
+    max_chars: 1800
+    excel_required_formula: 'OR(TRIM(LEFT({reason_amendment},FIND(":",{reason_amendment}&":")-1))="O",NOT(ISBLANK({other_reason_amendment_en})))'
+    form_attrs:
+      style: "width: 100%; display: block"
+      maxlength: 1800
+
+  # 3.32 Risk rating
   - datastore_id: rating_risk
     label:
       en: Risk rating
@@ -820,7 +891,15 @@ resources:
           errors := errors || both_languages_error(NEW.other_dem_intended_beneficiary_description_en, 'other_dem_intended_beneficiary_description_en', NEW.other_dem_intended_beneficiary_description_fr, 'other_dem_intended_beneficiary_description_fr');
         END IF;
         errors := errors || required_error(NEW.reason_amendment, 'reason_amendment');
-        errors := errors || choice_error(NEW.reason_amendment, {reason_amendment}, 'reason_amendment');
+        crval := choices_clean_error(NEW.reason_amendment, {reason_amendment}, 'reason_amendment');
+        errors := errors || crval.error;
+        NEW.reason_amendment := crval.clean;
+        IF 'O' = ANY(NEW.reason_amendment) THEN
+          errors := errors || conditional_required_error(NEW.other_reason_amendment_en, 'other_reason_amendment_en');
+          errors := errors || conditional_required_error(NEW.other_reason_amendment_fr, 'other_reason_amendment_fr');
+        ELSE
+          errors := errors || both_languages_error(NEW.other_reason_amendment_en, 'other_reason_amendment_en', NEW.other_reason_amendment_fr, 'other_reason_amendment_fr');
+        END IF;
         errors := errors || required_error(NEW.rating_risk, 'rating_risk');
         errors := errors || choice_error(NEW.rating_risk, {rating_risk}, 'rating_risk');
 
@@ -889,7 +968,9 @@ resources:
       dem_intended_beneficiary: ["Y"]
       other_dem_intended_beneficiary_description_en: "immigrant owned"
       other_dem_intended_beneficiary_description_fr: "appartenant à des immigrés"
-      reason_amendment: "S"
+      reason_amendment: ["S"]
+      other_reason_amendment_en: Change of the eligible activities or initiatives
+      other_reason_amendment_fr: Modification des activités ou initiatives éligibles
       rating_risk: "L"
 
     filters:
