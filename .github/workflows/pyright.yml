@@ -51,5 +51,6 @@ jobs:
       - name: Check types
         if: steps.pydepends.outcome == 'success'
         run: |
+          export PYTHONPATH="${PYTHONPATH}:/home/runner/work/app/lib/python3.9/site-packages:/home/runner/work/app/src/ckanext-citeproc"
           cd /home/runner/work/app/src/ckanext-canada
           npx pyright
