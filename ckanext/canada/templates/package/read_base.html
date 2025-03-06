@@ -141,6 +141,13 @@
           {% endif %}
         </ul>
       </li>
+      {% if h.plugin_loaded('citeproc') and pkg.type not in h.recombinant_get_types() %}
+        <li class="list-group-item">
+          {% if h.show_citations_for(pkg.type or 'dataset') %}
+            {% snippet "snippets/citeproc_button.html", pkg_dict=pkg %}
+          {% endif %}
+        </li>
+      {% endif %}
       {% if pkg.collection == 'fgp' %}
         <li class="list-group-item">
           <strong>{{ _('FGP Metadata:') }}</strong>
