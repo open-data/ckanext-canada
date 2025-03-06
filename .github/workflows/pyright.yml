@@ -42,8 +42,6 @@ jobs:
             pip install -e 'git+https://github.com/open-data/frictionless-py.git@canada-v2.10#egg=frictionless' -r 'https://raw.githubusercontent.com/open-data/frictionless-py/canada-v2.10/requirements.txt'
             pip install -e 'git+https://github.com/open-data/ckanext-security.git@canada-v2.10#egg=ckanext-security' -r 'https://raw.githubusercontent.com/open-data/ckanext-security/canada-v2.10/requirements.txt'
             pip install -e 'git+https://github.com/open-data/ckanext-citeproc.git#egg=ckanext-citeproc' -r 'https://raw.githubusercontent.com/open-data/ckanext-citeproc/main/requirements.txt'
-            cd /home/runner/work/app/src/ckanext-citeproc
-            python setup.py develop
             find /home/runner/work/app -name '*.pyc' -delete
       - name: Install node deps
         if: steps.pydepends.outcome == 'success'
@@ -53,5 +51,6 @@ jobs:
       - name: Check types
         if: steps.pydepends.outcome == 'success'
         run: |
+          source /home/runner/work/app/bin/activate
           cd /home/runner/work/app/src/ckanext-canada
           npx pyright
