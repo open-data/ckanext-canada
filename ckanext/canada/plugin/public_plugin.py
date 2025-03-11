@@ -10,7 +10,7 @@ from ckan.types import (
 from ckan.common import CKANConfig
 
 import os
-from flask import Blueprint, has_request_context
+from flask import Blueprint
 from click import Command
 
 import ckan.plugins as p
@@ -216,54 +216,47 @@ class CanadaPublicPlugin(p.SingletonPlugin, DefaultTranslation):
         return [canada_views]
 
     def _canada_citation_map(self, cite_data: DataDict,
-                             pkg_dict: DataDict) -> Dict[str, Any]:
+                             pkg_dict: DataDict):
         lang = 'en'
-        if has_request_context():
+        try:
             lang = h.lang()
+        except Exception:
+            pass
 
-        if (
-          pkg_dict.get('org_section') and
-          lang in pkg_dict['org_section']
-          and pkg_dict['org_section'][lang]):
-            cite_data['publisher'] += ' - ' + pkg_dict['org_section'][lang]
+        if org := pkg_dict.get('org_section', {}).get(lang):
+            cite_data['publisher'] += ' - ' + org
 
         cite_data['author'] = []
         if pkg_dict.get('creator'):
             cite_data['author'].append({
                 'family': pkg_dict['creator']
             })
-        if (
-          pkg_dict.get('contributor') and
-          lang in pkg_dict['contributor'] and
-          pkg_dict['contributor'][lang]):
+        if contributor := pkg_dict.get('contributor', {}).get(lang):
             cite_data['author'].append({
-                'family': pkg_dict['contributor'][lang]
+                'family': contributor
             })
         if pkg_dict.get('credit'):
             for e in pkg_dict['credit']:
-                if lang not in e['credit_name'] or not e['credit_name'][lang]:
-                    continue
-                cite_data['author'].append({
-                    'family': e['credit_name'][lang]
-                })
+                if creditor := e.get('credit_name', {}).get(lang):
+                    cite_data['author'].append({
+                        'family': creditor
+                    })
         if not cite_data['author']:
             cite_data.pop('author', None)
 
-        return cite_data
-
     # ICiteProcMappings
     def dataset_citation_map(self, cite_data: DataDict,
-                             pkg_dict: DataDict) -> Tuple[bool, Dict[str, Any]]:
+                             pkg_dict: DataDict) -> bool:
         cite_data['container_title'] = _(cite_data['container_title'])
-        cite_data = self._canada_citation_map(cite_data, pkg_dict)
-        return False, cite_data
+        self._canada_citation_map(cite_data, pkg_dict)
+        return False
 
     def resource_citation_map(self, cite_data: DataDict,
                               pkg_dict: DataDict,
-                              res_dict: DataDict) -> Tuple[bool, Dict[str, Any]]:
+                              res_dict: DataDict) -> bool:
         cite_data['container_title'] = _(cite_data['container_title'])
-        cite_data = self._canada_citation_map(cite_data, pkg_dict)
-        return False, cite_data
+        self._canada_citation_map(cite_data, pkg_dict)
+        return False
 
 
 class LogExtraMiddleware(object):
