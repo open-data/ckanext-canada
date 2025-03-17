@@ -215,12 +215,12 @@ class CanadaPublicPlugin(p.SingletonPlugin, DefaultTranslation):
     def get_blueprint(self) -> List[Blueprint]:
         return [canada_views]
 
-    def _canada_citation_map(self, cite_data: DataDict,
-                             pkg_dict: DataDict):
+    def _update_canada_citation_map(self, cite_data: DataDict,
+                                    pkg_dict: DataDict):
         lang = 'en'
         try:
             lang = h.lang()
-        except Exception:
+        except RuntimeError:
             pass
 
         if org := pkg_dict.get('org_section', {}).get(lang):
@@ -245,17 +245,17 @@ class CanadaPublicPlugin(p.SingletonPlugin, DefaultTranslation):
             cite_data.pop('author', None)
 
     # ICiteProcMappings
-    def dataset_citation_map(self, cite_data: DataDict,
-                             pkg_dict: DataDict) -> bool:
+    def update_dataset_citation_map(self, cite_data: DataDict,
+                                    pkg_dict: DataDict) -> bool:
         cite_data['container_title'] = _(cite_data['container_title'])
-        self._canada_citation_map(cite_data, pkg_dict)
+        self._update_canada_citation_map(cite_data, pkg_dict)
         return False
 
-    def resource_citation_map(self, cite_data: DataDict,
-                              pkg_dict: DataDict,
-                              res_dict: DataDict) -> bool:
+    def update_resource_citation_map(self, cite_data: DataDict,
+                                     pkg_dict: DataDict,
+                                     res_dict: DataDict) -> bool:
         cite_data['container_title'] = _(cite_data['container_title'])
-        self._canada_citation_map(cite_data, pkg_dict)
+        self._update_canada_citation_map(cite_data, pkg_dict)
         return False
 
 
