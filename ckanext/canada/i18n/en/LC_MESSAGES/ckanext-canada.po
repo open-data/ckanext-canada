@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  CKAN\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-03-04 14:43+0000\n"
+"POT-Creation-Date: 2025-03-05 14:25+0000\n"
 "PO-Revision-Date: 2014-01-23 13:04+0000\n"
 "Last-Translator: Sean Hammond <sean.hammond@okfn.org>\n"
 "Language: en\n"
@@ -237,7 +237,7 @@ msgstr ""
 #: ckanext/canada/templates/admin/publish_search.html:19
 #: ckanext/canada/templates/home/quick_links.html:104
 #: ckanext/canada/templates/organization/snippets/organization_search.html:8
-#: ckanext/canada/templates/snippets/cdts/header.html:150
+#: ckanext/canada/templates/snippets/cdts/header.html:154
 #: ckanext/canada/templates/snippets/search_form.html:45
 #: ckanext/canada/templates/user/snippets/user_search.html:10
 msgid "Search"
@@ -1047,66 +1047,66 @@ msgstr ""
 msgid "User %r not authorized to view members of %s"
 msgstr ""
 
-#: ckanext/canada/plugin/public_plugin.py:139
+#: ckanext/canada/plugin/public_plugin.py:140
 #: ckanext/canada/templates/scheming/package/snippets/package_form.html:25
 msgid "Portal Type"
 msgstr ""
 
-#: ckanext/canada/plugin/public_plugin.py:140
+#: ckanext/canada/plugin/public_plugin.py:141
 #: ckanext/canada/templates/package/deleted.html:14
 #: ckanext/canada/templates/user/new_user_form.html:18
 msgid "Organization"
 msgstr ""
 
-#: ckanext/canada/plugin/public_plugin.py:141
+#: ckanext/canada/plugin/public_plugin.py:142
 msgid "Collection Type"
 msgstr ""
 
-#: ckanext/canada/plugin/public_plugin.py:142
 #: ckanext/canada/plugin/public_plugin.py:143
+#: ckanext/canada/plugin/public_plugin.py:144
 msgid "Keywords"
 msgstr ""
 
-#: ckanext/canada/plugin/public_plugin.py:144
+#: ckanext/canada/plugin/public_plugin.py:145
 msgid "Subject"
 msgstr ""
 
-#: ckanext/canada/plugin/public_plugin.py:145
+#: ckanext/canada/plugin/public_plugin.py:146
 #: ckanext/canada/templates/package/snippets/resource_info.html:13
 #: ckanext/canada/templates/scheming/package/resource_read.html:19
 #: ckanext/canada/templates/tabledesigner/view_snippets/cra_business_number.html:1
 msgid "Format"
 msgstr ""
 
-#: ckanext/canada/plugin/public_plugin.py:146
+#: ckanext/canada/plugin/public_plugin.py:147
 msgid "Resource Type"
 msgstr ""
 
-#: ckanext/canada/plugin/public_plugin.py:147
+#: ckanext/canada/plugin/public_plugin.py:148
 msgid "Maintenance and Update Frequency"
 msgstr ""
 
-#: ckanext/canada/plugin/public_plugin.py:148
+#: ckanext/canada/plugin/public_plugin.py:149
 msgid "Record Status"
 msgstr ""
 
-#: ckanext/canada/plugin/public_plugin.py:149
+#: ckanext/canada/plugin/public_plugin.py:150
 msgid "IMSO Approval"
 msgstr ""
 
-#: ckanext/canada/plugin/public_plugin.py:150
+#: ckanext/canada/plugin/public_plugin.py:151
 msgid "Jurisdiction"
 msgstr ""
 
-#: ckanext/canada/plugin/public_plugin.py:151
+#: ckanext/canada/plugin/public_plugin.py:152
 msgid "Suggestion Status"
 msgstr ""
 
-#: ckanext/canada/plugin/public_plugin.py:249
+#: ckanext/canada/plugin/public_plugin.py:250
 msgid "Previous"
 msgstr ""
 
-#: ckanext/canada/plugin/public_plugin.py:250
+#: ckanext/canada/plugin/public_plugin.py:251
 msgid "Next"
 msgstr ""
 
@@ -1131,6 +1131,7 @@ msgstr ""
 #. SQL Trigger String for PD Type: adminaircraft
 #. SQL Trigger String for PD Type: contracts
 #. SQL Trigger String for PD Type: grants
+#. SQL Trigger String for PD Type: grantsmonthly
 #. SQL Trigger String for PD Type: hospitalityq
 #. SQL Trigger String for PD Type: qpnotes
 #. SQL Trigger String for PD Type: reclassification
@@ -1139,6 +1140,7 @@ msgstr ""
 #: ckanext/canada/tables/adminaircraft.yaml:317
 #: ckanext/canada/tables/contracts.yaml:2185
 #: ckanext/canada/tables/grants.yaml:838
+#: ckanext/canada/tables/grantsmonthly.yaml:935
 #: ckanext/canada/tables/hospitalityq.yaml:632
 #: ckanext/canada/tables/qpnotes.yaml:335
 #: ckanext/canada/tables/reclassification.yaml:271
@@ -1479,6 +1481,57 @@ msgstr ""
 msgid "Proactive Publication - Grants and Contributions Nothing to Report"
 msgstr ""
 
+#. Title for PD Type: grantsmonthly
+#. Resource Title for PD Type: grantsmonthly
+#: ckanext/canada/tables/grantsmonthly.yaml:3
+#: ckanext/canada/tables/grantsmonthly.yaml:14
+msgid "Proactive Publication - Grants and Contributions Data Sharing Pilot"
+msgstr ""
+
+#. Label for PD Type: grantsmonthly
+#: ckanext/canada/tables/grantsmonthly.yaml:4
+msgid "Grants and Contributions Data Sharing Pilot"
+msgstr ""
+
+#. Description for PD Type: grantsmonthly
+#: ckanext/canada/tables/grantsmonthly.yaml:5
+msgid ""
+"Access, upload and modify the Grants and Contributions Data Sharing Pilot"
+" reports for your organization"
+msgstr ""
+
+#. SQL Trigger String for PD Type: grantsmonthly
+#. SQL Trigger String for PD Type: service
+#: ckanext/canada/tables/grantsmonthly.yaml:936
+#: ckanext/canada/tables/service.yaml:1550
+#: ckanext/canada/tables/service.yaml:2388
+msgid "This field has a maximum length of {} characters."
+msgstr ""
+
+#. SQL Trigger String for PD Type: grantsmonthly
+#. SQL Trigger String for PD Type: service
+#: ckanext/canada/tables/grantsmonthly.yaml:937
+#: ckanext/canada/tables/service.yaml:1551
+#: ckanext/canada/tables/service.yaml:2389
+msgid "Invalid choice: {}"
+msgstr ""
+
+#. SQL Trigger String for PD Type: grantsmonthly
+#. SQL Trigger String for PD Type: service
+#: ckanext/canada/tables/grantsmonthly.yaml:938
+#: ckanext/canada/tables/service.yaml:1553
+#: ckanext/canada/tables/service.yaml:2392
+msgid "This field is required due to a response in a different field."
+msgstr ""
+
+#. SQL Trigger String for PD Type: grantsmonthly
+#. SQL Trigger String for PD Type: service
+#: ckanext/canada/tables/grantsmonthly.yaml:939
+#: ckanext/canada/tables/service.yaml:1554
+#: ckanext/canada/tables/service.yaml:2393
+msgid "This text must be provided in both languages"
+msgstr ""
+
 #. Title for PD Type: hospitalityq
 #. Resource Title for PD Type: hospitalityq
 #: ckanext/canada/tables/hospitalityq.yaml:4
@@ -1626,33 +1679,9 @@ msgid "This field must be either a number, \"NA\", or \"ND\""
 msgstr ""
 
 #. SQL Trigger String for PD Type: service
-#: ckanext/canada/tables/service.yaml:1550
-#: ckanext/canada/tables/service.yaml:2388
-msgid "This field has a maximum length of {} characters."
-msgstr ""
-
-#. SQL Trigger String for PD Type: service
-#: ckanext/canada/tables/service.yaml:1551
-#: ckanext/canada/tables/service.yaml:2389
-msgid "Invalid choice: {}"
-msgstr ""
-
-#. SQL Trigger String for PD Type: service
 #: ckanext/canada/tables/service.yaml:1552
 #: ckanext/canada/tables/service.yaml:2391
 msgid "Invalid input syntax for type integer: {}"
-msgstr ""
-
-#. SQL Trigger String for PD Type: service
-#: ckanext/canada/tables/service.yaml:1553
-#: ckanext/canada/tables/service.yaml:2392
-msgid "This field is required due to a response in a different field."
-msgstr ""
-
-#. SQL Trigger String for PD Type: service
-#: ckanext/canada/tables/service.yaml:1554
-#: ckanext/canada/tables/service.yaml:2393
-msgid "This text must be provided in both languages"
 msgstr ""
 
 #. SQL Trigger String for PD Type: service
@@ -2154,7 +2183,7 @@ msgid "Load more"
 msgstr ""
 
 #: ckanext/canada/templates/admin/base.html:5
-#: ckanext/canada/templates/snippets/cdts/header.html:197
+#: ckanext/canada/templates/snippets/cdts/header.html:201
 msgid "Admin"
 msgstr ""
 
@@ -2384,14 +2413,14 @@ msgid "Add information about government programs, activities and publications."
 msgstr ""
 
 #: ckanext/canada/templates/home/quick_links.html:91
-#: ckanext/canada/templates/snippets/cdts/header.html:135
+#: ckanext/canada/templates/snippets/cdts/header.html:139
 #: ckanext/canada/templates/snippets/dataset_facets.html:4
 #: ckanext/canada/templates/snippets/package_item.html:19
 msgid "Open Dialogue"
 msgstr ""
 
 #: ckanext/canada/templates/home/quick_links.html:98
-#: ckanext/canada/templates/snippets/cdts/header.html:144
+#: ckanext/canada/templates/snippets/cdts/header.html:148
 msgid "Consultations master dataset"
 msgstr ""
 
@@ -2425,58 +2454,58 @@ msgstr ""
 msgid "View the list of members linked to your organization."
 msgstr ""
 
-#: ckanext/canada/templates/home/quick_links.html:151
-#: ckanext/canada/templates/snippets/cdts/header.html:106
+#: ckanext/canada/templates/home/quick_links.html:152
+#: ckanext/canada/templates/snippets/cdts/header.html:110
 msgid "Reports Tabled in Parliament"
 msgstr ""
 
-#: ckanext/canada/templates/home/quick_links.html:152
+#: ckanext/canada/templates/home/quick_links.html:153
 msgid "Access, add or modify your reports tabled in Parliament."
 msgstr ""
 
-#: ckanext/canada/templates/home/quick_links.html:159
+#: ckanext/canada/templates/home/quick_links.html:160
 msgid "Briefing packages"
 msgstr ""
 
-#: ckanext/canada/templates/home/quick_links.html:166
-#: ckanext/canada/templates/snippets/cdts/header.html:118
+#: ckanext/canada/templates/home/quick_links.html:167
+#: ckanext/canada/templates/snippets/cdts/header.html:122
 msgid "New or incoming ministers"
 msgstr ""
 
-#: ckanext/canada/templates/home/quick_links.html:167
+#: ckanext/canada/templates/home/quick_links.html:168
 msgid ""
 "Access, add or modify briefing package information for your new or "
 "incoming minister."
 msgstr ""
 
-#: ckanext/canada/templates/home/quick_links.html:174
-#: ckanext/canada/templates/snippets/cdts/header.html:122
+#: ckanext/canada/templates/home/quick_links.html:175
+#: ckanext/canada/templates/snippets/cdts/header.html:126
 msgid "New or incoming deputy heads"
 msgstr ""
 
-#: ckanext/canada/templates/home/quick_links.html:175
+#: ckanext/canada/templates/home/quick_links.html:176
 msgid ""
 "Access, add or modify briefing package information for your new or "
 "incoming deputy head."
 msgstr ""
 
-#: ckanext/canada/templates/home/quick_links.html:182
-#: ckanext/canada/templates/snippets/cdts/header.html:126
+#: ckanext/canada/templates/home/quick_links.html:183
+#: ckanext/canada/templates/snippets/cdts/header.html:130
 msgid "Parliamentary Committee appearances for ministers"
 msgstr ""
 
-#: ckanext/canada/templates/home/quick_links.html:183
+#: ckanext/canada/templates/home/quick_links.html:184
 msgid ""
 "Access, add or modify briefing packages for Parliamentary Committee "
 "appearance for your minister."
 msgstr ""
 
-#: ckanext/canada/templates/home/quick_links.html:190
-#: ckanext/canada/templates/snippets/cdts/header.html:130
+#: ckanext/canada/templates/home/quick_links.html:191
+#: ckanext/canada/templates/snippets/cdts/header.html:134
 msgid "Parliamentary Committee appearances for deputy heads"
 msgstr ""
 
-#: ckanext/canada/templates/home/quick_links.html:191
+#: ckanext/canada/templates/home/quick_links.html:192
 msgid ""
 "Access, add or modify briefing packages for Parliamentary Committee "
 "appearance for your deputy head."
@@ -2524,7 +2553,7 @@ msgstr ""
 #: ckanext/canada/templates/organization/index.html:26
 #: ckanext/canada/templates/organization/members.html:10
 #: ckanext/canada/templates/organization/read_base.html:7
-#: ckanext/canada/templates/snippets/cdts/header.html:154
+#: ckanext/canada/templates/snippets/cdts/header.html:158
 #: ckanext/canada/templates/user/read.html:28
 #: ckanext/canada/templates/user/read_base.html:12
 #: ckanext/canada/templates/user/read_base.html:71
@@ -3610,25 +3639,25 @@ msgstr ""
 msgid "Home"
 msgstr ""
 
-#: ckanext/canada/templates/snippets/cdts/header.html:159
+#: ckanext/canada/templates/snippets/cdts/header.html:163
 msgid "FAQ"
 msgstr ""
 
-#: ckanext/canada/templates/snippets/cdts/header.html:189
+#: ckanext/canada/templates/snippets/cdts/header.html:193
 #: ckanext/canada/templates/user/dashboard.html:9
 #: ckanext/canada/templates/user/dashboard_datasets.html:19
 msgid "Dashboard"
 msgstr ""
 
-#: ckanext/canada/templates/snippets/cdts/header.html:205
+#: ckanext/canada/templates/snippets/cdts/header.html:209
 msgid "Get Help"
 msgstr ""
 
-#: ckanext/canada/templates/snippets/cdts/header.html:226
+#: ckanext/canada/templates/snippets/cdts/header.html:230
 msgid "Signed in as"
 msgstr ""
 
-#: ckanext/canada/templates/snippets/cdts/header.html:226
+#: ckanext/canada/templates/snippets/cdts/header.html:230
 msgid "View profile"
 msgstr ""
 
@@ -7869,7 +7898,7 @@ msgstr ""
 #~ " in connection with your GCKey may"
 #~ " be directed to the Access to "
 #~ "Information and Privacy Protection Division"
-#~ " by email to <a href=\"mailto:ATIP-"
+#~ " by email to <a href=\"mailto:ATIP-"
 #~ "AIPRP@ssc-spc.gc.ca\">ATIP-AIPRP@ssc-spc.gc.ca</a>,"
 #~ " or by writing to the following "
 #~ "address:</p> <p>Access to Information and "
@@ -7877,11 +7906,11 @@ msgstr ""
 #~ " Shared Services Canada<br/> PO Box "
 #~ "9808, STN T, CSC<br/> Ottawa ON "
 #~ "K1G 4A8</p> <p>For more information on"
-#~ " privacy issues and the <em>Privacy "
+#~ " privacy issues and the <em>Privacy "
 #~ "Act</em> in general, please consult the"
-#~ " Office of the <a "
+#~ " Office of the <a "
 #~ "href=\"http://www.priv.gc.ca/index_e.asp\">Privacy Commissioner"
-#~ " of Canada</a> website or call "
+#~ " of Canada</a> website or call "
 #~ "1-800-282-1376.</p> <p>In return for the "
 #~ "Treasury Board of Canada Secretariat "
 #~ "(TBS) giving you access to the "
@@ -10006,160 +10035,5 @@ msgstr ""
 #~ msgstr ""
 
 #~ msgid "Close"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "<h2>Terms and Conditions for the Open"
-#~ " Government Registry</h2> <p><em>Privacy "
-#~ "Statement</em></p> <p>The Government of Canada"
-#~ " is committed to providing measures "
-#~ "that respect and value your privacy "
-#~ "and security. This page summarizes the"
-#~ " privacy policy and practices that "
-#~ "apply to your Open Government Registry"
-#~ " Account Credentials.</p> <p>The purpose "
-#~ "for collecting and using “Username, "
-#~ "Password and Email” is to issue, "
-#~ "manage and validate anonymous credentials "
-#~ "of individuals accessing and/or communicating"
-#~ " with Government of Canada systems "
-#~ "and applications.</p> <p>The personal "
-#~ "information may be used to establish "
-#~ "audit trails of credential usage. In "
-#~ "the case of suspected security or "
-#~ "privacy breaches, personal information may "
-#~ "be shared with departmental security and"
-#~ " access to information and privacy "
-#~ "officials, as well as the federal "
-#~ "government department or agency which "
-#~ "collects and uses the personal "
-#~ "information considered to have been "
-#~ "compromised (refer to Standard PIB "
-#~ "Security Incidents - PSU 939). For "
-#~ "suspected criminal activity, personal "
-#~ "information may also be disclosed to "
-#~ "the Royal Canadian Mounted Police for"
-#~ " investigational purposes; refer to "
-#~ "institution-specific PIB Operational Case "
-#~ "Records - RCMP PPU 005.</p> <p>We "
-#~ "employ software programs to monitor "
-#~ "network traffic to identify unauthorized "
-#~ "attempts to upload or change "
-#~ "information, or otherwise cause damage. "
-#~ "This software receives and records the"
-#~ " Internet Protocol (IP) address of "
-#~ "the computer that has contacted our "
-#~ "websites, the date and time of the"
-#~ " visit and the pages visited. We "
-#~ "make no attempt to link these "
-#~ "addresses with the identity of "
-#~ "individuals visiting our sites unless an"
-#~ " attempt to damage the sites has "
-#~ "been detected.</p> <p>Questions, concerns and"
-#~ " complaints regarding this notice, or "
-#~ "the administration of the Privacy Act"
-#~ " in connection with your GCKey may"
-#~ " be directed to the Access to "
-#~ "Information and Privacy Protection Division"
-#~ " by email to <a href=\"mailto:ATIP-"
-#~ "AIPRP@ssc-spc.gc.ca\">ATIP-AIPRP@ssc-spc.gc.ca</a>,"
-#~ " or by writing to the following "
-#~ "address:</p> <p>Access to Information and "
-#~ "Privacy Directorate<br/> Corporate Secretariat<br/>"
-#~ " Shared Services Canada<br/> PO Box "
-#~ "9808, STN T, CSC<br/> Ottawa ON "
-#~ "K1G 4A8</p> <p>For more information on"
-#~ " privacy issues and the <em>Privacy "
-#~ "Act</em> in general, please consult the"
-#~ " Office of the <a "
-#~ "href=\"http://www.priv.gc.ca/index_e.asp\">Privacy Commissioner"
-#~ " of Canada</a> website or call "
-#~ "1-800-282-1376.</p> <p>In return for the "
-#~ "Treasury Board of Canada Secretariat "
-#~ "(TBS) giving you access to the "
-#~ "Open Government Registry (the Registry), "
-#~ "you agree to abide by the "
-#~ "following terms and conditions of use"
-#~ " for this and all future uses "
-#~ "of the Registry:</p> <ol><li>You agree "
-#~ "to provide all of the required "
-#~ "information for the creation of a "
-#~ "registry account<br/> Username<br/> Full "
-#~ "Name<br/> Government of Canada Email<br/> "
-#~ "Department Name<br/> Password</li> <li>You "
-#~ "agree that any information you provide"
-#~ " is true, accurate, and complete to"
-#~ " the best of your knowledge.</li> "
-#~ "<li>You understand and accept that you"
-#~ " are at all times responsible for "
-#~ "your login information . This "
-#~ "responsibility applies even if you "
-#~ "change your login information. This "
-#~ "information must be kept confidential at"
-#~ " all times and must not be "
-#~ "shared with or disclosed to others.</li>"
-#~ " <li>If your login information (i.e. "
-#~ "username, password) are revealed or if"
-#~ " you suspect that someone else has"
-#~ " learned or obtained them, you are"
-#~ " responsible for taking all necessary "
-#~ "measures to ensure compliance with the"
-#~ " terms and conditions you agreed to"
-#~ " when you created your login "
-#~ "information.</li> <li>You agree not to "
-#~ "use your own or another individual's "
-#~ "login information for any improper "
-#~ "activities.</li> <li>You agree to provide "
-#~ "all of the required information for "
-#~ "the creation of records</li> <li>You "
-#~ "agree not to use the services in"
-#~ " a manner that harasses or may "
-#~ "harass other parties, or that will "
-#~ "or will have the potential to "
-#~ "disrupt, undermine, corrupt, diminish or "
-#~ "otherwise threaten or jeopardize the "
-#~ "Registry.</li> <li>The TBS Open Government "
-#~ "Team will monitor access to the "
-#~ "Registry to ensure the service is "
-#~ "being used responsibly and in accordance"
-#~ " with these terms and conditions.</li> "
-#~ "<li>You understand and accept that the"
-#~ " TBS Open Government Group can "
-#~ "suspend or revoke your access to "
-#~ "the Registry without notice under the"
-#~ " following circumstances: <ul><li>we suspect "
-#~ "unauthorized use of your personal or "
-#~ "login information;</li> <li>you fail to "
-#~ "comply with any of the terms and"
-#~ " conditions of use and/or agreements "
-#~ "in place with the Treasury Board "
-#~ "of Canada Secretariat;</li> <li>as a "
-#~ "security measure;</li> <li>for operational "
-#~ "reasons;</li> <li>for administrative "
-#~ "reasons.</li></ul></li> <li>The TBS Open "
-#~ "Government Group has taken all "
-#~ "reasonable steps to ensure the security"
-#~ " of this website. We have used "
-#~ "sophisticated encryption technology and "
-#~ "incorporated other procedures to protect "
-#~ "your personal information at all times."
-#~ " However, the Internet is a public"
-#~ " network and there is the remote "
-#~ "possibility of data security violations.</li>"
-#~ " <li>TBS is not responsible for the"
-#~ " failure to meet publication deadlines "
-#~ "relating to: <ul><li>the availability or "
-#~ "unavailability, for any reason, of the"
-#~ " Internet, login services or other "
-#~ "infrastructure systems;</li> <li>any restriction,"
-#~ " delay, malfunction, or unavailability of"
-#~ " the Registry</li></ul></li> <li>These terms "
-#~ "and conditions of use may be "
-#~ "amended from time to time</li></ol> "
-#~ "<p>By selecting “I agree” you indicate"
-#~ " that you accept these terms and "
-#~ "conditions of use.</p> <p>If you select"
-#~ " “I do not agree” you will not"
-#~ " have access to the Registry.</p>"
 #~ msgstr ""
 
