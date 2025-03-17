@@ -13,7 +13,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
         id: gitcheckout
-      - uses: actions/setup-python@v2
+      - uses: actions/setup-python@v3
         with:
           python-version: ${{ env.PYTHON_VERSION }}
       - uses: actions/setup-node@v3
