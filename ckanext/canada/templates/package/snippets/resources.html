@@ -9,6 +9,7 @@
       <div class="panel-body resources-side-panel {% if not can_edit or is_activity_archive %} resources-side-panel-no-edit {% endif %}">
         {% block resources_list %}
           <ul class="list-unstyled nav nav-simple">
+            {# TODO: upstream contrib "loop.index > 8" !!! #}
             {% set ns = namespace(aria_controls='') %}
             {% for resource in resources %}
               {% set collapse_class = '' %}
@@ -79,9 +80,9 @@
                   data-toggle="collapse"
                   data-target=".show-all-resources"
                   aria-expanded="false"
-                  aria-controls="{{ ns.aria_controls }}">
-                    <span class="show-all-resources show">{{ _('Show more') }}</span>
-                    <span class="show-all-resources hide">{{ _('Hide') }}</span>
+                  aria-controls="{{ ns.aria_controls }} show-all-resources--label--more show-all-resources--label--less">
+                    <span id="show-all-resources--label--more" class="show-all-resources show">{{ _('Show more') }}</span>
+                    <span id="show-all-resources--label--less" class="show-all-resources hide">{{ _('Hide') }}</span>
                 </a>
               </li>
             {% endif %}
