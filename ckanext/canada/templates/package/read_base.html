@@ -163,7 +163,7 @@
     </ul>
   </div>
 
-  {% set iso19115_blocks = (('contact_information', 'Data Contact'), ('distributor', 'Distributor Contact')) %}
+  {% set iso19115_blocks = (('contact_information', _('Data Contact')), ('distributor', _('Distributor Contact'))) %}
   {% for block_name, block_label in iso19115_blocks %}
     {% if block_name in pkg %}
       {% set dist = h.json_loads(pkg[block_name])[h.lang()] %}
