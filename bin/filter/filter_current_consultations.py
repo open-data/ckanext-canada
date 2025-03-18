@@ -9,6 +9,7 @@ from datetime import datetime, timedelta
 import csv
 import sys
 
+
 def main():
     current = datetime.today() - timedelta(365 * 2)
 
@@ -18,5 +19,6 @@ def main():
     for row in reader:
         if datetime.strptime(row['end_date'], '%Y-%m-%d') > current:
             writer.writerow(row)
+
 
 main()

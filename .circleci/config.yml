@@ -17,7 +17,7 @@ orbs:
 jobs:
   test:
     docker:
-      - image: openknowledge/ckan-dev:2.9  # primary executor
+      - image: ckan/ckan-dev:2.10.4  # primary executor
         name: ckan
         environment:
           PGHOST: postgres
@@ -39,7 +39,7 @@ jobs:
           CKAN_REDIS_URL: redis://redis:6379/1
       - image: opendatacanada/solr  # dependency service
         name: solr
-      - image: postgres:9.6  # dependency service
+      - image: postgres:13.14  # dependency service
         name: postgres
         environment:
           POSTGRES_USER: postgres
@@ -54,33 +54,40 @@ jobs:
             - "0c:02:84:7e:c0:46:16:eb:9b:5e:1d:c9:f8:3b:5a:3d"
       - checkout
       - run:
-          name: Set CKAN to open-data/ckan@canada-py3
+          name: Set Python Version to 3.9
+          command: |
+            apk add --no-cache python3=3.9.18-r0 --repository=https://dl-cdn.alpinelinux.org/alpine/v3.15/main
+            ln -sf python3 /usr/local/bin/python
+            python3 -m ensurepip
+            pip3 install --no-cache --upgrade pip setuptools
+            python3 --version
+      - run:
+          name: Set CKAN to open-data/ckan@canada-v2.10
           command: |
             pip uninstall -y ckan
             git --git-dir=\/srv\/app\/src\/ckan\/.git --work-tree=\/srv\/app\/src\/ckan\/ remote add canada https://github.com/open-data/ckan.git
-            git --git-dir=\/srv\/app\/src\/ckan\/.git --work-tree=\/srv\/app\/src\/ckan\/ fetch canada canada-py3
-            git --git-dir=\/srv\/app\/src\/ckan\/.git --work-tree=\/srv\/app\/src\/ckan\/ checkout -b canada-py3 canada/canada-py3
+            git --git-dir=\/srv\/app\/src\/ckan\/.git --work-tree=\/srv\/app\/src\/ckan\/ fetch canada canada-v2.10
+            git --git-dir=\/srv\/app\/src\/ckan\/.git --work-tree=\/srv\/app\/src\/ckan\/ checkout -b canada-v2.10 canada/canada-v2.10
             git --git-dir=\/srv\/app\/src\/ckan\/.git --work-tree=\/srv\/app\/src\/ckan\/ pull
       - run:
           name: Install requirements
           command: |
             apk add jpeg-dev
-            pip install setuptools==44.1.0
+            pip install --upgrade setuptools==70.0.0
             pip install --upgrade pip==23.2.1
             pip install -e \/srv\/app\/src\/ckan\/ -r \/srv\/app\/src\/ckan\/requirements.txt -r \/srv\/app\/src\/ckan\/dev-requirements.txt
             pip install -e 'git+https://github.com/ckan/ckanapi.git#egg=ckanapi' -r 'https://raw.githubusercontent.com/ckan/ckanapi/master/requirements.txt'
             pip install -e . -r .\/requirements.txt -r .\/test-requirements.txt
             pip install -e 'git+https://github.com/ckan/ckanext-fluent.git#egg=ckanext-fluent' -r 'https://raw.githubusercontent.com/ckan/ckanext-fluent/master/requirements.txt'
-            pip install -e 'git+https://github.com/open-data/ckanext-recombinant.git#egg=ckanext-recombinant' -r 'https://raw.githubusercontent.com/open-data/ckanext-recombinant/master/requirements.txt'
+            pip install -e 'git+https://github.com/open-data/ckanext-recombinant.git@master#egg=ckanext-recombinant' -r 'https://raw.githubusercontent.com/open-data/ckanext-recombinant/master/requirements.txt'
             pip install -e 'git+https://github.com/ckan/ckanext-scheming.git#egg=ckanext-scheming'
-            pip install -e 'git+https://github.com/open-data/ckanext-validation.git@canada-py3#egg=ckanext-validation' -r 'https://raw.githubusercontent.com/open-data/ckanext-validation/canada-py3/requirements.txt' -r 'https://raw.githubusercontent.com/open-data/ckanext-validation/canada-py3/dev-requirements.txt'
-            pip install -e 'git+https://github.com/open-data/ckanext-xloader.git@canada-py3#egg=ckanext-xloader' -r 'https://raw.githubusercontent.com/open-data/ckanext-xloader/canada-py3/requirements.txt' -r 'https://raw.githubusercontent.com/open-data/ckanext-xloader/canada-py3/dev-requirements.txt'
-            pip install -e 'git+https://github.com/ckan/ckantoolkit.git#egg=ckantoolkit' -r 'https://raw.githubusercontent.com/ckan/ckantoolkit/master/requirements.txt'
-            pip install -e 'git+https://github.com/open-data/goodtables.git@canada-py3#egg=goodtables' -r 'https://raw.githubusercontent.com/open-data/goodtables/canada-py3/requirements.txt'
-            pip install -e 'git+https://github.com/open-data/ckanext-security.git@canada-py3#egg=ckanext-security' -r 'https://raw.githubusercontent.com/open-data/ckanext-security/canada-py3/requirements.txt'
+            pip install -e 'git+https://github.com/open-data/ckanext-validation.git@canada-v2.10#egg=ckanext-validation' -r 'https://raw.githubusercontent.com/open-data/ckanext-validation/canada-v2.10/requirements.txt' -r 'https://raw.githubusercontent.com/open-data/ckanext-validation/canada-v2.10/dev-requirements.txt'
+            pip install -e 'git+https://github.com/open-data/ckanext-xloader.git@canada-v2.10#egg=ckanext-xloader' -r 'https://raw.githubusercontent.com/open-data/ckanext-xloader/canada-v2.10/requirements.txt' -r 'https://raw.githubusercontent.com/open-data/ckanext-xloader/canada-v2.10/dev-requirements.txt'
+            pip install -e 'git+https://github.com/open-data/frictionless-py.git@canada-v2.10#egg=frictionless' -r 'https://raw.githubusercontent.com/open-data/frictionless-py/canada-v2.10/requirements.txt'
+            pip install -e 'git+https://github.com/open-data/ckanext-security.git@canada-v2.10#egg=ckanext-security' -r 'https://raw.githubusercontent.com/open-data/ckanext-security/canada-v2.10/requirements.txt'
             find \/srv\/app\/ -name '*.pyc' -delete
       - run:
-          name: Setup extension (CKAN 2.9 PY3)
+          name: Setup extension (CKAN 2.10 PY3.9)
           command: |
             ln -s \/srv\/app\/src\/ckan\/test-core.ini .\/links\/test-core.ini
             ln -s \/srv\/app\/src\/ckan\/who.ini .\/links\/who.ini
@@ -93,12 +100,14 @@ jobs:
             ckan -c test-core.ini datastore set-permissions | psql -U postgres --set ON_ERROR_STOP=1
             ckan -c test-core.ini canada update-triggers
             ckan -c test-core.ini recombinant create-triggers -a
+            ckan -c test-core.ini db upgrade
+            ckan -c test-core.ini db pending-migrations --apply
             python3 .\/bin\/download_country.py
       - run:
           name: Run all tests
           command: |
             mkdir -p ~/junit/result
-            pytest --ckan-ini=test-core.ini ckanext/canada/tests --junitxml=~/junit/result/junit.xml
+            pytest --ckan-ini=test-core.ini --disable-warnings ckanext/canada/tests --junitxml=~/junit/result/junit.xml
       - store_test_results:
           path: ~/junit
       - slack/notify:

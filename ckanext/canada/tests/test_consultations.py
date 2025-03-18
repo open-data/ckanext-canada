@@ -24,13 +24,11 @@ class TestConsultations(CanadaTestBase):
 
         self.resource_id = rval['resources'][0]['id']
 
-
     def test_example(self):
         record = get_chromo('consultations')['examples']['record']
         self.lc.action.datastore_upsert(
             resource_id=self.resource_id,
             records=[record])
-
 
     def test_blank(self):
         with pytest.raises(ValidationError) as ve:
@@ -41,7 +39,6 @@ class TestConsultations(CanadaTestBase):
         assert 'key' in err
         assert 'registration_number' in err['key'][0]
 
-
     def test_multiple_errors(self):
         with pytest.raises(ValidationError) as ve:
             self.lc.action.datastore_upsert(
@@ -50,7 +47,7 @@ class TestConsultations(CanadaTestBase):
                     'registration_number': 'CCC0249',
                     'publishable': 'Q',
                     'subjects': ["IP", "CD", "HS", "GEO", "SE", "MATH"],
-                    'title_fr': u'seulment français',
+                    'title_fr': 'seulment français',
                     'description_en': 'only english',
                     'target_participants_and_audience': ["ZOMBIES", "IP", "IG", "PT"],
                     'end_date': "2018-05-15",
@@ -64,19 +61,18 @@ class TestConsultations(CanadaTestBase):
                     }])
         err = ve.value.error_dict['records'][0]
         expected = {
-            'publishable': ['Invalid choice: {}\uf8ff"Q"'],
-            'subjects': ['Invalid choice: {}\uf8ff"GEO,MATH"'],
+            'publishable': ['Invalid choice: "Q"'],
+            'subjects': ['Invalid choice: "GEO,MATH"'],
             'title_en': ['This field must not be empty'],
             'description_fr': ['This field must not be empty'],
-            'target_participants_and_audience': ['Invalid choice: {}\uf8ff"ZOMBIES"'],
+            'target_participants_and_audience': ['Invalid choice: "ZOMBIES"'],
             'start_date': ['This field must not be empty'],
-            'partner_departments': ['Invalid choice: {}\uf8ff"DARN"'],
+            'partner_departments': ['Invalid choice: "DARN"'],
             'rationale': ['This field must not be empty'],
         }
         for k in set(err) | set(expected):
             assert k in err
             assert err[k] == expected[k]
-
 
     def test_not_going_forward_unpublished(self):
         record = get_chromo('consultations')['examples']['record']

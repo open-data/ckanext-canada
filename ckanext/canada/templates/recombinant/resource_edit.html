@@ -29,19 +29,58 @@
   {% endif %}
 {% endblock %}
 
+{% block resource_menu_classes %}nav nav-tabs{% endblock %}
+
 {% block primary_content %}
+  {% set geno = h.recombinant_get_geno(dataset_type) %}
+
   <div class="row">
+    {% block resource_menu %}
+      {% if dataset %}
+        <div class="col-md-12 canada-action-toolbar">
+          <header class="module-content page-header">
+            <div class="content_action"><div></div></div>
+            {{ super() }}
+          </header>
+        </div>
+      {% endif %}
+    {% endblock %}
+  </div>
+
+  <div class="row">
+    {% block org_select %}
+      <div class="col-md-12 canada-action-toolbar canada-pd-org-select-wrapper">
+        <header class="module-content page-header {% if dataset %} canada-no-marg {% endif %}">
+          <div class="content_action"><div></div></div>
+          {{ super() }}
+        </header>
+      </div>
+    {% endblock %}
+  </div>
+
+  <div class="row mrgn-tp-lg">
     <div class="col-md-9">
-      {{ super() }}
+      <div class="recombinant-action-panels-container">
+        {% block action_panels %}{{ super() }}{% endblock %}
+      </div>
     </div>
     <aside class="col-md-3">
+      {% if geno.notes %}
+        <div class="panel panel-primary">
+          <div class="panel-heading">{{ _("Info") }}</div>
+          <div class="panel-body">
+            <p>{{ _(geno.notes) }}</p>
+          </div>
+        </div>
+      {% endif %}
       <div class="panel panel-primary">
         <div class="panel-heading">{{ _("Guide") }}</div>
         <div class="panel-body">
-          {% set gcpedialink = h.recombinant_language_text(h.recombinant_get_geno(dataset_type).get('gcpedia_link', 'http://www.gcpedia.gc.ca/wiki/Proactive_Disclosure_on_Open.Canada.ca') ) %}
+          {% set default_guidelink = h.operations_guide_link(stub='publication-proactive' if h.lang() == 'fr' else 'proactive-publication' ) %}
+          {% set guide_link = h.recombinant_language_text(h.recombinant_get_geno(dataset_type).get('guide_link', default_guidelink) ) %}
           <p>
-            {% trans gclink=gcpedialink %}
-              For information on how to prepare, maintain and upload templates to the Registry, refer to the appropriate documentation posted on <a href="{{ gclink }}">GCPEDIA</a>
+            {% trans guide_link=guide_link %}
+              For information on how to prepare, maintain and upload templates to the Registry, refer to the appropriate documentation posted on the <a href="{{ guide_link }}">Operations Guide.</a>
             {% endtrans %}
           </p>
           {{ h.render_markdown(h.recombinant_language_text(h.recombinant_get_geno(dataset_type).get('sidebar_extra_content', ''))) }}

@@ -7,11 +7,12 @@ title: Service Inventory
 notes: Access, upload and modify the Service Inventory of external and internal enterprise services for your organization
 
 template_version: 3
+template_updated: 2024-11-26  # last qa confirmed: 2025-02-19
 
 portal_type: dataset
 collection: service
 
-gcpedia_link: http://www.gcpedia.gc.ca/wiki/GC_Service_Policy_Agenda
+guide_link: http://www.gcpedia.gc.ca/wiki/GC_Service_Policy_Agenda
 
 resources:
 - title: Service Identification Information & Metrics
@@ -30,8 +31,14 @@ resources:
       en: Fiscal Year
       fr: Année financière
     description:
-      en: Identifies the fiscal year (April-March) for which service data is reported.
-      fr: Indique l'exercice financier (avril-mars) pour lequel les données sur les services sont déclarées.
+      en: >
+        Identifies the fiscal year (April 1 to March 31) during which service activities took place.
+        For example, records for fiscal year 2023-2024 should include applications received
+        from April 1, 2023, to March 31, 2024.
+      fr: >
+        Indique l'exercice financier (1 avril au 31 mars) durant lequel les activités du service ont eu lieu.
+        Par exemple, les données pour l’exercice financier 2023-2024 devrait inclure les demandes de service qui
+        ont été reçues entre le 1 avril 2023 et le 31 mars 2024.
     obligation: Mandatory
     excel_required: true
     form_required: true
@@ -53,10 +60,15 @@ resources:
     obligation: Mandatory
     excel_required: true
     form_required: true
+    excel_error_formula: 'OR({default_formula},LEN({cell})-LEN(SUBSTITUTE({cell},",",""))>0)'
     format_type: Free text
     validation:
-      en: This field must not be empty.
-      fr: Ce champ ne doit pas être vide.
+      en: |
+        This field must not be empty.
+        This field cannot contain commas.
+      fr: |
+        Ce champ ne doit pas être vide.
+        Ce champ ne peut pas contenir de virgules.
     occurrence: Single
     datastore_type: text
 
@@ -76,16 +88,16 @@ resources:
     validation:
       en: |
         This field must not be empty.
-        This field has a maximum length of 250 characters.
+        This field has a maximum length of 350 characters.
       fr: |
         Ce champ ne doit pas être vide.
-        Ce champ ne peut excéder une longueur maximale de 250 caractères.
+        Ce champ ne peut excéder une longueur maximale de 350 caractères.
     occurrence: Single
     datastore_type: text
-    max_chars: 250
+    max_chars: 350
     form_attrs:
       style: "width: 100%; display: block"
-      maxlength: 250
+      maxlength: 350
 
   # DEP 1-5
   - datastore_id: service_name_fr
@@ -103,16 +115,16 @@ resources:
     validation:
       en: |
         This field must not be empty.
-        This field has a maximum length of 250 characters.
+        This field has a maximum length of 350 characters.
       fr: |
         Ce champ ne doit pas être vide.
-        Ce champ ne peut excéder une longueur maximale de 250 caractères.
+        Ce champ ne peut excéder une longueur maximale de 350 caractères.
     occurrence: Single
     datastore_type: text
-    max_chars: 250
+    max_chars: 350
     form_attrs:
       style: "width: 100%; display: block"
-      maxlength: 250
+      maxlength: 350
 
   # DEP 1-6
   - datastore_id: service_description_en
@@ -1342,8 +1354,10 @@ resources:
 
   datastore_primary_key: [fiscal_yr, service_id]
   datastore_indexes: ""
+  datastore_constraint_error_templates:
+    delete: recombinant/snippets/service_delete_fk_error.html
   datastore_constraint_errors:  # yaml | not supported
-    delete: Cannot delete record(s) because the Fiscal Year, Service ID Number is referenced in at least one Service Standards & Performance Results record.
+    delete: Cannot delete record(s) because the Fiscal Year, Service ID Number ({refValues}) is referenced in at least one Service Standards & Performance Results record.
 
   default_preview_sort: fiscal_yr, service_id
 
@@ -1357,14 +1371,17 @@ resources:
         errors := errors || choice_error(NEW.fiscal_yr, {fiscal_yr}, 'fiscal_yr');
 
         errors := errors || required_error(NEW.service_id, 'service_id');
+        IF NEW.service_id LIKE '%,%' THEN
+          errors := errors || ARRAY[['service_id', {service_id_comma_error}]];
+        END IF;
 
         errors := errors || required_error(NEW.service_name_en, 'service_name_en');
         NEW.service_name_en := trim_lead_trailing(NEW.service_name_en);
-        errors := errors || max_char_error(NEW.service_name_en, 250, 'service_name_en');
+        errors := errors || max_char_error(NEW.service_name_en, 350, 'service_name_en');
 
         errors := errors || required_error(NEW.service_name_fr, 'service_name_fr');
         NEW.service_name_fr := trim_lead_trailing(NEW.service_name_fr);
-        errors := errors || max_char_error(NEW.service_name_fr, 250, 'service_name_fr');
+        errors := errors || max_char_error(NEW.service_name_fr, 350, 'service_name_fr');
 
         errors := errors || required_error(NEW.service_description_en, 'service_description_en');
         NEW.service_description_en := trim_lead_trailing(NEW.service_description_en);
@@ -1535,6 +1552,7 @@ resources:
     integer_type_error: 'Invalid input syntax for type integer: {}'
     conditional_required_error: This field is required due to a response in a different field.
     both_lang_error: This text must be provided in both languages
+    service_id_comma_error: Comma is not allowed in Service ID Number field
 
   examples:
     record:
@@ -1624,8 +1642,14 @@ resources:
       en: Fiscal Year
       fr: Année financière
     description:
-      en: Identifies the fiscal year (April-March) for which service data is reported.
-      fr: Indique l'exercice financier (avril-mars) pour lequel les données sur les services sont déclarées.
+      en: >
+        Identifies the fiscal year (April 1 to March 31) during which service activities took place.
+        For example, records for fiscal year 2023-2024 should include applications received
+        from April 1, 2023, to March 31, 2024.
+      fr: >
+        Indique l'exercice financier (1 avril au 31 mars) durant lequel les activités du service ont eu lieu.
+        Par exemple, les données pour l’exercice financier 2023-2024 devrait inclure les demandes de service qui
+        ont été reçues entre le 1 avril 2023 et le 31 mars 2024.
     obligation: Mandatory
     excel_required: true
     form_required: true
@@ -1648,9 +1672,14 @@ resources:
     obligation: Mandatory
     excel_required: true
     form_required: true
+    excel_error_formula: 'OR({default_formula},LEN({cell})-LEN(SUBSTITUTE({cell},",",""))>0)'
     validation:
-      en: This field must not be empty.
-      fr: Ce champ ne doit pas être vide.
+      en: |
+        This field must not be empty.
+        This field cannot contain commas.
+      fr: |
+        Ce champ ne doit pas être vide.
+        Ce champ ne peut pas contenir de virgules.
     format_type: Free text
     occurrence: Single
     datastore_type: text
@@ -1670,17 +1699,17 @@ resources:
     validation:
       en: |
         This field must not be empty.
-        This field has a maximum length of 250 characters.
+        This field has a maximum length of 350 characters.
       fr: |
         Ce champ ne doit pas être vide.
-        Ce champ ne peut excéder une longueur maximale de 250 caractères.
+        Ce champ ne peut excéder une longueur maximale de 350 caractères.
     format_type: Free text
     occurrence: Single
     datastore_type: text
-    max_chars: 250
+    max_chars: 350
     form_attrs:
       style: "width: 100%; display: block"
-      maxlength: 250
+      maxlength: 350
 
   # DEP 2-4
   - datastore_id: service_name_fr
@@ -1697,17 +1726,17 @@ resources:
     validation:
       en: |
         This field must not be empty.
-        This field has a maximum length of 250 characters.
+        This field has a maximum length of 350 characters.
       fr: |
         Ce champ ne doit pas être vide.
-        Ce champ ne peut excéder une longueur maximale de 250 caractères.
+        Ce champ ne peut excéder une longueur maximale de 350 caractères.
     format_type: Free text
     occurrence: Single
     datastore_type: text
-    max_chars: 250
+    max_chars: 350
     form_attrs:
       style: "width: 100%; display: block"
-      maxlength: 250
+      maxlength: 350
 
   # DEP 2-5
   - datastore_id: service_standard_id
@@ -1726,9 +1755,14 @@ resources:
     obligation: Mandatory
     excel_required: true
     form_required: true
+    excel_error_formula: 'OR({default_formula},LEN({cell})-LEN(SUBSTITUTE({cell},",",""))>0)'
     validation:
-      en: This field must not be empty.
-      fr: Ce champ ne doit pas être vide.
+      en: |
+        This field must not be empty.
+        This field cannot contain commas.
+      fr: |
+        Ce champ ne doit pas être vide.
+        Ce champ ne peut pas contenir de virgules.
     format_type: Free text
     occurrence: Single
     datastore_type: text
@@ -1975,7 +2009,7 @@ resources:
       en: This value must not be negative.
       fr: Cette valeur ne doit être négative.
     occurrence: Single
-    datastore_type: int
+    datastore_type: bigint
     excel_error_formula: 'OR({default_formula},NOT(ISNUMBER({cell})),{cell}<0)'
 
   # DEP 2-14
@@ -2000,7 +2034,7 @@ resources:
       en: This value must not be negative.
       fr: Cette valeur ne doit être négative.
     occurrence: Single
-    datastore_type: int
+    datastore_type: bigint
     excel_error_formula: 'OR({default_formula},NOT(ISNUMBER({cell})),{cell}<0)'
 
   # DEP 2-15
@@ -2072,17 +2106,17 @@ resources:
     label:
       en: Was the target met
       fr: La cible était-elle atteinte
-    description:
+    # description:
       #TODO: get a description
-      en:
-      fr:
-    obligation: Optional
+      # en:
+      # fr:
+    obligation: Mandatory
     datastore_type: text
     published_resource_computed_field: true
     choices:
       'NA':
-        en: N/A (not a service to businesses)
-        fr: S.O. (N'est pas un service aux entreprises)
+        en: N/A
+        fr: S.O.
       'N':
         en: "No"
         fr: Non
@@ -2248,8 +2282,10 @@ resources:
       fiscal_yr: fiscal_yr
       service_id: service_id
   datastore_indexes: ""
+  datastore_constraint_error_templates:
+    upsert: recombinant/snippets/service_std_upsert_fk_error.html
   datastore_constraint_errors:  # yaml | not supported
-    upsert: Cannot create record because the Service ID Number does not exist in the Service Identification Information & Metrics resource for that fiscal year.
+    upsert: Cannot create record ({refValues}) because the Service ID Number does not exist in the Service Identification Information & Metrics resource for that fiscal year.
 
   default_preview_sort: fiscal_yr, service_id, service_standard_id
 
@@ -2263,16 +2299,22 @@ resources:
         errors := errors || choice_error(NEW.fiscal_yr, {fiscal_yr}, 'fiscal_yr');
 
         errors := errors || required_error(NEW.service_id, 'service_id');
+        IF NEW.service_id LIKE '%,%' THEN
+          errors := errors || ARRAY[['service_id', {service_id_comma_error}]];
+        END IF;
 
         errors := errors || required_error(NEW.service_name_en, 'service_name_en');
         NEW.service_name_en := trim_lead_trailing(NEW.service_name_en);
-        errors := errors || max_char_error(NEW.service_name_en, 250, 'service_name_en');
+        errors := errors || max_char_error(NEW.service_name_en, 350, 'service_name_en');
 
         errors := errors || required_error(NEW.service_name_fr, 'service_name_fr');
         NEW.service_name_fr := trim_lead_trailing(NEW.service_name_fr);
-        errors := errors || max_char_error(NEW.service_name_fr, 250, 'service_name_fr');
+        errors := errors || max_char_error(NEW.service_name_fr, 350, 'service_name_fr');
 
         errors := errors || required_error(NEW.service_standard_id, 'service_standard_id');
+        IF NEW.service_standard_id LIKE '%,%' THEN
+          errors := errors || ARRAY[['service_standard_id', {service_standard_id_comma_error}]];
+        END IF;
 
         errors := errors || required_error(NEW.service_standard_en, 'service_standard_en');
         NEW.service_standard_en := trim_lead_trailing(NEW.service_standard_en);
@@ -2349,6 +2391,8 @@ resources:
     integer_type_error: 'Invalid input syntax for type integer: {}'
     conditional_required_error: This field is required due to a response in a different field.
     both_lang_error: This text must be provided in both languages
+    service_id_comma_error: Comma is not allowed in Service ID Number field
+    service_standard_id_comma_error: Comma is not allowed in Service Standard ID field
 
   examples:
     record:

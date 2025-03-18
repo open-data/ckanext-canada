@@ -9,8 +9,7 @@ try:
     infile = sys.argv[1]
     outfile = sys.argv[2]
     colnames = sys.argv[3]
-
-except:
+except Exception:
     sys.stderr.write('''Usage:
     jsonlerrors2csv input.jsonl output.csv 'col1,col2,...'
 

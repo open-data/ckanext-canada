@@ -77,7 +77,6 @@ class TestMakePD(CanadaTestBase):
         os.environ['PORTAL_STATIC_SMB_DIRECTORY'] = self.tmp_dir
         os.environ['REGISTRY_CKAN_COMMAND'] = 'ckan'
 
-
     @classmethod
     def teardown_method(self, method):
         """Method is called at class level after EACH test methods of the class are called.
@@ -91,18 +90,15 @@ class TestMakePD(CanadaTestBase):
 
         shutil.rmtree(self.tmp_dir)
 
-
     def _get_ds_records(self, type):
         chromo = get_chromo(type)
         result = self.action.datastore_search(resource_id=chromo['published_resource_id'])
         return result.get('fields'), result.get('records')
 
-
     def _setup_ini(self, ini):
         assert ini.startswith('/')
         os.environ['REGISTRY_INI'] = ini
         os.environ['PORTAL_INI'] = ini
-
 
     def _setup_pd(self, type, nil_type=None, extra_resource_ids=[]):
         assert type
@@ -133,7 +129,6 @@ class TestMakePD(CanadaTestBase):
         for _id in extra_resource_ids:
             Resource(id=_id)
 
-
     def test_enivonment_variables(self):
         assert self.ckan_ini
         self._setup_ini(self.ckan_ini)
@@ -155,7 +150,6 @@ class TestMakePD(CanadaTestBase):
         assert 'REGISTRY_STATIC_SMB_DIRECTORY is undefined' not in stdout
         assert 'PORTAL_STATIC_SMB_DIRECTORY is undefined' not in stdout
         assert 'REGISTRY_CKAN_COMMAND is undefined' not in stdout
-
 
     def test_make_ati(self):
         assert self.ckan_ini
@@ -181,7 +175,6 @@ class TestMakePD(CanadaTestBase):
         assert "rebuild-ati] Error" not in stdout
         assert '%s 1' % self.org['name'] in stdout
 
-
     def test_make_briefingt(self):
         assert self.ckan_ini
         self._setup_ini(self.ckan_ini)
@@ -205,7 +198,6 @@ class TestMakePD(CanadaTestBase):
         assert "Usage:" not in stdout
         assert "rebuild-briefingt] Error" not in stdout
         assert 'import_data_csv' in stdout
-
 
     def test_make_qpnotes(self):
         assert self.ckan_ini
@@ -231,7 +223,6 @@ class TestMakePD(CanadaTestBase):
         assert "rebuild-qpnotes] Error" not in stdout
         assert 'import_data_csv' in stdout
 
-
     def test_make_contracts(self):
         assert self.ckan_ini
         self._setup_ini(self.ckan_ini)
@@ -256,7 +247,6 @@ class TestMakePD(CanadaTestBase):
         assert "rebuild-contracts] Error" not in stdout
         assert 'import_data_csv' in stdout
 
-
     def test_make_contractsa(self):
         assert self.ckan_ini
         self._setup_ini(self.ckan_ini)
@@ -279,7 +269,6 @@ class TestMakePD(CanadaTestBase):
         # there is no search for contractsa, just test for no errors
         assert "Usage:" not in stdout
         assert "rebuild-contractsa] Error" not in stdout
-
 
     def test_make_consultations(self):
         assert self.ckan_ini
@@ -306,7 +295,6 @@ class TestMakePD(CanadaTestBase):
         assert "Usage:" not in stdout
         assert "rebuild-consultations] Error" not in stdout
 
-
     def test_make_dac(self):
         assert self.ckan_ini
         self._setup_ini(self.ckan_ini)
@@ -330,7 +318,6 @@ class TestMakePD(CanadaTestBase):
         assert "Usage:" not in stdout
         assert "rebuild-dac] Error" not in stdout
 
-
     def test_make_experiment(self):
         assert self.ckan_ini
         self._setup_ini(self.ckan_ini)
@@ -353,7 +340,6 @@ class TestMakePD(CanadaTestBase):
         # there is no search for contractsa, just test for no errors
         assert "Usage:" not in stdout
         assert "rebuild-experiment] Error" not in stdout
-
 
     def test_make_grants(self):
         assert self.ckan_ini
@@ -379,7 +365,6 @@ class TestMakePD(CanadaTestBase):
         assert "rebuild-grants] Error" not in stdout
         assert 'import_data_csv' in stdout
 
-
     def test_make_hospitalityq(self):
         assert self.ckan_ini
         self._setup_ini(self.ckan_ini)
@@ -399,11 +384,10 @@ class TestMakePD(CanadaTestBase):
 
         stdout = stdout.decode("utf-8")
 
-        # Drupal/Solr, test for record indexing
+        # Django, just test for command output from echo
         assert "Usage:" not in stdout
         assert "rebuild-hospitalityq] Error" not in stdout
-        assert '%s 1' % self.org['name'] in stdout
-
+        assert 'import_data_csv' in stdout
 
     def test_make_travelq(self):
         assert self.ckan_ini
@@ -429,7 +413,6 @@ class TestMakePD(CanadaTestBase):
         assert "rebuild-travelq] Error" not in stdout
         assert 'import_data_csv' in stdout
 
-
     def test_make_nap5(self):
         assert self.ckan_ini
         self._setup_ini(self.ckan_ini)
@@ -454,7 +437,6 @@ class TestMakePD(CanadaTestBase):
         assert "rebuild-nap5] Error" not in stdout
         assert 'import_data_csv' in stdout
 
-
     def test_make_reclassification(self):
         assert self.ckan_ini
         self._setup_ini(self.ckan_ini)
@@ -474,11 +456,10 @@ class TestMakePD(CanadaTestBase):
 
         stdout = stdout.decode("utf-8")
 
-        # Drupal/Solr, test for record indexing
+        # Django, just test for command output from echo
         assert "Usage:" not in stdout
         assert "rebuild-reclassification] Error" not in stdout
-        assert '%s 1' % self.org['name'] in stdout
-
+        assert 'import_data_csv' in stdout
 
     def test_make_service(self):
         assert self.ckan_ini
@@ -633,7 +614,6 @@ class TestMakePD(CanadaTestBase):
         assert expected_fields == published_fields
         assert expected_record == published_record
 
-
     def test_make_travela(self):
         assert self.ckan_ini
         self._setup_ini(self.ckan_ini)
@@ -658,7 +638,6 @@ class TestMakePD(CanadaTestBase):
         assert "rebuild-travela] Error" not in stdout
         assert 'import_data_csv' in stdout
 
-
     def test_make_wrongdoing(self):
         assert self.ckan_ini
         self._setup_ini(self.ckan_ini)
@@ -678,11 +657,10 @@ class TestMakePD(CanadaTestBase):
 
         stdout = stdout.decode("utf-8")
 
-        # Drupal/Solr, test for record indexing
+        # Django, just test for command output from echo
         assert "Usage:" not in stdout
         assert "rebuild-wrongdoing] Error" not in stdout
-        assert '%s 1' % self.org['name'] in stdout
-
+        assert 'import_data_csv' in stdout
 
     def test_make_adminaircraft(self):
         assert self.ckan_ini

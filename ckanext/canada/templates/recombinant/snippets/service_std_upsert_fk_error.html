@@ -1,0 +1,8 @@
+{% if ref_dataset['type'] in h.recombinant_get_types() %}
+  {% set ref_table_link = h.url_for('recombinant.preview_table', resource_name=ref_resource['name'], owner_org=ref_dataset['organization']['name'], dt_query=dt_query) %}
+{% else %}
+  {% set ref_table_link = h.url_for('resource.read', id=ref_dataset['id'], resource_id=ref_resource['id']) %}
+{% endif %}
+{% trans %}
+Cannot create record (<strong><em>{{ ref_values }}</em></strong>) because the Service ID Number does not exist in the <a target="_blank" href="{{ ref_table_link }}">Service Identification Information & Metrics resource</a> for that fiscal year.
+{% endtrans %}

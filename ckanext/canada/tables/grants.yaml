@@ -5,7 +5,7 @@ shortname: Grants and Contributions
 notes: Access, upload and modify the Grants and Contributions reports for your organization
 
 template_version: 3
-template_updated: 2019-11-15
+template_updated: 2024-11-03  # last qa confirmed: 2025-02-19
 
 portal_type: info
 collection: pd
@@ -30,7 +30,7 @@ resources:
         The Reference number is populated by departments. It is a unique reference number given to each entry. Having a unique identifier for each item will allow departments to locate a specific item in the registry should they need to modify or delete.
 
         Controlled format; This field is populated in the following format DDD-YYYY-YYYY-QX-XXXXX
-         1. DDD represents the department number – See annex A for list of department numbers
+         1. DDD represents the department number – Use the same three-digit number as the ‘Departmental Identifier’, which is the department number per the Chart of Accounts list of departments. Ensure you are reviewing the most current year: https://www.tpsgc-pwgsc.gc.ca/recgen/pceaf-gwcoa/2425/txt/rg-3-num-eng.html
          2. YYYY-YYYY represents the fiscal year
          3. QX represents the fiscal quarter
          4. XXXXX represents the unique number assigned by the department for each entry.
@@ -40,7 +40,7 @@ resources:
         Ce champ est rempli par l’utilisateur. L’identificateur de projet ministériel permet aux ministères d’identifier rapidement les rapports produits dans leur propre système. Les ministères devraient utiliser un chiffre qui est logique pour le ministère. Ces renseignements seront publiés dans le cadre du rapport.
 
         Format contrôlé; Ce champ est rempli au format suivant: DDD-YYYY-YYYY-QX-XXXXX
-         1.	DDD représente le numéro de département - Voir l’annexe A pour la liste des numéros de département.
+         1.	DDD représente le numéro du ministère - Utilisez le même numéro à trois chiffres que l’«Identificateur ministériel», qui est le numéro de ministère selon la liste du plan comptable des ministères. Assurez-vous de consulter l’année la plus récente : https://www.tpsgc-pwgsc.gc.ca/recgen/pceaf-gwcoa/2425/txt/rg-3-num-fra.html
          2.	AAAA-AAAA représente l'année fiscale
          3.	QX représente le trimestre fiscal
          4.	XXXXX représente le numéro unique attribué par le département pour chaque entrée.
@@ -79,7 +79,7 @@ resources:
       fr: Obligatoire si le numéro de modification est défini
     format_type: Date (Please format the data as YYYY-MM-DD)
     datastore_type: date
-    excel_cell_required_formula: 'and({column}{row}="",{column_before}{row}<>0)'
+    excel_required_formula: AND(NOT(ISBLANK({amendment_number})),{amendment_number}<>0)
     form_snippet: scheming/form_snippets/date.html
 
   # 3.4 Agreement Type (Formerly “Type”- 3.16)
@@ -128,7 +128,7 @@ resources:
         en: Academia
         fr: établissement universitaire et institution publique
       A:
-        en: Aboriginal recipients
+        en: Indigenous recipients
         fr: bénéficiaire autochtone
       G:
         en: Government
@@ -253,12 +253,14 @@ resources:
       en: Recipient Province or Territory
       fr: Province ou territoire du bénéficiaire
     description:
-      en: The "Recipient province or territory" is a mandatory field that identifies where, within Canada, the recipient resides.
-      fr: Le champ « province ou territoire du bénéficiaire » est un champ obligatoire qui indique le lieu de résidence du bénéficiaire au Canada.
-    obligation: Optional
+      en: The "Recipient province or territory" is a mandatory field if the Recipient Country is Canada and identifies where, within Canada, the recipient resides.
+      fr: Le champ « province ou territoire du bénéficiaire » est un champ obligatoire si le pays destinataire est le Canada et indique le lieu de résidence du bénéficiaire au Canada.
+    obligation:
+      en: Mandatory if Recipient Country is Canada
+      fr: Obligatoire si le pays destinataire est le Canada
     format_type: Controlled List
     datastore_type: text
-    excel_cell_required_formula: 'and({column}{row}="",{column_before}{row}="CA")'
+    excel_required_formula: AND(NOT(ISBLANK({recipient_country})),{recipient_country}="CA")
     choices:
       "ON":
         en: Ontario
@@ -520,7 +522,7 @@ resources:
     obligation: Optional (Mandatory when funding provided in foreign currency)
     format_type: Controlled List
     datastore_type: text
-    excel_cell_required_formula: 'and({column}{row}="",{column_after}{row}<>"")'
+    excel_required_formula: NOT(ISBLANK({foreign_currency_value}))
     choices_file: choices/currency.json
 
   # 3.26 Foreign Currency Value (New field)
@@ -533,7 +535,7 @@ resources:
       fr: La valeur en monnaie étrangère est le montant convenu aux termes de l'entente de subvention ou de contribution avec le bénéficiaire. Ce champ doit être rempli en inscrivant la valeur dans la monnaie étrangère. Ce champ est obligatoire si l'entente est en devise étrangère.
     obligation: Mandatory if foreign currency type is selected
     datastore_type: money
-    excel_cell_required_formula: 'and({column}{row}="",{column_before}{row}<>"")'
+    excel_required_formula: NOT(ISBLANK({foreign_currency_type}))
 
   # 3.27 Agreement Start Date (Formerly 3.14 "date")
   - datastore_id: agreement_start_date

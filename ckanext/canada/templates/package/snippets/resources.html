@@ -4,32 +4,51 @@
   <section class="panel panel-default resources-side-section">
     {% block resources_inner %}
       {% block resources_title %}
-        <div class="panel-heading"><i class="fa fa-bars"></i>&nbsp;{{ _("Resources") }}</div>
+        <div class="panel-heading"><i class="fa fa-bars" aria-hidden="true"></i>&nbsp;{{ _("Resources") }}</div>
       {% endblock %}
-      <div class="panel-body resources-side-panel">
+      <div class="panel-body resources-side-panel {% if not can_edit or is_activity_archive %} resources-side-panel-no-edit {% endif %}">
         {% block resources_list %}
-          {% if g.is_registry %}
-            <ul class="list-unstyled nav nav-simple">
-              {% for resource in resources %}
-                {% set url = h.url_for(pkg.type ~ '_resource.read', id=pkg.id if is_activity_archive else pkg.name, resource_id=resource.id, **({'activity_id': request.args['activity_id']} if 'activity_id' in request.args else {})) %}
-                {% if active == resource.id %}
-                  <li class="nav-item active">
-                    <a href="#">{{ h.resource_display_name(resource)|truncate(25) }}</a>
-                  </li>
-                {% elif can_edit and not is_activity_archive %}
-                  <li class="nav-item justify-content-between position-relative">
-                    <a class="flex-fill" href="{{ url }}" title="{{ h.resource_display_name(resource) }}">{{ h.resource_display_name(resource)|truncate(25) }}</a>
-                    <div class="dropdown position-absolute end-0 me-2">
-                      <button class="btn btn-light btn-sm dropdown-toggle" type="button" id="dropdownRes{{ loop.index }}" data-bs-toggle="dropdown" aria-expanded="false" data-toggle="dropdown"><i class="fa fa-wrench"></i></button>
-                      <ul class="dropdown-menu" aria-labelledby="dropdownRes{{ loop.index }}">
-                        <li>{% link_for _('Edit resource'), named_route=pkg.type ~ '_resource.edit', id=pkg.name, resource_id=resource.id, class_='dropdown-item', icon='pencil' %}</li>
-                        {% block resources_list_edit_dropdown_inner scoped %}{% endblock %}
-                        <li>{% link_for _('Views'), named_route=pkg.type ~ '_resource.views', id=pkg.name, resource_id=resource.id, class_='dropdown-item', icon='chart-bar' %}</li>
-                      </ul>
-                    </div>
-                    {% set language_options = h.scheming_get_preset('canada_resource_language').choices %}
-                    <div class="mrgn-tp-md mrgn-lft-md">
-                    {% for language in resource.language %}
+          <ul class="list-unstyled nav nav-simple">
+            {# TODO: upstream contrib "loop.index > 8" !!! #}
+            {% set ns = namespace(aria_controls='') %}
+            {% for resource in resources %}
+              {% set collapse_class = '' %}
+              {% set collapse_id = '' %}
+              {% if loop.index > 8 %}
+                {% set collapse_class = 'show-all-resources hide' %}
+                {% set collapse_id = 'show-all-resources-' + loop.index|string %}
+                {% set ns.aria_controls = ns.aria_controls + ' ' + collapse_id %}
+              {% endif %}
+              {% set url = h.url_for(pkg.type ~ '_resource.read', id=pkg.id if is_activity_archive else pkg.name, resource_id=resource.id, **({'activity_id': request.args['activity_id']} if 'activity_id' in request.args else {})) %}
+              {% set is_active = 'active' if active == resource.id else '' %}
+              <li id="{{ collapse_id }}" class="nav-item justify-content-between position-relative {{ is_active }} {{ collapse_class }}">
+                <a class="resources-side-section-item-link" tabindex="{{ -1 if is_active else 0 }}" href="{{ 'javascript:void(0);' if is_active else url }}" title="{{ h.resource_display_name(resource) }}">{{ h.resource_display_name(resource)|truncate(45) }}</a>
+                {% if g.is_registry and can_edit and not is_activity_archive %}
+                  {% set validation_badge = h.get_validation_badge(resource)|safe %}
+                  <div class="dropdown position-absolute end-0 me-2">
+                    <button class="btn btn-light btn-sm dropdown-toggle" type="button" id="dropdownRes{{ loop.index }}" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa fa-wrench" aria-hidden="true"></i></button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownRes{{ loop.index }}">
+                      <li>{% link_for _('Edit resource'), named_route=pkg.type ~ '_resource.edit', id=pkg.name, resource_id=resource.id, class_='dropdown-item', icon='pencil' %}</li>
+                      {% block resources_list_edit_dropdown_inner scoped %}{% endblock %}
+                      {% if h.is_resource_supported_by_xloader(resource) %}
+                        <li>{% link_for _('DataStore'), named_route='xloader.resource_data', id=pkg.name, resource_id=resource.id, class_='dropdown-item', icon='cloud-upload' %}</li>
+                        <li>{% link_for _('Data Dictionary'), named_route='datastore.dictionary', id=pkg.name, resource_id=resource.id, class_='dropdown-item', icon='code' %}</li>
+                      {% endif %}
+                      {% if validation_badge %}
+                        <li>{% link_for _('Validation'), named_route='validation.read', id=pkg.name, resource_id=resource.id, class_='dropdown-item', icon='tasks' %}</li>
+                      {% endif %}
+                      <li>{% link_for _('Views'), named_route=pkg.type ~ '_resource.views', id=pkg.name, resource_id=resource.id, class_='dropdown-item', icon='chart-bar' %}</li>
+                      <li>
+                        <a class="dropdown-item text-danger" href="{{ h.url_for(pkg.type ~ '_resource.delete', id=pkg.name, resource_id=resource.id) }}" data-module="confirm-action" data-module-content="{{ _('Are you sure you want to delete this resource?') }}">
+                          <i class="fa fa-trash" aria-hidden="true"></i>&nbsp;{{ _('Delete resource') }}</a>
+                      </li>
+                    </ul>
+                  </div>
+                {% endif %}
+                {% set language_options = h.scheming_get_preset('canada_resource_language').choices %}
+                <div class="resources-side-section-item-badges">
+                  {% for language in resource.language %}
+                    {% if loop.index <= 2 %}
                       {% for option in language_options %}
                         {% if option.value == language %}
                           <span class="badge res-tag res-tag-lang">
@@ -37,24 +56,37 @@
                           </span>
                         {% endif %}
                       {% endfor %}
-                    {% endfor %}
-                    {% if resource.format %}
-                      <span class="badge res-tag">
-                        {{ resource.format }}
-                      </span>
                     {% endif %}
-                    </div>
-                  </li>
-                {% else %}
-                  <li class="nav-item">
-                    <a href="{{ url }}" title="{{ h.resource_display_name(resource) }}">{{ h.resource_display_name(resource)|truncate(25) }}</a>
-                  </li>
-                {% endif %}
-              {% endfor %}
-            </ul>
-          {% else %}
-            {{ super() }}
-          {% endif %}
+                  {% endfor %}
+                  {% if resource.language|length > 2 %}
+                    {% set lang_count = resource.language|length %}
+                    <span class="badge res-tag res-tag-lang">
+                      {{ _('+ %s more').format(lang_count - 2) }}
+                    </span>
+                  {% endif %}
+                  {% if resource.format %}
+                    <span class="badge res-tag">
+                      {{ h.scheming_choices_label(h.scheming_get_preset('canada_resource_format').choices, resource.format) }}
+                    </span>
+                  {% endif %}
+                </div>
+              </li>
+            {% endfor %}
+            {% if resources|length > 8 %}
+              <li class="nav-item d-inline text-center">
+                <a href="javascript:void(0);"
+                  data-bs-toggle="collapse"
+                  data-bs-target=".show-all-resources"
+                  data-toggle="collapse"
+                  data-target=".show-all-resources"
+                  aria-expanded="false"
+                  aria-controls="{{ ns.aria_controls }} show-all-resources--label--more show-all-resources--label--less">
+                    <span id="show-all-resources--label--more" class="show-all-resources show">{{ _('Show more') }}</span>
+                    <span id="show-all-resources--label--less" class="show-all-resources hide">{{ _('Hide') }}</span>
+                </a>
+              </li>
+            {% endif %}
+          </ul>
         {% endblock %}
       </div>
     {% endblock %}

@@ -17,7 +17,7 @@ presets:
 - preset_name: canada_dataset_id
   values:
     create_validators: canada_validate_generate_uuid
-      unicode name_validator package_id_does_not_exist
+      unicode_safe name_validator package_id_does_not_exist
     display_snippet: null
     field_name: id
     form_snippet: null
@@ -31,7 +31,7 @@ presets:
     field_name: name
     form_snippet: null
     validators: if_empty_same_as(id)
-      unicode not_empty canada_validate_generate_uuid
+      unicode_safe not_empty canada_validate_generate_uuid
 
 # Field = Collection Type.
 # Display the English or the French Description from the Collection Type code table (refer to Data Migration), depending on the selected language.
@@ -170,10 +170,10 @@ presets:
     required: true
     form_include_blank_choice: true
     form_select_attrs:
-      class: form-control
+      class: form-control form-select
     # copied from dataset_organization preset
     validators: scheming_required string_safe owner_org_validator
-    form_snippet: organization.html
+    form_snippet: organization_autocomplete.html
 
 # Field = Publisher - Organization Name at Publication (English).
 # {The organization Title at publication Time}
@@ -2689,9 +2689,7 @@ presets:
       class: form-control
 
 # Field = Relationship Type.
-# List box Source: Relationship Type code table (refer to Data Migration).
-# {The Related Record’s relationship with the dataset}
-- preset_name: canada_resource_related_relationship
+- preset_name: canada_dataset_related_relationship
   values:
     field_name: related_relationship
     label:
@@ -2700,7 +2698,6 @@ presets:
     help_text:
       en: The Related Record’s relationship with the dataset
       fr: Relation du dossier connexe avec le jeu de données
-    form_panel: related
     choices:
     - label:
         en: Continues
@@ -2755,25 +2752,64 @@ presets:
         fr: Séparé de
       value: separated_from
     - label:
-        en: Split into ...
-        fr: Divisé en …
+        en: Split into
+        fr: Divisé en
       value: split_into
     - label:
-        en: Merged with ...
+        en: Merged with
         fr: Fusionné avec
       value: merged_into
     - label:
         en: Changed back to
         fr: Restauré à
       value: changed_back_to
+    form_include_blank_choice: true
     form_snippet: select.html
     display_snippet: select.html
     validators: scheming_required scheming_choices
+    required: true
+    form_panel: relationships
+
+# Field = Related Record URL.
+- preset_name: canada_dataset_related_url
+  values:
+    field_name: related_url
+    label:
+      en: Related Record URL
+      fr: URL de l'enregistrement connexe
+    help_text:
+      en: The URL for online access to the related record
+      fr: L'URL pour l'accès en ligne à la fiche connexe
+    fluent_form_label:
+      en:
+        en: Related Record URL (English)
+        fr: URL de l'enregistrement connexe (anglais)
+      fr:
+        en: Related Record URL (French)
+        fr: URL de l'enregistrement connexe (français)
+    fluent_help_text:
+      en:
+        en: The URL for online access to the related record in English
+        fr: L'URL pour l'accès en ligne à la fiche connexe en anglais
+      fr:
+        en: The URL for online access to the related record in French
+        fr: L'URL pour l'accès en ligne à la fiche connexe en français
+    # copied from fluent_text preset
+    form_snippet: fluent_text.html
+    display_snippet: fluent_link.html
+    display_attributes:
+      style: "word-wrap: break-word"
+    error_snippet: fluent_text.html
+    validators: fluent_text
+    output_validators: fluent_text_output
+    required: true
+    form_panel: relationships
+    form_attrs:
+      style: "width: 100%;"
+      class: form-control
 
 # Field = Record Type.
-# List box Source: Record Type code table (refer to Data Migration).
-# {The portal or page to which the Related Record belongs}
-- preset_name: canada_resource_related_type
+- preset_name: canada_dataset_related_type
   values:
     field_name: related_type
     label:
@@ -2782,9 +2818,6 @@ presets:
     help_text:
       en: The portal or page to which the Related Record belongs
       fr: Portail auquel appartient le dossier connexe
-    form_panel: related
-    required: true
-    form_include_blank_choice: true
     choices:
     - label:
         en: Open Data
@@ -2802,11 +2835,45 @@ presets:
         en: Other
         fr: Autre
       value: other
+    required: true
+    form_include_blank_choice: true
     form_snippet: select.html
     display_snippet: select.html
-    # no 'scheming_required' in validators because this field may be omitted
-    # for non-related-item resources
-    validators: ignore_missing scheming_choices
+    validators: scheming_required scheming_choices
+    form_panel: relationships
+
+- preset_name: canada_resource_related_relationship
+  values:
+    field_name: related_relationship
+    label:
+      en: Relationship Type
+      fr: Type de relation
+    help_text:
+      en: The Related Record’s relationship with the resource
+      fr: Relation du dossier connexe avec le jeu de données
+    choices:
+    - label:
+        en: Defines
+        fr: Définit
+      value: defines
+    - label:
+        en: Defined by
+        fr: Défini par
+      value: defined_by
+    - label:
+        en: References
+        fr: Références
+      value: references
+    - label:
+        en: Referenced by
+        fr: Référencé par
+      value: referenced_by
+    form_include_blank_choice: true
+    form_snippet: select.html
+    display_snippet: select.html
+    validators: scheming_required scheming_choices
+    required: true
+    form_panel: relationships
 
 # Field = Date Published.
 # Add a Calendar control to select a Date.
@@ -2841,7 +2908,7 @@ presets:
     field_name: resource_type
     form_snippet: select.html
     display_snippet: select.html
-    validators: canada_non_related_required canada_static_rtype_tabledesigner scheming_choices
+    validators: scheming_required canada_static_rtype_tabledesigner scheming_choices
     required: true
     form_include_blank_choice: true
     form_panel: resource
@@ -2978,6 +3045,10 @@ presets:
         en: Correspondence - Memorandum
         fr: Correspondance - note de service
       value: memorandum
+    - label:
+        en: Data Dictionary
+        fr: Dictionnaire de données
+      value: data_dictionary
     - label:
         en: Dataset
         fr: Jeu de données
@@ -3191,6 +3262,10 @@ presets:
         fr: Bordereau d’acheminement
       value: routing_slip
     - label:
+        en: Schema
+        fr: Schéma
+      value: schema
+    - label:
         en: Social Media Resource - Blog Entry
         fr: Ressources des médias sociaux - entrée de blogue
       value: blog_entry
@@ -3267,7 +3342,7 @@ presets:
     form_placeholder:
       en: "eg. CSV, XML or JSON"
       fr: "par exemple CSV, XML ou JSON"
-    validators: canada_guess_resource_format scheming_required unicode_safe canada_non_related_required scheming_choices
+    validators: canada_guess_resource_format scheming_required unicode_safe scheming_required scheming_choices
     required: false
     form_include_blank_choice: true
     form_panel: resource
@@ -3296,7 +3371,11 @@ presets:
     - value: BMP
       mimetype: image/bmp
       replaces: [bmp]
+    - value: BUFR
+      replaces: [bufr]
     - value: BWF
+    - value: CAP
+      replaces: [cap]
     - value: CCT
     - value: CDED ASCII
       replaces: [cded ascii]
@@ -3358,6 +3437,9 @@ presets:
         en: Flat raster binary
         fr: Binaire raster plat
       replaces: [flat raster binary]
+    - value: FLV
+      mimetype: video/x-flv
+      replaces: ["fla", "f4v", "f4a", "f4b", "f4p"]
     - value: GDB
       mimetype: application/x-filegdb
       label: GeoSoftDatabases
@@ -3387,7 +3469,9 @@ presets:
       mimetype: application/x-filegrd
       label: GeoSoftGrids
     - value: GRIB1
+      replaces: ["grib1", "grb1", "gb1"]
     - value: GRIB2
+      replaces: ["grib2", "grb2", "gb2"]
     - value: GZ
       mimetype: application/gzip
       label: Gzip
@@ -3437,13 +3521,20 @@ presets:
     - value: MFX
       mimetype: application/mxf
     - value: MOV
-      mimetype: video/mov
+      mimetype: video/quicktime
+      replaces: ["movie", "qt"]
+    - value: MKV
+      mimetype: video/matroska
+      replaces: ["mk3d", "mka", "mks"]
     - value: MPEG
       mimetype: video/mpeg
     - value: MPEG-1
       mimetype: video/mpeg
     - value: MP3
       mimetype: audio/mpeg
+    - value: MP4
+      mimetype: video/mp4
+      replaces: ["m4a", "m4p", "m4b", "m4r", "m4v"]
     - value: MXD
     - value: NetCDF
       mimetype: application/x-netcdf
@@ -3534,6 +3625,12 @@ presets:
       mimetype: text/plain
       replaces: ["ASCII", "text", "TXT"]
     - value: VPF
+    - value: WATERML1
+      label: WaterML 1.0
+      replace: ["waterml1.0", "waterml1"]
+    - value: WATERML2
+      label: WaterML 2.0
+      replace: ["waterml2.0", "waterml2"]
     - value: WAV
       mimetype: audio/wav
     - value: WCS
@@ -3585,6 +3682,7 @@ presets:
       fr: Taille [estimative] d’une distribution en octets
     form_panel: resource
     validators: ignore_missing int_validator
+    display_snippet: filesize.html
 
 # Field = Character Set.
 # {This is the character set of the dataset}
@@ -3833,6 +3931,10 @@ presets:
         fr: indonésien
       value: id
     - label:
+        en: Innu-Aimun
+        fr: innu-aimun
+      value: moe
+    - label:
         en: Inuinnaqtun
         fr: innuinaqtun
       value: inuinnaqtun
@@ -4051,17 +4153,6 @@ presets:
     upload_field: upload
     upload_clear: clear_upload
 
-# XXX This is a copy of the resource URL field to be displayed only in the
-#     related item panel but is not used directly in any schemas
-- preset_name: _canada_related_resource_url
-  values:
-    field_name: url
-    label:
-      en: Record URL
-    help_text:
-      en: The URL for online access to the related record
-    required: true
-
 # Field = Data Includes URI.
 # Default Value = Unchecked.
 # {The most important data items in this resource have a URI, e.g. data in RDF format.}
@@ -4109,4 +4200,85 @@ presets:
     required: false
     display_snippet: null
     validators: ignore
+    output_validators: canada_output_none
+
+# Field = Validation Status.
+- preset_name: canada_resource_validation_status
+  values:
+    field_name: validation_status
+    label:
+      en: Validation status
+      fr: Statut de validation
+    preset: hidden_in_form
+    display_snippet: validation_status.html
+    form_panel: validation
+
+# Field = Validation Timestamp.
+- preset_name: canada_resource_validation_timestamp
+  values:
+    field_name: validation_timestamp
+    label:
+      en: Validation timestamp
+      fr: Horodatage de la validation
+    preset: hidden_in_form
+    display_snippet: validation_timestamp.html
+    form_panel: validation
+
+- preset_name: canada_dataset_relationship
+  values:
+    field_name: relationship
+    form_panel: relationships
+    label:
+      en: Relationship
+      fr: Relation
+    display_snippet: dataset_relationship.html
+    form_blanks: 0
+
+    repeating_subfields:
+
+    - preset: canada_dataset_related_relationship
+    - preset: canada_dataset_related_type
+    - preset: canada_dataset_related_url
+
+
+- preset_name: canada_resource_relationship
+  values:
+    field_name: relationship
+    form_panel: relationships
+    label:
+      en: Relationship
+      fr: Relation
+    display_snippet: resource_relationship.html
+    form_blanks: 0
+
+    repeating_subfields:
+
+    - preset: canada_resource_related_relationship
+    - preset: canada_resource_type
+    - preset: canada_dataset_related_url
+
+
+###
+# LEGACY FIELDS
+###
+
+- preset_name: _legacy_canada_related_type
+  values:
+    field_name: related_type
+    form_snippet: null
+    display_snippet: null
+    required: false
+    validators: ignore
+    form_panel: _exclude_from_form
+    output_validators: canada_output_none
+
+- preset_name: _legacy_canada_related_relationship
+  values:
+    field_name: related_relationship
+    form_snippet: null
+    display_snippet: null
+    required: false
+    validators: ignore
+    required: true
+    form_panel: _exclude_from_form
     output_validators: canada_output_none

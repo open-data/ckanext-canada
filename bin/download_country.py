@@ -6,12 +6,15 @@ import json
 import sys
 import os.path
 
-OUTPUT_FILE = os.path.join(os.path.split(__file__)[0],
-    '../ckanext/canada/tables/choices/country.json')
+OUTPUT_FILE = os.path.join(
+                os.path.split(__file__)[0],
+                '../ckanext/canada/tables/choices/country.json')
 
-DATA_URL = 'https://raw.githubusercontent.com/datasets/country-codes/master/data/country-codes.csv'
+DATA_URL = 'https://raw.githubusercontent.com/datasets/'\
+           'country-codes/master/data/country-codes.csv'
 
 choices = {}
+
 
 def download_csv_filter_output(url):
     """
@@ -38,12 +41,6 @@ download_csv_filter_output(DATA_URL)
 choices['XK'] = {
     'en': 'Kosovo',
     'fr': 'Kosovo',
-}
-
-# OPN-510 add text for "TW" code
-choices['TW'] = {
-    'en': 'Taiwan',
-    'fr': 'Taiwan',
 }
 
 open(OUTPUT_FILE, 'wb').write(json.dumps(

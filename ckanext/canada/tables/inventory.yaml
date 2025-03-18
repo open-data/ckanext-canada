@@ -6,10 +6,13 @@ target_dataset_id: 4ed351cf-95d8-4c10-97ac-6b3511f359b7
 title: Open Data Inventory
 notes: This dataset houses your departmental open data inventory. This is where you can access and upload your open data inventory template.
 
+template_version: 3
+template_updated: 2017-08-09  # last qa confirmed: 2025-02-19
+
 portal_type: dataset
 collection: inventory
 
-gcpedia_link: http://www.gcpedia.gc.ca/wiki/Open_Data_Inventory_/_l%E2%80%99inventaire_de_donn%C3%A9es_ouvertes
+guide_link: http://www.gcpedia.gc.ca/wiki/Open_Data_Inventory_/_l%E2%80%99inventaire_de_donn%C3%A9es_ouvertes
 upload_warn: 'IMPORTANT: New or updated inventories / rows will be published on open.canada.ca daily. IMSO approval must be obtained and sent to <a href="mailto:open-ouvert@tbs-sct.gc.ca">open-ouvert@tbs-sct.gc.ca</a> before uploading your inventory data. By clicking the Submit button, you are confirming IMSO approval.'
 
 resources:

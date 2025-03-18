@@ -202,7 +202,7 @@ upload-briefingt: $(workdir)/filtered/briefingt.csv $(workdir)/filtered/briefing
 .PHONY: rebuild-briefingt
 rebuild-briefingt: $(workdir)/filtered/briefingt.csv $(workdir)/filtered/briefingt-nil.csv
 	@$(echo_date) Rebuilding Briefing Note Titles...
-	@$(oc_search) import_data_csv --csv "$(workdir)/filtered/briefingt.csv" --search briefingt --quiet
+	@$(oc_search) import_data_csv --csv "$(workdir)/filtered/briefingt.csv" --search briefingt
 
 $(workdir)/briefingt.csv:
 	$(ckan_command) -c $(registry_ini) $(combine) briefingt -d $(workdir)
@@ -236,7 +236,7 @@ upload-qpnotes: $(workdir)/filtered/qpnotes.csv $(workdir)/filtered/qpnotes-nil.
 .PHONY: rebuild-qpnotes
 rebuild-qpnotes: $(workdir)/filtered/qpnotes.csv $(workdir)/filtered/qpnotes-nil.csv
 	@$(echo_date) Rebuilding Question Period Notes...
-	@$(oc_search) import_data_csv --csv "$(workdir)/filtered/qpnotes.csv" --search qpnotes --quiet
+	@$(oc_search) import_data_csv --csv "$(workdir)/filtered/qpnotes.csv" --search qpnotes
 	@$(oc_search) import_data_csv --csv "$(workdir)/filtered/qpnotes-nil.csv" --search qpnotes --nothing_to_report
 
 $(workdir)/qpnotes.csv:
@@ -271,7 +271,7 @@ upload-contracts: $(workdir)/filtered/contracts.csv $(workdir)/filtered/contract
 rebuild-contracts: $(workdir)/filtered/contracts.csv $(workdir)/filtered/contracts-nil.csv
 	@$(echo_date) Rebuilding Contracts...
 	@$(oc_search) contracts_amendments --contracts $(workdir)/filtered/contracts.csv --amendments $(workdir)/filtered/contract-amendments.csv --tmpdir $(workdir)
-	@$(oc_search) import_data_csv --csv "$(workdir)/filtered/contract-amendments.csv" --search contracts --quiet
+	@$(oc_search) import_data_csv --csv "$(workdir)/filtered/contract-amendments.csv" --search contracts
 
 $(workdir)/contracts.csv:
 	$(ckan_command) -c $(registry_ini) $(combine) contracts -d $(workdir)
@@ -420,8 +420,8 @@ rebuild-grants: $(workdir)/filtered/grants.csv $(workdir)/filtered/grants-nil.cs
 	mkdir -p $(workdir)/amendments
 	$(registry_python) $(fdir)/amendment_delta_records.py \
 	"$(workdir)/filtered/grants.csv" "$(workdir)/amendments/grants.csv"
-	@$(oc_search) import_data_csv --csv "$(workdir)/amendments/grants.csv" --search grants --quiet
-	@$(oc_search) import_data_csv --csv "$(workdir)/filtered/grants-nil.csv" --search grants --quiet --nothing_to_report
+	@$(oc_search) import_data_csv --csv "$(workdir)/amendments/grants.csv" --search grants
+	@$(oc_search) import_data_csv --csv "$(workdir)/filtered/grants-nil.csv" --search grants --nothing_to_report
 
 $(workdir)/grants.csv:
 	$(ckan_command) -c $(registry_ini) $(combine) grants -d $(workdir)
@@ -454,8 +454,8 @@ upload-hospitalityq: $(workdir)/filtered/hospitalityq.csv $(workdir)/filtered/ho
 .PHONY: rebuild-hospitalityq
 rebuild-hospitalityq: $(workdir)/filtered/hospitalityq.csv $(workdir)/filtered/hospitalityq-nil.csv
 	@$(echo_date) Rebuilding Hospitality Expenses...
-	$(ckan_command) -c $(portal_ini) pd rebuild hospitalityq --lenient --has-nil \
-	-f "$(workdir)/filtered/hospitalityq.csv" -f "$(workdir)/filtered/hospitalityq-nil.csv"
+	@$(oc_search) import_data_csv --csv "$(workdir)/filtered/hospitalityq.csv" --search hospitalityq
+	@$(oc_search) import_data_csv --csv "$(workdir)/filtered/hospitalityq-nil.csv" --search hospitalityq --nothing_to_report
 
 $(workdir)/hospitalityq.csv:
 	$(ckan_command) -c $(registry_ini) $(combine) hospitalityq -d $(workdir)
@@ -488,7 +488,7 @@ upload-travelq: $(workdir)/filtered/travelq.csv $(workdir)/filtered/travelq-nil.
 .PHONY: rebuild-travelq
 rebuild-travelq: $(workdir)/filtered/travelq.csv $(workdir)/filtered/travelq-nil.csv
 	@$(echo_date) Rebuilding Travel Expenses...
-	@$(oc_search) import_data_csv --csv "$(workdir)/filtered/travelq.csv" --search travelq --quiet
+	@$(oc_search) import_data_csv --csv "$(workdir)/filtered/travelq.csv" --search travelq
 	@$(oc_search) import_data_csv --csv "$(workdir)/filtered/travelq-nil.csv" --search travelq --nothing_to_report
 
 $(workdir)/travelq.csv:
@@ -554,8 +554,8 @@ upload-reclassification: $(workdir)/filtered/reclassification.csv $(workdir)/fil
 .PHONY: rebuild-reclassification
 rebuild-reclassification: $(workdir)/filtered/reclassification.csv $(workdir)/filtered/reclassification-nil.csv
 	@$(echo_date) Rebuilding Position Reclassification...
-	$(ckan_command) -c $(portal_ini) pd rebuild reclassification --lenient --has-nil \
-	-f "$(workdir)/filtered/reclassification.csv" -f "$(workdir)/filtered/reclassification-nil.csv"
+	@$(oc_search) import_data_csv --csv "$(workdir)/filtered/reclassification.csv" --search reclassification
+	@$(oc_search) import_data_csv --csv "$(workdir)/filtered/reclassification-nil.csv" --search reclassification --nothing_to_report	
 
 $(workdir)/reclassification.csv:
 	$(ckan_command) -c $(registry_ini) $(combine) reclassification -d $(workdir)
@@ -645,8 +645,7 @@ upload-wrongdoing: $(workdir)/filtered/wrongdoing.csv
 .PHONY: rebuild-wrongdoing
 rebuild-wrongdoing: $(workdir)/filtered/wrongdoing.csv
 	@$(echo_date) Rebuilding Acts of Founded Wrongdoing...
-	$(ckan_command) -c $(portal_ini) pd rebuild wrongdoing --lenient \
-	-f "$(workdir)/filtered/wrongdoing.csv"
+	@$(oc_search) import_data_csv --csv "$(workdir)/filtered/wrongdoing.csv" --search wrongdoing
 
 $(workdir)/wrongdoing.csv:
 	$(ckan_command) -c $(registry_ini) $(combine) wrongdoing -d $(workdir)

@@ -99,104 +99,6 @@ details.alert-error {
 div.dt-button-collection {width:50%;}
 div.dt-button-collection a.dt-button {display: inline-block}
 
-.activity {
-  margin: 10px 0;
-  padding: 0;
-  list-style-type: none;
-  background: transparent url('../../../base/images/dotted.png') 14px 0 repeat-y
-}
-
-.activity .item {
-  position: relative;
-  margin: 0 0 15px 0;
-  padding: 0;
-  *zoom: 1;
-}
-
-.activity .item:before,
-.activity .item:after {
-  display: table;
-  content: "";
-  line-height: 0
-}
-
-.activity .item:after {
-  clear: both
-}
-
-.activity .item .icon {
-  display: block;
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 30px;
-  height: 30px;
-  line-height: 30px;
-  text-align: center;
-  color: #ffffff;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
-  font-weight: normal;
-  margin-right: 10px;
-  -webkit-border-radius: 100px;
-  -moz-border-radius: 100px;
-  border-radius: 100px;
-  -webkit-box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.2);
-  -moz-box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.2);
-  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.2);
-  padding-left: 0px;
-}
-
-.activity .item .gravatar {
-  -webkit-border-radius: 100px;
-  -moz-border-radius: 100px;
-  border-radius: 100px
-}
-
-.activity .item .actor .gravatar {
-  position: absolute;
-  top: 0;
-  left: 40px
-}
-
-.activity .item p {
-  font-size: 14px;
-  line-height: 1.5;
-  margin: 5px 0 0 40px
-}
-
-.activity .item .date {
-  color: #999;
-  font-size: 12px;
-  white-space: nowrap
-}
-
-.activity .item .new {
-  display: block;
-  position: absolute;
-  overflow: hidden;
-  top: -3px;
-  left: -3px;
-  width: 10px;
-  height: 10px;
-  background-color: #A35647;
-  border: 1px solid #FFF;
-  text-indent: -1000px;
-  -webkit-border-radius: 100px;
-  -moz-border-radius: 100px;
-  border-radius: 100px;
-  -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
-  -moz-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2)
-}
-
-.activity .item.no-avatar p {
-  margin-left: 40px
-}
-
-.activity .load-less {
-  margin-bottom: 15px
-}
-
 .popover {
   width: 300px
 }
@@ -229,114 +131,6 @@ div.dt-button-collection a.dt-button {display: inline-block}
 .popover .popover-content dl dd {
   margin-left: 0;
   margin-bottom: 10px
-}
-
-.activity .item .icon {
-  background-color: #999999
-}
-
-.activity .item.failure .icon {
-  background-color: #b95252
-}
-
-.activity .item.success .icon {
-  background-color: #69a67a
-}
-
-.activity .item.added-tag .icon {
-  background-color: #6995a6
-}
-
-.activity .item.changed-group .icon {
-  background-color: #767dce
-}
-
-.activity .item.changed-package .icon {
-  background-color: #8c76ce
-}
-
-.activity .item.changed-package_extra .icon {
-  background-color: #769ace
-}
-
-.activity .item.changed-resource .icon {
-  background-color: #aa76ce
-}
-
-.activity .item.changed-user .icon {
-  background-color: #76b8ce
-}
-
-.activity .item.changed-organization .icon {
-  background-color: #699fa6
-}
-
-.activity .item.deleted-group .icon {
-  background-color: #b95252
-}
-
-.activity .item.deleted-package .icon {
-  background-color: #b97452
-}
-
-.activity .item.deleted-package_extra .icon {
-  background-color: #b95274
-}
-
-.activity .item.deleted-resource .icon {
-    background-color: #b99752
-}
-
-.activity .item.deleted-organization .icon {
-  background-color: #b95297
-}
-
-.activity .item.new-group .icon {
-  background-color: #69a67a
-}
-
-.activity .item.new-package .icon {
-  background-color: #69a68e
-}
-
-.activity .item.new-package_extra .icon {
-  background-color: #6ca669
-}
-
-.activity .item.new-resource .icon {
-  background-color: #81a669
-}
-
-.activity .item.new-user .icon {
-  background-color: #69a6a3
-}
-
-.activity .item.new-organization .icon {
-  background-color: #81a669
-}
-
-.activity .item.removed-tag .icon {
-  background-color: #b95297
-}
-
-.activity .item.deleted-related-item .icon {
-  background-color: #b9b952
-}
-
-.activity .item.follow-dataset .icon {
-  background-color: #767dce
-}
-
-.activity .item.follow-user .icon {
-  background-color: #8c76ce
-}
-
-.activity .item.new-related-item .icon {
-  background-color: #95a669
-}
-
-.activity .item.follow-group .icon {
-  background-color: #8ba669
 }
 
 footer {
@@ -757,3 +551,256 @@ div.canada-datastore-button-fix{
 ## DataStore Buttons ##
 ##        END        ##
 #######################*/
+
+
+/*############################
+##  CKAN Base CSS Overrides ##
+##############################*/
+body ul.xloader-log li.item{
+  position: relative;
+}
+body ul.xloader-log li.item > i{
+  background-color: white !important;
+  position: absolute;
+  left: 0;
+  top: 0;
+  border-radius: 50%;
+  outline: 4px solid #999999;
+  height: 34px !important;
+  width: 34px !important;
+  padding: 0;
+  margin: 0;
+  line-height: 1 !important;
+  text-align: initial !important;
+  -webkit-box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.2);
+  -moz-box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.2);
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+body ul.xloader-log li.item > i::before{
+  width: 16px;
+  height: 16px;
+  font-size: 16px;
+  line-height: 1;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  background-color: transparent !important;
+  color: white !important;
+  z-index: 2;
+}
+body ul.xloader-log li.item > i::after{
+  content: '';
+  background-color: #999999 !important;
+  border-radius: 50%;
+  width: 26px;
+  height: 26px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -webkit-box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.2);
+  -moz-box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.2);
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+}
+body ul.xloader-log li.item.success > i{
+  outline-color: #69A67A !important;
+}
+body ul.xloader-log li.item.success > i::after{
+  background-color: #69A67A !important;
+}
+body ul.xloader-log li.item.failure > i{
+  outline-color: #B95252 !important;
+}
+body ul.xloader-log li.item.failure > i::after{
+  background-color: #B95252 !important;
+}
+#s2id_field-department,
+#s2id_field-organizations{
+  min-height: 37px !important;
+}
+#s2id_field-department.select2-container,
+#s2id_field-organizations.select2-container{
+  vertical-align: initial !important;
+  width: 100% !important;
+}
+#s2id_field-department.select2-container,
+#s2id_field-department.select2-container .select2-choice,
+#s2id_field-department.select2-container .select2-chosen,
+#s2id_field-organizations.select2-container,
+#s2id_field-organizations.select2-container .select2-choice,
+#s2id_field-organizations.select2-container .select2-chosen{
+  height: 100% !important;
+}
+#s2id_field-department.select2-container .select2-choice,
+#s2id_field-organizations.select2-container .select2-choice{
+  font-size: 16px !important;
+  line-height: 1.4375 !important;
+  padding: 6px 12px !important;
+}
+#s2id_field-department.select2-container .select2-arrow b,
+#s2id_field-organizations.select2-container .select2-arrow b{
+  background-position-y: -100%;
+}
+.s2id_field-organizations_wrapper{
+  margin-bottom: 0 !important;
+}
+.s2id_field-organizations_wrapper .error-block{
+  margin-top: -8px;
+  padding-top: 8px !important;
+}
+/*###########################
+##           END           ##
+##  CKAN Base CSS Overrides##
+##           END           ##
+#############################*/
+
+
+/*####################################
+##  Recombinaant Base CSS Overrides ##
+######################################*/
+@keyframes fade-opacity-in{
+  from{
+    opacity: 0;
+    pointer-events: none;
+  }
+  to{
+    opacity: 1;
+    pointer-events: all;
+  }
+}
+.canada-pd-org-select-wrapper > .module-content.canada-no-marg{
+  margin-top: 0 !important;
+}
+.canada-pd-org-select-wrapper .recombinant-org-select-container{
+  display: flex !important;
+  width: 100% !important;
+  flex-wrap: nowrap !important;
+  flex-direction: row;
+  min-height: 38px;
+  max-height: 38px;
+  height: 38px;
+}
+.canada-pd-org-select-wrapper .recombinant-org-select-label-wrapper{
+  display: block;
+  flex: 0;
+  padding-left: 15px !important;
+  white-space: nowrap;
+}
+.canada-pd-org-select-wrapper .recombinant-org-select-label-wrapper label{
+  font-weight: bold !important;
+  font-size: 16px !important;
+  line-height: 1.4375 !important;
+  border-radius: 0 !important;
+  border: none !important;
+  margin: 0 !important;
+  transition-duration: 0.325s !important;
+  color: #295376 !important;
+}
+.canada-pd-org-select-wrapper .recombinant-org-select-wrapper{
+  display: flex;
+  flex: 1;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+  width: 100%;
+  opacity: 0;
+  pointer-events: none;
+  animation: fade-opacity-in 0.5s ease-in 1s 1 normal forwards;
+}
+.canada-pd-org-select-wrapper .recombinant-org-select-wrapper .select2-container,
+.canada-pd-org-select-wrapper .recombinant-org-select-wrapper .recombinant-org-select1-wrapper select{
+  vertical-align: initial !important;
+  flex: 1;
+  width: auto !important;
+}
+.canada-pd-org-select-wrapper .recombinant-org-select-wrapper .select2-container,
+.canada-pd-org-select-wrapper .recombinant-org-select-wrapper .select2-container .select2-choice,
+.canada-pd-org-select-wrapper .recombinant-org-select-wrapper .select2-container .select2-chosen,
+.canada-pd-org-select-wrapper .recombinant-org-select-wrapper .recombinant-org-select1-wrapper select{
+  height: 100% !important;
+  border-radius: 0 !important;
+}
+.canada-pd-org-select-wrapper .recombinant-org-select-wrapper .select2-container .select2-choice,
+.canada-pd-org-select-wrapper .recombinant-org-select-wrapper .recombinant-org-select1-wrapper select{
+  background: #335075 !important;
+  border-color: #335075 !important;
+  box-shadow: none !important;
+}
+.canada-pd-org-select-wrapper .recombinant-org-select-wrapper .select2-container .select2-chosen{
+  vertical-align: middle;
+  display: inline-block;
+  width: 95%;
+  height: initial !important;
+  overflow: visible !important;
+  font-weight: bold !important;
+  font-size: 16px !important;
+  line-height: 1.4375 !important;
+  border-radius: 0 !important;
+  border: none !important;
+  margin: 0 !important;
+  margin-top: 4px !important;
+  transition-duration: 0.325s !important;
+  color: white !important;
+}
+.canada-pd-org-select-wrapper .recombinant-org-select-wrapper .recombinant-org-select1-wrapper{
+  width: 100% !important;
+}
+.canada-pd-org-select-wrapper .recombinant-org-select-wrapper .recombinant-org-select1-wrapper select{
+  color: white !important;
+  width: 100% !important;
+}
+.canada-pd-org-select-wrapper .recombinant-org-select-wrapper .select2-container .select2-arrow{
+  border-radius: 0 !important;
+  background: #335075 !important;
+  border-color: #335075 !important;
+}
+.canada-pd-org-select-wrapper .recombinant-org-select-wrapper .select2-container .select2-arrow b{
+  background-position-y: -100%;
+  color: white !important;
+  border-color: white !important;
+  background-image: url("/data/static/img/select2x2_white.png"), url("/static/img/select2x2_white.png") !important;
+}
+.recombinant-action-panels-container .tabpanels > details{
+  padding: 0 20px 20px 20px !important;
+}
+.canada-wet-datatable-btn-primary{
+  color: white !important;
+  background: #26374a !important;
+  border-color: #1d2a39 !important;
+  transition-duration: 0.325s !important;
+}
+.canada-wet-datatable-btn-primary.disabled{
+  color: white !important;
+  background: #adc0d5 !important;
+  border-color: #9cb3cd !important;
+}
+.canada-wet-datatable-btn-primary:not(.disabled):hover,
+.canada-wet-datatable-btn-primary:not(.disabled):active,
+.canada-wet-datatable-btn-primary:not(.disabled):focus{
+  background: #1c578a !important;
+  border-color: #091c2d !important;
+}
+.canada-wet-datatable-btn-danger{
+  color: white !important;
+  background: #bc3331 !important;
+  border-color: #6b1d1c !important;
+  transition-duration: 0.325s !important;
+}
+.canada-wet-datatable-btn-danger.disabled{
+  color: white !important;
+  background: #ebb3b2 !important;
+  border-color: #e6a1a0 !important;
+}
+.canada-wet-datatable-btn-danger:not(.disabled):hover,
+.canada-wet-datatable-btn-danger:not(.disabled):active,
+.canada-wet-datatable-btn-danger:not(.disabled):focus{
+  background: #942826 !important;
+  border-color: #3b100f !important;
+}
+/*###################################
+##               END               ##
+##  Recombinaant Base CSS Overrides##
+##               END               ##
+#####################################*/

@@ -8,6 +8,7 @@ notes: Access, upload and modify government administrative aircraft use
 
 
 template_version: 3
+template_updated: 2025-01-10  # last qa confirmed: 2025-02-19
 
 portal_type: info
 
@@ -60,7 +61,7 @@ resources:
     occurrence: Single
     datastore_type: text
     excel_full_text_choices: True
-    choices_file: choices/aircraft_minister.json
+    choices_file: choices/minister.json
     excel_error_formula: 'FALSE'
 
   # 3.3

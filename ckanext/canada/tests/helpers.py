@@ -17,3 +17,20 @@ class MockFieldStorage(FieldStorage):
         if self.file:
             return True
         return False
+
+
+class MockFlashMessages(object):
+
+    __flashes = []
+
+    def mock_flash(self, message: str, category: str = "message") -> None:
+        self.__flashes.append((category, message))
+
+    def mock_get_flashed_messages(self, with_categories: bool = False, category_filter: set = ()):
+        flashes = self.__flashes
+        if category_filter:
+            flashes = list(filter(lambda f: f[0] in category_filter, flashes))
+        if not with_categories:
+            return [x[1] for x in flashes]
+        self.__flashes = []
+        return flashes

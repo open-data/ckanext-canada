@@ -24,13 +24,11 @@ class TestGrants(CanadaTestBase):
 
         self.resource_id = rval['resources'][0]['id']
 
-
     def test_example(self):
         record = get_chromo('grants')['examples']['record']
         self.lc.action.datastore_upsert(
             resource_id=self.resource_id,
             records=[record])
-
 
     def test_blank(self):
         with pytest.raises(ValidationError) as ve:
@@ -40,7 +38,6 @@ class TestGrants(CanadaTestBase):
         err = ve.value.error_dict
         assert 'key' in err
         assert 'ref_number, amendment_number' in err['key'][0]
-
 
     def test_empty_string_instead_of_null(self):
         record = dict(get_chromo('grants')['examples']['record'])

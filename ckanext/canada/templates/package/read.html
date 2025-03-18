@@ -1,47 +1,55 @@
 {% ckan_extends %}
 
-{% set pkg = g.pkg_dict %}
 {% set client_lang = h.lang() %}
 
-{% set title, machine_translated = h.get_translated_t(pkg, 'title') %}
+{% set title, machine_translated = h.get_translated_t(pkg_dict, 'title') %}
 
 {%- block subtitle -%}
-  {{ (title or pkg.name) | trim }}
+  {{ (title or pkg_dict.name) | trim }}
 {%- endblock -%}
 
 {% block page_title %}
-  <h1>{{ title or pkg.name }}
-    {% if pkg.state.startswith('draft') %}
+  <h1>{{ title or pkg_dict.name }}
+    {% if pkg_dict.state.startswith('draft') %}
       <span class="label label-info" style="padding-top: 4px; padding-bottom: 4px;">{{ _('Draft') }}</span>
     {% endif %}
     {% if machine_translated %}
       <i class="fa fa-language text-muted mrgn-lft-sm" title="{{ _('This third party metadata element has been translated using an automated translation tool.  To report any discrepancies please contact open-ouvert@tbs-sct.gc.ca') }}"></i>
     {% endif %}
   </h1>
-  {% if is_activity_archive %}
-    <div class="module-alert alert alert-danger mrgn-tp-sm">
-      <p>
-        {% trans url = h.url_for(pkg.type + '.read', id=pkg.id) %}You're currently viewing an old version of this dataset. Some resources may no longer exist or the dataset may not display correctly. To see the current version, click <a href="{{ url }}">here</a>.{% endtrans %}
-      </p>
-    </div>
-  {% endif %}
 {% endblock %}
 
 {% block primary_content_inner %}
   {% if not is_activity_archive %}
-    {%- snippet 'package/snippets/schemaorg.html', data=pkg -%}
+    {%- snippet 'package/snippets/schemaorg.html', data=pkg_dict -%}
   {% endif %}
   <div class="module">
     {% block internal_actions %}
       {% if g.is_registry %}
+        {% set max_resource_count = h.max_resources_per_dataset() %}
+        {% if max_resource_count and pkg.resources|length >= max_resource_count %}
+          <div class="row">
+            <div class="col-md-12 canada-flash-messages">
+              <div>
+                <section class="alert fade in alert-danger">
+                  <strong>{{ _("Resource Limit Reached") }}</strong>
+                  <p>{{ _("You can only add up to {max_resource_count} resources to a dataset. "
+                          "You can segment your resources across multiple datasets or merge your "
+                          "data to limit the number of resources. Please contact "
+                          "open-ouvert@tbs-sct.gc.ca if you need further assistance.").format(max_resource_count=max_resource_count) }}</p>
+                </section>
+              </div>
+            </div>
+          </div>
+        {% endif %}
         <section class="resources module-content indent-large">
-          {% set portal_link = h.portal_url() ~ "/data/" ~ client_lang ~ "/" ~ pkg.get('type', 'dataset') ~ "/" ~ pkg.name %}
+          {% set portal_link = h.portal_url() ~ "/data/" ~ client_lang ~ "/" ~ pkg_dict.get('type', 'dataset') ~ "/" ~ pkg_dict.name %}
           {% set portal_status_alerts = [] %}
-          {% set is_type_for_alerts = pkg.get('type') == 'dataset' or pkg.get('type') == 'info' %}
-          {% set do_not_show_alerts = pkg.state.startswith('draft') or pkg.state.startswith('deleted') %}
-          {% set no_ready_to_publish = pkg['ready_to_publish'] == 'false' or not pkg['ready_to_publish'] %}
-          {% set no_has_approval = pkg['imso_approval'] == 'false' or not pkg['imso_approval'] %}
-          {% set queued_for_publishing = not pkg['portal_release_date'] or h.date_format(pkg['portal_release_date']) > h.today() %}
+          {% set is_type_for_alerts = pkg_dict.get('type') == 'dataset' or pkg_dict.get('type') == 'info' %}
+          {% set do_not_show_alerts = pkg_dict.state.startswith('draft') or pkg_dict.state.startswith('deleted') %}
+          {% set no_ready_to_publish = pkg_dict['ready_to_publish'] == 'false' or not pkg_dict['ready_to_publish'] %}
+          {% set no_has_approval = pkg_dict['imso_approval'] == 'false' or not pkg_dict['imso_approval'] %}
+          {% set queued_for_publishing = not pkg_dict['portal_release_date'] or h.date_format(pkg_dict['portal_release_date']) > h.today() %}
           {% if no_ready_to_publish %}
             {% do portal_status_alerts.append({
                 'label': _('Action required:'),
@@ -80,11 +88,11 @@
               {% endfor %}
             {% else %}
               <a href="{{ portal_link }}" title="{{ _('View on Portal') }}" class="btn btn-success" target="_blank">
-                <span class="fa fa-arrow-circle-right"></span>&nbsp;<span class="text">{{ _('View on Portal') }}</span>
+                <span class="fa fa-arrow-circle-right" aria-hidden="true"></span>&nbsp;<span class="text">{{ _('View on Portal') }}</span>
               </a>
             {% endif %}
           {% endif %}
-          {% if pkg.state == "deleted" %}
+          {% if pkg_dict.state == "deleted" %}
             <div class="module-alert alert alert-danger mrgn-tp-sm">
               <p>{{ _('This dataset has been deleted and is no longer accessible') }}.</p>
             </div>
@@ -96,7 +104,7 @@
     {% block package_item_title %}
       <section class="module-content indent-large">
         <div id="resource-desc">
-          {% set notes, machine_translated = h.get_translated_t(pkg, 'notes') %}
+          {% set notes, machine_translated = h.get_translated_t(pkg_dict, 'notes') %}
           {% if machine_translated %}
             <i class="fa fa-language text-muted mrgn-bttm-md" style="float: right" title="{{ _('This third party metadata element has been translated using an automated translation tool.  To report any discrepancies please contact open-ouvert@tbs-sct.gc.ca') }}"></i>
           {% endif %}
@@ -104,8 +112,8 @@
         </div>
       </section>
     {%- endblock -%}
-    {% if (pkg.organization.name == 'ab' or pkg.organization.name == 'qc' or pkg.organization.name == 'bc-cb' or pkg.organization.name == 'on') %}
-      {% set owner_org_title = h.split_piped_bilingual_field(pkg.organization.title, h.lang()) %}
+    {% if (pkg_dict.organization.name == 'ab' or pkg_dict.organization.name == 'qc' or pkg_dict.organization.name == 'bc-cb' or pkg_dict.organization.name == 'on') %}
+      {% set owner_org_title = h.split_piped_bilingual_field(pkg_dict.organization.title, h.lang()) %}
       <section>
         <details class="alert alert-info" id="alberta-content" open="open">
           <summary class="h4">
@@ -121,10 +129,10 @@
     {# Display some publisher-specific details on this dataset inline with the dataset notes. #}
     <section>
       <ul class="list-group dataset-inline-details">
-        {% if pkg.organization %}
+        {% if pkg_dict.organization %}
           {# For legacy reasons, organization titles are not stores the same way as other multilingual fields, so special case it. #}
           {% set owner_org = h.scheming_field_by_name(schema.dataset_fields, 'owner_org') %}
-          {% set owner_org_title = h.split_piped_bilingual_field(pkg.organization.title, h.lang()) %}
+          {% set owner_org_title = h.split_piped_bilingual_field(pkg_dict.organization.title, h.lang()) %}
           <li class="list-group-item">
             <strong>{{ h.scheming_language_text(owner_org.label) }}{{ _(':') }}</strong>
             {{ owner_org_title }}
@@ -140,17 +148,17 @@
         {% for field in schema.dataset_fields if field.field_name in include_labels and field.display_snippet is not none %}
           {% set field_title = h.scheming_language_text(field.label) %}
           {% if field_title %}
-            {% set field_value = pkg[field.field_name] %}
-            {% if pkg[field.field_name] is mapping %}
+            {% set field_value = pkg_dict[field.field_name] %}
+            {% if pkg_dict[field.field_name] is mapping %}
               {% set field_value = h.scheming_language_text(field_value) %}
             {% endif %}
             {% if field_value %}
               {% if field.field_name != 'org_title_at_publication' or (field_value|escape) != owner_org_title %}
-                {% if field.field_name == 'org_title_at_publication' and pkg.jurisdiction != 'federal' %}
+                {% if field.field_name == 'org_title_at_publication' and pkg_dict.jurisdiction != 'federal' %}
                   {% set field_title = _('Issued by') %}
                 {% endif %}
                 <li class="list-group-item"><strong>{{ field_title }}{{ _(':') }}</strong>
-                  {% snippet 'scheming/snippets/display_field.html', field=field, data=pkg, entity_type='dataset', object_type=pkg.type %}
+                  {% snippet 'scheming/snippets/display_field.html', field=field, data=pkg_dict, entity_type='dataset', object_type=pkg_dict.type %}
                 </li>
               {% endif %}
             {% endif %}
@@ -159,33 +167,21 @@
       </ul>
     </section>
     {% block package_resources %}
-      {% if pkg.type != 'prop' %}
+      {% if pkg_dict.type != 'prop' %}
         {{ super() }}
       {% endif %}
     {% endblock %}
-    {% block package_item_apps %}
-      <div class="span-6 margin-top-medium clear-both">
-        {% set apps = [] %}
-        {% for resource in pkg.resources %}
-          {% if resource.format == 'app' %}
-            {% do apps.append(resource) %}
-          {% endif %}
-        {% endfor %}
-      </div>
-      {% if apps|length > 0 %}
+    {% block related_items %}
+      {% if pkg_dict.get('relationship') %}
         <div class="span-6 margin-top-medium clear-both">
-          <h4>{{ _('Related Items') }}</h4>
-          <ul class="list-unstyled">
-          {% for resource in apps %}
-            {% snippet 'package/snippets/app_item.html', pkg=pkg, res=resource, res_num=loop.index, client_lang=client_lang %}
-          {% endfor %}
-          </ul>
+          <h2>{{ _('Dataset Relationships') }}</h2>
+          {% set relation_field = h.scheming_field_by_name(schema.dataset_fields, 'relationship') %}
+          {% snippet 'scheming/snippets/display_field.html', field=relation_field, data=pkg_dict, entity_type='dataset', object_type=pkg_dict.type %}
         </div>
       {% endif %}
-    {% endblock %}
-    {% block related_items %}{% endblock related_items %}
+    {% endblock related_items %}
     {% block contact_information %}
-      {% set info = h.contact_information(pkg.get('contact_information')) %}
+      {% set info = h.contact_information(pkg_dict.get('contact_information')) %}
       {% if info %}
         <div class="span-6 margin-top-medium clear-both">
           <h4>{{ _('Contact Information') }}</h4>
@@ -217,7 +213,7 @@
       {% if show_fields %}
         {% for field in schema.dataset_fields %}
           {% if field.field_name in show_fields %}
-            {% snippet 'scheming/snippets/display_field.html', field=field, data=pkg, entity_type='dataset', object_type=pkg.type %}
+            {% snippet 'scheming/snippets/display_field.html', field=field, data=pkg_dict, entity_type='dataset', object_type=pkg_dict.type %}
           {% endif %}
         {% endfor %}
       {% endif %}
@@ -229,7 +225,7 @@
             <header class="panel-heading">
               <div class="panel-title">{{ _('Similar records') }}</div>
             </header>
-            <div data-ajax-replace="{{ h.adv_search_mlt_root() }}{{ g.pkg_dict.id }}" class="panel-body" id="related_pkgs"></div>
+            <div data-ajax-replace="{{ h.adv_search_mlt_root() }}{{ pkg_dict.id }}" class="panel-body" id="related_pkgs"></div>
           </section>
         {% endif %}
       {% endif %}
@@ -237,14 +233,14 @@
     {% block package_rate %}
       {% if not g.is_registry %}
         <a id="rate"></a>
-        <div id="voting-wrapper" data-ajax-replace="/{{ h.lang() }}/vote?uuid={{ g.pkg_dict.id }}"></div>
+        <div id="voting-wrapper" data-ajax-replace="/{{ h.lang() }}/vote?uuid={{ pkg_dict.id }}"></div>
       {% endif %}
     {% endblock %}
     {% block package_feedback %}
       {% if not g.is_registry %}
         <a id="feedback"></a>
         <section class="indent-large">
-          <div id="feedback-wrapper" data-ajax-replace="/{{ h.lang() }}/feedback?uuid={{ g.pkg_dict.id }}"></div>
+          <div id="feedback-wrapper" data-ajax-replace="/{{ h.lang() }}/feedback?uuid={{ pkg_dict.id }}"></div>
         </section>
       {% endif %}
     {% endblock %}

@@ -1,0 +1,3 @@
+fix: datatables column headings missing spaces
+remove broken nbsp-replacement code instead of fixing
+(doesn't handle other whitespace characters)
