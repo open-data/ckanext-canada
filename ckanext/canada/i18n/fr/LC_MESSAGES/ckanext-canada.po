@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-03-05 14:46+0000\n"
+"POT-Creation-Date: 2025-03-18 15:44+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: fr\n"
@@ -545,12 +545,14 @@ msgid "Activity type"
 msgstr "Type d'activité"
 
 #: ckanext/canada/strings.py:68
+#: ckanext/canada/templates/package/snippets/resources.html:84
 #: ckanext/canada/templates/snippets/facet_list.html:47
 #: ckanext/canada/templates/snippets/facet_list.html:48
 msgid "Show more"
 msgstr "Afficher plus"
 
 #: ckanext/canada/strings.py:69
+#: ckanext/canada/templates/package/snippets/resources.html:85
 msgid "Hide"
 msgstr "Cacher"
 
@@ -1154,66 +1156,71 @@ msgstr "L’utilisateur %r n’est pas autorisé à modifier les membres de %s"
 msgid "User %r not authorized to view members of %s"
 msgstr "L’utilisateur %r n’est pas autorisé à voir les membres de %s"
 
-#: ckanext/canada/plugin/public_plugin.py:140
+#: ckanext/canada/plugin/public_plugin.py:143
 #: ckanext/canada/templates/scheming/package/snippets/package_form.html:25
 msgid "Portal Type"
 msgstr "Type de portail"
 
-#: ckanext/canada/plugin/public_plugin.py:141
+#: ckanext/canada/plugin/public_plugin.py:144
 #: ckanext/canada/templates/package/deleted.html:14
 #: ckanext/canada/templates/user/new_user_form.html:18
 msgid "Organization"
 msgstr "Organisation"
 
-#: ckanext/canada/plugin/public_plugin.py:142
+#: ckanext/canada/plugin/public_plugin.py:145
 msgid "Collection Type"
 msgstr "Type de collection"
 
-#: ckanext/canada/plugin/public_plugin.py:143
-#: ckanext/canada/plugin/public_plugin.py:144
+#: ckanext/canada/plugin/public_plugin.py:146
+#: ckanext/canada/plugin/public_plugin.py:147
 msgid "Keywords"
 msgstr "Mots clés"
 
-#: ckanext/canada/plugin/public_plugin.py:145
+#: ckanext/canada/plugin/public_plugin.py:148
 msgid "Subject"
 msgstr "Sujet"
 
-#: ckanext/canada/plugin/public_plugin.py:146
+#: ckanext/canada/plugin/public_plugin.py:149
 #: ckanext/canada/templates/package/snippets/resource_info.html:13
 #: ckanext/canada/templates/scheming/package/resource_read.html:19
 #: ckanext/canada/templates/tabledesigner/view_snippets/cra_business_number.html:1
 msgid "Format"
 msgstr "Format"
 
-#: ckanext/canada/plugin/public_plugin.py:147
+#: ckanext/canada/plugin/public_plugin.py:150
 msgid "Resource Type"
 msgstr "Type de ressource"
 
-#: ckanext/canada/plugin/public_plugin.py:148
+#: ckanext/canada/plugin/public_plugin.py:151
 msgid "Maintenance and Update Frequency"
 msgstr "Fréquence d’entretien et de mise à jour"
 
-#: ckanext/canada/plugin/public_plugin.py:149
+#: ckanext/canada/plugin/public_plugin.py:152
 msgid "Record Status"
 msgstr "État du dossier"
 
-#: ckanext/canada/plugin/public_plugin.py:150
+#: ckanext/canada/plugin/public_plugin.py:153
 msgid "IMSO Approval"
 msgstr "Approbation du CSGI"
 
-#: ckanext/canada/plugin/public_plugin.py:151
+#: ckanext/canada/plugin/public_plugin.py:154
 msgid "Jurisdiction"
 msgstr "Juridiction"
 
-#: ckanext/canada/plugin/public_plugin.py:152
+#: ckanext/canada/plugin/public_plugin.py:155
 msgid "Suggestion Status"
 msgstr "État de la suggestion"
 
-#: ckanext/canada/plugin/public_plugin.py:250
+#: ckanext/canada/plugin/public_plugin.py:251
+#: ckanext/canada/plugin/public_plugin.py:258
+msgid "container_title"
+msgstr ""
+
+#: ckanext/canada/plugin/public_plugin.py:296
 msgid "Previous"
 msgstr "Précédent"
 
-#: ckanext/canada/plugin/public_plugin.py:251
+#: ckanext/canada/plugin/public_plugin.py:297
 msgid "Next"
 msgstr "Suivant"
 
@@ -2945,7 +2952,7 @@ msgid "Activity Stream"
 msgstr "Flux d’Activités"
 
 #: ckanext/canada/templates/organization/activity_stream.html:11
-#: ckanext/canada/templates/package/read_base.html:154
+#: ckanext/canada/templates/package/read_base.html:161
 msgid "Atom Feed"
 msgstr "Fil de nouvelles Atom"
 
@@ -3305,8 +3312,8 @@ msgstr ""
 #: ckanext/canada/templates/package/read_base.html:60
 #: ckanext/canada/templates/package/read_base.html:69
 #: ckanext/canada/templates/package/read_base.html:85
-#: ckanext/canada/templates/package/read_base.html:159
-#: ckanext/canada/templates/package/read_base.html:191
+#: ckanext/canada/templates/package/read_base.html:166
+#: ckanext/canada/templates/package/read_base.html:198
 #: ckanext/canada/templates/recombinant/create_pd_record.html:30
 #: ckanext/canada/templates/recombinant/update_pd_record.html:30
 #: ckanext/canada/templates/snippets/package_item.html:90
@@ -3434,13 +3441,21 @@ msgstr "DCAT (JSON-LD)"
 msgid "DCAT (XML)"
 msgstr "DCAT (XML)"
 
-#: ckanext/canada/templates/package/read_base.html:146
+#: ckanext/canada/templates/package/read_base.html:153
 msgid "FGP Metadata:"
 msgstr "Métadonnées de la PGF :"
 
-#: ckanext/canada/templates/package/read_base.html:148
+#: ckanext/canada/templates/package/read_base.html:155
 msgid "HNAP ISO:19115 Metadata Record"
 msgstr "Enregistrement de métadonnées de HNAP ISO:19115"
+
+#: ckanext/canada/templates/package/read_base.html:173
+msgid "Data Contact"
+msgstr "Point de contact pour les données"
+
+#: ckanext/canada/templates/package/read_base.html:173
+msgid "Distributor Contact"
+msgstr "Renseignements au sujet du distributeur"
 
 #: ckanext/canada/templates/package/resource_edit.html:11
 msgid "Go back"
@@ -3545,7 +3560,7 @@ msgstr "Informations complémentaires"
 
 #: ckanext/canada/templates/package/snippets/resource_info.html:40
 #: ckanext/canada/templates/package/snippets/resource_item.html:34
-#: ckanext/canada/templates/package/snippets/resources.html:55
+#: ckanext/canada/templates/package/snippets/resources.html:64
 #, python-format
 msgid "+ %s more"
 msgstr "+ %s plus"
@@ -3574,34 +3589,34 @@ msgid "View on Map"
 msgstr "Afficher la carte"
 
 #: ckanext/canada/templates/package/snippets/resource_item.html:97
-#: ckanext/canada/templates/package/snippets/resources.html:22
+#: ckanext/canada/templates/package/snippets/resources.html:31
 msgid "Edit resource"
 msgstr "Editer la ressource"
 
 #: ckanext/canada/templates/package/snippets/resource_item.html:99
-#: ckanext/canada/templates/package/snippets/resources.html:31
+#: ckanext/canada/templates/package/snippets/resources.html:40
 msgid "Views"
 msgstr "Vues"
 
 #: ckanext/canada/templates/package/snippets/resource_item.html:101
-#: ckanext/canada/templates/package/snippets/resources.html:33
+#: ckanext/canada/templates/package/snippets/resources.html:42
 msgid "Are you sure you want to delete this resource?"
 msgstr ""
 
 #: ckanext/canada/templates/package/snippets/resource_item.html:102
-#: ckanext/canada/templates/package/snippets/resources.html:34
+#: ckanext/canada/templates/package/snippets/resources.html:43
 msgid "Delete resource"
 msgstr ""
 
-#: ckanext/canada/templates/package/snippets/resources.html:25
+#: ckanext/canada/templates/package/snippets/resources.html:34
 msgid "DataStore"
 msgstr "DataStore"
 
-#: ckanext/canada/templates/package/snippets/resources.html:26
+#: ckanext/canada/templates/package/snippets/resources.html:35
 msgid "Data Dictionary"
 msgstr "Dictionnaire de données"
 
-#: ckanext/canada/templates/package/snippets/resources.html:29
+#: ckanext/canada/templates/package/snippets/resources.html:38
 msgid "Validation"
 msgstr "Validation"
 
