@@ -313,7 +313,7 @@ The Django Search App uses an action API endpoint from the `activity` plugin to 
 
 ### Proactive Disclosure Data Flow
 
-![data flow diagram](docs/pd-data-flow.svg)
+![data flow diagram](docs/pd-data-flow.png)
 
 1. ckanext-canada (this repository)
    - [PD yaml files](ckanext/canada/tables) are read by ckanext-recombinant and used to
