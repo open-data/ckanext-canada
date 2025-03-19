@@ -349,5 +349,5 @@ The Django Search App uses an action API endpoint from the `activity` plugin to 
    - published CSV data
 5. [deplane](https://github.com/open-data/deplane)
    - data element profile
-6. [ogc_search](https://github.com/open-data/oc_search)
+6. [oc_search](https://github.com/open-data/oc_search)
    - advanced search
