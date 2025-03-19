@@ -1,159 +1,232 @@
-# ckanext-canada
+# CKANEXT Canada
+
+## Government of Canada CKAN Extension - Extension à CKAN du Gouvernement du Canada
 
 [![CircleCI](https://dl.circleci.com/status-badge/img/gh/open-data/ckanext-canada/tree/master.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/gh/open-data/ckanext-canada/tree/master)
 
-Government of Canada CKAN Extension - Extension à CKAN du Gouvernement du Canada
+| Table of Contents    |
+| -------- |
+| [Requirements](#requirements)  |
+| [Installation](#installation) |
+| [Plugins](#plugins)    |
+| [Configurations](#configurations)    |
+| [SOLR](#solr)    |
+| [Localization](#localization)    |
+| [Migrations](#migrations)    |
+| [Data Flows](#data-flows)    |
 
-Features:
+## Requirements
 
-* Forms and Validation for GoC Metadata Schema
+Compatibility with core CKAN versions:
 
-Installation:
+| CKAN version    | Compatible?   |
+| --------------- | ------------- |
+| 2.6 and earlier | no    |
+| 2.7             | no    |
+| 2.8             | no    |
+| 2.9             | no    |
+| 2.10             | yes    |
+| 2.11             | no    |
 
-* Use [open-data fork of CKAN](https://github.com/open-data/ckan),
-  branch canada-v2.9
+Compatibility with Python versions:
 
-From a clean database you must run:
+| Python version    | Compatible?   |
+| --------------- | ------------- |
+| 2.7 and earlier | no    |
+| 3.7 and later            | yes    |
 
-```bash
-ckanapi load organizations -I transitional_orgs.jsonl
-```
+Required extensions, forks, and branches:
 
-Once to create the organizations this extension requires
-before loading any data.
+* [CKAN Fork](https://github.com/open-data/ckan/tree/canada-v2.10) *(canada-v2.10 branch)*
+* [CKANAPI](https://github.com/ckan/ckanapi)
+* [CKANEXT Recombinant](https://github.com/open-data/ckanext-recombinant)
+* [CKANEXT Fluent](https://github.com/ckan/ckanext-fluent)
+* [CKANEXT Scheming](https://github.com/ckan/ckanext-scheming)
+* [CKANEXT Security Fork](https://github.com/open-data/ckanext-security/tree/canada-v2.10) *(canada-v2.10 branch)*
+* [CKANEXT Validation Fork](https://github.com/open-data/ckanext-validation/tree/canada-v2.10) *(canada-v2.10 branch)*
+* [Frictionless-py Fork](https://github.com/open-data/frictionless-py/tree/canada-v2.10) *(canada-v2.10 branch)*
+* [CKANEXT XLoader Fork](https://github.com/open-data/ckanext-xloader/tree/canada-v2.10) *(canada-v2.10 branch)*
+* [CKANEXT CloudStorage Fork](https://github.com/open-data/ckanext-cloudstorage/tree/canada-v2.10) *(canada-v2.10 branch)*
+* [CKANEXT DCAT Fork](https://github.com/open-data/ckanext-dcat/tree/canada-v2.10) *(canada-v2.10 branch)*
+* [CKANEXT Power BI View](https://github.com/open-data/ckanext-power-bi)
+* [CKANEXT Open API View](https://github.com/open-data/ckanext-openapiview)
+* [CKANEXT GC Notify](https://github.com/open-data/ckanext-gcnotify)
 
+## Installation
 
-## Plugins in this extension
+To install ckanext-canada:
 
-`canada_forms`
-  dataset forms for Open Canada metadata schema
+1. Activate your CKAN virtual environment, for example:
 
-`canada_public`
-  base and public facing Open Canada templates (requires
-  `canada_forms`)
+     . /usr/lib/ckan/default/bin/activate
 
-`canada_internal`
-  templates for internal site and registration (requires
-  `canada_forms` and `canada_public`)
-
-`canada_datasets`
-  package processing between CKAN and Solr (requires
-  `Scheming extension`, see below)
-
-`canada_security`
-  extra security processing (requires
-  `Security extension`, see below)
-
-## Related Open Source Repos
-
-Project | Github group/repo | Our Contribution
---- | --- | ---
-CKAN | [open-data/ckan](https://github.com/open-data/ckan) | important contributor
-canada extension | [open-data/ckanext-canada](https://github.com/open-data/ckanext-canada) | sole maintainer
-Scheming extension | [ckan/ckanext-scheming](https://github.com/ckan/ckanext-scheming) | primary
-Fluent extension | [ckan/ckanext-fluent](https://github.com/ckan/ckanext-fluent) | primary
-ckanapi | [ckan/ckanapi](https://github.com/ckan/ckanapi) | primary
-ckanext-googleanalytics | [ofkn/ckanext-googleanalytics](https://github.com/okfn/ckanext-googleanalytics) | user
-Recombinant extension | [open-data/ckanext-recombinant](https://github.com/open-data/ckanext-recombinant) | sole maintainer
-Cloudstorage extension | [open-data/ckanext-cloudstorage](https://github.com/open-data/ckanext-cloudstorage) | original author, user
-Security extension | [open-data/ckanext-security](https://github.com/open-data/ckanext-security) | minor contributor
-Xloader extension | [open-data/ckanext-xloader](https://github.com/open-data/ckanext-xloader) | user, minor customizations
-Validation extension | [open-data/ckanext-validation](https://github.com/open-data/ckanext-validation/) | user, minor customization
+2. Clone the source and install it on the virtualenv:
+  ```
+  git clone https://github.com/open-data/ckanext-canada.git
+  cd ckanext-canada
+  pip install -e .
+	pip install -r requirements.txt
+  python setup.py develop
+  ```
+3. Add the [plugin entry points](#plugins) to the `ckan.plugins` setting in your CKAN
+   config file (by default the config file is located at
+   `/etc/ckan/default/ckan.ini`).
 
 
-## OD Configuration: development.ini or production.ini
+## Plugins
 
-The CKAN ini file needs the following settings for the registry server:
+### Theme
+
+`canada_theme` adds templates, template helpers, and webassets . This plugin should load first.
+
+### Forms
+
+`canada_forms` adds dataset and resource forms and extra blueprint functionality for them. This should load after `canada_theme` but before the other `canada` plugins
+
+### Public
+
+`canada_public` adds actions, logic, and functionality specific to the Canada data portal.
+
+### Internal
+
+`canada_internal` adds actions, logic, and functionality specific to the Canada data registry.
+
+### Datasets
+
+`canada_datasets` extends the ckanext-scheming plugin, modifying specific functionality for the Canada data portal.
+
+### Security
+
+`canada_security` extends the ckanext-security plugin, modifying specific functionality for the Canada data portal.
+
+## Configurations
+
+### Portal
+
+The CKAN ini file needs the following settings for the portal:
 
 ```ini
-ckan.plugins = dcat dcat_json_interface googleanalytics canada_forms canada_internal
-        canada_public datastore recombinant
-        canada_datasets scheming_organizations canada_security fluent
+ckan.plugins = canada_theme
+               activity
+               dcat
+               dcat_json_interface
+               canada_forms
+               canada_public
+               canada_datasets
+               scheming_organizations
+               fluent
+               recombinant
+               cloudstorage
+               canada_security
+               datastore
+               text_view
+               image_view
+               datatables_view
+               webpage_view
+               openapi_view
+               power_bi_view
 ```
 
-For the public server use only:
+### Registry
+
+The CKAN ini file needs the following settings for the registry:
 
 ```ini
-ckan.plugins = dcat dcat_json_interface googleanalytics canada_forms
-        canada_public canada_datasets scheming_organizations canada_security fluent
-
-canada.portal_url = http://myserver.com
-
-adobe_analytics.js = //path to the js file needed to trigger Adobe Analytics
+ckan.plugins =  canada_theme
+                activity
+                validation
+                canada_forms
+                canada_internal
+                canada_public
+                recombinant
+                datastore
+                dsaudit
+                canada_datasets
+                scheming_organizations
+                fluent
+                cloudstorage
+                canada_security
+                xloader
+                datatables_view
+                image_view
+                text_view
+                webpage_view
+                openapi_view
+                power_bi_view
+                gcnotify
 ```
 
-Both servers need:
+### General
+
+Both applications need at least the following:
 
 ```ini
+ckanext.power_bi.internal_i18n = true
+
+recombinant.definitions = ckanext.canada:tables/ati.yaml
+                          ckanext.canada:tables/briefingt.yaml
+                          ckanext.canada:tables/qpnotes.yaml
+                          ckanext.canada:tables/contracts.yaml
+                          ckanext.canada:tables/contractsa.yaml
+                          ckanext.canada:tables/grants.yaml
+                          ckanext.canada:tables/hospitalityq.yaml
+                          ckanext.canada:tables/reclassification.yaml
+                          ckanext.canada:tables/travela.yaml
+                          ckanext.canada:tables/travelq.yaml
+                          ckanext.canada:tables/wrongdoing.yaml
+                          ckanext.canada:tables/inventory.yaml
+                          ckanext.canada:tables/consultations.yaml
+                          ckanext.canada:tables/service.yaml
+                          ckanext.canada:tables/dac.yaml
+                          ckanext.canada:tables/nap5.yaml
+                          ckanext.canada:tables/experiment.yaml
+                          ckanext.canada:tables/adminaircraft.yaml
+
+recombinant.tables = ckanext.canada:recombinant_tables.yaml
+
+scheming.dataset_schemas =
+    ckanext.canada:schemas/dataset.yaml
+    ckanext.canada:schemas/info.yaml
+    ckanext.canada:schemas/prop.yaml
+
+scheming.presets =
+    ckanext.scheming:presets.json
+    ckanext.fluent:presets.json
+    ckanext.canada:schemas/presets.yaml
+    ckanext.validation:presets.json
+
+scheming.organization_schemas = ckanext.canada:schemas/organization.yaml
+
+ckanext.csrf_filter.same_site = Strict
+ckanext.csrf_filter.exempt_rules = ^/datatable.*
+ckanext.xloader.clean_datastore_tables = True
+ckanext.validation.clean_validation_reports = True
+ckan.feeds.pretty = True
+ckan.feeds.include_private = True
+ckan.auth.create_dataset_if_not_in_organization = false
+ckan.activity_streams_email_notifications = false
+ckan.record_private_activity = True
+ckan.activity_streams_enabled = True
+ckan.csrf_protection.ignore_extensions = False
+
 licenses_group_url = file://<path to this extension>/ckanext/canada/public/static/licenses.json
 
-ckan.auth.create_dataset_if_not_in_organization = false
+ckanext.canada.datastore_source_domain_allow_list = canada.ca www.canada.ca
 
-ckan.activity_streams_email_notifications = false
-
-ckan.datasets_per_page = 10
-
-googleanalytics.id = UA-1010101-1 (your analytics account id)
-googleanalytics.account = Account name (i.e. data.gov.uk, see top level item at https://www.google.com/analytics)
-
-# Internationalisation Settings
 ckan.locales_offered = en fr
 ```
 
-## OD Configuration: Adding WET Resource files
+## SOLR
 
-For the use of the Portal or Registry sites, the installation of the WET-BOEW theme extension isn't required anymore, because the templates it provides are now included in the `canada_public` and `canada_internal` plugins. All what's needed is to add the resource files:
-
-### Externally hosted:
-
-Set `wet_boew.url` (in your .ini file) to the root URL where the WET resources are hosted:
-
-*Example*:
-
-```ini
-wet_boew.url = http://domain.com/wet-boew/v4.0.31
-```
-
-### Internally Hosted:
-
-1. Extract the WET 4.0.x core CDN and desired themes cdn package to a folder::
-
-	```bash
-        export WET_VERSION=v4.0.31
-        export GCWEB_VERSION=v5.1
-        mkdir wet-boew && curl -L https://github.com/wet-boew/wet-boew-cdn/archive/$WET_VERSION.tar.gz | tar -zx --strip-components 1 - -directory=wet-boew
-        mkdir GCWeb && curl -L https://github.com/wet-boew/themes-cdn/archive/$GCWEB_VERSION-gcweb.tar.gz | tar -zx --strip-components 1 --directory=GCWeb
-	```
-
-2. Set the `extra_public_paths` settings to that path where the files are extracted:
-
-	*Example*:
-
-	```ini
-	extra_public_paths = /home/user/wet-boew/v4.0.31
-	```
-
-
-### Additional Configuration:
-
-Set `wet_theme.geo_map_type` to indicate what style of [WET Geomap widget](https://wet-boew.github.io/wet-boew/docs/ref/geomap/geomap-en.html) to use. Set this to either 'static' or 'dynamic':
-
-```ini
-wet_theme.geo_map_type = static
-```
-
-## Configuration: Solr
-
-This extension uses a custom Solr schema based on the ckan 2.8 schema. You can find the schema in the root directory of the project.
-Overwrite the default CKAN Solr schema with this one in order to enable search faceting over custom metadata fields.
+This extension uses a custom Solr schema based on the CKAN 2.10 schema. Overwrite the default CKAN Solr schema with this one in order to enable search faceting over custom metadata fields.
 
 You will need to rebuild your search index using:
 
 ```bash
-ckan search-index rebuild
+ckan -c <INI> search-index rebuild
 ```
 
-## Localization strings
+## Localization
 
 To update strings in the translation files:
 
@@ -182,73 +255,75 @@ updated translations by running:
 python setup.py compile_catalog
 ```
 
+## Migrations
 
+### Creating a plugin migration
 
-## Migrating Proactive Disclosure (recombinant) data
+If adding or modifying custom database models in the CKAN framework, you can create a migration following the [docs.](https://docs.ckan.org/en/2.10/contributing/database-migrations.html)
 
-First extract the current version of the data from the registry for each table, e.g for contracts migrations
-we need contracts.csv and contracts-nil.csv:
-
-```bash
-mkdir migrate-contracts-2020-08-07  # a new working directory
-paster --plugin=ckanext-recombinant recombinant combine contracts contracts-nil -d migrate-contracts-2020-07-08 -c $REGISTRY_INI
+After making the migration, you can apply it with:
+```shell
+ckan -c <INI> db upgrade --plugin=<PLUGIN NAME>
+```
+or (execute twice):
+```shell
+ckan -c <INI> db pending-migrations --apply
+ckan -c <INI> db pending-migrations --apply
 ```
 
-Remove the old tables from the database so that tables with the new schema can be created when we load the migrated
-data, deleting contracts will delete both the contracts and contracts-nil tables:
+### Manually reloading Proactive Disclosure Data
+
+This needs to be done if the data types change in the schema. The data will need to be exported, deleted from the database, and then reloaded so the new datatypes are created properly in the database.
+
+1. Extract the current version of the data from the registry for each table, e.g for contracts migrations we need contracts.csv and contracts-nil.csv:
 
 ```bash
-paster --plugin=ckanext-recombinant recombinant delete contracts -c $REGISTRY_INI
+mkdir migrate-contracts  # a new working directory
+ckan -c <INI> recombinant combine contracts contracts-nil -d migrate-contracts
 ```
 
-Deploy the new version of the code, for our prod registry site that would be:
+2. Remove the old tables from the database. Deleting contracts will delete both the contracts and contracts-nil tables:
 
 ```bash
-fab pull registry
+ckan -c <INI> recombinant delete contracts
 ```
 
-Migrate the data with the script deployed as part of the changes. The output csv files need to have
-the same names as the input files for loading to work in the next step.
+3. Reload the data
 
 ```bash
-cd migrate-contracts-2020-08-07
-mkdir new err  # for migrated data and error logs
-.../ckanext-canada/bin/migrate/migrate_contracts_2019_11.py <contracts.csv >new/contracts.csv 2>err/contracts.err
-.../ckanext-canada/bin/migrate/migrate_contracts_nil_2019_11.py <contracts-nil.csv >new/contracts-nil.csv 2>err/contracts-nil.err
-ls -al err
+cd migrate-contracts
+ckan -c <INI> recombinant load-csv contracts.csv contracts-nil.csv
 ```
 
-Records removed in the data migration will appear in the error logs.
-Also check that the migrated data is comparable in size to the original
-data in just in case something interrupted the migration.
+### Advanced data migrations
 
-Load the migrated data back into the registry, capturing any validation errors:
+Any advanced data migrations should be created in the [DataOps repo](https://github.com/open-data/data-ops) and should adopt the concept that the Python script runs independatly from this plugin code and CKAN application context.
 
-```bash
-paster --plugin=ckanext-recombinant recombinant load-csv new/contracts.csv new/contracts-nil.csv -c $REGISTRY_INI 2>err/load-contracts.err
-ls -al err/load-contracts.err
-```
+## Data Flows
 
-If there are validation errors or records removed during migration, consider
-revising the migration script to allow more records to be migrated without manual intervention.
+### Open Data Flow
 
-Inform the business owner or source departments about all records that were removed as part of the
-final data migration or due to validation errors so that data can be corrected and re-imported.
+The custom command `ckan -c <INI> canada portal-update` is a worker function that copies datasets, resources, views, and datastore tables from the Registry to the Portal. This relies on the `activity` plugin and the capability to record Private activity.
 
+1. Datasets that are "ready to publish" and have a "published date" are proccessed into the `canada copy-datasets` command;
+2. Gathers resources, views, and datastore tables from the Registry;
+3. If there are differences between the Registry and Portal dataset/resources, then copies the Registry data to the Portal (including dumping the Registry datastore table into the Portal datastore table).
 
-## Proactive Disclosure Data Flow
+The Django Search App uses an action API endpoint from the `activity` plugin to add/update/remove datasets from the Django Search Index.
+
+### Proactive Disclosure Data Flow
 
 ![data flow diagram](docs/pd-data-flow.svg)
 
 1. ckanext-canada (this repository)
    - [PD yaml files](ckanext/canada/tables) are read by ckanext-recombinant and used to
      generate most of the pages, tables, triggers and metadata shown.
-   - [add+edit forms](ckanext/canada/templates/internal/recombinant) use form snippets
+   - [add+edit forms](ckanext/canada/templates/recombinant) use form snippets
      from ckanext-scheming and validation enforced by datastore triggers. They are
      currently part of the ckanext-canada extension but should be moved into
      ckanext-recombinant or another reusable extension once the trigger-validation
      pattern becomes standardized
-   - [datatable preview](ckanext/canada/templates/internal/package/wet_datatable.html)
+   - [datatable preview](ckanext/canada/templates/snippets/pd_datatable.html)
      is part of ckanext-canada because this code predates the datatables view feature
      that is now part of ckan. It should be removed from here so we can use the ckan
      datatable view instead
@@ -274,42 +349,5 @@ final data migration or due to validation errors so that data can be corrected a
    - published CSV data
 5. [deplane](https://github.com/open-data/deplane)
    - data element profile
-6. [ogc_search](https://github.com/open-data/ogc_search)
+6. [ogc_search](https://github.com/open-data/oc_search)
    - advanced search
-
-## Suggest a Dataset Data Flow
-
-![data flow diagram](docs/suggest-dataset-dfd.svg)
-
-The "Suggest a Dataset" feature integrates CKAN with both Drupal and Django Search.
-
-1. Submit Suggestion: The process begins with external public users submitting the
-[Suggest a Dataset](https://open.canada.ca/en/forms/suggest-dataset) form on Drupal. As a result of submission,
-a new node of content type `suggested_dataset` is created by the
-[webform handler](https://github.com/open-data/og/blob/ff0d819ce5c87ee61fd2c5436e9a02028031ac51/modules/custom/og_ext_webform/src/Plugin/WebformHandler/SuggestedDatasetFormHandler.php#L21).
-
-2. Moderate Suggestion: A registered user with role `comment_moderator` on Drupal updates and/or adds translation
-to the suggested dataset. The user may also choose to delete the suggestion if it is not relevant or a duplicate.
-Once translation is added, the user publishes the suggestion.
-
-3. Nightly Cron: A number of cron jobs are responsible for cross-integration.
-    - Suggested datasets are exported from Drupal as a CSV using a
-    [cron hook](https://github.com/open-data/og/blob/ff0d819ce5c87ee61fd2c5436e9a02028031ac51/modules/custom/og_ext_cron/src/Utils/CronFunctions.php#L107)
-    - The exported CSV is used to
-    [load suggested datasets](https://github.com/open-data/ckanext-canada/blob/f7375feb2ac265e2beca939fd7b62a0298a62bce/ckanext/canada/commands.py#L452)
-    in the Registry
-    - Next, the status updates for all suggested datasets is exported from the Registry in a JSON file using
-    `ckanapi search datasets q=type:prop include_private=true`
-    - [New status updates are compared with existing status updates](https://github.com/open-data/ogc_search/blob/master/ogc_search/suggested_dataset/management/commands/check_for_status_change.py)
-    in the Solr index and emails are sent out to external public users for any new status updates
-    - New status updates exported as JSON are
-    [loaded into to the Solr index](https://github.com/open-data/ogc_search/blob/master/ogc_search/load_sd_to_solr.py)
-
-4. Provide status updates: Registry users can view a list of suggested datasets for their organization and can provide
-an update on progress.
-
-5. Search suggested datasets: External public users can [search](https://search.open.canada.ca/en/sd)
-a list of suggested datasets. Each suggested dataset has a details page which shows all the status updates for a
-suggestion. Users can [vote](https://github.com/open-data/og/blob/ff0d819ce5c87ee61fd2c5436e9a02028031ac51/modules/custom/voting_webform/src/Controller/VotingWebformController.php#L89)
-on a suggestion or [add comments](https://github.com/open-data/og/blob/master/modules/custom/external_comment/src/Controller/ExternalCommentController.php).
-The votes and comments are stored in Drupal.
