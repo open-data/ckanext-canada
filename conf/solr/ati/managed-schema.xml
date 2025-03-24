@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Solr managed schema - automatically generated - DO NOT EDIT -->
+<schema name="drupal-ati" version="1.6">
+  <uniqueKey>id</uniqueKey>
+  <fieldType name="binary" class="solr.BinaryField"/>
+  <fieldType name="boolean" class="solr.BoolField" omitNorms="true" sortMissingLast="true"/>
+  <fieldType name="booleans" class="solr.BoolField" sortMissingLast="true" multiValued="true"/>
+  <fieldType name="date" class="solr.DatePointField" omitNorms="true" positionIncrementGap="0"/>
+  <fieldType name="double" class="solr.DoublePointField" omitNorms="true" positionIncrementGap="0"/>
+  <fieldType name="float" class="solr.FloatPointField" omitNorms="true" positionIncrementGap="0"/>
+  <fieldType name="int" class="solr.IntPointField" omitNorms="true" positionIncrementGap="0"/>
+  <fieldType name="long" class="solr.LongPointField" omitNorms="true" positionIncrementGap="0"/>
+  <fieldType name="pdate" class="solr.DatePointField" omitNorms="true" positionIncrementGap="0"/>
+  <fieldType name="pdates" class="solr.DatePointField" positionIncrementGap="0" multiValued="true"/>
+  <fieldType name="pdouble" class="solr.DoublePointField" omitNorms="true" positionIncrementGap="0"/>
+  <fieldType name="pdoubles" class="solr.DoublePointField" positionIncrementGap="0" multiValued="true"/>
+  <fieldType name="pfloat" class="solr.FloatPointField" omitNorms="true" positionIncrementGap="0"/>
+  <fieldType name="pfloats" class="solr.FloatPointField" positionIncrementGap="0" multiValued="true"/>
+  <fieldType name="pint" class="solr.IntPointField" omitNorms="true" positionIncrementGap="0"/>
+  <fieldType name="pints" class="solr.IntPointField" positionIncrementGap="0" multiValued="true"/>
+  <fieldType name="plong" class="solr.LongPointField" omitNorms="true" positionIncrementGap="0"/>
+  <fieldType name="plongs" class="solr.LongPointField" positionIncrementGap="0" multiValued="true"/>
+  <fieldType name="string" class="solr.StrField" omitNorms="true" sortMissingLast="true"/>
+  <fieldType name="text" class="solr.TextField" positionIncrementGap="100">
+    <analyzer type="index">
+      <tokenizer class="solr.WhitespaceTokenizerFactory"/>
+      <filter class="solr.WordDelimiterGraphFilterFactory" generateWordParts="1" generateNumberParts="1" catenateWords="1" catenateNumbers="1" splitOnCaseChange="1" catenateAll="0"/>
+      <filter class="solr.FlattenGraphFilterFactory"/>
+      <filter class="solr.LowerCaseFilterFactory"/>
+      <filter class="solr.SnowballPorterFilterFactory" protected="protwords.txt" language="English"/>
+      <filter class="solr.ASCIIFoldingFilterFactory"/>
+    </analyzer>
+    <analyzer type="query">
+      <tokenizer class="solr.WhitespaceTokenizerFactory"/>
+      <filter class="solr.SynonymGraphFilterFactory" ignoreCase="true" expand="true" synonyms="synonyms.txt"/>
+      <filter class="solr.WordDelimiterGraphFilterFactory" generateWordParts="1" generateNumberParts="1" catenateWords="0" catenateNumbers="0" splitOnCaseChange="1" catenateAll="0"/>
+      <filter class="solr.LowerCaseFilterFactory"/>
+      <filter class="solr.SnowballPorterFilterFactory" protected="protwords.txt" language="English"/>
+      <filter class="solr.ASCIIFoldingFilterFactory"/>
+    </analyzer>
+  </fieldType>
+  <fieldType name="text_fr" class="solr.TextField" positionIncrementGap="100">
+    <analyzer type="index">
+      <tokenizer class="solr.WhitespaceTokenizerFactory"/>
+      <filter class="solr.WordDelimiterGraphFilterFactory" generateWordParts="1" generateNumberParts="1" catenateWords="1" catenateNumbers="1" splitOnCaseChange="1" catenateAll="0"/>
+      <filter class="solr.LowerCaseFilterFactory"/>
+      <filter class="solr.SnowballPorterFilterFactory" protected="protwords_fr.txt" language="French"/>
+      <filter class="solr.ASCIIFoldingFilterFactory"/>
+    </analyzer>
+    <analyzer type="query">
+      <tokenizer class="solr.WhitespaceTokenizerFactory"/>
+      <filter class="solr.SynonymFilterFactory" ignoreCase="true" expand="true" synonyms="synonyms_fr.txt"/>
+      <filter class="solr.WordDelimiterGraphFilterFactory" generateWordParts="1" generateNumberParts="1" catenateWords="0" catenateNumbers="0" splitOnCaseChange="1" catenateAll="0"/>
+      <filter class="solr.LowerCaseFilterFactory"/>
+      <filter class="solr.SnowballPorterFilterFactory" protected="protwords_fr.txt" language="French"/>
+      <filter class="solr.ASCIIFoldingFilterFactory"/>
+    </analyzer>
+  </fieldType>
+  <fieldType name="text_general" class="solr.TextField" positionIncrementGap="100">
+    <analyzer type="index">
+      <tokenizer class="solr.WhitespaceTokenizerFactory"/>
+      <filter class="solr.WordDelimiterGraphFilterFactory" generateWordParts="1" generateNumberParts="1" catenateWords="1" catenateNumbers="1" splitOnCaseChange="0" catenateAll="0"/>
+      <filter class="solr.FlattenGraphFilterFactory"/>
+      <filter class="solr.LowerCaseFilterFactory"/>
+    </analyzer>
+    <analyzer type="query">
+      <tokenizer class="solr.WhitespaceTokenizerFactory"/>
+      <filter class="solr.StopFilterFactory" words="stopwords.txt" ignoreCase="true"/>
+      <filter class="solr.SynonymGraphFilterFactory" ignoreCase="true" expand="true" synonyms="synonyms.txt"/>
+      <filter class="solr.WordDelimiterGraphFilterFactory" generateWordParts="1" generateNumberParts="1" catenateWords="0" catenateNumbers="0" splitOnCaseChange="0" catenateAll="0"/>
+      <filter class="solr.LowerCaseFilterFactory"/>
+    </analyzer>
+  </fieldType>
+  <fieldType name="text_ngram" class="solr.TextField" positionIncrementGap="100">
+    <analyzer type="index">
+      <tokenizer class="solr.NGramTokenizerFactory" minGramSize="2" maxGramSize="10"/>
+      <filter class="solr.LowerCaseFilterFactory"/>
+    </analyzer>
+    <analyzer type="query">
+      <tokenizer class="solr.WhitespaceTokenizerFactory"/>
+      <filter class="solr.LowerCaseFilterFactory"/>
+    </analyzer>
+  </fieldType>
+  <field name="id" type="string" indexed="true" required="true" stored="true"/>
+  <field name="text" type="text" multiValued="true" indexed="true" stored="false"/>
+  <field name="text_fr" type="text" multiValued="true" indexed="true" stored="false"/>
+  <field name="unique_id"  type="text" multiValued="false" indexed="true" stored="true"/>
+  <field name="partial_id" type="string" multiValued="false" indexed="true" stored="true"/>
+  <field name="org_name_code" type="text" multiValued="false" indexed="true" stored="true"/>
+  <field name="org_name_en" type="text" multiValued="false" indexed="true" stored="true"/>
+  <field name="org_name_fr" type="text" multiValued="false" indexed="true" stored="true"/>
+  <field name="ati_email" type="text" multiValued="false" indexed="true" stored="true"/>
+  <field name="year" type="text" multiValued="false" indexed="true" stored="true"/>
+  <field name="month" type="text" multiValued="false" indexed="true" stored="true"/>
+  <field name="month_name_en" type="text" multiValued="false" indexed="true" stored="true"/>
+  <field name="month_name_fr" type="text" multiValued="false" indexed="true" stored="true"/>
+  <field name="request_number" type="text" multiValued="false" indexed="true" stored="true"/>
+  <field name="summary_en" type="text" multiValued="false" indexed="true" stored="true"/>
+  <field name="summary_fr" type="text" multiValued="false" indexed="true" stored="true"/>
+  <field name="disposition" type="text" multiValued="false" indexed="true" stored="true"/>
+  <field name="disposition_en" type="text" multiValued="false" indexed="true" stored="true"/>
+  <field name="disposition_fr" type="text" multiValued="false" indexed="true" stored="true"/>
+  <field name="pages" type="text" multiValued="false" indexed="true" stored="true"/>
+  <field name="comments_en" type="text" multiValued="false" indexed="true" stored="true"/>
+  <field name="comments_fr" type="text" multiValued="false" indexed="true" stored="true"/>  
+  <dynamicField name="multi_*" type="string" multiValued="true" indexed="true" stored="true"/>
+  <dynamicField name="*" type="string" indexed="true" stored="true"/>
+  <copyField source="*_en" dest="text"/>
+  <copyField source="*_fr" dest="text_fr"/>
+</schema>
