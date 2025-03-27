@@ -1,9 +1,38 @@
-body #dtprv{
+body #dtprv,
+body .dt-scroll-head{
   visibility: hidden;
 }
 
-body #dtprv_wrapper{
+body #dtprv_wrapper #dtprv{
+  margin-top: -15px !important;
+}
+
+body #dtprv_wrapper,
+body #dtprv_wrapper .dt-scroll{
   position: relative !important;
+}
+
+body #dtprv_wrapper #dtprv_processing{
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  background-color: rgba(0, 0, 0, 0.325) !important;
+}
+
+body #dtprv_wrapper #dtprv_processing > div{
+  position: absolute !important;
+  top: 25% !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+}
+
+body #dtprv_wrapper #dtprv_processing > div > div{
+  background-color: #335075 !important;
 }
 
 body #dtprv_wrapper .dt-buttons .btn-secondary,
@@ -174,8 +203,10 @@ body #dtprv_wrapper .dropdown-menu.dt-button-collection{
   left: 0 !important;
   right: 0 !important;
   bottom: 0 !important;
-  width: 100% !important;
+  width: calc(100% + 10px) !important;
   background-color: rgba(0, 0, 0, 0.325) !important;
+  margin-left: -5px !important;
+  margin-right: -5px !important;
 }
 
 body #dtprv_wrapper .dropdown-menu.dt-button-collection div[role="menu"]{
@@ -190,8 +221,10 @@ body #dtprv_wrapper .dropdown-menu.dt-button-collection div[role="menu"]{
   padding-left: 5px !important;
   padding-top: 5px !important;
   padding-bottom: none !important;
-  background-color: rgba(255, 255, 255, 0.9) !important;
+  background-color: white !important;
   border-radius: 4px !important;
+  max-height: 85% !important;
+  overflow-y: scroll !important;
 }
 
 body #dtprv_wrapper .dropdown-menu.dt-button-collection div[role="menu"] a.dt-button{
@@ -204,6 +237,15 @@ body #dtprv_wrapper .dropdown-menu.dt-button-collection div[role="menu"] a.dt-bu
   margin-right: 5px !important;
   text-decoration: none !important;
   font-size: 14px !important;
+  text-overflow: initial !important;
+  white-space: normal !important;
+  line-height: 22px !important;
+}
+
+body #dtprv_wrapper .dropdown-menu.dt-button-collection div[role="menu"] a.dt-button:nth-of-type(1),
+body #dtprv_wrapper .dropdown-menu.dt-button-collection div[role="menu"] a.dt-button:nth-of-type(2),
+body #dtprv_wrapper[data-editable='true'] .dropdown-menu.dt-button-collection div[role="menu"] a.dt-button:nth-of-type(3){
+  display: none !important;
 }
 
 body #dtprv_wrapper .dropdown-menu.dt-button-collection div[role="menu"] a.dt-button.dt-button-active{
@@ -245,11 +287,15 @@ body #dtprv_wrapper .dropdown-menu.dt-button-collection div[role="menu"] a.dt-bu
   }
 }
 
+body #dtprv_wrapper th.expanders{
+  visibility: hidden !important;
+}
+
 body #dtprv_wrapper td.expanders.dtr-control::before{
   font-family: 'FontAwesome';
-  content: '\f055';
+  content: '\f065';
   border: none !important;
-  font-size: 14px !important;
+  font-size: 18px !important;
   color: #26374a !important;
 }
 
@@ -260,5 +306,32 @@ body #dtprv_wrapper td.expanders.dtr-control:focus::before{
 }
 
 body #dtprv_wrapper tr.dtr-expanded td.expanders.dtr-control::before{
-  content: '\f056';
+  content: '\f066';
+}
+
+body #dtprv_wrapper .dt-scroll-head thead{
+  background-color: white !important;
+}
+
+body #dtprv_wrapper .dt-scroll-head th:not(:first-of-type){
+  z-index: 2 !important;
+  border-bottom: 2px solid #335075 !important;
+}
+
+body #dtprv_wrapper .dt-scroll-body thead{
+  position: relative !important;
+}
+
+body #dtprv_wrapper .dt-scroll-body thead th,
+body #dtprv_wrapper .dt-scroll-body thead th .dt-column-title,
+body #dtprv_wrapper .dt-scroll-body thead th .dt-column-order{
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
+
+body #dtprv_wrapper[data-compact-view='false'] .dt-scroll-head,
+body #dtprv_wrapper[data-compact-view='false'] #dtprv{
+  overflow: hidden !important;
+  margin-left: -50px !important;
+  width: calc(100% + 50px) !important;
 }
