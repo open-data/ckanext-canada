@@ -143,6 +143,14 @@
         scrollResize: true,
         scrollCollapse: false,
         deferRender: true,
+        select: {
+          style: 'multi',
+          selector: 'td:not(:first-child)'
+        },
+        order: sortOrder,
+        columns: availableColumns,
+        dom: "Blfrtip",
+        language: tableLanguage,
         ajax: {
           "url": ajaxURI,
           "type": "POST",
@@ -316,14 +324,15 @@
           // add foreign key links to cells
           // END
         },
-        select: {
-          style: 'multi',
-          selector: 'td:not(:first-child)'
+        stateSaveParams: function(_settings, _data){
+          _data.page = this.api().page();
+          _data.selected = this.api().rows({selected: true})[0];
+          console.log(_data);
+          // TODO: save to local storage with resource ID...
         },
-        order: sortOrder,
-        columns: availableColumns,
-        dom: "Blfrtip",
-        language: tableLanguage,
+        stateLoadParams: function(_settings, _data){
+          // TODO: ingest any saved state
+        },
         buttons: [
           // TODO: make a fullscreen button? position fixed??
           {
