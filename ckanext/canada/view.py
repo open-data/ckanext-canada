@@ -897,7 +897,7 @@ def view_help():
 @canada_views.route('/datatable/<resource_name>/<resource_id>',
                     methods=['GET', 'POST'])
 @csrf.exempt
-def datatable(resource_name: str, resource_id: str):
+def pd_datatable(resource_name: str, resource_id: str):
     params = parse_params(request.form)
     # type_ignore_reason: datatable param draw is int
     draw = int(params['draw'])  # type: ignore
@@ -961,7 +961,8 @@ def datatable(resource_name: str, resource_id: str):
     )
 
     aadata = [
-        ['<input type="checkbox">'] +
+        [''] +  # Expand column
+        ['<input type="checkbox">'] +  # Select column
         [datatablify(row.get(colname, ''), colname, chromo) for colname in cols]
         for row in response['records']]
 
@@ -970,7 +971,7 @@ def datatable(resource_name: str, resource_id: str):
         pkg = lc.action.package_show(id=res['package_id'])
         pkids = [fids.index(k) for k in aslist(chromo['datastore_primary_key'])]
         for row in aadata:
-            row.insert(1, (
+            row.insert(2, (
                     '<a href="{0}" aria-label="' + _("Edit") + '">'
                     '<i class="fa fa-lg fa-edit" aria-hidden="true"></i></a>').format(
                     h.url_for(

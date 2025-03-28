@@ -93,6 +93,6 @@
 {% block primary %}
   {{ super() }}
   {% if resource and 'error' not in resource %}
-    {{ h.get_datapreview_recombinant(resource.name, resource.id, organization.name, dataset.dataset_type) }}
+    {{ h.get_pd_datatable(resource.name, resource.id, organization.name, dataset.dataset_type) }}
   {% endif %}
 {% endblock %}
