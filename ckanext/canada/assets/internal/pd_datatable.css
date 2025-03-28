@@ -329,9 +329,6 @@ body #dtprv_wrapper .dt-scroll-body thead th .dt-column-order{
   pointer-events: none !important;
 }
 
-body #dtprv_wrapper[data-compact-view='false'] .dt-scroll-head,
-body #dtprv_wrapper[data-compact-view='false'] #dtprv{
-  overflow: hidden !important;
-  margin-left: -50px !important;
-  width: calc(100% + 50px) !important;
+body #dtprv_wrapper td.expanders.dtr-control::before{
+  content: none !important;
 }

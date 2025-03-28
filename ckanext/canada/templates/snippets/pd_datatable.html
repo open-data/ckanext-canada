@@ -18,7 +18,7 @@
         {% endif %}
         {% for field in ds_fields %}
           {# TODO: add fa fa-info-circle to headings for field data dictionary linking??? #}
-          <th scope="col" data-datastore-id="{{ field.id }}" data-priority="{{field.priority + magic_priority_no_field_should_be_below}}">
+          <th scope="col" data-datastore-id="{{- field.id -}}" data-priority="{{- field.priority + magic_priority_no_field_should_be_below -}}">
             {{field.label}}<span class="sorting-cnt"><span class="sorting-icons"></span></span>
           </th>
         {% endfor %}
@@ -66,7 +66,7 @@
     const chromoFields = {{ chromo.fields|tojson }};  // syntax_ignore: jinja2 tojson constants
     const isEditable = {{ (chromo.edit_form and can_edit)|tojson }};  // syntax_ignore: jinja2 tojson constants
     const selectAllLabel = "{{- _('Select All') -}}";
-    const colVisLabel = "{{- _('Column Visibility') -}}";
+    const fullscreenLabel = "{{- _('Fullscreen') -}}";
     const fullTableLabel = "{{- _('Full Table') -}}";
     const compactTableLabel = "{{- _('Compact Table') -}}";
     const editButtonLabel = "{{- _('Edit in Excel') -}}";
@@ -187,18 +187,12 @@
           $('.dt-scroll-head').css({'visibility': 'visible'});
           $('#dtprv_wrapper').attr('data-editable', isEditable);
           $('#dtprv_wrapper').attr('data-compact-view', isCompactView);
-          if( ! isCompactView ){
-            $('#dtprv_wrapper').find('tr').children('th:first-of-type').css(
-              {'width': '50px', 'min-width': '50px', 'max-width': '50px', 'padding': 0, 'visibility': 'hidden'});
-            $('#dtprv_wrapper').find('tr').children('td:first-of-type').css(
-              {'width': '50px', 'min-width': '50px', 'max-width': '50px', 'padding': 0, 'visibility': 'hidden'});
-          }else{
-            $('#dtprv_wrapper').find('tr').children('th:first-of-type').css(
-              {'width': 'auto', 'min-width': 'auto', 'max-width': 'auto', 'padding': '8px',  'visibility': 'visible'});
-            $('#dtprv_wrapper').find('tr').children('td:first-of-type').css(
-              {'width': 'auto', 'min-width': 'auto', 'max-width': 'auto', 'padding': '8px',  'visibility': 'visible'});
-          }
           let expanderButtons = $('#dtprv').find('td.expanders'); // FIXME: select row vs checkboxes...
+          $(expanderButtons).each(function(_index, _button){
+            if( ! $(_button).hasClass('dtr-control') ){
+              $(_button).addClass('dtr-control');
+            }
+          });
           // add foreign key links to cells
           $('#dtprv').find('.ref-link').remove();
           if( $.isEmptyObject(foreignKeys) ){
@@ -263,6 +257,14 @@
         language: tableLanguage,
         buttons: [
           // TODO: make a fullscreen button? position fixed??
+          {
+            name: "fullscreenButton",
+            text: '<i aria-hidden="true" class="fas fa-expand"></i>&nbsp;' + fullscreenLabel,
+            className: 'btn-secondary',
+            action: function(e, dt, node, config){
+
+            }
+          },
           {
             name: "tableTypeButton",
             text: isCompactView ? '<i aria-hidden="true" class="fa fa-table"></i>&nbsp;' + fullTableLabel : '<i aria-hidden="true" class="fa fa-list"></i>&nbsp;' + compactTableLabel,
@@ -357,7 +359,7 @@
         ]
       });
       // set checkboxes when selecting rows
-      // FIXME: this is kind of broken...
+      // FIXME: this is kind of broken...window stop propogation??
       table.on('select', function(e, dt, type, indexes){
         for( let _i = 0; _i < indexes.length; _i++){
           $($('#dtprv').find('tr')[indexes[_i] + 1]).find('td.checkboxes').find('input[type="checkbox"]').attr("checked", true).trigger('change').blur();

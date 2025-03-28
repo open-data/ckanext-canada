@@ -961,7 +961,7 @@ def pd_datatable(resource_name: str, resource_id: str):
     )
 
     aadata = [
-        [''] +  # Expand column
+        ['<i aria-hidden="true" class="fas fa-expand-alt"></i>'] +  # Expand column
         ['<input type="checkbox">'] +  # Select column
         [datatablify(row.get(colname, ''), colname, chromo) for colname in cols]
         for row in response['records']]
