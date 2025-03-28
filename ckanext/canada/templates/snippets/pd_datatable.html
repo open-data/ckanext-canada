@@ -8,7 +8,7 @@
 
 <section id="dt-preview">
   <h2 id="prtable">{{_("Preview")}}</h2>
-  <table id="dtprv" class="table table-striped" data-role="table" data-mode="columntoggle" >
+  <table id="dtprv" class="table table-striped" data-role="table" data-mode="columntoggle" style="visibility: hidden;">
     <thead>
       <tr class="font-small">
         <th scope="col" data-priority="3"></th>
@@ -66,6 +66,7 @@
     const chromoFields = {{ chromo.fields|tojson }};  // syntax_ignore: jinja2 tojson constants
     const isEditable = {{ (chromo.edit_form and can_edit)|tojson }};  // syntax_ignore: jinja2 tojson constants
     const selectAllLabel = "{{- _('Select All') -}}";
+    const jumpToPageLabel = "{{- _('Jump to page') -}}";
     const fullscreenLabel = "{{- _('Fullscreen') -}}";
     const fullTableLabel = "{{- _('Full Table') -}}";
     const compactTableLabel = "{{- _('Compact Table') -}}";
@@ -141,6 +142,7 @@
         scrollY: 400,
         scrollResize: true,
         scrollCollapse: false,
+        deferRender: true,
         ajax: {
           "url": ajaxURI,
           "type": "POST",
@@ -187,12 +189,76 @@
           $('.dt-scroll-head').css({'visibility': 'visible'});
           $('#dtprv_wrapper').attr('data-editable', isEditable);
           $('#dtprv_wrapper').attr('data-compact-view', isCompactView);
-          let expanderButtons = $('#dtprv').find('td.expanders'); // FIXME: select row vs checkboxes...
-          $(expanderButtons).each(function(_index, _button){
-            if( ! $(_button).hasClass('dtr-control') ){
-              $(_button).addClass('dtr-control');
+          // set fake visiility for responsive column
+          if( ! isCompactView ){
+            $('#dtprv_wrapper').find('tr').children('th:first-of-type').css(
+              {'width': '50px', 'min-width': '50px', 'max-width': '50px', 'padding': 0, 'visibility': 'hidden'});
+            $('#dtprv_wrapper').find('tr').children('td:first-of-type').css(
+              {'width': '50px', 'min-width': '50px', 'max-width': '50px', 'padding': 0, 'visibility': 'hidden'});
+          }else{
+            $('#dtprv_wrapper').find('tr').children('th:first-of-type').css(
+              {'width': 'auto', 'min-width': 'auto', 'max-width': 'auto', 'padding': '8px',  'visibility': 'visible'});
+            $('#dtprv_wrapper').find('tr').children('td:first-of-type').css(
+              {'width': 'auto', 'min-width': 'auto', 'max-width': 'auto', 'padding': '8px',  'visibility': 'visible'});
+          }
+          // END
+          // set fake visiility for responsive column
+          // END
+          // set expander button extra functionality
+          let expanderButtons = $('#dtprv').find('td.expanders');
+          if( expanderButtons.length > 0){
+            // TODO: add aria-labels for expanding...
+
+          }
+          // END
+          // set expander button extra functionality
+          // END
+          // select rows when checking boxes
+          let checkboxes = $('#dtprv').find('td.checkboxes').find('input[type="checkbox"]');
+          if( checkboxes.length > 0){
+            $(checkboxes).each(function(_index, _checkbox){
+              $(_checkbox).off('click.preventSelect');
+              $(_checkbox).on('click.preventSelect', function(_event){
+                _event.stopPropagation();
+              });
+              $(_checkbox).off('change.rowSelect');
+              $(_checkbox).on('change.rowSelect', function(_event){
+                _event.stopPropagation();
+                if( $(_checkbox).is(":checked") ){
+                  table.row(':eq(' + _index + ')').select();
+                } else {
+                  table.row(':eq(' + _index + ')').deselect();
+                }
+              });
+            });
+          }
+          // END
+          // select rows when checking boxes
+          // END
+          // add jump to page
+          let pagingWrapper = $('#dtprv_wrapper').find('.dt-paging');
+          if( pagingWrapper.length > 0 ){
+            $('#dtprv_wrapper').find('.dt-jump-to-page').remove();
+            let pageInfo = table.page.info();
+            let pageInput = '<div class="dt-jump-to-page"><label for="dt-jump-to-page">' + jumpToPageLabel + '</label><input aria-controls="dtprv" class"form-control form-control-sm" type="number" id="dt-jump-to-page" name="dt-jump-to-page" value="' + (pageInfo.page + 1) + '" min="1" max="' + (pageInfo.pages) + '" /></div>';
+            $(pagingWrapper).after(pageInput);
+            let jumpToPage = $('#dtprv_wrapper').find('.dt-jump-to-page').find('input');
+            if( jumpToPage.length > 0 ){
+              $(jumpToPage).off('change.setPage');
+              $(jumpToPage).on('change.setPage', function(_event){
+                let newPage = parseInt($(jumpToPage).val());
+                if( isNaN(newPage) && ! Number.isInteger(newPage) ){
+                  newPage = 0;
+                }else if( newPage >= 1 ){
+                  newPage -= 1;
+                }
+                table.page(newPage).draw(false);
+              });
             }
-          });
+          }
+          // END
+          // add jump to page
+          // END
           // add foreign key links to cells
           $('#dtprv').find('.ref-link').remove();
           if( $.isEmptyObject(foreignKeys) ){
@@ -250,7 +316,10 @@
           // add foreign key links to cells
           // END
         },
-        select: {style: 'multi'},
+        select: {
+          style: 'multi',
+          selector: 'td:not(:first-child)'
+        },
         order: sortOrder,
         columns: availableColumns,
         dom: "Blfrtip",
@@ -359,14 +428,17 @@
         ]
       });
       // set checkboxes when selecting rows
-      // FIXME: this is kind of broken...window stop propogation??
       table.on('select', function(e, dt, type, indexes){
         for( let _i = 0; _i < indexes.length; _i++){
-          $($('#dtprv').find('tr')[indexes[_i] + 1]).find('td.checkboxes').find('input[type="checkbox"]').attr("checked", true).trigger('change').blur();
+          let checkbox = $($('#dtprv').find('tr')[indexes[_i] + 1]).find('td.checkboxes').find('input[type="checkbox"]');
+          $(checkbox)[0].checked = true;  // set prop in the scenario that the checkbox has human interaction
+          $(checkbox).attr("checked", true).blur();
         }
       }).on('deselect', function(e, dt, type, indexes){
         for( let _i = 0; _i < indexes.length; _i++){
-          $($('#dtprv').find('tr')[indexes[_i] + 1]).find('td.checkboxes').find('input[type="checkbox"]').attr("checked", false).trigger('change').blur();
+          let checkbox = $($('#dtprv').find('tr')[indexes[_i] + 1]).find('td.checkboxes').find('input[type="checkbox"]');
+          $(checkbox)[0].checked = false;  // set prop in the scenario that the checkbox has human interaction
+          $(checkbox).removeAttr("checked").blur();
         }
       });
       // END

@@ -125,6 +125,28 @@ body #dtprv_wrapper .dt-info{
   }
 }
 
+body #dtprv_wrapper .dt-jump-to-page{
+  display: flex !important;
+}
+
+body #dtprv_wrapper .dt-jump-to-page input{
+  font-size: 14px !important;
+  height: 32px !important;
+  min-height: 32px !important;
+  max-height: 32px !important;
+}
+
+body #dtprv_wrapper .dt-jump-to-page label{
+  margin-right: 10px !important;
+  margin-left: auto !important;
+}
+
+@media all and (max-width: 768px){
+  body #dtprv_wrapper .dt-jump-to-page label{
+    margin-left: 0 !important;
+  }
+}
+
 body #dtprv_wrapper .dt-paging{
   display: inline-flex !important;
   width: 50% !important;
@@ -293,7 +315,7 @@ body #dtprv_wrapper th.expanders{
 
 body #dtprv_wrapper td.expanders.dtr-control::before{
   font-family: 'FontAwesome';
-  content: '\f065';
+  content: '\f105';
   border: none !important;
   font-size: 18px !important;
   color: #26374a !important;
@@ -306,7 +328,8 @@ body #dtprv_wrapper td.expanders.dtr-control:focus::before{
 }
 
 body #dtprv_wrapper tr.dtr-expanded td.expanders.dtr-control::before{
-  content: '\f066';
+  content: '\f107';
+  font-size: 15px !important;
 }
 
 body #dtprv_wrapper .dt-scroll-head thead{
@@ -329,6 +352,9 @@ body #dtprv_wrapper .dt-scroll-body thead th .dt-column-order{
   pointer-events: none !important;
 }
 
-body #dtprv_wrapper td.expanders.dtr-control::before{
-  content: none !important;
+body #dtprv_wrapper[data-compact-view='false'] .dt-scroll-head,
+body #dtprv_wrapper[data-compact-view='false'] #dtprv{
+  overflow: hidden !important;
+  margin-left: -50px !important;
+  width: calc(100% + 50px) !important;
 }
