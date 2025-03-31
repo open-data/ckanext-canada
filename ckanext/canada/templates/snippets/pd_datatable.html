@@ -13,9 +13,6 @@
       <tr class="font-small">
         <th scope="col" data-priority="3"></th>
         <th scope="col" data-priority="3">{{ _('Select') }}</th>
-        {% if chromo.edit_form and can_edit %}
-          <th scope="col" data-priority="4">{{ _('Edit') }}</th>
-        {% endif %}
         {% for field in ds_fields %}
           {# TODO: add fa fa-info-circle to headings for field data dictionary linking??? #}
           <th scope="col" data-datastore-id="{{- field.id -}}" data-priority="{{- field.priority + magic_priority_no_field_should_be_below -}}">
@@ -60,6 +57,7 @@
     const csrfTokenValue = "{{- csrf_token() -}}";
     const csrfTokenName = "{{- g.csrf_field_name -}}";
     const resourceName = "{{- resource_name -}}";
+    const colOffset = 2;  // expand col + select col
     const primaryKeys = {{ primary_keys|tojson }};  // syntax_ignore: jinja2 tojson constants
     const foreignKeys = {{ foreign_keys|tojson }};  // syntax_ignore: jinja2 tojson constants
     const foreignLinks = {{ fk_links|tojson }};  // syntax_ignore: jinja2 tojson constants
@@ -68,11 +66,15 @@
     const selectAllLabel = "{{- _('Select All') -}}";
     const jumpToPageLabel = "{{- _('Jump to page') -}}";
     const fullscreenLabel = "{{- _('Fullscreen') -}}";
+    const exitFullscreenLabel = "{{- _('Exit Fullscreen') -}}";
     const fullTableLabel = "{{- _('Full Table') -}}";
     const compactTableLabel = "{{- _('Compact Table') -}}";
-    const editButtonLabel = "{{- _('Edit in Excel') -}}";
+    const editSingleButtonLabel = "{{- _('Edit Online') -}}";
+    const countSuffix = "{{- _(' record(s)') -}}";
+    const editSingleRecordURI = "{{- h.url_for('canada.update_pd_record', resource_name=resource_name, owner_org=owner_org, pk='') -}}";
+    const editButtonLabel = "{{- _('Edit<span class=\\"pd-datatbales-btn-count\\"></span> in Excel') -}}";
     const editRecordsURI = "{{- h.url_for('recombinant.template', dataset_type=dataset_type, lang=h.lang(), owner_org=owner_org) -}}";
-    const deleteButtonLabel = "{{- _('Delete records') -}}";
+    const deleteButtonLabel = "{{- _('Delete<span class=\\"pd-datatbales-btn-count\\"></span>') -}}";
     const deleteRecordsURI = "{{- h.url_for('canada.delete_selected_records', resource_id=resource_id) -}}";
     const ajaxURI = "{{- h.url_for('canada.pd_datatable', resource_name=resource_name, resource_id=resource_id) -}}";
     const tableLanguage = {
@@ -101,23 +103,13 @@
     };
 
     let isCompactView = true;
+    let isFullScreen = isPageFullScreen();
     let sortOrder = [[1, "asc"]];
-
-    let colOffset = 2;
-    if( isEditable ){
-      colOffset = 3;
-    }
 
     let availableColumns = [
       {"className": "expanders", "orderable": false, "targets": 0},
       {"className": "checkboxes", "orderable": false, "targets": 1},
     ];
-
-    if( isEditable ){
-      availableColumns.push(
-        {"className": "bg-light", "orderable": false, "targets": 2},
-      );
-    }
 
     for( let i = 0; i < chromoFields.length; i++ ){
       if( typeof chromoFields[i].published_resource_computed_field == 'undefined' || ! chromoFields[i].published_resource_computed_field ){
@@ -131,7 +123,186 @@
       }
     }
 
+    function isPageFullScreen(){
+      return document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreenElement || document.msFullscreenElement;
+    }
+
+    function openFullscreen(_element){
+      if( _element.requestFullscreen ){
+        _element.requestFullscreen();
+        isFullScreen = true;
+      }else if( _element.webkitRequestFullscreen ){
+        _element.webkitRequestFullscreen();
+        isFullScreen = true;
+      }else if( _element.mozRequestFullScreen ){
+        _element.mozRequestFullScreen();
+        isFullScreen = true;
+      }else if(_element.msRequestFullscreen){
+        _element.msRequestFullscreen();
+        isFullScreen = true;
+      }
+    }
+
+    function closeFullscreen(){
+      if( document.exitFullscreen ){
+        document.exitFullscreen();
+      }else if( document.webkitExitFullscreen ){
+        document.webkitExitFullscreen();
+      }else if( document.mozExitFullscreen ){
+        document.mozExitFullscreen();
+      }else if( document.msExitFullscreen ){
+        document.msExitFullscreen();
+      }
+    }
+
     function initialize_datatable(){
+      let availableButtons = [];
+
+      if ( document.fullscreenEnabled ){
+        availableButtons.push({
+          name: "fullscreenButton",
+          text: (isFullScreen && isPageFullScreen()) ? '<i aria-hidden="true" class="fas fa-compress"></i>&nbsp;' + exitFullscreenLabel : '<i aria-hidden="true" class="fas fa-expand"></i>&nbsp;' + fullscreenLabel,
+          className: 'pd-datatable-btn btn-secondary',
+          action: function(e, dt, node, config){
+            let datatableSection = $('#dt-preview')[0];
+            if( isPageFullScreen() ){
+              closeFullscreen();
+              dt.button('fullscreenButton:name').text('<i aria-hidden="true" class="fas fa-expand"></i>&nbsp;' + fullscreenLabel);
+              return;
+            }else{
+              openFullscreen(datatableSection);
+            }
+            if( isFullScreen ){
+              dt.button('fullscreenButton:name').text('<i aria-hidden="true" class="fas fa-compress"></i>&nbsp;' + exitFullscreenLabel);
+            }
+          }
+        });
+        $(document).off('fullscreenchange.setButtonLabel');
+        $(document).on('fullscreenchange.setButtonLabel', function(_event){
+          if( isFullScreen && isPageFullScreen() ){
+            table.button('fullscreenButton:name').text('<i aria-hidden="true" class="fas fa-compress"></i>&nbsp;' + exitFullscreenLabel);
+            isFullScreen = true;
+          }else{
+            table.button('fullscreenButton:name').text('<i aria-hidden="true" class="fas fa-expand"></i>&nbsp;' + fullscreenLabel);
+            isFullScreen = false;
+          }
+        });
+      }
+
+      availableButtons.push({
+        name: "tableTypeButton",
+        text: isCompactView ? '<i aria-hidden="true" class="fa fa-table"></i>&nbsp;' + fullTableLabel : '<i aria-hidden="true" class="fa fa-list"></i>&nbsp;' + compactTableLabel,
+        className: 'btn-info',
+        action: function(e, dt, node, config){
+          if( isCompactView ){
+            dt.button('tableTypeButton:name').text('<i aria-hidden="true" class="fa fa-table"></i>&nbsp;' + compactTableLabel);
+            isCompactView = false;
+          }else{
+            dt.button('tableTypeButton:name').text('<i aria-hidden="true" class="fa fa-list"></i>&nbsp;' + fullTableLabel);
+            isCompactView = true;
+          }
+          // FIXME: store sort and page number
+          $('#dtprv').css({'visibility': 'hidden'});
+          $('.dt-scroll-head').css({'visibility': 'hidden'});
+          dt.clear().destroy();
+          initialize_datatable();
+        }
+      });
+
+      if( isEditable ){
+        availableButtons.push({
+          extend: "selected",
+          text: '<i aria-hidden="true" class="fas fa-edit"></i>&nbsp;' + editSingleButtonLabel,
+          className: "pd-datatable-btn pd-datatable-btn-single btn-success",
+          action: function(e, dt, button, config){
+            let pk_cols = primaryKeys.map(function(value){
+              return value + colOffset;
+            });
+            let rows = dt.rows({ selected: true });
+            if( rows[0].length > 1 ){
+              return;
+            }
+            rows.eq(0).each(function(index){
+              let keyString = dt.cells(index, pk_cols).data().toArray();
+              window.location = editSingleRecordURI + keyString.join(',');
+            });
+          }
+        });
+        availableButtons.push({
+          extend: "selected",
+          text: '<i aria-hidden="true" class="fas fa-edit"></i>&nbsp;' + editButtonLabel,
+          className: "pd-datatable-btn btn-primary",
+          action: function(e, dt, button, config){
+            // closing form tag needed for py webtest lib
+            let form = $('<form></form>', {
+              action : editRecordsURI,
+              method : "post"
+            }).append($('<input>').attr({
+              type: 'hidden',
+              value: resourceName,
+              name: 'resource_name'
+            })).append($('<input>').attr({
+              type: 'hidden',
+              value: csrfTokenValue,
+              name: csrfTokenName
+            })).append($('<input>').attr({
+              type: 'hidden',
+              value: primaryKeys,
+              name: 'key_indices'
+            }));
+            let pk_cols = primaryKeys.map(function(value){
+              return value + colOffset;
+            });
+            let rows = dt.rows({ selected: true });
+            rows.eq(0).each(function(index){
+              form.append($('<input>').attr({
+                type: 'hidden',
+                value: dt.cells(index, pk_cols).data().toArray(),
+                name: 'bulk-template'
+              }));
+            });
+            form.appendTo('body').submit();
+          }
+        });
+      }
+
+      availableButtons.push({
+        extend: "selected",
+        text: '<i aria-hidden="true" class="fas fa-trash-alt"></i>&nbsp;' + deleteButtonLabel,
+        className: "pd-datatable-btn btn-danger",
+        action: function(e, dt, button, config){
+          // closing form tag needed for py webtest lib
+          let form = $('<form></form>', {
+            action : deleteRecordsURI,
+            method : "post"
+          }).append($('<input>').attr({
+            type: 'hidden',
+            value: resourceName,
+            name: 'resource_name'
+          })).append($('<input>').attr({
+            type: 'hidden',
+            value: csrfTokenValue,
+            name: csrfTokenName
+          })).append($('<input>').attr({
+            type: 'hidden',
+            value: primaryKeys,
+            name: 'key_indices'
+          }));
+          let pk_cols = primaryKeys.map(function(value){
+            return value + colOffset;
+          });
+          let rows = dt.rows({ selected: true});
+          rows.eq(0).each(function(index){
+            form.append($('<input>').attr({
+              type: 'hidden',
+              value: dt.cells(index, pk_cols).data().toArray(),
+              name: 'select-delete'
+            }));
+          });
+          form.appendTo('body').submit();
+        }
+      });
+
       let table = $('#dtprv').DataTable({
         paging: true,
         serverSide: true,
@@ -327,128 +498,43 @@
         stateSaveParams: function(_settings, _data){
           _data.page = this.api().page();
           _data.selected = this.api().rows({selected: true})[0];
-          console.log(_data);
           // TODO: save to local storage with resource ID...
         },
         stateLoadParams: function(_settings, _data){
           // TODO: ingest any saved state
         },
-        buttons: [
-          // TODO: make a fullscreen button? position fixed??
-          {
-            name: "fullscreenButton",
-            text: '<i aria-hidden="true" class="fas fa-expand"></i>&nbsp;' + fullscreenLabel,
-            className: 'btn-secondary',
-            action: function(e, dt, node, config){
-
-            }
-          },
-          {
-            name: "tableTypeButton",
-            text: isCompactView ? '<i aria-hidden="true" class="fa fa-table"></i>&nbsp;' + fullTableLabel : '<i aria-hidden="true" class="fa fa-list"></i>&nbsp;' + compactTableLabel,
-            className: 'btn-info',
-            action: function(e, dt, node, config){
-              if( isCompactView ){
-                dt.button('tableTypeButton:name').text('<i aria-hidden="true" class="fa fa-table"></i>&nbsp;' + compactTableLabel);
-                isCompactView = false;
-              }else{
-                dt.button('tableTypeButton:name').text('<i aria-hidden="true" class="fa fa-list"></i>&nbsp;' + fullTableLabel);
-                isCompactView = true;
-              }
-              // FIXME: store sort and page number
-              $('#dtprv').css({'visibility': 'hidden'});
-              $('.dt-scroll-head').css({'visibility': 'hidden'});
-              dt.clear().destroy();
-              initialize_datatable();
-            }
-          },
-          {
-            extend: "selected",
-            text: '<i aria-hidden="true" class="fas fa-edit"></i>&nbsp;' + editButtonLabel,
-            className: "canada-wet-datatable-btn-primary",
-            action: function(e, dt, button, config){
-              // closing form tag needed for py webtest lib
-              let form = $('<form></form>', {
-                action : editRecordsURI,
-                method : "post"
-              }).append($('<input>').attr({
-                type: 'hidden',
-                value: resourceName,
-                name: 'resource_name'
-              })).append($('<input>').attr({
-                type: 'hidden',
-                value: csrfTokenValue,
-                name: csrfTokenName
-              })).append($('<input>').attr({
-                type: 'hidden',
-                value: primaryKeys,
-                name: 'key_indices'
-              }));
-              let pk_cols = primaryKeys.map(function(value){
-                return value + colOffset;
-              });
-              let rows = dt.rows({ selected: true });
-              rows.eq(0).each(function(index){
-                form.append($('<input>').attr({
-                  type: 'hidden',
-                  value: dt.cells(index, pk_cols).data().toArray(),
-                  name: 'bulk-template'
-                }));
-              });
-              form.appendTo('body').submit();
-            }
-          },
-          {
-            extend: "selected",
-            text: '<i aria-hidden="true" class="fas fa-trash-alt"></i>&nbsp;' + deleteButtonLabel,
-            className: "canada-wet-datatable-btn-danger",
-            action: function(e, dt, button, config){
-              // closing form tag needed for py webtest lib
-              let form = $('<form></form>', {
-                action : deleteRecordsURI,
-                method : "post"
-              }).append($('<input>').attr({
-                type: 'hidden',
-                value: resourceName,
-                name: 'resource_name'
-              })).append($('<input>').attr({
-                type: 'hidden',
-                value: csrfTokenValue,
-                name: csrfTokenName
-              })).append($('<input>').attr({
-                type: 'hidden',
-                value: primaryKeys,
-                name: 'key_indices'
-              }));
-              let pk_cols = primaryKeys.map(function(value){
-                return value + colOffset;
-              });
-              let rows = dt.rows({ selected: true});
-              rows.eq(0).each(function(index){
-                form.append($('<input>').attr({
-                  type: 'hidden',
-                  value: dt.cells(index, pk_cols).data().toArray(),
-                  name: 'select-delete'
-                }));
-              });
-              form.appendTo('body').submit();
-            }
-          }
-        ]
+        buttons: availableButtons,
       });
+      function check_the_boxes(_checked, _indexes, _dt){
+        let selectCount = _dt.rows({ selected: true })[0].length;
+        let singleSelectButtons = $('#dtprv_wrapper').find('.pd-datatable-btn-single');
+        let buttonStats = $('#dtprv_wrapper').find('span.pd-datatbales-btn-count');
+        if( selectCount > 1 ){
+          $(singleSelectButtons).each(function(_index, _button){
+            $(_button).addClass('disabled');
+            $(_button).attr('disabled', 'disabled');
+          });
+        }
+        if( selectCount > 0 ){
+          $(buttonStats).each(function(_index, _button){
+            $(_button).html('&nbsp;' + selectCount + countSuffix);
+          });
+        }else{
+          $(buttonStats).each(function(_index, _button){
+            $(_button).html('');
+          });
+        }
+        for( let _i = 0; _i < _indexes.length; _i++){
+          let checkbox = $($('#dtprv').find('tr')[_indexes[_i] + 1]).find('td.checkboxes').find('input[type="checkbox"]');
+          $(checkbox)[0].checked = _checked;  // set prop in the scenario that the checkbox has human interaction
+          $(checkbox).attr("checked", _checked).blur();
+        }
+      }
       // set checkboxes when selecting rows
       table.on('select', function(e, dt, type, indexes){
-        for( let _i = 0; _i < indexes.length; _i++){
-          let checkbox = $($('#dtprv').find('tr')[indexes[_i] + 1]).find('td.checkboxes').find('input[type="checkbox"]');
-          $(checkbox)[0].checked = true;  // set prop in the scenario that the checkbox has human interaction
-          $(checkbox).attr("checked", true).blur();
-        }
+        check_the_boxes(true, indexes, dt);
       }).on('deselect', function(e, dt, type, indexes){
-        for( let _i = 0; _i < indexes.length; _i++){
-          let checkbox = $($('#dtprv').find('tr')[indexes[_i] + 1]).find('td.checkboxes').find('input[type="checkbox"]');
-          $(checkbox)[0].checked = false;  // set prop in the scenario that the checkbox has human interaction
-          $(checkbox).removeAttr("checked").blur();
-        }
+        check_the_boxes(false, indexes, dt);
       });
       // END
       // set checkboxes when selecting rows

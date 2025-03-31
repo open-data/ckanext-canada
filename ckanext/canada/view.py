@@ -963,25 +963,9 @@ def pd_datatable(resource_name: str, resource_id: str):
     aadata = [
         [''] +  # Expand column
         ['<input type="checkbox">'] +  # Select column
+        # FIXME: move to datatable renderer method
         [datatablify(row.get(colname, ''), colname, chromo) for colname in cols]
         for row in response['records']]
-
-    if chromo.get('edit_form', False) and can_edit:
-        res = lc.action.resource_show(id=resource_id)
-        pkg = lc.action.package_show(id=res['package_id'])
-        pkids = [fids.index(k) for k in aslist(chromo['datastore_primary_key'])]
-        for row in aadata:
-            row.insert(2, (
-                    '<a href="{0}" aria-label="' + _("Edit") + '">'
-                    '<i class="fa fa-lg fa-edit" aria-hidden="true"></i></a>').format(
-                    h.url_for(
-                        'canada.update_pd_record',
-                        owner_org=pkg['organization']['name'],
-                        resource_name=resource_name,
-                        pk=','.join(_url_part_escape(row[i+1]) for i in pkids)
-                    )
-                )
-            )
 
     return json.dumps({
         'draw': draw,
@@ -995,6 +979,7 @@ def datatablify(v: Any, colname: str, chromo: Dict[str, Any]) -> str:
     '''
     format value from datastore v for display in a datatable preview
     '''
+    # FIXME: move to datatable renderer method
     chromo_field = None
     for f in chromo['fields']:
         if f['datastore_id'] == colname:

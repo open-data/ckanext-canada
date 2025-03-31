@@ -1,3 +1,23 @@
+body #dtprv_wrapper{
+  background-color: white !important;
+}
+
+body #dt-preview:fullscreen h2{
+  display: none !important;
+}
+
+body #dt-preview:fullscreen #dtprv_wrapper{
+  padding: 15px !important;
+  height: 100vh !important;
+  min-height: 100vh !important;
+  max-height: 100vh !important;
+}
+
+body #dt-preview:fullscreen #dtprv_wrapper .dt-scroll-body{
+  height: 60vh !important;
+  max-height: 60vh !important;
+}
+
 body #dtprv,
 body .dt-scroll-head{
   visibility: hidden;
@@ -10,6 +30,10 @@ body #dtprv_wrapper #dtprv{
 body #dtprv_wrapper,
 body #dtprv_wrapper .dt-scroll{
   position: relative !important;
+}
+
+body #dtprv_wrapper .dt-scroll{
+  overflow: hidden !important;
 }
 
 body #dtprv_wrapper #dtprv_processing{
