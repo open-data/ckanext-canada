@@ -23,6 +23,10 @@ body .dt-scroll-head{
   visibility: hidden;
 }
 
+body #dtprv td{
+  font-size: 16px;
+}
+
 body #dtprv_wrapper #dtprv{
   margin-top: -15px !important;
 }
@@ -376,9 +380,19 @@ body #dtprv_wrapper .dt-scroll-body thead th .dt-column-order{
   pointer-events: none !important;
 }
 
-body #dtprv_wrapper[data-compact-view='false'] .dt-scroll-head,
-body #dtprv_wrapper[data-compact-view='false'] #dtprv{
+body #dtprv_wrapper[data-compact-view="false"] .dt-scroll-head,
+body #dtprv_wrapper[data-compact-view="false"] #dtprv,
+body #dtprv_wrapper[data-compact-view="false"] .dt-scroll-foot{
   overflow: hidden !important;
   margin-left: -50px !important;
   width: calc(100% + 50px) !important;
+}
+
+
+body #dtprv_wrapper #dtprv-foot-main,
+body #dtprv_wrapper #dtprv-foot-main input[type="text"]{
+  font-size: 13px !important;
+  width: auto !important;
+  min-width: auto !important;
+  max-width: auto !important;
 }

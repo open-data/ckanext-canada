@@ -16,12 +16,21 @@
         {% for field in ds_fields %}
           {# TODO: add fa fa-info-circle to headings for field data dictionary linking??? #}
           <th scope="col" data-datastore-id="{{- field.id -}}" data-priority="{{- field.priority + magic_priority_no_field_should_be_below -}}">
-            {{field.label}}<span class="sorting-cnt"><span class="sorting-icons"></span></span>
+            {{- field.label -}}<span class="sorting-cnt"><span class="sorting-icons"></span></span>
           </th>
         {% endfor %}
       </tr>
     </thead>
-    <tbody></tbody>
+    <tbody id="dtprv-body-main"></tbody>
+    <tfoot id="dtprv-foot-main">
+      <th scope="col" data-priority="3"></th>
+      <th scope="col" data-priority="3">{{ _('Select') }}</th>
+      {% for field in ds_fields %}
+        <th scope="col" data-datastore-id="{{- field.id -}}" data-priority="{{- field.priority + magic_priority_no_field_should_be_below -}}">
+          {{- field.label -}}
+        </th>
+      {% endfor %}
+    </tfoot>
   </table>
 </section>
 
@@ -41,6 +50,9 @@
 <script type="text/javascript" src="//cdn.datatables.net/select/3.0.0/js/dataTables.select.min.js" defer></script><!-- Select Extension -->
 <script type="text/javascript" src="//cdn.datatables.net/select/3.0.0/js/select.bootstrap5.min.js" defer></script><!-- Select Extension -->
 
+<!-- https://github.com/markedjs/marked -->
+<script type="text/javascript" src="//cdn.jsdelivr.net/npm/marked@15.0.7/lib/marked.umd.min.js"></script>
+
 <script type="text/javascript">
   const searchParams = new URLSearchParams(document.location.search);
 
@@ -54,6 +66,9 @@
   };
 
   function preview_datatable(){
+    const locale = "{{- h.lang() or 'en' -}}";
+    const localeString = locale == 'en' ? 'en-CA' : 'fr-CA';
+    const timezoneString = locale == 'en' ? 'EST' : 'HNE';  // FIXME: EDT / HAE
     const csrfTokenValue = "{{- csrf_token() -}}";
     const csrfTokenName = "{{- g.csrf_field_name -}}";
     const resourceName = "{{- resource_name -}}";
@@ -64,6 +79,7 @@
     const chromoFields = {{ chromo.fields|tojson }};  // syntax_ignore: jinja2 tojson constants
     const isEditable = {{ (chromo.edit_form and can_edit)|tojson }};  // syntax_ignore: jinja2 tojson constants
     const selectAllLabel = "{{- _('Select All') -}}";
+    const colSearchLabel = "{{- _('Search:') -}}";
     const jumpToPageLabel = "{{- _('Jump to page') -}}";
     const fullscreenLabel = "{{- _('Fullscreen') -}}";
     const exitFullscreenLabel = "{{- _('Exit Fullscreen') -}}";
@@ -111,15 +127,79 @@
       {"className": "checkboxes", "orderable": false, "targets": 1},
     ];
 
+    DataTable.render.ellipsis = function(_cutoff){
+      return function(_data, _type, _row ){
+        if( _type == 'display' ){
+          let str = _data.toString();
+          // TODO: make expand to read all content
+          return str.length < _cutoff ? str : str.substr(0, _cutoff-1) + '&#8230;';
+        }
+        return _data;
+      };
+    };
+
+    function renderer(_data, _type, _row, _chromo_field){
+      // TODO: check search values, namely for money and datetimes
+      // TODO: make highlishts on fulltext search value
+      if( _type == 'display' ){
+        if( _data == null ){
+          return '';  // blank cell for None/null values
+        }
+        if( typeof _chromo_field.markdown != 'undefined' && _chromo_field.markdown ){
+          _data = _data.replace('•', '\n-');  // replace commonly used list characters
+          return marked.parse(DataTable.render.ellipsis(100)(_data, _type, _row));
+        }
+        if( _chromo_field.datastore_type == '_text' ){
+          if( ! Array.isArray(_data) ){
+            _data = _data.toString().split(',');  // split to Array if not already
+          }
+          let displayList = '<ul>';
+          _data.forEach(function(_val, _i, _arr){
+            displayList += '<li>' + _val + '</li>';
+          });
+          displayList += '</ul>';
+          return displayList;
+        }
+        if( _data === true ){
+          return 'TRUE';
+        }
+        if( _data === false ){
+          return 'FALSE';
+        }
+        if( _chromo_field.datastore_type == 'numeric' || _chromo_field.datastore_type == 'int' || _chromo_field.datastore_type == 'bigint' ){
+          return DataTable.render.number().display(_data, _type, _row);
+        }
+        if( _chromo_field.datastore_type == 'timestamp' ){
+          if( ! _data.toString().includes('+0000') ){
+            _data = _data.toString() + '+0000';  // add UTC offset if not present
+          }
+          return new Date(_data).toLocaleString(localeString, {timeZone: "America/Montreal"}) + ' ' + timezoneString;
+        }
+        if( _chromo_field.datastore_type == 'money' ){
+          if( _data.toString().includes('$') ){
+            _data = _data.toString().replace('$', '');  // remove dollar signs if present
+          }
+          return DataTable.render.number(null, null, 2, '$').display(_data, _type, _row);
+        }
+        // default 100 ellipses length from ckanext-datatablesview
+        return DataTable.render.ellipsis(100)(_data, _type, _row);
+      }
+      return _data;
+    }
+
     for( let i = 0; i < chromoFields.length; i++ ){
       if( typeof chromoFields[i].published_resource_computed_field == 'undefined' || ! chromoFields[i].published_resource_computed_field ){
         let previewClass = '';
         if( typeof chromoFields[i].preview_class != 'undefined' ){
           previewClass = chromoFields[i].preview_class;
         }
-        availableColumns.push(
-          {"className": previewClass, "searchable": true}
-        );
+        availableColumns.push({
+          "className": previewClass,
+          "searchable": true,
+          "render": function(_data, _type, _row){
+            return renderer(_data, _type, _row, chromoFields[i]);
+          }
+        });
       }
     }
 
@@ -146,12 +226,16 @@
     function closeFullscreen(){
       if( document.exitFullscreen ){
         document.exitFullscreen();
+        isFullScreen = false;
       }else if( document.webkitExitFullscreen ){
         document.webkitExitFullscreen();
+        isFullScreen = false;
       }else if( document.mozExitFullscreen ){
         document.mozExitFullscreen();
+        isFullScreen = false;
       }else if( document.msExitFullscreen ){
         document.msExitFullscreen();
+        isFullScreen = false;
       }
     }
 
@@ -342,12 +426,22 @@
           if( searchParams.has('dt_query') ){  // set search query
             table.search(searchParams.get('dt_query'));
           }
-          // add select all checkbox
-          let select_cell = $('#dtprv_wrapper').find('th.checkboxes').first();
-          if( select_cell.length > 0 ){
-            $(select_cell).find('#dt-select-all').remove();
-            $(select_cell).append('<input title="' + selectAllLabel + '" aria-label="' + selectAllLabel + '" id="dt-select-all" name="dt-select-all" type="checkbox"/>');
-            let select_all = $(select_cell).find('#dt-select-all');
+          // add column search fields and select all checkbox
+          let footer = $('#dtprv').find('#dtprv-foot-main');
+          if( footer.length > 0 ){
+            let filterRow = '';
+            this.api().columns().every(function(_i){
+              let _column = this;
+              let footerContent = $.parseHTML('<span class="dtprv-filter-col"></span>')[0];
+              if( _i == 1 ){  // select column
+                footerContent = $.parseHTML('<input title="' + selectAllLabel + '" aria-label="' + selectAllLabel + '" id="dt-select-all" name="dt-select-all" type="checkbox"/>')[0];
+              }
+              if( _i >= colOffset ){
+                footerContent = $.parseHTML('<span class="dtprv-filter-col"><label for="dtprv-filter-col-' + _i + '" class="sr-only">' + colSearchLabel + ' ' + _column.footer().textContent + '</label><input placeholder="' + colSearchLabel + ' ' + _column.footer().textContent + '" name="dtprv-filter-col-' + _i + '" type="text" value="" class="form-control form-control-sm" /></span>')[0];
+              }
+              _column.footer().replaceChildren(footerContent);
+            });
+            let select_all = $('#dtprv_wrapper').find('.dt-scroll-foot').find('#dt-select-all');
             if( select_all.length > 0 ){
               $(select_all).on("click", function(_event) {
                 if( $(select_all).is(":checked") ){
@@ -358,11 +452,13 @@
               });
             }
           }
+          //
           // END
-          // add select all checkbox
+          // add column search fields and select all checkbox
           // END
         },
         drawCallback: function(_settings){
+          // TODO: add search column fields...
           $('#dtprv').css({'visibility': 'visible'});
           $('table.dataTable').css({'visibility': 'visible'});
           $('.dt-scroll-head').css({'visibility': 'visible'});
@@ -387,7 +483,7 @@
           let expanderButtons = $('#dtprv').find('td.expanders');
           if( expanderButtons.length > 0){
             // TODO: add aria-labels for expanding...
-
+            // td.dtr-hidden
           }
           // END
           // set expander button extra functionality
@@ -447,10 +543,10 @@
           for(let [_table, _keys] of Object.entries(foreignKeys)){
             dt_queries[_table] = {}
             for(let [_this_key, _that_key] of Object.entries(_keys)){
-              let header = $('#dtprv').find('th[data-datastore-id="' + _this_key + '"]');
+              let header = $('#dtprv').find('thead').find('th[data-datastore-id="' + _this_key + '"]');
               if( header.length > 0 ){
                 let header_index = $(header).index() + 1;
-                let data_cells = $('#dtprv').find('td:nth-child(' + header_index + ')');
+                let data_cells = $('#dtprv').find('#dtprv-body-main').find('td:nth-child(' + header_index + ')');
                 if( data_cells.length > 0 ){
                   $(data_cells).each(function(_index, _cell){
                     $(_cell).attr('data-datastore-id', _this_key);
@@ -472,7 +568,7 @@
               }
             }
           }
-          let table_rows = $('#dtprv').find('tr');
+          let table_rows = $('#dtprv').find('#dtprv-body-main').find('tr');
           if( table_rows.length > 0 ){
             $(table_rows).each(function(_index, _row){
               for(let [_table, _rows] of Object.entries(dt_queries)){
@@ -525,7 +621,7 @@
           });
         }
         for( let _i = 0; _i < _indexes.length; _i++){
-          let checkbox = $($('#dtprv').find('tr')[_indexes[_i] + 1]).find('td.checkboxes').find('input[type="checkbox"]');
+          let checkbox = $($('#dtprv').find('#dtprv-body-main').find('tr')[_indexes[_i]]).find('td.checkboxes').find('input[type="checkbox"]');
           $(checkbox)[0].checked = _checked;  // set prop in the scenario that the checkbox has human interaction
           $(checkbox).attr("checked", _checked).blur();
         }

@@ -2,7 +2,6 @@ import re
 import codecs
 import json
 import decimal
-from pytz import timezone, utc
 from socket import error as socket_error
 from logging import getLogger
 import csv
@@ -79,8 +78,6 @@ from ckanapi import LocalCKAN
 
 from flask import Blueprint, make_response
 
-from ckanext.canada.helpers import canada_date_str_to_datetime
-
 from io import StringIO
 
 
@@ -91,7 +88,6 @@ MAX_JOB_QUEUE_LIST_SIZE = 25
 log = getLogger(__name__)
 
 canada_views = Blueprint('canada', __name__)
-ottawa_tz = timezone('America/Montreal')
 
 
 class IntentionalServerError(Exception):
@@ -964,8 +960,7 @@ def pd_datatable(resource_name: str, resource_id: str):
         [''] +  # Expand column
         ['<input type="checkbox">'] +  # Select column
         # FIXME: move to datatable renderer method
-        [datatablify(row.get(colname, ''), colname, chromo) for colname in cols]
-        for row in response['records']]
+        [row.get(col, '') for col in cols] for row in response['records']]
 
     return json.dumps({
         'draw': draw,
@@ -973,34 +968,6 @@ def pd_datatable(resource_name: str, resource_id: str):
         'iTotalDisplayRecords': response.get('total', 0),
         'aaData': aadata,
     })
-
-
-def datatablify(v: Any, colname: str, chromo: Dict[str, Any]) -> str:
-    '''
-    format value from datastore v for display in a datatable preview
-    '''
-    # FIXME: move to datatable renderer method
-    chromo_field = None
-    for f in chromo['fields']:
-        if f['datastore_id'] == colname:
-            chromo_field = f
-            break
-    if v is None:
-        return ''
-    if v is True:
-        return 'TRUE'
-    if v is False:
-        return 'FALSE'
-    if isinstance(v, list):
-        return ', '.join(str(e) for e in v)
-    if colname in ('record_created', 'record_modified') and v:
-        return canada_date_str_to_datetime(v).replace(tzinfo=utc).astimezone(
-            ottawa_tz).strftime('%Y-%m-%d %H:%M:%S %Z')
-    if chromo_field and chromo_field.get('datastore_type') == 'money':
-        if isinstance(v, str) and '$' in v:
-            return v
-        return '${:,.2f}'.format(v)
-    return str(v)
 
 
 @canada_views.route('/fgpv-vpgf/<pkg_id>', methods=['GET'])
