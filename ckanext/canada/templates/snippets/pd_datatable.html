@@ -1,48 +1,63 @@
 {% set chromo = h.recombinant_get_chromo(resource_name) %}
 {% set can_edit = h.check_access('resource_update', {'id': resource_id}) %}
-{% set offset = 1 %}
-{% if chromo.edit_form and can_edit %}
-  {% set offset = 2 %}
-{% endif %}
 {% set fk_links = {} %}
 {% for _res_name, _fkeys in foreign_keys.items() %}
   {% do fk_links.update({_res_name: h.url_for('recombinant.preview_table', resource_name=_res_name, owner_org=owner_org)}) %}
 {% endfor  %}
+{% set magic_priority_no_field_should_be_below = 2 %}
 
 <section id="dt-preview">
   <h2 id="prtable">{{_("Preview")}}</h2>
-  <table id="dtprv" class="table table-striped" data-role="table" data-mode="columntoggle" >
+  <table id="dtprv" class="table table-striped" data-role="table" data-mode="columntoggle" style="visibility: hidden;">
     <thead>
       <tr class="font-small">
-        <th scope="col" data-priority="dtprv-1000">{{ _('Select') }}</th>
-        {% if chromo.edit_form and can_edit %}
-          <th scope="col" data-priority="dtprv-999">{{ _('Edit') }}</th>
-        {% endif %}
-        {% set magic_priority_no_field_should_be_below = 2 %}
+        <th scope="col" data-priority="3"></th>
+        <th scope="col" data-priority="3">{{ _('Select') }}</th>
         {% for field in ds_fields %}
-          <th scope="col" data-datastore-id="{{ field.id }}" data-priority="dtprv-{{field.priority + magic_priority_no_field_should_be_below}}">
-            {{field.label}}<span class="sorting-cnt"><span class="sorting-icons"></span></span>
+          {# TODO: add fa fa-info-circle to headings for field data dictionary linking??? #}
+          <th scope="col" data-datastore-id="{{- field.id -}}" data-priority="{{- field.priority + magic_priority_no_field_should_be_below -}}">
+            {{- field.label -}}<span class="sorting-cnt"><span class="sorting-icons"></span></span>
           </th>
         {% endfor %}
       </tr>
     </thead>
-    <tbody></tbody>
+    <tbody id="dtprv-body-main"></tbody>
+    <tfoot id="dtprv-foot-main">
+      <th scope="col" data-priority="3"></th>
+      <th scope="col" data-priority="3">{{ _('Select') }}</th>
+      {% for field in ds_fields %}
+        <th scope="col" data-datastore-id="{{- field.id -}}" data-priority="{{- field.priority + magic_priority_no_field_should_be_below -}}">
+          {{- field.label -}}
+        </th>
+      {% endfor %}
+    </tfoot>
   </table>
 </section>
 
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css"/>
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/1.6.1/css/buttons.dataTables.min.css"/>
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/select/1.3.1/css/select.dataTables.min.css"/>
+<!-- https://datatables.net/download/release | https://cdn.datatables.net/ -->
+<link rel="stylesheet" type="text/css" href="//cdn.datatables.net/2.2.2/css/dataTables.bootstrap5.min.css"><!-- Core -->
+<link rel="stylesheet" type="text/css" href="//cdn.datatables.net/buttons/3.2.2/css/buttons.bootstrap5.min.css"><!-- Buttons Extension -->
+<link rel="stylesheet" type="text/css" href="//cdn.datatables.net/responsive/3.0.4/css/responsive.bootstrap5.min.css"><!-- Responsive Extension -->
+<link rel="stylesheet" type="text/css" href="//cdn.datatables.net/select/3.0.0/css/select.bootstrap5.min.css"><!-- Select Extension -->
+{% asset 'canada_internal/pd_datatable_css' %}
 
-<script type="text/javascript" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js" defer></script>
-<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.6.1/js/dataTables.buttons.min.js" defer></script>
-<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.colVis.min.js" defer></script>
-<script type="text/javascript" src="https://cdn.datatables.net/select/1.3.1/js/dataTables.select.min.js" defer></script>
+<script type="text/javascript" src="//cdn.datatables.net/2.2.2/js/dataTables.min.js" defer></script><!-- Core -->
+<script type="text/javascript" src="//cdn.datatables.net/2.2.2/js/dataTables.bootstrap5.min.js" defer></script><!-- Core -->
+<script type="text/javascript" src="//cdn.datatables.net/buttons/3.2.2/js/dataTables.buttons.min.js" defer></script><!-- Buttons Extension -->
+<script type="text/javascript" src="//cdn.datatables.net/buttons/3.2.2/js/buttons.bootstrap5.min.js" defer></script><!-- Buttons Extension -->
+<script type="text/javascript" src="//cdn.datatables.net/responsive/3.0.4/js/dataTables.responsive.min.js" defer></script><!-- Responsive Extension -->
+<script type="text/javascript" src="//cdn.datatables.net/responsive/3.0.4/js/responsive.bootstrap5.min.js" defer></script><!-- Responsive Extension -->
+<script type="text/javascript" src="//cdn.datatables.net/select/3.0.0/js/dataTables.select.min.js" defer></script><!-- Select Extension -->
+<script type="text/javascript" src="//cdn.datatables.net/select/3.0.0/js/select.bootstrap5.min.js" defer></script><!-- Select Extension -->
+
+<!-- https://github.com/markedjs/marked -->
+<script type="text/javascript" src="//cdn.jsdelivr.net/npm/marked@15.0.7/lib/marked.umd.min.js"></script>
+
 <script type="text/javascript">
   const searchParams = new URLSearchParams(document.location.search);
 
   window.onload = function() {
-    window.document.body.onload = previewdatatable();
+    window.document.body.onload = preview_datatable();
     if( searchParams.has('dt_query') ){
       $([document.documentElement, document.body]).animate({
           scrollTop: $("#dt-preview").offset().top
@@ -50,207 +65,577 @@
     }
   };
 
-  function previewdatatable(){
-    const foreign_keys = {{ foreign_keys|tojson }};
-    const foreign_links = {{ fk_links|tojson }};
-    var table = $('#dtprv').DataTable({
-      paging: true,
-      serverSide: true,
-      processing: true,
-      ajax: {
-        "url": "{{ h.url_for('canada.datatable', resource_name=resource_name, resource_id=resource_id,) }}",
-        "type": "POST",
-        "data": function(data){
-          if( searchParams.has('dt_query') ){  // pass search query from URI param
-            data.dt_query = searchParams.get('dt_query');
-          }else{
-            data.dt_query = '';
-          }
-        }
+  function preview_datatable(){
+    const locale = "{{- h.lang() or 'en' -}}";
+    const localeString = locale == 'en' ? 'en-CA' : 'fr-CA';
+    const timezoneString = locale == 'en' ? 'EST' : 'HNE';  // FIXME: EDT / HAE
+    const csrfTokenValue = "{{- csrf_token() -}}";
+    const csrfTokenName = "{{- g.csrf_field_name -}}";
+    const resourceName = "{{- resource_name -}}";
+    const colOffset = 2;  // expand col + select col
+    const primaryKeys = {{ primary_keys|tojson }};  // syntax_ignore: jinja2 tojson constants
+    const foreignKeys = {{ foreign_keys|tojson }};  // syntax_ignore: jinja2 tojson constants
+    const foreignLinks = {{ fk_links|tojson }};  // syntax_ignore: jinja2 tojson constants
+    const chromoFields = {{ chromo.fields|tojson }};  // syntax_ignore: jinja2 tojson constants
+    const isEditable = {{ (chromo.edit_form and can_edit)|tojson }};  // syntax_ignore: jinja2 tojson constants
+    const selectAllLabel = "{{- _('Select All') -}}";
+    const colSearchLabel = "{{- _('Search:') -}}";
+    const jumpToPageLabel = "{{- _('Jump to page') -}}";
+    const fullscreenLabel = "{{- _('Fullscreen') -}}";
+    const exitFullscreenLabel = "{{- _('Exit Fullscreen') -}}";
+    const fullTableLabel = "{{- _('Full Table') -}}";
+    const compactTableLabel = "{{- _('Compact Table') -}}";
+    const editSingleButtonLabel = "{{- _('Edit Online') -}}";
+    const countSuffix = "{{- _(' record(s)') -}}";
+    const editSingleRecordURI = "{{- h.url_for('canada.update_pd_record', resource_name=resource_name, owner_org=owner_org, pk='') -}}";
+    const editButtonLabel = "{{- _('Edit<span class=\\"pd-datatbales-btn-count\\"></span> in Excel') -}}";
+    const editRecordsURI = "{{- h.url_for('recombinant.template', dataset_type=dataset_type, lang=h.lang(), owner_org=owner_org) -}}";
+    const deleteButtonLabel = "{{- _('Delete<span class=\\"pd-datatbales-btn-count\\"></span>') -}}";
+    const deleteRecordsURI = "{{- h.url_for('canada.delete_selected_records', resource_id=resource_id) -}}";
+    const ajaxURI = "{{- h.url_for('canada.pd_datatable', resource_name=resource_name, resource_id=resource_id) -}}";
+    const tableLanguage = {
+      decimal: "",
+      emptyTable: "{{- _('No data available in table') -}}",
+      info: "{{- _('Showing _START_ to _END_ of _TOTAL_ entries') -}}",
+      infoEmpty: "{{- _('Showing 0 to 0 of 0 entries') -}}",
+      infoFiltered: "{{- _('(filtered from _MAX_ total entries)') -}}",
+      infoPostFix: "",
+      thousands: ",",
+      lengthMenu: "{{- _('_MENU_ Show number of entries') -}}",
+      loadingRecords: "{{- _('Loading...') -}}",
+      processing: "",
+      search: "{{- _('Search') -}}",
+      zeroRecords: "{{- _('No matching records found') -}}",
+      paginate: {
+        first: "«",
+        last: "»",
+        next: "›",
+        previous: "‹"
       },
-      initComplete: function(){
-        if( searchParams.has('dt_query') ){  // set search query
-          table.search(searchParams.get('dt_query'));
+      aria: {
+        orderable: "{{- _('Order by this column') -}}",
+        orderableReverse: "{{- _('Reverse order this column') -}}"
+      }
+    };
+
+    let isCompactView = true;
+    let isFullScreen = isPageFullScreen();
+    let sortOrder = [[1, "asc"]];
+
+    let availableColumns = [
+      {"className": "expanders", "orderable": false, "targets": 0},
+      {"className": "checkboxes", "orderable": false, "targets": 1},
+    ];
+
+    DataTable.render.ellipsis = function(_cutoff){
+      return function(_data, _type, _row ){
+        if( _type == 'display' ){
+          let str = _data.toString();
+          // TODO: make expand to read all content
+          return str.length < _cutoff ? str : str.substr(0, _cutoff-1) + '&#8230;';
         }
-        // add select all checkbox
-        let select_cell = this.find('th.checkboxes');
-        if( select_cell.length > 0 ){
-          $(select_cell).append('<input title="{{ _('Select All') }}" aria-label="{{ _('Select All') }}" id="dt-select-all" name="dt-select-all" type="checkbox"/>');
-          let select_all = $(select_cell).find('#dt-select-all');
-          if( select_all.length > 0 ){
-            $(select_all).on("click", function(_event) {
-              if( $(select_all).is(":checked") ){
-                table.rows().select();
-              } else {
-                table.rows().deselect();
-              }
-            });
+        return _data;
+      };
+    };
+
+    function renderer(_data, _type, _row, _chromo_field){
+      // TODO: check search values, namely for money and datetimes
+      // TODO: make highlishts on fulltext search value
+      if( _type == 'display' ){
+        if( _data == null ){
+          return '';  // blank cell for None/null values
+        }
+        if( typeof _chromo_field.markdown != 'undefined' && _chromo_field.markdown ){
+          _data = _data.replace('•', '\n-');  // replace commonly used list characters
+          return marked.parse(DataTable.render.ellipsis(100)(_data, _type, _row));
+        }
+        if( _chromo_field.datastore_type == '_text' ){
+          if( ! Array.isArray(_data) ){
+            _data = _data.toString().split(',');  // split to Array if not already
           }
-        }
-        // END
-        // add select all checkbox
-        // END
-      },
-      drawCallback: function(_settings){
-        // add foreign key links to cells
-        $('#dtprv').find('.ref-link').remove();
-        if( $.isEmptyObject(foreign_keys) ){
-          return;
-        }
-        let dt_queries = {};
-        for(let [_table, _keys] of Object.entries(foreign_keys)){
-          dt_queries[_table] = {}
-          for(let [_this_key, _that_key] of Object.entries(_keys)){
-            let header = $('#dtprv').find('th[data-datastore-id="' + _this_key + '"]');
-            if( header.length > 0 ){
-              let header_index = $(header).index() + 1;
-              let data_cells = $('#dtprv').find('td:nth-child(' + header_index + ')');
-              if( data_cells.length > 0 ){
-                $(data_cells).each(function(_index, _cell){
-                  $(_cell).attr('data-datastore-id', _this_key);
-                  let parent_row = $(_cell).parent('tr');
-                  if( parent_row.length > 0 ){
-                    let row_index = $(parent_row).index();
-                    let this_value = $(_cell).text();
-                    if( typeof dt_queries[_table][row_index] == 'undefined' ){
-                      dt_queries[_table][row_index] = {
-                        'this_keys': [],
-                        'dt_query': {}
-                      };
-                    }
-                    dt_queries[_table][row_index]['this_keys'].push(_this_key);
-                    dt_queries[_table][row_index]['dt_query'][_that_key] = this_value;
-                  }
-                });
-              }
-            }
-          }
-        }
-        let table_rows = $('#dtprv').find('tr');
-        if( table_rows.length > 0 ){
-          $(table_rows).each(function(_index, _row){
-            for(let [_table, _rows] of Object.entries(dt_queries)){
-              if( typeof _rows[_index - 1] == 'undefined' ){
-                continue;
-              }
-              let ref_uri = foreign_links[_table];
-              let encoded_query = encodeURIComponent(JSON.stringify(_rows[_index - 1]['dt_query']));
-              ref_uri += '?dt_query=' +  encoded_query;
-              for( _i = 0; _i < _rows[_index - 1]['this_keys'].length; _i++ ){
-                let fk_cell = $(_row).find('td[data-datastore-id="' + _rows[_index - 1]['this_keys'][_i] + '"]');
-                if( fk_cell.length > 0 ){
-                  $(fk_cell).append('<sup class="ref-link" style="opacity:0.65;margin-left:4px"><small style="font-size:75%;"><a target="_blank" href="' + ref_uri + '"><i class="fas fa-external-link-alt"></i></a></small></sup>');
-                }
-              }
-            }
+          let displayList = '<ul>';
+          _data.forEach(function(_val, _i, _arr){
+            displayList += '<li>' + _val + '</li>';
           });
+          displayList += '</ul>';
+          return displayList;
         }
-        // END
-        // add foreign key links to cells
-        // END
-      },
-      select: {style: 'multi'},
-      order: [[1, "asc"]],
-      columns: [
-        {"className":"checkboxes","orderable":false,"targets":0},
-        {% if chromo.edit_form and can_edit %}
-          {"className": "bg-info", "orderable": false, "targets": "no-sort"},
-        {% endif %}
-        {% for f in chromo.fields %}
-          {% if not f.get('published_resource_computed_field', false) %}
-            {{- "null" if 'preview_class' not in f else '{"className":"' | safe ~ f['preview_class'] ~ '"}' | safe }}
-            {%- if not loop.last %},{% endif %}
-          {% endif %}
-        {% endfor %}
-      ],
-      dom: "Blfrtip",
-      language:{
-        search: "Filter:"
-      },
-      buttons: [
-        'colvis',
-        {extend:"selected",text:"{{_('Edit in Excel')}}",className:"canada-wet-datatable-btn-primary",action: function ( e, dt, button, config ){
-            // closing form tag needed for py webtest lib
-            var form = $('<form></form>',{
-              action : "{{ h.url_for('recombinant.template', dataset_type=dataset_type, lang=h.lang(), owner_org=owner_org) }}",
-              method : "post"
+        if( _data === true ){
+          return 'TRUE';
+        }
+        if( _data === false ){
+          return 'FALSE';
+        }
+        if( _chromo_field.datastore_type == 'numeric' || _chromo_field.datastore_type == 'int' || _chromo_field.datastore_type == 'bigint' ){
+          return DataTable.render.number().display(_data, _type, _row);
+        }
+        if( _chromo_field.datastore_type == 'timestamp' ){
+          if( ! _data.toString().includes('+0000') ){
+            _data = _data.toString() + '+0000';  // add UTC offset if not present
+          }
+          return new Date(_data).toLocaleString(localeString, {timeZone: "America/Montreal"}) + ' ' + timezoneString;
+        }
+        if( _chromo_field.datastore_type == 'money' ){
+          if( _data.toString().includes('$') ){
+            _data = _data.toString().replace('$', '');  // remove dollar signs if present
+          }
+          return DataTable.render.number(null, null, 2, '$').display(_data, _type, _row);
+        }
+        // default 100 ellipses length from ckanext-datatablesview
+        return DataTable.render.ellipsis(100)(_data, _type, _row);
+      }
+      return _data;
+    }
+
+    for( let i = 0; i < chromoFields.length; i++ ){
+      if( typeof chromoFields[i].published_resource_computed_field == 'undefined' || ! chromoFields[i].published_resource_computed_field ){
+        let previewClass = '';
+        if( typeof chromoFields[i].preview_class != 'undefined' ){
+          previewClass = chromoFields[i].preview_class;
+        }
+        availableColumns.push({
+          "className": previewClass,
+          "searchable": true,
+          "render": function(_data, _type, _row){
+            return renderer(_data, _type, _row, chromoFields[i]);
+          }
+        });
+      }
+    }
+
+    function isPageFullScreen(){
+      return document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreenElement || document.msFullscreenElement;
+    }
+
+    function openFullscreen(_element){
+      if( _element.requestFullscreen ){
+        _element.requestFullscreen();
+        isFullScreen = true;
+      }else if( _element.webkitRequestFullscreen ){
+        _element.webkitRequestFullscreen();
+        isFullScreen = true;
+      }else if( _element.mozRequestFullScreen ){
+        _element.mozRequestFullScreen();
+        isFullScreen = true;
+      }else if(_element.msRequestFullscreen){
+        _element.msRequestFullscreen();
+        isFullScreen = true;
+      }
+    }
+
+    function closeFullscreen(){
+      if( document.exitFullscreen ){
+        document.exitFullscreen();
+        isFullScreen = false;
+      }else if( document.webkitExitFullscreen ){
+        document.webkitExitFullscreen();
+        isFullScreen = false;
+      }else if( document.mozExitFullscreen ){
+        document.mozExitFullscreen();
+        isFullScreen = false;
+      }else if( document.msExitFullscreen ){
+        document.msExitFullscreen();
+        isFullScreen = false;
+      }
+    }
+
+    function initialize_datatable(){
+      let availableButtons = [];
+
+      if ( document.fullscreenEnabled ){
+        availableButtons.push({
+          name: "fullscreenButton",
+          text: (isFullScreen && isPageFullScreen()) ? '<i aria-hidden="true" class="fas fa-compress"></i>&nbsp;' + exitFullscreenLabel : '<i aria-hidden="true" class="fas fa-expand"></i>&nbsp;' + fullscreenLabel,
+          className: 'pd-datatable-btn btn-secondary',
+          action: function(e, dt, node, config){
+            let datatableSection = $('#dt-preview')[0];
+            if( isPageFullScreen() ){
+              closeFullscreen();
+              dt.button('fullscreenButton:name').text('<i aria-hidden="true" class="fas fa-expand"></i>&nbsp;' + fullscreenLabel);
+              return;
+            }else{
+              openFullscreen(datatableSection);
+            }
+            if( isFullScreen ){
+              dt.button('fullscreenButton:name').text('<i aria-hidden="true" class="fas fa-compress"></i>&nbsp;' + exitFullscreenLabel);
+            }
+          }
+        });
+        $(document).off('fullscreenchange.setButtonLabel');
+        $(document).on('fullscreenchange.setButtonLabel', function(_event){
+          if( isFullScreen && isPageFullScreen() ){
+            table.button('fullscreenButton:name').text('<i aria-hidden="true" class="fas fa-compress"></i>&nbsp;' + exitFullscreenLabel);
+            isFullScreen = true;
+          }else{
+            table.button('fullscreenButton:name').text('<i aria-hidden="true" class="fas fa-expand"></i>&nbsp;' + fullscreenLabel);
+            isFullScreen = false;
+          }
+        });
+      }
+
+      availableButtons.push({
+        name: "tableTypeButton",
+        text: isCompactView ? '<i aria-hidden="true" class="fa fa-table"></i>&nbsp;' + fullTableLabel : '<i aria-hidden="true" class="fa fa-list"></i>&nbsp;' + compactTableLabel,
+        className: 'btn-info',
+        action: function(e, dt, node, config){
+          if( isCompactView ){
+            dt.button('tableTypeButton:name').text('<i aria-hidden="true" class="fa fa-table"></i>&nbsp;' + compactTableLabel);
+            isCompactView = false;
+          }else{
+            dt.button('tableTypeButton:name').text('<i aria-hidden="true" class="fa fa-list"></i>&nbsp;' + fullTableLabel);
+            isCompactView = true;
+          }
+          // FIXME: store sort and page number
+          $('#dtprv').css({'visibility': 'hidden'});
+          $('.dt-scroll-head').css({'visibility': 'hidden'});
+          dt.clear().destroy();
+          initialize_datatable();
+        }
+      });
+
+      if( isEditable ){
+        availableButtons.push({
+          extend: "selected",
+          text: '<i aria-hidden="true" class="fas fa-edit"></i>&nbsp;' + editSingleButtonLabel,
+          className: "pd-datatable-btn pd-datatable-btn-single btn-success",
+          action: function(e, dt, button, config){
+            let pk_cols = primaryKeys.map(function(value){
+              return value + colOffset;
             });
-            form.append($('<input>').attr({
+            let rows = dt.rows({ selected: true });
+            if( rows[0].length > 1 ){
+              return;
+            }
+            rows.eq(0).each(function(index){
+              let keyString = dt.cells(index, pk_cols).data().toArray();
+              window.location = editSingleRecordURI + keyString.join(',');
+            });
+          }
+        });
+        availableButtons.push({
+          extend: "selected",
+          text: '<i aria-hidden="true" class="fas fa-edit"></i>&nbsp;' + editButtonLabel,
+          className: "pd-datatable-btn btn-primary",
+          action: function(e, dt, button, config){
+            // closing form tag needed for py webtest lib
+            let form = $('<form></form>', {
+              action : editRecordsURI,
+              method : "post"
+            }).append($('<input>').attr({
               type: 'hidden',
-              value: "{{resource_name}}",
+              value: resourceName,
               name: 'resource_name'
-            }));
-            form.append($('<input>').attr({
+            })).append($('<input>').attr({
               type: 'hidden',
-              value: "{{- csrf_token() -}}",
-              name: '{{- g.csrf_field_name -}}'
-            }));
-            form.append($('<input>').attr({
+              value: csrfTokenValue,
+              name: csrfTokenName
+            })).append($('<input>').attr({
               type: 'hidden',
-              value: {{primary_keys}},
+              value: primaryKeys,
               name: 'key_indices'
             }));
-            var pk_cols = {{primary_keys}}.map(function(value){
-              return value + {{offset}};
+            let pk_cols = primaryKeys.map(function(value){
+              return value + colOffset;
             });
-            let rows = dt.rows( { selected: true } );
+            let rows = dt.rows({ selected: true });
             rows.eq(0).each(function(index){
               form.append($('<input>').attr({
                 type: 'hidden',
-                value: dt.cells( index, pk_cols ).data().toArray(),
+                value: dt.cells(index, pk_cols).data().toArray(),
                 name: 'bulk-template'
               }));
             });
             form.appendTo('body').submit();
-        }},
-        {extend:"selected",text:"{{_('Delete records')}}",className:"canada-wet-datatable-btn-danger",action: function ( e, dt, button, config ){
-            // closing form tag needed for py webtest lib
-            var form = $('<form></form>',{
-              action : "{{ h.url_for('canada.delete_selected_records', resource_id=resource_id) }}",
-              method : "post"
-            });
-            form.append($('<input>').attr({
-              type: 'hidden',
-              value: "{{resource_name}}",
-              name: 'resource_name'
-            }));
-            form.append($('<input>').attr({
-              type: 'hidden',
-              value: "{{- csrf_token() -}}",
-              name: '{{- g.csrf_field_name -}}'
-            }));
-            form.append($('<input>').attr({
-              type: 'hidden',
-              value: {{primary_keys | tojson}},
-              name: 'key_indices'
-            }));
-            var pk_cols = {{primary_keys}}.map(function(value){
-              return value + {{offset}};
-            });
-            let rows = dt.rows( { selected: true } );
-            rows.eq(0).each(function(index){
-              form.append($('<input>').attr({
-                type: 'hidden',
-                value: dt.cells( index, pk_cols ).data().toArray(),
-                name: 'select-delete'
-              }));
-            });
-            form.appendTo('body').submit();
-        }}
-      ]
-    });
-    // set checkboxes when selecting rows
-    table.on('select', function(e, dt, type, indexes){
-      for( let _i = 0; _i < indexes.length; _i++){
-        $($('#dtprv').find('tr')[indexes[_i] + 1]).find('td.checkboxes').find('input[type="checkbox"]').attr("checked", true).trigger('change').blur();
+          }
+        });
       }
-    }).on('deselect', function(e, dt, type, indexes){
-      for( let _i = 0; _i < indexes.length; _i++){
-        $($('#dtprv').find('tr')[indexes[_i] + 1]).find('td.checkboxes').find('input[type="checkbox"]').attr("checked", false).trigger('change').blur();
+
+      availableButtons.push({
+        extend: "selected",
+        text: '<i aria-hidden="true" class="fas fa-trash-alt"></i>&nbsp;' + deleteButtonLabel,
+        className: "pd-datatable-btn btn-danger",
+        action: function(e, dt, button, config){
+          // closing form tag needed for py webtest lib
+          let form = $('<form></form>', {
+            action : deleteRecordsURI,
+            method : "post"
+          }).append($('<input>').attr({
+            type: 'hidden',
+            value: resourceName,
+            name: 'resource_name'
+          })).append($('<input>').attr({
+            type: 'hidden',
+            value: csrfTokenValue,
+            name: csrfTokenName
+          })).append($('<input>').attr({
+            type: 'hidden',
+            value: primaryKeys,
+            name: 'key_indices'
+          }));
+          let pk_cols = primaryKeys.map(function(value){
+            return value + colOffset;
+          });
+          let rows = dt.rows({ selected: true});
+          rows.eq(0).each(function(index){
+            form.append($('<input>').attr({
+              type: 'hidden',
+              value: dt.cells(index, pk_cols).data().toArray(),
+              name: 'select-delete'
+            }));
+          });
+          form.appendTo('body').submit();
+        }
+      });
+
+      let table = $('#dtprv').DataTable({
+        paging: true,
+        serverSide: true,
+        processing: true,
+        responsive: isCompactView,
+        autoWidth: true,
+        scrollX: ! isCompactView,
+        scrollY: 400,
+        scrollResize: true,
+        scrollCollapse: false,
+        deferRender: true,
+        select: {
+          style: 'multi',
+          selector: 'td:not(:first-child)'
+        },
+        order: sortOrder,
+        columns: availableColumns,
+        dom: "Blfrtip",
+        language: tableLanguage,
+        ajax: {
+          "url": ajaxURI,
+          "type": "POST",
+          "data": function(data){
+            if( searchParams.has('dt_query') ){  // pass search query from URI param
+              data.dt_query = searchParams.get('dt_query');
+            }else{
+              data.dt_query = '';
+            }
+          }
+        },
+        initComplete: function(){
+          $('#dtprv').css({'visibility': 'visible'});
+          $('table.dataTable').css({'visibility': 'visible'});
+          $('.dt-scroll-head').css({'visibility': 'visible'});
+          $('#dtprv_wrapper').attr('data-editable', isEditable);
+          $('#dtprv_wrapper').attr('data-compact-view', isCompactView);
+          if( searchParams.has('dt_query') ){  // set search query
+            table.search(searchParams.get('dt_query'));
+          }
+          // add column search fields and select all checkbox
+          let footer = $('#dtprv').find('#dtprv-foot-main');
+          if( footer.length > 0 ){
+            let filterRow = '';
+            this.api().columns().every(function(_i){
+              let _column = this;
+              let footerContent = $.parseHTML('<span class="dtprv-filter-col"></span>')[0];
+              if( _i == 1 ){  // select column
+                footerContent = $.parseHTML('<input title="' + selectAllLabel + '" aria-label="' + selectAllLabel + '" id="dt-select-all" name="dt-select-all" type="checkbox"/>')[0];
+              }
+              if( _i >= colOffset ){
+                footerContent = $.parseHTML('<span class="dtprv-filter-col"><label for="dtprv-filter-col-' + _i + '" class="sr-only">' + colSearchLabel + ' ' + _column.footer().textContent + '</label><input placeholder="' + colSearchLabel + ' ' + _column.footer().textContent + '" name="dtprv-filter-col-' + _i + '" type="text" value="" class="form-control form-control-sm" /></span>')[0];
+              }
+              _column.footer().replaceChildren(footerContent);
+            });
+            let select_all = $('#dtprv_wrapper').find('.dt-scroll-foot').find('#dt-select-all');
+            if( select_all.length > 0 ){
+              $(select_all).on("click", function(_event) {
+                if( $(select_all).is(":checked") ){
+                  table.rows().select();
+                } else {
+                  table.rows().deselect();
+                }
+              });
+            }
+          }
+          //
+          // END
+          // add column search fields and select all checkbox
+          // END
+        },
+        drawCallback: function(_settings){
+          // TODO: add search column fields...
+          $('#dtprv').css({'visibility': 'visible'});
+          $('table.dataTable').css({'visibility': 'visible'});
+          $('.dt-scroll-head').css({'visibility': 'visible'});
+          $('#dtprv_wrapper').attr('data-editable', isEditable);
+          $('#dtprv_wrapper').attr('data-compact-view', isCompactView);
+          // set fake visiility for responsive column
+          if( ! isCompactView ){
+            $('#dtprv_wrapper').find('tr').children('th:first-of-type').css(
+              {'width': '50px', 'min-width': '50px', 'max-width': '50px', 'padding': 0, 'visibility': 'hidden'});
+            $('#dtprv_wrapper').find('tr').children('td:first-of-type').css(
+              {'width': '50px', 'min-width': '50px', 'max-width': '50px', 'padding': 0, 'visibility': 'hidden'});
+          }else{
+            $('#dtprv_wrapper').find('tr').children('th:first-of-type').css(
+              {'width': 'auto', 'min-width': 'auto', 'max-width': 'auto', 'padding': '8px',  'visibility': 'visible'});
+            $('#dtprv_wrapper').find('tr').children('td:first-of-type').css(
+              {'width': 'auto', 'min-width': 'auto', 'max-width': 'auto', 'padding': '8px',  'visibility': 'visible'});
+          }
+          // END
+          // set fake visiility for responsive column
+          // END
+          // set expander button extra functionality
+          let expanderButtons = $('#dtprv').find('td.expanders');
+          if( expanderButtons.length > 0){
+            // TODO: add aria-labels for expanding...
+            // td.dtr-hidden
+          }
+          // END
+          // set expander button extra functionality
+          // END
+          // select rows when checking boxes
+          let checkboxes = $('#dtprv').find('td.checkboxes').find('input[type="checkbox"]');
+          if( checkboxes.length > 0){
+            $(checkboxes).each(function(_index, _checkbox){
+              $(_checkbox).off('click.preventSelect');
+              $(_checkbox).on('click.preventSelect', function(_event){
+                _event.stopPropagation();
+              });
+              $(_checkbox).off('change.rowSelect');
+              $(_checkbox).on('change.rowSelect', function(_event){
+                _event.stopPropagation();
+                if( $(_checkbox).is(":checked") ){
+                  table.row(':eq(' + _index + ')').select();
+                } else {
+                  table.row(':eq(' + _index + ')').deselect();
+                }
+              });
+            });
+          }
+          // END
+          // select rows when checking boxes
+          // END
+          // add jump to page
+          let pagingWrapper = $('#dtprv_wrapper').find('.dt-paging');
+          if( pagingWrapper.length > 0 ){
+            $('#dtprv_wrapper').find('.dt-jump-to-page').remove();
+            let pageInfo = table.page.info();
+            let pageInput = '<div class="dt-jump-to-page"><label for="dt-jump-to-page">' + jumpToPageLabel + '</label><input aria-controls="dtprv" class"form-control form-control-sm" type="number" id="dt-jump-to-page" name="dt-jump-to-page" value="' + (pageInfo.page + 1) + '" min="1" max="' + (pageInfo.pages) + '" /></div>';
+            $(pagingWrapper).after(pageInput);
+            let jumpToPage = $('#dtprv_wrapper').find('.dt-jump-to-page').find('input');
+            if( jumpToPage.length > 0 ){
+              $(jumpToPage).off('change.setPage');
+              $(jumpToPage).on('change.setPage', function(_event){
+                let newPage = parseInt($(jumpToPage).val());
+                if( isNaN(newPage) && ! Number.isInteger(newPage) ){
+                  newPage = 0;
+                }else if( newPage >= 1 ){
+                  newPage -= 1;
+                }
+                table.page(newPage).draw(false);
+              });
+            }
+          }
+          // END
+          // add jump to page
+          // END
+          // add foreign key links to cells
+          $('#dtprv').find('.ref-link').remove();
+          if( $.isEmptyObject(foreignKeys) ){
+            return;
+          }
+          let dt_queries = {};
+          for(let [_table, _keys] of Object.entries(foreignKeys)){
+            dt_queries[_table] = {}
+            for(let [_this_key, _that_key] of Object.entries(_keys)){
+              let header = $('#dtprv').find('thead').find('th[data-datastore-id="' + _this_key + '"]');
+              if( header.length > 0 ){
+                let header_index = $(header).index() + 1;
+                let data_cells = $('#dtprv').find('#dtprv-body-main').find('td:nth-child(' + header_index + ')');
+                if( data_cells.length > 0 ){
+                  $(data_cells).each(function(_index, _cell){
+                    $(_cell).attr('data-datastore-id', _this_key);
+                    let parent_row = $(_cell).parent('tr');
+                    if( parent_row.length > 0 ){
+                      let row_index = $(parent_row).index();
+                      let this_value = $(_cell).text();
+                      if( typeof dt_queries[_table][row_index] == 'undefined' ){
+                        dt_queries[_table][row_index] = {
+                          'this_keys': [],
+                          'dt_query': {}
+                        };
+                      }
+                      dt_queries[_table][row_index]['this_keys'].push(_this_key);
+                      dt_queries[_table][row_index]['dt_query'][_that_key] = this_value;
+                    }
+                  });
+                }
+              }
+            }
+          }
+          let table_rows = $('#dtprv').find('#dtprv-body-main').find('tr');
+          if( table_rows.length > 0 ){
+            $(table_rows).each(function(_index, _row){
+              for(let [_table, _rows] of Object.entries(dt_queries)){
+                if( typeof _rows[_index - 1] == 'undefined' ){
+                  continue;
+                }
+                let ref_uri = foreignLinks[_table];
+                let encoded_query = encodeURIComponent(JSON.stringify(_rows[_index - 1]['dt_query']));
+                ref_uri += '?dt_query=' +  encoded_query;
+                for( _i = 0; _i < _rows[_index - 1]['this_keys'].length; _i++ ){
+                  let fk_cell = $(_row).find('td[data-datastore-id="' + _rows[_index - 1]['this_keys'][_i] + '"]');
+                  if( fk_cell.length > 0 ){
+                    $(fk_cell).append('<sup class="ref-link" style="opacity:0.65;margin-left:4px"><small style="font-size:75%;"><a target="_blank" href="' + ref_uri + '"><i class="fas fa-external-link-alt"></i></a></small></sup>');
+                  }
+                }
+              }
+            });
+          }
+          // END
+          // add foreign key links to cells
+          // END
+        },
+        stateSaveParams: function(_settings, _data){
+          _data.page = this.api().page();
+          _data.selected = this.api().rows({selected: true})[0];
+          // TODO: save to local storage with resource ID...
+        },
+        stateLoadParams: function(_settings, _data){
+          // TODO: ingest any saved state
+        },
+        buttons: availableButtons,
+      });
+      function check_the_boxes(_checked, _indexes, _dt){
+        let selectCount = _dt.rows({ selected: true })[0].length;
+        let singleSelectButtons = $('#dtprv_wrapper').find('.pd-datatable-btn-single');
+        let buttonStats = $('#dtprv_wrapper').find('span.pd-datatbales-btn-count');
+        if( selectCount > 1 ){
+          $(singleSelectButtons).each(function(_index, _button){
+            $(_button).addClass('disabled');
+            $(_button).attr('disabled', 'disabled');
+          });
+        }
+        if( selectCount > 0 ){
+          $(buttonStats).each(function(_index, _button){
+            $(_button).html('&nbsp;' + selectCount + countSuffix);
+          });
+        }else{
+          $(buttonStats).each(function(_index, _button){
+            $(_button).html('');
+          });
+        }
+        for( let _i = 0; _i < _indexes.length; _i++){
+          let checkbox = $($('#dtprv').find('#dtprv-body-main').find('tr')[_indexes[_i]]).find('td.checkboxes').find('input[type="checkbox"]');
+          $(checkbox)[0].checked = _checked;  // set prop in the scenario that the checkbox has human interaction
+          $(checkbox).attr("checked", _checked).blur();
+        }
       }
-    });
-    // END
-    // set checkboxes when selecting rows
-    // END
-  };
+      // set checkboxes when selecting rows
+      table.on('select', function(e, dt, type, indexes){
+        check_the_boxes(true, indexes, dt);
+      }).on('deselect', function(e, dt, type, indexes){
+        check_the_boxes(false, indexes, dt);
+      });
+      // END
+      // set checkboxes when selecting rows
+      // END
+    }
+    initialize_datatable();
+  }; // syntax_ignore: jinja2 tojson constants
 </script>

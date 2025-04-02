@@ -86,6 +86,7 @@ resources:
     form_required: true
     excel_required: true
     excel_column_width: 41
+    markdown: true
 
   - datastore_id: summary_fr
     label:
@@ -101,6 +102,7 @@ resources:
     form_required: true
     excel_required: true
     excel_column_width: 41
+    markdown: true
 
   - datastore_id: disposition
     label:
