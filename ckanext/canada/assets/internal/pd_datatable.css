@@ -341,6 +341,13 @@ body #dtprv_wrapper th.expanders{
   visibility: hidden !important;
 }
 
+body #dtprv_wrapper[data-compact-view="true"] th.expanders,
+body #dtprv_wrapper[data-compact-view="true"] td.expanders{
+  width: 36px !important;
+  min-width: 36px !important;
+  max-width: 36px !important;
+}
+
 body #dtprv_wrapper td.expanders.dtr-control::before{
   font-family: 'FontAwesome';
   content: '\f105';
@@ -395,4 +402,44 @@ body #dtprv_wrapper #dtprv-foot-main input[type="text"]{
   width: auto !important;
   min-width: auto !important;
   max-width: auto !important;
+}
+
+body #dtprv_wrapper #dtprv-foot-main .dtprv-filter-col{
+  position: relative !important;
+  display: flex !important;
+  flex-wrap: nowrap !important;
+  flex-direction: row !important;
+}
+
+/* body #dtprv_wrapper #dtprv-foot-main .dtprv-filter-col input:not([type="submit"]){
+  width: 100% !important;
+} */
+
+body #dtprv_wrapper #dtprv-foot-main .dtprv-filter-col input[type="text"]{
+  padding-left: 6px !important;
+  padding-right: 6px !important;
+  flex: 1;
+  /* border-top-right-radius: 0 !important; */
+  /* border-bottom-right-radius: 0 !important; */
+}
+
+body #dtprv_wrapper #dtprv-foot-main .dtprv-filter-col button[type="submit"]{
+  display: none !important;
+  /* TODO: use submit buttons in column filters?? */
+  width: 24px;
+  min-width: 24px;
+  max-width: 24px;
+  padding: 0 !important;
+  position: relative !important;
+  border-top-left-radius: 0 !important;
+  border-bottom-left-radius: 0 !important;
+}
+
+body #dtprv_wrapper #dtprv-foot-main .dtprv-filter-col button[type="submit"] i.fa,
+body #dtprv_wrapper #dtprv-foot-main .dtprv-filter-col button[type="submit"] i.fas{
+  position: absolute !important;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 13px !important;
 }

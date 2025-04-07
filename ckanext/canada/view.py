@@ -948,12 +948,24 @@ def pd_datatable(resource_name: str, resource_id: str):
             cols[sort_by_num - prefix_cols] + ' ' + sort_order + ' nulls last')
         i += 1
 
+    col_filters = {}
+    i = 0
+    while True:
+        if u'columns[%d][search][value]' % i not in request.form:
+            break
+        v = str(request.form[u'columns[%d][search][value]' % i])
+        if v:
+            k = str(request.form[u'columns[%d][name]' % i])
+            col_filters[k] = v
+        i += 1
+
     response = lc.action.datastore_search(
         q=search_text,
         resource_id=resource_id,
         offset=offset,
         limit=limit,
         sort=', '.join(sort_list),
+        filters=col_filters,
     )
 
     aadata = [
