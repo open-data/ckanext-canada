@@ -78,6 +78,8 @@
 
   function preview_datatable(){
     const locale = "{{- h.lang() or 'en' -}}";
+    const currentDate = new Date().toISOString().split('T')[0];
+    const currentYear = new Date().getFullYear();
     const localeString = locale == 'en' ? 'en-CA' : 'fr-CA';
     const timezoneString = locale == 'en' ? 'EST' : 'HNE';  // FIXME: EDT / HAE
     const csrfTokenValue = "{{- csrf_token() -}}";
@@ -150,22 +152,45 @@
     };
 
     function render_column_filter(_column, _index){
-      // TODO: use correct HTML input types. e.g. number for int|numeric|bigint and date picker for timestamp|datetime
       let footerContent = $.parseHTML('<span class="dtprv-filter-col"></span>')[0];
       if( _index == 1 ){  // select column
         footerContent = $.parseHTML('<input title="' + selectAllLabel + '" aria-label="' + selectAllLabel + '" id="dt-select-all" name="dt-select-all" type="checkbox"/>')[0];
       }
       if( _index >= colOffset ){
-        let _chromoField = chromoFields[_index - colOffset];
-        console.log(_chromoField.datastore_type);
-        footerContent = $.parseHTML('<span class="dtprv-filter-col"><label for="dtprv-filter-col-' + _index + '" class="sr-only">' + colSearchLabel + ' ' + _column.footer().textContent + '</label><input placeholder="' + colSearchLabel + ' ' + _column.footer().textContent + '" name="dtprv-filter-col-' + _index + '" id="dtprv-filter-col-' + _index + '" type="text" value="" class="form-control form-control-sm" /><button type="submit" class="btn btn-primary btn-small"><i aria-hidden="true" class="fas fa-search"></i><span class="sr-only">' + colSearchLabel + ' ' + _column.footer().textContent + '</span></button></span>')[0];
+        let ds_type = chromoFields[_index - colOffset].datastore_type;
+        let labelText = _column.footer().textContent;
+        if( ! labelText.includes(colSearchLabel) ){
+          labelText = colSearchLabel + ' ' + _column.footer().textContent;
+        }
+        let filterInput = '<input placeholder="' + labelText + '" name="dtprv-filter-col-' + _index + '" id="dtprv-filter-col-' + _index + '" type="text" value="" class="form-control form-control-sm" />';
+        if( ds_type == 'year' ){
+          filterInput = '<input name="dtprv-filter-col-' + _index + '" id="dtprv-filter-col-' + _index + '" data-number-type="int" type="number" min="1899" max="' + currentYear + '" step="1" value="" class="form-control form-control-sm" />';
+        }else if( ds_type == 'month' ){
+          filterInput = '<input name="dtprv-filter-col-' + _index + '" id="dtprv-filter-col-' + _index + '" data-number-type="int" type="number" min="1" max="12" step="1" value="" class="form-control form-control-sm" />';
+        }else if( ds_type == 'date' ){
+          filterInput = '<input name="dtprv-filter-col-' + _index + '" id="dtprv-filter-col-' + _index + '" type="date" min="1899-01-01" max="' + currentDate + '" value="" class="form-control form-control-sm" />';
+        }else if( ds_type == 'timestamp' ){
+          filterInput = '<input name="dtprv-filter-col-' + _index + '" id="dtprv-filter-col-' + _index + '" type="datetime-local" min="1899-01-01T00:00" max="' + currentDate + 'T23:59" value="" class="form-control form-control-sm" />';
+        }else if( ds_type == 'int' || ds_type == 'bigint' ){
+          filterInput = '<input name="dtprv-filter-col-' + _index + '" id="dtprv-filter-col-' + _index + '" data-number-type="int" type="number" value="" step="1" class="form-control form-control-sm" />';
+        }else if( ds_type == 'numeric' || ds_type == 'float' || ds_type == 'double' ){
+          filterInput = '<input name="dtprv-filter-col-' + _index + '" id="dtprv-filter-col-' + _index + '" data-number-type="float" type="number" value="" class="form-control form-control-sm" />';
+        }else if( ds_type == 'money' ){
+          filterInput = '<input name="dtprv-filter-col-' + _index + '" id="dtprv-filter-col-' + _index + '" data-number-type="money" type="number" value="" class="form-control form-control-sm" />';
+        }
+        // TODO: mask datetimes and money inputs...
+        footerContent = $.parseHTML('<span class="dtprv-filter-col"><label for="dtprv-filter-col-' + _index + '" class="sr-only">' + labelText + '</label>' + filterInput + '<button type="submit" class="btn btn-primary btn-small"><i aria-hidden="true" class="fas fa-search"></i><span class="sr-only">' + labelText + '</span></button></span>')[0];
       }
       _column.footer().replaceChildren(footerContent);
       let searchFilterInput = $('#dtprv-filter-col-' + _index);
       if( searchFilterInput.length > 0 ){
+        let numberType = $(searchFilterInput).attr('data-number-type');
         $(searchFilterInput).off('keyup.filterCol');
         $(searchFilterInput).on('keyup.filterCol', function(_event){
           if( _event.keyCode == 13 && _column.search() !== $(searchFilterInput).val() ){
+            if( numberType == 'int' && $(searchFilterInput).val() ){
+              $(searchFilterInput).val(Math.round($(searchFilterInput).val())).focus().blur();
+            }
             _column.search($(searchFilterInput).val()).draw();
           }
         });
@@ -193,7 +218,7 @@
     }
 
     function cell_renderer(_data, _type, _row, _chromo_field){
-      // TODO: check search values, namely for money and datetimes
+      // FIXME: any data transormations for masks in _type == 'search'
       if( _type == 'display' ){
         if( _data == null ){
           return '';  // blank cell for None/null values
@@ -206,7 +231,7 @@
           if( ! Array.isArray(_data) ){
             _data = _data.toString().split(',');  // split to Array if not already
           }
-          let displayList = '<ul>';
+          let displayList = '<ul style="text-align:left;">';
           _data.forEach(function(_val, _i, _arr){
             displayList += '<li>' + _val + '</li>';
           });
@@ -406,7 +431,7 @@
       }
     }
 
-    function render_select_inputs(_table){
+    function render_selectbox_inputs(_table){
       let checkboxes = $('#dtprv').find('td.checkboxes').find('input[type="checkbox"]');
       if( checkboxes.length > 0){
         $(checkboxes).each(function(_index, _checkbox){
@@ -454,6 +479,7 @@
     }
 
     function get_available_buttons(){
+      // TODO: make a clear all filters and sorts button (reset button)
       let availableButtons = [];
 
       if ( document.fullscreenEnabled ){
@@ -522,6 +548,7 @@
             }
             rows.eq(0).each(function(index){
               let keyString = dt.cells(index, pk_cols).data().toArray();
+              // FIXME: url encode keyString
               window.location = editSingleRecordURI + keyString.join(',');
             });
           }
@@ -649,7 +676,7 @@
           // TODO: make an error message for AJAX failures!
           set_table_visibility(isCompactView);
           render_expand_buttons();
-          render_select_inputs(table);
+          render_selectbox_inputs(table);
           render_pager_input(table);
           render_foreign_key_links();
         },

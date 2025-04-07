@@ -11,11 +11,12 @@ body #dt-preview:fullscreen #dtprv_wrapper{
   height: 100vh !important;
   min-height: 100vh !important;
   max-height: 100vh !important;
+  overflow-y: scroll !important;
 }
 
 body #dt-preview:fullscreen #dtprv_wrapper .dt-scroll-body{
-  height: 60vh !important;
-  max-height: 60vh !important;
+  height: 55vh !important;
+  max-height: 55vh !important;
 }
 
 body #dtprv,
@@ -414,6 +415,11 @@ body #dtprv_wrapper #dtprv-foot-main .dtprv-filter-col{
 /* body #dtprv_wrapper #dtprv-foot-main .dtprv-filter-col input:not([type="submit"]){
   width: 100% !important;
 } */
+
+body #dtprv_wrapper #dtprv-foot-main .dtprv-filter-col input{
+  min-height: 37px !important;
+  max-height: 37px !important;
+}
 
 body #dtprv_wrapper #dtprv-foot-main .dtprv-filter-col input[type="text"]{
   padding-left: 6px !important;
