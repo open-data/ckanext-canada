@@ -1,4 +1,3 @@
-import re
 import codecs
 import json
 import decimal
@@ -882,9 +881,6 @@ def pd_datatable(resource_name: str, resource_id: str):
     # type_ignore_reason: datatable param draw is int
     draw = int(params['draw'])  # type: ignore
     search_text = str(params['search[value]'])
-    dt_query = str(params['dt_query'])
-    if dt_query and not search_text:
-        search_text = dt_query
     # type_ignore_reason: datatable param start is int
     offset = int(params['start'])  # type: ignore
     # type_ignore_reason: datatable param length is int

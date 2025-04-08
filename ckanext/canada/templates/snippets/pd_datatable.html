@@ -13,7 +13,7 @@
 {% set magic_priority_no_field_should_be_below = 2 %}
 
 <section id="dt-preview">
-  <h2 id="prtable">{{_("Preview")}}</h2>
+  <h2 id="prtable">{{_("Interactive Table")}}</h2>
   <table id="dtprv" class="table table-striped" data-role="table" data-mode="columntoggle" style="visibility: hidden;">
     <thead>
       <tr class="font-small">
@@ -86,6 +86,10 @@
     const csrfTokenName = "{{- g.csrf_field_name -}}";
     const resourceName = "{{- resource_name -}}";
     const colOffset = 2;  // expand col + select col
+    const defaultSortOrder = [[1, "asc"]];
+    const defaultRows = 10;
+    // default 100 ellipses length from ckanext-datatablesview
+    const ellipsesLength = 100;
     const primaryKeys = {{ primary_keys|tojson }};  // syntax_ignore: jinja2 tojson constants
     const foreignKeys = {{ foreign_keys|tojson }};  // syntax_ignore: jinja2 tojson constants
     const foreignLinks = {{ fk_links|tojson }};  // syntax_ignore: jinja2 tojson constants
@@ -94,12 +98,14 @@
     const selectAllLabel = "{{- _('Select All') -}}";
     const colSearchLabel = "{{- _('Search:') -}}";
     const jumpToPageLabel = "{{- _('Jump to page') -}}";
+    const resetTabelLabel = "{{- _('Reset Table') -}}";
     const fullscreenLabel = "{{- _('Fullscreen') -}}";
     const exitFullscreenLabel = "{{- _('Exit Fullscreen') -}}";
     const fullTableLabel = "{{- _('Full Table') -}}";
     const compactTableLabel = "{{- _('Compact Table') -}}";
     const editSingleButtonLabel = "{{- _('Edit Online') -}}";
     const countSuffix = "{{- _(' record(s)') -}}";
+    const ajaxErrorMessage = "{{- _('Error: Could not query records. Please try again.') -}}";
     const editSingleRecordURI = "{{- h.url_for('canada.update_pd_record', resource_name=resource_name, owner_org=owner_org, pk='') -}}";
     const editButtonLabel = "{{- _('Edit<span class=\\"pd-datatbales-btn-count\\"></span> in Excel') -}}";
     const editRecordsURI = "{{- h.url_for('recombinant.template', dataset_type=dataset_type, lang=h.lang(), owner_org=owner_org) -}}";
@@ -131,14 +137,32 @@
       }
     };
 
+    let table;
+    let tableState;
     let isCompactView = true;
     let isFullScreen = is_page_fullscreen();
-    let sortOrder = [[1, "asc"]];
+    let sortOrder = defaultSortOrder;
+
+    let uri_filters = {};
+    if( searchParams.has('dt_query') ){
+      let _uri_filters = JSON.parse(searchParams.get('dt_query'));
+      for(let [_key, _value] of Object.entries(_uri_filters)){
+        let header = $('#dtprv').find('thead').find('th[data-datastore-id="' + _key + '"]');
+        if( header.length > 0 ){
+          let header_index = $(header).index();
+          uri_filters[header_index] = _value
+        }
+      }
+    }
 
     let availableColumns = [
       {"className": "expanders", "orderable": false, "targets": 0},
       {"className": "checkboxes", "orderable": false, "targets": 1},
     ];
+
+    DataTable.ext.errMode = function( _settings, _techNote, _message ){
+      console.warn(_message);
+    };
 
     DataTable.render.ellipsis = function(_cutoff){
       return function(_data, _type, _row ){
@@ -149,6 +173,22 @@
         }
         return _data;
       };
+    };
+
+    function render_highlights(){
+      let tableBody = $(table.table().body());
+      tableBody.unhighlight();
+      if( table.rows({filter: 'applied'}).data().length ){
+        table.columns().every(function(_index){
+          let column = this;
+          if( uri_filters && typeof uri_filters[_index] != 'undefined' ){
+            column.search(uri_filters[_index]);
+          }
+          column.nodes().flatten().to$().unhighlight({className: 'column_highlight'});
+          column.nodes().flatten().to$().highlight(column.search().trim().split(/\s+/), {className: 'column_highlight'});
+        });
+        tableBody.highlight(table.search().trim().split(/\s+/));
+      }
     };
 
     function render_column_filter(_column, _index){
@@ -162,21 +202,25 @@
         if( ! labelText.includes(colSearchLabel) ){
           labelText = colSearchLabel + ' ' + _column.footer().textContent;
         }
-        let filterInput = '<input placeholder="' + labelText + '" name="dtprv-filter-col-' + _index + '" id="dtprv-filter-col-' + _index + '" type="text" value="" class="form-control form-control-sm" />';
+        let val = _column.search().length > 0 ? _column.search() : '';
+        if( uri_filters && typeof uri_filters[_index] != 'undefined' ){
+          val = uri_filters[_index];
+        }
+        let filterInput = '<input placeholder="' + labelText + '" name="dtprv-filter-col-' + _index + '" id="dtprv-filter-col-' + _index + '" type="text" value="' + val + '" class="form-control form-control-sm" />';
         if( ds_type == 'year' ){
-          filterInput = '<input name="dtprv-filter-col-' + _index + '" id="dtprv-filter-col-' + _index + '" data-number-type="int" type="number" min="1899" max="' + currentYear + '" step="1" value="" class="form-control form-control-sm" />';
+          filterInput = '<input name="dtprv-filter-col-' + _index + '" id="dtprv-filter-col-' + _index + '" data-number-type="int" type="number" min="1899" max="' + currentYear + '" step="1" value="' + val + '" class="form-control form-control-sm" />';
         }else if( ds_type == 'month' ){
-          filterInput = '<input name="dtprv-filter-col-' + _index + '" id="dtprv-filter-col-' + _index + '" data-number-type="int" type="number" min="1" max="12" step="1" value="" class="form-control form-control-sm" />';
+          filterInput = '<input name="dtprv-filter-col-' + _index + '" id="dtprv-filter-col-' + _index + '" data-number-type="int" type="number" min="1" max="12" step="1" value="' + val + '" class="form-control form-control-sm" />';
         }else if( ds_type == 'date' ){
-          filterInput = '<input name="dtprv-filter-col-' + _index + '" id="dtprv-filter-col-' + _index + '" type="date" min="1899-01-01" max="' + currentDate + '" value="" class="form-control form-control-sm" />';
+          filterInput = '<input name="dtprv-filter-col-' + _index + '" id="dtprv-filter-col-' + _index + '" type="date" min="1899-01-01" max="' + currentDate + '" value="' + val + '" class="form-control form-control-sm" />';
         }else if( ds_type == 'timestamp' ){
-          filterInput = '<input name="dtprv-filter-col-' + _index + '" id="dtprv-filter-col-' + _index + '" type="datetime-local" min="1899-01-01T00:00" max="' + currentDate + 'T23:59" value="" class="form-control form-control-sm" />';
+          filterInput = '<input name="dtprv-filter-col-' + _index + '" id="dtprv-filter-col-' + _index + '" type="datetime-local" min="1899-01-01T00:00" max="' + currentDate + 'T23:59" value="' + val + '" class="form-control form-control-sm" />';
         }else if( ds_type == 'int' || ds_type == 'bigint' ){
-          filterInput = '<input name="dtprv-filter-col-' + _index + '" id="dtprv-filter-col-' + _index + '" data-number-type="int" type="number" value="" step="1" class="form-control form-control-sm" />';
+          filterInput = '<input name="dtprv-filter-col-' + _index + '" id="dtprv-filter-col-' + _index + '" data-number-type="int" type="number" value="' + val + '" step="1" class="form-control form-control-sm" />';
         }else if( ds_type == 'numeric' || ds_type == 'float' || ds_type == 'double' ){
-          filterInput = '<input name="dtprv-filter-col-' + _index + '" id="dtprv-filter-col-' + _index + '" data-number-type="float" type="number" value="" class="form-control form-control-sm" />';
+          filterInput = '<input name="dtprv-filter-col-' + _index + '" id="dtprv-filter-col-' + _index + '" data-number-type="float" type="number" value="' + val + '" class="form-control form-control-sm" />';
         }else if( ds_type == 'money' ){
-          filterInput = '<input name="dtprv-filter-col-' + _index + '" id="dtprv-filter-col-' + _index + '" data-number-type="money" type="number" value="" class="form-control form-control-sm" />';
+          filterInput = '<input name="dtprv-filter-col-' + _index + '" id="dtprv-filter-col-' + _index + '" data-number-type="money" type="number" value="' + val + '" class="form-control form-control-sm" />';
         }
         // TODO: mask datetimes and money inputs...
         footerContent = $.parseHTML('<span class="dtprv-filter-col"><label for="dtprv-filter-col-' + _index + '" class="sr-only">' + labelText + '</label>' + filterInput + '<button type="submit" class="btn btn-primary btn-small"><i aria-hidden="true" class="fas fa-search"></i><span class="sr-only">' + labelText + '</span></button></span>')[0];
@@ -197,20 +241,20 @@
       }
     }
 
-    function render_table_footer(_dtObj, _table){
+    function render_table_footer(){
       let footer = $('#dtprv').find('#dtprv-foot-main');
       if( footer.length > 0 ){
         let filterRow = '';
-        _dtObj.api().columns().every(function(_i){
+        $('#dtprv').dataTable().api().columns().every(function(_i){
           render_column_filter(this, _i);
         });
         let select_all = $('#dtprv_wrapper').find('.dt-scroll-foot').find('#dt-select-all');
         if( select_all.length > 0 ){
           $(select_all).on("click", function(_event) {
             if( $(select_all).is(":checked") ){
-              _table.rows().select();
+              table.rows().select();
             } else {
-              _table.rows().deselect();
+              table.rows().deselect();
             }
           });
         }
@@ -225,7 +269,7 @@
         }
         if( typeof _chromo_field.markdown != 'undefined' && _chromo_field.markdown ){
           _data = _data.replace('•', '\n-');  // replace commonly used list characters
-          return marked.parse(DataTable.render.ellipsis(100)(_data, _type, _row));
+          return marked.parse(DataTable.render.ellipsis(ellipsesLength)(_data, _type, _row));
         }
         if( _chromo_field.datastore_type == '_text' ){
           if( ! Array.isArray(_data) ){
@@ -259,8 +303,7 @@
           }
           return DataTable.render.number(null, null, 2, '$').display(_data, _type, _row);
         }
-        // default 100 ellipses length from ckanext-datatablesview
-        return DataTable.render.ellipsis(100)(_data, _type, _row);
+        return DataTable.render.ellipsis(ellipsesLength)(_data, _type, _row);
       }
       return _data;
     }
@@ -318,8 +361,8 @@
       }
     }
 
-    function check_the_boxes(_checked, _indexes, _table){
-      let selectCount = _table.rows({ selected: true })[0].length;
+    function check_the_boxes(_checked, _indexes){
+      let selectCount = table.rows({ selected: true })[0].length;
       let singleSelectButtons = $('#dtprv_wrapper').find('.pd-datatable-btn-single');
       let buttonStats = $('#dtprv_wrapper').find('span.pd-datatbales-btn-count');
       if( selectCount > 1 ){
@@ -344,11 +387,11 @@
       }
     }
 
-    function render_pager_input(_table){
+    function render_pager_input(){
       let pagingWrapper = $('#dtprv_wrapper').find('.dt-paging');
       if( pagingWrapper.length > 0 ){
         $('#dtprv_wrapper').find('.dt-jump-to-page').remove();
-        let pageInfo = _table.page.info();
+        let pageInfo = table.page.info();
         let pageInput = '<div class="dt-jump-to-page"><label for="dt-jump-to-page">' + jumpToPageLabel + '</label><input aria-controls="dtprv" class"form-control form-control-sm" type="number" id="dt-jump-to-page" name="dt-jump-to-page" value="' + (pageInfo.page + 1) + '" min="1" max="' + (pageInfo.pages) + '" /></div>';
         $(pagingWrapper).after(pageInput);
         let jumpToPage = $('#dtprv_wrapper').find('.dt-jump-to-page').find('input');
@@ -361,14 +404,13 @@
             }else if( newPage >= 1 ){
               newPage -= 1;
             }
-            _table.page(newPage).draw(false);
+            table.page(newPage).draw(false);
           });
         }
       }
     }
 
     function render_foreign_key_links(){
-      // FIXME: first row...
       $('#dtprv').find('.ref-link').remove();
       if( $.isEmptyObject(foreignKeys) ){
         return;
@@ -406,14 +448,14 @@
       if( table_rows.length > 0 ){
         $(table_rows).each(function(_index, _row){
           for(let [_table, _rows] of Object.entries(dt_queries)){
-            if( typeof _rows[_index - 1] == 'undefined' ){
+            if( typeof _rows[_index] == 'undefined' ){
               continue;
             }
             let ref_uri = foreignLinks[_table];
-            let encoded_query = encodeURIComponent(JSON.stringify(_rows[_index - 1]['dt_query']));
+            let encoded_query = encodeURIComponent(JSON.stringify(_rows[_index]['dt_query']));
             ref_uri += '?dt_query=' +  encoded_query;
-            for( _i = 0; _i < _rows[_index - 1]['this_keys'].length; _i++ ){
-              let fk_cell = $(_row).find('td[data-datastore-id="' + _rows[_index - 1]['this_keys'][_i] + '"]');
+            for( _i = 0; _i < _rows[_index]['this_keys'].length; _i++ ){
+              let fk_cell = $(_row).find('td[data-datastore-id="' + _rows[_index]['this_keys'][_i] + '"]');
               if( fk_cell.length > 0 ){
                 $(fk_cell).append('<sup class="ref-link" style="opacity:0.65;margin-left:4px"><small style="font-size:75%;"><a target="_blank" href="' + ref_uri + '"><i class="fas fa-external-link-alt"></i></a></small></sup>');
               }
@@ -431,7 +473,7 @@
       }
     }
 
-    function render_selectbox_inputs(_table){
+    function render_selectbox_inputs(){
       let checkboxes = $('#dtprv').find('td.checkboxes').find('input[type="checkbox"]');
       if( checkboxes.length > 0){
         $(checkboxes).each(function(_index, _checkbox){
@@ -443,23 +485,31 @@
           $(_checkbox).on('change.rowSelect', function(_event){
             _event.stopPropagation();
             if( $(_checkbox).is(":checked") ){
-              _table.row(':eq(' + _index + ')').select();
+              table.row(':eq(' + _index + ')').select();
             } else {
-              _table.row(':eq(' + _index + ')').deselect();
+              table.row(':eq(' + _index + ')').deselect();
             }
           });
         });
       }
     }
 
-    function set_table_visibility(_isCompactView){
+    function render_ajax_failure(_message){
+      console.warn(_message);
+      table.processing(false);
+      $('#dtprv_processing').css({'display': 'none'});
+      $('#dtprv_wrapper').find('#dtprv_failure_message').remove();
+      $('#dtprv_wrapper').find('.dt-scroll').before('<div id="dtprv_failure_message" class="alert alert-dismissible show alert-warning"><p>' + ajaxErrorMessage + '</p></div>');
+    }
+
+    function set_table_visibility(){
       $('#dtprv').css({'visibility': 'visible'});
       $('table.dataTable').css({'visibility': 'visible'});
       $('.dt-scroll-head').css({'visibility': 'visible'});
       $('#dtprv_wrapper').attr('data-editable', isEditable);
-      $('#dtprv_wrapper').attr('data-compact-view', _isCompactView);
+      $('#dtprv_wrapper').attr('data-compact-view', isCompactView);
       // set fake visiility for responsive column
-      if( ! _isCompactView ){
+      if( ! isCompactView ){
         $('#dtprv_wrapper').find('tr').children('th:first-of-type').css(
           {'width': '50px', 'min-width': '50px', 'max-width': '50px', 'padding': 0, 'visibility': 'hidden'});
         $('#dtprv_wrapper').find('tr').children('td:first-of-type').css(
@@ -472,14 +522,48 @@
       }
     }
 
-    function set_table_search_from_uri(_table){
-      if( searchParams.has('dt_query') ){
-        _table.search(searchParams.get('dt_query'));
+    function set_row_selects(){
+      if( typeof tableState.selected != 'undefined' ){
+        table.rows(tableState.selected).select();
+      }
+    }
+
+    function set_button_states(){
+      let buttons = $('#dtprv_wrapper').find('.dt-buttons').find('.btn.disabled');
+      if( buttons.length > 0 ){
+        $(buttons).each(function(_index, _button){
+          $(_button).attr('disabled', true);
+        });
+      }
+      let tableModified = false;
+      if( table.search() ){
+        tableModified = true;
+      }
+      if( table.page.len() != defaultRows ){
+        tableModified = true;
+      }
+      if( table.order().length != defaultSortOrder.length || (table.order()[0][0] != defaultSortOrder[0][0] && table.order()[0][1] != defaultSortOrder[0][1]) ){
+        tableModified = true;
+      }
+      if( table.page.info().page > 0 ){
+        tableModified = true;
+      }
+      // TODO: remove dt_query??
+      if( Object.keys(uri_filters).length == 0 ){
+        table.columns().every(function(_index){
+          if( this.search() ){
+            tableModified = true;
+          }
+        });
+      }
+      if( tableModified ){
+        table.buttons('resetTableButton:name').enable();
+      }else{
+        table.buttons('resetTableButton:name').enable(false);
       }
     }
 
     function get_available_buttons(){
-      // TODO: make a clear all filters and sorts button (reset button)
       let availableButtons = [];
 
       if ( document.fullscreenEnabled ){
@@ -516,7 +600,7 @@
       availableButtons.push({
         name: "tableTypeButton",
         text: isCompactView ? '<i aria-hidden="true" class="fa fa-table"></i>&nbsp;' + fullTableLabel : '<i aria-hidden="true" class="fa fa-list"></i>&nbsp;' + compactTableLabel,
-        className: 'btn-info',
+        className: 'pd-datatable-btn btn-info',
         action: function(e, dt, node, config){
           if( isCompactView ){
             dt.button('tableTypeButton:name').text('<i aria-hidden="true" class="fa fa-table"></i>&nbsp;' + compactTableLabel);
@@ -525,9 +609,22 @@
             dt.button('tableTypeButton:name').text('<i aria-hidden="true" class="fa fa-list"></i>&nbsp;' + fullTableLabel);
             isCompactView = true;
           }
-          // FIXME: store sort and page number
           $('#dtprv').css({'visibility': 'hidden'});
           $('.dt-scroll-head').css({'visibility': 'hidden'});
+          dt.clear().destroy();
+          initialize_datatable();
+        }
+      });
+
+      availableButtons.push({
+        name: "resetTableButton",
+        text: '<i aria-hidden="true" class="fas fa-sync-alt"></i>&nbsp;' + resetTabelLabel,
+        className: 'pd-datatable-btn btn-warning pd-datatable-reset-btn',
+        enabled: false,
+        action: function(e, dt, node, config){
+          $('#dtprv').css({'visibility': 'hidden'});
+          $('.dt-scroll-head').css({'visibility': 'hidden'});
+          dt.state.clear();
           dt.clear().destroy();
           initialize_datatable();
         }
@@ -548,8 +645,8 @@
             }
             rows.eq(0).each(function(index){
               let keyString = dt.cells(index, pk_cols).data().toArray();
-              // FIXME: url encode keyString
-              window.location = editSingleRecordURI + keyString.join(',');
+              let encodedKeyString = encodeURIComponent(keyString.join(','));
+              window.location = editSingleRecordURI + encodedKeyString;
             });
           }
         });
@@ -631,19 +728,40 @@
       return availableButtons;
     }
 
+    function draw_callback(_settings){
+      $('#dtprv_wrapper').find('#dtprv_failure_message').remove();
+      set_table_visibility();
+      render_expand_buttons();
+      render_selectbox_inputs();
+      render_pager_input();
+      render_foreign_key_links();
+      set_button_states();
+      if( uri_filters ){
+        render_highlights();
+      }
+    }
+
+    function init_callback(){
+      set_table_visibility();
+      render_table_footer();
+      set_button_states();
+      set_row_selects();
+    }
+
     function initialize_datatable(){
-      let table;
       table = $('#dtprv').DataTable({
         paging: true,
         serverSide: true,
         processing: true,
         responsive: isCompactView,
         autoWidth: true,
+        stateSave: true,
         scrollX: ! isCompactView,
         scrollY: 400,
         scrollResize: true,
         scrollCollapse: false,
         deferRender: true,
+        pageLength: defaultRows,
         select: {
           style: 'multi',
           selector: 'td:not(:first-child)'
@@ -659,42 +777,42 @@
         ajax: {
           "url": ajaxURI,
           "type": "POST",
-          "data": function(data){
-            if( searchParams.has('dt_query') ){  // pass search query from URI param
-              data.dt_query = searchParams.get('dt_query');
+          "data": function(_data){
+            if( Object.keys(uri_filters).length > 0 ){
+              for(let [_index, _value] of Object.entries(uri_filters)){
+                _data['columns'][_index]['search']['value'] = _value;
+              }
+            }
+          },
+          "complete": function(_data){
+            if( _data.responseJSON ){
+              if( ! _data.responseJSON.aaData ){
+                render_ajax_failure('DataTables error - ' + _data.status + ': ' + _data.statusText);
+              }
             }else{
-              data.dt_query = '';
+              render_ajax_failure('DataTables error - ' + _data.status + ': ' + _data.statusText);
             }
           }
         },
-        initComplete: function(){
-          set_table_visibility(isCompactView);
-          set_table_search_from_uri(table);
-          render_table_footer(this, table);
-        },
-        drawCallback: function(_settings){
-          // TODO: make an error message for AJAX failures!
-          set_table_visibility(isCompactView);
-          render_expand_buttons();
-          render_selectbox_inputs(table);
-          render_pager_input(table);
-          render_foreign_key_links();
-        },
+        initComplete: init_callback,
+        drawCallback: draw_callback,
         stateSaveParams: function(_settings, _data){
-          _data.page = this.api().page();
           _data.selected = this.api().rows({selected: true})[0];
-          // TODO: save to local storage with resource ID...
+          if( typeof _data.order != 'undefined' ){
+            // TODO: if order string is empty, delete from array;
+            //       if array is then empty, set order to defaultSortOrder
+          }
         },
         stateLoadParams: function(_settings, _data){
-          // TODO: ingest any saved state
+          tableState = _data;
         },
         buttons: get_available_buttons(),
       });
       // set checkboxes when selecting rows
       table.on('select', function(e, dt, type, indexes){
-        check_the_boxes(true, indexes, dt);
+        check_the_boxes(true, indexes);
       }).on('deselect', function(e, dt, type, indexes){
-        check_the_boxes(false, indexes, dt);
+        check_the_boxes(false, indexes);
       });
       // END
       // set checkboxes when selecting rows
