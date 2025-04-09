@@ -3,11 +3,6 @@ css:
     - canada_internal.css
   output: canada_internal/%(version)s_canada_internal.css
 
-pd_datatable_css:
-  contents:
-    - pd_datatable.css
-  output: canada_internal/%(version)s_pd_datatable.css
-
 analytics:
   contents:
     - canada_internal_analytics.js

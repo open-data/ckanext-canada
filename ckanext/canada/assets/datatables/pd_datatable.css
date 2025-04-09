@@ -449,3 +449,24 @@ body #dtprv_wrapper #dtprv-foot-main .dtprv-filter-col button[type="submit"] i.f
   transform: translate(-50%, -50%);
   font-size: 13px !important;
 }
+
+body #dtprv .pd-datatable-readmore .collapse
+body #dtprv .pd-datatable-readmore .collapsing{
+  transition-duration: 0s !important;
+}
+
+body #dtprv .pd-datatable-readmore span.show{
+  display: inline !important;
+}
+
+body #dtprv_wrapper[data-compact-view="false"] .pd-datatables-primary-key-fixed{
+  position: sticky !important;
+  left: 0;
+  background-color: white !important;
+}
+
+body #dtprv_wrapper[data-compact-view="false"] .dt-scroll-head th:not(:first-of-type).pd-datatables-primary-key-fixed,
+body #dtprv_wrapper[data-compact-view="false"] #dtprv-foot-main .pd-datatables-primary-key-fixed{
+  left: 50px;
+  z-index: 4 !important;
+}
