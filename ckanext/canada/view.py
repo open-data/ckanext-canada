@@ -1,8 +1,6 @@
-import re
 import codecs
 import json
 import decimal
-from pytz import timezone, utc
 from socket import error as socket_error
 from logging import getLogger
 import csv
@@ -79,8 +77,6 @@ from ckanapi import LocalCKAN
 
 from flask import Blueprint, make_response
 
-from ckanext.canada.helpers import canada_date_str_to_datetime
-
 from io import StringIO
 
 
@@ -91,27 +87,10 @@ MAX_JOB_QUEUE_LIST_SIZE = 25
 log = getLogger(__name__)
 
 canada_views = Blueprint('canada', __name__)
-ottawa_tz = timezone('America/Montreal')
 
 
 class IntentionalServerError(Exception):
     pass
-
-
-def _url_part_escape(orig: str) -> str:
-    """
-    simple encoding for url-parts where all non-alphanumerics are
-    wrapped in e.g. _xxyyzz_ blocks w/hex UTF-8 xx, yy, zz values
-
-    used for safely including arbitrary unicode as part of a url path
-    all returned characters will be in [a-zA-Z0-9_-]
-    """
-    return '_'.join(
-        codecs.encode(s.encode('utf-8'), 'hex').decode('ascii') if i % 2 else s
-        for i, s in enumerate(
-            re.split(r'([^-a-zA-Z0-9]+)', orig)
-        )
-    )
 
 
 def _url_part_unescape(urlpart: str) -> str:
@@ -897,14 +876,11 @@ def view_help():
 @canada_views.route('/datatable/<resource_name>/<resource_id>',
                     methods=['GET', 'POST'])
 @csrf.exempt
-def datatable(resource_name: str, resource_id: str):
+def pd_datatable(resource_name: str, resource_id: str):
     params = parse_params(request.form)
     # type_ignore_reason: datatable param draw is int
     draw = int(params['draw'])  # type: ignore
     search_text = str(params['search[value]'])
-    dt_query = str(params['dt_query'])
-    if dt_query and not search_text:
-        search_text = dt_query
     # type_ignore_reason: datatable param start is int
     offset = int(params['start'])  # type: ignore
     # type_ignore_reason: datatable param length is int
@@ -952,35 +928,31 @@ def datatable(resource_name: str, resource_id: str):
             cols[sort_by_num - prefix_cols] + ' ' + sort_order + ' nulls last')
         i += 1
 
+    col_filters = {}
+    i = 0
+    while True:
+        if u'columns[%d][search][value]' % i not in request.form:
+            break
+        v = str(request.form[u'columns[%d][search][value]' % i])
+        if v:
+            k = str(request.form[u'columns[%d][name]' % i])
+            col_filters[k] = v
+        i += 1
+
     response = lc.action.datastore_search(
         q=search_text,
         resource_id=resource_id,
         offset=offset,
         limit=limit,
         sort=', '.join(sort_list),
+        filters=col_filters,
     )
 
     aadata = [
-        ['<input type="checkbox">'] +
-        [datatablify(row.get(colname, ''), colname, chromo) for colname in cols]
-        for row in response['records']]
-
-    if chromo.get('edit_form', False) and can_edit:
-        res = lc.action.resource_show(id=resource_id)
-        pkg = lc.action.package_show(id=res['package_id'])
-        pkids = [fids.index(k) for k in aslist(chromo['datastore_primary_key'])]
-        for row in aadata:
-            row.insert(1, (
-                    '<a href="{0}" aria-label="' + _("Edit") + '">'
-                    '<i class="fa fa-lg fa-edit" aria-hidden="true"></i></a>').format(
-                    h.url_for(
-                        'canada.update_pd_record',
-                        owner_org=pkg['organization']['name'],
-                        resource_name=resource_name,
-                        pk=','.join(_url_part_escape(row[i+1]) for i in pkids)
-                    )
-                )
-            )
+        [''] +  # Expand column
+        ['<input type="checkbox">'] +  # Select column
+        # FIXME: move to datatable renderer method
+        [row.get(col, '') for col in cols] for row in response['records']]
 
     return json.dumps({
         'draw': draw,
@@ -988,33 +960,6 @@ def datatable(resource_name: str, resource_id: str):
         'iTotalDisplayRecords': response.get('total', 0),
         'aaData': aadata,
     })
-
-
-def datatablify(v: Any, colname: str, chromo: Dict[str, Any]) -> str:
-    '''
-    format value from datastore v for display in a datatable preview
-    '''
-    chromo_field = None
-    for f in chromo['fields']:
-        if f['datastore_id'] == colname:
-            chromo_field = f
-            break
-    if v is None:
-        return ''
-    if v is True:
-        return 'TRUE'
-    if v is False:
-        return 'FALSE'
-    if isinstance(v, list):
-        return ', '.join(str(e) for e in v)
-    if colname in ('record_created', 'record_modified') and v:
-        return canada_date_str_to_datetime(v).replace(tzinfo=utc).astimezone(
-            ottawa_tz).strftime('%Y-%m-%d %H:%M:%S %Z')
-    if chromo_field and chromo_field.get('datastore_type') == 'money':
-        if isinstance(v, str) and '$' in v:
-            return v
-        return '${:,.2f}'.format(v)
-    return str(v)
 
 
 @canada_views.route('/fgpv-vpgf/<pkg_id>', methods=['GET'])
