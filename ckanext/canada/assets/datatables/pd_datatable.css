@@ -1,3 +1,12 @@
+.pd-dattable-instructions{
+  margin-bottom: 10px;
+}
+
+.pd-dattable-instructions pre{
+  display: inline !important;
+  padding: 2px 6px !important;
+}
+
 body #dtprv_wrapper{
   background-color: white !important;
 }

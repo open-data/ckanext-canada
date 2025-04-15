@@ -130,6 +130,7 @@ function load_pd_datatable(){
   }
 
   function render_highlights(){
+    // FIXME: highglights for masked data types: money & datetime...
     let tableBody = $(table.table().body());
     tableBody.unhighlight();
     if( table.rows({filter: 'applied'}).data().length ){
@@ -478,6 +479,8 @@ function load_pd_datatable(){
   }
 
   function set_row_selects(){
+    // FIXME: not working anymore!!!
+    console.log(tableState.selected);
     if( typeof tableState != 'undefined' && typeof tableState.selected != 'undefined' ){
       table.rows(tableState.selected).select();
     }
@@ -716,6 +719,8 @@ function load_pd_datatable(){
     if( uri_filters ){
       render_highlights();
     }
+    // TODO: human readable sort order...
+    // TODO: fix tab indexing in hidden elements!!!
   }
 
   function init_callback(){
@@ -797,10 +802,8 @@ function load_pd_datatable(){
       check_the_boxes(true, indexes);
     }).on('deselect', function(e, dt, type, indexes){
       check_the_boxes(false, indexes);
-    // TODO: key callback to focus on row??
-    // TODO: key callback to add space key to select row??
     }).on('key', function(e, dt, key, cell, oe){
-      let rowIndex = cell.row()[0][0];
+      let rowIndex = cell[0][0].row;
       if( key == 32 ){  // select row on space
         e.preventDefault();
         oe.preventDefault();
@@ -811,12 +814,19 @@ function load_pd_datatable(){
         }
       }
       if( key == 13 ){  // expand on enter
-
+        e.preventDefault();
+        oe.preventDefault();
+        if( isCompactView ){
+          let _row = $('#dtprv-body-main').find('tr').eq(rowIndex);
+          let _rowObj = table.row(_row);
+          if( _rowObj.child.isShown() ){
+            _rowObj.child.hide();
+          }else{
+            _rowObj.child().show();
+          }
+        }
       }
-    }).on('key-focus', function(e, dt, cell){
-
-    }).on('key-blur', function(e, dt, cell){
-
+      // TODO: control for readmore cells??
     });
     // END
     // set checkboxes when selecting rows
