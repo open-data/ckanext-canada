@@ -319,6 +319,10 @@ function load_pd_datatable(){
   }
 
   function check_the_boxes(_checked, _indexes){
+    if( typeof _indexes == 'undefined' ){
+      // a cell could be selected with KeyTables
+      return;
+    }
     let selectCount = table.rows({ selected: true })[0].length;
     let singleSelectButtons = $('#dtprv_wrapper').find('.pd-datatable-btn-single');
     let buttonStats = $('#dtprv_wrapper').find('span.pd-datatbales-btn-count');
@@ -479,10 +483,9 @@ function load_pd_datatable(){
   }
 
   function set_row_selects(){
-    // FIXME: not working anymore!!!
-    console.log(tableState.selected);
     if( typeof tableState != 'undefined' && typeof tableState.selected != 'undefined' ){
       table.rows(tableState.selected).select();
+      check_the_boxes(true, tableState.selected);
     }
   }
 
@@ -507,6 +510,9 @@ function load_pd_datatable(){
       tableModified = true;
     }
     if( table.page.info().page > 0 ){
+      tableModified = true;
+    }
+    if( table.rows({selected: true})[0].length > 0 ){
       tableModified = true;
     }
     // TODO: remove dt_query??
@@ -537,6 +543,86 @@ function load_pd_datatable(){
         sortOrder = defaultSortOrder;
       }
     }
+  }
+
+  function bind_table_selects(){
+    table.off('select.CheckBoxes');
+    table.off('deselect.CheckBoxes');
+    table.on('select.CheckBoxes', function(e, dt, type, indexes){
+      check_the_boxes(true, indexes);
+      set_button_states();
+      if( table.rows({selected: true})[0].length > 0 ){
+        table.buttons('resetTableButton:name').enable();
+      }else{
+        table.buttons('resetTableButton:name').enable(false);
+      }
+    }).on('deselect.CheckBoxes', function(e, dt, type, indexes){
+      check_the_boxes(false, indexes);
+      if( table.rows({selected: true})[0].length > 0 ){
+        table.buttons('resetTableButton:name').enable();
+      }else{
+        table.buttons('resetTableButton:name').enable(false);
+      }
+    });
+  }
+
+  function bind_keyboard_controls(){
+    let _start = isCompactView ? 0 : 1;
+    $(document).off('keyup.KeyTable');
+    $(document).on('keyup.KeyTable', function(_event){
+      if( _event.ctrlKey && _event.keyCode == 13 ){  // CTRL + ENTER
+        _event.stopPropagation();
+        table.cell(':eq(' + _start + ')').focus();
+        $('.dt-scroll-body')[0].scrollTop = 0;
+      }
+    });
+    let orderControls = $('.dt-column-order');
+    if( orderControls.length > 0 ){
+      $(orderControls).each(function(_index, _orderControl){
+        $(_orderControl).off('keydown.KeyTable');
+        $(_orderControl).on('keydown.KeyTable', function(_event){
+          if( _event.ctrlKey && _event.keyCode == 13 ){  // CTRL + ENTER
+            $(_orderControl).blur();
+            _event.stopPropagation();
+            _event.preventDefault();
+          }
+        });
+      });
+    }
+    table.off('key.KeyTable');
+    table.on('key.KeyTable', function(e, dt, key, cell, oe){
+      let rowIndex = cell[0][0].row;
+      if( key == 32 ){  // select row on space
+        e.preventDefault();
+        oe.preventDefault();
+        if( table.rows({ selected: true })[0].includes(rowIndex) ){
+          table.row(rowIndex).deselect();
+        }else{
+          table.row(rowIndex).select();
+        }
+      }
+      if( (e.ctrlKey && e.keyCode) == 13 || (oe.ctrlKey && oe.keyCode) ){  // CTRL + ENTER
+        e.preventDefault();
+        oe.preventDefault();
+        return
+      }
+      if( key == 13 ){  // expand on enter
+        e.preventDefault();
+        oe.preventDefault();
+        if( isCompactView ){
+          let _row = $('#dtprv-body-main').find('tr').eq(rowIndex);
+          let _rowObj = table.row(_row);
+          if( $(_row).hasClass('dtr-expanded') ){
+            _rowObj.child.hide();
+            $(_row).removeClass('dtr-expanded');
+          }else{
+            // workaround the datatable api to use default child renderers
+            table.settings()[0].responsive._detailsDisplay(_rowObj, false);
+          }
+        }
+      }
+      // TODO: control for readmore cells??
+    });
   }
 
   function get_available_buttons(){
@@ -587,6 +673,7 @@ function load_pd_datatable(){
           isCompactView = true;
           tableState.compact_view = true;
         }
+        tableState.selected = table.rows({ selected: true })[0];
         $('#dtprv').css({'visibility': 'hidden'});
         $('.dt-scroll-head').css({'visibility': 'hidden'});
         dt.clear().destroy();
@@ -602,7 +689,9 @@ function load_pd_datatable(){
       action: function(e, dt, node, config){
         $('#dtprv').css({'visibility': 'hidden'});
         $('.dt-scroll-head').css({'visibility': 'hidden'});
+        table.rows().deselect();
         isCompactView = true;
+        tableState = void 0;
         dt.state.clear();
         dt.clear().destroy();
         initialize_datatable();
@@ -726,12 +815,14 @@ function load_pd_datatable(){
   function init_callback(){
     set_table_visibility();
     render_table_footer();
-    set_button_states();
     bind_readmore();
     set_row_selects();
+    set_button_states();
     if( ! isCompactView ){
       table.columns.adjust();
     }
+    bind_table_selects();
+    bind_keyboard_controls();
   }
 
   function initialize_datatable(){
@@ -789,48 +880,14 @@ function load_pd_datatable(){
         _data.selected = this.api().rows({selected: true})[0];
         fix_blank_ordering(_data);
         _data.compact_view = isCompactView;
-        tableState = _data;
+        tableState = typeof tableState != 'undefined' ? tableState : _data;
       },
       stateLoadParams: function(_settings, _data){
         fix_blank_ordering(_data);
-        tableState = _data;
+        tableState = typeof tableState != 'undefined' ? tableState : _data;
       },
       buttons: get_available_buttons(),
     });
-    // set checkboxes when selecting rows
-    table.on('select', function(e, dt, type, indexes){
-      check_the_boxes(true, indexes);
-    }).on('deselect', function(e, dt, type, indexes){
-      check_the_boxes(false, indexes);
-    }).on('key', function(e, dt, key, cell, oe){
-      let rowIndex = cell[0][0].row;
-      if( key == 32 ){  // select row on space
-        e.preventDefault();
-        oe.preventDefault();
-        if( table.rows({ selected: true })[0].includes(rowIndex) ){
-          table.rows(rowIndex).deselect();
-        }else{
-          table.rows(rowIndex).select();
-        }
-      }
-      if( key == 13 ){  // expand on enter
-        e.preventDefault();
-        oe.preventDefault();
-        if( isCompactView ){
-          let _row = $('#dtprv-body-main').find('tr').eq(rowIndex);
-          let _rowObj = table.row(_row);
-          if( _rowObj.child.isShown() ){
-            _rowObj.child.hide();
-          }else{
-            _rowObj.child().show();
-          }
-        }
-      }
-      // TODO: control for readmore cells??
-    });
-    // END
-    // set checkboxes when selecting rows
-    // END
   }
   initialize_datatable();
 }

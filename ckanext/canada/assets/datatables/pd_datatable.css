@@ -469,6 +469,7 @@ body #dtprv .pd-datatable-readmore span.show{
 }
 
 body #dtprv_wrapper[data-compact-view="false"] .pd-datatables-primary-key-fixed{
+  /* TODO: not sticky when in KeyTable mode?? */
   position: sticky !important;
   left: 0;
   background-color: white !important;
