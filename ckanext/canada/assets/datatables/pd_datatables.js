@@ -13,7 +13,6 @@ function load_pd_datatable(){
   const csrfTokenName = pd_datatable__csrfTokenName;
   const resourceName = pd_datatable__resourceName;
   const colOffset = 2;  // expand col + select col
-  const defaultSortOrder = [[1, "asc"]];
   const defaultRows = 10;
   const ellipsesLength = 100;  // default 100 ellipses length from ckanext-datatablesview
   const primaryKeys = pd_datatable__primaryKeys;
@@ -23,6 +22,10 @@ function load_pd_datatable(){
   const isEditable = pd_datatable__isEditable;
   const selectAllLabel = pd_datatable__selectAllLabel;
   const colSearchLabel = pd_datatable__colSearchLabel;
+  const colSortLabel = pd_datatable__colSortLabel;
+  const colSortAscLabel = pd_datatable__colSortAscLabel;
+  const colSortDescLabel = pd_datatable__colSortDescLabel;
+  const colSortAnyLabel = pd_datatable__colSortAnyLabel;
   const readLessLabel = pd_datatable__readLessLabel;
   const jumpToPageLabel = pd_datatable__jumpToPageLabel;
   const resetTabelLabel = pd_datatable__resetTabelLabel;
@@ -56,7 +59,6 @@ function load_pd_datatable(){
   }
   let isCompactView = typeof tableState != 'undefined' && typeof tableState.compact_view != 'undefined' ? tableState.compact_view : true;
   let isFullScreen = is_page_fullscreen();
-  let sortOrder = defaultSortOrder;
 
   let uri_filters = {};
   if( searchParams.has('dt_query') ){
@@ -152,6 +154,7 @@ function load_pd_datatable(){
       footerContent = $.parseHTML('<input title="' + selectAllLabel + '" aria-label="' + selectAllLabel + '" id="dt-select-all" name="dt-select-all" type="checkbox"/>')[0];
     }
     if( _index >= colOffset ){
+      // FIXME: ds_type select may not work with computed fields...add datatype as HTLM attribute!!!
       let ds_type = chromoFields[_index - colOffset].datastore_type;
       let labelText = _column.footer().textContent;
       if( ! labelText.includes(colSearchLabel) ){
@@ -262,6 +265,8 @@ function load_pd_datatable(){
     return _data;
   }
 
+  // Compile available columns
+  let _sortOrderIndex = 1;
   for( let i = 0; i < chromoFields.length; i++ ){
     if( typeof chromoFields[i].published_resource_computed_field == 'undefined' || ! chromoFields[i].published_resource_computed_field ){
       let previewClass = '';
@@ -279,8 +284,14 @@ function load_pd_datatable(){
           return cell_renderer(_data, _type, _row, _meta, chromoFields[i]);
         }
       });
+      _sortOrderIndex += 1;
     }
   }
+  // END
+  // Compile available columns
+  // END
+  const defaultSortOrder = [[_sortOrderIndex - 1, "desc"]];
+  sortOrder = defaultSortOrder;
 
   function is_page_fullscreen(){
     return document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreenElement || document.msFullscreenElement;
@@ -345,6 +356,35 @@ function load_pd_datatable(){
       let checkbox = $($('#dtprv').find('#dtprv-body-main').find('tr')[_indexes[_i]]).find('td.checkboxes').find('input[type="checkbox"]');
       $(checkbox)[0].checked = _checked;  // set prop in the scenario that the checkbox has human interaction
       $(checkbox).attr("checked", _checked).blur();
+    }
+  }
+
+  function render_human_sorting(){
+    let infoWrapper = $('#dtprv_wrapper').find('#dtprv_info');
+    if( infoWrapper.length > 0 ){
+      $('#dtprv_wrapper').find('.dt-sorting-info').remove();
+      let sortInfo = table.order();
+      let sortingText = '<span class="info-label">' + colSortLabel + '</span>';
+      if( sortInfo.length > 0 ){
+        sortingText += '<div>';
+        for( let i = 0; i < sortInfo.length; i++ ){
+          let column = table.column(sortInfo[i][0]);
+          let labelText = column.header().textContent;
+          sortingText += '<span><em>' + labelText;
+          // TODO: do numeric and alphabetic sorting...
+          if( sortInfo[i][1] == 'asc' ){
+            sortingText += '<sup><i title="' + colSortAscLabel + '" aria-label="' + colSortAscLabel + '" class="fas fa-sort-amount-up"></i></sup>';
+          }else if( sortInfo[i][1] == 'desc' ){
+            sortingText += '<sup><i title="' + colSortDescLabel + '" aria-label="' + colSortDescLabel + '" class="fas fa-sort-amount-down"></i></sup>';
+          }else{
+            sortingText += '<sup><i title="' + colSortAnyLabel + '" aria-label="' + colSortAnyLabel + '" class="fas fa-random"></i></sup>';
+          }
+          sortingText += '</em></span>';
+        }
+        sortingText += '</div>';
+      }
+      let sortDisplay = '<div class="dt-sorting-info">' + sortingText + '</div>';
+      $(infoWrapper).after(sortDisplay);
     }
   }
 
@@ -506,7 +546,8 @@ function load_pd_datatable(){
     if( table.page.len() != defaultRows ){
       tableModified = true;
     }
-    if( tableState.order.length != defaultSortOrder.length || (tableState.order[0][0] != defaultSortOrder[0][0] || tableState.order[0][1] != defaultSortOrder[0][1]) ){
+    let possibleNamedSortIndex = $('#dtprv').find('thead').find('th[data-datastore-id="' + tableState.order[0][0] + '"]').index();
+    if( tableState.order.length != defaultSortOrder.length || tableState.order[0][1] != 'desc' || ((tableState.order[0][0] != defaultSortOrder[0][0] && possibleNamedSortIndex != defaultSortOrder[0][0]) || tableState.order[0][1] != defaultSortOrder[0][1]) ){
       tableModified = true;
     }
     if( table.page.info().page > 0 ){
@@ -527,21 +568,6 @@ function load_pd_datatable(){
       table.buttons('resetTableButton:name').enable();
     }else{
       table.buttons('resetTableButton:name').enable(false);
-    }
-  }
-
-  function fix_blank_ordering(_data){
-    if( typeof _data.order != 'undefined' ){
-      let _sortOrder = _data.order;
-      for( let _i = 0; _i < _data.order.length; _i++ ){
-        if( ! _data.order[_i][1] ){
-          _sortOrder.splice(_i, 1);
-        }
-      }
-      if( _sortOrder.length == 0 ){
-        _data.order = defaultSortOrder;
-        sortOrder = defaultSortOrder;
-      }
     }
   }
 
@@ -589,6 +615,22 @@ function load_pd_datatable(){
         });
       });
     }
+    // FIXME: if an expander is focused on, the KeyTable controls double...maybe just switch focus element during key tabeling??
+    let expanderControls = $('td.expanders');
+    if( orderControls.length > 0 ){
+      $(expanderControls).each(function(_index, _expanderControl){
+        $(_expanderControl).off('keydown.KeyTable');
+        $(_expanderControl).on('keydown.KeyTable', function(_event){
+          if( _event.keyCode == 13 ){  // ENTER
+            $(_expanderControl).blur();
+            _event.stopPropagation();
+            _event.preventDefault();
+          }
+        });
+      });
+    }
+    // FIXME: search and col filters ENTER keys with KeyTable controls...
+    // FIXME: readmore ENTER keys with KeyTable controls...
     table.off('key.KeyTable');
     table.on('key.KeyTable', function(e, dt, key, cell, oe){
       let rowIndex = cell[0][0].row;
@@ -802,14 +844,13 @@ function load_pd_datatable(){
     render_expand_buttons();
     render_selectbox_inputs();
     render_pager_input();
+    render_human_sorting();
     render_foreign_key_links();
     set_button_states();
     bind_readmore();
     if( uri_filters ){
       render_highlights();
     }
-    // TODO: human readable sort order...
-    // TODO: fix tab indexing in hidden elements!!!
   }
 
   function init_callback(){
@@ -878,13 +919,15 @@ function load_pd_datatable(){
       drawCallback: draw_callback,
       stateSaveParams: function(_settings, _data){
         _data.selected = this.api().rows({selected: true})[0];
-        fix_blank_ordering(_data);
         _data.compact_view = isCompactView;
-        tableState = typeof tableState != 'undefined' ? tableState : _data;
+        let localInstanceSelected = typeof tableState != 'undefined' ? tableState.selected : _data.selected;
+        tableState = _data;
+        tableState.selected = localInstanceSelected;
       },
       stateLoadParams: function(_settings, _data){
-        fix_blank_ordering(_data);
-        tableState = typeof tableState != 'undefined' ? tableState : _data;
+        let localInstanceSelected = typeof tableState != 'undefined' ? tableState.selected : _data.selected;
+        tableState = _data;
+        tableState.selected = localInstanceSelected;
       },
       buttons: get_available_buttons(),
     });

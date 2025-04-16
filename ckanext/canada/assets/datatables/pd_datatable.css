@@ -26,6 +26,7 @@ body #dt-preview:fullscreen #dtprv_wrapper{
 body #dt-preview:fullscreen #dtprv_wrapper .dt-scroll-body{
   height: 55vh !important;
   max-height: 55vh !important;
+  /* FIXME: add scrollY overflow!!! */
 }
 
 body #dtprv,
@@ -164,7 +165,15 @@ body #dtprv_wrapper .dt-info{
 }
 
 body #dtprv_wrapper .dt-jump-to-page{
-  display: flex !important;
+  display: inline-flex !important;
+  width: 50% !important;
+  min-width: 50% !important;
+  max-width: 50% !important;
+  margin-top: -5px;
+  margin-bottom: 10px;
+  float: right;
+  clear: right;
+  box-sizing: border-box;
 }
 
 body #dtprv_wrapper .dt-jump-to-page input{
@@ -180,8 +189,50 @@ body #dtprv_wrapper .dt-jump-to-page label{
 }
 
 @media all and (max-width: 768px){
+  body #dtprv_wrapper .dt-jump-to-page{
+    width: 100% !important;
+    min-width: 100% !important;
+    max-width: 100% !important;
+  }
   body #dtprv_wrapper .dt-jump-to-page label{
     margin-left: 0 !important;
+  }
+}
+
+body #dtprv_wrapper #dtprv_info{
+  float: left;
+  clear: left;
+  box-sizing: border-box;
+}
+
+body #dtprv_wrapper .dt-sorting-info{
+  display: inline-flex !important;
+  width: 50% !important;
+  min-width: 50% !important;
+  max-width: 50% !important;
+  margin-top: -10px;
+  margin-bottom: 10px;
+  float: left;
+  clear: left;
+  box-sizing: border-box;
+}
+
+body #dtprv_wrapper .dt-sorting-info .info-label{
+  white-space: nowrap !important;
+  margin-right: 8px !important;
+}
+
+body #dtprv_wrapper .dt-sorting-info div{
+  display: inline-flex;
+  width: 100%;
+  flex-direction: column;
+}
+
+@media all and (max-width: 768px){
+  body #dtprv_wrapper .dt-sorting-info{
+    width: 100% !important;
+    min-width: 100% !important;
+    max-width: 100% !important;
   }
 }
 
@@ -192,6 +243,8 @@ body #dtprv_wrapper .dt-paging{
   max-width: 50% !important;
   margin-top: 10px !important;
   margin-bottom: 10px !important;
+  clear: both;
+  box-sizing: border-box;
 }
 
 body #dtprv_wrapper .dt-paging > nav{
@@ -479,4 +532,10 @@ body #dtprv_wrapper[data-compact-view="false"] .dt-scroll-head th:not(:first-of-
 body #dtprv_wrapper[data-compact-view="false"] #dtprv-foot-main .pd-datatables-primary-key-fixed{
   left: 50px;
   z-index: 4 !important;
+}
+
+body #dtprv_wrapper .dt-scroll-body tfoot input,
+body #dtprv_wrapper .dt-scroll-body tfoot label,
+body #dtprv_wrapper .dt-scroll-body thead span.dt-column-order{
+  visibility: hidden !important;
 }
