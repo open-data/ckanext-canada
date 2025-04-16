@@ -34,6 +34,8 @@ function load_pd_datatable(){
   const fullTableLabel = pd_datatable__fullTableLabel;
   const compactTableLabel = pd_datatable__compactTableLabel;
   const editSingleButtonLabel = pd_datatable__editSingleButtonLabel;
+  const addInTableButtonLabel = pd_datatable__addInTableButtonLabel;
+  const editInTableButtonLabel = pd_datatable__editInTableButtonLabel;
   const countSuffix = pd_datatable__countSuffix;
   const ajaxErrorMessage = pd_datatable__ajaxErrorMessage;
   const editSingleRecordURI = pd_datatable__editSingleRecordURI;
@@ -44,6 +46,7 @@ function load_pd_datatable(){
   const ajaxURI = pd_datatable__ajaxURI;
   const tableLanguage = pd_datatable__tableLanguage;
   const markedRenderer = new marked.Renderer();
+  const EDITOR = pd_datatables__EDITOR;
 
   if( searchParams.has('dt_query') ){
     $([document.documentElement, document.body]).animate({
@@ -104,6 +107,7 @@ function load_pd_datatable(){
       $(readmores).each(function(_index, _section){
         let expandElement = $(_section).find('a.pd-datatable-readmore-expander');
         let minimizeElement = $(_section).find('a.pd-datatable-readmore-minimizer');
+        // FIXME: some strange things may be happening...
         if( expandElement.length > 0 ){
           $(expandElement).off('click.readMore');
           $(expandElement).on('click.readMore', function(_event){
@@ -154,8 +158,7 @@ function load_pd_datatable(){
       footerContent = $.parseHTML('<input title="' + selectAllLabel + '" aria-label="' + selectAllLabel + '" id="dt-select-all" name="dt-select-all" type="checkbox"/>')[0];
     }
     if( _index >= colOffset ){
-      // FIXME: ds_type select may not work with computed fields...add datatype as HTLM attribute!!!
-      let ds_type = chromoFields[_index - colOffset].datastore_type;
+      let ds_type = $('#dtprv').find('thead').find('th').eq(_index).attr('data-datastore-type');
       let labelText = _column.footer().textContent;
       if( ! labelText.includes(colSearchLabel) ){
         labelText = colSearchLabel + ' ' + _column.footer().textContent;
@@ -370,8 +373,9 @@ function load_pd_datatable(){
         for( let i = 0; i < sortInfo.length; i++ ){
           let column = table.column(sortInfo[i][0]);
           let labelText = column.header().textContent;
+          let ds_type = $('#dtprv').find('thead').find('th').eq(column.index()).attr('data-datastore-type');
           sortingText += '<span><em>' + labelText;
-          // TODO: do numeric and alphabetic sorting...
+          // TODO: do numeric and alphabetic sorting based on ds_type...
           if( sortInfo[i][1] == 'asc' ){
             sortingText += '<sup><i title="' + colSortAscLabel + '" aria-label="' + colSortAscLabel + '" class="fas fa-sort-amount-up"></i></sup>';
           }else if( sortInfo[i][1] == 'desc' ){
@@ -469,8 +473,34 @@ function load_pd_datatable(){
   function render_expand_buttons(){
     let expanderButtons = $('#dtprv').find('td.expanders');
     if( expanderButtons.length > 0){
-      // TODO: add aria-labels for expanding...
-      // td.dtr-hidden
+      $(expanderButtons).each(function(_index, _expanderButton){
+        $(_expanderButton).attr('role', 'button');
+        $(_expanderButton).attr('aria-controls', 'dtprv-child-data-row-' + _index);
+        if( $(_expanderButton).parent().next().hasClass('child') ){
+          $(_expanderButton).attr('aria-expanded', true);
+        }else{
+          $(_expanderButton).attr('aria-expanded', false);
+        }
+        $(_expanderButton).off('click.Accessible');
+        $(_expanderButton).on('click.Accessible', function(_event){
+          setTimeout(function(){
+            if( $(_expanderButton).parent().next().hasClass('child') ){
+              $(_expanderButton).attr('aria-expanded', true);
+            }else{
+              $(_expanderButton).attr('aria-expanded', false);
+            }
+          }, 250);  // there is some transition duration for childRows
+        });
+      });
+      table.off('childRow.Accessible');
+      table.on('childRow.Accessible', function(_event, _isShown, _row){
+        if( _isShown ){
+          let rowIndex = _row.index();
+          $(expanderButtons).eq(rowIndex).attr('aria-expanded', true);
+          $(expanderButtons).eq(rowIndex).attr('aria-controls', 'dtprv-child-data-row-' + rowIndex);
+          $(expanderButtons).eq(rowIndex).parent().next().attr('id', 'dtprv-child-data-row-' + rowIndex);
+        }
+      });
     }
   }
 
@@ -556,7 +586,6 @@ function load_pd_datatable(){
     if( table.rows({selected: true})[0].length > 0 ){
       tableModified = true;
     }
-    // TODO: remove dt_query??
     if( Object.keys(uri_filters).length == 0 ){
       table.columns().every(function(_index){
         if( this.search() ){
@@ -596,41 +625,12 @@ function load_pd_datatable(){
     let _start = isCompactView ? 0 : 1;
     $(document).off('keyup.KeyTable');
     $(document).on('keyup.KeyTable', function(_event){
-      if( _event.ctrlKey && _event.keyCode == 13 ){  // CTRL + ENTER
+      if( _event.altKey && _event.keyCode == 75 ){  // ALT + k
         _event.stopPropagation();
         table.cell(':eq(' + _start + ')').focus();
         $('.dt-scroll-body')[0].scrollTop = 0;
       }
     });
-    let orderControls = $('.dt-column-order');
-    if( orderControls.length > 0 ){
-      $(orderControls).each(function(_index, _orderControl){
-        $(_orderControl).off('keydown.KeyTable');
-        $(_orderControl).on('keydown.KeyTable', function(_event){
-          if( _event.ctrlKey && _event.keyCode == 13 ){  // CTRL + ENTER
-            $(_orderControl).blur();
-            _event.stopPropagation();
-            _event.preventDefault();
-          }
-        });
-      });
-    }
-    // FIXME: if an expander is focused on, the KeyTable controls double...maybe just switch focus element during key tabeling??
-    let expanderControls = $('td.expanders');
-    if( orderControls.length > 0 ){
-      $(expanderControls).each(function(_index, _expanderControl){
-        $(_expanderControl).off('keydown.KeyTable');
-        $(_expanderControl).on('keydown.KeyTable', function(_event){
-          if( _event.keyCode == 13 ){  // ENTER
-            $(_expanderControl).blur();
-            _event.stopPropagation();
-            _event.preventDefault();
-          }
-        });
-      });
-    }
-    // FIXME: search and col filters ENTER keys with KeyTable controls...
-    // FIXME: readmore ENTER keys with KeyTable controls...
     table.off('key.KeyTable');
     table.on('key.KeyTable', function(e, dt, key, cell, oe){
       let rowIndex = cell[0][0].row;
@@ -643,12 +643,7 @@ function load_pd_datatable(){
           table.row(rowIndex).select();
         }
       }
-      if( (e.ctrlKey && e.keyCode) == 13 || (oe.ctrlKey && oe.keyCode) ){  // CTRL + ENTER
-        e.preventDefault();
-        oe.preventDefault();
-        return
-      }
-      if( key == 13 ){  // expand on enter
+      if( key == 69 ){  // expand on E
         e.preventDefault();
         oe.preventDefault();
         if( isCompactView ){
@@ -657,13 +652,14 @@ function load_pd_datatable(){
           if( $(_row).hasClass('dtr-expanded') ){
             _rowObj.child.hide();
             $(_row).removeClass('dtr-expanded');
+            $(_row).find('td.expanders').attr('aria-expanded', false);
           }else{
             // workaround the datatable api to use default child renderers
             table.settings()[0].responsive._detailsDisplay(_rowObj, false);
+            $(_row).find('td.expanders').attr('aria-expanded', true);
           }
         }
       }
-      // TODO: control for readmore cells??
     });
   }
 
@@ -838,6 +834,14 @@ function load_pd_datatable(){
     return availableButtons;
   }
 
+  function render_table_editor(){
+    let entryElement = $('#dtprv_wrapper').find('.dt-scroll-head').find('th.expanders');
+    if( entryElement.length > 0 ){
+      // TODO: edit button if row selected...
+      $(entryElement).html('<div id="dtprv-editor-button"><button data-action="add" class="btn btn-success"><i title="' + addInTableButtonLabel + '" aria-label="' + addInTableButtonLabel + '" class="fas fa-plus"></i></button></div>');
+    }
+  }
+
   function draw_callback(_settings){
     $('#dtprv_wrapper').find('#dtprv_failure_message').remove();
     set_table_visibility();
@@ -856,6 +860,9 @@ function load_pd_datatable(){
   function init_callback(){
     set_table_visibility();
     render_table_footer();
+    if( isEditable ){
+      render_table_editor();
+    }
     bind_readmore();
     set_row_selects();
     set_button_states();

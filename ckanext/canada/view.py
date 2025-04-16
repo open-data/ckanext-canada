@@ -951,7 +951,6 @@ def pd_datatable(resource_name: str, resource_id: str):
     aadata = [
         [''] +  # Expand column
         ['<input type="checkbox">'] +  # Select column
-        # FIXME: move to datatable renderer method
         [row.get(col, '') for col in cols] for row in response['records']]
 
     return json.dumps({

@@ -11,19 +11,20 @@
   {% do fk_links.update({_res_name: h.url_for('recombinant.preview_table', resource_name=_res_name, owner_org=owner_org)}) %}
 {% endfor  %}
 {% set magic_priority_no_field_should_be_below = 2 %}
+{% set choice_fields = h.recombinant_choice_fields(resource_name) if can_edit else {} %}
 
 <section id="dt-preview">
   <h2 id="prtable">{{_("Interactive Table")}}</h2>
-  <div class="pd-dattable-instructions">
+  <div class="pd-datable-instructions">
     <details>
       <summary>{{ _('Keyboard controls') }}</summary>
       {# TODO: add table control tutorials!!! #}
       <ul>
-        <li>{{ _('Press <pre>SHIFT</pre> key while clicking on sort controls for multi-column sorting') }}</li>
-        <li>{{ _('Press <pre>CTRL + ENTER</pre> keys to enter KeyTable mode, allowing you to navigate the table with arrow keys') }}</li>
+        <li>{{ _('Hold <pre>SHIFT</pre> key while clicking on sort controls for multi-column sorting') }}</li>
+        <li>{{ _('Press <pre>ALT + K</pre> keys to enter KeyTable mode, allowing you to navigate the table with arrow keys') }}</li>
         <ul>
           <li>{{ _('Press <pre>SPACE</pre> key to select a row') }}</li>
-          <li>{{ _('Press <pre>ENTER</pre> key to expand a row (Compact Table mode only)') }}</li>
+          <li>{{ _('Press <pre>E</pre> key to expand a row (Compact Table mode only)') }}</li>
           <li>{{ _('Press <pre>ESC</pre> key to exit KeyTable mode') }}</li>
         </ul>
       </ul>
@@ -37,7 +38,7 @@
         {% for field in ds_fields %}
           {# TODO: add fa fa-info-circle to headings for field data dictionary linking??? #}
           {# TODO: add a glue button for sticky columns #}
-          <th scope="col" data-datastore-id="{{- field.id -}}" data-priority="{{- field.priority + magic_priority_no_field_should_be_below -}}">
+          <th scope="col" data-datastore-id="{{- field.id -}}" data-datastore-type="{{- field.type -}}" data-priority="{{- field.priority + magic_priority_no_field_should_be_below -}}">
             {{- field.label -}}<span class="sorting-cnt"><span class="sorting-icons"></span></span>
           </th>
         {% endfor %}
@@ -91,11 +92,11 @@
   const pd_datatable__csrfTokenValue = "{{- csrf_token() -}}";
   const pd_datatable__csrfTokenName = "{{- g.csrf_field_name -}}";
   const pd_datatable__resourceName = "{{- resource_name -}}";
-  const pd_datatable__primaryKeys = {{ primary_keys|tojson }};  // syntax_ignore: jinja2 tojson constants
-  const pd_datatable__foreignKeys = {{ foreign_keys|tojson }};  // syntax_ignore: jinja2 tojson constants
-  const pd_datatable__foreignLinks = {{ fk_links|tojson }};  // syntax_ignore: jinja2 tojson constants
-  const pd_datatable__chromoFields = {{ chromo.fields|tojson }};  // syntax_ignore: jinja2 tojson constants
-  const pd_datatable__isEditable = {{ (chromo.edit_form and can_edit)|tojson }};  // syntax_ignore: jinja2 tojson constants
+  const pd_datatable__primaryKeys = {{ primary_keys|tojson }};
+  const pd_datatable__foreignKeys = {{ foreign_keys|tojson }};
+  const pd_datatable__foreignLinks = {{ fk_links|tojson }};
+  const pd_datatable__chromoFields = {{ chromo.fields|tojson }};
+  const pd_datatable__isEditable = {{ (chromo.edit_form and can_edit)|tojson }};
   const pd_datatable__selectAllLabel = "{{- _('Select All') -}}";
   const pd_datatable__colSearchLabel = "{{- _('Search:') -}}";
   const pd_datatable__colSortLabel = "{{- _('Sorting by:') -}}";
@@ -110,6 +111,8 @@
   const pd_datatable__fullTableLabel = "{{- _('Full Table') -}}";
   const pd_datatable__compactTableLabel = "{{- _('Compact Table') -}}";
   const pd_datatable__editSingleButtonLabel = "{{- _('Edit Online') -}}";
+  const pd_datatable__addInTableButtonLabel = "{{- _('Add new record in Table') -}}";
+  const pd_datatable__editInTableButtonLabel = "{{- _('Edit in Table') -}}";
   const pd_datatable__countSuffix = "{{- _(' record(s)') -}}";
   const pd_datatable__ajaxErrorMessage = "{{- _('Error: Could not query records. Please try again.') -}}";
   const pd_datatable__editSingleRecordURI = "{{- h.url_for('canada.update_pd_record', resource_name=resource_name, owner_org=owner_org, pk='') -}}";
@@ -142,6 +145,32 @@
       orderableReverse: "{{- _('Reverse order this column') -}}"
     }
   };
+  {% if can_edit %}
+    const pd_datatables__EDITOR = {
+      {% for field in chromo.fields %}
+        {{- field.datastore_id -}}: {
+          type: '{{- field.datastore_type -}}',
+          form_attrs: {{ field.form_attrs|tojson if 'form_attrs' in field else None|tojson}},
+          select_choices: {{ choice_fields[field.datastore_id]|tojson if field.datastore_id in choice_fields else None|tojson}},
+          is_invalid: function(VALUE){
+            let CHOICES = [];
+            if( this.select_choices ){
+              for( let _i = 0; _i < this.select_choices.length; _i++ ){
+                CHOICES.push(this.select_choices[_i][0]);
+              }
+            }
+            {% if field.js_error_eval %}
+              return ({{- field.js_error_eval|safe -}});
+            {% else %}
+              return false;
+            {% endif %}
+          }
+        },
+      {% endfor %}
+    }
+  {% else %}
+    const pd_datatables__EDITOR = false;
+  {% endif %}
   window.addEventListener('load', function(){
     $(document).ready(function() {
       load_pd_datatable();
