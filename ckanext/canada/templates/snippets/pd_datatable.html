@@ -4,6 +4,7 @@
         and re-initializing the table, a full object model can get expensive and
         unpredictable.
 #}
+{% set geno = h.recombinant_get_geno(dataset_type) %}
 {% set chromo = h.recombinant_get_chromo(resource_name) %}
 {% set can_edit = h.check_access('resource_update', {'id': resource_id}) %}
 {% set fk_links = {} %}
@@ -112,7 +113,7 @@
   const pd_datatable__compactTableLabel = "{{- _('Compact Table') -}}";
   const pd_datatable__editSingleButtonLabel = "{{- _('Edit Online') -}}";
   const pd_datatable__addInTableButtonLabel = "{{- _('Add new record in Table') -}}";
-  const pd_datatable__editInTableButtonLabel = "{{- _('Edit in Table') -}}";
+  const pd_datatable__editInTableButtonLabel = "{{- _('Edit record(s) in Table') -}}";
   const pd_datatable__countSuffix = "{{- _(' record(s)') -}}";
   const pd_datatable__ajaxErrorMessage = "{{- _('Error: Could not query records. Please try again.') -}}";
   const pd_datatable__editSingleRecordURI = "{{- h.url_for('canada.update_pd_record', resource_name=resource_name, owner_org=owner_org, pk='') -}}";
@@ -160,7 +161,9 @@
               }
             }
             {% if field.js_error_eval %}
-              return ({{- field.js_error_eval|safe -}});
+              return (typeof VALUE == "undefined" || VALUE.trim().length == 0) || ({{- field.js_error_eval|safe -}});
+            {% elif field.form_required or field.excel_required %}
+              return (typeof VALUE == "undefined" || VALUE.trim().length == 0);
             {% else %}
               return false;
             {% endif %}
@@ -177,3 +180,15 @@
     });
   });
 </script>
+
+{# TODO: use chromo theme for table styles?? #}
+<!-- <style>
+  body #dtprv_wrapper .dt-scroll-head th{
+    background-color: #{{- geno.datatables_style.header.bgColor -}} !important;
+  }
+  body #dtprv_wrapper #dtprv-body-main tr.selected td,
+  body #dtprv_wrapper #dtprv-body-main tr.selected:hover td,
+  body #dtprv_wrapper #dtprv-body-main tr.selected:focus td{
+    box-shadow: inset 0 0 0 9999px #{{- geno.datatables_style.select.bgColor -}} !important;
+  }
+</style> -->

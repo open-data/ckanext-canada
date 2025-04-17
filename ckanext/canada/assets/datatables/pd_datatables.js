@@ -537,6 +537,9 @@ function load_pd_datatable(){
     $('#dtprv').css({'visibility': 'visible'});
     $('table.dataTable').css({'visibility': 'visible'});
     $('.dt-scroll-head').css({'visibility': 'visible'});
+    $('.dt-scroll-head').find('th.expanders').css({'visibility': 'visible'});
+    $('#dtprv-editor-button').css({'visibility': 'visible'});
+    $('#dtprv-editor-button').find('button').css({'display': 'flex'});
     $('#dtprv_wrapper').attr('data-editable', isEditable);
     $('#dtprv_wrapper').attr('data-compact-view', isCompactView);
     if( ! isCompactView ){  // set fake visiility for responsive column
@@ -550,6 +553,14 @@ function load_pd_datatable(){
       $('#dtprv_wrapper').find('tr').children('td:first-of-type').css(
         {'width': 'auto', 'min-width': 'auto', 'max-width': 'auto', 'padding': '8px',  'visibility': 'visible'});
     }
+  }
+
+  function set_state_change_visibility(){
+    $('#dtprv').css({'visibility': 'hidden'});
+    $('.dt-scroll-head').css({'visibility': 'hidden'});
+    $('.dt-scroll-head').find('th.expanders').css({'visibility': 'hidden'});
+    $('#dtprv-editor-button').css({'visibility': 'hidden'});
+    $('#dtprv-editor-button').find('button').css({'display': 'none'});
   }
 
   function set_row_selects(){
@@ -606,6 +617,7 @@ function load_pd_datatable(){
     table.on('select.CheckBoxes', function(e, dt, type, indexes){
       check_the_boxes(true, indexes);
       set_button_states();
+      render_table_editor();
       if( table.rows({selected: true})[0].length > 0 ){
         table.buttons('resetTableButton:name').enable();
       }else{
@@ -613,6 +625,7 @@ function load_pd_datatable(){
       }
     }).on('deselect.CheckBoxes', function(e, dt, type, indexes){
       check_the_boxes(false, indexes);
+      render_table_editor();
       if( table.rows({selected: true})[0].length > 0 ){
         table.buttons('resetTableButton:name').enable();
       }else{
@@ -712,8 +725,7 @@ function load_pd_datatable(){
           tableState.compact_view = true;
         }
         tableState.selected = table.rows({ selected: true })[0];
-        $('#dtprv').css({'visibility': 'hidden'});
-        $('.dt-scroll-head').css({'visibility': 'hidden'});
+        set_state_change_visibility();
         dt.clear().destroy();
         initialize_datatable();
       }
@@ -725,8 +737,7 @@ function load_pd_datatable(){
       className: 'pd-datatable-btn btn-warning pd-datatable-reset-btn',
       enabled: false,
       action: function(e, dt, node, config){
-        $('#dtprv').css({'visibility': 'hidden'});
-        $('.dt-scroll-head').css({'visibility': 'hidden'});
+        set_state_change_visibility();
         table.rows().deselect();
         isCompactView = true;
         tableState = void 0;
@@ -834,11 +845,39 @@ function load_pd_datatable(){
     return availableButtons;
   }
 
+  function table_editor(formAction){
+    // TODO: write the form stuffs...
+    if( EDITOR && formAction == 'add' ){
+
+    }else if( isEditable && EDITOR && formAction == 'edit' ){
+      let selectedRows = table.rows({selected: true})[0];
+    }
+  }
+
   function render_table_editor(){
+    // FIXME: where to put the button in full table mode??
     let entryElement = $('#dtprv_wrapper').find('.dt-scroll-head').find('th.expanders');
+    if( ! isEditable && ! EDITOR ){
+      $(entryElement).addClass('no-edit');
+      return;
+    }
     if( entryElement.length > 0 ){
-      // TODO: edit button if row selected...
-      $(entryElement).html('<div id="dtprv-editor-button"><button data-action="add" class="btn btn-success"><i title="' + addInTableButtonLabel + '" aria-label="' + addInTableButtonLabel + '" class="fas fa-plus"></i></button></div>');
+      let label = addInTableButtonLabel;
+      let icon = 'fas fa-plus';
+      let action = 'add';
+      if( isEditable && table.rows({selected: true})[0].length > 0 ){
+        label = editInTableButtonLabel;
+        icon = 'fas fa-edit';
+        action = 'edit';
+      }
+      $(entryElement).html('<div id="dtprv-editor-button"><button data-action="' + action + '" class="btn btn-success" title="' + label + '" aria-label="' + label + '"><i class="' + icon + '"></i></button></div>');
+      let editorButton = $('#dtprv-editor-button').find('button');
+      if( editorButton.length > 0 ){
+        $(editorButton).off('click.Edit');
+        $(editorButton).on('click.Edit', function(_event){
+          table_editor($(editorButton).attr('data-action'));
+        });
+      }
     }
   }
 
@@ -847,6 +886,7 @@ function load_pd_datatable(){
     set_table_visibility();
     render_expand_buttons();
     render_selectbox_inputs();
+    render_table_editor();
     render_pager_input();
     render_human_sorting();
     render_foreign_key_links();
@@ -860,9 +900,6 @@ function load_pd_datatable(){
   function init_callback(){
     set_table_visibility();
     render_table_footer();
-    if( isEditable ){
-      render_table_editor();
-    }
     bind_readmore();
     set_row_selects();
     set_button_states();

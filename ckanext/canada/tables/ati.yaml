@@ -40,7 +40,7 @@ resources:
     excel_required: true
     excel_column_width: 13
     excel_error_formula: 'OR({default_formula},{cell}>YEAR(TODAY()),{cell}<2011)'
-    js_error_eval: typeof VALUE == "undefined" || VALUE.trim().length == 0 || VALUE.length != 4 || isNaN(VALUE) || ! Number.isInteger(VALUE)
+    js_error_eval: VALUE.length != 4 || isNaN(VALUE) || ! Number.isInteger(VALUE)
 
   - datastore_id: month
     label:
@@ -59,7 +59,7 @@ resources:
     excel_required: true
     excel_column_width: 18
     excel_error_formula: 'OR({default_formula},{cell}<1,{cell}>12)'
-    js_error_eval: typeof VALUE == "undefined" || VALUE.trim().length == 0 || VALUE < 1 || VALUE > 12 || isNaN(VALUE) || ! Number.isInteger(VALUE)
+    js_error_eval: VALUE < 1 || VALUE > 12 || isNaN(VALUE) || ! Number.isInteger(VALUE)
     solr_month_names: true
 
   - datastore_id: request_number
@@ -73,7 +73,6 @@ resources:
     excel_column_width: 38
     form_required: true
     excel_required: true
-    js_error_eval: typeof VALUE == "undefined" || VALUE.trim().length == 0
 
   - datastore_id: summary_en
     label:
@@ -90,7 +89,6 @@ resources:
     excel_required: true
     excel_column_width: 41
     markdown: true
-    js_error_eval: typeof VALUE == "undefined" || VALUE.trim().length == 0
 
   - datastore_id: summary_fr
     label:
@@ -107,8 +105,7 @@ resources:
     excel_required: true
     excel_column_width: 41
     markdown: true
-    # TODO: how do we reference another field value?? e.g. summary_en and summary_fr both have to be filled
-    js_error_eval: typeof VALUE == "undefined" || VALUE.trim().length == 0
+    # TODO: how do we reference another field value?? e.g. summary_en and summary_fr both have to be filled (for js_error_eval)
 
   - datastore_id: disposition
     label:
@@ -120,7 +117,7 @@ resources:
     datastore_type: text
     form_required: true
     excel_required: true
-    js_error_eval: typeof VALUE == "undefined" || VALUE.trim().length == 0 || ! CHOICES.includes(VALUE)
+    js_error_eval: '! CHOICES.includes(VALUE)'
     excel_column_width: 39
     excel_full_text_choices: true
     choices:
@@ -157,7 +154,7 @@ resources:
       size: 10
     excel_column_width: 34
     excel_error_formula: 'OR({default_formula},{cell}<0)'
-    js_error_eval: typeof VALUE == "undefined" || VALUE.trim().length == 0 || VALUE < 0 || isNaN(VALUE) || ! Number.isInteger(VALUE)
+    js_error_eval: VALUE < 0 || isNaN(VALUE) || ! Number.isInteger(VALUE)
 
   - datastore_id: comments_en
     label:
@@ -317,6 +314,7 @@ resources:
     excel_required: true
     excel_column_width: 13
     excel_error_formula: 'OR({default_formula},{cell}>YEAR(TODAY()),{cell}<2011)'
+    js_error_eval: VALUE.length != 4 || isNaN(VALUE) || ! Number.isInteger(VALUE)
 
   - datastore_id: month
     label:
@@ -335,6 +333,7 @@ resources:
     excel_required: true
     excel_column_width: 18
     excel_error_formula: 'OR({default_formula},{cell}<1,{cell}>12)'
+    js_error_eval: VALUE < 1 || VALUE > 12 || isNaN(VALUE) || ! Number.isInteger(VALUE)
     solr_month_names: true
 
   - datastore_id: record_created
@@ -419,3 +418,10 @@ excel_column_heading_style:
   PatternFill:
     patternType: solid
     fgColor: FFbc83d8
+datatables_style:
+  header:
+    bgColor: bc83d8
+  select:
+    bgColor: d1aae4
+  required:
+    bgColor: 7815bf

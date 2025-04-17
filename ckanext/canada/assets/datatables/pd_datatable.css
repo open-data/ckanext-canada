@@ -297,15 +297,16 @@ body #dtprv_wrapper thead th{
 
 body #dtprv_wrapper thead th .dt-column-order::after,
 body #dtprv_wrapper thead th .dt-column-order::before{
-  color: #284162 !important;
+  color: #333333 !important;
 }
 
 body #dtprv_wrapper thead th .dt-column-order::after{
-  top: calc(25% + 5px) !important;
+  top: 17.5px !important;
 }
 
 body #dtprv_wrapper thead th .dt-column-order::before{
-  bottom: 75% !important;
+  bottom: initial !important;
+  top: 5px !important;
 }
 
 body #dtprv_wrapper thead th:not(.dt-ordering-desc):not(.dt-ordering-asc) .dt-column-order::after,
@@ -406,8 +407,13 @@ body #dtprv_wrapper .dropdown-menu.dt-button-collection div[role="menu"] a.dt-bu
   }
 }
 
-body #dtprv_wrapper tfoot th.expanders{
+body #dtprv_wrapper tfoot th.expanders,
+body #dtprv_wrapper .dt-scroll-head th.expanders.no-edit{
   visibility: hidden !important;
+}
+
+body #dtprv_wrapper .dt-scroll-head th.expanders.no-edit #dtprv-editor-button{
+  display: none !important;
 }
 
 body #dtprv_wrapper[data-compact-view="true"] th.expanders,
@@ -440,7 +446,7 @@ body #dtprv_wrapper .dt-scroll-head thead{
   background-color: white !important;
 }
 
-body #dtprv_wrapper .dt-scroll-head th{
+body #dtprv_wrapper .dt-scroll-head th:not(.no-edit){
   z-index: 2 !important;
   border-bottom: 2px solid #335075 !important;
 }
@@ -453,9 +459,11 @@ body #dtprv_wrapper #dtprv-editor-button button{
   position: absolute !important;
   top: 0;
   left: 0;
-  right: 0;
+  right: 1px;
   bottom: 0;
   width: 100%;
+  min-width: 100%;
+  max-width: 100%;
   height: 100%;
   display: flex;
   align-items: center;
