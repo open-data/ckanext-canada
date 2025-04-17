@@ -543,6 +543,7 @@ resources:
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
       style: "width: 100%; display: block"
+    markdown: true
 
   - datastore_id: minister_compared_fiscal_year_fr
     label:
@@ -565,6 +566,7 @@ resources:
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
       style: "width: 100%; display: block"
+    markdown: true
 
   - datastore_id: record_created
     label: Record Creation Time
