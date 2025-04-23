@@ -24,7 +24,8 @@ from ckan.plugins.toolkit import (
     check_access,
     aslist,
     request,
-    render
+    render,
+    asbool
 )
 import ckan.lib.mailer as mailer
 from ckan import model
@@ -885,6 +886,7 @@ def pd_datatable(resource_name: str, resource_id: str):
     offset = int(params['start'])  # type: ignore
     # type_ignore_reason: datatable param length is int
     limit = int(params['length'])  # type: ignore
+    is_edit_mode = asbool(params['is_edit_mode'])
 
     chromo = h.recombinant_get_chromo(resource_name)
     lc = LocalCKAN(username=g.user)
@@ -939,14 +941,19 @@ def pd_datatable(resource_name: str, resource_id: str):
             col_filters[k] = v
         i += 1
 
-    response = lc.action.datastore_search(
-        q=search_text,
-        resource_id=resource_id,
-        offset=offset,
-        limit=limit,
-        sort=', '.join(sort_list),
-        filters=col_filters,
-    )
+    if is_edit_mode:
+        default_fill = chromo.get('datatables_default_fill', 10)
+        response = {
+            'records': [{} for _i in range(default_fill)]
+        }
+    else:
+        response = lc.action.datastore_search(
+            q=search_text,
+            resource_id=resource_id,
+            offset=offset,
+            limit=limit,
+            sort=', '.join(sort_list),
+            filters=col_filters)
 
     aadata = [
         [''] +  # Expand column

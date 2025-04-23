@@ -483,6 +483,12 @@ body #dtprv_wrapper #dtprv-editor-button button:focus{
   border-color: #000000 !important;
 }
 
+body #dtprv_wrapper[data-edit-view="true"] #dtprv-editor-button button{
+  visibility: hidden !important;
+  pointer-events: none !important;
+  display: none !important;
+}
+
 body #dtprv_wrapper .dt-scroll-body thead{
   position: relative !important;
 }
@@ -498,10 +504,19 @@ body #dtprv_wrapper[data-compact-view="false"] .dt-scroll-head,
 body #dtprv_wrapper[data-compact-view="false"] #dtprv,
 body #dtprv_wrapper[data-compact-view="false"] .dt-scroll-foot{
   overflow: hidden !important;
-  margin-left: -50px !important;
-  width: calc(100% + 50px) !important;
 }
 
+body #dtprv_wrapper[data-compact-view="false"][data-edit-view="false"] #dtprv td.expanders{
+  visibility: hidden !important;
+}
+
+body #dtprv_wrapper[data-edit-view="false"] .dt-scroll-body{
+  border-bottom: 0 !important;
+}
+
+body #dtprv_wrapper[data-edit-view="false"] .dt-scroll-foot tfoot th{
+  border-top: 3px solid #26374a !important;
+}
 
 body #dtprv_wrapper #dtprv-foot-main,
 body #dtprv_wrapper #dtprv-foot-main input[type="text"]{
@@ -571,16 +586,118 @@ body #dtprv_wrapper[data-compact-view="false"] .pd-datatables-primary-key-fixed{
   position: sticky !important;
   left: 0;
   background-color: white !important;
+  /* FIXME: header and footer not sticky... */
 }
 
 body #dtprv_wrapper[data-compact-view="false"] .dt-scroll-head th:not(:first-of-type).pd-datatables-primary-key-fixed,
 body #dtprv_wrapper[data-compact-view="false"] #dtprv-foot-main .pd-datatables-primary-key-fixed{
-  left: 50px;
+  left: 0;
   z-index: 4 !important;
+}
+
+body #dtprv_wrapper[data-edit-view="true"] .pd-datatables-primary-key-fixed{
+  position: relative !important;
+  left: initial !important;
+}
+
+body #dtprv_wrapper[data-compact-view="false"] .dt-scroll-head th:not(:first-of-type).pd-datatables-primary-key-fixed,
+body #dtprv_wrapper[data-compact-view="false"] #dtprv-foot-main .pd-datatables-primary-key-fixed{
+  left: initial !important;
+}
+
+body #dtprv_wrapper[data-edit-view="false"] th.expanders,
+body #dtprv_wrapper[data-edit-view="false"] td.expanders{
+  width: 36px !important;
+  min-width: 36px !important;
+  max-width: 36px !important;
 }
 
 body #dtprv_wrapper .dt-scroll-body tfoot input,
 body #dtprv_wrapper .dt-scroll-body tfoot label,
 body #dtprv_wrapper .dt-scroll-body thead span.dt-column-order{
   visibility: hidden !important;
+}
+
+body #dtprv_wrapper .btn.btn-warning,
+body #dtprv_wrapper .btn.btn-warning:hover,
+body #dtprv_wrapper .btn.btn-warning:active,
+body #dtprv_wrapper .btn.btn-warning:focus{
+  color: black !important;
+}
+
+body #dtprv_wrapper[data-edit-view="true"] #dtprv-foot-main,
+body #dtprv_wrapper[data-edit-view="true"] #dtprv_info,
+body #dtprv_wrapper[data-edit-view="true"] .dt-paging,
+body #dtprv_wrapper[data-edit-view="true"] .dt-length,
+body #dtprv_wrapper[data-edit-view="true"] .dt-search{
+  display: none !important;
+  visibility: hidden !important;
+}
+
+body #dtprv_wrapper[data-edit-view="true"] th.checkboxes,
+body #dtprv_wrapper[data-edit-view="true"] td.checkboxes,
+body #dtprv_wrapper[data-edit-view="true"] th[data-editable-col="false"],
+body #dtprv_wrapper[data-edit-view="true"] td[data-editable-col="false"]
+body #dtprv_wrapper[data-edit-view="true"] th.pd-datatables-non-editable-col,
+body #dtprv_wrapper[data-edit-view="true"] td.pd-datatables-non-editable-col{
+  visibility: hidden !important;
+  width: 0 !important;
+  min-width: 0 !important;
+  max-width: 0 !important;
+  height: 0 !important;
+  min-height: 0 !important;
+  max-height: 0 !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  line-height: 0 !important;
+  font-size: 0 !important;
+  border: none !important;
+}
+
+body #dtprv_wrapper[data-edit-view="true"] th{
+  pointer-events: none !important;
+}
+
+body #dtprv_wrapper[data-edit-view="true"] .dt-scroll{
+  margin-top: 25px !important;
+}
+
+body #dtprv_wrapper[data-edit-view="true"] .dt-scroll-body thead{
+  height: 16px;
+  min-height: 16px;
+}
+
+body #dtprv_wrapper[data-edit-view="true"] #dtprv-body-main td.expanders{
+  position: sticky !important;
+  left: 0;
+  background-color: #555555;
+  color: white !important;
+  font-weight: 700 !important;
+  text-align: center !important;
+  padding: 4px 8px !important;
+  z-index: 6 !important;
+}
+
+body #dtprv_wrapper[data-edit-view="true"] #dtprv-body-main td{
+  padding: 0 !important;
+  box-shadow: none;
+  vertical-align: middle !important;
+}
+
+body #dtprv_wrapper[data-edit-view="true"] #dtprv-body-main td input,
+body #dtprv_wrapper[data-edit-view="true"] #dtprv-body-main td select,
+body #dtprv_wrapper[data-edit-view="true"] #dtprv-body-main td textarea{
+  width: 100% !important;
+  min-width: 100% !important;
+  max-width: 100% !important;
+  border-radius: 0 !important;
+  padding: 4px 8px !important;
+  border: none !important;
+  background-color: white !important;
+  margin: 0 !important;
+}
+
+body #dtprv_wrapper[data-edit-view="true"] #dtprv-body-main td textarea{
+  min-height: 31px !important;
+  height: 100%;
 }

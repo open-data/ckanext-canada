@@ -28,9 +28,10 @@ function load_pd_datatable(){
   const colSortAnyLabel = pd_datatable__colSortAnyLabel;
   const readLessLabel = pd_datatable__readLessLabel;
   const jumpToPageLabel = pd_datatable__jumpToPageLabel;
-  const resetTabelLabel = pd_datatable__resetTabelLabel;
+  const resetTableLabel = pd_datatable__resetTableLabel;
   const fullscreenLabel = pd_datatable__fullscreenLabel;
   const exitFullscreenLabel = pd_datatable__exitFullscreenLabel;
+  const exitEditTableLabel = pd_datatable__exitEditTableLabel
   const fullTableLabel = pd_datatable__fullTableLabel;
   const compactTableLabel = pd_datatable__compactTableLabel;
   const editSingleButtonLabel = pd_datatable__editSingleButtonLabel;
@@ -43,6 +44,7 @@ function load_pd_datatable(){
   const editRecordsURI = pd_datatable__editRecordsURI;
   const deleteButtonLabel = pd_datatable__deleteButtonLabel;
   const deleteRecordsURI = pd_datatable__deleteRecordsURI;
+  const saveButtonLabel = pd_datatable__saveButtonLabel;
   const ajaxURI = pd_datatable__ajaxURI;
   const tableLanguage = pd_datatable__tableLanguage;
   const markedRenderer = new marked.Renderer();
@@ -62,6 +64,8 @@ function load_pd_datatable(){
   }
   let isCompactView = typeof tableState != 'undefined' && typeof tableState.compact_view != 'undefined' ? tableState.compact_view : true;
   let isFullScreen = is_page_fullscreen();
+  let isEditMode = typeof tableState != 'undefined' && typeof tableState.edit_view != 'undefined' ? tableState.edit_view : false;
+  let editingRows = [];
 
   let uri_filters = {};
   if( searchParams.has('dt_query') ){
@@ -76,7 +80,17 @@ function load_pd_datatable(){
   }
 
   let availableColumns = [
-    {"className": "expanders", "orderable": false, "targets": 0},
+    {
+      "className": "expanders",
+      "orderable": false,
+      "targets": 0,
+      "render": function(_data, _type, _row, _meta){
+        if( isEditMode ){
+          return _meta.row + 1;
+        }
+        return _data;
+      }
+    },
     {"className": "checkboxes", "orderable": false, "targets": 1},
   ];
 
@@ -107,7 +121,11 @@ function load_pd_datatable(){
       $(readmores).each(function(_index, _section){
         let expandElement = $(_section).find('a.pd-datatable-readmore-expander');
         let minimizeElement = $(_section).find('a.pd-datatable-readmore-minimizer');
-        // FIXME: some strange things may be happening...
+        $(_section).find('.collapse').off('hidden.bs.collapse');
+        $(_section).find('.collapse').on('hidden.bs.collapse', function(_event){
+          $(_section).find('span[data-markdown="true"]').show(0);
+          $(expandElement).show(0);
+        });
         if( expandElement.length > 0 ){
           $(expandElement).off('click.readMore');
           $(expandElement).on('click.readMore', function(_event){
@@ -125,10 +143,6 @@ function load_pd_datatable(){
           $(minimizeElement).on('click.readLess', function(_event){
             _event.stopPropagation();
             $(_section).find('.collapse').collapse('hide');
-            $(_section).find('span[data-markdown="true"]').show(0);
-            setTimeout(function(){
-              $(expandElement).show(0);
-            }, 285);
           });
         }
       });
@@ -221,9 +235,51 @@ function load_pd_datatable(){
     }
   }
 
+  function render_cell_input(_value, _rowIndex, _chromo_field){
+    let ds_type = _chromo_field.datastore_type;
+    let fieldID = 'pd-records_' + _rowIndex + '_' + _chromo_field.datastore_id;
+    let editorObject = EDITOR[_chromo_field.datastore_id];
+    let fieldInput = '<input class="pd-datatable-editor-input" value="' + _value + '" name=' + fieldID + '" id="' + fieldID + '" data-row-index="' + _rowIndex + '" data-datastore-id="' + _chromo_field.datastore_id + '" />';
+    if( ds_type == 'year' ){
+      fieldInput = '<input class="pd-datatable-editor-input" value="' + _value + '" name=' + fieldID + '" id="' + fieldID + '" data-row-index="' + _rowIndex + '" data-datastore-id="' + _chromo_field.datastore_id + '" data-number-type="int" type="number" min="1899" max="' + currentYear + '" step="1" />';
+    }else if( ds_type == 'month' ){
+      fieldInput = '<input class="pd-datatable-editor-input" value="' + _value + '" name=' + fieldID + '" id="' + fieldID + '" data-row-index="' + _rowIndex + '" data-datastore-id="' + _chromo_field.datastore_id + '" data-number-type="int" type="number" min="1" max="12" step="1" />';
+    }else if( ds_type == 'date' ){
+      fieldInput = '<input class="pd-datatable-editor-input" value="' + _value + '" name=' + fieldID + '" id="' + fieldID + '" data-row-index="' + _rowIndex + '" data-datastore-id="' + _chromo_field.datastore_id + '" type="date" min="1899-01-01" max="' + currentDate + '" />';
+    }else if( ds_type == 'timestamp' ){
+      fieldInput = '<input class="pd-datatable-editor-input" value="' + _value + '" name=' + fieldID + '" id="' + fieldID + '" data-row-index="' + _rowIndex + '" data-datastore-id="' + _chromo_field.datastore_id + '" type="datetime-local" min="1899-01-01T00:00" max="' + currentDate + 'T23:59" />';
+    }else if( ds_type == 'int' || ds_type == 'bigint' ){
+      fieldInput = '<input class="pd-datatable-editor-input" value="' + _value + '" name=' + fieldID + '" id="' + fieldID + '" data-row-index="' + _rowIndex + '" data-datastore-id="' + _chromo_field.datastore_id + '" data-number-type="int" type="number" />';
+    }else if( ds_type == 'numeric' || ds_type == 'float' || ds_type == 'double' ){
+      fieldInput = '<input class="pd-datatable-editor-input" value="' + _value + '" name=' + fieldID + '" id="' + fieldID + '" data-row-index="' + _rowIndex + '" data-datastore-id="' + _chromo_field.datastore_id + '" data-number-type="float" type="number" />';
+    }else if( ds_type == 'money' ){
+      fieldInput = '<input class="pd-datatable-editor-input" value="' + _value + '" name=' + fieldID + '" id="' + fieldID + '" data-row-index="' + _rowIndex + '" data-datastore-id="' + _chromo_field.datastore_id + '" data-number-type="money" type="number" />';
+    }
+    if( typeof editorObject.select_choices != 'undefined' && editorObject.select_choices ){
+      let isMultiple = ds_type == '_text' ? 'multiple' : '';
+      fieldInput = '<select class="pd-datatable-editor-input" name=' + fieldID + '" id="' + fieldID + '" ' + isMultiple + ' data-row-index="' + _rowIndex + '" data-datastore-id="' + _chromo_field.datastore_id + '"><option></option>';
+      for( let _i = 0; _i < editorObject.select_choices.length; _i++ ){
+        // TODO: do checked based on _value and editorObject.select_choices[_i][0]
+        fieldInput += '<option value="' + editorObject.select_choices[_i][0] + '">' + editorObject.select_choices[_i][0] + ': ' + editorObject.select_choices[_i][1] + '</option>';
+      }
+      fieldInput += '</select>';
+    }
+    if( (typeof _chromo_field.form_snippet != 'undefined' && _chromo_field.form_snippet.includes('textarea')) || (typeof _chromo_field.markdown != 'undefined' && _chromo_field.markdown) ){
+      fieldInput = '<textarea class="pd-datatable-editor-input" name=' + fieldID + '" id="' + fieldID + '" rows="1" data-row-index="' + _rowIndex + '" data-datastore-id="' + _chromo_field.datastore_id + '">' + _value + '</textarea>';
+    }
+    // TODO: mask datetimes and money inputs...
+    return fieldInput;
+  }
+
   function cell_renderer(_data, _type, _row, _meta, _chromo_field){
     // FIXME: any data transormations for masks in _type == 'search'
     if( _type == 'display' ){
+      if( isEditMode ){
+        if( typeof _chromo_field.import_template_include != 'undefined' && ! _chromo_field.import_template_include ){
+          return '';  // blank cells for non-editable
+        }
+        return render_cell_input(_data, _meta.row, _chromo_field);
+      }
       if( _data == null ){
         return '';  // blank cell for None/null values
       }
@@ -278,6 +334,9 @@ function load_pd_datatable(){
       }
       if( primaryKeys.includes(i) ){
         previewClass += ' pd-datatables-primary-key-fixed ';
+      }
+      if( typeof chromoFields[i].import_template_include != 'undefined' && ! chromoFields[i].import_template_include ){
+        previewClass += ' pd-datatables-non-editable-col ';
       }
       availableColumns.push({
         "name": chromoFields[i].datastore_id,
@@ -538,27 +597,25 @@ function load_pd_datatable(){
     $('table.dataTable').css({'visibility': 'visible'});
     $('.dt-scroll-head').css({'visibility': 'visible'});
     $('.dt-scroll-head').find('th.expanders').css({'visibility': 'visible'});
+    $('.dt-length').css({'visibility': 'visible'});
+    $('.dt-search').css({'visibility': 'visible'});
     $('#dtprv-editor-button').css({'visibility': 'visible'});
     $('#dtprv-editor-button').find('button').css({'display': 'flex'});
     $('#dtprv_wrapper').attr('data-editable', isEditable);
     $('#dtprv_wrapper').attr('data-compact-view', isCompactView);
-    if( ! isCompactView ){  // set fake visiility for responsive column
-      $('#dtprv_wrapper').find('tr').children('th:first-of-type').css(
-        {'width': '50px', 'min-width': '50px', 'max-width': '50px', 'padding': 0, 'visibility': 'hidden'});
-      $('#dtprv_wrapper').find('tr').children('td:first-of-type').css(
-        {'width': '50px', 'min-width': '50px', 'max-width': '50px', 'padding': 0, 'visibility': 'hidden'});
-    }else{
-      $('#dtprv_wrapper').find('tr').children('th:first-of-type').css(
-        {'width': 'auto', 'min-width': 'auto', 'max-width': 'auto', 'padding': '8px',  'visibility': 'visible'});
-      $('#dtprv_wrapper').find('tr').children('td:first-of-type').css(
-        {'width': 'auto', 'min-width': 'auto', 'max-width': 'auto', 'padding': '8px',  'visibility': 'visible'});
-    }
+    $('#dtprv_wrapper').attr('data-edit-view', isEditMode);
+    $('#dtprv_wrapper').find('tr').children('th:first-of-type').css(
+      {'width': 'auto', 'min-width': 'auto', 'max-width': 'auto', 'padding': '8px',  'visibility': 'visible'});
+    $('#dtprv_wrapper').find('tr').children('td:first-of-type').css(
+      {'width': 'auto', 'min-width': 'auto', 'max-width': 'auto', 'padding': '8px',  'visibility': 'visible'});
   }
 
   function set_state_change_visibility(){
     $('#dtprv').css({'visibility': 'hidden'});
     $('.dt-scroll-head').css({'visibility': 'hidden'});
     $('.dt-scroll-head').find('th.expanders').css({'visibility': 'hidden'});
+    $('.dt-length').css({'visibility': 'hidden'});
+    $('.dt-search').css({'visibility': 'hidden'});
     $('#dtprv-editor-button').css({'visibility': 'hidden'});
     $('#dtprv-editor-button').find('button').css({'display': 'none'});
   }
@@ -617,7 +674,7 @@ function load_pd_datatable(){
     table.on('select.CheckBoxes', function(e, dt, type, indexes){
       check_the_boxes(true, indexes);
       set_button_states();
-      render_table_editor();
+      render_table_editor_button();
       if( table.rows({selected: true})[0].length > 0 ){
         table.buttons('resetTableButton:name').enable();
       }else{
@@ -625,7 +682,7 @@ function load_pd_datatable(){
       }
     }).on('deselect.CheckBoxes', function(e, dt, type, indexes){
       check_the_boxes(false, indexes);
-      render_table_editor();
+      render_table_editor_button();
       if( table.rows({selected: true})[0].length > 0 ){
         table.buttons('resetTableButton:name').enable();
       }else{
@@ -635,7 +692,9 @@ function load_pd_datatable(){
   }
 
   function bind_keyboard_controls(){
+    // TODO: allow deep paste into EditMode for CSV/Excel to webform cells!!!
     let _start = isCompactView ? 0 : 1;
+    _start = isEditMode ? 2 : _start;
     $(document).off('keyup.KeyTable');
     $(document).on('keyup.KeyTable', function(_event){
       if( _event.altKey && _event.keyCode == 75 ){  // ALT + k
@@ -645,35 +704,47 @@ function load_pd_datatable(){
       }
     });
     table.off('key.KeyTable');
-    table.on('key.KeyTable', function(e, dt, key, cell, oe){
-      let rowIndex = cell[0][0].row;
-      if( key == 32 ){  // select row on space
-        e.preventDefault();
-        oe.preventDefault();
-        if( table.rows({ selected: true })[0].includes(rowIndex) ){
-          table.row(rowIndex).deselect();
-        }else{
-          table.row(rowIndex).select();
-        }
-      }
-      if( key == 69 ){  // expand on E
-        e.preventDefault();
-        oe.preventDefault();
-        if( isCompactView ){
-          let _row = $('#dtprv-body-main').find('tr').eq(rowIndex);
-          let _rowObj = table.row(_row);
-          if( $(_row).hasClass('dtr-expanded') ){
-            _rowObj.child.hide();
-            $(_row).removeClass('dtr-expanded');
-            $(_row).find('td.expanders').attr('aria-expanded', false);
+    table.off('key-focus.KeyTable');
+    table.off('focus.KeyTable');
+    if( isEditMode ){
+      // FIXME: focus into inputs and allow for keying inside inputs!!!
+      table.on('key-focus.KeyTable', function(e, dt, cell, oe){
+        $('input', cell.node()).focus();
+      });
+      table.on('focus.KeyTable', 'td input', function(){
+        $(this).select();
+      });
+    }else{
+      table.on('key.KeyTable', function(e, dt, key, cell, oe){
+        let rowIndex = cell[0][0].row;
+        if( key == 32 ){  // select row on space
+          e.preventDefault();
+          oe.preventDefault();
+          if( table.rows({ selected: true })[0].includes(rowIndex) ){
+            table.row(rowIndex).deselect();
           }else{
-            // workaround the datatable api to use default child renderers
-            table.settings()[0].responsive._detailsDisplay(_rowObj, false);
-            $(_row).find('td.expanders').attr('aria-expanded', true);
+            table.row(rowIndex).select();
           }
         }
-      }
-    });
+        if( key == 69 ){  // expand on E
+          e.preventDefault();
+          oe.preventDefault();
+          if( isCompactView ){
+            let _row = $('#dtprv-body-main').find('tr').eq(rowIndex);
+            let _rowObj = table.row(_row);
+            if( $(_row).hasClass('dtr-expanded') ){
+              _rowObj.child.hide();
+              $(_row).removeClass('dtr-expanded');
+              $(_row).find('td.expanders').attr('aria-expanded', false);
+            }else{
+              // workaround the datatable api to use default child renderers
+              table.settings()[0].responsive._detailsDisplay(_rowObj, false);
+              $(_row).find('td.expanders').attr('aria-expanded', true);
+            }
+          }
+        }
+      });
+    }
   }
 
   function get_available_buttons(){
@@ -710,6 +781,39 @@ function load_pd_datatable(){
       });
     }
 
+    if( isEditMode ){
+      availableButtons.push({
+        name: "saveButton",
+        // TODO: update button label with number added + countSuffix
+        text: '<i aria-hidden="true" class="fas fa-save"></i>&nbsp;' + saveButtonLabel,
+        className: 'pd-datatable-btn btn-success pd-datatable-save-btn',
+        enabled: false,
+        action: function(e, dt, node, config){
+          // TODO: write ajax POST to datastore_upsert API.
+          //       action=insert for create, action=update for edit
+        }
+      })
+
+      availableButtons.push({
+        name: "exitEditButton",
+        text: '<i aria-hidden="true" class="fas fa-door-open"></i>&nbsp;' + exitEditTableLabel,
+        className: 'pd-datatable-btn btn-warning pd-datatable-exit-edit-btn',
+        enabled: true,
+        action: function(e, dt, node, config){
+          // TODO: check if there are new/changes fields and then alert of unsaved work...
+          set_state_change_visibility();
+          table.rows().deselect();
+          isCompactView = true;
+          isEditMode = false;
+          tableState = void 0;
+          dt.state.clear();
+          dt.clear().destroy();
+          initialize_datatable();
+        }
+      });
+      return availableButtons;
+    }
+
     availableButtons.push({
       name: "tableTypeButton",
       text: isCompactView ? '<i aria-hidden="true" class="fa fa-table"></i>&nbsp;' + fullTableLabel : '<i aria-hidden="true" class="fa fa-list"></i>&nbsp;' + compactTableLabel,
@@ -733,13 +837,14 @@ function load_pd_datatable(){
 
     availableButtons.push({
       name: "resetTableButton",
-      text: '<i aria-hidden="true" class="fas fa-sync-alt"></i>&nbsp;' + resetTabelLabel,
+      text: '<i aria-hidden="true" class="fas fa-sync-alt"></i>&nbsp;' + resetTableLabel,
       className: 'pd-datatable-btn btn-warning pd-datatable-reset-btn',
       enabled: false,
       action: function(e, dt, node, config){
         set_state_change_visibility();
         table.rows().deselect();
         isCompactView = true;
+        isEditMode = false;
         tableState = void 0;
         dt.state.clear();
         dt.clear().destroy();
@@ -845,17 +950,51 @@ function load_pd_datatable(){
     return availableButtons;
   }
 
-  function table_editor(formAction){
-    // TODO: write the form stuffs...
-    if( EDITOR && formAction == 'add' ){
+  function bind_table_editor(){
+    $('th[class*="dt-orderable"]').removeClass('dt-orderable').removeClass('dt-orderable-asc').removeClass('dt-ordering-asc').removeClass('dt-orderable-desc').removeClass('dt-ordering-desc');
+    let tableWrapper = $('#dtprv_wrapper');
+    let innerTable = $(tableWrapper).find('#dtprv-body-main');
+    let fields = $(innerTable).find('.pd-datatable-editor-input');
+    if( editingRows.length == 0 ){
 
-    }else if( isEditable && EDITOR && formAction == 'edit' ){
-      let selectedRows = table.rows({selected: true})[0];
     }
+    // TODO: on browser nav alert unsaved!!!
+    let erroredRows = {};
+    let requiredRows = {};
+    $(fields).each(function(_index, _field){
+      $(_field).off('change.EDITOR');
+      $(_field).on('change.EDITOR', function(_event){
+        let datastoreID = $(_field).attr('data-datastore-id')
+        let editorObject = EDITOR[datastoreID];
+        let rowIndex = $(_field).attr('data-row-index');
+        let row = $(innerTable).find('tr').eq(rowIndex);
+        let rowFields = $(row).find('.pd-datatable-editor-input');
+        // TODO: click to go to error...
+        // TODO: check required fields!!!
+        if( typeof erroredRows[rowIndex] == 'undefined' ){
+          erroredRows[rowIndex] = [];
+        }
+        if( editorObject.is_invalid($(_field).val()) ){
+          $(_field).css({'box-shadow': '0 0 2px 2px #C00000 inset'});
+          if( ! erroredRows[rowIndex].includes(datastoreID) ){
+            erroredRows[rowIndex].push(datastoreID);
+          }
+        }else{
+          $(_field).css({'box-shadow': '0 0 2px 2px #1e7e34 inset'});
+          erroredRows[rowIndex] = erroredRows[rowIndex].filter(function(_arrItem){
+            return _arrItem != datastoreID;
+          });
+        }
+        if( erroredRows[rowIndex].length > 0 ){
+          $(row).find('td.expanders').css({'background-color': '#C00000'});
+        }else{
+          $(row).find('td.expanders').css({'background-color': '#1e7e34'});
+        }
+      });
+    });
   }
 
-  function render_table_editor(){
-    // FIXME: where to put the button in full table mode??
+  function render_table_editor_button(){
     let entryElement = $('#dtprv_wrapper').find('.dt-scroll-head').find('th.expanders');
     if( ! isEditable && ! EDITOR ){
       $(entryElement).addClass('no-edit');
@@ -866,7 +1005,7 @@ function load_pd_datatable(){
       let icon = 'fas fa-plus';
       let action = 'add';
       if( isEditable && table.rows({selected: true})[0].length > 0 ){
-        label = editInTableButtonLabel;
+        label = editInTableButtonLabel.replace('{COUNT}', table.rows({selected: true})[0].length);
         icon = 'fas fa-edit';
         action = 'edit';
       }
@@ -875,7 +1014,19 @@ function load_pd_datatable(){
       if( editorButton.length > 0 ){
         $(editorButton).off('click.Edit');
         $(editorButton).on('click.Edit', function(_event){
-          table_editor($(editorButton).attr('data-action'));
+          let formAction = $(editorButton).attr('data-action');
+          if( EDITOR && formAction == 'add' ){
+            editingRows = [];
+          }else if( isEditable && EDITOR && formAction == 'edit' ){
+            editingRows = table.rows({selected: true})[0];
+          }
+          set_state_change_visibility();
+          table.rows().deselect();
+          isCompactView = false;
+          isEditMode = true;
+          table.state.save();
+          table.clear().destroy();
+          initialize_datatable();
         });
       }
     }
@@ -884,33 +1035,52 @@ function load_pd_datatable(){
   function draw_callback(_settings){
     $('#dtprv_wrapper').find('#dtprv_failure_message').remove();
     set_table_visibility();
-    render_expand_buttons();
-    render_selectbox_inputs();
-    render_table_editor();
-    render_pager_input();
-    render_human_sorting();
-    render_foreign_key_links();
-    set_button_states();
-    bind_readmore();
-    if( uri_filters ){
-      render_highlights();
+    if( ! isEditMode ){
+      render_expand_buttons();
+      render_selectbox_inputs();
+      render_table_editor_button();
+      render_pager_input();
+      render_human_sorting();
+      render_foreign_key_links();
+      set_button_states();
+      bind_readmore();
+      if( uri_filters ){
+        render_highlights();
+      }
+    }else{
+      bind_table_editor();
     }
   }
 
   function init_callback(){
     set_table_visibility();
-    render_table_footer();
-    bind_readmore();
-    set_row_selects();
-    set_button_states();
-    if( ! isCompactView ){
+    if( ! isEditMode ){
+      render_table_footer();
+      bind_readmore();
+      set_row_selects();
+      set_button_states();
+      if( ! isCompactView ){
+        table.columns.adjust();
+      }
+      bind_table_selects();
+    }
+    bind_keyboard_controls();
+    if( isEditMode ){
+      // FIXME: non-editable cols widths when changing states and reinitializing...
       table.columns.adjust();
     }
-    bind_table_selects();
-    bind_keyboard_controls();
   }
 
   function initialize_datatable(){
+    let keyTarget = isCompactView ? ':not(.dtr-hidden)' : ':not(.dtr-hidden):not(.expanders)';
+    let selectSettings = {
+      style: 'multi',
+      selector: 'td:not(:first-child)'
+    }
+    if( isEditMode ){
+      keyTarget = ':not(.dtr-hidden):not(.expanders):not(.checkboxes):not(.pd-datatables-non-editable-col)';
+      selectSettings = false;
+    }
     table = $('#dtprv').DataTable({
       paging: true,
       serverSide: true,
@@ -924,13 +1094,10 @@ function load_pd_datatable(){
       scrollCollapse: false,
       deferRender: true,
       keys: {
-        columns: ':not(.dtr-hidden)'
+        columns: keyTarget
       },
-      pageLength: defaultRows,
-      select: {
-        style: 'multi',
-        selector: 'td:not(:first-child)'
-      },
+      pageLength: isEditMode ? -1 : defaultRows,
+      select: selectSettings,
       search: {
         return: true
       },
@@ -943,11 +1110,12 @@ function load_pd_datatable(){
         "url": ajaxURI,
         "type": "POST",
         "data": function(_data){
-          if( Object.keys(uri_filters).length > 0 ){
+          if( ! isEditMode && Object.keys(uri_filters).length > 0 ){
             for(let [_index, _value] of Object.entries(uri_filters)){
               _data['columns'][_index]['search']['value'] = _value;
             }
           }
+          _data['is_edit_mode'] = isEditMode;
         },
         "complete": function(_data){
           if( _data.responseJSON ){
@@ -964,9 +1132,12 @@ function load_pd_datatable(){
       stateSaveParams: function(_settings, _data){
         _data.selected = this.api().rows({selected: true})[0];
         _data.compact_view = isCompactView;
+        _data.edit_view = isEditMode;
         let localInstanceSelected = typeof tableState != 'undefined' ? tableState.selected : _data.selected;
         tableState = _data;
         tableState.selected = localInstanceSelected;
+        tableState.edit_view = isEditMode;
+        // TODO: store editingRows...
       },
       stateLoadParams: function(_settings, _data){
         let localInstanceSelected = typeof tableState != 'undefined' ? tableState.selected : _data.selected;

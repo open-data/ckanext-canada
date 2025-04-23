@@ -13,6 +13,7 @@
 {% endfor  %}
 {% set magic_priority_no_field_should_be_below = 2 %}
 {% set choice_fields = h.recombinant_choice_fields(resource_name) if can_edit else {} %}
+{% set nonEditableCols = ['record_created', 'record_modified', 'user_modified'] %}
 
 <section id="dt-preview">
   <h2 id="prtable">{{_("Interactive Table")}}</h2>
@@ -34,12 +35,12 @@
   <table id="dtprv" class="table table-striped" data-role="table" data-mode="columntoggle" style="visibility: hidden;">
     <thead>
       <tr class="font-small">
-        <th scope="col" data-priority="3"></th>
-        <th scope="col" data-priority="3">{{ _('Select') }}</th>
+        <th scope="col" data-editable-col="false" data-priority="3"></th>
+        <th scope="col" data-editable-col="false" data-priority="3">{{ _('Select') }}</th>
         {% for field in ds_fields %}
           {# TODO: add fa fa-info-circle to headings for field data dictionary linking??? #}
           {# TODO: add a glue button for sticky columns #}
-          <th scope="col" data-datastore-id="{{- field.id -}}" data-datastore-type="{{- field.type -}}" data-priority="{{- field.priority + magic_priority_no_field_should_be_below -}}">
+          <th scope="col" data-editable-col="{{- (field.id not in nonEditableCols)|tojson -}}" data-datastore-id="{{- field.id -}}" data-datastore-type="{{- field.type -}}" data-priority="{{- field.priority + magic_priority_no_field_should_be_below -}}">
             {{- field.label -}}<span class="sorting-cnt"><span class="sorting-icons"></span></span>
           </th>
         {% endfor %}
@@ -106,14 +107,15 @@
   const pd_datatable__colSortAnyLabel = "{{- _('Any') -}}";
   const pd_datatable__readLessLabel = "{{- _('less') -}}";
   const pd_datatable__jumpToPageLabel = "{{- _('Jump to page') -}}";
-  const pd_datatable__resetTabelLabel = "{{- _('Reset Table') -}}";
+  const pd_datatable__resetTableLabel = "{{- _('Reset Table') -}}";
   const pd_datatable__fullscreenLabel = "{{- _('Fullscreen') -}}";
   const pd_datatable__exitFullscreenLabel = "{{- _('Exit Fullscreen') -}}";
+  const pd_datatable__exitEditTableLabel = "{{- _('Exit Edit Mode') -}}";
   const pd_datatable__fullTableLabel = "{{- _('Full Table') -}}";
   const pd_datatable__compactTableLabel = "{{- _('Compact Table') -}}";
   const pd_datatable__editSingleButtonLabel = "{{- _('Edit Online') -}}";
   const pd_datatable__addInTableButtonLabel = "{{- _('Add new record in Table') -}}";
-  const pd_datatable__editInTableButtonLabel = "{{- _('Edit record(s) in Table') -}}";
+  const pd_datatable__editInTableButtonLabel = "{{- _('Edit {COUNT} record(s) in Table') -}}";
   const pd_datatable__countSuffix = "{{- _(' record(s)') -}}";
   const pd_datatable__ajaxErrorMessage = "{{- _('Error: Could not query records. Please try again.') -}}";
   const pd_datatable__editSingleRecordURI = "{{- h.url_for('canada.update_pd_record', resource_name=resource_name, owner_org=owner_org, pk='') -}}";
@@ -121,6 +123,7 @@
   const pd_datatable__editRecordsURI = "{{- h.url_for('recombinant.template', dataset_type=dataset_type, lang=h.lang(), owner_org=owner_org) -}}";
   const pd_datatable__deleteButtonLabel = "{{- _('Delete<span class=\\"pd-datatbales-btn-count\\"></span>') -}}";
   const pd_datatable__deleteRecordsURI = "{{- h.url_for('canada.delete_selected_records', resource_id=resource_id) -}}";
+  const pd_datatable__saveButtonLabel = "{{- _('Save<span class=\\"pd-datatbales-btn-count\\"></span>') -}}";
   const pd_datatable__ajaxURI = "{{- h.url_for('canada.pd_datatable', resource_name=resource_name, resource_id=resource_id) -}}";
   const pd_datatable__tableLanguage = {
     decimal: "",
@@ -182,13 +185,15 @@
 </script>
 
 {# TODO: use chromo theme for table styles?? #}
-<!-- <style>
-  body #dtprv_wrapper .dt-scroll-head th{
-    background-color: #{{- geno.datatables_style.header.bgColor -}} !important;
-  }
-  body #dtprv_wrapper #dtprv-body-main tr.selected td,
-  body #dtprv_wrapper #dtprv-body-main tr.selected:hover td,
-  body #dtprv_wrapper #dtprv-body-main tr.selected:focus td{
-    box-shadow: inset 0 0 0 9999px #{{- geno.datatables_style.select.bgColor -}} !important;
-  }
-</style> -->
+{% if geno.datatables_style %}
+  <style>
+    body #dtprv_wrapper .dt-scroll-head th:not(.bg-info){
+      background-color: #{{- geno.datatables_style.header.bgColor -}} !important;
+    }
+    body #dtprv_wrapper #dtprv-body-main tr.selected td,
+    body #dtprv_wrapper #dtprv-body-main tr.selected:hover td,
+    body #dtprv_wrapper #dtprv-body-main tr.selected:focus td{
+      box-shadow: inset 0 0 0 9999px #{{- geno.datatables_style.select.bgColor -}} !important;
+    }
+  </style>
+{% endif %}
