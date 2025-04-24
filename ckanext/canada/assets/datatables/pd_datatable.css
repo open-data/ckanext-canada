@@ -408,12 +408,8 @@ body #dtprv_wrapper .dropdown-menu.dt-button-collection div[role="menu"] a.dt-bu
 }
 
 body #dtprv_wrapper tfoot th.expanders,
-body #dtprv_wrapper .dt-scroll-head th.expanders.no-edit{
+body #dtprv_wrapper .dt-scroll-head th.expanders{
   visibility: hidden !important;
-}
-
-body #dtprv_wrapper .dt-scroll-head th.expanders.no-edit #dtprv-editor-button{
-  display: none !important;
 }
 
 body #dtprv_wrapper[data-compact-view="true"] th.expanders,
@@ -504,6 +500,15 @@ body #dtprv_wrapper[data-compact-view="false"] .dt-scroll-head,
 body #dtprv_wrapper[data-compact-view="false"] #dtprv,
 body #dtprv_wrapper[data-compact-view="false"] .dt-scroll-foot{
   overflow: hidden !important;
+  margin-left: -36px !important;
+  width: calc(100% + 36px) !important;
+}
+
+body #dtprv_wrapper[data-edit-view="true"] .dt-scroll-head,
+body #dtprv_wrapper[data-edit-view="true"] #dtprv,
+body #dtprv_wrapper[data-edit-view="true"] .dt-scroll-foot{
+  margin-left: 0 !important;
+  width: 100% !important;
 }
 
 body #dtprv_wrapper[data-compact-view="false"][data-edit-view="false"] #dtprv td.expanders{
@@ -586,7 +591,6 @@ body #dtprv_wrapper[data-compact-view="false"] .pd-datatables-primary-key-fixed{
   position: sticky !important;
   left: 0;
   background-color: white !important;
-  /* FIXME: header and footer not sticky... */
 }
 
 body #dtprv_wrapper[data-compact-view="false"] .dt-scroll-head th:not(:first-of-type).pd-datatables-primary-key-fixed,
@@ -602,6 +606,11 @@ body #dtprv_wrapper[data-edit-view="true"] .pd-datatables-primary-key-fixed{
 
 body #dtprv_wrapper[data-compact-view="false"] .dt-scroll-head th:not(:first-of-type).pd-datatables-primary-key-fixed,
 body #dtprv_wrapper[data-compact-view="false"] #dtprv-foot-main .pd-datatables-primary-key-fixed{
+  left: 36px !important;
+}
+
+body #dtprv_wrapper[data-edit-view="true"] .dt-scroll-head th:not(:first-of-type).pd-datatables-primary-key-fixed,
+body #dtprv_wrapper[data-edit-view="true"] #dtprv-foot-main .pd-datatables-primary-key-fixed{
   left: initial !important;
 }
 
@@ -700,4 +709,23 @@ body #dtprv_wrapper[data-edit-view="true"] #dtprv-body-main td textarea{
 body #dtprv_wrapper[data-edit-view="true"] #dtprv-body-main td textarea{
   min-height: 31px !important;
   height: 100%;
+}
+
+@-moz-keyframes spin {
+  100% { -moz-transform: rotate(360deg); }
+}
+
+@-webkit-keyframes spin {
+  100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+  100% {
+      -webkit-transform: rotate(360deg);
+      transform: rotate(360deg);
+  }
+}
+
+body #dtprv_wrapper i.fa-spinner{
+  animation: spin 4s linear infinite;
 }

@@ -942,10 +942,7 @@ def pd_datatable(resource_name: str, resource_id: str):
         i += 1
 
     if is_edit_mode:
-        default_fill = chromo.get('datatables_default_fill', 10)
-        response = {
-            'records': [{} for _i in range(default_fill)]
-        }
+        response = {}
     else:
         response = lc.action.datastore_search(
             q=search_text,
@@ -955,10 +952,17 @@ def pd_datatable(resource_name: str, resource_id: str):
             sort=', '.join(sort_list),
             filters=col_filters)
 
-    aadata = [
-        [''] +  # Expand column
-        ['<input type="checkbox">'] +  # Select column
-        [row.get(col, '') for col in cols] for row in response['records']]
+    if is_edit_mode:
+        default_fill = chromo.get('datatables_default_fill', 10)
+        aadata = [
+            [''] +  # Expand column
+            ['<input type="checkbox">'] +  # Select column
+            ['' for _col in cols] for _row in range(default_fill)]
+    else:
+        aadata = [
+            [''] +  # Expand column
+            ['<input type="checkbox">'] +  # Select column
+            [row.get(col, '') for col in cols] for row in response['records']]
 
     return json.dumps({
         'draw': draw,

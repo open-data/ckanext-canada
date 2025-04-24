@@ -115,11 +115,13 @@
   const pd_datatable__compactTableLabel = "{{- _('Compact Table') -}}";
   const pd_datatable__editSingleButtonLabel = "{{- _('Edit Online') -}}";
   const pd_datatable__addInTableButtonLabel = "{{- _('Add new record in Table') -}}";
-  const pd_datatable__editInTableButtonLabel = "{{- _('Edit {COUNT} record(s) in Table') -}}";
+  const pd_datatable__editInTableButtonLabel = "{{- _('Edit<span class=\\"pd-datatbales-btn-count\\"></span> in Table') -}}";
   const pd_datatable__countSuffix = "{{- _(' record(s)') -}}";
   const pd_datatable__ajaxErrorMessage = "{{- _('Error: Could not query records. Please try again.') -}}";
+  const pd_datatable__excelTemplateErrorMessage = "{{- _('Error: Could not generate Excel template. Please try again.') -}}";
   const pd_datatable__editSingleRecordURI = "{{- h.url_for('canada.update_pd_record', resource_name=resource_name, owner_org=owner_org, pk='') -}}";
   const pd_datatable__editButtonLabel = "{{- _('Edit<span class=\\"pd-datatbales-btn-count\\"></span> in Excel') -}}";
+  const pd_datatable__exportingButtonLabel = "{{- _('Exporting{COUNT} record(s) to an Excel Template') -}}";
   const pd_datatable__editRecordsURI = "{{- h.url_for('recombinant.template', dataset_type=dataset_type, lang=h.lang(), owner_org=owner_org) -}}";
   const pd_datatable__deleteButtonLabel = "{{- _('Delete<span class=\\"pd-datatbales-btn-count\\"></span>') -}}";
   const pd_datatable__deleteRecordsURI = "{{- h.url_for('canada.delete_selected_records', resource_id=resource_id) -}}";
@@ -156,6 +158,7 @@
           type: '{{- field.datastore_type -}}',
           form_attrs: {{ field.form_attrs|tojson if 'form_attrs' in field else None|tojson}},
           select_choices: {{ choice_fields[field.datastore_id]|tojson if field.datastore_id in choice_fields else None|tojson}},
+          is_required: {{- (field.form_required or field.excel_required or false)|tojson -}},
           is_invalid: function(VALUE){
             let CHOICES = [];
             if( this.select_choices ){

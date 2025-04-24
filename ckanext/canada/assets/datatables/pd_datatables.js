@@ -39,8 +39,10 @@ function load_pd_datatable(){
   const editInTableButtonLabel = pd_datatable__editInTableButtonLabel;
   const countSuffix = pd_datatable__countSuffix;
   const ajaxErrorMessage = pd_datatable__ajaxErrorMessage;
+  const excelTemplateErrorMessage = pd_datatable__excelTemplateErrorMessage;
   const editSingleRecordURI = pd_datatable__editSingleRecordURI;
   const editButtonLabel = pd_datatable__editButtonLabel;
+  const exportingButtonLabel = pd_datatable__exportingButtonLabel;
   const editRecordsURI = pd_datatable__editRecordsURI;
   const deleteButtonLabel = pd_datatable__deleteButtonLabel;
   const deleteRecordsURI = pd_datatable__deleteRecordsURI;
@@ -66,6 +68,8 @@ function load_pd_datatable(){
   let isFullScreen = is_page_fullscreen();
   let isEditMode = typeof tableState != 'undefined' && typeof tableState.edit_view != 'undefined' ? tableState.edit_view : false;
   let editingRows = [];
+  let isExportingExcel = false;
+  let exportingExcelLabel = '<i aria-hidden="true" class="fas fa-spinner"></i>&nbsp;' + exportingButtonLabel.replace('{COUNT}', '');
 
   let uri_filters = {};
   if( searchParams.has('dt_query') ){
@@ -398,7 +402,6 @@ function load_pd_datatable(){
     }
     let selectCount = table.rows({ selected: true })[0].length;
     let singleSelectButtons = $('#dtprv_wrapper').find('.pd-datatable-btn-single');
-    let buttonStats = $('#dtprv_wrapper').find('span.pd-datatbales-btn-count');
     if( selectCount > 1 ){
       $(singleSelectButtons).each(function(_index, _button){
         $(_button).addClass('disabled');
@@ -406,10 +409,14 @@ function load_pd_datatable(){
       });
     }
     if( selectCount > 0 ){
+      table.buttons('tableEditorButton:name').text('<i aria-hidden="true" class="fas fa-edit"></i>&nbsp;' + editInTableButtonLabel);
+      let buttonStats = $('#dtprv_wrapper').find('span.pd-datatbales-btn-count');
       $(buttonStats).each(function(_index, _button){
         $(_button).html('&nbsp;' + selectCount + countSuffix);
       });
     }else{
+      table.buttons('tableEditorButton:name').text('<i aria-hidden="true" class="fas fa-plus"></i>&nbsp;' + addInTableButtonLabel);
+      let buttonStats = $('#dtprv_wrapper').find('span.pd-datatbales-btn-count');
       $(buttonStats).each(function(_index, _button){
         $(_button).html('');
       });
@@ -592,6 +599,14 @@ function load_pd_datatable(){
     $('#dtprv_wrapper').find('.dt-scroll').before('<div id="dtprv_failure_message" class="alert alert-dismissible show alert-warning"><p>' + ajaxErrorMessage + '</p></div>');
   }
 
+  function render_excel_template_failure(_message){
+    console.warn(_message);
+    table.processing(false);
+    $('#dtprv_processing').css({'display': 'none'});
+    $('#dtprv_wrapper').find('#dtprv_failure_message').remove();
+    $('#dtprv_wrapper').find('.dt-scroll').before('<div id="dtprv_failure_message" class="alert alert-dismissible show alert-warning"><p>' + excelTemplateErrorMessage + '</p></div>');
+  }
+
   function set_table_visibility(){
     $('#dtprv').css({'visibility': 'visible'});
     $('table.dataTable').css({'visibility': 'visible'});
@@ -628,6 +643,9 @@ function load_pd_datatable(){
   }
 
   function set_button_states(){
+    if( isExportingExcel ){
+      table.buttons('excelEditorButton:name').enable(false);
+    }
     let buttons = $('#dtprv_wrapper').find('.dt-buttons').find('.btn.disabled');
     if( buttons.length > 0 ){
       $(buttons).each(function(_index, _button){
@@ -674,19 +692,23 @@ function load_pd_datatable(){
     table.on('select.CheckBoxes', function(e, dt, type, indexes){
       check_the_boxes(true, indexes);
       set_button_states();
-      render_table_editor_button();
       if( table.rows({selected: true})[0].length > 0 ){
         table.buttons('resetTableButton:name').enable();
       }else{
         table.buttons('resetTableButton:name').enable(false);
       }
+      if( isExportingExcel ){
+        table.buttons('excelEditorButton:name').enable(false);
+      }
     }).on('deselect.CheckBoxes', function(e, dt, type, indexes){
       check_the_boxes(false, indexes);
-      render_table_editor_button();
       if( table.rows({selected: true})[0].length > 0 ){
         table.buttons('resetTableButton:name').enable();
       }else{
         table.buttons('resetTableButton:name').enable(false);
+      }
+      if( isExportingExcel ){
+        table.buttons('excelEditorButton:name').enable(false);
       }
     });
   }
@@ -745,6 +767,31 @@ function load_pd_datatable(){
         }
       });
     }
+  }
+
+  function download_excel_template(_uri, _params){
+    return new Promise(function(_resolve, _reject){
+      let xhr = new XMLHttpRequest();
+      xhr.responseType = 'blob';
+      xhr.withCredentials = true;
+      xhr.onload = function() {
+        _resolve(xhr);
+      };
+      xhr.onerror = _reject;
+      xhr.open('POST', _uri);
+      xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+      xhr.send(_params);
+    }).then(function(_xhr){
+      let filename = _uri.substring(_uri.lastIndexOf("/") + 1).split("?")[0];
+      let a = document.createElement('a');
+      a.href = window.URL.createObjectURL(_xhr.response);
+      a.download = filename;
+      a.style.display = 'none';
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      return _xhr;
+    });
   }
 
   function get_available_buttons(){
@@ -852,7 +899,74 @@ function load_pd_datatable(){
       }
     });
 
+    if( isEditable && EDITOR ){
+      availableButtons.push({
+        name: "tableEditorButton",
+        text: '<i aria-hidden="true" class="fas fa-plus"></i>&nbsp;' + addInTableButtonLabel,
+        className: "pd-datatable-btn pd-datatable-editor-btn btn-success",
+        action: function(e, dt, button, config){
+          editingRows = table.rows({selected: true})[0];
+          set_state_change_visibility();
+          table.rows().deselect();
+          isCompactView = false;
+          isEditMode = true;
+          table.state.save();
+          table.clear().destroy();
+          initialize_datatable();
+        }
+      });
+    }
+
     if( isEditable ){
+      availableButtons.push({
+        extend: "selected",
+        name: "excelEditorButton",
+        text: isExportingExcel ? exportingExcelLabel : '<i aria-hidden="true" class="fas fa-file-excel"></i>&nbsp;' + editButtonLabel,
+        enabled: ! isExportingExcel,
+        className: "pd-datatable-btn pd-datatable-excel-btn btn-primary",
+        action: function(e, dt, button, config){
+          let pk_cols = primaryKeys.map(function(value){
+            return value + colOffset;
+          });
+          let rows = dt.rows({ selected: true });
+          let params = new Object();
+          // FIXME: bulk-template and key_indices multiple!!!
+          params['resource_name'] = resourceName;
+          params[csrfTokenName] = csrfTokenValue;
+          params['key_indices'] = primaryKeys;
+          params['bulk-template'] = [];
+          rows.eq(0).each(function(index){
+            params['bulk-template'].push(dt.cells(index, pk_cols).data().toArray());
+          });
+          let urlEncodedData = "";
+          let urlEncodedDataPairs = [];
+          for( let [_key, _value] of Object.entries(params) ){
+            if( Array.isArray(_value) ){
+              urlEncodedDataPairs.push(encodeURIComponent(_key) + '=' + encodeURIComponent(_value.join(',')));
+            }else{
+              urlEncodedDataPairs.push(encodeURIComponent(_key) + '=' + encodeURIComponent(_value));
+            }
+          }
+          urlEncodedData = urlEncodedDataPairs.join('&');
+          exportingExcelLabel = '<i aria-hidden="true" class="fas fa-spinner"></i>&nbsp;' + exportingButtonLabel.replace('{COUNT}', ' ' + rows[0].length);
+          table.buttons('excelEditorButton:name').text(exportingExcelLabel);
+          table.buttons('excelEditorButton:name').enable(false);
+          isExportingExcel = true;
+          download_excel_template(editRecordsURI, urlEncodedData).then(function(){
+            table.buttons('excelEditorButton:name').text('<i aria-hidden="true" class="fas fa-file-excel"></i>&nbsp;' + editButtonLabel);
+            let buttonStats = $('#dtprv_wrapper').find('.pd-datatable-excel-btn').find('span.pd-datatbales-btn-count');
+            let selectCount = table.rows({ selected: true })[0].length;
+            if( selectCount > 0 ){
+              $(buttonStats).html('&nbsp;' + selectCount + countSuffix);
+            }
+            table.buttons('excelEditorButton:name').enable();
+            isExportingExcel = false;
+          }).catch(function(){
+            render_excel_template_failure('DataTables error - Failed to generate Excel template');
+            isExportingExcel = false;
+          });
+        }
+      });
       availableButtons.push({
         extend: "selected",
         text: '<i aria-hidden="true" class="fas fa-edit"></i>&nbsp;' + editSingleButtonLabel,
@@ -870,42 +984,6 @@ function load_pd_datatable(){
             let encodedKeyString = encodeURIComponent(keyString.join(','));
             window.location = editSingleRecordURI + encodedKeyString;
           });
-        }
-      });
-      availableButtons.push({
-        extend: "selected",
-        text: '<i aria-hidden="true" class="fas fa-edit"></i>&nbsp;' + editButtonLabel,
-        className: "pd-datatable-btn btn-primary",
-        action: function(e, dt, button, config){
-          // closing form tag needed for py webtest lib
-          let form = $('<form></form>', {
-            action : editRecordsURI,
-            method : "post"
-          }).append($('<input>').attr({
-            type: 'hidden',
-            value: resourceName,
-            name: 'resource_name'
-          })).append($('<input>').attr({
-            type: 'hidden',
-            value: csrfTokenValue,
-            name: csrfTokenName
-          })).append($('<input>').attr({
-            type: 'hidden',
-            value: primaryKeys,
-            name: 'key_indices'
-          }));
-          let pk_cols = primaryKeys.map(function(value){
-            return value + colOffset;
-          });
-          let rows = dt.rows({ selected: true });
-          rows.eq(0).each(function(index){
-            form.append($('<input>').attr({
-              type: 'hidden',
-              value: dt.cells(index, pk_cols).data().toArray(),
-              name: 'bulk-template'
-            }));
-          });
-          form.appendTo('body').submit();
         }
       });
     }
@@ -994,51 +1072,12 @@ function load_pd_datatable(){
     });
   }
 
-  function render_table_editor_button(){
-    let entryElement = $('#dtprv_wrapper').find('.dt-scroll-head').find('th.expanders');
-    if( ! isEditable && ! EDITOR ){
-      $(entryElement).addClass('no-edit');
-      return;
-    }
-    if( entryElement.length > 0 ){
-      let label = addInTableButtonLabel;
-      let icon = 'fas fa-plus';
-      let action = 'add';
-      if( isEditable && table.rows({selected: true})[0].length > 0 ){
-        label = editInTableButtonLabel.replace('{COUNT}', table.rows({selected: true})[0].length);
-        icon = 'fas fa-edit';
-        action = 'edit';
-      }
-      $(entryElement).html('<div id="dtprv-editor-button"><button data-action="' + action + '" class="btn btn-success" title="' + label + '" aria-label="' + label + '"><i class="' + icon + '"></i></button></div>');
-      let editorButton = $('#dtprv-editor-button').find('button');
-      if( editorButton.length > 0 ){
-        $(editorButton).off('click.Edit');
-        $(editorButton).on('click.Edit', function(_event){
-          let formAction = $(editorButton).attr('data-action');
-          if( EDITOR && formAction == 'add' ){
-            editingRows = [];
-          }else if( isEditable && EDITOR && formAction == 'edit' ){
-            editingRows = table.rows({selected: true})[0];
-          }
-          set_state_change_visibility();
-          table.rows().deselect();
-          isCompactView = false;
-          isEditMode = true;
-          table.state.save();
-          table.clear().destroy();
-          initialize_datatable();
-        });
-      }
-    }
-  }
-
   function draw_callback(_settings){
     $('#dtprv_wrapper').find('#dtprv_failure_message').remove();
     set_table_visibility();
     if( ! isEditMode ){
       render_expand_buttons();
       render_selectbox_inputs();
-      render_table_editor_button();
       render_pager_input();
       render_human_sorting();
       render_foreign_key_links();
