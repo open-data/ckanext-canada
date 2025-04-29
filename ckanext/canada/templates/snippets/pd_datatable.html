@@ -14,6 +14,21 @@
 {% set magic_priority_no_field_should_be_below = 2 %}
 {% set choice_fields = h.recombinant_choice_fields(resource_name) if can_edit else {} %}
 {% set nonEditableCols = ['record_created', 'record_modified', 'user_modified'] %}
+{% set tableStyles = {
+    'header': {
+      'bgColor': '#ffffff',
+    },
+    'select': {
+      'bgColor': '#0d6efd',
+    },
+    'required': {
+      'bgColor': '#ffc107',
+    }
+  }
+%}
+{% if geno.datatables_style %}
+  {% do tableStyles.update(geno.datatables_style) %}
+{% endif %}
 
 <section id="dt-preview">
   <h2 id="prtable">{{_("Interactive Table")}}</h2>
@@ -39,7 +54,6 @@
         <th scope="col" data-editable-col="false" data-priority="3">{{ _('Select') }}</th>
         {% for field in ds_fields %}
           {# TODO: add fa fa-info-circle to headings for field data dictionary linking??? #}
-          {# TODO: add a glue button for sticky columns #}
           <th scope="col" data-editable-col="{{- (field.id not in nonEditableCols)|tojson -}}" data-datastore-id="{{- field.id -}}" data-datastore-type="{{- field.type -}}" data-priority="{{- field.priority + magic_priority_no_field_should_be_below -}}">
             {{- field.label -}}<span class="sorting-cnt"><span class="sorting-icons"></span></span>
           </th>
@@ -93,7 +107,9 @@
   const pd_datatable__timezoneString = pd_datatable__locale == 'en' ? 'EST' : 'HNE';  // FIXME: EDT / HAE
   const pd_datatable__csrfTokenValue = "{{- csrf_token() -}}";
   const pd_datatable__csrfTokenName = "{{- g.csrf_field_name -}}";
+  const pd_datatable__resourceID = "{{- resource_id -}}";
   const pd_datatable__resourceName = "{{- resource_name -}}";
+  const pd_datatable__tableStyles = {{ tableStyles|tojson }};
   const pd_datatable__primaryKeys = {{ primary_keys|tojson }};
   const pd_datatable__foreignKeys = {{ foreign_keys|tojson }};
   const pd_datatable__foreignLinks = {{ fk_links|tojson }};
@@ -116,6 +132,12 @@
   const pd_datatable__editSingleButtonLabel = "{{- _('Edit Online') -}}";
   const pd_datatable__addInTableButtonLabel = "{{- _('Add new record in Table') -}}";
   const pd_datatable__editInTableButtonLabel = "{{- _('Edit<span class=\\"pd-datatbales-btn-count\\"></span> in Table') -}}";
+  const pd_datatable__validRowLabel = "{{- _('Record is valid') -}}";
+  const pd_datatable__errorInRowLabel = "{{- _('Some fields have validation errors') -}}";
+  const pd_datatable__requiredInRowLabel = "{{- _('Some fields are required') -}}";
+  const pd_datatable__leavingEditorWarning = "{{- _('You have unsaved records in the table. Do you want to discard your changes or continue editing?') -}}";
+  const pd_datatable__validatingLabel = "{{- _('Validating records') -}}";
+  const pd_datatable__savingLabel = "{{- _('Saving records to the system') -}}";
   const pd_datatable__countSuffix = "{{- _(' record(s)') -}}";
   const pd_datatable__ajaxErrorMessage = "{{- _('Error: Could not query records. Please try again.') -}}";
   const pd_datatable__excelTemplateErrorMessage = "{{- _('Error: Could not generate Excel template. Please try again.') -}}";
@@ -187,16 +209,13 @@
   });
 </script>
 
-{# TODO: use chromo theme for table styles?? #}
-{% if geno.datatables_style %}
-  <style>
-    body #dtprv_wrapper .dt-scroll-head th:not(.bg-info){
-      background-color: #{{- geno.datatables_style.header.bgColor -}} !important;
-    }
-    body #dtprv_wrapper #dtprv-body-main tr.selected td,
-    body #dtprv_wrapper #dtprv-body-main tr.selected:hover td,
-    body #dtprv_wrapper #dtprv-body-main tr.selected:focus td{
-      box-shadow: inset 0 0 0 9999px #{{- geno.datatables_style.select.bgColor -}} !important;
-    }
-  </style>
-{% endif %}
+<style>
+  body #dtprv_wrapper .dt-scroll-head th:not(.bg-info){
+    background-color: #{{- tableStyles.header.bgColor -}} !important;
+  }
+  body #dtprv_wrapper #dtprv-body-main tr.selected td,
+  body #dtprv_wrapper #dtprv-body-main tr.selected:hover td,
+  body #dtprv_wrapper #dtprv-body-main tr.selected:focus td{
+    box-shadow: inset 0 0 0 9999px #{{- tableStyles.select.bgColor -}} !important;
+  }
+</style>

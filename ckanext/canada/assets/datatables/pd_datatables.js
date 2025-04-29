@@ -11,6 +11,7 @@ function load_pd_datatable(){
   const timezoneString = pd_datatable__timezoneString;
   const csrfTokenValue = pd_datatable__csrfTokenValue;
   const csrfTokenName = pd_datatable__csrfTokenName;
+  const resourceID = pd_datatable__resourceID;
   const resourceName = pd_datatable__resourceName;
   const colOffset = 2;  // expand col + select col
   const defaultRows = 10;
@@ -37,6 +38,12 @@ function load_pd_datatable(){
   const editSingleButtonLabel = pd_datatable__editSingleButtonLabel;
   const addInTableButtonLabel = pd_datatable__addInTableButtonLabel;
   const editInTableButtonLabel = pd_datatable__editInTableButtonLabel;
+  const validRowLabel = pd_datatable__validRowLabel;
+  const errorInRowLabel = pd_datatable__errorInRowLabel;
+  const requiredInRowLabel = pd_datatable__requiredInRowLabel;
+  const leavingEditorWarning = pd_datatable__leavingEditorWarning;
+  const validatingLabel = pd_datatable__validatingLabel;
+  const savingLabel = pd_datatable__savingLabel;
   const countSuffix = pd_datatable__countSuffix;
   const ajaxErrorMessage = pd_datatable__ajaxErrorMessage;
   const excelTemplateErrorMessage = pd_datatable__excelTemplateErrorMessage;
@@ -50,6 +57,7 @@ function load_pd_datatable(){
   const ajaxURI = pd_datatable__ajaxURI;
   const tableLanguage = pd_datatable__tableLanguage;
   const markedRenderer = new marked.Renderer();
+  const tableStyles = pd_datatable__tableStyles;
   const EDITOR = pd_datatables__EDITOR;
 
   if( searchParams.has('dt_query') ){
@@ -70,6 +78,9 @@ function load_pd_datatable(){
   let editingRows = [];
   let isExportingExcel = false;
   let exportingExcelLabel = '<i aria-hidden="true" class="fas fa-spinner"></i>&nbsp;' + exportingButtonLabel.replace('{COUNT}', '');
+  let erroredRows = {};
+  let requiredRows = {};
+  let filledRows = {};
 
   let uri_filters = {};
   if( searchParams.has('dt_query') ){
@@ -643,6 +654,39 @@ function load_pd_datatable(){
   }
 
   function set_button_states(){
+    if( isEditMode ){
+      let hasFilledRows = false;
+      let isIncomplete = false;
+      let buttonStats = $('#dtprv_wrapper').find('.pd-datatable-save-btn').find('span.pd-datatbales-btn-count');
+      for(let [_rowIndex, _erroredCells] of Object.entries(erroredRows)){
+        if( _erroredCells.length > 0 ){
+          isIncomplete = true;
+        }
+      }
+      for(let [_rowIndex, _requiredCells] of Object.entries(requiredRows)){
+        if( _requiredCells.length > 0 ){
+          isIncomplete = true;
+        }
+      }
+      let filledCounter = 0;
+      for(let [_rowIndex, _filledCells] of Object.entries(filledRows)){
+        if( _filledCells.length > 0 ){
+          filledCounter += 1;
+        }
+      }
+      if( filledCounter == 0 ){
+        hasFilledRows = false;
+        $(buttonStats).html('');
+      }else{
+        hasFilledRows = true;
+        $(buttonStats).html('&nbsp;' + filledCounter + countSuffix);
+      }
+      if( isIncomplete || ! hasFilledRows ){
+        table.buttons('saveButton:name').enable(false);
+      }else{
+        table.buttons('saveButton:name').enable();
+      }
+    }
     if( isExportingExcel ){
       table.buttons('excelEditorButton:name').enable(false);
     }
@@ -651,6 +695,9 @@ function load_pd_datatable(){
       $(buttons).each(function(_index, _button){
         $(_button).attr('disabled', true);
       });
+    }
+    if( isEditMode ){
+      return;
     }
     let tableModified = false;
     if( ! isCompactView ){
@@ -831,13 +878,11 @@ function load_pd_datatable(){
     if( isEditMode ){
       availableButtons.push({
         name: "saveButton",
-        // TODO: update button label with number added + countSuffix
         text: '<i aria-hidden="true" class="fas fa-save"></i>&nbsp;' + saveButtonLabel,
         className: 'pd-datatable-btn btn-success pd-datatable-save-btn',
         enabled: false,
         action: function(e, dt, node, config){
-          // TODO: write ajax POST to datastore_upsert API.
-          //       action=insert for create, action=update for edit
+          save_table_rows();
         }
       })
 
@@ -847,7 +892,16 @@ function load_pd_datatable(){
         className: 'pd-datatable-btn btn-warning pd-datatable-exit-edit-btn',
         enabled: true,
         action: function(e, dt, node, config){
-          // TODO: check if there are new/changes fields and then alert of unsaved work...
+          for(let [_rowIndex, _filledCells] of Object.entries(filledRows)){
+            if( _filledCells.length > 0 ){
+              if( ! window.confirm(leavingEditorWarning) ){
+                return;
+              }
+            }
+          }
+          erroredRows = {};
+          requiredRows = {};
+          filledRows = {};
           set_state_change_visibility();
           table.rows().deselect();
           isCompactView = true;
@@ -1028,29 +1082,112 @@ function load_pd_datatable(){
     return availableButtons;
   }
 
-  function bind_table_editor(){
-    $('th[class*="dt-orderable"]').removeClass('dt-orderable').removeClass('dt-orderable-asc').removeClass('dt-ordering-asc').removeClass('dt-orderable-desc').removeClass('dt-ordering-desc');
+  function save_table_rows(){
+    // TODO: write ajax POST to datastore_upsert API.
+    //       method=insert for create, method=update for edit
+    let payload = {
+      'action_data': {
+        'resource_id': resourceID,
+        'method': 'insert',
+        'dry_run': true,
+        'records': []
+      }
+    };
+    let tokenFieldName = $('meta[name="csrf_field_name"]').attr('content');
+    let tokenValue = $('meta[name="' + tokenFieldName + '"]').attr('content');
+    payload[tokenFieldName] = tokenValue;
     let tableWrapper = $('#dtprv_wrapper');
     let innerTable = $(tableWrapper).find('#dtprv-body-main');
+    for(let [_rowIndex, _filledCells] of Object.entries(filledRows)){
+      if( _filledCells.length > 0 ){
+        let record = {};
+        let row = $(innerTable).find('tr').eq(_rowIndex);
+        for( let _i = 0; _i < _filledCells.length; _i++ ){
+          record[_filledCells[_i]] = $(row).find('.pd-datatable-editor-input[data-datastore-id="' + _filledCells[_i] + '"]').val().trim();
+        }
+        payload['action_data']['records'].push(record);
+      }
+    }
+    // TODO: make animation...
+    $(tableWrapper).find('.pd-datatables-editor-loader[data-action="validate"]').css({'display': 'flex'});
+    $(tableWrapper).find('.pd-datatables-editor-loader[data-action="validate"]').focus();
+    $(tableWrapper).children('.dt-scroll').css({'pointer-events': 'none', 'visibility': 'hidden'});
+    $(tableWrapper).children('.dt-buttons').css({'pointer-events': 'none', 'visibility': 'hidden'});
+    upsert_data(payload);
+  }
+
+  function render_from_editor_response(_data, _payload){
+    if( _data.responseJSON ){
+      if( _data.responseJSON.success ){
+        console.log(_data.responseJSON.result);
+      }else{
+        // TODO: output validation errors
+        console.log(_data.responseJSON);
+      }
+    }else{
+      // TODO: output generic error
+      console.log(_data);
+    }
+  }
+
+  function upsert_data(_payload){
+    let encodedPayload = _payload;
+    encodedPayload['action_data'] = JSON.stringify(encodedPayload['action_data']);
+    $.ajax({
+      'url': '/api/action/upsert_pd_data',
+      'type': 'POST',
+      'dataType': 'JSON',
+      'data': encodedPayload,
+      'complete': function(_data){
+        setTimeout(function(){
+          $('#dtprv_wrapper').children('.dt-scroll').css({'pointer-events': 'all', 'visibility': 'visible'});
+          $('#dtprv_wrapper').children('.dt-buttons').css({'pointer-events': 'all', 'visibility': 'visible'});
+          $('#dtprv_wrapper').find('.pd-datatables-editor-loader[data-action="validate"]').css({'display': 'none'});
+          $('#dtprv_wrapper').find('.pd-datatables-editor-loader[data-action="save"]').css({'display': 'none'});
+          render_from_editor_response(_data, _payload);
+        }, 1760);
+      }
+    });
+  }
+
+  function bind_table_editor(){
+    $('th[class*="dt-orderable"]').removeClass('dt-orderable').removeClass('dt-orderable-asc').removeClass('dt-ordering-asc').removeClass('dt-orderable-desc').removeClass('dt-ordering-desc');
+    set_button_states();
+    let tableWrapper = $('#dtprv_wrapper');
+    let innerTable = $(tableWrapper).find('#dtprv-body-main');
+    let indexBlocks = $(innerTable).find('td.expanders');
     let fields = $(innerTable).find('.pd-datatable-editor-input');
     if( editingRows.length == 0 ){
 
     }
-    // TODO: on browser nav alert unsaved!!!
-    let erroredRows = {};
-    let requiredRows = {};
+    if( indexBlocks.length > 0 ){
+      $(indexBlocks).each(function(_index, _indexBlock){
+        $(_indexBlock).off('click.GoToError');
+        $(_indexBlock).on('click.GoToError', function(_event){
+          if( typeof erroredRows[_index] != 'undefined' && erroredRows[_index].length > 0 ){
+            $(innerTable).find('tr').eq(_index).find('td').find('[data-datastore-id="' + erroredRows[_index][0] + '"]').focus();
+          }else if( typeof requiredRows[_index] != 'undefined' && requiredRows[_index].length > 0 ){
+            $(innerTable).find('tr').eq(_index).find('td').find('[data-datastore-id="' + requiredRows[_index][0] + '"]').focus();
+          }
+        });
+      });
+    }
     $(fields).each(function(_index, _field){
       $(_field).off('change.EDITOR');
       $(_field).on('change.EDITOR', function(_event){
-        let datastoreID = $(_field).attr('data-datastore-id')
+        let datastoreID = $(_field).attr('data-datastore-id');
         let editorObject = EDITOR[datastoreID];
         let rowIndex = $(_field).attr('data-row-index');
         let row = $(innerTable).find('tr').eq(rowIndex);
         let rowFields = $(row).find('.pd-datatable-editor-input');
-        // TODO: click to go to error...
-        // TODO: check required fields!!!
         if( typeof erroredRows[rowIndex] == 'undefined' ){
           erroredRows[rowIndex] = [];
+        }
+        if( typeof requiredRows[rowIndex] == 'undefined' ){
+          requiredRows[rowIndex] = [];
+        }
+        if( typeof filledRows[rowIndex] == 'undefined' ){
+          filledRows[rowIndex] = [];
         }
         if( editorObject.is_invalid($(_field).val()) ){
           $(_field).css({'box-shadow': '0 0 2px 2px #C00000 inset'});
@@ -1063,13 +1200,66 @@ function load_pd_datatable(){
             return _arrItem != datastoreID;
           });
         }
-        if( erroredRows[rowIndex].length > 0 ){
-          $(row).find('td.expanders').css({'background-color': '#C00000'});
-        }else{
-          $(row).find('td.expanders').css({'background-color': '#1e7e34'});
+        $(rowFields).each(function(_i, _f){
+          let _dsID = $(_f).attr('data-datastore-id');
+          let _editorObj = EDITOR[_dsID];
+          let _v = $(_f).val();
+          if( _editorObj.is_required && (typeof _v == 'undefined' || _v.trim().length == 0) ){
+            $(_f).css({'box-shadow': '0 0 2px 2px #' + tableStyles.required.bgColor + ' inset'});
+            if( ! requiredRows[rowIndex].includes(_dsID) ){
+              requiredRows[rowIndex].push(_dsID);
+            }
+          }else{
+            requiredRows[rowIndex] = requiredRows[rowIndex].filter(function(_arrItem){
+              return _arrItem != _dsID;
+            });
+          }
+          if( typeof _v != 'undefined' && _v.trim().length > 0 ){
+            if( ! filledRows[rowIndex].includes(_dsID) ){
+              filledRows[rowIndex].push(_dsID);
+            }
+          }else{
+            filledRows[rowIndex] = filledRows[rowIndex].filter(function(_arrItem){
+              return _arrItem != _dsID;
+            });
+          }
+        });
+        if( filledRows[rowIndex].length == 0 ){
+          erroredRows[rowIndex] = [];
+          requiredRows[rowIndex] = [];
+          $(rowFields).each(function(_i, _f){
+            $(_f).css({'box-shadow': 'none'});
+          });
         }
+        if( erroredRows[rowIndex].length > 0 ){
+          $(row).find('td.expanders').css({'background-color': '#C00000', 'cursor': 'pointer'});
+          $(row).find('td.expanders').attr('title', errorInRowLabel);
+        }else if( requiredRows[rowIndex].length > 0 ){
+          $(row).find('td.expanders').css({'background-color': '#' + tableStyles.required.bgColor, 'cursor': 'pointer'});
+          $(row).find('td.expanders').attr('title', requiredInRowLabel);
+        }else if( filledRows[rowIndex].length == 0 ){
+          $(row).find('td.expanders').css({'background-color': '#555555', 'cursor': 'default'});
+          $(row).find('td.expanders').attr('title', null);
+        }else{
+          $(row).find('td.expanders').css({'background-color': '#1e7e34', 'cursor': 'default'});
+          $(row).find('td.expanders').attr('title', validRowLabel);
+        }
+        set_button_states();
       });
     });
+  }
+
+  function render_loaders(){
+    $('#dtprv_wrapper').prepend('<div data-action="save" class="pd-datatables-editor-loader"><div><p><strong>' + savingLabel + '</strong></p></div><div id="loader-saving"></div></div>');
+    $('#dtprv_wrapper').prepend('<div data-action="validate" class="pd-datatables-editor-loader"><div><p><strong>' + validatingLabel + '</strong></p></div><div id="loader-validating"></div></div>');
+  }
+
+  function warn_unsaved_records(){
+    for(let [_rowIndex, _filledCells] of Object.entries(filledRows)){
+      if( _filledCells.length > 0 ){
+        return leavingEditorWarning;
+      }
+    }
   }
 
   function draw_callback(_settings){
@@ -1093,6 +1283,7 @@ function load_pd_datatable(){
 
   function init_callback(){
     set_table_visibility();
+    render_loaders();
     if( ! isEditMode ){
       render_table_footer();
       bind_readmore();
@@ -1105,7 +1296,6 @@ function load_pd_datatable(){
     }
     bind_keyboard_controls();
     if( isEditMode ){
-      // FIXME: non-editable cols widths when changing states and reinitializing...
       table.columns.adjust();
     }
   }
@@ -1176,7 +1366,7 @@ function load_pd_datatable(){
         tableState = _data;
         tableState.selected = localInstanceSelected;
         tableState.edit_view = isEditMode;
-        // TODO: store editingRows...
+        // TODO: store editingRows, erroredRows, requiredRows, filledRows...
       },
       stateLoadParams: function(_settings, _data){
         let localInstanceSelected = typeof tableState != 'undefined' ? tableState.selected : _data.selected;
@@ -1186,5 +1376,6 @@ function load_pd_datatable(){
       buttons: get_available_buttons(),
     });
   }
+  window.onbeforeunload = warn_unsaved_records;
   initialize_datatable();
 }

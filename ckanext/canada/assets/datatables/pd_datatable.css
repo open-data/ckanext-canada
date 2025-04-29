@@ -706,26 +706,109 @@ body #dtprv_wrapper[data-edit-view="true"] #dtprv-body-main td textarea{
   margin: 0 !important;
 }
 
+body #dtprv_wrapper[data-edit-view="true"] span.dt-column-order{
+  pointer-events: none !important;
+  display: none !important;
+}
+
 body #dtprv_wrapper[data-edit-view="true"] #dtprv-body-main td textarea{
   min-height: 31px !important;
   height: 100%;
 }
 
-@-moz-keyframes spin {
-  100% { -moz-transform: rotate(360deg); }
+body #dtprv_wrapper[data-edit-view="true"] .pd-datatables-non-editable-col:not(.expanders):not(.checkboxes){
+  display: none !important;
 }
 
-@-webkit-keyframes spin {
-  100% { -webkit-transform: rotate(360deg); }
+@-moz-keyframes spin{
+  100%{ -moz-transform: rotate(360deg); }
 }
 
-@keyframes spin {
-  100% {
-      -webkit-transform: rotate(360deg);
-      transform: rotate(360deg);
+@-webkit-keyframes spin{
+  100%{ -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin{
+  100%{
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
   }
 }
 
 body #dtprv_wrapper i.fa-spinner{
   animation: spin 4s linear infinite;
+}
+
+body #dtprv_wrapper #loader-validating{
+  width: 90px;
+  height: 14px;
+  margin-top: 15px;
+  box-shadow: 0 3px 0 #fff;
+  position: relative;
+  clip-path: inset(-40px 0 -5px);
+}
+
+body #dtprv_wrapper #loader-validating:before{
+  content: "";
+  position: absolute;
+  inset: auto calc(50% - 17px) 0;
+  height: 50px;
+  --g: no-repeat linear-gradient(#335075 0 0);
+  background: var(--g),var(--g),var(--g),var(--g);
+  background-size: 16px 14px;
+  animation:
+    l7-1 2s infinite linear,
+    l7-2 2s infinite linear;
+}
+
+@keyframes l7-1{
+  0%,
+  100%{ background-position: 0 -50px, 100% -50px; }
+  17.5%{ background-position: 0 100%, 100% -50px, 0 -50px,100% -50px; }
+  35%{ background-position: 0 100%, 100% 100%, 0 -50px,100% -50px; }
+  52.5%{ background-position: 0 100%, 100% 100%, 0 calc(100% - 16px), 100% -50px; }
+  70%,
+  98%{ background-position: 0 100%, 100% 100%, 0 calc(100% - 16px), 100% calc(100% - 16px); }
+}
+
+@keyframes l7-2{
+  0%,
+  70%{ transform:translate(0); }
+  100%{ transform:translate(200%); }
+}
+
+body #dtprv_wrapper #loader-saving{
+  margin-top: 15px;
+  width: 90px;
+  height: 30px;
+  box-shadow: 0 3px 0 #fff;
+  --g: repeat-x repeating-linear-gradient(90deg, #335075 0 16px, #0000 0 18px, #335075 0 34px, #0000 0 100%);
+  background: var(--g), var(--g);
+  background-size: 60px 14px, 60px 14px;
+  animation: l8 1s infinite linear;
+}
+
+@keyframes l8{
+  0%{ background-position: 0 0, 0 100%; }
+  100%{ background-position: 60px 0, 60px 100%; }
+}
+
+body #dtprv_wrapper .pd-datatables-editor-loader{
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding-top: 50px;
+  margin: -5px;
+  background: white;
+  width: calc(100% + 10px);
+  height: calc(100% + 10px);
+  z-index: 99;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-wrap: nowrap;
+  color: #335075;
+  display: none;
 }

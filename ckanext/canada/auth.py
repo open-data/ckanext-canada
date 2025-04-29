@@ -4,6 +4,7 @@ from ckan.types import Context, AuthFunction, DataDict, AuthResult
 from ckan.plugins.toolkit import chained_auth_function, config
 from ckan.authz import has_user_permission_for_group_or_org
 from ckan.plugins import plugin_loaded
+from ckanext.datastore.logic.auth import datastore_upsert
 
 
 def _is_reporting_user(context: Context):
@@ -93,3 +94,11 @@ def list_out_of_sync_packages(context: Context,
     Only sysadmins can list the out of sync packages.
     """
     return {'success': False}
+
+
+def upsert_pd_data(context: Context,
+                   data_dict: DataDict) -> AuthResult:
+    """
+    Wrapper to datastore_upsert.
+    """
+    return datastore_upsert(context, data_dict)
