@@ -687,10 +687,29 @@ body #dtprv_wrapper[data-edit-view="true"] #dtprv-body-main td.expanders{
   z-index: 6 !important;
 }
 
+body #dtprv_wrapper[data-edit-view="true"] #dtprv_failure_message{
+  margin-top: 15px;
+}
+
+body #dtprv_wrapper[data-edit-view="true"] #dtprv_failure_message p{
+  font-weight: 700;
+}
+
 body #dtprv_wrapper[data-edit-view="true"] #dtprv-body-main td{
   padding: 0 !important;
   box-shadow: none;
+}
+
+body #dtprv_wrapper[data-edit-view="true"] #dtprv-body-main td.expanders{
   vertical-align: middle !important;
+}
+
+body #dtprv_wrapper[data-edit-view="true"] #dtprv-body-main td .validation-error{
+  padding: 4px 6px;
+  background-color: #C00000;
+  color: white !important;
+  font-size: 14px;
+  font-weight: 600;
 }
 
 body #dtprv_wrapper[data-edit-view="true"] #dtprv-body-main td input,

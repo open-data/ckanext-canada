@@ -94,11 +94,3 @@ def list_out_of_sync_packages(context: Context,
     Only sysadmins can list the out of sync packages.
     """
     return {'success': False}
-
-
-def upsert_pd_data(context: Context,
-                   data_dict: DataDict) -> AuthResult:
-    """
-    Wrapper to datastore_upsert.
-    """
-    return datastore_upsert(context, data_dict)

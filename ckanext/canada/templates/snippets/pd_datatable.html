@@ -4,6 +4,7 @@
         and re-initializing the table, a full object model can get expensive and
         unpredictable.
 #}
+{% set lang = h.lang() or 'en' %}
 {% set geno = h.recombinant_get_geno(dataset_type) %}
 {% set chromo = h.recombinant_get_chromo(resource_name) %}
 {% set can_edit = h.check_access('resource_update', {'id': resource_id}) %}
@@ -87,92 +88,12 @@
 <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/keytable/2.12.1/css/keyTable.bootstrap5.min.css"><!-- KeyTable Extension -->
 <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/plug-ins/2.2.2/features/searchHighlight/dataTables.searchHighlight.css"><!-- Highlight Extension -->
 {% asset 'canada_datatables/pd_datatable_css' %}
-
-<script type="text/javascript" src="//cdn.datatables.net/2.2.2/js/dataTables.min.js" defer></script><!-- Core -->
-<script type="text/javascript" src="//cdn.datatables.net/2.2.2/js/dataTables.bootstrap5.min.js" defer></script><!-- Core -->
-<script type="text/javascript" src="//cdn.datatables.net/buttons/3.2.2/js/dataTables.buttons.min.js" defer></script><!-- Buttons Extension -->
-<script type="text/javascript" src="//cdn.datatables.net/buttons/3.2.2/js/buttons.bootstrap5.min.js" defer></script><!-- Buttons Extension -->
-<script type="text/javascript" src="//cdn.datatables.net/responsive/3.0.4/js/dataTables.responsive.min.js" defer></script><!-- Responsive Extension -->
-<script type="text/javascript" src="//cdn.datatables.net/responsive/3.0.4/js/responsive.bootstrap5.min.js" defer></script><!-- Responsive Extension -->
-<script type="text/javascript" src="//cdn.datatables.net/select/3.0.0/js/dataTables.select.min.js" defer></script><!-- Select Extension -->
-<script type="text/javascript" src="//cdn.datatables.net/select/3.0.0/js/select.bootstrap5.min.js" defer></script><!-- Select Extension -->
-<script type="text/javascript" src="//cdn.datatables.net/keytable/2.12.1/js/dataTables.keyTable.min.js" defer></script><!-- KeyTable Extension -->
-<script type="text/javascript" src="//cdn.datatables.net/keytable/2.12.1/js/keyTable.bootstrap5.min.js" defer></script><!-- KeyTable Extension -->
-<script type="text/javascript" src="//cdn.datatables.net/plug-ins/2.2.2/features/searchHighlight/dataTables.searchHighlight.min.js" defer></script><!-- Highlight Extension -->
-{% asset 'canada_datatables/pd_datatable_js' %}
-
+{#
+  NOTE: to avoid unsafe JS eval, we render the js_error_evals via jinja2.
+        because of this, we cannot pass this object into the CKAN JS Module
+        like the other variables. So we must make it a JS Global here.
+#}
 <script type="text/javascript">
-  const pd_datatable__locale = "{{- h.lang() or 'en' -}}";
-  const pd_datatable__localeString = pd_datatable__locale == 'en' ? 'en-CA' : 'fr-CA';
-  const pd_datatable__timezoneString = pd_datatable__locale == 'en' ? 'EST' : 'HNE';  // FIXME: EDT / HAE
-  const pd_datatable__csrfTokenValue = "{{- csrf_token() -}}";
-  const pd_datatable__csrfTokenName = "{{- g.csrf_field_name -}}";
-  const pd_datatable__resourceID = "{{- resource_id -}}";
-  const pd_datatable__resourceName = "{{- resource_name -}}";
-  const pd_datatable__tableStyles = {{ tableStyles|tojson }};
-  const pd_datatable__primaryKeys = {{ primary_keys|tojson }};
-  const pd_datatable__foreignKeys = {{ foreign_keys|tojson }};
-  const pd_datatable__foreignLinks = {{ fk_links|tojson }};
-  const pd_datatable__chromoFields = {{ chromo.fields|tojson }};
-  const pd_datatable__isEditable = {{ (chromo.edit_form and can_edit)|tojson }};
-  const pd_datatable__selectAllLabel = "{{- _('Select All') -}}";
-  const pd_datatable__colSearchLabel = "{{- _('Search:') -}}";
-  const pd_datatable__colSortLabel = "{{- _('Sorting by:') -}}";
-  const pd_datatable__colSortAscLabel = "{{- _('Ascending') -}}";
-  const pd_datatable__colSortDescLabel = "{{- _('Descending') -}}";
-  const pd_datatable__colSortAnyLabel = "{{- _('Any') -}}";
-  const pd_datatable__readLessLabel = "{{- _('less') -}}";
-  const pd_datatable__jumpToPageLabel = "{{- _('Jump to page') -}}";
-  const pd_datatable__resetTableLabel = "{{- _('Reset Table') -}}";
-  const pd_datatable__fullscreenLabel = "{{- _('Fullscreen') -}}";
-  const pd_datatable__exitFullscreenLabel = "{{- _('Exit Fullscreen') -}}";
-  const pd_datatable__exitEditTableLabel = "{{- _('Exit Edit Mode') -}}";
-  const pd_datatable__fullTableLabel = "{{- _('Full Table') -}}";
-  const pd_datatable__compactTableLabel = "{{- _('Compact Table') -}}";
-  const pd_datatable__editSingleButtonLabel = "{{- _('Edit Online') -}}";
-  const pd_datatable__addInTableButtonLabel = "{{- _('Add new record in Table') -}}";
-  const pd_datatable__editInTableButtonLabel = "{{- _('Edit<span class=\\"pd-datatbales-btn-count\\"></span> in Table') -}}";
-  const pd_datatable__validRowLabel = "{{- _('Record is valid') -}}";
-  const pd_datatable__errorInRowLabel = "{{- _('Some fields have validation errors') -}}";
-  const pd_datatable__requiredInRowLabel = "{{- _('Some fields are required') -}}";
-  const pd_datatable__leavingEditorWarning = "{{- _('You have unsaved records in the table. Do you want to discard your changes or continue editing?') -}}";
-  const pd_datatable__validatingLabel = "{{- _('Validating records') -}}";
-  const pd_datatable__savingLabel = "{{- _('Saving records to the system') -}}";
-  const pd_datatable__countSuffix = "{{- _(' record(s)') -}}";
-  const pd_datatable__ajaxErrorMessage = "{{- _('Error: Could not query records. Please try again.') -}}";
-  const pd_datatable__excelTemplateErrorMessage = "{{- _('Error: Could not generate Excel template. Please try again.') -}}";
-  const pd_datatable__editSingleRecordURI = "{{- h.url_for('canada.update_pd_record', resource_name=resource_name, owner_org=owner_org, pk='') -}}";
-  const pd_datatable__editButtonLabel = "{{- _('Edit<span class=\\"pd-datatbales-btn-count\\"></span> in Excel') -}}";
-  const pd_datatable__exportingButtonLabel = "{{- _('Exporting{COUNT} record(s) to an Excel Template') -}}";
-  const pd_datatable__editRecordsURI = "{{- h.url_for('recombinant.template', dataset_type=dataset_type, lang=h.lang(), owner_org=owner_org) -}}";
-  const pd_datatable__deleteButtonLabel = "{{- _('Delete<span class=\\"pd-datatbales-btn-count\\"></span>') -}}";
-  const pd_datatable__deleteRecordsURI = "{{- h.url_for('canada.delete_selected_records', resource_id=resource_id) -}}";
-  const pd_datatable__saveButtonLabel = "{{- _('Save<span class=\\"pd-datatbales-btn-count\\"></span>') -}}";
-  const pd_datatable__ajaxURI = "{{- h.url_for('canada.pd_datatable', resource_name=resource_name, resource_id=resource_id) -}}";
-  const pd_datatable__tableLanguage = {
-    decimal: "",
-    emptyTable: "{{- _('No data available in table') -}}",
-    info: "{{- _('Showing _START_ to _END_ of _TOTAL_ entries') -}}",
-    infoEmpty: "{{- _('Showing 0 to 0 of 0 entries') -}}",
-    infoFiltered: "{{- _('(filtered from _MAX_ total entries)') -}}",
-    infoPostFix: "",
-    thousands: ",",
-    lengthMenu: "{{- _('_MENU_ Show number of entries') -}}",
-    loadingRecords: "{{- _('Loading...') -}}",
-    processing: "",
-    search: "{{- _('Search') -}}",
-    zeroRecords: "{{- _('No matching records found') -}}",
-    paginate: {
-      first: "«",
-      last: "»",
-      next: "›",
-      previous: "‹"
-    },
-    aria: {
-      orderable: "{{- _('Order by this column') -}}",
-      orderableReverse: "{{- _('Reverse order this column') -}}"
-    }
-  };
   {% if can_edit %}
     const pd_datatables__EDITOR = {
       {% for field in chromo.fields %}
@@ -202,13 +123,20 @@
   {% else %}
     const pd_datatables__EDITOR = false;
   {% endif %}
-  window.addEventListener('load', function(){
-    $(document).ready(function() {
-      load_pd_datatable();
-    });
-  });
 </script>
 
+<script type="text/javascript" src="//cdn.datatables.net/2.2.2/js/dataTables.min.js" defer></script><!-- Core -->
+<script type="text/javascript" src="//cdn.datatables.net/2.2.2/js/dataTables.bootstrap5.min.js" defer></script><!-- Core -->
+<script type="text/javascript" src="//cdn.datatables.net/buttons/3.2.2/js/dataTables.buttons.min.js" defer></script><!-- Buttons Extension -->
+<script type="text/javascript" src="//cdn.datatables.net/buttons/3.2.2/js/buttons.bootstrap5.min.js" defer></script><!-- Buttons Extension -->
+<script type="text/javascript" src="//cdn.datatables.net/responsive/3.0.4/js/dataTables.responsive.min.js" defer></script><!-- Responsive Extension -->
+<script type="text/javascript" src="//cdn.datatables.net/responsive/3.0.4/js/responsive.bootstrap5.min.js" defer></script><!-- Responsive Extension -->
+<script type="text/javascript" src="//cdn.datatables.net/select/3.0.0/js/dataTables.select.min.js" defer></script><!-- Select Extension -->
+<script type="text/javascript" src="//cdn.datatables.net/select/3.0.0/js/select.bootstrap5.min.js" defer></script><!-- Select Extension -->
+<script type="text/javascript" src="//cdn.datatables.net/keytable/2.12.1/js/dataTables.keyTable.min.js" defer></script><!-- KeyTable Extension -->
+<script type="text/javascript" src="//cdn.datatables.net/keytable/2.12.1/js/keyTable.bootstrap5.min.js" defer></script><!-- KeyTable Extension -->
+<script type="text/javascript" src="//cdn.datatables.net/plug-ins/2.2.2/features/searchHighlight/dataTables.searchHighlight.min.js" defer></script><!-- Highlight Extension -->
+{% asset 'canada_datatables/pd_datatable_js' %}
 <style>
   body #dtprv_wrapper .dt-scroll-head th:not(.bg-info){
     background-color: #{{- tableStyles.header.bgColor -}} !important;
@@ -219,3 +147,24 @@
     box-shadow: inset 0 0 0 9999px #{{- tableStyles.select.bgColor -}} !important;
   }
 </style>
+
+<div data-module="pd-datatables"
+     data-module-locale="{{- lang -}}"
+     data-module-locale_string="{{- 'en-CA' if lang == 'en' else 'fr-CA' -}}"
+     data-module-timezone_string="{{- 'EST' if lang == 'en' else 'HNE' -}}"
+     data-module-csrf_name="{{- g.csrf_field_name -}}"
+     data-module-csrf_value="{{- csrf_token() -}}"
+     data-module-resource_id="{{- resource_id -}}"
+     data-module-resource_name="{{- resource_name -}}"
+     data-module-edit_single_uri="{{- h.url_for('canada.update_pd_record', resource_name=resource_name, owner_org=owner_org, pk='') -}}"
+     data-module-edit_records_uri="{{- h.url_for('recombinant.template', dataset_type=dataset_type, lang=lang, owner_org=owner_org) -}}"
+     data-module-upsert_records_uri="{{- h.url_for('canada.upsert_pd_data', resource_name=resource_name, owner_org=owner_org) -}}"
+     data-module-delete_records_uri="{{- h.url_for('canada.delete_selected_records', resource_id=resource_id) -}}"
+     data-module-ajax_uri="{{- h.url_for('canada.pd_datatable', resource_name=resource_name, resource_id=resource_id) -}}"
+     data-module-table_styles='{{ tableStyles|tojson }}'
+     data-module-primary_keys='{{ primary_keys|tojson }}'
+     data-module-foreign_keys='{{ foreign_keys|tojson }}'
+     data-module-foreign_links='{{ fk_links|tojson }}'
+     data-module-chromo_fields='{{ chromo.fields|tojson }}'
+     data-module-is_editable='{{ (chromo.edit_form and can_edit)|tojson }}'>
+</div>

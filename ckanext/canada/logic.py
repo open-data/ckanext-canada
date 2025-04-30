@@ -1,5 +1,3 @@
-import json
-
 from typing import Optional, Any, cast, Dict, List, Union
 from ckan.types import Context, DataDict, Action, ChainedAction, Schema, ErrorDict
 
@@ -760,24 +758,3 @@ def canada_datastore_search(up_func: Action,
                                     'not supported for data with '
                                     'more than {} rows.').format(max_rows_for_fts))
     return up_func(context, data_dict)
-
-
-def upsert_pd_data(context: Context,
-                   data_dict: DataDict) -> Dict[str, Any]:
-    """
-    Wrapper to datastore_upsert with specific logic for custom DataTables.
-
-    Allows for encoded POSTed form data as a JSON string in the action_data field.
-    This allows for easy CSRF Token validation in AJAX requests.
-
-    Adds custom message handling for DataTables.
-    """
-    check_access('upsert_pd_data', context, data_dict)
-
-    # FIXME: is there a better way to verify CSRF token in application/json POST??
-    action_data = data_dict.pop('action_data', None)
-    if action_data:
-        data_dict = json.loads(action_data)
-
-    # TODO: try catch and change error return messages as needed...
-    return get_action('datastore_upsert')(context, data_dict)

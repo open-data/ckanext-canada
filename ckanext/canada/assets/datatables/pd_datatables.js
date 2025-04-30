@@ -2,63 +2,124 @@
 //       in order to keep things somewhat synchronous and stateless. With re-drawing
 //       and re-initializing the table, a full object model can get expensive and
 //       unpredictable.
+//
+//       Using a CKAN module allows us to easily pass variables, use gettext,
+//       and initialize on document ready.
+this.ckan.module('pd-datatables', function($){
+  return {
+    /* options object can be extended using data-module-* attributes */
+    options : {
+      locale: 'en',
+      locale_string: 'en-CA',
+      timezone_string: 'EST',  // FIXME: EDT / HAE
+      csrf_name: null,
+      csrf_value: null,
+      resource_id: null,
+      resource_name: null,
+      edit_single_uri: null,
+      edit_records_uri: null,
+      upsert_records_uri: null,
+      delete_records_uri: null,
+      ajax_uri: null,
+      table_styles: null,
+      primary_keys: null,
+      foreign_keys: null,
+      foreign_links: null,
+      chromo_fields: null,
+      is_editable: false,
+    },
+    initialize: function (){
+      load_pd_datatable(this);
+    }
+  };
+});
 
-function load_pd_datatable(){
+function load_pd_datatable(CKAN_MODULE){
+  const _ = CKAN_MODULE._;
   const searchParams = new URLSearchParams(document.location.search);
   const currentDate = new Date().toISOString().split('T')[0];
   const currentYear = new Date().getFullYear();
-  const localeString = pd_datatable__localeString;
-  const timezoneString = pd_datatable__timezoneString;
-  const csrfTokenValue = pd_datatable__csrfTokenValue;
-  const csrfTokenName = pd_datatable__csrfTokenName;
-  const resourceID = pd_datatable__resourceID;
-  const resourceName = pd_datatable__resourceName;
+  const locale = CKAN_MODULE.options.locale;
+  const localeString = CKAN_MODULE.options.locale_string;
+  const timezoneString = CKAN_MODULE.options.timezone_string;
+  const csrfTokenName = CKAN_MODULE.options.csrf_name;
+  const csrfTokenValue = CKAN_MODULE.options.csrf_value;
+  const resourceID = CKAN_MODULE.options.resource_id;
+  const resourceName = CKAN_MODULE.options.resource_name;
   const colOffset = 2;  // expand col + select col
   const defaultRows = 10;
   const ellipsesLength = 100;  // default 100 ellipses length from ckanext-datatablesview
-  const primaryKeys = pd_datatable__primaryKeys;
-  const foreignKeys = pd_datatable__foreignKeys;
-  const foreignLinks = pd_datatable__foreignLinks;
-  const chromoFields = pd_datatable__chromoFields;
-  const isEditable = pd_datatable__isEditable;
-  const selectAllLabel = pd_datatable__selectAllLabel;
-  const colSearchLabel = pd_datatable__colSearchLabel;
-  const colSortLabel = pd_datatable__colSortLabel;
-  const colSortAscLabel = pd_datatable__colSortAscLabel;
-  const colSortDescLabel = pd_datatable__colSortDescLabel;
-  const colSortAnyLabel = pd_datatable__colSortAnyLabel;
-  const readLessLabel = pd_datatable__readLessLabel;
-  const jumpToPageLabel = pd_datatable__jumpToPageLabel;
-  const resetTableLabel = pd_datatable__resetTableLabel;
-  const fullscreenLabel = pd_datatable__fullscreenLabel;
-  const exitFullscreenLabel = pd_datatable__exitFullscreenLabel;
-  const exitEditTableLabel = pd_datatable__exitEditTableLabel
-  const fullTableLabel = pd_datatable__fullTableLabel;
-  const compactTableLabel = pd_datatable__compactTableLabel;
-  const editSingleButtonLabel = pd_datatable__editSingleButtonLabel;
-  const addInTableButtonLabel = pd_datatable__addInTableButtonLabel;
-  const editInTableButtonLabel = pd_datatable__editInTableButtonLabel;
-  const validRowLabel = pd_datatable__validRowLabel;
-  const errorInRowLabel = pd_datatable__errorInRowLabel;
-  const requiredInRowLabel = pd_datatable__requiredInRowLabel;
-  const leavingEditorWarning = pd_datatable__leavingEditorWarning;
-  const validatingLabel = pd_datatable__validatingLabel;
-  const savingLabel = pd_datatable__savingLabel;
-  const countSuffix = pd_datatable__countSuffix;
-  const ajaxErrorMessage = pd_datatable__ajaxErrorMessage;
-  const excelTemplateErrorMessage = pd_datatable__excelTemplateErrorMessage;
-  const editSingleRecordURI = pd_datatable__editSingleRecordURI;
-  const editButtonLabel = pd_datatable__editButtonLabel;
-  const exportingButtonLabel = pd_datatable__exportingButtonLabel;
-  const editRecordsURI = pd_datatable__editRecordsURI;
-  const deleteButtonLabel = pd_datatable__deleteButtonLabel;
-  const deleteRecordsURI = pd_datatable__deleteRecordsURI;
-  const saveButtonLabel = pd_datatable__saveButtonLabel;
-  const ajaxURI = pd_datatable__ajaxURI;
-  const tableLanguage = pd_datatable__tableLanguage;
-  const markedRenderer = new marked.Renderer();
-  const tableStyles = pd_datatable__tableStyles;
+  const editSingleRecordURI = CKAN_MODULE.options.edit_single_uri;
+  const editRecordsURI = CKAN_MODULE.options.edit_records_uri;
+  const upsertRecordsURI = CKAN_MODULE.options.upsert_records_uri;
+  const deleteRecordsURI = CKAN_MODULE.options.delete_records_uri;
+  const ajaxURI = CKAN_MODULE.options.ajax_uri;
+  const primaryKeys = CKAN_MODULE.options.primary_keys;
+  const foreignKeys = CKAN_MODULE.options.foreign_keys;
+  const foreignLinks = CKAN_MODULE.options.foreign_links;
+  const chromoFields = CKAN_MODULE.options.chromo_fields;
+  const isEditable = CKAN_MODULE.options.is_editable;
+  const tableStyles = CKAN_MODULE.options.table_styles;
   const EDITOR = pd_datatables__EDITOR;
+
+  const selectAllLabel = _('Select All');
+  const colSearchLabel = _('Search:');
+  const colSortLabel = _('Sorting by:');
+  const colSortAscLabel = _('Ascending');
+  const colSortDescLabel = _('Descending');
+  const colSortAnyLabel = _('Any');
+  const readLessLabel = _('less');
+  const jumpToPageLabel = _('Jump to page');
+  const resetTableLabel = _('Reset Table');
+  const fullscreenLabel = _('Fullscreen');
+  const exitFullscreenLabel = _('Exit Fullscreen');
+  const exitEditTableLabel = _('Exit Edit Mode');
+  const fullTableLabel = _('Full Table');
+  const compactTableLabel = _('Compact Table');
+  const editSingleButtonLabel = _('Edit Online');
+  const addInTableButtonLabel = _('Add new record in Table');
+  const editInTableButtonLabel = _('Edit<span class="pd-datatbales-btn-count"></span> in Table');
+  const validRowLabel = _('Record is valid');
+  const errorInRowLabel = _('Some fields have validation errors');
+  const requiredInRowLabel = _('Some fields are required');
+  const leavingEditorWarning = _('You have unsaved records in the table. Do you want to discard your changes or continue editing?');
+  const validatingLabel = _('Validating records');
+  const savingLabel = _('Saving records to the system');
+  const validationErrorMessage = _('Your records did not save because one or more of them have errors. Fix the errors and save again to finalize your records.');
+  const exceptionErrorMessage = _('Could not save the records due to the following error: ');
+  const genericErrorMessage = _('Your records did not save. Try saving again. If the issue persist please contact support.');
+  const countSuffix = _(' record(s)');
+  const ajaxErrorMessage = _('Error: Could not query records. Please try again.');
+  const excelTemplateErrorMessage = _('Error: Could not generate Excel template. Please try again.');
+  const editButtonLabel = _('Edit<span class="pd-datatbales-btn-count"></span> in Excel');
+  const exportingButtonLabel = _('Exporting{COUNT} record(s) to an Excel Template');
+  const deleteButtonLabel = _('Delete<span class="pd-datatbales-btn-count"></span>');
+  const saveButtonLabel = _('Save<span class="pd-datatbales-btn-count"></span>');
+  const tableLanguage = {
+    decimal: "",
+    emptyTable: _('No data available in table'),
+    info: _('Showing _START_ to _END_ of _TOTAL_ entries'),
+    infoEmpty: _('Showing 0 to 0 of 0 entries'),
+    infoFiltered: _('(filtered from _MAX_ total entries)'),
+    infoPostFix: "",
+    thousands: ",",
+    lengthMenu: _('_MENU_ Show number of entries'),
+    loadingRecords: _('Loading...'),
+    processing: "",
+    search: _('Search'),
+    zeroRecords: _('No matching records found'),
+    paginate: {
+      first: "«",
+      last: "»",
+      next: "›",
+      previous: "‹"
+    },
+    aria: {
+      orderable: _('Order by this column'),
+      orderableReverse: _('Reverse order this column')
+    }
+  };
+  const markedRenderer = new marked.Renderer();
 
   if( searchParams.has('dt_query') ){
     $([document.documentElement, document.body]).animate({
@@ -602,20 +663,32 @@ function load_pd_datatable(){
     }
   }
 
-  function render_ajax_failure(_message){
-    console.warn(_message);
+  function _render_failure(_consoleMessage, _message, _type){
+    console.warn(_consoleMessage);
     table.processing(false);
     $('#dtprv_processing').css({'display': 'none'});
     $('#dtprv_wrapper').find('#dtprv_failure_message').remove();
-    $('#dtprv_wrapper').find('.dt-scroll').before('<div id="dtprv_failure_message" class="alert alert-dismissible show alert-warning"><p>' + ajaxErrorMessage + '</p></div>');
+    $('#dtprv_wrapper').find('.dt-scroll').before('<div id="dtprv_failure_message" class="alert alert-dismissible show alert-' + _type + '"><p>' + _message + '</p></div>');
+  }
+
+  function render_ajax_failure(_message){
+    _render_failure(_message, ajaxErrorMessage, 'warning');
   }
 
   function render_excel_template_failure(_message){
-    console.warn(_message);
-    table.processing(false);
-    $('#dtprv_processing').css({'display': 'none'});
-    $('#dtprv_wrapper').find('#dtprv_failure_message').remove();
-    $('#dtprv_wrapper').find('.dt-scroll').before('<div id="dtprv_failure_message" class="alert alert-dismissible show alert-warning"><p>' + excelTemplateErrorMessage + '</p></div>');
+    _render_failure(_message, excelTemplateErrorMessage, 'warning');
+  }
+
+  function render_validation_failure(_message){
+    _render_failure(_message, validationErrorMessage, 'danger');
+  }
+
+  function render_exception_failure(_message, _exceptionMessage){
+    _render_failure(_message, exceptionErrorMessage + _exceptionMessage, 'danger');
+  }
+
+  function render_generic_failure(_message){
+    _render_failure(_message, genericErrorMessage, 'danger');
   }
 
   function set_table_visibility(){
@@ -1086,12 +1159,10 @@ function load_pd_datatable(){
     // TODO: write ajax POST to datastore_upsert API.
     //       method=insert for create, method=update for edit
     let payload = {
-      'action_data': {
-        'resource_id': resourceID,
-        'method': 'insert',
-        'dry_run': true,
-        'records': []
-      }
+      'resource_id': resourceID,
+      'method': 'insert',
+      'dry_run': true,
+      'records': []
     };
     let tokenFieldName = $('meta[name="csrf_field_name"]').attr('content');
     let tokenValue = $('meta[name="' + tokenFieldName + '"]').attr('content');
@@ -1105,9 +1176,10 @@ function load_pd_datatable(){
         for( let _i = 0; _i < _filledCells.length; _i++ ){
           record[_filledCells[_i]] = $(row).find('.pd-datatable-editor-input[data-datastore-id="' + _filledCells[_i] + '"]').val().trim();
         }
-        payload['action_data']['records'].push(record);
+        payload['records'].push(record);
       }
     }
+    payload['records'] = JSON.stringify(payload['records']);
     // TODO: make animation...
     $(tableWrapper).find('.pd-datatables-editor-loader[data-action="validate"]').css({'display': 'flex'});
     $(tableWrapper).find('.pd-datatables-editor-loader[data-action="validate"]').focus();
@@ -1116,28 +1188,78 @@ function load_pd_datatable(){
     upsert_data(payload);
   }
 
+  function set_row_errors(_rowIndex, _errObj){
+    let row = $('#dtprv_wrapper').find('#dtprv-body-main').find('tr').eq(_rowIndex);
+    if( typeof _errObj.message != 'undefined' && _errObj.message && _errObj.message.length > 0 ){
+      // TODO: output anu possible error summaries for the row...
+    }
+    if( typeof _errObj.data != 'undefined' && _errObj.data ){
+      for(let [_fieldID, _errArr] of Object.entries(_errObj.data)){
+        let _field = $(row).find('.pd-datatable-editor-input[data-datastore-id="' + _fieldID + '"]');
+        if( _field.length > 0 ){
+          $(_field).parent().find('.validation-error').remove();
+          $(_field).parent().append('<div class="validation-error"><i aria-hidden="true" class="fas fa-exclamation-triangle"></i>&nbsp;' + _errArr.join('. ') + '</div>');
+          $(_field).css({'box-shadow': '0 0 2px 2px #C00000 inset'});
+          if( ! erroredRows[_rowIndex].includes(_fieldID) ){
+            erroredRows[_rowIndex].push(_fieldID);
+          }
+        }
+      }
+    }
+    $(row).find('td.expanders').css({'background-color': '#C00000', 'cursor': 'pointer'})
+                               .attr('title', errorInRowLabel)
+                               .attr('role', 'button')
+                               .attr('tabindex', 0);
+  }
+
   function render_from_editor_response(_data, _payload){
+    // TODO: scrollTo
+    $('#dtprv_wrapper').find('.dt-scroll-body')[0].scrollTo(0, 0);
     if( _data.responseJSON ){
       if( _data.responseJSON.success ){
-        console.log(_data.responseJSON.result);
+        if( _payload['dry_run'] == true ){
+          $(tableWrapper).find('.pd-datatables-editor-loader[data-action="saving"]').css({'display': 'flex'});
+          $(tableWrapper).find('.pd-datatables-editor-loader[data-action="saving"]').focus();
+          $(tableWrapper).children('.dt-scroll').css({'pointer-events': 'none', 'visibility': 'hidden'});
+          $(tableWrapper).children('.dt-buttons').css({'pointer-events': 'none', 'visibility': 'hidden'});
+          _payload['dry_run'] = false;
+          upsert_data(_payload);
+        }else{
+          // TODO: create new splash to add more or go view new ones...
+        }
       }else{
         // TODO: output validation errors
-        console.log(_data.responseJSON);
+        let errors = _data.responseJSON.error;
+        if( typeof errors.message != 'undefined' ){
+          // TODO: output generic error
+          render_exception_failure('DataTables error - Could not save data: ' + errors.message);
+        }else{
+          render_validation_failure('DataTables error - Could not save data: one or more records have errors');
+          for(let [_index, _errObj] of Object.entries(errors)){
+            let _rowIndex = parseInt(_index.replace('row_', ''));
+            _rowIndex = $(filledRows).eq(_rowIndex);
+            if( _rowIndex.length > 0 ){
+              _rowIndex = Object.keys(_rowIndex[0])[0];
+              set_row_errors(_rowIndex, _errObj);
+            }else{
+              // could not find row in table...
+              // TODO: output generic error
+            }
+          }
+        }
       }
     }else{
-      // TODO: output generic error
-      console.log(_data);
+      render_generic_failure('DataTables error - Could not save data');
     }
+    set_button_states();
   }
 
   function upsert_data(_payload){
-    let encodedPayload = _payload;
-    encodedPayload['action_data'] = JSON.stringify(encodedPayload['action_data']);
     $.ajax({
-      'url': '/api/action/upsert_pd_data',
+      'url': upsertRecordsURI,
       'type': 'POST',
       'dataType': 'JSON',
-      'data': encodedPayload,
+      'data': _payload,
       'complete': function(_data){
         setTimeout(function(){
           $('#dtprv_wrapper').children('.dt-scroll').css({'pointer-events': 'all', 'visibility': 'visible'});
@@ -1162,6 +1284,7 @@ function load_pd_datatable(){
     }
     if( indexBlocks.length > 0 ){
       $(indexBlocks).each(function(_index, _indexBlock){
+        // TODO: keyup on enter!!!
         $(_indexBlock).off('click.GoToError');
         $(_indexBlock).on('click.GoToError', function(_event){
           if( typeof erroredRows[_index] != 'undefined' && erroredRows[_index].length > 0 ){
@@ -1180,6 +1303,7 @@ function load_pd_datatable(){
         let rowIndex = $(_field).attr('data-row-index');
         let row = $(innerTable).find('tr').eq(rowIndex);
         let rowFields = $(row).find('.pd-datatable-editor-input');
+        $(_field).parent().find('.validation-error').remove();
         if( typeof erroredRows[rowIndex] == 'undefined' ){
           erroredRows[rowIndex] = [];
         }
@@ -1232,17 +1356,25 @@ function load_pd_datatable(){
           });
         }
         if( erroredRows[rowIndex].length > 0 ){
-          $(row).find('td.expanders').css({'background-color': '#C00000', 'cursor': 'pointer'});
-          $(row).find('td.expanders').attr('title', errorInRowLabel);
+          $(row).find('td.expanders').css({'background-color': '#C00000', 'cursor': 'pointer'})
+                                     .attr('title', errorInRowLabel)
+                                     .attr('role', 'button')
+                                     .attr('tabindex', 0);
         }else if( requiredRows[rowIndex].length > 0 ){
-          $(row).find('td.expanders').css({'background-color': '#' + tableStyles.required.bgColor, 'cursor': 'pointer'});
-          $(row).find('td.expanders').attr('title', requiredInRowLabel);
+          $(row).find('td.expanders').css({'background-color': '#' + tableStyles.required.bgColor, 'cursor': 'pointer'})
+                                     .attr('title', requiredInRowLabel)
+                                     .attr('role', 'button')
+                                     .attr('tabindex', 0);
         }else if( filledRows[rowIndex].length == 0 ){
-          $(row).find('td.expanders').css({'background-color': '#555555', 'cursor': 'default'});
-          $(row).find('td.expanders').attr('title', null);
+          $(row).find('td.expanders').css({'background-color': '#555555', 'cursor': 'default'})
+                                     .attr('title', null)
+                                     .attr('role', null)
+                                     .attr('tabindex', null);
         }else{
-          $(row).find('td.expanders').css({'background-color': '#1e7e34', 'cursor': 'default'});
-          $(row).find('td.expanders').attr('title', validRowLabel);
+          $(row).find('td.expanders').css({'background-color': '#1e7e34', 'cursor': 'default'})
+                                     .attr('title', validRowLabel)
+                                     .attr('role', null)
+                                     .attr('tabindex', null);
         }
         set_button_states();
       });

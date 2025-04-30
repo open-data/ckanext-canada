@@ -114,7 +114,6 @@ class CanadaInternalPlugin(p.SingletonPlugin):
             datastore_run_triggers=logic.canada_datastore_run_triggers,
             portal_sync_info=logic.portal_sync_info,
             list_out_of_sync_packages=logic.list_out_of_sync_packages,
-            upsert_pd_data=logic.upsert_pd_data,
         )
 
     # IAuthFunctions
@@ -127,7 +126,6 @@ class CanadaInternalPlugin(p.SingletonPlugin):
             'organization_show': auth.organization_show,
             'portal_sync_info': auth.portal_sync_info,
             'list_out_of_sync_packages': auth.list_out_of_sync_packages,
-            'upsert_pd_data': auth.upsert_pd_data,
         }
 
     # IXloader

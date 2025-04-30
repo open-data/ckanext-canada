@@ -620,6 +620,125 @@ def update_pd_record(owner_org: str, resource_name: str, pk: str):
                   })
 
 
+@canada_views.route('/upsert_pd_data/<owner_org>/<resource_name>', methods=['POST'])
+def upsert_pd_data(owner_org: str, resource_name: str):
+    """
+    Wrapper to datastore_upsert with specific logic for custom DataTables.
+
+    Allows for encoded POSTed form data as a JSON string in the records field.
+    This allows for easy CSRF Token validation in AJAX requests.
+
+    Adds custom message handling for DataTables.
+    """
+    if not g.is_registry:
+        return abort(404)
+
+    context = cast(Context, {'user': g.user, 'model': model})
+
+    data_dict = parse_params(request.form, ignore_keys=[g.csrf_field_name])
+    if 'records' in data_dict:
+        try:
+            data_dict['records'] = json.loads(data_dict['records'])
+        except (KeyError, ValueError):
+            pass
+
+    return_dict = {}
+    lc = LocalCKAN()
+    chromo = h.recombinant_get_chromo(resource_name)
+    pk_fields = aslist(chromo['datastore_primary_key'])
+    offset = 0
+    records = data_dict.get('records', [])
+    resource_id = data_dict.get('resource_id')
+    dry_run = data_dict.get('dry_run')
+    method = data_dict.get('method')
+    # NOTE: upserting each record one-by-one is crazy slower,
+    #       but it is the only way to get all of the errors back in one object.
+    while offset < len(records):
+        try:
+            data = get_action('datastore_upsert')(
+                context, {
+                    'method': method,
+                    'resource_id': resource_id,
+                    'dry_run': dry_run,
+                    'records': [records[offset]]
+                })
+            if 'result' not in return_dict:
+                return_dict['result'] = {}
+            return_dict['result']['row_{}'.format(offset)] = data
+            return_dict['success'] = True
+            offset += 1
+        except NotAuthorized:
+            return_dict['error'] = {'__type': 'Authorization Error',
+                                    'message': _('Access denied')}
+            return_dict['success'] = False
+            return _finish(403, return_dict, content_type='json')
+        except NotFound:
+            return_dict['error'] = {'__type': 'Not Found Error',
+                                    'message': _('Not found')}
+            return_dict['success'] = False
+            return _finish(404, return_dict, content_type='json')
+        except ValidationError as ve:
+            err = {}
+            error_summary = None
+            if 'records' in ve.error_dict:
+                try:
+                    # type_ignore_reason: incomplete typing
+                    err = dict({
+                        k: list(format_trigger_error(v))
+                        for (k, v) in
+                        ve.error_dict['records'][0].items()  # type: ignore
+                    }, **err)
+                except AttributeError:
+                    # type_ignore_reason: incomplete typing
+                    if (
+                        'duplicate key value violates unique constraint' in
+                        ve.error_dict['records'][0]):  # type: ignore
+                        err = dict({
+                            k: [_("This record already exists")]
+                            for k in pk_fields
+                        }, **err)
+                    elif (
+                        'constraint_info' in ve.error_dict):
+                        error_summary = _render_recombinant_constraint_errors(
+                            lc, ve, chromo, 'upsert')
+                    else:
+                        log.warning('Failed to create %s record for org %s:\n%s',
+                                    resource_name, owner_org, traceback.format_exc())
+                        error_summary = _('Something went wrong, your record '
+                                          'was not created. Please contact support.')
+            # type_ignore_reason: incomplete typing
+            elif ve.error_dict.get(
+                    'info', {}).get('pgcode', '') == '23505':  # type: ignore
+                err = dict({
+                    k: [_("This record already exists")]
+                    for k in pk_fields
+                }, **err)
+            else:
+                log.warning('Failed to create %s record for org %s:\n%s',
+                            resource_name, owner_org, traceback.format_exc())
+                error_summary = _('Something went wrong, your record '
+                                  'was not created. Please contact support.')
+            if 'error' not in return_dict:
+                return_dict['error'] = {}
+            return_dict['error']['row_{}'.format(offset)] = {
+                '__type': 'Validation Error',
+                'message': error_summary,
+                'data': err}
+            return_dict['success'] = False
+            offset += 1
+        except Exception as e:
+            return_dict['error'] = {'__type': 'Internal Server Error',
+                                    'message': _('Internal Server Error')}
+            return_dict['success'] = False
+            log.warning(e)
+            return _finish(500, return_dict, content_type='json')
+
+    if 'error' in return_dict:
+        return _finish(409, return_dict, content_type='json')
+
+    return _finish_ok(return_dict)
+
+
 @canada_views.route('/recombinant/<resource_name>', methods=['GET'])
 def type_redirect(resource_name: str, dataset_id: Optional[str] = None):
     orgs = h.organizations_available('read')
