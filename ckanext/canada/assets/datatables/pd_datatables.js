@@ -85,6 +85,11 @@ function load_pd_datatable(CKAN_MODULE){
   const leavingEditorWarning = _('You have unsaved records in the table. Do you want to discard your changes or continue editing?');
   const validatingLabel = _('Validating records');
   const savingLabel = _('Saving records to the system');
+  const checkMarkSVG = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 214 214" class="pd-check-circle"><g fill="none" stroke="currentColor" stroke-width="2"><circle class="semi-transparent" fill="currentColor" opacity="0.15" cx="107" cy="107" r="72" ></circle><circle class="colored" fill="currentColor" cx="107" cy="107" r="72" opacity="0.8" ></circle> <polyline stroke="#fff" stroke-width="10" points="73.5,107.8 93.7,127.9 142.2,79.4" style="stroke-dasharray: 50%, 50%; stroke-dashoffset: 100%" /></g></svg>';
+  const completeCopy = _('Records saved to the system.');
+  const completeSubCopy = _('Would you like to add more records, or preview them in the table?');
+  const completeMoreButtonLabel = _('Add more records');
+  const completeViewButtonLabel = _('Preview records');
   const validationErrorMessage = _('Your records did not save because one or more of them have errors. Fix the errors and save again to finalize your records.');
   const exceptionErrorMessage = _('Could not save the records due to the following error: ');
   const genericErrorMessage = _('Your records did not save. Try saving again. If the issue persist please contact support.');
@@ -136,12 +141,14 @@ function load_pd_datatable(CKAN_MODULE){
   let isCompactView = typeof tableState != 'undefined' && typeof tableState.compact_view != 'undefined' ? tableState.compact_view : true;
   let isFullScreen = is_page_fullscreen();
   let isEditMode = typeof tableState != 'undefined' && typeof tableState.edit_view != 'undefined' ? tableState.edit_view : false;
-  let editingRows = [];
+  let editingRows = typeof tableState != 'undefined' && typeof tableState.editing_rows != 'undefined' ? tableState.editing_rows : [];
   let isExportingExcel = false;
   let exportingExcelLabel = '<i aria-hidden="true" class="fas fa-spinner"></i>&nbsp;' + exportingButtonLabel.replace('{COUNT}', '');
-  let erroredRows = {};
-  let requiredRows = {};
-  let filledRows = {};
+  let erroredRows = typeof tableState != 'undefined' && typeof tableState.errored_rows != 'undefined' ? tableState.errored_rows : {};
+  let requiredRows = typeof tableState != 'undefined' && typeof tableState.required_rows != 'undefined' ? tableState.required_rows : {};
+  let filledRows = typeof tableState != 'undefined' && typeof tableState.filled_rows != 'undefined' ? tableState.filled_rows : {};
+  let newRecords = [];
+  let updatedRecords = [];
 
   let uri_filters = {};
   if( searchParams.has('dt_query') ){
@@ -315,6 +322,10 @@ function load_pd_datatable(CKAN_MODULE){
     let ds_type = _chromo_field.datastore_type;
     let fieldID = 'pd-records_' + _rowIndex + '_' + _chromo_field.datastore_id;
     let editorObject = EDITOR[_chromo_field.datastore_id];
+    if( typeof _value == 'undefined' || _value == null ){
+      _value = '';
+    }
+    // TODO: primary fields readOnly
     let fieldInput = '<input class="pd-datatable-editor-input" value="' + _value + '" name=' + fieldID + '" id="' + fieldID + '" data-row-index="' + _rowIndex + '" data-datastore-id="' + _chromo_field.datastore_id + '" />';
     if( ds_type == 'year' ){
       fieldInput = '<input class="pd-datatable-editor-input" value="' + _value + '" name=' + fieldID + '" id="' + fieldID + '" data-row-index="' + _rowIndex + '" data-datastore-id="' + _chromo_field.datastore_id + '" data-number-type="int" type="number" min="1899" max="' + currentYear + '" step="1" />';
@@ -333,10 +344,12 @@ function load_pd_datatable(CKAN_MODULE){
     }
     if( typeof editorObject.select_choices != 'undefined' && editorObject.select_choices ){
       let isMultiple = ds_type == '_text' ? 'multiple' : '';
+      // TODO: select2 for multiple??
       fieldInput = '<select class="pd-datatable-editor-input" name=' + fieldID + '" id="' + fieldID + '" ' + isMultiple + ' data-row-index="' + _rowIndex + '" data-datastore-id="' + _chromo_field.datastore_id + '"><option></option>';
       for( let _i = 0; _i < editorObject.select_choices.length; _i++ ){
         // TODO: do checked based on _value and editorObject.select_choices[_i][0]
-        fieldInput += '<option value="' + editorObject.select_choices[_i][0] + '">' + editorObject.select_choices[_i][0] + ': ' + editorObject.select_choices[_i][1] + '</option>';
+        let selected = _value == editorObject.select_choices[_i][0] ? 'selected' : '';
+        fieldInput += '<option value="' + editorObject.select_choices[_i][0] + '" ' + selected + '>' + editorObject.select_choices[_i][0] + ': ' + editorObject.select_choices[_i][1] + '</option>';
       }
       fieldInput += '</select>';
     }
@@ -1032,7 +1045,14 @@ function load_pd_datatable(CKAN_MODULE){
         text: '<i aria-hidden="true" class="fas fa-plus"></i>&nbsp;' + addInTableButtonLabel,
         className: "pd-datatable-btn pd-datatable-editor-btn btn-success",
         action: function(e, dt, button, config){
-          editingRows = table.rows({selected: true})[0];
+          editingRows = [];
+          let pk_cols = primaryKeys.map(function(val){
+            return val + colOffset;
+          });
+          let _rows = table.rows({selected: true});
+          _rows.eq(0).each(function(index){
+            editingRows.push(dt.cells(index, pk_cols).data().toArray());
+          });
           set_state_change_visibility();
           table.rows().deselect();
           isCompactView = false;
@@ -1156,11 +1176,9 @@ function load_pd_datatable(CKAN_MODULE){
   }
 
   function save_table_rows(){
-    // TODO: write ajax POST to datastore_upsert API.
-    //       method=insert for create, method=update for edit
     let payload = {
       'resource_id': resourceID,
-      'method': 'insert',
+      'method': editingRows.length > 0 ? 'update' : 'insert',
       'dry_run': true,
       'records': []
     };
@@ -1180,7 +1198,6 @@ function load_pd_datatable(CKAN_MODULE){
       }
     }
     payload['records'] = JSON.stringify(payload['records']);
-    // TODO: make animation...
     $(tableWrapper).find('.pd-datatables-editor-loader[data-action="validate"]').css({'display': 'flex'});
     $(tableWrapper).find('.pd-datatables-editor-loader[data-action="validate"]').focus();
     $(tableWrapper).children('.dt-scroll').css({'pointer-events': 'none', 'visibility': 'hidden'});
@@ -1190,8 +1207,10 @@ function load_pd_datatable(CKAN_MODULE){
 
   function set_row_errors(_rowIndex, _errObj){
     let row = $('#dtprv_wrapper').find('#dtprv-body-main').find('tr').eq(_rowIndex);
+    let colLength = $(row).find('td').length;
+    $(row).next('.validation-error').remove();
     if( typeof _errObj.message != 'undefined' && _errObj.message && _errObj.message.length > 0 ){
-      // TODO: output anu possible error summaries for the row...
+      $(row).after('<tr class="validation-error"><td class="expanders">' + (parseInt(_rowIndex) + 1) + '</td><td colspan="' + (colLength - 1) + '"><i aria-hidden="true" class="fas fa-exclamation-triangle"></i>&nbsp;' + _errObj.message + '</td></tr>');
     }
     if( typeof _errObj.data != 'undefined' && _errObj.data ){
       for(let [_fieldID, _errArr] of Object.entries(_errObj.data)){
@@ -1213,28 +1232,58 @@ function load_pd_datatable(CKAN_MODULE){
   }
 
   function render_from_editor_response(_data, _payload){
-    // TODO: scrollTo
-    $('#dtprv_wrapper').find('.dt-scroll-body')[0].scrollTo(0, 0);
+    let tableWrapper = $('#dtprv_wrapper');
+    $(tableWrapper).find('#dtprv_failure_message').remove();
+    $(tableWrapper).find('.dt-scroll-body')[0].scrollTo(0, 0);
     if( _data.responseJSON ){
       if( _data.responseJSON.success ){
-        if( _payload['dry_run'] == true ){
-          $(tableWrapper).find('.pd-datatables-editor-loader[data-action="saving"]').css({'display': 'flex'});
-          $(tableWrapper).find('.pd-datatables-editor-loader[data-action="saving"]').focus();
+        if( _payload['dry_run'] ){
+          $(tableWrapper).find('.pd-datatables-editor-loader[data-action="save"]').css({'display': 'flex'});
+          $(tableWrapper).find('.pd-datatables-editor-loader[data-action="save"]').focus();
           $(tableWrapper).children('.dt-scroll').css({'pointer-events': 'none', 'visibility': 'hidden'});
           $(tableWrapper).children('.dt-buttons').css({'pointer-events': 'none', 'visibility': 'hidden'});
           _payload['dry_run'] = false;
           upsert_data(_payload);
         }else{
-          // TODO: create new splash to add more or go view new ones...
+          if( editingRows.length > 0 ){
+            $(tableWrapper).find('#pd-datatables-editor-complete-sub-copy').css({'display': 'none'});
+            $(tableWrapper).find('#pd-datatables-editor-complete-more').css({'display': 'none'});
+          }else{
+            $(tableWrapper).find('#pd-datatables-editor-complete-sub-copy').css({'display': 'inline'});
+            $(tableWrapper).find('#pd-datatables-editor-complete-more').css({'display': 'inline-block'});
+          }
+          $(tableWrapper).find('.pd-datatables-editor-loader[data-action="complete"]').css({'display': 'flex'});
+          $(tableWrapper).find('.pd-datatables-editor-loader[data-action="complete"]').focus();
+          $(tableWrapper).children('.dt-scroll').css({'pointer-events': 'none', 'visibility': 'hidden'});
+          $(tableWrapper).children('.dt-buttons').css({'pointer-events': 'none', 'visibility': 'hidden'});
+          // TODO: make "new"/"updated" badges to display on rows...
+          if( typeof _data.responseJSON.result != 'undefined' && _data.responseJSON.result ){
+            newRecords = [];
+            updatedRecords = [];
+            let records = _data.responseJSON.result;
+            for(let [_index, _record] of Object.entries(records)){
+              let max = Object.keys(_record).length;
+              let _r = [];
+              for( let _i = 0; _i < max; _i++ ){
+                _r.push($(_record).eq(_i));
+              }
+              if( editingRows.length > 0 ){
+                updatedRecords.push(_r);
+              }else{
+                newRecords.push(_r);
+              }
+            }
+            console.log(updatedRecords);
+            console.log(newRecords);
+          }
         }
       }else{
-        // TODO: output validation errors
         let errors = _data.responseJSON.error;
         if( typeof errors.message != 'undefined' ){
-          // TODO: output generic error
-          render_exception_failure('DataTables error - Could not save data: ' + errors.message);
+          render_exception_failure('DataTables error - Could not save data: ' + errors.message, errors.message);
         }else{
           render_validation_failure('DataTables error - Could not save data: one or more records have errors');
+          // TODO: compile a dropdown section for detailed error summaries
           for(let [_index, _errObj] of Object.entries(errors)){
             let _rowIndex = parseInt(_index.replace('row_', ''));
             _rowIndex = $(filledRows).eq(_rowIndex);
@@ -1243,7 +1292,7 @@ function load_pd_datatable(CKAN_MODULE){
               set_row_errors(_rowIndex, _errObj);
             }else{
               // could not find row in table...
-              // TODO: output generic error
+              // TODO: output generic error??
             }
           }
         }
@@ -1264,12 +1313,26 @@ function load_pd_datatable(CKAN_MODULE){
         setTimeout(function(){
           $('#dtprv_wrapper').children('.dt-scroll').css({'pointer-events': 'all', 'visibility': 'visible'});
           $('#dtprv_wrapper').children('.dt-buttons').css({'pointer-events': 'all', 'visibility': 'visible'});
-          $('#dtprv_wrapper').find('.pd-datatables-editor-loader[data-action="validate"]').css({'display': 'none'});
-          $('#dtprv_wrapper').find('.pd-datatables-editor-loader[data-action="save"]').css({'display': 'none'});
+          $('#dtprv_wrapper').find('.pd-datatables-editor-loader').css({'display': 'none'});
           render_from_editor_response(_data, _payload);
         }, 1760);
       }
     });
+  }
+
+  function clear_editor(_stayInEditMode){
+    editingRows = [];
+    erroredRows = {};
+    requiredRows = {};
+    filledRows = {};
+    set_state_change_visibility();
+    table.rows().deselect();
+    isCompactView = ! _stayInEditMode;
+    isEditMode = _stayInEditMode;
+    tableState = void 0;
+    table.state.clear();
+    table.clear().destroy();
+    initialize_datatable();
   }
 
   function bind_table_editor(){
@@ -1279,18 +1342,24 @@ function load_pd_datatable(CKAN_MODULE){
     let innerTable = $(tableWrapper).find('#dtprv-body-main');
     let indexBlocks = $(innerTable).find('td.expanders');
     let fields = $(innerTable).find('.pd-datatable-editor-input');
-    if( editingRows.length == 0 ){
-
-    }
     if( indexBlocks.length > 0 ){
       $(indexBlocks).each(function(_index, _indexBlock){
-        // TODO: keyup on enter!!!
         $(_indexBlock).off('click.GoToError');
+        $(_indexBlock).off('keyup.GoToError');
         $(_indexBlock).on('click.GoToError', function(_event){
           if( typeof erroredRows[_index] != 'undefined' && erroredRows[_index].length > 0 ){
             $(innerTable).find('tr').eq(_index).find('td').find('[data-datastore-id="' + erroredRows[_index][0] + '"]').focus();
           }else if( typeof requiredRows[_index] != 'undefined' && requiredRows[_index].length > 0 ){
             $(innerTable).find('tr').eq(_index).find('td').find('[data-datastore-id="' + requiredRows[_index][0] + '"]').focus();
+          }
+        });
+        $(_indexBlock).on('keyup.GoToError', function(_event){
+          if( _event.keyCode == 13 ){
+            if( typeof erroredRows[_index] != 'undefined' && erroredRows[_index].length > 0 ){
+              $(innerTable).find('tr').eq(_index).find('td').find('[data-datastore-id="' + erroredRows[_index][0] + '"]').focus();
+            }else if( typeof requiredRows[_index] != 'undefined' && requiredRows[_index].length > 0 ){
+              $(innerTable).find('tr').eq(_index).find('td').find('[data-datastore-id="' + requiredRows[_index][0] + '"]').focus();
+            }
           }
         });
       });
@@ -1382,8 +1451,23 @@ function load_pd_datatable(CKAN_MODULE){
   }
 
   function render_loaders(){
+    $('#dtprv_wrapper').prepend('<div data-action="complete" class="pd-datatables-editor-loader"><div>' + checkMarkSVG + '</div><div><p><strong class="text-success">' + completeCopy + '</strong><br/><span id="pd-datatables-editor-complete-sub-copy">' + completeSubCopy + '</span></p></div><div><button id="pd-datatables-editor-complete-more" class="btn btn-success"><i aria-hidden="true" class="fas fa-plus"></i>&nbsp;' + completeMoreButtonLabel + '</button><button id="pd-datatables-editor-complete-preview" class="btn btn-primary"><i aria-hidden="true" class="fas fa-table"></i>&nbsp;' + completeViewButtonLabel + '</button></div></div>');
     $('#dtprv_wrapper').prepend('<div data-action="save" class="pd-datatables-editor-loader"><div><p><strong>' + savingLabel + '</strong></p></div><div id="loader-saving"></div></div>');
     $('#dtprv_wrapper').prepend('<div data-action="validate" class="pd-datatables-editor-loader"><div><p><strong>' + validatingLabel + '</strong></p></div><div id="loader-validating"></div></div>');
+    let addMoreButton = $('#dtprv_wrapper').find('#pd-datatables-editor-complete-more');
+    let previewButton = $('#dtprv_wrapper').find('#pd-datatables-editor-complete-preview');
+    if( addMoreButton.length > 0 ){
+      $(addMoreButton).off('click.AddMore');
+      $(addMoreButton).on('click.AddMore', function(_event){
+        clear_editor(true);
+      });
+    }
+    if( previewButton.length > 0 ){
+      $(previewButton).off('click.AddMore');
+      $(previewButton).on('click.AddMore', function(_event){
+        clear_editor(false);
+      });
+    }
   }
 
   function warn_unsaved_records(){
@@ -1476,6 +1560,28 @@ function load_pd_datatable(CKAN_MODULE){
               _data['columns'][_index]['search']['value'] = _value;
             }
           }
+          if( isEditMode && editingRows.length > 0 ){
+            let pk_cols = primaryKeys.map(function(value){
+              return value + colOffset;
+            });
+            let filteredCols = [];
+            for( let _i = 0; _i < editingRows.length; _i++ ){
+              for( let _ci = 0; _ci < editingRows[_i].length; _ci++ ){
+                if( ! Array.isArray(_data['columns'][pk_cols[_ci]]['search']['value']) ){
+                  _data['columns'][pk_cols[_ci]]['search']['value'] = [];
+                }
+                if( ! _data['columns'][pk_cols[_ci]]['search']['value'].includes(editingRows[_i][_ci]) ){
+                  _data['columns'][pk_cols[_ci]]['search']['value'].push(editingRows[_i][_ci]);
+                }
+                if( ! filteredCols.includes(_ci) ){
+                  filteredCols.push(_ci);
+                }
+              }
+            }
+            for( let _i = 0; _i < filteredCols.length; _i++ ){
+              _data['columns'][pk_cols[_i]]['search']['value'] = JSON.stringify(_data['columns'][pk_cols[_i]]['search']['value']);
+            }
+          }
           _data['is_edit_mode'] = isEditMode;
         },
         "complete": function(_data){
@@ -1494,11 +1600,18 @@ function load_pd_datatable(CKAN_MODULE){
         _data.selected = this.api().rows({selected: true})[0];
         _data.compact_view = isCompactView;
         _data.edit_view = isEditMode;
+        _data.editing_rows = editingRows;
+        _data.errored_rows = erroredRows;
+        _data.required_rows = requiredRows;
+        _data.filled_rows = filledRows;
         let localInstanceSelected = typeof tableState != 'undefined' ? tableState.selected : _data.selected;
         tableState = _data;
         tableState.selected = localInstanceSelected;
         tableState.edit_view = isEditMode;
-        // TODO: store editingRows, erroredRows, requiredRows, filledRows...
+        tableState.editing_rows = editingRows;
+        tableState.errored_rows = erroredRows;
+        tableState.required_rows = requiredRows;
+        tableState.filled_rows = filledRows;
       },
       stateLoadParams: function(_settings, _data){
         let localInstanceSelected = typeof tableState != 'undefined' ? tableState.selected : _data.selected;

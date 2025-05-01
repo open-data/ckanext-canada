@@ -1,6 +1,7 @@
 import codecs
 import json
 import decimal
+from sys import maxsize as MAX_INT
 from socket import error as socket_error
 from logging import getLogger
 import csv
@@ -1004,7 +1005,7 @@ def pd_datatable(resource_name: str, resource_id: str):
     # type_ignore_reason: datatable param start is int
     offset = int(params['start'])  # type: ignore
     # type_ignore_reason: datatable param length is int
-    limit = int(params['length'])  # type: ignore
+    limit = int(params['length']) if params['length'] else 15  # type: ignore
     is_edit_mode = asbool(params['is_edit_mode'])
 
     chromo = h.recombinant_get_chromo(resource_name)
@@ -1052,15 +1053,22 @@ def pd_datatable(resource_name: str, resource_id: str):
     col_filters = {}
     i = 0
     while True:
-        if u'columns[%d][search][value]' % i not in request.form:
+        if 'columns[%d][search][value]' % i not in request.form:
             break
-        v = str(request.form[u'columns[%d][search][value]' % i])
+        try:
+            v = json.loads(request.form['columns[%d][search][value]' % i])
+        except (ValueError, KeyError):
+            v = str(request.form['columns[%d][search][value]' % i])
         if v:
-            k = str(request.form[u'columns[%d][name]' % i])
+            k = str(request.form['columns[%d][name]' % i])
             col_filters[k] = v
         i += 1
 
     if is_edit_mode:
+        offset = 0
+        limit = MAX_INT
+
+    if is_edit_mode and not col_filters:
         response = {}
     else:
         response = lc.action.datastore_search(
@@ -1071,7 +1079,7 @@ def pd_datatable(resource_name: str, resource_id: str):
             sort=', '.join(sort_list),
             filters=col_filters)
 
-    if is_edit_mode:
+    if is_edit_mode and not col_filters:
         default_fill = chromo.get('datatables_default_fill', 10)
         aadata = [
             [''] +  # Expand column

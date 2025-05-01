@@ -725,6 +725,19 @@ body #dtprv_wrapper[data-edit-view="true"] #dtprv-body-main td textarea{
   margin: 0 !important;
 }
 
+body #dtprv_wrapper[data-edit-view="true"] #dtprv-body-main tr.validation-error td.expanders{
+  background-color: #C00000 !important;
+  color: white !important;
+}
+
+body #dtprv_wrapper[data-edit-view="true"] #dtprv-body-main tr.validation-error td:not(.expanders){
+  padding: 4px 6px !important;
+  background-color: #C00000 !important;
+  color: white !important;
+  font-size: 14px !important;
+  font-weight: 600 !important;
+}
+
 body #dtprv_wrapper[data-edit-view="true"] span.dt-column-order{
   pointer-events: none !important;
   display: none !important;
@@ -822,12 +835,60 @@ body #dtprv_wrapper .pd-datatables-editor-loader{
   margin: -5px;
   background: white;
   width: calc(100% + 10px);
-  height: calc(100% + 10px);
+  height: calc(100% + 40px);
   z-index: 99;
   display: flex;
   flex-direction: column;
   align-items: center;
   flex-wrap: nowrap;
   color: #335075;
+  text-align: center;
   display: none;
+}
+
+body #dtprv_wrapper #pd-datatables-editor-complete-more{
+  margin-right: 15px;
+}
+
+body #dtprv_wrapper svg.pd-check-circle{
+  color: #1e7e34;
+  width: 50px;
+  height: 50px;
+}
+
+@keyframes checkmark{
+  0%{
+    stroke-dashoffset: 50%;
+  }
+  100%{
+    stroke-dashoffset: 0px;
+  }
+}
+
+body #dtprv_wrapper svg.pd-check-circle polyline{
+  animation: checkmark 0.5s cubic-bezier(0.55, 0.2, 0.71, -0.04) 0.7s backwards;
+}
+
+@keyframes grow-circle{
+  0%{
+    r: 0;
+  }
+}
+
+@keyframes grow-circle-bigger{
+  50%{
+    opacity: 0.11;
+  }
+  100%{
+    r: 100;
+    opacity: 0;
+  }
+}
+
+body #dtprv_wrapper svg.pd-check-circle circle.semi-transparent{
+  animation: grow-circle 0.45s cubic-bezier(0.66, 0.23, 0.51, 1.23) backwards, grow-circle-bigger 0.9s linear 1.1s forwards;
+}
+
+body #dtprv_wrapper svg.pd-check-circle circle.colored{
+  animation: grow-circle 0.5s cubic-bezier(0.66, 0.23, 0.51, 1.23) 0.25s backwards;
 }
