@@ -99,6 +99,7 @@
       {% for field in chromo.fields %}
         {{- field.datastore_id -}}: {
           type: '{{- field.datastore_type -}}',
+          label: '{{- h.scheming_language_text(field.label) -}}',
           form_attrs: {{ field.form_attrs|tojson if 'form_attrs' in field else None|tojson}},
           select_choices: {{ choice_fields[field.datastore_id]|tojson if field.datastore_id in choice_fields else None|tojson}},
           is_required: {{- (field.form_required or field.excel_required or false)|tojson -}},

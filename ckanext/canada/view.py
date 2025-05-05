@@ -639,7 +639,8 @@ def upsert_pd_data(owner_org: str, resource_name: str):
     data_dict = parse_params(request.form, ignore_keys=[g.csrf_field_name])
     if 'records' in data_dict:
         try:
-            data_dict['records'] = json.loads(data_dict['records'])
+            # type_ignore_reason: incomplete typing
+            data_dict['records'] = json.loads(data_dict['records'])  # type: ignore
         except (KeyError, ValueError):
             pass
 
@@ -692,14 +693,14 @@ def upsert_pd_data(owner_org: str, resource_name: str):
                 except AttributeError:
                     # type_ignore_reason: incomplete typing
                     if (
-                        'duplicate key value violates unique constraint' in
-                        ve.error_dict['records'][0]):  # type: ignore
+                      'duplicate key value violates unique constraint' in
+                      ve.error_dict['records'][0]):  # type: ignore
                         err = dict({
                             k: [_("This record already exists")]
                             for k in pk_fields
                         }, **err)
                     elif (
-                        'constraint_info' in ve.error_dict):
+                      'constraint_info' in ve.error_dict):
                         error_summary = _render_recombinant_constraint_errors(
                             lc, ve, chromo, 'upsert')
                     else:

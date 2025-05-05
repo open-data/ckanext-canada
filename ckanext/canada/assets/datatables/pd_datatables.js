@@ -69,6 +69,9 @@ function load_pd_datatable(CKAN_MODULE){
   const colSortDescLabel = _('Descending');
   const colSortAnyLabel = _('Any');
   const readLessLabel = _('less');
+  const rowLabel = _('Row');
+  const newBadgeLabel = _('New');
+  const updatedBadgeLabel = _('Updated');
   const jumpToPageLabel = _('Jump to page');
   const resetTableLabel = _('Reset Table');
   const fullscreenLabel = _('Fullscreen');
@@ -318,63 +321,69 @@ function load_pd_datatable(CKAN_MODULE){
     }
   }
 
-  function render_cell_input(_value, _rowIndex, _chromo_field){
+  function render_cell_input(_value, _rowIndex, _colIndex, _chromo_field){
     let ds_type = _chromo_field.datastore_type;
     let fieldID = 'pd-records_' + _rowIndex + '_' + _chromo_field.datastore_id;
     let editorObject = EDITOR[_chromo_field.datastore_id];
     if( typeof _value == 'undefined' || _value == null ){
       _value = '';
     }
-    // TODO: primary fields readOnly
-    let fieldInput = '<input class="pd-datatable-editor-input" value="' + _value + '" name=' + fieldID + '" id="' + fieldID + '" data-row-index="' + _rowIndex + '" data-datastore-id="' + _chromo_field.datastore_id + '" />';
+    let readOnly = '';
+    let tabIndex = 0;
+    if( editingRows.length > 0 && primaryKeys.includes(_colIndex) ){
+      readOnly = 'readonly';
+      tabIndex = -1;
+    }
+    // TODO: min and max widths...
+    let srLabel = '<label class="sr-only" for="' + fieldID + '">' + rowLabel + ' ' + (_rowIndex + 1) + ' - ' + editorObject.label + '</label>';
+    let fieldInput = '<input class="pd-datatable-editor-input editor-input-' + readOnly + '" value="' + _value + '" name=' + fieldID + '" id="' + fieldID + '" data-row-index="' + _rowIndex + '" data-datastore-id="' + _chromo_field.datastore_id + '" ' + readOnly + ' tabindex="' + tabIndex + '" />';
     if( ds_type == 'year' ){
-      fieldInput = '<input class="pd-datatable-editor-input" value="' + _value + '" name=' + fieldID + '" id="' + fieldID + '" data-row-index="' + _rowIndex + '" data-datastore-id="' + _chromo_field.datastore_id + '" data-number-type="int" type="number" min="1899" max="' + currentYear + '" step="1" />';
+      fieldInput = '<input class="pd-datatable-editor-input editor-input-' + readOnly + '" value="' + _value + '" name=' + fieldID + '" id="' + fieldID + '" data-row-index="' + _rowIndex + '" data-datastore-id="' + _chromo_field.datastore_id + '" data-number-type="int" type="number" min="1899" max="' + currentYear + '" step="1" ' + readOnly + ' tabindex="' + tabIndex + '" />';
     }else if( ds_type == 'month' ){
-      fieldInput = '<input class="pd-datatable-editor-input" value="' + _value + '" name=' + fieldID + '" id="' + fieldID + '" data-row-index="' + _rowIndex + '" data-datastore-id="' + _chromo_field.datastore_id + '" data-number-type="int" type="number" min="1" max="12" step="1" />';
+      fieldInput = '<input class="pd-datatable-editor-input editor-input-' + readOnly + '" value="' + _value + '" name=' + fieldID + '" id="' + fieldID + '" data-row-index="' + _rowIndex + '" data-datastore-id="' + _chromo_field.datastore_id + '" data-number-type="int" type="number" min="1" max="12" step="1" ' + readOnly + ' tabindex="' + tabIndex + '" />';
     }else if( ds_type == 'date' ){
-      fieldInput = '<input class="pd-datatable-editor-input" value="' + _value + '" name=' + fieldID + '" id="' + fieldID + '" data-row-index="' + _rowIndex + '" data-datastore-id="' + _chromo_field.datastore_id + '" type="date" min="1899-01-01" max="' + currentDate + '" />';
+      fieldInput = '<input class="pd-datatable-editor-input editor-input-' + readOnly + '" value="' + _value + '" name=' + fieldID + '" id="' + fieldID + '" data-row-index="' + _rowIndex + '" data-datastore-id="' + _chromo_field.datastore_id + '" type="date" min="1899-01-01" max="' + currentDate + '" ' + readOnly + ' tabindex="' + tabIndex + '" />';
     }else if( ds_type == 'timestamp' ){
-      fieldInput = '<input class="pd-datatable-editor-input" value="' + _value + '" name=' + fieldID + '" id="' + fieldID + '" data-row-index="' + _rowIndex + '" data-datastore-id="' + _chromo_field.datastore_id + '" type="datetime-local" min="1899-01-01T00:00" max="' + currentDate + 'T23:59" />';
+      fieldInput = '<input class="pd-datatable-editor-input editor-input-' + readOnly + '" value="' + _value + '" name=' + fieldID + '" id="' + fieldID + '" data-row-index="' + _rowIndex + '" data-datastore-id="' + _chromo_field.datastore_id + '" type="datetime-local" min="1899-01-01T00:00" max="' + currentDate + 'T23:59" ' + readOnly + ' tabindex="' + tabIndex + '" />';
     }else if( ds_type == 'int' || ds_type == 'bigint' ){
-      fieldInput = '<input class="pd-datatable-editor-input" value="' + _value + '" name=' + fieldID + '" id="' + fieldID + '" data-row-index="' + _rowIndex + '" data-datastore-id="' + _chromo_field.datastore_id + '" data-number-type="int" type="number" />';
+      fieldInput = '<input class="pd-datatable-editor-input editor-input-' + readOnly + '" value="' + _value + '" name=' + fieldID + '" id="' + fieldID + '" data-row-index="' + _rowIndex + '" data-datastore-id="' + _chromo_field.datastore_id + '" data-number-type="int" type="number" ' + readOnly + ' tabindex="' + tabIndex + '" />';
     }else if( ds_type == 'numeric' || ds_type == 'float' || ds_type == 'double' ){
-      fieldInput = '<input class="pd-datatable-editor-input" value="' + _value + '" name=' + fieldID + '" id="' + fieldID + '" data-row-index="' + _rowIndex + '" data-datastore-id="' + _chromo_field.datastore_id + '" data-number-type="float" type="number" />';
+      fieldInput = '<input class="pd-datatable-editor-input editor-input-' + readOnly + '" value="' + _value + '" name=' + fieldID + '" id="' + fieldID + '" data-row-index="' + _rowIndex + '" data-datastore-id="' + _chromo_field.datastore_id + '" data-number-type="float" type="number" ' + readOnly + ' tabindex="' + tabIndex + '" />';
     }else if( ds_type == 'money' ){
-      fieldInput = '<input class="pd-datatable-editor-input" value="' + _value + '" name=' + fieldID + '" id="' + fieldID + '" data-row-index="' + _rowIndex + '" data-datastore-id="' + _chromo_field.datastore_id + '" data-number-type="money" type="number" />';
+      fieldInput = '<input class="pd-datatable-editor-input editor-input-' + readOnly + '" value="' + _value + '" name=' + fieldID + '" id="' + fieldID + '" data-row-index="' + _rowIndex + '" data-datastore-id="' + _chromo_field.datastore_id + '" data-number-type="money" type="number" ' + readOnly + ' tabindex="' + tabIndex + '" />';
     }
     if( typeof editorObject.select_choices != 'undefined' && editorObject.select_choices ){
       let isMultiple = ds_type == '_text' ? 'multiple' : '';
-      // TODO: select2 for multiple??
-      fieldInput = '<select class="pd-datatable-editor-input" name=' + fieldID + '" id="' + fieldID + '" ' + isMultiple + ' data-row-index="' + _rowIndex + '" data-datastore-id="' + _chromo_field.datastore_id + '"><option></option>';
+      fieldInput = '<select class="pd-datatable-editor-input editor-input-' + readOnly + '" name=' + fieldID + '" id="' + fieldID + '" ' + isMultiple + ' data-row-index="' + _rowIndex + '" data-datastore-id="' + _chromo_field.datastore_id + '" ' + readOnly + ' tabindex="' + tabIndex + '"><option></option>';
       for( let _i = 0; _i < editorObject.select_choices.length; _i++ ){
-        // TODO: do checked based on _value and editorObject.select_choices[_i][0]
         let selected = _value == editorObject.select_choices[_i][0] ? 'selected' : '';
         fieldInput += '<option value="' + editorObject.select_choices[_i][0] + '" ' + selected + '>' + editorObject.select_choices[_i][0] + ': ' + editorObject.select_choices[_i][1] + '</option>';
       }
       fieldInput += '</select>';
     }
     if( (typeof _chromo_field.form_snippet != 'undefined' && _chromo_field.form_snippet.includes('textarea')) || (typeof _chromo_field.markdown != 'undefined' && _chromo_field.markdown) ){
-      fieldInput = '<textarea class="pd-datatable-editor-input" name=' + fieldID + '" id="' + fieldID + '" rows="1" data-row-index="' + _rowIndex + '" data-datastore-id="' + _chromo_field.datastore_id + '">' + _value + '</textarea>';
+      fieldInput = '<textarea class="pd-datatable-editor-input editor-input-' + readOnly + '" name=' + fieldID + '" id="' + fieldID + '" rows="1" data-row-index="' + _rowIndex + '" data-datastore-id="' + _chromo_field.datastore_id + '" ' + readOnly + ' tabindex="' + tabIndex + '">' + _value + '</textarea>';
     }
     // TODO: mask datetimes and money inputs...
-    return fieldInput;
+    return srLabel + fieldInput;
   }
 
   function cell_renderer(_data, _type, _row, _meta, _chromo_field){
     // FIXME: any data transormations for masks in _type == 'search'
     if( _type == 'display' ){
+      let colIndex = _meta.col - colOffset;
       if( isEditMode ){
         if( typeof _chromo_field.import_template_include != 'undefined' && ! _chromo_field.import_template_include ){
           return '';  // blank cells for non-editable
         }
-        return render_cell_input(_data, _meta.row, _chromo_field);
+        return render_cell_input(_data, _meta.row, colIndex, _chromo_field);
       }
       if( _data == null ){
         return '';  // blank cell for None/null values
       }
       if( typeof _chromo_field.markdown != 'undefined' && _chromo_field.markdown ){
         _data = _data.replace('•', '\n-').replace('\r\n•', '\n-').replace('\n•', '\n-').replace('\r•', '\n-').replace(String.fromCharCode(8226), '\n-').replace(String.fromCharCode(183), '\n-');  // replace commonly used list characters
-        return DataTable.render.ellipsis(ellipsesLength, _meta.row, _chromo_field.datastore_id, true)(_data, _type, _row, _meta);
+        _data = DataTable.render.ellipsis(ellipsesLength, _meta.row, _chromo_field.datastore_id, true)(_data, _type, _row, _meta);
       }
       if( _chromo_field.datastore_type == '_text' ){
         if( ! Array.isArray(_data) ){
@@ -385,30 +394,47 @@ function load_pd_datatable(CKAN_MODULE){
           displayList += '<li>' + _val + '</li>';
         });
         displayList += '</ul>';
-        return displayList;
+        _data = displayList;
       }
       if( _data === true ){
-        return 'TRUE';
+        _data = 'TRUE';
       }
       if( _data === false ){
-        return 'FALSE';
+        _data = 'FALSE';
       }
       if( _chromo_field.datastore_type == 'numeric' || _chromo_field.datastore_type == 'int' || _chromo_field.datastore_type == 'bigint' ){
-        return DataTable.render.number().display(_data, _type, _row);
+        _data = DataTable.render.number().display(_data, _type, _row);
       }
       if( _chromo_field.datastore_type == 'timestamp' ){
         if( ! _data.toString().includes('+0000') ){
           _data = _data.toString() + '+0000';  // add UTC offset if not present
         }
-        return new Date(_data).toLocaleString(localeString, {timeZone: "America/Montreal"}) + ' ' + timezoneString;
+        _data = new Date(_data).toLocaleString(localeString, {timeZone: "America/Montreal"}) + ' ' + timezoneString;
       }
       if( _chromo_field.datastore_type == 'money' ){
         if( _data.toString().includes('$') ){
           _data = _data.toString().replace('$', '');  // remove dollar signs if present
         }
-        return DataTable.render.number(null, null, 2, '$').display(_data, _type, _row);
+        _data = DataTable.render.number(null, null, 2, '$').display(_data, _type, _row);
       }
-      return DataTable.render.ellipsis(ellipsesLength, _meta.row, _chromo_field.datastore_id, false)(_data, _type, _row, _meta);
+      _data = DataTable.render.ellipsis(ellipsesLength, _meta.row, _chromo_field.datastore_id, false)(_data, _type, _row, _meta);
+      if( primaryKeys.includes(colIndex) ){
+        if( newRecords.length > 0 ){
+          for( let _i = 0; _i < newRecords.length; _i++ ){
+            if( newRecords[_i].includes(_data) ){
+              _data += '<sup><span class="badge pd-datatable-badge pd-datatable-badge-new"><i aria-hidden="true" class="fas fa-star"></i>&nbsp;' + newBadgeLabel + '</span></sup>';
+            }
+          }
+        }
+        if( updatedRecords.length > 0 ){
+          for( let _i = 0; _i < updatedRecords.length; _i++ ){
+            if( updatedRecords[_i].includes(_data) ){
+              _data += '<sup><span class="badge pd-datatable-badge pd-datatable-badge-update"><i aria-hidden="true" class="fas fa-star"></i>&nbsp;' + updatedBadgeLabel + '</span></sup>';
+            }
+          }
+        }
+      }
+      return _data;
     }
     return _data;
   }
@@ -1040,6 +1066,7 @@ function load_pd_datatable(CKAN_MODULE){
     });
 
     if( isEditable && EDITOR ){
+      // FIXME: should be able to add rows in table...
       availableButtons.push({
         name: "tableEditorButton",
         text: '<i aria-hidden="true" class="fas fa-plus"></i>&nbsp;' + addInTableButtonLabel,
@@ -1256,26 +1283,26 @@ function load_pd_datatable(CKAN_MODULE){
           $(tableWrapper).find('.pd-datatables-editor-loader[data-action="complete"]').focus();
           $(tableWrapper).children('.dt-scroll').css({'pointer-events': 'none', 'visibility': 'hidden'});
           $(tableWrapper).children('.dt-buttons').css({'pointer-events': 'none', 'visibility': 'hidden'});
-          // TODO: make "new"/"updated" badges to display on rows...
           if( typeof _data.responseJSON.result != 'undefined' && _data.responseJSON.result ){
             newRecords = [];
             updatedRecords = [];
             let records = _data.responseJSON.result;
             for(let [_index, _record] of Object.entries(records)){
-              let max = Object.keys(_record).length;
-              let _r = [];
-              for( let _i = 0; _i < max; _i++ ){
-                _r.push($(_record).eq(_i));
+              let pks = [];
+              for( let _i = 0; _i < primaryKeys.length; _i++ ){
+                pks.push(Object.values(_record.records[0])[primaryKeys[_i]]);
               }
               if( editingRows.length > 0 ){
-                updatedRecords.push(_r);
+                updatedRecords.push(pks);
               }else{
-                newRecords.push(_r);
+                newRecords.push(pks);
               }
             }
-            console.log(updatedRecords);
-            console.log(newRecords);
           }
+          editingRows = [];
+          erroredRows = {};
+          requiredRows = {};
+          filledRows = {};
         }
       }else{
         let errors = _data.responseJSON.error;
@@ -1365,6 +1392,9 @@ function load_pd_datatable(CKAN_MODULE){
       });
     }
     $(fields).each(function(_index, _field){
+      if( $(_field).is('select') && $(_field).attr('multiple') ){
+        $(_field).select2();
+      }
       $(_field).off('change.EDITOR');
       $(_field).on('change.EDITOR', function(_event){
         let datastoreID = $(_field).attr('data-datastore-id');

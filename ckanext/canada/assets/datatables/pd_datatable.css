@@ -714,7 +714,8 @@ body #dtprv_wrapper[data-edit-view="true"] #dtprv-body-main td .validation-error
 
 body #dtprv_wrapper[data-edit-view="true"] #dtprv-body-main td input,
 body #dtprv_wrapper[data-edit-view="true"] #dtprv-body-main td select,
-body #dtprv_wrapper[data-edit-view="true"] #dtprv-body-main td textarea{
+body #dtprv_wrapper[data-edit-view="true"] #dtprv-body-main td textarea,
+body #dtprv_wrapper[data-edit-view="true"] #dtprv-body-main td .select2-container{
   width: 100% !important;
   min-width: 100% !important;
   max-width: 100% !important;
@@ -723,6 +724,42 @@ body #dtprv_wrapper[data-edit-view="true"] #dtprv-body-main td textarea{
   border: none !important;
   background-color: white !important;
   margin: 0 !important;
+}
+
+body #dtprv_wrapper[data-edit-view="true"] #dtprv-body-main td .select2-container{
+  padding: 0 !important;
+  position: relative;
+}
+
+body #dtprv_wrapper[data-edit-view="true"] #dtprv-body-main td .select2-container::after{
+  content: '\f142';
+  font-family: 'FontAwesome';
+  font-weight: 900;
+  position: absolute;
+  right: 6px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 12px;
+  color: #333333 !important;
+  pointer-events: none !important;
+}
+
+body #dtprv_wrapper[data-edit-view="true"] #dtprv-body-main td .select2-container > ul{
+  border-radius: 0 !important;
+  padding: 0 !important;
+  padding-right: 15px !important;
+  border: none !important;
+  background-color: white !important;
+  margin: 0 !important;
+  background-image: none !important;
+  box-shadow: none !important;
+}
+
+body #dtprv_wrapper[data-edit-view="true"] #dtprv-body-main .pd-datatable-editor-input.editor-input-readonly{
+  background-color: #555555 !important;
+  color: white !important;
+  outline: none !important;
+  pointer-events: none !important;
 }
 
 body #dtprv_wrapper[data-edit-view="true"] #dtprv-body-main tr.validation-error td.expanders{
@@ -750,6 +787,21 @@ body #dtprv_wrapper[data-edit-view="true"] #dtprv-body-main td textarea{
 
 body #dtprv_wrapper[data-edit-view="true"] .pd-datatables-non-editable-col:not(.expanders):not(.checkboxes){
   display: none !important;
+}
+
+body #dtprv_wrapper #dtprv-body-main .pd-datatable-badge{
+  background-color: #ffd700 !important;
+  color: #333333 !important;
+  font-size: 12px !important;
+  display: inline-flex;
+  flex-wrap: nowrap;
+  flex-direction: row;
+  align-items: center;
+  margin-left: 4px;
+}
+
+body #dtprv_wrapper #dtprv-body-main .pd-datatable-badge i{
+  font-size: 9px !important;
 }
 
 @-moz-keyframes spin{
