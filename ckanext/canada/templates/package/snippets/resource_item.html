@@ -106,4 +106,10 @@
       </ul>
     </div>
   {% endif %}
+  {% if g.is_registry %}
+    {# res.validation_status and res.datastore_active w/ res.format|lower == 'csv' #}
+    {% if res.validation_status == 'failure' %}
+      <div class="canada-resource-list-validation-info"><p><i aria-hidden="true" class="fas fa-exclamation-triangle"></i>&nbsp;{{ _('Resource failed validation. Click here to see the detailed report.') }}</p></div>
+    {% endif %}
+  {% endif %}
 {% endblock %}

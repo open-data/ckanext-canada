@@ -697,7 +697,7 @@ form#user-edit-form > fieldset:first-of-type{
 /* Dataset Index */
 ul.resource-list > li.resource-item{
   display: flex;
-  flex-wrap: nowrap;
+  flex-wrap: wrap;
   width: 100%;
 }
 ul.resource-list > li.resource-item:not(:last-of-type){
@@ -749,6 +749,21 @@ ul.resource-list > li.resource-item > div.canada-resource-list-badges{
     margin-top: 10px !important;
     margin-bottom: 10px !important;
   }
+}
+ul.resource-list > li.resource-item .canada-resource-list-validation-info{
+  width: calc(100% + 70px);
+  margin-left: -60px;
+  margin-right: -10px;
+  margin-bottom: -10px;
+  margin-top: 10px;
+  background-color: #e05d44;
+  color: white;
+  padding: 4px 12px;
+  font-size: 16px;
+  font-weight: 500;
+}
+ul.resource-list > li.resource-item .canada-resource-list-validation-info p{
+  margin: 0;
 }
 /* END - Dataset Index - END */
 
