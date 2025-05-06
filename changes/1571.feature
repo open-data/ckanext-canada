@@ -5,4 +5,4 @@ Upgraded DataTables JS contributed library and extensions to latest (as of 2025.
 - Improved i18n;
 - Fullscreen;
 - Editing in DataTables;
-- General improved JS code inside Jinja2 templates.
+- General improved functional JS code.

@@ -85,6 +85,8 @@ function load_pd_datatable(CKAN_MODULE){
   const validRowLabel = _('Record is valid');
   const errorInRowLabel = _('Some fields have validation errors');
   const requiredInRowLabel = _('Some fields are required');
+  const errorSummaryLabel = _('Detailed error summary');
+  const fieldErrorSummaryLabel = _('Field errors');
   const leavingEditorWarning = _('You have unsaved records in the table. Do you want to discard your changes or continue editing?');
   const validatingLabel = _('Validating records');
   const savingLabel = _('Saving records to the system');
@@ -128,6 +130,20 @@ function load_pd_datatable(CKAN_MODULE){
     }
   };
   const markedRenderer = new marked.Renderer();
+  const numberTypes = [
+    'year',
+    'month',
+    'int',
+    'bigint',
+    'numeric',
+    'float',
+    'double',
+    'money'
+  ];
+  const alphaTypes = [
+    'text',
+    '_text'
+  ]
 
   if( searchParams.has('dt_query') ){
     $([document.documentElement, document.body]).animate({
@@ -419,16 +435,20 @@ function load_pd_datatable(CKAN_MODULE){
       }
       _data = DataTable.render.ellipsis(ellipsesLength, _meta.row, _chromo_field.datastore_id, false)(_data, _type, _row, _meta);
       if( primaryKeys.includes(colIndex) ){
+        let pkValue = [];
+        for( let _i = 0; _i < primaryKeys.length; _i++ ){
+          pkValue.push(String(_row[(primaryKeys[_i] + colOffset)]));
+        }
         if( newRecords.length > 0 ){
           for( let _i = 0; _i < newRecords.length; _i++ ){
-            if( newRecords[_i].includes(_data) ){
+            if( newRecords[_i].every(function(_val, _idx){ return _val == pkValue[_idx] }) ){
               _data += '<sup><span class="badge pd-datatable-badge pd-datatable-badge-new"><i aria-hidden="true" class="fas fa-star"></i>&nbsp;' + newBadgeLabel + '</span></sup>';
             }
           }
         }
         if( updatedRecords.length > 0 ){
           for( let _i = 0; _i < updatedRecords.length; _i++ ){
-            if( updatedRecords[_i].includes(_data) ){
+            if( updatedRecords[_i].every(function(_val, _idx){ return _val == pkValue[_idx] }) ){
               _data += '<sup><span class="badge pd-datatable-badge pd-datatable-badge-update"><i aria-hidden="true" class="fas fa-star"></i>&nbsp;' + updatedBadgeLabel + '</span></sup>';
             }
           }
@@ -519,7 +539,7 @@ function load_pd_datatable(CKAN_MODULE){
         $(_button).attr('disabled', 'disabled');
       });
     }
-    if( selectCount > 0 ){
+    if( isEditable && selectCount > 0 ){
       table.buttons('tableEditorButton:name').text('<i aria-hidden="true" class="fas fa-edit"></i>&nbsp;' + editInTableButtonLabel);
       let buttonStats = $('#dtprv_wrapper').find('span.pd-datatbales-btn-count');
       $(buttonStats).each(function(_index, _button){
@@ -552,11 +572,19 @@ function load_pd_datatable(CKAN_MODULE){
           let labelText = column.header().textContent;
           let ds_type = $('#dtprv').find('thead').find('th').eq(column.index()).attr('data-datastore-type');
           sortingText += '<span><em>' + labelText;
-          // TODO: do numeric and alphabetic sorting based on ds_type...
+          let downIcon = 'fas fa-sort-amount-down';
+          let upIcon = 'fas fa-sort-amount-up';
+          if( numberTypes.includes(ds_type) ){
+            downIcon = 'fas fa-sort-numeric-down-alt';
+            upIcon = 'fas fa-sort-numeric-up-alt';
+          }else if( alphaTypes.includes(ds_type) ){
+            downIcon = 'fas fa-sort-alpha-down-alt';
+            upIcon = 'fas fa-sort-alpha-up-alt';
+          }
           if( sortInfo[i][1] == 'asc' ){
-            sortingText += '<sup><i title="' + colSortAscLabel + '" aria-label="' + colSortAscLabel + '" class="fas fa-sort-amount-up"></i></sup>';
+            sortingText += '<sup><i title="' + colSortAscLabel + '" aria-label="' + colSortAscLabel + '" class="' + upIcon + '"></i></sup>';
           }else if( sortInfo[i][1] == 'desc' ){
-            sortingText += '<sup><i title="' + colSortDescLabel + '" aria-label="' + colSortDescLabel + '" class="fas fa-sort-amount-down"></i></sup>';
+            sortingText += '<sup><i title="' + colSortDescLabel + '" aria-label="' + colSortDescLabel + '" class="' + downIcon + '"></i></sup>';
           }else{
             sortingText += '<sup><i title="' + colSortAnyLabel + '" aria-label="' + colSortAnyLabel + '" class="fas fa-random"></i></sup>';
           }
@@ -1065,21 +1093,22 @@ function load_pd_datatable(CKAN_MODULE){
       }
     });
 
-    if( isEditable && EDITOR ){
-      // FIXME: should be able to add rows in table...
+    if( EDITOR ){
       availableButtons.push({
         name: "tableEditorButton",
         text: '<i aria-hidden="true" class="fas fa-plus"></i>&nbsp;' + addInTableButtonLabel,
         className: "pd-datatable-btn pd-datatable-editor-btn btn-success",
         action: function(e, dt, button, config){
           editingRows = [];
-          let pk_cols = primaryKeys.map(function(val){
-            return val + colOffset;
-          });
-          let _rows = table.rows({selected: true});
-          _rows.eq(0).each(function(index){
-            editingRows.push(dt.cells(index, pk_cols).data().toArray());
-          });
+          if( isEditable ){
+            let pk_cols = primaryKeys.map(function(val){
+              return val + colOffset;
+            });
+            let _rows = table.rows({selected: true});
+            _rows.eq(0).each(function(index){
+              editingRows.push(dt.cells(index, pk_cols).data().toArray());
+            });
+          }
           set_state_change_visibility();
           table.rows().deselect();
           isCompactView = false;
@@ -1104,7 +1133,6 @@ function load_pd_datatable(CKAN_MODULE){
           });
           let rows = dt.rows({ selected: true });
           let params = new Object();
-          // FIXME: bulk-template and key_indices multiple!!!
           params['resource_name'] = resourceName;
           params[csrfTokenName] = csrfTokenValue;
           params['key_indices'] = primaryKeys;
@@ -1116,7 +1144,13 @@ function load_pd_datatable(CKAN_MODULE){
           let urlEncodedDataPairs = [];
           for( let [_key, _value] of Object.entries(params) ){
             if( Array.isArray(_value) ){
-              urlEncodedDataPairs.push(encodeURIComponent(_key) + '=' + encodeURIComponent(_value.join(',')));
+              if( _key == 'bulk-template' ){
+                for( let _i = 0; _i < _value.length; _i++ ){
+                  urlEncodedDataPairs.push(encodeURIComponent(_key) + '=' + encodeURIComponent(_value[_i].join(',')));
+                }
+              }else{
+                urlEncodedDataPairs.push(encodeURIComponent(_key) + '=' + encodeURIComponent(_value.join(',')));
+              }
             }else{
               urlEncodedDataPairs.push(encodeURIComponent(_key) + '=' + encodeURIComponent(_value));
             }
@@ -1310,18 +1344,37 @@ function load_pd_datatable(CKAN_MODULE){
           render_exception_failure('DataTables error - Could not save data: ' + errors.message, errors.message);
         }else{
           render_validation_failure('DataTables error - Could not save data: one or more records have errors');
-          // TODO: compile a dropdown section for detailed error summaries
+          $(tableWrapper).find('.pd-datable-error-summary').remove();
+          let errSummary = '<div class="pd-datable-error-summary"><details><summary>' + errorSummaryLabel + '</summary>';
           for(let [_index, _errObj] of Object.entries(errors)){
             let _rowIndex = parseInt(_index.replace('row_', ''));
             _rowIndex = $(filledRows).eq(_rowIndex);
             if( _rowIndex.length > 0 ){
               _rowIndex = Object.keys(_rowIndex[0])[0];
               set_row_errors(_rowIndex, _errObj);
+              errSummary += '<div class="pd-datable-error-summary-item"><strong class="pd-datable-error-summary-row-title">' + rowLabel + ' ' + (parseInt(_rowIndex) + 1) + '</strong>';
+              if( typeof _errObj.message != 'undefined' && _errObj.message && _errObj.message.length > 0 ){
+                errSummary += '<em>' + errObj.message + '</em><br/>';
+              }
+              if( typeof _errObj.data != 'undefined' && _errObj.data ){
+                errSummary += '<strong>' + fieldErrorSummaryLabel + '</strong><ul>';
+                for(let [_fieldID, _errArr] of Object.entries(_errObj.data)){
+                  errSummary += '<li><em>' + EDITOR[_fieldID].label + '</em><ul>';
+                  for( let _i = 0; _i < _errArr.length; _i++ ){
+                    errSummary += '<li>' + _errArr[_i] + '</li>';
+                  }
+                  errSummary += '</ul></li>';
+                }
+                errSummary += '</ul>';
+              }
+              errSummary += '</div>';
             }else{
-              // could not find row in table...
-              // TODO: output generic error??
+              // could not find row in table, probably safe to ignore
+              console.warning('DataTables error - Could not locate record in the table...ignoring...');
             }
           }
+          errSummary += '</details></div>';
+          $(tableWrapper).find('.dt-scroll').before(errSummary);
         }
       }
     }else{
@@ -1631,17 +1684,12 @@ function load_pd_datatable(CKAN_MODULE){
         _data.compact_view = isCompactView;
         _data.edit_view = isEditMode;
         _data.editing_rows = editingRows;
-        _data.errored_rows = erroredRows;
-        _data.required_rows = requiredRows;
-        _data.filled_rows = filledRows;
+        // TODO: save filledRows, erroredRows, requiredRows??? need to save the field values too???
         let localInstanceSelected = typeof tableState != 'undefined' ? tableState.selected : _data.selected;
         tableState = _data;
         tableState.selected = localInstanceSelected;
         tableState.edit_view = isEditMode;
         tableState.editing_rows = editingRows;
-        tableState.errored_rows = erroredRows;
-        tableState.required_rows = requiredRows;
-        tableState.filled_rows = filledRows;
       },
       stateLoadParams: function(_settings, _data){
         let localInstanceSelected = typeof tableState != 'undefined' ? tableState.selected : _data.selected;

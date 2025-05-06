@@ -36,7 +36,6 @@
   <div class="pd-datable-instructions">
     <details>
       <summary>{{ _('Keyboard controls') }}</summary>
-      {# TODO: add table control tutorials!!! #}
       <ul>
         <li>{{ _('Hold <pre>SHIFT</pre> key while clicking on sort controls for multi-column sorting') }}</li>
         <li>{{ _('Press <pre>ALT + K</pre> keys to enter KeyTable mode, allowing you to navigate the table with arrow keys') }}</li>
@@ -54,7 +53,6 @@
         <th scope="col" data-editable-col="false" data-priority="3"></th>
         <th scope="col" data-editable-col="false" data-priority="3">{{ _('Select') }}</th>
         {% for field in ds_fields %}
-          {# TODO: add fa fa-info-circle to headings for field data dictionary linking??? #}
           <th scope="col" data-editable-col="{{- (field.id not in nonEditableCols)|tojson -}}" data-datastore-id="{{- field.id -}}" data-datastore-type="{{- field.type -}}" data-priority="{{- field.priority + magic_priority_no_field_should_be_below -}}">
             {{- field.label -}}<span class="sorting-cnt"><span class="sorting-icons"></span></span>
           </th>
