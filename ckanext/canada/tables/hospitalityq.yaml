@@ -617,15 +617,15 @@ resources:
           errors := errors || ARRAY[['start_date', {start_end_date_error}]];
         END IF;
 
-        IF NEW.employee_attendees IS NOT NULL AND NEW.employee_attendees::int < 0 THEN
+        IF NEW.start_date >= '2025-04-01'::date AND NEW.employee_attendees IS NOT NULL AND NEW.employee_attendees::int < 0 THEN
           errors := errors || ARRAY[['employee_attendees', {negative_number_error}]];
         END IF;
 
-        IF NEW.guest_attendees IS NOT NULL AND NEW.guest_attendees::int < 0 THEN
+        IF NEW.start_date >= '2025-04-01'::date AND NEW.guest_attendees IS NOT NULL AND NEW.guest_attendees::int < 0 THEN
           errors := errors || ARRAY[['guest_attendees', {negative_number_error}]];
         END IF;
 
-        IF NEW.employee_attendees IS NOT NULL AND NEW.employee_attendees::int = 0 THEN
+        IF NEW.start_date >= '2025-04-01'::date AND NEW.employee_attendees IS NOT NULL AND NEW.employee_attendees::int <= 0 THEN
           errors := errors || ARRAY[['employee_attendees', {zero_number_error}]];
         END IF;
 

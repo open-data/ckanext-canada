@@ -90,8 +90,8 @@ class TestTravelQ(CanadaTestBase):
 
             assert 'disclosure_group' in err
 
-        record['start_date'] = '2019-04-21'
-        record['end_date'] = '2019-04-24'
+        record['start_date'] = '2024-04-21'
+        record['end_date'] = '2024-04-24'
         record['disclosure_group'] = 'SLE'
 
         self.lc.action.datastore_upsert(
@@ -124,8 +124,8 @@ class TestTravelQ(CanadaTestBase):
                 assert k in err
                 assert expected[k][0] in err[k][0]
 
-        record['start_date'] = '2019-04-21'
-        record['end_date'] = '2019-04-24'
+        record['start_date'] = '2024-04-21'
+        record['end_date'] = '2024-04-24'
         record['destination_en'] = 'England'
         record['destination_fr'] = 'England'
 
