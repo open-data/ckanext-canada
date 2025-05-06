@@ -1481,7 +1481,9 @@ function load_pd_datatable(CKAN_MODULE){
           let _editorObj = EDITOR[_dsID];
           let _v = $(_f).val();
           if( _editorObj.is_required && (typeof _v == 'undefined' || _v.trim().length == 0) ){
-            $(_f).css({'box-shadow': '0 0 2px 2px #' + tableStyles.required.bgColor + ' inset'});
+            if( ! erroredRows[rowIndex].includes(_dsID) ){
+              $(_f).css({'box-shadow': '0 0 2px 2px #' + tableStyles.required.bgColor + ' inset'});
+            }
             if( ! requiredRows[rowIndex].includes(_dsID) ){
               requiredRows[rowIndex].push(_dsID);
             }
