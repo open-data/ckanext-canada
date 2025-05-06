@@ -1960,6 +1960,11 @@ presets:
       value: '6208'
     # copied from multiple_select preset
     form_snippet: multiple_select.html
+    classes:
+      - control-full
+      - canada-select2-field-wrapper
+    form_select_attrs:
+      data-field-select2: true
     display_snippet: multiple_choice.html
     validators: scheming_multiple_choice
     output_validators: scheming_multiple_choice_output
