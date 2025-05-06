@@ -57,7 +57,7 @@ resources:
       fr: Requis si la "date de début" est le 1er avril 2025 ou après
     excel_required: false
     form_required: false
-    excel_required_formula: 'OR({default_formula},{start_date}>=DATE(2025,4,1))'
+    excel_required_formula: '{start_date}>=DATE(2025,4,1)'
     validation:
       en: Required if "Start Date" is on or after April 1st 2025
       fr: Requis si la "date de début" est le 1er avril 2025 ou après
