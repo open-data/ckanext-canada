@@ -43,9 +43,98 @@ class TestTravelQ(CanadaTestBase):
         assert 'key' in err
         assert 'ref_number' in err['key'][0]
 
+    def test_dates(self):
+        """
+        Start Date cannot be in the future, and dates must be chronological
+        """
+        record = get_chromo('travelq')['examples']['record']
+
+        record['start_date'] = '2999999-01-29'
+        record['end_date'] = '2999999-01-30'
+
+        with pytest.raises(ValidationError) as ve:
+            self.lc.action.datastore_upsert(
+                resource_id=self.resource_id,
+                records=[record])
+            err = ve.value.error_dict['records'][0]
+
+            assert 'start_date' in err
+            assert 'end_date' in err
+
+        record['start_date'] = '2024-01-29'
+        record['end_date'] = '2024-01-15'
+
+        with pytest.raises(ValidationError) as ve:
+            self.lc.action.datastore_upsert(
+                resource_id=self.resource_id,
+                records=[record])
+            err = ve.value.error_dict['records'][0]
+
+            assert 'start_date' in err
+
+    def test_disclosure_group(self):
+        """
+        Disclosure Group is required if on or after April 1st 2025
+        """
+        record = get_chromo('travelq')['examples']['record']
+
+        record['start_date'] = '2025-04-21'
+        record['end_date'] = '2025-04-24'
+        record['disclosure_group'] = None
+
+        with pytest.raises(ValidationError) as ve:
+            self.lc.action.datastore_upsert(
+                resource_id=self.resource_id,
+                records=[record])
+            err = ve.value.error_dict['records'][0]
+
+            assert 'disclosure_group' in err
+
+        record['start_date'] = '2019-04-21'
+        record['end_date'] = '2019-04-24'
+        record['disclosure_group'] = 'SLE'
+
+        self.lc.action.datastore_upsert(
+            resource_id=self.resource_id,
+            records=[record])
+
     def test_destination_format(self):
+        """
+        Destination format is validated on or after April 1st 2025
+        """
         record = get_chromo('travelq')['examples']['record']
         partial_err_msg = 'Invalid format for destination'
+
+        record['start_date'] = '2025-04-21'
+        record['end_date'] = '2025-04-24'
+        record['destination_en'] = 'England'
+        record['destination_fr'] = 'England'
+
+        with pytest.raises(ValidationError) as ve:
+            self.lc.action.datastore_upsert(
+                resource_id=self.resource_id,
+                records=[record])
+            err = ve.value.error_dict['records'][0]
+            # NOTE: have to do partial because \uF8FF split formatting does not happen at this level
+            expected = {
+                'destination_en': [partial_err_msg],
+                'destination_fr': [partial_err_msg],
+            }
+            for k in set(err) | set(expected):
+                assert k in err
+                assert expected[k][0] in err[k][0]
+
+        record['start_date'] = '2019-04-21'
+        record['end_date'] = '2019-04-24'
+        record['destination_en'] = 'England'
+        record['destination_fr'] = 'England'
+
+        self.lc.action.datastore_upsert(
+            resource_id=self.resource_id,
+            records=[record])
+
+        record['start_date'] = '2025-04-21'
+        record['end_date'] = '2025-04-24'
 
         with open(COUNTRY_FILE) as f:
             countries = json.load(f)
