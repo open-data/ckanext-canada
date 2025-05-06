@@ -1279,14 +1279,14 @@ function load_pd_datatable(CKAN_MODULE){
         if( _field.length > 0 ){
           $(_field).parent().find('.validation-error').remove();
           $(_field).parent().append('<div class="validation-error"><i aria-hidden="true" class="fas fa-exclamation-triangle"></i>&nbsp;' + _errArr.join('. ') + '</div>');
-          $(_field).css({'box-shadow': '0 0 2px 2px #C00000 inset'});
+          $(_field).css({'box-shadow': '0 0 2px 2px #' + tableStyles.errored.bgColor + ' inset'});
           if( ! erroredRows[_rowIndex].includes(_fieldID) ){
             erroredRows[_rowIndex].push(_fieldID);
           }
         }
       }
     }
-    $(row).find('td.expanders').css({'background-color': '#C00000', 'cursor': 'pointer'})
+    $(row).find('td.expanders').css({'background-color': '#' + tableStyles.errored.bgColor, 'color': '#' + tableStyles.errored.fgColor, 'cursor': 'pointer'})
                                .attr('title', errorInRowLabel)
                                .attr('role', 'button')
                                .attr('tabindex', 0);
@@ -1466,12 +1466,12 @@ function load_pd_datatable(CKAN_MODULE){
           filledRows[rowIndex] = [];
         }
         if( editorObject.is_invalid($(_field).val()) ){
-          $(_field).css({'box-shadow': '0 0 2px 2px #C00000 inset'});
+          $(_field).css({'box-shadow': '0 0 2px 2px #' + tableStyles.errored.bgColor + ' inset'});
           if( ! erroredRows[rowIndex].includes(datastoreID) ){
             erroredRows[rowIndex].push(datastoreID);
           }
         }else{
-          $(_field).css({'box-shadow': '0 0 2px 2px #1e7e34 inset'});
+          $(_field).css({'box-shadow': '0 0 2px 2px #' + tableStyles.success.bgColor + ' inset'});
           erroredRows[rowIndex] = erroredRows[rowIndex].filter(function(_arrItem){
             return _arrItem != datastoreID;
           });
@@ -1508,22 +1508,22 @@ function load_pd_datatable(CKAN_MODULE){
           });
         }
         if( erroredRows[rowIndex].length > 0 ){
-          $(row).find('td.expanders').css({'background-color': '#C00000', 'cursor': 'pointer'})
+          $(row).find('td.expanders').css({'background-color': '#' + tableStyles.errored.bgColor, 'color': '#' + tableStyles.errored.fgColor, 'cursor': 'pointer'})
                                      .attr('title', errorInRowLabel)
                                      .attr('role', 'button')
                                      .attr('tabindex', 0);
         }else if( requiredRows[rowIndex].length > 0 ){
-          $(row).find('td.expanders').css({'background-color': '#' + tableStyles.required.bgColor, 'cursor': 'pointer'})
+          $(row).find('td.expanders').css({'background-color': '#' + tableStyles.required.bgColor, 'color': '#' + tableStyles.required.fgColor, 'cursor': 'pointer'})
                                      .attr('title', requiredInRowLabel)
                                      .attr('role', 'button')
                                      .attr('tabindex', 0);
         }else if( filledRows[rowIndex].length == 0 ){
-          $(row).find('td.expanders').css({'background-color': '#555555', 'cursor': 'default'})
+          $(row).find('td.expanders').css({'background-color': '#555555', 'color': 'white', 'cursor': 'default'})
                                      .attr('title', null)
                                      .attr('role', null)
                                      .attr('tabindex', null);
         }else{
-          $(row).find('td.expanders').css({'background-color': '#1e7e34', 'cursor': 'default'})
+          $(row).find('td.expanders').css({'background-color': '#' + tableStyles.success.bgColor, 'color': '#' + tableStyles.success.fgColor, 'cursor': 'default'})
                                      .attr('title', validRowLabel)
                                      .attr('role', null)
                                      .attr('tabindex', null);
