@@ -60,10 +60,15 @@ resources:
     description:
       en: This field will display the group to which the individual belongs.
       fr: Ce champ indique le groupe auquel appartient l’individu.
-    obligation: Mandatory
-    excel_required: true
-    form_required: true
-    validation: This field must not be empty
+    obligation:
+      en: Required if "Travel Start Date" is on or after April 1st 2025
+      fr: Requis si la "date de début du voyage" est le 1er avril 2025 ou après
+    excel_required: false
+    form_required: false
+    excel_required_formula: '{start_date}>=DATE(2025,4,1)'
+    validation:
+      en: Required if "Travel Start Date" is on or after April 1st 2025
+      fr: Requis si la "date de début du voyage" est le 1er avril 2025 ou après
     format_type: Controlled List
     choices:
       MPSES:
@@ -638,14 +643,19 @@ resources:
           errors := errors || required_error(NEW.end_date, 'end_date');
 
           errors := errors || required_error(NEW.destination_en, 'destination_en');
-          crval := destination_clean_error(NEW.destination_en, 'destination_en');
-          errors := errors || crval.error;
-          NEW.destination_en := crval.clean;
-
           errors := errors || required_error(NEW.destination_fr, 'destination_fr');
-          crval := destination_clean_error(NEW.destination_fr, 'destination_fr');
-          errors := errors || crval.error;
-          NEW.destination_fr := crval.clean;
+
+          IF NEW.start_date >= '2025-04-01'::date THEN
+            errors := errors || required_error(NEW.disclosure_group, 'disclosure_group');
+
+            crval := destination_clean_error(NEW.destination_en, 'destination_en');
+            errors := errors || crval.error;
+            NEW.destination_en := crval.clean;
+
+            crval := destination_clean_error(NEW.destination_fr, 'destination_fr');
+            errors := errors || crval.error;
+            NEW.destination_fr := crval.clean;
+          END IF;
 
           errors := errors || both_languages_error(NEW.destination_2_en, 'destination_2_en', NEW.destination_2_fr, 'destination_2_fr');
           crval := destination_clean_error(NEW.destination_2_en, 'destination_2_en');
