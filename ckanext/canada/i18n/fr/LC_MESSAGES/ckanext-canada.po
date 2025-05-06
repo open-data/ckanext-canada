@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-03-18 15:38+0000\n"
+"POT-Creation-Date: 2025-05-06 19:47+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: fr\n"
@@ -294,6 +294,7 @@ msgstr ""
 
 #: ckanext/canada/strings.py:12
 #: ckanext/canada/templates/package/base_form_page.html:5
+#: ckanext/canada/templates/package/new.html:9
 msgid "Create Dataset"
 msgstr "Créer un jeu de données"
 
@@ -320,7 +321,7 @@ msgstr "Nom d’utilisateur"
 #: ckanext/canada/strings.py:17
 #: ckanext/canada/templates/user/edit_user_form.html:10
 #: ckanext/canada/templates/user/new_user_form.html:14
-#: ckanext/canada/templates/user/read_base.html:58
+#: ckanext/canada/templates/user/read_base.html:61
 #: ckanext/canada/templates/user/recover_username.html:17
 #: ckanext/canada/view.py:1279
 msgid "Email"
@@ -2704,6 +2705,7 @@ msgstr ""
 "\">open-ouvert@tbs-sct.gc.ca</a>."
 
 #: ckanext/canada/templates/home/quick_links.html:71
+#: ckanext/canada/templates/package/new.html:7
 #: ckanext/canada/templates/snippets/cdts/header.html:36
 msgid "Create an Open Data Record"
 msgstr "Créer un enregistrement de données ouvert"
@@ -2892,8 +2894,8 @@ msgstr "Gérer"
 #: ckanext/canada/templates/organization/read_base.html:7
 #: ckanext/canada/templates/snippets/cdts/header.html:154
 #: ckanext/canada/templates/user/read.html:28
-#: ckanext/canada/templates/user/read_base.html:12
-#: ckanext/canada/templates/user/read_base.html:71
+#: ckanext/canada/templates/user/read_base.html:15
+#: ckanext/canada/templates/user/read_base.html:74
 msgid "Organizations"
 msgstr "Organisations"
 
@@ -2907,6 +2909,7 @@ msgstr "Modifier l’organisation"
 
 #: ckanext/canada/templates/organization/edit_base.html:28
 #: ckanext/canada/templates/organization/read_base.html:21
+#: ckanext/canada/templates/user/read_base.html:13
 msgid "Activity"
 msgstr "Activité"
 
@@ -3115,6 +3118,10 @@ msgstr "Retourner à la page de recherche"
 #: ckanext/canada/templates/package/snippets/resource_views_list_item.html:17
 msgid "Disabled"
 msgstr "Désactivé"
+
+#: ckanext/canada/templates/package/new.html:5
+msgid "Create an Open Information Asset"
+msgstr "Créer un enregistrement d'informations ouvertes"
 
 #: ckanext/canada/templates/package/new_resource.html:18
 #: ckanext/canada/templates/package/new_resource_not_draft.html:10
@@ -3587,12 +3594,12 @@ msgid "Add Asset Metadata"
 msgstr "Ajouter les métadonnées du produit"
 
 #: ckanext/canada/templates/package/snippets/stages.html:23
-msgid "Add Dataset Metadata"
-msgstr "Ajouter les métadonnées du jeu de données"
+msgid "Add Record Metadata"
+msgstr "Ajouter des métadonnées de jeu de données"
 
 #: ckanext/canada/templates/package/snippets/stages.html:33
-msgid "Add Resource or Related Item"
-msgstr "Ajouter une ressource ou un objet connexe"
+msgid "Add Resource"
+msgstr "Ajouter une ressource"
 
 #: ckanext/canada/templates/package/snippets/stages.html:36
 msgid "Add Resource Metadata"
@@ -3926,6 +3933,10 @@ msgid ""
 msgstr ""
 "Expression ou chaîne unique désignant le dossier de métadonnées dans le "
 "Portail du gouvernement ouvert"
+
+#: ckanext/canada/templates/scheming/package/snippets/package_form.html:70
+msgid "Next: Add Resource"
+msgstr "Suivant : ajouter une ressource"
 
 #: ckanext/canada/templates/scheming/package/snippets/resource_form.html:29
 msgid "Metadata Fields for Resources"
@@ -4622,43 +4633,43 @@ msgstr "J’accepte"
 msgid "I do not agree"
 msgstr "Je n’accepte pas"
 
-#: ckanext/canada/templates/user/read_base.html:14
+#: ckanext/canada/templates/user/read_base.html:17
 msgid "API Tokens"
 msgstr "Jetons API"
 
-#: ckanext/canada/templates/user/read_base.html:17
+#: ckanext/canada/templates/user/read_base.html:20
 msgid "MFA"
 msgstr "AMF"
 
-#: ckanext/canada/templates/user/read_base.html:24
+#: ckanext/canada/templates/user/read_base.html:27
 msgid "Details"
 msgstr "Détails"
 
-#: ckanext/canada/templates/user/read_base.html:36
+#: ckanext/canada/templates/user/read_base.html:39
 msgid "Followers:"
 msgstr "Suiveurs :"
 
-#: ckanext/canada/templates/user/read_base.html:40
+#: ckanext/canada/templates/user/read_base.html:43
 msgid "Datasets:"
 msgstr "Dossiers :"
 
-#: ckanext/canada/templates/user/read_base.html:48
+#: ckanext/canada/templates/user/read_base.html:51
 msgid "Open ID:"
 msgstr "Ouvrir ID :"
 
-#: ckanext/canada/templates/user/read_base.html:51
+#: ckanext/canada/templates/user/read_base.html:54
 msgid "Username:"
 msgstr "Nom d’utilisateur :"
 
-#: ckanext/canada/templates/user/read_base.html:59
+#: ckanext/canada/templates/user/read_base.html:62
 msgid "This means only you can see this"
 msgstr "Cela signifie que vous êtes le seul à pouvoir le voir"
 
-#: ckanext/canada/templates/user/read_base.html:59
+#: ckanext/canada/templates/user/read_base.html:62
 msgid "Private"
 msgstr "Privé"
 
-#: ckanext/canada/templates/user/read_base.html:64
+#: ckanext/canada/templates/user/read_base.html:67
 msgid "Member Since"
 msgstr "Membre depuis"
 
@@ -8624,4 +8635,10 @@ msgstr "Télécharger vers le DataStore"
 
 #~ msgid "Close"
 #~ msgstr "Fermer"
+
+#~ msgid "Add Dataset Metadata"
+#~ msgstr "Ajouter les métadonnées du jeu de données"
+
+#~ msgid "Add Resource or Related Item"
+#~ msgstr "Ajouter une ressource ou un objet connexe"
 

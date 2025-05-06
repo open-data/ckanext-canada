@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ckanext-canada 0.4.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-03-18 15:38+0000\n"
+"POT-Creation-Date: 2025-05-06 19:47+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -262,6 +262,7 @@ msgstr ""
 
 #: ckanext/canada/strings.py:12
 #: ckanext/canada/templates/package/base_form_page.html:5
+#: ckanext/canada/templates/package/new.html:9
 msgid "Create Dataset"
 msgstr ""
 
@@ -288,7 +289,7 @@ msgstr ""
 #: ckanext/canada/strings.py:17
 #: ckanext/canada/templates/user/edit_user_form.html:10
 #: ckanext/canada/templates/user/new_user_form.html:14
-#: ckanext/canada/templates/user/read_base.html:58
+#: ckanext/canada/templates/user/read_base.html:61
 #: ckanext/canada/templates/user/recover_username.html:17
 #: ckanext/canada/view.py:1279
 msgid "Email"
@@ -2318,6 +2319,7 @@ msgid ""
 msgstr ""
 
 #: ckanext/canada/templates/home/quick_links.html:71
+#: ckanext/canada/templates/package/new.html:7
 #: ckanext/canada/templates/snippets/cdts/header.html:36
 msgid "Create an Open Data Record"
 msgstr ""
@@ -2479,8 +2481,8 @@ msgstr ""
 #: ckanext/canada/templates/organization/read_base.html:7
 #: ckanext/canada/templates/snippets/cdts/header.html:154
 #: ckanext/canada/templates/user/read.html:28
-#: ckanext/canada/templates/user/read_base.html:12
-#: ckanext/canada/templates/user/read_base.html:71
+#: ckanext/canada/templates/user/read_base.html:15
+#: ckanext/canada/templates/user/read_base.html:74
 msgid "Organizations"
 msgstr ""
 
@@ -2494,6 +2496,7 @@ msgstr ""
 
 #: ckanext/canada/templates/organization/edit_base.html:28
 #: ckanext/canada/templates/organization/read_base.html:21
+#: ckanext/canada/templates/user/read_base.html:13
 msgid "Activity"
 msgstr ""
 
@@ -2677,6 +2680,10 @@ msgstr ""
 #: ckanext/canada/templates/package/edit_view.html:6
 #: ckanext/canada/templates/package/snippets/resource_views_list_item.html:17
 msgid "Disabled"
+msgstr ""
+
+#: ckanext/canada/templates/package/new.html:5
+msgid "Create an Open Information Asset"
 msgstr ""
 
 #: ckanext/canada/templates/package/new_resource.html:18
@@ -3114,11 +3121,11 @@ msgid "Add Asset Metadata"
 msgstr ""
 
 #: ckanext/canada/templates/package/snippets/stages.html:23
-msgid "Add Dataset Metadata"
+msgid "Add Record Metadata"
 msgstr ""
 
 #: ckanext/canada/templates/package/snippets/stages.html:33
-msgid "Add Resource or Related Item"
+msgid "Add Resource"
 msgstr ""
 
 #: ckanext/canada/templates/package/snippets/stages.html:36
@@ -3377,6 +3384,10 @@ msgstr ""
 msgid ""
 "A unique phrase or string which identifies the metadata record within the "
 "Open Government Portal"
+msgstr ""
+
+#: ckanext/canada/templates/scheming/package/snippets/package_form.html:70
+msgid "Next: Add Resource"
 msgstr ""
 
 #: ckanext/canada/templates/scheming/package/snippets/resource_form.html:29
@@ -3918,43 +3929,43 @@ msgstr ""
 msgid "I do not agree"
 msgstr ""
 
-#: ckanext/canada/templates/user/read_base.html:14
+#: ckanext/canada/templates/user/read_base.html:17
 msgid "API Tokens"
 msgstr ""
 
-#: ckanext/canada/templates/user/read_base.html:17
+#: ckanext/canada/templates/user/read_base.html:20
 msgid "MFA"
 msgstr ""
 
-#: ckanext/canada/templates/user/read_base.html:24
+#: ckanext/canada/templates/user/read_base.html:27
 msgid "Details"
 msgstr ""
 
-#: ckanext/canada/templates/user/read_base.html:36
+#: ckanext/canada/templates/user/read_base.html:39
 msgid "Followers:"
 msgstr ""
 
-#: ckanext/canada/templates/user/read_base.html:40
+#: ckanext/canada/templates/user/read_base.html:43
 msgid "Datasets:"
 msgstr ""
 
-#: ckanext/canada/templates/user/read_base.html:48
+#: ckanext/canada/templates/user/read_base.html:51
 msgid "Open ID:"
 msgstr ""
 
-#: ckanext/canada/templates/user/read_base.html:51
+#: ckanext/canada/templates/user/read_base.html:54
 msgid "Username:"
 msgstr ""
 
-#: ckanext/canada/templates/user/read_base.html:59
+#: ckanext/canada/templates/user/read_base.html:62
 msgid "This means only you can see this"
 msgstr ""
 
-#: ckanext/canada/templates/user/read_base.html:59
+#: ckanext/canada/templates/user/read_base.html:62
 msgid "Private"
 msgstr ""
 
-#: ckanext/canada/templates/user/read_base.html:64
+#: ckanext/canada/templates/user/read_base.html:67
 msgid "Member Since"
 msgstr ""
 
