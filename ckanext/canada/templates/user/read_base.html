@@ -9,6 +9,9 @@
 
 {% block content_primary_nav %}
   {{ h.build_nav_icon('user.read', h.humanize_entity_type('package', dataset_type, 'content tab') or _('Datasets'), id=user.name, icon='sitemap') }}
+  {% if h.check_access('sysadmin') %}
+    {{ h.build_nav_icon('activity.user_activity', _('Activity'), id=user.name, icon='clock') }}
+  {% endif %}
   {{ h.build_nav_icon('user.read_organizations', h.humanize_entity_type('organization', org_type, 'content tab') or _('Organizations'), id=user.name, icon='building') }}
   {% if h.check_access('api_token_list', {'user': user['name']}) %}
     {{ h.build_nav_icon('user.api_tokens', _('API Tokens'), id=user.name, icon='key') }}
