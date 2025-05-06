@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ckanext-canada 0.4.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-03-18 15:44+0000\n"
+"POT-Creation-Date: 2025-05-06 19:56+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -262,6 +262,7 @@ msgstr ""
 
 #: ckanext/canada/strings.py:12
 #: ckanext/canada/templates/package/base_form_page.html:5
+#: ckanext/canada/templates/package/new.html:9
 msgid "Create Dataset"
 msgstr ""
 
@@ -288,7 +289,7 @@ msgstr ""
 #: ckanext/canada/strings.py:17
 #: ckanext/canada/templates/user/edit_user_form.html:10
 #: ckanext/canada/templates/user/new_user_form.html:14
-#: ckanext/canada/templates/user/read_base.html:58
+#: ckanext/canada/templates/user/read_base.html:61
 #: ckanext/canada/templates/user/recover_username.html:17
 #: ckanext/canada/view.py:1279
 msgid "Email"
@@ -1138,10 +1139,10 @@ msgstr ""
 #: ckanext/canada/tables/adminaircraft.yaml:317
 #: ckanext/canada/tables/contracts.yaml:2184 ckanext/canada/tables/grants.yaml:838
 #: ckanext/canada/tables/grantsmonthly.yaml:935
-#: ckanext/canada/tables/hospitalityq.yaml:632
+#: ckanext/canada/tables/hospitalityq.yaml:641
 #: ckanext/canada/tables/qpnotes.yaml:335
 #: ckanext/canada/tables/reclassification.yaml:271
-#: ckanext/canada/tables/travelq.yaml:694 ckanext/canada/tables/wrongdoing.yaml:247
+#: ckanext/canada/tables/travelq.yaml:704 ckanext/canada/tables/wrongdoing.yaml:247
 msgid "Comma is not allowed in Reference Number field"
 msgstr ""
 
@@ -1175,7 +1176,7 @@ msgstr ""
 #. SQL Trigger String for PD Type: hospitalityq
 #. SQL Trigger String for PD Type: service
 #: ckanext/canada/tables/ati.yaml:142 ckanext/canada/tables/ati.yaml:254
-#: ckanext/canada/tables/hospitalityq.yaml:634
+#: ckanext/canada/tables/hospitalityq.yaml:643
 #: ckanext/canada/tables/service.yaml:1549 ckanext/canada/tables/service.yaml:2387
 msgid "This value must not be negative"
 msgstr ""
@@ -1227,10 +1228,10 @@ msgstr ""
 #. SQL Trigger String for PD Type: travelq
 #: ckanext/canada/tables/briefingt.yaml:407
 #: ckanext/canada/tables/contractsa.yaml:396
-#: ckanext/canada/tables/hospitalityq.yaml:762
+#: ckanext/canada/tables/hospitalityq.yaml:771
 #: ckanext/canada/tables/qpnotes.yaml:460
 #: ckanext/canada/tables/reclassification.yaml:389
-#: ckanext/canada/tables/travela.yaml:646 ckanext/canada/tables/travelq.yaml:839
+#: ckanext/canada/tables/travela.yaml:646 ckanext/canada/tables/travelq.yaml:849
 msgid "This must list the year you are reporting on (not the fiscal year)."
 msgstr ""
 
@@ -1523,7 +1524,7 @@ msgstr ""
 
 #. Label for PD Type: hospitalityq
 #: ckanext/canada/tables/hospitalityq.yaml:5
-#: ckanext/canada/tables/hospitalityq.yaml:556
+#: ckanext/canada/tables/hospitalityq.yaml:561
 msgid "Hospitality Expenses"
 msgstr ""
 
@@ -1535,33 +1536,33 @@ msgid ""
 msgstr ""
 
 #. SQL Trigger String for PD Type: hospitalityq
-#: ckanext/canada/tables/hospitalityq.yaml:633
+#: ckanext/canada/tables/hospitalityq.yaml:642
 msgid ""
 "Invalid format for multiple commercial establishments or vendors. Use <Vendor"
 " Name>;<Vendor 2 Name> (e.g. Les Impertinentes;Les Street Monkeys)"
 msgstr ""
 
 #. SQL Trigger String for PD Type: hospitalityq
-#: ckanext/canada/tables/hospitalityq.yaml:635
+#: ckanext/canada/tables/hospitalityq.yaml:644
 msgid "Zero is an invalid entry. Please enter a different number"
 msgstr ""
 
 #. SQL Trigger String for PD Type: hospitalityq
 #. SQL Trigger String for PD Type: travelq
-#: ckanext/canada/tables/hospitalityq.yaml:636
-#: ckanext/canada/tables/travelq.yaml:696
+#: ckanext/canada/tables/hospitalityq.yaml:645
+#: ckanext/canada/tables/travelq.yaml:706
 msgid "Start date cannot be after the end date"
 msgstr ""
 
 #. SQL Trigger String for PD Type: hospitalityq
 #. SQL Trigger String for PD Type: travelq
-#: ckanext/canada/tables/hospitalityq.yaml:637
-#: ckanext/canada/tables/travelq.yaml:697
+#: ckanext/canada/tables/hospitalityq.yaml:646
+#: ckanext/canada/tables/travelq.yaml:707
 msgid "Date can’t be in the future"
 msgstr ""
 
 #. Resource Title for PD Type: hospitalityq
-#: ckanext/canada/tables/hospitalityq.yaml:673
+#: ckanext/canada/tables/hospitalityq.yaml:682
 msgid "Proactive Publication - Hospitality Nothing to Report"
 msgstr ""
 
@@ -1751,7 +1752,7 @@ msgid "Proactive Publication - Travel Expenses"
 msgstr ""
 
 #. Label for PD Type: travelq
-#: ckanext/canada/tables/travelq.yaml:5 ckanext/canada/tables/travelq.yaml:612
+#: ckanext/canada/tables/travelq.yaml:5 ckanext/canada/tables/travelq.yaml:617
 msgid "Travel Expenses"
 msgstr ""
 
@@ -1763,7 +1764,7 @@ msgid ""
 msgstr ""
 
 #. SQL Trigger String for PD Type: travelq
-#: ckanext/canada/tables/travelq.yaml:695
+#: ckanext/canada/tables/travelq.yaml:705
 msgid ""
 "Invalid format for destination: \"{}\". Use <City Name>, <State/Province "
 "Name>, <Country Name> for Canada and US, or <City Name>, <Country Name> for "
@@ -1771,7 +1772,7 @@ msgid ""
 msgstr ""
 
 #. Resource Title for PD Type: travelq
-#: ckanext/canada/tables/travelq.yaml:735
+#: ckanext/canada/tables/travelq.yaml:745
 msgid "Proactive Publication - Travel Expenses Nothing to Report"
 msgstr ""
 
@@ -2382,6 +2383,7 @@ msgid ""
 msgstr ""
 
 #: ckanext/canada/templates/home/quick_links.html:71
+#: ckanext/canada/templates/package/new.html:7
 #: ckanext/canada/templates/snippets/cdts/header.html:36
 msgid "Create an Open Data Record"
 msgstr ""
@@ -2543,8 +2545,8 @@ msgstr ""
 #: ckanext/canada/templates/organization/read_base.html:7
 #: ckanext/canada/templates/snippets/cdts/header.html:158
 #: ckanext/canada/templates/user/read.html:28
-#: ckanext/canada/templates/user/read_base.html:12
-#: ckanext/canada/templates/user/read_base.html:71
+#: ckanext/canada/templates/user/read_base.html:15
+#: ckanext/canada/templates/user/read_base.html:74
 msgid "Organizations"
 msgstr ""
 
@@ -2558,6 +2560,7 @@ msgstr ""
 
 #: ckanext/canada/templates/organization/edit_base.html:28
 #: ckanext/canada/templates/organization/read_base.html:21
+#: ckanext/canada/templates/user/read_base.html:13
 msgid "Activity"
 msgstr ""
 
@@ -2741,6 +2744,10 @@ msgstr ""
 #: ckanext/canada/templates/package/edit_view.html:6
 #: ckanext/canada/templates/package/snippets/resource_views_list_item.html:17
 msgid "Disabled"
+msgstr ""
+
+#: ckanext/canada/templates/package/new.html:5
+msgid "Create an Open Information Asset"
 msgstr ""
 
 #: ckanext/canada/templates/package/new_resource.html:18
@@ -3178,11 +3185,11 @@ msgid "Add Asset Metadata"
 msgstr ""
 
 #: ckanext/canada/templates/package/snippets/stages.html:23
-msgid "Add Dataset Metadata"
+msgid "Add Record Metadata"
 msgstr ""
 
 #: ckanext/canada/templates/package/snippets/stages.html:33
-msgid "Add Resource or Related Item"
+msgid "Add Resource"
 msgstr ""
 
 #: ckanext/canada/templates/package/snippets/stages.html:36
@@ -3441,6 +3448,10 @@ msgstr ""
 msgid ""
 "A unique phrase or string which identifies the metadata record within the "
 "Open Government Portal"
+msgstr ""
+
+#: ckanext/canada/templates/scheming/package/snippets/package_form.html:70
+msgid "Next: Add Resource"
 msgstr ""
 
 #: ckanext/canada/templates/scheming/package/snippets/resource_form.html:29
@@ -3982,43 +3993,43 @@ msgstr ""
 msgid "I do not agree"
 msgstr ""
 
-#: ckanext/canada/templates/user/read_base.html:14
+#: ckanext/canada/templates/user/read_base.html:17
 msgid "API Tokens"
 msgstr ""
 
-#: ckanext/canada/templates/user/read_base.html:17
+#: ckanext/canada/templates/user/read_base.html:20
 msgid "MFA"
 msgstr ""
 
-#: ckanext/canada/templates/user/read_base.html:24
+#: ckanext/canada/templates/user/read_base.html:27
 msgid "Details"
 msgstr ""
 
-#: ckanext/canada/templates/user/read_base.html:36
+#: ckanext/canada/templates/user/read_base.html:39
 msgid "Followers:"
 msgstr ""
 
-#: ckanext/canada/templates/user/read_base.html:40
+#: ckanext/canada/templates/user/read_base.html:43
 msgid "Datasets:"
 msgstr ""
 
-#: ckanext/canada/templates/user/read_base.html:48
+#: ckanext/canada/templates/user/read_base.html:51
 msgid "Open ID:"
 msgstr ""
 
-#: ckanext/canada/templates/user/read_base.html:51
+#: ckanext/canada/templates/user/read_base.html:54
 msgid "Username:"
 msgstr ""
 
-#: ckanext/canada/templates/user/read_base.html:59
+#: ckanext/canada/templates/user/read_base.html:62
 msgid "This means only you can see this"
 msgstr ""
 
-#: ckanext/canada/templates/user/read_base.html:59
+#: ckanext/canada/templates/user/read_base.html:62
 msgid "Private"
 msgstr ""
 
-#: ckanext/canada/templates/user/read_base.html:64
+#: ckanext/canada/templates/user/read_base.html:67
 msgid "Member Since"
 msgstr ""
 
