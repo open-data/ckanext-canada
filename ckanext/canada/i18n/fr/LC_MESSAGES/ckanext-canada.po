@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-03-18 15:38+0000\n"
+"POT-Creation-Date: 2025-05-07 15:22+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: fr\n"
@@ -294,6 +294,7 @@ msgstr ""
 
 #: ckanext/canada/strings.py:12
 #: ckanext/canada/templates/package/base_form_page.html:5
+#: ckanext/canada/templates/package/new.html:9
 msgid "Create Dataset"
 msgstr "Créer un jeu de données"
 
@@ -320,7 +321,7 @@ msgstr "Nom d’utilisateur"
 #: ckanext/canada/strings.py:17
 #: ckanext/canada/templates/user/edit_user_form.html:10
 #: ckanext/canada/templates/user/new_user_form.html:14
-#: ckanext/canada/templates/user/read_base.html:58
+#: ckanext/canada/templates/user/read_base.html:61
 #: ckanext/canada/templates/user/recover_username.html:17
 #: ckanext/canada/view.py:1279
 msgid "Email"
@@ -2704,6 +2705,7 @@ msgstr ""
 "\">open-ouvert@tbs-sct.gc.ca</a>."
 
 #: ckanext/canada/templates/home/quick_links.html:71
+#: ckanext/canada/templates/package/new.html:7
 #: ckanext/canada/templates/snippets/cdts/header.html:36
 msgid "Create an Open Data Record"
 msgstr "Créer un enregistrement de données ouvert"
@@ -2892,8 +2894,8 @@ msgstr "Gérer"
 #: ckanext/canada/templates/organization/read_base.html:7
 #: ckanext/canada/templates/snippets/cdts/header.html:154
 #: ckanext/canada/templates/user/read.html:28
-#: ckanext/canada/templates/user/read_base.html:12
-#: ckanext/canada/templates/user/read_base.html:71
+#: ckanext/canada/templates/user/read_base.html:15
+#: ckanext/canada/templates/user/read_base.html:74
 msgid "Organizations"
 msgstr "Organisations"
 
@@ -2907,6 +2909,7 @@ msgstr "Modifier l’organisation"
 
 #: ckanext/canada/templates/organization/edit_base.html:28
 #: ckanext/canada/templates/organization/read_base.html:21
+#: ckanext/canada/templates/user/read_base.html:13
 msgid "Activity"
 msgstr "Activité"
 
@@ -3116,6 +3119,10 @@ msgstr "Retourner à la page de recherche"
 msgid "Disabled"
 msgstr "Désactivé"
 
+#: ckanext/canada/templates/package/new.html:5
+msgid "Create an Open Information Asset"
+msgstr "Créer un enregistrement d'informations ouvertes"
+
 #: ckanext/canada/templates/package/new_resource.html:18
 #: ckanext/canada/templates/package/new_resource_not_draft.html:10
 #: ckanext/canada/templates/package/read.html:35
@@ -3124,7 +3131,7 @@ msgstr "Limite de ressources atteinte"
 
 #: ckanext/canada/templates/package/read.html:17
 #: ckanext/canada/templates/package/read.html:109
-#: ckanext/canada/templates/package/snippets/resource_item.html:12
+#: ckanext/canada/templates/package/snippets/resource_item.html:15
 #: ckanext/canada/templates/scheming/display_snippets/fluent_tags.html:8
 #: ckanext/canada/templates/snippets/package_item.html:39
 #: ckanext/canada/templates/snippets/package_item.html:55
@@ -3379,12 +3386,29 @@ msgstr "Toutes les ressources"
 msgid "View resource"
 msgstr "Afficher la ressource"
 
-#: ckanext/canada/templates/package/resource_read.html:62
+#: ckanext/canada/templates/package/resource_read.html:51
+#: ckanext/canada/templates/package/snippets/resource_item.html:118
+msgid "Resource data has failed validation."
+msgstr "Les données de ressource ont échoué à la validation."
+
+#: ckanext/canada/templates/package/resource_read.html:51
+#: ckanext/canada/templates/package/resource_read.html:59
+#: ckanext/canada/templates/package/snippets/resource_item.html:118
+#: ckanext/canada/templates/package/snippets/resource_item.html:121
+msgid "View Report"
+msgstr "Voir le rapport"
+
+#: ckanext/canada/templates/package/resource_read.html:59
+#: ckanext/canada/templates/package/snippets/resource_item.html:121
+msgid "Resource data has failed to load to the DataStore."
+msgstr "Les données de ressource n'ont pas pu être chargées dans le DataStore."
+
+#: ckanext/canada/templates/package/resource_read.html:78
 msgid "List of downloadable formats"
 msgstr "Liste des formats téléchargeables"
 
-#: ckanext/canada/templates/package/resource_read.html:64
-#: ckanext/canada/templates/package/snippets/resource_item.html:81
+#: ckanext/canada/templates/package/resource_read.html:80
+#: ckanext/canada/templates/package/snippets/resource_item.html:88
 msgid "Download"
 msgstr "Télécharger"
 
@@ -3469,51 +3493,51 @@ msgid "Additional Information "
 msgstr "Informations complémentaires "
 
 #: ckanext/canada/templates/package/snippets/resource_info.html:40
-#: ckanext/canada/templates/package/snippets/resource_item.html:34
+#: ckanext/canada/templates/package/snippets/resource_item.html:37
 #: ckanext/canada/templates/package/snippets/resources.html:64
 #, python-format
 msgid "+ %s more"
 msgstr "+ %s plus"
 
-#: ckanext/canada/templates/package/snippets/resource_item.html:64
+#: ckanext/canada/templates/package/snippets/resource_item.html:71
 msgid "Explore"
 msgstr "Explorer"
 
-#: ckanext/canada/templates/package/snippets/resource_item.html:71
+#: ckanext/canada/templates/package/snippets/resource_item.html:78
 #: ckanext/canada/templates/snippets/pd_datatable.html:13
 msgid "Preview"
 msgstr "Aperçu"
 
-#: ckanext/canada/templates/package/snippets/resource_item.html:73
+#: ckanext/canada/templates/package/snippets/resource_item.html:80
 msgid "More information"
 msgstr "Plus d'information"
 
-#: ckanext/canada/templates/package/snippets/resource_item.html:83
+#: ckanext/canada/templates/package/snippets/resource_item.html:90
 msgid "Go to resource"
 msgstr "Aller à la ressource"
 
-#: ckanext/canada/templates/package/snippets/resource_item.html:92
+#: ckanext/canada/templates/package/snippets/resource_item.html:99
 #: ckanext/canada/templates/package/snippets/resources_list.html:9
 #: ckanext/canada/templates/snippets/search_form.html:34
 msgid "View on Map"
 msgstr "Afficher la carte"
 
-#: ckanext/canada/templates/package/snippets/resource_item.html:97
+#: ckanext/canada/templates/package/snippets/resource_item.html:104
 #: ckanext/canada/templates/package/snippets/resources.html:31
 msgid "Edit resource"
 msgstr "Editer la ressource"
 
-#: ckanext/canada/templates/package/snippets/resource_item.html:99
+#: ckanext/canada/templates/package/snippets/resource_item.html:106
 #: ckanext/canada/templates/package/snippets/resources.html:40
 msgid "Views"
 msgstr "Vues"
 
-#: ckanext/canada/templates/package/snippets/resource_item.html:101
+#: ckanext/canada/templates/package/snippets/resource_item.html:108
 #: ckanext/canada/templates/package/snippets/resources.html:42
 msgid "Are you sure you want to delete this resource?"
 msgstr "Etes-vous sûr de vouloir supprimer cette ressource?"
 
-#: ckanext/canada/templates/package/snippets/resource_item.html:102
+#: ckanext/canada/templates/package/snippets/resource_item.html:109
 #: ckanext/canada/templates/package/snippets/resources.html:43
 msgid "Delete resource"
 msgstr "Supprimer la ressource"
@@ -3587,12 +3611,12 @@ msgid "Add Asset Metadata"
 msgstr "Ajouter les métadonnées du produit"
 
 #: ckanext/canada/templates/package/snippets/stages.html:23
-msgid "Add Dataset Metadata"
-msgstr "Ajouter les métadonnées du jeu de données"
+msgid "Add Record Metadata"
+msgstr "Ajouter des métadonnées de jeu de données"
 
 #: ckanext/canada/templates/package/snippets/stages.html:33
-msgid "Add Resource or Related Item"
-msgstr "Ajouter une ressource ou un objet connexe"
+msgid "Add Resource"
+msgstr "Ajouter une ressource"
 
 #: ckanext/canada/templates/package/snippets/stages.html:36
 msgid "Add Resource Metadata"
@@ -3926,6 +3950,10 @@ msgid ""
 msgstr ""
 "Expression ou chaîne unique désignant le dossier de métadonnées dans le "
 "Portail du gouvernement ouvert"
+
+#: ckanext/canada/templates/scheming/package/snippets/package_form.html:70
+msgid "Next: Add Resource"
+msgstr "Suivant : ajouter une ressource"
 
 #: ckanext/canada/templates/scheming/package/snippets/resource_form.html:29
 msgid "Metadata Fields for Resources"
@@ -4622,43 +4650,43 @@ msgstr "J’accepte"
 msgid "I do not agree"
 msgstr "Je n’accepte pas"
 
-#: ckanext/canada/templates/user/read_base.html:14
+#: ckanext/canada/templates/user/read_base.html:17
 msgid "API Tokens"
 msgstr "Jetons API"
 
-#: ckanext/canada/templates/user/read_base.html:17
+#: ckanext/canada/templates/user/read_base.html:20
 msgid "MFA"
 msgstr "AMF"
 
-#: ckanext/canada/templates/user/read_base.html:24
+#: ckanext/canada/templates/user/read_base.html:27
 msgid "Details"
 msgstr "Détails"
 
-#: ckanext/canada/templates/user/read_base.html:36
+#: ckanext/canada/templates/user/read_base.html:39
 msgid "Followers:"
 msgstr "Suiveurs :"
 
-#: ckanext/canada/templates/user/read_base.html:40
+#: ckanext/canada/templates/user/read_base.html:43
 msgid "Datasets:"
 msgstr "Dossiers :"
 
-#: ckanext/canada/templates/user/read_base.html:48
+#: ckanext/canada/templates/user/read_base.html:51
 msgid "Open ID:"
 msgstr "Ouvrir ID :"
 
-#: ckanext/canada/templates/user/read_base.html:51
+#: ckanext/canada/templates/user/read_base.html:54
 msgid "Username:"
 msgstr "Nom d’utilisateur :"
 
-#: ckanext/canada/templates/user/read_base.html:59
+#: ckanext/canada/templates/user/read_base.html:62
 msgid "This means only you can see this"
 msgstr "Cela signifie que vous êtes le seul à pouvoir le voir"
 
-#: ckanext/canada/templates/user/read_base.html:59
+#: ckanext/canada/templates/user/read_base.html:62
 msgid "Private"
 msgstr "Privé"
 
-#: ckanext/canada/templates/user/read_base.html:64
+#: ckanext/canada/templates/user/read_base.html:67
 msgid "Member Since"
 msgstr "Membre depuis"
 
@@ -8624,4 +8652,10 @@ msgstr "Télécharger vers le DataStore"
 
 #~ msgid "Close"
 #~ msgstr "Fermer"
+
+#~ msgid "Add Dataset Metadata"
+#~ msgstr "Ajouter les métadonnées du jeu de données"
+
+#~ msgid "Add Resource or Related Item"
+#~ msgstr "Ajouter une ressource ou un objet connexe"
 
