@@ -35,7 +35,9 @@ window.addEventListener('load', function(){
     let trier = setInterval(function(){
       reportWrapper = $('.frictionless-components-report');
       if( tries >= maxTries || reportWrapper.length > 0 ){
-        expand_reports(reportWrapper);
+        if( reportWrapper.length > 0 ){
+          expand_reports(reportWrapper);
+        }
         clearInterval(trier);
         trier = false;
         return;
