@@ -57,7 +57,7 @@
       {% if res.validation_status in ('success', 'unkown') %}
         {{- h.get_validation_badge(res, in_listing=True)|safe -}}
       {% endif %}
-      {% if xloader_info and xloader_info.status in ('complete', 'unknown') %}
+      {% if xloader_info and xloader_info.status not in ('error', 'inactive') %}
         {{- h.get_loader_status_badge(res) -}}
       {% endif %}
     </div>
