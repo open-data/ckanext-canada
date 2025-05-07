@@ -762,8 +762,19 @@ ul.resource-list > li.resource-item .canada-resource-list-validation-info{
   font-size: 16px;
   font-weight: 500;
 }
-ul.resource-list > li.resource-item .canada-resource-list-validation-info p{
+ul.resource-list > li.resource-item:hover .canada-resource-list-validation-info{
+  background-color: #dc4a2e;
+}
+ul.resource-list > li.resource-item .canada-resource-list-validation-info > p{
   margin: 0;
+  display: flex;
+  flex-wrap: nowrap;
+  flex-direction: row;
+  width: 100%;
+  align-items: center;
+}
+ul.resource-list > li.resource-item .canada-resource-list-validation-info a.btn{
+  margin-left: auto;
 }
 /* END - Dataset Index - END */
 
