@@ -778,7 +778,7 @@ body #dtprv_wrapper[data-edit-view="true"] #dtprv-body-main td .select2-containe
   background-color: white !important;
   margin: 0 !important;
   background-image: none !important;
-  box-shadow: none !important;
+  box-shadow: none;
 }
 
 body #dtprv_wrapper[data-edit-view="true"] #dtprv-body-main .pd-datatable-editor-input.editor-input-readonly{
@@ -813,6 +813,15 @@ body #dtprv_wrapper[data-edit-view="true"] #dtprv-body-main td textarea{
 
 body #dtprv_wrapper[data-edit-view="true"] .pd-datatables-non-editable-col:not(.expanders):not(.checkboxes){
   display: none !important;
+}
+
+body #dtprv_wrapper[data-edit-view="true"] #pd-datatables-editor-legend{
+  font-size: 14px;
+  margin-top: 10px;
+}
+
+body #dtprv_wrapper[data-edit-view="true"] #pd-datatables-editor-legend span{
+  padding: 4px 8px;
 }
 
 body #dtprv_wrapper #dtprv-body-main .pd-datatable-badge{

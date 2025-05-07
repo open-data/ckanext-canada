@@ -210,6 +210,8 @@ resources:
       en: Full list of flight passengers. (Comma seperated)
       fr: Liste complète des passagers du vol. (séparées par des virgules)
     obligation: Mandatory
+    excel_required: true
+    form_required: true
     format_type: Free Text (separated by commas)
     validation: This field must not be empty
     visible_to_public: Yes
@@ -236,6 +238,7 @@ resources:
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
       style: "width: 100%; display: block"
+    js_required_eval: '{{additional_information_fr}}.trim().length > 0'
 
   # 3.12
   - datastore_id: additional_information_fr
@@ -254,6 +257,7 @@ resources:
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
       style: "width: 100%; display: block"
+    js_required_eval: '{{additional_information_en}}.trim().length > 0'
 
   # audit trail
   - datastore_id: record_created

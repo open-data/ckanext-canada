@@ -111,21 +111,57 @@
           label: '{{- h.scheming_language_text(field.label) -}}',
           form_attrs: {{ field.form_attrs|tojson if 'form_attrs' in field else None|tojson}},
           select_choices: {{ choice_fields[field.datastore_id]|tojson if field.datastore_id in choice_fields else None|tojson}},
-          is_required: {{- (field.form_required or field.excel_required or false)|tojson -}},
-          is_invalid: function(VALUE){
-            let CHOICES = [];
-            if( this.select_choices ){
-              for( let _i = 0; _i < this.select_choices.length; _i++ ){
-                CHOICES.push(this.select_choices[_i][0]);
+          is_required: function(VALUE, ROW_INDEX){
+            {%- if field.js_required_eval -%}
+              {%- set ns = namespace(js_required_eval=field.js_required_eval) -%}
+              {%- if '{{' in ns.js_required_eval -%}
+                {%- for field in chromo.fields -%}
+                  {%- if '{{' ~ field.datastore_id ~ '}}' in ns.js_required_eval -%}
+                    let _{{- field.datastore_id }} = $('#dtprv_wrapper').find('#dtprv-body-main').find('tr').eq(ROW_INDEX).find('.pd-datatable-editor-input[data-datastore-id="{{- field.datastore_id -}}"]').val();
+                    {%- set ns.js_required_eval = ns.js_required_eval.replace('{{' ~ field.datastore_id ~ '}}', '_' ~ field.datastore_id) -%}
+                  {%- endif -%}
+                {%- endfor -%}
+              {%- endif -%}
+              return ({{- ns.js_required_eval|safe -}});
+            {%- else -%}
+              return ({{- (field.form_required or field.excel_required or false)|tojson -}});
+            {%- endif -%}
+          },
+          is_invalid: function(VALUE, ROW_INDEX){
+            {%- set default_error_eval = 'typeof VALUE == "undefined" || VALUE.trim().length == 0' -%}
+            {%- if field.datastore_type in ('int', 'bigint', 'numeric', 'float', 'double', 'year', 'month') -%}
+              {%- set default_error_eval = default_error_eval ~ ' || isNaN(parseInt(VALUE)) || ! Number.isInteger(parseInt(VALUE))' -%}
+            {%- endif -%}
+            {%- if field.datastore_type == 'year' -%}
+              {%- set default_error_eval = default_error_eval ~ ' || VALUE.length != 4' -%}
+            {%- elif field.datastore_type == 'month' -%}
+              {%- set default_error_eval = default_error_eval ~ ' || parseInt(VALUE) < 1 || parseInt(VALUE) > 12' -%}
+            {%- endif -%}
+            {%- if field.datastore_id in choice_fields -%}
+              {%- set default_error_eval = default_error_eval ~ ' || ! CHOICES.includes(VALUE)' -%}
+              let CHOICES = [];
+              if( this.select_choices ){
+                for( let _i = 0; _i < this.select_choices.length; _i++ ){
+                  CHOICES.push(this.select_choices[_i][0]);
+                }
               }
-            }
-            {% if field.js_error_eval %}
-              return (typeof VALUE == "undefined" || VALUE.trim().length == 0) || ({{- field.js_error_eval|safe -}});
-            {% elif field.form_required or field.excel_required %}
-              return (typeof VALUE == "undefined" || VALUE.trim().length == 0);
-            {% else %}
+            {%- endif -%}
+            {%- if field.js_error_eval -%}
+              {%- set ns = namespace(js_error_eval=field.js_error_eval) -%}
+              {%- if '{{' in ns.js_error_eval -%}
+                {%- for field in chromo.fields -%}
+                  {%- if '{{' ~ field.datastore_id ~ '}}' in ns.js_error_eval -%}
+                    let _{{- field.datastore_id }} = $('#dtprv_wrapper').find('#dtprv-body-main').find('tr').eq(ROW_INDEX).find('.pd-datatable-editor-input[data-datastore-id="{{- field.datastore_id -}}"]').val();
+                    {%- set ns.js_error_eval = ns.js_error_eval.replace('{{' ~ field.datastore_id ~ '}}', '_' ~ field.datastore_id) -%}
+                  {%- endif -%}
+                {%- endfor -%}
+              {%- endif -%}
+              return ({{- default_error_eval|safe -}}) || ({{- ns.js_error_eval|safe -}});
+            {%- elif field.form_required or field.excel_required -%}
+              return ({{- default_error_eval|safe -}});
+            {%- else -%}
               return false;
-            {% endif %}
+            {%- endif -%}
           }
         },
       {% endfor %}

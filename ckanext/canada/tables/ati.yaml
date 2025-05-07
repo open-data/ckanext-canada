@@ -41,7 +41,6 @@ resources:
     excel_required: true
     excel_column_width: 13
     excel_error_formula: 'OR({default_formula},{cell}>YEAR(TODAY()),{cell}<2011)'
-    js_error_eval: VALUE.length != 4 || isNaN(parseInt(VALUE)) || ! Number.isInteger(parseInt(VALUE))
 
   - datastore_id: month
     label:
@@ -60,7 +59,6 @@ resources:
     excel_required: true
     excel_column_width: 18
     excel_error_formula: 'OR({default_formula},{cell}<1,{cell}>12)'
-    js_error_eval: parseInt(VALUE) < 1 || parseInt(VALUE) > 12 || isNaN(parseInt(VALUE)) || ! Number.isInteger(parseInt(VALUE))
     solr_month_names: true
 
   - datastore_id: request_number
@@ -106,7 +104,6 @@ resources:
     excel_required: true
     excel_column_width: 41
     markdown: true
-    # TODO: how do we reference another field value?? e.g. summary_en and summary_fr both have to be filled (for js_error_eval)
 
   - datastore_id: disposition
     label:
@@ -118,7 +115,6 @@ resources:
     datastore_type: text
     form_required: true
     excel_required: true
-    js_error_eval: '! CHOICES.includes(VALUE)'
     excel_column_width: 39
     excel_full_text_choices: true
     choices:
@@ -155,7 +151,7 @@ resources:
       size: 10
     excel_column_width: 34
     excel_error_formula: 'OR({default_formula},{cell}<0)'
-    js_error_eval: parseInt(VALUE) < 0 || isNaN(parseInt(VALUE)) || ! Number.isInteger(parseInt(VALUE))
+    js_error_eval: parseInt(VALUE) < 0
 
   - datastore_id: comments_en
     label:
@@ -170,6 +166,7 @@ resources:
       style: "width: 100%; display: block"
     excel_column_width: 41
     excel_required_formula: NOT(ISBLANK({comments_fr}))
+    js_required_eval: '{{comments_fr}}.trim().length > 0'
 
   - datastore_id: comments_fr
     label:
@@ -184,6 +181,7 @@ resources:
       style: "width: 100%; display: block"
     excel_column_width: 41
     excel_required_formula: NOT(ISBLANK({comments_en}))
+    js_required_eval: '{{comments_en}}.trim().length > 0'
 
   - datastore_id: record_created
     label: Record Creation Time
@@ -315,7 +313,6 @@ resources:
     excel_required: true
     excel_column_width: 13
     excel_error_formula: 'OR({default_formula},{cell}>YEAR(TODAY()),{cell}<2011)'
-    js_error_eval: VALUE.length != 4 || isNaN(parseInt(VALUE)) || ! Number.isInteger(parseInt(VALUE))
 
   - datastore_id: month
     label:
@@ -334,7 +331,6 @@ resources:
     excel_required: true
     excel_column_width: 18
     excel_error_formula: 'OR({default_formula},{cell}<1,{cell}>12)'
-    js_error_eval: parseInt(VALUE) < 1 || parseInt(VALUE) > 12 || isNaN(parseInt(VALUE)) || ! Number.isInteger(parseInt(VALUE))
     solr_month_names: true
 
   - datastore_id: record_created

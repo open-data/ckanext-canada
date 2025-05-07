@@ -99,6 +99,10 @@ function load_pd_datatable(CKAN_MODULE){
   const exceptionErrorMessage = _('Could not save the records due to the following error: ');
   const genericErrorMessage = _('Your records did not save. Try saving again. If the issue persist please contact support.');
   const countSuffix = _(' record(s)');
+  const editorLegendLabel = _('Legend:');
+  const editorLegendValidLabel = _('Valid');
+  const editorLegendErrorLabel = _('Error');
+  const editorLegendRequiredLabel = _('Required');
   const ajaxErrorMessage = _('Error: Could not query records. Please try again.');
   const excelTemplateErrorMessage = _('Error: Could not generate Excel template. Please try again.');
   const editButtonLabel = _('Edit<span class="pd-datatbales-btn-count"></span> in Excel');
@@ -160,6 +164,9 @@ function load_pd_datatable(CKAN_MODULE){
   let isCompactView = typeof tableState != 'undefined' && typeof tableState.compact_view != 'undefined' ? tableState.compact_view : true;
   let isFullScreen = is_page_fullscreen();
   let isEditMode = typeof tableState != 'undefined' && typeof tableState.edit_view != 'undefined' ? tableState.edit_view : false;
+  if( isEditMode ){
+    $('.pd-datable-instructions').css({'display': 'none'});
+  }
   let editingRows = typeof tableState != 'undefined' && typeof tableState.editing_rows != 'undefined' ? tableState.editing_rows : [];
   let isExportingExcel = false;
   let exportingExcelLabel = '<i aria-hidden="true" class="fas fa-spinner"></i>&nbsp;' + exportingButtonLabel.replace('{COUNT}', '');
@@ -345,32 +352,34 @@ function load_pd_datatable(CKAN_MODULE){
       _value = '';
     }
     let readOnly = '';
+    let readOnlyClass = '';
     let tabIndex = 0;
     if( editingRows.length > 0 && primaryKeys.includes(_colIndex) ){
       readOnly = 'readonly';
+      readOnlyClass = 'editor-input-readonly';
       tabIndex = -1;
     }
     // TODO: min and max widths...
     let srLabel = '<label class="sr-only" for="' + fieldID + '">' + rowLabel + ' ' + (_rowIndex + 1) + ' - ' + editorObject.label + '</label>';
-    let fieldInput = '<input class="pd-datatable-editor-input editor-input-' + readOnly + '" value="' + _value + '" name=' + fieldID + '" id="' + fieldID + '" data-row-index="' + _rowIndex + '" data-datastore-id="' + _chromo_field.datastore_id + '" ' + readOnly + ' tabindex="' + tabIndex + '" />';
+    let fieldInput = '<input class="pd-datatable-editor-input ' + readOnlyClass + '" value="' + _value + '" name=' + fieldID + '" id="' + fieldID + '" data-row-index="' + _rowIndex + '" data-datastore-id="' + _chromo_field.datastore_id + '" ' + readOnly + ' tabindex="' + tabIndex + '" />';
     if( ds_type == 'year' ){
-      fieldInput = '<input class="pd-datatable-editor-input editor-input-' + readOnly + '" value="' + _value + '" name=' + fieldID + '" id="' + fieldID + '" data-row-index="' + _rowIndex + '" data-datastore-id="' + _chromo_field.datastore_id + '" data-number-type="int" type="number" min="1899" max="' + currentYear + '" step="1" ' + readOnly + ' tabindex="' + tabIndex + '" />';
+      fieldInput = '<input class="pd-datatable-editor-input ' + readOnlyClass + '" value="' + _value + '" name=' + fieldID + '" id="' + fieldID + '" data-row-index="' + _rowIndex + '" data-datastore-id="' + _chromo_field.datastore_id + '" data-number-type="int" type="number" min="1899" max="' + currentYear + '" step="1" ' + readOnly + ' tabindex="' + tabIndex + '" />';
     }else if( ds_type == 'month' ){
-      fieldInput = '<input class="pd-datatable-editor-input editor-input-' + readOnly + '" value="' + _value + '" name=' + fieldID + '" id="' + fieldID + '" data-row-index="' + _rowIndex + '" data-datastore-id="' + _chromo_field.datastore_id + '" data-number-type="int" type="number" min="1" max="12" step="1" ' + readOnly + ' tabindex="' + tabIndex + '" />';
+      fieldInput = '<input class="pd-datatable-editor-input ' + readOnlyClass + '" value="' + _value + '" name=' + fieldID + '" id="' + fieldID + '" data-row-index="' + _rowIndex + '" data-datastore-id="' + _chromo_field.datastore_id + '" data-number-type="int" type="number" min="1" max="12" step="1" ' + readOnly + ' tabindex="' + tabIndex + '" />';
     }else if( ds_type == 'date' ){
-      fieldInput = '<input class="pd-datatable-editor-input editor-input-' + readOnly + '" value="' + _value + '" name=' + fieldID + '" id="' + fieldID + '" data-row-index="' + _rowIndex + '" data-datastore-id="' + _chromo_field.datastore_id + '" type="date" min="1899-01-01" max="' + currentDate + '" ' + readOnly + ' tabindex="' + tabIndex + '" />';
+      fieldInput = '<input class="pd-datatable-editor-input ' + readOnlyClass + '" value="' + _value + '" name=' + fieldID + '" id="' + fieldID + '" data-row-index="' + _rowIndex + '" data-datastore-id="' + _chromo_field.datastore_id + '" type="date" min="1899-01-01" max="' + currentDate + '" ' + readOnly + ' tabindex="' + tabIndex + '" />';
     }else if( ds_type == 'timestamp' ){
-      fieldInput = '<input class="pd-datatable-editor-input editor-input-' + readOnly + '" value="' + _value + '" name=' + fieldID + '" id="' + fieldID + '" data-row-index="' + _rowIndex + '" data-datastore-id="' + _chromo_field.datastore_id + '" type="datetime-local" min="1899-01-01T00:00" max="' + currentDate + 'T23:59" ' + readOnly + ' tabindex="' + tabIndex + '" />';
+      fieldInput = '<input class="pd-datatable-editor-input ' + readOnlyClass + '" value="' + _value + '" name=' + fieldID + '" id="' + fieldID + '" data-row-index="' + _rowIndex + '" data-datastore-id="' + _chromo_field.datastore_id + '" type="datetime-local" min="1899-01-01T00:00" max="' + currentDate + 'T23:59" ' + readOnly + ' tabindex="' + tabIndex + '" />';
     }else if( ds_type == 'int' || ds_type == 'bigint' ){
-      fieldInput = '<input class="pd-datatable-editor-input editor-input-' + readOnly + '" value="' + _value + '" name=' + fieldID + '" id="' + fieldID + '" data-row-index="' + _rowIndex + '" data-datastore-id="' + _chromo_field.datastore_id + '" data-number-type="int" type="number" ' + readOnly + ' tabindex="' + tabIndex + '" />';
+      fieldInput = '<input class="pd-datatable-editor-input ' + readOnlyClass + '" value="' + _value + '" name=' + fieldID + '" id="' + fieldID + '" data-row-index="' + _rowIndex + '" data-datastore-id="' + _chromo_field.datastore_id + '" data-number-type="int" type="number" ' + readOnly + ' tabindex="' + tabIndex + '" />';
     }else if( ds_type == 'numeric' || ds_type == 'float' || ds_type == 'double' ){
-      fieldInput = '<input class="pd-datatable-editor-input editor-input-' + readOnly + '" value="' + _value + '" name=' + fieldID + '" id="' + fieldID + '" data-row-index="' + _rowIndex + '" data-datastore-id="' + _chromo_field.datastore_id + '" data-number-type="float" type="number" ' + readOnly + ' tabindex="' + tabIndex + '" />';
+      fieldInput = '<input class="pd-datatable-editor-input ' + readOnlyClass + '" value="' + _value + '" name=' + fieldID + '" id="' + fieldID + '" data-row-index="' + _rowIndex + '" data-datastore-id="' + _chromo_field.datastore_id + '" data-number-type="float" type="number" ' + readOnly + ' tabindex="' + tabIndex + '" />';
     }else if( ds_type == 'money' ){
-      fieldInput = '<input class="pd-datatable-editor-input editor-input-' + readOnly + '" value="' + _value + '" name=' + fieldID + '" id="' + fieldID + '" data-row-index="' + _rowIndex + '" data-datastore-id="' + _chromo_field.datastore_id + '" data-number-type="money" type="number" ' + readOnly + ' tabindex="' + tabIndex + '" />';
+      fieldInput = '<input class="pd-datatable-editor-input ' + readOnlyClass + '" value="' + _value + '" name=' + fieldID + '" id="' + fieldID + '" data-row-index="' + _rowIndex + '" data-datastore-id="' + _chromo_field.datastore_id + '" data-number-type="money" type="number" ' + readOnly + ' tabindex="' + tabIndex + '" />';
     }
     if( typeof editorObject.select_choices != 'undefined' && editorObject.select_choices ){
       let isMultiple = ds_type == '_text' ? 'multiple' : '';
-      fieldInput = '<select class="pd-datatable-editor-input editor-input-' + readOnly + '" name=' + fieldID + '" id="' + fieldID + '" ' + isMultiple + ' data-row-index="' + _rowIndex + '" data-datastore-id="' + _chromo_field.datastore_id + '" ' + readOnly + ' tabindex="' + tabIndex + '"><option></option>';
+      fieldInput = '<select class="pd-datatable-editor-input ' + readOnlyClass + '" name=' + fieldID + '" id="' + fieldID + '" ' + isMultiple + ' data-row-index="' + _rowIndex + '" data-datastore-id="' + _chromo_field.datastore_id + '" ' + readOnly + ' tabindex="' + tabIndex + '"><option></option>';
       for( let _i = 0; _i < editorObject.select_choices.length; _i++ ){
         let selected = _value == editorObject.select_choices[_i][0] ? 'selected' : '';
         fieldInput += '<option value="' + editorObject.select_choices[_i][0] + '" ' + selected + '>' + editorObject.select_choices[_i][0] + ': ' + editorObject.select_choices[_i][1] + '</option>';
@@ -378,7 +387,7 @@ function load_pd_datatable(CKAN_MODULE){
       fieldInput += '</select>';
     }
     if( (typeof _chromo_field.form_snippet != 'undefined' && _chromo_field.form_snippet.includes('textarea')) || (typeof _chromo_field.markdown != 'undefined' && _chromo_field.markdown) ){
-      fieldInput = '<textarea class="pd-datatable-editor-input editor-input-' + readOnly + '" name=' + fieldID + '" id="' + fieldID + '" rows="1" data-row-index="' + _rowIndex + '" data-datastore-id="' + _chromo_field.datastore_id + '" ' + readOnly + ' tabindex="' + tabIndex + '">' + _value + '</textarea>';
+      fieldInput = '<textarea class="pd-datatable-editor-input ' + readOnlyClass + '" name=' + fieldID + '" id="' + fieldID + '" rows="1" data-row-index="' + _rowIndex + '" data-datastore-id="' + _chromo_field.datastore_id + '" ' + readOnly + ' tabindex="' + tabIndex + '">' + _value + '</textarea>';
     }
     // TODO: mask datetimes and money inputs...
     return srLabel + fieldInput;
@@ -1046,6 +1055,7 @@ function load_pd_datatable(CKAN_MODULE){
           table.rows().deselect();
           isCompactView = true;
           isEditMode = false;
+          $('.pd-datable-instructions').css({'display': 'block'});
           tableState = void 0;
           dt.state.clear();
           dt.clear().destroy();
@@ -1086,6 +1096,7 @@ function load_pd_datatable(CKAN_MODULE){
         table.rows().deselect();
         isCompactView = true;
         isEditMode = false;
+        $('.pd-datable-instructions').css({'display': 'block'});
         tableState = void 0;
         dt.state.clear();
         dt.clear().destroy();
@@ -1113,6 +1124,7 @@ function load_pd_datatable(CKAN_MODULE){
           table.rows().deselect();
           isCompactView = false;
           isEditMode = true;
+          $('.pd-datable-instructions').css({'display': 'none'});
           table.state.save();
           table.clear().destroy();
           initialize_datatable();
@@ -1253,7 +1265,7 @@ function load_pd_datatable(CKAN_MODULE){
         let record = {};
         let row = $(innerTable).find('tr').eq(_rowIndex);
         for( let _i = 0; _i < _filledCells.length; _i++ ){
-          record[_filledCells[_i]] = $(row).find('.pd-datatable-editor-input[data-datastore-id="' + _filledCells[_i] + '"]').val().trim();
+          record[_filledCells[_i]] = $(row).find('.pd-datatable-editor-input[data-datastore-id="' + _filledCells[_i] + '"]').val();
         }
         payload['records'].push(record);
       }
@@ -1419,9 +1431,14 @@ function load_pd_datatable(CKAN_MODULE){
     $('th[class*="dt-orderable"]').removeClass('dt-orderable').removeClass('dt-orderable-asc').removeClass('dt-ordering-asc').removeClass('dt-orderable-desc').removeClass('dt-ordering-desc');
     set_button_states();
     let tableWrapper = $('#dtprv_wrapper');
+    let legendEntryPoint = $(tableWrapper).find('.dt-scroll');
     let innerTable = $(tableWrapper).find('#dtprv-body-main');
     let indexBlocks = $(innerTable).find('td.expanders');
     let fields = $(innerTable).find('.pd-datatable-editor-input');
+    if( legendEntryPoint.length > 0 ){
+      $(tableWrapper).find('#pd-datatables-editor-legend').remove();
+      $(legendEntryPoint).after('<div id="pd-datatables-editor-legend"><strong>' + editorLegendLabel + '</strong>&nbsp;<span style="box-shadow: 0 0 2px 2px #' + tableStyles.success.bgColor + ' inset"><em>' + editorLegendValidLabel + '</em></span>&nbsp;&nbsp;<span style="box-shadow: 0 0 2px 2px #' + tableStyles.required.bgColor + ' inset"><em>' + editorLegendRequiredLabel + '</em></span>&nbsp;&nbsp;<span style="box-shadow: 0 0 2px 2px #' + tableStyles.errored.bgColor + ' inset"><em>' + editorLegendErrorLabel + '</em></span></div>')
+    }
     if( indexBlocks.length > 0 ){
       $(indexBlocks).each(function(_index, _indexBlock){
         $(_indexBlock).off('click.GoToError');
@@ -1446,7 +1463,17 @@ function load_pd_datatable(CKAN_MODULE){
     }
     $(fields).each(function(_index, _field){
       if( $(_field).is('select') && $(_field).attr('multiple') ){
-        $(_field).select2();
+        $(_field).select2({
+          'datastore-id': $(_field).attr('data-datastore-id'),
+          'row-index': $(_field).attr('data-row-index'),
+        });
+      }
+    });
+    fields = $(innerTable).find('.pd-datatable-editor-input');
+    $(fields).each(function(_index, _field){
+      // FIXME: styling and binding for select2 changes and boxes...
+      if( $(_field).hasClass('select2-container') ){
+        return;
       }
       $(_field).off('change.EDITOR');
       $(_field).on('change.EDITOR', function(_event){
@@ -1465,7 +1492,7 @@ function load_pd_datatable(CKAN_MODULE){
         if( typeof filledRows[rowIndex] == 'undefined' ){
           filledRows[rowIndex] = [];
         }
-        if( editorObject.is_invalid($(_field).val()) ){
+        if( editorObject.is_invalid($(_field).val(), rowIndex) ){
           $(_field).css({'box-shadow': '0 0 2px 2px #' + tableStyles.errored.bgColor + ' inset'});
           if( ! erroredRows[rowIndex].includes(datastoreID) ){
             erroredRows[rowIndex].push(datastoreID);
@@ -1477,10 +1504,13 @@ function load_pd_datatable(CKAN_MODULE){
           });
         }
         $(rowFields).each(function(_i, _f){
+          if( $(_f).hasClass('select2-container') ){
+            return;
+          }
           let _dsID = $(_f).attr('data-datastore-id');
           let _editorObj = EDITOR[_dsID];
           let _v = $(_f).val();
-          if( _editorObj.is_required && (typeof _v == 'undefined' || _v.trim().length == 0) ){
+          if( _editorObj.is_required(_v, rowIndex) && (typeof _v == 'undefined' || _v.length == 0) ){
             if( ! erroredRows[rowIndex].includes(_dsID) ){
               $(_f).css({'box-shadow': '0 0 2px 2px #' + tableStyles.required.bgColor + ' inset'});
             }
@@ -1492,7 +1522,7 @@ function load_pd_datatable(CKAN_MODULE){
               return _arrItem != _dsID;
             });
           }
-          if( typeof _v != 'undefined' && _v.trim().length > 0 ){
+          if( typeof _v != 'undefined' && _v.length > 0 ){
             if( ! filledRows[rowIndex].includes(_dsID) ){
               filledRows[rowIndex].push(_dsID);
             }
@@ -1532,6 +1562,9 @@ function load_pd_datatable(CKAN_MODULE){
         }
         set_button_states();
       });
+      if( editingRows.length > 0 && $(_field).val().length > 0 ){
+        $(_field).trigger('change');
+      }
     });
   }
 
@@ -1594,21 +1627,27 @@ function load_pd_datatable(CKAN_MODULE){
         table.columns.adjust();
       }
       bind_table_selects();
+      $('.pd-datable-instructions').css({'display': 'block'});
     }
     bind_keyboard_controls();
     if( isEditMode ){
       table.columns.adjust();
+      $('.pd-datable-instructions').css({'display': 'none'});
     }
   }
 
   function initialize_datatable(){
-    let keyTarget = isCompactView ? ':not(.dtr-hidden)' : ':not(.dtr-hidden):not(.expanders)';
+    let keySettings = {
+      columns: isCompactView ? ':not(.dtr-hidden)' : ':not(.dtr-hidden):not(.expanders)'
+    };
     let selectSettings = {
       style: 'multi',
       selector: 'td:not(:first-child)'
     }
     if( isEditMode ){
-      keyTarget = ':not(.dtr-hidden):not(.expanders):not(.checkboxes):not(.pd-datatables-non-editable-col)';
+      // keyTarget = {columns: ':not(.dtr-hidden):not(.expanders):not(.checkboxes):not(.pd-datatables-non-editable-col)'};
+      // FIXME: disabled keyTable in edit more for now...
+      keySettings = false;
       selectSettings = false;
     }
     table = $('#dtprv').DataTable({
@@ -1623,9 +1662,7 @@ function load_pd_datatable(CKAN_MODULE){
       scrollResize: true,
       scrollCollapse: false,
       deferRender: true,
-      keys: {
-        columns: keyTarget
-      },
+      keys: keySettings,
       pageLength: isEditMode ? -1 : defaultRows,
       select: selectSettings,
       search: {
