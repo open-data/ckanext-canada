@@ -41,11 +41,8 @@
 {% endblock %}
 
 {% block resource_content %}
-  {% if g.is_registry %}
-    {% set is_xloader_resource = h.is_resource_supported_by_xloader(res) %}
-    {% if is_xloader_resource %}
-      {% set xloader_info = h.xloader_status(res.id) %}
-    {% endif %}
+  {% if g.is_registry and h.is_resource_supported_by_xloader(res) %}
+    {% set xloader_info = h.xloader_status(res.id) %}
     {% if res.validation_status in ('failure', 'error', 'deprecated_report') %}
       <div class="canada-flash-messages"><div class="flash-messages"><div class="alert alert-dismissible fade show alert-danger">
         <p><strong>{{ _('Resource data has failed validation.') }}</strong></p><a href="{{ h.url_for('validation.read', id=pkg.name, resource_id=res.id) }}" class="btn btn-sm btn-danger">{{ _('View Report') }}</a>
@@ -58,7 +55,7 @@
       <div class="canada-flash-messages"><div class="flash-messages"><div class="alert alert-dismissible fade show alert-danger">
         <p><strong>{{ _('Resource data has failed to load to the DataStore.') }}</strong></p><a href="{{ h.url_for('xloader.resource_data', id=pkg.name, resource_id=res.id) }}" class="btn btn-sm btn-danger">{{ _('View Report') }}</a>
       </div></div></div>
-    {% elif is_xloader_resource %}
+    {% else %}
       {{- h.get_loader_status_badge(res) -}}
     {% endif %}
   {% endif %}
