@@ -47,3 +47,8 @@ recombinant_webforms:
   contents:
     - recombinant_webform.js
   output: canada_internal/%(version)s_recombinant_webform.js
+
+frictionless:
+  contents:
+    - registry_frictionless.js
+  output: canada_internal/%(version)s_registry_frictionless.js
