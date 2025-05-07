@@ -41,7 +41,7 @@
 {% endblock %}
 
 {% block resource_content %}
-  {% if g.is_registry and h.is_resource_supported_by_xloader(res) %}
+  {% if g.is_registry and 'is_resource_supported_by_xloader' in h and h.is_resource_supported_by_xloader(res) %}
     {% set xloader_info = h.xloader_status(res.id) %}
     {% if res.validation_status in ('failure', 'error', 'deprecated_report') %}
       <div class="canada-flash-messages"><div class="flash-messages"><div class="alert alert-dismissible fade show alert-danger">
