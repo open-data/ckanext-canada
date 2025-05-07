@@ -53,14 +53,14 @@ resources:
       en: This field will display the group to which the individual belongs.
       fr: Ce champ indique le groupe auquel appartient l’individu.
     obligation:
-      en: Required if "Start Date" is on or after April 1st 2025
-      fr: Requis si la "date de début" est le 1er avril 2025 ou après
+      en: Required if "End Date" is on or after April 1st 2025
+      fr: Requis si la "date de fin" est le 1er avril 2025 ou après
     excel_required: false
     form_required: false
-    excel_required_formula: '{start_date}>=DATE(2025,4,1)'
+    excel_required_formula: '{end_date}>=DATE(2025,4,1)'
     validation:
-      en: Required if "Start Date" is on or after April 1st 2025
-      fr: Requis si la "date de début" est le 1er avril 2025 ou après
+      en: Required if "End Date" is on or after April 1st 2025
+      fr: Requis si la "date de fin" est le 1er avril 2025 ou après
     format_type: Controlled List
     choices:
       MPSES:
@@ -588,10 +588,6 @@ resources:
           errors := errors || required_error(NEW.location_en, 'location_en');
           errors := errors || required_error(NEW.location_fr, 'location_fr');
 
-          IF NEW.start_date >= '2025-04-01'::date THEN
-            errors := errors || required_error(NEW.disclosure_group, 'disclosure_group');
-          END IF;
-
           errors := errors || required_error(NEW.vendor_en, 'vendor_en');
           errors := errors || required_error(NEW.vendor_fr, 'vendor_fr');
           errors := errors || both_languages_error(NEW.vendor_2_en, 'vendor_2_en', NEW.vendor_2_fr, 'vendor_2_fr');
@@ -617,15 +613,19 @@ resources:
           errors := errors || ARRAY[['start_date', {start_end_date_error}]];
         END IF;
 
-        IF NEW.start_date >= '2025-04-01'::date AND NEW.employee_attendees IS NOT NULL AND NEW.employee_attendees::int < 0 THEN
+        IF NEW.end_date >= '2025-04-01'::date THEN
+          errors := errors || required_error(NEW.disclosure_group, 'disclosure_group');
+        END IF;
+
+        IF NEW.end_date >= '2025-04-01'::date AND NEW.employee_attendees IS NOT NULL AND NEW.employee_attendees::int < 0 THEN
           errors := errors || ARRAY[['employee_attendees', {negative_number_error}]];
         END IF;
 
-        IF NEW.start_date >= '2025-04-01'::date AND NEW.guest_attendees IS NOT NULL AND NEW.guest_attendees::int < 0 THEN
+        IF NEW.end_date >= '2025-04-01'::date AND NEW.guest_attendees IS NOT NULL AND NEW.guest_attendees::int < 0 THEN
           errors := errors || ARRAY[['guest_attendees', {negative_number_error}]];
         END IF;
 
-        IF NEW.start_date >= '2025-04-01'::date AND NEW.employee_attendees IS NOT NULL AND NEW.employee_attendees::int <= 0 THEN
+        IF NEW.end_date >= '2025-04-01'::date AND NEW.employee_attendees IS NOT NULL AND NEW.employee_attendees::int <= 0 THEN
           errors := errors || ARRAY[['employee_attendees', {zero_number_error}]];
         END IF;
 

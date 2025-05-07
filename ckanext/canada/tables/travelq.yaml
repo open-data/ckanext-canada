@@ -61,14 +61,14 @@ resources:
       en: This field will display the group to which the individual belongs.
       fr: Ce champ indique le groupe auquel appartient l’individu.
     obligation:
-      en: Required if "Travel Start Date" is on or after April 1st 2025
-      fr: Requis si la "date de début du voyage" est le 1er avril 2025 ou après
+      en: Required if "Travel End Date" is on or after April 1st 2025
+      fr: Requis si la "date de fin du voyage" est le 1er avril 2025 ou après
     excel_required: false
     form_required: false
-    excel_required_formula: '{start_date}>=DATE(2025,4,1)'
+    excel_required_formula: '{end_date}>=DATE(2025,4,1)'
     validation:
-      en: Required if "Travel Start Date" is on or after April 1st 2025
-      fr: Requis si la "date de début du voyage" est le 1er avril 2025 ou après
+      en: Required if "Travel End Date" is on or after April 1st 2025
+      fr: Requis si la "date de fin du voyage" est le 1er avril 2025 ou après
     format_type: Controlled List
     choices:
       MPSES:
@@ -645,7 +645,7 @@ resources:
           errors := errors || required_error(NEW.destination_en, 'destination_en');
           errors := errors || required_error(NEW.destination_fr, 'destination_fr');
 
-          IF NEW.start_date >= '2025-04-01'::date THEN
+          IF NEW.end_date >= '2025-04-01'::date THEN
             errors := errors || required_error(NEW.disclosure_group, 'disclosure_group');
 
             crval := destination_clean_error(NEW.destination_en, 'destination_en');
