@@ -753,7 +753,7 @@ body #dtprv_wrapper[data-edit-view="true"] #dtprv-body-main td .select2-containe
 }
 
 body #dtprv_wrapper[data-edit-view="true"] #dtprv-body-main td .select2-container{
-  padding: 0 !important;
+  padding: 1px !important;
   position: relative;
 }
 
@@ -770,12 +770,16 @@ body #dtprv_wrapper[data-edit-view="true"] #dtprv-body-main td .select2-containe
   pointer-events: none !important;
 }
 
+body #dtprv_wrapper[data-edit-view="true"] #dtprv-body-main td .select2-container input.select2-input{
+  background-color: transparent !important;
+}
+
 body #dtprv_wrapper[data-edit-view="true"] #dtprv-body-main td .select2-container > ul{
   border-radius: 0 !important;
   padding: 0 !important;
   padding-right: 15px !important;
   border: none !important;
-  background-color: white !important;
+  background-color: transparent !important;
   margin: 0 !important;
   background-image: none !important;
   box-shadow: none;

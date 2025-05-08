@@ -128,7 +128,10 @@
             {%- endif -%}
           },
           is_invalid: function(VALUE, ROW_INDEX){
-            {%- set default_error_eval = 'typeof VALUE == "undefined" || VALUE.trim().length == 0' -%}
+            {%- set default_error_eval = 'false' -%}
+            {% if field.form_required or field.excel_required %}
+              {%- set default_error_eval = 'typeof VALUE == "undefined" || VALUE.length == 0' -%}
+            {%- endif -%}
             {%- if field.datastore_type in ('int', 'bigint', 'numeric', 'float', 'double', 'year', 'month') -%}
               {%- set default_error_eval = default_error_eval ~ ' || isNaN(parseInt(VALUE)) || ! Number.isInteger(parseInt(VALUE))' -%}
             {%- endif -%}
@@ -138,7 +141,11 @@
               {%- set default_error_eval = default_error_eval ~ ' || parseInt(VALUE) < 1 || parseInt(VALUE) > 12' -%}
             {%- endif -%}
             {%- if field.datastore_id in choice_fields -%}
-              {%- set default_error_eval = default_error_eval ~ ' || ! CHOICES.includes(VALUE)' -%}
+              {%- if field.datastore_type == '_text' -%}
+                {%- set default_error_eval = default_error_eval ~ ' || ! VALUE.every(function(_v){return CHOICES.includes(_v)})' -%}
+              {%- else -%}
+                {%- set default_error_eval = default_error_eval ~ ' || ! CHOICES.includes(VALUE)' -%}
+              {%- endif -%}
               let CHOICES = [];
               if( this.select_choices ){
                 for( let _i = 0; _i < this.select_choices.length; _i++ ){
@@ -157,11 +164,8 @@
                 {%- endfor -%}
               {%- endif -%}
               return ({{- default_error_eval|safe -}}) || ({{- ns.js_error_eval|safe -}});
-            {%- elif field.form_required or field.excel_required -%}
-              return ({{- default_error_eval|safe -}});
-            {%- else -%}
-              return false;
             {%- endif -%}
+            return ({{- default_error_eval|safe -}});
           }
         },
       {% endfor %}

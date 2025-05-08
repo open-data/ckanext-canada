@@ -425,6 +425,7 @@ resources:
       fr: Cette zone comprend des renseignements supplémentaires sur la consultation qu’il n’était pas possible d’inscrire dans d’autres zones (en anglais).
     obligation: Optional
     format_type: Free Text (separate paragraphs with two blank lines)
+    js_required_eval: '{{remarks_fr}}.trim().length > 0'
     validation: None
     visible_to_public: No
     occurrence: Repeatable
@@ -443,6 +444,7 @@ resources:
       fr: Cette zone comprend des renseignements supplémentaires sur la consultation qu’il n’était pas possible d’inscrire dans d’autres zones (en français).
     obligation: Optional
     format_type: Free Text (separate paragraphs with two blank lines)
+    js_required_eval: '{{remarks_en}}.trim().length > 0'
     validation: None
     visible_to_public: No
     occurrence: Repeatable

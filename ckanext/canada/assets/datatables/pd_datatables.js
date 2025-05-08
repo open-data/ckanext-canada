@@ -910,7 +910,7 @@ function load_pd_datatable(CKAN_MODULE){
   }
 
   function bind_keyboard_controls(){
-    // TODO: allow deep paste into EditMode for CSV/Excel to webform cells!!!
+    // TODO: allow deep paste into EditMode for CSV/Excel to webform cells???
     let _start = isCompactView ? 0 : 1;
     _start = isEditMode ? 2 : _start;
     $(document).off('keyup.KeyTable');
@@ -925,7 +925,7 @@ function load_pd_datatable(CKAN_MODULE){
     table.off('key-focus.KeyTable');
     table.off('focus.KeyTable');
     if( isEditMode ){
-      // FIXME: focus into inputs and allow for keying inside inputs!!!
+      // FIXME: focus into inputs and allow for keying inside inputs???
       table.on('key-focus.KeyTable', function(e, dt, cell, oe){
         $('input', cell.node()).focus();
       });
@@ -1427,6 +1427,114 @@ function load_pd_datatable(CKAN_MODULE){
     initialize_datatable();
   }
 
+  function set_editor_field_state(_field){
+    let tableWrapper = $('#dtprv_wrapper');
+    let innerTable = $(tableWrapper).find('#dtprv-body-main');
+    let datastoreID = $(_field).attr('data-datastore-id');
+    let editorObject = EDITOR[datastoreID];
+    let rowIndex = $(_field).attr('data-row-index');
+    let row = $(innerTable).find('tr').eq(rowIndex);
+    let rowFields = $(row).find('.pd-datatable-editor-input');
+    let select2Container = $(_field).prev('.select2-container');
+    let fieldValue = $(_field).val();
+    $(_field).parent().find('.validation-error').remove();
+    if( typeof erroredRows[rowIndex] == 'undefined' ){
+      erroredRows[rowIndex] = [];
+    }
+    if( typeof requiredRows[rowIndex] == 'undefined' ){
+      requiredRows[rowIndex] = [];
+    }
+    if( typeof filledRows[rowIndex] == 'undefined' ){
+      filledRows[rowIndex] = [];
+    }
+    if( fieldValue.length > 0 && editorObject.is_invalid(fieldValue, rowIndex) ){
+      $(_field).css({'box-shadow': '0 0 2px 2px #' + tableStyles.errored.bgColor + ' inset'});
+      if( select2Container.length > 0 ){
+        $(select2Container).css({'box-shadow': '0 0 2px 2px #' + tableStyles.errored.bgColor + ' inset'});
+      }
+      if( ! erroredRows[rowIndex].includes(datastoreID) ){
+        erroredRows[rowIndex].push(datastoreID);
+      }
+    }else{
+      if( fieldValue.length == 0 ){
+        $(_field).css({'box-shadow': 'none'});
+        if( select2Container.length > 0 ){
+          $(select2Container).css({'box-shadow': 'none'});
+        }
+      }else{
+        $(_field).css({'box-shadow': '0 0 2px 2px #' + tableStyles.success.bgColor + ' inset'});
+        if( select2Container.length > 0 ){
+          $(select2Container).css({'box-shadow': '0 0 2px 2px #' + tableStyles.success.bgColor + ' inset'});
+        }
+      }
+      erroredRows[rowIndex] = erroredRows[rowIndex].filter(function(_arrItem){
+        return _arrItem != datastoreID;
+      });
+    }
+    $(rowFields).each(function(_i, _f){
+      if( $(_f).hasClass('select2-container') ){
+        return;
+      }
+      let _dsID = $(_f).attr('data-datastore-id');
+      let _editorObj = EDITOR[_dsID];
+      let _select2Container = $(_f).prev('.select2-container');
+      let _v = $(_f).val();
+      if( _editorObj.is_required(_v, rowIndex) && (typeof _v == 'undefined' || _v.length == 0) ){
+        if( ! erroredRows[rowIndex].includes(_dsID) ){
+          $(_f).css({'box-shadow': '0 0 2px 2px #' + tableStyles.required.bgColor + ' inset'});
+          if( _select2Container.length > 0 ){
+            $(_select2Container).css({'box-shadow': '0 0 2px 2px #' + tableStyles.required.bgColor + ' inset'});
+          }
+        }
+        if( ! requiredRows[rowIndex].includes(_dsID) ){
+          requiredRows[rowIndex].push(_dsID);
+        }
+      }else{
+        requiredRows[rowIndex] = requiredRows[rowIndex].filter(function(_arrItem){
+          return _arrItem != _dsID;
+        });
+      }
+      if( typeof _v != 'undefined' && _v.length > 0 ){
+        if( ! filledRows[rowIndex].includes(_dsID) ){
+          filledRows[rowIndex].push(_dsID);
+        }
+      }else{
+        filledRows[rowIndex] = filledRows[rowIndex].filter(function(_arrItem){
+          return _arrItem != _dsID;
+        });
+      }
+    });
+    if( filledRows[rowIndex].length == 0 ){
+      erroredRows[rowIndex] = [];
+      requiredRows[rowIndex] = [];
+      $(rowFields).each(function(_i, _f){
+        $(_f).css({'box-shadow': 'none'});
+      });
+    }
+    if( erroredRows[rowIndex].length > 0 ){
+      $(row).find('td.expanders').css({'background-color': '#' + tableStyles.errored.bgColor, 'color': '#' + tableStyles.errored.fgColor, 'cursor': 'pointer'})
+                                 .attr('title', errorInRowLabel)
+                                 .attr('role', 'button')
+                                 .attr('tabindex', 0);
+    }else if( requiredRows[rowIndex].length > 0 ){
+      $(row).find('td.expanders').css({'background-color': '#' + tableStyles.required.bgColor, 'color': '#' + tableStyles.required.fgColor, 'cursor': 'pointer'})
+                                 .attr('title', requiredInRowLabel)
+                                 .attr('role', 'button')
+                                 .attr('tabindex', 0);
+    }else if( filledRows[rowIndex].length == 0 ){
+      $(row).find('td.expanders').css({'background-color': '#555555', 'color': 'white', 'cursor': 'default'})
+                                 .attr('title', null)
+                                 .attr('role', null)
+                                 .attr('tabindex', null);
+    }else{
+      $(row).find('td.expanders').css({'background-color': '#' + tableStyles.success.bgColor, 'color': '#' + tableStyles.success.fgColor, 'cursor': 'default'})
+                                 .attr('title', validRowLabel)
+                                 .attr('role', null)
+                                 .attr('tabindex', null);
+    }
+    set_button_states();
+  }
+
   function bind_table_editor(){
     $('th[class*="dt-orderable"]').removeClass('dt-orderable').removeClass('dt-orderable-asc').removeClass('dt-ordering-asc').removeClass('dt-orderable-desc').removeClass('dt-ordering-desc');
     set_button_states();
@@ -1469,98 +1577,13 @@ function load_pd_datatable(CKAN_MODULE){
         });
       }
     });
-    fields = $(innerTable).find('.pd-datatable-editor-input');
     $(fields).each(function(_index, _field){
-      // FIXME: styling and binding for select2 changes and boxes...
       if( $(_field).hasClass('select2-container') ){
         return;
       }
       $(_field).off('change.EDITOR');
       $(_field).on('change.EDITOR', function(_event){
-        let datastoreID = $(_field).attr('data-datastore-id');
-        let editorObject = EDITOR[datastoreID];
-        let rowIndex = $(_field).attr('data-row-index');
-        let row = $(innerTable).find('tr').eq(rowIndex);
-        let rowFields = $(row).find('.pd-datatable-editor-input');
-        $(_field).parent().find('.validation-error').remove();
-        if( typeof erroredRows[rowIndex] == 'undefined' ){
-          erroredRows[rowIndex] = [];
-        }
-        if( typeof requiredRows[rowIndex] == 'undefined' ){
-          requiredRows[rowIndex] = [];
-        }
-        if( typeof filledRows[rowIndex] == 'undefined' ){
-          filledRows[rowIndex] = [];
-        }
-        if( editorObject.is_invalid($(_field).val(), rowIndex) ){
-          $(_field).css({'box-shadow': '0 0 2px 2px #' + tableStyles.errored.bgColor + ' inset'});
-          if( ! erroredRows[rowIndex].includes(datastoreID) ){
-            erroredRows[rowIndex].push(datastoreID);
-          }
-        }else{
-          $(_field).css({'box-shadow': '0 0 2px 2px #' + tableStyles.success.bgColor + ' inset'});
-          erroredRows[rowIndex] = erroredRows[rowIndex].filter(function(_arrItem){
-            return _arrItem != datastoreID;
-          });
-        }
-        $(rowFields).each(function(_i, _f){
-          if( $(_f).hasClass('select2-container') ){
-            return;
-          }
-          let _dsID = $(_f).attr('data-datastore-id');
-          let _editorObj = EDITOR[_dsID];
-          let _v = $(_f).val();
-          if( _editorObj.is_required(_v, rowIndex) && (typeof _v == 'undefined' || _v.length == 0) ){
-            if( ! erroredRows[rowIndex].includes(_dsID) ){
-              $(_f).css({'box-shadow': '0 0 2px 2px #' + tableStyles.required.bgColor + ' inset'});
-            }
-            if( ! requiredRows[rowIndex].includes(_dsID) ){
-              requiredRows[rowIndex].push(_dsID);
-            }
-          }else{
-            requiredRows[rowIndex] = requiredRows[rowIndex].filter(function(_arrItem){
-              return _arrItem != _dsID;
-            });
-          }
-          if( typeof _v != 'undefined' && _v.length > 0 ){
-            if( ! filledRows[rowIndex].includes(_dsID) ){
-              filledRows[rowIndex].push(_dsID);
-            }
-          }else{
-            filledRows[rowIndex] = filledRows[rowIndex].filter(function(_arrItem){
-              return _arrItem != _dsID;
-            });
-          }
-        });
-        if( filledRows[rowIndex].length == 0 ){
-          erroredRows[rowIndex] = [];
-          requiredRows[rowIndex] = [];
-          $(rowFields).each(function(_i, _f){
-            $(_f).css({'box-shadow': 'none'});
-          });
-        }
-        if( erroredRows[rowIndex].length > 0 ){
-          $(row).find('td.expanders').css({'background-color': '#' + tableStyles.errored.bgColor, 'color': '#' + tableStyles.errored.fgColor, 'cursor': 'pointer'})
-                                     .attr('title', errorInRowLabel)
-                                     .attr('role', 'button')
-                                     .attr('tabindex', 0);
-        }else if( requiredRows[rowIndex].length > 0 ){
-          $(row).find('td.expanders').css({'background-color': '#' + tableStyles.required.bgColor, 'color': '#' + tableStyles.required.fgColor, 'cursor': 'pointer'})
-                                     .attr('title', requiredInRowLabel)
-                                     .attr('role', 'button')
-                                     .attr('tabindex', 0);
-        }else if( filledRows[rowIndex].length == 0 ){
-          $(row).find('td.expanders').css({'background-color': '#555555', 'color': 'white', 'cursor': 'default'})
-                                     .attr('title', null)
-                                     .attr('role', null)
-                                     .attr('tabindex', null);
-        }else{
-          $(row).find('td.expanders').css({'background-color': '#' + tableStyles.success.bgColor, 'color': '#' + tableStyles.success.fgColor, 'cursor': 'default'})
-                                     .attr('title', validRowLabel)
-                                     .attr('role', null)
-                                     .attr('tabindex', null);
-        }
-        set_button_states();
+        set_editor_field_state(_field);
       });
       if( editingRows.length > 0 && $(_field).val().length > 0 ){
         $(_field).trigger('change');
