@@ -20,6 +20,7 @@ resources:
 
   create_form: true
   edit_form: true
+  datatables_default_fill: 15
 
   fields:
 
@@ -86,6 +87,7 @@ resources:
     form_required: true
     excel_required: true
     excel_column_width: 41
+    markdown: true
 
   - datastore_id: summary_fr
     label:
@@ -101,6 +103,7 @@ resources:
     form_required: true
     excel_required: true
     excel_column_width: 41
+    markdown: true
 
   - datastore_id: disposition
     label:
@@ -148,6 +151,7 @@ resources:
       size: 10
     excel_column_width: 34
     excel_error_formula: 'OR({default_formula},{cell}<0)'
+    js_error_eval: parseInt(VALUE) < 0
 
   - datastore_id: comments_en
     label:
@@ -162,6 +166,7 @@ resources:
       style: "width: 100%; display: block"
     excel_column_width: 41
     excel_required_formula: NOT(ISBLANK({comments_fr}))
+    js_required_eval: '{{comments_fr}}.length > 0'
 
   - datastore_id: comments_fr
     label:
@@ -176,6 +181,7 @@ resources:
       style: "width: 100%; display: block"
     excel_column_width: 41
     excel_required_formula: NOT(ISBLANK({comments_en}))
+    js_required_eval: '{{comments_en}}.length > 0'
 
   - datastore_id: record_created
     label: Record Creation Time
@@ -409,3 +415,9 @@ excel_column_heading_style:
   PatternFill:
     patternType: solid
     fgColor: FFbc83d8
+datatables_style:
+  header:
+    bgColor: bc83d8
+  select:
+    bgColor: d1aae4
+    fgColor: 333333

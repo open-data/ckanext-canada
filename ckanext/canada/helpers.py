@@ -448,13 +448,14 @@ def is_ready_to_publish(package: Dict[str, Any]) -> bool:
         return False
 
 
-def get_datapreview_recombinant(resource_name: str,
-                                resource_id: str,
-                                owner_org: str,
-                                dataset_type: str) -> str:
+def get_pd_datatable(resource_name: str,
+                     resource_id: str,
+                     owner_org: str,
+                     dataset_type: str) -> str:
     chromo = get_chromo(resource_name)
     priority = len(chromo['datastore_primary_key'])
     pk_priority = 0
+    activity_priority = 1
     fields = []
     fids = []
     for f in chromo['fields']:
@@ -466,6 +467,9 @@ def get_datapreview_recombinant(resource_name: str,
             'label': h.recombinant_language_text(f['label'])}
         if out['id'] in chromo['datastore_primary_key']:
             out['priority'] = pk_priority
+            pk_priority += 1
+        elif out['id'] in ('record_modified', 'user_modified'):
+            out['priority'] = activity_priority
             pk_priority += 1
         else:
             out['priority'] = priority
@@ -540,14 +544,6 @@ def json_loads(value: str) -> Dict[str, Any]:
         return json.loads(value)
     except Exception:
         return {}
-
-
-def get_datapreview(res_id: str) -> str:
-    dsq_results = get_action('datastore_search')(
-        cast(Context, {}), {'resource_id': res_id, 'limit': 100})
-    return h.snippet('snippets/pd_datatable.html',
-                     ds_fields=dsq_results['fields'],
-                     ds_records=dsq_results['records'])
 
 
 def iso_to_goctime(isodatestr: str) -> str:

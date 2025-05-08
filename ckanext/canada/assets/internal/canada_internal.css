@@ -788,40 +788,6 @@ body ul.xloader-log li.item.failure > i::after{
 .recombinant-action-panels-container .tabpanels > details{
   padding: 0 20px 20px 20px !important;
 }
-.canada-wet-datatable-btn-primary{
-  color: white !important;
-  background: #26374a !important;
-  border-color: #1d2a39 !important;
-  transition-duration: 0.325s !important;
-}
-.canada-wet-datatable-btn-primary.disabled{
-  color: white !important;
-  background: #adc0d5 !important;
-  border-color: #9cb3cd !important;
-}
-.canada-wet-datatable-btn-primary:not(.disabled):hover,
-.canada-wet-datatable-btn-primary:not(.disabled):active,
-.canada-wet-datatable-btn-primary:not(.disabled):focus{
-  background: #1c578a !important;
-  border-color: #091c2d !important;
-}
-.canada-wet-datatable-btn-danger{
-  color: white !important;
-  background: #bc3331 !important;
-  border-color: #6b1d1c !important;
-  transition-duration: 0.325s !important;
-}
-.canada-wet-datatable-btn-danger.disabled{
-  color: white !important;
-  background: #ebb3b2 !important;
-  border-color: #e6a1a0 !important;
-}
-.canada-wet-datatable-btn-danger:not(.disabled):hover,
-.canada-wet-datatable-btn-danger:not(.disabled):active,
-.canada-wet-datatable-btn-danger:not(.disabled):focus{
-  background: #942826 !important;
-  border-color: #3b100f !important;
-}
 /*###################################
 ##               END               ##
 ##  Recombinant Base CSS Overrides ##
