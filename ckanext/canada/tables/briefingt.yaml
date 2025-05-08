@@ -202,7 +202,7 @@ resources:
     occurrence: Single
     datastore_type: text
     excel_column_width: 35
-    js_required_eval: '{{additional_information_fr}}.trim().length > 0'
+    js_required_eval: '{{additional_information_fr}}.length > 0'
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
       style: "width: 100%; display: block"
@@ -222,7 +222,7 @@ resources:
     occurrence: Single
     datastore_type: text
     excel_column_width: 35
-    js_required_eval: '{{additional_information_en}}.trim().length > 0'
+    js_required_eval: '{{additional_information_en}}.length > 0'
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
       style: "width: 100%; display: block"

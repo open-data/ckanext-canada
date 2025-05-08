@@ -238,7 +238,7 @@ resources:
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
       style: "width: 100%; display: block"
-    js_required_eval: '{{additional_information_fr}}.trim().length > 0'
+    js_required_eval: '{{additional_information_fr}}.length > 0'
 
   # 3.12
   - datastore_id: additional_information_fr
@@ -257,7 +257,7 @@ resources:
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
       style: "width: 100%; display: block"
-    js_required_eval: '{{additional_information_en}}.trim().length > 0'
+    js_required_eval: '{{additional_information_en}}.length > 0'
 
   # audit trail
   - datastore_id: record_created

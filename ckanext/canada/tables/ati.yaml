@@ -166,7 +166,7 @@ resources:
       style: "width: 100%; display: block"
     excel_column_width: 41
     excel_required_formula: NOT(ISBLANK({comments_fr}))
-    js_required_eval: '{{comments_fr}}.trim().length > 0'
+    js_required_eval: '{{comments_fr}}.length > 0'
 
   - datastore_id: comments_fr
     label:
@@ -181,7 +181,7 @@ resources:
       style: "width: 100%; display: block"
     excel_column_width: 41
     excel_required_formula: NOT(ISBLANK({comments_en}))
-    js_required_eval: '{{comments_en}}.trim().length > 0'
+    js_required_eval: '{{comments_en}}.length > 0'
 
   - datastore_id: record_created
     label: Record Creation Time

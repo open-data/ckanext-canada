@@ -1447,7 +1447,7 @@ function load_pd_datatable(CKAN_MODULE){
     if( typeof filledRows[rowIndex] == 'undefined' ){
       filledRows[rowIndex] = [];
     }
-    if( fieldValue.length > 0 && editorObject.is_invalid(fieldValue, rowIndex) ){
+    if( typeof fieldValue != 'undefined' && fieldValue.length > 0 && editorObject.is_invalid(fieldValue, rowIndex) ){
       $(_field).css({'box-shadow': '0 0 2px 2px #' + tableStyles.errored.bgColor + ' inset'});
       if( select2Container.length > 0 ){
         $(select2Container).css({'box-shadow': '0 0 2px 2px #' + tableStyles.errored.bgColor + ' inset'});
@@ -1456,7 +1456,7 @@ function load_pd_datatable(CKAN_MODULE){
         erroredRows[rowIndex].push(datastoreID);
       }
     }else{
-      if( fieldValue.length == 0 ){
+      if( typeof fieldValue == 'undefined' || fieldValue.length == 0 ){
         $(_field).css({'box-shadow': 'none'});
         if( select2Container.length > 0 ){
           $(select2Container).css({'box-shadow': 'none'});
@@ -1490,6 +1490,12 @@ function load_pd_datatable(CKAN_MODULE){
           requiredRows[rowIndex].push(_dsID);
         }
       }else{
+        if( typeof _v == 'undefined' || _v.length == 0 ){
+          $(_f).css({'box-shadow': 'none'});
+          if( _select2Container.length > 0 ){
+            $(_select2Container).css({'box-shadow': 'none'});
+          }
+        }
         requiredRows[rowIndex] = requiredRows[rowIndex].filter(function(_arrItem){
           return _arrItem != _dsID;
         });
