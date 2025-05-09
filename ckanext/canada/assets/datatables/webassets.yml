@@ -3,7 +3,20 @@ css:
     - canada_datatables.css
   output: canada_datatables/%(version)s_canada_datatables.css
 
+pd_datatable_css:
+  contents:
+    - pd_datatable.css
+  output: canada_datatables/%(version)s_pd_datatable.css
+
 js:
   contents:
     - canada_datatables.js
   output: canada_datatables/%(version)s_canada_datatables.js
+
+pd_datatable_js:
+  contents:
+    - pd_datatables.js
+  extra:
+    preload:
+      - base/main  # need ckan JS and jQuery
+  output: canada_datatables/%(version)s_pd_datatables.js

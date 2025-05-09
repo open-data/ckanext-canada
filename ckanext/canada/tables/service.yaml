@@ -2435,4 +2435,9 @@ excel_column_heading_style:
   PatternFill:
     patternType: solid
     fgColor: FFEFBD09
-
+datatables_style:
+  header:
+    bgColor: EFBD09
+  select:
+    bgColor: fbe69a
+    fgColor: 333333

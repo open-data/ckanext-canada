@@ -79,6 +79,7 @@ resources:
     datastore_type: text
     form_attrs:
       size: 60
+    markdown: true
 
   - datastore_id: case_description_fr
     label:
@@ -94,6 +95,7 @@ resources:
     datastore_type: text
     form_attrs:
       size: 60
+    markdown: true
 
   - datastore_id: findings_conclusions
     label:
@@ -167,6 +169,7 @@ resources:
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
       style: "width: 100%; display: block"
+    markdown: true
 
   - datastore_id: recommendations_corrective_measures_fr
     label:
@@ -190,6 +193,7 @@ resources:
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
       style: "width: 100%; display: block"
+    markdown: true
 
   - datastore_id: record_created
     label: Record Creation Time
@@ -274,3 +278,9 @@ excel_column_heading_style:
   PatternFill:
     patternType: solid
     fgColor: FFC1D699
+datatables_style:
+  header:
+    bgColor: C1D699
+  select:
+    bgColor: e2ecd0
+    fgColor: 333333
