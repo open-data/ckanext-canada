@@ -39,8 +39,94 @@ class TestHospitalityQ(CanadaTestBase):
         assert 'key' in err
         assert 'ref_number' in err['key'][0]
 
+    def test_dates(self):
+        """
+        Start Date cannot be in the future, and dates must be chronological
+        """
+        record = get_chromo('hospitalityq')['examples']['record']
+
+        record['start_date'] = '2999999-01-29'
+        record['end_date'] = '2999999-01-30'
+
+        with pytest.raises(ValidationError) as ve:
+            self.lc.action.datastore_upsert(
+                resource_id=self.resource_id,
+                records=[record])
+            err = ve.value.error_dict['records'][0]
+
+            assert 'start_date' in err
+            assert 'end_date' in err
+
+        record['start_date'] = '2024-01-29'
+        record['end_date'] = '2024-01-15'
+
+        with pytest.raises(ValidationError) as ve:
+            self.lc.action.datastore_upsert(
+                resource_id=self.resource_id,
+                records=[record])
+            err = ve.value.error_dict['records'][0]
+
+            assert 'start_date' in err
+
+    def test_attendees(self):
+        """
+        Attendee fields cannot be zero or below if on or after April 1st 2025
+        """
+        record = get_chromo('hospitalityq')['examples']['record']
+
+        record['start_date'] = '2025-04-29'
+        record['end_date'] = '2025-04-30'
+        record['employee_attendees'] = -2
+        record['guest_attendees'] = -5
+        record['employee_attendees'] = 0
+
+        with pytest.raises(ValidationError) as ve:
+            self.lc.action.datastore_upsert(
+                resource_id=self.resource_id,
+                records=[record])
+            err = ve.value.error_dict['records'][0]
+
+            assert 'employee_attendees' in err
+            assert 'guest_attendees' in err
+            assert 'employee_attendees' in err
+
+        record['start_date'] = '2024-04-29'
+        record['end_date'] = '2024-04-30'
+
+        self.lc.action.datastore_upsert(
+                resource_id=self.resource_id,
+                records=[record])
+
+    def test_disclosure_group(self):
+        """
+        Disclosure Group is required if on or after April 1st 2025
+        """
+        record = get_chromo('hospitalityq')['examples']['record']
+
+        record['start_date'] = '2025-04-21'
+        record['end_date'] = '2025-04-24'
+        record['disclosure_group'] = None
+
+        with pytest.raises(ValidationError) as ve:
+            self.lc.action.datastore_upsert(
+                resource_id=self.resource_id,
+                records=[record])
+            err = ve.value.error_dict['records'][0]
+
+            assert 'disclosure_group' in err
+
+        record['start_date'] = '2024-04-21'
+        record['end_date'] = '2024-04-24'
+        record['disclosure_group'] = 'SLE'
+
+        self.lc.action.datastore_upsert(
+            resource_id=self.resource_id,
+            records=[record])
+
     def test_vendor_format(self):
         record = get_chromo('hospitalityq')['examples']['record']
+        record['start_date'] = '2024-04-21'
+        record['end_date'] = '2024-04-24'
 
         # tests some incorrect formats
         incorrect_formats = [
@@ -63,6 +149,7 @@ class TestHospitalityQ(CanadaTestBase):
             }
             for k in set(err) | set(expected):
                 assert k in err
+                assert k in expected
                 assert err[k] == expected[k]
 
         # test surrounding white space stripping
