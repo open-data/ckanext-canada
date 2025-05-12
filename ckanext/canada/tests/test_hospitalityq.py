@@ -149,6 +149,7 @@ class TestHospitalityQ(CanadaTestBase):
             }
             for k in set(err) | set(expected):
                 assert k in err
+                assert k in expected
                 assert err[k] == expected[k]
 
         # test surrounding white space stripping
