@@ -5,6 +5,8 @@
     {{- _('Create an Open Information Asset') -}}
   {% elif dataset_type == 'dataset' %}
     {{- _('Create an Open Data Record') -}}
+  {% elif dataset_type == 'prop' %}
+    {{- _('Create a Suggested Dataset') -}}
   {% else %}
     {{- h.humanize_entity_type('package', dataset_type, 'create title') or _('Create Dataset') -}}
   {% endif %}

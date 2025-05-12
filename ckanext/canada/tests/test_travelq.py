@@ -122,6 +122,7 @@ class TestTravelQ(CanadaTestBase):
             }
             for k in set(err) | set(expected):
                 assert k in err
+                assert k in expected
                 assert expected[k][0] in err[k][0]
 
         record['start_date'] = '2024-04-21'
@@ -184,6 +185,7 @@ class TestTravelQ(CanadaTestBase):
             }
             for k in set(err) | set(expected):
                 assert k in err
+                assert k in expected
                 assert expected[k][0] in err[k][0]
 
         # test multi-destination formats
@@ -228,6 +230,7 @@ class TestTravelQ(CanadaTestBase):
             }
             for k in set(err) | set(expected):
                 assert k in err
+                assert k in expected
                 assert len(err[k]) == error_count
                 for _i in range(0, error_count):
                     assert expected[k][0] in err[k][_i]
