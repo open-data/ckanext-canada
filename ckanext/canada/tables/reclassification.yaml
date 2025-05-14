@@ -112,8 +112,9 @@ resources:
     form_required: true
     format_type: Controlled List
     validation: This field must not be empty
-    excel_full_text_choices: True
-    form_choices_prefix_code: True
+    excel_full_text_choices: true
+    datatables_full_text_choices: true
+    form_choices_prefix_code: true
     choices_file: choices/classification_group.yaml
     excel_error_formula: 'FALSE'
 
@@ -127,7 +128,7 @@ resources:
     form_required: true
     format_type: Controlled List
     validation: This field must not be empty
-    excel_full_text_choices: False
+    excel_full_text_choices: false
     choices_file: choices/level_number.yaml
     excel_error_formula: 'FALSE'
 
@@ -141,8 +142,9 @@ resources:
     form_required: true
     format_type: Controlled List
     validation: This field must not be empty
-    excel_full_text_choices: True
-    form_choices_prefix_code: True
+    excel_full_text_choices: true
+    datatables_full_text_choices: true
+    form_choices_prefix_code: true
     choices_file: choices/classification_group.yaml
     excel_error_formula: 'FALSE'
 
@@ -156,7 +158,7 @@ resources:
     form_required: true
     format_type: Controlled List
     validation: This field must not be empty
-    excel_full_text_choices: False
+    excel_full_text_choices: false
     choices_file: choices/level_number.yaml
     excel_error_formula: 'FALSE'
 
@@ -323,6 +325,7 @@ resources:
     form_required: true
     validation: This field must not be empty
     excel_full_text_choices: true
+    datatables_full_text_choices: true
     choices:
       Q1:
         en: April 1 - June 30

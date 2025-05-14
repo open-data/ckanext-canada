@@ -62,6 +62,7 @@ resources:
     datastore_type: text
     excel_error_formula: 'OR({default_formula},AND(TRIM(LEFT({publishable},FIND(":",{publishable}&":")-1))="Y",TRIM(LEFT({status},FIND(":",{status}&":")-1))="NF"))'
     excel_full_text_choices: true
+    datatables_full_text_choices: true
     choices:
       Y:
         en: "Yes"
@@ -85,6 +86,7 @@ resources:
     occurrence: Repeatable
     datastore_type: _text
     excel_full_text_choices: true
+    datatables_full_text_choices: true
     choices_file: choices/consultation_org.yaml
 
   # 3.4
@@ -106,6 +108,7 @@ resources:
     datastore_type: _text
     excel_column_width: 30
     excel_full_text_choices: true
+    datatables_full_text_choices: true
     choices_file: choices/consultation_subject.yaml
 
   # 3.5
@@ -208,6 +211,7 @@ resources:
     occurrence: Repeatable
     datastore_type: _text
     excel_full_text_choices: true
+    datatables_full_text_choices: true
     choices_file: choices/consultation_audience.yaml
 
   # 3.10
@@ -264,6 +268,7 @@ resources:
     datastore_type: text
     excel_error_formula: 'OR({default_formula},AND(TRIM(LEFT({publishable},FIND(":",{publishable}&":")-1))="Y",TRIM(LEFT({status},FIND(":",{status}&":")-1))="NF"))'
     excel_full_text_choices: true
+    datatables_full_text_choices: true
     choices:
       P:
         en: Planned
@@ -337,6 +342,7 @@ resources:
     occurrence: Single
     datastore_type: text
     excel_full_text_choices: true
+    datatables_full_text_choices: true
     choices:
       Y:
         en: "Yes"
@@ -470,6 +476,7 @@ resources:
     occurrence: Single
     datastore_type: text
     excel_full_text_choices: true
+    datatables_full_text_choices: true
     choices:
       Y:
         en: "Yes"
@@ -495,6 +502,7 @@ resources:
     occurrence: Repeatable
     datastore_type: _text
     excel_full_text_choices: true
+    datatables_full_text_choices: true
     choices:
       BG:
         en: Budget

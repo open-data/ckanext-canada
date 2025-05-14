@@ -130,6 +130,7 @@ resources:
     datastore_type: text
     excel_column_width: 20
     excel_full_text_choices: true
+    datatables_full_text_choices: true
     choices:
       M:
         en: Minister
@@ -176,6 +177,7 @@ resources:
     datastore_type: text
     excel_column_width: 20
     excel_full_text_choices: true
+    datatables_full_text_choices: true
     choices:
       I:
         en: For Information

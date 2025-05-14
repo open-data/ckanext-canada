@@ -501,9 +501,13 @@ body #dtprv_wrapper .dt-scroll-body thead th .dt-column-order{
 }
 
 body #dtprv_wrapper[data-compact-view="false"] .dt-scroll-head,
-body #dtprv_wrapper[data-compact-view="false"] #dtprv,
 body #dtprv_wrapper[data-compact-view="false"] .dt-scroll-foot{
   overflow: hidden !important;
+}
+
+body #dtprv_wrapper[data-compact-view="false"] .dt-scroll-head,
+body #dtprv_wrapper[data-compact-view="false"] #dtprv,
+body #dtprv_wrapper[data-compact-view="false"] .dt-scroll-foot{
   margin-left: -36px !important;
   width: calc(100% + 36px) !important;
 }
@@ -592,6 +596,7 @@ body #dtprv .pd-datatable-readmore span.show{
 
 body #dtprv_wrapper[data-compact-view="false"] .pd-datatables-primary-key-fixed{
   /* FIXME: margin in KeyTableing when going backwards is a bit bad... */
+  /* FIXME: multiple primary keys... */
   position: sticky !important;
   left: 0;
   background-color: white !important;
@@ -606,6 +611,12 @@ body #dtprv_wrapper[data-compact-view="false"] #dtprv-foot-main .pd-datatables-p
 body #dtprv_wrapper[data-edit-view="true"] .pd-datatables-primary-key-fixed{
   position: relative !important;
   left: initial !important;
+}
+
+body #dtprv_wrapper .pd-datatable-choice-title{
+  text-decoration: underline dotted;
+  cursor: help;
+  display: inline;
 }
 
 body #dtprv_wrapper[data-compact-view="false"] .dt-scroll-head th:not(:first-of-type).pd-datatables-primary-key-fixed,
@@ -736,6 +747,41 @@ body #dtprv_wrapper[data-edit-view="true"] .pd-datable-error-summary .pd-datable
   margin-left: -15px;
   margin-right: -15px;
   width: calc(100% + 30px);
+}
+
+body #dtprv_wrapper[data-edit-view="true"] .pd-datable-error-field-link{
+  color: initial !important;
+  text-decoration: underline dotted !important;
+}
+
+body #dtprv_wrapper .pd-datatables-col-xs{
+  width: 100px !important;
+  min-width: 100px !important;
+  max-width: 100px !important;
+}
+
+body #dtprv_wrapper .pd-datatables-col-sm{
+  width: 135px !important;
+  min-width: 135px !important;
+  max-width: 135px !important;
+}
+
+body #dtprv_wrapper .pd-datatables-col-md{
+  width: 225px !important;
+  min-width: 225px !important;
+  max-width: 225px !important;
+}
+
+body #dtprv_wrapper .pd-datatables-col-lg{
+  width: 300px !important;
+  min-width: 300px !important;
+  max-width: 300px !important;
+}
+
+body #dtprv_wrapper .pd-datatables-col-xl{
+  width: 400px !important;
+  min-width: 400px !important;
+  max-width: 400px !important;
 }
 
 body #dtprv_wrapper[data-edit-view="true"] #dtprv-body-main td input,

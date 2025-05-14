@@ -111,6 +111,7 @@ resources:
     occurrence: Repeatable
     datastore_type: _text
     excel_full_text_choices: false
+    datatables_full_text_choices: true
     form_snippet: scheming/form_snippets/multiple_checkbox.html
     choices:
       a:

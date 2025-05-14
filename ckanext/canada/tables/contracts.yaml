@@ -568,6 +568,7 @@ resources:
     excel_error_formula: 'OR({default_formula},NOT(ISBLANK({trade_agreement})),VALUE({contract_date})>=DATE(2022,1,1))'
     datastore_type: text
     excel_full_text_choices: false
+    datatables_full_text_choices: true
     excel_column_width: 40
     choice_order_expression: 'value.get("discontinued", False), len(code), code'
     choices:
@@ -1099,6 +1100,7 @@ resources:
     excel_required_formula: 'VALUE({contract_date})>=DATE(2019,1,1)'
     datastore_type: text
     excel_full_text_choices: false
+    datatables_full_text_choices: true
     choices:
       G:
         en: Good
@@ -1194,6 +1196,7 @@ resources:
     datastore_type: text
     excel_error_formula: 'OR({default_formula},AND(VALUE({contract_date})>=DATE(2022,1,1),AND(OR({cell}="TC",{cell}="TN",{cell}="AC"),AND({trade_agreement}<>"XX",{trade_agreement}<>""),OR({limited_tendering_reason}="0",{limited_tendering_reason}="00"))))'
     excel_full_text_choices: false
+    datatables_full_text_choices: true
     choices:
       AC:
         en: Advance Contract Award Notice
@@ -1235,6 +1238,7 @@ resources:
     excel_error_formula: 'OR({default_formula},AND(VALUE({contract_date})>=DATE(2022,1,1),OR({cell}="24",{cell}="25",{cell}="85",{cell}="86",{cell}="87",{cell}="90")),AND(ISNUMBER(SEARCH("00",{cell})),{cell}<>"00"),AND(VALUE({contract_date})>=DATE(2022,1,1),AND(OR({solicitation_procedure}="TC",{solicitation_procedure}="TN",{solicitation_procedure}="AC"),AND({trade_agreement}<>"XX",{trade_agreement}<>""),{cell}="00")))'
     datastore_type: _text
     excel_full_text_choices: false
+    datatables_full_text_choices: true
     # accept single digit for backwards compat
     excel_error_cell_filter_formula: 'IF(LEN({cell})=1,"0"&{cell},{cell})'
     choice_order_expression: 'value.get("discontinued", False), code'
@@ -1332,6 +1336,7 @@ resources:
     excel_required_formula: 'VALUE({contract_date})>=DATE(2019,1,1)'
     excel_error_formula: 'OR({default_formula},AND(ISNUMBER(SEARCH("00",{cell})),{cell}<>"00"),AND(VALUE({contract_date})>=DATE(2022,1,1),{cell}="04"))'
     datastore_type: _text
+    datatables_full_text_choices: true
     excel_full_text_choices: false  # some of these are really long
     # accept single digit for backwards compat
     excel_error_cell_filter_formula: 'IF(LEN({cell})=1,"0"&{cell},{cell})'
@@ -1406,6 +1411,7 @@ resources:
     excel_required_formula: 'VALUE({contract_date})>=DATE(2022,1,1)'
     datastore_type: text
     excel_full_text_choices: false
+    datatables_full_text_choices: true
     choices:
       NA:
         en: None
@@ -1448,6 +1454,7 @@ resources:
     excel_error_formula: 'AND(OR({indigenous_business}="MS",{indigenous_business}="VS"),NOT(ISERROR(SEARCH("|"&TRIM({cell})&"|","|true|t|vrai|v|1|yes|y|oui|o|"))))'
     datastore_type: text
     excel_full_text_choices: false
+    datatables_full_text_choices: true
     choices:
       Y:
         en: "Yes"
@@ -1477,6 +1484,7 @@ resources:
     excel_error_formula: 'OR({default_formula},AND(VALUE({contract_date})>=DATE(2022,1,1),OR({cell}="A1",{cell}="NA")),AND(VALUE({contract_date})>=DATE(2017,1,1),OR({cell}="A65",{cell}="D")))'
     datastore_type: text
     excel_full_text_choices: false  # some of these are really long
+    datatables_full_text_choices: true
     choice_order_expression: 'value.get("discontinued", False), code'
     choices:
       A1:
@@ -1554,6 +1562,7 @@ resources:
     excel_required_formula: 'NOT(OR({intellectual_property}="C",{intellectual_property}="NA",{intellectual_property}=""))'
     excel_error_formula: 'ISERROR(SEARCH("|"&TRIM({cell})&"|","|true|t|vrai|v|1|yes|y|oui|o|false|f|faux|0|no|n|non|"))'
     excel_full_text_choices: false
+    datatables_full_text_choices: true
     choices:
       Y:
         en: "Yes"
@@ -1583,6 +1592,7 @@ resources:
     excel_error_formula: 'ISERROR(SEARCH("|"&TRIM({cell})&"|","|true|t|vrai|v|1|yes|y|oui|o|false|f|faux|0|no|n|non|"))'
     datastore_type: text
     excel_full_text_choices: false
+    datatables_full_text_choices: true
     choices:
       Y:
         en: "Yes"
@@ -1612,6 +1622,7 @@ resources:
     excel_required_formula: 'OR({standing_offer_number}<>"",VALUE({contract_date})>=DATE(2022,1,1))'
     datastore_type: text
     excel_full_text_choices: false
+    datatables_full_text_choices: true
     choices:
       PWC:
         en: Contract or Call-up awarded by PSPC on behalf of the client department.
@@ -1690,6 +1701,7 @@ resources:
     excel_required_formula: 'VALUE({contract_date})>=DATE(2019,1,1)'
     datastore_type: text
     excel_full_text_choices: false
+    datatables_full_text_choices: true
     choices:
       C:
         en: Contract
@@ -1722,6 +1734,7 @@ resources:
     excel_error_formula: 'ISERROR(SEARCH("|"&TRIM({cell})&"|","|true|t|vrai|v|1|yes|y|oui|o|false|f|faux|0|no|n|non|"))'
     datastore_type: text
     excel_full_text_choices: false
+    datatables_full_text_choices: true
     choices:
       Y:
         en: "Yes"
@@ -1790,6 +1803,7 @@ resources:
         Ce champ peut seulement contenir « 0 » si l’acquisition a été identifiée comme étant concurrentielle (invitation ouverte à soumissionner (OB) ou concurrentielle - traditionnelle (TC) ou Concurrentielle – Appel d’offres sélectif (ST)).
     datastore_type: text
     excel_full_text_choices: false
+    datatables_full_text_choices: true
     excel_error_formula: 'OR({default_formula},AND(VALUE({cell})<>0,NOT(OR({solicitation_procedure}="TN",{solicitation_procedure}="AC"))))'
     choices:
       "0":
@@ -1837,6 +1851,7 @@ resources:
         champ Type d’instrument.
     datastore_type: text
     excel_full_text_choices: false
+    datatables_full_text_choices: true
     excel_error_formula: 'OR({default_formula},AND(VALUE({cell})<>0,OR({solicitation_procedure}="TN",{solicitation_procedure}="AC",{instrument_type}="A")))'
     choices:
       "0":
@@ -1867,6 +1882,7 @@ resources:
       fr: Il est recommandé d’indiquer dans ce champ si l’approvisionnement est relié à au moins un des indicateurs socioéconomiques applicables.
     datastore_type: text
     excel_full_text_choices: false
+    datatables_full_text_choices: true
     choices:
       NA:
         en: None
@@ -2334,7 +2350,7 @@ excel_column_heading_style:
     fgColor: FFdfdce3
 datatables_style:
   header:
-    bgColor: dfdce3
+    bgColor: 8f859d
   select:
-    bgColor: eceaee
+    bgColor: b6afbf
     fgColor: 333333

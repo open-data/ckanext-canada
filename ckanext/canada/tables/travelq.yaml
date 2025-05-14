@@ -793,6 +793,7 @@ resources:
     form_required: true
     validation: This field must not be empty
     excel_full_text_choices: true
+    datatables_full_text_choices: true
     choices_file: choices/gregor_month.yaml
 
   - datastore_id: record_created

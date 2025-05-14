@@ -56,6 +56,7 @@ resources:
     form_required: true
     datastore_type: text
     excel_full_text_choices: true
+    datatables_full_text_choices: true
     form_choices_prefix_code: true
     choices:
       C01:
@@ -86,6 +87,7 @@ resources:
     form_required: true
     datastore_type: text
     excel_full_text_choices: true
+    datatables_full_text_choices: true
     form_choices_prefix_code: true
     excel_column_width: 80
     # choices based on commitments value
@@ -166,6 +168,7 @@ resources:
     form_required: true
     datastore_type: text
     excel_full_text_choices: true
+    datatables_full_text_choices: true
     form_choices_prefix_code: true
     excel_column_width: 80
     # choices based on milestones value
@@ -1160,6 +1163,7 @@ resources:
     form_required: true
     datastore_type: text
     excel_full_text_choices: true
+    datatables_full_text_choices: true
     choices:
       NS:
         en: Not started

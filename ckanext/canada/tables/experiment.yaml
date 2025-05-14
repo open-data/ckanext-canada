@@ -196,6 +196,7 @@ resources:
           fr: "Ce champ décrira dans quel secteur l'expérience prend place."
         excel_column_width: 20
         excel_full_text_choices: true
+        datatables_full_text_choices: true
         excel_required: true
         format_type: "Controlled List"
         label:
@@ -226,6 +227,7 @@ resources:
           fr: "Ce champ décrira le devis de recherche employé dans le projet."
         excel_column_width: 20
         excel_full_text_choices: true
+        datatables_full_text_choices: true
         excel_required: true
         format_type: "Controlled List"
         label:
@@ -405,6 +407,7 @@ resources:
           fr: "Ce champ décrira le statut du projet."
         excel_column_width: 20
         excel_full_text_choices: true
+        datatables_full_text_choices: true
         excel_required: true
         format_type: "Controlled List"
         label:

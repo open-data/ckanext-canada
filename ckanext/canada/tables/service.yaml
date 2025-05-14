@@ -198,6 +198,7 @@ resources:
     occurrence: Repeatable
     datastore_type: _text
     excel_full_text_choices: false
+    datatables_full_text_choices: true
     form_snippet: scheming/form_snippets/multiple_select.html
     choices:
       APIR:
@@ -250,6 +251,7 @@ resources:
     occurrence: Single
     datastore_type: text
     excel_full_text_choices: true
+    datatables_full_text_choices: true
     choices:
       CLIENT:
         en: Targeted, Client-based service
@@ -276,6 +278,7 @@ resources:
     occurrence: Repeatable
     datastore_type: _text
     excel_full_text_choices: false
+    datatables_full_text_choices: true
     form_snippet: scheming/form_snippets/multiple_select.html
     choices:
       CLUSTER:
@@ -309,6 +312,7 @@ resources:
     occurrence: Repeatable
     datastore_type: _text
     excel_full_text_choices: false
+    datatables_full_text_choices: true
     form_snippet: scheming/form_snippets/multiple_select.html
     choices:
       ECONOM:
@@ -358,6 +362,7 @@ resources:
     occurrence: Repeatable
     datastore_type: _text
     excel_full_text_choices: false
+    datatables_full_text_choices: true
     form_snippet: scheming/form_snippets/multiple_select.html
     choices_file: choices/service_program_names.yaml
     form_choices_prefix_code: true
@@ -415,6 +420,7 @@ resources:
     occurrence: Repeatable
     datastore_type: _text
     excel_full_text_choices: false
+    datatables_full_text_choices: true
     form_snippet: scheming/form_snippets/multiple_select.html
     choices:
       EML:
@@ -471,6 +477,7 @@ resources:
     occurrence: Single
     datastore_type: text
     excel_full_text_choices: true
+    datatables_full_text_choices: true
     choices_file: choices/yes_no.yaml
     form_snippet: scheming/form_snippets/radio.html
 
@@ -562,6 +569,7 @@ resources:
     occurrence: Single
     datastore_type: text
     excel_full_text_choices: true
+    datatables_full_text_choices: true
     choices_file: choices/yes_no.yaml
     form_snippet: scheming/form_snippets/radio.html
 
@@ -589,6 +597,7 @@ resources:
     occurrence: Single
     datastore_type: text
     excel_full_text_choices: true
+    datatables_full_text_choices: true
     choices_file: choices/online_service_yes_no.yaml
     form_snippet: scheming/form_snippets/radio.html
 
@@ -610,6 +619,7 @@ resources:
     occurrence: Single
     datastore_type: text
     excel_full_text_choices: true
+    datatables_full_text_choices: true
     choices_file: choices/online_service_yes_no.yaml
     form_snippet: scheming/form_snippets/radio.html
 
@@ -631,6 +641,7 @@ resources:
     occurrence: Single
     datastore_type: text
     excel_full_text_choices: true
+    datatables_full_text_choices: true
     choices_file: choices/online_service_yes_no.yaml
     form_snippet: scheming/form_snippets/radio.html
 
@@ -652,6 +663,7 @@ resources:
     occurrence: Single
     datastore_type: text
     excel_full_text_choices: true
+    datatables_full_text_choices: true
     choices_file: choices/online_service_yes_no.yaml
     form_snippet: scheming/form_snippets/radio.html
 
@@ -673,6 +685,7 @@ resources:
     occurrence: Single
     datastore_type: text
     excel_full_text_choices: true
+    datatables_full_text_choices: true
     choices_file: choices/online_service_yes_no.yaml
     form_snippet: scheming/form_snippets/radio.html
 
@@ -694,6 +707,7 @@ resources:
     occurrence: Single
     datastore_type: text
     excel_full_text_choices: true
+    datatables_full_text_choices: true
     choices_file: choices/online_service_yes_no.yaml
     form_snippet: scheming/form_snippets/radio.html
 
@@ -777,6 +791,7 @@ resources:
     occurrence: Single
     datastore_type: text
     excel_full_text_choices: false
+    datatables_full_text_choices: false
     choices_file: choices/fiscal_year.yaml
 
   # DEP 1-29
@@ -793,6 +808,7 @@ resources:
     occurrence: Single
     datastore_type: text
     excel_full_text_choices: false
+    datatables_full_text_choices: false
     choices_file: choices/fiscal_year.yaml
 
   # DEP 1-30
@@ -813,6 +829,7 @@ resources:
     occurrence: Single
     datastore_type: text
     excel_full_text_choices: true
+    datatables_full_text_choices: true
     choices:
       'NA':
         en: N/A (not a service to individuals)
@@ -849,6 +866,7 @@ resources:
     occurrence: Single
     datastore_type: text
     excel_full_text_choices: true
+    datatables_full_text_choices: true
     choices:
       'NA':
         en: N/A (not a service to businesses)
@@ -1659,6 +1677,7 @@ resources:
     occurrence: Single
     datastore_type: text
     excel_full_text_choices: false
+    datatables_full_text_choices: false
     choices_file: choices/fiscal_year.yaml
 
   # DEP 2-2
@@ -1866,6 +1885,7 @@ resources:
     occurrence: Single
     datastore_type: text
     excel_full_text_choices: true
+    datatables_full_text_choices: true
     choices:
       ACS:
         en: Access
@@ -1898,6 +1918,7 @@ resources:
     occurrence: Single
     datastore_type: text
     excel_full_text_choices: true
+    datatables_full_text_choices: true
     choices:
       EML:
         en: Email

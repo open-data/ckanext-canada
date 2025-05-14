@@ -60,7 +60,8 @@ resources:
     visible_to_public: Yes
     occurrence: Single
     datastore_type: text
-    excel_full_text_choices: True
+    excel_full_text_choices: true
+    datatables_full_text_choices: true
     choices_file: choices/minister.json
     excel_error_formula: 'FALSE'
 

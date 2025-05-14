@@ -94,7 +94,8 @@ resources:
     visible_to_public: Yes
     occurrence: Single
     datastore_type: text
-    excel_full_text_choices: True
+    excel_full_text_choices: true
+    datatables_full_text_choices: true
     choices_file: choices/minister.json
     exclude_choices:
     - GG
@@ -404,6 +405,7 @@ resources:
     form_required: true
     validation: This field must not be empty
     excel_full_text_choices: true
+    datatables_full_text_choices: true
     choices:
       P01:
         en: Jan. - June
