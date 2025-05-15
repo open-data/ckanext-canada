@@ -149,6 +149,14 @@ function load_pd_datatable(CKAN_MODULE){
     'text',
     '_text'
   ]
+  let intMask = '000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000';
+  let floatMask = '000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000.000000000000000000000000';
+  let moneyMask = '000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000.00';
+  if( locale == 'fr' ){
+    intMask = '000 000 000 000 000 000 000 000 000 000 000 000 000 000 000 000 000 000 000 000';
+    floatMask = '000 000 000 000 000 000 000 000 000 000 000 000 000 000 000 000 000 000 000 000,000000000000000000000000';
+    moneyMask = '000 000 000 000 000 000 000 000 000 000 000 000 000 000 000 000 000 000 000 000,00';
+  }
 
   if( searchParams.has('dt_query') ){
     $([document.documentElement, document.body]).animate({
@@ -268,7 +276,7 @@ function load_pd_datatable(CKAN_MODULE){
   }
 
   function render_highlights(){
-    // FIXME: highglights for masked data types: money & datetime...
+    // FIXME: highglights for masked data types: number, money, datetime!!!
     let tableBody = $(table.table().body());
     tableBody.unhighlight();
     if( table.rows({filter: 'applied'}).data().length ){
@@ -292,6 +300,7 @@ function load_pd_datatable(CKAN_MODULE){
     if( _index >= colOffset ){
       let ds_type = $('#dtprv').find('thead').find('th').eq(_index).attr('data-datastore-type');
       let labelText = _column.footer().textContent;
+      let extraClasses = '';
       if( ! labelText.includes(colSearchLabel) ){
         labelText = colSearchLabel + ' ' + _column.footer().textContent;
       }
@@ -309,26 +318,49 @@ function load_pd_datatable(CKAN_MODULE){
       }else if( ds_type == 'timestamp' ){
         filterInput = '<input name="dtprv-filter-col-' + _index + '" id="dtprv-filter-col-' + _index + '" type="datetime-local" min="1899-01-01T00:00" max="' + currentDate + 'T23:59" value="' + val + '" class="form-control form-control-sm" />';
       }else if( ds_type == 'int' || ds_type == 'bigint' ){
-        filterInput = '<input name="dtprv-filter-col-' + _index + '" id="dtprv-filter-col-' + _index + '" data-number-type="int" type="number" value="' + val + '" step="1" class="form-control form-control-sm" />';
+        filterInput = '<input name="dtprv-filter-col-' + _index + '" id="dtprv-filter-col-' + _index + '" placeholder="' + labelText + '" data-mask-type="int" data-number-type="int" type="text" value="' + val + '" class="form-control form-control-sm" />';
       }else if( ds_type == 'numeric' || ds_type == 'float' || ds_type == 'double' ){
-        filterInput = '<input name="dtprv-filter-col-' + _index + '" id="dtprv-filter-col-' + _index + '" data-number-type="float" type="number" value="' + val + '" class="form-control form-control-sm" />';
+        filterInput = '<input name="dtprv-filter-col-' + _index + '" id="dtprv-filter-col-' + _index + '" placeholder="' + labelText + '" data-mask-type="float" data-number-type="float" type="text" value="' + val + '" class="form-control form-control-sm" />';
       }else if( ds_type == 'money' ){
-        filterInput = '<input name="dtprv-filter-col-' + _index + '" id="dtprv-filter-col-' + _index + '" data-number-type="money" type="number" value="' + val + '" class="form-control form-control-sm" />';
+        filterInput = '<input name="dtprv-filter-col-' + _index + '" id="dtprv-filter-col-' + _index + '" placeholder="' + labelText + '" data-mask-type="money" data-number-type="money" type="text" value="' + val + '" class="form-control form-control-sm" />';
+        extraClasses = 'dtprv-filter-col-money dtprv-filter-col-money-' + locale;
+        if( val.length > 0 ){
+          extraClasses += ' dtprv-filter-col-money-show';
+        }
       }
-      // TODO: mask datetimes and money inputs...
-      footerContent = $.parseHTML('<span class="dtprv-filter-col"><label for="dtprv-filter-col-' + _index + '" class="sr-only">' + labelText + '</label>' + filterInput + '<button type="submit" class="btn btn-primary btn-small"><i aria-hidden="true" class="fas fa-search"></i><span class="sr-only">' + labelText + '</span></button></span>')[0];
+      footerContent = $.parseHTML('<span class="dtprv-filter-col ' + extraClasses + '"><label for="dtprv-filter-col-' + _index + '" class="sr-only">' + labelText + '</label>' + filterInput + '<button type="submit" class="btn btn-primary btn-small"><i aria-hidden="true" class="fas fa-search"></i><span class="sr-only">' + labelText + '</span></button></span>')[0];
     }
     _column.footer().replaceChildren(footerContent);
     let searchFilterInput = $('#dtprv-filter-col-' + _index);
     if( searchFilterInput.length > 0 ){
+      let maskType = $(searchFilterInput).attr('data-mask-type');
       let numberType = $(searchFilterInput).attr('data-number-type');
+      if( maskType == 'int' ){
+        $(searchFilterInput).mask(intMask, {jitMasking: true, clearIfNotMatch: false, reverse: true});
+      }else if( maskType == 'float' ){
+        $(searchFilterInput).mask(floatMask, {jitMasking: true, clearIfNotMatch: false, reverse: true});
+      }else if( maskType == 'money' ){
+        $(searchFilterInput).mask(moneyMask, {jitMasking: true, clearIfNotMatch: false, reverse: true});
+      }
       $(searchFilterInput).off('keyup.filterCol');
       $(searchFilterInput).on('keyup.filterCol', function(_event){
-        if( _event.keyCode == 13 && _column.search() !== $(searchFilterInput).val() ){
-          if( numberType == 'int' && $(searchFilterInput).val() ){
-            $(searchFilterInput).val(Math.round($(searchFilterInput).val())).focus().blur();
+        let _fVal = $(searchFilterInput).val();
+        if( typeof maskType != 'undefined' ){
+          _fVal = $(searchFilterInput).cleanVal();
+          if( maskType == 'money' ){
+            if( _fVal.length > 0 ){
+              $(searchFilterInput).parent('.dtprv-filter-col').addClass('dtprv-filter-col-money-show');
+            }else{
+              $(searchFilterInput).parent('.dtprv-filter-col').removeClass('dtprv-filter-col-money-show');
+            }
           }
-          _column.search($(searchFilterInput).val()).draw();
+        }
+        // TODO: pass real value...unmasking or something...
+        if( _event.keyCode == 13 && _column.search() !== _fVal ){
+          if( numberType == 'int' && _fVal ){
+            $(searchFilterInput).val(Math.round(_fVal)).focus().blur();
+          }
+          _column.search(_fVal).draw();
         }
       });
     }
@@ -369,7 +401,6 @@ function load_pd_datatable(CKAN_MODULE){
       readOnlyClass = 'editor-input-readonly';
       tabIndex = -1;
     }
-    // TODO: min and max widths...
     let srLabel = '<label class="sr-only" for="' + fieldID + '">' + rowLabel + ' ' + (_rowIndex + 1) + ' - ' + editorObject.label + '</label>';
     let fieldInput = '<input class="pd-datatable-editor-input ' + readOnlyClass + '" value="' + _value + '" name=' + fieldID + '" id="' + fieldID + '" data-primary-key="' + isPrimaryKey + '" data-row-index="' + _rowIndex + '" data-datastore-id="' + _chromo_field.datastore_id + '" ' + readOnly + ' tabindex="' + tabIndex + '" />';
     if( ds_type == 'year' ){
@@ -404,12 +435,11 @@ function load_pd_datatable(CKAN_MODULE){
     if( (typeof _chromo_field.form_snippet != 'undefined' && _chromo_field.form_snippet.includes('textarea')) || (typeof _chromo_field.markdown != 'undefined' && _chromo_field.markdown) ){
       fieldInput = '<textarea class="pd-datatable-editor-input ' + readOnlyClass + '" name=' + fieldID + '" id="' + fieldID + '" rows="1" data-primary-key="' + isPrimaryKey + '" data-row-index="' + _rowIndex + '" data-datastore-id="' + _chromo_field.datastore_id + '" ' + readOnly + ' tabindex="' + tabIndex + '">' + _value + '</textarea>';
     }
-    // TODO: mask datetimes and money inputs...
+    // TODO: mask datetimes and money inputs??
     return srLabel + fieldInput;
   }
 
   function cell_renderer(_data, _type, _row, _meta, _chromo_field){
-    // FIXME: any data transormations for masks in _type == 'search'
     if( _type == 'display' ){
       let originalData = _data;
       let showFullTextChoices = false;
@@ -473,8 +503,13 @@ function load_pd_datatable(CKAN_MODULE){
         _data = 'FALSE';
       }
       if( _chromo_field.datastore_type == 'numeric' || _chromo_field.datastore_type == 'int' || _chromo_field.datastore_type == 'bigint' ){
-        // TODO: number locales
-        _data = DataTable.render.number().display(_data, _type, _row);
+        if( locale == 'en' ){
+          _data = DataTable.render.number(',', '.', null, null).display(_data, _type, _row);
+        }else if( locale == 'fr' ){
+          _data = DataTable.render.number(' ', ',', null, null).display(_data, _type, _row);
+        }else{
+          _data = DataTable.render.number(null, null, null, null).display(_data, _type, _row);
+        }
       }
       if( _chromo_field.datastore_type == 'timestamp' ){
         if( ! _data.toString().includes('+0000') ){
@@ -486,8 +521,13 @@ function load_pd_datatable(CKAN_MODULE){
         if( _data.toString().includes('$') ){
           _data = _data.toString().replace('$', '');  // remove dollar signs if present
         }
-        // TODO: money locales
-        _data = DataTable.render.number(null, null, 2, '$').display(_data, _type, _row);
+        if( locale == 'en' ){
+          _data = DataTable.render.number(',', '.', 2, '$').display(_data, _type, _row);
+        }else if( locale == 'fr' ){
+          _data = DataTable.render.number(' ', ',', 2, null).display(_data, _type, _row) + '&nbsp;$';
+        }else{
+          _data = DataTable.render.number(null, null, 2, '$').display(_data, _type, _row);
+        }
       }
       _data = DataTable.render.ellipsis(ellipsesLength, _meta.row, _chromo_field.datastore_id, false)(_data, _type, _row, _meta);
       if( primaryKeys.includes(colIndex) ){
@@ -977,7 +1017,7 @@ function load_pd_datatable(CKAN_MODULE){
     table.off('key-focus.KeyTable');
     table.off('focus.KeyTable');
     if( isEditMode ){
-      // FIXME: focus into inputs and allow for keying inside inputs???
+      // FIXME: key tabling does not work great in Edit Mode, disabled for now...
       table.on('key-focus.KeyTable', function(e, dt, cell, oe){
         $('input', cell.node()).focus();
       });
@@ -1804,6 +1844,7 @@ function load_pd_datatable(CKAN_MODULE){
       keySettings = false;
       selectSettings = false;
     }
+    // TODO: figure out better No records found...
     table = $('#dtprv').DataTable({
       paging: true,
       serverSide: true,

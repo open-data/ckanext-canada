@@ -564,6 +564,39 @@ body #dtprv_wrapper #dtprv-foot-main .dtprv-filter-col input[type="text"]{
   /* border-bottom-right-radius: 0 !important; */
 }
 
+body #dtprv_wrapper #dtprv-foot-main .dtprv-filter-col.dtprv-filter-col-money::after{
+  content: '';
+  font-family: 'FontAwesome';
+  font-size: 13px !important;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #5c5c5c !important;
+  opacity: 0.75;
+}
+
+body #dtprv_wrapper #dtprv-foot-main .dtprv-filter-col.dtprv-filter-col-money.dtprv-filter-col-money-show::after{
+  content: '\f155';
+}
+
+body #dtprv_wrapper #dtprv-foot-main .dtprv-filter-col.dtprv-filter-col-money-en input{
+  padding-left: 20px !important;
+  text-align: left !important;
+}
+
+body #dtprv_wrapper #dtprv-foot-main .dtprv-filter-col.dtprv-filter-col-money-en::after{
+  left: 10px;
+}
+
+body #dtprv_wrapper #dtprv-foot-main .dtprv-filter-col.dtprv-filter-col-money-fr input{
+  padding-right: 20px !important;
+  text-align: right !important;
+}
+
+body #dtprv_wrapper #dtprv-foot-main .dtprv-filter-col.dtprv-filter-col-money-fr::after{
+  right: 10px;
+}
+
 body #dtprv_wrapper #dtprv-foot-main .dtprv-filter-col button[type="submit"]{
   /* OPTIONAL: input buttons */
   display: none !important;
