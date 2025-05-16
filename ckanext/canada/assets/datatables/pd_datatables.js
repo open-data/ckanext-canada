@@ -122,7 +122,7 @@ function load_pd_datatable(CKAN_MODULE){
     loadingRecords: _('Loading...'),
     processing: "",
     search: _('Search'),
-    zeroRecords: _('No matching records found'),
+    zeroRecords: '<span id="pd-dtatable-no-records">' + _('No matching records found') + '</span>',
     paginate: {
       first: "«",
       last: "»",
@@ -148,15 +148,7 @@ function load_pd_datatable(CKAN_MODULE){
   const alphaTypes = [
     'text',
     '_text'
-  ]
-  let intMask = '000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000';
-  let floatMask = '000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000.000000000000000000000000';
-  let moneyMask = '000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000.00';
-  if( locale == 'fr' ){
-    intMask = '000 000 000 000 000 000 000 000 000 000 000 000 000 000 000 000 000 000 000 000';
-    floatMask = '000 000 000 000 000 000 000 000 000 000 000 000 000 000 000 000 000 000 000 000,000000000000000000000000';
-    moneyMask = '000 000 000 000 000 000 000 000 000 000 000 000 000 000 000 000 000 000 000 000,00';
-  }
+  ];
 
   if( searchParams.has('dt_query') ){
     $([document.documentElement, document.body]).animate({
@@ -318,44 +310,22 @@ function load_pd_datatable(CKAN_MODULE){
       }else if( ds_type == 'timestamp' ){
         filterInput = '<input name="dtprv-filter-col-' + _index + '" id="dtprv-filter-col-' + _index + '" type="datetime-local" min="1899-01-01T00:00" max="' + currentDate + 'T23:59" value="' + val + '" class="form-control form-control-sm" />';
       }else if( ds_type == 'int' || ds_type == 'bigint' ){
-        filterInput = '<input name="dtprv-filter-col-' + _index + '" id="dtprv-filter-col-' + _index + '" placeholder="' + labelText + '" data-mask-type="int" data-number-type="int" type="text" value="' + val + '" class="form-control form-control-sm" />';
+        filterInput = '<input name="dtprv-filter-col-' + _index + '" id="dtprv-filter-col-' + _index + '" data-number-type="int" type="number" step="1" value="' + val + '" class="form-control form-control-sm" />';
       }else if( ds_type == 'numeric' || ds_type == 'float' || ds_type == 'double' ){
-        filterInput = '<input name="dtprv-filter-col-' + _index + '" id="dtprv-filter-col-' + _index + '" placeholder="' + labelText + '" data-mask-type="float" data-number-type="float" type="text" value="' + val + '" class="form-control form-control-sm" />';
+        filterInput = '<input name="dtprv-filter-col-' + _index + '" id="dtprv-filter-col-' + _index + '" data-number-type="float" type="number" value="' + val + '" class="form-control form-control-sm" />';
       }else if( ds_type == 'money' ){
-        filterInput = '<input name="dtprv-filter-col-' + _index + '" id="dtprv-filter-col-' + _index + '" placeholder="' + labelText + '" data-mask-type="money" data-number-type="money" type="text" value="' + val + '" class="form-control form-control-sm" />';
-        extraClasses = 'dtprv-filter-col-money dtprv-filter-col-money-' + locale;
-        if( val.length > 0 ){
-          extraClasses += ' dtprv-filter-col-money-show';
-        }
+        filterInput = '<input name="dtprv-filter-col-' + _index + '" id="dtprv-filter-col-' + _index + '" data-number-type="money" type="number" value="' + val + '" class="form-control form-control-sm" />';
       }
       footerContent = $.parseHTML('<span class="dtprv-filter-col ' + extraClasses + '"><label for="dtprv-filter-col-' + _index + '" class="sr-only">' + labelText + '</label>' + filterInput + '<button type="submit" class="btn btn-primary btn-small"><i aria-hidden="true" class="fas fa-search"></i><span class="sr-only">' + labelText + '</span></button></span>')[0];
     }
     _column.footer().replaceChildren(footerContent);
     let searchFilterInput = $('#dtprv-filter-col-' + _index);
     if( searchFilterInput.length > 0 ){
-      let maskType = $(searchFilterInput).attr('data-mask-type');
       let numberType = $(searchFilterInput).attr('data-number-type');
-      if( maskType == 'int' ){
-        $(searchFilterInput).mask(intMask, {jitMasking: true, clearIfNotMatch: false, reverse: true});
-      }else if( maskType == 'float' ){
-        $(searchFilterInput).mask(floatMask, {jitMasking: true, clearIfNotMatch: false, reverse: true});
-      }else if( maskType == 'money' ){
-        $(searchFilterInput).mask(moneyMask, {jitMasking: true, clearIfNotMatch: false, reverse: true});
-      }
       $(searchFilterInput).off('keyup.filterCol');
       $(searchFilterInput).on('keyup.filterCol', function(_event){
         let _fVal = $(searchFilterInput).val();
-        if( typeof maskType != 'undefined' ){
-          _fVal = $(searchFilterInput).cleanVal();
-          if( maskType == 'money' ){
-            if( _fVal.length > 0 ){
-              $(searchFilterInput).parent('.dtprv-filter-col').addClass('dtprv-filter-col-money-show');
-            }else{
-              $(searchFilterInput).parent('.dtprv-filter-col').removeClass('dtprv-filter-col-money-show');
-            }
-          }
-        }
-        // TODO: pass real value...unmasking or something...
+        // TODO: pass real value...replace commas and spaces and dotssssss
         if( _event.keyCode == 13 && _column.search() !== _fVal ){
           if( numberType == 'int' && _fVal ){
             $(searchFilterInput).val(Math.round(_fVal)).focus().blur();
@@ -427,7 +397,6 @@ function load_pd_datatable(CKAN_MODULE){
         if( typeof _chromo_field.datatables_full_text_choices != 'undefined' && _chromo_field.datatables_full_text_choices ){
           label = editorObject.select_choices[_i][0] + _(': ') + label;
         }
-        // TODO: truncate label??
         fieldInput += '<option value="' + editorObject.select_choices[_i][0] + '" ' + selected + '>' + label + '</option>';
       }
       fieldInput += '</select>';
@@ -435,7 +404,6 @@ function load_pd_datatable(CKAN_MODULE){
     if( (typeof _chromo_field.form_snippet != 'undefined' && _chromo_field.form_snippet.includes('textarea')) || (typeof _chromo_field.markdown != 'undefined' && _chromo_field.markdown) ){
       fieldInput = '<textarea class="pd-datatable-editor-input ' + readOnlyClass + '" name=' + fieldID + '" id="' + fieldID + '" rows="1" data-primary-key="' + isPrimaryKey + '" data-row-index="' + _rowIndex + '" data-datastore-id="' + _chromo_field.datastore_id + '" ' + readOnly + ' tabindex="' + tabIndex + '">' + _value + '</textarea>';
     }
-    // TODO: mask datetimes and money inputs??
     return srLabel + fieldInput;
   }
 
@@ -652,9 +620,18 @@ function load_pd_datatable(CKAN_MODULE){
       });
     }
     for( let _i = 0; _i < _indexes.length; _i++){
-      let checkbox = $($('#dtprv').find('#dtprv-body-main').find('tr:not(.child)')[_indexes[_i]]).find('td.checkboxes').find('input[type="checkbox"]');
+      let checkbox = $($('#dtprv').find('#dtprv-body-main').find('tr:not(.child):not(.validation-error)')[_indexes[_i]]).find('td.checkboxes').find('input[type="checkbox"]');
       $(checkbox)[0].checked = _checked;  // set prop in the scenario that the checkbox has human interaction
       $(checkbox).attr("checked", _checked).blur();
+    }
+  }
+
+  function render_no_records(){
+    let wrapper = $('#dtprv_wrapper').find('.dt-scroll-body');
+    if( table.rows()[0].length == 0 ){
+      $(wrapper).addClass('pd-datatable-body-main-no-records');
+    }else{
+      $(wrapper).removeClass('pd-datatable-body-main-no-records');
     }
   }
 
@@ -1736,7 +1713,7 @@ function load_pd_datatable(CKAN_MODULE){
       });
     }
     $(fields).each(function(_index, _field){
-      if( $(_field).is('select') && $(_field).attr('multiple') ){
+      if( $(_field).is('select') ){
         $(_field).select2({
           'datastore-id': $(_field).attr('data-datastore-id'),
           'row-index': $(_field).attr('data-row-index'),
@@ -1804,6 +1781,7 @@ function load_pd_datatable(CKAN_MODULE){
       if( uri_filters ){
         render_highlights();
       }
+      render_no_records();
     }else{
       bind_table_editor();
     }
@@ -1844,7 +1822,6 @@ function load_pd_datatable(CKAN_MODULE){
       keySettings = false;
       selectSettings = false;
     }
-    // TODO: figure out better No records found...
     table = $('#dtprv').DataTable({
       paging: true,
       serverSide: true,

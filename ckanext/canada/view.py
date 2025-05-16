@@ -1053,7 +1053,6 @@ def pd_datatable(resource_name: str, resource_id: str):
 
     col_filters = {}
     i = 0
-    # FIXME: searching _text fields!!!
     while True:
         if 'columns[%d][search][value]' % i not in request.form:
             break

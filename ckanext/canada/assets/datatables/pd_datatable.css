@@ -57,6 +57,36 @@ body #dtprv_wrapper .dt-scroll{
   overflow: hidden !important;
 }
 
+body #dtprv_wrapper .dt-empty{
+  padding: 0;
+  position: relative;
+  height: 400px;
+  background-color: rgba(0, 0, 0, 0.05);
+  text-align: left !important;
+}
+
+body #dtprv_wrapper[data-compact-view="true"] .dt-scroll-body.pd-datatable-body-main-no-records::after{
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 36px;
+  display: block;
+  background-color: white;
+}
+
+body #dtprv_wrapper #pd-dtatable-no-records{
+  position: sticky;
+  display: block;
+  text-align: center;
+  width: 225px;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 36px;
+  font-weight: 600;
+}
+
 body #dtprv_wrapper #dtprv_processing{
   top: 0 !important;
   left: 0 !important;
@@ -562,39 +592,6 @@ body #dtprv_wrapper #dtprv-foot-main .dtprv-filter-col input[type="text"]{
   /* OPTIONAL: input buttons */
   /* border-top-right-radius: 0 !important; */
   /* border-bottom-right-radius: 0 !important; */
-}
-
-body #dtprv_wrapper #dtprv-foot-main .dtprv-filter-col.dtprv-filter-col-money::after{
-  content: '';
-  font-family: 'FontAwesome';
-  font-size: 13px !important;
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  color: #5c5c5c !important;
-  opacity: 0.75;
-}
-
-body #dtprv_wrapper #dtprv-foot-main .dtprv-filter-col.dtprv-filter-col-money.dtprv-filter-col-money-show::after{
-  content: '\f155';
-}
-
-body #dtprv_wrapper #dtprv-foot-main .dtprv-filter-col.dtprv-filter-col-money-en input{
-  padding-left: 20px !important;
-  text-align: left !important;
-}
-
-body #dtprv_wrapper #dtprv-foot-main .dtprv-filter-col.dtprv-filter-col-money-en::after{
-  left: 10px;
-}
-
-body #dtprv_wrapper #dtprv-foot-main .dtprv-filter-col.dtprv-filter-col-money-fr input{
-  padding-right: 20px !important;
-  text-align: right !important;
-}
-
-body #dtprv_wrapper #dtprv-foot-main .dtprv-filter-col.dtprv-filter-col-money-fr::after{
-  right: 10px;
 }
 
 body #dtprv_wrapper #dtprv-foot-main .dtprv-filter-col button[type="submit"]{
