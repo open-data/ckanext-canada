@@ -101,7 +101,8 @@ def download_from_source():
     # set position code with position initials
     for p in ministers_list:
         # set position code with position initials
-        position_title = p['title_en'].split(' ')
+        clean = re.sub(r'[^\w\s]', '', p['title_en']) # remove any punctuations
+        position_title = clean.split(' ')
         position_code = ''
         for initial in position_title:
             if initial not in ('and', 'the', 'is', 'of', 'with', 'for', 'in'):
