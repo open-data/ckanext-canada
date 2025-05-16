@@ -1,8 +1,7 @@
-import re
 import codecs
 import json
 import decimal
-from pytz import timezone, utc
+from sys import maxsize as MAX_INT
 from socket import error as socket_error
 from logging import getLogger
 import csv
@@ -26,7 +25,8 @@ from ckan.plugins.toolkit import (
     check_access,
     aslist,
     request,
-    render
+    render,
+    asbool
 )
 import ckan.lib.mailer as mailer
 from ckan import model
@@ -79,8 +79,6 @@ from ckanapi import LocalCKAN
 
 from flask import Blueprint, make_response
 
-from ckanext.canada.helpers import canada_date_str_to_datetime
-
 from io import StringIO
 
 
@@ -91,27 +89,10 @@ MAX_JOB_QUEUE_LIST_SIZE = 25
 log = getLogger(__name__)
 
 canada_views = Blueprint('canada', __name__)
-ottawa_tz = timezone('America/Montreal')
 
 
 class IntentionalServerError(Exception):
     pass
-
-
-def _url_part_escape(orig: str) -> str:
-    """
-    simple encoding for url-parts where all non-alphanumerics are
-    wrapped in e.g. _xxyyzz_ blocks w/hex UTF-8 xx, yy, zz values
-
-    used for safely including arbitrary unicode as part of a url path
-    all returned characters will be in [a-zA-Z0-9_-]
-    """
-    return '_'.join(
-        codecs.encode(s.encode('utf-8'), 'hex').decode('ascii') if i % 2 else s
-        for i, s in enumerate(
-            re.split(r'([^-a-zA-Z0-9]+)', orig)
-        )
-    )
 
 
 def _url_part_unescape(urlpart: str) -> str:
@@ -640,6 +621,126 @@ def update_pd_record(owner_org: str, resource_name: str, pk: str):
                   })
 
 
+@canada_views.route('/upsert_pd_data/<owner_org>/<resource_name>', methods=['POST'])
+def upsert_pd_data(owner_org: str, resource_name: str):
+    """
+    Wrapper to datastore_upsert with specific logic for custom DataTables.
+
+    Allows for encoded POSTed form data as a JSON string in the records field.
+    This allows for easy CSRF Token validation in AJAX requests.
+
+    Adds custom message handling for DataTables.
+    """
+    if not g.is_registry:
+        return abort(404)
+
+    context = cast(Context, {'user': g.user, 'model': model})
+
+    data_dict = parse_params(request.form, ignore_keys=[g.csrf_field_name])
+    if 'records' in data_dict:
+        try:
+            # type_ignore_reason: incomplete typing
+            data_dict['records'] = json.loads(data_dict['records'])  # type: ignore
+        except (KeyError, ValueError):
+            pass
+
+    return_dict = {}
+    lc = LocalCKAN()
+    chromo = h.recombinant_get_chromo(resource_name)
+    pk_fields = aslist(chromo['datastore_primary_key'])
+    offset = 0
+    records = data_dict.get('records', [])
+    resource_id = data_dict.get('resource_id')
+    dry_run = data_dict.get('dry_run')
+    method = data_dict.get('method')
+    # NOTE: upserting each record one-by-one is crazy slower,
+    #       but it is the only way to get all of the errors back in one object.
+    while offset < len(records):
+        try:
+            data = get_action('datastore_upsert')(
+                context, {
+                    'method': method,
+                    'resource_id': resource_id,
+                    'dry_run': dry_run,
+                    'records': [records[offset]]
+                })
+            if 'result' not in return_dict:
+                return_dict['result'] = {}
+            return_dict['result']['row_{}'.format(offset)] = data
+            return_dict['success'] = True
+            offset += 1
+        except NotAuthorized:
+            return_dict['error'] = {'__type': 'Authorization Error',
+                                    'message': _('Access denied')}
+            return_dict['success'] = False
+            return _finish(403, return_dict, content_type='json')
+        except NotFound:
+            return_dict['error'] = {'__type': 'Not Found Error',
+                                    'message': _('Not found')}
+            return_dict['success'] = False
+            return _finish(404, return_dict, content_type='json')
+        except ValidationError as ve:
+            err = {}
+            error_summary = None
+            if 'records' in ve.error_dict:
+                try:
+                    # type_ignore_reason: incomplete typing
+                    err = dict({
+                        k: list(format_trigger_error(v))
+                        for (k, v) in
+                        ve.error_dict['records'][0].items()  # type: ignore
+                    }, **err)
+                except AttributeError:
+                    # type_ignore_reason: incomplete typing
+                    if (
+                      'duplicate key value violates unique constraint' in
+                      ve.error_dict['records'][0]):  # type: ignore
+                        err = dict({
+                            k: [_("This record already exists")]
+                            for k in pk_fields
+                        }, **err)
+                    elif (
+                      'constraint_info' in ve.error_dict):
+                        error_summary = _render_recombinant_constraint_errors(
+                            lc, ve, chromo, 'upsert')
+                    else:
+                        log.warning('Failed to create %s record for org %s:\n%s',
+                                    resource_name, owner_org, traceback.format_exc())
+                        error_summary = _('Something went wrong, your record '
+                                          'was not created. Please contact support.')
+            # type_ignore_reason: incomplete typing
+            elif ve.error_dict.get(
+                    'info', {}).get('pgcode', '') == '23505':  # type: ignore
+                err = dict({
+                    k: [_("This record already exists")]
+                    for k in pk_fields
+                }, **err)
+            else:
+                log.warning('Failed to create %s record for org %s:\n%s',
+                            resource_name, owner_org, traceback.format_exc())
+                error_summary = _('Something went wrong, your record '
+                                  'was not created. Please contact support.')
+            if 'error' not in return_dict:
+                return_dict['error'] = {}
+            return_dict['error']['row_{}'.format(offset)] = {
+                '__type': 'Validation Error',
+                'message': error_summary,
+                'data': err}
+            return_dict['success'] = False
+            offset += 1
+        except Exception as e:
+            return_dict['error'] = {'__type': 'Internal Server Error',
+                                    'message': _('Internal Server Error')}
+            return_dict['success'] = False
+            log.warning(e)
+            return _finish(500, return_dict, content_type='json')
+
+    if 'error' in return_dict:
+        return _finish(409, return_dict, content_type='json')
+
+    return _finish_ok(return_dict)
+
+
 @canada_views.route('/recombinant/<resource_name>', methods=['GET'])
 def type_redirect(resource_name: str, dataset_id: Optional[str] = None):
     orgs = h.organizations_available('read')
@@ -897,18 +998,16 @@ def view_help():
 @canada_views.route('/datatable/<resource_name>/<resource_id>',
                     methods=['GET', 'POST'])
 @csrf.exempt
-def datatable(resource_name: str, resource_id: str):
+def pd_datatable(resource_name: str, resource_id: str):
     params = parse_params(request.form)
     # type_ignore_reason: datatable param draw is int
     draw = int(params['draw'])  # type: ignore
     search_text = str(params['search[value]'])
-    dt_query = str(params['dt_query'])
-    if dt_query and not search_text:
-        search_text = dt_query
     # type_ignore_reason: datatable param start is int
     offset = int(params['start'])  # type: ignore
     # type_ignore_reason: datatable param length is int
-    limit = int(params['length'])  # type: ignore
+    limit = int(params['length']) if params['length'] else 15  # type: ignore
+    is_edit_mode = asbool(params['is_edit_mode'])
 
     chromo = h.recombinant_get_chromo(resource_name)
     lc = LocalCKAN(username=g.user)
@@ -952,35 +1051,46 @@ def datatable(resource_name: str, resource_id: str):
             cols[sort_by_num - prefix_cols] + ' ' + sort_order + ' nulls last')
         i += 1
 
-    response = lc.action.datastore_search(
-        q=search_text,
-        resource_id=resource_id,
-        offset=offset,
-        limit=limit,
-        sort=', '.join(sort_list),
-    )
+    col_filters = {}
+    i = 0
+    while True:
+        if 'columns[%d][search][value]' % i not in request.form:
+            break
+        try:
+            v = json.loads(request.form['columns[%d][search][value]' % i])
+        except (ValueError, KeyError):
+            v = str(request.form['columns[%d][search][value]' % i])
+        if v:
+            k = str(request.form['columns[%d][name]' % i])
+            col_filters[k] = v
+        i += 1
 
-    aadata = [
-        ['<input type="checkbox">'] +
-        [datatablify(row.get(colname, ''), colname, chromo) for colname in cols]
-        for row in response['records']]
+    if is_edit_mode:
+        offset = 0
+        limit = MAX_INT
 
-    if chromo.get('edit_form', False) and can_edit:
-        res = lc.action.resource_show(id=resource_id)
-        pkg = lc.action.package_show(id=res['package_id'])
-        pkids = [fids.index(k) for k in aslist(chromo['datastore_primary_key'])]
-        for row in aadata:
-            row.insert(1, (
-                    '<a href="{0}" aria-label="' + _("Edit") + '">'
-                    '<i class="fa fa-lg fa-edit" aria-hidden="true"></i></a>').format(
-                    h.url_for(
-                        'canada.update_pd_record',
-                        owner_org=pkg['organization']['name'],
-                        resource_name=resource_name,
-                        pk=','.join(_url_part_escape(row[i+1]) for i in pkids)
-                    )
-                )
-            )
+    if is_edit_mode and not col_filters:
+        response = {}
+    else:
+        response = lc.action.datastore_search(
+            q=search_text,
+            resource_id=resource_id,
+            offset=offset,
+            limit=limit,
+            sort=', '.join(sort_list),
+            filters=col_filters)
+
+    if is_edit_mode and not col_filters:
+        default_fill = chromo.get('datatables_default_fill', 10)
+        aadata = [
+            [''] +  # Expand column
+            ['<input type="checkbox">'] +  # Select column
+            ['' for _col in cols] for _row in range(default_fill)]
+    else:
+        aadata = [
+            [''] +  # Expand column
+            ['<input type="checkbox">'] +  # Select column
+            [row.get(col, '') for col in cols] for row in response['records']]
 
     return json.dumps({
         'draw': draw,
@@ -988,33 +1098,6 @@ def datatable(resource_name: str, resource_id: str):
         'iTotalDisplayRecords': response.get('total', 0),
         'aaData': aadata,
     })
-
-
-def datatablify(v: Any, colname: str, chromo: Dict[str, Any]) -> str:
-    '''
-    format value from datastore v for display in a datatable preview
-    '''
-    chromo_field = None
-    for f in chromo['fields']:
-        if f['datastore_id'] == colname:
-            chromo_field = f
-            break
-    if v is None:
-        return ''
-    if v is True:
-        return 'TRUE'
-    if v is False:
-        return 'FALSE'
-    if isinstance(v, list):
-        return ', '.join(str(e) for e in v)
-    if colname in ('record_created', 'record_modified') and v:
-        return canada_date_str_to_datetime(v).replace(tzinfo=utc).astimezone(
-            ottawa_tz).strftime('%Y-%m-%d %H:%M:%S %Z')
-    if chromo_field and chromo_field.get('datastore_type') == 'money':
-        if isinstance(v, str) and '$' in v:
-            return v
-        return '${:,.2f}'.format(v)
-    return str(v)
 
 
 @canada_views.route('/fgpv-vpgf/<pkg_id>', methods=['GET'])

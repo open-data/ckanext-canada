@@ -130,6 +130,7 @@ resources:
     datastore_type: text
     excel_column_width: 20
     excel_full_text_choices: true
+    datatables_full_text_choices: true
     choices:
       M:
         en: Minister
@@ -176,6 +177,7 @@ resources:
     datastore_type: text
     excel_column_width: 20
     excel_full_text_choices: true
+    datatables_full_text_choices: true
     choices:
       I:
         en: For Information
@@ -202,6 +204,7 @@ resources:
     occurrence: Single
     datastore_type: text
     excel_column_width: 35
+    js_required_eval: '{{additional_information_fr}}.length > 0'
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
       style: "width: 100%; display: block"
@@ -221,6 +224,7 @@ resources:
     occurrence: Single
     datastore_type: text
     excel_column_width: 35
+    js_required_eval: '{{additional_information_en}}.length > 0'
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
       style: "width: 100%; display: block"
@@ -430,3 +434,9 @@ excel_column_heading_style:
   PatternFill:
     patternType: solid
     fgColor: FF84acb6
+datatables_style:
+  header:
+    bgColor: 84acb6
+  select:
+    bgColor: b4ccd2
+    fgColor: 333333

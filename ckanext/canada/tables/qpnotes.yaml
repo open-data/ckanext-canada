@@ -94,7 +94,8 @@ resources:
     visible_to_public: Yes
     occurrence: Single
     datastore_type: text
-    excel_full_text_choices: True
+    excel_full_text_choices: true
+    datatables_full_text_choices: true
     choices_file: choices/minister.json
     exclude_choices:
     - GG
@@ -119,6 +120,7 @@ resources:
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
       style: "width: 100%; display: block"
+    markdown: true
 
   # 3.6
   - datastore_id: question_fr
@@ -139,6 +141,7 @@ resources:
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
       style: "width: 100%; display: block"
+    markdown: true
 
   # 3.7
   - datastore_id: date_received
@@ -177,6 +180,7 @@ resources:
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
       style: "width: 100%; display: block"
+    markdown: true
 
   # 3.11
   - datastore_id: response_fr
@@ -197,6 +201,7 @@ resources:
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
       style: "width: 100%; display: block"
+    markdown: true
 
   # 3.8
   - datastore_id: background_en
@@ -217,6 +222,7 @@ resources:
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
       style: "width: 100%; display: block"
+    markdown: true
 
   # 3.9
   - datastore_id: background_fr
@@ -237,6 +243,7 @@ resources:
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
       style: "width: 100%; display: block"
+    markdown: true
 
   # 3.12
   - datastore_id: additional_information_en
@@ -255,6 +262,7 @@ resources:
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
       style: "width: 100%; display: block"
+    markdown: true
 
   # 3.13
   - datastore_id: additional_information_fr
@@ -273,6 +281,7 @@ resources:
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
       style: "width: 100%; display: block"
+    markdown: true
 
   # audit trail
   - datastore_id: record_created
@@ -396,6 +405,7 @@ resources:
     form_required: true
     validation: This field must not be empty
     excel_full_text_choices: true
+    datatables_full_text_choices: true
     choices:
       P01:
         en: Jan. - June
@@ -481,3 +491,9 @@ excel_column_heading_style:
   PatternFill:
     patternType: solid
     fgColor: FF84acb6
+datatables_style:
+  header:
+    bgColor: 84acb6
+  select:
+    bgColor: c4d7dc
+    fgColor: 333333

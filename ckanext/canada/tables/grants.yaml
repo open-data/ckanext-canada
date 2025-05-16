@@ -428,6 +428,7 @@ resources:
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
       style: "width: 100%; display: block"
+    markdown: true
 
   # 3.20 Program Purpose (French) (formerly purpose_fr)
   - datastore_id: prog_purpose_fr
@@ -443,6 +444,7 @@ resources:
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
       style: "width: 100%; display: block"
+    markdown: true
 
   # 3.21 Agreement Title (English) (formerly proj_name_en)
   - datastore_id: agreement_title_en
@@ -598,6 +600,7 @@ resources:
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
       style: "width: 100%; display: block"
+    markdown: true
 
   # 3.31 Description (French) (New Field)
   - datastore_id: description_fr
@@ -615,6 +618,7 @@ resources:
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
       style: "width: 100%; display: block"
+    markdown: true
 
   # 3.32 NAICS Identifier (New Field)
   - datastore_id: naics_identifier
@@ -652,6 +656,7 @@ resources:
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
       style: "width: 100%; display: block"
+    markdown: true
 
   # 3.34 Expected Results or Intended Outcome (French) (New Field)
   - datastore_id: expected_results_fr
@@ -667,6 +672,7 @@ resources:
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
       style: "width: 100%; display: block"
+    markdown: true
 
   # 3.35 Additional Information (English) (Formerly comments_en, additional_info_en)
   - datastore_id: additional_information_en
@@ -706,6 +712,7 @@ resources:
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
       style: "width: 100%; display: block"
+    markdown: true
 
   # 3.36 Additional Information (French) (Formerly comments_fr, additional_info_fr)
   - datastore_id: additional_information_fr
@@ -745,6 +752,7 @@ resources:
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
       style: "width: 100%; display: block"
+    markdown: true
 
   - datastore_id: record_created
     label: Record Creation Time
@@ -996,3 +1004,9 @@ excel_column_heading_style:
   PatternFill:
     patternType: solid
     fgColor: FFEDDB7C
+datatables_style:
+  header:
+    bgColor: EDDB7C
+  select:
+    bgColor: f6edbf
+    fgColor: 333333
