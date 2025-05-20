@@ -97,8 +97,8 @@ dataset_fields:
 
 - field_name: date_submitted
   help_text:
-    en: The date the submission form was submitted to open-ouvert@tbs-sct.gc.ca. This value will be automatically populated
-    fr: Date d’envoi du formulaire de demande à open-ouvert@tbs-sct.gc.ca. Cette information sera inscrite automatiquement.
+    en: The date the submission form was submitted to {support}. This value will be automatically populated
+    fr: Date d’envoi du formulaire de demande à {support}. Cette information sera inscrite automatiquement.
   label:
     en: Date suggestion was submitted
     fr: Date d’envoi de la suggestion
