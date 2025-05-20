@@ -64,7 +64,7 @@
         <th scope="col" data-editable-col="false" data-priority="3"></th>
         <th scope="col" data-editable-col="false" data-priority="3">{{ _('Select') }}</th>
         {% for field in ds_fields %}
-          <th scope="col" data-editable-col="{{- (field.id not in nonEditableCols)|tojson -}}" data-datastore-id="{{- field.id -}}" data-datastore-type="{{- field.type -}}" data-priority="{{- field.priority + magic_priority_no_field_should_be_below -}}">
+          <th scope="col" data-editable-col="{{- (field.id not in nonEditableCols)|tojson -}}" data-schema-label="{{- h.scheming_language_text(field.label) -}}" data-datastore-id="{{- field.id -}}" data-datastore-type="{{- field.type -}}" data-priority="{{- field.priority + magic_priority_no_field_should_be_below -}}">
             {{- field.label -}}<span class="sorting-cnt"><span class="sorting-icons"></span></span>
           </th>
         {% endfor %}

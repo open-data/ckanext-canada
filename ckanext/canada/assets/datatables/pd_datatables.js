@@ -121,7 +121,7 @@ function load_pd_datatable(CKAN_MODULE){
     lengthMenu: _('_MENU_ Show number of entries'),
     loadingRecords: _('Loading...'),
     processing: "",
-    search: _('Search'),
+    search: _('Full Text Search'),
     zeroRecords: '<span id="pd-dtatable-no-records">' + _('No matching records found') + '</span>',
     paginate: {
       first: "«",
@@ -268,7 +268,6 @@ function load_pd_datatable(CKAN_MODULE){
   }
 
   function render_highlights(){
-    // FIXME: highglights for masked data types: number, money, datetime!!!
     let tableBody = $(table.table().body());
     tableBody.unhighlight();
     if( table.rows({filter: 'applied'}).data().length ){
@@ -278,9 +277,35 @@ function load_pd_datatable(CKAN_MODULE){
           column.search(uri_filters[_index]);
         }
         column.nodes().flatten().to$().unhighlight({className: 'column_highlight'});
-        column.nodes().flatten().to$().highlight(column.search().trim().split(/\s+/), {className: 'column_highlight'});
+        let colSearch = String(column.search());
+        let highlightText = colSearch.trim();
+        let ds_type = $('.dt-scroll-head').find('th').eq(column.index()).attr('data-datastore-type');
+        if( colSearch ){
+          if( ds_type == 'numeric' || ds_type == 'float' || ds_type == 'double' || ds_type == 'int' || ds_type == 'bigint' ){
+            if( locale == 'en' ){
+              highlightText = DataTable.render.number(',', '.', null, null).display(highlightText, null, null);
+            }else if( locale == 'fr' ){
+              highlightText = DataTable.render.number(' ', ',', null, null).display(highlightText, null, null);
+            }else{
+              highlightText = DataTable.render.number(null, null, null, null).display(highlightText, null, null);
+            }
+          }else if( ds_type == 'money' ){
+            if( highlightText.toString().includes('$') ){
+              highlightText = highlightText.toString().replace('$', '');  // remove dollar signs if present
+            }
+            if( locale == 'en' ){
+              highlightText = DataTable.render.number(',', '.', 2, '$').display(highlightText, null, null);
+            }else if( locale == 'fr' ){
+              highlightText = DataTable.render.number(' ', ',', 2, null).display(highlightText, null, null) + ' $';
+            }else{
+              highlightText = DataTable.render.number(null, null, 2, '$').display(highlightText, null, null);
+            }
+          }
+        }
+        column.nodes().flatten().to$().highlight(highlightText.split(/\s+/), {className: 'column_highlight'});
       });
-      tableBody.highlight(table.search().trim().split(/\s+/));
+      let tableSearch = String(table.search());
+      tableBody.highlight(tableSearch.trim().split(/\s+/));
     }
   };
 
@@ -290,13 +315,12 @@ function load_pd_datatable(CKAN_MODULE){
       footerContent = $.parseHTML('<input title="' + selectAllLabel + '" aria-label="' + selectAllLabel + '" id="dt-select-all" name="dt-select-all" type="checkbox"/>')[0];
     }
     if( _index >= colOffset ){
-      let ds_type = $('#dtprv').find('thead').find('th').eq(_index).attr('data-datastore-type');
-      let labelText = _column.footer().textContent;
+      let headCell = $('#dtprv').find('thead').find('th').eq(_index);
+      let ds_type = $(headCell).attr('data-datastore-type');
+      let labelText = colSearchLabel + ' ' + $(headCell).attr('data-schema-label');
       let extraClasses = '';
-      if( ! labelText.includes(colSearchLabel) ){
-        labelText = colSearchLabel + ' ' + _column.footer().textContent;
-      }
-      let val = _column.search().length > 0 ? _column.search() : '';
+      let colSearch = _column.search();
+      let val = String(colSearch).length > 0 ? colSearch : '';
       if( uri_filters && typeof uri_filters[_index] != 'undefined' ){
         val = uri_filters[_index];
       }
@@ -308,13 +332,15 @@ function load_pd_datatable(CKAN_MODULE){
       }else if( ds_type == 'date' ){
         filterInput = '<input name="dtprv-filter-col-' + _index + '" id="dtprv-filter-col-' + _index + '" type="date" min="1899-01-01" max="' + currentDate + '" value="' + val + '" class="form-control form-control-sm" />';
       }else if( ds_type == 'timestamp' ){
-        filterInput = '<input name="dtprv-filter-col-' + _index + '" id="dtprv-filter-col-' + _index + '" type="datetime-local" min="1899-01-01T00:00" max="' + currentDate + 'T23:59" value="' + val + '" class="form-control form-control-sm" />';
+        // TODO: bring back timestamp field when we can do DateTime range filtering in datastore_search!!!
+        extraClasses = 'dtprv-filter-col-deactive';
+        filterInput = '<input tabindex="-1" name="dtprv-filter-col-' + _index + '" id="dtprv-filter-col-' + _index + '" type="datetime-local" min="1899-01-01T00:00" max="' + currentDate + 'T23:59" value="' + val + '" class="form-control form-control-sm" />';
       }else if( ds_type == 'int' || ds_type == 'bigint' ){
-        filterInput = '<input name="dtprv-filter-col-' + _index + '" id="dtprv-filter-col-' + _index + '" data-number-type="int" type="number" step="1" value="' + val + '" class="form-control form-control-sm" />';
+        filterInput = '<input name="dtprv-filter-col-' + _index + '" id="dtprv-filter-col-' + _index + '" placeholder="' + labelText + '" data-number-type="int" type="text" step="1" value="' + val + '" class="form-control form-control-sm" />';
       }else if( ds_type == 'numeric' || ds_type == 'float' || ds_type == 'double' ){
-        filterInput = '<input name="dtprv-filter-col-' + _index + '" id="dtprv-filter-col-' + _index + '" data-number-type="float" type="number" value="' + val + '" class="form-control form-control-sm" />';
+        filterInput = '<input name="dtprv-filter-col-' + _index + '" id="dtprv-filter-col-' + _index + '" placeholder="' + labelText + '" data-number-type="float" type="text" value="' + val + '" class="form-control form-control-sm" />';
       }else if( ds_type == 'money' ){
-        filterInput = '<input name="dtprv-filter-col-' + _index + '" id="dtprv-filter-col-' + _index + '" data-number-type="money" type="number" value="' + val + '" class="form-control form-control-sm" />';
+        filterInput = '<input name="dtprv-filter-col-' + _index + '" id="dtprv-filter-col-' + _index + '" placeholder="' + labelText + '" data-number-type="money" type="text" value="' + val + '" class="form-control form-control-sm" />';
       }
       footerContent = $.parseHTML('<span class="dtprv-filter-col ' + extraClasses + '"><label for="dtprv-filter-col-' + _index + '" class="sr-only">' + labelText + '</label>' + filterInput + '<button type="submit" class="btn btn-primary btn-small"><i aria-hidden="true" class="fas fa-search"></i><span class="sr-only">' + labelText + '</span></button></span>')[0];
     }
@@ -325,11 +351,16 @@ function load_pd_datatable(CKAN_MODULE){
       $(searchFilterInput).off('keyup.filterCol');
       $(searchFilterInput).on('keyup.filterCol', function(_event){
         let _fVal = $(searchFilterInput).val();
-        // TODO: pass real value...replace commas and spaces and dotssssss
+        let commaReplace = locale == 'fr' ? '.' : '';
         if( _event.keyCode == 13 && _column.search() !== _fVal ){
           if( numberType == 'int' && _fVal ){
-            $(searchFilterInput).val(Math.round(_fVal)).focus().blur();
+            _fVal = Math.round(_fVal.replace(' ', '').replace(',', commaReplace));
+          }else if( numberType == 'float' && _fVal ){
+            _fVal = parseFloat(_fVal.replace(',', commaReplace).replace(' ', ''));
+          }else if( numberType == 'money' && _fVal ){
+            _fVal = parseFloat(_fVal.replace('$', '').replace(' ', '').replace(',', commaReplace)).toFixed(2);
           }
+          $(searchFilterInput).val(_fVal).focus().blur();
           _column.search(_fVal).draw();
         }
       });
@@ -1778,9 +1809,7 @@ function load_pd_datatable(CKAN_MODULE){
       render_foreign_key_links();
       set_button_states();
       bind_readmore();
-      if( uri_filters ){
-        render_highlights();
-      }
+      render_highlights();
       render_no_records();
     }else{
       bind_table_editor();
@@ -1840,7 +1869,7 @@ function load_pd_datatable(CKAN_MODULE){
       search: {
         return: true
       },
-      searchHighlight: true,
+      searchHighlight: false,  // we have custom ones that improve it
       order: sortOrder,
       columns: availableColumns,
       dom: "Blfrtip",

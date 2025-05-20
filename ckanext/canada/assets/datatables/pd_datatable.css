@@ -576,6 +576,11 @@ body #dtprv_wrapper #dtprv-foot-main .dtprv-filter-col{
   flex-direction: row !important;
 }
 
+body #dtprv_wrapper #dtprv-foot-main .dtprv-filter-col.dtprv-filter-col-deactive{
+  pointer-events: none !important;
+  visibility: hidden !important;
+}
+
 /* body #dtprv_wrapper #dtprv-foot-main .dtprv-filter-col input:not([type="submit"]){
   width: 100% !important;
 } */
