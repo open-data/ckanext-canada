@@ -1,4 +1,4 @@
-{% if g.is_registry %}
+{% if h.is_registry_domain() %}
   {% import 'macros/form.html' as form %}
   <form id="user-register-form" role="form" action="" method="post" enctype="multipart/form-data">
     {{ h.csrf_input() }}

@@ -6,13 +6,15 @@
 
   {% ckan_extends %}
 
+  {% set is_registry = h.is_registry_domain() %}
+
   {%- block api_access_info -%}{%- endblock -%}
 
   {% block page_primary_action %}{% endblock %}
 
   {% block subtitle %}{{ _('Search Datasets') }}{% endblock %}
   {% block breadcrumb_content %}
-    {% if g.is_registry %}
+    {% if is_registry %}
       <li class="active">{{ h.nav_link(_('Datasets'), named_route='dataset.search', highlight_actions = 'new index') }}</li>
     {% else %}
       <li>{% link_for _('Search Open Government'), named_route='dataset_search' %}</li>
@@ -26,7 +28,7 @@
     </div>
     {% snippet 'snippets/dataset_facets.html', show_org_facet=true, search_facets=search_facets, facet_titles=facet_titles %}
     {% block extra_facets %}
-      {% if g.is_registry %}
+      {% if is_registry %}
         {{ h.snippet('snippets/publish_facet.html', search_facets=search_facets, facet_ranges=facet_ranges) }}
       {% endif %}
     {% endblock %}

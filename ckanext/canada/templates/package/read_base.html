@@ -1,5 +1,6 @@
 {% ckan_extends %}
 
+{% set is_registry = h.is_registry_domain() %}
 {% set pkg = pkg_dict %}
 {% set client_lang = h.lang() %}
 {% set schema = h.scheming_get_dataset_schema(pkg.type) %}
@@ -10,7 +11,7 @@
 
 {%- block subtitle -%}
   {% set title, mt = h.get_translated_t(pkg, 'title') %}
-  {% if g.is_registry and pkg.type in h.recombinant_get_types() %}
+  {% if is_registry and pkg.type in h.recombinant_get_types() %}
     {{ (title or pkg.name) ~ ' - ' ~ h.split_piped_bilingual_field(pkg.organization.title, h.lang()) | trim }}
   {% else %}
     {{ (title or pkg.name) | trim }}
@@ -18,7 +19,7 @@
 {%- endblock -%}
 
 {% block content_primary_nav %}
-  {% if g.is_registry %}
+  {% if is_registry %}
     {% set dataset_label = _('Dataset') %}
     {% if pkg.type in h.recombinant_get_types() %}
       {% set dataset_label = _(pkg.title) ~ ' - ' ~ h.split_piped_bilingual_field(pkg.organization.title, h.lang()) %}

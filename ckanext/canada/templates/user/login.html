@@ -1,7 +1,9 @@
 {% ckan_extends %}
 
+{% set is_registry = h.is_registry_domain() %}
+
 {% block primary_content %}
-  {% if g.is_registry %}
+  {% if is_registry %}
     <div class="mrgn-bttm-lg">
       {% trans %}login welcome text{% endtrans %}
       {% trans %}password reset alert{% endtrans %}
@@ -13,7 +15,7 @@
 {% endblock %}
 
 {% block secondary_content %}
-  {% if g.is_registry %}
+  {% if is_registry %}
     {% set reset_link = h.url_for('user.request_reset') %}
     {% set name_reset_link = h.url_for('canada.recover_username') %}
     <div class="panel panel-info">

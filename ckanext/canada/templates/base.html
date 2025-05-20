@@ -1,7 +1,9 @@
 {% ckan_extends %}
 
+{% set is_registry = h.is_registry_domain() %}
+
 {% block site_title %}
-  {% if g.is_registry %}
+  {% if is_registry %}
     <a href="{{ h.url_for('dataset.search') }}">{{ _('Open Data Registry') }}</a>
   {% else %}
     {{ super() }}
@@ -14,7 +16,7 @@
     <meta property="og:title" content="{{ self.title() }}">
   {% endblock %}
   {% block adobe_analytics_meta %}
-    {% if not g.is_registry %}
+    {% if not is_registry %}
       {% block adobe_analytics_title %}
         <meta property="dcterms:title" content="{{ self.title() }}" />
       {% endblock %}
@@ -54,7 +56,7 @@
 
 {%- block custom_styles -%}
   {% asset 'canada_public/css' %}
-  {% if g.is_registry %}
+  {% if is_registry %}
     {# Remove when WET v4.0.21 is out #}
     {% asset 'canada_internal/css' %}
   {% endif %}

@@ -1,8 +1,9 @@
 {% ckan_extends %}
 
+{% set is_registry = h.is_registry_domain() %}
 {% set url_action = 'resource.edit' if url_is_edit and can_edit else 'resource.read' %}
 {% set url = h.url_for('dataset_' + url_action, id=pkg.name, resource_id=res.id) %}
-{% if g.is_registry and 'is_resource_supported_by_xloader' in h %}
+{% if is_registry and 'is_resource_supported_by_xloader' in h %}
   {% set is_xloader_supported = h.is_resource_supported_by_xloader(res) %}
   {% set xloader_info = h.xloader_status(res.id) %}
 {% endif %}
@@ -53,7 +54,7 @@
 {% endblock %}
 
 {% block resource_item_description %}
-  {% if g.is_registry and is_xloader_supported %}
+  {% if is_registry and is_xloader_supported %}
     <div class="canada-resource-list-badges">
       {% if res.validation_status in ('success', 'unkown') %}
         {{- h.get_validation_badge(res, in_listing=True)|safe -}}
@@ -114,7 +115,7 @@
       </ul>
     </div>
   {% endif %}
-  {% if g.is_registry and is_xloader_supported %}
+  {% if is_registry and is_xloader_supported %}
     {% if res.validation_status in ('failure', 'error', 'deprecated_report') %}
       <div class="canada-resource-list-validation-info"><p><i aria-hidden="true" class="fas fa-exclamation-triangle"></i>&nbsp;{{ _('Resource data has failed validation.') }}<a href="{{ h.url_for('validation.read', id=pkg.name, resource_id=res.id) }}" class="btn btn-sm btn-danger">{{ _('View Report') }}</a></p></div>
     {% endif %}

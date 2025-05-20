@@ -1,7 +1,9 @@
 {% ckan_extends %}
 
+{% set is_registry = h.is_registry_domain() %}
+
 {% block breadcrumb_content %}
-  {% if g.is_registry %}
+  {% if is_registry %}
     {{ h.build_nav('admin.index', _('Admin')) }}
   {% else %}
     {{ super() }}
@@ -9,7 +11,7 @@
 {% endblock %}
 
 {% block content_primary_nav %}
-  {% if g.is_registry %}
+  {% if is_registry %}
     {{ h.build_nav_icon('canada.ckan_admin_index', _('Admins'), icon='user-plus') }}
     {{ h.build_nav_icon('user.index', _('Users'), icon='user') }}
     {{ h.build_nav_icon('admin.trash', _('Trash'), icon='trash') }}

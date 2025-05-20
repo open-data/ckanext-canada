@@ -1,5 +1,6 @@
 {% ckan_extends %}
 
+{% set is_registry = h.is_registry_domain() %}
 {% set organization = group_dict if action != 'new' else {} %}
 {%- set translated_title = h.get_translated(organization, 'title') -%}
 {% set org_member_count = member_count %}
@@ -21,7 +22,7 @@
 {% endblock %}
 
 {% block content_primary_nav %}
-  {% if g.is_registry %}
+  {% if is_registry %}
     {% if h.check_access('group_update', {'id': organization.id}) %}
       {{ h.build_nav_icon('organization.edit', _('Edit Organization'), id=organization.name, icon='pencil-square') }}
     {% endif %}
@@ -49,7 +50,7 @@
 
 {% block scripts %}
   {{ super() }}
-  {% if g.is_registry %}
+  {% if is_registry %}
     {% asset 'canada_internal/organization_edit' %}
   {% endif %}
 {% endblock %}

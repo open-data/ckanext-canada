@@ -1,5 +1,7 @@
 {% ckan_extends %}
 
+{% set is_registry = h.is_registry_domain() %}
+
 {% block adobe_analytics_creator %}
   {{ h.adobe_analytics_creator(organization=pkg.organization, package=pkg) }}
 {% endblock %}
@@ -14,7 +16,7 @@
     <div class="col-md-12">
       {# _site_messaging is handled by aliases in nginx to SMB #}
       {# has to be below title for a11y H3 after H1 #}
-      {% if g.is_registry %}
+      {% if is_registry %}
         <div data-ajax-replace="/static/_site_messaging/header_od_registry.{{ h.lang() }}"></div>
       {% else %}
         <div data-ajax-replace="/data/static/_site_messaging/header_od_ckan.{{ h.lang() }}"></div>
@@ -25,7 +27,7 @@
 
 {% block resource_actions %}
   {% set extra_classes = '' %}
-  {% if not g.is_registry or not h.check_access('package_update', {'id':pkg.id }) %}
+  {% if not is_registry or not h.check_access('package_update', {'id':pkg.id }) %}
     {% set extra_classes = 'resource-actions-toolbar-portal' %}
   {% endif %}
   <div class="resource-actions-toolbar {{ extra_classes }}">{{ super() }}</div>
@@ -41,7 +43,7 @@
 {% endblock %}
 
 {% block resource_content %}
-  {% if g.is_registry and 'is_resource_supported_by_xloader' in h and h.is_resource_supported_by_xloader(res) %}
+  {% if h.is_registry_domain() and 'is_resource_supported_by_xloader' in h and h.is_resource_supported_by_xloader(res) %}
     {% set xloader_info = h.xloader_status(res.id) %}
     {% if res.validation_status in ('failure', 'error', 'deprecated_report') %}
       <div class="canada-flash-messages"><div class="flash-messages"><div class="alert alert-dismissible fade show alert-danger">
