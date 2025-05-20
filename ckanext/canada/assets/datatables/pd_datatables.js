@@ -112,7 +112,7 @@ function load_pd_datatable(CKAN_MODULE){
   const saveButtonLabel = _('Save<span class="pd-datatbales-btn-count"></span>');
   const tableLanguage = {
     decimal: "",
-    emptyTable: _('No data available in table'),
+    emptyTable:  '<span id="pd-dtatable-no-records">' + _('No data available in table') + '</span>',
     info: _('Showing _START_ to _END_ of _TOTAL_ entries'),
     infoEmpty: _('Showing 0 to 0 of 0 entries'),
     infoFiltered: _('(filtered from _MAX_ total entries)'),
@@ -433,6 +433,7 @@ function load_pd_datatable(CKAN_MODULE){
       fieldInput += '</select>';
     }
     if( (typeof _chromo_field.form_snippet != 'undefined' && _chromo_field.form_snippet.includes('textarea')) || (typeof _chromo_field.markdown != 'undefined' && _chromo_field.markdown) ){
+      // TODO: auto resize when typing!!!
       fieldInput = '<textarea class="pd-datatable-editor-input ' + readOnlyClass + '" name=' + fieldID + '" id="' + fieldID + '" rows="1" data-primary-key="' + isPrimaryKey + '" data-row-index="' + _rowIndex + '" data-datastore-id="' + _chromo_field.datastore_id + '" ' + readOnly + ' tabindex="' + tabIndex + '">' + _value + '</textarea>';
     }
     return srLabel + fieldInput;
@@ -570,6 +571,9 @@ function load_pd_datatable(CKAN_MODULE){
       }
       if( typeof chromoFields[i].datatables_col_class != 'undefined' ){
         previewClass += ' pd-datatables-' + chromoFields[i].datatables_col_class + ' ';
+      }
+      if( chromoFields[i].datastore_id == 'record_created' || chromoFields[i].datastore_id == 'record_modified' ){
+        previewClass += ' pd-datatables-col-lg ';
       }
       availableColumns.push({
         "name": chromoFields[i].datastore_id,
@@ -1748,6 +1752,7 @@ function load_pd_datatable(CKAN_MODULE){
         $(_field).select2({
           'datastore-id': $(_field).attr('data-datastore-id'),
           'row-index': $(_field).attr('data-row-index'),
+          'allowClear': true,
         });
       }
     });

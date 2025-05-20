@@ -80,6 +80,7 @@ resources:
     form_attrs:
       size: 60
     markdown: true
+    datatables_col_class: col-xxl
 
   - datastore_id: case_description_fr
     label:
@@ -96,6 +97,7 @@ resources:
     form_attrs:
       size: 60
     markdown: true
+    datatables_col_class: col-xxl
 
   - datastore_id: findings_conclusions
     label:
@@ -112,6 +114,7 @@ resources:
     datastore_type: _text
     excel_full_text_choices: false
     datatables_full_text_choices: true
+    datatables_col_class: col-xl
     form_snippet: scheming/form_snippets/multiple_checkbox.html
     choices:
       a:
@@ -171,6 +174,7 @@ resources:
     form_attrs:
       style: "width: 100%; display: block"
     markdown: true
+    datatables_col_class: col-xxl
 
   - datastore_id: recommendations_corrective_measures_fr
     label:
@@ -195,6 +199,7 @@ resources:
     form_attrs:
       style: "width: 100%; display: block"
     markdown: true
+    datatables_col_class: col-xxl
 
   - datastore_id: record_created
     label: Record Creation Time
