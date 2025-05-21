@@ -11,7 +11,7 @@
             <p>{{ _("You can only add up to {max_resource_count} resources to a dataset. "
                     "You can segment your resources across multiple datasets or merge your "
                     "data to limit the number of resources. Please contact "
-                    "open-ouvert@tbs-sct.gc.ca if you need further assistance.").format(max_resource_count=max_resource_count) }}</p>
+                    "{support} if you need further assistance.").format(max_resource_count=max_resource_count, support=h.support_email_address()) }}</p>
           </section>
         </div>
       </div>

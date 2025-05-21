@@ -10,3 +10,9 @@ groups:
         validators: ignore_missing
         required: false
         type: list
+      - key: ckanext.canada.support_email_address
+        default: open-ouvert@tbs-sct.gc.ca
+        description: |
+            Email address of Open Canada support desk.
+        validators: ignore_missing
+        required: false
