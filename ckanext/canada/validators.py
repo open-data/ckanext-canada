@@ -233,7 +233,10 @@ def canada_maintainer_email_default(key: FlattenKey,
                                     errors: FlattenErrorDict,
                                     context: Context):
     """
-    Set to ckanext.canada.support_email_address if not given and no contact form given
+    Set to ckanext.canada.support_email_address
+    if not given and no contact form given.
+
+    This is an output validator.
     """
     em = data[key]
     cf = data.get(('maintainer_contact_form',), '')
