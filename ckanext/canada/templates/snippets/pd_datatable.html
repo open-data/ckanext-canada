@@ -164,8 +164,9 @@
                 {%- endfor -%}
               {%- endif -%}
               return ({{- default_error_eval|safe -}}) || ({{- ns.js_error_eval|safe -}});
+            {%- else -%}
+              return ({{- default_error_eval|safe -}});
             {%- endif -%}
-            return ({{- default_error_eval|safe -}});
           }
         },
       {% endfor %}

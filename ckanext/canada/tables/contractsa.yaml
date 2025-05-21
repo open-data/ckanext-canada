@@ -41,6 +41,7 @@ resources:
     excel_required: true
     datastore_type: year
     excel_error_formula: '{cell}>YEAR(TODAY())'
+    js_error_eval: 'VALUE.length > 0 && VALUE > new Date().getFullYear()'
 
   # 2.
   - datastore_id: contract_goods_number_of
