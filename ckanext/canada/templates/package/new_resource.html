@@ -1,5 +1,7 @@
 {% ckan_extends %}
 
+{% set is_registry = h.is_registry_domain() %}
+
 {% block primary_content %}
   <div class="row mrgn-tp-md canada-page-main-wrapper">
     <div class="col-md-12">
@@ -10,7 +12,7 @@
 
 {% block form %}
   {% set max_resource_count = h.max_resources_per_dataset() %}
-  {% if g.is_registry and max_resource_count and pkg_dict.resources|length >= max_resource_count %}
+  {% if is_registry and max_resource_count and pkg_dict.resources|length >= max_resource_count %}
     <div class="row">
       <div class="col-md-12 canada-flash-messages">
         <div>
@@ -30,7 +32,7 @@
 {% endblock %}
 
 {% block scripts %}
-  {% if g.is_registry %}
+  {% if is_registry %}
     <script type="text/javascript" src="{{ h.url_for_static('/registry_resource_edit.js') }}" ></script>
     {% asset 'canada_internal/guess_mimetype' %}
   {% endif %}
@@ -39,7 +41,7 @@
 
 {% block custom_styles %}
   {{ super() }}
-  {% if g.is_registry %}
+  {% if is_registry %}
     {% asset 'vendor/select2-css' %}
   {% endif %}
 {% endblock %}

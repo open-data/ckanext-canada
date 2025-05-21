@@ -1,5 +1,5 @@
 {% block ds_socialmedia %}
-  {% if not g.is_registry %}
+  {% if not h.is_registry_domain() %}
     <div class="panel panel-primary">
       {% set pkg = pkg_dict %}
       <div class="panel-heading"><div class="panel-title">{{ _('Have your say') }}</div></div>

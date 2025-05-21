@@ -1,5 +1,7 @@
 {% ckan_extends %}
 
+{% set is_registry = h.is_registry_domain() %}
+
 {% block page %}
   {%- block header %}
     {% macro breadcrumb_content() %}
@@ -10,7 +12,7 @@
   {% block toolbar %}{% endblock %}
   {% set lang = h.lang() %}
   {% block content %}
-    {% if g.is_registry %}
+    {% if is_registry %}
       {% if g.userobj and h.get_timeout_length() %}
         <div class="modal fade" id="timeout" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
           <div class="modal-dialog modal-dialog-centered" role="document">
@@ -50,7 +52,7 @@
         {% endblock flash %}
         <main role="main" property="mainContentOfPage" class="container">
           {% block page_title %}
-            {% if g.is_registry %}
+            {% if is_registry %}
               <div id="ie_warning" class="alert alert-warning" style="display: none">
                 <p>{{ _('Internet Explorer is no longer being supported within the Open Government Registry. Some features will not work as expected, including publication of records. Please use MS Edge or Google Chrome, or contact <a href="mailto:open-ouvert@tbs-sct.gc.ca">open-ouvert@tbs-sct.gc.ca</a> for additional support.') | safe }}</p>
               </div>
@@ -68,7 +70,7 @@
               <div class="col-md-12">
                 {# _site_messaging is handled by aliases in nginx to SMB #}
                 {# has to be below title for a11y H3 after H1 #}
-                {% if g.is_registry %}
+                {% if is_registry %}
                   <div data-ajax-replace="/static/_site_messaging/header_od_registry.{{ h.lang() }}"></div>
                 {% else %}
                   <div data-ajax-replace="/data/static/_site_messaging/header_od_ckan.{{ h.lang() }}"></div>
@@ -135,12 +137,12 @@
   {% snippet 'snippets/cdts/footer_scripts.html' %}
   {% asset 'canada_public/analytics' %}
   {% block google_analytics_footer %}
-    {% if g.is_registry %}
+    {% if is_registry %}
       {% asset 'canada_internal/analytics' %}
     {% endif %}
   {%- endblock -%}
   {{ super() }}
-  {% if g.is_registry %}
+  {% if is_registry %}
     {%- block session_timeout -%}
       {% if g.userobj and h.get_timeout_length() %}
         <script>

@@ -13,7 +13,7 @@
 <script>
   let appTop = document.getElementById("app-top");
   if( appTop ){
-    {% if g.is_registry %}
+    {% if h.is_registry_domain() %}
       const menuLinks = [
         {% if g.userobj %}
           {
