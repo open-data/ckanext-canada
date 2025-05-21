@@ -56,6 +56,7 @@ resources:
           fr: "Titre du projet (en anglais)"
         obligation: Mandatory
         occurrence: Single
+        datatables_col_class: col-lg
         validation: "This field must not be empty"
         visible_to_public: true
 
@@ -73,6 +74,7 @@ resources:
           fr: "Titre du projet (en français)"
         obligation: Mandatory
         occurrence: Single
+        datatables_col_class: col-lg
         validation: "This field must not be empty"
         visible_to_public: true
 
@@ -84,6 +86,7 @@ resources:
         excel_column_width: 50
         excel_required: true
         format_type: "Free text"
+        datatables_col_class: col-xl
         form_attrs:
           size: 120
         label:
@@ -102,6 +105,7 @@ resources:
         excel_column_width: 50
         excel_required: true
         format_type: "Free text"
+        datatables_col_class: col-xl
         form_attrs:
           size: 120
         label:
@@ -118,6 +122,7 @@ resources:
           en: "This field summarizes the key information about the project, including any findings once the initiative is completed, in English"
           fr: "Ce champ résumera les information-clés à propos du projet, y compris les résultats lorque le projet est complété, en anglais"
         excel_column_width: 50
+        datatables_col_class: col-xxl
         excel_required: true
         format_type: "Free Text (separate paragraphs with two blank lines)"
         form_snippet: scheming/form_snippets/textarea.html
@@ -137,6 +142,7 @@ resources:
           en: "This field summarizes the key information about the project, including any findings once the initiatve is completed, in French"
           fr: "Ce champ résumera les information-clés à propos du projet, y compris les résultats lorque le projet est complété, en français"
         excel_column_width: 50
+        datatables_col_class: col-xxl
         excel_required: true
         format_type: "Free Text (separate paragraphs with two blank lines)"
         form_snippet: scheming/form_snippets/textarea.html
@@ -244,6 +250,7 @@ resources:
           en: "This field will describe the details of the research design used for the project."
           fr: "Ce champ décrira les détails du devis de recherche employé dans le projet."
         excel_column_width: 50
+        datatables_col_class: col-xxl
         excel_required: true
         format_type: "Free Text (separate paragraphs with two blank lines)"
         form_snippet: scheming/form_snippets/textarea.html
@@ -263,6 +270,7 @@ resources:
           en: "This field will describe the details of the research design used for the project."
           fr: "Ce champ décrira les détails du devis de recherche employé dans le projet."
         excel_column_width: 50
+        datatables_col_class: col-xxl
         excel_required: true
         format_type: "Free Text (separate paragraphs with two blank lines)"
         form_snippet: scheming/form_snippets/textarea.html
@@ -282,6 +290,7 @@ resources:
           en: "This field will describe the intervention tested in the project."
           fr: "Ce champ décrira l’intervention testée dans le projet."
         excel_column_width: 50
+        datatables_col_class: col-xxl
         excel_required: true
         format_type: "Free Text (separate paragraphs with two blank lines)"
         form_snippet: scheming/form_snippets/textarea.html
@@ -301,6 +310,7 @@ resources:
           en: "This field will describe the intervention tested in the project."
           fr: "Ce champ décrira l’intervention testée dans le projet."
         excel_column_width: 50
+        datatables_col_class: col-xxl
         excel_required: true
         format_type: "Free Text (separate paragraphs with two blank lines)"
         form_snippet: scheming/form_snippets/textarea.html
@@ -320,6 +330,7 @@ resources:
           en: "This field will describe the intervention tested in the project."
           fr: "Ce champ décrira l’intervention testée dans le projet."
         excel_column_width: 50
+        datatables_col_class: col-xxl
         excel_required: true
         format_type: "Free Text (separate paragraphs with two blank lines)"
         form_snippet: scheming/form_snippets/textarea.html
@@ -339,6 +350,7 @@ resources:
           en: "This field will describe the outcomes measured in the project."
           fr: "Ce champ décrira la/les mesure(s) de résultat(s) employée(s) dans le projet."
         excel_column_width: 50
+        datatables_col_class: col-xxl
         excel_required: true
         format_type: "Free Text (separate paragraphs with two blank lines)"
         form_snippet: scheming/form_snippets/textarea.html
@@ -358,6 +370,7 @@ resources:
           en: "This field will describe the outcomes measured in the project."
           fr: "Ce champ décrira la/les mesure(s) de résultat(s) employée(s) dans le projet."
         excel_column_width: 50
+        datatables_col_class: col-xxl
         excel_required: true
         format_type: "Free Text (separate paragraphs with two blank lines)"
         form_snippet: scheming/form_snippets/textarea.html
@@ -377,6 +390,7 @@ resources:
           en: "This field will describe the findings of the project."
           fr: "Ce champ décrira les résultats observés dans le projet."
         excel_column_width: 50
+        datatables_col_class: col-xxl
         excel_required: true
         format_type: "Free Text (separate paragraphs with two blank lines)"
         form_snippet: scheming/form_snippets/textarea.html
@@ -424,6 +438,7 @@ resources:
           en: "This field describes the organizational structure tied to the project owner (if applicable), in English"
           fr: "Ce champ décrira la structure organisationnelle liée à ce projet (si applicable), en anglais"
         excel_column_width: 35
+        datatables_col_class: col-lg
         excel_required: false
         format_type: "Free text"
         label:
@@ -440,6 +455,7 @@ resources:
           en: "This field describes the organizational structure tied to the project owner (if applicable), in French."
           fr: "Ce champ décrira la structure organisationnelle liée à ce projet (si applicable), en français"
         excel_column_width: 35
+        datatables_col_class: col-lg
         excel_required: false
         format_type: "Free text"
         label:
@@ -456,6 +472,7 @@ resources:
           en: "This field includes a URL link to additional information on the project (e.g. report, blog post, etc.), in English."
           fr: "Ce champ incluera un lien URL fournissant des information additionnelles (p.ex. rapport, blogue), en anglais."
         excel_column_width: 50
+        datatables_col_class: col-lg
         excel_required: false
         format_type: "Free text"
         form_snippet: scheming/form_snippets/textarea.html
@@ -475,6 +492,7 @@ resources:
           en: "This field includes a URL link to additional information on the project (e.g. report, blog post, etc.), in Frencjh."
           fr: "Ce champ incluera un lien URL fournissant des information additionnelles (p.ex. rapport, blogue), en français."
         excel_column_width: 50
+        datatables_col_class: col-lg
         excel_required: false
         format_type: "Free text"
         form_snippet: scheming/form_snippets/textarea.html

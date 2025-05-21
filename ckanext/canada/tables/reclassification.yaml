@@ -84,6 +84,7 @@ resources:
     form_required: true
     validation: This field must not be empty
     format_type: Free text
+    datatables_col_class: col-xl
     excel_column_width: 30
     form_attrs:
       size: 60
@@ -98,6 +99,7 @@ resources:
     form_required: true
     validation: This field must not be empty
     format_type: Free text
+    datatables_col_class: col-xl
     excel_column_width: 30
     form_attrs:
       size: 60
@@ -115,6 +117,7 @@ resources:
     excel_full_text_choices: true
     datatables_full_text_choices: true
     form_choices_prefix_code: true
+    datatables_col_class: col-md
     choices_file: choices/classification_group.yaml
     excel_error_formula: 'FALSE'
 
@@ -145,6 +148,7 @@ resources:
     excel_full_text_choices: true
     datatables_full_text_choices: true
     form_choices_prefix_code: true
+    datatables_col_class: col-md
     choices_file: choices/classification_group.yaml
     excel_error_formula: 'FALSE'
 
@@ -168,6 +172,7 @@ resources:
       en: Previous Supervisory Differential
       fr: Ancienne prime de surveillance
     format_type: Free Text
+    datatables_col_class: col-md
     form_attrs:
       size: 60
 
@@ -177,6 +182,7 @@ resources:
       en: Reclassified Supervisory Differential
       fr: Prime de surveillance précédente
     format_type: Free Text
+    datatables_col_class: col-md
     form_attrs:
       size: 60
 
@@ -189,6 +195,7 @@ resources:
     excel_required: true
     form_required: true
     format_type: Free Text
+    datatables_col_class: col-xl
     validation: This field must not be empty
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
@@ -203,6 +210,7 @@ resources:
     excel_required: true
     form_required: true
     format_type: Free Text
+    datatables_col_class: col-xl
     validation: This field must not be empty
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
@@ -312,6 +320,7 @@ resources:
     validation: This field must not be empty
     excel_column_width: 10
     extract_date_year: true
+    datatables_col_class: col-md
     excel_error_formula: '{cell}>YEAR(TODAY())'
 
   - datastore_id: quarter
@@ -323,6 +332,7 @@ resources:
     obligation: Mandatory
     excel_required: true
     form_required: true
+    datatables_col_class: col-sm pd-datatables-primary-key-offset-md
     validation: This field must not be empty
     excel_full_text_choices: true
     datatables_full_text_choices: true

@@ -38,6 +38,7 @@ resources:
       fr: Ce champ montre l’année de clôture de l’exercice financier en cours (31 mars AAAA).
     datastore_type: year
     form_required: true
+    datatables_col_class: col-md
     excel_error_formula: '{cell}>YEAR(TODAY())'
 
   - datastore_id: mandate_description_en
@@ -59,6 +60,7 @@ resources:
     format_type: Free text
     validation: This field must not be empty
     datastore_type: text
+    datatables_col_class: col-lg
     excel_column_width: 50
     form_required: true
     form_snippet: scheming/form_snippets/textarea.html
@@ -84,6 +86,7 @@ resources:
     format_type: Free text
     validation: This field must not be empty
     datastore_type: text
+    datatables_col_class: col-lg
     excel_column_width: 50
     form_required: true
     form_snippet: scheming/form_snippets/textarea.html
@@ -407,6 +410,7 @@ resources:
       en: Provide a brief explanation, in English, of the significant reason(s) for the increase/decrease in annual expenditures for travel of public servants and non-public servants.
       fr: Expliquez brièvement, en anglais, la ou les raisons significatives de l’augmentation ou de la diminution des dépenses annuelles de voyage pour les fonctionnaires et non-fonctionnaires.
     datastore_type: text
+    datatables_col_class: col-xxl
     excel_column_width: 50
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
@@ -429,6 +433,7 @@ resources:
       en: Provide a brief explanation, in French, of the significant reason(s) for the increase/decrease in annual expenditures for travel of public servants and non-public servants.
       fr: Expliquez brièvement, en français, la ou les raisons significatives de l’augmentation ou de la diminution des dépenses annuelles de voyage pour les fonctionnaires et non-fonctionnaires.
     datastore_type: text
+    datatables_col_class: col-xxl
     excel_column_width: 50
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
@@ -451,6 +456,7 @@ resources:
       en: Provide a brief explanation, in English, of the significant reason(s) for the increase/decrease in annual expenditures for hospitality.
       fr: Expliquez brièvement, en anglais, la ou les raisons significatives de l’augmentation ou de la diminution des dépenses annuelles d’accueil.
     datastore_type: text
+    datatables_col_class: col-xxl
     excel_column_width: 50
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
@@ -473,6 +479,7 @@ resources:
       en: Provide a brief explanation, in French, of the significant reason(s) for the increase/decrease in annual expenditures for hospitality.
       fr: Expliquez brièvement, en français, la ou les raisons significatives de l’augmentation ou de la diminution des dépenses annuelles d’accueil.
     datastore_type: text
+    datatables_col_class: col-xxl
     excel_column_width: 50
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
@@ -495,6 +502,7 @@ resources:
       en: Provide a brief explanation, in English, of the significant reason(s) for the increase/decrease in annual expenditures for conference fees.
       fr: Expliquez brièvement, en anglais, la ou les raisons significatives de l’augmentation ou de la diminution des dépenses annuelles de conférences.
     datastore_type: text
+    datatables_col_class: col-xxl
     excel_column_width: 50
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
@@ -517,6 +525,7 @@ resources:
       en: Provide a brief explanation, in French, of the significant reason(s) for the increase/decrease in annual expenditures for conference fees.
       fr: Expliquez brièvement, en français, la ou les raisons significatives de l’augmentation ou de la diminution des dépenses annuelles de conférences
     datastore_type: text
+    datatables_col_class: col-xxl
     excel_column_width: 50
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
@@ -539,6 +548,7 @@ resources:
       en: Provide a brief explanation, in English, of the significant reason(s) for the increase/decrease in annual expenditures for international travel by the minister and minister's staff.
       fr: Expliquez brièvement, en anglais, la ou les raisons significatives de l’augmentation ou de la diminution des dépenses annuelles de voyage à l’étranger pour le ministre et son personnel.
     datastore_type: text
+    datatables_col_class: col-xxl
     excel_column_width: 50
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
@@ -562,6 +572,7 @@ resources:
       en: Provide a brief explanation, in French, of the significant reason(s) for the increase/decrease in annual expenditures for international travel by the minister and minister's staff.
       fr: Expliquez brièvement, en français, la ou les raisons significatives de l’augmentation ou de la diminution des dépenses annuelles de voyage à l’étranger pour le ministre et son personnel.
     datastore_type: text
+    datatables_col_class: col-xxl
     excel_column_width: 50
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:

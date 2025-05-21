@@ -52,6 +52,7 @@ resources:
     validation: This field must not be empty
     occurrence: Single
     datastore_type: text
+    datatables_col_class: col-lg
     excel_column_width: 28
     form_attrs:
       size: 60
@@ -71,6 +72,7 @@ resources:
     validation: This field must not be empty
     occurrence: Single
     datastore_type: text
+    datatables_col_class: col-lg
     excel_column_width: 28
     form_attrs:
       size: 60
@@ -90,6 +92,7 @@ resources:
     validation: This field must not be empty
     occurrence: Single
     datastore_type: text
+    datatables_col_class: col-lg
     excel_column_width: 28
     form_attrs:
       size: 60
@@ -109,6 +112,7 @@ resources:
     validation: This field must not be empty
     occurrence: Single
     datastore_type: text
+    datatables_col_class: col-lg
     excel_column_width: 28
     form_attrs:
       size: 60
@@ -128,6 +132,7 @@ resources:
     validation: This field must not be empty
     occurrence: Single
     datastore_type: text
+    datatables_col_class: col-md
     excel_column_width: 20
     excel_full_text_choices: true
     datatables_full_text_choices: true
@@ -203,6 +208,7 @@ resources:
     validation: None
     occurrence: Single
     datastore_type: text
+    datatables_col_class: col-xl
     excel_column_width: 35
     js_required_eval: '{{additional_information_fr}}.length > 0'
     form_snippet: scheming/form_snippets/textarea.html
@@ -223,6 +229,7 @@ resources:
     validation: None
     occurrence: Single
     datastore_type: text
+    datatables_col_class: col-xl
     excel_column_width: 35
     js_required_eval: '{{additional_information_en}}.length > 0'
     form_snippet: scheming/form_snippets/textarea.html
@@ -331,6 +338,7 @@ resources:
     validation: This field must not be empty
     excel_column_width: 10
     extract_date_year: true
+    datatables_col_class: col-md
     form_attrs:
       size: 20
 
@@ -350,6 +358,7 @@ resources:
     obligation: Mandatory
     form_required: true
     excel_required: true
+    datatables_col_class: col-sm pd-datatables-primary-key-offset-md
     excel_column_width: 18
     excel_error_formula: 'OR({default_formula},{cell}<1,{cell}>12)'
     solr_month_names: true

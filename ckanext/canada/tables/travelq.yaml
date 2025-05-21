@@ -70,6 +70,7 @@ resources:
       en: Required if "Travel End Date" is on or after April 1st 2025
       fr: Requis si la "date de fin du voyage" est le 1er avril 2025 ou après
     format_type: Controlled List
+    datatables_col_class: col-lg
     choices:
       MPSES:
         en: Minister/Ministerial adviser/Ministerial staff/Parliamentary Secretary/Exempt Staff
@@ -92,6 +93,7 @@ resources:
     form_required: true
     validation: This field must not be empty
     format_type: Free text
+    datatables_col_class: col-lg
     excel_column_width: 30
     form_attrs:
       size: 60
@@ -110,6 +112,7 @@ resources:
     form_required: true
     validation: This field must not be empty
     format_type: Free text
+    datatables_col_class: col-lg
     excel_column_width: 30
     form_attrs:
       size: 60
@@ -128,6 +131,7 @@ resources:
     form_required: true
     validation: This field must not be empty
     format_type: Free text
+    datatables_col_class: col-lg
     excel_column_width: 30
     form_attrs:
       size: 60
@@ -152,6 +156,7 @@ resources:
     form_required: true
     validation: This field must not be empty
     format_type: Free text
+    datatables_col_class: col-xl
     form_attrs:
       size: 60
 
@@ -175,6 +180,7 @@ resources:
     form_required: true
     validation: This field must not be empty
     format_type: Free text
+    datatables_col_class: col-xl
     form_attrs:
       size: 60
 
@@ -249,6 +255,7 @@ resources:
     excel_required: true
     # Dev NOTE: excel_error_formula: Excel and Open Office Calc parity issues with REGEX. REGEX does not exist in Excel.
     form_required: true
+    datatables_col_class: col-lg
     validation:
       en: |
         This field must not be empty
@@ -286,6 +293,7 @@ resources:
     excel_required: true
     # Dev NOTE: excel_error_formula: Excel and Open Office Calc parity issues with REGEX. REGEX does not exist in Excel.
     form_required: true
+    datatables_col_class: col-lg
     validation:
       en: |
         This field must not be empty
@@ -324,6 +332,7 @@ resources:
     # Dev NOTE: excel_error_formula: Excel and Open Office Calc parity issues with REGEX. REGEX does not exist in Excel.
     excel_required_formula: NOT(ISBLANK({destination_2_fr}))
     form_required: false
+    datatables_col_class: col-lg
     validation:
       en: |
         Must be in the format of <City Name>, <State/Province Name>, <Country Name> for Canada and US, or <City Name>, <Country Name> for international
@@ -360,6 +369,7 @@ resources:
     # Dev NOTE: excel_error_formula: Excel and Open Office Calc parity issues with REGEX. REGEX does not exist in Excel.
     excel_required_formula: NOT(ISBLANK({destination_2_en}))
     form_required: false
+    datatables_col_class: col-lg
     validation:
       en: |
         Must be in the format of <City Name>, <State/Province Name>, <Country Name> for Canada and US, or <City Name>, <Country Name> for international
@@ -396,6 +406,7 @@ resources:
     # Dev NOTE: excel_error_formula: Excel and Open Office Calc parity issues with REGEX. REGEX does not exist in Excel.
     excel_required_formula: NOT(ISBLANK({destination_other_fr}))
     form_required: false
+    datatables_col_class: col-xl
     validation:
       en: |
         Must be in the format of <City Name>, <State/Province Name>, <Country Name>;<City 2 Name>, <Country 2 Name>
@@ -432,6 +443,7 @@ resources:
     # Dev NOTE: excel_error_formula: Excel and Open Office Calc parity issues with REGEX. REGEX does not exist in Excel.
     excel_required_formula: NOT(ISBLANK({destination_other_en}))
     form_required: false
+    datatables_col_class: col-xl
     validation:
       en: |
         Must be in the format of <City Name>, <State/Province Name>, <Country Name>;<City 2 Name>, <Country 2 Name>
@@ -575,6 +587,7 @@ resources:
       fr: Ce champ peut indiquer des commentaires supplémentaires en anglais.
     obligation: Optional
     format_type: Free text
+    datatables_col_class: col-xxl
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
       style: "width: 100%; display: block"
@@ -588,6 +601,7 @@ resources:
       fr: Ce champ peut indiquer des commentaires supplémentaires en français.
     obligation: Optional
     format_type: Free text
+    datatables_col_class: col-xxl
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
       style: "width: 100%; display: block"
@@ -770,6 +784,7 @@ resources:
     form_required: true
     validation: This field must not be empty
     excel_column_width: 10
+    datatables_col_class: col-md
     extract_date_year: true
     form_attrs:
       size: 20
@@ -791,6 +806,7 @@ resources:
     obligation: Mandatory
     excel_required: true
     form_required: true
+    datatables_col_class: col-sm pd-datatables-primary-key-offset-md
     validation: This field must not be empty
     excel_full_text_choices: true
     datatables_full_text_choices: true

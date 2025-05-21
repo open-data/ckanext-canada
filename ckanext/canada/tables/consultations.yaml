@@ -85,6 +85,7 @@ resources:
     visible_to_public: Yes
     occurrence: Repeatable
     datastore_type: _text
+    datatables_col_class: col-lg
     excel_full_text_choices: true
     datatables_full_text_choices: true
     choices_file: choices/consultation_org.yaml
@@ -107,6 +108,7 @@ resources:
     occurrence: Repeatable
     datastore_type: _text
     excel_column_width: 30
+    datatables_col_class: col-lg
     excel_full_text_choices: true
     datatables_full_text_choices: true
     choices_file: choices/consultation_subject.yaml
@@ -128,6 +130,7 @@ resources:
     occurrence: Single
     datastore_type: text
     excel_column_width: 30
+    datatables_col_class: col-xl
     form_attrs:
       size: 60
 
@@ -148,6 +151,7 @@ resources:
     occurrence: Single
     datastore_type: text
     excel_column_width: 30
+    datatables_col_class: col-xl
     form_attrs:
       size: 60
 
@@ -168,6 +172,7 @@ resources:
     visible_to_public: Yes
     occurrence: Repeatable
     datastore_type: text
+    datatables_col_class: col-xxl
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
       style: "width: 100%; display: block"
@@ -189,6 +194,7 @@ resources:
     visible_to_public: Yes
     occurrence: Repeatable
     datastore_type: text
+    datatables_col_class: col-xxl
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
       style: "width: 100%; display: block"
@@ -210,6 +216,7 @@ resources:
     visible_to_public: Yes
     occurrence: Repeatable
     datastore_type: _text
+    datatables_col_class: col-xl
     excel_full_text_choices: true
     datatables_full_text_choices: true
     choices_file: choices/consultation_audience.yaml
@@ -304,6 +311,7 @@ resources:
     visible_to_public: Yes
     occurrence: Single
     datastore_type: text
+    datatables_col_class: col-lg
     form_attrs:
       size: 60
 
@@ -322,6 +330,7 @@ resources:
     visible_to_public: Yes
     occurrence: Single
     datastore_type: text
+    datatables_col_class: col-lg
     form_attrs:
       size: 60
 
@@ -365,6 +374,7 @@ resources:
     visible_to_public: Yes
     occurrence: Single
     datastore_type: text
+    datatables_col_class: col-lg
     js_required_eval: '{{report_link_fr}}.length > 0'
     form_attrs:
       size: 60
@@ -383,6 +393,7 @@ resources:
     visible_to_public: Yes
     occurrence: Single
     datastore_type: text
+    datatables_col_class: col-lg
     js_required_eval: '{{report_link_en}}.length > 0'
     form_attrs:
       size: 60
@@ -401,6 +412,7 @@ resources:
     visible_to_public: No
     occurrence: Single
     datastore_type: text
+    datatables_col_class: col-lg
     form_attrs:
       size: 40
 
@@ -418,6 +430,7 @@ resources:
     visible_to_public: No
     occurrence: Single
     datastore_type: text
+    datatables_col_class: col-lg
     form_attrs:
       size: 40
 
@@ -436,6 +449,7 @@ resources:
     visible_to_public: No
     occurrence: Repeatable
     datastore_type: text
+    datatables_col_class: col-xxl
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
       style: "width: 100%; display: block"
@@ -455,6 +469,7 @@ resources:
     visible_to_public: No
     occurrence: Repeatable
     datastore_type: text
+    datatables_col_class: col-xxl
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
       style: "width: 100%; display: block"
@@ -501,6 +516,7 @@ resources:
     visible_to_public: Yes
     occurrence: Repeatable
     datastore_type: _text
+    datatables_col_class: col-lg
     excel_full_text_choices: true
     datatables_full_text_choices: true
     choices:

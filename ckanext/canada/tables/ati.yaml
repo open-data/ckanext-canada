@@ -315,7 +315,7 @@ resources:
     datastore_type: year
     form_attrs:
       size: 10
-    datatables_col_class: col-sm
+    datatables_col_class: col-md
     form_required: true
     excel_required: true
     excel_column_width: 13
@@ -334,7 +334,7 @@ resources:
     datastore_type: month
     form_attrs:
       size: 5
-    datatables_col_class: col-xs
+    datatables_col_class: col-sm pd-datatables-primary-key-offset-md
     form_required: true
     excel_required: true
     excel_column_width: 18

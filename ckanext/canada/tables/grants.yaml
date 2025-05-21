@@ -51,6 +51,7 @@ resources:
     form_required: true
     format_type: Free text
     datastore_type: text
+    datatables_col_class: col-lg
 
   # 3.2 Amendment Number (New Field)
   - datastore_id: amendment_number
@@ -65,6 +66,7 @@ resources:
     form_required: true
     format_type: Numeric only
     datastore_type: int
+    datatables_col_class: col-sm pd-datatables-primary-key-offset-lg
 
   # 3.3 Amendment Date (New Field)
   - datastore_id: amendment_date
@@ -190,6 +192,7 @@ resources:
     form_required: true
     format_type: Free text
     datastore_type: text
+    datatables_col_class: col-lg
     form_attrs:
       size: 60
 
@@ -209,6 +212,7 @@ resources:
         Traduction seulement si le nom est fourni dans les deux langues officielles par le bénéficiaire. Fournir dans le format suivant : nom anglais|nom français.
     format_type: Free text
     datastore_type: text
+    datatables_col_class: col-lg
     form_attrs:
       size: 60
 
@@ -229,6 +233,7 @@ resources:
     obligation: Optional
     format_type: Free text
     datastore_type: text
+    datatables_col_class: col-lg
     form_attrs:
       size: 60
 
@@ -243,6 +248,7 @@ resources:
     obligation: Mandatory
     excel_required: true
     form_required: true
+    datatables_col_class: col-md
     format_type: Controlled List
     datastore_type: text
     choices_file: choices/country.json
@@ -325,6 +331,7 @@ resources:
     form_required: true
     format_type: Free text
     datastore_type: text
+    datatables_col_class: col-lg
     form_attrs:
       size: 60
 
@@ -357,6 +364,7 @@ resources:
     obligation: Optional
     format_type: Free text
     datastore_type: text
+    datatables_col_class: col-md
     form_attrs:
       size: 60
 
@@ -371,6 +379,7 @@ resources:
     obligation: Optional
     format_type: Free text
     datastore_type: text
+    datatables_col_class: col-md
     form_attrs:
       size: 60
 
@@ -397,6 +406,7 @@ resources:
     obligation: Optional
     format_type: Free text
     datastore_type: text
+    datatables_col_class: col-lg
     form_attrs:
       size: 60
 
@@ -411,6 +421,7 @@ resources:
     obligation: Optional
     format_type: Free text
     datastore_type: text
+    datatables_col_class: col-lg
     form_attrs:
       size: 60
 
@@ -425,6 +436,7 @@ resources:
     obligation: Optional
     format_type: Free text
     datastore_type: text
+    datatables_col_class: col-xxl
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
       style: "width: 100%; display: block"
@@ -441,6 +453,7 @@ resources:
     obligation: Optional
     format_type: Free text
     datastore_type: text
+    datatables_col_class: col-xxl
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
       style: "width: 100%; display: block"
@@ -457,6 +470,7 @@ resources:
     obligation: Optional
     format_type: Free text
     datastore_type: text
+    datatables_col_class: col-lg
     form_attrs:
       size: 60
 
@@ -471,6 +485,7 @@ resources:
     obligation: Optional
     format_type: Free text
     datastore_type: text
+    datatables_col_class: col-lg
     form_attrs:
       size: 60
 
@@ -581,6 +596,7 @@ resources:
     obligation: Optional
     format_type: Free text; separate entries with a “;” and include bilingual entries, where applicable, separated with a “│”
     datastore_type: text
+    datatables_col_class: col-lg
     form_attrs:
       size: 60
 
@@ -597,6 +613,7 @@ resources:
     form_required: true
     format_type: Free text
     datastore_type: text
+    datatables_col_class: col-xl
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
       style: "width: 100%; display: block"
@@ -615,6 +632,7 @@ resources:
     form_required: true
     format_type: Free text
     datastore_type: text
+    datatables_col_class: col-xl
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
       style: "width: 100%; display: block"
@@ -653,6 +671,7 @@ resources:
     obligation: Optional
     format_type: Free text
     datastore_type: text
+    datatables_col_class: col-xxl
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
       style: "width: 100%; display: block"
@@ -669,6 +688,7 @@ resources:
     obligation: Optional
     format_type: Free text
     datastore_type: text
+    datatables_col_class: col-xxl
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
       style: "width: 100%; display: block"
@@ -709,6 +729,7 @@ resources:
     obligation: Optional
     format_type: Free text
     datastore_type: text
+    datatables_col_class: col-xxl
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
       style: "width: 100%; display: block"
@@ -749,6 +770,7 @@ resources:
     obligation: Optional
     format_type: Free text
     datastore_type: text
+    datatables_col_class: col-xxl
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
       style: "width: 100%; display: block"
@@ -910,6 +932,7 @@ resources:
     excel_required: true
     form_required: true
     extract_date_year: true
+    datatables_col_class: col-md
     choices_file: choices/fiscal_year.yaml
 
   - datastore_id: quarter
@@ -920,6 +943,7 @@ resources:
     obligation: Mandatory
     excel_required: true
     form_required: true
+    datatables_col_class: col-sm pd-datatables-primary-key-offset-md
     choices:
       Q1:
         en: April 1 - June 30

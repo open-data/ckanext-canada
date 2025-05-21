@@ -636,7 +636,6 @@ body #dtprv .pd-datatable-readmore span.show{
 
 body #dtprv_wrapper[data-compact-view="false"] .pd-datatables-primary-key-fixed{
   /* FIXME: margin in KeyTableing when going backwards is a bit bad... */
-  /* FIXME: multiple primary keys... */
   position: sticky !important;
   left: 0;
   background-color: white !important;
@@ -661,7 +660,79 @@ body #dtprv_wrapper .pd-datatable-choice-title{
 
 body #dtprv_wrapper[data-compact-view="false"] .dt-scroll-head th:not(:first-of-type).pd-datatables-primary-key-fixed,
 body #dtprv_wrapper[data-compact-view="false"] #dtprv-foot-main .pd-datatables-primary-key-fixed{
-  left: 36px !important;
+  left: 36px;
+}
+
+body #dtprv_wrapper[data-compact-view="false"] .pd-datatables-primary-key-offset-xxs{
+  left: 75px;
+}
+
+body #dtprv_wrapper[data-compact-view="false"] .dt-scroll-head th:not(:first-of-type).pd-datatables-primary-key-offset-xxs
+body #dtprv_wrapper[data-compact-view="false"] #dtprv-foot-main .pd-datatables-primary-key-offset-xxs{
+  left: calc(75px + 36px);
+}
+
+body #dtprv_wrapper[data-compact-view="false"] .pd-datatables-primary-key-offset-xs{
+  left: 100px;
+}
+
+body #dtprv_wrapper[data-compact-view="false"] .dt-scroll-head th:not(:first-of-type).pd-datatables-primary-key-offset-xs,
+body #dtprv_wrapper[data-compact-view="false"] #dtprv-foot-main .pd-datatables-primary-key-offset-xs{
+  left: calc(100px + 36px);
+}
+
+body #dtprv_wrapper[data-compact-view="false"] .pd-datatables-primary-key-offset-sm{
+  left: 135px;
+}
+
+body #dtprv_wrapper[data-compact-view="false"] .dt-scroll-head th:not(:first-of-type).pd-datatables-primary-key-offset-sm,
+body #dtprv_wrapper[data-compact-view="false"] #dtprv-foot-main .pd-datatables-primary-key-offset-sm{
+  left: calc(135px + 36px);
+}
+
+body #dtprv_wrapper[data-compact-view="false"] .pd-datatables-primary-key-offset-md{
+  left: 225px;
+}
+
+body #dtprv_wrapper[data-compact-view="false"] .dt-scroll-head th:not(:first-of-type).pd-datatables-primary-key-offset-md,
+body #dtprv_wrapper[data-compact-view="false"] #dtprv-foot-main .pd-datatables-primary-key-offset-md{
+  left: calc(225px + 36px);
+}
+
+body #dtprv_wrapper[data-compact-view="false"] .pd-datatables-primary-key-offset-sm_md{
+  left: 360px;
+}
+
+body #dtprv_wrapper[data-compact-view="false"] .dt-scroll-head th:not(:first-of-type).pd-datatables-primary-key-offset-sm_md,
+body #dtprv_wrapper[data-compact-view="false"] #dtprv-foot-main .pd-datatables-primary-key-offset-sm_md{
+  left: calc(360px + 36px);
+}
+
+body #dtprv_wrapper[data-compact-view="false"] .pd-datatables-primary-key-offset-lg{
+  left: 300px;
+}
+
+body #dtprv_wrapper[data-compact-view="false"] .dt-scroll-head th:not(:first-of-type).pd-datatables-primary-key-offset-lg,
+body #dtprv_wrapper[data-compact-view="false"] #dtprv-foot-main .pd-datatables-primary-key-offset-lg{
+  left: calc(300px + 36px);
+}
+
+body #dtprv_wrapper[data-compact-view="false"] .pd-datatables-primary-key-offset-xl{
+  left: 400px;
+}
+
+body #dtprv_wrapper[data-compact-view="false"] .dt-scroll-head th:not(:first-of-type).pd-datatables-primary-key-offset-xl,
+body #dtprv_wrapper[data-compact-view="false"] #dtprv-foot-main .pd-datatables-primary-key-offset-xl{
+  left: calc(400px + 36px);
+}
+
+body #dtprv_wrapper[data-compact-view="false"] .pd-datatables-primary-key-offset-xxl{
+  left: 620px;
+}
+
+body #dtprv_wrapper[data-compact-view="false"] .dt-scroll-head th:not(:first-of-type).pd-datatables-primary-key-offset-xxl,
+body #dtprv_wrapper[data-compact-view="false"] #dtprv-foot-main .pd-datatables-primary-key-offset-xxl{
+  left: calc(620px + 36px);
 }
 
 body #dtprv_wrapper[data-edit-view="true"] .dt-scroll-head th:not(:first-of-type).pd-datatables-primary-key-fixed,
@@ -829,6 +900,13 @@ body #dtprv_wrapper th.pd-datatables-col-lg{
   max-width: 300px !important;
 }
 
+body #dtprv_wrapper[data-edit-view="false"] td:not(.child).pd-datatables-meta-col-lg,
+body #dtprv_wrapper[data-edit-view="false"] th.pd-datatables-meta-col-lg{
+  width: 300px !important;
+  min-width: 300px !important;
+  max-width: 300px !important;
+}
+
 body #dtprv_wrapper td:not(.child).pd-datatables-col-xl,
 body #dtprv_wrapper th.pd-datatables-col-xl{
   width: 400px !important;
@@ -855,6 +933,11 @@ body #dtprv_wrapper[data-edit-view="true"] #dtprv-body-main td .select2-containe
   border: none !important;
   background-color: white !important;
   margin: 0 !important;
+  box-shadow: 0 0 1px 1px #d0d0d0 inset;
+}
+
+body #dtprv_wrapper[data-edit-view="true"] #dtprv-body-main td input.select2-input{
+  box-shadow: none !important;
 }
 
 body #dtprv_wrapper[data-edit-view="true"] #dtprv-body-main td .select2-container{
@@ -912,6 +995,15 @@ body #dtprv_wrapper[data-edit-view="true"] #dtprv-body-main .pd-datatable-editor
   color: #333333 !important;
   outline: none !important;
   cursor: not-allowed !important;
+}
+
+body #dtprv_wrapper[data-edit-view="true"] #dtprv-body-main .select2-container.editor-input-readonly{
+  cursor: not-allowed !important;
+  pointer-events: none !important;
+}
+
+body #dtprv_wrapper[data-edit-view="true"] #dtprv-body-main .select2-container.editor-input-readonly .select2-search-choice-close{
+  visibility: hidden !important;
 }
 
 body #dtprv_wrapper[data-edit-view="true"] #dtprv-body-main tr.validation-error td.expanders{

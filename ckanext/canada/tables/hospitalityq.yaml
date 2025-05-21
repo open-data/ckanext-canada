@@ -62,6 +62,7 @@ resources:
       en: Required if "End Date" is on or after April 1st 2025
       fr: Requis si la "date de fin" est le 1er avril 2025 ou après
     format_type: Controlled List
+    datatables_col_class: col-md
     choices:
       MPSES:
         en: Minister/Ministerial advisor / Ministerial Staff / Parliamentary Secretary/Exempt Staff
@@ -84,6 +85,7 @@ resources:
     form_required: true
     validation: This field must not be empty
     format_type: Free text
+    datatables_col_class: col-md
     excel_column_width: 30
     form_attrs:
       size: 60
@@ -102,6 +104,7 @@ resources:
     form_required: true
     validation: This field must not be empty
     format_type: Free text
+    datatables_col_class: col-md
     excel_column_width: 30
     form_attrs:
       size: 60
@@ -120,6 +123,7 @@ resources:
     form_required: true
     validation: This field must not be empty
     format_type: Free text
+    datatables_col_class: col-md
     excel_column_width: 30
     form_attrs:
       size: 60
@@ -138,6 +142,7 @@ resources:
     form_required: true
     validation: This field must not be empty
     format_type: Free text
+    datatables_col_class: col-xxl
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
       style: "width: 100%; display: block"
@@ -156,6 +161,7 @@ resources:
     form_required: true
     validation: This field must not be empty
     format_type: Free text
+    datatables_col_class: col-xxl
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
       style: "width: 100%; display: block"
@@ -232,6 +238,7 @@ resources:
     form_required: true
     validation: This field must not be empty
     format_type: Free text
+    datatables_col_class: col-md
     form_attrs:
       size: 60
 
@@ -256,6 +263,7 @@ resources:
     form_required: true
     validation: This field must not be empty
     format_type: Free text
+    datatables_col_class: col-md
     form_attrs:
       size: 60
 
@@ -280,6 +288,7 @@ resources:
     form_required: true
     validation: This field must not be empty
     format_type: Free text
+    datatables_col_class: col-md
     form_attrs:
       size: 60
 
@@ -304,6 +313,7 @@ resources:
     form_required: true
     validation: This field must not be empty
     format_type: Free text
+    datatables_col_class: col-md
     form_attrs:
       size: 60
 
@@ -328,6 +338,7 @@ resources:
     excel_required_formula: NOT(ISBLANK({vendor_2_fr}))
     form_required: false
     format_type: Free text
+    datatables_col_class: col-md
     form_attrs:
       size: 60
 
@@ -352,6 +363,7 @@ resources:
     excel_required_formula: NOT(ISBLANK({vendor_2_en}))
     form_required: false
     format_type: Free text
+    datatables_col_class: col-md
     form_attrs:
       size: 60
 
@@ -385,6 +397,7 @@ resources:
     excel_required_formula: NOT(ISBLANK({vendor_other_fr}))
     form_required: false
     format_type: Free text
+    datatables_col_class: col-lg
     form_attrs:
       size: 60
 
@@ -418,6 +431,7 @@ resources:
     excel_required_formula: NOT(ISBLANK({vendor_other_en}))
     form_required: false
     format_type: Free text
+    datatables_col_class: col-lg
     form_attrs:
       size: 60
 
@@ -517,6 +531,7 @@ resources:
       fr: Ce champ peut indiquer des commentaires explicatifs additionnels, en anglais.
     obligation: Optional
     format_type: Free text
+    datatables_col_class: col-xl
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
       style: "width: 100%; display: block"
@@ -532,6 +547,7 @@ resources:
       fr: Ce champ peut indiquer des commentaires explicatifs additionnels, en français.
     obligation: Optional
     format_type: Free text
+    datatables_col_class: col-xl
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
       style: "width: 100%; display: block"
@@ -706,6 +722,7 @@ resources:
     form_required: true
     validation: This field must not be empty
     excel_column_width: 10
+    datatables_col_class: col-md
     extract_date_year: true
 
   - datastore_id: month
@@ -720,6 +737,7 @@ resources:
     excel_required: true
     form_required: true
     validation: This field must not be empty
+    datatables_col_class: col-sm pd-datatables-primary-key-offset-md
     excel_full_text_choices: true
     datatables_full_text_choices: true
     choices_file: choices/gregor_month.yaml

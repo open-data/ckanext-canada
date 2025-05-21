@@ -152,6 +152,7 @@ resources:
       fr: Obligatoire pour les marchés conclus après le 2019-01-01
     excel_required_formula: 'VALUE({contract_date})>=DATE(2019,1,1)'
     datastore_type: text
+    datatables_col_class: col-lg
     form_attrs:
       size: 60
 
@@ -159,6 +160,7 @@ resources:
     label:
       en: Vendor Postal Code
       fr: Code postal du fournisseur
+    datatables_col_class: col-sm
     description:
       en: |
         i. It is recommended that this field be populated with the first three digits of the postal code for the vendor identified in the contract.
@@ -184,6 +186,7 @@ resources:
     label:
       en: Buyer Name
       fr: Nom de l’acheteur
+    datatables_col_class: col-lg
     description:
       en: |
         i. It is recommended that the field be populated with the name of the buyer, as indicated on the original contract or, alternatively, the individual responsible for the procurement at the department.
@@ -285,6 +288,7 @@ resources:
       fr: Obligatoire pour les marchés conclus après le 2019-01-01
     excel_required_formula: 'VALUE({contract_date})>=DATE(2019,1,1)'
     datastore_type: text
+    datatables_col_class: col-xxl
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
       style: "width: 100%; display: block"
@@ -310,6 +314,7 @@ resources:
       fr: Obligatoire pour les marchés conclus après le 2019-01-01
     excel_required_formula: 'VALUE({contract_date})>=DATE(2019,1,1)'
     datastore_type: text
+    datatables_col_class: col-xxl
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
       style: "width: 100%; display: block"
@@ -487,6 +492,7 @@ resources:
         iii. Lorsqu’un marché comprend un code d’article économique précisé à l’annexe D, les ministères doivent satisfaire aux exigences en matière de déclaration précisées à l’annexe D.
     excel_column_width: 40
     datastore_type: text
+    datatables_col_class: col-xl
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
       style: "width: 100%; display: block"
@@ -506,6 +512,7 @@ resources:
         iii. Lorsqu’un marché comprend un code d’article économique précisé à l’annexe D, les ministères doivent satisfaire aux exigences en matière de déclaration précisées à l’annexe D.
     excel_column_width: 40
     datastore_type: text
+    datatables_col_class: col-xl
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
       style: "width: 100%; display: block"
@@ -525,6 +532,7 @@ resources:
       en: The additional comments English field may be populated with additional comments when an organization needs additional capacity to fulfill the reporting requirements under the comments English data field.
       fr: Ce champ sert à consigner tout commentaire additionnel lorsqu’une organisation a besoin d’une capacité additionnelle pour répondre aux exigences de déclaration dans le champ « commentaires en anglais ».
     datastore_type: text
+    datatables_col_class: col-xl
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
       style: "width: 100%; display: block"
@@ -544,6 +552,7 @@ resources:
       en: The additional comments French field may be populated with additional comments when an organization needs additional capacity to fulfill the reporting requirements under the comments French data field.
       fr: Ce champ sert à consigner tout commentaire additionnel lorsqu’une organisation a besoin d’une capacité additionnelle pour répondre aux exigences de déclaration dans le champ « commentaires en   français ».
     datastore_type: text
+    datatables_col_class: col-xl
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
       style: "width: 100%; display: block"
@@ -567,6 +576,7 @@ resources:
     excel_required_formula: 'AND(VALUE({contract_date})>=DATE(2019,1,1),VALUE({contract_date})<DATE(2022,1,1),ISBLANK({trade_agreement}))'
     excel_error_formula: 'OR({default_formula},NOT(ISBLANK({trade_agreement})),VALUE({contract_date})>=DATE(2022,1,1))'
     datastore_type: text
+    datatables_col_class: col-md
     excel_full_text_choices: false
     datatables_full_text_choices: true
     excel_column_width: 40
@@ -932,6 +942,7 @@ resources:
     excel_required_formula: 'VALUE({contract_date})>=DATE(2022,1,1)'
     excel_error_formula: 'OR({default_formula},NOT({agreement_type_code}=""),AND(ISNUMBER(SEARCH("XX",{cell})),{cell}<>"XX"))'
     datastore_type: _text
+    datatables_col_class: col-lg
     choices:
       XX:
         en: None
@@ -1004,6 +1015,7 @@ resources:
     excel_required_formula: 'VALUE({contract_date})>=DATE(2022,1,1)'
     excel_error_formula: 'OR({default_formula},AND(ISNUMBER(SEARCH("NA",{cell})),{cell}<>"NA"))'
     datastore_type: _text
+    datatables_col_class: col-lg
     choices:
       NA:
         en: Not Applicable
@@ -1153,6 +1165,7 @@ resources:
       fr: Obligatoire pour les marchés conclus après le 2019-01-01
     excel_required_formula: 'VALUE({contract_date})>=DATE(2019,1,1)'
     datastore_type: text
+    datatables_col_class: col-lg
     choices_file: choices/country.json
 
   - datastore_id: solicitation_procedure
@@ -1237,6 +1250,7 @@ resources:
     excel_required_formula: 'VALUE({contract_date})>=DATE(2022,1,1)'
     excel_error_formula: 'OR({default_formula},AND(VALUE({contract_date})>=DATE(2022,1,1),OR({cell}="24",{cell}="25",{cell}="85",{cell}="86",{cell}="87",{cell}="90")),AND(ISNUMBER(SEARCH("00",{cell})),{cell}<>"00"),AND(VALUE({contract_date})>=DATE(2022,1,1),AND(OR({solicitation_procedure}="TC",{solicitation_procedure}="TN",{solicitation_procedure}="AC"),AND({trade_agreement}<>"XX",{trade_agreement}<>""),{cell}="00")))'
     datastore_type: _text
+    datatables_col_class: col-lg
     excel_full_text_choices: false
     datatables_full_text_choices: true
     # accept single digit for backwards compat
@@ -1336,6 +1350,7 @@ resources:
     excel_required_formula: 'VALUE({contract_date})>=DATE(2019,1,1)'
     excel_error_formula: 'OR({default_formula},AND(ISNUMBER(SEARCH("00",{cell})),{cell}<>"00"),AND(VALUE({contract_date})>=DATE(2022,1,1),{cell}="04"))'
     datastore_type: _text
+    datatables_col_class: col-lg
     datatables_full_text_choices: true
     excel_full_text_choices: false  # some of these are really long
     # accept single digit for backwards compat
@@ -1453,6 +1468,7 @@ resources:
     excel_required_formula: 'VALUE({contract_date})>=DATE(2019,1,1)'
     excel_error_formula: 'AND(OR({indigenous_business}="MS",{indigenous_business}="VS"),NOT(ISERROR(SEARCH("|"&TRIM({cell})&"|","|true|t|vrai|v|1|yes|y|oui|o|"))))'
     datastore_type: text
+    datatables_col_class: col-md
     excel_full_text_choices: false
     datatables_full_text_choices: true
     choices:
@@ -1483,6 +1499,7 @@ resources:
     excel_required_formula: 'VALUE({contract_date})>=DATE(2019,1,1)'
     excel_error_formula: 'OR({default_formula},AND(VALUE({contract_date})>=DATE(2022,1,1),OR({cell}="A1",{cell}="NA")),AND(VALUE({contract_date})>=DATE(2017,1,1),OR({cell}="A65",{cell}="D")))'
     datastore_type: text
+    datatables_col_class: col-lg
     excel_full_text_choices: false  # some of these are really long
     datatables_full_text_choices: true
     choice_order_expression: 'value.get("discontinued", False), code'
@@ -1559,6 +1576,7 @@ resources:
       fr: |
         Ce champ ne doit pas être vide lorsque le champ Propriété intellectuelle contient l’une des valeurs suivantes : A2, A3, A41, A42, A43, A5, A8 ou B. Ce champ peut demeurer vide si aucune des valeurs de Propriété intellectuelle ne s’applique. Les formats valides incluent : Oui ou Non.
     datastore_type: text
+    datatables_col_class: col-md
     excel_required_formula: 'NOT(OR({intellectual_property}="C",{intellectual_property}="NA",{intellectual_property}=""))'
     excel_error_formula: 'ISERROR(SEARCH("|"&TRIM({cell})&"|","|true|t|vrai|v|1|yes|y|oui|o|false|f|faux|0|no|n|non|"))'
     excel_full_text_choices: false
@@ -1591,6 +1609,7 @@ resources:
     excel_required_formula: 'VALUE({contract_date})>=DATE(2019,1,1)'
     excel_error_formula: 'ISERROR(SEARCH("|"&TRIM({cell})&"|","|true|t|vrai|v|1|yes|y|oui|o|false|f|faux|0|no|n|non|"))'
     datastore_type: text
+    datatables_col_class: col-md
     excel_full_text_choices: false
     datatables_full_text_choices: true
     choices:
@@ -1621,6 +1640,7 @@ resources:
       fr: Obligatoire pour les marchés conclus après le 2022-01-01
     excel_required_formula: 'OR({standing_offer_number}<>"",VALUE({contract_date})>=DATE(2022,1,1))'
     datastore_type: text
+    datatables_col_class: col-lg
     excel_full_text_choices: false
     datatables_full_text_choices: true
     choices:
@@ -1700,6 +1720,7 @@ resources:
       fr: Obligatoire pour les marchés conclus après le 2019-01-01
     excel_required_formula: 'VALUE({contract_date})>=DATE(2019,1,1)'
     datastore_type: text
+    datatables_col_class: col-md
     excel_full_text_choices: false
     datatables_full_text_choices: true
     choices:
@@ -1802,6 +1823,7 @@ resources:
       fr: |
         Ce champ peut seulement contenir « 0 » si l’acquisition a été identifiée comme étant concurrentielle (invitation ouverte à soumissionner (OB) ou concurrentielle - traditionnelle (TC) ou Concurrentielle – Appel d’offres sélectif (ST)).
     datastore_type: text
+    datatables_col_class: col-md
     excel_full_text_choices: false
     datatables_full_text_choices: true
     excel_error_formula: 'OR({default_formula},AND(VALUE({cell})<>0,NOT(OR({solicitation_procedure}="TN",{solicitation_procedure}="AC"))))'
@@ -1850,6 +1872,7 @@ resources:
         (AC) ou si l’acquisition a été identifiée comme un modification (A) dans le
         champ Type d’instrument.
     datastore_type: text
+    datatables_col_class: col-md
     excel_full_text_choices: false
     datatables_full_text_choices: true
     excel_error_formula: 'OR({default_formula},AND(VALUE({cell})<>0,OR({solicitation_procedure}="TN",{solicitation_procedure}="AC",{instrument_type}="A")))'
@@ -1881,6 +1904,7 @@ resources:
       en: It is recommended for this field to indicate whether the procurement is subject to one or more of the applicable Socio-economic indicators.
       fr: Il est recommandé d’indiquer dans ce champ si l’approvisionnement est relié à au moins un des indicateurs socioéconomiques applicables.
     datastore_type: text
+    datatables_col_class: col-md
     excel_full_text_choices: false
     datatables_full_text_choices: true
     choices:

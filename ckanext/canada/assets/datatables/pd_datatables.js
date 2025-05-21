@@ -433,7 +433,6 @@ function load_pd_datatable(CKAN_MODULE){
       fieldInput += '</select>';
     }
     if( (typeof _chromo_field.form_snippet != 'undefined' && _chromo_field.form_snippet.includes('textarea')) || (typeof _chromo_field.markdown != 'undefined' && _chromo_field.markdown) ){
-      // TODO: auto resize when typing!!!
       fieldInput = '<textarea class="pd-datatable-editor-input ' + readOnlyClass + '" name=' + fieldID + '" id="' + fieldID + '" rows="1" data-primary-key="' + isPrimaryKey + '" data-row-index="' + _rowIndex + '" data-datastore-id="' + _chromo_field.datastore_id + '" ' + readOnly + ' tabindex="' + tabIndex + '">' + _value + '</textarea>';
     }
     return srLabel + fieldInput;
@@ -573,7 +572,7 @@ function load_pd_datatable(CKAN_MODULE){
         previewClass += ' pd-datatables-' + chromoFields[i].datatables_col_class + ' ';
       }
       if( chromoFields[i].datastore_id == 'record_created' || chromoFields[i].datastore_id == 'record_modified' ){
-        previewClass += ' pd-datatables-col-lg ';
+        previewClass += ' pd-datatables-meta-col-lg ';
       }
       availableColumns.push({
         "name": chromoFields[i].datastore_id,
@@ -1576,9 +1575,9 @@ function load_pd_datatable(CKAN_MODULE){
       }
     }else{
       if( typeof fieldValue == 'undefined' || fieldValue.length == 0 ){
-        $(_field).css({'box-shadow': 'none'});
+        $(_field).css({'box-shadow': '0 0 1px 1px #d0d0d0 inset'});
         if( select2Container.length > 0 ){
-          $(select2Container).css({'box-shadow': 'none'});
+          $(select2Container).css({'box-shadow': '0 0 1px 1px #d0d0d0 inset'});
         }
       }else{
         $(_field).css({'box-shadow': '0 0 2px 2px #' + tableStyles.success.bgColor + ' inset'});
@@ -1610,9 +1609,9 @@ function load_pd_datatable(CKAN_MODULE){
         }
       }else{
         if( typeof _v == 'undefined' || _v.length == 0 ){
-          $(_f).css({'box-shadow': 'none'});
+          $(_f).css({'box-shadow': '0 0 1px 1px #d0d0d0 inset'});
           if( _select2Container.length > 0 ){
-            $(_select2Container).css({'box-shadow': 'none'});
+            $(_select2Container).css({'box-shadow': '0 0 1px 1px #d0d0d0 inset'});
           }
         }
         requiredRows[rowIndex] = requiredRows[rowIndex].filter(function(_arrItem){
@@ -1633,7 +1632,7 @@ function load_pd_datatable(CKAN_MODULE){
       erroredRows[rowIndex] = [];
       requiredRows[rowIndex] = [];
       $(rowFields).each(function(_i, _f){
-        $(_f).css({'box-shadow': 'none'});
+        $(_f).css({'box-shadow': '0 0 1px 1px #d0d0d0 inset'});
       });
     }else if( $(_field).attr('data-primary-key') == 'true' ){
       let primaryValues = [];
@@ -1759,6 +1758,13 @@ function load_pd_datatable(CKAN_MODULE){
     $(fields).each(function(_index, _field){
       if( $(_field).hasClass('select2-container') ){
         return;
+      }
+      if( $(_field).is('textarea') ){
+        $(_field).off('keyup.ResizeField');
+        $(_field).on('keyup.ResizeField', function(_event){
+          $(_field).css({'height': 'auto'});
+          $(_field).css({'height': this.scrollHeight + 'px'});
+        });
       }
       $(_field).off('change.EDITOR');
       $(_field).on('change.EDITOR', function(_event){
