@@ -96,6 +96,7 @@ resources:
     # choices based on commitments value
     excel_choice_range_formula: 'offset({range_top},countif({range},"<"&trim(left({commitments},find(":",{commitments}&":")-1))),0,countif({range},trim(left({commitments},find(":",{commitments}&":")-1))&"*"),1)'
     excel_error_formula: 'trim(left({commitments},find(":",{commitments}&":")-1))<>trim(left({cell},find(":",{commitments}&":")-1))'
+    js_error_eval: '{{commitments}}.length > 0 && VALUE.length > 0 && VALUE.split(".")[0] != {{commitments}}'
     form_attrs:
       cascading_select_field: commitments
 
@@ -178,7 +179,7 @@ resources:
     # choices based on milestones value
     excel_choice_range_formula: 'offset({range_top},countif({range},"<"&trim(left({milestones},find(":",{milestones}&":")-1))),0,countif({range},trim(left({milestones},find(":",{milestones}&":")-1))&"*"),1)'
     excel_error_formula: 'trim(left({milestones},find(":",{milestones}&":")-1))<>trim(left({cell},find(":",{milestones}&":")-1))'
-    # TODO: implement cascading select for select2 in PD DataTables
+    js_error_eval: '{{milestones}}.length > 0 && VALUE.length > 0 && VALUE.split(".")[0] + "." + VALUE.split(".")[1] != {{milestones}}'
     form_attrs:
       cascading_select_field: milestones
 

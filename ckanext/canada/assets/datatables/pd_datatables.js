@@ -1596,8 +1596,36 @@ function load_pd_datatable(CKAN_MODULE){
       let _dsID = $(_f).attr('data-datastore-id');
       let _editorObj = EDITOR[_dsID];
       let _select2Container = $(_f).prev('.select2-container');
+      let _cascadingSelectField;
+      if( typeof _editorObj.form_attrs != 'undefined' && _editorObj.form_attrs && typeof _editorObj.form_attrs.cascading_select_field != 'undefined' ){
+        _cascadingSelectField = _editorObj.form_attrs.cascading_select_field;
+      }
       let _v = $(_f).val();
-      if( _editorObj.is_required(_v, rowIndex) && (typeof _v == 'undefined' || _v.length == 0) ){
+      if( typeof _cascadingSelectField != 'undefined' && _cascadingSelectField == datastoreID ){
+        $(_f).find('option').each(function(_i2, _o){
+          let _oVal = $(_o).attr('value');
+          if( _oVal && _oVal != _v && ! _oVal.startsWith(fieldValue) ){
+            $(_o).attr('disabled', true);
+          }else{
+            $(_o).attr('disabled', null);
+          }
+        });
+        $(_f).select2({
+          'datastore-id': _dsID,
+          'row-index': rowIndex,
+          'allowClear': true,
+        });
+        _select2Container = $(_f).prev('.select2-container');
+      }
+      if( typeof _v != 'undefined' && _v.length > 0 && _editorObj.is_invalid(_v, rowIndex) ){
+        $(_f).css({'box-shadow': '0 0 2px 2px #' + tableStyles.errored.bgColor + ' inset'});
+        if( _select2Container.length > 0 ){
+          $(_select2Container).css({'box-shadow': '0 0 2px 2px #' + tableStyles.errored.bgColor + ' inset'}).blur();
+        }
+        if( ! erroredRows[rowIndex].includes(_dsID) ){
+          erroredRows[rowIndex].push(_dsID);
+        }
+      }else if( _editorObj.is_required(_v, rowIndex) && (typeof _v == 'undefined' || _v.length == 0) ){
         if( ! erroredRows[rowIndex].includes(_dsID) ){
           $(_f).css({'box-shadow': '0 0 2px 2px #' + tableStyles.required.bgColor + ' inset'});
           if( _select2Container.length > 0 ){
@@ -1613,7 +1641,15 @@ function load_pd_datatable(CKAN_MODULE){
           if( _select2Container.length > 0 ){
             $(_select2Container).css({'box-shadow': '0 0 1px 1px #d0d0d0 inset'});
           }
+        }else{
+          $(_f).css({'box-shadow': '0 0 2px 2px #' + tableStyles.success.bgColor + ' inset'});
+          if( _select2Container.length > 0 ){
+            $(_select2Container).css({'box-shadow': '0 0 2px 2px #' + tableStyles.success.bgColor + ' inset'});
+          }
         }
+        erroredRows[rowIndex] = erroredRows[rowIndex].filter(function(_arrItem){
+          return _arrItem != _dsID;
+        });
         requiredRows[rowIndex] = requiredRows[rowIndex].filter(function(_arrItem){
           return _arrItem != _dsID;
         });
@@ -1640,6 +1676,7 @@ function load_pd_datatable(CKAN_MODULE){
         primaryValues.push($(rowFields).eq(primaryKeys[_i]).val());
       }
       for(let [_rowIndex, _filledCells] of Object.entries(filledRows)){
+        // FIXME: not working with select fields??
         if( _rowIndex == rowIndex ){
           continue;
         }

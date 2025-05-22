@@ -86,6 +86,8 @@ resources:
     validation: This field must not be empty
     format_type: Free text
     datatables_col_class: col-md
+    excel_required_formula: 'VALUE({start_date})>=DATE(2019,6,21)'
+    js_required_eval: '{{title_fr}}.length > 0 || {{start_date}}.length > 0 && new Date({{start_date}}) >= new Date("2019-06-21")'
     excel_column_width: 30
     form_attrs:
       size: 60
@@ -105,6 +107,8 @@ resources:
     validation: This field must not be empty
     format_type: Free text
     datatables_col_class: col-md
+    excel_required_formula: 'VALUE({start_date})>=DATE(2019,6,21)'
+    js_required_eval: '{{title_en}}.length > 0 || {{start_date}}.length > 0 && new Date({{start_date}}) >= new Date("2019-06-21")'
     excel_column_width: 30
     form_attrs:
       size: 60
@@ -124,6 +128,8 @@ resources:
     validation: This field must not be empty
     format_type: Free text
     datatables_col_class: col-md
+    excel_required_formula: 'VALUE({start_date})>=DATE(2019,6,21)'
+    js_required_eval: '{{start_date}}.length > 0 && new Date({{start_date}}) >= new Date("2019-06-21")'
     excel_column_width: 30
     form_attrs:
       size: 60
@@ -143,6 +149,8 @@ resources:
     validation: This field must not be empty
     format_type: Free text
     datatables_col_class: col-xxl
+    excel_required_formula: 'VALUE({start_date})>=DATE(2019,6,21)'
+    js_required_eval: '{{description_fr}}.length > 0 || {{start_date}}.length > 0 && new Date({{start_date}}) >= new Date("2019-06-21")'
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
       style: "width: 100%; display: block"
@@ -162,6 +170,8 @@ resources:
     validation: This field must not be empty
     format_type: Free text
     datatables_col_class: col-xxl
+    excel_required_formula: 'VALUE({start_date})>=DATE(2019,6,21)'
+    js_required_eval: '{{description_en}}.length > 0 || {{start_date}}.length > 0 && new Date({{start_date}}) >= new Date("2019-06-21")'
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
       style: "width: 100%; display: block"
@@ -179,6 +189,7 @@ resources:
     excel_required: true
     form_required: true
     excel_error_formula: 'OR({default_formula},{cell}>TODAY(),AND(NOT(ISBLANK({end_date})),{start_date}>{end_date}))'
+    js_error_eval: '(VALUE.length > 0 && new Date(VALUE) > new Date()) || (VALUE.length > 0 && {{end_date}}.length > 0 && new Date(VALUE) > new Date({{end_date}}))'
     validation:
       en: |
         This field must not be empty.
@@ -206,6 +217,9 @@ resources:
     excel_required: true
     form_required: true
     excel_error_formula: 'OR({default_formula},{cell}>TODAY(),AND(NOT(ISBLANK({start_date})),{end_date}<{start_date}))'
+    excel_required_formula: 'VALUE({start_date})>=DATE(2019,6,21)'
+    js_required_eval: '{{start_date}}.length > 0 && new Date({{start_date}}) >= new Date("2019-06-21")'
+    js_error_eval: '(VALUE.length > 0 && new Date(VALUE) > new Date()) || (VALUE.length > 0 && {{start_date}}.length > 0 && new Date(VALUE) < new Date({{start_date}}))'
     validation:
       en: |
         This field must not be empty.
@@ -239,6 +253,8 @@ resources:
     validation: This field must not be empty
     format_type: Free text
     datatables_col_class: col-md
+    excel_required_formula: 'VALUE({start_date})>=DATE(2019,6,21)'
+    js_required_eval: '{{location_fr}}.length > 0 || {{start_date}}.length > 0 && new Date({{start_date}}) >= new Date("2019-06-21")'
     form_attrs:
       size: 60
 
@@ -264,6 +280,8 @@ resources:
     validation: This field must not be empty
     format_type: Free text
     datatables_col_class: col-md
+    excel_required_formula: 'VALUE({start_date})>=DATE(2019,6,21)'
+    js_required_eval: '{{location_en}}.length > 0 || {{start_date}}.length > 0 && new Date({{start_date}}) >= new Date("2019-06-21")'
     form_attrs:
       size: 60
 
@@ -288,7 +306,9 @@ resources:
     form_required: true
     validation: This field must not be empty
     format_type: Free text
-    datatables_col_class: col-md
+    datatables_col_class: col-lg
+    excel_required_formula: 'VALUE({start_date})>=DATE(2019,6,21)'
+    js_required_eval: '{{vendor_fr}}.length > 0 || {{start_date}}.length > 0 && new Date({{start_date}}) >= new Date("2019-06-21")'
     form_attrs:
       size: 60
 
@@ -313,7 +333,9 @@ resources:
     form_required: true
     validation: This field must not be empty
     format_type: Free text
-    datatables_col_class: col-md
+    datatables_col_class: col-lg
+    excel_required_formula: 'VALUE({start_date})>=DATE(2019,6,21)'
+    js_required_eval: '{{vendor_en}}.length > 0 || {{start_date}}.length > 0 && new Date({{start_date}}) >= new Date("2019-06-21")'
     form_attrs:
       size: 60
 
@@ -336,9 +358,10 @@ resources:
     obligation: Optional
     excel_required: false
     excel_required_formula: NOT(ISBLANK({vendor_2_fr}))
+    js_required_eval: '{{vendor_2_fr}}.length > 0'
     form_required: false
     format_type: Free text
-    datatables_col_class: col-md
+    datatables_col_class: col-lg
     form_attrs:
       size: 60
 
@@ -361,9 +384,10 @@ resources:
     obligation: Optional
     excel_required: false
     excel_required_formula: NOT(ISBLANK({vendor_2_en}))
+    js_required_eval: '{{vendor_2_en}}.length > 0'
     form_required: false
     format_type: Free text
-    datatables_col_class: col-md
+    datatables_col_class: col-lg
     form_attrs:
       size: 60
 
@@ -395,9 +419,10 @@ resources:
     excel_required: false
     # Dev NOTE: excel_error_formula: Excel and Open Office Calc parity issues with REGEX. REGEX does not exist in Excel.
     excel_required_formula: NOT(ISBLANK({vendor_other_fr}))
+    js_required_eval: '{{vendor_other_fr}}.length > 0'
     form_required: false
     format_type: Free text
-    datatables_col_class: col-lg
+    datatables_col_class: col-xl
     form_attrs:
       size: 60
 
@@ -429,9 +454,10 @@ resources:
     excel_required: false
     # Dev NOTE: excel_error_formula: Excel and Open Office Calc parity issues with REGEX. REGEX does not exist in Excel.
     excel_required_formula: NOT(ISBLANK({vendor_other_en}))
+    js_required_eval: '{{vendor_other_en}}.length > 0'
     form_required: false
     format_type: Free text
-    datatables_col_class: col-lg
+    datatables_col_class: col-xl
     form_attrs:
       size: 60
 
@@ -463,6 +489,9 @@ resources:
     excel_required: true
     form_required: true
     excel_error_formula: 'OR({default_formula},VALUE({cell})<=0)'
+    excel_required_formula: 'VALUE({start_date})>=DATE(2019,6,21)'
+    js_required_eval: '{{start_date}}.length > 0 && new Date({{start_date}}) >= new Date("2019-06-21")'
+    js_error_eval: '{{end_date}}.length > 0 && new Date({{end_date}}) >= new Date("2025-04-01") && VALUE.length > 0 && VALUE <= 0'
     validation:
       en: |
         This field must not be empty.
@@ -487,6 +516,9 @@ resources:
     excel_required: true
     form_required: true
     excel_error_formula: 'OR({default_formula},VALUE({cell})<0)'
+    excel_required_formula: 'VALUE({start_date})>=DATE(2019,6,21)'
+    js_required_eval: '{{start_date}}.length > 0 && new Date({{start_date}}) >= new Date("2019-06-21")'
+    js_error_eval: '{{end_date}}.length > 0 && new Date({{end_date}}) >= new Date("2025-04-01") && VALUE.length > 0 && VALUE < 0'
     validation: This field must not be empty
     format_type: Free text
     form_attrs:
@@ -504,6 +536,8 @@ resources:
     obligation: Mandatory
     excel_required: true
     form_required: true
+    excel_required_formula: 'VALUE({start_date})>=DATE(2019,6,21)'
+    js_required_eval: '{{start_date}}.length > 0 && new Date({{start_date}}) >= new Date("2019-06-21")'
     validation: This field must not be empty
     format_type:
       en: Numerical – Note, do not include dollar signs ($), all amounts include taxes.

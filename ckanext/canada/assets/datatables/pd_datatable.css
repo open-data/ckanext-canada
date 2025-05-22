@@ -1006,6 +1006,10 @@ body #dtprv_wrapper[data-edit-view="true"] #dtprv-body-main .select2-container.e
   visibility: hidden !important;
 }
 
+body #select2-drop ul.select2-results li.select2-disabled{
+  display: none !important;
+}
+
 body #dtprv_wrapper[data-edit-view="true"] #dtprv-body-main tr.validation-error td.expanders{
   background-color: #FF7961 !important;
   color: #333333 !important;
