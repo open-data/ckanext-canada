@@ -43,6 +43,7 @@ resources:
     visible_to_public: Yes
     occurrence: Single
     datastore_type: text
+    js_error_eval: 'VALUE.length > 0 && VALUE.includes(",")'
 
   # 3.2
   - datastore_id: publishable
@@ -62,6 +63,7 @@ resources:
     datastore_type: text
     excel_error_formula: 'OR({default_formula},AND(TRIM(LEFT({publishable},FIND(":",{publishable}&":")-1))="Y",TRIM(LEFT({status},FIND(":",{status}&":")-1))="NF"))'
     excel_full_text_choices: true
+    datatables_full_text_choices: true
     choices:
       Y:
         en: "Yes"
@@ -84,7 +86,9 @@ resources:
     visible_to_public: Yes
     occurrence: Repeatable
     datastore_type: _text
+    datatables_col_class: col-lg
     excel_full_text_choices: true
+    datatables_full_text_choices: true
     choices_file: choices/consultation_org.yaml
 
   # 3.4
@@ -97,6 +101,7 @@ resources:
       fr: Cette zone indique les différents sujets sur lesquels porte le processus de participation.
     obligation: Mandatory
     excel_required_formula: 'or(isblank({end_date}),{end_date}>=DATE(2018,1,1))'
+    js_required_eval: '{{end_date}}.length == 0 || new Date({{end_date}}) >= new Date("2018-01-01")'
     form_required: true
     format_type: Free text (comma separated list of codes from reference table)
     validation: This field must not be empty
@@ -104,7 +109,9 @@ resources:
     occurrence: Repeatable
     datastore_type: _text
     excel_column_width: 30
+    datatables_col_class: col-lg
     excel_full_text_choices: true
+    datatables_full_text_choices: true
     choices_file: choices/consultation_subject.yaml
 
   # 3.5
@@ -124,6 +131,7 @@ resources:
     occurrence: Single
     datastore_type: text
     excel_column_width: 30
+    datatables_col_class: col-xl
     form_attrs:
       size: 60
 
@@ -144,6 +152,7 @@ resources:
     occurrence: Single
     datastore_type: text
     excel_column_width: 30
+    datatables_col_class: col-xl
     form_attrs:
       size: 60
 
@@ -157,12 +166,14 @@ resources:
       fr: Cette zone fournit de l’information, en anglais, sur la nature des activités de consultation et de participation. On y trouve notamment une description des principaux objectifs et des résultats attendus du processus de participation. On invite les utilisateurs à expliquer en quoi les activités, les méthodes et les outils permettront d’atteindre les objectifs de la consultation.
     obligation: Mandatory
     excel_required_formula: 'or(isblank({end_date}),{end_date}>=DATE(2018,1,1))'
+    js_required_eval: '{{end_date}}.length == 0 || new Date({{end_date}}) >= new Date("2018-01-01") || {{description_fr}}.length > 0'
     form_required: true
     format_type: Free Text (separate paragraphs with two blank lines)
     validation: This field must not be empty
     visible_to_public: Yes
     occurrence: Repeatable
     datastore_type: text
+    datatables_col_class: col-xxl
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
       style: "width: 100%; display: block"
@@ -177,12 +188,14 @@ resources:
       fr: Cette zone fournit de l’information, en français, sur la nature des activités de consultation et de participation. On y trouve notamment une description des principaux objectifs et des résultats attendus du processus de participation. On invite les utilisateurs à expliquer en quoi les activités, les méthodes et les outils permettront d’atteindre les objectifs de la consultation.
     obligation: Mandatory
     excel_required_formula: 'or(isblank({end_date}),{end_date}>=DATE(2018,1,1))'
+    js_required_eval: '{{end_date}}.length == 0 || new Date({{end_date}}) >= new Date("2018-01-01") || {{description_en}}.length > 0'
     form_required: true
     format_type: Free Text (separate paragraphs with two blank lines)
     validation: This field must not be empty
     visible_to_public: Yes
     occurrence: Repeatable
     datastore_type: text
+    datatables_col_class: col-xxl
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
       style: "width: 100%; display: block"
@@ -197,13 +210,16 @@ resources:
       fr: Cette zone précise les participants visés et le public cible du processus de participation.
     obligation: Mandatory
     excel_required_formula: 'or(isblank({end_date}),{end_date}>=DATE(2018,1,1))'
+    js_required_eval: '{{end_date}}.length == 0 || new Date({{end_date}}) >= new Date("2018-01-01")'
     form_required: true
     format_type: Free text (comma separated list of codes from reference table)
     validation: This field must not be empty
     visible_to_public: Yes
     occurrence: Repeatable
     datastore_type: _text
+    datatables_col_class: col-xl
     excel_full_text_choices: true
+    datatables_full_text_choices: true
     choices_file: choices/consultation_audience.yaml
 
   # 3.10
@@ -260,6 +276,7 @@ resources:
     datastore_type: text
     excel_error_formula: 'OR({default_formula},AND(TRIM(LEFT({publishable},FIND(":",{publishable}&":")-1))="Y",TRIM(LEFT({status},FIND(":",{status}&":")-1))="NF"))'
     excel_full_text_choices: true
+    datatables_full_text_choices: true
     choices:
       P:
         en: Planned
@@ -289,13 +306,13 @@ resources:
       en: This field provides the link to the English engagement information profile page.
       fr: Cette zone contient le lien vers la page de profil (en anglais) qui donne des renseignements sur le processus de participation du public.
     obligation: Mandatory
-    excel_required_formula: 'or(isblank({end_date}),{end_date}>=DATE(2018,1,1))'
     form_required: true
     format_type: Web address
     validation: This field must not be empty
     visible_to_public: Yes
     occurrence: Single
     datastore_type: text
+    datatables_col_class: col-lg
     form_attrs:
       size: 60
 
@@ -308,13 +325,13 @@ resources:
       en: This field provides the link to the French engagement information profile page.
       fr: Cette zone contient le lien vers la page profil française qui contient des renseignements sur le processus de participation.
     obligation: Mandatory
-    excel_required_formula: 'or(isblank({end_date}),{end_date}>=DATE(2018,1,1))'
     form_required: true
     format_type: Web address
     validation: This field must not be empty
     visible_to_public: Yes
     occurrence: Single
     datastore_type: text
+    datatables_col_class: col-lg
     form_attrs:
       size: 60
 
@@ -335,6 +352,7 @@ resources:
     occurrence: Single
     datastore_type: text
     excel_full_text_choices: true
+    datatables_full_text_choices: true
     choices:
       Y:
         en: "Yes"
@@ -357,6 +375,8 @@ resources:
     visible_to_public: Yes
     occurrence: Single
     datastore_type: text
+    datatables_col_class: col-lg
+    js_required_eval: '{{report_link_fr}}.length > 0'
     form_attrs:
       size: 60
 
@@ -374,6 +394,8 @@ resources:
     visible_to_public: Yes
     occurrence: Single
     datastore_type: text
+    datatables_col_class: col-lg
+    js_required_eval: '{{report_link_en}}.length > 0'
     form_attrs:
       size: 60
 
@@ -391,6 +413,7 @@ resources:
     visible_to_public: No
     occurrence: Single
     datastore_type: text
+    datatables_col_class: col-lg
     form_attrs:
       size: 40
 
@@ -408,6 +431,7 @@ resources:
     visible_to_public: No
     occurrence: Single
     datastore_type: text
+    datatables_col_class: col-lg
     form_attrs:
       size: 40
 
@@ -421,10 +445,12 @@ resources:
       fr: Cette zone comprend des renseignements supplémentaires sur la consultation qu’il n’était pas possible d’inscrire dans d’autres zones (en anglais).
     obligation: Optional
     format_type: Free Text (separate paragraphs with two blank lines)
+    js_required_eval: '{{remarks_fr}}.length > 0'
     validation: None
     visible_to_public: No
     occurrence: Repeatable
     datastore_type: text
+    datatables_col_class: col-xxl
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
       style: "width: 100%; display: block"
@@ -439,10 +465,12 @@ resources:
       fr: Cette zone comprend des renseignements supplémentaires sur la consultation qu’il n’était pas possible d’inscrire dans d’autres zones (en français).
     obligation: Optional
     format_type: Free Text (separate paragraphs with two blank lines)
+    js_required_eval: '{{remarks_en}}.length > 0'
     validation: None
     visible_to_public: No
     occurrence: Repeatable
     datastore_type: text
+    datatables_col_class: col-xxl
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
       style: "width: 100%; display: block"
@@ -464,6 +492,7 @@ resources:
     occurrence: Single
     datastore_type: text
     excel_full_text_choices: true
+    datatables_full_text_choices: true
     choices:
       Y:
         en: "Yes"
@@ -482,12 +511,15 @@ resources:
       fr: Cette zone comprend le(s) motif(s) de l’activité de participation du public. Cette zone inclut uniquement les critères qui définissent une consultation ou participation public de profil élevé.
     obligation: Mandatory
     excel_required_formula: 'LEFT({high_profile},1)="Y"'
+    js_required_eval: '{{high_profile}}.length > 0 && {{high_profile}} == "Y"'
     format_type: Controlled List
     validation: This field must not be empty
     visible_to_public: Yes
     occurrence: Repeatable
     datastore_type: _text
+    datatables_col_class: col-lg
     excel_full_text_choices: true
+    datatables_full_text_choices: true
     choices:
       BG:
         en: Budget
@@ -649,3 +681,9 @@ excel_column_heading_style:
   PatternFill:
     patternType: solid
     fgColor: FF90AFC5
+datatables_style:
+  header:
+    bgColor: 90AFC5
+  select:
+    bgColor: c2d3df
+    fgColor: 333333
