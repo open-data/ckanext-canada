@@ -402,22 +402,26 @@ function load_pd_datatable(CKAN_MODULE){
       readOnlyClass = 'editor-input-readonly';
       tabIndex = -1;
     }
+    let maxLength = '';
+    if( typeof editorObject.form_attrs != 'undefined' && editorObject.form_attrs && typeof editorObject.form_attrs.maxlength != 'undefined' ){
+      maxLength = 'maxlength="' + editorObject.form_attrs.maxlength + '"';
+    }
     let srLabel = '<label class="sr-only" for="' + fieldID + '">' + rowLabel + ' ' + (_rowIndex + 1) + ' - ' + editorObject.label + '</label>';
-    let fieldInput = '<input class="pd-datatable-editor-input ' + readOnlyClass + '" value="' + _value + '" name=' + fieldID + '" id="' + fieldID + '" data-primary-key="' + isPrimaryKey + '" data-row-index="' + _rowIndex + '" data-datastore-id="' + _chromo_field.datastore_id + '" ' + readOnly + ' tabindex="' + tabIndex + '" />';
+    let fieldInput = '<input class="pd-datatable-editor-input ' + readOnlyClass + '" value="' + _value + '" name=' + fieldID + '" id="' + fieldID + '" data-primary-key="' + isPrimaryKey + '" data-row-index="' + _rowIndex + '" data-datastore-id="' + _chromo_field.datastore_id + '" ' + readOnly + maxLength + ' tabindex="' + tabIndex + '" />';
     if( ds_type == 'year' ){
-      fieldInput = '<input class="pd-datatable-editor-input ' + readOnlyClass + '" value="' + _value + '" name=' + fieldID + '" id="' + fieldID + '" data-primary-key="' + isPrimaryKey + '" data-row-index="' + _rowIndex + '" data-datastore-id="' + _chromo_field.datastore_id + '" data-number-type="int" type="number" min="1899" max="' + currentYear + '" step="1" ' + readOnly + ' tabindex="' + tabIndex + '" />';
+      fieldInput = '<input class="pd-datatable-editor-input ' + readOnlyClass + '" value="' + _value + '" name=' + fieldID + '" id="' + fieldID + '" data-primary-key="' + isPrimaryKey + '" data-row-index="' + _rowIndex + '" data-datastore-id="' + _chromo_field.datastore_id + '" data-number-type="int" type="number" min="1899" max="' + currentYear + '" step="1" ' + readOnly + maxLength + ' tabindex="' + tabIndex + '" />';
     }else if( ds_type == 'month' ){
-      fieldInput = '<input class="pd-datatable-editor-input ' + readOnlyClass + '" value="' + _value + '" name=' + fieldID + '" id="' + fieldID + '" data-primary-key="' + isPrimaryKey + '" data-row-index="' + _rowIndex + '" data-datastore-id="' + _chromo_field.datastore_id + '" data-number-type="int" type="number" min="1" max="12" step="1" ' + readOnly + ' tabindex="' + tabIndex + '" />';
+      fieldInput = '<input class="pd-datatable-editor-input ' + readOnlyClass + '" value="' + _value + '" name=' + fieldID + '" id="' + fieldID + '" data-primary-key="' + isPrimaryKey + '" data-row-index="' + _rowIndex + '" data-datastore-id="' + _chromo_field.datastore_id + '" data-number-type="int" type="number" min="1" max="12" step="1" ' + readOnly + maxLength + ' tabindex="' + tabIndex + '" />';
     }else if( ds_type == 'date' ){
-      fieldInput = '<input class="pd-datatable-editor-input ' + readOnlyClass + '" value="' + _value + '" name=' + fieldID + '" id="' + fieldID + '" data-primary-key="' + isPrimaryKey + '" data-row-index="' + _rowIndex + '" data-datastore-id="' + _chromo_field.datastore_id + '" type="date" min="1899-01-01" max="' + currentDate + '" ' + readOnly + ' tabindex="' + tabIndex + '" />';
+      fieldInput = '<input class="pd-datatable-editor-input ' + readOnlyClass + '" value="' + _value + '" name=' + fieldID + '" id="' + fieldID + '" data-primary-key="' + isPrimaryKey + '" data-row-index="' + _rowIndex + '" data-datastore-id="' + _chromo_field.datastore_id + '" type="date" min="1899-01-01" max="' + currentDate + '" ' + readOnly + maxLength + ' tabindex="' + tabIndex + '" />';
     }else if( ds_type == 'timestamp' ){
-      fieldInput = '<input class="pd-datatable-editor-input ' + readOnlyClass + '" value="' + _value + '" name=' + fieldID + '" id="' + fieldID + '" data-primary-key="' + isPrimaryKey + '" data-row-index="' + _rowIndex + '" data-datastore-id="' + _chromo_field.datastore_id + '" type="datetime-local" min="1899-01-01T00:00" max="' + currentDate + 'T23:59" ' + readOnly + ' tabindex="' + tabIndex + '" />';
+      fieldInput = '<input class="pd-datatable-editor-input ' + readOnlyClass + '" value="' + _value + '" name=' + fieldID + '" id="' + fieldID + '" data-primary-key="' + isPrimaryKey + '" data-row-index="' + _rowIndex + '" data-datastore-id="' + _chromo_field.datastore_id + '" type="datetime-local" min="1899-01-01T00:00" max="' + currentDate + 'T23:59" ' + readOnly + maxLength + ' tabindex="' + tabIndex + '" />';
     }else if( ds_type == 'int' || ds_type == 'bigint' ){
-      fieldInput = '<input class="pd-datatable-editor-input ' + readOnlyClass + '" value="' + _value + '" name=' + fieldID + '" id="' + fieldID + '" data-primary-key="' + isPrimaryKey + '" data-row-index="' + _rowIndex + '" data-datastore-id="' + _chromo_field.datastore_id + '" data-number-type="int" type="number" ' + readOnly + ' tabindex="' + tabIndex + '" />';
+      fieldInput = '<input class="pd-datatable-editor-input ' + readOnlyClass + '" value="' + _value + '" name=' + fieldID + '" id="' + fieldID + '" data-primary-key="' + isPrimaryKey + '" data-row-index="' + _rowIndex + '" data-datastore-id="' + _chromo_field.datastore_id + '" data-number-type="int" type="number" ' + readOnly + maxLength + ' tabindex="' + tabIndex + '" />';
     }else if( ds_type == 'numeric' || ds_type == 'float' || ds_type == 'double' ){
-      fieldInput = '<input class="pd-datatable-editor-input ' + readOnlyClass + '" value="' + _value + '" name=' + fieldID + '" id="' + fieldID + '" data-primary-key="' + isPrimaryKey + '" data-row-index="' + _rowIndex + '" data-datastore-id="' + _chromo_field.datastore_id + '" data-number-type="float" type="number" ' + readOnly + ' tabindex="' + tabIndex + '" />';
+      fieldInput = '<input class="pd-datatable-editor-input ' + readOnlyClass + '" value="' + _value + '" name=' + fieldID + '" id="' + fieldID + '" data-primary-key="' + isPrimaryKey + '" data-row-index="' + _rowIndex + '" data-datastore-id="' + _chromo_field.datastore_id + '" data-number-type="float" type="number" ' + readOnly + maxLength + ' tabindex="' + tabIndex + '" />';
     }else if( ds_type == 'money' ){
-      fieldInput = '<input class="pd-datatable-editor-input ' + readOnlyClass + '" value="' + _value + '" name=' + fieldID + '" id="' + fieldID + '" data-primary-key="' + isPrimaryKey + '" data-row-index="' + _rowIndex + '" data-datastore-id="' + _chromo_field.datastore_id + '" data-number-type="money" type="number" ' + readOnly + ' tabindex="' + tabIndex + '" />';
+      fieldInput = '<input class="pd-datatable-editor-input ' + readOnlyClass + '" value="' + _value + '" name=' + fieldID + '" id="' + fieldID + '" data-primary-key="' + isPrimaryKey + '" data-row-index="' + _rowIndex + '" data-datastore-id="' + _chromo_field.datastore_id + '" data-number-type="money" type="number" ' + readOnly + maxLength + ' tabindex="' + tabIndex + '" />';
     }
     if( typeof editorObject.select_choices != 'undefined' && editorObject.select_choices ){
       let isMultiple = ds_type == '_text' ? 'multiple' : '';
@@ -433,7 +437,7 @@ function load_pd_datatable(CKAN_MODULE){
       fieldInput += '</select>';
     }
     if( (typeof _chromo_field.form_snippet != 'undefined' && _chromo_field.form_snippet.includes('textarea')) || (typeof _chromo_field.markdown != 'undefined' && _chromo_field.markdown) ){
-      fieldInput = '<textarea class="pd-datatable-editor-input ' + readOnlyClass + '" name=' + fieldID + '" id="' + fieldID + '" rows="1" data-primary-key="' + isPrimaryKey + '" data-row-index="' + _rowIndex + '" data-datastore-id="' + _chromo_field.datastore_id + '" ' + readOnly + ' tabindex="' + tabIndex + '">' + _value + '</textarea>';
+      fieldInput = '<textarea class="pd-datatable-editor-input ' + readOnlyClass + '" name=' + fieldID + '" id="' + fieldID + '" rows="1" data-primary-key="' + isPrimaryKey + '" data-row-index="' + _rowIndex + '" data-datastore-id="' + _chromo_field.datastore_id + '" ' + readOnly + maxLength + ' tabindex="' + tabIndex + '">' + _value + '</textarea>';
     }
     return srLabel + fieldInput;
   }

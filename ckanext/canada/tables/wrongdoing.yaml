@@ -34,6 +34,7 @@ resources:
       en: "FW-2015-Q1-00001 – this sequence will continue for each line item (i.e.: FW-2015-Q1-00001, FW-2015-Q1-00002, FW-2015-Q1-00001….)"
       fr: FW-2016-Q1-00001 – cette séquence se poursuivra pour chaque poste (c.-à-d. FW-2016-Q1-00001, FW-2016-Q1-00002, FW-2016-Q1-00003….)
     datastore_type: text
+    js_error_eval: 'VALUE.length > 0 && VALUE.includes(",")'
 
   - datastore_id: file_id_number
     label:

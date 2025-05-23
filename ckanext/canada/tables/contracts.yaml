@@ -119,6 +119,7 @@ resources:
     excel_required: true
     datastore_type: text
     form_required: true
+    js_error_eval: 'VALUE.length > 0 && VALUE.includes(",")'
 
   - datastore_id: procurement_id
     label:

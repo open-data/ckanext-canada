@@ -63,6 +63,7 @@ resources:
     form_required: true
     datatables_col_class: col-sm pd-datatables-primary-key-offset-md
     excel_error_formula: 'OR({default_formula},LEN({cell})-LEN(SUBSTITUTE({cell},",",""))>0)'
+    js_error_eval: 'VALUE.length > 0 && VALUE.includes(",")'
     format_type: Free text
     validation:
       en: |
@@ -525,6 +526,7 @@ resources:
     datatables_col_class: col-xxl
     max_chars: 1800
     excel_required_formula: 'OR(TRIM(LEFT({automated_decision_system},FIND(":",{automated_decision_system}&":")-1))="Y",NOT(ISBLANK({automated_decision_system_description_fr})))'
+    js_required_eval: '{{automated_decision_system_description_fr}}.length > 0 || ({{automated_decision_system}}.length > 0 && {{automated_decision_system}} == "Y")'
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
       maxlength: 1800
@@ -561,6 +563,7 @@ resources:
     datatables_col_class: col-xxl
     max_chars: 1800
     excel_required_formula: 'OR(TRIM(LEFT({automated_decision_system},FIND(":",{automated_decision_system}&":")-1))="Y",NOT(ISBLANK({automated_decision_system_description_en})))'
+    js_required_eval: '{{automated_decision_system_description_en}}.length > 0 || ({{automated_decision_system}}.length > 0 && {{automated_decision_system}} == "Y")'
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
       maxlength: 1800
@@ -761,6 +764,7 @@ resources:
     datatables_col_class: col-xxl
     max_chars: 1000
     excel_required_formula: 'OR(TRIM(LEFT({os_account_registration},FIND(":",{os_account_registration}&":")-1))="NA",TRIM(LEFT({os_authentication},FIND(":",{os_authentication}&":")-1))="NA",TRIM(LEFT({os_application},FIND(":",{os_application}&":")-1))="NA",TRIM(LEFT({os_decision},FIND(":",{os_decision}&":")-1))="NA",TRIM(LEFT({os_issuance},FIND(":",{os_issuance}&":")-1))="NA",TRIM(LEFT({os_issue_resolution_feedback},FIND(":",{os_issue_resolution_feedback}&":")-1))="NA",NOT(ISBLANK({os_comments_client_interaction_fr})))'
+    js_required_eval: '{{os_comments_client_interaction_fr}}.length > 0 || ({{os_account_registration}} == "NA" || {{os_authentication}} == "NA" || {{os_application}} == "NA" || {{os_decision}} == "NA" || {{os_issuance}} == "NA" || {{os_issue_resolution_feedback}} == "NA")'
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
       maxlength: 1000
@@ -795,6 +799,7 @@ resources:
     datatables_col_class: col-xxl
     max_chars: 1000
     excel_required_formula: 'OR(TRIM(LEFT({os_account_registration},FIND(":",{os_account_registration}&":")-1))="NA",TRIM(LEFT({os_authentication},FIND(":",{os_authentication}&":")-1))="NA",TRIM(LEFT({os_application},FIND(":",{os_application}&":")-1))="NA",TRIM(LEFT({os_decision},FIND(":",{os_decision}&":")-1))="NA",TRIM(LEFT({os_issuance},FIND(":",{os_issuance}&":")-1))="NA",TRIM(LEFT({os_issue_resolution_feedback},FIND(":",{os_issue_resolution_feedback}&":")-1))="NA",NOT(ISBLANK({os_comments_client_interaction_en})))'
+    js_required_eval: '{{os_comments_client_interaction_en}}.length > 0 || ({{os_account_registration}} == "NA" || {{os_authentication}} == "NA" || {{os_application}} == "NA" || {{os_decision}} == "NA" || {{os_issuance}} == "NA" || {{os_issue_resolution_feedback}} == "NA")'
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
       maxlength: 1000
@@ -939,6 +944,7 @@ resources:
     occurrence: Single
     datastore_type: text
     excel_error_formula: 'OR({default_formula},IFERROR(VALUE({cell})<0,AND({cell}<>"NA",{cell}<>"ND")))'
+    js_error_eval: 'VALUE.length > 0 && ( (String(VALUE).match(/^-?[0-9]+$/) != null && parseInt(VALUE) < 0) || (String(VALUE).match(/^-?[0-9]+$/) == null && VALUE.toUpperCase() != "NA" && VALUE.toUpperCase() != "ND") )'
 
   # DEP 1-33
   - datastore_id: num_applications_by_phone
@@ -973,6 +979,7 @@ resources:
     occurrence: Single
     datastore_type: text
     excel_error_formula: 'OR({default_formula},IFERROR(VALUE({cell})<0,AND({cell}<>"NA",{cell}<>"ND")))'
+    js_error_eval: 'VALUE.length > 0 && ( (String(VALUE).match(/^-?[0-9]+$/) != null && parseInt(VALUE) < 0) || (String(VALUE).match(/^-?[0-9]+$/) == null && VALUE.toUpperCase() != "NA" && VALUE.toUpperCase() != "ND") )'
 
   # DEP 1-34
   - datastore_id: num_website_visits
@@ -1006,6 +1013,7 @@ resources:
     occurrence: Single
     datastore_type: text
     excel_error_formula: 'OR({default_formula},IFERROR(VALUE({cell})<0,AND({cell}<>"NA",{cell}<>"ND")))'
+    js_error_eval: 'VALUE.length > 0 && ( (String(VALUE).match(/^-?[0-9]+$/) != null && parseInt(VALUE) < 0) || (String(VALUE).match(/^-?[0-9]+$/) == null && VALUE.toUpperCase() != "NA" && VALUE.toUpperCase() != "ND") )'
 
   # DEP 1-35
   - datastore_id: num_applications_online
@@ -1042,6 +1050,7 @@ resources:
     occurrence: Single
     datastore_type: text
     excel_error_formula: 'OR({default_formula},IFERROR(VALUE({cell})<0,AND({cell}<>"NA",{cell}<>"ND")))'
+    js_error_eval: 'VALUE.length > 0 && ( (String(VALUE).match(/^-?[0-9]+$/) != null && parseInt(VALUE) < 0) || (String(VALUE).match(/^-?[0-9]+$/) == null && VALUE.toUpperCase() != "NA" && VALUE.toUpperCase() != "ND") )'
 
   # DEP 1-36
   - datastore_id: num_applications_in_person
@@ -1077,6 +1086,7 @@ resources:
     occurrence: Single
     datastore_type: text
     excel_error_formula: 'OR({default_formula},IFERROR(VALUE({cell})<0,AND({cell}<>"NA",{cell}<>"ND")))'
+    js_error_eval: 'VALUE.length > 0 && ( (String(VALUE).match(/^-?[0-9]+$/) != null && parseInt(VALUE) < 0) || (String(VALUE).match(/^-?[0-9]+$/) == null && VALUE.toUpperCase() != "NA" && VALUE.toUpperCase() != "ND") )'
 
   # DEP 1-37
   - datastore_id: num_applications_by_mail
@@ -1111,6 +1121,7 @@ resources:
     occurrence: Single
     datastore_type: text
     excel_error_formula: 'OR({default_formula},IFERROR(VALUE({cell})<0,AND({cell}<>"NA",{cell}<>"ND")))'
+    js_error_eval: 'VALUE.length > 0 && ( (String(VALUE).match(/^-?[0-9]+$/) != null && parseInt(VALUE) < 0) || (String(VALUE).match(/^-?[0-9]+$/) == null && VALUE.toUpperCase() != "NA" && VALUE.toUpperCase() != "ND") )'
 
   # DEP 1-38
   - datastore_id: num_applications_by_email
@@ -1145,6 +1156,7 @@ resources:
     occurrence: Single
     datastore_type: text
     excel_error_formula: 'OR({default_formula},IFERROR(VALUE({cell})<0,AND({cell}<>"NA",{cell}<>"ND")))'
+    js_error_eval: 'VALUE.length > 0 && ( (String(VALUE).match(/^-?[0-9]+$/) != null && parseInt(VALUE) < 0) || (String(VALUE).match(/^-?[0-9]+$/) == null && VALUE.toUpperCase() != "NA" && VALUE.toUpperCase() != "ND") )'
 
   # DEP 1-39
   - datastore_id: num_applications_by_fax
@@ -1179,6 +1191,7 @@ resources:
     occurrence: Single
     datastore_type: text
     excel_error_formula: 'OR({default_formula},IFERROR(VALUE({cell})<0,AND({cell}<>"NA",{cell}<>"ND")))'
+    js_error_eval: 'VALUE.length > 0 && ( (String(VALUE).match(/^-?[0-9]+$/) != null && parseInt(VALUE) < 0) || (String(VALUE).match(/^-?[0-9]+$/) == null && VALUE.toUpperCase() != "NA" && VALUE.toUpperCase() != "ND") )'
 
   # DEP 1-40
   - datastore_id: num_applications_by_other
@@ -1214,6 +1227,7 @@ resources:
     occurrence: Single
     datastore_type: text
     excel_error_formula: 'OR({default_formula},IFERROR(VALUE({cell})<0,AND({cell}<>"NA",{cell}<>"ND")))'
+    js_error_eval: 'VALUE.length > 0 && ( (String(VALUE).match(/^-?[0-9]+$/) != null && parseInt(VALUE) < 0) || (String(VALUE).match(/^-?[0-9]+$/) == null && VALUE.toUpperCase() != "NA" && VALUE.toUpperCase() != "ND") )'
 
   # DEP 1-45
   # Dev: Published Resource Field
@@ -1263,6 +1277,7 @@ resources:
     datatables_col_class: col-xxl
     max_chars: 2000
     excel_required_formula: 'OR(AND(NOT(ISBLANK({num_applications_by_other})),ISNUMBER(VALUE({num_applications_by_other})),VALUE({num_applications_by_other})>0),NOT(ISBLANK({special_remarks_fr})))'
+    js_required_eval: '{{special_remarks_fr}}.length > 0 || (String({{num_applications_by_other}}).match(/^-?[0-9]+$/) != null && parseInt({{num_applications_by_other}}) > 0)'
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
       maxlength: 2000
@@ -1302,6 +1317,7 @@ resources:
     datatables_col_class: col-xxl
     max_chars: 2000
     excel_required_formula: 'OR(AND(NOT(ISBLANK({num_applications_by_other})),ISNUMBER(VALUE({num_applications_by_other})),VALUE({num_applications_by_other})>0),NOT(ISBLANK({special_remarks_en})))'
+    js_required_eval: '{{special_remarks_en}}.length > 0 || (String({{num_applications_by_other}}).match(/^-?[0-9]+$/) != null && parseInt({{num_applications_by_other}}) > 0)'
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
       maxlength: 2000
@@ -1325,6 +1341,7 @@ resources:
     datatables_col_class: col-lg
     max_chars: 1500
     excel_required_formula: NOT(ISBLANK({service_uri_fr}))
+    js_required_eval: '{{service_uri_fr}}.length > 0'
     form_attrs:
       style: "width: 100%; display: block"
       maxlength: 1500
@@ -1348,6 +1365,7 @@ resources:
     datatables_col_class: col-lg
     max_chars: 1500
     excel_required_formula: NOT(ISBLANK({service_uri_en}))
+    js_required_eval: '{{service_uri_en}}.length > 0'
     form_attrs:
       style: "width: 100%; display: block"
       maxlength: 1500
@@ -1731,6 +1749,7 @@ resources:
     excel_required: true
     form_required: true
     excel_error_formula: 'OR({default_formula},LEN({cell})-LEN(SUBSTITUTE({cell},",",""))>0)'
+    js_error_eval: 'VALUE.length > 0 && VALUE.includes(",")'
     validation:
       en: |
         This field must not be empty.

@@ -34,6 +34,7 @@ resources:
     form_required: true
     format_type: Free text
     validation: This field must not be empty
+    js_error_eval: 'VALUE.length > 0 && VALUE.includes(",")'
     visible_to_public: Yes
     occurrence: Single
     datastore_type: text

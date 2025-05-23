@@ -74,6 +74,7 @@ resources:
     excel_column_width: 38
     form_required: true
     excel_required: true
+    js_error_eval: 'VALUE.length > 0 && VALUE.includes(",")'
 
   - datastore_id: summary_en
     label:

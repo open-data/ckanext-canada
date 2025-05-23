@@ -29,6 +29,7 @@ resources:
     excel_required: true
     form_required: true
     validation: This field must not be empty
+    js_error_eval: 'VALUE.length > 0 && VALUE.includes(",")'
     format_type: Free text
     excel_column_width: 30
     form_attrs:

@@ -40,6 +40,7 @@ resources:
     form_required: true
     datatables_col_class: col-md
     excel_error_formula: '{cell}>YEAR(TODAY())'
+    js_error_eval: 'VALUE.length > 0 && VALUE > new Date().getFullYear()'
 
   - datastore_id: mandate_description_en
     label:
@@ -61,6 +62,8 @@ resources:
     validation: This field must not be empty
     datastore_type: text
     datatables_col_class: col-lg
+    excel_required_formula: 'VALUE({year})>=2018'
+    js_required_eval: '{{mandate_description_fr}}.length > 0 || ({{year}}.length > 0 && parseInt({{year}}) >= 2018)'
     excel_column_width: 50
     form_required: true
     form_snippet: scheming/form_snippets/textarea.html
@@ -87,6 +90,8 @@ resources:
     validation: This field must not be empty
     datastore_type: text
     datatables_col_class: col-lg
+    excel_required_formula: 'VALUE({year})>=2018'
+    js_required_eval: '{{mandate_description_en}}.length > 0 || ({{year}}.length > 0 && parseInt({{year}}) >= 2018)'
     excel_column_width: 50
     form_required: true
     form_snippet: scheming/form_snippets/textarea.html
@@ -113,6 +118,8 @@ resources:
     obligation: 'Mandatory if year ≥ 2018'
     excel_required_formula: 'OR(ISBLANK({year}),{year}>=2018)'
     excel_error_formula: 'OR({default_formula},AND(NOT(ISBLANK({year})),{year}<2018))'
+    js_required_eval: '{{year}}.length > 0 && parseInt({{year}}) >= 2018'
+    js_error_eval: '{{year}}.length > 0 && parseInt({{year}}) < 2018 && VALUE.length > 0'
     solr_sum_to_field: [total_travel_kdollars, total_kdollars]
     solr_compare_previous_year:
       previous_year: operational_activities_kdollars_previous_year
@@ -144,6 +151,8 @@ resources:
     obligation: 'Mandatory if year ≥ 2018'
     excel_required_formula: 'OR(ISBLANK({year}),{year}>=2018)'
     excel_error_formula: 'OR({default_formula},AND(NOT(ISBLANK({year})),{year}<2018))'
+    js_required_eval: '{{year}}.length > 0 && parseInt({{year}}) >= 2018'
+    js_error_eval: '{{year}}.length > 0 && parseInt({{year}}) < 2018 && VALUE.length > 0'
     solr_sum_to_field: [total_travel_kdollars, total_kdollars]
     solr_compare_previous_year:
       previous_year: key_stakeholders_kdollars_previous_year
@@ -175,6 +184,8 @@ resources:
     obligation: 'Mandatory if year ≥ 2018'
     excel_required_formula: 'OR(ISBLANK({year}),{year}>=2018)'
     excel_error_formula: 'OR({default_formula},AND(NOT(ISBLANK({year})),{year}<2018))'
+    js_required_eval: '{{year}}.length > 0 && parseInt({{year}}) >= 2018'
+    js_error_eval: '{{year}}.length > 0 && parseInt({{year}}) < 2018 && VALUE.length > 0'
     solr_sum_to_field: [total_travel_kdollars, total_kdollars]
     solr_compare_previous_year:
       previous_year: training_kdollars_previous_year
@@ -206,6 +217,8 @@ resources:
     obligation: 'Mandatory if year ≥ 2018'
     excel_required_formula: 'OR(ISBLANK({year}),{year}>=2018)'
     excel_error_formula: 'OR({default_formula},AND(NOT(ISBLANK({year})),{year}<2018))'
+    js_required_eval: '{{year}}.length > 0 && parseInt({{year}}) >= 2018'
+    js_error_eval: '{{year}}.length > 0 && parseInt({{year}}) < 2018 && VALUE.length > 0'
     solr_sum_to_field: [total_travel_kdollars, total_kdollars]
     solr_compare_previous_year:
       previous_year: other_kdollars_previous_year
@@ -237,6 +250,8 @@ resources:
     obligation: 'Mandatory if year ≥ 2018'
     excel_required_formula: 'OR(ISBLANK({year}),{year}>=2018)'
     excel_error_formula: 'OR({default_formula},AND(NOT(ISBLANK({year})),{year}<2018))'
+    js_required_eval: '{{year}}.length > 0 && parseInt({{year}}) >= 2018'
+    js_error_eval: '{{year}}.length > 0 && parseInt({{year}}) < 2018 && VALUE.length > 0'
     solr_sum_to_field: [total_travel_kdollars, total_kdollars]
     solr_compare_previous_year:
       previous_year: internal_governance_kdollars_previous_year
@@ -268,6 +283,8 @@ resources:
     obligation: 'Mandatory if year < 2018'
     excel_required_formula: 'AND(NOT(ISBLANK({year})),{year}<2018)'
     excel_error_formula: 'OR({default_formula},{year}>=2018)'
+    js_required_eval: '{{year}}.length > 0 && parseInt({{year}}) < 2018'
+    js_error_eval: '{{year}}.length > 0 && parseInt({{year}}) >= 2018 && VALUE.length > 0'
     excel_column_heading_style:
       PatternFill:
         patternType: solid
@@ -303,6 +320,8 @@ resources:
     obligation: 'Mandatory if year < 2018'
     excel_required_formula: 'AND(NOT(ISBLANK({year})),{year}<2018)'
     excel_error_formula: 'OR({default_formula},{year}>=2018)'
+    js_required_eval: '{{year}}.length > 0 && parseInt({{year}}) < 2018'
+    js_error_eval: '{{year}}.length > 0 && parseInt({{year}}) >= 2018 && VALUE.length > 0'
     excel_column_heading_style:
       PatternFill:
         patternType: solid
@@ -411,6 +430,7 @@ resources:
       fr: Expliquez brièvement, en anglais, la ou les raisons significatives de l’augmentation ou de la diminution des dépenses annuelles de voyage pour les fonctionnaires et non-fonctionnaires.
     datastore_type: text
     datatables_col_class: col-xxl
+    js_required_eval: '{{travel_compared_fiscal_year_fr}}.length > 0'
     excel_column_width: 50
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
@@ -434,6 +454,7 @@ resources:
       fr: Expliquez brièvement, en français, la ou les raisons significatives de l’augmentation ou de la diminution des dépenses annuelles de voyage pour les fonctionnaires et non-fonctionnaires.
     datastore_type: text
     datatables_col_class: col-xxl
+    js_required_eval: '{{travel_compared_fiscal_year_en}}.length > 0'
     excel_column_width: 50
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
@@ -457,6 +478,7 @@ resources:
       fr: Expliquez brièvement, en anglais, la ou les raisons significatives de l’augmentation ou de la diminution des dépenses annuelles d’accueil.
     datastore_type: text
     datatables_col_class: col-xxl
+    js_required_eval: '{{hospitality_compared_fiscal_year_fr}}.length > 0'
     excel_column_width: 50
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
@@ -480,6 +502,7 @@ resources:
       fr: Expliquez brièvement, en français, la ou les raisons significatives de l’augmentation ou de la diminution des dépenses annuelles d’accueil.
     datastore_type: text
     datatables_col_class: col-xxl
+    js_required_eval: '{{hospitality_compared_fiscal_year_en}}.length > 0'
     excel_column_width: 50
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
@@ -503,6 +526,7 @@ resources:
       fr: Expliquez brièvement, en anglais, la ou les raisons significatives de l’augmentation ou de la diminution des dépenses annuelles de conférences.
     datastore_type: text
     datatables_col_class: col-xxl
+    js_required_eval: '{{conference_fees_compared_fiscal_year_fr}}.length > 0'
     excel_column_width: 50
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
@@ -526,6 +550,7 @@ resources:
       fr: Expliquez brièvement, en français, la ou les raisons significatives de l’augmentation ou de la diminution des dépenses annuelles de conférences
     datastore_type: text
     datatables_col_class: col-xxl
+    js_required_eval: '{{conference_fees_compared_fiscal_year_en}}.length > 0'
     excel_column_width: 50
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
@@ -549,6 +574,7 @@ resources:
       fr: Expliquez brièvement, en anglais, la ou les raisons significatives de l’augmentation ou de la diminution des dépenses annuelles de voyage à l’étranger pour le ministre et son personnel.
     datastore_type: text
     datatables_col_class: col-xxl
+    js_required_eval: '{{minister_compared_fiscal_year_fr}}.length > 0'
     excel_column_width: 50
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
@@ -573,6 +599,7 @@ resources:
       fr: Expliquez brièvement, en français, la ou les raisons significatives de l’augmentation ou de la diminution des dépenses annuelles de voyage à l’étranger pour le ministre et son personnel.
     datastore_type: text
     datatables_col_class: col-xxl
+    js_required_eval: '{{minister_compared_fiscal_year_en}}.length > 0'
     excel_column_width: 50
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:

@@ -39,6 +39,7 @@ resources:
     excel_required: true
     form_required: true
     validation: This field must not be empty
+    js_error_eval: 'VALUE.length > 0 && VALUE.includes(",")'
     format_type:
       en: "H-2019-P1-00001 – this sequence will continue for each line item (i.e.: H-2019-P1-00001, H-2019-P1-00002, H-2019-P1-00003, etc.)"
       fr: H-2016-P1-00001 – cette séquence se poursuivra pour chaque poste (c.-à-d. H-2016-Q1-00001, H-2016-P1-00002, H -2016-P1-00003….)
@@ -420,6 +421,7 @@ resources:
     # Dev NOTE: excel_error_formula: Excel and Open Office Calc parity issues with REGEX. REGEX does not exist in Excel.
     excel_required_formula: NOT(ISBLANK({vendor_other_fr}))
     js_required_eval: '{{vendor_other_fr}}.length > 0'
+    # TODO: multi-vendor format js_error_eval
     form_required: false
     format_type: Free text
     datatables_col_class: col-xl

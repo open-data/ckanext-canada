@@ -43,6 +43,7 @@ resources:
     visible_to_public: Yes
     occurrence: Single
     datastore_type: text
+    js_error_eval: 'VALUE.length > 0 && VALUE.includes(",")'
 
 # 3.2
   - datastore_id: minister

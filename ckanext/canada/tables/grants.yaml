@@ -52,6 +52,7 @@ resources:
     format_type: Free text
     datastore_type: text
     datatables_col_class: col-lg
+    js_error_eval: 'VALUE.length > 0 && VALUE.includes(",")'
 
   # 3.2 Amendment Number (New Field)
   - datastore_id: amendment_number
