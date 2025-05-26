@@ -43,6 +43,7 @@ resources:
     visible_to_public: Yes
     occurrence: Single
     datastore_type: text
+    js_error_eval: 'VALUE.length > 0 && VALUE.includes(",")'
 
 # 3.2
   - datastore_id: minister
@@ -60,7 +61,9 @@ resources:
     visible_to_public: Yes
     occurrence: Single
     datastore_type: text
-    excel_full_text_choices: True
+    excel_full_text_choices: true
+    datatables_full_text_choices: true
+    datatables_col_class: col-md
     choices_file: choices/minister.json
     excel_error_formula: 'FALSE'
 
@@ -77,6 +80,7 @@ resources:
     form_required: true
     format_type: Free text
     validation: This field must not be empty
+    datatables_col_class: col-lg
     visible_to_public: Yes
     occurrence: Single
     datastore_type: text
@@ -97,6 +101,7 @@ resources:
     form_required: true
     format_type: Free Text
     validation: This field must not be empty
+    datatables_col_class: col-lg
     visible_to_public: Yes
     occurrence: Single
     datastore_type: text
@@ -154,6 +159,7 @@ resources:
     form_required: true
     format_type: Free Text (Note, use full city/region, province/state and country name where possible. Seperate multiple locations with semicolons.)
     validation: This field must not be empty
+    datatables_col_class: col-lg
     visible_to_public: Yes
     occurrence: Repeatable
     datastore_type: text
@@ -174,6 +180,7 @@ resources:
     form_required: true
     format_type: Free Text (Note, use full city/region, province/state and country name where possible. Seperate multiple locations with semicolons.)
     validation: This field must not be empty
+    datatables_col_class: col-lg
     visible_to_public: Yes
     occurrence: Repeatable
     datastore_type: text
@@ -214,6 +221,7 @@ resources:
     form_required: true
     format_type: Free Text (separated by commas)
     validation: This field must not be empty
+    datatables_col_class: col-lg
     visible_to_public: Yes
     occurrence: Repeatable
     datastore_type: text
@@ -235,6 +243,7 @@ resources:
     visible_to_public: Yes
     occurrence: Repeatable
     datastore_type: text
+    datatables_col_class: col-lg
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
       style: "width: 100%; display: block"
@@ -254,6 +263,7 @@ resources:
     visible_to_public: Yes
     occurrence: Repeatable
     datastore_type: text
+    datatables_col_class: col-lg
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
       style: "width: 100%; display: block"

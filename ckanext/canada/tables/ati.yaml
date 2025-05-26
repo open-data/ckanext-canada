@@ -37,10 +37,12 @@ resources:
     datastore_type: year
     form_attrs:
       size: 10
+    datatables_col_class: col-sm
     form_required: true
     excel_required: true
     excel_column_width: 13
     excel_error_formula: 'OR({default_formula},{cell}>YEAR(TODAY()),{cell}<2011)'
+    js_error_eval: 'VALUE.length > 0 && ( VALUE < 2011 || VALUE > new Date().getFullYear() )'
 
   - datastore_id: month
     label:
@@ -55,6 +57,7 @@ resources:
     datastore_type: month
     form_attrs:
       size: 5
+    datatables_col_class: col-xs
     form_required: true
     excel_required: true
     excel_column_width: 18
@@ -72,6 +75,7 @@ resources:
     excel_column_width: 38
     form_required: true
     excel_required: true
+    js_error_eval: 'VALUE.length > 0 && VALUE.includes(",")'
 
   - datastore_id: summary_en
     label:
@@ -117,6 +121,7 @@ resources:
     excel_required: true
     excel_column_width: 39
     excel_full_text_choices: true
+    datatables_full_text_choices: true
     choices:
       DA:
         en: All disclosed
@@ -149,6 +154,7 @@ resources:
     excel_required: true
     form_attrs:
       size: 10
+    datatables_col_class: col-md
     excel_column_width: 34
     excel_error_formula: 'OR({default_formula},{cell}<0)'
     js_error_eval: parseInt(VALUE) < 0
@@ -164,6 +170,7 @@ resources:
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
       style: "width: 100%; display: block"
+    datatables_col_class: col-xl
     excel_column_width: 41
     excel_required_formula: NOT(ISBLANK({comments_fr}))
     js_required_eval: '{{comments_fr}}.length > 0'
@@ -179,6 +186,7 @@ resources:
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
       style: "width: 100%; display: block"
+    datatables_col_class: col-xl
     excel_column_width: 41
     excel_required_formula: NOT(ISBLANK({comments_en}))
     js_required_eval: '{{comments_en}}.length > 0'
@@ -309,10 +317,12 @@ resources:
     datastore_type: year
     form_attrs:
       size: 10
+    datatables_col_class: col-md
     form_required: true
     excel_required: true
     excel_column_width: 13
     excel_error_formula: 'OR({default_formula},{cell}>YEAR(TODAY()),{cell}<2011)'
+    js_error_eval: 'VALUE.length > 0 && ( VALUE < 2011 || VALUE > new Date().getFullYear() )'
 
   - datastore_id: month
     label:
@@ -327,6 +337,7 @@ resources:
     datastore_type: month
     form_attrs:
       size: 5
+    datatables_col_class: col-sm pd-datatables-primary-key-offset-md
     form_required: true
     excel_required: true
     excel_column_width: 18

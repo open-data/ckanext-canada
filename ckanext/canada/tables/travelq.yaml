@@ -47,6 +47,7 @@ resources:
     excel_required: true
     form_required: true
     validation: This field must not be empty
+    js_error_eval: 'VALUE.length > 0 && VALUE.includes(",")'
     format_type:
       en: "T-2019-P1-00001 – this sequence will continue for each line item (i.e.: T-2019-P1-00001, T-2019-P1-00002, T-2019-P1-00003, etc.)"
       fr: T-2019-P1-00001 – cette séquence se poursuivra pour chaque poste (c.-à-d. T-2019-P1-00001, T-2019-P1-00002, T-2019-P1-00003….)
@@ -66,10 +67,12 @@ resources:
     excel_required: false
     form_required: false
     excel_required_formula: '{end_date}>=DATE(2025,4,1)'
+    js_required_eval: '{{end_date}}.length > 0 && new Date({{end_date}}) >= new Date("2025-04-01")'
     validation:
       en: Required if "Travel End Date" is on or after April 1st 2025
       fr: Requis si la "date de fin du voyage" est le 1er avril 2025 ou après
     format_type: Controlled List
+    datatables_col_class: col-lg
     choices:
       MPSES:
         en: Minister/Ministerial adviser/Ministerial staff/Parliamentary Secretary/Exempt Staff
@@ -92,6 +95,9 @@ resources:
     form_required: true
     validation: This field must not be empty
     format_type: Free text
+    datatables_col_class: col-lg
+    excel_required_formula: '{start_date}>=DATE(2019,6,21)'
+    js_required_eval: '{{title_fr}}.length > 0 || ({{start_date}}.length > 0 && new Date({{start_date}}) >= new Date("2019-06-21"))'
     excel_column_width: 30
     form_attrs:
       size: 60
@@ -110,6 +116,9 @@ resources:
     form_required: true
     validation: This field must not be empty
     format_type: Free text
+    datatables_col_class: col-lg
+    excel_required_formula: '{start_date}>=DATE(2019,6,21)'
+    js_required_eval: '{{title_en}}.length > 0 || ({{start_date}}.length > 0 && new Date({{start_date}}) >= new Date("2019-06-21"))'
     excel_column_width: 30
     form_attrs:
       size: 60
@@ -128,6 +137,9 @@ resources:
     form_required: true
     validation: This field must not be empty
     format_type: Free text
+    datatables_col_class: col-lg
+    excel_required_formula: '{start_date}>=DATE(2019,6,21)'
+    js_required_eval: '{{start_date}}.length > 0 && new Date({{start_date}}) >= new Date("2019-06-21")'
     excel_column_width: 30
     form_attrs:
       size: 60
@@ -152,6 +164,9 @@ resources:
     form_required: true
     validation: This field must not be empty
     format_type: Free text
+    datatables_col_class: col-xl
+    excel_required_formula: '{start_date}>=DATE(2019,6,21)'
+    js_required_eval: '{{purpose_fr}}.length > 0 || ({{start_date}}.length > 0 && new Date({{start_date}}) >= new Date("2019-06-21"))'
     form_attrs:
       size: 60
 
@@ -175,6 +190,9 @@ resources:
     form_required: true
     validation: This field must not be empty
     format_type: Free text
+    datatables_col_class: col-xl
+    excel_required_formula: '{start_date}>=DATE(2019,6,21)'
+    js_required_eval: '{{purpose_en}}.length > 0 || ({{start_date}}.length > 0 && new Date({{start_date}}) >= new Date("2019-06-21"))'
     form_attrs:
       size: 60
 
@@ -218,6 +236,8 @@ resources:
     excel_required: true
     form_required: true
     excel_error_formula: 'OR({default_formula},{cell}>TODAY(),AND(NOT(ISBLANK({start_date})),{end_date}<{start_date}))'
+    excel_required_formula: '{start_date}>=DATE(2019,6,21)'
+    js_required_eval: '{{start_date}}.length > 0 && new Date({{start_date}}) >= new Date("2019-06-21")'
     validation:
       en: |
         This field must not be empty.
@@ -249,6 +269,10 @@ resources:
     excel_required: true
     # Dev NOTE: excel_error_formula: Excel and Open Office Calc parity issues with REGEX. REGEX does not exist in Excel.
     form_required: true
+    datatables_col_class: col-lg
+    excel_required_formula: '{start_date}>=DATE(2019,6,21)'
+    js_required_eval: '{{destination_fr}}.length > 0 || ({{start_date}}.length > 0 && new Date({{start_date}}) >= new Date("2019-06-21"))'
+    js_error_eval: '{{end_date}}.length > 0 && new Date({{end_date}}) >= new Date("2025-04-01") && VALUE.length > 0 && ( (VALUE.split(",").length <= 1 || VALUE.split(",").length > 3) || ! VALUE.split(",").every(function(_vv){ return _vv.trim().length > 0 }) )'
     validation:
       en: |
         This field must not be empty
@@ -286,6 +310,10 @@ resources:
     excel_required: true
     # Dev NOTE: excel_error_formula: Excel and Open Office Calc parity issues with REGEX. REGEX does not exist in Excel.
     form_required: true
+    datatables_col_class: col-lg
+    excel_required_formula: '{start_date}>=DATE(2019,6,21)'
+    js_required_eval: '{{destination_en}}.length > 0 || ({{start_date}}.length > 0 && new Date({{start_date}}) >= new Date("2019-06-21"))'
+    js_error_eval: '{{end_date}}.length > 0 && new Date({{end_date}}) >= new Date("2025-04-01") && VALUE.length > 0 && ( (VALUE.split(",").length <= 1 || VALUE.split(",").length > 3) || ! VALUE.split(",").every(function(_vv){ return _vv.trim().length > 0 }) )'
     validation:
       en: |
         This field must not be empty
@@ -323,7 +351,10 @@ resources:
     excel_required: false
     # Dev NOTE: excel_error_formula: Excel and Open Office Calc parity issues with REGEX. REGEX does not exist in Excel.
     excel_required_formula: NOT(ISBLANK({destination_2_fr}))
+    js_required_eval: '{{destination_2_fr}}.length > 0'
+    js_error_eval: '{{end_date}}.length > 0 && new Date({{end_date}}) >= new Date("2025-04-01") && VALUE.length > 0 && ( (VALUE.split(",").length <= 1 || VALUE.split(",").length > 3) || ! VALUE.split(",").every(function(_vv){ return _vv.trim().length > 0 }) )'
     form_required: false
+    datatables_col_class: col-lg
     validation:
       en: |
         Must be in the format of <City Name>, <State/Province Name>, <Country Name> for Canada and US, or <City Name>, <Country Name> for international
@@ -359,7 +390,10 @@ resources:
     excel_required: false
     # Dev NOTE: excel_error_formula: Excel and Open Office Calc parity issues with REGEX. REGEX does not exist in Excel.
     excel_required_formula: NOT(ISBLANK({destination_2_en}))
+    js_required_eval: '{{destination_2_en}}.length > 0'
+    js_error_eval: '{{end_date}}.length > 0 && new Date({{end_date}}) >= new Date("2025-04-01") && VALUE.length > 0 && ( (VALUE.split(",").length <= 1 || VALUE.split(",").length > 3) || ! VALUE.split(",").every(function(_vv){ return _vv.trim().length > 0 }) )'
     form_required: false
+    datatables_col_class: col-lg
     validation:
       en: |
         Must be in the format of <City Name>, <State/Province Name>, <Country Name> for Canada and US, or <City Name>, <Country Name> for international
@@ -395,7 +429,10 @@ resources:
     excel_required: false
     # Dev NOTE: excel_error_formula: Excel and Open Office Calc parity issues with REGEX. REGEX does not exist in Excel.
     excel_required_formula: NOT(ISBLANK({destination_other_fr}))
+    js_required_eval: '{{destination_other_fr}}.length > 0'
+    js_error_eval: '{{end_date}}.length > 0 && new Date({{end_date}}) >= new Date("2025-04-01") && VALUE.length > 0 && ! VALUE.split(";").every(function(_vv){ return ! (_vv.split(",").length <= 1 || _vv.split(",").length > 3) && _vv.split(",").every(function(_vvv){ return _vvv.trim().length > 0 } ) })'
     form_required: false
+    datatables_col_class: col-xl
     validation:
       en: |
         Must be in the format of <City Name>, <State/Province Name>, <Country Name>;<City 2 Name>, <Country 2 Name>
@@ -431,7 +468,10 @@ resources:
     excel_required: false
     # Dev NOTE: excel_error_formula: Excel and Open Office Calc parity issues with REGEX. REGEX does not exist in Excel.
     excel_required_formula: NOT(ISBLANK({destination_other_en}))
+    js_required_eval: '{{destination_other_en}}.length > 0'
+    js_error_eval: '{{end_date}}.length > 0 && new Date({{end_date}}) >= new Date("2025-04-01") && VALUE.length > 0 && ! VALUE.split(";").every(function(_vv){ return ! (_vv.split(",").length <= 1 || _vv.split(",").length > 3) && _vv.split(",").every(function(_vvv){ return _vvv.trim().length > 0 } ) })'
     form_required: false
+    datatables_col_class: col-xl
     validation:
       en: |
         Must be in the format of <City Name>, <State/Province Name>, <Country Name>;<City 2 Name>, <Country 2 Name>
@@ -494,6 +534,8 @@ resources:
     excel_required: true
     form_required: true
     validation: This field must not be empty
+    excel_required_formula: '{start_date}>=DATE(2019,6,21)'
+    js_required_eval: '{{start_date}}.length > 0 && new Date({{start_date}}) >= new Date("2019-06-21")'
     format_type:
       en: Numerical– Note, do not include dollar signs ($), all amounts include taxes.
       fr: Texte libre
@@ -514,6 +556,8 @@ resources:
     excel_required: true
     form_required: true
     validation: This field must not be empty
+    excel_required_formula: '{start_date}>=DATE(2019,6,21)'
+    js_required_eval: '{{start_date}}.length > 0 && new Date({{start_date}}) >= new Date("2019-06-21")'
     format_type:
       en: Numerical– Note, do not include dollar signs ($), all amounts include taxes.
       fr: Texte libre
@@ -556,6 +600,8 @@ resources:
       fr: Texte libre
     extract_double_sortable: true
     excel_column_width: 20
+    excel_required_formula: '{start_date}>=DATE(2019,6,21)'
+    js_required_eval: '{{start_date}}.length > 0 && new Date({{start_date}}) >= new Date("2019-06-21")'
     form_attrs:
       size: 40
     solr_dollar_range_facet:
@@ -575,7 +621,9 @@ resources:
       fr: Ce champ peut indiquer des commentaires supplémentaires en anglais.
     obligation: Optional
     format_type: Free text
+    datatables_col_class: col-xxl
     form_snippet: scheming/form_snippets/textarea.html
+    js_required_eval: '{{additional_comments_fr}}.length > 0'
     form_attrs:
       style: "width: 100%; display: block"
 
@@ -588,7 +636,9 @@ resources:
       fr: Ce champ peut indiquer des commentaires supplémentaires en français.
     obligation: Optional
     format_type: Free text
+    datatables_col_class: col-xxl
     form_snippet: scheming/form_snippets/textarea.html
+    js_required_eval: '{{additional_comments_en}}.length > 0'
     form_attrs:
       style: "width: 100%; display: block"
 
@@ -770,6 +820,9 @@ resources:
     form_required: true
     validation: This field must not be empty
     excel_column_width: 10
+    datatables_col_class: col-md
+    excel_error_formula: '{cell}>YEAR(TODAY())'
+    js_error_eval: 'VALUE.length > 0 && VALUE > new Date().getFullYear()'
     extract_date_year: true
     form_attrs:
       size: 20
@@ -791,8 +844,10 @@ resources:
     obligation: Mandatory
     excel_required: true
     form_required: true
+    datatables_col_class: col-sm pd-datatables-primary-key-offset-md
     validation: This field must not be empty
     excel_full_text_choices: true
+    datatables_full_text_choices: true
     choices_file: choices/gregor_month.yaml
 
   - datastore_id: record_created

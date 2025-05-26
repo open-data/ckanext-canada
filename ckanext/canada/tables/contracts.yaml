@@ -119,6 +119,7 @@ resources:
     excel_required: true
     datastore_type: text
     form_required: true
+    js_error_eval: 'VALUE.length > 0 && VALUE.includes(",")'
 
   - datastore_id: procurement_id
     label:
@@ -138,6 +139,7 @@ resources:
       en: Mandatory for contracts after 2019-01-01
       fr: Obligatoire pour les marchés conclus après le 2019-01-01
     excel_required_formula: 'VALUE({contract_date})>=DATE(2019,1,1)'
+    js_required_eval: '{{contract_date}}.length > 0 && new Date({{contract_date}}) >= new Date("2019-01-01")'
     datastore_type: text
 
   - datastore_id: vendor_name
@@ -151,7 +153,9 @@ resources:
       en: Mandatory for contracts after 2019-01-01
       fr: Obligatoire pour les marchés conclus après le 2019-01-01
     excel_required_formula: 'VALUE({contract_date})>=DATE(2019,1,1)'
+    js_required_eval: '{{contract_date}}.length > 0 && new Date({{contract_date}}) >= new Date("2019-01-01")'
     datastore_type: text
+    datatables_col_class: col-lg
     form_attrs:
       size: 60
 
@@ -159,6 +163,7 @@ resources:
     label:
       en: Vendor Postal Code
       fr: Code postal du fournisseur
+    datatables_col_class: col-sm
     description:
       en: |
         i. It is recommended that this field be populated with the first three digits of the postal code for the vendor identified in the contract.
@@ -168,7 +173,6 @@ resources:
         i. Il est recommandé de saisir dans ce champ les trois premiers chiffres du code postal du fournisseur indiqué dans le marché.
         ii. Sinon, le code postal du fournisseur peut être les trois premiers chiffres du code postal inscrits dans le système financier ou d’approvisionnement s’il s’agit de la pratique courante du ministère.
         iii. Il faut indiquer « NA » dans ce champ si le fournisseur se trouve à l’étranger, car la valeur « NA » dans ce champ indique qu’il ne s’applique pas.
-
     validation:
       en: |
         Mandatory for contracts after 2022-01-01
@@ -178,12 +182,15 @@ resources:
         Ce champ doit contenir les trois premiers chiffres d’un code postal dans le format A1A ou la valeur « NA »
     excel_required_formula: 'VALUE({contract_date})>=DATE(2022,1,1)'
     excel_error_formula: 'AND({cell}<>"NA",OR(CODE(LEFT({cell}&" ",1))<65,CODE(LEFT({cell}&" ",1))>90,NOT(ISNUMBER(VALUE(MID({cell}&"  ",2,1)))),CODE(MID({cell}&"   ",3,1))<65,CODE(MID({cell}&"   ",3,1))>90,LEN({cell})>3))'
+    js_required_eval: '{{contract_date}}.length > 0 && new Date({{contract_date}}) >= new Date("2022-01-01")'
+    js_error_eval: 'VALUE.length > 0 && VALUE.match(/^[A-Z][0-9][A-Z]$/) == null && VALUE != "NA"'
     datastore_type: text
 
   - datastore_id: buyer_name
     label:
       en: Buyer Name
       fr: Nom de l’acheteur
+    datatables_col_class: col-lg
     description:
       en: |
         i. It is recommended that the field be populated with the name of the buyer, as indicated on the original contract or, alternatively, the individual responsible for the procurement at the department.
@@ -192,7 +199,6 @@ resources:
         iv. For a contract with task authorizations, this field may be populated with the name of the buyer indicated in the original contract or in the individual task authorization.
         v. For amendments, it is recommended that this field be populated with the value “NA,” as the value “NA” for this field indicates not applicable.
         vi. For contracts awarded by PSPC or Shared Services Canada (SSC) on behalf of the client department, it is recommended that this field be populated with the name of the PSPC or SSC contracting authority. If this is not available, indicate the values, “PSPC-SPAC” or “SSC-SPC” as applicable.
-
       fr: |
         i. Il est recommandé de saisir dans ce champ le nom de l’acheteur, comme il est indiqué dans le marché initial, sinon il faut saisir celui de la personne responsable de l’approvisionnement au ministère.
         ii. Dans le cas de l’établissement d’une offre à commandes ou d’un arrangement en matière d’approvisionnement, il est recommandé de saisir dans ce champ le nom de l’acheteur qui a émis l’offre à commandes ou l’arrangement en matière d’approvisionnement initial.
@@ -200,21 +206,20 @@ resources:
         iv. Dans le cas d’un marché comportant des autorisations de tâches, ce champ peut comprendre le nom de l’acheteur indiqué dans le marché initial ou dans chaque autorisation de tâches.
         v. Pour les modifications de marché, il est recommandé que ce champ soit rempli avec la valeur « NA », car la valeur « NA » pour ce champ indique qu’il ne s’applique pas.
         vi. Pour les marchés attribués par SPAC ou SPC pour le compte du ministère client, il est recommandé de saisir le nom de l’autorité contractante de SPAC ou de SPC dans ce champ. S’il n’est pas disponible, il faut indiquer la valeur «  PSPC-SPAC  » ou «  SSC-SPC  », selon le cas.
-
     validation:
       en: |
        Mandatory for contracts after 2022-01-01
        This field must be populated with an NA if an amendment is reported under Instrument Type.
-
       fr: |
         Obligatoire pour les marchés conclus après le 2022-01-01
         Ce champ doit contenir NA si une modification est déclarée sous l’élément Type d’instrument.
     excel_required_formula: 'VALUE({contract_date})>=DATE(2022,1,1)'
     excel_error_formula: 'AND(TRIM({cell})<>"NA",{instrument_type}="A",VALUE({contract_date})>=DATE(2022,1,1))'
+    js_required_eval: '{{contract_date}}.length > 0 && new Date({{contract_date}}) >= new Date("2022-01-01")'
+    js_error_eval: 'VALUE.length > 0 && VALUE.trim() != "NA" && {{instrument_type}} == "A"'
     datastore_type: text
     form_attrs:
       size: 60
-
 
   - datastore_id: contract_date
     label:
@@ -231,7 +236,6 @@ resources:
         ii. Il est recommandé que la date d’un marché qui comprend des autorisations de tâches corresponde à la date d’adjudication du marché (ou à la date de l’engagement ferme) du marché. S’il est probable que le montant du marché comprenant des autorisations de tâches ne sera pas utilisé en totalité, la date du marché pour chaque autorisation de tâche peut être la date à laquelle chaque autorisation de tâche a été accordée (ou la date de l’engagement ferme).
         iii. Il est recommandé que la date du marché pour un marché modifié ou l’exercice d’une option corresponde à la date d’adjudication du marché (ou à la date de l’engagement ferme).
         iv. Il est recommandé que la date du marché pour une commande de confirmation corresponde à la date du marché verbal de biens ou de services ou d’une modification de marché. Si la date du marché verbal ne peut pas être déterminée, la date du marché peut être la date de la commande de confirmation.
-
     excel_required: true
     datastore_type: date
     extract_date_year: true
@@ -264,6 +268,8 @@ resources:
         Si NA, alors le Type d’instrument doit être identifié comme étant une offre à commandes ou un arrangement en matière d’approvisionnement (SOSA).
     excel_error_formula: 'OR(LEN(TRIM({cell}))>4,AND(TRIM({cell})="NA",{instrument_type}<>"SOSA"))'
     excel_required_formula: 'VALUE({contract_date})>=DATE(2019,1,1)'
+    js_required_eval: '{{contract_date}}.length > 0 && new Date({{contract_date}}) >= new Date("2019-01-01")'
+    js_error_eval: 'VALUE.trim().length > 4 || (VALUE == "NA" && {{instrument_type}}.length > 0 && {{instrument_type}} != "SOSA")'
     datastore_type: text
 
   - datastore_id: description_en
@@ -284,7 +290,9 @@ resources:
       en: Mandatory for contracts after 2019-01-01
       fr: Obligatoire pour les marchés conclus après le 2019-01-01
     excel_required_formula: 'VALUE({contract_date})>=DATE(2019,1,1)'
+    js_required_eval: '{{description_fr}}.length > 0 || ({{contract_date}}.length > 0 && new Date({{contract_date}}) >= new Date("2019-01-01"))'
     datastore_type: text
+    datatables_col_class: col-xxl
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
       style: "width: 100%; display: block"
@@ -309,7 +317,9 @@ resources:
       en: Mandatory for contracts after 2019-01-01
       fr: Obligatoire pour les marchés conclus après le 2019-01-01
     excel_required_formula: 'VALUE({contract_date})>=DATE(2019,1,1)'
+    js_required_eval: '{{description_en}}.length > 0 || ({{contract_date}}.length > 0 && new Date({{contract_date}}) >= new Date("2019-01-01"))'
     datastore_type: text
+    datatables_col_class: col-xxl
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
       style: "width: 100%; display: block"
@@ -343,6 +353,7 @@ resources:
         Obligatoire pour les marchés conclus après le 2019-01-01
         Si le Type de produit est un service (S) ou une construction (C), ce champ ne doit pas être vide et doit contenir une date valide.
     excel_required_formula: 'AND(VALUE({contract_date})>=DATE(2019,1,1),{commodity_type}<>"G")'
+    js_required_eval: '{{contract_date}}.length > 0 && new Date({{contract_date}}) >= new Date("2019-01-01") && {{commodity_type}}.length > 0 && {{commodity_type}} != "G"'
     datastore_type: date
     form_snippet: scheming/form_snippets/date.html
 
@@ -372,6 +383,7 @@ resources:
       en: Mandatory for contracts after 2019-01-01
       fr: Obligatoire pour les marchés conclus après le 2019-01-01
     excel_required_formula: 'VALUE({contract_date})>=DATE(2019,1,1)'
+    js_required_eval: '{{contract_date}}.length > 0 && new Date({{contract_date}}) >= new Date("2019-01-01")'
     datastore_type: date
     form_snippet: scheming/form_snippets/date.html
 
@@ -401,6 +413,7 @@ resources:
         v. La valeur inscrite dans ce champ pour la déclaration d’une offre à commandes ou d’un arrangement en matière d’approvisionnement doit être de 0 $.
     validation: Mandatory for contracts after 2019-01-01
     excel_required_formula: 'VALUE({contract_date})>=DATE(2019,1,1)'
+    js_required_eval: '{{contract_date}}.length > 0 && new Date({{contract_date}}) >= new Date("2019-01-01")'
     datastore_type: money
     extract_double_sortable: true
 
@@ -440,6 +453,7 @@ resources:
       en: Mandatory for contracts after 2019-01-01
       fr: Obligatoire pour les marchés conclus après le 2019-01-01
     excel_required_formula: 'VALUE({contract_date})>=DATE(2019,1,1)'
+    js_required_eval: '{{contract_date}}.length > 0 && new Date({{contract_date}}) >= new Date("2019-01-01")'
     datastore_type: money
 
   - datastore_id: amendment_value
@@ -470,6 +484,7 @@ resources:
       en: This field must be populated if Amendment (A) was selected as the Instrument Type
       fr: Ce champ doit être rempli si Modification (A) a été sélectionné comme Type d’instrument
     excel_required_formula: '{instrument_type}="A"'
+    js_required_eval: '{{contract_date}}.length > 0 && new Date({{contract_date}}) >= new Date("2019-01-01") && {{instrument_type}}.length > 0 && {{instrument_type}} == "A"'
     datastore_type: money
 
   - datastore_id: comments_en
@@ -487,7 +502,9 @@ resources:
         iii. Lorsqu’un marché comprend un code d’article économique précisé à l’annexe D, les ministères doivent satisfaire aux exigences en matière de déclaration précisées à l’annexe D.
     excel_column_width: 40
     datastore_type: text
+    datatables_col_class: col-xl
     form_snippet: scheming/form_snippets/textarea.html
+    js_required_eval: '{{comments_fr}}.length > 0'
     form_attrs:
       style: "width: 100%; display: block"
 
@@ -506,7 +523,9 @@ resources:
         iii. Lorsqu’un marché comprend un code d’article économique précisé à l’annexe D, les ministères doivent satisfaire aux exigences en matière de déclaration précisées à l’annexe D.
     excel_column_width: 40
     datastore_type: text
+    datatables_col_class: col-xl
     form_snippet: scheming/form_snippets/textarea.html
+    js_required_eval: '{{comments_en}}.length > 0'
     form_attrs:
       style: "width: 100%; display: block"
 
@@ -525,7 +544,9 @@ resources:
       en: The additional comments English field may be populated with additional comments when an organization needs additional capacity to fulfill the reporting requirements under the comments English data field.
       fr: Ce champ sert à consigner tout commentaire additionnel lorsqu’une organisation a besoin d’une capacité additionnelle pour répondre aux exigences de déclaration dans le champ « commentaires en anglais ».
     datastore_type: text
+    datatables_col_class: col-xl
     form_snippet: scheming/form_snippets/textarea.html
+    js_required_eval: '{{additional_comments_fr}}.length > 0'
     form_attrs:
       style: "width: 100%; display: block"
 
@@ -544,7 +565,9 @@ resources:
       en: The additional comments French field may be populated with additional comments when an organization needs additional capacity to fulfill the reporting requirements under the comments French data field.
       fr: Ce champ sert à consigner tout commentaire additionnel lorsqu’une organisation a besoin d’une capacité additionnelle pour répondre aux exigences de déclaration dans le champ « commentaires en   français ».
     datastore_type: text
+    datatables_col_class: col-xl
     form_snippet: scheming/form_snippets/textarea.html
+    js_required_eval: '{{additional_comments_en}}.length > 0'
     form_attrs:
       style: "width: 100%; display: block"
 
@@ -566,8 +589,12 @@ resources:
         Ce champ doit être vide si le champ Accord commercial n’est pas vide.
     excel_required_formula: 'AND(VALUE({contract_date})>=DATE(2019,1,1),VALUE({contract_date})<DATE(2022,1,1),ISBLANK({trade_agreement}))'
     excel_error_formula: 'OR({default_formula},NOT(ISBLANK({trade_agreement})),VALUE({contract_date})>=DATE(2022,1,1))'
+    js_required_eval: '{{contract_date}}.length > 0 && new Date({{contract_date}}) >= new Date("2019-01-01") && new Date({{contract_date}}) < new Date("2022-01-01") && {{trade_agreement}}.length == 0'
+    js_error_eval: '{{contract_date}}.length > 0 && ( ({{trade_agreement}}.length > 0 && VALUE.length > 0) || (new Date({{contract_date}}) >= new Date("2022-01-01") && VALUE.length > 0) )'
     datastore_type: text
+    datatables_col_class: col-md
     excel_full_text_choices: false
+    datatables_full_text_choices: true
     excel_column_width: 40
     choice_order_expression: 'value.get("discontinued", False), len(code), code'
     choices:
@@ -842,7 +869,6 @@ resources:
         lookup: [ABSA, LCSA]
         en: ABSA / LCSA
         fr: MREA / MRERT
-
     choices_lookup:
       NONE:
         trade_agreement: XX
@@ -930,7 +956,10 @@ resources:
         Ce champ doit être vide si le champ Type d’accord n’est pas vide.
     excel_required_formula: 'VALUE({contract_date})>=DATE(2022,1,1)'
     excel_error_formula: 'OR({default_formula},NOT({agreement_type_code}=""),AND(ISNUMBER(SEARCH("XX",{cell})),{cell}<>"XX"))'
+    js_required_eval: '{{contract_date}}.length > 0 && new Date({{contract_date}}) >= new Date("2022-01-01")'
+    js_error_eval: 'VALUE.length > 1 && VALUE.includes("XX")'
     datastore_type: _text
+    datatables_col_class: col-lg
     choices:
       XX:
         en: None
@@ -999,10 +1028,12 @@ resources:
         Obligatoire pour les marchés conclus après le 2022-01-01.
 
         Si la valeur NA (sans objet) est inscrite, alors aucune autre valeur ne peut être inscrite dans ce champ.
-
     excel_required_formula: 'VALUE({contract_date})>=DATE(2022,1,1)'
     excel_error_formula: 'OR({default_formula},AND(ISNUMBER(SEARCH("NA",{cell})),{cell}<>"NA"))'
+    js_required_eval: '{{contract_date}}.length > 0 && new Date({{contract_date}}) >= new Date("2022-01-01")'
+    js_error_eval: 'VALUE.length > 1 && VALUE.includes("NA")'
     datastore_type: _text
+    datatables_col_class: col-lg
     choices:
       NA:
         en: Not Applicable
@@ -1097,8 +1128,10 @@ resources:
       en: Mandatory for contracts after 2019-01-01
       fr: Obligatoire pour les marchés conclus après le 2019-01-01
     excel_required_formula: 'VALUE({contract_date})>=DATE(2019,1,1)'
+    js_required_eval: '{{contract_date}}.length > 0 && new Date({{contract_date}}) >= new Date("2019-01-01")'
     datastore_type: text
     excel_full_text_choices: false
+    datatables_full_text_choices: true
     choices:
       G:
         en: Good
@@ -1131,6 +1164,8 @@ resources:
           Ce champ est limité à 8 caractères alphanumériques.
     excel_required_formula: 'VALUE({contract_date})>=DATE(2019,1,1)'
     excel_error_formula: 'LEN(TRIM({cell}))>8'
+    js_required_eval: '{{contract_date}}.length > 0 && new Date({{contract_date}}) >= new Date("2019-01-01")'
+    js_error_eval: 'VALUE.length > 8'
     datastore_type: text
 
   - datastore_id: country_of_vendor
@@ -1150,7 +1185,9 @@ resources:
       en: Mandatory for contracts after 2019-01-01
       fr: Obligatoire pour les marchés conclus après le 2019-01-01
     excel_required_formula: 'VALUE({contract_date})>=DATE(2019,1,1)'
+    js_required_eval: '{{contract_date}}.length > 0 && new Date({{contract_date}}) >= new Date("2019-01-01")'
     datastore_type: text
+    datatables_col_class: col-lg
     choices_file: choices/country.json
 
   - datastore_id: solicitation_procedure
@@ -1179,7 +1216,6 @@ resources:
           •	TC: Concurrentielle – Traditionnelle fait référence à un marché concurrentiel l’appel d’offres n’a pas été fait par le biais du SEAO, mais par un autre moyen, comme la demande de soumissions directement auprès des fournisseurs par courriel ou par téléphone.
           •	ST: Concurrentielle – Appel d’offres sélectif fait référence à une procédure de sollicitation autorisée en vertu des accords commerciaux du Canada selon laquelle les fournisseurs qualifiés sont sélectionnés à partir d’une liste de sources (y compris des listes à usage unique ou à usage multiple) en vertu des règles procédurales d’appel d’offres sélectif des accords commerciaux du Canada.
           •	TN: Non concurrentielle fait référence à un marché attribué à un fournisseur sans appel d’offres.
-
     validation:
       en: |
         Mandatory for contracts after 2022-01-01
@@ -1189,11 +1225,13 @@ resources:
         Obligatoire pour les marchés conclus après le 2022-01-01
 
         Si les options « TC » (Concurrentielle - Traditionnelle), « TN » (non concurrentielle) ou « AC » (préavis d’attribution de contrat) sont sélectionnées et qu’une entente de marché ayant une valeur autre que « XX » (nulle) est sélectionnée, le champ Appel d’offres restreint ne peut avoir la valeur « 0 » ou « 00 » (nulle), pour les marchés conclus après le 2022-01-01.
-
-    excel_required_formula: 'VALUE({contract_date})>=DATE(2022,1,1)'
     datastore_type: text
+    excel_required_formula: 'VALUE({contract_date})>=DATE(2022,1,1)'
     excel_error_formula: 'OR({default_formula},AND(VALUE({contract_date})>=DATE(2022,1,1),AND(OR({cell}="TC",{cell}="TN",{cell}="AC"),AND({trade_agreement}<>"XX",{trade_agreement}<>""),OR({limited_tendering_reason}="0",{limited_tendering_reason}="00"))))'
+    js_required_eval: '{{contract_date}}.length > 0 && new Date({{contract_date}}) >= new Date("2022-01-01")'
+    js_error_eval: '{{contract_date}}.length > 0 && new Date({{contract_date}}) >= new Date("2022-01-01") && VALUE.length > 0 && ["TC","TN","AC"].includes(VALUE) && {{trade_agreement}}.length > 0 && ! {{trade_agreement}}.includes("XX") && {{limited_tendering_reason}}.length > 0 && {{limited_tendering_reason}}.includes("00")'
     excel_full_text_choices: false
+    datatables_full_text_choices: true
     choices:
       AC:
         en: Advance Contract Award Notice
@@ -1233,8 +1271,12 @@ resources:
         Si TC, TN ou AC est sélectionné dans le champ de données Méthode d’invitation à soumissioner avec une valeur autre que XX (Aucune) sélectionnée dans le champ de données Accord commercial, une valeur d'offre limitée autre que 0 (aucune) doit être entrée, pour les marchés conclus après le 2022-01-01.
     excel_required_formula: 'VALUE({contract_date})>=DATE(2022,1,1)'
     excel_error_formula: 'OR({default_formula},AND(VALUE({contract_date})>=DATE(2022,1,1),OR({cell}="24",{cell}="25",{cell}="85",{cell}="86",{cell}="87",{cell}="90")),AND(ISNUMBER(SEARCH("00",{cell})),{cell}<>"00"),AND(VALUE({contract_date})>=DATE(2022,1,1),AND(OR({solicitation_procedure}="TC",{solicitation_procedure}="TN",{solicitation_procedure}="AC"),AND({trade_agreement}<>"XX",{trade_agreement}<>""),{cell}="00")))'
+    js_required_eval: '{{contract_date}}.length > 0 && new Date({{contract_date}}) >= new Date("2022-01-01")'
+    js_error_eval: 'VALUE.length > 1 && VALUE.includes("00") || ( {{contract_date}}.length > 0 && new Date({{contract_date}}) >= new Date("2022-01-01") && {{solicitation_procedure}}.length > 0 && ["TC","TN","AC"].includes({{solicitation_procedure}}) && {{trade_agreement}}.length > 0 && ! {{trade_agreement}}.includes("XX") && VALUE.length > 0 && VALUE.includes("00") )'
     datastore_type: _text
+    datatables_col_class: col-lg
     excel_full_text_choices: false
+    datatables_full_text_choices: true
     # accept single digit for backwards compat
     excel_error_cell_filter_formula: 'IF(LEN({cell})=1,"0"&{cell},{cell})'
     choice_order_expression: 'value.get("discontinued", False), code'
@@ -1331,7 +1373,11 @@ resources:
         Si la valeur 00 (aucune) est inscrite, alors aucune autre valeur ne peut être inscrite dans ce champ.
     excel_required_formula: 'VALUE({contract_date})>=DATE(2019,1,1)'
     excel_error_formula: 'OR({default_formula},AND(ISNUMBER(SEARCH("00",{cell})),{cell}<>"00"),AND(VALUE({contract_date})>=DATE(2022,1,1),{cell}="04"))'
+    js_required_eval: '{{contract_date}}.length > 0 && new Date({{contract_date}}) >= new Date("2019-01-01")'
+    js_error_eval: 'VALUE.length > 1 && VALUE.includes("00") || ( {{contract_date}}.length > 0 && new Date({{contract_date}}) >= new Date("2022-01-01") && VALUE.includes("04") )'
     datastore_type: _text
+    datatables_col_class: col-lg
+    datatables_full_text_choices: true
     excel_full_text_choices: false  # some of these are really long
     # accept single digit for backwards compat
     excel_error_cell_filter_formula: 'IF(LEN({cell})=1,"0"&{cell},{cell})'
@@ -1399,13 +1445,13 @@ resources:
     validation:
       en: |
         Mandatory for contracts after 2022-01-01
-
       fr: |
         Obligatoire pour les marchés conclus après le 2022-01-01
-
     excel_required_formula: 'VALUE({contract_date})>=DATE(2022,1,1)'
+    js_required_eval: '{{contract_date}}.length > 0 && new Date({{contract_date}}) >= new Date("2022-01-01")'
     datastore_type: text
     excel_full_text_choices: false
+    datatables_full_text_choices: true
     choices:
       NA:
         en: None
@@ -1446,8 +1492,12 @@ resources:
         Ce champ doit être N, No ou Non, si le champ Stratégie d’approvisionnement auprès des entreprises autochtones contient MS ou VS.
     excel_required_formula: 'VALUE({contract_date})>=DATE(2019,1,1)'
     excel_error_formula: 'AND(OR({indigenous_business}="MS",{indigenous_business}="VS"),NOT(ISERROR(SEARCH("|"&TRIM({cell})&"|","|true|t|vrai|v|1|yes|y|oui|o|"))))'
+    js_required_eval: '{{contract_date}}.length > 0 && new Date({{contract_date}}) >= new Date("2019-01-01")'
+    js_error_eval: 'VALUE.length > 0 && VALUE == "Y" && {{indigenous_business}}.length > 0 && ["MS","VS"].includes({{indigenous_business}})'
     datastore_type: text
+    datatables_col_class: col-md
     excel_full_text_choices: false
+    datatables_full_text_choices: true
     choices:
       Y:
         en: "Yes"
@@ -1475,8 +1525,12 @@ resources:
       fr: Obligatoire pour les marchés conclus après le 2019-01-01
     excel_required_formula: 'VALUE({contract_date})>=DATE(2019,1,1)'
     excel_error_formula: 'OR({default_formula},AND(VALUE({contract_date})>=DATE(2022,1,1),OR({cell}="A1",{cell}="NA")),AND(VALUE({contract_date})>=DATE(2017,1,1),OR({cell}="A65",{cell}="D")))'
+    js_required_eval: '{{contract_date}}.length > 0 && new Date({{contract_date}}) >= new Date("2019-01-01")'
+    js_error_eval: '{{contract_date}}.length > 0 && VALUE.length > 0 && ( (new Date({{contract_date}}) >= new Date("2017-01-01") && ["A65","D"].includes(VALUE)) || (new Date({{contract_date}}) >= new Date("2022-01-01") && ["A1","NA"].includes(VALUE)) )'
     datastore_type: text
+    datatables_col_class: col-lg
     excel_full_text_choices: false  # some of these are really long
+    datatables_full_text_choices: true
     choice_order_expression: 'value.get("discontinued", False), code'
     choices:
       A1:
@@ -1551,9 +1605,12 @@ resources:
       fr: |
         Ce champ ne doit pas être vide lorsque le champ Propriété intellectuelle contient l’une des valeurs suivantes : A2, A3, A41, A42, A43, A5, A8 ou B. Ce champ peut demeurer vide si aucune des valeurs de Propriété intellectuelle ne s’applique. Les formats valides incluent : Oui ou Non.
     datastore_type: text
+    datatables_col_class: col-md
     excel_required_formula: 'NOT(OR({intellectual_property}="C",{intellectual_property}="NA",{intellectual_property}=""))'
     excel_error_formula: 'ISERROR(SEARCH("|"&TRIM({cell})&"|","|true|t|vrai|v|1|yes|y|oui|o|false|f|faux|0|no|n|non|"))'
+    js_required_eval: '{{contract_date}}.length > 0 && new Date({{contract_date}}) >= new Date("2019-01-01") && {{intellectual_property}}.length > 0 && ! ["C","NA"].includes({{intellectual_property}})'
     excel_full_text_choices: false
+    datatables_full_text_choices: true
     choices:
       Y:
         en: "Yes"
@@ -1581,8 +1638,11 @@ resources:
       fr: Obligatoire pour les marchés conclus après le 2019-01-01
     excel_required_formula: 'VALUE({contract_date})>=DATE(2019,1,1)'
     excel_error_formula: 'ISERROR(SEARCH("|"&TRIM({cell})&"|","|true|t|vrai|v|1|yes|y|oui|o|false|f|faux|0|no|n|non|"))'
+    js_required_eval: '{{contract_date}}.length > 0 && new Date({{contract_date}}) >= new Date("2019-01-01")'
     datastore_type: text
+    datatables_col_class: col-md
     excel_full_text_choices: false
+    datatables_full_text_choices: true
     choices:
       Y:
         en: "Yes"
@@ -1610,8 +1670,11 @@ resources:
       en: Mandatory for contracts after 2022-01-01
       fr: Obligatoire pour les marchés conclus après le 2022-01-01
     excel_required_formula: 'OR({standing_offer_number}<>"",VALUE({contract_date})>=DATE(2022,1,1))'
+    js_required_eval: '{{contract_date}}.length > 0 && new Date({{contract_date}}) >= new Date("2022-01-01") && {{standing_offer_number}}.length > 0'
     datastore_type: text
+    datatables_col_class: col-lg
     excel_full_text_choices: false
+    datatables_full_text_choices: true
     choices:
       PWC:
         en: Contract or Call-up awarded by PSPC on behalf of the client department.
@@ -1658,6 +1721,7 @@ resources:
         Si ce champ est rempli, le champ Entité contractante doit être rempli.
     datastore_type: text
     excel_required_formula: 'OR({contracting_entity}="PWSOSA",{contracting_entity}="SSCSOSA")'
+    js_required_eval: '{{contract_date}}.length > 0 && new Date({{contract_date}}) >= new Date("2019-01-01") && {{contracting_entity}}.length > 0 && ["PWSOSA","SSCSOSA"].includes({{contracting_entity}})'
 
   - datastore_id: instrument_type
     label:
@@ -1688,8 +1752,11 @@ resources:
       en: Mandatory for contracts after 2019-01-01
       fr: Obligatoire pour les marchés conclus après le 2019-01-01
     excel_required_formula: 'VALUE({contract_date})>=DATE(2019,1,1)'
+    js_required_eval: '{{contract_date}}.length > 0 && new Date({{contract_date}}) >= new Date("2019-01-01")'
     datastore_type: text
+    datatables_col_class: col-md
     excel_full_text_choices: false
+    datatables_full_text_choices: true
     choices:
       C:
         en: Contract
@@ -1720,8 +1787,10 @@ resources:
       fr: Obligatoire pour les marchés conclus après le 2019-06-21
     excel_required_formula: 'VALUE({contract_date})>=DATE(2019,6,21)'
     excel_error_formula: 'ISERROR(SEARCH("|"&TRIM({cell})&"|","|true|t|vrai|v|1|yes|y|oui|o|false|f|faux|0|no|n|non|"))'
+    js_required_eval: '{{contract_date}}.length > 0 && new Date({{contract_date}}) >= new Date("2019-06-21")'
     datastore_type: text
     excel_full_text_choices: false
+    datatables_full_text_choices: true
     choices:
       Y:
         en: "Yes"
@@ -1760,6 +1829,7 @@ resources:
         Ce champ doit contenir un « 1 » si la méthode d’invitation à soumissionner est identifiée comme étant non concurrentielle (TN) ou un préavis d’attribution de contrat (AC).
     datastore_type: int
     excel_error_formula: 'OR({default_formula},AND(VALUE({cell})<>1,OR({solicitation_procedure}="TN",{solicitation_procedure}="AC")))'
+    js_error_eval: 'VALUE.length > 0 && VALUE != 1 && {{solicitation_procedure}}.length > 0 && ["TN","AC"].includes({{solicitation_procedure}})'
 
   - datastore_id: article_6_exceptions
     label:
@@ -1789,8 +1859,11 @@ resources:
       fr: |
         Ce champ peut seulement contenir « 0 » si l’acquisition a été identifiée comme étant concurrentielle (invitation ouverte à soumissionner (OB) ou concurrentielle - traditionnelle (TC) ou Concurrentielle – Appel d’offres sélectif (ST)).
     datastore_type: text
+    datatables_col_class: col-md
     excel_full_text_choices: false
+    datatables_full_text_choices: true
     excel_error_formula: 'OR({default_formula},AND(VALUE({cell})<>0,NOT(OR({solicitation_procedure}="TN",{solicitation_procedure}="AC"))))'
+    js_error_eval: 'VALUE.length > 0 && VALUE != "0" && {{solicitation_procedure}}.length > 0 && ["TN","AC"].includes({{solicitation_procedure}})'
     choices:
       "0":
         en: Not applicable
@@ -1836,8 +1909,11 @@ resources:
         (AC) ou si l’acquisition a été identifiée comme un modification (A) dans le
         champ Type d’instrument.
     datastore_type: text
+    datatables_col_class: col-md
     excel_full_text_choices: false
+    datatables_full_text_choices: true
     excel_error_formula: 'OR({default_formula},AND(VALUE({cell})<>0,OR({solicitation_procedure}="TN",{solicitation_procedure}="AC",{instrument_type}="A")))'
+    js_error_eval: 'VALUE.length > 0 && VALUE != "0" && ( ( {{solicitation_procedure}}.length > 0 && ["TN","AC"].includes({{solicitation_procedure}}) ) || ( {{instrument_type}}.length > 0 && {{instrument_type}} == "A" ) )'
     choices:
       "0":
         en: Not applicable
@@ -1866,7 +1942,9 @@ resources:
       en: It is recommended for this field to indicate whether the procurement is subject to one or more of the applicable Socio-economic indicators.
       fr: Il est recommandé d’indiquer dans ce champ si l’approvisionnement est relié à au moins un des indicateurs socioéconomiques applicables.
     datastore_type: text
+    datatables_col_class: col-md
     excel_full_text_choices: false
+    datatables_full_text_choices: true
     choices:
       NA:
         en: None
@@ -1890,6 +1968,7 @@ resources:
       en: Mandatory for contracts after 2019-01-01
       fr: Obligatoire pour les marchés conclus après le 2019-01-01
     excel_required_formula: 'VALUE({contract_date})>=DATE(2019,1,1)'
+    js_required_eval: '{{contract_date}}.length > 0 && new Date({{contract_date}}) >= new Date("2019-01-01")'
     format_type: YYYY-YYYY-QX
     datastore_type: text
     choices_file: choices/quarter.yaml
@@ -2334,7 +2413,7 @@ excel_column_heading_style:
     fgColor: FFdfdce3
 datatables_style:
   header:
-    bgColor: dfdce3
+    bgColor: 8f859d
   select:
-    bgColor: eceaee
+    bgColor: b6afbf
     fgColor: 333333

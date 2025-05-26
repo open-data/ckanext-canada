@@ -51,6 +51,8 @@ resources:
     form_required: true
     format_type: Free text
     datastore_type: text
+    datatables_col_class: col-lg
+    js_error_eval: 'VALUE.length > 0 && VALUE.includes(",")'
 
   # 3.2 Amendment Number (New Field)
   - datastore_id: amendment_number
@@ -65,6 +67,7 @@ resources:
     form_required: true
     format_type: Numeric only
     datastore_type: int
+    datatables_col_class: col-sm pd-datatables-primary-key-offset-lg
 
   # 3.3 Amendment Date (New Field)
   - datastore_id: amendment_date
@@ -80,6 +83,7 @@ resources:
     format_type: Date (Please format the data as YYYY-MM-DD)
     datastore_type: date
     excel_required_formula: AND(NOT(ISBLANK({amendment_number})),{amendment_number}<>0)
+    js_required_eval: '{{amendment_number}}.length > 0 && {{amendment_number}} != 0'
     form_snippet: scheming/form_snippets/date.html
 
   # 3.4 Agreement Type (Formerly “Type”- 3.16)
@@ -95,6 +99,8 @@ resources:
     form_required: true
     format_type: Controlled List
     datastore_type: text
+    excel_required_formula: 'VALUE({agreement_start_date})>=DATE(2018,4,1)'
+    js_required_eval: '{{agreement_start_date}}.length > 0 && new Date({{agreement_start_date}}) >= new Date("2018-04-01")'
     choices:
       G:
         en: Grant
@@ -188,8 +194,11 @@ resources:
     obligation: Mandatory
     excel_required: true
     form_required: true
+    excel_required_formula: 'VALUE({agreement_start_date})>=DATE(2018,4,1)'
+    js_required_eval: '{{agreement_start_date}}.length > 0 && new Date({{agreement_start_date}}) >= new Date("2018-04-01")'
     format_type: Free text
     datastore_type: text
+    datatables_col_class: col-lg
     form_attrs:
       size: 60
 
@@ -209,6 +218,7 @@ resources:
         Traduction seulement si le nom est fourni dans les deux langues officielles par le bénéficiaire. Fournir dans le format suivant : nom anglais|nom français.
     format_type: Free text
     datastore_type: text
+    datatables_col_class: col-lg
     form_attrs:
       size: 60
 
@@ -229,6 +239,7 @@ resources:
     obligation: Optional
     format_type: Free text
     datastore_type: text
+    datatables_col_class: col-lg
     form_attrs:
       size: 60
 
@@ -243,6 +254,9 @@ resources:
     obligation: Mandatory
     excel_required: true
     form_required: true
+    excel_required_formula: 'VALUE({agreement_start_date})>=DATE(2018,4,1)'
+    js_required_eval: '{{agreement_start_date}}.length > 0 && new Date({{agreement_start_date}}) >= new Date("2018-04-01")'
+    datatables_col_class: col-md
     format_type: Controlled List
     datastore_type: text
     choices_file: choices/country.json
@@ -260,7 +274,8 @@ resources:
       fr: Obligatoire si le pays destinataire est le Canada
     format_type: Controlled List
     datastore_type: text
-    excel_required_formula: AND(NOT(ISBLANK({recipient_country})),{recipient_country}="CA")
+    excel_required_formula: AND(VALUE({agreement_start_date})>=DATE(2018,4,1), NOT(ISBLANK({recipient_country})), {recipient_country}="CA")
+    js_required_eval: '{{agreement_start_date}}.length > 0 && new Date({{agreement_start_date}}) >= new Date("2018-04-01") && {{recipient_country}}.length > 0 && {{recipient_country}} == "CA"'
     choices:
       "ON":
         en: Ontario
@@ -323,8 +338,11 @@ resources:
     obligation: Mandatory
     excel_required: true
     form_required: true
+    excel_required_formula: 'VALUE({agreement_start_date})>=DATE(2018,4,1)'
+    js_required_eval: '{{agreement_start_date}}.length > 0 && new Date({{agreement_start_date}}) >= new Date("2018-04-01")'
     format_type: Free text
     datastore_type: text
+    datatables_col_class: col-lg
     form_attrs:
       size: 60
 
@@ -357,6 +375,8 @@ resources:
     obligation: Optional
     format_type: Free text
     datastore_type: text
+    datatables_col_class: col-md
+    js_required_eval: '{{federal_riding_name_fr}}.length > 0'
     form_attrs:
       size: 60
 
@@ -371,6 +391,8 @@ resources:
     obligation: Optional
     format_type: Free text
     datastore_type: text
+    datatables_col_class: col-md
+    js_required_eval: '{{federal_riding_name_en}}.length > 0'
     form_attrs:
       size: 60
 
@@ -397,6 +419,8 @@ resources:
     obligation: Optional
     format_type: Free text
     datastore_type: text
+    datatables_col_class: col-lg
+    js_required_eval: '{{prog_name_fr}}.length > 0'
     form_attrs:
       size: 60
 
@@ -411,6 +435,8 @@ resources:
     obligation: Optional
     format_type: Free text
     datastore_type: text
+    datatables_col_class: col-lg
+    js_required_eval: '{{prog_name_en}}.length > 0'
     form_attrs:
       size: 60
 
@@ -425,7 +451,9 @@ resources:
     obligation: Optional
     format_type: Free text
     datastore_type: text
+    datatables_col_class: col-xxl
     form_snippet: scheming/form_snippets/textarea.html
+    js_required_eval: '{{prog_purpose_fr}}.length > 0'
     form_attrs:
       style: "width: 100%; display: block"
     markdown: true
@@ -441,7 +469,9 @@ resources:
     obligation: Optional
     format_type: Free text
     datastore_type: text
+    datatables_col_class: col-xxl
     form_snippet: scheming/form_snippets/textarea.html
+    js_required_eval: '{{prog_purpose_en}}.length > 0'
     form_attrs:
       style: "width: 100%; display: block"
     markdown: true
@@ -457,6 +487,8 @@ resources:
     obligation: Optional
     format_type: Free text
     datastore_type: text
+    datatables_col_class: col-lg
+    js_required_eval: '{{agreement_title_fr}}.length > 0'
     form_attrs:
       size: 60
 
@@ -471,6 +503,8 @@ resources:
     obligation: Optional
     format_type: Free text
     datastore_type: text
+    datatables_col_class: col-lg
+    js_required_eval: '{{agreement_title_en}}.length > 0'
     form_attrs:
       size: 60
 
@@ -525,6 +559,7 @@ resources:
     format_type: Controlled List
     datastore_type: text
     excel_required_formula: NOT(ISBLANK({foreign_currency_value}))
+    js_required_eval: '{{foreign_currency_value}}.length > 0'
     choices_file: choices/currency.json
 
   # 3.26 Foreign Currency Value (New field)
@@ -538,6 +573,7 @@ resources:
     obligation: Mandatory if foreign currency type is selected
     datastore_type: money
     excel_required_formula: NOT(ISBLANK({foreign_currency_type}))
+    js_required_eval: '{{foreign_currency_type}}.length > 0'
 
   # 3.27 Agreement Start Date (Formerly 3.14 "date")
   - datastore_id: agreement_start_date
@@ -581,6 +617,7 @@ resources:
     obligation: Optional
     format_type: Free text; separate entries with a “;” and include bilingual entries, where applicable, separated with a “│”
     datastore_type: text
+    datatables_col_class: col-lg
     form_attrs:
       size: 60
 
@@ -597,6 +634,8 @@ resources:
     form_required: true
     format_type: Free text
     datastore_type: text
+    datatables_col_class: col-xl
+    js_required_eval: '{{description_fr}}.length > 0 || ({{agreement_start_date}}.length > 0 && new Date({{agreement_start_date}}) >= new Date("2018-04-01"))'
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
       style: "width: 100%; display: block"
@@ -615,6 +654,8 @@ resources:
     form_required: true
     format_type: Free text
     datastore_type: text
+    datatables_col_class: col-xl
+    js_required_eval: '{{description_en}}.length > 0 || ({{agreement_start_date}}.length > 0 && new Date({{agreement_start_date}}) >= new Date("2018-04-01"))'
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
       style: "width: 100%; display: block"
@@ -653,6 +694,7 @@ resources:
     obligation: Optional
     format_type: Free text
     datastore_type: text
+    datatables_col_class: col-xxl
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
       style: "width: 100%; display: block"
@@ -669,6 +711,7 @@ resources:
     obligation: Optional
     format_type: Free text
     datastore_type: text
+    datatables_col_class: col-xxl
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
       style: "width: 100%; display: block"
@@ -709,6 +752,7 @@ resources:
     obligation: Optional
     format_type: Free text
     datastore_type: text
+    datatables_col_class: col-xxl
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
       style: "width: 100%; display: block"
@@ -749,6 +793,7 @@ resources:
     obligation: Optional
     format_type: Free text
     datastore_type: text
+    datatables_col_class: col-xxl
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
       style: "width: 100%; display: block"
@@ -910,6 +955,7 @@ resources:
     excel_required: true
     form_required: true
     extract_date_year: true
+    datatables_col_class: col-md
     choices_file: choices/fiscal_year.yaml
 
   - datastore_id: quarter
@@ -920,6 +966,7 @@ resources:
     obligation: Mandatory
     excel_required: true
     form_required: true
+    datatables_col_class: col-sm pd-datatables-primary-key-offset-md
     choices:
       Q1:
         en: April 1 - June 30

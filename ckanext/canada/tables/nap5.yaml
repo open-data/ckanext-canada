@@ -30,6 +30,7 @@ resources:
     excel_required: true
     form_required: true
     datastore_type: text
+    datatables_col_class: col-sm
     choices:
       2022-03: 2022-03
       2022-06: 2022-06
@@ -56,7 +57,9 @@ resources:
     form_required: true
     datastore_type: text
     excel_full_text_choices: true
+    datatables_full_text_choices: true
     form_choices_prefix_code: true
+    datatables_col_class: col-lg
     choices:
       C01:
         en: Climate Change and Sustainable Growth
@@ -86,11 +89,14 @@ resources:
     form_required: true
     datastore_type: text
     excel_full_text_choices: true
+    datatables_full_text_choices: true
     form_choices_prefix_code: true
+    datatables_col_class: col-lg
     excel_column_width: 80
     # choices based on commitments value
     excel_choice_range_formula: 'offset({range_top},countif({range},"<"&trim(left({commitments},find(":",{commitments}&":")-1))),0,countif({range},trim(left({commitments},find(":",{commitments}&":")-1))&"*"),1)'
     excel_error_formula: 'trim(left({commitments},find(":",{commitments}&":")-1))<>trim(left({cell},find(":",{commitments}&":")-1))'
+    js_error_eval: '{{commitments}}.length > 0 && VALUE.length > 0 && VALUE.split(".")[0] != {{commitments}}'
     form_attrs:
       cascading_select_field: commitments
 
@@ -166,11 +172,14 @@ resources:
     form_required: true
     datastore_type: text
     excel_full_text_choices: true
+    datatables_full_text_choices: true
     form_choices_prefix_code: true
+    datatables_col_class: col-lg pd-datatables-primary-key-offset-sm
     excel_column_width: 80
     # choices based on milestones value
     excel_choice_range_formula: 'offset({range_top},countif({range},"<"&trim(left({milestones},find(":",{milestones}&":")-1))),0,countif({range},trim(left({milestones},find(":",{milestones}&":")-1))&"*"),1)'
     excel_error_formula: 'trim(left({milestones},find(":",{milestones}&":")-1))<>trim(left({cell},find(":",{milestones}&":")-1))'
+    js_error_eval: '{{milestones}}.length > 0 && VALUE.length > 0 && VALUE.split(".")[0] + "." + VALUE.split(".")[1] != {{milestones}}'
     form_attrs:
       cascading_select_field: milestones
 
@@ -1160,6 +1169,7 @@ resources:
     form_required: true
     datastore_type: text
     excel_full_text_choices: true
+    datatables_full_text_choices: true
     choices:
       NS:
         en: Not started
@@ -1186,6 +1196,7 @@ resources:
     excel_required: true
     form_required: true
     datastore_type: text
+    datatables_col_class: col-xxl
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
       style: "width: 100%; display: block"
@@ -1202,6 +1213,7 @@ resources:
     excel_required: true
     form_required: true
     datastore_type: text
+    datatables_col_class: col-xxl
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
       style: "width: 100%; display: block"
@@ -1216,6 +1228,7 @@ resources:
       fr: Toute preuve à l'appui pour démontrer les progrès que vous avez accomplis. Cela peut inclure des sites Web, des liens vers des documents ou d’autres informations.
     obligation: Optional
     datastore_type: text
+    datatables_col_class: col-xxl
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
       style: "width: 100%; display: block"
@@ -1230,6 +1243,7 @@ resources:
       fr: Toute preuve à l'appui pour démontrer les progrès que vous avez accomplis. Cela peut inclure des sites Web, des liens vers des documents ou d’autres informations.
     obligation: Optional
     datastore_type: text
+    datatables_col_class: col-xxl
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
       style: "width: 100%; display: block"
@@ -1244,6 +1258,7 @@ resources:
       fr: Décrivez les défis rencontrés
     obligation: Optional
     datastore_type: text
+    datatables_col_class: col-xxl
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
       style: "width: 100%; display: block"
@@ -1258,6 +1273,7 @@ resources:
       fr: Décrivez les défis rencontrés
     obligation: Optional
     datastore_type: text
+    datatables_col_class: col-xxl
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
       style: "width: 100%; display: block"

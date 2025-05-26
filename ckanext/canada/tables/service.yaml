@@ -47,6 +47,7 @@ resources:
       fr: Ce champ ne doit pas être vide.
     occurrence: Single
     datastore_type: text
+    datatables_col_class: col-md
     choices_file: choices/fiscal_year.yaml
 
   # DEP 1-2
@@ -60,7 +61,9 @@ resources:
     obligation: Mandatory
     excel_required: true
     form_required: true
+    datatables_col_class: col-sm pd-datatables-primary-key-offset-md
     excel_error_formula: 'OR({default_formula},LEN({cell})-LEN(SUBSTITUTE({cell},",",""))>0)'
+    js_error_eval: 'VALUE.length > 0 && VALUE.includes(",")'
     format_type: Free text
     validation:
       en: |
@@ -94,6 +97,7 @@ resources:
         Ce champ ne peut excéder une longueur maximale de 350 caractères.
     occurrence: Single
     datastore_type: text
+    datatables_col_class: col-lg
     max_chars: 350
     form_attrs:
       style: "width: 100%; display: block"
@@ -121,6 +125,7 @@ resources:
         Ce champ ne peut excéder une longueur maximale de 350 caractères.
     occurrence: Single
     datastore_type: text
+    datatables_col_class: col-lg
     max_chars: 350
     form_attrs:
       style: "width: 100%; display: block"
@@ -148,6 +153,7 @@ resources:
         Ce champ ne peut excéder une longueur maximale de 1800 caractères.
     occurrence: Single
     datastore_type: text
+    datatables_col_class: col-xxl
     max_chars: 1800
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
@@ -175,6 +181,7 @@ resources:
         Ce champ ne peut excéder une longueur maximale de 1800 caractères.
     occurrence: Single
     datastore_type: text
+    datatables_col_class: col-xxl
     max_chars: 1800
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
@@ -197,7 +204,9 @@ resources:
       fr: Ce champ ne doit pas être vide.
     occurrence: Repeatable
     datastore_type: _text
+    datatables_col_class: col-md
     excel_full_text_choices: false
+    datatables_full_text_choices: true
     form_snippet: scheming/form_snippets/multiple_select.html
     choices:
       APIR:
@@ -243,6 +252,7 @@ resources:
     obligation: Mandatory
     excel_required: true
     form_required: true
+    datatables_col_class: col-md
     format_type: Controlled List
     validation:
       en: This field must not be empty.
@@ -250,6 +260,7 @@ resources:
     occurrence: Single
     datastore_type: text
     excel_full_text_choices: true
+    datatables_full_text_choices: true
     choices:
       CLIENT:
         en: Targeted, Client-based service
@@ -275,7 +286,9 @@ resources:
       fr: Ce champ ne doit pas être vide.
     occurrence: Repeatable
     datastore_type: _text
+    datatables_col_class: col-md
     excel_full_text_choices: false
+    datatables_full_text_choices: true
     form_snippet: scheming/form_snippets/multiple_select.html
     choices:
       CLUSTER:
@@ -308,7 +321,9 @@ resources:
       fr: Ce champ ne doit pas être vide.
     occurrence: Repeatable
     datastore_type: _text
+    datatables_col_class: col-md
     excel_full_text_choices: false
+    datatables_full_text_choices: true
     form_snippet: scheming/form_snippets/multiple_select.html
     choices:
       ECONOM:
@@ -351,6 +366,7 @@ resources:
     obligation: Mandatory
     excel_required: true
     form_required: true
+    datatables_col_class: col-lg
     format_type: Controlled List
     validation:
       en: This field must not be empty.
@@ -358,6 +374,7 @@ resources:
     occurrence: Repeatable
     datastore_type: _text
     excel_full_text_choices: false
+    datatables_full_text_choices: true
     form_snippet: scheming/form_snippets/multiple_select.html
     choices_file: choices/service_program_names.yaml
     form_choices_prefix_code: true
@@ -408,6 +425,7 @@ resources:
     obligation: Mandatory
     excel_required: true
     form_required: true
+    datatables_col_class: col-md
     format_type: Controlled List
     validation:
       en: This field must not be empty.
@@ -415,6 +433,7 @@ resources:
     occurrence: Repeatable
     datastore_type: _text
     excel_full_text_choices: false
+    datatables_full_text_choices: true
     form_snippet: scheming/form_snippets/multiple_select.html
     choices:
       EML:
@@ -471,6 +490,7 @@ resources:
     occurrence: Single
     datastore_type: text
     excel_full_text_choices: true
+    datatables_full_text_choices: true
     choices_file: choices/yes_no.yaml
     form_snippet: scheming/form_snippets/radio.html
 
@@ -503,8 +523,10 @@ resources:
         Ce champ ne peut excéder une longueur maximale de 1800 caractères.
     occurrence: Single
     datastore_type: text
+    datatables_col_class: col-xxl
     max_chars: 1800
     excel_required_formula: 'OR(TRIM(LEFT({automated_decision_system},FIND(":",{automated_decision_system}&":")-1))="Y",NOT(ISBLANK({automated_decision_system_description_fr})))'
+    js_required_eval: '{{automated_decision_system_description_fr}}.length > 0 || ({{automated_decision_system}}.length > 0 && {{automated_decision_system}} == "Y")'
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
       maxlength: 1800
@@ -538,8 +560,10 @@ resources:
         Ce champ ne peut excéder une longueur maximale de 1800 caractères.
     occurrence: Single
     datastore_type: text
+    datatables_col_class: col-xxl
     max_chars: 1800
     excel_required_formula: 'OR(TRIM(LEFT({automated_decision_system},FIND(":",{automated_decision_system}&":")-1))="Y",NOT(ISBLANK({automated_decision_system_description_en})))'
+    js_required_eval: '{{automated_decision_system_description_en}}.length > 0 || ({{automated_decision_system}}.length > 0 && {{automated_decision_system}} == "Y")'
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
       maxlength: 1800
@@ -562,6 +586,7 @@ resources:
     occurrence: Single
     datastore_type: text
     excel_full_text_choices: true
+    datatables_full_text_choices: true
     choices_file: choices/yes_no.yaml
     form_snippet: scheming/form_snippets/radio.html
 
@@ -582,6 +607,7 @@ resources:
     obligation: Mandatory
     excel_required: true
     form_required: true
+    datatables_col_class: col-md
     format_type: Controlled List
     validation:
       en: This field must not be empty.
@@ -589,6 +615,7 @@ resources:
     occurrence: Single
     datastore_type: text
     excel_full_text_choices: true
+    datatables_full_text_choices: true
     choices_file: choices/online_service_yes_no.yaml
     form_snippet: scheming/form_snippets/radio.html
 
@@ -603,6 +630,7 @@ resources:
     obligation: Mandatory
     excel_required: true
     form_required: true
+    datatables_col_class: col-md
     format_type: Controlled List
     validation:
       en: This field must not be empty.
@@ -610,6 +638,7 @@ resources:
     occurrence: Single
     datastore_type: text
     excel_full_text_choices: true
+    datatables_full_text_choices: true
     choices_file: choices/online_service_yes_no.yaml
     form_snippet: scheming/form_snippets/radio.html
 
@@ -624,6 +653,7 @@ resources:
     obligation: Mandatory
     excel_required: true
     form_required: true
+    datatables_col_class: col-md
     format_type: Controlled List
     validation:
       en: This field must not be empty.
@@ -631,6 +661,7 @@ resources:
     occurrence: Single
     datastore_type: text
     excel_full_text_choices: true
+    datatables_full_text_choices: true
     choices_file: choices/online_service_yes_no.yaml
     form_snippet: scheming/form_snippets/radio.html
 
@@ -645,6 +676,7 @@ resources:
     obligation: Mandatory
     excel_required: true
     form_required: true
+    datatables_col_class: col-md
     format_type: Controlled List
     validation:
       en: This field must not be empty.
@@ -652,6 +684,7 @@ resources:
     occurrence: Single
     datastore_type: text
     excel_full_text_choices: true
+    datatables_full_text_choices: true
     choices_file: choices/online_service_yes_no.yaml
     form_snippet: scheming/form_snippets/radio.html
 
@@ -666,6 +699,7 @@ resources:
     obligation: Mandatory
     excel_required: true
     form_required: true
+    datatables_col_class: col-md
     format_type: Controlled List
     validation:
       en: This field must not be empty.
@@ -673,6 +707,7 @@ resources:
     occurrence: Single
     datastore_type: text
     excel_full_text_choices: true
+    datatables_full_text_choices: true
     choices_file: choices/online_service_yes_no.yaml
     form_snippet: scheming/form_snippets/radio.html
 
@@ -687,6 +722,7 @@ resources:
     obligation: Mandatory
     excel_required: true
     form_required: true
+    datatables_col_class: col-md
     format_type: Controlled List
     validation:
       en: This field must not be empty.
@@ -694,6 +730,7 @@ resources:
     occurrence: Single
     datastore_type: text
     excel_full_text_choices: true
+    datatables_full_text_choices: true
     choices_file: choices/online_service_yes_no.yaml
     form_snippet: scheming/form_snippets/radio.html
 
@@ -724,8 +761,10 @@ resources:
         Ce champ ne peut excéder une longueur maximale de 1000 caractères.
     occurrence: Single
     datastore_type: text
+    datatables_col_class: col-xxl
     max_chars: 1000
     excel_required_formula: 'OR(TRIM(LEFT({os_account_registration},FIND(":",{os_account_registration}&":")-1))="NA",TRIM(LEFT({os_authentication},FIND(":",{os_authentication}&":")-1))="NA",TRIM(LEFT({os_application},FIND(":",{os_application}&":")-1))="NA",TRIM(LEFT({os_decision},FIND(":",{os_decision}&":")-1))="NA",TRIM(LEFT({os_issuance},FIND(":",{os_issuance}&":")-1))="NA",TRIM(LEFT({os_issue_resolution_feedback},FIND(":",{os_issue_resolution_feedback}&":")-1))="NA",NOT(ISBLANK({os_comments_client_interaction_fr})))'
+    js_required_eval: '{{os_comments_client_interaction_fr}}.length > 0 || ({{os_account_registration}} == "NA" || {{os_authentication}} == "NA" || {{os_application}} == "NA" || {{os_decision}} == "NA" || {{os_issuance}} == "NA" || {{os_issue_resolution_feedback}} == "NA")'
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
       maxlength: 1000
@@ -757,8 +796,10 @@ resources:
         Ce champ ne peut excéder une longueur maximale de 1000 caractères.
     occurrence: Single
     datastore_type: text
+    datatables_col_class: col-xxl
     max_chars: 1000
     excel_required_formula: 'OR(TRIM(LEFT({os_account_registration},FIND(":",{os_account_registration}&":")-1))="NA",TRIM(LEFT({os_authentication},FIND(":",{os_authentication}&":")-1))="NA",TRIM(LEFT({os_application},FIND(":",{os_application}&":")-1))="NA",TRIM(LEFT({os_decision},FIND(":",{os_decision}&":")-1))="NA",TRIM(LEFT({os_issuance},FIND(":",{os_issuance}&":")-1))="NA",TRIM(LEFT({os_issue_resolution_feedback},FIND(":",{os_issue_resolution_feedback}&":")-1))="NA",NOT(ISBLANK({os_comments_client_interaction_en})))'
+    js_required_eval: '{{os_comments_client_interaction_en}}.length > 0 || ({{os_account_registration}} == "NA" || {{os_authentication}} == "NA" || {{os_application}} == "NA" || {{os_decision}} == "NA" || {{os_issuance}} == "NA" || {{os_issue_resolution_feedback}} == "NA")'
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
       maxlength: 1000
@@ -777,6 +818,7 @@ resources:
     occurrence: Single
     datastore_type: text
     excel_full_text_choices: false
+    datatables_full_text_choices: false
     choices_file: choices/fiscal_year.yaml
 
   # DEP 1-29
@@ -793,6 +835,7 @@ resources:
     occurrence: Single
     datastore_type: text
     excel_full_text_choices: false
+    datatables_full_text_choices: false
     choices_file: choices/fiscal_year.yaml
 
   # DEP 1-30
@@ -806,6 +849,7 @@ resources:
     obligation: Mandatory
     excel_required: true
     form_required: true
+    datatables_col_class: col-sm
     format_type: Controlled List
     validation:
       en: This field must not be empty.
@@ -813,6 +857,7 @@ resources:
     occurrence: Single
     datastore_type: text
     excel_full_text_choices: true
+    datatables_full_text_choices: true
     choices:
       'NA':
         en: N/A (not a service to individuals)
@@ -840,6 +885,7 @@ resources:
         la prestation des services en tant qu’identificateur standard, conformément à la
         Directive sur le numéro d’entreprise.
     obligation: Mandatory
+    datatables_col_class: col-sm
     excel_required: true
     form_required: true
     format_type: Controlled List
@@ -849,6 +895,7 @@ resources:
     occurrence: Single
     datastore_type: text
     excel_full_text_choices: true
+    datatables_full_text_choices: true
     choices:
       'NA':
         en: N/A (not a service to businesses)
@@ -881,6 +928,7 @@ resources:
         "telephone applications" pour les demandes de prestation de service
         reçues par téléphone.
     obligation: Mandatory
+    datatables_col_class: col-sm
     excel_required: true
     form_required: true
     format_type: Free text
@@ -896,6 +944,7 @@ resources:
     occurrence: Single
     datastore_type: text
     excel_error_formula: 'OR({default_formula},IFERROR(VALUE({cell})<0,AND({cell}<>"NA",{cell}<>"ND")))'
+    js_error_eval: 'VALUE.length > 0 && ( (String(VALUE).match(/^-?[0-9]+$/) != null && parseInt(VALUE) < 0) || (String(VALUE).match(/^-?[0-9]+$/) == null && VALUE.toUpperCase() != "NA" && VALUE.toUpperCase() != "ND") )'
 
   # DEP 1-33
   - datastore_id: num_applications_by_phone
@@ -916,6 +965,7 @@ resources:
     obligation: Mandatory
     excel_required: true
     form_required: true
+    datatables_col_class: col-sm
     format_type: Free text
     validation:
       en: |
@@ -929,6 +979,7 @@ resources:
     occurrence: Single
     datastore_type: text
     excel_error_formula: 'OR({default_formula},IFERROR(VALUE({cell})<0,AND({cell}<>"NA",{cell}<>"ND")))'
+    js_error_eval: 'VALUE.length > 0 && ( (String(VALUE).match(/^-?[0-9]+$/) != null && parseInt(VALUE) < 0) || (String(VALUE).match(/^-?[0-9]+$/) == null && VALUE.toUpperCase() != "NA" && VALUE.toUpperCase() != "ND") )'
 
   # DEP 1-34
   - datastore_id: num_website_visits
@@ -946,6 +997,7 @@ resources:
         aucune donnée (ND) signifie que le nombre de visites n’est pas mesuré, et sans
         objet (NA) signifie qu’il n’y a aucune site web à visiter.
     obligation: Mandatory
+    datatables_col_class: col-sm
     excel_required: true
     form_required: true
     format_type: Free text
@@ -961,6 +1013,7 @@ resources:
     occurrence: Single
     datastore_type: text
     excel_error_formula: 'OR({default_formula},IFERROR(VALUE({cell})<0,AND({cell}<>"NA",{cell}<>"ND")))'
+    js_error_eval: 'VALUE.length > 0 && ( (String(VALUE).match(/^-?[0-9]+$/) != null && parseInt(VALUE) < 0) || (String(VALUE).match(/^-?[0-9]+$/) == null && VALUE.toUpperCase() != "NA" && VALUE.toUpperCase() != "ND") )'
 
   # DEP 1-35
   - datastore_id: num_applications_online
@@ -983,6 +1036,7 @@ resources:
     obligation: Mandatory
     excel_required: true
     form_required: true
+    datatables_col_class: col-sm
     format_type: Free text
     validation:
       en: |
@@ -996,6 +1050,7 @@ resources:
     occurrence: Single
     datastore_type: text
     excel_error_formula: 'OR({default_formula},IFERROR(VALUE({cell})<0,AND({cell}<>"NA",{cell}<>"ND")))'
+    js_error_eval: 'VALUE.length > 0 && ( (String(VALUE).match(/^-?[0-9]+$/) != null && parseInt(VALUE) < 0) || (String(VALUE).match(/^-?[0-9]+$/) == null && VALUE.toUpperCase() != "NA" && VALUE.toUpperCase() != "ND") )'
 
   # DEP 1-36
   - datastore_id: num_applications_in_person
@@ -1017,6 +1072,7 @@ resources:
     obligation: Mandatory
     excel_required: true
     form_required: true
+    datatables_col_class: col-sm
     format_type: Free text
     validation:
       en: |
@@ -1030,6 +1086,7 @@ resources:
     occurrence: Single
     datastore_type: text
     excel_error_formula: 'OR({default_formula},IFERROR(VALUE({cell})<0,AND({cell}<>"NA",{cell}<>"ND")))'
+    js_error_eval: 'VALUE.length > 0 && ( (String(VALUE).match(/^-?[0-9]+$/) != null && parseInt(VALUE) < 0) || (String(VALUE).match(/^-?[0-9]+$/) == null && VALUE.toUpperCase() != "NA" && VALUE.toUpperCase() != "ND") )'
 
   # DEP 1-37
   - datastore_id: num_applications_by_mail
@@ -1050,6 +1107,7 @@ resources:
     obligation: Mandatory
     excel_required: true
     form_required: true
+    datatables_col_class: col-sm
     format_type: Free text
     validation:
       en: |
@@ -1063,6 +1121,7 @@ resources:
     occurrence: Single
     datastore_type: text
     excel_error_formula: 'OR({default_formula},IFERROR(VALUE({cell})<0,AND({cell}<>"NA",{cell}<>"ND")))'
+    js_error_eval: 'VALUE.length > 0 && ( (String(VALUE).match(/^-?[0-9]+$/) != null && parseInt(VALUE) < 0) || (String(VALUE).match(/^-?[0-9]+$/) == null && VALUE.toUpperCase() != "NA" && VALUE.toUpperCase() != "ND") )'
 
   # DEP 1-38
   - datastore_id: num_applications_by_email
@@ -1083,6 +1142,7 @@ resources:
     obligation: Mandatory
     excel_required: true
     form_required: true
+    datatables_col_class: col-sm
     format_type: Free text
     validation:
       en: |
@@ -1096,6 +1156,7 @@ resources:
     occurrence: Single
     datastore_type: text
     excel_error_formula: 'OR({default_formula},IFERROR(VALUE({cell})<0,AND({cell}<>"NA",{cell}<>"ND")))'
+    js_error_eval: 'VALUE.length > 0 && ( (String(VALUE).match(/^-?[0-9]+$/) != null && parseInt(VALUE) < 0) || (String(VALUE).match(/^-?[0-9]+$/) == null && VALUE.toUpperCase() != "NA" && VALUE.toUpperCase() != "ND") )'
 
   # DEP 1-39
   - datastore_id: num_applications_by_fax
@@ -1116,6 +1177,7 @@ resources:
     obligation: Mandatory
     excel_required: true
     form_required: true
+    datatables_col_class: col-sm
     format_type: Free text
     validation:
       en: |
@@ -1129,6 +1191,7 @@ resources:
     occurrence: Single
     datastore_type: text
     excel_error_formula: 'OR({default_formula},IFERROR(VALUE({cell})<0,AND({cell}<>"NA",{cell}<>"ND")))'
+    js_error_eval: 'VALUE.length > 0 && ( (String(VALUE).match(/^-?[0-9]+$/) != null && parseInt(VALUE) < 0) || (String(VALUE).match(/^-?[0-9]+$/) == null && VALUE.toUpperCase() != "NA" && VALUE.toUpperCase() != "ND") )'
 
   # DEP 1-40
   - datastore_id: num_applications_by_other
@@ -1150,6 +1213,7 @@ resources:
     obligation: Mandatory
     excel_required: true
     form_required: true
+    datatables_col_class: col-sm
     format_type: Free text
     validation:
       en: |
@@ -1163,6 +1227,7 @@ resources:
     occurrence: Single
     datastore_type: text
     excel_error_formula: 'OR({default_formula},IFERROR(VALUE({cell})<0,AND({cell}<>"NA",{cell}<>"ND")))'
+    js_error_eval: 'VALUE.length > 0 && ( (String(VALUE).match(/^-?[0-9]+$/) != null && parseInt(VALUE) < 0) || (String(VALUE).match(/^-?[0-9]+$/) == null && VALUE.toUpperCase() != "NA" && VALUE.toUpperCase() != "ND") )'
 
   # DEP 1-45
   # Dev: Published Resource Field
@@ -1209,8 +1274,10 @@ resources:
       fr: Ce champ ne peut excéder une longueur maximale de 2000 caractères.
     occurrence: Single
     datastore_type: text
+    datatables_col_class: col-xxl
     max_chars: 2000
     excel_required_formula: 'OR(AND(NOT(ISBLANK({num_applications_by_other})),ISNUMBER(VALUE({num_applications_by_other})),VALUE({num_applications_by_other})>0),NOT(ISBLANK({special_remarks_fr})))'
+    js_required_eval: '{{special_remarks_fr}}.length > 0 || (String({{num_applications_by_other}}).match(/^-?[0-9]+$/) != null && parseInt({{num_applications_by_other}}) > 0)'
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
       maxlength: 2000
@@ -1247,8 +1314,10 @@ resources:
       fr: Ce champ ne peut excéder une longueur maximale de 2000 caractères.
     occurrence: Single
     datastore_type: text
+    datatables_col_class: col-xxl
     max_chars: 2000
     excel_required_formula: 'OR(AND(NOT(ISBLANK({num_applications_by_other})),ISNUMBER(VALUE({num_applications_by_other})),VALUE({num_applications_by_other})>0),NOT(ISBLANK({special_remarks_en})))'
+    js_required_eval: '{{special_remarks_en}}.length > 0 || (String({{num_applications_by_other}}).match(/^-?[0-9]+$/) != null && parseInt({{num_applications_by_other}}) > 0)'
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
       maxlength: 2000
@@ -1269,8 +1338,10 @@ resources:
       fr: Ce champ ne peut excéder une longueur maximale de 1500 caractères.
     occurrence: Single
     datastore_type: text
+    datatables_col_class: col-lg
     max_chars: 1500
     excel_required_formula: NOT(ISBLANK({service_uri_fr}))
+    js_required_eval: '{{service_uri_fr}}.length > 0'
     form_attrs:
       style: "width: 100%; display: block"
       maxlength: 1500
@@ -1291,8 +1362,10 @@ resources:
       fr: Ce champ ne peut excéder une longueur maximale de 1500 caractères.
     occurrence: Single
     datastore_type: text
+    datatables_col_class: col-lg
     max_chars: 1500
     excel_required_formula: NOT(ISBLANK({service_uri_en}))
+    js_required_eval: '{{service_uri_en}}.length > 0'
     form_attrs:
       style: "width: 100%; display: block"
       maxlength: 1500
@@ -1651,6 +1724,7 @@ resources:
         Par exemple, les données pour l’exercice financier 2023-2024 devrait inclure les demandes de service qui
         ont été reçues entre le 1 avril 2023 et le 31 mars 2024.
     obligation: Mandatory
+    datatables_col_class: col-md
     excel_required: true
     form_required: true
     validation:
@@ -1659,6 +1733,7 @@ resources:
     occurrence: Single
     datastore_type: text
     excel_full_text_choices: false
+    datatables_full_text_choices: false
     choices_file: choices/fiscal_year.yaml
 
   # DEP 2-2
@@ -1670,9 +1745,11 @@ resources:
       en: The unique number assigned to a service in the inventory to make it easier to refer to specific services.
       fr: Le numéro unique attribué à un service dans le répertoire afin de faciliter le référencement à des services précis.
     obligation: Mandatory
+    datatables_col_class: col-sm pd-datatables-primary-key-offset-md
     excel_required: true
     form_required: true
     excel_error_formula: 'OR({default_formula},LEN({cell})-LEN(SUBSTITUTE({cell},",",""))>0)'
+    js_error_eval: 'VALUE.length > 0 && VALUE.includes(",")'
     validation:
       en: |
         This field must not be empty.
@@ -1706,6 +1783,7 @@ resources:
     format_type: Free text
     occurrence: Single
     datastore_type: text
+    datatables_col_class: col-lg
     max_chars: 350
     form_attrs:
       style: "width: 100%; display: block"
@@ -1733,6 +1811,7 @@ resources:
     format_type: Free text
     occurrence: Single
     datastore_type: text
+    datatables_col_class: col-lg
     max_chars: 350
     form_attrs:
       style: "width: 100%; display: block"
@@ -1753,6 +1832,7 @@ resources:
         pour ce service. Facilite le référencement, car un service peut avoir
         de multiples normes.
     obligation: Mandatory
+    datatables_col_class: col-sm pd-datatables-primary-key-offset-sm_md
     excel_required: true
     form_required: true
     excel_error_formula: 'OR({default_formula},LEN({cell})-LEN(SUBSTITUTE({cell},",",""))>0)'
@@ -1796,6 +1876,7 @@ resources:
     format_type: Free text
     occurrence: Single
     datastore_type: text
+    datatables_col_class: col-xl
     max_chars: 500
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
@@ -1830,6 +1911,7 @@ resources:
     format_type: Free text
     occurrence: Single
     datastore_type: text
+    datatables_col_class: col-xl
     max_chars: 500
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
@@ -1866,6 +1948,7 @@ resources:
     occurrence: Single
     datastore_type: text
     excel_full_text_choices: true
+    datatables_full_text_choices: true
     choices:
       ACS:
         en: Access
@@ -1898,6 +1981,7 @@ resources:
     occurrence: Single
     datastore_type: text
     excel_full_text_choices: true
+    datatables_full_text_choices: true
     choices:
       EML:
         en: Email
@@ -1938,6 +2022,7 @@ resources:
       fr: Ce champ ne peut excéder une longueur maximale de 1500 caractères.
     occurrence: Single
     datastore_type: text
+    datatables_col_class: col-xxl
     max_chars: 1500
     excel_required_formula: NOT(ISBLANK({channel_comments_fr}))
     form_snippet: scheming/form_snippets/textarea.html
@@ -1961,6 +2046,7 @@ resources:
       fr: Ce champ ne peut excéder une longueur maximale de 1500 caractères.
     occurrence: Single
     datastore_type: text
+    datatables_col_class: col-xxl
     max_chars: 1500
     excel_required_formula: NOT(ISBLANK({channel_comments_en}))
     form_snippet: scheming/form_snippets/textarea.html
@@ -2071,6 +2157,7 @@ resources:
       fr: Ce champ ne peut excéder une longueur maximale de 2000 caractères.
     occurrence: Single
     datastore_type: text
+    datatables_col_class: col-xxl
     max_chars: 2000
     excel_required_formula: NOT(ISBLANK({comments_fr}))
     form_snippet: scheming/form_snippets/textarea.html
@@ -2094,6 +2181,7 @@ resources:
       fr: Ce champ ne peut excéder une longueur maximale de 2000 caractères.
     occurrence: Single
     datastore_type: text
+    datatables_col_class: col-xxl
     max_chars: 2000
     excel_required_formula: NOT(ISBLANK({comments_en}))
     form_snippet: scheming/form_snippets/textarea.html
@@ -2145,6 +2233,7 @@ resources:
         Ce champ ne peut excéder une longueur maximale de 1500 caractères.
     occurrence: Single
     datastore_type: text
+    datatables_col_class: col-lg
     max_chars: 1500
     form_attrs:
       style: "width: 100%; display: block"
@@ -2171,6 +2260,7 @@ resources:
         Ce champ ne peut excéder une longueur maximale de 1500 caractères.
     occurrence: Single
     datastore_type: text
+    datatables_col_class: col-lg
     max_chars: 1500
     form_attrs:
       style: "width: 100%; display: block"
@@ -2192,6 +2282,7 @@ resources:
       fr: Ce champ ne peut excéder une longueur maximale de 1500 caractères.
     occurrence: Single
     datastore_type: text
+    datatables_col_class: col-lg
     max_chars: 1500
     excel_required_formula: NOT(ISBLANK({performance_results_uri_fr}))
     form_attrs:
@@ -2214,6 +2305,7 @@ resources:
       fr: Ce champ ne peut excéder une longueur maximale de 1500 caractères.
     occurrence: Single
     datastore_type: text
+    datatables_col_class: col-lg
     max_chars: 1500
     excel_required_formula: NOT(ISBLANK({performance_results_uri_en}))
     form_attrs:

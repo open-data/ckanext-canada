@@ -34,6 +34,7 @@ resources:
     form_required: true
     format_type: Free text
     validation: This field must not be empty
+    js_error_eval: 'VALUE.length > 0 && VALUE.includes(",")'
     visible_to_public: Yes
     occurrence: Single
     datastore_type: text
@@ -54,6 +55,7 @@ resources:
     visible_to_public: Yes
     occurrence: Single
     datastore_type: text
+    datatables_col_class: col-lg
     excel_column_width: 30
     form_attrs:
       size: 60
@@ -74,6 +76,7 @@ resources:
     visible_to_public: Yes
     occurrence: Single
     datastore_type: text
+    datatables_col_class: col-lg
     excel_column_width: 30
     form_attrs:
       size: 60
@@ -94,7 +97,9 @@ resources:
     visible_to_public: Yes
     occurrence: Single
     datastore_type: text
-    excel_full_text_choices: True
+    excel_full_text_choices: true
+    datatables_full_text_choices: true
+    datatables_col_class: col-lg
     choices_file: choices/minister.json
     exclude_choices:
     - GG
@@ -116,6 +121,7 @@ resources:
     visible_to_public: Yes
     occurrence: Repeatable
     datastore_type: text
+    datatables_col_class: col-xxl
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
       style: "width: 100%; display: block"
@@ -137,6 +143,7 @@ resources:
     visible_to_public: Yes
     occurrence: Repeatable
     datastore_type: text
+    datatables_col_class: col-xxl
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
       style: "width: 100%; display: block"
@@ -176,6 +183,7 @@ resources:
     visible_to_public: Yes
     occurrence: Repeatable
     datastore_type: text
+    datatables_col_class: col-xxl
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
       style: "width: 100%; display: block"
@@ -197,6 +205,7 @@ resources:
     visible_to_public: Yes
     occurrence: Repeatable
     datastore_type: text
+    datatables_col_class: col-xxl
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
       style: "width: 100%; display: block"
@@ -218,6 +227,7 @@ resources:
     visible_to_public: Yes
     occurrence: Repeatable
     datastore_type: text
+    datatables_col_class: col-xxl
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
       style: "width: 100%; display: block"
@@ -239,6 +249,7 @@ resources:
     visible_to_public: Yes
     occurrence: Repeatable
     datastore_type: text
+    datatables_col_class: col-xxl
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
       style: "width: 100%; display: block"
@@ -258,6 +269,7 @@ resources:
     visible_to_public: Yes
     occurrence: Repeatable
     datastore_type: text
+    datatables_col_class: col-xxl
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
       style: "width: 100%; display: block"
@@ -277,6 +289,7 @@ resources:
     visible_to_public: Yes
     occurrence: Repeatable
     datastore_type: text
+    datatables_col_class: col-xxl
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
       style: "width: 100%; display: block"
@@ -385,9 +398,12 @@ resources:
     obligation: Mandatory
     excel_required: true
     form_required: true
+    datatables_col_class: col-md
     validation: This field must not be empty
     excel_column_width: 10
     extract_date_year: true
+    excel_error_formula: '{cell}>YEAR(TODAY())'
+    js_error_eval: 'VALUE.length > 0 && VALUE > new Date().getFullYear()'
     form_attrs:
       size: 20
 
@@ -402,8 +418,10 @@ resources:
     obligation: Mandatory
     excel_required: true
     form_required: true
+    datatables_col_class: col-sm pd-datatables-primary-key-offset-md
     validation: This field must not be empty
     excel_full_text_choices: true
+    datatables_full_text_choices: true
     choices:
       P01:
         en: Jan. - June
