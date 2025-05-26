@@ -42,6 +42,7 @@ resources:
     excel_required: true
     excel_column_width: 13
     excel_error_formula: 'OR({default_formula},{cell}>YEAR(TODAY()),{cell}<2011)'
+    js_error_eval: 'VALUE.length > 0 && ( VALUE < 2011 || VALUE > new Date().getFullYear() )'
 
   - datastore_id: month
     label:
@@ -321,6 +322,7 @@ resources:
     excel_required: true
     excel_column_width: 13
     excel_error_formula: 'OR({default_formula},{cell}>YEAR(TODAY()),{cell}<2011)'
+    js_error_eval: 'VALUE.length > 0 && ( VALUE < 2011 || VALUE > new Date().getFullYear() )'
 
   - datastore_id: month
     label:

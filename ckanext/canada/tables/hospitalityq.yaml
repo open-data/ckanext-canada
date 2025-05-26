@@ -421,7 +421,7 @@ resources:
     # Dev NOTE: excel_error_formula: Excel and Open Office Calc parity issues with REGEX. REGEX does not exist in Excel.
     excel_required_formula: NOT(ISBLANK({vendor_other_fr}))
     js_required_eval: '{{vendor_other_fr}}.length > 0'
-    # TODO: multi-vendor format js_error_eval
+    js_error_eval: 'VALUE.length > 0 && ! VALUE.split(";").every(function(_vv){ return _vv.trim().length > 0 })'
     form_required: false
     format_type: Free text
     datatables_col_class: col-xl
@@ -457,6 +457,7 @@ resources:
     # Dev NOTE: excel_error_formula: Excel and Open Office Calc parity issues with REGEX. REGEX does not exist in Excel.
     excel_required_formula: NOT(ISBLANK({vendor_other_en}))
     js_required_eval: '{{vendor_other_en}}.length > 0'
+    js_error_eval: 'VALUE.length > 0 && ! VALUE.split(";").every(function(_vv){ return _vv.trim().length > 0 })'
     form_required: false
     format_type: Free text
     datatables_col_class: col-xl
@@ -760,6 +761,8 @@ resources:
     excel_column_width: 10
     datatables_col_class: col-md
     extract_date_year: true
+    excel_error_formula: '{cell}>YEAR(TODAY())'
+    js_error_eval: 'VALUE.length > 0 && VALUE > new Date().getFullYear()'
 
   - datastore_id: month
     datastore_type: text

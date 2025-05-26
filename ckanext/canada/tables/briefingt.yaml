@@ -340,6 +340,8 @@ resources:
     excel_column_width: 10
     extract_date_year: true
     datatables_col_class: col-md
+    excel_error_formula: '{cell}>YEAR(TODAY())'
+    js_error_eval: 'VALUE.length > 0 && VALUE > new Date().getFullYear()'
     form_attrs:
       size: 20
 
