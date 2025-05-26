@@ -25,12 +25,7 @@
   {% if 'upload_warn' in geno %}
     <div class="col-md-12">
       <div class="alert alert-warning" style="font-weight:bold;">
-        {%- set warn_text = h.recombinant_language_text(geno.upload_warn) -%}
-        {%- if '{support}' in warn_text -%}
-          <p>{{ h.recombinant_language_text(geno.upload_warn).format(support=h.support_email_address()) | safe }}</p>
-        {%- else -%}
-          <p>{{ h.recombinant_language_text(geno.upload_warn) | safe }}</p>
-        {%- endif -%}
+        <p>{{ h.recombinant_language_text(geno.upload_warn).format(support=h.support_email_address()) | safe }}</p>
       </div>
     </div>
   {% endif %}

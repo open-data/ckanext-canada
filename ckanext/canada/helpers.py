@@ -1116,4 +1116,4 @@ def max_resources_per_dataset() -> Optional[int]:
 
 
 def support_email_address() -> str:
-    return config.get('ckanext.canada.support_email_address')
+    return config['ckanext.canada.support_email_address']

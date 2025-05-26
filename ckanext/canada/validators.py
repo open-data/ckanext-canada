@@ -9,6 +9,7 @@ from six import text_type
 
 from ckan.plugins.toolkit import (
     _,
+    h,
     get_action,
     ValidationError,
     ObjectNotFound,
@@ -241,7 +242,7 @@ def canada_maintainer_email_default(key: FlattenKey,
     em = data[key]
     cf = data.get(('maintainer_contact_form',), '')
     if (not em or em is missing) and (not cf or cf is missing or cf == '{}'):
-        data[key] = config.get('ckanext.canada.support_email_address')
+        data[key] = h.support_email_address()
 
 
 def canada_sort_prop_status(key: FlattenKey,
