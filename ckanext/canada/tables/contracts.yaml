@@ -586,6 +586,7 @@ resources:
         Ce champ doit être vide si le champ Accord commercial n’est pas vide.
     excel_required_formula: 'AND(VALUE({contract_date})>=DATE(2019,1,1),VALUE({contract_date})<DATE(2022,1,1),ISBLANK({trade_agreement}))'
     excel_error_formula: 'OR({default_formula},NOT(ISBLANK({trade_agreement})),VALUE({contract_date})>=DATE(2022,1,1))'
+    # TODO: continue #L2048
     datastore_type: text
     datatables_col_class: col-md
     excel_full_text_choices: false
@@ -952,8 +953,7 @@ resources:
     excel_required_formula: 'VALUE({contract_date})>=DATE(2022,1,1)'
     excel_error_formula: 'OR({default_formula},NOT({agreement_type_code}=""),AND(ISNUMBER(SEARCH("XX",{cell})),{cell}<>"XX"))'
     js_required_eval: '{{contract_date}}.length > 0 && new Date({{contract_date}}) >= new Date("2022-01-01")'
-    # FIXME: not working...#L2043
-    js_error_eval: 'VALUE.length > 1 && "XX" in VALUE'
+    js_error_eval: 'VALUE.length > 1 && VALUE.includes("XX")'
     datastore_type: _text
     datatables_col_class: col-lg
     choices:

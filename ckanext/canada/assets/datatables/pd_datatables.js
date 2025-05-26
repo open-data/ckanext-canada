@@ -177,6 +177,9 @@ function load_pd_datatable(CKAN_MODULE){
   let newRecords = [];
   let updatedRecords = [];
 
+  // TODO: first click in table can be laggy...put loading bubbles???
+  let doneFirstClick = false;
+
   let uri_filters = {};
   if( searchParams.has('dt_query') ){
     let _uri_filters = JSON.parse(searchParams.get('dt_query'));
