@@ -55,6 +55,7 @@ body #dtprv_wrapper .dt-scroll{
 
 body #dtprv_wrapper .dt-scroll{
   overflow: hidden !important;
+  margin-top: 10px !important;
 }
 
 body #dtprv_wrapper .dt-empty{
@@ -125,7 +126,6 @@ body #dtprv_wrapper .dt-length{
   display: inline-flex !important;
   flex-direction: row-reverse !important;
   margin-top: 10px !important;
-  margin-bottom: 10px !important;
   align-items: center !important;
   width: calc(100% / 3) !important;
   min-width: calc(100% / 3) !important;
@@ -158,7 +158,6 @@ body #dtprv_wrapper .dt-search{
   display: inline-flex !important;
   flex-direction: row !important;
   margin-top: 10px !important;
-  margin-bottom: 10px !important;
   align-items: center !important;
   width: calc((100% / 3) * 2) !important;
   min-width: calc((100% / 3) * 2) !important;
@@ -184,6 +183,11 @@ body #dtprv_wrapper .dt-search label{
   body #dtprv_wrapper .dt-search label{
     margin-left: 0 !important
   }
+}
+
+body #dtprv_wrapper[data-edit-view="true"] .dt-length,
+body #dtprv_wrapper[data-edit-view="true"] .dt-search{
+  display: none !important;
 }
 
 body #dtprv_wrapper .dt-info{
@@ -934,6 +938,11 @@ body #dtprv_wrapper[data-edit-view="true"] #dtprv-body-main td .select2-containe
   background-color: white !important;
   margin: 0 !important;
   box-shadow: 0 0 1px 1px #d0d0d0 inset;
+}
+
+body #dtprv_wrapper[data-edit-view="true"] #dtprv-body-main td input,
+body #dtprv_wrapper[data-edit-view="true"] #dtprv-body-main td textarea{
+  display: block !important;
 }
 
 body #dtprv_wrapper[data-edit-view="true"] #dtprv-body-main td input.select2-input{
