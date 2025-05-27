@@ -1677,8 +1677,10 @@ function load_pd_datatable(CKAN_MODULE){
       });
     }else if( $(_field).attr('data-primary-key') == 'true' ){
       let primaryValues = [];
+      // FIXME: why is column offset different if multiple primary keys??
+      let primColOffsetEditMode = primaryKeys.length == 1 ? 0 : (colOffset - 1);
       for( let _i = 0; _i < primaryKeys.length; _i++ ){
-        primaryValues.push($(rowFields).eq(primaryKeys[_i] + (colOffset - 1)).val());
+        primaryValues.push($(rowFields).eq(primaryKeys[_i] + primColOffsetEditMode).val());
       }
       for(let [_rowIndex, _filledCells] of Object.entries(filledRows)){
         if( _rowIndex == rowIndex ){
@@ -1689,7 +1691,7 @@ function load_pd_datatable(CKAN_MODULE){
         let _primLabels = [];
         let errMsg = dupePrimaryKeysErrorMessage;
         for( let _i = 0; _i < primaryKeys.length; _i++ ){
-          let _f = $(innerTable).find('tr').eq(_rowIndex).find('.pd-datatable-editor-input').eq(primaryKeys[_i] + (colOffset - 1));
+          let _f = $(innerTable).find('tr').eq(_rowIndex).find('.pd-datatable-editor-input').eq(primaryKeys[_i] + primColOffsetEditMode);
           if( typeof _f.val() != 'undefined' && _f.val().length > 0 ){
             _primVals.push(_f.val());
             _primIDs.push(_f.attr('data-datastore-id'));
