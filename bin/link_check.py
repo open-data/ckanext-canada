@@ -26,8 +26,7 @@ import codecs
 
 proxy = os.environ['http_proxy']
 temp_db = '/tmp/od_linkcheker2.db'
-USER_AGENT = "open.canada.ca dataset link checker; "\
-             "abuse report open-ouvert@tbs-sct.gc.ca"
+USER_AGENT = "open.canada.ca dataset link checker;"
 URL_TIMEOUT = 20
 
 ''' Check the resource links of datasets on open.canada.ca

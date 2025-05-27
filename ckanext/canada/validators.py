@@ -9,6 +9,7 @@ from six import text_type
 
 from ckan.plugins.toolkit import (
     _,
+    h,
     get_action,
     ValidationError,
     ObjectNotFound,
@@ -266,12 +267,15 @@ def canada_maintainer_email_default(key: FlattenKey,
                                     errors: FlattenErrorDict,
                                     context: Context):
     """
-    Set to open-ouvert@tbs-sct.gc.ca if not given and no contact form given
+    Set to ckanext.canada.support_email_address
+    if not given and no contact form given.
+
+    This is an output validator.
     """
     em = data[key]
     cf = data.get(('maintainer_contact_form',), '')
     if (not em or em is missing) and (not cf or cf is missing or cf == '{}'):
-        data[key] = 'open-ouvert@tbs-sct.gc.ca'
+        data[key] = h.support_email_address()
 
 
 def canada_sort_prop_status(key: FlattenKey,
@@ -686,6 +690,7 @@ def limit_resources_per_dataset(key: FlattenKey,
             _('You can only add up to {max_resource_count} resources to a dataset. '
               'You can segment your resources across multiple datasets or merge your '
               'data to limit the number of resources. Please contact '
-              'open-ouvert@tbs-sct.gc.ca if you need further assistance.').format(
-                  max_resource_count=max_resource_count)]
+              '{support} if you need further assistance.').format(
+                  max_resource_count=max_resource_count,
+                  support=config.get('ckanext.canada.support_email_address'))]
         raise StopOnError
