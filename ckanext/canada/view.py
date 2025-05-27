@@ -1263,8 +1263,9 @@ def notice_no_access():
           'day once the account activation process has been '
           'completed. If you require faster processing of the '
           'account, please send the request directly to: '
-          '<a href="mailto:open-ouvert@tbs-sct.gc.ca">'
-          'open-ouvert@tbs-sct.gc.ca</a>'), True)
+          '<a href="mailto:{support}">'
+          '{support}</a>').format(support=config.get(
+              'ckanext.canada.support_email_address')), True)
 
 
 def notify_ckan_user_create(email: str,

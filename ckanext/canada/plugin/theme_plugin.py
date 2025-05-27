@@ -88,4 +88,5 @@ class CanadaThemePlugin(p.SingletonPlugin):
             'available_purge_types',
             'operations_guide_link',
             'max_resources_per_dataset',
+            'support_email_address',
         ])

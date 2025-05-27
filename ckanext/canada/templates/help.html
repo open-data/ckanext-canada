@@ -24,7 +24,7 @@
     </details>
     <details>
       <summary>{{ _("What if I manage the registry for more than one organization?") }}</summary>
-      <p>{{ _('To manage additional organizations using your Registry account, send an email to open-ouvert@tbs-sct.gc.ca requesting that your account is linked to the desired organization. Ensure that you include the name of the organization in your email.') }}</p>
+      <p>{{ _('To manage additional organizations using your Registry account, send an email to {support} requesting that your account is linked to the desired organization. Ensure that you include the name of the organization in your email.').format(support=h.support_email_address()) }}</p>
       <p>{{ _("Once the support team processes your request, you'll be able to manage those organizations through your Registry account.") }}</p>
     </details>
     <details>
