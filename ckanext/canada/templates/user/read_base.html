@@ -1,7 +1,9 @@
 {% ckan_extends %}
 
+{% set is_registry = h.is_registry_domain() %}
+
 {% block breadcrumb_content %}
-  {% if g.is_registry %}
+  {% if is_registry %}
     {{ h.build_nav('user.index', _('Users')) }}
     {{ h.build_nav('user.read', user.display_name|truncate(35), id=user.name) }}
   {% endif %}
@@ -67,7 +69,7 @@
           <div class="col-md-12 left-center text-break text-wrap"><strong>{{ _('Member Since') }}</strong></div>
           <div class="col-md-12 left-center text-break text-wrap">{{ h.render_datetime(user.created) }}</div>
         </div>
-        {% if g.is_registry %}
+        {% if is_registry %}
           <div class="info mrgn-tp-md">
             {% if h.user_organizations(user) %}
             <dl>
