@@ -58,6 +58,15 @@ GEO_MAP_TYPE_DEFAULT = 'static'
 RELEASE_DATE_FACET_STEP = 100
 
 
+def is_registry_domain() -> bool:
+    """
+    This helper should only be used inside the request context.
+    """
+    uri_parts = urlsplit(request.url)
+    subdomain = uri_parts.netloc.split('.')[0]
+    return 'registry' in subdomain or 'registre' in subdomain
+
+
 def get_translated_t(data_dict: Dict[str, Any],
                      field: str) -> Tuple[str, bool]:
     '''
@@ -1018,7 +1027,8 @@ def ckan_to_cdts_breadcrumbs(breadcrumb_content: str) -> List[Dict[str, Any]]:
     """
     breadcrumb_html = BeautifulSoup(breadcrumb_content, 'html.parser')
     cdts_breadcrumbs = []
-    if g.is_registry:
+    is_registry = h.is_registry_domain()
+    if is_registry:
         cdts_breadcrumbs.append({
             'title': _('Registry Home'),
             'href': '/%s' % h.lang(),
@@ -1041,7 +1051,7 @@ def ckan_to_cdts_breadcrumbs(breadcrumb_content: str) -> List[Dict[str, Any]]:
         if anchor and anchor.get('title'):
             link['acronym'] = anchor.get('title')
 
-        if g.is_registry:
+        if is_registry:
             cdts_breadcrumbs.append(link)
         elif 'active' not in breadcrumb.get('class', []):
             cdts_breadcrumbs.append(link)

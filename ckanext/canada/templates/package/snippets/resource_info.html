@@ -14,7 +14,7 @@
           <dd>{{ h.scheming_choices_label(h.scheming_get_preset('canada_resource_format').choices, res.format) }}</dd>
         </dl>
       </div>
-      {% if g.is_registry %}
+      {% if h.is_registry_domain() %}
         <div class="mrgn-bttm-md">
           {{- h.get_validation_badge(res)|safe -}}
           <div class="clearfix"></div>

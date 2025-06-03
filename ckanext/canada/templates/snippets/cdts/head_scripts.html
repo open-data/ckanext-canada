@@ -4,7 +4,7 @@
 <script>
   document.write(
     wet.builder.refTop({
-      {% if g.is_registry %}
+      {% if h.is_registry_domain() %}
         "isApplication": true,
       {% else %}
         "isApplication": false,

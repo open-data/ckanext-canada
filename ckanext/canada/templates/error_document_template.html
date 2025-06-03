@@ -21,7 +21,7 @@
 {% endblock %}
 
 {% block primary %}
-  {% if g.is_registry %}
+  {% if h.is_registry_domain() %}
     <div class="row">
       <div class="col-md-12">
         <p>{{ content }}</p>

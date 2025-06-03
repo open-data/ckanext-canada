@@ -1,12 +1,14 @@
 {% ckan_extends %}
 
+{% set is_registry = h.is_registry_domain() %}
+
 {% block subtitle %}
   {{ user.display_name }}
 {% endblock %}
 
 {% block page_heading %}
   {{ super.super() }}
-  {% if g.is_registry %}
+  {% if is_registry %}
     {% if g.userobj and g.userobj.sysadmin %}
       {% if h.is_user_locked(user_name=user['name']) %}
         &nbsp;<span class="text-warning"><span title="{{ _('Unlock account') }}" aria-label="{{ _('Unlock account') }}" tabindex="0" role="button" class="fa fa-lock canada-security-unlock" data-user="{{ user['name'] }}" data-error="{{ _('Unable to unlock user account.') }}"></span></span>
@@ -34,7 +36,7 @@
 {%- endblock -%}
 
 {% block scripts %}
-  {% if g.is_registry %}
+  {% if is_registry %}
     {% asset 'canada_internal/user_lock' %}
   {% endif %}
   {{ super() }}
