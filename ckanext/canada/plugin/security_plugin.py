@@ -3,7 +3,6 @@ from ckan.types import Context, Validator
 from ckan.common import CKANConfig
 
 import ckan.plugins as p
-from ckan.plugins.core import plugin_loaded
 from ckan.config.middleware.flask_app import csrf
 
 from ckanext.datatablesview.blueprint import datatablesview

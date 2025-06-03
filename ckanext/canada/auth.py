@@ -1,9 +1,7 @@
-from typing import Optional
-from ckan.types import Context, AuthFunction, DataDict, AuthResult
+from ckan.types import Context, DataDict, AuthResult
 
-from ckan.plugins.toolkit import chained_auth_function, config
+from ckan.plugins.toolkit import config
 from ckan.authz import has_user_permission_for_group_or_org
-from ckan.plugins import plugin_loaded
 
 
 def _is_reporting_user(context: Context):
