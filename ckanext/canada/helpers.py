@@ -59,9 +59,12 @@ RELEASE_DATE_FACET_STEP = 100
 
 
 def is_registry_domain() -> bool:
+    """
+    This helper should only be used inside the request context.
+    """
     uri_parts = urlsplit(request.url)
     subdomain = uri_parts.netloc.split('.')[0]
-    return 'registry' in subdomain
+    return 'registry' in subdomain or 'registre' in subdomain
 
 
 def get_translated_t(data_dict: Dict[str, Any],

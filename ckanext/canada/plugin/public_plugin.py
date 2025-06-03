@@ -183,9 +183,6 @@ class CanadaPublicPlugin(p.SingletonPlugin, DefaultTranslation):
     def get_auth_functions(self) -> Dict[str, Union[AuthFunction,
                                                     ChainedAuthFunction]]:
         return {
-            'datastore_create': auth.datastore_create,
-            'datastore_delete': auth.datastore_delete,
-            'datastore_upsert': auth.datastore_upsert,
             'view_org_members': auth.view_org_members,
             'registry_jobs_running': auth.registry_jobs_running,
             'recently_changed_packages_activity_list':

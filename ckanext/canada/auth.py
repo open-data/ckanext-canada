@@ -12,34 +12,6 @@ def _is_reporting_user(context: Context):
     return context.get('user') == config.get('ckanext.canada.reporting_user')
 
 
-# block datastore-modifying APIs on the portal
-@chained_auth_function
-def datastore_create(up_func: AuthFunction, context: Context,
-                     data_dict: Optional[DataDict]) -> AuthResult:
-    if not plugin_loaded('canada_internal'):
-        return {'success': False}
-    # type_ignore_reason: incomplete typing
-    return up_func(context, data_dict)  # type: ignore
-
-
-@chained_auth_function
-def datastore_delete(up_func: AuthFunction, context: Context,
-                     data_dict: Optional[DataDict]) -> AuthResult:
-    if not plugin_loaded('canada_internal'):
-        return {'success': False}
-    # type_ignore_reason: incomplete typing
-    return up_func(context, data_dict)  # type: ignore
-
-
-@chained_auth_function
-def datastore_upsert(up_func: AuthFunction, context: Context,
-                     data_dict: Optional[DataDict]) -> AuthResult:
-    if not plugin_loaded('canada_internal'):
-        return {'success': False}
-    # type_ignore_reason: incomplete typing
-    return up_func(context, data_dict)  # type: ignore
-
-
 def view_org_members(context: Context, data_dict: DataDict) -> AuthResult:
     user = context.get('user')
     can_view = has_user_permission_for_group_or_org(
@@ -82,8 +54,7 @@ def portal_sync_info(context: Context, data_dict: DataDict) -> AuthResult:
 
     Anyone on public Portal can access.
     """
-    if plugin_loaded('canada_internal'):
-        return {'success': bool(context.get('user'))}
+    # TODO: remove during PortalUpdater removal/rework
     return {'success': True}
 
 
