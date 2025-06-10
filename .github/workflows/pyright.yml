@@ -41,6 +41,7 @@ jobs:
             pip install -e 'git+https://github.com/ckan/ckantoolkit.git#egg=ckantoolkit' -r 'https://raw.githubusercontent.com/ckan/ckantoolkit/master/requirements.txt'
             pip install -e 'git+https://github.com/open-data/frictionless-py.git@canada-v2.10#egg=frictionless' -r 'https://raw.githubusercontent.com/open-data/frictionless-py/canada-v2.10/requirements.txt'
             pip install -e 'git+https://github.com/open-data/ckanext-security.git@canada-v2.10#egg=ckanext-security' -r 'https://raw.githubusercontent.com/open-data/ckanext-security/canada-v2.10/requirements.txt'
+            pip install --upgrade setuptools
             find /home/runner/work/app -name '*.pyc' -delete
       - name: Install node deps
         if: steps.pydepends.outcome == 'success'
