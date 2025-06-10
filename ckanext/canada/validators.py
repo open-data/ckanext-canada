@@ -651,5 +651,5 @@ def limit_resources_per_dataset(key: FlattenKey,
               'data to limit the number of resources. Please contact '
               '{support} if you need further assistance.').format(
                   max_resource_count=max_resource_count,
-                  support=config.get('ckanext.canada.support_email_address'))]
+                  support=h.support_email_address())]
         raise StopOnError
