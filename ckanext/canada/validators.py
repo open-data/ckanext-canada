@@ -234,7 +234,7 @@ def canada_maintainer_email_default(key: FlattenKey,
                                     errors: FlattenErrorDict,
                                     context: Context):
     """
-    Set to ckanext.canada.support_email_address
+    Set to ckanext.canada.default_open_email_address
     if not given and no contact form given.
 
     This is an output validator.
@@ -242,7 +242,7 @@ def canada_maintainer_email_default(key: FlattenKey,
     em = data[key]
     cf = data.get(('maintainer_contact_form',), '')
     if (not em or em is missing) and (not cf or cf is missing or cf == '{}'):
-        data[key] = h.support_email_address()
+        data[key] = config['ckanext.canada.default_open_email_address']
 
 
 def canada_sort_prop_status(key: FlattenKey,
@@ -651,5 +651,5 @@ def limit_resources_per_dataset(key: FlattenKey,
               'data to limit the number of resources. Please contact '
               '{support} if you need further assistance.').format(
                   max_resource_count=max_resource_count,
-                  support=config.get('ckanext.canada.support_email_address'))]
+                  support=h.support_email_address())]
         raise StopOnError
