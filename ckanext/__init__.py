@@ -1,6 +1,7 @@
 # this is a namespace package
 try:
     import pkg_resources
+    # pyright: reportAttributeAccessIssue=false
     pkg_resources.declare_namespace(__name__)
 except ImportError:
     import pkgutil
