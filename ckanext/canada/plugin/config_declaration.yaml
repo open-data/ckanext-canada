@@ -7,12 +7,15 @@ groups:
         description: |
             List of domains to allow as DataStore resources. These
             will pass through the Validation and XLoader plugins.
-        validators: ignore_missing
         required: false
         type: list
       - key: ckanext.canada.support_email_address
-        default: open-ouvert@tbs-sct.gc.ca
+        default: PortalSupport-Soutienportail@tbs-sct.gc.ca
         description: |
             Email address of Open Canada support desk.
-        validators: ignore_missing
+        required: false
+      - key: ckanext.canada.default_open_email_address
+        default: open-ouvert@tbs-sct.gc.ca
+        description: |
+            Generic email address for Open Canada.
         required: false
