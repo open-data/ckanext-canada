@@ -1,6 +1,6 @@
-
-scheming_version: 1
 dataset_type: dataset
+
+draft_fields_required: false
 
 before_validators: limit_resources_per_dataset
 
@@ -59,7 +59,9 @@ sidebar_show_fields:
 dataset_fields:
 
 # our id + name fields are uuids and always equal
-- preset: canada_dataset_id
+- start_form_page:
+    title: Descriptive Metadata
+  preset: canada_dataset_id
 - preset: canada_dataset_name
 
 - preset: canada_collection
@@ -68,6 +70,67 @@ dataset_fields:
     - code
     - api
     - app
+
+- preset: canada_title
+- preset: canada_owner_org
+- preset: canada_notes
+- preset: canada_keywords
+- preset: canada_digital_object_identifier
+
+- start_form_page:
+    title: Publishing Information
+  preset: canada_org_title_at_publication
+- preset: canada_org_section_name
+- preset: canada_creator
+- preset: canada_contributor
+- preset: canada_maintainer_email
+- preset: canada_maintainer_contact_form
+- preset: canada_credit
+
+- start_form_page:
+    title: Taxonomic Metadata
+  preset: canada_subject
+- preset: canada_audience
+
+- field_name: place_of_publication
+  label:
+    en: Place of Publication
+    fr: Endroit de publication
+  help_text:
+    en: "The region where the dataset was originally published. You may select or deselect multiple options (Ctrl+Click) "
+    fr: "La région où le jeu de données a été publié initialement. Vous pouvez sélectionner ou désélectionner de multiples options (Ctrl+Clic)"
+  preset: canada_geographic_region # use same multi-select controlled list
+  select_size: 10
+
+- preset: canada_spatial
+- preset: canada_geographic_region
+
+- start_form_page:
+    title: Series Metadata
+  preset: canada_data_series_name
+- preset: canada_data_series_issue_identification
+- preset: canada_program_page_url
+- preset: canada_dataset_relationship
+
+- start_form_page:
+    title: Coverage
+  preset: canada_time_period_coverage_start
+- preset: canada_time_period_coverage_end
+- preset: canada_frequency
+- preset: canada_date_published
+- preset: canada_date_modified
+- preset: canada_federated_date_modified
+- preset: canada_jurisdiction
+- preset: canada_license_id
+- preset: canada_restrictions
+
+- start_form_page:
+    title: Approval
+  preset: canada_imso_approval
+- preset: canada_ready_to_publish
+- preset: canada_portal_release_date
+
+
 
 # FGP fields (hidden from form)
 - field_name: metadata_contact
@@ -100,14 +163,6 @@ dataset_fields:
     fr: Identifiant court
   form_snippet: null
   validators: scheming_required string_safe
-
-- preset: canada_title
-- preset: canada_owner_org
-- preset: canada_org_title_at_publication
-- preset: canada_org_section_name
-- preset: canada_creator
-
-# FGP fields (hidden from form)
 - field_name: position_name
   label:
     en: Position Name
@@ -212,37 +267,6 @@ dataset_fields:
       fr: Services communication
     value: utilities_communication
 
-- preset: canada_contributor
-- preset: canada_maintainer_email
-- preset: canada_maintainer_contact_form
-- preset: canada_credit
-- preset: canada_notes
-- preset: canada_keywords
-- preset: canada_subject
-- preset: canada_audience
-
-- field_name: place_of_publication
-  label:
-    en: Place of Publication
-    fr: Endroit de publication
-  help_text:
-    en: "The region where the dataset was originally published. You may select or deselect multiple options (Ctrl+Click) "
-    fr: "La région où le jeu de données a été publié initialement. Vous pouvez sélectionner ou désélectionner de multiples options (Ctrl+Clic)"
-  preset: canada_geographic_region # use same multi-select controlled list
-  select_size: 10
-
-- preset: canada_spatial
-- preset: canada_geographic_region
-- preset: canada_time_period_coverage_start
-- preset: canada_time_period_coverage_end
-- preset: canada_frequency
-- preset: canada_date_published
-- preset: canada_date_modified
-- preset: canada_program_page_url
-- preset: canada_federated_date_modified
-- preset: canada_data_series_name
-- preset: canada_data_series_issue_identification
-- preset: canada_digital_object_identifier
 
 # FGP fields (hidden from form)
 - field_name: reference_system_information
@@ -339,13 +363,6 @@ dataset_fields:
   validators: scheming_required string_safe
 - preset: canada_spatial_representation_type
 
-
-- preset: canada_jurisdiction
-- preset: canada_license_id
-- preset: canada_restrictions
-- preset: canada_imso_approval
-- preset: canada_ready_to_publish
-- preset: canada_portal_release_date
 
 # fields hidden from the form to support loading fgp and geogratis data
 
@@ -453,7 +470,6 @@ dataset_fields:
       en: FGP viewer is supported
     value: fgp_viewer
 
-- preset: canada_dataset_relationship
 
 
 #
