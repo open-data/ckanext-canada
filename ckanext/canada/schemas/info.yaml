@@ -486,6 +486,7 @@ dataset_fields:
 # List box options are Yes and No.
 # {Selecting ‘Yes’ will set this asset as ready to publish on the Open Government Portal. Selecting ‘No’ will saved it as a ‘draft’}
 - preset: canada_ready_to_publish
+- preset: canada_visibility
 
 # Field = Date Released.
 # Available only for an Admin user.

@@ -19,7 +19,7 @@
   <ul class="nav nav-pills">
     {% if h.check_access('package_update', {'id':pkg.id }) %}
       {% block actions_content_inner %}
-        {% if g.is_registry %}
+        {% if h.is_registry_domain() %}
           {# restore the original Edit button replaced on the public site #}
           {{ super.super() }}
         {% else %}

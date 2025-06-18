@@ -281,7 +281,7 @@ canada_views.add_url_rule(
 
 @canada_views.route('/recover-username', methods=['GET', 'POST'])
 def recover_username():
-    if not g.is_registry or not h.plugin_loaded('gcnotify'):
+    if not h.is_registry_domain() or not h.plugin_loaded('gcnotify'):
         # we only want this route on the Registry, and the email template
         # is monkey patched in GC Notify so we need that loaded
         return abort(404)
@@ -341,9 +341,10 @@ def recover_username():
 
 
 def canada_search(package_type: str):
-    if g.is_registry and not g.user:
+    is_registry = h.is_registry_domain()
+    if is_registry and not g.user:
         return abort(403)
-    if not g.is_registry and package_type in h.recombinant_get_types():
+    if not is_registry and package_type in h.recombinant_get_types():
         return h.redirect_to('dataset.search', package_type='dataset')
     return dataset_search(package_type)
 
@@ -801,7 +802,7 @@ def _clean_check_type_errors(post_data: Dict[str, Any],
 
 @canada_views.route('/', methods=['GET'])
 def home():
-    if not g.is_registry:
+    if not h.is_registry_domain():
         return h.redirect_to('dataset.search')
     if not g.user:
         return h.redirect_to('user.login')
@@ -816,7 +817,7 @@ def home():
 
 @canada_views.route('/links', methods=['GET'])
 def links():
-    if not g.is_registry:
+    if not h.is_registry_domain():
         return h.redirect_to('dataset.search')
     return render('home/quick_links.html',
                   extra_vars={'is_sysadmin': is_sysadmin(g.user)})
@@ -857,6 +858,7 @@ def ckanadmin_publish_datasets():
     for package_id in publish_packages:
         lc.action.package_patch(
             id=package_id,
+            private=False,
             portal_release_date=publish_date,
         )
 
@@ -889,7 +891,7 @@ def ckanadmin_job_queue():
 
 @canada_views.route('/help', methods=['GET'])
 def view_help():
-    if not g.is_registry:
+    if not h.is_registry_domain():
         return abort(404)
     return render('help.html', extra_vars={})
 
@@ -1381,41 +1383,3 @@ def ckan_admin_config():
     404 this page always.
     """
     return abort(404)
-
-
-@canada_views.route('/ckan-admin/portal-sync', methods=['GET'])
-def ckan_admin_portal_sync():
-    """
-    Lists any packages that are out of date with the Portal.
-    """
-    try:
-        check_access('list_out_of_sync_packages', {'user': g.user})
-    except NotAuthorized:
-        return abort(403)
-
-    page_number = h.get_page_number(request.args) or 1
-    limit = 25
-    start = limit * (page_number - 1)
-    extra_vars = {}
-
-    out_of_sync_packages = get_action('list_out_of_sync_packages')(
-        {'user': g.user}, {'limit': limit, 'start': start})
-    extra_vars['out_of_sync_packages'] = out_of_sync_packages
-
-    def _basic_pager_uri(page: Union[int, str], text: str):
-        return h.url_for('canada.ckan_admin_portal_sync', page=page)
-    pager_url = partial(_basic_pager_uri, page=page_number, text='')
-
-    extra_vars['page'] = Page(
-        collection=out_of_sync_packages['results'],
-        page=page_number,
-        url=pager_url,
-        item_count=out_of_sync_packages.get('count', 0),
-        items_per_page=limit
-    )
-    extra_vars['page'].items = out_of_sync_packages['results']
-
-    # TODO: remove in CKAN 2.11??
-    setattr(g, 'page', extra_vars['page'])
-
-    return render('admin/portal_sync.html', extra_vars=extra_vars)

@@ -10,6 +10,10 @@ from ckanext.recombinant.cli import _create_triggers
 from ckan.cli.db import _run_migrations
 
 
+def mock_is_registry_domain() -> bool:
+    return True
+
+
 class CanadaTestBase(object):
     @classmethod
     def setup_method(self, method):

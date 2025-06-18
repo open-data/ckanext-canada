@@ -2,7 +2,7 @@
 <script>
   document.write(
     wet.builder.refFooter({
-      {% if g.is_registry %}
+      {% if h.is_registry_domain() %}
         "isApplication": true,
       {% else %}
         "isApplication": false,

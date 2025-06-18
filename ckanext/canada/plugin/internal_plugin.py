@@ -14,7 +14,6 @@ from typing import Dict, Union, Any
 from ckan.common import CKANConfig
 
 import ckan.plugins as p
-from ckan import model
 from ckan.plugins.toolkit import ValidationError, ObjectNotFound
 
 from ckanext.datastore.backend import postgres as db
@@ -34,7 +33,6 @@ class CanadaInternalPlugin(p.SingletonPlugin):
     """
     p.implements(p.IConfigurable)
     p.implements(p.IConfigurer)
-    p.implements(p.IPackageController, inherit=True)
     p.implements(p.IActions)
     p.implements(IXloader, inherit=True)
     p.implements(p.IAuthFunctions)
@@ -54,6 +52,7 @@ class CanadaInternalPlugin(p.SingletonPlugin):
         assert 'ckanext.validation:presets.json' in scheming_presets
 
         # Include private datasets in Feeds
+        # TODO: figure this out....
         config['ckan.feeds.include_private'] = True
 
     # IConfigurable
@@ -84,20 +83,6 @@ class CanadaInternalPlugin(p.SingletonPlugin):
         # register custom frictionless plugin
         system.register('canada-validation', CanadaValidationPlugin())
 
-    # IPackageController
-    def create(self, pkg: 'model.Package'):
-        """
-        All datasets on registry should now be marked private
-        """
-        pkg.private = True
-
-    # IPackageController
-    def edit(self, pkg: 'model.Package'):
-        """
-        All datasets on registry should now be marked private
-        """
-        pkg.private = True
-
     # IActions
     def get_actions(self) -> Dict[str, Union[Action, ChainedAction]]:
         return dict(
@@ -112,8 +97,7 @@ class CanadaInternalPlugin(p.SingletonPlugin):
             resource_view_update=logic.resource_view_update_bilingual,
             resource_view_create=logic.resource_view_create_bilingual,
             datastore_run_triggers=logic.canada_datastore_run_triggers,
-            portal_sync_info=logic.portal_sync_info,
-            list_out_of_sync_packages=logic.list_out_of_sync_packages,
+            user_update=logic.canada_user_update,
         )
 
     # IAuthFunctions
@@ -124,8 +108,6 @@ class CanadaInternalPlugin(p.SingletonPlugin):
             'group_show': auth.group_show,
             'organization_list': auth.organization_list,
             'organization_show': auth.organization_show,
-            'portal_sync_info': auth.portal_sync_info,
-            'list_out_of_sync_packages': auth.list_out_of_sync_packages,
         }
 
     # IXloader
