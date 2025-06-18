@@ -1,5 +1,7 @@
 {% ckan_extends %}
 
+{% set is_registry = h.is_registry_domain() %}
+
 {% block resources %}
   <section class="panel panel-default resources-side-section">
     {% block resources_inner %}
@@ -23,7 +25,7 @@
               {% set is_active = 'active' if active == resource.id else '' %}
               <li id="{{ collapse_id }}" class="nav-item justify-content-between position-relative {{ is_active }} {{ collapse_class }}">
                 <a class="resources-side-section-item-link" tabindex="{{ -1 if is_active else 0 }}" href="{{ 'javascript:void(0);' if is_active else url }}" title="{{ h.resource_display_name(resource) }}">{{ h.resource_display_name(resource)|truncate(45) }}</a>
-                {% if g.is_registry and can_edit and not is_activity_archive %}
+                {% if is_registry and can_edit and not is_activity_archive %}
                   {% set validation_badge = h.get_validation_badge(resource)|safe %}
                   <div class="dropdown position-absolute end-0 me-2">
                     <button class="btn btn-light btn-sm dropdown-toggle" type="button" id="dropdownRes{{ loop.index }}" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa fa-wrench" aria-hidden="true"></i></button>
