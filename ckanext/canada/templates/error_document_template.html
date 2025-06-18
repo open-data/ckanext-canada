@@ -35,7 +35,7 @@
             </p>
           {% endif %}
         {% elif code == 500 %}
-          <p class="mrgn-tp-lg">{{ _('We encountered an error and are unable to serve your request. Please try again in short time or contact <a href="mailto:open-ouvert@tbs-sct.gc.ca">open-ouvert@tbs-sct.gc.ca</a> if you need immediate assistance or if this issue persists. Note that your login expires after 1 hour of inactivity.') | safe }}</p>
+          <p class="mrgn-tp-lg">{{ _('We encountered an error and are unable to serve your request. Please try again in short time or contact <a href="mailto:{support}">{support}</a> if you need immediate assistance or if this issue persists. Note that your login expires after 1 hour of inactivity.').format(support=h.support_email_address()) | safe }}</p>
         {% endif %}
       </div>
     </div>

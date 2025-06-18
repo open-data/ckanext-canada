@@ -14,7 +14,7 @@
       <span class="label label-info" style="padding-top: 4px; padding-bottom: 4px;">{{ _('Draft') }}</span>
     {% endif %}
     {% if machine_translated %}
-      <i class="fa fa-language text-muted mrgn-lft-sm" title="{{ _('This third party metadata element has been translated using an automated translation tool.  To report any discrepancies please contact open-ouvert@tbs-sct.gc.ca') }}"></i>
+      <i class="fa fa-language text-muted mrgn-lft-sm" title="{{ _('This third party metadata element has been translated using an automated translation tool.  To report any discrepancies please contact {support}').format(support=h.support_email_address()) }}"></i>
     {% endif %}
   </h1>
 {% endblock %}
@@ -36,7 +36,7 @@
                   <p>{{ _("You can only add up to {max_resource_count} resources to a dataset. "
                           "You can segment your resources across multiple datasets or merge your "
                           "data to limit the number of resources. Please contact "
-                          "open-ouvert@tbs-sct.gc.ca if you need further assistance.").format(max_resource_count=max_resource_count) }}</p>
+                          "{support} if you need further assistance.").format(max_resource_count=max_resource_count, support=h.support_email_address()) }}</p>
                 </section>
               </div>
             </div>
@@ -106,7 +106,7 @@
         <div id="resource-desc">
           {% set notes, machine_translated = h.get_translated_t(pkg_dict, 'notes') %}
           {% if machine_translated %}
-            <i class="fa fa-language text-muted mrgn-bttm-md" style="float: right" title="{{ _('This third party metadata element has been translated using an automated translation tool.  To report any discrepancies please contact open-ouvert@tbs-sct.gc.ca') }}"></i>
+            <i class="fa fa-language text-muted mrgn-bttm-md" style="float: right" title="{{ _('This third party metadata element has been translated using an automated translation tool.  To report any discrepancies please contact {support}').format(support=h.support_email_address()) }}"></i>
           {% endif %}
           {{ h.render_markdown(notes) }}
         </div>

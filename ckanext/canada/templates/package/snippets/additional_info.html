@@ -35,6 +35,11 @@
           <td>{{ _('Maintainer') }}</td>
           <td>{{ pkg_dict.maintainer }}</td>
         </tr>
+      {% else %}
+        <tr>
+          <td>{{ _('Maintainer') }}</td>
+          <td>{{ h.mail_to(email_address=h.default_open_email_address(), name=h.default_open_email_address()) }}</td>
+        </tr>
       {% endif %}
       {% if pkg_dict.version %}
         <tr>

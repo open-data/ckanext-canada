@@ -14,7 +14,7 @@
     <a class="heading resource-heading" href="{{ url }}" title="{{ translated_title or res.description }}">
       {{ translated_title }}<span class="format-label" property="dc:format" data-format="{{ res.format.lower() or 'data' }}">{{ h.get_translated(res, 'format') }}</span>
       {%- if machine_translated -%}
-        <i class="fa fa-language text-muted" style="margin-left: 10px;" title="{{ _('This third party metadata element has been translated using an automated translation tool.  To report any discrepancies please contact open-ouvert@tbs-sct.gc.ca') }}"></i>
+        <i class="fa fa-language text-muted" style="margin-left: 10px;" title="{{ _('This third party metadata element has been translated using an automated translation tool. To report any discrepancies please contact {support}').format(support=h.support_email_address()) }}"></i>
       {%- endif -%}
       {% if 'tracking_summary' in res %}
         {{ h.popular('views', res.tracking_summary.total, min=10) }}
