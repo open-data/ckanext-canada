@@ -841,8 +841,6 @@ def ckanadmin_publish_datasets():
     if not is_sysadmin(g.user):
         abort(403, _('Not authorized to see this page'))
 
-    # TODO: rework this!!!
-
     lc = LocalCKAN(username=g.user)
     data = clean_dict(unflatten(tuplize_dict(parse_params(request.form))))
 
@@ -860,6 +858,7 @@ def ckanadmin_publish_datasets():
     for package_id in publish_packages:
         lc.action.package_patch(
             id=package_id,
+            private=False,
             portal_release_date=publish_date,
         )
 

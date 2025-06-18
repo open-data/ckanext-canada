@@ -55,7 +55,6 @@ dataset_fields:
 # our id + name fields are uuids and always equal
 - preset: canada_dataset_id
 - preset: canada_dataset_name
-- preset: canada_visibility
 
 - preset: canada_collection
   form_restrict_choices_to:
@@ -487,6 +486,7 @@ dataset_fields:
 # List box options are Yes and No.
 # {Selecting ‘Yes’ will set this asset as ready to publish on the Open Government Portal. Selecting ‘No’ will saved it as a ‘draft’}
 - preset: canada_ready_to_publish
+- preset: canada_visibility
 
 # Field = Date Released.
 # Available only for an Admin user.

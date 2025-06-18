@@ -31,6 +31,7 @@ def upgrade():
         return
     op.drop_table("package_sync")
     print('package_sync database table deleted')
+    # TODO: set private=False where ready_to_publish=true and imso_approval=true and portal_release_date!=null
     pass
 
 

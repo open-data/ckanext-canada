@@ -14,7 +14,6 @@ from typing import Dict, Union, Any
 from ckan.common import CKANConfig
 
 import ckan.plugins as p
-from ckan import model
 from ckan.plugins.toolkit import ValidationError, ObjectNotFound
 
 from ckanext.datastore.backend import postgres as db
@@ -98,6 +97,7 @@ class CanadaInternalPlugin(p.SingletonPlugin):
             resource_view_update=logic.resource_view_update_bilingual,
             resource_view_create=logic.resource_view_create_bilingual,
             datastore_run_triggers=logic.canada_datastore_run_triggers,
+            user_update=logic.canada_user_update,
         )
 
     # IAuthFunctions

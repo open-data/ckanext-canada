@@ -7,6 +7,7 @@ from ckanext.activity.model import Activity, activity
 from ckan.logic.schema import (
     default_create_resource_view_schema_filtered,
     default_update_resource_view_schema_changes,
+    default_update_user_schema
 )
 from contextlib import contextmanager
 
@@ -641,4 +642,27 @@ def canada_datastore_search(up_func: Action,
             raise ValidationError(_('Invalid request. Full text search is '
                                     'not supported for data with '
                                     'more than {} rows.').format(max_rows_for_fts))
+    return up_func(context, data_dict)
+
+
+@chained_action
+def canada_user_update(up_func: Action,
+                       context: Context,
+                       data_dict: DataDict) -> ChainedAction:
+    """
+    Add new fields to the User schema.
+    """
+    one_of_validator = get_validator('one_of')
+    default_validator = get_validator('default')
+    ignore_missing_validator = get_validator('ignore_missing')
+    ignore_not_sysadmin_validator = get_validator('ignore_not_sysadmin')
+    # TODO: gotta save it under plugin_extras...try to schema it??
+    if 'schema' not in context:
+        context['schema'] = default_update_user_schema()
+    context['schema']['default_dataset_visibility'] = [
+        ignore_missing_validator,
+        ignore_not_sysadmin_validator,
+        default_validator('private'),
+        one_of_validator(['private', 'public'])
+    ]
     return up_func(context, data_dict)

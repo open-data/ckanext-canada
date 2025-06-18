@@ -9,7 +9,7 @@ from flask.typing import BeforeRequestCallable
 from ckan.types import Context, Response, Any
 
 import ckan.plugins as p
-from ckan.plugins.toolkit import g, h, request
+from ckan.plugins.toolkit import g, h, request, ObjectNotFound, asbool
 
 from ckanext.datastore.interfaces import IDataDictionaryForm
 from ckanext.scheming.plugins import SchemingDatasetsPlugin
@@ -202,7 +202,27 @@ class CanadaDatasetsPlugin(SchemingDatasetsPlugin):
                 search_params['fq'] = search_params['fq'].replace(
                     release_date_query, release_date_query.replace('"', ''))
 
+        # FIXME: figure out the static SOLR query params for Portal...
+        if has_request_context() and not h.is_registry_domain():
+            # NOTE: wilcards must come last...
+            search_params['fq'] += '+imso_approval:"true", +state:"active" '\
+                '+dataset_type:(info OR dataset OR prop), +portal_release_date:*'
+
         return search_params
+
+    # IPackageController
+    def after_dataset_show(self, context: Context, pkg_dict: Dict[str, Any]):
+        if has_request_context() and not h.is_registry_domain():
+            if(
+              pkg_dict.get('type') not in ['info', 'dataset', 'prop'] or
+              not asbool(pkg_dict.get('imso_approval')) or
+              not asbool(pkg_dict.get('ready_to_publish')) or
+              not pkg_dict.get('portal_release_date') or
+              asbool(pkg_dict.get('private')) or
+              pkg_dict.get('state') != 'active'
+            ):
+                raise ObjectNotFound()
+        return
 
     # IPackageController
     def after_dataset_search(self, search_results: Dict[str, Any],

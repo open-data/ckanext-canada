@@ -14,7 +14,7 @@ presets:
 
 - preset_name: canada_visibility
   values:
-    validators: ignore_missing ignore_not_sysadmin default(Flase) boolean_validator
+    validators: ignore_missing ignore_not_sysadmin default(true) boolean_validator
     field_name: private
     form_snippet: null
     display_snippet: null

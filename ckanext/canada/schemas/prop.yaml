@@ -31,7 +31,6 @@ dataset_fields:
 # our id + name fields are uuids and always equal
 - preset: canada_dataset_id
 - preset: canada_dataset_name
-- preset: canada_visibility
 
 - preset: canada_title
   form_snippet: ro_fluent_title.html
@@ -213,6 +212,8 @@ dataset_fields:
         en: The comments provided by the data holder related to the suggestions. For example, whether or not the dataset can be published, if there are reasons why it should be exempted or not published (i.e. licence issues, security or privacy concerns)
         fr: Les commentaires fournis par le détenteur des données concernant les propositions. Par exemple, si le jeu de données peut être publié ou non, s'il existe des raisons pour lesquelles il devrait être exempté ou non publié (c'est-à-dire problèmes de licence ou préoccupations liées à la sécurité ou à la protection des renseignements personnels).
     preset: fluent_markdown
+
+- preset: canada_visibility
 
 after_validators: canada_sort_prop_status
 

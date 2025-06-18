@@ -61,7 +61,6 @@ dataset_fields:
 # our id + name fields are uuids and always equal
 - preset: canada_dataset_id
 - preset: canada_dataset_name
-- preset: canada_visibility
 
 - preset: canada_collection
   form_restrict_choices_to:
@@ -347,6 +346,7 @@ dataset_fields:
 - preset: canada_imso_approval
 - preset: canada_ready_to_publish
 - preset: canada_portal_release_date
+- preset: canada_visibility
 
 # fields hidden from the form to support loading fgp and geogratis data
 
