@@ -61,6 +61,7 @@ dataset_fields:
 # our id + name fields are uuids and always equal
 - preset: canada_dataset_id
 - preset: canada_dataset_name
+- preset: canada_visibility
 
 - preset: canada_collection
   form_restrict_choices_to:

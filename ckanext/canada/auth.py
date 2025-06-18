@@ -1,6 +1,6 @@
 from ckan.types import Context, DataDict, AuthResult
 
-from ckan.plugins.toolkit import config
+from ckan.plugins.toolkit import config, h
 from ckan.authz import has_user_permission_for_group_or_org
 
 
@@ -10,6 +10,15 @@ def _is_reporting_user(context: Context):
     return context.get('user') == config.get('ckanext.canada.reporting_user')
 
 
+def _registry_org_perms(context: Context, data_dict: DataDict) -> AuthResult:
+    try:
+        if h.is_registry_domain():
+            return {'success': bool(context.get('user'))}
+    except RuntimeError:
+        pass
+    return {'success': True}
+
+
 def view_org_members(context: Context, data_dict: DataDict) -> AuthResult:
     user = context.get('user')
     can_view = has_user_permission_for_group_or_org(
@@ -17,24 +26,20 @@ def view_org_members(context: Context, data_dict: DataDict) -> AuthResult:
     return {'success': can_view}
 
 
-def registry_jobs_running(context: Context, data_dict: DataDict) -> AuthResult:
-    return {'success': _is_reporting_user(context)}
-
-
 def group_list(context: Context, data_dict: DataDict) -> AuthResult:
-    return {'success': bool(context.get('user'))}
+    return _registry_org_perms(context, data_dict)
 
 
 def group_show(context: Context, data_dict: DataDict) -> AuthResult:
-    return {'success': bool(context.get('user'))}
+    return _registry_org_perms(context, data_dict)
 
 
 def organization_list(context: Context, data_dict: DataDict) -> AuthResult:
-    return {'success': bool(context.get('user'))}
+    return _registry_org_perms(context, data_dict)
 
 
 def organization_show(context: Context, data_dict: DataDict) -> AuthResult:
-    return {'success': bool(context.get('user'))}
+    return _registry_org_perms(context, data_dict)
 
 
 def recently_changed_packages_activity_list(
@@ -44,21 +49,3 @@ def recently_changed_packages_activity_list(
     Legacy, anyone can view.
     """
     return {'success': True}
-
-
-def portal_sync_info(context: Context, data_dict: DataDict) -> AuthResult:
-    """
-    Registry users have to be logged in.
-
-    Anyone on public Portal can access.
-    """
-    # TODO: remove during PortalUpdater removal/rework
-    return {'success': True}
-
-
-def list_out_of_sync_packages(context: Context,
-                              data_dict: DataDict) -> AuthResult:
-    """
-    Only sysadmins can list the out of sync packages.
-    """
-    return {'success': False}

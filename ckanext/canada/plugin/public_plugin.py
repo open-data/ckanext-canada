@@ -175,7 +175,6 @@ class CanadaPublicPlugin(p.SingletonPlugin, DefaultTranslation):
             'resource_view_show': logic.canada_resource_view_show,
             'resource_view_list': logic.canada_resource_view_list,
             'job_list': logic.canada_job_list,
-            'registry_jobs_running': logic.registry_jobs_running,
             'datastore_search': logic.canada_datastore_search,
         }
 
@@ -184,7 +183,6 @@ class CanadaPublicPlugin(p.SingletonPlugin, DefaultTranslation):
                                                     ChainedAuthFunction]]:
         return {
             'view_org_members': auth.view_org_members,
-            'registry_jobs_running': auth.registry_jobs_running,
             'recently_changed_packages_activity_list':
                 auth.recently_changed_packages_activity_list,
         }

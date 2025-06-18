@@ -31,6 +31,7 @@ dataset_fields:
 # our id + name fields are uuids and always equal
 - preset: canada_dataset_id
 - preset: canada_dataset_name
+- preset: canada_visibility
 
 - preset: canada_title
   form_snippet: ro_fluent_title.html

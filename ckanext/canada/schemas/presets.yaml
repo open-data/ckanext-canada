@@ -12,6 +12,13 @@ detail_show_fields:
 
 presets:
 
+- preset_name: canada_visibility
+  values:
+    validators: ignore_missing ignore_not_sysadmin default(Flase) boolean_validator
+    field_name: private
+    form_snippet: null
+    display_snippet: null
+
 # We generate IDs here because we use that ID as our name field as well
 # and it needs to exist for "if_empty_same_as(id)" below to work
 - preset_name: canada_dataset_id

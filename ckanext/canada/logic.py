@@ -10,11 +10,6 @@ from ckan.logic.schema import (
 )
 from contextlib import contextmanager
 
-from redis import ConnectionPool, Redis
-from rq import Queue
-
-from datetime import datetime, timedelta
-
 from ckan.plugins.toolkit import (
     get_or_bust,
     ValidationError,
@@ -28,7 +23,6 @@ from ckan.plugins.toolkit import (
     get_action,
     h,
     asbool,
-    check_access,
     get_validator,
 )
 from ckan.authz import is_sysadmin
@@ -45,7 +39,6 @@ from ckanext.scheming.helpers import scheming_get_preset
 
 from ckanext.datastore.backend import DatastoreBackend
 from ckanext.datastore.logic.schema import datastore_search_schema
-from ckanext.canada import model as canada_model
 
 from rq.job import Job
 from rq.exceptions import NoSuchJobError
@@ -602,45 +595,6 @@ def canada_job_list(up_func: Action, context: Context,
     return job_list
 
 
-@side_effect_free
-def registry_jobs_running(context: Context, data_dict: DataDict) -> bool:
-    """
-    Returns false if the first job in the default
-    queue has not run in the last 18 minutes.
-
-    #TODO: rework this when the Registry moves to public network.
-    """
-    registry_redis_url = config.get('ckanext.canada.registry_jobs.url')
-    registry_redis_prefix = config.get('ckanext.canada.registry_jobs.prefix')
-
-    if not registry_redis_url or not registry_redis_prefix:
-        return False
-
-    check_access('registry_jobs_running', context, data_dict)
-
-    _connection_pool = ConnectionPool.from_url(registry_redis_url)
-    redis_conn = Redis(connection_pool=_connection_pool)
-
-    fullname = 'ckan:{}:default'.format(registry_redis_prefix)
-
-    queue = Queue(fullname, connection=redis_conn)
-
-    if not queue:
-        return False
-
-    jobs = queue.jobs
-
-    if jobs:
-        first_job = jobs[0]
-        first_created_at = first_job.created_at.strftime('%Y-%m-%dT%H:%M:%S')
-        if (
-          datetime.strptime(first_created_at, '%Y-%m-%dT%H:%M:%S') <
-          (datetime.now() - timedelta(minutes=18))):
-            return False
-
-    return True
-
-
 @chained_action
 def canada_datastore_run_triggers(up_func: Action,
                                   context: Context,
@@ -654,76 +608,6 @@ def canada_datastore_run_triggers(up_func: Action,
         context['connection'] = backend._get_write_engine().connect()  # type: ignore
     with datastore_create_temp_user_table(context, drop_on_commit=False):
         return up_func(context, data_dict)
-
-
-@side_effect_free
-def portal_sync_info(context: Context, data_dict: DataDict) -> Dict[str, Any]:
-    """
-    Returns PackageSync object for a given package_id if it exists.
-    """
-    package_id = get_or_bust(data_dict, 'id')
-
-    check_access('portal_sync_info', context, data_dict)
-
-    sync_info = canada_model.PackageSync.get(package_id=package_id)
-
-    if not sync_info:
-        raise ObjectNotFound(
-            _('No Portal Sync information found for package %s') % package_id)
-
-    # NOTE: never show sync_info.error as it
-    # contains stack traces and system information
-    return {
-        'package_id': sync_info.package_id,
-        'last_run': sync_info.last_run,
-        'last_successful_sync': sync_info.last_successful_sync,
-        'error_on': sync_info.error_on,
-    }
-
-
-@side_effect_free
-def list_out_of_sync_packages(context: Context, data_dict: DataDict) -> Dict[str, Any]:
-    """
-    Returns a list of out of sync packages on the Portal.
-
-    Based on PackageSync model.
-    """
-    check_access('list_out_of_sync_packages', context, data_dict)
-
-    sync_infos_count = model.Session.query(
-        canada_model.PackageSync.package_id).filter(
-            # noqa_reason: just how sqlalchemy works
-            canada_model.PackageSync.error_on != None).count()  # noqa: E711
-
-    out_of_sync_packages = {'count': sync_infos_count, 'results': []}
-
-    if not sync_infos_count:
-        return out_of_sync_packages
-
-    limit = data_dict.get('limit', 25)
-    offset = data_dict.get('start', 0)
-    sync_infos = model.Session.query(
-        canada_model.PackageSync).filter(
-            # noqa_reason: just how sqlalchemy works
-            canada_model.PackageSync.error_on != None).limit(  # noqa: E711
-                limit).offset(offset)
-
-    for sync_info in sync_infos:
-        try:
-            pkg_dict = get_action('package_show')(
-                cast(Context, {'user': context.get('user')}),
-                {'id': sync_info.package_id})
-        except (ObjectNotFound, NotAuthorized):
-            continue
-        # NOTE: never show sync_info.error as it
-        # contains stack traces and system information
-        out_of_sync_packages['results'].append(
-            {'pkg_dict': pkg_dict,
-             'last_successful_sync': sync_info.last_successful_sync,
-             'error_on': sync_info.error_on,
-             'last_run': sync_info.last_run})
-
-    return out_of_sync_packages
 
 
 @chained_action
