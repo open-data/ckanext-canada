@@ -11,6 +11,7 @@
           <ul class="list-unstyled nav nav-simple">
             {# TODO: upstream contrib "loop.index > 8" !!! #}
             {% set ns = namespace(aria_controls='') %}
+            {% set can_edit_pkg = h.check_access('package_update', {'id': pkg.id }) %}
             {% for resource in resources %}
               {% set collapse_class = '' %}
               {% set collapse_id = '' %}
@@ -30,7 +31,7 @@
                     <ul class="dropdown-menu" aria-labelledby="dropdownRes{{ loop.index }}">
                       <li>{% link_for _('Edit resource'), named_route=pkg.type ~ '_resource.edit', id=pkg.name, resource_id=resource.id, class_='dropdown-item', icon='pencil' %}</li>
                       {% block resources_list_edit_dropdown_inner scoped %}{% endblock %}
-                      {% if h.is_resource_supported_by_xloader(resource) %}
+                      {% if h.is_resource_supported_by_xloader(resource) and can_edit_pkg %}
                         <li>{% link_for _('DataStore'), named_route='xloader.resource_data', id=pkg.name, resource_id=resource.id, class_='dropdown-item', icon='cloud-upload' %}</li>
                         <li>{% link_for _('Data Dictionary'), named_route='datastore.dictionary', id=pkg.name, resource_id=resource.id, class_='dropdown-item', icon='code' %}</li>
                       {% endif %}

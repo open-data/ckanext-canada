@@ -2,7 +2,7 @@
 
 {% set url_action = 'resource.edit' if url_is_edit and can_edit else 'resource.read' %}
 {% set url = h.url_for('dataset_' + url_action, id=pkg.name, resource_id=res.id) %}
-{% if g.is_registry and 'is_resource_supported_by_xloader' in h %}
+{% if g.is_registry and 'is_resource_supported_by_xloader' in h and h.check_access('package_update', {'id': pkg.id }) %}
   {% set is_xloader_supported = h.is_resource_supported_by_xloader(res) %}
   {% set xloader_info = h.xloader_status(res.id) %}
 {% endif %}
