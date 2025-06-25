@@ -143,6 +143,22 @@ class TestAti(CanadaTestBase):
         err = ve.value.error_dict['records'][0]
         assert 'month' in err
 
+    def test_negative_pages(self):
+        with pytest.raises(ValidationError) as ve:
+            self.lc.action.datastore_upsert(
+                resource_id=self.resource_id,
+                records=[{
+                    'pages':'-1',
+                    'month':'13',
+                    'year': '2029',
+                    'request_number': 'AA-2020-00516',
+                    'disposition': 'DP',
+                    'summary_en': 'summary',
+                    'summary_fr': 'summary french',
+                }]
+            )
+        err = ve.value.error_dict['records'][0]
+        assert 'pages' in err
 
 
 class TestAtiNil(CanadaTestBase):
