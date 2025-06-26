@@ -14,7 +14,7 @@
     {% call form.input("email", id="field-email", label=_("Email"), type="email", value=data.email, error=errors.email, attrs=valid_dict2, is_required=true, classes=["control-medium"]) %}
       {{ form.info(_('Example: joe.bloggs@tbs-sct.gc.ca')) }}
     {% endcall %}
-    {% set format_attrs={ 'oninvalid': "setCustomValidity('"+_("Please fill out this field.")+"')", 'onchange':"setCustomValidity('')", 'data-module': 'autocomplete', 'data-module-source': '/organization/autocomplete?q=?', 'data-module-key': 'title', 'data-module-label': 'title', 'data-module-dropdownClass': 'org-select2-dropdown', 'data-module-containerClass': 'org-select2-container', 'data-module-tags': 'false', 'data-module-createtags': 'false', 'class':'control-medium'} %}
+    {% set format_attrs={ 'oninvalid': "setCustomValidity('"+_("Please fill out this field.")+"')", 'onchange':"setCustomValidity('')", 'data-module': 'autocomplete', 'data-module-source': h.lang()~ '/organization/autocomplete?q=?', 'data-module-key': 'title', 'data-module-label': 'title', 'data-module-dropdownClass': 'org-select2-dropdown', 'data-module-containerClass': 'org-select2-container', 'data-module-tags': 'false', 'data-module-createtags': 'false', 'class':'control-medium'} %}
     {{ form.input('department', id='field-department', label=_('Organization'), value=data.department, error=errors.department, attrs=format_attrs, is_required=true, placeholder=_('Search organizations...')) }}
     {% call form.input("phoneno", id="field-phoneno", label=_("Phone Number"), value=data.phoneno, error=errors.phoneno, classes=["control-medium"]) %}
       {{ form.info(_('Example: 000 000 0000')) }}
