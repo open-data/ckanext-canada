@@ -25,7 +25,7 @@
           value="{{ data.get('owner_org', '') if data else '' }}"
           placeholder="{{ _('Search organizations...') }}"
           data-module="autocomplete"
-          data-module-source="/organization/autocomplete?q=?"
+          data-module-source="{{ h.lang()}}/organization/autocomplete?q=?"
           data-module-key="id"
           data-module-label="title"
           data-module-dropdownClass="org-select2-dropdown"
