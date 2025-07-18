@@ -105,7 +105,7 @@ def download_from_source():
         position_title = clean.split(' ')
         position_code = ''
         for initial in position_title:
-            if initial not in ('and', 'the', 'is', 'of', 'with', 'for', 'in'):
+            if initial and initial not in ('and', 'the', 'is', 'of', 'with', 'for', 'in'):
                 position_code += initial[0].upper()
 
         # resolve duplicate position codes
@@ -141,7 +141,7 @@ def get_ministries_list():
         positions = minister.find_all('div', class_='')
         for position in positions:
             minister_positions.append(position.text)
-        minister_positions = filter(None, minister_positions)
+        minister_positions = filter(lambda x: x and x != ".", minister_positions)
         current_positions = get_parliamentary_position_roles(
             'https://www.ourcommons.ca' + minister_url + '/roles/xml',
             minister_positions)
