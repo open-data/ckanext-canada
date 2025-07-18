@@ -13,6 +13,10 @@ from ckan.plugins.toolkit import g, h, request
 
 from ckanext.datastore.interfaces import IDataDictionaryForm
 from ckanext.scheming.plugins import SchemingDatasetsPlugin
+from ckanext.scheming.views import (
+    SchemingEditPageView,
+    SchemingCreatePageView,
+)
 from ckanext.canada.helpers import RELEASE_DATE_FACET_STEP
 from ckanext.canada.view import (
     CanadaDatasetEditView,
@@ -115,6 +119,16 @@ class CanadaDatasetsPlugin(SchemingDatasetsPlugin):
             view_func=canada_search,
             methods=['GET'],
             strict_slashes=False
+        )
+        blueprint.add_url_rule(
+            '/new/<id>/<page>',
+            'scheming_new_page',
+            SchemingCreatePageView.as_view('new_page'),
+        )
+        blueprint.add_url_rule(
+            '/edit/<id>/<page>',
+            'scheming_edit_page',
+            SchemingEditPageView.as_view('edit_page'),
         )
         # redirect PD endpoints accessed from /dataset/<pd pkg id>
         blueprint.before_request(cast(BeforeRequestCallable,
