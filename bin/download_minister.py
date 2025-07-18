@@ -104,8 +104,9 @@ def download_from_source():
         clean = re.sub(r'[^\w\s]', '', p['title_en'])  # remove any punctuations
         position_title = clean.split(' ')
         position_code = ''
+        ignore_words = ('and', 'the', 'is', 'of', 'with', 'for', 'in')
         for initial in position_title:
-            if initial and initial not in ('and', 'the', 'is', 'of', 'with', 'for', 'in'):
+            if initial and initial not in ignore_words:
                 position_code += initial[0].upper()
 
         # resolve duplicate position codes
