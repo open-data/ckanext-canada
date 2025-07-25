@@ -2006,8 +2006,12 @@ resources:
     excel_required: false
     format_type: Decimal
     validation:
-      en: This value must not be negative.
-      fr: Cette valeur ne doit être négative.
+      en: |
+        This value must not be negative.
+        Volume Meeting Target can not exceed Total Volume.
+      fr: |
+        Cette valeur ne doit être négative.
+        Les volumes atteignant la cible ne peuvent pas dépasser le volume total.
     occurrence: Single
     datastore_type: bigint
     excel_error_formula: 'OR({default_formula},NOT(ISNUMBER({cell})),{cell}<0)'
@@ -2035,7 +2039,7 @@ resources:
       fr: Cette valeur ne doit être négative.
     occurrence: Single
     datastore_type: bigint
-    excel_error_formula: 'OR({default_formula},NOT(ISNUMBER({cell})),{cell}<0)'
+    excel_error_formula: 'OR({default_formula},NOT(ISNUMBER({cell})),{cell}<0,{volume_meeting_target}>{cell})'
 
   # DEP 2-15
   # Dev: Published Resource Field
@@ -2350,6 +2354,10 @@ resources:
             errors := errors || ARRAY[['total_volume', {negative_number_error}]];
         END IF;
 
+        IF NEW.volume_meeting_target > NEW.total_volume THEN
+            errors := errors || ARRAY[['volume_meeting_target', {volume_error}]];
+        END IF;
+
         NEW.comments_en := trim_lead_trailing(NEW.comments_en);
         errors := errors || max_char_error(NEW.comments_en, 2000, 'comments_en');
 
@@ -2393,6 +2401,7 @@ resources:
     both_lang_error: This text must be provided in both languages
     service_id_comma_error: Comma is not allowed in Service ID Number field
     service_standard_id_comma_error: Comma is not allowed in Service Standard ID field
+    volume_error: Volume Meeting Target can not exceed Total Volume.
 
   examples:
     record:
