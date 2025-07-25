@@ -2039,7 +2039,7 @@ resources:
       fr: Cette valeur ne doit être négative.
     occurrence: Single
     datastore_type: bigint
-    excel_error_formula: 'OR({default_formula},NOT(ISNUMBER({cell})),{cell}<0)'
+    excel_error_formula: 'OR({default_formula},NOT(ISNUMBER({cell})),{cell}<0,OFFSET({cell},-1,0)>{cell})'
 
   # DEP 2-15
   # Dev: Published Resource Field
