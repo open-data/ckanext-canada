@@ -29,12 +29,14 @@ with open(sys.argv[1], 'r', encoding='utf-8-sig') as infile:
     assert CSV_UNTIL in c.fieldnames, c.fieldnames
 
     for rec in c:
-        p = prog_ids.setdefault(rec['Program ID'], {'valid_orgs': []})
+        p = prog_ids.setdefault(rec['Program ID'], {'valid_orgs': {}})
 
         if rec[CSV_ORGS] in p['valid_orgs']:
             sys.stderr.write(f'SKIPPING duplicate: {rec}\n')
             continue
-        p['valid_orgs'].append(rec[CSV_ORGS])
+        p['valid_orgs'][rec[CSV_ORGS]] = {
+            'until_fiscal_end': int(rec[CSV_UNTIL])
+        }
 
         rec[CSV_EN] = rec[CSV_EN].replace('\N{NO-BREAK SPACE}', ' ').strip()
         if p.get('en') not in (None, rec[CSV_EN]):
@@ -49,15 +51,6 @@ with open(sys.argv[1], 'r', encoding='utf-8-sig') as infile:
         if 'fr' not in p or len(rec[CSV_FR]) < len(p['fr']):
             # assume shorter is more generic
             p['fr'] = rec[CSV_FR]
-
-        rec[CSV_UNTIL] = int(rec[CSV_UNTIL])
-        if p.get('valid_until_fiscal_end') not in (None, rec[CSV_UNTIL]):
-            sys.stderr.write(
-                f'unmatched valid until {rec} / {p["valid_until_fiscal_end"]}\n'
-            )
-        if rec[CSV_UNTIL] > p.get('valid_until_fiscal_end', 0):
-            # assume later year is better
-            p['valid_until_fiscal_end'] = rec[CSV_UNTIL]
 
 with open(OUTPUT_FILE, 'w', encoding='utf-8') as outfile:
     yaml.dump(
