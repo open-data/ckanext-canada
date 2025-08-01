@@ -21,30 +21,6 @@ resources:
   fields:
 
   # DEP 1-1
-  - datastore_id: ref_number
-    label:
-      en: Reference Number
-      fr: Numéro de référence
-    description:
-      en: The unique number assigned to a service using AI to make it easier to refer to specific services.
-      fr: Le numéro unique attribué à un service à l'aide de l'IA pour faciliter le référencement à des services précis.
-    obligation: Mandatory
-    excel_required: true
-    form_required: true
-    format_type: Free text
-    visible_to_public: Yes
-    occurrence: Single
-    datastore_type: text
-    excel_error_formula: 'OR({default_formula},LEN({cell})-LEN(SUBSTITUTE({cell},",",""))>0)'
-    validation:
-      en: |
-        This field must not be empty.
-        This field cannot contain commas.
-      fr: |
-        Ce champ ne doit pas être vide.
-        Ce champ ne peut pas contenir de virgules.
-
-  # DEP 1-2
   - datastore_id: reporting_period
     label:
       en: Reporting Period
@@ -88,7 +64,7 @@ resources:
         en: 2027-Q2
         fr: 2027-T2
 
-  # DEP 1-3
+  # DEP 1-2
   - datastore_id: priority_area
     label:
       en: Priority Area
@@ -120,7 +96,7 @@ resources:
         en: Engagement, Transparency, and Value to Canadians
         fr: Engagement, transparence et valeur pour les Canadiens
 
-  # DEP 1-4
+  # DEP 1-3
   - datastore_id: key_action
     label:
       en: Key Action
@@ -181,7 +157,7 @@ resources:
         en: Commit to engagement on AI
         fr: Prendre des engagements de mobilisation sur l’IA
 
-  # DEP 1-5
+  # DEP 1-4
   - datastore_id: sub_action
     label:
       en: Strategic sub-action
@@ -308,7 +284,7 @@ resources:
         en: Provide mechanisms for ongoing public feedback and questions on AI used by the federal government
         fr: Mettre en place des mécanismes permettant au public de formuler des commentaires et des questions sur l'IA utilisée par le gouvernement fédéral
 
-  # DEP 1-6
+  # DEP 1-5
   - datastore_id: activity
     label:
       en: Activity
@@ -507,7 +483,7 @@ resources:
         en: Provide mechanisms for ongoing public feedback and questions on AI used by the federal government
         fr: Fournir des mécanismes facilitant la rétroaction continue et les questions du public sur l’IA utilisée par le gouvernement fédéral
 
-  # DEP 1-7
+  # DEP 1-6
   - datastore_id: description_en
     label:
       en: Description (English)
@@ -531,7 +507,7 @@ resources:
       style: "width: 100%; display: block"
       maxlength: 1000
 
-  # DEP 1-8
+  # DEP 1-7
   - datastore_id: description_fr
     label:
       en: Description (French)
@@ -555,7 +531,7 @@ resources:
       style: "width: 100%; display: block"
       maxlength: 1000
 
-  # DEP 1-9
+  # DEP 1-8
   - datastore_id: expected_completion
     label:
       en: Expected Completion
@@ -599,7 +575,7 @@ resources:
         en: 2027-Q2
         fr: 2027-T2
 
-  # DEP 1-10
+  # DEP 1-9
   - datastore_id: lead_department
     label:
       en: Lead Department(s)
@@ -653,7 +629,7 @@ resources:
         en: National Research Council
         fr: Conseil national de recherches Canada
 
-  # DEP 1-11
+  # DEP 1-10
   - datastore_id: status
     label:
       en: Status
@@ -682,7 +658,7 @@ resources:
         en: Completed
         fr: Réalisé
 
-  # DEP 1-12
+  # DEP 1-11
   - datastore_id: progress_en
     label:
       en: Progress Made (English)
@@ -704,7 +680,7 @@ resources:
     form_attrs:
       maxlength: 1000
 
-  # DEP 1-13
+  # DEP 1-12
   - datastore_id: progress_fr
     label:
       en: Progress Made (French)
@@ -750,10 +726,10 @@ resources:
     datastore_type: text
     preview_class: bg-info
 
-  datastore_primary_key: [ref_number, reporting_period]
+  datastore_primary_key: [reporting_period, activity]
   datastore_indexes: ""
 
-  default_preview_sort: ref_number, reporting_period desc, priority_area
+  default_preview_sort: reporting_period desc, activity
 
   cascading_select_fields: true
 
@@ -786,7 +762,7 @@ resources:
         errors := errors || required_error(NEW.activity, 'activity');
         errors := errors || choice_error(NEW.activity,
           array(SELECT unnest from unnest({activity}) where left(unnest, length(NEW.sub_action)) = NEW.sub_action),
-          'activity')
+          'activity');
 
         NEW.description_en := trim_lead_trailing(NEW.description_en);
         errors := errors || max_char_error(NEW.description_en, 1000, 'description_en');
