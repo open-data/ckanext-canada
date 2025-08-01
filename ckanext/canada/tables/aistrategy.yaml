@@ -61,7 +61,7 @@ resources:
       en: Must match expected completion options in the controlled list.
       fr: Doit correspondre aux options d'achèvement prévues de la liste contrôlée.
     occurrence: Single
-    excel_full_text_choices: true
+    excel_full_text_choices: false
     choices:
       2025-Q3:
         en: 2025-Q3
@@ -138,6 +138,11 @@ resources:
       fr: Doit correspondre à des déclarations d'action prédéfinies.
     occurrence: Single
     excel_full_text_choices: true
+    # choices based on priority_area value
+    excel_choice_range_formula: 'offset({range_top},countif({range},"<"&trim(left({priority_area},find(":",{priority_area}&":")-1))),0,countif({range},trim(left({priority_area},find(":",{priority_area}&":")-1))&"*"),1)'
+    excel_error_formula: 'trim(left({priority_area},find(":",{priority_area}&":")-1))<>trim(left({cell},find(":",{priority_area}&":")-1))'
+    form_attrs:
+      cascading_select_field: priority_area
     choices:
       A.1:
         en: Establish an AI Centre of Expertise for the Government of Canada
@@ -194,6 +199,11 @@ resources:
       fr: Doit correspondre à l'une des sous-actions définies dans la stratégie IA.
     occurrence: Single
     excel_full_text_choices: true
+    # choices based on key_action value
+    excel_choice_range_formula: 'offset({range_top},countif({range},"<"&trim(left({key_action},find(":",{key_action}&":")-1))),0,countif({range},trim(left({key_action},find(":",{key_action}&":")-1))&"*"),1)'
+    excel_error_formula: 'trim(left({key_action},find(":",{key_action}&":")-1))<>trim(left({cell},find(":",{key_action}&":")-1))'
+    form_attrs:
+      cascading_select_field: key_action
     choices:
       A.1.1:
         en: Establish an AI Centre of Expertise for the Government of Canada
@@ -316,6 +326,11 @@ resources:
       fr: Doit correspondre à des activités prédéfinies.
     occurrence: Single
     excel_full_text_choices: true
+    # choices based on sub_action value
+    excel_choice_range_formula: 'offset({range_top},countif({range},"<"&trim(left({sub_action},find(":",{sub_action}&":")-1))),0,countif({range},trim(left({sub_action},find(":",{sub_action}&":")-1))&"*"),1)'
+    excel_error_formula: 'trim(left({sub_action},find(":",{sub_action}&":")-1))<>trim(left({cell},find(":",{sub_action}&":")-1))'
+    form_attrs:
+      cascading_select_field: sub_action
     choices:
       A.1.1.1:
         en: Develop operating and business models, organizational and governance structures, key performance indicators, and ways to prioritize the use of the AI centre's resources
@@ -653,7 +668,7 @@ resources:
     datastore_type: text
     validation:
       en: "Must be one of: Not Started, In Progress, Completed."
-      fr: "Il doit s'agir de l'un des éléments suivants : Non commencé, En cours, Terminé.""
+      fr: "Il doit s'agir de l'un des éléments suivants : Non commencé, En cours, Terminé."
     occurrence: Single
     excel_full_text_choices: true
     choices:
@@ -759,13 +774,19 @@ resources:
         errors := errors || choice_error(NEW.priority_area, {priority_area}, 'priority_area');
 
         errors := errors || required_error(NEW.key_action, 'key_action');
-        errors := errors || choice_error(NEW.key_action, {key_action}, 'key_action');
+        errors := errors || choice_error(NEW.key_action,
+          array(SELECT unnest from unnest({key_action}) where left(unnest, length(NEW.priority_area)) = NEW.priority_area),
+          'key_action');
 
         errors := errors || required_error(NEW.sub_action, 'sub_action');
-        errors := errors || choice_error(NEW.sub_action, {sub_action}, 'sub_action');
+        errors := errors || choice_error(NEW.sub_action,
+          array(SELECT unnest from unnest({sub_action}) where left(unnest, length(NEW.key_action)) = NEW.key_action),
+          'sub_action');
 
         errors := errors || required_error(NEW.activity, 'activity');
-        errors := errors || choice_error(NEW.activity, {activity}, 'activity');
+        errors := errors || choice_error(NEW.activity,
+          array(SELECT unnest from unnest({activity}) where left(unnest, length(NEW.sub_action)) = NEW.sub_action),
+          'activity')
 
         NEW.description_en := trim_lead_trailing(NEW.description_en);
         errors := errors || max_char_error(NEW.description_en, 1000, 'description_en');
@@ -811,7 +832,7 @@ resources:
       progress_en: "AI Strategy is being implemented using various new initiatives. The initiatives are divided into four components. The four components of this initiative as further been broken down into various activities, sub-activities, status trackability, descriptions, and progress made. Progress made is being tracked using: In Progress, Not Started, or Completed."
       progress_fr: "La stratégie en matière d'IA est mise en œuvre à l'aide de diverses nouvelles initiatives. Ces initiatives sont divisées en quatre volets. Les quatre volets de cette initiative ont été subdivisés en diverses activités, sous-activités, suivi de l'état d'avancement, descriptions et progrès réalisés. Les progrès réalisés sont suivis à l'aide des statuts suivants : En cours, Non commencé ou Terminé."
     filters:
-      activity: "1.3.1"
+      activity: "A.1.1.3"
     filter_one:
       reporting_period: "2025-Q3"
       sub_action: "A.1.1"
