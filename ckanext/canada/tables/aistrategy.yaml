@@ -21,6 +21,30 @@ resources:
   fields:
 
   # DEP 1-1
+  - datastore_id: ref_number
+    label:
+      en: Reference Number
+      fr: Numéro de référence
+    description:
+      en: The unique number assigned to a service using AI to make it easier to refer to specific services.
+      fr: Le numéro unique attribué à un service à l'aide de l'IA pour faciliter le référencement à des services précis.
+    obligation: Mandatory
+    excel_required: true
+    form_required: true
+    format_type: Free text
+    visible_to_public: Yes
+    occurrence: Single
+    datastore_type: text
+    excel_error_formula: 'OR({default_formula},LEN({cell})-LEN(SUBSTITUTE({cell},",",""))>0)'
+    validation:
+      en: |
+        This field must not be empty.
+        This field cannot contain commas.
+      fr: |
+        Ce champ ne doit pas être vide.
+        Ce champ ne peut pas contenir de virgules.
+
+  # DEP 1-2
   - datastore_id: reporting_period
     label:
       en: Reporting Period
@@ -64,7 +88,7 @@ resources:
         en: 2027-Q2
         fr: 2027-T2
 
-  # DEP 1-2
+  # DEP 1-3
   - datastore_id: priority_area
     label:
       en: Priority Area
@@ -82,6 +106,8 @@ resources:
       fr: Doit correspondre à l'une des valeurs de la liste contrôlée.
     occurrence: Single
     excel_full_text_choices: true
+    form_choices_prefix_code: true
+    excel_column_width: 25
     choice_order_expression: 'value.get("order", False), code'
     choices:
       A:
@@ -101,7 +127,7 @@ resources:
         fr: Engagement, transparence et valeur pour les Canadiens
         order: 4
 
-  # DEP 1-3
+  # DEP 1-4
   - datastore_id: key_action
     label:
       en: Key Action
@@ -119,9 +145,11 @@ resources:
       fr: Doit correspondre à des déclarations d'action prédéfinies.
     occurrence: Single
     excel_full_text_choices: true
+    form_choices_prefix_code: true
     # choices based on priority_area value
     excel_choice_range_formula: 'offset({range_top},countif({range},"<"&trim(left({priority_area},find(":",{priority_area}&":")-1))),0,countif({range},trim(left({priority_area},find(":",{priority_area}&":")-1))&"*"),1)'
     excel_error_formula: 'trim(left({priority_area},find(":",{priority_area}&":")-1))<>trim(left({cell},find(":",{priority_area}&":")-1))'
+    excel_column_width: 50
     form_attrs:
       cascading_select_field: priority_area
     choices:
@@ -162,7 +190,7 @@ resources:
         en: Commit to engagement on AI
         fr: Prendre des engagements de mobilisation sur l’IA
 
-  # DEP 1-4
+  # DEP 1-5
   - datastore_id: sub_action
     label:
       en: Strategic sub-action
@@ -180,9 +208,11 @@ resources:
       fr: Doit correspondre à l'une des sous-actions définies dans la stratégie IA.
     occurrence: Single
     excel_full_text_choices: true
+    form_choices_prefix_code: true
     # choices based on key_action value
     excel_choice_range_formula: 'offset({range_top},countif({range},"<"&trim(left({key_action},find(":",{key_action}&":")-1))),0,countif({range},trim(left({key_action},find(":",{key_action}&":")-1))&"*"),1)'
     excel_error_formula: 'trim(left({key_action},find(":",{key_action}&":")-1))<>trim(left({cell},find(":",{key_action}&":")-1))'
+    excel_column_width: 50
     form_attrs:
       cascading_select_field: key_action
     choices:
@@ -289,7 +319,7 @@ resources:
         en: Provide mechanisms for ongoing public feedback and questions on AI used by the federal government
         fr: Mettre en place des mécanismes permettant au public de formuler des commentaires et des questions sur l'IA utilisée par le gouvernement fédéral
 
-  # DEP 1-5
+  # DEP 1-6
   - datastore_id: activity
     label:
       en: Activity
@@ -307,9 +337,11 @@ resources:
       fr: Doit correspondre à des activités prédéfinies.
     occurrence: Single
     excel_full_text_choices: true
+    form_choices_prefix_code: true
     # choices based on sub_action value
     excel_choice_range_formula: 'offset({range_top},countif({range},"<"&trim(left({sub_action},find(":",{sub_action}&":")-1))),0,countif({range},trim(left({sub_action},find(":",{sub_action}&":")-1))&"*"),1)'
     excel_error_formula: 'trim(left({sub_action},find(":",{sub_action}&":")-1))<>trim(left({cell},find(":",{sub_action}&":")-1))'
+    excel_column_width: 50
     form_attrs:
       cascading_select_field: sub_action
     choices:
@@ -488,7 +520,7 @@ resources:
         en: Provide mechanisms for ongoing public feedback and questions on AI used by the federal government
         fr: Fournir des mécanismes facilitant la rétroaction continue et les questions du public sur l’IA utilisée par le gouvernement fédéral
 
-  # DEP 1-6
+  # DEP 1-7
   - datastore_id: description_en
     label:
       en: Description (English)
@@ -512,7 +544,7 @@ resources:
       style: "width: 100%; display: block"
       maxlength: 1000
 
-  # DEP 1-7
+  # DEP 1-8
   - datastore_id: description_fr
     label:
       en: Description (French)
@@ -536,7 +568,7 @@ resources:
       style: "width: 100%; display: block"
       maxlength: 1000
 
-  # DEP 1-8
+  # DEP 1-9
   - datastore_id: expected_completion
     label:
       en: Expected Completion
@@ -553,7 +585,7 @@ resources:
       en: Must match expected completion options in the controlled list.
       fr: Doit correspondre aux options d'achèvement prévues de la liste contrôlée.
     occurrence: Single
-    excel_full_text_choices: true
+    excel_full_text_choices: false
     choices:
       2025-Q3:
         en: 2025-Q3
@@ -580,7 +612,7 @@ resources:
         en: 2027-Q2
         fr: 2027-T2
 
-  # DEP 1-9
+  # DEP 1-10
   - datastore_id: lead_department
     label:
       en: Lead Department(s)
@@ -634,7 +666,7 @@ resources:
         en: National Research Council
         fr: Conseil national de recherches Canada
 
-  # DEP 1-10
+  # DEP 1-11
   - datastore_id: status
     label:
       en: Status
@@ -663,7 +695,7 @@ resources:
         en: Completed
         fr: Réalisé
 
-  # DEP 1-11
+  # DEP 1-12
   - datastore_id: progress_en
     label:
       en: Progress Made (English)
@@ -685,7 +717,7 @@ resources:
     form_attrs:
       maxlength: 1000
 
-  # DEP 1-12
+  # DEP 1-13
   - datastore_id: progress_fr
     label:
       en: Progress Made (French)
@@ -731,10 +763,10 @@ resources:
     datastore_type: text
     preview_class: bg-info
 
-  datastore_primary_key: [reporting_period, activity]
+  datastore_primary_key: [ref_number]
   datastore_indexes: ""
 
-  default_preview_sort: reporting_period desc, activity
+  default_preview_sort: ref_number, reporting_period desc, activity
 
   cascading_select_fields: true
 
@@ -746,6 +778,8 @@ resources:
         errors text[][] := '{{}}';
         crval RECORD;
       BEGIN
+        errors := errors || required_error(NEW.ref_number, 'ref_number');
+
         errors := errors || required_error(NEW.reporting_period, 'reporting_period');
         errors := errors || choice_error(NEW.reporting_period, {reporting_period}, 'reporting_period');
 
@@ -797,6 +831,7 @@ resources:
 
   examples:
     record:
+      ref_number: "TBS-001"
       reporting_period: "2025-Q3"
       priority_area: "A"
       key_action: "A.1"
