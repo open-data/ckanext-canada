@@ -811,7 +811,9 @@ resources:
         errors := errors || choice_error(NEW.expected_completion, {expected_completion}, 'expected_completion');
 
         errors := errors || required_error(NEW.lead_department, 'lead_department');
-        errors := errors || choice_error(NEW.lead_department, {lead_department}, 'lead_department');
+        crval := choices_clean_error(NEW.lead_department, {lead_department}, 'lead_department');
+        errors := errors || crval.error;
+        NEW.lead_department := crval.clean;
 
         errors := errors || required_error(NEW.status, 'status');
         errors := errors || choice_error(NEW.status, {status}, 'status');
@@ -840,7 +842,7 @@ resources:
       description_en: "Provide high-performance computing (HPC) and cloud infrastructure that is available, secure, and scalable to meet the demands of AI projects."
       description_fr: "Fournir une infrastructure de calcul haute performance (CHP) et d'informatique en nuage disponible, sécurisée et évolutive pour répondre aux exigences des projets d'IA."
       expected_completion: "2027-Q1"
-      lead_department: TBS,PSPC
+      lead_department: [TBS, PSPC]
       status: IP
       progress_en: "AI Strategy is being implemented using various new initiatives. The initiatives are divided into four components. The four components of this initiative as further been broken down into various activities, sub-activities, status trackability, descriptions, and progress made. Progress made is being tracked using: In Progress, Not Started, or Completed."
       progress_fr: "La stratégie en matière d'IA est mise en œuvre à l'aide de diverses nouvelles initiatives. Ces initiatives sont divisées en quatre volets. Les quatre volets de cette initiative ont été subdivisés en diverses activités, sous-activités, suivi de l'état d'avancement, descriptions et progrès réalisés. Les progrès réalisés sont suivis à l'aide des statuts suivants : En cours, Non commencé ou Terminé."
@@ -849,4 +851,4 @@ resources:
     filter_one:
       reporting_period: "2025-Q3"
       sub_action: "A.1.1"
-    sort: reporting_period desc, sub_action
+    sort: reporting_period desc, activity
