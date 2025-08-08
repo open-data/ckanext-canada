@@ -1761,9 +1761,9 @@ resources:
         For example, records for fiscal year 2023-2024 should include applications received
         from April 1, 2023, to March 31, 2024.
       fr: >
-        Indique l'exercice financier (1 avril au 31 mars) durant lequel les activités du service ont eu lieu.
-        Par exemple, les données pour l’exercice financier 2023-2024 devrait inclure les demandes de service qui
-        ont été reçues entre le 1 avril 2023 et le 31 mars 2024.
+        Indique l'exercice financier (1 avril au 31 mars) durant lequel les activités du service 
+        ont eu lieu. Par exemple, les données pour l’exercice financier 2023-2024 devraient inclure 
+        les demandes de service qui ont été reçues entre le 1er avril 2023 et le 31 mars 2024.
     obligation: Mandatory
     excel_required: true
     form_required: true
@@ -1818,7 +1818,7 @@ resources:
         This field has a maximum length of 350 characters.
       fr: |
         Ce champ ne doit pas être vide.
-        Ce champ ne peut excéder une longueur maximale de 350 caractères.
+        Ce champ a une longueur maximale de 350 caractères.
     format_type:
       en: Free text
       fr: Texte libre
@@ -1847,7 +1847,7 @@ resources:
         This field has a maximum length of 350 characters.
       fr: |
         Ce champ ne doit pas être vide.
-        Ce champ ne peut excéder une longueur maximale de 350 caractères.
+        Ce champ a une longueur maximale de 350 caractères.
     format_type:
       en: Free text
       fr: Texte libre
@@ -1869,9 +1869,9 @@ resources:
         service. Makes it easier for reference purposes as one service may have
         multiple standards.
       fr: >
-        Indique le numéro unique attribué à chaque norme relative aux services
-        pour ce service. Facilite le référencement, car un service peut avoir
-        de multiples normes.
+        Indique le numéro unique attribué à chaque norme de service pour ce 
+        service. Facilite le référencement, car un service peut avoir de multiples 
+        normes.
     obligation: Mandatory
     excel_required: true
     form_required: true
@@ -1900,10 +1900,9 @@ resources:
         Guideline on Service and Digital for format to be used when defining
         service standards.
       fr: >
-        Indique la norme relative aux services ayant trait à un service en
-        particulier. Voir la Ligne directrice sur les services et le numérique
-        afin de connaître le format à utiliser pour définir les normes relatives
-        aux services.
+        Indique la norme de service ayant trait à un service en particulier. 
+        Voir la Ligne directrice sur les services et le numérique afin de 
+        connaître le format à utiliser pour définir une norme de service.
     obligation: Mandatory
     excel_required: true
     excel_column_width: 60
@@ -1914,7 +1913,7 @@ resources:
         This field has a maximum length of 500 characters.
       fr: |
         Ce champ ne doit pas être vide.
-        Ce champ ne peut excéder une longueur maximale de 500 caractères.
+        Ce champ a une longueur maximale de 500 caractères.
     format_type:
       en: Free text
       fr: Texte libre
@@ -1936,9 +1935,9 @@ resources:
         Guideline on Service and Digital for format to be used when defining
         service standards.
       fr: >
-        Indique la norme relative aux services ayant trait à un service en
-        particulier. Voir la Ligne directrice sur les services et le numérique
-        afin de connaître le format à utiliser pour définir les normes relatives
+        Indique la norme de service ayant trait à un service en particulier. 
+        Voir la Ligne directrice sur les services et le numérique afin de 
+        connaître le format à utiliser pour définir les normes relatives 
         aux services.
     obligation: Mandatory
     excel_required: true
@@ -1950,7 +1949,7 @@ resources:
         This field has a maximum length of 500 characters.
       fr: |
         Ce champ ne doit pas être vide.
-        Ce champ ne peut excéder une longueur maximale de 500 caractères.
+        Ce champ a une longueur maximale de 500 caractères.
     format_type:
       en: Free text
       fr: Texte libre
@@ -1975,20 +1974,19 @@ resources:
         errors, and complete. Timeliness: a commitment stating how long the client should
         expect to wait to receive a service once the service has been accessed.
       fr: >
-        Indique le type de norme relative aux services défini dans la Ligne directrice
-        sur les services et le numérique. Accès: un engagement qui décrit la facilité
-        et la convivialité que devrait connaître le client lorsqu'il essaie d'accéder
-        à un service. Exactitude: un engagement qui stipule que le client recevra un
-        service complet et à jour qui est exempt d'erreurs. Délai: un engagement qui
-        indique le temps d'attente que devrait connaître le client pour recevoir un
-        service une fois qu'il y a accédé.
+        Indique le type de norme de service défini selon la Ligne directrice sur les 
+        services et le numérique. Accès : un engagement qui décrit la facilité et la 
+        convivialité que devrait connaître le client lorsqu'il essaie d'accéder à un 
+        service. Exactitude : un engagement qui stipule que le client recevra un 
+        service complet et à jour qui est exempt d'erreurs. Délai : un engagement 
+        qui indique le temps d'attente que devrait connaître le client pour recevoir 
+        un service une fois qu'il y a accédé.
     obligation: Mandatory
     excel_required: true
     form_required: true
     format_type:
       en: Controlled List
       fr: Liste contrôlée
-
     validation:
       en: This field must not be empty.
       fr: Ce champ ne doit pas être vide.
@@ -2016,14 +2014,13 @@ resources:
       fr: Mode de prestation de la norme de service
     description:
       en: Identifies the service channel to which the service standard applies
-      fr: Identifie à quelle mode de prestation de service la norme de service s'applique
+      fr: Indique le mode de prestation de service à laquelle s'applique la norme de service
     obligation: Mandatory
     excel_required: true
     form_required: true
     format_type:
       en: Controlled List
       fr: Liste contrôlée
-
     validation:
       en: This field must not be empty.
       fr: Ce champ ne doit pas être vide.
@@ -2069,7 +2066,7 @@ resources:
       fr: Texte libre
     validation:
       en: This field has a maximum length of 1500 characters.
-      fr: Ce champ ne peut excéder une longueur maximale de 1500 caractères.
+      fr: Ce champ a une longueur maximale de 1500 caractères.
     occurrence: Single
     datastore_type: text
     max_chars: 1500
@@ -2094,7 +2091,7 @@ resources:
       fr: Texte libre
     validation:
       en: This field has a maximum length of 1500 characters.
-      fr: Ce champ ne peut excéder une longueur maximale de 1500 caractères.
+      fr: Ce champ a une longueur maximale de 1500 caractères.
     occurrence: Single
     datastore_type: text
     max_chars: 1500
@@ -2110,13 +2107,15 @@ resources:
       fr: Cible de la norme relative aux services
     description:
       en: The frequency that the organization expects to meet service standard (reported as a percentage).
-      fr: Fréquence à laquelle l'organisation s'attend à respecter sa norme de service (exprimée en pourcentage).
+      fr: Fréquence à laquelle l'organisation s'attend à respecter la norme de service (exprimée en pourcentage).
     obligation: Optional
     excel_required: false
-    format_type: Decimal
+    format_type: 
+      en: Decimal
+      fr: Décimale
     validation:
       en: This field must be a single number between 0 and 1 representing a percentage.
-      fr: Ce champ doit inscrire un seul et unique chiffre entre 0 et 1 représentant un pourcentage.
+      fr: Ce champ doit contenir un seul chiffre entre 0 et 1 représentant un pourcentage.
     occurrence: Single
     datastore_type: numeric
     excel_error_formula: 'OR({default_formula},{cell}<0,{cell}>1)'
@@ -2133,17 +2132,19 @@ resources:
         a particular service standard target for a service. Blank indicates no information
         available, while 0 indicates that no final outputs issued met service standard targets.
       fr: >
-        Indique le nombre d'opérations de service effectuées (p. ex. les appels auxquels on a
-        répondu, les paiements émis, les demandes traitées, etc.) au cours de l'exercice qui
-        ont respecté une norme relative aux services particulière à un service. Un champ vide
-        indique qu'aucune information n'est disponible, tandis que 0 indique qu'aucun résultat
-        final n'a été émis qui a atteint les objectifs de la norme de service.
+        Indique le nombre d'opérations de service effectuées (p. ex. les paiements émis, 
+        les demandes traitées, etc.) au cours de l'exercice qui ont respecté cette norme de 
+        service. Un champ vide indique qu'aucune information n'est disponible, tandis que 0 
+        indique qu'aucun résultat final n'a été émis qui a atteint les objectifs de la norme 
+        de service.
     obligation: Optional
     excel_required: false
-    format_type: Decimal
+    format_type: 
+      en: Decimal
+      fr: Décimale
     validation:
       en: This value must not be negative.
-      fr: Cette valeur ne doit être négative.
+      fr: Cette valeur ne doit pas être négative.
     occurrence: Single
     datastore_type: bigint
     excel_error_formula: 'OR({default_formula},NOT(ISNUMBER({cell})),{cell}<0)'
@@ -2159,16 +2160,18 @@ resources:
         (eg. payments issued, requests completed, etc) during the fiscal year. Blank
         indicates no information available, while 0 indicates no final outputs issued.
       fr: >
-        Indique le nombre total d'opérations de service effectuées (p. ex. les paiements
-        émis, les demandes traitées, etc.) relativement à un service au cours de l'exercice.
-        Un champ vide indique qu'aucune information n'est disponible, tandis que 0 indique
-        qu'aucune opération n'a été effectuée.
+        Indique le nombre total d'opérations de service effectuées (p. ex. les paiements 
+        émis, les demandes traitées, etc.) au cours de l'exercice auxquelles s'appliquent 
+        cette norme de service. Un champ vide indique qu'aucune information n'est 
+        disponible, tandis que 0 indique qu'aucune opération n'a été effectuée.
     obligation: Optional
     excel_required: false
-    format_type: Decimal
+    format_type: 
+      en: Decimal
+      fr: Décimale
     validation:
       en: This value must not be negative.
-      fr: Cette valeur ne doit être négative.
+      fr: Cette valeur ne doit pas être négative.
     occurrence: Single
     datastore_type: bigint
     excel_error_formula: 'OR({default_formula},NOT(ISNUMBER({cell})),{cell}<0)'
@@ -2184,8 +2187,8 @@ resources:
         Identifies the result achieved for this service standard. This is the "Business Volume That Met Service Standard Target"
         divided by the "Total Volume".
       fr: >
-        Identifie les résultats atteints pour cette norme de service. Il s'agit du "Volume d'activités qui respectent la cible
-        de la norme relative aux services" divisé par le "Volumes totaux".
+        Indique le rendement de cette norme de service. Il s'agit du « Volume d'activités qui respectent 
+        la norme de service » divisé par le « Volumes totaux ».
     obligation: Optional
     datastore_type: numeric
     published_resource_computed_field: true
@@ -2206,7 +2209,7 @@ resources:
       fr: Texte libre
     validation:
       en: This field has a maximum length of 2000 characters.
-      fr: Ce champ ne peut excéder une longueur maximale de 2000 caractères.
+      fr: Ce champ a une longueur maximale de 2000 caractères.
     occurrence: Single
     datastore_type: text
     max_chars: 2000
@@ -2231,7 +2234,7 @@ resources:
       fr: Texte libre
     validation:
       en: This field has a maximum length of 2000 characters.
-      fr: Ce champ ne peut excéder une longueur maximale de 2000 caractères.
+      fr: Ce champ a une longueur maximale de 2000 caractères.
     occurrence: Single
     datastore_type: text
     max_chars: 2000
@@ -2271,7 +2274,7 @@ resources:
       fr: URL vers les normes relatives aux services et les cibles (anglais)
     description:
       en: Identifies the departmental webpage (Canada.ca) where the service standards and targets are published.
-      fr: Indique la page Web ministérielle (Canada.ca) où les normes relatives aux services et les cibles sont publiées.
+      fr: Indique la page Web ministérielle (Canada.ca) où les normes de service et les cibles sont publiées.
     obligation: Mandatory
     excel_required: true
     form_required: true
@@ -2284,7 +2287,7 @@ resources:
         This field has a maximum length of 1500 characters.
       fr: |
         Ce champ ne doit pas être vide.
-        Ce champ ne peut excéder une longueur maximale de 1500 caractères.
+        Ce champ a une longueur maximale de 1500 caractères.
     occurrence: Single
     datastore_type: text
     max_chars: 1500
@@ -2299,7 +2302,7 @@ resources:
       fr: URL vers les normes relatives aux services et les cibles (français)
     description:
       en: Identifies the departmental webpage (Canada.ca) where the service standards and targets are published.
-      fr: Indique la page Web ministérielle (Canada.ca) où les normes relatives aux services et les cibles sont publiées.
+      fr: Indique la page Web ministérielle (Canada.ca) où les normes de service et les cibles sont publiées.
     obligation: Mandatory
     excel_required: true
     form_required: true
@@ -2312,7 +2315,7 @@ resources:
         This field has a maximum length of 1500 characters.
       fr: |
         Ce champ ne doit pas être vide.
-        Ce champ ne peut excéder une longueur maximale de 1500 caractères.
+        Ce champ a une longueur maximale de 1500 caractères.
     occurrence: Single
     datastore_type: text
     max_chars: 1500
@@ -2327,7 +2330,7 @@ resources:
       fr: URL aux résultats de rendement en temps réel (anglais)
     description:
       en: Identifies the departmental webpage where the real-time performance results for a service are published.
-      fr: Identifie la site Web du service sur laquelle les résultats de performance en temps réel d'un service sont publiés.
+      fr: Indique la page Web (en anglais) sur laquelle les résultats de rendement en temps réel d'un service sont publiés.
     obligation: Optional
     excel_required: false
     format_type:
@@ -2335,7 +2338,7 @@ resources:
       fr: Texte libre
     validation:
       en: This field has a maximum length of 1500 characters.
-      fr: Ce champ ne peut excéder une longueur maximale de 1500 caractères.
+      fr: Ce champ a une longueur maximale de 1500 caractères.
     occurrence: Single
     datastore_type: text
     max_chars: 1500
@@ -2351,7 +2354,7 @@ resources:
       fr: URL aux résultats de rendement en temps réel (français)
     description:
       en: Identifies the departmental webpage where the real-time performance results for a service are published.
-      fr: Identifie la site Web du service sur laquelle les résultats de performance en temps réel d'un service sont publiés.
+      fr: Indique la page Web (en français) sur laquelle les résultats de rendement en temps réel d'un service sont publiés.
     obligation: Optional
     excel_required: false
     format_type:
@@ -2359,7 +2362,7 @@ resources:
       fr: Texte libre
     validation:
       en: This field has a maximum length of 1500 characters.
-      fr: Ce champ ne peut excéder une longueur maximale de 1500 caractères.
+      fr: Ce champ a une longueur maximale de 1500 caractères.
     occurrence: Single
     datastore_type: text
     max_chars: 1500
@@ -2405,7 +2408,7 @@ resources:
       fr: ID du ministère
     description:
       en: Identifies the applied ID of the department or agency.
-      fr: Identifie la ID d'usage du ministère ou de l'organisme.
+      fr: Identifie l’ID d'usage du ministère ou de l'organisme.
     obligation: Mandatory
     datastore_type: text
     published_resource_computed_field: true
