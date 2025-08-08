@@ -1,5 +1,6 @@
 # NOTE: Service Inventory Search has been deprecated. Records remain in the Registry DB. (2020-06)
 # NOTE: Service Inventory is back in action. (2024-08)
+# NOTE: Service Inventory updates (2025-08)
 dataset_type: service
 target_dataset: service
 
@@ -36,9 +37,9 @@ resources:
         For example, records for fiscal year 2023-2024 should include applications received
         from April 1, 2023, to March 31, 2024.
       fr: >
-        Indique l'exercice financier (1 avril au 31 mars) durant lequel les activités du service ont eu lieu.
-        Par exemple, les données pour l’exercice financier 2023-2024 devrait inclure les demandes de service qui
-        ont été reçues entre le 1 avril 2023 et le 31 mars 2024.
+        Indique l'exercice financier (1 avril au 31 mars) durant lequel les activités du service ont eu lieu. 
+        Par exemple, les données pour l’exercice financier 2023-2024 devraient inclure les demandes de service qui 
+        ont été reçues entre le 1er avril 2023 et le 31 mars 2024.
     obligation: Mandatory
     excel_required: true
     form_required: true
@@ -61,7 +62,9 @@ resources:
     excel_required: true
     form_required: true
     excel_error_formula: 'OR({default_formula},LEN({cell})-LEN(SUBSTITUTE({cell},",",""))>0)'
-    format_type: Free text
+    format_type:
+      en: Free text
+      fr: Texte libre
     validation:
       en: |
         This field must not be empty.
@@ -76,7 +79,7 @@ resources:
   - datastore_id: service_name_en
     label:
       en: Service Name (English)
-      fr: Nom du service (en anglais)
+      fr: Nom du service (anglais)
     description:
       en: Identifies the official name of the service.
       fr: Indique le nom officiel du service.
@@ -84,14 +87,16 @@ resources:
     excel_required: true
     excel_column_width: 40
     form_required: true
-    format_type: Free text
+    format_type:
+      en: Free text
+      fr: Texte libre
     validation:
       en: |
         This field must not be empty.
         This field has a maximum length of 350 characters.
       fr: |
         Ce champ ne doit pas être vide.
-        Ce champ ne peut excéder une longueur maximale de 350 caractères.
+        Ce champ a une longueur maximale de 350 caractères.
     occurrence: Single
     datastore_type: text
     max_chars: 350
@@ -103,7 +108,7 @@ resources:
   - datastore_id: service_name_fr
     label:
       en: Service Name (French)
-      fr: Nom du service (en français)
+      fr: Nom du service (français)
     description:
       en: Identifies the official name of the service.
       fr: Indique le nom officiel du service.
@@ -111,15 +116,16 @@ resources:
     excel_required: true
     excel_column_width: 40
     form_required: true
-    format_type: Free text
+    format_type:
+      en: Free text
+      fr: Texte libre
     validation:
       en: |
         This field must not be empty.
         This field has a maximum length of 350 characters.
       fr: |
         Ce champ ne doit pas être vide.
-        Ce champ ne peut excéder une longueur maximale de 350 caractères.
-    occurrence: Single
+        Ce champ a une longueur maximale de 350 caractères.    occurrence: Single
     datastore_type: text
     max_chars: 350
     form_attrs:
@@ -130,7 +136,7 @@ resources:
   - datastore_id: service_description_en
     label:
       en: Service Description (English)
-      fr: Description du service (en anglais)
+      fr: Description du service (anglais)
     description:
       en: Provides a brief description of the service, in plain language.
       fr: Offre une brève description du service, en langage simple.
@@ -138,14 +144,16 @@ resources:
     excel_required: true
     excel_column_width: 80
     form_required: true
-    format_type: Free text
+    format_type:
+      en: Free text
+      fr: Texte libre
     validation:
       en: |
         This field must not be empty.
         This field has a maximum length of 1800 characters.
       fr: |
         Ce champ ne doit pas être vide.
-        Ce champ ne peut excéder une longueur maximale de 1800 caractères.
+        Ce champ a une longueur maximale de 1800 caractères.
     occurrence: Single
     datastore_type: text
     max_chars: 1800
@@ -157,7 +165,7 @@ resources:
   - datastore_id: service_description_fr
     label:
       en: Service Description (French)
-      fr: Description du service (en français)
+      fr: Description du service (français)
     description:
       en: Provides a brief description of the service, in plain language.
       fr: Offre une brève description du service, en langage simple.
@@ -165,14 +173,16 @@ resources:
     excel_required: true
     excel_column_width: 80
     form_required: true
-    format_type: Free text
+    format_type:
+      en: Free text
+      fr: Texte libre
     validation:
       en: |
         This field must not be empty.
         This field has a maximum length of 1800 characters.
       fr: |
         Ce champ ne doit pas être vide.
-        Ce champ ne peut excéder une longueur maximale de 1800 caractères.
+        Ce champ a une longueur maximale de 1800 caractères.
     occurrence: Single
     datastore_type: text
     max_chars: 1800
@@ -191,7 +201,9 @@ resources:
     obligation: Mandatory
     excel_required: true
     form_required: true
-    format_type: Controlled List
+    format_type:
+      en: Controlled List
+      fr: Liste contrôlée
     validation:
       en: This field must not be empty.
       fr: Ce champ ne doit pas être vide.
@@ -243,7 +255,10 @@ resources:
     obligation: Mandatory
     excel_required: true
     form_required: true
-    format_type: Controlled List
+    format_type:
+      en: Controlled List
+      fr: Liste contrôlée
+
     validation:
       en: This field must not be empty.
       fr: Ce champ ne doit pas être vide.
@@ -253,10 +268,10 @@ resources:
     choices:
       CLIENT:
         en: Targeted, Client-based service
-        fr: Service ciblé, axé sur les clients
+        fr: Service ciblé axé sur les clients
       SOCIETY:
         en: Untargeted, Societal-based service
-        fr: Service non-ciblé, axé sur la société
+        fr: Service non-ciblé axé sur la société
 
   # DEP 1-10
   - datastore_id: service_scope
@@ -269,7 +284,9 @@ resources:
     obligation: Mandatory
     excel_required: true
     form_required: true
-    format_type: Controlled List
+    format_type:
+      en: Controlled List
+      fr: Liste contrôlée
     validation:
       en: This field must not be empty.
       fr: Ce champ ne doit pas être vide.
@@ -302,7 +319,9 @@ resources:
     obligation: Mandatory
     excel_required: true
     form_required: true
-    format_type: Controlled List
+    format_type:
+      en: Controlled List
+      fr: Liste contrôlée
     validation:
       en: This field must not be empty.
       fr: Ce champ ne doit pas être vide.
@@ -343,15 +362,20 @@ resources:
         in the department/agency who are responsible for the Policy on Results can
         assist in identifying this, if needed. Multiple values must be separated by a comma (,).
       fr: >
-        Indique le code de programme unique associé aux éléments de programme pour tous
-        les résultats stratégiques, les programmes, les sous-programmes et les sous-sous-programmes.
-        Les planificateurs ministériels du ministère ou de l'organisme responsables de la
-        Politique sur les résultats peuvent aider à déterminer le code d'identification du
-        programme, au besoin. Séparez les entrées par une virgule (,) s’il y en a plusieurs qui s’appliquent.
+        Indique le code de programme unique associé aux éléments de programme pour tous 
+        les résultats stratégiques, les programmes, les sous-programmes et les 
+        sous-sous-programmes. Les codes de programme du Plan comptable à l'échelle de 
+        l'administration fédérale peuvent être utilisés. 
+        Les planificateurs ministériels du ministère ou de l'organisme responsables de la 
+        Politique sur les résultats peuvent aider à déterminer le code d'identification 
+        du programme, au besoin. Séparez les entrées par une virgule (,) s’il y en a plusieurs 
+        qui s’appliquent.
     obligation: Mandatory
     excel_required: true
     form_required: true
-    format_type: Controlled List
+    format_type:
+      en: Controlled List
+      fr: Liste contrôlée
     validation:
       en: This field must not be empty.
       fr: Ce champ ne doit pas être vide.
@@ -369,7 +393,7 @@ resources:
   - datastore_id: program_name_en
     label:
       en: Program Name (English)
-      fr: Désignation du programme (en anglais)
+      fr: Désignation du programme (anglais)
     description:
       en: Identifies the name of the program under which the service is delivered.
       fr: Indique le nom du programme sous lequel le service est offert.
@@ -383,7 +407,7 @@ resources:
   - datastore_id: program_name_fr
     label:
       en: Program Name (French)
-      fr: Désignation du programme (en français)
+      fr: Désignation du programme (français)
     description:
       en: Identifies the name of the program under which the service is delivered.
       fr: Indique le nom du programme sous lequel le service est offert.
@@ -408,7 +432,9 @@ resources:
     obligation: Mandatory
     excel_required: true
     form_required: true
-    format_type: Controlled List
+    format_type:
+      en: Controlled List
+      fr: Liste contrôlée
     validation:
       en: This field must not be empty.
       fr: Ce champ ne doit pas être vide.
@@ -455,16 +481,28 @@ resources:
         computer science, and use techniques such as rules-based systems, regression, predictive
         analytics, machine learning, deep learning, and neural networks.
       fr: >
-        Un système décisionnel automatisé est défini dans la Directive sur la prise de décisions
-        automatisée et désigne toute technologie qui assiste ou remplace le jugement des décideurs
-        humains, comme ceux qui proviennent de domaines tels que les statistiques, la linguistique
-        et les sciences informatiques, et utilisent des techniques telles que les systèmes basés
-        sur des règles, la régression, l’analytique prédictive, l’apprentissage automatique,
-        l’apprentissage en profondeur et les réseaux neuronaux.
+        Un système décisionnel automatisé est défini dans la Directive sur la prise de décisions 
+        automatisée et désigne toute technologie qui assiste ou remplace le jugement des décideurs 
+        humains, comme ceux qui proviennent de domaines tels que les statistiques, la linguistique 
+        et les sciences informatiques, et utilisent des techniques telles que les systèmes basés 
+        sur des règles, la régression, l’analytique prédictive, l’apprentissage automatique, 
+        l’apprentissage en profondeur et les réseaux neuronaux. Pour la portée de cette question, 
+        veuillez répondre "oui" si le service utilise des systèmes décisionnel automatisé pour 
+        prendre ou aider les agents à prendre des décisions administratives, celles qui affectent 
+        les droits juridiques, les privilèges ou les intérêts des clients, qu'ils soient internes 
+        ou externes. Lorsqu'un système est un système décisionnel automatisé qui prend ou aide un 
+        agent à prendre des décisions, les exigences de la Directive doivent être respectées, 
+        et une Évaluation de l'incidence algorithmique doit être publiée. Référez-vous au Guide 
+        sur la portée de la Directive sur la prise de décisions automatisée pour en savoir plus 
+        sur la portée de la Directive sur la prise de décision automatisée. Vous pouvez également 
+        contacter les bureaux du Dirigeant principal de l'information et du Dirigeant principal 
+        des données de votre ministère pour en savoir plus sur la portée de la Directive.
     obligation: Mandatory
     excel_required: true
     form_required: true
-    format_type: Controlled List
+    format_type:
+      en: Controlled List
+      fr: Liste contrôlée
     validation:
       en: This field must not be empty.
       fr: Ce champ ne doit pas être vide.
@@ -485,22 +523,26 @@ resources:
         the role of the system in the decision, whether it is full or partial
         automation, and how officers use the system to make or inform the decision.
       fr: >
-        Décrivez ce que fait le système. Inclure : le nom ou titre du système, le
-        rôle du système dans la prise de décision, s'il s'agit d'une automatisation
-        complète ou partielle, et comment les agents utilisent le système pour
-        prendre ou informer la décision.
+        Décrivez ce que fait le système. Inclure : le nom ou titre du système, 
+        le rôle du système dans la prise de décision, s'il s'agit d'une automatisation 
+        complète ou partielle, et comment les agents utilisent le système pour prendre 
+        ou informer la décision. Indiquer si une Évaluation de l'incidence algorithmique 
+        est publiée ou non, et si ce n'est pas le cas, indiquez la raison pour laquelle 
+        elle n'est pas publiée.
     #FIXME: specify if automated_decision_system is Y/YES ??
     obligation: Optional
     excel_required: false
     excel_column_width: 80
-    format_type: Free text
+    format_type:
+      en: Free text
+      fr: Texte libre
     validation:
       en: |
         This field is required due to a response in a different field.
         This field has a maximum length of 1800 characters.
       fr: |
         Ce champ est requis en raison d'une réponse présente dans un autre champ.
-        Ce champ ne peut excéder une longueur maximale de 1800 caractères.
+        Ce champ a une longueur maximale de 1800 caractères.
     occurrence: Single
     datastore_type: text
     max_chars: 1800
@@ -520,22 +562,26 @@ resources:
         the role of the system in the decision, whether it is full or partial
         automation, and how officers use the system to make or inform the decision.
       fr: >
-        Décrivez ce que fait le système. Inclure : le nom ou titre du système, le
-        rôle du système dans la prise de décision, s'il s'agit d'une automatisation
-        complète ou partielle, et comment les agents utilisent le système pour
-        prendre ou informer la décision.
+        Décrivez ce que fait le système. Inclure : le nom ou titre du système, 
+        le rôle du système dans la prise de décision, s'il s'agit d'une automatisation 
+        complète ou partielle, et comment les agents utilisent le système pour prendre 
+        ou informer la décision. Indiquer si une Évaluation de l'incidence algorithmique 
+        est publiée ou non, et si ce n'est pas le cas, indiquez la raison pour laquelle 
+        elle n'est pas publiée.
     #FIXME: specify if automated_decision_system is Y/YES ??
     obligation: Optional
     excel_required: false
     excel_column_width: 80
-    format_type: Free text
+    format_type:
+      en: Free text
+      fr: Texte libre
     validation:
       en: |
         This field is required due to a response in a different field.
         This field has a maximum length of 1800 characters.
       fr: |
         Ce champ est requis en raison d'une réponse présente dans un autre champ.
-        Ce champ ne peut excéder une longueur maximale de 1800 caractères.
+        Ce champ a une longueur maximale de 1800 caractères.
     occurrence: Single
     datastore_type: text
     max_chars: 1800
@@ -555,7 +601,9 @@ resources:
     obligation: Mandatory
     excel_required: true
     form_required: true
-    format_type: Controlled List
+    format_type:
+      en: Controlled List
+      fr: Liste contrôlée
     validation:
       en: This field must not be empty.
       fr: Ce champ ne doit pas être vide.
@@ -582,7 +630,9 @@ resources:
     obligation: Mandatory
     excel_required: true
     form_required: true
-    format_type: Controlled List
+    format_type:
+      en: Controlled List
+      fr: Liste contrôlée
     validation:
       en: This field must not be empty.
       fr: Ce champ ne doit pas être vide.
@@ -603,7 +653,9 @@ resources:
     obligation: Mandatory
     excel_required: true
     form_required: true
-    format_type: Controlled List
+    format_type:
+      en: Controlled List
+      fr: Liste contrôlée
     validation:
       en: This field must not be empty.
       fr: Ce champ ne doit pas être vide.
@@ -624,7 +676,9 @@ resources:
     obligation: Mandatory
     excel_required: true
     form_required: true
-    format_type: Controlled List
+    format_type:
+      en: Controlled List
+      fr: Liste contrôlée
     validation:
       en: This field must not be empty.
       fr: Ce champ ne doit pas être vide.
@@ -645,7 +699,9 @@ resources:
     obligation: Mandatory
     excel_required: true
     form_required: true
-    format_type: Controlled List
+    format_type:
+      en: Controlled List
+      fr: Liste contrôlée
     validation:
       en: This field must not be empty.
       fr: Ce champ ne doit pas être vide.
@@ -666,7 +722,9 @@ resources:
     obligation: Mandatory
     excel_required: true
     form_required: true
-    format_type: Controlled List
+    format_type:
+      en: Controlled List
+      fr: Liste contrôlée
     validation:
       en: This field must not be empty.
       fr: Ce champ ne doit pas être vide.
@@ -683,11 +741,13 @@ resources:
       fr: "Services en ligne : Solution de problème et rétroaction"
     description:
       en: Identifies whether a client can seek resolution to their issues or provide feedback online.
-      fr: Indique si un client peut demander une résolution à leur problèmes avec le service ou fournir de la rétroaction en ligne.
+      fr: Indique si un client peut demander une résolution à ses problèmes avec le service ou fournir de la rétroaction en ligne.
     obligation: Mandatory
     excel_required: true
     form_required: true
-    format_type: Controlled List
+    format_type:
+      en: Controlled List
+      fr: Liste contrôlée
     validation:
       en: This field must not be empty.
       fr: Ce champ ne doit pas être vide.
@@ -707,21 +767,23 @@ resources:
         Comments related to online services - client Interaction points (English). For
         any interaction points reported as "Not Applicable", comments have to be provided.
       fr: >
-        Commentaires en lien avec les services électroniques - points d'interaction avec les
-        clients (anglais). Pour tout points d'interaction signalés comme « sans objet »,
-        des commentaires doivent être fournis.
+        Commentaires en anglais en lien avec les services en ligne - points d'interaction avec les 
+        clients. Pour tout point d'interaction signalés comme « sans objet », des commentaires 
+        doivent être fournis.
     #FIXME: specify if any "Online Service" fields are NA ??
     obligation: Optional
     excel_required: false
     excel_column_width: 80
-    format_type: Free text
+    format_type:
+      en: Free text
+      fr: Texte libre
     validation:
       en: |
         This field is required due to a response in a different field.
         This field has a maximum length of 1000 characters.
       fr: |
         Ce champ est requis en raison d'une réponse présente dans un autre champ.
-        Ce champ ne peut excéder une longueur maximale de 1000 caractères.
+        Ce champ a une longueur maximale de 1000 caractères.
     occurrence: Single
     datastore_type: text
     max_chars: 1000
@@ -740,21 +802,23 @@ resources:
         Comments related to online services - client Interaction points (French). For any
         interaction points reported as "Not Applicable", comments have to be provided.
       fr: >
-        Commentaires en lien avec les services électroniques - points d'interaction avec
-        les clients (français). Pour tout points d'interaction signalés comme « sans objet »,
-        des commentaires doivent être fournis.
+        Commentaires en français en lien avec les services en ligne - points d'interaction avec les 
+        clients (français). Pour tout point d'interaction signalés comme « sans objet », des 
+        commentaires doivent être fournis.
     #FIXME: specify if any "Online Service" fields are NA ??
     obligation: Optional
     excel_required: false
     excel_column_width: 80
-    format_type: Free text
+    format_type:
+      en: Free text
+      fr: Texte libre
     validation:
       en: |
         This field is required due to a response in a different field.
         This field has a maximum length of 1000 characters.
       fr: |
         Ce champ est requis en raison d'une réponse présente dans un autre champ.
-        Ce champ ne peut excéder une longueur maximale de 1000 caractères.
+        Ce champ a une longueur maximale de 1000 caractères.
     occurrence: Single
     datastore_type: text
     max_chars: 1000
@@ -770,7 +834,7 @@ resources:
       fr: Année du dernier examen de service
     description:
       en: Identifies the fiscal year when the most recent service review was completed.
-      fr: Identifie l’exercice lors duquel le plus récent examen de service a été mené.
+      fr: Identifie l’exercice financier lors duquel le plus récent examen de service a été mené.
     obligation: Optional
     excel_required: false
     form_required: false
@@ -786,7 +850,7 @@ resources:
       fr: Année de la dernière amélioration du service sur la base de la rétroaction du client
     description:
       en: What was the most recent year in which this service was improved based on client feedback?
-      fr: Quelle a été l'année la plus récente au cours de laquelle ce service a été amélioré en fonction des commentaires des clients?
+      fr: Identifie l'exercice financier la plus récente au cours de laquelle ce service a été amélioré en fonction des commentaires des clients.
     obligation: Optional
     excel_required: false
     form_required: false
@@ -806,7 +870,9 @@ resources:
     obligation: Mandatory
     excel_required: true
     form_required: true
-    format_type: Controlled List
+    format_type:
+      en: Controlled List
+      fr: Liste contrôlée
     validation:
       en: This field must not be empty.
       fr: Ce champ ne doit pas être vide.
@@ -836,13 +902,15 @@ resources:
         delivery of the service as the standard identifier in accordance with the Directive
         on the Business Number.
       fr: >
-        Indique si le numéro d’entreprise de l’Agence du revenu du Canada est utilisé dans
-        la prestation des services en tant qu’identificateur standard, conformément à la
-        Directive sur le numéro d’entreprise.
+        Indique si le numéro d’entreprise de l’Agence du revenu du Canada est utilisé dans 
+        la prestation des services en tant qu’identificateur standard, conformément à la 
+        Norme référentielle relative aux données sur le numéro d’entreprise.
     obligation: Mandatory
     excel_required: true
     form_required: true
-    format_type: Controlled List
+    format_type:
+      en: Controlled List
+      fr: Liste contrôlée
     validation:
       en: This field must not be empty.
       fr: Ce champ ne doit pas être vide.
@@ -875,15 +943,20 @@ resources:
         field. A value of 0 means no calls were received; ND means no data
         was collected; and NA means it is not possible to submit telephone enquiries.
       fr: >
-        Indique le nombre de demandes d'information reçues par téléphone au cours
-        d'un exercice financier. Remarque : Ce champ indique seulement le nombre
-        de demandes d'information au sujet d'un service. Servez-vous du champ
-        "telephone applications" pour les demandes de prestation de service
-        reçues par téléphone.
+        Indique le nombre de demandes d'information reçues par téléphone au cours 
+        d'un exercice financier. Remarque: Ce champ indique seulement le nombre de 
+        demandes d'information au sujet d'un service. Servez-vous du champ « Nombre 
+        de demandes soumises par téléphone » pour les demandes de prestation de service 
+        reçues par téléphone. La valeur 0 signifie qu'aucun appel n'a été reçu, ND 
+        signifie qu'aucune donnée n'est disponible, et NA signifie qu'il n'est pas 
+        possible de présenter des demandes d’information par téléphone. Remarque : 
+        Ce champ n'est pas inclus dans « Nombre total de demandes ».
     obligation: Mandatory
     excel_required: true
     form_required: true
-    format_type: Free text
+    format_type:
+      en: Free text
+      fr: Texte libre
     validation:
       en: |
         This field must not be empty.
@@ -891,8 +964,8 @@ resources:
         This value must not be negative.
       fr: |
         Ce champ ne doit pas être vide.
-        Ce champ doit être un chiffre, "NA", ou "ND"
-        Cette valeur ne doit être négative.
+        Ce champ doit contenir soit un chiffre, soit « NA », soit « ND ».
+        Cette valeur ne doit pas être négative.
     occurrence: Single
     datastore_type: text
     excel_error_formula: 'OR({default_formula},IFERROR(VALUE({cell})<0,AND({cell}<>"NA",{cell}<>"ND")))'
@@ -909,14 +982,17 @@ resources:
         this channel; ND means there is no data collected for this channel; and
         NA means no applications can be submitted through this channel.
       fr: >
-        Indique le nombre de demandes reçues par téléphone au cours d'un exercice.
-        La valeur 0 signifie qu'aucune demande n'a été reçue via ce mode de prestation,
-        aucune donnée (ND) signifie qu'aucune donnée n’est disponible, et sans objet (NA)
-        signifie que le service n’est pas offert au moyen de ce mode de prestation.
+        Indique le nombre de demandes de prestation de service reçues par téléphone 
+        au cours d'un exercice. La valeur 0 signifie qu'aucune demande n'a été reçue 
+        via ce mode de prestation, aucune donnée (ND) signifie qu'aucune donnée n’est 
+        disponible, et sans objet (NA) signifie que le service n’est pas offert 
+        au moyen de ce mode de prestation.
     obligation: Mandatory
     excel_required: true
     form_required: true
-    format_type: Free text
+    format_type:
+      en: Free text
+      fr: Texte libre
     validation:
       en: |
         This field must not be empty.
@@ -924,8 +1000,8 @@ resources:
         This value must not be negative.
       fr: |
         Ce champ ne doit pas être vide.
-        Ce champ doit être un chiffre, "NA", ou "ND"
-        Cette valeur ne doit être négative.
+        Ce champ doit contenir soit un chiffre, soit « NA », soit « ND ».
+        Cette valeur ne doit pas être négative.
     occurrence: Single
     datastore_type: text
     excel_error_formula: 'OR({default_formula},IFERROR(VALUE({cell})<0,AND({cell}<>"NA",{cell}<>"ND")))'
@@ -941,14 +1017,17 @@ resources:
         A value of 0 means there were no visits; ND means there is no data collected
         website visits; and NA means there is no associated public website.
       fr: >
-        Indique le nombre de de visites au site web du service lors d'un exercice
-        financier. La valeur 0 signifie qu'aucune visite au site web n’a été enregistrée,
-        aucune donnée (ND) signifie que le nombre de visites n’est pas mesuré, et sans
-        objet (NA) signifie qu’il n’y a aucune site web à visiter.
+        Indique le nombre de de visites au site Web du service lors d'un exercice 
+        financier. La valeur 0 signifie qu'aucune visite au site Web n’a été enregistrée, 
+        aucune donnée (ND) signifie que le nombre de visites n’est pas mesuré, 
+        et sans objet (NA) signifie qu’il n’y a aucune site web à visiter. Remarque : 
+        Ce champ n'est pas inclus dans « Nombre total de demandes ».
     obligation: Mandatory
     excel_required: true
     form_required: true
-    format_type: Free text
+    format_type:
+      en: Free text
+      fr: Texte libre
     validation:
       en: |
         This field must not be empty.
@@ -956,8 +1035,8 @@ resources:
         This value must not be negative.
       fr: |
         Ce champ ne doit pas être vide.
-        Ce champ doit être un chiffre, "NA", ou "ND"
-        Cette valeur ne doit être négative.
+        Ce champ doit contenir soit un chiffre, soit « NA », soit « ND ».
+        Cette valeur ne doit pas être négative.
     occurrence: Single
     datastore_type: text
     excel_error_formula: 'OR({default_formula},IFERROR(VALUE({cell})<0,AND({cell}<>"NA",{cell}<>"ND")))'
@@ -975,15 +1054,20 @@ resources:
         this channel; and NA means no applications can be submitted through
         this channel.
       fr: >
-        Indique le nombre de demandes reçues en ligne au cours d'un exercice.
-        La valeur 0 signifie qu'aucune demande n'a été reçue via ce mode de
-        prestation, aucune donnée (ND) signifie qu'aucune donnée n’est disponible,
-        et sans objet (NA) signifie que le service n’est pas offert au moyen de
-        ce mode de prestation.
+        Indique le nombre de demandes de prestation de service reçues en 
+        ligne au cours d'un exercice. La valeur 0 signifie qu'aucune demande 
+        n'a été reçue via ce mode de prestation, aucune donnée (ND) signifie 
+        qu'aucune donnée n’est disponible, et sans objet (NA) signifie que 
+        le service n’est pas offert au moyen de ce mode de prestation. 
+        Il s'agit par exemple des demandes reçues sur un site Web ou un portail 
+        en ligne, sur des formulaires Web (p. ex., Ma demande de paye) et des 
+        vérifications et évaluations administrés numériquement.
     obligation: Mandatory
     excel_required: true
     form_required: true
-    format_type: Free text
+    format_type:
+      en: Free text
+      fr: Texte libre
     validation:
       en: |
         This field must not be empty.
@@ -991,8 +1075,8 @@ resources:
         This value must not be negative.
       fr: |
         Ce champ ne doit pas être vide.
-        Ce champ doit être un chiffre, "NA", ou "ND"
-        Cette valeur ne doit être négative.
+        Ce champ doit contenir soit un chiffre, soit « NA », soit « ND ».
+        Cette valeur ne doit pas être négative.
     occurrence: Single
     datastore_type: text
     excel_error_formula: 'OR({default_formula},IFERROR(VALUE({cell})<0,AND({cell}<>"NA",{cell}<>"ND")))'
@@ -1009,15 +1093,18 @@ resources:
         this channel; ND means there is no data collected for this channel;
         and NA means no applications can be submitted through this channel.
       fr: >
-        Indique le nombre de demandes reçues en personne au cours d'un exercice.
-        La valeur 0 signifie qu'aucune demande n'a été reçue via ce mode de
-        prestation, aucune donnée (ND) signifie qu'aucune donnée n’est disponible,
-        et sans objet (NA) signifie que le service n’est pas offert au moyen de
-        ce mode de prestation.
+        Indique le nombre de demandes de prestation de service reçues en personne 
+        au cours d'un exercice. La valeur 0 signifie qu'aucune demande n'a été 
+        reçue via ce mode de prestation, aucune donnée (ND) signifie qu'aucune 
+        donnée n’est disponible, et sans objet (NA) signifie que le service n’est 
+        pas offert au moyen de ce mode de prestation. Il s’agit par exemple des 
+        demandes en personne, du volume d'inspections, d'audits, d'évaluations, etc.
     obligation: Mandatory
     excel_required: true
     form_required: true
-    format_type: Free text
+    format_type:
+      en: Free text
+      fr: Texte libre
     validation:
       en: |
         This field must not be empty.
@@ -1025,8 +1112,8 @@ resources:
         This value must not be negative.
       fr: |
         Ce champ ne doit pas être vide.
-        Ce champ doit être un chiffre, "NA", ou "ND"
-        Cette valeur ne doit être négative.
+        Ce champ doit contenir soit un chiffre, soit « NA », soit « ND ».
+        Cette valeur ne doit pas être négative.
     occurrence: Single
     datastore_type: text
     excel_error_formula: 'OR({default_formula},IFERROR(VALUE({cell})<0,AND({cell}<>"NA",{cell}<>"ND")))'
@@ -1043,14 +1130,17 @@ resources:
         ND means there is no data collected for this channel; and NA means no applications
         can be submitted through this channel.
       fr: >
-        Indique le nombre de demandes reçues par la poste au cours d'un exercice.
-        La valeur 0 signifie qu'aucune demande n'a été reçue via ce mode de prestation,
-        aucune donnée (ND) signifie qu'aucune donnée n’est disponible, et sans objet (NA)
-        signifie que le service n’est pas offert au moyen de ce mode de prestation.
+        Indique le nombre de demandes de prestation de service reçues par la poste au cours 
+        d'un exercice. La valeur 0 signifie qu'aucune demande n'a été reçue via ce mode 
+        de prestation, aucune donnée (ND) signifie qu'aucune donnée n’est disponible, 
+        et sans objet (NA) signifie que le service n’est pas offert au moyen de ce mode 
+        de prestation.
     obligation: Mandatory
     excel_required: true
     form_required: true
-    format_type: Free text
+    format_type:
+      en: Free text
+      fr: Texte libre
     validation:
       en: |
         This field must not be empty.
@@ -1058,8 +1148,8 @@ resources:
         This value must not be negative.
       fr: |
         Ce champ ne doit pas être vide.
-        Ce champ doit être un chiffre, "NA", ou "ND"
-        Cette valeur ne doit être négative.
+        Ce champ doit contenir soit un chiffre, soit « NA », soit « ND ».
+        Cette valeur ne doit pas être négative.
     occurrence: Single
     datastore_type: text
     excel_error_formula: 'OR({default_formula},IFERROR(VALUE({cell})<0,AND({cell}<>"NA",{cell}<>"ND")))'
@@ -1076,14 +1166,18 @@ resources:
         this channel; ND means there is no data collected for this channel; and
         NA means no applications can be submitted through this channel.
       fr: >
-        Indique le nombre de demandes reçues par courriel au cours d'un exercice.
-        La valeur 0 signifie qu'aucune demande n'a été reçue via ce mode de prestation,
-        aucune donnée (ND) signifie qu'aucune donnée n’est disponible, et sans objet
-        (NA) signifie que le service n’est pas offert au moyen de ce mode de prestation.
+        Indique le nombre de demandes de prestation de service reçues par courriel 
+        au cours d'un exercice. La valeur 0 signifie qu'aucune demande n'a été reçue 
+        via ce mode de prestation, aucune donnée (ND) signifie qu'aucune donnée n’est 
+        disponible, et sans objet (NA) signifie que le service n’est pas offert au moyen 
+        de ce mode de prestation. Il s'agit par exemple des demandes reçues par courriel 
+        et des audits, examens et évaluations par courriel.
     obligation: Mandatory
     excel_required: true
     form_required: true
-    format_type: Free text
+    format_type:
+      en: Free text
+      fr: Texte libre
     validation:
       en: |
         This field must not be empty.
@@ -1091,8 +1185,8 @@ resources:
         This value must not be negative.
       fr: |
         Ce champ ne doit pas être vide.
-        Ce champ doit être un chiffre, "NA", ou "ND"
-        Cette valeur ne doit être négative.
+        Ce champ doit contenir soit un chiffre, soit « NA », soit « ND ».
+        Cette valeur ne doit pas être négative.
     occurrence: Single
     datastore_type: text
     excel_error_formula: 'OR({default_formula},IFERROR(VALUE({cell})<0,AND({cell}<>"NA",{cell}<>"ND")))'
@@ -1109,14 +1203,17 @@ resources:
         for this channel; ND means there is no data collected for this channel;
         and NA means no applications can be submitted through this channel.
       fr: >
-        Indique le nombre de demandes reçues par télécopieur au cours d'un exercice.
-        La valeur 0 signifie qu'aucune demande n'a été reçue via ce mode de prestation,
-        aucune donnée (ND) signifie qu'aucune donnée n’est disponible, et sans objet
-        (NA) signifie que le service n’est pas offert au moyen de ce mode de prestation.
+        Indique le nombre de demandes de prestation de service reçues par 
+        télécopieur au cours d'un exercice. La valeur 0 signifie qu'aucune 
+        demande n'a été reçue via ce mode de prestation, aucune donnée (ND) 
+        signifie qu'aucune donnée n’est disponible, et sans objet (NA) signifie 
+        que le service n’est pas offert au moyen de ce mode de prestation.
     obligation: Mandatory
     excel_required: true
     form_required: true
-    format_type: Free text
+    format_type:
+      en: Free text
+      fr: Texte libre
     validation:
       en: |
         This field must not be empty.
@@ -1124,8 +1221,8 @@ resources:
         This value must not be negative.
       fr: |
         Ce champ ne doit pas être vide.
-        Ce champ doit être un chiffre, "NA", ou "ND"
-        Cette valeur ne doit être négative.
+        Ce champ doit contenir soit un chiffre, soit « NA », soit « ND ».
+        Cette valeur ne doit pas être négative.
     occurrence: Single
     datastore_type: text
     excel_error_formula: 'OR({default_formula},IFERROR(VALUE({cell})<0,AND({cell}<>"NA",{cell}<>"ND")))'
@@ -1142,15 +1239,24 @@ resources:
         were received for this channel; ND means there is no data collected for this
         channel; and NA means no applications can be submitted through this channel.
       fr: >
-        Indique le nombre de demandes reçues par des modes de prestations qui ne sont
-        pas énumérés dans ce gabarit au cours d'un exercice. La valeur 0 signifie
-        qu'aucune demande n'a été reçue via ce mode de prestation, aucune donnée (ND)
-        signifie qu'aucune donnée n’est disponible, et sans objet (NA) signifie que le
-        service n’est pas offert au moyen de ce mode de prestation.
+        Indique le nombre de demandes de prestation de service reçues par des modes 
+        de prestations qui ne sont pas énumérés dans ce gabarit au cours d'un exercice. 
+        La valeur 0 signifie qu'aucune demande n'a été reçue via ce mode de prestation, 
+        aucune donnée (ND) signifie qu'aucune donnée n’est disponible, et sans objet (NA) 
+        signifie que le service n’est pas offert au moyen de ce mode de prestation. Si 
+        les volumes de service ne sont pas suivis par canal, veuillez inclure les volumes 
+        de service dans ce champ. De même, veuillez inclure dans ce champ les volumes 
+        d'allocations de fonds sans demandes ou d'autres services qui ne nécessitent pas 
+        de demandes (p. ex., examen médical à l'admission, enquêtes, audiences, conseils) 
+        ou qui ne ventilent pas la demande de service par canal de prestation. Remarque : 
+        les volumes déclarés dans chaque canal doivent s'exclure mutuellement. Ne déclarez 
+        pas la même demande ou interaction dans plus d'un canal.
     obligation: Mandatory
     excel_required: true
     form_required: true
-    format_type: Free text
+    format_type:
+      en: Free text
+      fr: Texte libre
     validation:
       en: |
         This field must not be empty.
@@ -1158,8 +1264,8 @@ resources:
         This value must not be negative.
       fr: |
         Ce champ ne doit pas être vide.
-        Ce champ doit être un chiffre, "NA", ou "ND"
-        Cette valeur ne doit être négative.
+        Ce champ doit contenir soit un chiffre, soit « NA », soit « ND ».
+        Cette valeur ne doit pas être négative.
     occurrence: Single
     datastore_type: text
     excel_error_formula: 'OR({default_formula},IFERROR(VALUE({cell})<0,AND({cell}<>"NA",{cell}<>"ND")))'
@@ -1191,22 +1297,24 @@ resources:
         mandatory if there is an amount reported under “Number of applications
         submitted via other channels”
       fr: >
-        Fournit de l'espace supplémentaire pour les commentaires relatifs aux
-        renseignements sur les volumes. Veuillez vous reporter au code d'identification
-        de la zone, s'il y a lieu. Pour les commentaires relatifs à d'autres zones,
-        les ministères peuvent publier une note explicative sur leur site Web suivi
-        d'un lien vers l'ensemble de données du Répertoire des services du GC.
-        Ce champ est requis s’il y a un montant rapporté sous le champ « Nombre de
-        demandes soumises par les autres modes de prestation »
+        Fournit de l'espace supplémentaire pour les commentaires relatifs aux 
+        renseignements sur les volumes. Veuillez vous reporter au code d'identification 
+        du champ, s'il y a lieu. Pour les commentaires relatifs à d'autres champs, 
+        les ministères peuvent publier une note explicative sur leur site Web suivi 
+        d'un lien vers l'ensemble de données du Répertoire des services du GC. Ce champ 
+        est requis s’il y a un montant rapporté sous le champ « Nombre de demandes 
+        soumises par les autres modes de prestation »
     obligation:
       en: This field is mandatory if there is an amount reported under “Number of applications submitted via other channels”
       fr: Ce champ est requis s’il y a un montant rapporté sous le champ « Nombre de demandes soumises par les autres modes de prestation »
     excel_required: false
     excel_column_width: 80
-    format_type: Free text
+    format_type:
+      en: Free text
+      fr: Texte libre
     validation:
       en: This field has a maximum length of 2000 characters.
-      fr: Ce champ ne peut excéder une longueur maximale de 2000 caractères.
+      fr: Ce champ a une longueur maximale de 2000 caractères.
     occurrence: Single
     datastore_type: text
     max_chars: 2000
@@ -1229,22 +1337,24 @@ resources:
         mandatory if there is an amount reported under “Number of applications
         submitted via other channels”
       fr: >
-        Fournit de l'espace supplémentaire pour les commentaires relatifs aux
-        renseignements sur les volumes. Veuillez vous reporter au code d'identification
-        de la zone, s'il y a lieu. Pour les commentaires relatifs à d'autres zones,
-        les ministères peuvent publier une note explicative sur leur site Web suivi
-        d'un lien vers l'ensemble de données du Répertoire des services du GC.
-        Ce champ est requis s’il y a un montant rapporté sous le champ « Nombre de
-        demandes soumises par les autres modes de prestation »
+        Fournit de l'espace supplémentaire pour les commentaires relatifs aux 
+        renseignements sur les volumes. Veuillez vous reporter au code d'identification 
+        du champ, s'il y a lieu. Pour les commentaires relatifs à d'autres champs, 
+        les ministères peuvent publier une note explicative sur leur site Web suivi d'un 
+        lien vers l'ensemble de données du Répertoire des services du GC. Ce champ est 
+        requis s’il y a un montant rapporté sous le champ « Nombre de demandes soumises 
+        par les autres modes de prestation »
     obligation:
       en: This field is mandatory if there is an amount reported under “Number of applications submitted via other channels”
       fr: Ce champ est requis s’il y a un montant rapporté sous le champ « Nombre de demandes soumises par les autres modes de prestation »
     excel_required: false
     excel_column_width: 80
-    format_type: Free text
+    format_type:
+      en: Free text
+      fr: Texte libre
     validation:
       en: This field has a maximum length of 2000 characters.
-      fr: Ce champ ne peut excéder une longueur maximale de 2000 caractères.
+      fr: Ce champ a une longueur maximale de 2000 caractères.
     occurrence: Single
     datastore_type: text
     max_chars: 2000
@@ -1260,13 +1370,15 @@ resources:
       fr: URL du service (anglais)
     description:
       en: Identifies the departmental webpage where the service is described and/or accessed.
-      fr: Indique la page Web du ministère où le service est décrit et/ou peut être lancé.
+      fr: Indique la page Web du ministère où le service est décrit ou peut être lancé.
     obligation: Optional
     excel_required: false
-    format_type: Free text
+    format_type:
+      en: Free text
+      fr: Texte libre
     validation:
       en: This field has a maximum length of 1500 characters.
-      fr: Ce champ ne peut excéder une longueur maximale de 1500 caractères.
+      fr: Ce champ a une longueur maximale de 1500 caractères.
     occurrence: Single
     datastore_type: text
     max_chars: 1500
@@ -1282,13 +1394,15 @@ resources:
       fr: URL du service (français)
     description:
       en: Identifies the departmental webpage where the service is described and/or accessed.
-      fr: Indique la page Web du ministère où le service est décrit et/ou peut être lancé.
+      fr: Indique la page Web du ministère où le service est décrit ou peut être lancé.
     obligation: Optional
     excel_required: false
-    format_type: Free text
+    format_type:
+      en: Free text
+      fr: Texte libre
     validation:
       en: This field has a maximum length of 1500 characters.
-      fr: Ce champ ne peut excéder une longueur maximale de 1500 caractères.
+      fr: Ce champ a une longueur maximale de 1500 caractères.
     occurrence: Single
     datastore_type: text
     max_chars: 1500
@@ -1334,7 +1448,7 @@ resources:
       fr: ID du ministère
     description:
       en: Identifies the applied ID of the department or agency.
-      fr: Identifie la ID d'usage du ministère ou de l'organisme.
+      fr: Identifie le code d'usage du ministère ou de l'organisme.
     obligation: Mandatory
     datastore_type: text
     published_resource_computed_field: true
@@ -1680,7 +1794,9 @@ resources:
       fr: |
         Ce champ ne doit pas être vide.
         Ce champ ne peut pas contenir de virgules.
-    format_type: Free text
+    format_type:
+      en: Free text
+      fr: Texte libre
     occurrence: Single
     datastore_type: text
 
@@ -1688,7 +1804,7 @@ resources:
   - datastore_id: service_name_en
     label:
       en: Service Name (English)
-      fr: Nom du service (en anglais)
+      fr: Nom du service (anglais)
     description:
       en: Identifies the official name of the service.
       fr: Indique le nom officiel du service.
@@ -1703,7 +1819,9 @@ resources:
       fr: |
         Ce champ ne doit pas être vide.
         Ce champ ne peut excéder une longueur maximale de 350 caractères.
-    format_type: Free text
+    format_type:
+      en: Free text
+      fr: Texte libre
     occurrence: Single
     datastore_type: text
     max_chars: 350
@@ -1715,7 +1833,7 @@ resources:
   - datastore_id: service_name_fr
     label:
       en: Service Name (French)
-      fr: Nom du service (en français)
+      fr: Nom du service (français)
     description:
       en: Identifies the official name of the service.
       fr: Indique le nom officiel du service.
@@ -1730,7 +1848,9 @@ resources:
       fr: |
         Ce champ ne doit pas être vide.
         Ce champ ne peut excéder une longueur maximale de 350 caractères.
-    format_type: Free text
+    format_type:
+      en: Free text
+      fr: Texte libre
     occurrence: Single
     datastore_type: text
     max_chars: 350
@@ -1763,7 +1883,9 @@ resources:
       fr: |
         Ce champ ne doit pas être vide.
         Ce champ ne peut pas contenir de virgules.
-    format_type: Free text
+    format_type:
+      en: Free text
+      fr: Texte libre
     occurrence: Single
     datastore_type: text
 
@@ -1793,7 +1915,9 @@ resources:
       fr: |
         Ce champ ne doit pas être vide.
         Ce champ ne peut excéder une longueur maximale de 500 caractères.
-    format_type: Free text
+    format_type:
+      en: Free text
+      fr: Texte libre
     occurrence: Single
     datastore_type: text
     max_chars: 500
@@ -1827,7 +1951,9 @@ resources:
       fr: |
         Ce champ ne doit pas être vide.
         Ce champ ne peut excéder une longueur maximale de 500 caractères.
-    format_type: Free text
+    format_type:
+      en: Free text
+      fr: Texte libre
     occurrence: Single
     datastore_type: text
     max_chars: 500
@@ -1859,7 +1985,10 @@ resources:
     obligation: Mandatory
     excel_required: true
     form_required: true
-    format_type: Controlled List
+    format_type:
+      en: Controlled List
+      fr: Liste contrôlée
+
     validation:
       en: This field must not be empty.
       fr: Ce champ ne doit pas être vide.
@@ -1891,7 +2020,10 @@ resources:
     obligation: Mandatory
     excel_required: true
     form_required: true
-    format_type: Controlled List
+    format_type:
+      en: Controlled List
+      fr: Liste contrôlée
+
     validation:
       en: This field must not be empty.
       fr: Ce champ ne doit pas être vide.
@@ -1932,7 +2064,9 @@ resources:
     obligation: Optional
     excel_required: false
     excel_column_width: 80
-    format_type: Free text
+    format_type:
+      en: Free text
+      fr: Texte libre
     validation:
       en: This field has a maximum length of 1500 characters.
       fr: Ce champ ne peut excéder une longueur maximale de 1500 caractères.
@@ -1955,7 +2089,9 @@ resources:
     obligation: Optional
     excel_required: false
     excel_column_width: 80
-    format_type: Free text
+    format_type:
+      en: Free text
+      fr: Texte libre
     validation:
       en: This field has a maximum length of 1500 characters.
       fr: Ce champ ne peut excéder une longueur maximale de 1500 caractères.
@@ -2065,7 +2201,9 @@ resources:
     obligation: Optional
     excel_required: false
     excel_column_width: 80
-    format_type: Free text
+    format_type:
+      en: Free text
+      fr: Texte libre
     validation:
       en: This field has a maximum length of 2000 characters.
       fr: Ce champ ne peut excéder une longueur maximale de 2000 caractères.
@@ -2088,7 +2226,9 @@ resources:
     obligation: Optional
     excel_required: false
     excel_column_width: 80
-    format_type: Free text
+    format_type:
+      en: Free text
+      fr: Texte libre
     validation:
       en: This field has a maximum length of 2000 characters.
       fr: Ce champ ne peut excéder une longueur maximale de 2000 caractères.
@@ -2135,7 +2275,9 @@ resources:
     obligation: Mandatory
     excel_required: true
     form_required: true
-    format_type: Free text
+    format_type:
+      en: Free text
+      fr: Texte libre
     validation:
       en: |
         This field must not be empty.
@@ -2161,7 +2303,9 @@ resources:
     obligation: Mandatory
     excel_required: true
     form_required: true
-    format_type: Free text
+    format_type:
+      en: Free text
+      fr: Texte libre
     validation:
       en: |
         This field must not be empty.
@@ -2186,7 +2330,9 @@ resources:
       fr: Identifie la site Web du service sur laquelle les résultats de performance en temps réel d'un service sont publiés.
     obligation: Optional
     excel_required: false
-    format_type: Free text
+    format_type:
+      en: Free text
+      fr: Texte libre
     validation:
       en: This field has a maximum length of 1500 characters.
       fr: Ce champ ne peut excéder une longueur maximale de 1500 caractères.
@@ -2208,7 +2354,9 @@ resources:
       fr: Identifie la site Web du service sur laquelle les résultats de performance en temps réel d'un service sont publiés.
     obligation: Optional
     excel_required: false
-    format_type: Free text
+    format_type:
+      en: Free text
+      fr: Texte libre
     validation:
       en: This field has a maximum length of 1500 characters.
       fr: Ce champ ne peut excéder une longueur maximale de 1500 caractères.
