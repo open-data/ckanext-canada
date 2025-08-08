@@ -1792,7 +1792,7 @@ msgstr ""
 #. Resource Title for PD Type: service
 #: ckanext/canada/tables/service.yaml:18
 msgid "Service Identification Information & Metrics"
-msgstr "Information et paramètres sur l’identification des services"
+msgstr "Renseignements sur l'identification des services, données volumétriques"
 
 #. SQL Trigger String for PD Type: service
 #: ckanext/canada/tables/service.yaml:1548
@@ -1846,12 +1846,12 @@ msgid ""
 msgstr ""
 "L'entrée de service ne peut être supprimée parce qu’il existe une ou "
 "plusieurs normes de service ({refValues}) qui y font référence dans la "
-"ressource  \"Normes de service et résultats du rendement\""
+"ressource  \"Normes de service et résultats de rendement\""
 
 #. Resource Title for PD Type: service
 #: ckanext/canada/tables/service.yaml:1629
 msgid "Service Standards & Performance Results"
-msgstr "Normes de service et résultats du rendement"
+msgstr "Normes de service et résultats de rendement"
 
 #. SQL Trigger String for PD Type: service
 #: ckanext/canada/tables/service.yaml:1982
