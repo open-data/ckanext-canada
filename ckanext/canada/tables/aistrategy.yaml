@@ -108,24 +108,19 @@ resources:
     excel_full_text_choices: true
     form_choices_prefix_code: true
     excel_column_width: 25
-    choice_order_expression: 'value.get("order", False), code'
     choices:
       A:
         en: Central AI Capacity
         fr: Capacité centrale d’IA
-        order: 1
       B:
         en: Policy, Legislation, and Governance
         fr: Politiques, lois et gouvernance
-        order: 2
       C:
         en: Talent and Training
         fr: Talents et formation
-        order: 3
       D:
         en: Engagement, Transparency, and Value to Canadians
         fr: Engagement, transparence et valeur pour les Canadiens
-        order: 4
 
   # DEP 1-4
   - datastore_id: key_action
