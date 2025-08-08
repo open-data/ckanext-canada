@@ -475,11 +475,21 @@ resources:
       fr: Système décisionnel automatisé
     description:
       en: >
-        An automated decision system is defined in the Directive on Automated Decision-Making
-        and means any technology that either assists or replaces the judgment of human
-        decision-makers, such as those that draw from fields like statistics, linguistics and
-        computer science, and use techniques such as rules-based systems, regression, predictive
-        analytics, machine learning, deep learning, and neural networks.
+        An automated decision system is defined in the Directive on Automated Decision-Making 
+        and means any technology that either assists or replaces the judgment of human 
+        decision-makers, such as those that draw from fields like statistics, linguistics and 
+        computer science, and use techniques such as rules-based systems, regression, 
+        predictive analytics, machine learning, deep learning, and neural networks. For the 
+        scope of this question, please answer yes if the service uses an automated decision 
+        systems to make or assist officers in making administrative decisions, those that 
+        affect legal rights, privileges or interests of clients, whether internal or external. 
+        When a system is an automated decision system that makes or assists an officer in 
+        making, the requirements of the Directive must be met, and an Algorithmic Impact 
+        Assessment published. Refer to the Guide on the Scope of the Directive on Automated 
+        Decision-Making to learn more about whether the system is in scope of the Directive 
+        on Automated Decision-Making. You can also reach out to your department’s Chief 
+        Information and Chief Data Offices to learn more about whether the system falls in 
+        scope of the Directive.
       fr: >
         Un système décisionnel automatisé est défini dans la Directive sur la prise de décisions 
         automatisée et désigne toute technologie qui assiste ou remplace le jugement des décideurs 
@@ -519,9 +529,11 @@ resources:
       fr: Description du système décisionnel automatisé (anglais)
     description:
       en: >
-        Describe what the system does. Include: the name or title of the system,
-        the role of the system in the decision, whether it is full or partial
-        automation, and how officers use the system to make or inform the decision.
+        Describe what the system does. Include: the name or title of the system, 
+        the role of the system in the decision, whether it is full or partial 
+        automation, and how officers use the system to make or inform the decision. 
+        Include whether or not an Algorithmic Impact Assessment is published, 
+        and if not indicate the reason for not publishing one.
       fr: >
         Décrivez ce que fait le système. Inclure : le nom ou titre du système, 
         le rôle du système dans la prise de décision, s'il s'agit d'une automatisation 
@@ -558,9 +570,11 @@ resources:
       fr: Description du système décisionnel automatisé (français)
     description:
       en: >
-        Describe what the system does. Include: the name or title of the system,
-        the role of the system in the decision, whether it is full or partial
-        automation, and how officers use the system to make or inform the decision.
+        Describe what the system does. Include: the name or title of the system, the 
+        role of the system in the decision, whether it is full or partial automation, 
+        and how officers use the system to make or inform the decision. Include 
+        whether or not an Algorithmic Impact Assessment is published, and if not 
+        indicate the reason for not publishing one.
       fr: >
         Décrivez ce que fait le système. Inclure : le nom ou titre du système, 
         le rôle du système dans la prise de décision, s'il s'agit d'une automatisation 
@@ -849,7 +863,7 @@ resources:
       en: Year of last service improvement based on client feedback
       fr: Année de la dernière amélioration du service sur la base de la rétroaction du client
     description:
-      en: What was the most recent year in which this service was improved based on client feedback?
+      en: Identifies the most recent year in which this service was improved based on client feedback.
       fr: Identifie l'exercice financier la plus récente au cours de laquelle ce service a été amélioré en fonction des commentaires des clients.
     obligation: Optional
     excel_required: false
@@ -898,9 +912,9 @@ resources:
       fr: Utilisation du numéro d’entreprise de l’ARC en tant qu’identificateur standard
     description:
       en: >
-        Identifies whether the Canada Revenue Agency's Business Number is used in the
-        delivery of the service as the standard identifier in accordance with the Directive
-        on the Business Number.
+        Identifies whether the Canada Revenue Agency's Business Number is used in the 
+        delivery of the service as the standard identifier in accordance with the Data 
+        reference standard on the business number Directive on the Business Number.
       fr: >
         Indique si le numéro d’entreprise de l’Agence du revenu du Canada est utilisé dans 
         la prestation des services en tant qu’identificateur standard, conformément à la 
@@ -936,12 +950,13 @@ resources:
       fr: Nombre des demandes téléphoniques reçus
     description:
       en: >
-        Identifies the number of enquiries about the service received
-        in this fiscal year. Note: This field represents only requests
-        for information about the service. Report service requests or
-        applications submitted by telephone in the "telephone applications"
-        field. A value of 0 means no calls were received; ND means no data
-        was collected; and NA means it is not possible to submit telephone enquiries.
+        Identifies the number of enquiries about the service received in this 
+        fiscal year. Note: This field represents only requests for information 
+        about the service. Report service requests or applications submitted 
+        by telephone in the "telephone applications" field. A value of 0 means 
+        no calls were received; ND means no data was collected; and NA means 
+        it is not possible to submit telephone enquiries. Note: This field is 
+        not included in 'Total Applications'.
       fr: >
         Indique le nombre de demandes d'information reçues par téléphone au cours 
         d'un exercice financier. Remarque: Ce champ indique seulement le nombre de 
@@ -1013,9 +1028,10 @@ resources:
       fr: Nombre de visites sur le site Web
     description:
       en: >
-        Identifies the number of visits to the service's website in a fiscal year.
-        A value of 0 means there were no visits; ND means there is no data collected
-        website visits; and NA means there is no associated public website.
+        Identifies the number of visits to the service's website in a fiscal year. 
+        A value of 0 means there were no visits; ND means there is no data collected 
+        website visits; and NA means there is no associated public website. Note: 
+        This field is not included in 'Total Applications'.
       fr: >
         Indique le nombre de de visites au site Web du service lors d'un exercice 
         financier. La valeur 0 signifie qu'aucune visite au site Web n’a été enregistrée, 
@@ -1048,11 +1064,13 @@ resources:
       fr: Nombre de demandes soumises en ligne
     description:
       en: >
-        Identifies the number of applications submitted in a fiscal year
-        for the online channel. A value of 0 means no applications were
-        received for this channel; ND means there is no data collected for
-        this channel; and NA means no applications can be submitted through
-        this channel.
+        Identifies the number of applications submitted in a fiscal year for 
+        the online channel. A value of 0 means no applications were received 
+        for this channel; ND means there is no data collected for this channel; 
+        and NA means no applications can be submitted through this channel. 
+        Examples include applications received via a website/online portal, 
+        via web forms (e.g., MyPayEnquiry) and digitally administered audits 
+        and evaluations.
       fr: >
         Indique le nombre de demandes de prestation de service reçues en 
         ligne au cours d'un exercice. La valeur 0 signifie qu'aucune demande 
@@ -1088,10 +1106,12 @@ resources:
       fr: Nombre de demandes soumises en personne
     description:
       en: >
-        Identifies number of applications received in-person in a fiscal year
-        for the service. A value of 0 means no applications were received for
-        this channel; ND means there is no data collected for this channel;
-        and NA means no applications can be submitted through this channel.
+        Identifies number of applications received in-person in a fiscal year 
+        for the service. A value of 0 means no applications were received for 
+        this channel; ND means there is no data collected for this channel; 
+        and NA means no applications can be submitted through this channel. 
+        Examples include in-person applications, volume of inspections, 
+        audits, evaluations, etc.
       fr: >
         Indique le nombre de demandes de prestation de service reçues en personne 
         au cours d'un exercice. La valeur 0 signifie qu'aucune demande n'a été 
@@ -1161,10 +1181,12 @@ resources:
       fr: Nombre de demandes soumises par courriel
     description:
       en: >
-        Identifies the number of applications received through email in a fiscal
-        year for the service. A value of 0 means no applications were received for
-        this channel; ND means there is no data collected for this channel; and
-        NA means no applications can be submitted through this channel.
+        Identifies the number of applications received through email in a fiscal 
+        year for the service. A value of 0 means no applications were received 
+        for this channel; ND means there is no data collected for this channel; 
+        and NA means no applications can be submitted through this channel. 
+        Examples include applications received by email and audits, reviews 
+        and evaluations by email.
       fr: >
         Indique le nombre de demandes de prestation de service reçues par courriel 
         au cours d'un exercice. La valeur 0 signifie qu'aucune demande n'a été reçue 
@@ -1234,10 +1256,18 @@ resources:
       fr: Nombre de demandes soumises par les autre modes de prestations
     description:
       en: >
-        Identifies the number of applications received through other channels not
-        listed in a fiscal year for the service. A value of 0 means no applications
-        were received for this channel; ND means there is no data collected for this
-        channel; and NA means no applications can be submitted through this channel.
+        Identifies the number of applications received through other channels not 
+        listed in a fiscal year for the service. A value of 0 means no applications 
+        were received for this channel; ND means there is no data collected for 
+        this channel; and NA means no applications can be submitted through this 
+        channel. If service volumes are not tracked by channel, please include 
+        service volumes in this field. As well, please include in this field volumes 
+        for funding allocations without applications or other services that do not 
+        require applications (e.g. medical screening at intake, investigations, 
+        hearings, advice) or which do not disaggregate service demand by delivery 
+        channel. Note: Volumes reported in each channel should be mutually 
+        exclusive. Do not report the same application or interaction in more 
+        than one channel.
       fr: >
         Indique le nombre de demandes de prestation de service reçues par des modes 
         de prestations qui ne sont pas énumérés dans ce gabarit au cours d'un exercice. 
