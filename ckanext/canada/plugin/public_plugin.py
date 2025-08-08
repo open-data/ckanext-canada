@@ -84,6 +84,7 @@ class CanadaPublicPlugin(p.SingletonPlugin, DefaultTranslation):
         assert 'ckanext.canada:tables/nap5.yaml' in recombinant_definitions
         assert 'ckanext.canada:tables/experiment.yaml' in recombinant_definitions
         assert 'ckanext.canada:tables/adminaircraft.yaml' in recombinant_definitions
+        assert 'ckanext.canada:tables/aistrategy.yaml' in recombinant_definitions
 
         config['ckan.search.show_all_types'] = True
         config['ckan.gravatar_default'] = 'disabled'
