@@ -28,9 +28,10 @@ class CanadaTestBase(object):
 
         try:
             self.lc = LocalCKAN()
-            self.org = self.lc.action.organization_show(name="tbs-sct")
+            self.org = self.lc.action.organization_show(name='tbs-sct')
         except NotFound:
-            self.org = Organization(name="tbs-sct")
+            self.org = Organization(id='tbs-sct',
+                                    name='tbs-sct')
 
         security_db_setup()
         _run_migrations('activity')
