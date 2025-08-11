@@ -5,9 +5,11 @@ from ckanext.validation.model import (
     tables_exist as validation_tables_exist
 )
 from ckanext.security.model import db_setup as security_db_setup
+from ckanext.canada.tests.factories import CanadaOrganization as Organization
 from ckanext.canada.triggers import update_triggers
 from ckanext.recombinant.cli import _create_triggers
 from ckan.cli.db import _run_migrations
+from ckanapi import LocalCKAN, NotFound
 
 
 class CanadaTestBase(object):
@@ -23,6 +25,13 @@ class CanadaTestBase(object):
         clear_all()
         if not validation_tables_exist():
             validation_create_tables()
+
+        try:
+            self.lc = LocalCKAN()
+            self.org = self.lc.action.organization_show(name="tbs-sct")
+        except NotFound:
+            self.org = Organization(name="tbs-sct")
+
         security_db_setup()
         _run_migrations('activity')
         update_triggers()
