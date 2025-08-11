@@ -8,7 +8,7 @@ title: Service Inventory
 notes: Access, upload and modify the Service Inventory of external and internal enterprise services for your organization
 
 template_version: 3
-template_updated: 2024-11-26  # last qa confirmed: 2025-02-19
+template_updated: 2025-07-25  # last qa confirmed: 2025-02-19
 
 portal_type: dataset
 collection: service
@@ -383,7 +383,7 @@ resources:
     datastore_type: _text
     excel_full_text_choices: false
     form_snippet: scheming/form_snippets/multiple_select.html
-    choices_file: choices/service_program_names.yaml
+    choices_file: choices/service_program_ids.yaml
     form_choices_prefix_code: true
     form_select_attrs:
       class: form-control recombinant-select2
@@ -2620,7 +2620,7 @@ excel_edge_style:
 excel_header_style:
   PatternFill:
     patternType: solid
-    fgColor: FFEFBD09
+    fgColor: FFF7DE84
 excel_column_heading_style:
   PatternFill:
     patternType: solid
