@@ -358,14 +358,16 @@ resources:
       en: >
         Identifies the unique program code associated with program elements for all
         strategic outcomes, programs, sub-programs, and sub-sub-programs. The Program
-        codes in the government-wide Chart of Accounts can be used. Corporate planners
-        in the department/agency who are responsible for the Policy on Results can
-        assist in identifying this, if needed. Multiple values must be separated by a comma (,).
+        codes in the government-wide Chart of Accounts can be used.
+        
+        Corporate planners in the department/agency who are responsible for the Policy on Results 
+        can assist in identifying this, if needed. Multiple values must be separated by a comma (,).
       fr: >
         Indique le code de programme unique associé aux éléments de programme pour tous 
         les résultats stratégiques, les programmes, les sous-programmes et les 
         sous-sous-programmes. Les codes de programme du Plan comptable à l'échelle de 
         l'administration fédérale peuvent être utilisés. 
+        
         Les planificateurs ministériels du ministère ou de l'organisme responsables de la 
         Politique sur les résultats peuvent aider à déterminer le code d'identification 
         du programme, au besoin. Séparez les entrées par une virgule (,) s’il y en a plusieurs 
@@ -480,6 +482,7 @@ resources:
         decision-makers, such as those that draw from fields like statistics, linguistics and 
         computer science, and use techniques such as rules-based systems, regression, 
         predictive analytics, machine learning, deep learning, and neural networks.
+        
         For the scope of this question, please answer yes if the service uses an automated decision 
         systems to make or assist officers in making administrative decisions, those that 
         affect legal rights, privileges or interests of clients, whether internal or external. 
@@ -497,6 +500,7 @@ resources:
         et les sciences informatiques, et utilisent des techniques telles que les systèmes basés 
         sur des règles, la régression, l’analytique prédictive, l’apprentissage automatique, 
         l’apprentissage en profondeur et les réseaux neuronaux.
+        
         Pour la portée de cette question, veuillez répondre "oui" si le service utilise des systèmes 
         décisionnel automatisé pour prendre ou aider les agents à prendre des décisions administratives, 
         celles qui affectent les droits juridiques, les privilèges ou les intérêts des clients, qu'ils 
@@ -955,8 +959,9 @@ resources:
         about the service. Report service requests or applications submitted 
         by telephone in the "telephone applications" field. A value of 0 means 
         no calls were received; ND means no data was collected; and NA means 
-        it is not possible to submit telephone enquiries. Note: This field is 
-        not included in 'Total Applications'.
+        it is not possible to submit telephone enquiries. 
+        
+        Note: This field is not included in 'Total Applications'.
       fr: >
         Indique le nombre de demandes d'information reçues par téléphone au cours 
         d'un exercice financier. Remarque: Ce champ indique seulement le nombre de 
@@ -964,8 +969,9 @@ resources:
         de demandes soumises par téléphone » pour les demandes de prestation de service 
         reçues par téléphone. La valeur 0 signifie qu'aucun appel n'a été reçu, ND 
         signifie qu'aucune donnée n'est disponible, et NA signifie qu'il n'est pas 
-        possible de présenter des demandes d’information par téléphone. Remarque : 
-        Ce champ n'est pas inclus dans « Nombre total de demandes ».
+        possible de présenter des demandes d’information par téléphone. 
+        
+        Remarque : Ce champ n'est pas inclus dans « Nombre total de demandes ».
     obligation: Mandatory
     excel_required: true
     form_required: true
@@ -1030,14 +1036,16 @@ resources:
       en: >
         Identifies the number of visits to the service's website in a fiscal year. 
         A value of 0 means there were no visits; ND means there is no data collected 
-        website visits; and NA means there is no associated public website. Note: 
-        This field is not included in 'Total Applications'.
+        website visits; and NA means there is no associated public website. 
+        
+        Note: This field is not included in 'Total Applications'.
       fr: >
         Indique le nombre de de visites au site Web du service lors d'un exercice 
         financier. La valeur 0 signifie qu'aucune visite au site Web n’a été enregistrée, 
         aucune donnée (ND) signifie que le nombre de visites n’est pas mesuré, 
-        et sans objet (NA) signifie qu’il n’y a aucune site web à visiter. Remarque : 
-        Ce champ n'est pas inclus dans « Nombre total de demandes ».
+        et sans objet (NA) signifie qu’il n’y a aucune site web à visiter. 
+        
+        Remarque : Ce champ n'est pas inclus dans « Nombre total de demandes ».
     obligation: Mandatory
     excel_required: true
     form_required: true
@@ -1184,7 +1192,8 @@ resources:
         Identifies the number of applications received through email in a fiscal 
         year for the service. A value of 0 means no applications were received 
         for this channel; ND means there is no data collected for this channel; 
-        and NA means no applications can be submitted through this channel. 
+        and NA means no applications can be submitted through this channel.
+        
         Examples include applications received by email and audits, reviews 
         and evaluations by email.
       fr: >
@@ -1192,7 +1201,9 @@ resources:
         au cours d'un exercice. La valeur 0 signifie qu'aucune demande n'a été reçue 
         via ce mode de prestation, aucune donnée (ND) signifie qu'aucune donnée n’est 
         disponible, et sans objet (NA) signifie que le service n’est pas offert au moyen 
-        de ce mode de prestation. Il s'agit par exemple des demandes reçues par courriel 
+        de ce mode de prestation.
+        
+        Il s'agit par exemple des demandes reçues par courriel 
         et des audits, examens et évaluations par courriel.
     obligation: Mandatory
     excel_required: true
@@ -1260,12 +1271,16 @@ resources:
         listed in a fiscal year for the service. A value of 0 means no applications 
         were received for this channel; ND means there is no data collected for 
         this channel; and NA means no applications can be submitted through this 
-        channel. If service volumes are not tracked by channel, please include 
+        channel.
+        
+        If service volumes are not tracked by channel, please include 
         service volumes in this field. As well, please include in this field volumes 
         for funding allocations without applications or other services that do not 
         require applications (e.g. medical screening at intake, investigations, 
         hearings, advice) or which do not disaggregate service demand by delivery 
-        channel. Note: Volumes reported in each channel should be mutually 
+        channel.
+        
+        Note: Volumes reported in each channel should be mutually 
         exclusive. Do not report the same application or interaction in more 
         than one channel.
       fr: >
@@ -1273,14 +1288,16 @@ resources:
         de prestations qui ne sont pas énumérés dans ce gabarit au cours d'un exercice. 
         La valeur 0 signifie qu'aucune demande n'a été reçue via ce mode de prestation, 
         aucune donnée (ND) signifie qu'aucune donnée n’est disponible, et sans objet (NA) 
-        signifie que le service n’est pas offert au moyen de ce mode de prestation. Si 
-        les volumes de service ne sont pas suivis par canal, veuillez inclure les volumes 
+        signifie que le service n’est pas offert au moyen de ce mode de prestation.
+        
+        Si les volumes de service ne sont pas suivis par canal, veuillez inclure les volumes 
         de service dans ce champ. De même, veuillez inclure dans ce champ les volumes 
         d'allocations de fonds sans demandes ou d'autres services qui ne nécessitent pas 
         de demandes (p. ex., examen médical à l'admission, enquêtes, audiences, conseils) 
-        ou qui ne ventilent pas la demande de service par canal de prestation. Remarque : 
-        les volumes déclarés dans chaque canal doivent s'exclure mutuellement. Ne déclarez 
-        pas la même demande ou interaction dans plus d'un canal.
+        ou qui ne ventilent pas la demande de service par canal de prestation.
+        
+        Remarque : les volumes déclarés dans chaque canal doivent s'exclure mutuellement. 
+        Ne déclarez pas la même demande ou interaction dans plus d'un canal.
     obligation: Mandatory
     excel_required: true
     form_required: true
