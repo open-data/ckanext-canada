@@ -69,7 +69,7 @@
                 "subhref": {{ recombinant_menu_link('ati') | tojson }},
                 "subtext": {{ recombinant_menu_text('ati') | tojson }},
               },
-              {% if h.check_access('organization_update', {'id': 'tbs-sct'}) %}
+              {% if h.check_access('organization_update', {'name': 'tbs-sct'}) %}
               {
                 "subhref": {{ recombinant_menu_link('aistrategy') | tojson }},
                 "subtext": {{ recombinant_menu_text('aistrategy') | tojson }},
