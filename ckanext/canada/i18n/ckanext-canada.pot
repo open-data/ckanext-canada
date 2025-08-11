@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ckanext-canada 0.4.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-08-08 09:33-0400\n"
+"POT-Creation-Date: 2025-08-11 11:28-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -965,7 +965,7 @@ msgid "{num} deleted."
 msgstr ""
 
 #. SQL Trigger String for PD Type: service
-#: ckanext/canada/tables/service.yaml:2390 ckanext/canada/view.py:791
+#: ckanext/canada/tables/service.yaml:2580 ckanext/canada/view.py:791
 msgid "Number required"
 msgstr ""
 
@@ -1166,7 +1166,7 @@ msgstr ""
 #. SQL Trigger String for PD Type: service
 #: ckanext/canada/tables/ati.yaml:142 ckanext/canada/tables/ati.yaml:254
 #: ckanext/canada/tables/hospitalityq.yaml:648
-#: ckanext/canada/tables/service.yaml:1549 ckanext/canada/tables/service.yaml:2387
+#: ckanext/canada/tables/service.yaml:1693 ckanext/canada/tables/service.yaml:2577
 msgid "This value must not be negative"
 msgstr ""
 
@@ -1581,59 +1581,59 @@ msgid "Proactive Publication - Position Reclassification Nothing to Report"
 msgstr ""
 
 #. Title for PD Type: service
-#: ckanext/canada/tables/service.yaml:6
+#: ckanext/canada/tables/service.yaml:7
 msgid "Service Inventory"
 msgstr ""
 
 #. Description for PD Type: service
-#: ckanext/canada/tables/service.yaml:7
+#: ckanext/canada/tables/service.yaml:8
 msgid ""
 "Access, upload and modify the Service Inventory of external and internal "
 "enterprise services for your organization"
 msgstr ""
 
 #. Resource Title for PD Type: service
-#: ckanext/canada/tables/service.yaml:18
+#: ckanext/canada/tables/service.yaml:19
 msgid "Service Identification Information & Metrics"
 msgstr ""
 
 #. SQL Trigger String for PD Type: service
-#: ckanext/canada/tables/service.yaml:1548
+#: ckanext/canada/tables/service.yaml:1692
 msgid "This field must be either a number, \"NA\", or \"ND\""
 msgstr ""
 
 #. SQL Trigger String for PD Type: service
-#: ckanext/canada/tables/service.yaml:1550 ckanext/canada/tables/service.yaml:2388
+#: ckanext/canada/tables/service.yaml:1694 ckanext/canada/tables/service.yaml:2578
 msgid "This field has a maximum length of {} characters."
 msgstr ""
 
 #. SQL Trigger String for PD Type: service
-#: ckanext/canada/tables/service.yaml:1551 ckanext/canada/tables/service.yaml:2389
+#: ckanext/canada/tables/service.yaml:1695 ckanext/canada/tables/service.yaml:2579
 msgid "Invalid choice: {}"
 msgstr ""
 
 #. SQL Trigger String for PD Type: service
-#: ckanext/canada/tables/service.yaml:1552 ckanext/canada/tables/service.yaml:2391
+#: ckanext/canada/tables/service.yaml:1696 ckanext/canada/tables/service.yaml:2581
 msgid "Invalid input syntax for type integer: {}"
 msgstr ""
 
 #. SQL Trigger String for PD Type: service
-#: ckanext/canada/tables/service.yaml:1553 ckanext/canada/tables/service.yaml:2392
+#: ckanext/canada/tables/service.yaml:1697 ckanext/canada/tables/service.yaml:2582
 msgid "This field is required due to a response in a different field."
 msgstr ""
 
 #. SQL Trigger String for PD Type: service
-#: ckanext/canada/tables/service.yaml:1554 ckanext/canada/tables/service.yaml:2393
+#: ckanext/canada/tables/service.yaml:1698 ckanext/canada/tables/service.yaml:2583
 msgid "This text must be provided in both languages"
 msgstr ""
 
 #. SQL Trigger String for PD Type: service
-#: ckanext/canada/tables/service.yaml:1555 ckanext/canada/tables/service.yaml:2394
+#: ckanext/canada/tables/service.yaml:1699 ckanext/canada/tables/service.yaml:2584
 msgid "Comma is not allowed in Service ID Number field"
 msgstr ""
 
 #. SQL Constraint Error String for PD Type: service
-#: ckanext/canada/tables/service.yaml:1360
+#: ckanext/canada/tables/service.yaml:1504
 msgid ""
 "Cannot delete record(s) because the Fiscal Year, Service ID Number "
 "({refValues}) is referenced in at least one Service Standards & Performance "
@@ -1641,22 +1641,27 @@ msgid ""
 msgstr ""
 
 #. Resource Title for PD Type: service
-#: ckanext/canada/tables/service.yaml:1629
+#: ckanext/canada/tables/service.yaml:1773
 msgid "Service Standards & Performance Results"
 msgstr ""
 
 #. SQL Trigger String for PD Type: service
-#: ckanext/canada/tables/service.yaml:1982 ckanext/canada/tables/service.yaml:2386
+#: ckanext/canada/tables/service.yaml:2147 ckanext/canada/tables/service.yaml:2576
 msgid "This field must be a single number between 0 and 1 representing a percentage."
 msgstr ""
 
 #. SQL Trigger String for PD Type: service
-#: ckanext/canada/tables/service.yaml:2395
+#: ckanext/canada/tables/service.yaml:2585
 msgid "Comma is not allowed in Service Standard ID field"
 msgstr ""
 
+#. SQL Trigger String for PD Type: service
+#: ckanext/canada/tables/service.yaml:2586
+msgid "Volume Meeting Target can not exceed Total Volume."
+msgstr ""
+
 #. SQL Constraint Error String for PD Type: service
-#: ckanext/canada/tables/service.yaml:2288
+#: ckanext/canada/tables/service.yaml:2474
 msgid ""
 "Cannot create record ({refValues}) because the Service ID Number does not "
 "exist in the Service Identification Information & Metrics resource for that "

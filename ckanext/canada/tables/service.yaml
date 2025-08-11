@@ -8,7 +8,7 @@ title: Service Inventory
 notes: Access, upload and modify the Service Inventory of external and internal enterprise services for your organization
 
 template_version: 3
-template_updated: 2025-07-25  # last qa confirmed: 2025-02-19
+template_updated: 2025-08-11  # last qa confirmed: 2025-02-19
 
 portal_type: dataset
 collection: service
@@ -30,7 +30,7 @@ resources:
   - datastore_id: fiscal_yr
     label:
       en: Fiscal Year
-      fr: Année financière
+      fr: Exercice financier
     description:
       en: >
         Identifies the fiscal year (April 1 to March 31) during which service activities took place.
@@ -479,8 +479,8 @@ resources:
         and means any technology that either assists or replaces the judgment of human 
         decision-makers, such as those that draw from fields like statistics, linguistics and 
         computer science, and use techniques such as rules-based systems, regression, 
-        predictive analytics, machine learning, deep learning, and neural networks. For the 
-        scope of this question, please answer yes if the service uses an automated decision 
+        predictive analytics, machine learning, deep learning, and neural networks.
+        For the scope of this question, please answer yes if the service uses an automated decision 
         systems to make or assist officers in making administrative decisions, those that 
         affect legal rights, privileges or interests of clients, whether internal or external. 
         When a system is an automated decision system that makes or assists an officer in 
@@ -496,12 +496,12 @@ resources:
         humains, comme ceux qui proviennent de domaines tels que les statistiques, la linguistique 
         et les sciences informatiques, et utilisent des techniques telles que les systèmes basés 
         sur des règles, la régression, l’analytique prédictive, l’apprentissage automatique, 
-        l’apprentissage en profondeur et les réseaux neuronaux. Pour la portée de cette question, 
-        veuillez répondre "oui" si le service utilise des systèmes décisionnel automatisé pour 
-        prendre ou aider les agents à prendre des décisions administratives, celles qui affectent 
-        les droits juridiques, les privilèges ou les intérêts des clients, qu'ils soient internes 
-        ou externes. Lorsqu'un système est un système décisionnel automatisé qui prend ou aide un 
-        agent à prendre des décisions, les exigences de la Directive doivent être respectées, 
+        l’apprentissage en profondeur et les réseaux neuronaux.
+        Pour la portée de cette question, veuillez répondre "oui" si le service utilise des systèmes 
+        décisionnel automatisé pour prendre ou aider les agents à prendre des décisions administratives, 
+        celles qui affectent les droits juridiques, les privilèges ou les intérêts des clients, qu'ils 
+        soient internes ou externes. Lorsqu'un système est un système décisionnel automatisé qui prend ou 
+        aide un agent à prendre des décisions, les exigences de la Directive doivent être respectées, 
         et une Évaluation de l'incidence algorithmique doit être publiée. Référez-vous au Guide 
         sur la portée de la Directive sur la prise de décisions automatisée pour en savoir plus 
         sur la portée de la Directive sur la prise de décision automatisée. Vous pouvez également 
@@ -1784,7 +1784,7 @@ resources:
   - datastore_id: fiscal_yr
     label:
       en: Fiscal Year
-      fr: Année financière
+      fr: Exercice financier
     description:
       en: >
         Identifies the fiscal year (April 1 to March 31) during which service activities took place.
@@ -2154,19 +2154,20 @@ resources:
   - datastore_id: volume_meeting_target
     label:
       en: Business Volume That Met Service Standard Target
-      fr: Volume d'activités qui respectent la cible de la norme relative aux services
+      fr: Volume d'activités qui respectent la norme de service
     description:
       en: >
         Identifies the number of final outputs issued appropriate to the service
         (eg. payments issued, requests completed, etc) during the fiscal year that met
         a particular service standard target for a service. Blank indicates no information
         available, while 0 indicates that no final outputs issued met service standard targets.
+        Note, this value must be less than or equal to the Total Volume.
       fr: >
-        Indique le nombre d'opérations de service effectuées (p. ex. les paiements émis, 
-        les demandes traitées, etc.) au cours de l'exercice qui ont respecté cette norme de 
-        service. Un champ vide indique qu'aucune information n'est disponible, tandis que 0 
-        indique qu'aucun résultat final n'a été émis qui a atteint les objectifs de la norme 
-        de service.
+        Indique le nombre total d'opérations de service effectuées (p. ex. les paiements émis, 
+        les demandes traitées, etc.) au cours de l'exercice auxquelles s'appliquent cette 
+        norme de service. Un champ vide indique qu'aucune information n'est disponible, tandis 
+        que 0 indique qu'aucune opération n'a été effectuée. Remarque : cette valeur doit 
+        être inférieure ou égale au volumes totaux.
     obligation: Optional
     excel_required: false
     format_type: 
@@ -2181,7 +2182,7 @@ resources:
         Les volumes atteignant la cible ne peuvent pas dépasser le volume total.
     occurrence: Single
     datastore_type: bigint
-    excel_error_formula: 'OR({default_formula},NOT(ISNUMBER({cell})),{cell}<0)'
+    excel_error_formula: 'OR({default_formula},NOT(ISNUMBER({cell})),{cell}<0,{cell}>{total_volume})'
 
   # DEP 2-14
   - datastore_id: total_volume
@@ -2196,8 +2197,8 @@ resources:
       fr: >
         Indique le nombre total d'opérations de service effectuées (p. ex. les paiements 
         émis, les demandes traitées, etc.) au cours de l'exercice auxquelles s'appliquent 
-        cette norme de service. Un champ vide indique qu'aucune information n'est 
-        disponible, tandis que 0 indique qu'aucune opération n'a été effectuée.
+        cette norme de service. Un champ vide indique qu'aucune information n'est disponible, 
+        tandis que 0 indique qu'aucune opération n'a été effectuée.
     obligation: Optional
     excel_required: false
     format_type: 
@@ -2208,7 +2209,7 @@ resources:
       fr: Cette valeur ne doit pas être négative.
     occurrence: Single
     datastore_type: bigint
-    excel_error_formula: 'OR({default_formula},NOT(ISNUMBER({cell})),{cell}<0,{volume_meeting_target}>{cell})'
+    excel_error_formula: 'OR({default_formula},NOT(ISNUMBER({cell})),{cell}<0)'
 
   # DEP 2-15
   # Dev: Published Resource Field
@@ -2231,7 +2232,7 @@ resources:
   - datastore_id: comments_en
     label:
       en: Comments on the service standard in general (English)
-      fr: Commentaires sur la norme de service en general (anglais)
+      fr: Commentaires sur la norme de service en général (anglais)
     description:
       en: Comments related to the service standard in general.
       fr: Commentaires en lien à la norme de service en general.
@@ -2256,7 +2257,7 @@ resources:
   - datastore_id: comments_fr
     label:
       en: Comments on the service standard in general (French)
-      fr: Commentaires sur la norme de service en general (Francais)
+      fr: Commentaires sur la norme de service en général (français)
     description:
       en: Comments related to the service standard in general.
       fr: Commentaires en lien à la norme de service en general.
@@ -2305,7 +2306,7 @@ resources:
   - datastore_id: standards_targets_uri_en
     label:
       en: URL to Service Standards and Targets (English)
-      fr: URL vers les normes relatives aux services et les cibles (anglais)
+      fr: URL vers les normes de service et les cibles (anglais)
     description:
       en: Identifies the departmental webpage (Canada.ca) where the service standards and targets are published.
       fr: Indique la page Web ministérielle (Canada.ca) où les normes de service et les cibles sont publiées.
@@ -2333,7 +2334,7 @@ resources:
   - datastore_id: standards_targets_uri_fr
     label:
       en: URL to Service Standards and Targets (French)
-      fr: URL vers les normes relatives aux services et les cibles (français)
+      fr: URL vers les normes de service et les cibles (français)
     description:
       en: Identifies the departmental webpage (Canada.ca) where the service standards and targets are published.
       fr: Indique la page Web ministérielle (Canada.ca) où les normes de service et les cibles sont publiées.
@@ -2388,7 +2389,7 @@ resources:
       fr: URL aux résultats de rendement en temps réel (français)
     description:
       en: Identifies the departmental webpage where the real-time performance results for a service are published.
-      fr: Indique la page Web (en français) sur laquelle les résultats de rendement en temps réel d'un service sont publiés.
+      fr: Indique la page Web (en anglais) sur laquelle les résultats de rendement en temps réel d'un service sont publiés.
     obligation: Optional
     excel_required: false
     format_type:
