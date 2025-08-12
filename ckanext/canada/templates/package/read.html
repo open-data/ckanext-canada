@@ -250,7 +250,7 @@
 {% block links %}
   {{ super() }}
   {% if not g.is_registry %}
-    <script>
+    <script nonce="{{- h.get_inline_script_nonce() -}}">
     window.imConfigPath = "/invitation-manager/";
     </script>
   {% endif %}

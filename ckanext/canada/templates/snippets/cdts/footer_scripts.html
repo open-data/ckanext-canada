@@ -1,5 +1,5 @@
 {# See: https://github.com/wet-boew/cdts-sgdc/blob/v4.1.0/src/gcweb/refFooter.ejs #}
-<script>
+<script nonce="{{- h.get_inline_script_nonce() -}}">
   document.write(
     wet.builder.refFooter({
       {% if g.is_registry %}
