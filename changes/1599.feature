@@ -1,0 +1,1 @@
+Added functionality for an inline script nonce for Content Security Policy headers. Configurable with `ckanext.canada.inline_script_nonce`
