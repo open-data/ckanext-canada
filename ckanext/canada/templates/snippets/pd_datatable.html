@@ -102,7 +102,7 @@
         because of this, we cannot pass this object into the CKAN JS Module
         like the other variables. So we must make it a JS Global here.
 #}
-<script type="text/javascript">
+<script type="text/javascript" nonce="{{- h.get_inline_script_nonce() -}}">
   {% if can_edit %}
     const pd_datatables__EDITOR = {
       {% for field in chromo.fields %}
