@@ -157,7 +157,7 @@ aistrategy: upload-aistrategy rebuild-aistrategy
 upload-aistrategy: $(workdir)/filtered/aistrategy.csv $(workdir)/aistrategy.csv
 	@echo Uploading AI Strategy Tracker ...
 	@$(ckanapi) action resource_patch -c $(registry_ini) \
-	id=TBD upload@"$(workdir)/filtered/aistrategy.csv" \
+	id=0ef67a0d-9ca4-49f8-a0b5-16c38b49b0a2 upload@"$(workdir)/filtered/aistrategy.csv" \
 	> /dev/null
 
 .PHONY: rebuild-aistrategy
