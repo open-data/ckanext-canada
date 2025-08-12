@@ -1803,3 +1803,95 @@ body details.canada-abbr summary::marker{
 body details.canada-abbr summary i{
   opacity: 0.75;
 }
+
+body .canada-display-none{
+  display: none;
+}
+
+body .canada-hidden{
+  visibility: hidden;
+}
+
+body .canada-border-none{
+  display: none;
+}
+
+body .canada-width-auto{
+  width: auto;
+}
+
+body .canada-width-full{
+  width: 100%;
+}
+
+body .canada-list-disc{
+  list-style-type: disc;
+}
+
+body .canada-padding-top-25{
+  padding-top: 25px;
+}
+
+body .canada-margin-top-0{
+  margin-top: 0;
+}
+
+body .canada-margin-bottom-0{
+  margin-bottom: 0;
+}
+
+body .canada-margin-bottom-10{
+  margin-bottom: 10px;
+}
+
+body .canada-margin-bottom-15{
+  margin-bottom: 15px;
+}
+
+body .canada-margin-left-10{
+  margin-left: 10px;
+}
+
+body .canada-admin-publish-checkbox{
+  float: right;
+  display: inline-block;
+  margin-top: -25px;
+}
+
+body .canada-draft-title-pill{
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+body .canada-status-modal{
+  max-height: 185px;
+  max-width: 600px;
+}
+
+body .canada-status-modal > div.modal-dialog{
+  margin: auto;
+}
+
+body .pd-datatable-ref-link{
+  opacity: 0.65;
+  margin-left: 4px;
+}
+
+body .pd-datatable-ref-link small{
+  font-size: 75%;
+}
+
+body .ogscartwrapper{
+  display: none;
+  visibility: hidden;
+}
+
+body .canada-mfa-help-link{
+  display: none;
+  margin-right: 20px;
+}
+
+body .canada-imso-approval-help-text{
+  margin-bottom: 15px;
+  display: inline-block;
+}

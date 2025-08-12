@@ -58,7 +58,7 @@
       </ul>
     </details>
   </div>
-  <table id="dtprv" class="table table-striped" data-role="table" data-mode="columntoggle" style="visibility: hidden;">
+  <table id="dtprv" class="table table-striped canada-hidden" data-role="table" data-mode="columntoggle">
     <thead>
       <tr class="font-small">
         <th scope="col" data-editable-col="false" data-priority="3"></th>
@@ -188,7 +188,7 @@
 <script type="text/javascript" src="//cdn.datatables.net/keytable/2.12.1/js/keyTable.bootstrap5.min.js" defer></script><!-- KeyTable Extension -->
 <script type="text/javascript" src="//cdn.datatables.net/plug-ins/2.2.2/features/searchHighlight/dataTables.searchHighlight.min.js" defer></script><!-- Highlight Extension -->
 {% asset 'canada_datatables/pd_datatable_js' %}
-<style>
+<style nonce="{{- h.get_inline_script_nonce() -}}">
   body #dtprv_wrapper .dt-scroll-head th:not(.bg-info){
     background-color: #{{- tableStyles.header.bgColor or 'ffffff' -}} !important;
     color: #{{- tableStyles.header.fgColor or '000000' -}} !important;

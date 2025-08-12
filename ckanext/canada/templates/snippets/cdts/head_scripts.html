@@ -20,7 +20,7 @@
   );
 </script>
 {# Styles done inline so first paint looks good. #}
-<style>
+<style nonce="{{- h.get_inline_script_nonce() -}}">
   body .app-bar-mb nav#info-pnl{
     display: none !important;
   }
