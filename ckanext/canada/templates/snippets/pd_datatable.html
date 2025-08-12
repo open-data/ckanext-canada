@@ -139,7 +139,7 @@
               for( _i = 0; _i < _rows[_index - 1]['this_keys'].length; _i++ ){
                 let fk_cell = $(_row).find('td[data-datastore-id="' + _rows[_index - 1]['this_keys'][_i] + '"]');
                 if( fk_cell.length > 0 ){
-                  $(fk_cell).append('<sup class="ref-link" style="opacity:0.65;margin-left:4px"><small style="font-size:75%;"><a target="_blank" href="' + ref_uri + '"><i class="fas fa-external-link-alt"></i></a></small></sup>');
+                  $(fk_cell).append('<sup class="ref-link pd-datatable-ref-link"><small><a target="_blank" href="' + ref_uri + '"><i class="fas fa-external-link-alt"></i></a></small></sup>');
                 }
               }
             }
