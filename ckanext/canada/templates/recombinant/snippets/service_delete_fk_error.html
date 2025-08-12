@@ -4,5 +4,5 @@
   {% set ref_table_link = h.url_for('resource.read', id=ref_dataset['id'], resource_id=ref_resource['id']) %}
 {% endif %}
 {% trans %}
-Cannot delete record(s) because the Fiscal Year, Service ID Number (<strong><em>{{ ref_values }}</em></strong>) is referenced in at least one <a target="_blank" href="{{ ref_table_link }}">Service Standards & Performance Results record.</a>
+Cannot delete record(s) because the Fiscal Year, Service ID Number (<strong><em>{{ ref_values }}</em></strong>) is referenced in at least one <a target="_blank" rel='noopener noreferrer' href="{{ ref_table_link }}">Service Standards & Performance Results record.</a>
 {% endtrans %}

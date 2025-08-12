@@ -4,5 +4,5 @@
   {% set ref_table_link = h.url_for('resource.read', id=ref_dataset['id'], resource_id=ref_resource['id']) %}
 {% endif %}
 {% trans %}
-Cannot create record (<strong><em>{{ ref_values }}</em></strong>) because the Service ID Number does not exist in the <a target="_blank" href="{{ ref_table_link }}">Service Identification Information & Metrics resource</a> for that fiscal year.
+Cannot create record (<strong><em>{{ ref_values }}</em></strong>) because the Service ID Number does not exist in the <a target="_blank" rel='noopener noreferrer' href="{{ ref_table_link }}">Service Identification Information & Metrics resource</a> for that fiscal year.
 {% endtrans %}

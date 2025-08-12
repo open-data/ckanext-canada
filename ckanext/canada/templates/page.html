@@ -25,7 +25,7 @@
                 {{ _('If you are currently entering data on this page, you may lose it when submitted. To avoid this, you can click on the log in button below to log in again in a new tab without losing your progress and you can then keep working on this page. If you have any issues please contact <a href="mailto:{support}">{support}</a>.').format(support=h.support_email_address()) | safe }}
               </div>
               <div class="modal-footer">
-                <a href="{{ h.url_for('user.login') }}" target="_blank" class="btn btn-default btn-sm">
+                <a href="{{ h.url_for('user.login') }}" target="_blank" rel='noopener noreferrer' class="btn btn-default btn-sm">
                   <span class="fa fa-sign-in" aria-hidden="true"></span>&nbsp;<span class="text">{{ _('Log in') }}</span>
                 </a>
                 <button type="button" class="btn btn-sm btn-primary pull-left" data-bs-dismiss="modal">Close</button>
