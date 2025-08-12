@@ -162,8 +162,7 @@ upload-aistrategy: $(workdir)/filtered/aistrategy.csv $(workdir)/aistrategy.csv
 
 .PHONY: rebuild-aistrategy
 rebuild-aistrategy: $(workdir)/filtered/aistrategy.csv $(workdir)/aistrategy.csv
-	@$(oc_search) aistrategy_preprocess_csv --csv "$(workdir)/filtered/aistrategy.csv" --out "$(workdir)/filtered/aistrategy_search.csv"
-	@$(oc_search) import_data_csv --csv "$(workdir)/filtered/aistrategy_search.csv" --search aistrategy
+	@$(oc_search) import_data_csv --csv "$(workdir)/filtered/aistrategy.csv" --search aistrategy
 
 $(workdir)/aistrategy.csv:
 	$(ckan_command) -c $(registry_ini) $(combine) aistrategy -d $(workdir)
