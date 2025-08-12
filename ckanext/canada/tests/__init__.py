@@ -38,5 +38,4 @@ class CanadaTestBase(object):
             self.org = self.lc.action.organization_show(id='tbs-sct')
         except NotFound:
             self.org = Organization(id='tbs-sct',
-                                    name='tbs-sct',
-                                    permission_labels='')
+                                    name='tbs-sct')
