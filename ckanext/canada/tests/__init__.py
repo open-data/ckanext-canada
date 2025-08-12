@@ -28,7 +28,7 @@ class CanadaTestBase(object):
 
         try:
             self.lc = LocalCKAN()
-            self.org = self.lc.action.organization_show(name='tbs-sct')
+            self.org = self.lc.action.organization_show(id='tbs-sct')
         except NotFound:
             self.org = Organization(id='tbs-sct',
                                     name='tbs-sct')
