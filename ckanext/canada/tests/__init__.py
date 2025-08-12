@@ -26,15 +26,17 @@ class CanadaTestBase(object):
         if not validation_tables_exist():
             validation_create_tables()
 
-        try:
-            self.lc = LocalCKAN()
-            self.org = self.lc.action.organization_show(id='tbs-sct')
-        except NotFound:
-            self.org = Organization(id='tbs-sct',
-                                    name='tbs-sct')
-
         security_db_setup()
         _run_migrations('activity')
         update_triggers()
         _create_triggers(dataset_types=[], all_types=True)
         _run_migrations('canada_public')
+
+        # NOTE: always make a tbs-sct org
+        try:
+            self.lc = LocalCKAN()
+            self.org = self.lc.action.organization_show(id='tbs-sct')
+        except NotFound:
+            self.org = Organization(id='tbs-sct',
+                                    name='tbs-sct',
+                                    permission_labels='')
