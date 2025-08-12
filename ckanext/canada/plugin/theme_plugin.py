@@ -90,4 +90,5 @@ class CanadaThemePlugin(p.SingletonPlugin):
             'max_resources_per_dataset',
             'support_email_address',
             'default_open_email_address',
+            'get_inline_script_nonce',
         ])
