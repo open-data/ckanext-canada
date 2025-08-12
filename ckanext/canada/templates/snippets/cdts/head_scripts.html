@@ -1,7 +1,7 @@
 <script src="{{ h.cdts_asset('/compiled/soyutils.js', theme=False) }}"></script>
 <script src="{{ h.cdts_asset('/compiled/wet-' ~ (h.lang() or 'en') ~ '.js', theme=False) }}"></script>
 {# See: https://github.com/wet-boew/cdts-sgdc/blob/v4.1.0/src/gcweb/refTop.ejs #}
-<script>
+<script nonce="{{- h.get_inline_script_nonce() -}}">
   document.write(
     wet.builder.refTop({
       {% if g.is_registry %}

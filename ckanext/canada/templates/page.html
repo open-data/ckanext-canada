@@ -143,13 +143,13 @@
   {% if g.is_registry %}
     {%- block session_timeout -%}
       {% if g.userobj and h.get_timeout_length() %}
-        <script>
+        <script nonce="{{- h.get_inline_script_nonce() -}}">
           setTimeout(function(){ $('#timeout').modal('show'); }, {{ h.get_timeout_length() }} * 1000);
         </script>
       {% endif %}
     {%- endblock -%}
     {% block ie_browser_warning %}
-      <script>
+      <script nonce="{{- h.get_inline_script_nonce() -}}">
         if (navigator.appName == 'Microsoft Internet Explorer' ||
             !!(navigator.userAgent.match(/Trident/) || navigator.userAgent.match(/rv:11/)) ||
             (typeof $.browser !== "undefined" && $.browser.msie == 1))

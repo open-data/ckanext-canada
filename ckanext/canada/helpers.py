@@ -1121,3 +1121,7 @@ def support_email_address() -> str:
 
 def default_open_email_address() -> str:
     return config['ckanext.canada.default_open_email_address']
+
+
+def get_inline_script_nonce() -> str:
+    return config['ckanext.canada.inline_script_nonce']
