@@ -20,7 +20,7 @@
     <span property="sameAs" value="{{ _('http://open.canada.ca') }}"></span>
     <span property="publisher" typeof="Organization">
       <span property="name" value="{{ _('Government of Canada, Treasury Board of Canada Secretariat') }}"></span>
-      <span property="email" value="open-ouvert@tbs-sct.gc.ca"></span>
+      <span property="email" value="{{ h.support_email_address() }}"></span>
     </span>
     <span property="genre" value="{{ _('Information and Communications Government and Politics') }}"></span>
     <span property="license" typeof="CreativeWork">

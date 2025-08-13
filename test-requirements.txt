@@ -4,6 +4,6 @@ soupsieve==1.2  # python2 compat beautifulsoup dep
 importlib-metadata==1.6.1  # python2 compat beautifulsoup dep
 zipp==1.2.0  # python2 compat beautifulsoup dep
 beautifulsoup4==4.8.2
-pytest==4.6.5
+pytest==7.4.4
 pytest-ckan
-pytest-cov==2.7.1
+pytest-cov==3.0.0

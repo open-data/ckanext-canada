@@ -55,7 +55,7 @@
   <div class="row canada-page-main-wrapper" id="quick-links">
     <div class="col-md-12">
       <section>
-        <p>{{ _('Welcome to the Open Government Registry. Use the Registry to add government resources that will be published on the Open Government Portal. For more information on using the Registry or to report errors, contact <a href="mailto:open-ouvert@tbs-sct.gc.ca">open-ouvert@tbs-sct.gc.ca</a>.') | safe }}</p>
+        <p>{{ _('Welcome to the Open Government Registry. Use the Registry to add government resources that will be published on the Open Government Portal. For more information on using the Registry or to report errors, contact <a href="mailto:{support}">{support}</a>.').format(support=h.support_email_address()) | safe }}</p>
       </section>
     </div>
     {% set orgs = h.organizations_available('read') %}

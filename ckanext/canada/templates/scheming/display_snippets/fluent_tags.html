@@ -5,6 +5,6 @@
     <li class="label label-default mrgn-rght-sm resource-tags">{{ tag }}</li>
   {%- endfor -%}
   {%- if machine_translated -%}
-    <li><i class="fa fa-language text-muted" title="{{ _('This third party metadata element has been translated using an automated translation tool.  To report any discrepancies please contact open-ouvert@tbs-sct.gc.ca') }}"></i></li>
+    <li><i class="fa fa-language text-muted" title="{{ _('This third party metadata element has been translated using an automated translation tool.  To report any discrepancies please contact {support}').format(support=h.support_email_address()) }}"></i></li>
   {%- endif -%}
 </ul>

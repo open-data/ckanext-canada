@@ -19,11 +19,11 @@
   {% if dataset_type == 'ati' %}
     {% if organization.ati_email %}
       <div class="dataset-alert alert alert-info">
-        <p>{{ (_('Informal Requests for ATI Records Previously Released are being sent to <strong>%s.</strong> Please contact <a href="mailto:open-ouvert@tbs-sct.gc.ca">open-ouvert@tbs-sct.gc.ca</a> if that address is no longer valid.') | safe ).format(organization.ati_email) }}</p>
+        <p>{{ _('Informal Requests for ATI Records Previously Released are being sent to <strong>{ati_email}.</strong> Please contact <a href="mailto:{support}">{support}</a> if that address is no longer valid.').format(ati_email=organization.ati_email, support=h.support_email_address()) | safe }}</p>
       </div>
     {% else %}
       <div class="dataset-alert alert alert-danger">
-        <p>{{ _('Your organization does not have an Access to Information email on file. Please contact <a href="mailto:open-ouvert@tbs-sct.gc.ca">open-ouvert@tbs-sct.gc.ca</a> with the email for your organization\'s Access to Information Coordinator.') | safe }}</p>
+        <p>{{ _('Your organization does not have an Access to Information email on file. Please contact <a href="mailto:{support}">{support}</a> with the email for your organization\'s Access to Information Coordinator.').format(support=h.support_email_address()) | safe }}</p>
       </div>
     {% endif %}
   {% endif %}

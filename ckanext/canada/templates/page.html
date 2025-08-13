@@ -22,7 +22,7 @@
                 </button>
               </header>
               <div class="modal-body">
-                {{ _('If you are currently entering data on this page, you may lose it when submitted. To avoid this, you can click on the log in button below to log in again in a new tab without losing your progress and you can then keep working on this page. If you have any issues please contact <a href="mailto:open-ouvert@tbs-sct.gc.ca">open-ouvert@tbs-sct.gc.ca</a>.') | safe }}
+                {{ _('If you are currently entering data on this page, you may lose it when submitted. To avoid this, you can click on the log in button below to log in again in a new tab without losing your progress and you can then keep working on this page. If you have any issues please contact <a href="mailto:{support}">{support}</a>.').format(support=h.support_email_address()) | safe }}
               </div>
               <div class="modal-footer">
                 <a href="{{ h.url_for('user.login') }}" target="_blank" class="btn btn-default btn-sm">
@@ -52,7 +52,7 @@
           {% block page_title %}
             {% if g.is_registry %}
               <div id="ie_warning" class="alert alert-warning" style="display: none">
-                <p>{{ _('Internet Explorer is no longer being supported within the Open Government Registry. Some features will not work as expected, including publication of records. Please use MS Edge or Google Chrome, or contact <a href="mailto:open-ouvert@tbs-sct.gc.ca">open-ouvert@tbs-sct.gc.ca</a> for additional support.') | safe }}</p>
+                <p>{{ _('Internet Explorer is no longer being supported within the Open Government Registry. Some features will not work as expected, including publication of records. Please use MS Edge or Google Chrome, or contact <a href="mailto:{support}">{support}</a> for additional support.').format(support=h.support_email_address()) | safe }}</p>
               </div>
             {% endif %}
             <h1 property="name" id="wb-cont">
