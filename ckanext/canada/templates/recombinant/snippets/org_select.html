@@ -18,7 +18,7 @@
            placeholder="{{ _('Search organizations...') }}"
            onchange="window.location.href=this.value"
            data-module="autocomplete"
-           data-module-source="/organization/autocomplete?q=?"
+           data-module-source="{{ h.url_for(/organization/autocomplete?q=?) }}"
            data-module-key="name"
            data-module-label="title"
            data-module-dropdownClass="recombinant-org-select2-dropdown"
