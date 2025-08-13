@@ -34,7 +34,7 @@
     {% set ga4_id = h.ga4_id() %}
     {% if ga4_id %}
       <!-- Google tag (gtag.js) -->
-      <script async src="https://www.googletagmanager.com/gtag/js?id={{ ga4_id }}"></script>
+      <script async src="https://www.googletagmanager.com/gtag/js?id={{ ga4_id }}" nonce="{{- h.get_inline_script_nonce() -}}"></script>
       <script nonce="{{- h.get_inline_script_nonce() -}}">
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
@@ -48,7 +48,7 @@
     <script type="text/javascript">
       window.loop11_key = '{{ loop11_key }}';
     </script>
-    <script src="//cdn.loop11.com/my/loop11.js" type="text/javascript" async="async"></script>
+    <script src="//cdn.loop11.com/my/loop11.js" type="text/javascript" async="async" nonce="{{- h.get_inline_script_nonce() -}}"></script>
   {% endif %}
 {% endblock %}
 

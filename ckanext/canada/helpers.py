@@ -1124,4 +1124,4 @@ def default_open_email_address() -> str:
 
 
 def get_inline_script_nonce() -> str:
-    return config['ckanext.canada.inline_script_nonce']
+    return str(request.environ.get('CSP_NONCE', ''))

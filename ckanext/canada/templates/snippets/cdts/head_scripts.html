@@ -1,23 +1,23 @@
-<script src="{{ h.cdts_asset('/compiled/soyutils.js', theme=False) }}"></script>
-<script src="{{ h.cdts_asset('/compiled/wet-' ~ (h.lang() or 'en') ~ '.js', theme=False) }}"></script>
+<script src="{{ h.cdts_asset('/compiled/soyutils.js', theme=False) }}" nonce="{{- h.get_inline_script_nonce() -}}"></script>
+<script src="{{ h.cdts_asset('/compiled/wet-' ~ (h.lang() or 'en') ~ '.js', theme=False) }}" nonce="{{- h.get_inline_script_nonce() -}}"></script>
 {# See: https://github.com/wet-boew/cdts-sgdc/blob/v4.1.0/src/gcweb/refTop.ejs #}
 <script nonce="{{- h.get_inline_script_nonce() -}}">
-  document.write(
-    wet.builder.refTop({
-      {% if g.is_registry %}
-        "isApplication": true,
-      {% else %}
-        "isApplication": false,
-        {% if h.adobe_analytics_js() %}
-          "webAnalytics": [
-            {
-              "custom": "{{ h.adobe_analytics_js() }}",
-            }
-          ],
-        {% endif %}
+  const wetHeaderScripts = wet.builder.refTop({
+    {% if g.is_registry %}
+      "isApplication": true,
+    {% else %}
+      "isApplication": false,
+      {% if h.adobe_analytics_js() %}
+        "webAnalytics": [
+          {
+            "custom": "{{ h.adobe_analytics_js() }}",
+          }
+        ],
       {% endif %}
-    })
-  );
+    {% endif %}
+  });
+  console.log(wetHeaderScripts);
+  console.log(typeof wetHeaderScripts);
 </script>
 {# Styles done inline so first paint looks good. #}
 <style nonce="{{- h.get_inline_script_nonce() -}}">

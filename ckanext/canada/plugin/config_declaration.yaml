@@ -19,8 +19,11 @@ groups:
         description: |
             Generic email address for Open Canada.
         required: false
-      - key: ckanext.canada.inline_script_nonce
-        default: eu4SO0tyWQ
+      - key: ckanext.canada.content_security_policy
+        default: >
+          Content-Security-Policy: default-src 'self';
         description: |
-            Generated nonce for safe inline scripts.
-        required: true
+            Content-Security-Policy header value for all requests.
+            To use nonces, use 'nonce-[[NONCE]]' and [[NONCE]] will
+            be replaced with a generated nonce.
+        required: false

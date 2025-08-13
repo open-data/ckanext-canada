@@ -150,12 +150,16 @@
     {%- endblock -%}
     {% block ie_browser_warning %}
       <script nonce="{{- h.get_inline_script_nonce() -}}">
-        if (navigator.appName == 'Microsoft Internet Explorer' ||
+        window.addEventListener('load', function(){
+          $(document).ready(function(){
+            if (navigator.appName == 'Microsoft Internet Explorer' ||
             !!(navigator.userAgent.match(/Trident/) || navigator.userAgent.match(/rv:11/)) ||
             (typeof $.browser !== "undefined" && $.browser.msie == 1))
-        {
-          document.getElementById("ie_warning").style.display = "block";
-        }
+            {
+              document.getElementById("ie_warning").style.display = "block";
+            }
+          });
+        });
       </script>
     {% endblock %}
   {% endif %}

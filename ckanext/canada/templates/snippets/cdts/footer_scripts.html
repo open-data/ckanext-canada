@@ -1,15 +1,23 @@
 {# See: https://github.com/wet-boew/cdts-sgdc/blob/v4.1.0/src/gcweb/refFooter.ejs #}
 <script nonce="{{- h.get_inline_script_nonce() -}}">
-  document.write(
-    wet.builder.refFooter({
-      {% if g.is_registry %}
-        "isApplication": true,
-      {% else %}
-        "isApplication": false,
-        {% if h.adobe_analytics_js() %}
-          "webAnalytics": true,
-        {% endif %}
+  const wetFooterScripts = wet.builder.refFooter({
+    {% if g.is_registry %}
+      "isApplication": true,
+    {% else %}
+      "isApplication": false,
+      {% if h.adobe_analytics_js() %}
+        "webAnalytics": true,
       {% endif %}
-    })
-  );
+    {% endif %}
+  });
+  const parser = new DOMParser();
+  const doc = parser.parseFromString(wetFooterScripts, 'text/html');
+  const scripts = doc.querySelectorAll('script');
+  scripts.forEach(function(_script){
+    document.body.appendChild(_script);
+  });
+  const styles = doc.querySelectorAll('style');
+  styles.forEach(function(_style){
+    document.body.appendChild(_style);
+  });
 </script>
