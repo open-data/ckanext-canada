@@ -25,7 +25,7 @@
 
 {% block resource_actions %}
   {% set extra_classes = '' %}
-  {% if not g.is_registry or not h.check_access('package_update', {'id':pkg.id }) %}
+  {% if not g.is_registry or not h.check_access('package_update', {'id': pkg.id }) %}
     {% set extra_classes = 'resource-actions-toolbar-portal' %}
   {% endif %}
   <div class="resource-actions-toolbar {{ extra_classes }}">{{ super() }}</div>
@@ -41,7 +41,7 @@
 {% endblock %}
 
 {% block resource_content %}
-  {% if g.is_registry and 'is_resource_supported_by_xloader' in h and h.is_resource_supported_by_xloader(res) %}
+  {% if g.is_registry and 'is_resource_supported_by_xloader' in h and h.is_resource_supported_by_xloader(res) and h.check_access('package_update', {'id': pkg.id }) %}
     {% set xloader_info = h.xloader_status(res.id) %}
     {% if res.validation_status in ('failure', 'error', 'deprecated_report') %}
       <div class="canada-flash-messages"><div class="flash-messages"><div class="alert alert-dismissible fade show alert-danger">

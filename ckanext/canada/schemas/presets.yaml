@@ -314,8 +314,9 @@ presets:
     help_text:
       en: The contact person's email for the dataset
       fr: Courriel de la personne-ressource à contacter au sujet du jeu de données ou de l’ensemble de données
-    validators: scheming_required string_safe canada_maintainer_email_default strip_value email_validator
+    validators: scheming_required string_safe strip_value email_validator
     display_snippet: email_with_parameters.html
+    output_validators: canada_maintainer_email_default
     form_attrs:
       size: 60
 

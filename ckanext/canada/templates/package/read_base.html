@@ -55,7 +55,13 @@
             {% if pkg[field.field_name] is mapping %}
               {% set field_value = h.scheming_language_text(field_value) %}
             {% endif %}
-            {% if field_value %}
+            {% if field.field_name == 'maintainer_email' and not field_value and not pkg.get('maintainer_contact_form') %}
+              {# FIXME: sunset the default_open_email_address eventually... #}
+              <li class="list-group-item resource-tags">
+                <strong>{{ field_title }}{{ _(':') }}</strong>
+                {{ h.mail_to(email_address=h.default_open_email_address(), name=h.default_open_email_address()) }}
+              </li>
+            {% elif field_value %}
               <li class="list-group-item resource-tags">
                 <strong>{{ field_title }}{{ _(':') }}</strong>
                 {% snippet 'scheming/snippets/display_field.html', field=field, data=pkg, entity_type='dataset', object_type=pkg.type %}

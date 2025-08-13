@@ -13,7 +13,7 @@ portal_type: dataset
 collection: inventory
 
 guide_link: http://www.gcpedia.gc.ca/wiki/Open_Data_Inventory_/_l%E2%80%99inventaire_de_donn%C3%A9es_ouvertes
-upload_warn: 'IMPORTANT: New or updated inventories / rows will be published on open.canada.ca daily. IMSO approval must be obtained and sent to <a href="mailto:open-ouvert@tbs-sct.gc.ca">open-ouvert@tbs-sct.gc.ca</a> before uploading your inventory data. By clicking the Submit button, you are confirming IMSO approval.'
+upload_warn: 'IMPORTANT: New or updated inventories / rows will be published on open.canada.ca daily. IMSO approval must be obtained and sent to <a href="mailto:{support}">{support}</a> before uploading your inventory data. By clicking the Submit button, you are confirming IMSO approval.'
 
 resources:
 - title: Open Data Inventory
