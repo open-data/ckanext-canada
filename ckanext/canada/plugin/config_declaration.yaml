@@ -27,3 +27,9 @@ groups:
             To use nonces, use 'nonce-[[NONCE]]' and [[NONCE]] will
             be replaced with a generated nonce.
         required: false
+      - key: ckanext.canada.disable_content_security_policy
+        default: false
+        description: |
+          Disables the internal Content-Security-Policy header.
+          Should not be set to True in production environments.
+        validators: boolean_validator

@@ -7,7 +7,6 @@ import string
 
 import ckan.plugins as p
 from ckan.plugins.core import plugin_loaded
-from ckan.lib.app_globals import set_app_global
 from ckan.config.middleware.flask_app import csrf
 
 from ckanext.datatablesview.blueprint import datatablesview
@@ -89,19 +88,21 @@ class CSPNonceMiddleware(object):
 
     def __call__(self, environ: Any, start_response: Any) -> Any:
         csp_nonce = ''.join(random.choices(
-                string.ascii_letters + string.digits, k=16))
+                string.ascii_letters + string.digits, k=22))
         environ['CSP_NONCE'] = csp_nonce
+        csp_header = [
+            ('Content-Security-Policy',
+             self.config['ckanext.canada.content_security_policy'].replace(
+                 '[[NONCE]]', csp_nonce).replace('\n', ' ').replace('\r', ''))]
 
         def _start_response(status: str,
                             response_headers: List[Tuple[str, str]],
                             exc_info: Optional[Any] = None):
-            response_headers += [
-                ('Content-Security-Policy',
-                 self.config['ckanext.canada.content_security_policy'].replace(
-                    '[[NONCE]]', csp_nonce).replace('\n', ' ').replace('\r', ''))]
             return start_response(
                 status,
-                response_headers,
+                response_headers if self.config[
+                    'ckanext.canada.disable_content_security_policy'] else
+                    response_headers + csp_header,
                 exc_info)
 
         return self.app(environ, _start_response)

@@ -1,6 +1,6 @@
 {# See: https://github.com/wet-boew/cdts-sgdc/blob/v4.1.0/src/gcweb/refFooter.ejs #}
 <script nonce="{{- h.get_inline_script_nonce() -}}">
-  const wetFooterScripts = wet.builder.refFooter({
+  const wetFooterString = wet.builder.refFooter({
     {% if g.is_registry %}
       "isApplication": true,
     {% else %}
@@ -10,14 +10,18 @@
       {% endif %}
     {% endif %}
   });
-  const parser = new DOMParser();
-  const doc = parser.parseFromString(wetFooterScripts, 'text/html');
-  const scripts = doc.querySelectorAll('script');
-  scripts.forEach(function(_script){
+  const wetFooterParser = new DOMParser();
+  const wetFooterDOC = wetFooterParser.parseFromString(wetFooterString, 'text/html');
+  const wetFooterScripts = wetFooterDOC.querySelectorAll('script');
+  wetFooterScripts.forEach(function(_script){
     document.body.appendChild(_script);
   });
-  const styles = doc.querySelectorAll('style');
-  styles.forEach(function(_style){
+  const wetFooterStyles = wetFooterDOC.querySelectorAll('style');
+  wetFooterStyles.forEach(function(_style){
     document.body.appendChild(_style);
+  });
+  const wetFooterObjLinks = wetFooterDOC.querySelectorAll('link');
+  wetFooterObjLinks.forEach(function(_link){
+    document.body.appendChild(_link);
   });
 </script>

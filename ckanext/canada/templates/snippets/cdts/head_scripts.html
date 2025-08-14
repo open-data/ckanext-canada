@@ -2,7 +2,7 @@
 <script src="{{ h.cdts_asset('/compiled/wet-' ~ (h.lang() or 'en') ~ '.js', theme=False) }}" nonce="{{- h.get_inline_script_nonce() -}}"></script>
 {# See: https://github.com/wet-boew/cdts-sgdc/blob/v4.1.0/src/gcweb/refTop.ejs #}
 <script nonce="{{- h.get_inline_script_nonce() -}}">
-  const wetHeaderScripts = wet.builder.refTop({
+  const wetHeaderString = wet.builder.refTop({
     {% if g.is_registry %}
       "isApplication": true,
     {% else %}
@@ -16,8 +16,24 @@
       {% endif %}
     {% endif %}
   });
-  console.log(wetHeaderScripts);
-  console.log(typeof wetHeaderScripts);
+  const wetHeaderParser = new DOMParser();
+  const wetHeaderDOC = wetHeaderParser.parseFromString(wetHeaderString, 'text/html');
+  const wetHeaderScripts = wetHeaderDOC.querySelectorAll('script');
+  wetHeaderScripts.forEach(function(_script){
+    document.head.appendChild(_script);
+  });
+  const wetHeaderStyles = wetHeaderDOC.querySelectorAll('style');
+  wetHeaderStyles.forEach(function(_style){
+    document.head.appendChild(_style);
+  });
+  const wetHeaderObjLinks = wetHeaderDOC.querySelectorAll('link');
+  wetHeaderObjLinks.forEach(function(_link){
+    document.head.appendChild(_link);
+  });
+  const wetHeaderMetaTags = wetHeaderDOC.querySelectorAll('meta');
+  wetHeaderMetaTags.forEach(function(_meta){
+    document.head.appendChild(_meta);
+  });
 </script>
 {# Styles done inline so first paint looks good. #}
 <style nonce="{{- h.get_inline_script_nonce() -}}">
