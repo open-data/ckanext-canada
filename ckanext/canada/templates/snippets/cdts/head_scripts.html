@@ -20,6 +20,7 @@
   const wetHeaderDOC = wetHeaderParser.parseFromString(wetHeaderString, 'text/html');
   const wetHeaderScripts = wetHeaderDOC.querySelectorAll('script');
   wetHeaderScripts.forEach(function(_script){
+    _script.defer = true;
     document.head.appendChild(_script);
   });
   const wetHeaderStyles = wetHeaderDOC.querySelectorAll('style');

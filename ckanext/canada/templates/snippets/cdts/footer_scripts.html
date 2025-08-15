@@ -14,6 +14,7 @@
   const wetFooterDOC = wetFooterParser.parseFromString(wetFooterString, 'text/html');
   const wetFooterScripts = wetFooterDOC.querySelectorAll('script');
   wetFooterScripts.forEach(function(_script){
+    _script.defer = true;
     document.body.appendChild(_script);
   });
   const wetFooterStyles = wetFooterDOC.querySelectorAll('style');
