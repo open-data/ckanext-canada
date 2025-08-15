@@ -102,7 +102,7 @@ class CSPNonceMiddleware(object):
                 status,
                 response_headers if self.config[
                     'ckanext.canada.disable_content_security_policy'] else
-                    response_headers + csp_header,
+                        response_headers + csp_header,
                 exc_info)
 
         return self.app(environ, _start_response)
