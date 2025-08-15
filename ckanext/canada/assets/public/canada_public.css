@@ -1820,6 +1820,10 @@ body .canada-width-full{
   width: 100%;
 }
 
+body .canada-break-words{
+  word-wrap: break-word;
+}
+
 body .canada-list-disc{
   list-style-type: disc;
 }

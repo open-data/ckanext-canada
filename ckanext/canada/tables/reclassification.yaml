@@ -190,7 +190,7 @@ resources:
     validation: This field must not be empty
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
-      style: "width: 100%; display: block"
+      class: form-control canada-width-full d-block
 
   - datastore_id: reason_fr
     datastore_type: text
@@ -204,7 +204,7 @@ resources:
     validation: This field must not be empty
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
-      style: "width: 100%; display: block"
+      class: form-control canada-width-full d-block
 
   - datastore_id: record_created
     label: Record Creation Time
