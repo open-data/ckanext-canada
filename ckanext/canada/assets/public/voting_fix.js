@@ -3,7 +3,7 @@ function load_voting_scripts(){
     var votingWrapper = document.getElementById('voting-wrapper');
     var hasLoadedVotingScripts = false;
 
-    if( typeof votingWrapper !== "undefined" ){
+    if( typeof votingWrapper != "undefined" && votingWrapper != null ){
 
       votingWrapper.style.opacity = 0;
       votingWrapper.style.pointerEvents = 'none';

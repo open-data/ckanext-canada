@@ -10,21 +10,23 @@
       {% endif %}
     {% endif %}
   });
+  let newWetFooterString = '';
   const wetFooterParser = new DOMParser();
   const wetFooterDOC = wetFooterParser.parseFromString(wetFooterString, 'text/html');
   const wetFooterScripts = wetFooterDOC.querySelectorAll('script');
   wetFooterScripts.forEach(function(_script){
     _script.setAttribute('nonce', '{{- h.get_inline_script_nonce() -}}');
+    newWetHeaderString += _script.outerHTML;
   });
   const wetFooterStyles = wetFooterDOC.querySelectorAll('style');
   wetFooterStyles.forEach(function(_style){
     _style.setAttribute('nonce', '{{- h.get_inline_script_nonce() -}}');
+    newWetHeaderString += _style.outerHTML;
   });
   const wetFooterObjLinks = wetFooterDOC.querySelectorAll('link');
   wetFooterObjLinks.forEach(function(_link){
     _link.setAttribute('nonce', '{{- h.get_inline_script_nonce() -}}');
+    newWetHeaderString += _link.outerHTML;
   });
-  const wetFooterSerializer = new XMLSerializer();
-  const newWetFooterString = wetFooterSerializer.serializeToString(wetFooterDOC);
   document.write(newWetFooterString);
 </script>
