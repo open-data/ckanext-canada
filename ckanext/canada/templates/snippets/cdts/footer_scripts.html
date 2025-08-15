@@ -14,15 +14,17 @@
   const wetFooterDOC = wetFooterParser.parseFromString(wetFooterString, 'text/html');
   const wetFooterScripts = wetFooterDOC.querySelectorAll('script');
   wetFooterScripts.forEach(function(_script){
-    _script.defer = true;
-    document.body.appendChild(_script);
+    _script.setAttribute('nonce', '{{- h.get_inline_script_nonce() -}}');
   });
   const wetFooterStyles = wetFooterDOC.querySelectorAll('style');
   wetFooterStyles.forEach(function(_style){
-    document.body.appendChild(_style);
+    _style.setAttribute('nonce', '{{- h.get_inline_script_nonce() -}}');
   });
   const wetFooterObjLinks = wetFooterDOC.querySelectorAll('link');
   wetFooterObjLinks.forEach(function(_link){
-    document.body.appendChild(_link);
+    _link.setAttribute('nonce', '{{- h.get_inline_script_nonce() -}}');
   });
+  const wetFooterSerializer = new XMLSerializer();
+  const newWetFooterString = wetFooterSerializer.serializeToString(wetFooterDOC);
+  document.write(newWetFooterString);
 </script>

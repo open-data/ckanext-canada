@@ -20,21 +20,19 @@
   const wetHeaderDOC = wetHeaderParser.parseFromString(wetHeaderString, 'text/html');
   const wetHeaderScripts = wetHeaderDOC.querySelectorAll('script');
   wetHeaderScripts.forEach(function(_script){
-    _script.defer = true;
-    document.head.appendChild(_script);
+    _script.setAttribute('nonce', '{{- h.get_inline_script_nonce() -}}');
   });
   const wetHeaderStyles = wetHeaderDOC.querySelectorAll('style');
   wetHeaderStyles.forEach(function(_style){
-    document.head.appendChild(_style);
+    _style.setAttribute('nonce', '{{- h.get_inline_script_nonce() -}}');
   });
   const wetHeaderObjLinks = wetHeaderDOC.querySelectorAll('link');
   wetHeaderObjLinks.forEach(function(_link){
-    document.head.appendChild(_link);
+    _link.setAttribute('nonce', '{{- h.get_inline_script_nonce() -}}');
   });
-  const wetHeaderMetaTags = wetHeaderDOC.querySelectorAll('meta');
-  wetHeaderMetaTags.forEach(function(_meta){
-    document.head.appendChild(_meta);
-  });
+  const wetHeaderSerializer = new XMLSerializer();
+  const newWetHeaderString = wetHeaderSerializer.serializeToString(wetHeaderDOC);
+  document.write(newWetHeaderString);
 </script>
 {# Styles done inline so first paint looks good. #}
 <style nonce="{{- h.get_inline_script_nonce() -}}">
