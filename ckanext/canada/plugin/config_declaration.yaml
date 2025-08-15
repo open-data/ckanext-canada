@@ -19,3 +19,17 @@ groups:
         description: |
             Generic email address for Open Canada.
         required: false
+      - key: ckanext.canada.content_security_policy
+        default: >
+          Content-Security-Policy: default-src 'self';
+        description: |
+            Content-Security-Policy header value for all requests.
+            To use nonces, use 'nonce-[[NONCE]]' and [[NONCE]] will
+            be replaced with a generated nonce.
+        required: false
+      - key: ckanext.canada.disable_content_security_policy
+        default: false
+        description: |
+          Disables the internal Content-Security-Policy header.
+          Should not be set to True in production environments.
+        validators: boolean_validator

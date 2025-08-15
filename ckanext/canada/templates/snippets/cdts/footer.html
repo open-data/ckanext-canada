@@ -1,4 +1,4 @@
-<script>
+<script nonce="{{- h.get_inline_script_nonce() -}}">
   let refFooter = document.getElementById("ref-footer");
   if( refFooter ){
     refFooter.outerHTML = wet.builder.footer({});

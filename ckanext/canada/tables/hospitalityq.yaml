@@ -140,7 +140,7 @@ resources:
     format_type: Free text
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
-      style: "width: 100%; display: block"
+      class: form-control canada-width-full d-block
 
   # 3.7
   - datastore_id: description_fr
@@ -158,7 +158,7 @@ resources:
     format_type: Free text
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
-      style: "width: 100%; display: block"
+      class: form-control canada-width-full d-block
 
   # 3.8
   - datastore_id: start_date
@@ -519,7 +519,7 @@ resources:
     format_type: Free text
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
-      style: "width: 100%; display: block"
+      class: form-control canada-width-full d-block
 
     # 3.18
   - datastore_id: additional_comments_fr
@@ -534,7 +534,7 @@ resources:
     format_type: Free text
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
-      style: "width: 100%; display: block"
+      class: form-control canada-width-full d-block
 
   - datastore_id: record_created
     label: Record Creation Time

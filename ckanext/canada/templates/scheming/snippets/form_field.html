@@ -3,8 +3,8 @@
 {% block removal_popup%}
   {% set locale = h.dump_json({'content': _('Are you sure you want to delete this status?') }) %}
   {% set template = [
-    '<div class="modal wb-overlay wb-popup-mid" id="mid-screen" tabindex="-1" role="dialog" aria-labelledby="mid-screenLabel" aria-hidden="true" style="max-height:185px;max-width:600px;">',
-      '<div class="modal-dialog" role="document" style="margin:auto;">',
+    '<div class="modal wb-overlay wb-popup-mid canada-status-modal" id="mid-screen" tabindex="-1" role="dialog" aria-labelledby="mid-screenLabel" aria-hidden="true">',
+      '<div class="modal-dialog" role="document">',
         '<div class="modal-content">',
           '<div class="modal-header">',
             '<h3 class="modal-title"></h3>',

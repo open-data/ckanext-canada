@@ -13,6 +13,6 @@
 {% endblock %}
 
 {% block scripts %}
-  <script src="{{ h.cdts_asset('/js/deps/jquery.dataTables.min.js') }}"> </script>
+  <script src="{{ h.cdts_asset('/js/deps/jquery.dataTables.min.js') }}" nonce="{{- h.get_inline_script_nonce() -}}"> </script>
   {{ super() }}
 {% endblock %}

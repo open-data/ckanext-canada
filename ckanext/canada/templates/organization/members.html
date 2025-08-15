@@ -54,7 +54,7 @@
 {% block styles %}
   {{ super() }}
   {% if is_org_editor %}
-    <style>
+    <style nonce="{{- h.get_inline_script_nonce() -}}">
       .organization-members-content-view-wrapper > header.page-header,
       .organization-members-content-view-wrapper > header.page-header ul.nav-tabs{
         margin: 0;

@@ -97,6 +97,13 @@ div.canada-disabled-view-alert{
   width: 49%;
   margin-left: -1%;
 }
+body .pd-datatable-ref-link{
+  opacity: 0.65;
+  margin-left: 4px;
+}
+body .pd-datatable-ref-link small{
+  font-size: 75%;
+}
 /*#####################
 ##       END         ##
 ##  Datatables Views ##
