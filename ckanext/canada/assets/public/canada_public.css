@@ -1895,3 +1895,11 @@ body .canada-imso-approval-help-text{
   margin-bottom: 15px;
   display: inline-block;
 }
+
+body .d-none-soft{
+  display: none;
+}
+
+body select[data-field-select2="True"]{
+  display: none !important;
+}
