@@ -84,7 +84,7 @@
           </li>
           {% if res.url and h.is_url(res.url) %}
             <li>
-              <a href="{{ res.url }}" class="resource-url-analytics" target="_blank" data-pkg-id="{{ pkg.id }}" data-res-id="{{ res.id }}" data-org-id="{{ pkg.organization.id }}">
+              <a href="{{ res.url }}" class="resource-url-analytics" target="_blank" rel='noopener noreferrer' data-pkg-id="{{ pkg.id }}" data-res-id="{{ res.id }}" data-org-id="{{ pkg.organization.id }}">
                 {% if res.has_views or res.url_type == 'upload' %}
                   <i class="fa fa-arrow-circle-down" aria-hidden="true"></i>&nbsp;{{ _('Download') }}
                 {% else %}
@@ -96,7 +96,7 @@
           {% set fgp_url = h.fgp_viewer_url(pkg) %}
           {% if fgp_url and res.url and h.is_url(res.url) and res.format not in ['PDF','HTML', 'PNG', 'CSV', 'TXT',] %}
             <li>
-              <a href="{{ fgp_url }}" class="dropdown-item" target="_blank">
+              <a href="{{ fgp_url }}" class="dropdown-item" target="_blank" rel='noopener noreferrer'>
                 <i class="fa fa-map-marker" aria-hidden="true"></i>&nbsp;{{ _('View on Map') }}
               </a>
             </li>
