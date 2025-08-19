@@ -34,7 +34,9 @@ resources:
           en: "This field is populated by the user with the reference number of the Experiment. This number is a mandatory system requirement when publishing a template."
           fr: "Ce champ est rempli par l’utilisateur avec le numéro de référence de l'experiment. Le numéro est une exigence de système obligatoire pour la publication d’un modèle."
         excel_required: true
-        format_type: "Free text"
+        format_type:
+          en: Free text
+          fr: Texte libre
         label:
           en: "Reference Number"
           fr: "Numéro de référence"
@@ -48,7 +50,9 @@ resources:
           en: "This field describes the project title, in English"
           fr: "Ce champ décrira le titre du projet, en anglais"
         excel_required: true
-        format_type: "Free text"
+        format_type:
+          en: Free text
+          fr: Texte libre
         form_attrs:
           size: 120
         label:
@@ -65,7 +69,9 @@ resources:
           en: "This field describes the project title, in French"
           fr: "Ce champ décrira le titre du projet, en français"
         excel_required: true
-        format_type: "Free text"
+        format_type:
+          en: Free text
+          fr: Texte libre
         form_attrs:
           size: 120
         label:
@@ -83,7 +89,9 @@ resources:
           fr: "Ce champ décrira la question de recherche guidant le projet, en anglais"
         excel_column_width: 50
         excel_required: true
-        format_type: "Free text"
+        format_type:
+          en: Free text
+          fr: Texte libre
         form_attrs:
           size: 120
         label:
@@ -101,7 +109,9 @@ resources:
           fr: "Ce champ décrira la question de recherche guidant le projet, en français"
         excel_column_width: 50
         excel_required: true
-        format_type: "Free text"
+        format_type:
+          en: Free text
+          fr: Texte libre
         form_attrs:
           size: 120
         label:
@@ -119,7 +129,9 @@ resources:
           fr: "Ce champ résumera les information-clés à propos du projet, y compris les résultats lorque le projet est complété, en anglais"
         excel_column_width: 50
         excel_required: true
-        format_type: "Free Text (separate paragraphs with two blank lines)"
+        format_type:
+          en: Free text (separate paragraphs with two blank lines)
+          fr: Texte libre (separate paragraphs with two blank lines)
         form_snippet: scheming/form_snippets/textarea.html
         form_attrs:
             style: "width: 100%; display: block"
@@ -138,7 +150,9 @@ resources:
           fr: "Ce champ résumera les information-clés à propos du projet, y compris les résultats lorque le projet est complété, en français"
         excel_column_width: 50
         excel_required: true
-        format_type: "Free Text (separate paragraphs with two blank lines)"
+        format_type:
+          en: Free text (separate paragraphs with two blank lines)
+          fr: Texte libre (separate paragraphs with two blank lines)
         form_snippet: scheming/form_snippets/textarea.html
         form_attrs:
             style: "width: 100%; display: block"
@@ -157,7 +171,9 @@ resources:
           fr: "Ce champ décrira à quand remonte la dernière mise à jour."
         excel_column_width: 28
         excel_required: true
-        format_type: "Date (Please format the data as YYYY-MM-DD)"
+        format_type:
+          en: Date (Please format the data as YYYY-MM-DD)
+          fr: Date (Please format the data as YYYY-MM-DD)
         form_snippet: scheming/form_snippets/date.html
         label:
           en: "Last Updated"
@@ -197,7 +213,9 @@ resources:
         excel_column_width: 20
         excel_full_text_choices: true
         excel_required: true
-        format_type: "Controlled List"
+        format_type:
+          en: Controlled List
+          fr: Liste contrôlée
         label:
           en: "Experimental area"
           fr: "Secteur d'expérimentation"
@@ -227,7 +245,9 @@ resources:
         excel_column_width: 20
         excel_full_text_choices: true
         excel_required: true
-        format_type: "Controlled List"
+        format_type:
+          en: Controlled List
+          fr: Liste contrôlée
         label:
           en: "Design"
           fr: "Devis"
@@ -243,7 +263,9 @@ resources:
           fr: "Ce champ décrira les détails du devis de recherche employé dans le projet."
         excel_column_width: 50
         excel_required: true
-        format_type: "Free Text (separate paragraphs with two blank lines)"
+        format_type:
+          en: Free text (separate paragraphs with two blank lines)
+          fr: Texte libre (separate paragraphs with two blank lines)
         form_snippet: scheming/form_snippets/textarea.html
         form_attrs:
             style: "width: 100%; display: block"
@@ -262,7 +284,9 @@ resources:
           fr: "Ce champ décrira les détails du devis de recherche employé dans le projet."
         excel_column_width: 50
         excel_required: true
-        format_type: "Free Text (separate paragraphs with two blank lines)"
+        format_type:
+          en: Free text (separate paragraphs with two blank lines)
+          fr: Texte libre (separate paragraphs with two blank lines)
         form_snippet: scheming/form_snippets/textarea.html
         form_attrs:
             style: "width: 100%; display: block"
@@ -281,7 +305,9 @@ resources:
           fr: "Ce champ décrira l’intervention testée dans le projet."
         excel_column_width: 50
         excel_required: true
-        format_type: "Free Text (separate paragraphs with two blank lines)"
+        format_type:
+          en: Free text (separate paragraphs with two blank lines)
+          fr: Texte libre (separate paragraphs with two blank lines)
         form_snippet: scheming/form_snippets/textarea.html
         form_attrs:
             style: "width: 100%; display: block"
@@ -300,7 +326,9 @@ resources:
           fr: "Ce champ décrira l’intervention testée dans le projet."
         excel_column_width: 50
         excel_required: true
-        format_type: "Free Text (separate paragraphs with two blank lines)"
+        format_type:
+          en: Free text (separate paragraphs with two blank lines)
+          fr: Texte libre (separate paragraphs with two blank lines)
         form_snippet: scheming/form_snippets/textarea.html
         form_attrs:
             style: "width: 100%; display: block"
@@ -319,7 +347,9 @@ resources:
           fr: "Ce champ décrira l’intervention testée dans le projet."
         excel_column_width: 50
         excel_required: true
-        format_type: "Free Text (separate paragraphs with two blank lines)"
+        format_type:
+          en: Free text (separate paragraphs with two blank lines)
+          fr: Texte libre (separate paragraphs with two blank lines)
         form_snippet: scheming/form_snippets/textarea.html
         form_attrs:
             style: "width: 100%; display: block"
@@ -338,7 +368,9 @@ resources:
           fr: "Ce champ décrira la/les mesure(s) de résultat(s) employée(s) dans le projet."
         excel_column_width: 50
         excel_required: true
-        format_type: "Free Text (separate paragraphs with two blank lines)"
+        format_type:
+          en: Free text (separate paragraphs with two blank lines)
+          fr: Texte libre (separate paragraphs with two blank lines)
         form_snippet: scheming/form_snippets/textarea.html
         form_attrs:
             style: "width: 100%; display: block"
@@ -357,7 +389,9 @@ resources:
           fr: "Ce champ décrira la/les mesure(s) de résultat(s) employée(s) dans le projet."
         excel_column_width: 50
         excel_required: true
-        format_type: "Free Text (separate paragraphs with two blank lines)"
+        format_type:
+          en: Free text (separate paragraphs with two blank lines)
+          fr: Texte libre (separate paragraphs with two blank lines)
         form_snippet: scheming/form_snippets/textarea.html
         form_attrs:
             style: "width: 100%; display: block"
@@ -376,7 +410,9 @@ resources:
           fr: "Ce champ décrira les résultats observés dans le projet."
         excel_column_width: 50
         excel_required: true
-        format_type: "Free Text (separate paragraphs with two blank lines)"
+        format_type:
+          en: Free text (separate paragraphs with two blank lines)
+          fr: Texte libre (separate paragraphs with two blank lines)
         form_snippet: scheming/form_snippets/textarea.html
         form_attrs:
             style: "width: 100%; display: block"
@@ -406,7 +442,9 @@ resources:
         excel_column_width: 20
         excel_full_text_choices: true
         excel_required: true
-        format_type: "Controlled List"
+        format_type:
+          en: Controlled List
+          fr: Liste contrôlée
         label:
           en: Status
           fr: Statut
@@ -422,7 +460,9 @@ resources:
           fr: "Ce champ décrira la structure organisationnelle liée à ce projet (si applicable), en anglais"
         excel_column_width: 35
         excel_required: false
-        format_type: "Free text"
+        format_type:
+          en: Free text
+          fr: Texte libre
         label:
           en: "Lead Branch and/or Unit (English)"
           fr: "Direction et/ou unité responsable (en anglais)"
@@ -438,7 +478,9 @@ resources:
           fr: "Ce champ décrira la structure organisationnelle liée à ce projet (si applicable), en français"
         excel_column_width: 35
         excel_required: false
-        format_type: "Free text"
+        format_type:
+          en: Free text
+          fr: Texte libre
         label:
           en: "Lead Branch and/or Unit (French)"
           fr: "Direction et/ou unité responsable (en français))"
@@ -454,7 +496,9 @@ resources:
           fr: "Ce champ incluera un lien URL fournissant des information additionnelles (p.ex. rapport, blogue), en anglais."
         excel_column_width: 50
         excel_required: false
-        format_type: "Free text"
+        format_type:
+          en: Free text
+          fr: Texte libre
         form_snippet: scheming/form_snippets/textarea.html
         form_attrs:
           style: "width: 100%; display: block"
@@ -473,7 +517,9 @@ resources:
           fr: "Ce champ incluera un lien URL fournissant des information additionnelles (p.ex. rapport, blogue), en français."
         excel_column_width: 50
         excel_required: false
-        format_type: "Free text"
+        format_type:
+          en: Free text
+          fr: Texte libre
         form_snippet: scheming/form_snippets/textarea.html
         form_attrs:
           style: "width: 100%; display: block"

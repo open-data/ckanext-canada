@@ -56,7 +56,9 @@ resources:
       fr: "Décrivez brièvement, en anglais, le mandat du ministère, ses principaux programmes et les liens avec les lois ou les règlements fondamentaux afin d’aider les lecteurs à comprendre les dépenses de voyages, d’accueil et de conférences engagées par le ministère, et en quoi ces dépenses soutiennent le mandat du ministère"
     obligation: Mandatory
     excel_required: true
-    format_type: Free text
+    format_type:
+      en: Free text
+      fr: Texte libre
     validation: This field must not be empty
     datastore_type: text
     excel_column_width: 50
@@ -81,7 +83,9 @@ resources:
       fr: "Décrivez brièvement, en français, le mandat du ministère, ses principaux programmes et les liens avec les lois ou les règlements fondamentaux afin d’aider les lecteurs à comprendre les dépenses de voyages, d’accueil et de conférences engagées par le ministère, et en quoi ces dépenses soutiennent le mandat du ministère"
     obligation: Mandatory
     excel_required: true
-    format_type: Free text
+    format_type:
+      en: Free text
+      fr: Texte libre
     validation: This field must not be empty
     datastore_type: text
     excel_column_width: 50

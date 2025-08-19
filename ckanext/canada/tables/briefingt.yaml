@@ -32,7 +32,9 @@ resources:
     obligation: Mandatory
     excel_required: true
     form_required: true
-    format_type: Free text
+    format_type:
+      en: Free text
+      fr: Texte libre
     validation: This field must not be empty
     datastore_type: text
     excel_column_width: 28
@@ -48,7 +50,9 @@ resources:
     obligation: Mandatory
     excel_required: true
     form_required: true
-    format_type: Free text
+    format_type:
+      en: Free text
+      fr: Texte libre
     validation: This field must not be empty
     occurrence: Single
     datastore_type: text
@@ -67,7 +71,9 @@ resources:
     obligation: Mandatory
     excel_required: true
     form_required: true
-    format_type: Free text
+    format_type:
+      en: Free text
+      fr: Texte libre
     validation: This field must not be empty
     occurrence: Single
     datastore_type: text
@@ -86,7 +92,9 @@ resources:
     obligation: Mandatory
     excel_required: true
     form_required: true
-    format_type: Free text
+    format_type:
+      en: Free text
+      fr: Texte libre
     validation: This field must not be empty
     occurrence: Single
     datastore_type: text
@@ -105,7 +113,9 @@ resources:
     obligation: Mandatory
     excel_required: true
     form_required: true
-    format_type: Free text
+    format_type:
+      en: Free text
+      fr: Texte libre
     validation: This field must not be empty
     occurrence: Single
     datastore_type: text
@@ -124,7 +134,9 @@ resources:
     obligation: Mandatory
     excel_required: true
     form_required: true
-    format_type: Controlled List
+    format_type:
+      en: Controlled List
+      fr: Liste contrôlée
     validation: This field must not be empty
     occurrence: Single
     datastore_type: text
@@ -152,7 +164,9 @@ resources:
     obligation: Mandatory
     excel_required: true
     form_required: true
-    format_type: Date (Please format the data as YYYY-MM-DD)
+    format_type:
+      en: Date (Please format the data as YYYY-MM-DD)
+      fr: Date (Please format the data as YYYY-MM-DD)
     validation: This field must not be empty
     occurrence: Single
     datastore_type: date
@@ -170,7 +184,9 @@ resources:
     obligation: Mandatory
     excel_required: true
     form_required: true
-    format_type: Controlled List
+    format_type:
+      en: Controlled List
+      fr: Liste contrôlée
     validation: This field must not be empty
     occurrence: Single
     datastore_type: text
@@ -197,7 +213,9 @@ resources:
       fr: Ce champ affichera de plus amples renseignements/commentaires concernant la note de breffage, en anglais.
     obligation: Optional
     excel_required: false
-    format_type: Free text
+    format_type:
+      en: Free text
+      fr: Texte libre
     validation: None
     occurrence: Single
     datastore_type: text
@@ -216,7 +234,9 @@ resources:
       fr: Ce champ affichera de plus amples renseignements/commentaires concernant la note de breffage, en français.
     obligation: Optional
     excel_required: false
-    format_type: Free text
+    format_type:
+      en: Free text
+      fr: Texte libre
     validation: None
     occurrence: Single
     datastore_type: text

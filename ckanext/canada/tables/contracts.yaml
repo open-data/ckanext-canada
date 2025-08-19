@@ -1890,7 +1890,9 @@ resources:
       en: Mandatory for contracts after 2019-01-01
       fr: Obligatoire pour les marchés conclus après le 2019-01-01
     excel_required_formula: 'VALUE({contract_date})>=DATE(2019,1,1)'
-    format_type: YYYY-YYYY-QX
+    format_type:
+      en: YYYY-YYYY-QX
+      fr: YYYY-YYYY-QX
     datastore_type: text
     choices_file: choices/quarter.yaml
 
@@ -2264,7 +2266,9 @@ resources:
       en: Reporting Period
       fr: Periode de declaration
     excel_required: true
-    format_type: YYYY-YYYY-QX
+    format_type:
+      en: YYYY-YYYY-QX
+      fr: YYYY-YYYY-QX
     datastore_type: text
     choices_file: choices/quarter.yaml
     form_required: true
