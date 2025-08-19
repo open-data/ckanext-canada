@@ -11,7 +11,7 @@
       {% if pkg_dict.url %}
         <tr>
           <td>{{ _('Source') }}</td>
-          <td>{{ h.link_to(pkg_dict.url, pkg_dict.url, rel='foaf:homepage', target='_blank') }}</td>
+          <td>{{ h.link_to(pkg_dict.url, pkg_dict.url, rel='foaf:homepage noopener noreferrer', target='_blank') }}</td>
         </tr>
       {% endif %}
       {% if pkg_dict.author_email %}
