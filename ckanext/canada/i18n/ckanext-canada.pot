@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ckanext-canada 0.4.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-08-08 11:07-0400\n"
+"POT-Creation-Date: 2025-08-12 16:20+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2172,7 +2172,8 @@ msgstr ""
 msgid ""
 "<p>As a sysadmin user you have full control over this CKAN instance. Proceed "
 "with care!</p> <p>For guidance on using sysadmin features, see the CKAN  <a "
-"href=\"%(docs_url)s\" target=\"_blank\">sysadmin guide</a></p>"
+"href=\"%(docs_url)s\" target=\"_blank\" rel='noopener noreferrer'>sysadmin "
+"guide</a></p>"
 msgstr ""
 
 #: ckanext/canada/templates/admin/jobs.html:8
@@ -3259,17 +3260,18 @@ msgstr ""
 msgid ""
 "Cannot delete record(s) because the Fiscal Year, Service ID Number "
 "(<strong><em>%(ref_values)s</em></strong>) is referenced in at least one <a "
-"target=\"_blank\" href=\"%(ref_table_link)s\">Service Standards & Performance"
-" Results record.</a>"
+"target=\"_blank\" rel='noopener noreferrer' "
+"href=\"%(ref_table_link)s\">Service Standards & Performance Results "
+"record.</a>"
 msgstr ""
 
 #: ckanext/canada/templates/recombinant/snippets/service_std_upsert_fk_error.html:6
 #, python-format
 msgid ""
 "Cannot create record (<strong><em>%(ref_values)s</em></strong>) because the "
-"Service ID Number does not exist in the <a target=\"_blank\" "
-"href=\"%(ref_table_link)s\">Service Identification Information & Metrics "
-"resource</a> for that fiscal year."
+"Service ID Number does not exist in the <a target=\"_blank\" rel='noopener "
+"noreferrer' href=\"%(ref_table_link)s\">Service Identification Information & "
+"Metrics resource</a> for that fiscal year."
 msgstr ""
 
 #: ckanext/canada/templates/recombinant/snippets/xls_upload.html:7
@@ -3446,7 +3448,9 @@ msgid "Errors in dataset"
 msgstr ""
 
 #: ckanext/canada/templates/scheming/snippets/resource_validation_errors.html:10
-msgid "The dataset <a href=\"{0}\" target=\"_blank\">{1}</a> contains errors:"
+msgid ""
+"The dataset <a href=\"{0}\" target=\"_blank\" rel=\"noopener "
+"noreferrer\">{1}</a> contains errors:"
 msgstr ""
 
 #: ckanext/canada/templates/scheming/snippets/resource_validation_errors.html:74
