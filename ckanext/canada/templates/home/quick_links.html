@@ -73,6 +73,9 @@
             )}}
             {{ quick_link_pd('experiment') }}
             {{ quick_link_pd('nap5') }}
+            {% if org_name == 'tbs-sct' %}
+              {{ quick_link_pd('aistrategy') }}
+            {% endif %}
           </ul>
         </section>
         <section id="ql-open-info">
@@ -135,9 +138,6 @@
             {{ quick_link_pd('wrongdoing') }}
             {{ quick_link_pd('contractsa') }}
             {{ quick_link_pd('ati') }}
-            {% if org_name == 'tbs-sct' %}
-              {{ quick_link_pd('aistrategy') }}
-            {% endif %}
             {{ quick_link_pd('briefingt') }}
             {{ quick_link_pd('contracts') }}
             {{ quick_link_pd('dac') }}
