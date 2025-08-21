@@ -346,7 +346,7 @@ resources:
       A.1.1.2:
         en: Consolidate the AI communities of practice under an information hub to support knowledge sharing and prevent duplication
         fr: Regrouper les communautés de pratique de l’IA sous un centre d’information afin d’améliorer l’échange des connaissances et d’éviter les chevauchements
-      A.1.1.3:
+      A.1.2.1:
         en: Identify other high value use cases that could be pursued as lighthouse projects
         fr: Cerner les cas d’utilisation ayant une grande valeur qui pourraient être réalisés en tant que projets phares
       A.2.1.1:
@@ -833,16 +833,16 @@ resources:
       priority_area: "A"
       key_action: "A.1"
       sub_action: "A.1.1"
-      activity: "A.1.1.3"
+      activity: "A.1.1.2"
       description_en: "Provide high-performance computing (HPC) and cloud infrastructure that is available, secure, and scalable to meet the demands of AI projects."
       description_fr: "Fournir une infrastructure de calcul haute performance (CHP) et d'informatique en nuage disponible, sécurisée et évolutive pour répondre aux exigences des projets d'IA."
       expected_completion: "2027-Q1"
-      lead_department: [TBS, PSPC]
+      lead_department: [TBS, PCO]
       status: IP
       progress_en: "AI Strategy is being implemented using various new initiatives. The initiatives are divided into four components. The four components of this initiative as further been broken down into various activities, sub-activities, status trackability, descriptions, and progress made. Progress made is being tracked using: In Progress, Not Started, or Completed."
       progress_fr: "La stratégie en matière d'IA est mise en œuvre à l'aide de diverses nouvelles initiatives. Ces initiatives sont divisées en quatre volets. Les quatre volets de cette initiative ont été subdivisés en diverses activités, sous-activités, suivi de l'état d'avancement, descriptions et progrès réalisés. Les progrès réalisés sont suivis à l'aide des statuts suivants : En cours, Non commencé ou Terminé."
     filters:
-      activity: "A.1.1.3"
+      activity: "A.1.1.2"
     filter_one:
       reporting_period: "2025-Q3"
       sub_action: "A.1.1"
