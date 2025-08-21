@@ -125,7 +125,8 @@ resources:
         This field has a maximum length of 350 characters.
       fr: |
         Ce champ ne doit pas être vide.
-        Ce champ a une longueur maximale de 350 caractères.    occurrence: Single
+        Ce champ a une longueur maximale de 350 caractères.
+    occurrence: Single
     datastore_type: text
     max_chars: 350
     form_attrs:
@@ -918,7 +919,7 @@ resources:
       en: >
         Identifies whether the Canada Revenue Agency's Business Number is used in the 
         delivery of the service as the standard identifier in accordance with the Data 
-        reference standard on the business number Directive on the Business Number.
+        reference standard on the business number.
       fr: >
         Indique si le numéro d’entreprise de l’Agence du revenu du Canada est utilisé dans 
         la prestation des services en tant qu’identificateur standard, conformément à la 

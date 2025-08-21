@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  CKAN\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-08-12 10:57-0400\n"
+"POT-Creation-Date: 2025-08-21 14:12-0400\n"
 "PO-Revision-Date: 2014-01-23 13:04+0000\n"
 "Last-Translator: Sean Hammond <sean.hammond@okfn.org>\n"
 "Language: en\n"
@@ -981,7 +981,7 @@ msgid "{num} deleted."
 msgstr ""
 
 #. SQL Trigger String for PD Type: service
-#: ckanext/canada/tables/service.yaml:2597 ckanext/canada/view.py:792
+#: ckanext/canada/tables/service.yaml:2598 ckanext/canada/view.py:792
 msgid "Number required"
 msgstr ""
 
@@ -1206,8 +1206,8 @@ msgstr ""
 #. SQL Trigger String for PD Type: service
 #: ckanext/canada/tables/ati.yaml:142 ckanext/canada/tables/ati.yaml:254
 #: ckanext/canada/tables/hospitalityq.yaml:648
-#: ckanext/canada/tables/service.yaml:1710
-#: ckanext/canada/tables/service.yaml:2594
+#: ckanext/canada/tables/service.yaml:1711
+#: ckanext/canada/tables/service.yaml:2595
 msgid "This value must not be negative"
 msgstr ""
 
@@ -1529,32 +1529,32 @@ msgstr ""
 #. SQL Trigger String for PD Type: grantsmonthly
 #. SQL Trigger String for PD Type: service
 #: ckanext/canada/tables/grantsmonthly.yaml:936
-#: ckanext/canada/tables/service.yaml:1711
-#: ckanext/canada/tables/service.yaml:2595
+#: ckanext/canada/tables/service.yaml:1712
+#: ckanext/canada/tables/service.yaml:2596
 msgid "This field has a maximum length of {} characters."
 msgstr ""
 
 #. SQL Trigger String for PD Type: grantsmonthly
 #. SQL Trigger String for PD Type: service
 #: ckanext/canada/tables/grantsmonthly.yaml:937
-#: ckanext/canada/tables/service.yaml:1712
-#: ckanext/canada/tables/service.yaml:2596
+#: ckanext/canada/tables/service.yaml:1713
+#: ckanext/canada/tables/service.yaml:2597
 msgid "Invalid choice: {}"
 msgstr ""
 
 #. SQL Trigger String for PD Type: grantsmonthly
 #. SQL Trigger String for PD Type: service
 #: ckanext/canada/tables/grantsmonthly.yaml:938
-#: ckanext/canada/tables/service.yaml:1714
-#: ckanext/canada/tables/service.yaml:2599
+#: ckanext/canada/tables/service.yaml:1715
+#: ckanext/canada/tables/service.yaml:2600
 msgid "This field is required due to a response in a different field."
 msgstr ""
 
 #. SQL Trigger String for PD Type: grantsmonthly
 #. SQL Trigger String for PD Type: service
 #: ckanext/canada/tables/grantsmonthly.yaml:939
-#: ckanext/canada/tables/service.yaml:1715
-#: ckanext/canada/tables/service.yaml:2600
+#: ckanext/canada/tables/service.yaml:1716
+#: ckanext/canada/tables/service.yaml:2601
 msgid "This text must be provided in both languages"
 msgstr ""
 
@@ -1700,24 +1700,24 @@ msgid "Service Identification Information & Metrics"
 msgstr ""
 
 #. SQL Trigger String for PD Type: service
-#: ckanext/canada/tables/service.yaml:1709
+#: ckanext/canada/tables/service.yaml:1710
 msgid "This field must be either a number, \"NA\", or \"ND\""
 msgstr ""
 
 #. SQL Trigger String for PD Type: service
-#: ckanext/canada/tables/service.yaml:1713
-#: ckanext/canada/tables/service.yaml:2598
+#: ckanext/canada/tables/service.yaml:1714
+#: ckanext/canada/tables/service.yaml:2599
 msgid "Invalid input syntax for type integer: {}"
 msgstr ""
 
 #. SQL Trigger String for PD Type: service
-#: ckanext/canada/tables/service.yaml:1716
-#: ckanext/canada/tables/service.yaml:2601
+#: ckanext/canada/tables/service.yaml:1717
+#: ckanext/canada/tables/service.yaml:2602
 msgid "Comma is not allowed in Service ID Number field"
 msgstr ""
 
 #. SQL Constraint Error String for PD Type: service
-#: ckanext/canada/tables/service.yaml:1521
+#: ckanext/canada/tables/service.yaml:1522
 msgid ""
 "Cannot delete record(s) because the Fiscal Year, Service ID Number "
 "({refValues}) is referenced in at least one Service Standards & "
@@ -1725,30 +1725,30 @@ msgid ""
 msgstr ""
 
 #. Resource Title for PD Type: service
-#: ckanext/canada/tables/service.yaml:1790
+#: ckanext/canada/tables/service.yaml:1791
 msgid "Service Standards & Performance Results"
 msgstr ""
 
 #. SQL Trigger String for PD Type: service
-#: ckanext/canada/tables/service.yaml:2164
-#: ckanext/canada/tables/service.yaml:2593
+#: ckanext/canada/tables/service.yaml:2165
+#: ckanext/canada/tables/service.yaml:2594
 msgid ""
 "This field must be a single number between 0 and 1 representing a "
 "percentage."
 msgstr ""
 
 #. SQL Trigger String for PD Type: service
-#: ckanext/canada/tables/service.yaml:2602
+#: ckanext/canada/tables/service.yaml:2603
 msgid "Comma is not allowed in Service Standard ID field"
 msgstr ""
 
 #. SQL Trigger String for PD Type: service
-#: ckanext/canada/tables/service.yaml:2603
+#: ckanext/canada/tables/service.yaml:2604
 msgid "Volume Meeting Target can not exceed Total Volume."
 msgstr ""
 
 #. SQL Constraint Error String for PD Type: service
-#: ckanext/canada/tables/service.yaml:2491
+#: ckanext/canada/tables/service.yaml:2492
 msgid ""
 "Cannot create record ({refValues}) because the Service ID Number does not"
 " exist in the Service Identification Information & Metrics resource for "
@@ -2283,8 +2283,8 @@ msgstr ""
 msgid ""
 "<p>As a sysadmin user you have full control over this CKAN instance. "
 "Proceed with care!</p> <p>For guidance on using sysadmin features, see "
-"the CKAN  <a href=\"%(docs_url)s\" target=\"_blank\">sysadmin "
-"guide</a></p>"
+"the CKAN  <a href=\"%(docs_url)s\" target=\"_blank\" rel='noopener "
+"noreferrer'>sysadmin guide</a></p>"
 msgstr ""
 
 #: ckanext/canada/templates/admin/jobs.html:8
@@ -3393,8 +3393,9 @@ msgstr ""
 msgid ""
 "Cannot delete record(s) because the Fiscal Year, Service ID Number "
 "(<strong><em>%(ref_values)s</em></strong>) is referenced in at least one "
-"<a target=\"_blank\" href=\"%(ref_table_link)s\">Service Standards & "
-"Performance Results record.</a>"
+"<a target=\"_blank\" rel='noopener noreferrer' "
+"href=\"%(ref_table_link)s\">Service Standards & Performance Results "
+"record.</a>"
 msgstr ""
 
 #: ckanext/canada/templates/recombinant/snippets/service_std_upsert_fk_error.html:6
@@ -3402,8 +3403,8 @@ msgstr ""
 msgid ""
 "Cannot create record (<strong><em>%(ref_values)s</em></strong>) because "
 "the Service ID Number does not exist in the <a target=\"_blank\" "
-"href=\"%(ref_table_link)s\">Service Identification Information & Metrics "
-"resource</a> for that fiscal year."
+"rel='noopener noreferrer' href=\"%(ref_table_link)s\">Service "
+"Identification Information & Metrics resource</a> for that fiscal year."
 msgstr ""
 
 #: ckanext/canada/templates/recombinant/snippets/xls_upload.html:7
@@ -3583,7 +3584,9 @@ msgid "Errors in dataset"
 msgstr ""
 
 #: ckanext/canada/templates/scheming/snippets/resource_validation_errors.html:10
-msgid "The dataset <a href=\"{0}\" target=\"_blank\">{1}</a> contains errors:"
+msgid ""
+"The dataset <a href=\"{0}\" target=\"_blank\" rel=\"noopener "
+"noreferrer\">{1}</a> contains errors:"
 msgstr ""
 
 #: ckanext/canada/templates/scheming/snippets/resource_validation_errors.html:74
@@ -9292,5 +9295,36 @@ msgstr ""
 #~ "@tbs-sct.gc.ca\">open-ouvert@tbs-sct.gc.ca</a> "
 #~ "with the email for your organization's"
 #~ " Access to Information Coordinator."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "<p>As a sysadmin user you have "
+#~ "full control over this CKAN instance."
+#~ " Proceed with care!</p> <p>For guidance "
+#~ "on using sysadmin features, see the "
+#~ "CKAN  <a href=\"%(docs_url)s\" "
+#~ "target=\"_blank\">sysadmin guide</a></p>"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Cannot delete record(s) because the "
+#~ "Fiscal Year, Service ID Number "
+#~ "(<strong><em>%(ref_values)s</em></strong>) is referenced"
+#~ " in at least one <a target=\"_blank\""
+#~ " href=\"%(ref_table_link)s\">Service Standards & "
+#~ "Performance Results record.</a>"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Cannot create record "
+#~ "(<strong><em>%(ref_values)s</em></strong>) because the "
+#~ "Service ID Number does not exist "
+#~ "in the <a target=\"_blank\" "
+#~ "href=\"%(ref_table_link)s\">Service Identification "
+#~ "Information & Metrics resource</a> for "
+#~ "that fiscal year."
+#~ msgstr ""
+
+#~ msgid "The dataset <a href=\"{0}\" target=\"_blank\">{1}</a> contains errors:"
 #~ msgstr ""
 
