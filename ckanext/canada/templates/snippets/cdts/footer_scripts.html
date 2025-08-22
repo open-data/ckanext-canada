@@ -1,4 +1,5 @@
 {# See: https://github.com/wet-boew/cdts-sgdc/blob/v4.1.0/src/gcweb/refFooter.ejs #}
+{# NOTE: DOMParser, nonce injection, and re-stringing is necessary for WET Builder to work with CSP header #}
 <script nonce="{{- h.get_inline_script_nonce() -}}">
   const wetFooterString = wet.builder.refFooter({
     {% if g.is_registry %}

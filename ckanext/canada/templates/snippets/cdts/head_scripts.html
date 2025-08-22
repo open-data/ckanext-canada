@@ -1,6 +1,7 @@
 <script src="{{ h.cdts_asset('/compiled/soyutils.js', theme=False) }}" nonce="{{- h.get_inline_script_nonce() -}}"></script>
 <script src="{{ h.cdts_asset('/compiled/wet-' ~ (h.lang() or 'en') ~ '.js', theme=False) }}" nonce="{{- h.get_inline_script_nonce() -}}"></script>
 {# See: https://github.com/wet-boew/cdts-sgdc/blob/v4.1.0/src/gcweb/refTop.ejs #}
+{# NOTE: DOMParser, nonce injection, and re-stringing is necessary for WET Builder to work with CSP header #}
 <script nonce="{{- h.get_inline_script_nonce() -}}">
   const wetHeaderString = wet.builder.refTop({
     {% if g.is_registry %}

@@ -5,6 +5,7 @@ function load_voting_scripts(){
 
     if( typeof votingWrapper != "undefined" && votingWrapper != null ){
 
+      // FIXME: TODO: move style attributes to classes
       votingWrapper.style.opacity = 0;
       votingWrapper.style.pointerEvents = 'none';
 
