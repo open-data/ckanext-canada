@@ -38,7 +38,9 @@ resources:
     obligation: Mandatory
     excel_required: true
     form_required: true
-    format_type: Free text
+    format_type:
+      en: Free text
+      fr: Texte libre
     validation: This field must not be empty
     visible_to_public: Yes
     occurrence: Single
@@ -55,7 +57,9 @@ resources:
     obligation: Mandatory
     excel_required: true
     form_required: true
-    format_type: Controlled List
+    format_type:
+      en: Controlled List
+      fr: Liste contrôlée
     validation: This field must not be empty
     visible_to_public: Yes
     occurrence: Single
@@ -75,7 +79,9 @@ resources:
     obligation: Mandatory
     excel_required: true
     form_required: true
-    format_type: Free text
+    format_type:
+      en: Free text
+      fr: Texte libre
     validation: This field must not be empty
     visible_to_public: Yes
     occurrence: Single
@@ -95,7 +101,9 @@ resources:
     obligation: Mandatory
     excel_required: true
     form_required: true
-    format_type: Free Text
+    format_type:
+      en: Free text
+      fr: Texte libre
     validation: This field must not be empty
     visible_to_public: Yes
     occurrence: Single
@@ -115,7 +123,9 @@ resources:
     obligation: Mandatory
     excel_required: true
     form_required: true
-    format_type: Date (Please format the data as YYYY-MM-DD)
+    format_type:
+      en: Date (Please format the date as YYYY-MM-DD)
+      fr: Date (Veuillez utiliser le format de date suivant : AAAA-MM-JJ)
     validation: This field must not be empty
     visible_to_public: Yes
     occurrence: Single
@@ -133,7 +143,9 @@ resources:
     obligation: Mandatory
     excel_required: true
     form_required: true
-    format_type: Date (Please format the data as YYYY-MM-DD)
+    format_type:
+      en: Date (Please format the date as YYYY-MM-DD)
+      fr: Date (Veuillez utiliser le format de date suivant : AAAA-MM-JJ)
     validation: This field must not be empty
     visible_to_public: Yes
     occurrence: Single
@@ -152,7 +164,9 @@ resources:
     obligation: Mandatory
     excel_required: true
     form_required: true
-    format_type: Free Text (Note, use full city/region, province/state and country name where possible. Seperate multiple locations with semicolons.)
+    format_type:
+      en: Free text (Note, use full city/region, province/state and country name where possible. Separate multiple locations with semicolons.)
+      fr: "Texte libre (Note : utilisez si possible le nom complet de la ville/région, de la province/de l’État et du pays. Séparez les emplacements multiples par des points-virgules.)"
     validation: This field must not be empty
     visible_to_public: Yes
     occurrence: Repeatable
@@ -172,7 +186,9 @@ resources:
     obligation: Mandatory
     excel_required: true
     form_required: true
-    format_type: Free Text (Note, use full city/region, province/state and country name where possible. Seperate multiple locations with semicolons.)
+    format_type:
+      en: Free text (Note, use full city/region, province/state and country name where possible. Separate multiple locations with semicolons.)
+      fr: "Texte libre (Note : utilisez si possible le nom complet de la ville/région, de la province/de l’État et du pays. Séparez les emplacements multiples par des points-virgules.)"
     validation: This field must not be empty
     visible_to_public: Yes
     occurrence: Repeatable
@@ -192,7 +208,9 @@ resources:
     obligation: Mandatory
     excel_required: true
     form_required: true
-    format_type: Decimal
+    format_type:
+      en: Decimal
+      fr: Décimale
     validation: This field must not be empty
     visible_to_public: Yes
     occurrence: Single
@@ -210,7 +228,9 @@ resources:
       en: Full list of flight passengers. (Comma seperated)
       fr: Liste complète des passagers du vol. (séparées par des virgules)
     obligation: Mandatory
-    format_type: Free Text (separated by commas)
+    format_type:
+      en: Free text (separated by commas)
+      fr: Texte libre (séparés par des virgules)
     validation: This field must not be empty
     visible_to_public: Yes
     occurrence: Repeatable
@@ -228,7 +248,9 @@ resources:
       en: This field will display any additional information, as deemed necessary, in English.
       fr: Ce champ affichera tout renseignement supplémentaire, en anglais, selon les besoins.
     obligation: Optional
-    format_type: Free Text (separate paragraphs with two blank lines)
+    format_type:
+      en: Free text (separate paragraphs with two blank lines)
+      fr: Texte libre (séparez les paragraphes par deux lignes blanches)
     validation: None
     visible_to_public: Yes
     occurrence: Repeatable
@@ -246,7 +268,9 @@ resources:
       en: This field will display any additional information, as deemed necessary, in French.
       fr: Ce champ affichera tout renseignement supplémentaire, en français, selon les besoins.
     obligation: Optional
-    format_type: Free Text (separate paragraphs with two blank lines)
+    format_type:
+      en: Free text (separate paragraphs with two blank lines)
+      fr: Texte libre (séparez les paragraphes par deux lignes blanches)
     validation: None
     visible_to_public: Yes
     occurrence: Repeatable

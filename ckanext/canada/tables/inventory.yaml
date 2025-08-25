@@ -32,7 +32,9 @@ resources:
       fr: Un identificateur unique est attribué à chaque poste dans la feuille de calcul. Un identificateur unique pour chaque poste permettra aux ministères de trouver un élément précis dans le système, si des modifications ou des suppressions sont nécessaires. Cet élément ne sera pas présenté au public.
     obligation: Mandatory
     occurrence: Single
-    format_type: Free text
+    format_type:
+      en: Free text
+      fr: Texte libre
     datastore_type: text
     excel_column_width: 20
 
@@ -43,7 +45,9 @@ resources:
       fr: Le nom en anglais sous lequel le jeu de données est connu.
     obligation: Mandatory
     occurrence: Single
-    format_type: Free text
+    format_type:
+      en: Free text
+      fr: Texte libre
     datastore_type: text
     excel_column_width: 30
 
@@ -54,7 +58,9 @@ resources:
       fr: Le nom en français sous lequel le jeu de données est connu.
     obligation: Mandatory
     occurrence: Single
-    format_type: Free text
+    format_type:
+      en: Free text
+      fr: Texte libre
     datastore_type: text
     excel_column_width: 30
 
@@ -65,7 +71,9 @@ resources:
       fr: Un compte rendu du jeu de données en anglais. Une description peut inclure, entre autres, un résumé, une table des matières ou du texte libre sur le jeu de données.
     obligation: Mandatory
     occurrence: Single
-    format_type: Free text
+    format_type:
+      en: Free text
+      fr: Texte libre
     datastore_type: text
     excel_column_width: 50
 
@@ -76,7 +84,9 @@ resources:
       fr: Un compte rendu du jeu de données en français. Une description peut inclure, entre autres, un résumé, une table des matières ou du texte libre sur le jeu de données.
     obligation: Mandatory
     occurrence: Single
-    format_type: Free text
+    format_type:
+      en: Free text
+      fr: Texte libre
     datastore_type: text
     excel_column_width: 50
 
@@ -113,7 +123,9 @@ resources:
       fr: Date de diffusion (p. ex., publication) du jeu de données.
     obligation: Mandatory
     occurrence: Single
-    format_type: Date (Please format the data as YYYY-MM-DD)
+    format_type:
+      en: Date (Please format the date as YYYY-MM-DD)
+      fr: Date (Veuillez utiliser le format de date suivant : AAAA-MM-JJ)
     datastore_type: date
     excel_column_width: 20
 
@@ -124,7 +136,9 @@ resources:
       fr: Langue de la ressource
     obligation: Mandatory
     occurrence: Repeatable
-    format_type: Controlled List
+    format_type:
+      en: Controlled List
+      fr: Liste contrôlée
     datastore_type: text
     excel_column_width: 15
     choices:
@@ -154,7 +168,9 @@ resources:
       fr: La taille [estimée] de la ressource (en octets).
     obligation: Mandatory
     occurrence: Single
-    format_type: Free text
+    format_type:
+      en: Free text
+      fr: Texte libre
     datastore_type: bigint
     excel_column_width: 15
 
@@ -165,7 +181,9 @@ resources:
       fr: Tout le contenu du jeu de données peut être diffusé publiquement selon les critères d’admissibilité mentionnés dans le guide de la mise en œuvre de la Directive sur le gouvernement ouvert?
     obligation: Mandatory
     occurrence: Single
-    format_type: Controlled List
+    format_type:
+      en: Controlled List
+      fr: Liste contrôlée
     datastore_type: text
     excel_column_width: 20
     choices:
@@ -183,7 +201,9 @@ resources:
       fr: L’Architecture d’alignement des programmes (AAP) en anglais. L’Architecture d’alignement des programmes (AAP) est un inventaire des programmes de chaque organisation. Il offre un aperçu des responsabilités de l’organisation.
     obligation: Mandatory
     occurrence: Single
-    format_type: Free text
+    format_type:
+      en: Free text
+      fr: Texte libre
     datastore_type: text
     excel_column_width: 30
 
@@ -194,7 +214,9 @@ resources:
       fr: L’Architecture d’alignement des programmes (AAP) en français. L’Architecture d’alignement des programmes (AAP) est un inventaire des programmes de chaque organisation. Il offre un aperçu des responsabilités de l’organisation.
     obligation: Mandatory
     occurrence: Single
-    format_type: Free text
+    format_type:
+      en: Free text
+      fr: Texte libre
     datastore_type: text
     excel_column_width: 30
 
@@ -205,7 +227,9 @@ resources:
       fr: La date à laquelle l’enregistrement de métadonnées a été diffusé et rendu accessible à partir du Portail du gouvernement ouvert, s’il y a lieu seulement.
     obligation: Mandatory
     occurrence: Single
-    format_type: Date (Please format the data as YYYY-MM-DD)
+    format_type:
+      en: Date (Please format the date as YYYY-MM-DD)
+      fr: Date (Veuillez utiliser le format de date suivant : AAAA-MM-JJ)
     datastore_type: date
     excel_column_width: 20
 
