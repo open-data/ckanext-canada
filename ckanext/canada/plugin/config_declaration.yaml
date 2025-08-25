@@ -27,6 +27,7 @@ groups:
             To use nonces, use 'nonce-[[NONCE]]' and [[NONCE]] will
             be replaced with a generated nonce.
         required: false
+        validators: ignore_missing http_header_value_validator
       - key: ckanext.canada.disable_content_security_policy
         default: false
         description: |
