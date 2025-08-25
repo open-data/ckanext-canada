@@ -1,6 +1,9 @@
-from typing import Any, Dict
-from ckan.types import Context, Validator
+from typing import Any, Dict, List, Tuple, Optional
+from ckan.types import Context, Validator, CKANApp
 from ckan.common import CKANConfig
+
+import random
+import string
 
 import ckan.plugins as p
 from ckan.plugins.core import plugin_loaded
@@ -18,6 +21,7 @@ class CanadaSecurityPlugin(CkanSecurityPlugin):
     p.implements(p.IResourceController, inherit=True)
     p.implements(p.IValidators, inherit=True)
     p.implements(p.IConfigurer)
+    p.implements(p.IMiddleware, inherit=True)
 
     def update_config(self, config: 'CKANConfig'):
         super(CanadaSecurityPlugin, self).update_config(config)
@@ -72,3 +76,33 @@ class CanadaSecurityPlugin(CkanSecurityPlugin):
             canada_security_upload_type=validators.canada_security_upload_type,
             canada_security_upload_presence=validators.canada_security_upload_presence,
         )
+
+    def make_middleware(self, app: CKANApp, config: 'CKANConfig') -> CKANApp:
+        return CSPNonceMiddleware(app, config)
+
+
+class CSPNonceMiddleware(object):
+    def __init__(self, app: Any, config: 'CKANConfig'):
+        self.config = config
+        self.app = app
+
+    def __call__(self, environ: Any, start_response: Any) -> Any:
+        csp_nonce = ''.join(random.choices(
+                string.ascii_letters + string.digits, k=22))
+        environ['CSP_NONCE'] = csp_nonce
+        csp_header = [
+            ('Content-Security-Policy',
+             self.config['ckanext.canada.content_security_policy'].replace(
+                 '[[NONCE]]', csp_nonce))]
+
+        def _start_response(status: str,
+                            response_headers: List[Tuple[str, str]],
+                            exc_info: Optional[Any] = None):
+            return start_response(
+                status,
+                response_headers if self.config[
+                    'ckanext.canada.disable_content_security_policy']
+                else response_headers + csp_header,
+                exc_info)
+
+        return self.app(environ, _start_response)

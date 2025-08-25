@@ -253,7 +253,7 @@ resources:
     datastore_type: text
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
-      style: "width: 100%; display: block"
+      class: form-control canada-width-full d-block
 
   - datastore_id: notes_fr
     label:
@@ -266,7 +266,7 @@ resources:
     datastore_type: text
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
-      style: "width: 100%; display: block"
+      class: form-control canada-width-full d-block
 
   - datastore_id: record_created
     label: Record Creation Time

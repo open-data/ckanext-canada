@@ -1,15 +1,33 @@
 {# See: https://github.com/wet-boew/cdts-sgdc/blob/v4.1.0/src/gcweb/refFooter.ejs #}
-<script>
-  document.write(
-    wet.builder.refFooter({
-      {% if g.is_registry %}
-        "isApplication": true,
-      {% else %}
-        "isApplication": false,
-        {% if h.adobe_analytics_js() %}
-          "webAnalytics": true,
-        {% endif %}
+{# NOTE: DOMParser, nonce injection, and re-stringing is necessary for WET Builder to work with CSP header #}
+<script nonce="{{- h.get_inline_script_nonce() -}}">
+  const wetFooterString = wet.builder.refFooter({
+    {% if g.is_registry %}
+      "isApplication": true,
+    {% else %}
+      "isApplication": false,
+      {% if h.adobe_analytics_js() %}
+        "webAnalytics": true,
       {% endif %}
-    })
-  );
+    {% endif %}
+  });
+  let newWetFooterString = '';
+  const wetFooterParser = new DOMParser();
+  const wetFooterDOC = wetFooterParser.parseFromString(wetFooterString, 'text/html');
+  const wetFooterScripts = wetFooterDOC.querySelectorAll('script');
+  wetFooterScripts.forEach(function(_script){
+    _script.setAttribute('nonce', '{{- h.get_inline_script_nonce() -}}');
+    newWetFooterString += _script.outerHTML;
+  });
+  const wetFooterStyles = wetFooterDOC.querySelectorAll('style');
+  wetFooterStyles.forEach(function(_style){
+    _style.setAttribute('nonce', '{{- h.get_inline_script_nonce() -}}');
+    newWetFooterString += _style.outerHTML;
+  });
+  const wetFooterObjLinks = wetFooterDOC.querySelectorAll('link');
+  wetFooterObjLinks.forEach(function(_link){
+    _link.setAttribute('nonce', '{{- h.get_inline_script_nonce() -}}');
+    newWetFooterString += _link.outerHTML;
+  });
+  document.write(newWetFooterString);
 </script>

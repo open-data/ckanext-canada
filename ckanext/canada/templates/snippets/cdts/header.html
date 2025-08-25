@@ -10,7 +10,7 @@
 
 {# See: https://github.com/wet-boew/cdts-sgdc/blob/v4.1.0/src/gcweb/appTop.ejs #}
 {# See: https://github.com/wet-boew/cdts-sgdc/blob/v4.1.0/src/gcweb/top.ejs #}
-<script>
+<script nonce="{{- h.get_inline_script_nonce() -}}">
   let appTop = document.getElementById("app-top");
   if( appTop ){
     {% if g.is_registry %}
