@@ -31,7 +31,9 @@ resources:
     obligation: Mandatory
     excel_required: true
     form_required: true
-    format_type: Free text
+    format_type:
+      en: Free text
+      fr: Texte libre
     visible_to_public: Yes
     occurrence: Single
     datastore_type: text
@@ -55,7 +57,9 @@ resources:
     obligation: Mandatory
     excel_required: true
     form_required: true
-    format_type: Controlled List
+    format_type:
+      en: Controlled List
+      fr: Liste contrôlée
     datastore_type: text
     validation:
       en: Must match expected completion options in the controlled list.
@@ -99,7 +103,9 @@ resources:
     obligation: Mandatory
     excel_required: true
     form_required: true
-    format_type: Controlled List
+    format_type:
+      en: Controlled List
+      fr: Liste contrôlée
     datastore_type: text
     validation:
       en: Must match one of the values in the controlled list.
@@ -133,7 +139,9 @@ resources:
     obligation: Mandatory
     excel_required: true
     form_required: true
-    format_type: Controlled List
+    format_type:
+      en: Controlled List
+      fr: Liste contrôlée
     datastore_type: text
     validation:
       en: Must match predefined action statements.
@@ -196,7 +204,9 @@ resources:
     obligation: Mandatory
     excel_required: true
     form_required: true
-    format_type: Controlled List
+    format_type:
+      en: Controlled List
+      fr: Liste contrôlée
     datastore_type: text
     validation:
       en: Must match one of the AI Strategy defined sub-action statements.
@@ -325,7 +335,9 @@ resources:
     obligation: Mandatory
     excel_required: true
     form_required: true
-    format_type: Controlled List
+    format_type:
+      en: Controlled List
+      fr: Liste contrôlée
     datastore_type: text
     validation:
       en: Must match predefined activities.
@@ -528,7 +540,9 @@ resources:
     excel_column_width: 80
     form_required: false
     datastore_type: text
-    format_type: Free text
+    format_type:
+      en: Free text
+      fr: Texte libre
     validation:
       en: Limit the number of characters, free text (maximum 1000 characters).
       fr: Limiter le nombre de caractères, libre texte (maximum 1000 caractères).
@@ -552,7 +566,9 @@ resources:
     excel_column_width: 80
     form_required: false
     datastore_type: text
-    format_type: Free text
+    format_type:
+      en: Free text
+      fr: Texte libre
     validation:
       en: Limit the number of characters, free text (maximum 1000 characters).
       fr: Limiter le nombre de caractères, libre texte (maximum 1000 caractères).
@@ -574,7 +590,9 @@ resources:
     obligation: Mandatory
     excel_required: true
     form_required: true
-    format_type: Controlled List
+    format_type:
+      en: Controlled List
+      fr: Liste contrôlée
     datastore_type: text
     validation:
       en: Must match expected completion options in the controlled list.
@@ -618,7 +636,9 @@ resources:
     obligation: Mandatory
     excel_required: true
     form_required: true
-    format_type: Controlled List
+    format_type:
+      en: Controlled List
+      fr: Liste contrôlée
     validation:
       en: Must match departments and organizations in the controlled list.
       fr: Doit correspondre aux départements et organisations de la liste contrôlée.
@@ -672,7 +692,9 @@ resources:
     obligation: Mandatory
     excel_required: true
     form_required: true
-    format_type: Controlled List
+    format_type:
+      en: Controlled List
+      fr: Liste contrôlée
     datastore_type: text
     validation:
       en: "Must be one of: Not Started, In Progress, Completed."
@@ -701,7 +723,9 @@ resources:
     obligation: Optional
     excel_required: false
     excel_column_width: 80
-    format_type: Free text
+    format_type:
+      en: Free text
+      fr: Texte libre
     validation:
       en: Limit the number of characters, free text (maximum 1000 characters).
       fr: Limiter le nombre de caractères, libre texte (maximum 1000 caractères).
@@ -723,7 +747,9 @@ resources:
     obligation: Optional
     excel_required: false
     excel_column_width: 80
-    format_type: Free text
+    format_type:
+      en: Free text
+      fr: Texte libre
     validation:
       en: Limit the number of characters, free text (maximum 1000 characters).
       fr: Limiter le nombre de caractères, libre texte (maximum 1000 caractères).
