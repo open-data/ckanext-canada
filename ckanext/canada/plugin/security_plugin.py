@@ -93,7 +93,7 @@ class CSPNonceMiddleware(object):
         csp_header = [
             ('Content-Security-Policy',
              self.config['ckanext.canada.content_security_policy'].replace(
-                 '[[NONCE]]', csp_nonce).replace('\n', ' ').replace('\r', ''))]
+                 '[[NONCE]]', csp_nonce))]
 
         def _start_response(status: str,
                             response_headers: List[Tuple[str, str]],
