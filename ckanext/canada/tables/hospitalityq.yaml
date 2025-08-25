@@ -529,7 +529,7 @@ resources:
     validation: This field must not be empty
     format_type:
       en: Numerical – Note, do not include dollar signs ($), all amounts include taxes.
-      fr: "Numérique – Note : ne pas inclure les signes du dollar ($), tous les montants incluent les taxes.""
+      fr: "Numérique – Note : ne pas inclure les signes du dollar ($), tous les montants incluent les taxes."
     extract_double_sortable: true
     excel_column_width: 20
     form_attrs:
