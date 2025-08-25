@@ -7,7 +7,7 @@
 
 {% block primary_content_inner %}
   <p>
-    <script>
+    <script nonce="{{- h.get_inline_script_nonce() -}}">
       document.write('<a class="btn btn-primary" href=\'' + document.referrer + '\';"><i class="fa fa-arrow-left" aria-hidden="true"></i>'+'{{ _("Go back") }}'+'</a>');
     </script>
   </p>

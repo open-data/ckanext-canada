@@ -442,8 +442,7 @@ presets:
     validators: fluent_tags
     output_validators: fluent_tags_output
     form_attrs:
-      style: "width: 100%"
-      class: form-control
+      class: form-control canada-width-full
 
 
 # Field = Subject.
@@ -2255,13 +2254,12 @@ presets:
     form_snippet: fluent_text.html
     display_snippet: fluent_link.html
     display_attributes:
-      style: "word-wrap: break-word"
+      class: canada-break-words
     error_snippet: fluent_text.html
     validators: fluent_text
     output_validators: fluent_text_output
     form_attrs:
-      style: "width: 100%;"
-      class: form-control
+      class: form-control canada-width-full
 
 
 # Field = Series Title English.
@@ -2805,15 +2803,14 @@ presets:
     form_snippet: fluent_text.html
     display_snippet: fluent_link.html
     display_attributes:
-      style: "word-wrap: break-word"
+      class: canada-break-words
     error_snippet: fluent_text.html
     validators: fluent_text
     output_validators: fluent_text_output
     required: true
     form_panel: relationships
     form_attrs:
-      style: "width: 100%;"
-      class: form-control
+      class: form-control canada-width-full
 
 # Field = Record Type.
 - preset_name: canada_dataset_related_type

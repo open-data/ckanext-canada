@@ -118,7 +118,7 @@ resources:
     datastore_type: text
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
-      style: "width: 100%; display: block"
+      class: form-control canada-width-full d-block
 
   # 3.6
   - datastore_id: question_fr
@@ -138,7 +138,7 @@ resources:
     datastore_type: text
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
-      style: "width: 100%; display: block"
+      class: form-control canada-width-full d-block
 
   # 3.7
   - datastore_id: date_received
@@ -176,7 +176,7 @@ resources:
     datastore_type: text
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
-      style: "width: 100%; display: block"
+      class: form-control canada-width-full d-block
 
   # 3.11
   - datastore_id: response_fr
@@ -196,7 +196,7 @@ resources:
     datastore_type: text
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
-      style: "width: 100%; display: block"
+      class: form-control canada-width-full d-block
 
   # 3.8
   - datastore_id: background_en
@@ -216,7 +216,7 @@ resources:
     datastore_type: text
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
-      style: "width: 100%; display: block"
+      class: form-control canada-width-full d-block
 
   # 3.9
   - datastore_id: background_fr
@@ -236,7 +236,7 @@ resources:
     datastore_type: text
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
-      style: "width: 100%; display: block"
+      class: form-control canada-width-full d-block
 
   # 3.12
   - datastore_id: additional_information_en
@@ -254,7 +254,7 @@ resources:
     datastore_type: text
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
-      style: "width: 100%; display: block"
+      class: form-control canada-width-full d-block
 
   # 3.13
   - datastore_id: additional_information_fr
@@ -272,7 +272,7 @@ resources:
     datastore_type: text
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
-      style: "width: 100%; display: block"
+      class: form-control canada-width-full d-block
 
   # audit trail
   - datastore_id: record_created

@@ -125,21 +125,21 @@
       </li>
       <li class="list-group-item">
         <strong>{{ _('Metadata:') }}</strong>
-        <ul class="list-group" style="margin-bottom: 0;">
+        <ul class="list-group canada-margin-bottom-0">
           <li class="list-group-item">
             <a href="{{h.url_for_static('/', qualified=true)}}api/action/package_show?id={{pkg.id}}" rel="nofollow">
               {{ _('Link to JSON format') }}
             </a>
           </li>
           {% if h.plugin_loaded('dcat_json_interface') and pkg.type not in h.recombinant_get_types() %}
-            <li class="list-group-item" style="border: none;">
+            <li class="list-group-item canada-border-none">
               <a href="{{ h.url_for(pkg.type + '.read', id=pkg.id) }}.jsonld" rel="nofollow">
                 {{ _('DCAT (JSON-LD)') }}
               </a>
             </li>
           {% endif %}
           {% if h.plugin_loaded('dcat') and pkg.type not in h.recombinant_get_types() %}
-            <li class="list-group-item" style="border: none;">
+            <li class="list-group-item canada-border-none">
               <a href="{{ h.url_for(pkg.type + '.read', id=pkg.id) }}.xml" rel="nofollow">
                 {{ _('DCAT (XML)') }}
               </a>

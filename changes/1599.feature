@@ -1,0 +1,1 @@
+Added functionality to define the `Content-Security-Policy` header in the Flask App instead of NGINX, allowing for script and style dynamic nonce generation. Configurable with `ckanext.canada.content_security_policy`
