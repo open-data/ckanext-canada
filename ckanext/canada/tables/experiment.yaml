@@ -173,7 +173,7 @@ resources:
         excel_required: true
         format_type:
           en: Date (Please format the date as YYYY-MM-DD)
-          fr: Date (Veuillez utiliser le format de date suivant : AAAA-MM-JJ)
+          fr: "Date (Veuillez utiliser le format de date suivant : AAAA-MM-JJ)"
         form_snippet: scheming/form_snippets/date.html
         label:
           en: "Last Updated"

@@ -165,7 +165,7 @@ resources:
     form_required: true
     format_type:
       en: Date (Please format the date as YYYY-MM-DD)
-      fr: Date (Veuillez utiliser le format de date suivant : AAAA-MM-JJ)
+      fr: "Date (Veuillez utiliser le format de date suivant : AAAA-MM-JJ)"
     validation: This field must not be empty
     visible_to_public: Yes
     occurrence: Single

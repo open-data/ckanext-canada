@@ -83,7 +83,7 @@ resources:
       fr: Obligatoire si le numéro de modification est défini
     format_type:
       en: Date (Please format the date as YYYY-MM-DD)
-      fr: Date (Veuillez utiliser le format de date suivant : AAAA-MM-JJ)
+      fr: "Date (Veuillez utiliser le format de date suivant : AAAA-MM-JJ)"
     datastore_type: date
     excel_required_formula: AND(NOT(ISBLANK({amendment_number})),{amendment_number}<>0)
     form_snippet: scheming/form_snippets/date.html
@@ -599,7 +599,7 @@ resources:
     form_snippet: scheming/form_snippets/date.html
     format_type:
       en: Date (Please format the date as YYYY-MM-DD)
-      fr: Date (Veuillez utiliser le format de date suivant : AAAA-MM-JJ)
+      fr: "Date (Veuillez utiliser le format de date suivant : AAAA-MM-JJ)"
     datastore_type: date
     extract_date_year: true
     extract_date_month: true
@@ -616,7 +616,7 @@ resources:
     obligation: Optional
     format_type:
       en: Date (Please format the date as YYYY-MM-DD)
-      fr: Date (Veuillez utiliser le format de date suivant : AAAA-MM-JJ)
+      fr: "Date (Veuillez utiliser le format de date suivant : AAAA-MM-JJ)"
     datastore_type: date
     form_snippet: scheming/form_snippets/date.html
 
