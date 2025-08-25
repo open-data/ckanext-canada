@@ -1,3 +1,7 @@
+:root{
+  --canada-root-dir: '/';
+}
+
 .header-title-box {
   border-left: 1px solid #ccc;
   border-right: 1px solid #ccc;
@@ -783,7 +787,7 @@ body ul.xloader-log li.item.failure > i::after{
   background-position-y: -100%;
   color: white !important;
   border-color: white !important;
-  background-image: url("/data/static/img/select2x2_white.png"), url("/static/img/select2x2_white.png") !important;
+  background-image: url("/data/static/img/select2x2_white.png") !important;
 }
 .recombinant-action-panels-container .tabpanels > details{
   padding: 0 20px 20px 20px !important;
