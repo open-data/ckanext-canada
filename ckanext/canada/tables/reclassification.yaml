@@ -74,8 +74,8 @@ resources:
     form_required: true
     validation: This field must not be empty
     format_type:
-      en: Date (Please format the data as YYYY-MM-DD)
-      fr: Date (Please format the data as YYYY-MM-DD)
+      en: Date (Please format the date as YYYY-MM-DD)
+      fr: Date (Veuillez utiliser le format de date suivant : AAAA-MM-JJ)
     excel_column_width: 20
     extract_date_year: true
     extract_date_month: true

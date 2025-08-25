@@ -121,7 +121,7 @@ resources:
     form_required: false
     format_type:
       en: Free text (separate paragraphs with two blank lines)
-      fr: Texte libre (separate paragraphs with two blank lines)
+      fr: Texte libre (séparez les paragraphes par deux lignes blanches)
     validation: None
     visible_to_public: Yes
     occurrence: Repeatable
@@ -143,7 +143,7 @@ resources:
     form_required: false
     format_type:
       en: Free text (separate paragraphs with two blank lines)
-      fr: Texte libre (separate paragraphs with two blank lines)
+      fr: Texte libre (séparez les paragraphes par deux lignes blanches)
     validation: None
     visible_to_public: Yes
     occurrence: Repeatable
@@ -164,8 +164,8 @@ resources:
     excel_required: true
     form_required: true
     format_type:
-      en: Date (Please format the data as YYYY-MM-DD)
-      fr: Date (Please format the data as YYYY-MM-DD)
+      en: Date (Please format the date as YYYY-MM-DD)
+      fr: Date (Veuillez utiliser le format de date suivant : AAAA-MM-JJ)
     validation: This field must not be empty
     visible_to_public: Yes
     occurrence: Single
@@ -185,7 +185,7 @@ resources:
     form_required: true
     format_type:
       en: Free text (separate paragraphs with two blank lines)
-      fr: Texte libre (separate paragraphs with two blank lines)
+      fr: Texte libre (séparez les paragraphes par deux lignes blanches)
     validation: This field must not be empty
     visible_to_public: Yes
     occurrence: Repeatable
@@ -207,7 +207,7 @@ resources:
     form_required: true
     format_type:
       en: Free text (separate paragraphs with two blank lines)
-      fr: Texte libre (separate paragraphs with two blank lines)
+      fr: Texte libre (séparez les paragraphes par deux lignes blanches)
     validation: This field must not be empty
     visible_to_public: Yes
     occurrence: Repeatable
@@ -229,7 +229,7 @@ resources:
     form_required: true
     format_type:
       en: Free text (separate paragraphs with two blank lines)
-      fr: Texte libre (separate paragraphs with two blank lines)
+      fr: Texte libre (séparez les paragraphes par deux lignes blanches)
     validation: This field must not be empty
     visible_to_public: Yes
     occurrence: Repeatable
@@ -251,7 +251,7 @@ resources:
     form_required: true
     format_type:
       en: Free text (separate paragraphs with two blank lines)
-      fr: Texte libre (separate paragraphs with two blank lines)
+      fr: Texte libre (séparez les paragraphes par deux lignes blanches)
     validation: This field must not be empty
     visible_to_public: Yes
     occurrence: Repeatable
@@ -271,7 +271,7 @@ resources:
     obligation: Optional
     format_type:
       en: Free text (separate paragraphs with two blank lines)
-      fr: Texte libre (separate paragraphs with two blank lines)
+      fr: Texte libre (séparez les paragraphes par deux lignes blanches)
     validation: None
     visible_to_public: Yes
     occurrence: Repeatable
@@ -291,7 +291,7 @@ resources:
     obligation: Optional
     format_type:
       en: Free text (separate paragraphs with two blank lines)
-      fr: Texte libre (separate paragraphs with two blank lines)
+      fr: Texte libre (séparez les paragraphes par deux lignes blanches)
     validation: None
     visible_to_public: Yes
     occurrence: Repeatable

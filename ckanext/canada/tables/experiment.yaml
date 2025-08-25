@@ -131,7 +131,7 @@ resources:
         excel_required: true
         format_type:
           en: Free text (separate paragraphs with two blank lines)
-          fr: Texte libre (separate paragraphs with two blank lines)
+          fr: Texte libre (séparez les paragraphes par deux lignes blanches)
         form_snippet: scheming/form_snippets/textarea.html
         form_attrs:
             style: "width: 100%; display: block"
@@ -152,7 +152,7 @@ resources:
         excel_required: true
         format_type:
           en: Free text (separate paragraphs with two blank lines)
-          fr: Texte libre (separate paragraphs with two blank lines)
+          fr: Texte libre (séparez les paragraphes par deux lignes blanches)
         form_snippet: scheming/form_snippets/textarea.html
         form_attrs:
             style: "width: 100%; display: block"
@@ -172,8 +172,8 @@ resources:
         excel_column_width: 28
         excel_required: true
         format_type:
-          en: Date (Please format the data as YYYY-MM-DD)
-          fr: Date (Please format the data as YYYY-MM-DD)
+          en: Date (Please format the date as YYYY-MM-DD)
+          fr: Date (Veuillez utiliser le format de date suivant : AAAA-MM-JJ)
         form_snippet: scheming/form_snippets/date.html
         label:
           en: "Last Updated"
@@ -265,7 +265,7 @@ resources:
         excel_required: true
         format_type:
           en: Free text (separate paragraphs with two blank lines)
-          fr: Texte libre (separate paragraphs with two blank lines)
+          fr: Texte libre (séparez les paragraphes par deux lignes blanches)
         form_snippet: scheming/form_snippets/textarea.html
         form_attrs:
             style: "width: 100%; display: block"
@@ -286,7 +286,7 @@ resources:
         excel_required: true
         format_type:
           en: Free text (separate paragraphs with two blank lines)
-          fr: Texte libre (separate paragraphs with two blank lines)
+          fr: Texte libre (séparez les paragraphes par deux lignes blanches)
         form_snippet: scheming/form_snippets/textarea.html
         form_attrs:
             style: "width: 100%; display: block"
@@ -307,7 +307,7 @@ resources:
         excel_required: true
         format_type:
           en: Free text (separate paragraphs with two blank lines)
-          fr: Texte libre (separate paragraphs with two blank lines)
+          fr: Texte libre (séparez les paragraphes par deux lignes blanches)
         form_snippet: scheming/form_snippets/textarea.html
         form_attrs:
             style: "width: 100%; display: block"
@@ -328,7 +328,7 @@ resources:
         excel_required: true
         format_type:
           en: Free text (separate paragraphs with two blank lines)
-          fr: Texte libre (separate paragraphs with two blank lines)
+          fr: Texte libre (séparez les paragraphes par deux lignes blanches)
         form_snippet: scheming/form_snippets/textarea.html
         form_attrs:
             style: "width: 100%; display: block"
@@ -349,7 +349,7 @@ resources:
         excel_required: true
         format_type:
           en: Free text (separate paragraphs with two blank lines)
-          fr: Texte libre (separate paragraphs with two blank lines)
+          fr: Texte libre (séparez les paragraphes par deux lignes blanches)
         form_snippet: scheming/form_snippets/textarea.html
         form_attrs:
             style: "width: 100%; display: block"
@@ -370,7 +370,7 @@ resources:
         excel_required: true
         format_type:
           en: Free text (separate paragraphs with two blank lines)
-          fr: Texte libre (separate paragraphs with two blank lines)
+          fr: Texte libre (séparez les paragraphes par deux lignes blanches)
         form_snippet: scheming/form_snippets/textarea.html
         form_attrs:
             style: "width: 100%; display: block"
@@ -391,7 +391,7 @@ resources:
         excel_required: true
         format_type:
           en: Free text (separate paragraphs with two blank lines)
-          fr: Texte libre (separate paragraphs with two blank lines)
+          fr: Texte libre (séparez les paragraphes par deux lignes blanches)
         form_snippet: scheming/form_snippets/textarea.html
         form_attrs:
             style: "width: 100%; display: block"
@@ -412,7 +412,7 @@ resources:
         excel_required: true
         format_type:
           en: Free text (separate paragraphs with two blank lines)
-          fr: Texte libre (separate paragraphs with two blank lines)
+          fr: Texte libre (séparez les paragraphes par deux lignes blanches)
         form_snippet: scheming/form_snippets/textarea.html
         form_attrs:
             style: "width: 100%; display: block"

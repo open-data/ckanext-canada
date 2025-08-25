@@ -85,7 +85,7 @@ resources:
     obligation: Optional
     format_type:
       en: Free text (comma separated list of codes from reference table)
-      fr: Texte libre (comma separated list of codes from reference table)
+      fr: Texte libre (liste de codes de la table de référence séparée par des virgules)
     validation: None
     visible_to_public: Yes
     occurrence: Repeatable
@@ -106,7 +106,7 @@ resources:
     form_required: true
     format_type:
       en: Free text (comma separated list of codes from reference table)
-      fr: Texte libre (comma separated list of codes from reference table)
+      fr: Texte libre (liste de codes de la table de référence séparée par des virgules)
     validation: This field must not be empty
     visible_to_public: Yes
     occurrence: Repeatable
@@ -172,7 +172,7 @@ resources:
     form_required: true
     format_type:
       en: Free text (separate paragraphs with two blank lines)
-      fr: Texte libre (separate paragraphs with two blank lines)
+      fr: Texte libre (séparez les paragraphes par deux lignes blanches)
     validation: This field must not be empty
     visible_to_public: Yes
     occurrence: Repeatable
@@ -194,7 +194,7 @@ resources:
     form_required: true
     format_type:
       en: Free text (separate paragraphs with two blank lines)
-      fr: Texte libre (separate paragraphs with two blank lines)
+      fr: Texte libre (séparez les paragraphes par deux lignes blanches)
     validation: This field must not be empty
     visible_to_public: Yes
     occurrence: Repeatable
@@ -216,7 +216,7 @@ resources:
     form_required: true
     format_type:
       en: Free text (comma separated list of codes from reference table)
-      fr: Texte libre (comma separated list of codes from reference table)
+      fr: Texte libre (liste de codes de la table de référence séparée par des virgules)
     validation: This field must not be empty
     visible_to_public: Yes
     occurrence: Repeatable
@@ -236,8 +236,8 @@ resources:
     excel_required: true
     form_required: true
     format_type:
-      en: Date (Please format the data as YYYY-MM-DD)
-      fr: Date (Please format the data as YYYY-MM-DD)
+      en: Date (Please format the date as YYYY-MM-DD)
+      fr: Date (Veuillez utiliser le format de date suivant : AAAA-MM-JJ)
     validation: This field must not be empty
     visible_to_public: Yes
     occurrence: Single
@@ -256,8 +256,8 @@ resources:
     excel_required: true
     form_required: true
     format_type:
-      en: Date (Please format the data as YYYY-MM-DD)
-      fr: Date (Please format the data as YYYY-MM-DD)
+      en: Date (Please format the date as YYYY-MM-DD)
+      fr: Date (Veuillez utiliser le format de date suivant : AAAA-MM-JJ)
     validation: This field must not be empty
     visible_to_public: Yes
     occurrence: Single
@@ -315,7 +315,9 @@ resources:
     obligation: Mandatory
     excel_required_formula: 'or(isblank({end_date}),{end_date}>=DATE(2018,1,1))'
     form_required: true
-    format_type: Web address
+    format_type:
+      en: Web address
+      fr: Adresse Web
     validation: This field must not be empty
     visible_to_public: Yes
     occurrence: Single
@@ -334,7 +336,9 @@ resources:
     obligation: Mandatory
     excel_required_formula: 'or(isblank({end_date}),{end_date}>=DATE(2018,1,1))'
     form_required: true
-    format_type: Web address
+    format_type:
+      en: Web address
+      fr: Adresse Web
     validation: This field must not be empty
     visible_to_public: Yes
     occurrence: Single
@@ -378,7 +382,9 @@ resources:
       en: This field provides the link to the “What we Heard” report when it is available online.
       fr: Cette zone contient le lien vers le rapport intitulé « Ce que nous avons entendu » en anglais après que le rapport est affiché en ligne.
     obligation: Optional
-    format_type: Web address
+    format_type:
+      en: Web address
+      fr: Adresse Web
     validation: None
     visible_to_public: Yes
     occurrence: Single
@@ -395,7 +401,9 @@ resources:
       en: This field provides the link to the “What we Heard” report when it is available online.
       fr: Cette zone contient le lien vers le rapport intitulé « Ce que nous avons entendu » après que le rapport est affiché en ligne.
     obligation: Optional
-    format_type: Web address
+    format_type:
+      en: Web address
+      fr: Adresse Web
     validation: None
     visible_to_public: Yes
     occurrence: Single
@@ -452,7 +460,7 @@ resources:
     obligation: Optional
     format_type:
       en: Free text (separate paragraphs with two blank lines)
-      fr: Texte libre (separate paragraphs with two blank lines)
+      fr: Texte libre (séparez les paragraphes par deux lignes blanches)
     validation: None
     visible_to_public: No
     occurrence: Repeatable
@@ -472,7 +480,7 @@ resources:
     obligation: Optional
     format_type:
       en: Free text (separate paragraphs with two blank lines)
-      fr: Texte libre (separate paragraphs with two blank lines)
+      fr: Texte libre (séparez les paragraphes par deux lignes blanches)
     validation: None
     visible_to_public: No
     occurrence: Repeatable

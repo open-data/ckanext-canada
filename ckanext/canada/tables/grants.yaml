@@ -67,7 +67,7 @@ resources:
     form_required: true
     format_type:
       en: Numeric only
-      fr: Numeric only
+      fr: Numérique uniquement
     datastore_type: int
 
   # 3.3 Amendment Date (New Field)
@@ -82,8 +82,8 @@ resources:
       en: Mandatory if amendment number set
       fr: Obligatoire si le numéro de modification est défini
     format_type:
-      en: Date (Please format the data as YYYY-MM-DD)
-      fr: Date (Please format the data as YYYY-MM-DD)
+      en: Date (Please format the date as YYYY-MM-DD)
+      fr: Date (Veuillez utiliser le format de date suivant : AAAA-MM-JJ)
     datastore_type: date
     excel_required_formula: AND(NOT(ISBLANK({amendment_number})),{amendment_number}<>0)
     form_snippet: scheming/form_snippets/date.html
@@ -369,7 +369,7 @@ resources:
     obligation: Optional
     format_type:
       en: "Text format locked to (X#X #X#)"
-      fr: "Text format locked to (X#X #X#)"
+      fr: "Format de texte verrouillé sur (X#X #X#)"
     datastore_type: text
 
   # 3.14 Federal Riding Name (English) (New Field)
@@ -598,8 +598,8 @@ resources:
     form_required: true
     form_snippet: scheming/form_snippets/date.html
     format_type:
-      en: Date (Please format the data as YYYY-MM-DD)
-      fr: Date (Please format the data as YYYY-MM-DD)
+      en: Date (Please format the date as YYYY-MM-DD)
+      fr: Date (Veuillez utiliser le format de date suivant : AAAA-MM-JJ)
     datastore_type: date
     extract_date_year: true
     extract_date_month: true
@@ -615,8 +615,8 @@ resources:
       fr: La date de fin prévue de l'entente est la date de fin présumée de l'entente, ou la date à laquelle le projet est censé prendre fin, conformément à l'entente initiale.
     obligation: Optional
     format_type:
-      en: Date (Please format the data as YYYY-MM-DD)
-      fr: Date (Please format the data as YYYY-MM-DD)
+      en: Date (Please format the date as YYYY-MM-DD)
+      fr: Date (Veuillez utiliser le format de date suivant : AAAA-MM-JJ)
     datastore_type: date
     form_snippet: scheming/form_snippets/date.html
 
@@ -695,15 +695,15 @@ resources:
         * industry group: 7 (educational support services)
         * industry: 10 (educational support services)
       fr: |
-        Free text based on controlled list from Statistics Canada; This list is available to users on the Statistics Canada website. http://www.statcan.gc.ca/eng/subjects/standard/naics/2012/index
+        Texte libre basé sur une liste contrôlée de Statistique Canada; cette liste est disponible pour les utilisateurs sur le site Web de Statistique Canada. https://www.statcan.gc.ca/fr/sujets/norme/scian/2012/index
 
-        The “NAICS identifier” field should be populated with the most appropriate choice in the selection list. Departments should consult the Statistics Canada website and populate at their own discretion. At least 3 digits should be entered to allow for broad coding when specificity is not possible.
+        Le champ « Identifiant SCIAN » doit être rempli avec le choix le plus approprié dans la liste de sélection. Les ministères doivent consulter le site Web de Statistique Canada et le remplir à leur guise. Au moins trois chiffres doivent être saisis pour permettre un codage large lorsque la spécificité n’est pas possible.
 
-        For example, if Employment and Social Development Canada is signing an agreement with an educational support services organization, the NAICS identifier would be 611710. The identifier is broken down as follows:
-        * sector: 61 (educational services)
-        * subsector: 1 (educational services)
-        * industry group: 7 (educational support services)
-        * industry: 10 (educational support services)
+        Par exemple, si Emploi et Développement social Canada signe un accord avec un organisme de services de soutien à l’éducation, l’identifiant SCIAN sera 611710. L’identifiant se décompose comme suit :
+        * secteur : 61 (services d’enseignement)
+        * sous-secteur : 1 (services d’enseignement)
+        * groupe industriel : 7 (services de soutien à l’enseignement)
+        * industrie : 10 (services de soutien à l’enseignement)
     datastore_type: text
 
   # 3.33 Expected Results or Intended Outcome (English) (New Field)
