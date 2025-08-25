@@ -68,6 +68,7 @@ from ckan.logic import (
     NotAuthorized
 )
 from ckan.lib.navl.dictization_functions import unflatten
+from ckan.common import repr_untrusted
 
 from ckanext.recombinant.datatypes import canonicalize
 from ckanext.recombinant.tables import get_chromo
@@ -301,7 +302,7 @@ def recover_username():
             h.flash_error(_('Email is required'))
             return h.redirect_to('canada.recover_username')
 
-        log.info('Username recovery requested for email "{}"'.format(email))
+        log.info('Username recovery requested for email', repr_untrusted(email))
 
         context = cast(Context, {'model': model, 'user': g.user, 'ignore_auth': True})
         username_list = []
