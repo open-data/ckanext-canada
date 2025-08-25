@@ -69,13 +69,11 @@ body .navbar-dark .navbar-toggler-icon{
 }
 
 body .accordion-button:not(.collapsed)::after{
-  /* background-image: url("/data/static/img/data_img/chevron-down-blue.svg"); */
-  background-image: none;
+  background-image: url("/data/static/img/data_img/chevron-down-blue.svg");
 }
 
 body .accordion-button::after{
-  /* background-image: url("/data/static/img/data_img/chevron-down-grey.svg"); */
-  background-image: none;
+  background-image: url("/data/static/img/data_img/chevron-down-grey.svg");
 }
 
 body .btn-close{

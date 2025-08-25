@@ -104,6 +104,9 @@ body .pd-datatable-ref-link{
 body .pd-datatable-ref-link small{
   font-size: 75%;
 }
+body .d-none-soft{
+  display: none;
+}
 /*#####################
 ##       END         ##
 ##  Datatables Views ##
