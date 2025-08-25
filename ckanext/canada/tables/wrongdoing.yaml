@@ -62,7 +62,7 @@ resources:
     form_required: true
     format_type:
       en: Date (Please format the date as YYYY-MM-DD)
-      fr: Date (Veuillez utiliser le format de date suivant : AAAA-MM-JJ)
+      fr: "Date (Veuillez utiliser le format de date suivant : AAAA-MM-JJ)"
     datastore_type: date
     extract_date_year: true
     extract_date_month: true
