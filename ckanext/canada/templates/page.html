@@ -156,7 +156,10 @@
             !!(navigator.userAgent.match(/Trident/) || navigator.userAgent.match(/rv:11/)) ||
             (typeof $.browser !== "undefined" && $.browser.msie == 1))
             {
-              document.getElementById("ie_warning").style.display = "block";
+              let ieWarning = document.getElementById("ie_warning");
+              if( ieWarning.length > 0 ){
+                $(ieWarning).show();
+              }
             }
           });
         });

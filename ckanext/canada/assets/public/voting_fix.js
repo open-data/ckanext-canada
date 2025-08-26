@@ -5,9 +5,9 @@ function load_voting_scripts(){
 
     if( typeof votingWrapper != "undefined" && votingWrapper != null ){
 
-      // FIXME: TODO: move style attributes to classes
-      votingWrapper.style.opacity = 0;
-      votingWrapper.style.pointerEvents = 'none';
+      if( ! votingWrapper.classList.contains('canada-voting-fix-hide') ){
+        votingWrapper.classList.add('canada-voting-fix-hide');
+      }
 
       const cacheVersion = 1
 
@@ -54,7 +54,12 @@ function load_voting_scripts(){
           if( ! votingWrapper.classList.contains('og-fade-in') ){
             votingWrapper.classList.add('og-fade-in');
           }
-          votingWrapper.style.pointerEvents = 'all';
+          if( votingWrapper.classList.contains('canada-voting-fix-hide') ){
+            votingWrapper.classList.remove('canada-voting-fix-hide');
+          }
+          if( ! votingWrapper.classList.contains('canada-voting-fix-show') ){
+            votingWrapper.classList.add('canada-voting-fix-show');
+          }
 
           observer.disconnect();
 
@@ -66,7 +71,12 @@ function load_voting_scripts(){
           if( ! votingWrapper.classList.contains('og-fade-in') ){
             votingWrapper.classList.add('og-fade-in');
           }
-          votingWrapper.style.pointerEvents = 'all';
+          if( votingWrapper.classList.contains('canada-voting-fix-hide') ){
+            votingWrapper.classList.remove('canada-voting-fix-hide');
+          }
+          if( ! votingWrapper.classList.contains('canada-voting-fix-show') ){
+            votingWrapper.classList.add('canada-voting-fix-show');
+          }
 
         },1500);
 
