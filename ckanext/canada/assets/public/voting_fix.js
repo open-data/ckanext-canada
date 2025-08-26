@@ -28,6 +28,9 @@ function load_voting_scripts(){
 
           if( hasLoadedVotingScripts ){ return; }
 
+          const scriptElement = document.querySelector('script[nonce]');
+          const nonceValue = scriptElement.nonce;
+
           if( votingWrapper.getElementsByTagName('form').length == 0 ){ return; }
 
           votingScripts.forEach(function(_scriptSource){
@@ -35,6 +38,7 @@ function load_voting_scripts(){
             var script = document.createElement('script');
             script.type = 'text/javascript';
             script.src = _scriptSource;
+            script.setAttribute('nonce', nonceValue);
             document.head.appendChild(script);
 
           });
@@ -45,6 +49,7 @@ function load_voting_scripts(){
             link.rel = 'stylesheet';
             link.media = 'all';
             link.href = _styleSource;
+            link.setAttribute('nonce', nonceValue);
             document.head.appendChild(link);
 
           });
