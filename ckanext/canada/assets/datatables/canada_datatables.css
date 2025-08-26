@@ -107,6 +107,108 @@ body .pd-datatable-ref-link small{
 body .d-none-soft{
   display: none;
 }
+/* Core data:image overrides for CSP support */
+body .form-select{
+  /* background-image: url("/data/static/img/data_img/chevron-down.svg"); */
+  background-image: none;
+}
+
+body .form-check-input:checked[type=checkbox]{
+  /* background-image: url("/data/static/img/data_img/check.svg"); */
+  background-image: none;
+}
+
+body .form-check-input:checked[type=radio]{
+  /* background-image: url("/data/static/img/data_img/dot.svg"); */
+  background-image: none;
+}
+
+body .form-check-input[type=checkbox]:indeterminate{
+  /* background-image: url("/data/static/img/data_img/dash.svg"); */
+  background-image: none;
+}
+
+body .form-switch .form-check-input {
+  /* background-image: url("/data/static/img/data_img/dot-grey.svg"); */
+  background-image: none;
+}
+
+body .form-switch .form-check-input:focus{
+  /* background-image: url("/data/static/img/data_img/dot-blue.svg"); */
+  background-image: none;
+}
+
+body .form-switch .form-check-input:checked{
+  /* background-image: url("/data/static/img/data_img/dot-white.svg"); */
+  background-image: none;
+}
+
+body .was-validated .form-control:valid, .form-control.is-valid{
+  /* background-image: url("/data/static/img/data_img/check-green.svg"); */
+  background-image: none;
+}
+
+body .was-validated .form-select:valid:not([multiple]):not([size]), .was-validated .form-select:valid:not([multiple])[size="1"], .form-select.is-valid:not([multiple]):not([size]), .form-select.is-valid:not([multiple])[size="1"]{
+  /* background-image: url("/data/static/img/data_img/chevron-downg"), url("/data/static/img/data_img/check-green.svg"); */
+  background-image: none;
+}
+
+body .was-validated .form-control:invalid, .form-control.is-invalid{
+  /* background-image: url("/data/static/img/data_img/danger.svg"); */
+  background-image: none;
+}
+
+body .was-validated .form-select:invalid:not([multiple]):not([size]), .was-validated .form-select:invalid:not([multiple])[size="1"], .form-select.is-invalid:not([multiple]):not([size]), .form-select.is-invalid:not([multiple])[size="1"]{
+  /* background-image: url("/data/static/img/data_img/chevron-down.svg"), url("/data/static/img/data_img/danger.svg"); */
+  background-image: none;
+}
+
+body .navbar-light .navbar-toggler-icon{
+  /* background-image: url("/data/static/img/data_img/burger.svg"); */
+  background-image: none;
+}
+
+body .navbar-dark .navbar-toggler-icon{
+  /* background-image: url("/data/static/img/data_img/burger-lite.svg"); */
+  background-image: none;
+}
+
+body .accordion-button:not(.collapsed)::after{
+  background-image: url("/data/static/img/data_img/chevron-down-blue.svg");
+}
+
+body .accordion-button::after{
+  background-image: url("/data/static/img/data_img/chevron-down-grey.svg");
+}
+
+body .btn-close{
+  /* background-image: url("/data/static/img/data_img/close-black.svg"); */
+  background-image: none;
+}
+
+body .carousel-control-prev-icon{
+  /* background-image: url("/data/static/img/data_img/chevron-left.svg"); */
+  background-image: none;
+}
+
+body .carousel-control-next-icon{
+  /* background-image: url("/data/static/img/data_img/chevron-right.svg"); */
+  background-image: none;
+}
+.canada-dt-search-input-no-fts{
+  cursor: not-allowed !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+.canada-dt-hidden-div-fix{
+  height: 1 !important;
+  width: 1 !important;
+  overflow: hidden !important;
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+}
+/* END Core data:image overrides for CSP support END */
 /*#####################
 ##       END         ##
 ##  Datatables Views ##
