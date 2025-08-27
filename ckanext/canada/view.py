@@ -804,6 +804,7 @@ def _clean_check_type_errors(post_data: Dict[str, Any],
 
 
 @canada_views.route('/', methods=['GET'])
+@nocache_store
 def home():
     if not g.is_registry:
         return h.redirect_to('dataset.search')
