@@ -35,7 +35,7 @@ from ckan.lib.helpers import (
     lang,
     Page,
 )
-
+from ckan.views import nocache_store
 from ckan.views.dataset import (
     EditView as DatasetEditView,
     search as dataset_search,
@@ -126,6 +126,7 @@ def _url_part_unescape(urlpart: str) -> str:
 
 
 @canada_views.route('/user/logged_in', methods=['GET'])
+@nocache_store
 def logged_in():
     # redirect if needed
     came_from = request.args.get('came_from', '')
@@ -242,6 +243,7 @@ class CanadaResourceCreateView(ResourceCreateView):
 
 
 class CanadaUserRegisterView(UserRegisterView):
+    @nocache_store
     def post(self):
         data = clean_dict(unflatten(tuplize_dict(parse_params(request.form))))
         email = data.get('email', '')
@@ -281,6 +283,7 @@ canada_views.add_url_rule(
 
 
 @canada_views.route('/recover-username', methods=['GET', 'POST'])
+@nocache_store
 def recover_username():
     if not g.is_registry or not h.plugin_loaded('gcnotify'):
         # we only want this route on the Registry, and the email template
