@@ -6,9 +6,6 @@
       "isApplication": true,
     {% else %}
       "isApplication": false,
-      {% if h.adobe_analytics_js() %}
-        "webAnalytics": true,
-      {% endif %}
     {% endif %}
   });
   let newWetFooterString = '';
@@ -30,4 +27,33 @@
     newWetFooterString += _link.outerHTML;
   });
   document.write(newWetFooterString);
+  {% if not g.is_registry and h.adobe_analytics_js() %}
+    function canada_set_adobe_bottom(){
+      const maxTries = 20;
+      let currentTry = 0;
+      let interval = false;
+
+      function _set_adobe_bottom(){
+        if( currentTry > maxTries ){
+          clearInterval(interval);
+          interval = false;
+          return;
+        }
+
+        currentTry++;
+
+        if( typeof _satellite == 'undefined' || typeof _satellite.pageBottom == 'undefined' ){
+          return;
+        }
+
+        clearInterval(interval);
+        interval = false;
+        _satellite.pageBottom();
+      }
+
+      interval = setInterval(_set_adobe_bottom, 100);
+
+    }
+    canada_set_adobe_bottom();
+  {% endif %}
 </script>

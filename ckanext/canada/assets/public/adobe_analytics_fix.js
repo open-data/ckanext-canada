@@ -14,16 +14,16 @@ function canada_fix_adobe_analytics_cookies(){
 
     currentTry++;
 
-    if( typeof _satellite == 'undefined' || typeof _satellite.cookie == 'undefined' ){
+    if( typeof _satellite == 'undefined' || typeof _satellite.cookie == 'undefined' || typeof _satellite.cookie.set == 'undefined' ){
       return;
     }
 
     clearInterval(interval);
     interval = false;
 
-    const superFunc = _satellite.cookie;
-    _satellite.cookie = function(_t, _n, _i){
-      if( _t != 'clickURL' || ! _n.includes('javascript') ){
+    const superFunc = _satellite.cookie.set;
+    _satellite.cookie.set = function(_t, _n, _i){
+      if( _t != 'clickURL' || ! _n.toString().includes('javascript') ){
         return superFunc(_t, _n, _i);
       }
       return superFunc(_t, '', _i);
