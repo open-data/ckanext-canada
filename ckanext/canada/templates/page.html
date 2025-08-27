@@ -139,6 +139,9 @@
       {% asset 'canada_internal/analytics' %}
     {% endif %}
   {%- endblock -%}
+  {%- if not g.is_registry -%}
+    {%- asset 'canada_public/adobe_analytics_fix' -%}
+  {%- endif -%}
   {{ super() }}
   {% if g.is_registry %}
     {%- block session_timeout -%}
