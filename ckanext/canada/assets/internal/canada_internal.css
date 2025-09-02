@@ -831,3 +831,7 @@ body ul.xloader-log li.item.failure > i::after{
 ##  Recombinant Base CSS Overrides ##
 ##               END               ##
 #####################################*/
+
+input#field-resource-url{
+  padding-right: 100px !important;
+}

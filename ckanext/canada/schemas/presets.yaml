@@ -3521,6 +3521,9 @@ presets:
     - label: MapInfo
       value: TAB
     - value: MAPX
+    - value: MRC
+      mimetype: application/marc
+      replaces: ["marc"]
     - value: MFX
       mimetype: application/mxf
     - value: MOV
@@ -3669,6 +3672,10 @@ presets:
         en: Unknown
         fr: Inconnu
       value: unknown
+    - label:
+        en: Unsupported
+        fr: Non pris en charge
+      value: unsupported
 
 # Field = Size.
 # {The [estimated] size of a distribution in kilobytes}
