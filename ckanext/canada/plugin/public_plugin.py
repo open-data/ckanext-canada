@@ -9,12 +9,12 @@ from ckan.types import (
 from ckan.common import CKANConfig
 
 import os
-from flask import Blueprint
+from flask import Blueprint, has_request_context
 from click import Command
 
 import ckan.plugins as p
 from ckan.lib.plugins import DefaultTranslation
-from ckan.plugins.toolkit import _, g, h
+from ckan.plugins.toolkit import _, g, h, request
 import ckan.lib.helpers as core_helpers
 import ckan.lib.formatters as formatters
 
@@ -241,6 +241,14 @@ class LogExtraMiddleware(object):
         return self.app(environ, _start_response)
 
 
+def _wet_pager_url_generator(page: int, partial: Optional[str] = None,
+                             **kwargs: Any) -> str:
+    pargs = []
+    pargs.append(request.endpoint)
+    kwargs['page'] = page
+    return h.url_for(*pargs, **kwargs)
+
+
 def _wet_pager(self: core_helpers.Page, *args: Any, **kwargs: Any):
     # a custom pagination method, because CKAN doesn't
     # expose the pagination to the templates,
@@ -251,6 +259,8 @@ def _wet_pager(self: core_helpers.Page, *args: Any, **kwargs: Any):
         symbol_next=core_helpers._('Next'),
         curpage_attr={'class': 'active'}
     )
+
+    self._url_generator = _wet_pager_url_generator
 
     return super(core_helpers.Page, self).pager(*args, **kwargs)
 
