@@ -72,6 +72,9 @@
               _('Add data about Government of Canada services, financials or national demographic information that is relevant to Canadians.')
             )}}
             {{ quick_link_pd('experiment') }}
+            {% if h.check_access('organization_update', {'id': 'tbs-sct'}) %}
+              {{ quick_link_pd('aistrategy') }}
+            {% endif %}
             {{ quick_link_pd('nap5') }}
           </ul>
         </section>
