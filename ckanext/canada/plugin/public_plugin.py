@@ -9,6 +9,7 @@ from ckan.types import (
 from ckan.common import CKANConfig
 
 import os
+from flask import Blueprint
 from click import Command
 
 import ckan.plugins as p
