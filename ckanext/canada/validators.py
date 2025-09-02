@@ -30,6 +30,7 @@ import uuid
 from datetime import datetime
 
 from ckan.lib.helpers import date_str_to_datetime
+from ckanext.scheming.helpers import scheming_get_preset
 from ckanext.fluent.validators import fluent_text_output, LANG_SUFFIX
 from ckanext.security.resource_upload_validator import (
     validate_upload_type, validate_upload_presence
@@ -530,6 +531,7 @@ def canada_guess_resource_format(key: FlattenKey,
         return
 
     value = data[key]
+    mimetype = None
 
     # if it is empty, then do the initial guess.
     # we will guess all url types, unlike Core
@@ -579,6 +581,15 @@ def canada_guess_resource_format(key: FlattenKey,
                 #      set this to something...
                 # errors[key].append(e.error_dict['format'])
                 # raise StopOnError
+
+    if mimetype:
+        preset_field = scheming_get_preset('canada_resource_format')
+        fmt_choices = []
+        if preset_field and 'choices' in preset_field:
+            fmt_choices = preset_field['choices']
+        if mimetype not in set(_f['value'] for _f in fmt_choices):
+            # guessed mimetype not in Scheming choice list, use `other` for now
+            data[key] = 'other'
 
 
 def protect_registry_access(key: FlattenKey,

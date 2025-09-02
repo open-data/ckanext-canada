@@ -356,9 +356,6 @@ def canada_guess_mimetype(context: Context, data_dict: DataDict) -> str:
                 for r in f['replaces']:
                     if mimetype.lower() == r.lower():
                         mimetype = f['value']
-        if mimetype not in set(_f['value'] for _f in fmt_choices):
-            # for UX, we always have a value here... (2025-09-02)
-            mimetype = 'unsupported'
 
     if not mimetype:
         # raise the ValidationError here so that the
