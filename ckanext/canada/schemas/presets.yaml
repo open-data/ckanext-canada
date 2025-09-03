@@ -3522,6 +3522,9 @@ presets:
     - label: MapInfo
       value: TAB
     - value: MAPX
+    - value: MRC
+      mimetype: application/marc
+      replaces: ["marc"]
     - value: MFX
       mimetype: application/mxf
     - value: MOV
