@@ -14,7 +14,6 @@
   const wetFooterScripts = wetFooterDOC.querySelectorAll('script');
   wetFooterScripts.forEach(function(_script){
     _script.setAttribute('nonce', '{{- h.get_inline_script_nonce() -}}');
-    _script.async = true;
     newWetFooterString += _script.outerHTML;
   });
   const wetFooterStyles = wetFooterDOC.querySelectorAll('style');
