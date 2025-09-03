@@ -10,7 +10,7 @@ from ckan.types import (
 from ckan.common import CKANConfig
 
 import os
-from flask import Blueprint
+from flask import Blueprint, has_request_context
 from click import Command
 
 import ckan.plugins as p
@@ -288,8 +288,8 @@ class LogExtraMiddleware(object):
         return self.app(environ, _start_response)
 
 
-def _wet_pager_url_generator(page: int, partial: Optional[str] = None,
-                             **kwargs: Any) -> str:
+def _wet_pager_admin_url_generator(page: int, partial: Optional[str] = None,
+                                   **kwargs: Any) -> str:
     pargs = []
     pargs.append(request.endpoint)
     kwargs['page'] = page
@@ -307,7 +307,9 @@ def _wet_pager(self: core_helpers.Page, *args: Any, **kwargs: Any):
         curpage_attr={'class': 'active'}
     )
 
-    self._url_generator = _wet_pager_url_generator
+    # pager links fix for ckan-admin/publish route
+    if has_request_context() and 'ckan-admin/publish' in request.url:
+        self._url_generator = _wet_pager_admin_url_generator
 
     return super(core_helpers.Page, self).pager(*args, **kwargs)
 
