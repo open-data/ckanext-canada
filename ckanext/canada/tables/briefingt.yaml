@@ -222,7 +222,7 @@ resources:
     excel_column_width: 35
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
-      style: "width: 100%; display: block"
+      class: form-control canada-width-full d-block
 
   # 3.2
   - datastore_id: additional_information_fr
@@ -243,7 +243,7 @@ resources:
     excel_column_width: 35
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
-      style: "width: 100%; display: block"
+      class: form-control canada-width-full d-block
 
 
 

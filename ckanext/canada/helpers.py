@@ -284,8 +284,8 @@ def adv_search_mlt_root() -> str:
                 config.get('ckanext.canada.adv_search_url_en'))
 
 
-def ga4_id() -> str:
-    return str(config.get('ga4.id'))
+def ga4_id() -> Optional[str]:
+    return str(config['ga4.id']) if config.get('ga4.id') else None
 
 
 def adobe_analytics_login_required(current_url: str) -> int:
@@ -1121,3 +1121,7 @@ def support_email_address() -> str:
 
 def default_open_email_address() -> str:
     return config['ckanext.canada.default_open_email_address']
+
+
+def get_inline_script_nonce() -> str:
+    return str(request.environ.get('CSP_NONCE', ''))

@@ -134,7 +134,7 @@ resources:
           fr: Texte libre (séparez les paragraphes par deux lignes blanches)
         form_snippet: scheming/form_snippets/textarea.html
         form_attrs:
-            style: "width: 100%; display: block"
+            class: form-control canada-width-full d-block
         label:
           en: "Project Summary (English)"
           fr: "Résumé du projet (en anglais)"
@@ -155,7 +155,7 @@ resources:
           fr: Texte libre (séparez les paragraphes par deux lignes blanches)
         form_snippet: scheming/form_snippets/textarea.html
         form_attrs:
-            style: "width: 100%; display: block"
+            class: form-control canada-width-full d-block
         label:
           en: "Project Summary (French)"
           fr: "Résumé du projet (en français)"
@@ -268,7 +268,7 @@ resources:
           fr: Texte libre (séparez les paragraphes par deux lignes blanches)
         form_snippet: scheming/form_snippets/textarea.html
         form_attrs:
-            style: "width: 100%; display: block"
+            class: form-control canada-width-full d-block
         label:
           en: "Design Details (English)"
           fr: "Devis details (anglais)"
@@ -289,7 +289,7 @@ resources:
           fr: Texte libre (séparez les paragraphes par deux lignes blanches)
         form_snippet: scheming/form_snippets/textarea.html
         form_attrs:
-            style: "width: 100%; display: block"
+            class: form-control canada-width-full d-block
         label:
           en: "Design Details (French)"
           fr: "Devis details (français)"
@@ -310,7 +310,7 @@ resources:
           fr: Texte libre (séparez les paragraphes par deux lignes blanches)
         form_snippet: scheming/form_snippets/textarea.html
         form_attrs:
-            style: "width: 100%; display: block"
+            class: form-control canada-width-full d-block
         label:
           en: "Intervention (English)"
           fr: "Intervention (anglais)"
@@ -331,7 +331,7 @@ resources:
           fr: Texte libre (séparez les paragraphes par deux lignes blanches)
         form_snippet: scheming/form_snippets/textarea.html
         form_attrs:
-            style: "width: 100%; display: block"
+            class: form-control canada-width-full d-block
         label:
           en: "Intervention (French)"
           fr: "Intervention (français)"
@@ -352,7 +352,7 @@ resources:
           fr: Texte libre (séparez les paragraphes par deux lignes blanches)
         form_snippet: scheming/form_snippets/textarea.html
         form_attrs:
-            style: "width: 100%; display: block"
+            class: form-control canada-width-full d-block
         label:
           en: "Outcomes (English)"
           fr: "Mesure des résultats (anglais)"
@@ -373,7 +373,7 @@ resources:
           fr: Texte libre (séparez les paragraphes par deux lignes blanches)
         form_snippet: scheming/form_snippets/textarea.html
         form_attrs:
-            style: "width: 100%; display: block"
+            class: form-control canada-width-full d-block
         label:
           en: "Outcomes (French)"
           fr: "Mesure des résultats (françcais)"
@@ -394,7 +394,7 @@ resources:
           fr: Texte libre (séparez les paragraphes par deux lignes blanches)
         form_snippet: scheming/form_snippets/textarea.html
         form_attrs:
-            style: "width: 100%; display: block"
+            class: form-control canada-width-full d-block
         label:
           en: "Findings (English)"
           fr: "Résultats (anglais)"
@@ -415,7 +415,7 @@ resources:
           fr: Texte libre (séparez les paragraphes par deux lignes blanches)
         form_snippet: scheming/form_snippets/textarea.html
         form_attrs:
-            style: "width: 100%; display: block"
+            class: form-control canada-width-full d-block
         label:
           en: "Findings (French)"
           fr: "Résultats (françcais)"
@@ -501,7 +501,7 @@ resources:
           fr: Texte libre
         form_snippet: scheming/form_snippets/textarea.html
         form_attrs:
-          style: "width: 100%; display: block"
+          class: form-control canada-width-full d-block
         label:
           en: "Further Information / Links (English)"
           fr: "Informations supplémentaires / liens (anglais)"
@@ -522,7 +522,7 @@ resources:
           fr: Texte libre
         form_snippet: scheming/form_snippets/textarea.html
         form_attrs:
-          style: "width: 100%; display: block"
+          class: form-control canada-width-full d-block
         label:
           en: "Further Information / Links (French)"
           fr: "Informations supplémentaires / liens (en français)"

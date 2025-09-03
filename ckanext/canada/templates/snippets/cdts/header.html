@@ -10,7 +10,7 @@
 
 {# See: https://github.com/wet-boew/cdts-sgdc/blob/v4.1.0/src/gcweb/appTop.ejs #}
 {# See: https://github.com/wet-boew/cdts-sgdc/blob/v4.1.0/src/gcweb/top.ejs #}
-<script>
+<script nonce="{{- h.get_inline_script_nonce() -}}">
   let appTop = document.getElementById("app-top");
   if( appTop ){
     {% if g.is_registry %}
@@ -43,6 +43,12 @@
                 "subhref": {{ recombinant_menu_link('nap5') | tojson }},
                 "subtext": {{ recombinant_menu_text('nap5') | tojson }},
               },
+              {% if h.check_access('organization_update', {'id': 'tbs-sct'}) %}
+              {
+                "subhref": {{ recombinant_menu_link('aistrategy') | tojson }},
+                "subtext": {{ recombinant_menu_text('aistrategy') | tojson }},
+              },
+              {% endif %}
               {
                 "subhref": {{ recombinant_menu_link('inventory') | tojson }},
                 "subtext": {{ recombinant_menu_text('inventory') | tojson }},

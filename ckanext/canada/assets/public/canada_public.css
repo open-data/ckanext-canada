@@ -1,3 +1,134 @@
+:root{
+  --canada-root-dir: '/data';
+}
+
+/* Core data:image overrides for CSP support */
+body .form-select{
+  /* background-image: url("/data/static/img/data_img/chevron-down.svg"); */
+  background-image: none;
+}
+
+body .form-check-input:checked[type=checkbox]{
+  /* background-image: url("/data/static/img/data_img/check.svg"); */
+  background-image: none;
+}
+
+body .form-check-input:checked[type=radio]{
+  /* background-image: url("/data/static/img/data_img/dot.svg"); */
+  background-image: none;
+}
+
+body .form-check-input[type=checkbox]:indeterminate{
+  /* background-image: url("/data/static/img/data_img/dash.svg"); */
+  background-image: none;
+}
+
+body .form-switch .form-check-input {
+  /* background-image: url("/data/static/img/data_img/dot-grey.svg"); */
+  background-image: none;
+}
+
+body .form-switch .form-check-input:focus{
+  /* background-image: url("/data/static/img/data_img/dot-blue.svg"); */
+  background-image: none;
+}
+
+body .form-switch .form-check-input:checked{
+  /* background-image: url("/data/static/img/data_img/dot-white.svg"); */
+  background-image: none;
+}
+
+body .was-validated .form-control:valid, .form-control.is-valid{
+  /* background-image: url("/data/static/img/data_img/check-green.svg"); */
+  background-image: none;
+}
+
+body .was-validated .form-select:valid:not([multiple]):not([size]), .was-validated .form-select:valid:not([multiple])[size="1"], .form-select.is-valid:not([multiple]):not([size]), .form-select.is-valid:not([multiple])[size="1"]{
+  /* background-image: url("/data/static/img/data_img/chevron-downg"), url("/data/static/img/data_img/check-green.svg"); */
+  background-image: none;
+}
+
+body .was-validated .form-control:invalid, .form-control.is-invalid{
+  /* background-image: url("/data/static/img/data_img/danger.svg"); */
+  background-image: none;
+}
+
+body .was-validated .form-select:invalid:not([multiple]):not([size]), .was-validated .form-select:invalid:not([multiple])[size="1"], .form-select.is-invalid:not([multiple]):not([size]), .form-select.is-invalid:not([multiple])[size="1"]{
+  /* background-image: url("/data/static/img/data_img/chevron-down.svg"), url("/data/static/img/data_img/danger.svg"); */
+  background-image: none;
+}
+
+body .navbar-light .navbar-toggler-icon{
+  /* background-image: url("/data/static/img/data_img/burger.svg"); */
+  background-image: none;
+}
+
+body .navbar-dark .navbar-toggler-icon{
+  /* background-image: url("/data/static/img/data_img/burger-lite.svg"); */
+  background-image: none;
+}
+
+body .accordion-button:not(.collapsed)::after{
+  background-image: url("/data/static/img/data_img/chevron-down-blue.svg");
+}
+
+body .accordion-button::after{
+  background-image: url("/data/static/img/data_img/chevron-down-grey.svg");
+}
+
+body .btn-close{
+  /* background-image: url("/data/static/img/data_img/close-black.svg"); */
+  background-image: none;
+}
+
+body .carousel-control-prev-icon{
+  /* background-image: url("/data/static/img/data_img/chevron-left.svg"); */
+  background-image: none;
+}
+
+body .carousel-control-next-icon{
+  /* background-image: url("/data/static/img/data_img/chevron-right.svg"); */
+  background-image: none;
+}
+
+body .user-recaptcha-wrapper{
+  width: 304px;
+  height: 352px;
+  position: relative;
+}
+
+body .user-recaptcha-frame-wrapper{
+  width: 304px;
+  height: 352px;
+  position: absolute;
+}
+
+body .user-recaptcha-frame{
+  width: 304px;
+  height: 352px
+}
+
+body .user-recaptcha-text-wrapper{
+  width: 250px;
+  height: 80px;
+  position: absolute;
+  bottom: 21px;
+  left: 25px;
+  margin: 0;
+  padding: 0;
+  right: 25px;
+}
+
+body .user-recaptcha-text{
+  width: 250px;
+  height: 80px;
+  border: 1px solid #c1c1c1;
+  margin: 0;
+  padding: 0;
+  resize: none;
+}
+/* END Core data:image overrides for CSP support END */
+
 body .canada-w10-spacer{
   display: inline-block !important;
   margin: 0 !important;
@@ -255,7 +386,7 @@ a#edit-comment-body-0-format-help-about, button#edit-submit,button#edit-actions-
   margin: 10px 0;
   padding: 0;
   list-style-type: none;
-  background-image: url('/data/dotted.png'), url('/dotted.png');
+  background-image: url('/data/static/img/dotted.png');
   background-repeat: repeat-y;
   background-position: 17px 0;
 }
@@ -1020,7 +1151,7 @@ body ul.nav li.view-item a i.icon::before{
 ##  Custom Resource Sprites ##
 ##############################*/
 ul.resource-list > li.resource-item span.format-label[data-format="pbix"]{
-  background-image: url("/data/static/img/sprite-resource-additional-icons.png"), url("/static/img/sprite-resource-additional-icons.png");
+  background-image: url("/data/static/img/sprite-resource-additional-icons.png");
   background-repeat: no-repeat;
   width: 60px;
   height: 65px;
@@ -1034,7 +1165,7 @@ ul.resource-list > li.resource-item span.format-label[data-format="mov"],
 ul.resource-list > li.resource-item span.format-label[data-format="avi"],
 ul.resource-list > li.resource-item span.format-label[data-format="mkv"],
 ul.resource-list > li.resource-item span.format-label[data-format="wmv"]{
-  background-image: url("/data/static/img/sprite-resource-additional-icons.png"), url("/static/img/sprite-resource-additional-icons.png");
+  background-image: url("/data/static/img/sprite-resource-additional-icons.png");
   background-repeat: no-repeat;
   width: 60px;
   height: 65px;
@@ -1361,10 +1492,10 @@ div.canada-job-list-title small{
 ##  Core CSS URIs w/ Base URL ##
 ################################*/
 body .format-label{
-  background-image: url("/data/base/images/sprite-resource-icons.png"), url("/base/images/sprite-resource-icons.png");
+  background-image: url("/data/base/images/sprite-resource-icons.png");
 }
 body, body .module-grid, body .media-grid, body .main, body .account-masthead, body .masthead, body .site-footer{
-  /* background-image: url("/data/base/images/bg.png"), url("/base/images/bg.png"); */
+  /* background-image: url("/data/base/images/bg.png"); */
   background-image: none !important;
 }
 /*##############################
@@ -1537,7 +1668,10 @@ body #timeout > .modal-dialog{
 }
 /* BS4+ Fix. TODO: remove after upgrade to BS4+ */
 body .modal .modal-dialog .modal-content button.btn-close{
-  background: transparent url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23fff'><path d='M.293.293a1 1 0 011.414 0L8 6.586 14.293.293a1 1 0 111.414 1.414L9.414 8l6.293 6.293a1 1 0 01-1.414 1.414L8 9.414l-6.293 6.293a1 1 0 01-1.414-1.414L6.586 8 .293 1.707a1 1 0 010-1.414z'/></svg>") center/1em auto no-repeat;
+  background-color: transparent;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-image: url("/data/static/img/data_img/modal-close.svg");
 }
 body .panel-title > .label.label-info,
 body h1 > .label.label-info{
@@ -1802,4 +1936,128 @@ body details.canada-abbr summary::marker{
 
 body details.canada-abbr summary i{
   opacity: 0.75;
+}
+
+body .canada-display-none{
+  display: none;
+}
+
+body .canada-border-none{
+  border: none;
+}
+
+body .canada-width-auto{
+  width: auto;
+}
+
+body .canada-width-full{
+  width: 100%;
+}
+
+body .canada-break-words{
+  word-wrap: break-word;
+}
+
+body .canada-list-disc{
+  list-style-type: disc;
+}
+
+body .canada-padding-top-25{
+  padding-top: 25px;
+}
+
+body .canada-margin-top-0{
+  margin-top: 0;
+}
+
+body .canada-margin-bottom-0{
+  margin-bottom: 0;
+}
+
+body .canada-margin-bottom-10{
+  margin-bottom: 10px;
+}
+
+body .canada-margin-bottom-15{
+  margin-bottom: 15px;
+}
+
+body .canada-margin-left-10{
+  margin-left: 10px;
+}
+
+body .canada-admin-publish-checkbox{
+  float: right;
+  display: inline-block;
+  margin-top: -25px;
+}
+
+body .canada-draft-title-pill{
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+body .canada-status-modal{
+  max-height: 185px;
+  max-width: 600px;
+}
+
+body .canada-status-modal > div.modal-dialog{
+  margin: auto;
+}
+
+body .pd-datatable-ref-link{
+  opacity: 0.65;
+  margin-left: 4px;
+}
+
+body .pd-datatable-ref-link small{
+  font-size: 75%;
+}
+
+body .ogscartwrapper{
+  display: none;
+  visibility: hidden;
+}
+
+body .canada-mfa-help-link{
+  display: none;
+  margin-right: 20px;
+}
+
+body .canada-imso-approval-help-text{
+  margin-bottom: 15px;
+  display: inline-block;
+}
+
+body .d-none-soft{
+  display: none;
+}
+
+body select[data-field-select2="True"]{
+  display: none !important;
+}
+
+.canada-voting-fix-hide{
+ opacity: 0;
+ pointer-events: none !important;
+}
+
+.canada-voting-fix-show{
+  pointer-events: all !important;
+}
+
+.canada-dt-search-input-no-fts{
+  cursor: not-allowed !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+.canada-dt-hidden-div-fix{
+  height: 1 !important;
+  width: 1 !important;
+  overflow: hidden !important;
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
 }

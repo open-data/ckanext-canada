@@ -1,0 +1,875 @@
+dataset_type: aistrategy
+
+title: AI Strategy Implementation Tracker
+notes: Access, upload and modify the AI Strategy Implementation Tracker for your organization
+
+template_version: 3
+template_updated: 2025-08-04
+
+portal_type: info
+collection: pd
+
+resources:
+- title: AI Strategy Implementation Tracker
+  resource_name: aistrategy
+
+  published_resource_id: 0ef67a0d-9ca4-49f8-a0b5-16c38b49b0a2
+
+  create_form: true
+  edit_form: true
+
+  fields:
+
+  # DEP 1-1
+  - datastore_id: ref_number
+    label:
+      en: Reference Number
+      fr: Numéro de référence
+    description:
+      en: The unique number assigned to a service using AI to make it easier to refer to specific services.
+      fr: Le numéro unique attribué à un service à l'aide de l'IA pour faciliter le référencement à des services précis.
+    obligation: Mandatory
+    excel_required: true
+    form_required: true
+    format_type:
+      en: Free text
+      fr: Texte libre
+    visible_to_public: Yes
+    occurrence: Single
+    datastore_type: text
+    excel_error_formula: 'OR({default_formula},LEN({cell})-LEN(SUBSTITUTE({cell},",",""))>0)'
+    validation:
+      en: |
+        This field must not be empty.
+        This field cannot contain commas.
+      fr: |
+        Ce champ ne doit pas être vide.
+        Ce champ ne peut pas contenir de virgules.
+
+  # DEP 1-2
+  - datastore_id: reporting_period
+    label:
+      en: Reporting Period
+      fr: Période de déclaration
+    description:
+      en: Year and month of the update
+      fr: Année et mois de la mise à jour
+    obligation: Mandatory
+    excel_required: true
+    form_required: true
+    format_type:
+      en: Controlled List
+      fr: Liste contrôlée
+    datastore_type: text
+    validation:
+      en: Must match expected completion options in the controlled list.
+      fr: Doit correspondre aux options d'achèvement prévues de la liste contrôlée.
+    occurrence: Single
+    excel_full_text_choices: false
+    choices:
+      2025-Q3:
+        en: 2025-Q3
+        fr: 2025-T3
+      2025-Q4:
+        en: 2025-Q4
+        fr: 2025-T4
+      2026-Q1:
+        en: 2026-Q1
+        fr: 2026-T1
+      2026-Q2:
+        en: 2026-Q2
+        fr: 2026-T2
+      2026-Q3:
+        en: 2026-Q3
+        fr: 2026-T3
+      2026-Q4:
+        en: 2026-Q4
+        fr: 2026-T4
+      2027-Q1:
+        en: 2027-Q1
+        fr: 2027-T1
+      2027-Q2:
+        en: 2027-Q2
+        fr: 2027-T2
+
+  # DEP 1-3
+  - datastore_id: priority_area
+    label:
+      en: Priority Area
+      fr: Domaine Prioritaire
+    description:
+      en: The strategic focus area within the AI Strategy Implementation
+      fr: Le domaine d'action stratégique dans le cadre de la mise en œuvre de la stratégie en matière d'IA
+    obligation: Mandatory
+    excel_required: true
+    form_required: true
+    format_type:
+      en: Controlled List
+      fr: Liste contrôlée
+    datastore_type: text
+    validation:
+      en: Must match one of the values in the controlled list.
+      fr: Doit correspondre à l'une des valeurs de la liste contrôlée.
+    occurrence: Single
+    excel_full_text_choices: true
+    form_choices_prefix_code: true
+    excel_column_width: 25
+    choices:
+      A:
+        en: Central AI Capacity
+        fr: Capacité centrale d’IA
+      B:
+        en: Policy, Legislation, and Governance
+        fr: Politiques, lois et gouvernance
+      C:
+        en: Talent and Training
+        fr: Talents et formation
+      D:
+        en: Engagement, Transparency, and Value to Canadians
+        fr: Engagement, transparence et valeur pour les Canadiens
+
+  # DEP 1-4
+  - datastore_id: key_action
+    label:
+      en: Key Action
+      fr: Action Clé
+    description:
+      en: The key action described in the AI Strategy
+      fr: L'action clé décrite dans la stratégie en matière d'IA
+    obligation: Mandatory
+    excel_required: true
+    form_required: true
+    format_type:
+      en: Controlled List
+      fr: Liste contrôlée
+    datastore_type: text
+    validation:
+      en: Must match predefined action statements.
+      fr: Doit correspondre à des déclarations d'action prédéfinies.
+    occurrence: Single
+    excel_full_text_choices: true
+    form_choices_prefix_code: true
+    # choices based on priority_area value
+    excel_choice_range_formula: 'offset({range_top},countif({range},"<"&trim(left({priority_area},find(":",{priority_area}&":")-1))),0,countif({range},trim(left({priority_area},find(":",{priority_area}&":")-1))&"*"),1)'
+    excel_error_formula: 'trim(left({priority_area},find(":",{priority_area}&":")-1))<>trim(left({cell},find(":",{priority_area}&":")-1))'
+    excel_column_width: 50
+    form_attrs:
+      cascading_select_field: priority_area
+    choices:
+      A.1:
+        en: Establish an AI Centre of Expertise for the Government of Canada
+        fr: Établir un Centre d’expertise en IA pour le gouvernement du Canada
+      A.2:
+        en: Enable common infrastructure for AI adoption and promote adoption of existing approved enterprise solutions
+        fr: Mettre en place une infrastructure commune pour permettre l’adoption de l’IA et favoriser l’utilisation des solutions intégrées existantes qui sont autorisées
+      A.3:
+        en: Identify and develop a lighthouse project
+        fr: Cerner et élaborer un projet phare
+      B.1:
+        en: Establish common AI governance and risk management frameworks
+        fr: Établir des cadres communs de gouvernance et de gestion des risques en matière d'IA
+      B.2:
+        en: Address policy and legislative alignment, gaps, and barriers
+        fr: Surmonter les lacunes, les obstacles et le manque d’harmonie dans les politiques et lois
+      B.3:
+        en: Adopt a “think AI” approach
+        fr: Adopter une approche axée sur l’IA
+      C.1:
+        en: Benchmark talent needs
+        fr: Évaluer les besoins en matière de talents
+      C.2:
+        en: Develop a training plan
+        fr: Élaborer un plan de formation
+      C.3:
+        en: Develop a talent plan
+        fr: Élaborer un plan de gestion des talents
+      D.1:
+        en: Strengthen accountability and transparency on AI use
+        fr: Accroître la responsabilisation et la transparence quant à l’utilisation de l’IA
+      D.2:
+        en: Demonstrate impact and value to Canadians
+        fr: Démontrer l’incidence et la valeur pour les Canadiens
+      D.3:
+        en: Commit to engagement on AI
+        fr: Prendre des engagements de mobilisation sur l’IA
+
+  # DEP 1-5
+  - datastore_id: sub_action
+    label:
+      en: Strategic sub-action
+      fr: Sous-action stratégique
+    description:
+      en: Specific sub-action under the AI Strategy
+      fr: Sous-action spécifique dans le cadre de la stratégie d'IA
+    obligation: Mandatory
+    excel_required: true
+    form_required: true
+    format_type:
+      en: Controlled List
+      fr: Liste contrôlée
+    datastore_type: text
+    validation:
+      en: Must match one of the AI Strategy defined sub-action statements.
+      fr: Doit correspondre à l'une des sous-actions définies dans la stratégie IA.
+    occurrence: Single
+    excel_full_text_choices: true
+    form_choices_prefix_code: true
+    # choices based on key_action value
+    excel_choice_range_formula: 'offset({range_top},countif({range},"<"&trim(left({key_action},find(":",{key_action}&":")-1))),0,countif({range},trim(left({key_action},find(":",{key_action}&":")-1))&"*"),1)'
+    excel_error_formula: 'trim(left({key_action},find(":",{key_action}&":")-1))<>trim(left({cell},find(":",{key_action}&":")-1))'
+    excel_column_width: 50
+    form_attrs:
+      cascading_select_field: key_action
+    choices:
+      A.1.1:
+        en: Establish an AI Centre of Expertise for the Government of Canada
+        fr: Créer un centre d'expertise en IA pour le gouvernement du Canada   
+      A.1.2:
+        en: Identify high value use cases for AI Integration
+        fr: Identifier les cas d'utilisation à forte valeur ajoutée pour l'intégration de l'IA
+      A.2.1:
+        en: Provide high-performance computing (HPC) and cloud infrastructure that is available, secure, and scalable to meet the demands of AI projects
+        fr: Fournir une infrastructure de calcul haute performance (CHP) et d'informatique en nuage disponible, sécurisée et évolutive pour répondre aux exigences des projets d'IA
+      A.2.2:
+        en: Provide common data and information management systems and practices to support sharing, scaling, and agentic capabilities across Government of Canada platforms
+        fr: Fournir des systèmes et des pratiques communs de gestion des données et de l'information pour soutenir le partage, l'extension et les capacités agentiques à travers les plateformes du gouvernement du Canada
+      A.2.3:
+        en: Provide access to approved models, services, and application programming interfaces (APIs) within common Government of Canada cloud platforms to build or deploy systems
+        fr: Fournir un accès aux modèles, services et interfaces de programmation d'applications (API) approuvés au sein des plates-formes en nuage communes du gouvernement du Canada pour construire ou déployer des systèmes
+      A.2.4:
+        en: Provide access to common AI solutions and capabilities in vendor solutions through a standard Government of Canada platform service
+        fr: Fournir un accès aux solutions et capacités communes en matière d'IA dans les solutions des fournisseurs par l'intermédiaire d'un service de plateforme standard du gouvernement du Canada
+      A.2.5:
+        en: Support Canadian suppliers and vendors to promote the growth of the Canadian AI industry and ensure secure sovereign infrastructure and solutions
+        fr: Soutenir les fournisseurs et les vendeurs canadiens afin de promouvoir la croissance de l'industrie canadienne de l'IA et de garantir la sécurité des infrastructures et des solutions souveraines
+      A.3.1:
+        en: Self-serve language hub for the Government of Canada
+        fr: Carrefour linguistique libre-service pour le gouvernement du Canada
+      B.1.1:
+        en: Establish common governance framework for the AI lifecycle to provide clear guidance to AI project teams
+        fr: Établir un cadre de gouvernance commun pour le cycle de vie de l'IA afin de fournir des orientations claires aux équipes chargées des projets d'IA
+      B.1.2:
+        en: Establish a common risk management framework for the AI lifecycle
+        fr: Établir un cadre commun de gestion des risques pour le cycle de vie de l'IA
+      B.1.3:
+        en: Establish a government-wide governance structure
+        fr: Établir une structure de gouvernance à l'échelle du gouvernement
+      B.2.1:
+        en: Review, identify and address legal and policy gaps and ambiguities
+        fr: Examiner, identifier et traiter les lacunes et les ambiguïtés juridiques et politiques
+      B.2.2:
+        en: Develop agile process to review and update policy, guidance, tools and resources
+        fr: Développer un processus agile pour réviser et mettre à jour la politique, les orientations, les outils et les ressources
+      B.2.3:
+        en: Identify opportunities to synthesize or interpret existing policy to increase usability
+        fr: Identifier les possibilités de synthétiser ou d'interpréter la politique existante afin d'en améliorer l'utilité
+      B.2.4:
+        en: Update procurement policies, instruments, and processes
+        fr: Mettre à jour les politiques, les instruments et les procédures de passation de marchés
+      B.2.5:
+        en: Align internal AI policy with domestic policy or law and with international treaties, legislation and norms
+        fr: Aligner la politique interne en matière d'IA sur la politique ou la législation nationale, ainsi que sur les traités, la législation et les normes internationales
+      B.3.1:
+        en: Adopt a "think AI" approach
+        fr: Adopter une approche axée sur l’IA
+      C.1.1:
+        en: Assess talent needs
+        fr: Évaluer les besoins en talents
+      C.2.1:
+        en: Develop a training plan
+        fr: Élaborer un plan de formation
+      C.3.1:
+        en: Explore obstacles to recruitment and retention and ways to establish flexible data science career pathways for AI practitioners
+        fr: Explorer les obstacles au recrutement et à la fidélisation et les moyens d'établir des parcours de carrière flexibles en science des données pour les praticiens de l'IA
+      C.3.2:
+        en: Expand interchanges, apprenticeships, co-op programs, and partnerships with AI institutes and research centres to create a talent pipeline
+        fr: Développer les échanges, l'apprentissage, les programmes coopératifs et les partenariats avec les instituts d'IA et les centres de recherche pour créer un vivier de talents
+      C.3.3:
+        en: Optimize use of AI talent through flexible assignments
+        fr: Optimiser l'utilisation des talents en IA grâce à des affectations flexibles
+      C.3.4:
+        en: Competitions and challenges to meet some project-based needs
+        fr: Compétitions et défis pour répondre à certains besoins liés à des projets
+      D.1.1:
+        en: Strengthen and clarify accountabilities for AI use in policy
+        fr: Renforcer et clarifier les responsabilités en matière d'utilisation de l'IA dans les politiques
+      D.1.2:
+        en: New requirements and standard language for the disclosure of AI use, explanations of how an AI system reaches a decision, and information about rights and protections, including how to seek explanations or recourse and how to report problems
+        fr: De nouvelles exigences et un langage standard pour la divulgation de l'utilisation de l'IA, des explications sur la manière dont un système d'IA prend une décision, et des informations sur les droits et les protections, y compris la manière de demander des explications ou des recours et de signaler les problèmes
+      D.1.3:
+        en: Identification of AI capabilities and uses that GC will not pursue
+        fr: Identification des capacités et des utilisations de l'IA que le GC ne poursuivra pas
+      D.1.4:
+        en: Establishment of a public register of its AI systems within a defined scope
+        fr: Mise en place d'un registre public de ses systèmes d'IA dans un périmètre défini
+      D.1.5:
+        en: Develop and publish alternative oversight processes for systems that cannot be included in register
+        fr: Élaborer et publier des processus de surveillance alternatifs pour les systèmes qui ne peuvent pas être inclus dans le registre
+      D.2.1:
+        en: Develop metrics and performance indicators to demonstrate the impact and value of AI initiatives
+        fr: Élaborer des mesures et des indicateurs de performance pour démontrer l'impact et la valeur des initiatives en matière d'intelligence artificielle
+      D.2.2:
+        en: Develop a framework to track AI adoption
+        fr: Élaborer un cadre pour suivre l'adoption de l'IA
+      D.3.1:
+        en: Commitment to early and meaningful public and stakeholder engagement on AI initiatives of significant public interest or concern, including targeted engagement of communities that face greater impacts, risks or barriers from AI systems
+        fr: Engagement en faveur d'une participation précoce et significative du public et des parties prenantes aux initiatives d'IA présentant un intérêt ou une préoccupation publique importants, y compris une participation ciblée des communautés qui sont confrontées à des impacts, des risques ou des obstacles plus importants liés aux systèmes d'IA
+      D.3.2:
+        en: Union and employee engagement on workforce impacts
+        fr: L'engagement des syndicats et des employés sur l'impact de la main-d'oeuvre
+      D.3.3:
+        en: Client participation in system design to ensure that AI systems do not create or perpetuate barriers to access for clients
+        fr: Participation des clients à la conception du système afin de s'assurer que les systèmes d'IA ne créent pas ou ne perpétuent pas d'obstacles à l'accès pour les clients
+      D.3.4:
+        en: Provide mechanisms for ongoing public feedback and questions on AI used by the federal government
+        fr: Mettre en place des mécanismes permettant au public de formuler des commentaires et des questions sur l'IA utilisée par le gouvernement fédéral
+
+  # DEP 1-6
+  - datastore_id: activity
+    label:
+      en: Activity
+      fr: Activité
+    description:
+      en: Activity in support of the AI Strategy
+      fr: Activité de soutien à la stratégie en matière d'IA
+    obligation: Mandatory
+    excel_required: true
+    form_required: true
+    format_type:
+      en: Controlled List
+      fr: Liste contrôlée
+    datastore_type: text
+    validation:
+      en: Must match predefined activities.
+      fr: Doit correspondre à des activités prédéfinies.
+    occurrence: Single
+    excel_full_text_choices: true
+    form_choices_prefix_code: true
+    # choices based on sub_action value
+    excel_choice_range_formula: 'offset({range_top},countif({range},"<"&trim(left({sub_action},find(":",{sub_action}&":")-1))),0,countif({range},trim(left({sub_action},find(":",{sub_action}&":")-1))&"*"),1)'
+    excel_error_formula: 'trim(left({sub_action},find(":",{sub_action}&":")-1))<>trim(left({cell},find(":",{sub_action}&":")-1))'
+    excel_column_width: 50
+    form_attrs:
+      cascading_select_field: sub_action
+    choices:
+      A.1.1.1:
+        en: Develop operating and business models, organizational and governance structures, key performance indicators, and ways to prioritize the use of the AI centre's resources
+        fr: Élaborer des modèles opérationnels et intégrés, des structures organisationnelles et de gouvernance, des indicateurs de rendement clés et des procédures visant à établir l’ordre de priorité de l’utilisation des ressources du Centre d’expertise en IA
+      A.1.1.2:
+        en: Consolidate the AI communities of practice under an information hub to support knowledge sharing and prevent duplication
+        fr: Regrouper les communautés de pratique de l’IA sous un centre d’information afin d’améliorer l’échange des connaissances et d’éviter les chevauchements
+      A.1.2.1:
+        en: Identify other high value use cases that could be pursued as lighthouse projects
+        fr: Cerner les cas d’utilisation ayant une grande valeur qui pourraient être réalisés en tant que projets phares
+      A.2.1.1:
+        en: Provide high-performance computing (HPC) and cloud infrastructure that is available, secure, and scalable to meet the demands of AI projects
+        fr: Fournir une infrastructure infonuagique et des capacités de calcul à haute performance qui sont accessibles, sécurisées et évolutives afin de répondre aux exigences des projets d’IA
+      A.2.2.1:
+        en: Provide common data and information management systems and practices to support sharing, scaling, and agentic capabilities across Government of Canada platforms
+        fr: Mettre en oeuvre des pratiques et des systèmes communs de gestion des données et de l’information pour appuyer les échanges, la mise à l’échelle et les capacités agentiques dans l’ensemble des plateformes du GC
+      A.2.3.1:
+        en: Provide access to approved models, services, and application programming interfaces (APIs) within common Government of Canada cloud platforms to build or deploy systems
+        fr: Offrir l’accès à des services, des interfaces de programmation d’applications (API) et des modèles autorisés dans les plateformes infonuagiques communes du GC pour concevoir ou déployer des systèmes
+      A.2.4.1:
+        en: Provide access to common AI solutions and capabilities in vendor solutions through a standard Government of Canada platform service
+        fr: Donner l’accès à des solutions et capacités communes en matière d’IA dans les solutions de fournisseurs au moyen d’une plateforme de service standard du GC
+      A.2.5.1:
+        en: Streamline the AI Source list and develop tools for institutions to procure faster with a focus on Canadian service providers
+        fr: Simplifier la liste des fournisseurs d’IA et créer des outils permettant aux institutions de réaliser des achats plus rapidement, en mettant l’accent sur les fournisseurs de services canadiens
+      A.3.1.1:
+        en: Develop and scale machine translation tool using GC data, ensuring that translation services are provided at the same time and quality in both official languages
+        fr: Élaborer et déployer un outil de traduction automatique à partir des données du gouvernement du Canada, assurant l’accès à des services de traduction sécurisés disponibles en temps réel et de qualité égale dans les deux langues officielles
+      A.3.1.2:
+        en: Document project processes and lessons to identify policy and procedural barriers, and project teams’ needs for support, to develop and test governance processes, and to demonstrate how AI can be successfully scaled where necessary for Government of Canada requirements
+        fr: Consigner les processus du projet et les leçons apprises pour repérer les obstacles liés aux politiques et aux procédures et les besoins des équipes de projet en matière de soutien. Cette procédure permet d’élaborer et de mettre à l’essai des processus de gouvernance et de démontrer la façon dont l’IA peut être mise à l’échelle avec succès pourraient être adaptés aux exigences du gouvernement du Canada, le cas échéant
+      B.1.1.1:
+        en: Identify best practice departmental and international governance frameworks which could be adapted where necessary for Government of Canada requirements
+        fr: Cerner les pratiques exemplaires internationales et ministérielles sur les cadres de gouvernance qui pourraient être adaptés aux exigences du gouvernement du Canada, le cas échéant des organes de gouvernance ministériels et des propriétaires de solutions
+      B.1.1.2:
+        en: Develop GC governance framework in a user-friendly format structured around the AI lifecycle with varying governance requirements according to system risk, sensitivity, and impact
+        fr: Établir un cadre de gouvernance pour le gouvernement du Canada dans un format convivial structuré en fonction du cycle de vie de l’IA avec des exigences de gouvernance variables selon les risques, la sensibilité et l’incidence des systèmes
+      B.1.2.1:
+        en: Identify best practice risk frameworks which could be adapted where necessary for Government of Canada requirements
+        fr: Cerner les pratiques exemplaires sur les cadres de gestion des risques qui pourraient être adaptés aux exigences du gouvernement du Canada, le cas échéant
+      B.1.3.1:
+        en: Scale PSPC’s Operational Ethics Review Board to become a government-wide AI ethics review board
+        fr: Élargir le Conseil d’examen de l’éthique opérationnelle de SPAC pour qu’il devienne un conseil d’examen de l’éthique en matière d’IA à l’échelle du gouvernement
+      B.1.3.2:
+        en: Develop AI program governance structures for technical assessment and review, including determining role of existing bodies such as GCEARB
+        fr: Mettre sur pied des structures de gouvernance concernant le programme d’IA pour effectuer des évaluations et des examens techniques, notamment déterminer le rôle des organes existants comme le Conseil d’examen de l’architecture intégrée (CEAI) du gouvernement du Canada
+      B.2.1.1:
+        en: Develop Policy Implementation Notice on AI roles and responsibilities, including those of chief information, data, privacy, and security offices, chief architects, departmental governance bodies, and solution owners
+        fr: Élaborer un avis de mise en œuvre de la politique sur les rôles et les responsabilités en matière d’IA, y compris ceux des dirigeants principaux de l’information et des données et les chefs de la protection des renseignements personnels et de la sécurité, des architectes en chef, des organes de gouvernance ministériels et des propriétaires de solutions
+      B.2.1.2:
+        en: Define acceptable use of AI by outside organizations in their interactions with the Government of Canada, including AI meeting transcription tools
+        fr: Définir l’utilisation acceptable de l’IA par des organisations externes dans leurs interactions avec le gouvernement du Canada, y compris les outils d’IA pour la transcription de réunions
+      B.2.1.3:
+        en: Address legal and policy ambiguities related to privacy and training data, including guidance on de-identification for data sharing
+        fr: Corriger les ambiguïtés juridiques et politiques liées aux données sur la protection de la vie privée et la formation, y compris des directives sur la dépersonnalisation pour l’échange des données
+      B.2.1.4:
+        en: Define scope and application of national security systems in PSD s6.3 and the national security exemption in PIN
+        fr: Définir la portée et l’application des systèmes de sécurité nationale à la section 6.3 de la Politique sur les services et le numérique et l’exemption relative à la sécurité nationale dans un avis de mise en oeuvre de la politique
+      B.2.2.1:
+        en: Establish agile process to review and update policy, guidance, tools and resources, develop new policy and guidance for emerging technologies and applications, and identify opportunities to synthesize or interpret existing policy to increase usability
+        fr: Établir un processus agile pour examiner et mettre à jour les politiques, les directives, les outils et les ressources, élaborer de nouvelles politiques et directives sur des technologies et des applications émergentes et cerner les possibilités de synthétiser ou d’interpréter les politiques existantes afin de les rendre plus faciles à utiliser
+      B.2.3.1:
+        en: Review the Directive on Automated Decision-Making and Algorithmic Impact assessment tool, publish guidance, and consider their usability and design to ensure they remain relevant to support departments in a changing technological and legislative landscape
+        fr: Examiner la Directive sur la prise de décisions automatisée et l’outil d’évaluation de l’incidence algorithmique, publier des directives et examiner leur convivialité et leur conception pour s’assurer qu’elles sont toujours adaptées aux réalités des ministères dans un paysage technologique et législatif en évolution
+      B.2.3.2:
+        en: Update the Guide on the Use of Generative AI to adapt to reflect technological changes and address regular questions received from departments
+        fr: Mettre à jour le Guide sur l’utilisation de l’intelligence artificielle générative pour qu’il soit adapté aux changements technologiques et en tienne compte et afin de répondre aux questions que reçoivent régulièrement les ministères
+      B.2.3.3:
+        en: Identify policy approaches needed to ensure the responsible use of AI for non-administrative purposes and propose action-oriented and department-focused mechanisms to address them
+        fr: Cerner les approches stratégiques nécessaires pour assurer l’utilisation responsable de l’IA à des fins non administratives et proposer des mécanismes axés sur l’action et les ministères pour y remédier
+      B.2.4.1:
+        en: Review and update procurement policies, instruments and processes to make them more responsive to pace and requirements of AI procurement
+        fr: Passer en revue et mettre à jour les politiques, les instruments et les processus d’approvisionnement afin de mieux les adapter au rythme de l’IA et aux exigences d’approvisionnement en matière d’IA
+      B.2.5.1:
+        en: Review existing AI commitments in domestic policy and law, identifying where alignment is required
+        fr: Examiner les engagements existants en matière d’IA dans les politiques et les lois nationales et déterminer les domaines où l’harmonisation est nécessaire
+      B.2.5.2:
+        en: Identify opportunities to align PCAIS and AI Strategy Review and action the United Nations Declaration Act Action Plan commitments to Indigenous Data Sovereignty
+        fr: Trouver des possibilités d’harmoniser la Stratégie pancanadienne en matière d’intelligence artificielle et la Stratégie en matière d’intelligence artificielle pour la fonction publique fédérale Examiner et mettre en oeuvre les engagements du Plan d’action de la Loi sur la Déclaration des Nations Unies sur les droits des peuples autochtones à l’égard de la souveraineté des
+      B.2.5.3:
+        en: Review and action the United Nations Declaration Act Action Plan commitments to Indigenous Data Sovereignty
+        fr: Examiner et mettre en œuvre les engagements du Plan d’action de la Loi sur la Déclaration des Nations Unies sur les droits des peuples autochtones à l’égard de la souveraineté des données autochtones
+      B.2.5.4:
+        en: Identify opportunities to increase alignment with relevant international treaties, legislation and norms
+        fr: Trouver des moyens de mieux harmoniser les normes, les lois et les traités internationaux applicables
+      B.3.1.1:
+        en: Update MC drafter's guide to include AI and data consideration
+        fr: Mettre à jour le guide du rédacteur des mémoires au Cabinet pour inclure les considérations relatives à l’IA et aux données
+      B.3.1.2:
+        en: Update TB Submission guide to include AI and data considerations, including data, AI, compute and other relevant resource needs and to prompt exploration of collaboration with other departments or scaling existing projects before building or buying new
+        fr: Mettre à jour le guide des présentations au Conseil du Trésor afin d’inclure les considérations relatives à l’IA et aux données, y compris les besoins en matière de données, d’IA, de calcul et d’autres ressources pertinentes. Trouver des moyens de collaborer avec d’autres ministères ou d’adapter des projets existants avant d’en créer ou d’en acheter de nouveaux
+      B.3.1.3:
+        en: Strengthen TBS challenge function for AI and data
+        fr: Renforcer la fonction de remise en question du SCT relativement à l’IA et aux données
+      B.3.1.4:
+        en: Clarify EARB expectations regarding the deployment of IT that includes AI or other intelligence automation including common architecture questions or presentation requirements, such as on model selection assessment, costs, and performance
+        fr: Clarifier les attentes du CEAI concernant le déploiement de la technologie de l’information qui comprend l’IA ou d’autres formes d’automatisation, y compris les questions courantes sur l’architecture ou les exigences de présentation, comme l’évaluation de la sélection des modèles, les coûts et le rendement
+      B.3.1.5:
+        en: Require departments to consider and prioritize AI infrastructure and adoption within integrated IT planning
+        fr: Exiger des ministères qu’ils tiennent compte de l’infrastructure et de l’adoption de l’IA dans la planification intégrée de la TI et qu’ils leur accordent la priorité
+      B.3.1.6:
+        en: Support the implementation of the GC Data Strategy mission and actions on data stewardship models, expectations, and common practices to ensure high quality data is available for AI implementation
+        fr: Faciliter la mise en oeuvre des missions et des actions de la Stratégie relative aux données du gouvernement du Canada sur les modèles d’intendance des données, les attentes et les pratiques communes afin de s’assurer que des données de haute qualité sont disponibles pour la mise en oeuvre de l’IA
+      C.1.1.1:
+        en: Assess digital talent needs to the extent possible by leveraging available data on the Digital Talent Platform
+        fr: Évaluer les besoins en matière de talents numériques en utilisant les données disponibles sur la plateforme Talents numériques dans la mesure du possible
+      C.2.1.1:
+        en: Meet AI training objectives by leveraging existing efforts under multiple plans, including the CSPS Annual Digital Academy Plan, OCHRO’s Public Service Skills Strategy, and TBS-OCIO’s Digital Talent Strategy. These coordinated plans support an evergreen, role-based approach to AI training that includes foundational and advanced skills
+        fr: Atteindre les objectifs de formation en matière d’IA au moyen des nombreux plans existants, notamment l’Académie du numérique de l’EFPC, la Stratégie relative aux compétences de la fonction publique du Bureau du dirigeant principal des ressources humaines et la Stratégie en matière de talents numériques du Bureau du dirigeant principal de l’information. Ces plans coordonnés favorisent une approche évolutive et axée sur les rôles de la formation en IA qui comprend des compétences de base et avancées
+      C.2.1.2:
+        en: Curate and promote tailored training and learning paths to address advanced technical skills for IT, AI and data practitioners
+        fr: Organiser et promouvoir des parcours de formation et d’apprentissage personnalisés sur des compétences techniques avancées à l’intention des spécialistes de la TI, de l’IA et des données
+      C.2.1.3:
+        en: Develop, curate, and promote foundational core learning products and learning paths on AI for all public servants, including executives
+        fr: Élaborer, organiser et promouvoir des parcours et des produits d’apprentissage de base sur l’IA pour tous les fonctionnaires, y compris la haute direction
+      C.2.1.4:
+        en: Convene working group for key stakeholders in the AI learning space to discuss and evaluate ongoing needs and effectiveness of the centralized learning the GC is providing to all public servants
+        fr: Convoquer un groupe de travail pour les principaux intervenants dans le domaine de l’apprentissage de l’IA afin de discuter et d’évaluer les besoins continus et l’efficacité de l’apprentissage centralisé que le gouvernement du Canada offre à tous les fonctionnaires
+      C.2.1.5:
+        en: Work with public servants through their bargaining agents to prepare the workforce through upskilling and retraining for changes resulting from AI
+        fr: Travailler avec les fonctionnaires et leurs agents négociateurs afin de préparer la main-d’oeuvre aux changements découlant de l’IA en lui offrant du perfectionnement et du recyclage professionnel
+      C.3.1.1:
+        en: Develop mobility, recruitment, exchanges, and/or other types of opportunities on the GC Digital Talent Platform to recruit, develop, and retain AI and data talent
+        fr: Accroître la mobilité, le recrutement, les échanges ou d’autres types d’occasions sur la plateforme Talents numériques du gouvernement du Canada pour recruter, perfectionner et maintenir en poste les talents en IA et en données 
+      C.3.2.1:
+        en: Review and scale successful departmental initiatives
+        fr: Examiner et reproduire les initiatives ministérielles réussies
+      C.3.3.1:
+        en: Explore options to use existing provisions for short-term and flexible staffing to optimize talent use
+        fr: Étudier les options permettant d’inclure des dispositions existantes liées à la dotation à court terme et flexible afin d’optimiser l’utilisation des talents
+      C.3.4.1:
+        en: Explore reuse of challenge programs for specific projects
+        fr: Étudier la possibilité de réutiliser les programmes Défi pour des projets particuliers
+      D.1.1.1:
+        en: Review Policy on Service and Digital to clarify roles and responsibilities for AI use
+        fr: Examiner la Politique sur les services et le numérique pour clarifier les rôles et les responsabilités liés à l’utilisation de l’IA
+      D.1.2.1:
+        en: Develop and publish MVP language based on previously used examples
+        fr: Élaborer et publier des libellés pour la divulgation de l’utilisation de l’IA en se fondant sur des exemples déjà utilisés
+      D.1.3.1:
+        en: Identify and publish list of prohibited uses based on existing commitments in law, policy, or treaties, with commitment to annual review and update
+        fr: Établir et publier une liste des utilisations interdites en fonction des engagements existants dans les lois, les politiques ou les traités. Cette liste doit être examinée et mise à jour chaque année
+      D.1.4.1:
+        en: Define and publish register scope
+        fr: Définir et publier la portée du registre
+      D.1.5.1:
+        en: Develop a minimal viable product AI register that connects to personal information banks (PIBS), the Service Inventory, and AIAs
+        fr: Créer un registre de l’IA de type « produit minimum viable » qui se connecte aux jeux de données existants comme les fichiers de renseignements personnels, le répertoire des services et les évaluations de l’incidence algorithmique
+      D.1.6.1:
+        en: Engage internal and external stakeholders to refine registry format and content to increase value and usability
+        fr: Mobiliser les intervenants internes et externes pour améliorer le format et le contenu du registre afin d’accroître sa valeur et sa convivialité
+      D.1.7.1:
+        en: Define and publish alternative oversight processes of AI
+        fr: Définir et publier d’autres processus de surveillance de l’utilisation de l’IA qui ne peuvent pas être déclarés publiquement dans le registre
+      D.2.1.1:
+        en: Develop metrics and performance indicators to demonstrate the impact and value of AI initiatives
+        fr: Élaborer des mesures et des indicateurs de rendement pour démontrer l’incidence et la valeur des initiatives en matière d’IA
+      D.2.2.1:
+        en: Develop a consolidated dashboard that supports the outcomes and performance indicators of the AI and Data Strategies and the Digital Ambition
+        fr: Élaborer un tableau de bord consolidé qui consigne les résultats et les indicateurs de rendement de la Stratégie en matière d’IA, de la Stratégie relative aux données et de l’Ambition numérique
+      D.2.2.2:
+        en: Develop metrics for deployment, collaboration, sharing and scaling of solutions, departmental investment in AI and enablers, and financial and non-financial ROI for integration into dashboard
+        fr: Élaborer des mesures liées au déploiement, à la collaboration, aux échanges et aux mises à l’échelle des solutions, aux investissements des ministères dans l’IA et les outils habilitants, ainsi qu’au retour sur les investissements financiers et non financiers aux fins d’intégration dans le tableau de bord
+      D.3.1.1:
+        en: Develop and publish expectations for meaningful public, Indigenous, and stakeholder engagement, using existing resources
+        fr: Formuler et publier les attentes en matière de mobilisation constructive du public, des Autochtones et des intervenants à l’aide des ressources existantes
+      D.3.2.1:
+        en: Develop expectations and processes for engagement with bargaining agents
+        fr: Formuler les attentes et établir les processus de mobilisation des agents négociateurs
+      D.3.3.1:
+        en: Develop expectations and processes for engagement with bargaining agents
+        fr: Formuler les attentes et établir les processus de mobilisation des utilisateurs
+      D.3.4.1:
+        en: Provide mechanisms for ongoing public feedback and questions on AI used by the federal government
+        fr: Fournir des mécanismes facilitant la rétroaction continue et les questions du public sur l’IA utilisée par le gouvernement fédéral
+
+  # DEP 1-7
+  - datastore_id: description_en
+    label:
+      en: Description (English)
+      fr: Description (anglais)
+    description:
+      en: Operational description in the AI Strategy
+      fr: Description opérationnelle de la stratégie en matière d'IA
+    obligation: Optional
+    excel_required: false
+    excel_column_width: 80
+    form_required: false
+    datastore_type: text
+    format_type:
+      en: Free text
+      fr: Texte libre
+    validation:
+      en: Limit the number of characters, free text (maximum 1000 characters).
+      fr: Limiter le nombre de caractères, libre texte (maximum 1000 caractères).
+    occurrence: Single
+    max_chars: 1000
+    form_snippet: scheming/form_snippets/textarea.html
+    form_attrs:
+      style: "width: 100%; display: block"
+      maxlength: 1000
+
+  # DEP 1-8
+  - datastore_id: description_fr
+    label:
+      en: Description (French)
+      fr: Description (français)
+    description:
+      en: Operational description in the AI Strategy
+      fr: Description opérationnelle de la stratégie en matière d'IA
+    obligation: Optional
+    excel_required: false
+    excel_column_width: 80
+    form_required: false
+    datastore_type: text
+    format_type:
+      en: Free text
+      fr: Texte libre
+    validation:
+      en: Limit the number of characters, free text (maximum 1000 characters).
+      fr: Limiter le nombre de caractères, libre texte (maximum 1000 caractères).
+    occurrence: Single
+    max_chars: 1000
+    form_snippet: scheming/form_snippets/textarea.html
+    form_attrs:
+      style: "width: 100%; display: block"
+      maxlength: 1000
+
+  # DEP 1-9
+  - datastore_id: expected_completion
+    label:
+      en: Expected Completion
+      fr: Achèvement attendu
+    description:
+      en: Completion of activity
+      fr: Achèvement de l'activité
+    obligation: Mandatory
+    excel_required: true
+    form_required: true
+    format_type:
+      en: Controlled List
+      fr: Liste contrôlée
+    datastore_type: text
+    validation:
+      en: Must match expected completion options in the controlled list.
+      fr: Doit correspondre aux options d'achèvement prévues de la liste contrôlée.
+    occurrence: Single
+    excel_full_text_choices: false
+    choices:
+      2025-Q3:
+        en: 2025-Q3
+        fr: 2025-T3
+      2025-Q4:
+        en: 2025-Q4
+        fr: 2025-T4
+      2026-Q1:
+        en: 2026-Q1
+        fr: 2026-T1
+      2026-Q2:
+        en: 2026-Q2
+        fr: 2026-T2
+      2026-Q3:
+        en: 2026-Q3
+        fr: 2026-T3
+      2026-Q4:
+        en: 2026-Q4
+        fr: 2026-T4
+      2027-Q1:
+        en: 2027-Q1
+        fr: 2027-T1
+      2027-Q2:
+        en: 2027-Q2
+        fr: 2027-T2
+
+  # DEP 1-10
+  - datastore_id: lead_department
+    label:
+      en: Lead Department(s)
+      fr: Ministère(s) responsable(s)
+    description:
+      en: Primary departments involved
+      fr: Principaux départements concernés
+    obligation: Mandatory
+    excel_required: true
+    form_required: true
+    format_type:
+      en: Controlled List
+      fr: Liste contrôlée
+    validation:
+      en: Must match departments and organizations in the controlled list.
+      fr: Doit correspondre aux départements et organisations de la liste contrôlée.
+    occurrence: Repeatable
+    datastore_type: _text
+    excel_full_text_choices: true
+    form_snippet: scheming/form_snippets/multiple_select.html
+    choices:
+      TBS:
+        en: Treasury Board of Canada Secretariat
+        fr: Secrétariat du Conseil du Trésor du Canada
+      CDS:
+        en: Canadian Digital Service
+        fr: Service Numérique Canadien
+      CSE:
+        en: Communications Security Establishment
+        fr: Centre de la sécurité des télécommunications Canada
+      PCO:
+        en: Privy Council Office
+        fr: Bureau du Conseil Privé
+      CSPS:
+        en: Canadian School of Public Service
+        fr: École de la fonction publique du Canada
+      GAC:
+        en: Global Affairs Canada
+        fr: Affaires Mondiales Canada
+      ISC:
+        en: Indigenous Services Canada
+        fr: Services aux Autochtones Canada
+      ISED:
+        en: Innovation, Science, and Economic Development
+        fr: Innovation, Sciences et Développement économique Canada
+      PSPC:
+        en: Public Services and Procurement Canada
+        fr: Services publics et Approvisionnement Canada
+      SSC:
+        en: Shared Services Canada
+        fr: Services Partagés Canada
+      NRC:
+        en: National Research Council
+        fr: Conseil national de recherches Canada
+
+  # DEP 1-11
+  - datastore_id: status
+    label:
+      en: Status
+      fr: État
+    description:
+      en: AI Strategy tracker status
+      fr: Statut du tracker de la stratégie IA
+    obligation: Mandatory
+    excel_required: true
+    form_required: true
+    format_type:
+      en: Controlled List
+      fr: Liste contrôlée
+    datastore_type: text
+    validation:
+      en: "Must be one of: Not Started, In Progress, Completed."
+      fr: "Il doit s'agir de l'un des éléments suivants : Non commencé, En cours, Terminé."
+    occurrence: Single
+    excel_full_text_choices: true
+    choices:
+      NS:
+        en: Not started
+        fr: Non commencé
+      IP:
+        en: In progress
+        fr: En cours
+      CO:
+        en: Completed
+        fr: Réalisé
+
+  # DEP 1-12
+  - datastore_id: progress_en
+    label:
+      en: Progress Made (English)
+      fr: Progrès réalisés (anglais)
+    description:
+      en: Describes any progress made
+      fr: Décrit les progrès réalisés
+    obligation: Optional
+    excel_required: false
+    excel_column_width: 80
+    format_type:
+      en: Free text
+      fr: Texte libre
+    validation:
+      en: Limit the number of characters, free text (maximum 1000 characters).
+      fr: Limiter le nombre de caractères, libre texte (maximum 1000 caractères).
+    occurrence: Single
+    datastore_type: text
+    max_chars: 1000
+    form_snippet: scheming/form_snippets/textarea.html
+    form_attrs:
+      maxlength: 1000
+
+  # DEP 1-13
+  - datastore_id: progress_fr
+    label:
+      en: Progress Made (French)
+      fr: Progrès réalisés (français)
+    description:
+      en: Describes any progress made
+      fr: Décrit les progrès réalisés
+    obligation: Optional
+    excel_required: false
+    excel_column_width: 80
+    format_type:
+      en: Free text
+      fr: Texte libre
+    validation:
+      en: Limit the number of characters, free text (maximum 1000 characters).
+      fr: Limiter le nombre de caractères, libre texte (maximum 1000 caractères).
+    occurrence: Single
+    datastore_type: text
+    max_chars: 1000
+    form_snippet: scheming/form_snippets/textarea.html
+    form_attrs:
+      maxlength: 1000
+
+  # Dev: req dynamic field
+  - datastore_id: record_created
+    label: Record Creation Time
+    import_template_include: false
+    visible_to_public: false
+    datastore_type: timestamp
+    preview_class: bg-info
+
+  # Dev: req dynamic field
+  - datastore_id: record_modified
+    label: Last Record Modification Time
+    import_template_include: false
+    visible_to_public: false
+    datastore_type: timestamp
+    preview_class: bg-info
+
+  # Dev: req dynamic field
+  - datastore_id: user_modified
+    label: User Last Modified Record
+    import_template_include: false
+    visible_to_public: false
+    datastore_type: text
+    preview_class: bg-info
+
+  datastore_primary_key: [reporting_period, ref_number]
+  datastore_indexes: ""
+
+  default_preview_sort: ref_number, reporting_period desc, activity
+
+  cascading_select_fields: true
+
+  excel_example_height: 50
+
+  triggers:
+  - aistrategy_trigger: |
+      DECLARE
+        errors text[][] := '{{}}';
+        crval RECORD;
+      BEGIN
+        errors := errors || required_error(NEW.ref_number, 'ref_number');
+
+        errors := errors || required_error(NEW.reporting_period, 'reporting_period');
+        errors := errors || choice_error(NEW.reporting_period, {reporting_period}, 'reporting_period');
+
+        errors := errors || required_error(NEW.priority_area, 'priority_area');
+        errors := errors || choice_error(NEW.priority_area, {priority_area}, 'priority_area');
+
+        errors := errors || required_error(NEW.key_action, 'key_action');
+        errors := errors || choice_error(NEW.key_action,
+          array(SELECT unnest from unnest({key_action}) where left(unnest, length(NEW.priority_area)) = NEW.priority_area),
+          'key_action');
+
+        errors := errors || required_error(NEW.sub_action, 'sub_action');
+        errors := errors || choice_error(NEW.sub_action,
+          array(SELECT unnest from unnest({sub_action}) where left(unnest, length(NEW.key_action)) = NEW.key_action),
+          'sub_action');
+
+        errors := errors || required_error(NEW.activity, 'activity');
+        errors := errors || choice_error(NEW.activity,
+          array(SELECT unnest from unnest({activity}) where left(unnest, length(NEW.sub_action)) = NEW.sub_action),
+          'activity');
+
+        NEW.description_en := trim_lead_trailing(NEW.description_en);
+        errors := errors || max_char_error(NEW.description_en, 1000, 'description_en');
+
+        NEW.description_fr := trim_lead_trailing(NEW.description_fr);
+        errors := errors || max_char_error(NEW.description_fr, 1000, 'description_fr');
+
+        errors := errors || required_error(NEW.expected_completion, 'expected_completion');
+        errors := errors || choice_error(NEW.expected_completion, {expected_completion}, 'expected_completion');
+
+        errors := errors || required_error(NEW.lead_department, 'lead_department');
+        crval := choices_clean_error(NEW.lead_department, {lead_department}, 'lead_department');
+        errors := errors || crval.error;
+        NEW.lead_department := crval.clean;
+
+        errors := errors || required_error(NEW.status, 'status');
+        errors := errors || choice_error(NEW.status, {status}, 'status');
+
+        NEW.progress_en := trim_lead_trailing(NEW.progress_en);
+        errors := errors || max_char_error(NEW.progress_en, 1000, 'progress_en');
+
+        NEW.progress_fr := trim_lead_trailing(NEW.progress_fr);
+        errors := errors || max_char_error(NEW.progress_fr, 1000, 'progress_fr');
+
+        IF errors = '{{}}' THEN
+          RETURN NEW;
+        END IF;
+        RAISE EXCEPTION E'TAB-DELIMITED\t%', array_to_string(errors, E'\t');
+      END;
+  - update_record_modified_created_trigger
+
+  examples:
+    record:
+      ref_number: "TBS-001"
+      reporting_period: "2025-Q3"
+      priority_area: "A"
+      key_action: "A.1"
+      sub_action: "A.1.1"
+      activity: "A.1.1.2"
+      description_en: "Provide high-performance computing (HPC) and cloud infrastructure that is available, secure, and scalable to meet the demands of AI projects."
+      description_fr: "Fournir une infrastructure de calcul haute performance (CHP) et d'informatique en nuage disponible, sécurisée et évolutive pour répondre aux exigences des projets d'IA."
+      expected_completion: "2027-Q1"
+      lead_department: [TBS, PCO]
+      status: IP
+      progress_en: "AI Strategy is being implemented using various new initiatives. The initiatives are divided into four components. The four components of this initiative as further been broken down into various activities, sub-activities, status trackability, descriptions, and progress made. Progress made is being tracked using: In Progress, Not Started, or Completed."
+      progress_fr: "La stratégie en matière d'IA est mise en œuvre à l'aide de diverses nouvelles initiatives. Ces initiatives sont divisées en quatre volets. Les quatre volets de cette initiative ont été subdivisés en diverses activités, sous-activités, suivi de l'état d'avancement, descriptions et progrès réalisés. Les progrès réalisés sont suivis à l'aide des statuts suivants : En cours, Non commencé ou Terminé."
+    filters:
+      activity: "A.1.1.2"
+    filter_one:
+      reporting_period: "2025-Q3"
+      sub_action: "A.1.1"
+    sort: reporting_period desc, activity

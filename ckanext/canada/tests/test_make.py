@@ -151,6 +151,30 @@ class TestMakePD(CanadaTestBase):
         assert 'PORTAL_STATIC_SMB_DIRECTORY is undefined' not in stdout
         assert 'REGISTRY_CKAN_COMMAND is undefined' not in stdout
 
+    def test_make_aistrategy(self):
+        assert self.ckan_ini
+        self._setup_ini(self.ckan_ini)
+
+        self._setup_pd(type='aistrategy')
+
+        make_process = subprocess.Popen(["make upload-aistrategy"], shell=True, cwd=MAKE_PATH, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        stdout, stderr = make_process.communicate()
+
+        stdout = stdout.decode("utf-8")
+
+        assert "Usage:" not in stdout
+        assert "upload-aistrategy] Error" not in stdout
+
+        make_process = subprocess.Popen(["make rebuild-aistrategy"], shell=True, cwd=MAKE_PATH, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        stdout, stderr = make_process.communicate()
+
+        stdout = stdout.decode("utf-8")
+
+        # Django, just test for command output from echo
+        assert "Usage:" not in stdout
+        assert "rebuild-aistrategy] Error" not in stdout
+        assert 'import_data_csv' in stdout
+
     def test_make_ati(self):
         assert self.ckan_ini
         self._setup_ini(self.ckan_ini)

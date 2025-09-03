@@ -1,0 +1,1 @@
+Use the new `nocache_store` blueprint decorator for login and reset pages.

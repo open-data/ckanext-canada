@@ -179,7 +179,7 @@ resources:
     datastore_type: text
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
-      style: "width: 100%; display: block"
+      class: form-control canada-width-full d-block
 
   # 3.8
   - datastore_id: description_fr
@@ -201,7 +201,7 @@ resources:
     datastore_type: text
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
-      style: "width: 100%; display: block"
+      class: form-control canada-width-full d-block
 
   # 3.9
   - datastore_id: target_participants_and_audience
@@ -467,7 +467,7 @@ resources:
     datastore_type: text
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
-      style: "width: 100%; display: block"
+      class: form-control canada-width-full d-block
 
   # 3.21
   - datastore_id: remarks_fr
@@ -487,7 +487,7 @@ resources:
     datastore_type: text
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
-      style: "width: 100%; display: block"
+      class: form-control canada-width-full d-block
 
   # 3.22
   - datastore_id: high_profile

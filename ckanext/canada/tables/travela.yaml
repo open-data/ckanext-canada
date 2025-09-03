@@ -65,7 +65,7 @@ resources:
     form_required: true
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
-      style: "width: 100%; display: block"
+      class: form-control canada-width-full d-block
 
   - datastore_id: mandate_description_fr
     label:
@@ -92,7 +92,7 @@ resources:
     form_required: true
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
-      style: "width: 100%; display: block"
+      class: form-control canada-width-full d-block
 
   - datastore_id: operational_activities_kdollars
     label:
@@ -414,7 +414,7 @@ resources:
     excel_column_width: 50
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
-      style: "width: 100%; display: block"
+      class: form-control canada-width-full d-block
 
   - datastore_id: travel_compared_fiscal_year_fr
     label:
@@ -436,7 +436,7 @@ resources:
     excel_column_width: 50
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
-      style: "width: 100%; display: block"
+      class: form-control canada-width-full d-block
 
   - datastore_id: hospitality_compared_fiscal_year_en
     label:
@@ -458,7 +458,7 @@ resources:
     excel_column_width: 50
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
-      style: "width: 100%; display: block"
+      class: form-control canada-width-full d-block
 
   - datastore_id: hospitality_compared_fiscal_year_fr
     label:
@@ -480,7 +480,7 @@ resources:
     excel_column_width: 50
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
-      style: "width: 100%; display: block"
+      class: form-control canada-width-full d-block
 
   - datastore_id: conference_fees_compared_fiscal_year_en
     label:
@@ -502,7 +502,7 @@ resources:
     excel_column_width: 50
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
-      style: "width: 100%; display: block"
+      class: form-control canada-width-full d-block
 
   - datastore_id: conference_fees_compared_fiscal_year_fr
     label:
@@ -524,7 +524,7 @@ resources:
     excel_column_width: 50
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
-      style: "width: 100%; display: block"
+      class: form-control canada-width-full d-block
 
   - datastore_id: minister_compared_fiscal_year_en
     label:
@@ -546,7 +546,7 @@ resources:
     excel_column_width: 50
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
-      style: "width: 100%; display: block"
+      class: form-control canada-width-full d-block
 
   - datastore_id: minister_compared_fiscal_year_fr
     label:
@@ -568,7 +568,7 @@ resources:
     excel_column_width: 50
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
-      style: "width: 100%; display: block"
+      class: form-control canada-width-full d-block
 
   - datastore_id: record_created
     label: Record Creation Time
