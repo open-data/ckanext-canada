@@ -24,8 +24,8 @@
   wetHeaderScripts.forEach(function(_script){
     _script.setAttribute('nonce', '{{- h.get_inline_script_nonce() -}}');
     if( _script.id == 'cdts_AnalyticsId' ){
-      _script.setAttribute('data-nonce', '{{- h.get_inline_script_nonce() -}}');
       _script.async = true;
+      _script.setAttribute('data-nonce', '{{- h.get_inline_script_nonce() -}}');
     }
     newWetHeaderString += _script.outerHTML;
   });
