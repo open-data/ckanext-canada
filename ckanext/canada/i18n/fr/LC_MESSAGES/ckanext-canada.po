@@ -1060,7 +1060,7 @@ msgid "{num} deleted."
 msgstr "{num} supprimé."
 
 #. SQL Trigger String for PD Type: service
-#: ckanext/canada/tables/service.yaml:2390 ckanext/canada/view.py:791
+#: ckanext/canada/tables/service.yaml:2580 ckanext/canada/view.py:791
 msgid "Number required"
 msgstr "Nombre requis"
 
@@ -1293,8 +1293,8 @@ msgstr "Veuillez entrer une valeur comprise entre 1 et 12"
 #. SQL Trigger String for PD Type: service
 #: ckanext/canada/tables/ati.yaml:142 ckanext/canada/tables/ati.yaml:254
 #: ckanext/canada/tables/hospitalityq.yaml:648
-#: ckanext/canada/tables/service.yaml:1549
-#: ckanext/canada/tables/service.yaml:2387
+#: ckanext/canada/tables/service.yaml:1693
+#: ckanext/canada/tables/service.yaml:2577
 msgid "This value must not be negative"
 msgstr "Cette valeur ne doit pas être négatif"
 
@@ -1792,12 +1792,12 @@ msgid "Proactive Publication - Position Reclassification Nothing to Report"
 msgstr "Publication proactive - Reclassifications de postes (Rien à signaler)"
 
 #. Title for PD Type: service
-#: ckanext/canada/tables/service.yaml:6
+#: ckanext/canada/tables/service.yaml:7
 msgid "Service Inventory"
 msgstr "Répertoire de services"
 
 #. Description for PD Type: service
-#: ckanext/canada/tables/service.yaml:7
+#: ckanext/canada/tables/service.yaml:8
 msgid ""
 "Access, upload and modify the Service Inventory of external and internal "
 "enterprise services for your organization"
@@ -1806,55 +1806,55 @@ msgstr ""
 "intégrés et externes pour votre organisation"
 
 #. Resource Title for PD Type: service
-#: ckanext/canada/tables/service.yaml:18
+#: ckanext/canada/tables/service.yaml:19
 msgid "Service Identification Information & Metrics"
-msgstr "Information et paramètres sur l’identification des services"
+msgstr "Renseignements sur l'identification des services, données volumétriques"
 
 #. SQL Trigger String for PD Type: service
-#: ckanext/canada/tables/service.yaml:1548
+#: ckanext/canada/tables/service.yaml:1692
 msgid "This field must be either a number, \"NA\", or \"ND\""
 msgstr "Ce champ doit être un chiffre, \"NA\", ou \"ND\""
 
 #. SQL Trigger String for PD Type: service
-#: ckanext/canada/tables/service.yaml:1550
-#: ckanext/canada/tables/service.yaml:2388
+#: ckanext/canada/tables/service.yaml:1694
+#: ckanext/canada/tables/service.yaml:2578
 msgid "This field has a maximum length of {} characters."
 msgstr "Ce champ ne peut excéder une longueur maximale de {} caractères."
 
 #. SQL Trigger String for PD Type: service
-#: ckanext/canada/tables/service.yaml:1551
-#: ckanext/canada/tables/service.yaml:2389
+#: ckanext/canada/tables/service.yaml:1695
+#: ckanext/canada/tables/service.yaml:2579
 msgid "Invalid choice: {}"
 msgstr "Choix non valide : {}"
 
 #. SQL Trigger String for PD Type: service
-#: ckanext/canada/tables/service.yaml:1552
-#: ckanext/canada/tables/service.yaml:2391
+#: ckanext/canada/tables/service.yaml:1696
+#: ckanext/canada/tables/service.yaml:2581
 msgid "Invalid input syntax for type integer: {}"
 msgstr "Syntaxe d'entrée invalide pour le type entier : {}"
 
 #. SQL Trigger String for PD Type: service
-#: ckanext/canada/tables/service.yaml:1553
-#: ckanext/canada/tables/service.yaml:2392
+#: ckanext/canada/tables/service.yaml:1697
+#: ckanext/canada/tables/service.yaml:2582
 msgid "This field is required due to a response in a different field."
 msgstr "Ce champ est requis en raison d'une réponse présente dans un autre champ."
 
 #. SQL Trigger String for PD Type: service
-#: ckanext/canada/tables/service.yaml:1554
-#: ckanext/canada/tables/service.yaml:2393
+#: ckanext/canada/tables/service.yaml:1698
+#: ckanext/canada/tables/service.yaml:2583
 msgid "This text must be provided in both languages"
 msgstr "Ce texte doit être fourni dans les deux langues"
 
 #. SQL Trigger String for PD Type: service
-#: ckanext/canada/tables/service.yaml:1555
-#: ckanext/canada/tables/service.yaml:2394
+#: ckanext/canada/tables/service.yaml:1699
+#: ckanext/canada/tables/service.yaml:2584
 msgid "Comma is not allowed in Service ID Number field"
 msgstr ""
 "La virgule n’est pas autorisée dans le champ du Numéro d'identification "
 "du service"
 
 #. SQL Constraint Error String for PD Type: service
-#: ckanext/canada/tables/service.yaml:1360
+#: ckanext/canada/tables/service.yaml:1504
 msgid ""
 "Cannot delete record(s) because the Fiscal Year, Service ID Number "
 "({refValues}) is referenced in at least one Service Standards & "
@@ -1862,16 +1862,16 @@ msgid ""
 msgstr ""
 "L'entrée de service ne peut être supprimée parce qu’il existe une ou "
 "plusieurs normes de service ({refValues}) qui y font référence dans la "
-"ressource  \"Normes de service et résultats du rendement\""
+"ressource  \"Normes de service et résultats de rendement\""
 
 #. Resource Title for PD Type: service
-#: ckanext/canada/tables/service.yaml:1629
+#: ckanext/canada/tables/service.yaml:1773
 msgid "Service Standards & Performance Results"
-msgstr "Normes de service et résultats du rendement"
+msgstr "Normes de service et résultats de rendement"
 
 #. SQL Trigger String for PD Type: service
-#: ckanext/canada/tables/service.yaml:1982
-#: ckanext/canada/tables/service.yaml:2386
+#: ckanext/canada/tables/service.yaml:2147
+#: ckanext/canada/tables/service.yaml:2576
 msgid ""
 "This field must be a single number between 0 and 1 representing a "
 "percentage."
@@ -1880,14 +1880,19 @@ msgstr ""
 "représentant un pourcentage"
 
 #. SQL Trigger String for PD Type: service
-#: ckanext/canada/tables/service.yaml:2395
+#: ckanext/canada/tables/service.yaml:2585
 msgid "Comma is not allowed in Service Standard ID field"
 msgstr ""
 "La virgule n’est pas autorisée dans le champ du Numéro d'identification "
 "de la norme relative aux services"
 
+#. SQL Trigger String for PD Type: service
+#: ckanext/canada/tables/service.yaml:2586
+msgid "Volume Meeting Target can not exceed Total Volume."
+msgstr "Les volumes atteignant la cible ne peuvent pas dépasser le volume total."
+
 #. SQL Constraint Error String for PD Type: service
-#: ckanext/canada/tables/service.yaml:2288
+#: ckanext/canada/tables/service.yaml:2474
 msgid ""
 "Cannot create record ({refValues}) because the Service ID Number does not"
 " exist in the Service Identification Information & Metrics resource for "
