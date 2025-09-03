@@ -35,7 +35,7 @@
     {% if ga4_id %}
       <!-- Google tag (gtag.js) -->
       <script src="https://www.googletagmanager.com/gtag/js?id={{ ga4_id }}" nonce="{{- h.get_inline_script_nonce() -}}" async></script>
-      <script async>
+      <script nonce="{{- h.get_inline_script_nonce() -}}" async>
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
