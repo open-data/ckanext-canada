@@ -34,9 +34,9 @@
     {% set ga4_id = h.ga4_id() %}
     {% if ga4_id %}
       <!-- Google tag (gtag.js) -->
-      <script async src="https://www.googletagmanager.com/gtag/js?id={{ ga4_id }}" nonce="{{- h.get_inline_script_nonce() -}}"></script>
+      <script async src="https://www.googletagmanager.com/gtag/js?id={{ ga4_id }}" nonce="{{- h.get_inline_script_nonce() -}}" async></script>
       {# NOTE: below is the nonce aware code for tag manager #}
-      <script nonce="{{- h.get_inline_script_nonce() -}}">
+      <script nonce="{{- h.get_inline_script_nonce() -}}" async>
         (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
           new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
           j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
