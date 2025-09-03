@@ -29,7 +29,9 @@ resources:
     excel_required: true
     form_required: true
     validation: This field must not be empty
-    format_type: Free text
+    format_type:
+      en: Free text
+      fr: Texte libre
     excel_column_width: 30
     form_attrs:
       size: 60
@@ -39,7 +41,9 @@ resources:
     label:
       en: Job Number
       fr: Numéro d'emploi
-    format_type: Free text
+    format_type:
+      en: Free text
+      fr: Texte libre
     excel_column_width: 30
     form_attrs:
       size: 60
@@ -53,7 +57,9 @@ resources:
     excel_required: true
     form_required: true
     validation: This field must not be empty
-    format_type: Free text
+    format_type:
+      en: Free text
+      fr: Texte libre
     excel_column_width: 30
     form_attrs:
       size: 60
@@ -67,7 +73,9 @@ resources:
     excel_required: true
     form_required: true
     validation: This field must not be empty
-    format_type: Date (Please format the data as YYYY-MM-DD)
+    format_type:
+      en: Date (Please format the date as YYYY-MM-DD)
+      fr: "Date (Veuillez utiliser le format de date suivant : AAAA-MM-JJ)"
     excel_column_width: 20
     extract_date_year: true
     extract_date_month: true
@@ -83,7 +91,9 @@ resources:
     excel_required: true
     form_required: true
     validation: This field must not be empty
-    format_type: Free text
+    format_type:
+      en: Free text
+      fr: Texte libre
     excel_column_width: 30
     form_attrs:
       size: 60
@@ -97,7 +107,9 @@ resources:
     excel_required: true
     form_required: true
     validation: This field must not be empty
-    format_type: Free text
+    format_type:
+      en: Free text
+      fr: Texte libre
     excel_column_width: 30
     form_attrs:
       size: 60
@@ -110,7 +122,9 @@ resources:
     obligation: Mandatory
     excel_required: true
     form_required: true
-    format_type: Controlled List
+    format_type:
+      en: Controlled List
+      fr: Liste contrôlée
     validation: This field must not be empty
     excel_full_text_choices: True
     form_choices_prefix_code: True
@@ -125,7 +139,9 @@ resources:
     obligation: Mandatory
     excel_required: true
     form_required: true
-    format_type: Controlled List
+    format_type:
+      en: Controlled List
+      fr: Liste contrôlée
     validation: This field must not be empty
     excel_full_text_choices: False
     choices_file: choices/level_number.yaml
@@ -139,7 +155,9 @@ resources:
     obligation: Mandatory
     excel_required: true
     form_required: true
-    format_type: Controlled List
+    format_type:
+      en: Controlled List
+      fr: Liste contrôlée
     validation: This field must not be empty
     excel_full_text_choices: True
     form_choices_prefix_code: True
@@ -154,7 +172,9 @@ resources:
     obligation: Mandatory
     excel_required: true
     form_required: true
-    format_type: Controlled List
+    format_type:
+      en: Controlled List
+      fr: Liste contrôlée
     validation: This field must not be empty
     excel_full_text_choices: False
     choices_file: choices/level_number.yaml
@@ -165,7 +185,9 @@ resources:
     label:
       en: Previous Supervisory Differential
       fr: Ancienne prime de surveillance
-    format_type: Free Text
+    format_type:
+      en: Free text
+      fr: Texte libre
     form_attrs:
       size: 60
 
@@ -174,7 +196,9 @@ resources:
     label:
       en: Reclassified Supervisory Differential
       fr: Prime de surveillance précédente
-    format_type: Free Text
+    format_type:
+      en: Free text
+      fr: Texte libre
     form_attrs:
       size: 60
 
@@ -186,7 +210,9 @@ resources:
     obligation: Mandatory
     excel_required: true
     form_required: true
-    format_type: Free Text
+    format_type:
+      en: Free text
+      fr: Texte libre
     validation: This field must not be empty
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
@@ -200,7 +226,9 @@ resources:
     obligation: Mandatory
     excel_required: true
     form_required: true
-    format_type: Free Text
+    format_type:
+      en: Free text
+      fr: Texte libre
     validation: This field must not be empty
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
