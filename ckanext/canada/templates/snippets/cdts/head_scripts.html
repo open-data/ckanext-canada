@@ -23,9 +23,9 @@
   const wetHeaderScripts = wetHeaderDOC.querySelectorAll('script');
   wetHeaderScripts.forEach(function(_script){
     _script.setAttribute('nonce', '{{- h.get_inline_script_nonce() -}}');
+    _script.async = true;
     if( _script.id == 'cdts_AnalyticsId' ){
       _script.setAttribute('data-nonce', '{{- h.get_inline_script_nonce() -}}');
-      _script.async = true;
     }
     newWetHeaderString += _script.outerHTML;
   });
