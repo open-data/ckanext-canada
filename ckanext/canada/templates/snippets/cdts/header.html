@@ -40,14 +40,12 @@
                 "subtext": {{ recombinant_menu_text('experiment') | tojson }},
               },
               {% set orgs = h.organizations_available('read') %}
-              {% for org in orgs %}
-                {% if 'tbs-sct' in org['name'] %}
+              {% if 'tbs-sct' in orgs | map(attribute='name') | list %}
                   {
                     "subhref": {{ recombinant_menu_link('aistrategy') | tojson }},
                     "subtext": {{ recombinant_menu_text('aistrategy') | tojson }},
                   },
-                {% endif %}
-              {% endfor %}
+              {% endif %}
               {
                 "subhref": {{ recombinant_menu_link('nap5') | tojson }},
                 "subtext": {{ recombinant_menu_text('nap5') | tojson }},
