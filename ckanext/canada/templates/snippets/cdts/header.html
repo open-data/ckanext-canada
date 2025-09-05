@@ -39,19 +39,16 @@
                 "subhref": {{ recombinant_menu_link('experiment') | tojson }},
                 "subtext": {{ recombinant_menu_text('experiment') | tojson }},
               },
+              {% set orgs = h.organizations_available('read') %}
+              {% if 'tbs-sct' in orgs | map(attribute='name') | list %}
+                  {
+                    "subhref": {{ recombinant_menu_link('aistrategy') | tojson }},
+                    "subtext": {{ recombinant_menu_text('aistrategy') | tojson }},
+                  },
+              {% endif %}
               {
                 "subhref": {{ recombinant_menu_link('nap5') | tojson }},
                 "subtext": {{ recombinant_menu_text('nap5') | tojson }},
-              },
-              {% if h.check_access('organization_update', {'id': 'tbs-sct'}) %}
-              {
-                "subhref": {{ recombinant_menu_link('aistrategy') | tojson }},
-                "subtext": {{ recombinant_menu_text('aistrategy') | tojson }},
-              },
-              {% endif %}
-              {
-                "subhref": {{ recombinant_menu_link('inventory') | tojson }},
-                "subtext": {{ recombinant_menu_text('inventory') | tojson }},
               },
             ],
           },
