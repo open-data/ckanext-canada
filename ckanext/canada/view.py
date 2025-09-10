@@ -823,6 +823,8 @@ def home():
 def links():
     if not g.is_registry:
         return h.redirect_to('dataset.search')
+    if not g.user:
+        return h.redirect_to('user.login')
     return render('home/quick_links.html',
                   extra_vars={'is_sysadmin': is_sysadmin(g.user)})
 
