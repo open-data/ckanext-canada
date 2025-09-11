@@ -87,8 +87,9 @@ class CanadaSecurityPlugin(CkanSecurityPlugin):
 
     # IAuthenticator
     def abort(self, status_code: int, detail: str,
-              headers: Optional[dict[str, Any]], comment: Optional[str],
-             ) -> tuple[int, str, Optional[dict[str, Any]], Optional[str]]:
+              headers: Optional[dict[str, Any]],
+              comment: Optional[str]) \
+                -> tuple[int, str, Optional[dict[str, Any]], Optional[str]]:
         """
         All 403 status should be made into 404s for non-logged in users.
         """
