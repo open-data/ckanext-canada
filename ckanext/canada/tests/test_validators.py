@@ -555,6 +555,20 @@ class TestNAVLSchema(CanadaTestBase):
         assert 'digital_object_identifier' in err
         assert err['digital_object_identifier'] == ['Invalid value for a digital object identifier.']
 
+    def test_api_token_name(self):
+        """
+        Cannot have crazy stuff in API Token Names
+        """
+        with pytest.raises(ValidationError) as ve:
+            self.sysadmin_action.api_token_create(user=self.normal_user['name'],
+                                                  name='eval("console.log("THIS IS NOT ALLOWED")")')
+        err = ve.value.error_dict
+        assert 'name' in err
+        assert err['name'] == ['Invalid name for an API Token. API Token names can only contain alphanumeric characters, hyphens, and underscores.']
+
+        self.sysadmin_action.api_token_create(user=self.normal_user['name'],
+                                              name='this_name-is-PERFECTLY_FINE-0001928309')
+
 
 class TestSysadminUpdate(CanadaTestBase):
     @classmethod
