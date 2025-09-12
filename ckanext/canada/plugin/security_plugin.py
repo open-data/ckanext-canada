@@ -103,7 +103,8 @@ class CanadaSecurityPlugin(CkanSecurityPlugin):
 
     # IApiToken
     def create_api_token_schema(self, schema: Schema) -> Schema:
-        api_token_name_validator = p.toolkit.get_validator('canada_api_token_name_validator')
+        api_token_name_validator = p.toolkit.get_validator(
+            'canada_api_token_name_validator')
         # type_ignore_reason: incomplete typing
         schema['name'].append(api_token_name_validator)  # type: ignore
         return schema
