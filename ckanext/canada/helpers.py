@@ -1133,7 +1133,7 @@ def mail_to(email_address: str, name: str) -> Markup:
     if email_address == name:
         author = obfuscate_to_code_points(name, return_safe=False)
     else:
-        author = escape(author)
+        author = escape(name)
     html = Markup('<a href=mailto:{0}>{1}</a>'.format(email, author))
     return html
 
