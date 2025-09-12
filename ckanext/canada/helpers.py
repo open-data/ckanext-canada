@@ -633,17 +633,6 @@ def recombinant_description_to_markup(text: str) -> Dict[str, Markup]:
     return {'en': Markup(''.join(markup))}
 
 
-def mail_to_with_params(email_address: str, name: str,
-                        subject: str, body: str) -> Markup:
-    email = escape(email_address)
-    author = escape(name)
-    mail_subject = escape(subject)
-    mail_body = escape(body)
-    html = Markup('<a href="mailto:{0}?subject={2}&body={3}">{1}</a>'.format(
-        email, author, mail_subject, mail_body))
-    return html
-
-
 def get_timeout_length() -> int:
     return int(config.get('beaker.session.timeout', 0))
 
@@ -1115,12 +1104,52 @@ def max_resources_per_dataset() -> Optional[int]:
         return int(max_resource_count)
 
 
-def support_email_address() -> str:
-    return config['ckanext.canada.support_email_address']
+def obfuscate_to_code_points(string: str,
+                             return_safe: bool = True) -> Union[Markup, str]:
+    """
+    Obfuscate each string character to its code point.
+    """
+    obfuscated_string = ''
+    for _s in string:
+        obfuscated_string += f'&#{ord(_s):03d};'
+    return Markup(obfuscated_string) if return_safe \
+        else obfuscated_string
 
 
-def default_open_email_address() -> str:
-    return config['ckanext.canada.default_open_email_address']
+def support_email_address(xml_encode: bool = True) -> Union[Markup, str]:
+    return config['ckanext.canada.support_email_address'] if not xml_encode \
+        else obfuscate_to_code_points(
+            config['ckanext.canada.support_email_address'])
+
+
+def default_open_email_address(xml_encode: bool = True) -> Union[Markup, str]:
+    return config['ckanext.canada.default_open_email_address'] if not xml_encode \
+        else obfuscate_to_code_points(
+            config['ckanext.canada.default_open_email_address'])
+
+
+def mail_to(email_address: str, name: str) -> Markup:
+    email = obfuscate_to_code_points(email_address, return_safe=False)
+    if email_address == name:
+        author = obfuscate_to_code_points(name, return_safe=False)
+    else:
+        author = escape(author)
+    html = Markup('<a href=mailto:{0}>{1}</a>'.format(email, author))
+    return html
+
+
+def mail_to_with_params(email_address: str, name: str,
+                        subject: str, body: str) -> Markup:
+    email = obfuscate_to_code_points(email_address, return_safe=False)
+    if email_address == name:
+        author = obfuscate_to_code_points(name, return_safe=False)
+    else:
+        author = escape(name)
+    mail_subject = escape(subject)
+    mail_body = escape(body)
+    html = Markup('<a href="mailto:{0}?subject={2}&body={3}">{1}</a>'.format(
+        email, author, mail_subject, mail_body))
+    return html
 
 
 def get_inline_script_nonce() -> str:

@@ -59,7 +59,7 @@
               {# FIXME: sunset the default_open_email_address eventually... #}
               <li class="list-group-item resource-tags">
                 <strong>{{ field_title }}{{ _(':') }}</strong>
-                {{ h.mail_to(email_address=h.default_open_email_address(), name=h.default_open_email_address()) }}
+                {{ h.mail_to(email_address=h.default_open_email_address(xml_encode=False), name=h.default_open_email_address(xml_encode=False)) }}
               </li>
             {% elif field_value %}
               <li class="list-group-item resource-tags">
