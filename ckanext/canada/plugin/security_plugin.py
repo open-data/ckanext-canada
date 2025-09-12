@@ -80,7 +80,7 @@ class CanadaSecurityPlugin(CkanSecurityPlugin):
             validators_dict,
             canada_security_upload_type=validators.canada_security_upload_type,
             canada_security_upload_presence=validators.canada_security_upload_presence,
-            canada_api_name_validator=validators.canada_api_name_validator,
+            canada_api_token_name_validator=validators.canada_api_token_name_validator,
         )
 
     # IMiddleware
@@ -103,8 +103,8 @@ class CanadaSecurityPlugin(CkanSecurityPlugin):
 
     # IApiToken
     def create_api_token_schema(self, schema: Schema) -> Schema:
-        api_name_validator = p.toolkit.get_validator('canada_api_name_validator')
-        schema['name'].append(api_name_validator)
+        api_token_name_validator = p.toolkit.get_validator('canada_api_token_name_validator')
+        schema['name'].append(api_token_name_validator)
         return schema
 
 

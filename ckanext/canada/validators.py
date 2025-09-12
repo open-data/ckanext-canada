@@ -668,7 +668,7 @@ def limit_resources_per_dataset(key: FlattenKey,
         raise StopOnError
 
 
-def canada_api_name_validator(value: Any, context: Context):
+def canada_api_token_name_validator(value: Any, context: Context):
     """
     Only accept some basic naming conventions. Should not allow any
     special characters or control characters.
