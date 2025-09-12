@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-09-11 15:34+0000\n"
+"POT-Creation-Date: 2025-09-12 15:53+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: fr\n"
@@ -159,7 +159,7 @@ msgid "Treasury Board of Canada Secretariat"
 msgstr "Secrétariat du Conseil du Trésor du Canada"
 
 #: ckanext/canada/helpers.py:698 ckanext/canada/strings.py:14
-#: ckanext/canada/view.py:1283
+#: ckanext/canada/view.py:1285
 msgid "Members not found"
 msgstr "Membres non trouvés"
 
@@ -304,7 +304,7 @@ msgstr "Non autorisé à accéder au téléchargement des membres du {group}"
 
 #: ckanext/canada/strings.py:15
 #: ckanext/canada/templates/admin/snippets/portal_sync_package_item.html:14
-#: ckanext/canada/view.py:1293
+#: ckanext/canada/view.py:1295
 msgid "N/A"
 msgstr "N/A"
 
@@ -312,33 +312,33 @@ msgstr "N/A"
 #: ckanext/canada/templates/organization/member_new.html:31
 #: ckanext/canada/templates/user/edit_user_form.html:8
 #: ckanext/canada/templates/user/list.html:44
-#: ckanext/canada/templates/user/new_user_form.html:8
+#: ckanext/canada/templates/user/new_user_form.html:6
 #: ckanext/canada/templates/user/snippets/login_form.html:32
-#: ckanext/canada/view.py:1285
+#: ckanext/canada/view.py:1287
 msgid "Username"
 msgstr "Nom d’utilisateur"
 
 #: ckanext/canada/strings.py:17
 #: ckanext/canada/templates/user/edit_user_form.html:10
-#: ckanext/canada/templates/user/new_user_form.html:14
+#: ckanext/canada/templates/user/new_user_form.html:12
 #: ckanext/canada/templates/user/read_base.html:61
 #: ckanext/canada/templates/user/recover_username.html:17
-#: ckanext/canada/view.py:1285
+#: ckanext/canada/view.py:1287
 msgid "Email"
 msgstr "Courriel"
 
 #: ckanext/canada/strings.py:18 ckanext/canada/templates/user/api_tokens.html:7
-#: ckanext/canada/templates/user/list.html:45 ckanext/canada/view.py:1285
+#: ckanext/canada/templates/user/list.html:45 ckanext/canada/view.py:1287
 msgid "Name"
 msgstr "Nom"
 
 #: ckanext/canada/strings.py:19
 #: ckanext/canada/templates/organization/member_new.html:58
-#: ckanext/canada/templates/user/list.html:46 ckanext/canada/view.py:1285
+#: ckanext/canada/templates/user/list.html:46 ckanext/canada/view.py:1287
 msgid "Role"
 msgstr "Rôle"
 
-#: ckanext/canada/strings.py:20 ckanext/canada/view.py:1303
+#: ckanext/canada/strings.py:20 ckanext/canada/view.py:1305
 msgid "members"
 msgstr "membres"
 
@@ -721,9 +721,9 @@ msgid ""
 "The requested URL was not found on the server. If you entered the URL "
 "manually please check your spelling and try again."
 msgstr ""
-"L'adresse URL demandée ne se trouve pas sur le serveur. "
-"Si vous avez saisi l'adresse URL manuellement, veuillez "
-"vérifier l'orthographe et réessayer."
+"L'adresse URL demandée ne se trouve pas sur le serveur. Si vous avez "
+"saisi l'adresse URL manuellement, veuillez vérifier l'orthographe et "
+"réessayer."
 
 #: ckanext/canada/strings.py:100
 msgid "Please upload a file or link to an external resource"
@@ -894,7 +894,7 @@ msgstr "La balise \"%s\"ne peut pas contenir de caractères séparateurs U+%04x"
 msgid "Badly formed hexadecimal UUID string"
 msgstr "Chaîne UUID hexadécimale mal formée"
 
-#: ckanext/canada/templates/user/new_user_form.html:7
+#: ckanext/canada/templates/user/new_user_form.html:74
 #: ckanext/canada/validators.py:185 ckanext/canada/validators.py:187
 msgid "Please enter a valid email address."
 msgstr "S’il vous plaît, mettez une adresse email valide."
@@ -1077,16 +1077,16 @@ msgstr "Nombre requis"
 msgid "Integer required"
 msgstr "Entier requis"
 
-#: ckanext/canada/view.py:838 ckanext/canada/view.py:846
-#: ckanext/canada/view.py:883
+#: ckanext/canada/view.py:840 ckanext/canada/view.py:848
+#: ckanext/canada/view.py:885
 msgid "Not authorized to see this page"
 msgstr "Non autorisé à voir cette page"
 
-#: ckanext/canada/view.py:853
+#: ckanext/canada/view.py:855
 msgid "Invalid publish date"
 msgstr "Date de publication invalide"
 
-#: ckanext/canada/view.py:869
+#: ckanext/canada/view.py:871
 msgid " record(s) published."
 msgstr " d’enregistrements publiés."
 
@@ -1096,19 +1096,19 @@ msgstr " d’enregistrements publiés."
 #: ckanext/canada/templates/package/resource_edit.html:3
 #: ckanext/canada/templates/package/resource_edit_base.html:7
 #: ckanext/canada/templates/snippets/pd_datatable.html:19
-#: ckanext/canada/view.py:979
+#: ckanext/canada/view.py:981
 msgid "Edit"
 msgstr "Modifier"
 
-#: ckanext/canada/view.py:1117
+#: ckanext/canada/view.py:1119
 msgid "Access denied"
 msgstr "Accès refusé"
 
-#: ckanext/canada/view.py:1175
+#: ckanext/canada/view.py:1177
 msgid "Account Created"
 msgstr "Compte créé"
 
-#: ckanext/canada/view.py:1177
+#: ckanext/canada/view.py:1179
 msgid ""
 "Thank you for creating your account for the Open Government registry. "
 "Although your account is active, it has not yet been linked to your "
@@ -1119,7 +1119,7 @@ msgstr ""
 "ministère. Vous ne pourrez créer ou modifier de jeux de données dans le "
 "registre tant que votre compte n’aura pas été relié à votre ministère."
 
-#: ckanext/canada/view.py:1184
+#: ckanext/canada/view.py:1186
 msgid ""
 "You should receive an email within the next business day once the account"
 " activation process has been completed. If you require faster processing "
@@ -1132,20 +1132,20 @@ msgstr ""
 "plus rapidement, veuillez envoyer une demande directement à :<a "
 "href=\"mailto:{support}\">{support}.</a"
 
-#: ckanext/canada/view.py:1263 ckanext/canada/view.py:1341
+#: ckanext/canada/view.py:1265 ckanext/canada/view.py:1343
 msgid "Organization not found"
 msgstr "Organisation non trouvée"
 
-#: ckanext/canada/view.py:1272
+#: ckanext/canada/view.py:1274
 msgid "Not authorized to access {org_name} members download"
 msgstr "Non autorisé à accéder au téléchargement des membres du {group}"
 
-#: ckanext/canada/view.py:1344
+#: ckanext/canada/view.py:1346
 #, python-format
 msgid "User %r not authorized to edit members of %s"
 msgstr "L’utilisateur %r n’est pas autorisé à modifier les membres de %s"
 
-#: ckanext/canada/view.py:1347
+#: ckanext/canada/view.py:1349
 #, python-format
 msgid "User %r not authorized to view members of %s"
 msgstr "L’utilisateur %r n’est pas autorisé à voir les membres de %s"
@@ -1157,7 +1157,7 @@ msgstr "Type de portail"
 
 #: ckanext/canada/plugin/public_plugin.py:141
 #: ckanext/canada/templates/package/deleted.html:14
-#: ckanext/canada/templates/user/new_user_form.html:18
+#: ckanext/canada/templates/user/new_user_form.html:16
 msgid "Organization"
 msgstr "Organisation"
 
@@ -3035,6 +3035,10 @@ msgstr ""
 msgid "Members"
 msgstr "Membres"
 
+#: ckanext/canada/templates/organization/read.html:8
+msgid "This organization has been deleted and is no longer accessible"
+msgstr "Cette organisation a été supprimée et n’est plus accessible"
+
 #: ckanext/canada/templates/organization/read_base.html:20
 #: ckanext/canada/templates/package/search.html:16
 #: ckanext/canada/templates/snippets/organization.html:37
@@ -3095,7 +3099,7 @@ msgstr "0 dossiers"
 #: ckanext/canada/templates/organization/snippets/organization_search.html:4
 #: ckanext/canada/templates/recombinant/snippets/org_select.html:18
 #: ckanext/canada/templates/scheming/form_snippets/organization_autocomplete.html:26
-#: ckanext/canada/templates/user/new_user_form.html:18
+#: ckanext/canada/templates/user/new_user_form.html:16
 msgid "Search organizations..."
 msgstr "Rechercher les organisations..."
 
@@ -4240,13 +4244,13 @@ msgid "Old Password"
 msgstr "Ancien mot de passe"
 
 #: ckanext/canada/templates/user/edit_user_form.html:36
-#: ckanext/canada/templates/user/new_user_form.html:22
+#: ckanext/canada/templates/user/new_user_form.html:20
 #: ckanext/canada/templates/user/snippets/login_form.html:33
 msgid "Password"
 msgstr "Mot de passe"
 
 #: ckanext/canada/templates/user/edit_user_form.html:37
-#: ckanext/canada/templates/user/new_user_form.html:25
+#: ckanext/canada/templates/user/new_user_form.html:23
 msgid "Confirm Password"
 msgstr "Confirmer le mot de passe"
 
@@ -4405,12 +4409,7 @@ msgstr ""
 "compte et votre organisation et vous fera parvenir un avis. Vous pourrez "
 "alors commencer à ajouter des dossiers dans le registre."
 
-#: ckanext/canada/templates/user/new_user_form.html:6
-#: ckanext/canada/templates/user/new_user_form.html:17
-msgid "Please fill out this field."
-msgstr "Ce champ est obligatoire."
-
-#: ckanext/canada/templates/user/new_user_form.html:9
+#: ckanext/canada/templates/user/new_user_form.html:7
 msgid ""
 "Use only lowercase letters (a-z) and numbers (0-9) with optional hyphens "
 "(-) and underscores (_). Example: joe-bloggs"
@@ -4419,27 +4418,27 @@ msgstr ""
 "facultativement, des traits d’union (-) et des traits de soulignement "
 "(_). Exemple : joe-bloggs"
 
-#: ckanext/canada/templates/user/new_user_form.html:11
+#: ckanext/canada/templates/user/new_user_form.html:9
 msgid "Full Name"
 msgstr "Nom complet"
 
-#: ckanext/canada/templates/user/new_user_form.html:12
+#: ckanext/canada/templates/user/new_user_form.html:10
 msgid "Example: Joe Bloggs"
 msgstr "Exemple : Joe Bloggs"
 
-#: ckanext/canada/templates/user/new_user_form.html:15
+#: ckanext/canada/templates/user/new_user_form.html:13
 msgid "Example: joe.bloggs@tbs-sct.gc.ca"
 msgstr "Exemple : joe.bloggs@tbs-sct.gc.ca"
 
-#: ckanext/canada/templates/user/new_user_form.html:19
+#: ckanext/canada/templates/user/new_user_form.html:17
 msgid "Phone Number"
 msgstr "Numéro de téléphone"
 
-#: ckanext/canada/templates/user/new_user_form.html:20
+#: ckanext/canada/templates/user/new_user_form.html:18
 msgid "Example: 000 000 0000"
 msgstr "Exemple : 000 000 0000"
 
-#: ckanext/canada/templates/user/new_user_form.html:23
+#: ckanext/canada/templates/user/new_user_form.html:21
 msgid ""
 "Password must be 12 characters or longer, and must consist of at least "
 "three of the following character sets: uppercase characters, lowercase "
@@ -4449,11 +4448,11 @@ msgstr ""
 "d'au moins trois des caractères suivants : majuscules, minuscules, "
 "chiffres, ponctuation et caractères spéciaux"
 
-#: ckanext/canada/templates/user/new_user_form.html:26
+#: ckanext/canada/templates/user/new_user_form.html:24
 msgid "The password must match"
 msgstr "Le mot de passe doit être identique"
 
-#: ckanext/canada/templates/user/new_user_form.html:29
+#: ckanext/canada/templates/user/new_user_form.html:27
 msgid ""
 "<h2>Terms and Conditions for the Open Government Registry</h2> "
 "<p><em>Privacy Statement</em></p> <p>The Government of Canada is "
@@ -4635,10 +4634,14 @@ msgstr ""
 "sélectionnez \"Je n’accepte pas\" vous n’aurez pas accès au registre.</p>"
 
 #: ckanext/canada/templates/user/new_user_form.html:73
+msgid "Please fill out this field."
+msgstr "Ce champ est obligatoire."
+
+#: ckanext/canada/templates/user/new_user_form.html:105
 msgid "I agree"
 msgstr "J’accepte"
 
-#: ckanext/canada/templates/user/new_user_form.html:74
+#: ckanext/canada/templates/user/new_user_form.html:106
 msgid "I do not agree"
 msgstr "Je n’accepte pas"
 
