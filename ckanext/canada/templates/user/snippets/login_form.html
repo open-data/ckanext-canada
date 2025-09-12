@@ -30,7 +30,7 @@
     {% trans %}NOTE: Username and password are case sensitive.{% endtrans %}
   </div>
   {{ form.input('login', label=_("Username"), id='field-login', value="", error=username_error) }}
-  {{ form.input('password', label=_("Password"), id='field-password', type="password", value="", error=password_error) }}
+  {{ form.input('password', label=_("Password"), id='field-password', attrs={'class': 'form-control', 'autocomplete': 'off'}, type="password", value="", error=password_error) }}
   <div class="form-actions">
     {% block login_button %}
       <div class="clear"></div>
