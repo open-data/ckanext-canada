@@ -4,6 +4,7 @@ from ckan.common import CKANConfig
 
 import random
 import string
+from flask import has_request_context
 
 import ckan.plugins as p
 from ckan.plugins.core import plugin_loaded
@@ -23,6 +24,7 @@ class CanadaSecurityPlugin(CkanSecurityPlugin):
     p.implements(p.IConfigurer)
     p.implements(p.IMiddleware, inherit=True)
 
+    # IConfigurer
     def update_config(self, config: 'CKANConfig'):
         super(CanadaSecurityPlugin, self).update_config(config)
         # Disable auth settings
@@ -43,6 +45,7 @@ class CanadaSecurityPlugin(CkanSecurityPlugin):
 
         csrf.exempt(datatablesview)
 
+    # IResourceController
     def before_create(self, context: Context, resource: Dict[str, Any]):
         """
         Override before_create from CkanSecurityPlugin.
@@ -69,6 +72,7 @@ class CanadaSecurityPlugin(CkanSecurityPlugin):
         Want to use the methods in scheming instead of before_resource_update.
         """
 
+    # IValidators
     def get_validators(self) -> Dict[str, Validator]:
         validators_dict = super(CanadaSecurityPlugin, self).get_validators() or {}
         return dict(
@@ -77,8 +81,23 @@ class CanadaSecurityPlugin(CkanSecurityPlugin):
             canada_security_upload_presence=validators.canada_security_upload_presence,
         )
 
+    # IMiddleware
     def make_middleware(self, app: CKANApp, config: 'CKANConfig') -> CKANApp:
         return CSPNonceMiddleware(app, config)
+
+    # IAuthenticator
+    def abort(self, status_code: int, detail: str,
+              headers: Optional[Dict[str, Any]],
+              comment: Optional[str]) -> Tuple[
+                  int, str, Optional[Dict[str, Any]], Optional[str]]:
+        """
+        All 403 status should be made into 404s for non-logged in users.
+        """
+        if has_request_context() and p.toolkit.g.user:
+            return (status_code, detail, headers, comment)
+        if status_code == 403:
+            return (404, detail, headers, comment)
+        return (status_code, detail, headers, comment)
 
 
 class CSPNonceMiddleware(object):
