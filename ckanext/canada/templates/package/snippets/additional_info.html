@@ -38,7 +38,7 @@
       {% else %}
         <tr>
           <td>{{ _('Maintainer') }}</td>
-          <td>{{ h.mail_to(email_address=h.default_open_email_address(), name=h.default_open_email_address()) }}</td>
+          <td>{{ h.mail_to(email_address=h.default_open_email_address(xml_encode=False), name=h.default_open_email_address(xml_encode=False)) }}</td>
         </tr>
       {% endif %}
       {% if pkg_dict.version %}
