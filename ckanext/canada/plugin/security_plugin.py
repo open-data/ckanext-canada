@@ -1,5 +1,5 @@
 from typing import Any, Dict, List, Tuple, Optional
-from ckan.types import Context, Validator, CKANApp
+from ckan.types import Context, Validator, CKANApp, Schema
 from ckan.common import CKANConfig
 
 import random
@@ -23,6 +23,7 @@ class CanadaSecurityPlugin(CkanSecurityPlugin):
     p.implements(p.IValidators, inherit=True)
     p.implements(p.IConfigurer)
     p.implements(p.IMiddleware, inherit=True)
+    p.implements(p.IApiToken, inherit=True)
 
     # IConfigurer
     def update_config(self, config: 'CKANConfig'):
@@ -79,6 +80,7 @@ class CanadaSecurityPlugin(CkanSecurityPlugin):
             validators_dict,
             canada_security_upload_type=validators.canada_security_upload_type,
             canada_security_upload_presence=validators.canada_security_upload_presence,
+            canada_api_name_validator=validators.canada_api_name_validator,
         )
 
     # IMiddleware
@@ -98,6 +100,12 @@ class CanadaSecurityPlugin(CkanSecurityPlugin):
         if status_code == 403:
             return (404, detail, headers, comment)
         return (status_code, detail, headers, comment)
+
+    # IApiToken
+    def create_api_token_schema(self, schema: Schema) -> Schema:
+        api_name_validator = p.toolkit.get_validator('canada_api_name_validator')
+        schema['name'].append(api_name_validator)
+        return schema
 
 
 class CSPNonceMiddleware(object):

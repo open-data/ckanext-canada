@@ -39,6 +39,8 @@ from ckanext.security.resource_upload_validator import (
 not_empty = get_validator('not_empty')
 ignore_missing = get_validator('ignore_missing')
 
+invalid_api_token_match = re.compile(r'[^A-Za-z0-9_\-]')
+
 MIN_TAG_LENGTH = 2
 MAX_TAG_LENGTH = 140  # because twitter
 
@@ -664,3 +666,19 @@ def limit_resources_per_dataset(key: FlattenKey,
                   max_resource_count=max_resource_count,
                   support=h.support_email_address())]
         raise StopOnError
+
+
+def canada_api_name_validator(value: Any, context: Context):
+    """
+    Only accept some basic naming conventions. Should not allow any
+    special characters or control characters.
+    """
+    if re.search(invalid_api_token_match, value):
+        raise Invalid(_('Invalid name for an API Token. API Token '
+                        'names can only contain alphanumeric characters, '
+                        'hyphens, and underscores.'))
+    if True in [unicodedata.category(char).startswith('C') for char in value]:
+        raise Invalid(_('Invalid name for an API Token. API Token '
+                        'names can only contain alphanumeric characters, '
+                        'hyphens, and underscores.'))
+    return value
