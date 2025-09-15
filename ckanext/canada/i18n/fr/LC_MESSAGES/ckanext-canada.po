@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-09-12 16:03+0000\n"
+"POT-Creation-Date: 2025-09-15 18:13+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: fr\n"
@@ -158,41 +158,41 @@ msgstr "Numéro d’entreprise non valide"
 msgid "Treasury Board of Canada Secretariat"
 msgstr "Secrétariat du Conseil du Trésor du Canada"
 
-#: ckanext/canada/helpers.py:698 ckanext/canada/strings.py:14
+#: ckanext/canada/helpers.py:687 ckanext/canada/strings.py:14
 #: ckanext/canada/view.py:1285
 msgid "Members not found"
 msgstr "Membres non trouvés"
 
-#: ckanext/canada/helpers.py:833
+#: ckanext/canada/helpers.py:822
 msgid "Data awaiting load to DataStore"
 msgstr "Le versement des données dans DataStore est en attente"
 
-#: ckanext/canada/helpers.py:834
+#: ckanext/canada/helpers.py:823
 msgid "Loading data into DataStore"
 msgstr "Le versement des données dans DataStore est en cours"
 
-#: ckanext/canada/helpers.py:835
+#: ckanext/canada/helpers.py:824
 msgid "Data loaded into DataStore"
 msgstr "Les données ont été versées dans DataStore"
 
-#: ckanext/canada/helpers.py:836
+#: ckanext/canada/helpers.py:825
 msgid "Failed to load data into DataStore"
 msgstr "Les données n'ont pas été versées dans DataStore"
 
-#: ckanext/canada/helpers.py:837
+#: ckanext/canada/helpers.py:826
 msgid "Data available in DataStore"
 msgstr "Les données sont disponibles dans DataStore"
 
-#: ckanext/canada/helpers.py:838
+#: ckanext/canada/helpers.py:827
 msgid "Resource not active in DataStore"
 msgstr "La ressource est inactive dans DataStore"
 
-#: ckanext/canada/helpers.py:839
+#: ckanext/canada/helpers.py:828
 msgid "DataStore status unknown"
 msgstr "L'état de DataStore est inconnu"
 
 # Search facets
-#: ckanext/canada/helpers.py:918
+#: ckanext/canada/helpers.py:907
 #: ckanext/canada/templates/home/quick_links.html:65
 #: ckanext/canada/templates/scheming/package/snippets/package_form.html:28
 #: ckanext/canada/templates/snippets/cdts/header.html:31
@@ -202,7 +202,7 @@ msgstr "L'état de DataStore est inconnu"
 msgid "Open Data"
 msgstr "Données ouvertes"
 
-#: ckanext/canada/helpers.py:919
+#: ckanext/canada/helpers.py:908
 #: ckanext/canada/templates/home/quick_links.html:82
 #: ckanext/canada/templates/scheming/package/snippets/package_form.html:30
 #: ckanext/canada/templates/snippets/cdts/header.html:57
@@ -212,23 +212,23 @@ msgstr "Données ouvertes"
 msgid "Open Information"
 msgstr "Information ouverte"
 
-#: ckanext/canada/helpers.py:931
+#: ckanext/canada/helpers.py:920
 #: ckanext/canada/templates/snippets/dataset_facets.html:27
 msgid "Request sent to data owner - awaiting response"
 msgstr "Demande envoyée au propriétaire des données, en attente de réponse"
 
-#: ckanext/canada/helpers.py:935
+#: ckanext/canada/helpers.py:924
 #: ckanext/canada/templates/snippets/publish_facet.html:44
 msgid "Pending"
 msgstr "En attente"
 
-#: ckanext/canada/helpers.py:936 ckanext/canada/templates/package/read.html:14
+#: ckanext/canada/helpers.py:925 ckanext/canada/templates/package/read.html:14
 #: ckanext/canada/templates/snippets/package_item.html:33
 #: ckanext/canada/templates/snippets/publish_facet.html:44
 msgid "Draft"
 msgstr "Ébauche"
 
-#: ckanext/canada/helpers.py:953
+#: ckanext/canada/helpers.py:942
 #: ckanext/canada/templates/home/quick_links.html:136
 #: ckanext/canada/templates/snippets/cdts/header.html:60
 #: ckanext/canada/templates/snippets/dataset_facets.html:33
@@ -237,25 +237,25 @@ msgstr "Ébauche"
 msgid "Proactive Publication"
 msgstr "Publication proactive"
 
-#: ckanext/canada/helpers.py:982
+#: ckanext/canada/helpers.py:971
 #: ckanext/canada/templates/snippets/publish_facet.html:25
 msgid "Published"
 msgstr "Publié"
 
-#: ckanext/canada/helpers.py:984
+#: ckanext/canada/helpers.py:973
 #: ckanext/canada/templates/snippets/publish_facet.html:34
 msgid "Scheduled"
 msgstr "Prévu"
 
-#: ckanext/canada/helpers.py:1023
+#: ckanext/canada/helpers.py:1012
 msgid "Registry Home"
 msgstr "Accueil du registre"
 
-#: ckanext/canada/helpers.py:1028
+#: ckanext/canada/helpers.py:1017
 msgid "Open Government"
 msgstr "Gouvernement ouvert"
 
-#: ckanext/canada/helpers.py:1031
+#: ckanext/canada/helpers.py:1020
 #: ckanext/canada/templates/admin/publish_search.html:19
 #: ckanext/canada/templates/home/quick_links.html:107
 #: ckanext/canada/templates/organization/snippets/organization_search.html:8
@@ -877,71 +877,71 @@ msgstr "La ressource publiée est obsolète"
 msgid "The Recombinant resource is out of date:"
 msgstr "La ressource publiée est obsolète :"
 
-#: ckanext/canada/validators.py:170
+#: ckanext/canada/validators.py:172
 #, python-format
 msgid "Tag \"%s\" length is less than minimum %s"
 msgstr "La longueur de la balise \"%s\" est inférieure au minimum %s"
 
-#: ckanext/canada/validators.py:174
+#: ckanext/canada/validators.py:176
 #, python-format
 msgid "Tag \"%s\" length is more than maximum %i"
 msgstr "La longueur de la balise \"%s\" est supérieure au maximum %i"
 
-#: ckanext/canada/validators.py:178
+#: ckanext/canada/validators.py:180
 #, python-format
 msgid "Tag \"%s\" may not contain consecutive spaces"
 msgstr "La balise \"%s\" ne peut pas contenir d’espaces consécutifs"
 
-#: ckanext/canada/validators.py:185
+#: ckanext/canada/validators.py:187
 #, python-format
 msgid "Tag \"%s\" may not contain unprintable character U+%04x"
 msgstr "La balise \"%s\" ne peut pas contenir de caractères non imprimables U+%04x"
 
-#: ckanext/canada/validators.py:189
+#: ckanext/canada/validators.py:191
 #, python-format
 msgid "Tag \"%s\" may not contain separator charater U+%04x"
 msgstr "La balise \"%s\"ne peut pas contenir de caractères séparateurs U+%04x"
 
-#: ckanext/canada/validators.py:205
+#: ckanext/canada/validators.py:207
 msgid "Badly formed hexadecimal UUID string"
 msgstr "Chaîne UUID hexadécimale mal formée"
 
 #: ckanext/canada/templates/user/new_user_form.html:74
-#: ckanext/canada/validators.py:218 ckanext/canada/validators.py:220
+#: ckanext/canada/validators.py:220 ckanext/canada/validators.py:222
 msgid "Please enter a valid email address."
 msgstr "S’il vous plaît, mettez une adresse email valide."
 
-#: ckanext/canada/validators.py:235
+#: ckanext/canada/validators.py:237
 msgid "Invalid GeoJSON"
 msgstr "GeoJSON invalide"
 
-#: ckanext/canada/validators.py:321
+#: ckanext/canada/validators.py:323
 msgid "Date may not be in the future when this record is marked ready to publish"
 msgstr ""
 "Une fois que ce document est marqué comme étant prêt à publier, la date "
 "ne peut pas être dans le futur"
 
-#: ckanext/canada/validators.py:417
+#: ckanext/canada/validators.py:419
 msgid "Date format incorrect. Expecting YYYY-MM-DD"
 msgstr "Le format de la date est incorrect. Il devrait être AAAA-MM-JJ"
 
-#: ckanext/canada/validators.py:432 ckanext/canada/validators.py:453
+#: ckanext/canada/validators.py:434 ckanext/canada/validators.py:455
 msgid "Must be a Unicode string value"
 msgstr "Doit être une chaîne de caractères Unicode"
 
-#: ckanext/canada/validators.py:461 ckanext/canada/validators.py:473
+#: ckanext/canada/validators.py:463 ckanext/canada/validators.py:475
 msgid "Must be a JSON string"
 msgstr "Doit être une chaîne JSON"
 
-#: ckanext/canada/validators.py:469
+#: ckanext/canada/validators.py:471
 msgid "JSON object must contain \"en\" key"
 msgstr "L’objet JSON doit contenir la clé \"en\""
 
-#: ckanext/canada/validators.py:471
+#: ckanext/canada/validators.py:473
 msgid "JSON object must contain \"fr\" key"
 msgstr "L’objet JSON doit contenir la clé \"fr\""
 
-#: ckanext/canada/validators.py:656
+#: ckanext/canada/validators.py:658
 #, python-format
 msgid ""
 "Cannot change value of registry_access field from '%s' to '%s'. This "
@@ -950,14 +950,14 @@ msgstr ""
 "Impossible de modifier la valeur du champ d’accès au registre de '%s' à "
 "'%s'. Ce champ ne sert qu’à des fins de lecture."
 
-#: ckanext/canada/validators.py:664
+#: ckanext/canada/validators.py:666
 msgid "Invalid value for a digital object identifier."
 msgstr ""
 
 #: ckanext/canada/templates/package/new_resource.html:19
 #: ckanext/canada/templates/package/new_resource_not_draft.html:11
 #: ckanext/canada/templates/package/read.html:36
-#: ckanext/canada/validators.py:701
+#: ckanext/canada/validators.py:703
 msgid ""
 "You can only add up to {max_resource_count} resources to a dataset. You "
 "can segment your resources across multiple datasets or merge your data to"
@@ -968,6 +968,12 @@ msgstr ""
 "de données. Vous pouvez segmenter vos ressources sur plusieurs ensembles "
 "de données ou fusionner vos données pour limiter le nombre de ressources."
 " Pour du support veuillez contacter {support}."
+
+#: ckanext/canada/validators.py:721
+msgid ""
+"Invalid name for an API Token. API Token names can only contain "
+"alphanumeric characters, hyphens, and underscores."
+msgstr ""
 
 #: ckanext/canada/view.py:140
 msgid "<strong>Note</strong><br>{0} is now logged in"
@@ -4396,83 +4402,126 @@ msgid "Search and manage users."
 msgstr "Rechercher et gérer les utilisateurs."
 
 #: ckanext/canada/templates/user/login.html:6
-msgid "login welcome text"
-msgstr ""
-"<h2>Bienvenue au registre du gouvernement ouvert</h2><p>Utilisez le "
-"registre pour publier des ressources gouvernementales dans le <a "
-"href='http://ouvert.canada.ca/fr'>Portail du gouvernement ouvert</a>.<br "
-"/>Pour obtenir de plus amples renseignements sur l’utilisation du "
-"registre ou pour signaler des erreurs, communiquez avec PortalSupport-"
-"Soutienportail@tbs-sct.gc.ca. </p>"
+msgid "Welcome to the Open Government Registry"
+msgstr "Bienvenue au Registre du gouvernement ouvert"
 
-#: ckanext/canada/templates/user/login.html:7
-msgid "password reset alert"
+#: ckanext/canada/templates/user/login.html:8
+msgid ""
+"Use the Registry to publish government resources on the Open Government "
+"Portal."
 msgstr ""
-"<div class=\"alert alert-info\"><details><summary>Nouvelles exigences en "
-"matière de sécurité des mots de passe</summary><p>Le registre du "
-"gouvernement ouvert applique désormais de nouvelles exigences en matière "
-"de mots de passe afin d'assurer la conformité aux meilleures pratiques "
-"décrites dans le guide des mots de passe du gouvernement du Canada "
-":</p><ul><li>La longueur minimale est de 12 caractères</li><li>Doit être "
-"composé d'au moins trois des caractères suivants : majuscules, "
-"minuscules, chiffres, ponctuation et caractères spéciaux</li><li>Le mot "
-"de passe n'égale pas au nom d'utilisateur</li></ul><p>Les utilisateurs "
-"dont les mots de passe ne répondent pas aux nouvelles exigences peuvent "
-"les mettre à jour dans section <i>Modifier le mot de passe</i> dans la "
-"page Mon profil ou en utilisant la fonction de <a "
-"href=\"/fr/user/reset\">réinitialisation du mot de "
-"passe</a>.</p><p><strong>Remarque :</strong> si les mots de passe ne sont"
-" pas mis à jour avant la fin de l'année 2024, nous mettrons en œuvre un "
-"processus obligeant les utilisateurs à modifier leur mot de passe pour "
-"répondre aux nouvelles exigences avant de pouvoir accéder au "
-"registre.</p></details></div>"
+"Utilisez le registre pour ajouter des ressources gouvernementales qui "
+"seront publiées dans le Portail du gouvernement ouvert."
+
+#: ckanext/canada/templates/user/login.html:10
+msgid ""
+"For more information on using the Registry or to report errors, contact "
+"<a href=\"mailto:{support}\">{support}</a>."
+msgstr ""
+"Pour obtenir de plus amples renseignements sur l’utilisation du registre "
+"ou pour signaler des erreurs, communiquez avec <a "
+"href=\"mailto:{support}\">{support}</a>."
+
+#: ckanext/canada/templates/user/login.html:14
+msgid "New password security requirements"
+msgstr "Nouvelles exigences en matière de sécurité des mots de passe"
+
+#: ckanext/canada/templates/user/login.html:16
+msgid ""
+"The Open Government Registry is now enforcing new password requirements "
+"to align with the best practices outlined in the Government of Canada's "
+"Password Guidance:"
+msgstr ""
+"Le registre du gouvernement ouvert applique désormais de nouvelles "
+"exigences en matière de mots de passe afin d'assurer la conformité aux "
+"meilleures pratiques décrites dans le guide des mots de passe du "
+"gouvernement du Canada :"
+
+#: ckanext/canada/templates/user/login.html:19
+msgid "Minimum length equals 12 characters"
+msgstr "La longueur minimale est de 12 caractères"
+
+#: ckanext/canada/templates/user/login.html:20
+msgid ""
+"Includes at least three of the following character sets: uppercase "
+"characters, lowercase characters, digits, punctuation & special "
+"characters"
+msgstr ""
+"Doit être composé d'au moins trois des caractères suivants : majuscules, "
+"minuscules, chiffres, ponctuation et caractères spéciaux"
 
 #: ckanext/canada/templates/user/login.html:21
+msgid "Does not equal username"
+msgstr "Le mot de passe n'égale pas au nom d'utilisateur"
+
+#: ckanext/canada/templates/user/login.html:24
+msgid ""
+"Users with passwords that do not currently meet the new requirements can "
+"update their passwords, through <em>Change password</em> section of My "
+"Profile page or the <a href=\"/user/reset\">Reset password</a> function."
+msgstr ""
+"Les utilisateurs dont les mots de passe ne répondent pas aux nouvelles "
+"exigences peuvent les mettre à jour dans section <em>Modifier le mot de "
+"passe</em> dans la page Mon profil ou en utilisant la fonction de <a "
+"href=\"/fr/user/reset\">réinitialisation du mot de passe</a>."
+
+#: ckanext/canada/templates/user/login.html:27
+msgid ""
+"<strong>Please note:</strong> if passwords are not updated by the end of "
+"2024, we will implement a process to force users to change their password"
+" to meet the new requirements before they can access the Registry."
+msgstr ""
+"<strong>Remarque :</strong> si les mots de passe ne sont pas mis à jour "
+"avant la fin de l'année 2024, nous mettrons en œuvre un processus "
+"obligeant les utilisateurs à modifier leur mot de passe pour répondre aux"
+" nouvelles exigences avant de pouvoir accéder au registre."
+
+#: ckanext/canada/templates/user/login.html:44
 msgid "Need an account"
 msgstr "Besoin d’un compte"
 
-#: ckanext/canada/templates/user/login.html:24
+#: ckanext/canada/templates/user/login.html:47
 msgid "Then sign right up, it only takes a minute"
 msgstr "Inscrivez-vous maintenant, cela ne prend qu’une minute"
 
-#: ckanext/canada/templates/user/login.html:26
+#: ckanext/canada/templates/user/login.html:49
 #: ckanext/canada/templates/user/new.html:5
 msgid "Request an Account"
 msgstr "Demande d’un compte"
 
-#: ckanext/canada/templates/user/login.html:32
+#: ckanext/canada/templates/user/login.html:55
 msgid "Forgotten your password?"
 msgstr "Réinitialiser le mot de passe"
 
-#: ckanext/canada/templates/user/login.html:34
+#: ckanext/canada/templates/user/login.html:57
 msgid "No problem, use our password recovery form to reset it"
 msgstr ""
 "Utilisez notre formulaire de récupération de mot de passe pour rétablir "
 "votre identité"
 
-#: ckanext/canada/templates/user/login.html:36
+#: ckanext/canada/templates/user/login.html:59
 msgid "Reset password"
 msgstr "Réinitialiser le mot de passe"
 
-#: ckanext/canada/templates/user/login.html:44
+#: ckanext/canada/templates/user/login.html:67
 msgid "Forgotten your username?"
 msgstr "Vous avez oublié votre nom d'utilisateur ?"
 
-#: ckanext/canada/templates/user/login.html:47
+#: ckanext/canada/templates/user/login.html:70
 msgid "No problem, use our username recovery form to recover it"
 msgstr ""
 "Pas de problème, utilisez notre formulaire de récupération du nom "
 "d'utilisateur pour le récupérer"
 
-#: ckanext/canada/templates/user/login.html:49
+#: ckanext/canada/templates/user/login.html:72
 msgid "Recover username"
 msgstr "Récupérer le nom d'utilisateur"
 
-#: ckanext/canada/templates/user/login.html:64
+#: ckanext/canada/templates/user/login.html:87
 msgid " Create an Account"
 msgstr "Créer un compte"
 
-#: ckanext/canada/templates/user/login.html:74
+#: ckanext/canada/templates/user/login.html:97
 msgid "Forgot your password?"
 msgstr "Réinitialiser le mot de passe"
 
@@ -4530,8 +4579,8 @@ msgid "Example: Joe Bloggs"
 msgstr "Exemplar : Joe Bloggs"
 
 #: ckanext/canada/templates/user/new_user_form.html:13
-msgid "Example: joe.bloggs@tbs-sct.gc.ca"
-msgstr "Exemplar : joe.bloggs@tbs-sct.gc.ca"
+msgid "Example: {example_email}"
+msgstr ""
 
 #: ckanext/canada/templates/user/new_user_form.html:17
 msgid "Phone Number"
@@ -4585,9 +4634,9 @@ msgid ""
 " and complaints regarding this notice, or the administration of the "
 "Privacy Act in connection with your GCKey may be directed to the Access "
 "to Information and Privacy Protection Division by email to <a "
-"href=\"mailto:ATIP-AIPRP@ssc-spc.gc.ca\">ATIP-AIPRP@ssc-spc.gc.ca</a>, or"
-" by writing to the following address:</p> <p>Access to Information and "
-"Privacy Directorate<br/> Corporate Secretariat<br/> Shared Services "
+"href=\"mailto:&#065;&#084;&#073;&#080;&#045;&#065;&#073;&#080;&#082;&#080;&#064;&#115;&#115;&#099;&#045;&#115;&#112;&#099;&#046;&#103;&#099;&#046;&#099;&#097;\">&#065;&#084;&#073;&#080;&#045;&#065;&#073;&#080;&#082;&#080;&#064;&#115;&#115;&#099;&#045;&#115;&#112;&#099;&#046;&#103;&#099;&#046;&#099;&#097;</a>,"
+" or by writing to the following address:</p> <p>Access to Information and"
+" Privacy Directorate<br/> Corporate Secretariat<br/> Shared Services "
 "Canada<br/> PO Box 9808, STN T, CSC<br/> Ottawa ON K1G 4A8</p> <p>For "
 "more information on privacy issues and the <em>Privacy Act</em> in "
 "general, please consult the Office of the <a "
@@ -4674,8 +4723,8 @@ msgstr ""
 "cette notification ou l’application de la Loi sur la protection des "
 "renseignements personnels en lien avec votre CléGC peuvent être adressées"
 " à la division de l’accès à l’information et de la protection des "
-"renseignements personnels par courriel à <a href=\"mailto:ATIP-AIPRP@ssc-"
-"spc.gc.ca\">ATIP-AIPRP@ssc-spc.gc.ca</a>, ou par écrit à l’adresse "
+"renseignements personnels par courriel à <a href=\"mailto:&#065;&#084;&#073;&#080;&#045;&#065;&#073;&#080;&#082;&#080;&#064;&#115;&#115;&#099;&#045;&#115;&#112;&#099;&#046;&#103;&#099;&#046;&#099;&#097;\">"
+"&#065;&#084;&#073;&#080;&#045;&#065;&#073;&#080;&#082;&#080;&#064;&#115;&#115;&#099;&#045;&#115;&#112;&#099;&#046;&#103;&#099;&#046;&#099;&#097;</a>, ou par écrit à l’adresse "
 "suivante :</p> <p>Direction de l’accès à l’information et de la "
 "protection des renseignements personnels <br/> Secrétariat aux affaires "
 "générales<br/> Services partagés Canada <br/> CP 9808 Station T CSC<br/> "
@@ -7513,4 +7562,55 @@ msgstr "Télécharger vers le DataStore"
 #~ " restrictions ou de limitations juridiques,"
 #~ " contractuelles, de tiers ou de "
 #~ "stratégiques pertinentes).</li></ol></small>"
+
+#~ msgid "login welcome text"
+#~ msgstr ""
+#~ "<h2>Bienvenue au registre du gouvernement "
+#~ "ouvert</h2><p>Utilisez le registre pour "
+#~ "publier des ressources gouvernementales dans"
+#~ " le <a href='http://ouvert.canada.ca/fr'>Portail "
+#~ "du gouvernement ouvert</a>.<br />Pour obtenir"
+#~ " de plus amples renseignements sur "
+#~ "l’utilisation du registre ou pour "
+#~ "signaler des erreurs, communiquez avec "
+#~ "PortalSupport-Soutienportail@tbs-sct.gc.ca. </p>"
+
+#~ msgid "password reset alert"
+#~ msgstr ""
+#~ "<div class=\"alert alert-"
+#~ "info\"><details><summary>Nouvelles exigences en "
+#~ "matière de sécurité des mots de "
+#~ "passe</summary><p>Le registre du gouvernement "
+#~ "ouvert applique désormais de nouvelles "
+#~ "exigences en matière de mots de "
+#~ "passe afin d'assurer la conformité aux"
+#~ " meilleures pratiques décrites dans le "
+#~ "guide des mots de passe du "
+#~ "gouvernement du Canada :</p><ul><li>La "
+#~ "longueur minimale est de 12 "
+#~ "caractères</li><li>Doit être composé d'au "
+#~ "moins trois des caractères suivants :"
+#~ " majuscules, minuscules, chiffres, ponctuation"
+#~ " et caractères spéciaux</li><li>Le mot de"
+#~ " passe n'égale pas au nom "
+#~ "d'utilisateur</li></ul><p>Les utilisateurs dont les"
+#~ " mots de passe ne répondent pas "
+#~ "aux nouvelles exigences peuvent les "
+#~ "mettre à jour dans section <i>Modifier"
+#~ " le mot de passe</i> dans la "
+#~ "page Mon profil ou en utilisant la"
+#~ " fonction de <a "
+#~ "href=\"/fr/user/reset\">réinitialisation du mot de"
+#~ " passe</a>.</p><p><strong>Remarque :</strong> si "
+#~ "les mots de passe ne sont pas "
+#~ "mis à jour avant la fin de "
+#~ "l'année 2024, nous mettrons en œuvre "
+#~ "un processus obligeant les utilisateurs "
+#~ "à modifier leur mot de passe pour"
+#~ " répondre aux nouvelles exigences avant "
+#~ "de pouvoir accéder au "
+#~ "registre.</p></details></div>"
+
+#~ msgid "Example: joe.bloggs@tbs-sct.gc.ca"
+#~ msgstr "Exemplar : joe.bloggs@tbs-sct.gc.ca"
 
