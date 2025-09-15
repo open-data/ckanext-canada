@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  CKAN\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-09-12 15:53+0000\n"
+"POT-Creation-Date: 2025-09-15 18:08+0000\n"
 "PO-Revision-Date: 2014-01-23 13:04+0000\n"
 "Last-Translator: Sean Hammond <sean.hammond@okfn.org>\n"
 "Language: en\n"
@@ -137,40 +137,40 @@ msgstr ""
 msgid "Treasury Board of Canada Secretariat"
 msgstr ""
 
-#: ckanext/canada/helpers.py:698 ckanext/canada/strings.py:14
+#: ckanext/canada/helpers.py:687 ckanext/canada/strings.py:14
 #: ckanext/canada/view.py:1285
 msgid "Members not found"
 msgstr ""
 
-#: ckanext/canada/helpers.py:833
+#: ckanext/canada/helpers.py:822
 msgid "Data awaiting load to DataStore"
 msgstr ""
 
-#: ckanext/canada/helpers.py:834
+#: ckanext/canada/helpers.py:823
 msgid "Loading data into DataStore"
 msgstr ""
 
-#: ckanext/canada/helpers.py:835
+#: ckanext/canada/helpers.py:824
 msgid "Data loaded into DataStore"
 msgstr ""
 
-#: ckanext/canada/helpers.py:836
+#: ckanext/canada/helpers.py:825
 msgid "Failed to load data into DataStore"
 msgstr ""
 
-#: ckanext/canada/helpers.py:837
+#: ckanext/canada/helpers.py:826
 msgid "Data available in DataStore"
 msgstr ""
 
-#: ckanext/canada/helpers.py:838
+#: ckanext/canada/helpers.py:827
 msgid "Resource not active in DataStore"
 msgstr ""
 
-#: ckanext/canada/helpers.py:839
+#: ckanext/canada/helpers.py:828
 msgid "DataStore status unknown"
 msgstr ""
 
-#: ckanext/canada/helpers.py:918
+#: ckanext/canada/helpers.py:907
 #: ckanext/canada/templates/home/quick_links.html:65
 #: ckanext/canada/templates/scheming/package/snippets/package_form.html:28
 #: ckanext/canada/templates/snippets/cdts/header.html:31
@@ -180,7 +180,7 @@ msgstr ""
 msgid "Open Data"
 msgstr ""
 
-#: ckanext/canada/helpers.py:919
+#: ckanext/canada/helpers.py:908
 #: ckanext/canada/templates/home/quick_links.html:82
 #: ckanext/canada/templates/scheming/package/snippets/package_form.html:30
 #: ckanext/canada/templates/snippets/cdts/header.html:57
@@ -190,23 +190,23 @@ msgstr ""
 msgid "Open Information"
 msgstr ""
 
-#: ckanext/canada/helpers.py:931
+#: ckanext/canada/helpers.py:920
 #: ckanext/canada/templates/snippets/dataset_facets.html:27
 msgid "Request sent to data owner - awaiting response"
 msgstr ""
 
-#: ckanext/canada/helpers.py:935
+#: ckanext/canada/helpers.py:924
 #: ckanext/canada/templates/snippets/publish_facet.html:44
 msgid "Pending"
 msgstr ""
 
-#: ckanext/canada/helpers.py:936 ckanext/canada/templates/package/read.html:14
+#: ckanext/canada/helpers.py:925 ckanext/canada/templates/package/read.html:14
 #: ckanext/canada/templates/snippets/package_item.html:33
 #: ckanext/canada/templates/snippets/publish_facet.html:44
 msgid "Draft"
 msgstr ""
 
-#: ckanext/canada/helpers.py:953
+#: ckanext/canada/helpers.py:942
 #: ckanext/canada/templates/home/quick_links.html:136
 #: ckanext/canada/templates/snippets/cdts/header.html:60
 #: ckanext/canada/templates/snippets/dataset_facets.html:33
@@ -215,25 +215,25 @@ msgstr ""
 msgid "Proactive Publication"
 msgstr ""
 
-#: ckanext/canada/helpers.py:982
+#: ckanext/canada/helpers.py:971
 #: ckanext/canada/templates/snippets/publish_facet.html:25
 msgid "Published"
 msgstr ""
 
-#: ckanext/canada/helpers.py:984
+#: ckanext/canada/helpers.py:973
 #: ckanext/canada/templates/snippets/publish_facet.html:34
 msgid "Scheduled"
 msgstr ""
 
-#: ckanext/canada/helpers.py:1023
+#: ckanext/canada/helpers.py:1012
 msgid "Registry Home"
 msgstr ""
 
-#: ckanext/canada/helpers.py:1028
+#: ckanext/canada/helpers.py:1017
 msgid "Open Government"
 msgstr ""
 
-#: ckanext/canada/helpers.py:1031
+#: ckanext/canada/helpers.py:1020
 #: ckanext/canada/templates/admin/publish_search.html:19
 #: ckanext/canada/templates/home/quick_links.html:107
 #: ckanext/canada/templates/organization/snippets/organization_search.html:8
@@ -797,69 +797,69 @@ msgstr "The published resource is out of date"
 msgid "The Recombinant resource is out of date:"
 msgstr "The published resource is out of date:"
 
-#: ckanext/canada/validators.py:137
+#: ckanext/canada/validators.py:139
 #, python-format
 msgid "Tag \"%s\" length is less than minimum %s"
 msgstr ""
 
-#: ckanext/canada/validators.py:141
+#: ckanext/canada/validators.py:143
 #, python-format
 msgid "Tag \"%s\" length is more than maximum %i"
 msgstr ""
 
-#: ckanext/canada/validators.py:145
+#: ckanext/canada/validators.py:147
 #, python-format
 msgid "Tag \"%s\" may not contain consecutive spaces"
 msgstr ""
 
-#: ckanext/canada/validators.py:152
+#: ckanext/canada/validators.py:154
 #, python-format
 msgid "Tag \"%s\" may not contain unprintable character U+%04x"
 msgstr ""
 
-#: ckanext/canada/validators.py:156
+#: ckanext/canada/validators.py:158
 #, python-format
 msgid "Tag \"%s\" may not contain separator charater U+%04x"
 msgstr ""
 
-#: ckanext/canada/validators.py:172
+#: ckanext/canada/validators.py:174
 msgid "Badly formed hexadecimal UUID string"
 msgstr ""
 
 #: ckanext/canada/templates/user/new_user_form.html:74
-#: ckanext/canada/validators.py:185 ckanext/canada/validators.py:187
+#: ckanext/canada/validators.py:187 ckanext/canada/validators.py:189
 msgid "Please enter a valid email address."
 msgstr ""
 
-#: ckanext/canada/validators.py:202
+#: ckanext/canada/validators.py:204
 msgid "Invalid GeoJSON"
 msgstr ""
 
-#: ckanext/canada/validators.py:288
+#: ckanext/canada/validators.py:290
 msgid "Date may not be in the future when this record is marked ready to publish"
 msgstr ""
 
-#: ckanext/canada/validators.py:384
+#: ckanext/canada/validators.py:386
 msgid "Date format incorrect. Expecting YYYY-MM-DD"
 msgstr ""
 
-#: ckanext/canada/validators.py:399 ckanext/canada/validators.py:420
+#: ckanext/canada/validators.py:401 ckanext/canada/validators.py:422
 msgid "Must be a Unicode string value"
 msgstr ""
 
-#: ckanext/canada/validators.py:428 ckanext/canada/validators.py:440
+#: ckanext/canada/validators.py:430 ckanext/canada/validators.py:442
 msgid "Must be a JSON string"
 msgstr ""
 
-#: ckanext/canada/validators.py:436
+#: ckanext/canada/validators.py:438
 msgid "JSON object must contain \"en\" key"
 msgstr ""
 
-#: ckanext/canada/validators.py:438
+#: ckanext/canada/validators.py:440
 msgid "JSON object must contain \"fr\" key"
 msgstr ""
 
-#: ckanext/canada/validators.py:623
+#: ckanext/canada/validators.py:625
 #, python-format
 msgid ""
 "Cannot change value of registry_access field from '%s' to '%s'. This "
@@ -869,12 +869,18 @@ msgstr ""
 #: ckanext/canada/templates/package/new_resource.html:19
 #: ckanext/canada/templates/package/new_resource_not_draft.html:11
 #: ckanext/canada/templates/package/read.html:36
-#: ckanext/canada/validators.py:660
+#: ckanext/canada/validators.py:662
 msgid ""
 "You can only add up to {max_resource_count} resources to a dataset. You "
 "can segment your resources across multiple datasets or merge your data to"
 " limit the number of resources. Please contact {support} if you need "
 "further assistance."
+msgstr ""
+
+#: ckanext/canada/validators.py:680
+msgid ""
+"Invalid name for an API Token. API Token names can only contain "
+"alphanumeric characters, hyphens, and underscores."
 msgstr ""
 
 #: ckanext/canada/view.py:140
@@ -3844,73 +3850,103 @@ msgid "Search and manage users."
 msgstr ""
 
 #: ckanext/canada/templates/user/login.html:6
-msgid "login welcome text"
+msgid "Welcome to the Open Government Registry"
 msgstr ""
-"<h2>Welcome to the Open Government Registry</h2><p>Use the Registry to "
-"publish government resources on the Open Government Portal.<br/> For more"
-" information on using the Registry or to report errors, contact "
-"PortalSupport-Soutienportail@tbs-sct.gc.ca.</p>"
 
-#: ckanext/canada/templates/user/login.html:7
-msgid "password reset alert"
+#: ckanext/canada/templates/user/login.html:8
+msgid ""
+"Use the Registry to publish government resources on the Open Government "
+"Portal."
 msgstr ""
-"<div class=\"alert alert-info\"><details><summary>New password security "
-"requirements</summary><p>The Open Government Registry is now enforcing "
-"new password requirements to align with the best practices outlined in "
-"the Government of Canada's Password Guidance:</p><ul><li>Minimum length "
-"equals 12 characters</li><li>Includes at least three of the following "
-"character sets: uppercase characters, lowercase characters, digits, "
-"punctuation & special characters</li><li>Does not equal "
-"username</li></ul><p>Users with passwords that do not currently meet the "
-"new requirements can update their passwords, through <i>Change "
-"password</i> section of My Profile page or the <a "
-"href=\"/user/reset\">Reset password</a> function.</p><p><strong>Please "
-"note:</strong> if passwords are not updated by the end of 2024, we will "
-"implement a process to force users to change their password to meet the "
-"new requirements before they can access the Registry.</p></details></div>"
+
+#: ckanext/canada/templates/user/login.html:10
+msgid ""
+"For more information on using the Registry or to report errors, contact "
+"<a href=\"mailto:{support}\">{support}</a>."
+msgstr ""
+
+#: ckanext/canada/templates/user/login.html:14
+msgid "New password security requirements"
+msgstr ""
+
+#: ckanext/canada/templates/user/login.html:16
+msgid ""
+"The Open Government Registry is now enforcing new password requirements "
+"to align with the best practices outlined in the Government of Canada's "
+"Password Guidance:"
+msgstr ""
+
+#: ckanext/canada/templates/user/login.html:19
+msgid "Minimum length equals 12 characters"
+msgstr ""
+
+#: ckanext/canada/templates/user/login.html:20
+msgid ""
+"Includes at least three of the following character sets: uppercase "
+"characters, lowercase characters, digits, punctuation & special "
+"characters"
+msgstr ""
 
 #: ckanext/canada/templates/user/login.html:21
-msgid "Need an account"
+msgid "Does not equal username"
 msgstr ""
 
 #: ckanext/canada/templates/user/login.html:24
+msgid ""
+"Users with passwords that do not currently meet the new requirements can "
+"update their passwords, through <em>Change password</em> section of My "
+"Profile page or the <a href=\"/user/reset\">Reset password</a> function."
+msgstr ""
+
+#: ckanext/canada/templates/user/login.html:27
+msgid ""
+"<strong>Please note:</strong> if passwords are not updated by the end of "
+"2024, we will implement a process to force users to change their password"
+" to meet the new requirements before they can access the Registry."
+msgstr ""
+
+#: ckanext/canada/templates/user/login.html:44
+msgid "Need an account"
+msgstr ""
+
+#: ckanext/canada/templates/user/login.html:47
 msgid "Then sign right up, it only takes a minute"
 msgstr ""
 
-#: ckanext/canada/templates/user/login.html:26
+#: ckanext/canada/templates/user/login.html:49
 #: ckanext/canada/templates/user/new.html:5
 msgid "Request an Account"
 msgstr ""
 
-#: ckanext/canada/templates/user/login.html:32
+#: ckanext/canada/templates/user/login.html:55
 msgid "Forgotten your password?"
 msgstr ""
 
-#: ckanext/canada/templates/user/login.html:34
+#: ckanext/canada/templates/user/login.html:57
 msgid "No problem, use our password recovery form to reset it"
 msgstr ""
 
-#: ckanext/canada/templates/user/login.html:36
+#: ckanext/canada/templates/user/login.html:59
 msgid "Reset password"
 msgstr ""
 
-#: ckanext/canada/templates/user/login.html:44
+#: ckanext/canada/templates/user/login.html:67
 msgid "Forgotten your username?"
 msgstr ""
 
-#: ckanext/canada/templates/user/login.html:47
+#: ckanext/canada/templates/user/login.html:70
 msgid "No problem, use our username recovery form to recover it"
 msgstr ""
 
-#: ckanext/canada/templates/user/login.html:49
+#: ckanext/canada/templates/user/login.html:72
 msgid "Recover username"
 msgstr ""
 
-#: ckanext/canada/templates/user/login.html:64
+#: ckanext/canada/templates/user/login.html:87
 msgid " Create an Account"
 msgstr ""
 
-#: ckanext/canada/templates/user/login.html:74
+#: ckanext/canada/templates/user/login.html:97
 msgid "Forgot your password?"
 msgstr ""
 
@@ -3959,7 +3995,7 @@ msgid "Example: Joe Bloggs"
 msgstr ""
 
 #: ckanext/canada/templates/user/new_user_form.html:13
-msgid "Example: joe.bloggs@tbs-sct.gc.ca"
+msgid "Example: {example_email}"
 msgstr ""
 
 #: ckanext/canada/templates/user/new_user_form.html:17
@@ -4011,9 +4047,9 @@ msgid ""
 " and complaints regarding this notice, or the administration of the "
 "Privacy Act in connection with your GCKey may be directed to the Access "
 "to Information and Privacy Protection Division by email to <a "
-"href=\"mailto:ATIP-AIPRP@ssc-spc.gc.ca\">ATIP-AIPRP@ssc-spc.gc.ca</a>, or"
-" by writing to the following address:</p> <p>Access to Information and "
-"Privacy Directorate<br/> Corporate Secretariat<br/> Shared Services "
+"href=\"mailto:&#065;&#084;&#073;&#080;&#045;&#065;&#073;&#080;&#082;&#080;&#064;&#115;&#115;&#099;&#045;&#115;&#112;&#099;&#046;&#103;&#099;&#046;&#099;&#097;\">&#065;&#084;&#073;&#080;&#045;&#065;&#073;&#080;&#082;&#080;&#064;&#115;&#115;&#099;&#045;&#115;&#112;&#099;&#046;&#103;&#099;&#046;&#099;&#097;</a>,"
+" or by writing to the following address:</p> <p>Access to Information and"
+" Privacy Directorate<br/> Corporate Secretariat<br/> Shared Services "
 "Canada<br/> PO Box 9808, STN T, CSC<br/> Ottawa ON K1G 4A8</p> <p>For "
 "more information on privacy issues and the <em>Privacy Act</em> in "
 "general, please consult the Office of the <a "
@@ -4233,5 +4269,210 @@ msgstr ""
 #~ " legal, contractual, or third party, "
 #~ "policy restrictions or limitations).</li> "
 #~ "</ol> </small>"
+#~ msgstr ""
+
+#~ msgid "login welcome text"
+#~ msgstr ""
+#~ "<h2>Welcome to the Open Government "
+#~ "Registry</h2><p>Use the Registry to publish"
+#~ " government resources on the Open "
+#~ "Government Portal.<br/> For more information"
+#~ " on using the Registry or to "
+#~ "report errors, contact PortalSupport-"
+#~ "Soutienportail@tbs-sct.gc.ca.</p>"
+
+#~ msgid "password reset alert"
+#~ msgstr ""
+#~ "<div class=\"alert alert-"
+#~ "info\"><details><summary>New password security "
+#~ "requirements</summary><p>The Open Government "
+#~ "Registry is now enforcing new password"
+#~ " requirements to align with the best"
+#~ " practices outlined in the Government "
+#~ "of Canada's Password Guidance:</p><ul><li>Minimum"
+#~ " length equals 12 characters</li><li>Includes "
+#~ "at least three of the following "
+#~ "character sets: uppercase characters, "
+#~ "lowercase characters, digits, punctuation &"
+#~ " special characters</li><li>Does not equal "
+#~ "username</li></ul><p>Users with passwords that "
+#~ "do not currently meet the new "
+#~ "requirements can update their passwords, "
+#~ "through <i>Change password</i> section of "
+#~ "My Profile page or the <a "
+#~ "href=\"/user/reset\">Reset password</a> "
+#~ "function.</p><p><strong>Please note:</strong> if "
+#~ "passwords are not updated by the "
+#~ "end of 2024, we will implement a"
+#~ " process to force users to change "
+#~ "their password to meet the new "
+#~ "requirements before they can access the"
+#~ " Registry.</p></details></div>"
+
+#~ msgid "Example: joe.bloggs@tbs-sct.gc.ca"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "<h2>Terms and Conditions for the Open"
+#~ " Government Registry</h2> <p><em>Privacy "
+#~ "Statement</em></p> <p>The Government of Canada"
+#~ " is committed to providing measures "
+#~ "that respect and value your privacy "
+#~ "and security. This page summarizes the"
+#~ " privacy policy and practices that "
+#~ "apply to your Open Government Registry"
+#~ " Account Credentials.</p> <p>The purpose "
+#~ "for collecting and using “Username, "
+#~ "Password and Email” is to issue, "
+#~ "manage and validate anonymous credentials "
+#~ "of individuals accessing and/or communicating"
+#~ " with Government of Canada systems "
+#~ "and applications.</p> <p>The personal "
+#~ "information may be used to establish "
+#~ "audit trails of credential usage. In "
+#~ "the case of suspected security or "
+#~ "privacy breaches, personal information may "
+#~ "be shared with departmental security and"
+#~ " access to information and privacy "
+#~ "officials, as well as the federal "
+#~ "government department or agency which "
+#~ "collects and uses the personal "
+#~ "information considered to have been "
+#~ "compromised (refer to Standard PIB "
+#~ "Security Incidents - PSU 939). For "
+#~ "suspected criminal activity, personal "
+#~ "information may also be disclosed to "
+#~ "the Royal Canadian Mounted Police for"
+#~ " investigational purposes; refer to "
+#~ "institution-specific PIB Operational Case "
+#~ "Records - RCMP PPU 005.</p> <p>We "
+#~ "employ software programs to monitor "
+#~ "network traffic to identify unauthorized "
+#~ "attempts to upload or change "
+#~ "information, or otherwise cause damage. "
+#~ "This software receives and records the"
+#~ " Internet Protocol (IP) address of "
+#~ "the computer that has contacted our "
+#~ "websites, the date and time of the"
+#~ " visit and the pages visited. We "
+#~ "make no attempt to link these "
+#~ "addresses with the identity of "
+#~ "individuals visiting our sites unless an"
+#~ " attempt to damage the sites has "
+#~ "been detected.</p> <p>Questions, concerns and"
+#~ " complaints regarding this notice, or "
+#~ "the administration of the Privacy Act"
+#~ " in connection with your GCKey may"
+#~ " be directed to the Access to "
+#~ "Information and Privacy Protection Division"
+#~ " by email to <a href=\"mailto:ATIP-"
+#~ "AIPRP@ssc-spc.gc.ca\">ATIP-AIPRP@ssc-spc.gc.ca</a>,"
+#~ " or by writing to the following "
+#~ "address:</p> <p>Access to Information and "
+#~ "Privacy Directorate<br/> Corporate Secretariat<br/>"
+#~ " Shared Services Canada<br/> PO Box "
+#~ "9808, STN T, CSC<br/> Ottawa ON "
+#~ "K1G 4A8</p> <p>For more information on"
+#~ " privacy issues and the <em>Privacy "
+#~ "Act</em> in general, please consult the"
+#~ " Office of the <a "
+#~ "href=\"http://www.priv.gc.ca/index_e.asp\">Privacy Commissioner"
+#~ " of Canada</a> website or call "
+#~ "1-800-282-1376.</p> <p>In return for the "
+#~ "Treasury Board of Canada Secretariat "
+#~ "(TBS) giving you access to the "
+#~ "Open Government Registry (the Registry), "
+#~ "you agree to abide by the "
+#~ "following terms and conditions of use"
+#~ " for this and all future uses "
+#~ "of the Registry:</p> <ol><li>You agree "
+#~ "to provide all of the required "
+#~ "information for the creation of a "
+#~ "registry account<br/> Username<br/> Full "
+#~ "Name<br/> Government of Canada Email<br/> "
+#~ "Department Name<br/> Password</li> <li>You "
+#~ "agree that any information you provide"
+#~ " is true, accurate, and complete to"
+#~ " the best of your knowledge.</li> "
+#~ "<li>You understand and accept that you"
+#~ " are at all times responsible for "
+#~ "your login information . This "
+#~ "responsibility applies even if you "
+#~ "change your login information. This "
+#~ "information must be kept confidential at"
+#~ " all times and must not be "
+#~ "shared with or disclosed to others.</li>"
+#~ " <li>If your login information (i.e. "
+#~ "username, password) are revealed or if"
+#~ " you suspect that someone else has"
+#~ " learned or obtained them, you are"
+#~ " responsible for taking all necessary "
+#~ "measures to ensure compliance with the"
+#~ " terms and conditions you agreed to"
+#~ " when you created your login "
+#~ "information.</li> <li>You agree not to "
+#~ "use your own or another individual's "
+#~ "login information for any improper "
+#~ "activities.</li> <li>You agree to provide "
+#~ "all of the required information for "
+#~ "the creation of records</li> <li>You "
+#~ "agree not to use the services in"
+#~ " a manner that harasses or may "
+#~ "harass other parties, or that will "
+#~ "or will have the potential to "
+#~ "disrupt, undermine, corrupt, diminish or "
+#~ "otherwise threaten or jeopardize the "
+#~ "Registry.</li> <li>The TBS Open Government "
+#~ "Team will monitor access to the "
+#~ "Registry to ensure the service is "
+#~ "being used responsibly and in accordance"
+#~ " with these terms and conditions.</li> "
+#~ "<li>You understand and accept that the"
+#~ " TBS Open Government Group can "
+#~ "suspend or revoke your access to "
+#~ "the Registry without notice under the"
+#~ " following circumstances: <ul><li>we suspect "
+#~ "unauthorized use of your personal or "
+#~ "login information;</li> <li>you fail to "
+#~ "comply with any of the terms and"
+#~ " conditions of use and/or agreements "
+#~ "in place with the Treasury Board "
+#~ "of Canada Secretariat;</li> <li>as a "
+#~ "security measure;</li> <li>for operational "
+#~ "reasons;</li> <li>for administrative "
+#~ "reasons.</li></ul></li> <li>The TBS Open "
+#~ "Government Group has taken all "
+#~ "reasonable steps to ensure the security"
+#~ " of this website. We have used "
+#~ "sophisticated encryption technology and "
+#~ "incorporated other procedures to protect "
+#~ "your personal information at all times."
+#~ " However, the Internet is a public"
+#~ " network and there is the remote "
+#~ "possibility of data security violations.</li>"
+#~ " <li>TBS is not responsible for the"
+#~ " failure to meet publication deadlines "
+#~ "relating to: <ul><li>the availability or "
+#~ "unavailability, for any reason, of the"
+#~ " Internet, login services or other "
+#~ "infrastructure systems;</li> <li>any restriction,"
+#~ " delay, malfunction, or unavailability of"
+#~ " the Registry</li></ul></li> <li>These terms "
+#~ "and conditions of use may be "
+#~ "amended from time to time</li></ol> "
+#~ "<p>By selecting “I agree” you indicate"
+#~ " that you accept these terms and "
+#~ "conditions of use.</p> <p>If you select"
+#~ " “I do not agree” you will not"
+#~ " have access to the Registry.</p>"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Users with passwords that do not "
+#~ "currently meet the new requirements can"
+#~ " update their passwords, through <i>Change"
+#~ " password</i> section of My Profile "
+#~ "page or the <a href=\"/user/reset\">Reset "
+#~ "password</a> function."
 #~ msgstr ""
 
