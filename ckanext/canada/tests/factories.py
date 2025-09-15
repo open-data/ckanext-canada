@@ -7,10 +7,24 @@ from ckan.tests.factories import (
     Dataset,
     Resource,
     ResourceView,
-    APIToken
+    APIToken,
+    SysadminWithToken
 )
 import ckan.tests.helpers as helpers
 from ckan.model import Session
+
+
+class CanadaAPIToken(APIToken):
+    name = 'static_api_token_name'
+
+
+class CanadaSysadminWithToken(SysadminWithToken):
+    @post_generation
+    def token(obj, create, extracted, **kwargs):
+        if not create:
+            return
+        api_token = CanadaAPIToken(user=obj["id"])
+        obj["token"] = api_token["token"]
 
 
 class CanadaUser(UserWithToken):
@@ -18,7 +32,7 @@ class CanadaUser(UserWithToken):
     def token(obj, create, extracted, **kwargs):
         if not create:
             return
-        api_token = APIToken(user=obj["id"], name='static_api_token_name')
+        api_token = CanadaAPIToken(user=obj["id"])
         obj["token"] = api_token["token"]
 
     @classmethod
