@@ -56,6 +56,7 @@ class CanadaThemePlugin(p.SingletonPlugin):
             'adv_search_url',
             'adv_search_mlt_root',
             'ga4_id',
+            'ga4_integrity',
             'loop11_key',
             'contact_information',
             'show_openinfo_facets',
