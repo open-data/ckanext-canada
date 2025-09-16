@@ -2065,3 +2065,22 @@ body select[data-field-select2="True"]{
   top: 0 !important;
   left: 0 !important;
 }
+
+/* Promise Download Module */
+/* TODO: write better UI stuffs... */
+.promise-download-executing{
+  cursor: wait !important;
+  color: #6c757d !important;
+  pointer-events: none !important;
+}
+.promise-download-complete{
+  cursor: pointer !important;
+  color: #28a745 !important;
+  pointer-events: all !important;
+}
+.promise-download-failed{
+  cursor: pointer !important;
+  color: #dc3545 !important;
+  pointer-events: all !important;
+}
+/* END Promise Download Module END */
