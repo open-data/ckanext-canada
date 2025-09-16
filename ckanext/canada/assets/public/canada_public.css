@@ -2079,4 +2079,24 @@ body select[data-field-select2="True"]{
   color: #dc3545 !important;
   pointer-events: all !important;
 }
+#promise-download-shelf{
+  position: fixed;
+  right: 0;
+  bottom: 25%;
+  width: 250px;
+  height: 200px;
+  background: white;
+  z-index: 99;
+  border-radius: 5px 0 0 5px;
+  box-shadow: -2px 2px 2px 2px rgba(0, 0, 0, 0.15);
+  border: 2px solid #26374a;
+  border-right-color: transparent;
+  margin-right: -2px;
+}
+#promise-download-shelf-inner{
+  padding: 10px 13px 10px 10px;
+}
+#promise-download-shelf-inner h4{
+  margin-top: 0;
+}
 /* END Promise Download Module END */
