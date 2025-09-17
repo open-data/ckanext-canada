@@ -2064,39 +2064,81 @@ body select[data-field-select2="True"]{
 
 /* Promise Download Module */
 /* TODO: write better UI stuffs... */
-.promise-download-executing{
-  cursor: wait !important;
-  color: #6c757d !important;
-  pointer-events: none !important;
+@keyframes flashDownload{
+  0%{
+    transform: scale(1.25);
+  }
+  100%{
+    transform: scale(0.75);
+  }
 }
-.promise-download-complete{
-  cursor: pointer !important;
+@keyframes spinDownload{
+  0%{
+    transform: rotate(0deg);
+  }
+  50%{
+    transform: rotate(180deg);
+  }
+  100%{
+    transform: rotate(360deg);
+  }
+}
+.promise-download-icon{
+  margin-right: 10px;
+  overflow: visible;
+}
+.promise-download-icon i.fa-cloud-download{
+  color: #17a2b8 !important;
+  animation-name: 'flashDownload';
+  animation-duration: 1500ms;
+  animation-timing-function: ease-in-out;
+  animation-delay: 0s;
+  animation-iteration-count: 1;
+  animation-direction: normal;
+  animation-fill-mode: forwards;
+}
+.promise-download-icon i.fa-spinner{
+  color: #17a2b8 !important;
+  animation-name: 'spinDownload';
+  animation-duration: 1500ms;
+  animation-timing-function: linear;
+  animation-delay: 0s;
+  animation-iteration-count: infinite;
+  animation-direction: normal;
+  animation-fill-mode: forwards;
+}
+.promise-download-icon i.fa-check-circle{
   color: #28a745 !important;
-  pointer-events: all !important;
 }
-.promise-download-failed{
-  cursor: pointer !important;
-  color: #dc3545 !important;
-  pointer-events: all !important;
+.promise-download-icon i.fa-exclamation-circle{
+  color: #ffc107 !important;
 }
 #promise-download-shelf{
   position: fixed;
+  left: 0;
   right: 0;
-  bottom: 25%;
-  width: 250px;
-  height: 200px;
-  background: white;
-  z-index: 99;
-  border-radius: 5px 0 0 5px;
-  box-shadow: -2px 2px 2px 2px rgba(0, 0, 0, 0.15);
-  border: 2px solid #26374a;
-  border-right-color: transparent;
+  bottom: 0;
+  width: 100vw;
+  min-height: 33px;
+  background: #E1E4E7;
+  z-index: 50;
+  border-top: 2px solid #26374a;
   margin-right: -2px;
 }
 #promise-download-shelf-inner{
-  padding: 10px 13px 10px 10px;
+  padding: 5px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  overflow-x: scroll;
 }
-#promise-download-shelf-inner h4{
-  margin-top: 0;
+#promise-download-shelf-inner strong{
+  margin-right: 35px;
+}
+#promise-download-shelf-list{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  overflow-x: scroll;
 }
 /* END Promise Download Module END */

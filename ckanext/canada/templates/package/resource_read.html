@@ -111,3 +111,12 @@
     </ul>
   {% endif %}
 {% endblock %}
+
+{%- block promise_download_shelf -%}
+  <div id="promise-download-shelf" class="d-none">
+    <div id="promise-download-shelf-inner">
+      <strong><i class="fa fa-download" aria-hidden="true"></i>&nbsp;{{- _('DataStore Exports') -}}</strong>
+      <div id="promise-download-shelf-list"></div>
+    </div>
+  </div>
+{%- endblock -%}
