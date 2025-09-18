@@ -82,24 +82,28 @@
         <a href="{{- h.url_for('datastore.dump', resource_id=res.id, bom=True) -}}"
            data-module="promise-download"
            data-module-extension="csv"
+           data-module-description="{{- _('CSV type files') -}}"
            data-module-url="{{- h.url_for('datastore.dump', resource_id=res.id, bom=True) -}}"
            target="_blank" class="resource-url-analytics" rel='noopener noreferrer' data-gc-analytics="manualDownload"
            data-pkg-id="{{ pkg.id }}" data-res-id="{{ res.id }}" data-org-id="{{ pkg.organization.id }}"><span>CSV</span></a>
         <a href="{{- h.url_for('datastore.dump', resource_id=res.id, format='tsv', bom=True) -}}"
            data-module="promise-download"
            data-module-extension="tsv"
+           data-module-description="{{- _('TSV type files') -}}"
            data-module-url="{{- h.url_for('datastore.dump', resource_id=res.id, format='tsv', bom=True) -}}"
            target="_blank" class="resource-url-analytics" rel='noopener noreferrer' data-gc-analytics="manualDownload"
            data-pkg-id="{{ pkg.id }}" data-res-id="{{ res.id }}" data-org-id="{{ pkg.organization.id }}"><span>TSV</span></a>
         <a href="{{- h.url_for('datastore.dump', resource_id=res.id, format='json') -}}"
            data-module="promise-download"
            data-module-extension="json"
+           data-module-description="{{- _('JSON type files') -}}"
            data-module-url="{{- h.url_for('datastore.dump', resource_id=res.id, format='json') -}}"
            target="_blank" class="resource-url-analytics" rel='noopener noreferrer' data-gc-analytics="manualDownload"
            data-pkg-id="{{ pkg.id }}" data-res-id="{{ res.id }}" data-org-id="{{ pkg.organization.id }}"><span>JSON</span></a>
         <a href="{{- h.url_for('datastore.dump', resource_id=res.id, format='xml') -}}"
            data-module="promise-download"
            data-module-extension="xml"
+           data-module-description="{{- _('XML type files') -}}"
            data-module-url="{{- h.url_for('datastore.dump', resource_id=res.id, format='xml') -}}"
            target="_blank" class="resource-url-analytics" rel='noopener noreferrer' data-gc-analytics="manualDownload"
            data-pkg-id="{{ pkg.id }}" data-res-id="{{ res.id }}" data-org-id="{{ pkg.organization.id }}"><span>XML</span></a>
@@ -107,3 +111,12 @@
     </ul>
   {% endif %}
 {% endblock %}
+
+{%- block promise_download_shelf -%}
+  <div id="promise-download-shelf" class="d-none">
+    <div id="promise-download-shelf-inner">
+      <strong><i class="fa fa-download" aria-hidden="true"></i>&nbsp;{{- _('DataStore Exports') -}}</strong>
+      <div id="promise-download-shelf-list"></div>
+    </div>
+  </div>
+{%- endblock -%}
