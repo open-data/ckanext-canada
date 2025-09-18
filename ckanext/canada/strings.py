@@ -95,6 +95,11 @@ _('Could not create or update resource because the dataset has errors')
 _('Could not delete resource because the dataset has errors')
 _('Could not reorder resources because the dataset has errors')
 _('The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.')
+_('Downloads')  # promise-download js module
+_('You have unfinished downloads in this page. Do you want to stop these downloads and leave the page?')  # promise-download js module
+_('Downloading file...')  # promise-download js module
+_('Successfully downloaded file')  # promise-download js module
+_('Error downloading file, trying again through your browser')  # promise-download js module
 
 # strings from security
 _("Please upload a file or link to an external resource")
