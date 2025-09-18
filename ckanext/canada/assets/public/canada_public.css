@@ -2086,6 +2086,7 @@ body select[data-field-select2="True"]{
 .promise-download-icon{
   margin-right: 10px;
   overflow: visible;
+  white-space: nowrap !important;
 }
 .promise-download-icon i.fa-cloud-download{
   color: #17a2b8 !important;
@@ -2134,6 +2135,7 @@ body select[data-field-select2="True"]{
 }
 #promise-download-shelf-inner strong{
   margin-right: 35px;
+  white-space: nowrap !important;
 }
 #promise-download-shelf-list{
   display: flex;
