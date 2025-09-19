@@ -823,10 +823,10 @@ resources:
           'activity');
 
         NEW.description_en := trim_lead_trailing(NEW.description_en);
-        errors := errors || max_char_error(NEW.description_en, 1000, 'description_en');
+        errors := errors || max_char_error(NEW.description_en, 1500, 'description_en');
 
         NEW.description_fr := trim_lead_trailing(NEW.description_fr);
-        errors := errors || max_char_error(NEW.description_fr, 1000, 'description_fr');
+        errors := errors || max_char_error(NEW.description_fr, 1500, 'description_fr');
 
         errors := errors || required_error(NEW.expected_completion, 'expected_completion');
         errors := errors || choice_error(NEW.expected_completion, {expected_completion}, 'expected_completion');
@@ -840,10 +840,10 @@ resources:
         errors := errors || choice_error(NEW.status, {status}, 'status');
 
         NEW.progress_en := trim_lead_trailing(NEW.progress_en);
-        errors := errors || max_char_error(NEW.progress_en, 1000, 'progress_en');
+        errors := errors || max_char_error(NEW.progress_en, 1500, 'progress_en');
 
         NEW.progress_fr := trim_lead_trailing(NEW.progress_fr);
-        errors := errors || max_char_error(NEW.progress_fr, 1000, 'progress_fr');
+        errors := errors || max_char_error(NEW.progress_fr, 1500, 'progress_fr');
 
         IF errors = '{{}}' THEN
           RETURN NEW;
