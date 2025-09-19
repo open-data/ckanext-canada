@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  CKAN\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-09-15 18:13+0000\n"
+"POT-Creation-Date: 2025-09-19 14:43+0000\n"
 "PO-Revision-Date: 2014-01-23 13:04+0000\n"
 "Last-Translator: Sean Hammond <sean.hammond@okfn.org>\n"
 "Language: en\n"
@@ -133,44 +133,44 @@ msgstr ""
 msgid "Invalid business number"
 msgstr ""
 
-#: ckanext/canada/helpers.py:341 ckanext/canada/helpers.py:342
+#: ckanext/canada/helpers.py:345 ckanext/canada/helpers.py:346
 msgid "Treasury Board of Canada Secretariat"
 msgstr ""
 
-#: ckanext/canada/helpers.py:687 ckanext/canada/strings.py:14
+#: ckanext/canada/helpers.py:691 ckanext/canada/strings.py:14
 #: ckanext/canada/view.py:1285
 msgid "Members not found"
 msgstr ""
 
-#: ckanext/canada/helpers.py:822
+#: ckanext/canada/helpers.py:826
 msgid "Data awaiting load to DataStore"
 msgstr ""
 
-#: ckanext/canada/helpers.py:823
+#: ckanext/canada/helpers.py:827
 msgid "Loading data into DataStore"
 msgstr ""
 
-#: ckanext/canada/helpers.py:824
+#: ckanext/canada/helpers.py:828
 msgid "Data loaded into DataStore"
 msgstr ""
 
-#: ckanext/canada/helpers.py:825
+#: ckanext/canada/helpers.py:829
 msgid "Failed to load data into DataStore"
 msgstr ""
 
-#: ckanext/canada/helpers.py:826
+#: ckanext/canada/helpers.py:830
 msgid "Data available in DataStore"
 msgstr ""
 
-#: ckanext/canada/helpers.py:827
+#: ckanext/canada/helpers.py:831
 msgid "Resource not active in DataStore"
 msgstr ""
 
-#: ckanext/canada/helpers.py:828
+#: ckanext/canada/helpers.py:832
 msgid "DataStore status unknown"
 msgstr ""
 
-#: ckanext/canada/helpers.py:907
+#: ckanext/canada/helpers.py:911
 #: ckanext/canada/templates/home/quick_links.html:65
 #: ckanext/canada/templates/scheming/package/snippets/package_form.html:28
 #: ckanext/canada/templates/snippets/cdts/header.html:31
@@ -180,7 +180,7 @@ msgstr ""
 msgid "Open Data"
 msgstr ""
 
-#: ckanext/canada/helpers.py:908
+#: ckanext/canada/helpers.py:912
 #: ckanext/canada/templates/home/quick_links.html:82
 #: ckanext/canada/templates/scheming/package/snippets/package_form.html:30
 #: ckanext/canada/templates/snippets/cdts/header.html:57
@@ -190,23 +190,23 @@ msgstr ""
 msgid "Open Information"
 msgstr ""
 
-#: ckanext/canada/helpers.py:920
+#: ckanext/canada/helpers.py:924
 #: ckanext/canada/templates/snippets/dataset_facets.html:27
 msgid "Request sent to data owner - awaiting response"
 msgstr ""
 
-#: ckanext/canada/helpers.py:924
+#: ckanext/canada/helpers.py:928
 #: ckanext/canada/templates/snippets/publish_facet.html:44
 msgid "Pending"
 msgstr ""
 
-#: ckanext/canada/helpers.py:925 ckanext/canada/templates/package/read.html:14
+#: ckanext/canada/helpers.py:929 ckanext/canada/templates/package/read.html:14
 #: ckanext/canada/templates/snippets/package_item.html:33
 #: ckanext/canada/templates/snippets/publish_facet.html:44
 msgid "Draft"
 msgstr ""
 
-#: ckanext/canada/helpers.py:942
+#: ckanext/canada/helpers.py:946
 #: ckanext/canada/templates/home/quick_links.html:136
 #: ckanext/canada/templates/snippets/cdts/header.html:60
 #: ckanext/canada/templates/snippets/dataset_facets.html:33
@@ -215,25 +215,25 @@ msgstr ""
 msgid "Proactive Publication"
 msgstr ""
 
-#: ckanext/canada/helpers.py:971
+#: ckanext/canada/helpers.py:975
 #: ckanext/canada/templates/snippets/publish_facet.html:25
 msgid "Published"
 msgstr ""
 
-#: ckanext/canada/helpers.py:973
+#: ckanext/canada/helpers.py:977
 #: ckanext/canada/templates/snippets/publish_facet.html:34
 msgid "Scheduled"
 msgstr ""
 
-#: ckanext/canada/helpers.py:1012
+#: ckanext/canada/helpers.py:1016
 msgid "Registry Home"
 msgstr ""
 
-#: ckanext/canada/helpers.py:1017
+#: ckanext/canada/helpers.py:1021
 msgid "Open Government"
 msgstr ""
 
-#: ckanext/canada/helpers.py:1020
+#: ckanext/canada/helpers.py:1024
 #: ckanext/canada/templates/admin/publish_search.html:19
 #: ckanext/canada/templates/home/quick_links.html:107
 #: ckanext/canada/templates/organization/snippets/organization_search.html:8
@@ -670,68 +670,94 @@ msgid ""
 "manually please check your spelling and try again."
 msgstr ""
 
+#: ckanext/canada/strings.py:98
+msgid "Requesting Download..."
+msgstr ""
+
+#: ckanext/canada/strings.py:99
+msgid "Downloads"
+msgstr ""
+
 #: ckanext/canada/strings.py:100
-msgid "Please upload a file or link to an external resource"
+msgid ""
+"You have unfinished downloads in this page. Do you want to stop these "
+"downloads and leave the page?"
 msgstr ""
 
 #: ckanext/canada/strings.py:101
-msgid "Cannot upload files of this type"
+msgid "Downloading file..."
 msgstr ""
 
 #: ckanext/canada/strings.py:102
-msgid "Cannot link files of this type"
+msgid "Successfully downloaded file"
 msgstr ""
 
 #: ckanext/canada/strings.py:103
+msgid "Error downloading file, trying again through your browser"
+msgstr ""
+
+#: ckanext/canada/strings.py:106
+msgid "Please upload a file or link to an external resource"
+msgstr ""
+
+#: ckanext/canada/strings.py:107
+msgid "Cannot upload files of this type"
+msgstr ""
+
+#: ckanext/canada/strings.py:108
+msgid "Cannot link files of this type"
+msgstr ""
+
+#: ckanext/canada/strings.py:109
 msgid "Your password must be {} characters or longer."
 msgstr ""
 
-#: ckanext/canada/strings.py:104
+#: ckanext/canada/strings.py:110
 msgid ""
 "Your password must consist of at least three of the following character "
 "sets: uppercase characters, lowercase characters, digits, punctuation & "
 "special characters."
 msgstr ""
 
-#: ckanext/canada/strings.py:106
+#: ckanext/canada/strings.py:112
 msgid "Your password cannot be the same as your username."
 msgstr ""
 
-#: ckanext/canada/strings.py:108
+#: ckanext/canada/strings.py:114
 msgid ""
 "Your current password is too weak. Please create a new password before "
 "logging in again."
 msgstr ""
 
-#: ckanext/canada/strings.py:111
+#: ckanext/canada/strings.py:117
 msgid "These fields have been removed, click update below to save your changes."
 msgstr "These fields will be removed once you save your changes."
 
-#: ckanext/canada/strings.py:112
+#: ckanext/canada/strings.py:118
 msgid "These fields have been removed."
 msgstr ""
 
-#: ckanext/canada/strings.py:115
+#: ckanext/canada/strings.py:121
 msgid "Your form submission could not be validated, please re-submit the form."
 msgstr ""
 
-#: ckanext/canada/strings.py:118
+#: ckanext/canada/strings.py:124
 msgid "Open Government Portal"
 msgstr ""
 
-#: ckanext/canada/strings.py:119
+#: ckanext/canada/strings.py:125
 msgid "Open Government Portal (staging)"
 msgstr ""
 
-#: ckanext/canada/strings.py:122
+#: ckanext/canada/strings.py:128
 msgid "Delete from DataStore"
 msgstr ""
 
-#: ckanext/canada/strings.py:123
+#: ckanext/canada/strings.py:129
 msgid "Are you sure you want to delete the DataStore and Data Dictionary?"
 msgstr ""
 
-#: ckanext/canada/strings.py:124
+#: ckanext/canada/strings.py:130
 #: ckanext/canada/templates/organization/confirm_delete_member.html:3
 #: ckanext/canada/templates/organization/confirm_delete_member.html:14
 #: ckanext/canada/templates/package/confirm_delete.html:3
@@ -745,55 +771,55 @@ msgstr ""
 msgid "Confirm Delete"
 msgstr ""
 
-#: ckanext/canada/strings.py:127
+#: ckanext/canada/strings.py:133
 msgid "Validation Information"
 msgstr ""
 
-#: ckanext/canada/strings.py:128
+#: ckanext/canada/strings.py:134
 msgid "Validation status:"
 msgstr ""
 
-#: ckanext/canada/strings.py:129
+#: ckanext/canada/strings.py:135
 msgid "Validation timestamp:"
 msgstr ""
 
-#: ckanext/canada/strings.py:130
+#: ckanext/canada/strings.py:136
 msgid "Duration:"
 msgstr ""
 
-#: ckanext/canada/strings.py:131
+#: ckanext/canada/strings.py:137
 msgid "Validation status"
 msgstr ""
 
-#: ckanext/canada/strings.py:132
+#: ckanext/canada/strings.py:138
 msgid "Validation timestamp"
 msgstr ""
 
-#: ckanext/canada/strings.py:135
+#: ckanext/canada/strings.py:141
 msgid "Single"
 msgstr ""
 
-#: ckanext/canada/strings.py:136
+#: ckanext/canada/strings.py:142
 msgid "Repeatable"
 msgstr ""
 
-#: ckanext/canada/strings.py:137
+#: ckanext/canada/strings.py:143
 msgid "Optional"
 msgstr ""
 
-#: ckanext/canada/strings.py:140
+#: ckanext/canada/strings.py:146
 msgid "Errors in Recombinant Resource"
 msgstr "Errors in Published Resource"
 
-#: ckanext/canada/strings.py:141
+#: ckanext/canada/strings.py:147
 msgid "Refresh Recombinant Resource"
 msgstr "Refresh Published Resource"
 
-#: ckanext/canada/strings.py:142
+#: ckanext/canada/strings.py:148
 msgid "The Recombinant resource is out of date"
 msgstr "The published resource is out of date"
 
-#: ckanext/canada/strings.py:143
+#: ckanext/canada/strings.py:149
 msgid "The Recombinant resource is out of date:"
 msgstr "The published resource is out of date:"
 
@@ -3099,6 +3125,22 @@ msgstr ""
 #: ckanext/canada/templates/package/resource_read.html:77
 #: ckanext/canada/templates/package/snippets/resource_item.html:89
 msgid "Download"
+msgstr ""
+
+#: ckanext/canada/templates/package/resource_read.html:85
+msgid "CSV type files"
+msgstr ""
+
+#: ckanext/canada/templates/package/resource_read.html:92
+msgid "TSV type files"
+msgstr ""
+
+#: ckanext/canada/templates/package/resource_read.html:99
+msgid "JSON type files"
+msgstr ""
+
+#: ckanext/canada/templates/package/resource_read.html:106
+msgid "XML type files"
 msgstr ""
 
 #: ckanext/canada/templates/package/resources.html:5

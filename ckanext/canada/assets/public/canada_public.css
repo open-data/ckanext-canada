@@ -2065,3 +2065,9 @@ body select[data-field-select2="True"]{
   top: 0 !important;
   left: 0 !important;
 }
+
+#promise-download-alert-inner span{
+  font-weight: 600 !important;
+  font-size: 32px !important;
+  color: #38414d !important;
+}
