@@ -72,7 +72,6 @@ class TestAIStrategy(CanadaTestBase):
             assert k in err
             assert err[k] == expected[k]
 
-
     def test_max_chars(self):
         """
         Over max character field values should raise an exception
