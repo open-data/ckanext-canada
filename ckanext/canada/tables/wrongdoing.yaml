@@ -46,7 +46,9 @@ resources:
     obligation: Mandatory
     excel_required: true
     form_required: true
-    format_type: Free text
+    format_type:
+      en: Free text
+      fr: Texte libre
     datastore_type: text
 
   - datastore_id: file_id_date
@@ -59,7 +61,9 @@ resources:
     obligation: Mandatory
     excel_required: true
     form_required: true
-    format_type: Date (Please format the data as YYYY-MM-DD)
+    format_type:
+      en: Date (Please format the date as YYYY-MM-DD)
+      fr: "Date (Veuillez utiliser le format de date suivant : AAAA-MM-JJ)"
     datastore_type: date
     extract_date_year: true
     extract_date_month: true
@@ -76,7 +80,9 @@ resources:
     obligation: Mandatory
     excel_required: true
     form_required: true
-    format_type: Free text
+    format_type:
+      en: Free text
+      fr: Texte libre
     datastore_type: text
     form_attrs:
       size: 60
@@ -93,7 +99,9 @@ resources:
     obligation: Mandatory
     excel_required: true
     form_required: true
-    format_type: Free text
+    format_type:
+      en: Free text
+      fr: Texte libre
     datastore_type: text
     form_attrs:
       size: 60
@@ -110,7 +118,9 @@ resources:
     obligation: Mandatory
     excel_required: true
     form_required: true
-    format_type: Controlled List
+    format_type:
+      en: Controlled List
+      fr: Liste contrôlée
     occurrence: Repeatable
     datastore_type: _text
     excel_full_text_choices: false
@@ -169,11 +179,13 @@ resources:
     obligation: Mandatory
     excel_required: true
     form_required: true
-    format_type: Free text
+    format_type:
+      en: Free text
+      fr: Texte libre
     datastore_type: text
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
-      style: "width: 100%; display: block"
+      class: form-control canada-width-full d-block
     markdown: true
     datatables_col_class: col-xxl
 
@@ -194,11 +206,13 @@ resources:
     obligation: Mandatory
     excel_required: true
     form_required: true
-    format_type: Free text
+    format_type:
+      en: Free text
+      fr: Texte libre
     datastore_type: text
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
-      style: "width: 100%; display: block"
+      class: form-control canada-width-full d-block
     markdown: true
     datatables_col_class: col-xxl
 

@@ -7,6 +7,30 @@ groups:
         description: |
             List of domains to allow as DataStore resources. These
             will pass through the Validation and XLoader plugins.
-        validators: ignore_missing
         required: false
         type: list
+      - key: ckanext.canada.support_email_address
+        default: PortalSupport-Soutienportail@tbs-sct.gc.ca
+        description: |
+            Email address of Open Canada support desk.
+        required: false
+      - key: ckanext.canada.default_open_email_address
+        default: open-ouvert@tbs-sct.gc.ca
+        description: |
+            Generic email address for Open Canada.
+        required: false
+      - key: ckanext.canada.content_security_policy
+        default: >
+          Content-Security-Policy: default-src 'self';
+        description: |
+            Content-Security-Policy header value for all requests.
+            To use nonces, use 'nonce-[[NONCE]]' and [[NONCE]] will
+            be replaced with a generated nonce.
+        required: false
+        validators: ignore_missing http_header_value_validator
+      - key: ckanext.canada.disable_content_security_policy
+        default: false
+        description: |
+          Disables the internal Content-Security-Policy header.
+          Should not be set to True in production environments.
+        validators: boolean_validator

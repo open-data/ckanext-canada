@@ -1199,7 +1199,7 @@ resources:
     datatables_col_class: col-xxl
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
-      style: "width: 100%; display: block"
+      class: form-control canada-width-full d-block
     markdown: true
 
   - datastore_id: progress_fr
@@ -1216,7 +1216,7 @@ resources:
     datatables_col_class: col-xxl
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
-      style: "width: 100%; display: block"
+      class: form-control canada-width-full d-block
     markdown: true
 
   - datastore_id: evidence_en
@@ -1231,7 +1231,7 @@ resources:
     datatables_col_class: col-xxl
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
-      style: "width: 100%; display: block"
+      class: form-control canada-width-full d-block
     markdown: true
 
   - datastore_id: evidence_fr
@@ -1246,7 +1246,7 @@ resources:
     datatables_col_class: col-xxl
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
-      style: "width: 100%; display: block"
+      class: form-control canada-width-full d-block
     markdown: true
 
   - datastore_id: challenges_en
@@ -1261,7 +1261,7 @@ resources:
     datatables_col_class: col-xxl
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
-      style: "width: 100%; display: block"
+      class: form-control canada-width-full d-block
     markdown: true
 
   - datastore_id: challenges_fr
@@ -1276,7 +1276,7 @@ resources:
     datatables_col_class: col-xxl
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
-      style: "width: 100%; display: block"
+      class: form-control canada-width-full d-block
     markdown: true
 
   - datastore_id: record_created

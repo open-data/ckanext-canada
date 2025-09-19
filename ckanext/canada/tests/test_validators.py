@@ -426,21 +426,21 @@ class TestNAVLSchema(CanadaTestBase):
         assert 'format' in res_dict
         assert res_dict['format'] == 'HTML'
 
-        # failed mimetype guessing should raise a validation error
+        # failed mimetype guessing should go to unknown
         resource_data['url'] = 'thisisabadformat.blublub'
 
         res_dict = self.sysadmin_action.resource_patch(**resource_data)
 
-        # TODO: once guess format is fully functional, use raises test and remove this one
         assert 'format' in res_dict
         assert res_dict['format'] == 'unknown' or res_dict['format'] == 'Unknown'
 
-        # TODO: once guess format is fully functional, use this test
-        # with pytest.raises(ValidationError) as ve:
-        #     self.sysadmin_action.resource_patch(**resource_data)
-        # err = ve.value.error_dict
-        # assert 'format' in err
-        # assert 'Could not determine a resource format' in err['format'][0]
+        # successful mimetype guessing but not in choice list should go to other
+        resource_data['url'] = 'thisisabadformat.rar'
+
+        res_dict = self.sysadmin_action.resource_patch(**resource_data)
+
+        assert 'format' in res_dict
+        assert res_dict['format'] == 'other' or res_dict['format'] == 'other'
 
     def test_validation_options(self):
         "creating a resource with lax validation options should remove them"
@@ -479,6 +479,20 @@ class TestNAVLSchema(CanadaTestBase):
 
         resource = self.sysadmin_action.resource_create(**resource_data)
         assert 'validation_options' not in resource or resource['validation_options'] is None
+
+    def test_api_token_name(self):
+        """
+        Cannot have crazy stuff in API Token Names
+        """
+        with pytest.raises(ValidationError) as ve:
+            self.sysadmin_action.api_token_create(user=self.normal_user['name'],
+                                                  name='eval("console.log("THIS IS NOT ALLOWED")")')
+        err = ve.value.error_dict
+        assert 'name' in err
+        assert err['name'] == ['Invalid name for an API Token. API Token names can only contain alphanumeric characters, hyphens, and underscores.']
+
+        self.sysadmin_action.api_token_create(user=self.normal_user['name'],
+                                              name='this_name-is-PERFECTLY_FINE-0001928309')
 
 
 class TestSysadminUpdate(CanadaTestBase):

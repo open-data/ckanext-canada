@@ -62,8 +62,10 @@ resources:
     validation:
       en: Required if "End Date" is on or after April 1st 2025
       fr: Requis si la "date de fin" est le 1er avril 2025 ou après
-    format_type: Controlled List
     datatables_col_class: col-md
+    format_type:
+      en: Controlled List
+      fr: Liste contrôlée
     choices:
       MPSES:
         en: Minister/Ministerial advisor / Ministerial Staff / Parliamentary Secretary/Exempt Staff
@@ -85,10 +87,12 @@ resources:
     excel_required: true
     form_required: true
     validation: This field must not be empty
-    format_type: Free text
     datatables_col_class: col-md
     excel_required_formula: 'VALUE({start_date})>=DATE(2019,6,21)'
     js_required_eval: '{{title_fr}}.length > 0 || {{start_date}}.length > 0 && new Date({{start_date}}) >= new Date("2019-06-21")'
+    format_type:
+      en: Free text
+      fr: Texte libre
     excel_column_width: 30
     form_attrs:
       size: 60
@@ -106,10 +110,12 @@ resources:
     excel_required: true
     form_required: true
     validation: This field must not be empty
-    format_type: Free text
     datatables_col_class: col-md
     excel_required_formula: 'VALUE({start_date})>=DATE(2019,6,21)'
     js_required_eval: '{{title_en}}.length > 0 || {{start_date}}.length > 0 && new Date({{start_date}}) >= new Date("2019-06-21")'
+    format_type:
+      en: Free text
+      fr: Texte libre
     excel_column_width: 30
     form_attrs:
       size: 60
@@ -127,10 +133,12 @@ resources:
     excel_required: true
     form_required: true
     validation: This field must not be empty
-    format_type: Free text
     datatables_col_class: col-md
     excel_required_formula: 'VALUE({start_date})>=DATE(2019,6,21)'
     js_required_eval: '{{start_date}}.length > 0 && new Date({{start_date}}) >= new Date("2019-06-21")'
+    format_type:
+      en: Free text
+      fr: Texte libre
     excel_column_width: 30
     form_attrs:
       size: 60
@@ -148,13 +156,15 @@ resources:
     excel_required: true
     form_required: true
     validation: This field must not be empty
-    format_type: Free text
     datatables_col_class: col-xxl
     excel_required_formula: 'VALUE({start_date})>=DATE(2019,6,21)'
     js_required_eval: '{{description_fr}}.length > 0 || {{start_date}}.length > 0 && new Date({{start_date}}) >= new Date("2019-06-21")'
+    format_type:
+      en: Free text
+      fr: Texte libre
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
-      style: "width: 100%; display: block"
+      class: form-control canada-width-full d-block
 
   # 3.7
   - datastore_id: description_fr
@@ -169,13 +179,15 @@ resources:
     excel_required: true
     form_required: true
     validation: This field must not be empty
-    format_type: Free text
     datatables_col_class: col-xxl
     excel_required_formula: 'VALUE({start_date})>=DATE(2019,6,21)'
     js_required_eval: '{{description_en}}.length > 0 || {{start_date}}.length > 0 && new Date({{start_date}}) >= new Date("2019-06-21")'
+    format_type:
+      en: Free text
+      fr: Texte libre
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
-      style: "width: 100%; display: block"
+      class: form-control canada-width-full d-block
 
   # 3.8
   - datastore_id: start_date
@@ -198,7 +210,9 @@ resources:
       fr: |
         Ce champ ne doit pas être vide.
         La date ne doit pas être dans le futur.
-    format_type: Date (Please format the data as YYYY-MM-DD)
+    format_type:
+      en: Date (Please format the date as YYYY-MM-DD)
+      fr: "Date (Veuillez utiliser le format de date suivant : AAAA-MM-JJ)"
     excel_column_width: 20
     extract_date_year: true
     extract_date_month: true
@@ -228,7 +242,9 @@ resources:
       fr: |
         Ce champ ne doit pas être vide.
         La date ne doit pas être dans le futur.
-    format_type: Date (Please format the data as YYYY-MM-DD)
+    format_type:
+      en: Date (Please format the date as YYYY-MM-DD)
+      fr: "Date (Veuillez utiliser le format de date suivant : AAAA-MM-JJ)"
     excel_column_width: 20
     form_snippet: scheming/form_snippets/date.html
 
@@ -252,10 +268,12 @@ resources:
     excel_required: true
     form_required: true
     validation: This field must not be empty
-    format_type: Free text
     datatables_col_class: col-md
     excel_required_formula: 'VALUE({start_date})>=DATE(2019,6,21)'
     js_required_eval: '{{location_fr}}.length > 0 || {{start_date}}.length > 0 && new Date({{start_date}}) >= new Date("2019-06-21")'
+    format_type:
+      en: Free text
+      fr: Texte libre
     form_attrs:
       size: 60
 
@@ -279,10 +297,12 @@ resources:
     excel_required: true
     form_required: true
     validation: This field must not be empty
-    format_type: Free text
     datatables_col_class: col-md
     excel_required_formula: 'VALUE({start_date})>=DATE(2019,6,21)'
     js_required_eval: '{{location_en}}.length > 0 || {{start_date}}.length > 0 && new Date({{start_date}}) >= new Date("2019-06-21")'
+    format_type:
+      en: Free text
+      fr: Texte libre
     form_attrs:
       size: 60
 
@@ -306,10 +326,12 @@ resources:
     excel_required: true
     form_required: true
     validation: This field must not be empty
-    format_type: Free text
     datatables_col_class: col-lg
     excel_required_formula: 'VALUE({start_date})>=DATE(2019,6,21)'
     js_required_eval: '{{vendor_fr}}.length > 0 || {{start_date}}.length > 0 && new Date({{start_date}}) >= new Date("2019-06-21")'
+    format_type:
+      en: Free text
+      fr: Texte libre
     form_attrs:
       size: 60
 
@@ -333,10 +355,12 @@ resources:
     excel_required: true
     form_required: true
     validation: This field must not be empty
-    format_type: Free text
     datatables_col_class: col-lg
     excel_required_formula: 'VALUE({start_date})>=DATE(2019,6,21)'
     js_required_eval: '{{vendor_en}}.length > 0 || {{start_date}}.length > 0 && new Date({{start_date}}) >= new Date("2019-06-21")'
+    format_type:
+      en: Free text
+      fr: Texte libre
     form_attrs:
       size: 60
 
@@ -361,8 +385,10 @@ resources:
     excel_required_formula: NOT(ISBLANK({vendor_2_fr}))
     js_required_eval: '{{vendor_2_fr}}.length > 0'
     form_required: false
-    format_type: Free text
     datatables_col_class: col-lg
+    format_type:
+      en: Free text
+      fr: Texte libre
     form_attrs:
       size: 60
 
@@ -387,8 +413,10 @@ resources:
     excel_required_formula: NOT(ISBLANK({vendor_2_en}))
     js_required_eval: '{{vendor_2_en}}.length > 0'
     form_required: false
-    format_type: Free text
     datatables_col_class: col-lg
+    format_type:
+      en: Free text
+      fr: Texte libre
     form_attrs:
       size: 60
 
@@ -423,8 +451,10 @@ resources:
     js_required_eval: '{{vendor_other_fr}}.length > 0'
     js_error_eval: 'VALUE.length > 0 && ! VALUE.split(";").every(function(_vv){ return _vv.trim().length > 0 })'
     form_required: false
-    format_type: Free text
     datatables_col_class: col-xl
+    format_type:
+      en: Free text
+      fr: Texte libre
     form_attrs:
       size: 60
 
@@ -459,8 +489,10 @@ resources:
     js_required_eval: '{{vendor_other_en}}.length > 0'
     js_error_eval: 'VALUE.length > 0 && ! VALUE.split(";").every(function(_vv){ return _vv.trim().length > 0 })'
     form_required: false
-    format_type: Free text
     datatables_col_class: col-xl
+    format_type:
+      en: Free text
+      fr: Texte libre
     form_attrs:
       size: 60
 
@@ -502,7 +534,9 @@ resources:
       fr: |
         Ce champ ne doit pas être vide.
         Zéro est une entrée invalide.
-    format_type: Free text
+    format_type:
+      en: Free text
+      fr: Texte libre
     form_attrs:
       size: 40
 
@@ -523,7 +557,9 @@ resources:
     js_required_eval: '{{start_date}}.length > 0 && new Date({{start_date}}) >= new Date("2019-06-21")'
     js_error_eval: '{{end_date}}.length > 0 && new Date({{end_date}}) >= new Date("2025-04-01") && VALUE.length > 0 && VALUE < 0'
     validation: This field must not be empty
-    format_type: Free text
+    format_type:
+      en: Free text
+      fr: Texte libre
     form_attrs:
       size: 40
 
@@ -544,7 +580,7 @@ resources:
     validation: This field must not be empty
     format_type:
       en: Numerical – Note, do not include dollar signs ($), all amounts include taxes.
-      fr: Texte libre
+      fr: "Numérique – Note : ne pas inclure les signes du dollar ($), tous les montants incluent les taxes."
     extract_double_sortable: true
     excel_column_width: 20
     form_attrs:
@@ -567,11 +603,13 @@ resources:
       en: This field may be populated with additional explanatory comments, in English.
       fr: Ce champ peut indiquer des commentaires explicatifs additionnels, en anglais.
     obligation: Optional
-    format_type: Free text
     datatables_col_class: col-xl
+    format_type:
+      en: Free text
+      fr: Texte libre
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
-      style: "width: 100%; display: block"
+      class: form-control canada-width-full d-block
 
     # 3.18
   - datastore_id: additional_comments_fr
@@ -583,11 +621,13 @@ resources:
       en: This field may be populated with additional explanatory comments, in French.
       fr: Ce champ peut indiquer des commentaires explicatifs additionnels, en français.
     obligation: Optional
-    format_type: Free text
     datatables_col_class: col-xl
+    format_type:
+      en: Free text
+      fr: Texte libre
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
-      style: "width: 100%; display: block"
+      class: form-control canada-width-full d-block
 
   - datastore_id: record_created
     label: Record Creation Time
@@ -709,7 +749,7 @@ resources:
       disclosure_group: SLE
       title_en: Vice-Chairperson, Deputy Minister, Parliamentary Secretary, Assistant Deputy Minister, Programs Branch
       title_fr: Vice-président, sous-ministre, secrétaire parlementaire, sous-ministre adjoint, Direction générale des programmes
-      name: Smith, John
+      name: John Smith
       description_en: "Refreshments: information management and policies committee meeting; reception: Maltese delegation, etc"
       description_fr: "Rafraîchissements : Réunion du Comité de gestion de l’information et des politiques, Réception : Délégation maltaise, etc"
       start_date: "2019-06-25"

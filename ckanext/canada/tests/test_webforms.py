@@ -13,10 +13,11 @@ from ckanapi import (
 
 from ckan.tests.helpers import CKANResponse  # noqa: F401
 
-from ckan.tests.factories import SysadminWithToken as Sysadmin, APIToken
 from ckanext.canada.tests.factories import (
     CanadaOrganization as Organization,
-    CanadaUser as User
+    CanadaUser as User,
+    CanadaAPIToken as APIToken,
+    CanadaSysadminWithToken as Sysadmin
 )
 from ckanext.canada.tests.helpers import MockFlashMessages
 

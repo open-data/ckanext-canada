@@ -84,25 +84,25 @@
 </section>
 
 <!-- https://github.com/markedjs/marked -->
-<script type="text/javascript" src="//cdn.jsdelivr.net/npm/marked@15.0.7/lib/marked.umd.min.js" defer></script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/npm/marked@15.0.7/lib/marked.umd.min.js" integrity="sha384-EjL6IeH3KCXB9dkBQaYqnb/m6V3TOBP++kooL0bl43Vt6eCFJ2Pxck/B/dU4PB8d" crossorigin="anonymous" nonce="{{- h.get_inline_script_nonce() -}}" defer></script>
 
 <!-- https://github.com/knownasilya/jquery-highlight | https:////bartaz.github.io/sandbox.js/jquery.highlight.js -->
-<script type="text/javascript" src="//cdn.jsdelivr.net/npm/jquery-highlight@3.5.0/jquery.highlight.js" defer></script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/npm/jquery-highlight@3.5.0/jquery.highlight.js" integrity="sha384-iHYAoCetx95M8Rp57MEkmPOf1LLUXm7Tc/xjsmVejTGEHjR4ePBbRFp+c0v6U43v" crossorigin="anonymous" nonce="{{- h.get_inline_script_nonce() -}}" defer></script>
 
 <!-- https://datatables.net/download/release | https://cdn.datatables.net/ -->
-<link rel="stylesheet" type="text/css" href="//cdn.datatables.net/2.2.2/css/dataTables.bootstrap5.min.css"><!-- Core -->
-<link rel="stylesheet" type="text/css" href="//cdn.datatables.net/buttons/3.2.2/css/buttons.bootstrap5.min.css"><!-- Buttons Extension -->
-<link rel="stylesheet" type="text/css" href="//cdn.datatables.net/responsive/3.0.4/css/responsive.bootstrap5.min.css"><!-- Responsive Extension -->
-<link rel="stylesheet" type="text/css" href="//cdn.datatables.net/select/3.0.0/css/select.bootstrap5.min.css"><!-- Select Extension -->
-<link rel="stylesheet" type="text/css" href="//cdn.datatables.net/keytable/2.12.1/css/keyTable.bootstrap5.min.css"><!-- KeyTable Extension -->
-<link rel="stylesheet" type="text/css" href="//cdn.datatables.net/plug-ins/2.2.2/features/searchHighlight/dataTables.searchHighlight.css"><!-- Highlight Extension -->
+<link rel="stylesheet" type="text/css" href="//cdn.datatables.net/2.2.2/css/dataTables.bootstrap5.min.css" integrity="sha384-BDXgFqzL/EpYeT/J5XTrxR+qDB4ft42notjpwhZDEjDIzutqmXeImvKS3YPH/WJX" crossorigin="anonymous" nonce="{{- h.get_inline_script_nonce() -}}"><!-- Core -->
+<link rel="stylesheet" type="text/css" href="//cdn.datatables.net/buttons/3.2.2/css/buttons.bootstrap5.min.css" integrity="sha384-DJhypeLg79qWALC844KORuTtaJcH45J+36wNgzj4d1Kv1vt2PtRuV2eVmdkVmf/U" crossorigin="anonymous" nonce="{{- h.get_inline_script_nonce() -}}"><!-- Buttons Extension -->
+<link rel="stylesheet" type="text/css" href="//cdn.datatables.net/responsive/3.0.4/css/responsive.bootstrap5.min.css" integrity="sha384-seyUnB//1QOFEqox9uI7YTLBgz9jBwFRqZvsEPFrTw6NAsFEo70nhBWsQfODqiYA" crossorigin="anonymous" nonce="{{- h.get_inline_script_nonce() -}}"><!-- Responsive Extension -->
+<link rel="stylesheet" type="text/css" href="//cdn.datatables.net/select/3.0.0/css/select.bootstrap5.min.css" integrity="sha384-TlxQ7BelG5MWHP/TbW8dDV3/3kwuo6rinsUsoQdbLGPvurwx/DA2Z49RVLIOxVrG" crossorigin="anonymous" nonce="{{- h.get_inline_script_nonce() -}}"><!-- Select Extension -->
+<link rel="stylesheet" type="text/css" href="//cdn.datatables.net/keytable/2.12.1/css/keyTable.bootstrap5.min.css" integrity="sha384-9rz3zS4qleWOOeZmPIp29dWk7GYvmx2zNp0FlRKbtHHY0T8fHci0uuiTB9SwHYbv" crossorigin="anonymous" nonce="{{- h.get_inline_script_nonce() -}}"><!-- KeyTable Extension -->
+<link rel="stylesheet" type="text/css" href="//cdn.datatables.net/plug-ins/2.2.2/features/searchHighlight/dataTables.searchHighlight.css" integrity="sha384-3FGcHDS9wKlVV/Pu4y1kojpLsNxlE3jQjdm1N0p7RC9f6xPdRAj78js3ELGiGP/j" crossorigin="anonymous" nonce="{{- h.get_inline_script_nonce() -}}"><!-- Highlight Extension -->
 {% asset 'canada_datatables/pd_datatable_css' %}
 {#
   NOTE: to avoid unsafe JS eval, we render the js_error_evals via jinja2.
         because of this, we cannot pass this object into the CKAN JS Module
         like the other variables. So we must make it a JS Global here.
 #}
-<script type="text/javascript">
+<script type="text/javascript" nonce="{{- h.get_inline_script_nonce() -}}">
   {% if can_edit %}
     const pd_datatables__EDITOR = {
       {% for field in chromo.fields %}
@@ -176,19 +176,19 @@
   {% endif %}
 </script>
 
-<script type="text/javascript" src="//cdn.datatables.net/2.2.2/js/dataTables.min.js" defer></script><!-- Core -->
-<script type="text/javascript" src="//cdn.datatables.net/2.2.2/js/dataTables.bootstrap5.min.js" defer></script><!-- Core -->
-<script type="text/javascript" src="//cdn.datatables.net/buttons/3.2.2/js/dataTables.buttons.min.js" defer></script><!-- Buttons Extension -->
-<script type="text/javascript" src="//cdn.datatables.net/buttons/3.2.2/js/buttons.bootstrap5.min.js" defer></script><!-- Buttons Extension -->
-<script type="text/javascript" src="//cdn.datatables.net/responsive/3.0.4/js/dataTables.responsive.min.js" defer></script><!-- Responsive Extension -->
-<script type="text/javascript" src="//cdn.datatables.net/responsive/3.0.4/js/responsive.bootstrap5.min.js" defer></script><!-- Responsive Extension -->
-<script type="text/javascript" src="//cdn.datatables.net/select/3.0.0/js/dataTables.select.min.js" defer></script><!-- Select Extension -->
-<script type="text/javascript" src="//cdn.datatables.net/select/3.0.0/js/select.bootstrap5.min.js" defer></script><!-- Select Extension -->
-<script type="text/javascript" src="//cdn.datatables.net/keytable/2.12.1/js/dataTables.keyTable.min.js" defer></script><!-- KeyTable Extension -->
-<script type="text/javascript" src="//cdn.datatables.net/keytable/2.12.1/js/keyTable.bootstrap5.min.js" defer></script><!-- KeyTable Extension -->
-<script type="text/javascript" src="//cdn.datatables.net/plug-ins/2.2.2/features/searchHighlight/dataTables.searchHighlight.min.js" defer></script><!-- Highlight Extension -->
+<script type="text/javascript" src="//cdn.datatables.net/2.2.2/js/dataTables.min.js" integrity="sha384-AenwROccLjIcbIsJuEZmrLlBzwrhvO94q+wm9RwETq4Kkqv9npFR2qbpdMhsehX3" crossorigin="anonymous" nonce="{{- h.get_inline_script_nonce() -}}" defer></script><!-- Core -->
+<script type="text/javascript" src="//cdn.datatables.net/2.2.2/js/dataTables.bootstrap5.min.js" integrity="sha384-G85lmdZCo2WkHaZ8U1ZceHekzKcg37sFrs4St2+u/r2UtfvSDQmQrkMsEx4Cgv/W" crossorigin="anonymous" nonce="{{- h.get_inline_script_nonce() -}}" defer></script><!-- Core -->
+<script type="text/javascript" src="//cdn.datatables.net/buttons/3.2.2/js/dataTables.buttons.min.js" integrity="sha384-DmaAfo+/+UjRKHPidNNswlNqd9ybuE6yx9zKHyMY+vYy9SZhQEu4nauMVgwSx4Z/" crossorigin="anonymous" nonce="{{- h.get_inline_script_nonce() -}}" defer></script><!-- Buttons Extension -->
+<script type="text/javascript" src="//cdn.datatables.net/buttons/3.2.2/js/buttons.bootstrap5.min.js" integrity="sha384-BdedgzbgcQH1hGtNWLD56fSa7LYUCzyRMuDzgr5+9etd1/W7eT0kHDrsADMmx60k" crossorigin="anonymous" nonce="{{- h.get_inline_script_nonce() -}}" defer></script><!-- Buttons Extension -->
+<script type="text/javascript" src="//cdn.datatables.net/responsive/3.0.4/js/dataTables.responsive.min.js" integrity="sha384-A6In5tKqlvPZKDpH+ei4A3A4TZrEsyvvN2Fe+oCB1IaQfGD5HNqDIxwjztNKSGDd" crossorigin="anonymous" nonce="{{- h.get_inline_script_nonce() -}}" defer></script><!-- Responsive Extension -->
+<script type="text/javascript" src="//cdn.datatables.net/responsive/3.0.4/js/responsive.bootstrap5.min.js" integrity="sha384-VdUZen/UKzp4O+wnInvMeDymYoESBoFxn8hXwJcu+3QTKXC0Ewzr1Wj+17lPUrtn" crossorigin="anonymous" nonce="{{- h.get_inline_script_nonce() -}}" defer></script><!-- Responsive Extension -->
+<script type="text/javascript" src="//cdn.datatables.net/select/3.0.0/js/dataTables.select.min.js" integrity="sha384-Y/112jU1UJsyj7J/WhficUVfFZTLF2TgmBuDHBvJmYS8f+dGaz3ZNKxgwcg4YgP9" crossorigin="anonymous" nonce="{{- h.get_inline_script_nonce() -}}" defer></script><!-- Select Extension -->
+<script type="text/javascript" src="//cdn.datatables.net/select/3.0.0/js/select.bootstrap5.min.js" integrity="sha384-Ttfoqnculm18lypWoer93HIDnzUXrznwNRvE6iuz4TQZoWnKUb7xO3wPdnRrSFu+" crossorigin="anonymous" nonce="{{- h.get_inline_script_nonce() -}}" defer></script><!-- Select Extension -->
+<script type="text/javascript" src="//cdn.datatables.net/keytable/2.12.1/js/dataTables.keyTable.min.js" integrity="sha384-NpM9cy4W0hbpF01CF3uXWZjVV0Q3qBPDaQlLcm92tD/4zpTXoj716Q1VkXFb7/t7" crossorigin="anonymous" nonce="{{- h.get_inline_script_nonce() -}}" defer></script><!-- KeyTable Extension -->
+<script type="text/javascript" src="//cdn.datatables.net/keytable/2.12.1/js/keyTable.bootstrap5.min.js" integrity="sha384-LjqAejAs/gUORIoPKSXkTcNT0qFKpirTWZ4RvIlbwjgY1TYGi7E7dCoyTFZM1q68" crossorigin="anonymous" nonce="{{- h.get_inline_script_nonce() -}}" defer></script><!-- KeyTable Extension -->
+<script type="text/javascript" src="//cdn.datatables.net/plug-ins/2.2.2/features/searchHighlight/dataTables.searchHighlight.min.js" integrity="sha384-XDdmvsWg5e1/POTILjMFvB3KtrBqRk5W1CG9aoi1+K6bBMPHQAvlKEiekndU6CTp" crossorigin="anonymous" nonce="{{- h.get_inline_script_nonce() -}}" defer></script><!-- Highlight Extension -->
 {% asset 'canada_datatables/pd_datatable_js' %}
-<style>
+<style nonce="{{- h.get_inline_script_nonce() -}}">
   body #dtprv_wrapper .dt-scroll-head th:not(.bg-info){
     background-color: #{{- tableStyles.header.bgColor or 'ffffff' -}} !important;
     color: #{{- tableStyles.header.fgColor or '000000' -}} !important;
