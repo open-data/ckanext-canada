@@ -111,6 +111,11 @@ body #dtprv_wrapper #dtprv_processing > div > div{
   background-color: #335075 !important;
 }
 
+body #dtprv_wrapper .dt-buttons{
+  /* req: Edge arch */
+  width: 100%;
+}
+
 body #dtprv_wrapper .dt-buttons button.btn{
   border-radius: 0 !important;
 }

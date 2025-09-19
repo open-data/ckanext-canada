@@ -754,7 +754,9 @@ function load_pd_datatable(CKAN_MODULE){
               let parent_row = $(_cell).parent('tr');
               if( parent_row.length > 0 ){
                 let row_index = $(parent_row).index();
-                let this_value = $(_cell).text();
+                let clone_cell = $(_cell).clone();
+                $(clone_cell).find('sup').remove();
+                let this_value = $(clone_cell).text();
                 if( typeof dt_queries[_table][row_index] == 'undefined' ){
                   dt_queries[_table][row_index] = {
                     'this_keys': [],
