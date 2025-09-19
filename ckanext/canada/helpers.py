@@ -288,6 +288,10 @@ def ga4_id() -> Optional[str]:
     return str(config['ga4.id']) if config.get('ga4.id') else None
 
 
+def ga4_integrity() -> Optional[str]:
+    return str(config['ga4.integrity']) if config.get('ga4.integrity') else None
+
+
 def adobe_analytics_login_required(current_url: str) -> int:
     """
     1: login required
