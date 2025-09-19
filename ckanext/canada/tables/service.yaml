@@ -101,7 +101,7 @@ resources:
     datastore_type: text
     max_chars: 350
     form_attrs:
-      style: "width: 100%; display: block"
+      class: form-control canada-width-full d-block
       maxlength: 350
 
   # DEP 1-5
@@ -130,7 +130,7 @@ resources:
     datastore_type: text
     max_chars: 350
     form_attrs:
-      style: "width: 100%; display: block"
+      class: form-control canada-width-full d-block
       maxlength: 350
 
   # DEP 1-6
@@ -1432,7 +1432,7 @@ resources:
     max_chars: 1500
     excel_required_formula: NOT(ISBLANK({service_uri_fr}))
     form_attrs:
-      style: "width: 100%; display: block"
+      class: form-control canada-width-full d-block
       maxlength: 1500
 
   # DEP 1-44
@@ -1456,7 +1456,7 @@ resources:
     max_chars: 1500
     excel_required_formula: NOT(ISBLANK({service_uri_en}))
     form_attrs:
-      style: "width: 100%; display: block"
+      class: form-control canada-width-full d-block
       maxlength: 1500
 
   # Dev: req dynamic field
@@ -1880,7 +1880,7 @@ resources:
     datastore_type: text
     max_chars: 350
     form_attrs:
-      style: "width: 100%; display: block"
+      class: form-control canada-width-full d-block
       maxlength: 350
 
   # DEP 2-4
@@ -1909,7 +1909,7 @@ resources:
     datastore_type: text
     max_chars: 350
     form_attrs:
-      style: "width: 100%; display: block"
+      class: form-control canada-width-full d-block
       maxlength: 350
 
   # DEP 2-5
@@ -2351,7 +2351,7 @@ resources:
     datastore_type: text
     max_chars: 1500
     form_attrs:
-      style: "width: 100%; display: block"
+      class: form-control canada-width-full d-block
       maxlength: 1500
 
   # DEP 2-20
@@ -2379,7 +2379,7 @@ resources:
     datastore_type: text
     max_chars: 1500
     form_attrs:
-      style: "width: 100%; display: block"
+      class: form-control canada-width-full d-block
       maxlength: 1500
 
   # DEP 2-21
@@ -2403,7 +2403,7 @@ resources:
     max_chars: 1500
     excel_required_formula: NOT(ISBLANK({performance_results_uri_fr}))
     form_attrs:
-      style: "width: 100%; display: block"
+      class: form-control canada-width-full d-block
       maxlength: 1500
 
   # DEP 2-22
@@ -2427,7 +2427,7 @@ resources:
     max_chars: 1500
     excel_required_formula: NOT(ISBLANK({performance_results_uri_en}))
     form_attrs:
-      style: "width: 100%; display: block"
+      class: form-control canada-width-full d-block
       maxlength: 1500
 
   # Dev: req dynamic field

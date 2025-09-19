@@ -3,8 +3,31 @@
 {% block primary_content %}
   {% if g.is_registry %}
     <div class="mrgn-bttm-lg">
-      {% trans %}login welcome text{% endtrans %}
-      {% trans %}password reset alert{% endtrans %}
+      <h2>{{- _('Welcome to the Open Government Registry') -}}</h2>
+      <p>
+        {{- _('Use the Registry to publish government resources on the Open Government Portal.') -}}
+        <br/>
+        {{- _('For more information on using the Registry or to report errors, contact <a href="mailto:{support}">{support}</a>.').format(support=h.support_email_address()) | safe -}}
+      </p>
+      <div class="alert alert-info">
+        <details>
+          <summary>{{- _('New password security requirements') -}}</summary>
+          <p>
+            {{- _("The Open Government Registry is now enforcing new password requirements to align with the best practices outlined in the Government of Canada's Password Guidance:") -}}
+          </p>
+          <ul>
+            <li>{{- _('Minimum length equals 12 characters') -}}</li>
+            <li>{{- _('Includes at least three of the following character sets: uppercase characters, lowercase characters, digits, punctuation & special characters') -}}</li>
+            <li>{{- _('Does not equal username') -}}</li>
+          </ul>
+          <p>
+            {{- _('Users with passwords that do not currently meet the new requirements can update their passwords, through <em>Change password</em> section of My Profile page or the <a href="/user/reset">Reset password</a> function.') -}}
+          </p>
+          <p>
+            {{- _('<strong>Please note:</strong> if passwords are not updated by the end of 2024, we will implement a process to force users to change their password to meet the new requirements before they can access the Registry.') -}}
+          </p>
+        </details>
+      </div>
       {% block form %}
         {{ super() }}
       {% endblock %}

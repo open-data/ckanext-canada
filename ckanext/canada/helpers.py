@@ -284,8 +284,12 @@ def adv_search_mlt_root() -> str:
                 config.get('ckanext.canada.adv_search_url_en'))
 
 
-def ga4_id() -> str:
-    return str(config.get('ga4.id'))
+def ga4_id() -> Optional[str]:
+    return str(config['ga4.id']) if config.get('ga4.id') else None
+
+
+def ga4_integrity() -> Optional[str]:
+    return str(config['ga4.integrity']) if config.get('ga4.integrity') else None
 
 
 def adobe_analytics_login_required(current_url: str) -> int:
@@ -631,17 +635,6 @@ def recombinant_description_to_markup(text: str) -> Dict[str, Markup]:
     # extra dict because language text expected and language text helper
     # will cause plain markup to be escaped
     return {'en': Markup(''.join(markup))}
-
-
-def mail_to_with_params(email_address: str, name: str,
-                        subject: str, body: str) -> Markup:
-    email = escape(email_address)
-    author = escape(name)
-    mail_subject = escape(subject)
-    mail_body = escape(body)
-    html = Markup('<a href="mailto:{0}?subject={2}&body={3}">{1}</a>'.format(
-        email, author, mail_subject, mail_body))
-    return html
 
 
 def get_timeout_length() -> int:
@@ -1115,9 +1108,53 @@ def max_resources_per_dataset() -> Optional[int]:
         return int(max_resource_count)
 
 
-def support_email_address() -> str:
-    return config['ckanext.canada.support_email_address']
+def obfuscate_to_code_points(string: str,
+                             return_safe: bool = True) -> Union[Markup, str]:
+    """
+    Obfuscate each string character to its code point.
+    """
+    obfuscated_string = ''
+    for _s in string:
+        obfuscated_string += f'&#{ord(_s):03d};'
+    return Markup(obfuscated_string) if return_safe \
+        else obfuscated_string
 
 
-def default_open_email_address() -> str:
-    return config['ckanext.canada.default_open_email_address']
+def support_email_address(xml_encode: bool = True) -> Union[Markup, str]:
+    return config['ckanext.canada.support_email_address'] if not xml_encode \
+        else obfuscate_to_code_points(
+            config['ckanext.canada.support_email_address'])
+
+
+def default_open_email_address(xml_encode: bool = True) -> Union[Markup, str]:
+    return config['ckanext.canada.default_open_email_address'] if not xml_encode \
+        else obfuscate_to_code_points(
+            config['ckanext.canada.default_open_email_address'])
+
+
+def mail_to(email_address: str, name: str) -> Markup:
+    email = obfuscate_to_code_points(email_address, return_safe=False)
+    if email_address == name:
+        author = obfuscate_to_code_points(name, return_safe=False)
+    else:
+        author = escape(name)
+    html = Markup('<a href=mailto:{0}>{1}</a>'.format(email, author))
+    return html
+
+
+def mail_to_with_params(email_address: str, name: str,
+                        subject: str, body: str) -> Markup:
+    email = obfuscate_to_code_points(email_address, return_safe=False)
+    if email_address == name:
+        author = obfuscate_to_code_points(name, return_safe=False)
+    else:
+        author = escape(name)
+    mail_subject = escape(subject)
+    mail_body = escape(body)
+    html = Markup('<a href="mailto:{0}?subject={2}&body={3}">{1}</a>'.format(
+        email, author, mail_subject, mail_body))
+    return html
+
+
+def get_inline_script_nonce() -> str:
+    return str(request.environ.get('CSP_NONCE', ''))

@@ -2,6 +2,15 @@
 
 {% set client_lang = h.lang() %}
 
+{% block page_primary_action %}
+  {% if group_dict.state == "deleted" %}
+    <div class="module-alert alert alert-danger mrgn-tp-sm">
+      <p>{{ _('This organization has been deleted and is no longer accessible') }}.</p>
+    </div>
+  {% endif %}
+  {{ super() }}
+{% endblock %}
+
 {% block organization_facets %}
   {% snippet 'snippets/dataset_facets.html', extras={'id': group_dict.name}, show_org_facet=false, search_facets=search_facets, facet_titles=facet_titles %}
 {% endblock %}

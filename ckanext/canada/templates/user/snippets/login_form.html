@@ -6,14 +6,14 @@
   {% asset 'security/mfa_login' %}
   <div class="col-md-12 canada-flash-messages">
     <div class="flash-messages">
-      <div id="login-error" class="alert fade alert-danger error-explanation" style="display: none;">
-        <p style="padding-bottom: 10px;">{{ _('Login failed. Incorrect username or password.') }}</p>
+      <div id="login-error" class="alert fade alert-danger error-explanation canada-display-none">
+        <p class="canada-margin-bottom-10">{{ _('Login failed. Incorrect username or password.') }}</p>
       </div>
-      <div id="mfa-error" class="alert fade alert-danger error-explanation" style="display: none;">
-        <p style="padding-bottom: 10px;">{{ _('Invalid code, please try again.') }}</p>
+      <div id="mfa-error" class="alert fade alert-danger error-explanation canada-display-none">
+        <p class="canada-margin-bottom-10">{{ _('Invalid code, please try again.') }}</p>
       </div>
-      <div id="unknown-error" class="alert fade alert-danger error-explanation" style="display: none;">
-        <p style="padding-bottom: 10px;">{{ _('An unknown error occurred.') }}</p>
+      <div id="unknown-error" class="alert fade alert-danger error-explanation canada-display-none">
+        <p class="canada-margin-bottom-10">{{ _('An unknown error occurred.') }}</p>
       </div>
     </div>
   </div>
@@ -30,7 +30,7 @@
     {% trans %}NOTE: Username and password are case sensitive.{% endtrans %}
   </div>
   {{ form.input('login', label=_("Username"), id='field-login', value="", error=username_error) }}
-  {{ form.input('password', label=_("Password"), id='field-password', type="password", value="", error=password_error) }}
+  {{ form.input('password', label=_("Password"), id='field-password', attrs={'class': 'form-control', 'autocomplete': 'off'}, type="password", value="", error=password_error) }}
   <div class="form-actions">
     {% block login_button %}
       <div class="clear"></div>
@@ -38,13 +38,13 @@
     {% endblock %}
   </div>
   {% if h.security_enable_totp() %}
-    <div id="mfa-form" style="display: none;">
+    <div id="mfa-form" class="canada-display-none">
       <p class="mrgn-tp-md">{{_('Please enter your authenticator app generated 6-digit verification code.')}}</p>
       {{ form.input('mfa', label=_("Verification code"), id='field-mfa', type="text", value="", error=mfa_error, classes=["control-medium"], attrs={"autocomplete": "off", "class": "form-control"}) }}
 
       <input id="mfa-form-active" name="mfa-form-active" type="hidden" value="" />
       <div class="form-actions">
-        <a id="mfa-help-link" href="/" style="display: none; margin-right: 20px;">{{_('Need help?')}}</a>
+        <a id="mfa-help-link" class="canada-mfa-help-link" href="/">{{_('Need help?')}}</a>
         <button class="btn btn-primary" type="submit">{{ _('Submit') }}</button>
       </div>
     </div>

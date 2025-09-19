@@ -32,14 +32,16 @@
   {{ super() }}
   {% block google_analytics %}
     {% set ga4_id = h.ga4_id() %}
+    {% set ga4_integrity = h.ga4_integrity() %}
     {% if ga4_id %}
       <!-- Google tag (gtag.js) -->
-      <script async src="https://www.googletagmanager.com/gtag/js?id={{ ga4_id }}"></script>
-      <script>
+      {# FIXME: how to do script integrity with the non-static gtag script... #}
+      <script src="https://www.googletagmanager.com/gtag/js?id={{- ga4_id -}}" crossorigin="anonymous" nonce="{{- h.get_inline_script_nonce() -}}" async></script>
+      <script nonce="{{- h.get_inline_script_nonce() -}}" async>
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
-        gtag('config', '{{ ga4_id }}');
+        gtag('config', '{{- ga4_id -}}');
       </script>
     {% endif %}
   {% endblock %}
@@ -48,7 +50,7 @@
     <script type="text/javascript">
       window.loop11_key = '{{ loop11_key }}';
     </script>
-    <script src="//cdn.loop11.com/my/loop11.js" type="text/javascript" async="async"></script>
+    <script src="//cdn.loop11.com/my/loop11.js" integrity="sha384-ryoGVNTPnR+ANCc00GlsI2s1q5ZLFbGKUScq2M4b8iqMM2TDjh1x8PDoRpHTOejB" crossorigin="anonymous" type="text/javascript" async="async" nonce="{{- h.get_inline_script_nonce() -}}"></script>
   {% endif %}
 {% endblock %}
 
