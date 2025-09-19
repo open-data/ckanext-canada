@@ -38,6 +38,8 @@ resources:
     occurrence: Single
     datastore_type: text
     excel_error_formula: 'OR({default_formula},LEN({cell})-LEN(SUBSTITUTE({cell},",",""))>0)'
+    js_error_eval: 'VALUE.length > 0 && VALUE.includes(",")'
+    datatables_col_class: col-md
     validation:
       en: |
         This field must not be empty.
@@ -66,6 +68,8 @@ resources:
       fr: Doit correspondre aux options d'achèvement prévues de la liste contrôlée.
     occurrence: Single
     excel_full_text_choices: false
+    datatables_full_text_choices: false
+    datatables_col_class: col-md
     choices:
       2025-Q3:
         en: 2025-Q3
@@ -112,8 +116,10 @@ resources:
       fr: Doit correspondre à l'une des valeurs de la liste contrôlée.
     occurrence: Single
     excel_full_text_choices: true
+    datatables_full_text_choices: true
     form_choices_prefix_code: true
     excel_column_width: 25
+    datatables_col_class: col-lg
     choices:
       A:
         en: Central AI Capacity
@@ -148,11 +154,14 @@ resources:
       fr: Doit correspondre à des déclarations d'action prédéfinies.
     occurrence: Single
     excel_full_text_choices: true
+    datatables_full_text_choices: true
     form_choices_prefix_code: true
     # choices based on priority_area value
     excel_choice_range_formula: 'offset({range_top},countif({range},"<"&trim(left({priority_area},find(":",{priority_area}&":")-1))),0,countif({range},trim(left({priority_area},find(":",{priority_area}&":")-1))&"*"),1)'
     excel_error_formula: 'trim(left({priority_area},find(":",{priority_area}&":")-1))<>trim(left({cell},find(":",{priority_area}&":")-1))'
+    js_error_eval: '{{priority_area}}.length > 0 && VALUE.length > 0 && VALUE.split(".")[0] != {{priority_area}}'
     excel_column_width: 50
+    datatables_col_class: col-xl
     form_attrs:
       cascading_select_field: priority_area
     choices:
@@ -213,17 +222,20 @@ resources:
       fr: Doit correspondre à l'une des sous-actions définies dans la stratégie IA.
     occurrence: Single
     excel_full_text_choices: true
+    datatables_full_text_choices: true
     form_choices_prefix_code: true
     # choices based on key_action value
     excel_choice_range_formula: 'offset({range_top},countif({range},"<"&trim(left({key_action},find(":",{key_action}&":")-1))),0,countif({range},trim(left({key_action},find(":",{key_action}&":")-1))&"*"),1)'
     excel_error_formula: 'trim(left({key_action},find(":",{key_action}&":")-1))<>trim(left({cell},find(":",{key_action}&":")-1))'
+    js_error_eval: '{{key_action}}.length > 0 && VALUE.length > 0 && VALUE.split(".")[0] + "." + VALUE.split(".")[1] != {{key_action}}'
     excel_column_width: 50
+    datatables_col_class: col-xxl
     form_attrs:
       cascading_select_field: key_action
     choices:
       A.1.1:
         en: Establish an AI Centre of Expertise for the Government of Canada
-        fr: Créer un centre d'expertise en IA pour le gouvernement du Canada   
+        fr: Créer un centre d'expertise en IA pour le gouvernement du Canada
       A.1.2:
         en: Identify high value use cases for AI Integration
         fr: Identifier les cas d'utilisation à forte valeur ajoutée pour l'intégration de l'IA
@@ -344,11 +356,14 @@ resources:
       fr: Doit correspondre à des activités prédéfinies.
     occurrence: Single
     excel_full_text_choices: true
+    datatables_full_text_choices: true
     form_choices_prefix_code: true
     # choices based on sub_action value
     excel_choice_range_formula: 'offset({range_top},countif({range},"<"&trim(left({sub_action},find(":",{sub_action}&":")-1))),0,countif({range},trim(left({sub_action},find(":",{sub_action}&":")-1))&"*"),1)'
     excel_error_formula: 'trim(left({sub_action},find(":",{sub_action}&":")-1))<>trim(left({cell},find(":",{sub_action}&":")-1))'
+    js_error_eval: '{{sub_action}}.length > 0 && VALUE.length > 0 && VALUE.split(".")[0] + "." + VALUE.split(".")[1] + "." + VALUE.split(".")[2] != {{sub_action}}'
     excel_column_width: 50
+    datatables_col_class: col-xxl
     form_attrs:
       cascading_select_field: sub_action
     choices:
@@ -474,7 +489,7 @@ resources:
         fr: Travailler avec les fonctionnaires et leurs agents négociateurs afin de préparer la main-d’oeuvre aux changements découlant de l’IA en lui offrant du perfectionnement et du recyclage professionnel
       C.3.1.1:
         en: Develop mobility, recruitment, exchanges, and/or other types of opportunities on the GC Digital Talent Platform to recruit, develop, and retain AI and data talent
-        fr: Accroître la mobilité, le recrutement, les échanges ou d’autres types d’occasions sur la plateforme Talents numériques du gouvernement du Canada pour recruter, perfectionner et maintenir en poste les talents en IA et en données 
+        fr: Accroître la mobilité, le recrutement, les échanges ou d’autres types d’occasions sur la plateforme Talents numériques du gouvernement du Canada pour recruter, perfectionner et maintenir en poste les talents en IA et en données
       C.3.2.1:
         en: Review and scale successful departmental initiatives
         fr: Examiner et reproduire les initiatives ministérielles réussies
@@ -548,6 +563,8 @@ resources:
       fr: Limiter le nombre de caractères, libre texte (maximum 1000 caractères).
     occurrence: Single
     max_chars: 1000
+    js_required_eval: '{{description_fr}}.length > 0'
+    datatables_col_class: col-xl
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
       style: "width: 100%; display: block"
@@ -574,6 +591,8 @@ resources:
       fr: Limiter le nombre de caractères, libre texte (maximum 1000 caractères).
     occurrence: Single
     max_chars: 1000
+    js_required_eval: '{{description_en}}.length > 0'
+    datatables_col_class: col-xl
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
       style: "width: 100%; display: block"
@@ -599,6 +618,7 @@ resources:
       fr: Doit correspondre aux options d'achèvement prévues de la liste contrôlée.
     occurrence: Single
     excel_full_text_choices: false
+    datatables_col_class: col-md
     choices:
       2025-Q3:
         en: 2025-Q3
@@ -645,6 +665,8 @@ resources:
     occurrence: Repeatable
     datastore_type: _text
     excel_full_text_choices: true
+    datatables_full_text_choices: true
+    datatables_col_class: col-lg
     form_snippet: scheming/form_snippets/multiple_select.html
     choices:
       TBS:
@@ -701,6 +723,8 @@ resources:
       fr: "Il doit s'agir de l'un des éléments suivants : Non commencé, En cours, Terminé."
     occurrence: Single
     excel_full_text_choices: true
+    datatables_full_text_choices: true
+    datatables_col_class: col-md
     choices:
       NS:
         en: Not started
@@ -732,6 +756,8 @@ resources:
     occurrence: Single
     datastore_type: text
     max_chars: 1000
+    js_required_eval: '{{progress_fr}}.length > 0'
+    datatables_col_class: col-xl
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
       maxlength: 1000
@@ -756,6 +782,8 @@ resources:
     occurrence: Single
     datastore_type: text
     max_chars: 1000
+    js_required_eval: '{{progress_en}}.length > 0'
+    datatables_col_class: col-xl
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
       maxlength: 1000
