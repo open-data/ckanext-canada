@@ -542,8 +542,8 @@ resources:
       fr: Ce champ ne doit pas être vide.
     occurrence: Single
     datastore_type: text
-    excel_full_text_choices: true
-    datatables_full_text_choices: true
+    datatables_full_text_choices: false
+    excel_full_text_choices: false
     choices_file: choices/yes_no.yaml
     form_snippet: scheming/form_snippets/radio.html
 
@@ -652,8 +652,8 @@ resources:
       fr: Ce champ ne doit pas être vide.
     occurrence: Single
     datastore_type: text
-    excel_full_text_choices: true
-    datatables_full_text_choices: true
+    datatables_full_text_choices: false
+    excel_full_text_choices: false
     choices_file: choices/yes_no.yaml
     form_snippet: scheming/form_snippets/radio.html
 
