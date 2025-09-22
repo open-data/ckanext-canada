@@ -523,7 +523,7 @@ resources:
       fr: Ce champ ne doit pas être vide.
     occurrence: Single
     datastore_type: text
-    excel_full_text_choices: true
+    excel_full_text_choices: false
     choices_file: choices/yes_no.yaml
     form_snippet: scheming/form_snippets/radio.html
 
@@ -628,7 +628,7 @@ resources:
       fr: Ce champ ne doit pas être vide.
     occurrence: Single
     datastore_type: text
-    excel_full_text_choices: true
+    excel_full_text_choices: false
     choices_file: choices/yes_no.yaml
     form_snippet: scheming/form_snippets/radio.html
 
@@ -897,7 +897,7 @@ resources:
       fr: Ce champ ne doit pas être vide.
     occurrence: Single
     datastore_type: text
-    excel_full_text_choices: true
+    excel_full_text_choices: false
     choices:
       'NA':
         en: N/A (not a service to individuals)
@@ -935,7 +935,7 @@ resources:
       fr: Ce champ ne doit pas être vide.
     occurrence: Single
     datastore_type: text
-    excel_full_text_choices: true
+    excel_full_text_choices: false
     choices:
       'NA':
         en: N/A (not a service to businesses)
