@@ -900,8 +900,8 @@ resources:
     excel_full_text_choices: false
     choices:
       'NA':
-        en: N/A (not a service to individuals)
-        fr: S.O. (N'est pas un service aux particuliers)
+        en: N/A
+        fr: S.O.
       'N':
         en: "No"
         fr: Non
@@ -938,8 +938,8 @@ resources:
     excel_full_text_choices: false
     choices:
       'NA':
-        en: N/A (not a service to businesses)
-        fr: S.O. (N'est pas un service aux entreprises)
+        en: N/A
+        fr: S.O.
       'N':
         en: "No"
         fr: Non
