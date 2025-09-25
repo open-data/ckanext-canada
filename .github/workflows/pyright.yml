@@ -18,12 +18,12 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
-      - name: Checkout Repository (${{ GITHUB_HEAD_REF ||github.ref_name }})
+      - name: Checkout Repository (${{ github.head_ref || github.ref_name }})
         id: gitcheckout
         run: |
           cd /srv/app/src/ckanext-canada
           git fetch origin
-          git checkout -b ${{ GITHUB_HEAD_REF ||github.ref_name }} origin/${{ GITHUB_HEAD_REF ||github.ref_name }}
+          git checkout -b ${{ github.head_ref || github.ref_name }} origin/${{ github.head_ref || github.ref_name }}
           git fetch
           git pull
           source /srv/app/venv/bin/activate
