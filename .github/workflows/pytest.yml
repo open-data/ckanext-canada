@@ -160,7 +160,7 @@ jobs:
         if: needs.define-matrix.outputs.restored == 'false'
         run: |
           echo "unzip pytest test duration details"
-          gunzip .test_durations.gz
+          gunzip /srv/app/src/ckanext-canada/test_durations.gz
       - name: Run Pytest
         run: |
           set -ex
