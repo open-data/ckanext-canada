@@ -127,11 +127,11 @@ jobs:
         run: |
           mkdir -p /srv/app/junit/result
           touch /srv/app/junit/result/test-summary.md
-      - name: Checkout Repository (${{ github.ref_name }})
+      - name: Checkout Repository (${{ GITHUB_HEAD_REF || github.ref_name }})
         run: |
           cd /srv/app/src/ckanext-canada
           git fetch origin
-          git checkout -b ${{ github.ref_name }} origin/${{ github.ref_name }}
+          git checkout -b ${{ GITHUB_HEAD_REF || github.ref_name }} origin/${{ GITHUB_HEAD_REF || github.ref_name }}
           git fetch
           git pull
           source /srv/app/venv/bin/activate
