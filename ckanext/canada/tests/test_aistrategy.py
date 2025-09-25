@@ -71,3 +71,27 @@ class TestAIStrategy(CanadaTestBase):
         for k in set(err) | set(expected):
             assert k in err
             assert err[k] == expected[k]
+
+    def test_max_chars(self):
+        """
+        Over max character field values should raise an exception
+        """
+        chromo = get_chromo('aistrategy')
+        record = chromo['examples']['record'].copy()
+
+        expect_maxchar_fields = ['description_en', 'description_fr',
+                                 'progress_en', 'progress_fr']
+
+        for field in chromo['fields']:
+            if field.get('max_chars'):
+                assert field['datastore_id'] in expect_maxchar_fields
+                record[field['datastore_id']] = 'xx' * field.get('max_chars')
+
+        with pytest.raises(ValidationError) as ve:
+            self.lc.action.datastore_upsert(
+                resource_id=self.resource_id,
+                records=[record])
+        err = ve.value.error_dict
+        assert 'records' in err
+        for maxchar_field in expect_maxchar_fields:
+            assert maxchar_field in err['records'][0]
