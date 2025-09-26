@@ -36,6 +36,7 @@ resources:
       en: Free text
       fr: Texte libre
     validation: This field must not be empty
+    js_error_eval: 'VALUE.length > 0 && VALUE.includes(",")'
     visible_to_public: Yes
     occurrence: Single
     datastore_type: text
@@ -58,6 +59,7 @@ resources:
     visible_to_public: Yes
     occurrence: Single
     datastore_type: text
+    datatables_col_class: col-lg
     excel_column_width: 30
     form_attrs:
       size: 60
@@ -80,6 +82,7 @@ resources:
     visible_to_public: Yes
     occurrence: Single
     datastore_type: text
+    datatables_col_class: col-lg
     excel_column_width: 30
     form_attrs:
       size: 60
@@ -102,7 +105,9 @@ resources:
     visible_to_public: Yes
     occurrence: Single
     datastore_type: text
-    excel_full_text_choices: True
+    excel_full_text_choices: true
+    datatables_full_text_choices: true
+    datatables_col_class: col-lg
     choices_file: choices/minister.json
     exclude_choices:
     - GG
@@ -126,9 +131,11 @@ resources:
     visible_to_public: Yes
     occurrence: Repeatable
     datastore_type: text
+    datatables_col_class: col-xxl
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
       class: form-control canada-width-full d-block
+    markdown: true
 
   # 3.6
   - datastore_id: question_fr
@@ -148,9 +155,11 @@ resources:
     visible_to_public: Yes
     occurrence: Repeatable
     datastore_type: text
+    datatables_col_class: col-xxl
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
       class: form-control canada-width-full d-block
+    markdown: true
 
   # 3.7
   - datastore_id: date_received
@@ -190,9 +199,11 @@ resources:
     visible_to_public: Yes
     occurrence: Repeatable
     datastore_type: text
+    datatables_col_class: col-xxl
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
       class: form-control canada-width-full d-block
+    markdown: true
 
   # 3.11
   - datastore_id: response_fr
@@ -212,9 +223,11 @@ resources:
     visible_to_public: Yes
     occurrence: Repeatable
     datastore_type: text
+    datatables_col_class: col-xxl
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
       class: form-control canada-width-full d-block
+    markdown: true
 
   # 3.8
   - datastore_id: background_en
@@ -234,9 +247,11 @@ resources:
     visible_to_public: Yes
     occurrence: Repeatable
     datastore_type: text
+    datatables_col_class: col-xxl
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
       class: form-control canada-width-full d-block
+    markdown: true
 
   # 3.9
   - datastore_id: background_fr
@@ -256,9 +271,11 @@ resources:
     visible_to_public: Yes
     occurrence: Repeatable
     datastore_type: text
+    datatables_col_class: col-xxl
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
       class: form-control canada-width-full d-block
+    markdown: true
 
   # 3.12
   - datastore_id: additional_information_en
@@ -276,9 +293,11 @@ resources:
     visible_to_public: Yes
     occurrence: Repeatable
     datastore_type: text
+    datatables_col_class: col-xxl
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
       class: form-control canada-width-full d-block
+    markdown: true
 
   # 3.13
   - datastore_id: additional_information_fr
@@ -296,9 +315,11 @@ resources:
     visible_to_public: Yes
     occurrence: Repeatable
     datastore_type: text
+    datatables_col_class: col-xxl
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
       class: form-control canada-width-full d-block
+    markdown: true
 
   # audit trail
   - datastore_id: record_created
@@ -403,9 +424,12 @@ resources:
     obligation: Mandatory
     excel_required: true
     form_required: true
+    datatables_col_class: col-md
     validation: This field must not be empty
     excel_column_width: 10
     extract_date_year: true
+    excel_error_formula: '{cell}>YEAR(TODAY())'
+    js_error_eval: 'VALUE.length > 0 && VALUE > new Date().getFullYear()'
     form_attrs:
       size: 20
 
@@ -420,8 +444,10 @@ resources:
     obligation: Mandatory
     excel_required: true
     form_required: true
+    datatables_col_class: col-sm pd-datatables-primary-key-offset-md
     validation: This field must not be empty
     excel_full_text_choices: true
+    datatables_full_text_choices: true
     choices:
       P01:
         en: Jan. - June
@@ -507,3 +533,9 @@ excel_column_heading_style:
   PatternFill:
     patternType: solid
     fgColor: FF84acb6
+datatables_style:
+  header:
+    bgColor: 84acb6
+  select:
+    bgColor: c4d7dc
+    fgColor: 333333
