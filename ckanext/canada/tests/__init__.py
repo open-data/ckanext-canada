@@ -1,15 +1,4 @@
-from ckan.tests.helpers import reset_db
-from ckan.lib.search import clear_all
-from ckanext.validation.model import (
-    create_tables as validation_create_tables,
-    tables_exist as validation_tables_exist
-)
-from ckanext.security.model import db_setup as security_db_setup
-from ckanext.canada.tests.factories import CanadaOrganization as Organization
-from ckanext.canada.triggers import update_triggers
-from ckanext.recombinant.cli import _create_triggers
-from ckan.cli.db import _run_migrations
-from ckanapi import LocalCKAN, NotFound
+from ckan import model
 
 
 class CanadaTestBase(object):
@@ -18,24 +7,27 @@ class CanadaTestBase(object):
         """Method is called at class level before EACH test methods of the class are called.
         Setup any state specific to the execution of the given class methods.
         """
-        # FIXME: DB head for migartions in our test environment setup.
-        #        HEAD of CKAN db Docker image is always ahead??
-        _run_migrations('canada_public')
-        reset_db()
-        clear_all()
-        if not validation_tables_exist():
-            validation_create_tables()
+        return
 
-        security_db_setup()
-        _run_migrations('activity')
-        update_triggers()
-        _create_triggers(dataset_types=[], all_types=True)
-        _run_migrations('canada_public')
+    @classmethod
+    def teardown_method(self, method):
+        """Method is called at class level after EACH test methods of the class are called.
+        Remove any state specific to the execution of the given class methods.
+        """
+        model.Session.rollback()
+        return
 
-        # NOTE: always make a tbs-sct org
-        try:
-            self.lc = LocalCKAN()
-            self.org = self.lc.action.organization_show(id='tbs-sct')
-        except NotFound:
-            self.org = Organization(id='tbs-sct',
-                                    name='tbs-sct')
+    @classmethod
+    def setup_class(self):
+        """Method is called at class level once the class is instatiated.
+        Setup any state specific to the execution of the given class.
+        """
+        return
+
+    @classmethod
+    def teardown_class(self):
+        """Method is called at class level after ALL test methods of the class are called.
+        Remove any state specific to the execution of the given class.
+        """
+        model.Session.rollback()
+        return
