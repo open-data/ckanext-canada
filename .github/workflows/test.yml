@@ -6,6 +6,8 @@ on:
   push:
     branches:
       - master
+      - staging
+      - dev
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.head_ref || github.ref }} # workflow limits it to this workflow, ref includes a pushed branch or on pull request merge branch
