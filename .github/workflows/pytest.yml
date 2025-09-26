@@ -365,7 +365,7 @@ jobs:
                     },
                     {
                       "type": "mrkdwn",
-                      "text": "*Branch:*\n${{ github.ref_name }}"
+                      "text": "*Branch:*\n${{ github.head_ref || github.ref_name }}"
                     },
                     {
                       "type": "mrkdwn",
@@ -440,7 +440,7 @@ jobs:
                     },
                     {
                       "type": "mrkdwn",
-                      "text": "*Branch:*\n${{ github.ref_name }}"
+                      "text": "*Branch:*\n${{ github.head_ref || github.ref_name }}"
                     },
                     {
                       "type": "mrkdwn",
