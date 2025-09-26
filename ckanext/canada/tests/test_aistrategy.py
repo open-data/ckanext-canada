@@ -3,6 +3,7 @@ from ckanext.canada.tests import CanadaTestBase
 from ckanapi import LocalCKAN, ValidationError
 
 import pytest
+from ckan import model
 from ckanext.canada.tests.factories import CanadaOrganization as Organization
 
 from ckanext.recombinant.tables import get_chromo
@@ -10,11 +11,11 @@ from ckanext.recombinant.tables import get_chromo
 
 class TestAIStrategy(CanadaTestBase):
     @classmethod
-    def setup_method(self, method):
-        """Method is called at class level before EACH test methods of the class are called.
-        Setup any state specific to the execution of the given class methods.
+    def setup_class(self):
+        """Method is called at class level once the class is instatiated.
+        Setup any state specific to the execution of the given class.
         """
-        super(TestAIStrategy, self).setup_method(method)
+        super(TestAIStrategy, self).setup_class()
 
         org = Organization()
         self.lc = LocalCKAN()
@@ -35,6 +36,7 @@ class TestAIStrategy(CanadaTestBase):
             self.lc.action.datastore_upsert(
                 resource_id=self.resource_id,
                 records=[{}])
+        model.Session.rollback()
         err = ve.value.error_dict
         assert 'key' in err, err
 
@@ -55,6 +57,7 @@ class TestAIStrategy(CanadaTestBase):
             self.lc.action.datastore_upsert(
                 resource_id=self.resource_id,
                 records=[record])
+        model.Session.rollback()
         err = ve.value.error_dict['records'][0]
         expected = {
             'ref_number': ['This field must not be empty'],
@@ -71,3 +74,28 @@ class TestAIStrategy(CanadaTestBase):
         for k in set(err) | set(expected):
             assert k in err
             assert err[k] == expected[k]
+
+    def test_max_chars(self):
+        """
+        Over max character field values should raise an exception
+        """
+        chromo = get_chromo('aistrategy')
+        record = chromo['examples']['record'].copy()
+
+        expect_maxchar_fields = ['description_en', 'description_fr',
+                                 'progress_en', 'progress_fr']
+
+        for field in chromo['fields']:
+            if field.get('max_chars'):
+                assert field['datastore_id'] in expect_maxchar_fields
+                record[field['datastore_id']] = 'xx' * field.get('max_chars')
+
+        with pytest.raises(ValidationError) as ve:
+            self.lc.action.datastore_upsert(
+                resource_id=self.resource_id,
+                records=[record])
+        model.Session.rollback()
+        err = ve.value.error_dict
+        assert 'records' in err
+        for maxchar_field in expect_maxchar_fields:
+            assert maxchar_field in err['records'][0]
