@@ -171,7 +171,9 @@ jobs:
         run: |
           cd /srv/app/src/ckanext-canada
           git fetch origin
-          git checkout -b ${{ github.head_ref || github.ref_name }} origin/${{ github.head_ref || github.ref_name }}
+          if [[ "${{ github.head_ref || github.ref_name }}" != "master" ]]; then
+            git checkout -b ${{ github.head_ref || github.ref_name }} origin/${{ github.head_ref || github.ref_name }}
+          fi;
           git fetch
           git pull
           source /srv/app/venv/bin/activate
@@ -338,7 +340,9 @@ jobs:
         run: |
           cd /srv/app/src/ckanext-canada
           git fetch origin
-          git checkout -b ${{ github.head_ref || github.ref_name }} origin/${{ github.head_ref || github.ref_name }}
+          if [[ "${{ github.head_ref || github.ref_name }}" != "master" ]]; then
+            git checkout -b ${{ github.head_ref || github.ref_name }} origin/${{ github.head_ref || github.ref_name }}
+          fi;
           git fetch
           git pull
           source /srv/app/venv/bin/activate
