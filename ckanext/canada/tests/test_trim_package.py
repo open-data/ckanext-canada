@@ -9,11 +9,11 @@ from ckanext.canada.cli import _trim_package, PACKAGE_TRIM_FIELDS, RESOURCE_TRIM
 
 class TestTrimPackage(CanadaTestBase):
     @classmethod
-    def setup_method(self, method):
+    def setup_class(self):
         """Method is called at class level before EACH test methods of the class are called.
         Setup any state specific to the execution of the given class methods.
         """
-        super(TestTrimPackage, self).setup_method(method)
+        super(TestTrimPackage, self).setup_class()
 
         self.example_pkg = Dataset()
         resources = []

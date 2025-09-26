@@ -65,11 +65,11 @@ class TestCanadaTags(object):
 
 class TestNAVLSchema(CanadaTestBase):
     @classmethod
-    def setup_method(self, method):
+    def setup_class(self):
         """Method is called at class level before EACH test methods of the class are called.
         Setup any state specific to the execution of the given class methods.
         """
-        super(TestNAVLSchema, self).setup_method(method)
+        super(TestNAVLSchema, self).setup_class()
 
         self.sysadmin_user = Sysadmin()
         self.normal_user = User()
@@ -139,6 +139,8 @@ class TestNAVLSchema(CanadaTestBase):
         for k in set(err) | set(expected):
             assert k in err
             assert err[k] == expected[k]
+
+        model.Session.rollback()
 
         resp = self.normal_action.package_create(
             name='12345678-9abc-def0-1234-56789abcdef0', **self.complete_pkg)
@@ -497,11 +499,11 @@ class TestNAVLSchema(CanadaTestBase):
 
 class TestSysadminUpdate(CanadaTestBase):
     @classmethod
-    def setup_method(self, method):
+    def setup_class(self):
         """Method is called at class level before EACH test methods of the class are called.
         Setup any state specific to the execution of the given class methods.
         """
-        super(TestSysadminUpdate, self).setup_method(method)
+        super(TestSysadminUpdate, self).setup_class()
 
         self.sysadmin_user = Sysadmin()
         self.normal_user = User()

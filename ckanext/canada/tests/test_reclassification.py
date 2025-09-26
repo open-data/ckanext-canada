@@ -10,11 +10,11 @@ from ckanext.recombinant.tables import get_chromo
 
 class TestReclassification(CanadaTestBase):
     @classmethod
-    def setup_method(self, method):
+    def setup_class(self):
         """Method is called at class level before EACH test methods of the class are called.
         Setup any state specific to the execution of the given class methods.
         """
-        super(TestReclassification, self).setup_method(method)
+        super(TestReclassification, self).setup_class()
 
         org = Organization()
         self.lc = LocalCKAN()
@@ -42,11 +42,11 @@ class TestReclassification(CanadaTestBase):
 
 class TestReclassificationNil(CanadaTestBase):
     @classmethod
-    def setup_method(self, method):
+    def setup_class(self):
         """Method is called at class level before EACH test methods of the class are called.
         Setup any state specific to the execution of the given class methods.
         """
-        super(TestReclassificationNil, self).setup_method(method)
+        super(TestReclassificationNil, self).setup_class()
 
         org = Organization()
         self.lc = LocalCKAN()

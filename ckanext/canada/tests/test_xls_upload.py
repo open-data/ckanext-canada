@@ -24,11 +24,11 @@ from ckanext.recombinant.errors import BadExcelData
 @pytest.mark.usefixtures('with_request_context')
 class TestXlsUpload(CanadaTestBase):
     @classmethod
-    def setup_method(self, method):
+    def setup_class(self):
         """Method is called at class level before EACH test methods of the class are called.
         Setup any state specific to the execution of the given class methods.
         """
-        super(TestXlsUpload, self).setup_method(method)
+        super(TestXlsUpload, self).setup_class()
 
         self.editor = User()
         self.extra_environ_tester = {'Authorization': self.editor['token']}

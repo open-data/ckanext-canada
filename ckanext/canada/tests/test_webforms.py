@@ -42,11 +42,11 @@ def _get_relative_offset_from_response(response):
 @pytest.mark.usefixtures('with_request_context')
 class TestPackageWebForms(CanadaTestBase):
     @classmethod
-    def setup_method(self, method):
+    def setup_class(self):
         """Method is called at class level before EACH test methods of the class are called.
         Setup any state specific to the execution of the given class methods.
         """
-        super(TestPackageWebForms, self).setup_method(method)
+        super(TestPackageWebForms, self).setup_class()
         self.sysadmin = Sysadmin()
         self.extra_environ_tester = {'Authorization': self.sysadmin['token']}
         self.environ_overrides_tester = {'REMOTE_USER': self.sysadmin['name'].encode('ascii')}
@@ -194,11 +194,11 @@ class TestPackageWebForms(CanadaTestBase):
 @pytest.mark.ckan_config("ckanext.canada.suppress_user_emails", True)
 class TestNewUserWebForms(CanadaTestBase):
     @classmethod
-    def setup_method(self, method):
+    def setup_class(self):
         """Method is called at class level before EACH test methods of the class are called.
         Setup any state specific to the execution of the given class methods.
         """
-        super(TestNewUserWebForms, self).setup_method(method)
+        super(TestNewUserWebForms, self).setup_class()
         self.extra_environ_tester = {'Authorization': str(u"")}
         self.environ_overrides_tester = {'REMOTE_USER': str(u"")}
         self.org = Organization()
@@ -272,11 +272,11 @@ class TestNewUserWebForms(CanadaTestBase):
 @pytest.mark.usefixtures('with_request_context')
 class TestRecombinantWebForms(CanadaTestBase):
     @classmethod
-    def setup_method(self, method):
+    def setup_class(self):
         """Method is called at class level before EACH test methods of the class are called.
         Setup any state specific to the execution of the given class methods.
         """
-        super(TestRecombinantWebForms, self).setup_method(method)
+        super(TestRecombinantWebForms, self).setup_class()
         member = User()
         editor = User()
         sysadmin = Sysadmin()

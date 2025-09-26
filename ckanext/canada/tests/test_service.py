@@ -20,11 +20,11 @@ spec.loader.exec_module(filter_service_std)
 
 class TestService(CanadaTestBase):
     @classmethod
-    def setup_method(self, method):
+    def setup_class(self):
         """Method is called at class level before EACH test methods of the class are called.
         Setup any state specific to the execution of the given class methods.
         """
-        super(TestService, self).setup_method(method)
+        super(TestService, self).setup_class()
 
         org = Organization()
         self.lc = LocalCKAN()
@@ -345,11 +345,11 @@ class TestService(CanadaTestBase):
 
 class TestStdService(CanadaTestBase):
     @classmethod
-    def setup_method(self, method):
+    def setup_class(self):
         """Method is called at class level before EACH test methods of the class are called.
         Setup any state specific to the execution of the given class methods.
         """
-        super(TestStdService, self).setup_method(method)
+        super(TestStdService, self).setup_class()
 
         org = Organization()
         self.lc = LocalCKAN()

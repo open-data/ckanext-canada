@@ -40,11 +40,11 @@ def mock_get_resource_uploader(data_dict):
 
 class TestDatastoreValidation(CanadaTestBase):
     @classmethod
-    def setup_method(self, method):
+    def setup_class(self):
         """Method is called at class level before EACH test methods of the class are called.
         Setup any state specific to the execution of the given class methods.
         """
-        super(TestDatastoreValidation, self).setup_method(method)
+        super(TestDatastoreValidation, self).setup_class()
 
         if plugins.plugin_loaded('xloader'):
             plugins.unload('xloader')
@@ -211,11 +211,11 @@ class TestDatastoreValidation(CanadaTestBase):
 
 class TestDatastoreXloader(CanadaTestBase):
     @classmethod
-    def setup_method(self, method):
+    def setup_class(self):
         """Method is called at class level before EACH test methods of the class are called.
         Setup any state specific to the execution of the given class methods.
         """
-        super(TestDatastoreXloader, self).setup_method(method)
+        super(TestDatastoreXloader, self).setup_class()
 
         if not plugins.plugin_loaded('xloader'):
             plugins.load('xloader')
