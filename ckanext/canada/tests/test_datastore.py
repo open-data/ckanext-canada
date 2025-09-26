@@ -251,10 +251,9 @@ class TestDatastoreXloader(CanadaTestBase):
         super(TestDatastoreXloader, self).teardown_method(method)
 
         try:
-            self.action.datastore_records_delete(
+            self.action.datastore_delete(
                 resource_id=self.resource_id,
-                force=True,
-                filters={})
+                force=True)
         except Exception:
             pass
 
