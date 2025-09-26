@@ -243,6 +243,21 @@ class TestDatastoreXloader(CanadaTestBase):
 
         super(TestDatastoreXloader, self).teardown_class()
 
+    @classmethod
+    def teardown_method(self, method):
+        """Method is called at class level after EACH test methods of the class are called.
+        Remove any state specific to the execution of the given class methods.
+        """
+        super(TestDatastoreXloader, self).teardown_method(method)
+
+        try:
+            self.action.datastore_records_delete(
+                resource_id=self.resource_id,
+                force=True,
+                filters={})
+        except Exception:
+            pass
+
     def _get_ds_records(self, exclude_field_schemas=True):
         result = self.action.datastore_search(resource_id=self.resource_id)
         ds_info = self.action.datastore_info(id=self.resource_id)

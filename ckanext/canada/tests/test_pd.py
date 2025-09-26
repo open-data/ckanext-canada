@@ -3,8 +3,6 @@ from ckanext.canada.pd import dollar_range_facet
 from ckanext.canada.tests import CanadaTestBase
 from ckanapi import LocalCKAN
 
-from pysolr import SolrError
-
 from ckanext.canada.tests.factories import CanadaOrganization as Organization
 
 from ckanext.recombinant.tables import get_chromo

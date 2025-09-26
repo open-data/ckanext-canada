@@ -58,7 +58,6 @@ class TestPackageWebForms(CanadaTestBase):
     @mock.patch.object(h, 'get_flashed_messages', flashes.mock_get_flashed_messages)
     def test_new_dataset_required_fields(self, app):
         dataset_id = 'f3e4adb9-6e32-4cb4-bf68-1eab9d1288f5'
-        resource_id = '8b29e2c6-8a12-4537-bf97-fe4e5f0a14c2'
 
         offset = h.url_for('dataset.new')
         response = app.get(offset, extra_environ=self.extra_environ_tester,
@@ -93,7 +92,6 @@ class TestPackageWebForms(CanadaTestBase):
 
     def test_new_dataset_missing_fields(self, app):
         dataset_id = 'f3e4adb9-6e32-4cb4-bf68-1eab9d1288f4'
-        resource_id = '8b29e2c6-8a12-4537-bf97-fe4e5f0a14c1'
 
         offset = h.url_for('dataset.new')
         response = app.get(offset, extra_environ=self.extra_environ_tester,

@@ -2,7 +2,6 @@
 from ckanext.canada.tests import CanadaTestBase
 from ckan.tests.factories import Sysadmin
 from ckan.plugins.toolkit import Invalid, config, NotAuthorized
-from ckan import model
 
 import pytest
 from ckan import model

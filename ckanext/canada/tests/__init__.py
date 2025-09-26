@@ -1,5 +1,6 @@
 from ckan import model
 
+
 class CanadaTestBase(object):
     @classmethod
     def setup_method(self, method):
