@@ -127,6 +127,46 @@ jobs:
         run: |
           mkdir -p /srv/app/junit/result
           touch /srv/app/junit/result/test-summary.md
+      - name: Check Source Dependency Versions
+        run: |
+          source /srv/app/venv/bin/activate
+          for dir in /srv/app/src/*; do
+            srcName=$(echo "$dir" | awk -F'/' '{print $NF}');
+            if [[ -d "$dir/.git"  ]]; then
+                printf "${srcName}: Checking for updates..."
+                cd $dir;
+                current_branch=$(git rev-parse --abbrev-ref HEAD);
+                if [[ "$srcName" == "ckan" ]]; then
+                    git fetch canada;
+                    reslog=$(git log HEAD..canada/$current_branch --oneline);
+                else
+                    git fetch origin;
+                    reslog=$(git log HEAD..origin/$current_branch --oneline);
+                fi;
+                if [[ "${reslog}" == "" ]]; then
+                    printf "${srcName}: Up to date. Skipping..."
+                else
+                    git pull || true;
+                    printf "${Green}${srcName}: Pulled updated code. Re-initializing in python environment..."
+                    cd /srv/app;
+                    if [[ -f "$dir/requirements.txt" ]]; then
+                        pip install -r $dir/requirements.txt || true;
+                    fi;
+                    if [[ -f "$dir/dev-requirements.txt" ]]; then
+                        pip install -r $dir/dev-requirements.txt || true;
+                    fi;
+                    if [[ -f "$dir/test-requirements.txt" ]]; then
+                        pip install -r $dir/test-requirements.txt || true;
+                    fi;
+                    if [[ -f "$dir/setup.py" ]]; then
+                        python $dir/setup.py develop || true;
+                    fi;
+                fi;
+            else
+                printf "${srcName}: Not a source repository. Skipping..."
+            fi;
+          done;
+          cd /srv/app;
       - name: Checkout Repository (${{ github.head_ref || github.ref_name }})
         run: |
           cd /srv/app/src/ckanext-canada
@@ -254,6 +294,46 @@ jobs:
     container:
       image: opendatacanada/ckan-pytest  # primary executor
     steps:
+      - name: Check Source Dependency Versions
+        run: |
+          source /srv/app/venv/bin/activate
+          for dir in /srv/app/src/*; do
+            srcName=$(echo "$dir" | awk -F'/' '{print $NF}');
+            if [[ -d "$dir/.git"  ]]; then
+                printf "${srcName}: Checking for updates..."
+                cd $dir;
+                current_branch=$(git rev-parse --abbrev-ref HEAD);
+                if [[ "$srcName" == "ckan" ]]; then
+                    git fetch canada;
+                    reslog=$(git log HEAD..canada/$current_branch --oneline);
+                else
+                    git fetch origin;
+                    reslog=$(git log HEAD..origin/$current_branch --oneline);
+                fi;
+                if [[ "${reslog}" == "" ]]; then
+                    printf "${srcName}: Up to date. Skipping..."
+                else
+                    git pull || true;
+                    printf "${Green}${srcName}: Pulled updated code. Re-initializing in python environment..."
+                    cd /srv/app;
+                    if [[ -f "$dir/requirements.txt" ]]; then
+                        pip install -r $dir/requirements.txt || true;
+                    fi;
+                    if [[ -f "$dir/dev-requirements.txt" ]]; then
+                        pip install -r $dir/dev-requirements.txt || true;
+                    fi;
+                    if [[ -f "$dir/test-requirements.txt" ]]; then
+                        pip install -r $dir/test-requirements.txt || true;
+                    fi;
+                    if [[ -f "$dir/setup.py" ]]; then
+                        python $dir/setup.py develop || true;
+                    fi;
+                fi;
+            else
+                printf "${srcName}: Not a source repository. Skipping..."
+            fi;
+          done;
+          cd /srv/app;
       - name: Checkout Repository (${{ github.head_ref || github.ref_name }})
         run: |
           cd /srv/app/src/ckanext-canada
