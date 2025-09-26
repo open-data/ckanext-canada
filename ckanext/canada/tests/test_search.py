@@ -17,8 +17,8 @@ class TestRegistrySearch(CanadaTestBase):
     """
     @classmethod
     def setup_class(self):
-        """Method is called at class level before EACH test methods of the class are called.
-        Setup any state specific to the execution of the given class methods.
+        """Method is called at class level once the class is instatiated.
+        Setup any state specific to the execution of the given class.
         """
         super(TestRegistrySearch, self).setup_class()
         # all datasets in canada_internal are private
@@ -82,7 +82,7 @@ class TestRegistrySearch(CanadaTestBase):
         assert 'facet_ranges' in response
         assert 'portal_release_date' in response['facet_ranges']
         assert 'counts' in response['facet_ranges']['portal_release_date']
-        assert response['facet_ranges']['portal_release_date']['counts'][2] >= 5
+        assert response['facet_ranges']['portal_release_date']['counts'][1] >= 5
 
     def test_sysadmin_package_search(self):
         "A sysadmin should have access to all packages."
@@ -127,8 +127,8 @@ class TestPortalSearch(CanadaTestBase):
     """
     @classmethod
     def setup_class(self):
-        """Method is called at class level before EACH test methods of the class are called.
-        Setup any state specific to the execution of the given class methods.
+        """Method is called at class level once the class is instatiated.
+        Setup any state specific to the execution of the given class.
         """
         if p.plugin_loaded('canada_internal'):
             p.unload('canada_internal')
@@ -168,12 +168,14 @@ class TestPortalSearch(CanadaTestBase):
                 portal_release_date='2000-01-01')
 
     @classmethod
-    def teardown_method(self, method):
-        """Method is called at class level after EACH test methods of the class are called.
-        Remove any state specific to the execution of the given class methods.
+    def teardown_class(self):
+        """Method is called at class level after ALL test methods of the class are called.
+        Remove any state specific to the execution of the given class.
         """
         if not p.plugin_loaded('canada_internal'):
             p.load('canada_internal')
+
+        super(TestPortalSearch, self).teardown_class()
 
     def test_user_package_search(self):
         response = self.lc.action.package_search(

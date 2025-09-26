@@ -10,8 +10,8 @@ from ckanext.canada.cli import _trim_package, PACKAGE_TRIM_FIELDS, RESOURCE_TRIM
 class TestTrimPackage(CanadaTestBase):
     @classmethod
     def setup_class(self):
-        """Method is called at class level before EACH test methods of the class are called.
-        Setup any state specific to the execution of the given class methods.
+        """Method is called at class level once the class is instatiated.
+        Setup any state specific to the execution of the given class.
         """
         super(TestTrimPackage, self).setup_class()
 

@@ -5,6 +5,7 @@ from ckanext.canada.tests import CanadaTestBase
 from ckanapi import LocalCKAN, ValidationError
 
 import pytest
+from ckan import model
 from ckanext.canada.tests.factories import CanadaOrganization as Organization
 
 from ckanext.recombinant.tables import get_chromo
@@ -15,8 +16,8 @@ COUNTRY_FILE = os.path.dirname(__file__) + '/../tables/choices/country.json'
 class TestTravelQ(CanadaTestBase):
     @classmethod
     def setup_class(self):
-        """Method is called at class level before EACH test methods of the class are called.
-        Setup any state specific to the execution of the given class methods.
+        """Method is called at class level once the class is instatiated.
+        Setup any state specific to the execution of the given class.
         """
         super(TestTravelQ, self).setup_class()
 
@@ -39,6 +40,7 @@ class TestTravelQ(CanadaTestBase):
             self.lc.action.datastore_upsert(
                 resource_id=self.resource_id,
                 records=[{}])
+        model.Session.rollback()
         err = ve.value.error_dict
         assert 'key' in err
         assert 'ref_number' in err['key'][0]
@@ -60,7 +62,7 @@ class TestTravelQ(CanadaTestBase):
 
             assert 'start_date' in err
             assert 'end_date' in err
-
+        model.Session.rollback()
         record['start_date'] = '2024-01-29'
         record['end_date'] = '2024-01-15'
 
@@ -71,6 +73,7 @@ class TestTravelQ(CanadaTestBase):
             err = ve.value.error_dict['records'][0]
 
             assert 'start_date' in err
+        model.Session.rollback()
 
     def test_disclosure_group(self):
         """
@@ -89,7 +92,7 @@ class TestTravelQ(CanadaTestBase):
             err = ve.value.error_dict['records'][0]
 
             assert 'disclosure_group' in err
-
+        model.Session.rollback()
         record['start_date'] = '2024-04-21'
         record['end_date'] = '2024-04-24'
         record['disclosure_group'] = 'SLE'
@@ -124,7 +127,7 @@ class TestTravelQ(CanadaTestBase):
                 assert k in err
                 assert k in expected
                 assert expected[k][0] in err[k][0]
-
+        model.Session.rollback()
         record['start_date'] = '2024-04-21'
         record['end_date'] = '2024-04-24'
         record['destination_en'] = 'England'
@@ -173,6 +176,7 @@ class TestTravelQ(CanadaTestBase):
                 self.lc.action.datastore_upsert(
                     resource_id=self.resource_id,
                     records=[record])
+            model.Session.rollback()
             err = ve.value.error_dict['records'][0]
             # NOTE: have to do partial because \uF8FF split formatting does not happen at this level
             expected = {
@@ -222,6 +226,7 @@ class TestTravelQ(CanadaTestBase):
                 self.lc.action.datastore_upsert(
                     resource_id=self.resource_id,
                     records=[record])
+            model.Session.rollback()
             err = ve.value.error_dict['records'][0]
             # NOTE: have to do partial because \uF8FF split formatting does not happen at this level
             expected = {
@@ -289,8 +294,8 @@ class TestTravelQ(CanadaTestBase):
 class TestTravelQNil(CanadaTestBase):
     @classmethod
     def setup_class(self):
-        """Method is called at class level before EACH test methods of the class are called.
-        Setup any state specific to the execution of the given class methods.
+        """Method is called at class level once the class is instatiated.
+        Setup any state specific to the execution of the given class.
         """
         super(TestTravelQNil, self).setup_class()
 
@@ -313,6 +318,7 @@ class TestTravelQNil(CanadaTestBase):
             self.lc.action.datastore_upsert(
                 resource_id=self.resource_id,
                 records=[{}])
+        model.Session.rollback()
         err = ve.value.error_dict
         assert 'key' in err
         assert 'year, month' in err['key'][0]

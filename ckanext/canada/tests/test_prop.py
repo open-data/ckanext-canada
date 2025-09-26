@@ -8,6 +8,7 @@ from ckanext.canada.tests.factories import (
 
 import pytest
 
+from ckan import model
 from ckanapi import LocalCKAN, ValidationError, NotAuthorized
 
 
@@ -58,8 +59,8 @@ UPDATED_SUGGESTION = dict(SIMPLE_SUGGESTION,
 class TestSuggestedDataset(CanadaTestBase):
     @classmethod
     def setup_class(self):
-        """Method is called at class level before EACH test methods of the class are called.
-        Setup any state specific to the execution of the given class methods.
+        """Method is called at class level once the class is instatiated.
+        Setup any state specific to the execution of the given class.
         """
         super(TestSuggestedDataset, self).setup_class()
 
@@ -115,6 +116,7 @@ class TestSuggestedDataset(CanadaTestBase):
             self.editor_lc.action.package_create(
                 owner_org=self.org['name'],
                 **SIMPLE_SUGGESTION)
+        model.Session.rollback()
         err = ve.value.error_dict
         for e in err:
             assert [m for m in err[e] if 'Only sysadmin may set this value' in m]

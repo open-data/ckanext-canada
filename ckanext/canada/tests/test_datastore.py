@@ -41,8 +41,8 @@ def mock_get_resource_uploader(data_dict):
 class TestDatastoreValidation(CanadaTestBase):
     @classmethod
     def setup_class(self):
-        """Method is called at class level before EACH test methods of the class are called.
-        Setup any state specific to the execution of the given class methods.
+        """Method is called at class level once the class is instatiated.
+        Setup any state specific to the execution of the given class.
         """
         super(TestDatastoreValidation, self).setup_class()
 
@@ -58,9 +58,9 @@ class TestDatastoreValidation(CanadaTestBase):
         self.action = LocalCKAN().action
 
     @classmethod
-    def teardown_method(self):
-        """Method is called at class level after EACH test methods of the class are called.
-        Close any state specific to the execution of the given class methods.
+    def teardown_class(self):
+        """Method is called at class level after ALL test methods of the class are called.
+        Remove any state specific to the execution of the given class.
         """
         if plugins.plugin_loaded('xloader'):
             plugins.unload('xloader')
@@ -70,6 +70,8 @@ class TestDatastoreValidation(CanadaTestBase):
 
         if not plugins.plugin_loaded('validation'):
             plugins.load('validation')
+
+        super(TestDatastoreValidation, self).teardown_class()
 
     def _setup_resource_upload(self, filename):
         csv_filepath = get_sample_filepath(filename)
@@ -212,8 +214,8 @@ class TestDatastoreValidation(CanadaTestBase):
 class TestDatastoreXloader(CanadaTestBase):
     @classmethod
     def setup_class(self):
-        """Method is called at class level before EACH test methods of the class are called.
-        Setup any state specific to the execution of the given class methods.
+        """Method is called at class level once the class is instatiated.
+        Setup any state specific to the execution of the given class.
         """
         super(TestDatastoreXloader, self).setup_class()
 
@@ -229,15 +231,17 @@ class TestDatastoreXloader(CanadaTestBase):
         self.resource_id = resource['id']
 
     @classmethod
-    def teardown_method(self):
-        """Method is called at class level after EACH test methods of the class are called.
-        Close any state specific to the execution of the given class methods.
+    def teardown_class(self):
+        """Method is called at class level after ALL test methods of the class are called.
+        Remove any state specific to the execution of the given class.
         """
         if plugins.plugin_loaded('xloader'):
             plugins.unload('xloader')
 
         if not plugins.plugin_loaded('validation'):
             plugins.load('validation')
+
+        super(TestDatastoreXloader, self).teardown_class()
 
     def _get_ds_records(self, exclude_field_schemas=True):
         result = self.action.datastore_search(resource_id=self.resource_id)

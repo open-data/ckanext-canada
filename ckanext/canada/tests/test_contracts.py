@@ -3,6 +3,7 @@ from ckanext.canada.tests import CanadaTestBase
 from ckanapi import LocalCKAN, ValidationError
 
 import pytest
+from ckan import model
 from ckanext.canada.tests.factories import CanadaOrganization as Organization
 
 from ckanext.recombinant.tables import get_chromo
@@ -11,8 +12,8 @@ from ckanext.recombinant.tables import get_chromo
 class TestContracts(CanadaTestBase):
     @classmethod
     def setup_class(self):
-        """Method is called at class level before EACH test methods of the class are called.
-        Setup any state specific to the execution of the given class methods.
+        """Method is called at class level once the class is instatiated.
+        Setup any state specific to the execution of the given class.
         """
         super(TestContracts, self).setup_class()
 
@@ -35,6 +36,7 @@ class TestContracts(CanadaTestBase):
             self.lc.action.datastore_upsert(
                 resource_id=self.resource_id,
                 records=[{}])
+        model.Session.rollback()
         err = ve.value.error_dict
         assert 'key' in err
         assert 'reference_number' in err['key'][0]
@@ -48,6 +50,7 @@ class TestContracts(CanadaTestBase):
             self.lc.action.datastore_upsert(
                 resource_id=self.resource_id,
                 records=[record])
+        model.Session.rollback()
         err = ve.value.error_dict
         assert 'records' in err
         assert 'ministers_office' in err['records'][0]
@@ -76,6 +79,7 @@ class TestContracts(CanadaTestBase):
             self.lc.action.datastore_upsert(
                 resource_id=self.resource_id,
                 records=[record])
+        model.Session.rollback()
         err = ve.value.error_dict['records'][0]
         expected = {
             'vendor_postal_code': ['This field must not be empty'],
@@ -102,6 +106,7 @@ class TestContracts(CanadaTestBase):
             self.lc.action.datastore_upsert(
                 resource_id=self.resource_id,
                 records=[record])
+        model.Session.rollback()
         err = ve.value.error_dict['records'][0]
         expected = {
             'trade_agreement': ['If the value XX (none) is entered, then no other value can be entered in this field.'],
@@ -130,6 +135,7 @@ class TestContracts(CanadaTestBase):
             self.lc.action.datastore_upsert(
                 resource_id=self.resource_id,
                 records=[record])
+        model.Session.rollback()
         err = ve.value.error_dict['records'][0]
         expected = {
             'buyer_name': ['This field must be populated with an NA if an amendment is disclosed under Instrument Type'],
@@ -151,6 +157,7 @@ class TestContracts(CanadaTestBase):
             self.lc.action.datastore_upsert(
                 resource_id=self.resource_id,
                 records=[record])
+        model.Session.rollback()
         err = ve.value.error_dict['records'][0]
         expected = {
             'economic_object_code': ['This field is limited to only 3 or 4 digits.'],
@@ -169,6 +176,7 @@ class TestContracts(CanadaTestBase):
             self.lc.action.datastore_upsert(
                 resource_id=self.resource_id,
                 records=[record])
+        model.Session.rollback()
         err = ve.value.error_dict
         assert 'records' in err
         assert 'vendor_postal_code' in err['records'][0]

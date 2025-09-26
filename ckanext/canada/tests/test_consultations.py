@@ -3,6 +3,7 @@ from ckanext.canada.tests import CanadaTestBase
 from ckanapi import LocalCKAN, ValidationError
 
 import pytest
+from ckan import model
 from ckanext.canada.tests.factories import CanadaOrganization as Organization
 
 from ckanext.recombinant.tables import get_chromo
@@ -11,8 +12,8 @@ from ckanext.recombinant.tables import get_chromo
 class TestConsultations(CanadaTestBase):
     @classmethod
     def setup_class(self):
-        """Method is called at class level before EACH test methods of the class are called.
-        Setup any state specific to the execution of the given class methods.
+        """Method is called at class level once the class is instatiated.
+        Setup any state specific to the execution of the given class.
         """
         super(TestConsultations, self).setup_class()
 
@@ -35,6 +36,7 @@ class TestConsultations(CanadaTestBase):
             self.lc.action.datastore_upsert(
                 resource_id=self.resource_id,
                 records=[{}])
+        model.Session.rollback()
         err = ve.value.error_dict
         assert 'key' in err
         assert 'registration_number' in err['key'][0]
@@ -44,7 +46,7 @@ class TestConsultations(CanadaTestBase):
             self.lc.action.datastore_upsert(
                 resource_id=self.resource_id,
                 records=[{
-                    'registration_number': 'CCC0249',
+                    'registration_number': 'CCC0250_new_records',
                     'publishable': 'Q',
                     'subjects': ["IP", "CD", "HS", "GEO", "SE", "MATH"],
                     'title_fr': 'seulment français',
@@ -59,6 +61,7 @@ class TestConsultations(CanadaTestBase):
                     'high_profile': "Y",
                     'report_available_online': "N",
                     }])
+        model.Session.rollback()
         err = ve.value.error_dict['records'][0]
         expected = {
             'publishable': ['Invalid choice: "Q"'],
@@ -80,6 +83,7 @@ class TestConsultations(CanadaTestBase):
             self.lc.action.datastore_upsert(
                 resource_id=self.resource_id,
                 records=[dict(record, publishable='Y', status='NF')])
+        model.Session.rollback()
         err = ve.value.error_dict
         assert 'records' in err
         assert 'status' in err['records'][0]
