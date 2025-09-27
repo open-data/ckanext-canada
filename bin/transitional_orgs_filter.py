@@ -7,7 +7,7 @@ to another ckan instance.
 
 Usage:
 
-ckanapi dump organizations --all -r http://registry.data.gc.ca |
+ckanapi dump organizations --all -r https://open.canada.ca/data |
     bin/transitional_orgs_filter.py > transitional_orgs.jsonl
 """
 
