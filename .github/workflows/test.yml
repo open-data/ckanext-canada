@@ -31,4 +31,6 @@ jobs:
   pytest:
     name: Test (Pytest)
     uses: ./.github/workflows/pytest.yml # Call the reusable workflow
+    with:
+      splits: 12
     secrets: inherit

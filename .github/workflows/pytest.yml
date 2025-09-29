@@ -1,6 +1,12 @@
 name: Pytest
 on:
   workflow_call:
+    inputs:
+      splits:
+        type: number
+        description: 'Number of test splits default 1 (max 24)'
+        required: true
+        default: '1'
   workflow_dispatch:
     inputs:
       splits:
