@@ -38,7 +38,9 @@ resources:
     obligation: Mandatory
     excel_required: true
     form_required: true
-    format_type: Free text
+    format_type:
+      en: Free text
+      fr: Texte libre
     validation: This field must not be empty
     visible_to_public: Yes
     occurrence: Single
@@ -56,7 +58,9 @@ resources:
     obligation: Mandatory
     excel_required: true
     form_required: true
-    format_type: Controlled List
+    format_type:
+      en: Controlled List
+      fr: Liste contrôlée
     validation: This field must not be empty (if status is set to Not Going Forward, publishable must be no)
     visible_to_public: No
     occurrence: Single
@@ -81,7 +85,9 @@ resources:
       en: This field identifies the name(s) of the departments who are collaborating on the identified engagement process. Please provide the numerical code associated to each department and separated by commas.
       fr: Cette zone indique le ministère ou les ministères qui collaborent au processus de participation en question. Il faut indiquer le nom complet des ministères (aucun acronyme).
     obligation: Optional
-    format_type: Free text (comma separated list of codes from reference table)
+    format_type:
+      en: Free text (comma separated list of codes from reference table)
+      fr: Texte libre (liste de codes de la table de référence séparée par des virgules)
     validation: None
     visible_to_public: Yes
     occurrence: Repeatable
@@ -103,7 +109,9 @@ resources:
     excel_required_formula: 'or(isblank({end_date}),{end_date}>=DATE(2018,1,1))'
     js_required_eval: '{{end_date}}.length == 0 || new Date({{end_date}}) >= new Date("2018-01-01")'
     form_required: true
-    format_type: Free text (comma separated list of codes from reference table)
+    format_type:
+      en: Free text (comma separated list of codes from reference table)
+      fr: Texte libre (liste de codes de la table de référence séparée par des virgules)
     validation: This field must not be empty
     visible_to_public: Yes
     occurrence: Repeatable
@@ -125,7 +133,9 @@ resources:
     obligation: Mandatory
     excel_required: true
     form_required: true
-    format_type: Free text
+    format_type:
+      en: Free text
+      fr: Texte libre
     validation: This field must not be empty
     visible_to_public: Yes
     occurrence: Single
@@ -146,7 +156,9 @@ resources:
     obligation: Mandatory
     excel_required: true
     form_required: true
-    format_type: Free Text
+    format_type:
+      en: Free text
+      fr: Texte libre
     validation: This field must not be empty
     visible_to_public: Yes
     occurrence: Single
@@ -168,7 +180,9 @@ resources:
     excel_required_formula: 'or(isblank({end_date}),{end_date}>=DATE(2018,1,1))'
     js_required_eval: '{{end_date}}.length == 0 || new Date({{end_date}}) >= new Date("2018-01-01") || {{description_fr}}.length > 0'
     form_required: true
-    format_type: Free Text (separate paragraphs with two blank lines)
+    format_type:
+      en: Free text (separate paragraphs with two blank lines)
+      fr: Texte libre (séparez les paragraphes par deux lignes blanches)
     validation: This field must not be empty
     visible_to_public: Yes
     occurrence: Repeatable
@@ -176,7 +190,7 @@ resources:
     datatables_col_class: col-xxl
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
-      style: "width: 100%; display: block"
+      class: form-control canada-width-full d-block
 
   # 3.8
   - datastore_id: description_fr
@@ -190,7 +204,9 @@ resources:
     excel_required_formula: 'or(isblank({end_date}),{end_date}>=DATE(2018,1,1))'
     js_required_eval: '{{end_date}}.length == 0 || new Date({{end_date}}) >= new Date("2018-01-01") || {{description_en}}.length > 0'
     form_required: true
-    format_type: Free Text (separate paragraphs with two blank lines)
+    format_type:
+      en: Free text (separate paragraphs with two blank lines)
+      fr: Texte libre (séparez les paragraphes par deux lignes blanches)
     validation: This field must not be empty
     visible_to_public: Yes
     occurrence: Repeatable
@@ -198,7 +214,7 @@ resources:
     datatables_col_class: col-xxl
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
-      style: "width: 100%; display: block"
+      class: form-control canada-width-full d-block
 
   # 3.9
   - datastore_id: target_participants_and_audience
@@ -212,7 +228,9 @@ resources:
     excel_required_formula: 'or(isblank({end_date}),{end_date}>=DATE(2018,1,1))'
     js_required_eval: '{{end_date}}.length == 0 || new Date({{end_date}}) >= new Date("2018-01-01")'
     form_required: true
-    format_type: Free text (comma separated list of codes from reference table)
+    format_type:
+      en: Free text (comma separated list of codes from reference table)
+      fr: Texte libre (liste de codes de la table de référence séparée par des virgules)
     validation: This field must not be empty
     visible_to_public: Yes
     occurrence: Repeatable
@@ -233,7 +251,9 @@ resources:
     obligation: Mandatory
     excel_required: true
     form_required: true
-    format_type: Date (Please format the data as YYYY-MM-DD)
+    format_type:
+      en: Date (Please format the date as YYYY-MM-DD)
+      fr: "Date (Veuillez utiliser le format de date suivant : AAAA-MM-JJ)"
     validation: This field must not be empty
     visible_to_public: Yes
     occurrence: Single
@@ -251,7 +271,9 @@ resources:
     obligation: Mandatory
     excel_required: true
     form_required: true
-    format_type: Date (Please format the data as YYYY-MM-DD)
+    format_type:
+      en: Date (Please format the date as YYYY-MM-DD)
+      fr: "Date (Veuillez utiliser le format de date suivant : AAAA-MM-JJ)"
     validation: This field must not be empty
     visible_to_public: Yes
     occurrence: Single
@@ -269,7 +291,9 @@ resources:
     obligation: Mandatory
     excel_required: true
     form_required: true
-    format_type: Controlled List
+    format_type:
+      en: Controlled List
+      fr: Liste contrôlée
     validation: This field must not be empty
     visible_to_public: Yes
     occurrence: Single
@@ -307,7 +331,9 @@ resources:
       fr: Cette zone contient le lien vers la page de profil (en anglais) qui donne des renseignements sur le processus de participation du public.
     obligation: Mandatory
     form_required: true
-    format_type: Web address
+    format_type:
+      en: Web address
+      fr: Adresse Web
     validation: This field must not be empty
     visible_to_public: Yes
     occurrence: Single
@@ -326,7 +352,9 @@ resources:
       fr: Cette zone contient le lien vers la page profil française qui contient des renseignements sur le processus de participation.
     obligation: Mandatory
     form_required: true
-    format_type: Web address
+    format_type:
+      en: Web address
+      fr: Adresse Web
     validation: This field must not be empty
     visible_to_public: Yes
     occurrence: Single
@@ -346,7 +374,9 @@ resources:
     obligation: Mandatory
     excel_required: true
     form_required: true
-    format_type: Controlled List
+    format_type:
+      en: Controlled List
+      fr: Liste contrôlée
     validation: This field must not be empty
     visible_to_public: Yes
     occurrence: Single
@@ -370,7 +400,9 @@ resources:
       en: This field provides the link to the “What we Heard” report when it is available online.
       fr: Cette zone contient le lien vers le rapport intitulé « Ce que nous avons entendu » en anglais après que le rapport est affiché en ligne.
     obligation: Optional
-    format_type: Web address
+    format_type:
+      en: Web address
+      fr: Adresse Web
     validation: None
     visible_to_public: Yes
     occurrence: Single
@@ -389,7 +421,9 @@ resources:
       en: This field provides the link to the “What we Heard” report when it is available online.
       fr: Cette zone contient le lien vers le rapport intitulé « Ce que nous avons entendu » après que le rapport est affiché en ligne.
     obligation: Optional
-    format_type: Web address
+    format_type:
+      en: Web address
+      fr: Adresse Web
     validation: None
     visible_to_public: Yes
     occurrence: Single
@@ -408,7 +442,9 @@ resources:
       en: This field provide the email address of the departmental consultation and public engagement contact (if applicable). The department consultation contact is defined as the primary contact for departmental consultations.
       fr: Cette zone indique l’adresse courriel de la personne du ministère responsable de la consultation et de la participation du public (s’il y a lieu). Le responsable de la consultation au ministère est le principal responsable des consultations du ministère.
     obligation: Optional
-    format_type: Email
+    format_type:
+      en: Email
+      fr: Courriel
     validation: None
     visible_to_public: No
     occurrence: Single
@@ -426,7 +462,9 @@ resources:
       en: This field provides the email address of the policy or program lead for the consultation. The policy or program lead is defined as the person leading the specific consultation and accountable for the engagement activities.
       fr: Cette zone indique l’adresse courriel du responsable des politiques ou des programmes pour la consultation. Il s’agit de la personne qui dirige la consultation en question et qui doit rendre des comptes sur les activités de participation.
     obligation: Optional
-    format_type: Email
+    format_type:
+      en: Email
+      fr: Courriel
     validation: None
     visible_to_public: No
     occurrence: Single
@@ -444,8 +482,10 @@ resources:
       en: This field identifies additional information on the consultation that could not be submitted in other fields, in English
       fr: Cette zone comprend des renseignements supplémentaires sur la consultation qu’il n’était pas possible d’inscrire dans d’autres zones (en anglais).
     obligation: Optional
-    format_type: Free Text (separate paragraphs with two blank lines)
     js_required_eval: '{{remarks_fr}}.length > 0'
+    format_type:
+      en: Free text (separate paragraphs with two blank lines)
+      fr: Texte libre (séparez les paragraphes par deux lignes blanches)
     validation: None
     visible_to_public: No
     occurrence: Repeatable
@@ -453,7 +493,7 @@ resources:
     datatables_col_class: col-xxl
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
-      style: "width: 100%; display: block"
+      class: form-control canada-width-full d-block
 
   # 3.21
   - datastore_id: remarks_fr
@@ -464,8 +504,10 @@ resources:
       en: This field identifies additional information on the consultation that could not be submitted in other fields, in French.
       fr: Cette zone comprend des renseignements supplémentaires sur la consultation qu’il n’était pas possible d’inscrire dans d’autres zones (en français).
     obligation: Optional
-    format_type: Free Text (separate paragraphs with two blank lines)
     js_required_eval: '{{remarks_en}}.length > 0'
+    format_type:
+      en: Free text (separate paragraphs with two blank lines)
+      fr: Texte libre (séparez les paragraphes par deux lignes blanches)
     validation: None
     visible_to_public: No
     occurrence: Repeatable
@@ -473,7 +515,7 @@ resources:
     datatables_col_class: col-xxl
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
-      style: "width: 100%; display: block"
+      class: form-control canada-width-full d-block
 
   # 3.22
   - datastore_id: high_profile
@@ -486,7 +528,9 @@ resources:
     obligation: Mandatory
     excel_required: true
     form_required: true
-    format_type: Controlled List
+    format_type:
+      en: Controlled List
+      fr: Liste contrôlée
     validation: This field must not be empty
     visible_to_public: Yes
     occurrence: Single
@@ -512,7 +556,9 @@ resources:
     obligation: Mandatory
     excel_required_formula: 'LEFT({high_profile},1)="Y"'
     js_required_eval: '{{high_profile}}.length > 0 && {{high_profile}} == "Y"'
-    format_type: Controlled List
+    format_type:
+      en: Controlled List
+      fr: Liste contrôlée
     validation: This field must not be empty
     visible_to_public: Yes
     occurrence: Repeatable

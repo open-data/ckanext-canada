@@ -3,6 +3,7 @@ from ckanext.canada.tests import CanadaTestBase
 from ckanapi import LocalCKAN, ValidationError
 
 import pytest
+from ckan import model
 from ckanext.canada.tests.factories import CanadaOrganization as Organization
 
 from ckanext.recombinant.tables import get_chromo
@@ -10,11 +11,11 @@ from ckanext.recombinant.tables import get_chromo
 
 class TestReclassification(CanadaTestBase):
     @classmethod
-    def setup_method(self, method):
-        """Method is called at class level before EACH test methods of the class are called.
-        Setup any state specific to the execution of the given class methods.
+    def setup_class(self):
+        """Method is called at class level once the class is instatiated.
+        Setup any state specific to the execution of the given class.
         """
-        super(TestReclassification, self).setup_method(method)
+        super(TestReclassification, self).setup_class()
 
         org = Organization()
         self.lc = LocalCKAN()
@@ -35,6 +36,7 @@ class TestReclassification(CanadaTestBase):
             self.lc.action.datastore_upsert(
                 resource_id=self.resource_id,
                 records=[{}])
+        model.Session.rollback()
         err = ve.value.error_dict
         assert 'key' in err
         assert 'ref_number' in err['key'][0]
@@ -42,11 +44,11 @@ class TestReclassification(CanadaTestBase):
 
 class TestReclassificationNil(CanadaTestBase):
     @classmethod
-    def setup_method(self, method):
-        """Method is called at class level before EACH test methods of the class are called.
-        Setup any state specific to the execution of the given class methods.
+    def setup_class(self):
+        """Method is called at class level once the class is instatiated.
+        Setup any state specific to the execution of the given class.
         """
-        super(TestReclassificationNil, self).setup_method(method)
+        super(TestReclassificationNil, self).setup_class()
 
         org = Organization()
         self.lc = LocalCKAN()
@@ -67,6 +69,7 @@ class TestReclassificationNil(CanadaTestBase):
             self.lc.action.datastore_upsert(
                 resource_id=self.resource_id,
                 records=[{}])
+        model.Session.rollback()
         err = ve.value.error_dict
         assert 'key' in err
         assert 'year, quarter' in err['key'][0]

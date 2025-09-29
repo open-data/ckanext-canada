@@ -58,7 +58,9 @@ resources:
       fr: "Décrivez brièvement, en anglais, le mandat du ministère, ses principaux programmes et les liens avec les lois ou les règlements fondamentaux afin d’aider les lecteurs à comprendre les dépenses de voyages, d’accueil et de conférences engagées par le ministère, et en quoi ces dépenses soutiennent le mandat du ministère"
     obligation: Mandatory
     excel_required: true
-    format_type: Free text
+    format_type:
+      en: Free text
+      fr: Texte libre
     validation: This field must not be empty
     datastore_type: text
     datatables_col_class: col-lg
@@ -68,7 +70,7 @@ resources:
     form_required: true
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
-      style: "width: 100%; display: block"
+      class: form-control canada-width-full d-block
 
   - datastore_id: mandate_description_fr
     label:
@@ -86,7 +88,9 @@ resources:
       fr: "Décrivez brièvement, en français, le mandat du ministère, ses principaux programmes et les liens avec les lois ou les règlements fondamentaux afin d’aider les lecteurs à comprendre les dépenses de voyages, d’accueil et de conférences engagées par le ministère, et en quoi ces dépenses soutiennent le mandat du ministère"
     obligation: Mandatory
     excel_required: true
-    format_type: Free text
+    format_type:
+      en: Free text
+      fr: Texte libre
     validation: This field must not be empty
     datastore_type: text
     datatables_col_class: col-lg
@@ -96,7 +100,7 @@ resources:
     form_required: true
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
-      style: "width: 100%; display: block"
+      class: form-control canada-width-full d-block
 
   - datastore_id: operational_activities_kdollars
     label:
@@ -434,7 +438,7 @@ resources:
     excel_column_width: 50
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
-      style: "width: 100%; display: block"
+      class: form-control canada-width-full d-block
 
   - datastore_id: travel_compared_fiscal_year_fr
     label:
@@ -458,7 +462,7 @@ resources:
     excel_column_width: 50
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
-      style: "width: 100%; display: block"
+      class: form-control canada-width-full d-block
 
   - datastore_id: hospitality_compared_fiscal_year_en
     label:
@@ -482,7 +486,7 @@ resources:
     excel_column_width: 50
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
-      style: "width: 100%; display: block"
+      class: form-control canada-width-full d-block
 
   - datastore_id: hospitality_compared_fiscal_year_fr
     label:
@@ -506,7 +510,7 @@ resources:
     excel_column_width: 50
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
-      style: "width: 100%; display: block"
+      class: form-control canada-width-full d-block
 
   - datastore_id: conference_fees_compared_fiscal_year_en
     label:
@@ -530,7 +534,7 @@ resources:
     excel_column_width: 50
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
-      style: "width: 100%; display: block"
+      class: form-control canada-width-full d-block
 
   - datastore_id: conference_fees_compared_fiscal_year_fr
     label:
@@ -554,7 +558,7 @@ resources:
     excel_column_width: 50
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
-      style: "width: 100%; display: block"
+      class: form-control canada-width-full d-block
 
   - datastore_id: minister_compared_fiscal_year_en
     label:
@@ -578,7 +582,7 @@ resources:
     excel_column_width: 50
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
-      style: "width: 100%; display: block"
+      class: form-control canada-width-full d-block
     markdown: true
 
   - datastore_id: minister_compared_fiscal_year_fr
@@ -603,7 +607,7 @@ resources:
     excel_column_width: 50
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
-      style: "width: 100%; display: block"
+      class: form-control canada-width-full d-block
     markdown: true
 
   - datastore_id: record_created

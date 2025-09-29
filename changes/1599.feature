@@ -1,1 +1,1 @@
-Added functionality for an inline script nonce for Content Security Policy headers. Configurable with `ckanext.canada.inline_script_nonce`
+Added functionality to define the `Content-Security-Policy` header in the Flask App instead of NGINX, allowing for script and style dynamic nonce generation. Configurable with `ckanext.canada.content_security_policy`

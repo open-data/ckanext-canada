@@ -34,7 +34,9 @@ resources:
           en: "This field is populated by the user with the reference number of the Experiment. This number is a mandatory system requirement when publishing a template."
           fr: "Ce champ est rempli par l’utilisateur avec le numéro de référence de l'experiment. Le numéro est une exigence de système obligatoire pour la publication d’un modèle."
         excel_required: true
-        format_type: "Free text"
+        format_type:
+          en: Free text
+          fr: Texte libre
         label:
           en: "Reference Number"
           fr: "Numéro de référence"
@@ -48,7 +50,9 @@ resources:
           en: "This field describes the project title, in English"
           fr: "Ce champ décrira le titre du projet, en anglais"
         excel_required: true
-        format_type: "Free text"
+        format_type:
+          en: Free text
+          fr: Texte libre
         form_attrs:
           size: 120
         label:
@@ -66,7 +70,9 @@ resources:
           en: "This field describes the project title, in French"
           fr: "Ce champ décrira le titre du projet, en français"
         excel_required: true
-        format_type: "Free text"
+        format_type:
+          en: Free text
+          fr: Texte libre
         form_attrs:
           size: 120
         label:
@@ -85,8 +91,10 @@ resources:
           fr: "Ce champ décrira la question de recherche guidant le projet, en anglais"
         excel_column_width: 50
         excel_required: true
-        format_type: "Free text"
         datatables_col_class: col-xl
+        format_type:
+          en: Free text
+          fr: Texte libre
         form_attrs:
           size: 120
         label:
@@ -104,8 +112,10 @@ resources:
           fr: "Ce champ décrira la question de recherche guidant le projet, en français"
         excel_column_width: 50
         excel_required: true
-        format_type: "Free text"
         datatables_col_class: col-xl
+        format_type:
+          en: Free text
+          fr: Texte libre
         form_attrs:
           size: 120
         label:
@@ -124,10 +134,12 @@ resources:
         excel_column_width: 50
         datatables_col_class: col-xxl
         excel_required: true
-        format_type: "Free Text (separate paragraphs with two blank lines)"
+        format_type:
+          en: Free text (separate paragraphs with two blank lines)
+          fr: Texte libre (séparez les paragraphes par deux lignes blanches)
         form_snippet: scheming/form_snippets/textarea.html
         form_attrs:
-            style: "width: 100%; display: block"
+            class: form-control canada-width-full d-block
         label:
           en: "Project Summary (English)"
           fr: "Résumé du projet (en anglais)"
@@ -144,10 +156,12 @@ resources:
         excel_column_width: 50
         datatables_col_class: col-xxl
         excel_required: true
-        format_type: "Free Text (separate paragraphs with two blank lines)"
+        format_type:
+          en: Free text (separate paragraphs with two blank lines)
+          fr: Texte libre (séparez les paragraphes par deux lignes blanches)
         form_snippet: scheming/form_snippets/textarea.html
         form_attrs:
-            style: "width: 100%; display: block"
+            class: form-control canada-width-full d-block
         label:
           en: "Project Summary (French)"
           fr: "Résumé du projet (en français)"
@@ -163,7 +177,9 @@ resources:
           fr: "Ce champ décrira à quand remonte la dernière mise à jour."
         excel_column_width: 28
         excel_required: true
-        format_type: "Date (Please format the data as YYYY-MM-DD)"
+        format_type:
+          en: Date (Please format the date as YYYY-MM-DD)
+          fr: "Date (Veuillez utiliser le format de date suivant : AAAA-MM-JJ)"
         form_snippet: scheming/form_snippets/date.html
         label:
           en: "Last Updated"
@@ -204,7 +220,9 @@ resources:
         excel_full_text_choices: true
         datatables_full_text_choices: true
         excel_required: true
-        format_type: "Controlled List"
+        format_type:
+          en: Controlled List
+          fr: Liste contrôlée
         label:
           en: "Experimental area"
           fr: "Secteur d'expérimentation"
@@ -235,7 +253,9 @@ resources:
         excel_full_text_choices: true
         datatables_full_text_choices: true
         excel_required: true
-        format_type: "Controlled List"
+        format_type:
+          en: Controlled List
+          fr: Liste contrôlée
         label:
           en: "Design"
           fr: "Devis"
@@ -252,10 +272,12 @@ resources:
         excel_column_width: 50
         datatables_col_class: col-xxl
         excel_required: true
-        format_type: "Free Text (separate paragraphs with two blank lines)"
+        format_type:
+          en: Free text (separate paragraphs with two blank lines)
+          fr: Texte libre (séparez les paragraphes par deux lignes blanches)
         form_snippet: scheming/form_snippets/textarea.html
         form_attrs:
-            style: "width: 100%; display: block"
+            class: form-control canada-width-full d-block
         label:
           en: "Design Details (English)"
           fr: "Devis details (anglais)"
@@ -272,10 +294,12 @@ resources:
         excel_column_width: 50
         datatables_col_class: col-xxl
         excel_required: true
-        format_type: "Free Text (separate paragraphs with two blank lines)"
+        format_type:
+          en: Free text (separate paragraphs with two blank lines)
+          fr: Texte libre (séparez les paragraphes par deux lignes blanches)
         form_snippet: scheming/form_snippets/textarea.html
         form_attrs:
-            style: "width: 100%; display: block"
+            class: form-control canada-width-full d-block
         label:
           en: "Design Details (French)"
           fr: "Devis details (français)"
@@ -292,10 +316,12 @@ resources:
         excel_column_width: 50
         datatables_col_class: col-xxl
         excel_required: true
-        format_type: "Free Text (separate paragraphs with two blank lines)"
+        format_type:
+          en: Free text (separate paragraphs with two blank lines)
+          fr: Texte libre (séparez les paragraphes par deux lignes blanches)
         form_snippet: scheming/form_snippets/textarea.html
         form_attrs:
-            style: "width: 100%; display: block"
+            class: form-control canada-width-full d-block
         label:
           en: "Intervention (English)"
           fr: "Intervention (anglais)"
@@ -312,10 +338,12 @@ resources:
         excel_column_width: 50
         datatables_col_class: col-xxl
         excel_required: true
-        format_type: "Free Text (separate paragraphs with two blank lines)"
+        format_type:
+          en: Free text (separate paragraphs with two blank lines)
+          fr: Texte libre (séparez les paragraphes par deux lignes blanches)
         form_snippet: scheming/form_snippets/textarea.html
         form_attrs:
-            style: "width: 100%; display: block"
+            class: form-control canada-width-full d-block
         label:
           en: "Intervention (French)"
           fr: "Intervention (français)"
@@ -332,10 +360,12 @@ resources:
         excel_column_width: 50
         datatables_col_class: col-xxl
         excel_required: true
-        format_type: "Free Text (separate paragraphs with two blank lines)"
+        format_type:
+          en: Free text (separate paragraphs with two blank lines)
+          fr: Texte libre (séparez les paragraphes par deux lignes blanches)
         form_snippet: scheming/form_snippets/textarea.html
         form_attrs:
-            style: "width: 100%; display: block"
+            class: form-control canada-width-full d-block
         label:
           en: "Outcomes (English)"
           fr: "Mesure des résultats (anglais)"
@@ -352,10 +382,12 @@ resources:
         excel_column_width: 50
         datatables_col_class: col-xxl
         excel_required: true
-        format_type: "Free Text (separate paragraphs with two blank lines)"
+        format_type:
+          en: Free text (separate paragraphs with two blank lines)
+          fr: Texte libre (séparez les paragraphes par deux lignes blanches)
         form_snippet: scheming/form_snippets/textarea.html
         form_attrs:
-            style: "width: 100%; display: block"
+            class: form-control canada-width-full d-block
         label:
           en: "Outcomes (French)"
           fr: "Mesure des résultats (françcais)"
@@ -372,10 +404,12 @@ resources:
         excel_column_width: 50
         datatables_col_class: col-xxl
         excel_required: true
-        format_type: "Free Text (separate paragraphs with two blank lines)"
+        format_type:
+          en: Free text (separate paragraphs with two blank lines)
+          fr: Texte libre (séparez les paragraphes par deux lignes blanches)
         form_snippet: scheming/form_snippets/textarea.html
         form_attrs:
-            style: "width: 100%; display: block"
+            class: form-control canada-width-full d-block
         label:
           en: "Findings (English)"
           fr: "Résultats (anglais)"
@@ -392,10 +426,12 @@ resources:
         excel_column_width: 50
         datatables_col_class: col-xxl
         excel_required: true
-        format_type: "Free Text (separate paragraphs with two blank lines)"
+        format_type:
+          en: Free text (separate paragraphs with two blank lines)
+          fr: Texte libre (séparez les paragraphes par deux lignes blanches)
         form_snippet: scheming/form_snippets/textarea.html
         form_attrs:
-            style: "width: 100%; display: block"
+            class: form-control canada-width-full d-block
         label:
           en: "Findings (French)"
           fr: "Résultats (françcais)"
@@ -423,7 +459,9 @@ resources:
         excel_full_text_choices: true
         datatables_full_text_choices: true
         excel_required: true
-        format_type: "Controlled List"
+        format_type:
+          en: Controlled List
+          fr: Liste contrôlée
         label:
           en: Status
           fr: Statut
@@ -440,7 +478,9 @@ resources:
         excel_column_width: 35
         datatables_col_class: col-lg
         excel_required: false
-        format_type: "Free text"
+        format_type:
+          en: Free text
+          fr: Texte libre
         label:
           en: "Lead Branch and/or Unit (English)"
           fr: "Direction et/ou unité responsable (en anglais)"
@@ -457,7 +497,9 @@ resources:
         excel_column_width: 35
         datatables_col_class: col-lg
         excel_required: false
-        format_type: "Free text"
+        format_type:
+          en: Free text
+          fr: Texte libre
         label:
           en: "Lead Branch and/or Unit (French)"
           fr: "Direction et/ou unité responsable (en français))"
@@ -474,10 +516,12 @@ resources:
         excel_column_width: 50
         datatables_col_class: col-lg
         excel_required: false
-        format_type: "Free text"
+        format_type:
+          en: Free text
+          fr: Texte libre
         form_snippet: scheming/form_snippets/textarea.html
         form_attrs:
-          style: "width: 100%; display: block"
+          class: form-control canada-width-full d-block
         label:
           en: "Further Information / Links (English)"
           fr: "Informations supplémentaires / liens (anglais)"
@@ -494,10 +538,12 @@ resources:
         excel_column_width: 50
         datatables_col_class: col-lg
         excel_required: false
-        format_type: "Free text"
+        format_type:
+          en: Free text
+          fr: Texte libre
         form_snippet: scheming/form_snippets/textarea.html
         form_attrs:
-          style: "width: 100%; display: block"
+          class: form-control canada-width-full d-block
         label:
           en: "Further Information / Links (French)"
           fr: "Informations supplémentaires / liens (en français)"

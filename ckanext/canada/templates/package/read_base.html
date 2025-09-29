@@ -59,7 +59,7 @@
               {# FIXME: sunset the default_open_email_address eventually... #}
               <li class="list-group-item resource-tags">
                 <strong>{{ field_title }}{{ _(':') }}</strong>
-                {{ h.mail_to(email_address=h.default_open_email_address(), name=h.default_open_email_address()) }}
+                {{ h.mail_to(email_address=h.default_open_email_address(xml_encode=False), name=h.default_open_email_address(xml_encode=False)) }}
               </li>
             {% elif field_value %}
               <li class="list-group-item resource-tags">
@@ -131,22 +131,29 @@
               {{ _('Link to JSON format') }}
             </a>
           </li>
-          {% if h.plugin_loaded('dcat_json_interface') and pkg.type not in h.recombinant_get_types() %}
+          {%- if h.plugin_loaded('dcat_json_interface') and pkg.type not in h.recombinant_get_types() -%}
             <li class="list-group-item canada-border-none">
-              <a href="{{ h.url_for(pkg.type + '.read', id=pkg.id) }}.jsonld" rel="nofollow">
-                {{ _('DCAT (JSON-LD)') }}
+              <a href="{{- h.url_for(pkg.type + '.read', id=pkg.id) -}}.jsonld" rel="nofollow">
+                {{- _('DCAT (JSON-LD)') -}}
               </a>
             </li>
-          {% endif %}
-          {% if h.plugin_loaded('dcat') and pkg.type not in h.recombinant_get_types() %}
+          {%- endif -%}
+          {%- if h.plugin_loaded('dcat') and pkg.type not in h.recombinant_get_types() -%}
             <li class="list-group-item canada-border-none">
-              <a href="{{ h.url_for(pkg.type + '.read', id=pkg.id) }}.xml" rel="nofollow">
-                {{ _('DCAT (XML)') }}
+              <a href="{{- h.url_for(pkg.type + '.read', id=pkg.id) -}}.xml" rel="nofollow">
+                {{- _('DCAT (XML)') -}}
               </a>
             </li>
-          {% endif %}
+          {%- endif -%}
         </ul>
       </li>
+      {% if h.plugin_loaded('citeproc') and pkg.type not in h.recombinant_get_types() %}
+        <li class="list-group-item">
+          {% if h.show_citations_for(pkg.type or 'dataset') %}
+            {% snippet "snippets/citeproc_button.html", pkg_dict=pkg %}
+          {% endif %}
+        </li>
+      {% endif %}
       {% if pkg.collection == 'fgp' %}
         <li class="list-group-item">
           <strong>{{ _('FGP Metadata:') }}</strong>

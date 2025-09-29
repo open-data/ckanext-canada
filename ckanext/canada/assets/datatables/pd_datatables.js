@@ -472,7 +472,7 @@ function load_pd_datatable(CKAN_MODULE){
         if( ! Array.isArray(_data) ){
           _data = _data.toString().split(',');  // split to Array if not already
         }
-        let displayList = '<ul style="text-align:left;">';
+        let displayList = '<ul class="text-left">';
         _data.forEach(function(_val, _i, _arr){
           let _l = _val;
           if( editorObject && showFullTextChoices && typeof editorObject.select_choices != 'undefined' && editorObject.select_choices ){
@@ -754,7 +754,9 @@ function load_pd_datatable(CKAN_MODULE){
               let parent_row = $(_cell).parent('tr');
               if( parent_row.length > 0 ){
                 let row_index = $(parent_row).index();
-                let this_value = $(_cell).text();
+                let clone_cell = $(_cell).clone();
+                $(clone_cell).find('sup').remove();
+                let this_value = $(clone_cell).text();
                 if( typeof dt_queries[_table][row_index] == 'undefined' ){
                   dt_queries[_table][row_index] = {
                     'this_keys': [],
@@ -782,7 +784,7 @@ function load_pd_datatable(CKAN_MODULE){
           for( _i = 0; _i < _rows[_index]['this_keys'].length; _i++ ){
             let fk_cell = $(_row).find('td[data-datastore-id="' + _rows[_index]['this_keys'][_i] + '"]');
             if( fk_cell.length > 0 ){
-              $(fk_cell).append('<sup class="ref-link" style="opacity:0.65;margin-left:4px"><small style="font-size:75%;"><a target="_blank" href="' + ref_uri + '"><i class="fas fa-external-link-alt"></i></a></small></sup>');
+              $(fk_cell).append('<sup class="ref-link pd-datatable-ref-link"><small><a target="_blank" href="' + ref_uri + '"><i class="fas fa-external-link-alt"></i></a></small></sup>');
             }
           }
         }
@@ -1073,7 +1075,7 @@ function load_pd_datatable(CKAN_MODULE){
     }
   }
 
-  function download_excel_template(_uri, _params){
+  async function download_excel_template(_uri, _params){
     return new Promise(function(_resolve, _reject){
       let xhr = new XMLHttpRequest();
       xhr.responseType = 'blob';
@@ -1765,7 +1767,7 @@ function load_pd_datatable(CKAN_MODULE){
     let fields = $(innerTable).find('.pd-datatable-editor-input');
     if( legendEntryPoint.length > 0 ){
       $(tableWrapper).find('#pd-datatables-editor-legend').remove();
-      $(legendEntryPoint).after('<div id="pd-datatables-editor-legend"><strong>' + editorLegendLabel + '</strong>&nbsp;<span style="box-shadow: 0 0 2px 2px #' + tableStyles.success.bgColor + ' inset"><em>' + editorLegendValidLabel + '</em></span>&nbsp;&nbsp;<span style="box-shadow: 0 0 2px 2px #' + tableStyles.required.bgColor + ' inset"><em>' + editorLegendRequiredLabel + '</em></span>&nbsp;&nbsp;<span style="box-shadow: 0 0 2px 2px #' + tableStyles.errored.bgColor + ' inset"><em>' + editorLegendErrorLabel + '</em></span></div>')
+      $(legendEntryPoint).after('<div id="pd-datatables-editor-legend"><strong>' + editorLegendLabel + '</strong>&nbsp;<span class="pd-datatables-legend-success"><em>' + editorLegendValidLabel + '</em></span>&nbsp;&nbsp;<span class="pd-datatables-legend-required"><em>' + editorLegendRequiredLabel + '</em></span>&nbsp;&nbsp;<span class="pd-datatables-legend-error"><em>' + editorLegendErrorLabel + '</em></span></div>')
     }
     if( indexBlocks.length > 0 ){
       $(indexBlocks).each(function(_index, _indexBlock){

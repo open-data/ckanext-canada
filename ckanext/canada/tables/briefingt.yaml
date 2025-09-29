@@ -32,7 +32,9 @@ resources:
     obligation: Mandatory
     excel_required: true
     form_required: true
-    format_type: Free text
+    format_type:
+      en: Free text
+      fr: Texte libre
     validation: This field must not be empty
     js_error_eval: 'VALUE.length > 0 && VALUE.includes(",")'
     datastore_type: text
@@ -49,7 +51,9 @@ resources:
     obligation: Mandatory
     excel_required: true
     form_required: true
-    format_type: Free text
+    format_type:
+      en: Free text
+      fr: Texte libre
     validation: This field must not be empty
     occurrence: Single
     datastore_type: text
@@ -69,7 +73,9 @@ resources:
     obligation: Mandatory
     excel_required: true
     form_required: true
-    format_type: Free text
+    format_type:
+      en: Free text
+      fr: Texte libre
     validation: This field must not be empty
     occurrence: Single
     datastore_type: text
@@ -89,7 +95,9 @@ resources:
     obligation: Mandatory
     excel_required: true
     form_required: true
-    format_type: Free text
+    format_type:
+      en: Free text
+      fr: Texte libre
     validation: This field must not be empty
     occurrence: Single
     datastore_type: text
@@ -109,7 +117,9 @@ resources:
     obligation: Mandatory
     excel_required: true
     form_required: true
-    format_type: Free text
+    format_type:
+      en: Free text
+      fr: Texte libre
     validation: This field must not be empty
     occurrence: Single
     datastore_type: text
@@ -129,7 +139,9 @@ resources:
     obligation: Mandatory
     excel_required: true
     form_required: true
-    format_type: Controlled List
+    format_type:
+      en: Controlled List
+      fr: Liste contrôlée
     validation: This field must not be empty
     occurrence: Single
     datastore_type: text
@@ -159,7 +171,9 @@ resources:
     obligation: Mandatory
     excel_required: true
     form_required: true
-    format_type: Date (Please format the data as YYYY-MM-DD)
+    format_type:
+      en: Date (Please format the date as YYYY-MM-DD)
+      fr: "Date (Veuillez utiliser le format de date suivant : AAAA-MM-JJ)"
     validation: This field must not be empty
     occurrence: Single
     datastore_type: date
@@ -177,7 +191,9 @@ resources:
     obligation: Mandatory
     excel_required: true
     form_required: true
-    format_type: Controlled List
+    format_type:
+      en: Controlled List
+      fr: Liste contrôlée
     validation: This field must not be empty
     occurrence: Single
     datastore_type: text
@@ -205,7 +221,9 @@ resources:
       fr: Ce champ affichera de plus amples renseignements/commentaires concernant la note de breffage, en anglais.
     obligation: Optional
     excel_required: false
-    format_type: Free text
+    format_type:
+      en: Free text
+      fr: Texte libre
     validation: None
     occurrence: Single
     datastore_type: text
@@ -214,7 +232,7 @@ resources:
     js_required_eval: '{{additional_information_fr}}.length > 0'
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
-      style: "width: 100%; display: block"
+      class: form-control canada-width-full d-block
 
   # 3.2
   - datastore_id: additional_information_fr
@@ -226,7 +244,9 @@ resources:
       fr: Ce champ affichera de plus amples renseignements/commentaires concernant la note de breffage, en français.
     obligation: Optional
     excel_required: false
-    format_type: Free text
+    format_type:
+      en: Free text
+      fr: Texte libre
     validation: None
     occurrence: Single
     datastore_type: text
@@ -235,7 +255,7 @@ resources:
     js_required_eval: '{{additional_information_en}}.length > 0'
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
-      style: "width: 100%; display: block"
+      class: form-control canada-width-full d-block
 
 
 

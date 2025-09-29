@@ -1,0 +1,34 @@
+name: Test
+on:
+  pull_request:
+  workflow_dispatch:
+  workflow_call:
+  push:
+    branches:
+      - master
+      - staging
+      - dev
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.head_ref || github.ref }} # workflow limits it to this workflow, ref includes a pushed branch or on pull request merge branch
+  cancel-in-progress: ${{ github.ref != 'refs/heads/master' }}
+
+permissions:
+  contents: read
+
+jobs:
+
+  flake8:
+    name: Lint (Flake8)
+    uses: ./.github/workflows/flake8.yml # Call the reusable workflow
+    secrets: inherit
+
+  pyright:
+    name: Lint (PyRight)
+    uses: ./.github/workflows/pyright.yml # Call the reusable workflow
+    secrets: inherit
+
+  pytest:
+    name: Test (Pytest)
+    uses: ./.github/workflows/pytest.yml # Call the reusable workflow
+    secrets: inherit

@@ -35,7 +35,7 @@ from ckan.lib.helpers import (
     lang,
     Page,
 )
-
+from ckan.views import nocache_store
 from ckan.views.dataset import (
     EditView as DatasetEditView,
     search as dataset_search,
@@ -68,6 +68,7 @@ from ckan.logic import (
     NotAuthorized
 )
 from ckan.lib.navl.dictization_functions import unflatten
+from ckan.common import repr_untrusted
 
 from ckanext.recombinant.datatypes import canonicalize
 from ckanext.recombinant.tables import get_chromo
@@ -106,6 +107,7 @@ def _url_part_unescape(urlpart: str) -> str:
 
 
 @canada_views.route('/user/logged_in', methods=['GET'])
+@nocache_store
 def logged_in():
     # redirect if needed
     came_from = request.args.get('came_from', '')
@@ -222,6 +224,7 @@ class CanadaResourceCreateView(ResourceCreateView):
 
 
 class CanadaUserRegisterView(UserRegisterView):
+    @nocache_store
     def post(self):
         data = clean_dict(unflatten(tuplize_dict(parse_params(request.form))))
         email = data.get('email', '')
@@ -261,6 +264,7 @@ canada_views.add_url_rule(
 
 
 @canada_views.route('/recover-username', methods=['GET', 'POST'])
+@nocache_store
 def recover_username():
     if not g.is_registry or not h.plugin_loaded('gcnotify'):
         # we only want this route on the Registry, and the email template
@@ -282,7 +286,7 @@ def recover_username():
             h.flash_error(_('Email is required'))
             return h.redirect_to('canada.recover_username')
 
-        log.info('Username recovery requested for email "{}"'.format(email))
+        log.info('Username recovery requested for email', repr_untrusted(email))
 
         context = cast(Context, {'model': model, 'user': g.user, 'ignore_auth': True})
         username_list = []
@@ -901,6 +905,7 @@ def _clean_check_type_errors(post_data: Dict[str, Any],
 
 
 @canada_views.route('/', methods=['GET'])
+@nocache_store
 def home():
     if not g.is_registry:
         return h.redirect_to('dataset.search')
@@ -919,6 +924,8 @@ def home():
 def links():
     if not g.is_registry:
         return h.redirect_to('dataset.search')
+    if not g.user:
+        return h.redirect_to('user.login')
     return render('home/quick_links.html',
                   extra_vars={'is_sysadmin': is_sysadmin(g.user)})
 

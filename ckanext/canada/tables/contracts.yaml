@@ -295,7 +295,7 @@ resources:
     datatables_col_class: col-xxl
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
-      style: "width: 100%; display: block"
+      class: form-control canada-width-full d-block
 
   - datastore_id: description_fr
     label:
@@ -322,7 +322,7 @@ resources:
     datatables_col_class: col-xxl
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
-      style: "width: 100%; display: block"
+      class: form-control canada-width-full d-block
 
   - datastore_id: contract_period_start
     label:
@@ -506,7 +506,7 @@ resources:
     form_snippet: scheming/form_snippets/textarea.html
     js_required_eval: '{{comments_fr}}.length > 0'
     form_attrs:
-      style: "width: 100%; display: block"
+      class: form-control canada-width-full d-block
 
   - datastore_id: comments_fr
     label:
@@ -527,7 +527,7 @@ resources:
     form_snippet: scheming/form_snippets/textarea.html
     js_required_eval: '{{comments_en}}.length > 0'
     form_attrs:
-      style: "width: 100%; display: block"
+      class: form-control canada-width-full d-block
 
   - datastore_id: additional_comments_en
     label:
@@ -548,7 +548,7 @@ resources:
     form_snippet: scheming/form_snippets/textarea.html
     js_required_eval: '{{additional_comments_fr}}.length > 0'
     form_attrs:
-      style: "width: 100%; display: block"
+      class: form-control canada-width-full d-block
 
   - datastore_id: additional_comments_fr
     label:
@@ -569,7 +569,7 @@ resources:
     form_snippet: scheming/form_snippets/textarea.html
     js_required_eval: '{{additional_comments_en}}.length > 0'
     form_attrs:
-      style: "width: 100%; display: block"
+      class: form-control canada-width-full d-block
 
   - datastore_id: agreement_type_code
     label:
@@ -1969,7 +1969,9 @@ resources:
       fr: Obligatoire pour les marchés conclus après le 2019-01-01
     excel_required_formula: 'VALUE({contract_date})>=DATE(2019,1,1)'
     js_required_eval: '{{contract_date}}.length > 0 && new Date({{contract_date}}) >= new Date("2019-01-01")'
-    format_type: YYYY-YYYY-QX
+    format_type:
+      en: YYYY-YYYY-QX
+      fr: YYYY-YYYY-QX
     datastore_type: text
     choices_file: choices/quarter.yaml
 
@@ -2343,7 +2345,9 @@ resources:
       en: Reporting Period
       fr: Periode de declaration
     excel_required: true
-    format_type: YYYY-YYYY-QX
+    format_type:
+      en: YYYY-YYYY-QX
+      fr: YYYY-YYYY-QX
     datastore_type: text
     choices_file: choices/quarter.yaml
     form_required: true
