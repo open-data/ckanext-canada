@@ -29,7 +29,6 @@ from bs4 import BeautifulSoup
 from ckan import plugins
 
 from ckanext.scheming.helpers import scheming_get_preset
-import html
 import dateutil.parser
 import geomet.wkt as wkt
 from markupsafe import Markup, escape

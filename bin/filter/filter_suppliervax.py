@@ -4,11 +4,13 @@
 import csv
 import sys
 
+
 REMOVE_COLUMNS = [
     'record_created',
     'record_modified',
     'user_modified',
 ]
+
 
 def main():
     reader = csv.DictReader(sys.stdin)
@@ -22,5 +24,6 @@ def main():
             writer.writerow(row)
         except ValueError:
             pass
+
 
 main()

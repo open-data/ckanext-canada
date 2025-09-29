@@ -1590,6 +1590,7 @@ def delete_activities(days: Optional[int] = 90,
         click.echo(f'Including activity_type {include_types}')
     if exclude_types:
         click.echo(f'Excluding activity_type {exclude_types}')
+    # type_ignore_reason: incomplete typing
     activity_count = model.Session.execute(
         "SELECT count(*) FROM activity "
         "WHERE timestamp < NOW() - INTERVAL '{d} days' {i} {e};"
@@ -1609,6 +1610,7 @@ def delete_activities(days: Optional[int] = 90,
         click.confirm("\nAre you sure you want to delete {num} activities?".format(
             num=activity_count), abort=True)
 
+    # type_ignore_reason: incomplete typing
     model.Session.execute(
         "DELETE FROM activity "
         "WHERE timestamp < NOW() - INTERVAL '{d} days' {i} {e};"

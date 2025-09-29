@@ -52,17 +52,19 @@ MAX_TAG_LENGTH = 140  # because twitter
 #
 # <prefix>/<suffix>
 #
-# prefix: refers to the DOI namespace (a namespace is allocated to a given service provider).
-#         The prefix can contain only numeric values and the "." character which is used to
-#         delimit a hierarchical level in the namespace allocation: a one-delimiter prefix
+# prefix: refers to the DOI namespace (a namespace is allocated to a
+#         given service provider). The prefix can contain only numeric
+#         values and the "." character which is used to delimit a hierarchical
+#         level in the namespace allocation: a one-delimiter prefix
 #         (for example, "10.1000") derives from a zero-delimiter prefix ("10").
 #         The prefix 10 is allocated to the DOI Foundation.
 #
-# suffix: is a unique local name in the namespace. Any Unicode 2.0 character can be used
-#         in the suffix (there is no practical limitation on the length of a DOI name).
-#         This unique string may be an existing identifier, or any unique string chosen
-#         by the Registration Agency or the referent owner (registrant). Some limitations
-#         should be applied due to DOI HTTPS Links.
+# suffix: is a unique local name in the namespace. Any Unicode 2.0 character
+#         can be used in the suffix (there is no practical limitation on
+#         the length of a DOI name). This unique string may be an existing identifier,
+#         or any unique string chosen by the Registration Agency or the referent
+#         owner (registrant). Some limitations should be applied due to
+#         DOI HTTPS Links.
 #
 # https limitations: double quotes (")
 #                    single quotes (')

@@ -191,7 +191,7 @@ class TestNAVLSchema(CanadaTestBase):
 
         with pytest.raises(ValidationError) as ve:
             self.sysadmin_action.package_create(
-                name='12345678-9abc-def0-1234-56789abcdef0',
+                name='02345678-9abc-def0-1234-56789abcdef0',
                 id=my_uuid,
                 **self.complete_pkg)
         model.Session.rollback()
