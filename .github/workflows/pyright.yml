@@ -24,7 +24,7 @@ jobs:
           for dir in /srv/app/src/*; do
             srcName=$(echo "$dir" | awk -F'/' '{print $NF}');
             if [[ -d "$dir/.git"  ]]; then
-                printf "${srcName}: Checking for updates..."
+                printf "\n${srcName}: Checking for updates..."
                 cd $dir;
                 current_branch=$(git rev-parse --abbrev-ref HEAD);
                 if [[ "$srcName" == "ckan" ]]; then
@@ -35,10 +35,10 @@ jobs:
                     reslog=$(git log HEAD..origin/$current_branch --oneline);
                 fi;
                 if [[ "${reslog}" == "" ]]; then
-                    printf "${srcName}: Up to date. Skipping..."
+                    printf "\n${srcName}: Up to date. Skipping..."
                 else
                     git pull || true;
-                    printf "${srcName}: Pulled updated code. Re-initializing in python environment..."
+                    printf "\n${srcName}: Pulled updated code. Re-initializing in python environment..."
                     cd /srv/app;
                     if [[ -f "$dir/requirements.txt" ]]; then
                         pip install -r $dir/requirements.txt || true;
@@ -54,7 +54,7 @@ jobs:
                     fi;
                 fi;
             else
-                printf "${srcName}: Not a source repository. Skipping..."
+                printf "\n${srcName}: Not a source repository. Skipping..."
             fi;
           done;
           cd /srv/app;
@@ -78,7 +78,11 @@ jobs:
       - name: Install Node Dependencies
         if: steps.gitcheckout.outcome == 'success'
         run: |
+          source /srv/app/venv/bin/activate
           cd /srv/app/src/ckanext-canada
+          printf "\nNode Version: $(node --version)"
+          printf "\nNPM Version: $(npm --version)"
+          printf "\nPython Version: $(python3 --version)"
           npm ci
       - name: Check Types
         if: steps.gitcheckout.outcome == 'success'
@@ -86,4 +90,7 @@ jobs:
           export PYTHONPATH="${PYTHONPATH}:/srv/app/lib/python3.9/site-packages:/srv/app/src/ckanext-citeproc"
           source /srv/app/venv/bin/activate
           cd /srv/app/src/ckanext-canada
+          printf "\nNode Version: $(node --version)"
+          printf "\nNPM Version: $(npm --version)"
+          printf "\nPython Version: $(python3 --version)"
           npx pyright
