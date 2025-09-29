@@ -153,7 +153,7 @@ jobs:
                     printf "${srcName}: Up to date. Skipping..."
                 else
                     git pull || true;
-                    printf "${Green}${srcName}: Pulled updated code. Re-initializing in python environment..."
+                    printf "${srcName}: Pulled updated code. Re-initializing in python environment..."
                     cd /srv/app;
                     if [[ -f "$dir/requirements.txt" ]]; then
                         pip install -r $dir/requirements.txt || true;
@@ -322,7 +322,7 @@ jobs:
                     printf "${srcName}: Up to date. Skipping..."
                 else
                     git pull || true;
-                    printf "${Green}${srcName}: Pulled updated code. Re-initializing in python environment..."
+                    printf "${srcName}: Pulled updated code. Re-initializing in python environment..."
                     cd /srv/app;
                     if [[ -f "$dir/requirements.txt" ]]; then
                         pip install -r $dir/requirements.txt || true;
