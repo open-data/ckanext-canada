@@ -428,7 +428,7 @@ jobs:
   slack_notify:
     name: Send Slack Notifications
     needs: [pytest, merge-code-coverage-and-upload]
-    if: github.run_attempt == 1 && (success() || failure()) && needs.define-matrix.outputs.IS_PYTEST_COMBINE_TEST_RESULTS_DISABLED == 'false'
+    if: (success() || failure()) && needs.define-matrix.outputs.IS_PYTEST_COMBINE_TEST_RESULTS_DISABLED == 'false'
     runs-on: ubuntu-latest
     steps:
       - name: Slack Notification (Success)
