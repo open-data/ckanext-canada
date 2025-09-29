@@ -6,14 +6,14 @@ on:
         type: number
         description: 'Number of test splits default 1 (max 24)'
         required: true
-        default: '1'
+        default: 1
   workflow_dispatch:
     inputs:
       splits:
         type: number
         description: 'Number of test splits default 1 (max 24)'
         required: true
-        default: '1'
+        default: 1
       IS_PYTEST_COMBINE_TEST_RESULTS_DISABLED:
         type: boolean
         description: Override flag for skipping rollup of pytest/coverage html reports
