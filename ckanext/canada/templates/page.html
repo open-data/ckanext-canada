@@ -53,7 +53,7 @@
         <main role="main" property="mainContentOfPage" class="container">
           {% block page_title %}
             {% if is_registry %}
-              <div id="ie_warning" class="alert alert-warning" class="alert alert-warning canada-display-none">
+              <div id="ie_warning" class="alert alert-warning canada-display-none">
                 <p>{{ _('Internet Explorer is no longer being supported within the Open Government Registry. Some features will not work as expected, including publication of records. Please use MS Edge or Google Chrome, or contact <a href="mailto:{support}">{support}</a> for additional support.').format(support=h.support_email_address()) | safe }}</p>
               </div>
             {% endif %}
