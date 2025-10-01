@@ -11,7 +11,7 @@
 {% block page_title %}
   <h1>{{ title or pkg_dict.name }}
     {% if pkg_dict.state.startswith('draft') %}
-      <span class="label label-info" style="padding-top: 4px; padding-bottom: 4px;">{{ _('Draft') }}</span>
+      <span class="label label-info canada-draft-title-pill">{{ _('Draft') }}</span>
     {% endif %}
     {% if machine_translated %}
       <i class="fa fa-language text-muted mrgn-lft-sm" title="{{ _('This third party metadata element has been translated using an automated translation tool.  To report any discrepancies please contact {support}').format(support=h.support_email_address()) }}"></i>
@@ -87,7 +87,7 @@
                 </div>
               {% endfor %}
             {% else %}
-              <a href="{{ portal_link }}" title="{{ _('View on Portal') }}" class="btn btn-success" target="_blank">
+              <a href="{{ portal_link }}" title="{{ _('View on Portal') }}" class="btn btn-success" target="_blank" rel='noopener noreferrer'>
                 <span class="fa fa-arrow-circle-right" aria-hidden="true"></span>&nbsp;<span class="text">{{ _('View on Portal') }}</span>
               </a>
             {% endif %}
@@ -106,7 +106,7 @@
         <div id="resource-desc">
           {% set notes, machine_translated = h.get_translated_t(pkg_dict, 'notes') %}
           {% if machine_translated %}
-            <i class="fa fa-language text-muted mrgn-bttm-md" style="float: right" title="{{ _('This third party metadata element has been translated using an automated translation tool.  To report any discrepancies please contact {support}').format(support=h.support_email_address()) }}"></i>
+            <i class="fa fa-language text-muted mrgn-bttm-md float-right" title="{{ _('This third party metadata element has been translated using an automated translation tool.  To report any discrepancies please contact {support}').format(support=h.support_email_address()) }}"></i>
           {% endif %}
           {{ h.render_markdown(notes) }}
         </div>
@@ -250,7 +250,7 @@
 {% block links %}
   {{ super() }}
   {% if not is_registry %}
-    <script>
+    <script nonce="{{- h.get_inline_script_nonce() -}}">
     window.imConfigPath = "/invitation-manager/";
     </script>
   {% endif %}

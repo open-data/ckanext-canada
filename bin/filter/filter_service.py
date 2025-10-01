@@ -16,7 +16,7 @@ BOM = "\N{bom}"
 PROGRAM_NAMES_FILE = os.path.join(
                         os.path.split(__file__)[0],
                         '../../ckanext/canada/tables/choices'
-                        '/service_program_names.yaml')
+                        '/service_program_ids.yaml')
 
 COLUMNS = [
     'fiscal_yr', 'service_id', 'service_name_en', 'service_name_fr',

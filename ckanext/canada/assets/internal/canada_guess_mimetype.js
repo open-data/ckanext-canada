@@ -127,7 +127,11 @@ window.addEventListener('load', function(){
       $(uploadField).off('change.guess_mimetype');
       $(uploadField).on('change.guess_mimetype', function(_event){
         _clear_alert();
-        let fileName = $(uploadField).val().split(/^C:\\fakepath\\/).pop();
+        const selectedFile = _event.target.files[0];
+        let fileName = '';
+        if( selectedFile ){
+          fileName = selectedFile.name;
+        }
         if( fileName.length > 0 ){
           _guess_mimetype(fileName);
         }

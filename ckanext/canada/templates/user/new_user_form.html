@@ -3,26 +3,24 @@
   <form id="user-register-form" role="form" action="" method="post" enctype="multipart/form-data">
     {{ h.csrf_input() }}
     {{ form.errors(error_summary) }}
-    {% set valid_dict1={ 'oninvalid': "setCustomValidity('"+_("Please fill out this field.")+"')", 'onchange':"setCustomValidity('')", 'class': 'form-control'} %}
-    {% set valid_dict2={ 'oninvalid': "setCustomValidity('"+_("Please enter a valid email address.")+"')", 'onchange':"setCustomValidity('')", 'class': 'form-control'} %}
-    {% call form.input("name", id="field-username", label=_("Username"), value=data.name, error=errors.name, attrs=valid_dict1, is_required=true, classes=["control-medium"])  %}
+    {% call form.input("name", id="field-username", label=_("Username"), value=data.name, error=errors.name, attrs={'class': 'form-control canada-custom-validity-general'}, is_required=true, classes=["control-medium"])  %}
       {{ form.info(_('Use only lowercase letters (a-z) and numbers (0-9) with optional hyphens (-) and underscores (_). Example: joe-bloggs')) }}
     {% endcall %}
-    {% call form.input("fullname", id="field-fullname", label=_("Full Name"), value=data.fullname, error=errors.fullname, attrs=valid_dict1, is_required=true, classes=["control-medium"]) %}
+    {% call form.input("fullname", id="field-fullname", label=_("Full Name"), value=data.fullname, error=errors.fullname, attrs={'class': 'form-control canada-custom-validity-general'}, is_required=true, classes=["control-medium"]) %}
       {{ form.info(_('Example: Joe Bloggs')) }}
     {% endcall %}
-    {% call form.input("email", id="field-email", label=_("Email"), type="email", value=data.email, error=errors.email, attrs=valid_dict2, is_required=true, classes=["control-medium"]) %}
-      {{ form.info(_('Example: joe.bloggs@tbs-sct.gc.ca')) }}
+    {% call form.input("email", id="field-email", label=_("Email"), type="email", value=data.email, error=errors.email, attrs={'class': 'form-control canada-custom-validity-email'}, is_required=true, classes=["control-medium"]) %}
+      {{ form.info(_('Example: {example_email}').format(example_email=h.obfuscate_to_code_points('joe.bloggs@tbs-sct.gc.ca'))) }}
     {% endcall %}
-    {% set format_attrs={ 'oninvalid': "setCustomValidity('"+_("Please fill out this field.")+"')", 'onchange':"setCustomValidity('')", 'data-module': 'autocomplete', 'data-module-source': '/organization/autocomplete?q=?', 'data-module-key': 'title', 'data-module-label': 'title', 'data-module-dropdownClass': 'org-select2-dropdown', 'data-module-containerClass': 'org-select2-container', 'data-module-tags': 'false', 'data-module-createtags': 'false', 'class':'control-medium'} %}
+    {% set format_attrs={'data-module': 'autocomplete', 'data-module-source': '/organization/autocomplete?q=?', 'data-module-key': 'title', 'data-module-label': 'title', 'data-module-dropdownClass': 'org-select2-dropdown', 'data-module-containerClass': 'org-select2-container', 'data-module-tags': 'false', 'data-module-createtags': 'false', 'class':'control-medium canada-custom-validity-general'} %}
     {{ form.input('department', id='field-department', label=_('Organization'), value=data.department, error=errors.department, attrs=format_attrs, is_required=true, placeholder=_('Search organizations...')) }}
     {% call form.input("phoneno", id="field-phoneno", label=_("Phone Number"), value=data.phoneno, error=errors.phoneno, classes=["control-medium"]) %}
       {{ form.info(_('Example: 000 000 0000')) }}
     {% endcall %}
-    {% call form.input("password1", id="field-password", label=_("Password"), value=data.password1, error=errors.password1, type="password", attrs=valid_dict1, is_required=true, classes=["control-medium"]) %}
+    {% call form.input("password1", id="field-password", label=_("Password"), value=data.password1, error=errors.password1, type="password", attrs={'class': 'form-control canada-custom-validity-general', 'autocomplete': 'off'}, is_required=true, classes=["control-medium"]) %}
       {{ form.info(_('Password must be 12 characters or longer, and must consist of at least three of the following character sets: uppercase characters, lowercase characters, digits, punctuation & special characters')) }}
     {% endcall %}
-    {% call form.input("password2", id="field-confirm-password", label=_("Confirm Password"), value=data.password2, error=errors.password1, type="password", attrs=valid_dict1, is_required=true, classes=["control-medium"]) %}
+    {% call form.input("password2", id="field-confirm-password", label=_("Confirm Password"), value=data.password2, error=errors.password1, type="password", attrs={'class': 'form-control canada-custom-validity-general', 'autocomplete': 'off'}, is_required=true, classes=["control-medium"]) %}
       {{ form.info(_('The password must match')) }}
     {% endcall %}
     <div class="terms-and-conditions">
@@ -33,7 +31,7 @@
         <p>The purpose for collecting and using “Username, Password and Email” is to issue, manage and validate anonymous credentials of individuals accessing and/or communicating with Government of Canada systems and applications.</p>
         <p>The personal information may be used to establish audit trails of credential usage. In the case of suspected security or privacy breaches, personal information may be shared with departmental security and access to information and privacy officials, as well as the federal government department or agency which collects and uses the personal information considered to have been compromised (refer to Standard PIB Security Incidents - PSU 939). For suspected criminal activity, personal information may also be disclosed to the Royal Canadian Mounted Police for investigational purposes; refer to institution-specific PIB Operational Case Records - RCMP PPU 005.</p>
         <p>We employ software programs to monitor network traffic to identify unauthorized attempts to upload or change information, or otherwise cause damage. This software receives and records the Internet Protocol (IP) address of the computer that has contacted our websites, the date and time of the visit and the pages visited. We make no attempt to link these addresses with the identity of individuals visiting our sites unless an attempt to damage the sites has been detected.</p>
-        <p>Questions, concerns and complaints regarding this notice, or the administration of the Privacy Act in connection with your GCKey may be directed to the Access to Information and Privacy Protection Division by email to <a href="mailto:ATIP-AIPRP@ssc-spc.gc.ca">ATIP-AIPRP@ssc-spc.gc.ca</a>, or by writing to the following address:</p>
+        <p>Questions, concerns and complaints regarding this notice, or the administration of the Privacy Act in connection with your GCKey may be directed to the Access to Information and Privacy Protection Division by email to <a href="mailto:&#065;&#084;&#073;&#080;&#045;&#065;&#073;&#080;&#082;&#080;&#064;&#115;&#115;&#099;&#045;&#115;&#112;&#099;&#046;&#103;&#099;&#046;&#099;&#097;">&#065;&#084;&#073;&#080;&#045;&#065;&#073;&#080;&#082;&#080;&#064;&#115;&#115;&#099;&#045;&#115;&#112;&#099;&#046;&#103;&#099;&#046;&#099;&#097;</a>, or by writing to the following address:</p>
         <p>Access to Information and Privacy Directorate<br/>
         Corporate Secretariat<br/>
         Shared Services Canada<br/>
@@ -69,6 +67,40 @@
         <p>If you select “I do not agree” you will not have access to the Registry.</p>
       {% endtrans %}
     </div>
+    <script nonce="{{- h.get_inline_script_nonce() -}}">
+      window.addEventListener('load', function(){
+        $(document).ready(function(){
+          const invalidGeneralMsg = '{{- _("Please fill out this field.") -}}';
+          const invalidEmailMsg = '{{- _("Please enter a valid email address.") -}}';
+
+          let generalFields = $('.canada-custom-validity-general');
+          if( generalFields.length > 0 ){
+            $(generalFields).each(function(_index, _generalField){
+              $(_generalField).off('invalid.CustomMessage');
+              $(_generalField).on('invalid.CustomMessage', function(_event){
+                $(_generalField)[0].setCustomValidity(invalidGeneralMsg);
+              });
+              $(_generalField).on('change', function(_event){
+                $(_generalField)[0].setCustomValidity('');
+              });
+            });
+          }
+
+          let emailFields = $('.canada-custom-validity-email');
+          if( emailFields.length > 0 ){
+            $(emailFields).each(function(_index, _emailField){
+              $(_emailField).off('invalid.CustomMessage');
+              $(_emailField).on('invalid.CustomMessage', function(_event){
+                $(_emailField)[0].setCustomValidity(invalidEmailMsg);
+              });
+              $(_emailField).on('change', function(_event){
+                $(_emailField)[0].setCustomValidity('');
+              });
+            });
+          }
+        });
+      });
+    </script>
     <div class="form-group">
       <button class="btn btn-primary" type="submit" name="save">{{ _("I agree") }}</button>
       <button class="btn btn-default" type="reset">{{ _("I do not agree") }}</button>

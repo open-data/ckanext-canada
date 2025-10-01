@@ -24,9 +24,11 @@
   {% if h.is_registry_domain() %}
     <div class="row">
       <div class="col-md-12">
-        <p>{{ content }}</p>
-        {% if code == 403 %}
-          {% if not g.userobj %}
+        {% if content %}
+          <p>{{- _(content) -}}</p>
+        {% endif %}
+        {% if code == 403 or code == 404 %}
+          {% if not g.userobj and 'The requested URL was not found on the server' not in content %}
             <p class="mrgn-tp-lg">{{ _('You are not logged in to the Open Government Registry. Note that your login expires after 1 hour of inactivity. Click on the log in button below to log in.') }}</p>
             <p>
               <a href="{{ h.url_for('user.login') }}" class="btn btn-primary">

@@ -10,7 +10,7 @@ Example:
 #}
 <div class="form-group">
   <label for="field-order-by" class="control-label">{{ _('Order by') }}</label>
-  <select id="field-order-by" name="sort" class="form-control input-sm form-select" onchange="this.form.submit()">
+  <select id="field-order-by" name="sort" class="form-control input-sm form-select">
     <option value="" >{{ _('Relevance') }}</option>
     {% if h.lang() == 'fr' %}
       <option value="title_fr asc"{% if sort=="title_fr asc" %} selected="selected"{% endif %}>{{ _('Name Ascending') }}</option>
@@ -22,3 +22,16 @@ Example:
     <option value="metadata_modified desc"{% if sort=='metadata_modified desc' %} selected="selected"{% endif %}>{{ _('Last Modified') }}</option>
   </select>
 </div>
+<script nonce="{{- h.get_inline_script_nonce() -}}">
+  window.addEventListener('load', function(){
+    $(document).ready(function(){
+      let orderByField = $('#field-order-by');
+      if( orderByField.length > 0 ){
+        $(orderByField).off('change.Submit');
+        $(orderByField).on('change.Submit', function(_event){
+          $(orderByField)[0].form.submit();
+        });
+      }
+    });
+  });
+</script>

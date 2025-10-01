@@ -1,18 +1,40 @@
 # -*- coding: UTF-8 -*-
-from factory import LazyAttribute, Sequence
+from factory import LazyAttribute, Sequence, post_generation
 
 from ckan.tests.factories import (
     UserWithToken,
     Organization,
     Dataset,
     Resource,
-    ResourceView
+    ResourceView,
+    APIToken,
+    SysadminWithToken
 )
 import ckan.tests.helpers as helpers
 from ckan.model import Session
 
 
+class CanadaAPIToken(APIToken):
+    name = 'static_api_token_name'
+
+
+class CanadaSysadminWithToken(SysadminWithToken):
+    @post_generation
+    def token(obj, create, extracted, **kwargs):
+        if not create:
+            return
+        api_token = CanadaAPIToken(user=obj["id"])
+        obj["token"] = api_token["token"]
+
+
 class CanadaUser(UserWithToken):
+    @post_generation
+    def token(obj, create, extracted, **kwargs):
+        if not create:
+            return
+        api_token = CanadaAPIToken(user=obj["id"])
+        obj["token"] = api_token["token"]
+
     @classmethod
     def _create(self, target_class, *args, **kwargs):
         if args:
