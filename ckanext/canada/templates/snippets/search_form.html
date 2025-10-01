@@ -9,7 +9,7 @@
 <form class="form-inline mrgn-bttm-lg" role="form" method="get" data-module="select-switch">
   {% block search_input %}
     {% block search_input_label %}
-      {% if g.is_registry %}
+      {% if h.is_registry_domain() %}
         <label for="search_field" class="wb-inv">{{ _('Search Datasets') }}</label>
       {% else %}
         {% if h.show_openinfo_facets() %}
