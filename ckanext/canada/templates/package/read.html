@@ -1,6 +1,5 @@
 {% ckan_extends %}
 
-{% set is_registry = h.is_registry_domain() %}
 {% set client_lang = h.lang() %}
 {% set title, machine_translated = h.get_translated_t(pkg_dict, 'title') %}
 
@@ -25,7 +24,7 @@
   {% endif %}
   <div class="module">
     {% block internal_actions %}
-      {% if is_registry %}
+      {% if h.is_registry_domain() %}
         {% set max_resource_count = h.max_resources_per_dataset() %}
         {% if max_resource_count and pkg.resources|length >= max_resource_count %}
           <div class="row">
@@ -219,7 +218,7 @@
       {% endif %}
     {% endblock %}
     {% block more_like_this %}
-      {% if not is_registry %}
+      {% if not h.is_registry_domain() %}
         {% if h.adv_search_url() %}
           <section class="panel panel-primary">
             <header class="panel-heading">
@@ -231,13 +230,13 @@
       {% endif %}
     {% endblock %}
     {% block package_rate %}
-      {% if not is_registry %}
+      {% if not h.is_registry_domain() %}
         <a id="rate"></a>
         <div id="voting-wrapper" data-ajax-replace="/{{ h.lang() }}/vote?uuid={{ pkg_dict.id }}"></div>
       {% endif %}
     {% endblock %}
     {% block package_feedback %}
-      {% if not is_registry %}
+      {% if not h.is_registry_domain() %}
         <a id="feedback"></a>
         <section class="indent-large">
           <div id="feedback-wrapper" data-ajax-replace="/{{ h.lang() }}/feedback?uuid={{ pkg_dict.id }}"></div>
@@ -249,7 +248,7 @@
 
 {% block links %}
   {{ super() }}
-  {% if not is_registry %}
+  {% if not h.is_registry_domain() %}
     <script nonce="{{- h.get_inline_script_nonce() -}}">
     window.imConfigPath = "/invitation-manager/";
     </script>
@@ -259,7 +258,7 @@
 {% block scripts %}
   {% asset 'canada_public/more_like_this' %}
   {% asset 'canada_public/voting_fix' %}
-  {% if not is_registry %}
+  {% if not h.is_registry_domain() %}
     {% asset 'invitation_manager/js' %}
   {% endif %}
   {{ super() }}
@@ -267,7 +266,7 @@
 
 {% block custom_styles %}
   {{ super() }}
-  {% if not is_registry %}
+  {% if not h.is_registry_domain() %}
     {% asset 'invitation_manager/css' %}
   {% endif %}
 {% endblock %}

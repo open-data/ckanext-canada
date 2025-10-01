@@ -62,7 +62,13 @@ def is_registry_domain() -> bool:
     """
     This helper should only be used inside the request context.
     """
-    uri_parts = urlsplit(request.url)
+    try:
+        uri_parts = urlsplit(request.url)
+    except RuntimeError:
+        # outside of the Flask request/view context.
+        # is the CLI or background system process,
+        # run as Registry.
+        return True
     subdomain = uri_parts.netloc.split('.')[0]
     return 'registry' in subdomain or 'registre' in subdomain
 

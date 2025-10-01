@@ -1,9 +1,8 @@
 {# See: https://github.com/wet-boew/cdts-sgdc/blob/v4.1.0/src/gcweb/refFooter.ejs #}
 {# NOTE: DOMParser, nonce injection, and re-stringing is necessary for WET Builder to work with CSP header #}
-{% set is_registry = h.is_registry_domain() %}
 <script nonce="{{- h.get_inline_script_nonce() -}}">
   const wetFooterString = wet.builder.refFooter({
-    {% if is_registry and 'is_resource_supported_by_xloader' in h %}
+    {% if h.is_registry_domain() and 'is_resource_supported_by_xloader' in h %}
       "isApplication": true,
     {% else %}
       "isApplication": false,
@@ -28,7 +27,7 @@
     newWetFooterString += _link.outerHTML;
   });
   document.write(newWetFooterString);
-  {% if not is_registry and h.adobe_analytics_js() %}
+  {% if not h.is_registry_domain() and h.adobe_analytics_js() %}
     function canada_set_adobe_bottom(){
       const maxTries = 20;
       let currentTry = 0;
