@@ -293,7 +293,7 @@ def update_triggers():
         rettype='bool',
         definition='''
     BEGIN
-        IF value AND value ~ '^[0-9]+$' THEN
+        IF value IS NOT NULL AND value <> '' AND value ~ '^[0-9]+$' THEN
             RETURN TRUE;
         END IF;
         RETURN FALSE;

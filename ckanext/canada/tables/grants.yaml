@@ -1003,13 +1003,13 @@ resources:
           NEW.recipient_postal_code := trim_lead_trailing(NEW.recipient_postal_code);
           NEW.recipient_postal_code := UPPER(NEW.recipient_postal_code);
           NEW.recipient_postal_code := REGEXP_REPLACE(NEW.recipient_postal_code, '\s+', ' ', 'g');
-          IF NEW.recipient_postal_code AND NOT NEW.recipient_postal_code ~ '^[A-Z]\d[A-Z]\s\d[A-Z]\d$' THEN
-            errors := errors || recipient_postal_code_error(NEW.recipient_postal_code, 'recipient_postal_code');
+          IF NEW.recipient_postal_code IS NOT NULL AND NEW.recipient_postal_code <> '' AND NOT NEW.recipient_postal_code ~ '^[A-Z]\d[A-Z]\s\d[A-Z]\d$' THEN
+            errors := errors || ARRAY[['recipient_postal_code', {recipient_postal_code_error}]];
           END IF;
 
           NEW.federal_riding_number := trim_lead_trailing(NEW.federal_riding_number);
-          IF NEW.federal_riding_number AND (NOT is_natural_number(NEW.federal_riding_number) OR (is_natural_number(NEW.federal_riding_number) AND LENGTH(NEW.federal_riding_number) != 5)) THEN
-            errors := errors || federal_riding_number_error(NEW.federal_riding_number, 'federal_riding_number');
+          IF NEW.federal_riding_number IS NOT NULL AND NEW.federal_riding_number <> '' AND (NOT is_natural_number(NEW.federal_riding_number) OR (is_natural_number(NEW.federal_riding_number) AND LENGTH(NEW.federal_riding_number) != 5)) THEN
+            errors := errors || ARRAY[['federal_riding_number', {federal_riding_number_error}]];
           END IF;
 
         END IF;
@@ -1027,7 +1027,7 @@ resources:
 
   trigger_strings:  # yaml | not supported
     ref_number_error: Comma is not allowed in Reference Number field
-    recipient_postal_code: 'Must be a valid Canadian postal code in the format of "A1A 1A1"'
+    recipient_postal_code_error: 'Must be a valid Canadian postal code in the format of "A1A 1A1"'
     federal_riding_number_error: Must be a 5 digit number
     start_end_date_error: '"Agreement Start Date" cannot be after "Projected Agreement End Date"'
 
@@ -1059,8 +1059,8 @@ resources:
       agreement_value: "500000"
       foreign_currency_type: "USD"
       foreign_currency_value: "450000"
-      agreement_start_date: "2019-04-01"
-      agreement_end_date: "2020-04-30"
+      agreement_start_date: "2025-04-01"
+      agreement_end_date: "2026-04-30"
       coverage: "Canada; Mexico|Mexique; United States|États-Unis"
       description_en: "Developing models and other tools to predict the safety performance of buildings."
       description_fr: "Met au point des modèles et d'autres outils pour prévoir la sécurité des bâtiments."
