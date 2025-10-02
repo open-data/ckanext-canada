@@ -285,6 +285,20 @@ def update_triggers():
         RETURN value_trimmed;
     END;
         ''')
+    lc.action.datastore_function_create(
+        name='is_natural_number',
+        or_replace=True,
+        arguments=[
+            {'argname': 'value', 'argtype': 'text'}],
+        rettype='bool',
+        definition='''
+    BEGIN
+        IF value AND value ~ '^[0-9]+$' THEN
+            RETURN TRUE;
+        END IF;
+        RETURN FALSE;
+    END;
+        ''')
     # return record with .clean (normalized value) and .error
     # (NULL or ARRAY[[field_name, error_message]])
     lc.action.datastore_function_create(
