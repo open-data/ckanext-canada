@@ -295,7 +295,8 @@ def update_triggers():
         rettype='bool',
         definition='''
     BEGIN
-        RETURN value IS NOT NULL AND value <> '' AND value ~ '^[0-9]+$' AND value !~ '^0';
+        RETURN value IS NOT NULL AND value <> ''
+        AND value ~ '^[0-9]+$' AND value !~ '^0';
     END;
         ''')
     # return record with .clean (normalized value) and .error
