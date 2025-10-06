@@ -306,8 +306,8 @@ class TestRecombinantWebForms(CanadaTestBase):
         self.nil_chromo = get_chromo(self.nil_type)
         self.fields = self.chromo['fields']
         self.nil_fields = self.nil_chromo['fields']
-        self.example_record = self.chromo['examples']['record']
-        self.example_nil_record = self.nil_chromo['examples']['record']
+        self.example_record = self.chromo['examples']['record'].copy()
+        self.example_nil_record = self.nil_chromo['examples']['record'].copy()
 
     @classmethod
     def teardown_method(self, method):
@@ -316,6 +316,8 @@ class TestRecombinantWebForms(CanadaTestBase):
         """
         super(TestRecombinantWebForms, self).teardown_method(method)
 
+        self.example_record = self.chromo['examples']['record'].copy()
+        self.example_nil_record = self.nil_chromo['examples']['record'].copy()
         lc = LocalCKAN()
         try:
             rval = lc.action.recombinant_show(dataset_type=self.pd_type,
