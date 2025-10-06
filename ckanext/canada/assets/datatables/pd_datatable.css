@@ -833,6 +833,7 @@ body #dtprv_wrapper[data-edit-view="true"] #dtprv-body-main td.expanders{
 
 body #dtprv_wrapper[data-edit-view="true"] #dtprv_failure_message{
   margin-top: 15px;
+  clear: both !important;
 }
 
 body #dtprv_wrapper[data-edit-view="true"] #dtprv_failure_message p{
