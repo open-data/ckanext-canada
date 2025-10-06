@@ -187,6 +187,9 @@ jobs:
           pip install -r requirements.txt
           pip install -r test-requirements.txt
           python3 setup.py develop
+          cd /srv/app/src/ckan
+          python3 setup.py develop
+          pip install setuptools==70.0.0
           cd /srv/app
       - name: Setup Databases
         run: |
