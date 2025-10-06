@@ -266,7 +266,7 @@ canada_views.add_url_rule(
 @canada_views.route('/recover-username', methods=['GET', 'POST'])
 @nocache_store
 def recover_username():
-    if not g.is_registry or not h.plugin_loaded('gcnotify'):
+    if not h.is_registry_domain() or not h.plugin_loaded('gcnotify'):
         # we only want this route on the Registry, and the email template
         # is monkey patched in GC Notify so we need that loaded
         return abort(404)
@@ -326,9 +326,10 @@ def recover_username():
 
 
 def canada_search(package_type: str):
-    if g.is_registry and not g.user:
+    is_registry = h.is_registry_domain()
+    if is_registry and not g.user:
         return abort(403)
-    if not g.is_registry and package_type in h.recombinant_get_types():
+    if not is_registry and package_type in h.recombinant_get_types():
         return h.redirect_to('dataset.search', package_type='dataset')
     return dataset_search(package_type)
 
@@ -907,7 +908,7 @@ def _clean_check_type_errors(post_data: Dict[str, Any],
 @canada_views.route('/', methods=['GET'])
 @nocache_store
 def home():
-    if not g.is_registry:
+    if not h.is_registry_domain():
         return h.redirect_to('dataset.search')
     if not g.user:
         return h.redirect_to('user.login')
@@ -922,7 +923,7 @@ def home():
 
 @canada_views.route('/links', methods=['GET'])
 def links():
-    if not g.is_registry:
+    if not h.is_registry_domain():
         return h.redirect_to('dataset.search')
     if not g.user:
         return h.redirect_to('user.login')
@@ -997,7 +998,7 @@ def ckanadmin_job_queue():
 
 @canada_views.route('/help', methods=['GET'])
 def view_help():
-    if not g.is_registry:
+    if not h.is_registry_domain():
         return abort(404)
     return render('help.html', extra_vars={})
 

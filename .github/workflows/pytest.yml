@@ -405,7 +405,7 @@ jobs:
 
           source /srv/app/venv/bin/activate
 
-          codecov -v upload-coverage -t ${{ secrets.CODECOV_TOKEN }} --report-type coverage --slug open-data/ckanext-canada --git-service github --branch ${{ github.ref_name }} --network-root-folder /srv/app/src/ckanext-canada --commit-sha ${{ github.sha }}
+          codecov -v upload-coverage -t ${{ secrets.CODECOV_TOKEN }} --report-type coverage --slug open-data/ckanext-canada --git-service github --branch ${{ github.head_ref || github.ref_name }} --network-root-folder /srv/app/src/ckanext-canada --commit-sha ${{ github.sha }}
       - name: Upload Test Results to CodeCov
         if: ${{ !cancelled() }}
         continue-on-error: true
@@ -414,7 +414,7 @@ jobs:
 
           source /srv/app/venv/bin/activate
 
-          codecov -v do-upload -t ${{ secrets.CODECOV_TOKEN }} -f /srv/app/results/junit_results.xml --report-type test_results --slug open-data/ckanext-canada --git-service github --branch ${{ github.ref_name }} --network-root-folder /srv/app/src/ckanext-canada --commit-sha ${{ github.sha }}
+          codecov -v do-upload -t ${{ secrets.CODECOV_TOKEN }} -f /srv/app/results/junit_results.xml --report-type test_results --slug open-data/ckanext-canada --git-service github --branch ${{ github.head_ref || github.ref_name }} --network-root-folder /srv/app/src/ckanext-canada --commit-sha ${{ github.sha }}
       - name: Pytest Coverage Console Report
         run: |
           set -ex
@@ -428,7 +428,7 @@ jobs:
   slack_notify:
     name: Send Slack Notifications
     needs: [pytest, merge-code-coverage-and-upload]
-    if: github.run_attempt == 1 && (success() || failure()) && needs.define-matrix.outputs.IS_PYTEST_COMBINE_TEST_RESULTS_DISABLED == 'false'
+    if: (success() || failure()) && needs.define-matrix.outputs.IS_PYTEST_COMBINE_TEST_RESULTS_DISABLED == 'false'
     runs-on: ubuntu-latest
     steps:
       - name: Slack Notification (Success)
