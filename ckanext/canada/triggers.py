@@ -285,6 +285,8 @@ def update_triggers():
         RETURN value_trimmed;
     END;
         ''')
+    # natural number being a positive integer without leading zeros
+    # does not accept commas or decimals, or other numeric delimiters
     lc.action.datastore_function_create(
         name='is_natural_number',
         or_replace=True,
@@ -293,10 +295,7 @@ def update_triggers():
         rettype='bool',
         definition='''
     BEGIN
-        IF value IS NOT NULL AND value <> '' AND value ~ '^[0-9]+$' THEN
-            RETURN TRUE;
-        END IF;
-        RETURN FALSE;
+        RETURN value IS NOT NULL AND value <> '' AND value ~ '^[0-9]+$' AND value !~ '^0';
     END;
         ''')
     # return record with .clean (normalized value) and .error

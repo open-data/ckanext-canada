@@ -5,7 +5,8 @@ shortname: Grants and Contributions
 notes: Access, upload and modify the Grants and Contributions reports for your organization
 
 template_version: 3
-template_updated: 2024-11-03  # last qa confirmed: 2025-02-19
+# TODO: update me with date of PROD deployment
+template_updated: 2025-10-06  # last qa confirmed: 2025-02-19
 
 portal_type: info
 collection: pd
@@ -381,7 +382,35 @@ resources:
     format_type:
       en: 'Text - Should be in the format "A1A 1A1"'
       fr: 'Texte - Should be in the format "A1A 1A1"'
-    excel_error_formula: 'OR({default_formula},AND(NOT(ISBLANK({agreement_start_date})),VALUE({agreement_start_date})>=DATE(2025,11,1),OR(LEFT(TRIM({cell}),3)&" "&RIGHT(TRIM({cell}),3)<>TRIM({cell}),CODE(UPPER(MID(TRIM({cell}),1,1)))>CODE("Z"),CODE(UPPER(MID(TRIM({cell}),1,1)))<CODE("A"),CODE(UPPER(MID(TRIM({cell}),2,1)))>CODE("9"),CODE(UPPER(MID(TRIM({cell}),2,1)))<CODE("0"),CODE(UPPER(MID(TRIM({cell}),3,1)))>CODE("Z"),CODE(UPPER(MID(TRIM({cell}),3,1)))<CODE("A"),MID(TRIM({cell}),4,1)<>" ",CODE(UPPER(MID(TRIM({cell}),5,1)))>CODE("9"),CODE(UPPER(MID(TRIM({cell}),5,1)))<CODE("0"),CODE(UPPER(MID(TRIM({cell}),6,1)))>CODE("Z"),CODE(UPPER(MID(TRIM({cell}),6,1)))<CODE("A"),CODE(UPPER(MID(TRIM({cell}),7,1)))>CODE("9"),CODE(UPPER(MID(TRIM({cell}),7,1)))<CODE("0"))))'
+    excel_error_formula: >-
+      OR(
+        {default_formula},
+        AND(
+          NOT(
+            ISBLANK({agreement_start_date})
+          ),
+          VALUE({agreement_start_date})>=DATE(2025,11,1),
+          OR(
+            LEFT(TRIM({cell}),3)&" "&RIGHT(TRIM({cell}),3)<>TRIM({cell}),
+            CODE(UPPER(MID({cell},1,1)))>CODE("Z"),
+            CODE(UPPER(MID({cell},1,1)))<CODE("A"),
+            CODE(UPPER(MID({cell},3,1)))>CODE("Z"),
+            CODE(UPPER(MID({cell},3,1)))<CODE("A"),
+            CODE(UPPER(MID({cell},6,1)))>CODE("Z"),
+            CODE(UPPER(MID({cell},6,1)))<CODE("A"),
+            MID({cell},4,1)<>" ",
+            NOT(
+              ISNUMBER(
+                VALUE(
+                  MID({cell},2,1)&
+                  MID({cell},5,1)&
+                  MID({cell},7,1)
+                )
+              )
+            )
+          )
+        )
+      )
     datastore_type: text
 
   # 3.14 Federal Riding Name (English) (New Field)
@@ -433,7 +462,24 @@ resources:
       # TODO: french translation!!!
       en: Text - 5 digit number
       fr: Texte - 5 digit number
-    excel_error_formula: 'OR({default_formula},AND(NOT(ISBLANK({agreement_start_date})),VALUE({agreement_start_date})>=DATE(2025,11,1),OR(NOT(ISNUMBER(VALUE({cell}))),LEN(TRIM({cell}))<>5,LEN({cell})-LEN(SUBSTITUTE({cell},"-",""))>0,LEN({cell})-LEN(SUBSTITUTE({cell},".",""))>0,LEN({cell})-LEN(SUBSTITUTE({cell},",",""))>0)))'
+    excel_error_formula: >-
+      OR(
+        {default_formula},
+        AND(
+          NOT(
+            ISBLANK({agreement_start_date})
+          ),
+          VALUE({agreement_start_date})>=DATE(2025,11,1),
+          OR(
+            NOT(ISNUMBER(VALUE({cell}))),
+            LEN(TRIM({cell}))<>5,
+            MID(TRIM({cell}),1,1)="0",
+            LEN({cell})-LEN(SUBSTITUTE({cell},"-",""))>0,
+            LEN({cell})-LEN(SUBSTITUTE({cell},".",""))>0,
+            LEN({cell})-LEN(SUBSTITUTE({cell},",",""))>0
+          )
+        )
+      )
     datastore_type: text
 
   # 3.17 Program Name (English)

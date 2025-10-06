@@ -84,6 +84,7 @@ class TestGrants(CanadaTestBase):
             '-1800',
             '2600-',
             '29.50',
+            '00087',
         ]
 
         for bad_format in bad_formats:
