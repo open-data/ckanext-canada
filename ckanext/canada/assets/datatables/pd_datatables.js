@@ -97,6 +97,7 @@ function load_pd_datatable(CKAN_MODULE){
   const completeViewButtonLabel = _('Preview records');
   const validationErrorMessage = _('Your records did not save because one or more of them have errors. Fix the errors and save again to finalize your records.');
   const exceptionErrorMessage = _('Could not save the records due to the following error: ');
+  const supprtErrorMessage = _('Your records did not save. Try saving again. If the issue persist please contact support with Support ID: ');
   const genericErrorMessage = _('Your records did not save. Try saving again. If the issue persist please contact support.');
   const dupePrimaryKeysErrorMessage = _('{PRIM_IDS} already used in this Editor Table.');
   const countSuffix = _(' record(s)');
@@ -149,6 +150,7 @@ function load_pd_datatable(CKAN_MODULE){
     'text',
     '_text'
   ];
+  const supportIDMatch = '<span>Support ID: <em>([0-9]+)</em></span>';
 
   if( searchParams.has('dt_query') ){
     $([document.documentElement, document.body]).animate({
@@ -877,6 +879,10 @@ function load_pd_datatable(CKAN_MODULE){
     _render_failure(_message, genericErrorMessage, 'danger');
   }
 
+  function render_support_failure(_message, _supportID){
+    _render_failure(_message, supprtErrorMessage + '<pre>' + _supportID + '</pre>', 'danger');
+  }
+
   function set_table_visibility(){
     $('#dtprv').css({'visibility': 'visible'});
     $('table.dataTable').css({'visibility': 'visible'});
@@ -1515,7 +1521,17 @@ function load_pd_datatable(CKAN_MODULE){
         }
       }
     }else{
-      render_generic_failure('DataTables error - Could not save data');
+      if( _data.responseText && _data.responseText.length > 0 ){
+        let supportID = _data.responseText.match(supportIDMatch);
+        if( Array.isArray(supportID) && supportID.length >= 2 ){
+          supportID = supportID[1];
+          render_support_failure('DataTables error - Could not save data', supportID);
+        }else{
+          render_generic_failure('DataTables error - Could not save data');
+        }
+      }else{
+        render_generic_failure('DataTables error - Could not save data');
+      }
     }
     set_button_states();
   }
