@@ -57,10 +57,14 @@ GEO_MAP_TYPE_OPTION = 'wet_theme.geo_map_type'
 GEO_MAP_TYPE_DEFAULT = 'static'
 RELEASE_DATE_FACET_STEP = 100
 
+REGISTRY_SUBDOMAIN_MATCH = re.compile(r'registry|registre')
+
 
 def is_registry_domain() -> bool:
     """
     This helper should only be used inside the request context.
+
+    Otherwise, if outside the request context, it is assumed True (is Registry)
     """
     try:
         uri_parts = urlsplit(request.url)
@@ -70,7 +74,7 @@ def is_registry_domain() -> bool:
         # run as Registry.
         return True
     subdomain = uri_parts.netloc.split('.')[0]
-    return 'registry' in subdomain or 'registre' in subdomain
+    return re.search(REGISTRY_SUBDOMAIN_MATCH, subdomain) is not None
 
 
 def get_translated_t(data_dict: Dict[str, Any],
