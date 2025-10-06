@@ -194,6 +194,10 @@ jobs:
       - name: Setup Databases
         run: |
           source /srv/app/venv/bin/activate
+          cd /srv/app/src/ckan
+          python3 setup.py develop
+          pip install setuptools==70.0.0
+          cd /srv/app
           . /srv/app/src/ckanext-canada/links/ckan/bin/postgres_init/1_create_ckan_db.sh
           . /srv/app/src/ckanext-canada/links/ckan/bin/postgres_init/2_create_ckan_datastore_db.sh
           ckan -c /srv/app/src/ckanext-canada/test-core.ini db init
