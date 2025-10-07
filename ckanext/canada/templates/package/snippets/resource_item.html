@@ -13,7 +13,7 @@
     <a class="heading resource-heading" href="{{ url }}" title="{{ translated_title or res.description }}">
       {{ translated_title }}<span class="format-label" property="dc:format" data-format="{{ res.format.lower() or 'data' }}">{{ h.get_translated(res, 'format') }}</span>
       {%- if machine_translated -%}
-        <i class="fa fa-language text-muted" style="margin-left: 10px;" title="{{ _('This third party metadata element has been translated using an automated translation tool. To report any discrepancies please contact {support}').format(support=h.support_email_address()) }}"></i>
+        <i class="fa fa-language text-muted canada-margin-left-10" title="{{ _('This third party metadata element has been translated using an automated translation tool. To report any discrepancies please contact {support}').format(support=h.support_email_address()) }}"></i>
       {%- endif -%}
       {% if 'tracking_summary' in res %}
         {{ h.popular('views', res.tracking_summary.total, min=10) }}
@@ -84,7 +84,7 @@
           </li>
           {% if res.url and h.is_url(res.url) %}
             <li>
-              <a href="{{ res.url }}" class="resource-url-analytics" target="_blank" data-pkg-id="{{ pkg.id }}" data-res-id="{{ res.id }}" data-org-id="{{ pkg.organization.id }}">
+              <a href="{{ res.url }}" class="resource-url-analytics" target="_blank" rel='noopener noreferrer' data-pkg-id="{{ pkg.id }}" data-res-id="{{ res.id }}" data-org-id="{{ pkg.organization.id }}">
                 {% if res.has_views or res.url_type == 'upload' %}
                   <i class="fa fa-arrow-circle-down" aria-hidden="true"></i>&nbsp;{{ _('Download') }}
                 {% else %}
@@ -96,7 +96,7 @@
           {% set fgp_url = h.fgp_viewer_url(pkg) %}
           {% if fgp_url and res.url and h.is_url(res.url) and res.format not in ['PDF','HTML', 'PNG', 'CSV', 'TXT',] %}
             <li>
-              <a href="{{ fgp_url }}" class="dropdown-item" target="_blank">
+              <a href="{{ fgp_url }}" class="dropdown-item" target="_blank" rel='noopener noreferrer'>
                 <i class="fa fa-map-marker" aria-hidden="true"></i>&nbsp;{{ _('View on Map') }}
               </a>
             </li>

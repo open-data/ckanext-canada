@@ -2,7 +2,10 @@
 
 ## Government of Canada CKAN Extension - Extension à CKAN du Gouvernement du Canada
 
-[![CircleCI](https://dl.circleci.com/status-badge/img/gh/open-data/ckanext-canada/tree/master.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/gh/open-data/ckanext-canada/tree/master)
+[![Tests](https://github.com/open-data/ckanext-canada/actions/workflows/test.yml/badge.svg)](https://github.com/open-data/ckanext-canada/actions/workflows/test.yml)
+
+[![CodeCov](https://codecov.io/github/open-data/ckanext-canada/graph/badge.svg?token=aXdmn98Yu2)](https://codecov.io/github/open-data/ckanext-canada)
+
 
 | Table of Contents    |
 | -------- |
@@ -181,6 +184,7 @@ recombinant.definitions = ckanext.canada:tables/ati.yaml
                           ckanext.canada:tables/nap5.yaml
                           ckanext.canada:tables/experiment.yaml
                           ckanext.canada:tables/adminaircraft.yaml
+                          ckanext.canada:tables/aistrategy.yaml
 
 recombinant.tables = ckanext.canada:recombinant_tables.yaml
 

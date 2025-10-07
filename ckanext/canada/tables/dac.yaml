@@ -85,7 +85,9 @@ resources:
     obligation: Mandatory
     excel_required: true
     form_required: true
-    format_type: Free text
+    format_type:
+      en: Free text
+      fr: Texte libre
     validation: This field must not be empty
     datastore_type: text
     form_attrs:
@@ -109,7 +111,9 @@ resources:
     excel_required: true
     form_required: true
     excel_full_text_choices: true
-    format_type: Controlled List
+    format_type:
+      en: Controlled List
+      fr: Liste contrôlée
     datastore_type: text
     choices:
       "ON":
@@ -166,7 +170,9 @@ resources:
     excel_required: true
     form_required: true
     excel_full_text_choices: true
-    format_type: Controlled List
+    format_type:
+      en: Controlled List
+      fr: Liste contrôlée
     datastore_type: text
     choices:
       "C-P":
@@ -193,7 +199,9 @@ resources:
     obligation: Mandatory
     excel_required: true
     form_required: true
-    format_type: Decimal
+    format_type:
+      en: Decimal
+      fr: Décimale
     validation: This field must not be empty
     datastore_type: numeric
 
@@ -214,7 +222,9 @@ resources:
     obligation: Mandatory
     excel_required: true
     form_required: true
-    format_type: Decimal
+    format_type:
+      en: Decimal
+      fr: Décimale
     validation: This field must not be empty
     datastore_type: numeric
 
@@ -253,7 +263,7 @@ resources:
     datastore_type: text
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
-      style: "width: 100%; display: block"
+      class: form-control canada-width-full d-block
 
   - datastore_id: notes_fr
     label:
@@ -266,7 +276,7 @@ resources:
     datastore_type: text
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
-      style: "width: 100%; display: block"
+      class: form-control canada-width-full d-block
 
   - datastore_id: record_created
     label: Record Creation Time

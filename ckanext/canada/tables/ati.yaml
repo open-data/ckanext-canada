@@ -82,7 +82,7 @@ resources:
     datastore_type: text
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
-      style: "width: 100%; display: block"
+      class: form-control canada-width-full d-block
     form_required: true
     excel_required: true
     excel_column_width: 41
@@ -97,7 +97,7 @@ resources:
     datastore_type: text
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
-      style: "width: 100%; display: block"
+      class: form-control canada-width-full d-block
     form_required: true
     excel_required: true
     excel_column_width: 41
@@ -159,7 +159,7 @@ resources:
     datastore_type: text
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
-      style: "width: 100%; display: block"
+      class: form-control canada-width-full d-block
     excel_column_width: 41
     excel_required_formula: NOT(ISBLANK({comments_fr}))
 
@@ -173,7 +173,7 @@ resources:
     datastore_type: text
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
-      style: "width: 100%; display: block"
+      class: form-control canada-width-full d-block
     excel_column_width: 41
     excel_required_formula: NOT(ISBLANK({comments_en}))
 

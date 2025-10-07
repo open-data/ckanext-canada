@@ -1,0 +1,1 @@
+Obfuscates email addresses rendered in HTML with entity code points. Helps prevent non-advanced Bots from crawling email addresses in HTML content.
