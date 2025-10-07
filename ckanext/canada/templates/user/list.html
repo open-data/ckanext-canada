@@ -4,10 +4,8 @@
   {% extends 'page.html' %}
 {% endif %}
 
-{% set is_registry = h.is_registry_domain() %}
-
 {% block breadcrumb_content %}
-  {% if is_registry %}
+  {% if h.is_registry_domain() %}
     {% if g.userobj and not g.userobj.sysadmin %}
       {{ h.build_nav('user.index', _('Users')) }}
     {% else %}
@@ -19,7 +17,7 @@
 {% endblock %}
 
 {% block subtitle %}
-  {% if is_registry %}
+  {% if h.is_registry_domain() %}
     {% if g.userobj and not g.userobj.sysadmin %}
       {{ _('Users') }}
     {% else %}
@@ -31,7 +29,7 @@
 {% endblock %}
 
 {% block primary_content_inner %}
-  {% if is_registry %}
+  {% if h.is_registry_domain() %}
     <h2 class="wb-inv">{{ _('Users') }}</h2>
     {% if g.userobj and g.userobj.sysadmin %}
       <a class="btn btn-default mrgn-bttm-lg" href="{{ h.url_for('user.register') }}">{{ _('Create an Account') }}</a>
@@ -40,7 +38,7 @@
       {% block users_search %}
         {% snippet 'user/snippets/user_search.html', q=q %}
       {% endblock %}
-      <table style="width:100%">
+      <table class="canada-width-full">
         <thead>
           <tr>
             <th>{{ _('Username') }}</th>
@@ -87,7 +85,7 @@
 {% endblock %}
 
 {% block secondary_content %}
-  {% if is_registry %}
+  {% if h.is_registry_domain() %}
     <section class="panel panel-info">
       <header class="panel-heading">
         <h3 class="panel-title">
@@ -108,7 +106,7 @@
 {% endblock %}
 
 {% block scripts %}
-  {% if is_registry %}
+  {% if h.is_registry_domain() %}
     {% snippet 'snippets/cdts/footer_scripts.html' %}
     {% asset 'canada_public/analytics' %}
     {% asset 'canada_internal/user_lock' %}

@@ -30,6 +30,7 @@ import uuid
 from datetime import datetime
 
 from ckan.lib.helpers import date_str_to_datetime
+from ckanext.scheming.helpers import scheming_get_preset
 from ckanext.fluent.validators import fluent_text_output, LANG_SUFFIX
 from ckanext.security.resource_upload_validator import (
     validate_upload_type, validate_upload_presence
@@ -37,6 +38,8 @@ from ckanext.security.resource_upload_validator import (
 
 not_empty = get_validator('not_empty')
 ignore_missing = get_validator('ignore_missing')
+
+invalid_api_token_name_match = re.compile(r'[^A-Za-z0-9_\-]')
 
 MIN_TAG_LENGTH = 2
 MAX_TAG_LENGTH = 140  # because twitter
@@ -530,6 +533,7 @@ def canada_guess_resource_format(key: FlattenKey,
         return
 
     value = data[key]
+    mimetype = None
 
     # if it is empty, then do the initial guess.
     # we will guess all url types, unlike Core
@@ -579,6 +583,15 @@ def canada_guess_resource_format(key: FlattenKey,
                 #      set this to something...
                 # errors[key].append(e.error_dict['format'])
                 # raise StopOnError
+
+    if mimetype:
+        preset_field = scheming_get_preset('canada_resource_format')
+        fmt_choices = []
+        if preset_field and 'choices' in preset_field:
+            fmt_choices = preset_field['choices']
+        if mimetype not in set(_f['value'] for _f in fmt_choices):
+            # guessed mimetype not in Scheming choice list, use `other` for now
+            data[key] = 'other'
 
 
 def protect_registry_access(key: FlattenKey,
@@ -651,5 +664,20 @@ def limit_resources_per_dataset(key: FlattenKey,
               'data to limit the number of resources. Please contact '
               '{support} if you need further assistance.').format(
                   max_resource_count=max_resource_count,
-                  support=h.support_email_address())]
+                  support=h.support_email_address(xml_encode=False))]
         raise StopOnError
+
+
+def canada_api_token_name_validator(value: Any, context: Context):
+    """
+    Only accept some basic naming conventions. Should not allow any
+    special characters or control characters.
+    """
+    if (
+      re.search(invalid_api_token_name_match, value) or
+      True in [unicodedata.category(char).startswith('C') for char in value]
+    ):
+        raise Invalid(_('Invalid name for an API Token. API Token '
+                        'names can only contain alphanumeric characters, '
+                        'hyphens, and underscores.'))
+    return value

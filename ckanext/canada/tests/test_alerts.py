@@ -12,11 +12,11 @@ from ckanext.canada.tests.factories import CanadaOrganization as Organization
 @pytest.mark.usefixtures('with_request_context')
 class TestPackageAlerts(CanadaTestBase):
     @classmethod
-    def setup_method(self, method):
-        """Method is called at class level before EACH test methods of the class are called.
-        Setup any state specific to the execution of the given class methods.
+    def setup_class(self):
+        """Method is called at class level once the class is instatiated.
+        Setup any state specific to the execution of the given class.
         """
-        super(TestPackageAlerts, self).setup_method(method)
+        super(TestPackageAlerts, self).setup_class()
 
         self.sysadmin = Sysadmin()
         self.extra_environ_tester = {'REMOTE_USER': self.sysadmin['name'].encode('ascii')}

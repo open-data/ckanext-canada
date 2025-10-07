@@ -1,0 +1,586 @@
+name: Pytest
+on:
+  workflow_call:
+    inputs:
+      splits:
+        type: number
+        description: 'Number of test splits default 1 (max 24)'
+        required: true
+        default: 1
+  workflow_dispatch:
+    inputs:
+      splits:
+        type: number
+        description: 'Number of test splits default 1 (max 24)'
+        required: true
+        default: 1
+      IS_PYTEST_COMBINE_TEST_RESULTS_DISABLED:
+        type: boolean
+        description: Override flag for skipping rollup of pytest/coverage html reports
+
+permissions:
+  contents: read
+
+jobs:
+  define-matrix:
+    runs-on: ubuntu-latest
+    outputs:
+      SPLIT_LIST: ${{ steps.splits.outputs.SPLIT_LIST }}
+      SPLIT_COUNT: ${{ steps.splits.outputs.SPLIT_COUNT }}
+      IS_PYTEST_COMBINE_TEST_RESULTS_DISABLED: ${{ steps.splits.outputs.IS_PYTEST_COMBINE_TEST_RESULTS_DISABLED }}
+      restored: ${{ steps.restore-test-durations.outputs.cache-hit == '' && 'false' || 'true' }}
+    steps:
+      - name: Define Matrix Split
+        id: splits
+        run: |
+          set -ex
+          export SPLIT_COUNT=${{ inputs.splits || 12 }}
+          if [ "$SPLIT_COUNT" -gt 24 ]; then
+            echo "Splits cannot exceed 24"
+            export SPLIT_COUNT=24
+          fi
+
+          if [ "$ACT" == "true" ] && [ -z "${{ inputs.splits }}" ]; then
+            echo "Running with act limiting splits to 1 as splits not provided"
+            export SPLIT_COUNT=1
+          else
+            echo "Running on GitHub Actions"
+          fi
+
+          SPLIT_LIST="["
+          for ((i=1; i<=SPLIT_COUNT; i++)); do
+            SPLIT_LIST+="\"$i\""
+            if [ $i -lt $SPLIT_COUNT ]; then
+              SPLIT_LIST+=", "
+            fi
+          done
+          SPLIT_LIST+="]"
+
+          echo "Generated list: $SPLIT_LIST"
+
+          export SPLIT_COUNT="$(echo ${SPLIT_LIST} | jq 'length')"
+          echo "${SPLIT_COUNT} : ${SPLIT_LIST}"
+          echo "SPLIT_LIST=${SPLIT_LIST}" >> "$GITHUB_OUTPUT"
+          echo "SPLIT_COUNT=${SPLIT_COUNT}" >> "$GITHUB_OUTPUT"
+
+          echo "IS_PYTEST_COMBINE_TEST_RESULTS_DISABLED=${{ inputs.IS_PYTEST_COMBINE_TEST_RESULTS_DISABLED || vars.IS_PYTEST_COMBINE_TEST_RESULTS_DISABLED == 'True' }}" >> $GITHUB_OUTPUT
+      - name: Restore Test Durations
+        id: restore-test-durations
+        uses: actions/cache/restore@v4
+        with:
+          path: /tmp/.test_durations
+          key: tests-durations-${{ github.sha }}
+          restore-keys: |
+            tests-durations-${{ github.sha }}-
+            tests-durations-
+          fail-on-cache-miss: false
+      - name: Upload Test Durations
+        if: steps.restore-test-durations.outputs.cache-hit != ''
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-durations-before
+          path: /tmp/.test_durations
+          include-hidden-files: true
+  pytest:
+    needs: define-matrix
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        split: ${{ fromJSON(needs.define-matrix.outputs.SPLIT_LIST) }}
+    container:
+      image: opendatacanada/ckan-pytest  # primary executor
+    services:
+      postgres:
+        image: postgres:13.14
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: pass
+          POSTGRES_DB: postgres
+      solr:
+        image: opendatacanada/solr
+      redis:
+        image: redis:3
+    env:
+      SPLIT_COUNT: ${{ needs.define-matrix.outputs.SPLIT_COUNT }}
+      PGHOST: postgres
+      PGDATABASE: postgres
+      PGUSER: postgres
+      PGPASSWORD: pass
+      CKAN_POSTGRES_DB: ckan_test
+      CKAN_DATASTORE_POSTGRES_DB: datastore_test
+      CKAN_POSTGRES_USER: ckan_default
+      CKAN_DATASTORE_POSTGRES_READ_USER: datastore_read
+      CKAN_DATASTORE_POSTGRES_WRITE_USER: datastore_write
+      CKAN_POSTGRES_PWD: pass
+      CKAN_DATASTORE_POSTGRES_READ_PWD: pass
+      CKAN_DATASTORE_POSTGRES_WRITE_PWD: pass
+      CKAN_SQLALCHEMY_URL: postgresql://ckan_default:pass@postgres/ckan_test
+      CKAN_DATASTORE_WRITE_URL: postgresql://datastore_write:pass@postgres/datastore_test
+      CKAN_DATASTORE_READ_URL: postgresql://datastore_read:pass@postgres/datastore_test
+      CKAN_SOLR_URL: http://solr:8983/solr/ckan_registry
+      CKAN_REDIS_URL: redis://redis:6379/1
+      PYTEST_COMMON_OPTIONS: -v --ckan-ini=/srv/app/src/ckanext-canada/test-core.ini --cov=/srv/app/src/ckanext-canada --cov-branch --cov-report=term-missing --cov-config=/srv/app/src/ckanext-canada/.coveragerc --disable-warnings --confcutdir=/srv/app/src/ckanext-canada/ckanext/canada/tests /srv/app/src/ckanext-canada/ckanext/canada/tests --junitxml=/srv/app/junit/result/junit-${{ matrix.split }}.xml -o junit_family=legacy
+    steps:
+      - run: |
+          echo "${{ matrix.split }} of $SPLIT_COUNT"
+      - name: Setup JUnit Folders
+        run: |
+          mkdir -p /srv/app/junit/result
+          touch /srv/app/junit/result/test-summary.md
+      - name: Check Source Dependency Versions
+        run: |
+          source /srv/app/venv/bin/activate
+          for dir in /srv/app/src/*; do
+            srcName=$(echo "$dir" | awk -F'/' '{print $NF}');
+            if [[ -d "$dir/.git"  ]]; then
+                printf "\n${srcName}: Checking for updates..."
+                cd $dir;
+                current_branch=$(git rev-parse --abbrev-ref HEAD);
+                if [[ "$srcName" == "ckan" ]]; then
+                    git fetch canada;
+                    reslog=$(git log HEAD..canada/$current_branch --oneline);
+                else
+                    git fetch origin;
+                    reslog=$(git log HEAD..origin/$current_branch --oneline);
+                fi;
+                if [[ "${reslog}" == "" ]]; then
+                    printf "\n${srcName}: Up to date. Skipping..."
+                else
+                    git pull || true;
+                    printf "\n${srcName}: Pulled updated code. Re-initializing in python environment..."
+                    cd /srv/app;
+                    if [[ -f "$dir/requirements.txt" ]]; then
+                        pip install -r $dir/requirements.txt || true;
+                    fi;
+                    if [[ -f "$dir/dev-requirements.txt" ]]; then
+                        pip install -r $dir/dev-requirements.txt || true;
+                    fi;
+                    if [[ -f "$dir/test-requirements.txt" ]]; then
+                        pip install -r $dir/test-requirements.txt || true;
+                    fi;
+                    if [[ -f "$dir/setup.py" ]]; then
+                        python $dir/setup.py develop || true;
+                    fi;
+                fi;
+            else
+                printf "\n${srcName}: Not a source repository. Skipping..."
+            fi;
+          done;
+          cd /srv/app;
+      - name: Checkout Repository (${{ github.head_ref || github.ref_name }})
+        run: |
+          cd /srv/app/src/ckanext-canada
+          git fetch origin
+          if [[ "${{ github.head_ref || github.ref_name }}" != "master" ]]; then
+            git checkout -b ${{ github.head_ref || github.ref_name }} origin/${{ github.head_ref || github.ref_name }}
+          fi;
+          git fetch
+          git pull
+          source /srv/app/venv/bin/activate
+          pip install -e .
+          pip install -r requirements.txt
+          pip install -r test-requirements.txt
+          python3 setup.py develop
+          cd /srv/app/src/ckan
+          python3 setup.py develop
+          pip install setuptools==70.0.0
+          cd /srv/app
+      - name: Setup Databases
+        run: |
+          source /srv/app/venv/bin/activate
+          . /srv/app/src/ckanext-canada/links/ckan/bin/postgres_init/1_create_ckan_db.sh
+          . /srv/app/src/ckanext-canada/links/ckan/bin/postgres_init/2_create_ckan_datastore_db.sh
+          ckan -c /srv/app/src/ckanext-canada/test-core.ini db init
+          ckan -c /srv/app/src/ckanext-canada/test-core.ini datastore set-permissions | psql -U postgres --set ON_ERROR_STOP=1
+          ckan -c /srv/app/src/ckanext-canada/test-core.ini canada update-triggers
+          ckan -c /srv/app/src/ckanext-canada/test-core.ini recombinant create-triggers -a
+          ckan -c /srv/app/src/ckanext-canada/test-core.ini db upgrade
+          ckan -c /srv/app/src/ckanext-canada/test-core.ini db pending-migrations --apply
+      - name: Download Test Durations
+        if: needs.define-matrix.outputs.restored == 'true'
+        uses: actions/download-artifact@v4
+        with:
+          name: test-durations-before
+      - name: Use Fallback Test Durations
+        if: needs.define-matrix.outputs.restored == 'false'
+        run: |
+          echo "unzip pytest test duration details"
+          gunzip /srv/app/src/ckanext-canada/.test_durations.gz
+      - name: Run Pytest
+        run: |
+          set -ex
+
+          echo "${{ matrix.split }} of $SPLIT_COUNT"
+
+          source /srv/app/venv/bin/activate
+
+          echo "::group::pytest"
+          pytest $PYTEST_COMMON_OPTIONS --splits $SPLIT_COUNT --group ${{ matrix.split }} --splitting-algorithm least_duration --store-durations --clean-durations
+          echo "::endgroup::"
+      - name: Upload Test Durations
+        if: github.run_attempt == 1
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-durations-after-partial-${{ matrix.split }}
+          path: .test_durations
+          if-no-files-found: error
+          include-hidden-files: true
+          retention-days: 1
+      - name: Prep Test Coverage Split File
+        run: |
+          mv .coverage coverage-${{ matrix.split }}
+      - name: Upload Coverage Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: internal_coverage-${{ matrix.split }}
+          path: coverage-${{ matrix.split }}
+          if-no-files-found: error
+          include-hidden-files: true
+          retention-days: 1
+      - name: Store Test Results
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: internal_junit-results-${{ matrix.split }}
+          path: /srv/app/junit/result
+          retention-days: 1
+      - name: Test Summary (if Failure)
+        uses: test-summary/action@v2
+        with:
+          paths: "/srv/app/junit/result/*.xml"
+        if: failure()
+      - name: Test Summary Local Copy (If Failure)
+        uses: test-summary/action@v2
+        with:
+          paths: "/srv/app/junit/result/*.xml"
+          output: "/srv/app/junit/result/test-summary.md"
+        if: failure()
+      - name: Store Test Summary Results (If Failure)
+        uses: actions/upload-artifact@v4
+        with:
+          name: split-test-summary-${{ matrix.split }}.md
+          path: "/srv/app/junit/result/test-summary.md"
+          retention-days: 30
+        if: failure()
+  cache-test-durations:
+    name: Cache Test Durations
+    needs: pytest
+    if: github.run_attempt == 1 && (success() || failure())
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download All Partial Test Durations
+        uses: actions/download-artifact@v4
+        with:
+          pattern: test-durations-after-partial-*
+      - name: Merge All Partial Test Durations
+        run: |
+          ls -ltra
+
+          jq -s 'add' test-durations-after-partial-*/.test_durations \
+          | jq 'to_entries | sort_by(.key) | from_entries' \
+          > /tmp/.test_durations
+      - name: Upload Final Test Durations
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-durations-after
+          path: /tmp/.test_durations
+          if-no-files-found: error
+          include-hidden-files: true
+      - name: Cache Final Test Durations
+        uses: actions/cache/save@v4
+        with:
+          path: /tmp/.test_durations
+          key: tests-durations-${{ github.sha }}
+  merge-code-coverage-and-upload:
+    name: Merge & Upload Code Coverage and Results
+    needs: pytest
+    if: github.run_attempt == 1 && (success() || failure()) && needs.define-matrix.outputs.IS_PYTEST_COMBINE_TEST_RESULTS_DISABLED == 'false'
+    runs-on: ubuntu-latest
+    container:
+      image: opendatacanada/ckan-pytest  # primary executor
+    steps:
+      - name: Check Source Dependency Versions
+        run: |
+          source /srv/app/venv/bin/activate
+          for dir in /srv/app/src/*; do
+            srcName=$(echo "$dir" | awk -F'/' '{print $NF}');
+            if [[ -d "$dir/.git"  ]]; then
+                printf "\n${srcName}: Checking for updates..."
+                cd $dir;
+                current_branch=$(git rev-parse --abbrev-ref HEAD);
+                if [[ "$srcName" == "ckan" ]]; then
+                    git fetch canada;
+                    reslog=$(git log HEAD..canada/$current_branch --oneline);
+                else
+                    git fetch origin;
+                    reslog=$(git log HEAD..origin/$current_branch --oneline);
+                fi;
+                if [[ "${reslog}" == "" ]]; then
+                    printf "\n${srcName}: Up to date. Skipping..."
+                else
+                    git pull || true;
+                    printf "\n${srcName}: Pulled updated code. Re-initializing in python environment..."
+                    cd /srv/app;
+                    if [[ -f "$dir/requirements.txt" ]]; then
+                        pip install -r $dir/requirements.txt || true;
+                    fi;
+                    if [[ -f "$dir/dev-requirements.txt" ]]; then
+                        pip install -r $dir/dev-requirements.txt || true;
+                    fi;
+                    if [[ -f "$dir/test-requirements.txt" ]]; then
+                        pip install -r $dir/test-requirements.txt || true;
+                    fi;
+                    if [[ -f "$dir/setup.py" ]]; then
+                        python $dir/setup.py develop || true;
+                    fi;
+                fi;
+            else
+                printf "\n${srcName}: Not a source repository. Skipping..."
+            fi;
+          done;
+          cd /srv/app;
+      - name: Checkout Repository (${{ github.head_ref || github.ref_name }})
+        run: |
+          cd /srv/app/src/ckanext-canada
+          git fetch origin
+          if [[ "${{ github.head_ref || github.ref_name }}" != "master" ]]; then
+            git checkout -b ${{ github.head_ref || github.ref_name }} origin/${{ github.head_ref || github.ref_name }}
+          fi;
+          git fetch
+          git pull
+          source /srv/app/venv/bin/activate
+          pip install -e .
+          pip install -r requirements.txt
+          pip install -r test-requirements.txt
+          python3 setup.py develop
+          pip install codecov-cli==11.2.3
+          cd /srv/app
+      - name: Download All Coverage Artifacts
+        uses: actions/download-artifact@v4
+        with:
+          pattern: internal_coverage-*
+          path: /srv/app/coverage-data
+          merge-multiple: 'true'
+      - name: Download All JUnit XML Results
+        uses: actions/download-artifact@v4
+        with:
+          pattern: internal_junit-results-*
+          merge-multiple: true
+          path: /srv/app/junit-results
+      - name: Merge Coverage and JUnit XML files
+        run: |
+          set -ex
+
+          source /srv/app/venv/bin/activate
+
+          mkdir -p /srv/app/results
+          echo "merge junit test results"
+
+          echo "::group::junitparser-merge"
+          junitparser merge /srv/app/junit-results/*.xml /srv/app/merged.xml
+          echo "::endgroup::"
+
+          echo "::group::junit2html generate"
+          junit2html /srv/app/merged.xml /srv/app/results/pytest-results.html
+          cp /srv/app/merged.xml /srv/app/results/junit_results.xml
+          echo "::endgroup::"
+
+          echo "merge pytest coverage results"
+
+          echo "::group::coverage combine"
+          coverage combine --keep -a /srv/app/coverage-data/*
+          echo "::endgroup::"
+
+          echo "::group::pytest-html-report"
+          coverage html -d /srv/app/results/coverage_html
+          echo "::endgroup::"
+      - name: Upload Coverage Reports to CodeCov
+        if: ${{ !cancelled() }}
+        continue-on-error: true
+        run: |
+          set -ex
+
+          source /srv/app/venv/bin/activate
+
+          codecov -v upload-coverage -t ${{ secrets.CODECOV_TOKEN }} --report-type coverage --slug open-data/ckanext-canada --git-service github --branch ${{ github.head_ref || github.ref_name }} --network-root-folder /srv/app/src/ckanext-canada --commit-sha ${{ github.sha }}
+      - name: Upload Test Results to CodeCov
+        if: ${{ !cancelled() }}
+        continue-on-error: true
+        run: |
+          set -ex
+
+          source /srv/app/venv/bin/activate
+
+          codecov -v do-upload -t ${{ secrets.CODECOV_TOKEN }} -f /srv/app/results/junit_results.xml --report-type test_results --slug open-data/ckanext-canada --git-service github --branch ${{ github.head_ref || github.ref_name }} --network-root-folder /srv/app/src/ckanext-canada --commit-sha ${{ github.sha }}
+      - name: Pytest Coverage Console Report
+        run: |
+          set -ex
+          source /srv/app/venv/bin/activate
+          coverage report -m
+      - name: Upload HTML coverage report
+        uses: actions/upload-artifact@v4
+        with:
+          name: combined-test-coverage-reports
+          path: /srv/app/results
+  slack_notify:
+    name: Send Slack Notifications
+    needs: [pytest, merge-code-coverage-and-upload]
+    if: (success() || failure()) && needs.define-matrix.outputs.IS_PYTEST_COMBINE_TEST_RESULTS_DISABLED == 'false'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Slack Notification (Success)
+        if: ${{ !cancelled() && needs.pytest.result == 'success' }}
+        uses: slackapi/slack-github-action@v1.23.0
+        with:
+          payload: |
+            {
+              "blocks": [
+                {
+                  "type": "header",
+                  "text": {
+                    "type": "plain_text",
+                    "text": "Tests Succeeded :white_check_mark:",
+                    "emoji": true
+                  }
+                },
+                {
+                  "type": "section",
+                  "fields": [
+                    {
+                      "type": "mrkdwn",
+                      "text": "*Project:*\n${{ github.repository }}"
+                    },
+                    {
+                      "type": "mrkdwn",
+                      "text": "*Branch:*\n${{ github.head_ref || github.ref_name }}"
+                    },
+                    {
+                      "type": "mrkdwn",
+                      "text": "*Commit:*\n${{ github.sha }}"
+                    },
+                    {
+                      "type": "mrkdwn",
+                      "text": "*Author:*\n${{ github.actor }}"
+                    }
+                  ]
+                },
+                {
+                  "type": "section",
+                  "text": {
+                    "type": "mrkdwn",
+                    "text": "_View it on GitHub:_"
+                  },
+                  "accessory": {
+                    "type": "button",
+                    "text": {
+                      "type": "plain_text",
+                      "text": "View Workflow",
+                      "emoji": true
+                    },
+                    "url": "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}",
+                    "action_id": "button-action"
+                  }
+                },
+                {
+                  "type": "section",
+                  "text": {
+                    "type": "mrkdwn",
+                    "text": "_View it on CodeCov:_"
+                  },
+                  "accessory": {
+                    "type": "button",
+                    "text": {
+                      "type": "plain_text",
+                      "text": "View Test Coverage",
+                      "emoji": true
+                    },
+                    "url": "https://app.codecov.io/gh/${{ github.repository }}/commit/${{ github.sha }}",
+                    "action_id": "button-action"
+                  }
+                }
+              ]
+            }
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
+      - name: Slack Notification (Failure)
+        if: ${{ !cancelled() && needs.pytest.result != 'success' }}
+        uses: slackapi/slack-github-action@v1.23.0
+        with:
+          payload: |
+            {
+              "blocks": [
+                {
+                  "type": "header",
+                  "text": {
+                    "type": "plain_text",
+                    "text": "Tests Failed :red_circle:",
+                    "emoji": true
+                  }
+                },
+                {
+                  "type": "section",
+                  "fields": [
+                    {
+                      "type": "mrkdwn",
+                      "text": "*Project:*\n${{ github.repository }}"
+                    },
+                    {
+                      "type": "mrkdwn",
+                      "text": "*Branch:*\n${{ github.head_ref || github.ref_name }}"
+                    },
+                    {
+                      "type": "mrkdwn",
+                      "text": "*Commit:*\n${{ github.sha }}"
+                    },
+                    {
+                      "type": "mrkdwn",
+                      "text": "*Author:*\n${{ github.actor }}"
+                    }
+                  ]
+                },
+                {
+                  "type": "section",
+                  "text": {
+                    "type": "mrkdwn",
+                    "text": "_View it on GitHub:_"
+                  },
+                  "accessory": {
+                    "type": "button",
+                    "text": {
+                      "type": "plain_text",
+                      "text": "View Workflow",
+                      "emoji": true
+                    },
+                    "url": "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}",
+                    "action_id": "button-action"
+                  }
+                },
+                {
+                  "type": "section",
+                  "text": {
+                    "type": "mrkdwn",
+                    "text": "_View it on CodeCov:_"
+                  },
+                  "accessory": {
+                    "type": "button",
+                    "text": {
+                      "type": "plain_text",
+                      "text": "View Test Coverage",
+                      "emoji": true
+                    },
+                    "url": "https://app.codecov.io/gh/${{ github.repository }}/commit/${{ github.sha }}",
+                    "action_id": "button-action"
+                  }
+                }
+              ]
+            }
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK

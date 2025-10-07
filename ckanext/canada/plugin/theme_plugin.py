@@ -51,6 +51,7 @@ class CanadaThemePlugin(p.SingletonPlugin):
             'adv_search_url',
             'adv_search_mlt_root',
             'ga4_id',
+            'ga4_integrity',
             'loop11_key',
             'contact_information',
             'show_openinfo_facets',
@@ -86,4 +87,7 @@ class CanadaThemePlugin(p.SingletonPlugin):
             'max_resources_per_dataset',
             'support_email_address',
             'default_open_email_address',
+            'get_inline_script_nonce',
+            'obfuscate_to_code_points',
+            'mail_to'
         ])
