@@ -9,7 +9,6 @@ import csv
 from six import string_types
 from datetime import datetime, timedelta
 import traceback
-from functools import partial
 
 from typing import Optional, Union, Any, cast, Dict, List, Tuple
 from ckan.types import Context, Response
@@ -33,7 +32,6 @@ from ckan import model
 from ckan.lib.helpers import (
     date_str_to_datetime,
     lang,
-    Page,
 )
 from ckan.views import nocache_store
 from ckan.views.dataset import (
@@ -863,11 +861,16 @@ def ckanadmin_publish_datasets():
         publish_packages = [publish_packages]
     count = len(publish_packages)
     for package_id in publish_packages:
-        lc.action.package_patch(
-            id=package_id,
-            private=False,
-            portal_release_date=publish_date,
-        )
+        try:
+            lc.action.package_patch(
+                id=package_id,
+                private=False,
+                portal_release_date=publish_date,
+            )
+        except ValidationError as e:
+            h.flash_error(_('Error publishing dataset %s: %s' %
+                            (package_id, str(e.error_dict))))
+            return h.redirect_to('canada.ckanadmin_publish')
 
     # flash notice that records are published
     h.flash_notice(str(count) + _(' record(s) published.'))

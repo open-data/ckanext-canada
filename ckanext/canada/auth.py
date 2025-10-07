@@ -4,7 +4,8 @@ from ckan.plugins.toolkit import config, h
 from ckan.authz import has_user_permission_for_group_or_org
 
 
-def _is_reporting_user(context: Context):
+# type_ignore_reason: underscored method
+def _is_reporting_user(context: Context):  # type: ignore
     if not context.get('user') or not config.get('ckanext.canada.reporting_user'):
         return False
     return context.get('user') == config.get('ckanext.canada.reporting_user')

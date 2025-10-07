@@ -149,6 +149,7 @@ class CanadaPublicPlugin(p.SingletonPlugin, DefaultTranslation):
             'res_format': _('Format'),
             'res_type': _('Resource Type'),
             'frequency': _('Maintenance and Update Frequency'),
+            'capacity': _('Published'),
             'ready_to_publish': _('Record Status'),
             'imso_approval': _('IMSO Approval'),
             'jurisdiction': _('Jurisdiction'),

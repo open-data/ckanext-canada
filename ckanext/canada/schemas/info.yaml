@@ -486,13 +486,14 @@ dataset_fields:
 # List box options are Yes and No.
 # {Selecting ‘Yes’ will set this asset as ready to publish on the Open Government Portal. Selecting ‘No’ will saved it as a ‘draft’}
 - preset: canada_ready_to_publish
-- preset: canada_visibility
 
 # Field = Date Released.
 # Available only for an Admin user.
 # Add a Calendar control to select a Date.
 # {The date the asset may be published on the Portal (YYYY-MM-DD)}
 - preset: canada_portal_release_date
+
+- preset: canada_visibility
 
 - preset: canada_dataset_relationship
 

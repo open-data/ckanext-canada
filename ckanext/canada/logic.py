@@ -6,8 +6,7 @@ from ckan import model
 from ckanext.activity.model import Activity, activity
 from ckan.logic.schema import (
     default_create_resource_view_schema_filtered,
-    default_update_resource_view_schema_changes,
-    default_update_user_schema
+    default_update_resource_view_schema_changes
 )
 from contextlib import contextmanager
 
@@ -656,13 +655,40 @@ def canada_user_update(up_func: Action,
     default_validator = get_validator('default')
     ignore_missing_validator = get_validator('ignore_missing')
     ignore_not_sysadmin_validator = get_validator('ignore_not_sysadmin')
-    # TODO: gotta save it under plugin_extras...try to schema it??
-    if 'schema' not in context:
-        context['schema'] = default_update_user_schema()
-    context['schema']['default_dataset_visibility'] = [
-        ignore_missing_validator,
-        ignore_not_sysadmin_validator,
-        default_validator('private'),
-        one_of_validator(['private', 'public'])
-    ]
+    custom_data_dict = {
+        'default_dataset_visibility': data_dict.get(
+            'default_dataset_visibility', None)
+    }
+    schema = {
+        'default_dataset_visibility': [
+            ignore_missing_validator,
+            ignore_not_sysadmin_validator,
+            # type_ignore_reason: incomplete typing
+            default_validator('private'),  # type: ignore
+            one_of_validator(['private', 'public'])  # type: ignore
+        ]
+    }
+    data, errors = validate(custom_data_dict, schema, context)
+    if errors:
+        model.Session.rollback()
+        raise ValidationError(errors)
+    if 'plugin_extras' not in data_dict:
+        data_dict['plugin_extras'] = {}
+    data_dict['plugin_extras']['default_dataset_visibility'] = \
+        data['default_dataset_visibility']
     return up_func(context, data_dict)
+
+
+@chained_action
+def canada_user_show(up_func: Action,
+                     context: Context,
+                     data_dict: DataDict) -> ChainedAction:
+    """
+    Return new fields in the User dictionary.
+    """
+    data_dict['include_plugin_extras'] = True
+    user_dict = up_func(context, data_dict)
+    extras = user_dict.pop('plugin_extras', {})
+    user_dict['default_dataset_visibility'] = extras.get(
+        'default_dataset_visibility', 'private')
+    return user_dict

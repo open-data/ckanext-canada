@@ -112,6 +112,7 @@ def _resource_https_update(https_report: str, https_alt_report: str):
                               (res['id'], str(e.error_dict)))
     log.close()
 
+
 def _bulk_validate():
     """
     Usage: ckanapi search datasets include_private=true -c $CONFIG_INI |
@@ -322,8 +323,9 @@ def delete_activities(days: Optional[int] = 90,
         click.echo(f'Including activity_type {include_types}')
     if exclude_types:
         click.echo(f'Excluding activity_type {exclude_types}')
+    # type_ignore_reason: incomplete typing
     activity_count = model.Session.execute(
-        "SELECT count(*) FROM activity "
+        "SELECT count(*) FROM activity "  # type: ignore
         "WHERE timestamp < NOW() - INTERVAL '{d} days' {i} {e};"
         .format(
             d=days,
@@ -340,9 +342,9 @@ def delete_activities(days: Optional[int] = 90,
     if not quiet:
         click.confirm("\nAre you sure you want to delete {num} activities?".format(
             num=activity_count), abort=True)
-
+    # type_ignore_reason: incomplete typing
     model.Session.execute(
-        "DELETE FROM activity "
+        "DELETE FROM activity "  # type: ignore
         "WHERE timestamp < NOW() - INTERVAL '{d} days' {i} {e};"
         .format(
             d=days,

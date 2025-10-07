@@ -98,6 +98,7 @@ class CanadaInternalPlugin(p.SingletonPlugin):
             resource_view_create=logic.resource_view_create_bilingual,
             datastore_run_triggers=logic.canada_datastore_run_triggers,
             user_update=logic.canada_user_update,
+            user_show=logic.canada_user_show,
         )
 
     # IAuthFunctions

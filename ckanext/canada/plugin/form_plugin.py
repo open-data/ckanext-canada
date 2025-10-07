@@ -66,6 +66,8 @@ class CanadaFormsPlugin(p.SingletonPlugin, DefaultDatasetForm):
                 validators.canada_sort_prop_status,
             'no_future_date':
                 validators.no_future_date,
+            'no_future_date_out_of_draft':
+                validators.no_future_date_out_of_draft,
             'canada_org_title_translated_save':
                 validators.canada_org_title_translated_save,
             'canada_org_title_translated_output':
@@ -96,4 +98,6 @@ class CanadaFormsPlugin(p.SingletonPlugin, DefaultDatasetForm):
                 validators.protect_registry_access,
             'limit_resources_per_dataset':
                 validators.limit_resources_per_dataset,
+            'canada_dataset_visibility':
+                validators.canada_dataset_visibility,
             }

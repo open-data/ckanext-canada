@@ -213,7 +213,7 @@ class CanadaDatasetsPlugin(SchemingDatasetsPlugin):
     # IPackageController
     def after_dataset_show(self, context: Context, pkg_dict: Dict[str, Any]):
         if has_request_context() and not h.is_registry_domain():
-            if(
+            if (
               pkg_dict.get('type') not in ['info', 'dataset', 'prop'] or
               not asbool(pkg_dict.get('imso_approval')) or
               not asbool(pkg_dict.get('ready_to_publish')) or
@@ -296,6 +296,14 @@ class CanadaDatasetsPlugin(SchemingDatasetsPlugin):
             data_dict['related_type'] = [rel['related_type'] for
                                          rel in data_dict['relationship']]
         data_dict.pop('relationship', None)
+
+        if data_dict['type'] in ['dataset', 'info']:
+            if data_dict.get('private', True):
+                data_dict['capacity'] = 'private'
+            else:
+                data_dict['capacity'] = 'public'
+        else:
+            data_dict['capacity'] = 'private'
 
         return data_dict
 
