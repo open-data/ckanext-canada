@@ -139,7 +139,7 @@
       {% asset 'canada_internal/analytics' %}
     {% endif %}
   {%- endblock -%}
-  {%- if not g.is_registry -%}
+  {%- if not h.is_registry_domain() -%}
     {%- asset 'canada_public/adobe_analytics_fix' -%}
   {%- endif -%}
   {{ super() }}
