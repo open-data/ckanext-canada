@@ -1,7 +1,7 @@
 {% ckan_extends %}
 
 {% block page_primary_action %}
-  {% if not g.is_registry %}
+  {% if not h.is_registry_domain() %}
     {{ super() }}
   {% endif %}
 {% endblock %}
