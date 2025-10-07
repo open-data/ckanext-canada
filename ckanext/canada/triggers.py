@@ -285,6 +285,20 @@ def update_triggers():
         RETURN value_trimmed;
     END;
         ''')
+    # natural number being a positive integer without leading zeros
+    # does not accept commas or decimals, or other numeric delimiters
+    lc.action.datastore_function_create(
+        name='is_natural_number',
+        or_replace=True,
+        arguments=[
+            {'argname': 'value', 'argtype': 'text'}],
+        rettype='bool',
+        definition='''
+    BEGIN
+        RETURN value IS NOT NULL AND value <> ''
+        AND value ~ '^[0-9]+$' AND value !~ '^0';
+    END;
+        ''')
     # return record with .clean (normalized value) and .error
     # (NULL or ARRAY[[field_name, error_message]])
     lc.action.datastore_function_create(

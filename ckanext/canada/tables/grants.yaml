@@ -5,7 +5,8 @@ shortname: Grants and Contributions
 notes: Access, upload and modify the Grants and Contributions reports for your organization
 
 template_version: 3
-template_updated: 2024-11-03  # last qa confirmed: 2025-02-19
+# TODO: update me with date of PROD deployment
+template_updated: 2025-10-06  # last qa confirmed: 2025-02-19
 
 portal_type: info
 collection: pd
@@ -128,10 +129,16 @@ resources:
     description:
       en: The recipient type helps identify who is receiving the money.
       fr: Le type de bénéficiaire permet d'identifier qui reçoit l'argent.
-    obligation: Optional
+    obligation:
+      en: Required if "Agreement Start Date" is on or after November 1st 2025
+      fr: Requis si la "date de début de l’entente" est le 1er novembre 2025 ou après
+    validation:
+      en: Required if "Agreement Start Date" is on or after November 1st 2025
+      fr: Requis si la "date de début de l’entente" est le 1er novembre 2025 ou après
     format_type:
       en: Controlled List
       fr: Liste contrôlée
+    excel_required_formula: 'AND(NOT(ISBLANK({agreement_start_date})),VALUE({agreement_start_date})>=DATE(2025,11,1))'
     datastore_type: text
     choices:
       F:
@@ -376,18 +383,52 @@ resources:
       en: Recipient Postal Code
       fr: Code postal du bénéficiaire
     description:
+      # TODO: french translation!!!
       en: |
         The "Recipient postal code" is a mandatory field that serves to identify the specific area in which the recipient operates. In cases where this field cannot be populated this field may be left blank.
 
-        Text format locked to "X#X #X#"; The Canada Post tool for looking up a postal code can be found on the Canada Post website.
+        Should be in the format "A1A 1A1"; The Canada Post tool for looking up a postal code can be found on the Canada Post website.
       fr: |
         Le « Code postal du bénéficiaire » est un champ obligatoire qui sert à identifier avec précision la région où le bénéficiaire exerce ses activités. Si le fait de remplir ce champ suscite des préoccupations à l'égard de la vie privée, il est possible de le laisser vide.
 
-        Format de texte : "X#X #X#"; L'outil de Postes Canada permettant de rechercher un code postal se trouve sur le site Web de Postes Canada.
+        Should be in the format "A1A 1A1"; L'outil de Postes Canada permettant de rechercher un code postal se trouve sur le site Web de Postes Canada.
     obligation: Optional
+    validation:
+      en: Must be in the format "A1A 1A1" if "Agreement Start Date" is on or after November 1st 2025
+      # TODO: french translation!!!
+      fr: Requis si la "date de début de l’entente" est le 1er novembre 2025 ou après
     format_type:
-      en: "Text format locked to (X#X #X#)"
-      fr: "Format de texte verrouillé sur (X#X #X#)"
+      en: 'Text - Should be in the format "A1A 1A1"'
+      fr: 'Texte - Should be in the format "A1A 1A1"'
+    excel_error_formula: >-
+      OR(
+        {default_formula},
+        AND(
+          NOT(
+            ISBLANK({agreement_start_date})
+          ),
+          VALUE({agreement_start_date})>=DATE(2025,11,1),
+          OR(
+            LEFT(TRIM({cell}),3)&" "&RIGHT(TRIM({cell}),3)<>TRIM({cell}),
+            CODE(UPPER(MID({cell},1,1)))>CODE("Z"),
+            CODE(UPPER(MID({cell},1,1)))<CODE("A"),
+            CODE(UPPER(MID({cell},3,1)))>CODE("Z"),
+            CODE(UPPER(MID({cell},3,1)))<CODE("A"),
+            CODE(UPPER(MID({cell},6,1)))>CODE("Z"),
+            CODE(UPPER(MID({cell},6,1)))<CODE("A"),
+            MID({cell},4,1)<>" ",
+            NOT(
+              ISNUMBER(
+                VALUE(
+                  MID({cell},2,1)&
+                  MID({cell},5,1)&
+                  MID({cell},7,1)
+                )
+              )
+            )
+          )
+        )
+      )
     datastore_type: text
 
   # 3.14 Federal Riding Name (English) (New Field)
@@ -432,12 +473,35 @@ resources:
       en: Federal Riding Number
       fr: Numéro de la circonscription fédérale
     description:
-      en: The federal riding number is based on the riding in which the recipient resides.  Departments can consult the Elections Canada website in order to retrieve the federal riding number. http://www.elections.ca/content.aspx?section=res&dir=cir/list&document=index338&lang=e
-      fr: Numéro de la circonscription fédérale où réside le bénéficiaire.  Les départements peuvent consulter le site-web d’Élections Canada pour trouver le numéro de la circonscription fédérale. http://www.elections.ca/content.aspx?section=res&dir=cir/list&document=index338&lang=f
+      en: The federal riding number is based on the riding in which the recipient resides. Departments can consult the Elections Canada website in order to retrieve the federal riding number. http://www.elections.ca/content.aspx?section=res&dir=cir/list&document=index338&lang=e
+      fr: Numéro de la circonscription fédérale où réside le bénéficiaire. Les départements peuvent consulter le site-web d’Élections Canada pour trouver le numéro de la circonscription fédérale. http://www.elections.ca/content.aspx?section=res&dir=cir/list&document=index338&lang=f
     obligation: Optional
+    validation:
+      en: Must be a 5 digit number if "Agreement Start Date" is on or after November 1st 2025
+      # TODO: french translation!!!
+      fr: Requis si la "date de début de l’entente" est le 1er novembre 2025 ou après
     format_type:
-      en: Free text
-      fr: Texte libre
+      # TODO: french translation!!!
+      en: Text - 5 digit number
+      fr: Texte - 5 digit number
+    excel_error_formula: >-
+      OR(
+        {default_formula},
+        AND(
+          NOT(
+            ISBLANK({agreement_start_date})
+          ),
+          VALUE({agreement_start_date})>=DATE(2025,11,1),
+          OR(
+            NOT(ISNUMBER(VALUE({cell}))),
+            LEN(TRIM({cell}))<>5,
+            MID(TRIM({cell}),1,1)="0",
+            LEN({cell})-LEN(SUBSTITUTE({cell},"-",""))>0,
+            LEN({cell})-LEN(SUBSTITUTE({cell},".",""))>0,
+            LEN({cell})-LEN(SUBSTITUTE({cell},",",""))>0
+          )
+        )
+      )
     datastore_type: text
 
   # 3.17 Program Name (English)
@@ -448,10 +512,16 @@ resources:
     description:
       en: The program name is the name of the program, according to the terms and conditions (Ts&Cs), under which a recipient is funded.
       fr: Le nom du programme selon les modalités en vertu desquelles le financement est versé au bénéficiaire.
-    obligation: Optional
+    obligation:
+      en: Required if "Agreement Start Date" is on or after November 1st 2025
+      fr: Requis si la "date de début de l’entente" est le 1er novembre 2025 ou après
+    validation:
+      en: Required if "Agreement Start Date" is on or after November 1st 2025
+      fr: Requis si la "date de début de l’entente" est le 1er novembre 2025 ou après
     format_type:
       en: Free text
       fr: Texte libre
+    excel_required_formula: 'AND(NOT(ISBLANK({agreement_start_date})),VALUE({agreement_start_date})>=DATE(2025,11,1))'
     datastore_type: text
     datatables_col_class: col-lg
     js_required_eval: '{{prog_name_fr}}.length > 0'
@@ -466,10 +536,16 @@ resources:
     description:
       en: The program name is the name of the program, according to the terms and conditions (Ts&Cs), under which a recipient is funded.
       fr: Le nom du programme selon les modalités en vertu desquelles le financement est versé au bénéficiaire.
-    obligation: Optional
+    obligation:
+      en: Required if "Agreement Start Date" is on or after November 1st 2025
+      fr: Requis si la "date de début de l’entente" est le 1er novembre 2025 ou après
+    validation:
+      en: Required if "Agreement Start Date" is on or after November 1st 2025
+      fr: Requis si la "date de début de l’entente" est le 1er novembre 2025 ou après
     format_type:
       en: Free text
       fr: Texte libre
+    excel_required_formula: 'AND(NOT(ISBLANK({agreement_start_date})),VALUE({agreement_start_date})>=DATE(2025,11,1))'
     datastore_type: text
     datatables_col_class: col-lg
     js_required_eval: '{{prog_name_en}}.length > 0'
@@ -484,10 +560,16 @@ resources:
     description:
       en: The program purpose is the program’s purpose according to the Ts&Cs.
       fr: Le but du programme est celui dans lequel le programme a été créé, selon les modalités du programme.
-    obligation: Optional
+    obligation:
+      en: Required if "Agreement Start Date" is on or after November 1st 2025
+      fr: Requis si la "date de début de l’entente" est le 1er novembre 2025 ou après
+    validation:
+      en: Required if "Agreement Start Date" is on or after November 1st 2025
+      fr: Requis si la "date de début de l’entente" est le 1er novembre 2025 ou après
     format_type:
       en: Free text
       fr: Texte libre
+    excel_required_formula: 'AND(NOT(ISBLANK({agreement_start_date})),VALUE({agreement_start_date})>=DATE(2025,11,1))'
     datastore_type: text
     datatables_col_class: col-xxl
     form_snippet: scheming/form_snippets/textarea.html
@@ -504,10 +586,16 @@ resources:
     description:
       en: The program purpose is the program’s purpose according to the Ts&Cs.
       fr: Le but du programme est celui dans lequel le programme a été créé, selon les modalités du programme.
-    obligation: Optional
+    obligation:
+      en: Required if "Agreement Start Date" is on or after November 1st 2025
+      fr: Requis si la "date de début de l’entente" est le 1er novembre 2025 ou après
+    validation:
+      en: Required if "Agreement Start Date" is on or after November 1st 2025
+      fr: Requis si la "date de début de l’entente" est le 1er novembre 2025 ou après
     format_type:
       en: Free text
       fr: Texte libre
+    excel_required_formula: 'AND(NOT(ISBLANK({agreement_start_date})),VALUE({agreement_start_date})>=DATE(2025,11,1))'
     datastore_type: text
     datatables_col_class: col-xxl
     form_snippet: scheming/form_snippets/textarea.html
@@ -524,10 +612,16 @@ resources:
     description:
       en: The agreement title is the title of the project or agreement that the recipient is undertaking. In cases where there is no title, the agreement number will be duplicated here.
       fr: Le nom de l'entente est le titre du projet ou de l'entente à l'égard duquel s'engage le bénéficiaire. S'il n'y a pas de titre, le numéro de l'entente peut être réinscrit ici.
-    obligation: Optional
+    obligation:
+      en: Required if "Agreement Start Date" is on or after November 1st 2025
+      fr: Requis si la "date de début de l’entente" est le 1er novembre 2025 ou après
+    validation:
+      en: Required if "Agreement Start Date" is on or after November 1st 2025
+      fr: Requis si la "date de début de l’entente" est le 1er novembre 2025 ou après
     format_type:
       en: Free text
       fr: Texte libre
+    excel_required_formula: 'AND(NOT(ISBLANK({agreement_start_date})),VALUE({agreement_start_date})>=DATE(2025,11,1))'
     datastore_type: text
     datatables_col_class: col-lg
     js_required_eval: '{{agreement_title_fr}}.length > 0'
@@ -542,10 +636,16 @@ resources:
     description:
       en: The agreement title is the title of the project or agreement that the recipient is undertaking. In cases where there is no title, the agreement number will be duplicated here.
       fr: Le nom de l'entente est le titre du projet ou de l'entente à l'égard duquel s'engage le bénéficiaire. S'il n'y a pas de titre, le numéro de l'entente peut être réinscrit ici.
-    obligation: Optional
+    obligation:
+      en: Required if "Agreement Start Date" is on or after November 1st 2025
+      fr: Requis si la "date de début de l’entente" est le 1er novembre 2025 ou après
+    validation:
+      en: Required if "Agreement Start Date" is on or after November 1st 2025
+      fr: Requis si la "date de début de l’entente" est le 1er novembre 2025 ou après
     format_type:
       en: Free text
       fr: Texte libre
+    excel_required_formula: 'AND(NOT(ISBLANK({agreement_start_date})),VALUE({agreement_start_date})>=DATE(2025,11,1))'
     datastore_type: text
     datatables_col_class: col-lg
     js_required_eval: '{{agreement_title_en}}.length > 0'
@@ -632,12 +732,18 @@ resources:
       en: The agreement start date is the assumed start of the agreement, or when the project is supposed to begin, as captured in the initial agreement.
       fr: La date de début de l'entente est la date d'entrée en vigueur présumée de l'entente ou la date à laquelle le projet est censé commencer, conformément à l'entente initiale.
     obligation: Mandatory
+    validation:
+      en: |
+        This field must not be empty.
+      fr: |
+        Ce champ ne doit pas être vide.
     excel_required: true
     form_required: true
     form_snippet: scheming/form_snippets/date.html
     format_type:
       en: Date (Please format the date as YYYY-MM-DD)
       fr: "Date (Veuillez utiliser le format de date suivant : AAAA-MM-JJ)"
+    excel_error_formula: 'OR({default_formula},AND(NOT(ISBLANK({cell})),NOT(ISBLANK({agreement_end_date})),{cell}>{agreement_end_date}))'
     datastore_type: date
     extract_date_year: true
     extract_date_month: true
@@ -651,10 +757,17 @@ resources:
     description:
       en: The projected agreement end date is the assumed end of the agreement, or when the project is supposed to end, as captured in the initial agreement.
       fr: La date de fin prévue de l'entente est la date de fin présumée de l'entente, ou la date à laquelle le projet est censé prendre fin, conformément à l'entente initiale.
-    obligation: Optional
+    obligation:
+      en: Required if "Agreement Start Date" is on or after November 1st 2025
+      fr: Requis si la "date de début de l’entente" est le 1er novembre 2025 ou après
+    validation:
+      en: Required if "Agreement Start Date" is on or after November 1st 2025.
+      fr: Requis si la "date de début de l’entente" est le 1er novembre 2025 ou après.
     format_type:
       en: Date (Please format the date as YYYY-MM-DD)
       fr: "Date (Veuillez utiliser le format de date suivant : AAAA-MM-JJ)"
+    excel_error_formula: 'OR({default_formula},AND(NOT(ISBLANK({agreement_start_date})),NOT(ISBLANK({cell})),{cell}<{agreement_start_date}))'
+    excel_required_formula: 'AND(NOT(ISBLANK({agreement_start_date})),VALUE({agreement_start_date})>=DATE(2025,11,1))'
     datastore_type: date
     form_snippet: scheming/form_snippets/date.html
 
@@ -759,10 +872,16 @@ resources:
     description:
       en: The expected results or intended outcome is the assumed result of project completion. It should be populated in accordance with the project that the recipient is undertaking or the program under which it is funded. This field will attempt to explain why the project is being undertaken, and what the final results should be.
       fr: Les résultats attendus ou visés sont les résultats présumés qui découlent de l'exécution d'un projet. Le champ doit être rempli en fonction du projet qu'entreprend le bénéficiaire ou conformément au programme en vertu duquel il est financé. Ce champ vise à offrir une description de la raisond'être du projet et de ce que devraient être les résultats finaux.
-    obligation: Optional
+    obligation:
+      en: Required if "Agreement Start Date" is on or after November 1st 2025
+      fr: Requis si la "date de début de l’entente" est le 1er novembre 2025 ou après
+    validation:
+      en: Required if "Agreement Start Date" is on or after November 1st 2025
+      fr: Requis si la "date de début de l’entente" est le 1er novembre 2025 ou après
     format_type:
       en: Free text
       fr: Texte libre
+    excel_required_formula: 'AND(NOT(ISBLANK({agreement_start_date})),VALUE({agreement_start_date})>=DATE(2025,11,1))'
     datastore_type: text
     datatables_col_class: col-xxl
     form_snippet: scheming/form_snippets/textarea.html
@@ -778,10 +897,16 @@ resources:
     description:
       en: The expected results or intended outcome is the assumed result of project completion. It should be populated in accordance with the project that the recipient is undertaking or the program under which it is funded. This field will attempt to explain why the project is being undertaken, and what the final results should be.
       fr: Les résultats attendus ou visés sont les résultats présumés qui découlent de l'exécution d'un projet. Le champ doit être rempli en fonction du projet qu'entreprend le bénéficiaire ou conformément au programme en vertu duquel il est financé. Ce champ vise à offrir une description de la raisond'être du projet et de ce que devraient être les résultats finaux.
-    obligation: Optional
+    obligation:
+      en: Required if "Agreement Start Date" is on or after November 1st 2025
+      fr: Requis si la "date de début de l’entente" est le 1er novembre 2025 ou après
+    validation:
+      en: Required if "Agreement Start Date" is on or after November 1st 2025
+      fr: Requis si la "date de début de l’entente" est le 1er novembre 2025 ou après
     format_type:
       en: Free text
       fr: Texte libre
+    excel_required_formula: 'AND(NOT(ISBLANK({agreement_start_date})),VALUE({agreement_start_date})>=DATE(2025,11,1))'
     datastore_type: text
     datatables_col_class: col-xxl
     form_snippet: scheming/form_snippets/textarea.html
@@ -953,8 +1078,44 @@ resources:
           errors := errors || required_error(NEW.description_en, 'description_en');
           errors := errors || required_error(NEW.description_fr, 'description_fr');
         END IF;
+
+        IF NEW.agreement_start_date >= '2025-11-01'::date THEN
+          errors := errors || conditional_required_error(NEW.recipient_type, 'recipient_type');
+
+          errors := errors || conditional_required_error(NEW.prog_name_en, 'prog_name_en');
+          errors := errors || conditional_required_error(NEW.prog_name_fr, 'prog_name_fr');
+
+          errors := errors || conditional_required_error(NEW.prog_purpose_en, 'prog_purpose_en');
+          errors := errors || conditional_required_error(NEW.prog_purpose_fr, 'prog_purpose_fr');
+
+          errors := errors || conditional_required_error(NEW.agreement_title_en, 'agreement_title_en');
+          errors := errors || conditional_required_error(NEW.agreement_title_fr, 'agreement_title_fr');
+
+          errors := errors || conditional_required_error(NEW.agreement_end_date, 'agreement_end_date');
+          IF NEW.agreement_start_date::timestamp > NEW.agreement_end_date::timestamp THEN
+            errors := errors || ARRAY[['agreement_start_date', {start_end_date_error}]];
+          END IF;
+
+          errors := errors || conditional_required_error(NEW.expected_results_en, 'expected_results_en');
+          errors := errors || conditional_required_error(NEW.expected_results_fr, 'expected_results_fr');
+
+          NEW.recipient_postal_code := trim_lead_trailing(NEW.recipient_postal_code);
+          NEW.recipient_postal_code := UPPER(NEW.recipient_postal_code);
+          NEW.recipient_postal_code := REGEXP_REPLACE(NEW.recipient_postal_code, '\s+', ' ', 'g');
+          IF NEW.recipient_postal_code IS NOT NULL AND NEW.recipient_postal_code <> '' AND NOT NEW.recipient_postal_code ~ '^[A-Z]\d[A-Z]\s\d[A-Z]\d$' THEN
+            errors := errors || ARRAY[['recipient_postal_code', {recipient_postal_code_error}]];
+          END IF;
+
+          NEW.federal_riding_number := trim_lead_trailing(NEW.federal_riding_number);
+          IF NEW.federal_riding_number IS NOT NULL AND NEW.federal_riding_number <> '' AND (NOT is_natural_number(NEW.federal_riding_number) OR (is_natural_number(NEW.federal_riding_number) AND LENGTH(NEW.federal_riding_number) != 5)) THEN
+            errors := errors || ARRAY[['federal_riding_number', {federal_riding_number_error}]];
+          END IF;
+
+        END IF;
+
         NEW.agreement_value := round(NEW.agreement_value, 2);
         NEW.foreign_currency_value := round(NEW.foreign_currency_value, 2);
+
         IF errors = '{{}}' THEN
           RETURN NEW;
         END IF;
@@ -965,6 +1126,9 @@ resources:
 
   trigger_strings:  # yaml | not supported
     ref_number_error: Comma is not allowed in Reference Number field
+    recipient_postal_code_error: 'Must be a valid Canadian postal code in the format of "A1A 1A1"'
+    federal_riding_number_error: Must be a 5 digit number
+    start_end_date_error: '"Agreement Start Date" cannot be after "Projected Agreement End Date"'
 
   examples:
     record:
@@ -994,8 +1158,8 @@ resources:
       agreement_value: "500000"
       foreign_currency_type: "USD"
       foreign_currency_value: "450000"
-      agreement_start_date: "2019-04-01"
-      agreement_end_date: "2020-04-30"
+      agreement_start_date: "2025-04-01"
+      agreement_end_date: "2026-04-30"
       coverage: "Canada; Mexico|Mexique; United States|États-Unis"
       description_en: "Developing models and other tools to predict the safety performance of buildings."
       description_fr: "Met au point des modèles et d'autres outils pour prévoir la sécurité des bâtiments."
