@@ -373,12 +373,12 @@ resources:
       fr: |
         Le « Code postal du bénéficiaire » est un champ obligatoire qui sert à identifier avec précision la région où le bénéficiaire exerce ses activités. Si le fait de remplir ce champ suscite des préoccupations à l'égard de la vie privée, il est possible de le laisser vide.
 
-        Should be in the format "A1A 1A1"; L'outil de Postes Canada permettant de rechercher un code postal se trouve sur le site Web de Postes Canada.
+        Should be in the format "A1A 1A1"; L'outil de Postes Canada permettant de rechercher un code postal se trouve sur le site Web de Postes Canada. --TODO-- french translation
     obligation: Optional
     validation:
       en: Must be in the format "A1A 1A1" if "Agreement Start Date" is on or after November 1st 2025
       # TODO: french translation!!!
-      fr: Requis si la "date de début de l’entente" est le 1er novembre 2025 ou après
+      fr: Requis si la "date de début de l’entente" est le 1er novembre 2025 ou après --TODO-- french translation
     format_type:
       en: 'Text - Should be in the format "A1A 1A1"'
       fr: 'Texte - Should be in the format "A1A 1A1"'
@@ -457,11 +457,11 @@ resources:
     validation:
       en: Must be a 5 digit number if "Agreement Start Date" is on or after November 1st 2025
       # TODO: french translation!!!
-      fr: Requis si la "date de début de l’entente" est le 1er novembre 2025 ou après
+      fr: Requis si la "date de début de l’entente" est le 1er novembre 2025 ou après --TODO-- french translation
     format_type:
       # TODO: french translation!!!
       en: Text - 5 digit number
-      fr: Texte - 5 digit number
+      fr: Texte - 5 digit number --TODO-- french translation
     excel_error_formula: >-
       OR(
         {default_formula},
