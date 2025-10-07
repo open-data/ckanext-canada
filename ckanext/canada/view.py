@@ -636,7 +636,7 @@ def upsert_pd_data(owner_org: str, resource_name: str):
 
     Adds custom message handling for DataTables.
     """
-    if not g.is_registry:
+    if not h.is_registry_domain():
         return abort(404)
 
     context = cast(Context, {'user': g.user, 'model': model})
