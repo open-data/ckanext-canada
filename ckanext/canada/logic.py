@@ -680,6 +680,7 @@ def canada_user_update(up_func: Action,
 
 
 @chained_action
+@side_effect_free
 def canada_user_show(up_func: Action,
                      context: Context,
                      data_dict: DataDict) -> ChainedAction:
