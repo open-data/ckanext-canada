@@ -13,11 +13,6 @@ cascading_select:
     - cascading_select.js
   output: canada_internal/%(version)s_cascading_select.js
 
-geomap_zoom:
-  contents:
-    - geomapzoom.js
-  output: canada_internal/%(version)s_geomapzoom.js
-
 organization_edit:
   contents:
     - registry_organization_edit.js
