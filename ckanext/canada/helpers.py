@@ -57,6 +57,25 @@ GEO_MAP_TYPE_OPTION = 'wet_theme.geo_map_type'
 GEO_MAP_TYPE_DEFAULT = 'static'
 RELEASE_DATE_FACET_STEP = 100
 
+REGISTRY_SUBDOMAIN_MATCH = re.compile(r'registry|registre')
+
+
+def is_registry_domain() -> bool:
+    """
+    This helper should only be used inside the request context.
+
+    Otherwise, if outside the request context, it is assumed True (is Registry)
+    """
+    try:
+        uri_parts = urlsplit(request.url)
+    except RuntimeError:
+        # outside of the Flask request/view context.
+        # is the CLI or background system process,
+        # run as Registry.
+        return True
+    subdomain = uri_parts.netloc.split('.')[0]
+    return re.search(REGISTRY_SUBDOMAIN_MATCH, subdomain) is not None
+
 
 def get_translated_t(data_dict: Dict[str, Any],
                      field: str) -> Tuple[str, bool]:
@@ -1007,7 +1026,8 @@ def ckan_to_cdts_breadcrumbs(breadcrumb_content: str) -> List[Dict[str, Any]]:
     """
     breadcrumb_html = BeautifulSoup(breadcrumb_content, 'html.parser')
     cdts_breadcrumbs = []
-    if g.is_registry:
+    is_registry = h.is_registry_domain()
+    if is_registry:
         cdts_breadcrumbs.append({
             'title': _('Registry Home'),
             'href': '/%s' % h.lang(),
@@ -1030,7 +1050,7 @@ def ckan_to_cdts_breadcrumbs(breadcrumb_content: str) -> List[Dict[str, Any]]:
         if anchor and anchor.get('title'):
             link['acronym'] = anchor.get('title')
 
-        if g.is_registry:
+        if is_registry:
             cdts_breadcrumbs.append(link)
         elif 'active' not in breadcrumb.get('class', []):
             cdts_breadcrumbs.append(link)

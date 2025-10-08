@@ -1,13 +1,19 @@
 name: Pytest
 on:
   workflow_call:
+    inputs:
+      splits:
+        type: number
+        description: 'Number of test splits default 1 (max 24)'
+        required: true
+        default: 1
   workflow_dispatch:
     inputs:
       splits:
         type: number
         description: 'Number of test splits default 1 (max 24)'
         required: true
-        default: '1'
+        default: 1
       IS_PYTEST_COMBINE_TEST_RESULTS_DISABLED:
         type: boolean
         description: Override flag for skipping rollup of pytest/coverage html reports
@@ -133,7 +139,7 @@ jobs:
           for dir in /srv/app/src/*; do
             srcName=$(echo "$dir" | awk -F'/' '{print $NF}');
             if [[ -d "$dir/.git"  ]]; then
-                printf "${srcName}: Checking for updates..."
+                printf "\n${srcName}: Checking for updates..."
                 cd $dir;
                 current_branch=$(git rev-parse --abbrev-ref HEAD);
                 if [[ "$srcName" == "ckan" ]]; then
@@ -144,10 +150,10 @@ jobs:
                     reslog=$(git log HEAD..origin/$current_branch --oneline);
                 fi;
                 if [[ "${reslog}" == "" ]]; then
-                    printf "${srcName}: Up to date. Skipping..."
+                    printf "\n${srcName}: Up to date. Skipping..."
                 else
                     git pull || true;
-                    printf "${Green}${srcName}: Pulled updated code. Re-initializing in python environment..."
+                    printf "\n${srcName}: Pulled updated code. Re-initializing in python environment..."
                     cd /srv/app;
                     if [[ -f "$dir/requirements.txt" ]]; then
                         pip install -r $dir/requirements.txt || true;
@@ -163,7 +169,7 @@ jobs:
                     fi;
                 fi;
             else
-                printf "${srcName}: Not a source repository. Skipping..."
+                printf "\n${srcName}: Not a source repository. Skipping..."
             fi;
           done;
           cd /srv/app;
@@ -181,6 +187,9 @@ jobs:
           pip install -r requirements.txt
           pip install -r test-requirements.txt
           python3 setup.py develop
+          cd /srv/app/src/ckan
+          python3 setup.py develop
+          pip install setuptools==70.0.0
           cd /srv/app
       - name: Setup Databases
         run: |
@@ -302,7 +311,7 @@ jobs:
           for dir in /srv/app/src/*; do
             srcName=$(echo "$dir" | awk -F'/' '{print $NF}');
             if [[ -d "$dir/.git"  ]]; then
-                printf "${srcName}: Checking for updates..."
+                printf "\n${srcName}: Checking for updates..."
                 cd $dir;
                 current_branch=$(git rev-parse --abbrev-ref HEAD);
                 if [[ "$srcName" == "ckan" ]]; then
@@ -313,10 +322,10 @@ jobs:
                     reslog=$(git log HEAD..origin/$current_branch --oneline);
                 fi;
                 if [[ "${reslog}" == "" ]]; then
-                    printf "${srcName}: Up to date. Skipping..."
+                    printf "\n${srcName}: Up to date. Skipping..."
                 else
                     git pull || true;
-                    printf "${Green}${srcName}: Pulled updated code. Re-initializing in python environment..."
+                    printf "\n${srcName}: Pulled updated code. Re-initializing in python environment..."
                     cd /srv/app;
                     if [[ -f "$dir/requirements.txt" ]]; then
                         pip install -r $dir/requirements.txt || true;
@@ -332,7 +341,7 @@ jobs:
                     fi;
                 fi;
             else
-                printf "${srcName}: Not a source repository. Skipping..."
+                printf "\n${srcName}: Not a source repository. Skipping..."
             fi;
           done;
           cd /srv/app;
@@ -399,7 +408,7 @@ jobs:
 
           source /srv/app/venv/bin/activate
 
-          codecov -v upload-coverage -t ${{ secrets.CODECOV_TOKEN }} --report-type coverage --slug open-data/ckanext-canada --git-service github --branch ${{ github.ref_name }} --network-root-folder /srv/app/src/ckanext-canada --commit-sha ${{ github.sha }}
+          codecov -v upload-coverage -t ${{ secrets.CODECOV_TOKEN }} --report-type coverage --slug open-data/ckanext-canada --git-service github --branch ${{ github.head_ref || github.ref_name }} --network-root-folder /srv/app/src/ckanext-canada --commit-sha ${{ github.sha }}
       - name: Upload Test Results to CodeCov
         if: ${{ !cancelled() }}
         continue-on-error: true
@@ -408,7 +417,7 @@ jobs:
 
           source /srv/app/venv/bin/activate
 
-          codecov -v do-upload -t ${{ secrets.CODECOV_TOKEN }} -f /srv/app/results/junit_results.xml --report-type test_results --slug open-data/ckanext-canada --git-service github --branch ${{ github.ref_name }} --network-root-folder /srv/app/src/ckanext-canada --commit-sha ${{ github.sha }}
+          codecov -v do-upload -t ${{ secrets.CODECOV_TOKEN }} -f /srv/app/results/junit_results.xml --report-type test_results --slug open-data/ckanext-canada --git-service github --branch ${{ github.head_ref || github.ref_name }} --network-root-folder /srv/app/src/ckanext-canada --commit-sha ${{ github.sha }}
       - name: Pytest Coverage Console Report
         run: |
           set -ex
@@ -422,7 +431,7 @@ jobs:
   slack_notify:
     name: Send Slack Notifications
     needs: [pytest, merge-code-coverage-and-upload]
-    if: github.run_attempt == 1 && (success() || failure()) && needs.define-matrix.outputs.IS_PYTEST_COMBINE_TEST_RESULTS_DISABLED == 'false'
+    if: (success() || failure()) && needs.define-matrix.outputs.IS_PYTEST_COMBINE_TEST_RESULTS_DISABLED == 'false'
     runs-on: ubuntu-latest
     steps:
       - name: Slack Notification (Success)
