@@ -4,7 +4,7 @@
 {# NOTE: DOMParser, nonce injection, and re-stringing is necessary for WET Builder to work with CSP header #}
 <script nonce="{{- h.get_inline_script_nonce() -}}">
   const wetHeaderString = wet.builder.refTop({
-    {% if g.is_registry %}
+    {% if h.is_registry_domain() %}
       "isApplication": true,
     {% else %}
       "isApplication": false,

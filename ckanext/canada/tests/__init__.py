@@ -1,6 +1,10 @@
 from ckan import model
 
 
+def mock_is_registry_domain() -> bool:
+    return True
+
+
 class CanadaTestBase(object):
     @classmethod
     def setup_method(self, method):
