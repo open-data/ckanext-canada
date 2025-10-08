@@ -15,6 +15,7 @@ from ckan.plugins.toolkit import (
     ObjectNotFound,
     config,
     get_validator,
+    get_converter,
     Invalid,
     missing,
     asbool
@@ -39,6 +40,7 @@ from ckanext.security.resource_upload_validator import (
 
 not_empty = get_validator('not_empty')
 ignore_missing = get_validator('ignore_missing')
+convert_to_extras = get_converter('convert_to_extras')
 
 invalid_api_token_name_match = re.compile(r'[^A-Za-z0-9_\-]')
 
@@ -710,6 +712,8 @@ def canada_dataset_visibility(key: FlattenKey,
     If there is no portal_release_date, but default_dataset_visibility=public
     then we should assume that the release date should be set to now,
     and the dataset is instantly public.
+
+    NOTE: this should only be used as an __after validator
     """
     current_user_dict = get_action('user_show')({'ignore_auth': True},
                                                 {'id': context['user']})
@@ -721,13 +725,15 @@ def canada_dataset_visibility(key: FlattenKey,
     portal_release_date = data.get(key[:-1] + ('portal_release_date',))
 
     if not user_publishes_private:
-        # FIXME: fields not getting set...
         data[key[:-1] + ('ready_to_publish',)] = 'true'
+        convert_to_extras(('ready_to_publish',), data, errors, context)
         data[key[:-1] + ('imso_approval',)] = 'true'
+        convert_to_extras(('imso_approval',), data, errors, context)
         if portal_release_date is None or portal_release_date is missing:
             data[key[:-1] + ('portal_release_date',)] = \
                 datetime.today().strftime("%Y-%m-%d")
-        data[key] = False
+            convert_to_extras(('portal_release_date',), data, errors, context)
+        data[key[:-1] + ('private',)] = False
         return
 
     if (
@@ -737,8 +743,8 @@ def canada_dataset_visibility(key: FlattenKey,
       portal_release_date is not missing and
       datetime.strptime(portal_release_date, '%Y-%m-%d') <= datetime.today()
     ):
-        data[key] = False
+        data[key[:-1] + ('private',)] = False
         return
 
     # always default to Private datasets
-    data[key] = True
+    data[key[:-1] + ('private',)] = True

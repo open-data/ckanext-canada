@@ -864,7 +864,6 @@ def ckanadmin_publish_datasets():
         try:
             lc.action.package_patch(
                 id=package_id,
-                private=False,
                 portal_release_date=publish_date,
             )
         except ValidationError as e:

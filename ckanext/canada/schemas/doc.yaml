@@ -3,6 +3,7 @@ scheming_version: 1
 dataset_type: doc
 
 before_validators: limit_resources_per_dataset
+after_validators: canada_dataset_visibility
 
 about: 'open.canada.ca: Open By Default metadata schema'
 about_url: http://github.com/open-data/ckanext-canada
