@@ -12,7 +12,7 @@
     {% call form.input("email", id="field-email", label=_("Email"), type="email", value=data.email, error=errors.email, attrs={'class': 'form-control canada-custom-validity-email'}, is_required=true, classes=["control-medium"]) %}
       {{ form.info(_('Example: {example_email}').format(example_email=h.obfuscate_to_code_points('joe.bloggs@tbs-sct.gc.ca'))) }}
     {% endcall %}
-    {% set format_attrs={'data-module': 'autocomplete', 'data-module-source': '/organization/autocomplete?q=?', 'data-module-key': 'title', 'data-module-label': 'title', 'data-module-dropdownClass': 'org-select2-dropdown', 'data-module-containerClass': 'org-select2-container', 'data-module-tags': 'false', 'data-module-createtags': 'false', 'class':'control-medium canada-custom-validity-general'} %}
+    {% set format_attrs={'data-module': 'autocomplete', 'data-module-source': h.url_for('canada.organization_autocomplete') ~ '?q=?', 'data-module-key': 'title', 'data-module-label': 'title', 'data-module-dropdownClass': 'org-select2-dropdown', 'data-module-containerClass': 'org-select2-container', 'data-module-tags': 'false', 'data-module-createtags': 'false', 'class':'control-medium canada-custom-validity-general'} %}
     {{ form.input('department', id='field-department', label=_('Organization'), value=data.department, error=errors.department, attrs=format_attrs, is_required=true, placeholder=_('Search organizations...')) }}
     {% call form.input("phoneno", id="field-phoneno", label=_("Phone Number"), value=data.phoneno, error=errors.phoneno, classes=["control-medium"]) %}
       {{ form.info(_('Example: 000 000 0000')) }}

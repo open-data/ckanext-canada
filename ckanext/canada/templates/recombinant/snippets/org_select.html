@@ -17,7 +17,7 @@
            value="{{ h.split_piped_bilingual_field(selected.title, h.lang()) }}"
            placeholder="{{ _('Search organizations...') }}"
            data-module="autocomplete"
-           data-module-source="/organization/autocomplete?q=?"
+           data-module-source="{{ h.url_for('canada.organization_autocomplete') ~ '?q=?' }}"
            data-module-key="name"
            data-module-label="title"
            data-module-dropdownClass="recombinant-org-select2-dropdown"
