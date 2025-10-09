@@ -61,8 +61,18 @@ resources:
       en: Amendment Number
       fr: Numéro de modification
     description:
-      en: This field is populated by departments and identifies that an amendment is occurring to original information. Use 0 for original records.
-      fr: Ce champ est rempli par les ministères et indique qu'une modification est apportée aux renseignements originaux. Utiliser 0 pour les enregistrements originaux.
+      en: >
+        This field is populated by departments and identifies that an amendment is
+        occurring to original information. Use 0 for original records.
+        The first amendment after the original agreement should be identified as 1, then 2, etc.
+        Agreement terminations should be identified as another amendment number and report
+        'termination' in the 'Additional information' column.
+      fr: >
+        Ce champ est rempli par les ministères et indique qu'une modification est apportée
+        aux renseignements originaux. Utiliser 0 pour les enregistrements originaux. La
+        première modification après l'accord initial doit être identifiée comme numéro 1,
+        puis 2, etc. Les résiliations d'accord doivent être identifiées comme un autre numéro
+        de modification et indiquer 'résiliation' dans la colonne 'Renseignements supplémentaires'.
     obligation: Mandatory
     excel_required: true
     form_required: true
@@ -124,8 +134,8 @@ resources:
       en: The recipient type helps identify who is receiving the money.
       fr: Le type de bénéficiaire permet d'identifier qui reçoit l'argent.
     obligation:
-      en: Required if "Agreement Start Date" is on or after November 1st 2025
-      fr: Requis si la "date de début de l’entente" est le 1er novembre 2025 ou après
+      en: Mandatory
+      fr: Obligatoire
     validation:
       en: Required if "Agreement Start Date" is on or after November 1st 2025
       fr: Requis si la "date de début de l’entente" est le 1er novembre 2025 ou après
@@ -169,6 +179,8 @@ resources:
       en: |
         The Business Number is a nine digit number issued by the Canada Revenue Agency since 1994. Per the Directive on the Business Number, it has been identified as the standard identifier for all transactions between businesses and the Government of Canada, including transactions linked to grant and/or contribution funding.
 
+        This guidance further aligns with the Government of Canada data reference standard on business number: Data reference standard on the business number - Canada.ca (https://www.canada.ca/en/government/system/digital-government/digital-government-innovations/enabling-interoperability/gc-enterprise-data-reference-standards/data-reference-standard-business-number.html)
+
         The business number should be populated for an organization or charity.
 
         Real-time validation of business identity information linked to the Business Number, including legal name and operating name, for sole proprietorship, partnerships and incorporations, is available to departments through the Business Number Web Validation Service. For more details contact ic.bnadoptionne.ic@canada.ca.
@@ -179,15 +191,38 @@ resources:
       fr: |
         Depuis 1994, l’Agence du revenu du Canada émet des numéros d’entreprise à neuf chiffres. Aux termes de la Directive sur le numéro d’entreprise, le numéro d’entreprise constitue l’identificateur standard de toutes les opérations effectuées entre une entreprise et le gouvernement du Canada, y compris les opérations associées à une subvention ou à un financement de contribution.
 
+        Cette directive est également conforme à la norme de référence sur les données du numéro d'entreprise du gouvernement du Canada : Norme référentielle relative aux données sur le numéro d’entreprise - Canada.ca (https://www.canada.ca/fr/gouvernement/systeme/gouvernement-numerique/innovations-gouvernementales-numeriques/permettre-interoperabilite/normes-referentielles-pangouvernementales-relatives-donnees-gc/norme-referentielle-relative-donnees-numero-entreprise.html)
+
         Le numéro d’entreprise devrait être consigné pour une organisation ou un organisme de bienfaisance.
 
         Les ministères peuvent obtenir la validation en temps réel de l’identité d’une entreprise en saisissant son numéro d’entreprise dans le Service de validation du numéro d’entreprise en ligne, qui inclut le nom légal et le nom commercial pour les entreprises individuelles, les partenariats et les constitutions en personne morale. Si vous voulez obtenir de plus amples renseignements, envoyez un courriel à ic.bnadoptionne.ic@canada.ca.
 
-        Pour valider un numéro d’entreprise associé à un organisme de bienfaisance, les ministères peuvent effectuer une recherche de base dans la Liste d’organismes de bienfaisance, sur le site Web Canada.ca. Entrez le nom de l’organisme de bienfaisance, puis cliquez sur le bouton de Recherche. Ensuite, cliquez sur le nom de l’organisme de bienfaisance tiré du résultat de la recherche afin de trouver de plus amples renseignements sur l’organisme de bienfaisance (p. ex., le numéro du programme de bienfaisance, le statut de l’organisme de bienfaisance, la date d’entrée en vigueur du statut et la désignation de l’organisme de bienfaisance). Il est impossible de valider le nom légal et le nom commercial au moyen de la fonction de recherche de base.
+        Pour valider un numéro d’entreprise associé à un organisme de bienfaisance, les ministères peuvent effectuer une recherche de base dans la Liste d’organismes de bienfaisance, sur le site Web Canada.ca. Entrez le nom de l’organisme de bienfaisance, puis cliquez sur le bouton de Recherche. Ensuite, cliquez sur le nom de l’organisme de bienfaisance tiré du résultat de la recherche afin de trouver de plus amples renseignements sur l’organisme de bienfaisance (p. ex., le numéro du programme de bienfaisance, le statut de l’organisme de bienfaisance, la date d’entrée en vigueur du statut et la désignation de l’organisme de bienfaisance). Il est impossible de valider le nom légal et le nom commercial au moyen de la fonction de recherche de base.
     obligation: Optional
+    validation:
+      en: Must be a 9 digit number if "Agreement Start Date" is on or after November 1st 2025
+      fr: Doit être un numéro à neuf chiffres si la "date de début de l’entente" est le 1er novembre 2025 ou après
     format_type:
-      en: Free text
-      fr: Texte libre
+      en: Free text - 9 digit number
+      fr: Texte libre - numéro à neuf chiffres
+    excel_error_formula: >-
+      OR(
+        {default_formula},
+        AND(
+          NOT(
+            ISBLANK({agreement_start_date})
+          ),
+          VALUE({agreement_start_date})>=DATE(2025,11,1),
+          OR(
+            NOT(ISNUMBER(VALUE({cell}))),
+            LEN(TRIM({cell}))<>9,
+            MID(TRIM({cell}),1,1)="0",
+            LEN({cell})-LEN(SUBSTITUTE({cell},"-",""))>0,
+            LEN({cell})-LEN(SUBSTITUTE({cell},".",""))>0,
+            LEN({cell})-LEN(SUBSTITUTE({cell},",",""))>0
+          )
+        )
+      )
     datastore_type: text
 
   # 3.7 Recipient Legal Name (formerly recipient_name_en, recipient_name_fr)
@@ -203,7 +238,7 @@ resources:
       fr: |
         Le nom légal du bénéficiaire se veut complémentaire au champ « Numéro d'entreprise du bénéficiaire ». Cette information devrait être tirée de l'entente de subvention ou de contribution.
 
-        Traduction seulement si le nom légal est fourni dans les deux langues officielles par le bénéficiaire. Fournir dans le format suivant : nom anglais|nom français.
+        Traduction seulement si le nom légal est fourni dans les deux langues officielles par le bénéficiaire. Fournir dans le format suivant : nom anglais|nom français.
     obligation: Mandatory
     excel_required: true
     form_required: true
@@ -227,7 +262,7 @@ resources:
       fr: |
         Le champ « Nom commercial du bénéficiaire » est un champ facultatif utilisé dans le cas d'organisations qui exercent leurs activités sous un nom différent de leur nom légal ou de leur numéro d'entreprise. Dans le cas de chercheurs qui reçoivent leur financement par l'entremise d'une université, cette information doit être entrée ici. Ce champ ne sert pas à saisir le nom du bénéficiaire ultime de la subvention ou de la contribution, mais plutôt celui de la personne qui reçoit le financement du gouvernement du Canada.
 
-        Traduction seulement si le nom est fourni dans les deux langues officielles par le bénéficiaire. Fournir dans le format suivant : nom anglais|nom français.
+        Traduction seulement si le nom est fourni dans les deux langues officielles par le bénéficiaire. Fournir dans le format suivant : nom anglais|nom français.
     format_type:
       en: Free text
       fr: Texte libre
@@ -346,7 +381,7 @@ resources:
       fr: |
         La « Ville du bénéficiaire » est un champ obligatoire qui indique la ville où le bénéficiaire exerce ses activités. On peut y inscrire le nom de villes canadiennes ou de villes étrangères.
 
-        Nom officiel exact de la ville, y compris dans les deux langues officielles (le cas échéant) au format suivant : nom anglais|nom français
+        Nom officiel exact de la ville, y compris dans les deux langues officielles (le cas échéant) au format suivant : nom anglais|nom français
 
         Texte libre, mais une liste contrôlée de la liste des municipalités désignées donataires de l’Agence du revenu du Canada peut être consultée: site Web de l’Agence du revenu du Canada (http://www.cra-arc.gc.ca/chrts-gvng/qlfd-dns/mncplts-fra.html).
     obligation: Mandatory
@@ -365,7 +400,6 @@ resources:
       en: Recipient Postal Code
       fr: Code postal du bénéficiaire
     description:
-      # TODO: french translation!!!
       en: |
         The "Recipient postal code" is a mandatory field that serves to identify the specific area in which the recipient operates. In cases where this field cannot be populated this field may be left blank.
 
@@ -373,15 +407,14 @@ resources:
       fr: |
         Le « Code postal du bénéficiaire » est un champ obligatoire qui sert à identifier avec précision la région où le bénéficiaire exerce ses activités. Si le fait de remplir ce champ suscite des préoccupations à l'égard de la vie privée, il est possible de le laisser vide.
 
-        Should be in the format "A1A 1A1"; L'outil de Postes Canada permettant de rechercher un code postal se trouve sur le site Web de Postes Canada. --TODO-- french translation
+        Devrait être selon le format « A1A 1A1 »; L'outil de Postes Canada permettant de rechercher un code postal se trouve sur le site Web de Postes Canada.
     obligation: Optional
     validation:
       en: Must be in the format "A1A 1A1" if "Agreement Start Date" is on or after November 1st 2025
-      # TODO: french translation!!!
-      fr: Requis si la "date de début de l’entente" est le 1er novembre 2025 ou après --TODO-- french translation
+      fr: Doit être selon le format « A1A 1A1 » si la "date de début de l’entente" est le 1er novembre 2025 ou après
     format_type:
       en: 'Text - Should be in the format "A1A 1A1"'
-      fr: 'Texte - Should be in the format "A1A 1A1"'
+      fr: 'Texte - Devrait être selon le format « A1A 1A1 »'
     excel_error_formula: >-
       OR(
         {default_formula},
@@ -456,12 +489,10 @@ resources:
     obligation: Optional
     validation:
       en: Must be a 5 digit number if "Agreement Start Date" is on or after November 1st 2025
-      # TODO: french translation!!!
-      fr: Requis si la "date de début de l’entente" est le 1er novembre 2025 ou après --TODO-- french translation
+      fr: Doit être un numéro à cinq chiffres si la "date de début de l’entente" est le 1er novembre 2025 ou après
     format_type:
-      # TODO: french translation!!!
       en: Text - 5 digit number
-      fr: Texte - 5 digit number --TODO-- french translation
+      fr: Texte - numéro à cinq chiffres
     excel_error_formula: >-
       OR(
         {default_formula},
@@ -491,8 +522,8 @@ resources:
       en: The program name is the name of the program, according to the terms and conditions (Ts&Cs), under which a recipient is funded.
       fr: Le nom du programme selon les modalités en vertu desquelles le financement est versé au bénéficiaire.
     obligation:
-      en: Required if "Agreement Start Date" is on or after November 1st 2025
-      fr: Requis si la "date de début de l’entente" est le 1er novembre 2025 ou après
+      en: Mandatory
+      fr: Obligatoire
     validation:
       en: Required if "Agreement Start Date" is on or after November 1st 2025
       fr: Requis si la "date de début de l’entente" est le 1er novembre 2025 ou après
@@ -513,8 +544,8 @@ resources:
       en: The program name is the name of the program, according to the terms and conditions (Ts&Cs), under which a recipient is funded.
       fr: Le nom du programme selon les modalités en vertu desquelles le financement est versé au bénéficiaire.
     obligation:
-      en: Required if "Agreement Start Date" is on or after November 1st 2025
-      fr: Requis si la "date de début de l’entente" est le 1er novembre 2025 ou après
+      en: Mandatory
+      fr: Obligatoire
     validation:
       en: Required if "Agreement Start Date" is on or after November 1st 2025
       fr: Requis si la "date de début de l’entente" est le 1er novembre 2025 ou après
@@ -535,8 +566,8 @@ resources:
       en: The program purpose is the program’s purpose according to the Ts&Cs.
       fr: Le but du programme est celui dans lequel le programme a été créé, selon les modalités du programme.
     obligation:
-      en: Required if "Agreement Start Date" is on or after November 1st 2025
-      fr: Requis si la "date de début de l’entente" est le 1er novembre 2025 ou après
+      en: Mandatory
+      fr: Obligatoire
     validation:
       en: Required if "Agreement Start Date" is on or after November 1st 2025
       fr: Requis si la "date de début de l’entente" est le 1er novembre 2025 ou après
@@ -558,8 +589,8 @@ resources:
       en: The program purpose is the program’s purpose according to the Ts&Cs.
       fr: Le but du programme est celui dans lequel le programme a été créé, selon les modalités du programme.
     obligation:
-      en: Required if "Agreement Start Date" is on or after November 1st 2025
-      fr: Requis si la "date de début de l’entente" est le 1er novembre 2025 ou après
+      en: Mandatory
+      fr: Obligatoire
     validation:
       en: Required if "Agreement Start Date" is on or after November 1st 2025
       fr: Requis si la "date de début de l’entente" est le 1er novembre 2025 ou après
@@ -581,8 +612,8 @@ resources:
       en: The agreement title is the title of the project or agreement that the recipient is undertaking. In cases where there is no title, the agreement number will be duplicated here.
       fr: Le nom de l'entente est le titre du projet ou de l'entente à l'égard duquel s'engage le bénéficiaire. S'il n'y a pas de titre, le numéro de l'entente peut être réinscrit ici.
     obligation:
-      en: Required if "Agreement Start Date" is on or after November 1st 2025
-      fr: Requis si la "date de début de l’entente" est le 1er novembre 2025 ou après
+      en: Mandatory
+      fr: Obligatoire
     validation:
       en: Required if "Agreement Start Date" is on or after November 1st 2025
       fr: Requis si la "date de début de l’entente" est le 1er novembre 2025 ou après
@@ -603,8 +634,8 @@ resources:
       en: The agreement title is the title of the project or agreement that the recipient is undertaking. In cases where there is no title, the agreement number will be duplicated here.
       fr: Le nom de l'entente est le titre du projet ou de l'entente à l'égard duquel s'engage le bénéficiaire. S'il n'y a pas de titre, le numéro de l'entente peut être réinscrit ici.
     obligation:
-      en: Required if "Agreement Start Date" is on or after November 1st 2025
-      fr: Requis si la "date de début de l’entente" est le 1er novembre 2025 ou après
+      en: Mandatory
+      fr: Obligatoire
     validation:
       en: Required if "Agreement Start Date" is on or after November 1st 2025
       fr: Requis si la "date de début de l’entente" est le 1er novembre 2025 ou après
@@ -636,13 +667,40 @@ resources:
       en: Agreement Value in CAD
       fr: Valeur de l’entente en dollars canadiens
     description:
-      en: The agreement value is the dollar amount stated in the grant or contribution agreement. This field should be populated with a monetary value in Canadian dollars.
-      fr: La valeur de l'entente est le montant en dollars indiqué dans l'entente de subvention ou de contribution. Ce champ doit indiquer une valeur monétaire en dollars canadiens.
+      en: >
+        The agreement value is the dollar amount stated in the grant or contribution agreement.
+        This field should be populated with a monetary value in Canadian dollars. This field
+        should report on the total grant or contribution value, and not the change in agreement value.
+      fr: >
+        La valeur de l'entente est le montant en dollars indiqué dans l'entente de subvention ou
+        de contribution. Ce champ doit indiquer une valeur monétaire en dollars canadiens. Ce champ
+        doit indiquer la valeur totale de la subvention ou de la contribution, et non la variation de
+        la valeur de l'accord.
     obligation: Mandatory
+    validation:
+      en: |
+        This field must not be empty.
+        The number must be greater than 0.
+      fr: |
+        Ce champ ne doit pas être vide.
+        Le nombre doit être supérieur à 0.
     excel_required: true
     form_required: true
     datastore_type: money
-
+    excel_error_formula: >-
+      OR(
+        {default_formula},
+        AND(
+          NOT(
+            ISBLANK({agreement_start_date})
+          ),
+          VALUE({agreement_start_date})>=DATE(2025,11,1),
+          OR(
+            NOT(ISNUMBER(VALUE({cell}))),
+            NOT(VALUE({cell})>0)
+          )
+        )
+      )
     solr_dollar_range_facet:
      - 10000
      - 25000
@@ -691,21 +749,29 @@ resources:
       en: Agreement Start Date
       fr: Date de début de l’entente
     description:
-      en: The agreement start date is the assumed start of the agreement, or when the project is supposed to begin, as captured in the initial agreement.
-      fr: La date de début de l'entente est la date d'entrée en vigueur présumée de l'entente ou la date à laquelle le projet est censé commencer, conformément à l'entente initiale.
+      en: |
+        The agreement start date is the assumed start of the agreement, normally identified based on the last date of signature, as captured in the initial agreement.
+
+        This date should identify the start of the funding agreement, and not the date of the grant or contribution project.
+      fr: |
+        La date de début de l'entente est la date d'entrée en vigueur présumée de l'entente, commence généralement à être identifié en fonction de la dernière date de signature, conformément à l'entente initiale.
+
+        Cette date doit indiquer le début de l'accord de financement, et non la date du projet de subvention ou de contribution.
     obligation: Mandatory
     validation:
       en: |
         This field must not be empty.
+        Date can’t be in the future.
       fr: |
         Ce champ ne doit pas être vide.
+        La date ne doit pas être dans le futur.
     excel_required: true
     form_required: true
     form_snippet: scheming/form_snippets/date.html
     format_type:
       en: Date (Please format the date as YYYY-MM-DD)
       fr: "Date (Veuillez utiliser le format de date suivant : AAAA-MM-JJ)"
-    excel_error_formula: 'OR({default_formula},AND(NOT(ISBLANK({cell})),NOT(ISBLANK({agreement_end_date})),{cell}>{agreement_end_date}))'
+    excel_error_formula: 'OR({default_formula},{cell}>TODAY(),AND(NOT(ISBLANK({cell})),NOT(ISBLANK({agreement_end_date})),{cell}>{agreement_end_date}))'
     datastore_type: date
     extract_date_year: true
     extract_date_month: true
@@ -720,8 +786,8 @@ resources:
       en: The projected agreement end date is the assumed end of the agreement, or when the project is supposed to end, as captured in the initial agreement.
       fr: La date de fin prévue de l'entente est la date de fin présumée de l'entente, ou la date à laquelle le projet est censé prendre fin, conformément à l'entente initiale.
     obligation:
-      en: Required if "Agreement Start Date" is on or after November 1st 2025
-      fr: Requis si la "date de début de l’entente" est le 1er novembre 2025 ou après
+      en: Mandatory
+      fr: Obligatoire
     validation:
       en: Required if "Agreement Start Date" is on or after November 1st 2025.
       fr: Requis si la "date de début de l’entente" est le 1er novembre 2025 ou après.
@@ -828,8 +894,8 @@ resources:
       en: The expected results or intended outcome is the assumed result of project completion. It should be populated in accordance with the project that the recipient is undertaking or the program under which it is funded. This field will attempt to explain why the project is being undertaken, and what the final results should be.
       fr: Les résultats attendus ou visés sont les résultats présumés qui découlent de l'exécution d'un projet. Le champ doit être rempli en fonction du projet qu'entreprend le bénéficiaire ou conformément au programme en vertu duquel il est financé. Ce champ vise à offrir une description de la raisond'être du projet et de ce que devraient être les résultats finaux.
     obligation:
-      en: Required if "Agreement Start Date" is on or after November 1st 2025
-      fr: Requis si la "date de début de l’entente" est le 1er novembre 2025 ou après
+      en: Mandatory
+      fr: Obligatoire
     validation:
       en: Required if "Agreement Start Date" is on or after November 1st 2025
       fr: Requis si la "date de début de l’entente" est le 1er novembre 2025 ou après
@@ -851,8 +917,8 @@ resources:
       en: The expected results or intended outcome is the assumed result of project completion. It should be populated in accordance with the project that the recipient is undertaking or the program under which it is funded. This field will attempt to explain why the project is being undertaken, and what the final results should be.
       fr: Les résultats attendus ou visés sont les résultats présumés qui découlent de l'exécution d'un projet. Le champ doit être rempli en fonction du projet qu'entreprend le bénéficiaire ou conformément au programme en vertu duquel il est financé. Ce champ vise à offrir une description de la raisond'être du projet et de ce que devraient être les résultats finaux.
     obligation:
-      en: Required if "Agreement Start Date" is on or after November 1st 2025
-      fr: Requis si la "date de début de l’entente" est le 1er novembre 2025 ou après
+      en: Mandatory
+      fr: Obligatoire
     validation:
       en: Required if "Agreement Start Date" is on or after November 1st 2025
       fr: Requis si la "date de début de l’entente" est le 1er novembre 2025 ou après
@@ -1026,6 +1092,9 @@ resources:
           errors := errors || required_error(NEW.description_fr, 'description_fr');
         END IF;
 
+        NEW.agreement_value := round(NEW.agreement_value, 2);
+        NEW.foreign_currency_value := round(NEW.foreign_currency_value, 2);
+
         IF NEW.agreement_start_date >= '2025-11-01'::date THEN
           errors := errors || conditional_required_error(NEW.recipient_type, 'recipient_type');
 
@@ -1037,6 +1106,8 @@ resources:
 
           errors := errors || conditional_required_error(NEW.agreement_title_en, 'agreement_title_en');
           errors := errors || conditional_required_error(NEW.agreement_title_fr, 'agreement_title_fr');
+
+          errors := errors || future_date_error(NEW.agreement_start_date, 'agreement_start_date');
 
           errors := errors || conditional_required_error(NEW.agreement_end_date, 'agreement_end_date');
           IF NEW.agreement_start_date::timestamp > NEW.agreement_end_date::timestamp THEN
@@ -1053,15 +1124,21 @@ resources:
             errors := errors || ARRAY[['recipient_postal_code', {recipient_postal_code_error}]];
           END IF;
 
+          NEW.recipient_business_number := trim_lead_trailing(NEW.recipient_business_number);
+          IF NEW.recipient_business_number IS NOT NULL AND NEW.recipient_business_number <> '' AND (NOT is_natural_number(NEW.recipient_business_number) OR (is_natural_number(NEW.recipient_business_number) AND LENGTH(NEW.recipient_business_number) != 9)) THEN
+            errors := errors || ARRAY[['recipient_business_number', {recipient_business_number_error}]];
+          END IF;
+
           NEW.federal_riding_number := trim_lead_trailing(NEW.federal_riding_number);
           IF NEW.federal_riding_number IS NOT NULL AND NEW.federal_riding_number <> '' AND (NOT is_natural_number(NEW.federal_riding_number) OR (is_natural_number(NEW.federal_riding_number) AND LENGTH(NEW.federal_riding_number) != 5)) THEN
             errors := errors || ARRAY[['federal_riding_number', {federal_riding_number_error}]];
           END IF;
 
-        END IF;
+          IF NOT NEW.agreement_value > 0 THEN
+            errors := errors || ARRAY[['agreement_value', {agreement_value_error}]];
+          END IF;
 
-        NEW.agreement_value := round(NEW.agreement_value, 2);
-        NEW.foreign_currency_value := round(NEW.foreign_currency_value, 2);
+        END IF;
 
         IF errors = '{{}}' THEN
           RETURN NEW;
@@ -1074,8 +1151,10 @@ resources:
   trigger_strings:  # yaml | not supported
     ref_number_error: Comma is not allowed in Reference Number field
     recipient_postal_code_error: 'Must be a valid Canadian postal code in the format of "A1A 1A1"'
+    recipient_business_number_error: Must be a 9 digit number
     federal_riding_number_error: Must be a 5 digit number
     start_end_date_error: '"Agreement Start Date" cannot be after "Projected Agreement End Date"'
+    agreement_value_error: Must be greater than zero
 
   examples:
     record:
