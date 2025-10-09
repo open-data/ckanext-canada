@@ -65,6 +65,99 @@ class TestGrants(CanadaTestBase):
         assert 'ref_number' in err['records'][0]
         assert err['records'][0]['ref_number'] == ['Comma is not allowed in Reference Number field']
 
+    # TODO: enable after November 1st 2025!!!
+    @pytest.mark.skip(reason="agreement_start_date cannot be in future")
+    def test_agreement_value(self):
+        """
+        Must be greater than 0
+
+        NOTE: conditional on `agreement_start_date`>=2025-11-01
+        """
+        chromo = get_chromo('grants')
+        record = chromo['examples']['record'].copy()
+
+        record['agreement_start_date'] = '2025-11-01'
+        record['amendment_number'] = 0
+
+        bad_formats = [
+            -200,
+            0,
+            -0.01,
+            0.001,  # rounds to 0
+        ]
+
+        for bad_format in bad_formats:
+            record['agreement_value'] = bad_format
+
+            with pytest.raises(ValidationError) as ve:
+                self.lc.action.datastore_upsert(
+                    resource_id=self.resource_id,
+                    records=[record])
+            model.Session.rollback()
+            err = ve.value.error_dict
+            assert 'records' in err
+            assert 'agreement_value' in err['records'][0]
+
+        good_formats = [
+            200,
+            1,
+            0.01,
+            0.99,
+            0.009,  # rounds to 0.01
+        ]
+
+        for good_format in good_formats:
+            record['agreement_value'] = good_format
+
+            self.lc.action.datastore_upsert(
+                    resource_id=self.resource_id,
+                    records=[record])
+
+    # TODO: enable after November 1st 2025!!!
+    @pytest.mark.skip(reason="agreement_start_date cannot be in future")
+    def test_business_number_format(self):
+        """
+        Should be a 9 digit natural number
+
+        NOTE: conditional on `agreement_start_date`>=2025-11-01
+        """
+        chromo = get_chromo('grants')
+        record = chromo['examples']['record'].copy()
+
+        record['agreement_start_date'] = '2025-11-01'
+        record['amendment_number'] = 0
+
+        bad_formats = [
+            'this is no good',
+            '80',
+            '2,000',
+            '-1800',
+            '2600-',
+            '29.50',
+            '00087',
+            '58928100487832',
+        ]
+
+        for bad_format in bad_formats:
+            record['recipient_business_number'] = bad_format
+
+            with pytest.raises(ValidationError) as ve:
+                self.lc.action.datastore_upsert(
+                    resource_id=self.resource_id,
+                    records=[record])
+            model.Session.rollback()
+            err = ve.value.error_dict
+            assert 'records' in err
+            assert 'recipient_business_number' in err['records'][0]
+
+        record['recipient_business_number'] = '500010009'
+
+        self.lc.action.datastore_upsert(
+                resource_id=self.resource_id,
+                records=[record])
+
+    # TODO: enable after November 1st 2025!!!
+    @pytest.mark.skip(reason="agreement_start_date cannot be in future")
     def test_riding_number_format(self):
         """
         Should be a 5 digit natural number
@@ -85,6 +178,7 @@ class TestGrants(CanadaTestBase):
             '2600-',
             '29.50',
             '00087',
+            '58928100487832',
         ]
 
         for bad_format in bad_formats:
@@ -105,6 +199,8 @@ class TestGrants(CanadaTestBase):
                 resource_id=self.resource_id,
                 records=[record])
 
+    # TODO: enable after November 1st 2025!!!
+    @pytest.mark.skip(reason="agreement_start_date cannot be in future")
     def test_postal_code_format(self):
         """
         Should enforce Canadian postal code format
@@ -141,9 +237,9 @@ class TestGrants(CanadaTestBase):
             resource_id=self.resource_id,
             records=[record])
 
-    def test_start_end_date_overlaps(self):
+    def test_dates(self):
         """
-        Start date should always be before end date
+        Start Date cannot be in the future, and dates must be chronological
 
         NOTE: conditional on `agreement_start_date`>=2025-11-01
         """
@@ -153,6 +249,19 @@ class TestGrants(CanadaTestBase):
         record['agreement_start_date'] = '2025-11-05'
         record['amendment_number'] = 0
         record['agreement_end_date'] = '2025-11-01'
+
+        with pytest.raises(ValidationError) as ve:
+            self.lc.action.datastore_upsert(
+                resource_id=self.resource_id,
+                records=[record])
+        model.Session.rollback()
+        err = ve.value.error_dict
+        assert 'records' in err
+        assert 'agreement_start_date' in err['records'][0]
+
+        record['agreement_start_date'] = '2099-01-01'
+        record['amendment_number'] = 0
+        record['agreement_end_date'] = '2099-01-02'
 
         with pytest.raises(ValidationError) as ve:
             self.lc.action.datastore_upsert(
@@ -241,6 +350,8 @@ class TestGrants(CanadaTestBase):
         assert 'records' in err
         assert 'recipient_province' in err['records'][0]
 
+    # TODO: enable after November 1st 2025!!!
+    @pytest.mark.skip(reason="agreement_start_date cannot be in future")
     def test_required_fields_2025(self):
         """
         Excluding conditionally required fields should raise an exception
