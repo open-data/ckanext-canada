@@ -52,6 +52,8 @@ class TestRegistrySearch(CanadaTestBase):
                 keywords={
                     'en': ['Test %s' % i, 'Keywords'],
                     'fr': ['Test %s' % i, 'FR', 'Keywords']},
+                private=True,
+                imso_approval=str(i == 1 or i == 3).lower(),
                 ready_to_publish=str(i == 1 or i == 3).lower(),
                 portal_release_date=None if i == 3 else '2000-01-01')
         self.org2 = Organization()
@@ -71,6 +73,8 @@ class TestRegistrySearch(CanadaTestBase):
                 keywords={
                     'en': ['Test %s' % i, 'Keywords'],
                     'fr': ['Test %s' % i, 'FR', 'Keywords']},
+                private=True,
+                imso_approval='true',
                 ready_to_publish='true',
                 portal_release_date='2000-01-01')
 
@@ -149,6 +153,8 @@ class TestPortalSearch(CanadaTestBase):
                 keywords={
                     'en': ['Test %s' % i, 'Keywords'],
                     'fr': ['Test %s' % i, 'FR', 'Keywords']},
+                private=False,
+                imso_approval='true',
                 ready_to_publish='true',
                 portal_release_date='2000-01-01')
         self.org2 = Organization()
@@ -164,6 +170,8 @@ class TestPortalSearch(CanadaTestBase):
                 keywords={
                     'en': ['Test %s' % i, 'Keywords'],
                     'fr': ['Test %s' % i, 'FR', 'Keywords']},
+                private=False,
+                imso_approval='true',
                 ready_to_publish='true',
                 portal_release_date='2000-01-01')
 

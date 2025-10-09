@@ -205,8 +205,9 @@ class CanadaDatasetsPlugin(SchemingDatasetsPlugin):
         # FIXME: figure out the static SOLR query params for Portal...
         if has_request_context() and not h.is_registry_domain():
             # NOTE: wilcards must come last...
-            search_params['fq'] += '+imso_approval:"true", +state:"active" '\
-                '+dataset_type:(info OR dataset OR prop), +portal_release_date:*'
+            search_params['fq'] += '+imso_approval:"true", +state:"active"'\
+                ', +capacity:"public", +dataset_type:(info OR dataset OR prop)'\
+                ', +portal_release_date:*'
 
         return search_params
 

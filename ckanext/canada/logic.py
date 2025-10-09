@@ -691,5 +691,5 @@ def canada_user_show(up_func: Action,
     user_dict = up_func(context, data_dict)
     extras = user_dict.pop('plugin_extras', {})
     user_dict['default_dataset_visibility'] = extras.get(
-        'default_dataset_visibility', 'private')
+        'default_dataset_visibility', 'private') if extras else 'private'
     return user_dict
