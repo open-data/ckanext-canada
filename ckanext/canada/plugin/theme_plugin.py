@@ -41,6 +41,7 @@ class CanadaThemePlugin(p.SingletonPlugin):
             'validation_status',
             'is_user_locked',
             'is_registry_domain',
+            'linked_user',
             # Portal
             'user_organizations',
             'openness_score',

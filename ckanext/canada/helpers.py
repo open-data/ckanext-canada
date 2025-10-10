@@ -32,7 +32,10 @@ from ckanext.scheming.helpers import scheming_get_preset
 import dateutil.parser
 import geomet.wkt as wkt
 from markupsafe import Markup, escape
-from ckan.lib.helpers import core_helper
+from ckan.lib.helpers import (
+    core_helper,
+    linked_user as core_linked_user
+)
 from ckan.plugins.core import plugin_loaded
 import ckan.lib.datapreview as datapreview
 
@@ -292,15 +295,15 @@ def portal_url() -> str:
 
 
 def adv_search_url() -> str:
-    return config.get('ckanext.canada.adv_search_url_fr') if \
-        h.lang() == 'fr' else config.get('ckanext.canada.adv_search_url_en')
+    return config.get('ckanext.canada.adv_search_url_fr', '') if \
+        h.lang() == 'fr' else config.get('ckanext.canada.adv_search_url_en', '')
 
 
 def adv_search_mlt_root() -> str:
     return "{0}/donneesouvertes/similaire/".format(
-        config.get('ckanext.canada.adv_search_url_fr')) if \
+        config.get('ckanext.canada.adv_search_url_fr', '')) if \
             h.lang() == 'fr' else "{0}/opendata/similar/".format(
-                config.get('ckanext.canada.adv_search_url_en'))
+                config.get('ckanext.canada.adv_search_url_en', ''))
 
 
 def ga4_id() -> Optional[str]:
@@ -1178,3 +1181,20 @@ def mail_to_with_params(email_address: str, name: str,
 
 def get_inline_script_nonce() -> str:
     return str(request.environ.get('CSP_NONCE', ''))
+
+
+def linked_user(user: Union[str, model.User],
+                maxlength: int = 0,
+                avatar: int = 20) -> Union[Markup, str, None]:
+    # TODO: ckanext.canada.activity.system_user_match regex
+    try:
+        if (
+          not g.user and
+          getattr(user, 'name', user) in
+          [config.get('ckanext.canada.activity.system_username'),
+           config.get('ckanext.canada.activity.system_id')]
+        ):
+            return _('System')
+    except RuntimeError:
+        pass
+    return core_linked_user(user, maxlength, avatar)

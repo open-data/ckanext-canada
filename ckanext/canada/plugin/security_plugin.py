@@ -8,6 +8,7 @@ from flask import has_request_context
 
 import ckan.plugins as p
 from ckan.config.middleware.flask_app import csrf
+from ckanext.activity.model import activity as activity_model
 
 from ckanext.datatablesview.blueprint import datatablesview
 from ckanext.security.plugin import CkanSecurityPlugin
@@ -45,7 +46,20 @@ class CanadaSecurityPlugin(CkanSecurityPlugin):
         # Set auth settings
         config['ckan.auth.roles_that_cascade_to_sub_groups'] = ['admin']
 
+        activity_model.activity_dictize = self.activity_dictize
+
         csrf.exempt(datatablesview)
+
+    def activity_dictize(self, activity: activity_model.Activity,
+                         context: Context) -> dict[str, Any]:
+        activity_dict = activity_model.table_dictize(activity, context)
+        try:
+            if not p.toolkit.g.user:
+                activity_dict['user_id'] = p.toolkit.config.get(
+                    'ckanext.canada.activity.system_id')
+        except RuntimeError:
+            pass
+        return activity_dict
 
     # IResourceController
     def before_create(self, context: Context, resource: Dict[str, Any]):

@@ -18,11 +18,6 @@ check_all:
     - check_all.js
   output: canada_public/%(version)s_check_all.js
 
-geomap_zoom:
-  contents:
-    - geomapzoom.js
-  output: canada_public/%(version)s_geomapzoom.js
-
 i18n:
   contents:
     - i18n.js
