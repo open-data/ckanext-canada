@@ -2,24 +2,24 @@ from typing import Dict, Union
 from ckan.types import Action, ChainedAction, Validator
 
 import ckan.plugins as p
-from ckan.lib.plugins import DefaultDatasetForm
+from ckan import model
 
 from ckanext.canada import validators
 from ckanext.canada import logic
 
 
-class CanadaFormsPlugin(p.SingletonPlugin, DefaultDatasetForm):
+class CanadaFormsPlugin(p.SingletonPlugin):
     """
     Plugin for dataset forms for Canada's metadata schema
     """
     p.implements(p.IActions)
     p.implements(p.IValidators, inherit=True)
+    p.implements(p.IPackageController, inherit=True)
 
     # IActions
     def get_actions(self) -> Dict[str, Union[Action, ChainedAction]]:
         actions = logic.limit_api_logic()
         actions.update((h, getattr(logic, h)) for h in [
-            'changed_packages_activity_timestamp_since',
             'canada_guess_mimetype',
             ])
         actions.update({k: logic.disabled_anon_action for k in [
@@ -101,3 +101,20 @@ class CanadaFormsPlugin(p.SingletonPlugin, DefaultDatasetForm):
             'canada_dataset_visibility':
                 validators.canada_dataset_visibility,
             }
+
+    # IPackageController
+    def create(self, pkg: 'model.Package'):
+        """
+        Force Private on package types that should never be visible on the Portal
+        """
+        non_portal_types = p.toolkit.h.recombinant_get_types() + ['prop', 'doc']
+        if self.type in non_portal_types:
+            pkg.private = True
+
+    def edit(self, pkg: 'model.Package'):
+        """
+        Force Private on package types that should never be visible on the Portal
+        """
+        non_portal_types = p.toolkit.h.recombinant_get_types() + ['prop', 'doc']
+        if self.type in non_portal_types:
+            pkg.private = True

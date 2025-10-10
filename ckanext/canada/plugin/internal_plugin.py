@@ -52,7 +52,7 @@ class CanadaInternalPlugin(p.SingletonPlugin):
         assert 'ckanext.validation:presets.json' in scheming_presets
 
         # Include private datasets in Feeds
-        # TODO: figure this out....
+        # NOTE: before_dataset_search in dataset_plugin.py will handle permissions
         config['ckan.feeds.include_private'] = True
 
     # IConfigurable
@@ -85,21 +85,18 @@ class CanadaInternalPlugin(p.SingletonPlugin):
 
     # IActions
     def get_actions(self) -> Dict[str, Union[Action, ChainedAction]]:
-        return dict(
-            {
-                k: logic.disabled_anon_action for k in [
-                    'package_activity_list',
-                    'recently_changed_packages_activity_list',
-                    'dashboard_activity_list',
-                    'changed_packages_activity_timestamp_since',
-                ]
-            },
-            resource_view_update=logic.resource_view_update_bilingual,
-            resource_view_create=logic.resource_view_create_bilingual,
-            datastore_run_triggers=logic.canada_datastore_run_triggers,
-            user_update=logic.canada_user_update,
-            user_show=logic.canada_user_show,
-        )
+        return {
+            'resource_view_update':
+                logic.resource_view_update_bilingual,
+            'resource_view_create':
+                logic.resource_view_create_bilingual,
+            'datastore_run_triggers':
+                logic.canada_datastore_run_triggers,
+            'user_update':
+                logic.canada_user_update,
+            'user_show':
+                logic.canada_user_show,
+        }
 
     # IAuthFunctions
     def get_auth_functions(self) -> Dict[str, Union[AuthFunction,

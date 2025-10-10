@@ -1335,21 +1335,15 @@ def _drop_function(name: str, verbose: Optional[bool] = False):
         pass
 
 
-@canada.command(short_help="Sets all Recombinant datasets to Private.")
-def privatize_pd_packages():
-    pd_types = toolkit.h.recombinant_get_types()
-    if not pd_types:
-        click.echo('Could not find any Recombinant types. Exiting...')
-        return
-    # type_ignore_reason: incomplete typing
-    # update_count = model.Session.execute(
-    #     "SELECT count(*) FROM activity "
-    #     "WHERE timestamp < NOW() - INTERVAL '{d} days' {i} {e};"
-    #     .format(
-    #         d=days,
-    #         i="AND activity_type IN {i}".format(i=include_types) if
-    #         include_types else "",
-    #         e="AND activity_type NOT IN {e}".format(e=exclude_types) if
-    #         exclude_types else "")) \
-    #     .fetchall()[0][0]
+@canada.command(short_help="Sets all non Portal dataset types datasets to Private.")
+def privatize_non_portal_packages():
+    registry_only_types = toolkit.h.recombinant_get_types() + ['doc', 'prop']
+    model.Session.execute(
+        "UPDATE package SET private=true "
+        "WHERE type IN ({types});"
+        .format(types=','.join([
+            datastore.literal_string(t) for t in registry_only_types])))
+    model.Session.commit()
+    click.echo('DONE!')
+    click.echo('Now go reindex the search! (ckan -c INI search-index rebuild)')
 

@@ -6,6 +6,7 @@
   {% if is_sysadmin %}
   <fieldset>
     <legend class="h2">{{ _('Publishing permissions') }}</legend>
+    {# TODO: add description for what this actually does... #}
     {{- form.select(
           'default_dataset_visibility',
           label=_('Default Dataset Visibility'),

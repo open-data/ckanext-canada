@@ -215,7 +215,9 @@ dataset_fields:
 
 - preset: canada_visibility
 
-after_validators: canada_sort_prop_status
+after_validators:
+  - canada_sort_prop_status
+  - canada_dataset_visibility
 
 #
 #   RESOURCE FIELDS

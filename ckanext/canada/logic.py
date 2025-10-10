@@ -166,117 +166,6 @@ def limit_api_logic() -> Dict[str, Any]:
     return {}
 
 
-@side_effect_free
-def changed_packages_activity_timestamp_since(context: Context,
-                                              data_dict: DataDict) -> \
-                                                List[Dict[str, Any]]:
-    '''Return the package_id and timestamp of all recently added or changed packages.
-
-    :param since_time: starting date/time
-
-    Limited to 10,000 records (configurable via the
-    ckan.activity_timestamp_since_limit setting) but may be called repeatedly
-    with the timestamp of the last record to collect all activities.
-
-    :rtype: list of dictionaries
-    '''
-
-    since = get_or_bust(data_dict, 'since_time')
-    try:
-        since_time = isodate(since, cast(Context, {}))
-    except Invalid as e:
-        raise ValidationError(cast(ErrorDict, {'since_time': e.error}))
-
-    # hard limit this api to reduce opportunity for abuse
-    limit = int(config.get('ckan.activity_timestamp_since_limit', 10000))
-
-    package_timestamp_list = []
-    for row in _changed_packages_activity_timestamp_since(since_time, limit):
-        package_timestamp_list.append({
-            'package_id': row.object_id,
-            'timestamp': row.timestamp})
-    return package_timestamp_list
-
-
-@side_effect_free
-def activity_list_from_user_since(context: Context, data_dict: DataDict):
-    '''Return the activity stream of all recently added or changed packages.
-
-    :param since_time: starting date/time
-
-    Limited to 31 records (configurable via the
-    ckan.activity_list_hard_limit setting) but may be called repeatedly
-    with the timestamp of the last record to collect all activities.
-
-    :param user_id:  the user of the requested activity list
-
-    :rtype: list of dictionaries
-    '''
-
-    since = get_or_bust(data_dict, 'since_time')
-    user_id = get_or_bust(data_dict, 'user_id')
-    try:
-        since_time = isodate(since, cast(Context, {}))
-    except Invalid as e:
-        raise ValidationError(cast(ErrorDict, {'since_time': e.error}))
-
-    # hard limit this api to reduce opportunity for abuse
-    limit = int(config.get('ckan.activity_list_hard_limit', 63))
-
-    activity_objects = _activities_from_user_list_since(
-        since_time, limit, user_id)
-    return activity.activity_list_dictize(activity_objects, context)
-
-
-def _changed_packages_activity_timestamp_since(since: str,
-                                               limit: int) -> List[Activity]:
-    '''Return package_ids and last activity date of changed package
-    activities since a given date.
-
-    This activity stream includes recent 'new package', 'changed package',
-    'deleted package', 'new resource view', 'changed resource view' and
-    'deleted resource view' activities for the whole site.
-
-    '''
-    # type_ignore_reason: incomplete typing
-    q = model.Session.query(Activity.object_id.label('object_id'),  # type: ignore
-                            func.max(Activity.timestamp).label(
-                                'timestamp'))
-    q = q.filter(
-            or_(
-                # Package create, update, delete
-                Activity.activity_type.endswith('package'),
-                # Resource View create, update, delete
-                Activity.activity_type.endswith('view'),
-                # DataStore create & Data Dictionary update
-                Activity.activity_type.endswith('created datastore')
-            )
-        )
-    # type_ignore_reason: incomplete typing
-    q = q.filter(Activity.timestamp > since)  # type: ignore
-    q = q.group_by(Activity.object_id)
-    q = q.order_by('timestamp')
-    # type_ignore_reason: incomplete typing
-    return q.limit(limit)  # type: ignore
-
-
-def _activities_from_user_list_since(since: str,
-                                     limit: int,
-                                     user_id: str) -> List[Activity]:
-    '''Return the site-wide stream of changed package activities since a given
-    date for a particular user.
-
-    This activity stream includes recent 'new package', 'changed package' and
-    'deleted package' activities for that user.
-
-    '''
-    q = activity._activities_from_user_query(user_id)
-    q = q.order_by(Activity.timestamp)
-    # type_ignore_reason: incomplete typing
-    q = q.filter(Activity.timestamp > since)  # type: ignore
-    return q.limit(limit)
-
-
 @contextmanager
 def datastore_create_temp_user_table(context: Context,
                                      drop_on_commit: Optional[bool] = True):
@@ -672,6 +561,8 @@ def canada_user_update(up_func: Action,
     if errors:
         model.Session.rollback()
         raise ValidationError(errors)
+    if 'default_dataset_visibility' not in data:
+        return up_func(context, data_dict)
     if 'plugin_extras' not in data_dict:
         data_dict['plugin_extras'] = {}
     data_dict['plugin_extras']['default_dataset_visibility'] = \

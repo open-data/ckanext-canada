@@ -9,7 +9,8 @@ from flask.typing import BeforeRequestCallable
 from ckan.types import Context, Response, Any
 
 import ckan.plugins as p
-from ckan.plugins.toolkit import g, h, request, ObjectNotFound, asbool
+from ckan.plugins.toolkit import g, h, request, ObjectNotFound, asbool, get_action
+from ckan.authz import is_sysadmin
 
 from ckanext.datastore.interfaces import IDataDictionaryForm
 from ckanext.scheming.plugins import SchemingDatasetsPlugin
@@ -172,6 +173,9 @@ class CanadaDatasetsPlugin(SchemingDatasetsPlugin):
         search_params['facet.range.gap'] = '+%sYEARS' % \
             RELEASE_DATE_FACET_STEP
 
+        if 'fq_list' not in search_params:
+            search_params['fq_list'] = []
+
         # FIXME: so terrible. hack out WET4 wbdisable parameter
         try:
             search_params['fq'] = search_params['fq'].replace(
@@ -185,14 +189,18 @@ class CanadaDatasetsPlugin(SchemingDatasetsPlugin):
         except Exception:
             pass
 
+        in_request_context = has_request_context()
+
         # search extras for ckan-admin/publish route.
         # we only want to show ready to publish,
         # approved datasets without a release date.
-        if has_request_context() and 'ckan-admin/publish' in request.url:
+        if in_request_context and 'ckan-admin/publish' in request.url:
             search_params['extras']['ready_to_publish'] = 'true'
             search_params['extras']['imso_approval'] = 'true'
-            search_params['fq'] += '+ready_to_publish:"true", '\
-                '+imso_approval:"true", -portal_release_date:*'
+            search_params['fq_list'] += [
+                '+ready_to_publish:"true"',
+                '+imso_approval:"true"',
+                '-portal_release_date:*']
 
         # CKAN Core search view wraps all fq values with double quotes.
         # We need to remove double quotes from the portal_release_date queries.
@@ -202,12 +210,24 @@ class CanadaDatasetsPlugin(SchemingDatasetsPlugin):
                 search_params['fq'] = search_params['fq'].replace(
                     release_date_query, release_date_query.replace('"', ''))
 
-        # FIXME: figure out the static SOLR query params for Portal...
-        if has_request_context() and not h.is_registry_domain():
+        if in_request_context and not h.is_registry_domain():
             # NOTE: wilcards must come last...
-            search_params['fq'] += '+imso_approval:"true", +state:"active"'\
-                ', +capacity:"public", +dataset_type:(info OR dataset OR prop)'\
-                ', +portal_release_date:*'
+            search_params['fq_list'] += [
+                '+imso_approval:"true"',
+                '+state:"active"',
+                '+capacity:"public"',
+                '+dataset_type:(info OR dataset)',
+                '+portal_release_date:*']
+        elif in_request_context and not is_sysadmin(g.user):
+            if not g.user:
+                search_params['fq_list'] += [
+                '-organization:*']
+            else:
+                org_names = [o['name'] for o in get_action(
+                    'organization_list_for_user')({'user': g.user},
+                                                  {'permission': 'read'})]
+                search_params['fq_list'] += [
+                    '+organization:(%s)' % ' OR '.join(org_names)]
 
         return search_params
 
