@@ -715,6 +715,9 @@ def canada_dataset_visibility(key: FlattenKey,
 
     NOTE: this should only be used as an __after validator
     """
+    pd_types = h.recombinant_get_types()
+    # TODO: pd types should always be private
+
     current_user_dict = get_action('user_show')({'ignore_auth': True},
                                                 {'id': context['user']})
     user_publishes_private = current_user_dict.get(

@@ -1333,3 +1333,23 @@ def _drop_function(name: str, verbose: Optional[bool] = False):
             click.echo('Failed to drop function: {0}\n{1}'.format(
                 name, str(datastore._programming_error_summary(pe))), err=True)
         pass
+
+
+@canada.command(short_help="Sets all Recombinant datasets to Private.")
+def privatize_pd_packages():
+    pd_types = toolkit.h.recombinant_get_types()
+    if not pd_types:
+        click.echo('Could not find any Recombinant types. Exiting...')
+        return
+    # type_ignore_reason: incomplete typing
+    # update_count = model.Session.execute(
+    #     "SELECT count(*) FROM activity "
+    #     "WHERE timestamp < NOW() - INTERVAL '{d} days' {i} {e};"
+    #     .format(
+    #         d=days,
+    #         i="AND activity_type IN {i}".format(i=include_types) if
+    #         include_types else "",
+    #         e="AND activity_type NOT IN {e}".format(e=exclude_types) if
+    #         exclude_types else "")) \
+    #     .fetchall()[0][0]
+
