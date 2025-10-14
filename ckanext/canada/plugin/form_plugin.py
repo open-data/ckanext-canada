@@ -108,7 +108,7 @@ class CanadaFormsPlugin(p.SingletonPlugin):
         Force Private on package types that should never be visible on the Portal
         """
         non_portal_types = p.toolkit.h.recombinant_get_types() + ['prop', 'doc']
-        if self.type in non_portal_types:
+        if pkg.type in non_portal_types:
             pkg.private = True
 
     def edit(self, pkg: 'model.Package'):
@@ -116,5 +116,5 @@ class CanadaFormsPlugin(p.SingletonPlugin):
         Force Private on package types that should never be visible on the Portal
         """
         non_portal_types = p.toolkit.h.recombinant_get_types() + ['prop', 'doc']
-        if self.type in non_portal_types:
+        if pkg.type in non_portal_types:
             pkg.private = True
