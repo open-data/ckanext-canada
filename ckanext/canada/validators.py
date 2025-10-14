@@ -732,13 +732,17 @@ def canada_dataset_visibility(key: FlattenKey,
 
     if not user_publishes_private:
         data[key[:-1] + ('ready_to_publish',)] = 'true'
-        convert_to_extras(('ready_to_publish',), data, errors, context)
+        # type_ignore_reason: incomplete typing
+        convert_to_extras(('ready_to_publish',), data, errors, context)  # type: ignore
         data[key[:-1] + ('imso_approval',)] = 'true'
-        convert_to_extras(('imso_approval',), data, errors, context)
+        # type_ignore_reason: incomplete typing
+        convert_to_extras(('imso_approval',), data, errors, context)  # type: ignore
         if portal_release_date is None or portal_release_date is missing:
             data[key[:-1] + ('portal_release_date',)] = \
                 datetime.today().strftime("%Y-%m-%d")
-            convert_to_extras(('portal_release_date',), data, errors, context)
+            # type_ignore_reason: incomplete typing
+            convert_to_extras(
+                ('portal_release_date',), data, errors, context)  # type: ignore
         data[key[:-1] + ('private',)] = False
         return
 

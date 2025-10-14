@@ -1,9 +1,7 @@
 from typing import Optional, Any, cast, Dict, List, Union
 from ckan.types import Context, DataDict, Action, ChainedAction, Schema, ErrorDict
 
-from ckan.logic.validators import isodate, Invalid
 from ckan import model
-from ckanext.activity.model import Activity, activity
 from ckan.logic.schema import (
     default_create_resource_view_schema_filtered,
     default_update_resource_view_schema_changes
@@ -11,7 +9,6 @@ from ckan.logic.schema import (
 from contextlib import contextmanager
 
 from ckan.plugins.toolkit import (
-    get_or_bust,
     ValidationError,
     side_effect_free,
     chained_action,
@@ -29,9 +26,6 @@ from ckan.authz import is_sysadmin
 from ckan.lib.navl.dictization_functions import validate
 
 from flask import has_request_context
-
-from sqlalchemy import func
-from sqlalchemy import or_
 
 from urllib.parse import urlparse
 import mimetypes

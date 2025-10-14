@@ -220,8 +220,7 @@ class CanadaDatasetsPlugin(SchemingDatasetsPlugin):
                 '+portal_release_date:*']
         elif in_request_context and not is_sysadmin(g.user):
             if not g.user:
-                search_params['fq_list'] += [
-                '-organization:*']
+                search_params['fq_list'] += ['-organization:*']
             else:
                 org_names = [o['name'] for o in get_action(
                     'organization_list_for_user')({'user': g.user},
