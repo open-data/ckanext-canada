@@ -13,6 +13,7 @@ from ckanext.activity.model import activity as activity_model
 from ckanext.datatablesview.blueprint import datatablesview
 from ckanext.security.plugin import CkanSecurityPlugin
 from ckanext.canada import validators
+from ckanext.canada.helpers import PUBLIC_ACTIVITY_USER
 
 
 class CanadaSecurityPlugin(CkanSecurityPlugin):
@@ -55,8 +56,7 @@ class CanadaSecurityPlugin(CkanSecurityPlugin):
         activity_dict = activity_model.table_dictize(activity, context)
         try:
             if not p.toolkit.g.user:
-                activity_dict['user_id'] = p.toolkit.config.get(
-                    'ckanext.canada.activity.system_id')
+                activity_dict['user_id'] = PUBLIC_ACTIVITY_USER
         except RuntimeError:
             pass
         return activity_dict

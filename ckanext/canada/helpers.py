@@ -59,6 +59,7 @@ CDTS_URI = 'https://www.canada.ca/etc/designs/canada/cdts/gcweb'
 GEO_MAP_TYPE_OPTION = 'wet_theme.geo_map_type'
 GEO_MAP_TYPE_DEFAULT = 'static'
 RELEASE_DATE_FACET_STEP = 100
+PUBLIC_ACTIVITY_USER = '__CKAN_SYSTEM__'
 
 REGISTRY_SUBDOMAIN_MATCH = re.compile(r'registry|registre')
 
@@ -1186,13 +1187,10 @@ def get_inline_script_nonce() -> str:
 def linked_user(user: Union[str, model.User],
                 maxlength: int = 0,
                 avatar: int = 20) -> Union[Markup, str, None]:
-    # TODO: ckanext.canada.activity.system_user_match regex
     try:
         if (
           not g.user and
-          getattr(user, 'name', user) in
-          [config.get('ckanext.canada.activity.system_username'),
-           config.get('ckanext.canada.activity.system_id')]
+          getattr(user, 'name', user) == PUBLIC_ACTIVITY_USER
         ):
             return _('System')
     except RuntimeError:
