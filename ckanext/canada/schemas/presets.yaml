@@ -12,6 +12,13 @@ detail_show_fields:
 
 presets:
 
+- preset_name: canada_visibility
+  values:
+    validators: ignore_missing ignore_not_sysadmin default(true) boolean_validator
+    field_name: private
+    form_snippet: null
+    display_snippet: null
+
 # We generate IDs here because we use that ID as our name field as well
 # and it needs to exist for "if_empty_same_as(id)" below to work
 - preset_name: canada_dataset_id
@@ -2129,7 +2136,7 @@ presets:
     # copied from date preset
     form_snippet: date.html
     display_snippet: date.html
-    validators: scheming_required string_safe isodate no_future_date
+    validators: scheming_required string_safe isodate no_future_date_out_of_draft
 
 # Field = Date Modified.
 # Add a Calendar control to select a Date.
@@ -2146,7 +2153,7 @@ presets:
     # copied from date preset
     form_snippet: date.html
     display_snippet: date.html
-    validators: scheming_required string_safe isodate no_future_date
+    validators: scheming_required string_safe isodate no_future_date_out_of_draft
 
 # Field = Date Expires.
 # Add a Calendar control to select a Date.
@@ -2498,8 +2505,7 @@ presets:
     form_snippet: portal_release_date.html
     display_snippet: date.html
     # order is very important here:
-    validators: protect_portal_release_date ignore_empty scheming_required isodate
-      convert_to_json_if_date
+    validators: protect_portal_release_date ignore_empty scheming_required isodate no_future_date convert_to_json_if_date
 
 
 - preset_name: canada_endpoint_url

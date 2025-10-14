@@ -1,22 +1,14 @@
 from typing import Optional, Any, cast, Dict, List, Union
 from ckan.types import Context, DataDict, Action, ChainedAction, Schema, ErrorDict
 
-from ckan.logic.validators import isodate, Invalid
 from ckan import model
-from ckanext.activity.model import Activity, activity
 from ckan.logic.schema import (
     default_create_resource_view_schema_filtered,
-    default_update_resource_view_schema_changes,
+    default_update_resource_view_schema_changes
 )
 from contextlib import contextmanager
 
-from redis import ConnectionPool, Redis
-from rq import Queue
-
-from datetime import datetime, timedelta
-
 from ckan.plugins.toolkit import (
-    get_or_bust,
     ValidationError,
     side_effect_free,
     chained_action,
@@ -28,7 +20,6 @@ from ckan.plugins.toolkit import (
     get_action,
     h,
     asbool,
-    check_access,
     get_validator,
 )
 from ckan.authz import is_sysadmin
@@ -36,16 +27,12 @@ from ckan.lib.navl.dictization_functions import validate
 
 from flask import has_request_context
 
-from sqlalchemy import func
-from sqlalchemy import or_
-
 from urllib.parse import urlparse
 import mimetypes
 from ckanext.scheming.helpers import scheming_get_preset
 
 from ckanext.datastore.backend import DatastoreBackend
 from ckanext.datastore.logic.schema import datastore_search_schema
-from ckanext.canada import model as canada_model
 
 from rq.job import Job
 from rq.exceptions import NoSuchJobError
@@ -171,117 +158,6 @@ def limit_api_logic() -> Dict[str, Any]:
     existing api calls to set new default limits and hard limits
     """
     return {}
-
-
-@side_effect_free
-def changed_packages_activity_timestamp_since(context: Context,
-                                              data_dict: DataDict) -> \
-                                                List[Dict[str, Any]]:
-    '''Return the package_id and timestamp of all recently added or changed packages.
-
-    :param since_time: starting date/time
-
-    Limited to 10,000 records (configurable via the
-    ckan.activity_timestamp_since_limit setting) but may be called repeatedly
-    with the timestamp of the last record to collect all activities.
-
-    :rtype: list of dictionaries
-    '''
-
-    since = get_or_bust(data_dict, 'since_time')
-    try:
-        since_time = isodate(since, cast(Context, {}))
-    except Invalid as e:
-        raise ValidationError(cast(ErrorDict, {'since_time': e.error}))
-
-    # hard limit this api to reduce opportunity for abuse
-    limit = int(config.get('ckan.activity_timestamp_since_limit', 10000))
-
-    package_timestamp_list = []
-    for row in _changed_packages_activity_timestamp_since(since_time, limit):
-        package_timestamp_list.append({
-            'package_id': row.object_id,
-            'timestamp': row.timestamp})
-    return package_timestamp_list
-
-
-@side_effect_free
-def activity_list_from_user_since(context: Context, data_dict: DataDict):
-    '''Return the activity stream of all recently added or changed packages.
-
-    :param since_time: starting date/time
-
-    Limited to 31 records (configurable via the
-    ckan.activity_list_hard_limit setting) but may be called repeatedly
-    with the timestamp of the last record to collect all activities.
-
-    :param user_id:  the user of the requested activity list
-
-    :rtype: list of dictionaries
-    '''
-
-    since = get_or_bust(data_dict, 'since_time')
-    user_id = get_or_bust(data_dict, 'user_id')
-    try:
-        since_time = isodate(since, cast(Context, {}))
-    except Invalid as e:
-        raise ValidationError(cast(ErrorDict, {'since_time': e.error}))
-
-    # hard limit this api to reduce opportunity for abuse
-    limit = int(config.get('ckan.activity_list_hard_limit', 63))
-
-    activity_objects = _activities_from_user_list_since(
-        since_time, limit, user_id)
-    return activity.activity_list_dictize(activity_objects, context)
-
-
-def _changed_packages_activity_timestamp_since(since: str,
-                                               limit: int) -> List[Activity]:
-    '''Return package_ids and last activity date of changed package
-    activities since a given date.
-
-    This activity stream includes recent 'new package', 'changed package',
-    'deleted package', 'new resource view', 'changed resource view' and
-    'deleted resource view' activities for the whole site.
-
-    '''
-    # type_ignore_reason: incomplete typing
-    q = model.Session.query(Activity.object_id.label('object_id'),  # type: ignore
-                            func.max(Activity.timestamp).label(
-                                'timestamp'))
-    q = q.filter(
-            or_(
-                # Package create, update, delete
-                Activity.activity_type.endswith('package'),
-                # Resource View create, update, delete
-                Activity.activity_type.endswith('view'),
-                # DataStore create & Data Dictionary update
-                Activity.activity_type.endswith('created datastore')
-            )
-        )
-    # type_ignore_reason: incomplete typing
-    q = q.filter(Activity.timestamp > since)  # type: ignore
-    q = q.group_by(Activity.object_id)
-    q = q.order_by('timestamp')
-    # type_ignore_reason: incomplete typing
-    return q.limit(limit)  # type: ignore
-
-
-def _activities_from_user_list_since(since: str,
-                                     limit: int,
-                                     user_id: str) -> List[Activity]:
-    '''Return the site-wide stream of changed package activities since a given
-    date for a particular user.
-
-    This activity stream includes recent 'new package', 'changed package' and
-    'deleted package' activities for that user.
-
-    '''
-    q = activity._activities_from_user_query(user_id)
-    q = q.order_by(Activity.timestamp)
-    # type_ignore_reason: incomplete typing
-    q = q.filter(Activity.timestamp > since)  # type: ignore
-    return q.limit(limit)
 
 
 @contextmanager
@@ -602,45 +478,6 @@ def canada_job_list(up_func: Action, context: Context,
     return job_list
 
 
-@side_effect_free
-def registry_jobs_running(context: Context, data_dict: DataDict) -> bool:
-    """
-    Returns false if the first job in the default
-    queue has not run in the last 18 minutes.
-
-    #TODO: rework this when the Registry moves to public network.
-    """
-    registry_redis_url = config.get('ckanext.canada.registry_jobs.url')
-    registry_redis_prefix = config.get('ckanext.canada.registry_jobs.prefix')
-
-    if not registry_redis_url or not registry_redis_prefix:
-        return False
-
-    check_access('registry_jobs_running', context, data_dict)
-
-    _connection_pool = ConnectionPool.from_url(registry_redis_url)
-    redis_conn = Redis(connection_pool=_connection_pool)
-
-    fullname = 'ckan:{}:default'.format(registry_redis_prefix)
-
-    queue = Queue(fullname, connection=redis_conn)
-
-    if not queue:
-        return False
-
-    jobs = queue.jobs
-
-    if jobs:
-        first_job = jobs[0]
-        first_created_at = first_job.created_at.strftime('%Y-%m-%dT%H:%M:%S')
-        if (
-          datetime.strptime(first_created_at, '%Y-%m-%dT%H:%M:%S') <
-          (datetime.now() - timedelta(minutes=18))):
-            return False
-
-    return True
-
-
 @chained_action
 def canada_datastore_run_triggers(up_func: Action,
                                   context: Context,
@@ -654,76 +491,6 @@ def canada_datastore_run_triggers(up_func: Action,
         context['connection'] = backend._get_write_engine().connect()  # type: ignore
     with datastore_create_temp_user_table(context, drop_on_commit=False):
         return up_func(context, data_dict)
-
-
-@side_effect_free
-def portal_sync_info(context: Context, data_dict: DataDict) -> Dict[str, Any]:
-    """
-    Returns PackageSync object for a given package_id if it exists.
-    """
-    package_id = get_or_bust(data_dict, 'id')
-
-    check_access('portal_sync_info', context, data_dict)
-
-    sync_info = canada_model.PackageSync.get(package_id=package_id)
-
-    if not sync_info:
-        raise ObjectNotFound(
-            _('No Portal Sync information found for package %s') % package_id)
-
-    # NOTE: never show sync_info.error as it
-    # contains stack traces and system information
-    return {
-        'package_id': sync_info.package_id,
-        'last_run': sync_info.last_run,
-        'last_successful_sync': sync_info.last_successful_sync,
-        'error_on': sync_info.error_on,
-    }
-
-
-@side_effect_free
-def list_out_of_sync_packages(context: Context, data_dict: DataDict) -> Dict[str, Any]:
-    """
-    Returns a list of out of sync packages on the Portal.
-
-    Based on PackageSync model.
-    """
-    check_access('list_out_of_sync_packages', context, data_dict)
-
-    sync_infos_count = model.Session.query(
-        canada_model.PackageSync.package_id).filter(
-            # noqa_reason: just how sqlalchemy works
-            canada_model.PackageSync.error_on != None).count()  # noqa: E711
-
-    out_of_sync_packages = {'count': sync_infos_count, 'results': []}
-
-    if not sync_infos_count:
-        return out_of_sync_packages
-
-    limit = data_dict.get('limit', 25)
-    offset = data_dict.get('start', 0)
-    sync_infos = model.Session.query(
-        canada_model.PackageSync).filter(
-            # noqa_reason: just how sqlalchemy works
-            canada_model.PackageSync.error_on != None).limit(  # noqa: E711
-                limit).offset(offset)
-
-    for sync_info in sync_infos:
-        try:
-            pkg_dict = get_action('package_show')(
-                cast(Context, {'user': context.get('user')}),
-                {'id': sync_info.package_id})
-        except (ObjectNotFound, NotAuthorized):
-            continue
-        # NOTE: never show sync_info.error as it
-        # contains stack traces and system information
-        out_of_sync_packages['results'].append(
-            {'pkg_dict': pkg_dict,
-             'last_successful_sync': sync_info.last_successful_sync,
-             'error_on': sync_info.error_on,
-             'last_run': sync_info.last_run})
-
-    return out_of_sync_packages
 
 
 @chained_action
@@ -758,3 +525,56 @@ def canada_datastore_search(up_func: Action,
                                     'not supported for data with '
                                     'more than {} rows.').format(max_rows_for_fts))
     return up_func(context, data_dict)
+
+
+@chained_action
+def canada_user_update(up_func: Action,
+                       context: Context,
+                       data_dict: DataDict) -> ChainedAction:
+    """
+    Add new fields to the User schema.
+    """
+    one_of_validator = get_validator('one_of')
+    default_validator = get_validator('default')
+    ignore_missing_validator = get_validator('ignore_missing')
+    ignore_not_sysadmin_validator = get_validator('ignore_not_sysadmin')
+    custom_data_dict = {
+        'default_dataset_visibility': data_dict.get(
+            'default_dataset_visibility', None)
+    }
+    schema = {
+        'default_dataset_visibility': [
+            ignore_missing_validator,
+            ignore_not_sysadmin_validator,
+            # type_ignore_reason: incomplete typing
+            default_validator('private'),  # type: ignore
+            one_of_validator(['private', 'public'])  # type: ignore
+        ]
+    }
+    data, errors = validate(custom_data_dict, schema, context)
+    if errors:
+        model.Session.rollback()
+        raise ValidationError(errors)
+    if 'default_dataset_visibility' not in data:
+        return up_func(context, data_dict)
+    if 'plugin_extras' not in data_dict:
+        data_dict['plugin_extras'] = {}
+    data_dict['plugin_extras']['default_dataset_visibility'] = \
+        data['default_dataset_visibility']
+    return up_func(context, data_dict)
+
+
+@chained_action
+@side_effect_free
+def canada_user_show(up_func: Action,
+                     context: Context,
+                     data_dict: DataDict) -> ChainedAction:
+    """
+    Return new fields in the User dictionary.
+    """
+    data_dict['include_plugin_extras'] = True
+    user_dict = up_func(context, data_dict)
+    extras = user_dict.pop('plugin_extras', {})
+    user_dict['default_dataset_visibility'] = extras.get(
+        'default_dataset_visibility', 'private') if extras else 'private'
+    return user_dict

@@ -1622,6 +1622,14 @@ body .canada-admin-trash #accordion-group{
   }
 }
 /* BS4+ Fix. TODO: remove after upgrade to BS4+ */
+body .float-right{
+  float: right;
+}
+/* BS4+ Fix. TODO: remove after upgrade to BS4+ */
+body .float-left{
+  float: left;
+}
+/* BS4+ Fix. TODO: remove after upgrade to BS4+ */
 body .modal.fade,
 body .popover.fade{
   animation: modal-fade-out 0.325s ease-in 0s forwards !important;

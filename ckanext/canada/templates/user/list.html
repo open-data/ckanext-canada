@@ -59,6 +59,11 @@
                       {% else %}
                         <span class="text-muted"><span class="fa fa-unlock-alt">&nbsp;</span></span>
                       {% endif %}
+                      {% if user.default_dataset_visibility == 'public' or (user.User and user.User.plugin_extras and user.User.plugin_extras['default_dataset_visibility'] == 'public') %}
+                        <span class="text-muted" title="{{- _('Creates Public Datasets') -}}"><i class="fa fa-eye"></i>&nbsp;</span>
+                      {% else %}
+                        <span class="text-muted" title="{{- _('Creates Private Datasets') -}}"><i class="fa fa-eye-slash"></i>&nbsp;</span>
+                      {% endif %}
                     {% endif %}
                     <a href="{{ h.url_for('user.read', id=user.name) }}">
                       {{- user['name'] -}}
