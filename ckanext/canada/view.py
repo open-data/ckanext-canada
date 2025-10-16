@@ -44,7 +44,10 @@ from ckan.views.resource import (
     EditView as ResourceEditView,
     CreateView as ResourceCreateView
 )
-from ckan.views.user import RegisterView as UserRegisterView
+from ckan.views.user import (
+    RegisterView as UserRegisterView,
+    login as core_login
+)
 from ckan.views.api import (
     API_DEFAULT_VERSION,
     API_MAX_VERSION,
@@ -1392,3 +1395,11 @@ def ckan_admin_config():
     404 this page always.
     """
     return abort(404)
+
+
+@canada_views.route('/user/login', methods=['GET', 'POST'])
+@nocache_store
+def login():
+    if not h.is_registry_domain():
+        return abort(404)
+    return core_login()
