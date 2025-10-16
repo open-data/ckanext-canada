@@ -20,14 +20,16 @@
         {% elif geno %}
           <span class="label label-default lb-pd">{{ _("Proactive Publication") }}</span>
         {% endif %}
-        {% if package.private %}
-          <span class="float-right dataset-private badge bg-secondary">
-              <i class="fa fa-lock"></i>&nbsp;{{- _('Private') -}}
-          </span>
-        {% else %}
-          <span class="float-right dataset-private badge bg-secondary">
-              <i class="fa fa-eye"></i>&nbsp;{{- _('Public') -}}
-          </span>
+        {% if h.is_registry_domain() %}
+          {% if package.private %}
+            <span class="float-right dataset-private badge bg-secondary">
+                <i class="fa fa-lock"></i>&nbsp;{{- _('Private') -}}
+            </span>
+          {% else %}
+            <span class="float-right dataset-private badge bg-secondary">
+                <i class="fa fa-eye"></i>&nbsp;{{- _('Public') -}}
+            </span>
+          {% endif %}
         {% endif %}
         <h3 class="panel-title">
           {% block heading %}
