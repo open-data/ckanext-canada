@@ -1346,4 +1346,3 @@ def privatize_non_portal_packages():
     model.Session.commit()
     click.echo('DONE!')
     click.echo('Now go reindex the search! (ckan -c INI search-index rebuild)')
-

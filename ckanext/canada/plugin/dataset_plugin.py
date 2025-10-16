@@ -210,23 +210,28 @@ class CanadaDatasetsPlugin(SchemingDatasetsPlugin):
                 search_params['fq'] = search_params['fq'].replace(
                     release_date_query, release_date_query.replace('"', ''))
 
-        if in_request_context and not h.is_registry_domain():
-            # NOTE: wilcards must come last...
-            search_params['fq_list'] += [
-                '+imso_approval:"true"',
-                '+state:"active"',
-                '+capacity:"public"',
-                '+dataset_type:(info OR dataset)',
-                '+portal_release_date:*']
-        elif in_request_context and not is_sysadmin(g.user):
-            if not g.user:
-                search_params['fq_list'] += ['-organization:*']
-            else:
-                org_names = [o['name'] for o in get_action(
-                    'organization_list_for_user')({'user': g.user},
-                                                  {'permission': 'read'})]
+        if in_request_context:
+            if not h.is_registry_domain():
+                # NOTE: wilcards must come last...
                 search_params['fq_list'] += [
-                    '+organization:(%s)' % ' OR '.join(org_names)]
+                    '+imso_approval:"true"',
+                    '+state:"active"',
+                    '+capacity:"public"',
+                    '+dataset_type:(info OR dataset)',
+                    '+portal_release_date:*']
+            else:
+                try:
+                    contextual_user = g.user
+                except (TypeError, RuntimeError, AttributeError):
+                    contextual_user = None
+                if not contextual_user:
+                    search_params['fq_list'] += ['-organization:*']
+                elif not is_sysadmin(contextual_user):
+                    org_names = [o['name'] for o in get_action(
+                    'organization_list_for_user')({'user': contextual_user},
+                                                  {'permission': 'read'})]
+                    search_params['fq_list'] += [
+                        '+organization:(%s)' % ' OR '.join(org_names)]
 
         return search_params
 
