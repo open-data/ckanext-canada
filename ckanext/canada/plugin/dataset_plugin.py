@@ -228,8 +228,8 @@ class CanadaDatasetsPlugin(SchemingDatasetsPlugin):
                     search_params['fq_list'] += ['-organization:*']
                 elif not is_sysadmin(contextual_user):
                     org_names = [o['name'] for o in get_action(
-                    'organization_list_for_user')({'user': contextual_user},
-                                                  {'permission': 'read'})]
+                        'organization_list_for_user')({'user': contextual_user},
+                                                      {'permission': 'read'})]
                     search_params['fq_list'] += [
                         '+organization:(%s)' % ' OR '.join(org_names)]
 
