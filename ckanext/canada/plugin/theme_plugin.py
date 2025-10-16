@@ -41,6 +41,7 @@ class CanadaThemePlugin(p.SingletonPlugin):
             'validation_status',
             'is_user_locked',
             'is_registry_domain',
+            'linked_user',
             # Portal
             'user_organizations',
             'openness_score',
@@ -89,5 +90,5 @@ class CanadaThemePlugin(p.SingletonPlugin):
             'default_open_email_address',
             'get_inline_script_nonce',
             'obfuscate_to_code_points',
-            'mail_to'
+            'mail_to',
         ])
