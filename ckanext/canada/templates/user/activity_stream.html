@@ -10,5 +10,6 @@
 
 {% block primary_content_inner %}
   <h2 class="wb-inv">{{ _('Activity Stream') }}</h2>
-  {% snippet 'snippets/activity_stream.html', activity_stream=activity_stream, name=user.name %}
+  {% snippet 'snippets/stream.html', activity_stream=activity_stream, id=id, object_type='user' %}
+  {% snippet 'snippets/pagination.html', newer_activities_url=newer_activities_url, older_activities_url=older_activities_url %}
 {% endblock %}

@@ -1,6 +1,7 @@
 # this is a namespace package
 try:
     import pkg_resources
+    # type_ignore_reason: reportAttributeAccessIssue
     pkg_resources.declare_namespace(__name__)
 except ImportError:
     import pkgutil

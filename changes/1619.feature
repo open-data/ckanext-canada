@@ -1,0 +1,1 @@
+API Token Names have more rigorous validation to help protect the application and database.

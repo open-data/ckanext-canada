@@ -9,7 +9,7 @@
 <form class="form-inline mrgn-bttm-lg" role="form" method="get" data-module="select-switch">
   {% block search_input %}
     {% block search_input_label %}
-      {% if g.is_registry %}
+      {% if h.is_registry_domain() %}
         <label for="search_field" class="wb-inv">{{ _('Search Datasets') }}</label>
       {% else %}
         {% if h.show_openinfo_facets() %}
@@ -28,7 +28,7 @@
             </h2>
           </div>
         </div>
-        <div class="ogscartwrapper mrgn-bttm-md" style="display:none;visibility:hidden;">
+        <div class="ogscartwrapper mrgn-bttm-md">
           <span class="ogscarttally fa fa-shopping-cart"> {{ _('Tally of Cart Items') }}</span>
           <a id="OGSCartListItems" class="ogscartlistbtn btn btn-primary btn-xs" href="#"><span class="fa fa-list-alt" aria-hidden="true"></span>&nbsp;{{ _('List Cart Items') }}</a>
           <a id="OGSCartPlotItems" class="ogscartplotbtn btn btn-primary btn-xs" href="#"><span class="fa fa-globe" aria-hidden="true"></span>&nbsp;{{ _('View on Map') }}</a>

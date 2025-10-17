@@ -314,8 +314,9 @@ presets:
     help_text:
       en: The contact person's email for the dataset
       fr: Courriel de la personne-ressource à contacter au sujet du jeu de données ou de l’ensemble de données
-    validators: scheming_required string_safe canada_maintainer_email_default strip_value email_validator
+    validators: scheming_required string_safe strip_value email_validator
     display_snippet: email_with_parameters.html
+    output_validators: canada_maintainer_email_default
     form_attrs:
       size: 60
 
@@ -441,8 +442,7 @@ presets:
     validators: fluent_tags
     output_validators: fluent_tags_output
     form_attrs:
-      style: "width: 100%"
-      class: form-control
+      class: form-control canada-width-full
 
 
 # Field = Subject.
@@ -1960,6 +1960,11 @@ presets:
       value: '6208'
     # copied from multiple_select preset
     form_snippet: multiple_select.html
+    classes:
+      - control-full
+      - canada-select2-field-wrapper
+    form_select_attrs:
+      data-field-select2: true
     display_snippet: multiple_choice.html
     validators: scheming_multiple_choice
     output_validators: scheming_multiple_choice_output
@@ -2249,13 +2254,12 @@ presets:
     form_snippet: fluent_text.html
     display_snippet: fluent_link.html
     display_attributes:
-      style: "word-wrap: break-word"
+      class: canada-break-words
     error_snippet: fluent_text.html
     validators: fluent_text
     output_validators: fluent_text_output
     form_attrs:
-      style: "width: 100%;"
-      class: form-control
+      class: form-control canada-width-full
 
 
 # Field = Series Title English.
@@ -2798,15 +2802,14 @@ presets:
     form_snippet: fluent_text.html
     display_snippet: fluent_link.html
     display_attributes:
-      style: "word-wrap: break-word"
+      class: canada-break-words
     error_snippet: fluent_text.html
     validators: fluent_text
     output_validators: fluent_text_output
     required: true
     form_panel: relationships
     form_attrs:
-      style: "width: 100%;"
-      class: form-control
+      class: form-control canada-width-full
 
 # Field = Record Type.
 - preset_name: canada_dataset_related_type
@@ -3518,6 +3521,9 @@ presets:
     - label: MapInfo
       value: TAB
     - value: MAPX
+    - value: MRC
+      mimetype: application/marc
+      replaces: ["marc"]
     - value: MFX
       mimetype: application/mxf
     - value: MOV

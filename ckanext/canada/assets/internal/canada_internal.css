@@ -1,3 +1,7 @@
+:root{
+  --canada-root-dir: '/';
+}
+
 .header-title-box {
   border-left: 1px solid #ccc;
   border-right: 1px solid #ccc;
@@ -521,6 +525,29 @@ li.nav-item.justify-content-between.position-relative:hover {
   background-color: #eee;
 }
 
+.canada-select2-field-wrapper div.select2-container{
+  padding: 0 !important;
+  border: none !important;
+  position: relative;
+}
+
+.canada-select2-field-wrapper div.select2-container::after{
+  content: '\f142';
+  font-family: 'FontAwesome';
+  font-weight: 900;
+  position: absolute;
+  right: 6px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 12px;
+  color: #333333 !important;
+  pointer-events: none !important;
+}
+
+.canada-select2-field-wrapper div.select2-container ul.select2-choices{
+  padding-right: 15px !important;
+}
+
 /*#####################
 ## DataStore Buttons ##
 #######################*/
@@ -659,7 +686,7 @@ body ul.xloader-log li.item.failure > i::after{
 
 
 /*####################################
-##  Recombinaant Base CSS Overrides ##
+##  Recombinant Base CSS Overrides  ##
 ######################################*/
 @keyframes fade-opacity-in{
   from{
@@ -760,7 +787,7 @@ body ul.xloader-log li.item.failure > i::after{
   background-position-y: -100%;
   color: white !important;
   border-color: white !important;
-  background-image: url("/data/static/img/select2x2_white.png"), url("/static/img/select2x2_white.png") !important;
+  background-image: url("/data/static/img/select2x2_white.png") !important;
 }
 .recombinant-action-panels-container .tabpanels > details{
   padding: 0 20px 20px 20px !important;
@@ -801,6 +828,10 @@ body ul.xloader-log li.item.failure > i::after{
 }
 /*###################################
 ##               END               ##
-##  Recombinaant Base CSS Overrides##
+##  Recombinant Base CSS Overrides ##
 ##               END               ##
 #####################################*/
+
+input#field-resource-url{
+  padding-right: 100px !important;
+}

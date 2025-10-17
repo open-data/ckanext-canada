@@ -20,7 +20,7 @@ Example:
     {% if dataset_type == 'info' %}
       {% set m1 = _('Add Asset Metadata') %}
     {% else %}
-      {% set m1 = _('Add Dataset Metadata') %}
+      {% set m1 = _('Add Record Metadata') %}
     {% endif %}
     {% if s1 != 'complete' %}
       <a><span class="highlight">{{ m1 }}</span></a>
@@ -30,7 +30,7 @@ Example:
   </li>
   <li class="last {{ s2 }}">
     {% if s2 != 'complete' %}
-      <a><span class="highlight">{{ _('Add Resource or Related Item') }}</span></a>
+      <a><span class="highlight">{{ _('Add Resource') }}</span></a>
     {% else %}
       {% if s1 == 'active' %}
         <a><button class="btn-link highlight" name="save" value="go-resources" type="submit">{{ _('Add Resource Metadata') }}</button></a>

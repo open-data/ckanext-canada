@@ -5,6 +5,7 @@ from ckanext.canada.tests import CanadaTestBase
 from ckanapi import LocalCKAN, ValidationError
 
 import pytest
+from ckan import model
 from ckanext.canada.tests.factories import CanadaOrganization as Organization
 
 from ckanext.recombinant.tables import get_chromo
@@ -14,11 +15,11 @@ COUNTRY_FILE = os.path.dirname(__file__) + '/../tables/choices/country.json'
 
 class TestTravelQ(CanadaTestBase):
     @classmethod
-    def setup_method(self, method):
-        """Method is called at class level before EACH test methods of the class are called.
-        Setup any state specific to the execution of the given class methods.
+    def setup_class(self):
+        """Method is called at class level once the class is instatiated.
+        Setup any state specific to the execution of the given class.
         """
-        super(TestTravelQ, self).setup_method(method)
+        super(TestTravelQ, self).setup_class()
 
         org = Organization()
         self.lc = LocalCKAN()
@@ -39,13 +40,105 @@ class TestTravelQ(CanadaTestBase):
             self.lc.action.datastore_upsert(
                 resource_id=self.resource_id,
                 records=[{}])
+        model.Session.rollback()
         err = ve.value.error_dict
         assert 'key' in err
         assert 'ref_number' in err['key'][0]
 
+    def test_dates(self):
+        """
+        Start Date cannot be in the future, and dates must be chronological
+        """
+        record = get_chromo('travelq')['examples']['record']
+
+        record['start_date'] = '2999999-01-29'
+        record['end_date'] = '2999999-01-30'
+
+        with pytest.raises(ValidationError) as ve:
+            self.lc.action.datastore_upsert(
+                resource_id=self.resource_id,
+                records=[record])
+            err = ve.value.error_dict['records'][0]
+
+            assert 'start_date' in err
+            assert 'end_date' in err
+        model.Session.rollback()
+        record['start_date'] = '2024-01-29'
+        record['end_date'] = '2024-01-15'
+
+        with pytest.raises(ValidationError) as ve:
+            self.lc.action.datastore_upsert(
+                resource_id=self.resource_id,
+                records=[record])
+            err = ve.value.error_dict['records'][0]
+
+            assert 'start_date' in err
+        model.Session.rollback()
+
+    def test_disclosure_group(self):
+        """
+        Disclosure Group is required if on or after April 1st 2025
+        """
+        record = get_chromo('travelq')['examples']['record']
+
+        record['start_date'] = '2025-04-21'
+        record['end_date'] = '2025-04-24'
+        record['disclosure_group'] = None
+
+        with pytest.raises(ValidationError) as ve:
+            self.lc.action.datastore_upsert(
+                resource_id=self.resource_id,
+                records=[record])
+            err = ve.value.error_dict['records'][0]
+
+            assert 'disclosure_group' in err
+        model.Session.rollback()
+        record['start_date'] = '2024-04-21'
+        record['end_date'] = '2024-04-24'
+        record['disclosure_group'] = 'SLE'
+
+        self.lc.action.datastore_upsert(
+            resource_id=self.resource_id,
+            records=[record])
+
     def test_destination_format(self):
+        """
+        Destination format is validated on or after April 1st 2025
+        """
         record = get_chromo('travelq')['examples']['record']
         partial_err_msg = 'Invalid format for destination'
+
+        record['start_date'] = '2025-04-21'
+        record['end_date'] = '2025-04-24'
+        record['destination_en'] = 'England'
+        record['destination_fr'] = 'England'
+
+        with pytest.raises(ValidationError) as ve:
+            self.lc.action.datastore_upsert(
+                resource_id=self.resource_id,
+                records=[record])
+            err = ve.value.error_dict['records'][0]
+            # NOTE: have to do partial because \uF8FF split formatting does not happen at this level
+            expected = {
+                'destination_en': [partial_err_msg],
+                'destination_fr': [partial_err_msg],
+            }
+            for k in set(err) | set(expected):
+                assert k in err
+                assert k in expected
+                assert expected[k][0] in err[k][0]
+        model.Session.rollback()
+        record['start_date'] = '2024-04-21'
+        record['end_date'] = '2024-04-24'
+        record['destination_en'] = 'England'
+        record['destination_fr'] = 'England'
+
+        self.lc.action.datastore_upsert(
+            resource_id=self.resource_id,
+            records=[record])
+
+        record['start_date'] = '2025-04-21'
+        record['end_date'] = '2025-04-24'
 
         with open(COUNTRY_FILE) as f:
             countries = json.load(f)
@@ -83,6 +176,7 @@ class TestTravelQ(CanadaTestBase):
                 self.lc.action.datastore_upsert(
                     resource_id=self.resource_id,
                     records=[record])
+            model.Session.rollback()
             err = ve.value.error_dict['records'][0]
             # NOTE: have to do partial because \uF8FF split formatting does not happen at this level
             expected = {
@@ -95,6 +189,7 @@ class TestTravelQ(CanadaTestBase):
             }
             for k in set(err) | set(expected):
                 assert k in err
+                assert k in expected
                 assert expected[k][0] in err[k][0]
 
         # test multi-destination formats
@@ -131,6 +226,7 @@ class TestTravelQ(CanadaTestBase):
                 self.lc.action.datastore_upsert(
                     resource_id=self.resource_id,
                     records=[record])
+            model.Session.rollback()
             err = ve.value.error_dict['records'][0]
             # NOTE: have to do partial because \uF8FF split formatting does not happen at this level
             expected = {
@@ -139,6 +235,7 @@ class TestTravelQ(CanadaTestBase):
             }
             for k in set(err) | set(expected):
                 assert k in err
+                assert k in expected
                 assert len(err[k]) == error_count
                 for _i in range(0, error_count):
                     assert expected[k][0] in err[k][_i]
@@ -196,11 +293,11 @@ class TestTravelQ(CanadaTestBase):
 
 class TestTravelQNil(CanadaTestBase):
     @classmethod
-    def setup_method(self, method):
-        """Method is called at class level before EACH test methods of the class are called.
-        Setup any state specific to the execution of the given class methods.
+    def setup_class(self):
+        """Method is called at class level once the class is instatiated.
+        Setup any state specific to the execution of the given class.
         """
-        super(TestTravelQNil, self).setup_method(method)
+        super(TestTravelQNil, self).setup_class()
 
         org = Organization()
         self.lc = LocalCKAN()
@@ -221,6 +318,7 @@ class TestTravelQNil(CanadaTestBase):
             self.lc.action.datastore_upsert(
                 resource_id=self.resource_id,
                 records=[{}])
+        model.Session.rollback()
         err = ve.value.error_dict
         assert 'key' in err
         assert 'year, month' in err['key'][0]

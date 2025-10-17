@@ -2,6 +2,10 @@
 
 {% set url_action = 'resource.edit' if url_is_edit and can_edit else 'resource.read' %}
 {% set url = h.url_for('dataset_' + url_action, id=pkg.name, resource_id=res.id) %}
+{% if h.is_registry_domain() and 'is_resource_supported_by_xloader' in h and h.check_access('package_update', {'id': pkg.id }) %}
+  {% set is_xloader_supported = h.is_resource_supported_by_xloader(res) %}
+  {% set xloader_info = h.xloader_status(res.id) %}
+{% endif %}
 
 {% block resource_item_title %}
   <div id="resource_title">
@@ -9,7 +13,7 @@
     <a class="heading resource-heading" href="{{ url }}" title="{{ translated_title or res.description }}">
       {{ translated_title }}<span class="format-label" property="dc:format" data-format="{{ res.format.lower() or 'data' }}">{{ h.get_translated(res, 'format') }}</span>
       {%- if machine_translated -%}
-        <i class="fa fa-language text-muted" style="margin-left: 10px;" title="{{ _('This third party metadata element has been translated using an automated translation tool.  To report any discrepancies please contact open-ouvert@tbs-sct.gc.ca') }}"></i>
+        <i class="fa fa-language text-muted canada-margin-left-10" title="{{ _('This third party metadata element has been translated using an automated translation tool. To report any discrepancies please contact {support}').format(support=h.support_email_address()) }}"></i>
       {%- endif -%}
       {% if 'tracking_summary' in res %}
         {{ h.popular('views', res.tracking_summary.total, min=10) }}
@@ -49,10 +53,14 @@
 {% endblock %}
 
 {% block resource_item_description %}
-  {% if g.is_registry %}
+  {% if h.is_registry_domain() and is_xloader_supported %}
     <div class="canada-resource-list-badges">
-      {{- h.get_validation_badge(res, in_listing=True)|safe -}}
-      {{- h.get_loader_status_badge(res) -}}
+      {% if res.validation_status in ('success', 'unkown') %}
+        {{- h.get_validation_badge(res, in_listing=True)|safe -}}
+      {% endif %}
+      {% if xloader_info and xloader_info.status not in ('error', 'inactive') %}
+        {{- h.get_loader_status_badge(res) -}}
+      {% endif %}
     </div>
   {% endif %}
 {% endblock %}
@@ -76,7 +84,7 @@
           </li>
           {% if res.url and h.is_url(res.url) %}
             <li>
-              <a href="{{ res.url }}" class="resource-url-analytics" target="_blank" data-pkg-id="{{ pkg.id }}" data-res-id="{{ res.id }}" data-org-id="{{ pkg.organization.id }}">
+              <a href="{{ res.url }}" class="resource-url-analytics" target="_blank" rel='noopener noreferrer' data-pkg-id="{{ pkg.id }}" data-res-id="{{ res.id }}" data-org-id="{{ pkg.organization.id }}">
                 {% if res.has_views or res.url_type == 'upload' %}
                   <i class="fa fa-arrow-circle-down" aria-hidden="true"></i>&nbsp;{{ _('Download') }}
                 {% else %}
@@ -88,7 +96,7 @@
           {% set fgp_url = h.fgp_viewer_url(pkg) %}
           {% if fgp_url and res.url and h.is_url(res.url) and res.format not in ['PDF','HTML', 'PNG', 'CSV', 'TXT',] %}
             <li>
-              <a href="{{ fgp_url }}" class="dropdown-item" target="_blank">
+              <a href="{{ fgp_url }}" class="dropdown-item" target="_blank" rel='noopener noreferrer'>
                 <i class="fa fa-map-marker" aria-hidden="true"></i>&nbsp;{{ _('View on Map') }}
               </a>
             </li>
@@ -105,5 +113,13 @@
         {% endblock %}
       </ul>
     </div>
+  {% endif %}
+  {% if h.is_registry_domain() and is_xloader_supported %}
+    {% if res.validation_status in ('failure', 'error', 'deprecated_report') %}
+      <div class="canada-resource-list-validation-info"><p><i aria-hidden="true" class="fas fa-exclamation-triangle"></i>&nbsp;{{ _('Resource data has failed validation.') }}<a href="{{ h.url_for('validation.read', id=pkg.name, resource_id=res.id) }}" class="btn btn-sm btn-danger">{{ _('View Report') }}</a></p></div>
+    {% endif %}
+    {% if xloader_info and xloader_info.status in ('error', 'inactive') %}
+      <div class="canada-resource-list-validation-info"><p><i aria-hidden="true" class="fas fa-exclamation-triangle"></i>&nbsp;{{ _('Resource data has failed to load to the DataStore.') }}<a href="{{ h.url_for('xloader.resource_data', id=pkg.name, resource_id=res.id) }}" class="btn btn-sm btn-danger">{{ _('View Report') }}</a></p></div>
+    {% endif %}
   {% endif %}
 {% endblock %}

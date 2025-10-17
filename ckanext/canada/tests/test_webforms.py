@@ -1,5 +1,5 @@
 # -*- coding: UTF-8 -*-
-from ckanext.canada.tests import CanadaTestBase
+from ckanext.canada.tests import CanadaTestBase, mock_is_registry_domain
 import pytest
 import mock
 from urllib.parse import urlparse
@@ -13,10 +13,11 @@ from ckanapi import (
 
 from ckan.tests.helpers import CKANResponse  # noqa: F401
 
-from ckan.tests.factories import SysadminWithToken as Sysadmin, APIToken
 from ckanext.canada.tests.factories import (
     CanadaOrganization as Organization,
-    CanadaUser as User
+    CanadaUser as User,
+    CanadaAPIToken as APIToken,
+    CanadaSysadminWithToken as Sysadmin
 )
 from ckanext.canada.tests.helpers import MockFlashMessages
 
@@ -41,23 +42,24 @@ def _get_relative_offset_from_response(response):
 @pytest.mark.usefixtures('with_request_context')
 class TestPackageWebForms(CanadaTestBase):
     @classmethod
-    def setup_method(self, method):
-        """Method is called at class level before EACH test methods of the class are called.
-        Setup any state specific to the execution of the given class methods.
+    def setup_class(self):
+        """Method is called at class level once the class is instatiated.
+        Setup any state specific to the execution of the given class.
         """
-        super(TestPackageWebForms, self).setup_method(method)
+        super(TestPackageWebForms, self).setup_class()
         self.sysadmin = Sysadmin()
         self.extra_environ_tester = {'Authorization': self.sysadmin['token']}
         self.environ_overrides_tester = {'REMOTE_USER': self.sysadmin['name'].encode('ascii')}
         self.org = Organization(users=[{
             'name': self.sysadmin['name'],
             'capacity': 'admin'}])
-        self.dataset_id = 'f3e4adb9-6e32-4cb4-bf68-1eab9d1288f4'
-        self.resource_id = '8b29e2c6-8a12-4537-bf97-fe4e5f0a14c1'
 
     @mock.patch.object(h, 'flash_success', flashes.mock_flash)
     @mock.patch.object(h, 'get_flashed_messages', flashes.mock_get_flashed_messages)
+    @mock.patch.object(h, 'is_registry_domain', mock_is_registry_domain)
     def test_new_dataset_required_fields(self, app):
+        dataset_id = 'f3e4adb9-6e32-4cb4-bf68-1eab9d1288f5'
+
         offset = h.url_for('dataset.new')
         response = app.get(offset, extra_environ=self.extra_environ_tester,
                            environ_overrides=self.environ_overrides_tester)
@@ -66,7 +68,7 @@ class TestPackageWebForms(CanadaTestBase):
         assert 'Before you can create a dataset you need to create an organization' not in response.body
 
         response = app.post(offset,
-                            data=self._filled_dataset_form(),
+                            data=self._filled_dataset_form(dataset_id),
                             extra_environ=self.extra_environ_tester,
                             environ_overrides=self.environ_overrides_tester,
                             follow_redirects=False)
@@ -78,7 +80,7 @@ class TestPackageWebForms(CanadaTestBase):
         assert 'Add data to the dataset' in response.body
 
         response = app.post(offset,
-                            data=self._filled_resource_form(),
+                            data=self._filled_resource_form(dataset_id),
                             extra_environ=self.extra_environ_tester,
                             environ_overrides=self.environ_overrides_tester,
                             follow_redirects=False)
@@ -89,7 +91,10 @@ class TestPackageWebForms(CanadaTestBase):
 
         assert 'Resource added' in response.body
 
+    @mock.patch.object(h, 'is_registry_domain', mock_is_registry_domain)
     def test_new_dataset_missing_fields(self, app):
+        dataset_id = 'f3e4adb9-6e32-4cb4-bf68-1eab9d1288f4'
+
         offset = h.url_for('dataset.new')
         response = app.get(offset, extra_environ=self.extra_environ_tester,
                            environ_overrides=self.environ_overrides_tester)
@@ -98,7 +103,7 @@ class TestPackageWebForms(CanadaTestBase):
         assert 'Before you can create a dataset you need to create an organization' not in response.body
 
         incomplete_dataset_form = {
-            'id': self.dataset_id,
+            'id': dataset_id,
             'save': '',
             '_ckan_phase': '1',
         }
@@ -124,7 +129,7 @@ class TestPackageWebForms(CanadaTestBase):
         assert 'Ready to Publish:' in response.body
 
         response = app.post(offset,
-                            data=self._filled_dataset_form(),
+                            data=self._filled_dataset_form(dataset_id),
                             extra_environ=self.extra_environ_tester,
                             environ_overrides=self.environ_overrides_tester,
                             follow_redirects=False)
@@ -137,7 +142,7 @@ class TestPackageWebForms(CanadaTestBase):
 
         incomplete_resource_form = {
             'id': '',
-            'package_id': self.dataset_id,
+            'package_id': dataset_id,
             'url': 'somewhere',
             'save': 'go-dataset-complete',
         }
@@ -152,9 +157,9 @@ class TestPackageWebForms(CanadaTestBase):
         assert 'Title (French):' in response.body
         assert 'Resource Type:' in response.body
 
-    def _filled_dataset_form(self):
+    def _filled_dataset_form(self, dataset_id):
         return {
-            'id': self.dataset_id,
+            'id': dataset_id,
             'owner_org': self.org['id'],
             'collection': 'primary',
             'title_translated-en': 'english title',
@@ -175,10 +180,10 @@ class TestPackageWebForms(CanadaTestBase):
             '_ckan_phase': '1',
         }
 
-    def _filled_resource_form(self):
+    def _filled_resource_form(self, dataset_id):
         return {
             'id': '',
-            'package_id': self.dataset_id,
+            'package_id': dataset_id,
             'name_translated-en': 'english resource name',
             'name_translated-fr': 'french resource name',
             'resource_type': 'dataset',
@@ -193,17 +198,18 @@ class TestPackageWebForms(CanadaTestBase):
 @pytest.mark.ckan_config("ckanext.canada.suppress_user_emails", True)
 class TestNewUserWebForms(CanadaTestBase):
     @classmethod
-    def setup_method(self, method):
-        """Method is called at class level before EACH test methods of the class are called.
-        Setup any state specific to the execution of the given class methods.
+    def setup_class(self):
+        """Method is called at class level once the class is instatiated.
+        Setup any state specific to the execution of the given class.
         """
-        super(TestNewUserWebForms, self).setup_method(method)
+        super(TestNewUserWebForms, self).setup_class()
         self.extra_environ_tester = {'Authorization': str(u"")}
         self.environ_overrides_tester = {'REMOTE_USER': str(u"")}
         self.org = Organization()
 
     @mock.patch.object(h, 'flash_notice', flashes.mock_flash)
     @mock.patch.object(h, 'get_flashed_messages', flashes.mock_get_flashed_messages)
+    @mock.patch.object(h, 'is_registry_domain', mock_is_registry_domain)
     def test_new_user_required_fields(self, app):
         offset = h.url_for('user.register')
         response = app.get(offset, extra_environ=self.extra_environ_tester,
@@ -231,6 +237,7 @@ class TestNewUserWebForms(CanadaTestBase):
         assert 'Account Created' in response.body
         assert 'Thank you for creating your account for the Open Government registry' in response.body
 
+    @mock.patch.object(h, 'is_registry_domain', mock_is_registry_domain)
     def test_new_user_missing_fields(self, app):
         offset = h.url_for('user.register')
         response = app.get(offset, extra_environ=self.extra_environ_tester,
@@ -271,11 +278,11 @@ class TestNewUserWebForms(CanadaTestBase):
 @pytest.mark.usefixtures('with_request_context')
 class TestRecombinantWebForms(CanadaTestBase):
     @classmethod
-    def setup_method(self, method):
-        """Method is called at class level before EACH test methods of the class are called.
-        Setup any state specific to the execution of the given class methods.
+    def setup_class(self):
+        """Method is called at class level once the class is instatiated.
+        Setup any state specific to the execution of the given class.
         """
-        super(TestRecombinantWebForms, self).setup_method(method)
+        super(TestRecombinantWebForms, self).setup_class()
         member = User()
         editor = User()
         sysadmin = Sysadmin()
@@ -299,8 +306,30 @@ class TestRecombinantWebForms(CanadaTestBase):
         self.nil_chromo = get_chromo(self.nil_type)
         self.fields = self.chromo['fields']
         self.nil_fields = self.nil_chromo['fields']
-        self.example_record = self.chromo['examples']['record']
-        self.example_nil_record = self.nil_chromo['examples']['record']
+        self.example_record = self.chromo['examples']['record'].copy()
+        self.example_nil_record = self.nil_chromo['examples']['record'].copy()
+
+    @classmethod
+    def teardown_method(self, method):
+        """Method is called at class level after EACH test methods of the class are called.
+        Remove any state specific to the execution of the given class methods.
+        """
+        super(TestRecombinantWebForms, self).teardown_method(method)
+
+        self.example_record = self.chromo['examples']['record'].copy()
+        self.example_nil_record = self.nil_chromo['examples']['record'].copy()
+        lc = LocalCKAN()
+        try:
+            rval = lc.action.recombinant_show(dataset_type=self.pd_type,
+                                              owner_org=self.org['name'])
+            lc.action.datastore_records_delete(resource_id=rval['resources'][0]['id'],
+                                               force=True,
+                                               filters={})
+            lc.action.datastore_records_delete(resource_id=rval['resources'][1]['id'],
+                                               force=True,
+                                               filters={})
+        except Exception:
+            pass
 
     def _lc_init_pd(self, org=None):
         lc = LocalCKAN()
@@ -333,6 +362,7 @@ class TestRecombinantWebForms(CanadaTestBase):
         rval = lc.action.recombinant_show(dataset_type=self.pd_type, owner_org=org['name'])
         return rval['id']
 
+    @mock.patch.object(h, 'is_registry_domain', mock_is_registry_domain)
     def test_member_cannot_init_pd(self, app):
         offset = h.url_for('recombinant.preview_table',
                            resource_name=self.pd_type,
@@ -355,6 +385,7 @@ class TestRecombinantWebForms(CanadaTestBase):
         assert 'not authorized to add dataset' in response.body or \
                'not authorized to create packages' in response.body
 
+    @mock.patch.object(h, 'is_registry_domain', mock_is_registry_domain)
     def test_editor_can_init_pd(self, app):
         offset = h.url_for('recombinant.preview_table',
                            resource_name=self.pd_type,
@@ -379,6 +410,7 @@ class TestRecombinantWebForms(CanadaTestBase):
 
         assert 'Create and update multiple records' in response.body
 
+    @mock.patch.object(h, 'is_registry_domain', mock_is_registry_domain)
     def test_admin_can_init_pd(self, app):
         offset = h.url_for('recombinant.preview_table',
                            resource_name=self.pd_type,
@@ -403,6 +435,7 @@ class TestRecombinantWebForms(CanadaTestBase):
 
         assert 'Create and update multiple records' in response.body
 
+    @mock.patch.object(h, 'is_registry_domain', mock_is_registry_domain)
     def test_ati_email_notice(self, app):
         no_ati_email_org = Organization(ati_email=None)
         self._lc_init_pd(org=no_ati_email_org)
@@ -425,6 +458,7 @@ class TestRecombinantWebForms(CanadaTestBase):
         assert 'Your organization does not have an Access to Information email on file' not in response.body
         assert 'Informal Requests for ATI Records Previously Released are being sent to' in response.body
 
+    @mock.patch.object(h, 'is_registry_domain', mock_is_registry_domain)
     def test_member_cannot_create_single_record(self, app):
         self._lc_init_pd()
 
@@ -449,6 +483,7 @@ class TestRecombinantWebForms(CanadaTestBase):
 
     @mock.patch.object(h, 'flash_notice', flashes.mock_flash)
     @mock.patch.object(h, 'get_flashed_messages', flashes.mock_get_flashed_messages)
+    @mock.patch.object(h, 'is_registry_domain', mock_is_registry_domain)
     def test_editor_can_create_single_record(self, app):
         self._lc_init_pd()
 
@@ -471,6 +506,7 @@ class TestRecombinantWebForms(CanadaTestBase):
 
     @mock.patch.object(h, 'flash_notice', flashes.mock_flash)
     @mock.patch.object(h, 'get_flashed_messages', flashes.mock_get_flashed_messages)
+    @mock.patch.object(h, 'is_registry_domain', mock_is_registry_domain)
     def test_admin_can_create_single_record(self, app):
         self._lc_init_pd()
 
@@ -491,6 +527,7 @@ class TestRecombinantWebForms(CanadaTestBase):
 
         assert 'Record Created' in response.body
 
+    @mock.patch.object(h, 'is_registry_domain', mock_is_registry_domain)
     def test_member_cannot_update_single_record(self, app):
         self._lc_create_pd_record()
 
@@ -518,6 +555,7 @@ class TestRecombinantWebForms(CanadaTestBase):
 
     @mock.patch.object(h, 'flash_notice', flashes.mock_flash)
     @mock.patch.object(h, 'get_flashed_messages', flashes.mock_get_flashed_messages)
+    @mock.patch.object(h, 'is_registry_domain', mock_is_registry_domain)
     def test_editor_can_update_single_record(self, app):
         self._lc_create_pd_record()
 
@@ -543,6 +581,7 @@ class TestRecombinantWebForms(CanadaTestBase):
 
     @mock.patch.object(h, 'flash_notice', flashes.mock_flash)
     @mock.patch.object(h, 'get_flashed_messages', flashes.mock_get_flashed_messages)
+    @mock.patch.object(h, 'is_registry_domain', mock_is_registry_domain)
     def test_admin_can_update_single_record(self, app):
         self._lc_create_pd_record()
 
@@ -578,6 +617,7 @@ class TestRecombinantWebForms(CanadaTestBase):
             'save': ''
         }
 
+    @mock.patch.object(h, 'is_registry_domain', mock_is_registry_domain)
     def test_download_template(self, app):
         self._lc_create_pd_record()
         self._lc_create_pd_record(is_nil=True)
@@ -609,6 +649,7 @@ class TestRecombinantWebForms(CanadaTestBase):
             if f.get('import_template_include', True):  # only check fields included in template
                 assert f['datastore_id'] in template_file[1][2]  # check each field id is in column names
 
+    @mock.patch.object(h, 'is_registry_domain', mock_is_registry_domain)
     def test_selected_download_template(self, app):
         resource_name = self._lc_create_pd_record()
         nil_resource_name = self._lc_create_pd_record(is_nil=True)
@@ -673,6 +714,7 @@ class TestRecombinantWebForms(CanadaTestBase):
             assert int(v[1]) == int(self.example_nil_record['month'])
             break
 
+    @mock.patch.object(h, 'is_registry_domain', mock_is_registry_domain)
     def test_member_cannot_upload_records(self, app):
         template = self._lc_pd_template()
         template_file = self._populate_good_template_file(template)
@@ -700,6 +742,7 @@ class TestRecombinantWebForms(CanadaTestBase):
 
     @mock.patch.object(h, 'flash_success', flashes.mock_flash)
     @mock.patch.object(h, 'get_flashed_messages', flashes.mock_get_flashed_messages)
+    @mock.patch.object(h, 'is_registry_domain', mock_is_registry_domain)
     def test_editor_can_upload_records(self, app):
         template = self._lc_pd_template()
         template_file = self._populate_good_template_file(template)
@@ -725,6 +768,7 @@ class TestRecombinantWebForms(CanadaTestBase):
 
     @mock.patch.object(h, 'flash_success', flashes.mock_flash)
     @mock.patch.object(h, 'get_flashed_messages', flashes.mock_get_flashed_messages)
+    @mock.patch.object(h, 'is_registry_domain', mock_is_registry_domain)
     def test_admin_can_upload_records(self, app):
         template = self._lc_pd_template()
         template_file = self._populate_good_template_file(template)
@@ -748,6 +792,7 @@ class TestRecombinantWebForms(CanadaTestBase):
 
         assert 'Your file was successfully uploaded into the central system.' in response.body
 
+    @mock.patch.object(h, 'is_registry_domain', mock_is_registry_domain)
     def test_member_cannot_validate_upload(self, app):
         template = self._lc_pd_template()
         good_template_file = self._populate_good_template_file(template)
@@ -775,6 +820,7 @@ class TestRecombinantWebForms(CanadaTestBase):
     @mock.patch.object(h, 'flash_error', flashes.mock_flash)
     @mock.patch.object(h, 'flash_success', flashes.mock_flash)
     @mock.patch.object(h, 'get_flashed_messages', flashes.mock_get_flashed_messages)
+    @mock.patch.object(h, 'is_registry_domain', mock_is_registry_domain)
     def test_editor_can_validate_upload(self, app):
         template = self._lc_pd_template()
         good_template_file = self._populate_good_template_file(template)
@@ -815,6 +861,7 @@ class TestRecombinantWebForms(CanadaTestBase):
     @mock.patch.object(h, 'flash_error', flashes.mock_flash)
     @mock.patch.object(h, 'flash_success', flashes.mock_flash)
     @mock.patch.object(h, 'get_flashed_messages', flashes.mock_get_flashed_messages)
+    @mock.patch.object(h, 'is_registry_domain', mock_is_registry_domain)
     def test_admin_can_validate_upload(self, app):
         template = self._lc_pd_template()
         good_template_file = self._populate_good_template_file(template)
@@ -899,6 +946,7 @@ class TestRecombinantWebForms(CanadaTestBase):
             action: ''
         }
 
+    @mock.patch.object(h, 'is_registry_domain', mock_is_registry_domain)
     def test_member_cannot_delete_records(self, app):
         records_to_delete = self._prepare_records_to_delete()
 
@@ -936,6 +984,7 @@ class TestRecombinantWebForms(CanadaTestBase):
 
     @mock.patch.object(h, 'flash_success', flashes.mock_flash)
     @mock.patch.object(h, 'get_flashed_messages', flashes.mock_get_flashed_messages)
+    @mock.patch.object(h, 'is_registry_domain', mock_is_registry_domain)
     def test_editor_can_delete_records(self, app):
         records_to_delete = self._prepare_records_to_delete()
 
@@ -970,6 +1019,7 @@ class TestRecombinantWebForms(CanadaTestBase):
 
     @mock.patch.object(h, 'flash_success', flashes.mock_flash)
     @mock.patch.object(h, 'get_flashed_messages', flashes.mock_get_flashed_messages)
+    @mock.patch.object(h, 'is_registry_domain', mock_is_registry_domain)
     def test_admin_can_delete_records(self, app):
         records_to_delete = self._prepare_records_to_delete()
 

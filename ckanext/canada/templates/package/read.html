@@ -1,7 +1,6 @@
 {% ckan_extends %}
 
 {% set client_lang = h.lang() %}
-
 {% set title, machine_translated = h.get_translated_t(pkg_dict, 'title') %}
 
 {%- block subtitle -%}
@@ -11,10 +10,10 @@
 {% block page_title %}
   <h1>{{ title or pkg_dict.name }}
     {% if pkg_dict.state.startswith('draft') %}
-      <span class="label label-info" style="padding-top: 4px; padding-bottom: 4px;">{{ _('Draft') }}</span>
+      <span class="label label-info canada-draft-title-pill">{{ _('Draft') }}</span>
     {% endif %}
     {% if machine_translated %}
-      <i class="fa fa-language text-muted mrgn-lft-sm" title="{{ _('This third party metadata element has been translated using an automated translation tool.  To report any discrepancies please contact open-ouvert@tbs-sct.gc.ca') }}"></i>
+      <i class="fa fa-language text-muted mrgn-lft-sm" title="{{ _('This third party metadata element has been translated using an automated translation tool.  To report any discrepancies please contact {support}').format(support=h.support_email_address()) }}"></i>
     {% endif %}
   </h1>
 {% endblock %}
@@ -25,7 +24,7 @@
   {% endif %}
   <div class="module">
     {% block internal_actions %}
-      {% if g.is_registry %}
+      {% if h.is_registry_domain() %}
         {% set max_resource_count = h.max_resources_per_dataset() %}
         {% if max_resource_count and pkg.resources|length >= max_resource_count %}
           <div class="row">
@@ -36,7 +35,7 @@
                   <p>{{ _("You can only add up to {max_resource_count} resources to a dataset. "
                           "You can segment your resources across multiple datasets or merge your "
                           "data to limit the number of resources. Please contact "
-                          "open-ouvert@tbs-sct.gc.ca if you need further assistance.").format(max_resource_count=max_resource_count) }}</p>
+                          "{support} if you need further assistance.").format(max_resource_count=max_resource_count, support=h.support_email_address()) }}</p>
                 </section>
               </div>
             </div>
@@ -87,7 +86,7 @@
                 </div>
               {% endfor %}
             {% else %}
-              <a href="{{ portal_link }}" title="{{ _('View on Portal') }}" class="btn btn-success" target="_blank">
+              <a href="{{ portal_link }}" title="{{ _('View on Portal') }}" class="btn btn-success" target="_blank" rel='noopener noreferrer'>
                 <span class="fa fa-arrow-circle-right" aria-hidden="true"></span>&nbsp;<span class="text">{{ _('View on Portal') }}</span>
               </a>
             {% endif %}
@@ -106,7 +105,7 @@
         <div id="resource-desc">
           {% set notes, machine_translated = h.get_translated_t(pkg_dict, 'notes') %}
           {% if machine_translated %}
-            <i class="fa fa-language text-muted mrgn-bttm-md" style="float: right" title="{{ _('This third party metadata element has been translated using an automated translation tool.  To report any discrepancies please contact open-ouvert@tbs-sct.gc.ca') }}"></i>
+            <i class="fa fa-language text-muted mrgn-bttm-md float-right" title="{{ _('This third party metadata element has been translated using an automated translation tool.  To report any discrepancies please contact {support}').format(support=h.support_email_address()) }}"></i>
           {% endif %}
           {{ h.render_markdown(notes) }}
         </div>
@@ -219,7 +218,7 @@
       {% endif %}
     {% endblock %}
     {% block more_like_this %}
-      {% if not g.is_registry %}
+      {% if not h.is_registry_domain() %}
         {% if h.adv_search_url() %}
           <section class="panel panel-primary">
             <header class="panel-heading">
@@ -231,13 +230,13 @@
       {% endif %}
     {% endblock %}
     {% block package_rate %}
-      {% if not g.is_registry %}
+      {% if not h.is_registry_domain() %}
         <a id="rate"></a>
         <div id="voting-wrapper" data-ajax-replace="/{{ h.lang() }}/vote?uuid={{ pkg_dict.id }}"></div>
       {% endif %}
     {% endblock %}
     {% block package_feedback %}
-      {% if not g.is_registry %}
+      {% if not h.is_registry_domain() %}
         <a id="feedback"></a>
         <section class="indent-large">
           <div id="feedback-wrapper" data-ajax-replace="/{{ h.lang() }}/feedback?uuid={{ pkg_dict.id }}"></div>
@@ -249,8 +248,8 @@
 
 {% block links %}
   {{ super() }}
-  {% if not g.is_registry %}
-    <script>
+  {% if not h.is_registry_domain() %}
+    <script nonce="{{- h.get_inline_script_nonce() -}}">
     window.imConfigPath = "/invitation-manager/";
     </script>
   {% endif %}
@@ -259,7 +258,7 @@
 {% block scripts %}
   {% asset 'canada_public/more_like_this' %}
   {% asset 'canada_public/voting_fix' %}
-  {% if not g.is_registry %}
+  {% if not h.is_registry_domain() %}
     {% asset 'invitation_manager/js' %}
   {% endif %}
   {{ super() }}
@@ -267,7 +266,7 @@
 
 {% block custom_styles %}
   {{ super() }}
-  {% if not g.is_registry %}
+  {% if not h.is_registry_domain() %}
     {% asset 'invitation_manager/css' %}
   {% endif %}
 {% endblock %}

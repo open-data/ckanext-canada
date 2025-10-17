@@ -1,0 +1,1 @@
+Use the new `promise-download` CKAN JS module for DataStore Dump links for better UX with larger DataStore tables.

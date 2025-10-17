@@ -1,0 +1,1 @@
+Improved the display of Resource Validation and XLoader badges to be more clear. Errors/failures will now display in semantic alert areas with a button link to go to the respective report. Successful and Processing badges will display as normal. The Frictionless report items will now be expanded by default, showing the user how to correct the problems in their data.

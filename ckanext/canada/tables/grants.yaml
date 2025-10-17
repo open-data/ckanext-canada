@@ -49,7 +49,9 @@ resources:
     obligation: Mandatory
     excel_required: true
     form_required: true
-    format_type: Free text
+    format_type:
+      en: Free text
+      fr: Texte libre
     datastore_type: text
 
   # 3.2 Amendment Number (New Field)
@@ -63,7 +65,9 @@ resources:
     obligation: Mandatory
     excel_required: true
     form_required: true
-    format_type: Numeric only
+    format_type:
+      en: Numeric only
+      fr: Numérique uniquement
     datastore_type: int
 
   # 3.3 Amendment Date (New Field)
@@ -77,7 +81,9 @@ resources:
     obligation:
       en: Mandatory if amendment number set
       fr: Obligatoire si le numéro de modification est défini
-    format_type: Date (Please format the data as YYYY-MM-DD)
+    format_type:
+      en: Date (Please format the date as YYYY-MM-DD)
+      fr: "Date (Veuillez utiliser le format de date suivant : AAAA-MM-JJ)"
     datastore_type: date
     excel_required_formula: AND(NOT(ISBLANK({amendment_number})),{amendment_number}<>0)
     form_snippet: scheming/form_snippets/date.html
@@ -93,7 +99,9 @@ resources:
     obligation: Mandatory
     excel_required: true
     form_required: true
-    format_type: Controlled List
+    format_type:
+      en: Controlled List
+      fr: Liste contrôlée
     datastore_type: text
     choices:
       G:
@@ -115,7 +123,9 @@ resources:
       en: The recipient type helps identify who is receiving the money.
       fr: Le type de bénéficiaire permet d'identifier qui reçoit l'argent.
     obligation: Optional
-    format_type: Controlled List
+    format_type:
+      en: Controlled List
+      fr: Liste contrôlée
     datastore_type: text
     choices:
       F:
@@ -168,7 +178,9 @@ resources:
 
         Pour valider un numéro d’entreprise associé à un organisme de bienfaisance, les ministères peuvent effectuer une recherche de base dans la Liste d’organismes de bienfaisance, sur le site Web Canada.ca. Entrez le nom de l’organisme de bienfaisance, puis cliquez sur le bouton de Recherche. Ensuite, cliquez sur le nom de l’organisme de bienfaisance tiré du résultat de la recherche afin de trouver de plus amples renseignements sur l’organisme de bienfaisance (p. ex., le numéro du programme de bienfaisance, le statut de l’organisme de bienfaisance, la date d’entrée en vigueur du statut et la désignation de l’organisme de bienfaisance). Il est impossible de valider le nom légal et le nom commercial au moyen de la fonction de recherche de base.
     obligation: Optional
-    format_type: Free text
+    format_type:
+      en: Free text
+      fr: Texte libre
     datastore_type: text
 
   # 3.7 Recipient Legal Name (formerly recipient_name_en, recipient_name_fr)
@@ -188,7 +200,9 @@ resources:
     obligation: Mandatory
     excel_required: true
     form_required: true
-    format_type: Free text
+    format_type:
+      en: Free text
+      fr: Texte libre
     datastore_type: text
     form_attrs:
       size: 60
@@ -207,7 +221,9 @@ resources:
         Le champ « Nom commercial du bénéficiaire » est un champ facultatif utilisé dans le cas d'organisations qui exercent leurs activités sous un nom différent de leur nom légal ou de leur numéro d'entreprise. Dans le cas de chercheurs qui reçoivent leur financement par l'entremise d'une université, cette information doit être entrée ici. Ce champ ne sert pas à saisir le nom du bénéficiaire ultime de la subvention ou de la contribution, mais plutôt celui de la personne qui reçoit le financement du gouvernement du Canada.
 
         Traduction seulement si le nom est fourni dans les deux langues officielles par le bénéficiaire. Fournir dans le format suivant : nom anglais|nom français.
-    format_type: Free text
+    format_type:
+      en: Free text
+      fr: Texte libre
     datastore_type: text
     form_attrs:
       size: 60
@@ -227,7 +243,9 @@ resources:
 
         Traduction seulement si le nom de l'organisme est fourni dans les deux langues officielles par le bénéficiaire. Fournir dans le format suivant : nom anglais|nom français.
     obligation: Optional
-    format_type: Free text
+    format_type:
+      en: Free text
+      fr: Texte libre
     datastore_type: text
     form_attrs:
       size: 60
@@ -243,7 +261,9 @@ resources:
     obligation: Mandatory
     excel_required: true
     form_required: true
-    format_type: Controlled List
+    format_type:
+      en: Controlled List
+      fr: Liste contrôlée
     datastore_type: text
     choices_file: choices/country.json
 
@@ -258,7 +278,9 @@ resources:
     obligation:
       en: Mandatory if Recipient Country is Canada
       fr: Obligatoire si le pays destinataire est le Canada
-    format_type: Controlled List
+    format_type:
+      en: Controlled List
+      fr: Liste contrôlée
     datastore_type: text
     excel_required_formula: AND(NOT(ISBLANK({recipient_country})),{recipient_country}="CA")
     choices:
@@ -323,7 +345,9 @@ resources:
     obligation: Mandatory
     excel_required: true
     form_required: true
-    format_type: Free text
+    format_type:
+      en: Free text
+      fr: Texte libre
     datastore_type: text
     form_attrs:
       size: 60
@@ -343,7 +367,9 @@ resources:
 
         Format de texte : "X#X #X#"; L'outil de Postes Canada permettant de rechercher un code postal se trouve sur le site Web de Postes Canada.
     obligation: Optional
-    format_type: "Text format locked to (X#X #X#)"
+    format_type:
+      en: "Text format locked to (X#X #X#)"
+      fr: "Format de texte verrouillé sur (X#X #X#)"
     datastore_type: text
 
   # 3.14 Federal Riding Name (English) (New Field)
@@ -355,7 +381,9 @@ resources:
       en: The federal riding name is the name of the riding in which the recipient resides.
       fr: Le nom de la circonscription fédérale où réside le bénéficiaire.
     obligation: Optional
-    format_type: Free text
+    format_type:
+      en: Free text
+      fr: Texte libre
     datastore_type: text
     form_attrs:
       size: 60
@@ -369,7 +397,9 @@ resources:
       en: The federal riding name is the name of the riding in which the recipient resides.
       fr: Le nom de la circonscription fédérale où réside le bénéficiaire.
     obligation: Optional
-    format_type: Free text
+    format_type:
+      en: Free text
+      fr: Texte libre
     datastore_type: text
     form_attrs:
       size: 60
@@ -383,7 +413,9 @@ resources:
       en: The federal riding number is based on the riding in which the recipient resides.  Departments can consult the Elections Canada website in order to retrieve the federal riding number. http://www.elections.ca/content.aspx?section=res&dir=cir/list&document=index338&lang=e
       fr: Numéro de la circonscription fédérale où réside le bénéficiaire.  Les départements peuvent consulter le site-web d’Élections Canada pour trouver le numéro de la circonscription fédérale. http://www.elections.ca/content.aspx?section=res&dir=cir/list&document=index338&lang=f
     obligation: Optional
-    format_type: Free text
+    format_type:
+      en: Free text
+      fr: Texte libre
     datastore_type: text
 
   # 3.17 Program Name (English)
@@ -395,7 +427,9 @@ resources:
       en: The program name is the name of the program, according to the terms and conditions (Ts&Cs), under which a recipient is funded.
       fr: Le nom du programme selon les modalités en vertu desquelles le financement est versé au bénéficiaire.
     obligation: Optional
-    format_type: Free text
+    format_type:
+      en: Free text
+      fr: Texte libre
     datastore_type: text
     form_attrs:
       size: 60
@@ -409,7 +443,9 @@ resources:
       en: The program name is the name of the program, according to the terms and conditions (Ts&Cs), under which a recipient is funded.
       fr: Le nom du programme selon les modalités en vertu desquelles le financement est versé au bénéficiaire.
     obligation: Optional
-    format_type: Free text
+    format_type:
+      en: Free text
+      fr: Texte libre
     datastore_type: text
     form_attrs:
       size: 60
@@ -423,11 +459,13 @@ resources:
       en: The program purpose is the program’s purpose according to the Ts&Cs.
       fr: Le but du programme est celui dans lequel le programme a été créé, selon les modalités du programme.
     obligation: Optional
-    format_type: Free text
+    format_type:
+      en: Free text
+      fr: Texte libre
     datastore_type: text
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
-      style: "width: 100%; display: block"
+      class: form-control canada-width-full d-block
 
   # 3.20 Program Purpose (French) (formerly purpose_fr)
   - datastore_id: prog_purpose_fr
@@ -438,11 +476,13 @@ resources:
       en: The program purpose is the program’s purpose according to the Ts&Cs.
       fr: Le but du programme est celui dans lequel le programme a été créé, selon les modalités du programme.
     obligation: Optional
-    format_type: Free text
+    format_type:
+      en: Free text
+      fr: Texte libre
     datastore_type: text
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
-      style: "width: 100%; display: block"
+      class: form-control canada-width-full d-block
 
   # 3.21 Agreement Title (English) (formerly proj_name_en)
   - datastore_id: agreement_title_en
@@ -453,7 +493,9 @@ resources:
       en: The agreement title is the title of the project or agreement that the recipient is undertaking. In cases where there is no title, the agreement number will be duplicated here.
       fr: Le nom de l'entente est le titre du projet ou de l'entente à l'égard duquel s'engage le bénéficiaire. S'il n'y a pas de titre, le numéro de l'entente peut être réinscrit ici.
     obligation: Optional
-    format_type: Free text
+    format_type:
+      en: Free text
+      fr: Texte libre
     datastore_type: text
     form_attrs:
       size: 60
@@ -467,7 +509,9 @@ resources:
       en: The agreement title is the title of the project or agreement that the recipient is undertaking. In cases where there is no title, the agreement number will be duplicated here.
       fr: Le nom de l'entente est le titre du projet ou de l'entente à l'égard duquel s'engage le bénéficiaire. S'il n'y a pas de titre, le numéro de l'entente peut être réinscrit ici.
     obligation: Optional
-    format_type: Free text
+    format_type:
+      en: Free text
+      fr: Texte libre
     datastore_type: text
     form_attrs:
       size: 60
@@ -481,7 +525,9 @@ resources:
       en: The agreement number should be the number on the agreement and/or in the departmental Gs&Cs system.
       fr: Le numéro de l'entente est celui qui figure à l'entente et/ou dans le système de subventions et de contributions du ministère.
     obligation: Optional
-    format_type: Free text
+    format_type:
+      en: Free text
+      fr: Texte libre
     datastore_type: text
 
   # 3.24 Agreement Value in CAD (Formerly Field 3.15 - Value)
@@ -520,7 +566,9 @@ resources:
 
         Le type de monnaie étrangère est complété à l'aide des codes alphabétiques ISO 4217 pour les monnaie étrangères. Cette liste se trouve sur le site Web XE. L'entrée est sélectionnée dans une liste déroulante.
     obligation: Optional (Mandatory when funding provided in foreign currency)
-    format_type: Controlled List
+    format_type:
+      en: Controlled List
+      fr: Liste contrôlée
     datastore_type: text
     excel_required_formula: NOT(ISBLANK({foreign_currency_value}))
     choices_file: choices/currency.json
@@ -549,7 +597,9 @@ resources:
     excel_required: true
     form_required: true
     form_snippet: scheming/form_snippets/date.html
-    format_type: Date (Please format the data as YYYY-MM-DD)
+    format_type:
+      en: Date (Please format the date as YYYY-MM-DD)
+      fr: "Date (Veuillez utiliser le format de date suivant : AAAA-MM-JJ)"
     datastore_type: date
     extract_date_year: true
     extract_date_month: true
@@ -564,7 +614,9 @@ resources:
       en: The projected agreement end date is the assumed end of the agreement, or when the project is supposed to end, as captured in the initial agreement.
       fr: La date de fin prévue de l'entente est la date de fin présumée de l'entente, ou la date à laquelle le projet est censé prendre fin, conformément à l'entente initiale.
     obligation: Optional
-    format_type: Date (Please format the data as YYYY-MM-DD)
+    format_type:
+      en: Date (Please format the date as YYYY-MM-DD)
+      fr: "Date (Veuillez utiliser le format de date suivant : AAAA-MM-JJ)"
     datastore_type: date
     form_snippet: scheming/form_snippets/date.html
 
@@ -577,7 +629,9 @@ resources:
       en: Coverage provides information about what will benefit from the project or agreement. Departments should populate this with any information they have available.
       fr: Le champ « Portée » fournit des renseignements sur l'incidence générale prévue du projet ou de l'entente. Les ministères peuvent entrer ici tout renseignement dont ils disposent.
     obligation: Optional
-    format_type: Free text; separate entries with a “;” and include bilingual entries, where applicable, separated with a “│”
+    format_type:
+      en: Free text; separate entries with a “;” and include bilingual entries, where applicable, separated with a “│”
+      fr: Texte libre; separate entries with a “;” and include bilingual entries, where applicable, separated with a “│”
     datastore_type: text
     form_attrs:
       size: 60
@@ -593,11 +647,13 @@ resources:
     obligation: Mandatory
     excel_required: true
     form_required: true
-    format_type: Free text
+    format_type:
+      en: Free text
+      fr: Texte libre
     datastore_type: text
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
-      style: "width: 100%; display: block"
+      class: form-control canada-width-full d-block
 
   # 3.31 Description (French) (New Field)
   - datastore_id: description_fr
@@ -610,11 +666,13 @@ resources:
     obligation: Mandatory
     excel_required: true
     form_required: true
-    format_type: Free text
+    format_type:
+      en: Free text
+      fr: Texte libre
     datastore_type: text
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
-      style: "width: 100%; display: block"
+      class: form-control canada-width-full d-block
 
   # 3.32 NAICS Identifier (New Field)
   - datastore_id: naics_identifier
@@ -625,17 +683,27 @@ resources:
       en: The North American Industry Classification System (NAICS) is an industry classification system developed by the statistical agencies of Canada, Mexico and the United States.
       fr: Le Système de classification des industries de l'Amérique du Nord (SCIAN) est un système de classification des industries conçu par les organismes statistiques du Canada, du Mexique et des États-Unis.
     obligation: Optional
-    format_type: |
-      Free text based on controlled list from Statistics Canada; This list is available to users on the Statistics Canada website. http://www.statcan.gc.ca/eng/subjects/standard/naics/2012/index
+    format_type:
+      en: |
+        Free text based on controlled list from Statistics Canada; This list is available to users on the Statistics Canada website. http://www.statcan.gc.ca/eng/subjects/standard/naics/2012/index
 
-      The “NAICS identifier” field should be populated with the most appropriate choice in the selection list. Departments should consult the Statistics Canada website and populate at their own discretion. At least 3 digits should be entered to allow for broad coding when specificity is not possible.
+        The “NAICS identifier” field should be populated with the most appropriate choice in the selection list. Departments should consult the Statistics Canada website and populate at their own discretion. At least 3 digits should be entered to allow for broad coding when specificity is not possible.
 
-      For example, if Employment and Social Development Canada is signing an agreement with an educational support services organization, the NAICS identifier would be 611710. The identifier is broken down as follows:
-      * sector: 61 (educational services)
-      * subsector: 1 (educational services)
-      * industry group: 7 (educational support services)
-      * industry: 10 (educational support services)
+        For example, if Employment and Social Development Canada is signing an agreement with an educational support services organization, the NAICS identifier would be 611710. The identifier is broken down as follows:
+        * sector: 61 (educational services)
+        * subsector: 1 (educational services)
+        * industry group: 7 (educational support services)
+        * industry: 10 (educational support services)
+      fr: |
+        Texte libre basé sur une liste contrôlée de Statistique Canada; cette liste est disponible pour les utilisateurs sur le site Web de Statistique Canada. https://www.statcan.gc.ca/fr/sujets/norme/scian/2012/index
 
+        Le champ « Identifiant SCIAN » doit être rempli avec le choix le plus approprié dans la liste de sélection. Les ministères doivent consulter le site Web de Statistique Canada et le remplir à leur guise. Au moins trois chiffres doivent être saisis pour permettre un codage large lorsque la spécificité n’est pas possible.
+
+        Par exemple, si Emploi et Développement social Canada signe un accord avec un organisme de services de soutien à l’éducation, l’identifiant SCIAN sera 611710. L’identifiant se décompose comme suit :
+        * secteur : 61 (services d’enseignement)
+        * sous-secteur : 1 (services d’enseignement)
+        * groupe industriel : 7 (services de soutien à l’enseignement)
+        * industrie : 10 (services de soutien à l’enseignement)
     datastore_type: text
 
   # 3.33 Expected Results or Intended Outcome (English) (New Field)
@@ -647,11 +715,13 @@ resources:
       en: The expected results or intended outcome is the assumed result of project completion. It should be populated in accordance with the project that the recipient is undertaking or the program under which it is funded. This field will attempt to explain why the project is being undertaken, and what the final results should be.
       fr: Les résultats attendus ou visés sont les résultats présumés qui découlent de l'exécution d'un projet. Le champ doit être rempli en fonction du projet qu'entreprend le bénéficiaire ou conformément au programme en vertu duquel il est financé. Ce champ vise à offrir une description de la raisond'être du projet et de ce que devraient être les résultats finaux.
     obligation: Optional
-    format_type: Free text
+    format_type:
+      en: Free text
+      fr: Texte libre
     datastore_type: text
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
-      style: "width: 100%; display: block"
+      class: form-control canada-width-full d-block
 
   # 3.34 Expected Results or Intended Outcome (French) (New Field)
   - datastore_id: expected_results_fr
@@ -662,11 +732,13 @@ resources:
       en: The expected results or intended outcome is the assumed result of project completion. It should be populated in accordance with the project that the recipient is undertaking or the program under which it is funded. This field will attempt to explain why the project is being undertaken, and what the final results should be.
       fr: Les résultats attendus ou visés sont les résultats présumés qui découlent de l'exécution d'un projet. Le champ doit être rempli en fonction du projet qu'entreprend le bénéficiaire ou conformément au programme en vertu duquel il est financé. Ce champ vise à offrir une description de la raisond'être du projet et de ce que devraient être les résultats finaux.
     obligation: Optional
-    format_type: Free text
+    format_type:
+      en: Free text
+      fr: Texte libre
     datastore_type: text
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
-      style: "width: 100%; display: block"
+      class: form-control canada-width-full d-block
 
   # 3.35 Additional Information (English) (Formerly comments_en, additional_info_en)
   - datastore_id: additional_information_en
@@ -701,11 +773,13 @@ resources:
         •résiliations;
         •remboursement.
     obligation: Optional
-    format_type: Free text
+    format_type:
+      en: Free text
+      fr: Texte libre
     datastore_type: text
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
-      style: "width: 100%; display: block"
+      class: form-control canada-width-full d-block
 
   # 3.36 Additional Information (French) (Formerly comments_fr, additional_info_fr)
   - datastore_id: additional_information_fr
@@ -740,11 +814,13 @@ resources:
         •résiliations;
         •remboursement.
     obligation: Optional
-    format_type: Free text
+    format_type:
+      en: Free text
+      fr: Texte libre
     datastore_type: text
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
-      style: "width: 100%; display: block"
+      class: form-control canada-width-full d-block
 
   - datastore_id: record_created
     label: Record Creation Time

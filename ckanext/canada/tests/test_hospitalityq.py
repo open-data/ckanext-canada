@@ -3,6 +3,7 @@ from ckanext.canada.tests import CanadaTestBase
 from ckanapi import LocalCKAN, ValidationError
 
 import pytest
+from ckan import model
 from ckanext.canada.tests.factories import CanadaOrganization as Organization
 
 from ckanext.recombinant.tables import get_chromo
@@ -10,11 +11,11 @@ from ckanext.recombinant.tables import get_chromo
 
 class TestHospitalityQ(CanadaTestBase):
     @classmethod
-    def setup_method(self, method):
-        """Method is called at class level before EACH test methods of the class are called.
-        Setup any state specific to the execution of the given class methods.
+    def setup_class(self):
+        """Method is called at class level once the class is instatiated.
+        Setup any state specific to the execution of the given class.
         """
-        super(TestHospitalityQ, self).setup_method(method)
+        super(TestHospitalityQ, self).setup_class()
 
         org = Organization()
         self.lc = LocalCKAN()
@@ -35,12 +36,100 @@ class TestHospitalityQ(CanadaTestBase):
             self.lc.action.datastore_upsert(
                 resource_id=self.resource_id,
                 records=[{}])
+        model.Session.rollback()
         err = ve.value.error_dict
         assert 'key' in err
         assert 'ref_number' in err['key'][0]
 
+    def test_dates(self):
+        """
+        Start Date cannot be in the future, and dates must be chronological
+        """
+        record = get_chromo('hospitalityq')['examples']['record']
+
+        record['start_date'] = '2999999-01-29'
+        record['end_date'] = '2999999-01-30'
+
+        with pytest.raises(ValidationError) as ve:
+            self.lc.action.datastore_upsert(
+                resource_id=self.resource_id,
+                records=[record])
+            err = ve.value.error_dict['records'][0]
+
+            assert 'start_date' in err
+            assert 'end_date' in err
+        model.Session.rollback()
+        record['start_date'] = '2024-01-29'
+        record['end_date'] = '2024-01-15'
+
+        with pytest.raises(ValidationError) as ve:
+            self.lc.action.datastore_upsert(
+                resource_id=self.resource_id,
+                records=[record])
+            err = ve.value.error_dict['records'][0]
+
+            assert 'start_date' in err
+        model.Session.rollback()
+
+    def test_attendees(self):
+        """
+        Attendee fields cannot be zero or below if on or after April 1st 2025
+        """
+        record = get_chromo('hospitalityq')['examples']['record']
+
+        record['start_date'] = '2025-04-29'
+        record['end_date'] = '2025-04-30'
+        record['employee_attendees'] = -2
+        record['guest_attendees'] = -5
+        record['employee_attendees'] = 0
+
+        with pytest.raises(ValidationError) as ve:
+            self.lc.action.datastore_upsert(
+                resource_id=self.resource_id,
+                records=[record])
+            err = ve.value.error_dict['records'][0]
+
+            assert 'employee_attendees' in err
+            assert 'guest_attendees' in err
+            assert 'employee_attendees' in err
+        model.Session.rollback()
+        record['start_date'] = '2024-04-29'
+        record['end_date'] = '2024-04-30'
+
+        self.lc.action.datastore_upsert(
+                resource_id=self.resource_id,
+                records=[record])
+
+    def test_disclosure_group(self):
+        """
+        Disclosure Group is required if on or after April 1st 2025
+        """
+        record = get_chromo('hospitalityq')['examples']['record']
+
+        record['start_date'] = '2025-04-21'
+        record['end_date'] = '2025-04-24'
+        record['disclosure_group'] = None
+
+        with pytest.raises(ValidationError) as ve:
+            self.lc.action.datastore_upsert(
+                resource_id=self.resource_id,
+                records=[record])
+            err = ve.value.error_dict['records'][0]
+
+            assert 'disclosure_group' in err
+        model.Session.rollback()
+        record['start_date'] = '2024-04-21'
+        record['end_date'] = '2024-04-24'
+        record['disclosure_group'] = 'SLE'
+
+        self.lc.action.datastore_upsert(
+            resource_id=self.resource_id,
+            records=[record])
+
     def test_vendor_format(self):
         record = get_chromo('hospitalityq')['examples']['record']
+        record['start_date'] = '2024-04-21'
+        record['end_date'] = '2024-04-24'
 
         # tests some incorrect formats
         incorrect_formats = [
@@ -56,6 +145,7 @@ class TestHospitalityQ(CanadaTestBase):
                 self.lc.action.datastore_upsert(
                     resource_id=self.resource_id,
                     records=[record])
+            model.Session.rollback()
             err = ve.value.error_dict['records'][0]
             expected = {
                 'vendor_other_en': ["Invalid format for multiple commercial establishments or vendors. Use <Vendor Name>;<Vendor 2 Name> (e.g. Les Impertinentes;Les Street Monkeys)"],
@@ -63,6 +153,7 @@ class TestHospitalityQ(CanadaTestBase):
             }
             for k in set(err) | set(expected):
                 assert k in err
+                assert k in expected
                 assert err[k] == expected[k]
 
         # test surrounding white space stripping
@@ -87,11 +178,11 @@ class TestHospitalityQ(CanadaTestBase):
 
 class TestHospitalityQNil(CanadaTestBase):
     @classmethod
-    def setup_method(self, method):
-        """Method is called at class level before EACH test methods of the class are called.
-        Setup any state specific to the execution of the given class methods.
+    def setup_class(self):
+        """Method is called at class level once the class is instatiated.
+        Setup any state specific to the execution of the given class.
         """
-        super(TestHospitalityQNil, self).setup_method(method)
+        super(TestHospitalityQNil, self).setup_class()
 
         org = Organization()
         self.lc = LocalCKAN()
@@ -112,6 +203,7 @@ class TestHospitalityQNil(CanadaTestBase):
             self.lc.action.datastore_upsert(
                 resource_id=self.resource_id,
                 records=[{}])
+        model.Session.rollback()
         err = ve.value.error_dict
         assert 'key' in err
         assert 'year, month' in err['key'][0]

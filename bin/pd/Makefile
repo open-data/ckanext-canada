@@ -1,9 +1,10 @@
 .DELETE_ON_ERROR:
 
-targets := ati briefingt qpnotes consultations contracts contractsa dac experiment grants hospitalityq \
-	nap5 reclassification service travela travelq wrongdoing adminaircraft
+targets := aistrategy ati briefingt qpnotes consultations contracts contractsa dac experiment grants \
+	hospitalityq nap5 reclassification service travela travelq wrongdoing adminaircraft
 
 csv_files := \
+	aistrategy.csv \
 	ati.csv ati-nil.csv \
 	briefingt.csv briefingt-nil.csv \
 	qpnotes.csv qpnotes-nil.csv \
@@ -145,6 +146,30 @@ upload-all: $(targets:%=upload-%)
 
 .PHONY: rebuild-all
 rebuild-all: $(targets:%=rebuild-%)
+
+###
+###  AI Strategy Tracker
+###
+.PHONY: aistrategy
+aistrategy: upload-aistrategy rebuild-aistrategy
+
+.PHONY: upload-aistrategy
+upload-aistrategy: $(workdir)/filtered/aistrategy.csv $(workdir)/aistrategy.csv
+	@echo Uploading AI Strategy Tracker ...
+	@$(ckanapi) action resource_patch -c $(registry_ini) \
+	id=0ef67a0d-9ca4-49f8-a0b5-16c38b49b0a2 upload@"$(workdir)/filtered/aistrategy.csv" \
+	> /dev/null
+
+.PHONY: rebuild-aistrategy
+rebuild-aistrategy: $(workdir)/filtered/aistrategy.csv $(workdir)/aistrategy.csv
+	@$(oc_search) import_data_csv --csv "$(workdir)/filtered/aistrategy.csv" --search aistrategy
+
+$(workdir)/aistrategy.csv:
+	$(ckan_command) -c $(registry_ini) $(combine) aistrategy -d $(workdir)
+
+# use $(registry_python) to execute filter_aistrategy.py as we need pyyaml from venv
+$(workdir)/filtered/aistrategy.csv: $(workdir)/aistrategy.csv
+	$(registry_python) $(fdir)/filter_aistrategy.py < $< > $@
 
 ###
 ###  ATI Summaries

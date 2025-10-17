@@ -2,8 +2,6 @@ from ckan.types import Callable, Any, Dict
 from ckan.common import CKANConfig
 
 import ckan.plugins as p
-from ckan.lib.app_globals import set_app_global
-from ckan.plugins.core import plugin_loaded
 
 from ckanext.canada import helpers
 
@@ -22,10 +20,6 @@ class CanadaThemePlugin(p.SingletonPlugin):
         p.toolkit.add_resource('../assets/datatables', 'canada_datatables')
         p.toolkit.add_resource('../assets/public', 'canada_public')
         p.toolkit.add_resource('../assets/invitation-manager', 'invitation_manager')
-        # type_ignore_reason: jinja2 versioning
-        set_app_global('is_registry',
-                       bool(plugin_loaded('canada_internal')))  # type: ignore
-
         config['ckan.favicon'] = helpers.cdts_asset('/assets/favicon.ico')
 
     # ITemplateHelpers
@@ -46,6 +40,7 @@ class CanadaThemePlugin(p.SingletonPlugin):
             'get_loader_status_badge',
             'validation_status',
             'is_user_locked',
+            'is_registry_domain',
             # Portal
             'user_organizations',
             'openness_score',
@@ -56,6 +51,7 @@ class CanadaThemePlugin(p.SingletonPlugin):
             'adv_search_url',
             'adv_search_mlt_root',
             'ga4_id',
+            'ga4_integrity',
             'loop11_key',
             'contact_information',
             'show_openinfo_facets',
@@ -89,4 +85,9 @@ class CanadaThemePlugin(p.SingletonPlugin):
             'available_purge_types',
             'operations_guide_link',
             'max_resources_per_dataset',
+            'support_email_address',
+            'default_open_email_address',
+            'get_inline_script_nonce',
+            'obfuscate_to_code_points',
+            'mail_to'
         ])

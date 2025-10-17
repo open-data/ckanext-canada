@@ -46,11 +46,11 @@ class TestMakePD(CanadaTestBase):
     #       published Docker image of our search application.
     """
     @classmethod
-    def setup_method(self, method):
-        """Method is called at class level before EACH test methods of the class are called.
-        Setup any state specific to the execution of the given class methods.
+    def setup_class(self):
+        """Method is called at class level once the class is instatiated.
+        Setup any state specific to the execution of the given class.
         """
-        super(TestMakePD, self).setup_method(method)
+        super(TestMakePD, self).setup_class()
 
         if not plugins.plugin_loaded('xloader'):
             plugins.load('xloader')
@@ -63,8 +63,6 @@ class TestMakePD(CanadaTestBase):
 
         self.action = LocalCKAN().action
 
-        self.tmp_dir = mkdtemp()
-
         os.environ['TMPDIR'] = '/tmp'
         os.environ['PD_FILTER_SCRIPT_DIRECTORY'] = PD_FILTER_SCRIPT_DIRECTORY
         os.environ['REGISTRY_PASTER_COMMAND'] = 'paster'
@@ -72,21 +70,40 @@ class TestMakePD(CanadaTestBase):
         os.environ['REGISTRY_CKANAPI_COMMAND'] = 'ckanapi'
         os.environ['OGC_SEARCH_COMMAND'] = 'echo'  # need a command to not fail
         os.environ['OC_SEARCH_COMMAND'] = 'echo'  # need a command to not fail
+        os.environ['REGISTRY_CKAN_COMMAND'] = 'ckan'
+
+    @classmethod
+    def teardown_class(self):
+        """Method is called at class level after ALL test methods of the class are called.
+        Remove any state specific to the execution of the given class.
+        """
+        super(TestMakePD, self).teardown_class()
+
+        if plugins.plugin_loaded('xloader'):
+            plugins.unload('xloader')
+
+        if not plugins.plugin_loaded('validation'):
+            plugins.load('validation')
+
+    @classmethod
+    def setup_method(self, method):
+        """Method is called at class level before EACH test methods of the class are called.
+        Setup any state specific to the execution of the given class methods.
+        """
+        super(TestMakePD, self).setup_method(method)
+
+        self.tmp_dir = mkdtemp()
+
         os.environ['PD_BACKUP_DIRECTORY'] = self.tmp_dir
         os.environ['REGISTRY_STATIC_SMB_DIRECTORY'] = self.tmp_dir
         os.environ['PORTAL_STATIC_SMB_DIRECTORY'] = self.tmp_dir
-        os.environ['REGISTRY_CKAN_COMMAND'] = 'ckan'
 
     @classmethod
     def teardown_method(self, method):
         """Method is called at class level after EACH test methods of the class are called.
         Remove any state specific to the execution of the given class methods.
         """
-        if plugins.plugin_loaded('xloader'):
-            plugins.unload('xloader')
-
-        if not plugins.plugin_loaded('validation'):
-            plugins.load('validation')
+        super(TestMakePD, self).teardown_method(method)
 
         shutil.rmtree(self.tmp_dir)
 
@@ -150,6 +167,30 @@ class TestMakePD(CanadaTestBase):
         assert 'REGISTRY_STATIC_SMB_DIRECTORY is undefined' not in stdout
         assert 'PORTAL_STATIC_SMB_DIRECTORY is undefined' not in stdout
         assert 'REGISTRY_CKAN_COMMAND is undefined' not in stdout
+
+    def test_make_aistrategy(self):
+        assert self.ckan_ini
+        self._setup_ini(self.ckan_ini)
+
+        self._setup_pd(type='aistrategy')
+
+        make_process = subprocess.Popen(["make upload-aistrategy"], shell=True, cwd=MAKE_PATH, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        stdout, stderr = make_process.communicate()
+
+        stdout = stdout.decode("utf-8")
+
+        assert "Usage:" not in stdout
+        assert "upload-aistrategy] Error" not in stdout
+
+        make_process = subprocess.Popen(["make rebuild-aistrategy"], shell=True, cwd=MAKE_PATH, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        stdout, stderr = make_process.communicate()
+
+        stdout = stdout.decode("utf-8")
+
+        # Django, just test for command output from echo
+        assert "Usage:" not in stdout
+        assert "rebuild-aistrategy] Error" not in stdout
+        assert 'import_data_csv' in stdout
 
     def test_make_ati(self):
         assert self.ckan_ini

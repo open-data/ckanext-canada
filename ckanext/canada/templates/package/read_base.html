@@ -10,7 +10,7 @@
 
 {%- block subtitle -%}
   {% set title, mt = h.get_translated_t(pkg, 'title') %}
-  {% if g.is_registry and pkg.type in h.recombinant_get_types() %}
+  {% if h.is_registry_domain() and pkg.type in h.recombinant_get_types() %}
     {{ (title or pkg.name) ~ ' - ' ~ h.split_piped_bilingual_field(pkg.organization.title, h.lang()) | trim }}
   {% else %}
     {{ (title or pkg.name) | trim }}
@@ -18,7 +18,7 @@
 {%- endblock -%}
 
 {% block content_primary_nav %}
-  {% if g.is_registry %}
+  {% if h.is_registry_domain() %}
     {% set dataset_label = _('Dataset') %}
     {% if pkg.type in h.recombinant_get_types() %}
       {% set dataset_label = _(pkg.title) ~ ' - ' ~ h.split_piped_bilingual_field(pkg.organization.title, h.lang()) %}
@@ -55,7 +55,13 @@
             {% if pkg[field.field_name] is mapping %}
               {% set field_value = h.scheming_language_text(field_value) %}
             {% endif %}
-            {% if field_value %}
+            {% if field.field_name == 'maintainer_email' and not field_value and not pkg.get('maintainer_contact_form') %}
+              {# FIXME: sunset the default_open_email_address eventually... #}
+              <li class="list-group-item resource-tags">
+                <strong>{{ field_title }}{{ _(':') }}</strong>
+                {{ h.mail_to(email_address=h.default_open_email_address(xml_encode=False), name=h.default_open_email_address(xml_encode=False)) }}
+              </li>
+            {% elif field_value %}
               <li class="list-group-item resource-tags">
                 <strong>{{ field_title }}{{ _(':') }}</strong>
                 {% snippet 'scheming/snippets/display_field.html', field=field, data=pkg, entity_type='dataset', object_type=pkg.type %}
@@ -119,28 +125,35 @@
       </li>
       <li class="list-group-item">
         <strong>{{ _('Metadata:') }}</strong>
-        <ul class="list-group" style="margin-bottom: 0;">
+        <ul class="list-group canada-margin-bottom-0">
           <li class="list-group-item">
             <a href="{{h.url_for_static('/', qualified=true)}}api/action/package_show?id={{pkg.id}}" rel="nofollow">
               {{ _('Link to JSON format') }}
             </a>
           </li>
-          {% if h.plugin_loaded('dcat_json_interface') and pkg.type not in h.recombinant_get_types() %}
-            <li class="list-group-item" style="border: none;">
-              <a href="{{ h.url_for(pkg.type + '.read', id=pkg.id) }}.jsonld" rel="nofollow">
-                {{ _('DCAT (JSON-LD)') }}
+          {%- if h.plugin_loaded('dcat_json_interface') and pkg.type not in h.recombinant_get_types() -%}
+            <li class="list-group-item canada-border-none">
+              <a href="{{- h.url_for(pkg.type + '.read', id=pkg.id) -}}.jsonld" rel="nofollow">
+                {{- _('DCAT (JSON-LD)') -}}
               </a>
             </li>
-          {% endif %}
-          {% if h.plugin_loaded('dcat') and pkg.type not in h.recombinant_get_types() %}
-            <li class="list-group-item" style="border: none;">
-              <a href="{{ h.url_for(pkg.type + '.read', id=pkg.id) }}.xml" rel="nofollow">
-                {{ _('DCAT (XML)') }}
+          {%- endif -%}
+          {%- if h.plugin_loaded('dcat') and pkg.type not in h.recombinant_get_types() -%}
+            <li class="list-group-item canada-border-none">
+              <a href="{{- h.url_for(pkg.type + '.read', id=pkg.id) -}}.xml" rel="nofollow">
+                {{- _('DCAT (XML)') -}}
               </a>
             </li>
-          {% endif %}
+          {%- endif -%}
         </ul>
       </li>
+      {% if h.plugin_loaded('citeproc') and pkg.type not in h.recombinant_get_types() %}
+        <li class="list-group-item">
+          {% if h.show_citations_for(pkg.type or 'dataset') %}
+            {% snippet "snippets/citeproc_button.html", pkg_dict=pkg %}
+          {% endif %}
+        </li>
+      {% endif %}
       {% if pkg.collection == 'fgp' %}
         <li class="list-group-item">
           <strong>{{ _('FGP Metadata:') }}</strong>
@@ -163,7 +176,7 @@
     </ul>
   </div>
 
-  {% set iso19115_blocks = (('contact_information', 'Data Contact'), ('distributor', 'Distributor Contact')) %}
+  {% set iso19115_blocks = (('contact_information', _('Data Contact')), ('distributor', _('Distributor Contact'))) %}
   {% for block_name, block_label in iso19115_blocks %}
     {% if block_name in pkg %}
       {% set dist = h.json_loads(pkg[block_name])[h.lang()] %}
