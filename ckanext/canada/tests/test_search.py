@@ -97,7 +97,7 @@ class TestRegistrySearch(CanadaTestBase):
         assert 'count' in response
         assert response['count'] >= 6
 
-    def test_user_package_search(self):
+    def test_user_package_search(self, app):
         "A user with no access to Orgs should not see any packages."
         response = self.user_lc.action.package_search(
             q='*:*',

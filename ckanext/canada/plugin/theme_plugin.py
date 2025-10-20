@@ -1,18 +1,68 @@
-from ckan.types import Callable, Any, Dict
+import os
+from flask import Blueprint
+
+from typing import List
+from ckan.types import Callable, Any, Dict, CKANApp
 from ckan.common import CKANConfig
 
 import ckan.plugins as p
+from ckan.lib.plugins import DefaultTranslation
 
 from ckanext.canada import helpers
+from ckanext.canada.middleware import CSPNonceMiddleware
+from ckanext.canada.view import canada_views
 
 
 @p.toolkit.blanket.config_declarations
-class CanadaThemePlugin(p.SingletonPlugin):
+class CanadaThemePlugin(p.SingletonPlugin, DefaultTranslation):
+    """
+    Plugin for all of the themeing of the Open Government Canada Portal & Registry.
+
+    See logic_plugin.py::CanadaLogicPlugin for actions,
+    configurations, and other implementations.
+    """
+    p.implements(p.ITranslation)
     p.implements(p.IConfigurer)
     p.implements(p.ITemplateHelpers)
+    p.implements(p.IMiddleware)
+    p.implements(p.IBlueprint)
 
-    # IConfigurer
+    @classmethod
+    def i18n_domain(cls) -> str:
+        """
+        Sets the namespace for gettext.
+
+        Implement of: ckan.plugins.interfaces.ITranslation
+        Submethod of: ckan.lib.plugins.DefaultTranslation
+        """
+        return 'ckanext-canada'
+
+    @classmethod
+    def i18n_directory(cls) -> str:
+        """
+        Sets the directory where the plugin's translations files are located.
+
+        Implement of: ckan.plugins.interfaces.ITranslation
+        Submethod of: ckan.lib.plugins.DefaultTranslation
+        """
+        return os.path.join(os.path.dirname(str(__file__)), '../i18n')
+
+    @classmethod
+    def i18n_locales(cls) -> List[str]:
+        """
+        Sets the supported locales.
+
+        Implement of: ckan.plugins.interfaces.ITranslation
+        Submethod of: ckan.lib.plugins.DefaultTranslation
+        """
+        return ['en', 'fr']
+
     def update_config(self, config: 'CKANConfig'):
+        """
+        Add template directories and set initial configuration values.
+
+        Implement of: ckan.plugins.interfaces.IConfigurer
+        """
         p.toolkit.add_template_directory(config, '../templates')
         p.toolkit.add_public_directory(config, '../public')
         p.toolkit.add_resource('../public/static/js', 'js')
@@ -22,10 +72,14 @@ class CanadaThemePlugin(p.SingletonPlugin):
         p.toolkit.add_resource('../assets/invitation-manager', 'invitation_manager')
         config['ckan.favicon'] = helpers.cdts_asset('/assets/favicon.ico')
 
-    # ITemplateHelpers
     def get_helpers(self) -> Dict[str, Callable[..., Any]]:
+        """
+        Add available helper methods to the global h object. These methods
+        are available via ckan.plugins.toolkit.h and inside Jinja2 templates.
+
+        Implement of: ckan.plugins.interfaces.ITemplateHelpers
+        """
         return dict((h, getattr(helpers, h)) for h in [
-            # Registry
             'may_publish_datasets',
             'today',
             'date_format',
@@ -42,7 +96,6 @@ class CanadaThemePlugin(p.SingletonPlugin):
             'is_user_locked',
             'is_registry_domain',
             'linked_user',
-            # Portal
             'user_organizations',
             'openness_score',
             'remove_duplicates',
@@ -92,3 +145,19 @@ class CanadaThemePlugin(p.SingletonPlugin):
             'obfuscate_to_code_points',
             'mail_to',
         ])
+
+    def make_middleware(self, app: CKANApp, config: 'CKANConfig') -> CKANApp:
+        """
+        Adds a Flask middleware object to the Flask app stack.
+
+        Implement of: ckan.plugins.interfaces.IMiddleware
+        """
+        return CSPNonceMiddleware(app, config)
+
+    def get_blueprint(self) -> List[Blueprint]:
+        """
+        Add Flask blueprint/view routes to the Flask app.
+
+        Implement of: ckan.plugins.interfaces.IBlueprint
+        """
+        return [canada_views]

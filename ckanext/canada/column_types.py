@@ -5,6 +5,16 @@ from ckanext.tabledesigner.column_types import ChoiceColumn, TextColumn
 from ckanext.datastore.backend.postgres import literal_string, identifier
 
 
+def get_datastore_column_types():
+    """
+    Returns a dict of registered datastore column types.
+    """
+    return {
+        'province': Province,
+        'crabusnum': CRABusinessNumber,
+    }
+
+
 def _(x: str) -> str:
     return x
 
