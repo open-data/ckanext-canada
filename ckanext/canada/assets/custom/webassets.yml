@@ -1,0 +1,97 @@
+css:
+  contents:
+    - custom_styles.scss
+  output: canada_custom/%(version)s_custom_styles.css
+  filters:
+    - scss
+    - cssmin
+
+adobe_analytics_fix:
+  contents:
+    - adobe_analytics_fix.js
+  output: canada_custom/%(version)s_adobe_analytics_fix.js
+  filters: rjsmin
+
+check_all:
+  contents:
+    - check_all.js
+  output: canada_custom/%(version)s_check_all.js
+  filters: rjsmin
+
+i18n:
+  contents:
+    - i18n.js
+  output: canada_custom/%(version)s_i18n.js
+  filters: rjsmin
+
+more_like_this:
+  contents:
+    - more_like_this.js
+  output: canada_custom/%(version)s_more_like_this.js
+  filters: rjsmin
+
+voting_fix:
+  contents:
+    - voting_fix.js
+  output: canada_custom/%(version)s_voting_fix.js
+  filters: rjsmin
+
+guess_mimetype:
+  contents:
+    - guess_mimetype.js
+  output: canada_custom/%(version)s_guess_mimetype.js
+  filters: rjsmin
+
+cascading_select:
+  contents:
+    - cascading_select.js
+  output: canada_custom/%(version)s_cascading_select.js
+  filters: rjsmin
+
+analytics:
+  contents:
+    - analytics.js
+  output: canada_custom/%(version)s_analytics.js
+  filters: rjsmin
+
+registry_analytics:
+  contents:
+    - registry_analytics.js
+  output: canada_custom/%(version)s_registry_analytics.js
+  filters: rjsmin
+
+user_lock:
+  contents:
+    - registry_users.js
+  output: canada_custom/%(version)s_registry_users.js
+  filters: rjsmin
+
+recombinant_webforms:
+  contents:
+    - recombinant_webform.js
+  output: canada_custom/%(version)s_recombinant_webform.js
+  filters: rjsmin
+
+frictionless:
+  contents:
+    - registry_frictionless.js
+  output: canada_custom/%(version)s_registry_frictionless.js
+  filters: rjsmin
+
+organization_edit:
+  contents:
+    - registry_organization_edit.js
+  output: canada_custom/%(version)s_registry_organization_edit.js
+  filters: rjsmin
+
+package_edit:
+  contents:
+    - registry_package_edit.js
+  output: canada_custom/%(version)s_registry_package_edit.js
+  filters: rjsmin
+
+resource_edit:
+  contents:
+    - registry_resource_edit.js
+  output: canada_custom/%(version)s_registry_resource_edit.js
+  filters: rjsmin
