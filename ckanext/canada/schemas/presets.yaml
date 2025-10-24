@@ -12,7 +12,7 @@ detail_show_fields:
 
 presets:
 
-- preset_name: canada_visibility
+- preset_name: canada_private
   values:
     validators: ignore_missing ignore_not_sysadmin default(true) boolean_validator
     field_name: private

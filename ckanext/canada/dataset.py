@@ -294,7 +294,7 @@ def activity_dictize(activity: activity_model.Activity,
     try:
         if not g.user:
             activity_dict['user_id'] = PUBLIC_ACTIVITY_USER
-    except RuntimeError:
+    except (TypeError, RuntimeError, AttributeError):
         pass
     return activity_dict
 
@@ -385,8 +385,11 @@ def update_dataset_search_params(search_params: Dict[str, Any]):
             org_names = [o['name'] for o in get_action(
                 'organization_list_for_user')({'user': contextual_user},
                                               {'permission': 'read'})]
-            search_params['fq_list'] += [
-                '+organization:(%s)' % ' OR '.join(org_names)]
+            if org_names:
+                search_params['fq_list'] += [
+                    '+organization:(%s)' % ' OR '.join(org_names)]
+            else:
+                search_params['fq_list'] += ['-organization:*']
 
 
 def update_dataset_for_solr(data_dict: Dict[str, Any]):
