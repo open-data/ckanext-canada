@@ -23,12 +23,12 @@ from typing import (
     TYPE_CHECKING
 )
 from ckan.common import CKANConfig
+from ckanext.tabledesigner.column_types import ColumnType
 
 import ckan.plugins as p
 from ckan import model
 
 from ckan.plugins.toolkit import (
-    _,
     h,
     g,
     get_validator,
@@ -53,8 +53,6 @@ from ckanext.canada import dataset
 from ckanext.canada import config as canada_config
 from ckanext.canada.middleware import LogExtraMiddleware
 
-from ckanext.tabledesigner.column_types import ColumnType
-
 if TYPE_CHECKING:
     from collections import OrderedDict
 
@@ -65,31 +63,40 @@ class CanadaLogicPlugin(SchemingDatasetsPlugin, CkanSecurityPlugin):
 
     See theme_plugin.py::CanadaThemePlugin for templates and helpers.
     """
-    p.implements(p.IConfigurable)
-    p.implements(p.IConfigurer)
-    p.implements(p.IActions)
-    p.implements(p.IBlueprint)
     p.implements(IXloader, inherit=True)
     p.implements(p.IFacets)
-    p.implements(p.IAuthFunctions)
-    p.implements(p.IDatasetForm, inherit=True)
-    p.implements(p.IResourceController, inherit=True)
     p.implements(p.IPackageController, inherit=True)
     p.implements(IDataDictionaryForm, inherit=True)
     p.implements(IDataValidation, inherit=True)
-    p.implements(p.IValidators, inherit=True)
     p.implements(p.IMiddleware, inherit=True)
     p.implements(p.IApiToken, inherit=True)
     p.implements(IColumnTypes)
     p.implements(ICiteProcMappings)
+    # NOTE: SchemingDatasetsPlugin implements:
+    #           p.IConfigurer
+    #           p.IConfigurable
+    #           p.IDatasetForm
+    #           p.IActions
+    #           p.IValidators
+    # NOTE: CkanSecurityPlugin implements:
+    #           p.IConfigurer
+    #           p.IResourceController
+    #           p.IActions
+    #           p.IAuthFunctions
+    #           p.IValidators
+    #           p.IAuthenticator
+    #           p.IBlueprint
+    #           p.IClick
 
     def update_config(self, config: 'CKANConfig'):
         """
         Add template directories and set initial configuration values.
 
         Implement of: ckan.plugins.interfaces.IConfigurer
+        SubMethod of: SchemingDatasetsPlugin, CkanSecurityPlugin
         """
-        super().update_config(config)
+        SchemingDatasetsPlugin.update_config(self, config)
+        CkanSecurityPlugin.update_config(self, config)
         canada_config.update_config(config)
 
     def configure(self, config: 'CKANConfig'):
@@ -98,8 +105,9 @@ class CanadaLogicPlugin(SchemingDatasetsPlugin, CkanSecurityPlugin):
         but prior to requests, this happens after IConfigurer::update_config
 
         Implement of: ckan.plugins.interfaces.IConfigurable
+        SubMethod of: SchemingDatasetsPlugin
         """
-        super().configure()
+        super().configure(config)
         canada_config.configure()
 
     def get_commands(self) -> List[Command]:
@@ -107,8 +115,11 @@ class CanadaLogicPlugin(SchemingDatasetsPlugin, CkanSecurityPlugin):
         Adds sub commands to the ckan command line.
 
         Implement of: ckan.plugins.interfaces.IClick
+        SuMethod of: CkanSecurityPlugin
         """
-        return [get_canada_commands(), get_pd_commands()] + super().get_commands()
+        # type_ignore_reason: incomplete typing
+        return super().get_commands() + [
+            get_canada_commands(), get_pd_commands()]  # type: ignore
 
     def dataset_facets(self, facets_dict: 'OrderedDict[str, Any]',
                        package_type: str) -> 'OrderedDict[str, Any]':
@@ -148,8 +159,9 @@ class CanadaLogicPlugin(SchemingDatasetsPlugin, CkanSecurityPlugin):
         Add Flask blueprint/view routes to the Flask app.
 
         Implement of: ckan.plugins.interfaces.IBlueprint
+        SubMethod of: CkanSecurityPlugin
         """
-        return dataset.prevent_core_views_for_pd_types()
+        return super().get_blueprint() + dataset.prevent_core_views_for_pd_types()
 
     def before_create(self, context: Context, resource: Dict[str, Any]):
         """
@@ -157,6 +169,7 @@ class CanadaLogicPlugin(SchemingDatasetsPlugin, CkanSecurityPlugin):
         Want to use the methods in scheming instead of before_create.
 
         Implement of: ckan.plugins.interfaces.IResourceController
+        SubMethod of: CkanSecurityPlugin
         """
 
     def before_update(self, context: Context,
@@ -166,6 +179,7 @@ class CanadaLogicPlugin(SchemingDatasetsPlugin, CkanSecurityPlugin):
         Want to use the methods in scheming instead of before_update.
 
         Implement of: ckan.plugins.interfaces.IResourceController
+        SubMethod of: CkanSecurityPlugin
         """
 
     def before_resource_create(self, context: Context, resource: Dict[str, Any]):
@@ -174,6 +188,7 @@ class CanadaLogicPlugin(SchemingDatasetsPlugin, CkanSecurityPlugin):
         Want to use the methods in scheming instead of before_resource_create.
 
         Implement of: ckan.plugins.interfaces.IResourceController
+        SubMethod of: CkanSecurityPlugin
         """
 
     def before_resource_update(self, context: Context,
@@ -183,6 +198,7 @@ class CanadaLogicPlugin(SchemingDatasetsPlugin, CkanSecurityPlugin):
         Want to use the methods in scheming instead of before_resource_update.
 
         Implement of: ckan.plugins.interfaces.IResourceController
+        SubMethod of: CkanSecurityPlugin
         """
 
     def create(self, pkg: 'model.Package'):
@@ -230,7 +246,6 @@ class CanadaLogicPlugin(SchemingDatasetsPlugin, CkanSecurityPlugin):
 
         Implement of: ckan.plugins.interfaces.IPackageController
         """
-        # FIXME: need user context!!!
         dataset.update_dataset_search_params(search_params)
         return search_params
 
@@ -246,7 +261,8 @@ class CanadaLogicPlugin(SchemingDatasetsPlugin, CkanSecurityPlugin):
     def update_datastore_info_field(self, field: Dict[str, Any],
                                     plugin_data: Dict[str, Any]) -> Dict[str, Any]:
         """
-        Manipulates the DataStore dict. This is a workaround for legacy DataDictionaries.
+        Manipulates the DataStore dict. This is a workaround
+        for legacy DataDictionaries.
 
         Implement of: ckanext.datastore.interfaces.IDataDictionaryForm
         """
@@ -267,7 +283,9 @@ class CanadaLogicPlugin(SchemingDatasetsPlugin, CkanSecurityPlugin):
         Modify the Core Dataset blueprint.
 
         Implement of: ckan.plugins.interfaces.IDatasetForm
+        SubMethod of: SchemingDatasetsPlugin
         """
+        super().prepare_dataset_blueprint(package_type, blueprint)
         dataset.modify_core_dataset_blueprint(package_type, blueprint)
         return blueprint
 
@@ -277,7 +295,9 @@ class CanadaLogicPlugin(SchemingDatasetsPlugin, CkanSecurityPlugin):
         Modify the Core Resource blueprint.
 
         Implement of: ckan.plugins.interfaces.IDatasetForm
+        SubMethod of: SchemingDatasetsPlugin
         """
+        super().prepare_dataset_blueprint(package_type, blueprint)
         dataset.modify_core_resource_blueprint(package_type, blueprint)
         return blueprint
 
@@ -330,9 +350,12 @@ class CanadaLogicPlugin(SchemingDatasetsPlugin, CkanSecurityPlugin):
         """
         Override, extend, and add logic action methods.
 
-        Implement of: ckan.plugins.interfaces.IAuthFunctions
+        Implement of: ckan.plugins.interfaces.IActions
+        SubMethod of: SchemingDatasetsPlugin, CkanSecurityPlugin
         """
-        return get_action_methods()
+        return SchemingDatasetsPlugin.get_actions(self) \
+            | CkanSecurityPlugin.get_actions(self) \
+            | get_action_methods()
 
     def get_auth_functions(self) -> Dict[str, Union[AuthFunction,
                                                     ChainedAuthFunction]]:
@@ -340,8 +363,10 @@ class CanadaLogicPlugin(SchemingDatasetsPlugin, CkanSecurityPlugin):
         Override, extend, and add authentication methods.
 
         Implement of: ckan.plugins.interfaces.IAuthFunctions
+        SubMethod of: CkanSecurityPlugin
         """
-        return get_auth_methods()
+        # type_ignore_reason: incomplete typing
+        return super().get_auth_functions() | get_auth_methods()  # type: ignore
 
     def column_types(self, existing_types: Dict[str, Type[ColumnType]]):
         """

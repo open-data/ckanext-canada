@@ -32,14 +32,15 @@ from ckan.plugins.toolkit import (
 from ckan.lib.navl.validators import StopOnError
 from ckan.authz import is_sysadmin
 from ckan import model
-
-from ckanext.canada.helpers import may_publish_datasets
 from ckan.lib.helpers import date_str_to_datetime
+
 from ckanext.scheming.helpers import scheming_get_preset
 from ckanext.fluent.validators import fluent_text_output, LANG_SUFFIX
 from ckanext.security.resource_upload_validator import (
     validate_upload_type, validate_upload_presence
 )
+
+from ckanext.canada.helpers import may_publish_datasets
 
 not_empty = get_validator('not_empty')
 ignore_missing = get_validator('ignore_missing')
@@ -85,7 +86,7 @@ def get_validator_methods() -> Dict[str, Validator]:
         'limit_resources_per_dataset': limit_resources_per_dataset,
         'canada_dataset_visibility': canada_dataset_visibility,
         'canada_security_upload_type': canada_security_upload_type,
-        'canada_security_upload_type': canada_security_upload_presence,
+        'canada_security_upload_presence': canada_security_upload_presence,
         'canada_api_token_name_validator': canada_api_token_name_validator,
     }
 

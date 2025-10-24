@@ -1,11 +1,12 @@
-from typing import Dict
+from typing import Dict, Type
 from ckan.types import Schema, Validator
+from ckanext.tabledesigner.column_types import ColumnType
 
 from ckanext.tabledesigner.column_types import ChoiceColumn, TextColumn
 from ckanext.datastore.backend.postgres import literal_string, identifier
 
 
-def get_datastore_column_types():
+def get_datastore_column_types() -> Dict[str, Type[ColumnType]]:
     """
     Returns a dict of registered datastore column types.
     """

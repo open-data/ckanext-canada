@@ -20,7 +20,7 @@ from ckan.types import (
 from flask.typing import BeforeRequestCallable
 
 from ckan.authz import is_sysadmin
-from ckan.plugins.toolkit import(
+from ckan.plugins.toolkit import (
     _,
     h,
     g,
@@ -30,9 +30,10 @@ from ckan.plugins.toolkit import(
     asbool,
     ObjectNotFound
 )
+
 from ckanext.activity.model import activity as activity_model
 
-from ckanext.canada.view import(
+from ckanext.canada.view import (
     canada_search,
     canada_prevent_pd_views,
     CanadaResourceEditView,
@@ -61,9 +62,10 @@ def can_xloader(resource_id: str) -> bool:
             {'ignore_auth': True}, {'id': resource_id})
 
         if (
-            res.get('url_type') != 'upload' and
-            res.get('url_type') != '' and
-            res.get('url_type') is not None):
+          res.get('url_type') != 'upload' and
+          res.get('url_type') != '' and
+          res.get('url_type') is not None
+        ):
             log.debug(
                 'Only uploaded resources and allowed domain '
                 'sources can be added to the Data Store.')
@@ -96,7 +98,7 @@ def can_xloader(resource_id: str) -> bool:
 
     except ObjectNotFound:
         log.error('No validation report exists for resource %s' %
-                    resource_id)
+                  resource_id)
         return False
 
     return True
@@ -154,8 +156,7 @@ def update_citation_map(cite_data: DataDict, pkg_dict: DataDict):
 
 
 # type_ignore_reason: incomplete typing
-def _redirect_pd_dataset_endpoints(blueprint: Blueprint  # type: ignore
-                                   ) -> Optional[Response]:
+def _redirect_pd_dataset_endpoints() -> Optional[Response]:
     """
     Runs before request for /dataset and /dataset/<pkg_id>/resource
 
@@ -363,12 +364,6 @@ def update_dataset_search_params(search_params: Dict[str, Any]):
             search_params['fq'] = search_params['fq'].replace(
                 release_date_query, release_date_query.replace('"', ''))
 
-    log.info('    ')
-    log.info('DEBUGGING::')
-    log.info('    ')
-    log.info(search_params)
-    log.info('    ')
-
     # NOTE: is_registry_domain returns True outside of flask context
     if not h.is_registry_domain():
         # NOTE: wilcards must come last...
@@ -379,9 +374,9 @@ def update_dataset_search_params(search_params: Dict[str, Any]):
             '+dataset_type:(info OR dataset)',
             '+portal_release_date:*']
     else:
-        # FIXME: need to use dict key from extended action!!!
         try:
-            contextual_user = context['user']
+            contextual_user = search_params.get('extras', {}).pop(
+                '__CONTEXTUAL_USER__', None)
         except (TypeError, RuntimeError, AttributeError):
             contextual_user = None
         if not contextual_user:
@@ -457,9 +452,9 @@ def update_dataset_for_solr(data_dict: Dict[str, Any]):
 
     if data_dict.get('relationship'):
         data_dict['related_relationship'] = [rel['related_relationship'] for
-                                                rel in data_dict['relationship']]
+                                             rel in data_dict['relationship']]
         data_dict['related_type'] = [rel['related_type'] for
-                                        rel in data_dict['relationship']]
+                                     rel in data_dict['relationship']]
     data_dict.pop('relationship', None)
 
     if data_dict['type'] in ['dataset', 'info']:

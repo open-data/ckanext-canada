@@ -7,16 +7,11 @@ from io import StringIO, BytesIO
 import gzip
 import requests
 from collections import defaultdict
+from urllib.parse import urlparse
+from itertools import groupby
 
 from typing import Optional, Union, cast, Generator, Dict, Any, List
 from ckan.types import Context
-
-from urllib.parse import urlparse
-
-from ckan.logic import get_action
-from ckan import model
-from ckan.cli.db import db
-from itertools import groupby
 
 from ckanapi import (
     LocalCKAN,
@@ -24,6 +19,9 @@ from ckanapi import (
     ValidationError
 )
 
+from ckan.logic import get_action
+from ckan import model
+from ckan.cli.db import db
 import ckan.plugins.toolkit as toolkit
 
 import ckanext.datastore.backend.postgres as datastore

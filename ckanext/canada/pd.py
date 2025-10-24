@@ -1,7 +1,5 @@
 # NOTE: used to connect to the SOLR cores for Drupal PD Searches
 # TODO: remove once all PDs are in Django
-from typing import Optional, Union, Dict, Any, List, Tuple, Generator
-
 import click
 import os
 import sys
@@ -12,6 +10,9 @@ from pysolr import Solr
 from babel.numbers import format_currency, format_decimal
 
 from ckanapi import LocalCKAN, NotFound
+
+from typing import Optional, Union, Dict, Any, List, Tuple, Generator
+
 from ckan.plugins.toolkit import config
 
 from ckanext.recombinant.tables import (

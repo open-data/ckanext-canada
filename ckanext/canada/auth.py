@@ -6,7 +6,7 @@ from ckan.authz import has_user_permission_for_group_or_org
 
 
 def get_auth_methods() -> Dict[str, Union[AuthFunction,
-                                            ChainedAuthFunction]]:
+                                          ChainedAuthFunction]]:
     """
     Returns a dict of registered authentication methods.
     """
