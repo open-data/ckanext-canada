@@ -1765,6 +1765,9 @@ resources:
     invalid_choice_error: 'Invalid choice: {}'
     conditional_required_error: This field is required due to a response in a different field.
     both_lang_error: This text must be provided in both languages
+    recipient_postal_code_error: 'Must be a valid Canadian postal code in the format of "A1A 1A1"'
+    recipient_business_number_error: Must be a 9 digit number
+    federal_riding_number_error: Must be a 5 digit number
     start_end_date_error: '"Agreement Start Date" cannot be after "Projected Agreement End Date"'
     agreement_value_error: Must be greater than zero
 
