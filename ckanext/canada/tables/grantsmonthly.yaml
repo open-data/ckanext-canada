@@ -143,7 +143,8 @@ resources:
     format_type:
       en: Controlled List
       fr: Liste contrôlée
-    excel_required_formula: 'AND(NOT(ISBLANK({agreement_start_date})),VALUE({agreement_start_date})>=DATE(2025,11,1))'    datastore_type: text
+    excel_required_formula: 'AND(NOT(ISBLANK({agreement_start_date})),VALUE({agreement_start_date})>=DATE(2025,11,1))'
+    datastore_type: text
     choices:
       F:
         en: For-profit organizations
@@ -219,9 +220,7 @@ resources:
             NOT(ISNUMBER(VALUE({cell}))),
             LEN(TRIM({cell}))<>9,
             MID(TRIM({cell}),1,1)="0",
-            LEN({cell})-LEN(SUBSTITUTE({cell},"-",""))>0,
-            LEN({cell})-LEN(SUBSTITUTE({cell},".",""))>0,
-            LEN({cell})-LEN(SUBSTITUTE({cell},",",""))>0
+            LEN({cell})-LEN(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE({cell},",",""),".",""),"-",""))>0
           )
         )
       )
@@ -1271,21 +1270,20 @@ resources:
   - datastore_id: recipient_risk_flag_crown
     label:
       en: Recipient Risk Flag – Money currently owed to Crown
-      fr: (FR) Recipient Risk Flag – Money currently owed to Crown
+      fr: Indicateur de risques liés aux organisations bénéficiaires
     description:
       en: |
-        Use this field to assess whether the recipient has any history or currently instances of owing money to the Crown (to your department) related to this funding agreement, or on other funding agreements in your organizations (based on your department’s history with this recipient).
-        • Select "Yes" if the recipient has previously owned or currently owes money to the Crown (e.g., outstanding debt to your department or other federal entities) related to any funding agreements.
-        • Select "No" if the recipient has no known history of owing money to the Crown and there are no current outstanding debts.
-        • Select "NA – Not Applicable" if this is a newly signed funding agreement with a first-time recipient..   
-        • Select “Unknown” if you do not have this information (i.e. you do not track this information, or it was unavailable for reporting at this time).
-      fr: |
-        (FR)
         Use this field to assess whether the recipient has any history or currently instances of owingowes money to the Crown (to your department) related to this funding agreement, or on other funding agreements in your organizations (based on your department’s history with this recipient).
         • Select "Yes" if the recipient has previously owned or currently owes money to the Crown (e.g., outstanding debt to your department or other federal entities) related to any funding agreements.
         • Select "No" if the recipient has no known history of owing money to the Crown and there are no current outstanding debts.
         • Select "NA – Not Applicable" if this is a newly signed funding agreement with a first-time recipient..   
         • Select “Unknown” if you do not have this information (i.e. you do not track this information, or it was unavailable for reporting at this time).
+      fr: |
+        Utilisez ce champ pour évaluer si la personne bénéficiaire a des antécédents ou des dettes en cours envers l’État (au sein de votre ministère) liés à cette entente de financement ou à d’autres ententes de financement dans vos organisations, selon les dossiers de votre ministère concernant cette personne.
+        • Sélectionner « Oui » si l’organisation bénéficiaire a déjà eu ou a actuellement des sommes dues à l’État (p. ex. une dette impayée envers votre ministère ou d’autres entités fédérales) liées à une ou plusieurs ententes de financement.
+        • Sélectionner « Non » si l’organisation bénéficiaire n’a aucun antécédent connu de sommes dues à l’État et qu’aucune dette impayée n’est actuellement en cours.
+        • Sélectionner « S. O. — Sans objet » s’il s’agit d’une nouvelle entente de financement conclue avec une organisation bénéficiaire pour la première fois.
+        • Sélectionner « Inconnu » si vous ne disposez pas de ce renseignement (c’est-à-dire si vous ne le suivez pas ou s’il n’était pas disponible au moment de la déclaration).
     obligation:
       en: Mandatory
       fr: Obligatoire
@@ -1323,7 +1321,7 @@ resources:
   - datastore_id: recipient_risk_flag_compliance
     label:
       en: Recipient Risk Flag – Agreement compliance issue
-      fr: (FR) Recipient Risk Flag – Agreement compliance issue
+      fr: Indicateur de risques liés à l’organisation bénéficiaire
     description:
       en: |
         Use this field to assess whether there are ongoing or historical compliance issues associated with the recipient of this funding agreement (e.g. improper use of funds, unauthorized change of scope).
@@ -1332,12 +1330,11 @@ resources:
         • Select "N/A – Not Applicable" if this is a newly signed funding agreement with a first-time recipient.
         • Select “Unknown” if you do not have this information (i.e. you do not track this information, or it was unavailable for reporting at this time).
       fr: |
-        (FR)
-        Use this field to assess whether there are ongoing or historical compliance issues associated with the recipient of this funding agreement (e.g. improper use of funds, unauthorized change of scope).
-        • Select "Yes" if the recipient has a history of non-compliance with previous funding agreements, or if compliance issues have been identified during the current funding agreement.
-        • Select "No" if the recipient has remained compliant under the current funding agreement and there are no known compliance issues from past agreements.
-        • Select "N/A – Not Applicable" if this is a newly signed funding agreement with a first-time recipient.
-        • Select “Unknown” if you do not have this information (i.e. you do not track this information, or it was unavailable for reporting at this time).
+        Utilisez ce champ pour évaluer l’existence de problèmes de conformité actuels ou passés liés à la personne bénéficiaire de cette entente de financement (par exemple utilisation inappropriée des fonds ou modification non autorisée de la portée).
+        • Sélectionner « Oui » si l’organisation bénéficiaire a des antécédents de non-conformité à des ententes de financement antérieures ou si des problèmes de conformité ont été relevés dans le cadre de l’entente de financement actuelle.
+        • Sélectionner « Non » si l’organisation bénéficiaire est demeurée conforme à l’entente de financement actuelle et qu’aucun problème de conformité n’est connu pour les ententes passées.
+        • Sélectionner « S. O. — Sans objet » s’il s’agit d’une nouvelle entente de financement conclue avec une organisation bénéficiaire pour la première fois.
+        • Sélectionner « Inconnu » si vous ne disposez pas de ce renseignement (c’est-à-dire si vous ne le suivez pas ou si elle n’était pas disponible au moment de la déclaration). — Indicateur de risque lié à l’organisation bénéficiaire.
     obligation:
       en: Mandatory
       fr: Obligatoire
@@ -1375,7 +1372,7 @@ resources:
   - datastore_id: recipient_risk_flag_agreement
     label:
       en: Recipient Risk Flag – Agreement Close-out issues
-      fr: (FR) Recipient Risk Flag – Agreement Close-out issues
+      fr: Problèmes liés à la clôture de l’entente
     description:
       en: |
         Use this field to assess whether the recipient has experienced any issues during the close-out phase of previous or current funding agreements. 
@@ -1384,12 +1381,11 @@ resources:
         • Select "N/A – Not Applicable" if this is a newly signed agreement with a first-time recipient, or if the funding agreement is still active and has not yet reached the close-out phase.   
         • Select “Unknown” if you do not have this information (i.e. you do not track this information, or it was unavailable for reporting at this time).
       fr: |
-        (FR)
-        Use this field to assess whether the recipient has experienced any issues during the close-out phase of previous or current funding agreements. 
-        • Select "Yes" if the recipient has a history of close-out issues with previous funding agreements (e.g., delays in final reporting, unresolved deliverables, financial reconciliation problems), or if such issues have been identified during the close-out of the current agreement.
-        • Select "No" if the recipient has successfully completed close-out requirements for previous and/or current funding agreements without any known issues.
-        • Select "N/A – Not Applicable" if this is a newly signed agreement with a first-time recipient, or if the funding agreement is still active and has not yet reached the close-out phase.   
-        • Select “Unknown” if you do not have this information (i.e. you do not track this information, or it was unavailable for reporting at this time).
+        Utiliser ce champ pour évaluer si l’organisation bénéficiaire a rencontré des problèmes lors de la phase de clôture d’ententes de financement antérieures ou en cours.
+        • Sélectionner « Oui » si l’organisation bénéficiaire a des antécédents de problèmes lors de la clôture d’ententes de financement précédentes (p. ex., retards dans la remise des rapports finaux, livrables non réglés, problèmes liés à l'apurement des comptes) ou si de tels problèmes ont été relevés lors de la clôture de l’entente actuelle.
+        • Sélectionner « Non » si l’organisation bénéficiaire a satisfait avec succès aux exigences de clôture des ententes de financement précédentes ou en cours, sans qu’aucun problème connu n’ait été relevé.
+        • Sélectionner « S. O. — Sans objet » s’il s’agit d’une entente nouvellement signée avec une organisation bénéficiaire pour la première fois, ou si l’entente de financement est toujours active et n’a pas encore atteint la phase de clôture.
+        • Sélectionner « Inconnu » si vous ne disposez pas de ce renseignement (c’est-à-dire si vous ne le suivez pas ou s’il n’était pas disponible au moment de compte rendu).
     obligation:
       en: Mandatory
       fr: Obligatoire
@@ -1424,10 +1420,10 @@ resources:
         order: 4
 
   # 3.42 Contact Information for Funding Agreement
-  - datastore_id: recipient_risk_flag_agreement
+  - datastore_id: contact_funding_agreement
     label:
       en: Contact Information for Funding Agreement
-      fr: (FR) Contact Information for Funding Agreement
+      fr: Coordonnées pour les questions liées à l’entente de financement
     description:
       en: |
         Provide the primary email address for inquiries related to this funding agreement. This contact will be used to facilitate communication between departments and agencies (e.g. clarify agreement scope, coordinate on common recipients, or address operational questions, etc.).
@@ -1437,13 +1433,11 @@ resources:
             • The work email address of the program officer responsible for this agreement
         Ensure the selected contact is actively monitored and appropriate for interdepartmental correspondence.
       fr: |
-        (FR)
-        Provide the primary email address for inquiries related to this funding agreement. This contact will be used to facilitate communication between departments and agencies (e.g. clarify agreement scope, coordinate on common recipients, or address operational questions, etc.).
-        You may choose to provide one of the following, based on your program’s communication practices:
-            • A generic program inbox
-            • The work email address of the program manager
-            • The work email address of the program officer responsible for this agreement
-        Ensure the selected contact is actively monitored and appropriate for interdepartmental correspondence.
+        Fournir l’adresse courriel principale à laquelle envoyer les demandes de renseignements concernant cette entente de financement. Ce contact servira à faciliter la communication entre les ministères et les organismes (p. ex., clarifier la portée de l’entente, coordonner les actions concernant des bénéficiaires communs ou répondre à des questions opérationnelles, etc.).
+        Vous pouvez choisir de fournir l’une des options suivantes, selon les pratiques de communication de votre programme :
+        • Une boîte de réception générique du programme
+        • L’adresse courriel professionnelle de la personne chargée de la gestion du programme
+        • L’adresse courriel professionnelle de l’agent ou de l’agente de programme responsable de cette entente
     obligation:
       en: Mandatory
       fr: Obligatoire
@@ -1463,17 +1457,16 @@ resources:
   - datastore_id: multi_funding_indicator
     label:
       en: Multi-Program Funding Indicator
-      fr: (FR) Multi-Program Funding Indicator
+      fr: Indicateur de financement multiprogrammes
     description:
       en: |
         Use this field to identify whether the funding agreement includes financial contributions from more than one grant and contribution program. 
           • Select "Yes" if the agreement consolidates funding from multiple grant and contribution programs, either within the same department or across different departments or agencies.
           • Select "No" if the agreement is funded by a single grant and contribution program only.
       fr: |
-        (FR)
-        Use this field to identify whether the funding agreement includes financial contributions from more than one grant and contribution program. 
-          • Select "Yes" if the agreement consolidates funding from multiple grant and contribution programs, either within the same department or across different departments or agencies.
-          • Select "No" if the agreement is funded by a single grant and contribution program only.
+        Utiliser ce champ pour indiquer si l’entente de financement comprend des contributions financières provenant de plus d’un programme de subventions et de contributions.
+        • Sélectionner « Oui » si l’entente regroupe des fonds provenant de plusieurs programmes de subventions et de contributions, que ce soit au sein du même ministère ou entre différents ministères ou organismes.
+        • Sélectionnez « Non » si l’entente est financée uniquement par un seul programme de subventions et de contributions.
     obligation:
       en: Mandatory
       fr: Obligatoire
@@ -1503,7 +1496,7 @@ resources:
   - datastore_id: multi_recipient_agreement_indicator
     label:
       en: Multi-Recipient Agreement Indicator
-      fr: (FR) Multi-Recipient Agreement Indicator
+      fr: Indicateur d’entente à bénéficiaires multiples
     description:
       en: |
         Use this field to identify whether the funding agreement involves more than one recipient.
@@ -1511,11 +1504,10 @@ resources:
           • Select "No" if the agreement is with a single recipient only.
         This field is NOT meant to capture ultimate recipients, but rather instances of multiple recipients directly on a grant or contribution agreement with a federal organization.
       fr: |
-        (FR)
-        Use this field to identify whether the funding agreement involves more than one recipient.
-          • Select "Yes" if the agreement is established with multiple recipients, such as a consortium, partnership, or joint initiative involving two or more organizations.
-          • Select "No" if the agreement is with a single recipient only.
-        This field is NOT meant to capture ultimate recipients, but rather instances of multiple recipients directly on a grant or contribution agreement with a federal organization.
+        Utiliser ce champ pour indiquer si l’entente de financement implique plus d’une organisation bénéficiaire.
+        • Sélectionner « Oui » si l’entente est établie avec plusieurs bénéficiaires, par exemple un consortium, un partenariat ou une initiative conjointe impliquant deux organisations ou plus.
+        • Sélectionner « Non » si l’entente ne concerne qu’une seule organisation bénéficiaire.
+        Ce champ n’est pas destiné à enregistrer les bénéficiaires finaux, mais plutôt les cas de bénéficiaires multiples directement liés à une entente de subvention ou de contribution avec une organisation fédérale.
     obligation:
       en: Mandatory
       fr: Obligatoire
@@ -1545,24 +1537,28 @@ resources:
   - datastore_id: project_location_variance_indicator
     label:
       en: Project Location Variance Indicator
-      fr: (FR) Project Location Variance Indicator
+      fr: Indicateur de variation du lieu de projet
     description:
       en: |
         Use this field to identify whether the location of the project(s) funded under this funding agreement is different from the recipient’s organizational location.
           • Select "Yes" if the project activities are primarily carried out in a location that differs from the recipient’s registered or operational address (e.g., a national organization delivering services in a remote community).
           • Select "No" if the project activities take place at the same location as the recipient’s registered or operational address.
-          • Select "Not Applicable" if the project activities do not have a physical address, e.g. research.          • Select "Unknown" if the project location is not specified or not known at the time of data entry.
-        Note: This indicator helps identify agreements where project delivery occurs in regions distinct from the recipient’s base, supporting regional analysis and service coverage assessments.
-      fr: |
-        (FR)
-        Use this field to identify whether the location of the project(s) funded under this funding agreement is different from the recipient’s organizational location.
-          • Select "Yes" if the project activities are primarily carried out in a location that differs from the recipient’s registered or operational address (e.g., a national organization delivering services in a remote community).
-          • Select "No" if the project activities take place at the same location as the recipient’s registered or operational address.
-          • Select "Not Applicable" if the project activities do not have a physical address, e.g. research.          • Select "Unknown" if the project location is not specified or not known at the time of data entry.
+          • Select "Not Applicable" if the project activities do not have a physical address, e.g. research.
           • Select "Unknown" if the project location is not specified or not known at the time of data entry.
         Note: This indicator helps identify agreements where project delivery occurs in regions distinct from the recipient’s base, supporting regional analysis and service coverage assessments.
+
         For domestic projects, please determine your response by comparing the recipient’s city and the project location city.
         For international projects, please determine your response by comparing the recipient’s country and the project location country.
+      fr: |
+        Utiliser ce champ pour indiquer si le lieu du ou des projets financés dans le cadre de cette entente de financement diffère de l’emplacement organisationnel de l’organisation bénéficiaire.
+        • Sélectionner « Oui » si les activités du projet sont principalement réalisées dans un lieu différent de l’adresse enregistrée ou opérationnelle de l’organisation bénéficiaire (p. ex., une organisation nationale offrant des services dans une collectivité éloignée).
+        • Sélectionner « Non » si les activités du projet se déroulent au même endroit que l’adresse enregistrée ou opérationnelle de l’organisation bénéficiaire.
+        • Sélectionnez « Sans objet » si les activités du projet n’ont pas d’adresse physique, par exemple dans le cadre de la recherche.
+        • Sélectionner « Inconnu » si le lieu du projet n’est pas spécifié ou n’est pas connu au moment de la saisie des données.
+        Remarque : Cet indicateur permet d’indiquer les ententes pour lesquelles la prestation du projet se déroule dans des régions distinctes du siège de l’organisation bénéficiaire, ce qui facilite les analyses régionales et l’évaluation de la couverture des services.
+
+        Pour les projets nationaux, déterminez votre réponse en comparant la ville de la personne bénéficiaire avec celle de l’emplacement du projet.
+        Pour les projets internationaux, déterminez votre réponse en comparant le pays de la personne bénéficiaire avec celui de l’emplacement du projet.
     obligation:
       en: Mandatory
       fr: Obligatoire
@@ -1650,7 +1646,6 @@ resources:
 
         errors := errors || required_error(NEW.agreement_value, 'agreement_value');
 
-        errors := errors || required_error(NEW.dem_intended_beneficiary, 'dem_intended_beneficiary');
         crval := choices_clean_error(NEW.dem_intended_beneficiary, {dem_intended_beneficiary}, 'dem_intended_beneficiary');
         errors := errors || crval.error;
         NEW.dem_intended_beneficiary := crval.clean;
@@ -1660,7 +1655,6 @@ resources:
         ELSE
           errors := errors || both_languages_error(NEW.other_dem_intended_beneficiary_description_en, 'other_dem_intended_beneficiary_description_en', NEW.other_dem_intended_beneficiary_description_fr, 'other_dem_intended_beneficiary_description_fr');
         END IF;
-        errors := errors || required_error(NEW.reason_amendment, 'reason_amendment');
         crval := choices_clean_error(NEW.reason_amendment, {reason_amendment}, 'reason_amendment');
         errors := errors || crval.error;
         NEW.reason_amendment := crval.clean;
@@ -1670,8 +1664,26 @@ resources:
         ELSE
           errors := errors || both_languages_error(NEW.other_reason_amendment_en, 'other_reason_amendment_en', NEW.other_reason_amendment_fr, 'other_reason_amendment_fr');
         END IF;
-        errors := errors || required_error(NEW.rating_risk, 'rating_risk');
-        errors := errors || choice_error(NEW.rating_risk, {rating_risk}, 'rating_risk');
+
+        errors := errors || required_error(NEW.recipient_risk_flag_crown, 'recipient_risk_flag_crown');
+        errors := errors || choice_error(NEW.recipient_risk_flag_crown, {recipient_risk_flag_crown}, 'recipient_risk_flag_crown');
+
+        errors := errors || required_error(NEW.recipient_risk_flag_compliance, 'recipient_risk_flag_compliance');
+        errors := errors || choice_error(NEW.recipient_risk_flag_compliance, {recipient_risk_flag_compliance}, 'recipient_risk_flag_compliance');
+
+        errors := errors || required_error(NEW.recipient_risk_flag_agreement, 'recipient_risk_flag_agreement');
+        errors := errors || choice_error(NEW.recipient_risk_flag_agreement, {recipient_risk_flag_agreement}, 'recipient_risk_flag_agreement');
+
+        errors := errors || required_error(NEW.contact_funding_agreement, 'contact_funding_agreement');
+
+        errors := errors || required_error(NEW.multi_funding_indicator, 'multi_funding_indicator');
+        errors := errors || choice_error(NEW.multi_funding_indicator, {multi_funding_indicator}, 'multi_funding_indicator');
+
+        errors := errors || required_error(NEW.multi_recipient_agreement_indicator, 'multi_recipient_agreement_indicator');
+        errors := errors || choice_error(NEW.multi_recipient_agreement_indicator, {multi_recipient_agreement_indicator}, 'multi_recipient_agreement_indicator');
+
+        errors := errors || required_error(NEW.project_location_variance_indicator, 'project_location_variance_indicator');
+        errors := errors || choice_error(NEW.project_location_variance_indicator, {project_location_variance_indicator}, 'project_location_variance_indicator');
 
         errors := errors || required_error(NEW.agreement_start_date, 'agreement_start_date');
         IF NEW.agreement_start_date >= '2018-04-01'::date THEN
@@ -1691,7 +1703,53 @@ resources:
           errors := errors || required_error(NEW.description_en, 'description_en');
           errors := errors || required_error(NEW.description_fr, 'description_fr');
         END IF;
+
         NEW.agreement_value := round(NEW.agreement_value, 2);
+
+        IF NEW.agreement_start_date >= '2025-11-01'::date THEN
+          errors := errors || conditional_required_error(NEW.recipient_type, 'recipient_type');
+
+          errors := errors || conditional_required_error(NEW.prog_name_en, 'prog_name_en');
+          errors := errors || conditional_required_error(NEW.prog_name_fr, 'prog_name_fr');
+
+          errors := errors || conditional_required_error(NEW.prog_purpose_en, 'prog_purpose_en');
+          errors := errors || conditional_required_error(NEW.prog_purpose_fr, 'prog_purpose_fr');
+
+          errors := errors || conditional_required_error(NEW.agreement_title_en, 'agreement_title_en');
+          errors := errors || conditional_required_error(NEW.agreement_title_fr, 'agreement_title_fr');
+
+          errors := errors || future_date_error(NEW.agreement_start_date, 'agreement_start_date');
+
+          errors := errors || conditional_required_error(NEW.agreement_end_date, 'agreement_end_date');
+          IF NEW.agreement_start_date::timestamp > NEW.agreement_end_date::timestamp THEN
+            errors := errors || ARRAY[['agreement_start_date', {start_end_date_error}]];
+          END IF;
+
+          errors := errors || conditional_required_error(NEW.expected_results_en, 'expected_results_en');
+          errors := errors || conditional_required_error(NEW.expected_results_fr, 'expected_results_fr');
+
+          NEW.recipient_postal_code := trim_lead_trailing(NEW.recipient_postal_code);
+          NEW.recipient_postal_code := UPPER(NEW.recipient_postal_code);
+          NEW.recipient_postal_code := REGEXP_REPLACE(NEW.recipient_postal_code, '\s+', ' ', 'g');
+          IF NEW.recipient_postal_code IS NOT NULL AND NEW.recipient_postal_code <> '' AND NOT NEW.recipient_postal_code ~ '^[A-Z]\d[A-Z]\s\d[A-Z]\d$' THEN
+            errors := errors || ARRAY[['recipient_postal_code', {recipient_postal_code_error}]];
+          END IF;
+
+          NEW.recipient_business_number := trim_lead_trailing(NEW.recipient_business_number);
+          IF NEW.recipient_business_number IS NOT NULL AND NEW.recipient_business_number <> '' AND (NOT is_natural_number(NEW.recipient_business_number) OR (is_natural_number(NEW.recipient_business_number) AND LENGTH(NEW.recipient_business_number) != 9)) THEN
+            errors := errors || ARRAY[['recipient_business_number', {recipient_business_number_error}]];
+          END IF;
+
+          NEW.federal_riding_number := trim_lead_trailing(NEW.federal_riding_number);
+          IF NEW.federal_riding_number IS NOT NULL AND NEW.federal_riding_number <> '' AND (NOT is_natural_number(NEW.federal_riding_number) OR (is_natural_number(NEW.federal_riding_number) AND LENGTH(NEW.federal_riding_number) != 5)) THEN
+            errors := errors || ARRAY[['federal_riding_number', {federal_riding_number_error}]];
+          END IF;
+
+          IF NOT NEW.agreement_value > 0 THEN
+            errors := errors || ARRAY[['agreement_value', {agreement_value_error}]];
+          END IF;
+
+        END IF;
 
         IF errors = '{{}}' THEN
           RETURN NEW;
@@ -1727,12 +1785,15 @@ resources:
       prog_name_fr: "Le programme de subvention du Canada"
       prog_purpose_en: "The Canada Granting Program encourage Canadians to learn about Canada’s geography, history, and economy. The Program provides networking opportunities to enhance recipients’ understanding of Canada."
       prog_purpose_fr: "Le programme de subventions du Canada incite les Canadiens à se renseigner sur la géographie, l’histoire et l’économie du Canada. Le programme offre des opportunités de réseautage pour aider les bénéficiaires d’améliorer leur compréhension du Canada."
+      agreement_title_en: "Building better buildings"
+      agreement_title_fr: "Construire des meilleurs bâtiments"
       agreement_number: "F1580-140737"
       agreement_value: "500000"
       agreement_start_date: "2019-04-01"
       agreement_end_date: "2020-04-30"
       description_en: "Developing models and other tools to predict the safety performance of buildings."
       description_fr: "Met au point des modèles et d'autres outils pour prévoir la sécurité des bâtiments."
+      naics_identifier: "611710"
       expected_results_en: "Develop highly qualified personnel available to pursue various careers within industry, academia, government and other sectors of the economy."
       expected_results_fr: "Développé un personnel hautement qualifié prêt à mener une carrière variée au sein de l’industrie, du milieu académique, de la fonction publique ou dans d’autres secteurs de l’économie."
       dem_intended_beneficiary: ["Y"]
@@ -1742,6 +1803,13 @@ resources:
       other_reason_amendment_en: Change of the eligible activities or initiatives
       other_reason_amendment_fr: Modification des activités ou initiatives éligibles
       rating_risk: "L"
+      recipient_risk_flag_crown: "Y"
+      recipient_risk_flag_compliance: "Y"
+      recipient_risk_flag_agreement: "Y"
+      contact_funding_agreement: "firstname.lastname@tbs-sct.gc.ca"
+      multi_funding_indicator: "Y"
+      multi_recipient_agreement_indicator: "Y"
+      project_location_variance_indicator: "Y"
 
     filters:
       recipient_province: "ON"
