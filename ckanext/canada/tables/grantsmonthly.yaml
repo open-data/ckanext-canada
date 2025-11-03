@@ -1765,6 +1765,8 @@ resources:
     invalid_choice_error: 'Invalid choice: {}'
     conditional_required_error: This field is required due to a response in a different field.
     both_lang_error: This text must be provided in both languages
+    start_end_date_error: '"Agreement Start Date" cannot be after "Projected Agreement End Date"'
+    agreement_value_error: Must be greater than zero
 
   examples:
     record:
