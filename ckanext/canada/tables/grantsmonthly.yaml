@@ -1292,20 +1292,20 @@ resources:
     choice_order_expression: 'value.get("order", False), code'
     choices:
       'Y':
-        en: Yes
-        fr: Oui
+        en: "Yes"
+        fr: "Oui"
         order: 1
       'N':
-        en: No
-        fr: Non
+        en: "No"
+        fr: "Non"
         order: 2
       'NA':
-        en: Not applicable
-        fr: Sans objet
+        en: "Not applicable"
+        fr: "Sans objet"
         order: 3
       'U':
-        en: Unknown
-        fr: Inconnue
+        en: "Unknown"
+        fr: "Inconnue"
         order: 4
 
   # 3.40 Recipient Risk Flag – Agreement compliance issue
@@ -1343,20 +1343,20 @@ resources:
     choice_order_expression: 'value.get("order", False), code'
     choices:
       'Y':
-        en: Yes
-        fr: Oui
+        en: "Yes"
+        fr: "Oui"
         order: 1
       'N':
-        en: No
-        fr: Non
+        en: "No"
+        fr: "Non"
         order: 2
       'NA':
-        en: Not applicable
-        fr: Sans objet
+        en: "Not applicable"
+        fr: "Sans objet"
         order: 3
       'U':
-        en: Unknown
-        fr: Inconnue
+        en: "Unknown"
+        fr: "Inconnue"
         order: 4
 
   # 3.41 Recipient Risk Flag – Agreement Close-out issues
@@ -1394,20 +1394,20 @@ resources:
     choice_order_expression: 'value.get("order", False), code'
     choices:
       'Y':
-        en: Yes
-        fr: Oui
+        en: "Yes"
+        fr: "Oui"
         order: 1
       'N':
-        en: No
-        fr: Non
+        en: "No"
+        fr: "Non"
         order: 2
       'NA':
-        en: Not applicable
-        fr: Sans objet
+        en: "Not applicable"
+        fr: "Sans objet"
         order: 3
       'U':
-        en: Unknown
-        fr: Inconnue
+        en: "Unknown"
+        fr: "Inconnue"
         order: 4
 
   # 3.42 Contact Information for Funding Agreement
@@ -1474,12 +1474,12 @@ resources:
     choice_order_expression: 'value.get("order", False), code'
     choices:
       'Y':
-        en: Yes
-        fr: Oui
+        en: "Yes"
+        fr: "Oui"
         order: 1
       'N':
-        en: No
-        fr: Non
+        en: "No"
+        fr: "Non"
         order: 2
 
   # 3.44 Multi-Recipient Agreement Indicator
@@ -1515,12 +1515,12 @@ resources:
     choice_order_expression: 'value.get("order", False), code'
     choices:
       'Y':
-        en: Yes
-        fr: Oui
+        en: "Yes"
+        fr: "Oui"
         order: 1
       'N':
-        en: No
-        fr: Non
+        en: "No"
+        fr: "Non"
         order: 2
 
   # 3.45 Project Location Variance Indicator
@@ -1566,20 +1566,20 @@ resources:
     choice_order_expression: 'value.get("order", False), code'
     choices:
       'Y':
-        en: Yes
-        fr: Oui
+        en: "Yes"
+        fr: "Oui"
         order: 1
       'N':
-        en: No
-        fr: Non
+        en: "No"
+        fr: "Non"
         order: 2
       'NA':
-        en: Not applicable
-        fr: Sans objet
+        en: "Not applicable"
+        fr: "Sans objet"
         order: 3
       'U':
-        en: Unknown
-        fr: Inconnue
+        en: "Unknown"
+        fr: "Inconnue"
         order: 4
 
   # System fields for audit trail
