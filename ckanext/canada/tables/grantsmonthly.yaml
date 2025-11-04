@@ -959,9 +959,6 @@ resources:
     format_type:
       en: Controlled List
       fr: Liste contrôlée
-    validation:
-      en: This field must not be empty.
-      fr: Ce champ ne doit pas être vide.
     datastore_type: _text
     form_snippet: scheming/form_snippets/multiple_select.html
     choice_order_expression: 'value.get("order", False), code'
@@ -1100,9 +1097,6 @@ resources:
     format_type:
       en: Controlled List
       fr: Liste contrôlée
-    validation:
-      en: This field must not be empty.
-      fr: Ce champ ne doit pas être vide.
     datastore_type: _text
     excel_full_text_choices: true
     form_snippet: scheming/form_snippets/multiple_select.html
@@ -1238,9 +1232,6 @@ resources:
     format_type:
       en: Controlled List
       fr: Liste contrôlée
-    validation:
-      en: This field must not be empty.
-      fr: Ce champ ne doit pas être vide.
     datastore_type: text
     excel_full_text_choices: true
     choice_order_expression: 'value.get("order", False), code'
@@ -1273,7 +1264,7 @@ resources:
       fr: Indicateur de risques liés aux organisations bénéficiaires
     description:
       en: |
-        Use this field to assess whether the recipient has any history or currently instances of owingowes money to the Crown (to your department) related to this funding agreement, or on other funding agreements in your organizations (based on your department’s history with this recipient).
+        Use this field to assess whether the recipient currently owes money to the Crown (to your department) related to this funding agreement, or on other funding agreements in your organization.
         • Select "Yes" if the recipient has previously owned or currently owes money to the Crown (e.g., outstanding debt to your department or other federal entities) related to any funding agreements.
         • Select "No" if the recipient has no known history of owing money to the Crown and there are no current outstanding debts.
         • Select "NA – Not Applicable" if this is a newly signed funding agreement with a first-time recipient..   
@@ -1300,19 +1291,19 @@ resources:
     excel_full_text_choices: true
     choice_order_expression: 'value.get("order", False), code'
     choices:
-      Y:
+      'Y':
         en: Yes
         fr: Oui
         order: 1
-      N:
+      'N':
         en: No
         fr: Non
         order: 2
-      NA:
+      'NA':
         en: Not applicable
         fr: Sans objet
         order: 3
-      U:
+      'U':
         en: Unknown
         fr: Inconnue
         order: 4
@@ -1351,19 +1342,19 @@ resources:
     excel_full_text_choices: true
     choice_order_expression: 'value.get("order", False), code'
     choices:
-      Y:
+      'Y':
         en: Yes
         fr: Oui
         order: 1
-      N:
+      'N':
         en: No
         fr: Non
         order: 2
-      NA:
+      'NA':
         en: Not applicable
         fr: Sans objet
         order: 3
-      U:
+      'U':
         en: Unknown
         fr: Inconnue
         order: 4
@@ -1402,19 +1393,19 @@ resources:
     excel_full_text_choices: true
     choice_order_expression: 'value.get("order", False), code'
     choices:
-      Y:
+      'Y':
         en: Yes
         fr: Oui
         order: 1
-      N:
+      'N':
         en: No
         fr: Non
         order: 2
-      NA:
+      'NA':
         en: Not applicable
         fr: Sans objet
         order: 3
-      U:
+      'U':
         en: Unknown
         fr: Inconnue
         order: 4
@@ -1451,7 +1442,6 @@ resources:
       en: This field must not be empty.
       fr: Ce champ ne doit pas être vide.
     datastore_type: text
-    excel_full_text_choices: true
 
   # 3.43 Recipient Risk Flag – Agreement Close-out issues
   - datastore_id: multi_funding_indicator
@@ -1483,11 +1473,11 @@ resources:
     excel_full_text_choices: true
     choice_order_expression: 'value.get("order", False), code'
     choices:
-      Y:
+      'Y':
         en: Yes
         fr: Oui
         order: 1
-      N:
+      'N':
         en: No
         fr: Non
         order: 2
@@ -1524,11 +1514,11 @@ resources:
     excel_full_text_choices: true
     choice_order_expression: 'value.get("order", False), code'
     choices:
-      Y:
+      'Y':
         en: Yes
         fr: Oui
         order: 1
-      N:
+      'N':
         en: No
         fr: Non
         order: 2
@@ -1575,19 +1565,19 @@ resources:
     excel_full_text_choices: true
     choice_order_expression: 'value.get("order", False), code'
     choices:
-      Y:
+      'Y':
         en: Yes
         fr: Oui
         order: 1
-      N:
+      'N':
         en: No
         fr: Non
         order: 2
-      NA:
+      'NA':
         en: Not applicable
         fr: Sans objet
         order: 3
-      U:
+      'U':
         en: Unknown
         fr: Inconnue
         order: 4
