@@ -953,8 +953,8 @@ resources:
       en: Optional
       fr: Facultatif
     occurrence: Repeatable
-    excel_required: true
-    form_required: true
+    excel_required: false
+    form_required: false
     excel_full_text_choices: true
     format_type:
       en: Controlled List
@@ -1092,8 +1092,8 @@ resources:
       en: Optional
       fr: Facultatif
     occurrence: Repeatable
-    excel_required: true
-    form_required: true
+    excel_required: false
+    form_required: false
     format_type:
       en: Controlled List
       fr: Liste contrôlée
@@ -1227,8 +1227,8 @@ resources:
       en: Optional
       fr: Facultatif
     occurrence: Single
-    excel_required: true
-    form_required: true
+    excel_required: false
+    form_required: false
     format_type:
       en: Controlled List
       fr: Liste contrôlée
