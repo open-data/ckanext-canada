@@ -1289,6 +1289,11 @@ def organization_member_dump(id: str):
                 _('Role'), _('Date created'), _('Last active date')]]
     for uid, _user, role in members:
         user_obj = model.User.get(uid)
+        if user_obj.last_active:
+            last_active = user_obj.last_active.strftime("%Y-%m-%d %H:%M:%S")
+        else:
+            last_active = _('N/A')
+
         if not user_obj:
             continue
         results.append([
@@ -1297,8 +1302,7 @@ def organization_member_dump(id: str):
             user_obj.fullname if user_obj.fullname else _('N/A'),
             role,
             user_obj.created.strftime("%Y-%m-%d %H:%M:%S"),
-            user_obj.last_active.strftime("%Y-%m-%d %H:%M:%S")
-                if user_obj.last_active else _('N/A'),
+            last_active,
         ])
 
     output_stream = StringIO()
