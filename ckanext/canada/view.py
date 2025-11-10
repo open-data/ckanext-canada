@@ -1368,17 +1368,39 @@ def organization_member_dump(id: str):
     except NotFound:
         abort(404, _('Members not found'))
 
-    results = [[_('Username'), _('Email'), _('Name'), _('Role')]]
+    results = [
+        [
+            _("Username"),
+            _("Email"),
+            _("Name"),
+            _("Role"),
+            _("Date created"),
+            _("Last active date"),
+        ]
+    ]
+
     for uid, _user, role in members:
         user_obj = model.User.get(uid)
+
         if not user_obj:
             continue
-        results.append([
-            user_obj.name,
-            user_obj.email,
-            user_obj.fullname if user_obj.fullname else _('N/A'),
-            role,
-        ])
+
+        last_active = (
+            user_obj.last_active.strftime("%Y-%m-%d %H:%M:%S")
+            if user_obj.last_active
+            else _("N/A")
+        )
+
+        results.append(
+            [
+                user_obj.name,
+                user_obj.email,
+                user_obj.fullname or _("N/A"),
+                role,
+                user_obj.created.strftime("%Y-%m-%d %H:%M:%S"),
+                last_active,
+            ]
+        )
 
     output_stream = StringIO()
     output_stream.write(BOM)

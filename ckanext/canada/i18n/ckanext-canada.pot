@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ckanext-canada 0.4.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-10-09 17:46+0000\n"
+"POT-Creation-Date: 2025-11-10 13:11-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -272,7 +272,7 @@ msgstr ""
 
 #: ckanext/canada/strings.py:15
 #: ckanext/canada/templates/admin/snippets/portal_sync_package_item.html:14
-#: ckanext/canada/view.py:1379
+#: ckanext/canada/view.py:1391 ckanext/canada/view.py:1398
 msgid "N/A"
 msgstr ""
 
@@ -282,7 +282,7 @@ msgstr ""
 #: ckanext/canada/templates/user/list.html:44
 #: ckanext/canada/templates/user/new_user_form.html:6
 #: ckanext/canada/templates/user/snippets/login_form.html:32
-#: ckanext/canada/view.py:1371
+#: ckanext/canada/view.py:1373
 msgid "Username"
 msgstr ""
 
@@ -291,22 +291,22 @@ msgstr ""
 #: ckanext/canada/templates/user/new_user_form.html:12
 #: ckanext/canada/templates/user/read_base.html:61
 #: ckanext/canada/templates/user/recover_username.html:17
-#: ckanext/canada/view.py:1371
+#: ckanext/canada/view.py:1374
 msgid "Email"
 msgstr ""
 
 #: ckanext/canada/strings.py:18 ckanext/canada/templates/user/api_tokens.html:7
-#: ckanext/canada/templates/user/list.html:45 ckanext/canada/view.py:1371
+#: ckanext/canada/templates/user/list.html:45 ckanext/canada/view.py:1375
 msgid "Name"
 msgstr ""
 
 #: ckanext/canada/strings.py:19
 #: ckanext/canada/templates/organization/member_new.html:58
-#: ckanext/canada/templates/user/list.html:46 ckanext/canada/view.py:1371
+#: ckanext/canada/templates/user/list.html:46 ckanext/canada/view.py:1376
 msgid "Role"
 msgstr ""
 
-#: ckanext/canada/strings.py:20 ckanext/canada/view.py:1389
+#: ckanext/canada/strings.py:20 ckanext/canada/view.py:1411
 msgid "members"
 msgstr ""
 
@@ -1058,7 +1058,7 @@ msgid ""
 "href=\"mailto:{support}\">{support}</a>"
 msgstr ""
 
-#: ckanext/canada/view.py:1349 ckanext/canada/view.py:1427
+#: ckanext/canada/view.py:1349 ckanext/canada/view.py:1449
 msgid "Organization not found"
 msgstr ""
 
@@ -1066,12 +1066,20 @@ msgstr ""
 msgid "Not authorized to access {org_name} members download"
 msgstr ""
 
-#: ckanext/canada/view.py:1430
+#: ckanext/canada/view.py:1377
+msgid "Date created"
+msgstr ""
+
+#: ckanext/canada/view.py:1378
+msgid "Last active date"
+msgstr ""
+
+#: ckanext/canada/view.py:1452
 #, python-format
 msgid "User %r not authorized to edit members of %s"
 msgstr ""
 
-#: ckanext/canada/view.py:1433
+#: ckanext/canada/view.py:1455
 #, python-format
 msgid "User %r not authorized to view members of %s"
 msgstr ""
@@ -1420,8 +1428,8 @@ msgstr ""
 #. SQL Trigger String for PD Type: travelq
 #. SQL Trigger String for PD Type: wrongdoing
 #: ckanext/canada/tables/adminaircraft.yaml:355
-#: ckanext/canada/tables/contracts.yaml:2265 ckanext/canada/tables/grants.yaml:1253
-#: ckanext/canada/tables/grantsmonthly.yaml:935
+#: ckanext/canada/tables/contracts.yaml:2265 ckanext/canada/tables/grants.yaml:1255
+#: ckanext/canada/tables/grantsmonthly.yaml:1753
 #: ckanext/canada/tables/hospitalityq.yaml:739
 #: ckanext/canada/tables/qpnotes.yaml:382
 #: ckanext/canada/tables/reclassification.yaml:310
@@ -1760,32 +1768,42 @@ msgid ""
 msgstr ""
 
 #. SQL Trigger String for PD Type: grants
-#: ckanext/canada/tables/grants.yaml:1254
+#. SQL Trigger String for PD Type: grantsmonthly
+#: ckanext/canada/tables/grants.yaml:1256
+#: ckanext/canada/tables/grantsmonthly.yaml:1758
 msgid "Must be a valid Canadian postal code in the format of \"A1A 1A1\""
 msgstr ""
 
 #. SQL Trigger String for PD Type: grants
-#: ckanext/canada/tables/grants.yaml:1255
+#. SQL Trigger String for PD Type: grantsmonthly
+#: ckanext/canada/tables/grants.yaml:1257
+#: ckanext/canada/tables/grantsmonthly.yaml:1759
 msgid "Must be a 9 digit number"
 msgstr ""
 
 #. SQL Trigger String for PD Type: grants
-#: ckanext/canada/tables/grants.yaml:1256
+#. SQL Trigger String for PD Type: grantsmonthly
+#: ckanext/canada/tables/grants.yaml:1258
+#: ckanext/canada/tables/grantsmonthly.yaml:1760
 msgid "Must be a 5 digit number"
 msgstr ""
 
 #. SQL Trigger String for PD Type: grants
-#: ckanext/canada/tables/grants.yaml:1257
+#. SQL Trigger String for PD Type: grantsmonthly
+#: ckanext/canada/tables/grants.yaml:1259
+#: ckanext/canada/tables/grantsmonthly.yaml:1761
 msgid "\"Agreement Start Date\" cannot be after \"Projected Agreement End Date\""
 msgstr ""
 
 #. SQL Trigger String for PD Type: grants
-#: ckanext/canada/tables/grants.yaml:1258
+#. SQL Trigger String for PD Type: grantsmonthly
+#: ckanext/canada/tables/grants.yaml:1260
+#: ckanext/canada/tables/grantsmonthly.yaml:1762
 msgid "Must be greater than zero"
 msgstr ""
 
 #. Resource Title for PD Type: grants
-#: ckanext/canada/tables/grants.yaml:1307
+#: ckanext/canada/tables/grants.yaml:1309
 msgid "Proactive Publication - Grants and Contributions Nothing to Report"
 msgstr ""
 
@@ -1810,28 +1828,28 @@ msgstr ""
 
 #. SQL Trigger String for PD Type: grantsmonthly
 #. SQL Trigger String for PD Type: service
-#: ckanext/canada/tables/grantsmonthly.yaml:936
+#: ckanext/canada/tables/grantsmonthly.yaml:1754
 #: ckanext/canada/tables/service.yaml:1785 ckanext/canada/tables/service.yaml:2688
 msgid "This field has a maximum length of {} characters."
 msgstr ""
 
 #. SQL Trigger String for PD Type: grantsmonthly
 #. SQL Trigger String for PD Type: service
-#: ckanext/canada/tables/grantsmonthly.yaml:937
+#: ckanext/canada/tables/grantsmonthly.yaml:1755
 #: ckanext/canada/tables/service.yaml:1786 ckanext/canada/tables/service.yaml:2689
 msgid "Invalid choice: {}"
 msgstr ""
 
 #. SQL Trigger String for PD Type: grantsmonthly
 #. SQL Trigger String for PD Type: service
-#: ckanext/canada/tables/grantsmonthly.yaml:938
+#: ckanext/canada/tables/grantsmonthly.yaml:1756
 #: ckanext/canada/tables/service.yaml:1788 ckanext/canada/tables/service.yaml:2692
 msgid "This field is required due to a response in a different field."
 msgstr ""
 
 #. SQL Trigger String for PD Type: grantsmonthly
 #. SQL Trigger String for PD Type: service
-#: ckanext/canada/tables/grantsmonthly.yaml:939
+#: ckanext/canada/tables/grantsmonthly.yaml:1757
 #: ckanext/canada/tables/service.yaml:1789 ckanext/canada/tables/service.yaml:2693
 msgid "This text must be provided in both languages"
 msgstr ""
