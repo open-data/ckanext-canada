@@ -2,7 +2,9 @@
   "name": "ckanext-canada",
   "version": "1.0.0",
   "description": "CKAN Canada Plugin",
-  "dependencies": {},
+  "dependencies": {
+    "sass": "^1.93.2"
+  },
   "devDependencies": {
     "pyright": "1.1.386"
   },
