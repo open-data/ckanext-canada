@@ -5,7 +5,7 @@
 {% endif %}
 
 {% block breadcrumb_content %}
-  {% if h.is_registry_domain() %}
+  {% if g.is_registry %}
     {% if g.userobj and not g.userobj.sysadmin %}
       {{ h.build_nav('user.index', _('Users')) }}
     {% else %}
@@ -17,7 +17,7 @@
 {% endblock %}
 
 {% block subtitle %}
-  {% if h.is_registry_domain() %}
+  {% if g.is_registry %}
     {% if g.userobj and not g.userobj.sysadmin %}
       {{ _('Users') }}
     {% else %}
@@ -29,7 +29,7 @@
 {% endblock %}
 
 {% block primary_content_inner %}
-  {% if h.is_registry_domain() %}
+  {% if g.is_registry %}
     <h2 class="wb-inv">{{ _('Users') }}</h2>
     {% if g.userobj and g.userobj.sysadmin %}
       <a class="btn btn-default mrgn-bttm-lg" href="{{ h.url_for('user.register') }}">{{ _('Create an Account') }}</a>
@@ -85,7 +85,7 @@
 {% endblock %}
 
 {% block secondary_content %}
-  {% if h.is_registry_domain() %}
+  {% if g.is_registry %}
     <section class="panel panel-info">
       <header class="panel-heading">
         <h3 class="panel-title">
@@ -106,7 +106,7 @@
 {% endblock %}
 
 {% block scripts %}
-  {% if h.is_registry_domain() %}
+  {% if g.is_registry %}
     {% snippet 'snippets/cdts/footer_scripts.html' %}
     {% asset 'canada_public/analytics' %}
     {% asset 'canada_internal/user_lock' %}

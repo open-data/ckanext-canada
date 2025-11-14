@@ -21,7 +21,7 @@
 {% endblock %}
 
 {% block content_primary_nav %}
-  {% if h.is_registry_domain() %}
+  {% if g.is_registry %}
     {% if h.check_access('group_update', {'id': organization.id}) %}
       {{ h.build_nav_icon('organization.edit', _('Edit Organization'), id=organization.name, icon='pencil-square') }}
     {% endif %}
@@ -49,7 +49,7 @@
 
 {% block scripts %}
   {{ super() }}
-  {% if h.is_registry_domain() %}
+  {% if g.is_registry %}
     {% asset 'canada_internal/organization_edit' %}
   {% endif %}
 {% endblock %}

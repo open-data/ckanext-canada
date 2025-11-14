@@ -7,6 +7,7 @@ import string
 from flask import has_request_context
 
 import ckan.plugins as p
+from ckan.plugins.core import plugin_loaded
 from ckan.config.middleware.flask_app import csrf
 
 from ckanext.datatablesview.blueprint import datatablesview
@@ -38,10 +39,8 @@ class CanadaSecurityPlugin(CkanSecurityPlugin):
         # Enable auth settings
         config['ckan.auth.user_delete_groups'] = True
         config['ckan.auth.user_delete_organizations'] = True
-        # NOTE: user register page for Registry is controlled by"
-        #           - IP Intranet list
-        #           - NGINX redirects
-        config['ckan.auth.create_user_via_web'] = True
+        config['ckan.auth.create_user_via_web'] = plugin_loaded(
+            'canada_internal')  # /user/register view only on registry
         # Set auth settings
         config['ckan.auth.roles_that_cascade_to_sub_groups'] = ['admin']
 

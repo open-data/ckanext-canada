@@ -1,19 +1,19 @@
 {% ckan_extends %}
 
 {% block breadcrumb_content %}
-  {% if h.is_registry_domain() %}
+  {% if g.is_registry %}
     {{ h.build_nav('dataset.new', _('Create Dataset')) }}
   {% endif %}
 {% endblock %}
 
 {% block secondary_content %}
-  {% if not h.is_registry_domain() %}
+  {% if not g.is_registry %}
     {{ super() }}
   {% endif %}
 {% endblock %}
 
 {% block page_header %}
-  {% if not h.is_registry_domain() %}
+  {% if not g.is_registry %}
     {{ super() }}
   {% endif %}
 {% endblock %}

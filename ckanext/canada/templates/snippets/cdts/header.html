@@ -13,7 +13,7 @@
 <script nonce="{{- h.get_inline_script_nonce() -}}">
   let appTop = document.getElementById("app-top");
   if( appTop ){
-    {% if h.is_registry_domain() %}
+    {% if g.is_registry %}
       const menuLinks = [
         {% if g.userobj %}
           {

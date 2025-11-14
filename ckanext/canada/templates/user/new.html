@@ -1,19 +1,19 @@
 {% ckan_extends %}
 
 {% block subtitle %}
-  {% if h.is_registry_domain() %}
+  {% if g.is_registry %}
     {% block page_heading %}{{ _('Request an Account') }}{% endblock %}
   {% endif %}
 {% endblock %}
 
 {% block breadcrumb_content %}
-  {% if h.is_registry_domain() %}
+  {% if g.is_registry %}
     <li class="active">{{ h.nav_link(_('Registration'), 'user.register') }}</li>
   {% endif %}
 {% endblock %}
 
 {% block primary_content %}
-  {% if h.is_registry_domain() %}
+  {% if g.is_registry %}
     <div class="row col-md-12 mrgn-tp-lg canada-page-main-wrapper">
       {{ form | safe }}
     </div>
@@ -27,7 +27,7 @@
 {% endblock %}
 
 {% block secondary_content %}
-  {% if h.is_registry_domain() %}
+  {% if g.is_registry %}
     <div class="panel panel-info">
       <div class="panel-heading">{{ _('Why Sign Up?') }}</div>
       <div class="panel-body">
@@ -45,7 +45,7 @@
 
 {% block custom_styles %}
   {{ super() }}
-  {% if h.is_registry_domain() %}
+  {% if g.is_registry %}
     <link rel="stylesheet" href="{{ h.url_for_static('base/vendor/select2/select2.css') }}" />
     <link rel="stylesheet" href="{{ h.url_for_static('base/vendor/select2/select2-bootstrap.css') }}" />
   {% endif %}

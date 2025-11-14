@@ -1,7 +1,7 @@
 {% ckan_extends %}
 
 {% block all_user_agents -%}
-  {%- if h.is_registry_domain() -%}
+  {%- if g.is_registry -%}
 Disallow: /
 Crawl-Delay: 20
   {%- else -%}
