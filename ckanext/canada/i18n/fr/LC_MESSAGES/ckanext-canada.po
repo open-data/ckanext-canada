@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-10-09 17:17+0000\n"
+"POT-Creation-Date: 2025-11-17 14:20+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: fr\n"
@@ -304,7 +304,7 @@ msgstr "Non autorisé à accéder au téléchargement des membres du {group}"
 
 #: ckanext/canada/strings.py:15
 #: ckanext/canada/templates/admin/snippets/portal_sync_package_item.html:14
-#: ckanext/canada/view.py:1296
+#: ckanext/canada/view.py:1308 ckanext/canada/view.py:1315
 msgid "N/A"
 msgstr "N/A"
 
@@ -314,7 +314,7 @@ msgstr "N/A"
 #: ckanext/canada/templates/user/list.html:44
 #: ckanext/canada/templates/user/new_user_form.html:6
 #: ckanext/canada/templates/user/snippets/login_form.html:32
-#: ckanext/canada/view.py:1288
+#: ckanext/canada/view.py:1290
 msgid "Username"
 msgstr "Nom d’utilisateur"
 
@@ -323,22 +323,22 @@ msgstr "Nom d’utilisateur"
 #: ckanext/canada/templates/user/new_user_form.html:12
 #: ckanext/canada/templates/user/read_base.html:61
 #: ckanext/canada/templates/user/recover_username.html:17
-#: ckanext/canada/view.py:1288
+#: ckanext/canada/view.py:1291
 msgid "Email"
 msgstr "Courriel"
 
 #: ckanext/canada/strings.py:18 ckanext/canada/templates/user/api_tokens.html:7
-#: ckanext/canada/templates/user/list.html:45 ckanext/canada/view.py:1288
+#: ckanext/canada/templates/user/list.html:45 ckanext/canada/view.py:1292
 msgid "Name"
 msgstr "Nom"
 
 #: ckanext/canada/strings.py:19
 #: ckanext/canada/templates/organization/member_new.html:58
-#: ckanext/canada/templates/user/list.html:46 ckanext/canada/view.py:1288
+#: ckanext/canada/templates/user/list.html:46 ckanext/canada/view.py:1293
 msgid "Role"
 msgstr "Rôle"
 
-#: ckanext/canada/strings.py:20 ckanext/canada/view.py:1306
+#: ckanext/canada/strings.py:20 ckanext/canada/view.py:1328
 msgid "members"
 msgstr "membres"
 
@@ -1164,7 +1164,7 @@ msgstr ""
 "plus rapidement, veuillez envoyer une demande directement à :<a "
 "href=\"mailto:{support}\">{support}.</a"
 
-#: ckanext/canada/view.py:1266 ckanext/canada/view.py:1344
+#: ckanext/canada/view.py:1266 ckanext/canada/view.py:1366
 msgid "Organization not found"
 msgstr "Organisation non trouvée"
 
@@ -1172,12 +1172,20 @@ msgstr "Organisation non trouvée"
 msgid "Not authorized to access {org_name} members download"
 msgstr "Non autorisé à accéder au téléchargement des membres du {group}"
 
-#: ckanext/canada/view.py:1347
+#: ckanext/canada/view.py:1294
+msgid "Date created"
+msgstr "Date de création"
+
+#: ckanext/canada/view.py:1295
+msgid "Last active date"
+msgstr "Dernière date d'activité"
+
+#: ckanext/canada/view.py:1369
 #, python-format
 msgid "User %r not authorized to edit members of %s"
 msgstr "L’utilisateur %r n’est pas autorisé à modifier les membres de %s"
 
-#: ckanext/canada/view.py:1350
+#: ckanext/canada/view.py:1372
 #, python-format
 msgid "User %r not authorized to view members of %s"
 msgstr "L’utilisateur %r n’est pas autorisé à voir les membres de %s"
@@ -1279,8 +1287,8 @@ msgstr ""
 #. SQL Trigger String for PD Type: travelq
 #. SQL Trigger String for PD Type: wrongdoing
 #: ckanext/canada/tables/adminaircraft.yaml:341
-#: ckanext/canada/tables/contracts.yaml:2187
-#: ckanext/canada/tables/grants.yaml:1152
+#: ckanext/canada/tables/contracts.yaml:2175
+#: ckanext/canada/tables/grants.yaml:1202
 #: ckanext/canada/tables/hospitalityq.yaml:686
 #: ckanext/canada/tables/qpnotes.yaml:361
 #: ckanext/canada/tables/reclassification.yaml:299
@@ -1438,7 +1446,7 @@ msgstr "La virgule n’est pas autorisée dans le champ du Numéro d’enregistr
 #. Title for PD Type: contracts
 #. Resource Title for PD Type: contracts
 #: ckanext/canada/tables/contracts.yaml:4
-#: ckanext/canada/tables/contracts.yaml:101
+#: ckanext/canada/tables/contracts.yaml:89
 msgid "Proactive Publication - Contracts over $10,000"
 msgstr "Publication proactive - Contrats attribués de plus de 10 000 $"
 
@@ -1457,12 +1465,12 @@ msgstr ""
 "attribués de plus de 10 000 $ pour votre organisation"
 
 #. SQL Trigger String for PD Type: contracts
-#: ckanext/canada/tables/contracts.yaml:2186
+#: ckanext/canada/tables/contracts.yaml:2174
 msgid "This field must not be empty"
 msgstr "Ce champ ne doit pas être vide"
 
 #. SQL Trigger String for PD Type: contracts
-#: ckanext/canada/tables/contracts.yaml:2188
+#: ckanext/canada/tables/contracts.yaml:2176
 msgid ""
 "This field must contain the first three digits of a postal code in A1A "
 "format or the value \"NA\""
@@ -1471,7 +1479,7 @@ msgstr ""
 "le format A1A ou la valeur « NA. »"
 
 #. SQL Trigger String for PD Type: contracts
-#: ckanext/canada/tables/contracts.yaml:2189
+#: ckanext/canada/tables/contracts.yaml:2177
 msgid ""
 "This field must be populated with an NA if an amendment is disclosed "
 "under Instrument Type"
@@ -1480,12 +1488,12 @@ msgstr ""
 "divulguée dans le cadre du type d’instrument"
 
 #. SQL Trigger String for PD Type: contracts
-#: ckanext/canada/tables/contracts.yaml:2190
+#: ckanext/canada/tables/contracts.yaml:2178
 msgid "This field is limited to only 3 or 4 digits."
 msgstr "Ce champ a une limite de 3 ou 4 chiffres."
 
 #. SQL Trigger String for PD Type: contracts
-#: ckanext/canada/tables/contracts.yaml:2191
+#: ckanext/canada/tables/contracts.yaml:2179
 msgid ""
 "If N/A, then Instrument Type must be identified as a standing "
 "offer/supply arrangement (SOSA)"
@@ -1494,7 +1502,7 @@ msgstr ""
 "commandes et d’arrangements en matière d’approvisionnement (OCAA)"
 
 #. SQL Trigger String for PD Type: contracts
-#: ckanext/canada/tables/contracts.yaml:2192
+#: ckanext/canada/tables/contracts.yaml:2180
 msgid ""
 "If the value XX (none) is entered, then no other value can be entered in "
 "this field."
@@ -1503,19 +1511,19 @@ msgstr ""
 "saisie dans ce champ."
 
 #. SQL Trigger String for PD Type: contracts
-#: ckanext/canada/tables/contracts.yaml:2193
+#: ckanext/canada/tables/contracts.yaml:2181
 msgid "Discontinued as of 2022-01-01"
 msgstr "Supprimé à compter du 2022-01-01"
 
 #. SQL Trigger String for PD Type: contracts
-#: ckanext/canada/tables/contracts.yaml:2194
+#: ckanext/canada/tables/contracts.yaml:2182
 msgid "Must be left blank when trade agreements specified"
 msgstr ""
 "Ce champ ne doit pas être rempli lorsque des accords commerciaux sont "
 "précisés"
 
 #. SQL Trigger String for PD Type: contracts
-#: ckanext/canada/tables/contracts.yaml:2195
+#: ckanext/canada/tables/contracts.yaml:2183
 msgid ""
 "If the value NA (not applicable) is entered, then no other value can be "
 "entered in this field."
@@ -1524,13 +1532,13 @@ msgstr ""
 "peut être saisie dans ce champ."
 
 #. SQL Trigger String for PD Type: contracts
-#: ckanext/canada/tables/contracts.yaml:2196
+#: ckanext/canada/tables/contracts.yaml:2184
 msgid "The field is limited to eight alpha-numeric digits or less."
 msgstr "Ce champ est limité à 8 caractères alphanumériques."
 
 #. SQL Trigger String for PD Type: contracts
-#: ckanext/canada/tables/contracts.yaml:2197
-#: ckanext/canada/tables/contracts.yaml:2200
+#: ckanext/canada/tables/contracts.yaml:2185
+#: ckanext/canada/tables/contracts.yaml:2188
 msgid ""
 "If the value 00 (none) is entered, then no other value can be entered in "
 "this field."
@@ -1539,7 +1547,7 @@ msgstr ""
 "saisie dans ce champ."
 
 #. SQL Trigger String for PD Type: contracts
-#: ckanext/canada/tables/contracts.yaml:2198
+#: ckanext/canada/tables/contracts.yaml:2186
 msgid ""
 "If TC, TN or AC is selected in the Solicitation Procedure data field with"
 " a value other than XX (None) selected in the Trade Agreement data field,"
@@ -1551,7 +1559,7 @@ msgstr ""
 "une valeur d’appel d’offres limité autre que 00 (aucun) doit être saisie."
 
 #. SQL Trigger String for PD Type: contracts
-#: ckanext/canada/tables/contracts.yaml:2199
+#: ckanext/canada/tables/contracts.yaml:2187
 msgid ""
 "If “TC” (Competitive - Traditional), “TN” (Non-Competitive) or “AC” "
 "(Advanced Contract Award Notice) is selected and trade agreement with a "
@@ -1565,7 +1573,7 @@ msgstr ""
 "avoir la valeur « 0 » ou « 00 » (nulle)."
 
 #. SQL Trigger String for PD Type: contracts
-#: ckanext/canada/tables/contracts.yaml:2201
+#: ckanext/canada/tables/contracts.yaml:2189
 msgid ""
 "This field must be N, No or Non, if the Procurement Strategy for "
 "Aboriginal Business field is MS or VS."
@@ -1575,7 +1583,7 @@ msgstr ""
 "est MS ou VS."
 
 #. SQL Trigger String for PD Type: contracts
-#: ckanext/canada/tables/contracts.yaml:2202
+#: ckanext/canada/tables/contracts.yaml:2190
 msgid ""
 "This field must be populated with a 1 if the solicitation procedure is "
 "identified as non-competitive (TN) or Advance Contract Award Notice (AC)."
@@ -1585,7 +1593,7 @@ msgstr ""
 "d’adjudication de contrat (PAC)."
 
 #. SQL Trigger String for PD Type: contracts
-#: ckanext/canada/tables/contracts.yaml:2203
+#: ckanext/canada/tables/contracts.yaml:2191
 msgid ""
 "If this field is populated, it must be with a “0” if the procurement was "
 "identified as non-competitive (TN) or advance contract award notice (AC) "
@@ -1597,7 +1605,7 @@ msgstr ""
 "une modification (M) dans le champ de données du type d’instrument."
 
 #. SQL Trigger String for PD Type: contracts
-#: ckanext/canada/tables/contracts.yaml:2204
+#: ckanext/canada/tables/contracts.yaml:2192
 msgid ""
 "This field may only be populated with “0” if the procurement was "
 "identified as competitive (open bidding (OB), traditional competitive "
@@ -1609,7 +1617,7 @@ msgstr ""
 "d’offres sélectif [AOS])."
 
 #. Resource Title for PD Type: contracts
-#: ckanext/canada/tables/contracts.yaml:2255
+#: ckanext/canada/tables/contracts.yaml:2243
 msgid "Proactive Publication - Contracts Nothing to Report"
 msgstr "Publication proactive - Contrats (Rien à signaler)"
 
@@ -1691,35 +1699,34 @@ msgstr ""
 "et les subventions pour votre organisation"
 
 #. SQL Trigger String for PD Type: grants
-#: ckanext/canada/tables/grants.yaml:1153
+#: ckanext/canada/tables/grants.yaml:1203
 msgid "Must be a valid Canadian postal code in the format of \"A1A 1A1\""
-msgstr ""
-"Doit être un code postal canadien valide selon le format « A1A 1A1 »"
+msgstr "Doit être un code postal canadien valide selon le format « A1A 1A1 »"
 
 #. SQL Trigger String for PD Type: grants
-#: ckanext/canada/tables/grants.yaml:1154
+#: ckanext/canada/tables/grants.yaml:1204
 msgid "Must be a 9 digit number"
 msgstr "Doit être un numéro à neuf chiffres"
 
 #. SQL Trigger String for PD Type: grants
-#: ckanext/canada/tables/grants.yaml:1155
+#: ckanext/canada/tables/grants.yaml:1205
 msgid "Must be a 5 digit number"
 msgstr "Doit être un numéro à cinq chiffres"
 
 #. SQL Trigger String for PD Type: grants
-#: ckanext/canada/tables/grants.yaml:1156
+#: ckanext/canada/tables/grants.yaml:1206
 msgid "\"Agreement Start Date\" cannot be after \"Projected Agreement End Date\""
 msgstr ""
-"La « date de début de l'entente » ne peut venir après la "
-"« date de fin prévue de l'entente »"
+"La « date de début de l'entente » ne peut venir après la « date de fin "
+"prévue de l'entente »"
 
 #. SQL Trigger String for PD Type: grants
-#: ckanext/canada/tables/grants.yaml:1157
+#: ckanext/canada/tables/grants.yaml:1207
 msgid "Must be greater than zero"
 msgstr "Le nombre doit être supérieur à 0"
 
 #. Resource Title for PD Type: grants
-#: ckanext/canada/tables/grants.yaml:1206
+#: ckanext/canada/tables/grants.yaml:1256
 msgid "Proactive Publication - Grants and Contributions Nothing to Report"
 msgstr ""
 "Publication proactive – Subventions et contributions, rien à "
