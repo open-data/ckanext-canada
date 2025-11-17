@@ -6,7 +6,7 @@ notes: Access, upload and modify the Grants and Contributions reports for your o
 
 template_version: 3
 # TODO: update me with date of PROD deployment
-template_updated: 2025-10-06  # last qa confirmed: 2025-02-19
+template_updated: 2025-11-17  # last qa confirmed: 2025-02-19
 
 portal_type: info
 collection: pd
@@ -143,12 +143,12 @@ resources:
       en: Mandatory
       fr: Obligatoire
     validation:
-      en: Required if "Agreement Start Date" is on or after November 1st 2025
-      fr: Requis si la "date de début de l’entente" est le 1er novembre 2025 ou après
+      en: Required if "Agreement Start Date" is on or after December 1st 2025
+      fr: Requis si la "date de début de l’entente" est le 1er décembre 2025 ou après
     format_type:
       en: Controlled List
       fr: Liste contrôlée
-    excel_required_formula: 'AND(NOT(ISBLANK({agreement_start_date})),VALUE({agreement_start_date})>=DATE(2025,11,1))'
+    excel_required_formula: 'AND(NOT(ISBLANK({agreement_start_date})),VALUE({agreement_start_date})>=DATE(2025,12,1))'
     datastore_type: text
     choices:
       F:
@@ -208,8 +208,8 @@ resources:
       en: Optional
       fr: Facultatif
     validation:
-      en: Must be a 9 digit number if "Agreement Start Date" is on or after November 1st 2025
-      fr: Doit être un numéro à neuf chiffres si la "date de début de l’entente" est le 1er novembre 2025 ou après
+      en: Must be a 9 digit number if "Agreement Start Date" is on or after December 1st 2025
+      fr: Doit être un numéro à neuf chiffres si la "date de début de l’entente" est le 1er décembre 2025 ou après
     format_type:
       en: Free text - 9 digit number
       fr: Texte libre - numéro à neuf chiffres
@@ -220,7 +220,7 @@ resources:
           NOT(
             ISBLANK({agreement_start_date})
           ),
-          VALUE({agreement_start_date})>=DATE(2025,11,1),
+          VALUE({agreement_start_date})>=DATE(2025,12,1),
           OR(
             NOT(ISNUMBER(VALUE({cell}))),
             LEN(TRIM({cell}))<>9,
@@ -428,8 +428,8 @@ resources:
       en: Optional
       fr: Facultatif
     validation:
-      en: Must be in the format "A1A 1A1" if "Agreement Start Date" is on or after November 1st 2025
-      fr: Doit être selon le format « A1A 1A1 » si la "date de début de l’entente" est le 1er novembre 2025 ou après
+      en: Must be in the format "A1A 1A1" if "Agreement Start Date" is on or after December 1st 2025
+      fr: Doit être selon le format « A1A 1A1 » si la "date de début de l’entente" est le 1er décembre 2025 ou après
     format_type:
       en: 'Text - Should be in the format "A1A 1A1"'
       fr: 'Texte - devrait être selon le format « A1A 1A1 »'
@@ -440,7 +440,7 @@ resources:
           NOT(
             ISBLANK({agreement_start_date})
           ),
-          VALUE({agreement_start_date})>=DATE(2025,11,1),
+          VALUE({agreement_start_date})>=DATE(2025,12,1),
           OR(
             LEFT(TRIM({cell}),3)&" "&RIGHT(TRIM({cell}),3)<>TRIM({cell}),
             CODE(UPPER(MID({cell},1,1)))>CODE("Z"),
@@ -512,8 +512,8 @@ resources:
       en: Optional
       fr: Facultatif
     validation:
-      en: Must be a 5 digit number if "Agreement Start Date" is on or after November 1st 2025
-      fr: Doit être un numéro à cinq chiffres si la "date de début de l’entente" est le 1er novembre 2025 ou après
+      en: Must be a 5 digit number if "Agreement Start Date" is on or after December 1st 2025
+      fr: Doit être un numéro à cinq chiffres si la "date de début de l’entente" est le 1er décembre 2025 ou après
     format_type:
       en: Text - 5 digit number
       fr: Texte - numéro à cinq chiffres
@@ -524,7 +524,7 @@ resources:
           NOT(
             ISBLANK({agreement_start_date})
           ),
-          VALUE({agreement_start_date})>=DATE(2025,11,1),
+          VALUE({agreement_start_date})>=DATE(2025,12,1),
           OR(
             NOT(ISNUMBER(VALUE({cell}))),
             LEN(TRIM({cell}))<>5,
@@ -549,12 +549,12 @@ resources:
       en: Mandatory
       fr: Obligatoire
     validation:
-      en: Required if "Agreement Start Date" is on or after November 1st 2025
-      fr: Requis si la "date de début de l’entente" est le 1er novembre 2025 ou après
+      en: Required if "Agreement Start Date" is on or after December 1st 2025
+      fr: Requis si la "date de début de l’entente" est le 1er décembre 2025 ou après
     format_type:
       en: Free text
       fr: Texte libre
-    excel_required_formula: 'AND(NOT(ISBLANK({agreement_start_date})),VALUE({agreement_start_date})>=DATE(2025,11,1))'
+    excel_required_formula: 'AND(NOT(ISBLANK({agreement_start_date})),VALUE({agreement_start_date})>=DATE(2025,12,1))'
     datastore_type: text
     form_attrs:
       size: 60
@@ -571,12 +571,12 @@ resources:
       en: Mandatory
       fr: Obligatoire
     validation:
-      en: Required if "Agreement Start Date" is on or after November 1st 2025
-      fr: Requis si la "date de début de l’entente" est le 1er novembre 2025 ou après
+      en: Required if "Agreement Start Date" is on or after December 1st 2025
+      fr: Requis si la "date de début de l’entente" est le 1er décembre 2025 ou après
     format_type:
       en: Free text
       fr: Texte libre
-    excel_required_formula: 'AND(NOT(ISBLANK({agreement_start_date})),VALUE({agreement_start_date})>=DATE(2025,11,1))'
+    excel_required_formula: 'AND(NOT(ISBLANK({agreement_start_date})),VALUE({agreement_start_date})>=DATE(2025,12,1))'
     datastore_type: text
     form_attrs:
       size: 60
@@ -593,12 +593,12 @@ resources:
       en: Mandatory
       fr: Obligatoire
     validation:
-      en: Required if "Agreement Start Date" is on or after November 1st 2025
-      fr: Requis si la "date de début de l’entente" est le 1er novembre 2025 ou après
+      en: Required if "Agreement Start Date" is on or after December 1st 2025
+      fr: Requis si la "date de début de l’entente" est le 1er décembre 2025 ou après
     format_type:
       en: Free text
       fr: Texte libre
-    excel_required_formula: 'AND(NOT(ISBLANK({agreement_start_date})),VALUE({agreement_start_date})>=DATE(2025,11,1))'
+    excel_required_formula: 'AND(NOT(ISBLANK({agreement_start_date})),VALUE({agreement_start_date})>=DATE(2025,12,1))'
     datastore_type: text
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
@@ -616,12 +616,12 @@ resources:
       en: Mandatory
       fr: Obligatoire
     validation:
-      en: Required if "Agreement Start Date" is on or after November 1st 2025
-      fr: Requis si la "date de début de l’entente" est le 1er novembre 2025 ou après
+      en: Required if "Agreement Start Date" is on or after December 1st 2025
+      fr: Requis si la "date de début de l’entente" est le 1er décembre 2025 ou après
     format_type:
       en: Free text
       fr: Texte libre
-    excel_required_formula: 'AND(NOT(ISBLANK({agreement_start_date})),VALUE({agreement_start_date})>=DATE(2025,11,1))'
+    excel_required_formula: 'AND(NOT(ISBLANK({agreement_start_date})),VALUE({agreement_start_date})>=DATE(2025,12,1))'
     datastore_type: text
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
@@ -639,12 +639,12 @@ resources:
       en: Mandatory
       fr: Obligatoire
     validation:
-      en: Required if "Agreement Start Date" is on or after November 1st 2025
-      fr: Requis si la "date de début de l’entente" est le 1er novembre 2025 ou après
+      en: Required if "Agreement Start Date" is on or after December 1st 2025
+      fr: Requis si la "date de début de l’entente" est le 1er décembre 2025 ou après
     format_type:
       en: Free text
       fr: Texte libre
-    excel_required_formula: 'AND(NOT(ISBLANK({agreement_start_date})),VALUE({agreement_start_date})>=DATE(2025,11,1))'
+    excel_required_formula: 'AND(NOT(ISBLANK({agreement_start_date})),VALUE({agreement_start_date})>=DATE(2025,12,1))'
     datastore_type: text
     form_attrs:
       size: 60
@@ -661,12 +661,12 @@ resources:
       en: Mandatory
       fr: Obligatoire
     validation:
-      en: Required if "Agreement Start Date" is on or after November 1st 2025
-      fr: Requis si la "date de début de l’entente" est le 1er novembre 2025 ou après
+      en: Required if "Agreement Start Date" is on or after December 1st 2025
+      fr: Requis si la "date de début de l’entente" est le 1er décembre 2025 ou après
     format_type:
       en: Free text
       fr: Texte libre
-    excel_required_formula: 'AND(NOT(ISBLANK({agreement_start_date})),VALUE({agreement_start_date})>=DATE(2025,11,1))'
+    excel_required_formula: 'AND(NOT(ISBLANK({agreement_start_date})),VALUE({agreement_start_date})>=DATE(2025,12,1))'
     datastore_type: text
     form_attrs:
       size: 60
@@ -722,7 +722,7 @@ resources:
           NOT(
             ISBLANK({agreement_start_date})
           ),
-          VALUE({agreement_start_date})>=DATE(2025,11,1),
+          VALUE({agreement_start_date})>=DATE(2025,12,1),
           OR(
             NOT(ISNUMBER(VALUE({cell}))),
             NOT(VALUE({cell})>0)
@@ -821,13 +821,13 @@ resources:
       en: Mandatory
       fr: Obligatoire
     validation:
-      en: Required if "Agreement Start Date" is on or after November 1st 2025.
-      fr: Requis si la "date de début de l’entente" est le 1er novembre 2025 ou après.
+      en: Required if "Agreement Start Date" is on or after December 1st 2025.
+      fr: Requis si la "date de début de l’entente" est le 1er décembre 2025 ou après.
     format_type:
       en: Date (Please format the date as YYYY-MM-DD)
       fr: "Date (Veuillez utiliser le format de date suivant : AAAA-MM-JJ)"
     excel_error_formula: 'OR({default_formula},AND(NOT(ISBLANK({agreement_start_date})),NOT(ISBLANK({cell})),{cell}<{agreement_start_date}))'
-    excel_required_formula: 'AND(NOT(ISBLANK({agreement_start_date})),VALUE({agreement_start_date})>=DATE(2025,11,1))'
+    excel_required_formula: 'AND(NOT(ISBLANK({agreement_start_date})),VALUE({agreement_start_date})>=DATE(2025,12,1))'
     datastore_type: date
     form_snippet: scheming/form_snippets/date.html
 
@@ -939,12 +939,12 @@ resources:
       en: Mandatory
       fr: Obligatoire
     validation:
-      en: Required if "Agreement Start Date" is on or after November 1st 2025
-      fr: Requis si la "date de début de l’entente" est le 1er novembre 2025 ou après
+      en: Required if "Agreement Start Date" is on or after December 1st 2025
+      fr: Requis si la "date de début de l’entente" est le 1er décembre 2025 ou après
     format_type:
       en: Free text
       fr: Texte libre
-    excel_required_formula: 'AND(NOT(ISBLANK({agreement_start_date})),VALUE({agreement_start_date})>=DATE(2025,11,1))'
+    excel_required_formula: 'AND(NOT(ISBLANK({agreement_start_date})),VALUE({agreement_start_date})>=DATE(2025,12,1))'
     datastore_type: text
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
@@ -962,12 +962,12 @@ resources:
       en: Mandatory
       fr: Obligatoire
     validation:
-      en: Required if "Agreement Start Date" is on or after November 1st 2025
-      fr: Requis si la "date de début de l’entente" est le 1er novembre 2025 ou après
+      en: Required if "Agreement Start Date" is on or after December 1st 2025
+      fr: Requis si la "date de début de l’entente" est le 1er décembre 2025 ou après
     format_type:
       en: Free text
       fr: Texte libre
-    excel_required_formula: 'AND(NOT(ISBLANK({agreement_start_date})),VALUE({agreement_start_date})>=DATE(2025,11,1))'
+    excel_required_formula: 'AND(NOT(ISBLANK({agreement_start_date})),VALUE({agreement_start_date})>=DATE(2025,12,1))'
     datastore_type: text
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
@@ -1145,7 +1145,7 @@ resources:
         NEW.agreement_value := round(NEW.agreement_value, 2);
         NEW.foreign_currency_value := round(NEW.foreign_currency_value, 2);
 
-        IF NEW.agreement_start_date >= '2025-11-01'::date THEN
+        IF NEW.agreement_start_date >= '2025-12-01'::date THEN
           errors := errors || conditional_required_error(NEW.recipient_type, 'recipient_type');
 
           errors := errors || conditional_required_error(NEW.prog_name_en, 'prog_name_en');
