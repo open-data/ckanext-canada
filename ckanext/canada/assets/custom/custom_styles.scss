@@ -1,5 +1,156 @@
-.header-title-box {
+.header-title-box{
   border-left: 1px solid #ccc;
   border-right: 1px solid #ccc;
   padding-top: 12px;
+}
+
+img.openness-rating-stars{
+  margin-bottom: 0px !important;
+}
+
+.facet-item{
+  padding-bottom: 3px;
+  padding-top: 3px;
+}
+
+.pkg-rss-feed-text{
+  color: white;
+}
+
+.canada-debug-wrapper{
+  border: 2px solid #af3c43;
+  border-radius: 3px;
+  margin-top: 15px;
+  padding: 15px;
+
+  > div.container{
+    max-width: 100% !important;
+  }
+}
+
+.table{
+  > tbody, > tfoot, > thead{
+    > tr{
+      > td, > th{
+        border: 1px solid #ddd;
+      }
+    }
+  }
+  > caption+thead, > colgroup+thead, > thead:first-child{
+    > tr:first-child > td{
+      border: 1px solid #ddd;
+    }
+  }
+}
+
+.td-center{
+  text-align: center;
+}
+
+.td-full{
+  width: 100%;
+}
+
+.resource-list td{
+  vertical-align: middle !important;
+}
+
+body{
+
+  /* Core data:image overrides for CSP support */
+  .form-select{
+    /* background-image: url("/data/static/img/data_img/chevron-down.svg"); */
+    background-image: none;
+  }
+
+  .form-check-input{
+
+    &:checked[type=checkbox]{
+      /* background-image: url("/data/static/img/data_img/check.svg"); */
+      background-image: none;
+    }
+
+    &:checked[type=radio]{
+      /* background-image: url("/data/static/img/data_img/dot.svg"); */
+      background-image: none;
+    }
+
+    &[type=checkbox]:indeterminate{
+      /* background-image: url("/data/static/img/data_img/dash.svg"); */
+      background-image: none;
+    }
+
+  }
+
+  .form-switch .form-check-input{
+    /* background-image: url("/data/static/img/data_img/dot-grey.svg"); */
+    background-image: none;
+
+    &:focus{
+      /* background-image: url("/data/static/img/data_img/dot-blue.svg"); */
+      background-image: none;
+    }
+
+    &:checked{
+      /* background-image: url("/data/static/img/data_img/dot-white.svg"); */
+      background-image: none;
+    }
+  }
+
+  // TODO: cont. bringing from public.css
+
+  // END
+  /* Core data:image overrides for CSP support */
+  // END
+
+  .user-recaptcha-wrapper{
+    width: 304px;
+    height: 352px;
+    position: relative;
+  }
+
+  .user-recaptcha-frame-wrapper{
+    width: 304px;
+    height: 352px;
+    position: absolute;
+  }
+
+  .user-recaptcha-frame{
+    width: 304px;
+    height: 352px
+  }
+
+  .user-recaptcha-text-wrapper{
+    width: 250px;
+    height: 80px;
+    position: absolute;
+    bottom: 21px;
+    left: 25px;
+    margin: 0;
+    padding: 0;
+    right: 25px;
+  }
+
+  .user-recaptcha-text{
+    width: 250px;
+    height: 80px;
+    border: 1px solid #c1c1c1;
+    margin: 0;
+    padding: 0;
+    resize: none;
+  }
+
+  .canada-w10-spacer{
+    display: inline-block !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    min-width: 10px !important;
+    max-width: 10px !important;
+    width: 10px !important;
+    min-height: 0 !important;
+    max-height: 0 !important;
+    height: 0 !important;
+    line-height: 0 !important;
+  }
+
 }
