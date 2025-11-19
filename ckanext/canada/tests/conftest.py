@@ -1,4 +1,5 @@
 from pytest import Session
+from ckan import model
 from ckan.tests.helpers import reset_db
 from ckan.lib.search import clear_all
 from ckanext.validation.model import (
@@ -40,6 +41,7 @@ def pytest_collection_finish(session: Session) -> None:
     _create_triggers(dataset_types=[], all_types=True)
 
     print('Running Canada plugin migrations...')
+    model.Session.commit()
     _run_migrations('canada_public')
 
     # NOTE: always make a tbs-sct org
