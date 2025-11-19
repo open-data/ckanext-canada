@@ -1,0 +1,1 @@
+Added a new plugin database version `e65b85682f14` which drops the old `idx_only_one_active_email` index and replaces it with the `idx_only_one_active_email_no_case` index, which lower cases user email addresses for the uniqueness constraint.
