@@ -203,7 +203,9 @@ def catalogue_last_update_date() -> str:
     return q[0].replace(microsecond=0).isoformat() if q else ''
 
 
-def today() -> str:
+def today(include_time: bool = False) -> str:
+    if include_time:
+        return datetime.datetime.now().strftime("%Y-%m-%dT%H:%M")
     return datetime.datetime.now(EST()).strftime("%Y-%m-%d")
 
 

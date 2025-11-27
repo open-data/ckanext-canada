@@ -18,9 +18,9 @@
     <fieldset class="admin-publish-date-fieldset mrgn-tp-md">
       <div>
         <label for="publish_date" class="admin-publish-date-label">
-          {% trans %}Publish Date (<abbr title="Four digits year">YYYY</abbr>-<abbr title="Two digits month">MM</abbr>-<abbr title="Two digits day">DD</abbr>):{% endtrans %}
+          {% trans %}Publish Date and Time (<abbr title="Four digits year">YYYY</abbr>-<abbr title="Two digits month">MM</abbr>-<abbr title="Two digits day">DD</abbr> , <abbr title="Two digits hour">HH</abbr> : <abbr title="Two digits minutes">MM</abbr>):{% endtrans %}
         </label>
-        <input type="date" id="publish_date" name="publish_date" min="{{h.today()}}" value="{{h.today()}}" />
+        <input type="datetime-local" id="publish_date" name="publish_date" min="{{h.today(include_time=True)}}" value="{{h.today(include_time=True)}}" />
       </div>
 
       <button type="submit" class="btn btn-primary mrgn-tp-md">{{ _('Publish Selected Records') }}</button>

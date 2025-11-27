@@ -2493,13 +2493,13 @@ presets:
       en: Portal Release Date
       fr: Date de lancement du portail
     help_text:
-      en: The date the dataset may be published on the Portal (YYYY-MM-DD)
-      fr: La date à laquelle le jeu de données peut être publié dans le portail (AAAA-MM-JJ)
+      en: The date the dataset may be published on the Portal (YYYY-MM-DD , HH-MM)
+      fr: La date à laquelle le jeu de données peut être publié dans le portail (AAAA-MM-JJ , HH-MM)
     form_snippet: portal_release_date.html
     display_snippet: date.html
     # order is very important here:
     validators: protect_portal_release_date ignore_empty scheming_required isodate
-      convert_to_json_if_date
+      convert_to_json_if_datetime
 
 
 - preset_name: canada_endpoint_url
