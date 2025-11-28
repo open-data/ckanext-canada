@@ -5,8 +5,11 @@ shortname: Grants and Contributions
 notes: Access, upload and modify the Grants and Contributions reports for your organization
 
 template_version: 3
-# TODO: update me with date of PROD deployment
-template_updated: 2025-11-17  # last qa confirmed: 2025-02-19
+template_updated: 2025-12-01  # last qa confirmed: 2025-12-01
+
+template_warning:
+  en: The template has been updated. Please download the latest version.
+  fr: Le modèle a été mis à jour. Veuillez télécharger la dernière version.
 
 portal_type: info
 collection: pd
