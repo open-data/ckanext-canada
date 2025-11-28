@@ -60,6 +60,7 @@ resources:
           fr: "Titre du projet (en anglais)"
         obligation: Mandatory
         occurrence: Single
+        datatables_col_class: col-lg
         validation: "This field must not be empty"
         visible_to_public: true
 
@@ -79,6 +80,7 @@ resources:
           fr: "Titre du projet (en français)"
         obligation: Mandatory
         occurrence: Single
+        datatables_col_class: col-lg
         validation: "This field must not be empty"
         visible_to_public: true
 
@@ -89,6 +91,7 @@ resources:
           fr: "Ce champ décrira la question de recherche guidant le projet, en anglais"
         excel_column_width: 50
         excel_required: true
+        datatables_col_class: col-xl
         format_type:
           en: Free text
           fr: Texte libre
@@ -109,6 +112,7 @@ resources:
           fr: "Ce champ décrira la question de recherche guidant le projet, en français"
         excel_column_width: 50
         excel_required: true
+        datatables_col_class: col-xl
         format_type:
           en: Free text
           fr: Texte libre
@@ -128,6 +132,7 @@ resources:
           en: "This field summarizes the key information about the project, including any findings once the initiative is completed, in English"
           fr: "Ce champ résumera les information-clés à propos du projet, y compris les résultats lorque le projet est complété, en anglais"
         excel_column_width: 50
+        datatables_col_class: col-xxl
         excel_required: true
         format_type:
           en: Free text (separate paragraphs with two blank lines)
@@ -149,6 +154,7 @@ resources:
           en: "This field summarizes the key information about the project, including any findings once the initiatve is completed, in French"
           fr: "Ce champ résumera les information-clés à propos du projet, y compris les résultats lorque le projet est complété, en français"
         excel_column_width: 50
+        datatables_col_class: col-xxl
         excel_required: true
         format_type:
           en: Free text (separate paragraphs with two blank lines)
@@ -212,6 +218,7 @@ resources:
           fr: "Ce champ décrira dans quel secteur l'expérience prend place."
         excel_column_width: 20
         excel_full_text_choices: true
+        datatables_full_text_choices: true
         excel_required: true
         format_type:
           en: Controlled List
@@ -244,6 +251,7 @@ resources:
           fr: "Ce champ décrira le devis de recherche employé dans le projet."
         excel_column_width: 20
         excel_full_text_choices: true
+        datatables_full_text_choices: true
         excel_required: true
         format_type:
           en: Controlled List
@@ -262,6 +270,7 @@ resources:
           en: "This field will describe the details of the research design used for the project."
           fr: "Ce champ décrira les détails du devis de recherche employé dans le projet."
         excel_column_width: 50
+        datatables_col_class: col-xxl
         excel_required: true
         format_type:
           en: Free text (separate paragraphs with two blank lines)
@@ -283,6 +292,7 @@ resources:
           en: "This field will describe the details of the research design used for the project."
           fr: "Ce champ décrira les détails du devis de recherche employé dans le projet."
         excel_column_width: 50
+        datatables_col_class: col-xxl
         excel_required: true
         format_type:
           en: Free text (separate paragraphs with two blank lines)
@@ -304,6 +314,7 @@ resources:
           en: "This field will describe the intervention tested in the project."
           fr: "Ce champ décrira l’intervention testée dans le projet."
         excel_column_width: 50
+        datatables_col_class: col-xxl
         excel_required: true
         format_type:
           en: Free text (separate paragraphs with two blank lines)
@@ -325,6 +336,7 @@ resources:
           en: "This field will describe the intervention tested in the project."
           fr: "Ce champ décrira l’intervention testée dans le projet."
         excel_column_width: 50
+        datatables_col_class: col-xxl
         excel_required: true
         format_type:
           en: Free text (separate paragraphs with two blank lines)
@@ -346,6 +358,7 @@ resources:
           en: "This field will describe the intervention tested in the project."
           fr: "Ce champ décrira l’intervention testée dans le projet."
         excel_column_width: 50
+        datatables_col_class: col-xxl
         excel_required: true
         format_type:
           en: Free text (separate paragraphs with two blank lines)
@@ -367,6 +380,7 @@ resources:
           en: "This field will describe the outcomes measured in the project."
           fr: "Ce champ décrira la/les mesure(s) de résultat(s) employée(s) dans le projet."
         excel_column_width: 50
+        datatables_col_class: col-xxl
         excel_required: true
         format_type:
           en: Free text (separate paragraphs with two blank lines)
@@ -388,6 +402,7 @@ resources:
           en: "This field will describe the outcomes measured in the project."
           fr: "Ce champ décrira la/les mesure(s) de résultat(s) employée(s) dans le projet."
         excel_column_width: 50
+        datatables_col_class: col-xxl
         excel_required: true
         format_type:
           en: Free text (separate paragraphs with two blank lines)
@@ -409,6 +424,7 @@ resources:
           en: "This field will describe the findings of the project."
           fr: "Ce champ décrira les résultats observés dans le projet."
         excel_column_width: 50
+        datatables_col_class: col-xxl
         excel_required: true
         format_type:
           en: Free text (separate paragraphs with two blank lines)
@@ -441,6 +457,7 @@ resources:
           fr: "Ce champ décrira le statut du projet."
         excel_column_width: 20
         excel_full_text_choices: true
+        datatables_full_text_choices: true
         excel_required: true
         format_type:
           en: Controlled List
@@ -459,6 +476,7 @@ resources:
           en: "This field describes the organizational structure tied to the project owner (if applicable), in English"
           fr: "Ce champ décrira la structure organisationnelle liée à ce projet (si applicable), en anglais"
         excel_column_width: 35
+        datatables_col_class: col-lg
         excel_required: false
         format_type:
           en: Free text
@@ -477,6 +495,7 @@ resources:
           en: "This field describes the organizational structure tied to the project owner (if applicable), in French."
           fr: "Ce champ décrira la structure organisationnelle liée à ce projet (si applicable), en français"
         excel_column_width: 35
+        datatables_col_class: col-lg
         excel_required: false
         format_type:
           en: Free text
@@ -495,6 +514,7 @@ resources:
           en: "This field includes a URL link to additional information on the project (e.g. report, blog post, etc.), in English."
           fr: "Ce champ incluera un lien URL fournissant des information additionnelles (p.ex. rapport, blogue), en anglais."
         excel_column_width: 50
+        datatables_col_class: col-lg
         excel_required: false
         format_type:
           en: Free text
@@ -516,6 +536,7 @@ resources:
           en: "This field includes a URL link to additional information on the project (e.g. report, blog post, etc.), in Frencjh."
           fr: "Ce champ incluera un lien URL fournissant des information additionnelles (p.ex. rapport, blogue), en français."
         excel_column_width: 50
+        datatables_col_class: col-lg
         excel_required: false
         format_type:
           en: Free text
@@ -624,3 +645,9 @@ excel_header_style:
   PatternFill:
     fgColor: FFFF5500
     patternType: solid
+datatables_style:
+  header:
+    bgColor: FF5500
+  select:
+    bgColor: ffaa80
+    fgColor: 333333
