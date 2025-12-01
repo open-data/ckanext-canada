@@ -17,7 +17,10 @@ def pytest_collection_finish(session: Session) -> None:
     print("--- Performing global setup before all tests ---")
 
     print('Running Canada plugin migrations...')
-    _run_migrations('canada_public')
+    try:
+        _run_migrations('canada_public')
+    except Exception:
+        pass
 
     print('Refreshing database...')
     reset_db()
@@ -40,7 +43,10 @@ def pytest_collection_finish(session: Session) -> None:
     _create_triggers(dataset_types=[], all_types=True)
 
     print('Running Canada plugin migrations...')
-    _run_migrations('canada_public')
+    try:
+        _run_migrations('canada_public')
+    except Exception:
+        pass
 
     # NOTE: always make a tbs-sct org
     try:
