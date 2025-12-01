@@ -63,7 +63,8 @@ class TestIndex(CanadaTestBase):
         return records
 
     def test_max_text_length(self):
-        record = get_chromo(self.ds_type)['examples']['record']
+        record = get_chromo(self.ds_type)['examples']['record'].copy()
+        record['request_number'] = 'TestIndex__test_max_text_length'
         record['summary_en'] = 'e' * 33000
         record['summary_fr'] = 'é' * 33000
         self.lc.action.datastore_upsert(

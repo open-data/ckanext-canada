@@ -345,7 +345,7 @@ class TestRecombinantWebForms(CanadaTestBase):
         self._lc_init_pd(org=org)
         rval = lc.action.recombinant_show(dataset_type=self.pd_type, owner_org=org['name'])
         resource_id = rval['resources'][1]['id'] if is_nil else rval['resources'][0]['id']
-        record = self.example_nil_record if is_nil else self.example_record
+        record = self.example_nil_record.copy() if is_nil else self.example_record.copy()
         lc.action.datastore_upsert(resource_id=resource_id, records=[record])
         return rval['resources'][1][return_field] if is_nil else rval['resources'][0][return_field]
 
@@ -1053,14 +1053,15 @@ class TestRecombinantWebForms(CanadaTestBase):
         assert '2 deleted.' in response.body
 
     def _prepare_records_to_delete(self):
-        original_request_number = self.example_record['request_number']
-        self.example_record['request_number'] = 'B-8019'
+        _example_record = self.example_record.copy()
+        original_request_number = _example_record['request_number']
+        _example_record['request_number'] = 'B-8019'
         self._lc_create_pd_record()
-        records_to_delete = self.example_record['request_number']
+        records_to_delete = _example_record['request_number']
         # reset example record request number to original
-        self.example_record['request_number'] = original_request_number
+        _example_record['request_number'] = original_request_number
         resource_id = self._lc_create_pd_record(return_field='id')
-        records_to_delete += '\n{}'.format(self.example_record['request_number'])
+        records_to_delete += '\n{}'.format(_example_record['request_number'])
         return {
             'resource_id': resource_id,
             'form': {
