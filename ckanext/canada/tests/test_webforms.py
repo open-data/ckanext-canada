@@ -339,13 +339,14 @@ class TestRecombinantWebForms(CanadaTestBase):
         except ValidationError:
             pass
 
-    def _lc_create_pd_record(self, org=None, is_nil=False, return_field='name'):
+    def _lc_create_pd_record(self, org=None, is_nil=False, return_field='name', record=None):
         lc = LocalCKAN()
         org = org if org else self.org
         self._lc_init_pd(org=org)
         rval = lc.action.recombinant_show(dataset_type=self.pd_type, owner_org=org['name'])
         resource_id = rval['resources'][1]['id'] if is_nil else rval['resources'][0]['id']
-        record = self.example_nil_record.copy() if is_nil else self.example_record.copy()
+        if not record:
+            record = self.example_nil_record.copy() if is_nil else self.example_record.copy()
         lc.action.datastore_upsert(resource_id=resource_id, records=[record])
         return rval['resources'][1][return_field] if is_nil else rval['resources'][0][return_field]
 
@@ -1056,11 +1057,11 @@ class TestRecombinantWebForms(CanadaTestBase):
         _example_record = self.example_record.copy()
         original_request_number = _example_record['request_number']
         _example_record['request_number'] = 'B-8019'
-        self._lc_create_pd_record()
+        self._lc_create_pd_record(record=_example_record)
         records_to_delete = _example_record['request_number']
         # reset example record request number to original
         _example_record['request_number'] = original_request_number
-        resource_id = self._lc_create_pd_record(return_field='id')
+        resource_id = self._lc_create_pd_record(return_field='id', record=_example_record)
         records_to_delete += '\n{}'.format(_example_record['request_number'])
         return {
             'resource_id': resource_id,
