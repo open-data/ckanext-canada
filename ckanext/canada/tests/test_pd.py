@@ -54,6 +54,26 @@ class TestIndex(CanadaTestBase):
 
         self.resource_id = rval['resources'][0]['id']
 
+    @classmethod
+    def teardown_method(self, method):
+        """Method is called at class level after EACH test methods of the class are called.
+        Remove any state specific to the execution of the given class methods.
+        """
+        super(TestIndex, self).teardown_method(method)
+
+        lc = LocalCKAN()
+        try:
+            rval = lc.action.recombinant_show(dataset_type=self.ds_type,
+                                              owner_org=self.org['name'])
+            lc.action.datastore_records_delete(resource_id=rval['resources'][0]['id'],
+                                               force=True,
+                                               filters={})
+            lc.action.datastore_records_delete(resource_id=rval['resources'][1]['id'],
+                                               force=True,
+                                               filters={})
+        except Exception:
+            pass
+
     def get_records(self):
         rval = self.lc.action.datastore_search(
             resource_id=self.resource_id,
