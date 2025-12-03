@@ -1385,7 +1385,7 @@ def canada():
 )
 @click.option(
     "-D",
-    "--dataset-d",
+    "--dataset-id",
     default=None,
     help="Dataset ID to sync to the Portal.",
 )
