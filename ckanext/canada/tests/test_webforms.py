@@ -302,6 +302,7 @@ class TestRecombinantWebForms(CanadaTestBase):
             ati_email='test@example.com')
         self.pd_type = 'ati'
         self.nil_type = 'ati-nil'
+        self.sheet_names = [self.pd_type, self.nil_type]
         self.chromo = get_chromo(self.pd_type)
         self.nil_chromo = get_chromo(self.nil_type)
         self.fields = self.chromo['fields']
@@ -636,7 +637,7 @@ class TestRecombinantWebForms(CanadaTestBase):
         template_file.write(response.get_data(as_text=False))
         # produces: (sheet-name, org-name, column_names, data_rows_generator)
         #   note: data_rows_generator excludes the example row
-        template_file = list(read_excel(template_file))
+        template_file = list(read_excel(template_file, expected_sheet_names=self.sheet_names))
         # pd workbook
         assert template_file[0][0] == self.pd_type  # check sheet name
         assert template_file[0][1] == self.org['name']  # check org name
@@ -671,7 +672,7 @@ class TestRecombinantWebForms(CanadaTestBase):
         template_file.write(response.get_data(as_text=False))
         # produces: (sheet-name, org-name, column_names, data_rows_generator)
         #   note: data_rows_generator excludes the example row
-        template_file = list(read_excel(template_file))
+        template_file = list(read_excel(template_file, expected_sheet_names=self.sheet_names))
         # pd workbook
         assert template_file[0][0] == self.pd_type  # check sheet name
         assert template_file[0][1] == self.org['name']  # check org name
@@ -702,7 +703,7 @@ class TestRecombinantWebForms(CanadaTestBase):
         template_file.write(response.get_data(as_text=False))
         # produces: (sheet-name, org-name, column_names, data_rows_generator)
         #   note: data_rows_generator excludes the example row
-        template_file = list(read_excel(template_file))
+        template_file = list(read_excel(template_file, expected_sheet_names=self.sheet_names))
         # nil workbook
         assert template_file[1][0] == self.nil_type  # check sheet name
         assert template_file[1][1] == self.org['name']  # check org name

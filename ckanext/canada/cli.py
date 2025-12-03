@@ -98,7 +98,9 @@ class PortalUpdater(object):
                  log: Optional[str],
                  tries: int,
                  delay: int,
-                 verbose: bool):
+                 verbose: bool,
+                 dataset_id: Optional[str] = None,
+                 ignore_hashes: bool = False):
         self.portal_ini = portal_ini
         self.ckan_user = ckan_user
         self.last_activity_date = last_activity_date
@@ -110,6 +112,8 @@ class PortalUpdater(object):
         self._portal_update_activity_date = None
         self._portal_update_completed = False
         self.verbose = verbose
+        self.dataset_id = dataset_id
+        self.ignore_hashes = ignore_hashes
 
     def portal_update(self):
         """
@@ -161,7 +165,8 @@ class PortalUpdater(object):
             # retrieve a list of changed packages from the registry
             while True:
                 packages, next_date = _changed_packages_since(
-                    registry, start_date, verbose=verbose)
+                    registry, start_date, verbose=verbose,
+                    dataset_id=self.dataset_id)
                 if next_date is None or packages is None:
                     return
                 yield packages, next_date
@@ -183,6 +188,8 @@ class PortalUpdater(object):
             cmd.append('-m')
         if self.verbose:
             cmd.append('-v')
+        if self.ignore_hashes:
+            cmd.append('-i')
 
         pool = worker_pool(
             cmd,
@@ -297,7 +304,8 @@ class PortalUpdater(object):
 def _changed_packages_since(registry: Union[LocalCKAN, RemoteCKAN],
                             since_time: Optional[datetime],
                             ids_only: Optional[bool] = False,
-                            verbose: Optional[bool] = False) -> \
+                            verbose: Optional[bool] = False,
+                            dataset_id: Optional[str] = None) -> \
                                 Union[Tuple[List[bytes], datetime],
                                       Tuple[None, None]]:
     """
@@ -318,13 +326,32 @@ def _changed_packages_since(registry: Union[LocalCKAN, RemoteCKAN],
     if not since_time:
         return None, None
 
-    data = registry.action.changed_packages_activity_timestamp_since(
-        since_time=since_time.isoformat())
+    packages: List[bytes] = []
+
+    data = None
+    if not dataset_id:
+        data = registry.action.changed_packages_activity_timestamp_since(
+            since_time=since_time.isoformat())
+    else:
+        try:
+            source_package = registry.action.package_show(id=dataset_id)
+        except NotFound:
+            print(dataset_id + " not found in database.", file=sys.stderr)
+        else:
+            if ids_only:
+                # ckanapi workers are expecting bytes
+                packages.append(source_package['id'].encode('utf-8'))
+            else:
+                source_package = get_datastore_and_views(
+                    source_package, registry, verbose=verbose)
+                # ckanapi workers are expecting bytes
+                packages.append(json.dumps(source_package).encode('utf-8'))
+            next_time: datetime = isodate(since_time, cast(Context, {}))
+            return packages, next_time
 
     if not data:
         return None, None
 
-    packages: List[bytes] = []
     if verbose:
         if ids_only:
             print("Only retrieving changed package IDs...", file=sys.stderr)
@@ -357,7 +384,8 @@ def _changed_packages_since(registry: Union[LocalCKAN, RemoteCKAN],
 def _copy_datasets(source_datastore_uri: Optional[str],
                    user: Optional[str] = None,
                    mirror: Optional[bool] = False,
-                   verbose: Optional[bool] = False):
+                   verbose: Optional[bool] = False,
+                   ignore_hashes: Optional[bool] = False):
     """
     PortalUpdater member: Syncs package dicts from the stdin (valid JSON).
 
@@ -481,9 +509,12 @@ def _copy_datasets(source_datastore_uri: Optional[str],
                     do_update_sync_success_time = True
                 # only try adding datastores and views if no errors
                 if not failure_reason:
-                    for r in source_pkg['resources']:
-                        # use Registry file hashes for force undelete
-                        resource_file_hashes[r['id']] = r.get('hash')
+                    if not ignore_hashes:
+                        for r in source_pkg['resources']:
+                            # use Registry file hashes for force undelete
+                            resource_file_hashes[r['id']] = r.get('hash')
+                    else:
+                        action += ' (ignoring file hash checks) '
                     _action, _error, failure_reason, failure_trace = \
                         _add_datastore_and_views(source_pkg, portal,
                                                  resource_file_hashes,
@@ -499,6 +530,8 @@ def _copy_datasets(source_datastore_uri: Optional[str],
                     do_update_sync_success_time = False
             elif target_pkg is None and source_pkg is not None:
                 action = 'created'
+                if ignore_hashes:
+                    action += ' (ignoring file hash checks) '
                 with _capture_exception_details('package_create', package_id):
                     portal.action.package_create(**source_pkg)
                     do_update_sync_success_time = True
@@ -532,9 +565,12 @@ def _copy_datasets(source_datastore_uri: Optional[str],
                 do_update_sync_success_time = False
             elif target_pkg is not None:
                 action = 'updated'
-                for r in target_pkg['resources']:
-                    # use Portal file hashes
-                    resource_file_hashes[r['id']] = r.get('hash')
+                if not ignore_hashes:
+                    for r in target_pkg['resources']:
+                        # use Portal file hashes
+                        resource_file_hashes[r['id']] = r.get('hash')
+                else:
+                    action += ' (ignoring file hash checks) '
                 with _capture_exception_details('package_update', package_id):
                     portal.action.package_update(**source_pkg)
                     do_update_sync_success_time = True
@@ -1348,6 +1384,18 @@ def canada():
     is_flag=True,
     help="Increase verbosity",
 )
+@click.option(
+    "-D",
+    "--dataset-id",
+    default=None,
+    help="Dataset ID to sync to the Portal.",
+)
+@click.option(
+    "-i",
+    "--ignore-hashes",
+    is_flag=True,
+    help="Ignore resource file hashes.",
+)
 def portal_update(portal_ini: str,
                   ckan_user: Optional[str],
                   last_activity_date: Optional[str] = None,
@@ -1356,7 +1404,9 @@ def portal_update(portal_ini: str,
                   log: Optional[str] = None,
                   tries: int = 1,
                   delay: int = 60,
-                  verbose: bool = False):
+                  verbose: bool = False,
+                  dataset_id: Optional[str] = None,
+                  ignore_hashes: bool = False):
     """
     PortalUpdater member: CKAN cli command entrance to run the PortalUpdater stack.
 
@@ -1381,7 +1431,9 @@ def portal_update(portal_ini: str,
                   log,
                   tries,
                   delay,
-                  verbose).portal_update()
+                  verbose,
+                  dataset_id,
+                  ignore_hashes).portal_update()
 
 
 @canada.command(short_help="Copy records from another source.")
@@ -1409,10 +1461,17 @@ def portal_update(portal_ini: str,
     is_flag=True,
     help="Increase verbosity",
 )
+@click.option(
+    "-i",
+    "--ignore-hashes",
+    is_flag=True,
+    help="Ignore resource file hashes.",
+)
 def copy_datasets(mirror: Optional[bool] = False,
                   ckan_user: Optional[str] = None,
                   source: Optional[str] = None,
-                  verbose: Optional[bool] = False):
+                  verbose: Optional[bool] = False,
+                  ignore_hashes: bool = False):
     """
     PortalUpdater member: CKAN cli command entrance
     to sync packages from stdin (valid JSON).
@@ -1428,7 +1487,8 @@ def copy_datasets(mirror: Optional[bool] = False,
     _copy_datasets(source,
                    _get_user(ckan_user),
                    mirror,
-                   verbose)
+                   verbose,
+                   ignore_hashes)
 
 
 @canada.command(short_help="Lists changed records.")

@@ -1,0 +1,1 @@
+Added `--dataset-id` (`-D`) and `--ignore-hashes` (`-i`) options to the `portal_update` command. This is an interim fix to some DataStore tables not syncing to the Portal during the Post to Portal process.
