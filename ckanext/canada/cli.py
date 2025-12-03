@@ -346,7 +346,8 @@ def _changed_packages_since(registry: Union[LocalCKAN, RemoteCKAN],
                     source_package, registry, verbose=verbose)
                 # ckanapi workers are expecting bytes
                 packages.append(json.dumps(source_package).encode('utf-8'))
-            return packages, since_time.isoformat()
+            next_time: datetime = isodate(since_time, cast(Context, {}))
+            return packages, next_time
 
     if not data:
         return None, None
