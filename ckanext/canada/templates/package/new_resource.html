@@ -8,6 +8,16 @@
   </div>
 {% endblock %}
 
+{% block pre_primary %}
+  <div class="panel panel-default mrgn-tp-lg">
+    {% snippet 'package/snippets/resource_help.html' %}
+  </div>
+  {% snippet 'package/snippets/resources.html', pkg=pkg %}
+{% endblock %}
+
+{% block secondary_content %}
+{% endblock %}
+
 {% block form %}
   {% set max_resource_count = h.max_resources_per_dataset() %}
   {% if g.is_registry and max_resource_count and pkg_dict.resources|length >= max_resource_count %}
