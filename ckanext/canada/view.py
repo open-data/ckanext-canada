@@ -1228,7 +1228,6 @@ def _url_part_escape(orig: str) -> str:
     )
 
 
-
 # TODO: DEPRECATED: REMOVE AFTER FULL PD DATATABLES QA
 def datatablify(v: Any, colname: str, chromo: Dict[str, Any]) -> str:
     '''
