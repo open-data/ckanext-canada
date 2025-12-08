@@ -529,7 +529,11 @@ def get_pd_datatable(resource_name: str,
                         (fk['parent_columns'][fk_ci], fk_cc)
                         for fk_ci, fk_cc in enumerate(fk['child_columns']))
 
-    return h.snippet('snippets/pd_datatable.html',
+    # TODO: DEPRECATED: REMOVE AFTER FULL PD DATATABLES QA
+    snippet = 'pd_datatable.html' if config.get(
+        'ckanext.canada.enable_pd_datatable_editor') else 'pd_datatable_depr.html'
+
+    return h.snippet('snippets/%s' % snippet,
                      resource_name=resource_name,
                      resource_id=resource_id,
                      owner_org=owner_org,
