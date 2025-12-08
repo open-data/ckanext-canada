@@ -346,7 +346,7 @@ def _changed_packages_since(registry: Union[LocalCKAN, RemoteCKAN],
                     source_package, registry, verbose=verbose)
                 # ckanapi workers are expecting bytes
                 packages.append(json.dumps(source_package).encode('utf-8'))
-            next_time: datetime = isodate(since_time, cast(Context, {}))
+            next_time: datetime = isodate('2332-07-07', cast(Context, {}))
             return packages, next_time
 
     if not data:
@@ -563,6 +563,21 @@ def _copy_datasets(source_datastore_uri: Optional[str],
                 reason = 'no difference found'
                 # do not update sync time if nothing changed
                 do_update_sync_success_time = False
+                if ignore_hashes:
+                    # try to update datastore and views if
+                    # ignoring hashes
+                    action += ' (ignoring file hash checks) '
+                    do_update_sync_success_time = True
+                    _action, _error, failure_reason, failure_trace = \
+                        _add_datastore_and_views(source_pkg, portal,
+                                                 resource_file_hashes,
+                                                 source_datastore_uri,
+                                                 verbose=verbose)
+                    error += _error
+                    action += _action
+                    if failure_reason:
+                        reason += ' ERRORED'
+                        do_update_sync_success_time = False
             elif target_pkg is not None:
                 action = 'updated'
                 if not ignore_hashes:
