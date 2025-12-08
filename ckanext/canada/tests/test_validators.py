@@ -140,7 +140,6 @@ class TestNAVLSchema(CanadaTestBase):
         for k in set(err) | set(expected):
             assert k in err
             assert err[k] == expected[k]
-        model.Session.rollback()
         resp = self.normal_action.package_create(
             name='12345678-9abc-def0-1234-56789abcdef0', **self.complete_pkg)
         assert resp['title_translated']['fr'] == 'Un novel par Tolstoy'

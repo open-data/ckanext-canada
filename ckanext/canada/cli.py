@@ -167,6 +167,8 @@ class PortalUpdater(object):
                 packages, next_date = _changed_packages_since(
                     registry, start_date, verbose=verbose,
                     dataset_id=self.dataset_id)
+                if self.dataset_id is not None:
+                    return packages, None
                 if next_date is None or packages is None:
                     return
                 yield packages, next_date
@@ -346,8 +348,7 @@ def _changed_packages_since(registry: Union[LocalCKAN, RemoteCKAN],
                     source_package, registry, verbose=verbose)
                 # ckanapi workers are expecting bytes
                 packages.append(json.dumps(source_package).encode('utf-8'))
-            next_time: datetime = isodate('2332-07-07', cast(Context, {}))
-            return packages, next_time
+            return packages, None
 
     if not data:
         return None, None
