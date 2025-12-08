@@ -163,16 +163,17 @@ class PortalUpdater(object):
                 Tuple[None, None]],
                 None, None]:
             # retrieve a list of changed packages from the registry
+            retrieved_single_dataset = False
             while True:
                 packages, next_date = _changed_packages_since(
                     registry, start_date, verbose=verbose,
                     dataset_id=self.dataset_id)
-                if self.dataset_id is not None:
-                    return packages, None
-                if next_date is None or packages is None:
+                if next_date is None or packages is None or retrieved_single_dataset:
                     return
                 yield packages, next_date
                 start_date = next_date
+                if self.dataset_id is not None:
+                    retrieved_single_dataset = True
 
         # copy the changed packages to portal
         cmd = [
@@ -348,7 +349,9 @@ def _changed_packages_since(registry: Union[LocalCKAN, RemoteCKAN],
                     source_package, registry, verbose=verbose)
                 # ckanapi workers are expecting bytes
                 packages.append(json.dumps(source_package).encode('utf-8'))
-            return packages, None
+            # return a fake date
+            next_time: datetime = isodate('2332-07-07', cast(Context, {}))
+            return packages, next_time
 
     if not data:
         return None, None
