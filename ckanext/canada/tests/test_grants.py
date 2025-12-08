@@ -65,8 +65,6 @@ class TestGrants(CanadaTestBase):
         assert 'ref_number' in err['records'][0]
         assert err['records'][0]['ref_number'] == ['Comma is not allowed in Reference Number field']
 
-    # TODO: enable after December 1st 2025!!!
-    @pytest.mark.skip(reason="agreement_start_date cannot be in future")
     def test_agreement_value(self):
         """
         Must be greater than 0
@@ -113,8 +111,6 @@ class TestGrants(CanadaTestBase):
                     resource_id=self.resource_id,
                     records=[record])
 
-    # TODO: enable after December 1st 2025!!!
-    @pytest.mark.skip(reason="agreement_start_date cannot be in future")
     def test_business_number_format(self):
         """
         Should be a 9 digit natural number
@@ -156,8 +152,6 @@ class TestGrants(CanadaTestBase):
                 resource_id=self.resource_id,
                 records=[record])
 
-    # TODO: enable after December 1st 2025!!!
-    @pytest.mark.skip(reason="agreement_start_date cannot be in future")
     def test_riding_number_format(self):
         """
         Should be a 5 digit natural number
@@ -199,8 +193,6 @@ class TestGrants(CanadaTestBase):
                 resource_id=self.resource_id,
                 records=[record])
 
-    # TODO: enable after December 1st 2025!!!
-    @pytest.mark.skip(reason="agreement_start_date cannot be in future")
     def test_postal_code_format(self):
         """
         Should enforce Canadian postal code format
@@ -350,8 +342,6 @@ class TestGrants(CanadaTestBase):
         assert 'records' in err
         assert 'recipient_province' in err['records'][0]
 
-    # TODO: enable after December 1st 2025!!!
-    @pytest.mark.skip(reason="agreement_start_date cannot be in future")
     def test_required_fields_2025(self):
         """
         Excluding conditionally required fields should raise an exception
