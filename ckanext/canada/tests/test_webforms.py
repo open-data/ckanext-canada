@@ -302,6 +302,7 @@ class TestRecombinantWebForms(CanadaTestBase):
             ati_email='test@example.com')
         self.pd_type = 'ati'
         self.nil_type = 'ati-nil'
+        self.sheet_names = [self.pd_type, self.nil_type]
         self.chromo = get_chromo(self.pd_type)
         self.nil_chromo = get_chromo(self.nil_type)
         self.fields = self.chromo['fields']
@@ -339,13 +340,14 @@ class TestRecombinantWebForms(CanadaTestBase):
         except ValidationError:
             pass
 
-    def _lc_create_pd_record(self, org=None, is_nil=False, return_field='name'):
+    def _lc_create_pd_record(self, org=None, is_nil=False, return_field='name', record=None):
         lc = LocalCKAN()
         org = org if org else self.org
         self._lc_init_pd(org=org)
         rval = lc.action.recombinant_show(dataset_type=self.pd_type, owner_org=org['name'])
         resource_id = rval['resources'][1]['id'] if is_nil else rval['resources'][0]['id']
-        record = self.example_nil_record if is_nil else self.example_record
+        if not record:
+            record = self.example_nil_record.copy() if is_nil else self.example_record.copy()
         lc.action.datastore_upsert(resource_id=resource_id, records=[record])
         return rval['resources'][1][return_field] if is_nil else rval['resources'][0][return_field]
 
@@ -635,7 +637,7 @@ class TestRecombinantWebForms(CanadaTestBase):
         template_file.write(response.get_data(as_text=False))
         # produces: (sheet-name, org-name, column_names, data_rows_generator)
         #   note: data_rows_generator excludes the example row
-        template_file = list(read_excel(template_file))
+        template_file = list(read_excel(template_file, expected_sheet_names=self.sheet_names))
         # pd workbook
         assert template_file[0][0] == self.pd_type  # check sheet name
         assert template_file[0][1] == self.org['name']  # check org name
@@ -670,7 +672,7 @@ class TestRecombinantWebForms(CanadaTestBase):
         template_file.write(response.get_data(as_text=False))
         # produces: (sheet-name, org-name, column_names, data_rows_generator)
         #   note: data_rows_generator excludes the example row
-        template_file = list(read_excel(template_file))
+        template_file = list(read_excel(template_file, expected_sheet_names=self.sheet_names))
         # pd workbook
         assert template_file[0][0] == self.pd_type  # check sheet name
         assert template_file[0][1] == self.org['name']  # check org name
@@ -701,7 +703,7 @@ class TestRecombinantWebForms(CanadaTestBase):
         template_file.write(response.get_data(as_text=False))
         # produces: (sheet-name, org-name, column_names, data_rows_generator)
         #   note: data_rows_generator excludes the example row
-        template_file = list(read_excel(template_file))
+        template_file = list(read_excel(template_file, expected_sheet_names=self.sheet_names))
         # nil workbook
         assert template_file[1][0] == self.nil_type  # check sheet name
         assert template_file[1][1] == self.org['name']  # check org name
@@ -1053,14 +1055,15 @@ class TestRecombinantWebForms(CanadaTestBase):
         assert '2 deleted.' in response.body
 
     def _prepare_records_to_delete(self):
-        original_request_number = self.example_record['request_number']
-        self.example_record['request_number'] = 'B-8019'
-        self._lc_create_pd_record()
-        records_to_delete = self.example_record['request_number']
+        _example_record = self.example_record.copy()
+        original_request_number = _example_record['request_number']
+        _example_record['request_number'] = 'B-8019'
+        self._lc_create_pd_record(record=_example_record)
+        records_to_delete = _example_record['request_number']
         # reset example record request number to original
-        self.example_record['request_number'] = original_request_number
-        resource_id = self._lc_create_pd_record(return_field='id')
-        records_to_delete += '\n{}'.format(self.example_record['request_number'])
+        _example_record['request_number'] = original_request_number
+        resource_id = self._lc_create_pd_record(return_field='id', record=_example_record)
+        records_to_delete += '\n{}'.format(_example_record['request_number'])
         return {
             'resource_id': resource_id,
             'form': {
