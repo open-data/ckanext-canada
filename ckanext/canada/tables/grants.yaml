@@ -241,7 +241,7 @@ resources:
           )
         )
       )
-    # TODO: js error eval
+    # TODO: TEST js error eval
     js_error_eval: >-
       {{agreement_start_date}}.length > 0 &&
       new Date({{agreement_start_date}}) >= new Date("2025-12-01") &&
@@ -251,7 +251,8 @@ resources:
           String(VALUE).match(/^-?[0-9]+$/) != null
           && parseInt(VALUE) < 0
         ) ||
-        VALUE.startsWith("0")
+        VALUE.startsWith("0") ||
+        VALUE.length != 9
       )
     datastore_type: text
 
@@ -496,10 +497,12 @@ resources:
           )
         )
       )
-    # TODO: js error eval
+    # TODO: TEST js error eval
     js_error_eval: >-
       {{agreement_start_date}}.length > 0 &&
-      new Date({{agreement_start_date}}) >= new Date("2025-12-01")
+      new Date({{agreement_start_date}}) >= new Date("2025-12-01") &&
+      VALUE.length > 0 &&
+      ! /^[A-Za-z]\d[A-Za-z] \d[A-Za-z]\d$/.test(VALUE)
     datastore_type: text
 
   # 3.14 Federal Riding Name (English) (New Field)
@@ -577,10 +580,19 @@ resources:
           )
         )
       )
-    # TODO: js error eval
+    # TODO: TEST js error eval
     js_required_eval: >-
       {{agreement_start_date}}.length > 0 &&
-      new Date({{agreement_start_date}}) >= new Date("2025-12-01")
+      new Date({{agreement_start_date}}) >= new Date("2025-12-01") &&
+      VALUE.length > 0 &&
+      (
+        (
+          String(VALUE).match(/^-?[0-9]+$/) != null
+          && parseInt(VALUE) < 0
+        ) ||
+        VALUE.startsWith("0") ||
+        VALUE.length != 5
+      )
     datastore_type: text
 
   # 3.17 Program Name (English)
@@ -789,8 +801,18 @@ resources:
           )
         )
       )
-    # TODO: js error eval
-    js_error_eval: '{{agreement_start_date}}.length > 0 && new Date({{agreement_start_date}}) >= new Date("2025-12-01")'
+    # TODO: TEST js error eval
+    js_error_eval: >-
+      {{agreement_start_date}}.length > 0 &&
+      new Date({{agreement_start_date}}) >= new Date("2025-12-01") &&
+      VALUE.length > 0 &&
+      (
+        (
+          String(VALUE).match(/^-?[0-9]+$/) != null
+          && parseInt(VALUE) < 0
+        ) ||
+        String(VALUE).match(/^-?[0-9]+$/) == null
+      )
     solr_dollar_range_facet:
      - 10000
      - 25000
@@ -868,8 +890,16 @@ resources:
       en: Date (Please format the date as YYYY-MM-DD)
       fr: "Date (Veuillez utiliser le format de date suivant : AAAA-MM-JJ)"
     excel_error_formula: 'OR({default_formula},{cell}>TODAY(),AND(NOT(ISBLANK({cell})),NOT(ISBLANK({agreement_end_date})),{cell}>{agreement_end_date}))'
-    # TODO: js error eval for future date
-    js_error_eval: ''
+    # TODO: TEST js error eval for future date not after end date
+    js_error_eval: >-
+      VALUE.length > 0 &&
+      (
+        new Date(VALUE) > new Date() ||
+        (
+          {{agreement_end_date}}.length > 0 &&
+          new Date(VALUE) > new Date({{agreement_end_date}})
+        )
+      )
     datastore_type: date
     extract_date_year: true
     extract_date_month: true
@@ -895,8 +925,11 @@ resources:
     excel_error_formula: 'OR({default_formula},AND(NOT(ISBLANK({agreement_start_date})),NOT(ISBLANK({cell})),{cell}<{agreement_start_date}))'
     excel_required_formula: 'AND(NOT(ISBLANK({agreement_start_date})),VALUE({agreement_start_date})>=DATE(2025,12,1))'
     js_required_eval: '{{agreement_start_date}}.length > 0 && new Date({{agreement_start_date}}) >= new Date("2025-12-01")'
-    # TODO: js error eval for date before start date
-    js_error_eval: ''
+    # TODO: TEST js error eval for date before start date
+    js_error_eval: >-
+      VALUE.length > 0 &&
+      {{agreement_start_date}}.length > 0 &&
+      new Date(VALUE) < new Date({{agreement_start_date}})
     datastore_type: date
     form_snippet: scheming/form_snippets/date.html
 
