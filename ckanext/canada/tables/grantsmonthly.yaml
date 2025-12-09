@@ -675,14 +675,8 @@ resources:
       en: Agreement Start Date
       fr: Date de début de l’entente
     description:
-      en: |
-        The agreement start date is the assumed start of the agreement, normally identified based on the last date of signature, as captured in the initial agreement.
-
-        This date should identify the start of the funding agreement, and not the date of the grant or contribution project.
-      fr: |
-        La date de début de l'entente est la date d'entrée en vigueur présumée de l'entente, commence généralement à être identifié en fonction de la dernière date de signature, conformément à l'entente initiale.
-
-        Cette date doit indiquer le début de l'accord de financement, et non la date du projet de subvention ou de contribution.
+      en: The agreement start date is the start of the agreement as identified by the last date of signature in the initial agreement.
+      fr: La date de début de l’accord correspond au début prévu de l’accord, généralement déterminé en fonction de la dernière date de signature, telle qu’elle figure dans l’accord initial.
     obligation:
       en: Mandatory
       fr: Obligatoire
