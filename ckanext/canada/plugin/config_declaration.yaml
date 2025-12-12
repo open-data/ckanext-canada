@@ -14,11 +14,6 @@ groups:
         description: |
             Email address of Open Canada support desk.
         required: false
-      - key: ckanext.canada.default_open_email_address
-        default: open-ouvert@tbs-sct.gc.ca
-        description: |
-            Generic email address for Open Canada.
-        required: false
       - key: ckanext.canada.content_security_policy
         default: >
           Content-Security-Policy: default-src 'self';
