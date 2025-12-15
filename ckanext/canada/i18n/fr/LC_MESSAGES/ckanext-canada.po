@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-12-15 19:58+0000\n"
+"POT-Creation-Date: 2025-12-15 20:00+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: fr\n"
@@ -1565,7 +1565,7 @@ msgstr ""
 #: ckanext/canada/tables/adminaircraft.yaml:355
 #: ckanext/canada/tables/contracts.yaml:2253
 #: ckanext/canada/tables/grants.yaml:1317
-#: ckanext/canada/tables/grantsmonthly.yaml:1747
+#: ckanext/canada/tables/grantsmonthly.yaml:1841
 #: ckanext/canada/tables/hospitalityq.yaml:739
 #: ckanext/canada/tables/qpnotes.yaml:382
 #: ckanext/canada/tables/reclassification.yaml:310
@@ -1978,28 +1978,28 @@ msgstr ""
 #. SQL Trigger String for PD Type: grants
 #. SQL Trigger String for PD Type: grantsmonthly
 #: ckanext/canada/tables/grants.yaml:1318
-#: ckanext/canada/tables/grantsmonthly.yaml:1752
+#: ckanext/canada/tables/grantsmonthly.yaml:1846
 msgid "Must be a valid Canadian postal code in the format of \"A1A 1A1\""
 msgstr "Doit être un code postal canadien valide selon le format « A1A 1A1 »"
 
 #. SQL Trigger String for PD Type: grants
 #. SQL Trigger String for PD Type: grantsmonthly
 #: ckanext/canada/tables/grants.yaml:1319
-#: ckanext/canada/tables/grantsmonthly.yaml:1753
+#: ckanext/canada/tables/grantsmonthly.yaml:1847
 msgid "Must be a 9 digit number"
 msgstr "Doit être un numéro à neuf chiffres"
 
 #. SQL Trigger String for PD Type: grants
 #. SQL Trigger String for PD Type: grantsmonthly
 #: ckanext/canada/tables/grants.yaml:1320
-#: ckanext/canada/tables/grantsmonthly.yaml:1754
+#: ckanext/canada/tables/grantsmonthly.yaml:1848
 msgid "Must be a 5 digit number"
 msgstr "Doit être un numéro à cinq chiffres"
 
 #. SQL Trigger String for PD Type: grants
 #. SQL Trigger String for PD Type: grantsmonthly
 #: ckanext/canada/tables/grants.yaml:1321
-#: ckanext/canada/tables/grantsmonthly.yaml:1755
+#: ckanext/canada/tables/grantsmonthly.yaml:1849
 msgid "\"Agreement Start Date\" cannot be after \"Projected Agreement End Date\""
 msgstr ""
 "La « date de début de l'entente » ne peut venir après la « date de fin "
@@ -2008,7 +2008,7 @@ msgstr ""
 #. SQL Trigger String for PD Type: grants
 #. SQL Trigger String for PD Type: grantsmonthly
 #: ckanext/canada/tables/grants.yaml:1322
-#: ckanext/canada/tables/grantsmonthly.yaml:1756
+#: ckanext/canada/tables/grantsmonthly.yaml:1850
 msgid "Must be greater than zero"
 msgstr "Le nombre doit être supérieur à 0"
 
@@ -2048,7 +2048,7 @@ msgstr ""
 
 #. SQL Trigger String for PD Type: grantsmonthly
 #. SQL Trigger String for PD Type: service
-#: ckanext/canada/tables/grantsmonthly.yaml:1748
+#: ckanext/canada/tables/grantsmonthly.yaml:1842
 #: ckanext/canada/tables/service.yaml:1785
 #: ckanext/canada/tables/service.yaml:2688
 msgid "This field has a maximum length of {} characters."
@@ -2056,7 +2056,7 @@ msgstr "Ce champ ne peut excéder une longueur maximale de {} caractères."
 
 #. SQL Trigger String for PD Type: grantsmonthly
 #. SQL Trigger String for PD Type: service
-#: ckanext/canada/tables/grantsmonthly.yaml:1749
+#: ckanext/canada/tables/grantsmonthly.yaml:1843
 #: ckanext/canada/tables/service.yaml:1786
 #: ckanext/canada/tables/service.yaml:2689
 msgid "Invalid choice: {}"
@@ -2064,7 +2064,7 @@ msgstr "Choix non valide : {}"
 
 #. SQL Trigger String for PD Type: grantsmonthly
 #. SQL Trigger String for PD Type: service
-#: ckanext/canada/tables/grantsmonthly.yaml:1750
+#: ckanext/canada/tables/grantsmonthly.yaml:1844
 #: ckanext/canada/tables/service.yaml:1788
 #: ckanext/canada/tables/service.yaml:2692
 msgid "This field is required due to a response in a different field."
@@ -2072,7 +2072,7 @@ msgstr "Ce champ est requis en raison d'une réponse présente dans un autre cha
 
 #. SQL Trigger String for PD Type: grantsmonthly
 #. SQL Trigger String for PD Type: service
-#: ckanext/canada/tables/grantsmonthly.yaml:1751
+#: ckanext/canada/tables/grantsmonthly.yaml:1845
 #: ckanext/canada/tables/service.yaml:1789
 #: ckanext/canada/tables/service.yaml:2693
 msgid "This text must be provided in both languages"
