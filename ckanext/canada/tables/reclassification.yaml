@@ -29,6 +29,7 @@ resources:
     excel_required: true
     form_required: true
     validation: This field must not be empty
+    js_error_eval: 'VALUE.length > 0 && VALUE.includes(",")'
     format_type:
       en: Free text
       fr: Texte libre
@@ -91,6 +92,7 @@ resources:
     excel_required: true
     form_required: true
     validation: This field must not be empty
+    datatables_col_class: col-xl
     format_type:
       en: Free text
       fr: Texte libre
@@ -107,6 +109,7 @@ resources:
     excel_required: true
     form_required: true
     validation: This field must not be empty
+    datatables_col_class: col-xl
     format_type:
       en: Free text
       fr: Texte libre
@@ -126,8 +129,10 @@ resources:
       en: Controlled List
       fr: Liste contrôlée
     validation: This field must not be empty
-    excel_full_text_choices: True
-    form_choices_prefix_code: True
+    excel_full_text_choices: true
+    datatables_full_text_choices: true
+    form_choices_prefix_code: true
+    datatables_col_class: col-md
     choices_file: choices/classification_group.yaml
     excel_error_formula: 'FALSE'
 
@@ -143,7 +148,7 @@ resources:
       en: Controlled List
       fr: Liste contrôlée
     validation: This field must not be empty
-    excel_full_text_choices: False
+    excel_full_text_choices: false
     choices_file: choices/level_number.yaml
     excel_error_formula: 'FALSE'
 
@@ -159,8 +164,10 @@ resources:
       en: Controlled List
       fr: Liste contrôlée
     validation: This field must not be empty
-    excel_full_text_choices: True
-    form_choices_prefix_code: True
+    excel_full_text_choices: true
+    datatables_full_text_choices: true
+    form_choices_prefix_code: true
+    datatables_col_class: col-md
     choices_file: choices/classification_group.yaml
     excel_error_formula: 'FALSE'
 
@@ -176,7 +183,7 @@ resources:
       en: Controlled List
       fr: Liste contrôlée
     validation: This field must not be empty
-    excel_full_text_choices: False
+    excel_full_text_choices: false
     choices_file: choices/level_number.yaml
     excel_error_formula: 'FALSE'
 
@@ -185,6 +192,7 @@ resources:
     label:
       en: Previous Supervisory Differential
       fr: Ancienne prime de surveillance
+    datatables_col_class: col-md
     format_type:
       en: Free text
       fr: Texte libre
@@ -196,6 +204,7 @@ resources:
     label:
       en: Reclassified Supervisory Differential
       fr: Prime de surveillance précédente
+    datatables_col_class: col-md
     format_type:
       en: Free text
       fr: Texte libre
@@ -210,6 +219,7 @@ resources:
     obligation: Mandatory
     excel_required: true
     form_required: true
+    datatables_col_class: col-xl
     format_type:
       en: Free text
       fr: Texte libre
@@ -226,6 +236,7 @@ resources:
     obligation: Mandatory
     excel_required: true
     form_required: true
+    datatables_col_class: col-xl
     format_type:
       en: Free text
       fr: Texte libre
@@ -338,7 +349,9 @@ resources:
     validation: This field must not be empty
     excel_column_width: 10
     extract_date_year: true
+    datatables_col_class: col-md
     excel_error_formula: '{cell}>YEAR(TODAY())'
+    js_error_eval: 'VALUE.length > 0 && VALUE > new Date().getFullYear()'
 
   - datastore_id: quarter
     datastore_type: text
@@ -349,8 +362,10 @@ resources:
     obligation: Mandatory
     excel_required: true
     form_required: true
+    datatables_col_class: col-sm pd-datatables-primary-key-offset-md
     validation: This field must not be empty
     excel_full_text_choices: true
+    datatables_full_text_choices: true
     choices:
       Q1:
         en: April 1 - June 30
@@ -443,3 +458,9 @@ excel_column_heading_style:
   PatternFill:
     patternType: solid
     fgColor: FF83c3f2
+datatables_style:
+  header:
+    bgColor: 83c3f2
+  select:
+    bgColor: c8e5f9
+    fgColor: 333333

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-10-17 17:54+0000\n"
+"POT-Creation-Date: 2025-12-15 19:11+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: fr\n"
@@ -159,7 +159,7 @@ msgid "Treasury Board of Canada Secretariat"
 msgstr "Secrétariat du Conseil du Trésor du Canada"
 
 #: ckanext/canada/helpers.py:710 ckanext/canada/strings.py:14
-#: ckanext/canada/view.py:1286
+#: ckanext/canada/view.py:1517
 msgid "Members not found"
 msgstr "Membres non trouvés"
 
@@ -292,6 +292,36 @@ msgid ""
 "than {} rows."
 msgstr ""
 
+#: ckanext/canada/strings.js:11 ckanext/canada/strings.py:98
+msgid "Requesting Download..."
+msgstr "Préparation du téléchargement..."
+
+#: ckanext/canada/strings.js:12 ckanext/canada/strings.py:99
+msgid "Downloads"
+msgstr "Téléchargements"
+
+#: ckanext/canada/strings.js:13 ckanext/canada/strings.py:100
+msgid ""
+"You have unfinished downloads in this page. Do you want to stop these "
+"downloads and leave the page?"
+msgstr ""
+
+#: ckanext/canada/strings.js:14 ckanext/canada/strings.py:101
+msgid "Downloading file..."
+msgstr "Téléchargement du fichier..."
+
+#: ckanext/canada/strings.js:15 ckanext/canada/strings.py:102
+msgid "Successfully downloaded file"
+msgstr "Fichier téléchargé avec succès"
+
+#: ckanext/canada/strings.js:16 ckanext/canada/strings.py:103
+msgid "Error downloading file, trying again through your browser"
+msgstr "Erreur lors du téléchargement du fichier, réessayez via votre navigateur"
+
+#: ckanext/canada/strings.js:17 ckanext/canada/strings.py:104
+msgid "Searching..."
+msgstr "Recherche..."
+
 #: ckanext/canada/strings.py:12
 #: ckanext/canada/templates/package/base_form_page.html:5
 #: ckanext/canada/templates/package/new.html:9
@@ -304,7 +334,7 @@ msgstr "Non autorisé à accéder au téléchargement des membres du {group}"
 
 #: ckanext/canada/strings.py:15
 #: ckanext/canada/templates/admin/snippets/portal_sync_package_item.html:14
-#: ckanext/canada/view.py:1296
+#: ckanext/canada/view.py:1539 ckanext/canada/view.py:1546
 msgid "N/A"
 msgstr "N/A"
 
@@ -314,7 +344,7 @@ msgstr "N/A"
 #: ckanext/canada/templates/user/list.html:44
 #: ckanext/canada/templates/user/new_user_form.html:6
 #: ckanext/canada/templates/user/snippets/login_form.html:32
-#: ckanext/canada/view.py:1288
+#: ckanext/canada/view.py:1521
 msgid "Username"
 msgstr "Nom d’utilisateur"
 
@@ -323,22 +353,22 @@ msgstr "Nom d’utilisateur"
 #: ckanext/canada/templates/user/new_user_form.html:12
 #: ckanext/canada/templates/user/read_base.html:61
 #: ckanext/canada/templates/user/recover_username.html:17
-#: ckanext/canada/view.py:1288
+#: ckanext/canada/view.py:1522
 msgid "Email"
 msgstr "Courriel"
 
 #: ckanext/canada/strings.py:18 ckanext/canada/templates/user/api_tokens.html:7
-#: ckanext/canada/templates/user/list.html:45 ckanext/canada/view.py:1288
+#: ckanext/canada/templates/user/list.html:45 ckanext/canada/view.py:1523
 msgid "Name"
 msgstr "Nom"
 
 #: ckanext/canada/strings.py:19
 #: ckanext/canada/templates/organization/member_new.html:58
-#: ckanext/canada/templates/user/list.html:46 ckanext/canada/view.py:1288
+#: ckanext/canada/templates/user/list.html:46 ckanext/canada/view.py:1524
 msgid "Role"
 msgstr "Rôle"
 
-#: ckanext/canada/strings.py:20 ckanext/canada/view.py:1306
+#: ckanext/canada/strings.py:20 ckanext/canada/view.py:1559
 msgid "members"
 msgstr "membres"
 
@@ -737,51 +767,25 @@ msgstr ""
 "saisi l'adresse URL manuellement, veuillez vérifier l'orthographe et "
 "réessayer."
 
-#: ckanext/canada/strings.py:98
-msgid "Requesting Download..."
-msgstr "Préparation du téléchargement..."
-
-#: ckanext/canada/strings.py:99
-msgid "Downloads"
-msgstr "Téléchargements"
-
-#: ckanext/canada/strings.py:100
-msgid ""
-"You have unfinished downloads in this page. Do you want to stop these "
-"downloads and leave the page?"
-msgstr ""
-
-#: ckanext/canada/strings.py:101
-msgid "Downloading file..."
-msgstr "Téléchargement du fichier..."
-
-#: ckanext/canada/strings.py:102
-msgid "Successfully downloaded file"
-msgstr "Fichier téléchargé avec succès"
-
-#: ckanext/canada/strings.py:103
-msgid "Error downloading file, trying again through your browser"
-msgstr "Erreur lors du téléchargement du fichier, réessayez via votre navigateur"
-
-#: ckanext/canada/strings.py:106
+#: ckanext/canada/strings.py:107
 msgid "Please upload a file or link to an external resource"
 msgstr ""
 "Veuillez téléverser un fichier ou donner un lien vers une ressource "
 "externe"
 
-#: ckanext/canada/strings.py:107
+#: ckanext/canada/strings.py:108
 msgid "Cannot upload files of this type"
 msgstr "Impossible de téléverser un fichier de ce type"
 
-#: ckanext/canada/strings.py:108
+#: ckanext/canada/strings.py:109
 msgid "Cannot link files of this type"
 msgstr "Impossible de donner un lien vers un fichier de ce type"
 
-#: ckanext/canada/strings.py:109
+#: ckanext/canada/strings.py:110
 msgid "Your password must be {} characters or longer."
 msgstr "Votre mot de passe doit comporter au moins {} caractères."
 
-#: ckanext/canada/strings.py:110
+#: ckanext/canada/strings.py:111
 msgid ""
 "Your password must consist of at least three of the following character "
 "sets: uppercase characters, lowercase characters, digits, punctuation & "
@@ -791,11 +795,11 @@ msgstr ""
 "suivants : majuscules, minuscules, chiffres, ponctuation et caractères "
 "spéciaux."
 
-#: ckanext/canada/strings.py:112
+#: ckanext/canada/strings.py:113
 msgid "Your password cannot be the same as your username."
 msgstr "Votre mot de passe ne peut pas être le même que votre nom d'utilisateur."
 
-#: ckanext/canada/strings.py:114
+#: ckanext/canada/strings.py:115
 msgid ""
 "Your current password is too weak. Please create a new password before "
 "logging in again."
@@ -803,41 +807,41 @@ msgstr ""
 "Votre mot de passe actuel est trop faible. Veuillez créer un nouveau mot "
 "de passe avant de vous connecter à nouveau."
 
-#: ckanext/canada/strings.py:117
+#: ckanext/canada/strings.py:118
 msgid "These fields have been removed, click update below to save your changes."
 msgstr ""
 "Ces champs seront supprimés une fois que vous aurez sauvegardé vos "
 "changements."
 
-#: ckanext/canada/strings.py:118
+#: ckanext/canada/strings.py:119
 msgid "These fields have been removed."
 msgstr "Ces champs ont été supprimés."
 
-#: ckanext/canada/strings.py:121
+#: ckanext/canada/strings.py:122
 msgid "Your form submission could not be validated, please re-submit the form."
 msgstr ""
 "La soumission de votre formulaire n'a pas pu être confirmée. Veuillez le "
 "soumettre de nouveau."
 
-#: ckanext/canada/strings.py:124
+#: ckanext/canada/strings.py:125
 msgid "Open Government Portal"
 msgstr "Portail du gouvernement ouvert"
 
-#: ckanext/canada/strings.py:125
+#: ckanext/canada/strings.py:126
 msgid "Open Government Portal (staging)"
 msgstr "Portail du gouvernement ouvert (stadification)"
 
-#: ckanext/canada/strings.py:128
+#: ckanext/canada/strings.py:129
 msgid "Delete from DataStore"
 msgstr "Supprimer la table DataStore"
 
-#: ckanext/canada/strings.py:129
+#: ckanext/canada/strings.py:130
 msgid "Are you sure you want to delete the DataStore and Data Dictionary?"
 msgstr ""
 "Voulez-vous vraiment supprimer cette table DataStore et ce dictionnaire "
 "de données"
 
-#: ckanext/canada/strings.py:130
+#: ckanext/canada/strings.py:131
 #: ckanext/canada/templates/organization/confirm_delete_member.html:3
 #: ckanext/canada/templates/organization/confirm_delete_member.html:14
 #: ckanext/canada/templates/package/confirm_delete.html:3
@@ -851,55 +855,55 @@ msgstr ""
 msgid "Confirm Delete"
 msgstr "Confirmer la suppression"
 
-#: ckanext/canada/strings.py:133
+#: ckanext/canada/strings.py:134
 msgid "Validation Information"
 msgstr "Renseignements de validation"
 
-#: ckanext/canada/strings.py:134
+#: ckanext/canada/strings.py:135
 msgid "Validation status:"
 msgstr "État de la validation :"
 
-#: ckanext/canada/strings.py:135
+#: ckanext/canada/strings.py:136
 msgid "Validation timestamp:"
 msgstr "Horodatage de la validation :"
 
-#: ckanext/canada/strings.py:136
+#: ckanext/canada/strings.py:137
 msgid "Duration:"
 msgstr "Durée :"
 
-#: ckanext/canada/strings.py:137
+#: ckanext/canada/strings.py:138
 msgid "Validation status"
 msgstr "État de la validation"
 
-#: ckanext/canada/strings.py:138
+#: ckanext/canada/strings.py:139
 msgid "Validation timestamp"
 msgstr "Horodatage de la validation"
 
-#: ckanext/canada/strings.py:141
+#: ckanext/canada/strings.py:142
 msgid "Single"
 msgstr "Une seule"
 
-#: ckanext/canada/strings.py:142
+#: ckanext/canada/strings.py:143
 msgid "Repeatable"
 msgstr "Répétable"
 
-#: ckanext/canada/strings.py:143
+#: ckanext/canada/strings.py:144
 msgid "Optional"
 msgstr "Facultatif"
 
-#: ckanext/canada/strings.py:146
+#: ckanext/canada/strings.py:147
 msgid "Errors in Recombinant Resource"
 msgstr "Erreurs dans la ressource publiée"
 
-#: ckanext/canada/strings.py:147
+#: ckanext/canada/strings.py:148
 msgid "Refresh Recombinant Resource"
 msgstr "Rafraîchir la ressource publiée"
 
-#: ckanext/canada/strings.py:148
+#: ckanext/canada/strings.py:149
 msgid "The Recombinant resource is out of date"
 msgstr "La ressource publiée est obsolète"
 
-#: ckanext/canada/strings.py:149
+#: ckanext/canada/strings.py:150
 msgid "The Recombinant resource is out of date:"
 msgstr "La ressource publiée est obsolète :"
 
@@ -997,15 +1001,15 @@ msgid ""
 "alphanumeric characters, hyphens, and underscores."
 msgstr ""
 
-#: ckanext/canada/view.py:140
+#: ckanext/canada/view.py:127
 msgid "<strong>Note</strong><br>{0} is now logged in"
 msgstr "<strong>Note</strong><br />{0} est maintenant connecté"
 
-#: ckanext/canada/view.py:150
+#: ckanext/canada/view.py:137
 msgid "Login failed. Bad username or password."
 msgstr "L’authentification a échoué. Mauvais nom d’utilisateur ou mot de passe."
 
-#: ckanext/canada/view.py:198
+#: ckanext/canada/view.py:185
 msgid ""
 "The status has been added/updated for this suggested dataset. This update"
 " will be reflected on open.canada.ca shortly."
@@ -1013,32 +1017,32 @@ msgstr ""
 "L’état a été ajouté/mis à jour pour cet ensemble de données suggéré. "
 "Cette mise à jour sera bientôt effectuée dans ouvert.canada.ca."
 
-#: ckanext/canada/view.py:203
+#: ckanext/canada/view.py:190
 #, python-format
 msgid "Your dataset %s has been saved."
 msgstr "Votre jeu de données %s a été sauvegardé."
 
-#: ckanext/canada/view.py:216
+#: ckanext/canada/view.py:203
 msgid "Dataset added."
 msgstr "Jeu de données ajouté."
 
-#: ckanext/canada/view.py:229
+#: ckanext/canada/view.py:216
 msgid "Resource updated."
 msgstr "Ressource mise à jour."
 
-#: ckanext/canada/view.py:241
+#: ckanext/canada/view.py:228
 msgid "Resource added."
 msgstr "Une ressource a été ajoutée."
 
-#: ckanext/canada/view.py:300
+#: ckanext/canada/view.py:287
 msgid "Unauthorized to request username recovery."
 msgstr "Non autorisé à demander la récupération du nom d'utilisateur."
 
-#: ckanext/canada/view.py:305
+#: ckanext/canada/view.py:292
 msgid "Email is required"
 msgstr "L'adresse électronique est requise"
 
-#: ckanext/canada/view.py:332
+#: ckanext/canada/view.py:319
 msgid ""
 "Error sending the email. Try again later or contact an administrator for "
 "help"
@@ -1046,7 +1050,7 @@ msgstr ""
 "Une erreur est survenue lors de l'envoi de l'email. Veuillez réessayer "
 "plus tard ou contacter un administrateur."
 
-#: ckanext/canada/view.py:339
+#: ckanext/canada/view.py:326
 msgid ""
 "An email has been sent to you containing your username(s). (unless the "
 "account specified does not exist)"
@@ -1054,83 +1058,93 @@ msgstr ""
 "Un courriel vous a été envoyé contenant votre (vos) nom(s) d'utilisateur."
 " (sauf si le compte spécifié n'existe pas)"
 
-#: ckanext/canada/view.py:423
+#: ckanext/canada/view.py:410
 msgid "Unauthorized to create a resource for this package"
 msgstr "Non autorisé à créer une ressource pour cet ensemble"
 
-#: ckanext/canada/view.py:465 ckanext/canada/view.py:481
+#: ckanext/canada/view.py:452 ckanext/canada/view.py:468
+#: ckanext/canada/view.py:710 ckanext/canada/view.py:726
 msgid "This record already exists"
 msgstr "Cet enregistrement existe déjà."
 
-#: ckanext/canada/view.py:475 ckanext/canada/view.py:487
+#: ckanext/canada/view.py:462 ckanext/canada/view.py:474
+#: ckanext/canada/view.py:720 ckanext/canada/view.py:732
 msgid "Something went wrong, your record was not created. Please contact support."
 msgstr ""
 "Un problème s’est produit, votre document n’a pas été créé. Veuillez "
 "contacter l’assistance technique."
 
-#: ckanext/canada/view.py:504
+#: ckanext/canada/view.py:491
 msgid "Record Created"
 msgstr "Renregistrement créé"
 
-#: ckanext/canada/view.py:543
+#: ckanext/canada/view.py:530
 msgid "Unauthorized to update dataset"
 msgstr "Vous n'êtes pas autorisé à mettre à jour ce jeu de données"
 
-#: ckanext/canada/view.py:553 ckanext/canada/view.py:702
-#: ckanext/canada/view.py:737
+#: ckanext/canada/view.py:540 ckanext/canada/view.py:690
+#: ckanext/canada/view.py:809 ckanext/canada/view.py:844
 msgid "Not found"
 msgstr "Non trouvé"
 
-#: ckanext/canada/view.py:555
+#: ckanext/canada/view.py:542
 msgid "Multiple records found"
 msgstr "Plusieurs enregistrements ont été trouvés"
 
-#: ckanext/canada/view.py:594
+#: ckanext/canada/view.py:581
 msgid "Something went wrong, your record was not updated. Please contact support."
 msgstr ""
 "Un problème s’est produit, votre document n’a pas été mis à jour. "
 "Veuillez contacter l’assistance technique."
 
-#: ckanext/canada/view.py:611
+#: ckanext/canada/view.py:598
 #, python-format
 msgid "Record %s Updated"
 msgstr "Dossier %s mis à jour"
 
-#: ckanext/canada/view.py:653
+#: ckanext/canada/view.py:685 ckanext/canada/view.py:1351
+msgid "Access denied"
+msgstr "Accès refusé"
+
+#: ckanext/canada/view.py:744
+msgid "Internal Server Error"
+msgstr ""
+
+#: ckanext/canada/view.py:760
 msgid "No organizations found"
 msgstr "Aucune organisation n’a été trouvée"
 
-#: ckanext/canada/view.py:657
+#: ckanext/canada/view.py:764
 msgid "Recombinant resource_name not found"
 msgstr "Le recombinant resource_name n’a pas été trouvé"
 
-#: ckanext/canada/view.py:693
+#: ckanext/canada/view.py:800
 msgid "User {0} not authorized to update resource {1}"
 msgstr "L'utilisateur {0} n'est pas autorisé à mettre à jour la ressource {1}"
 
-#: ckanext/canada/view.py:748
+#: ckanext/canada/view.py:855
 msgid "{num} deleted."
 msgstr "{num} supprimé."
 
 #. SQL Trigger String for PD Type: service
-#: ckanext/canada/tables/service.yaml:2598 ckanext/canada/view.py:796
+#: ckanext/canada/tables/service.yaml:2690 ckanext/canada/view.py:903
 msgid "Number required"
 msgstr "Nombre requis"
 
-#: ckanext/canada/view.py:801
+#: ckanext/canada/view.py:908
 msgid "Integer required"
 msgstr "Entier requis"
 
-#: ckanext/canada/view.py:841 ckanext/canada/view.py:849
-#: ckanext/canada/view.py:886
+#: ckanext/canada/view.py:948 ckanext/canada/view.py:956
+#: ckanext/canada/view.py:993
 msgid "Not authorized to see this page"
 msgstr "Non autorisé à voir cette page"
 
-#: ckanext/canada/view.py:856
+#: ckanext/canada/view.py:963
 msgid "Invalid publish date"
 msgstr "Date de publication invalide"
 
-#: ckanext/canada/view.py:872
+#: ckanext/canada/view.py:979
 msgid " record(s) published."
 msgstr " d’enregistrements publiés."
 
@@ -1139,20 +1153,16 @@ msgstr " d’enregistrements publiés."
 #: ckanext/canada/templates/package/edit.html:8
 #: ckanext/canada/templates/package/resource_edit.html:3
 #: ckanext/canada/templates/package/resource_edit_base.html:7
-#: ckanext/canada/templates/snippets/pd_datatable.html:19
-#: ckanext/canada/view.py:982
+#: ckanext/canada/templates/snippets/pd_datatable_depr.html:20
+#: ckanext/canada/view.py:1195
 msgid "Edit"
 msgstr "Modifier"
 
-#: ckanext/canada/view.py:1120
-msgid "Access denied"
-msgstr "Accès refusé"
-
-#: ckanext/canada/view.py:1178
+#: ckanext/canada/view.py:1409
 msgid "Account Created"
 msgstr "Compte créé"
 
-#: ckanext/canada/view.py:1180
+#: ckanext/canada/view.py:1411
 msgid ""
 "Thank you for creating your account for the Open Government registry. "
 "Although your account is active, it has not yet been linked to your "
@@ -1163,7 +1173,7 @@ msgstr ""
 "ministère. Vous ne pourrez créer ou modifier de jeux de données dans le "
 "registre tant que votre compte n’aura pas été relié à votre ministère."
 
-#: ckanext/canada/view.py:1187
+#: ckanext/canada/view.py:1418
 msgid ""
 "You should receive an email within the next business day once the account"
 " activation process has been completed. If you require faster processing "
@@ -1176,23 +1186,280 @@ msgstr ""
 "plus rapidement, veuillez envoyer une demande directement à :<a "
 "href=\"mailto:{support}\">{support}.</a"
 
-#: ckanext/canada/view.py:1266 ckanext/canada/view.py:1344
+#: ckanext/canada/view.py:1497 ckanext/canada/view.py:1597
 msgid "Organization not found"
 msgstr "Organisation non trouvée"
 
-#: ckanext/canada/view.py:1275
+#: ckanext/canada/view.py:1506
 msgid "Not authorized to access {org_name} members download"
 msgstr "Non autorisé à accéder au téléchargement des membres du {group}"
 
-#: ckanext/canada/view.py:1347
+#: ckanext/canada/view.py:1525
+msgid "Date created"
+msgstr "Date de création"
+
+#: ckanext/canada/view.py:1526
+msgid "Last active date"
+msgstr "Dernière date d'activité"
+
+#: ckanext/canada/view.py:1600
 #, python-format
 msgid "User %r not authorized to edit members of %s"
 msgstr "L’utilisateur %r n’est pas autorisé à modifier les membres de %s"
 
-#: ckanext/canada/view.py:1350
+#: ckanext/canada/view.py:1603
 #, python-format
 msgid "User %r not authorized to view members of %s"
 msgstr "L’utilisateur %r n’est pas autorisé à voir les membres de %s"
+
+#: ckanext/canada/assets/datatables/pd_datatables.js:65
+#: ckanext/canada/templates/snippets/pd_datatable_depr.html:79
+msgid "Select All"
+msgstr "Sélectionner tout"
+
+#: ckanext/canada/assets/datatables/pd_datatables.js:66
+msgid "Search:"
+msgstr "Rechercher :"
+
+#: ckanext/canada/assets/datatables/pd_datatables.js:67
+msgid "Sorting by:"
+msgstr ""
+
+#: ckanext/canada/assets/datatables/pd_datatables.js:68
+msgid "Ascending"
+msgstr ""
+
+#: ckanext/canada/assets/datatables/pd_datatables.js:69
+msgid "Descending"
+msgstr ""
+
+#: ckanext/canada/assets/datatables/pd_datatables.js:70
+msgid "Any"
+msgstr ""
+
+#: ckanext/canada/assets/datatables/pd_datatables.js:71
+msgid "less"
+msgstr ""
+
+#: ckanext/canada/assets/datatables/pd_datatables.js:72
+msgid "Row"
+msgstr ""
+
+#: ckanext/canada/assets/datatables/pd_datatables.js:73
+msgid "New"
+msgstr ""
+
+#: ckanext/canada/assets/datatables/pd_datatables.js:74
+msgid "Updated"
+msgstr ""
+
+#: ckanext/canada/assets/datatables/pd_datatables.js:75
+msgid "Jump to page"
+msgstr ""
+
+#: ckanext/canada/assets/datatables/pd_datatables.js:76
+msgid "Reset Table"
+msgstr ""
+
+#: ckanext/canada/assets/datatables/pd_datatables.js:77
+msgid "Fullscreen"
+msgstr ""
+
+#: ckanext/canada/assets/datatables/pd_datatables.js:78
+msgid "Exit Fullscreen"
+msgstr ""
+
+#: ckanext/canada/assets/datatables/pd_datatables.js:79
+msgid "Exit Edit Mode"
+msgstr ""
+
+#: ckanext/canada/assets/datatables/pd_datatables.js:80
+msgid "Full Table"
+msgstr ""
+
+#: ckanext/canada/assets/datatables/pd_datatables.js:81
+msgid "Compact Table"
+msgstr ""
+
+#: ckanext/canada/assets/datatables/pd_datatables.js:82
+msgid "Edit Online"
+msgstr ""
+
+#: ckanext/canada/assets/datatables/pd_datatables.js:83
+msgid "Add new record in Table"
+msgstr ""
+
+#: ckanext/canada/assets/datatables/pd_datatables.js:84
+msgid "Edit<span class=\"pd-datatbales-btn-count\"></span> in Table"
+msgstr ""
+
+#: ckanext/canada/assets/datatables/pd_datatables.js:85
+msgid "Record is valid"
+msgstr ""
+
+#: ckanext/canada/assets/datatables/pd_datatables.js:86
+msgid "Some fields have validation errors"
+msgstr ""
+
+#: ckanext/canada/assets/datatables/pd_datatables.js:87
+msgid "Some fields are required"
+msgstr ""
+
+#: ckanext/canada/assets/datatables/pd_datatables.js:88
+msgid "Detailed error summary"
+msgstr ""
+
+#: ckanext/canada/assets/datatables/pd_datatables.js:89
+msgid "Field errors"
+msgstr ""
+
+#: ckanext/canada/assets/datatables/pd_datatables.js:90
+msgid ""
+"You have unsaved records in the table. Do you want to discard your "
+"changes or continue editing?"
+msgstr ""
+
+#: ckanext/canada/assets/datatables/pd_datatables.js:91
+msgid "Validating records"
+msgstr ""
+
+#: ckanext/canada/assets/datatables/pd_datatables.js:92
+msgid "Saving records to the system"
+msgstr ""
+
+#: ckanext/canada/assets/datatables/pd_datatables.js:94
+msgid "Records saved to the system."
+msgstr ""
+
+#: ckanext/canada/assets/datatables/pd_datatables.js:95
+msgid "Would you like to add more records, or preview them in the table?"
+msgstr ""
+
+#: ckanext/canada/assets/datatables/pd_datatables.js:96
+msgid "Add more records"
+msgstr ""
+
+#: ckanext/canada/assets/datatables/pd_datatables.js:97
+msgid "Preview records"
+msgstr ""
+
+#: ckanext/canada/assets/datatables/pd_datatables.js:98
+msgid ""
+"Your records did not save because one or more of them have errors. Fix "
+"the errors and save again to finalize your records."
+msgstr ""
+
+#: ckanext/canada/assets/datatables/pd_datatables.js:99
+msgid "Could not save the records due to the following error: "
+msgstr ""
+
+#: ckanext/canada/assets/datatables/pd_datatables.js:100
+msgid ""
+"Your records did not save. Try saving again. If the issue persist please "
+"contact support with Support ID: "
+msgstr ""
+
+#: ckanext/canada/assets/datatables/pd_datatables.js:101
+msgid ""
+"Your records did not save. Try saving again. If the issue persist please "
+"contact support."
+msgstr ""
+
+#: ckanext/canada/assets/datatables/pd_datatables.js:102
+msgid "{PRIM_IDS} already used in this Editor Table."
+msgstr ""
+
+#: ckanext/canada/assets/datatables/pd_datatables.js:103
+msgid " record(s)"
+msgstr ""
+
+#: ckanext/canada/assets/datatables/pd_datatables.js:104
+msgid "Legend:"
+msgstr ""
+
+#: ckanext/canada/assets/datatables/pd_datatables.js:105
+msgid "Valid"
+msgstr ""
+
+#: ckanext/canada/assets/datatables/pd_datatables.js:106
+#: ckanext/canada/templates/error_document_template.html:18
+msgid "Error"
+msgstr "Erreur"
+
+#: ckanext/canada/assets/datatables/pd_datatables.js:107
+msgid "Required"
+msgstr ""
+
+#: ckanext/canada/assets/datatables/pd_datatables.js:108
+msgid "Error: Could not query records. Please try again."
+msgstr ""
+
+#: ckanext/canada/assets/datatables/pd_datatables.js:109
+msgid "Error: Could not generate Excel template. Please try again."
+msgstr ""
+
+#: ckanext/canada/assets/datatables/pd_datatables.js:110
+msgid "Edit<span class=\"pd-datatbales-btn-count\"></span> in Excel"
+msgstr ""
+
+#: ckanext/canada/assets/datatables/pd_datatables.js:111
+msgid "Exporting{COUNT} record(s) to an Excel Template"
+msgstr ""
+
+#: ckanext/canada/assets/datatables/pd_datatables.js:112
+msgid "Delete<span class=\"pd-datatbales-btn-count\"></span>"
+msgstr ""
+
+#: ckanext/canada/assets/datatables/pd_datatables.js:113
+msgid "Save<span class=\"pd-datatbales-btn-count\"></span>"
+msgstr ""
+
+#: ckanext/canada/assets/datatables/pd_datatables.js:116
+msgid "No data available in table"
+msgstr ""
+
+#: ckanext/canada/assets/datatables/pd_datatables.js:117
+msgid "Showing _START_ to _END_ of _TOTAL_ entries"
+msgstr ""
+
+#: ckanext/canada/assets/datatables/pd_datatables.js:118
+msgid "Showing 0 to 0 of 0 entries"
+msgstr ""
+
+#: ckanext/canada/assets/datatables/pd_datatables.js:119
+msgid "(filtered from _MAX_ total entries)"
+msgstr ""
+
+#: ckanext/canada/assets/datatables/pd_datatables.js:122
+msgid "_MENU_ Show number of entries"
+msgstr ""
+
+#: ckanext/canada/assets/datatables/pd_datatables.js:123
+#: ckanext/canada/templates/package/snippets/data_api_button.html:2
+msgid "Loading..."
+msgstr "Chargement..."
+
+#: ckanext/canada/assets/datatables/pd_datatables.js:125
+msgid "Full Text Search"
+msgstr ""
+
+#: ckanext/canada/assets/datatables/pd_datatables.js:126
+msgid "No matching records found"
+msgstr ""
+
+#: ckanext/canada/assets/datatables/pd_datatables.js:134
+msgid "Order by this column"
+msgstr ""
+
+#: ckanext/canada/assets/datatables/pd_datatables.js:135
+msgid "Reverse order this column"
+msgstr ""
+
+#: ckanext/canada/assets/datatables/pd_datatables.js:439
+#: ckanext/canada/assets/datatables/pd_datatables.js:487
+#: ckanext/canada/assets/datatables/pd_datatables.js:503
+msgid ": "
+msgstr " : "
 
 #: ckanext/canada/plugin/public_plugin.py:144
 #: ckanext/canada/templates/scheming/package/snippets/package_form.html:25
@@ -1291,15 +1558,15 @@ msgstr ""
 #. SQL Trigger String for PD Type: reclassification
 #. SQL Trigger String for PD Type: travelq
 #. SQL Trigger String for PD Type: wrongdoing
-#: ckanext/canada/tables/adminaircraft.yaml:341
-#: ckanext/canada/tables/contracts.yaml:2187
-#: ckanext/canada/tables/grants.yaml:914
-#: ckanext/canada/tables/grantsmonthly.yaml:935
-#: ckanext/canada/tables/hospitalityq.yaml:686
-#: ckanext/canada/tables/qpnotes.yaml:361
-#: ckanext/canada/tables/reclassification.yaml:299
-#: ckanext/canada/tables/travelq.yaml:724
-#: ckanext/canada/tables/wrongdoing.yaml:261
+#: ckanext/canada/tables/adminaircraft.yaml:355
+#: ckanext/canada/tables/contracts.yaml:2254
+#: ckanext/canada/tables/grants.yaml:1317
+#: ckanext/canada/tables/grantsmonthly.yaml:1747
+#: ckanext/canada/tables/hospitalityq.yaml:739
+#: ckanext/canada/tables/qpnotes.yaml:382
+#: ckanext/canada/tables/reclassification.yaml:310
+#: ckanext/canada/tables/travelq.yaml:774
+#: ckanext/canada/tables/wrongdoing.yaml:272
 msgid "Comma is not allowed in Reference Number field"
 msgstr "La virgule n’est pas autorisée dans le champ du Numéro de Référence"
 
@@ -1322,7 +1589,7 @@ msgstr ""
 #. Title for PD Type: ati
 #. Resource Title for PD Type: ati
 #: ckanext/canada/tables/ati.yaml:4 ckanext/canada/tables/ati.yaml:15
-#: ckanext/canada/tables/ati.yaml:202
+#: ckanext/canada/tables/ati.yaml:216
 msgid "ATI Summaries"
 msgstr "Accès à l’information sommaires complétés"
 
@@ -1337,34 +1604,34 @@ msgstr ""
 "n’est à signaler pour votre organisation"
 
 #. SQL Trigger String for PD Type: ati
-#: ckanext/canada/tables/ati.yaml:252 ckanext/canada/tables/ati.yaml:385
+#: ckanext/canada/tables/ati.yaml:266 ckanext/canada/tables/ati.yaml:402
 msgid "Please enter a valid year"
 msgstr "Veuillez entrer une année valide"
 
 #. SQL Trigger String for PD Type: ati
 #. SQL Trigger String for PD Type: briefingt
-#: ckanext/canada/tables/ati.yaml:253 ckanext/canada/tables/ati.yaml:386
-#: ckanext/canada/tables/briefingt.yaml:428
+#: ckanext/canada/tables/ati.yaml:267 ckanext/canada/tables/ati.yaml:403
+#: ckanext/canada/tables/briefingt.yaml:444
 msgid "Please enter a month number from 1-12"
 msgstr "Veuillez entrer une valeur comprise entre 1 et 12"
 
 #. SQL Trigger String for PD Type: ati
 #. SQL Trigger String for PD Type: hospitalityq
 #. SQL Trigger String for PD Type: service
-#: ckanext/canada/tables/ati.yaml:142 ckanext/canada/tables/ati.yaml:254
-#: ckanext/canada/tables/hospitalityq.yaml:688
-#: ckanext/canada/tables/service.yaml:1711
-#: ckanext/canada/tables/service.yaml:2595
+#: ckanext/canada/tables/ati.yaml:150 ckanext/canada/tables/ati.yaml:268
+#: ckanext/canada/tables/hospitalityq.yaml:741
+#: ckanext/canada/tables/service.yaml:1784
+#: ckanext/canada/tables/service.yaml:2687
 msgid "This value must not be negative"
 msgstr "Cette valeur ne doit pas être négatif"
 
 #. SQL Trigger String for PD Type: ati
-#: ckanext/canada/tables/ati.yaml:255
+#: ckanext/canada/tables/ati.yaml:269
 msgid "Comma is not allowed in Request Number field"
 msgstr "La virgule n’est pas autorisée dans le champ du Numero de la demande"
 
 #. Resource Title for PD Type: ati
-#: ckanext/canada/tables/ati.yaml:282
+#: ckanext/canada/tables/ati.yaml:296
 msgid "ATI Nothing to Report"
 msgstr "Accès à l’information rien à signaler"
 
@@ -1390,12 +1657,12 @@ msgstr ""
 "numéros des notes d’information pour votre organisation"
 
 #. SQL Trigger String for PD Type: briefingt
-#: ckanext/canada/tables/briefingt.yaml:307
+#: ckanext/canada/tables/briefingt.yaml:319
 msgid "Comma is not allowed in Briefing Note Number field"
 msgstr "La virgule n’est pas autorisée dans le champ du Numéro de suivi"
 
 #. Resource Title for PD Type: briefingt
-#: ckanext/canada/tables/briefingt.yaml:327
+#: ckanext/canada/tables/briefingt.yaml:339
 msgid "Proactive Publication - Briefing Note Titles and Numbers Nothing to Report"
 msgstr ""
 "Publication proactive - Titres et numéros des notes d’information rien à "
@@ -1408,13 +1675,13 @@ msgstr ""
 #. SQL Trigger String for PD Type: reclassification
 #. SQL Trigger String for PD Type: travela
 #. SQL Trigger String for PD Type: travelq
-#: ckanext/canada/tables/briefingt.yaml:427
-#: ckanext/canada/tables/contractsa.yaml:396
-#: ckanext/canada/tables/hospitalityq.yaml:816
-#: ckanext/canada/tables/qpnotes.yaml:485
-#: ckanext/canada/tables/reclassification.yaml:417
-#: ckanext/canada/tables/travela.yaml:650
-#: ckanext/canada/tables/travelq.yaml:869
+#: ckanext/canada/tables/briefingt.yaml:443
+#: ckanext/canada/tables/contractsa.yaml:397
+#: ckanext/canada/tables/hospitalityq.yaml:874
+#: ckanext/canada/tables/qpnotes.yaml:511
+#: ckanext/canada/tables/reclassification.yaml:432
+#: ckanext/canada/tables/travela.yaml:690
+#: ckanext/canada/tables/travelq.yaml:924
 msgid "This must list the year you are reporting on (not the fiscal year)."
 msgstr "Veuillez indiquer l’année civile visée par le rapport."
 
@@ -1438,21 +1705,21 @@ msgstr ""
 "pour votre organisation"
 
 #. SQL Trigger String for PD Type: consultations
-#: ckanext/canada/tables/consultations.yaml:650
+#: ckanext/canada/tables/consultations.yaml:682
 msgid "If Status is set to: Not Going Forward, Publish Record must be set to No"
 msgstr ""
 "Si le statut est établi à : Ne pas aller de l’avant, alors l’option de "
 "Publier le document doit être réglée à Non."
 
 #. SQL Trigger String for PD Type: consultations
-#: ckanext/canada/tables/consultations.yaml:651
+#: ckanext/canada/tables/consultations.yaml:683
 msgid "Comma is not allowed in Registration Number field"
 msgstr "La virgule n’est pas autorisée dans le champ du Numéro d’enregistrement"
 
 #. Title for PD Type: contracts
 #. Resource Title for PD Type: contracts
 #: ckanext/canada/tables/contracts.yaml:4
-#: ckanext/canada/tables/contracts.yaml:101
+#: ckanext/canada/tables/contracts.yaml:89
 msgid "Proactive Publication - Contracts over $10,000"
 msgstr "Publication proactive - Contrats attribués de plus de 10 000 $"
 
@@ -1471,12 +1738,12 @@ msgstr ""
 "attribués de plus de 10 000 $ pour votre organisation"
 
 #. SQL Trigger String for PD Type: contracts
-#: ckanext/canada/tables/contracts.yaml:2186
+#: ckanext/canada/tables/contracts.yaml:2253
 msgid "This field must not be empty"
 msgstr "Ce champ ne doit pas être vide"
 
 #. SQL Trigger String for PD Type: contracts
-#: ckanext/canada/tables/contracts.yaml:2188
+#: ckanext/canada/tables/contracts.yaml:2255
 msgid ""
 "This field must contain the first three digits of a postal code in A1A "
 "format or the value \"NA\""
@@ -1485,7 +1752,7 @@ msgstr ""
 "le format A1A ou la valeur « NA. »"
 
 #. SQL Trigger String for PD Type: contracts
-#: ckanext/canada/tables/contracts.yaml:2189
+#: ckanext/canada/tables/contracts.yaml:2256
 msgid ""
 "This field must be populated with an NA if an amendment is disclosed "
 "under Instrument Type"
@@ -1494,12 +1761,12 @@ msgstr ""
 "divulguée dans le cadre du type d’instrument"
 
 #. SQL Trigger String for PD Type: contracts
-#: ckanext/canada/tables/contracts.yaml:2190
+#: ckanext/canada/tables/contracts.yaml:2257
 msgid "This field is limited to only 3 or 4 digits."
 msgstr "Ce champ a une limite de 3 ou 4 chiffres."
 
 #. SQL Trigger String for PD Type: contracts
-#: ckanext/canada/tables/contracts.yaml:2191
+#: ckanext/canada/tables/contracts.yaml:2258
 msgid ""
 "If N/A, then Instrument Type must be identified as a standing "
 "offer/supply arrangement (SOSA)"
@@ -1508,7 +1775,7 @@ msgstr ""
 "commandes et d’arrangements en matière d’approvisionnement (OCAA)"
 
 #. SQL Trigger String for PD Type: contracts
-#: ckanext/canada/tables/contracts.yaml:2192
+#: ckanext/canada/tables/contracts.yaml:2259
 msgid ""
 "If the value XX (none) is entered, then no other value can be entered in "
 "this field."
@@ -1517,19 +1784,19 @@ msgstr ""
 "saisie dans ce champ."
 
 #. SQL Trigger String for PD Type: contracts
-#: ckanext/canada/tables/contracts.yaml:2193
+#: ckanext/canada/tables/contracts.yaml:2260
 msgid "Discontinued as of 2022-01-01"
 msgstr "Supprimé à compter du 2022-01-01"
 
 #. SQL Trigger String for PD Type: contracts
-#: ckanext/canada/tables/contracts.yaml:2194
+#: ckanext/canada/tables/contracts.yaml:2261
 msgid "Must be left blank when trade agreements specified"
 msgstr ""
 "Ce champ ne doit pas être rempli lorsque des accords commerciaux sont "
 "précisés"
 
 #. SQL Trigger String for PD Type: contracts
-#: ckanext/canada/tables/contracts.yaml:2195
+#: ckanext/canada/tables/contracts.yaml:2262
 msgid ""
 "If the value NA (not applicable) is entered, then no other value can be "
 "entered in this field."
@@ -1538,13 +1805,13 @@ msgstr ""
 "peut être saisie dans ce champ."
 
 #. SQL Trigger String for PD Type: contracts
-#: ckanext/canada/tables/contracts.yaml:2196
+#: ckanext/canada/tables/contracts.yaml:2263
 msgid "The field is limited to eight alpha-numeric digits or less."
 msgstr "Ce champ est limité à 8 caractères alphanumériques."
 
 #. SQL Trigger String for PD Type: contracts
-#: ckanext/canada/tables/contracts.yaml:2197
-#: ckanext/canada/tables/contracts.yaml:2200
+#: ckanext/canada/tables/contracts.yaml:2264
+#: ckanext/canada/tables/contracts.yaml:2267
 msgid ""
 "If the value 00 (none) is entered, then no other value can be entered in "
 "this field."
@@ -1553,7 +1820,7 @@ msgstr ""
 "saisie dans ce champ."
 
 #. SQL Trigger String for PD Type: contracts
-#: ckanext/canada/tables/contracts.yaml:2198
+#: ckanext/canada/tables/contracts.yaml:2265
 msgid ""
 "If TC, TN or AC is selected in the Solicitation Procedure data field with"
 " a value other than XX (None) selected in the Trade Agreement data field,"
@@ -1565,7 +1832,7 @@ msgstr ""
 "une valeur d’appel d’offres limité autre que 00 (aucun) doit être saisie."
 
 #. SQL Trigger String for PD Type: contracts
-#: ckanext/canada/tables/contracts.yaml:2199
+#: ckanext/canada/tables/contracts.yaml:2266
 msgid ""
 "If “TC” (Competitive - Traditional), “TN” (Non-Competitive) or “AC” "
 "(Advanced Contract Award Notice) is selected and trade agreement with a "
@@ -1579,7 +1846,7 @@ msgstr ""
 "avoir la valeur « 0 » ou « 00 » (nulle)."
 
 #. SQL Trigger String for PD Type: contracts
-#: ckanext/canada/tables/contracts.yaml:2201
+#: ckanext/canada/tables/contracts.yaml:2268
 msgid ""
 "This field must be N, No or Non, if the Procurement Strategy for "
 "Aboriginal Business field is MS or VS."
@@ -1589,7 +1856,7 @@ msgstr ""
 "est MS ou VS."
 
 #. SQL Trigger String for PD Type: contracts
-#: ckanext/canada/tables/contracts.yaml:2202
+#: ckanext/canada/tables/contracts.yaml:2269
 msgid ""
 "This field must be populated with a 1 if the solicitation procedure is "
 "identified as non-competitive (TN) or Advance Contract Award Notice (AC)."
@@ -1599,7 +1866,7 @@ msgstr ""
 "d’adjudication de contrat (PAC)."
 
 #. SQL Trigger String for PD Type: contracts
-#: ckanext/canada/tables/contracts.yaml:2203
+#: ckanext/canada/tables/contracts.yaml:2270
 msgid ""
 "If this field is populated, it must be with a “0” if the procurement was "
 "identified as non-competitive (TN) or advance contract award notice (AC) "
@@ -1611,7 +1878,7 @@ msgstr ""
 "une modification (M) dans le champ de données du type d’instrument."
 
 #. SQL Trigger String for PD Type: contracts
-#: ckanext/canada/tables/contracts.yaml:2204
+#: ckanext/canada/tables/contracts.yaml:2271
 msgid ""
 "This field may only be populated with “0” if the procurement was "
 "identified as competitive (open bidding (OB), traditional competitive "
@@ -1623,7 +1890,7 @@ msgstr ""
 "d’offres sélectif [AOS])."
 
 #. Resource Title for PD Type: contracts
-#: ckanext/canada/tables/contracts.yaml:2255
+#: ckanext/canada/tables/contracts.yaml:2322
 msgid "Proactive Publication - Contracts Nothing to Report"
 msgstr "Publication proactive - Contrats (Rien à signaler)"
 
@@ -1686,7 +1953,7 @@ msgstr ""
 
 #. Title for PD Type: grants
 #. Resource Title for PD Type: grants
-#: ckanext/canada/tables/grants.yaml:3 ckanext/canada/tables/grants.yaml:14
+#: ckanext/canada/tables/grants.yaml:3 ckanext/canada/tables/grants.yaml:18
 msgid "Proactive Publication - Grants and Contributions"
 msgstr "Publication proactive - Subventions et les contributions"
 
@@ -1704,8 +1971,45 @@ msgstr ""
 "Accès, téléversement et modifications des rapports sur les contributions "
 "et les subventions pour votre organisation"
 
+#. SQL Trigger String for PD Type: grants
+#. SQL Trigger String for PD Type: grantsmonthly
+#: ckanext/canada/tables/grants.yaml:1318
+#: ckanext/canada/tables/grantsmonthly.yaml:1752
+msgid "Must be a valid Canadian postal code in the format of \"A1A 1A1\""
+msgstr ""
+
+#. SQL Trigger String for PD Type: grants
+#. SQL Trigger String for PD Type: grantsmonthly
+#: ckanext/canada/tables/grants.yaml:1319
+#: ckanext/canada/tables/grantsmonthly.yaml:1753
+msgid "Must be a 9 digit number"
+msgstr "Doit être un numéro à neuf chiffres"
+
+#. SQL Trigger String for PD Type: grants
+#. SQL Trigger String for PD Type: grantsmonthly
+#: ckanext/canada/tables/grants.yaml:1320
+#: ckanext/canada/tables/grantsmonthly.yaml:1754
+msgid "Must be a 5 digit number"
+msgstr "Doit être un numéro à cinq chiffres"
+
+#. SQL Trigger String for PD Type: grants
+#. SQL Trigger String for PD Type: grantsmonthly
+#: ckanext/canada/tables/grants.yaml:1321
+#: ckanext/canada/tables/grantsmonthly.yaml:1755
+msgid "\"Agreement Start Date\" cannot be after \"Projected Agreement End Date\""
+msgstr ""
+"La « date de début de l'entente » ne peut venir après la « date de fin "
+"prévue de l'entente »""
+
+#. SQL Trigger String for PD Type: grants
+#. SQL Trigger String for PD Type: grantsmonthly
+#: ckanext/canada/tables/grants.yaml:1322
+#: ckanext/canada/tables/grantsmonthly.yaml:1756
+msgid "Must be greater than zero"
+msgstr ""
+
 #. Resource Title for PD Type: grants
-#: ckanext/canada/tables/grants.yaml:963
+#: ckanext/canada/tables/grants.yaml:1371
 msgid "Proactive Publication - Grants and Contributions Nothing to Report"
 msgstr ""
 "Publication proactive – Subventions et contributions, rien à "
@@ -1740,33 +2044,33 @@ msgstr ""
 
 #. SQL Trigger String for PD Type: grantsmonthly
 #. SQL Trigger String for PD Type: service
-#: ckanext/canada/tables/grantsmonthly.yaml:936
-#: ckanext/canada/tables/service.yaml:1712
-#: ckanext/canada/tables/service.yaml:2596
+#: ckanext/canada/tables/grantsmonthly.yaml:1748
+#: ckanext/canada/tables/service.yaml:1785
+#: ckanext/canada/tables/service.yaml:2688
 msgid "This field has a maximum length of {} characters."
 msgstr "Ce champ ne peut excéder une longueur maximale de {} caractères."
 
 #. SQL Trigger String for PD Type: grantsmonthly
 #. SQL Trigger String for PD Type: service
-#: ckanext/canada/tables/grantsmonthly.yaml:937
-#: ckanext/canada/tables/service.yaml:1713
-#: ckanext/canada/tables/service.yaml:2597
+#: ckanext/canada/tables/grantsmonthly.yaml:1749
+#: ckanext/canada/tables/service.yaml:1786
+#: ckanext/canada/tables/service.yaml:2689
 msgid "Invalid choice: {}"
 msgstr "Choix non valide : {}"
 
 #. SQL Trigger String for PD Type: grantsmonthly
 #. SQL Trigger String for PD Type: service
-#: ckanext/canada/tables/grantsmonthly.yaml:938
-#: ckanext/canada/tables/service.yaml:1715
-#: ckanext/canada/tables/service.yaml:2600
+#: ckanext/canada/tables/grantsmonthly.yaml:1750
+#: ckanext/canada/tables/service.yaml:1788
+#: ckanext/canada/tables/service.yaml:2692
 msgid "This field is required due to a response in a different field."
 msgstr "Ce champ est requis en raison d'une réponse présente dans un autre champ."
 
 #. SQL Trigger String for PD Type: grantsmonthly
 #. SQL Trigger String for PD Type: service
-#: ckanext/canada/tables/grantsmonthly.yaml:939
-#: ckanext/canada/tables/service.yaml:1716
-#: ckanext/canada/tables/service.yaml:2601
+#: ckanext/canada/tables/grantsmonthly.yaml:1751
+#: ckanext/canada/tables/service.yaml:1789
+#: ckanext/canada/tables/service.yaml:2693
 msgid "This text must be provided in both languages"
 msgstr "Ce texte doit être fourni dans les deux langues"
 
@@ -1779,7 +2083,7 @@ msgstr "Publication proactive - Dépenses d'accueil"
 
 #. Label for PD Type: hospitalityq
 #: ckanext/canada/tables/hospitalityq.yaml:5
-#: ckanext/canada/tables/hospitalityq.yaml:601
+#: ckanext/canada/tables/hospitalityq.yaml:654
 msgid "Hospitality Expenses"
 msgstr "Dépenses d'accueil"
 
@@ -1793,33 +2097,33 @@ msgstr ""
 " à l’accueil pour votre organisation"
 
 #. SQL Trigger String for PD Type: hospitalityq
-#: ckanext/canada/tables/hospitalityq.yaml:687
+#: ckanext/canada/tables/hospitalityq.yaml:740
 msgid ""
 "Invalid format for multiple commercial establishments or vendors. Use "
 "<Vendor Name>;<Vendor 2 Name> (e.g. Les Impertinentes;Les Street Monkeys)"
 msgstr ""
 
 #. SQL Trigger String for PD Type: hospitalityq
-#: ckanext/canada/tables/hospitalityq.yaml:689
+#: ckanext/canada/tables/hospitalityq.yaml:742
 msgid "Zero is an invalid entry. Please enter a different number"
 msgstr "Zéro est une entrée invalide. Veuillez saisir un autre nombre."
 
 #. SQL Trigger String for PD Type: hospitalityq
 #. SQL Trigger String for PD Type: travelq
-#: ckanext/canada/tables/hospitalityq.yaml:690
-#: ckanext/canada/tables/travelq.yaml:726
+#: ckanext/canada/tables/hospitalityq.yaml:743
+#: ckanext/canada/tables/travelq.yaml:776
 msgid "Start date cannot be after the end date"
 msgstr "La date de début ne peut pas être postérieure à la date de fin"
 
 #. SQL Trigger String for PD Type: hospitalityq
 #. SQL Trigger String for PD Type: travelq
-#: ckanext/canada/tables/hospitalityq.yaml:691
-#: ckanext/canada/tables/travelq.yaml:727
+#: ckanext/canada/tables/hospitalityq.yaml:744
+#: ckanext/canada/tables/travelq.yaml:777
 msgid "Date can’t be in the future"
 msgstr "La date ne doit pas être dans le futur"
 
 #. Resource Title for PD Type: hospitalityq
-#: ckanext/canada/tables/hospitalityq.yaml:727
+#: ckanext/canada/tables/hospitalityq.yaml:780
 msgid "Proactive Publication - Hospitality Nothing to Report"
 msgstr "Publication proactive - Dépenses d'accueil (Rien à signaler)"
 
@@ -1876,7 +2180,7 @@ msgstr ""
 "questions pour votre organisation"
 
 #. Resource Title for PD Type: qpnotes
-#: ckanext/canada/tables/qpnotes.yaml:386
+#: ckanext/canada/tables/qpnotes.yaml:407
 msgid "Proactive Publication - Question Period Notes Nothing to Report"
 msgstr ""
 "Publication proactive - Notes pour la période des questions rien à "
@@ -1891,7 +2195,7 @@ msgstr "Publication proactive - Reclassifications de postes"
 
 #. Label for PD Type: reclassification
 #: ckanext/canada/tables/reclassification.yaml:4
-#: ckanext/canada/tables/reclassification.yaml:259
+#: ckanext/canada/tables/reclassification.yaml:270
 msgid "Position Reclassification"
 msgstr "Reclassifications de postes"
 
@@ -1905,7 +2209,7 @@ msgstr ""
 "et les subventions pour votre organisation"
 
 #. Resource Title for PD Type: reclassification
-#: ckanext/canada/tables/reclassification.yaml:321
+#: ckanext/canada/tables/reclassification.yaml:332
 msgid "Proactive Publication - Position Reclassification Nothing to Report"
 msgstr "Publication proactive - Reclassifications de postes (Rien à signaler)"
 
@@ -1929,26 +2233,26 @@ msgid "Service Identification Information & Metrics"
 msgstr "Information et paramètres sur l’identification des services"
 
 #. SQL Trigger String for PD Type: service
-#: ckanext/canada/tables/service.yaml:1710
+#: ckanext/canada/tables/service.yaml:1783
 msgid "This field must be either a number, \"NA\", or \"ND\""
 msgstr "Ce champ doit être un chiffre, \"NA\", ou \"ND\""
 
 #. SQL Trigger String for PD Type: service
-#: ckanext/canada/tables/service.yaml:1714
-#: ckanext/canada/tables/service.yaml:2599
+#: ckanext/canada/tables/service.yaml:1787
+#: ckanext/canada/tables/service.yaml:2691
 msgid "Invalid input syntax for type integer: {}"
 msgstr "Syntaxe d'entrée invalide pour le type entier : {}"
 
 #. SQL Trigger String for PD Type: service
-#: ckanext/canada/tables/service.yaml:1717
-#: ckanext/canada/tables/service.yaml:2602
+#: ckanext/canada/tables/service.yaml:1790
+#: ckanext/canada/tables/service.yaml:2694
 msgid "Comma is not allowed in Service ID Number field"
 msgstr ""
 "La virgule n’est pas autorisée dans le champ du Numéro d'identification "
 "du service"
 
 #. SQL Constraint Error String for PD Type: service
-#: ckanext/canada/tables/service.yaml:1522
+#: ckanext/canada/tables/service.yaml:1595
 msgid ""
 "Cannot delete record(s) because the Fiscal Year, Service ID Number "
 "({refValues}) is referenced in at least one Service Standards & "
@@ -1959,13 +2263,13 @@ msgstr ""
 "ressource  \"Normes de service et résultats du rendement\""
 
 #. Resource Title for PD Type: service
-#: ckanext/canada/tables/service.yaml:1791
+#: ckanext/canada/tables/service.yaml:1864
 msgid "Service Standards & Performance Results"
 msgstr "Normes de service et résultats du rendement"
 
 #. SQL Trigger String for PD Type: service
-#: ckanext/canada/tables/service.yaml:2165
-#: ckanext/canada/tables/service.yaml:2594
+#: ckanext/canada/tables/service.yaml:2251
+#: ckanext/canada/tables/service.yaml:2686
 msgid ""
 "This field must be a single number between 0 and 1 representing a "
 "percentage."
@@ -1974,19 +2278,19 @@ msgstr ""
 "représentant un pourcentage"
 
 #. SQL Trigger String for PD Type: service
-#: ckanext/canada/tables/service.yaml:2603
+#: ckanext/canada/tables/service.yaml:2695
 msgid "Comma is not allowed in Service Standard ID field"
 msgstr ""
 "La virgule n’est pas autorisée dans le champ du Numéro d'identification "
 "de la norme relative aux services"
 
 #. SQL Trigger String for PD Type: service
-#: ckanext/canada/tables/service.yaml:2604
+#: ckanext/canada/tables/service.yaml:2696
 msgid "Volume Meeting Target can not exceed Total Volume."
 msgstr "Les volumes atteignant la cible ne peuvent pas dépasser le volume total."
 
 #. SQL Constraint Error String for PD Type: service
-#: ckanext/canada/tables/service.yaml:2492
+#: ckanext/canada/tables/service.yaml:2584
 msgid ""
 "Cannot create record ({refValues}) because the Service ID Number does not"
 " exist in the Service Identification Information & Metrics resource for "
@@ -2025,7 +2329,7 @@ msgid "Proactive Publication - Travel Expenses"
 msgstr "Publication proactive - Dépenses de voyage"
 
 #. Label for PD Type: travelq
-#: ckanext/canada/tables/travelq.yaml:5 ckanext/canada/tables/travelq.yaml:637
+#: ckanext/canada/tables/travelq.yaml:5 ckanext/canada/tables/travelq.yaml:687
 msgid "Travel Expenses"
 msgstr "Dépenses de voyage"
 
@@ -2039,7 +2343,7 @@ msgstr ""
 "de déplacement pour votre organisation"
 
 #. SQL Trigger String for PD Type: travelq
-#: ckanext/canada/tables/travelq.yaml:725
+#: ckanext/canada/tables/travelq.yaml:775
 msgid ""
 "Invalid format for destination: \"{}\". Use <City Name>, <State/Province "
 "Name>, <Country Name> for Canada and US, or <City Name>, <Country Name> "
@@ -2051,7 +2355,7 @@ msgstr ""
 "(p. ex. Ottawa, Ontario, Canada ou Londres, Angleterre)"
 
 #. Resource Title for PD Type: travelq
-#: ckanext/canada/tables/travelq.yaml:765
+#: ckanext/canada/tables/travelq.yaml:815
 msgid "Proactive Publication - Travel Expenses Nothing to Report"
 msgstr "Publication proactive - Dépenses de voyage (Rien à signaler)"
 
@@ -2090,10 +2394,6 @@ msgstr "Nous ne pouvons trouver cette page Web"
 #: ckanext/canada/templates/error_document_template.html:15
 msgid "We encountered an error"
 msgstr "Nous rencontrons une erreur"
-
-#: ckanext/canada/templates/error_document_template.html:18
-msgid "Error"
-msgstr "Erreur"
 
 #: ckanext/canada/templates/error_document_template.html:32
 msgid ""
@@ -3610,10 +3910,6 @@ msgstr "Version"
 msgid "State"
 msgstr "État"
 
-#: ckanext/canada/templates/package/snippets/data_api_button.html:2
-msgid "Loading..."
-msgstr "Chargement..."
-
 #: ckanext/canada/templates/package/snippets/data_api_button.html:4
 msgid "Data API"
 msgstr "API de données"
@@ -3643,7 +3939,7 @@ msgid "Explore"
 msgstr "Explorer"
 
 #: ckanext/canada/templates/package/snippets/resource_item.html:79
-#: ckanext/canada/templates/snippets/pd_datatable.html:13
+#: ckanext/canada/templates/snippets/pd_datatable_depr.html:14
 msgid "Preview"
 msgstr "Aperçu"
 
@@ -3819,7 +4115,6 @@ msgid "Save"
 msgstr "Enregistrer"
 
 #: ckanext/canada/templates/recombinant/resource_edit.html:22
-#, python-format
 msgid ""
 "Informal Requests for ATI Records Previously Released are being sent to "
 "<strong>{ati_email}.</strong> Please contact <a "
@@ -4160,19 +4455,49 @@ msgstr "Demande envoyée au propriétaire des données, en attente de réponse"
 msgid "Resource Formats:"
 msgstr "Formats des ressources :"
 
-#: ckanext/canada/templates/snippets/pd_datatable.html:17
+#: ckanext/canada/templates/snippets/pd_datatable.html:46
+msgid "Interactive Table"
+msgstr ""
+
+#: ckanext/canada/templates/snippets/pd_datatable.html:49
+msgid "Keyboard controls"
+msgstr ""
+
+#: ckanext/canada/templates/snippets/pd_datatable.html:51
+msgid ""
+"Hold <pre>SHIFT</pre> key while clicking on sort controls for multi-"
+"column sorting"
+msgstr ""
+
+#: ckanext/canada/templates/snippets/pd_datatable.html:52
+msgid ""
+"Press <pre>ALT + K</pre> keys to enter KeyTable mode, allowing you to "
+"navigate the table with arrow keys"
+msgstr ""
+
+#: ckanext/canada/templates/snippets/pd_datatable.html:54
+msgid "Press <pre>SPACE</pre> key to select a row"
+msgstr ""
+
+#: ckanext/canada/templates/snippets/pd_datatable.html:55
+msgid "Press <pre>E</pre> key to expand a row (Compact Table mode only)"
+msgstr ""
+
+#: ckanext/canada/templates/snippets/pd_datatable.html:56
+msgid "Press <pre>ESC</pre> key to exit KeyTable mode"
+msgstr ""
+
+#: ckanext/canada/templates/snippets/pd_datatable.html:65
+#: ckanext/canada/templates/snippets/pd_datatable.html:76
+#: ckanext/canada/templates/snippets/pd_datatable_depr.html:18
 msgid "Select"
 msgstr "Sélectionner"
 
-#: ckanext/canada/templates/snippets/pd_datatable.html:78
-msgid "Select All"
-msgstr "Sélectionner tout"
-
-#: ckanext/canada/templates/snippets/pd_datatable.html:172
+#: ckanext/canada/templates/snippets/pd_datatable_depr.html:173
 msgid "Edit in Excel"
 msgstr "Modifier dans Excel"
 
-#: ckanext/canada/templates/snippets/pd_datatable.html:206
+#: ckanext/canada/templates/snippets/pd_datatable_depr.html:207
 msgid "Delete records"
 msgstr "Supprimer des dossiers"
 
@@ -4886,3 +5211,4 @@ msgstr "Rechercher des utilisateurs..."
 #: ckanext/canada/templates/xloader/resource_data.html:8
 msgid "Upload to DataStore"
 msgstr "Télécharger vers le DataStore"
+

@@ -30,6 +30,7 @@ resources:
     obligation: Mandatory
     form_required: true
     datastore_type: text
+    datatables_col_class: col-md
     choices:
       2018-2019-Q1: 2018-2019-Q1
       2018-2019-Q2: 2018-2019-Q2
@@ -73,6 +74,7 @@ resources:
       fr: Le numéro de ligne de la divulgation.
     obligation: Mandatory
     form_required: true
+    datatables_col_class: col-sm pd-datatables-primary-key-offset-md
     datastore_type: int
 
   - datastore_id: member_name
@@ -85,6 +87,7 @@ resources:
     obligation: Mandatory
     excel_required: true
     form_required: true
+    datatables_col_class: col-lg
     format_type:
       en: Free text
       fr: Texte libre
@@ -111,6 +114,7 @@ resources:
     excel_required: true
     form_required: true
     excel_full_text_choices: true
+    datatables_full_text_choices: true
     format_type:
       en: Controlled List
       fr: Liste contrôlée
@@ -170,6 +174,7 @@ resources:
     excel_required: true
     form_required: true
     excel_full_text_choices: true
+    datatables_full_text_choices: true
     format_type:
       en: Controlled List
       fr: Liste contrôlée
@@ -261,6 +266,7 @@ resources:
       fr: Toute autre information pertinente (par exemple, une description des activités incluses dans la rémunération totale, le point de départ du déplacement d’un membre, etc.)
     excel_column_width: 50
     datastore_type: text
+    datatables_col_class: col-xl
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
       class: form-control canada-width-full d-block
@@ -274,6 +280,7 @@ resources:
       fr: Toute autre information pertinente (par exemple, une description des activités incluses dans la rémunération totale, le point de départ du déplacement d’un membre, etc.)
     excel_column_width: 50
     datastore_type: text
+    datatables_col_class: col-xl
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
       class: form-control canada-width-full d-block

@@ -36,6 +36,7 @@ resources:
       en: Free text
       fr: Texte libre
     validation: This field must not be empty
+    js_error_eval: 'VALUE.length > 0 && VALUE.includes(",")'
     datastore_type: text
     excel_column_width: 28
 
@@ -56,6 +57,7 @@ resources:
     validation: This field must not be empty
     occurrence: Single
     datastore_type: text
+    datatables_col_class: col-lg
     excel_column_width: 28
     form_attrs:
       size: 60
@@ -77,6 +79,7 @@ resources:
     validation: This field must not be empty
     occurrence: Single
     datastore_type: text
+    datatables_col_class: col-lg
     excel_column_width: 28
     form_attrs:
       size: 60
@@ -98,6 +101,7 @@ resources:
     validation: This field must not be empty
     occurrence: Single
     datastore_type: text
+    datatables_col_class: col-lg
     excel_column_width: 28
     form_attrs:
       size: 60
@@ -119,6 +123,7 @@ resources:
     validation: This field must not be empty
     occurrence: Single
     datastore_type: text
+    datatables_col_class: col-lg
     excel_column_width: 28
     form_attrs:
       size: 60
@@ -140,8 +145,10 @@ resources:
     validation: This field must not be empty
     occurrence: Single
     datastore_type: text
+    datatables_col_class: col-md
     excel_column_width: 20
     excel_full_text_choices: true
+    datatables_full_text_choices: true
     choices:
       M:
         en: Minister
@@ -192,6 +199,7 @@ resources:
     datastore_type: text
     excel_column_width: 20
     excel_full_text_choices: true
+    datatables_full_text_choices: true
     choices:
       I:
         en: For Information
@@ -219,7 +227,9 @@ resources:
     validation: None
     occurrence: Single
     datastore_type: text
+    datatables_col_class: col-xl
     excel_column_width: 35
+    js_required_eval: '{{additional_information_fr}}.length > 0'
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
       class: form-control canada-width-full d-block
@@ -240,7 +250,9 @@ resources:
     validation: None
     occurrence: Single
     datastore_type: text
+    datatables_col_class: col-xl
     excel_column_width: 35
+    js_required_eval: '{{additional_information_en}}.length > 0'
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
       class: form-control canada-width-full d-block
@@ -347,6 +359,9 @@ resources:
     validation: This field must not be empty
     excel_column_width: 10
     extract_date_year: true
+    datatables_col_class: col-md
+    excel_error_formula: '{cell}>YEAR(TODAY())'
+    js_error_eval: 'VALUE.length > 0 && VALUE > new Date().getFullYear()'
     form_attrs:
       size: 20
 
@@ -366,6 +381,7 @@ resources:
     obligation: Mandatory
     form_required: true
     excel_required: true
+    datatables_col_class: col-sm pd-datatables-primary-key-offset-md
     excel_column_width: 18
     excel_error_formula: 'OR({default_formula},{cell}<1,{cell}>12)'
     solr_month_names: true
@@ -450,3 +466,9 @@ excel_column_heading_style:
   PatternFill:
     patternType: solid
     fgColor: FF84acb6
+datatables_style:
+  header:
+    bgColor: 84acb6
+  select:
+    bgColor: b4ccd2
+    fgColor: 333333

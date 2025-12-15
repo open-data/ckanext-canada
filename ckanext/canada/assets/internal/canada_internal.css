@@ -792,6 +792,24 @@ body ul.xloader-log li.item.failure > i::after{
 .recombinant-action-panels-container .tabpanels > details{
   padding: 0 20px 20px 20px !important;
 }
+/*###################################
+##               END               ##
+##  Recombinant Base CSS Overrides ##
+##               END               ##
+#####################################*/
+
+input#field-resource-url{
+  padding-right: 100px !important;
+}
+
+
+/*######################################
+##    TODO: DEPRECATED:               ##
+## REMOVE AFTER FULL PD DATATABLES QA ##
+##   PD DataTable CSS Overrides       ##
+##    TODO: DEPRECATED:               ##
+## REMOVE AFTER FULL PD DATATABLES QA ##
+########################################*/
 .canada-wet-datatable-btn-primary{
   color: white !important;
   background: #26374a !important;
@@ -826,12 +844,12 @@ body ul.xloader-log li.item.failure > i::after{
   background: #942826 !important;
   border-color: #3b100f !important;
 }
-/*###################################
-##               END               ##
-##  Recombinant Base CSS Overrides ##
-##               END               ##
-#####################################*/
-
-input#field-resource-url{
-  padding-right: 100px !important;
-}
+/*######################################
+##               END                  ##
+##    TODO: DEPRECATED:               ##
+## REMOVE AFTER FULL PD DATATABLES QA ##
+##   PD DataTable CSS Overrides       ##
+##    TODO: DEPRECATED:               ##
+## REMOVE AFTER FULL PD DATATABLES QA ##
+##               END                  ##
+########################################*/
