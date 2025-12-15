@@ -34,6 +34,7 @@ resources:
       en: "FW-2015-Q1-00001 – this sequence will continue for each line item (i.e.: FW-2015-Q1-00001, FW-2015-Q1-00002, FW-2015-Q1-00001….)"
       fr: FW-2016-Q1-00001 – cette séquence se poursuivra pour chaque poste (c.-à-d. FW-2016-Q1-00001, FW-2016-Q1-00002, FW-2016-Q1-00003….)
     datastore_type: text
+    js_error_eval: 'VALUE.length > 0 && VALUE.includes(",")'
 
   - datastore_id: file_id_number
     label:
@@ -85,6 +86,8 @@ resources:
     datastore_type: text
     form_attrs:
       size: 60
+    markdown: true
+    datatables_col_class: col-xxl
 
   - datastore_id: case_description_fr
     label:
@@ -102,6 +105,8 @@ resources:
     datastore_type: text
     form_attrs:
       size: 60
+    markdown: true
+    datatables_col_class: col-xxl
 
   - datastore_id: findings_conclusions
     label:
@@ -119,6 +124,8 @@ resources:
     occurrence: Repeatable
     datastore_type: _text
     excel_full_text_choices: false
+    datatables_full_text_choices: true
+    datatables_col_class: col-xl
     form_snippet: scheming/form_snippets/multiple_checkbox.html
     choices:
       a:
@@ -179,6 +186,8 @@ resources:
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
       class: form-control canada-width-full d-block
+    markdown: true
+    datatables_col_class: col-xxl
 
   - datastore_id: recommendations_corrective_measures_fr
     label:
@@ -204,6 +213,8 @@ resources:
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
       class: form-control canada-width-full d-block
+    markdown: true
+    datatables_col_class: col-xxl
 
   - datastore_id: record_created
     label: Record Creation Time
@@ -288,3 +299,9 @@ excel_column_heading_style:
   PatternFill:
     patternType: solid
     fgColor: FFC1D699
+datatables_style:
+  header:
+    bgColor: C1D699
+  select:
+    bgColor: e2ecd0
+    fgColor: 333333
