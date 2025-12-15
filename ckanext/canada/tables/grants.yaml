@@ -59,6 +59,8 @@ resources:
       en: Free text
       fr: Texte libre
     datastore_type: text
+    datatables_col_class: col-lg
+    js_error_eval: 'VALUE.length > 0 && VALUE.includes(",")'
 
   # 3.2 Amendment Number (New Field)
   - datastore_id: amendment_number
@@ -87,6 +89,7 @@ resources:
       en: Numeric only
       fr: Numérique uniquement
     datastore_type: int
+    datatables_col_class: col-sm pd-datatables-primary-key-offset-lg
 
   # 3.3 Amendment Date (New Field)
   - datastore_id: amendment_date
@@ -104,6 +107,7 @@ resources:
       fr: "Date (Veuillez utiliser le format de date suivant : AAAA-MM-JJ)"
     datastore_type: date
     excel_required_formula: AND(NOT(ISBLANK({amendment_number})),{amendment_number}<>0)
+    js_required_eval: '{{amendment_number}}.length > 0 && {{amendment_number}} != 0'
     form_snippet: scheming/form_snippets/date.html
 
   # 3.4 Agreement Type (Formerly “Type”- 3.16)
@@ -123,6 +127,8 @@ resources:
       en: Controlled List
       fr: Liste contrôlée
     datastore_type: text
+    excel_required_formula: 'VALUE({agreement_start_date})>=DATE(2018,4,1)'
+    js_required_eval: '{{agreement_start_date}}.length > 0 && new Date({{agreement_start_date}}) >= new Date("2018-04-01")'
     choices:
       G:
         en: Grant
@@ -152,6 +158,7 @@ resources:
       en: Controlled List
       fr: Liste contrôlée
     excel_required_formula: 'AND(NOT(ISBLANK({agreement_start_date})),VALUE({agreement_start_date})>=DATE(2025,12,1))'
+    js_required_eval: '{{agreement_start_date}}.length > 0 && new Date({{agreement_start_date}}) >= new Date("2025-12-01")'
     datastore_type: text
     choices:
       F:
@@ -234,6 +241,19 @@ resources:
           )
         )
       )
+    js_error_eval: >-
+      {{agreement_start_date}}.length > 0 &&
+      new Date({{agreement_start_date}}) >= new Date("2025-12-01") &&
+      VALUE.length > 0 &&
+      (
+        (
+          String(VALUE).match(/^-?[0-9]+$/) != null
+          && parseInt(VALUE) < 0
+        ) ||
+        VALUE.startsWith("0") ||
+        VALUE.length != 9 ||
+        String(VALUE).match(/^-?[0-9]+$/) == null
+      )
     datastore_type: text
 
   # 3.7 Recipient Legal Name (formerly recipient_name_en, recipient_name_fr)
@@ -255,10 +275,13 @@ resources:
       fr: Obligatoire
     excel_required: true
     form_required: true
+    excel_required_formula: 'VALUE({agreement_start_date})>=DATE(2018,4,1)'
+    js_required_eval: '{{agreement_start_date}}.length > 0 && new Date({{agreement_start_date}}) >= new Date("2018-04-01")'
     format_type:
       en: Free text
       fr: Texte libre
     datastore_type: text
+    datatables_col_class: col-lg
     form_attrs:
       size: 60
 
@@ -280,6 +303,7 @@ resources:
       en: Free text
       fr: Texte libre
     datastore_type: text
+    datatables_col_class: col-lg
     form_attrs:
       size: 60
 
@@ -304,6 +328,7 @@ resources:
       en: Free text
       fr: Texte libre
     datastore_type: text
+    datatables_col_class: col-lg
     form_attrs:
       size: 60
 
@@ -320,6 +345,9 @@ resources:
       fr: Obligatoire
     excel_required: true
     form_required: true
+    excel_required_formula: 'VALUE({agreement_start_date})>=DATE(2018,4,1)'
+    js_required_eval: '{{agreement_start_date}}.length > 0 && new Date({{agreement_start_date}}) >= new Date("2018-04-01")'
+    datatables_col_class: col-md
     format_type:
       en: Controlled List
       fr: Liste contrôlée
@@ -341,7 +369,8 @@ resources:
       en: Controlled List
       fr: Liste contrôlée
     datastore_type: text
-    excel_required_formula: AND(NOT(ISBLANK({recipient_country})),{recipient_country}="CA")
+    excel_required_formula: AND(VALUE({agreement_start_date})>=DATE(2018,4,1), NOT(ISBLANK({recipient_country})), {recipient_country}="CA")
+    js_required_eval: '{{agreement_start_date}}.length > 0 && new Date({{agreement_start_date}}) >= new Date("2018-04-01") && {{recipient_country}}.length > 0 && {{recipient_country}} == "CA"'
     choices:
       "ON":
         en: Ontario
@@ -406,10 +435,13 @@ resources:
       fr: Obligatoire
     excel_required: true
     form_required: true
+    excel_required_formula: 'VALUE({agreement_start_date})>=DATE(2018,4,1)'
+    js_required_eval: '{{agreement_start_date}}.length > 0 && new Date({{agreement_start_date}}) >= new Date("2018-04-01")'
     format_type:
       en: Free text
       fr: Texte libre
     datastore_type: text
+    datatables_col_class: col-lg
     form_attrs:
       size: 60
 
@@ -465,6 +497,11 @@ resources:
           )
         )
       )
+    js_error_eval: >-
+      {{agreement_start_date}}.length > 0 &&
+      new Date({{agreement_start_date}}) >= new Date("2025-12-01") &&
+      VALUE.length > 0 &&
+      ! /^[A-Za-z]\d[A-Za-z] \d[A-Za-z]\d$/.test(VALUE)
     datastore_type: text
 
   # 3.14 Federal Riding Name (English) (New Field)
@@ -482,6 +519,8 @@ resources:
       en: Free text
       fr: Texte libre
     datastore_type: text
+    datatables_col_class: col-md
+    js_required_eval: '{{federal_riding_name_fr}}.length > 0'
     form_attrs:
       size: 60
 
@@ -500,6 +539,8 @@ resources:
       en: Free text
       fr: Texte libre
     datastore_type: text
+    datatables_col_class: col-md
+    js_required_eval: '{{federal_riding_name_en}}.length > 0'
     form_attrs:
       size: 60
 
@@ -538,6 +579,19 @@ resources:
           )
         )
       )
+    js_error_eval: >-
+      {{agreement_start_date}}.length > 0 &&
+      new Date({{agreement_start_date}}) >= new Date("2025-12-01") &&
+      VALUE.length > 0 &&
+      (
+        (
+          String(VALUE).match(/^-?[0-9]+$/) != null
+          && parseInt(VALUE) < 0
+        ) ||
+        VALUE.startsWith("0") ||
+        VALUE.length != 5 ||
+        String(VALUE).match(/^-?[0-9]+$/) == null
+      )
     datastore_type: text
 
   # 3.17 Program Name (English)
@@ -559,6 +613,8 @@ resources:
       fr: Texte libre
     excel_required_formula: 'AND(NOT(ISBLANK({agreement_start_date})),VALUE({agreement_start_date})>=DATE(2025,12,1))'
     datastore_type: text
+    datatables_col_class: col-lg
+    js_required_eval: '{{prog_name_fr}}.length > 0 || ({{agreement_start_date}}.length > 0 && new Date({{agreement_start_date}}) >= new Date("2025-12-01"))'
     form_attrs:
       size: 60
 
@@ -581,6 +637,8 @@ resources:
       fr: Texte libre
     excel_required_formula: 'AND(NOT(ISBLANK({agreement_start_date})),VALUE({agreement_start_date})>=DATE(2025,12,1))'
     datastore_type: text
+    datatables_col_class: col-lg
+    js_required_eval: '{{prog_name_en}}.length > 0 || ({{agreement_start_date}}.length > 0 && new Date({{agreement_start_date}}) >= new Date("2025-12-01"))'
     form_attrs:
       size: 60
 
@@ -603,9 +661,12 @@ resources:
       fr: Texte libre
     excel_required_formula: 'AND(NOT(ISBLANK({agreement_start_date})),VALUE({agreement_start_date})>=DATE(2025,12,1))'
     datastore_type: text
+    datatables_col_class: col-xxl
     form_snippet: scheming/form_snippets/textarea.html
+    js_required_eval: '{{prog_purpose_fr}}.length > 0 || ({{agreement_start_date}}.length > 0 && new Date({{agreement_start_date}}) >= new Date("2025-12-01"))'
     form_attrs:
       class: form-control canada-width-full d-block
+    markdown: true
 
   # 3.20 Program Purpose (French) (formerly purpose_fr)
   - datastore_id: prog_purpose_fr
@@ -626,9 +687,12 @@ resources:
       fr: Texte libre
     excel_required_formula: 'AND(NOT(ISBLANK({agreement_start_date})),VALUE({agreement_start_date})>=DATE(2025,12,1))'
     datastore_type: text
+    datatables_col_class: col-xxl
     form_snippet: scheming/form_snippets/textarea.html
+    js_required_eval: '{{prog_purpose_en}}.length > 0 || ({{agreement_start_date}}.length > 0 && new Date({{agreement_start_date}}) >= new Date("2025-12-01"))'
     form_attrs:
       class: form-control canada-width-full d-block
+    markdown: true
 
   # 3.21 Agreement Title (English) (formerly proj_name_en)
   - datastore_id: agreement_title_en
@@ -649,6 +713,8 @@ resources:
       fr: Texte libre
     excel_required_formula: 'AND(NOT(ISBLANK({agreement_start_date})),VALUE({agreement_start_date})>=DATE(2025,12,1))'
     datastore_type: text
+    datatables_col_class: col-lg
+    js_required_eval: '{{agreement_title_fr}}.length > 0 || ({{agreement_start_date}}.length > 0 && new Date({{agreement_start_date}}) >= new Date("2025-12-01"))'
     form_attrs:
       size: 60
 
@@ -671,6 +737,8 @@ resources:
       fr: Texte libre
     excel_required_formula: 'AND(NOT(ISBLANK({agreement_start_date})),VALUE({agreement_start_date})>=DATE(2025,12,1))'
     datastore_type: text
+    datatables_col_class: col-lg
+    js_required_eval: '{{agreement_title_en}}.length > 0 || ({{agreement_start_date}}.length > 0 && new Date({{agreement_start_date}}) >= new Date("2025-12-01"))'
     form_attrs:
       size: 60
 
@@ -732,6 +800,17 @@ resources:
           )
         )
       )
+    js_error_eval: >-
+      {{agreement_start_date}}.length > 0 &&
+      new Date({{agreement_start_date}}) >= new Date("2025-12-01") &&
+      VALUE.length > 0 &&
+      (
+        (
+          String(VALUE).match(/^-?[0-9]+$/) != null
+          && parseInt(VALUE) < 0
+        ) ||
+        String(VALUE).match(/^-?[0-9]+$/) == null
+      )
     solr_dollar_range_facet:
      - 10000
      - 25000
@@ -762,6 +841,7 @@ resources:
       fr: Liste contrôlée
     datastore_type: text
     excel_required_formula: NOT(ISBLANK({foreign_currency_value}))
+    js_required_eval: '{{foreign_currency_value}}.length > 0'
     choices_file: choices/currency.json
 
   # 3.26 Foreign Currency Value (New field)
@@ -775,6 +855,7 @@ resources:
     obligation: Mandatory if foreign currency type is selected
     datastore_type: money
     excel_required_formula: NOT(ISBLANK({foreign_currency_type}))
+    js_required_eval: '{{foreign_currency_type}}.length > 0'
 
   # 3.27 Agreement Start Date (Formerly 3.14 "date")
   - datastore_id: agreement_start_date
@@ -807,6 +888,15 @@ resources:
       en: Date (Please format the date as YYYY-MM-DD)
       fr: "Date (Veuillez utiliser le format de date suivant : AAAA-MM-JJ)"
     excel_error_formula: 'OR({default_formula},{cell}>TODAY(),AND(NOT(ISBLANK({cell})),NOT(ISBLANK({agreement_end_date})),{cell}>{agreement_end_date}))'
+    js_error_eval: >-
+      VALUE.length > 0 &&
+      (
+        new Date(VALUE) > new Date() ||
+        (
+          {{agreement_end_date}}.length > 0 &&
+          new Date(VALUE) > new Date({{agreement_end_date}})
+        )
+      )
     datastore_type: date
     extract_date_year: true
     extract_date_month: true
@@ -831,6 +921,11 @@ resources:
       fr: "Date (Veuillez utiliser le format de date suivant : AAAA-MM-JJ)"
     excel_error_formula: 'OR({default_formula},AND(NOT(ISBLANK({agreement_start_date})),NOT(ISBLANK({cell})),{cell}<{agreement_start_date}))'
     excel_required_formula: 'AND(NOT(ISBLANK({agreement_start_date})),VALUE({agreement_start_date})>=DATE(2025,12,1))'
+    js_required_eval: '{{agreement_start_date}}.length > 0 && new Date({{agreement_start_date}}) >= new Date("2025-12-01")'
+    js_error_eval: >-
+      VALUE.length > 0 &&
+      {{agreement_start_date}}.length > 0 &&
+      new Date(VALUE) < new Date({{agreement_start_date}})
     datastore_type: date
     form_snippet: scheming/form_snippets/date.html
 
@@ -849,6 +944,7 @@ resources:
       en: Free text; separate entries with a “;” and include bilingual entries, where applicable, separated with a “│”
       fr: Texte libre; separate entries with a “;” and include bilingual entries, where applicable, separated with a “│”
     datastore_type: text
+    datatables_col_class: col-lg
     form_attrs:
       size: 60
 
@@ -869,9 +965,12 @@ resources:
       en: Free text
       fr: Texte libre
     datastore_type: text
+    datatables_col_class: col-xl
+    js_required_eval: '{{description_fr}}.length > 0 || ({{agreement_start_date}}.length > 0 && new Date({{agreement_start_date}}) >= new Date("2018-04-01"))'
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
       class: form-control canada-width-full d-block
+    markdown: true
 
   # 3.31 Description (French) (New Field)
   - datastore_id: description_fr
@@ -890,9 +989,12 @@ resources:
       en: Free text
       fr: Texte libre
     datastore_type: text
+    datatables_col_class: col-xl
+    js_required_eval: '{{description_en}}.length > 0 || ({{agreement_start_date}}.length > 0 && new Date({{agreement_start_date}}) >= new Date("2018-04-01"))'
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
       class: form-control canada-width-full d-block
+    markdown: true
 
   # 3.32 NAICS Identifier (New Field)
   - datastore_id: naics_identifier
@@ -948,10 +1050,13 @@ resources:
       en: Free text
       fr: Texte libre
     excel_required_formula: 'AND(NOT(ISBLANK({agreement_start_date})),VALUE({agreement_start_date})>=DATE(2025,12,1))'
+    js_required_eval: '{{agreement_start_date}}.length > 0 && new Date({{agreement_start_date}}) >= new Date("2025-12-01")'
     datastore_type: text
+    datatables_col_class: col-xxl
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
       class: form-control canada-width-full d-block
+    markdown: true
 
   # 3.34 Expected Results or Intended Outcome (French) (New Field)
   - datastore_id: expected_results_fr
@@ -971,10 +1076,13 @@ resources:
       en: Free text
       fr: Texte libre
     excel_required_formula: 'AND(NOT(ISBLANK({agreement_start_date})),VALUE({agreement_start_date})>=DATE(2025,12,1))'
+    js_required_eval: '{{agreement_start_date}}.length > 0 && new Date({{agreement_start_date}}) >= new Date("2025-12-01")'
     datastore_type: text
+    datatables_col_class: col-xxl
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
       class: form-control canada-width-full d-block
+    markdown: true
 
   # 3.35 Additional Information (English) (Formerly comments_en, additional_info_en)
   - datastore_id: additional_information_en
@@ -1017,9 +1125,11 @@ resources:
       en: Free text
       fr: Texte libre
     datastore_type: text
+    datatables_col_class: col-xxl
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
       class: form-control canada-width-full d-block
+    markdown: true
 
   # 3.36 Additional Information (French) (Formerly comments_fr, additional_info_fr)
   - datastore_id: additional_information_fr
@@ -1062,9 +1172,11 @@ resources:
       en: Free text
       fr: Texte libre
     datastore_type: text
+    datatables_col_class: col-xxl
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
       class: form-control canada-width-full d-block
+    markdown: true
 
   - datastore_id: record_created
     label: Record Creation Time
@@ -1276,6 +1388,7 @@ resources:
     excel_required: true
     form_required: true
     extract_date_year: true
+    datatables_col_class: col-md
     choices_file: choices/fiscal_year.yaml
 
   - datastore_id: quarter
@@ -1288,6 +1401,7 @@ resources:
       fr: Obligatoire
     excel_required: true
     form_required: true
+    datatables_col_class: col-sm pd-datatables-primary-key-offset-md
     choices:
       Q1:
         en: April 1 - June 30
@@ -1372,3 +1486,9 @@ excel_column_heading_style:
   PatternFill:
     patternType: solid
     fgColor: FFEDDB7C
+datatables_style:
+  header:
+    bgColor: EDDB7C
+  select:
+    bgColor: f6edbf
+    fgColor: 333333
