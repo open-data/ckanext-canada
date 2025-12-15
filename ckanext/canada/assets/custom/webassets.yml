@@ -1,97 +1,79 @@
 css:
   contents:
-    - custom_styles.scss
+    - build/custom_styles.min.css
   output: canada_custom/%(version)s_custom_styles.css
-  filters:
-    - scss
-    - cssmin
 
 adobe_analytics_fix:
   contents:
-    - adobe_analytics_fix.js
+    - build/adobe_analytics_fix.min.js
   output: canada_custom/%(version)s_adobe_analytics_fix.js
-  filters: rjsmin
 
 check_all:
   contents:
-    - check_all.js
+    - build/check_all.min.js
   output: canada_custom/%(version)s_check_all.js
-  filters: rjsmin
 
 i18n:
   contents:
-    - i18n.js
+    - build/i18n.min.js
   output: canada_custom/%(version)s_i18n.js
-  filters: rjsmin
 
 more_like_this:
   contents:
-    - more_like_this.js
+    - build/more_like_this.min.js
   output: canada_custom/%(version)s_more_like_this.js
-  filters: rjsmin
 
 voting_fix:
   contents:
-    - voting_fix.js
+    - build/voting_fix.min.js
   output: canada_custom/%(version)s_voting_fix.js
-  filters: rjsmin
 
 guess_mimetype:
   contents:
-    - guess_mimetype.js
+    - build/guess_mimetype.min.js
   output: canada_custom/%(version)s_guess_mimetype.js
-  filters: rjsmin
 
 cascading_select:
   contents:
-    - cascading_select.js
+    - build/cascading_select.min.js
   output: canada_custom/%(version)s_cascading_select.js
-  filters: rjsmin
 
 analytics:
   contents:
-    - analytics.js
+    - build/analytics.min.js
   output: canada_custom/%(version)s_analytics.js
-  filters: rjsmin
 
 registry_analytics:
   contents:
-    - registry_analytics.js
+    - build/registry_analytics.min.js
   output: canada_custom/%(version)s_registry_analytics.js
-  filters: rjsmin
 
 user_lock:
   contents:
-    - registry_users.js
+    - build/registry_users.min.js
   output: canada_custom/%(version)s_registry_users.js
-  filters: rjsmin
 
 recombinant_webforms:
   contents:
-    - recombinant_webform.js
+    - build/recombinant_webform.min.js
   output: canada_custom/%(version)s_recombinant_webform.js
-  filters: rjsmin
 
 frictionless:
   contents:
-    - registry_frictionless.js
+    - build/registry_frictionless.min.js
   output: canada_custom/%(version)s_registry_frictionless.js
-  filters: rjsmin
 
 organization_edit:
   contents:
-    - registry_organization_edit.js
+    - build/registry_organization_edit.min.js
   output: canada_custom/%(version)s_registry_organization_edit.js
-  filters: rjsmin
 
 package_edit:
   contents:
-    - registry_package_edit.js
+    - build/registry_package_edit.min.js
   output: canada_custom/%(version)s_registry_package_edit.js
-  filters: rjsmin
 
 resource_edit:
   contents:
-    - registry_resource_edit.js
+    - build/registry_resource_edit.min.js
   output: canada_custom/%(version)s_registry_resource_edit.js
-  filters: rjsmin
