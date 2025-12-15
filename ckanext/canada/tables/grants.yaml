@@ -241,7 +241,6 @@ resources:
           )
         )
       )
-    # TODO: TEST js error eval
     js_error_eval: >-
       {{agreement_start_date}}.length > 0 &&
       new Date({{agreement_start_date}}) >= new Date("2025-12-01") &&
@@ -252,7 +251,8 @@ resources:
           && parseInt(VALUE) < 0
         ) ||
         VALUE.startsWith("0") ||
-        VALUE.length != 9
+        VALUE.length != 9 ||
+        String(VALUE).match(/^-?[0-9]+$/) == null
       )
     datastore_type: text
 
@@ -497,7 +497,6 @@ resources:
           )
         )
       )
-    # TODO: TEST js error eval
     js_error_eval: >-
       {{agreement_start_date}}.length > 0 &&
       new Date({{agreement_start_date}}) >= new Date("2025-12-01") &&
@@ -580,8 +579,7 @@ resources:
           )
         )
       )
-    # TODO: TEST js error eval
-    js_required_eval: >-
+    js_error_eval: >-
       {{agreement_start_date}}.length > 0 &&
       new Date({{agreement_start_date}}) >= new Date("2025-12-01") &&
       VALUE.length > 0 &&
@@ -591,7 +589,8 @@ resources:
           && parseInt(VALUE) < 0
         ) ||
         VALUE.startsWith("0") ||
-        VALUE.length != 5
+        VALUE.length != 5 ||
+        String(VALUE).match(/^-?[0-9]+$/) == null
       )
     datastore_type: text
 
@@ -801,7 +800,6 @@ resources:
           )
         )
       )
-    # TODO: TEST js error eval
     js_error_eval: >-
       {{agreement_start_date}}.length > 0 &&
       new Date({{agreement_start_date}}) >= new Date("2025-12-01") &&
@@ -890,7 +888,6 @@ resources:
       en: Date (Please format the date as YYYY-MM-DD)
       fr: "Date (Veuillez utiliser le format de date suivant : AAAA-MM-JJ)"
     excel_error_formula: 'OR({default_formula},{cell}>TODAY(),AND(NOT(ISBLANK({cell})),NOT(ISBLANK({agreement_end_date})),{cell}>{agreement_end_date}))'
-    # TODO: TEST js error eval for future date not after end date
     js_error_eval: >-
       VALUE.length > 0 &&
       (
@@ -925,7 +922,6 @@ resources:
     excel_error_formula: 'OR({default_formula},AND(NOT(ISBLANK({agreement_start_date})),NOT(ISBLANK({cell})),{cell}<{agreement_start_date}))'
     excel_required_formula: 'AND(NOT(ISBLANK({agreement_start_date})),VALUE({agreement_start_date})>=DATE(2025,12,1))'
     js_required_eval: '{{agreement_start_date}}.length > 0 && new Date({{agreement_start_date}}) >= new Date("2025-12-01")'
-    # TODO: TEST js error eval for date before start date
     js_error_eval: >-
       VALUE.length > 0 &&
       {{agreement_start_date}}.length > 0 &&
