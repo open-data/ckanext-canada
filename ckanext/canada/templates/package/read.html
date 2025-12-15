@@ -236,7 +236,7 @@
       {% endif %}
     {% endblock %}
     {% block package_feedback %}
-      {% if not h.is_registry_domain() %}
+      {% if not h.is_registry_domain() and pkg_dict.maintainer_email %}
         <a id="feedback"></a>
         <section class="indent-large">
           <div id="feedback-wrapper" data-ajax-replace="/{{ h.lang() }}/feedback?uuid={{ pkg_dict.id }}"></div>

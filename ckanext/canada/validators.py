@@ -267,22 +267,6 @@ def canada_copy_from_org_name(key: FlattenKey,
     })
 
 
-def canada_maintainer_email_default(key: FlattenKey,
-                                    data: FlattenDataDict,
-                                    errors: FlattenErrorDict,
-                                    context: Context):
-    """
-    Set to ckanext.canada.default_open_email_address
-    if not given and no contact form given.
-
-    This is an output validator.
-    """
-    em = data[key]
-    cf = data.get(('maintainer_contact_form',), '')
-    if (not em or em is missing) and (not cf or cf is missing or cf == '{}'):
-        data[key] = config['ckanext.canada.default_open_email_address']
-
-
 def canada_sort_prop_status(key: FlattenKey,
                             data: FlattenDataDict,
                             errors: FlattenErrorDict,
