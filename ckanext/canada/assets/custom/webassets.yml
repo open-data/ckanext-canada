@@ -50,8 +50,8 @@ registry_analytics:
 
 user_lock:
   contents:
-    - build/registry_users.min.js
-  output: canada_custom/%(version)s_registry_users.js
+    - build/users.min.js
+  output: canada_custom/%(version)s_users.js
 
 recombinant_webforms:
   contents:
@@ -60,20 +60,20 @@ recombinant_webforms:
 
 frictionless:
   contents:
-    - build/registry_frictionless.min.js
-  output: canada_custom/%(version)s_registry_frictionless.js
+    - build/frictionless.min.js
+  output: canada_custom/%(version)s_frictionless.js
 
 organization_edit:
   contents:
-    - build/registry_organization_edit.min.js
-  output: canada_custom/%(version)s_registry_organization_edit.js
+    - build/organization_edit.min.js
+  output: canada_custom/%(version)s_organization_edit.js
 
 package_edit:
   contents:
-    - build/registry_package_edit.min.js
-  output: canada_custom/%(version)s_registry_package_edit.js
+    - build/package_edit.min.js
+  output: canada_custom/%(version)s_package_edit.js
 
 resource_edit:
   contents:
-    - build/registry_resource_edit.min.js
-  output: canada_custom/%(version)s_registry_resource_edit.js
+    - build/resource_edit.min.js
+  output: canada_custom/%(version)s_resource_edit.js

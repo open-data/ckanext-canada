@@ -5,8 +5,8 @@ css:
 
 pd_datatable_css:
   contents:
-    - build/pd_datatable.min.css
-  output: canada_datatables/%(version)s_pd_datatable.css
+    - build/pd_datatables.min.css
+  output: canada_datatables/%(version)s_pd_datatables.css
 
 js:
   contents:
