@@ -11,6 +11,7 @@ from io import StringIO, BytesIO
 import gzip
 import requests
 from collections import defaultdict
+import sqlalchemy as sa
 
 from typing import Optional, Union, Tuple, cast, Generator, Dict, Any, List
 from ckan.types import Context, ErrorDict
@@ -41,6 +42,8 @@ from ckanapi.cli.workers import worker_pool
 from ckanapi.cli.utils import completion_stats
 
 import ckanext.datastore.backend.postgres as datastore
+
+from ckanext.recombinant.tables import get_geno
 
 from ckanext.canada import triggers
 from ckanext.canada import model as canada_model
@@ -2678,3 +2681,109 @@ def _drop_function(name: str, verbose: Optional[bool] = False):
             click.echo('Failed to drop function: {0}\n{1}'.format(
                 name, str(datastore._programming_error_summary(pe))), err=True)
         pass
+
+
+@canada.command(short_help="Exports Proactive Disclosure reporting data info.")
+@click.option('-s', '--since', required=True,
+              type=click.STRING, help='Export data since a time.')
+@click.option('-t', '--type', required=True, multiple=True,
+              help='Export data for this PD type - e.g. ati-nil (accepts multiple).')
+@click.option('-v', '--verbose', is_flag=True,
+              type=click.BOOL, help='Increase verbosity.')
+def export_pd_reporting_info(since: str,
+                             type: Union[str, List[str]],
+                             verbose: Optional[bool] = False):
+    # TODO: write verbosity...
+    type_options = {}
+    for pd_type in toolkit.h.recombinant_get_types():
+        geno = get_geno(pd_type)
+        for r in geno['resources']:
+            type_options[r['resource_name']] = toolkit._(r['title'].replace(
+                'Proactive Publication - ', '').replace('Open Dialogue - ', ''))
+    try:
+        datetime.strptime(since, '%Y-%m-%d')
+    except ValueError:
+        click.echo('--since %s is not a valid DateTime' % since)
+        click.Abort()
+    export_data = [
+        [
+            "Organization ID",
+            "Organization Name (English)",
+            "Organization Name (French)",
+            "Proactive Disclosure ID",
+            "Proactive Disclosure Name",
+            "Record Created",
+            "Record Modified",
+            "Username",
+            "User Long Name",
+            "User Email",
+        ]
+    ]
+    types = type
+    if isinstance(types, str):
+        types = [types]
+    # type_ignore_reason: incomplete typing
+    q = model.Session.query(model.Resource.id,
+                            model.Resource.name,
+                            model.Package.owner_org,
+                            model.Group.name,
+                            model.Group.title,
+                           ).outerjoin(
+                            model.Package, model.Package.id ==
+                            model.Resource.package_id
+                           ).outerjoin(
+                            model.Group, model.Group.id ==
+                            model.Package.owner_org
+                           )  # type: ignore
+    # type_ignore_reason: incomplete typing
+    q = q.filter(model.Resource.name.in_(types))  # type: ignore
+    user_info_cache = {}
+    for _r in q.all():
+        rid = _r[0]
+        rname = _r[1]
+        _oid = _r[2]
+        oname = _r[3]
+        otitle = _r[4]
+        otitle_en = toolkit.h.split_piped_bilingual_field(otitle, 'en')
+        otitle_fr = toolkit.h.split_piped_bilingual_field(otitle, 'fr')
+
+        sql = '''
+        SELECT record_created, record_modified, user_modified FROM {0}
+        WHERE record_created >= DATE({1}) OR record_modified >= DATE({1});
+        '''.format(datastore.identifier(rid),
+                   datastore.literal_string(since))
+
+        try:
+            with datastore.get_read_engine().begin() as conn:
+                result = conn.execute(sa.text(sql))
+        except datastore.ProgrammingError as pe:
+            if verbose:
+                click.echo('Failed to read table: {0}\n{1}'.format(
+                    rid, str(datastore._programming_error_summary(pe))), err=True)
+            click.Abort()
+
+        for rec in result:
+            if rec['user_modified'] not in user_info_cache:
+                user_obj = model.User.get(rec['user_modified'])
+                user_info_cache[rec['user_modified']] = {
+                    'fullname': user_obj.fullname if user_obj else 'N/A',
+                    'email': user_obj.email if user_obj else 'N/A',
+                }
+            user_info = user_info_cache[rec['user_modified']]
+            export_data.append(
+                [
+                    oname,  # org id
+                    otitle_en,  # org title en
+                    otitle_fr,  # or title fr
+                    rname,  # pd name
+                    type_options[rname],  # pd long name
+                    rec['record_created'].strftime(
+                        "%Y-%m-%d %H:%M:%S"),  # record create date
+                    rec['record_modified'].strftime(
+                        "%Y-%m-%d %H:%M:%S"),  # record mod date
+                    rec['user_modified'],  # username
+                    user_info['fullname'],  # user long name
+                    user_info['email'],  # user email
+                ]
+            )
+    # TODO: export to csv...
