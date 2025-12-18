@@ -12,6 +12,8 @@ import gzip
 import requests
 from collections import defaultdict
 import sqlalchemy as sa
+import gettext
+import os
 
 from typing import Optional, Union, Tuple, cast, Generator, Dict, Any, List
 from ckan.types import Context, ErrorDict
@@ -2688,18 +2690,43 @@ def _drop_function(name: str, verbose: Optional[bool] = False):
               type=click.STRING, help='Export data since a time.')
 @click.option('-t', '--type', required=True, multiple=True,
               help='Export data for this PD type - e.g. ati-nil (accepts multiple).')
+@click.option('-o', '--output', type=click.File('w'), required=True,
+              help='Dump results to a CSV file.')
 @click.option('-v', '--verbose', is_flag=True,
               type=click.BOOL, help='Increase verbosity.')
 def export_pd_reporting_info(since: str,
                              type: Union[str, List[str]],
+                             output: 'click.File',
                              verbose: Optional[bool] = False):
-    # TODO: write verbosity...
-    type_options = {}
+    if verbose:
+        click.echo('Compiling PD names...')
+    type_names = {}
+    i18n_dir = os.path.join(os.path.dirname(__file__), 'i18n')
     for pd_type in toolkit.h.recombinant_get_types():
         geno = get_geno(pd_type)
         for r in geno['resources']:
-            type_options[r['resource_name']] = toolkit._(r['title'].replace(
-                'Proactive Publication - ', '').replace('Open Dialogue - ', ''))
+            rt = r['title'].replace('Proactive Publication - ', '').replace(
+                'Open Dialogue - ', '')
+            try:
+                rt_en = gettext.translation(
+                    'ckanext-canada', i18n_dir, ['en']).ugettext(rt)
+            except AttributeError:
+                rt_en = gettext.translation(
+                    'ckanext-canada', i18n_dir, ['en']).gettext(rt)
+            except IOError:
+                rt_en = rt
+            try:
+                rt_fr = gettext.translation(
+                    'ckanext-canada', i18n_dir, ['fr']).ugettext(rt)
+            except AttributeError:
+                rt_fr = gettext.translation(
+                    'ckanext-canada', i18n_dir, ['fr']).gettext(rt)
+            except IOError:
+                rt_fr = rt
+            type_names[r['resource_name']] = {
+                'en': rt_en,
+                'fr': rt_fr,
+            }
     try:
         datetime.strptime(since, '%Y-%m-%d')
     except ValueError:
@@ -2711,7 +2738,8 @@ def export_pd_reporting_info(since: str,
             "Organization Name (English)",
             "Organization Name (French)",
             "Proactive Disclosure ID",
-            "Proactive Disclosure Name",
+            "Proactive Disclosure Name (English)",
+            "Proactive Disclosure Name (French)",
             "Record Created",
             "Record Modified",
             "Username",
@@ -2722,6 +2750,8 @@ def export_pd_reporting_info(since: str,
     types = type
     if isinstance(types, str):
         types = [types]
+    if verbose:
+        click.echo('Gathering information for PD types: %s...' % ', '.join(types))
     # type_ignore_reason: incomplete typing
     q = model.Session.query(model.Resource.id,
                             model.Resource.name,
@@ -2737,7 +2767,11 @@ def export_pd_reporting_info(since: str,
                            )  # type: ignore
     # type_ignore_reason: incomplete typing
     q = q.filter(model.Resource.name.in_(types))  # type: ignore
+    q = q.order_by(model.Resource.name)
     user_info_cache = {}
+    if verbose:
+        click.echo('Checking for DS records since %s...' % since)
+    total_count = 0
     for _r in q.all():
         rid = _r[0]
         rname = _r[1]
@@ -2755,12 +2789,17 @@ def export_pd_reporting_info(since: str,
 
         try:
             with datastore.get_read_engine().begin() as conn:
-                result = conn.execute(sa.text(sql))
+                result = conn.execute(sa.text(sql)).fetchall()
         except datastore.ProgrammingError as pe:
             if verbose:
                 click.echo('Failed to read table: {0}\n{1}'.format(
                     rid, str(datastore._programming_error_summary(pe))), err=True)
             click.Abort()
+
+        if verbose:
+            click.echo('%s -- %s -- %s record(s)' % (rname, oname, len(result)))
+
+        total_count += len(result)
 
         for rec in result:
             if rec['user_modified'] not in user_info_cache:
@@ -2776,7 +2815,8 @@ def export_pd_reporting_info(since: str,
                     otitle_en,  # org title en
                     otitle_fr,  # or title fr
                     rname,  # pd name
-                    type_options[rname],  # pd long name
+                    type_names[rname]['en'],  # pd long name en
+                    type_names[rname]['fr'],  # pd long name fr
                     rec['record_created'].strftime(
                         "%Y-%m-%d %H:%M:%S"),  # record create date
                     rec['record_modified'].strftime(
@@ -2786,4 +2826,11 @@ def export_pd_reporting_info(since: str,
                     user_info['email'],  # user email
                 ]
             )
-    # TODO: export to csv...
+    # type_ignore_reason: incomplete click typing
+    output.write(BOM)  # type: ignore
+    out = csv.writer(output)  # type: ignore
+    out.writerows(export_data)
+    # type_ignore_reason: incomplete click typing
+    output.close()  # type: ignore
+    click.echo('Wrote %s rows to %s' % (total_count, output.name))
+    click.echo('DONE!')
