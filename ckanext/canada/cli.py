@@ -2712,7 +2712,8 @@ def export_pd_reporting_info(since: str,
                 'Open Dialogue - ', '')
             try:
                 rt_en = gettext.translation(
-                    'ckanext-canada', i18n_dir, ['en']).ugettext(rt)
+                    # type_ignore_reason: incomplete typing
+                    'ckanext-canada', i18n_dir, ['en']).ugettext(rt)  # type: ignore
             except AttributeError:
                 rt_en = gettext.translation(
                     'ckanext-canada', i18n_dir, ['en']).gettext(rt)
@@ -2720,7 +2721,8 @@ def export_pd_reporting_info(since: str,
                 rt_en = rt
             try:
                 rt_fr = gettext.translation(
-                    'ckanext-canada', i18n_dir, ['fr']).ugettext(rt)
+                    # type_ignore_reason: incomplete typing
+                    'ckanext-canada', i18n_dir, ['fr']).ugettext(rt)  # type: ignore
             except AttributeError:
                 rt_fr = gettext.translation(
                     'ckanext-canada', i18n_dir, ['fr']).gettext(rt)
@@ -2755,19 +2757,15 @@ def export_pd_reporting_info(since: str,
         types = [types]
     if verbose:
         click.echo('Gathering information for PD types: %s...' % ', '.join(types))
-    # type_ignore_reason: incomplete typing
     q = model.Session.query(model.Resource.id,
                             model.Resource.name,
                             model.Package.owner_org,
                             model.Group.name,
-                            model.Group.title,
-                           ).outerjoin(
-                            model.Package, model.Package.id ==
-                            model.Resource.package_id
-                           ).outerjoin(
-                            model.Group, model.Group.id ==
-                            model.Package.owner_org
-                           )  # type: ignore
+                            model.Group.title).outerjoin(
+                                model.Package, model.Package.id ==
+                                model.Resource.package_id).outerjoin(
+                                    model.Group, model.Group.id ==
+                                    model.Package.owner_org)
     # type_ignore_reason: incomplete typing
     q = q.filter(model.Resource.name.in_(types))  # type: ignore
     q = q.order_by(model.Resource.name)
@@ -2778,7 +2776,7 @@ def export_pd_reporting_info(since: str,
     for _r in q.all():
         rid = _r[0]
         rname = _r[1]
-        _oid = _r[2]
+        # _r[2] is org long ID / owner_org
         oname = _r[3]
         otitle = _r[4]
         otitle_en = toolkit.h.split_piped_bilingual_field(otitle, 'en')
@@ -2791,6 +2789,7 @@ def export_pd_reporting_info(since: str,
         '''.format(datastore.identifier(rid),
                    datastore.literal_string(since))
 
+        result = []
         try:
             with datastore.get_read_engine().begin() as conn:
                 result = conn.execute(sa.text(sql)).fetchall()
