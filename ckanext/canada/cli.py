@@ -2692,11 +2692,14 @@ def _drop_function(name: str, verbose: Optional[bool] = False):
               help='Export data for this PD type - e.g. ati-nil (accepts multiple).')
 @click.option('-o', '--output', type=click.File('w'), required=True,
               help='Dump results to a CSV file.')
+@click.option('-l', '--lite', is_flag=True,
+              type=click.BOOL, help='Only output one record per unique user.')
 @click.option('-v', '--verbose', is_flag=True,
               type=click.BOOL, help='Increase verbosity.')
 def export_pd_reporting_info(since: str,
                              type: Union[str, List[str]],
                              output: 'click.File',
+                             lite: Optional[bool] = False,
                              verbose: Optional[bool] = False):
     if verbose:
         click.echo('Compiling PD names...')
@@ -2783,7 +2786,8 @@ def export_pd_reporting_info(since: str,
 
         sql = '''
         SELECT record_created, record_modified, user_modified FROM {0}
-        WHERE record_created >= DATE({1}) OR record_modified >= DATE({1});
+        WHERE record_created >= DATE({1}) OR record_modified >= DATE({1})
+        ORDER BY record_modified DESC;
         '''.format(datastore.identifier(rid),
                    datastore.literal_string(since))
 
@@ -2799,8 +2803,6 @@ def export_pd_reporting_info(since: str,
         if verbose:
             click.echo('%s -- %s -- %s record(s)' % (rname, oname, len(result)))
 
-        total_count += len(result)
-
         for rec in result:
             if rec['user_modified'] not in user_info_cache:
                 user_obj = model.User.get(rec['user_modified'])
@@ -2808,6 +2810,9 @@ def export_pd_reporting_info(since: str,
                     'fullname': user_obj.fullname if user_obj else 'N/A',
                     'email': user_obj.email if user_obj else 'N/A',
                 }
+            elif lite:
+                continue
+            total_count += 1
             user_info = user_info_cache[rec['user_modified']]
             export_data.append(
                 [
