@@ -60,9 +60,9 @@
                         <span class="text-muted"><span class="fa fa-unlock-alt">&nbsp;</span></span>
                       {% endif %}
                       {% if user.default_dataset_visibility == 'public' or (user.User and user.User.plugin_extras and user.User.plugin_extras['default_dataset_visibility'] == 'public') %}
-                        <span class="text-muted" title="{{- _('Creates Public Datasets') -}}"><i class="fa fa-eye"></i>&nbsp;</span>
+                        <span class="text-muted" title="{{- _('Exempted from approval process') -}}"><i class="fa fa-eye"></i>&nbsp;</span>
                       {% else %}
-                        <span class="text-muted" title="{{- _('Creates Private Datasets') -}}"><i class="fa fa-eye-slash"></i>&nbsp;</span>
+                        <span class="text-muted" title="{{- _('Datasets require approval') -}}"><i class="fa fa-eye-slash"></i>&nbsp;</span>
                       {% endif %}
                     {% endif %}
                     <a href="{{ h.url_for('user.read', id=user.name) }}">
@@ -113,8 +113,8 @@
 {% block scripts %}
   {% if h.is_registry_domain() %}
     {% snippet 'snippets/cdts/footer_scripts.html' %}
-    {% asset 'canada_public/analytics' %}
-    {% asset 'canada_internal/user_lock' %}
+    {% asset 'canada_custom/analytics' %}
+    {% asset 'canada_custom/user_lock' %}
     {% block google_analytics_footer %}{%- endblock -%}
   {% endif %}
   {{ super() }}

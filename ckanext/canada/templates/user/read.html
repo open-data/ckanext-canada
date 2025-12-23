@@ -40,7 +40,7 @@
 
 {% block scripts %}
   {% if h.is_registry_domain() %}
-    {% asset 'canada_internal/user_lock' %}
+    {% asset 'canada_custom/user_lock' %}
   {% endif %}
   {{ super() }}
 {% endblock %}

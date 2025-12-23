@@ -5,6 +5,7 @@ from ckanext.validation.model import (
     create_tables as validation_create_tables,
     tables_exist as validation_tables_exist
 )
+from ckan import model
 from ckanext.security.model import db_setup as security_db_setup
 from ckanext.canada.tests.factories import CanadaOrganization as Organization
 from ckanext.canada.triggers import update_triggers
@@ -17,7 +18,10 @@ def pytest_collection_finish(session: Session) -> None:
     print("--- Performing global setup before all tests ---")
 
     print('Running Canada plugin migrations...')
-    _run_migrations('canada_public')
+    try:
+        _run_migrations('canada_logic')
+    except Exception:
+        pass
 
     print('Refreshing database...')
     reset_db()
@@ -39,8 +43,14 @@ def pytest_collection_finish(session: Session) -> None:
     print('Updating Recombinant database triggers...')
     _create_triggers(dataset_types=[], all_types=True)
 
+    # commit initial migrations
+    model.Session.commit()
+
     print('Running Canada plugin migrations...')
-    _run_migrations('canada_public')
+    try:
+        _run_migrations('canada_logic')
+    except Exception:
+        pass
 
     # NOTE: always make a tbs-sct org
     try:

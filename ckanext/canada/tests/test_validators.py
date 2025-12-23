@@ -121,7 +121,7 @@ class TestNAVLSchema(CanadaTestBase):
     def test_basic_package(self):
         with pytest.raises(ValidationError) as ve:
             self.normal_action.package_create(
-                name='12345678-9abc-def0-1234-56789abcdef0',
+                name='92345678-9abc-def0-1234-56789abcdef0',
                 **self.incomplete_pkg)
         model.Session.rollback()
         err = ve.value.error_dict
@@ -140,9 +140,8 @@ class TestNAVLSchema(CanadaTestBase):
         for k in set(err) | set(expected):
             assert k in err
             assert err[k] == expected[k]
-        model.Session.rollback()
         resp = self.normal_action.package_create(
-            name='12345678-9abc-def0-1234-56789abcdef0', **self.complete_pkg)
+            name='92345678-9abc-def0-1234-56789abcdef0', **self.complete_pkg)
         assert resp['title_translated']['fr'] == 'Un novel par Tolstoy'
 
         resp = self.action.package_show(id=resp['id'])

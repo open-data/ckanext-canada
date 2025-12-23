@@ -256,8 +256,8 @@
 {% endblock %}
 
 {% block scripts %}
-  {% asset 'canada_public/more_like_this' %}
-  {% asset 'canada_public/voting_fix' %}
+  {% asset 'canada_custom/more_like_this' %}
+  {% asset 'canada_custom/voting_fix' %}
   {% if not h.is_registry_domain() %}
     {% asset 'invitation_manager/js' %}
   {% endif %}

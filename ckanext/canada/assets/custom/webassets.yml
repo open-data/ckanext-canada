@@ -1,0 +1,79 @@
+css:
+  contents:
+    - build/custom_styles.min.css
+  output: canada_custom/%(version)s_custom_styles.css
+
+adobe_analytics_fix:
+  contents:
+    - build/adobe_analytics_fix.min.js
+  output: canada_custom/%(version)s_adobe_analytics_fix.js
+
+check_all:
+  contents:
+    - build/check_all.min.js
+  output: canada_custom/%(version)s_check_all.js
+
+i18n:
+  contents:
+    - build/i18n.min.js
+  output: canada_custom/%(version)s_i18n.js
+
+more_like_this:
+  contents:
+    - build/more_like_this.min.js
+  output: canada_custom/%(version)s_more_like_this.js
+
+voting_fix:
+  contents:
+    - build/voting_fix.min.js
+  output: canada_custom/%(version)s_voting_fix.js
+
+guess_mimetype:
+  contents:
+    - build/guess_mimetype.min.js
+  output: canada_custom/%(version)s_guess_mimetype.js
+
+cascading_select:
+  contents:
+    - build/cascading_select.min.js
+  output: canada_custom/%(version)s_cascading_select.js
+
+analytics:
+  contents:
+    - build/analytics.min.js
+  output: canada_custom/%(version)s_analytics.js
+
+registry_analytics:
+  contents:
+    - build/registry_analytics.min.js
+  output: canada_custom/%(version)s_registry_analytics.js
+
+user_lock:
+  contents:
+    - build/users.min.js
+  output: canada_custom/%(version)s_users.js
+
+recombinant_webforms:
+  contents:
+    - build/recombinant_webform.min.js
+  output: canada_custom/%(version)s_recombinant_webform.js
+
+frictionless:
+  contents:
+    - build/frictionless.min.js
+  output: canada_custom/%(version)s_frictionless.js
+
+organization_edit:
+  contents:
+    - build/organization_edit.min.js
+  output: canada_custom/%(version)s_organization_edit.js
+
+package_edit:
+  contents:
+    - build/package_edit.min.js
+  output: canada_custom/%(version)s_package_edit.js
+
+resource_edit:
+  contents:
+    - build/resource_edit.min.js
+  output: canada_custom/%(version)s_resource_edit.js

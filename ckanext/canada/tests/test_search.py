@@ -1,7 +1,9 @@
 # -*- coding: UTF-8 -*-
-from ckanext.canada.tests import CanadaTestBase
+from ckanext.canada.tests import CanadaTestBase, mock_is_portal_domain
+from ckan.plugins.toolkit import h
 from ckanapi import LocalCKAN
-import ckan.plugins as p
+
+import mock
 
 from ckan.tests.factories import Sysadmin
 from ckanext.canada.tests.factories import (
@@ -21,7 +23,7 @@ class TestRegistrySearch(CanadaTestBase):
         Setup any state specific to the execution of the given class.
         """
         super(TestRegistrySearch, self).setup_class()
-        # all datasets in canada_internal are private
+        # default Registry creation is private=True
         self.include_private = True
         user = User()
         editor = User()
@@ -78,6 +80,21 @@ class TestRegistrySearch(CanadaTestBase):
                 ready_to_publish='true',
                 portal_release_date='2000-01-01')
 
+    @classmethod
+    def teardown_class(self):
+        """Method is called at class level after ALL test methods of the class are called.
+        Remove any state specific to the execution of the given class.
+        """
+        datasets = self.system_lc.action.package_search(
+            q='*:*',
+            fl='id',
+            include_private=True)
+
+        for dataset in datasets['results']:
+            self.system_lc.action.package_delete(id=dataset['id'])
+
+        super(TestRegistrySearch, self).teardown_class()
+
     def test_portal_release_date_facet(self):
         response = self.system_lc.action.package_search(
             q='*:*',
@@ -97,7 +114,7 @@ class TestRegistrySearch(CanadaTestBase):
         assert 'count' in response
         assert response['count'] >= 6
 
-    def test_user_package_search(self):
+    def test_user_package_search(self, app):
         "A user with no access to Orgs should not see any packages."
         response = self.user_lc.action.package_search(
             q='*:*',
@@ -134,8 +151,6 @@ class TestPortalSearch(CanadaTestBase):
         """Method is called at class level once the class is instatiated.
         Setup any state specific to the execution of the given class.
         """
-        if p.plugin_loaded('canada_internal'):
-            p.unload('canada_internal')
         super(TestPortalSearch, self).setup_class()
         # datasets on the portal are all public
         self.include_private = False
@@ -180,11 +195,17 @@ class TestPortalSearch(CanadaTestBase):
         """Method is called at class level after ALL test methods of the class are called.
         Remove any state specific to the execution of the given class.
         """
-        if not p.plugin_loaded('canada_internal'):
-            p.load('canada_internal')
+        datasets = self.lc.action.package_search(
+            q='*:*',
+            fl='id',
+            include_private=True)
+
+        for dataset in datasets['results']:
+            self.lc.action.package_delete(id=dataset['id'])
 
         super(TestPortalSearch, self).teardown_class()
 
+    @mock.patch.object(h, 'is_registry_domain', mock_is_portal_domain)
     def test_user_package_search(self):
         response = self.lc.action.package_search(
             q='*:*',
@@ -193,6 +214,7 @@ class TestPortalSearch(CanadaTestBase):
         assert 'count' in response
         assert response['count'] == 6
 
+    @mock.patch.object(h, 'is_registry_domain', mock_is_portal_domain)
     def test_user_package_search_by_owner_org(self):
         response = self.lc.action.package_search(
             fq='owner_org:%s' % self.org['id'],
@@ -208,6 +230,7 @@ class TestPortalSearch(CanadaTestBase):
         assert 'count' in response
         assert response['count'] == 2
 
+    @mock.patch.object(h, 'is_registry_domain', mock_is_portal_domain)
     def test_user_package_search_by_keywords(self):
         response = self.lc.action.package_search(
             fq='keywords:("Test 0" OR "Test 1")',

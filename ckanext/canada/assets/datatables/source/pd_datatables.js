@@ -332,11 +332,13 @@ function load_pd_datatable(CKAN_MODULE){
       }else if( ds_type == 'month' ){
         filterInput = '<input name="dtprv-filter-col-' + _index + '" id="dtprv-filter-col-' + _index + '" data-number-type="int" type="number" min="1" max="12" step="1" value="' + val + '" class="form-control form-control-sm" />';
       }else if( ds_type == 'date' ){
-        filterInput = '<input name="dtprv-filter-col-' + _index + '" id="dtprv-filter-col-' + _index + '" type="date" min="1899-01-01" max="' + currentDate + '" value="' + val + '" class="form-control form-control-sm" />';
+        // TODO: add configurable max="' + currentDate + '" ???
+        filterInput = '<input name="dtprv-filter-col-' + _index + '" id="dtprv-filter-col-' + _index + '" type="date" min="1899-01-01" value="' + val + '" class="form-control form-control-sm" />';
       }else if( ds_type == 'timestamp' ){
         // TODO: bring back timestamp field when we can do DateTime range filtering in datastore_search!!!
+        // TODO: add configurable max="' + currentDate + 'T23:59" ???
         extraClasses = 'dtprv-filter-col-deactive';
-        filterInput = '<input tabindex="-1" name="dtprv-filter-col-' + _index + '" id="dtprv-filter-col-' + _index + '" type="datetime-local" min="1899-01-01T00:00" max="' + currentDate + 'T23:59" value="' + val + '" class="form-control form-control-sm" />';
+        filterInput = '<input tabindex="-1" name="dtprv-filter-col-' + _index + '" id="dtprv-filter-col-' + _index + '" type="datetime-local" min="1899-01-01T00:00" value="' + val + '" class="form-control form-control-sm" />';
       }else if( ds_type == 'int' || ds_type == 'bigint' ){
         filterInput = '<input name="dtprv-filter-col-' + _index + '" id="dtprv-filter-col-' + _index + '" placeholder="' + labelText + '" data-number-type="int" type="text" step="1" value="' + val + '" class="form-control form-control-sm" />';
       }else if( ds_type == 'numeric' || ds_type == 'float' || ds_type == 'double' ){
@@ -415,9 +417,11 @@ function load_pd_datatable(CKAN_MODULE){
     }else if( ds_type == 'month' ){
       fieldInput = '<input class="pd-datatable-editor-input ' + readOnlyClass + '" value="' + _value + '" name=' + fieldID + '" id="' + fieldID + '" data-primary-key="' + isPrimaryKey + '" data-row-index="' + _rowIndex + '" data-datastore-id="' + _chromo_field.datastore_id + '" data-number-type="int" type="number" min="1" max="12" step="1" ' + readOnly + maxLength + ' tabindex="' + tabIndex + '" autocomplete="off" />';
     }else if( ds_type == 'date' ){
-      fieldInput = '<input class="pd-datatable-editor-input ' + readOnlyClass + '" value="' + _value + '" name=' + fieldID + '" id="' + fieldID + '" data-primary-key="' + isPrimaryKey + '" data-row-index="' + _rowIndex + '" data-datastore-id="' + _chromo_field.datastore_id + '" type="date" min="1899-01-01" max="' + currentDate + '" ' + readOnly + maxLength + ' tabindex="' + tabIndex + '" autocomplete="off" />';
+      // TODO: add configurable max="' + currentDate + '" ???
+      fieldInput = '<input class="pd-datatable-editor-input ' + readOnlyClass + '" value="' + _value + '" name=' + fieldID + '" id="' + fieldID + '" data-primary-key="' + isPrimaryKey + '" data-row-index="' + _rowIndex + '" data-datastore-id="' + _chromo_field.datastore_id + '" type="date" min="1899-01-01" ' + readOnly + maxLength + ' tabindex="' + tabIndex + '" autocomplete="off" />';
     }else if( ds_type == 'timestamp' ){
-      fieldInput = '<input class="pd-datatable-editor-input ' + readOnlyClass + '" value="' + _value + '" name=' + fieldID + '" id="' + fieldID + '" data-primary-key="' + isPrimaryKey + '" data-row-index="' + _rowIndex + '" data-datastore-id="' + _chromo_field.datastore_id + '" type="datetime-local" min="1899-01-01T00:00" max="' + currentDate + 'T23:59" ' + readOnly + maxLength + ' tabindex="' + tabIndex + '" autocomplete="off" />';
+      // TODO: add configurable max="' + currentDate + 'T23:59" ???
+      fieldInput = '<input class="pd-datatable-editor-input ' + readOnlyClass + '" value="' + _value + '" name=' + fieldID + '" id="' + fieldID + '" data-primary-key="' + isPrimaryKey + '" data-row-index="' + _rowIndex + '" data-datastore-id="' + _chromo_field.datastore_id + '" type="datetime-local" min="1899-01-01T00:00" ' + readOnly + maxLength + ' tabindex="' + tabIndex + '" autocomplete="off" />';
     }else if( ds_type == 'int' || ds_type == 'bigint' ){
       fieldInput = '<input class="pd-datatable-editor-input ' + readOnlyClass + '" value="' + _value + '" name=' + fieldID + '" id="' + fieldID + '" data-primary-key="' + isPrimaryKey + '" data-row-index="' + _rowIndex + '" data-datastore-id="' + _chromo_field.datastore_id + '" data-number-type="int" type="number" ' + readOnly + maxLength + ' tabindex="' + tabIndex + '" autocomplete="off" />';
     }else if( ds_type == 'numeric' || ds_type == 'float' || ds_type == 'double' ){

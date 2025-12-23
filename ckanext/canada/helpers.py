@@ -1,10 +1,19 @@
-from typing import Optional, Union, Any, Tuple, List, Set, Dict, cast
-from ckan.types import Context
-
 import json
 import re
 import inspect
 from urllib.parse import urlsplit
+import datetime
+import unicodedata
+import html
+from six import text_type
+from bs4 import BeautifulSoup
+import dateutil.parser
+import geomet.wkt as wkt
+from markupsafe import Markup, escape
+
+from typing import Optional, Union, Any, Tuple, List, Set, Dict, cast
+from ckan.types import Context
+
 from ckan.plugins.toolkit import (
     config,
     asbool,
@@ -18,20 +27,9 @@ from ckan.plugins.toolkit import (
     NotAuthorized
 )
 from ckan.model import User, Package
-from ckanext.activity.model import Activity
 import ckan.model as model
 from ckan.model.license import License
-import datetime
-import unicodedata
-import html
-from six import text_type
-from bs4 import BeautifulSoup
 from ckan import plugins
-
-from ckanext.scheming.helpers import scheming_get_preset
-import dateutil.parser
-import geomet.wkt as wkt
-from markupsafe import Markup, escape
 from ckan.lib.helpers import (
     core_helper,
     linked_user as core_linked_user
@@ -39,6 +37,8 @@ from ckan.lib.helpers import (
 from ckan.plugins.core import plugin_loaded
 import ckan.lib.datapreview as datapreview
 
+from ckanext.activity.model import Activity
+from ckanext.scheming.helpers import scheming_get_preset
 from ckanext.recombinant.tables import get_chromo
 from ckanext.security.cache.login import max_login_attempts
 
@@ -533,7 +533,11 @@ def get_pd_datatable(resource_name: str,
                         (fk['parent_columns'][fk_ci], fk_cc)
                         for fk_ci, fk_cc in enumerate(fk['child_columns']))
 
-    return h.snippet('snippets/pd_datatable.html',
+    # TODO: DEPRECATED: REMOVE AFTER FULL PD DATATABLES QA
+    snippet = 'pd_datatable.html' if config.get(
+        'ckanext.canada.enable_pd_datatable_editor') else 'pd_datatable_depr.html'
+
+    return h.snippet('snippets/%s' % snippet,
                      resource_name=resource_name,
                      resource_id=resource_id,
                      owner_org=owner_org,

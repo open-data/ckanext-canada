@@ -1,3 +1,12 @@
+from contextlib import contextmanager
+from flask import has_request_context
+from urllib.parse import urlparse
+import mimetypes
+from rq.job import Job
+from rq.exceptions import NoSuchJobError
+from pytz import timezone
+from logging import getLogger
+
 from typing import Optional, Any, cast, Dict, List, Union
 from ckan.types import Context, DataDict, Action, ChainedAction, Schema, ErrorDict
 
@@ -6,8 +15,6 @@ from ckan.logic.schema import (
     default_create_resource_view_schema_filtered,
     default_update_resource_view_schema_changes
 )
-from contextlib import contextmanager
-
 from ckan.plugins.toolkit import (
     ValidationError,
     side_effect_free,
@@ -25,20 +32,9 @@ from ckan.plugins.toolkit import (
 from ckan.authz import is_sysadmin
 from ckan.lib.navl.dictization_functions import validate
 
-from flask import has_request_context
-
-from urllib.parse import urlparse
-import mimetypes
 from ckanext.scheming.helpers import scheming_get_preset
-
 from ckanext.datastore.backend import DatastoreBackend
 from ckanext.datastore.logic.schema import datastore_search_schema
-
-from rq.job import Job
-from rq.exceptions import NoSuchJobError
-
-from pytz import timezone
-from logging import getLogger
 
 
 MIMETYPES_AS_DOMAINS = [
@@ -71,6 +67,45 @@ JOB_MAPPING = {
 
 log = getLogger(__name__)
 ottawa_tz = timezone('America/Montreal')
+
+
+def get_action_methods() -> Dict[str, Union[Action, ChainedAction]]:
+    """
+    Returns a dict of registered logic action methods.
+    """
+    actions = {
+        'canada_guess_mimetype': canada_guess_mimetype,
+        'resource_view_update': resource_view_update_bilingual,
+        'resource_view_create': resource_view_create_bilingual,
+        'datastore_run_triggers': canada_datastore_run_triggers,
+        'user_update': canada_user_update,
+        'user_show': canada_user_show,
+        'resource_view_show': canada_resource_view_show,
+        'resource_view_list': canada_resource_view_list,
+        'job_list': canada_job_list,
+        'datastore_search': canada_datastore_search,
+        'package_search': canada_package_search,
+    }
+    # disable actions for logged out users
+    actions.update({k: disabled_anon_action for k in [
+        'current_package_list_with_resources',
+        'user_list',
+        'user_activity_list',
+        'member_list',
+        'package_autocomplete',
+        'format_autocomplete',
+        'user_autocomplete',
+        'group_activity_list',
+        'organization_activity_list',
+        'group_package_show',]})
+    # disable group & organization bulk actions as they do not support
+    # IPackageController and IResourceController implementations.
+    actions.update({k: disabled_action for k in [
+        'bulk_update_private',
+        'bulk_update_public',
+        'bulk_update_delete',
+        '_bulk_update_dataset',]})
+    return actions
 
 
 def disabled_action(context: Context,
@@ -150,14 +185,6 @@ def resource_view_update_bilingual(up_func: Action,
         )),
         data_dict
     )
-
-
-def limit_api_logic() -> Dict[str, Any]:
-    """
-    Return a dict of logic function names -> wrappers that override
-    existing api calls to set new default limits and hard limits
-    """
-    return {}
 
 
 @contextmanager
@@ -578,3 +605,18 @@ def canada_user_show(up_func: Action,
     user_dict['default_dataset_visibility'] = extras.get(
         'default_dataset_visibility', 'private') if extras else 'private'
     return user_dict
+
+
+@chained_action
+@side_effect_free
+def canada_package_search(up_func: Action,
+                          context: Context,
+                          data_dict: DataDict) -> ChainedAction:
+    """
+    Pass the username from the context into a data_dict extra key
+    to be used in the IPackageController::before_dataset_search
+    """
+    if 'extras' not in data_dict:
+        data_dict['extras'] = {}
+    data_dict['extras']['__CONTEXTUAL_USER__'] = context.get('user')
+    return up_func(context, data_dict)

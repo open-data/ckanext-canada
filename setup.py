@@ -23,11 +23,7 @@ setup(
     ],
     entry_points="""
     [ckan.plugins]
-    canada_internal=ckanext.canada.plugin:CanadaInternalPlugin
-    canada_public=ckanext.canada.plugin:CanadaPublicPlugin
-    canada_forms=ckanext.canada.plugin:CanadaFormsPlugin
-    canada_datasets=ckanext.canada.plugin:CanadaDatasetsPlugin
-    canada_security=ckanext.canada.plugin:CanadaSecurityPlugin
+    canada_logic=ckanext.canada.plugin:CanadaLogicPlugin
     canada_theme=ckanext.canada.plugin:CanadaThemePlugin
 
     [babel.extractors]

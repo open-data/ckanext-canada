@@ -10,8 +10,8 @@
           'default_dataset_visibility',
           label=_('Default Dataset Visibility'),
           id='field-default_dataset_visibility',
-          options=[{'value': 'private', 'text': _('Private')},
-                   {'value': 'public', 'text': _('Public')}],
+          options=[{'value': 'private', 'text': _('Unpublished')},
+                   {'value': 'public', 'text': _('Published')}],
           selected=data.default_dataset_visibility if data.default_dataset_visibility else 'private',
           error=errors.default_dataset_visibility,
           attrs={'class': 'form-control form-select'}) -%}

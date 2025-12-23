@@ -6,3 +6,5 @@ Upgraded DataTables JS contributed library and extensions to latest (as of 2025.
 - Fullscreen;
 - Editing in DataTables;
 - General improved functional JS code.
+
+Must use the option `ckanext.canada.enable_pd_datatable_editor`

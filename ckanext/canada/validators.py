@@ -1,11 +1,20 @@
-# -*- coding: utf-8 -*-
-from typing import Any, cast
-from ckan.types import Context, FlattenKey, FlattenDataDict, FlattenErrorDict
-
 import re
 import unicodedata
-
 from six import text_type
+import geojson
+from geomet import wkt
+import json
+import uuid
+from datetime import datetime
+
+from typing import Any, cast, Dict
+from ckan.types import (
+    Context,
+    FlattenKey,
+    FlattenDataDict,
+    FlattenErrorDict,
+    Validator
+)
 
 from ckan.plugins.toolkit import (
     _,
@@ -23,20 +32,15 @@ from ckan.plugins.toolkit import (
 from ckan.lib.navl.validators import StopOnError
 from ckan.authz import is_sysadmin
 from ckan import model
-
-from ckanext.canada.helpers import may_publish_datasets
-import geojson
-from geomet import wkt
-import json
-import uuid
-from datetime import datetime
-
 from ckan.lib.helpers import date_str_to_datetime
+
 from ckanext.scheming.helpers import scheming_get_preset
 from ckanext.fluent.validators import fluent_text_output, LANG_SUFFIX
 from ckanext.security.resource_upload_validator import (
     validate_upload_type, validate_upload_presence
 )
+
+from ckanext.canada.helpers import may_publish_datasets
 
 not_empty = get_validator('not_empty')
 ignore_missing = get_validator('ignore_missing')
@@ -46,6 +50,45 @@ invalid_api_token_name_match = re.compile(r'[^A-Za-z0-9_\-]')
 
 MIN_TAG_LENGTH = 2
 MAX_TAG_LENGTH = 140  # because twitter
+
+
+def get_validator_methods() -> Dict[str, Validator]:
+    """
+    Returns a dict of registered validation methods.
+    """
+    return {
+        'canada_validate_generate_uuid': canada_validate_generate_uuid,
+        'canada_tags': canada_tags,
+        'geojson_validator': geojson_validator,
+        'email_validator': email_validator,
+        'protect_portal_release_date': protect_portal_release_date,
+        'canada_copy_from_org_name': canada_copy_from_org_name,
+        'canada_maintainer_email_default': canada_maintainer_email_default,
+        'user_read_only': user_read_only,
+        'user_read_only_json': user_read_only_json,
+        'canada_sort_prop_status': canada_sort_prop_status,
+        'no_future_date': no_future_date,
+        'no_future_date_out_of_draft': no_future_date_out_of_draft,
+        'canada_org_title_translated_save': canada_org_title_translated_save,
+        'canada_org_title_translated_output': canada_org_title_translated_output,
+        'protect_reporting_requirements': protect_reporting_requirements,
+        'ati_email_validate': ati_email_validate,
+        'isodate': isodate,
+        'string_safe': string_safe,
+        'string_safe_stop': string_safe_stop,
+        'json_string': json_string,
+        'json_string_has_en_fr_keys': json_string_has_en_fr_keys,
+        'canada_static_charset_tabledesigner': canada_static_charset_tabledesigner,
+        'canada_static_rtype_tabledesigner': canada_static_rtype_tabledesigner,
+        'canada_guess_resource_format': canada_guess_resource_format,
+        'canada_output_none': canada_output_none,
+        'protect_registry_access': protect_registry_access,
+        'limit_resources_per_dataset': limit_resources_per_dataset,
+        'canada_dataset_visibility': canada_dataset_visibility,
+        'canada_security_upload_type': canada_security_upload_type,
+        'canada_security_upload_presence': canada_security_upload_presence,
+        'canada_api_token_name_validator': canada_api_token_name_validator,
+    }
 
 
 def protect_portal_release_date(key: FlattenKey,

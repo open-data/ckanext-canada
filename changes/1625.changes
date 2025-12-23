@@ -1,15 +1,18 @@
 Updated the Grants & Contributions schema:
 
-- `recipient_type` is required if `agreement_start_date` is on or after `2025-11-01`
-- `prog_name_en` is required if `agreement_start_date` is on or after `2025-11-01`
-- `prog_name_fr` is required if `agreement_start_date` is on or after `2025-11-01`
-- `prog_purpose_en` is required if `agreement_start_date` is on or after `2025-11-01`
-- `prog_purpose_fr` is required if `agreement_start_date` is on or after `2025-11-01`
-- `agreement_title_en` is required if `agreement_start_date` is on or after `2025-11-01`
-- `agreement_title_fr` is required if `agreement_start_date` is on or after `2025-11-01`
-- `agreement_end_date` is required if `agreement_start_date` is on or after `2025-11-01`
-- `agreement_end_date` cannot be before `agreement_start_date` if `agreement_start_date` is on or after `2025-11-01`
-- `expected_results_en` is required if `agreement_start_date` is on or after `2025-11-01`
-- `expected_results_fr` is required if `agreement_start_date` is on or after `2025-11-01`
-- `recipient_postal_code` must be in a valid Canadian postal code format of "A1A 1A1" if `agreement_start_date` is on or after `2025-11-01`
-- `federal_riding_number` must be a 5 digit natural number if `agreement_start_date` is on or after `2025-11-01`
+- `recipient_type` is required if `agreement_start_date` is on or after `2025-12-01`
+- `recipient_business_number` must be a 9 digit natural number if `agreement_start_date` is on or after `2025-12-01`
+- `prog_name_en` is required if `agreement_start_date` is on or after `2025-12-01`
+- `prog_name_fr` is required if `agreement_start_date` is on or after `2025-12-01`
+- `prog_purpose_en` is required if `agreement_start_date` is on or after `2025-12-01`
+- `prog_purpose_fr` is required if `agreement_start_date` is on or after `2025-12-01`
+- `agreement_title_en` is required if `agreement_start_date` is on or after `2025-12-01`
+- `agreement_title_fr` is required if `agreement_start_date` is on or after `2025-12-01`
+- `agreement_start_date` cannot be in the future if `agreement_start_date` is on or after `2025-12-01`
+- `agreement_end_date` is required if `agreement_start_date` is on or after `2025-12-01`
+- `agreement_end_date` cannot be before `agreement_start_date` if `agreement_start_date` is on or after `2025-12-01`
+- `agreement_value` must be larger than 0 if `agreement_start_date` is on or after `2025-12-01`
+- `expected_results_en` is required if `agreement_start_date` is on or after `2025-12-01`
+- `expected_results_fr` is required if `agreement_start_date` is on or after `2025-12-01`
+- `recipient_postal_code` must be in a valid Canadian postal code format of "A1A 1A1" if `agreement_start_date` is on or after `2025-12-01`
+- `federal_riding_number` must be a 5 digit natural number if `agreement_start_date` is on or after `2025-12-01`
