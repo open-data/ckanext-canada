@@ -24,7 +24,7 @@ class CanadaThemePlugin(p.SingletonPlugin, DefaultTranslation):
     p.implements(p.ITranslation)
     p.implements(p.IConfigurer)
     p.implements(p.ITemplateHelpers)
-    p.implements(p.IMiddleware)
+    p.implements(p.IMiddleware, inherit=True)
     p.implements(p.IBlueprint)
 
     @classmethod
