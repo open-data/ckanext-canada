@@ -377,11 +377,14 @@ def update_dataset_search_params(search_params: Dict[str, Any]):
         try:
             contextual_user = search_params.get('extras', {}).pop(
                 '__CONTEXTUAL_USER__', None)
+            contextual_ignore_auth = search_params.get('extras', {}).pop(
+                '__CONTEXTUAL_IGNORE_AUTH__', False)
         except (TypeError, RuntimeError, AttributeError):
             contextual_user = None
-        if not contextual_user:
+            contextual_ignore_auth = False
+        if not contextual_user and not contextual_ignore_auth:
             search_params['fq_list'] += ['-organization:*']
-        elif not is_sysadmin(contextual_user):
+        elif not is_sysadmin(contextual_user) and not contextual_ignore_auth:
             org_names = [o['name'] for o in get_action(
                 'organization_list_for_user')({'user': contextual_user},
                                               {'permission': 'read'})]

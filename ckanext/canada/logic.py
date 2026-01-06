@@ -619,4 +619,6 @@ def canada_package_search(up_func: Action,
     if 'extras' not in data_dict:
         data_dict['extras'] = {}
     data_dict['extras']['__CONTEXTUAL_USER__'] = context.get('user')
+    data_dict['extras']['__CONTEXTUAL_IGNORE_AUTH__'] = context.get(
+        'ignore_auth', False)
     return up_func(context, data_dict)
