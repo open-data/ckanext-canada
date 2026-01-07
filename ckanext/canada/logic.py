@@ -745,8 +745,11 @@ def canada_datastore_search(up_func: Action,
                                       'limit': 0})
     except Exception:
         return up_func(context, data_dict)
-    res = get_action('resource_show')(
-        cast(Context, dict(context)), {'id': _data_dict.get('resource_id')})
+    try:
+        res = get_action('resource_show')(
+            cast(Context, dict(context)), {'id': _data_dict.get('resource_id')})
+    except (ObjectNotFound, NotAuthorized):
+        return up_func(context, data_dict)
     if not res.get('url_type') or res.get('url_type') == 'upload':
         # only limit FTS for links and uploads
         record_count = ds_result.get('total', 0)
