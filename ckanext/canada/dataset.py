@@ -386,7 +386,7 @@ def update_dataset_search_params(search_params: Dict[str, Any]):
             search_params['fq_list'] += ['-organization:*']
         elif not is_sysadmin(contextual_user) and not contextual_ignore_auth:
             org_names = [o['name'] for o in get_action(
-                'organization_list_for_user')({'user': contextual_user},
+                'organization_list_for_user')(cast(Context, {'user': contextual_user}),
                                               {'permission': 'read'})]
             if org_names:
                 search_params['fq_list'] += [
