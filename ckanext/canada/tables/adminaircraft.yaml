@@ -45,6 +45,7 @@ resources:
     visible_to_public: Yes
     occurrence: Single
     datastore_type: text
+    js_error_eval: 'VALUE.length > 0 && VALUE.includes(",")'
 
 # 3.2
   - datastore_id: minister
@@ -64,7 +65,9 @@ resources:
     visible_to_public: Yes
     occurrence: Single
     datastore_type: text
-    excel_full_text_choices: True
+    excel_full_text_choices: true
+    datatables_full_text_choices: true
+    datatables_col_class: col-md
     choices_file: choices/minister.json
     excel_error_formula: 'FALSE'
 
@@ -83,6 +86,7 @@ resources:
       en: Free text
       fr: Texte libre
     validation: This field must not be empty
+    datatables_col_class: col-lg
     visible_to_public: Yes
     occurrence: Single
     datastore_type: text
@@ -105,6 +109,7 @@ resources:
       en: Free text
       fr: Texte libre
     validation: This field must not be empty
+    datatables_col_class: col-lg
     visible_to_public: Yes
     occurrence: Single
     datastore_type: text
@@ -168,6 +173,7 @@ resources:
       en: Free text (Note, use full city/region, province/state and country name where possible. Separate multiple locations with semicolons.)
       fr: "Texte libre (Note : utilisez si possible le nom complet de la ville/région, de la province/de l’État et du pays. Séparez les emplacements multiples par des points-virgules.)"
     validation: This field must not be empty
+    datatables_col_class: col-lg
     visible_to_public: Yes
     occurrence: Repeatable
     datastore_type: text
@@ -190,6 +196,7 @@ resources:
       en: Free text (Note, use full city/region, province/state and country name where possible. Separate multiple locations with semicolons.)
       fr: "Texte libre (Note : utilisez si possible le nom complet de la ville/région, de la province/de l’État et du pays. Séparez les emplacements multiples par des points-virgules.)"
     validation: This field must not be empty
+    datatables_col_class: col-lg
     visible_to_public: Yes
     occurrence: Repeatable
     datastore_type: text
@@ -228,10 +235,13 @@ resources:
       en: Full list of flight passengers. (Comma seperated)
       fr: Liste complète des passagers du vol. (séparées par des virgules)
     obligation: Mandatory
+    excel_required: true
+    form_required: true
     format_type:
       en: Free text (separated by commas)
       fr: Texte libre (séparés par des virgules)
     validation: This field must not be empty
+    datatables_col_class: col-lg
     visible_to_public: Yes
     occurrence: Repeatable
     datastore_type: text
@@ -255,9 +265,11 @@ resources:
     visible_to_public: Yes
     occurrence: Repeatable
     datastore_type: text
+    datatables_col_class: col-lg
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
       class: form-control canada-width-full d-block
+    js_required_eval: '{{additional_information_fr}}.length > 0'
 
   # 3.12
   - datastore_id: additional_information_fr
@@ -275,9 +287,11 @@ resources:
     visible_to_public: Yes
     occurrence: Repeatable
     datastore_type: text
+    datatables_col_class: col-lg
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
       class: form-control canada-width-full d-block
+    js_required_eval: '{{additional_information_en}}.length > 0'
 
   # audit trail
   - datastore_id: record_created
@@ -370,3 +384,9 @@ excel_column_heading_style:
   PatternFill:
     patternType: solid
     fgColor: FFEFEFEF
+datatables_style:
+  header:
+    bgColor: 9a75ec
+  select:
+    bgColor: bba2f2
+    fgColor: 333333

@@ -29,3 +29,9 @@ groups:
           Disables the internal Content-Security-Policy header.
           Should not be set to True in production environments.
         validators: boolean_validator
+      - key: ckanext.canada.enable_pd_datatable_editor
+        default: false
+        description: |
+          Enables the improved DataTables and custom editor for
+          Recombinant type resources.
+        validators: boolean_validator
