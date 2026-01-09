@@ -741,9 +741,10 @@ def canada_datastore_search(up_func: Action,
     if errors:
         raise ValidationError(errors)
     try:
+        # get record count with limit=0
         ds_result = up_func(context, {'resource_id': _data_dict.get('resource_id'),
                                       'limit': 0})
-    except Exception:
+    except (ObjectNotFound, ValidationError):
         return up_func(context, data_dict)
     try:
         res = get_action('resource_show')(
