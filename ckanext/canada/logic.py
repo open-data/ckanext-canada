@@ -90,14 +90,20 @@ def get_action_methods() -> Dict[str, Union[Action, ChainedAction]]:
     actions.update({k: disabled_anon_action for k in [
         'current_package_list_with_resources',
         'user_list',
-        'user_activity_list',
         'member_list',
         'package_autocomplete',
         'format_autocomplete',
         'user_autocomplete',
-        'group_activity_list',
-        'organization_activity_list',
         'group_package_show',]})
+    try:
+        get_action('user_activity_list')({'ignore_auth': True}, {})
+        actions.update({k: disabled_anon_action for k in [
+            'user_activity_list',
+            'group_activity_list',
+            'organization_activity_list',]})
+    except (ObjectNotFound, KeyError):
+        # the activity plugin is not loaded, ignore
+        pass
     # disable group & organization bulk actions as they do not support
     # IPackageController and IResourceController implementations.
     actions.update({k: disabled_action for k in [
