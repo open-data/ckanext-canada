@@ -25,7 +25,9 @@
     {% if h.check_access('group_update', {'id': organization.id}) %}
       {{ h.build_nav_icon('organization.edit', _('Edit Organization'), id=organization.name, icon='pencil-square') }}
     {% endif %}
-    {{ h.build_nav_icon('activity.organization_activity', _('Activity'), id=organization.name, icon='clock') }}
+    {% if h.plugin_loaded('activity') %}
+      {{ h.build_nav_icon('activity.organization_activity', _('Activity'), id=organization.name, icon='clock') }}
+    {% endif %}
     {% if h.check_access('organization_update', {'id': organization.id}) %}
       {{ h.build_nav_icon('organization.manage_members', _('Edit Members'), id=organization.name, icon='users') }}
     {% elif h.check_access('view_org_members', {'id': organization.id}) %}
