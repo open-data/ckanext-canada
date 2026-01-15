@@ -1,1 +1,1 @@
-Set dependency `greenlet==3.2.4` for newer version of Python (`3.9.25+`) using threading in uWSGI.
+Set dependencies `greenlet==3.2.4` and `gevent==25.5.1` for newer version of Python (`3.9.25+`) using threading in uWSGI.
