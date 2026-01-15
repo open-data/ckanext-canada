@@ -17,3 +17,4 @@ setuptools==70.0.0
 rq==1.15.1
 pydantic==2.10.6
 typing_extensions==4.12.2
+greenlet==3.2.4  # req for threading
