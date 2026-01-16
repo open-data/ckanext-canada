@@ -98,16 +98,16 @@
 
 {% block publish_button %}{% endblock %}
 
+{% block save_button_text %}
+  {% if form_style != 'edit' %}
+    {{- _('Next: Add Resource') -}}
+  {% else %}
+    {{- _('Update Record') -}}
+  {% endif %}
+{% endblock %}
+
 {% block save_button %}
   <div data-module="package_confirm_contact_email">
-    <button class="btn btn-primary" type="submit" name="save">
-      {% block save_button_text %}
-        {% if form_style != 'edit' %}
-          {{- _('Next: Add Resource') -}}
-        {% else %}
-          {{- _('Update Record') -}}
-        {% endif %}
-      {% endblock %}
-    </button>
+    {{ super() }}
   </div>
 {% endblock %}
