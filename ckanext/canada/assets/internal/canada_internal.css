@@ -438,8 +438,20 @@ ul#brf-pkg { padding-left: 0; }
   vertical-align: middle;
 }
 
-#confirm-contact-email > .modal-dialog {
-  transform: none;
+#confirm-contact-email .modal-dialog{
+  position: absolute;
+  top: 20%;
+  left: 50%;
+  transform: translate(-50%, 0);
+  max-width: 80%;
+}
+
+@media all and (max-width: 768px){
+  #confirm-contact-email .modal-dialog{
+    min-width: 80%;
+    max-width: 80%;
+    width: 80%;
+  }
 }
 
 .nav-item.active > a span, .nav-aside li.active a span {
