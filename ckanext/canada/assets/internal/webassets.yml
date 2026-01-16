@@ -52,3 +52,8 @@ frictionless:
   contents:
     - registry_frictionless.js
   output: canada_internal/%(version)s_registry_frictionless.js
+
+package_confirm_contact_email:
+  contents:
+    - package_confirm_contact_email.js
+  output: canada_internal/%(version)s_package_confirm_contact_email.js

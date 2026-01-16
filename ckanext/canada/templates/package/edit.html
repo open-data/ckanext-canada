@@ -21,3 +21,8 @@
     {% snippet "package/snippets/resources.html", pkg=pkg %}
   {% endif %}
 {% endblock %}
+
+{% block scripts %}
+  {{ super() }}
+  {% asset 'canada_internal/package_confirm_contact_email' %}
+{% endblock %}

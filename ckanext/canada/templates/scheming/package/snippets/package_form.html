@@ -53,6 +53,35 @@
       </details>
     </li>
   </ul>
+
+  {% block confirm_contact_email %}
+    <div class="modal fade" id="confirm-contact-email" tabindex="-1" role="dialog"
+        aria-labelledby="modalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content overlay-def">
+          <header class="modal-header">
+            <h2 class="modal-title" id="modalLabel">{{ _('Contact Email') }}</h2>
+            <button type="button" class="close mfp-close" data-bs-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </header>
+          <div class="modal-body">
+            {{ _('Please note: The Contact Email field allows Portal users to send feedback about this dataset. If you leave this field empty, you won’t be able to receive any feedback.') }}
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-sm btn-primary pull-left" data-bs-dismiss="modal" id="go-back-email">
+              {{ _('Go back and add Contact email') }}
+            </button>
+            <button type="button" class="btn btn-sm btn-default pull-left" id="continue-submit">
+              {{ _('Continue anyway') }}
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  {% endblock %}
+
   {{ super() }}
 {% endblock %}
 
@@ -69,10 +98,16 @@
 
 {% block publish_button %}{% endblock %}
 
-{% block save_button_text %}
-  {% if form_style != 'edit' %}
-    {{- _('Next: Add Resource') -}}
-  {% else %}
-    {{- _('Update Record') -}}
-  {% endif %}
+{% block save_button %}
+  <div data-module="package_confirm_contact_email">
+    <button class="btn btn-primary" type="submit" name="save">
+      {% block save_button_text %}
+        {% if form_style != 'edit' %}
+          {{- _('Next: Add Resource') -}}
+        {% else %}
+          {{- _('Update Record') -}}
+        {% endif %}
+      {% endblock %}
+    </button>
+  </div>
 {% endblock %}
