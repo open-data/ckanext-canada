@@ -2917,7 +2917,8 @@ presets:
     field_name: resource_type
     form_snippet: select.html
     display_snippet: select.html
-    validators: scheming_required canada_static_rtype_tabledesigner scheming_choices
+    # TODO: remove default("unknown") after migration!!!
+    validators: default("unknown") scheming_required canada_static_rtype_tabledesigner scheming_choices
     required: true
     form_include_blank_choice: true
     form_panel: resource
@@ -3334,6 +3335,10 @@ presets:
         en: Workflow
         fr: Flux des travaux
       value: workflow
+    - label:
+        en: Unknown
+        fr: Inconnu
+      value: unknown
 
 # Field = Format.
 # List box Source: Format code table (refer to Data Migration).
