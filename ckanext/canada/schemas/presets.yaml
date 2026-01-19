@@ -312,8 +312,8 @@ presets:
       en: "Contact Email"
       fr: "Courriel - Personne-ressource"
     help_text:
-      en: The contact person's email for the dataset
-      fr: Courriel de la personne-ressource à contacter au sujet du jeu de données ou de l’ensemble de données
+      en: The contact person's email for the dataset. Adding a Contact Email allows Portal users to send feedback and questions. This field is optional but recommended.
+      fr: Courriel de la personne-ressource à contacter au sujet du jeu de données ou de l’ensemble de données. L’ajout d’une adresse de courriel permet aux utilisateurs du portail d’envoyer des commentaires et des questions. Ce champ est facultatif, mais recommandé.
     validators: scheming_required string_safe strip_value email_validator
     display_snippet: email_with_parameters.html
     form_attrs:
