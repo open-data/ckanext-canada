@@ -1,0 +1,1915 @@
+dataset_type: grantsmonthly
+target_dataset: grantsmonthly
+title: Proactive Publication - Grants and Contributions Data Sharing Pilot
+shortname: Grants and Contributions Data Sharing Pilot
+notes: Access, upload and modify the Grants and Contributions Data Sharing Pilot reports for your organization
+
+template_version: 3
+template_updated: 2025-11-03
+
+portal_type: info
+collection: pd
+
+resources:
+- title: Proactive Publication - Grants and Contributions Data Sharing Pilot
+  resource_name: grantsmonthly
+
+  published_resource_id: a4fa27d7-0c7c-4e31-bc0a-2d1cf249f749
+
+  create_form: true
+  edit_form: true
+  fields:
+
+  # 3.1 Reference Number
+  - datastore_id: ref_number
+    label:
+      en: Reference Number
+      fr: Numéro de référence
+    description:
+      en: |
+        The Reference number is populated by departments. It is a unique reference number given to each entry. Having a unique identifier for each item will allow departments to locate a specific item in the registry should they need to modify or delete.
+
+        Controlled format; This field is populated in the following format DDD-YYYY-YYYY-QX-XXXXX
+         1. DDD represents the department number – Use the same three-digit number as the ‘Departmental Identifier’, which is the department number per the Chart of Accounts list of departments. Ensure you are reviewing the most current year: https://www.tpsgc-pwgsc.gc.ca/recgen/pceaf-gwcoa/2425/txt/rg-3-num-eng.html
+         2. YYYY-YYYY represents the fiscal year
+         3. QX represents the fiscal quarter
+         4. XXXXX represents the unique number assigned by the department for each entry.
+
+        For example, entries in the 2018-2019 Q1 fiscal year should be assigned numbers as follows: 001-2018-2019-Q1-00001, 001-2018-2019-Q1-00002, 001-2018-2019-Q1-00003, etc.'
+      fr: |
+        Ce champ est rempli par l’utilisateur. L’identificateur de projet ministériel permet aux ministères d’identifier rapidement les rapports produits dans leur propre système. Les ministères devraient utiliser un chiffre qui est logique pour le ministère. Ces renseignements seront publiés dans le cadre du rapport.
+
+        Format contrôlé; Ce champ est rempli au format suivant: DDD-YYYY-YYYY-QX-XXXXX
+         1.	DDD représente le numéro du ministère - Utilisez le même numéro à trois chiffres que l’«Identificateur ministériel», qui est le numéro de ministère selon la liste du plan comptable des ministères. Assurez-vous de consulter l’année la plus récente : https://www.tpsgc-pwgsc.gc.ca/recgen/pceaf-gwcoa/2425/txt/rg-3-num-fra.html
+         2.	AAAA-AAAA représente l'année fiscale
+         3.	QX représente le trimestre fiscal
+         4.	XXXXX représente le numéro unique attribué par le département pour chaque entrée.
+
+        Par exemple, les numéros de l'exercice 2018-2019 du T1 devraient recevoir les numéros suivants: 001-2018-2019-Q1-00001, 001-2018-2019-Q1-00002, 001-2018-2019-Q1-00003, etc.'
+    obligation:
+      en: Mandatory
+      fr: Obligatoire
+    excel_required: true
+    form_required: true
+    format_type:
+      en: Free text
+      fr: Texte libre
+    datastore_type: text
+    datatables_col_class: col-lg
+    js_error_eval: 'VALUE.length > 0 && VALUE.includes(",")'
+
+  # 3.2 Amendment Number
+  - datastore_id: amendment_number
+    label:
+      en: Amendment Number
+      fr: Numéro de modification
+    description:
+      en: >
+        This field is populated by departments and identifies that an amendment is
+        occurring to original information. Use 0 for original records.
+        The first amendment after the original agreement should be identified as 1, then 2, etc.
+        Agreement terminations should be identified as another amendment number and report
+        'termination' in the 'Additional information' column.
+      fr: >
+        Ce champ est rempli par les ministères et indique qu'une modification est apportée
+        aux renseignements originaux. Utiliser 0 pour les enregistrements originaux. La
+        première modification après l'accord initial doit être identifiée comme numéro 1,
+        puis 2, etc. Les résiliations d'accord doivent être identifiées comme un autre numéro
+        de modification et indiquer 'résiliation' dans la colonne 'Renseignements supplémentaires'.
+    obligation:
+      en: Mandatory
+      fr: Obligatoire
+    excel_required: true
+    form_required: true
+    format_type: Numeric only
+    datastore_type: int
+    datatables_col_class: col-sm pd-datatables-primary-key-offset-lg
+
+  # 3.3 Amendment Date
+  - datastore_id: amendment_date
+    label:
+      en: Amendment Date
+      fr: Date de modification
+    description:
+      en: This field is populated by departments and indicates the date on which an amendment (or amendments) took place. If the amendment number is not zero, this field is required.
+      fr: Ce champ est rempli par les ministères et indique la date à laquelle une modification (ou des modifications) a été apportée. Vous devez remplir ce champ si le numéro de la modification indique un autre chiffre que 0.
+    obligation:
+      en: Mandatory if amendment number set
+      fr: Obligatoire si le numéro de modification est défini
+    format_type: Date (Please format the data as YYYY-MM-DD)
+    datastore_type: date
+    excel_cell_required_formula: 'and({column}{row}="",{column_before}{row}<>0)'
+    js_required_eval: '{{amendment_number}}.length > 0 && {{amendment_number}} != 0'
+    form_snippet: scheming/form_snippets/date.html
+
+  # 3.4 Agreement Type
+  - datastore_id: agreement_type
+    label:
+      en: Agreement Type
+      fr: Type d’entente
+    description:
+      en: This field is populated by departments and indicates whether the agreement signed is a grant, contribution or other transfer payment.
+      fr: Ce champ est rempli par les ministères et indique si l'entente signée vise une subvention, une contribution ou un autre paiement de transfert.
+    obligation:
+      en: Mandatory
+      fr: Obligatoire
+    excel_required: true
+    form_required: true
+    format_type:
+      en: Controlled List
+      fr: Liste contrôlée
+    datastore_type: text
+    choices:
+      G:
+        en: Grant
+        fr: subvention
+      C:
+        en: Contribution
+        fr: contribution
+      O:
+        en: Other transfer payment
+        fr: autre
+
+  # 3.5 Recipient Type
+  - datastore_id: recipient_type
+    label:
+      en: Recipient Type
+      fr: Type de bénéficiaire
+    description:
+      en: The recipient type helps identify who is receiving the money.
+      fr: Le type de bénéficiaire permet d'identifier qui reçoit l'argent.
+    obligation:
+      en: Mandatory
+      fr: Obligatoire
+    validation:
+      en: Required if "Agreement Start Date" is on or after November 1st 2025
+      fr: Requis si la "date de début de l’entente" est le 1er novembre 2025 ou après
+    format_type:
+      en: Controlled List
+      fr: Liste contrôlée
+    excel_required_formula: 'AND(NOT(ISBLANK({agreement_start_date})),VALUE({agreement_start_date})>=DATE(2025,11,1))'
+    js_required_eval: '{{agreement_start_date}}.length > 0 && new Date({{agreement_start_date}}) >= new Date("2025-12-01")'
+    datastore_type: text
+    choices:
+      F:
+        en: For-profit organizations
+        fr: organisme à but lucratif
+      N:
+        en: Not-for-profit organizations and charities
+        fr: organisme à but non lucratif et organisme de bienfaisance
+      S:
+        en: Academia
+        fr: établissement universitaire et institution publique
+      A:
+        en: Indigenous recipients
+        fr: bénéficiaire autochtone
+      G:
+        en: Government
+        fr: gouvernement
+      I:
+        en: International (non-government)
+        fr: organisation internationale (non gouvernementale)
+      P:
+        en: Individual or sole proprietorships
+        fr: particulier ou entreprise à propriétaire unique
+      O:
+        en: Other
+        fr: autre
+
+  # 3.6 Recipient Business Number
+  - datastore_id: recipient_business_number
+    label:
+      en: Recipient Business Number
+      fr: Numéro d'entreprise du bénéficiaire
+    description:
+      en: |
+        The Business Number is a nine digit number issued by the Canada Revenue Agency since 1994. Per the Directive on the Business Number, it has been identified as the standard identifier for all transactions between businesses and the Government of Canada, including transactions linked to grant and/or contribution funding.
+
+        This guidance further aligns with the Government of Canada data reference standard on business number: Data reference standard on the business number - Canada.ca (https://www.canada.ca/en/government/system/digital-government/digital-government-innovations/enabling-interoperability/gc-enterprise-data-reference-standards/data-reference-standard-business-number.html)
+
+        The business number should be populated for an organization or charity.
+
+        Real-time validation of business identity information linked to the Business Number, including legal name and operating name, for sole proprietorship, partnerships and incorporations, is available to departments through the Business Number Web Validation Service. For more details contact ic.bnadoptionne.ic@canada.ca.
+
+        To validate a Business Number associated with a charity, departments can access the List of Charities basic search on the Canada.ca website. Enter the Charity name and click the Search button. Then click the Charity name of the search result to find additional information about the charity (e.g., Charity Program number, charity status, effective date of status, designation, etc.) Legal name and operating name cannot be validated using this basic search.
+
+        A business number is issued when an organization is registered federally, provincially or municipally. It does not change and will allow for consistent identification even if the legal name, the operation name or the organization changes over the life cycle of the grant or contribution.
+      fr: |
+        Depuis 1994, l’Agence du revenu du Canada émet des numéros d’entreprise à neuf chiffres. Aux termes de la Directive sur le numéro d’entreprise, le numéro d’entreprise constitue l’identificateur standard de toutes les opérations effectuées entre une entreprise et le gouvernement du Canada, y compris les opérations associées à une subvention ou à un financement de contribution.
+
+        Cette directive est également conforme à la norme de référence sur les données du numéro d'entreprise du gouvernement du Canada : Norme référentielle relative aux données sur le numéro d’entreprise - Canada.ca (https://www.canada.ca/fr/gouvernement/systeme/gouvernement-numerique/innovations-gouvernementales-numeriques/permettre-interoperabilite/normes-referentielles-pangouvernementales-relatives-donnees-gc/norme-referentielle-relative-donnees-numero-entreprise.html)
+
+        Le numéro d’entreprise devrait être consigné pour une organisation ou un organisme de bienfaisance.
+
+        Les ministères peuvent obtenir la validation en temps réel de l’identité d’une entreprise en saisissant son numéro d’entreprise dans le Service de validation du numéro d’entreprise en ligne, qui inclut le nom légal et le nom commercial pour les entreprises individuelles, les partenariats et les constitutions en personne morale. Si vous voulez obtenir de plus amples renseignements, envoyez un courriel à ic.bnadoptionne.ic@canada.ca.
+
+        Pour valider un numéro d’entreprise associé à un organisme de bienfaisance, les ministères peuvent effectuer une recherche de base dans la Liste d’organismes de bienfaisance, sur le site Web Canada.ca. Entrez le nom de l’organisme de bienfaisance, puis cliquez sur le bouton de Recherche. Ensuite, cliquez sur le nom de l’organisme de bienfaisance tiré du résultat de la recherche afin de trouver de plus amples renseignements sur l’organisme de bienfaisance (p. ex., le numéro du programme de bienfaisance, le statut de l’organisme de bienfaisance, la date d’entrée en vigueur du statut et la désignation de l’organisme de bienfaisance). Il est impossible de valider le nom légal et le nom commercial au moyen de la fonction de recherche de base.
+    obligation:
+      en: Optional
+      fr: Facultatif
+    validation:
+      en: Must be a 9 digit number if "Agreement Start Date" is on or after November 1st 2025
+      fr: Doit être un numéro à neuf chiffres si la "date de début de l’entente" est le 1er novembre 2025 ou après
+    format_type:
+      en: Free text - 9 digit number
+      fr: Texte libre - numéro à neuf chiffres
+    excel_error_formula: >-
+      OR(
+        {default_formula},
+        AND(
+          NOT(
+            ISBLANK({agreement_start_date})
+          ),
+          VALUE({agreement_start_date})>=DATE(2025,11,1),
+          OR(
+            NOT(ISNUMBER(VALUE({cell}))),
+            LEN(TRIM({cell}))<>9,
+            MID(TRIM({cell}),1,1)="0",
+            LEN({cell})-LEN(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE({cell},",",""),".",""),"-",""))>0
+          )
+        )
+      )
+    js_error_eval: >-
+      {{agreement_start_date}}.length > 0 &&
+      new Date({{agreement_start_date}}) >= new Date("2025-12-01") &&
+      VALUE.length > 0 &&
+      (
+        (
+          String(VALUE).match(/^-?[0-9]+$/) != null
+          && parseInt(VALUE) < 0
+        ) ||
+        VALUE.startsWith("0") ||
+        VALUE.length != 9 ||
+        String(VALUE).match(/^-?[0-9]+$/) == null
+      )
+    datastore_type: text
+
+  # 3.7 Recipient Legal Name
+  - datastore_id: recipient_legal_name
+    label:
+      en: Recipient Legal Name (English|French)
+      fr: Nom légal du bénéficiaire (anglais|français)
+    description:
+      en: |
+        The recipient legal name is meant to complement the existing “Recipient business number” field. It is the legal name of the recipient. This information should be taken from the agreement.
+
+        Only translated if the legal name is provided in both official languages by the recipient.  Provide in the following format: name English|name French.
+      fr: |
+        Le nom légal du bénéficiaire se veut complémentaire au champ « Numéro d'entreprise du bénéficiaire ». Cette information devrait être tirée de l'entente de subvention ou de contribution.
+
+        Traduction seulement si le nom légal est fourni dans les deux langues officielles par le bénéficiaire. Fournir dans le format suivant : nom anglais|nom français.
+    obligation:
+      en: Mandatory
+      fr: Obligatoire
+    excel_required: true
+    form_required: true
+    format_type:
+      en: Free text
+      fr: Texte libre
+    datastore_type: text
+    datatables_col_class: col-lg
+    form_attrs:
+      size: 60
+
+  # 3.8 Recipient Operating Name
+  - datastore_id: recipient_operating_name
+    label:
+      en: Recipient Operating Name (English|French)
+      fr: Nom commercial du bénéficiaire (anglais|français)
+    description:
+      en: |
+        The “Recipient operating name” is an optional field used when an organization operates under a name that differs from its legal name or business number. When a researcher receives funding through a university, this information would be populated here. This field is not intended to capture the ultimate recipient of a grant or contribution; instead, the name of the person receiving funding from the Government of Canada should be entered.
+
+        Only translated if the name is provided in both official languages by the recipient. Provide in the following format: Legal name English|Legal name French.
+      fr: |
+        Le champ « Nom commercial du bénéficiaire » est un champ facultatif utilisé dans le cas d'organisations qui exercent leurs activités sous un nom différent de leur nom légal ou de leur numéro d'entreprise. Dans le cas de chercheurs qui reçoivent leur financement par l'entremise d'une université, cette information doit être entrée ici. Ce champ ne sert pas à saisir le nom du bénéficiaire ultime de la subvention ou de la contribution, mais plutôt celui de la personne qui reçoit le financement du gouvernement du Canada.
+
+        Traduction seulement si le nom est fourni dans les deux langues officielles par le bénéficiaire. Fournir dans le format suivant : nom anglais|nom français.
+    obligation:
+      en: Optional
+      fr: Facultatif
+    format_type:
+      en: Free text
+      fr: Texte libre
+    datastore_type: text
+    datatables_col_class: col-lg
+    form_attrs:
+      size: 60
+
+  # 3.9 Recipient Country
+  - datastore_id: recipient_country
+    label:
+      en: Recipient Country
+      fr: Pays du bénéficiaire
+    description:
+      en: The “Recipient country” is a mandatory field. It is the country in which the recipient resides.
+      fr: Le « Pays du bénéficiaire » est un champ obligatoire qui indique le pays de résidence du bénéficiaire.
+    obligation:
+      en: Mandatory
+      fr: Obligatoire
+    excel_required: true
+    form_required: true
+    format_type:
+      en: Controlled List
+      fr: Liste contrôlée
+    datastore_type: text
+    choices_file: choices/country.json
+
+  # 3.10 Recipient Province or Territory
+  - datastore_id: recipient_province
+    label:
+      en: Recipient Province or Territory
+      fr: Province ou territoire du bénéficiaire
+    description:
+      en: The "Recipient province or territory" is a mandatory field if the Recipient Country is Canada and identifies where, within Canada, the recipient resides.
+      fr: Le champ « province ou territoire du bénéficiaire » est un champ obligatoire si le pays destinataire est le Canada et indique le lieu de résidence du bénéficiaire au Canada.
+    obligation:
+      en: Mandatory if Recipient Country is Canada
+      fr: Obligatoire si le pays destinataire est le Canada
+    format_type:
+      en: Controlled List
+      fr: Liste contrôlée
+    datastore_type: text
+    excel_cell_required_formula: 'and({column}{row}="",{column_before}{row}="CA")'
+    js_required_eval: '{{recipient_country}}.length > 0 && {{recipient_country}} == "CA"'
+    choices:
+      "ON":
+        en: Ontario
+        fr: Ontario
+      QC:
+        en: Quebec
+        fr: Québec
+      NB:
+        en: New Brunswick
+        fr: Nouveau-Brunswick
+      NL:
+        en: Newfoundland & Labrador
+        fr: Terre-Neuve-et-Labrador
+      PE:
+        en: Prince Edward Island
+        fr: Île-du-Prince-Édouard
+      SK:
+        en: Saskatchewan
+        fr: Saskatchewan
+      YT:
+        en: Yukon
+        fr: Yukon
+      AB:
+        en: Alberta
+        fr: Alberta
+      BC:
+        en: British Columbia
+        fr: Colombie-Britannique
+      MB:
+        en: Manitoba
+        fr: Manitoba
+      NT:
+        en: Northwest Territories
+        fr: Territoires du Nord-Ouest
+      NU:
+        en: Nunavut
+        fr: Nunavut
+      NS:
+        en: Nova Scotia
+        fr: Nouvelle-Écosse
+
+  # 3.11 Recipient City
+  - datastore_id: recipient_city
+    label:
+      en: Recipient City (English|French)
+      fr: Ville du bénéficiaire (anglais|français)
+    description:
+      en: |
+        The "Recipient city" is a mandatory field that identifies which city the recipient operates in. This field can be populated with Canadian or foreign cities.
+
+        Official city names should be provided, including both official languages (where applicable in the following format: name English|name French
+
+        Free text, but a controlled list from Canada Revenue Agency’s qualified donees list of municipalities can be consulted: Canada Revenue Agency website (http://www.cra-arc.gc.ca/chrts-gvng/qlfd-dns/mncplts-eng.html).
+      fr: |
+        La « Ville du bénéficiaire » est un champ obligatoire qui indique la ville où le bénéficiaire exerce ses activités. On peut y inscrire le nom de villes canadiennes ou de villes étrangères.
+
+        Nom officiel exact de la ville, y compris dans les deux langues officielles (le cas échéant) au format suivant : nom anglais|nom français
+
+        Texte libre, mais une liste contrôlée de la liste des municipalités désignées donataires de l’Agence du revenu du Canada peut être consultée: site Web de l’Agence du revenu du Canada (http://www.cra-arc.gc.ca/chrts-gvng/qlfd-dns/mncplts-fra.html).
+    obligation:
+      en: Mandatory
+      fr: Obligatoire
+    excel_required: true
+    form_required: true
+    format_type:
+      en: Free text
+      fr: Texte libre
+    datastore_type: text
+    form_attrs:
+      size: 60
+
+  # 3.12 Recipient Postal Code
+  - datastore_id: recipient_postal_code
+    label:
+      en: Recipient Postal Code
+      fr: Code postal du bénéficiaire
+    description:
+      en: |
+        The "Recipient postal code" is a mandatory field that serves to identify the specific area in which the recipient operates. In cases where this field cannot be populated this field may be left blank.
+
+        Should be in the format "A1A 1A1"; The Canada Post tool for looking up a postal code can be found on the Canada Post website.
+      fr: |
+        Le « Code postal du bénéficiaire » est un champ obligatoire qui sert à identifier avec précision la région où le bénéficiaire exerce ses activités. Si le fait de remplir ce champ suscite des préoccupations à l'égard de la vie privée, il est possible de le laisser vide.
+
+        Devrait être selon le format « A1A 1A1 »; L'outil de Postes Canada permettant de rechercher un code postal se trouve sur le site Web de Postes Canada.
+    obligation:
+      en: Optional
+      fr: Facultatif
+    validation:
+      en: Must be in the format "A1A 1A1" if "Agreement Start Date" is on or after November 1st 2025
+      fr: Doit être selon le format « A1A 1A1 » si la "date de début de l’entente" est le 1er novembre 2025 ou après
+    excel_error_formula: >-
+      OR(
+        {default_formula},
+        AND(
+          NOT(
+            ISBLANK({agreement_start_date})
+          ),
+          VALUE({agreement_start_date})>=DATE(2025,11,1),
+          OR(
+            LEFT(TRIM({cell}),3)&" "&RIGHT(TRIM({cell}),3)<>TRIM({cell}),
+            CODE(UPPER(MID({cell},1,1)))>CODE("Z"),
+            CODE(UPPER(MID({cell},1,1)))<CODE("A"),
+            CODE(UPPER(MID({cell},3,1)))>CODE("Z"),
+            CODE(UPPER(MID({cell},3,1)))<CODE("A"),
+            CODE(UPPER(MID({cell},6,1)))>CODE("Z"),
+            CODE(UPPER(MID({cell},6,1)))<CODE("A"),
+            MID({cell},4,1)<>" ",
+            NOT(
+              ISNUMBER(
+                VALUE(
+                  MID({cell},2,1)&
+                  MID({cell},5,1)&
+                  MID({cell},7,1)
+                )
+              )
+            )
+          )
+        )
+      )
+    js_error_eval: >-
+      {{agreement_start_date}}.length > 0 &&
+      new Date({{agreement_start_date}}) >= new Date("2025-12-01") &&
+      VALUE.length > 0 &&
+      ! /^[A-Za-z]\d[A-Za-z] \d[A-Za-z]\d$/.test(VALUE)
+    datastore_type: text
+
+  # 3.13 Federal Riding Number
+  - datastore_id: federal_riding_number
+    label:
+      en: Federal Riding Number
+      fr: Numéro de la circonscription fédérale
+    description:
+      en: The federal riding number is based on the riding in which the recipient resides. Departments can consult the Elections Canada website in order to retrieve the federal riding number. http://www.elections.ca/content.aspx?section=res&dir=cir/list&document=index338&lang=e
+      fr: Numéro de la circonscription fédérale où réside le bénéficiaire. Les départements peuvent consulter le site-web d’Élections Canada pour trouver le numéro de la circonscription fédérale. http://www.elections.ca/content.aspx?section=res&dir=cir/list&document=index338&lang=f
+    obligation:
+      en: Optional
+      fr: Facultatif
+    validation:
+      en: Must be a 5 digit number if "Agreement Start Date" is on or after November 1st 2025
+      fr: Doit être un numéro à cinq chiffres si la "date de début de l’entente" est le 1er novembre 2025 ou après
+    format_type:
+      en: Text - 5 digit number
+      fr: Texte - numéro à cinq chiffres
+    excel_error_formula: >-
+      OR(
+        {default_formula},
+        AND(
+          NOT(
+            ISBLANK({agreement_start_date})
+          ),
+          VALUE({agreement_start_date})>=DATE(2025,11,1),
+          OR(
+            NOT(ISNUMBER(VALUE({cell}))),
+            LEN(TRIM({cell}))<>5,
+            MID(TRIM({cell}),1,1)="0",
+            LEN({cell})-LEN(SUBSTITUTE({cell},"-",""))>0,
+            LEN({cell})-LEN(SUBSTITUTE({cell},".",""))>0,
+            LEN({cell})-LEN(SUBSTITUTE({cell},",",""))>0
+          )
+        )
+      )
+    js_error_eval: >-
+      {{agreement_start_date}}.length > 0 &&
+      new Date({{agreement_start_date}}) >= new Date("2025-12-01") &&
+      VALUE.length > 0 &&
+      (
+        (
+          String(VALUE).match(/^-?[0-9]+$/) != null
+          && parseInt(VALUE) < 0
+        ) ||
+        VALUE.startsWith("0") ||
+        VALUE.length != 5 ||
+        String(VALUE).match(/^-?[0-9]+$/) == null
+      )
+    datastore_type: text
+
+  # 3.14 Program Name (English)
+  - datastore_id: prog_name_en
+    label:
+      en: Program Name (English)
+      fr: Nom du programme (anglais)
+    description:
+      en: The program name is the name of the program, according to the terms and conditions (Ts&Cs), under which a recipient is funded.
+      fr: Le nom du programme selon les modalités en vertu desquelles le financement est versé au bénéficiaire.
+    obligation:
+      en: Mandatory
+      fr: Obligatoire
+    validation:
+      en: Required if "Agreement Start Date" is on or after November 1st 2025
+      fr: Requis si la "date de début de l’entente" est le 1er novembre 2025 ou après
+    format_type:
+      en: Free text
+      fr: Texte libre
+    excel_required_formula: 'AND(NOT(ISBLANK({agreement_start_date})),VALUE({agreement_start_date})>=DATE(2025,11,1))'
+    datastore_type: text
+    datatables_col_class: col-lg
+    js_required_eval: '{{prog_name_fr}}.length > 0 || ({{agreement_start_date}}.length > 0 && new Date({{agreement_start_date}}) >= new Date("2025-12-01"))'
+    form_attrs:
+      size: 60
+
+  # 3.17 Program Name (French)
+  - datastore_id: prog_name_fr
+    label:
+      en: Program Name (French)
+      fr: Nom du programme (français)
+    description:
+      en: The program name is the name of the program, according to the terms and conditions (Ts&Cs), under which a recipient is funded.
+      fr: Le nom du programme selon les modalités en vertu desquelles le financement est versé au bénéficiaire.
+    obligation:
+      en: Mandatory
+      fr: Obligatoire
+    validation:
+      en: Required if "Agreement Start Date" is on or after November 1st 2025
+      fr: Requis si la "date de début de l’entente" est le 1er novembre 2025 ou après
+    format_type:
+      en: Free text
+      fr: Texte libre
+    excel_required_formula: 'AND(NOT(ISBLANK({agreement_start_date})),VALUE({agreement_start_date})>=DATE(2025,11,1))'
+    datastore_type: text
+    datatables_col_class: col-lg
+    js_required_eval: '{{prog_name_en}}.length > 0 || ({{agreement_start_date}}.length > 0 && new Date({{agreement_start_date}}) >= new Date("2025-12-01"))'
+    form_attrs:
+      size: 60
+
+  # 3.18 Program Purpose (English)
+  - datastore_id: prog_purpose_en
+    label:
+      en: Program Purpose (English)
+      fr: But du programme (anglais)
+    description:
+      en: The program purpose is the program’s purpose according to the Ts&Cs.
+      fr: Le but du programme est celui dans lequel le programme a été créé, selon les modalités du programme.
+    obligation:
+      en: Mandatory
+      fr: Obligatoire
+    validation:
+      en: Required if "Agreement Start Date" is on or after November 1st 2025
+      fr: Requis si la "date de début de l’entente" est le 1er novembre 2025 ou après
+    format_type:
+      en: Free text
+      fr: Texte libre
+    excel_required_formula: 'AND(NOT(ISBLANK({agreement_start_date})),VALUE({agreement_start_date})>=DATE(2025,11,1))'
+    datastore_type: text
+    datatables_col_class: col-xxl
+    form_snippet: scheming/form_snippets/textarea.html
+    js_required_eval: '{{prog_purpose_fr}}.length > 0 || ({{agreement_start_date}}.length > 0 && new Date({{agreement_start_date}}) >= new Date("2025-12-01"))'
+    form_attrs:
+      class: form-control canada-width-full d-block
+
+  # 3.19 Program Purpose (French)
+  - datastore_id: prog_purpose_fr
+    label:
+      en: Program Purpose (French)
+      fr: But du programme (français)
+    description:
+      en: The program purpose is the program’s purpose according to the Ts&Cs.
+      fr: Le but du programme est celui dans lequel le programme a été créé, selon les modalités du programme.
+    obligation:
+      en: Mandatory
+      fr: Obligatoire
+    validation:
+      en: Required if "Agreement Start Date" is on or after November 1st 2025
+      fr: Requis si la "date de début de l’entente" est le 1er novembre 2025 ou après
+    format_type:
+      en: Free text
+      fr: Texte libre
+    excel_required_formula: 'AND(NOT(ISBLANK({agreement_start_date})),VALUE({agreement_start_date})>=DATE(2025,11,1))'
+    datastore_type: text
+    datatables_col_class: col-xxl
+    form_snippet: scheming/form_snippets/textarea.html
+    js_required_eval: '{{prog_purpose_en}}.length > 0 || ({{agreement_start_date}}.length > 0 && new Date({{agreement_start_date}}) >= new Date("2025-12-01"))'
+    form_attrs:
+      class: form-control canada-width-full d-block
+
+  # 3.20 Agreement Title (English) (formerly proj_name_en)
+  - datastore_id: agreement_title_en
+    label:
+      en: Agreement Title (English)
+      fr: Titre de l’entente (anglais)
+    description:
+      en: The agreement title is the title of the project or agreement that the recipient is undertaking. In cases where there is no title, the agreement number will be duplicated here.
+      fr: Le nom de l'entente est le titre du projet ou de l'entente à l'égard duquel s'engage le bénéficiaire. S'il n'y a pas de titre, le numéro de l'entente peut être réinscrit ici.
+    obligation:
+      en: Mandatory
+      fr: Obligatoire
+    validation:
+      en: Required if "Agreement Start Date" is on or after November 1st 2025
+      fr: Requis si la "date de début de l’entente" est le 1er novembre 2025 ou après
+    format_type:
+      en: Free text
+      fr: Texte libre
+    excel_required_formula: 'AND(NOT(ISBLANK({agreement_start_date})),VALUE({agreement_start_date})>=DATE(2025,11,1))'
+    datastore_type: text
+    datatables_col_class: col-lg
+    js_required_eval: '{{agreement_title_fr}}.length > 0 || ({{agreement_start_date}}.length > 0 && new Date({{agreement_start_date}}) >= new Date("2025-12-01"))'
+    form_attrs:
+      size: 60
+
+  # 3.21 Agreement Title (French) (formerly proj_name_fr)
+  - datastore_id: agreement_title_fr
+    label:
+      en: Agreement Title (French)
+      fr: Titre de l’entente (français)
+    description:
+      en: The agreement title is the title of the project or agreement that the recipient is undertaking. In cases where there is no title, the agreement number will be duplicated here.
+      fr: Le nom de l'entente est le titre du projet ou de l'entente à l'égard duquel s'engage le bénéficiaire. S'il n'y a pas de titre, le numéro de l'entente peut être réinscrit ici.
+    obligation:
+      en: Mandatory
+      fr: Obligatoire
+    validation:
+      en: Required if "Agreement Start Date" is on or after November 1st 2025
+      fr: Requis si la "date de début de l’entente" est le 1er novembre 2025 ou après
+    format_type:
+      en: Free text
+      fr: Texte libre
+    excel_required_formula: 'AND(NOT(ISBLANK({agreement_start_date})),VALUE({agreement_start_date})>=DATE(2025,11,1))'
+    datastore_type: text
+    datatables_col_class: col-lg
+    js_required_eval: '{{agreement_title_en}}.length > 0 || ({{agreement_start_date}}.length > 0 && new Date({{agreement_start_date}}) >= new Date("2025-12-01"))'
+    form_attrs:
+      size: 60
+
+  # 3.22 Agreement Number
+  - datastore_id: agreement_number
+    label:
+      en: Agreement Number
+      fr: Numéro de l’entente
+    description:
+      en: The agreement number should be the number on the agreement and/or in the departmental Gs&Cs system.
+      fr: Le numéro de l'entente est celui qui figure à l'entente et/ou dans le système de subventions et de contributions du ministère.
+    obligation:
+      en: Optional
+      fr: Facultatif
+    format_type:
+      en: Free text
+      fr: Texte libre
+    datastore_type: text
+
+  # 3.23 Agreement Value in CAD
+  - datastore_id: agreement_value
+    label:
+      en: Agreement Value in CAD
+      fr: Valeur de l’entente en dollars canadiens
+    description:
+      en: >
+        The agreement value is the dollar amount stated in the grant or contribution agreement.
+        This field should be populated with a monetary value in Canadian dollars. This field
+        should report on the total grant or contribution value, and not the change in agreement value.
+      fr: >
+        La valeur de l'entente est le montant en dollars indiqué dans l'entente de subvention ou
+        de contribution. Ce champ doit indiquer une valeur monétaire en dollars canadiens. Ce champ
+        doit indiquer la valeur totale de la subvention ou de la contribution, et non la variation de
+        la valeur de l'accord.
+    obligation:
+      en: Mandatory
+      fr: Obligatoire
+    validation:
+      en: |
+        This field must not be empty.
+        The number must be greater than 0.
+      fr: |
+        Ce champ ne doit pas être vide.
+        Le nombre doit être supérieur à 0.
+    excel_required: true
+    form_required: true
+    datastore_type: money
+    excel_error_formula: >-
+      OR(
+        {default_formula},
+        AND(
+          NOT(
+            ISBLANK({agreement_start_date})
+          ),
+          VALUE({agreement_start_date})>=DATE(2025,11,1),
+          OR(
+            NOT(ISNUMBER(VALUE({cell}))),
+            NOT(VALUE({cell})>0)
+          )
+        )
+      )
+    js_error_eval: >-
+      {{agreement_start_date}}.length > 0 &&
+      new Date({{agreement_start_date}}) >= new Date("2025-12-01") &&
+      VALUE.length > 0 &&
+      (
+        (
+          String(VALUE).match(/^-?[0-9]+$/) != null
+          && parseInt(VALUE) < 0
+        ) ||
+        String(VALUE).match(/^-?[0-9]+$/) == null
+      )
+    solr_dollar_range_facet:
+     - 10000
+     - 25000
+     - 100000
+     - 1000000
+     - 5000000
+
+  # 3.24 Agreement Start Date
+  - datastore_id: agreement_start_date
+    label:
+      en: Agreement Start Date
+      fr: Date de début de l’entente
+    description:
+      en: The agreement start date is the start of the agreement as identified by the last date of signature in the initial agreement.
+      fr: La date de début de l’accord correspond au début prévu de l’accord, généralement déterminé en fonction de la dernière date de signature, telle qu’elle figure dans l’accord initial.
+    obligation:
+      en: Mandatory
+      fr: Obligatoire
+    validation:
+      en: |
+        This field must not be empty.
+        Date can’t be in the future.
+      fr: |
+        Ce champ ne doit pas être vide.
+        La date ne doit pas être dans le futur.
+    excel_required: true
+    form_required: true
+    form_snippet: scheming/form_snippets/date.html
+    format_type:
+      en: Date (Please format the date as YYYY-MM-DD)
+      fr: "Date (Veuillez utiliser le format de date suivant : AAAA-MM-JJ)"
+    excel_error_formula: 'OR({default_formula},{cell}>TODAY(),AND(NOT(ISBLANK({cell})),NOT(ISBLANK({agreement_end_date})),{cell}>{agreement_end_date}))'
+    js_error_eval: >-
+      VALUE.length > 0 &&
+      (
+        new Date(VALUE) > new Date() ||
+        (
+          {{agreement_end_date}}.length > 0 &&
+          new Date(VALUE) > new Date({{agreement_end_date}})
+        )
+      )
+    datastore_type: date
+    extract_date_year: true
+    extract_date_month: true
+    extract_date_clean: true
+
+  # 3.25 Projected Agreement End Date
+  - datastore_id: agreement_end_date
+    label:
+      en: Projected Agreement End Date
+      fr: Date de fin prévue de l’entente
+    description:
+      en: The projected agreement end date is the assumed end of the agreement, or when the project is supposed to end, as captured in the initial agreement.
+      fr: La date de fin prévue de l'entente est la date de fin présumée de l'entente, ou la date à laquelle le projet est censé prendre fin, conformément à l'entente initiale.
+    obligation:
+      en: Mandatory
+      fr: Obligatoire
+    validation:
+      en: Required if "Agreement Start Date" is on or after November 1st 2025.
+      fr: Requis si la "date de début de l’entente" est le 1er novembre 2025 ou après.
+    format_type:
+      en: Date (Please format the date as YYYY-MM-DD)
+      fr: "Date (Veuillez utiliser le format de date suivant : AAAA-MM-JJ)"
+    excel_error_formula: 'OR({default_formula},AND(NOT(ISBLANK({agreement_start_date})),NOT(ISBLANK({cell})),{cell}<{agreement_start_date}))'
+    excel_required_formula: 'AND(NOT(ISBLANK({agreement_start_date})),VALUE({agreement_start_date})>=DATE(2025,11,1))'
+    js_required_eval: '{{agreement_start_date}}.length > 0 && new Date({{agreement_start_date}}) >= new Date("2025-12-01")'
+    js_error_eval: >-
+      VALUE.length > 0 &&
+      {{agreement_start_date}}.length > 0 &&
+      new Date(VALUE) < new Date({{agreement_start_date}})
+    datastore_type: date
+    form_snippet: scheming/form_snippets/date.html
+
+  # 3.26 Description (English)
+  - datastore_id: description_en
+    label:
+      en: Description (English)
+      fr: Description (anglais)
+    description:
+      en: The description explains why the recipient received funding. It should provide a brief yet accurate description of what the recipient is undertaking.
+      fr: La description explique à quelles fins le bénéficiaire a reçu le financement. Elle doit décrire de façon brève, mais explicite, en quoi consistent les travaux du bénéficiaire.
+    obligation:
+      en: Mandatory
+      fr: Obligatoire
+    excel_required: true
+    form_required: true
+    format_type:
+      en: Free text
+      fr: Texte libre
+    datastore_type: text
+    form_snippet: scheming/form_snippets/textarea.html
+    datatables_col_class: col-xl
+    js_required_eval: '{{description_fr}}.length > 0'
+    form_attrs:
+      class: form-control canada-width-full d-block
+
+  # 3.27 Description (French)
+  - datastore_id: description_fr
+    label:
+      en: Description (French)
+      fr: Description (français)
+    description:
+      en: The description explains why the recipient received funding. It should provide a brief yet accurate description of what the recipient is undertaking.
+      fr: La description explique à quelles fins le bénéficiaire a reçu le financement. Elle doit décrire de façon brève, mais explicite, en quoi consistent les travaux du bénéficiaire.
+    obligation:
+      en: Mandatory
+      fr: Obligatoire
+    excel_required: true
+    form_required: true
+    format_type:
+      en: Free text
+      fr: Texte libre
+    datastore_type: text
+    form_snippet: scheming/form_snippets/textarea.html
+    datatables_col_class: col-xl
+    js_required_eval: '{{description_en}}.length > 0'
+    form_attrs:
+      class: form-control canada-width-full d-block
+
+  # 3.28 NAICS Identifier (New Field)
+  - datastore_id: naics_identifier
+    label:
+      en: NAICS Identifier
+      fr: Identificateur du SCIAN
+    description:
+      en: The North American Industry Classification System (NAICS) is an industry classification system developed by the statistical agencies of Canada, Mexico and the United States.
+      fr: Le Système de classification des industries de l'Amérique du Nord (SCIAN) est un système de classification des industries conçu par les organismes statistiques du Canada, du Mexique et des États-Unis.
+    obligation:
+      en: Optional
+      fr: Facultatif
+    format_type:
+      en: |
+        Free text based on controlled list from Statistics Canada; This list is available to users on the Statistics Canada website. https://www.statcan.gc.ca/en/subjects/standard/naics/2022/v1/index
+
+        The “NAICS identifier” field should be populated with the most appropriate choice in the selection list. Departments should consult the Statistics Canada website and populate at their own discretion. At least 3 digits should be entered to allow for broad coding when specificity is not possible.
+
+        For example, if Employment and Social Development Canada is signing an agreement with an educational support services organization, the NAICS identifier would be 611710. The identifier is broken down as follows:
+
+        • sector: 61 (educational services)
+        • subsector: 1 (educational services)
+        • industry group: 7 (educational support services)
+        • industry: 10 (educational support services)
+      fr: |
+        Texte libre basé sur une liste contrôlée de Statistique Canada; cette liste est disponible pour les utilisateurs sur le site Web de Statistique Canada. https://www.statcan.gc.ca/fr/sujets/norme/scian/2022/v1/index
+
+        Le champ « Identifiant SCIAN » doit être rempli avec le choix le plus approprié dans la liste de sélection. Les ministères doivent consulter le site Web de Statistique Canada et le remplir à leur guise. Au moins trois chiffres doivent être saisis pour permettre un codage large lorsque la spécificité n’est pas possible.
+
+        Par exemple, si Emploi et Développement social Canada signe un accord avec un organisme de services de soutien à l’éducation, l’identifiant SCIAN sera 611710. L’identifiant se décompose comme suit :
+
+        • secteur : 61 (services d’enseignement);
+        • sous-secteur : 1 (services d’enseignement);
+        • groupe industriel : 7 (services de soutien à l’enseignement);
+        • industrie : 10 (services de soutien à l’enseignement).
+    datastore_type: text
+
+  # 3.29 Expected Results or Intended Outcome (English)
+  - datastore_id: expected_results_en
+    label:
+      en: Expected Results or Intended Outcome (English)
+      fr: Résultats attendus ou visés (anglais)
+    description:
+      en: The expected results or intended outcome is the assumed result of project completion. It should be populated in accordance with the project that the recipient is undertaking or the program under which it is funded. This field will attempt to explain why the project is being undertaken, and what the final results should be.
+      fr: Les résultats attendus ou visés sont les résultats présumés qui découlent de l'exécution d'un projet. Le champ doit être rempli en fonction du projet qu'entreprend le bénéficiaire ou conformément au programme en vertu duquel il est financé. Ce champ vise à offrir une description de la raisond'être du projet et de ce que devraient être les résultats finaux.
+    obligation:
+      en: Mandatory
+      fr: Obligatoire
+    validation:
+      en: Required if "Agreement Start Date" is on or after November 1st 2025
+      fr: Requis si la "date de début de l’entente" est le 1er novembre 2025 ou après
+    format_type:
+      en: Free text
+      fr: Texte libre
+    excel_required_formula: 'AND(NOT(ISBLANK({agreement_start_date})),VALUE({agreement_start_date})>=DATE(2025,11,1))'
+    js_required_eval: '{{agreement_start_date}}.length > 0 && new Date({{agreement_start_date}}) >= new Date("2025-12-01")'
+    datastore_type: text
+    datatables_col_class: col-xxl
+    form_snippet: scheming/form_snippets/textarea.html
+    form_attrs:
+      class: form-control canada-width-full d-block
+
+  # 3.30 Expected Results or Intended Outcome (French)
+  - datastore_id: expected_results_fr
+    label:
+      en: Expected Results or Intended Outcome (French)
+      fr: Résultats attendus ou visés (français)
+    description:
+      en: The expected results or intended outcome is the assumed result of project completion. It should be populated in accordance with the project that the recipient is undertaking or the program under which it is funded. This field will attempt to explain why the project is being undertaken, and what the final results should be.
+      fr: Les résultats attendus ou visés sont les résultats présumés qui découlent de l'exécution d'un projet. Le champ doit être rempli en fonction du projet qu'entreprend le bénéficiaire ou conformément au programme en vertu duquel il est financé. Ce champ vise à offrir une description de la raisond'être du projet et de ce que devraient être les résultats finaux.
+    obligation:
+      en: Mandatory
+      fr: Obligatoire
+    validation:
+      en: Required if "Agreement Start Date" is on or after November 1st 2025
+      fr: Requis si la "date de début de l’entente" est le 1er novembre 2025 ou après
+    format_type:
+      en: Free text
+      fr: Texte libre
+    excel_required_formula: 'AND(NOT(ISBLANK({agreement_start_date})),VALUE({agreement_start_date})>=DATE(2025,11,1))'
+    js_required_eval: '{{agreement_start_date}}.length > 0 && new Date({{agreement_start_date}}) >= new Date("2025-12-01")'
+    datastore_type: text
+    datatables_col_class: col-xxl
+    form_snippet: scheming/form_snippets/textarea.html
+    form_attrs:
+      class: form-control canada-width-full d-block
+
+  # 3.31 Additional Information (English) (Formerly comments_en, additional_info_en)
+  - datastore_id: additional_information_en
+    label:
+      en: Additional Information (English)
+      fr: Renseignements supplémentaires (anglais)
+    description:
+      en: |
+        Additional information is information that departments are required to enter under the guidance instructions for exceptions but that is not captured in any of the aforementioned fields. It may contain information on:
+
+        • additional funding departments
+        • funding through a third party
+        • ministerial announcements
+        • research fields
+        • joint funding
+        • collaborators and partners
+        • keywords
+        • belated reporting
+        • novation agreements
+        • terminations
+        • repayability
+      fr: |
+        Lorsqu'ils sont tenus de le faire conformément aux « Indications » qui traitent des exceptions, les ministères doivent entrer ici les renseignements supplémentaires qui ne sont pas saisis dans les champs précédents. Il peut s'agir de renseignements comme ceux-ci :
+
+        • autres ministères participent au financement;
+        • financement par l'intermédiaire d'un tiers;
+        • annonces ministérielles;
+        • domaines de recherche;
+        • financement conjoint;
+        • collaborateurs et partenaires;
+        • mots-clés;
+        • divulgation tardive;
+        • entente d'innovation;
+        • résiliations;
+        • remboursement.
+    obligation:
+      en: Optional
+      fr: Facultatif
+    format_type:
+      en: Free text
+      fr: Texte libre
+    datastore_type: text
+    datatables_col_class: col-xxl
+    form_snippet: scheming/form_snippets/textarea.html
+    form_attrs:
+      class: form-control canada-width-full d-block
+
+  # 3.32 Additional Information (French) (Formerly comments_fr, additional_info_fr)
+  - datastore_id: additional_information_fr
+    label:
+      en: Additional Information (French)
+      fr: Renseignements supplémentaires (français)
+    description:
+      en: |
+        Additional information is information that departments are required to enter under the guidance instructions for exceptions but that is not captured in any of the aforementioned fields. It may contain information on:
+
+        • additional funding departments
+        • funding through a third party
+        • ministerial announcements
+        • research fields
+        • joint funding
+        • collaborators and partners
+        • keywords
+        • belated reporting
+        • novation agreements
+        • terminations
+        • repayability
+      fr: |
+        Lorsqu'ils sont tenus de le faire conformément aux « Indications » qui traitent des exceptions, les ministères doivent entrer ici les renseignements supplémentaires qui ne sont pas saisis dans les champs précédents. Il peut s'agir de renseignements comme ceux-ci :
+
+        • autres ministères participent au financement;
+        • financement par l'intermédiaire d'un tiers;
+        • annonces ministérielles;
+        • domaines de recherche;
+        • financement conjoint;
+        • collaborateurs et partenaires;
+        • mots-clés;
+        • divulgation tardive;
+        • entente d'innovation;
+        • résiliations;
+        • remboursement.
+    obligation:
+      en: Optional
+      fr: Facultatif
+    format_type:
+      en: Free text
+      fr: Texte libre
+    datastore_type: text
+    datatables_col_class: col-xxl
+    form_snippet: scheming/form_snippets/textarea.html
+    form_attrs:
+      class: form-control canada-width-full d-block
+
+  # 3.33 Demographic of the ultimate beneficiary
+  - datastore_id: dem_intended_beneficiary
+    label:
+      en: Ultimate Beneficiary demographic group
+      fr: Groupe démographique des bénéficiaires ultimes
+    description:
+      en: The field indicates whether the ultimate beneficiaries belong to a specific demographic group.
+      fr: Le champ indique si les bénéficiaires ultimes font partie d’un groupe démographique identifié.
+    obligation:
+      en: Optional
+      fr: Facultatif
+    occurrence: Repeatable
+    excel_required: false
+    form_required: false
+    excel_full_text_choices: true
+    format_type:
+      en: Controlled List
+      fr: Liste contrôlée
+    datastore_type: _text
+    form_snippet: scheming/form_snippets/multiple_select.html
+    choice_order_expression: 'value.get("order", False), code'
+    choices:
+      Y:
+        en: Youth
+        fr: Jeunes
+        order: 1
+      S:
+        en: Senior
+        fr: Personnes âgées
+        order: 2
+      D:
+        en: Persons with disability
+        fr: Personnes handicappées
+        order: 3
+      I:
+        en: Indigenous people
+        fr: Personnes autochtones
+        order: 4
+      V:
+        en: Visible minority
+        fr: Minorités visibles
+        order: 5
+      W:
+        en: Women
+        fr: Femmes
+        order: 6
+      L:
+        en: 2SLGBTQI+
+        fr: 2ELGBTQI+
+        order: 7
+      O:
+        en: Other
+        fr: Autre
+        order: 8
+      N:
+        en: None
+        fr: Aucun
+        order: 9
+      U:
+        en: Not collected
+        fr: Non collecté
+        order: 10
+      C:
+        en: Collected but confidential
+        fr: Collecté mais confidentiel
+        order: 11
+
+  # 3.34 Other Demographic of ultimate beneficiary Description (English)
+  - datastore_id: other_dem_intended_beneficiary_description_en
+    label:
+      en: Demographic of ultimate beneficiary Description (English)
+      fr: Description du groupe démographique des bénéficiaires ultimes (anglais)
+    description:
+      en: >
+        This field is mandatory if “Other” is chosen as an
+        option for the field “Ultimate Beneficiary demographic
+        group”. This field has a maximum length of 1800
+        characters. This text must be provided in both languages.
+      fr: >
+        Ce champ est obligatoire si l'option « Autre » est choisie
+        pour le champ « Groupe démographique des bénéficiaires ultimes ».
+        Ce champ ne peut excéder une longueur maximale de 1800
+        caractères. Ce texte doit être fourni en anglais et en français.
+    obligation:
+      en: Mandatory if “Other” is chosen as an option for the field “Ultimate Beneficiary demographic group”.
+      fr: Obligatoire si l'option « Autre » est choisie pour le champ « Groupe démographique des bénéficiaires ultimes ».
+    excel_required: false
+    form_required: false
+    excel_column_width: 40
+    validation:
+      en: This field has a maximum length of 1800 characters. This text must be provided in both languages.
+      fr: Ce champ ne peut excéder une longueur maximale de 1800 caractères. Ce texte doit être fourni en anglais et en français.
+    occurrence: Single
+    format_type:
+      en: Free text
+      fr: Texte libre
+    datastore_type: text
+    max_chars: 1800
+    excel_required_formula: 'OR(TRIM(LEFT({dem_intended_beneficiary},FIND(":",{dem_intended_beneficiary}&":")-1))="O",NOT(ISBLANK({other_dem_intended_beneficiary_description_fr})))'
+    js_required_eval: '{{other_dem_intended_beneficiary_description_fr}}.length > 0 || ({{dem_intended_beneficiary}}.length > 0 && {{dem_intended_beneficiary}}.includes("O"))'
+    datatables_col_class: col-xxl
+    form_attrs:
+      class: form-control canada-width-full d-block
+      maxlength: 1800
+
+  # 3.35 Other Demographic of ultimate beneficiary Description (French)
+  - datastore_id: other_dem_intended_beneficiary_description_fr
+    label:
+      en: Demographic of ultimate beneficiary Description (French)
+      fr: Description du groupe démographique des bénéficiaires ultimes (français)
+    description:
+      en: >
+        This field is mandatory if “Other” is chosen as an
+        option for the field “Ultimate Beneficiary demographic
+        group”. This field has a maximum length of 1800
+        characters. This text must be provided in both languages.
+      fr: >
+        Ce champ est obligatoire si l'option « Autre » est choisie
+        pour le champ « Groupe démographique des bénéficiaires ultimes ».
+        Ce champ ne peut excéder une longueur maximale de 1800
+        caractères. Ce texte doit être fourni en anglais et en français.
+    obligation:
+      en: Mandatory if “Other” is chosen as an option for the field “Ultimate Beneficiary demographic group”.
+      fr: Obligatoire si l'option « Autre » est choisie pour le champ « Groupe démographique des bénéficiaires ultimes ».
+    excel_required: false
+    form_required: false
+    excel_column_width: 40
+    validation:
+      en: This field has a maximum length of 1800 characters. This text must be provided in both languages.
+      fr: Ce champ ne peut excéder une longueur maximale de 1800 caractères. Ce texte doit être fourni en anglais et en français.
+    occurrence: Single
+    format_type:
+      en: Free text
+      fr: Texte libre
+    datastore_type: text
+    max_chars: 1800
+    excel_required_formula: 'OR(TRIM(LEFT({dem_intended_beneficiary},FIND(":",{dem_intended_beneficiary}&":")-1))="O",NOT(ISBLANK({other_dem_intended_beneficiary_description_en})))'
+    js_required_eval: '{{other_dem_intended_beneficiary_description_en}}.length > 0 || ({{dem_intended_beneficiary}}.length > 0 && {{dem_intended_beneficiary}}.includes("O"))'
+    datatables_col_class: col-xxl
+    form_attrs:
+      class: form-control canada-width-full d-block
+      maxlength: 1800
+
+  # 3.36 Reason for the amendment
+  - datastore_id: reason_amendment
+    label:
+      en: Reason for the amendment
+      fr: Raison pour changement
+    description:
+      en: The field indicates the reason for the amendment to the project.
+      fr: Le champ indique la raison pour le changement au projet.
+    obligation:
+      en: Optional
+      fr: Facultatif
+    occurrence: Repeatable
+    excel_required: false
+    form_required: false
+    format_type:
+      en: Controlled List
+      fr: Liste contrôlée
+    datastore_type: _text
+    excel_full_text_choices: true
+    form_snippet: scheming/form_snippets/multiple_select.html
+    choice_order_expression: 'value.get("order", False), code'
+    choices:
+      S:
+        en: Change of start date of agreement
+        fr: Changement de date de debut de l’entente
+        order: 1
+      E:
+        en: Change of end date of agreement
+        fr: Changement de date de fin de l’entente
+        order: 2
+      A:
+        en: Change of amount of agreement
+        fr: Changement du montant de l’entente
+        order: 3
+      O:
+        en: Other
+        fr: Autre
+        order: 4
+      N:
+        en: No amendment
+        fr: Pas de changement
+        order: 5
+      U:
+        en: Unknown
+        fr: Inconnu
+        order: 6
+
+  # 3.37 Reason for amendment Description (English)
+  - datastore_id: other_reason_amendment_en
+    label:
+      en: Reason for amendment Description (English)
+      fr: Description du raison pour changement (anglais)
+    description:
+      en: >
+        This field is mandatory if “Other” is chosen as
+        an option for the field “Reason for amendment”.
+        This field has a maximum length of 1800  characters.
+        This text must be provided in both languages.
+      fr: >
+        Ce champ est obligatoire si l'option « Autre » est
+        choisie  pour le champ « Raison pour changement ».
+        Ce champ ne peut excéder une longueur maximale de
+        1800 caractères. Ce texte doit être fourni en anglais
+        et en français.
+    obligation:
+      en: Mandatory if “Other” is chosen as an option for the field “Reason for amendment”.
+      fr: Obligatoire si l'option « Autre » est choisie pour le champ « Raison pour changement ».
+    excel_required: false
+    form_required: false
+    excel_column_width: 40
+    validation:
+      en: This field has a maximum length of 1800 characters. This text must be provided in both languages.
+      fr: Ce champ ne peut excéder une longueur maximale de 1800 caractères. Ce texte doit être fourni en anglais et en français.
+    occurrence: Single
+    format_type:
+      en: Free text
+      fr: Texte libre
+    datastore_type: text
+    max_chars: 1800
+    excel_required_formula: 'OR(TRIM(LEFT({reason_amendment},FIND(":",{reason_amendment}&":")-1))="O",NOT(ISBLANK({other_reason_amendment_fr})))'
+    js_required_eval: '{{other_reason_amendment_fr}}.length > 0 || ({{reason_amendment}}.length > 0 && {{reason_amendment}}.includes("O"))'
+    datatables_col_class: col-xxl
+    form_attrs:
+      class: form-control canada-width-full d-block
+      maxlength: 1800
+
+  # 3.38 Reason for amendment Description (French)
+  - datastore_id: other_reason_amendment_fr
+    label:
+      en: Reason for amendment Description (French)
+      fr: Description du raison pour changement (français)
+    description:
+      en: >
+        This field is mandatory if “Other” is chosen as
+        an option for the field “Reason for amendment”.
+        This field has a maximum length of 1800  characters.
+        This text must be provided in both languages.
+      fr: >
+        Ce champ est obligatoire si l'option « Autre » est
+        choisie  pour le champ « Raison pour changement ».
+        Ce champ ne peut excéder une longueur maximale de
+        1800 caractères. Ce texte doit être fourni en anglais
+        et en français.
+    obligation:
+      en: Mandatory if “Other” is chosen as an option for the field “Reason for amendment”.
+      fr: Obligatoire si l'option « Autre » est choisie pour le champ « Raison pour changement ».
+    excel_required: false
+    form_required: false
+    excel_column_width: 40
+    validation:
+      en: This field has a maximum length of 1800 characters. This text must be provided in both languages.
+      fr: Ce champ ne peut excéder une longueur maximale de 1800 caractères. Ce texte doit être fourni en anglais et en français.
+    occurrence: Single
+    format_type:
+      en: Free text
+      fr: Texte libre
+    datastore_type: text
+    max_chars: 1800
+    excel_required_formula: 'OR(TRIM(LEFT({reason_amendment},FIND(":",{reason_amendment}&":")-1))="O",NOT(ISBLANK({other_reason_amendment_en})))'
+    js_required_eval: '{{other_reason_amendment_en}}.length > 0 || ({{reason_amendment}}.length > 0 && {{reason_amendment}}.includes("O"))'
+    datatables_col_class: col-xxl
+    form_attrs:
+      class: form-control canada-width-full d-block
+      maxlength: 1800
+
+  # 3.39 Risk rating
+  - datastore_id: rating_risk
+    label:
+      en: Risk rating
+      fr: Evaluation du risque
+    description:
+      en: |
+        The field indicates the risk rating for the organization as determined by the department.
+
+        A “Low” rating suggests the department has identified minimal risk in funding this recipient, indicating strong financial stability, compliance history, and organizational capacity. The recipient is considered trustworthy in terms of their ability to manage the funds and achieve the intended outcomes.
+
+        A “Medium” rating suggests the department has identified a moderate level of risk, where additional monitoring or support may be needed to ensure compliance and program success.
+
+        A “High” rating suggests the department has identified a substantial level of risk, with significant concerns regarding the recipient's financial situation, organizational capacity, and compliance with previous agreement. As a result, intensive oversight or specific conditions may be necessary to mitigate potential issues.
+      fr: |
+        Le champ indique l'évaluation du risque pour l'organisation telle qu'elle a été déterminée par le département.
+
+        Une évaluation « faible » suggère que le département a identifié un risque minimal dans le financement de ce bénéficiaire, indiquant une forte stabilité financière, des antécédents de conformité et une capacité organisationnelle. Le bénéficiaire est considéré comme digne de confiance en ce qui concerne sa capacité à gérer les fonds et à atteindre les résultats escomptés.
+
+        Une évaluation « moyenne » indique que le département a identifié un niveau de risque modéré, pour lequel un suivi ou un soutien supplémentaire peut être nécessaire afin de garantir la conformité et la réussite du programme.
+
+        Une évaluation « élevée » indique que le département a identifié un niveau de risque substantiel, avec des préoccupations importantes concernant la situation financière du bénéficiaire, sa capacite organisationnelle et sa conformité aux accords précédents. En conséquence, une surveillance intensive ou des conditions spécifiques peuvent nécessiter pour atténuer les problèmes potentiels.
+    obligation:
+      en: Optional
+      fr: Facultatif
+    occurrence: Single
+    excel_required: false
+    form_required: false
+    format_type:
+      en: Controlled List
+      fr: Liste contrôlée
+    datastore_type: text
+    excel_full_text_choices: true
+    choice_order_expression: 'value.get("order", False), code'
+    choices:
+      L:
+        en: Low
+        fr: Faible
+        order: 1
+      M:
+        en: Medium
+        fr: Moyen
+        order: 2
+      H:
+        en: High
+        fr: Élevé
+        order: 3
+      N:
+        en: No rating available
+        fr: Pas d'évaluation disponible
+        order: 4
+      C:
+        en: Confidential
+        fr: Confidentiel
+        order: 5
+
+  # 3.39 Recipient Risk Flag – Money currently owed to Crown
+  - datastore_id: recipient_risk_flag_crown
+    label:
+      en: Recipient Risk Flag – Money currently owed to Crown
+      fr: Indicateur de risques liés aux organisations bénéficiaires
+    description:
+      en: |
+        Use this field to assess whether the recipient currently owes money to the Crown (to your department) related to this funding agreement, or on other funding agreements in your organization.
+        • Select "Yes" if the recipient has previously owned or currently owes money to the Crown (e.g., outstanding debt to your department or other federal entities) related to any funding agreements.
+        • Select "No" if the recipient has no known history of owing money to the Crown and there are no current outstanding debts.
+        • Select "NA – Not Applicable" if this is a newly signed funding agreement with a first-time recipient..
+        • Select “Unknown” if you do not have this information (i.e. you do not track this information, or it was unavailable for reporting at this time).
+      fr: |
+        Utilisez ce champ pour évaluer si la personne bénéficiaire a des antécédents ou des dettes en cours envers l’État (au sein de votre ministère) liés à cette entente de financement ou à d’autres ententes de financement dans vos organisations, selon les dossiers de votre ministère concernant cette personne.
+        • Sélectionner « Oui » si l’organisation bénéficiaire a déjà eu ou a actuellement des sommes dues à l’État (p. ex. une dette impayée envers votre ministère ou d’autres entités fédérales) liées à une ou plusieurs ententes de financement.
+        • Sélectionner « Non » si l’organisation bénéficiaire n’a aucun antécédent connu de sommes dues à l’État et qu’aucune dette impayée n’est actuellement en cours.
+        • Sélectionner « S. O. — Sans objet » s’il s’agit d’une nouvelle entente de financement conclue avec une organisation bénéficiaire pour la première fois.
+        • Sélectionner « Inconnu » si vous ne disposez pas de ce renseignement (c’est-à-dire si vous ne le suivez pas ou s’il n’était pas disponible au moment de la déclaration).
+    obligation:
+      en: Mandatory
+      fr: Obligatoire
+    occurrence: Single
+    excel_required: true
+    form_required: true
+    format_type:
+      en: Controlled List
+      fr: Liste contrôlée
+    validation:
+      en: This field must not be empty.
+      fr: Ce champ ne doit pas être vide.
+    datastore_type: text
+    excel_full_text_choices: true
+    choice_order_expression: 'value.get("order", False), code'
+    choices:
+      'Y':
+        en: "Yes"
+        fr: "Oui"
+        order: 1
+      'N':
+        en: "No"
+        fr: "Non"
+        order: 2
+      'NA':
+        en: "Not applicable"
+        fr: "Sans objet"
+        order: 3
+      'U':
+        en: "Unknown"
+        fr: "Inconnue"
+        order: 4
+
+  # 3.40 Recipient Risk Flag – Agreement compliance issue
+  - datastore_id: recipient_risk_flag_compliance
+    label:
+      en: Recipient Risk Flag – Agreement compliance issue
+      fr: Indicateur de risques liés à l’organisation bénéficiaire
+    description:
+      en: |
+        Use this field to assess whether there are ongoing or historical compliance issues associated with the recipient of this funding agreement (e.g. improper use of funds, unauthorized change of scope).
+        • Select "Yes" if the recipient has a history of non-compliance with previous funding agreements, or if compliance issues have been identified during the current funding agreement.
+        • Select "No" if the recipient has remained compliant under the current funding agreement and there are no known compliance issues from past agreements.
+        • Select "N/A – Not Applicable" if this is a newly signed funding agreement with a first-time recipient.
+        • Select “Unknown” if you do not have this information (i.e. you do not track this information, or it was unavailable for reporting at this time).
+      fr: |
+        Utilisez ce champ pour évaluer l’existence de problèmes de conformité actuels ou passés liés à la personne bénéficiaire de cette entente de financement (par exemple utilisation inappropriée des fonds ou modification non autorisée de la portée).
+        • Sélectionner « Oui » si l’organisation bénéficiaire a des antécédents de non-conformité à des ententes de financement antérieures ou si des problèmes de conformité ont été relevés dans le cadre de l’entente de financement actuelle.
+        • Sélectionner « Non » si l’organisation bénéficiaire est demeurée conforme à l’entente de financement actuelle et qu’aucun problème de conformité n’est connu pour les ententes passées.
+        • Sélectionner « S. O. — Sans objet » s’il s’agit d’une nouvelle entente de financement conclue avec une organisation bénéficiaire pour la première fois.
+        • Sélectionner « Inconnu » si vous ne disposez pas de ce renseignement (c’est-à-dire si vous ne le suivez pas ou si elle n’était pas disponible au moment de la déclaration). — Indicateur de risque lié à l’organisation bénéficiaire.
+    obligation:
+      en: Mandatory
+      fr: Obligatoire
+    occurrence: Single
+    excel_required: true
+    form_required: true
+    format_type:
+      en: Controlled List
+      fr: Liste contrôlée
+    validation:
+      en: This field must not be empty.
+      fr: Ce champ ne doit pas être vide.
+    datastore_type: text
+    excel_full_text_choices: true
+    choice_order_expression: 'value.get("order", False), code'
+    choices:
+      'Y':
+        en: "Yes"
+        fr: "Oui"
+        order: 1
+      'N':
+        en: "No"
+        fr: "Non"
+        order: 2
+      'NA':
+        en: "Not applicable"
+        fr: "Sans objet"
+        order: 3
+      'U':
+        en: "Unknown"
+        fr: "Inconnue"
+        order: 4
+
+  # 3.41 Recipient Risk Flag – Agreement Close-out issues
+  - datastore_id: recipient_risk_flag_agreement
+    label:
+      en: Recipient Risk Flag – Agreement Close-out issues
+      fr: Problèmes liés à la clôture de l’entente
+    description:
+      en: |
+        Use this field to assess whether the recipient has experienced any issues during the close-out phase of previous or current funding agreements.
+        • Select "Yes" if the recipient has a history of close-out issues with previous funding agreements (e.g., delays in final reporting, unresolved deliverables, financial reconciliation problems), or if such issues have been identified during the close-out of the current agreement.
+        • Select "No" if the recipient has successfully completed close-out requirements for previous and/or current funding agreements without any known issues.
+        • Select "N/A – Not Applicable" if this is a newly signed agreement with a first-time recipient, or if the funding agreement is still active and has not yet reached the close-out phase.
+        • Select “Unknown” if you do not have this information (i.e. you do not track this information, or it was unavailable for reporting at this time).
+      fr: |
+        Utiliser ce champ pour évaluer si l’organisation bénéficiaire a rencontré des problèmes lors de la phase de clôture d’ententes de financement antérieures ou en cours.
+        • Sélectionner « Oui » si l’organisation bénéficiaire a des antécédents de problèmes lors de la clôture d’ententes de financement précédentes (p. ex., retards dans la remise des rapports finaux, livrables non réglés, problèmes liés à l'apurement des comptes) ou si de tels problèmes ont été relevés lors de la clôture de l’entente actuelle.
+        • Sélectionner « Non » si l’organisation bénéficiaire a satisfait avec succès aux exigences de clôture des ententes de financement précédentes ou en cours, sans qu’aucun problème connu n’ait été relevé.
+        • Sélectionner « S. O. — Sans objet » s’il s’agit d’une entente nouvellement signée avec une organisation bénéficiaire pour la première fois, ou si l’entente de financement est toujours active et n’a pas encore atteint la phase de clôture.
+        • Sélectionner « Inconnu » si vous ne disposez pas de ce renseignement (c’est-à-dire si vous ne le suivez pas ou s’il n’était pas disponible au moment de compte rendu).
+    obligation:
+      en: Mandatory
+      fr: Obligatoire
+    occurrence: Single
+    excel_required: true
+    form_required: true
+    format_type:
+      en: Controlled List
+      fr: Liste contrôlée
+    validation:
+      en: This field must not be empty.
+      fr: Ce champ ne doit pas être vide.
+    datastore_type: text
+    excel_full_text_choices: true
+    choice_order_expression: 'value.get("order", False), code'
+    choices:
+      'Y':
+        en: "Yes"
+        fr: "Oui"
+        order: 1
+      'N':
+        en: "No"
+        fr: "Non"
+        order: 2
+      'NA':
+        en: "Not applicable"
+        fr: "Sans objet"
+        order: 3
+      'U':
+        en: "Unknown"
+        fr: "Inconnue"
+        order: 4
+
+  # 3.42 Contact Information for Funding Agreement
+  - datastore_id: contact_funding_agreement
+    label:
+      en: Contact Information for Funding Agreement
+      fr: Coordonnées pour les questions liées à l’entente de financement
+    description:
+      en: |
+        Provide the primary email address for inquiries related to this funding agreement. This contact will be used to facilitate communication between departments and agencies (e.g. clarify agreement scope, coordinate on common recipients, or address operational questions, etc.).
+        You may choose to provide one of the following, based on your program’s communication practices:
+            • A generic program inbox
+            • The work email address of the program manager
+            • The work email address of the program officer responsible for this agreement
+        Ensure the selected contact is actively monitored and appropriate for interdepartmental correspondence.
+      fr: |
+        Fournir l’adresse courriel principale à laquelle envoyer les demandes de renseignements concernant cette entente de financement. Ce contact servira à faciliter la communication entre les ministères et les organismes (p. ex., clarifier la portée de l’entente, coordonner les actions concernant des bénéficiaires communs ou répondre à des questions opérationnelles, etc.).
+        Vous pouvez choisir de fournir l’une des options suivantes, selon les pratiques de communication de votre programme :
+        • Une boîte de réception générique du programme
+        • L’adresse courriel professionnelle de la personne chargée de la gestion du programme
+        • L’adresse courriel professionnelle de l’agent ou de l’agente de programme responsable de cette entente
+    obligation:
+      en: Mandatory
+      fr: Obligatoire
+    occurrence: Single
+    excel_required: true
+    form_required: true
+    format_type:
+      en: Email
+      fr: Courriel
+    validation:
+      en: This field must not be empty.
+      fr: Ce champ ne doit pas être vide.
+    datastore_type: text
+
+  # 3.43 Recipient Risk Flag – Agreement Close-out issues
+  - datastore_id: multi_funding_indicator
+    label:
+      en: Multi-Program Funding Indicator
+      fr: Indicateur de financement multiprogrammes
+    description:
+      en: |
+        Use this field to identify whether the funding agreement includes financial contributions from more than one grant and contribution program.
+          • Select "Yes" if the agreement consolidates funding from multiple grant and contribution programs, either within the same department or across different departments or agencies.
+          • Select "No" if the agreement is funded by a single grant and contribution program only.
+      fr: |
+        Utiliser ce champ pour indiquer si l’entente de financement comprend des contributions financières provenant de plus d’un programme de subventions et de contributions.
+        • Sélectionner « Oui » si l’entente regroupe des fonds provenant de plusieurs programmes de subventions et de contributions, que ce soit au sein du même ministère ou entre différents ministères ou organismes.
+        • Sélectionnez « Non » si l’entente est financée uniquement par un seul programme de subventions et de contributions.
+    obligation:
+      en: Mandatory
+      fr: Obligatoire
+    occurrence: Single
+    excel_required: true
+    form_required: true
+    format_type:
+      en: Controlled List
+      fr: Liste contrôlée
+    validation:
+      en: This field must not be empty.
+      fr: Ce champ ne doit pas être vide.
+    datastore_type: text
+    excel_full_text_choices: true
+    choice_order_expression: 'value.get("order", False), code'
+    choices:
+      'Y':
+        en: "Yes"
+        fr: "Oui"
+        order: 1
+      'N':
+        en: "No"
+        fr: "Non"
+        order: 2
+
+  # 3.44 Multi-Recipient Agreement Indicator
+  - datastore_id: multi_recipient_agreement_indicator
+    label:
+      en: Multi-Recipient Agreement Indicator
+      fr: Indicateur d’entente à bénéficiaires multiples
+    description:
+      en: |
+        Use this field to identify whether the funding agreement involves more than one recipient.
+          • Select "Yes" if the agreement is established with multiple recipients, such as a consortium, partnership, or joint initiative involving two or more organizations.
+          • Select "No" if the agreement is with a single recipient only.
+        This field is NOT meant to capture ultimate recipients, but rather instances of multiple recipients directly on a grant or contribution agreement with a federal organization.
+      fr: |
+        Utiliser ce champ pour indiquer si l’entente de financement implique plus d’une organisation bénéficiaire.
+        • Sélectionner « Oui » si l’entente est établie avec plusieurs bénéficiaires, par exemple un consortium, un partenariat ou une initiative conjointe impliquant deux organisations ou plus.
+        • Sélectionner « Non » si l’entente ne concerne qu’une seule organisation bénéficiaire.
+        Ce champ n’est pas destiné à enregistrer les bénéficiaires finaux, mais plutôt les cas de bénéficiaires multiples directement liés à une entente de subvention ou de contribution avec une organisation fédérale.
+    obligation:
+      en: Mandatory
+      fr: Obligatoire
+    occurrence: Single
+    excel_required: true
+    form_required: true
+    format_type:
+      en: Controlled List
+      fr: Liste contrôlée
+    validation:
+      en: This field must not be empty.
+      fr: Ce champ ne doit pas être vide.
+    datastore_type: text
+    excel_full_text_choices: true
+    choice_order_expression: 'value.get("order", False), code'
+    choices:
+      'Y':
+        en: "Yes"
+        fr: "Oui"
+        order: 1
+      'N':
+        en: "No"
+        fr: "Non"
+        order: 2
+
+  # 3.45 Project Location Variance Indicator
+  - datastore_id: project_location_variance_indicator
+    label:
+      en: Project Location Variance Indicator
+      fr: Indicateur de variation du lieu de projet
+    description:
+      en: |
+        Use this field to identify whether the location of the project(s) funded under this funding agreement is different from the recipient’s organizational location.
+          • Select "Yes" if the project activities are primarily carried out in a location that differs from the recipient’s registered or operational address (e.g., a national organization delivering services in a remote community).
+          • Select "No" if the project activities take place at the same location as the recipient’s registered or operational address.
+          • Select "Not Applicable" if the project activities do not have a physical address, e.g. research.
+          • Select "Unknown" if the project location is not specified or not known at the time of data entry.
+        Note: This indicator helps identify agreements where project delivery occurs in regions distinct from the recipient’s base, supporting regional analysis and service coverage assessments.
+
+        For domestic projects, please determine your response by comparing the recipient’s city and the project location city.
+        For international projects, please determine your response by comparing the recipient’s country and the project location country.
+      fr: |
+        Utiliser ce champ pour indiquer si le lieu du ou des projets financés dans le cadre de cette entente de financement diffère de l’emplacement organisationnel de l’organisation bénéficiaire.
+        • Sélectionner « Oui » si les activités du projet sont principalement réalisées dans un lieu différent de l’adresse enregistrée ou opérationnelle de l’organisation bénéficiaire (p. ex., une organisation nationale offrant des services dans une collectivité éloignée).
+        • Sélectionner « Non » si les activités du projet se déroulent au même endroit que l’adresse enregistrée ou opérationnelle de l’organisation bénéficiaire.
+        • Sélectionnez « Sans objet » si les activités du projet n’ont pas d’adresse physique, par exemple dans le cadre de la recherche.
+        • Sélectionner « Inconnu » si le lieu du projet n’est pas spécifié ou n’est pas connu au moment de la saisie des données.
+        Remarque : Cet indicateur permet d’indiquer les ententes pour lesquelles la prestation du projet se déroule dans des régions distinctes du siège de l’organisation bénéficiaire, ce qui facilite les analyses régionales et l’évaluation de la couverture des services.
+
+        Pour les projets nationaux, déterminez votre réponse en comparant la ville de la personne bénéficiaire avec celle de l’emplacement du projet.
+        Pour les projets internationaux, déterminez votre réponse en comparant le pays de la personne bénéficiaire avec celui de l’emplacement du projet.
+    obligation:
+      en: Mandatory
+      fr: Obligatoire
+    occurrence: Single
+    excel_required: true
+    form_required: true
+    format_type:
+      en: Controlled List
+      fr: Liste contrôlée
+    validation:
+      en: This field must not be empty.
+      fr: Ce champ ne doit pas être vide.
+    datastore_type: text
+    excel_full_text_choices: true
+    choice_order_expression: 'value.get("order", False), code'
+    choices:
+      'Y':
+        en: "Yes"
+        fr: "Oui"
+        order: 1
+      'N':
+        en: "No"
+        fr: "Non"
+        order: 2
+      'NA':
+        en: "Not applicable"
+        fr: "Sans objet"
+        order: 3
+      'U':
+        en: "Unknown"
+        fr: "Inconnue"
+        order: 4
+
+  # System fields for audit trail
+  - datastore_id: record_created
+    label: Record Creation Time
+    import_template_include: false
+    visible_to_public: false
+    datastore_type: timestamp
+    preview_class: bg-info
+
+  - datastore_id: record_modified
+    label: Last Record Modification Time
+    import_template_include: false
+    visible_to_public: false
+    datastore_type: timestamp
+    preview_class: bg-info
+
+  - datastore_id: user_modified
+    label: User Last Modified Record
+    import_template_include: false
+    visible_to_public: false
+    datastore_type: text
+    preview_class: bg-info
+
+  datastore_primary_key: [ref_number, amendment_number]
+  datastore_indexes: ""
+  excel_organization_style:
+    PatternFill:
+      patternType: solid
+      fgColor: FFd35c37
+    Font:
+      color: FFFFFF
+      size: 14
+  excel_header_style:
+    PatternFill:
+      patternType: solid
+      fgColor: FFc09a77
+
+  triggers:
+  - grantsmonthly_trigger: |
+      DECLARE
+        errors text[][] := '{{}}';
+        crval RECORD;
+      BEGIN
+        errors := errors || required_error(NEW.ref_number, 'ref_number');
+        IF NEW.ref_number LIKE '%,%' THEN
+          errors := errors || ARRAY[['ref_number', {ref_number_error}]];
+        END IF;
+
+        errors := errors || required_error(NEW.amendment_number, 'amendment_number');
+        IF NEW.amendment_number <> 0 THEN
+          errors := errors || required_error(NEW.amendment_date, 'amendment_date');
+        END IF;
+
+        errors := errors || required_error(NEW.agreement_value, 'agreement_value');
+
+        crval := choices_clean_error(NEW.dem_intended_beneficiary, {dem_intended_beneficiary}, 'dem_intended_beneficiary');
+        errors := errors || crval.error;
+        NEW.dem_intended_beneficiary := crval.clean;
+        IF 'O' = ANY(NEW.dem_intended_beneficiary) THEN
+          errors := errors || conditional_required_error(NEW.other_dem_intended_beneficiary_description_en, 'other_dem_intended_beneficiary_description_en');
+          errors := errors || conditional_required_error(NEW.other_dem_intended_beneficiary_description_fr, 'other_dem_intended_beneficiary_description_fr');
+        ELSE
+          errors := errors || both_languages_error(NEW.other_dem_intended_beneficiary_description_en, 'other_dem_intended_beneficiary_description_en', NEW.other_dem_intended_beneficiary_description_fr, 'other_dem_intended_beneficiary_description_fr');
+        END IF;
+        crval := choices_clean_error(NEW.reason_amendment, {reason_amendment}, 'reason_amendment');
+        errors := errors || crval.error;
+        NEW.reason_amendment := crval.clean;
+        IF 'O' = ANY(NEW.reason_amendment) THEN
+          errors := errors || conditional_required_error(NEW.other_reason_amendment_en, 'other_reason_amendment_en');
+          errors := errors || conditional_required_error(NEW.other_reason_amendment_fr, 'other_reason_amendment_fr');
+        ELSE
+          errors := errors || both_languages_error(NEW.other_reason_amendment_en, 'other_reason_amendment_en', NEW.other_reason_amendment_fr, 'other_reason_amendment_fr');
+        END IF;
+
+        errors := errors || required_error(NEW.recipient_risk_flag_crown, 'recipient_risk_flag_crown');
+        errors := errors || choice_error(NEW.recipient_risk_flag_crown, {recipient_risk_flag_crown}, 'recipient_risk_flag_crown');
+
+        errors := errors || required_error(NEW.recipient_risk_flag_compliance, 'recipient_risk_flag_compliance');
+        errors := errors || choice_error(NEW.recipient_risk_flag_compliance, {recipient_risk_flag_compliance}, 'recipient_risk_flag_compliance');
+
+        errors := errors || required_error(NEW.recipient_risk_flag_agreement, 'recipient_risk_flag_agreement');
+        errors := errors || choice_error(NEW.recipient_risk_flag_agreement, {recipient_risk_flag_agreement}, 'recipient_risk_flag_agreement');
+
+        errors := errors || required_error(NEW.contact_funding_agreement, 'contact_funding_agreement');
+
+        errors := errors || required_error(NEW.multi_funding_indicator, 'multi_funding_indicator');
+        errors := errors || choice_error(NEW.multi_funding_indicator, {multi_funding_indicator}, 'multi_funding_indicator');
+
+        errors := errors || required_error(NEW.multi_recipient_agreement_indicator, 'multi_recipient_agreement_indicator');
+        errors := errors || choice_error(NEW.multi_recipient_agreement_indicator, {multi_recipient_agreement_indicator}, 'multi_recipient_agreement_indicator');
+
+        errors := errors || required_error(NEW.project_location_variance_indicator, 'project_location_variance_indicator');
+        errors := errors || choice_error(NEW.project_location_variance_indicator, {project_location_variance_indicator}, 'project_location_variance_indicator');
+
+        errors := errors || required_error(NEW.agreement_start_date, 'agreement_start_date');
+        IF NEW.agreement_start_date >= '2018-04-01'::date THEN
+          errors := errors || required_error(NEW.agreement_type, 'agreement_type');
+          errors := errors || choice_error(NEW.agreement_type, {agreement_type}, 'agreement_type');
+          IF NOT ((NEW.recipient_type = '') IS NOT FALSE) THEN
+            errors := errors || choice_error(NEW.recipient_type, {recipient_type}, 'recipient_type');
+          END IF;
+          errors := errors || required_error(NEW.recipient_legal_name, 'recipient_legal_name');
+          errors := errors || required_error(NEW.recipient_country, 'recipient_country');
+          errors := errors || choice_error(NEW.recipient_country, {recipient_country}, 'recipient_country');
+          IF NEW.recipient_country = 'CA' THEN
+            errors := errors || required_error(NEW.recipient_province, 'recipient_province');
+            errors := errors || choice_error(NEW.recipient_province, {recipient_province}, 'recipient_province');
+          END IF;
+          errors := errors || required_error(NEW.recipient_city, 'recipient_city');
+          errors := errors || required_error(NEW.description_en, 'description_en');
+          errors := errors || required_error(NEW.description_fr, 'description_fr');
+        END IF;
+
+        NEW.agreement_value := round(NEW.agreement_value, 2);
+
+        IF NEW.agreement_start_date >= '2025-11-01'::date THEN
+          errors := errors || conditional_required_error(NEW.recipient_type, 'recipient_type');
+
+          errors := errors || conditional_required_error(NEW.prog_name_en, 'prog_name_en');
+          errors := errors || conditional_required_error(NEW.prog_name_fr, 'prog_name_fr');
+
+          errors := errors || conditional_required_error(NEW.prog_purpose_en, 'prog_purpose_en');
+          errors := errors || conditional_required_error(NEW.prog_purpose_fr, 'prog_purpose_fr');
+
+          errors := errors || conditional_required_error(NEW.agreement_title_en, 'agreement_title_en');
+          errors := errors || conditional_required_error(NEW.agreement_title_fr, 'agreement_title_fr');
+
+          errors := errors || future_date_error(NEW.agreement_start_date, 'agreement_start_date');
+
+          errors := errors || conditional_required_error(NEW.agreement_end_date, 'agreement_end_date');
+          IF NEW.agreement_start_date::timestamp > NEW.agreement_end_date::timestamp THEN
+            errors := errors || ARRAY[['agreement_start_date', {start_end_date_error}]];
+          END IF;
+
+          errors := errors || conditional_required_error(NEW.expected_results_en, 'expected_results_en');
+          errors := errors || conditional_required_error(NEW.expected_results_fr, 'expected_results_fr');
+
+          NEW.recipient_postal_code := trim_lead_trailing(NEW.recipient_postal_code);
+          NEW.recipient_postal_code := UPPER(NEW.recipient_postal_code);
+          NEW.recipient_postal_code := REGEXP_REPLACE(NEW.recipient_postal_code, '\s+', ' ', 'g');
+          IF NEW.recipient_postal_code IS NOT NULL AND NEW.recipient_postal_code <> '' AND NOT NEW.recipient_postal_code ~ '^[A-Z]\d[A-Z]\s\d[A-Z]\d$' THEN
+            errors := errors || ARRAY[['recipient_postal_code', {recipient_postal_code_error}]];
+          END IF;
+
+          NEW.recipient_business_number := trim_lead_trailing(NEW.recipient_business_number);
+          IF NEW.recipient_business_number IS NOT NULL AND NEW.recipient_business_number <> '' AND (NOT is_natural_number(NEW.recipient_business_number) OR (is_natural_number(NEW.recipient_business_number) AND LENGTH(NEW.recipient_business_number) != 9)) THEN
+            errors := errors || ARRAY[['recipient_business_number', {recipient_business_number_error}]];
+          END IF;
+
+          NEW.federal_riding_number := trim_lead_trailing(NEW.federal_riding_number);
+          IF NEW.federal_riding_number IS NOT NULL AND NEW.federal_riding_number <> '' AND (NOT is_natural_number(NEW.federal_riding_number) OR (is_natural_number(NEW.federal_riding_number) AND LENGTH(NEW.federal_riding_number) != 5)) THEN
+            errors := errors || ARRAY[['federal_riding_number', {federal_riding_number_error}]];
+          END IF;
+
+          IF NOT NEW.agreement_value > 0 THEN
+            errors := errors || ARRAY[['agreement_value', {agreement_value_error}]];
+          END IF;
+
+        END IF;
+
+        IF errors = '{{}}' THEN
+          RETURN NEW;
+        END IF;
+        RAISE EXCEPTION E'TAB-DELIMITED\t%', array_to_string(errors, E'\t');
+      END;
+
+  - update_record_modified_created_trigger
+
+  trigger_strings:  # yaml | not supported
+    ref_number_error: Comma is not allowed in Reference Number field
+    max_length_error: This field has a maximum length of {} characters.
+    invalid_choice_error: 'Invalid choice: {}'
+    conditional_required_error: This field is required due to a response in a different field.
+    both_lang_error: This text must be provided in both languages
+    recipient_postal_code_error: 'Must be a valid Canadian postal code in the format of "A1A 1A1"'
+    recipient_business_number_error: Must be a 9 digit number
+    federal_riding_number_error: Must be a 5 digit number
+    start_end_date_error: '"Agreement Start Date" cannot be after "Projected Agreement End Date"'
+    agreement_value_error: Must be greater than zero
+
+  examples:
+    record:
+      ref_number: "001-2018-2019-Q2-00045"
+      amendment_number: "3"
+      amendment_date: "2018-04-01"
+      agreement_type: "G"
+      recipient_type: "G"
+      recipient_business_number: "123456789"
+      recipient_legal_name: "ACME Services Limited|Services ACME Limitée"
+      recipient_operating_name: "ACME"
+      recipient_country: "CA"
+      recipient_province: "ON"
+      recipient_city: "Grand Falls|Grand-Sault"
+      recipient_postal_code: "A1A 1A1"
+      federal_riding_number: "46014"
+      prog_name_en: "Canada Granting Program"
+      prog_name_fr: "Le programme de subvention du Canada"
+      prog_purpose_en: "The Canada Granting Program encourage Canadians to learn about Canada’s geography, history, and economy. The Program provides networking opportunities to enhance recipients’ understanding of Canada."
+      prog_purpose_fr: "Le programme de subventions du Canada incite les Canadiens à se renseigner sur la géographie, l’histoire et l’économie du Canada. Le programme offre des opportunités de réseautage pour aider les bénéficiaires d’améliorer leur compréhension du Canada."
+      agreement_title_en: "Building better buildings"
+      agreement_title_fr: "Construire des meilleurs bâtiments"
+      agreement_number: "F1580-140737"
+      agreement_value: "500000"
+      agreement_start_date: "2019-04-01"
+      agreement_end_date: "2020-04-30"
+      description_en: "Developing models and other tools to predict the safety performance of buildings."
+      description_fr: "Met au point des modèles et d'autres outils pour prévoir la sécurité des bâtiments."
+      naics_identifier: "611710"
+      expected_results_en: "Develop highly qualified personnel available to pursue various careers within industry, academia, government and other sectors of the economy."
+      expected_results_fr: "Développé un personnel hautement qualifié prêt à mener une carrière variée au sein de l’industrie, du milieu académique, de la fonction publique ou dans d’autres secteurs de l’économie."
+      dem_intended_beneficiary: ["Y"]
+      other_dem_intended_beneficiary_description_en: "immigrant owned"
+      other_dem_intended_beneficiary_description_fr: "appartenant à des immigrés"
+      reason_amendment: ["S"]
+      other_reason_amendment_en: Change of the eligible activities or initiatives
+      other_reason_amendment_fr: Modification des activités ou initiatives éligibles
+      rating_risk: "L"
+      recipient_risk_flag_crown: "Y"
+      recipient_risk_flag_compliance: "Y"
+      recipient_risk_flag_agreement: "Y"
+      contact_funding_agreement: "firstname.lastname@tbs-sct.gc.ca"
+      multi_funding_indicator: "Y"
+      multi_recipient_agreement_indicator: "Y"
+      project_location_variance_indicator: "Y"
+
+    filters:
+      recipient_province: "ON"
+    filter_one:
+      ref_number: "001-2018-2019-Q2-00045"
+      amendment_number: "0"
+    sort: agreement_date desc
+
+excel_edge_style:
+  PatternFill:
+    patternType: solid
+    fgColor: FF024571
+excel_header_style:
+  PatternFill:
+    patternType: solid
+    fgColor: FFEDDB7C
+excel_column_heading_style:
+  PatternFill:
+    patternType: solid
+    fgColor: FFEDDB7C

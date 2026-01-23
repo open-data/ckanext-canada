@@ -225,10 +225,6 @@ class TestGrants(CanadaTestBase):
 
         record['recipient_postal_code'] = 'A1B 2C3'
 
-        self.lc.action.datastore_upsert(
-            resource_id=self.resource_id,
-            records=[record])
-
     def test_dates(self):
         """
         Start Date cannot be in the future, and dates must be chronological
@@ -509,3 +505,35 @@ class TestGrants(CanadaTestBase):
         err = ve.value.error_dict
         assert 'records' in err
         assert 'recipient_province' in err['records'][0]
+
+# (staging fork only): grants monthly
+class TestGrantsMonthly(CanadaTestBase):
+    @classmethod
+    def setup_method(self, method):
+        """Method is called at class level before EACH test methods of the class are called.
+        Setup any state specific to the execution of the given class methods.
+        """
+        super(TestGrantsMonthly, self).setup_method(method)
+
+        org = Organization()
+        self.lc = LocalCKAN()
+
+        self.lc.action.recombinant_create(dataset_type='grantsmonthly', owner_org=org['name'])
+        rval = self.lc.action.recombinant_show(dataset_type='grantsmonthly', owner_org=org['name'])
+
+        self.resource_id = rval['resources'][0]['id']
+
+    def test_example(self):
+        record = get_chromo('grantsmonthly')['examples']['record']
+        self.lc.action.datastore_upsert(
+            resource_id=self.resource_id,
+            records=[record])
+
+    def test_blank(self):
+        with pytest.raises(ValidationError) as ve:
+            self.lc.action.datastore_upsert(
+                resource_id=self.resource_id,
+                records=[{}])
+        err = ve.value.error_dict
+        assert 'key' in err
+        assert 'ref_number, amendment_number' in err['key'][0]
