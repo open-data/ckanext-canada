@@ -2,6 +2,10 @@
   --canada-root-dir: '/data';
 }
 
+#flDebug .flDebugPanelContentParent{
+  overflow: scroll !important;
+}
+
 /* Core data:image overrides for CSP support */
 body .form-select{
   /* background-image: url("/data/static/img/data_img/chevron-down.svg"); */
