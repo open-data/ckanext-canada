@@ -1,0 +1,1 @@
+Added test coverage for core CKAN `ckan.site_read_only` mode.
