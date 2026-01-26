@@ -121,6 +121,12 @@ body,
 footer{
   margin-top: 15px;
 }
+
+#flDebug{
+  .flDebugPanelContentParent{
+    overflow: scroll !important;
+  }
+}
 /*##########
 ##  END   ##
 ##  Root  ##
