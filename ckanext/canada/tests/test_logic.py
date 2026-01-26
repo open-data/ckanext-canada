@@ -150,7 +150,7 @@ class TestMetadataDatesLogic(CanadaTestBase):
     def test_package_update_metadata_fields(self):
         """
         When updating packages, sysadmins should be able to provide
-        a metadata_updated value, but not a metadata_created one
+        a metadata_updated and metadata_created value
         """
         pkg = self.editor_action.package_create(
             name='12345678-9abc-def0-1234-56789abcd20d',
@@ -187,7 +187,7 @@ class TestMetadataDatesLogic(CanadaTestBase):
 
         pkg = self.sysadmin_action.package_update(**pkg)
 
-        assert pkg['metadata_created'] != self.update_date
+        assert pkg['metadata_created'] == self.update_date
         assert pkg['metadata_modified'] == self.update_date
         assert pkg['resources'][0]['created'] == self.update_date
         assert pkg['resources'][0]['last_modified'] == self.update_date
@@ -196,8 +196,7 @@ class TestMetadataDatesLogic(CanadaTestBase):
     def test_package_patch_metadata_fields(self):
         """
         When patching packages and resources, sysadmins should be
-        able to provide a metadata_updated value, but not
-        a metadata_created one
+        able to provide a metadata_updated and metadata_created value
         """
         pkg = self.editor_action.package_create(
             name='12345678-9abc-def0-1234-56789abcd34c',
@@ -235,7 +234,7 @@ class TestMetadataDatesLogic(CanadaTestBase):
             metadata_created=self.update_date,
             metadata_modified=self.update_date)
 
-        assert pkg['metadata_created'] != self.update_date
+        assert pkg['metadata_created'] == self.update_date
         assert pkg['metadata_modified'] == self.update_date
 
         res = self.sysadmin_action.resource_patch(
