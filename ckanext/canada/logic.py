@@ -368,6 +368,7 @@ def canada_guess_mimetype(context: Context, data_dict: DataDict) -> str:
 
 
 @chained_action
+@side_effect_free
 def canada_resource_view_show(up_func: Action,
                               context: Context,
                               data_dict: DataDict) -> ChainedAction:
@@ -434,6 +435,7 @@ def canada_resource_view_show(up_func: Action,
 
 
 @chained_action
+@side_effect_free
 def canada_resource_view_list(up_func: Action,
                               context: Context,
                               data_dict: DataDict) -> List[Dict[str, Any]]:
