@@ -6,7 +6,7 @@ shortname: Briefing Note Titles and Numbers
 notes: Access, upload and modify the Briefing Note Titles and Numbers reports for your organization
 
 template_version: 3
-template_updated: 2024-12-13  # last qa confirmed: 2025-02-19
+template_updated: 2026-01-27  # last qa confirmed: 2025-02-19
 
 portal_type: info
 collection: briefingt
@@ -230,6 +230,7 @@ resources:
     datatables_col_class: col-xl
     excel_column_width: 35
     js_required_eval: '{{additional_information_fr}}.length > 0'
+    excel_required_formula: NOT(ISBLANK({additional_information_fr}))
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
       class: form-control canada-width-full d-block
@@ -253,6 +254,7 @@ resources:
     datatables_col_class: col-xl
     excel_column_width: 35
     js_required_eval: '{{additional_information_en}}.length > 0'
+    excel_required_formula: NOT(ISBLANK({additional_information_en}))
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
       class: form-control canada-width-full d-block
@@ -308,6 +310,11 @@ resources:
         errors := errors || required_error(NEW.date_received, 'date_received');
         errors := errors || required_error(NEW.action_required, 'action_required');
         errors := errors || choice_error(NEW.action_required, {action_required}, 'action_required');
+
+        IF NEW.date_received >= '2026-02-01'::date THEN
+          errors := errors || both_languages_error(NEW.additional_information_en, 'additional_information_en', NEW.additional_information_fr, 'additional_information_fr');
+        END IF;
+
         IF errors = '{{}}' THEN
           RETURN NEW;
         END IF;

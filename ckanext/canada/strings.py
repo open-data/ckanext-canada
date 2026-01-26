@@ -102,6 +102,7 @@ _('Downloading file...')  # promise-download js module
 _('Successfully downloaded file')  # promise-download js module
 _('Error downloading file, trying again through your browser')  # promise-download js module
 _('Searching...')  # autocomplete js module # TODO: remove after upstream contrib
+_('Site is in read only mode')  # TODO: remove after upstream contrib
 
 # strings from security
 _("Please upload a file or link to an external resource")
