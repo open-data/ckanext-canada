@@ -42,6 +42,10 @@ class TestCanadaAuth(CanadaTestBase):
             - _updated actions
             - _patch actions
             - _delete actions
+
+        NOTE: we except ValueError due to missing auth functions from
+              the followee type actions.
+        TODO: remove exceptions after backporting followee authz.
         """
         name_patterns = [
             '_create',
@@ -72,7 +76,7 @@ class TestCanadaAuth(CanadaTestBase):
                 continue
             try:
                 check_access(action_func_name, {'user': self.org_admin['name']}, {})
-            except (KeyError, ValueError, ValidationError):
+            except ValueError:  # TODO: remove after followee auth backport
                 continue
             except NotAuthorized as e:
                 assert any(p in action_func_name for p in name_patterns)
@@ -84,7 +88,7 @@ class TestCanadaAuth(CanadaTestBase):
                 continue
             try:
                 check_access(action_func_name, {'user': self.editor['name']}, {})
-            except (KeyError, ValueError, ValidationError):
+            except ValueError:  # TODO: remove after followee auth backport
                 continue
             except NotAuthorized as e:
                 assert any(p in action_func_name for p in name_patterns)
@@ -96,7 +100,7 @@ class TestCanadaAuth(CanadaTestBase):
                 continue
             try:
                 check_access(action_func_name, {'user': self.member['name']}, {})
-            except (KeyError, ValueError, ValidationError):
+            except ValueError:  # TODO: remove after followee auth backport
                 continue
             except NotAuthorized as e:
                 assert any(p in action_func_name for p in name_patterns)
@@ -108,7 +112,7 @@ class TestCanadaAuth(CanadaTestBase):
                 continue
             try:
                 check_access(action_func_name, {'user': self.sysadmin['name']}, {})
-            except (KeyError, ValueError, ValidationError):
+            except ValueError:  # TODO: remove after followee auth backport
                 continue
 
         # using ignore_auth can do anything still
@@ -118,5 +122,5 @@ class TestCanadaAuth(CanadaTestBase):
             try:
                 check_access(action_func_name, {'user': self.member['name'],
                                                 'ignore_auth': True}, {})
-            except (KeyError, ValueError, ValidationError):
+            except ValueError:  # TODO: remove after followee auth backport
                 continue
