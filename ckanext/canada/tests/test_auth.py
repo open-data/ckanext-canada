@@ -3,7 +3,7 @@ from ckanext.canada.tests import CanadaTestBase
 from ckan.tests.helpers import change_config
 from ckan.logic import _actions, check_access
 
-from ckan.plugins.toolkit import NotAuthorized, ValidationError
+from ckan.plugins.toolkit import NotAuthorized
 
 from ckanext.canada.tests.factories import (
     CanadaOrganization as Organization,
