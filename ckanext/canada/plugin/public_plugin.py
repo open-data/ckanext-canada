@@ -85,6 +85,7 @@ class CanadaPublicPlugin(p.SingletonPlugin, DefaultTranslation):
         assert 'ckanext.canada:tables/service.yaml' in recombinant_definitions
         assert 'ckanext.canada:tables/dac.yaml' in recombinant_definitions
         assert 'ckanext.canada:tables/nap5.yaml' in recombinant_definitions
+        assert 'ckanext.canada:tables/nap6.yaml' in recombinant_definitions
         assert 'ckanext.canada:tables/experiment.yaml' in recombinant_definitions
         assert 'ckanext.canada:tables/adminaircraft.yaml' in recombinant_definitions
         assert 'ckanext.canada:tables/aistrategy.yaml' in recombinant_definitions

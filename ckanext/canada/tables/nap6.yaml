@@ -31,9 +31,13 @@ resources:
       en: Year and month of the update
       fr: Année et mois de la mise à jour
     obligation: Mandatory
+    occurrence: Single
     excel_required: true
     form_required: true
     datastore_type: text
+    format_type:
+      en: Controlled List
+      fr: Liste contrôlée
     datatables_col_class: col-sm
     choices:
       2025-12: 2025-12
@@ -55,9 +59,13 @@ resources:
       en: The 4 commitments in the 2025-2029 National Action Plan on Open Government
       fr: Les 4 engagements dans le Plan d'action national du Canada pour un gouvernement ouvert de 2025-2029
     obligation: Mandatory
+    occurrence: Single
     excel_required: true
     form_required: true
     datastore_type: text
+    format_type:
+      en: Controlled List
+      fr: Liste contrôlée
     excel_full_text_choices: true
     datatables_full_text_choices: true
     form_choices_prefix_code: true
@@ -85,9 +93,13 @@ resources:
       en: This list contains milestones that correspond to the chosen commitment
       fr: Cette liste contient des jalons correspondant à l'engagement choisi
     obligation: Mandatory
+    occurrence: Single
     excel_required: true
     form_required: true
     datastore_type: text
+    format_type:
+      en: Controlled List
+      fr: Liste contrôlée
     excel_full_text_choices: true
     datatables_full_text_choices: true
     form_choices_prefix_code: true
@@ -120,7 +132,7 @@ resources:
         fr: Dans la mesure du possible, combler de façon proactive les besoins en données des organisations autochtones afin d'accroître l'efficacité et la transparence.
       C01.7:
         en: Establish an internal working group at VAC to identify and act on opportunities to promote open government at VAC
-        fr: Former un groupe de travail interne au sein d'ACC chargé de cerner et de mettre en œuvre les occasions de promouvoir le gouvernement ouvert dans ACC.
+        fr: Former un groupe de travail interne au sein d'ACC chargé de cerner et de mettre en oeuvre les occasions de promouvoir le gouvernement ouvert dans ACC.
       C02.1:
         en: "Establish an organization-wide approach to conducting public participation activities with Canadian communities. Engage with communities on a wide variety of topics and encourage feedback at multiple levels to demonstrate the RCMP's commitment to the principles in the Government of Canada (GC) Digital Standards: Playbook"
         fr: "Mettre en place une approche pangouvernementale pour la réalisation d'activités de participation publique auprès des communautés canadiennes. Mobiliser les communautés sur un grand nombre de sujets et encourager la rétroaction à plusieurs niveaux pour démontrer l'engagement de la GRC envers les principes figurant dans les Normes relatives au numérique du gouvernement du Canada : Directives."
@@ -147,29 +159,29 @@ resources:
         fr: Harmoniser les approches d'« ouverture par défaut » et de « sécurité dès la conception » afin de faire progresser la souveraineté autochtone et en matière d'information, et de limiter les obstacles législatifs au moyen de la communication proactive afin de faciliter un meilleur échange d'information avec les communautés autochtones.
       C04.2:
         en: Develop a targeted learning series on open data for use by federal public servants
-        fr: Préparer un programme d’apprentissage ciblé sur les données ouvertes à l’intention des fonctionnaires fédéraux.
+        fr: Préparer un programme d'apprentissage ciblé sur les données ouvertes à l'intention des fonctionnaires fédéraux.
       C04.3:
         en: |
-          Monitor Canadians’ experiences with serious legal problems and enhance the Department of Justice Canada’s understanding of effective responses using findings from the National Justice Survey and Serious Legal Problems in Canada
+          Monitor Canadians' experiences with serious legal problems and enhance the Department of Justice Canada's understanding of effective responses using findings from the National Justice Survey and Serious Legal Problems in Canada
 
-          Publish findings from the National Justice Survey and from Statistics Canada’s Canadian Legal Problems Survey (CLPS), in user-friendly formats (for example, infographics or a simple dashboard).
+          Publish findings from the National Justice Survey and from Statistics Canada's Canadian Legal Problems Survey (CLPS), in user-friendly formats (for example, infographics or a simple dashboard).
 
           Use the National Justice Survey data to inform decision-making both by the Department of Justice Canada and by key external stakeholders.
         fr: |
-          Faire le suivi de l’expérience des Canadiens aux prises avec des problèmes juridiques graves et approfondir la compréhension qu’a le ministère de la Justice Canada des réponses efficaces, en s’appuyant sur les résultats du Sondage national sur la justice et de l’Enquête canadienne sur les problèmes juridiques.
+          Faire le suivi de l'expérience des Canadiens aux prises avec des problèmes juridiques graves et approfondir la compréhension qu'a le ministère de la Justice Canada des réponses efficaces, en s'appuyant sur les résultats du Sondage national sur la justice et de l'Enquête canadienne sur les problèmes juridiques.
 
-          Publier les résultats du Sondage national sur la justice et de l’Enquête canadienne sur les problèmes juridiques de Statistique Canada dans des formats conviviaux (par exemple, infographies ou tableau de bord simple).
+          Publier les résultats du Sondage national sur la justice et de l'Enquête canadienne sur les problèmes juridiques de Statistique Canada dans des formats conviviaux (par exemple, infographies ou tableau de bord simple).
 
           Utiliser les données du Sondage national sur la justice pour éclairer le processus décisionnel du ministère de la Justice Canada et des principaux intervenants externes.
       C04.4:
         en: |
-          Update Justice Canada’s State of the Criminal Justice System Dashboard and pursue the automation of updates to support easier dissemination of data to the public.
+          Update Justice Canada's State of the Criminal Justice System Dashboard and pursue the automation of updates to support easier dissemination of data to the public.
 
-          Explore, in collaboration with key partners, the possibility of expanding the indicators in the Department of Justice Canada’s State of the Criminal Justice System dashboard to include available disaggregated data related to court delays and other key justice system issues.
+          Explore, in collaboration with key partners, the possibility of expanding the indicators in the Department of Justice Canada's State of the Criminal Justice System dashboard to include available disaggregated data related to court delays and other key justice system issues.
         fr: |
-          Mettre à jour le Tableau de bord sur l’état du système de justice pénale du ministère de la Justice Canada et automatiser les mises à jour pour faciliter la diffusion des données au public.
+          Mettre à jour le Tableau de bord sur l'état du système de justice pénale du ministère de la Justice Canada et automatiser les mises à jour pour faciliter la diffusion des données au public.
 
-          Explorer, en collaboration avec les partenaires clés, la possibilité d’élargir les indicateurs du Tableau de bord sur l’état du système de justice pénale du ministère de la Justice Canada pour y inclure les données désagrégées disponibles concernant les retards judiciaires et d’autres enjeux importants du système de justice.
+          Explorer, en collaboration avec les partenaires clés, la possibilité d'élargir les indicateurs du Tableau de bord sur l'état du système de justice pénale du ministère de la Justice Canada pour y inclure les données désagrégées disponibles concernant les retards judiciaires et d'autres enjeux importants du système de justice.
       C04.5:
         en: Support the design and delivery of accessible administrative services provided by the Department of Justice Canada
         fr: Appuyer la conception et la prestation de services administratifs accessibles fournis par le ministère de la Justice Canada.
@@ -183,9 +195,13 @@ resources:
       en: The indicators related to the chosen milestone
       fr: Les indicateurs liés au jalon choisi
     obligation: Mandatory
+    occurrence: Single
     excel_required: true
     form_required: true
     datastore_type: text
+    format_type:
+      en: Controlled List
+      fr: Liste contrôlée
     excel_full_text_choices: true
     datatables_full_text_choices: true
     form_choices_prefix_code: true
@@ -201,7 +217,7 @@ resources:
     choices:
       C01.1.1:
         en: Draft a strategic plan to establish a multi-collaborator forum. The draft strategic plan outlines the role and mandate of, and the context behind, the creation of the consultation body.
-        fr: Rédiger un plan stratégique pour établir un Forum multi-intervenants. L’ébauche de plan stratégique décrit le rôle et le mandat de l’organisme de consultation, ainsi que le contexte dans lequel il a été créé.
+        fr: Rédiger un plan stratégique pour établir un Forum multi-intervenants. L'ébauche de plan stratégique décrit le rôle et le mandat de l'organisme de consultation, ainsi que le contexte dans lequel il a été créé.
         # TODO: update info
         due_date:
         deadline:
@@ -221,7 +237,7 @@ resources:
         s4d:
       C01.1.3:
         en: Analyze the feedback received during the consultation period, incorporate it into the final draft of the strategic plan and publish the strategic plan as an open asset (in other words, designed for reuse in future initiatives).
-        fr: Analyser les commentaires reçus durant la période de consultation, les intégrer à la version finale du plan stratégique et publier le plan stratégique en tant qu’actif ouvert (autrement dit, conçu pour être réutilisé dans des initiatives futures).
+        fr: Analyser les commentaires reçus durant la période de consultation, les intégrer à la version finale du plan stratégique et publier le plan stratégique en tant qu'actif ouvert (autrement dit, conçu pour être réutilisé dans des initiatives futures).
         # TODO: update info
         due_date:
         deadline:
@@ -231,7 +247,7 @@ resources:
         s4d:
       C01.1.4:
         en: Set up the multi-collaborator forum (that is, decide on nomination criteria, governance structure, engagement approach, and so on).
-        fr: Mettre en place le Forum multi-intervenants (par exemple, déterminer les critères de mise en candidature, la structure de gouvernance, l’approche en matière d’engagement).
+        fr: Mettre en place le Forum multi-intervenants (par exemple, déterminer les critères de mise en candidature, la structure de gouvernance, l'approche en matière d'engagement).
         # TODO: update info
         due_date:
         deadline:
@@ -240,7 +256,7 @@ resources:
         lead_dept:
         s4d:
       C01.1.5:
-        en: Secure additional resources for the forum’s activities.
+        en: Secure additional resources for the forum's activities.
         fr: Obtenir des ressources supplémentaires pour les activités du Forum.
         # TODO: update info
         due_date:
@@ -260,7 +276,7 @@ resources:
         lead_dept:
         s4d:
       C01.2.2:
-        en: Using the RCMP’s public participation framework, incorporate a feedback loop into each consultation. Publish feedback on the Open Government portal.
+        en: Using the RCMP's public participation framework, incorporate a feedback loop into each consultation. Publish feedback on the Open Government portal.
         fr: Intégrer une boucle de rétroaction à chaque consultation au moyen du cadre de participation du public de la GRC. Publier la rétroaction sur le Portail du gouvernement ouvert.
         # TODO: update info
         due_date:
@@ -271,7 +287,7 @@ resources:
         s4d:
       C01.2.3:
         en: Increase the percentage of Canadians who respond to the Organisation for Economic Co-operation and Development (OECD) survey on drivers of trust in public institutions from the 2024 baseline of 49%.
-        fr: Accroître le pourcentage de Canadiens qui répondent à l’enquête de l’Organisation de coopération et de développement économiques sur les déterminants de la confiance dans les institutions publiques par rapport au pourcentage de référence de 2024, soit 49 %.
+        fr: Accroître le pourcentage de Canadiens qui répondent à l'enquête de l'Organisation de coopération et de développement économiques sur les déterminants de la confiance dans les institutions publiques par rapport au pourcentage de référence de 2024, soit 49 %.
         # TODO: update info
         due_date:
         deadline:
@@ -281,7 +297,7 @@ resources:
         s4d:
       C01.2.4:
         en: Reduce the percentage of ethnically diverse Canadians who report a hate crime or hate- motivated event from the 79% high in 2022.
-        fr: Réduire le pourcentage de Canadiens de diverses origines ethniques qui signalent un crime haineux ou un événement motivé par la haine par rapport au niveau record de 79 % atteint en 2022.
+        fr: Réduire le pourcentage de Canadiens de diverses origines ethniques qui signalent un crime haineux ou un événement motivé par la haine par rapport au niveau record de 79 % atteint en 2022.
         # TODO: update info
         due_date:
         deadline:
@@ -290,8 +306,8 @@ resources:
         lead_dept:
         s4d:
       C01.3.1:
-        en: Contribute to the government-wide implementation of the Action Plan Measure for Shared Priority 30 of the United Nations Declaration on the Rights of Indigenous Peoples Act.
-        fr: Contribuer à la mise en œuvre pangouvernementale de la mesure pour la priorité partagée 30 du Plan d’action de la Loi sur la Déclaration des Nations Unies sur les droits des peuples autochtones.
+        en: Contribute to the government-wide implementation of the Action Plan Measure for Shared Priority 30 of the United Nations Declaration on the Rights of Indigenous Peoples Act.
+        fr: Contribuer à la mise en oeuvre pangouvernementale de la mesure pour la priorité partagée 30 du Plan d'action de la Loi sur la Déclaration des Nations Unies sur les droits des peuples autochtones.
         # TODO: update info
         due_date:
         deadline:
@@ -300,7 +316,7 @@ resources:
         lead_dept:
         s4d:
       C01.3.2:
-        en: Identify concrete steps the Government of Canada can take to advance this approach, including identifying how to leverage each department’s mandate.
+        en: Identify concrete steps the Government of Canada can take to advance this approach, including identifying how to leverage each department's mandate.
         fr: Déterminer les mesures concrètes que le gouvernement du Canada peut prendre pour faire progresser cette approche, y compris quant à la façon de mettre à profit le mandat de chaque ministère.
         # TODO: update info
         due_date:
@@ -310,7 +326,7 @@ resources:
         lead_dept:
         s4d:
       C01.3.3:
-        en: Make meaningful progress on the RCMP’s commitments to reconciliation that were outlined by the Truth and Reconciliation Council.
+        en: Make meaningful progress on the RCMP's commitments to reconciliation that were outlined by the Truth and Reconciliation Council.
         fr: Réaliser des progrès significatifs par rapport aux engagements de la GRC en matière de réconciliation qui ont été présentés par le Conseil national de la réconciliation.
         # TODO: update info
         due_date:
@@ -321,7 +337,7 @@ resources:
         s4d:
       C01.4.1:
         en: Publicly launch the Public Participation Maturity Model tool, including launching a webinar, and a presentation at the 2025 Open Government Partnership Summit.
-        fr: Lancer publiquement l’outil du modèle de maturité pour la participation du public, qui comprend le lancement d’un webinaire et d’une présentation au Sommet du Partenariat pour un gouvernement ouvert 2025.
+        fr: Lancer publiquement l'outil du modèle de maturité pour la participation du public, qui comprend le lancement d'un webinaire et d'une présentation au Sommet du Partenariat pour un gouvernement ouvert 2025.
         # TODO: update info
         due_date:
         deadline:
@@ -330,8 +346,8 @@ resources:
         lead_dept:
         s4d:
       C01.4.2:
-        en: Test the maturity model framework through the Maturity Model Pilot Program, which includes two one-year test groups (four to six departments in each) to assess the functionality of the model in different settings.
-        fr: Mettre à l’essai le cadre de modèle de maturité au moyen du programme pilote du modèle de maturité, qui comprend deux groupes d’essai sur une période d’un an (quatre à six ministères pour chaque groupe) afin d’évaluer la fonctionnalité du modèle dans différents contextes.
+        en: Test the maturity model framework through the Maturity Model Pilot Program, which includes two one-year test groups (four to six departments in each) to assess the functionality of the model in different settings.
+        fr: Mettre à l'essai le cadre de modèle de maturité au moyen du programme pilote du modèle de maturité, qui comprend deux groupes d'essai sur une période d'un an (quatre à six ministères pour chaque groupe) afin d'évaluer la fonctionnalité du modèle dans différents contextes.
         # TODO: update info
         due_date:
         deadline:
@@ -340,7 +356,7 @@ resources:
         lead_dept:
         s4d:
       C01.4.3:
-        en: Collect input from two years of the Maturity Model Pilot Program and refine the model based on the evidence collected.
+        en: Collect input from two years of the Maturity Model Pilot Program and refine the model based on the evidence collected.
         fr: Recueillir les commentaires pendant les deux années du programme pilote du modèle de maturité et peaufiner le modèle en fonction des données probantes recueillies.
         # TODO: update info
         due_date:
@@ -351,7 +367,7 @@ resources:
         s4d:
       C01.4.4:
         en: Share reflections and best practices from the pilot program and make recommendations to senior leadership on the future of public participation in the Government of Canada.
-        fr: Transmettre les réflexions et les pratiques exemplaires qui ont découlé du programme pilote et faire des recommandations à la haute direction sur l’avenir de la participation du public au sein du gouvernement du Canada.
+        fr: Transmettre les réflexions et les pratiques exemplaires qui ont découlé du programme pilote et faire des recommandations à la haute direction sur l'avenir de la participation du public au sein du gouvernement du Canada.
         # TODO: update info
         due_date:
         deadline:
@@ -361,7 +377,7 @@ resources:
         s4d:
       C01.5.1:
         en: Develop and advance infrastructure by, for example, building capacity, providing guidance and creating a digital prototype platform, to facilitate dialogue and the successful adoption of participatory research and citizen science in the federal science ecosystem.
-        fr: Concevoir et consolider l’infrastructure, par exemple, en renforçant les capacités, en fournissant une orientation et en créant une plateforme numérique prototype afin de faciliter le dialogue et d’assurer l’adoption de la recherche participative et de la science citoyenne dans l’écosystème scientifique fédéral.
+        fr: Concevoir et consolider l'infrastructure, par exemple, en renforçant les capacités, en fournissant une orientation et en créant une plateforme numérique prototype afin de faciliter le dialogue et d'assurer l'adoption de la recherche participative et de la science citoyenne dans l'écosystème scientifique fédéral.
         # TODO: update info
         due_date:
         deadline:
@@ -371,7 +387,7 @@ resources:
         s4d:
       C01.6.1:
         en: Development of a proposal detailing the design, framework and governance structure for a new external portal that will provide controlled, login-based access to unprotected, non-sensitive data assets and datasets for selected Indigenous organizations and governments.
-        fr: Élaborer une proposition détaillant la conception, le cadre et la structure de gouvernance d’un nouveau portail externe qui offrira un accès contrôlé, avec authentification, à des actifs et ensembles de données non protégés et non sensibles pour certains gouvernements et certaines organisations autochtones.
+        fr: Élaborer une proposition détaillant la conception, le cadre et la structure de gouvernance d'un nouveau portail externe qui offrira un accès contrôlé, avec authentification, à des actifs et ensembles de données non protégés et non sensibles pour certains gouvernements et certaines organisations autochtones.
         # TODO: update info
         due_date:
         deadline:
@@ -401,7 +417,7 @@ resources:
         s4d:
       C01.7.1:
         en: Invite branches to think about their own holdings and consider what could be made available through the Open Government Portal in an accessible format.
-        fr: Inviter les directions générales à réfléchir à leurs propres données et à ce qu’elles pourraient publier dans un format accessible par l’intermédiaire du Portail du gouvernement ouvert.
+        fr: Inviter les directions générales à réfléchir à leurs propres données et à ce qu'elles pourraient publier dans un format accessible par l'intermédiaire du Portail du gouvernement ouvert.
         # TODO: update info
         due_date:
         deadline:
@@ -411,7 +427,7 @@ resources:
         s4d:
       C01.7.2:
         en: Encourage branches to consider whether the work they are doing will include opportunities to promote accountability and citizen engagement.
-        fr: Encourager les directions générales à se demander si le travail qu’elles accomplissent comprendra des occasions de promouvoir la responsabilité et l’engagement des citoyens.
+        fr: Encourager les directions générales à se demander si le travail qu'elles accomplissent comprendra des occasions de promouvoir la responsabilité et l'engagement des citoyens.
         # TODO: update info
         due_date:
         deadline:
@@ -421,7 +437,7 @@ resources:
         s4d:
       C01.7.3:
         en: Ensure that twice annually, open government awareness activities are highlighted (once during Open Government Week and once during “Right to Know” week), with the goal of raising awareness at VAC. Success would be measured through participatory activities like employee knowledge challenges.
-        fr: Veiller à ce que deux fois par année, les activités de sensibilisation à l’égard du gouvernement ouvert soient mises en évidence (une fois dans le cadre de la Semaine du gouvernement ouvert et une fois dans le cadre de la Semaine du droit à l’information), dans le but de mieux faire connaître le gouvernement ouvert au sein d’ACC. Le succès serait évalué au moyen d’activités participatives comme des tests de connaissances à l’intention des employés.
+        fr: Veiller à ce que deux fois par année, les activités de sensibilisation à l'égard du gouvernement ouvert soient mises en évidence (une fois dans le cadre de la Semaine du gouvernement ouvert et une fois dans le cadre de la Semaine du droit à l'information), dans le but de mieux faire connaître le gouvernement ouvert au sein d'ACC. Le succès serait évalué au moyen d'activités participatives comme des tests de connaissances à l'intention des employés.
         # TODO: update info
         due_date:
         deadline:
@@ -441,7 +457,7 @@ resources:
         s4d:
       C02.1.2:
         en: Promote the framework and guidebook throughout the RCMP to facilitate their adoption and implementation.
-        fr: Faire la promotion du cadre et du guide dans l’ensemble de la GRC afin de faciliter leur adoption et leur mise en œuvre.
+        fr: Faire la promotion du cadre et du guide dans l'ensemble de la GRC afin de faciliter leur adoption et leur mise en oevreu.
         # TODO: update info
         due_date:
         deadline:
@@ -451,7 +467,7 @@ resources:
         s4d:
       C02.1.3:
         en: Create an ethics and personal data tool to ensure that data is collected legally and ethically during public consultations.
-        fr: Créer un outil d’éthique et de données personnelles pour veiller à ce que les données soient recueillies de manière légale et éthique durant les consultations publiques.
+        fr: Créer un outil d'éthique et de données personnelles pour veiller à ce que les données soient recueillies de manière légale et éthique durant les consultations publiques.
         # TODO: update info
         due_date:
         deadline:
@@ -460,8 +476,8 @@ resources:
         lead_dept:
         s4d:
       C02.2.1:
-        en: Prepare a draft paper that assesses progress to date, identifies domestic and international best practices, and lays out potential approaches to strengthen Canadians’ resilience to online disinformation.
-        fr: Préparer une ébauche d’un document qui évalue les progrès réalisés à ce jour, dégage les pratiques exemplaires nationales et internationales et présente des approches possibles pour renforcer la capacité des Canadiens à faire face à la désinformation en ligne.
+        en: Prepare a draft paper that assesses progress to date, identifies domestic and international best practices, and lays out potential approaches to strengthen Canadians' resilience to online disinformation.
+        fr: Préparer une ébauche d'un document qui évalue les progrès réalisés à ce jour, dégage les pratiques exemplaires nationales et internationales et présente des approches possibles pour renforcer la capacité des Canadiens à faire face à la désinformation en ligne.
         # TODO: update info
         due_date:
         deadline:
@@ -481,7 +497,7 @@ resources:
         s4d:
       C02.2.3:
         en: Develop a revised knowledge-sharing and communications strategy for the Digital Citizen Initiative.
-        fr: Élaborer une stratégie révisée de partage des connaissances et de communication pour l’Initiative de citoyenneté numérique.
+        fr: Élaborer une stratégie révisée de partage des connaissances et de communication pour l'Initiative de citoyenneté numérique.
         # TODO: update info
         due_date:
         deadline:
@@ -491,7 +507,7 @@ resources:
         s4d:
       C02.2.4:
         en: Host three events to build capacity and share best practices among researchers and civil society organizations that work in civic engagement and digital media literacy.
-        fr: Organiser trois événements pour renforcer les capacités et permettre l’échange de pratiques exemplaires entre les chercheurs et les organisations de la société civile qui œuvrent dans le domaine de l’engagement civique et de la littératie numérique.
+        fr: Organiser trois événements pour renforcer les capacités et permettre l'échange de pratiques exemplaires entre les chercheurs et les organisations de la société civile qui oeuvrent dans le domaine de l'engagement civique et de la littératie numérique.
         # TODO: update info
         due_date:
         deadline:
@@ -500,8 +516,8 @@ resources:
         lead_dept:
         s4d:
       C02.3.1:
-        en: Renew and revise LAC’s Access Policy Framework and programs and processes to maximize access to federal records held by LAC.
-        fr: Renouveler et réviser le Cadre de politique d’accès de BAC ainsi que ses programmes et processus afin de maximiser l’accès aux documents fédéraux détenus par BAC.
+        en: Renew and revise LAC's Access Policy Framework and programs and processes to maximize access to federal records held by LAC.
+        fr: Renouveler et réviser le Cadre de politique d'accès de BAC ainsi que ses programmes et processus afin de maximiser l'accès aux documents fédéraux détenus par BAC.
         # TODO: update info
         due_date:
         deadline:
@@ -511,7 +527,7 @@ resources:
         s4d:
       C02.3.2:
         en: Proactively remove access barriers to GC archival records and have 30% to 50% of the archival GC records held at LAC open and readily available for Canadians to access either in person or online.
-        fr: Éliminer de façon proactive les obstacles à l’accès aux documents archivés du gouvernement du Canada. Faire en sorte que de 30 % à 50 % des documents archivés du gouvernement du Canada détenus par BAC soient ouverts et facilement accessibles aux Canadiens, en personne ou en ligne.
+        fr: Éliminer de façon proactive les obstacles à l'accès aux documents archivés du gouvernement du Canada. Faire en sorte que de 30 % à 50 % des documents archivés du gouvernement du Canada détenus par BAC soient ouverts et facilement accessibles aux Canadiens, en personne ou en ligne.
         # TODO: update info
         due_date:
         deadline:
@@ -521,7 +537,7 @@ resources:
         s4d:
       C02.3.3:
         en: Integrate public demand into the prioritization process of federal archival records to be proactively opened and maximize access to those records.
-        fr: Intégrer la demande du public dans le processus d’établissement de la priorité des documents fédéraux archivés afin qu’ils soient ouverts de façon proactive et d’optimiser l’accès à ces documents.
+        fr: Intégrer la demande du public dans le processus d'établissement de la priorité des documents fédéraux archivés afin qu'ils soient ouverts de façon proactive et d'optimiser l'accès à ces documents.
         # TODO: update info
         due_date:
         deadline:
@@ -540,8 +556,8 @@ resources:
         lead_dept:
         s4d:
       C03.1.2:
-        en: Increase Canadians’ trust in the federal government, which was at 49% in 2023 according to the OECD Surveys on Drivers of Trust in Public Institutions.
-        fr: Accroître la confiance des Canadiens envers le gouvernement fédéral, qui était de 49 % en 2023 selon l’enquête de l’Organisation de coopération et de développement économiques sur les déterminants de la confiance dans les institutions publiques.
+        en: Increase Canadians' trust in the federal government, which was at 49% in 2023 according to the OECD Surveys on Drivers of Trust in Public Institutions.
+        fr: Accroître la confiance des Canadiens envers le gouvernement fédéral, qui était de 49 % en 2023 selon l'enquête de l'Organisation de coopération et de développement économiques sur les déterminants de la confiance dans les institutions publiques.
         # TODO: update info
         due_date:
         deadline:
@@ -551,7 +567,7 @@ resources:
         s4d:
       C03.1.3:
         en: Provide dashboards on high-level crime statistics and aggregated occurrence maps.
-        fr: Fournir des tableaux de bord sur les statistiques criminelles globales et des cartes d’événements agrégées.
+        fr: Fournir des tableaux de bord sur les statistiques criminelles globales et des cartes d'événements agrégées.
         # TODO: update info
         due_date:
         deadline:
@@ -560,8 +576,8 @@ resources:
         lead_dept:
         s4d:
       C03.2.1:
-        en: Develop interactive and accessible versions of the Creative Export Strategy’s data viewer.
-        fr: Développer des versions interactives et accessibles du visualiseur de données sur la Stratégie d’exportation créative.
+        en: Develop interactive and accessible versions of the Creative Export Strategy's data viewer.
+        fr: Développer des versions interactives et accessibles du visualiseur de données sur la Stratégie d'exportation créative.
         # TODO: update info
         due_date:
         deadline:
@@ -571,7 +587,7 @@ resources:
         s4d:
       C03.2.2:
         en: Publish the Creative Export Strategy Interactive Data Viewer on the Canadian Heritage website.
-        fr: Publier le visualiseur de données interactif sur la Stratégie d’exportation créative dans le site Web de Patrimoine canadien.
+        fr: Publier le visualiseur de données interactif sur la Stratégie d'exportation créative dans le site Web de Patrimoine canadien.
         # TODO: update info
         due_date:
         deadline:
@@ -591,7 +607,7 @@ resources:
         s4d:
       C03.3.1:
         en: Research to identify existing sources of data, information and good practices from other jurisdictions, researchers and organizations.
-        fr: Effectuer des recherches pour déterminer les sources existantes de données, de renseignements et de bonnes pratiques provenant d’autres administrations, chercheurs et organisations.
+        fr: Effectuer des recherches pour déterminer les sources existantes de données, de renseignements et de bonnes pratiques provenant d'autres administrations, chercheurs et organisations.
         # TODO: update info
         due_date:
         deadline:
@@ -611,7 +627,7 @@ resources:
         s4d:
       C03.3.3:
         en: Engagement of internal and external stakeholders to further develop and refine MVP content, format and functionality, and to identify where needed data and information can be sourced.
-        fr: Mobiliser des intervenants internes et externes afin de poursuivre l’élaboration et le peaufinage du contenu, du format et des fonctionnalités du produit minimum viable ainsi que de déterminer où les données et l’information nécessaires peuvent être obtenues.
+        fr: Mobiliser des intervenants internes et externes afin de poursuivre l'élaboration et le peaufinage du contenu, du format et des fonctionnalités du produit minimum viable ainsi que de déterminer où les données et l'information nécessaires peuvent être obtenues.
         # TODO: update info
         due_date:
         deadline:
@@ -631,7 +647,7 @@ resources:
         s4d:
       C03.4.1:
         en: Foster dialogue with key stakeholders (for example, unions, media and federal public servants) through activities like polling, public opinion research, question-and-answer sessions with senior officials, newsletters, and technical briefings.
-        fr: Favoriser un dialogue avec les principaux intervenants (par exemple, les syndicats, les médias et les fonctionnaires fédéraux) au moyen d’activités comme des sondages, des recherches sur l’opinion publique, des séances de questions et réponses avec les hauts fonctionnaires, des bulletins et des séances d’information technique.
+        fr: Favoriser un dialogue avec les principaux intervenants (par exemple, les syndicats, les médias et les fonctionnaires fédéraux) au moyen d'activités comme des sondages, des recherches sur l'opinion publique, des séances de questions et réponses avec les hauts fonctionnaires, des bulletins et des séances d'information technique.
         # TODO: update info
         due_date:
         deadline:
@@ -661,7 +677,7 @@ resources:
         s4d:
       C04.1.1:
         en: Review the processes required for Indigenous people when accessing their data and information held by the RCMP.
-        fr: Examiner les processus requis pour les peuples autochtones lorsqu’ils accèdent à leurs données et aux renseignements détenus par la GRC.
+        fr: Examiner les processus requis pour les peuples autochtones lorsqu'ils accèdent à leurs données et aux renseignements détenus par la GRC.
         # TODO: update info
         due_date:
         deadline:
@@ -691,7 +707,7 @@ resources:
         s4d:
       C04.2.1:
         en: Consult stakeholders on the essential content and desired outcomes of a foundational training or learning program for the federal public service on open data.
-        fr: Consulter les intervenants sur le contenu essentiel et les résultats souhaités relativement à une formation de base ou à un programme d’apprentissage sur les données ouvertes s’adressant à la fonction publique fédérale.
+        fr: Consulter les intervenants sur le contenu essentiel et les résultats souhaités relativement à une formation de base ou à un programme d'apprentissage sur les données ouvertes s'adressant à la fonction publique fédérale.
         # TODO: update info
         due_date:
         deadline:
@@ -701,7 +717,7 @@ resources:
         s4d:
       C04.2.2:
         en: Co-create the module(s) with civil society and Canada School of Public Service and do user testing.
-        fr: Créer un ou des modules en collaboration avec la société civile et l’École de la fonction publique du Canada et procéder à des essais par les utilisateurs.
+        fr: Créer un ou des modules en collaboration avec la société civile et l'École de la fonction publique du Canada et procéder à des essais par les utilisateurs.
         # TODO: update info
         due_date:
         deadline:
@@ -721,7 +737,7 @@ resources:
         s4d:
       C04.2.4:
         en: Assess the effectiveness of the update of the module, by soliciting feedback on how to continually improve it.
-        fr: Évaluer l’efficacité de la mise à jour du module en sollicitant de la rétroaction sur la façon de l’améliorer de manière continue.
+        fr: Évaluer l'efficacité de la mise à jour du module en sollicitant de la rétroaction sur la façon de l'améliorer de manière continue.
         # TODO: update info
         due_date:
         deadline:
@@ -740,7 +756,7 @@ resources:
         lead_dept:
         s4d:
       C04.3.2:
-        en: Number of Justice Canada research publications and resources that use National Justice Survey data and are publicly available
+        en: Number of Justice Canada research publications and resources that use National Justice Survey data and are publicly available
         fr: Nombre de ressources et de publications de recherche du ministère de la Justice Canada utilisant les données du Sondage national sur la justice et qui sont accessibles au public.
         # TODO: update info
         due_date:
@@ -761,7 +777,7 @@ resources:
         s4d:
       C04.3.4:
         en: Qualitative feedback from key stakeholders on accessibility and usability of the data.
-        fr: Rétroaction qualitative des intervenants clés sur l’accessibilité et la facilité d’utilisation des données.
+        fr: Rétroaction qualitative des intervenants clés sur l'accessibilité et la facilité d'utilisation des données.
         # TODO: update info
         due_date:
         deadline:
@@ -770,8 +786,8 @@ resources:
         lead_dept:
         s4d:
       C04.4.1:
-        en: Number of Canada’s State of the Criminal Justice System Dashboard indicators that have been automated
-        fr: Nombre d’indicateurs du Tableau de bord sur l’état du système de justice pénale du Canada qui ont été automatisés.
+        en: Number of Canada's State of the Criminal Justice System Dashboard indicators that have been automated
+        fr: Nombre d'indicateurs du Tableau de bord sur l'état du système de justice pénale du Canada qui ont été automatisés.
         # TODO: update info
         due_date:
         deadline:
@@ -780,8 +796,8 @@ resources:
         lead_dept:
         s4d:
       C04.4.2:
-        en: Number of hits on Canada’s State of the Criminal Justice System Dashboard webpages
-        fr: Nombre de visites des pages Web du Tableau de bord sur l’état du système de justice pénale du Canada.
+        en: Number of hits on Canada's State of the Criminal Justice System Dashboard webpages
+        fr: Nombre de visites des pages Web du Tableau de bord sur l'état du système de justice pénale du Canada.
         # TODO: update info
         due_date:
         deadline:
@@ -790,7 +806,7 @@ resources:
         lead_dept:
         s4d:
       C04.4.3:
-        en: Provide examples of data being used to inform decision-making.
+        en: Provide examples of data being used to inform decision-making.
         fr: Fournir des exemples de données qui sont utilisées pour éclairer le processus décisionnel.
         # TODO: update info
         due_date:
@@ -801,7 +817,7 @@ resources:
         s4d:
       C04.4.4:
         en: Qualitative feedback from key stakeholders on accessibility and usability of the data.
-        fr: Rétroaction qualitative des intervenants clés sur l’accessibilité et la facilité d’utilisation des données.
+        fr: Rétroaction qualitative des intervenants clés sur l'accessibilité et la facilité d'utilisation des données.
         # TODO: update info
         due_date:
         deadline:
@@ -810,8 +826,8 @@ resources:
         lead_dept:
         s4d:
       C04.5.1:
-        en: The number of administrative bodies—federal, provincial and territorial—that apply the Access to Justice Index to their operations for an initial assessment.
-        fr: Nombre d’entités administratives (fédérales, provinciales et territoriales) qui appliquent l’Indice de l’accès à la justice à leurs activités pour une première évaluation.
+        en: The number of administrative bodies—federal, provincial and territorial—that apply the Access to Justice Index to their operations for an initial assessment.
+        fr: Nombre d'entités administratives (fédérales, provinciales et territoriales) qui appliquent l'Indice de l'accès à la justice à leurs activités pour une première évaluation.
         # TODO: update info
         due_date:
         deadline:
@@ -821,7 +837,7 @@ resources:
         s4d:
       C04.5.2:
         en: The number of administrative bodies that use the index for a further self-assessment to evaluate progress and identify additional improvements.
-        fr: Nombre d’entités administratives qui utilisent l’Indice pour procéder à une autoévaluation plus poussée visant à évaluer les progrès et à cerner toute amélioration supplémentaire requise.
+        fr: Nombre d'entités administratives qui utilisent l'Indice pour procéder à une autoévaluation plus poussée visant à évaluer les progrès et à cerner toute amélioration supplémentaire requise.
         # TODO: update info
         due_date:
         deadline:
@@ -831,7 +847,7 @@ resources:
         s4d:
       C04.5.3:
         en: Feedback from administrative bodies on the effectiveness of the index as a tool to support more accessible and user-friendly services.
-        fr: Rétroaction des entités administratives sur l’efficacité de l’Indice comme outil favorisant des services plus accessibles et conviviaux.
+        fr: Rétroaction des entités administratives sur l'efficacité de l'Indice comme outil favorisant des services plus accessibles et conviviaux.
         # TODO: update info
         due_date:
         deadline:
@@ -841,7 +857,7 @@ resources:
         s4d:
       C04.5.4:
         en: Number of awareness raising activities (for example, webinars, talks at conferences).
-        fr: Nombre d’activités de sensibilisation (par exemple, webinaires, présentations lors de conférences).
+        fr: Nombre d'activités de sensibilisation (par exemple, webinaires, présentations lors de conférences).
         # TODO: update info
         due_date:
         deadline:
@@ -851,6 +867,97 @@ resources:
         s4d:
 
   # DEP 1-5
+  # Dev: Published Resource Field
+  - datastore_id: indicator_en
+    label:
+      en: TODO - supply label
+      fr: TODO - supply label
+    description:
+      en: TODO - supply description
+      fr: TODO - supply description
+    obligation: Mandatory
+    datastore_type: text
+    published_resource_computed_field: true
+
+  # DEP 1-6
+  # Dev: Published Resource Field
+  - datastore_id: indicator_fr
+    label:
+      en: TODO - supply label
+      fr: TODO - supply label
+    description:
+      en: TODO - supply description
+      fr: TODO - supply description
+    obligation: Mandatory
+    datastore_type: text
+    published_resource_computed_field: true
+
+  # DEP 1-7
+  # Dev: Published Resource Field
+  - datastore_id: indicator_due_date
+    label:
+      en: TODO - supply label
+      fr: TODO - supply label
+    description:
+      en: TODO - supply description
+      fr: TODO - supply description
+    obligation: Mandatory
+    datastore_type: text
+    published_resource_computed_field: true
+
+  # DEP 1-8
+  # Dev: Published Resource Field
+  - datastore_id: indicator_deadline_en
+    label:
+      en: TODO - supply label
+      fr: TODO - supply label
+    description:
+      en: TODO - supply description
+      fr: TODO - supply description
+    obligation: Mandatory
+    datastore_type: text
+    published_resource_computed_field: true
+
+  # DEP 1-9
+  # Dev: Published Resource Field
+  - datastore_id: indicator_deadline_fr
+    label:
+      en: TODO - supply label
+      fr: TODO - supply label
+    description:
+      en: TODO - supply description
+      fr: TODO - supply description
+    obligation: Mandatory
+    datastore_type: text
+    published_resource_computed_field: true
+
+  # DEP 1-10
+  # Dev: Published Resource Field
+  - datastore_id: indicator_lead_dept
+    label:
+      en: TODO - supply label
+      fr: TODO - supply label
+    description:
+      en: TODO - supply description
+      fr: TODO - supply description
+    obligation: Mandatory
+    datastore_type: text
+    published_resource_computed_field: true
+
+  # DEP 1-11
+  # Dev: Published Resource Field
+  - datastore_id: indicator_s4d
+    label:
+      en: TODO - supply label
+      fr: TODO - supply label
+    description:
+      en: TODO - supply description
+      fr: TODO - supply description
+    obligation: Mandatory
+    datastore_type: text
+    published_resource_computed_field: true
+
+  # DEP 1-12
   - datastore_id: status
     label:
       en: Status
@@ -859,26 +966,35 @@ resources:
       en: Indicate the current status of the commitment
       fr: Indiquer l'état actuel de l'engagement
     obligation: Mandatory
+    occurrence: Single
     excel_required: true
     form_required: true
     datastore_type: text
+    format_type:
+      en: Controlled List
+      fr: Liste contrôlée
     excel_full_text_choices: true
     datatables_full_text_choices: true
+    choice_order_expression: 'value.get("order", 0), code'
     choices:
       NS:
         en: Not started
         fr: Non commencé
+        order: 0
       LP:
         en: Limited progress
         fr: Progrès limité
+        order: 1
       SP:
         en: Substantial progress
         fr: Progrès important
+        order: 2
       C:
         en: Complete
         fr: Réalisé
+        order: 3
 
-  # DEP 1-6
+  # DEP 1-13
   - datastore_id: progress_en
     label:
       en: Progress during reporting period (English)
@@ -887,16 +1003,21 @@ resources:
       en: 1-3 bullets outlining progress made during the most recent reportnig period. If no progress has been made, please write "NIL"
       fr: 1-3 balles décrivant les progrès réalisés au cours dupériode de déclaration. Si aucun progrès n'a été réalisé, veuillez écrire "NIL"
     obligation: Mandatory
+    occurrence: Single
     excel_required: true
     form_required: true
     datastore_type: text
+    excel_column_width: 80
+    format_type:
+      en: Free text
+      fr: Texte libre
     datatables_col_class: col-xxl
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
       class: form-control canada-width-full d-block
     markdown: true
 
-  # DEP 1-7
+  # DEP 1-14
   - datastore_id: progress_fr
     label:
       en: Progress during reporting period (French)
@@ -905,16 +1026,21 @@ resources:
       en: 1-3 bullets outlining progress made during the most recent reporting period. If no progress has been made, please write "NUL"
       fr: 1-3 balles décrivant les progrès réalisés au cours du dernier période de déclaration. Si aucun progrès n'a été réalisé, veuillez écrire "NUL"
     obligation: Mandatory
+    occurrence: Single
     excel_required: true
     form_required: true
     datastore_type: text
+    excel_column_width: 80
+    format_type:
+      en: Free text
+      fr: Texte libre
     datatables_col_class: col-xxl
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
       class: form-control canada-width-full d-block
     markdown: true
 
-  # DEP 1-8
+  # DEP 1-15
   - datastore_id: evidence_en
     label:
       en: Evidence of progress (English)
@@ -923,7 +1049,12 @@ resources:
       en: Any supporting evidence to demonstrate the progress you have made. This could include websites, links to documents, or other information.
       fr: Toute preuve à l'appui pour démontrer les progrès que vous avez accomplis. Cela peut inclure des sites Web, des liens vers des documents ou d'autres informations.
     obligation: Optional
+    occurrence: Single
     datastore_type: text
+    excel_column_width: 80
+    format_type:
+      en: Free text
+      fr: Texte libre
     datatables_col_class: col-xxl
     js_required_eval: '{{evidence_fr}}.length > 0'
     excel_required_formula: NOT(ISBLANK({evidence_fr}))
@@ -932,7 +1063,7 @@ resources:
       class: form-control canada-width-full d-block
     markdown: true
 
-  # DEP 1-9
+  # DEP 1-16
   - datastore_id: evidence_fr
     label:
       en: Evidence of progress (French)
@@ -941,7 +1072,12 @@ resources:
       en: Any supporting evidence to demonstrate the progress you have made. This could include websites, links to documents, or other information.
       fr: Toute preuve à l'appui pour démontrer les progrès que vous avez accomplis. Cela peut inclure des sites Web, des liens vers des documents ou d'autres informations.
     obligation: Optional
+    occurrence: Single
     datastore_type: text
+    excel_column_width: 80
+    format_type:
+      en: Free text
+      fr: Texte libre
     datatables_col_class: col-xxl
     js_required_eval: '{{evidence_en}}.length > 0'
     excel_required_formula: NOT(ISBLANK({evidence_en}))
@@ -950,7 +1086,7 @@ resources:
       class: form-control canada-width-full d-block
     markdown: true
 
-  # DEP 1-10
+  # DEP 1-17
   - datastore_id: challenges
     label:
       en: Challenges
@@ -964,38 +1100,57 @@ resources:
       fr: Obligatoire, conditionnel
     validation:
       en: Required if "Status" is "Limited progress" or "Not started"
-      fr: TODO - CONFIRM TRANSLATION (I am not bilingual) Requis si l'"État" est "Progrès limité" ou "Non commencé"
+      fr: TODO - CONFIRM TRANSLATION (I am not bilingual, thanks!) Requis si l'"État" est "Progrès limité" ou "Non commencé"
+    occurrence: Repeatable
     excel_required: false
     form_required: false
-    # TODO: evals...
-    js_required_eval:
-    excel_required_formula:
+    js_required_eval: >-
+      {{status}}.length > 0 &&
+      (
+        {{status}} == "LP" ||
+        {{status}} == "NS"
+      )
+    excel_required_formula: >-
+      OR(
+        TRIM(LEFT({status},FIND(":",{status}&":")-1))="LP",
+        TRIM(LEFT({status},FIND(":",{status}&":")-1))="NS"
+      )
     datastore_type: _text
+    format_type:
+      en: Controlled List
+      fr: Liste contrôlée
     excel_full_text_choices: false
     datatables_full_text_choices: true
     form_snippet: scheming/form_snippets/multiple_select.html
-    datatables_col_class: col-lg
+    datatables_col_class: col-md
+    choice_order_expression: 'value.get("order", 0), code'
     choices:
       CF:
         en: Change of funding
         fr: Changement de financement
+        order: 0
       LR:
         en: Lack of resources
         fr: Manque de ressources
+        order: 1
       SP:
         en: Shift in priorities
         fr: Changement de priorités
+        order: 2
       DA:
         en: Delay in approvals
         fr: Retard dans les approbations
+        order: 3
       OA:
         en: Dependant on other activities (e.g. an activity can only start after another activity has completed)
         fr: Dépendant d'autres activités (par exemple, une activité ne peut commencer qu'après la fin d'une autre activité)
+        order: 4
       OT:
         en: Other
         fr: Autre
+        order: 5
 
-  # DEP 1-11
+  # DEP 1-18
   - datastore_id: challenges_other_en
     label:
       en: TODO - supply label
@@ -1008,19 +1163,36 @@ resources:
       fr: Obligatoire, conditionnel
     validation:
       en: Required if "Challenges" is "Other"
-      fr: TODO - CONFIRM TRANSLATION (I am not bilingual) Requis si le "Défis" est "Autre"
+      fr: TODO - CONFIRM TRANSLATION (I am not bilingual, thanks!) Requis si le "Défis" est "Autre"
+    occurrence: Single
     excel_required: false
     form_required: false
     datastore_type: text
+    excel_column_width: 80
+    format_type:
+      en: Free text
+      fr: Texte libre
     datatables_col_class: col-xxl
-    js_required_eval: '{{challenges_other_fr}}.length > 0'
-    excel_required_formula: NOT(ISBLANK({challenges_other_fr}))
+    js_required_eval: >-
+      {{challenges_other_fr}}.length > 0 ||
+      (
+        {{challenges}}.length > 0 &&
+        {{challenges}}.includes("OT")
+      )
+    excel_required_formula: >-
+      OR(
+        NOT(ISBLANK({challenges_other_fr})),
+        AND(
+          NOT(ISBLANK({challenges})),
+          ISNUMBER(SEARCH("OT",{challenges}))
+        )
+      )
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
       class: form-control canada-width-full d-block
     markdown: true
 
-  # DEP 1-12
+  # DEP 1-19
   - datastore_id: challenges_other_fr
     label:
       en: TODO - supply label
@@ -1033,13 +1205,30 @@ resources:
       fr: Obligatoire, conditionnel
     validation:
       en: Required if "Challenges" is "Other"
-      fr: TODO - CONFIRM TRANSLATION (I am not bilingual) Requis si le "Défis" est "Autre"
+      fr: TODO - CONFIRM TRANSLATION (I am not bilingual, thanks!) Requis si le "Défis" est "Autre"
+    occurrence: Single
     excel_required: false
     form_required: false
     datastore_type: text
+    excel_column_width: 80
+    format_type:
+      en: Free text
+      fr: Texte libre
     datatables_col_class: col-xxl
-    js_required_eval: '{{challenges_other_en}}.length > 0'
-    excel_required_formula: NOT(ISBLANK({challenges_other_en}))
+    js_required_eval: >-
+      {{challenges_other_en}}.length > 0 ||
+      (
+        {{challenges}}.length > 0 &&
+        {{challenges}}.includes("OT")
+      )
+    excel_required_formula: >-
+      OR(
+        NOT(ISBLANK({challenges_other_en})),
+        AND(
+          NOT(ISBLANK({challenges})),
+          ISNUMBER(SEARCH("OT",{challenges}))
+        )
+      )
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
       class: form-control canada-width-full d-block
@@ -1087,6 +1276,18 @@ resources:
     datastore_type: text
     published_resource_computed_field: true
 
+  # Dev: Published Resource Field
+  - datastore_id: owner_org_title
+    label:
+      en: Department Name
+      fr: Nom du ministère
+    description:
+      en: Identifies the applied title of the department or agency.
+      fr: Identifie le titre d'usage du ministère ou de l'organisme.
+    obligation: Mandatory
+    datastore_type: text
+    published_resource_computed_field: true
+
   datastore_primary_key: [reporting_period, indicators]
   datastore_indexes: ""
 
@@ -1097,8 +1298,7 @@ resources:
   excel_example_height: 50
 
   triggers:
-  # TODO: triggers...
-  - nap_trigger: |
+  - nap6_trigger: |
       DECLARE
         errors text[][] := '{{}}';
         crval RECORD;
@@ -1122,21 +1322,29 @@ resources:
         errors := errors || required_error(NEW.status, 'status');
         errors := errors || choice_error(NEW.status, {status}, 'status');
 
+        NEW.progress_en := trim_lead_trailing(NEW.progress_en);
         errors := errors || required_error(NEW.progress_en, 'progress_en');
+
+        NEW.progress_fr := trim_lead_trailing(NEW.progress_fr);
         errors := errors || required_error(NEW.progress_fr, 'progress_fr');
 
+        NEW.evidence_en := trim_lead_trailing(NEW.evidence_en);
+        NEW.evidence_fr := trim_lead_trailing(NEW.evidence_fr);
         errors := errors || both_languages_error(NEW.evidence_en, 'evidence_en', NEW.evidence_fr, 'evidence_fr');
 
         IF NEW.status = 'NS' OR NEW.status = 'LP' THEN
-          errors := errors || required_error(NEW.challenges, 'challenges');
+          errors := errors || conditional_required_error(NEW.challenges, 'challenges');
         END IF;
 
         crval := choices_clean_error(NEW.challenges, {challenges}, 'challenges');
         errors := errors || crval.error;
+        NEW.challenges := crval.clean;
 
-        IF NEW.challenges <> "" AND NEW.challenges = "OT" THEN
-          errors := errors || required_error(NEW.challenges_other_en, 'challenges_other_en');
-          errors := errors || required_error(NEW.challenges_other_fr, 'challenges_other_fr');
+        NEW.challenges_other_en := trim_lead_trailing(NEW.challenges_other_en);
+        NEW.challenges_other_fr := trim_lead_trailing(NEW.challenges_other_fr);
+        IF NEW.challenges IS NOT NULL AND 'OT' = ANY(NEW.challenges) THEN
+          errors := errors || conditional_required_error(NEW.challenges_other_en, 'challenges_other_en');
+          errors := errors || conditional_required_error(NEW.challenges_other_fr, 'challenges_other_fr');
         ELSE
           errors := errors || both_languages_error(NEW.challenges_other_en, 'challenges_other_en', NEW.challenges_other_fr, 'challenges_other_fr');
         END IF;
@@ -1163,7 +1371,7 @@ resources:
         - Lancer un appel à propositions pour trouver un contractant capable de garantir que le matériel est présenté dans un format utile pour les enseignants et les éducateurs.
       evidence_en: Materials are drafted and posted at [link]
       evidence_fr:  Les documents sont rédigés et publiés sur [link]
-      challenges: CF
+      challenges: [CF]
       challenges_other_en: TODO - supply example value
       challenges_other_fr: TODO - supply example value
     filters:
