@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  CKAN\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-01-19 11:41-0500\n"
+"POT-Creation-Date: 2026-01-30 10:47-0500\n"
 "PO-Revision-Date: 2014-01-23 13:04+0000\n"
 "Last-Translator: Sean Hammond <sean.hammond@okfn.org>\n"
 "Language: en\n"
@@ -247,20 +247,20 @@ msgstr ""
 msgid "Could not determine a resource format. Please supply a format."
 msgstr ""
 
-#: ckanext/canada/logic.py:552
+#: ckanext/canada/logic.py:554
 msgid "Unknown Job"
 msgstr ""
 
-#: ckanext/canada/logic.py:559
+#: ckanext/canada/logic.py:561
 msgid "Entire Site"
 msgstr ""
 
-#: ckanext/canada/logic.py:672
+#: ckanext/canada/logic.py:674
 #, python-format
 msgid "No Portal Sync information found for package %s"
 msgstr "No Portal Sync information found for dataset %s"
 
-#: ckanext/canada/logic.py:761
+#: ckanext/canada/logic.py:763
 msgid ""
 "Invalid request. Full text search is not supported for data with more "
 "than {} rows."
@@ -700,68 +700,72 @@ msgid ""
 "manually please check your spelling and try again."
 msgstr ""
 
-#: ckanext/canada/strings.py:107
-msgid "Please upload a file or link to an external resource"
+#: ckanext/canada/strings.py:105
+msgid "Site is in read only mode"
 msgstr ""
 
 #: ckanext/canada/strings.py:108
-msgid "Cannot upload files of this type"
+msgid "Please upload a file or link to an external resource"
 msgstr ""
 
 #: ckanext/canada/strings.py:109
-msgid "Cannot link files of this type"
+msgid "Cannot upload files of this type"
 msgstr ""
 
 #: ckanext/canada/strings.py:110
-msgid "Your password must be {} characters or longer."
+msgid "Cannot link files of this type"
 msgstr ""
 
 #: ckanext/canada/strings.py:111
+msgid "Your password must be {} characters or longer."
+msgstr ""
+
+#: ckanext/canada/strings.py:112
 msgid ""
 "Your password must consist of at least three of the following character "
 "sets: uppercase characters, lowercase characters, digits, punctuation & "
 "special characters."
 msgstr ""
 
-#: ckanext/canada/strings.py:113
+#: ckanext/canada/strings.py:114
 msgid "Your password cannot be the same as your username."
 msgstr ""
 
-#: ckanext/canada/strings.py:115
+#: ckanext/canada/strings.py:116
 msgid ""
 "Your current password is too weak. Please create a new password before "
 "logging in again."
 msgstr ""
 
-#: ckanext/canada/strings.py:118
+#: ckanext/canada/strings.py:119
 msgid "These fields have been removed, click update below to save your changes."
 msgstr "These fields will be removed once you save your changes."
 
-#: ckanext/canada/strings.py:119
+#: ckanext/canada/strings.py:120
 msgid "These fields have been removed."
 msgstr ""
 
-#: ckanext/canada/strings.py:122
+#: ckanext/canada/strings.py:123
 msgid "Your form submission could not be validated, please re-submit the form."
 msgstr ""
 
-#: ckanext/canada/strings.py:125
+#: ckanext/canada/strings.py:126
 msgid "Open Government Portal"
 msgstr ""
 
-#: ckanext/canada/strings.py:126
+#: ckanext/canada/strings.py:127
 msgid "Open Government Portal (staging)"
 msgstr ""
 
-#: ckanext/canada/strings.py:129
+#: ckanext/canada/strings.py:130
 msgid "Delete from DataStore"
 msgstr ""
 
-#: ckanext/canada/strings.py:130
+#: ckanext/canada/strings.py:131
 msgid "Are you sure you want to delete the DataStore and Data Dictionary?"
 msgstr ""
 
-#: ckanext/canada/strings.py:131
+#: ckanext/canada/strings.py:132
 #: ckanext/canada/templates/organization/confirm_delete_member.html:3
 #: ckanext/canada/templates/organization/confirm_delete_member.html:14
 #: ckanext/canada/templates/package/confirm_delete.html:3
@@ -775,55 +779,55 @@ msgstr ""
 msgid "Confirm Delete"
 msgstr ""
 
-#: ckanext/canada/strings.py:134
+#: ckanext/canada/strings.py:135
 msgid "Validation Information"
 msgstr ""
 
-#: ckanext/canada/strings.py:135
+#: ckanext/canada/strings.py:136
 msgid "Validation status:"
 msgstr ""
 
-#: ckanext/canada/strings.py:136
+#: ckanext/canada/strings.py:137
 msgid "Validation timestamp:"
 msgstr ""
 
-#: ckanext/canada/strings.py:137
+#: ckanext/canada/strings.py:138
 msgid "Duration:"
 msgstr ""
 
-#: ckanext/canada/strings.py:138
+#: ckanext/canada/strings.py:139
 msgid "Validation status"
 msgstr ""
 
-#: ckanext/canada/strings.py:139
+#: ckanext/canada/strings.py:140
 msgid "Validation timestamp"
 msgstr ""
 
-#: ckanext/canada/strings.py:142
+#: ckanext/canada/strings.py:143
 msgid "Single"
 msgstr ""
 
-#: ckanext/canada/strings.py:143
+#: ckanext/canada/strings.py:144
 msgid "Repeatable"
 msgstr ""
 
-#: ckanext/canada/strings.py:144
+#: ckanext/canada/strings.py:145
 msgid "Optional"
 msgstr ""
 
-#: ckanext/canada/strings.py:147
+#: ckanext/canada/strings.py:148
 msgid "Errors in Recombinant Resource"
 msgstr "Errors in Published Resource"
 
-#: ckanext/canada/strings.py:148
+#: ckanext/canada/strings.py:149
 msgid "Refresh Recombinant Resource"
 msgstr "Refresh Published Resource"
 
-#: ckanext/canada/strings.py:149
+#: ckanext/canada/strings.py:150
 msgid "The Recombinant resource is out of date"
 msgstr "The published resource is out of date"
 
-#: ckanext/canada/strings.py:150
+#: ckanext/canada/strings.py:151
 msgid "The Recombinant resource is out of date:"
 msgstr "The published resource is out of date:"
 
@@ -1502,7 +1506,7 @@ msgstr ""
 #. SQL Trigger String for PD Type: ati
 #. SQL Trigger String for PD Type: briefingt
 #: ckanext/canada/tables/ati.yaml:267 ckanext/canada/tables/ati.yaml:403
-#: ckanext/canada/tables/briefingt.yaml:444
+#: ckanext/canada/tables/briefingt.yaml:451
 msgid "Please enter a month number from 1-12"
 msgstr ""
 
@@ -1546,12 +1550,12 @@ msgid ""
 msgstr ""
 
 #. SQL Trigger String for PD Type: briefingt
-#: ckanext/canada/tables/briefingt.yaml:319
+#: ckanext/canada/tables/briefingt.yaml:326
 msgid "Comma is not allowed in Briefing Note Number field"
 msgstr ""
 
 #. Resource Title for PD Type: briefingt
-#: ckanext/canada/tables/briefingt.yaml:339
+#: ckanext/canada/tables/briefingt.yaml:346
 msgid "Proactive Publication - Briefing Note Titles and Numbers Nothing to Report"
 msgstr ""
 
@@ -1562,7 +1566,7 @@ msgstr ""
 #. SQL Trigger String for PD Type: reclassification
 #. SQL Trigger String for PD Type: travela
 #. SQL Trigger String for PD Type: travelq
-#: ckanext/canada/tables/briefingt.yaml:443
+#: ckanext/canada/tables/briefingt.yaml:450
 #: ckanext/canada/tables/contractsa.yaml:397
 #: ckanext/canada/tables/hospitalityq.yaml:874
 #: ckanext/canada/tables/qpnotes.yaml:512
@@ -3687,7 +3691,7 @@ msgstr ""
 
 #: ckanext/canada/templates/recombinant/create_pd_record.html:89
 #: ckanext/canada/templates/recombinant/update_pd_record.html:92
-#: ckanext/canada/templates/scheming/package/snippets/package_form.html:90
+#: ckanext/canada/templates/scheming/package/snippets/package_form.html:89
 msgid "Save"
 msgstr ""
 
@@ -3725,7 +3729,7 @@ msgstr ""
 #: ckanext/canada/templates/recombinant/update_pd_record.html:3
 #: ckanext/canada/templates/recombinant/update_pd_record.html:4
 #: ckanext/canada/templates/recombinant/update_pd_record.html:11
-#: ckanext/canada/templates/scheming/package/snippets/package_form.html:103
+#: ckanext/canada/templates/scheming/package/snippets/package_form.html:102
 msgid "Update Record"
 msgstr ""
 
@@ -3900,26 +3904,26 @@ msgid ""
 " Open Government Portal"
 msgstr ""
 
-#: ckanext/canada/templates/scheming/package/snippets/package_form.html:68
+#: ckanext/canada/templates/scheming/package/snippets/package_form.html:67
 msgid "Confirm Contact Email"
 msgstr ""
 
-#: ckanext/canada/templates/scheming/package/snippets/package_form.html:72
+#: ckanext/canada/templates/scheming/package/snippets/package_form.html:71
 msgid ""
 "Please note: The Contact Email field allows Portal users to send feedback"
-" about this dataset. If you leave this field empty, you won’t be able to "
-"receive any feedback."
+" and questions about this data and information. If you leave this field "
+"empty, you will not be able to receive any feedback or questions."
 msgstr ""
 
-#: ckanext/canada/templates/scheming/package/snippets/package_form.html:75
+#: ckanext/canada/templates/scheming/package/snippets/package_form.html:74
 msgid "Go back and add Contact email"
 msgstr ""
 
-#: ckanext/canada/templates/scheming/package/snippets/package_form.html:76
+#: ckanext/canada/templates/scheming/package/snippets/package_form.html:75
 msgid "Continue anyway"
 msgstr ""
 
-#: ckanext/canada/templates/scheming/package/snippets/package_form.html:101
+#: ckanext/canada/templates/scheming/package/snippets/package_form.html:100
 msgid "Next: Add Resource"
 msgstr ""
 
