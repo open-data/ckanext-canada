@@ -1380,3 +1380,29 @@ resources:
       reporting_period: 2025-12
       indicators: C01.1.1
     sort: reporting_period desc, indicators
+
+excel_edge_style:
+  PatternFill:
+    patternType: solid
+    fgColor: FF1692ae
+excel_header_style:
+  PatternFill:
+    patternType: solid
+    fgColor: FF536a40
+excel_example_style:
+  PatternFill:
+    patternType: solid
+    fgColor: FF3a474f
+excel_column_heading_style:
+  PatternFill:
+    patternType: solid
+    fgColor: FF536a40
+  Font:
+    color: f7f7f7
+datatables_style:
+  header:
+    bgColor: 536a40
+    fgColor: f7f7f7
+  select:
+    bgColor: 97b381
+    fgColor: 333333
