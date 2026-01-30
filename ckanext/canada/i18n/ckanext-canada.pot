@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ckanext-canada 0.4.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-01-19 09:59-0500\n"
+"POT-Creation-Date: 2026-01-30 10:35-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -254,7 +254,7 @@ msgstr ""
 msgid "No Portal Sync information found for package %s"
 msgstr ""
 
-#: ckanext/canada/logic.py:757
+#: ckanext/canada/logic.py:761
 msgid ""
 "Invalid request. Full text search is not supported for data with more than {}"
 " rows."
@@ -3556,7 +3556,7 @@ msgstr ""
 
 #: ckanext/canada/templates/recombinant/create_pd_record.html:89
 #: ckanext/canada/templates/recombinant/update_pd_record.html:92
-#: ckanext/canada/templates/scheming/package/snippets/package_form.html:90
+#: ckanext/canada/templates/scheming/package/snippets/package_form.html:89
 msgid "Save"
 msgstr ""
 
@@ -3593,7 +3593,7 @@ msgstr ""
 #: ckanext/canada/templates/recombinant/update_pd_record.html:3
 #: ckanext/canada/templates/recombinant/update_pd_record.html:4
 #: ckanext/canada/templates/recombinant/update_pd_record.html:11
-#: ckanext/canada/templates/scheming/package/snippets/package_form.html:103
+#: ckanext/canada/templates/scheming/package/snippets/package_form.html:102
 msgid "Update Record"
 msgstr ""
 
@@ -3765,26 +3765,26 @@ msgid ""
 "Open Government Portal"
 msgstr ""
 
-#: ckanext/canada/templates/scheming/package/snippets/package_form.html:68
+#: ckanext/canada/templates/scheming/package/snippets/package_form.html:67
 msgid "Confirm Contact Email"
 msgstr ""
 
-#: ckanext/canada/templates/scheming/package/snippets/package_form.html:72
+#: ckanext/canada/templates/scheming/package/snippets/package_form.html:71
 msgid ""
-"Please note: The Contact Email field allows Portal users to send feedback "
-"about this dataset. If you leave this field empty, you won’t be able to "
-"receive any feedback."
+"Please note: The Contact Email field allows Portal users to send feedback and"
+" questions about this data and information. If you leave this field empty, "
+"you will not be able to receive any feedback or questions."
 msgstr ""
 
-#: ckanext/canada/templates/scheming/package/snippets/package_form.html:75
+#: ckanext/canada/templates/scheming/package/snippets/package_form.html:74
 msgid "Go back and add Contact email"
 msgstr ""
 
-#: ckanext/canada/templates/scheming/package/snippets/package_form.html:76
+#: ckanext/canada/templates/scheming/package/snippets/package_form.html:75
 msgid "Continue anyway"
 msgstr ""
 
-#: ckanext/canada/templates/scheming/package/snippets/package_form.html:101
+#: ckanext/canada/templates/scheming/package/snippets/package_form.html:100
 msgid "Next: Add Resource"
 msgstr ""
 

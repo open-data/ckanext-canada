@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-01-19 09:59-0500\n"
+"POT-Creation-Date: 2026-01-30 10:35-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: fr\n"
@@ -286,7 +286,7 @@ msgstr ""
 "Aucune information de synchronisation du portail n'a été trouvée pour le "
 "jeu de données %s"
 
-#: ckanext/canada/logic.py:757
+#: ckanext/canada/logic.py:761
 msgid ""
 "Invalid request. Full text search is not supported for data with more "
 "than {} rows."
@@ -4041,7 +4041,7 @@ msgstr "Vous pouvez sélectionner ou désélectionner de multiples entrées."
 
 #: ckanext/canada/templates/recombinant/create_pd_record.html:89
 #: ckanext/canada/templates/recombinant/update_pd_record.html:92
-#: ckanext/canada/templates/scheming/package/snippets/package_form.html:90
+#: ckanext/canada/templates/scheming/package/snippets/package_form.html:89
 msgid "Save"
 msgstr "Enregistrer"
 
@@ -4091,7 +4091,7 @@ msgstr ""
 #: ckanext/canada/templates/recombinant/update_pd_record.html:3
 #: ckanext/canada/templates/recombinant/update_pd_record.html:4
 #: ckanext/canada/templates/recombinant/update_pd_record.html:11
-#: ckanext/canada/templates/scheming/package/snippets/package_form.html:103
+#: ckanext/canada/templates/scheming/package/snippets/package_form.html:102
 msgid "Update Record"
 msgstr "Mettre à jour les données"
 
@@ -4273,30 +4273,30 @@ msgstr ""
 "Expression ou chaîne unique désignant le dossier de métadonnées dans le "
 "Portail du gouvernement ouvert"
 
-#: ckanext/canada/templates/scheming/package/snippets/package_form.html:68
+#: ckanext/canada/templates/scheming/package/snippets/package_form.html:67
 msgid "Confirm Contact Email"
 msgstr "Vérifier le courriel"
 
-#: ckanext/canada/templates/scheming/package/snippets/package_form.html:72
+#: ckanext/canada/templates/scheming/package/snippets/package_form.html:71
 msgid ""
 "Please note: The Contact Email field allows Portal users to send feedback"
-" about this dataset. If you leave this field empty, you won’t be able to "
-"receive any feedback."
+" and questions about this data and information. If you leave this field "
+"empty, you will not be able to receive any feedback or questions."
 msgstr ""
 "Veuillez noter que le champ Adresse de courriel permet aux utilisateurs "
 "du portail d’envoyer des commentaires et des questions au sujet de ces "
 "données et renseignements. Si vous laissez ce champ vide, vous ne pourrez"
 " pas recevoir de commentaires ni de questions."
 
-#: ckanext/canada/templates/scheming/package/snippets/package_form.html:75
+#: ckanext/canada/templates/scheming/package/snippets/package_form.html:74
 msgid "Go back and add Contact email"
 msgstr "Ajouter le courriel avant de continuer"
 
-#: ckanext/canada/templates/scheming/package/snippets/package_form.html:76
+#: ckanext/canada/templates/scheming/package/snippets/package_form.html:75
 msgid "Continue anyway"
 msgstr "Continuer malgré tout"
 
-#: ckanext/canada/templates/scheming/package/snippets/package_form.html:101
+#: ckanext/canada/templates/scheming/package/snippets/package_form.html:100
 msgid "Next: Add Resource"
 msgstr "Suivant : ajouter une ressource"
 
