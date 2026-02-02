@@ -1,8 +1,10 @@
 {% ckan_extends %}
 
 {% block stages %}
-  {% if form_style != 'edit' and dataset_type != 'prop' %}
-    {{ super() }}
+  {% if dataset_type != 'prop' %}
+    <div id="canada-package-form-stages" data-style="{{- form_style -}}">
+      {{ super() }}
+    </div>
   {% endif %}
 {% endblock %}
 
@@ -96,11 +98,7 @@
 {% block publish_button %}{% endblock %}
 
 {% block save_button_text %}
-  {% if form_style != 'edit' %}
-    {{- _('Next: Add Resource') -}}
-  {% else %}
-    {{- _('Update Record') -}}
-  {% endif %}
+  {{ super() }}
 {% endblock %}
 
 {% block save_button %}
