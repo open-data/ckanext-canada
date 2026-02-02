@@ -14,8 +14,24 @@ groups:
         description: |
             Email address of Open Canada support desk.
         required: false
-      - key: ckanext.canada.default_open_email_address
-        default: open-ouvert@tbs-sct.gc.ca
+      - key: ckanext.canada.content_security_policy
+        default: >
+          Content-Security-Policy: default-src 'self';
         description: |
-            Generic email address for Open Canada.
+            Content-Security-Policy header value for all requests.
+            To use nonces, use 'nonce-[[NONCE]]' and [[NONCE]] will
+            be replaced with a generated nonce.
         required: false
+        validators: ignore_missing http_header_value_validator
+      - key: ckanext.canada.disable_content_security_policy
+        default: false
+        description: |
+          Disables the internal Content-Security-Policy header.
+          Should not be set to True in production environments.
+        validators: boolean_validator
+      - key: ckanext.canada.enable_pd_datatable_editor
+        default: false
+        description: |
+          Enables the improved DataTables and custom editor for
+          Recombinant type resources.
+        validators: boolean_validator

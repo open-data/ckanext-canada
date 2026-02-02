@@ -11,7 +11,7 @@
       {% if pkg_dict.url %}
         <tr>
           <td>{{ _('Source') }}</td>
-          <td>{{ h.link_to(pkg_dict.url, pkg_dict.url, rel='foaf:homepage', target='_blank') }}</td>
+          <td>{{ h.link_to(pkg_dict.url, pkg_dict.url, rel='foaf:homepage noopener noreferrer', target='_blank') }}</td>
         </tr>
       {% endif %}
       {% if pkg_dict.author_email %}
@@ -23,22 +23,6 @@
         <tr>
           <td>{{ _("Author") }}</td>
           <td>{{ pkg_dict.author }}</td>
-        </tr>
-      {% endif %}
-      {% if pkg_dict.maintainer_email %}
-        <tr>
-          <td>{{ _('Maintainer') }}</td>
-          <td>{{ h.mail_to(email_address=pkg_dict.maintainer_email, name=pkg_dict.maintainer) }}</td>
-        </tr>
-      {% elif pkg_dict.maintainer %}
-        <tr>
-          <td>{{ _('Maintainer') }}</td>
-          <td>{{ pkg_dict.maintainer }}</td>
-        </tr>
-      {% else %}
-        <tr>
-          <td>{{ _('Maintainer') }}</td>
-          <td>{{ h.mail_to(email_address=h.default_open_email_address(), name=h.default_open_email_address()) }}</td>
         </tr>
       {% endif %}
       {% if pkg_dict.version %}

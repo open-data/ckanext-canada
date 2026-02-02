@@ -29,7 +29,10 @@ resources:
     excel_required: true
     form_required: true
     validation: This field must not be empty
-    format_type: Free text
+    js_error_eval: 'VALUE.length > 0 && VALUE.includes(",")'
+    format_type:
+      en: Free text
+      fr: Texte libre
     excel_column_width: 30
     form_attrs:
       size: 60
@@ -39,7 +42,9 @@ resources:
     label:
       en: Job Number
       fr: Numéro d'emploi
-    format_type: Free text
+    format_type:
+      en: Free text
+      fr: Texte libre
     excel_column_width: 30
     form_attrs:
       size: 60
@@ -53,7 +58,9 @@ resources:
     excel_required: true
     form_required: true
     validation: This field must not be empty
-    format_type: Free text
+    format_type:
+      en: Free text
+      fr: Texte libre
     excel_column_width: 30
     form_attrs:
       size: 60
@@ -67,7 +74,9 @@ resources:
     excel_required: true
     form_required: true
     validation: This field must not be empty
-    format_type: Date (Please format the data as YYYY-MM-DD)
+    format_type:
+      en: Date (Please format the date as YYYY-MM-DD)
+      fr: "Date (Veuillez utiliser le format de date suivant : AAAA-MM-JJ)"
     excel_column_width: 20
     extract_date_year: true
     extract_date_month: true
@@ -83,7 +92,10 @@ resources:
     excel_required: true
     form_required: true
     validation: This field must not be empty
-    format_type: Free text
+    datatables_col_class: col-xl
+    format_type:
+      en: Free text
+      fr: Texte libre
     excel_column_width: 30
     form_attrs:
       size: 60
@@ -97,7 +109,10 @@ resources:
     excel_required: true
     form_required: true
     validation: This field must not be empty
-    format_type: Free text
+    datatables_col_class: col-xl
+    format_type:
+      en: Free text
+      fr: Texte libre
     excel_column_width: 30
     form_attrs:
       size: 60
@@ -110,10 +125,14 @@ resources:
     obligation: Mandatory
     excel_required: true
     form_required: true
-    format_type: Controlled List
+    format_type:
+      en: Controlled List
+      fr: Liste contrôlée
     validation: This field must not be empty
-    excel_full_text_choices: True
-    form_choices_prefix_code: True
+    excel_full_text_choices: true
+    datatables_full_text_choices: true
+    form_choices_prefix_code: true
+    datatables_col_class: col-md
     choices_file: choices/classification_group.yaml
     excel_error_formula: 'FALSE'
 
@@ -125,9 +144,11 @@ resources:
     obligation: Mandatory
     excel_required: true
     form_required: true
-    format_type: Controlled List
+    format_type:
+      en: Controlled List
+      fr: Liste contrôlée
     validation: This field must not be empty
-    excel_full_text_choices: False
+    excel_full_text_choices: false
     choices_file: choices/level_number.yaml
     excel_error_formula: 'FALSE'
 
@@ -139,10 +160,14 @@ resources:
     obligation: Mandatory
     excel_required: true
     form_required: true
-    format_type: Controlled List
+    format_type:
+      en: Controlled List
+      fr: Liste contrôlée
     validation: This field must not be empty
-    excel_full_text_choices: True
-    form_choices_prefix_code: True
+    excel_full_text_choices: true
+    datatables_full_text_choices: true
+    form_choices_prefix_code: true
+    datatables_col_class: col-md
     choices_file: choices/classification_group.yaml
     excel_error_formula: 'FALSE'
 
@@ -154,9 +179,11 @@ resources:
     obligation: Mandatory
     excel_required: true
     form_required: true
-    format_type: Controlled List
+    format_type:
+      en: Controlled List
+      fr: Liste contrôlée
     validation: This field must not be empty
-    excel_full_text_choices: False
+    excel_full_text_choices: false
     choices_file: choices/level_number.yaml
     excel_error_formula: 'FALSE'
 
@@ -165,7 +192,10 @@ resources:
     label:
       en: Previous Supervisory Differential
       fr: Ancienne prime de surveillance
-    format_type: Free Text
+    datatables_col_class: col-md
+    format_type:
+      en: Free text
+      fr: Texte libre
     form_attrs:
       size: 60
 
@@ -174,7 +204,10 @@ resources:
     label:
       en: Reclassified Supervisory Differential
       fr: Prime de surveillance précédente
-    format_type: Free Text
+    datatables_col_class: col-md
+    format_type:
+      en: Free text
+      fr: Texte libre
     form_attrs:
       size: 60
 
@@ -186,11 +219,14 @@ resources:
     obligation: Mandatory
     excel_required: true
     form_required: true
-    format_type: Free Text
+    datatables_col_class: col-xl
+    format_type:
+      en: Free text
+      fr: Texte libre
     validation: This field must not be empty
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
-      style: "width: 100%; display: block"
+      class: form-control canada-width-full d-block
 
   - datastore_id: reason_fr
     datastore_type: text
@@ -200,11 +236,14 @@ resources:
     obligation: Mandatory
     excel_required: true
     form_required: true
-    format_type: Free Text
+    datatables_col_class: col-xl
+    format_type:
+      en: Free text
+      fr: Texte libre
     validation: This field must not be empty
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
-      style: "width: 100%; display: block"
+      class: form-control canada-width-full d-block
 
   - datastore_id: record_created
     label: Record Creation Time
@@ -310,7 +349,9 @@ resources:
     validation: This field must not be empty
     excel_column_width: 10
     extract_date_year: true
+    datatables_col_class: col-md
     excel_error_formula: '{cell}>YEAR(TODAY())'
+    js_error_eval: 'VALUE.length > 0 && VALUE > new Date().getFullYear()'
 
   - datastore_id: quarter
     datastore_type: text
@@ -321,8 +362,10 @@ resources:
     obligation: Mandatory
     excel_required: true
     form_required: true
+    datatables_col_class: col-sm pd-datatables-primary-key-offset-md
     validation: This field must not be empty
     excel_full_text_choices: true
+    datatables_full_text_choices: true
     choices:
       Q1:
         en: April 1 - June 30
@@ -415,3 +458,9 @@ excel_column_heading_style:
   PatternFill:
     patternType: solid
     fgColor: FF83c3f2
+datatables_style:
+  header:
+    bgColor: 83c3f2
+  select:
+    bgColor: c8e5f9
+    fgColor: 333333

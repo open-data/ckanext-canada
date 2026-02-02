@@ -368,6 +368,7 @@ def canada_guess_mimetype(context: Context, data_dict: DataDict) -> str:
 
 
 @chained_action
+@side_effect_free
 def canada_resource_view_show(up_func: Action,
                               context: Context,
                               data_dict: DataDict) -> ChainedAction:
@@ -434,6 +435,7 @@ def canada_resource_view_show(up_func: Action,
 
 
 @chained_action
+@side_effect_free
 def canada_resource_view_list(up_func: Action,
                               context: Context,
                               data_dict: DataDict) -> List[Dict[str, Any]]:
@@ -741,12 +743,16 @@ def canada_datastore_search(up_func: Action,
     if errors:
         raise ValidationError(errors)
     try:
+        # get record count with limit=0
         ds_result = up_func(context, {'resource_id': _data_dict.get('resource_id'),
                                       'limit': 0})
-    except Exception:
+    except (ObjectNotFound, ValidationError):
         return up_func(context, data_dict)
-    res = get_action('resource_show')(
-        cast(Context, dict(context)), {'id': _data_dict.get('resource_id')})
+    try:
+        res = get_action('resource_show')(
+            cast(Context, dict(context)), {'id': _data_dict.get('resource_id')})
+    except (ObjectNotFound, NotAuthorized):
+        return up_func(context, data_dict)
     if not res.get('url_type') or res.get('url_type') == 'upload':
         # only limit FTS for links and uploads
         record_count = ds_result.get('total', 0)

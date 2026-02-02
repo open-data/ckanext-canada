@@ -11,6 +11,9 @@ from io import StringIO, BytesIO
 import gzip
 import requests
 from collections import defaultdict
+import sqlalchemy as sa
+import gettext
+import os
 
 from typing import Optional, Union, Tuple, cast, Generator, Dict, Any, List
 from ckan.types import Context, ErrorDict
@@ -41,6 +44,8 @@ from ckanapi.cli.workers import worker_pool
 from ckanapi.cli.utils import completion_stats
 
 import ckanext.datastore.backend.postgres as datastore
+
+from ckanext.recombinant.tables import get_geno
 
 from ckanext.canada import triggers
 from ckanext.canada import model as canada_model
@@ -98,7 +103,9 @@ class PortalUpdater(object):
                  log: Optional[str],
                  tries: int,
                  delay: int,
-                 verbose: bool):
+                 verbose: bool,
+                 dataset_id: Optional[str] = None,
+                 ignore_hashes: bool = False):
         self.portal_ini = portal_ini
         self.ckan_user = ckan_user
         self.last_activity_date = last_activity_date
@@ -110,6 +117,8 @@ class PortalUpdater(object):
         self._portal_update_activity_date = None
         self._portal_update_completed = False
         self.verbose = verbose
+        self.dataset_id = dataset_id
+        self.ignore_hashes = ignore_hashes
 
     def portal_update(self):
         """
@@ -159,13 +168,17 @@ class PortalUpdater(object):
                 Tuple[None, None]],
                 None, None]:
             # retrieve a list of changed packages from the registry
+            retrieved_single_dataset = False
             while True:
                 packages, next_date = _changed_packages_since(
-                    registry, start_date, verbose=verbose)
-                if next_date is None or packages is None:
+                    registry, start_date, verbose=verbose,
+                    dataset_id=self.dataset_id)
+                if next_date is None or packages is None or retrieved_single_dataset:
                     return
                 yield packages, next_date
                 start_date = next_date
+                if self.dataset_id is not None:
+                    retrieved_single_dataset = True
 
         # copy the changed packages to portal
         cmd = [
@@ -183,6 +196,8 @@ class PortalUpdater(object):
             cmd.append('-m')
         if self.verbose:
             cmd.append('-v')
+        if self.ignore_hashes:
+            cmd.append('-i')
 
         pool = worker_pool(
             cmd,
@@ -297,7 +312,8 @@ class PortalUpdater(object):
 def _changed_packages_since(registry: Union[LocalCKAN, RemoteCKAN],
                             since_time: Optional[datetime],
                             ids_only: Optional[bool] = False,
-                            verbose: Optional[bool] = False) -> \
+                            verbose: Optional[bool] = False,
+                            dataset_id: Optional[str] = None) -> \
                                 Union[Tuple[List[bytes], datetime],
                                       Tuple[None, None]]:
     """
@@ -318,13 +334,33 @@ def _changed_packages_since(registry: Union[LocalCKAN, RemoteCKAN],
     if not since_time:
         return None, None
 
-    data = registry.action.changed_packages_activity_timestamp_since(
-        since_time=since_time.isoformat())
+    packages: List[bytes] = []
+
+    data = None
+    if not dataset_id:
+        data = registry.action.changed_packages_activity_timestamp_since(
+            since_time=since_time.isoformat())
+    else:
+        try:
+            source_package = registry.action.package_show(id=dataset_id)
+        except NotFound:
+            print(dataset_id + " not found in database.", file=sys.stderr)
+        else:
+            if ids_only:
+                # ckanapi workers are expecting bytes
+                packages.append(source_package['id'].encode('utf-8'))
+            else:
+                source_package = get_datastore_and_views(
+                    source_package, registry, verbose=verbose)
+                # ckanapi workers are expecting bytes
+                packages.append(json.dumps(source_package).encode('utf-8'))
+            # return a fake date
+            next_time: datetime = isodate('2332-07-07', cast(Context, {}))
+            return packages, next_time
 
     if not data:
         return None, None
 
-    packages: List[bytes] = []
     if verbose:
         if ids_only:
             print("Only retrieving changed package IDs...", file=sys.stderr)
@@ -357,7 +393,8 @@ def _changed_packages_since(registry: Union[LocalCKAN, RemoteCKAN],
 def _copy_datasets(source_datastore_uri: Optional[str],
                    user: Optional[str] = None,
                    mirror: Optional[bool] = False,
-                   verbose: Optional[bool] = False):
+                   verbose: Optional[bool] = False,
+                   ignore_hashes: Optional[bool] = False):
     """
     PortalUpdater member: Syncs package dicts from the stdin (valid JSON).
 
@@ -481,9 +518,12 @@ def _copy_datasets(source_datastore_uri: Optional[str],
                     do_update_sync_success_time = True
                 # only try adding datastores and views if no errors
                 if not failure_reason:
-                    for r in source_pkg['resources']:
-                        # use Registry file hashes for force undelete
-                        resource_file_hashes[r['id']] = r.get('hash')
+                    if not ignore_hashes:
+                        for r in source_pkg['resources']:
+                            # use Registry file hashes for force undelete
+                            resource_file_hashes[r['id']] = r.get('hash')
+                    else:
+                        action += ' (ignoring file hash checks) '
                     _action, _error, failure_reason, failure_trace = \
                         _add_datastore_and_views(source_pkg, portal,
                                                  resource_file_hashes,
@@ -499,6 +539,8 @@ def _copy_datasets(source_datastore_uri: Optional[str],
                     do_update_sync_success_time = False
             elif target_pkg is None and source_pkg is not None:
                 action = 'created'
+                if ignore_hashes:
+                    action += ' (ignoring file hash checks) '
                 with _capture_exception_details('package_create', package_id):
                     portal.action.package_create(**source_pkg)
                     do_update_sync_success_time = True
@@ -530,11 +572,29 @@ def _copy_datasets(source_datastore_uri: Optional[str],
                 reason = 'no difference found'
                 # do not update sync time if nothing changed
                 do_update_sync_success_time = False
+                if ignore_hashes:
+                    # try to update datastore and views if
+                    # ignoring hashes
+                    action += ' (ignoring file hash checks) '
+                    do_update_sync_success_time = True
+                    _action, _error, failure_reason, failure_trace = \
+                        _add_datastore_and_views(source_pkg, portal,
+                                                 resource_file_hashes,
+                                                 source_datastore_uri,
+                                                 verbose=verbose)
+                    error += _error
+                    action += _action
+                    if failure_reason:
+                        reason += ' ERRORED'
+                        do_update_sync_success_time = False
             elif target_pkg is not None:
                 action = 'updated'
-                for r in target_pkg['resources']:
-                    # use Portal file hashes
-                    resource_file_hashes[r['id']] = r.get('hash')
+                if not ignore_hashes:
+                    for r in target_pkg['resources']:
+                        # use Portal file hashes
+                        resource_file_hashes[r['id']] = r.get('hash')
+                else:
+                    action += ' (ignoring file hash checks) '
                 with _capture_exception_details('package_update', package_id):
                     portal.action.package_update(**source_pkg)
                     do_update_sync_success_time = True
@@ -1348,6 +1408,18 @@ def canada():
     is_flag=True,
     help="Increase verbosity",
 )
+@click.option(
+    "-D",
+    "--dataset-id",
+    default=None,
+    help="Dataset ID to sync to the Portal.",
+)
+@click.option(
+    "-i",
+    "--ignore-hashes",
+    is_flag=True,
+    help="Ignore resource file hashes.",
+)
 def portal_update(portal_ini: str,
                   ckan_user: Optional[str],
                   last_activity_date: Optional[str] = None,
@@ -1356,7 +1428,9 @@ def portal_update(portal_ini: str,
                   log: Optional[str] = None,
                   tries: int = 1,
                   delay: int = 60,
-                  verbose: bool = False):
+                  verbose: bool = False,
+                  dataset_id: Optional[str] = None,
+                  ignore_hashes: bool = False):
     """
     PortalUpdater member: CKAN cli command entrance to run the PortalUpdater stack.
 
@@ -1381,7 +1455,9 @@ def portal_update(portal_ini: str,
                   log,
                   tries,
                   delay,
-                  verbose).portal_update()
+                  verbose,
+                  dataset_id,
+                  ignore_hashes).portal_update()
 
 
 @canada.command(short_help="Copy records from another source.")
@@ -1409,10 +1485,17 @@ def portal_update(portal_ini: str,
     is_flag=True,
     help="Increase verbosity",
 )
+@click.option(
+    "-i",
+    "--ignore-hashes",
+    is_flag=True,
+    help="Ignore resource file hashes.",
+)
 def copy_datasets(mirror: Optional[bool] = False,
                   ckan_user: Optional[str] = None,
                   source: Optional[str] = None,
-                  verbose: Optional[bool] = False):
+                  verbose: Optional[bool] = False,
+                  ignore_hashes: bool = False):
     """
     PortalUpdater member: CKAN cli command entrance
     to sync packages from stdin (valid JSON).
@@ -1428,7 +1511,8 @@ def copy_datasets(mirror: Optional[bool] = False,
     _copy_datasets(source,
                    _get_user(ckan_user),
                    mirror,
-                   verbose)
+                   verbose,
+                   ignore_hashes)
 
 
 @canada.command(short_help="Lists changed records.")
@@ -2599,3 +2683,158 @@ def _drop_function(name: str, verbose: Optional[bool] = False):
             click.echo('Failed to drop function: {0}\n{1}'.format(
                 name, str(datastore._programming_error_summary(pe))), err=True)
         pass
+
+
+@canada.command(short_help="Exports Proactive Disclosure reporting data info.")
+@click.option('-s', '--since', required=True,
+              type=click.STRING, help='Export data since a time.')
+@click.option('-t', '--type', required=True, multiple=True,
+              help='Export data for this PD type - e.g. ati-nil (accepts multiple).')
+@click.option('-o', '--output', type=click.File('w'), required=True,
+              help='Dump results to a CSV file.')
+@click.option('-l', '--lite', is_flag=True,
+              type=click.BOOL, help='Only output one record per unique user.')
+@click.option('-v', '--verbose', is_flag=True,
+              type=click.BOOL, help='Increase verbosity.')
+def export_pd_reporting_info(since: str,
+                             type: Union[str, List[str]],
+                             output: 'click.File',
+                             lite: Optional[bool] = False,
+                             verbose: Optional[bool] = False):
+    if verbose:
+        click.echo('Compiling PD names...')
+    type_names = {}
+    i18n_dir = os.path.join(os.path.dirname(__file__), 'i18n')
+    for pd_type in toolkit.h.recombinant_get_types():
+        geno = get_geno(pd_type)
+        for r in geno['resources']:
+            rt = r['title'].replace('Proactive Publication - ', '').replace(
+                'Open Dialogue - ', '')
+            try:
+                rt_en = gettext.translation(
+                    # type_ignore_reason: incomplete typing
+                    'ckanext-canada', i18n_dir, ['en']).ugettext(rt)  # type: ignore
+            except AttributeError:
+                rt_en = gettext.translation(
+                    'ckanext-canada', i18n_dir, ['en']).gettext(rt)
+            except IOError:
+                rt_en = rt
+            try:
+                rt_fr = gettext.translation(
+                    # type_ignore_reason: incomplete typing
+                    'ckanext-canada', i18n_dir, ['fr']).ugettext(rt)  # type: ignore
+            except AttributeError:
+                rt_fr = gettext.translation(
+                    'ckanext-canada', i18n_dir, ['fr']).gettext(rt)
+            except IOError:
+                rt_fr = rt
+            type_names[r['resource_name']] = {
+                'en': rt_en,
+                'fr': rt_fr,
+            }
+    try:
+        datetime.strptime(since, '%Y-%m-%d')
+    except ValueError:
+        click.echo('--since %s is not a valid DateTime' % since)
+        click.Abort()
+    export_data = [
+        [
+            "Organization ID",
+            "Organization Name (English)",
+            "Organization Name (French)",
+            "Proactive Disclosure ID",
+            "Proactive Disclosure Name (English)",
+            "Proactive Disclosure Name (French)",
+            "Record Created",
+            "Record Modified",
+            "Username",
+            "User Long Name",
+            "User Email",
+        ]
+    ]
+    types = type
+    if isinstance(types, str):
+        types = [types]
+    if verbose:
+        click.echo('Gathering information for PD types: %s...' % ', '.join(types))
+    q = model.Session.query(model.Resource.id,
+                            model.Resource.name,
+                            model.Package.owner_org,
+                            model.Group.name,
+                            model.Group.title).outerjoin(
+                                model.Package, model.Package.id ==
+                                model.Resource.package_id).outerjoin(
+                                    model.Group, model.Group.id ==
+                                    model.Package.owner_org)
+    # type_ignore_reason: incomplete typing
+    q = q.filter(model.Resource.name.in_(types))  # type: ignore
+    q = q.order_by(model.Resource.name)
+    user_info_cache = {}
+    if verbose:
+        click.echo('Checking for DS records since %s...' % since)
+    total_count = 0
+    for _r in q.all():
+        rid = _r[0]
+        rname = _r[1]
+        # _r[2] is org long ID / owner_org
+        oname = _r[3]
+        otitle = _r[4]
+        otitle_en = toolkit.h.split_piped_bilingual_field(otitle, 'en')
+        otitle_fr = toolkit.h.split_piped_bilingual_field(otitle, 'fr')
+
+        sql = '''
+        SELECT record_created, record_modified, user_modified FROM {0}
+        WHERE record_created >= DATE({1}) OR record_modified >= DATE({1})
+        ORDER BY record_modified DESC;
+        '''.format(datastore.identifier(rid),
+                   datastore.literal_string(since))
+
+        result = []
+        try:
+            with datastore.get_read_engine().begin() as conn:
+                result = conn.execute(sa.text(sql)).fetchall()
+        except datastore.ProgrammingError as pe:
+            if verbose:
+                click.echo('Failed to read table: {0}\n{1}'.format(
+                    rid, str(datastore._programming_error_summary(pe))), err=True)
+            click.Abort()
+
+        if verbose:
+            click.echo('%s -- %s -- %s record(s)' % (rname, oname, len(result)))
+
+        for rec in result:
+            if rec['user_modified'] not in user_info_cache:
+                user_obj = model.User.get(rec['user_modified'])
+                user_info_cache[rec['user_modified']] = {
+                    'fullname': user_obj.fullname if user_obj else 'N/A',
+                    'email': user_obj.email if user_obj else 'N/A',
+                }
+            elif lite:
+                continue
+            total_count += 1
+            user_info = user_info_cache[rec['user_modified']]
+            export_data.append(
+                [
+                    oname,  # org id
+                    otitle_en,  # org title en
+                    otitle_fr,  # or title fr
+                    rname,  # pd name
+                    type_names[rname]['en'],  # pd long name en
+                    type_names[rname]['fr'],  # pd long name fr
+                    rec['record_created'].strftime(
+                        "%Y-%m-%d %H:%M:%S"),  # record create date
+                    rec['record_modified'].strftime(
+                        "%Y-%m-%d %H:%M:%S"),  # record mod date
+                    rec['user_modified'],  # username
+                    user_info['fullname'],  # user long name
+                    user_info['email'],  # user email
+                ]
+            )
+    # type_ignore_reason: incomplete click typing
+    output.write(BOM)  # type: ignore
+    out = csv.writer(output)  # type: ignore
+    out.writerows(export_data)
+    # type_ignore_reason: incomplete click typing
+    output.close()  # type: ignore
+    click.echo('Wrote %s rows to %s' % (total_count, output.name))
+    click.echo('DONE!')

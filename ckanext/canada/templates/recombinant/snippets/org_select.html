@@ -16,16 +16,15 @@
            name="org_select"
            value="{{ h.split_piped_bilingual_field(selected.title, h.lang()) }}"
            placeholder="{{ _('Search organizations...') }}"
-           onchange="window.location.href=this.value"
            data-module="autocomplete"
-           data-module-source="/organization/autocomplete?q=?"
+           data-module-source="{{ h.url_for('canada.organization_autocomplete') ~ '?q=?' }}"
            data-module-key="name"
            data-module-label="title"
            data-module-dropdownClass="recombinant-org-select2-dropdown"
            data-module-containerClass="recombinant-org-select2-container"
            data-module-tags="false"
            data-module-createtags="false"
-           class="control-medium"
+           class="control-medium recombinant-org-field"
            />
   {% else %}
     <div class="recombinant-org-select1-wrapper">{{ super() }}</div>

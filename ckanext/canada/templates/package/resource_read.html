@@ -14,7 +14,7 @@
     <div class="col-md-12">
       {# _site_messaging is handled by aliases in nginx to SMB #}
       {# has to be below title for a11y H3 after H1 #}
-      {% if g.is_registry %}
+      {% if h.is_registry_domain() %}
         <div data-ajax-replace="/static/_site_messaging/header_od_registry.{{ h.lang() }}"></div>
       {% else %}
         <div data-ajax-replace="/data/static/_site_messaging/header_od_ckan.{{ h.lang() }}"></div>
@@ -25,7 +25,7 @@
 
 {% block resource_actions %}
   {% set extra_classes = '' %}
-  {% if not g.is_registry or not h.check_access('package_update', {'id':pkg.id }) %}
+  {% if not h.is_registry_domain() or not h.check_access('package_update', {'id': pkg.id }) %}
     {% set extra_classes = 'resource-actions-toolbar-portal' %}
   {% endif %}
   <div class="resource-actions-toolbar {{ extra_classes }}">{{ super() }}</div>
@@ -41,7 +41,7 @@
 {% endblock %}
 
 {% block resource_content %}
-  {% if g.is_registry and 'is_resource_supported_by_xloader' in h and h.is_resource_supported_by_xloader(res) %}
+  {% if h.is_registry_domain() and 'is_resource_supported_by_xloader' in h and h.is_resource_supported_by_xloader(res) and h.check_access('package_update', {'id': pkg.id }) %}
     {% set xloader_info = h.xloader_status(res.id) %}
     {% if res.validation_status in ('failure', 'error', 'deprecated_report') %}
       <div class="canada-flash-messages"><div class="flash-messages"><div class="alert alert-dismissible fade show alert-danger">
@@ -79,17 +79,33 @@
     </button>
     <ul class="dropdown-menu">
       <li>
-        <a href="{{ h.url_for('datastore.dump', resource_id=res.id, bom=True) }}"
-           target="_blank" class="resource-url-analytics" data-gc-analytics="manualDownload"
+        <a href="{{- h.url_for('datastore.dump', resource_id=res.id, bom=True) -}}"
+           data-module="promise-download"
+           data-module-extension="csv"
+           data-module-description="{{- _('CSV type files') -}}"
+           data-module-url="{{- h.url_for('datastore.dump', resource_id=res.id, bom=True) -}}"
+           target="_blank" class="resource-url-analytics" rel='noopener noreferrer' data-gc-analytics="manualDownload"
            data-pkg-id="{{ pkg.id }}" data-res-id="{{ res.id }}" data-org-id="{{ pkg.organization.id }}"><span>CSV</span></a>
-        <a href="{{ h.url_for('datastore.dump', resource_id=res.id, format='tsv', bom=True) }}"
-           target="_blank" class="resource-url-analytics" data-gc-analytics="manualDownload"
+        <a href="{{- h.url_for('datastore.dump', resource_id=res.id, format='tsv', bom=True) -}}"
+           data-module="promise-download"
+           data-module-extension="tsv"
+           data-module-description="{{- _('TSV type files') -}}"
+           data-module-url="{{- h.url_for('datastore.dump', resource_id=res.id, format='tsv', bom=True) -}}"
+           target="_blank" class="resource-url-analytics" rel='noopener noreferrer' data-gc-analytics="manualDownload"
            data-pkg-id="{{ pkg.id }}" data-res-id="{{ res.id }}" data-org-id="{{ pkg.organization.id }}"><span>TSV</span></a>
-        <a href="{{ h.url_for('datastore.dump', resource_id=res.id, format='json') }}"
-           target="_blank" class="resource-url-analytics" data-gc-analytics="manualDownload"
+        <a href="{{- h.url_for('datastore.dump', resource_id=res.id, format='json') -}}"
+           data-module="promise-download"
+           data-module-extension="json"
+           data-module-description="{{- _('JSON type files') -}}"
+           data-module-url="{{- h.url_for('datastore.dump', resource_id=res.id, format='json') -}}"
+           target="_blank" class="resource-url-analytics" rel='noopener noreferrer' data-gc-analytics="manualDownload"
            data-pkg-id="{{ pkg.id }}" data-res-id="{{ res.id }}" data-org-id="{{ pkg.organization.id }}"><span>JSON</span></a>
-        <a href="{{ h.url_for('datastore.dump', resource_id=res.id, format='xml')}}"
-           target="_blank" class="resource-url-analytics" data-gc-analytics="manualDownload"
+        <a href="{{- h.url_for('datastore.dump', resource_id=res.id, format='xml') -}}"
+           data-module="promise-download"
+           data-module-extension="xml"
+           data-module-description="{{- _('XML type files') -}}"
+           data-module-url="{{- h.url_for('datastore.dump', resource_id=res.id, format='xml') -}}"
+           target="_blank" class="resource-url-analytics" rel='noopener noreferrer' data-gc-analytics="manualDownload"
            data-pkg-id="{{ pkg.id }}" data-res-id="{{ res.id }}" data-org-id="{{ pkg.organization.id }}"><span>XML</span></a>
         </li>
     </ul>

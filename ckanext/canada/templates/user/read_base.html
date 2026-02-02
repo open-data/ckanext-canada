@@ -1,7 +1,7 @@
 {% ckan_extends %}
 
 {% block breadcrumb_content %}
-  {% if g.is_registry %}
+  {% if h.is_registry_domain() %}
     {{ h.build_nav('user.index', _('Users')) }}
     {{ h.build_nav('user.read', user.display_name|truncate(35), id=user.name) }}
   {% endif %}
@@ -60,14 +60,14 @@
           <div class="row mrgn-tp-md">
             <div class="col-md-12 left-center text-break text-wrap"><strong>{{ _('Email') }} <span
                 class="label" title="{{ _('This means only you can see this') }}">{{ _('Private') }}</span></strong></div>
-            <div class="col-md-12 left-center text-break text-wrap"><a href="mailto:{{ user_email }}">{{ user_email | truncate(20) }}</a></div>
+            <div class="col-md-12 left-center text-break text-wrap"><a href="mailto:{{- h.obfuscate_to_code_points(user_email) -}}">{{- h.obfuscate_to_code_points(user_email) -}}</a></div>
           </div>
         {% endif %}
         <div class="row mrgn-tp-md">
           <div class="col-md-12 left-center text-break text-wrap"><strong>{{ _('Member Since') }}</strong></div>
           <div class="col-md-12 left-center text-break text-wrap">{{ h.render_datetime(user.created) }}</div>
         </div>
-        {% if g.is_registry %}
+        {% if h.is_registry_domain() %}
           <div class="info mrgn-tp-md">
             {% if h.user_organizations(user) %}
             <dl>

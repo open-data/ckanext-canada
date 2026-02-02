@@ -6,7 +6,7 @@ shortname: Briefing Note Titles and Numbers
 notes: Access, upload and modify the Briefing Note Titles and Numbers reports for your organization
 
 template_version: 3
-template_updated: 2024-12-13  # last qa confirmed: 2025-02-19
+template_updated: 2026-01-27  # last qa confirmed: 2025-02-19
 
 portal_type: info
 collection: briefingt
@@ -32,8 +32,11 @@ resources:
     obligation: Mandatory
     excel_required: true
     form_required: true
-    format_type: Free text
+    format_type:
+      en: Free text
+      fr: Texte libre
     validation: This field must not be empty
+    js_error_eval: 'VALUE.length > 0 && VALUE.includes(",")'
     datastore_type: text
     excel_column_width: 28
 
@@ -48,10 +51,13 @@ resources:
     obligation: Mandatory
     excel_required: true
     form_required: true
-    format_type: Free text
+    format_type:
+      en: Free text
+      fr: Texte libre
     validation: This field must not be empty
     occurrence: Single
     datastore_type: text
+    datatables_col_class: col-lg
     excel_column_width: 28
     form_attrs:
       size: 60
@@ -67,10 +73,13 @@ resources:
     obligation: Mandatory
     excel_required: true
     form_required: true
-    format_type: Free text
+    format_type:
+      en: Free text
+      fr: Texte libre
     validation: This field must not be empty
     occurrence: Single
     datastore_type: text
+    datatables_col_class: col-lg
     excel_column_width: 28
     form_attrs:
       size: 60
@@ -86,10 +95,13 @@ resources:
     obligation: Mandatory
     excel_required: true
     form_required: true
-    format_type: Free text
+    format_type:
+      en: Free text
+      fr: Texte libre
     validation: This field must not be empty
     occurrence: Single
     datastore_type: text
+    datatables_col_class: col-lg
     excel_column_width: 28
     form_attrs:
       size: 60
@@ -105,10 +117,13 @@ resources:
     obligation: Mandatory
     excel_required: true
     form_required: true
-    format_type: Free text
+    format_type:
+      en: Free text
+      fr: Texte libre
     validation: This field must not be empty
     occurrence: Single
     datastore_type: text
+    datatables_col_class: col-lg
     excel_column_width: 28
     form_attrs:
       size: 60
@@ -124,12 +139,16 @@ resources:
     obligation: Mandatory
     excel_required: true
     form_required: true
-    format_type: Controlled List
+    format_type:
+      en: Controlled List
+      fr: Liste contrôlée
     validation: This field must not be empty
     occurrence: Single
     datastore_type: text
+    datatables_col_class: col-md
     excel_column_width: 20
     excel_full_text_choices: true
+    datatables_full_text_choices: true
     choices:
       M:
         en: Minister
@@ -152,7 +171,9 @@ resources:
     obligation: Mandatory
     excel_required: true
     form_required: true
-    format_type: Date (Please format the data as YYYY-MM-DD)
+    format_type:
+      en: Date (Please format the date as YYYY-MM-DD)
+      fr: "Date (Veuillez utiliser le format de date suivant : AAAA-MM-JJ)"
     validation: This field must not be empty
     occurrence: Single
     datastore_type: date
@@ -170,12 +191,15 @@ resources:
     obligation: Mandatory
     excel_required: true
     form_required: true
-    format_type: Controlled List
+    format_type:
+      en: Controlled List
+      fr: Liste contrôlée
     validation: This field must not be empty
     occurrence: Single
     datastore_type: text
     excel_column_width: 20
     excel_full_text_choices: true
+    datatables_full_text_choices: true
     choices:
       I:
         en: For Information
@@ -197,14 +221,19 @@ resources:
       fr: Ce champ affichera de plus amples renseignements/commentaires concernant la note de breffage, en anglais.
     obligation: Optional
     excel_required: false
-    format_type: Free text
+    format_type:
+      en: Free text
+      fr: Texte libre
     validation: None
     occurrence: Single
     datastore_type: text
+    datatables_col_class: col-xl
     excel_column_width: 35
+    js_required_eval: '{{additional_information_fr}}.length > 0'
+    excel_required_formula: NOT(ISBLANK({additional_information_fr}))
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
-      style: "width: 100%; display: block"
+      class: form-control canada-width-full d-block
 
   # 3.2
   - datastore_id: additional_information_fr
@@ -216,14 +245,19 @@ resources:
       fr: Ce champ affichera de plus amples renseignements/commentaires concernant la note de breffage, en français.
     obligation: Optional
     excel_required: false
-    format_type: Free text
+    format_type:
+      en: Free text
+      fr: Texte libre
     validation: None
     occurrence: Single
     datastore_type: text
+    datatables_col_class: col-xl
     excel_column_width: 35
+    js_required_eval: '{{additional_information_en}}.length > 0'
+    excel_required_formula: NOT(ISBLANK({additional_information_en}))
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
-      style: "width: 100%; display: block"
+      class: form-control canada-width-full d-block
 
 
 
@@ -276,6 +310,11 @@ resources:
         errors := errors || required_error(NEW.date_received, 'date_received');
         errors := errors || required_error(NEW.action_required, 'action_required');
         errors := errors || choice_error(NEW.action_required, {action_required}, 'action_required');
+
+        IF NEW.date_received >= '2026-02-01'::date THEN
+          errors := errors || both_languages_error(NEW.additional_information_en, 'additional_information_en', NEW.additional_information_fr, 'additional_information_fr');
+        END IF;
+
         IF errors = '{{}}' THEN
           RETURN NEW;
         END IF;
@@ -327,6 +366,9 @@ resources:
     validation: This field must not be empty
     excel_column_width: 10
     extract_date_year: true
+    datatables_col_class: col-md
+    excel_error_formula: '{cell}>YEAR(TODAY())'
+    js_error_eval: 'VALUE.length > 0 && VALUE > new Date().getFullYear()'
     form_attrs:
       size: 20
 
@@ -346,6 +388,7 @@ resources:
     obligation: Mandatory
     form_required: true
     excel_required: true
+    datatables_col_class: col-sm pd-datatables-primary-key-offset-md
     excel_column_width: 18
     excel_error_formula: 'OR({default_formula},{cell}<1,{cell}>12)'
     solr_month_names: true
@@ -430,3 +473,9 @@ excel_column_heading_style:
   PatternFill:
     patternType: solid
     fgColor: FF84acb6
+datatables_style:
+  header:
+    bgColor: 84acb6
+  select:
+    bgColor: b4ccd2
+    fgColor: 333333

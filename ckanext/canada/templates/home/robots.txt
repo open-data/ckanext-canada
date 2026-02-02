@@ -1,0 +1,28 @@
+{% ckan_extends %}
+
+{% block all_user_agents -%}
+  {%- if h.is_registry_domain() -%}
+Disallow: /
+Crawl-Delay: 20
+  {%- else -%}
+Disallow: /dataset/*/history
+Disallow: /en/dataset/*/history
+Disallow: /fr/dataset/*/history
+Disallow: /dataset/activity
+Disallow: /en/dataset/activity
+Disallow: /fr/dataset/activity
+Disallow: /organization/activity
+Disallow: /en/organization/activity
+Disallow: /fr/organization/activity
+Disallow: /user
+Disallow: /en/user
+Disallow: /fr/user
+Disallow: /feeds
+Disallow: /en/feeds
+Disallow: /fr/feeds
+Disallow: /api
+Disallow: /en/api
+Disallow: /fr/api
+Crawl-Delay: 20
+  {%- endif -%}
+{%- endblock %}

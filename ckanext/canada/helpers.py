@@ -57,6 +57,25 @@ GEO_MAP_TYPE_OPTION = 'wet_theme.geo_map_type'
 GEO_MAP_TYPE_DEFAULT = 'static'
 RELEASE_DATE_FACET_STEP = 100
 
+REGISTRY_SUBDOMAIN_MATCH = re.compile(r'registry|registre')
+
+
+def is_registry_domain() -> bool:
+    """
+    This helper should only be used inside the request context.
+
+    Otherwise, if outside the request context, it is assumed True (is Registry)
+    """
+    try:
+        uri_parts = urlsplit(request.url)
+    except RuntimeError:
+        # outside of the Flask request/view context.
+        # is the CLI or background system process,
+        # run as Registry.
+        return True
+    subdomain = uri_parts.netloc.split('.')[0]
+    return re.search(REGISTRY_SUBDOMAIN_MATCH, subdomain) is not None
+
 
 def get_translated_t(data_dict: Dict[str, Any],
                      field: str) -> Tuple[str, bool]:
@@ -284,8 +303,12 @@ def adv_search_mlt_root() -> str:
                 config.get('ckanext.canada.adv_search_url_en'))
 
 
-def ga4_id() -> str:
-    return str(config.get('ga4.id'))
+def ga4_id() -> Optional[str]:
+    return str(config['ga4.id']) if config.get('ga4.id') else None
+
+
+def ga4_integrity() -> Optional[str]:
+    return str(config['ga4.integrity']) if config.get('ga4.integrity') else None
 
 
 def adobe_analytics_login_required(current_url: str) -> int:
@@ -448,13 +471,14 @@ def is_ready_to_publish(package: Dict[str, Any]) -> bool:
         return False
 
 
-def get_datapreview_recombinant(resource_name: str,
-                                resource_id: str,
-                                owner_org: str,
-                                dataset_type: str) -> str:
+def get_pd_datatable(resource_name: str,
+                     resource_id: str,
+                     owner_org: str,
+                     dataset_type: str) -> str:
     chromo = get_chromo(resource_name)
     priority = len(chromo['datastore_primary_key'])
     pk_priority = 0
+    activity_priority = 1
     fields = []
     fids = []
     for f in chromo['fields']:
@@ -466,6 +490,9 @@ def get_datapreview_recombinant(resource_name: str,
             'label': h.recombinant_language_text(f['label'])}
         if out['id'] in chromo['datastore_primary_key']:
             out['priority'] = pk_priority
+            pk_priority += 1
+        elif out['id'] in ('record_modified', 'user_modified'):
+            out['priority'] = activity_priority
             pk_priority += 1
         else:
             out['priority'] = priority
@@ -502,7 +529,11 @@ def get_datapreview_recombinant(resource_name: str,
                         (fk['parent_columns'][fk_ci], fk_cc)
                         for fk_ci, fk_cc in enumerate(fk['child_columns']))
 
-    return h.snippet('snippets/pd_datatable.html',
+    # TODO: DEPRECATED: REMOVE AFTER FULL PD DATATABLES QA
+    snippet = 'pd_datatable.html' if config.get(
+        'ckanext.canada.enable_pd_datatable_editor') else 'pd_datatable_depr.html'
+
+    return h.snippet('snippets/%s' % snippet,
                      resource_name=resource_name,
                      resource_id=resource_id,
                      owner_org=owner_org,
@@ -540,14 +571,6 @@ def json_loads(value: str) -> Dict[str, Any]:
         return json.loads(value)
     except Exception:
         return {}
-
-
-def get_datapreview(res_id: str) -> str:
-    dsq_results = get_action('datastore_search')(
-        cast(Context, {}), {'resource_id': res_id, 'limit': 100})
-    return h.snippet('snippets/pd_datatable.html',
-                     ds_fields=dsq_results['fields'],
-                     ds_records=dsq_results['records'])
 
 
 def iso_to_goctime(isodatestr: str) -> str:
@@ -631,17 +654,6 @@ def recombinant_description_to_markup(text: str) -> Dict[str, Markup]:
     # extra dict because language text expected and language text helper
     # will cause plain markup to be escaped
     return {'en': Markup(''.join(markup))}
-
-
-def mail_to_with_params(email_address: str, name: str,
-                        subject: str, body: str) -> Markup:
-    email = escape(email_address)
-    author = escape(name)
-    mail_subject = escape(subject)
-    mail_body = escape(body)
-    html = Markup('<a href="mailto:{0}?subject={2}&body={3}">{1}</a>'.format(
-        email, author, mail_subject, mail_body))
-    return html
 
 
 def get_timeout_length() -> int:
@@ -1018,7 +1030,8 @@ def ckan_to_cdts_breadcrumbs(breadcrumb_content: str) -> List[Dict[str, Any]]:
     """
     breadcrumb_html = BeautifulSoup(breadcrumb_content, 'html.parser')
     cdts_breadcrumbs = []
-    if g.is_registry:
+    is_registry = h.is_registry_domain()
+    if is_registry:
         cdts_breadcrumbs.append({
             'title': _('Registry Home'),
             'href': '/%s' % h.lang(),
@@ -1041,7 +1054,7 @@ def ckan_to_cdts_breadcrumbs(breadcrumb_content: str) -> List[Dict[str, Any]]:
         if anchor and anchor.get('title'):
             link['acronym'] = anchor.get('title')
 
-        if g.is_registry:
+        if is_registry:
             cdts_breadcrumbs.append(link)
         elif 'active' not in breadcrumb.get('class', []):
             cdts_breadcrumbs.append(link)
@@ -1115,9 +1128,47 @@ def max_resources_per_dataset() -> Optional[int]:
         return int(max_resource_count)
 
 
-def support_email_address() -> str:
-    return config['ckanext.canada.support_email_address']
+def obfuscate_to_code_points(string: str,
+                             return_safe: bool = True) -> Union[Markup, str]:
+    """
+    Obfuscate each string character to its code point.
+    """
+    obfuscated_string = ''
+    for _s in string:
+        obfuscated_string += f'&#{ord(_s):03d};'
+    return Markup(obfuscated_string) if return_safe \
+        else obfuscated_string
 
 
-def default_open_email_address() -> str:
-    return config['ckanext.canada.default_open_email_address']
+def support_email_address(xml_encode: bool = True) -> Union[Markup, str]:
+    return config['ckanext.canada.support_email_address'] if not xml_encode \
+        else obfuscate_to_code_points(
+            config['ckanext.canada.support_email_address'])
+
+
+def mail_to(email_address: str, name: str) -> Markup:
+    email = obfuscate_to_code_points(email_address, return_safe=False)
+    if email_address == name:
+        author = obfuscate_to_code_points(name, return_safe=False)
+    else:
+        author = escape(name)
+    html = Markup('<a href=mailto:{0}>{1}</a>'.format(email, author))
+    return html
+
+
+def mail_to_with_params(email_address: str, name: str,
+                        subject: str, body: str) -> Markup:
+    email = obfuscate_to_code_points(email_address, return_safe=False)
+    if email_address == name:
+        author = obfuscate_to_code_points(name, return_safe=False)
+    else:
+        author = escape(name)
+    mail_subject = escape(subject)
+    mail_body = escape(body)
+    html = Markup('<a href="mailto:{0}?subject={2}&body={3}">{1}</a>'.format(
+        email, author, mail_subject, mail_body))
+    return html
+
+
+def get_inline_script_nonce() -> str:
+    return str(request.environ.get('CSP_NONCE', ''))
