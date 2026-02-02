@@ -7,7 +7,9 @@
         <ul class="list-unstyled">
           <div data-ajax-replace="/{{ h.lang() }}/vote-result/vote/{{ pkg_dict.id }}"></div>
           <li><a href="#rate">{{ _('Rate this dataset') }}</a></li>
-          <li><a href="#feedback">{{ _('Provide feedback') }}</a></li>
+          {% if pkg.maintainer_email %}
+            <li><a href="#feedback">{{ _('Provide feedback') }}</a></li>
+          {% endif %}
         </ul>
       </div>
     </div>

@@ -63,7 +63,6 @@ def get_validator_methods() -> Dict[str, Validator]:
         'email_validator': email_validator,
         'protect_portal_release_date': protect_portal_release_date,
         'canada_copy_from_org_name': canada_copy_from_org_name,
-        'canada_maintainer_email_default': canada_maintainer_email_default,
         'user_read_only': user_read_only,
         'user_read_only_json': user_read_only_json,
         'canada_sort_prop_status': canada_sort_prop_status,
@@ -276,22 +275,6 @@ def canada_copy_from_org_name(key: FlattenKey,
         'en': org['title'].split(' | ')[0],
         'fr': org['title'].split(' | ')[-1],
     })
-
-
-def canada_maintainer_email_default(key: FlattenKey,
-                                    data: FlattenDataDict,
-                                    errors: FlattenErrorDict,
-                                    context: Context):
-    """
-    Set to ckanext.canada.default_open_email_address
-    if not given and no contact form given.
-
-    This is an output validator.
-    """
-    em = data[key]
-    cf = data.get(('maintainer_contact_form',), '')
-    if (not em or em is missing) and (not cf or cf is missing or cf == '{}'):
-        data[key] = config['ckanext.canada.default_open_email_address']
 
 
 def canada_sort_prop_status(key: FlattenKey,

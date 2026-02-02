@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-12-15 19:19+0000\n"
+"POT-Creation-Date: 2026-01-30 10:35-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: fr\n"
@@ -286,7 +286,7 @@ msgstr ""
 "Aucune information de synchronisation du portail n'a été trouvée pour le "
 "jeu de données %s"
 
-#: ckanext/canada/logic.py:757
+#: ckanext/canada/logic.py:761
 msgid ""
 "Invalid request. Full text search is not supported for data with more "
 "than {} rows."
@@ -933,33 +933,33 @@ msgstr "S’il vous plaît, mettez une adresse email valide."
 msgid "Invalid GeoJSON"
 msgstr "GeoJSON invalide"
 
-#: ckanext/canada/validators.py:290
+#: ckanext/canada/validators.py:274
 msgid "Date may not be in the future when this record is marked ready to publish"
 msgstr ""
 "Une fois que ce document est marqué comme étant prêt à publier, la date "
 "ne peut pas être dans le futur"
 
-#: ckanext/canada/validators.py:386
+#: ckanext/canada/validators.py:370
 msgid "Date format incorrect. Expecting YYYY-MM-DD"
 msgstr "Le format de la date est incorrect. Il devrait être AAAA-MM-JJ"
 
-#: ckanext/canada/validators.py:401 ckanext/canada/validators.py:422
+#: ckanext/canada/validators.py:385 ckanext/canada/validators.py:406
 msgid "Must be a Unicode string value"
 msgstr "Doit être une chaîne de caractères Unicode"
 
-#: ckanext/canada/validators.py:430 ckanext/canada/validators.py:442
+#: ckanext/canada/validators.py:414 ckanext/canada/validators.py:426
 msgid "Must be a JSON string"
 msgstr "Doit être une chaîne JSON"
 
-#: ckanext/canada/validators.py:438
+#: ckanext/canada/validators.py:422
 msgid "JSON object must contain \"en\" key"
 msgstr "L’objet JSON doit contenir la clé \"en\""
 
-#: ckanext/canada/validators.py:440
+#: ckanext/canada/validators.py:424
 msgid "JSON object must contain \"fr\" key"
 msgstr "L’objet JSON doit contenir la clé \"fr\""
 
-#: ckanext/canada/validators.py:625
+#: ckanext/canada/validators.py:609
 #, python-format
 msgid ""
 "Cannot change value of registry_access field from '%s' to '%s'. This "
@@ -971,7 +971,7 @@ msgstr ""
 #: ckanext/canada/templates/package/new_resource.html:19
 #: ckanext/canada/templates/package/new_resource_not_draft.html:11
 #: ckanext/canada/templates/package/read.html:35
-#: ckanext/canada/validators.py:662
+#: ckanext/canada/validators.py:646
 msgid ""
 "You can only add up to {max_resource_count} resources to a dataset. You "
 "can segment your resources across multiple datasets or merge your data to"
@@ -983,7 +983,7 @@ msgstr ""
 "de données ou fusionner vos données pour limiter le nombre de ressources."
 " Pour du support veuillez contacter {support}."
 
-#: ckanext/canada/validators.py:680
+#: ckanext/canada/validators.py:664
 msgid ""
 "Invalid name for an API Token. API Token names can only contain "
 "alphanumeric characters, hyphens, and underscores."
@@ -2838,11 +2838,6 @@ msgstr "Administrateurs"
 msgid "Users"
 msgstr "Utilisateurs"
 
-#: ckanext/canada/templates/admin/base.html:15
-#: ckanext/canada/templates/admin/trash.html:13
-msgid "Trash"
-msgstr "Dossiers supprimés"
-
 #: ckanext/canada/templates/admin/base.html:16
 msgid "Publish Records"
 msgstr "Publier des dossiers"
@@ -2969,6 +2964,10 @@ msgstr ""
 "facettes de recherche. Dans le cas où certains ensembles de données "
 "n'apparaissent pas dans la recherche ou qu'une facette de recherche ne "
 "fonctionne pas, vous pouvez essayer de réindexer le site."
+
+#: ckanext/canada/templates/admin/trash.html:13
+msgid "Trash"
+msgstr "Dossiers supprimés"
 
 #: ckanext/canada/templates/admin/trash.html:17
 msgid "Purge deleted datasets, organizations or groups forever and irreversibly."
@@ -3215,7 +3214,7 @@ msgid "Activity Stream"
 msgstr "Flux d’Activités"
 
 #: ckanext/canada/templates/organization/activity_stream.html:11
-#: ckanext/canada/templates/package/read_base.html:167
+#: ckanext/canada/templates/package/read_base.html:161
 msgid "Atom Feed"
 msgstr "Fil de nouvelles Atom"
 
@@ -3579,12 +3578,11 @@ msgstr ""
 
 #: ckanext/canada/templates/package/read.html:136
 #: ckanext/canada/templates/package/read.html:159
-#: ckanext/canada/templates/package/read_base.html:61
-#: ckanext/canada/templates/package/read_base.html:66
-#: ckanext/canada/templates/package/read_base.html:75
-#: ckanext/canada/templates/package/read_base.html:91
-#: ckanext/canada/templates/package/read_base.html:172
-#: ckanext/canada/templates/package/read_base.html:204
+#: ckanext/canada/templates/package/read_base.html:60
+#: ckanext/canada/templates/package/read_base.html:69
+#: ckanext/canada/templates/package/read_base.html:85
+#: ckanext/canada/templates/package/read_base.html:166
+#: ckanext/canada/templates/package/read_base.html:198
 #: ckanext/canada/templates/recombinant/create_pd_record.html:30
 #: ckanext/canada/templates/recombinant/update_pd_record.html:30
 #: ckanext/canada/templates/snippets/package_item.html:90
@@ -3640,91 +3638,91 @@ msgstr "Jeu de données"
 msgid "Additional Information"
 msgstr "Informations complémentaires"
 
-#: ckanext/canada/templates/package/read_base.html:75
+#: ckanext/canada/templates/package/read_base.html:69
 msgid "Temporal Coverage"
 msgstr "Couverture temporelle"
 
-#: ckanext/canada/templates/package/read_base.html:78
+#: ckanext/canada/templates/package/read_base.html:72
 msgid "to"
 msgstr "à"
 
-#: ckanext/canada/templates/package/read_base.html:80
+#: ckanext/canada/templates/package/read_base.html:74
 msgid "to undefined"
 msgstr "à non défini"
 
-#: ckanext/canada/templates/package/read_base.html:82
+#: ckanext/canada/templates/package/read_base.html:76
 msgid "undefined to"
 msgstr "non défini à"
 
-#: ckanext/canada/templates/package/read_base.html:91
+#: ckanext/canada/templates/package/read_base.html:85
 msgid "Openness Rating"
 msgstr "Cote de degrée d’ouverture des données"
 
-#: ckanext/canada/templates/package/read_base.html:96
+#: ckanext/canada/templates/package/read_base.html:90
 msgid "one star"
 msgstr "une étoile"
 
-#: ckanext/canada/templates/package/read_base.html:97
+#: ckanext/canada/templates/package/read_base.html:91
 msgid "two stars"
 msgstr "deux étoiles"
 
-#: ckanext/canada/templates/package/read_base.html:98
+#: ckanext/canada/templates/package/read_base.html:92
 msgid "three stars"
 msgstr "trois étoiles"
 
-#: ckanext/canada/templates/package/read_base.html:99
+#: ckanext/canada/templates/package/read_base.html:93
 msgid "four stars"
 msgstr "quatre étoiles"
 
-#: ckanext/canada/templates/package/read_base.html:100
+#: ckanext/canada/templates/package/read_base.html:94
 msgid "five stars"
 msgstr "cinq étoiles"
 
-#: ckanext/canada/templates/package/read_base.html:111
+#: ckanext/canada/templates/package/read_base.html:105
 msgid "About this Record"
 msgstr "Au sujet de ce dossier"
 
-#: ckanext/canada/templates/package/read_base.html:115
+#: ckanext/canada/templates/package/read_base.html:109
 msgid "Record Released:"
 msgstr "Dossier publié :"
 
-#: ckanext/canada/templates/package/read_base.html:119
+#: ckanext/canada/templates/package/read_base.html:113
 msgid "Record Modified:"
 msgstr "Dossier modifié :"
 
-#: ckanext/canada/templates/package/read_base.html:123
+#: ckanext/canada/templates/package/read_base.html:117
 msgid "Record ID:"
 msgstr "Identificateur du dossier :"
 
-#: ckanext/canada/templates/package/read_base.html:127
+#: ckanext/canada/templates/package/read_base.html:121
 msgid "Metadata:"
 msgstr "Métadonnées :"
 
-#: ckanext/canada/templates/package/read_base.html:131
+#: ckanext/canada/templates/package/read_base.html:125
 msgid "Link to JSON format"
 msgstr "Lien au format JSON"
 
-#: ckanext/canada/templates/package/read_base.html:137
+#: ckanext/canada/templates/package/read_base.html:131
 msgid "DCAT (JSON-LD)"
 msgstr "DCAT (JSON-LD)"
 
-#: ckanext/canada/templates/package/read_base.html:144
+#: ckanext/canada/templates/package/read_base.html:138
 msgid "DCAT (XML)"
 msgstr "DCAT (XML)"
 
-#: ckanext/canada/templates/package/read_base.html:159
+#: ckanext/canada/templates/package/read_base.html:153
 msgid "FGP Metadata:"
 msgstr "Métadonnées de la PGF :"
 
-#: ckanext/canada/templates/package/read_base.html:161
+#: ckanext/canada/templates/package/read_base.html:155
 msgid "HNAP ISO:19115 Metadata Record"
 msgstr "Enregistrement de métadonnées de HNAP ISO:19115"
 
-#: ckanext/canada/templates/package/read_base.html:179
+#: ckanext/canada/templates/package/read_base.html:173
 msgid "Data Contact"
 msgstr "Point de contact pour les données"
 
-#: ckanext/canada/templates/package/read_base.html:179
+#: ckanext/canada/templates/package/read_base.html:173
 msgid "Distributor Contact"
 msgstr "Renseignements au sujet du distributeur"
 
@@ -3834,21 +3832,12 @@ msgid "Author"
 msgstr "Auteur"
 
 #: ckanext/canada/templates/package/snippets/additional_info.html:30
-#: ckanext/canada/templates/package/snippets/additional_info.html:35
-#: ckanext/canada/templates/package/snippets/additional_info.html:40
 #: ckanext/canada/templates/package/snippets/additional_info2.html:24
-#: ckanext/canada/templates/package/snippets/additional_info2.html:29
-#: ckanext/canada/templates/package/snippets/additional_info2.html:34
-msgid "Maintainer"
-msgstr "Responsable de la maintenance"
-
-#: ckanext/canada/templates/package/snippets/additional_info.html:46
-#: ckanext/canada/templates/package/snippets/additional_info2.html:40
 msgid "Version"
 msgstr "Version"
 
-#: ckanext/canada/templates/package/snippets/additional_info.html:52
-#: ckanext/canada/templates/package/snippets/additional_info2.html:46
+#: ckanext/canada/templates/package/snippets/additional_info.html:36
+#: ckanext/canada/templates/package/snippets/additional_info2.html:30
 msgid "State"
 msgstr "État"
 
@@ -3979,7 +3968,7 @@ msgstr "À vous la parole"
 msgid "Rate this dataset"
 msgstr "Évaluez ce jeu de données"
 
-#: ckanext/canada/templates/package/snippets/socialmedia.html:10
+#: ckanext/canada/templates/package/snippets/socialmedia.html:11
 msgid "Provide feedback"
 msgstr "Fournir un retour d’information"
 
@@ -4052,7 +4041,7 @@ msgstr "Vous pouvez sélectionner ou désélectionner de multiples entrées."
 
 #: ckanext/canada/templates/recombinant/create_pd_record.html:89
 #: ckanext/canada/templates/recombinant/update_pd_record.html:92
-#: ckanext/canada/templates/scheming/package/snippets/package_form.html:63
+#: ckanext/canada/templates/scheming/package/snippets/package_form.html:89
 msgid "Save"
 msgstr "Enregistrer"
 
@@ -4102,7 +4091,7 @@ msgstr ""
 #: ckanext/canada/templates/recombinant/update_pd_record.html:3
 #: ckanext/canada/templates/recombinant/update_pd_record.html:4
 #: ckanext/canada/templates/recombinant/update_pd_record.html:11
-#: ckanext/canada/templates/scheming/package/snippets/package_form.html:76
+#: ckanext/canada/templates/scheming/package/snippets/package_form.html:102
 msgid "Update Record"
 msgstr "Mettre à jour les données"
 
@@ -4284,7 +4273,30 @@ msgstr ""
 "Expression ou chaîne unique désignant le dossier de métadonnées dans le "
 "Portail du gouvernement ouvert"
 
+#: ckanext/canada/templates/scheming/package/snippets/package_form.html:67
+msgid "Confirm Contact Email"
+msgstr "Vérifier le courriel"
+
+#: ckanext/canada/templates/scheming/package/snippets/package_form.html:71
+msgid ""
+"Please note: The Contact Email field allows Portal users to send feedback"
+" and questions about this data and information. If you leave this field "
+"empty, you will not be able to receive any feedback or questions."
+msgstr ""
+"Veuillez noter que le champ Adresse de courriel permet aux utilisateurs "
+"du portail d’envoyer des commentaires et des questions au sujet de ces "
+"données et renseignements. Si vous laissez ce champ vide, vous ne pourrez"
+" pas recevoir de commentaires ni de questions."
+
 #: ckanext/canada/templates/scheming/package/snippets/package_form.html:74
+msgid "Go back and add Contact email"
+msgstr "Ajouter le courriel avant de continuer"
+
+#: ckanext/canada/templates/scheming/package/snippets/package_form.html:75
+msgid "Continue anyway"
+msgstr "Continuer malgré tout"
+
+#: ckanext/canada/templates/scheming/package/snippets/package_form.html:100
 msgid "Next: Add Resource"
 msgstr "Suivant : ajouter une ressource"
 
@@ -5340,4 +5352,7 @@ msgstr "Télécharger vers le DataStore"
 
 #~ msgid "Example: joe.bloggs@tbs-sct.gc.ca"
 #~ msgstr "Exemple : joe.bloggs@tbs-sct.gc.ca"
+
+#~ msgid "Maintainer"
+#~ msgstr "Responsable de la maintenance"
 
