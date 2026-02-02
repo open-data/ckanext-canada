@@ -504,6 +504,32 @@ label:lang(fr):after {
 .control-required {
   color: #e00;
 }
+.fs-3{
+  margin: 10px;
+}
+.stages{
+  background-color: #EDEDED;
+}
+.stages li {
+  --tri-h: calc((27px + 25px + 25px) / 2); /* line-height + top padding + bottom padding */
+  padding: 25px 20px;
+}
+.stages li::after {
+  content: "";
+  height: 0;
+  width: 0;
+  border-style: solid;
+  border-color: transparent;
+  border-width: var(--tri-h) 0 var(--tri-h) 30px;
+  margin-top: calc(var(--tri-h) * -1);
+}
+.stages li .highlight {
+  display: flex;
+  align-items: center;
+  padding: 0 52px;
+  line-height: 1.4;
+  white-space: normal;
+}
 .stages li.active:after {
   border-top-color: #EDEDED;
   border-bottom-color: #EDEDED;
