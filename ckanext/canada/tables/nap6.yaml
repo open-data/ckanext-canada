@@ -870,7 +870,7 @@ resources:
   # Dev: Published Resource Field
   - datastore_id: indicator_en
     label:
-      en: TODO - supply label
+      en: Indicator (English)
       fr: TODO - supply label
     description:
       en: TODO - supply description
@@ -883,7 +883,7 @@ resources:
   # Dev: Published Resource Field
   - datastore_id: indicator_fr
     label:
-      en: TODO - supply label
+      en: Indicator (French)
       fr: TODO - supply label
     description:
       en: TODO - supply description
@@ -896,7 +896,7 @@ resources:
   # Dev: Published Resource Field
   - datastore_id: indicator_due_date
     label:
-      en: TODO - supply label
+      en: Indicator Due Date
       fr: TODO - supply label
     description:
       en: TODO - supply description
@@ -909,7 +909,7 @@ resources:
   # Dev: Published Resource Field
   - datastore_id: indicator_deadline_en
     label:
-      en: TODO - supply label
+      en: Indicator Deadline (English)
       fr: TODO - supply label
     description:
       en: TODO - supply description
@@ -922,7 +922,7 @@ resources:
   # Dev: Published Resource Field
   - datastore_id: indicator_deadline_fr
     label:
-      en: TODO - supply label
+      en: Indicator Deadline (French)
       fr: TODO - supply label
     description:
       en: TODO - supply description
@@ -935,7 +935,7 @@ resources:
   # Dev: Published Resource Field
   - datastore_id: indicator_lead_dept
     label:
-      en: TODO - supply label
+      en: Indicator Lead Department
       fr: TODO - supply label
     description:
       en: TODO - supply description
@@ -948,7 +948,7 @@ resources:
   # Dev: Published Resource Field
   - datastore_id: indicator_s4d
     label:
-      en: TODO - supply label
+      en: Summit for Democracy
       fr: TODO - supply label
     description:
       en: TODO - supply description
@@ -1153,7 +1153,7 @@ resources:
   # DEP 1-18
   - datastore_id: challenges_other_en
     label:
-      en: TODO - supply label
+      en: Other Challenges (English)
       fr: TODO - supply label
     description:
       en: TODO - supply description
@@ -1195,7 +1195,7 @@ resources:
   # DEP 1-19
   - datastore_id: challenges_other_fr
     label:
-      en: TODO - supply label
+      en: Other Challenges (French)
       fr: TODO - supply label
     description:
       en: TODO - supply description
@@ -1295,7 +1295,7 @@ resources:
 
   cascading_select_fields: true
 
-  excel_example_height: 50
+  excel_example_height: 60
 
   triggers:
   - nap6_trigger: |

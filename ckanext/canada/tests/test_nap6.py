@@ -84,7 +84,7 @@ class TestNap6(CanadaTestBase):
         for required_field in expected_required_fields:
             assert required_field in err['records'][0]
 
-    def test_conitional_fields(self):
+    def test_conditional_fields(self):
         """
         Excluding conditionally required fields should raise an exception
         """
