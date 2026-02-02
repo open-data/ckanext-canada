@@ -1299,6 +1299,20 @@ ul#brf-pkg{
 /*##############################
 ##  Modals, Popups, & Alerts  ##
 ################################*/
+#confirm-contact-email .modal-dialog{
+  position: absolute;
+  top: 20%;
+  left: 50%;
+  transform: translate(-50%, 0);
+  max-width: 80%;
+  @media all and (max-width: 768px){
+    min-width: 80%;
+    max-width: 80%;
+    width: 80%;
+  }
+}
+
+
 .popover{
   width: 300px;
   .popover-title{

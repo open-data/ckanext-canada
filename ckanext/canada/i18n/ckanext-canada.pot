@@ -1,14 +1,14 @@
 # Translations template for ckanext-canada.
-# Copyright (C) 2025 ORGANIZATION
+# Copyright (C) 2026 ORGANIZATION
 # This file is distributed under the same license as the ckanext-canada project.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2025.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
 #
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: ckanext-canada 0.4.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-12-15 19:19+0000\n"
+"POT-Creation-Date: 2026-01-30 10:35-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -254,7 +254,7 @@ msgstr ""
 msgid "No Portal Sync information found for package %s"
 msgstr ""
 
-#: ckanext/canada/logic.py:757
+#: ckanext/canada/logic.py:761
 msgid ""
 "Invalid request. Full text search is not supported for data with more than {}"
 " rows."
@@ -857,31 +857,31 @@ msgstr ""
 msgid "Invalid GeoJSON"
 msgstr ""
 
-#: ckanext/canada/validators.py:290
+#: ckanext/canada/validators.py:274
 msgid "Date may not be in the future when this record is marked ready to publish"
 msgstr ""
 
-#: ckanext/canada/validators.py:386
+#: ckanext/canada/validators.py:370
 msgid "Date format incorrect. Expecting YYYY-MM-DD"
 msgstr ""
 
-#: ckanext/canada/validators.py:401 ckanext/canada/validators.py:422
+#: ckanext/canada/validators.py:385 ckanext/canada/validators.py:406
 msgid "Must be a Unicode string value"
 msgstr ""
 
-#: ckanext/canada/validators.py:430 ckanext/canada/validators.py:442
+#: ckanext/canada/validators.py:414 ckanext/canada/validators.py:426
 msgid "Must be a JSON string"
 msgstr ""
 
-#: ckanext/canada/validators.py:438
+#: ckanext/canada/validators.py:422
 msgid "JSON object must contain \"en\" key"
 msgstr ""
 
-#: ckanext/canada/validators.py:440
+#: ckanext/canada/validators.py:424
 msgid "JSON object must contain \"fr\" key"
 msgstr ""
 
-#: ckanext/canada/validators.py:625
+#: ckanext/canada/validators.py:609
 #, python-format
 msgid ""
 "Cannot change value of registry_access field from '%s' to '%s'. This field is"
@@ -890,7 +890,7 @@ msgstr ""
 
 #: ckanext/canada/templates/package/new_resource.html:19
 #: ckanext/canada/templates/package/new_resource_not_draft.html:11
-#: ckanext/canada/templates/package/read.html:35 ckanext/canada/validators.py:662
+#: ckanext/canada/templates/package/read.html:35 ckanext/canada/validators.py:646
 msgid ""
 "You can only add up to {max_resource_count} resources to a dataset. You can "
 "segment your resources across multiple datasets or merge your data to limit "
@@ -898,7 +898,7 @@ msgid ""
 "assistance."
 msgstr ""
 
-#: ckanext/canada/validators.py:680
+#: ckanext/canada/validators.py:664
 msgid ""
 "Invalid name for an API Token. API Token names can only contain alphanumeric "
 "characters, hyphens, and underscores."
@@ -2481,11 +2481,6 @@ msgstr ""
 msgid "Users"
 msgstr ""
 
-#: ckanext/canada/templates/admin/base.html:15
-#: ckanext/canada/templates/admin/trash.html:13
-msgid "Trash"
-msgstr ""
-
 #: ckanext/canada/templates/admin/base.html:16
 msgid "Publish Records"
 msgstr ""
@@ -2594,6 +2589,10 @@ msgid ""
 "The SOLR index is used for searching datasets and search facets. In the case "
 "that some datasets are not showing in the search or a search facet is not "
 "working, you can try to re-index the site."
+msgstr ""
+
+#: ckanext/canada/templates/admin/trash.html:13
+msgid "Trash"
 msgstr ""
 
 #: ckanext/canada/templates/admin/trash.html:17
@@ -2801,7 +2800,7 @@ msgid "Activity Stream"
 msgstr ""
 
 #: ckanext/canada/templates/organization/activity_stream.html:11
-#: ckanext/canada/templates/package/read_base.html:167
+#: ckanext/canada/templates/package/read_base.html:161
 msgid "Atom Feed"
 msgstr ""
 
@@ -3111,12 +3110,11 @@ msgstr ""
 
 #: ckanext/canada/templates/package/read.html:136
 #: ckanext/canada/templates/package/read.html:159
-#: ckanext/canada/templates/package/read_base.html:61
-#: ckanext/canada/templates/package/read_base.html:66
-#: ckanext/canada/templates/package/read_base.html:75
-#: ckanext/canada/templates/package/read_base.html:91
-#: ckanext/canada/templates/package/read_base.html:172
-#: ckanext/canada/templates/package/read_base.html:204
+#: ckanext/canada/templates/package/read_base.html:60
+#: ckanext/canada/templates/package/read_base.html:69
+#: ckanext/canada/templates/package/read_base.html:85
+#: ckanext/canada/templates/package/read_base.html:166
+#: ckanext/canada/templates/package/read_base.html:198
 #: ckanext/canada/templates/recombinant/create_pd_record.html:30
 #: ckanext/canada/templates/recombinant/update_pd_record.html:30
 #: ckanext/canada/templates/snippets/package_item.html:90
@@ -3172,91 +3170,91 @@ msgstr ""
 msgid "Additional Information"
 msgstr ""
 
-#: ckanext/canada/templates/package/read_base.html:75
+#: ckanext/canada/templates/package/read_base.html:69
 msgid "Temporal Coverage"
 msgstr ""
 
-#: ckanext/canada/templates/package/read_base.html:78
+#: ckanext/canada/templates/package/read_base.html:72
 msgid "to"
 msgstr ""
 
-#: ckanext/canada/templates/package/read_base.html:80
+#: ckanext/canada/templates/package/read_base.html:74
 msgid "to undefined"
 msgstr ""
 
-#: ckanext/canada/templates/package/read_base.html:82
+#: ckanext/canada/templates/package/read_base.html:76
 msgid "undefined to"
 msgstr ""
 
-#: ckanext/canada/templates/package/read_base.html:91
+#: ckanext/canada/templates/package/read_base.html:85
 msgid "Openness Rating"
 msgstr ""
 
-#: ckanext/canada/templates/package/read_base.html:96
+#: ckanext/canada/templates/package/read_base.html:90
 msgid "one star"
 msgstr ""
 
-#: ckanext/canada/templates/package/read_base.html:97
+#: ckanext/canada/templates/package/read_base.html:91
 msgid "two stars"
 msgstr ""
 
-#: ckanext/canada/templates/package/read_base.html:98
+#: ckanext/canada/templates/package/read_base.html:92
 msgid "three stars"
 msgstr ""
 
-#: ckanext/canada/templates/package/read_base.html:99
+#: ckanext/canada/templates/package/read_base.html:93
 msgid "four stars"
 msgstr ""
 
-#: ckanext/canada/templates/package/read_base.html:100
+#: ckanext/canada/templates/package/read_base.html:94
 msgid "five stars"
 msgstr ""
 
-#: ckanext/canada/templates/package/read_base.html:111
+#: ckanext/canada/templates/package/read_base.html:105
 msgid "About this Record"
 msgstr ""
 
-#: ckanext/canada/templates/package/read_base.html:115
+#: ckanext/canada/templates/package/read_base.html:109
 msgid "Record Released:"
 msgstr ""
 
-#: ckanext/canada/templates/package/read_base.html:119
+#: ckanext/canada/templates/package/read_base.html:113
 msgid "Record Modified:"
 msgstr ""
 
-#: ckanext/canada/templates/package/read_base.html:123
+#: ckanext/canada/templates/package/read_base.html:117
 msgid "Record ID:"
 msgstr ""
 
-#: ckanext/canada/templates/package/read_base.html:127
+#: ckanext/canada/templates/package/read_base.html:121
 msgid "Metadata:"
 msgstr ""
 
-#: ckanext/canada/templates/package/read_base.html:131
+#: ckanext/canada/templates/package/read_base.html:125
 msgid "Link to JSON format"
 msgstr ""
 
-#: ckanext/canada/templates/package/read_base.html:137
+#: ckanext/canada/templates/package/read_base.html:131
 msgid "DCAT (JSON-LD)"
 msgstr ""
 
-#: ckanext/canada/templates/package/read_base.html:144
+#: ckanext/canada/templates/package/read_base.html:138
 msgid "DCAT (XML)"
 msgstr ""
 
-#: ckanext/canada/templates/package/read_base.html:159
+#: ckanext/canada/templates/package/read_base.html:153
 msgid "FGP Metadata:"
 msgstr ""
 
-#: ckanext/canada/templates/package/read_base.html:161
+#: ckanext/canada/templates/package/read_base.html:155
 msgid "HNAP ISO:19115 Metadata Record"
 msgstr ""
 
-#: ckanext/canada/templates/package/read_base.html:179
+#: ckanext/canada/templates/package/read_base.html:173
 msgid "Data Contact"
 msgstr ""
 
-#: ckanext/canada/templates/package/read_base.html:179
+#: ckanext/canada/templates/package/read_base.html:173
 msgid "Distributor Contact"
 msgstr ""
 
@@ -3364,21 +3362,12 @@ msgid "Author"
 msgstr ""
 
 #: ckanext/canada/templates/package/snippets/additional_info.html:30
-#: ckanext/canada/templates/package/snippets/additional_info.html:35
-#: ckanext/canada/templates/package/snippets/additional_info.html:40
 #: ckanext/canada/templates/package/snippets/additional_info2.html:24
-#: ckanext/canada/templates/package/snippets/additional_info2.html:29
-#: ckanext/canada/templates/package/snippets/additional_info2.html:34
-msgid "Maintainer"
-msgstr ""
-
-#: ckanext/canada/templates/package/snippets/additional_info.html:46
-#: ckanext/canada/templates/package/snippets/additional_info2.html:40
 msgid "Version"
 msgstr ""
 
-#: ckanext/canada/templates/package/snippets/additional_info.html:52
-#: ckanext/canada/templates/package/snippets/additional_info2.html:46
+#: ckanext/canada/templates/package/snippets/additional_info.html:36
+#: ckanext/canada/templates/package/snippets/additional_info2.html:30
 msgid "State"
 msgstr ""
 
@@ -3502,7 +3491,7 @@ msgstr ""
 msgid "Rate this dataset"
 msgstr ""
 
-#: ckanext/canada/templates/package/snippets/socialmedia.html:10
+#: ckanext/canada/templates/package/snippets/socialmedia.html:11
 msgid "Provide feedback"
 msgstr ""
 
@@ -3567,7 +3556,7 @@ msgstr ""
 
 #: ckanext/canada/templates/recombinant/create_pd_record.html:89
 #: ckanext/canada/templates/recombinant/update_pd_record.html:92
-#: ckanext/canada/templates/scheming/package/snippets/package_form.html:63
+#: ckanext/canada/templates/scheming/package/snippets/package_form.html:89
 msgid "Save"
 msgstr ""
 
@@ -3604,7 +3593,7 @@ msgstr ""
 #: ckanext/canada/templates/recombinant/update_pd_record.html:3
 #: ckanext/canada/templates/recombinant/update_pd_record.html:4
 #: ckanext/canada/templates/recombinant/update_pd_record.html:11
-#: ckanext/canada/templates/scheming/package/snippets/package_form.html:76
+#: ckanext/canada/templates/scheming/package/snippets/package_form.html:102
 msgid "Update Record"
 msgstr ""
 
@@ -3776,7 +3765,26 @@ msgid ""
 "Open Government Portal"
 msgstr ""
 
+#: ckanext/canada/templates/scheming/package/snippets/package_form.html:67
+msgid "Confirm Contact Email"
+msgstr ""
+
+#: ckanext/canada/templates/scheming/package/snippets/package_form.html:71
+msgid ""
+"Please note: The Contact Email field allows Portal users to send feedback and"
+" questions about this data and information. If you leave this field empty, "
+"you will not be able to receive any feedback or questions."
+msgstr ""
+
 #: ckanext/canada/templates/scheming/package/snippets/package_form.html:74
+msgid "Go back and add Contact email"
+msgstr ""
+
+#: ckanext/canada/templates/scheming/package/snippets/package_form.html:75
+msgid "Continue anyway"
+msgstr ""
+
+#: ckanext/canada/templates/scheming/package/snippets/package_form.html:100
 msgid "Next: Add Resource"
 msgstr ""
 

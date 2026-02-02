@@ -77,3 +77,8 @@ resource_edit:
   contents:
     - build/resource_edit.min.js
   output: canada_custom/%(version)s_resource_edit.js
+
+package_confirm_contact_email:
+  contents:
+    - build/package_confirm_contact_email.js
+  output: canada_custom/%(version)s_package_confirm_contact_email.js
