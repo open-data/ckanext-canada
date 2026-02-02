@@ -2,7 +2,7 @@
 
 {% block stages %}
   {% if form_style != 'edit' and dataset_type != 'prop' %}
-    {{ h.snippet('package/snippets/stages.html', stages=stage, dataset_type=dataset_type) }}
+    {{ super() }}
   {% endif %}
 {% endblock %}
 
@@ -96,11 +96,12 @@
 {% block publish_button %}{% endblock %}
 
 {% block save_button_text %}
-  {% if form_style != 'edit' %}
+  <!-- {% if form_style != 'edit' %}
     {{- _('Next: Add Resource') -}}
   {% else %}
     {{- _('Update Record') -}}
-  {% endif %}
+  {% endif %} -->
+  {{ super() }}
 {% endblock %}
 
 {% block save_button %}

@@ -39,8 +39,8 @@ from ckan.views import nocache_store
 from ckan.views.dataset import (
     EditView as DatasetEditView,
     search as dataset_search,
-    CreateView as DatasetCreateView,
 )
+from ckanext.scheming.views import SchemingCreateView
 from ckanext.activity.views import package_activity
 from ckan.views.resource import (
     EditView as ResourceEditView,
@@ -192,7 +192,7 @@ class CanadaDatasetEditView(DatasetEditView):
         return response
 
 
-class CanadaDatasetCreateView(DatasetCreateView):
+class CanadaDatasetCreateView(SchemingCreateView):
     def post(self, package_type: str):
         response = super(CanadaDatasetCreateView, self).post(package_type)
         if hasattr(response, 'status_code'):
