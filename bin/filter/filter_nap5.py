@@ -55,11 +55,11 @@ def main():
             if ind.startswith('deadline_'):
                 # special case, this one has an en/fr sub-dict
                 row['indicator_' + ind] = ind_src.get('deadline', {}).\
-                    get(ind.split('_')[1], '').encode('utf-8')
+                    get(ind.split('_')[1], '')
             elif isinstance(ind_src.get(ind), bool):
                 row['indicator_' + ind] = 'true' if ind_src.get(ind) else 'false'
             else:
-                row['indicator_' + ind] = ind_src.get(ind, '').encode('utf-8')
+                row['indicator_' + ind] = ind_src.get(ind, '')
 
         writer.writerow(row)
 
