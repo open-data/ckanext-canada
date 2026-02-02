@@ -2,7 +2,7 @@
 
 {% block stages %}
   {% if form_style != 'edit' and dataset_type != 'prop' %}
-    {{ h.snippet('package/snippets/stages.html', stages=stage, dataset_type=dataset_type) }}
+    {{ super() }}
   {% endif %}
 {% endblock %}
 
