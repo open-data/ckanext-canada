@@ -2,6 +2,15 @@
 
 {% import 'macros/form.html' as form %}
 
+{% block stages %}
+  {% if dataset_type != 'prop' %}
+    <div id="canada-package-form-stages" data-style="new">
+      {{ super() }}
+    </div>
+  {% endif %}
+{% endblock %}
+
+
 {% block errors %}
   {%- if resource_validation_errors -%}
     {%- set schema = h.scheming_get_dataset_schema(dataset_type) -%}
