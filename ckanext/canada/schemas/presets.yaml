@@ -3390,6 +3390,9 @@ presets:
         en: Blackberry Application
         fr: Application Blackberry
     - value: COG
+      label:
+        en: Cloud Optimized GeoTIFF
+        fr: GeoTIFF optimisé pour le cloud
     - value: CSV
       mimetype: text/csv
       openness_score: 3
@@ -3446,6 +3449,7 @@ presets:
     - value: GDB
       mimetype: application/x-filegdb
       label: GeoSoftDatabases
+    - value: GeoParquet
     - value: GeoPDF
       mimetype: application/pdf
       replaces: [geopdf]
