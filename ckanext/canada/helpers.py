@@ -1146,12 +1146,6 @@ def support_email_address(xml_encode: bool = True) -> Union[Markup, str]:
             config['ckanext.canada.support_email_address'])
 
 
-def default_open_email_address(xml_encode: bool = True) -> Union[Markup, str]:
-    return config['ckanext.canada.default_open_email_address'] if not xml_encode \
-        else obfuscate_to_code_points(
-            config['ckanext.canada.default_open_email_address'])
-
-
 def mail_to(email_address: str, name: str) -> Markup:
     email = obfuscate_to_code_points(email_address, return_safe=False)
     if email_address == name:

@@ -56,8 +56,6 @@ class CanadaFormsPlugin(p.SingletonPlugin, DefaultDatasetForm):
                 validators.protect_portal_release_date,
             'canada_copy_from_org_name':
                 validators.canada_copy_from_org_name,
-            'canada_maintainer_email_default':
-                validators.canada_maintainer_email_default,
             'user_read_only':
                 validators.user_read_only,
             'user_read_only_json':
