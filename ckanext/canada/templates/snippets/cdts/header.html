@@ -187,10 +187,11 @@
         {% else %}
           {% set help_link = h.portal_url() ~ "/en/registry-operations-guide/your-account" %}
         {% endif %}
+        {%- set dash_link = h.url_for('activity.dashboard') if h.plugin_loaded('activity') else h.url_for('dashboard.datasets') -%}
         const extraAppBarButtons = [
           {
             "text": {{ _('Dashboard') | tojson }},
-            "href": {{ h.url_for('activity.dashboard') if h.plugin_loaded('activity') else h.url_for('dashboard.datasets') | tojson }},
+            "href": {{ dash_link | tojson }},
             "icon": "fa-tachometer",
             "btnClass": "",
             "location": "before",
