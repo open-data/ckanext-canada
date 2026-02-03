@@ -55,10 +55,10 @@
 {% block resource_item_description %}
   {% if h.is_registry_domain() and is_xloader_supported %}
     <div class="canada-resource-list-badges">
-      {% if res.validation_status in ('success', 'unkown') %}
+      {% if res.validation_status in ('success', 'unkown') and 'get_validation_badge' in h %}
         {{- h.get_validation_badge(res, in_listing=True)|safe -}}
       {% endif %}
-      {% if xloader_info and xloader_info.status not in ('error', 'inactive') %}
+      {% if xloader_info and xloader_info.status not in ('error', 'inactive') and 'get_loader_status_badge' in h %}
         {{- h.get_loader_status_badge(res) -}}
       {% endif %}
     </div>
