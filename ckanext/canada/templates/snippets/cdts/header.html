@@ -194,7 +194,7 @@
         const extraAppBarButtons = [
           {
             "text": {{ _('Dashboard') | tojson }},
-            "href": {{ h.url_for('activity.dashboard') | tojson }},
+            "href": {{ h.url_for('activity.dashboard') if h.plugin_loaded('activity') else h.url_for('dashboard.datasets') | tojson }},
             "icon": "fa-tachometer",
             "btnClass": "",
             "location": "before",

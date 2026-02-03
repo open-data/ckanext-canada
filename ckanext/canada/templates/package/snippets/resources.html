@@ -25,7 +25,7 @@
               <li id="{{ collapse_id }}" class="nav-item justify-content-between position-relative {{ is_active }} {{ collapse_class }}">
                 <a class="resources-side-section-item-link" tabindex="{{ -1 if is_active else 0 }}" href="{{ 'javascript:void(0);' if is_active else url }}" title="{{ h.resource_display_name(resource) }}">{{ h.resource_display_name(resource)|truncate(45) }}</a>
                 {% if h.is_registry_domain() and can_edit and not is_activity_archive %}
-                  {% set validation_badge = h.get_validation_badge(resource)|safe %}
+                  {% set validation_badge = h.get_validation_badge(resource)|safe if 'get_validation_badge' in h else '' %}
                   <div class="dropdown position-absolute end-0 me-2">
                     <button class="btn btn-light btn-sm dropdown-toggle" type="button" id="dropdownRes{{ loop.index }}" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa fa-wrench" aria-hidden="true"></i></button>
                     <ul class="dropdown-menu" aria-labelledby="dropdownRes{{ loop.index }}">
