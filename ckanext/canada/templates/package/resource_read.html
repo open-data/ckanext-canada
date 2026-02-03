@@ -47,7 +47,7 @@
       <div class="canada-flash-messages"><div class="flash-messages"><div class="alert alert-dismissible fade show alert-danger">
         <p><strong>{{ _('Resource data has failed validation.') }}</strong></p><a href="{{ h.url_for('validation.read', id=pkg.name, resource_id=res.id) }}" class="btn btn-sm btn-danger">{{ _('View Report') }}</a>
       </div></div></div>
-    {% else %}
+    {% elif 'get_validation_badge' in h %}
       {{- h.get_validation_badge(res)|safe -}}
       <div class="canada-w10-spacer"></div>
     {% endif %}
