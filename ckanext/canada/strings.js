@@ -15,3 +15,4 @@ _('Downloading file...')  // promise-download js module
 _('Successfully downloaded file')  // promise-download js module
 _('Error downloading file, trying again through your browser')  // promise-download js module
 _('Searching...')  // autocomplete js module // TODO: remove after upstream contrib
+_('Saved new order')  // resource-reorder js module // TODO: remove after upstream contrib
