@@ -10,7 +10,6 @@
   {% endif %}
 {% endblock %}
 
-
 {% block errors %}
   {%- if resource_validation_errors -%}
     {%- set schema = h.scheming_get_dataset_schema(dataset_type) -%}

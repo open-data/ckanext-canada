@@ -40,7 +40,11 @@ from ckan.views.dataset import (
     EditView as DatasetEditView,
     search as dataset_search,
 )
-from ckanext.scheming.views import SchemingCreateView
+from ckanext.scheming.views import (
+    SchemingCreateView,
+    SchemingEditPageView,
+    SchemingCreatePageView,
+)
 from ckanext.activity.views import package_activity
 from ckan.views.resource import (
     EditView as ResourceEditView,
@@ -192,6 +196,34 @@ class CanadaDatasetEditView(DatasetEditView):
         return response
 
 
+class CanadaDatasetEditPageView(SchemingEditPageView):
+    def post(self, package_type: str, id: str, page: int):
+        response = super(CanadaDatasetEditPageView, self).post(
+            package_type, id, page)
+        if hasattr(response, 'status_code'):
+            # type_ignore_reason: checking attribute
+            if (
+              response.status_code == 200 or  # type: ignore
+              response.status_code == 302):  # type: ignore
+                context = self._prepare()
+                pkg_dict = get_action('package_show')(
+                    cast(Context, dict(context, for_view=True)), {
+                        'id': id
+                    }
+                )
+                if pkg_dict['type'] == 'prop':
+                    h.flash_success(_('The status has been added/updated for this '
+                                      'suggested dataset. This update will be '
+                                      'reflected on open.canada.ca shortly.'))
+                else:
+                    pages = h.scheming_get_dataset_form_pages(package_type)
+                    h.flash_success(
+                        _('Saved "%s" for dataset %s.')
+                        % (h.scheming_language_text(pages[int(page) - 1]['title']),
+                           pkg_dict['id']))
+        return response
+
+
 class CanadaDatasetCreateView(SchemingCreateView):
     def post(self, package_type: str):
         response = super(CanadaDatasetCreateView, self).post(package_type)
@@ -200,7 +232,26 @@ class CanadaDatasetCreateView(SchemingCreateView):
             if (
               response.status_code == 200 or  # type: ignore
               response.status_code == 302):  # type: ignore
-                h.flash_success(_('Dataset added.'))
+                pages = h.scheming_get_dataset_form_pages(package_type)
+                h.flash_success(
+                    _('Saved "%s" for new dataset.')
+                    % h.scheming_language_text(pages[0]['title']))
+        return response
+
+
+class CanadaDatasetCreatePageView(SchemingCreatePageView):
+    def post(self, package_type: str, id: str, page: int):
+        response = super(CanadaDatasetCreatePageView, self).post(
+            package_type, id, page)
+        if hasattr(response, 'status_code'):
+            # type_ignore_reason: checking attribute
+            if (
+              response.status_code == 200 or  # type: ignore
+              response.status_code == 302):  # type: ignore
+                pages = h.scheming_get_dataset_form_pages(package_type)
+                h.flash_success(
+                    _('Saved "%s" for dataset %s.')
+                    % (h.scheming_language_text(pages[int(page) - 1]['title']), id))
         return response
 
 

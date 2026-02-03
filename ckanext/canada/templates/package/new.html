@@ -1,12 +1,26 @@
 {% ckan_extends %}
 
 {% block subtitle %}
+  {%- set editingDraft = form_vars.data.state == 'draft' -%}
+  {%- set title = h.get_translated(form_vars.data, 'title') or form_vars.data.id -%}
   {% if dataset_type == 'info' %}
-    {{- _('Create an Open Information Asset') -}}
+    {% if editingDraft %}
+      {{- _('Edit Draft Open Information Asset:') -}}&nbsp;{{- title -}}
+    {% else %}
+      {{- _('Create an Open Information Asset') -}}
+    {% endif %}
   {% elif dataset_type == 'dataset' %}
-    {{- _('Create an Open Data Record') -}}
+    {% if editingDraft %}
+      {{- _('Edit Draft Open Data Record:') -}}&nbsp;{{- title -}}
+    {% else %}
+      {{- _('Create an Open Data Record') -}}
+    {% endif %}
   {% else %}
-    {{- h.humanize_entity_type('package', dataset_type, 'create title') or _('Create Dataset') -}}
+    {% if editingDraft %}
+      {{- h.humanize_entity_type('package', dataset_type, 'edit label') or _('Edit Dataset') -}}{{- _(':') -}}&nbsp;{{- title -}}
+    {% else %}
+      {{- h.humanize_entity_type('package', dataset_type, 'create title') or _('Create Dataset') -}}
+    {% endif %}
   {% endif %}
 {% endblock %}
 
