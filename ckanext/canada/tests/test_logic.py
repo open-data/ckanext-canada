@@ -73,8 +73,8 @@ class TestMetadataDatesLogic(CanadaTestBase):
         """
         super(TestMetadataDatesLogic, self).setup_class()
 
-        sysadmin = Sysadmin(name='test_metadata_dates_sysadmin')
-        editor = User(name='test_metadata_dates_editor')
+        sysadmin = Sysadmin()
+        editor = User()
         org = Organization(users=[{
             'name': sysadmin['name'],
             'capacity': 'admin'},
@@ -262,7 +262,7 @@ class TestResourcePositionLogic(CanadaTestBase):
         """
         super(TestResourcePositionLogic, self).setup_class()
 
-        sysadmin = Sysadmin(name='test_metadata_dates_sysadmin')
+        sysadmin = Sysadmin()
         org = Organization(users=[{
             'name': sysadmin['name'],
             'capacity': 'admin'},])
