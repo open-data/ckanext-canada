@@ -8,11 +8,6 @@ Create Date: 2026-02-04 16:21:56.703503
 from alembic import op
 import sqlalchemy as sa
 
-from ckan.lib.search import (
-    rebuild as dataset_reindex,
-    commit as commit_index
-)
-
 # revision identifiers, used by Alembic.
 revision = '16ed91c52021'
 down_revision = '0ef791477ff0'
@@ -67,22 +62,12 @@ def upgrade():
         if total == 0:
             print('Did not find any resources needing position updating...')
             return
-        for index, package_id in enumerate(updated_package_ids):
-            try:
-                for pkg_id, _t, _i, err in dataset_reindex(force=True,
-                                                           defer_commit=True,
-                                                           package_id=package_id):
-                    if err:
-                        print('[%s/%s] Failed to index dataset %s with error: %s' %
-                              (index + 1, total, pkg_id, err))
-                        continue
-                    print('[%s/%s] Indexed dataset %s' %
-                          (index + 1, total, pkg_id))
-            except Exception as e:
-                print('[%s/%s] Failed to index dataset %s with error: %s' %
-                      (index + 1, total, pkg_id, e))
-                continue
-        commit_index()
+        print('Updated %s packages. They will need to be reindex' % total)
+        print(' ')
+        for package_id in updated_package_ids:
+            print(package_id)
+        print(' ')
+        print('DONE!')
 
 
 def downgrade():

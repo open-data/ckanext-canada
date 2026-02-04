@@ -253,7 +253,8 @@ class TestGrants(CanadaTestBase):
 
         record['agreement_start_date'] = '2099-01-01'
         record['amendment_number'] = 0
-        record['agreement_end_date'] = '2099-01-02'
+        # Disable temporarily for OPEN-4393
+        # record['agreement_end_date'] = '2099-01-02'
 
         with pytest.raises(ValidationError) as ve:
             self.lc.action.datastore_upsert(
