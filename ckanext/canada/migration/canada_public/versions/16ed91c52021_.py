@@ -1,4 +1,4 @@
-"""Fix resource postions not based on 0 index
+"""Fix resource positions not based on 0 index
 
 Revision ID: 16ed91c52021
 Revises: 0ef791477ff0
@@ -69,13 +69,18 @@ def upgrade():
             return
         for index, package_id in enumerate(updated_package_ids):
             try:
-                for pkg_id, _t, _i, err in dataset_reindex(force=True, defer_commit=True, package_id=package_id):
+                for pkg_id, _t, _i, err in dataset_reindex(force=True,
+                                                           defer_commit=True,
+                                                           package_id=package_id):
                     if err:
-                        print('[%s/%s] Failed to index dataset %s with error: %s' % (index, total, pkg_id, err))
+                        print('[%s/%s] Failed to index dataset %s with error: %s' %
+                              (index, total, pkg_id, err))
                         continue
-                    print('[%s/%s] Indexed dataset %s' % (index, total, pkg_id))
+                    print('[%s/%s] Indexed dataset %s' %
+                          (index, total, pkg_id))
             except Exception as e:
-                print('[%s/%s] Failed to index dataset %s with error: %s' % (index, total, pkg_id, err))
+                print('[%s/%s] Failed to index dataset %s with error: %s' %
+                      (index, total, pkg_id, e))
                 continue
         commit_index()
 
