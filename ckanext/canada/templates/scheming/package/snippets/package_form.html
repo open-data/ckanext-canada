@@ -102,7 +102,12 @@
 {% endblock %}
 
 {% block save_button %}
-  <div data-module="package_confirm_contact_email">
+  {%- set active_page = data.get('_form_page', 1) | int -%}
+  {% if active_page == 2 %}
+    <div data-module="package_confirm_contact_email">
+      {{ super() }}
+    </div>
+  {% else %}
     {{ super() }}
-  </div>
+  {% endif %}
 {% endblock %}
