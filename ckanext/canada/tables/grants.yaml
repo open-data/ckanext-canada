@@ -877,25 +877,20 @@ resources:
     validation:
       en: |
         This field must not be empty.
-        Date can’t be in the future.
       fr: |
         Ce champ ne doit pas être vide.
-        La date ne doit pas être dans le futur.
     excel_required: true
     form_required: true
     form_snippet: scheming/form_snippets/date.html
     format_type:
       en: Date (Please format the date as YYYY-MM-DD)
       fr: "Date (Veuillez utiliser le format de date suivant : AAAA-MM-JJ)"
-    excel_error_formula: 'OR({default_formula},{cell}>TODAY(),AND(NOT(ISBLANK({cell})),NOT(ISBLANK({agreement_end_date})),{cell}>{agreement_end_date}))'
+    excel_error_formula: 'OR({default_formula},AND(NOT(ISBLANK({cell})),NOT(ISBLANK({agreement_end_date})),{cell}>{agreement_end_date}))'
     js_error_eval: >-
       VALUE.length > 0 &&
       (
-        new Date(VALUE) > new Date() ||
-        (
           {{agreement_end_date}}.length > 0 &&
           new Date(VALUE) > new Date({{agreement_end_date}})
-        )
       )
     datastore_type: date
     extract_date_year: true
@@ -1271,8 +1266,6 @@ resources:
 
           errors := errors || conditional_required_error(NEW.agreement_title_en, 'agreement_title_en');
           errors := errors || conditional_required_error(NEW.agreement_title_fr, 'agreement_title_fr');
-
-          errors := errors || future_date_error(NEW.agreement_start_date, 'agreement_start_date');
 
           errors := errors || conditional_required_error(NEW.agreement_end_date, 'agreement_end_date');
           IF NEW.agreement_start_date::timestamp > NEW.agreement_end_date::timestamp THEN
