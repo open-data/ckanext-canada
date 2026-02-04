@@ -173,6 +173,9 @@ def canada_prevent_pd_views(uri: str, package_type: str) -> Union[Response, str]
 
 class CanadaDatasetEditView(DatasetEditView):
     def post(self, package_type: str, id: str):
+        """
+        Custom flash messages per dataset type.
+        """
         response = super(CanadaDatasetEditView, self).post(package_type, id)
         if hasattr(response, 'status_code'):
             # type_ignore_reason: checking attribute
@@ -195,9 +198,32 @@ class CanadaDatasetEditView(DatasetEditView):
                         % pkg_dict['id'])
         return response
 
+    def get(self, package_type: str, id: str, data: Optional[dict[str, Any]] = None,
+            errors: Optional[dict[str, Any]] = None,
+            error_summary: Optional[dict[str, Any]] = None) -> Union[Response, str]:
+        """
+        If the ACTUAL dataset type has pages, redirect to the edit 1st page.
+
+        This solves issues with Missing objects in Schemings stages.
+        """
+        pkg = model.Package.get(id)
+        package_type = pkg.type if pkg else package_type
+        pages = h.scheming_get_dataset_form_pages(package_type)
+        if pages:
+            return h.redirect_to('%s.scheming_edit_page' % package_type,
+                                 package_type=package_type,
+                                 id=id,
+                                 page=1)
+        return super(CanadaDatasetEditView, self).get(package_type, id,
+                                                      data, errors,
+                                                      error_summary)
+
 
 class CanadaDatasetEditPageView(SchemingEditPageView):
     def post(self, package_type: str, id: str, page: int):
+        """
+        Custom flash messages per dataset type.
+        """
         response = super(CanadaDatasetEditPageView, self).post(
             package_type, id, page)
         if hasattr(response, 'status_code'):
@@ -226,6 +252,9 @@ class CanadaDatasetEditPageView(SchemingEditPageView):
 
 class CanadaDatasetCreateView(SchemingCreateView):
     def post(self, package_type: str):
+        """
+        Custom flash messages for scheming pages.
+        """
         response = super(CanadaDatasetCreateView, self).post(package_type)
         if hasattr(response, 'status_code'):
             # type_ignore_reason: checking attribute
@@ -241,6 +270,9 @@ class CanadaDatasetCreateView(SchemingCreateView):
 
 class CanadaDatasetCreatePageView(SchemingCreatePageView):
     def post(self, package_type: str, id: str, page: int):
+        """
+        Custom flash messages for scheming pages.
+        """
         response = super(CanadaDatasetCreatePageView, self).post(
             package_type, id, page)
         if hasattr(response, 'status_code'):
@@ -257,6 +289,9 @@ class CanadaDatasetCreatePageView(SchemingCreatePageView):
 
 class CanadaResourceEditView(ResourceEditView):
     def post(self, package_type: str, id: str, resource_id: str):
+        """
+        Custom flash messages.
+        """
         response = super(CanadaResourceEditView, self).post(
             package_type, id, resource_id)
         if hasattr(response, 'status_code'):
@@ -270,6 +305,9 @@ class CanadaResourceEditView(ResourceEditView):
 
 class CanadaResourceCreateView(ResourceCreateView):
     def post(self, package_type: str, id: str):
+        """
+        Custom flash messages.
+        """
         response = super(CanadaResourceCreateView, self).post(package_type, id)
         if hasattr(response, 'status_code'):
             # type_ignore_reason: checking attribute

@@ -31,8 +31,13 @@
 {% endblock %}
 
 {% block content_action %}
-  {% if pkg.type not in h.recombinant_get_types() %}
-    {{ super() }}
+  {% if pkg.type not in h.recombinant_get_types() and h.check_access('package_update', {'id':pkg.id }) %}
+    {%- set pages = h.scheming_get_dataset_form_pages(pkg.type) -%}
+    {% if pages %}
+      {% link_for _('Manage'), named_route=pkg.type ~ '.scheming_edit_page', package_type=pkg.type, id=pkg.name, page=1, class_='btn btn-default', icon='wrench' %}
+    {% else %}
+      {{- super() -}}
+    {% endif %}
   {% endif %}
 {% endblock %}
 

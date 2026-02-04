@@ -675,13 +675,57 @@ body ul.xloader-log li.item.failure > i::after{
 /*####################
 ##  Package Stages  ##
 ######################*/
+form#dataset-edit{
+  position: relative;
+  width: 100%;
+}
+
+.canada-package-edit-toolbar{
+  margin: 0 !important;
+  padding: 0 !important;
+  margin-bottom: 80px !important;
+}
+
 #canada-package-form-stages{
   background-color: #EDEDED;
+  margin-bottom: 10px;
 }
 
 #canada-package-form-stages[data-style="new"]{
   margin-left: calc(((100vw - 100%) / 2) * -1);
   margin-right: calc(((100vw - 100%) / 2) * -1);
+}
+
+#canada-package-form-stages[data-style="edit"]{
+  margin-left: calc((-100% / 3) - 10px);
+  margin-right: 0;
+  width: calc((100% / 0.75) + 10px);
+  margin-top: -100px;
+}
+
+@media all and (max-width: 992px){
+  #canada-package-form-stages[data-style="edit"]{
+    margin-left: 0;
+    margin-right: calc((-100% / 3) - 10px);
+  }
+}
+
+@media all and (max-width: 768px){
+  #canada-package-form-stages[data-style="edit"]{
+    margin-left: 0;
+    margin-right: 0;
+    width: 100%;
+  }
+}
+
+.canada-package-edit-sidepanel{
+  margin-top: -30px;
+}
+
+@media all and (max-width: 1200px){
+  .canada-package-edit-sidepanel{
+    margin-top: 30px;
+  }
 }
 
 #canada-package-form-stages > ol.stages{
@@ -695,6 +739,7 @@ body ul.xloader-log li.item.failure > i::after{
   flex-wrap: wrap;
   width: 100%;
   overflow: hidden !important;
+  margin-bottom: 0 !important;
 }
 
 @media all and (max-width: 768px){
