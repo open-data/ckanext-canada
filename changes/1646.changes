@@ -1,0 +1,1 @@
+Created alembic migration `16ed91c52021` to fix an issue with Resource positions not being based on 0 index. This was due to older CKAN versions not updating the Resource poistions after deleting a Resource from the dataset.
