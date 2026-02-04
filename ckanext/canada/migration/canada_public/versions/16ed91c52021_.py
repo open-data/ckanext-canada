@@ -74,13 +74,13 @@ def upgrade():
                                                            package_id=package_id):
                     if err:
                         print('[%s/%s] Failed to index dataset %s with error: %s' %
-                              (index, total, pkg_id, err))
+                              (index + 1, total, pkg_id, err))
                         continue
                     print('[%s/%s] Indexed dataset %s' %
-                          (index, total, pkg_id))
+                          (index + 1, total, pkg_id))
             except Exception as e:
                 print('[%s/%s] Failed to index dataset %s with error: %s' %
-                      (index, total, pkg_id, e))
+                      (index + 1, total, pkg_id, e))
                 continue
         commit_index()
 
