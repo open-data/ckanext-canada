@@ -675,6 +675,45 @@ body ul.xloader-log li.item.failure > i::after{
 /*####################
 ##  Package Stages  ##
 ######################*/
+#dropdown-manage-dataset{
+  font-weight: bold !important;
+  font-size: 16px !important;
+  line-height: 1.4375 !important;
+  border-radius: 0 !important;
+  border: none !important;
+  background-color: #f6f6f6 !important;
+  transition-duration: 0.325s !important;
+}
+
+#dropdown-manage-dataset:hover,
+#dropdown-manage-dataset:active,
+#dropdown-manage-dataset:focus{
+  background-color: #335075 !important;
+  color: white !important;
+}
+
+ul.dropdown-menu#dropdown-manage-dataset-menu a{
+  display: block !important;
+  padding: 3px 20px !important;
+  clear: both !important;
+  font-weight: 400 !important;
+  line-height: 1.4375 !important;
+  color: #333 !important;
+  white-space: nowrap !important;
+  text-decoration: none !important;
+  margin: 0 !important;
+  transition-duration: 0.325s !important;
+  background-color: white !important;
+}
+
+ul.dropdown-menu#dropdown-manage-dataset-menu a:hover,
+ul.dropdown-menu#dropdown-manage-dataset-menu a:active,
+ul.dropdown-menu#dropdown-manage-dataset-menu a:focus{
+  color: #333 !important;
+  text-decoration: none !important;
+  background-color: #f5f5f5 !important;
+}
+
 form#dataset-edit{
   position: relative;
   width: 100%;

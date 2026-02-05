@@ -34,7 +34,24 @@
   {% if pkg.type not in h.recombinant_get_types() and h.check_access('package_update', {'id':pkg.id }) %}
     {%- set pages = h.scheming_get_dataset_form_pages(pkg.type) -%}
     {% if pages %}
-      {% link_for _('Manage'), named_route=pkg.type ~ '.scheming_edit_page', package_type=pkg.type, id=pkg.name, page=1, class_='btn btn-default', icon='wrench' %}
+      <button class="btn btn btn-default dropdown-toggle"
+              data-bs-toggle="dropdown" role="button"
+              data-bs-toggle="dropdown" id="dropdown-manage-dataset"
+              aria-label="{{ _('Manage') }}">
+        <i aria-hidden="true" class="fa fa-wrench"></i>&nbsp;{{ _('Manage') }}&nbsp;
+      </button>
+      <ul class="dropdown-menu" id="dropdown-manage-dataset-menu">
+        <li>
+          {% for page in pages %}
+            <a href="{{- h.url_for(pkg.type ~ '.scheming_edit_page', package_type=pkg.type, id=pkg.name, page=loop.index) -}}" rel='noopener noreferrer'>
+              <span><i aria-hidden="true" class="fa fa-wrench"></i>&nbsp;{{- h.scheming_language_text(page['title']) -}}</span>
+            </a>
+          {% endfor %}
+          <a href="{{- h.url_for(pkg.type ~ '.resources', id=pkg.name) -}}" rel='noopener noreferrer'>
+            <span><i aria-hidden="true" class="fa fa-bars"></i>&nbsp;{{- _('Reorder resources') -}}</span>
+          </a>
+        </li>
+      </ul>
     {% else %}
       {{- super() -}}
     {% endif %}
