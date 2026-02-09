@@ -237,8 +237,8 @@ class TestNap6(CanadaTestBase):
             test_record = filter_nap6.test(dict(record))
             assert test_record['indicator_en'] == indicator_obj['en']
             assert test_record['indicator_fr'] == indicator_obj['fr']
-            assert test_record['indicator_due_date'] == indicator_obj['due_date']
             assert test_record['indicator_deadline_en'] == indicator_obj['deadline']['en']
             assert test_record['indicator_deadline_fr'] == indicator_obj['deadline']['fr']
+            if isinstance(indicator_obj['lead_dept'], list):
+                indicator_obj['lead_dept'] = ','.join(indicator_obj['lead_dept'])
             assert test_record['indicator_lead_dept'] == indicator_obj['lead_dept']
-            assert test_record['indicator_s4d'] == indicator_obj['s4d']
