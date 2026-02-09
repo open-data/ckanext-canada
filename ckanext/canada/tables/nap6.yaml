@@ -712,7 +712,7 @@ resources:
       en: Indicator Deadline (English)
       fr: Date limite de l'indicateur (anglais)
     description:
-      en: Completion deadline for selected indicator in English
+      en: Completion deadline for selected indicator, in English
       fr: Date limite d'achèvement pour l'indicateur sélectionné en anglais
     obligation: Mandatory
     datastore_type: text
@@ -725,7 +725,7 @@ resources:
       en: Indicator Deadline (French)
       fr: Date limite de l'indicateur (français)
     description:
-      en: Completion deadline for selected indicator in French
+      en: Completion deadline for selected indicator, in French
       fr: Date limite d'achèvement pour l'indicateur sélectionné en français
     obligation: Mandatory
     datastore_type: text
@@ -943,7 +943,7 @@ resources:
       en: Other Challenges (English)
       fr: Autres défis (anglais)
     description:
-      en: Other challenges faced during implementation in English
+      en: Other challenges faced during implementation, in English
       fr: Autres difficultés rencontrées au cours de la mise en oeuvre en anglais
     obligation:
       en: Mandatory, conditional
@@ -985,7 +985,7 @@ resources:
       en: Other Challenges (French)
       fr: Autres défis (français)
     description:
-      en: Other challenges faced during implementation in French
+      en: Other challenges faced during implementation, in French
       fr: Autres difficultés rencontrées au cours de la mise en oeuvre en français
     obligation:
       en: Mandatory, conditional
