@@ -22,17 +22,15 @@ REMOVE_COLUMNS = [
 EXPAND_INDICATORS = [
     'en',
     'fr',
-    'due_date',
     'deadline_en',
     'deadline_fr',
     'lead_dept',
-    's4d',
 ]
 
 COLUMNS = [
     'reporting_period', 'commitments', 'milestones', 'indicators',
-    'indicator_en', 'indicator_fr', 'indicator_due_date', 'indicator_deadline_en',
-    'indicator_deadline_fr', 'indicator_lead_dept', 'indicator_s4d',
+    'indicator_en', 'indicator_fr', 'indicator_deadline_en',
+    'indicator_deadline_fr', 'indicator_lead_dept',
     'status', 'progress_en', 'progress_fr', 'evidence_en', 'evidence_fr',
     'challenges', 'challenges_other_en', 'challenges_other_fr', 'owner_org',
     'owner_org_title'
@@ -83,9 +81,8 @@ def process_row(row: Dict[str, Any],
             # special case, this one has an en/fr sub-dict
             row['indicator_' + f] = indicator_choice_obj.get('deadline', {}).\
                 get(f.split('_')[1], '')
-        elif isinstance(indicator_choice_obj.get(f), bool):
-            row['indicator_' + f] = 'true' if \
-                indicator_choice_obj.get(f) else 'false'
+        elif isinstance(indicator_choice_obj.get(f), list):
+            row['indicator_' + f] = ','.join(indicator_choice_obj.get(f))
         else:
             row['indicator_' + f] = indicator_choice_obj.get(f, '')
 

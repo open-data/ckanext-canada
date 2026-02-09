@@ -72,11 +72,11 @@ resources:
     datatables_col_class: col-lg
     choices:
       C01:
-        en: Protecting civic space and democracy in the digital era
-        fr: Protection de l'espace civique et de la démocratie à l'ère du numérique
-      C02:
         en: Inclusive and meaningful public participation
         fr: Participation inclusive et significative
+      C02:
+        en: Protecting civic space and democracy in the digital era
+        fr: Protection de l'espace civique et de la démocratie à l'ère du numérique
       C03:
         en: Anti-corruption, public confidence, and corporate transparency
         fr: Lutte contre la corruption, confiance du public et transparence organisationnelle
@@ -213,668 +213,481 @@ resources:
     js_error_eval: '{{milestones}}.length > 0 && VALUE.length > 0 && VALUE.split(".")[0] + "." + VALUE.split(".")[1] != {{milestones}}'
     form_attrs:
       cascading_select_field: milestones
-    # NOTE: s4d is "Summit for Democracy"
     choices:
       C01.1.1:
         en: Draft a strategic plan to establish a multi-collaborator forum. The draft strategic plan outlines the role and mandate of, and the context behind, the creation of the consultation body.
         fr: Rédiger un plan stratégique pour établir un Forum multi-intervenants. L'ébauche de plan stratégique décrit le rôle et le mandat de l'organisme de consultation, ainsi que le contexte dans lequel il a été créé.
-        # TODO: update info
-        due_date:
         deadline:
-          en:
-          fr:
-        lead_dept:
-        s4d:
+          en: Fall 2027
+          fr: Automne 2027
+        lead_dept: rcmp-grc
       C01.1.2:
         en: Conduct a three-week consultation with communities across Canada to gather feedback on the strategic plan.
         fr: Mener une consultation de trois semaines auprès de communautés de partout au Canada pour recueillir des commentaires sur le plan stratégique.
-        # TODO: update info
-        due_date:
         deadline:
-          en:
-          fr:
-        lead_dept:
-        s4d:
+          en: By winter 2025
+          fr: D'ici l'hiver 2025
+        lead_dept: rcmp-grc
       C01.1.3:
         en: Analyze the feedback received during the consultation period, incorporate it into the final draft of the strategic plan and publish the strategic plan as an open asset (in other words, designed for reuse in future initiatives).
         fr: Analyser les commentaires reçus durant la période de consultation, les intégrer à la version finale du plan stratégique et publier le plan stratégique en tant qu'actif ouvert (autrement dit, conçu pour être réutilisé dans des initiatives futures).
-        # TODO: update info
-        due_date:
         deadline:
-          en:
-          fr:
-        lead_dept:
-        s4d:
+          en: By summer 2025
+          fr: D'ici l'été 2025
+        lead_dept: rcmp-grc
       C01.1.4:
         en: Set up the multi-collaborator forum (that is, decide on nomination criteria, governance structure, engagement approach, and so on).
         fr: Mettre en place le Forum multi-intervenants (par exemple, déterminer les critères de mise en candidature, la structure de gouvernance, l'approche en matière d'engagement).
-        # TODO: update info
-        due_date:
         deadline:
-          en:
-          fr:
-        lead_dept:
-        s4d:
+          en: By fall 2028
+          fr: D'ici l'automne 2028
+        lead_dept: rcmp-grc
       C01.1.5:
         en: Secure additional resources for the forum's activities.
         fr: Obtenir des ressources supplémentaires pour les activités du Forum.
-        # TODO: update info
-        due_date:
         deadline:
-          en:
-          fr:
-        lead_dept:
-        s4d:
+          en: By fall 2028
+          fr: D'ici l'automne 2028
+        lead_dept: rcmp-grc
       C01.2.1:
         en: Establish an enterprise-wide consultation platform.
         fr: Mettre en place une plateforme de consultation pangouvernementale.
-        # TODO: update info
-        due_date:
         deadline:
-          en:
-          fr:
-        lead_dept:
-        s4d:
+          en: By fall 2027
+          fr: D'ici l'automne 2027
+        lead_dept: rcmp-grc
       C01.2.2:
         en: Using the RCMP's public participation framework, incorporate a feedback loop into each consultation. Publish feedback on the Open Government portal.
         fr: Intégrer une boucle de rétroaction à chaque consultation au moyen du cadre de participation du public de la GRC. Publier la rétroaction sur le Portail du gouvernement ouvert.
-        # TODO: update info
-        due_date:
         deadline:
-          en:
-          fr:
-        lead_dept:
-        s4d:
+          en: Ongoing
+          fr: Permanent
+        lead_dept: rcmp-grc
       C01.2.3:
         en: Increase the percentage of Canadians who respond to the Organisation for Economic Co-operation and Development (OECD) survey on drivers of trust in public institutions from the 2024 baseline of 49%.
         fr: Accroître le pourcentage de Canadiens qui répondent à l'enquête de l'Organisation de coopération et de développement économiques sur les déterminants de la confiance dans les institutions publiques par rapport au pourcentage de référence de 2024, soit 49 %.
-        # TODO: update info
-        due_date:
         deadline:
-          en:
-          fr:
-        lead_dept:
-        s4d:
+          en: By winter 2028
+          fr: D'ici l'hiver 2028
+        lead_dept: rcmp-grc
       C01.2.4:
         en: Reduce the percentage of ethnically diverse Canadians who report a hate crime or hate- motivated event from the 79% high in 2022.
         fr: Réduire le pourcentage de Canadiens de diverses origines ethniques qui signalent un crime haineux ou un événement motivé par la haine par rapport au niveau record de 79 % atteint en 2022.
-        # TODO: update info
-        due_date:
         deadline:
-          en:
-          fr:
-        lead_dept:
-        s4d:
+          en: Ongoing
+          fr: Permanent
+        lead_dept: rcmp-grc
       C01.3.1:
         en: Contribute to the government-wide implementation of the Action Plan Measure for Shared Priority 30 of the United Nations Declaration on the Rights of Indigenous Peoples Act.
         fr: Contribuer à la mise en oeuvre pangouvernementale de la mesure pour la priorité partagée 30 du Plan d'action de la Loi sur la Déclaration des Nations Unies sur les droits des peuples autochtones.
-        # TODO: update info
-        due_date:
         deadline:
-          en:
-          fr:
-        lead_dept:
-        s4d:
+          en: Ongoing
+          fr: Permanent
+        lead_dept: rcmp-grc
       C01.3.2:
         en: Identify concrete steps the Government of Canada can take to advance this approach, including identifying how to leverage each department's mandate.
         fr: Déterminer les mesures concrètes que le gouvernement du Canada peut prendre pour faire progresser cette approche, y compris quant à la façon de mettre à profit le mandat de chaque ministère.
-        # TODO: update info
-        due_date:
         deadline:
-          en:
-          fr:
-        lead_dept:
-        s4d:
+          en: By end of 2028
+          fr: D'ici la fin de 2028
+        lead_dept: rcmp-grc
       C01.3.3:
         en: Make meaningful progress on the RCMP's commitments to reconciliation that were outlined by the Truth and Reconciliation Council.
         fr: Réaliser des progrès significatifs par rapport aux engagements de la GRC en matière de réconciliation qui ont été présentés par le Conseil national de la réconciliation.
-        # TODO: update info
-        due_date:
         deadline:
-          en:
-          fr:
-        lead_dept:
-        s4d:
+          en: By end of 2028
+          fr: D'ici la fin de 2028
+        lead_dept: rcmp-grc
       C01.4.1:
         en: Publicly launch the Public Participation Maturity Model tool, including launching a webinar, and a presentation at the 2025 Open Government Partnership Summit.
         fr: Lancer publiquement l'outil du modèle de maturité pour la participation du public, qui comprend le lancement d'un webinaire et d'une présentation au Sommet du Partenariat pour un gouvernement ouvert 2025.
-        # TODO: update info
-        due_date:
         deadline:
-          en:
-          fr:
-        lead_dept:
-        s4d:
+          en: By end of 2025
+          fr: D'ici la fin de 2025
+        lead_dept: tbs-sct
       C01.4.2:
         en: Test the maturity model framework through the Maturity Model Pilot Program, which includes two one-year test groups (four to six departments in each) to assess the functionality of the model in different settings.
         fr: Mettre à l'essai le cadre de modèle de maturité au moyen du programme pilote du modèle de maturité, qui comprend deux groupes d'essai sur une période d'un an (quatre à six ministères pour chaque groupe) afin d'évaluer la fonctionnalité du modèle dans différents contextes.
-        # TODO: update info
-        due_date:
         deadline:
-          en:
-          fr:
-        lead_dept:
-        s4d:
+          en: 2026-27
+          fr: 2026‑2027
+        lead_dept: tbs-sct
       C01.4.3:
         en: Collect input from two years of the Maturity Model Pilot Program and refine the model based on the evidence collected.
         fr: Recueillir les commentaires pendant les deux années du programme pilote du modèle de maturité et peaufiner le modèle en fonction des données probantes recueillies.
-        # TODO: update info
-        due_date:
         deadline:
-          en:
-          fr:
-        lead_dept:
-        s4d:
+          en: 2026-27
+          fr: 2026‑2027
+        lead_dept: tbs-sct
       C01.4.4:
         en: Share reflections and best practices from the pilot program and make recommendations to senior leadership on the future of public participation in the Government of Canada.
         fr: Transmettre les réflexions et les pratiques exemplaires qui ont découlé du programme pilote et faire des recommandations à la haute direction sur l'avenir de la participation du public au sein du gouvernement du Canada.
-        # TODO: update info
-        due_date:
         deadline:
-          en:
-          fr:
-        lead_dept:
-        s4d:
+          en: By end of 2028
+          fr: D'ici la fin de 2028
+        lead_dept: tbs-sct
       C01.5.1:
         en: Develop and advance infrastructure by, for example, building capacity, providing guidance and creating a digital prototype platform, to facilitate dialogue and the successful adoption of participatory research and citizen science in the federal science ecosystem.
         fr: Concevoir et consolider l'infrastructure, par exemple, en renforçant les capacités, en fournissant une orientation et en créant une plateforme numérique prototype afin de faciliter le dialogue et d'assurer l'adoption de la recherche participative et de la science citoyenne dans l'écosystème scientifique fédéral.
-        # TODO: update info
-        due_date:
         deadline:
-          en:
-          fr:
+          en: By end of 2029
+          fr: D'ici la fin de 2029
         lead_dept:
-        s4d:
+          - pspc-spac
+          - hc-sc
       C01.6.1:
         en: Development of a proposal detailing the design, framework and governance structure for a new external portal that will provide controlled, login-based access to unprotected, non-sensitive data assets and datasets for selected Indigenous organizations and governments.
         fr: Élaborer une proposition détaillant la conception, le cadre et la structure de gouvernance d'un nouveau portail externe qui offrira un accès contrôlé, avec authentification, à des actifs et ensembles de données non protégés et non sensibles pour certains gouvernements et certaines organisations autochtones.
-        # TODO: update info
-        due_date:
         deadline:
-          en:
-          fr:
-        lead_dept:
-        s4d:
+          en: By March 2026
+          fr: D'ici mars 2026
+        lead_dept: isc-sac
       C01.6.2:
         en: Development of a data-sensitivity framework to help identify and categorize non-sensitive data assets that should be proactively shared, including determination of potential data-sharing platforms, in collaboration with Indigenous governments and organizations.
         fr: Élaborer un cadre de sensibilité des données pour aider à cerner les actifs de données qui ne sont pas sensibles, et à les catégoriser en conséquence, et qui devraient donc être transmis de façon proactive. Comprend le choix des plateformes potentielles de partage de données, en collaboration avec les gouvernements et les organisations autochtones.
-        # TODO: update info
-        due_date:
         deadline:
-          en:
-          fr:
-        lead_dept:
-        s4d:
+          en: By March 2027
+          fr: D'ici mars 2027
+        lead_dept: isc-sac
       C01.6.3:
         en: Identification and prioritization of datasets that should be proactively shared.
         fr: Cerner les ensembles de données qui devraient être transmis de façon proactive et établir leur ordre de priorité.
-        # TODO: update info
-        due_date:
         deadline:
-          en:
-          fr:
-        lead_dept:
-        s4d:
+          en: By March 2027
+          fr: D'ici mars 2027
+        lead_dept: isc-sac
       C01.7.1:
         en: Invite branches to think about their own holdings and consider what could be made available through the Open Government Portal in an accessible format.
         fr: Inviter les directions générales à réfléchir à leurs propres données et à ce qu'elles pourraient publier dans un format accessible par l'intermédiaire du Portail du gouvernement ouvert.
-        # TODO: update info
-        due_date:
         deadline:
-          en:
-          fr:
-        lead_dept:
-        s4d:
+          en: March 2029
+          fr: Mars 2029
+        lead_dept: vac-acc
       C01.7.2:
         en: Encourage branches to consider whether the work they are doing will include opportunities to promote accountability and citizen engagement.
         fr: Encourager les directions générales à se demander si le travail qu'elles accomplissent comprendra des occasions de promouvoir la responsabilité et l'engagement des citoyens.
-        # TODO: update info
-        due_date:
         deadline:
-          en:
-          fr:
-        lead_dept:
-        s4d:
+          en: March 2029
+          fr: Mars 2029
+        lead_dept: vac-acc
       C01.7.3:
         en: Ensure that twice annually, open government awareness activities are highlighted (once during Open Government Week and once during “Right to Know” week), with the goal of raising awareness at VAC. Success would be measured through participatory activities like employee knowledge challenges.
         fr: Veiller à ce que deux fois par année, les activités de sensibilisation à l'égard du gouvernement ouvert soient mises en évidence (une fois dans le cadre de la Semaine du gouvernement ouvert et une fois dans le cadre de la Semaine du droit à l'information), dans le but de mieux faire connaître le gouvernement ouvert au sein d'ACC. Le succès serait évalué au moyen d'activités participatives comme des tests de connaissances à l'intention des employés.
-        # TODO: update info
-        due_date:
         deadline:
-          en:
-          fr:
-        lead_dept:
-        s4d:
+          en: Annually, by March 31; to be reported as part of VAC's access to information and privacy annual reports
+          fr: Chaque année, au plus tard le 31 mars; en rendre compte dans le cadre des rapports annuels d'ACC sur l'accès à l'information et la protection des renseignements personnels
+        lead_dept: vac-acc
       C02.1.1:
         en: Publish the RCMP Public Participation Framework and accompanying guidebook.
         fr: Publier le cadre de participation du public de la GRC et le guide connexe.
-        # TODO: update info
-        due_date:
         deadline:
-          en:
-          fr:
-        lead_dept:
-        s4d:
+          en: By summer 2025
+          fr: D'ici l'été 2025
+        lead_dept: rcmp-grc
       C02.1.2:
         en: Promote the framework and guidebook throughout the RCMP to facilitate their adoption and implementation.
         fr: Faire la promotion du cadre et du guide dans l'ensemble de la GRC afin de faciliter leur adoption et leur mise en oevreu.
-        # TODO: update info
-        due_date:
         deadline:
-          en:
-          fr:
-        lead_dept:
-        s4d:
+          en: By summer 2025
+          fr: D'ici l'été 2025
+        lead_dept: rcmp-grc
       C02.1.3:
         en: Create an ethics and personal data tool to ensure that data is collected legally and ethically during public consultations.
         fr: Créer un outil d'éthique et de données personnelles pour veiller à ce que les données soient recueillies de manière légale et éthique durant les consultations publiques.
-        # TODO: update info
-        due_date:
         deadline:
-          en:
-          fr:
-        lead_dept:
-        s4d:
+          en: By summer 2025
+          fr: D'ici l'été 2025
+        lead_dept: rcmp-grc
       C02.2.1:
         en: Prepare a draft paper that assesses progress to date, identifies domestic and international best practices, and lays out potential approaches to strengthen Canadians' resilience to online disinformation.
         fr: Préparer une ébauche d'un document qui évalue les progrès réalisés à ce jour, dégage les pratiques exemplaires nationales et internationales et présente des approches possibles pour renforcer la capacité des Canadiens à faire face à la désinformation en ligne.
-        # TODO: update info
-        due_date:
         deadline:
-          en:
-          fr:
-        lead_dept:
-        s4d:
+          en: By April 2026
+          fr: D'ici avril 2026
+        lead_dept: pch
       C02.2.2:
         en: Consult on the paper with government and non-government partners.
         fr: Consulter les partenaires gouvernementaux et non gouvernementaux au sujet du document.
-        # TODO: update info
-        due_date:
         deadline:
-          en:
-          fr:
-        lead_dept:
-        s4d:
+          en: By spring 2026
+          fr: D'ici le printemps 2026
+        lead_dept: pch
       C02.2.3:
         en: Develop a revised knowledge-sharing and communications strategy for the Digital Citizen Initiative.
         fr: Élaborer une stratégie révisée de partage des connaissances et de communication pour l'Initiative de citoyenneté numérique.
-        # TODO: update info
-        due_date:
         deadline:
-          en:
-          fr:
-        lead_dept:
-        s4d:
+          en: By June 2026
+          fr: D'ici juin 2026
+        lead_dept: pch
       C02.2.4:
         en: Host three events to build capacity and share best practices among researchers and civil society organizations that work in civic engagement and digital media literacy.
         fr: Organiser trois événements pour renforcer les capacités et permettre l'échange de pratiques exemplaires entre les chercheurs et les organisations de la société civile qui oeuvrent dans le domaine de l'engagement civique et de la littératie numérique.
-        # TODO: update info
-        due_date:
         deadline:
-          en:
-          fr:
-        lead_dept:
-        s4d:
+          en: By 2026
+          fr: D'ici 2026
+        lead_dept: pch
       C02.3.1:
         en: Renew and revise LAC's Access Policy Framework and programs and processes to maximize access to federal records held by LAC.
         fr: Renouveler et réviser le Cadre de politique d'accès de BAC ainsi que ses programmes et processus afin de maximiser l'accès aux documents fédéraux détenus par BAC.
-        # TODO: update info
-        due_date:
         deadline:
-          en:
-          fr:
-        lead_dept:
-        s4d:
+          en: 2025 to 2028
+          fr: De 2025 à 2028
+        lead_dept: lac-bac
       C02.3.2:
         en: Proactively remove access barriers to GC archival records and have 30% to 50% of the archival GC records held at LAC open and readily available for Canadians to access either in person or online.
         fr: Éliminer de façon proactive les obstacles à l'accès aux documents archivés du gouvernement du Canada. Faire en sorte que de 30 % à 50 % des documents archivés du gouvernement du Canada détenus par BAC soient ouverts et facilement accessibles aux Canadiens, en personne ou en ligne.
-        # TODO: update info
-        due_date:
         deadline:
-          en:
-          fr:
-        lead_dept:
-        s4d:
+          en: By 2029
+          fr: D'ici 2029
+        lead_dept: lac-bac
       C02.3.3:
         en: Integrate public demand into the prioritization process of federal archival records to be proactively opened and maximize access to those records.
         fr: Intégrer la demande du public dans le processus d'établissement de la priorité des documents fédéraux archivés afin qu'ils soient ouverts de façon proactive et d'optimiser l'accès à ces documents.
-        # TODO: update info
-        due_date:
         deadline:
-          en:
-          fr:
-        lead_dept:
-        s4d:
+          en: 2025 to 2029
+          fr: De 2025 à 2029
+        lead_dept: lac-bac
       C03.1.1:
         en: Increase transparency at the RCMP by publicly disclosing data and information that demonstrates what evidence warrants an investigation into potential criminal activity. Information disclosed complies with requirements of releasing information about ongoing investigations.
         fr: Accroître la transparence au sein de la GRC en publiant publiquement des données et des renseignements qui démontrent les éléments probants justifiant une enquête sur une activité criminelle potentielle. De telles communications sont conformes aux exigences pour la communication de renseignements concernant les enquêtes en cours.
-        # TODO: update info
-        due_date:
         deadline:
-          en:
-          fr:
-        lead_dept:
-        s4d:
+          en: Ongoing
+          fr: Permanent
+        lead_dept: rcmp-grc
       C03.1.2:
         en: Increase Canadians' trust in the federal government, which was at 49% in 2023 according to the OECD Surveys on Drivers of Trust in Public Institutions.
         fr: Accroître la confiance des Canadiens envers le gouvernement fédéral, qui était de 49 % en 2023 selon l'enquête de l'Organisation de coopération et de développement économiques sur les déterminants de la confiance dans les institutions publiques.
-        # TODO: update info
-        due_date:
         deadline:
-          en:
-          fr:
-        lead_dept:
-        s4d:
+          en: By winter 2028
+          fr: D'ici l'hiver 2028
+        lead_dept: rcmp-grc
       C03.1.3:
         en: Provide dashboards on high-level crime statistics and aggregated occurrence maps.
         fr: Fournir des tableaux de bord sur les statistiques criminelles globales et des cartes d'événements agrégées.
-        # TODO: update info
-        due_date:
         deadline:
-          en:
-          fr:
-        lead_dept:
-        s4d:
+          en: By fall 2027
+          fr: D'ici l'automne 2027
+        lead_dept: rcmp-grc
       C03.2.1:
         en: Develop interactive and accessible versions of the Creative Export Strategy's data viewer.
         fr: Développer des versions interactives et accessibles du visualiseur de données sur la Stratégie d'exportation créative.
-        # TODO: update info
-        due_date:
         deadline:
-          en:
-          fr:
-        lead_dept:
-        s4d:
+          en: By summer 2025
+          fr: D'ici l'été 2025
+        lead_dept: pch
       C03.2.2:
         en: Publish the Creative Export Strategy Interactive Data Viewer on the Canadian Heritage website.
         fr: Publier le visualiseur de données interactif sur la Stratégie d'exportation créative dans le site Web de Patrimoine canadien.
-        # TODO: update info
-        due_date:
         deadline:
-          en:
-          fr:
-        lead_dept:
-        s4d:
+          en: By fall 2025
+          fr: D'ici l'automne 2025
+        lead_dept: pch
       C03.2.3:
         en: Announce the publication of the data viewer to stakeholders.
         fr: Annoncer la publication du visualiseur de données aux intervenants.
-        # TODO: update info
-        due_date:
         deadline:
-          en:
-          fr:
-        lead_dept:
-        s4d:
+          en: By fall 2025
+          fr: D'ici l'automne 2025
+        lead_dept: pch
       C03.3.1:
         en: Research to identify existing sources of data, information and good practices from other jurisdictions, researchers and organizations.
         fr: Effectuer des recherches pour déterminer les sources existantes de données, de renseignements et de bonnes pratiques provenant d'autres administrations, chercheurs et organisations.
-        # TODO: update info
-        due_date:
         deadline:
-          en:
-          fr:
-        lead_dept:
-        s4d:
+          en: By fall 2025
+          fr: D'ici l'automne 2025
+        lead_dept: tbs-sct
       C03.3.2:
         en: Publication of minimum viable product (MVP) register using existing data and information.
         fr: Publier un registre sur le produit minimum viable au moyen des données et renseignements existants.
-        # TODO: update info
-        due_date:
         deadline:
-          en:
-          fr:
-        lead_dept:
-        s4d:
+          en: By November 2025
+          fr: D'ici novembre 2025
+        lead_dept: tbs-sct
       C03.3.3:
         en: Engagement of internal and external stakeholders to further develop and refine MVP content, format and functionality, and to identify where needed data and information can be sourced.
         fr: Mobiliser des intervenants internes et externes afin de poursuivre l'élaboration et le peaufinage du contenu, du format et des fonctionnalités du produit minimum viable ainsi que de déterminer où les données et l'information nécessaires peuvent être obtenues.
-        # TODO: update info
-        due_date:
         deadline:
-          en:
-          fr:
-        lead_dept:
+          en: By early 2026
+          fr: D'ici le début de 2026
+        lead_dept: tbs-sct
         s4d:
       C03.3.4:
         en: Development and publication of second version of register incorporating user feedback.
         fr: Préparer et publier une deuxième version du registre intégrant les commentaires des utilisateurs.
-        # TODO: update info
-        due_date:
         deadline:
-          en:
-          fr:
-        lead_dept:
-        s4d:
+          en: By end of 2026
+          fr: D'ici la fin de 2026
+        lead_dept: tbs-sct
       C03.4.1:
         en: Foster dialogue with key stakeholders (for example, unions, media and federal public servants) through activities like polling, public opinion research, question-and-answer sessions with senior officials, newsletters, and technical briefings.
         fr: Favoriser un dialogue avec les principaux intervenants (par exemple, les syndicats, les médias et les fonctionnaires fédéraux) au moyen d'activités comme des sondages, des recherches sur l'opinion publique, des séances de questions et réponses avec les hauts fonctionnaires, des bulletins et des séances d'information technique.
-        # TODO: update info
-        due_date:
         deadline:
-          en:
-          fr:
-        lead_dept:
-        s4d:
+          en: Ongoing, annually
+          fr: Permanent, chaque année
+        lead_dept: pspc-spac
       C03.4.2:
         en: PSPC and TBS collaborate to publish internal documents related to HR and pay initiatives, as well as relevant data and findings. Share these documents on the Open Government Portal and promote them through multiple channels to ensure broader access.
         fr: SPAC et le SCT collaborent pour publier des documents internes liés aux initiatives de RH et de paye, ainsi que des données et des constatations pertinentes. Diffuser ces documents sur le Portail du gouvernement ouvert et en faire la promotion sur de multiples canaux afin de permettre un plus grand accès.
-        # TODO: update info
-        due_date:
         deadline:
-          en:
-          fr:
-        lead_dept:
-        s4d:
+          en: Ongoing, annually
+          fr: Permanent, chaque année
+        lead_dept: pspc-spac
       C03.4.3:
         en: Develop and maintain a publicly accessible tracker to monitor progress on key commitments related to HR and pay operations and transformation activities.
         fr: Créer et tenir à jour un outil de suivi accessible au public pour surveiller les progrès réalisés par rapport aux principaux engagements liés aux opérations des RH et de la paye et aux activités de transformation.
-        # TODO: update info
-        due_date:
         deadline:
-          en:
-          fr:
-        lead_dept:
-        s4d:
+          en: |
+            Updated monthly internally to reflect progress and published quarterly to the [Integrated strategy for human resources and pay webpage](https://www.canada.ca/en/public-services-procurement/services/pay-pension/pay-administration/integrated-strategy-human-resources-pay.html).
+
+            Updated annually to reflect new commitments.
+          fr: |
+            Effectuer une mise à jour à l'interne chaque mois pour refléter les progrès et procéder à une publication trimestrielle sur [la page Web Stratégie intégrée en matière de ressources humaines et de paye](https://www.canada.ca/fr/services-publics-approvisionnement/services/paye-pension/administration-paye/strategie-integree-ressources-humaines-salaire.html).
+
+            Procéder à une mise à jour annuelle pour refléter les nouveaux engagements.
+        lead_dept: pspc-spac
       C04.1.1:
         en: Review the processes required for Indigenous people when accessing their data and information held by the RCMP.
         fr: Examiner les processus requis pour les peuples autochtones lorsqu'ils accèdent à leurs données et aux renseignements détenus par la GRC.
-        # TODO: update info
-        due_date:
         deadline:
-          en:
-          fr:
-        lead_dept:
-        s4d:
+          en: By end of 2028
+          fr: D'ici la fin de 2028
+        lead_dept: rcmp-grc
       C04.1.2:
         en: Collaborate with Indigenous communities (First Nations, Inuit and Métis communities) to determine what information should be prioritized in the process.
         fr: Collaborer avec les communautés autochtones (communautés inuites, métisses et des Premières Nations) pour déterminer les renseignements prioritaires dans le cadre du processus.
-        # TODO: update info
-        due_date:
         deadline:
-          en:
-          fr:
-        lead_dept:
-        s4d:
+          en: By end of 2028
+          fr: D'ici la fin de 2028
+        lead_dept: rcmp-grc
       C04.1.3:
         en: Identify and address key barriers in the process to promote proactive disclosure for Indigenous communities accessing their data.
         fr: Cerner et éliminer les principaux obstacles au processus afin de promouvoir la communication proactive pour les communautés autochtones qui accèdent à leurs données.
-        # TODO: update info
-        due_date:
         deadline:
-          en:
-          fr:
-        lead_dept:
-        s4d:
+          en: By end of 2028
+          fr: D'ici la fin de 2028
+        lead_dept: rcmp-grc
       C04.2.1:
         en: Consult stakeholders on the essential content and desired outcomes of a foundational training or learning program for the federal public service on open data.
         fr: Consulter les intervenants sur le contenu essentiel et les résultats souhaités relativement à une formation de base ou à un programme d'apprentissage sur les données ouvertes s'adressant à la fonction publique fédérale.
-        # TODO: update info
-        due_date:
         deadline:
-          en:
-          fr:
-        lead_dept:
-        s4d:
+          en: By December 2026
+          fr: D'ici décembre 2026
+        lead_dept: tbs-sct
       C04.2.2:
         en: Co-create the module(s) with civil society and Canada School of Public Service and do user testing.
         fr: Créer un ou des modules en collaboration avec la société civile et l'École de la fonction publique du Canada et procéder à des essais par les utilisateurs.
-        # TODO: update info
-        due_date:
         deadline:
-          en:
-          fr:
-        lead_dept:
-        s4d:
+          en: By December 2027
+          fr: D'ici décembre 2027
+        lead_dept: tbs-sct
       C04.2.3:
         en: Publish the module(s) on an appropriate platform.
         fr: Publier le ou les modules sur une plateforme appropriée.
-        # TODO: update info
-        due_date:
         deadline:
-          en:
-          fr:
-        lead_dept:
-        s4d:
+          en: By December 2028
+          fr: D'ici décembre 2028
+        lead_dept: tbs-sct
       C04.2.4:
         en: Assess the effectiveness of the update of the module, by soliciting feedback on how to continually improve it.
         fr: Évaluer l'efficacité de la mise à jour du module en sollicitant de la rétroaction sur la façon de l'améliorer de manière continue.
-        # TODO: update info
-        due_date:
         deadline:
-          en:
-          fr:
-        lead_dept:
-        s4d:
+          en: By December 2029
+          fr: D'ici décembre 2029
+        lead_dept: tbs-sct
       C04.3.1:
         en: Number of hits on the National Justice Survey results
         fr: Nombre de consultations des résultats du Sondage national sur la justice.
-        # TODO: update info
-        due_date:
         deadline:
-          en:
-          fr:
-        lead_dept:
-        s4d:
+          en: Biannually until 2029
+          fr: Deux fois par année jusqu'en 2029
+        lead_dept: jus
       C04.3.2:
         en: Number of Justice Canada research publications and resources that use National Justice Survey data and are publicly available
         fr: Nombre de ressources et de publications de recherche du ministère de la Justice Canada utilisant les données du Sondage national sur la justice et qui sont accessibles au public.
-        # TODO: update info
-        due_date:
         deadline:
-          en:
-          fr:
-        lead_dept:
-        s4d:
+          en: Biannually until 2029
+          fr: Deux fois par année jusqu'en 2029
+        lead_dept: jus
       C04.3.3:
         en: Provide examples of National Justice Survey data being used to inform decision-making
         fr: Fournir des exemples de données du Sondage national sur la justice qui sont utilisées pour éclairer le processus décisionnel.
-        # TODO: update info
-        due_date:
         deadline:
-          en:
-          fr:
-        lead_dept:
-        s4d:
+          en: Feedback will be compiled in March 2027 and at the end of the commitment and published in a report.
+          fr: La rétroaction sera compilée en mars 2027 ainsi qu'à la fin de l'engagement et publiée dans un rapport.
+        lead_dept: jus
       C04.3.4:
         en: Qualitative feedback from key stakeholders on accessibility and usability of the data.
         fr: Rétroaction qualitative des intervenants clés sur l'accessibilité et la facilité d'utilisation des données.
-        # TODO: update info
-        due_date:
         deadline:
-          en:
-          fr:
-        lead_dept:
-        s4d:
+          en: Feedback will be compiled in March 2027 and at the end of the commitment and published in a report.
+          fr: La rétroaction sera compilée en mars 2027 ainsi qu'à la fin de l'engagement et publiée dans un rapport
+        lead_dept: jus
       C04.4.1:
         en: Number of Canada's State of the Criminal Justice System Dashboard indicators that have been automated
         fr: Nombre d'indicateurs du Tableau de bord sur l'état du système de justice pénale du Canada qui ont été automatisés.
-        # TODO: update info
-        due_date:
         deadline:
-          en:
-          fr:
-        lead_dept:
-        s4d:
+          en: Biannually until 2029
+          fr: Deux fois par année jusqu'en 2029
+        lead_dept: jus
       C04.4.2:
         en: Number of hits on Canada's State of the Criminal Justice System Dashboard webpages
         fr: Nombre de visites des pages Web du Tableau de bord sur l'état du système de justice pénale du Canada.
-        # TODO: update info
-        due_date:
         deadline:
-          en:
-          fr:
-        lead_dept:
-        s4d:
+          en: Biannually until 2029
+          fr: Deux fois par année jusqu'en 2029
+        lead_dept: jus
       C04.4.3:
         en: Provide examples of data being used to inform decision-making.
         fr: Fournir des exemples de données qui sont utilisées pour éclairer le processus décisionnel.
-        # TODO: update info
-        due_date:
         deadline:
-          en:
-          fr:
-        lead_dept:
-        s4d:
+          en: Examples will be compiled in March 2027 and at the end of the commitment and shared via public report.
+          fr: Les exemples seront compilés en mars 2027 ainsi qu'à la fin de l'engagement et publiés dans un rapport public
+        lead_dept: jus
       C04.4.4:
         en: Qualitative feedback from key stakeholders on accessibility and usability of the data.
         fr: Rétroaction qualitative des intervenants clés sur l'accessibilité et la facilité d'utilisation des données.
-        # TODO: update info
-        due_date:
         deadline:
-          en:
-          fr:
-        lead_dept:
-        s4d:
+          en: Feedback will be compiled in March 2027 and at the end of the commitment and shared via public report.
+          fr: La rétroaction sera compilée en mars 2027 ainsi qu'à la fin de l'engagement et publiée dans un rapport public
+        lead_dept: jus
       C04.5.1:
-        en: The number of administrative bodies—federal, provincial and territorial—that apply the Access to Justice Index to their operations for an initial assessment.
+        en: The number of administrative bodies (federal, provincial and territorial) that apply the Access to Justice Index to their operations for an initial assessment.
         fr: Nombre d'entités administratives (fédérales, provinciales et territoriales) qui appliquent l'Indice de l'accès à la justice à leurs activités pour une première évaluation.
-        # TODO: update info
-        due_date:
         deadline:
-          en:
-          fr:
-        lead_dept:
-        s4d:
+          en: Biannually until 2029
+          fr: Deux fois par année jusqu'en 2029
+        lead_dept: jus
       C04.5.2:
         en: The number of administrative bodies that use the index for a further self-assessment to evaluate progress and identify additional improvements.
         fr: Nombre d'entités administratives qui utilisent l'Indice pour procéder à une autoévaluation plus poussée visant à évaluer les progrès et à cerner toute amélioration supplémentaire requise.
-        # TODO: update info
-        due_date:
         deadline:
-          en:
-          fr:
-        lead_dept:
-        s4d:
+          en: Biannually until 2029
+          fr: Deux fois par année jusqu'en 2029
+        lead_dept: jus
       C04.5.3:
         en: Feedback from administrative bodies on the effectiveness of the index as a tool to support more accessible and user-friendly services.
         fr: Rétroaction des entités administratives sur l'efficacité de l'Indice comme outil favorisant des services plus accessibles et conviviaux.
-        # TODO: update info
-        due_date:
         deadline:
-          en:
-          fr:
-        lead_dept:
-        s4d:
+          en: Feedback will be compiled at the end of two years of promoting the Index, November 2027.
+          fr: La rétroaction sera compilée à la fin des deux années de promotion de l'Indice, soit en novembre 2027
+        lead_dept: jus
       C04.5.4:
         en: Number of awareness raising activities (for example, webinars, talks at conferences).
         fr: Nombre d'activités de sensibilisation (par exemple, webinaires, présentations lors de conférences).
-        # TODO: update info
-        due_date:
         deadline:
-          en:
-          fr:
-        lead_dept:
-        s4d:
+          en: Biannually until 2029
+          fr: Deux fois par année jusqu'en 2029
+        lead_dept: jus
 
   # DEP 1-5
   # Dev: Published Resource Field
   - datastore_id: indicator_en
     label:
       en: Indicator (English)
-      fr: TODO - supply label
+      fr: Indicateur (anglais)
     description:
-      en: TODO - supply description
-      fr: TODO - supply description
+      en: The indicator related to the chosen milestone, in English
+      fr: L'indicateurs liés au jalon choisi en anglais
     obligation: Mandatory
     datastore_type: text
     published_resource_computed_field: true
@@ -884,80 +697,54 @@ resources:
   - datastore_id: indicator_fr
     label:
       en: Indicator (French)
-      fr: TODO - supply label
+      fr: Indicateur (français)
     description:
-      en: TODO - supply description
-      fr: TODO - supply description
+      en: The indicator related to the chosen milestone, in French
+      fr: L'indicateur liés au jalon choisi en français
     obligation: Mandatory
     datastore_type: text
     published_resource_computed_field: true
 
   # DEP 1-7
   # Dev: Published Resource Field
-  - datastore_id: indicator_due_date
+  - datastore_id: indicator_deadline_en
     label:
-      en: Indicator Due Date
-      fr: TODO - supply label
+      en: Indicator Deadline (English)
+      fr: Date limite de l'indicateur (anglais)
     description:
-      en: TODO - supply description
-      fr: TODO - supply description
+      en: Completion deadline for selected indicator, in English
+      fr: Date limite d'achèvement pour l'indicateur sélectionné en anglais
     obligation: Mandatory
     datastore_type: text
     published_resource_computed_field: true
 
   # DEP 1-8
   # Dev: Published Resource Field
-  - datastore_id: indicator_deadline_en
+  - datastore_id: indicator_deadline_fr
     label:
-      en: Indicator Deadline (English)
-      fr: TODO - supply label
+      en: Indicator Deadline (French)
+      fr: Date limite de l'indicateur (français)
     description:
-      en: TODO - supply description
-      fr: TODO - supply description
+      en: Completion deadline for selected indicator, in French
+      fr: Date limite d'achèvement pour l'indicateur sélectionné en français
     obligation: Mandatory
     datastore_type: text
     published_resource_computed_field: true
 
   # DEP 1-9
   # Dev: Published Resource Field
-  - datastore_id: indicator_deadline_fr
-    label:
-      en: Indicator Deadline (French)
-      fr: TODO - supply label
-    description:
-      en: TODO - supply description
-      fr: TODO - supply description
-    obligation: Mandatory
-    datastore_type: text
-    published_resource_computed_field: true
-
-  # DEP 1-10
-  # Dev: Published Resource Field
   - datastore_id: indicator_lead_dept
     label:
       en: Indicator Lead Department
-      fr: TODO - supply label
+      fr: Ministère responsable
     description:
-      en: TODO - supply description
-      fr: TODO - supply description
+      en: Department responsible for the implementation of the selected indicator
+      fr: Ministère responsable de la mise en oeuvre de l'indicateur sélectionné
     obligation: Mandatory
-    datastore_type: text
+    datastore_type: _text
     published_resource_computed_field: true
 
-  # DEP 1-11
-  # Dev: Published Resource Field
-  - datastore_id: indicator_s4d
-    label:
-      en: Summit for Democracy
-      fr: TODO - supply label
-    description:
-      en: TODO - supply description
-      fr: TODO - supply description
-    obligation: Mandatory
-    datastore_type: text
-    published_resource_computed_field: true
-
-  # DEP 1-12
+  # DEP 1-10
   - datastore_id: status
     label:
       en: Status
@@ -994,7 +781,7 @@ resources:
         fr: Réalisé
         order: 3
 
-  # DEP 1-13
+  # DEP 1-11
   - datastore_id: progress_en
     label:
       en: Progress during reporting period (English)
@@ -1017,7 +804,7 @@ resources:
       class: form-control canada-width-full d-block
     markdown: true
 
-  # DEP 1-14
+  # DEP 1-12
   - datastore_id: progress_fr
     label:
       en: Progress during reporting period (French)
@@ -1040,7 +827,7 @@ resources:
       class: form-control canada-width-full d-block
     markdown: true
 
-  # DEP 1-15
+  # DEP 1-13
   - datastore_id: evidence_en
     label:
       en: Evidence of progress (English)
@@ -1063,7 +850,7 @@ resources:
       class: form-control canada-width-full d-block
     markdown: true
 
-  # DEP 1-16
+  # DEP 1-14
   - datastore_id: evidence_fr
     label:
       en: Evidence of progress (French)
@@ -1086,7 +873,7 @@ resources:
       class: form-control canada-width-full d-block
     markdown: true
 
-  # DEP 1-17
+  # DEP 1-15
   - datastore_id: challenges
     label:
       en: Challenges
@@ -1100,7 +887,7 @@ resources:
       fr: Obligatoire, conditionnel
     validation:
       en: Required if "Status" is "Limited progress" or "Not started"
-      fr: TODO - CONFIRM TRANSLATION (I am not bilingual, thanks!) Requis si l'"État" est "Progrès limité" ou "Non commencé"
+      fr: Obligatoire si « État » est « Progrès limité » ou « Pas commencé ».
     occurrence: Repeatable
     excel_required: false
     form_required: false
@@ -1150,20 +937,20 @@ resources:
         fr: Autre
         order: 5
 
-  # DEP 1-18
+  # DEP 1-16
   - datastore_id: challenges_other_en
     label:
       en: Other Challenges (English)
-      fr: TODO - supply label
+      fr: Autres défis (anglais)
     description:
-      en: TODO - supply description
-      fr: TODO - supply description
+      en: Other challenges faced during implementation, in English
+      fr: Autres difficultés rencontrées au cours de la mise en oeuvre en anglais
     obligation:
       en: Mandatory, conditional
       fr: Obligatoire, conditionnel
     validation:
       en: Required if "Challenges" is "Other"
-      fr: TODO - CONFIRM TRANSLATION (I am not bilingual, thanks!) Requis si le "Défis" est "Autre"
+      fr: Requis si « Défis » est « Autre »
     occurrence: Single
     excel_required: false
     form_required: false
@@ -1192,20 +979,20 @@ resources:
       class: form-control canada-width-full d-block
     markdown: true
 
-  # DEP 1-19
+  # DEP 1-17
   - datastore_id: challenges_other_fr
     label:
       en: Other Challenges (French)
-      fr: TODO - supply label
+      fr: Autres défis (français)
     description:
-      en: TODO - supply description
-      fr: TODO - supply description
+      en: Other challenges faced during implementation, in French
+      fr: Autres difficultés rencontrées au cours de la mise en oeuvre en français
     obligation:
       en: Mandatory, conditional
       fr: Obligatoire, conditionnel
     validation:
       en: Required if "Challenges" is "Other"
-      fr: TODO - CONFIRM TRANSLATION (I am not bilingual, thanks!) Requis si le "Défis" est "Autre"
+      fr: Requis si « Défis » est « Autre »
     occurrence: Single
     excel_required: false
     form_required: false
@@ -1271,7 +1058,7 @@ resources:
       fr: ID du ministère
     description:
       en: Identifies the applied ID of the department or agency.
-      fr: Identifie l’ID d'usage du ministère ou de l'organisme.
+      fr: Identifie l'ID d'usage du ministère ou de l'organisme.
     obligation: Mandatory
     datastore_type: text
     published_resource_computed_field: true
@@ -1372,8 +1159,12 @@ resources:
       evidence_en: Materials are drafted and posted at [link]
       evidence_fr:  Les documents sont rédigés et publiés sur [link]
       challenges: [CF]
-      challenges_other_en: TODO - supply example value
-      challenges_other_fr: TODO - supply example value
+      challenges_other_en: |
+        - Low participation rates
+        - Data not available yet
+      challenges_other_fr: |
+        - Faibles taux de participation
+        - Les données ne sont pas encore disponibles
     filters:
       commitments: C01
     filter_one:
