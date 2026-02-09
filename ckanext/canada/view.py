@@ -172,7 +172,7 @@ def canada_prevent_pd_views(uri: str, package_type: str) -> Union[Response, str]
 
 
 class CanadaDatasetEditView(DatasetEditView):
-    def post(self, package_type: str, id: str):
+    def post(self, package_type: str, id: str) -> Union[Response, str]:
         """
         Custom flash messages per dataset type.
         """
@@ -220,7 +220,7 @@ class CanadaDatasetEditView(DatasetEditView):
 
 
 class CanadaDatasetEditPageView(SchemingEditPageView):
-    def post(self, package_type: str, id: str, page: int):
+    def post(self, package_type: str, id: str, page: int) -> Union[Response, str]:
         """
         Custom flash messages per dataset type.
         """
@@ -251,16 +251,15 @@ class CanadaDatasetEditPageView(SchemingEditPageView):
 
 
 class CanadaDatasetCreateView(SchemingCreateView):
-    def post(self, package_type: str):
+    def post(self, package_type: str) -> Union[Response, str]:
         """
         Custom flash messages for scheming pages.
         """
         response = super(CanadaDatasetCreateView, self).post(package_type)
         if hasattr(response, 'status_code'):
-            # type_ignore_reason: checking attribute
             if (
-              response.status_code == 200 or  # type: ignore
-              response.status_code == 302):  # type: ignore
+              response.status_code == 200 or
+              response.status_code == 302):
                 pages = h.scheming_get_dataset_form_pages(package_type)
                 h.flash_success(
                     _('Saved "%s" for new dataset.')
@@ -269,7 +268,7 @@ class CanadaDatasetCreateView(SchemingCreateView):
 
 
 class CanadaDatasetCreatePageView(SchemingCreatePageView):
-    def post(self, package_type: str, id: str, page: int):
+    def post(self, package_type: str, id: str, page: int) -> Union[Response, str]:
         """
         Custom flash messages for scheming pages.
         """
@@ -288,7 +287,8 @@ class CanadaDatasetCreatePageView(SchemingCreatePageView):
 
 
 class CanadaResourceEditView(ResourceEditView):
-    def post(self, package_type: str, id: str, resource_id: str):
+    def post(self, package_type: str, id: str,
+             resource_id: str) -> Union[Response, str]:
         """
         Custom flash messages.
         """
@@ -304,7 +304,7 @@ class CanadaResourceEditView(ResourceEditView):
 
 
 class CanadaResourceCreateView(ResourceCreateView):
-    def post(self, package_type: str, id: str):
+    def post(self, package_type: str, id: str) -> Union[Response, str]:
         """
         Custom flash messages.
         """
@@ -320,7 +320,7 @@ class CanadaResourceCreateView(ResourceCreateView):
 
 class CanadaUserRegisterView(UserRegisterView):
     @nocache_store
-    def post(self):
+    def post(self) -> Union[Response, str]:
         data = clean_dict(unflatten(tuplize_dict(parse_params(request.form))))
         email = data.get('email', '')
         fullname = data.get('fullname', '')
