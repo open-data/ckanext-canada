@@ -1,4 +1,7 @@
 # -*- coding: UTF-8 -*-
+import pytest
+from sqlalchemy.exc import IntegrityError
+
 from ckanext.canada.tests import CanadaTestBase
 from ckanapi import LocalCKAN
 from ckan import model
@@ -517,3 +520,23 @@ class TestResourcePositionLogic(CanadaTestBase):
         for i, r in enumerate(pkg['resources']):
             assert r['position'] >= 0
             assert r['id'] != original_order[i]
+
+    def test_unique_positions(self):
+        """
+        Position values should be unique per dataset.
+        """
+        pkg = self.sysadmin_action.package_create(
+            name='391112e8-7cce-defc-ee66-56789abcd34c',
+            resources=[self.res_dict, self.res_dict, self.res_dict],
+            **self.pkg_dict)
+
+        assert len(pkg['resources']) == 3
+
+        with pytest.raises(IntegrityError) as e:
+            model.Session.execute(
+                "UPDATE resource SET position=1 WHERE id='{rid}';"
+                .format(rid=pkg['resources'][2]['id']))
+            model.Session.commit()
+        model.Session.rollback()
+        err = e.value
+        assert 'duplicate key value violates unique constraint "idx_package_resource_unique_position"' in str(err)
