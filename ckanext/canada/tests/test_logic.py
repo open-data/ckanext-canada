@@ -532,11 +532,12 @@ class TestResourcePositionLogic(CanadaTestBase):
 
         assert len(pkg['resources']) == 3
 
+        res3 = model.Resource.get(pkg['resources'][2]['id'])
+        res3.position = 1
+
         with pytest.raises(IntegrityError) as e:
-            model.Session.execute(
-                "UPDATE resource SET position=1 WHERE id='{rid}';"
-                .format(rid=pkg['resources'][2]['id']))
+            model.Session.add(res3)
             model.Session.commit()
         model.Session.rollback()
         err = e.value
-        assert 'duplicate key value violates unique constraint "idx_package_resource_unique_position"' in str(err)
+        assert 'duplicate key value violates unique constraint "con_package_resource_unique_position"' in str(err)
