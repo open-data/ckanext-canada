@@ -163,7 +163,7 @@ fields:
     value: nap6
 
   - label:
-      en: Acts of Founded Wrongdoing"
+      en: Acts of Founded Wrongdoing
       fr: Dossiers sur les actes répréhensibles fondés
     value: wrongdoing
 
@@ -216,6 +216,11 @@ fields:
       en: Question Period Notes
       fr: Notes pour la période des questions
     value: qpnotes
+
+  - label:
+      en: Service Identification Information & Metrics
+      fr: Renseignements sur l'identification des services, données volumétriques
+    value: service
 
   - label:
       en: Travel Expenses
