@@ -14,18 +14,11 @@ from ckan.tests.helpers import change_config
 
 import re
 import flask
-from urllib.parse import urlparse
 from ckan import model
 from ckan.views.api import _finish_ok
 
 import pytest
 import mock
-
-
-def _get_relative_offset_from_response(response):
-    assert response.headers
-    assert 'Location' in response.headers
-    return urlparse(response.headers['Location'])._replace(scheme='', netloc='').geturl()
 
 
 @pytest.mark.usefixtures('with_request_context')
@@ -42,6 +35,7 @@ class TestCanadaMiddleware(CanadaTestBase):
         self.environ_overrides_system = {'REMOTE_USER': self.sysadmin['name'].encode('ascii')}
 
     @mock.patch.object(h, 'is_registry_domain', mock_is_registry_domain)
+    @change_config('debug', False)
     def test_500_error_support_id_generation(self, app):
         """
         Raised, uncaught exceptions inside of the Flask app should
