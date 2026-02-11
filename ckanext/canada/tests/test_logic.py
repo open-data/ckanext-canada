@@ -5,6 +5,7 @@ from sqlalchemy.exc import IntegrityError
 from ckanext.canada.tests import CanadaTestBase
 from ckanapi import LocalCKAN
 from ckan import model
+from ckan.model.types import make_uuid
 
 from ckanext.canada.tests.factories import (
     CanadaResource as Resource,
@@ -304,13 +305,16 @@ class TestResourcePositionLogic(CanadaTestBase):
             'metadata_modified': '1994-01-01T00:00:01',
         }
 
+    def _new_res(self):
+        return dict(self.res_dict, id=make_uuid())
+
     def test_auto_resource_positions(self):
         """
         Creating new Resources should just add them to the list of resources.
         """
         pkg = self.sysadmin_action.package_create(
             name='76545678-9abc-def0-1234-56789abcd34c',
-            resources=[self.res_dict],
+            resources=[self._new_res()],
             **self.pkg_dict)
 
         assert len(pkg['resources']) == 1
@@ -318,7 +322,7 @@ class TestResourcePositionLogic(CanadaTestBase):
 
         self.sysadmin_action.resource_create(
             package_id=pkg['id'],
-            **self.res_dict)
+            **self._new_res())
 
         pkg = self.sysadmin_action.package_show(id=pkg['id'])
 
@@ -332,8 +336,8 @@ class TestResourcePositionLogic(CanadaTestBase):
         """
         pkg = self.sysadmin_action.package_create(
             name='76545678-7ade-def0-1234-56789abcd34c',
-            resources=[self.res_dict, self.res_dict, self.res_dict,
-                       self.res_dict, self.res_dict, self.res_dict],
+            resources=[self._new_res(), self._new_res(), self._new_res(),
+                       self._new_res(), self._new_res(), self._new_res()],
             **self.pkg_dict)
 
         assert len(pkg['resources']) == 6
@@ -386,8 +390,8 @@ class TestResourcePositionLogic(CanadaTestBase):
         """
         pkg = self.sysadmin_action.package_create(
             name='391112e8-7ade-def0-1234-56789abcd34c',
-            resources=[self.res_dict, self.res_dict, self.res_dict,
-                       self.res_dict, self.res_dict, self.res_dict],
+            resources=[self._new_res(), self._new_res(), self._new_res(),
+                       self._new_res(), self._new_res(), self._new_res()],
             **self.pkg_dict)
 
         assert len(pkg['resources']) == 6
@@ -437,12 +441,12 @@ class TestResourcePositionLogic(CanadaTestBase):
     def test_delete_resource_assigns_positions(self):
         """
         Deleting a Resource from a package should reorder the other
-        Resources properly, and set the deleted position to 0.
+        Resources properly, and set the deleted position to null.
         """
         pkg = self.sysadmin_action.package_create(
             name='44cefde8-7cce-defc-1234-56789abcd34c',
-            resources=[self.res_dict, self.res_dict, self.res_dict,
-                       self.res_dict, self.res_dict, self.res_dict],
+            resources=[self._new_res(), self._new_res(), self._new_res(),
+                       self._new_res(), self._new_res(), self._new_res()],
             **self.pkg_dict)
 
         assert len(pkg['resources']) == 6
@@ -472,7 +476,33 @@ class TestResourcePositionLogic(CanadaTestBase):
         res = model.Resource.get(deleted_res_id)
 
         assert res.id == deleted_res_id
-        assert res.position == 0
+        assert res.position is None
+
+        old_resource_ids = []
+        for r in pkg['resources']:
+            old_resource_ids.append(r['id'])
+
+        pkg = self.sysadmin_action.package_patch(
+            id=pkg['id'],
+            resources=[self._new_res(), self._new_res(), self._new_res(),
+                       self._new_res(), self._new_res(), self._new_res()])
+
+        assert len(pkg['resources']) == 6
+        assert pkg['resources'][0]['position'] == 0
+        assert pkg['resources'][1]['position'] == 1
+        assert pkg['resources'][2]['position'] == 2
+        assert pkg['resources'][3]['position'] == 3
+        assert pkg['resources'][4]['position'] == 4
+        assert pkg['resources'][5]['position'] == 5
+
+        pkg = self.sysadmin_action.package_show(id=pkg['id'])
+
+        for r in pkg['resources']:
+            assert r['id'] not in old_resource_ids
+
+        for rid in old_resource_ids:
+            res = model.Resource.get(rid)
+            assert res.position is None
 
     def test_reorder_resource_positions(self):
         """
@@ -480,8 +510,8 @@ class TestResourcePositionLogic(CanadaTestBase):
         """
         pkg = self.sysadmin_action.package_create(
             name='391112e8-7cce-defc-1234-56789abcd34c',
-            resources=[self.res_dict, self.res_dict, self.res_dict,
-                       self.res_dict, self.res_dict, self.res_dict],
+            resources=[self._new_res(), self._new_res(), self._new_res(),
+                       self._new_res(), self._new_res(), self._new_res()],
             **self.pkg_dict)
 
         assert len(pkg['resources']) == 6
@@ -527,7 +557,7 @@ class TestResourcePositionLogic(CanadaTestBase):
         """
         pkg = self.sysadmin_action.package_create(
             name='391112e8-7cce-defc-ee66-56789abcd34c',
-            resources=[self.res_dict, self.res_dict, self.res_dict],
+            resources=[self._new_res(), self._new_res(), self._new_res()],
             **self.pkg_dict)
 
         assert len(pkg['resources']) == 3
