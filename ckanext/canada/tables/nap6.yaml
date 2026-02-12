@@ -11,6 +11,7 @@ portal_type: info
 collection: pd
 
 resources:
+# TODO: translate title in PO file
 - title: 6th National Action Plan on Open Government Tracker
   resource_name: nap6
 
@@ -1158,7 +1159,7 @@ resources:
         - Lancer un appel à propositions pour trouver un contractant capable de garantir que le matériel est présenté dans un format utile pour les enseignants et les éducateurs.
       evidence_en: Materials are drafted and posted at [link]
       evidence_fr:  Les documents sont rédigés et publiés sur [link]
-      challenges: [CF]
+      challenges: [CF,OT]
       challenges_other_en: |
         - Low participation rates
         - Data not available yet
@@ -1176,20 +1177,29 @@ excel_edge_style:
   PatternFill:
     patternType: solid
     fgColor: FF1692ae
+  Font:
+    color: FF0F0F0F
 excel_header_style:
   PatternFill:
     patternType: solid
     fgColor: FF536a40
+  Font:
+    color: FFf7f7f7
+    bold: true
+    size: 16
 excel_example_style:
   PatternFill:
     patternType: solid
     fgColor: FF3a474f
+  Font:
+    color: FFf7f7f7
 excel_column_heading_style:
   PatternFill:
     patternType: solid
     fgColor: FF536a40
   Font:
-    color: f7f7f7
+    color: FFf7f7f7
+    underline: single
 datatables_style:
   header:
     bgColor: 536a40
