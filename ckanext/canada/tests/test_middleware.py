@@ -35,7 +35,6 @@ class TestCanadaMiddleware(CanadaTestBase):
         self.environ_overrides_system = {'REMOTE_USER': self.sysadmin['name'].encode('ascii')}
 
     @mock.patch.object(h, 'is_registry_domain', mock_is_registry_domain)
-    @change_config('debug', False)
     def test_500_error_support_id_generation(self, app):
         """
         Raised, uncaught exceptions inside of the Flask app should
