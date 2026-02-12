@@ -869,3 +869,59 @@ input#field-resource-url{
 ## REMOVE AFTER FULL PD DATATABLES QA ##
 ##               END                  ##
 ########################################*/
+
+/*##############################
+##  PD Compliance Dashboards  ##
+################################*/
+.pd-comp-summary-wrapper{
+  border: 2px solid #091c2d;
+  border-radius: 0 0 3px 3px;
+  margin-bottom: 25px;
+}
+/* TODO: write hover,active,focus states for details */
+body .pd-comp-summary-wrapper details,
+body .pd-comp-summary-wrapper summary{
+  margin: 0 !important;
+  padding: 0 !important;
+  display: block !important;
+  border: none !important;
+  outline: none !important;
+  text-decoration: none !important;
+  position: relative;
+}
+
+.pd-comp-summary-wrapper .pd-comp-summary-title{
+  display: block;
+  width: 100%;
+  min-height: 25px;
+  background-color: #091c2d;
+  color: #f7f7f7;
+  padding: 12px 36px 12px 24px;
+  font-weight: bold;
+  text-decoration: none !important;
+}
+
+.pd-comp-summary-wrapper details .pd-comp-summary-title::after{
+  content: '\f0fe';
+  position: absolute;
+  right: 24px;
+  top: 50%;
+  transform: translate(0, -50%);
+  display: block;
+  font-size: 36px;
+  line-height: 1;
+  font-family: 'FontAwesome';
+}
+
+.pd-comp-summary-wrapper details[open] .pd-comp-summary-title::after{
+  content: '\f146';
+}
+
+.pd-comp-summary-wrapper .pd-comp-summary-content{
+  padding: 10px;
+}
+/*##############################
+##             END            ##
+##  PD Compliance Dashboards  ##
+##             END            ##
+################################*/
