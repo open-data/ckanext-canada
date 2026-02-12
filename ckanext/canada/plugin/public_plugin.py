@@ -10,8 +10,12 @@ from ckan.types import (
 from ckan.common import CKANConfig
 
 import os
+import re
+import socket
+import time
 from flask import Blueprint, has_request_context
 from click import Command
+from logging import getLogger
 
 import ckan.plugins as p
 from ckan.lib.plugins import DefaultTranslation
@@ -32,6 +36,9 @@ from ckanext.canada import auth
 
 if TYPE_CHECKING:
     from collections import OrderedDict
+
+
+log = getLogger(__name__)
 
 
 class CanadaPublicPlugin(p.SingletonPlugin, DefaultTranslation):
@@ -262,6 +269,20 @@ class CanadaPublicPlugin(p.SingletonPlugin, DefaultTranslation):
 class LogExtraMiddleware(object):
     def __init__(self, app: Any, config: 'CKANConfig'):
         self.app = app
+        self.app.register_error_handler(Exception, self._log_support_id)
+
+    def _log_support_id(self, e: Exception):
+        supportID = ''.join(re.findall(
+            r'\d+', socket.gethostname())) + '-' + str(time.time())
+        log.error('500 ERROR Support ID: %s' % supportID)
+        try:
+            log.error('500 ERROR Context: %r' %
+                      {'user_id': g.userobj.id if hasattr(g, 'userobj') else None,
+                       'user_agent': request.environ.get('HTTP_USER_AGENT', None),
+                       'user_addr': request.remote_addr or None})
+        except (TypeError, RuntimeError, AttributeError):
+            pass
+        g.ERROR_SUPPORT_ID = supportID
 
     def __call__(self, environ: Any, start_response: Any) -> Any:
         def _start_response(status: str,
@@ -273,10 +294,13 @@ class LogExtraMiddleware(object):
             except (TypeError, RuntimeError, AttributeError):
                 contextual_user = None
             if contextual_user:
-                log_extra = g.log_extra if hasattr(g, 'log_extra') else ''
+                log_extra = ' ' + g.log_extra if hasattr(g, 'log_extra') else ''
                 # FIXME: make sure username special chars are handled
                 # the values in the tuple HAVE to be str types.
-                extra = [('X-LogExtra', f'user={contextual_user} {log_extra}')]
+                extra = [('X-LogExtra', f'user={contextual_user}{log_extra}')]
+                if log_extra:
+                    # clear log_extra from g
+                    del g.log_extra
 
             return start_response(
                 status,
