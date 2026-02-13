@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-01-30 10:35-0500\n"
+"POT-Creation-Date: 2026-02-11 21:16+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: fr\n"
@@ -271,22 +271,22 @@ msgstr ""
 "Il est impossible de déterminer le format de la ressource. Veuillez "
 "indiquer un format."
 
-#: ckanext/canada/logic.py:552
+#: ckanext/canada/logic.py:554
 msgid "Unknown Job"
 msgstr "Tâche inconnue "
 
-#: ckanext/canada/logic.py:559
+#: ckanext/canada/logic.py:561
 msgid "Entire Site"
 msgstr ""
 
-#: ckanext/canada/logic.py:672
+#: ckanext/canada/logic.py:674
 #, python-format
 msgid "No Portal Sync information found for package %s"
 msgstr ""
 "Aucune information de synchronisation du portail n'a été trouvée pour le "
 "jeu de données %s"
 
-#: ckanext/canada/logic.py:761
+#: ckanext/canada/logic.py:763
 msgid ""
 "Invalid request. Full text search is not supported for data with more "
 "than {} rows."
@@ -322,6 +322,10 @@ msgstr "Erreur lors du téléchargement du fichier, réessayez via votre navigat
 msgid "Searching..."
 msgstr "Recherche..."
 
+#: ckanext/canada/strings.js:18 ckanext/canada/strings.py:106
+msgid "Saved new order"
+msgstr ""
+
 #: ckanext/canada/strings.py:12
 #: ckanext/canada/templates/package/base_form_page.html:5
 #: ckanext/canada/templates/package/new.html:9
@@ -351,7 +355,7 @@ msgstr "Nom d’utilisateur"
 #: ckanext/canada/strings.py:17
 #: ckanext/canada/templates/user/edit_user_form.html:10
 #: ckanext/canada/templates/user/new_user_form.html:12
-#: ckanext/canada/templates/user/read_base.html:61
+#: ckanext/canada/templates/user/read_base.html:63
 #: ckanext/canada/templates/user/recover_username.html:17
 #: ckanext/canada/view.py:1522
 msgid "Email"
@@ -629,8 +633,8 @@ msgid "Rebuild Dataset Indices"
 msgstr "Reconstruire les index des ensembles de données"
 
 #: ckanext/canada/strings.py:75 ckanext/canada/templates/admin/base.html:19
-#: ckanext/canada/templates/organization/edit_base.html:35
-#: ckanext/canada/templates/organization/read_base.html:28
+#: ckanext/canada/templates/organization/edit_base.html:37
+#: ckanext/canada/templates/organization/read_base.html:30
 msgid "Rebuild Search Index"
 msgstr "Reconstruire l'index de recherche"
 
@@ -755,25 +759,29 @@ msgstr ""
 "saisi l'adresse URL manuellement, veuillez vérifier l'orthographe et "
 "réessayer."
 
-#: ckanext/canada/strings.py:107
+#: ckanext/canada/strings.py:105
+msgid "Site is in read only mode"
+msgstr ""
+
+#: ckanext/canada/strings.py:109
 msgid "Please upload a file or link to an external resource"
 msgstr ""
 "Veuillez téléverser un fichier ou donner un lien vers une ressource "
 "externe"
 
-#: ckanext/canada/strings.py:108
+#: ckanext/canada/strings.py:110
 msgid "Cannot upload files of this type"
 msgstr "Impossible de téléverser un fichier de ce type"
 
-#: ckanext/canada/strings.py:109
+#: ckanext/canada/strings.py:111
 msgid "Cannot link files of this type"
 msgstr "Impossible de donner un lien vers un fichier de ce type"
 
-#: ckanext/canada/strings.py:110
+#: ckanext/canada/strings.py:112
 msgid "Your password must be {} characters or longer."
 msgstr "Votre mot de passe doit comporter au moins {} caractères."
 
-#: ckanext/canada/strings.py:111
+#: ckanext/canada/strings.py:113
 msgid ""
 "Your password must consist of at least three of the following character "
 "sets: uppercase characters, lowercase characters, digits, punctuation & "
@@ -783,11 +791,11 @@ msgstr ""
 "suivants : majuscules, minuscules, chiffres, ponctuation et caractères "
 "spéciaux."
 
-#: ckanext/canada/strings.py:113
+#: ckanext/canada/strings.py:115
 msgid "Your password cannot be the same as your username."
 msgstr "Votre mot de passe ne peut pas être le même que votre nom d'utilisateur."
 
-#: ckanext/canada/strings.py:115
+#: ckanext/canada/strings.py:117
 msgid ""
 "Your current password is too weak. Please create a new password before "
 "logging in again."
@@ -795,41 +803,41 @@ msgstr ""
 "Votre mot de passe actuel est trop faible. Veuillez créer un nouveau mot "
 "de passe avant de vous connecter à nouveau."
 
-#: ckanext/canada/strings.py:118
+#: ckanext/canada/strings.py:120
 msgid "These fields have been removed, click update below to save your changes."
 msgstr ""
 "Ces champs seront supprimés une fois que vous aurez sauvegardé vos "
 "changements."
 
-#: ckanext/canada/strings.py:119
+#: ckanext/canada/strings.py:121
 msgid "These fields have been removed."
 msgstr "Ces champs ont été supprimés."
 
-#: ckanext/canada/strings.py:122
+#: ckanext/canada/strings.py:124
 msgid "Your form submission could not be validated, please re-submit the form."
 msgstr ""
 "La soumission de votre formulaire n'a pas pu être confirmée. Veuillez le "
 "soumettre de nouveau."
 
-#: ckanext/canada/strings.py:125
+#: ckanext/canada/strings.py:127
 msgid "Open Government Portal"
 msgstr "Portail du gouvernement ouvert"
 
-#: ckanext/canada/strings.py:126
+#: ckanext/canada/strings.py:128
 msgid "Open Government Portal (staging)"
 msgstr "Portail du gouvernement ouvert (stadification)"
 
-#: ckanext/canada/strings.py:129
+#: ckanext/canada/strings.py:131
 msgid "Delete from DataStore"
 msgstr "Supprimer la table DataStore"
 
-#: ckanext/canada/strings.py:130
+#: ckanext/canada/strings.py:132
 msgid "Are you sure you want to delete the DataStore and Data Dictionary?"
 msgstr ""
 "Voulez-vous vraiment supprimer cette table DataStore et ce dictionnaire "
 "de données"
 
-#: ckanext/canada/strings.py:131
+#: ckanext/canada/strings.py:133
 #: ckanext/canada/templates/organization/confirm_delete_member.html:3
 #: ckanext/canada/templates/organization/confirm_delete_member.html:14
 #: ckanext/canada/templates/package/confirm_delete.html:3
@@ -843,55 +851,55 @@ msgstr ""
 msgid "Confirm Delete"
 msgstr "Confirmer la suppression"
 
-#: ckanext/canada/strings.py:134
+#: ckanext/canada/strings.py:136
 msgid "Validation Information"
 msgstr "Renseignements de validation"
 
-#: ckanext/canada/strings.py:135
+#: ckanext/canada/strings.py:137
 msgid "Validation status:"
 msgstr "État de la validation :"
 
-#: ckanext/canada/strings.py:136
+#: ckanext/canada/strings.py:138
 msgid "Validation timestamp:"
 msgstr "Horodatage de la validation :"
 
-#: ckanext/canada/strings.py:137
+#: ckanext/canada/strings.py:139
 msgid "Duration:"
 msgstr "Durée :"
 
-#: ckanext/canada/strings.py:138
+#: ckanext/canada/strings.py:140
 msgid "Validation status"
 msgstr "État de la validation"
 
-#: ckanext/canada/strings.py:139
+#: ckanext/canada/strings.py:141
 msgid "Validation timestamp"
 msgstr "Horodatage de la validation"
 
-#: ckanext/canada/strings.py:142
+#: ckanext/canada/strings.py:144
 msgid "Single"
 msgstr "Une seule"
 
-#: ckanext/canada/strings.py:143
+#: ckanext/canada/strings.py:145
 msgid "Repeatable"
 msgstr "Répétable"
 
-#: ckanext/canada/strings.py:144
+#: ckanext/canada/strings.py:146
 msgid "Optional"
 msgstr "Facultatif"
 
-#: ckanext/canada/strings.py:147
+#: ckanext/canada/strings.py:149
 msgid "Errors in Recombinant Resource"
 msgstr ""
 
-#: ckanext/canada/strings.py:148
+#: ckanext/canada/strings.py:150
 msgid "Refresh Recombinant Resource"
 msgstr "Rafraîchir la ressource publiée"
 
-#: ckanext/canada/strings.py:149
+#: ckanext/canada/strings.py:151
 msgid "The Recombinant resource is out of date"
 msgstr "La ressource publiée est obsolète"
 
-#: ckanext/canada/strings.py:150
+#: ckanext/canada/strings.py:152
 msgid "The Recombinant resource is out of date:"
 msgstr "La ressource publiée est obsolète :"
 
@@ -1449,71 +1457,71 @@ msgstr ""
 msgid ": "
 msgstr " : "
 
-#: ckanext/canada/plugin/public_plugin.py:143
+#: ckanext/canada/plugin/public_plugin.py:150
 #: ckanext/canada/templates/scheming/package/snippets/package_form.html:25
 msgid "Portal Type"
 msgstr "Type de portail"
 
-#: ckanext/canada/plugin/public_plugin.py:144
+#: ckanext/canada/plugin/public_plugin.py:151
 #: ckanext/canada/templates/package/deleted.html:14
 #: ckanext/canada/templates/user/new_user_form.html:16
 msgid "Organization"
 msgstr "Organisation"
 
-#: ckanext/canada/plugin/public_plugin.py:145
+#: ckanext/canada/plugin/public_plugin.py:152
 msgid "Collection Type"
 msgstr "Type de collection"
 
-#: ckanext/canada/plugin/public_plugin.py:146
-#: ckanext/canada/plugin/public_plugin.py:147
+#: ckanext/canada/plugin/public_plugin.py:153
+#: ckanext/canada/plugin/public_plugin.py:154
 msgid "Keywords"
 msgstr "Mots clés"
 
-#: ckanext/canada/plugin/public_plugin.py:148
+#: ckanext/canada/plugin/public_plugin.py:155
 msgid "Subject"
 msgstr "Sujet"
 
-#: ckanext/canada/plugin/public_plugin.py:149
+#: ckanext/canada/plugin/public_plugin.py:156
 #: ckanext/canada/templates/package/snippets/resource_info.html:13
 #: ckanext/canada/templates/scheming/package/resource_read.html:19
 #: ckanext/canada/templates/tabledesigner/view_snippets/cra_business_number.html:1
 msgid "Format"
 msgstr "Format"
 
-#: ckanext/canada/plugin/public_plugin.py:150
+#: ckanext/canada/plugin/public_plugin.py:157
 msgid "Resource Type"
 msgstr "Type de ressource"
 
-#: ckanext/canada/plugin/public_plugin.py:151
+#: ckanext/canada/plugin/public_plugin.py:158
 msgid "Maintenance and Update Frequency"
 msgstr "Fréquence d’entretien et de mise à jour"
 
-#: ckanext/canada/plugin/public_plugin.py:152
+#: ckanext/canada/plugin/public_plugin.py:159
 msgid "Record Status"
 msgstr "État du dossier"
 
-#: ckanext/canada/plugin/public_plugin.py:153
+#: ckanext/canada/plugin/public_plugin.py:160
 msgid "IMSO Approval"
 msgstr "Approbation du CSGI"
 
-#: ckanext/canada/plugin/public_plugin.py:154
+#: ckanext/canada/plugin/public_plugin.py:161
 msgid "Jurisdiction"
 msgstr "Juridiction"
 
-#: ckanext/canada/plugin/public_plugin.py:155
+#: ckanext/canada/plugin/public_plugin.py:162
 msgid "Suggestion Status"
 msgstr "État de la suggestion"
 
-#: ckanext/canada/plugin/public_plugin.py:248
 #: ckanext/canada/plugin/public_plugin.py:255
+#: ckanext/canada/plugin/public_plugin.py:262
 msgid "container_title"
 msgstr ""
 
-#: ckanext/canada/plugin/public_plugin.py:301
+#: ckanext/canada/plugin/public_plugin.py:325
 msgid "Previous"
 msgstr "Précédent"
 
-#: ckanext/canada/plugin/public_plugin.py:302
+#: ckanext/canada/plugin/public_plugin.py:326
 msgid "Next"
 msgstr "Suivant"
 
@@ -1547,7 +1555,7 @@ msgstr ""
 #. SQL Trigger String for PD Type: wrongdoing
 #: ckanext/canada/tables/adminaircraft.yaml:355
 #: ckanext/canada/tables/contracts.yaml:2254
-#: ckanext/canada/tables/grants.yaml:1317
+#: ckanext/canada/tables/grants.yaml:1310
 #: ckanext/canada/tables/hospitalityq.yaml:739
 #: ckanext/canada/tables/qpnotes.yaml:382
 #: ckanext/canada/tables/reclassification.yaml:310
@@ -1597,7 +1605,7 @@ msgstr "Veuillez entrer une année valide"
 #. SQL Trigger String for PD Type: ati
 #. SQL Trigger String for PD Type: briefingt
 #: ckanext/canada/tables/ati.yaml:267 ckanext/canada/tables/ati.yaml:403
-#: ckanext/canada/tables/briefingt.yaml:444
+#: ckanext/canada/tables/briefingt.yaml:451
 msgid "Please enter a month number from 1-12"
 msgstr "Veuillez entrer une valeur comprise entre 1 et 12"
 
@@ -1643,12 +1651,12 @@ msgstr ""
 "numéros des notes d’information pour votre organisation"
 
 #. SQL Trigger String for PD Type: briefingt
-#: ckanext/canada/tables/briefingt.yaml:319
+#: ckanext/canada/tables/briefingt.yaml:326
 msgid "Comma is not allowed in Briefing Note Number field"
 msgstr "La virgule n’est pas autorisée dans le champ du Numéro de suivi"
 
 #. Resource Title for PD Type: briefingt
-#: ckanext/canada/tables/briefingt.yaml:339
+#: ckanext/canada/tables/briefingt.yaml:346
 msgid "Proactive Publication - Briefing Note Titles and Numbers Nothing to Report"
 msgstr ""
 "Publication proactive - Titres et numéros des notes d’information rien à "
@@ -1661,7 +1669,7 @@ msgstr ""
 #. SQL Trigger String for PD Type: reclassification
 #. SQL Trigger String for PD Type: travela
 #. SQL Trigger String for PD Type: travelq
-#: ckanext/canada/tables/briefingt.yaml:443
+#: ckanext/canada/tables/briefingt.yaml:450
 #: ckanext/canada/tables/contractsa.yaml:397
 #: ckanext/canada/tables/hospitalityq.yaml:874
 #: ckanext/canada/tables/qpnotes.yaml:511
@@ -1958,34 +1966,34 @@ msgstr ""
 "et les subventions pour votre organisation"
 
 #. SQL Trigger String for PD Type: grants
-#: ckanext/canada/tables/grants.yaml:1318
+#: ckanext/canada/tables/grants.yaml:1311
 msgid "Must be a valid Canadian postal code in the format of \"A1A 1A1\""
 msgstr "Doit être un code postal canadien valide selon le format « A1A 1A1 »"
 
 #. SQL Trigger String for PD Type: grants
-#: ckanext/canada/tables/grants.yaml:1319
+#: ckanext/canada/tables/grants.yaml:1312
 msgid "Must be a 9 digit number"
 msgstr "Doit être un numéro à neuf chiffres"
 
 #. SQL Trigger String for PD Type: grants
-#: ckanext/canada/tables/grants.yaml:1320
+#: ckanext/canada/tables/grants.yaml:1313
 msgid "Must be a 5 digit number"
 msgstr "Doit être un numéro à cinq chiffres"
 
 #. SQL Trigger String for PD Type: grants
-#: ckanext/canada/tables/grants.yaml:1321
+#: ckanext/canada/tables/grants.yaml:1314
 msgid "\"Agreement Start Date\" cannot be after \"Projected Agreement End Date\""
 msgstr ""
 "La « date de début de l'entente » ne peut venir après la « date de fin "
 "prévue de l'entente »"
 
 #. SQL Trigger String for PD Type: grants
-#: ckanext/canada/tables/grants.yaml:1322
+#: ckanext/canada/tables/grants.yaml:1315
 msgid "Must be greater than zero"
 msgstr "Le nombre doit être supérieur à 0"
 
 #. Resource Title for PD Type: grants
-#: ckanext/canada/tables/grants.yaml:1371
+#: ckanext/canada/tables/grants.yaml:1364
 msgid "Proactive Publication - Grants and Contributions Nothing to Report"
 msgstr ""
 "Publication proactive – Subventions et contributions, rien à "
@@ -2349,7 +2357,26 @@ msgstr ""
 msgid "Log in"
 msgstr "Connexion"
 
-#: ckanext/canada/templates/error_document_template.html:40
+#: ckanext/canada/templates/error_document_template.html:42
+msgid "Support ID: "
+msgstr "L'identifiant de support :"
+
+#: ckanext/canada/templates/error_document_template.html:43
+msgid ""
+"We encountered an error and are unable to serve your request. Please try "
+"again in short time or contact <a href=\"mailto:{support}\">{support}</a>"
+" <strong><em>with the above support ID</em></strong> if you need "
+"immediate assistance or if this issue persists. Note that your login "
+"expires after 1 hour of inactivity."
+msgstr ""
+"Nous rencontrons une erreur et nous ne pouvons pas répondre à votre "
+"demande. Veuillez réessayer plus tard ou communiquer avec <a "
+"href=\"mailto:{support}\">{support}</a> <strong><em>avec l'identifiant de "
+"support ci-dessus</em></strong> si votre demande est urgente ou "
+"si ce problème persiste. Veuillez noter que votre connexion expire après "
+"une heure d’inactivité."
+
+#: ckanext/canada/templates/error_document_template.html:45
 msgid ""
 "We encountered an error and are unable to serve your request. Please try "
 "again in short time or contact <a href=\"mailto:{support}\">{support}</a>"
@@ -2821,7 +2848,7 @@ msgid "Load more"
 msgstr "En charger davantage"
 
 #: ckanext/canada/templates/admin/base.html:5
-#: ckanext/canada/templates/snippets/cdts/header.html:200
+#: ckanext/canada/templates/snippets/cdts/header.html:201
 msgid "Admin"
 msgstr "Administrateur"
 
@@ -3208,13 +3235,13 @@ msgstr ""
 "bs-html=\"true\">le formatage du texte dans Markdown</a> ici"
 
 #: ckanext/canada/templates/organization/activity_stream.html:4
-#: ckanext/canada/templates/package/read_base.html:27
+#: ckanext/canada/templates/package/read_base.html:28
 #: ckanext/canada/templates/user/activity_stream.html:12
 msgid "Activity Stream"
 msgstr "Flux d’Activités"
 
 #: ckanext/canada/templates/organization/activity_stream.html:11
-#: ckanext/canada/templates/package/read_base.html:161
+#: ckanext/canada/templates/package/read_base.html:163
 msgid "Atom Feed"
 msgstr "Fil de nouvelles Atom"
 
@@ -3244,8 +3271,8 @@ msgstr "Gérer"
 #: ckanext/canada/templates/organization/read_base.html:7
 #: ckanext/canada/templates/snippets/cdts/header.html:157
 #: ckanext/canada/templates/user/read.html:28
-#: ckanext/canada/templates/user/read_base.html:15
-#: ckanext/canada/templates/user/read_base.html:74
+#: ckanext/canada/templates/user/read_base.html:17
+#: ckanext/canada/templates/user/read_base.html:76
 msgid "Organizations"
 msgstr "Organisations"
 
@@ -3257,19 +3284,19 @@ msgstr "Voir l’organisation"
 msgid "Edit Organization"
 msgstr "Modifier l’organisation"
 
-#: ckanext/canada/templates/organization/edit_base.html:28
-#: ckanext/canada/templates/organization/read_base.html:21
-#: ckanext/canada/templates/user/read_base.html:13
+#: ckanext/canada/templates/organization/edit_base.html:29
+#: ckanext/canada/templates/organization/read_base.html:22
+#: ckanext/canada/templates/user/read_base.html:14
 msgid "Activity"
 msgstr "Activité"
 
-#: ckanext/canada/templates/organization/edit_base.html:30
-#: ckanext/canada/templates/organization/read_base.html:23
+#: ckanext/canada/templates/organization/edit_base.html:32
+#: ckanext/canada/templates/organization/read_base.html:25
 msgid "Edit Members"
 msgstr "Modifier les membres"
 
-#: ckanext/canada/templates/organization/edit_base.html:32
-#: ckanext/canada/templates/organization/read_base.html:25
+#: ckanext/canada/templates/organization/edit_base.html:34
+#: ckanext/canada/templates/organization/read_base.html:27
 msgid "View Members"
 msgstr "Afficher les membres"
 
@@ -3578,11 +3605,11 @@ msgstr ""
 
 #: ckanext/canada/templates/package/read.html:136
 #: ckanext/canada/templates/package/read.html:159
-#: ckanext/canada/templates/package/read_base.html:60
-#: ckanext/canada/templates/package/read_base.html:69
-#: ckanext/canada/templates/package/read_base.html:85
-#: ckanext/canada/templates/package/read_base.html:166
-#: ckanext/canada/templates/package/read_base.html:198
+#: ckanext/canada/templates/package/read_base.html:62
+#: ckanext/canada/templates/package/read_base.html:71
+#: ckanext/canada/templates/package/read_base.html:87
+#: ckanext/canada/templates/package/read_base.html:168
+#: ckanext/canada/templates/package/read_base.html:200
 #: ckanext/canada/templates/recombinant/create_pd_record.html:30
 #: ckanext/canada/templates/recombinant/update_pd_record.html:30
 #: ckanext/canada/templates/snippets/package_item.html:90
@@ -3633,96 +3660,96 @@ msgstr "Dossiers similaires"
 msgid "Dataset"
 msgstr "Jeu de données"
 
-#: ckanext/canada/templates/package/read_base.html:45
+#: ckanext/canada/templates/package/read_base.html:47
 #: ckanext/canada/templates/scheming/package/resource_read.html:9
 msgid "Additional Information"
 msgstr "Informations complémentaires"
 
-#: ckanext/canada/templates/package/read_base.html:69
+#: ckanext/canada/templates/package/read_base.html:71
 msgid "Temporal Coverage"
 msgstr "Couverture temporelle"
 
-#: ckanext/canada/templates/package/read_base.html:72
+#: ckanext/canada/templates/package/read_base.html:74
 msgid "to"
 msgstr "à"
 
-#: ckanext/canada/templates/package/read_base.html:74
+#: ckanext/canada/templates/package/read_base.html:76
 msgid "to undefined"
 msgstr "à non défini"
 
-#: ckanext/canada/templates/package/read_base.html:76
+#: ckanext/canada/templates/package/read_base.html:78
 msgid "undefined to"
 msgstr "non défini à"
 
-#: ckanext/canada/templates/package/read_base.html:85
+#: ckanext/canada/templates/package/read_base.html:87
 msgid "Openness Rating"
 msgstr "Cote de degrée d’ouverture des données"
 
-#: ckanext/canada/templates/package/read_base.html:90
+#: ckanext/canada/templates/package/read_base.html:92
 msgid "one star"
 msgstr "une étoile"
 
-#: ckanext/canada/templates/package/read_base.html:91
+#: ckanext/canada/templates/package/read_base.html:93
 msgid "two stars"
 msgstr "deux étoiles"
 
-#: ckanext/canada/templates/package/read_base.html:92
+#: ckanext/canada/templates/package/read_base.html:94
 msgid "three stars"
 msgstr "trois étoiles"
 
-#: ckanext/canada/templates/package/read_base.html:93
+#: ckanext/canada/templates/package/read_base.html:95
 msgid "four stars"
 msgstr "quatre étoiles"
 
-#: ckanext/canada/templates/package/read_base.html:94
+#: ckanext/canada/templates/package/read_base.html:96
 msgid "five stars"
 msgstr "cinq étoiles"
 
-#: ckanext/canada/templates/package/read_base.html:105
+#: ckanext/canada/templates/package/read_base.html:107
 msgid "About this Record"
 msgstr "Au sujet de ce dossier"
 
-#: ckanext/canada/templates/package/read_base.html:109
+#: ckanext/canada/templates/package/read_base.html:111
 msgid "Record Released:"
 msgstr "Dossier publié :"
 
-#: ckanext/canada/templates/package/read_base.html:113
+#: ckanext/canada/templates/package/read_base.html:115
 msgid "Record Modified:"
 msgstr "Dossier modifié :"
 
-#: ckanext/canada/templates/package/read_base.html:117
+#: ckanext/canada/templates/package/read_base.html:119
 msgid "Record ID:"
 msgstr "Identificateur du dossier :"
 
-#: ckanext/canada/templates/package/read_base.html:121
+#: ckanext/canada/templates/package/read_base.html:123
 msgid "Metadata:"
 msgstr "Métadonnées :"
 
-#: ckanext/canada/templates/package/read_base.html:125
+#: ckanext/canada/templates/package/read_base.html:127
 msgid "Link to JSON format"
 msgstr "Lien au format JSON"
 
-#: ckanext/canada/templates/package/read_base.html:131
+#: ckanext/canada/templates/package/read_base.html:133
 msgid "DCAT (JSON-LD)"
 msgstr "DCAT (JSON-LD)"
 
-#: ckanext/canada/templates/package/read_base.html:138
+#: ckanext/canada/templates/package/read_base.html:140
 msgid "DCAT (XML)"
 msgstr "DCAT (XML)"
 
-#: ckanext/canada/templates/package/read_base.html:153
+#: ckanext/canada/templates/package/read_base.html:155
 msgid "FGP Metadata:"
 msgstr "Métadonnées de la PGF :"
 
-#: ckanext/canada/templates/package/read_base.html:155
+#: ckanext/canada/templates/package/read_base.html:157
 msgid "HNAP ISO:19115 Metadata Record"
 msgstr "Enregistrement de métadonnées de HNAP ISO:19115"
 
-#: ckanext/canada/templates/package/read_base.html:173
+#: ckanext/canada/templates/package/read_base.html:175
 msgid "Data Contact"
 msgstr "Point de contact pour les données"
 
-#: ckanext/canada/templates/package/read_base.html:173
+#: ckanext/canada/templates/package/read_base.html:175
 msgid "Distributor Contact"
 msgstr "Renseignements au sujet du distributeur"
 
@@ -4516,21 +4543,21 @@ msgstr "Accueil"
 msgid "FAQ"
 msgstr "FAQ"
 
-#: ckanext/canada/templates/snippets/cdts/header.html:192
+#: ckanext/canada/templates/snippets/cdts/header.html:193
 #: ckanext/canada/templates/user/dashboard.html:9
 #: ckanext/canada/templates/user/dashboard_datasets.html:19
 msgid "Dashboard"
 msgstr "Tableau de bord"
 
-#: ckanext/canada/templates/snippets/cdts/header.html:208
+#: ckanext/canada/templates/snippets/cdts/header.html:209
 msgid "Get Help"
 msgstr "Obtenez de l’aide"
 
-#: ckanext/canada/templates/snippets/cdts/header.html:229
+#: ckanext/canada/templates/snippets/cdts/header.html:230
 msgid "Signed in as"
 msgstr "Connecté en tant que"
 
-#: ckanext/canada/templates/snippets/cdts/header.html:229
+#: ckanext/canada/templates/snippets/cdts/header.html:230
 msgid "View profile"
 msgstr "Afficher le profil"
 
@@ -4552,12 +4579,13 @@ msgstr "Êtes-vous sûr de vouloir supprimer le membre - {name}?"
 
 #: ckanext/canada/templates/user/dashboard.html:9
 #: ckanext/canada/templates/user/dashboard.html:13
-#: ckanext/canada/templates/user/dashboard.html:18
-#: ckanext/canada/templates/user/dashboard.html:22
+#: ckanext/canada/templates/user/dashboard.html:19
+#: ckanext/canada/templates/user/dashboard.html:27
 msgid "My Activity"
 msgstr "Mon Activité"
 
-#: ckanext/canada/templates/user/dashboard.html:23
+#: ckanext/canada/templates/user/dashboard.html:21
+#: ckanext/canada/templates/user/dashboard.html:29
 msgid "My Datasets"
 msgstr "Mes dossiers"
 
@@ -5070,43 +5098,43 @@ msgstr "J’accepte"
 msgid "I do not agree"
 msgstr "Je n’accepte pas"
 
-#: ckanext/canada/templates/user/read_base.html:17
+#: ckanext/canada/templates/user/read_base.html:19
 msgid "API Tokens"
 msgstr "Jetons API"
 
-#: ckanext/canada/templates/user/read_base.html:20
+#: ckanext/canada/templates/user/read_base.html:22
 msgid "MFA"
 msgstr "AMF"
 
-#: ckanext/canada/templates/user/read_base.html:27
+#: ckanext/canada/templates/user/read_base.html:29
 msgid "Details"
 msgstr "Détails"
 
-#: ckanext/canada/templates/user/read_base.html:39
+#: ckanext/canada/templates/user/read_base.html:41
 msgid "Followers:"
 msgstr "Suiveurs :"
 
-#: ckanext/canada/templates/user/read_base.html:43
+#: ckanext/canada/templates/user/read_base.html:45
 msgid "Datasets:"
 msgstr "Dossiers :"
 
-#: ckanext/canada/templates/user/read_base.html:51
+#: ckanext/canada/templates/user/read_base.html:53
 msgid "Open ID:"
 msgstr "Ouvrir ID :"
 
-#: ckanext/canada/templates/user/read_base.html:54
+#: ckanext/canada/templates/user/read_base.html:56
 msgid "Username:"
 msgstr "Nom d’utilisateur :"
 
-#: ckanext/canada/templates/user/read_base.html:62
+#: ckanext/canada/templates/user/read_base.html:64
 msgid "This means only you can see this"
 msgstr "Cela signifie que vous êtes le seul à pouvoir le voir"
 
-#: ckanext/canada/templates/user/read_base.html:62
+#: ckanext/canada/templates/user/read_base.html:64
 msgid "Private"
 msgstr "Privé"
 
-#: ckanext/canada/templates/user/read_base.html:67
+#: ckanext/canada/templates/user/read_base.html:69
 msgid "Member Since"
 msgstr "Membre depuis"
 
