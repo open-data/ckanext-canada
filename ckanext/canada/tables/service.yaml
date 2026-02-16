@@ -1596,6 +1596,12 @@ resources:
 
   default_preview_sort: fiscal_yr, service_id
 
+  # Triggers that should be generated per organization
+  # along with a list of field IDs which have choices with valid_orgs
+  per_org_triggers:
+    service_trigger:
+    - program_id
+
   triggers:
   - service_trigger: |
       DECLARE
