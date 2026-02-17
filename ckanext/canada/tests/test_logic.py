@@ -2,12 +2,27 @@
 from ckanext.canada.tests import CanadaTestBase
 from ckanapi import LocalCKAN
 from ckan import model
+from ckan.model.types import make_uuid
+import ckan.lib.uploader as uploader
+
+import pytest
+import mock
+import io
+import re
 
 from ckanext.canada.tests.factories import (
     CanadaResource as Resource,
     CanadaOrganization as Organization,
     CanadaUser as User,
     CanadaSysadminWithToken as Sysadmin
+)
+from ckanext.canada.tests.helpers import (
+    MockFieldStorage,
+    get_sample_filepath,
+)
+# type_ignore_reason: custom fixtures
+from ckanext.canada.tests.fixtures import (  # noqa: F401
+    mock_uploads,  # type: ignore
 )
 
 
@@ -301,13 +316,16 @@ class TestResourcePositionLogic(CanadaTestBase):
             'metadata_modified': '1994-01-01T00:00:01',
         }
 
+    def _new_res(self):
+        return dict(self.res_dict, id=make_uuid())
+
     def test_auto_resource_positions(self):
         """
         Creating new Resources should just add them to the list of resources.
         """
         pkg = self.sysadmin_action.package_create(
             name='76545678-9abc-def0-1234-56789abcd34c',
-            resources=[self.res_dict],
+            resources=[self._new_res()],
             **self.pkg_dict)
 
         assert len(pkg['resources']) == 1
@@ -315,7 +333,7 @@ class TestResourcePositionLogic(CanadaTestBase):
 
         self.sysadmin_action.resource_create(
             package_id=pkg['id'],
-            **self.res_dict)
+            **self._new_res())
 
         pkg = self.sysadmin_action.package_show(id=pkg['id'])
 
@@ -329,8 +347,8 @@ class TestResourcePositionLogic(CanadaTestBase):
         """
         pkg = self.sysadmin_action.package_create(
             name='76545678-7ade-def0-1234-56789abcd34c',
-            resources=[self.res_dict, self.res_dict, self.res_dict,
-                       self.res_dict, self.res_dict, self.res_dict],
+            resources=[self._new_res(), self._new_res(), self._new_res(),
+                       self._new_res(), self._new_res(), self._new_res()],
             **self.pkg_dict)
 
         assert len(pkg['resources']) == 6
@@ -383,8 +401,8 @@ class TestResourcePositionLogic(CanadaTestBase):
         """
         pkg = self.sysadmin_action.package_create(
             name='391112e8-7ade-def0-1234-56789abcd34c',
-            resources=[self.res_dict, self.res_dict, self.res_dict,
-                       self.res_dict, self.res_dict, self.res_dict],
+            resources=[self._new_res(), self._new_res(), self._new_res(),
+                       self._new_res(), self._new_res(), self._new_res()],
             **self.pkg_dict)
 
         assert len(pkg['resources']) == 6
@@ -438,8 +456,8 @@ class TestResourcePositionLogic(CanadaTestBase):
         """
         pkg = self.sysadmin_action.package_create(
             name='44cefde8-7cce-defc-1234-56789abcd34c',
-            resources=[self.res_dict, self.res_dict, self.res_dict,
-                       self.res_dict, self.res_dict, self.res_dict],
+            resources=[self._new_res(), self._new_res(), self._new_res(),
+                       self._new_res(), self._new_res(), self._new_res()],
             **self.pkg_dict)
 
         assert len(pkg['resources']) == 6
@@ -477,8 +495,8 @@ class TestResourcePositionLogic(CanadaTestBase):
         """
         pkg = self.sysadmin_action.package_create(
             name='391112e8-7cce-defc-1234-56789abcd34c',
-            resources=[self.res_dict, self.res_dict, self.res_dict,
-                       self.res_dict, self.res_dict, self.res_dict],
+            resources=[self._new_res(), self._new_res(), self._new_res(),
+                       self._new_res(), self._new_res(), self._new_res()],
             **self.pkg_dict)
 
         assert len(pkg['resources']) == 6
@@ -517,3 +535,178 @@ class TestResourcePositionLogic(CanadaTestBase):
         for i, r in enumerate(pkg['resources']):
             assert r['position'] >= 0
             assert r['id'] != original_order[i]
+
+    @pytest.mark.usefixtures("mock_uploads")
+    def test_upload_resource_after_reorder(self, mock_uploads):  # noqa: F811
+        """
+        Having different resource positions in the database
+        should still allow for proper Resource uploads when
+        updating a resource/package.
+
+        NOTE: this flaky error is based on db object return of resources
+              in the package orm object. So we close and open db sessions
+              inside of this test to emulate browser request sessions.
+              Because of the flakiness, we update every resource w/ upload
+              in a new db session.
+        """
+        pkg = self.sysadmin_action.package_create(
+            name='391112e8-1ffd-defc-1234-56789abcd34c',
+            resources=[self._new_res(), self._new_res(), self._new_res(),
+                       self._new_res(), self._new_res(), self._new_res()],
+            **self.pkg_dict)
+
+        assert len(pkg['resources']) == 6
+        assert pkg['resources'][0]['position'] == 0
+        assert pkg['resources'][1]['position'] == 1
+        assert pkg['resources'][2]['position'] == 2
+        assert pkg['resources'][3]['position'] == 3
+        assert pkg['resources'][4]['position'] == 4
+        assert pkg['resources'][5]['position'] == 5
+
+        # upload sample file for all resources
+        sample_filepath = get_sample_filepath('example_image_1.png')
+        for i, r in enumerate(pkg['resources']):
+            fake_file_obj = io.BytesIO()
+            with open(sample_filepath, 'rb') as f:
+                file_data_r1 = f.read()
+                fake_file_obj.write(file_data_r1)
+                mock_field_store_r1 = MockFieldStorage(fake_file_obj, 'example_image_1.png')
+
+                fake_stream_r1 = io.BufferedReader(io.BytesIO(file_data_r1))
+
+            with mock.patch('io.open', return_value=fake_stream_r1):
+                model.Session.commit()
+                model.Session.remove()
+                _session = model.Session  # noqa: F841
+                r['url'] = '__upload'
+                r['url_type'] = 'upload'
+                r['format'] = 'PNG'
+                r['upload'] = mock_field_store_r1
+                self.sysadmin_action.resource_update(**r)
+
+            res = self.sysadmin_action.resource_show(id=r['id'])
+            assert res['id'] == r['id']
+            assert res['position'] == i
+            assert res['url_type'] == 'upload'
+            assert res['format'] == 'PNG'
+            assert re.match(rf'.*/dataset/{pkg["id"]}/resource/{r["id"]}/download/example_image_1.png$', res['url']) is not None
+
+        original_order = [
+            pkg['resources'][0]['id'],
+            pkg['resources'][1]['id'],
+            pkg['resources'][2]['id'],
+            pkg['resources'][3]['id'],
+            pkg['resources'][4]['id'],
+            pkg['resources'][5]['id'],
+        ]
+
+        new_order = [
+            pkg['resources'][4]['id'],
+            pkg['resources'][5]['id'],
+            pkg['resources'][0]['id'],
+            pkg['resources'][2]['id'],
+            pkg['resources'][3]['id'],
+            pkg['resources'][1]['id'],
+        ]
+
+        self.sysadmin_action.package_resource_reorder(
+            id=pkg['id'],
+            order=new_order)
+
+        pkg = self.sysadmin_action.package_show(id=pkg['id'])
+
+        assert original_order != new_order
+        for i, r in enumerate(pkg['resources']):
+            assert r['position'] >= 0
+            assert r['id'] != original_order[i]
+
+        # update sample file upload for all resources
+        sample_filepath = get_sample_filepath('example_image_2.png')
+        for i, r in enumerate(pkg['resources']):
+            fake_file_obj = io.BytesIO()
+            with open(sample_filepath, 'rb') as f:
+                file_data_r2 = f.read()
+                fake_file_obj.write(file_data_r2)
+                mock_field_store_r2 = MockFieldStorage(fake_file_obj, 'example_image_2.png')
+
+                fake_stream_r2 = io.BufferedReader(io.BytesIO(file_data_r2))
+
+            with mock.patch('io.open', return_value=fake_stream_r2):
+                model.Session.commit()
+                model.Session.remove()
+                _session = model.Session  # noqa: F841
+                r['upload'] = mock_field_store_r2
+                self.sysadmin_action.resource_update(**r)
+
+            res = self.sysadmin_action.resource_show(id=r['id'])
+            assert res['id'] == r['id']
+            assert r['id'] != original_order[i]
+            assert res['url_type'] == 'upload'
+            assert res['format'] == 'PNG'
+            assert re.match(rf'.*/dataset/{pkg["id"]}/resource/{r["id"]}/download/example_image_2.png$', res['url']) is not None
+
+            upload = uploader.get_resource_uploader(res)
+            filepath = upload.get_path(res['id'])
+
+            with open(filepath, 'rb') as current_file:
+                current_file_data = current_file.read()
+                assert current_file_data != file_data_r1
+                assert current_file_data == file_data_r2
+
+        # test adding a new file and resource
+        sample_filepath = get_sample_filepath('example_image_1.png')
+        fake_file_obj = io.BytesIO()
+        with open(sample_filepath, 'rb') as f:
+            file_data_rnew1 = f.read()
+            fake_file_obj.write(file_data_rnew1)
+            mock_field_store_rnew1 = MockFieldStorage(fake_file_obj, 'example_image_1.png')
+
+            fake_stream_rnew = io.BufferedReader(io.BytesIO(file_data_rnew1))
+
+        with mock.patch('io.open', return_value=fake_stream_rnew):
+            model.Session.commit()
+            model.Session.remove()
+            _session = model.Session  # noqa: F841
+            res = Resource(id='aa111aa1-1ffd-defc-1234-56789abcd34c',
+                           package_id=pkg['id'], upload=mock_field_store_rnew1)
+
+        assert res['position'] == 6
+        assert re.match(rf'.*/dataset/{pkg["id"]}/resource/{res["id"]}/download/example_image_1.png$', res['url']) is not None
+
+        upload = uploader.get_resource_uploader(res)
+        filepath = upload.get_path(res['id'])
+
+        with open(filepath, 'rb') as current_file:
+            current_file_data = current_file.read()
+            assert current_file_data == file_data_r1
+            assert current_file_data == file_data_rnew1
+            assert current_file_data != file_data_r2
+
+        # test updating the new file upload
+        sample_filepath = get_sample_filepath('example_image_2.png')
+        fake_file_obj = io.BytesIO()
+        with open(sample_filepath, 'rb') as f:
+            file_data_rnew2 = f.read()
+            fake_file_obj.write(file_data_rnew2)
+            mock_field_store_rnew2 = MockFieldStorage(fake_file_obj, 'example_image_2.png')
+
+            fake_stream_rnew2 = io.BufferedReader(io.BytesIO(file_data_rnew2))
+
+        with mock.patch('io.open', return_value=fake_stream_rnew2):
+            res['upload'] = mock_field_store_rnew2
+            self.sysadmin_action.resource_update(**res)
+
+        res = self.sysadmin_action.resource_show(id=res['id'])
+
+        assert res['position'] == 6
+        assert re.match(rf'.*/dataset/{pkg["id"]}/resource/{res["id"]}/download/example_image_2.png$', res['url']) is not None
+
+        upload = uploader.get_resource_uploader(res)
+        filepath = upload.get_path(res['id'])
+
+        with open(filepath, 'rb') as current_file:
+            current_file_data = current_file.read()
+            assert current_file_data == file_data_r2
+            assert current_file_data == file_data_rnew2
+            assert current_file_data != file_data_r1
+            assert current_file_data != file_data_rnew1
