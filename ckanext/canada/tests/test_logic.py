@@ -471,6 +471,7 @@ class TestResourcePositionLogic(CanadaTestBase):
         assert pkg['resources'][4]['position'] == 4
         assert pkg['resources'][5]['position'] == 5
 
+        # test single delete resource
         deleted_res_id = pkg['resources'][2]['id']
 
         self.sysadmin_action.resource_delete(
@@ -492,6 +493,7 @@ class TestResourcePositionLogic(CanadaTestBase):
         assert res.id == deleted_res_id
         assert res.position is None
 
+        # test mass soft delete resources
         old_resource_ids = []
         for r in pkg['resources']:
             old_resource_ids.append(r['id'])
@@ -516,7 +518,26 @@ class TestResourcePositionLogic(CanadaTestBase):
 
         for rid in old_resource_ids:
             res = model.Resource.get(rid)
+            assert res.state == 'deleted'
             assert res.position is None
+
+        # test mass purge/hard delete resources
+        pkg = self.sysadmin_action.package_patch(
+            id=pkg['id'],
+            resources=[self._new_res(), self._new_res(), self._new_res(),
+                       self._new_res(), self._new_res(), self._new_res()])
+
+        assert len(pkg['resources']) == 6
+        assert pkg['resources'][0]['position'] == 0
+        assert pkg['resources'][1]['position'] == 1
+        assert pkg['resources'][2]['position'] == 2
+        assert pkg['resources'][3]['position'] == 3
+        assert pkg['resources'][4]['position'] == 4
+        assert pkg['resources'][5]['position'] == 5
+
+        for rid in old_resource_ids:
+            res = model.Resource.get(rid)
+            assert res is None
 
     def test_reorder_resource_positions(self):
         """
