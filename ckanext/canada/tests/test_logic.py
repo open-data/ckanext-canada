@@ -1,17 +1,15 @@
 # -*- coding: UTF-8 -*-
 import pytest
 from sqlalchemy.exc import IntegrityError
+import mock
+import io
+import re
 
 from ckanext.canada.tests import CanadaTestBase
 from ckanapi import LocalCKAN
 from ckan import model
 from ckan.model.types import make_uuid
 import ckan.lib.uploader as uploader
-
-import pytest
-import mock
-import io
-import re
 
 from ckanext.canada.tests.factories import (
     CanadaResource as Resource,
