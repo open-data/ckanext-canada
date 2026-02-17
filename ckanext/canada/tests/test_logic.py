@@ -577,7 +577,7 @@ class TestResourcePositionLogic(CanadaTestBase):
             with mock.patch('io.open', return_value=fake_stream_r1):
                 model.Session.commit()
                 model.Session.remove()
-                _session = model.Session
+                _session = model.Session  # noqa: F841
                 r['url'] = '__upload'
                 r['url_type'] = 'upload'
                 r['format'] = 'PNG'
@@ -634,7 +634,7 @@ class TestResourcePositionLogic(CanadaTestBase):
             with mock.patch('io.open', return_value=fake_stream_r2):
                 model.Session.commit()
                 model.Session.remove()
-                _session = model.Session
+                _session = model.Session  # noqa: F841
                 r['upload'] = mock_field_store_r2
                 self.sysadmin_action.resource_update(**r)
 
@@ -666,7 +666,7 @@ class TestResourcePositionLogic(CanadaTestBase):
         with mock.patch('io.open', return_value=fake_stream_rnew):
             model.Session.commit()
             model.Session.remove()
-            _session = model.Session
+            _session = model.Session  # noqa: F841
             res = Resource(id='aa111aa1-1ffd-defc-1234-56789abcd34c',
                            package_id=pkg['id'], upload=mock_field_store_rnew1)
 
