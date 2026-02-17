@@ -1,14 +1,15 @@
 # -*- coding: UTF-8 -*-
+import pytest
+from sqlalchemy.exc import IntegrityError
+import mock
+import io
+import re
+
 from ckanext.canada.tests import CanadaTestBase
 from ckanapi import LocalCKAN
 from ckan import model
 from ckan.model.types import make_uuid
 import ckan.lib.uploader as uploader
-
-import pytest
-import mock
-import io
-import re
 
 from ckanext.canada.tests.factories import (
     CanadaResource as Resource,
@@ -452,7 +453,7 @@ class TestResourcePositionLogic(CanadaTestBase):
     def test_delete_resource_assigns_positions(self):
         """
         Deleting a Resource from a package should reorder the other
-        Resources properly, and set the deleted position to 0.
+        Resources properly, and set the deleted position to null.
         """
         pkg = self.sysadmin_action.package_create(
             name='44cefde8-7cce-defc-1234-56789abcd34c',
@@ -468,6 +469,7 @@ class TestResourcePositionLogic(CanadaTestBase):
         assert pkg['resources'][4]['position'] == 4
         assert pkg['resources'][5]['position'] == 5
 
+        # test single delete resource
         deleted_res_id = pkg['resources'][2]['id']
 
         self.sysadmin_action.resource_delete(
@@ -487,7 +489,53 @@ class TestResourcePositionLogic(CanadaTestBase):
         res = model.Resource.get(deleted_res_id)
 
         assert res.id == deleted_res_id
-        assert res.position == 0
+        assert res.position is None
+
+        # test mass soft delete resources
+        old_resource_ids = []
+        for r in pkg['resources']:
+            old_resource_ids.append(r['id'])
+
+        pkg = self.sysadmin_action.package_patch(
+            id=pkg['id'],
+            resources=[self._new_res(), self._new_res(), self._new_res(),
+                       self._new_res(), self._new_res(), self._new_res()])
+
+        assert len(pkg['resources']) == 6
+        assert pkg['resources'][0]['position'] == 0
+        assert pkg['resources'][1]['position'] == 1
+        assert pkg['resources'][2]['position'] == 2
+        assert pkg['resources'][3]['position'] == 3
+        assert pkg['resources'][4]['position'] == 4
+        assert pkg['resources'][5]['position'] == 5
+
+        pkg = self.sysadmin_action.package_show(id=pkg['id'])
+
+        for r in pkg['resources']:
+            assert r['id'] not in old_resource_ids
+
+        for rid in old_resource_ids:
+            res = model.Resource.get(rid)
+            assert res.state == 'deleted'
+            assert res.position is None
+
+        # test mass purge/hard delete resources
+        pkg = self.sysadmin_action.package_patch(
+            id=pkg['id'],
+            resources=[self._new_res(), self._new_res(), self._new_res(),
+                       self._new_res(), self._new_res(), self._new_res()])
+
+        assert len(pkg['resources']) == 6
+        assert pkg['resources'][0]['position'] == 0
+        assert pkg['resources'][1]['position'] == 1
+        assert pkg['resources'][2]['position'] == 2
+        assert pkg['resources'][3]['position'] == 3
+        assert pkg['resources'][4]['position'] == 4
+        assert pkg['resources'][5]['position'] == 5
+
+        for rid in old_resource_ids:
+            res = model.Resource.get(rid)
+            assert res is None
 
     def test_reorder_resource_positions(self):
         """
@@ -535,6 +583,27 @@ class TestResourcePositionLogic(CanadaTestBase):
         for i, r in enumerate(pkg['resources']):
             assert r['position'] >= 0
             assert r['id'] != original_order[i]
+
+    def test_unique_positions(self):
+        """
+        Position values should be unique per dataset.
+        """
+        pkg = self.sysadmin_action.package_create(
+            name='391112e8-7cce-defc-ee66-56789abcd34c',
+            resources=[self._new_res(), self._new_res(), self._new_res()],
+            **self.pkg_dict)
+
+        assert len(pkg['resources']) == 3
+
+        res3 = model.Resource.get(pkg['resources'][2]['id'])
+        res3.position = 1
+
+        with pytest.raises(IntegrityError) as e:
+            model.Session.add(res3)
+            model.Session.commit()
+        model.Session.rollback()
+        err = e.value
+        assert 'duplicate key value violates unique constraint "con_package_resource_unique_position"' in str(err)
 
     @pytest.mark.usefixtures("mock_uploads")
     def test_upload_resource_after_reorder(self, mock_uploads):  # noqa: F811
