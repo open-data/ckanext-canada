@@ -204,7 +204,8 @@ class CanadaPublicPlugin(p.SingletonPlugin, DefaultTranslation):
 
     # IMiddleware
     def make_middleware(self, app: CKANApp, config: 'CKANConfig') -> CKANApp:
-        return LogExtraMiddleware(app, config)
+        return LogExtraMiddleware(
+            app, config, getattr(app, 'original_flask_app', None))
 
     # IClick
     def get_commands(self) -> List[Command]:
@@ -267,9 +268,12 @@ class CanadaPublicPlugin(p.SingletonPlugin, DefaultTranslation):
 
 
 class LogExtraMiddleware(object):
-    def __init__(self, app: Any, config: 'CKANConfig'):
+    def __init__(self, app: Any, config: 'CKANConfig',
+                 flask_app: Optional[Any] = None):
+        self.original_flask_app = flask_app or app
+        self.config = config
         self.app = app
-        self.app.register_error_handler(Exception, self._log_support_id)
+        self.original_flask_app.register_error_handler(Exception, self._log_support_id)
 
     def _log_support_id(self, e: Exception):
         supportID = ''.join(re.findall(
