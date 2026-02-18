@@ -1,8 +1,10 @@
-"""empty message
+"""Drop the package_sync table.
 
-Revision ID: 3918d33c5c7f
-Revises: 0ef791477ff0
-Create Date: 2025-06-18 17:16:49.755578
+It is no longer needed in combined Portal & Registry instances.
+
+Revision ID: 480855025fc7
+Revises: 015d2fdd075f
+Create Date: 2026-02-18 15:38:38.950477
 
 """
 from alembic import op
@@ -12,8 +14,8 @@ import datetime
 
 
 # revision identifiers, used by Alembic.
-revision = '3918d33c5c7f'
-down_revision = '0ef791477ff0'
+revision = '480855025fc7'
+down_revision = '015d2fdd075f'
 branch_labels = None
 depends_on = None
 
