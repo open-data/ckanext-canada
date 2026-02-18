@@ -3,6 +3,22 @@
 <form id="user-edit-form" class="dataset-form" method="post" action="{{ action }}" enctype="multipart/form-data">
   {{ h.csrf_input() }}
   {{ form.errors(error_summary) }}
+  {% if is_sysadmin %}
+  <fieldset>
+    <legend class="h2">{{ _('Publishing permissions') }}</legend>
+    {%- call form.select(
+          'default_dataset_visibility',
+          label=_('Default Dataset Visibility'),
+          id='field-default_dataset_visibility',
+          options=[{'value': 'private', 'text': _('Unpublished')},
+                   {'value': 'public', 'text': _('Published')}],
+          selected=data.default_dataset_visibility if data.default_dataset_visibility else 'private',
+          error=errors.default_dataset_visibility,
+          attrs={'class': 'form-control form-select'}) -%}
+      {{ form.info(_('This field allows the user to instantly publish datasets to the Portal without the review process.<br/>The originally intended use of this field is for legacy support for Portal API users (e.g. FGP)'), classes=['info-help']) }}
+    {%- endcall -%}
+  </fieldset>
+  {% endif %}
   <fieldset>
     <legend class="h2">{{ _('Change details') }}</legend>
     {{ form.input('name', label=_('Username'), id='field-username', value=data.name, error=errors.name, classes=['control-medium'], attrs={'readonly': '', 'class': 'form-control'}) }}

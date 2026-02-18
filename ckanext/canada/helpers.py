@@ -1,10 +1,19 @@
-from typing import Optional, Union, Any, Tuple, List, Set, Dict, cast
-from ckan.types import Context
-
 import json
 import re
 import inspect
 from urllib.parse import urlsplit
+import datetime
+import unicodedata
+import html
+from six import text_type
+from bs4 import BeautifulSoup
+import dateutil.parser
+import geomet.wkt as wkt
+from markupsafe import Markup, escape
+
+from typing import Optional, Union, Any, Tuple, List, Set, Dict, cast
+from ckan.types import Context
+
 from ckan.plugins.toolkit import (
     config,
     asbool,
@@ -18,24 +27,18 @@ from ckan.plugins.toolkit import (
     NotAuthorized
 )
 from ckan.model import User, Package
-from ckanext.activity.model import Activity
 import ckan.model as model
 from ckan.model.license import License
-import datetime
-import unicodedata
-import html
-from six import text_type
-from bs4 import BeautifulSoup
 from ckan import plugins
-
-from ckanext.scheming.helpers import scheming_get_preset
-import dateutil.parser
-import geomet.wkt as wkt
-from markupsafe import Markup, escape
-from ckan.lib.helpers import core_helper
+from ckan.lib.helpers import (
+    core_helper,
+    linked_user as core_linked_user
+)
 from ckan.plugins.core import plugin_loaded
 import ckan.lib.datapreview as datapreview
 
+from ckanext.activity.model import Activity
+from ckanext.scheming.helpers import scheming_get_preset
 from ckanext.recombinant.tables import get_chromo
 from ckanext.security.cache.login import max_login_attempts
 
@@ -56,6 +59,7 @@ CDTS_URI = 'https://www.canada.ca/etc/designs/canada/cdts/gcweb'
 GEO_MAP_TYPE_OPTION = 'wet_theme.geo_map_type'
 GEO_MAP_TYPE_DEFAULT = 'static'
 RELEASE_DATE_FACET_STEP = 100
+PUBLIC_ACTIVITY_USER = '__CKAN_SYSTEM__'
 
 REGISTRY_SUBDOMAIN_MATCH = re.compile(r'registry|registre')
 
@@ -292,15 +296,15 @@ def portal_url() -> str:
 
 
 def adv_search_url() -> str:
-    return config.get('ckanext.canada.adv_search_url_fr') if \
-        h.lang() == 'fr' else config.get('ckanext.canada.adv_search_url_en')
+    return config.get('ckanext.canada.adv_search_url_fr', '') if \
+        h.lang() == 'fr' else config.get('ckanext.canada.adv_search_url_en', '')
 
 
 def adv_search_mlt_root() -> str:
     return "{0}/donneesouvertes/similaire/".format(
-        config.get('ckanext.canada.adv_search_url_fr')) if \
+        config.get('ckanext.canada.adv_search_url_fr', '')) if \
             h.lang() == 'fr' else "{0}/opendata/similar/".format(
-                config.get('ckanext.canada.adv_search_url_en'))
+                config.get('ckanext.canada.adv_search_url_en', ''))
 
 
 def ga4_id() -> Optional[str]:
@@ -1172,3 +1176,17 @@ def mail_to_with_params(email_address: str, name: str,
 
 def get_inline_script_nonce() -> str:
     return str(request.environ.get('CSP_NONCE', ''))
+
+
+def linked_user(user: Union[str, model.User],
+                maxlength: int = 0,
+                avatar: int = 20) -> Union[Markup, str, None]:
+    try:
+        if (
+          not g.user and
+          getattr(user, 'name', user) == PUBLIC_ACTIVITY_USER
+        ):
+            return _('System')
+    except RuntimeError:
+        pass
+    return core_linked_user(user, maxlength, avatar)

@@ -8,7 +8,10 @@ import csv
 from six import string_types
 from datetime import datetime, timedelta
 import traceback
-from functools import partial
+from flask import Blueprint, make_response
+from io import StringIO
+
+from ckanapi import LocalCKAN
 
 from typing import Optional, Union, Any, cast, Dict, List, Tuple
 from ckan.types import Context, Response
@@ -33,7 +36,6 @@ from ckan import model
 from ckan.lib.helpers import (
     date_str_to_datetime,
     lang,
-    Page,
 )
 from ckan.views import nocache_store
 from ckan.views.dataset import (
@@ -46,7 +48,10 @@ from ckan.views.resource import (
     EditView as ResourceEditView,
     CreateView as ResourceCreateView
 )
-from ckan.views.user import RegisterView as UserRegisterView
+from ckan.views.user import (
+    RegisterView as UserRegisterView,
+    login as core_login
+)
 from ckan.views.api import (
     API_DEFAULT_VERSION,
     API_MAX_VERSION,
@@ -57,7 +62,6 @@ from ckan.views.api import (
 )
 from ckan.views.group import set_org
 from ckan.views.admin import _get_sysadmins
-
 from ckan.authz import is_sysadmin
 from ckan.logic import (
     parse_params,
@@ -75,12 +79,6 @@ from ckanext.recombinant.tables import get_chromo
 from ckanext.recombinant.errors import RecombinantException, format_trigger_error
 from ckanext.recombinant.helpers import recombinant_primary_key_fields
 from ckanext.recombinant.views import _render_recombinant_constraint_errors
-
-from ckanapi import LocalCKAN
-
-from flask import Blueprint, make_response
-
-from io import StringIO
 
 # TODO: DEPRECATED: REMOVE AFTER FULL PD DATATABLES QA
 import re
@@ -970,10 +968,15 @@ def ckanadmin_publish_datasets():
         publish_packages = [publish_packages]
     count = len(publish_packages)
     for package_id in publish_packages:
-        lc.action.package_patch(
-            id=package_id,
-            portal_release_date=publish_date,
-        )
+        try:
+            lc.action.package_patch(
+                id=package_id,
+                portal_release_date=publish_date,
+            )
+        except ValidationError as e:
+            h.flash_error(_('Error publishing dataset %s: %s' %
+                            (package_id, str(e.error_dict))))
+            return h.redirect_to('canada.ckanadmin_publish')
 
     # flash notice that records are published
     h.flash_notice(str(count) + _(' record(s) published.'))
@@ -1644,39 +1647,9 @@ def ckan_admin_config():
     return abort(404)
 
 
-@canada_views.route('/ckan-admin/portal-sync', methods=['GET'])
-def ckan_admin_portal_sync():
-    """
-    Lists any packages that are out of date with the Portal.
-    """
-    try:
-        check_access('list_out_of_sync_packages', {'user': g.user})
-    except NotAuthorized:
-        return abort(403)
-
-    page_number = h.get_page_number(request.args) or 1
-    limit = 25
-    start = limit * (page_number - 1)
-    extra_vars = {}
-
-    out_of_sync_packages = get_action('list_out_of_sync_packages')(
-        {'user': g.user}, {'limit': limit, 'start': start})
-    extra_vars['out_of_sync_packages'] = out_of_sync_packages
-
-    def _basic_pager_uri(page: Union[int, str], text: str):
-        return h.url_for('canada.ckan_admin_portal_sync', page=page)
-    pager_url = partial(_basic_pager_uri, page=page_number, text='')
-
-    extra_vars['page'] = Page(
-        collection=out_of_sync_packages['results'],
-        page=page_number,
-        url=pager_url,
-        item_count=out_of_sync_packages.get('count', 0),
-        items_per_page=limit
-    )
-    extra_vars['page'].items = out_of_sync_packages['results']
-
-    # TODO: remove in CKAN 2.11??
-    setattr(g, 'page', extra_vars['page'])
-
-    return render('admin/portal_sync.html', extra_vars=extra_vars)
+@canada_views.route('/user/login', methods=['GET', 'POST'])
+@nocache_store
+def login():
+    if not h.is_registry_domain():
+        return abort(404)
+    return core_login()
