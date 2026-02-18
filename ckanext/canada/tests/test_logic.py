@@ -139,9 +139,7 @@ class TestMetadataDatesLogic(CanadaTestBase):
         When creating packages, sysadmins should be able to provide
         a metadata_created value
         """
-        pkg = self.editor_action.package_create(
-            name='12345678-9abc-def0-1234-56789abcdeb7',
-            **self.pkg_dict)
+        pkg = self.editor_action.package_create(name=make_uuid(), **self.pkg_dict)
 
         # sysadmin only field
         assert pkg['metadata_created'] != self.create_date
@@ -154,9 +152,7 @@ class TestMetadataDatesLogic(CanadaTestBase):
         # sysadmin only field
         assert pkg['resources'][0]['metadata_modified'] != self.create_date
 
-        pkg = self.sysadmin_action.package_create(
-            name='12345678-9abc-def0-1234-56789abcdec9',
-            **self.pkg_dict)
+        pkg = self.sysadmin_action.package_create(name=make_uuid(), **self.pkg_dict)
 
         assert pkg['metadata_created'] == self.create_date
         assert pkg['metadata_modified'] == self.create_date
@@ -169,9 +165,7 @@ class TestMetadataDatesLogic(CanadaTestBase):
         When updating packages, sysadmins should be able to provide
         a metadata_updated and metadata_created value
         """
-        pkg = self.editor_action.package_create(
-            name='12345678-9abc-def0-1234-56789abcd20d',
-            **self.pkg_dict)
+        pkg = self.editor_action.package_create(name=make_uuid(), **self.pkg_dict)
 
         pkg['metadata_created'] = self.update_date
         pkg['metadata_modified'] = self.update_date
@@ -192,9 +186,7 @@ class TestMetadataDatesLogic(CanadaTestBase):
         # sysadmin only field
         assert pkg['resources'][0]['metadata_modified'] != self.update_date
 
-        pkg = self.sysadmin_action.package_create(
-            name='12345678-9abc-def0-1234-56789abcdc81',
-            **self.pkg_dict)
+        pkg = self.sysadmin_action.package_create(name=make_uuid(), **self.pkg_dict)
 
         pkg['metadata_created'] = self.update_date
         pkg['metadata_modified'] = self.update_date
@@ -215,9 +207,7 @@ class TestMetadataDatesLogic(CanadaTestBase):
         When patching packages and resources, sysadmins should be
         able to provide a metadata_updated and metadata_created value
         """
-        pkg = self.editor_action.package_create(
-            name='12345678-9abc-def0-1234-56789abcd34c',
-            **self.pkg_dict)
+        pkg = self.editor_action.package_create(name=make_uuid(), **self.pkg_dict)
 
         pkg = self.editor_action.package_patch(
             id=pkg['id'],
@@ -242,9 +232,7 @@ class TestMetadataDatesLogic(CanadaTestBase):
         # sysadmin only field
         assert res['metadata_modified'] != self.update_date
 
-        pkg = self.sysadmin_action.package_create(
-            name='12345678-9abc-def0-1234-56789abcef89',
-            **self.pkg_dict)
+        pkg = self.sysadmin_action.package_create(name=make_uuid(), **self.pkg_dict)
 
         pkg = self.sysadmin_action.package_patch(
             id=pkg['id'],
@@ -325,7 +313,7 @@ class TestResourcePositionLogic(CanadaTestBase):
         Creating new Resources should just add them to the list of resources.
         """
         pkg = self.sysadmin_action.package_create(
-            name='76545678-9abc-def0-1234-56789abcd34c',
+            name=make_uuid(),
             resources=[self._new_res()],
             **self.pkg_dict)
 
@@ -347,7 +335,7 @@ class TestResourcePositionLogic(CanadaTestBase):
         Updating a resource should keep its previous position
         """
         pkg = self.sysadmin_action.package_create(
-            name='76545678-7ade-def0-1234-56789abcd34c',
+            name=make_uuid(),
             resources=[self._new_res(), self._new_res(), self._new_res(),
                        self._new_res(), self._new_res(), self._new_res()],
             **self.pkg_dict)
@@ -401,7 +389,7 @@ class TestResourcePositionLogic(CanadaTestBase):
         Patching a resource should keep its previous position
         """
         pkg = self.sysadmin_action.package_create(
-            name='391112e8-7ade-def0-1234-56789abcd34c',
+            name=make_uuid(),
             resources=[self._new_res(), self._new_res(), self._new_res(),
                        self._new_res(), self._new_res(), self._new_res()],
             **self.pkg_dict)
@@ -456,7 +444,7 @@ class TestResourcePositionLogic(CanadaTestBase):
         Resources properly, and set the deleted position to null.
         """
         pkg = self.sysadmin_action.package_create(
-            name='44cefde8-7cce-defc-1234-56789abcd34c',
+            name=make_uuid(),
             resources=[self._new_res(), self._new_res(), self._new_res(),
                        self._new_res(), self._new_res(), self._new_res()],
             **self.pkg_dict)
@@ -542,7 +530,7 @@ class TestResourcePositionLogic(CanadaTestBase):
         You can reorder Resources via package_resource_reorder action.
         """
         pkg = self.sysadmin_action.package_create(
-            name='391112e8-7cce-defc-1234-56789abcd34c',
+            name=make_uuid(),
             resources=[self._new_res(), self._new_res(), self._new_res(),
                        self._new_res(), self._new_res(), self._new_res()],
             **self.pkg_dict)
@@ -589,7 +577,7 @@ class TestResourcePositionLogic(CanadaTestBase):
         Position values should be unique per dataset.
         """
         pkg = self.sysadmin_action.package_create(
-            name='391112e8-7cce-defc-ee66-56789abcd34c',
+            name=make_uuid(),
             resources=[self._new_res(), self._new_res(), self._new_res()],
             **self.pkg_dict)
 
@@ -619,7 +607,7 @@ class TestResourcePositionLogic(CanadaTestBase):
               in a new db session.
         """
         pkg = self.sysadmin_action.package_create(
-            name='391112e8-1ffd-defc-1234-56789abcd34c',
+            name=make_uuid(),
             resources=[self._new_res(), self._new_res(), self._new_res(),
                        self._new_res(), self._new_res(), self._new_res()],
             **self.pkg_dict)
@@ -736,7 +724,7 @@ class TestResourcePositionLogic(CanadaTestBase):
             model.Session.commit()
             model.Session.remove()
             _session = model.Session  # noqa: F841
-            res = Resource(id='aa111aa1-1ffd-defc-1234-56789abcd34c',
+            res = Resource(id=make_uuid(),
                            package_id=pkg['id'], upload=mock_field_store_rnew1)
 
         assert res['position'] == 6

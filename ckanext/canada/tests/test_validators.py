@@ -5,6 +5,7 @@ from ckan.plugins.toolkit import Invalid, config, NotAuthorized
 
 import pytest
 from ckan import model
+from ckan.model.types import make_uuid
 from ckanext.canada.tests.factories import (
     CanadaOrganization as Organization,
     CanadaResource as Resource,
@@ -120,9 +121,7 @@ class TestNAVLSchema(CanadaTestBase):
 
     def test_basic_package(self):
         with pytest.raises(ValidationError) as ve:
-            self.normal_action.package_create(
-                name='12345678-9abc-def0-1234-56789abcdef0',
-                **self.incomplete_pkg)
+            self.normal_action.package_create(name=make_uuid(), **self.incomplete_pkg)
         model.Session.rollback()
         err = ve.value.error_dict
         expected = {
@@ -140,8 +139,7 @@ class TestNAVLSchema(CanadaTestBase):
         for k in set(err) | set(expected):
             assert k in err
             assert err[k] == expected[k]
-        resp = self.normal_action.package_create(
-            name='8efcb678-9abc-def0-1234-56789abcdef0', **self.complete_pkg)
+        resp = self.normal_action.package_create(name=make_uuid(), **self.complete_pkg)
         assert resp['title_translated']['fr'] == 'Un novel par Tolstoy'
 
         resp = self.action.package_show(id=resp['id'])
@@ -181,16 +179,16 @@ class TestNAVLSchema(CanadaTestBase):
     def test_custom_dataset_id(self):
         my_uuid = '3056920043b943f1a1fb9e7974cbb997'
         norm_uuid = '30569200-43b9-43f1-a1fb-9e7974cbb997'
-        self.normal_action.package_create(
-            name='02345678-9abc-def0-1234-56789abcdef0', id=my_uuid, **self.complete_pkg)
+        pname = make_uuid()
+        self.normal_action.package_create(name=pname, id=my_uuid, **self.complete_pkg)
 
-        resp = self.action.package_show(id='02345678-9abc-def0-1234-56789abcdef0')
+        resp = self.action.package_show(id=pname)
         assert resp['id'] == norm_uuid
-        assert resp['name'] == '02345678-9abc-def0-1234-56789abcdef0'
+        assert resp['name'] == pname
 
         with pytest.raises(ValidationError) as ve:
             self.sysadmin_action.package_create(
-                name='02345678-9abc-def0-1234-56789abcdef0',
+                name=make_uuid(),
                 id=my_uuid,
                 **self.complete_pkg)
         model.Session.rollback()
