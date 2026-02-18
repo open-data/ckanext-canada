@@ -1,0 +1,3 @@
+Allow users to recover their username using a case-insensitive email match.
+This ensures users can retrieve their username even if their email is
+stored with mixed-case letters in the database.
