@@ -317,8 +317,8 @@ class CanadaLogicPlugin(SchemingDatasetsPlugin, CkanSecurityPlugin):
 
         Implement of: ckan.plugins.interfaces.IMiddleware
         """
-        LogExtraMiddleware(app, config)
-        return app
+        return LogExtraMiddleware(
+            app, config, getattr(app, 'original_flask_app', None))
 
     def abort(self, status_code: int, detail: str,
               headers: Optional[Dict[str, Any]],
