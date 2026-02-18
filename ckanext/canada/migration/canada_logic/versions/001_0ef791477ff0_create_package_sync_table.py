@@ -1,4 +1,4 @@
-"""empty message
+"""Create package_sync table to track Registry to Portal sync states
 
 Revision ID: 0ef791477ff0
 Revises:
