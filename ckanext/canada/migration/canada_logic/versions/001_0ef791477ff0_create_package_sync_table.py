@@ -1,8 +1,8 @@
-"""empty message
+"""Create package_sync table to track Registry to Portal sync states
 
-Revision ID: 3918d33c5c7f
-Revises: 0ef791477ff0
-Create Date: 2025-06-18 17:16:49.755578
+Revision ID: 0ef791477ff0
+Revises:
+Create Date: 2024-10-18 18:20:50.040861
 
 """
 from alembic import op
@@ -12,8 +12,8 @@ import datetime
 
 
 # revision identifiers, used by Alembic.
-revision = '3918d33c5c7f'
-down_revision = '0ef791477ff0'
+revision = '0ef791477ff0'
+down_revision = None
 branch_labels = None
 depends_on = None
 
@@ -25,16 +25,6 @@ def _get_tables():
 
 
 def upgrade():
-    tables = _get_tables()
-    if "package_sync" not in tables:
-        print('package_sync database table not present')
-        return
-    op.drop_table("package_sync")
-    print('package_sync database table deleted')
-    pass
-
-
-def downgrade():
     tables = _get_tables()
     if "package_sync" in tables:
         print('package_sync database table already exists')
@@ -50,4 +40,14 @@ def downgrade():
         sa.Column("error", sa.Unicode, nullable=True),
     )
     print('package_sync database table created')
+    pass
+
+
+def downgrade():
+    tables = _get_tables()
+    if "package_sync" not in tables:
+        print('package_sync database table not present')
+        return
+    op.drop_table("package_sync")
+    print('package_sync database table deleted')
     pass
