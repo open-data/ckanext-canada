@@ -148,7 +148,8 @@ class CanadaThemePlugin(p.SingletonPlugin, DefaultTranslation):
 
         Implement of: ckan.plugins.interfaces.IMiddleware
         """
-        return CSPNonceMiddleware(app, config)
+        CSPNonceMiddleware(app, config)
+        return app
 
     def get_blueprint(self) -> List[Blueprint]:
         """

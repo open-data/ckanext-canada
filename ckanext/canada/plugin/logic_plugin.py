@@ -317,7 +317,8 @@ class CanadaLogicPlugin(SchemingDatasetsPlugin, CkanSecurityPlugin):
 
         Implement of: ckan.plugins.interfaces.IMiddleware
         """
-        return LogExtraMiddleware(app, config)
+        LogExtraMiddleware(app, config)
+        return app
 
     def abort(self, status_code: int, detail: str,
               headers: Optional[Dict[str, Any]],
