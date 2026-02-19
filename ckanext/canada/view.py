@@ -82,8 +82,6 @@ from flask import Blueprint, make_response
 
 from io import StringIO
 
-from sqlalchemy import func
-
 # TODO: DEPRECATED: REMOVE AFTER FULL PD DATATABLES QA
 import re
 from pytz import timezone, utc
@@ -294,18 +292,15 @@ def recover_username():
             h.flash_error(_('Email is required'))
             return h.redirect_to('canada.recover_username')
 
-        log.info(u'Username recovery requested for email %s', repr_untrusted(email))
+        log.info('Username recovery requested for email', repr_untrusted(email))
 
-        users = (
-            model.Session.query(model.User)
-            .filter(
-                func.lower(model.User.email) == email.strip().lower(),
-                model.User.state == 'active'
-                )
-            .all()
-        )
+        context = cast(Context, {'model': model, 'user': g.user, 'ignore_auth': True})
+        username_list = []
 
-        username_list = [user.name for user in users]
+        user_list = get_action('user_list')(context, {'email': email})
+        if user_list:
+            for user_dict in user_list:
+                username_list.append(user_dict['name'])
 
         if not username_list:
             log.info('User requested username recovery for unknown email: {}'
