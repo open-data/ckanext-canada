@@ -8,6 +8,17 @@
   {% endif %}
 {% endblock %}
 
+{% block secondary_content %}
+  {%- set pages = h.scheming_get_dataset_form_pages(dataset_type) -%}
+  {% snippet "package/snippets/stages_sidebar.html",
+    data={"_form_page": pages | length + 1},
+    dataset_type=dataset_type,
+    s1 = 'complete',
+    s2 = 'active'
+  %}
+  {{ super() }}
+{% endblock %}
+
 {% block content_action %}
   {%- link_for _('All resources'), named_route=pkg.type ~ '.resources', id=pkg.name, class_='btn btn-default', icon='arrow-left' -%}
   {% if res %}

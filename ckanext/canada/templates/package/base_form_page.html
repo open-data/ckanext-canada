@@ -7,9 +7,14 @@
 {% endblock %}
 
 {% block secondary_content %}
-  {% if not h.is_registry_domain() %}
-    {{ super() }}
-  {% endif %}
+  {% snippet "package/snippets/stages_sidebar.html",
+    data=form_vars.data,
+    dataset_type=form_vars.dataset_type,
+    form_style=form_vars.form_style,
+    s1 = form_vars.stage[0] or 'active',
+    s2 = form_vars.stage[1] or 'uncomplete'
+  %}
+  {{ super() }}
 {% endblock %}
 
 {% block page_header %}

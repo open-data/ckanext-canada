@@ -8,14 +8,15 @@
   </div>
 {% endblock %}
 
-{% block pre_primary %}
-  <div class="panel panel-default mrgn-tp-lg">
-    {% snippet 'package/snippets/resource_help.html' %}
-  </div>
-  {% snippet 'package/snippets/resources.html', pkg=pkg %}
-{% endblock %}
-
 {% block secondary_content %}
+  {%- set pages = h.scheming_get_dataset_form_pages(dataset_type) -%}
+  {% snippet "package/snippets/stages_sidebar.html",
+    data={"_form_page": pages | length + 1},
+    dataset_type=dataset_type,
+    s1 = 'complete',
+    s2 = 'active'
+  %}
+  {{ super() }}
 {% endblock %}
 
 {% block form %}
