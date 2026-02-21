@@ -39,7 +39,11 @@ from ckan.views import nocache_store
 from ckan.views.dataset import (
     EditView as DatasetEditView,
     search as dataset_search,
-    CreateView as DatasetCreateView,
+)
+from ckanext.scheming.views import (
+    SchemingCreateView,
+    SchemingEditPageView,
+    SchemingCreatePageView,
 )
 from ckanext.activity.views import package_activity
 from ckan.views.resource import (
@@ -168,7 +172,10 @@ def canada_prevent_pd_views(uri: str, package_type: str) -> Union[Response, str]
 
 
 class CanadaDatasetEditView(DatasetEditView):
-    def post(self, package_type: str, id: str):
+    def post(self, package_type: str, id: str) -> Union[Response, str]:
+        """
+        Custom flash messages per dataset type.
+        """
         response = super(CanadaDatasetEditView, self).post(package_type, id)
         if hasattr(response, 'status_code'):
             # type_ignore_reason: checking attribute
@@ -191,21 +198,100 @@ class CanadaDatasetEditView(DatasetEditView):
                         % pkg_dict['id'])
         return response
 
+    def get(self, package_type: str, id: str, data: Optional[dict[str, Any]] = None,
+            errors: Optional[dict[str, Any]] = None,
+            error_summary: Optional[dict[str, Any]] = None) -> Union[Response, str]:
+        """
+        If the ACTUAL dataset type has pages, redirect to the edit 1st page.
 
-class CanadaDatasetCreateView(DatasetCreateView):
-    def post(self, package_type: str):
-        response = super(CanadaDatasetCreateView, self).post(package_type)
+        This solves issues with Missing objects in Schemings stages.
+        """
+        pkg = model.Package.get(id)
+        package_type = pkg.type if pkg else package_type
+        pages = h.scheming_get_dataset_form_pages(package_type)
+        if pages:
+            return h.redirect_to('%s.scheming_edit_page' % package_type,
+                                 package_type=package_type,
+                                 id=id,
+                                 page=1)
+        return super(CanadaDatasetEditView, self).get(package_type, id,
+                                                      data, errors,
+                                                      error_summary)
+
+
+class CanadaDatasetEditPageView(SchemingEditPageView):
+    def post(self, package_type: str, id: str, page: int) -> Union[Response, str]:
+        """
+        Custom flash messages per dataset type.
+        """
+        response = super(CanadaDatasetEditPageView, self).post(
+            package_type, id, page)
         if hasattr(response, 'status_code'):
             # type_ignore_reason: checking attribute
             if (
               response.status_code == 200 or  # type: ignore
               response.status_code == 302):  # type: ignore
-                h.flash_success(_('Dataset added.'))
+                context = self._prepare()
+                pkg_dict = get_action('package_show')(
+                    cast(Context, dict(context, for_view=True)), {
+                        'id': id
+                    }
+                )
+                if pkg_dict['type'] == 'prop':
+                    h.flash_success(_('The status has been added/updated for this '
+                                      'suggested dataset. This update will be '
+                                      'reflected on open.canada.ca shortly.'))
+                else:
+                    pages = h.scheming_get_dataset_form_pages(package_type)
+                    h.flash_success(
+                        _('Saved "%s" for dataset %s.')
+                        % (h.scheming_language_text(pages[int(page) - 1]['title']),
+                           pkg_dict['id']))
+        return response
+
+
+class CanadaDatasetCreateView(SchemingCreateView):
+    def post(self, package_type: str) -> Union[Response, str]:
+        """
+        Custom flash messages for scheming pages.
+        """
+        response = super(CanadaDatasetCreateView, self).post(package_type)
+        if hasattr(response, 'status_code'):
+            if (
+              response.status_code == 200 or
+              response.status_code == 302):
+                pages = h.scheming_get_dataset_form_pages(package_type)
+                h.flash_success(
+                    _('Saved "%s" for new dataset.')
+                    % h.scheming_language_text(pages[0]['title']))
+        return response
+
+
+class CanadaDatasetCreatePageView(SchemingCreatePageView):
+    def post(self, package_type: str, id: str, page: int) -> Union[Response, str]:
+        """
+        Custom flash messages for scheming pages.
+        """
+        response = super(CanadaDatasetCreatePageView, self).post(
+            package_type, id, page)
+        if hasattr(response, 'status_code'):
+            # type_ignore_reason: checking attribute
+            if (
+              response.status_code == 200 or  # type: ignore
+              response.status_code == 302):  # type: ignore
+                pages = h.scheming_get_dataset_form_pages(package_type)
+                h.flash_success(
+                    _('Saved "%s" for dataset %s.')
+                    % (h.scheming_language_text(pages[int(page) - 1]['title']), id))
         return response
 
 
 class CanadaResourceEditView(ResourceEditView):
-    def post(self, package_type: str, id: str, resource_id: str):
+    def post(self, package_type: str, id: str,
+             resource_id: str) -> Union[Response, str]:
+        """
+        Custom flash messages.
+        """
         response = super(CanadaResourceEditView, self).post(
             package_type, id, resource_id)
         if hasattr(response, 'status_code'):
@@ -218,7 +304,10 @@ class CanadaResourceEditView(ResourceEditView):
 
 
 class CanadaResourceCreateView(ResourceCreateView):
-    def post(self, package_type: str, id: str):
+    def post(self, package_type: str, id: str) -> Union[Response, str]:
+        """
+        Custom flash messages.
+        """
         response = super(CanadaResourceCreateView, self).post(package_type, id)
         if hasattr(response, 'status_code'):
             # type_ignore_reason: checking attribute
@@ -231,7 +320,7 @@ class CanadaResourceCreateView(ResourceCreateView):
 
 class CanadaUserRegisterView(UserRegisterView):
     @nocache_store
-    def post(self):
+    def post(self) -> Union[Response, str]:
         data = clean_dict(unflatten(tuplize_dict(parse_params(request.form))))
         email = data.get('email', '')
         fullname = data.get('fullname', '')
