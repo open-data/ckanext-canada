@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-02-12 15:28+0000\n"
+"POT-Creation-Date: 2026-02-22 22:46+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: fr\n"
@@ -1534,16 +1534,16 @@ msgstr "Juridiction"
 msgid "Suggestion Status"
 msgstr "État de la suggestion"
 
-#: ckanext/canada/plugin/public_plugin.py:257
-#: ckanext/canada/plugin/public_plugin.py:264
+#: ckanext/canada/plugin/public_plugin.py:258
+#: ckanext/canada/plugin/public_plugin.py:265
 msgid "container_title"
 msgstr ""
 
-#: ckanext/canada/plugin/public_plugin.py:327
+#: ckanext/canada/plugin/public_plugin.py:331
 msgid "Previous"
 msgstr "Précédent"
 
-#: ckanext/canada/plugin/public_plugin.py:328
+#: ckanext/canada/plugin/public_plugin.py:332
 msgid "Next"
 msgstr "Suivant"
 
@@ -2481,10 +2481,10 @@ msgid ""
 msgstr ""
 "Nous rencontrons une erreur et nous ne pouvons pas répondre à votre "
 "demande. Veuillez réessayer plus tard ou communiquer avec <a "
-"href=\"mailto:{support}\">{support}</a> <strong><em>avec l'identifiant de "
-"support ci-dessus</em></strong> si votre demande est urgente ou "
-"si ce problème persiste. Veuillez noter que votre connexion expire après "
-"une heure d’inactivité."
+"href=\"mailto:{support}\">{support}</a> <strong><em>avec l'identifiant de"
+" support ci-dessus</em></strong> si votre demande est urgente ou si ce "
+"problème persiste. Veuillez noter que votre connexion expire après une "
+"heure d’inactivité."
 
 #: ckanext/canada/templates/error_document_template.html:45
 msgid ""
@@ -3636,7 +3636,6 @@ msgstr "Modifier ensemble de données"
 #: ckanext/canada/templates/package/read_base.html:93
 #: ckanext/canada/templates/package/read_base.html:109
 #: ckanext/canada/templates/package/read_base.html:190
-#: ckanext/canada/templates/package/read_base.html:222
 #: ckanext/canada/templates/recombinant/create_pd_record.html:30
 #: ckanext/canada/templates/recombinant/update_pd_record.html:30
 #: ckanext/canada/templates/snippets/package_item.html:90
@@ -3759,18 +3758,22 @@ msgid "Delivery Point:"
 msgstr "Point de livraison :"
 
 #: ckanext/canada/templates/package/read.html:191
+#: ckanext/canada/templates/package/read_base.html:213
 msgid "City:"
 msgstr "Ville :"
 
 #: ckanext/canada/templates/package/read.html:194
+#: ckanext/canada/templates/package/read_base.html:216
 msgid "Administrative Area:"
 msgstr "Zone administrative :"
 
 #: ckanext/canada/templates/package/read.html:197
+#: ckanext/canada/templates/package/read_base.html:215
 msgid "Postal Code:"
 msgstr "Code postal :"
 
 #: ckanext/canada/templates/package/read.html:200
+#: ckanext/canada/templates/package/read_base.html:214
 msgid "Country:"
 msgstr "Pays :"
 
@@ -3882,6 +3885,30 @@ msgstr "Point de contact pour les données"
 #: ckanext/canada/templates/package/read_base.html:197
 msgid "Distributor Contact"
 msgstr "Renseignements au sujet du distributeur"
+
+#: ckanext/canada/templates/package/read_base.html:208
+msgid "Organization Name:"
+msgstr "Nom de organisation :"
+
+#: ckanext/canada/templates/package/read_base.html:209
+msgid "Telephone Number:"
+msgstr "Numéro de téléphone :"
+
+#: ckanext/canada/templates/package/read_base.html:210
+msgid "Email:"
+msgstr "Courriel :"
+
+#: ckanext/canada/templates/package/read_base.html:211
+msgid "Contact Form:"
+msgstr "Formulaire de contact :"
+
+#: ckanext/canada/templates/package/read_base.html:212
+msgid "Address:"
+msgstr "Adresse :"
+
+#: ckanext/canada/templates/package/read_base.html:217
+msgid "Role:"
+msgstr "Rôle :"
 
 #: ckanext/canada/templates/package/resource_edit.html:11
 msgid "Go back"
