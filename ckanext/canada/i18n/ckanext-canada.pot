@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ckanext-canada 0.4.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-02-11 21:16+0000\n"
+"POT-Creation-Date: 2026-02-22 22:30+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1406,16 +1406,16 @@ msgstr ""
 msgid "Suggestion Status"
 msgstr ""
 
-#: ckanext/canada/plugin/public_plugin.py:255
-#: ckanext/canada/plugin/public_plugin.py:262
+#: ckanext/canada/plugin/public_plugin.py:256
+#: ckanext/canada/plugin/public_plugin.py:263
 msgid "container_title"
 msgstr ""
 
-#: ckanext/canada/plugin/public_plugin.py:325
+#: ckanext/canada/plugin/public_plugin.py:329
 msgid "Previous"
 msgstr ""
 
-#: ckanext/canada/plugin/public_plugin.py:326
+#: ckanext/canada/plugin/public_plugin.py:330
 msgid "Next"
 msgstr ""
 
@@ -3135,7 +3135,6 @@ msgstr ""
 #: ckanext/canada/templates/package/read_base.html:71
 #: ckanext/canada/templates/package/read_base.html:87
 #: ckanext/canada/templates/package/read_base.html:168
-#: ckanext/canada/templates/package/read_base.html:200
 #: ckanext/canada/templates/recombinant/create_pd_record.html:30
 #: ckanext/canada/templates/recombinant/update_pd_record.html:30
 #: ckanext/canada/templates/snippets/package_item.html:90
@@ -3159,18 +3158,22 @@ msgid "Delivery Point:"
 msgstr ""
 
 #: ckanext/canada/templates/package/read.html:191
+#: ckanext/canada/templates/package/read_base.html:191
 msgid "City:"
 msgstr ""
 
 #: ckanext/canada/templates/package/read.html:194
+#: ckanext/canada/templates/package/read_base.html:194
 msgid "Administrative Area:"
 msgstr ""
 
 #: ckanext/canada/templates/package/read.html:197
+#: ckanext/canada/templates/package/read_base.html:193
 msgid "Postal Code:"
 msgstr ""
 
 #: ckanext/canada/templates/package/read.html:200
+#: ckanext/canada/templates/package/read_base.html:192
 msgid "Country:"
 msgstr ""
 
@@ -3277,6 +3280,30 @@ msgstr ""
 
 #: ckanext/canada/templates/package/read_base.html:175
 msgid "Distributor Contact"
+msgstr ""
+
+#: ckanext/canada/templates/package/read_base.html:186
+msgid "Organization Name:"
+msgstr ""
+
+#: ckanext/canada/templates/package/read_base.html:187
+msgid "Telephone Number:"
+msgstr ""
+
+#: ckanext/canada/templates/package/read_base.html:188
+msgid "Email:"
+msgstr ""
+
+#: ckanext/canada/templates/package/read_base.html:189
+msgid "Contact Form:"
+msgstr ""
+
+#: ckanext/canada/templates/package/read_base.html:190
+msgid "Address:"
+msgstr ""
+
+#: ckanext/canada/templates/package/read_base.html:195
+msgid "Role:"
 msgstr ""
 
 #: ckanext/canada/templates/package/resource_edit.html:11
