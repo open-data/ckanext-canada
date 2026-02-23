@@ -1,7 +1,7 @@
 .DELETE_ON_ERROR:
 
 targets := aistrategy ati briefingt qpnotes consultations contracts contractsa dac experiment grants \
-	hospitalityq nap5 reclassification service travela travelq wrongdoing adminaircraft
+	hospitalityq nap5 nap6 reclassification service travela travelq wrongdoing adminaircraft
 
 csv_files := \
 	aistrategy.csv \
@@ -16,6 +16,7 @@ csv_files := \
 	grants.csv grants-nil.csv grantsmonthly.csv \
 	hospitalityq.csv hospitalityq-nil.csv \
 	nap5.csv \
+	nap6.csv \
 	reclassification.csv reclassification-nil.csv \
 	service.csv service-std.csv \
 	travela.csv \
@@ -562,6 +563,31 @@ $(workdir)/nap5.csv:
 # use $(registry_python) to execute filter_nap5.py as we need pyyaml from venv
 $(workdir)/filtered/nap5.csv: $(workdir)/nap5.csv
 	$(registry_python) $(fdir)/filter_modified_created.py < $< > $@
+
+###
+###  National Action Plan 6
+###
+.PHONY: nap6
+nap6: upload-nap6 rebuild-nap6
+
+.PHONY: upload-nap6
+upload-nap6: $(workdir)/filtered/nap6.csv $(workdir)/nap6.csv
+	@echo Uploading 6th NAP...
+	@$(ckanapi) action resource_patch -c $(registry_ini) \
+	id=c515847c-9209-4841-8207-1afc412b5791 upload@"$(workdir)/filtered/nap6.csv" \
+	> /dev/null
+
+.PHONY: rebuild-nap6
+rebuild-nap6: $(workdir)/filtered/nap6.csv $(workdir)/nap6.csv
+# 	@$(oc_search) nap6_preprocess_csv --csv "$(workdir)/filtered/nap6.csv" --out "$(workdir)/filtered/nap6_search.csv"
+# 	@$(oc_search) import_data_csv --csv "$(workdir)/filtered/nap6_search.csv" --search nap6
+
+$(workdir)/nap6.csv:
+	$(ckan_command) -c $(registry_ini) $(combine) nap6 -d $(workdir)
+
+# use $(registry_python) to execute filter_nap6.py as we need pyyaml from venv
+$(workdir)/filtered/nap6.csv: $(workdir)/nap6.csv
+	$(registry_python) $(fdir)/filter_nap6.py < $< > $@
 
 ###
 ###  Open Data Inventory

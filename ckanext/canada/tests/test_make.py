@@ -481,6 +481,31 @@ class TestMakePD(CanadaTestBase):
         assert "rebuild-nap5] Error" not in stdout
         assert 'import_data_csv' in stdout
 
+    def test_make_nap6(self):
+        assert self.ckan_ini
+        self._setup_ini(self.ckan_ini)
+
+        self._setup_pd(type='nap6')
+
+        make_process = subprocess.Popen(["make upload-nap6"], shell=True, cwd=MAKE_PATH, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        stdout, stderr = make_process.communicate()
+
+        stdout = stdout.decode("utf-8")
+
+        assert "Usage:" not in stdout
+        assert "upload-nap6] Error" not in stdout
+
+        make_process = subprocess.Popen(["make rebuild-nap6"], shell=True, cwd=MAKE_PATH, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        stdout, stderr = make_process.communicate()
+
+        stdout = stdout.decode("utf-8")
+
+        # Django, just test for command output from echo
+        # TODO: add test once Django seach is ready for nap6
+        # assert "Usage:" not in stdout
+        # assert "rebuild-nap6] Error" not in stdout
+        # assert 'import_data_csv' in stdout
+
     def test_make_reclassification(self):
         assert self.ckan_ini
         self._setup_ini(self.ckan_ini)
