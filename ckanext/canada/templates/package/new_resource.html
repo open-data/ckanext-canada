@@ -8,6 +8,17 @@
   </div>
 {% endblock %}
 
+{% block secondary_content %}
+  {%- set pages = h.scheming_get_dataset_form_pages(dataset_type) -%}
+  {% snippet "package/snippets/stages_sidebar.html",
+    data={"_form_page": pages | length + 1},
+    dataset_type=dataset_type,
+    s1 = 'complete',
+    s2 = 'active'
+  %}
+  {{ super() }}
+{% endblock %}
+
 {% block form %}
   {% set max_resource_count = h.max_resources_per_dataset() %}
   {% if h.is_registry_domain() and max_resource_count and pkg_dict.resources|length >= max_resource_count %}
