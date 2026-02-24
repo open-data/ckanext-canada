@@ -50,7 +50,8 @@ PORTAL_URL_OPTION = 'canada.portal_url'
 PORTAL_URL_DEFAULT_EN = 'https://open.canada.ca'
 PORTAL_URL_DEFAULT_FR = 'https://ouvert.canada.ca'
 DATAPREVIEW_MAX = 500
-CDTS_VERSION = config.get('ckanext.canada.cdts_version', 'v5_0_1')
+# update SHA384 integrity in template when changing CDTS_VERSION
+CDTS_VERSION = 'v5_0_5'
 CDTS_URI = 'https://www.canada.ca/etc/designs/canada/cdts/gcweb'
 GEO_MAP_TYPE_OPTION = 'wet_theme.geo_map_type'
 GEO_MAP_TYPE_DEFAULT = 'static'
