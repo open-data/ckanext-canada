@@ -1680,3 +1680,33 @@ def ckan_admin_portal_sync():
     setattr(g, 'page', extra_vars['page'])
 
     return render('admin/portal_sync.html', extra_vars=extra_vars)
+
+
+@canada_views.route('/organization/compliance/<id>', methods=['GET'])
+def pd_compliance_summary(id: str):
+    set_org(True)
+    context = cast(Context, {'model': model, 'session': model.Session, 'user': g.user})
+
+    try:
+        data_dict: Dict[str, Any] = {'id': id}
+        check_access('organization_update', context, data_dict)
+        data_dict['include_datasets'] = False
+        group_dict = get_action('organization_show')(context, data_dict)
+    except NotFound:
+        return abort(404, _('Organization not found'))
+    except NotAuthorized:
+        error_message = _('User %r not authorized to view compliance of %s') % \
+            (g.user, id)
+        return abort(403, error_message)
+
+    # TODO: Remove
+    # ckan 2.9: Adding variables that were removed from c object for
+    # compatibility with templates in existing extensions
+    g.group_dict = group_dict
+
+    extra_vars = {
+        "group_dict": group_dict,
+        "group_type": 'organization',
+    }
+
+    return render('organization/pd_compliance.html', extra_vars=extra_vars)
