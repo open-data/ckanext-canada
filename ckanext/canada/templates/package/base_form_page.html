@@ -15,6 +15,16 @@
     s2 = form_vars.stage[1] or 'uncomplete'
   %}
   {{ super() }}
+  {% if form_vars.data and form_vars.data.resources %}
+    <div class="canada-package-edit-sidepanel">
+      {% snippet "package/snippets/resources.html", pkg=form_vars.data %}
+    </div>
+  {% endif %}
+{% endblock %}
+
+{% block pre_primary %}
+  {{ super() }}
+  <div class="canada-v10-spacer"></div>
 {% endblock %}
 
 {% block page_header %}

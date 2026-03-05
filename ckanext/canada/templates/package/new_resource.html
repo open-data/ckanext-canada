@@ -11,7 +11,7 @@
 {% block secondary_content %}
   {%- set pages = h.scheming_get_dataset_form_pages(dataset_type) -%}
   {% snippet "package/snippets/stages_sidebar.html",
-    data={"_form_page": pages | length + 1},
+    data={"_form_page": pages | length + 1, "id": pkg_dict.id, "state": pkg_dict.state},
     dataset_type=dataset_type,
     s1 = 'complete',
     s2 = 'active'
