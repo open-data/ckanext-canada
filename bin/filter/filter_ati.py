@@ -58,7 +58,6 @@ def main():
     writer = csv.DictWriter(sys.stdout, outnames)
     writer.writeheader()
 
-
     for row in reader:
         row = process_row(row)
         if row is None:
