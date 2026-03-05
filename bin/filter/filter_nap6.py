@@ -32,7 +32,7 @@ COLUMNS = [
     'indicator_en', 'indicator_fr', 'indicator_deadline_en',
     'indicator_deadline_fr', 'indicator_lead_dept',
     'status', 'progress_en', 'progress_fr', 'evidence_en', 'evidence_fr',
-    'challenges', 'challenges_other_en', 'challenges_other_fr', 'owner_org',
+    'challenges_en', 'challenges_fr', 'owner_org',
     'owner_org_title'
 ]
 
