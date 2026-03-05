@@ -92,11 +92,10 @@ class TestNap6(CanadaTestBase):
         record = chromo['examples']['record'].copy()
 
         # if Status is LP, challenges is required
-        expected_required_fields = ['challenges']
+        expected_required_fields = ['challenges_en', 'challenges_fr']
         record['status'] = 'LP'
-        record['challenges'] = None
-        record['challenges_other_en'] = None
-        record['challenges_other_fr'] = None
+        record['challenges_en'] = None
+        record['challenges_fr'] = None
 
         with pytest.raises(ValidationError) as ve:
             self.lc.action.datastore_upsert(
@@ -109,29 +108,10 @@ class TestNap6(CanadaTestBase):
             assert required_field in err['records'][0]
 
         # if Status is NS, challenges is required
-        expected_required_fields = ['challenges']
+        expected_required_fields = ['challenges_en', 'challenges_fr']
         record['status'] = 'NS'
-        record['challenges'] = None
-        record['challenges_other_en'] = None
-        record['challenges_other_fr'] = None
-
-        with pytest.raises(ValidationError) as ve:
-            self.lc.action.datastore_upsert(
-                resource_id=self.resource_id,
-                records=[record])
-        model.Session.rollback()
-        err = ve.value.error_dict
-        assert 'records' in err
-        for required_field in expected_required_fields:
-            assert required_field in err['records'][0]
-
-        # if challenges is OT, challenges_other_* is required
-        expected_required_fields = ['challenges_other_en',
-                                    'challenges_other_fr']
-        record['status'] = 'NS'
-        record['challenges'] = ['OT']
-        record['challenges_other_en'] = None
-        record['challenges_other_fr'] = None
+        record['challenges_en'] = None
+        record['challenges_fr'] = None
 
         with pytest.raises(ValidationError) as ve:
             self.lc.action.datastore_upsert(
@@ -153,8 +133,8 @@ class TestNap6(CanadaTestBase):
         record['evidence_en'] = 'Not Blank'
         record['evidence_fr'] = None
 
-        record['challenges_other_en'] = 'Not Blank'
-        record['challenges_other_fr'] = None
+        record['challenges_en'] = 'Not Blank'
+        record['challenges_fr'] = None
 
         with pytest.raises(ValidationError) as ve:
             self.lc.action.datastore_upsert(
@@ -164,13 +144,13 @@ class TestNap6(CanadaTestBase):
         err = ve.value.error_dict
         assert 'records' in err
         assert 'evidence_fr' in err['records'][0]
-        assert 'challenges_other_fr' in err['records'][0]
+        assert 'challenges_fr' in err['records'][0]
 
         record['evidence_fr'] = 'Not Blank'
         record['evidence_en'] = None
 
-        record['challenges_other_fr'] = 'Not Blank'
-        record['challenges_other_en'] = None
+        record['challenges_fr'] = 'Not Blank'
+        record['challenges_en'] = None
 
         with pytest.raises(ValidationError) as ve:
             self.lc.action.datastore_upsert(
@@ -180,7 +160,7 @@ class TestNap6(CanadaTestBase):
         err = ve.value.error_dict
         assert 'records' in err
         assert 'evidence_en' in err['records'][0]
-        assert 'challenges_other_en' in err['records'][0]
+        assert 'challenges_en' in err['records'][0]
 
     def test_choice_fields(self):
         """
@@ -190,7 +170,7 @@ class TestNap6(CanadaTestBase):
         record = chromo['examples']['record'].copy()
 
         expected_choice_fields = ['reporting_period', 'commitments', 'milestones',
-                                  'indicators', 'status', 'challenges']
+                                  'indicators', 'status']
 
         for field in chromo['fields']:
             if field.get('published_resource_computed_field'):

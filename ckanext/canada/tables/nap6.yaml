@@ -874,151 +874,85 @@ resources:
     markdown: true
 
   # DEP 1-15
-  - datastore_id: challenges
+  - datastore_id: challenges_en
     label:
-      en: Challenges
-      fr: Défis
-    occurrence: Repeatable
+      en: Challenges (English)
+      fr: Défis (anglais)
     description:
-      en: Describe any challenges faced
-      fr: Décrivez les défis rencontrés
+      en: Describe any challenges faced, in English
+      fr: Décrivez les défis rencontrés en anglais
     obligation:
       en: Mandatory, conditional
       fr: Obligatoire, conditionnel
     validation:
       en: Required if "Status" is "Limited progress" or "Not started"
       fr: Obligatoire si « État » est « Progrès limité » ou « Pas commencé ».
-    occurrence: Repeatable
     excel_required: false
     form_required: false
     js_required_eval: >-
-      {{status}}.length > 0 &&
       (
-        {{status}} == "LP" ||
-        {{status}} == "NS"
-      )
+        {{status}}.length > 0 &&
+        (
+          {{status}} == "LP" ||
+          {{status}} == "NS"
+        )
+      ) || {{challenges_fr}}.length > 0
     excel_required_formula: >-
       OR(
         TRIM(LEFT({status},FIND(":",{status}&":")-1))="LP",
-        TRIM(LEFT({status},FIND(":",{status}&":")-1))="NS"
+        TRIM(LEFT({status},FIND(":",{status}&":")-1))="NS",
+        NOT(ISBLANK({challenges_fr}))
       )
-    datastore_type: _text
-    format_type:
-      en: Controlled List
-      fr: Liste contrôlée
-    excel_full_text_choices: false
-    datatables_full_text_choices: true
-    form_snippet: scheming/form_snippets/multiple_select.html
-    datatables_col_class: col-md
-    choice_order_expression: 'value.get("order", 0), code'
-    choices:
-      CF:
-        en: Change of funding
-        fr: Changement de financement
-        order: 0
-      LR:
-        en: Lack of resources
-        fr: Manque de ressources
-        order: 1
-      SP:
-        en: Shift in priorities
-        fr: Changement de priorités
-        order: 2
-      DA:
-        en: Delay in approvals
-        fr: Retard dans les approbations
-        order: 3
-      OA:
-        en: Dependant on other activities (e.g. an activity can only start after another activity has completed)
-        fr: Dépendant d'autres activités (par exemple, une activité ne peut commencer qu'après la fin d'une autre activité)
-        order: 4
-      OT:
-        en: Other
-        fr: Autre
-        order: 5
-
-  # DEP 1-16
-  - datastore_id: challenges_other_en
-    label:
-      en: Other Challenges (English)
-      fr: Autres défis (anglais)
-    description:
-      en: Other challenges faced during implementation, in English
-      fr: Autres difficultés rencontrées au cours de la mise en oeuvre en anglais
-    obligation:
-      en: Mandatory, conditional
-      fr: Obligatoire, conditionnel
-    validation:
-      en: Required if "Challenges" is "Other"
-      fr: Requis si « Défis » est « Autre »
-    occurrence: Single
-    excel_required: false
-    form_required: false
     datastore_type: text
-    excel_column_width: 80
     format_type:
       en: Free text
       fr: Texte libre
-    datatables_col_class: col-xxl
-    js_required_eval: >-
-      {{challenges_other_fr}}.length > 0 ||
-      (
-        {{challenges}}.length > 0 &&
-        {{challenges}}.includes("OT")
-      )
-    excel_required_formula: >-
-      OR(
-        NOT(ISBLANK({challenges_other_fr})),
-        AND(
-          NOT(ISBLANK({challenges})),
-          ISNUMBER(SEARCH("OT",{challenges}))
-        )
-      )
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
       class: form-control canada-width-full d-block
+    datatables_col_class: col-xxl
+    excel_column_width: 80
     markdown: true
 
-  # DEP 1-17
-  - datastore_id: challenges_other_fr
+  # DEP 1-16
+  - datastore_id: challenges_fr
     label:
-      en: Other Challenges (French)
-      fr: Autres défis (français)
+      en: Challenges (French)
+      fr: Défis (français)
     description:
-      en: Other challenges faced during implementation, in French
-      fr: Autres difficultés rencontrées au cours de la mise en oeuvre en français
+      en: Describe any challenges faced, in French
+      fr: Décrivez les défis rencontrés en français
     obligation:
       en: Mandatory, conditional
       fr: Obligatoire, conditionnel
     validation:
-      en: Required if "Challenges" is "Other"
-      fr: Requis si « Défis » est « Autre »
-    occurrence: Single
+      en: Required if "Status" is "Limited progress" or "Not started"
+      fr: Obligatoire si « État » est « Progrès limité » ou « Pas commencé ».
     excel_required: false
     form_required: false
+    js_required_eval: >-
+      (
+        {{status}}.length > 0 &&
+        (
+          {{status}} == "LP" ||
+          {{status}} == "NS"
+        )
+      ) || {{challenges_en}}.length > 0
+    excel_required_formula: >-
+      OR(
+        TRIM(LEFT({status},FIND(":",{status}&":")-1))="LP",
+        TRIM(LEFT({status},FIND(":",{status}&":")-1))="NS",
+        NOT(ISBLANK({challenges_en}))
+      )
     datastore_type: text
-    excel_column_width: 80
     format_type:
       en: Free text
       fr: Texte libre
-    datatables_col_class: col-xxl
-    js_required_eval: >-
-      {{challenges_other_en}}.length > 0 ||
-      (
-        {{challenges}}.length > 0 &&
-        {{challenges}}.includes("OT")
-      )
-    excel_required_formula: >-
-      OR(
-        NOT(ISBLANK({challenges_other_en})),
-        AND(
-          NOT(ISBLANK({challenges})),
-          ISNUMBER(SEARCH("OT",{challenges}))
-        )
-      )
     form_snippet: scheming/form_snippets/textarea.html
     form_attrs:
       class: form-control canada-width-full d-block
+    datatables_col_class: col-xxl
+    excel_column_width: 80
     markdown: true
 
   # Dev: req dynamic field
@@ -1120,20 +1054,10 @@ resources:
         errors := errors || both_languages_error(NEW.evidence_en, 'evidence_en', NEW.evidence_fr, 'evidence_fr');
 
         IF NEW.status = 'NS' OR NEW.status = 'LP' THEN
-          errors := errors || conditional_required_error(NEW.challenges, 'challenges');
-        END IF;
-
-        crval := choices_clean_error(NEW.challenges, {challenges}, 'challenges');
-        errors := errors || crval.error;
-        NEW.challenges := crval.clean;
-
-        NEW.challenges_other_en := trim_lead_trailing(NEW.challenges_other_en);
-        NEW.challenges_other_fr := trim_lead_trailing(NEW.challenges_other_fr);
-        IF NEW.challenges IS NOT NULL AND 'OT' = ANY(NEW.challenges) THEN
-          errors := errors || conditional_required_error(NEW.challenges_other_en, 'challenges_other_en');
-          errors := errors || conditional_required_error(NEW.challenges_other_fr, 'challenges_other_fr');
+          errors := errors || conditional_required_error(NEW.challenges_en, 'challenges_en');
+          errors := errors || conditional_required_error(NEW.challenges_fr, 'challenges_fr');
         ELSE
-          errors := errors || both_languages_error(NEW.challenges_other_en, 'challenges_other_en', NEW.challenges_other_fr, 'challenges_other_fr');
+          errors := errors || both_languages_error(NEW.challenges_en, 'challenges_en', NEW.challenges_fr, 'challenges_fr');
         END IF;
 
         IF errors = '{{}}' THEN
@@ -1158,13 +1082,12 @@ resources:
         - Lancer un appel à propositions pour trouver un contractant capable de garantir que le matériel est présenté dans un format utile pour les enseignants et les éducateurs.
       evidence_en: Materials are drafted and posted at [link]
       evidence_fr:  Les documents sont rédigés et publiés sur [link]
-      challenges: [CF,OT]
-      challenges_other_en: |
-        - Low participation rates
-        - Data not available yet
-      challenges_other_fr: |
-        - Faibles taux de participation
-        - Les données ne sont pas encore disponibles
+      challenges_en: |
+        - Change of funding
+        - Lack of resources
+      challenges_fr: |
+        - Changement de financement
+        - Manque de ressources
     filters:
       commitments: C01
     filter_one:
