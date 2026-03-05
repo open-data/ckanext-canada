@@ -1,11 +1,6 @@
 {% ckan_extends %}
 
 {% block stages %}
-  {% if dataset_type != 'prop' %}
-    <div id="canada-package-form-stages" data-style="{{- form_style -}}">
-      {{ super() }}
-    </div>
-  {% endif %}
 {% endblock %}
 
 {% block basic_fields %}

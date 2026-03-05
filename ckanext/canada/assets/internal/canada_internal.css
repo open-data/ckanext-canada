@@ -722,143 +722,71 @@ form#dataset-edit{
 .canada-package-edit-toolbar{
   margin: 0 !important;
   padding: 0 !important;
-  margin-bottom: 80px !important;
 }
 
 #canada-package-form-stages{
   background-color: #EDEDED;
-  margin-bottom: 10px;
+  margin-bottom: 30px;
+  margin-top: 0;
 }
 
-#canada-package-form-stages[data-style="new"]{
-  margin-left: calc(((100vw - 100%) / 2) * -1);
-  margin-right: calc(((100vw - 100%) / 2) * -1);
-}
-
-#canada-package-form-stages[data-style="edit"]{
-  margin-left: calc((-100% / 3) - 10px);
-  margin-right: 0;
-  width: calc((100% / 0.75) + 10px);
-  margin-top: -100px;
-}
-
-@media all and (max-width: 992px){
-  #canada-package-form-stages[data-style="edit"]{
-    margin-left: 0;
-    margin-right: calc((-100% / 3) - 10px);
-  }
-}
-
-@media all and (max-width: 768px){
-  #canada-package-form-stages[data-style="edit"]{
-    margin-left: 0;
-    margin-right: 0;
-    width: 100%;
-  }
-}
-
-.canada-package-edit-sidepanel{
+#canada-package-form-stages[data-form-style="new"]{
   margin-top: -30px;
 }
 
-@media all and (max-width: 1200px){
-  .canada-package-edit-sidepanel{
-    margin-top: 30px;
-  }
+#canada-package-form-stages .module-heading{
+  padding-left: 15px !important;
 }
 
-#canada-package-form-stages > ol.stages{
-  padding-left: 48px;
-  padding-right: 48px;
-  background-color: #EDEDED;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+#canada-package-form-stages ul.nav li.nav-item{
+  display: flex !important;
   flex-direction: row;
-  flex-wrap: wrap;
-  width: 100%;
-  overflow: hidden !important;
-  margin-bottom: 0 !important;
-}
-
-@media all and (max-width: 768px){
-  #canada-package-form-stages > ol.stages{
-    padding-left: 0;
-    padding-right: 0;
-    justify-content: flex-start;
-  }
-}
-
-#canada-package-form-stages[data-style="edit"] > ol.stages{
-  padding-left: 0;
-  padding-right: 0;
-  justify-content: flex-start;
-}
-
-#canada-package-form-stages > ol.stages li{
-  padding: 0;
-  width: auto !important;
-  flex-shrink: 1 !important;
+  flex-wrap: nowrap;
   position: relative;
-  overflow: hidden !important;
+  padding: 0 !important;
 }
 
-#canada-package-form-stages > ol.stages li::before{
-  position: absolute;
-  width: 20px;
-  height: 20px;
-  line-height: 20px;
-  top: 50%;
-  left: 8px;
-  transform: translate(0, -50%);
-  font-weight: 400 !important;
-}
-
-#canada-package-form-stages > ol.stages li.first::after{
-  border: 29px solid !important;
-  border-left-color: transparent !important;
-  border-top-color: #EDEDED !important;
-  border-bottom-color: #EDEDED !important;
-  border-right-color: #EDEDED !important;
-}
-
-#canada-package-form-stages > ol.stages li:last-of-type::after{
-  border: none !important;
-}
-
-#canada-package-form-stages > ol.stages li::after{
-  content: "";
-  position: absolute;
-  top: 50%;
-  left: initial;
-  right: -28px;
-  height: 101%;
-  width: 30px;
-  transform: translate(0, -50%);
-  z-index: 2;
-  pointer-events: none;
-  margin: 0 !important;
-  border-width: 29px !important;
-  border-top-color: #EDEDED !important;
-  border-bottom-color: #EDEDED !important;
-  border-right-color: #EDEDED !important;
-}
-
-#canada-package-form-stages > ol.stages li .highlight{
+#canada-package-form-stages .canada-package-form-stages--label{
+  padding: 17px 35px 17px 25px;
   display: block;
-  padding: 18px 28px 18px 36px !important;
-  line-height: 1.4;
-  white-space: normal;
-  position: relative;
-  font-weight: 500 !important;
+  width: 100%;
+  text-decoration: none !important;
+  color: #333 !important;
 }
 
-#canada-package-form-stages > ol.stages li .highlight a[data-bs-toggle]{
+#canada-package-form-stages a.canada-package-form-stages--label:hover,
+#canada-package-form-stages a.canada-package-form-stages--label:active,
+#canada-package-form-stages a.canada-package-form-stages--label:focus{
+  background: #d9d9d9;
+  color: #333 !important;
+  transition-duration: 0.325s;
+}
+
+#canada-package-form-stages ul.nav li.nav-item.active .canada-package-form-stages--label{
+ background: #38414d;
+ color: #fefefe !important;
+ font-weight: 600;
+}
+
+#canada-package-form-stages ul.nav li.nav-item abbr{
+  height: auto;
+  display: block;
   position: absolute;
+  right: 12px;
   top: 50%;
-  right: 10px;
   transform: translate(0, -50%);
   pointer-events: hover;
+  cursor: help;
+}
+
+#canada-package-form-stages ul.nav li.nav-item.active abbr i{
+  background: white;
+  border: 1px solid white;
+  border-radius: 50%;
+}
+
+#canada-package-form-stages ul.nav button{
+  padding: 0 !important;
 }
 /*####################
 ##       END        ##
