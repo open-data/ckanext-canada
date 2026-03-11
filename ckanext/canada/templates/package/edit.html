@@ -23,13 +23,15 @@
 {% endblock %}
 
 {% block secondary_content %}
-  {% snippet "package/snippets/stages_sidebar.html",
-    data=form_vars.data,
-    dataset_type=form_vars.dataset_type,
-    form_style=form_vars.form_style,
-    s1 = form_vars.stage[0] or 'active',
-    s2 = form_vars.stage[1] or 'uncomplete'
-  %}
+  {% if form_vars and form_vars.dataset_type not in h.recombinant_get_types() %}
+    {% snippet "package/snippets/stages_sidebar.html",
+      data=form_vars.data,
+      dataset_type=form_vars.dataset_type,
+      form_style=form_vars.form_style,
+      s1 = form_vars.stage[0] or 'active',
+      s2 = form_vars.stage[1] or 'uncomplete'
+    %}
+  {% endif %}
   {% if pkg_dict and pkg_dict.resources %}
     <div class="canada-package-edit-sidepanel">
       {% snippet "package/snippets/resources.html", pkg=pkg %}
