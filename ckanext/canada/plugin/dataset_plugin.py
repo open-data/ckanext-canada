@@ -16,7 +16,9 @@ from ckanext.scheming.plugins import SchemingDatasetsPlugin
 from ckanext.canada.helpers import RELEASE_DATE_FACET_STEP
 from ckanext.canada.view import (
     CanadaDatasetEditView,
+    CanadaDatasetEditPageView,
     CanadaDatasetCreateView,
+    CanadaDatasetCreatePageView,
     CanadaResourceEditView,
     CanadaResourceCreateView,
     canada_search,
@@ -115,6 +117,16 @@ class CanadaDatasetsPlugin(SchemingDatasetsPlugin):
             view_func=canada_search,
             methods=['GET'],
             strict_slashes=False
+        )
+        blueprint.add_url_rule(
+            '/new/<id>/<page>',
+            'scheming_new_page',
+            CanadaDatasetCreatePageView.as_view('new_page'),
+        )
+        blueprint.add_url_rule(
+            '/edit/<id>/<page>',
+            'scheming_edit_page',
+            CanadaDatasetEditPageView.as_view('edit_page'),
         )
         # redirect PD endpoints accessed from /dataset/<pd pkg id>
         blueprint.before_request(cast(BeforeRequestCallable,
