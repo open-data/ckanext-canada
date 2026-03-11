@@ -491,6 +491,8 @@ def create_pd_record(owner_org: str, resource_name: str):
             dataset_type=chromo['dataset_type'])
         [res] = [r for r in rcomb['resources'] if r['name'] == resource_name]
 
+        org = lc.action.organization_show(id=owner_org)
+
         check_access(
             'datastore_upsert',
             {'user': g.user, 'auth_user_obj': g.userobj},
@@ -571,6 +573,7 @@ def create_pd_record(owner_org: str, resource_name: str):
                               'chromo_title': chromo['title'],
                               'choice_fields': choice_fields,
                               'owner_org': rcomb['owner_org'],
+                              'org_dict': org,
                               # prevent rendering error on parent template
                               'pkg_dict': {},
                               'errors': err,
@@ -592,6 +595,7 @@ def create_pd_record(owner_org: str, resource_name: str):
                       'chromo_title': chromo['title'],
                       'choice_fields': choice_fields,
                       'owner_org': rcomb['owner_org'],
+                      'org_dict': org,
                       'pkg_dict': {},  # prevent rendering error on parent template
                       'errors': {},
                   })
@@ -610,6 +614,8 @@ def update_pd_record(owner_org: str, resource_name: str, pk: str):
             owner_org=owner_org,
             dataset_type=chromo['dataset_type'])
         [res] = [r for r in rcomb['resources'] if r['name'] == resource_name]
+
+        org = lc.action.organization_show(id=owner_org)
 
         check_access(
             'datastore_upsert',
@@ -679,6 +685,7 @@ def update_pd_record(owner_org: str, resource_name: str, pk: str):
                               'choice_fields': choice_fields,
                               'pk_fields': pk_fields,
                               'owner_org': rcomb['owner_org'],
+                              'org_dict': org,
                               # prevent rendering error on parent template
                               'pkg_dict': {},
                               'errors': err,
@@ -715,6 +722,7 @@ def update_pd_record(owner_org: str, resource_name: str, pk: str):
                       'choice_fields': choice_fields,
                       'pk_fields': pk_fields,
                       'owner_org': rcomb['owner_org'],
+                      'org_dict': org,
                       # prevent rendering error on parent template
                       'pkg_dict': {},
                       'errors': {},
