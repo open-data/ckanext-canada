@@ -580,7 +580,7 @@ upload-reclassification: $(workdir)/filtered/reclassification.csv $(workdir)/fil
 rebuild-reclassification: $(workdir)/filtered/reclassification.csv $(workdir)/filtered/reclassification-nil.csv
 	@$(echo_date) Rebuilding Position Reclassification...
 	@$(oc_search) import_data_csv --csv "$(workdir)/filtered/reclassification.csv" --search reclassification
-	@$(oc_search) import_data_csv --csv "$(workdir)/filtered/reclassification-nil.csv" --search reclassification --nothing_to_report	
+	@$(oc_search) import_data_csv --csv "$(workdir)/filtered/reclassification-nil.csv" --search reclassification --nothing_to_report
 
 $(workdir)/reclassification.csv:
 	$(ckan_command) -c $(registry_ini) $(combine) reclassification -d $(workdir)
@@ -589,10 +589,10 @@ $(workdir)/reclassification-nil.csv:
 	$(ckan_command) -c $(registry_ini) $(combine) reclassification-nil -d $(workdir)
 
 $(workdir)/filtered/reclassification.csv: $(workdir)/reclassification.csv
-	$(fdir)/filter_reclassification.py < $< > $@
+	$(fdir)/filter_modified_created.py < $< > $@
 
 $(workdir)/filtered/reclassification-nil.csv: $(workdir)/reclassification-nil.csv
-	$(fdir)/filter_reclassification.py < $< > $@
+	$(fdir)/filter_modified_created.py < $< > $@
 
 ###
 ###  Service Inventory
