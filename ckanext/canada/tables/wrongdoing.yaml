@@ -59,6 +59,7 @@ resources:
       en: This field will provide the date that the file was created/received.
       fr: Cette zone renferme la date à laquelle le dossier a été créé ou reçu.
     obligation: Mandatory
+    # FIXME: file_id_date does not have required trigger
     excel_required: true
     form_required: true
     format_type:
@@ -116,6 +117,7 @@ resources:
       en: The field will contain value(s) a – f, separated by commas if more than one value.
       fr: Le champ contiendra une (des) valeur(s) a – f, séparées par une virgule s´il y en a plus d´une.
     obligation: Mandatory
+    # FIXME:  findings_conclusions does not have required trigger
     excel_required: true
     form_required: true
     format_type:
