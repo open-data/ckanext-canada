@@ -398,7 +398,7 @@ $(workdir)/dac.csv:
 	$(ckan_command) -c $(registry_ini) $(combine) dac -d $(workdir)
 
 $(workdir)/filtered/dac.csv: $(workdir)/dac.csv
-	$(fdir)/filter_dac.py < $< > $@
+	$(fdir)/filter_modified_created.py < $< > $@
 
 ###
 ###  Experimental Inventory
@@ -625,10 +625,10 @@ $(workdir)/reclassification-nil.csv:
 	$(ckan_command) -c $(registry_ini) $(combine) reclassification-nil -d $(workdir)
 
 $(workdir)/filtered/reclassification.csv: $(workdir)/reclassification.csv
-	$(fdir)/filter_reclassification.py < $< > $@
+	$(fdir)/filter_modified_created.py < $< > $@
 
 $(workdir)/filtered/reclassification-nil.csv: $(workdir)/reclassification-nil.csv
-	$(fdir)/filter_reclassification.py < $< > $@
+	$(fdir)/filter_modified_created.py < $< > $@
 
 ###
 ###  Service Inventory
@@ -712,7 +712,7 @@ $(workdir)/wrongdoing.csv:
 	$(ckan_command) -c $(registry_ini) $(combine) wrongdoing -d $(workdir)
 
 $(workdir)/filtered/wrongdoing.csv: $(workdir)/wrongdoing.csv
-	$(fdir)/filter_wrongdoing.py < $< > $@
+	$(fdir)/filter_modified_created.py < $< > $@
 
 ###
 ###  Supplier Vaccination
