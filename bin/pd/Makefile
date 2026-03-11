@@ -676,7 +676,7 @@ $(workdir)/wrongdoing.csv:
 	$(ckan_command) -c $(registry_ini) $(combine) wrongdoing -d $(workdir)
 
 $(workdir)/filtered/wrongdoing.csv: $(workdir)/wrongdoing.csv
-	$(fdir)/filter_wrongdoing.py < $< > $@
+	$(fdir)/filter_modified_created.py < $< > $@
 
 
 
