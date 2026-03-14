@@ -11,10 +11,10 @@ REMOVE_COLUMNS = [
 ]
 
 
-def main():
-    reader = csv.DictReader(sys.stdin)
+def main(inf, outf):
+    reader = csv.DictReader(inf)
     outnames = [f for f in reader.fieldnames if f not in REMOVE_COLUMNS]
-    writer = csv.DictWriter(sys.stdout, outnames)
+    writer = csv.DictWriter(outf, outnames)
     writer.writeheader()
     for row in reader:
         try:
@@ -25,4 +25,5 @@ def main():
             pass
 
 
-main()
+if __name__ == '__main__':
+    main(sys.stdin, sys.stdout)
