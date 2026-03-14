@@ -1,8 +1,4 @@
 # -*- coding: UTF-8 -*-
-import sys
-import os
-from importlib import util
-
 from ckanext.canada.tests import CanadaTestBase
 from ckanapi import LocalCKAN, ValidationError
 

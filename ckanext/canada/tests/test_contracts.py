@@ -6,7 +6,6 @@ from ckanext.canada.tests import CanadaTestBase
 from ckanapi import LocalCKAN, ValidationError
 
 import pytest
-from ckan import model
 from ckanext.canada.tests.factories import CanadaOrganization as Organization
 from ckanext.canada.tests.filters import filter_contracts
 
@@ -78,7 +77,7 @@ class TestContracts(CanadaTestBase):
                 records=[{
                     'reference_number': '42',
                     'contract_date': '2022-01-01',
-            }])
+                }])
         err = ve.value.error_dict
         assert err == {'records': [{
             'buyer_name': ['This field must not be empty'],
@@ -114,7 +113,7 @@ class TestContracts(CanadaTestBase):
                 records=[{
                     'reference_number': '42',
                     'contract_date': '2019-01-01',
-            }])
+                }])
         err = ve.value.error_dict
         assert err == {'records': [{
             'agreement_type_code': ['This field must not be empty'],
@@ -143,7 +142,7 @@ class TestContracts(CanadaTestBase):
             records=[{
                 'reference_number': '42',
                 'contract_date': '2018-12-31',
-        }])
+            }])
 
     def test_ministers_office_missing(self):
         record = dict(
