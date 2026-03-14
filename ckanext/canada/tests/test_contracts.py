@@ -1,10 +1,14 @@
 # -*- coding: UTF-8 -*-
+
+from io import StringIO
+
 from ckanext.canada.tests import CanadaTestBase
 from ckanapi import LocalCKAN, ValidationError
 
 import pytest
 from ckan import model
 from ckanext.canada.tests.factories import CanadaOrganization as Organization
+from ckanext.canada.tests.filters import filter_contracts
 
 from ckanext.recombinant.tables import get_chromo
 
@@ -315,3 +319,13 @@ class TestContracts(CanadaTestBase):
                 'in A1A format or the value "NA"'
             ],
         }], 'records_row': 0}
+
+
+def test_contracts_filter():
+    inf = StringIO(
+        'a,b,record_created,record_modified,user_modified\n'
+        '1,2,3,4,5\n'
+    )
+    outf = StringIO()
+    filter_contracts.main(inf, outf)
+    assert outf.getvalue() == 'a,b\r\n1,2\r\n'
