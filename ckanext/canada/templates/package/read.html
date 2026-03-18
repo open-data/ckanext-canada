@@ -167,7 +167,35 @@
     </section>
     {% block package_resources %}
       {% if pkg_dict.type != 'prop' %}
-        {{ super() }}
+        {% set page = request.args.get('res_page', 1) | int %}
+        {% set total = pkg.resources | length %}
+        {% set total_pages = (total // 10) + (1 if total % 10 else 0) %}
+        {% set start = (page - 1) * 10 %}
+        {% set end = start + 10 %}
+        {% set paginated_resources = pkg.resources[start:end] %}
+
+        {% snippet "package/snippets/resources_list.html", pkg=pkg, resources=paginated_resources,
+          can_edit=h.check_access('package_update', {'id':pkg.id }), is_activity_archive=is_activity_archive %}
+
+        {% if total_pages > 1 %}
+        <nav aria-label="Resource pagination">
+          <ul class="pagination">
+            {% if page > 1 %}
+              <li><a href="?res_page={{ page - 1 }}" rel="prev">{{ _('Previous') }}</a></li>
+            {% endif %}
+
+            {% for p in range(1, total_pages + 1) %}
+              <li class="{{ 'active' if p == page else '' }}">
+                <a href="{{ h.url_for('dataset.read', id=pkg.name, res_page=p) }}">{{ p }}</a>
+              </li>
+            {% endfor %}
+
+            {% if page < total_pages %}
+              <li><a href="?res_page={{ page + 1 }}" rel="next">{{ _('Next') }}</a></li>
+            {% endif %}
+          </ul>
+        </nav>
+        {% endif %}
       {% endif %}
     {% endblock %}
     {% block related_items %}
