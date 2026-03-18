@@ -1,6 +1,6 @@
-
-scheming_version: 1
 dataset_type: info
+
+draft_fields_required: false
 
 before_validators: limit_resources_per_dataset
 
@@ -53,7 +53,9 @@ sidebar_show_fields:
 dataset_fields:
 
 # our id + name fields are uuids and always equal
-- preset: canada_dataset_id
+- start_form_page:
+    title: Descriptive Metadata
+  preset: canada_dataset_id
 - preset: canada_dataset_name
 
 - preset: canada_collection
@@ -67,62 +69,9 @@ dataset_fields:
     - aia
     - accessibiliy_plans
 
-# Field = Title English.
-# {The English name by which the asset is known}
-# Field = Title French.
-# {The French name by which the asset is known}
 - preset: canada_title
-
-# Field = Publisher - Current Organization Name.
-# List box Source: Publisher - Current Organization Name code table (refer to Data Migration).
-# Populate the list box with the Titles of all the organizations the currently logged-in user is linked to.
-# {The Title of the current Organization (GC Department or Agency) primarily responsible for publishing the asset}
 - preset: canada_owner_org
-
-# Field = Publisher - Organization Name at Publication (English).
-# {The organization Title at publication Time}
-# Field = Publisher - Organization Name at Publication (French).
-# {The organization Title at publication Time}
-- preset: canada_org_title_at_publication
-
-# Field = Publisher - Organization Section Name English.
-# {The English names of the work groups, units of work, business units, etc. of the organization that publishes the asset (separate multiple names by commas).}
-# Field = Publisher - Organization Section Name French.
-# {The French names of the work groups, units of work, business units, etc. of the organization that publishes the asset (separate multiple names by commas).}
-- preset: canada_org_section_name
-
-# Field = Creator.
-# { Individual entities (persons) primarily responsible for making the asset (separate multiple entities by commas).}
-- preset: canada_creator
-
-# Field = Contributor English.
-# {The English names of entities (persons, groups, GC Departments or Agencies) that contributed to the asset (separate multiple entities by commas).}
-# Field = Contributor French.
-# {The French names of entities (persons, groups, GC Departments or Agencies) that contributed to the asset (separate multiple entities by commas).}
-- preset: canada_contributor
-
-# Field = Contact Email.
-# {The contact person's email for the information asset}
-- preset: canada_maintainer_email
-
-# Field = Credit English.
-# {The English names of entities (persons, groups, GC Departments or Agencies) that are credited for the dataset.}
-# Field = Reconnaissance French.
-# {The French names of entities (persons, groups, GC Departments or Agencies) that are credited for the dataset.}
-- preset: canada_credit
-
-# Field = Description English
-# Markdown formatting Property = http://daringfireball.net/projects/markdown/syntax
-# {An account of the information asset, in English. A description may include abstract, table of contents or a free-text.}
-# Field = Description French.
-# Markdown formatting Property = http://daringfireball.net/projects/markdown/syntax
-# {An account of the information asset, in French. A description may include abstract, table of contents or a free-text.}
 - preset: canada_notes
-
-# Field = Note English.
-# { General information relating to an asset, in English }
-# Field = Note English.
-# { General information relating to an asset, in French }
 - field_name: additional_notes
   label:
     en: Note
@@ -150,25 +99,71 @@ dataset_fields:
       size: 100
       class: form-control
 
-# Field = Keywords English.
-# {Commonly used words or phrases which describe the asset, in English}
-# Field = Keywords French.
-# {Commonly used words or phrases which describe the asset, in French}
 - preset: canada_keywords
 
-# Field = Subject.
-# List box Source: Subject code table (refer to Data Migration).
-# {The topic of the content of the information asset. You may select or deselect multiple subjects (Ctrl+Click).}
-- preset: canada_subject
+- start_form_page:
+    title: Publishing Information
+  preset: canada_org_title_at_publication
+- preset: canada_org_section_name
+- preset: canada_creator
+- preset: canada_contributor
+- preset: canada_maintainer_email
+- preset: canada_credit
 
-# Field = Audience.
-# List box Source: Audience code table (refer to Data Migration).
-# {A description of the audience or group of people for whom the described asset is intended or useful. You may select or deselect multiple options (Ctrl+Click).}
+# Field = ISBN.
+# {The identification of the asset’s - International Standard Book Number, a unique identifier assigned to many types of publications except serials by a registration agency.}
+- field_name: isbn
+  label:
+    en: ISBN
+  help_text:
+    en: The identification of the asset’s - International Standard Book Number, a unique identifier assigned to many types of publications except serials by a registration agency
+
+# Field = ISSN.
+# {The identification of the asset’s International Standard Serial Number, a unique identifier assigned to serial publications by a registration agency.}
+- field_name: issn
+  label:
+    en: ISSN
+  help_text:
+    en: The identification of the asset’s International Standard Serial Number, a unique identifier assigned to serial publications by a registration agency
+    fr: Identification du Numéro international normalisé des publications en série du produit, un identificateur unique assigné aux publications en série par un organisme d’enregistrement
+
+# Field = Government of Canada Catalogue Number.
+# {The identification of the asset’s  GC Catalogue Number}
+- field_name: gc_catalogue_number
+  label:
+    en: Government of Canada Catalogue Number
+    fr: Numéro de catalogue du gouvernement du Canada
+  help_text:
+    en: The identification of the asset’s  GC Catalogue Number
+    fr: Identification du numéro du produit dans le catalogue du GC
+
+# Field = Departmental Identification Number.
+# {The identification number of the organization which published the asset}
+- field_name: departmental_identification_number
+  label:
+    en: Departmental Identification Number
+    fr: Numéro d’identification du ministère
+  help_text:
+    en: The identification number of the organization which published the asset
+    fr: Numéro d’identification de l’organisation qui a publié le produit
+
+# Field = PSPC System Identifier.
+# {The identification number given to the asset by Public Service and Procurement Canada}
+- field_name: pspc_identification_number
+  label:
+    en: PSPC System Identifier
+    fr: Identificateur de système de SPAC
+  help_text:
+    en: The identification number given to the asset by Public Service and Procurement Canada
+    fr: Le numéro d’identification attribué au produit par Services publics et Approvisionnement Canada
+
+- preset: canada_digital_object_identifier
+
+- start_form_page:
+    title: Taxonomic Metadata
+  preset: canada_subject
 - preset: canada_audience
 
-# Field = Place pf Publication.
-# List box Source: Geographic Region Name code table (refer to Data Migration).
-# {The region where the asset was originally published}
 - field_name: place_of_publication
   label:
     en: Place of Publication
@@ -178,68 +173,20 @@ dataset_fields:
     fr: La région où le produit a été publié initialement. Vous pouvez sélectionner ou désélectionner de multiples options (Ctrl+Clic)
   preset: canada_geographic_region # use same multi-select controlled list
 
-# Field = Spatial.
-# {The range of spatial applicability of an information asset. This element could include either a bounding box, or GeoJson string.}
 - preset: canada_spatial
-
-# Field = Geographic Region Name.
-# List box Source: Geographic Region name code table (refer to Data Migration).
-# Format: {Province – Region}, e.g. Ontario – Sudbury.
-# {The geographic region of an asset. You may or deselect multiple regions (Ctrl+Click).}
 - preset: canada_geographic_region
 
-# Field = Time Period Coverage Start Date.
-# Add a Calendar control to select a Date.
-# {The start date of the period covered by the asset (YYYY-MM-DD)}
-- preset: canada_time_period_coverage_start
+- start_form_page:
+    title: Series Metadata
+  preset: canada_data_series_name
+- preset: canada_data_series_issue_identification
+- preset: canada_program_page_url
+- preset: canada_dataset_relationship
 
-# Field = Time Period Coverage End Date.
-# Add a Calendar control to select a Date.
-# {The end date of the period covered by the asset (YYYY-MM-DD)}
+- start_form_page:
+    title: Coverage
+  preset: canada_time_period_coverage_start
 - preset: canada_time_period_coverage_end
-
-# Field = Issuance.
-# List box Source: Issuance code table (refer to Data Migration).
-# { A term that designates how the resource is issued }
-- field_name: issuance
-  label:
-    en: Issuance
-    fr: Publication
-  help_text:
-    en: A term that designates how the asset is issued
-    fr: Un terme qui décrit comment la ressource est publié
-  form_snippet: select.html
-  display_snippet: select.html
-  validators: scheming_required scheming_choices
-  choices:
-  - label:
-      en: Monographic
-      fr: Monographique
-    value: monographic
-  - label:
-      en: Single Unit
-      fr: Unité simple
-    value: single_unit
-  - label:
-      en: Multipart monograph
-      fr: Monographie en plusieurs volumes
-    value: multipart_monograph
-  - label:
-      en: Continuing
-      fr: Suite
-    value: continuing
-  - label:
-      en: Serial
-      fr: Série
-    value: serial
-  - label:
-      en: Integrating Resource
-      fr: Ressource intégratrice
-    value: integrating_resource
-
-# Field = Frequency of Issuance.
-# List box Source: Frequency of Issuance code table (refer to Data Migration).
-# { A statement of publication frequency in textual form }
 - field_name: issuance_frequency
   label:
     en: Frequency of Issuance
@@ -320,19 +267,8 @@ dataset_fields:
       fr: Entièrement irrégulier
     value: irregular
 
-# Field = Maintenance and Update Frequency.
-# List box Source: Maintenance and Update Frequency code table (refer to Data Migration).
-# {The frequency with which changes and additions are made to the initial asset}
 - preset: canada_frequency
-
-# Field = Date Published.
-# Add a Calendar control to select a Date.
-# {The date of issuance (e.g., publication) of the information asset (YYYY-MM-DD)}
 - preset: canada_date_published
-
-# Field = Date Modified.
-# Add a Calendar control to select a Date.
-# {The date on which the information asset was updated (YYYY-MM-DD)}
 - preset: canada_date_modified
 
 # Field = Date Created.
@@ -393,107 +329,54 @@ dataset_fields:
   form_attrs:
     class: form-control
 
-# Field = Homepage English.
-# {A program or homepage that can be navigated to gain additional or contextual information about the asset.}
-# Field = Homepage French.
-# {A program or homepage that can benavigated to gain additional or contextual information about the asset.}
-- preset: canada_program_page_url
-
-# Field = Series Title English.
-# {The English name of the series, or aggregate asset, of which the asset is a part}
-# Field = Series Title French.
-# {The French name of the series, or aggregate asset, of which the asset is a part}
-- preset: canada_data_series_name
-
-# Field = Series Issue ID English.
-# {English identification of the series’ issue information}
-# Field = Series Issue ID French.
-# {French identification of the series’ issue information}
-- preset: canada_data_series_issue_identification
-
-# Field = ISBN.
-# {The identification of the asset’s - International Standard Book Number, a unique identifier assigned to many types of publications except serials by a registration agency.}
-- field_name: isbn
+# Field = Issuance.
+# List box Source: Issuance code table (refer to Data Migration).
+# { A term that designates how the resource is issued }
+- field_name: issuance
   label:
-    en: ISBN
+    en: Issuance
+    fr: Publication
   help_text:
-    en: The identification of the asset’s - International Standard Book Number, a unique identifier assigned to many types of publications except serials by a registration agency
+    en: A term that designates how the asset is issued
+    fr: Un terme qui décrit comment la ressource est publié
+  form_snippet: select.html
+  display_snippet: select.html
+  validators: scheming_required scheming_choices
+  choices:
+  - label:
+      en: Monographic
+      fr: Monographique
+    value: monographic
+  - label:
+      en: Single Unit
+      fr: Unité simple
+    value: single_unit
+  - label:
+      en: Multipart monograph
+      fr: Monographie en plusieurs volumes
+    value: multipart_monograph
+  - label:
+      en: Continuing
+      fr: Suite
+    value: continuing
+  - label:
+      en: Serial
+      fr: Série
+    value: serial
+  - label:
+      en: Integrating Resource
+      fr: Ressource intégratrice
+    value: integrating_resource
 
-# Field = ISSN.
-# {The identification of the asset’s International Standard Serial Number, a unique identifier assigned to serial publications by a registration agency.}
-- field_name: issn
-  label:
-    en: ISSN
-  help_text:
-    en: The identification of the asset’s International Standard Serial Number, a unique identifier assigned to serial publications by a registration agency
-    fr: Identification du Numéro international normalisé des publications en série du produit, un identificateur unique assigné aux publications en série par un organisme d’enregistrement
-
-# Field = Government of Canada Catalogue Number.
-# {The identification of the asset’s  GC Catalogue Number}
-- field_name: gc_catalogue_number
-  label:
-    en: Government of Canada Catalogue Number
-    fr: Numéro de catalogue du gouvernement du Canada
-  help_text:
-    en: The identification of the asset’s  GC Catalogue Number
-    fr: Identification du numéro du produit dans le catalogue du GC
-
-# Field = Departmental Identification Number.
-# {The identification number of the organization which published the asset}
-- field_name: departmental_identification_number
-  label:
-    en: Departmental Identification Number
-    fr: Numéro d’identification du ministère
-  help_text:
-    en: The identification number of the organization which published the asset
-    fr: Numéro d’identification de l’organisation qui a publié le produit
-
-# Field = PSPC System Identifier.
-# {The identification number given to the asset by Public Service and Procurement Canada}
-- field_name: pspc_identification_number
-  label:
-    en: PSPC System Identifier
-    fr: Identificateur de système de SPAC
-  help_text:
-    en: The identification number given to the asset by Public Service and Procurement Canada
-    fr: Le numéro d’identification attribué au produit par Services publics et Approvisionnement Canada
-
-# Field = Digital Object Identifier DOI.
-# {The Digital Object Identifier assigned to the asset. For more information visit: http://cisti-icist.nrc-cnrc.gc.ca/eng/services/cisti/datacite-canada/index.html}
-- preset: canada_digital_object_identifier
-
-# Field = Jurisdiction.
-# {The extent or range of judicial, law enforcement or other authority. Example: Level of government that contributed the asset.}
 - preset: canada_jurisdiction
-
-# Field = Licence.
-# Populate the list box with the licence options from the Registry.
-# {The licence applied to the information asset}
 - preset: canada_license_id
-
-# Field = Access Restrictions.
-# Default Value = Unrestricted.
-# {These are the access restrictions of the asset}
 - preset: canada_restrictions
 
-# Field = IMSO Approval.
-# List box options are Yes and No.
-# {Has IMSO approval been obtained for this asset? By selecting yes, you agree to release this asset under the Open Government Licence - Canada}
-# http://open.canada.ca/en/open-government-licence-canada
-- preset: canada_imso_approval
-
-# Field = Ready to Publish.
-# List box options are Yes and No.
-# {Selecting ‘Yes’ will set this asset as ready to publish on the Open Government Portal. Selecting ‘No’ will saved it as a ‘draft’}
+- start_form_page:
+    title: Approval
+  preset: canada_imso_approval
 - preset: canada_ready_to_publish
-
-# Field = Date Released.
-# Available only for an Admin user.
-# Add a Calendar control to select a Date.
-# {The date the asset may be published on the Portal (YYYY-MM-DD)}
 - preset: canada_portal_release_date
-
-- preset: canada_dataset_relationship
 
 
 #
