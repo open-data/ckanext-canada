@@ -2075,3 +2075,30 @@ body select[data-field-select2="True"]{
   font-size: 32px !important;
   color: #38414d !important;
 }
+
+.canada-resource-search-wrapper #dataset-resource-search{
+  display: flex;
+  width: auto;
+}
+
+.canada-resource-search-wrapper input#resource_query{
+  min-width: 40%;
+  border-radius: 3px 0 0 3px;
+}
+
+.canada-resource-search-wrapper input#resource_query,
+.canada-resource-search-wrapper span.input-group-btn{
+  display: inline-block;
+}
+
+span.resource-heading-text mark.highlight{
+  padding: 0 !important;
+  margin: 0 !important;
+  border: none !important;
+  outline: none !important;
+}
+
+.dataset-resource-pager li.active a{
+  pointer-events: none !important;
+  cursor: not-allowed;
+}
