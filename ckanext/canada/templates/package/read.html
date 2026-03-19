@@ -167,31 +167,39 @@
     </section>
     {% block package_resources %}
       {% if pkg_dict.type != 'prop' %}
+        {% set PAGER = 10 %}
         {% set page = request.args.get('res_page', 1) | int %}
         {% set total = pkg.resources | length %}
-        {% set total_pages = (total // 10) + (1 if total % 10 else 0) %}
-        {% set start = (page - 1) * 10 %}
-        {% set end = start + 10 %}
+        {% set total_pages = (total // PAGER) + (1 if total % PAGER else 0) %}
+        {% set start = (page - 1) * PAGER %}
+        {% set end = start + PAGER %}
         {% set paginated_resources = pkg.resources[start:end] %}
+        {% set resource_query = '&resource_query=' ~ g.resource_query if g.resource_query else '' %}
 
         {% snippet "package/snippets/resources_list.html", pkg=pkg, resources=paginated_resources,
           can_edit=h.check_access('package_update', {'id':pkg.id }), is_activity_archive=is_activity_archive %}
 
         {% if total_pages > 1 %}
-        <nav aria-label="Resource pagination">
+        <nav aria-label="Resource pagination" class="dataset-resource-pager">
           <ul class="pagination">
             {% if page > 1 %}
-              <li><a href="?res_page={{ page - 1 }}" rel="prev">{{ _('Previous') }}</a></li>
+              <li><a href="?res_page={{ page - 1 }}{{- resource_query -}}#resources" rel="prev">{{ _('Previous') }}</a></li>
             {% endif %}
 
             {% for p in range(1, total_pages + 1) %}
-              <li class="{{ 'active' if p == page else '' }}">
-                <a href="{{ h.url_for('dataset.read', id=pkg.name, res_page=p) }}">{{ p }}</a>
-              </li>
+              {% if p == page %}
+                <li class="active">
+                  <span>{{ p }}</span>
+                </li>
+              {% else %}
+                <li>
+                  <a href="{{ h.url_for('dataset.read', id=pkg.name, res_page=p) }}{{- resource_query -}}#resources">{{ p }}</a>
+                </li>
+              {% endif %}
             {% endfor %}
 
             {% if page < total_pages %}
-              <li><a href="?res_page={{ page + 1 }}" rel="next">{{ _('Next') }}</a></li>
+              <li><a href="?res_page={{ page + 1 }}{{- resource_query -}}#resources" rel="next">{{ _('Next') }}</a></li>
             {% endif %}
           </ul>
         </nav>
@@ -290,6 +298,22 @@
     {% asset 'invitation_manager/js' %}
   {% endif %}
   {{ super() }}
+  <script nonce="{{- h.get_inline_script_nonce() -}}">
+    window.addEventListener('load', function(){
+      $(document).ready(function(){
+        const resourceQuery = {{- (g.resource_query or none) | tojson -}};
+        if( resourceQuery != null && resourceQuery.length > 0 ){
+          const regexMatch = new RegExp('(' + resourceQuery + ')', 'gi');
+          let resourceTitles = $('ul.resource-list').find('a.resource-heading').find('.resource-heading-text');
+          if( resourceTitles.length > 0 ){
+            $(resourceTitles).each(function(_index, _resourceTitle){
+              $(_resourceTitle).html($(_resourceTitle).text().trim().replace(regexMatch, '<mark class="highlight">$1</mark>'));
+            });
+          }
+        }
+      });
+    });
+  </script>
 {% endblock %}
 
 {% block custom_styles %}
