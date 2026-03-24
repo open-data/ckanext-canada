@@ -25,16 +25,22 @@ class CanadaFormsPlugin(p.SingletonPlugin, DefaultDatasetForm):
         actions.update({k: logic.disabled_anon_action for k in [
             'current_package_list_with_resources',
             'user_list',
-            'user_activity_list',
             'member_list',
             # 'user_show',  FIXME: required for password reset
             'package_autocomplete',
             'format_autocomplete',
             'user_autocomplete',
-            'group_activity_list',
-            'organization_activity_list',
             'group_package_show',
             ]})
+        try:
+            p.toolkit.get_action('user_activity_list')({'ignore_auth': True}, {})
+            actions.update({k: logic.disabled_anon_action for k in [
+                'user_activity_list',
+                'group_activity_list',
+                'organization_activity_list',]})
+        except (p.toolkit.ObjectNotFound, KeyError):
+            # the activity plugin is not loaded, ignore
+            pass
         # disable group & organization bulk actions as they do not support
         # IPackageController and IResourceController implementations.
         actions.update({k: logic.disabled_action for k in [
@@ -56,8 +62,6 @@ class CanadaFormsPlugin(p.SingletonPlugin, DefaultDatasetForm):
                 validators.protect_portal_release_date,
             'canada_copy_from_org_name':
                 validators.canada_copy_from_org_name,
-            'canada_maintainer_email_default':
-                validators.canada_maintainer_email_default,
             'user_read_only':
                 validators.user_read_only,
             'user_read_only_json':

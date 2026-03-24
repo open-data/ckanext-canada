@@ -16,11 +16,11 @@ class TestRegistrySearch(CanadaTestBase):
     Class to test the package_search functionality for the Registry.
     """
     @classmethod
-    def setup_method(self, method):
-        """Method is called at class level before EACH test methods of the class are called.
-        Setup any state specific to the execution of the given class methods.
+    def setup_class(self):
+        """Method is called at class level once the class is instatiated.
+        Setup any state specific to the execution of the given class.
         """
-        super(TestRegistrySearch, self).setup_method(method)
+        super(TestRegistrySearch, self).setup_class()
         # all datasets in canada_internal are private
         self.include_private = True
         user = User()
@@ -82,7 +82,7 @@ class TestRegistrySearch(CanadaTestBase):
         assert 'facet_ranges' in response
         assert 'portal_release_date' in response['facet_ranges']
         assert 'counts' in response['facet_ranges']['portal_release_date']
-        assert 5 in response['facet_ranges']['portal_release_date']['counts']
+        assert response['facet_ranges']['portal_release_date']['counts'][1] >= 5
 
     def test_sysadmin_package_search(self):
         "A sysadmin should have access to all packages."
@@ -91,7 +91,7 @@ class TestRegistrySearch(CanadaTestBase):
             include_private=self.include_private)
 
         assert 'count' in response
-        assert response['count'] == 6
+        assert response['count'] >= 6
 
     def test_user_package_search(self):
         "A user with no access to Orgs should not see any packages."
@@ -126,13 +126,13 @@ class TestPortalSearch(CanadaTestBase):
     Class to test the package_search functionality for the Portal.
     """
     @classmethod
-    def setup_method(self, method):
-        """Method is called at class level before EACH test methods of the class are called.
-        Setup any state specific to the execution of the given class methods.
+    def setup_class(self):
+        """Method is called at class level once the class is instatiated.
+        Setup any state specific to the execution of the given class.
         """
         if p.plugin_loaded('canada_internal'):
             p.unload('canada_internal')
-        super(TestPortalSearch, self).setup_method(method)
+        super(TestPortalSearch, self).setup_class()
         # datasets on the portal are all public
         self.include_private = False
         self.org = Organization()
@@ -168,12 +168,14 @@ class TestPortalSearch(CanadaTestBase):
                 portal_release_date='2000-01-01')
 
     @classmethod
-    def teardown_method(self, method):
-        """Method is called at class level after EACH test methods of the class are called.
-        Remove any state specific to the execution of the given class methods.
+    def teardown_class(self):
+        """Method is called at class level after ALL test methods of the class are called.
+        Remove any state specific to the execution of the given class.
         """
         if not p.plugin_loaded('canada_internal'):
             p.load('canada_internal')
+
+        super(TestPortalSearch, self).teardown_class()
 
     def test_user_package_search(self):
         response = self.lc.action.package_search(

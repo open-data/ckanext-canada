@@ -19,22 +19,6 @@
             <td>{{ pkg_dict.author }}</td>
           </tr>
         {% endif %}
-        {% if pkg_dict.maintainer_email %}
-          <tr>
-            <td>{{ _('Maintainer') }}</td>
-            <td>{{ h.mail_to(email_address=pkg_dict.maintainer_email, name=pkg_dict.maintainer) }}</td>
-          </tr>
-        {% elif pkg_dict.maintainer %}
-          <tr>
-            <td>{{ _('Maintainer') }}</td>
-            <td>{{ pkg_dict.maintainer }}</td>
-          </tr>
-        {% else %}
-          <tr>
-            <td>{{ _('Maintainer') }}</td>
-            <td>{{ h.mail_to(email_address=h.default_open_email_address(xml_encode=False), name=h.default_open_email_address(xml_encode=False)) }}</td>
-          </tr>
-        {% endif %}
         {% if pkg_dict.version %}
           <tr>
             <td>{{ _("Version") }}</td>

@@ -24,7 +24,7 @@ from ckanext.xloader import loader
 from ckanext.xloader.job_exceptions import LoaderError
 from ckanext.validation.jobs import run_validation_job
 
-from ckanapi import LocalCKAN
+from ckanapi import LocalCKAN, ValidationError
 
 logger = logging.getLogger(__name__)
 
@@ -40,11 +40,11 @@ def mock_get_resource_uploader(data_dict):
 
 class TestDatastoreValidation(CanadaTestBase):
     @classmethod
-    def setup_method(self, method):
-        """Method is called at class level before EACH test methods of the class are called.
-        Setup any state specific to the execution of the given class methods.
+    def setup_class(self):
+        """Method is called at class level once the class is instatiated.
+        Setup any state specific to the execution of the given class.
         """
-        super(TestDatastoreValidation, self).setup_method(method)
+        super(TestDatastoreValidation, self).setup_class()
 
         if plugins.plugin_loaded('xloader'):
             plugins.unload('xloader')
@@ -55,12 +55,14 @@ class TestDatastoreValidation(CanadaTestBase):
         if not plugins.plugin_loaded('validation'):
             plugins.load('validation')
 
+        resource = Resource()
+        self.resource_id = resource['id']
         self.action = LocalCKAN().action
 
     @classmethod
-    def teardown_method(self):
-        """Method is called at class level after EACH test methods of the class are called.
-        Close any state specific to the execution of the given class methods.
+    def teardown_class(self):
+        """Method is called at class level after ALL test methods of the class are called.
+        Remove any state specific to the execution of the given class.
         """
         if plugins.plugin_loaded('xloader'):
             plugins.unload('xloader')
@@ -70,6 +72,8 @@ class TestDatastoreValidation(CanadaTestBase):
 
         if not plugins.plugin_loaded('validation'):
             plugins.load('validation')
+
+        super(TestDatastoreValidation, self).teardown_class()
 
     def _setup_resource_upload(self, filename):
         csv_filepath = get_sample_filepath(filename)
@@ -88,6 +92,37 @@ class TestDatastoreValidation(CanadaTestBase):
             fake_stream = io.BufferedReader(io.BytesIO(file_data))
 
         return resource, fake_stream
+
+    def test_max_column_length(self):
+        """
+        Column length max is the pSQL 63 bytes max
+        """
+        with pytest.raises(ValidationError) as ve:
+            self.action.datastore_create(
+                resource_id=self.resource_id,
+                force=True,
+                records=[],
+                fields=[{'id': 'thisfieldissooooooooolonnggggggthisfieldissooooooooolonnggggggthisfieldissooooooooolonngggggg', 'type': 'text'},])
+        err = ve.value.error_dict
+        assert err['fields'] == ['Column heading "thisfieldissooooooooolonnggggggthisfieldissooooooooolonnggggggthisfieldissooooooooolonngggggg" exceeds limit of 63 characters.']
+
+    def test_duplicate_column_names(self):
+        """
+        Duplicate column names is not allowed and should show
+        them in the error message
+        """
+        with pytest.raises(ValidationError) as ve:
+            self.action.datastore_create(
+                resource_id=self.resource_id,
+                force=True,
+                records=[],
+                fields=[{'id': 'this_is_a_field', 'type': 'text'},
+                        {'id': 'this_is_a_field', 'type': 'text'},
+                        {'id': 'this_is_a_field', 'type': 'text'},
+                        {'id': 'another_dupe', 'type': 'text'},
+                        {'id': 'another_dupe', 'type': 'text'}])
+        err = ve.value.error_dict
+        assert err['field'] == ['Duplicate column names are not supported: this_is_a_field, another_dupe']
 
     @change_config('ckanext.validation.run_on_create_async', False)
     @change_config('ckanext.validation.run_on_update_async', False)
@@ -211,11 +246,11 @@ class TestDatastoreValidation(CanadaTestBase):
 
 class TestDatastoreXloader(CanadaTestBase):
     @classmethod
-    def setup_method(self, method):
-        """Method is called at class level before EACH test methods of the class are called.
-        Setup any state specific to the execution of the given class methods.
+    def setup_class(self):
+        """Method is called at class level once the class is instatiated.
+        Setup any state specific to the execution of the given class.
         """
-        super(TestDatastoreXloader, self).setup_method(method)
+        super(TestDatastoreXloader, self).setup_class()
 
         if not plugins.plugin_loaded('xloader'):
             plugins.load('xloader')
@@ -229,15 +264,31 @@ class TestDatastoreXloader(CanadaTestBase):
         self.resource_id = resource['id']
 
     @classmethod
-    def teardown_method(self):
-        """Method is called at class level after EACH test methods of the class are called.
-        Close any state specific to the execution of the given class methods.
+    def teardown_class(self):
+        """Method is called at class level after ALL test methods of the class are called.
+        Remove any state specific to the execution of the given class.
         """
         if plugins.plugin_loaded('xloader'):
             plugins.unload('xloader')
 
         if not plugins.plugin_loaded('validation'):
             plugins.load('validation')
+
+        super(TestDatastoreXloader, self).teardown_class()
+
+    @classmethod
+    def teardown_method(self, method):
+        """Method is called at class level after EACH test methods of the class are called.
+        Remove any state specific to the execution of the given class methods.
+        """
+        super(TestDatastoreXloader, self).teardown_method(method)
+
+        try:
+            self.action.datastore_delete(
+                resource_id=self.resource_id,
+                force=True)
+        except Exception:
+            pass
 
     def _get_ds_records(self, exclude_field_schemas=True):
         result = self.action.datastore_search(resource_id=self.resource_id)

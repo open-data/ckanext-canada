@@ -1,0 +1,1 @@
+Added capability to add and override strings in the CKAN i18n API.

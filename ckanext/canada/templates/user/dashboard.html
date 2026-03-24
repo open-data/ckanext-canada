@@ -15,11 +15,17 @@
 
 {% block breadcrumb_content %}
   {{ super() }}
-  <li class="active">{% link_for _('My Activity'), named_route='activity.dashboard' %}</li>
+  {% if h.plugin_loaded('activity') %}
+    <li class="active">{% link_for _('My Activity'), named_route='activity.dashboard' %}</li>
+  {% else %}
+    <li class="active">{% link_for _('My Datasets'), named_route='dashboard.datasets' %}</li>
+  {% endif %}
 {% endblock %}
 
 {% block content_primary_nav %}
-  {{ h.build_nav_icon('activity.dashboard', _('My Activity'), icon='clock') }}
+  {% if h.plugin_loaded('activity') %}
+    {{ h.build_nav_icon('activity.dashboard', _('My Activity'), icon='clock') }}
+  {% endif %}
   {{ h.build_nav_icon('dashboard.datasets', _('My Datasets'), icon='sitemap') }}
 {% endblock %}
 

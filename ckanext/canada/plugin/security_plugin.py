@@ -7,7 +7,6 @@ import string
 from flask import has_request_context
 
 import ckan.plugins as p
-from ckan.plugins.core import plugin_loaded
 from ckan.config.middleware.flask_app import csrf
 
 from ckanext.datatablesview.blueprint import datatablesview
@@ -39,8 +38,10 @@ class CanadaSecurityPlugin(CkanSecurityPlugin):
         # Enable auth settings
         config['ckan.auth.user_delete_groups'] = True
         config['ckan.auth.user_delete_organizations'] = True
-        config['ckan.auth.create_user_via_web'] = plugin_loaded(
-            'canada_internal')  # /user/register view only on registry
+        # NOTE: user register page for Registry is controlled by"
+        #           - IP Intranet list
+        #           - NGINX redirects
+        config['ckan.auth.create_user_via_web'] = True
         # Set auth settings
         config['ckan.auth.roles_that_cascade_to_sub_groups'] = ['admin']
 
@@ -85,7 +86,8 @@ class CanadaSecurityPlugin(CkanSecurityPlugin):
 
     # IMiddleware
     def make_middleware(self, app: CKANApp, config: 'CKANConfig') -> CKANApp:
-        return CSPNonceMiddleware(app, config)
+        return CSPNonceMiddleware(
+            app, config, getattr(app, 'original_flask_app', None))
 
     # IAuthenticator
     def abort(self, status_code: int, detail: str,
@@ -111,7 +113,9 @@ class CanadaSecurityPlugin(CkanSecurityPlugin):
 
 
 class CSPNonceMiddleware(object):
-    def __init__(self, app: Any, config: 'CKANConfig'):
+    def __init__(self, app: Any, config: 'CKANConfig',
+                 flask_app: Optional[Any] = None):
+        self.original_flask_app = flask_app or app
         self.config = config
         self.app = app
 

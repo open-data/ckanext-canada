@@ -1,7 +1,7 @@
 {% ckan_extends %}
 
 {% block primary_content %}
-  {% if g.is_registry %}
+  {% if h.is_registry_domain() %}
     <div class="mrgn-bttm-lg">
       <h2>{{- _('Welcome to the Open Government Registry') -}}</h2>
       <p>
@@ -36,7 +36,7 @@
 {% endblock %}
 
 {% block secondary_content %}
-  {% if g.is_registry %}
+  {% if h.is_registry_domain() %}
     {% set reset_link = h.url_for('user.request_reset') %}
     {% set name_reset_link = h.url_for('canada.recover_username') %}
     <div class="panel panel-info">

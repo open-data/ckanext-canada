@@ -1,0 +1,1 @@
+New CLI command `export-pd-reporting-info` exports data publisher info for Proactive Disclosures into a CSV.

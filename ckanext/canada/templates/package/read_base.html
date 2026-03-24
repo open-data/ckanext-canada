@@ -10,7 +10,7 @@
 
 {%- block subtitle -%}
   {% set title, mt = h.get_translated_t(pkg, 'title') %}
-  {% if g.is_registry and pkg.type in h.recombinant_get_types() %}
+  {% if h.is_registry_domain() and pkg.type in h.recombinant_get_types() %}
     {{ (title or pkg.name) ~ ' - ' ~ h.split_piped_bilingual_field(pkg.organization.title, h.lang()) | trim }}
   {% else %}
     {{ (title or pkg.name) | trim }}
@@ -18,13 +18,15 @@
 {%- endblock -%}
 
 {% block content_primary_nav %}
-  {% if g.is_registry %}
+  {% if h.is_registry_domain() %}
     {% set dataset_label = _('Dataset') %}
     {% if pkg.type in h.recombinant_get_types() %}
       {% set dataset_label = _(pkg.title) ~ ' - ' ~ h.split_piped_bilingual_field(pkg.organization.title, h.lang()) %}
     {% endif %}
     {{ h.build_nav_icon(pkg.type + '.read', dataset_label, id=pkg.name, icon='sitemap') }}
-    {{ h.build_nav_icon('activity.package_activity', _('Activity Stream'), id=pkg.name, icon='clock') }}
+    {% if h.plugin_loaded('activity') %}
+      {{ h.build_nav_icon('activity.package_activity', _('Activity Stream'), id=pkg.name, icon='clock') }}
+    {% endif %}
   {% endif %}
 {% endblock %}
 
@@ -55,13 +57,7 @@
             {% if pkg[field.field_name] is mapping %}
               {% set field_value = h.scheming_language_text(field_value) %}
             {% endif %}
-            {% if field.field_name == 'maintainer_email' and not field_value and not pkg.get('maintainer_contact_form') %}
-              {# FIXME: sunset the default_open_email_address eventually... #}
-              <li class="list-group-item resource-tags">
-                <strong>{{ field_title }}{{ _(':') }}</strong>
-                {{ h.mail_to(email_address=h.default_open_email_address(xml_encode=False), name=h.default_open_email_address(xml_encode=False)) }}
-              </li>
-            {% elif field_value %}
+            {% if field.field_name != 'maintainer_email' and field_value %}
               <li class="list-group-item resource-tags">
                 <strong>{{ field_title }}{{ _(':') }}</strong>
                 {% snippet 'scheming/snippets/display_field.html', field=field, data=pkg, entity_type='dataset', object_type=pkg.type %}
@@ -187,21 +183,21 @@
         <ul class="list-group">
           {# FIXME: Use scheming subfields to validate and enforce this schema. #}
           {% set dis_fields = (
-            {'field_name': 'organization_name', 'label': 'Organization Name'},
-            {'field_name': 'phone', 'label': 'Telephone Number'},
-            {'field_name': 'electronic_mail_address', 'label': 'Email', 'display_snippet': 'email.html'},
-            {'field_name': 'contact_form', 'label': 'Contact Form', 'display_snippet': 'link.html'},
-            {'field_name': 'address', 'label': 'Address'},
-            {'field_name': 'city', 'label': 'City'},
-            {'field_name': 'country', 'label': 'Country'},
-            {'field_name': 'postal_code', 'label': 'Postal Code'},
-            {'field_name': 'administrative_area', 'label': 'Administrative Area'},
-            {'field_name': 'role', 'label': 'Role'}
+            {'field_name': 'organization_name', 'label': _('Organization Name:')},
+            {'field_name': 'phone', 'label': _('Telephone Number:')},
+            {'field_name': 'electronic_mail_address', 'label': _('Email:'), 'display_snippet': 'email.html'},
+            {'field_name': 'contact_form', 'label': _('Contact Form:'), 'display_snippet': 'link.html'},
+            {'field_name': 'address', 'label': _('Address:')},
+            {'field_name': 'city', 'label': _('City:')},
+            {'field_name': 'country', 'label': _('Country:')},
+            {'field_name': 'postal_code', 'label': _('Postal Code:')},
+            {'field_name': 'administrative_area', 'label': _('Administrative Area:')},
+            {'field_name': 'role', 'label': _('Role:')}
           )
           %}
           {% for field in dis_fields %}
             {% if field.field_name in dist %}
-              <li class="list-group-item"><b>{{ _(field.label) }}{{ _(':') }}</b><br />
+              <li class="list-group-item"><b>{{ _(field.label) }}</b><br />
                 {% snippet 'scheming/snippets/display_field.html', field=field, data=dist,  entitiy_type='dataset', object_type=pkg.type %}
               </li>
             {% endif %}

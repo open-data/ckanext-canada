@@ -15,11 +15,11 @@ class SafeLineLoader(SafeLoader):
         if node.value in self.line_numbers:
             # type_ignore_reason: incomplete typing
             self.line_numbers[node.value].append(
-                node.start_mark.line + 1)  # type: ignore
+                node.start_mark.line + 1)
         else:
             # type_ignore_reason: incomplete typing
             self.line_numbers[node.value] = [
-                node.start_mark.line + 1]  # type: ignore
+                node.start_mark.line + 1]
         return super(SafeLineLoader, self).construct_scalar(node)
 
     def get_single_data(self) -> Any:

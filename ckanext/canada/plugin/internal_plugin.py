@@ -100,12 +100,9 @@ class CanadaInternalPlugin(p.SingletonPlugin):
 
     # IActions
     def get_actions(self) -> Dict[str, Union[Action, ChainedAction]]:
-        return dict(
+        actions = dict(
             {
                 k: logic.disabled_anon_action for k in [
-                    'package_activity_list',
-                    'recently_changed_packages_activity_list',
-                    'dashboard_activity_list',
                     'changed_packages_activity_timestamp_since',
                 ]
             },
@@ -115,6 +112,16 @@ class CanadaInternalPlugin(p.SingletonPlugin):
             portal_sync_info=logic.portal_sync_info,
             list_out_of_sync_packages=logic.list_out_of_sync_packages,
         )
+        try:
+            p.toolkit.get_action('user_activity_list')({'ignore_auth': True}, {})
+            actions.update({k: logic.disabled_anon_action for k in [
+                'package_activity_list',
+                'recently_changed_packages_activity_list',
+                'dashboard_activity_list',]})
+        except (p.toolkit.ObjectNotFound, KeyError):
+            # the activity plugin is not loaded, ignore
+            pass
+        return actions
 
     # IAuthFunctions
     def get_auth_functions(self) -> Dict[str, Union[AuthFunction,

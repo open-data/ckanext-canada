@@ -2,9 +2,10 @@
 from ckanext.canada.tests import CanadaTestBase
 from ckan.tests.factories import Sysadmin
 from ckan.plugins.toolkit import Invalid, config, NotAuthorized
-from ckan import model
 
 import pytest
+from ckan import model
+from ckan.model.types import make_uuid
 from ckanext.canada.tests.factories import (
     CanadaOrganization as Organization,
     CanadaResource as Resource,
@@ -65,11 +66,11 @@ class TestCanadaTags(object):
 
 class TestNAVLSchema(CanadaTestBase):
     @classmethod
-    def setup_method(self, method):
-        """Method is called at class level before EACH test methods of the class are called.
-        Setup any state specific to the execution of the given class methods.
+    def setup_class(self):
+        """Method is called at class level once the class is instatiated.
+        Setup any state specific to the execution of the given class.
         """
-        super(TestNAVLSchema, self).setup_method(method)
+        super(TestNAVLSchema, self).setup_class()
 
         self.sysadmin_user = Sysadmin()
         self.normal_user = User()
@@ -120,9 +121,8 @@ class TestNAVLSchema(CanadaTestBase):
 
     def test_basic_package(self):
         with pytest.raises(ValidationError) as ve:
-            self.normal_action.package_create(
-                name='12345678-9abc-def0-1234-56789abcdef0',
-                **self.incomplete_pkg)
+            self.normal_action.package_create(name=make_uuid(), **self.incomplete_pkg)
+        model.Session.rollback()
         err = ve.value.error_dict
         expected = {
             'notes_translated-en': ['Missing value'],
@@ -139,9 +139,7 @@ class TestNAVLSchema(CanadaTestBase):
         for k in set(err) | set(expected):
             assert k in err
             assert err[k] == expected[k]
-
-        resp = self.normal_action.package_create(
-            name='12345678-9abc-def0-1234-56789abcdef0', **self.complete_pkg)
+        resp = self.normal_action.package_create(name=make_uuid(), **self.complete_pkg)
         assert resp['title_translated']['fr'] == 'Un novel par Tolstoy'
 
         resp = self.action.package_show(id=resp['id'])
@@ -152,6 +150,7 @@ class TestNAVLSchema(CanadaTestBase):
             self.normal_action.package_create(**dict(
                 self.complete_pkg,
                 keywords={'en': ['test'], 'fr': ['not  ok']}))
+        model.Session.rollback()
         err = ve.value.error_dict
         assert 'keywords' in err
         assert 'may not contain consecutive spaces' in err['keywords'][0]
@@ -160,6 +159,7 @@ class TestNAVLSchema(CanadaTestBase):
             self.normal_action.package_create(**dict(
                 self.complete_pkg,
                 keywords={'en': ['test'], 'fr': ['one too short', 'q']}))
+        model.Session.rollback()
         err = ve.value.error_dict
         assert 'keywords' in err
         assert 'length is less than minimum' in err['keywords'][0]
@@ -168,6 +168,7 @@ class TestNAVLSchema(CanadaTestBase):
             self.normal_action.package_create(**dict(
                 self.complete_pkg,
                 keywords={'en': ['this is much too long' * 50], 'fr': ['test']}))
+        model.Session.rollback()
         err = ve.value.error_dict
         assert 'keywords' in err
         assert 'length is more than maximum' in err['keywords'][0]
@@ -178,18 +179,19 @@ class TestNAVLSchema(CanadaTestBase):
     def test_custom_dataset_id(self):
         my_uuid = '3056920043b943f1a1fb9e7974cbb997'
         norm_uuid = '30569200-43b9-43f1-a1fb-9e7974cbb997'
-        self.normal_action.package_create(
-            name='02345678-9abc-def0-1234-56789abcdef0', id=my_uuid, **self.complete_pkg)
+        pname = make_uuid()
+        self.normal_action.package_create(name=pname, id=my_uuid, **self.complete_pkg)
 
-        resp = self.action.package_show(id='02345678-9abc-def0-1234-56789abcdef0')
+        resp = self.action.package_show(id=pname)
         assert resp['id'] == norm_uuid
-        assert resp['name'] == '02345678-9abc-def0-1234-56789abcdef0'
+        assert resp['name'] == pname
 
         with pytest.raises(ValidationError) as ve:
             self.sysadmin_action.package_create(
-                name='12345678-9abc-def0-1234-56789abcdef0',
+                name=make_uuid(),
                 id=my_uuid,
                 **self.complete_pkg)
+        model.Session.rollback()
         err = ve.value.error_dict
         assert 'id' in err
         assert 'Dataset id already exists' in err['id'][0]
@@ -198,6 +200,7 @@ class TestNAVLSchema(CanadaTestBase):
             self.sysadmin_action.package_create(
                 id='my-custom-id',
                 **self.complete_pkg)
+        model.Session.rollback()
         err = ve.value.error_dict
         assert 'id' in err
         assert 'Badly formed hexadecimal UUID string' in err['id'][0]
@@ -208,6 +211,7 @@ class TestNAVLSchema(CanadaTestBase):
 
         with pytest.raises(ValidationError) as ve:
             self.normal_action.package_create(**raw_pkg)
+        model.Session.rollback()
         err = ve.value.error_dict
         expected = {
             'title_translated-fr': ['Missing value'],
@@ -236,6 +240,7 @@ class TestNAVLSchema(CanadaTestBase):
                 resources=[dict(
                     self.complete_pkg['resources'][0],
                     size='10M',)]))
+        model.Session.rollback()
         err = ve.value.error_dict
         assert 'resources' in err
         assert 'size' in err['resources'][0]
@@ -267,6 +272,7 @@ class TestNAVLSchema(CanadaTestBase):
 
         with pytest.raises(ValidationError) as ve:
             self.normal_action.package_create(**release_pkg)
+        model.Session.rollback()
 
         err = ve.value.error_dict
         assert 'portal_release_date' in err
@@ -289,6 +295,7 @@ class TestNAVLSchema(CanadaTestBase):
                                        '[-141.001333, 41.736231]]]}')
         with pytest.raises(ValidationError) as ve:
             self.normal_action.package_create(**bad_spatial_pkg)
+        model.Session.rollback()
         err = ve.value.error_dict
         assert 'spatial' in err
         assert 'Invalid GeoJSON' in err['spatial'][0]
@@ -296,6 +303,7 @@ class TestNAVLSchema(CanadaTestBase):
         bad_spatial_pkg2 = dict(self.complete_pkg, spatial='forty')
         with pytest.raises(ValidationError) as ve:
             self.normal_action.package_create(**bad_spatial_pkg2)
+        model.Session.rollback()
         err = ve.value.error_dict
         assert 'spatial' in err
         assert 'Invalid GeoJSON' in err['spatial'][0]
@@ -303,6 +311,7 @@ class TestNAVLSchema(CanadaTestBase):
         bad_spatial_pkg3 = dict(self.complete_pkg, spatial='{"type": "Polygon", "coordinates": ''}')
         with pytest.raises(ValidationError) as ve:
             self.normal_action.package_create(**bad_spatial_pkg3)
+        model.Session.rollback()
         err = ve.value.error_dict
         assert 'spatial' in err
         assert 'Invalid GeoJSON' in err['spatial'][0]
@@ -310,6 +319,7 @@ class TestNAVLSchema(CanadaTestBase):
         bad_spatial_pkg4 = dict(self.complete_pkg, spatial='{"type": "Polygon", "coordinates": [1,2,3,4]}')
         with pytest.raises(ValidationError) as ve:
             self.normal_action.package_create(**bad_spatial_pkg4)
+        model.Session.rollback()
         err = ve.value.error_dict
         assert 'spatial' in err
         assert 'Invalid GeoJSON' in err['spatial'][0]
@@ -487,6 +497,7 @@ class TestNAVLSchema(CanadaTestBase):
         with pytest.raises(ValidationError) as ve:
             self.sysadmin_action.api_token_create(user=self.normal_user['name'],
                                                   name='eval("console.log("THIS IS NOT ALLOWED")")')
+        model.Session.rollback()
         err = ve.value.error_dict
         assert 'name' in err
         assert err['name'] == ['Invalid name for an API Token. API Token names can only contain alphanumeric characters, hyphens, and underscores.']
@@ -497,11 +508,11 @@ class TestNAVLSchema(CanadaTestBase):
 
 class TestSysadminUpdate(CanadaTestBase):
     @classmethod
-    def setup_method(self, method):
-        """Method is called at class level before EACH test methods of the class are called.
-        Setup any state specific to the execution of the given class methods.
+    def setup_class(self):
+        """Method is called at class level once the class is instatiated.
+        Setup any state specific to the execution of the given class.
         """
-        super(TestSysadminUpdate, self).setup_method(method)
+        super(TestSysadminUpdate, self).setup_class()
 
         self.sysadmin_user = Sysadmin()
         self.normal_user = User()
@@ -529,7 +540,7 @@ class TestSysadminUpdate(CanadaTestBase):
         """non sysadmins shoud not be able to update"""
         with pytest.raises(NotAuthorized) as err:
             self.normal_action.user_patch(id=self.sysadmin_user.get('id'), sysadmin=False)
-
+        model.Session.rollback()
         assert err
         assert 'not authorized to edit user' in str(err)
 
@@ -537,7 +548,7 @@ class TestSysadminUpdate(CanadaTestBase):
         """cannot change your own sysadmin privs"""
         with pytest.raises(ValidationError) as err:
             self.sysadmin_action.user_patch(id=self.sysadmin_user.get('id'), sysadmin=False)
-
+        model.Session.rollback()
         err = err.value.error_dict
         assert 'sysadmin' in err
         assert 'Cannot modify your own sysadmin privileges' in err['sysadmin'][0]
@@ -547,7 +558,7 @@ class TestSysadminUpdate(CanadaTestBase):
         site_id = config.get('ckan.site_id')
         with pytest.raises(ValidationError) as err:
             self.sysadmin_action.user_patch(id=site_id, sysadmin=False)
-
+        model.Session.rollback()
         err = err.value.error_dict
         assert 'sysadmin' in err
         assert 'Cannot modify sysadmin privileges for system user' in err['sysadmin'][0]

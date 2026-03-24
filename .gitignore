@@ -21,3 +21,13 @@ ckanext/canada/download/*.jsonl
 **.mo
 *.xcf
 node_modules/**
+
+junit
+htmlcov/**
+.coverage
+.cache
+.bash_history
+.gitconfig
+.npm
+.test_durations
+.mypy_cache

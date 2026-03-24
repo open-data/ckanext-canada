@@ -24,11 +24,11 @@ from ckanext.recombinant.errors import BadExcelData
 @pytest.mark.usefixtures('with_request_context')
 class TestXlsUpload(CanadaTestBase):
     @classmethod
-    def setup_method(self, method):
-        """Method is called at class level before EACH test methods of the class are called.
-        Setup any state specific to the execution of the given class methods.
+    def setup_class(self):
+        """Method is called at class level once the class is instatiated.
+        Setup any state specific to the execution of the given class.
         """
-        super(TestXlsUpload, self).setup_method(method)
+        super(TestXlsUpload, self).setup_class()
 
         self.editor = User()
         self.extra_environ_tester = {'Authorization': self.editor['token']}
@@ -44,6 +44,20 @@ class TestXlsUpload(CanadaTestBase):
         self.org = org
         self.pkg_id = rval['id']
         self.resource_id = rval['resources'][0]['id']
+
+    @classmethod
+    def teardown_method(self, method):
+        """Method is called at class level after EACH test methods of the class are called.
+        Remove any state specific to the execution of the given class methods.
+        """
+        super(TestXlsUpload, self).teardown_method(method)
+
+        try:
+            self.lc.action.datastore_records_delete(resource_id=self.resource_id,
+                                                    force=True,
+                                                    filters={})
+        except Exception:
+            pass
 
     def test_upload_empty(self):
         current_user = model.User.get(self.editor['name'])

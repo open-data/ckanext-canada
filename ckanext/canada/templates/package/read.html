@@ -1,7 +1,6 @@
 {% ckan_extends %}
 
 {% set client_lang = h.lang() %}
-
 {% set title, machine_translated = h.get_translated_t(pkg_dict, 'title') %}
 
 {%- block subtitle -%}
@@ -25,7 +24,7 @@
   {% endif %}
   <div class="module">
     {% block internal_actions %}
-      {% if g.is_registry %}
+      {% if h.is_registry_domain() %}
         {% set max_resource_count = h.max_resources_per_dataset() %}
         {% if max_resource_count and pkg.resources|length >= max_resource_count %}
           <div class="row">
@@ -168,7 +167,43 @@
     </section>
     {% block package_resources %}
       {% if pkg_dict.type != 'prop' %}
-        {{ super() }}
+        {% set PAGER = 10 %}
+        {% set page = request.args.get('res_page', 1) | int %}
+        {% set total = pkg.resources | length %}
+        {% set total_pages = (total // PAGER) + (1 if total % PAGER else 0) %}
+        {% set start = (page - 1) * PAGER %}
+        {% set end = start + PAGER %}
+        {% set paginated_resources = pkg.resources[start:end] %}
+        {% set resource_query = '&resource_query=' ~ g.resource_query if g.resource_query else '' %}
+
+        {% snippet "package/snippets/resources_list.html", pkg=pkg, resources=paginated_resources,
+          can_edit=h.check_access('package_update', {'id':pkg.id }), is_activity_archive=is_activity_archive %}
+
+        {% if total_pages > 1 %}
+        <nav aria-label="Resource pagination" class="dataset-resource-pager">
+          <ul class="pagination">
+            {% if page > 1 %}
+              <li><a href="?res_page={{ page - 1 }}{{- resource_query -}}#resources" rel="prev">{{ _('Previous') }}</a></li>
+            {% endif %}
+
+            {% for p in range(1, total_pages + 1) %}
+              {% if p == page %}
+                <li class="active">
+                  <span>{{ p }}</span>
+                </li>
+              {% else %}
+                <li>
+                  <a href="{{ h.url_for('dataset.read', id=pkg.name, res_page=p) }}{{- resource_query -}}#resources">{{ p }}</a>
+                </li>
+              {% endif %}
+            {% endfor %}
+
+            {% if page < total_pages %}
+              <li><a href="?res_page={{ page + 1 }}{{- resource_query -}}#resources" rel="next">{{ _('Next') }}</a></li>
+            {% endif %}
+          </ul>
+        </nav>
+        {% endif %}
       {% endif %}
     {% endblock %}
     {% block related_items %}
@@ -219,7 +254,7 @@
       {% endif %}
     {% endblock %}
     {% block more_like_this %}
-      {% if not g.is_registry %}
+      {% if not h.is_registry_domain() %}
         {% if h.adv_search_url() %}
           <section class="panel panel-primary">
             <header class="panel-heading">
@@ -231,13 +266,13 @@
       {% endif %}
     {% endblock %}
     {% block package_rate %}
-      {% if not g.is_registry %}
+      {% if not h.is_registry_domain() %}
         <a id="rate"></a>
         <div id="voting-wrapper" data-ajax-replace="/{{ h.lang() }}/vote?uuid={{ pkg_dict.id }}"></div>
       {% endif %}
     {% endblock %}
     {% block package_feedback %}
-      {% if not g.is_registry %}
+      {% if not h.is_registry_domain() and pkg_dict.maintainer_email %}
         <a id="feedback"></a>
         <section class="indent-large">
           <div id="feedback-wrapper" data-ajax-replace="/{{ h.lang() }}/feedback?uuid={{ pkg_dict.id }}"></div>
@@ -249,7 +284,7 @@
 
 {% block links %}
   {{ super() }}
-  {% if not g.is_registry %}
+  {% if not h.is_registry_domain() %}
     <script nonce="{{- h.get_inline_script_nonce() -}}">
     window.imConfigPath = "/invitation-manager/";
     </script>
@@ -259,15 +294,31 @@
 {% block scripts %}
   {% asset 'canada_public/more_like_this' %}
   {% asset 'canada_public/voting_fix' %}
-  {% if not g.is_registry %}
+  {% if not h.is_registry_domain() %}
     {% asset 'invitation_manager/js' %}
   {% endif %}
   {{ super() }}
+  <script nonce="{{- h.get_inline_script_nonce() -}}">
+    window.addEventListener('load', function(){
+      $(document).ready(function(){
+        const resourceQuery = {{- (g.resource_query or none) | tojson -}};
+        if( resourceQuery != null && resourceQuery.length > 0 ){
+          const regexMatch = new RegExp('(' + resourceQuery + ')', 'gi');
+          let resourceTitles = $('ul.resource-list').find('a.resource-heading').find('.resource-heading-text');
+          if( resourceTitles.length > 0 ){
+            $(resourceTitles).each(function(_index, _resourceTitle){
+              $(_resourceTitle).html($(_resourceTitle).text().trim().replace(regexMatch, '<mark class="highlight">$1</mark>'));
+            });
+          }
+        }
+      });
+    });
+  </script>
 {% endblock %}
 
 {% block custom_styles %}
   {{ super() }}
-  {% if not g.is_registry %}
+  {% if not h.is_registry_domain() %}
     {% asset 'invitation_manager/css' %}
   {% endif %}
 {% endblock %}

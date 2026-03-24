@@ -198,10 +198,10 @@ def get_end_date(name, position):
             '?parliament=all&caucusId=all&province=all&gender=all')
         all_mps_html = all_mps_page.read().decode('utf-8')
         all_mps_soup = BeautifulSoup(all_mps_html, 'html.parser')
-        all_mp_urls = all_mps_soup.find_all(class_='ce-mip-mp-tile')
+        all_mp_urls = all_mps_soup.find_all(class_='ce-mip-mp-tile-container')
 
     for m in all_mp_urls:
-        if m.find(class_='ce-mip-mp-name', text=name):
+        if m.find(class_='ce-mip-mp-tile-link', text=name):
             roles = get_parliamentary_position_roles(
                 'https://www.ourcommons.ca' + m['href'] + '/roles/xml')
             for r in roles:

@@ -1,7 +1,17 @@
 {% ckan_extends %}
 
+{% block resource_list_empty %}
+  {% if g.resource_query or none %}
+    <div class="text-center text-warning">
+      <p class="empty"><strong>{{ _('No resources found for "{}"').format(g.resource_query) }}</strong></p>
+    </div>
+  {% else %}
+    {{ super() }}
+  {% endif %}
+{% endblock %}
+
 {% block resource_list_title %}
-  <h2>{{ _('Data and Resources') }}
+  <h2 id="resources">{{ _('Data and Resources') }}
     {% set fgp_url = h.fgp_viewer_url(pkg) %}
     {% if fgp_url %}
       <div class="pull-right mrgn-bttm-md">
@@ -10,7 +20,7 @@
         </a>
       </div>
     {% endif %}
-    {% if g.is_registry and h.check_access('package_update', {'id': pkg.id}) %}
+    {% if h.is_registry_domain() and h.check_access('package_update', {'id': pkg.id}) %}
       <div class="pull-right mrgn-bttm-md {{ 'mrgn-lft-md' if fgp_url else '' }}">
         <a href="{{ h.url_for(pkg.type ~ '_resource.new', id=pkg.id) }}" class="btn btn-light btn-sm">
           <i class="fa fa-plus" aria-hidden="true"></i>&nbsp;{{ _('Add new resource') }}
@@ -18,4 +28,14 @@
       </div>
     {% endif %}
   </h2>
+  <div class="canada-resource-search-wrapper">
+    <form id="dataset-resource-search" class="dataset-resource-search mrgn-bttm-md mrgn-tp-md" method="get" action="#resources" data-module="select-switch" role="search">
+      <input type="text" class="field form-control" id="resource_query" autocomplete="off" name="resource_query" value="{{ g.resource_query }}" placeholder="{{ _('Search resources...') }}">
+      <span class="input-group-btn">
+        <button class="btn btn-primary btn-small" type="submit">
+          <i class="fa fa-search" aria-hidden="true"></i><span class="wb-inv">{{ _('Search') }}</span>
+        </button>
+      </span>
+    </form>
+  </div>
 {% endblock %}

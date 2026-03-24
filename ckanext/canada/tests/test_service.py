@@ -1,30 +1,22 @@
 # -*- coding: UTF-8 -*-
-import sys
-import os
-from importlib import util
-
 from ckanext.canada.tests import CanadaTestBase
 from ckanapi import LocalCKAN, ValidationError
 
 import pytest
+from ckan import model
 from ckanext.canada.tests.factories import CanadaOrganization as Organization
+from ckanext.canada.tests.filters import filter_service_std
 
 from ckanext.recombinant.tables import get_chromo
-
-filter_service_std_path = os.path.join(os.path.dirname(str(__file__)), '../../../bin/filter/filter_service_std.py')
-spec = util.spec_from_file_location("canada.bin.filters.service_std", filter_service_std_path)
-filter_service_std = util.module_from_spec(spec)
-sys.modules["canada.bin.filters.service_std"] = filter_service_std
-spec.loader.exec_module(filter_service_std)
 
 
 class TestService(CanadaTestBase):
     @classmethod
-    def setup_method(self, method):
-        """Method is called at class level before EACH test methods of the class are called.
-        Setup any state specific to the execution of the given class methods.
+    def setup_class(self):
+        """Method is called at class level once the class is instatiated.
+        Setup any state specific to the execution of the given class.
         """
-        super(TestService, self).setup_method(method)
+        super(TestService, self).setup_class()
 
         org = Organization()
         self.lc = LocalCKAN()
@@ -54,6 +46,7 @@ class TestService(CanadaTestBase):
             self.lc.action.datastore_upsert(
                 resource_id=self.resource_id,
                 records=[record])
+        model.Session.rollback()
         err = ve.value.error_dict
         assert 'records' in err
         assert 'service_id' in err['records'][0]
@@ -75,6 +68,7 @@ class TestService(CanadaTestBase):
             self.lc.action.datastore_records_delete(
                 resource_id=self.resource_id,
                 filters={})
+        model.Session.rollback()
         err = ve.value.error_dict
         assert 'constraint_info' in err
         assert err['constraint_info']['ref_keys'] == 'fiscal_yr, service_id'
@@ -87,6 +81,7 @@ class TestService(CanadaTestBase):
             self.lc.action.datastore_upsert(
                 resource_id=self.resource_id,
                 records=[{}])
+        model.Session.rollback()
         err = ve.value.error_dict
         assert 'key' in err
         assert 'fiscal_yr, service_id' in err['key'][0]
@@ -124,6 +119,7 @@ class TestService(CanadaTestBase):
             self.lc.action.datastore_upsert(
                 resource_id=self.resource_id,
                 records=[record])
+        model.Session.rollback()
         err = ve.value.error_dict
         assert 'records' in err
         for required_field in expected_required_fields:
@@ -143,6 +139,7 @@ class TestService(CanadaTestBase):
             self.lc.action.datastore_upsert(
                 resource_id=self.resource_id,
                 records=[record])
+        model.Session.rollback()
         err = ve.value.error_dict
         assert 'records' in err
         assert 'automated_decision_system_description_en' in err['records'][0]
@@ -162,6 +159,7 @@ class TestService(CanadaTestBase):
                 self.lc.action.datastore_upsert(
                     resource_id=self.resource_id,
                     records=[record])
+            model.Session.rollback()
             err = ve.value.error_dict
             assert 'records' in err
             assert 'os_comments_client_interaction_en' in err['records'][0]
@@ -179,6 +177,7 @@ class TestService(CanadaTestBase):
             self.lc.action.datastore_upsert(
                 resource_id=self.resource_id,
                 records=[record])
+        model.Session.rollback()
         err = ve.value.error_dict
         assert 'records' in err
         assert 'special_remarks_en' in err['records'][0]
@@ -209,6 +208,7 @@ class TestService(CanadaTestBase):
             self.lc.action.datastore_upsert(
                 resource_id=self.resource_id,
                 records=[record])
+        model.Session.rollback()
         err = ve.value.error_dict
         assert 'records' in err
         assert 'automated_decision_system_description_fr' in err['records'][0]
@@ -232,6 +232,7 @@ class TestService(CanadaTestBase):
             self.lc.action.datastore_upsert(
                 resource_id=self.resource_id,
                 records=[record])
+        model.Session.rollback()
         err = ve.value.error_dict
         assert 'records' in err
         assert 'automated_decision_system_description_en' in err['records'][0]
@@ -269,6 +270,7 @@ class TestService(CanadaTestBase):
             self.lc.action.datastore_upsert(
                 resource_id=self.resource_id,
                 records=[record])
+        model.Session.rollback()
         err = ve.value.error_dict
         assert 'records' in err
         for expected_choice_field in expected_choice_fields:
@@ -299,6 +301,7 @@ class TestService(CanadaTestBase):
             self.lc.action.datastore_upsert(
                 resource_id=self.resource_id,
                 records=[record])
+        model.Session.rollback()
         err = ve.value.error_dict
         assert 'records' in err
         for maxchar_field in expect_maxchar_fields:
@@ -325,6 +328,7 @@ class TestService(CanadaTestBase):
             self.lc.action.datastore_upsert(
                 resource_id=self.resource_id,
                 records=[record])
+        model.Session.rollback()
         err = ve.value.error_dict
         assert 'records' in err
         for int_na_nd_field in expected_int_na_nd_fields:
@@ -337,6 +341,7 @@ class TestService(CanadaTestBase):
             self.lc.action.datastore_upsert(
                 resource_id=self.resource_id,
                 records=[record])
+        model.Session.rollback()
         err = ve.value.error_dict
         assert 'records' in err
         for int_na_nd_field in expected_int_na_nd_fields:
@@ -345,11 +350,11 @@ class TestService(CanadaTestBase):
 
 class TestStdService(CanadaTestBase):
     @classmethod
-    def setup_method(self, method):
-        """Method is called at class level before EACH test methods of the class are called.
-        Setup any state specific to the execution of the given class methods.
+    def setup_class(self):
+        """Method is called at class level once the class is instatiated.
+        Setup any state specific to the execution of the given class.
         """
-        super(TestStdService, self).setup_method(method)
+        super(TestStdService, self).setup_class()
 
         org = Organization()
         self.lc = LocalCKAN()
@@ -387,6 +392,7 @@ class TestStdService(CanadaTestBase):
             self.lc.action.datastore_upsert(
                 resource_id=self.resource_id,
                 records=[record])
+        model.Session.rollback()
         err = ve.value.error_dict
         assert 'records' in err
         assert 'service_id' in err['records'][0]
@@ -399,10 +405,12 @@ class TestStdService(CanadaTestBase):
         Trying to create a Standard record referencing a nonexistent Service record should raise an exception
         """
         record = get_chromo('service-std')['examples']['record'].copy()
+        record['service_id'] = '1002_does_not_exist'
         with pytest.raises(ValidationError) as ve:
             self.lc.action.datastore_upsert(
                 resource_id=self.resource_id,
                 records=[record])
+        model.Session.rollback()
         err = ve.value.error_dict
         assert 'constraint_info' in err
         assert err['constraint_info']['ref_keys'] == 'fiscal_yr, service_id'
@@ -415,6 +423,7 @@ class TestStdService(CanadaTestBase):
             self.lc.action.datastore_upsert(
                 resource_id=self.resource_id,
                 records=[{}])
+        model.Session.rollback()
         err = ve.value.error_dict
         assert 'key' in err
         assert 'fiscal_yr, service_id, service_standard_id' in err['key'][0]
@@ -443,6 +452,7 @@ class TestStdService(CanadaTestBase):
             self.lc.action.datastore_upsert(
                 resource_id=self.resource_id,
                 records=[record])
+        model.Session.rollback()
         err = ve.value.error_dict
         assert 'records' in err
         for required_field in expected_required_fields:
@@ -468,6 +478,7 @@ class TestStdService(CanadaTestBase):
             self.lc.action.datastore_upsert(
                 resource_id=self.resource_id,
                 records=[record])
+        model.Session.rollback()
         err = ve.value.error_dict
         assert 'records' in err
         assert 'channel_comments_fr' in err['records'][0]
@@ -487,6 +498,7 @@ class TestStdService(CanadaTestBase):
             self.lc.action.datastore_upsert(
                 resource_id=self.resource_id,
                 records=[record])
+        model.Session.rollback()
         err = ve.value.error_dict
         assert 'records' in err
         assert 'channel_comments_en' in err['records'][0]
@@ -516,6 +528,7 @@ class TestStdService(CanadaTestBase):
             self.lc.action.datastore_upsert(
                 resource_id=self.resource_id,
                 records=[record])
+        model.Session.rollback()
         err = ve.value.error_dict
         assert 'records' in err
         for expected_choice_field in expected_choice_fields:
@@ -547,6 +560,7 @@ class TestStdService(CanadaTestBase):
             self.lc.action.datastore_upsert(
                 resource_id=self.resource_id,
                 records=[record])
+        model.Session.rollback()
         err = ve.value.error_dict
         assert 'records' in err
         for maxchar_field in expect_maxchar_fields:
@@ -567,6 +581,7 @@ class TestStdService(CanadaTestBase):
             self.lc.action.datastore_upsert(
                 resource_id=self.resource_id,
                 records=[record])
+        model.Session.rollback()
         err = ve.value.error_dict
         assert 'records' in err
         assert 'target' in err['records'][0]
@@ -577,6 +592,7 @@ class TestStdService(CanadaTestBase):
             self.lc.action.datastore_upsert(
                 resource_id=self.resource_id,
                 records=[record])
+        model.Session.rollback()
         err = ve.value.error_dict
         assert 'records' in err
         assert 'target' in err['records'][0]
@@ -592,6 +608,7 @@ class TestStdService(CanadaTestBase):
             self.lc.action.datastore_upsert(
                 resource_id=self.resource_id,
                 records=[record])
+        model.Session.rollback()
         err = ve.value.error_dict
         assert 'records' in err
         assert 'volume_meeting_target' in err['records'][0]
