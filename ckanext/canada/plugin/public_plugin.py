@@ -286,6 +286,7 @@ class LogExtraMiddleware(object):
         except (TypeError, RuntimeError, AttributeError):
             pass
         g.ERROR_SUPPORT_ID = supportID
+        raise e
 
     def __call__(self, environ: Any, start_response: Any) -> Any:
         def _start_response(status: str,
