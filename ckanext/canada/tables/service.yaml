@@ -1924,6 +1924,7 @@ resources:
       fr: Texte libre
     occurrence: Single
     datastore_type: text
+    choices_reference_table: ref_service_service_ids
 
   # DEP 2-3
   - datastore_id: service_name_en

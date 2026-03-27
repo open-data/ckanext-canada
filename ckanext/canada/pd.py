@@ -11,6 +11,7 @@ from pysolr import Solr
 from babel.numbers import format_currency, format_decimal
 
 from ckanapi import LocalCKAN, NotFound
+from ckanext.datastore.backend.postgres import get_write_engine
 
 from ckanext.recombinant.tables import (
     get_chromo,
@@ -624,3 +625,31 @@ def compare_output(prev_solrrec: Dict[str, Any],
                     sum_to_field(out, sc, sum_change)
 
     return out
+
+
+@pd.command()
+def load_ref_data():
+    """
+    Loads CSV data into DataStore reference tables.
+    """
+    service_id_data = os.path.join(
+        os.path.split(__file__)[0],
+        'tables/references/data/ref_service_service_ids.csv')
+    write_engine = get_write_engine()
+    with write_engine.begin() as connection:
+        connection.execute("SET LOCAL lock_timeout = '5s'")
+        connection.execute('TRUNCATE TABLE "ref_service_service_ids"')
+
+    connection =  write_engine.raw_connection()
+    try:
+        cursor = connection.cursor()
+        with open(service_id_data, 'rb') as f:
+            try:
+                cursor.copy_expert(
+                    'COPY "ref_service_service_ids" '
+                    '("service_id","label_en","label_fr") FROM STDIN '
+                    "WITH (DELIMITER ',', FORMAT csv, HEADER 1, ENCODING 'UTF8');", f)
+            finally:
+                cursor.close()
+    finally:
+        connection.commit()
