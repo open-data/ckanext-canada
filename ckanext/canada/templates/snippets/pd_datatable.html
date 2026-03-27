@@ -13,7 +13,7 @@
   {% do fk_links.update({_res_name: h.url_for('recombinant.preview_table', resource_name=_res_name, owner_org=owner_org)}) %}
 {% endfor  %}
 {% set magic_priority_no_field_should_be_below = 2 %}
-{% set choice_fields = h.recombinant_choice_fields(resource_name) if can_edit else {} %}
+{% set choice_fields = h.recombinant_choice_fields(resource_name, org_name=owner_org) if can_edit else {} %}
 {% set nonEditableCols = ['record_created', 'record_modified', 'user_modified'] %}
 {% set tableStyles = {
     'header': {

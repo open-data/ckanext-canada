@@ -345,10 +345,12 @@ def fivehundred():
     raise IntentionalServerError()
 
 
-def _get_choice_fields(resource_name: str) -> Dict[str, Any]:
+def _get_choice_fields(resource_name: str,
+                       org_name: Optional[str] = None) -> Dict[str, Any]:
     separator = ' : ' if h.lang() == 'fr' else ': '
     choice_fields = {}
-    for datastore_id, choices in h.recombinant_choice_fields(resource_name).items():
+    for datastore_id, choices in \
+      h.recombinant_choice_fields(resource_name, org_name=org_name).items():
         f = h.recombinant_get_field(resource_name, datastore_id)
         form_choices_prefix_code = f.get('form_choices_prefix_code', False)
         form_choice_keys_only = f.get('form_choice_keys_only', False)
@@ -409,7 +411,7 @@ def create_pd_record(owner_org: str, resource_name: str):
     except NotAuthorized:
         return abort(403, _('Unauthorized to create a resource for this package'))
 
-    choice_fields = _get_choice_fields(resource_name)
+    choice_fields = _get_choice_fields(resource_name, org_name=owner_org)
     pk_fields = aslist(chromo['datastore_primary_key'])
 
     if request.method == 'POST':
@@ -529,7 +531,7 @@ def update_pd_record(owner_org: str, resource_name: str, pk: str):
     except NotAuthorized:
         abort(403, _('Unauthorized to update dataset'))
 
-    choice_fields = _get_choice_fields(resource_name)
+    choice_fields = _get_choice_fields(resource_name, org_name=owner_org)
     pk_fields = aslist(chromo['datastore_primary_key'])
     pk_filter = dict(zip(pk_fields, pk_list))
 
