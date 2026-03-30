@@ -287,6 +287,7 @@ class LogExtraMiddleware(object):
         except (TypeError, RuntimeError, AttributeError):
             pass
         g.ERROR_SUPPORT_ID = supportID
+        raise e  # pass exception onto other flask error handlers
 
     def __call__(self, environ: Any, start_response: Any) -> Any:
         def _start_response(status: str,
