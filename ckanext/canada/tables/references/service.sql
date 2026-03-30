@@ -1,6 +1,7 @@
 -- Program IDs
 DROP TABLE IF EXISTS ref_service_program_ids;
 CREATE TABLE ref_service_program_ids (
+  _id SMALLSERIAL,  -- needed for datastore_search
   program_id INT PRIMARY KEY,
   label_en TEXT,
   label_fr TEXT,
@@ -14,6 +15,7 @@ ALTER TABLE ref_service_program_ids OWNER TO {writeuser};
 -- Service IDs
 DROP TABLE IF EXISTS ref_service_service_ids;
 CREATE TABLE ref_service_service_ids (
+  _id SMALLSERIAL,  -- needed for datastore_search
   service_id TEXT PRIMARY KEY,
   label_en TEXT,
   label_fr TEXT
