@@ -5,18 +5,14 @@ import os
 import sys
 import yaml
 
+from typing import Dict, Any
+
 
 REMOVE_COLUMNS = [
     'record_created',
     'record_modified',
     'user_modified',
 ]
-
-BOM = "\N{bom}"
-PROGRAM_NAMES_FILE = os.path.join(
-                        os.path.split(__file__)[0],
-                        '../../ckanext/canada/tables/choices'
-                        '/service_program_ids.yaml')
 
 COLUMNS = [
     'fiscal_yr', 'service_id', 'service_name_en', 'service_name_fr',
@@ -39,6 +35,67 @@ COLUMNS = [
     'owner_org', 'owner_org_title',
 ]
 
+BOM = "\N{bom}"
+
+PROGRAM_IDS_FILE = os.path.join(
+                    os.path.split(__file__)[0],
+                    '../../ckanext/canada/tables/choices'
+                    '/service_program_ids.yaml')
+PROGRAM_IDS = {}
+with open(PROGRAM_IDS_FILE, 'r') as f:
+    PROGRAM_IDS = yaml.safe_load(f)
+
+
+def test(record: Dict[str, Any]) -> Dict[str, Any]:
+    return process_row(record)
+
+
+def process_row(row: Dict[str, Any]) -> Dict[str, Any]:
+    """
+    Add dynamic, calculated fields to the row.
+
+    NOTE: csv.DictReader treats every dict value as a string,
+          thus we need to do any number and falsy conversion.
+          e.g. "0" in a `not` will be False,
+               "" in a `not` will be True.
+    """
+    for rem in REMOVE_COLUMNS:
+        if rem in row:
+            del row[rem]
+
+    # calculate total number of applications
+    row['num_applications_total'] = 0
+    num_fields = ['num_applications_by_phone',
+                  'num_applications_online',
+                  'num_applications_in_person',
+                  'num_applications_by_mail',
+                  'num_applications_by_email',
+                  'num_applications_by_fax',
+                  'num_applications_by_other',]
+    for field in num_fields:
+        if row[field] in ['NA', 'ND']:
+            count = 0
+        else:
+            count = int(row[field])
+        row['num_applications_total'] += count
+
+    # populate program names from ids
+    row['program_name_en'] = []
+    row['program_name_fr'] = []
+    program_ids = row['program_id'].split(',')
+    for id in program_ids:
+        if id not in PROGRAM_IDS:
+            continue
+        # NOTE: we add double quotes as Program Names can have
+        #       single quotes and commas in them
+        row['program_name_en'].append('"%s"' % PROGRAM_IDS[id]['en'])
+        row['program_name_fr'].append('"%s"' % PROGRAM_IDS[id]['fr'])
+
+    row['program_name_en'] = ', '.join(row['program_name_en'])
+    row['program_name_fr'] = ', '.join(row['program_name_fr'])
+
+    return row
+
 
 def main():
     bom = sys.stdin.read(1)  # first code point
@@ -53,41 +110,9 @@ def main():
     writer.writeheader()
 
     for row in reader:
-        for rem in REMOVE_COLUMNS:
-            del row[rem]
-
-        # calculate total number of applications
-        row['num_applications_total'] = 0
-        num_fields = ['num_applications_by_phone',
-                      'num_applications_online',
-                      'num_applications_in_person',
-                      'num_applications_by_mail',
-                      'num_applications_by_email',
-                      'num_applications_by_fax',
-                      'num_applications_by_other',]
-        for field in num_fields:
-            if row[field] in ['NA', 'ND']:
-                count = 0
-            else:
-                count = int(row[field])
-            row['num_applications_total'] += count
-
-        # populate program names from ids
-        row['program_name_en'] = []
-        row['program_name_fr'] = []
-        program_ids = row['program_id'].split(',')
-        with open(PROGRAM_NAMES_FILE, 'r') as file:
-            program_names = yaml.safe_load(file)
-
-        for id in program_ids:
-            if id in program_names:
-                row['program_name_en'].append(program_names[id]['en'])
-                row['program_name_fr'].append(program_names[id]['fr'])
-
-        row['program_name_en'] = str(row['program_name_en'])[1:-1]
-        row['program_name_fr'] = str(row['program_name_fr'])[1:-1]
-
+        row = process_row(row)
         writer.writerow(row)
 
 
-main()
+if __name__ == '__main__':
+    main()
