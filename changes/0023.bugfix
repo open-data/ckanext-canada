@@ -1,0 +1,1 @@
+Fixed an issue where Flask Error Handlers were not passing the Exception onto other Handlers.
