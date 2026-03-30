@@ -76,15 +76,27 @@ class TestTravelQ(CanadaTestBase):
         assert 'key' in err
         assert 'ref_number' in err['key'][0]
 
-    def test_required_fields(self):
+    def test_start_date_required(self):
         """
-        Excluding required fields should raise an exception
+        Should raise an exaception if missing start_date
+        """
+        record = get_chromo('travelq')['examples']['record'].copy()
+        record['start_date'] = None
+        with pytest.raises(ValidationError):
+            self.lc.action.datastore_upsert(
+                resource_id=self.resource_id,
+                records=[record]
+            )
+        model.Session.rollback()
+
+    def test_conditional_required_fields(self):
+        """
+        Excluding conditional required fields should raise an exception
         """
         chromo = get_chromo('travelq')
         record = chromo['examples']['record'].copy()
 
-        expected_required_fields = ['start_date',
-                                    'title_en', 'title_fr',
+        expected_required_fields = ['title_en', 'title_fr',
                                     'name', 'purpose_en', 'purpose_fr',
                                     'end_date',
                                     'destination_en', 'destination_fr',
@@ -92,6 +104,8 @@ class TestTravelQ(CanadaTestBase):
 
         for field in chromo['fields']:
             if field['datastore_id'] in chromo['datastore_primary_key']:
+                continue
+            if field['datastore_id'] == 'start_date':
                 continue
             if field.get('excel_required') or field.get('form_required'):
                 assert field['datastore_id'] in expected_required_fields
