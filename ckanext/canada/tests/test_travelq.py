@@ -83,7 +83,7 @@ class TestTravelQ(CanadaTestBase):
         chromo = get_chromo('travelq')
         record = chromo['examples']['record'].copy()
 
-        expected_required_fields = ['ref_number', 'title_en', 'title_fr',
+        expected_required_fields = ['title_en', 'title_fr',
                                     'name', 'purpose_en', 'purpose_fr',
                                     'start_date', 'end_date',
                                     'destination_en', 'destination_fr',
