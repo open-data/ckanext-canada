@@ -673,10 +673,10 @@ def load_ref_data(pd_type: Optional[str] = None,
             'tables/references/data/ref_service_service_ids.csv')
         _load_csv_ref_data('ref_service_service_ids',
                            [
-                                'service_id',
-                                'label_en',
-                                'label_fr',
-                                'org',
+                               'service_id',
+                               'label_en',
+                               'label_fr',
+                               'org_years',
                            ],
                            service_id_data)
         if verbose:
@@ -691,11 +691,10 @@ def load_ref_data(pd_type: Optional[str] = None,
             'tables/references/data/ref_service_program_ids.csv')
         _load_csv_ref_data('ref_service_program_ids',
                            [
-                                'program_id',
-                                'label_en',
-                                'label_fr',
-                                'service_ids',
-                                'org_years',
+                               'program_id',
+                               'label_en',
+                               'label_fr',
+                               'org_years',
                            ],
                            program_id_data)
         if verbose:

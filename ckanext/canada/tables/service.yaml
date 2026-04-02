@@ -65,9 +65,12 @@ resources:
     datatables_col_class: col-sm pd-datatables-primary-key-offset-md
     excel_error_formula: 'OR({default_formula},LEN({cell})-LEN(SUBSTITUTE({cell},",",""))>0)'
     js_error_eval: 'VALUE.length > 0 && VALUE.includes(",")'
+    excel_full_text_choices: false
+    datatables_full_text_choices: true
+    # form_snippet: scheming/form_snippets/multiple_select.html
     format_type:
-      en: Free text
-      fr: Texte libre
+      en: Controlled List
+      fr: Liste contrôlée
     validation:
       en: |
         This field must not be empty.
@@ -77,8 +80,10 @@ resources:
         Ce champ ne peut pas contenir de virgules.
     occurrence: Single
     datastore_type: text
+    choices_reference_table: ref_service_service_ids
 
   # DEP 1-4
+  # Dev: Published Resource Field TODO: modify for published field
   - datastore_id: service_name_en
     label:
       en: Service Name (English)
@@ -109,6 +114,7 @@ resources:
       maxlength: 350
 
   # DEP 1-5
+  # Dev: Published Resource Field TODO: modify for published field
   - datastore_id: service_name_fr
     label:
       en: Service Name (French)
@@ -403,7 +409,8 @@ resources:
     excel_full_text_choices: false
     datatables_full_text_choices: true
     form_snippet: scheming/form_snippets/multiple_select.html
-    choices_file: choices/service_program_ids.yaml
+    choices_reference_table: ref_service_program_ids
+    choices_filter_query: "WHERE org_years ? {org}"
     form_choices_prefix_code: true
     form_select_attrs:
       class: form-control recombinant-select2
@@ -1588,6 +1595,9 @@ resources:
     published_resource_computed_field: true
 
   datastore_primary_key: [fiscal_yr, service_id]
+  org_specific_fields:
+    - service_id
+    - program_id
   datastore_indexes: ""
   datastore_constraint_error_templates:
     delete: recombinant/snippets/service_delete_fk_error.html
@@ -1912,6 +1922,12 @@ resources:
     form_required: true
     excel_error_formula: 'OR({default_formula},LEN({cell})-LEN(SUBSTITUTE({cell},",",""))>0)'
     js_error_eval: 'VALUE.length > 0 && VALUE.includes(",")'
+    excel_full_text_choices: false
+    datatables_full_text_choices: true
+    # form_snippet: scheming/form_snippets/multiple_select.html
+    format_type:
+      en: Controlled List
+      fr: Liste contrôlée
     validation:
       en: |
         This field must not be empty.
@@ -1919,14 +1935,12 @@ resources:
       fr: |
         Ce champ ne doit pas être vide.
         Ce champ ne peut pas contenir de virgules.
-    format_type:
-      en: Free text
-      fr: Texte libre
     occurrence: Single
     datastore_type: text
     choices_reference_table: ref_service_service_ids
 
   # DEP 2-3
+  # Dev: Published Resource Field TODO: modify for published field
   - datastore_id: service_name_en
     label:
       en: Service Name (English)
@@ -1957,6 +1971,7 @@ resources:
       maxlength: 350
 
   # DEP 2-4
+  # Dev: Published Resource Field TODO: modify for published field
   - datastore_id: service_name_fr
     label:
       en: Service Name (French)
@@ -2573,6 +2588,8 @@ resources:
     published_resource_computed_field: true
 
   datastore_primary_key: [fiscal_yr, service_id, service_standard_id]
+  org_specific_fields:
+    - service_id
   datastore_reference_table_only: true
   datastore_foreign_keys:
     service:
