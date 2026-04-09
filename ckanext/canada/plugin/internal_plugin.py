@@ -15,13 +15,14 @@ from ckan.common import CKANConfig
 
 import ckan.plugins as p
 from ckan import model
-from ckan.plugins.toolkit import ValidationError, ObjectNotFound
+from ckan.plugins.toolkit import ValidationError, ObjectNotFound, NotAuthorized
 
 from ckanext.datastore.backend import postgres as db
 from ckanext.xloader.interfaces import IXloader
 from ckanext.canada.plugin.validation_plugin import CanadaValidationPlugin
 from ckanext.canada import logic
 from ckanext.canada import auth
+from ckanext.recombinant.tables import get_resource_names
 
 
 log = logging.getLogger(__name__)
@@ -62,7 +63,20 @@ class CanadaInternalPlugin(p.SingletonPlugin):
         original_upsert_data = db.upsert_data
 
         def patched_upsert_data(context: Context, data_dict: DataDict) -> Any:
-            with logic.datastore_create_temp_user_table(context):
+            # NOTE: we check if the resource is a Recombinant one to pass
+            #       the organization abbreviation/name.
+            org_name = None
+            resource_id = data_dict.get('resource_id')
+            if resource_id:
+                res = model.Resource.get(resource_id)
+                if res and res.name in get_resource_names():
+                    try:
+                        pkg_dict = p.toolkit.get_action('package_show')(
+                            {'ignore_auth': True}, {'id': res.package_id})
+                        org_name = pkg_dict.get('organization', {}).get('name', None)
+                    except (ObjectNotFound, NotAuthorized):
+                        pass
+            with logic.datastore_create_temp_user_table(context, org_name=org_name):
                 try:
                     return original_upsert_data(context, data_dict)
                 except ValidationError as e:

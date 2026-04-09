@@ -8,6 +8,9 @@ CREATE TABLE ref_service_program_ids (
   org_years JSONB
 );
 
+DROP INDEX IF EXISTS idx_ref_service_program_ids_org_years;
+CREATE INDEX idx_ref_service_program_ids_org_years ON ref_service_program_ids USING GIN (org_years);
+
 GRANT SELECT ON TABLE ref_service_program_ids TO {readuser};
 ALTER TABLE ref_service_program_ids OWNER TO {writeuser};
 
@@ -20,6 +23,9 @@ CREATE TABLE ref_service_service_ids (
   label_fr TEXT NOT NULL,
   org_years JSONB
 );
+
+DROP INDEX IF EXISTS idx_ref_service_service_ids_org_years;
+CREATE INDEX idx_ref_service_service_ids_org_years ON ref_service_service_ids USING GIN (org_years);
 
 GRANT SELECT ON TABLE ref_service_service_ids TO {readuser};
 ALTER TABLE ref_service_service_ids OWNER TO {writeuser};

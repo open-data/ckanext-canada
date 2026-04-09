@@ -81,6 +81,7 @@ resources:
     occurrence: Single
     datastore_type: text
     choices_reference_table: ref_service_service_ids
+    choices_filter_query: WHERE org_years ? {org}
 
   # DEP 1-4
   # Dev: Published Resource Field TODO: modify for published field
@@ -410,7 +411,7 @@ resources:
     datatables_full_text_choices: true
     form_snippet: scheming/form_snippets/multiple_select.html
     choices_reference_table: ref_service_program_ids
-    choices_filter_query: "WHERE org_years ? {org}"
+    choices_filter_query: WHERE org_years ? {org}
     form_choices_prefix_code: true
     form_select_attrs:
       class: form-control recombinant-select2
@@ -1610,6 +1611,7 @@ resources:
   - service_trigger: |
       DECLARE
         errors text[][] := '{{}}';
+        org_name text NOT NULL := (SELECT org_name FROM datastore_user LIMIT 1);
         crval RECORD;
       BEGIN
         errors := errors || required_error(NEW.fiscal_yr, 'fiscal_yr');
@@ -1618,6 +1620,14 @@ resources:
         errors := errors || required_error(NEW.service_id, 'service_id');
         IF NEW.service_id LIKE '%,%' THEN
           errors := errors || ARRAY[['service_id', {service_id_comma_error}]];
+        END IF;
+
+        IF NOT EXISTS (
+          SELECT service_id FROM "ref_service_service_ids"
+          WHERE org_years ? org_name
+          AND service_id = NEW.service_id
+        ) THEN
+          errors := errors || ARRAY[['service_id', {service_id_org_limit_error}]];
         END IF;
 
         errors := errors || required_error(NEW.service_name_en, 'service_name_en');
@@ -1658,6 +1668,15 @@ resources:
         crval := choices_clean_error(NEW.program_id, {program_id}, 'program_id');
         errors := errors || crval.error;
         NEW.program_id := crval.clean;
+
+        IF EXISTS (
+          SELECT program_id FROM "ref_service_program_ids"
+          WHERE NOT org_years ? org_name
+          -- FIXME IN NEW.program_id is a syntax error
+          AND program_id IN NEW.program_id
+        ) THEN
+          errors := errors || ARRAY[['program_id', {program_id_org_limit_error}]];
+        END IF;
 
         errors := errors || required_error(NEW.client_feedback_channel, 'client_feedback_channel');
         crval := choices_clean_error(NEW.client_feedback_channel, {client_feedback_channel}, 'client_feedback_channel');
@@ -1798,6 +1817,8 @@ resources:
     conditional_required_error: This field is required due to a response in a different field.
     both_lang_error: This text must be provided in both languages
     service_id_comma_error: Comma is not allowed in Service ID Number field
+    service_id_org_limit_error: 'Invalid choice for Organization {}: {}'
+    program_id_org_limit_error: 'Invalid choice for Organization {}: {}'
 
   examples:
     record:
@@ -1938,6 +1959,7 @@ resources:
     occurrence: Single
     datastore_type: text
     choices_reference_table: ref_service_service_ids
+    choices_filter_query: WHERE org_years ? {org}
 
   # DEP 2-3
   # Dev: Published Resource Field TODO: modify for published field
@@ -2607,6 +2629,7 @@ resources:
   - service_std_trigger: |
       DECLARE
         errors text[][] := '{{}}';
+        org_name text NOT NULL := (SELECT org_name FROM datastore_user LIMIT 1);
         crval RECORD;
       BEGIN
         errors := errors || required_error(NEW.fiscal_yr, 'fiscal_yr');
@@ -2615,6 +2638,14 @@ resources:
         errors := errors || required_error(NEW.service_id, 'service_id');
         IF NEW.service_id LIKE '%,%' THEN
           errors := errors || ARRAY[['service_id', {service_id_comma_error}]];
+        END IF;
+
+        IF NOT EXISTS (
+          SELECT service_id FROM "ref_service_service_ids"
+          WHERE org_years ? org_name
+          AND service_id = NEW.service_id
+        ) THEN
+          errors := errors || ARRAY[['service_id', {service_id_org_limit_error}]];
         END IF;
 
         errors := errors || required_error(NEW.service_name_en, 'service_name_en');
@@ -2712,6 +2743,7 @@ resources:
     service_id_comma_error: Comma is not allowed in Service ID Number field
     service_standard_id_comma_error: Comma is not allowed in Service Standard ID field
     volume_error: Volume Meeting Target can not exceed Total Volume.
+    service_id_org_limit_error: 'Invalid choice for Organization {}: {}'
 
   examples:
     record:
