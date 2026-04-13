@@ -82,7 +82,7 @@ class TestConsultations(CanadaTestBase):
         expected_required_fields = ['publishable', 'title_en', 'title_fr',
                                     'start_date', 'end_date',
                                     'profile_page_en', 'profile_page_fr',
-                                    'high_profile',
+                                    'high_profile', 'status'
                                     ]
         record['end_date'] = '2017-12-31'
         record['high_profile'] = 'N'
@@ -115,7 +115,7 @@ class TestConsultations(CanadaTestBase):
                            'title_en', 'title_fr',
                            'start_date', 'end_date',
                            'profile_page_en', 'profile_page_fr',
-                           'high_profile', ]
+                           'high_profile', 'status']
 
         expected_conditional_required_fields = ['subjects',
                                                 'description_en', 'description_fr',

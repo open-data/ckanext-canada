@@ -290,6 +290,7 @@ resources:
       en: The field indicates the current status of the engagement process.
       fr: Cette zone indique l’état d’avancement du processus de participation.
     obligation: Mandatory
+    # FIXME: missing required trigger for status
     excel_required: true
     form_required: true
     format_type:
