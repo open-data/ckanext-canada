@@ -95,6 +95,9 @@ class TestConsultations(CanadaTestBase):
                 continue
             if field['datastore_id'] in chromo['datastore_primary_key']:
                 continue
+            # bypass conditional required fields
+            if 'excel_required_formula' in field:
+                continue
             if field.get('excel_required') or field.get('form_required'):
                 assert field['datastore_id'] in expected_required_fields
                 record[field['datastore_id']] = None
