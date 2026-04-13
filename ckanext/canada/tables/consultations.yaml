@@ -249,6 +249,7 @@ resources:
       en: This field indicates when a planned consultation will begin to accept input from participants.
       fr: Ce champ indique quand une séance de planification prévue commencera à accepter les commentaires des participants.
     obligation: Mandatory
+    # FIXME: add trigger to ensure start_date is not in future, and dates are chronological
     excel_required: true
     form_required: true
     format_type:
