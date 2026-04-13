@@ -222,12 +222,13 @@ class TestConsultations(CanadaTestBase):
         record = get_chromo('consultations')['examples']['record'].copy()
 
         # filters out publishable, record_created, record_modified, user_modified
+        record['publishable'] = 'Y'
         record['record_created'] = 'Not Blank'
         record['record_modified'] = 'Not Blank'
         record['user_modified'] = 'Not Blank'
-        record['publishable'] = 'Not Blank'
 
         test_record = filter_consultations.test(dict(record))
+        assert 'publishable' not in test_record
         assert 'record_created' not in test_record
         assert 'record_modified' not in test_record
         assert 'user_modified' not in test_record
