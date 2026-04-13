@@ -374,6 +374,7 @@ resources:
       en: This field indicates if the “What we Heard” report is completed, published and made available online on the Consulting with Canadians website.
       fr: Cette zone indique si le rapport intitulé « Ce que nous avons entendu » est terminé, publié et disponible sur le site Web « Consultations auprès des Canadiens ».
     obligation: Mandatory
+    # FIXME: missing required trigger for report_available_online
     excel_required: true
     form_required: true
     format_type:
