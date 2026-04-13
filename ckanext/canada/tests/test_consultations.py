@@ -132,6 +132,7 @@ class TestConsultations(CanadaTestBase):
 
         if record['high_profile'] == 'Y':
             expected_conditional_required_fields.append('rationale')
+            record['rationale'] = None
 
         for field in chromo['fields']:
             if field['datastore_id'] in skips:
