@@ -81,7 +81,7 @@ class TestConsultations(CanadaTestBase):
 
         # FIXME: missing required trigger for status
         # FIXME: missing required trigger for report_available_online
-        skips = [ 'status', 'report_available_online', ]
+        skips = ['status', 'report_available_online', ]
 
         expected_required_fields = ['publishable', 'title_en', 'title_fr',
                                     'start_date', 'end_date',
@@ -118,7 +118,7 @@ class TestConsultations(CanadaTestBase):
 
         # FIXME: missing required trigger for status
         # FIXME: missing required trigger for report_available_online
-        skips = [ 'status', 'report_available_online', ]
+        skips = ['status', 'report_available_online', ]
 
         required_fields = ['registration_number', 'publishable',
                            'title_en', 'title_fr',
