@@ -109,16 +109,24 @@ class TestConsultations(CanadaTestBase):
         chromo = get_chromo('consultations')
         record = chromo['examples']['record'].copy()
 
-        expected_required_fields = ['subjects', 'description_en', 'description_fr',
-                                    'target_participants_and_audience', ]
+        required_fields = ['registration_number', 'publishable',
+                           'title_en', 'title_fr',
+                           'start_date', 'end_date',
+                           'profile_page_en', 'profile_page_fr',
+                           'high_profile', ]
+
+        expected_conditional_required_fields = ['subjects',
+                                                'description_en', 'description_fr',
+                                                'target_participants_and_audience', ]
+
+        if record['high_profile'] == 'Y':
+            expected_conditional_required_fields.append('rationale')
 
         for field in chromo['fields']:
-            if field['datastore_id'] in chromo['datastore_primary_key']:
-                continue
-            if field['datastore_id'] == 'end_date':
+            if field['datastore_id'] in required_fields:
                 continue
             if field.get('excel_required') or field.get('form_required'):
-                assert field['datastore_id'] in expected_required_fields
+                assert field['datastore_id'] in expected_conditional_required_fields
                 record[field['datastore_id']] = None
 
         with pytest.raises(ValidationError) as ve:
@@ -128,7 +136,7 @@ class TestConsultations(CanadaTestBase):
         model.Session.rollback()
         err = ve.value.error_dict
         assert 'records' in err
-        for required_field in expected_required_fields:
+        for required_field in expected_conditional_required_fields:
             assert required_field in err['records'][0]
 
     def test_choice_fields(self):
