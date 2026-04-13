@@ -84,6 +84,8 @@ class TestConsultations(CanadaTestBase):
                                     'profile_page_en', 'profile_page_fr',
                                     'high_profile',
                                     ]
+        record['end_date'] = '2017-12-31'
+        record['high_profile'] = 'N'
 
         for field in chromo['fields']:
             if field['datastore_id'] in chromo['datastore_primary_key']:
