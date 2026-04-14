@@ -48,6 +48,8 @@ def process_row(row: Dict[str, Any]) -> Optional[Dict[str, Any]]:
         for rem in REMOVE_COLUMNS:
             if rem in row:
                 del row[rem]
+            # truncate status to remove "closed" reason
+            row['status'] = row['status'][:1]
         return row
 
     return None
