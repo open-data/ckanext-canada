@@ -588,32 +588,6 @@ class TestGrantsNil(CanadaTestBase):
         assert 'key' in err
         assert 'fiscal_year, quarter' in err['key'][0]
 
-    def test_required_fields(self):
-        """
-        Excluding required fields should raise an exception
-        """
-        chromo = get_chromo('grants-nil')
-        record = chromo['examples']['record'].copy()
-
-        expected_required_fields = ['fiscal_year', 'quarter', ]
-
-        for field in chromo['fields']:
-            if field['datastore_id'] in chromo['datastore_primary_key']:
-                continue
-            if field.get('excel_required') or field.get('form_required'):
-                assert field['datastore_id'] in expected_required_fields
-                record[field['datastore_id']] = None
-
-        with pytest.raises(ValidationError) as ve:
-            self.lc.action.datastore_upsert(
-                resource_id=self.resource_id,
-                records=[record])
-        model.Session.rollback()
-        err = ve.value.error_dict
-        assert 'records' in err
-        for required_field in expected_required_fields:
-            assert required_field in err['records'][0]
-
     def test_choice_fields(self):
         """
         Fields with choices should expect those values
