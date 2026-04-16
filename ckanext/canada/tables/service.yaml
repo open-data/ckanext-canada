@@ -49,7 +49,9 @@ resources:
     occurrence: Single
     datastore_type: text
     datatables_col_class: col-md
-    choices_file: choices/fiscal_year.yaml
+    choices_function: fiscal_years
+    choices_kwargs:
+      min: 2014-2015
 
   # DEP 1-2
   - datastore_id: service_id
@@ -1617,7 +1619,7 @@ resources:
         referr text[];
       BEGIN
         errors := errors || required_error(NEW.fiscal_yr, 'fiscal_yr');
-        errors := errors || choice_error(NEW.fiscal_yr, {fiscal_yr}, 'fiscal_yr');
+        errors := errors || fiscal_year_error(NEW.fiscal_yr, 'fiscal_yr', '2014-2015');
 
         errors := errors || required_error(NEW.service_id, 'service_id');
         IF NEW.service_id LIKE '%,%' THEN
@@ -1812,6 +1814,7 @@ resources:
   - update_record_modified_created_trigger
 
   trigger_strings:  # yaml | not supported
+    fiscal_year_error: 'Invalid fiscal year: {}'
     num_na_nd_error: This field must be either a number, "NA", or "ND"
     negative_number_error: This value must not be negative
     max_length_error: This field has a maximum length of {} characters.
@@ -1930,7 +1933,9 @@ resources:
     datastore_type: text
     excel_full_text_choices: false
     datatables_full_text_choices: false
-    choices_file: choices/fiscal_year.yaml
+    choices_function: fiscal_years
+    choices_kwargs:
+      min: 2014-2015
 
   # DEP 2-2
   - datastore_id: service_id
@@ -2637,7 +2642,7 @@ resources:
         refval text[];
       BEGIN
         errors := errors || required_error(NEW.fiscal_yr, 'fiscal_yr');
-        errors := errors || choice_error(NEW.fiscal_yr, {fiscal_yr}, 'fiscal_yr');
+        errors := errors || fiscal_year_error(NEW.fiscal_yr, 'fiscal_yr', '2014-2015');
 
         errors := errors || required_error(NEW.service_id, 'service_id');
         IF NEW.service_id LIKE '%,%' THEN
@@ -2739,6 +2744,7 @@ resources:
   - update_record_modified_created_trigger
 
   trigger_strings:  # yaml | not supported
+    fiscal_year_error: 'Invalid fiscal year: {}'
     target_error: This field must be a single number between 0 and 1 representing a percentage.
     negative_number_error: This value must not be negative
     max_length_error: This field has a maximum length of {} characters.
