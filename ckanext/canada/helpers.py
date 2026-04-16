@@ -5,6 +5,8 @@ import json
 import re
 import inspect
 from urllib.parse import urlsplit
+from sqlalchemy import and_
+from sqlalchemy.exc import NoResultFound, MultipleResultsFound
 from ckan.plugins.toolkit import (
     config,
     asbool,
@@ -1173,3 +1175,23 @@ def mail_to_with_params(email_address: str, name: str,
 
 def get_inline_script_nonce() -> str:
     return str(request.environ.get('CSP_NONCE', ''))
+
+
+def org_name_from_res_id(resource_id: Optional[str] = None) -> Optional[str]:
+    """
+    Get a Resource's Organization name/abbreviation from the database.
+    """
+    if not resource_id:
+        return
+    try:
+        return model.Session.query(model.Group.name).join(
+            model.Package,
+            model.Group.id == model.Package.owner_org).join(
+                model.Resource,
+                model.Resource.package_id == model.Package.id).filter(
+                and_(
+                    model.Resource.id == resource_id,
+                    model.Resource.state == "active",
+                    model.Package.state == "active")).one()[0]
+    except (NoResultFound, MultipleResultsFound):
+        return

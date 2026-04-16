@@ -1613,6 +1613,8 @@ resources:
         errors text[][] := '{{}}';
         org_name text NOT NULL := (SELECT org_name FROM datastore_user LIMIT 1);
         crval RECORD;
+        refval text[];
+        referr text[];
       BEGIN
         errors := errors || required_error(NEW.fiscal_yr, 'fiscal_yr');
         errors := errors || choice_error(NEW.fiscal_yr, {fiscal_yr}, 'fiscal_yr');
@@ -1622,12 +1624,15 @@ resources:
           errors := errors || ARRAY[['service_id', {service_id_comma_error}]];
         END IF;
 
-        IF NOT EXISTS (
-          SELECT service_id FROM "ref_service_service_ids"
+        refval := (
+          SELECT array_agg(service_id) FROM "ref_service_service_ids"
           WHERE org_years ? org_name
           AND service_id = NEW.service_id
-        ) THEN
-          errors := errors || ARRAY[['service_id', {service_id_org_limit_error}]];
+        );
+        IF refval IS NULL THEN
+          errors := errors || ARRAY[['service_id', {service_id_org_limit_error} || '' || org_name || '' || NEW.service_id]];
+        ELSE
+          NEW.service_id := refval[1];
         END IF;
 
         errors := errors || required_error(NEW.service_name_en, 'service_name_en');
@@ -1664,18 +1669,16 @@ resources:
         errors := errors || crval.error;
         NEW.client_target_groups := crval.clean;
 
-        errors := errors || required_error(NEW.program_id, 'program_id');
-        crval := choices_clean_error(NEW.program_id, {program_id}, 'program_id');
-        errors := errors || crval.error;
-        NEW.program_id := crval.clean;
-
-        IF EXISTS (
-          SELECT program_id FROM "ref_service_program_ids"
-          WHERE NOT org_years ? org_name
-          -- FIXME IN NEW.program_id is a syntax error
-          AND program_id IN NEW.program_id
-        ) THEN
-          errors := errors || ARRAY[['program_id', {program_id_org_limit_error}]];
+        refval := (
+          SELECT array_agg(program_id) FROM "ref_service_program_ids"
+          WHERE org_years ? org_name
+          AND program_id = ANY(NEW.program_id)
+        );
+        SELECT coalesce(array_agg(v), '{{}}') INTO referr FROM unnest(NEW.program_id) v WHERE NOT (v = ANY(coalesce(refval, '{{}}')));
+        IF refval IS NULL OR array_length(referr, 1) > 0 THEN
+          errors := errors || ARRAY[['program_id', {program_id_org_limit_error} || '' || org_name || '' || coalesce(array_to_string(referr, ','), '')]];
+        ELSE
+          NEW.program_id := refval;
         END IF;
 
         errors := errors || required_error(NEW.client_feedback_channel, 'client_feedback_channel');
@@ -1818,7 +1821,7 @@ resources:
     both_lang_error: This text must be provided in both languages
     service_id_comma_error: Comma is not allowed in Service ID Number field
     service_id_org_limit_error: 'Invalid choice for Organization {}: {}'
-    program_id_org_limit_error: 'Invalid choice for Organization {}: {}'
+    program_id_org_limit_error: 'Invalid choice(s) for Organization {}: {}'
 
   examples:
     record:
@@ -2631,6 +2634,7 @@ resources:
         errors text[][] := '{{}}';
         org_name text NOT NULL := (SELECT org_name FROM datastore_user LIMIT 1);
         crval RECORD;
+        refval text[];
       BEGIN
         errors := errors || required_error(NEW.fiscal_yr, 'fiscal_yr');
         errors := errors || choice_error(NEW.fiscal_yr, {fiscal_yr}, 'fiscal_yr');
@@ -2640,12 +2644,15 @@ resources:
           errors := errors || ARRAY[['service_id', {service_id_comma_error}]];
         END IF;
 
-        IF NOT EXISTS (
-          SELECT service_id FROM "ref_service_service_ids"
+        refval := (
+          SELECT array_agg(service_id) FROM "ref_service_service_ids"
           WHERE org_years ? org_name
           AND service_id = NEW.service_id
-        ) THEN
-          errors := errors || ARRAY[['service_id', {service_id_org_limit_error}]];
+        );
+        IF refval IS NULL THEN
+          errors := errors || ARRAY[['service_id', {service_id_org_limit_error} || '' || org_name || '' || NEW.service_id]];
+        ELSE
+          NEW.service_id := refval[1];
         END IF;
 
         errors := errors || required_error(NEW.service_name_en, 'service_name_en');

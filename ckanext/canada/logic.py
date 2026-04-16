@@ -36,8 +36,7 @@ from ckan.lib.navl.dictization_functions import validate
 
 from flask import has_request_context
 
-from sqlalchemy import func
-from sqlalchemy import or_
+from sqlalchemy import func, or_
 
 from urllib.parse import urlparse
 import mimetypes
@@ -46,7 +45,7 @@ from ckanext.scheming.helpers import scheming_get_preset
 from ckanext.datastore.backend import DatastoreBackend
 from ckanext.datastore.logic.schema import datastore_search_schema
 from ckanext.canada import model as canada_model
-from ckanext.recombinant.tables import get_resource_names
+from ckanext.canada.helpers import org_name_from_res_id
 
 from rq.job import Job
 from rq.exceptions import NoSuchJobError
@@ -315,8 +314,8 @@ def datastore_create_temp_user_table(context: Context,
             '''.format(
                 drop_statement=' ON COMMIT DROP' if drop_on_commit else '',
                 username=literal_string(username),
-                sysadmin='TRUE' if is_sysadmin(username) else 'FALSE'),
-                org_name=literal_string(org_name) if org_name else None)
+                sysadmin='TRUE' if is_sysadmin(username) else 'FALSE',
+                org_name=literal_string(org_name) if org_name else None))
         yield
 
     # __exit__ of context manager
@@ -658,19 +657,7 @@ def canada_datastore_run_triggers(up_func: Action,
         backend = DatastoreBackend.get_active_backend()
         # type_ignore_reason: incomplete typing
         context['connection'] = backend._get_write_engine().connect()  # type: ignore
-    # NOTE: we check if the resource is a Recombinant one to pass
-    #       the organization abbreviation/name.
-    org_name = None
-    resource_id = data_dict.get('resource_id')
-    if resource_id:
-        res = model.Resource.get(resource_id)
-        if res and res.name in get_resource_names():
-            try:
-                pkg_dict = get_action('package_show')(
-                    {'ignore_auth': True}, {'id': res.package_id})
-                org_name = pkg_dict.get('organization', {}).get('name', None)
-            except (ObjectNotFound, NotAuthorized):
-                pass
+    org_name = org_name_from_res_id(data_dict.get('resource_id'))
     with datastore_create_temp_user_table(context, drop_on_commit=False,
                                           org_name=org_name):
         return up_func(context, data_dict)
