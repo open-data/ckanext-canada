@@ -756,46 +756,36 @@ def update_triggers():
         arguments=[
             {'argname': 'value', 'argtype': 'text'},
             {'argname': 'field_name', 'argtype': 'text'},
-            {'argname': 'min', 'argtype': 'text', 'argdefault': 'NULL'},
-            {'argname': 'max', 'argtype': 'text', 'argdefault': 'NULL'}],
+            # min/max refers to the first year in the fiscal year
+            # e.g. 2014 means 2014-2015
+            {'argname': 'min', 'argtype': 'int4', 'argdefault': 'NULL'},
+            {'argname': 'max', 'argtype': 'int4', 'argdefault': 'NULL'}],
         rettype='_text',
         definition='''
     DECLARE
-        min_val text := min;
-        max_val text := max;
-        valid_vals text[];
+        min_val int4 := min;
+        max_val int4 := max;
     BEGIN
         IF min_val IS NULL THEN
-            min_val := '2005-2006';
+            min_val := 2005;
         END IF;
-        min_val := split_part(min_val, '-', 1);
 
         IF max_val IS NULL THEN
             SELECT CASE
-                WHEN EXTRACT(MONTH FROM CURRENT_DATE) >= 4 THEN
-                    (EXTRACT(YEAR FROM CURRENT_DATE)::int)::text
-                    || '-' ||
-                    (EXTRACT(YEAR FROM CURRENT_DATE)::int + 1)::text
+                WHEN EXTRACT(MONTH FROM CURRENT_DATE) >= 4
+                    THEN EXTRACT(YEAR FROM CURRENT_DATE)::int
                 ELSE
-                    (EXTRACT(YEAR FROM CURRENT_DATE)::int - 1)::text
-                    || '-' ||
-                    (EXTRACT(YEAR FROM CURRENT_DATE)::int)::text
+                    EXTRACT(YEAR FROM CURRENT_DATE)::int - 1
             END INTO max_val;
         END IF;
-        max_val := split_part(max_val, '-', 1);
 
-        WITH years AS (
-            SELECT generate_series(min_val::int, max_val::int) AS start_fyear
-        )
-        SELECT array_agg(start_fyear || '-' || (start_fyear + 1))
-            INTO valid_vals
-            FROM years;
-
-        IF value = ANY(valid_vals) THEN
-            RETURN NULL;
+        IF split_part(value, '-', 1)::int < min_val OR
+        split_part(value, '-', 1)::int > max_val OR
+        split_part(value, '-', 2)::int - split_part(value, '-', 1)::int <> 1 THEN
+           RETURN ARRAY[[field_name, 'Invalid fiscal year: {}\uF8FF"'
+                || replace(value, E'\\t', ' ') || '"']];
         END IF;
 
-        RETURN ARRAY[[field_name, 'Invalid fiscal year: {}\uF8FF"'
-                || replace(value, E'\\t', ' ') || '"']];
+        RETURN NULL;
     END;
         ''')

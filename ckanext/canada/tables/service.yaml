@@ -49,9 +49,8 @@ resources:
     occurrence: Single
     datastore_type: text
     datatables_col_class: col-md
-    choices_function: fiscal_years
-    choices_kwargs:
-      min: 2014-2015
+    choices_fiscal_year:
+      min_year: 2014
 
   # DEP 1-2
   - datastore_id: service_id
@@ -1618,8 +1617,9 @@ resources:
         refval text[];
         referr text[];
       BEGIN
+        NEW.fiscal_yr := trim(both E'\t\n\x0b\x0c\r \xc2\xa0' from NEW.fiscal_yr);
         errors := errors || required_error(NEW.fiscal_yr, 'fiscal_yr');
-        errors := errors || fiscal_year_error(NEW.fiscal_yr, 'fiscal_yr', '2014-2015');
+        errors := errors || fiscal_year_error(NEW.fiscal_yr, 'fiscal_yr', 2014);
 
         errors := errors || required_error(NEW.service_id, 'service_id');
         IF NEW.service_id LIKE '%,%' THEN
@@ -1933,9 +1933,8 @@ resources:
     datastore_type: text
     excel_full_text_choices: false
     datatables_full_text_choices: false
-    choices_function: fiscal_years
-    choices_kwargs:
-      min: 2014-2015
+    choices_fiscal_year:
+      min_year: 2014
 
   # DEP 2-2
   - datastore_id: service_id
@@ -2641,8 +2640,9 @@ resources:
         crval RECORD;
         refval text[];
       BEGIN
+        NEW.fiscal_yr := trim(both E'\t\n\x0b\x0c\r \xc2\xa0' from NEW.fiscal_yr);
         errors := errors || required_error(NEW.fiscal_yr, 'fiscal_yr');
-        errors := errors || fiscal_year_error(NEW.fiscal_yr, 'fiscal_yr', '2014-2015');
+        errors := errors || fiscal_year_error(NEW.fiscal_yr, 'fiscal_yr', 2014);
 
         errors := errors || required_error(NEW.service_id, 'service_id');
         IF NEW.service_id LIKE '%,%' THEN
