@@ -6,7 +6,8 @@ import re
 import inspect
 from urllib.parse import urlsplit
 from sqlalchemy import and_
-from sqlalchemy.exc import NoResultFound, MultipleResultsFound
+# type_ignore_reason: incomplete typing
+from sqlalchemy.exc import NoResultFound, MultipleResultsFound  # type: ignore
 from ckan.plugins.toolkit import (
     config,
     asbool,

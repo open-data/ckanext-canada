@@ -2,7 +2,8 @@
 """
 Compiles all the reference data for Service Inventory.
 
-All the required files are in the release of https://github.com/gcperformance/service-data
+All the required files are in the release of
+https://github.com/gcperformance/service-data
 
 https://github.com/gcperformance/service-data/blob/master/src/utils.py
     NOTE: program_list compiles fiscal years, orgs, program_ids, and their labels
@@ -130,16 +131,19 @@ def _generate_data():
 
             label_en = _clean_intake_text(row['program_en'])
             label_fr = _clean_intake_text(row['program_fr'])
-            if 'label_en' not in program_id_map[program_id]:  # take first occuring label
+            if 'label_en' not in program_id_map[program_id]:
+                # take first occuring label
                 program_id_map[program_id]['label_en'] = label_en
-            if 'label_fr' not in program_id_map[program_id]:  # take first occuring label
+            if 'label_fr' not in program_id_map[program_id]:
+                # take first occuring label
                 program_id_map[program_id]['label_fr'] = label_fr
 
             org = _clean_intake_text(row['org_id'])
             if org not in org_id_abbr_map:
                 # org not in open gov, skip
                 if org not in skipped_orgs:
-                    print('Organization %s not available in Open Gov Registry. Skipping...' % org)
+                    print('Organization %s not available '
+                          'in Open Gov Registry. Skipping...' % org)
                     skipped_orgs.add(org)
                 continue
             org = org_id_abbr_map[org]
@@ -163,7 +167,8 @@ def _generate_data():
                 'program_id': program_id,
                 'label_en': program_data['label_en'],
                 'label_fr': program_data['label_fr'],
-                'org_years': json.dumps(program_data['org_years']) if 'org_years' in program_data else None,})
+                'org_years': json.dumps(program_data['org_years'])
+                if 'org_years' in program_data else None})
 
     # write service_id ref data
     inserted_service_ids = set()
@@ -195,14 +200,16 @@ def _generate_data():
                 if org not in org_id_abbr_map:
                     # org not in open gov, skip
                     if org not in skipped_orgs:
-                        print('Organization %s not available in Open Gov Registry. Skipping...' % org)
+                        print('Organization %s not available '
+                              'in Open Gov Registry. Skipping...' % org)
                         skipped_orgs.add(org)
                     continue
                 org = org_id_abbr_map[org]
 
                 inserted_service_ids.add(service_id)
 
-                # just make same format as program_id org_years to make queries the same
+                # just make same format as program_id
+                # org_years to make queries the same
                 org_years = {}
                 org_years[org] = [_clean_intake_text(row['fiscal_yr_latest'])]
 
@@ -210,7 +217,7 @@ def _generate_data():
                     'service_id': service_id,
                     'label_en': _clean_intake_text(row['service_name_en']),
                     'label_fr': _clean_intake_text(row['service_name_fr']),
-                    'org_years': json.dumps(org_years) if org else None,})
+                    'org_years': json.dumps(org_years) if org else None})
     assert inserted_service_ids
 
 

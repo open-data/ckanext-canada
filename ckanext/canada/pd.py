@@ -637,7 +637,7 @@ def _load_csv_ref_data(table_name: str, columns: List[str],
         connection.execute("SET LOCAL lock_timeout = '5s'")
         connection.execute('TRUNCATE TABLE "%s"' % table_name)
 
-    connection =  write_engine.raw_connection()
+    connection = write_engine.raw_connection()
     try:
         cursor = connection.cursor()
         with open(file_path, 'rb') as f:
