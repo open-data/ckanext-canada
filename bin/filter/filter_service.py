@@ -44,9 +44,9 @@ SERVICE_IDS = {}
 with open(SERVICE_ID_REF_DATA_FILE, 'r') as f:
     c = csv.DictReader(f)
     for row in c:
-        SERVICE_IDS[c['service_id']] = {
-            'en': c['label_en'],
-            'fr': c['label_fr']
+        SERVICE_IDS[row['service_id']] = {
+            'en': row['label_en'],
+            'fr': row['label_fr']
         }
 
 PROGRAM_ID_REF_DATA_FILE = os.path.join(
@@ -57,9 +57,9 @@ PROGRAM_IDS = {}
 with open(PROGRAM_ID_REF_DATA_FILE, 'r') as f:
     c = csv.DictReader(f)
     for row in c:
-        PROGRAM_IDS[c['program_id']] = {
-            'en': c['label_en'],
-            'fr': c['label_fr']
+        PROGRAM_IDS[row['program_id']] = {
+            'en': row['label_en'],
+            'fr': row['label_fr']
         }
 
 

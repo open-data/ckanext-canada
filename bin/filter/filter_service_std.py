@@ -34,9 +34,9 @@ SERVICE_IDS = {}
 with open(SERVICE_ID_REF_DATA_FILE, 'r') as f:
     c = csv.DictReader(f)
     for row in c:
-        SERVICE_IDS[c['service_id']] = {
-            'en': c['label_en'],
-            'fr': c['label_fr']
+        SERVICE_IDS[row['service_id']] = {
+            'en': row['label_en'],
+            'fr': row['label_fr']
         }
 
 
