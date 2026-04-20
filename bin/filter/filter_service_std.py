@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import csv
+import os
 import sys
 
 from typing import Dict, Any
@@ -24,6 +25,19 @@ COLUMNS = [
 ]
 
 BOM = "\N{bom}"
+
+SERVICE_ID_REF_DATA_FILE = os.path.join(
+    os.path.split(__file__)[0],
+    '../../ckanext/canada/tables/references'
+    'data/ref_service_service_ids.csv')
+SERVICE_IDS = {}
+with open(SERVICE_ID_REF_DATA_FILE, 'r') as f:
+    c = csv.DictReader(f)
+    for row in c:
+        SERVICE_IDS[c['service_id']] = {
+            'en': c['label_en'],
+            'fr': c['label_fr']
+        }
 
 
 def test(record: Dict[str, Any]) -> Dict[str, Any]:
@@ -75,6 +89,10 @@ def process_row(row: Dict[str, Any]) -> Dict[str, Any]:
     # otherwise target_met is not met
     else:
         row['target_met'] = 'N'
+
+    # populate service names from ids
+    row['service_name_en'] = SERVICE_IDS[row['service_id']]['en']
+    row['service_name_fr'] = SERVICE_IDS[row['service_id']]['fr']
 
     return row
 

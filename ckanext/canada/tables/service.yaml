@@ -8,7 +8,7 @@ title: Service Inventory
 notes: Access, upload and modify the Service Inventory of external and internal enterprise services for your organization
 
 template_version: 3
-template_updated: 2025-08-11  # last qa confirmed: 2025-02-19
+template_updated: 2026-04-20  # last qa confirmed: 2025-02-19
 
 portal_type: dataset
 collection: service
@@ -63,7 +63,7 @@ resources:
     obligation: Mandatory
     excel_required: true
     form_required: true
-    datatables_col_class: col-sm pd-datatables-primary-key-offset-md
+    datatables_col_class: col-lg pd-datatables-primary-key-offset-md
     excel_error_formula: 'OR({default_formula},LEN({cell})-LEN(SUBSTITUTE({cell},",",""))>0)'
     js_error_eval: 'VALUE.length > 0 && VALUE.includes(",")'
     excel_full_text_choices: false
@@ -85,7 +85,7 @@ resources:
     choices_filter_query: WHERE org_years ? {org}
 
   # DEP 1-4
-  # Dev: Published Resource Field TODO: modify for published field
+  # Dev: Published Resource Field
   - datastore_id: service_name_en
     label:
       en: Service Name (English)
@@ -94,29 +94,12 @@ resources:
       en: Identifies the official name of the service.
       fr: Indique le nom officiel du service.
     obligation: Mandatory
-    excel_required: true
-    excel_column_width: 40
-    form_required: true
-    format_type:
-      en: Free text
-      fr: Texte libre
-    validation:
-      en: |
-        This field must not be empty.
-        This field has a maximum length of 350 characters.
-      fr: |
-        Ce champ ne doit pas être vide.
-        Ce champ a une longueur maximale de 350 caractères.
     occurrence: Single
     datastore_type: text
-    datatables_col_class: col-lg
-    max_chars: 350
-    form_attrs:
-      class: form-control canada-width-full d-block
-      maxlength: 350
+    published_resource_computed_field: true
 
   # DEP 1-5
-  # Dev: Published Resource Field TODO: modify for published field
+  # Dev: Published Resource Field
   - datastore_id: service_name_fr
     label:
       en: Service Name (French)
@@ -125,26 +108,9 @@ resources:
       en: Identifies the official name of the service.
       fr: Indique le nom officiel du service.
     obligation: Mandatory
-    excel_required: true
-    excel_column_width: 40
-    form_required: true
-    format_type:
-      en: Free text
-      fr: Texte libre
-    validation:
-      en: |
-        This field must not be empty.
-        This field has a maximum length of 350 characters.
-      fr: |
-        Ce champ ne doit pas être vide.
-        Ce champ a une longueur maximale de 350 caractères.
     occurrence: Single
     datastore_type: text
-    datatables_col_class: col-lg
-    max_chars: 350
-    form_attrs:
-      class: form-control canada-width-full d-block
-      maxlength: 350
+    published_resource_computed_field: true
 
   # DEP 1-6
   - datastore_id: service_description_en
@@ -1943,7 +1909,7 @@ resources:
       en: The unique number assigned to a service in the inventory to make it easier to refer to specific services.
       fr: Le numéro unique attribué à un service dans le répertoire afin de faciliter le référencement à des services précis.
     obligation: Mandatory
-    datatables_col_class: col-sm pd-datatables-primary-key-offset-md
+    datatables_col_class: col-lg pd-datatables-primary-key-offset-md
     excel_required: true
     form_required: true
     excel_error_formula: 'OR({default_formula},LEN({cell})-LEN(SUBSTITUTE({cell},",",""))>0)'
@@ -1967,7 +1933,7 @@ resources:
     choices_filter_query: WHERE org_years ? {org}
 
   # DEP 2-3
-  # Dev: Published Resource Field TODO: modify for published field
+  # Dev: Published Resource Field
   - datastore_id: service_name_en
     label:
       en: Service Name (English)
@@ -1976,29 +1942,12 @@ resources:
       en: Identifies the official name of the service.
       fr: Indique le nom officiel du service.
     obligation: Mandatory
-    excel_required: true
-    excel_column_width: 40
-    form_required: true
-    validation:
-      en: |
-        This field must not be empty.
-        This field has a maximum length of 350 characters.
-      fr: |
-        Ce champ ne doit pas être vide.
-        Ce champ a une longueur maximale de 350 caractères.
-    format_type:
-      en: Free text
-      fr: Texte libre
     occurrence: Single
     datastore_type: text
-    datatables_col_class: col-lg
-    max_chars: 350
-    form_attrs:
-      class: form-control canada-width-full d-block
-      maxlength: 350
+    published_resource_computed_field: true
 
   # DEP 2-4
-  # Dev: Published Resource Field TODO: modify for published field
+  # Dev: Published Resource Field
   - datastore_id: service_name_fr
     label:
       en: Service Name (French)
@@ -2007,26 +1956,9 @@ resources:
       en: Identifies the official name of the service.
       fr: Indique le nom officiel du service.
     obligation: Mandatory
-    excel_required: true
-    excel_column_width: 40
-    form_required: true
-    validation:
-      en: |
-        This field must not be empty.
-        This field has a maximum length of 350 characters.
-      fr: |
-        Ce champ ne doit pas être vide.
-        Ce champ a une longueur maximale de 350 caractères.
-    format_type:
-      en: Free text
-      fr: Texte libre
     occurrence: Single
     datastore_type: text
-    datatables_col_class: col-lg
-    max_chars: 350
-    form_attrs:
-      class: form-control canada-width-full d-block
-      maxlength: 350
+    published_resource_computed_field: true
 
   # DEP 2-5
   - datastore_id: service_standard_id
@@ -2043,7 +1975,7 @@ resources:
         service. Facilite le référencement, car un service peut avoir de multiples
         normes.
     obligation: Mandatory
-    datatables_col_class: col-sm pd-datatables-primary-key-offset-sm_md
+    datatables_col_class: col-sm pd-datatables-primary-key-offset-md_lg
     excel_required: true
     form_required: true
     excel_error_formula: 'OR({default_formula},LEN({cell})-LEN(SUBSTITUTE({cell},",",""))>0)'
