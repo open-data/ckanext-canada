@@ -1626,15 +1626,12 @@ resources:
           errors := errors || ARRAY[['service_id', {service_id_comma_error}]];
         END IF;
 
-        refval := (
-          SELECT array_agg(service_id) FROM "ref_service_service_ids"
-          WHERE org_years ? org_name
-          AND service_id = NEW.service_id
-        );
-        IF refval IS NULL THEN
+        IF NOT EXISTS(
+          SELECT FROM "ref_service_service_ids"
+            WHERE org_years ? org_name
+            AND service_id = NEW.service_id
+        ) THEN
           errors := errors || ARRAY[['service_id', {service_id_org_limit_error} || '' || org_name || '' || NEW.service_id]];
-        ELSE
-          NEW.service_id := refval[1];
         END IF;
 
         errors := errors || required_error(NEW.service_name_en, 'service_name_en');
@@ -1675,6 +1672,7 @@ resources:
           SELECT array_agg(program_id) FROM "ref_service_program_ids"
           WHERE org_years ? org_name
           AND program_id = ANY(NEW.program_id)
+          ORDER BY program_id
         );
         SELECT coalesce(array_agg(v), '{{}}') INTO referr FROM unnest(NEW.program_id) v WHERE NOT (v = ANY(coalesce(refval, '{{}}')));
         IF refval IS NULL OR array_length(referr, 1) > 0 THEN
@@ -2638,7 +2636,6 @@ resources:
         errors text[][] := '{{}}';
         org_name text NOT NULL := (SELECT org_name FROM datastore_user LIMIT 1);
         crval RECORD;
-        refval text[];
       BEGIN
         NEW.fiscal_yr := trim(both E'\t\n\x0b\x0c\r \xc2\xa0' from NEW.fiscal_yr);
         errors := errors || required_error(NEW.fiscal_yr, 'fiscal_yr');
@@ -2649,15 +2646,12 @@ resources:
           errors := errors || ARRAY[['service_id', {service_id_comma_error}]];
         END IF;
 
-        refval := (
-          SELECT array_agg(service_id) FROM "ref_service_service_ids"
-          WHERE org_years ? org_name
-          AND service_id = NEW.service_id
-        );
-        IF refval IS NULL THEN
+        IF NOT EXISTS(
+          SELECT FROM "ref_service_service_ids"
+            WHERE org_years ? org_name
+            AND service_id = NEW.service_id
+        ) THEN
           errors := errors || ARRAY[['service_id', {service_id_org_limit_error} || '' || org_name || '' || NEW.service_id]];
-        ELSE
-          NEW.service_id := refval[1];
         END IF;
 
         errors := errors || required_error(NEW.service_name_en, 'service_name_en');

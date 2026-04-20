@@ -95,7 +95,7 @@ def _generate_data():
     org_id_abbr_map = {}
     with requests.get(org_variants_uri, stream=True) as response:
         response.encoding = 'utf-8-sig'
-        c = csv.DictReader((l.decode('utf-8-sig') for l in response.iter_lines()))
+        c = csv.DictReader(response.iter_lines(decode_unicode=True))
 
         assert 'org_name_variant' in c.fieldnames
         assert 'org_id' in c.fieldnames
@@ -110,7 +110,7 @@ def _generate_data():
     program_id_map = {}
     with requests.get(program_ids_uri, stream=True) as response:
         response.encoding = 'utf-8-sig'
-        c = csv.DictReader((l.decode('utf-8-sig') for l in response.iter_lines()),
+        c = csv.DictReader(response.iter_lines(decode_unicode=True),
                            delimiter=';')
 
         assert 'org_id' in c.fieldnames
@@ -169,7 +169,7 @@ def _generate_data():
     inserted_service_ids = set()
     with requests.get(service_ids_uri, stream=True) as response:
         response.encoding = 'utf-8-sig'
-        c = csv.DictReader((l.decode('utf-8-sig') for l in response.iter_lines()),
+        c = csv.DictReader(response.iter_lines(decode_unicode=True),
                            delimiter=';')
 
         assert 'service_id' in c.fieldnames
