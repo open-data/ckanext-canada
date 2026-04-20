@@ -29,7 +29,7 @@ BOM = "\N{bom}"
 SERVICE_ID_REF_DATA_FILE = os.path.join(
     os.path.split(__file__)[0],
     '../../ckanext/canada/tables/references'
-    'data/ref_service_service_ids.csv')
+    '/data/ref_service_service_ids.csv')
 SERVICE_IDS = {}
 with open(SERVICE_ID_REF_DATA_FILE, 'r') as f:
     c = csv.DictReader(f)
