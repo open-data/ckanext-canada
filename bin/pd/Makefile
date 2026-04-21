@@ -456,10 +456,10 @@ $(workdir)/grants-nil.csv:
 	$(ckan_command) -c $(registry_ini) $(combine) grants-nil -d $(workdir)
 
 $(workdir)/filtered/grants.csv: $(workdir)/grants.csv
-	$(fdir)/filter_grants.py < $< > $@
+	$(fdir)/filter_modified_created.py < $< > $@
 
 $(workdir)/filtered/grants-nil.csv: $(workdir)/grants-nil.csv
-	$(fdir)/filter_grants.py < $< > $@
+	$(fdir)/filter_modified_created.py < $< > $@
 
 ###
 ###  Hospitality Expenses
