@@ -793,7 +793,7 @@ resources:
           NOT(
             ISBLANK({agreement_start_date})
           ),
-          VALUE({agreement_start_date})>=DATE(2025,12,1),
+          VALUE({agreement_start_date})>=DATE(2026,5,1),
           OR(
             NOT(ISNUMBER(VALUE({cell}))),
             NOT(VALUE({cell})>0)
@@ -802,7 +802,7 @@ resources:
       )
     js_error_eval: >-
       {{agreement_start_date}}.length > 0 &&
-      new Date({{agreement_start_date}}) >= new Date("2025-12-01") &&
+      new Date({{agreement_start_date}}) >= new Date("2026-05-01") &&
       VALUE.length > 0 &&
       (
         (
@@ -1292,6 +1292,9 @@ resources:
             errors := errors || ARRAY[['federal_riding_number', {federal_riding_number_error}]];
           END IF;
 
+        END IF;
+
+        IF NEW.agreement_start_date >= '2026-05-01'::date THEN
           IF NOT NEW.agreement_value > 0 THEN
             errors := errors || ARRAY[['agreement_value', {agreement_value_error}]];
           END IF;
