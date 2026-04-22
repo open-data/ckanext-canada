@@ -85,12 +85,12 @@ class TestGrants(CanadaTestBase):
         """
         Must be greater than 0
 
-        NOTE: conditional on `agreement_start_date`>=2025-12-01
+        NOTE: conditional on `agreement_start_date`>=2026-05-01
         """
         chromo = get_chromo('grants')
         record = chromo['examples']['record'].copy()
 
-        record['agreement_start_date'] = '2025-12-01'
+        record['agreement_start_date'] = '2026-05-01'
         record['amendment_number'] = 0
 
         bad_formats = [
