@@ -249,6 +249,7 @@ resources:
       en: This field indicates when a planned consultation will begin to accept input from participants.
       fr: Ce champ indique quand une séance de planification prévue commencera à accepter les commentaires des participants.
     obligation: Mandatory
+    # FIXME: add trigger to ensure start_date is not in future, and dates are chronological
     excel_required: true
     form_required: true
     format_type:
@@ -289,6 +290,7 @@ resources:
       en: The field indicates the current status of the engagement process.
       fr: Cette zone indique l’état d’avancement du processus de participation.
     obligation: Mandatory
+    # FIXME: missing required trigger for status
     excel_required: true
     form_required: true
     format_type:
@@ -372,6 +374,7 @@ resources:
       en: This field indicates if the “What we Heard” report is completed, published and made available online on the Consulting with Canadians website.
       fr: Cette zone indique si le rapport intitulé « Ce que nous avons entendu » est terminé, publié et disponible sur le site Web « Consultations auprès des Canadiens ».
     obligation: Mandatory
+    # FIXME: missing required trigger for report_available_online
     excel_required: true
     form_required: true
     format_type:

@@ -188,6 +188,8 @@ jobs:
           pip install -r test-requirements.txt
           pip install setuptools==70.0.0
           python3 setup.py develop
+          npm install -D
+          npm run build
           cd /srv/app/src/ckan
           pip install -e .
           python3 setup.py develop

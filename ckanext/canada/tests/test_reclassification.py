@@ -144,7 +144,7 @@ class TestReclassification(CanadaTestBase):
         NOTE: the filter test returns a Dict, not a csv.DictWriter,
               so we can assert on object types here.
         """
-        record = get_chromo('briefingt')['examples']['record'].copy()
+        record = get_chromo('reclassification')['examples']['record'].copy()
 
         # filters out record_created, record_modified, user_modified
         record['record_created'] = 'Not Blank'
