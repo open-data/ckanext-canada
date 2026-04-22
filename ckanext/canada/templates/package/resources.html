@@ -13,6 +13,6 @@
 {% endblock %}
 
 {% block scripts %}
-  <script src="{{ h.cdts_asset('/js/deps/jquery.dataTables.min.js') }}" integrity="sha384-b1RBSdBjGOkT2YrnjRU/Xz0do2szxDwYCnBdFesxWlyT7m6YrfGtjYaz1MBGYvEo" crossorigin="anonymous" nonce="{{- h.get_inline_script_nonce() -}}" defer></script>
+  <script src="{{ h.cdts_asset('/js/deps/jquery.dataTables.min.js') }}" integrity="sha384-xbKh5PcHqYD2znaTJ+mPamIq8ERw8yRfp72NI8CGRg51FffJAXidmePtdkmCjEh9" crossorigin="anonymous" nonce="{{- h.get_inline_script_nonce() -}}" defer></script>
   {{ super() }}
 {% endblock %}

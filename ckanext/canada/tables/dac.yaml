@@ -173,6 +173,7 @@ resources:
     obligation: Mandatory
     excel_required: true
     form_required: true
+    # FIXME: role does not have required trigger, or choices trigger
     excel_full_text_choices: true
     datatables_full_text_choices: true
     format_type:
