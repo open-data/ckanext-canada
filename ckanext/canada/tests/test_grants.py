@@ -91,6 +91,7 @@ class TestGrants(CanadaTestBase):
         record = chromo['examples']['record'].copy()
 
         record['agreement_start_date'] = '2026-05-01'
+        record['agreement_end_date'] = '2026-08-30'
         record['amendment_number'] = 0
 
         bad_formats = [
