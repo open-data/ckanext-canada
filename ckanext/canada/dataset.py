@@ -199,13 +199,13 @@ def modify_core_dataset_blueprint(package_type: str, blueprint: Blueprint):
         strict_slashes=False
     )
     blueprint.add_url_rule(
-        '/new/<id>/<page>',
+        '/new/<pkg_id>/<page>',
         endpoint='canada_new_page_%s' % package_type,
         view_func=CanadaDatasetCreatePageView.as_view('new_page'),
         methods=['GET', 'POST']
     )
     blueprint.add_url_rule(
-        '/edit/<id>/<page>',
+        '/edit/<pkg_id>/<page>',
         endpoint='canada_edit_page_%s' % package_type,
         view_func=CanadaDatasetEditPageView.as_view('edit_page'),
         methods=['GET', 'POST']
