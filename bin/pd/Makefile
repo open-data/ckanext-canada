@@ -463,10 +463,10 @@ $(workdir)/grantsmonthly.csv:
 	$(ckan_command) -c $(registry_ini) $(combine) grantsmonthly -d $(workdir)
 
 $(workdir)/filtered/grants.csv: $(workdir)/grants.csv
-	$(fdir)/filter_grants.py < $< > $@
+	$(fdir)/filter_modified_created.py < $< > $@
 
 $(workdir)/filtered/grants-nil.csv: $(workdir)/grants-nil.csv
-	$(fdir)/filter_grants.py < $< > $@
+	$(fdir)/filter_modified_created.py < $< > $@
 
 $(workdir)/filtered/grantsmonthly.csv: $(workdir)/grantsmonthly.csv
 	$(fdir)/filter_grants_monthly.py < $< > $@
