@@ -1,9 +1,8 @@
-# NOTE: custom Babel extrcators
-from typing import BinaryIO, Any, List, Generator, Tuple, Dict
-
 from yaml import load, ScalarNode
 from yaml.loader import SafeLoader
 from six import string_types
+
+from typing import BinaryIO, Any, List, Generator, Tuple, Dict
 
 
 class SafeLineLoader(SafeLoader):
