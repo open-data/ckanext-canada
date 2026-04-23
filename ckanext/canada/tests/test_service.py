@@ -93,8 +93,7 @@ class TestService(CanadaTestBase):
         chromo = get_chromo('service')
         record = chromo['examples']['record'].copy()
 
-        expected_required_fields = ['service_name_en', 'service_name_fr',
-                                    'service_description_en', 'service_description_fr',
+        expected_required_fields = ['service_description_en', 'service_description_fr',
                                     'service_type', 'service_recipient_type',
                                     'service_scope', 'client_target_groups',
                                     'program_id', 'client_feedback_channel',
@@ -283,8 +282,7 @@ class TestService(CanadaTestBase):
         chromo = get_chromo('service')
         record = chromo['examples']['record'].copy()
 
-        expect_maxchar_fields = ['service_name_en', 'service_name_fr',
-                                 'service_description_en', 'service_description_fr',
+        expect_maxchar_fields = ['service_description_en', 'service_description_fr',
                                  'automated_decision_system_description_en',
                                  'automated_decision_system_description_fr',
                                  'os_comments_client_interaction_en',
@@ -436,8 +434,7 @@ class TestStdService(CanadaTestBase):
         chromo = get_chromo('service-std')
         record = chromo['examples']['record'].copy()
 
-        expected_required_fields = ['service_name_en', 'service_name_fr',
-                                    'service_standard_en', 'service_standard_fr',
+        expected_required_fields = ['service_standard_en', 'service_standard_fr',
                                     'type', 'channel', 'standards_targets_uri_en',
                                     'standards_targets_uri_fr']
 
@@ -542,8 +539,7 @@ class TestStdService(CanadaTestBase):
         chromo = get_chromo('service-std')
         record = chromo['examples']['record'].copy()
 
-        expect_maxchar_fields = ['service_name_en', 'service_name_fr',
-                                 'service_standard_en', 'service_standard_fr',
+        expect_maxchar_fields = ['service_standard_en', 'service_standard_fr',
                                  'channel_comments_en', 'channel_comments_fr',
                                  'comments_en', 'comments_fr',
                                  'standards_targets_uri_en',

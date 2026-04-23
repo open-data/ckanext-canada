@@ -749,3 +749,43 @@ def update_triggers():
         RETURN NULL;
     END;
         ''')
+
+    lc.action.datastore_function_create(
+        name='fiscal_year_error',
+        or_replace=True,
+        arguments=[
+            {'argname': 'value', 'argtype': 'text'},
+            {'argname': 'field_name', 'argtype': 'text'},
+            # min/max refers to the first year in the fiscal year
+            # e.g. 2014 means 2014-2015
+            {'argname': 'min', 'argtype': 'int4', 'argdefault': 'NULL'},
+            {'argname': 'max', 'argtype': 'int4', 'argdefault': 'NULL'}],
+        rettype='_text',
+        definition='''
+    DECLARE
+        min_val int4 := min;
+        max_val int4 := max;
+    BEGIN
+        IF min_val IS NULL THEN
+            min_val := 2005;
+        END IF;
+
+        IF max_val IS NULL THEN
+            SELECT CASE
+                WHEN EXTRACT(MONTH FROM CURRENT_DATE) >= 4
+                    THEN EXTRACT(YEAR FROM CURRENT_DATE)::int
+                ELSE
+                    EXTRACT(YEAR FROM CURRENT_DATE)::int - 1
+            END INTO max_val;
+        END IF;
+
+        IF split_part(value, '-', 1)::int < min_val OR
+        split_part(value, '-', 1)::int > max_val OR
+        split_part(value, '-', 2)::int - split_part(value, '-', 1)::int <> 1 THEN
+           RETURN ARRAY[[field_name, 'Invalid fiscal year: {}\uF8FF"'
+                || replace(value, E'\\t', ' ') || '"']];
+        END IF;
+
+        RETURN NULL;
+    END;
+        ''')

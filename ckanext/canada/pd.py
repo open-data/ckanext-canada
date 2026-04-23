@@ -11,6 +11,7 @@ from pysolr import Solr
 from babel.numbers import format_currency, format_decimal
 
 from ckanapi import LocalCKAN, NotFound
+from ckanext.datastore.backend.postgres import get_write_engine
 
 from ckanext.recombinant.tables import (
     get_chromo,
@@ -624,3 +625,78 @@ def compare_output(prev_solrrec: Dict[str, Any],
                     sum_to_field(out, sc, sum_change)
 
     return out
+
+
+def _load_csv_ref_data(table_name: str, columns: List[str],
+                       file_path: str):
+    """
+    Runs a copy_expert to insert CSV data into a DataStore table.
+    """
+    write_engine = get_write_engine()
+    with write_engine.begin() as connection:
+        connection.execute("SET LOCAL lock_timeout = '5s'")
+        connection.execute('TRUNCATE TABLE "%s"' % table_name)
+
+    connection = write_engine.raw_connection()
+    try:
+        cursor = connection.cursor()
+        with open(file_path, 'rb') as f:
+            try:
+                cursor.copy_expert(
+                    'COPY "%s" '
+                    '(%s) FROM STDIN '
+                    "WITH (DELIMITER ',', FORMAT csv, HEADER 1, ENCODING 'UTF8');" % (
+                        table_name,
+                        ','.join(['"%s"' % f for f in columns])
+                    ), f)
+            finally:
+                cursor.close()
+    finally:
+        connection.commit()
+
+
+@pd.command()
+@click.argument("pd_type", required=False)
+@click.option('-v', '--verbose', is_flag=True,
+              type=click.BOOL, help='Increase verbosity.')
+def load_ref_data(pd_type: Optional[str] = None,
+                  verbose: Optional[bool] = False):
+    """
+    Loads CSV data into DataStore reference tables.
+    """
+    if pd_type is None or pd_type == 'service':
+        if verbose:
+            click.echo('Loading service Service IDs '
+                       'into ref_service_service_ids table...')
+        service_id_data = os.path.join(
+            os.path.split(__file__)[0],
+            'tables/references/data/ref_service_service_ids.csv')
+        _load_csv_ref_data('ref_service_service_ids',
+                           [
+                               'service_id',
+                               'label_en',
+                               'label_fr',
+                               'org_years',
+                           ],
+                           service_id_data)
+        if verbose:
+            click.echo('Successfully loaded service Service IDs '
+                       'into ref_service_service_ids table')
+
+        if verbose:
+            click.echo('Loading service Program IDs '
+                       'into ref_service_program_ids table...')
+        program_id_data = os.path.join(
+            os.path.split(__file__)[0],
+            'tables/references/data/ref_service_program_ids.csv')
+        _load_csv_ref_data('ref_service_program_ids',
+                           [
+                               'program_id',
+                               'label_en',
+                               'label_fr',
+                               'org_years',
+                           ],
+                           program_id_data)
+        if verbose:
+            click.echo('Successfully loaded service Program IDs '
+                       'into ref_service_program_ids table')
