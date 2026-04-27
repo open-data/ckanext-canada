@@ -22,6 +22,7 @@ from ckanext.xloader.interfaces import IXloader
 from ckanext.canada.plugin.validation_plugin import CanadaValidationPlugin
 from ckanext.canada import logic
 from ckanext.canada import auth
+from ckanext.canada.helpers import org_name_from_res_id
 
 
 log = logging.getLogger(__name__)
@@ -62,7 +63,8 @@ class CanadaInternalPlugin(p.SingletonPlugin):
         original_upsert_data = db.upsert_data
 
         def patched_upsert_data(context: Context, data_dict: DataDict) -> Any:
-            with logic.datastore_create_temp_user_table(context):
+            org_name = org_name_from_res_id(data_dict.get('resource_id'))
+            with logic.datastore_create_temp_user_table(context, org_name=org_name):
                 try:
                     return original_upsert_data(context, data_dict)
                 except ValidationError as e:

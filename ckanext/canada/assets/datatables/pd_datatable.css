@@ -735,6 +735,15 @@ body #dtprv_wrapper[data-compact-view="false"] #dtprv-foot-main .pd-datatables-p
   left: calc(300px + 36px);
 }
 
+body #dtprv_wrapper[data-compact-view="false"] .pd-datatables-primary-key-offset-md_lg{
+  left: 525px;
+}
+
+body #dtprv_wrapper[data-compact-view="false"] .dt-scroll-head th:not(:first-of-type).pd-datatables-primary-key-offset-md_lg,
+body #dtprv_wrapper[data-compact-view="false"] #dtprv-foot-main .pd-datatables-primary-key-offset-md_lg{
+  left: calc(525px + 36px);
+}
+
 body #dtprv_wrapper[data-compact-view="false"] .pd-datatables-primary-key-offset-xl{
   left: 400px;
 }

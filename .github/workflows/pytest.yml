@@ -204,6 +204,8 @@ jobs:
           ckan -c /srv/app/src/ckanext-canada/test-core.ini recombinant create-triggers -a
           ckan -c /srv/app/src/ckanext-canada/test-core.ini db upgrade
           ckan -c /srv/app/src/ckanext-canada/test-core.ini db pending-migrations --apply
+          ckan -c /srv/app/src/ckanext-canada/test-core.ini recombinant create-ref-tables
+          ckan -c /srv/app/src/ckanext-canada/test-core.ini pd load-ref-data -v
       - name: Download Test Durations
         if: needs.define-matrix.outputs.restored == 'true'
         uses: actions/download-artifact@v4
