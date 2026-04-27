@@ -218,12 +218,12 @@ class CanadaDatasetEditView(DatasetEditView):
 
 
 class CanadaDatasetEditPageView(SchemingEditPageView):
-    def post(self, package_type: str, pkg_id: str, page: int) -> Union[Response, str]:
+    def post(self, package_type: str, id: str, page: int) -> Union[Response, str]:
         """
         Custom flash messages per dataset type.
         """
         response = super(CanadaDatasetEditPageView, self).post(
-            package_type, pkg_id, page)
+            package_type, id, page)
         if hasattr(response, 'status_code'):
             # type_ignore_reason: checking attribute
             if (
@@ -232,7 +232,7 @@ class CanadaDatasetEditPageView(SchemingEditPageView):
                 context = self._prepare()
                 pkg_dict = get_action('package_show')(
                     cast(Context, dict(context, for_view=True)), {
-                        'id': pkg_id
+                        'id': id
                     }
                 )
                 if pkg_dict['type'] == 'prop':
@@ -266,12 +266,12 @@ class CanadaDatasetCreateView(SchemingCreateView):
 
 
 class CanadaDatasetCreatePageView(SchemingCreatePageView):
-    def post(self, package_type: str, pkg_id: str, page: int) -> Union[Response, str]:
+    def post(self, package_type: str, id: str, page: int) -> Union[Response, str]:
         """
         Custom flash messages for scheming pages.
         """
         response = super(CanadaDatasetCreatePageView, self).post(
-            package_type, pkg_id, page)
+            package_type, id, page)
         if hasattr(response, 'status_code'):
             # type_ignore_reason: checking attribute
             if (
@@ -280,7 +280,7 @@ class CanadaDatasetCreatePageView(SchemingCreatePageView):
                 pages = h.scheming_get_dataset_form_pages(package_type)
                 h.flash_success(
                     _('Saved "%s" for dataset %s.')
-                    % (h.scheming_language_text(pages[int(page) - 1]['title']), pkg_id))
+                    % (h.scheming_language_text(pages[int(page) - 1]['title']), id))
         return response
 
 
