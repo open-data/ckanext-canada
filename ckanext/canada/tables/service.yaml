@@ -1585,7 +1585,7 @@ resources:
       BEGIN
         NEW.fiscal_yr := trim(both E'\t\n\x0b\x0c\r \xc2\xa0' from NEW.fiscal_yr);
         errors := errors || required_error(NEW.fiscal_yr, 'fiscal_yr');
-        errors := errors || fiscal_year_error(NEW.fiscal_yr, 'fiscal_yr'::text, 2014);
+        errors := errors || fiscal_year_error(NEW.fiscal_yr, 'fiscal_yr', 2014);
 
         errors := errors || required_error(NEW.service_id, 'service_id');
         IF NEW.service_id LIKE '%,%' THEN
@@ -2569,7 +2569,7 @@ resources:
       BEGIN
         NEW.fiscal_yr := trim(both E'\t\n\x0b\x0c\r \xc2\xa0' from NEW.fiscal_yr);
         errors := errors || required_error(NEW.fiscal_yr, 'fiscal_yr');
-        errors := errors || fiscal_year_error(NEW.fiscal_yr, 'fiscal_yr'::text, 2014);
+        errors := errors || fiscal_year_error(NEW.fiscal_yr, 'fiscal_yr', 2014);
 
         errors := errors || required_error(NEW.service_id, 'service_id');
         IF NEW.service_id LIKE '%,%' THEN

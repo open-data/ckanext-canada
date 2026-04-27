@@ -758,7 +758,7 @@ def update_triggers():
             {'argname': 'field_name', 'argtype': 'text'},
             # min/max refers to the first year in the fiscal year
             # e.g. 2014 means 2014-2015
-            {'argname': 'min', 'argtype': 'int4', 'argdefault': 'NULL'},
+            {'argname': 'min', 'argtype': 'int4', 'argdefault': 2005},
             {'argname': 'max', 'argtype': 'int4', 'argdefault': 'NULL'}],
         rettype='_text',
         definition='''
@@ -766,10 +766,6 @@ def update_triggers():
         min_val int4 := min;
         max_val int4 := max;
     BEGIN
-        IF min_val IS NULL THEN
-            min_val := 2005;
-        END IF;
-
         IF max_val IS NULL THEN
             SELECT CASE
                 WHEN EXTRACT(MONTH FROM CURRENT_DATE) >= 4
