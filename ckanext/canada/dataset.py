@@ -178,7 +178,8 @@ def _redirect_pd_dataset_endpoints() -> Optional[Response]:
                                  resource_name=package_type)
 
 
-def modify_core_dataset_blueprint(package_type: str, blueprint: Blueprint):
+def modify_core_dataset_blueprint(package_type: str, blueprint: Blueprint,
+                                  has_form_pages: bool):
     blueprint.add_url_rule(
         '/edit/<id>',
         endpoint='canada_edit_%s' % package_type,
@@ -198,18 +199,19 @@ def modify_core_dataset_blueprint(package_type: str, blueprint: Blueprint):
         methods=['GET'],
         strict_slashes=False
     )
-    blueprint.add_url_rule(
-        '/new/<id>/<page>',
-        endpoint='canada_new_page_%s' % package_type,
-        view_func=CanadaDatasetCreatePageView.as_view('new_page'),
-        methods=['GET', 'POST']
-    )
-    blueprint.add_url_rule(
-        '/edit/<id>/<page>',
-        endpoint='canada_edit_page_%s' % package_type,
-        view_func=CanadaDatasetEditPageView.as_view('edit_page'),
-        methods=['GET', 'POST']
-    )
+    if has_form_pages:
+        blueprint.add_url_rule(
+            '/new/<id>/<page>',
+            endpoint='canada_new_page_%s' % package_type,
+            view_func=CanadaDatasetCreatePageView.as_view('new_page'),
+            methods=['GET', 'POST']
+        )
+        blueprint.add_url_rule(
+            '/edit/<id>/<page>',
+            endpoint='canada_edit_page_%s' % package_type,
+            view_func=CanadaDatasetEditPageView.as_view('edit_page'),
+            methods=['GET', 'POST']
+        )
     # redirect PD endpoints accessed from /dataset/<pd pkg id>
     blueprint.before_request(cast(BeforeRequestCallable,
                                   _redirect_pd_dataset_endpoints))
