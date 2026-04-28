@@ -19,7 +19,7 @@ def pytest_collection_finish(session: Session) -> None:
 
     print('Running Canada plugin migrations...')
     try:
-        _run_migrations('canada_public')
+        _run_migrations('canada_logic')
     except Exception:
         pass
 
@@ -48,7 +48,7 @@ def pytest_collection_finish(session: Session) -> None:
 
     print('Running Canada plugin migrations...')
     try:
-        _run_migrations('canada_public')
+        _run_migrations('canada_logic')
     except Exception:
         pass
 
