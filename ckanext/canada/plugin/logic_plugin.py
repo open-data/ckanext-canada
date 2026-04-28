@@ -297,7 +297,6 @@ class CanadaLogicPlugin(SchemingDatasetsPlugin, CkanSecurityPlugin):
         Implement of: ckan.plugins.interfaces.IDatasetForm
         SubMethod of: SchemingDatasetsPlugin
         """
-        super().prepare_dataset_blueprint(package_type, blueprint)
         dataset.modify_core_resource_blueprint(package_type, blueprint)
         return blueprint
 
