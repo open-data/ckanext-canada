@@ -4303,3 +4303,23 @@ presets:
     required: true
     form_panel: _exclude_from_form
     output_validators: canada_output_none
+
+- preset_name: ckanapi_dump_resource_views
+  values:
+    field_name: resource_views
+    form_snippet: null
+    display_snippet: null
+    required: false
+    validators: ignore
+    form_panel: _exclude_from_form
+    output_validators: canada_output_none
+
+- preset_name: ckanapi_dump_datastore_fields
+  values:
+    field_name: datastore_fields
+    form_snippet: null
+    display_snippet: null
+    required: false
+    validators: ignore
+    form_panel: _exclude_from_form
+    output_validators: canada_output_none
