@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ckanext-canada 0.4.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-03-19 17:50+0000\n"
+"POT-Creation-Date: 2026-05-12 10:50-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1423,12 +1423,12 @@ msgstr ""
 msgid "container_title"
 msgstr ""
 
-#: ckanext/canada/plugin/public_plugin.py:331
+#: ckanext/canada/plugin/public_plugin.py:332
 #: ckanext/canada/templates/package/read.html:186
 msgid "Previous"
 msgstr ""
 
-#: ckanext/canada/plugin/public_plugin.py:332
+#: ckanext/canada/plugin/public_plugin.py:333
 #: ckanext/canada/templates/package/read.html:202
 msgid "Next"
 msgstr ""
@@ -1590,12 +1590,12 @@ msgid "Access, upload and modify consultation reports for your organization"
 msgstr ""
 
 #. SQL Trigger String for PD Type: consultations
-#: ckanext/canada/tables/consultations.yaml:682
+#: ckanext/canada/tables/consultations.yaml:685
 msgid "If Status is set to: Not Going Forward, Publish Record must be set to No"
 msgstr ""
 
 #. SQL Trigger String for PD Type: consultations
-#: ckanext/canada/tables/consultations.yaml:683
+#: ckanext/canada/tables/consultations.yaml:686
 msgid "Comma is not allowed in Registration Number field"
 msgstr ""
 
@@ -1829,10 +1829,8 @@ msgid "\"Agreement Start Date\" cannot be after \"Projected Agreement End Date\"
 msgstr ""
 
 #. SQL Trigger String for PD Type: grants
-#. SQL Trigger String for PD Type: grantsmonthly
 #: ckanext/canada/tables/grants.yaml:1315
-#: ckanext/canada/tables/grantsmonthly.yaml:1850
-msgid "Must be greater than zero"
+msgid "Must be greater than or equal to zero"
 msgstr ""
 
 #. Resource Title for PD Type: grants
@@ -1885,6 +1883,11 @@ msgstr ""
 #: ckanext/canada/tables/grantsmonthly.yaml:1845
 #: ckanext/canada/tables/service.yaml:1789 ckanext/canada/tables/service.yaml:2693
 msgid "This text must be provided in both languages"
+msgstr ""
+
+#. SQL Trigger String for PD Type: grantsmonthly
+#: ckanext/canada/tables/grantsmonthly.yaml:1850
+msgid "Must be greater than zero"
 msgstr ""
 
 #. Title for PD Type: hospitalityq

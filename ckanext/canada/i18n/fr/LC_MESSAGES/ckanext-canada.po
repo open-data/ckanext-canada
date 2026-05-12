@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-03-19 17:50+0000\n"
+"POT-Creation-Date: 2026-05-12 10:50-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: fr\n"
@@ -1540,12 +1540,12 @@ msgstr "État de la suggestion"
 msgid "container_title"
 msgstr ""
 
-#: ckanext/canada/plugin/public_plugin.py:331
+#: ckanext/canada/plugin/public_plugin.py:332
 #: ckanext/canada/templates/package/read.html:186
 msgid "Previous"
 msgstr "Précédent"
 
-#: ckanext/canada/plugin/public_plugin.py:332
+#: ckanext/canada/plugin/public_plugin.py:333
 #: ckanext/canada/templates/package/read.html:202
 msgid "Next"
 msgstr "Suivant"
@@ -1726,14 +1726,14 @@ msgstr ""
 "pour votre organisation"
 
 #. SQL Trigger String for PD Type: consultations
-#: ckanext/canada/tables/consultations.yaml:682
+#: ckanext/canada/tables/consultations.yaml:685
 msgid "If Status is set to: Not Going Forward, Publish Record must be set to No"
 msgstr ""
 "Si le statut est établi à : Ne pas aller de l’avant, alors l’option de "
 "Publier le document doit être réglée à Non."
 
 #. SQL Trigger String for PD Type: consultations
-#: ckanext/canada/tables/consultations.yaml:683
+#: ckanext/canada/tables/consultations.yaml:686
 msgid "Comma is not allowed in Registration Number field"
 msgstr "La virgule n’est pas autorisée dans le champ du Numéro d’enregistrement"
 
@@ -2023,11 +2023,9 @@ msgstr ""
 "prévue de l'entente »"
 
 #. SQL Trigger String for PD Type: grants
-#. SQL Trigger String for PD Type: grantsmonthly
 #: ckanext/canada/tables/grants.yaml:1315
-#: ckanext/canada/tables/grantsmonthly.yaml:1850
-msgid "Must be greater than zero"
-msgstr "Le nombre doit être supérieur à 0"
+msgid "Must be greater than or equal to zero"
+msgstr "Le nombre doit être supérieur ou égal à 0"
 
 #. Resource Title for PD Type: grants
 #: ckanext/canada/tables/grants.yaml:1364
@@ -2094,6 +2092,11 @@ msgstr "Ce champ est requis en raison d'une réponse présente dans un autre cha
 #: ckanext/canada/tables/service.yaml:2693
 msgid "This text must be provided in both languages"
 msgstr "Ce texte doit être fourni dans les deux langues"
+
+#. SQL Trigger String for PD Type: grantsmonthly
+#: ckanext/canada/tables/grantsmonthly.yaml:1850
+msgid "Must be greater than zero"
+msgstr "Le nombre doit être supérieur à 0"
 
 #. Title for PD Type: hospitalityq
 #. Resource Title for PD Type: hospitalityq
