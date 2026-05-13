@@ -83,7 +83,7 @@ class TestGrants(CanadaTestBase):
 
     def test_agreement_value(self):
         """
-        Must be greater than 0
+        Must be greater than or equal to 0
 
         NOTE: conditional on `agreement_start_date`>=2026-05-01
         """
@@ -96,9 +96,7 @@ class TestGrants(CanadaTestBase):
 
         bad_formats = [
             -200,
-            0,
             -0.01,
-            0.001,  # rounds to 0
         ]
 
         for bad_format in bad_formats:
@@ -116,9 +114,11 @@ class TestGrants(CanadaTestBase):
         good_formats = [
             200,
             1,
+            0,
             0.01,
             0.99,
             0.009,  # rounds to 0.01
+            0.001,  # rounds to 0
         ]
 
         for good_format in good_formats:

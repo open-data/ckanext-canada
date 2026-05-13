@@ -564,3 +564,7 @@ resource_fields:
 # LEGACY FIELDS
 - preset: _legacy_canada_related_type
 - preset: _legacy_canada_related_relationship
+
+# CKANAPI Dump Fields
+- preset: ckanapi_dump_resource_views
+- preset: ckanapi_dump_datastore_fields

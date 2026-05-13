@@ -1992,8 +1992,8 @@ msgstr ""
 
 #. SQL Trigger String for PD Type: grants
 #: ckanext/canada/tables/grants.yaml:1315
-msgid "Must be greater than zero"
-msgstr "Le nombre doit être supérieur à 0"
+msgid "Must be greater than or equal to zero"
+msgstr "Le nombre doit être supérieur ou égal à 0"
 
 #. Resource Title for PD Type: grants
 #: ckanext/canada/tables/grants.yaml:1364

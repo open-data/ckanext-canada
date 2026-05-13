@@ -62,3 +62,6 @@ resource_fields:
 - preset: canada_resource_format
 - preset: canada_resource_language
 - preset: canada_resource_url
+# CKANAPI Dump Fields
+- preset: ckanapi_dump_resource_views
+- preset: ckanapi_dump_datastore_fields
