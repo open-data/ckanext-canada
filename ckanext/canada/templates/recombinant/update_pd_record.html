@@ -98,7 +98,7 @@
 {%- block scripts -%}
   {{ super() }}
   {% if h.recombinant_get_chromo(resource_name).get('cascading_select_fields') %}
-    {% asset 'canada_internal/cascading_select' %}
+    {% asset 'canada_custom/cascading_select' %}
   {% endif %}
-  {% asset 'canada_internal/recombinant_webforms' %}
+  {% asset 'canada_custom/recombinant_webforms' %}
 {%- endblock -%}

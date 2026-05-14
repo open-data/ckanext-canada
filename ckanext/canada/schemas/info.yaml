@@ -3,6 +3,7 @@ scheming_version: 1
 dataset_type: info
 
 before_validators: limit_resources_per_dataset
+after_validators: canada_dataset_visibility
 
 about: 'open.canada.ca: open information metadata definition'
 about_url: http://github.com/open-data/ckanext-canada
@@ -493,6 +494,8 @@ dataset_fields:
 # {The date the asset may be published on the Portal (YYYY-MM-DD)}
 - preset: canada_portal_release_date
 
+- preset: canada_private
+
 - preset: canada_dataset_relationship
 
 
@@ -561,3 +564,7 @@ resource_fields:
 # LEGACY FIELDS
 - preset: _legacy_canada_related_type
 - preset: _legacy_canada_related_relationship
+
+# CKANAPI Dump Fields
+- preset: ckanapi_dump_resource_views
+- preset: ckanapi_dump_datastore_fields
