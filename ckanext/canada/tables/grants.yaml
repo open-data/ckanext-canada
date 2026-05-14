@@ -779,10 +779,10 @@ resources:
     validation:
       en: |
         This field must not be empty.
-        The number must be greater than 0.
+        The number must be greater than or equal to 0.
       fr: |
         Ce champ ne doit pas être vide.
-        Le nombre doit être supérieur à 0.
+        Le nombre doit être supérieur ou égal à 0.
     excel_required: true
     form_required: true
     datastore_type: money
@@ -796,20 +796,17 @@ resources:
           VALUE({agreement_start_date})>=DATE(2026,5,1),
           OR(
             NOT(ISNUMBER(VALUE({cell}))),
-            NOT(VALUE({cell})>0)
+            VALUE({cell}) < 0
           )
         )
       )
     js_error_eval: >-
       {{agreement_start_date}}.length > 0 &&
       new Date({{agreement_start_date}}) >= new Date("2026-05-01") &&
-      VALUE.length > 0 &&
       (
-        (
-          String(VALUE).match(/^-?[0-9]+$/) != null
-          && parseInt(VALUE) < 0
-        ) ||
-        String(VALUE).match(/^-?[0-9]+$/) == null
+        VALUE.length == 0 ||
+        isNaN(Number(VALUE)) ||
+        Number(VALUE) < 0
       )
     solr_dollar_range_facet:
      - 10000
@@ -1295,7 +1292,7 @@ resources:
         END IF;
 
         IF NEW.agreement_start_date >= '2026-05-01'::date THEN
-          IF NOT NEW.agreement_value > 0 THEN
+          IF NOT NEW.agreement_value >= 0 THEN
             errors := errors || ARRAY[['agreement_value', {agreement_value_error}]];
           END IF;
 
@@ -1315,7 +1312,7 @@ resources:
     recipient_business_number_error: Must be a 9 digit number
     federal_riding_number_error: Must be a 5 digit number
     start_end_date_error: '"Agreement Start Date" cannot be after "Projected Agreement End Date"'
-    agreement_value_error: Must be greater than zero
+    agreement_value_error: Must be greater than or equal to zero
 
   examples:
     record:
