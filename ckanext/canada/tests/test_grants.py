@@ -528,6 +528,28 @@ class TestGrants(CanadaTestBase):
         assert 'records' in err
         assert 'recipient_province' in err['records'][0]
 
+    def test_filter_script(self):
+        """
+        Filter out default Registry fields.
+
+        NOTE: csv.DictReader treats every dict value as a string,
+              so we need to use Strings here. Empty strings ("") is None.
+
+        NOTE: the filter test returns a Dict, not a csv.DictWriter,
+              so we can assert on object types here.
+        """
+        record = get_chromo('grants')['examples']['record'].copy()
+
+        # filters out record_created, record_modified, user_modified
+        record['record_created'] = 'Not Blank'
+        record['record_modified'] = 'Not Blank'
+        record['user_modified'] = 'Not Blank'
+
+        test_record = filter_generic.test(dict(record))
+        assert 'record_created' not in test_record
+        assert 'record_modified' not in test_record
+        assert 'user_modified' not in test_record
+
 
 class TestGrantsNil(CanadaTestBase):
     @classmethod
