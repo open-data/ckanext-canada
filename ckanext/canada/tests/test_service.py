@@ -727,3 +727,19 @@ class TestStdService(CanadaTestBase):
         test_record = filter_service_std.test(dict(record))
         assert test_record['performance'] is None
         assert test_record['target_met'] == 'NA'
+
+        record['target'] = 1.0
+        record['volume_meeting_target'] = 405504991
+        record['total_volume'] = 405565059
+        test_record = filter_service_std.test(dict(record))
+        # 0.999851891
+        assert test_record['performance'] == 405504991 / 405565059
+        assert test_record['target_met'] == 'N'
+
+        record['target'] = 1.0
+        record['volume_meeting_target'] = 421615262
+        record['total_volume'] = 421615691
+        test_record = filter_service_std.test(dict(record))
+        # 0.999998982
+        assert test_record['performance'] == 421615262 / 421615691
+        assert test_record['target_met'] == 'N'
