@@ -5,6 +5,10 @@ def mock_is_registry_domain() -> bool:
     return True
 
 
+def mock_is_portal_domain() -> bool:
+    return False
+
+
 class CanadaTestBase(object):
     @classmethod
     def setup_method(self, method):

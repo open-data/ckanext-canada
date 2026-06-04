@@ -3,6 +3,7 @@ scheming_version: 1
 dataset_type: doc
 
 before_validators: limit_resources_per_dataset
+after_validators: canada_dataset_visibility
 
 about: 'open.canada.ca: Open By Default metadata schema'
 about_url: http://github.com/open-data/ckanext-canada
@@ -46,6 +47,7 @@ dataset_fields:
 - preset: canada_usage_condition
 - preset: canada_doc_classification_code
 - preset: canada_license_id
+- preset: canada_private
 
 
 #
@@ -60,3 +62,6 @@ resource_fields:
 - preset: canada_resource_format
 - preset: canada_resource_language
 - preset: canada_resource_url
+# CKANAPI Dump Fields
+- preset: ckanapi_dump_resource_views
+- preset: ckanapi_dump_datastore_fields

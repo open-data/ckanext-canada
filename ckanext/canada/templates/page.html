@@ -133,14 +133,14 @@
 
 {% block scripts %}
   {% snippet 'snippets/cdts/footer_scripts.html' %}
-  {% asset 'canada_public/analytics' %}
+  {% asset 'canada_custom/analytics' %}
   {% block google_analytics_footer %}
     {% if h.is_registry_domain() %}
-      {% asset 'canada_internal/analytics' %}
+      {% asset 'canada_custom/registry_analytics' %}
     {% endif %}
   {%- endblock -%}
   {%- if not h.is_registry_domain() -%}
-    {%- asset 'canada_public/adobe_analytics_fix' -%}
+    {%- asset 'canada_custom/adobe_analytics_fix' -%}
   {%- endif -%}
   {{ super() }}
   {% if h.is_registry_domain() %}

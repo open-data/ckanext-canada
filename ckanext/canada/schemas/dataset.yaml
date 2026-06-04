@@ -3,6 +3,7 @@ dataset_type: dataset
 draft_fields_required: false
 
 before_validators: limit_resources_per_dataset
+after_validators: canada_dataset_visibility
 
 about: 'open.canada.ca: raw open data metadata definition'
 about_url: http://github.com/open-data/ckanext-canada
@@ -494,6 +495,9 @@ resource_fields:
   - tool
   - website
 - preset: canada_resource_size
+# CKANAPI Dump Fields
+- preset: ckanapi_dump_resource_views
+- preset: ckanapi_dump_datastore_fields
 
 - preset: canada_resource_character_set
 - preset: canada_resource_format
