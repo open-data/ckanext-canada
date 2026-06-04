@@ -569,8 +569,8 @@ upload-nap6: $(workdir)/filtered/nap6.csv $(workdir)/nap6.csv
 
 .PHONY: rebuild-nap6
 rebuild-nap6: $(workdir)/filtered/nap6.csv $(workdir)/nap6.csv
-# 	@$(oc_search) nap6_preprocess_csv --csv "$(workdir)/filtered/nap6.csv" --out "$(workdir)/filtered/nap6_search.csv"
-# 	@$(oc_search) import_data_csv --csv "$(workdir)/filtered/nap6_search.csv" --search nap6
+	@$(oc_search) nap6_preprocess_csv --csv "$(workdir)/filtered/nap6.csv" --out "$(workdir)/filtered/nap6_search.csv"
+	@$(oc_search) import_data_csv --csv "$(workdir)/filtered/nap6_search.csv" --search nap6
 
 $(workdir)/nap6.csv:
 	$(ckan_command) -c $(registry_ini) $(combine) nap6 -d $(workdir)
