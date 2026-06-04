@@ -908,7 +908,7 @@ def fgp_viewer_url(package: Dict[str, Any]) -> Optional[str]:
         else:
             openmap_uri = 'openmap'
 
-        return h.adv_search_url() + '/' + openmap_uri + '/' + package.get('id')
+        return '/' + openmap_uri + '/' + h.lang() + '.html#' + package.get('id')
 
 
 def date_field(field: str, pkg: Dict[str, Any]) -> Any:
