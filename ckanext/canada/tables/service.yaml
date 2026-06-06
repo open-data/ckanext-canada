@@ -1627,9 +1627,12 @@ resources:
         NEW.client_target_groups := crval.clean;
 
         refval := (
-          SELECT array_agg(program_id) FROM "ref_service_program_ids"
-          WHERE org_years ? org_name
-          AND program_id = ANY(NEW.program_id)
+          SELECT array_agg(program_id) FROM (
+            SELECT program_id FROM "ref_service_program_ids"
+            WHERE org_years ? org_name
+            AND program_id = ANY(NEW.program_id)
+            ORDER BY program_id
+          ) a
         );
         SELECT coalesce(array_agg(v), '{{}}') INTO referr FROM unnest(NEW.program_id) v WHERE NOT (v = ANY(coalesce(refval, '{{}}')));
         IF refval IS NULL OR array_length(referr, 1) > 0 THEN
