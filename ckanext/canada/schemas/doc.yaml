@@ -65,3 +65,6 @@ resource_fields:
 # CKANAPI Dump Fields
 - preset: ckanapi_dump_resource_views
 - preset: ckanapi_dump_datastore_fields
+# XLoader Fields.
+- preset: canada_ckan_url
+- preset: canada_original_url

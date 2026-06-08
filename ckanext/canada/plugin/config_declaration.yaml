@@ -35,3 +35,8 @@ groups:
           Enables the improved DataTables and custom editor for
           Recombinant type resources.
         validators: boolean_validator
+      - key: ckanext.canada.portal_url
+        default: {"en":"https://open.canada.ca","fr":"https://ouvert.canada.ca"}
+        description: |
+          Set the English and French Portal Base URIs with schemes.
+        validators: convert_to_json_if_string dict_only
