@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-03-19 17:41+0000\n"
+"POT-Creation-Date: 2026-06-09 14:38+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: fr\n"
@@ -1518,12 +1518,12 @@ msgstr "État de la suggestion"
 msgid "container_title"
 msgstr ""
 
-#: ckanext/canada/plugin/public_plugin.py:330
+#: ckanext/canada/plugin/public_plugin.py:331
 #: ckanext/canada/templates/package/read.html:186
 msgid "Previous"
 msgstr "Précédent"
 
-#: ckanext/canada/plugin/public_plugin.py:331
+#: ckanext/canada/plugin/public_plugin.py:332
 #: ckanext/canada/templates/package/read.html:202
 msgid "Next"
 msgstr "Suivant"
@@ -1702,14 +1702,14 @@ msgstr ""
 "pour votre organisation"
 
 #. SQL Trigger String for PD Type: consultations
-#: ckanext/canada/tables/consultations.yaml:682
+#: ckanext/canada/tables/consultations.yaml:685
 msgid "If Status is set to: Not Going Forward, Publish Record must be set to No"
 msgstr ""
 "Si le statut est établi à : Ne pas aller de l’avant, alors l’option de "
 "Publier le document doit être réglée à Non."
 
 #. SQL Trigger String for PD Type: consultations
-#: ckanext/canada/tables/consultations.yaml:683
+#: ckanext/canada/tables/consultations.yaml:686
 msgid "Comma is not allowed in Registration Number field"
 msgstr "La virgule n’est pas autorisée dans le champ du Numéro d’enregistrement"
 
@@ -3973,6 +3973,43 @@ msgstr "Etes-vous sûr de vouloir supprimer cette ressource?"
 #: ckanext/canada/templates/package/snippets/resources.html:44
 msgid "Delete resource"
 msgstr "Supprimer la ressource"
+
+#: ckanext/canada/templates/package/snippets/resource_view.html:19
+msgid "Embed"
+msgstr "Embarquer sur un site"
+
+#: ckanext/canada/templates/package/snippets/resource_view.html:40
+msgid "Embed resource view"
+msgstr "Incorporer cette visualisation de ressource"
+
+#: ckanext/canada/templates/package/snippets/resource_view.html:41
+msgid "Close"
+msgstr ""
+
+#: ckanext/canada/templates/package/snippets/resource_view.html:44
+msgid ""
+"You can copy and paste the embed code into a CMS or blog software that "
+"supports raw HTML"
+msgstr ""
+"Vous pouvez copier et coller le code intégré dans un système de gestion "
+"de contenu ou un logiciel de blogue qui prend en charge le HTML brut"
+
+#: ckanext/canada/templates/package/snippets/resource_view.html:46
+msgid "Only certain websites are allowed to embed content from open.canada.ca:"
+msgstr "Seuls certains sites Web sont autorisés à intégrer du "
+"contenu provenant de open.canada.ca :"
+
+#: ckanext/canada/templates/package/snippets/resource_view.html:51
+msgid "Width"
+msgstr "Largeur"
+
+#: ckanext/canada/templates/package/snippets/resource_view.html:54
+msgid "Height"
+msgstr "Hauteur"
+
+#: ckanext/canada/templates/package/snippets/resource_view.html:57
+msgid "Code"
+msgstr "Code"
 
 #: ckanext/canada/templates/package/snippets/resources.html:35
 msgid "DataStore"
