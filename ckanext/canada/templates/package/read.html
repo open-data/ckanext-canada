@@ -2,6 +2,39 @@
 
 {% set client_lang = h.lang() %}
 {% set title, machine_translated = h.get_translated_t(pkg_dict, 'title') %}
+{% if h.is_registry_domain() %}
+  {% set portal_link = h.portal_url() ~ "/data/" ~ client_lang ~ "/" ~ pkg_dict.get('type', 'dataset') ~ "/" ~ pkg_dict.name %}
+  {% set portal_status_alerts = [] %}
+  {% set is_type_for_alerts = pkg_dict.get('type') == 'dataset' or pkg_dict.get('type') == 'info' %}
+  {% set do_not_show_alerts = pkg_dict.state.startswith('draft') or pkg_dict.state.startswith('deleted') %}
+  {% set no_ready_to_publish = pkg_dict['ready_to_publish'] == 'false' or not pkg_dict['ready_to_publish'] %}
+  {% set no_has_approval = pkg_dict['imso_approval'] == 'false' or not pkg_dict['imso_approval'] %}
+  {% set queued_for_publishing = not pkg_dict['portal_release_date'] or h.date_format(pkg_dict['portal_release_date']) > h.today() %}
+  {% if no_ready_to_publish %}
+    {% do portal_status_alerts.append({
+        'label': _('Action required:'),
+        'sub_label': _('Draft record has been saved and can be edited. Mark as ready to publish to continue.'),
+        'alert_class': 'warning',
+      })
+    %}
+  {% endif %}
+  {% if no_has_approval %}
+    {% do portal_status_alerts.append({
+        'label': _('Action required:'),
+        'sub_label': _('Seek out departmental approval and mark as approved to continue.'),
+        'alert_class': 'warning',
+      })
+    %}
+  {% endif %}
+  {% if not no_ready_to_publish and not no_has_approval and queued_for_publishing %}
+    {% do portal_status_alerts.append({
+        'label': _('Data record is in queue for validation.'),
+        'sub_label': _('Record will be published by the following business day upon validation.'),
+        'alert_class': 'info',
+      })
+    %}
+  {% endif %}
+{% endif %}
 
 {%- block subtitle -%}
   {{ (title or pkg_dict.name) | trim }}
@@ -15,7 +48,17 @@
     {% if machine_translated %}
       <i class="fa fa-language text-muted mrgn-lft-sm" title="{{ _('This third party metadata element has been translated using an automated translation tool.  To report any discrepancies please contact {support}').format(support=h.support_email_address()) }}"></i>
     {% endif %}
+    {% snippet 'package/snippets/package_type_label.html', pkg_dict=pkg_dict, for_page=true %}
   </h1>
+{% endblock %}
+
+{% block content_action %}
+  {{- super() -}}
+  {%- if not do_not_show_alerts and is_type_for_alerts and not portal_status_alerts -%}
+    <a href="{{ portal_link }}" title="{{ _('View on Portal') }}" class="btn btn-success" target="_blank" rel='noopener noreferrer'>
+      <span class="fa fa-arrow-circle-right" aria-hidden="true"></span>&nbsp;{{ _('View on Portal') }}
+    </a>
+  {%- endif -%}
 {% endblock %}
 
 {% block primary_content_inner %}
@@ -42,54 +85,17 @@
           </div>
         {% endif %}
         <section class="resources module-content indent-large">
-          {% set portal_link = h.portal_url() ~ "/data/" ~ client_lang ~ "/" ~ pkg_dict.get('type', 'dataset') ~ "/" ~ pkg_dict.name %}
-          {% set portal_status_alerts = [] %}
-          {% set is_type_for_alerts = pkg_dict.get('type') == 'dataset' or pkg_dict.get('type') == 'info' %}
-          {% set do_not_show_alerts = pkg_dict.state.startswith('draft') or pkg_dict.state.startswith('deleted') %}
-          {% set no_ready_to_publish = pkg_dict['ready_to_publish'] == 'false' or not pkg_dict['ready_to_publish'] %}
-          {% set no_has_approval = pkg_dict['imso_approval'] == 'false' or not pkg_dict['imso_approval'] %}
-          {% set queued_for_publishing = not pkg_dict['portal_release_date'] or h.date_format(pkg_dict['portal_release_date']) > h.today() %}
-          {% if no_ready_to_publish %}
-            {% do portal_status_alerts.append({
-                'label': _('Action required:'),
-                'sub_label': _('Draft record has been saved and can be edited. Mark as ready to publish to continue.'),
-                'alert_class': 'warning',
-              })
-            %}
-          {% endif %}
-          {% if no_has_approval %}
-            {% do portal_status_alerts.append({
-                'label': _('Action required:'),
-                'sub_label': _('Seek out departmental approval and mark as approved to continue.'),
-                'alert_class': 'warning',
-              })
-            %}
-          {% endif %}
-          {% if not no_ready_to_publish and not no_has_approval and queued_for_publishing %}
-            {% do portal_status_alerts.append({
-                'label': _('Data record is in queue for validation.'),
-                'sub_label': _('Record will be published by the following business day upon validation.'),
-                'alert_class': 'info',
-              })
-            %}
-          {% endif %}
-          {% if not do_not_show_alerts and is_type_for_alerts %}
-            {% if portal_status_alerts %}
-              {% for alert in portal_status_alerts %}
-                <div class="module-alert alert alert-{{ alert['alert_class'] }} mrgn-tp-sm">
-                  <p>
-                    {{ alert['label'] }}
-                    {% if alert['sub_label'] %}
-                      <br/><small>{{ alert['sub_label'] }}</small>
-                    {% endif %}
-                  </p>
-                </div>
-              {% endfor %}
-            {% else %}
-              <a href="{{ portal_link }}" title="{{ _('View on Portal') }}" class="btn btn-success" target="_blank" rel='noopener noreferrer'>
-                <span class="fa fa-arrow-circle-right" aria-hidden="true"></span>&nbsp;<span class="text">{{ _('View on Portal') }}</span>
-              </a>
-            {% endif %}
+          {% if not do_not_show_alerts and is_type_for_alerts and portal_status_alerts %}
+            {% for alert in portal_status_alerts %}
+              <div class="module-alert alert alert-{{ alert['alert_class'] }} mrgn-tp-sm">
+                <p>
+                  {{ alert['label'] }}
+                  {% if alert['sub_label'] %}
+                    <br/><small>{{ alert['sub_label'] }}</small>
+                  {% endif %}
+                </p>
+              </div>
+            {% endfor %}
           {% endif %}
           {% if pkg_dict.state == "deleted" %}
             <div class="module-alert alert alert-danger mrgn-tp-sm">

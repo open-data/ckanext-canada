@@ -373,6 +373,7 @@ button.dt-button, div.dt-button, a.dt-button {
 .label.lb-open-dialogue { float:right; border-color: #f08; background: #fff }
 .label.lb-open-info { float:right; border-color: #80f; background: #fff }
 .label.lb-pd { float:right; border-color: #44f; background: #fff }
+.lb-page-display{ font-size: 22px !important; }
 
 a#edit-comment-body-0-format-help-about, button#edit-submit,button#edit-actions-submit  {
   width: auto;
@@ -1792,6 +1793,16 @@ footer#wb-info{
   border: none !important;
   background: #f6f6f6 !important;
   transition-duration: 0.325s !important;
+}
+
+.canada-action-toolbar .content_action a.btn-success{
+  background-color: #1b6c1c !important;
+}
+
+.canada-action-toolbar .content_action a.btn-success:hover,
+.canada-action-toolbar .content_action a.btn-success:active,
+.canada-action-toolbar .content_action a.btn-success:focus{
+  background-color: #114311 !important;
 }
 
 .canada-action-toolbar header .content_action a:not(:last-of-type){
