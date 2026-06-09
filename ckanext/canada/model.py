@@ -16,6 +16,74 @@ Base = declarative_base(metadata=meta.metadata)
 
 
 # type_ignore_reason: incomplete typing
+class RefData(Base):  # type: ignore
+    __tablename__ = 'ref_data'
+
+    table_name = Column(Unicode, primary_key=True)
+    last_sync = Column(DateTime, nullable=False,
+                      default=datetime.datetime.now(datetime.timezone.utc))
+    file_hash = Column(Unicode, nullable=False)
+
+    Session = meta.Session
+
+    @classmethod
+    def get(cls, table_name: str, for_update: Optional[bool] = False):
+        """
+        Returns a ref_data object referenced by its table_name.
+        """
+        if not table_name:
+            return None
+
+        q = cls.Session.query(cls).autoflush(True).filter_by(table_name=table_name)
+        if for_update:
+            q = q.with_for_update()
+        return q.first()
+
+    @classmethod
+    def save(cls):
+        """
+        Adds the current object to the database Session. Requires Session.commit()
+        """
+        cls.Session.add(cls)
+
+    @classmethod
+    def upsert(cls, table_name: str,
+               file_hash: str,
+               last_sync: Optional[datetime.datetime] = None):
+        """
+        Sets and returns a ref_data object referenced by its table_name.
+        """
+        ref_data = cls.get(table_name, for_update=True)
+
+        if ref_data:
+            ref_data.file_hash = file_hash
+            ref_data.last_sync = last_sync if \
+                last_sync else datetime.datetime.now(datetime.timezone.utc)
+        else:
+            ref_data = cls(table_name=table_name,
+                           last_sync=last_sync,
+                           file_hash=file_hash)
+
+        cls.Session.add(ref_data)
+        cls.Session.commit()
+
+        return cls.get(table_name)
+
+    @classmethod
+    def delete(cls, table_name: str):
+        """
+        Deletes a ref_data object referenced by its table_name.
+        """
+        ref_data = cls.get(table_name, for_update=True)
+
+        if not ref_data:
+            return
+
+        cls.Session.query(cls).filter_by(table_name=table_name).delete()
+        cls.Session.commit()
+
+
+# type_ignore_reason: incomplete typing
 class PackageSync(Base):  # type: ignore
     __tablename__ = 'package_sync'
 

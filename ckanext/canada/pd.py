@@ -27,6 +27,7 @@ from ckanext.canada.dataset import (
     solr_connection,
     data_batch,
     safe_for_solr)
+from ckanext.canada import model as canada_model
 
 SOLR_MAX_UTF8_LENGTH = 28000
 
@@ -628,7 +629,7 @@ def compare_output(prev_solrrec: Dict[str, Any],
 
 
 def _load_csv_ref_data(table_name: str, columns: List[str],
-                       file_path: str):
+                       file_path: str, verbose: Optional[bool] = False) -> bool:
     """
     Runs a copy_expert to insert CSV data into a DataStore table.
     """
@@ -636,11 +637,25 @@ def _load_csv_ref_data(table_name: str, columns: List[str],
     with write_engine.begin() as connection:
         connection.execute("SET LOCAL lock_timeout = '5s'")
         connection.execute('TRUNCATE TABLE "%s"' % table_name)
-
     connection = write_engine.raw_connection()
     try:
         cursor = connection.cursor()
         with open(file_path, 'rb') as f:
+            f_hash = hashlib.sha256()
+            for chunk in iter(lambda: f.read(8192), b''):
+                f_hash.update(chunk)
+            f_hash = f_hash.hexdigest()
+            f.seek(0)  # point zero after hash check
+            db_obj = canada_model.RefData.get(table_name=table_name)
+            if db_obj and db_obj.file_hash == f_hash:
+                # no change to the ref data file
+                if verbose:
+                    click.echo('Ref data file %s has '
+                               'not changed. Skipping...' % os.path.basename(f.name))
+                return False
+            canada_model.RefData.upsert(
+                table_name=table_name,
+                file_hash=f_hash)
             try:
                 cursor.copy_expert(
                     'COPY "%s" '
@@ -653,6 +668,7 @@ def _load_csv_ref_data(table_name: str, columns: List[str],
                 cursor.close()
     finally:
         connection.commit()
+    return True
 
 
 @pd.command()
@@ -671,32 +687,31 @@ def load_ref_data(pd_type: Optional[str] = None,
         service_id_data = os.path.join(
             os.path.split(__file__)[0],
             'tables/references/data/ref_service_service_ids.csv')
-        _load_csv_ref_data('ref_service_service_ids',
-                           [
-                               'service_id',
-                               'label_en',
-                               'label_fr',
-                               'org_years',
-                           ],
-                           service_id_data)
-        if verbose:
+        loaded = _load_csv_ref_data('ref_service_service_ids',
+                                    [
+                                        'service_id',
+                                        'label_en',
+                                        'label_fr',
+                                        'org_years',
+                                    ],
+                                    service_id_data, verbose=verbose)
+        if verbose and loaded:
             click.echo('Successfully loaded service Service IDs '
                        'into ref_service_service_ids table')
-
         if verbose:
             click.echo('Loading service Program IDs '
                        'into ref_service_program_ids table...')
         program_id_data = os.path.join(
             os.path.split(__file__)[0],
             'tables/references/data/ref_service_program_ids.csv')
-        _load_csv_ref_data('ref_service_program_ids',
-                           [
-                               'program_id',
-                               'label_en',
-                               'label_fr',
-                               'org_years',
-                           ],
-                           program_id_data)
-        if verbose:
+        loaded = _load_csv_ref_data('ref_service_program_ids',
+                                    [
+                                        'program_id',
+                                        'label_en',
+                                        'label_fr',
+                                        'org_years',
+                                    ],
+                                    program_id_data, verbose=verbose)
+        if verbose and loaded:
             click.echo('Successfully loaded service Program IDs '
                        'into ref_service_program_ids table')
