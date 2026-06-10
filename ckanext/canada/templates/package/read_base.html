@@ -165,12 +165,8 @@
           {%- endif -%}
         </ul>
       </li>
-      {% if h.plugin_loaded('citeproc') and pkg.type not in h.recombinant_get_types() %}
-        <li class="list-group-item">
-          {% if h.show_citations_for(pkg.type or 'dataset') %}
-            {% snippet "snippets/citeproc_button.html", pkg_dict=pkg %}
-          {% endif %}
-        </li>
+      {% if h.plugin_loaded('citeproc') and pkg.type not in h.recombinant_get_types() and h.show_citations_for(pkg.type or 'dataset') %}
+          {% snippet "snippets/citeproc_button.html", pkg_dict=pkg, list=true, list_class='list-group-item' %}
       {% endif %}
       {% if pkg.collection == 'fgp' %}
         <li class="list-group-item">
