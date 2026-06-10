@@ -1078,11 +1078,11 @@ span.resource-heading-text mark.highlight{
           background: $can-dark-blue !important;
           color: white !important;
         }
-      }
-      &.btn-success{
-        background-color: $btn-success-bkg !important;
-        &:hover, &:active, &:focus{
-          background: $btn-success-bkg-hover !important;
+        &.btn-success{
+          background-color: $btn-success-bkg !important;
+          &:hover, &:active, &:focus{
+            background: $btn-success-bkg-hover !important;
+          }
         }
       }
     }
