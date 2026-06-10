@@ -734,8 +734,10 @@ def canada_output_resource_original_url(key: FlattenKey,
         original_url = data[key]
         original_url_parts = urlparse(original_url)
         if original_url_parts.netloc:
-            original_url = original_url.replace('%s://' % str(original_url_parts.scheme), '')
-            original_url = original_url.replace(str(original_url_parts.netloc), '')
+            original_url = original_url.replace(
+                '%s://' % str(original_url_parts.scheme), '')
+            original_url = original_url.replace(
+                str(original_url_parts.netloc), '')
             data[key] = original_url
 
 
