@@ -1351,7 +1351,6 @@ ul#brf-pkg{
   }
 }
 
-
 .popover{
   width: 300px;
   .popover-title{
@@ -1404,6 +1403,20 @@ ul#brf-pkg{
       }
       button.close span{
         color: white;
+      }
+    }
+  }
+  &.canada-resource-view-embed{
+    .modal-dialog{
+      position: absolute;
+      top: 20%;
+      left: 50%;
+      transform: translate(-50%, 0);
+      max-width: 80%;
+      @media all and (max-width: 768px){
+        min-width: 80%;
+        max-width: 80%;
+        width: 80%;
       }
     }
   }

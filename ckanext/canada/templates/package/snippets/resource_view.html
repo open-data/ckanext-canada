@@ -8,6 +8,19 @@
   {{ h.adobe_analytics_creator(organization=package.organization, package=package) }}
 {% endblock %}
 
+{% block resource_view_actions %}
+  {{ super() }}
+  {% if not h.is_registry_domain() %}
+    <a class="btn btn-default"
+        href="#embed-{{ resource_view['id'] }}"
+        data-module="resource-view-embed"
+        data-module-id="{{ resource_view['id'] }}"
+        data-module-url="{{ h.url_for('resource_view', id=package['name'], resource_id=resource['id'], view_id=resource_view['id'], qualified=true) }}">
+      <i class="fa fa-code"></i>&nbsp;{{ _("Embed") }}
+    </a>
+  {% endif %}
+{% endblock %}
+
 {% block description %}
 <p class="desc">
   {%- if h.lang() == 'fr' -%}
@@ -16,4 +29,34 @@
     {{ h.render_markdown(resource_view['description']) }}
   {%- endif -%}
 </p>
+{% endblock %}
+
+{% block resource_view_bottom %}
+  {% set allowed_hosts = ['canada.ca', '*.canada.ca', '*.gc.ca'] %}
+  <div id="embed-{{ resource_view['id'] }}" class="modal fade resource-view-embed canada-resource-view-embed">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 class="modal-title">{{ _("Embed resource view") }}</h3>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="{{ _('Close') }}"></button>
+        </div>
+        <div class="modal-body">
+          <p class="embed-content">{{ _("You can copy and paste the embed code into a CMS or blog software that supports raw HTML") }}</p>
+          <p class="embed-content">
+            {{ _("Only certain websites are allowed to embed content from open.canada.ca:") }}
+          <pre>{%- for h in allowed_hosts -%}{{- h -}}<br/>{%- endfor -%}</pre>
+          </p>
+          <div class="row">
+            <div class="col-md-6">
+              {{ form.input("width", label=_("Width"), value=700, classes=["control-full"]) }}
+            </div>
+            <div class="col-md-6">
+              {{ form.input("height", label=_("Height"), value=400, classes=["control-full"]) }}
+            </div>
+          </div>
+          {{ form.textarea("code", label=_("Code"), value="", classes=["pre"], rows=3) }}
+        </div>
+      </div>
+    </div>
+  </div>
 {% endblock %}
