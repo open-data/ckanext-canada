@@ -7,7 +7,7 @@
 {% block breadcrumb_content %}
   {% if h.is_registry_domain() %}
     {% if g.userobj and not g.userobj.sysadmin %}
-      {{ h.build_nav('user.index', _('Users')) }}
+      {{ h.build_nav('user.index', _('Users'), limit=15) }}
     {% else %}
       {{ super() }}
     {% endif %}
