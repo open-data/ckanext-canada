@@ -119,7 +119,9 @@ class TestNAVLSchema(CanadaTestBase):
         return dict(self.incomplete_pkg,
                     owner_org=self.org['name'],
                     title_translated={
-                    'en': 'A Novel By Tolstoy', 'fr': 'Un novel par Tolstoy'},
+                        'en': 'A Novel By Tolstoy',
+                        'fr': 'Un novel par Tolstoy',
+                    },
                     frequency='as_needed',
                     notes_translated={'en': '...', 'fr': '...'},
                     subject=['persons'],
