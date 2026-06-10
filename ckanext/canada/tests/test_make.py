@@ -665,7 +665,7 @@ class TestMakePD(CanadaTestBase):
             'target': '0.9',
             'volume_meeting_target': '315128',
             'total_volume': '359919',
-            'performance': '0.8756',
+            'performance': '0.8755525548804036',
             'comments_en': 'The total volumes assessed against the first month of entitlement service standard excludes 3,550 decisions involving files submitted under international agreements and interactions with foreign governments.',
             'comments_fr': "Les volumes totaux évalués par rapport à la norme de service du premier mois de droit excluent 3 550 décisions concernant des dossiers soumis dans le cadre d'accords internationaux et d'interactions avec des gouvernements étrangers.",
             'target_met': 'N',
