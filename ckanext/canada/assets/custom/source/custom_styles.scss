@@ -32,6 +32,8 @@ $btn-danger-bkg-hover: #942826;
 $btn-danger-brd-hover: #3b100f;
 $btn-danger-bkg-dis: #ebb3b2;
 $btn-danger-brd-dis: #e6a1a0;
+$btn-success-bkg: #1b6c1c;
+$btn-success-bkg-hover: #114311;
 
 @keyframes fade-opacity-in{
   from{
@@ -1077,6 +1079,12 @@ span.resource-heading-text mark.highlight{
           color: white !important;
         }
       }
+      &.btn-success{
+        background-color: $btn-success-bkg !important;
+        &:hover, &:active, &:focus{
+          background: $btn-success-bkg-hover !important;
+        }
+      }
     }
     &::after{
       content: none !important;
@@ -1316,6 +1324,10 @@ ul#brf-pkg{
     border-color: $can-pd-label;
     background: #fff;
   }
+}
+
+.lb-page-display{
+  font-size: 22px !important;
 }
 /*#############################
 ##            END            ##
