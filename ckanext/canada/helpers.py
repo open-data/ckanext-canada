@@ -49,7 +49,6 @@ except ImportError:
 
 ORG_MAY_PUBLISH_OPTION = 'canada.publish_datasets_organization_name'
 ORG_MAY_PUBLISH_DEFAULT_NAME = 'tb-ct'
-PORTAL_URL_OPTION = 'canada.portal_url'
 PORTAL_URL_DEFAULT_EN = 'https://open.canada.ca'
 PORTAL_URL_DEFAULT_FR = 'https://ouvert.canada.ca'
 DATAPREVIEW_MAX = 500
@@ -291,8 +290,14 @@ def normalize_strip_accents(s: Union[str, bytes]) -> str:
 
 
 def portal_url() -> str:
-    url = PORTAL_URL_DEFAULT_FR if h.lang() == 'fr' else PORTAL_URL_DEFAULT_EN
-    return str(config.get(PORTAL_URL_OPTION, url))
+    default_url = PORTAL_URL_DEFAULT_FR if h.lang() == 'fr' else PORTAL_URL_DEFAULT_EN
+    config_url = config.get('ckanext.canada.portal_url')
+    if not isinstance(config_url, dict):
+        try:
+            config_url = json.loads(config_url)
+        except (TypeError, AttributeError, UnicodeDecodeError):
+            pass
+    return config_url.get(h.lang(), default_url)
 
 
 def adv_search_url() -> str:

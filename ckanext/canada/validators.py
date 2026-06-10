@@ -6,6 +6,7 @@ from geomet import wkt
 import json
 import uuid
 from datetime import datetime
+from urllib.parse import urlparse
 
 from typing import Any, cast, Dict
 from ckan.types import (
@@ -123,6 +124,7 @@ def get_validator_methods() -> Dict[str, Validator]:
         'canada_security_upload_type': canada_security_upload_type,
         'canada_security_upload_presence': canada_security_upload_presence,
         'canada_api_token_name_validator': canada_api_token_name_validator,
+        'canada_output_resource_original_url': canada_output_resource_original_url,
     }
 
 
@@ -761,6 +763,26 @@ def canada_api_token_name_validator(value: Any, context: Context):
                         'names can only contain alphanumeric characters, '
                         'hyphens, and underscores.'))
     return value
+
+
+def canada_output_resource_original_url(key: FlattenKey,
+                                        data: FlattenDataDict,
+                                        errors: FlattenErrorDict,
+                                        context: Context):
+    """
+    XLoader saves full qualified URIs by default. Strip domains from them,
+    if the file is an upload.
+    """
+    url_type = data.get(key[:-1] + ('url_type',))
+    if url_type == 'upload':
+        original_url = data[key]
+        original_url_parts = urlparse(original_url)
+        if original_url_parts.netloc:
+            original_url = original_url.replace(
+                '%s://' % str(original_url_parts.scheme), '')
+            original_url = original_url.replace(
+                str(original_url_parts.netloc), '')
+            data[key] = original_url
 
 
 def canada_dataset_visibility(key: FlattenKey,

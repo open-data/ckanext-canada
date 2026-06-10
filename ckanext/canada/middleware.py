@@ -15,6 +15,9 @@ log = getLogger(__name__)
 
 
 class CSPNonceMiddleware(object):
+    """
+    Generates nonces for use in the CSP Header.
+    """
     def __init__(self, app: Any, config: 'CKANConfig',
                  flask_app: Optional[Any] = None):
         self.original_flask_app = flask_app or app
@@ -44,6 +47,12 @@ class CSPNonceMiddleware(object):
 
 
 class LogExtraMiddleware(object):
+    """
+    Adds X-LogExtra header to log to NGINX.
+
+    Adds a Flask error handler to log 500 Internal Server error
+    contexts with generated support IDs.
+    """
     def __init__(self, app: Any, config: 'CKANConfig',
                  flask_app: Optional[Any] = None):
         self.original_flask_app = flask_app or app

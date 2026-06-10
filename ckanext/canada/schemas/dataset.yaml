@@ -495,15 +495,16 @@ resource_fields:
   - tool
   - website
 - preset: canada_resource_size
-# CKANAPI Dump Fields
-- preset: ckanapi_dump_resource_views
-- preset: ckanapi_dump_datastore_fields
 
 - preset: canada_resource_character_set
 - preset: canada_resource_format
 - preset: canada_resource_language
 - preset: canada_resource_url
 - preset: canada_resource_data_quality
+
+# XLoader Fields.
+- preset: canada_ckan_url
+- preset: canada_original_url
 
 # Validation Fields.
 - preset: canada_resource_validation_schema
