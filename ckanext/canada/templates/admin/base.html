@@ -11,7 +11,7 @@
 {% block content_primary_nav %}
   {% if h.is_registry_domain() %}
     {{ h.build_nav_icon('canada.ckan_admin_index', _('Admins'), icon='user-plus') }}
-    {{ h.build_nav_icon('user.index', _('Users'), icon='user') }}
+    {{ h.build_nav_icon('user.index', _('Users'), limit=15, icon='user') }}
     {# {{ h.build_nav_icon('admin.trash', _('Trash'), icon='trash') }} #}
     {{ h.build_nav_icon('canada.ckanadmin_publish', _('Publish Records'), icon='cloud-upload') }}
     {{ h.build_nav_icon('canada.ckanadmin_job_queue', _('Job Queue'), icon='tasks') }}

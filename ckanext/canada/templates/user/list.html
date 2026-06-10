@@ -36,7 +36,7 @@
     {% endif %}
     {% block users_list %}
       {% block users_search %}
-        {% snippet 'user/snippets/user_search.html', q=q %}
+        {% snippet 'user/snippets/user_search.html', q=q, limit=page.items_per_page or 15 %}
       {% endblock %}
       <table class="canada-width-full">
         <thead>
@@ -76,7 +76,7 @@
     {% endblock %}
     {% block page_pagination %}
       {% if page.pager %}
-        {{ page.pager(q=q or '') }}
+        {{ page.pager(q=q or '', limit=page.items_per_page or 15) }}
       {% endif %}
     {% endblock %}
   {% else %}
