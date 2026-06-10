@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ckanext-canada 0.4.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-03-19 17:41+0000\n"
+"POT-Creation-Date: 2026-06-09 14:38+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1412,12 +1412,12 @@ msgstr ""
 msgid "container_title"
 msgstr ""
 
-#: ckanext/canada/plugin/public_plugin.py:330
+#: ckanext/canada/plugin/public_plugin.py:331
 #: ckanext/canada/templates/package/read.html:186
 msgid "Previous"
 msgstr ""
 
-#: ckanext/canada/plugin/public_plugin.py:331
+#: ckanext/canada/plugin/public_plugin.py:332
 #: ckanext/canada/templates/package/read.html:202
 msgid "Next"
 msgstr ""
@@ -1577,12 +1577,12 @@ msgid "Access, upload and modify consultation reports for your organization"
 msgstr ""
 
 #. SQL Trigger String for PD Type: consultations
-#: ckanext/canada/tables/consultations.yaml:682
+#: ckanext/canada/tables/consultations.yaml:685
 msgid "If Status is set to: Not Going Forward, Publish Record must be set to No"
 msgstr ""
 
 #. SQL Trigger String for PD Type: consultations
-#: ckanext/canada/tables/consultations.yaml:683
+#: ckanext/canada/tables/consultations.yaml:686
 msgid "Comma is not allowed in Registration Number field"
 msgstr ""
 
@@ -3491,6 +3491,40 @@ msgstr ""
 #: ckanext/canada/templates/package/snippets/resource_item.html:110
 #: ckanext/canada/templates/package/snippets/resources.html:44
 msgid "Delete resource"
+msgstr ""
+
+#: ckanext/canada/templates/package/snippets/resource_view.html:19
+msgid "Embed"
+msgstr ""
+
+#: ckanext/canada/templates/package/snippets/resource_view.html:40
+msgid "Embed resource view"
+msgstr ""
+
+#: ckanext/canada/templates/package/snippets/resource_view.html:41
+msgid "Close"
+msgstr ""
+
+#: ckanext/canada/templates/package/snippets/resource_view.html:44
+msgid ""
+"You can copy and paste the embed code into a CMS or blog software that "
+"supports raw HTML"
+msgstr ""
+
+#: ckanext/canada/templates/package/snippets/resource_view.html:46
+msgid "Only certain websites are allowed to embed content from open.canada.ca:"
+msgstr ""
+
+#: ckanext/canada/templates/package/snippets/resource_view.html:51
+msgid "Width"
+msgstr ""
+
+#: ckanext/canada/templates/package/snippets/resource_view.html:54
+msgid "Height"
+msgstr ""
+
+#: ckanext/canada/templates/package/snippets/resource_view.html:57
+msgid "Code"
 msgstr ""
 
 #: ckanext/canada/templates/package/snippets/resources.html:35

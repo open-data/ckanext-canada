@@ -123,7 +123,7 @@
         <strong>{{ _('Metadata:') }}</strong>
         <ul class="list-group canada-margin-bottom-0">
           <li class="list-group-item">
-            <a href="{{h.url_for_static('/', qualified=true)}}api/action/package_show?id={{pkg.id}}" rel="nofollow">
+            <a href="{{- h.url_for('api.action', ver=3, logic_function='package_show') -}}?id={{- pkg.id -}}" rel="nofollow">
               {{ _('Link to JSON format') }}
             </a>
           </li>

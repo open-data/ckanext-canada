@@ -13,7 +13,7 @@
 {% block resource_list_title %}
   <h2 id="resources">{{ _('Data and Resources') }}
     {% set fgp_url = h.fgp_viewer_url(pkg) %}
-    {% if fgp_url %}
+    {% if fgp_url and not h.is_registry_domain() %}
       <div class="pull-right mrgn-bttm-md">
         <a href="{{ fgp_url }}" class="btn btn-success btn-sm" target="_blank" rel='noopener noreferrer'>
           <span class="fa fa-map-marker" aria-hidden="true"></span>&nbsp;{{ _('View on Map') }}
