@@ -9,6 +9,7 @@
     {% block page_heading %}
       {{ super() }}
     {% endblock %}
+    {% snippet 'package/snippets/package_type_label.html', pkg_dict=pkg, for_page=true %}
   </h1>
   <div class="row">
     <div class="col-md-12">

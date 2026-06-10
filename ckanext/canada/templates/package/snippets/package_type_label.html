@@ -1,0 +1,28 @@
+{#
+Label/pill style display for a Package Type
+
+pkg_dict  - package dictionary
+for_page  - wraps html in a <span class="lb-page-display"></span>
+
+Example:
+
+    {% snippet 'package/snippets/package_type_label.html', for_page=true %}
+
+#}
+
+{% set geno = h.recombinant_get_geno(pkg_dict.type) %}
+{% if for_page %}<span class="lb-page-display">{% endif %}
+  {% if pkg_dict.type == 'dataset' %}
+    <span class="label label-default lb-open-data">{{ _("Open Data") }}</span>
+  {% elif pkg_dict.type == 'prop' %}
+    <span class="label label-default lb-sug-datasets">{{ _("Suggested Dataset") }}</span>
+  {% elif pkg_dict.collection in ('transition', 'transition_deputy', 'parliament_report', 'parliament_committee', 'parliament_committee_deputy') %}
+    <span class="label label-default lb-pd">{{ _("Proactive Publication") }}</span>
+  {% elif pkg_dict.type == 'info' or geno.portal_type == 'info' %}
+    <span class="label label-default lb-open-info">{{ _("Open Information") }}</span>
+  {% elif geno.portal_type == 'dialogue' %}
+    <span class="label label-default lb-open-dialogue">{{ _("Open Dialogue") }}</span>
+  {% elif geno %}
+    <span class="label label-default lb-pd">{{ _("Proactive Publication") }}</span>
+  {% endif %}
+{% if for_page %}</span>{% endif %}
