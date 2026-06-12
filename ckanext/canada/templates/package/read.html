@@ -41,15 +41,17 @@
 {%- endblock -%}
 
 {% block page_title %}
-  <h1>{{ title or pkg_dict.name }}
-    {% if pkg_dict.state.startswith('draft') %}
-      <span class="label label-info canada-draft-title-pill">{{ _('Draft') }}</span>
-    {% endif %}
-    {% if machine_translated %}
-      <i class="fa fa-language text-muted mrgn-lft-sm" title="{{ _('This third party metadata element has been translated using an automated translation tool.  To report any discrepancies please contact {support}').format(support=h.support_email_address()) }}"></i>
-    {% endif %}
+  <span>
     {% snippet 'package/snippets/package_type_label.html', pkg_dict=pkg_dict, for_page=true %}
-  </h1>
+    <h1>{{ title or pkg_dict.name }}
+      {% if pkg_dict.state.startswith('draft') %}
+        <span class="label label-info canada-draft-title-pill">{{ _('Draft') }}</span>
+      {% endif %}
+      {% if machine_translated %}
+        <i class="fa fa-language text-muted mrgn-lft-sm" title="{{ _('This third party metadata element has been translated using an automated translation tool.  To report any discrepancies please contact {support}').format(support=h.support_email_address()) }}"></i>
+      {% endif %}
+    </h1>
+  </span>
 {% endblock %}
 
 {% block content_action %}
