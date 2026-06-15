@@ -6,11 +6,11 @@
   {% set portal_link = h.portal_url() ~ "/data/" ~ client_lang ~ "/" ~ pkg_dict.get('type', 'dataset') ~ "/" ~ pkg_dict.name %}
   {% set portal_status_alerts = [] %}
   {% set is_type_for_alerts = pkg_dict.get('type') == 'dataset' or pkg_dict.get('type') == 'info' %}
-  {% set do_not_show_alerts = pkg_dict.state.startswith('draft') or pkg_dict.state.startswith('deleted') %}
-  {% set no_ready_to_publish = pkg_dict['ready_to_publish'] == 'false' or not pkg_dict['ready_to_publish'] %}
-  {% set no_has_approval = pkg_dict['imso_approval'] == 'false' or not pkg_dict['imso_approval'] %}
+  {% set is_state_for_alerts = not pkg_dict.state.startswith('draft') and not pkg_dict.state.startswith('deleted') %}
+  {% set is_ready_to_publish = pkg_dict.get('ready_to_publish') and pkg_dict['ready_to_publish'] == 'true' %}
+  {% set is_imso_approved = pkg_dict.get('imso_approval') and pkg_dict['imso_approval'] == 'true' %}
   {% set queued_for_publishing = not pkg_dict['portal_release_date'] or h.date_format(pkg_dict['portal_release_date']) > h.today() %}
-  {% if no_ready_to_publish %}
+  {% if not is_ready_to_publish %}
     {% do portal_status_alerts.append({
         'label': _('Action required:'),
         'sub_label': _('Draft record has been saved and can be edited. Mark as ready to publish to continue.'),
@@ -18,7 +18,7 @@
       })
     %}
   {% endif %}
-  {% if no_has_approval %}
+  {% if not is_imso_approved %}
     {% do portal_status_alerts.append({
         'label': _('Action required:'),
         'sub_label': _('Seek out departmental approval and mark as approved to continue.'),
@@ -26,7 +26,7 @@
       })
     %}
   {% endif %}
-  {% if not no_ready_to_publish and not no_has_approval and queued_for_publishing %}
+  {% if is_ready_to_publish and is_imso_approved and queued_for_publishing %}
     {% do portal_status_alerts.append({
         'label': _('Data record is in queue for validation.'),
         'sub_label': _('Record will be published by the following business day upon validation.'),
@@ -56,7 +56,7 @@
 
 {% block content_action %}
   {{- super() -}}
-  {%- if not do_not_show_alerts and is_type_for_alerts and not portal_status_alerts -%}
+  {%- if is_state_for_alerts and is_type_for_alerts and not portal_status_alerts -%}
     <a href="{{ portal_link }}" title="{{ _('View on Portal') }}" class="btn btn-success" target="_blank" rel='noopener noreferrer'>
       <span class="fa fa-arrow-circle-right" aria-hidden="true"></span>&nbsp;{{ _('View on Portal') }}
     </a>
@@ -87,7 +87,7 @@
           </div>
         {% endif %}
         <section class="resources module-content indent-large">
-          {% if not do_not_show_alerts and is_type_for_alerts and portal_status_alerts %}
+          {% if is_state_for_alerts and is_type_for_alerts and portal_status_alerts %}
             {% for alert in portal_status_alerts %}
               <div class="module-alert alert alert-{{ alert['alert_class'] }} mrgn-tp-sm">
                 <p>
