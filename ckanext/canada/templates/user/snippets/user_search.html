@@ -4,6 +4,7 @@
     <div class="input-group col-md-12">
       <div class="canada-search-field-wrapper">
         <input type="text" class="field form-control" id="field-user-search" autocomplete="off" name="q" value="{{ q }}" placeholder="{{ _('Search users...') }}">
+        <input type="hidden" name="limit" value="{{- limit or 15 -}}">
         <span class="input-group-btn">
           {% block search_input_button %}
           <button class="btn btn-primary btn-small" type="submit">
