@@ -275,13 +275,13 @@
     {% endblock %}
     {% block package_rate %}
       {% if not h.is_registry_domain() %}
-        <a id="rate"></a>
+        <div id="rate"></div>
         <div id="voting-wrapper" data-ajax-replace="/{{ h.lang() }}/vote?uuid={{ pkg_dict.id }}"></div>
       {% endif %}
     {% endblock %}
     {% block package_feedback %}
       {% if not h.is_registry_domain() and pkg_dict.maintainer_email %}
-        <a id="feedback"></a>
+        <div id="feedback"></div>
         <section class="indent-large">
           <div id="feedback-wrapper" data-ajax-replace="/{{ h.lang() }}/feedback?uuid={{ pkg_dict.id }}"></div>
         </section>
