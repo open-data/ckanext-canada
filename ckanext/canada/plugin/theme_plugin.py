@@ -87,5 +87,6 @@ class CanadaThemePlugin(p.SingletonPlugin):
             'support_email_address',
             'get_inline_script_nonce',
             'obfuscate_to_code_points',
-            'mail_to'
+            'mail_to',
+            'get_allowed_frame_hosts',
         ])

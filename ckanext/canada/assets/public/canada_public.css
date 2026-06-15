@@ -1674,6 +1674,23 @@ body #timeout > .modal-dialog{
     width: 80% !important;
   }
 }
+body .modal.canada-resource-view-embed .modal-dialog{
+  display: inline-block;
+  text-align: left;
+  vertical-align: middle;
+  position: absolute;
+  top: 20%;
+  left: 50%;
+  transform: translate(-50%, 0);
+  max-width: 80%;
+}
+@media all and (max-width: 768px){
+  body .modal.canada-resource-view-embed .modal-dialog{
+    min-width: 80%;
+    max-width: 80%;
+    width: 80%;
+  }
+}
 /* BS4+ Fix. TODO: remove after upgrade to BS4+ */
 body .modal .modal-dialog .modal-content button.btn-close{
   background-color: transparent;

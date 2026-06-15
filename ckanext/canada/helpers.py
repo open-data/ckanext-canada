@@ -1173,3 +1173,7 @@ def mail_to_with_params(email_address: str, name: str,
 
 def get_inline_script_nonce() -> str:
     return str(request.environ.get('CSP_NONCE', ''))
+
+
+def get_allowed_frame_hosts() -> Optional[list]:
+    return config.get('ckanext.canada.allowed_frame_hosts')
