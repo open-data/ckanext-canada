@@ -132,6 +132,15 @@
                 "subhref": {{ h.url_for('info_new', collection='parliament_committee_deputy') | tojson }},
                 "subtext": {{ _('Parliamentary Committee appearances for deputy heads') | tojson }},
               },
+              {% set orgs = h.organizations_available('read') %}
+              {% set user_org_names = orgs | map(attribute='name') | list %}
+
+              {% if ['tbs-sct', 'dnd-mdn'] | select('in', user_org_names) | list %}
+                {
+                  "subhref": {{ recombinant_menu_link('adminaircraft') | tojson }},
+                  "subtext": {{ recombinant_menu_text('adminaircraft') | tojson }}
+                },
+              {% endif %}
             ],
           },
           {
