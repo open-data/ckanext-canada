@@ -140,6 +140,7 @@ class CanadaThemePlugin(p.SingletonPlugin, DefaultTranslation):
             'get_inline_script_nonce',
             'obfuscate_to_code_points',
             'mail_to',
+            'get_allowed_frame_hosts',
         ])
 
     def make_middleware(self, app: CKANApp, config: 'CKANConfig') -> CKANApp:

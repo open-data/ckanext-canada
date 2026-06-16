@@ -1195,3 +1195,7 @@ def linked_user(user: Union[str, model.User],
     except RuntimeError:
         pass
     return core_linked_user(user, maxlength, avatar)
+
+
+def get_allowed_frame_hosts() -> Optional[list]:
+    return config.get('ckanext.canada.allowed_frame_hosts')

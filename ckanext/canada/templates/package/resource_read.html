@@ -5,12 +5,14 @@
 {% endblock %}
 
 {% block page_title %}
-  <h1 property="name" id="wb-cont">
-    {% block page_heading %}
-      {{ super() }}
-    {% endblock %}
+  <span>
     {% snippet 'package/snippets/package_type_label.html', pkg_dict=pkg, for_page=true %}
-  </h1>
+    <h1 property="name" id="wb-cont">
+      {% block page_heading %}
+        {{ super() }}
+      {% endblock %}
+    </h1>
+  </span>
   <div class="row">
     <div class="col-md-12">
       {# _site_messaging is handled by aliases in nginx to SMB #}

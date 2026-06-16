@@ -149,14 +149,14 @@
               {{ _('Link to JSON format') }}
             </a>
           </li>
-          {%- if h.plugin_loaded('dcat_json_interface') and pkg.type not in h.recombinant_get_types() -%}
+          {%- if not h.is_registry_domain() and h.plugin_loaded('dcat_json_interface') and pkg.type not in h.recombinant_get_types() -%}
             <li class="list-group-item canada-border-none">
               <a href="{{- h.url_for(pkg.type + '.read', id=pkg.id) -}}.jsonld" rel="nofollow">
                 {{- _('DCAT (JSON-LD)') -}}
               </a>
             </li>
           {%- endif -%}
-          {%- if h.plugin_loaded('dcat') and pkg.type not in h.recombinant_get_types() -%}
+          {%- if not h.is_registry_domain() and h.plugin_loaded('dcat') and pkg.type not in h.recombinant_get_types() -%}
             <li class="list-group-item canada-border-none">
               <a href="{{- h.url_for(pkg.type + '.read', id=pkg.id) -}}.xml" rel="nofollow">
                 {{- _('DCAT (XML)') -}}
@@ -176,11 +176,13 @@
           </a>
         </li>
       {% endif %}
-      <li class="list-group-item">
-        <a href="{{ h.url_for('feeds.dataset', id=pkg.id) }}" title="RSS">
-          <span class="fa fa-rss-square" aria-hidden="true"></span>&nbsp;{{_('Atom Feed')}}
-        </a>
-      </li>
+      {%- if not h.is_registry_domain() -%}
+        <li class="list-group-item">
+          <a href="{{ h.url_for('feeds.dataset', id=pkg.id) }}" title="RSS">
+            <span class="fa fa-rss-square" aria-hidden="true"></span>&nbsp;{{_('Atom Feed')}}
+          </a>
+        </li>
+      {%- endif -%}
       {% if pkg.spatial_representation_type %}
         {% set srep = h.scheming_field_by_name(schema.dataset_fields, 'spatial_representation_type') %}
         <li class="list-group-item"><b>{{ h.scheming_language_text(srep.label) }}{{ _(':') }}</b>
