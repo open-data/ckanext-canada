@@ -14,6 +14,8 @@
   let appTop = document.getElementById("app-top");
   if( appTop ){
     {% if h.is_registry_domain() %}
+      {% set orgs = h.organizations_available('read') %}
+      {% set user_org_names = orgs | map(attribute='name') | list %}
       const menuLinks = [
         {% if g.userobj %}
           {
@@ -39,8 +41,7 @@
                 "subhref": {{ recombinant_menu_link('experiment') | tojson }},
                 "subtext": {{ recombinant_menu_text('experiment') | tojson }},
               },
-              {% set orgs = h.organizations_available('read') %}
-              {% if 'tbs-sct' in orgs | map(attribute='name') | list %}
+              {% if 'tbs-sct' in user_org_names %}
                   {
                     "subhref": {{ recombinant_menu_link('aistrategy') | tojson }},
                     "subtext": {{ recombinant_menu_text('aistrategy') | tojson }},
@@ -132,9 +133,6 @@
                 "subhref": {{ h.url_for('info_new', collection='parliament_committee_deputy') | tojson }},
                 "subtext": {{ _('Parliamentary Committee appearances for deputy heads') | tojson }},
               },
-              {% set orgs = h.organizations_available('read') %}
-              {% set user_org_names = orgs | map(attribute='name') | list %}
-
               {% if ['tbs-sct', 'dnd-mdn'] | select('in', user_org_names) | list %}
                 {
                   "subhref": {{ recombinant_menu_link('adminaircraft') | tojson }},
