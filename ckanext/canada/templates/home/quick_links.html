@@ -197,7 +197,8 @@
               </ul>
             <li>
 
-            {% if h.canada_check_access('98abeb62-7c76-4dfb-a134-1551f55ede55') %}
+            {% set user_org_names = orgs | map(attribute='name') | list %}
+            {% if ['tbs-sct', 'dnd-mdn'] | select('in', user_org_names) | list %}
               {{ quick_link_pd('adminaircraft') }}
             {% endif %}
 
