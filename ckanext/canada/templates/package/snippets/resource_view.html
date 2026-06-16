@@ -32,7 +32,7 @@
 {% endblock %}
 
 {% block resource_view_bottom %}
-  {% set allowed_hosts = ['canada.ca', '*.canada.ca', '*.gc.ca'] %}
+  {% set allowed_hosts = h.get_allowed_frame_hosts() %}
   <div id="embed-{{ resource_view['id'] }}" class="modal fade resource-view-embed canada-resource-view-embed">
     <div class="modal-dialog">
       <div class="modal-content">
@@ -42,10 +42,12 @@
         </div>
         <div class="modal-body">
           <p class="embed-content">{{ _("You can copy and paste the embed code into a CMS or blog software that supports raw HTML") }}</p>
-          <p class="embed-content">
-            {{ _("Only certain websites are allowed to embed content from open.canada.ca:") }}
-          <pre>{%- for h in allowed_hosts -%}{{- h -}}<br/>{%- endfor -%}</pre>
-          </p>
+          {%- if allowed_hosts -%}
+            <p class="embed-content">
+              {{ _("Only certain websites are allowed to embed content from open.canada.ca:") }}
+            <ul>{%- for h in allowed_hosts -%}<li>{{- h -}}</li>{%- endfor -%}</ul>
+            </p>
+          {%- endif -%}
           <div class="row">
             <div class="col-md-6">
               {{ form.input("width", label=_("Width"), value=700, classes=["control-full"]) }}
