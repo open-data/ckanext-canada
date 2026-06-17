@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  CKAN\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-06-17 11:17-0400\n"
+"POT-Creation-Date: 2026-06-17 12:48-0400\n"
 "PO-Revision-Date: 2014-01-23 13:04+0000\n"
 "Last-Translator: Sean Hammond <sean.hammond@okfn.org>\n"
 "Language: en\n"
@@ -184,7 +184,7 @@ msgstr ""
 #: ckanext/canada/templates/home/quick_links.html:82
 #: ckanext/canada/templates/package/snippets/package_type_label.html:22
 #: ckanext/canada/templates/scheming/package/snippets/package_form.html:30
-#: ckanext/canada/templates/snippets/cdts/header.html:57
+#: ckanext/canada/templates/snippets/cdts/header.html:56
 #: ckanext/canada/templates/snippets/dataset_facets.html:5
 #: ckanext/canada/templates/snippets/dataset_facets.html:11
 msgid "Open Information"
@@ -210,7 +210,7 @@ msgstr ""
 #: ckanext/canada/templates/home/quick_links.html:152
 #: ckanext/canada/templates/package/snippets/package_type_label.html:20
 #: ckanext/canada/templates/package/snippets/package_type_label.html:26
-#: ckanext/canada/templates/snippets/cdts/header.html:60
+#: ckanext/canada/templates/snippets/cdts/header.html:74
 #: ckanext/canada/templates/snippets/dataset_facets.html:33
 msgid "Proactive Publication"
 msgstr ""
@@ -238,7 +238,7 @@ msgstr ""
 #: ckanext/canada/templates/home/quick_links.html:123
 #: ckanext/canada/templates/organization/snippets/organization_search.html:8
 #: ckanext/canada/templates/package/snippets/resources_list.html:36
-#: ckanext/canada/templates/snippets/cdts/header.html:153
+#: ckanext/canada/templates/snippets/cdts/header.html:167
 #: ckanext/canada/templates/snippets/search_form.html:45
 #: ckanext/canada/templates/user/snippets/user_search.html:11
 msgid "Search"
@@ -2536,7 +2536,7 @@ msgid "Load more"
 msgstr ""
 
 #: ckanext/canada/templates/admin/base.html:5
-#: ckanext/canada/templates/snippets/cdts/header.html:201
+#: ckanext/canada/templates/snippets/cdts/header.html:215
 msgid "Admin"
 msgstr ""
 
@@ -2765,6 +2765,7 @@ msgid "Add information about government programs, activities and publications."
 msgstr ""
 
 #: ckanext/canada/templates/home/quick_links.html:96
+#: ckanext/canada/templates/snippets/cdts/header.html:65
 msgid "Algorithmic Impact Assessment"
 msgstr ""
 
@@ -2773,6 +2774,7 @@ msgid "Access, add or modify Algorithmic Impact Assessment."
 msgstr ""
 
 #: ckanext/canada/templates/home/quick_links.html:104
+#: ckanext/canada/templates/snippets/cdts/header.html:69
 msgid "Institutional Accessibility plans"
 msgstr ""
 
@@ -2782,13 +2784,13 @@ msgstr ""
 
 #: ckanext/canada/templates/home/quick_links.html:110
 #: ckanext/canada/templates/package/snippets/package_type_label.html:24
-#: ckanext/canada/templates/snippets/cdts/header.html:138
+#: ckanext/canada/templates/snippets/cdts/header.html:152
 #: ckanext/canada/templates/snippets/dataset_facets.html:4
 msgid "Open Dialogue"
 msgstr ""
 
 #: ckanext/canada/templates/home/quick_links.html:117
-#: ckanext/canada/templates/snippets/cdts/header.html:147
+#: ckanext/canada/templates/snippets/cdts/header.html:161
 msgid "Consultations master dataset"
 msgstr ""
 
@@ -2823,7 +2825,7 @@ msgid "View the list of members linked to your organization."
 msgstr ""
 
 #: ckanext/canada/templates/home/quick_links.html:170
-#: ckanext/canada/templates/snippets/cdts/header.html:109
+#: ckanext/canada/templates/snippets/cdts/header.html:123
 msgid "Reports Tabled in Parliament"
 msgstr ""
 
@@ -2836,7 +2838,7 @@ msgid "Briefing packages"
 msgstr ""
 
 #: ckanext/canada/templates/home/quick_links.html:185
-#: ckanext/canada/templates/snippets/cdts/header.html:121
+#: ckanext/canada/templates/snippets/cdts/header.html:135
 msgid "New or incoming ministers"
 msgstr ""
 
@@ -2847,7 +2849,7 @@ msgid ""
 msgstr ""
 
 #: ckanext/canada/templates/home/quick_links.html:193
-#: ckanext/canada/templates/snippets/cdts/header.html:125
+#: ckanext/canada/templates/snippets/cdts/header.html:139
 msgid "New or incoming deputy heads"
 msgstr ""
 
@@ -2858,7 +2860,7 @@ msgid ""
 msgstr ""
 
 #: ckanext/canada/templates/home/quick_links.html:201
-#: ckanext/canada/templates/snippets/cdts/header.html:129
+#: ckanext/canada/templates/snippets/cdts/header.html:143
 msgid "Parliamentary Committee appearances for ministers"
 msgstr ""
 
@@ -2869,7 +2871,7 @@ msgid ""
 msgstr ""
 
 #: ckanext/canada/templates/home/quick_links.html:209
-#: ckanext/canada/templates/snippets/cdts/header.html:133
+#: ckanext/canada/templates/snippets/cdts/header.html:147
 msgid "Parliamentary Committee appearances for deputy heads"
 msgstr ""
 
@@ -2921,7 +2923,7 @@ msgstr ""
 #: ckanext/canada/templates/organization/index.html:26
 #: ckanext/canada/templates/organization/members.html:10
 #: ckanext/canada/templates/organization/read_base.html:7
-#: ckanext/canada/templates/snippets/cdts/header.html:157
+#: ckanext/canada/templates/snippets/cdts/header.html:171
 #: ckanext/canada/templates/user/read.html:28
 #: ckanext/canada/templates/user/read_base.html:17
 #: ckanext/canada/templates/user/read_base.html:76
@@ -4174,25 +4176,29 @@ msgstr ""
 msgid "Home"
 msgstr ""
 
-#: ckanext/canada/templates/snippets/cdts/header.html:162
+#: ckanext/canada/templates/snippets/cdts/header.html:61
+msgid "Create an Open Information Record"
+msgstr ""
+
+#: ckanext/canada/templates/snippets/cdts/header.html:176
 msgid "FAQ"
 msgstr ""
 
-#: ckanext/canada/templates/snippets/cdts/header.html:193
+#: ckanext/canada/templates/snippets/cdts/header.html:207
 #: ckanext/canada/templates/user/dashboard.html:9
 #: ckanext/canada/templates/user/dashboard_datasets.html:19
 msgid "Dashboard"
 msgstr ""
 
-#: ckanext/canada/templates/snippets/cdts/header.html:209
+#: ckanext/canada/templates/snippets/cdts/header.html:223
 msgid "Get Help"
 msgstr ""
 
-#: ckanext/canada/templates/snippets/cdts/header.html:230
+#: ckanext/canada/templates/snippets/cdts/header.html:244
 msgid "Signed in as"
 msgstr ""
 
-#: ckanext/canada/templates/snippets/cdts/header.html:230
+#: ckanext/canada/templates/snippets/cdts/header.html:244
 msgid "View profile"
 msgstr ""
 
