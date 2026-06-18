@@ -88,7 +88,7 @@
               _('Create Information Asset'),
               _('Add information about government programs, activities and publications.')
             )}}
-            {% set new_aia_path = h.url_for("info_new") + '?collection=aia' %}
+            {% set new_aia_path = h.url_for('info_new', collection='aia') %}
             {{ quick_link(
               'new_aia',
               new_aia_path,
@@ -96,7 +96,7 @@
               _('Algorithmic Impact Assessment'),
               _('Access, add or modify Algorithmic Impact Assessment.')
             )}}
-            {% set new_accessibiliy_plans_path = h.url_for("info_new") + '?collection=accessibiliy_plans' %}
+            {% set new_accessibiliy_plans_path = h.url_for('info_new', collection='accessibiliy_plans') %}
             {{ quick_link(
               'new_accessibiliy_plans',
               new_accessibiliy_plans_path,
