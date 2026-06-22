@@ -54,8 +54,22 @@
             ],
           },
           {
-            "href": {{ h.url_for('info_new') | tojson }},
             "text": {{ _('Open Information') | tojson }},
+            "id": "open-info",
+            "subLinks": [
+              {
+                "subhref": {{ h.url_for('info_new') | tojson }},
+                "subtext": {{ _('Create an Open Information Record') | tojson }},
+              },
+              {
+                "subhref": {{ h.url_for('info_new', collection='aia')| tojson }},
+                "subtext": {{ _('Algorithmic Impact Assessment') | tojson }},
+              },
+              {
+                "subhref": {{ h.url_for('info_new', collection='accessibiliy_plans') | tojson }},
+                "subtext": {{ _('Institutional Accessibility plans') | tojson }},
+              },
+            ],
           },
           {
             "text": {{ _('Proactive Publication') | tojson }},
