@@ -330,7 +330,7 @@ class CanadaLogicPlugin(SchemingDatasetsPlugin, CkanSecurityPlugin):
         """
         if has_request_context() and g.user:
             return (status_code, detail, headers, comment)
-        if status_code == 403:
+        if status_code == 403 and not g.debug:
             return (404, detail, headers, comment)
         return (status_code, detail, headers, comment)
 
