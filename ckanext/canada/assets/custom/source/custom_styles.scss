@@ -3143,6 +3143,16 @@ ul.resource-list{
         transform: scale(0.53);
         margin: -14px 0 0 -14px;
       }
+      &.format-label[data-format="md"],
+      &.format-label[data-format="markdown"]{
+        background-image: url("/data/static/img/sprite-resource-additional-icons.png");
+        background-repeat: no-repeat;
+        width: 60px;
+        height: 65px;
+        background-position: -320px -220px;
+        transform: scale(0.53);
+        margin: -14px 0 0 -14px;
+      }
     }
   }
 }
