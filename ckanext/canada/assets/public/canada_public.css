@@ -1182,6 +1182,16 @@ ul.resource-list > li.resource-item span.format-label[data-format="wmv"]{
   transform: scale(0.53);
   margin: -14px 0 0 -14px;
 }
+ul.resource-list > li.resource-item span.format-label[data-format="md"],
+ul.resource-list > li.resource-item span.format-label[data-format="markdown"]{
+  background-image: url("/data/static/img/sprite-resource-additional-icons.png");
+  background-repeat: no-repeat;
+  width: 60px;
+  height: 65px;
+  background-position: -320px -220px;
+  transform: scale(0.53);
+  margin: -14px 0 0 -14px;
+}
 /*############################
 ##            END           ##
 ##  Custom Resource Sprites ##
