@@ -3534,6 +3534,9 @@ presets:
     - label: MapInfo
       value: TAB
     - value: MAPX
+    - value: MD
+      mimetype: text/markdown
+      replaces: ["md", "markdown"]
     - value: MRC
       mimetype: application/marc
       replaces: ["marc"]
