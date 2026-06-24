@@ -1180,5 +1180,6 @@ def get_inline_script_nonce() -> str:
     return str(request.environ.get('CSP_NONCE', ''))
 
 
-def get_allowed_frame_hosts() -> Optional[list]:
+# type_ignore_reason: incomplete typing
+def get_allowed_frame_hosts() -> Optional[list]:  # type: ignore
     return config.get('ckanext.canada.allowed_frame_hosts')

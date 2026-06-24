@@ -783,7 +783,8 @@ def canada_user_update(up_func: Action,
     schema = {
         'opt_in_features__pd_datatables': [
             ignore_missing_validator,
-            default_validator(False),
+            # type_ignore_reason: incomplete typing
+            default_validator(False),  # type: ignore
             bool_validator,
         ]
     }
