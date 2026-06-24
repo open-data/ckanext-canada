@@ -572,14 +572,20 @@ def canada_user_update(up_func: Action,
                        data_dict: DataDict) -> ChainedAction:
     """
     Add new fields to the User schema.
+
+    - default_dataset_visibility
+    - opt_in_features__pd_datatables
     """
+    bool_validator = get_validator('boolean_validator')
     one_of_validator = get_validator('one_of')
     default_validator = get_validator('default')
     ignore_missing_validator = get_validator('ignore_missing')
     ignore_not_sysadmin_validator = get_validator('ignore_not_sysadmin')
     custom_data_dict = {
         'default_dataset_visibility': data_dict.get(
-            'default_dataset_visibility', None)
+            'default_dataset_visibility', None),
+        'opt_in_features__pd_datatables': data_dict.get(
+            'opt_in_features__pd_datatables', None)
     }
     schema = {
         'default_dataset_visibility': [
@@ -588,18 +594,30 @@ def canada_user_update(up_func: Action,
             # type_ignore_reason: incomplete typing
             default_validator('private'),  # type: ignore
             one_of_validator(['private', 'public'])  # type: ignore
+        ],
+        'opt_in_features__pd_datatables': [
+            ignore_missing_validator,
+            default_validator(False),
+            bool_validator,
         ]
     }
     data, errors = validate(custom_data_dict, schema, context)
     if errors:
         model.Session.rollback()
         raise ValidationError(errors)
-    if 'default_dataset_visibility' not in data:
+    if (
+      'default_dataset_visibility' not in data and
+      'opt_in_features__pd_datatables' not in data
+    ):
         return up_func(context, data_dict)
     if 'plugin_extras' not in data_dict:
         data_dict['plugin_extras'] = {}
-    data_dict['plugin_extras']['default_dataset_visibility'] = \
-        data['default_dataset_visibility']
+    if 'default_dataset_visibility' in data:
+        data_dict['plugin_extras']['default_dataset_visibility'] = \
+            data['default_dataset_visibility']
+    if 'opt_in_features__pd_datatables' in data:
+        data_dict['plugin_extras']['opt_in_features__pd_datatables'] = \
+            data['opt_in_features__pd_datatables']
     return up_func(context, data_dict)
 
 
@@ -610,12 +628,17 @@ def canada_user_show(up_func: Action,
                      data_dict: DataDict) -> ChainedAction:
     """
     Return new fields in the User dictionary.
+
+    - default_dataset_visibility
+    - opt_in_features__pd_datatables
     """
     data_dict['include_plugin_extras'] = True
     user_dict = up_func(context, data_dict)
     extras = user_dict.pop('plugin_extras', {})
     user_dict['default_dataset_visibility'] = extras.get(
         'default_dataset_visibility', 'private') if extras else 'private'
+    user_dict['opt_in_features__pd_datatables'] = extras.get(
+        'opt_in_features__pd_datatables', False) if extras else False
     return user_dict
 
 
