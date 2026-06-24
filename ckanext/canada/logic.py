@@ -764,3 +764,53 @@ def canada_datastore_search(up_func: Action,
                                     'not supported for data with '
                                     'more than {} rows.').format(max_rows_for_fts))
     return up_func(context, data_dict)
+
+
+@chained_action
+def canada_user_update(up_func: Action,
+                       context: Context,
+                       data_dict: DataDict) -> ChainedAction:
+    """
+    Add new fields to the User schema.
+    """
+    bool_validator = get_validator('boolean_validator')
+    default_validator = get_validator('default')
+    ignore_missing_validator = get_validator('ignore_missing')
+    custom_data_dict = {
+        'opt_in_features__pd_datatables': data_dict.get(
+            'opt_in_features__pd_datatables', None)
+    }
+    schema = {
+        'opt_in_features__pd_datatables': [
+            ignore_missing_validator,
+            default_validator(False),
+            bool_validator,
+        ]
+    }
+    data, errors = validate(custom_data_dict, schema, context)
+    if errors:
+        model.Session.rollback()
+        raise ValidationError(errors)
+    if 'opt_in_features__pd_datatables' not in data:
+        return up_func(context, data_dict)
+    if 'plugin_extras' not in data_dict:
+        data_dict['plugin_extras'] = {}
+    data_dict['plugin_extras']['opt_in_features__pd_datatables'] = \
+        data['opt_in_features__pd_datatables']
+    return up_func(context, data_dict)
+
+
+@chained_action
+@side_effect_free
+def canada_user_show(up_func: Action,
+                     context: Context,
+                     data_dict: DataDict) -> ChainedAction:
+    """
+    Return new fields in the User dictionary.
+    """
+    data_dict['include_plugin_extras'] = True
+    user_dict = up_func(context, data_dict)
+    extras = user_dict.pop('plugin_extras', {})
+    user_dict['opt_in_features__pd_datatables'] = extras.get(
+        'opt_in_features__pd_datatables', False) if extras else False
+    return user_dict
