@@ -1,0 +1,7 @@
+main_js:
+  contents:
+    - build/user_opt_in.min.js
+  extra:
+    preload:
+      - base/main  # need ckan JS and jQuery
+  output: canada_modules/%(version)s_user_opt_in.js

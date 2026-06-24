@@ -539,8 +539,13 @@ def get_pd_datatable(resource_name: str,
                         for fk_ci, fk_cc in enumerate(fk['child_columns']))
 
     # TODO: DEPRECATED: REMOVE AFTER FULL PD DATATABLES QA
-    snippet = 'pd_datatable.html' if config.get(
-        'ckanext.canada.enable_pd_datatable_editor') else 'pd_datatable_depr.html'
+    try:
+        user_dict = get_action('user_show')({'ignore_auth': True}, {'id': g.user})
+    except (ObjectNotFound, RuntimeError):
+        user_dict = {}
+    enable_new_template = user_dict.get('opt_in_features__pd_datatables', config.get(
+        'ckanext.canada.enable_pd_datatable_editor'))
+    snippet = 'pd_datatable.html' if enable_new_template else 'pd_datatable_depr.html'
 
     return h.snippet('snippets/%s' % snippet,
                      resource_name=resource_name,
