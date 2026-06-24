@@ -60,7 +60,10 @@ function load_pd_datatable(CKAN_MODULE){
   const chromoFields = CKAN_MODULE.options.chromo_fields;
   const isEditable = CKAN_MODULE.options.is_editable;
   const tableStyles = CKAN_MODULE.options.table_styles;
-  const EDITOR = pd_datatables__EDITOR;
+
+  // TODO: Disable Editor - enable Table Editor when ready...
+  // const EDITOR = pd_datatables__EDITOR;
+  const EDITOR = false;
 
   const selectAllLabel = _('Select All');
   const colSearchLabel = _('Search:');
@@ -167,6 +170,10 @@ function load_pd_datatable(CKAN_MODULE){
   let isCompactView = typeof tableState != 'undefined' && typeof tableState.compact_view != 'undefined' ? tableState.compact_view : true;
   let isFullScreen = is_page_fullscreen();
   let isEditMode = typeof tableState != 'undefined' && typeof tableState.edit_view != 'undefined' ? tableState.edit_view : false;
+
+  // TODO: Disable Editor - enable Table Editor when ready...
+  isEditMode = false;
+
   if( isEditMode ){
     $('.pd-datable-instructions').css({'display': 'none'});
   }
@@ -2002,18 +2009,29 @@ function load_pd_datatable(CKAN_MODULE){
         _data.selected = this.api().rows({selected: true})[0];
         _data.compact_view = isCompactView;
         _data.edit_view = isEditMode;
+
+        // TODO: Disable Editor - enable Table Editor when ready...
+        _data.edit_view = false;
+
         _data.editing_rows = editingRows;
         // TODO: save filledRows, erroredRows, requiredRows??? need to save the field values too???
         let localInstanceSelected = typeof tableState != 'undefined' ? tableState.selected : _data.selected;
         tableState = _data;
         tableState.selected = localInstanceSelected;
         tableState.edit_view = isEditMode;
+
+        // TODO: Disable Editor - enable Table Editor when ready...
+        tableState.edit_view = false;
+
         tableState.editing_rows = editingRows;
       },
       stateLoadParams: function(_settings, _data){
         let localInstanceSelected = typeof tableState != 'undefined' ? tableState.selected : _data.selected;
         tableState = _data;
         tableState.selected = localInstanceSelected;
+
+        // TODO: Disable Editor - enable Table Editor when ready...
+        tableState.edit_view = false;
       },
       buttons: get_available_buttons(),
     });
