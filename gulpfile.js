@@ -73,10 +73,21 @@ function minifyIMJS(){
     .pipe(dest('ckanext/canada/assets/invitation-manager/build', {sourcemaps: false}));
 }
 
+function minifyModulesJS(){
+  return src('ckanext/canada/assets/modules/source/*.js', {sourcemaps: false})
+    .pipe(terser({'compress': true,
+                  'mangle': true}))
+    .pipe(rename(function(_fileObj){
+      _fileObj.extname = '.min.js';
+    }))
+    .pipe(dest('ckanext/canada/assets/modules/build', {sourcemaps: false}));
+}
+
 function watchJS(){
   watch('ckanext/canada/assets/custom/source/*.js', minifyCustomJS);
   watch('ckanext/canada/assets/datatables/source/*.js', minifyDatatablesJS)
   watch('ckanext/canada/assets/invitation-manager/vendor/*.js', minifyIMJS)
+  watch('ckanext/canada/assets/modules/source/*.js', minifyModulesJS)
 }
 
 exports.build = series(compileCustomSass,
@@ -84,7 +95,8 @@ exports.build = series(compileCustomSass,
                        compileIMSass,
                        minifyCustomJS,
                        minifyDatatablesJS,
-                       minifyIMJS)
+                       minifyIMJS,
+                       minifyModulesJS)
 exports.watch = series(watchJS,
                        watchSass);
 exports.buildCSS = series(compileCustomSass,
@@ -93,5 +105,6 @@ exports.buildCSS = series(compileCustomSass,
 exports.watchCSS = watchSass;
 exports.buildJS = series(minifyCustomJS,
                          minifyDatatablesJS,
-                         minifyIMJS);
+                         minifyIMJS,
+                         minifyModulesJS);
 exports.watchJS = watchJS;
