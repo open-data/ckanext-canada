@@ -1510,6 +1510,25 @@ ul#brf-pkg{
 /*##########################
 ## Resource Items & Lists ##
 ############################*/
+.canada-package-panel-heading{
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 16px;
+  justify-content: space-between;
+  h3{
+    align-self: center;
+  }
+  > .canada-package-panel-heading--labels{
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    align-items: flex-end;
+  }
+  span.badge{
+    margin: 0 !important;
+  }
+}
+
 .canada-edit-resource-panel{
   margin: -15px -15px 8px -15px !important;
 }
