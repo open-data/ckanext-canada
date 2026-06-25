@@ -51,6 +51,16 @@ if TYPE_CHECKING:
 log = getLogger(__name__)
 fq_portal_release_date_match = re.compile(r"(portal_release_date:\"\[.*\]\")")
 
+# NOTE: SOLR keys like {!ready_to_publish__true} are not supported in CKAN
+#       so the best thing to do here is to map our facet fields to their
+#       respective facet queries
+FACET_QUERY_MAP = {
+    'ready_to_publish': {
+        'true': 'ready_to_publish:true AND +dataset_type:(dataset OR info)',
+        'false': 'ready_to_publish:false AND +dataset_type:(dataset OR info)',
+    }
+}
+
 
 def can_xloader(resource_id: str) -> bool:
     """
@@ -255,6 +265,42 @@ def expand_solr_french_extras(search_results: Dict[str, Any]):
                 result[extra['key']] = extra['value']
 
 
+def map_facet_queries(search_results: Dict[str, Any]):
+    """
+    Maps facet query results to facet fields and search facet counts.
+    """
+    facet_queries = search_results.get('facet_queries', {})
+    search_facets = search_results.get('search_facets', {})
+    if not facet_queries:
+        return
+    for facet_name, value_counts in search_results.get('facets', {}).items():
+        # try to map the facet query count to the facet field
+        if facet_name not in FACET_QUERY_MAP:
+            continue
+        for val in value_counts.keys():
+            if val not in FACET_QUERY_MAP[facet_name]:
+                continue
+            if FACET_QUERY_MAP[facet_name][val] not in facet_queries:
+                continue
+            # update the count to the facet query one
+            search_results['facets'][facet_name][val] = facet_queries[
+                FACET_QUERY_MAP[facet_name][val]]
+        # try to map the facet query count to the search facet field
+        if facet_name not in search_facets:
+            continue
+        for val in value_counts.keys():
+            for f_item in search_facets[facet_name]['items']:
+                if f_item['name'] not in FACET_QUERY_MAP[facet_name]:
+                    continue
+                # update the count to the facet query one
+                f_item['count'] =  facet_queries[
+                    FACET_QUERY_MAP[facet_name][f_item['name']]]
+            # pop zero counts
+            search_facets[facet_name]['items'] = [
+                f_item for f_item in search_facets[facet_name]['items']
+                if f_item['count'] > 0]
+
+
 def prevent_core_views_for_pd_types() -> List[Blueprint]:
     """
     Prevents all Core Dataset and Resources Views for all the PD types.
@@ -393,6 +439,16 @@ def update_dataset_search_params(search_params: Dict[str, Any]):
                     '+organization:(%s)' % ' OR '.join(org_names)]
             else:
                 search_params['fq_list'] += ['-organization:*']
+
+        if 'fq' in search_params and 'ready_to_publish' in search_params['fq']:
+            # NOTE: if querying ready_to_publish, only show "public" dataset types
+            search_params['fq_list'] += ['+dataset_type:(info OR dataset)',]
+
+        # NOTE: modify the ready_to_publish facet to only show "public" dataset types
+        search_params['facet.query'] = [
+            FACET_QUERY_MAP['ready_to_publish']['true'],
+            FACET_QUERY_MAP['ready_to_publish']['false'],
+        ]
 
 
 def update_dataset_for_solr(data_dict: Dict[str, Any]):

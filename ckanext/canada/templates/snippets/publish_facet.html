@@ -48,12 +48,12 @@
           {% endwith %}
         </ul>
       </nav>
-      {% if request.args.get(facet_range_name) or request.args.get(name) %}
-        {% set clear_uri = h.remove_url_param([name, facet_range_name], extras=extras, alternative_url=alternative_url) %}
+      {% if request.args.get(facet_range_name) or request.args.get(name) or request.args.get('capacity') %}
+        {% set clear_uri = h.remove_url_param([name, facet_range_name, 'capacity'], extras=extras, alternative_url=alternative_url) %}
         <ul class="list-unstyled list-facets">
           <li>
-            <a href="{{ clear_uri }}" class="action" title="{{_('Clear All')}} {{facet_name}}">
-              <span class="glyphicon glyphicon-remove"></span>&nbsp;{{ _('Clear All') }}
+            <a href="{{ clear_uri }}" class="action small" title="{{_('Clear All')}} {{facet_name}}">
+              <span class="fa fa-times"></span>&nbsp;{{ _('Clear All') }}
             </a>
           </li>
         </ul>
