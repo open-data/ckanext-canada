@@ -1,4 +1,19 @@
 from ckan import model
+from ckan.plugins.toolkit import config
+
+
+def get_test_domains():
+    # domain_map = config.get('ckanext.language_domains.domain_map')
+    return {
+        'registry': {
+            'en': 'registry.open.local:57006',
+            'fr': 'registry.open.local:57006',
+        },
+        'portal': {
+            'en': 'open.local:57006',
+            'fr': 'ouvert.local:57006',
+        },
+    }
 
 
 def mock_is_registry_domain() -> bool:
