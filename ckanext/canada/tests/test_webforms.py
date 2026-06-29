@@ -1,8 +1,7 @@
 # -*- coding: UTF-8 -*-
-from ckanext.canada.tests import CanadaTestBase, mock_is_registry_domain, get_test_domains
+from ckanext.canada.tests import CanadaTestBase, mock_is_registry_domain
 import pytest
 import mock
-from urllib.parse import urlparse
 from io import BytesIO
 from openpyxl.workbook import Workbook  # noqa: F401
 from ckan.plugins.toolkit import h
@@ -19,7 +18,10 @@ from ckanext.canada.tests.factories import (
     CanadaAPIToken as APIToken,
     CanadaSysadminWithToken as Sysadmin
 )
-from ckanext.canada.tests.helpers import MockFlashMessages
+from ckanext.canada.tests.helpers import (
+    MockFlashMessages,
+    get_relative_offset_from_response
+)
 
 from ckanext.recombinant.tables import get_chromo
 from ckanext.recombinant.read_excel import read_excel
@@ -31,12 +33,6 @@ from ckanext.recombinant.write_excel import (
 )
 
 flashes = MockFlashMessages()
-
-
-def _get_relative_offset_from_response(response):
-    assert response.headers
-    assert 'Location' in response.headers
-    return urlparse(response.headers['Location'])._replace(scheme='', netloc='').geturl()
 
 
 @pytest.mark.usefixtures('with_request_context')
@@ -74,7 +70,7 @@ class TestPackageWebForms(CanadaTestBase):
                             environ_overrides=self.environ_overrides_tester,
                             follow_redirects=False)  # no need for redirects
 
-        offset = _get_relative_offset_from_response(response)
+        offset, _host = get_relative_offset_from_response(response)
         response = app.get(offset, extra_environ=self.extra_environ_tester,
                            environ_overrides=self.environ_overrides_tester,
                            follow_redirects=False)  # no need for redirects
@@ -87,7 +83,7 @@ class TestPackageWebForms(CanadaTestBase):
                             environ_overrides=self.environ_overrides_tester,
                             follow_redirects=False)  # no need for redirects
 
-        offset = _get_relative_offset_from_response(response)
+        offset, _host = get_relative_offset_from_response(response)
         response = app.get(offset, extra_environ=self.extra_environ_tester,
                            environ_overrides=self.environ_overrides_tester,
                            follow_redirects=False)  # no need for redirects
@@ -138,7 +134,7 @@ class TestPackageWebForms(CanadaTestBase):
                             environ_overrides=self.environ_overrides_tester,
                             follow_redirects=False)  # catch redirect
 
-        offset = _get_relative_offset_from_response(response)
+        offset, _host = get_relative_offset_from_response(response)
         response = app.get(offset, extra_environ=self.extra_environ_tester,
                            environ_overrides=self.environ_overrides_tester,
                            follow_redirects=False)  # no need for redirects
@@ -236,7 +232,7 @@ class TestNewUserWebForms(CanadaTestBase):
         self.extra_environ_tester = {'Authorization': new_user['token']}
         self.environ_overrides_tester = {'REMOTE_USER': new_user['name'].encode('ascii')}
 
-        offset = _get_relative_offset_from_response(response)
+        offset, _host = get_relative_offset_from_response(response)
         response = app.get(offset, extra_environ=self.extra_environ_tester,
                            environ_overrides=self.environ_overrides_tester,
                            follow_redirects=True)  # expecting redirect
@@ -294,14 +290,12 @@ class TestRecombinantWebForms(CanadaTestBase):
         member = User()
         editor = User()
         sysadmin = Sysadmin()
-        test_domains = get_test_domains()
         self.extra_environ_member = {'Authorization': member['token']}
         self.environ_overrides_member = {'REMOTE_USER': member['name'].encode('ascii')}
         self.extra_environ_editor = {'Authorization': editor['token']}
         self.environ_overrides_editor = {'REMOTE_USER': editor['name'].encode('ascii')}
         self.extra_environ_system = {'Authorization': sysadmin['token'],}
-        self.environ_overrides_system = {'REMOTE_USER': sysadmin['name'].encode('ascii'),
-                                         'HTTP_HOST': test_domains['registry']['en']}
+        self.environ_overrides_system = {'REMOTE_USER': sysadmin['name'].encode('ascii')}
         self.org = Organization(users=[{
             'name': member['name'],
             'capacity': 'member'},
@@ -418,7 +412,7 @@ class TestRecombinantWebForms(CanadaTestBase):
                             environ_overrides=self.environ_overrides_editor,
                             follow_redirects=False)  # catch redirect
 
-        offset = _get_relative_offset_from_response(response)
+        offset, _host = get_relative_offset_from_response(response)
         response = app.get(offset, extra_environ=self.extra_environ_editor,
                            environ_overrides=self.environ_overrides_editor,
                            follow_redirects=False)  # no need for redirects
@@ -445,7 +439,7 @@ class TestRecombinantWebForms(CanadaTestBase):
                             environ_overrides=self.environ_overrides_system,
                             follow_redirects=False)  # catch redirect
 
-        offset = _get_relative_offset_from_response(response)
+        offset, _host = get_relative_offset_from_response(response)
         response = app.get(offset, extra_environ=self.extra_environ_editor,
                            environ_overrides=self.environ_overrides_editor,
                             follow_redirects=False)  # no need for redirects

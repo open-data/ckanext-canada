@@ -1,9 +1,17 @@
 import os
 from cgi import FieldStorage
+from urllib.parse import urlparse
 
 
 def get_sample_filepath(filename):
     return os.path.abspath(os.path.join(os.path.dirname(__file__), "samples", filename))
+
+
+def get_relative_offset_from_response(response):
+    assert response.headers
+    assert 'Location' in response.headers
+    return urlparse(response.headers['Location'])._replace(scheme='', netloc='').geturl(), \
+           urlparse(response.headers['Location'])._replace(scheme='', path='').geturl().replace('/', '')
 
 
 class MockFieldStorage(FieldStorage):

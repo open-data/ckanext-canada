@@ -6,12 +6,12 @@ def get_test_domains():
     # domain_map = config.get('ckanext.language_domains.domain_map')
     return {
         'registry': {
-            'en': 'registry.open.local:57006',
-            'fr': 'registry.open.local:57006',
+            'en': 'registry.open.local',
+            'fr': 'registry.open.local',
         },
         'portal': {
-            'en': 'open.local:57006',
-            'fr': 'ouvert.local:57006',
+            'en': 'open.local',
+            'fr': 'ouvert.local',
         },
     }
 
