@@ -55,11 +55,7 @@
 {% endblock %}
 
 {%- block custom_styles -%}
-  {% asset 'canada_public/css' %}
-  {% if h.is_registry_domain() %}
-    {# Remove when WET v4.0.21 is out #}
-    {% asset 'canada_internal/css' %}
-  {% endif %}
+  {% asset 'canada_custom/css' %}
   {% snippet 'snippets/cdts/head_scripts.html' %}
 {%- endblock -%}
 

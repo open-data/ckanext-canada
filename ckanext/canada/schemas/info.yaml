@@ -3,6 +3,7 @@ scheming_version: 1
 dataset_type: info
 
 before_validators: limit_resources_per_dataset
+after_validators: canada_dataset_visibility
 
 about: 'open.canada.ca: open information metadata definition'
 about_url: http://github.com/open-data/ckanext-canada
@@ -493,6 +494,8 @@ dataset_fields:
 # {The date the asset may be published on the Portal (YYYY-MM-DD)}
 - preset: canada_portal_release_date
 
+- preset: canada_private
+
 - preset: canada_dataset_relationship
 
 
@@ -551,6 +554,10 @@ resource_fields:
 # Field = Location.
 # {The location for online access to the distribution of the resource, if the file resides elsewhere.}
 - preset: canada_resource_url
+
+# XLoader Fields.
+- preset: canada_ckan_url
+- preset: canada_original_url
 
 # Validation Fields.
 - preset: canada_resource_validation_schema
