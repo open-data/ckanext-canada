@@ -3,15 +3,15 @@ from ckan.plugins.toolkit import config
 
 
 def get_test_domains():
-    # domain_map = config.get('ckanext.language_domains.domain_map')
+    domain_map = config.get('ckanext.language_domains.domain_map')
     return {
         'registry': {
-            'en': 'registry.open.local',
-            'fr': 'registry.open.local',
+            'en': domain_map['en'][0],
+            'fr': domain_map['fr'][0],
         },
         'portal': {
-            'en': 'open.local',
-            'fr': 'ouvert.local',
+            'en': domain_map['en'][1],
+            'fr': domain_map['fr'][1],
         },
     }
 

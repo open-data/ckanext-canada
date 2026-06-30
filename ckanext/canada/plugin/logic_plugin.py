@@ -227,6 +227,8 @@ class CanadaLogicPlugin(SchemingDatasetsPlugin, CkanSecurityPlugin):
 
         Implement of: ckan.plugins.interfaces.IPackageController
         """
+        if context.get('ignore_auth') or context.get('for_index'):
+            return
         dataset.raise_exception_show_non_published_dataset(pkg_dict)
         return
 
