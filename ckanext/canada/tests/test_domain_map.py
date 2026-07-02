@@ -5,10 +5,12 @@ from ckanext.canada.tests import (
     mock_is_portal_domain,
     get_test_domains
 )
+import re
 import io
 import pytest
 import mock
-from ckan.plugins.toolkit import h
+import xml.etree.ElementTree as ET
+from ckan.plugins.toolkit import h, config
 
 from ckan.tests.helpers import CKANResponse  # noqa: F401
 from ckan.model.types import make_uuid
@@ -30,7 +32,6 @@ from ckanext.canada.tests.helpers import (
 )
 
 
-@pytest.mark.usefixtures('with_request_context')
 class TestDomainMap(CanadaTestBase):
     """
     Tests for expected behaviour with the language_domains plugin.
@@ -534,6 +535,215 @@ class TestDomainMap(CanadaTestBase):
         assert 'help' in results
         assert results['help'] == 'http://%s/data/fr/api/3/action/help_show?name=status_show' % self.test_domain_map['portal']['fr']
 
-    # TODO: atom/feeds ids
+    @mock.patch.object(h, 'is_registry_domain', mock_is_registry_domain)
+    def test_registry_assets(self, app):
+        """
+        Webassets such as css, js, and images should have
+        the correct domain, root, and locale.
+        """
+        # english request
+        offset = '/en/organization'
+        response = app.get(offset, extra_environ=self.extra_environ_tester_registry,
+                           environ_overrides=self.environ_overrides_tester,
+                           status=200,
+                           follow_redirects=False)  # no need for redirects
+
+        assert 'Organizations' in response.body
+        assert '/en/base/css/main.css' in response.body or re.search(r'/en/webassets/base/.{8}_main.css', response.body)
+        assert '/en/base/vendor/jquery.js' in response.body or re.search(r'/en/webassets/vendor/.{8}_jquery.js', response.body)
+
+        # french request
+        offset = '/fr/organization'
+        response = app.get(offset, extra_environ=self.extra_environ_tester_registry,
+                           environ_overrides=self.environ_overrides_tester,
+                           status=200,
+                           follow_redirects=True)  # no need for redirects
+
+        # test for both in the case that the i18n catalogues are not built
+        assert 'Organizations' in response.body or 'Organisations' in response.body
+        assert '/fr/base/css/main.css' in response.body or re.search(r'/fr/webassets/base/.{8}_main.css', response.body)
+        assert '/fr/base/vendor/jquery.js' in response.body or re.search(r'/fr/webassets/vendor/.{8}_jquery.js', response.body)
+
+    @mock.patch.object(h, 'is_registry_domain', mock_is_portal_domain)
+    def test_portal_assets(self, app):
+        """
+        Webassets such as css, js, and images should have
+        the correct domain, root, and locale.
+        """
+        # english request
+        offset = '/en/organization'
+        response = app.get(offset, extra_environ=self.extra_environ_tester_portal_en,
+                           environ_overrides=self.environ_overrides_tester,
+                           status=200,
+                           follow_redirects=False)  # no need for redirects
+
+        assert 'Organizations' in response.body
+        assert '/data/en/base/css/main.css' in response.body or re.search(r'/data/en/webassets/base/.{8}_main.css', response.body)
+        assert '/data/en/base/vendor/jquery.js' in response.body or re.search(r'/data/en/webassets/vendor/.{8}_jquery.js', response.body)
+
+        # french request
+        offset = '/fr/organization'
+        response = app.get(offset, extra_environ=self.extra_environ_tester_portal_fr,
+                           environ_overrides=self.environ_overrides_tester,
+                           status=200,
+                           follow_redirects=True)  # no need for redirects
+
+        # test for both in the case that the i18n catalogues are not built
+        assert 'Organizations' in response.body or 'Organisations' in response.body
+        assert '/data/fr/base/css/main.css' in response.body or re.search(r'/data/fr/webassets/base/.{8}_main.css', response.body)
+        assert '/data/fr/base/vendor/jquery.js' in response.body or re.search(r'/data/fr/webassets/vendor/.{8}_jquery.js', response.body)
+
+    @mock.patch.object(h, 'is_registry_domain', mock_is_portal_domain)
+    def test_portal_atom_feed_ids(self, app):
+        """
+        Generated ATOM feed IDs should have the
+        the correct domain, root, and locale.
+
+        NOTE: the Portal does not have webforms, using LocalCKAN.
+        """
+        pkg_id = make_uuid()
+
+        res_post_dict = self._filled_resource_dict(pkg_id)
+        pkg_post_dict = self._filled_dataset_dict(pkg_id)
+        pkg_post_dict['resources'] = [res_post_dict]
+        pkg_dict = self.sysadmin_action.package_create(
+            **pkg_post_dict)
+
+        atom_ns = {'atom': 'http://www.w3.org/2005/Atom'}
+        feed_date = config.get('ckan.feeds.date')
+        feed_author = config.get('ckan.feeds.author_name')
+
+        # english request
+        offset = h.url_for('feeds.dataset', id=pkg_id, locale='en')
+        response = app.get(offset, extra_environ=self.extra_environ_tester_portal_en,
+                           environ_overrides=self.environ_overrides_tester,
+                           status=200,
+                           follow_redirects=False)  # no need for redirects
+
+        root = ET.fromstring(response.body)
+
+        feed_id = root.find('atom:id', atom_ns).text
+        feed_title = root.find('atom:title', atom_ns).text
+        feed_sub_title = root.find('atom:subtitle', atom_ns).text
+        links = root.findall('atom:link', atom_ns)
+
+        assert feed_id == 'tag:http://%s,%s:/data/en/feeds/dataset/%s.atom' % (
+            self.test_domain_map['portal']['en'], feed_date, pkg_id)
+        assert pkg_dict['title_translated']['en'] in feed_title
+        assert pkg_dict['title_translated']['en'] in feed_sub_title
+        for link in links:
+            if link.get('rel') == 'self':
+                assert link.get('href') == 'http://%s/data/en/feeds/dataset/%s.atom' % (
+                    self.test_domain_map['portal']['en'], pkg_id)
+            if link.get('rel') == 'enclosure':
+                assert link.get('href') == 'http://%s/data/en/api/3/action/package_show?id=%s' % (
+                    self.test_domain_map['portal']['en'], pkg_id)
+            if link.get('rel') == 'alternate':
+                assert link.get('href') == 'http://%s/data/en/dataset/%s' % (
+                    self.test_domain_map['portal']['en'], pkg_id)
+
+        author_name = root.find('atom:author', atom_ns).find('atom:name', atom_ns).text
+        assert author_name == feed_author
+
+        entries = root.findall('atom:entry', atom_ns)
+        entry_id = entries[0].find('atom:id', atom_ns).text
+        entry_title = entries[0].find('atom:title', atom_ns).text
+        entry_links = entries[0].findall('atom:link', atom_ns)
+
+        assert len(entries) == 1
+        assert entry_id == 'tag:http://%s,%s:/data/en/dataset/%s/resource/%s' % (
+            self.test_domain_map['portal']['en'], feed_date, pkg_id, pkg_dict['resources'][0]['id'])
+        assert entry_title == pkg_dict['resources'][0]['name_translated']['en']
+        for link in entry_links:
+            if link.get('rel') == 'enclosure':
+                assert link.get('href') == 'http://%s/data/en/api/3/action/resource_show?id=%s' % (
+                    self.test_domain_map['portal']['en'], pkg_dict['resources'][0]['id'])
+            if link.get('rel') == 'alternate':
+                assert link.get('href') == 'http://%s/data/en/dataset/%s/resource/%s' % (
+                    self.test_domain_map['portal']['en'], pkg_id, pkg_dict['resources'][0]['id'])
+
+        # french request
+        offset = h.url_for('feeds.dataset', id=pkg_id, locale='fr')
+        response = app.get(offset, extra_environ=self.extra_environ_tester_portal_fr,
+                           environ_overrides=self.environ_overrides_tester,
+                           status=200,
+                           follow_redirects=False)  # no need for redirects
+
+        root = ET.fromstring(response.body)
+
+        feed_id = root.find('atom:id', atom_ns).text
+        feed_title = root.find('atom:title', atom_ns).text
+        feed_sub_title = root.find('atom:subtitle', atom_ns).text
+        links = root.findall('atom:link', atom_ns)
+
+        assert feed_id == 'tag:http://%s,%s:/data/fr/feeds/dataset/%s.atom' % (
+            self.test_domain_map['portal']['fr'], feed_date, pkg_id)
+        assert pkg_dict['title_translated']['fr'] in feed_title
+        assert pkg_dict['title_translated']['fr'] in feed_sub_title
+        for link in links:
+            if link.get('rel') == 'self':
+                assert link.get('href') == 'http://%s/data/fr/feeds/dataset/%s.atom' % (
+                    self.test_domain_map['portal']['fr'], pkg_id)
+            if link.get('rel') == 'enclosure':
+                assert link.get('href') == 'http://%s/data/fr/api/3/action/package_show?id=%s' % (
+                    self.test_domain_map['portal']['fr'], pkg_id)
+            if link.get('rel') == 'alternate':
+                assert link.get('href') == 'http://%s/data/fr/dataset/%s' % (
+                    self.test_domain_map['portal']['fr'], pkg_id)
+
+        author_name = root.find('atom:author', atom_ns).find('atom:name', atom_ns).text
+        assert author_name == feed_author
+
+        entries = root.findall('atom:entry', atom_ns)
+        entry_id = entries[0].find('atom:id', atom_ns).text
+        entry_title = entries[0].find('atom:title', atom_ns).text
+        entry_links = entries[0].findall('atom:link', atom_ns)
+
+        assert len(entries) == 1
+        assert entry_id == 'tag:http://%s,%s:/data/fr/dataset/%s/resource/%s' % (
+            self.test_domain_map['portal']['fr'], feed_date, pkg_id, pkg_dict['resources'][0]['id'])
+        assert entry_title == pkg_dict['resources'][0]['name_translated']['fr']
+        for link in entry_links:
+            if link.get('rel') == 'enclosure':
+                assert link.get('href') == 'http://%s/data/fr/api/3/action/resource_show?id=%s' % (
+                    self.test_domain_map['portal']['fr'], pkg_dict['resources'][0]['id'])
+            if link.get('rel') == 'alternate':
+                assert link.get('href') == 'http://%s/data/fr/dataset/%s/resource/%s' % (
+                    self.test_domain_map['portal']['fr'], pkg_id, pkg_dict['resources'][0]['id'])
+
+    @mock.patch.object(h, 'is_registry_domain', mock_is_portal_domain)
+    def test_portal_dcat_ids(self, app):
+        """
+        Generated DCAT IDs should have the
+        the correct domain, root, and locale.
+
+        NOTE: the Portal does not have webforms, using LocalCKAN.
+        """
+        pkg_id = make_uuid()
+
+        res_post_dict = self._filled_resource_dict(pkg_id)
+        pkg_post_dict = self._filled_dataset_dict(pkg_id)
+        pkg_post_dict['resources'] = [res_post_dict]
+        pkg_dict = self.sysadmin_action.package_create(
+            **pkg_post_dict)
+
+        # english request
+        offset = h.url_for('dataset.read', id=pkg_id, locale='en') + '.jsonld'
+        response = app.get(offset, extra_environ=self.extra_environ_tester_portal_en,
+                           environ_overrides=self.environ_overrides_tester,
+                           status=200,
+                           follow_redirects=False)  # no need for redirects
+
+        pass
+
     # TODO: datastore search paging
     # TODO: dcat ids
+    # TODO: xloader ckan_url
+    # TODO: xloader original_url
+
+    # print('    ')
+    # print('DEBUGGING::')
+    # print('    ')
+    # print()
+    # print('    ')
+    # assert False
