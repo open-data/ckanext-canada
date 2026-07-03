@@ -5,12 +5,16 @@ from ckanext.canada.tests import (
     mock_is_portal_domain,
     get_test_domains
 )
+import builtins  # noqa: F401
 import re
 import io
 import pytest
 import mock
+import logging
 import xml.etree.ElementTree as ET
 from ckan.plugins.toolkit import h, config
+from ckan.lib.jobs import get_queue
+from ckanext.xloader.jobs import xloader_data_into_datastore_
 
 from ckan.tests.helpers import CKANResponse  # noqa: F401
 from ckan.model.types import make_uuid
@@ -30,6 +34,8 @@ from ckanext.canada.tests.helpers import (
     MockFieldStorage,
     get_sample_filepath,
 )
+
+logger = logging.getLogger(__name__)
 
 
 class TestDomainMap(CanadaTestBase):
@@ -712,7 +718,8 @@ class TestDomainMap(CanadaTestBase):
                     self.test_domain_map['portal']['fr'], pkg_id, pkg_dict['resources'][0]['id'])
 
     @mock.patch.object(h, 'is_registry_domain', mock_is_portal_domain)
-    def test_portal_dcat_ids(self, app):
+    @pytest.mark.usefixtures('mock_uploads')
+    def test_portal_dcat_fields(self, app, mock_uploads):
         """
         Generated DCAT IDs should have the
         the correct domain, root, and locale.
@@ -721,25 +728,409 @@ class TestDomainMap(CanadaTestBase):
         """
         pkg_id = make_uuid()
 
-        res_post_dict = self._filled_resource_dict(pkg_id)
-        pkg_post_dict = self._filled_dataset_dict(pkg_id)
-        pkg_post_dict['resources'] = [res_post_dict]
         pkg_dict = self.sysadmin_action.package_create(
-            **pkg_post_dict)
+            **self._filled_dataset_dict(pkg_id))
+
+        res_post_dict = self._filled_resource_dict(pkg_id)
+        sample_filepath = get_sample_filepath('example_image_1.png')
+        fake_file_obj = io.BytesIO()
+        with open(sample_filepath, 'rb') as f:
+            file_data_r1 = f.read()
+            fake_file_obj.write(file_data_r1)
+            mock_field_store_r1 = MockFieldStorage(fake_file_obj, 'example_image_1.png')
+
+            fake_stream_r1 = io.BufferedReader(io.BytesIO(file_data_r1))
+
+        with mock.patch('io.open', return_value=fake_stream_r1):
+            model.Session.commit()
+            model.Session.remove()
+            _session = model.Session  # noqa: F841
+            res_post_dict['url'] = 'example_image_1.png'
+            res_post_dict['url_type'] = 'upload'
+            res_post_dict['format'] = 'PNG'
+            res_post_dict['upload'] = mock_field_store_r1
+
+            res_dict = self.sysadmin_action.resource_create(**res_post_dict)
+
+        # test dcat JSON-LD
 
         # english request
-        offset = h.url_for('dataset.read', id=pkg_id, locale='en') + '.jsonld'
+        offset = '/en/dataset/%s.jsonld' % pkg_id
         response = app.get(offset, extra_environ=self.extra_environ_tester_portal_en,
                            environ_overrides=self.environ_overrides_tester,
                            status=200,
                            follow_redirects=False)  # no need for redirects
 
-        pass
+        graph_data = response.json['@graph']
+        for obj in graph_data:
+            # test org map
+            if obj['@type'] == 'foaf:Organization':
+                assert obj['@id'] == 'http://%s/data/en/organization/%s' % (
+                    self.test_domain_map['portal']['en'], pkg_dict['owner_org'])
+                for entry in obj['foaf:name']:
+                    if entry['@language'] == 'en':
+                        assert entry['@value'] == self.org['title_translated']['en']
+                    if entry['@language'] == 'fr':
+                        assert entry['@value'] == self.org['title_translated']['fr']
+            # test resource map
+            if obj['@type'] == 'dcat:Distribution':
+                assert obj['@id'] == 'http://%s/data/en/dataset/%s/resource/%s' % (
+                    self.test_domain_map['portal']['en'], pkg_id, res_dict['id'])
+                assert obj['dcat:accessURL']['@id'] == 'http://%s/data/en/dataset/%s/resource/%s/download/example_image_1.png' % (
+                    self.test_domain_map['portal']['en'], pkg_id, res_dict['id'])
+                assert obj['dct:format'] == res_dict['format']
+                for entry in obj['dct:title']:
+                    if entry['@language'] == 'en':
+                        assert entry['@value'] == res_dict['name_translated']['en']
+                    if entry['@language'] == 'fr':
+                        assert entry['@value'] == res_dict['name_translated']['fr']
+            # test dataset map
+            if obj['@type'] == 'dcat:Dataset':
+                assert obj['@id'] == 'http://%s/data/en/dataset/%s' % (
+                    self.test_domain_map['portal']['en'], pkg_id)
+                assert obj['dcat:distribution']['@id'] == 'http://%s/data/en/dataset/%s/resource/%s' % (
+                    self.test_domain_map['portal']['en'], pkg_id, res_dict['id'])
+                for entry in obj['dcat:keyword']:
+                    if entry['@language'] == 'en':
+                        assert entry['@value'] == pkg_dict['keywords']['en'][0]
+                    if entry['@language'] == 'fr':
+                        assert entry['@value'] == pkg_dict['keywords']['fr'][0]
+                assert obj['dct:accrualPeriodicity'] == pkg_dict['frequency']
+                assert obj['dct:identifier'] == pkg_dict['id']
+                for entry in obj['dct:description']:
+                    if entry['@language'] == 'en':
+                        assert entry['@value'] == pkg_dict['notes_translated']['en']
+                    if entry['@language'] == 'fr':
+                        assert entry['@value'] == pkg_dict['notes_translated']['fr']
+                assert obj['dct:publisher']['@id'] == 'http://%s/data/en/organization/%s' % (
+                    self.test_domain_map['portal']['en'], pkg_dict['owner_org'])
+                for entry in obj['dct:title']:
+                    if entry['@language'] == 'en':
+                        assert entry['@value'] == pkg_dict['title_translated']['en']
+                    if entry['@language'] == 'fr':
+                        assert entry['@value'] == pkg_dict['title_translated']['fr']
 
-    # TODO: datastore search paging
-    # TODO: dcat ids
+        # french request
+        offset = '/fr/dataset/%s.jsonld' % pkg_id
+        response = app.get(offset, extra_environ=self.extra_environ_tester_portal_fr,
+                           environ_overrides=self.environ_overrides_tester,
+                           status=200,
+                           follow_redirects=False)  # no need for redirects
+
+        graph_data = response.json['@graph']
+        for obj in graph_data:
+            # test org map
+            if obj['@type'] == 'foaf:Organization':
+                assert obj['@id'] == 'http://%s/data/fr/organization/%s' % (
+                    self.test_domain_map['portal']['fr'], pkg_dict['owner_org'])
+                for entry in obj['foaf:name']:
+                    if entry['@language'] == 'en':
+                        assert entry['@value'] == self.org['title_translated']['en']
+                    if entry['@language'] == 'fr':
+                        assert entry['@value'] == self.org['title_translated']['fr']
+            # test resource map
+            if obj['@type'] == 'dcat:Distribution':
+                assert obj['@id'] == 'http://%s/data/fr/dataset/%s/resource/%s' % (
+                    self.test_domain_map['portal']['fr'], pkg_id, res_dict['id'])
+                assert obj['dcat:accessURL']['@id'] == 'http://%s/data/fr/dataset/%s/resource/%s/download/example_image_1.png' % (
+                    self.test_domain_map['portal']['fr'], pkg_id, res_dict['id'])
+                assert obj['dct:format'] == res_dict['format']
+                for entry in obj['dct:title']:
+                    if entry['@language'] == 'en':
+                        assert entry['@value'] == res_dict['name_translated']['en']
+                    if entry['@language'] == 'fr':
+                        assert entry['@value'] == res_dict['name_translated']['fr']
+            # test dataset map
+            if obj['@type'] == 'dcat:Dataset':
+                assert obj['@id'] == 'http://%s/data/fr/dataset/%s' % (
+                    self.test_domain_map['portal']['fr'], pkg_id)
+                assert obj['dcat:distribution']['@id'] == 'http://%s/data/fr/dataset/%s/resource/%s' % (
+                    self.test_domain_map['portal']['fr'], pkg_id, res_dict['id'])
+                for entry in obj['dcat:keyword']:
+                    if entry['@language'] == 'en':
+                        assert entry['@value'] == pkg_dict['keywords']['en'][0]
+                    if entry['@language'] == 'fr':
+                        assert entry['@value'] == pkg_dict['keywords']['fr'][0]
+                assert obj['dct:accrualPeriodicity'] == pkg_dict['frequency']
+                assert obj['dct:identifier'] == pkg_dict['id']
+                for entry in obj['dct:description']:
+                    if entry['@language'] == 'en':
+                        assert entry['@value'] == pkg_dict['notes_translated']['en']
+                    if entry['@language'] == 'fr':
+                        assert entry['@value'] == pkg_dict['notes_translated']['fr']
+                assert obj['dct:publisher']['@id'] == 'http://%s/data/fr/organization/%s' % (
+                    self.test_domain_map['portal']['fr'], pkg_dict['owner_org'])
+                for entry in obj['dct:title']:
+                    if entry['@language'] == 'en':
+                        assert entry['@value'] == pkg_dict['title_translated']['en']
+                    if entry['@language'] == 'fr':
+                        assert entry['@value'] == pkg_dict['title_translated']['fr']
+
+        # test dcat XML
+        rdf_ns = 'http://www.w3.org/1999/02/22-rdf-syntax-ns#'
+        dcat_ns = {
+            'rdf': rdf_ns,
+            'dct': 'http://purl.org/dc/terms/',
+            'dcat': 'http://www.w3.org/ns/dcat#',
+            'foaf': 'http://xmlns.com/foaf/0.1/',
+        }
+
+        # english request
+        offset = '/en/dataset/%s.xml' % pkg_id
+        response = app.get(offset, extra_environ=self.extra_environ_tester_portal_en,
+                           environ_overrides=self.environ_overrides_tester,
+                           status=200,
+                           follow_redirects=False)  # no need for redirects
+
+        root = ET.fromstring(response.body)
+        dataset = root.find('dcat:Dataset', dcat_ns)
+        publisher = dataset.find('dct:publisher', dcat_ns).find('foaf:Organization', dcat_ns)
+        distributions = dataset.findall('dcat:distribution', dcat_ns)
+
+        # test org map
+        org_names = publisher.findall('foaf:name', dcat_ns)
+        for name in org_names:
+            if name.get('xml:lang') == 'en':
+                assert name.text == self.org['title_translated']['en']
+            if name.get('xml:lang') == 'fr':
+                assert name.text == self.org['title_translated']['fr']
+        assert publisher.get(f'{{{rdf_ns}}}about') == 'http://%s/data/en/organization/%s' % (
+            self.test_domain_map['portal']['en'], pkg_dict['owner_org'])
+        # test resource map
+        assert len(distributions) == 1
+        resource = distributions[0].find('dcat:Distribution', dcat_ns)
+        resource_titles = resource.findall('dct:title', dcat_ns)
+        for title in resource_titles:
+            if title.get('xml:lang') == 'en':
+                assert title.text == res_dict['name_translated']['en']
+            if title.get('xml:lang') == 'fr':
+                assert title.text == res_dict['name_translated']['fr']
+        assert resource.get(f'{{{rdf_ns}}}about') == 'http://%s/data/en/dataset/%s/resource/%s' % (
+            self.test_domain_map['portal']['en'], pkg_id, res_dict['id'])
+        assert resource.find('dct:format', dcat_ns).text == res_dict['format']
+        assert resource.find('dcat:accessURL', dcat_ns).get(f'{{{rdf_ns}}}resource') == 'http://%s/data/en/dataset/%s/resource/%s/download/example_image_1.png' % (
+            self.test_domain_map['portal']['en'], pkg_id, res_dict['id'])
+        # test dataset map
+        dataset_titles = dataset.findall('dct:title', dcat_ns)
+        dataset_descriptions = dataset.findall('dct:description', dcat_ns)
+        dataset_keywords = dataset.findall('dcat:keyword', dcat_ns)
+        for title in dataset_titles:
+            if title.get('xml:lang') == 'en':
+                assert title.text == pkg_dict['title_translated']['en']
+            if title.get('xml:lang') == 'fr':
+                assert title.text == pkg_dict['title_translated']['fr']
+        for description in dataset_descriptions:
+            if description.get('xml:lang') == 'en':
+                assert description.text == pkg_dict['notes_translated']['en']
+            if description.get('xml:lang') == 'fr':
+                assert description.text == pkg_dict['notes_translated']['fr']
+        for keyword in dataset_keywords:
+            if keyword.get('xml:lang') == 'en':
+                assert keyword.text == pkg_dict['keywords']['en'][0]
+            if keyword.get('xml:lang') == 'fr':
+                assert keyword.text == pkg_dict['keywords']['fr'][0]
+        assert dataset.find('dct:identifier', dcat_ns).text == pkg_dict['id']
+        assert dataset.find('dct:accrualPeriodicity', dcat_ns).text == pkg_dict['frequency']
+
+        # french request
+        offset = '/fr/dataset/%s.xml' % pkg_id
+        response = app.get(offset, extra_environ=self.extra_environ_tester_portal_fr,
+                           environ_overrides=self.environ_overrides_tester,
+                           status=200,
+                           follow_redirects=False)  # no need for redirects
+
+        root = ET.fromstring(response.body)
+        dataset = root.find('dcat:Dataset', dcat_ns)
+        publisher = dataset.find('dct:publisher', dcat_ns).find('foaf:Organization', dcat_ns)
+        distributions = dataset.findall('dcat:distribution', dcat_ns)
+
+        # test org map
+        org_names = publisher.findall('foaf:name', dcat_ns)
+        for name in org_names:
+            if name.get('xml:lang') == 'en':
+                assert name.text == self.org['title_translated']['en']
+            if name.get('xml:lang') == 'fr':
+                assert name.text == self.org['title_translated']['fr']
+        assert publisher.get(f'{{{rdf_ns}}}about') == 'http://%s/data/fr/organization/%s' % (
+            self.test_domain_map['portal']['fr'], pkg_dict['owner_org'])
+        # test resource map
+        assert len(distributions) == 1
+        resource = distributions[0].find('dcat:Distribution', dcat_ns)
+        resource_titles = resource.findall('dct:title', dcat_ns)
+        for title in resource_titles:
+            if title.get('xml:lang') == 'en':
+                assert title.text == res_dict['name_translated']['en']
+            if title.get('xml:lang') == 'fr':
+                assert title.text == res_dict['name_translated']['fr']
+        assert resource.get(f'{{{rdf_ns}}}about') == 'http://%s/data/fr/dataset/%s/resource/%s' % (
+            self.test_domain_map['portal']['fr'], pkg_id, res_dict['id'])
+        assert resource.find('dct:format', dcat_ns).text == res_dict['format']
+        assert resource.find('dcat:accessURL', dcat_ns).get(f'{{{rdf_ns}}}resource') == 'http://%s/data/fr/dataset/%s/resource/%s/download/example_image_1.png' % (
+            self.test_domain_map['portal']['fr'], pkg_id, res_dict['id'])
+        # test dataset map
+        dataset_titles = dataset.findall('dct:title', dcat_ns)
+        dataset_descriptions = dataset.findall('dct:description', dcat_ns)
+        dataset_keywords = dataset.findall('dcat:keyword', dcat_ns)
+        for title in dataset_titles:
+            if title.get('xml:lang') == 'en':
+                assert title.text == pkg_dict['title_translated']['en']
+            if title.get('xml:lang') == 'fr':
+                assert title.text == pkg_dict['title_translated']['fr']
+        for description in dataset_descriptions:
+            if description.get('xml:lang') == 'en':
+                assert description.text == pkg_dict['notes_translated']['en']
+            if description.get('xml:lang') == 'fr':
+                assert description.text == pkg_dict['notes_translated']['fr']
+        for keyword in dataset_keywords:
+            if keyword.get('xml:lang') == 'en':
+                assert keyword.text == pkg_dict['keywords']['en'][0]
+            if keyword.get('xml:lang') == 'fr':
+                assert keyword.text == pkg_dict['keywords']['fr'][0]
+        assert dataset.find('dct:identifier', dcat_ns).text == pkg_dict['id']
+        assert dataset.find('dct:accrualPeriodicity', dcat_ns).text == pkg_dict['frequency']
+
+    def test_registry_datastore_urls(self, app):
+        """
+        Creating XLoader resources should only store relative URIs
+        in the database and in SOLR. datastore_search should prepend the
+        requesting hostname to the paging URIs.
+        """
+        queue = get_queue('test_queue')
+        queue.empty()
+        pkg_id = make_uuid()
+
+        offset = h.url_for('dataset.new', locale='en')
+        response = app.post(offset,
+                            data=self._filled_dataset_form(pkg_id),
+                            extra_environ=self.extra_environ_tester_registry,
+                            environ_overrides=self.environ_overrides_tester,
+                            status=302,
+                            follow_redirects=False)  # catch redirect
+
+        offset, _host = get_relative_offset_from_response(response)
+        assert offset == f'/en/dataset/{pkg_id}/resource/new'
+
+        res_form_fields = self._filled_resource_form(pkg_id)
+        sample_filepath = get_sample_filepath('sample.csv')
+        fake_file_obj = io.BytesIO()
+        with open(sample_filepath, 'rb') as f:
+            file_data_r1 = f.read()
+            fake_file_obj.write(file_data_r1)
+            mock_field_store_r1 = MockFieldStorage(fake_file_obj, 'sample.csv')
+
+            fake_stream_r1 = io.BufferedReader(io.BytesIO(file_data_r1))
+
+        res_form_fields['url'] = 'sample.csv'
+        res_form_fields['url_type'] = 'upload'
+        res_form_fields['format'] = 'CSV'
+        res_form_fields['upload'] = mock_field_store_r1
+
+        response = app.post(offset,
+                            data=res_form_fields,
+                            extra_environ=self.extra_environ_tester_registry,
+                            environ_overrides=self.environ_overrides_tester,
+                            follow_redirects=False)  # catch redirect
+
+        # load file into the datastore
+        pkg_dict = self.sysadmin_action.package_show(id=pkg_id)
+
+        def _fake_open(*args, **kwargs):
+            return io.BufferedReader(io.BytesIO(file_data_r1))
+
+        # should have a ckanext-validation job queued right now
+        jobs = queue.jobs
+        assert len(jobs) == 1
+        job = jobs[0]
+        assert job.func_name == 'ckanext.validation.jobs.run_validation_job'
+        assert job.meta['title'] == 'Validate Resource'
+        with mock.patch('io.open', _fake_open), mock.patch('builtins.open', _fake_open):
+            model.Session.commit()
+            model.Session.remove()
+            _session = model.Session  # noqa: F841
+            job.func(*job.args, **job.kwargs)
+        queue.remove(job)
+        job.delete()
+
+        # submit it to XLoader as the xloader_submit action is what adds ckan_url and original_url
+        offset = h.url_for('api.action', ver=3, logic_function='xloader_submit', ignore_hash=True,
+                           resource_id=pkg_dict['resources'][0]['id'], locale='en')
+        response = app.post(offset,
+                            data={
+                                'resource_id': pkg_dict['resources'][0]['id'],
+                                'ignore_hash': True
+                            },
+                            extra_environ=self.extra_environ_tester_registry,
+                            environ_overrides=self.environ_overrides_tester,
+                            status=200,
+                            follow_redirects=False)  # no need for redirects
+        response = response.json
+
+        assert response['help'] == 'http://%s/en/api/3/action/help_show?name=xloader_submit' % (
+            self.test_domain_map['registry']['en'])
+        assert response['success'] is True
+
+        self.sysadmin_action.xloader_submit(resource_id=pkg_dict['resources'][0]['id'], ignore_hash=True)
+
+        # should have a ckanext-xloader job queued right now
+        jobs = queue.jobs
+        assert len(jobs) == 1
+        job = jobs[0]
+        assert job.func_name == 'ckanext.xloader.jobs.xloader_data_into_datastore'
+        assert job.meta['title'] == 'Upload to DataStore'
+        assert job.args[0]['metadata']['ckan_url'] is None
+        assert job.args[0]['metadata']['resource_id'] == pkg_dict['resources'][0]['id']
+        assert job.args[0]['metadata']['original_url'] == '/en/dataset/%s/resource/%s/download/sample.csv' % (
+            pkg_id, pkg_dict['resources'][0]['id'])
+        with mock.patch('io.open', _fake_open), mock.patch('builtins.open', _fake_open):
+            model.Session.commit()
+            model.Session.remove()
+            _session = model.Session  # noqa: F841
+            # FIXME: xloader_data_into_datastore expects to be inside of the jobs worker...
+            #        we need to call xloader_data_into_datastore_(input, job_dict, logger)  directly
+            job.func(*job.args, **job.kwargs)
+        queue.remove(job)
+        job.delete()
+
+        # check package_show in english
+        offset = h.url_for('api.action', ver=3, logic_function='package_show', id=pkg_id, locale='en')
+        response = app.get(offset, extra_environ=self.extra_environ_tester_registry,
+                           environ_overrides=self.environ_overrides_tester,
+                           status=200,
+                           follow_redirects=False)  # no need for redirects
+        pkg_dict = response.json['result']
+        res_dict = pkg_dict['resources'][0]
+
+        # check datastore_search in english
+        offset = h.url_for('api.action', ver=3, logic_function='datastore_search',
+                           resource_id=res_dict['id'], locale='en')
+        response = app.get(offset, extra_environ=self.extra_environ_tester_registry,
+                           environ_overrides=self.environ_overrides_tester,
+                           status=200,
+                           follow_redirects=False)  # no need for redirects
+        response = response.json
+
+        assert response['help'] == 'http://%s/en/api/3/action/help_show?name=datastore_search' % (
+            self.test_domain_map['registry']['en'])
+        assert response['result']['_links']['start'] == '/en/api/3/action/datastore_search?resource_id=%s' % (
+            res_dict['id'])
+        assert response['result']['_links']['next'] == '/en/api/3/action/datastore_search?resource_id=%s&offset=100' % (
+            res_dict['id'])
+
+        from pprint import pprint
+        print('    ')
+        print('DEBUGGING::')
+        print('    ')
+        print(pprint(response))
+        print('    ')
+        print(pprint(pkg_dict))
+        print('    ')
+        print(pprint(res_dict))
+        print('    ')
+        assert False
+
     # TODO: xloader ckan_url
     # TODO: xloader original_url
+    # TODO: validation report URIs
 
     # print('    ')
     # print('DEBUGGING::')
