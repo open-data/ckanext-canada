@@ -1203,5 +1203,6 @@ def linked_user(user: Union[str, model.User],
     return core_linked_user(user, maxlength, avatar)
 
 
-def get_allowed_frame_hosts() -> Optional[list]:
+# type_ignore_reason: incomplete typing
+def get_allowed_frame_hosts() -> Optional[list]:  # type: ignore
     return config.get('ckanext.canada.allowed_frame_hosts')
