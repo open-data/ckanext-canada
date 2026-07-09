@@ -41,7 +41,9 @@
 {% if geno.datatables_style %}
   {% do tableStyles.update(geno.datatables_style) %}
 {% endif %}
-{% set feedback_link = '<a href="mailto:' ~ h.support_email_address() ~ '">feedback</a>' %}
+{% set feedback_link %}
+  <a href="mailto:{{ h.support_email_address() }}">{{ _('feedback') }}</a>
+{% endset %}
 
 <section id="dt-preview">
   <h2 id="prtable">{{_("Interactive Table")}}</h2>

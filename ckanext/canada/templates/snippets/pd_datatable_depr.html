@@ -9,7 +9,9 @@
 {% for _res_name, _fkeys in foreign_keys.items() %}
   {% do fk_links.update({_res_name: h.url_for('recombinant.preview_table', resource_name=_res_name, owner_org=owner_org)}) %}
 {% endfor  %}
-{% set feedback_link = '<a href="mailto:' ~ h.support_email_address() ~ '">feedback</a>' %}
+{% set feedback_link %}
+  <a href="mailto:{{ h.support_email_address() }}">{{ _('feedback') }}</a>
+{% endset %}
 
 <section id="dt-preview">
   <h2 id="prtable">{{_("Preview")}}</h2>
