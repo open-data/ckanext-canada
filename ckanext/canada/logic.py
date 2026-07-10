@@ -7,6 +7,7 @@ from ckanext.activity.model import Activity, activity
 from ckan.logic.schema import (
     default_create_resource_view_schema_filtered,
     default_update_resource_view_schema_changes,
+    default_update_user_schema,
 )
 from contextlib import contextmanager
 
@@ -798,7 +799,15 @@ def canada_user_update(up_func: Action,
         data_dict['plugin_extras'] = {}
     data_dict['plugin_extras']['opt_in_features__pd_datatables'] = \
         data['opt_in_features__pd_datatables']
-    return up_func(context, data_dict)
+    user_update_schema = default_update_user_schema()
+    # remove ignore_not_sysadmin validator from plugin_extras
+    user_update_schema['plugin_extras'] = [get_validator('json_object')]
+    up_context = dict(context, schema=user_update_schema)
+    response = up_func(up_context, data_dict)
+    extras = up_context['user_obj'].plugin_extras
+    response['opt_in_features__pd_datatables'] = extras.get(
+        'opt_in_features__pd_datatables', False)
+    return response
 
 
 @chained_action
@@ -809,9 +818,8 @@ def canada_user_show(up_func: Action,
     """
     Return new fields in the User dictionary.
     """
-    data_dict['include_plugin_extras'] = True
     user_dict = up_func(context, data_dict)
-    extras = user_dict.pop('plugin_extras', {})
+    extras = context['user_obj'].plugin_extras
     user_dict['opt_in_features__pd_datatables'] = extras.get(
-        'opt_in_features__pd_datatables', False) if extras else False
+        'opt_in_features__pd_datatables', False)
     return user_dict
