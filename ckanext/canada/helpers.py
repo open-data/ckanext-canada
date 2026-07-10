@@ -531,8 +531,13 @@ def get_pd_datatable(resource_name: str,
                         for fk_ci, fk_cc in enumerate(fk['child_columns']))
 
     # TODO: DEPRECATED: REMOVE AFTER FULL PD DATATABLES QA
-    snippet = 'pd_datatable.html' if config.get(
-        'ckanext.canada.enable_pd_datatable_editor') else 'pd_datatable_depr.html'
+    try:
+        user_dict = get_action('user_show')({'ignore_auth': True}, {'id': g.user})
+    except (ObjectNotFound, RuntimeError):
+        user_dict = {}
+    enable_new_template = user_dict.get('opt_in_features__pd_datatables', config.get(
+        'ckanext.canada.enable_pd_datatable_editor'))
+    snippet = 'pd_datatable.html' if enable_new_template else 'pd_datatable_depr.html'
 
     return h.snippet('snippets/%s' % snippet,
                      resource_name=resource_name,
@@ -1175,5 +1180,6 @@ def get_inline_script_nonce() -> str:
     return str(request.environ.get('CSP_NONCE', ''))
 
 
-def get_allowed_frame_hosts() -> Optional[list]:
+# type_ignore_reason: incomplete typing
+def get_allowed_frame_hosts() -> Optional[list]:  # type: ignore
     return config.get('ckanext.canada.allowed_frame_hosts')

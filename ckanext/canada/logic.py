@@ -7,6 +7,7 @@ from ckanext.activity.model import Activity, activity
 from ckan.logic.schema import (
     default_create_resource_view_schema_filtered,
     default_update_resource_view_schema_changes,
+    default_update_user_schema,
 )
 from contextlib import contextmanager
 
@@ -764,3 +765,61 @@ def canada_datastore_search(up_func: Action,
                                     'not supported for data with '
                                     'more than {} rows.').format(max_rows_for_fts))
     return up_func(context, data_dict)
+
+
+@chained_action
+def canada_user_update(up_func: Action,
+                       context: Context,
+                       data_dict: DataDict) -> ChainedAction:
+    """
+    Add new fields to the User schema.
+    """
+    bool_validator = get_validator('boolean_validator')
+    default_validator = get_validator('default')
+    ignore_missing_validator = get_validator('ignore_missing')
+    custom_data_dict = {
+        'opt_in_features__pd_datatables': data_dict.get(
+            'opt_in_features__pd_datatables', None)
+    }
+    schema = {
+        'opt_in_features__pd_datatables': [
+            ignore_missing_validator,
+            # type_ignore_reason: incomplete typing
+            default_validator(False),  # type: ignore
+            bool_validator,
+        ]
+    }
+    data, errors = validate(custom_data_dict, schema, context)
+    if errors:
+        model.Session.rollback()
+        raise ValidationError(errors)
+    if 'opt_in_features__pd_datatables' not in data:
+        return up_func(context, data_dict)
+    if 'plugin_extras' not in data_dict:
+        data_dict['plugin_extras'] = {}
+    data_dict['plugin_extras']['opt_in_features__pd_datatables'] = \
+        data['opt_in_features__pd_datatables']
+    user_update_schema = default_update_user_schema()
+    # remove ignore_not_sysadmin validator from plugin_extras
+    user_update_schema['plugin_extras'] = [get_validator('json_object')]
+    up_context = cast(Context, dict(context, schema=user_update_schema))
+    response = up_func(up_context, data_dict)
+    extras = up_context['user_obj'].plugin_extras or {}
+    response['opt_in_features__pd_datatables'] = extras.get(
+        'opt_in_features__pd_datatables', False)
+    return response
+
+
+@chained_action
+@side_effect_free
+def canada_user_show(up_func: Action,
+                     context: Context,
+                     data_dict: DataDict) -> ChainedAction:
+    """
+    Return new fields in the User dictionary.
+    """
+    user_dict = up_func(context, data_dict)
+    extras = context['user_obj'].plugin_extras or {}
+    user_dict['opt_in_features__pd_datatables'] = extras.get(
+        'opt_in_features__pd_datatables', False)
+    return user_dict
