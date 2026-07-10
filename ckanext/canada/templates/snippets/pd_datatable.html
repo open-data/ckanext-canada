@@ -41,9 +41,6 @@
 {% if geno.datatables_style %}
   {% do tableStyles.update(geno.datatables_style) %}
 {% endif %}
-{% set feedback_link %}
-  <a href="mailto:{{ h.support_email_address() }}">{{ _('feedback') }}</a>
-{% endset %}
 
 <section id="dt-preview">
   <h2 id="prtable">{{_("Interactive Table")}}</h2>
@@ -54,7 +51,10 @@
        data-module-feature_key="opt_in_features__pd_datatables"
        data-module-feature_value=false
        data-module-page_redirect="#prtable"
-       data-module-label="{{ _('The new table interface will become the default experience. Try the updated interface and share your %(feedback)s to help shape future improvements.', feedback=feedback_link) }}"
+       data-module-label="{{ _(
+            "The new table interface will become the default experience. Try the updated interface and share your <a href='mailto:%(email)s'>feedback</a> to help shape future improvements.",
+            email=h.support_email_address()
+        ) }}"
        data-module-button_label="{{ _('Revert to older table interface') }}"></div>
   <div class="pd-datable-instructions">
     <details>

@@ -9,9 +9,6 @@
 {% for _res_name, _fkeys in foreign_keys.items() %}
   {% do fk_links.update({_res_name: h.url_for('recombinant.preview_table', resource_name=_res_name, owner_org=owner_org)}) %}
 {% endfor  %}
-{% set feedback_link %}
-  <a href="mailto:{{ h.support_email_address() }}">{{ _('feedback') }}</a>
-{% endset %}
 
 <section id="dt-preview">
   <h2 id="prtable">{{_("Preview")}}</h2>
@@ -21,7 +18,10 @@
        data-module-user_id="{{ g.user }}"
        data-module-feature_key="opt_in_features__pd_datatables"
        data-module-page_redirect="#prtable"
-       data-module-label="{{ _('A new table experience is now available! Try the updated interface and share your %(feedback)s to help shape future improvements.', feedback=feedback_link) }}"
+       data-module-label="{{ _(
+            "A new table experience is now available! Try the updated interface and share your <a href='mailto:%(email)s'>feedback</a> to help shape future improvements.",
+            email=h.support_email_address()
+        ) }}"
        data-module-button_label="{{ _('Enable new table interface') }}"></div>
   <table id="dtprv" class="table table-striped" data-role="table" data-mode="columntoggle" >
     <thead>
