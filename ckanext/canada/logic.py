@@ -802,9 +802,9 @@ def canada_user_update(up_func: Action,
     user_update_schema = default_update_user_schema()
     # remove ignore_not_sysadmin validator from plugin_extras
     user_update_schema['plugin_extras'] = [get_validator('json_object')]
-    up_context = dict(context, schema=user_update_schema)
+    up_context = cast(Context, dict(context, schema=user_update_schema))
     response = up_func(up_context, data_dict)
-    extras = up_context['user_obj'].plugin_extras
+    extras = up_context['user_obj'].plugin_extras or {}
     response['opt_in_features__pd_datatables'] = extras.get(
         'opt_in_features__pd_datatables', False)
     return response
@@ -819,7 +819,7 @@ def canada_user_show(up_func: Action,
     Return new fields in the User dictionary.
     """
     user_dict = up_func(context, data_dict)
-    extras = context['user_obj'].plugin_extras
+    extras = context['user_obj'].plugin_extras or {}
     user_dict['opt_in_features__pd_datatables'] = extras.get(
         'opt_in_features__pd_datatables', False)
     return user_dict
