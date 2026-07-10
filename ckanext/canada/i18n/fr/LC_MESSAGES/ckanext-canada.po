@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-07-09 13:09-0400\n"
+"POT-Creation-Date: 2026-07-10 10:24-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: fr\n"
@@ -3969,7 +3969,7 @@ msgid "Explore"
 msgstr "Explorer"
 
 #: ckanext/canada/templates/package/snippets/resource_item.html:79
-#: ckanext/canada/templates/snippets/pd_datatable_depr.html:17
+#: ckanext/canada/templates/snippets/pd_datatable_depr.html:14
 msgid "Preview"
 msgstr "Aperçu"
 
@@ -4538,24 +4538,19 @@ msgstr "Demande envoyée au propriétaire des données, en attente de réponse"
 msgid "Resource Formats:"
 msgstr "Formats des ressources :"
 
-#: ckanext/canada/templates/snippets/pd_datatable.html:45
-#: ckanext/canada/templates/snippets/pd_datatable_depr.html:13
-msgid "feedback"
-msgstr "commentaires"
-
-#: ckanext/canada/templates/snippets/pd_datatable.html:49
+#: ckanext/canada/templates/snippets/pd_datatable.html:46
 msgid "Interactive Table"
 msgstr ""
 
-#: ckanext/canada/templates/snippets/pd_datatable.html:57
-#, python-format
+#: ckanext/canada/templates/snippets/pd_datatable.html:54
 msgid ""
 "The new table interface will become the default experience. Try the "
-"updated interface and share your %(feedback)s to help shape future "
-"improvements."
+"updated interface and share your <a href='mailto:%(email)s'>feedback</a> "
+"to help shape future improvements."
 msgstr ""
-"La nouvelle interface sera appliquée par défaut à compter du.  Testez-la "
-"et faites-nous part de vos %(feedback)s afin de nous aider à l’améliorer."
+"La nouvelle interface sera appliquée par défaut à compter. Testez-la et "
+"faites-nous part de vos <a href='mailto:%(email)s'>commentaires</a> afin "
+"de nous aider à l’améliorer."
 
 #: ckanext/canada/templates/snippets/pd_datatable.html:58
 msgid "Revert to older table interface"
@@ -4595,14 +4590,16 @@ msgstr ""
 msgid "Select"
 msgstr "Sélectionner"
 
-#: ckanext/canada/templates/snippets/pd_datatable_depr.html:24
+#: ckanext/canada/templates/snippets/pd_datatable_depr.html:21
 #, python-format
 msgid ""
 "A new table experience is now available! Try the updated interface and "
-"share your %(feedback)s to help shape future improvements."
+"share your <a href='mailto:%(email)s'>feedback</a> to help shape future "
+"improvements."
 msgstr ""
 "Une toute nouvelle interface est maintenant disponible pour vos tableaux!"
-" Testez-la et faites-nous part de vos %(feedback)s afin de nous aider à "
+" Testez-la et faites-nous part de vos <a "
+"href='mailto:%(email)s'>commentaires</a> afin de nous aider à "
 "l’améliorer."
 
 #: ckanext/canada/templates/snippets/pd_datatable_depr.html:25
