@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-07-10 12:51-0400\n"
+"POT-Creation-Date: 2026-07-10 14:53-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: fr\n"
@@ -1352,7 +1352,7 @@ msgstr ""
 
 #: ckanext/canada/assets/datatables/source/pd_datatables.js:79
 msgid "Reset Table"
-msgstr "Réinitialiser le tableau des données"
+msgstr "Réinitialiser le tableau"
 
 #: ckanext/canada/assets/datatables/source/pd_datatables.js:80
 msgid "Fullscreen"
@@ -1368,15 +1368,15 @@ msgstr ""
 
 #: ckanext/canada/assets/datatables/source/pd_datatables.js:83
 msgid "Full Table"
-msgstr ""
+msgstr "Tableau complet"
 
 #: ckanext/canada/assets/datatables/source/pd_datatables.js:84
 msgid "Compact Table"
-msgstr ""
+msgstr "Tableau compact"
 
 #: ckanext/canada/assets/datatables/source/pd_datatables.js:85
 msgid "Edit Online"
-msgstr ""
+msgstr "Modifier en ligne"
 
 #: ckanext/canada/assets/datatables/source/pd_datatables.js:86
 msgid "Add new record in Table"
@@ -1384,7 +1384,7 @@ msgstr ""
 
 #: ckanext/canada/assets/datatables/source/pd_datatables.js:87
 msgid "Edit<span class=\"pd-datatbales-btn-count\"></span> in Table"
-msgstr ""
+msgstr "Modifier<span class=\"pd-datatbales-btn-count\"></span> dans Excel"
 
 #: ckanext/canada/assets/datatables/source/pd_datatables.js:88
 msgid "Record is valid"
@@ -1501,7 +1501,7 @@ msgstr ""
 
 #: ckanext/canada/assets/datatables/source/pd_datatables.js:115
 msgid "Delete<span class=\"pd-datatbales-btn-count\"></span>"
-msgstr ""
+msgstr "Supprimer<span class=\"pd-datatbales-btn-count\"></span>"
 
 #: ckanext/canada/assets/datatables/source/pd_datatables.js:116
 msgid "Save<span class=\"pd-datatbales-btn-count\"></span>"
@@ -1525,7 +1525,7 @@ msgstr ""
 
 #: ckanext/canada/assets/datatables/source/pd_datatables.js:125
 msgid "_MENU_ Show number of entries"
-msgstr ""
+msgstr "_MENU_ Afficher le nombre d'entrées"
 
 #: ckanext/canada/assets/datatables/source/pd_datatables.js:126
 #: ckanext/canada/templates/package/snippets/data_api_button.html:2
@@ -1534,7 +1534,7 @@ msgstr "Chargement..."
 
 #: ckanext/canada/assets/datatables/source/pd_datatables.js:128
 msgid "Full Text Search"
-msgstr ""
+msgstr "La recherche en texte intégral"
 
 #: ckanext/canada/assets/datatables/source/pd_datatables.js:129
 msgid "No matching records found"
@@ -4666,8 +4666,8 @@ msgid "Resource Formats:"
 msgstr "Formats des ressources :"
 
 #: ckanext/canada/templates/snippets/pd_datatable.html:46
-msgid "Interactive Table"
-msgstr ""
+msgid "Interactive Table (beta version)"
+msgstr "Tableau interactif (version bêta)"
 
 #: ckanext/canada/templates/snippets/pd_datatable.html:54
 #, python-format
@@ -4686,31 +4686,38 @@ msgstr "Retourner à l’ancienne interface des tableaux"
 
 #: ckanext/canada/templates/snippets/pd_datatable.html:61
 msgid "Keyboard controls"
-msgstr ""
+msgstr "Commandes du clavier"
 
 #: ckanext/canada/templates/snippets/pd_datatable.html:63
 msgid ""
 "Hold <pre>SHIFT</pre> key while clicking on sort controls for multi-"
 "column sorting"
 msgstr ""
+"Maintenez la touche <pre>SHIFT</pre> enfoncée tout en cliquant sur les "
+"commandes de tri pour trier plusieurs colonnes."
 
 #: ckanext/canada/templates/snippets/pd_datatable.html:64
 msgid ""
 "Press <pre>ALT + K</pre> keys to enter KeyTable mode, allowing you to "
 "navigate the table with arrow keys"
 msgstr ""
+"Appuyez sur les touches <pre>ALT + K</pre> pour passer en mode « KeyTable"
+" », ce qui vous permet de naviguer dans le tableau avec les touches "
+"fléchées"
 
 #: ckanext/canada/templates/snippets/pd_datatable.html:66
 msgid "Press <pre>SPACE</pre> key to select a row"
-msgstr ""
+msgstr "Appuyez sur la touche <pre>SPACE</pre> pour sélectionner une ligne."
 
 #: ckanext/canada/templates/snippets/pd_datatable.html:67
 msgid "Press <pre>E</pre> key to expand a row (Compact Table mode only)"
 msgstr ""
+"Appuyez sur la touche <pre>E</pre> pour agrandir une rangée (mode Tableau"
+" compact seulement)."
 
 #: ckanext/canada/templates/snippets/pd_datatable.html:68
 msgid "Press <pre>ESC</pre> key to exit KeyTable mode"
-msgstr ""
+msgstr "Appuyez sur la touche <pre>ESC</pre> pour quitter le mode « KeyTable »"
 
 #: ckanext/canada/templates/snippets/pd_datatable.html:77
 #: ckanext/canada/templates/snippets/pd_datatable.html:88
