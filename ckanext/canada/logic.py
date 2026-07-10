@@ -13,7 +13,8 @@ from ckan.types import Context, DataDict, Action, ChainedAction, Schema, ErrorDi
 from ckan import model
 from ckan.logic.schema import (
     default_create_resource_view_schema_filtered,
-    default_update_resource_view_schema_changes
+    default_update_resource_view_schema_changes,
+    default_update_user_schema,
 )
 from ckan.plugins.toolkit import (
     ValidationError,
@@ -613,13 +614,17 @@ def canada_user_update(up_func: Action,
         return up_func(context, data_dict)
     if 'plugin_extras' not in data_dict:
         data_dict['plugin_extras'] = {}
-    if 'default_dataset_visibility' in data:
-        data_dict['plugin_extras']['default_dataset_visibility'] = \
-            data['default_dataset_visibility']
-    if 'opt_in_features__pd_datatables' in data:
-        data_dict['plugin_extras']['opt_in_features__pd_datatables'] = \
-            data['opt_in_features__pd_datatables']
-    return up_func(context, data_dict)
+    data_dict['plugin_extras']['opt_in_features__pd_datatables'] = \
+        data['opt_in_features__pd_datatables']
+    user_update_schema = default_update_user_schema()
+    # remove ignore_not_sysadmin validator from plugin_extras
+    user_update_schema['plugin_extras'] = [get_validator('json_object')]
+    up_context = cast(Context, dict(context, schema=user_update_schema))
+    response = up_func(up_context, data_dict)
+    extras = up_context['user_obj'].plugin_extras or {}
+    response['opt_in_features__pd_datatables'] = extras.get(
+        'opt_in_features__pd_datatables', False)
+    return response
 
 
 @chained_action
@@ -633,13 +638,10 @@ def canada_user_show(up_func: Action,
     - default_dataset_visibility
     - opt_in_features__pd_datatables
     """
-    data_dict['include_plugin_extras'] = True
     user_dict = up_func(context, data_dict)
-    extras = user_dict.pop('plugin_extras', {})
-    user_dict['default_dataset_visibility'] = extras.get(
-        'default_dataset_visibility', 'private') if extras else 'private'
+    extras = context['user_obj'].plugin_extras or {}
     user_dict['opt_in_features__pd_datatables'] = extras.get(
-        'opt_in_features__pd_datatables', False) if extras else False
+        'opt_in_features__pd_datatables', False)
     return user_dict
 
 
