@@ -14,7 +14,6 @@ import logging
 import xml.etree.ElementTree as ET
 from ckan.plugins.toolkit import h, config
 from ckan.lib.jobs import get_queue
-from ckanext.xloader.jobs import xloader_data_into_datastore_
 
 from ckan.tests.helpers import CKANResponse  # noqa: F401
 from ckan.model.types import make_uuid
@@ -1065,11 +1064,12 @@ class TestDomainMap(CanadaTestBase):
                             follow_redirects=False)  # no need for redirects
         response = response.json
 
+        task = self.sysadmin_action.xloader_status(resource_id=pkg_dict['resources'][0]['id'])
+        assert task['error'] == {}
+        assert task['status'] == 'pending'
         assert response['help'] == 'http://%s/en/api/3/action/help_show?name=xloader_submit' % (
             self.test_domain_map['registry']['en'])
         assert response['success'] is True
-
-        self.sysadmin_action.xloader_submit(resource_id=pkg_dict['resources'][0]['id'], ignore_hash=True)
 
         # should have a ckanext-xloader job queued right now
         jobs = queue.jobs
@@ -1079,17 +1079,71 @@ class TestDomainMap(CanadaTestBase):
         assert job.meta['title'] == 'Upload to DataStore'
         assert job.args[0]['metadata']['ckan_url'] is None
         assert job.args[0]['metadata']['resource_id'] == pkg_dict['resources'][0]['id']
-        assert job.args[0]['metadata']['original_url'] == '/en/dataset/%s/resource/%s/download/sample.csv' % (
+        assert job.args[0]['metadata']['original_url'] == '/dataset/%s/resource/%s/download/sample.csv' % (
             pkg_id, pkg_dict['resources'][0]['id'])
-        with mock.patch('io.open', _fake_open), mock.patch('builtins.open', _fake_open):
+
+        rq_job = mock.Mock()
+        rq_job.meta = {}
+        rq_job.id = task['job_id']
+
+        file_response = mock.Mock()
+        file_response.status_code = 200
+        file_response.raw = io.BytesIO(file_data_r1)
+        file_response.iter_content.return_value = [
+            file_data_r1,
+        ]
+        file_response.headers = {}
+        file_response.url = pkg_dict['resources'][0]['url']
+
+        with mock.patch('ckanext.xloader.jobs.get_current_job', return_value=rq_job), \
+             mock.patch('ckanext.xloader.jobs.requests.get', return_value=file_response):
+            # NOTE: because XLoader is coded in a specific way which expects to be inside
+            #       of the Redis Job worker process, we need to patch get_current_job.
+            # NOTE: because XLoader uses requests.get we have to patch it, as it will always
+            #       be outside of the app/test request context.
             model.Session.commit()
             model.Session.remove()
             _session = model.Session  # noqa: F841
-            # FIXME: xloader_data_into_datastore expects to be inside of the jobs worker...
-            #        we need to call xloader_data_into_datastore_(input, job_dict, logger)  directly
             job.func(*job.args, **job.kwargs)
         queue.remove(job)
         job.delete()
+
+        # check task_status_show in english
+        offset = h.url_for('api.action', ver=3, logic_function='task_status_show',
+                           entity_id=pkg_dict['resources'][0]['id'], task_type='xloader',
+                           key='xloader', locale='en')
+        response = app.get(offset, extra_environ=self.extra_environ_tester_registry,
+                           environ_overrides=self.environ_overrides_tester,
+                           status=200,
+                           follow_redirects=False)  # no need for redirects
+        task_status = response.json['result']
+
+        assert task_status['error'] == r'{}'
+        assert task_status['state'] == 'complete'
+
+        # check xloader_status in english
+        offset = h.url_for('api.action', ver=3, logic_function='xloader_status',
+                           resource_id=pkg_dict['resources'][0]['id'], locale='en')
+        response = app.get(offset, extra_environ=self.extra_environ_tester_registry,
+                           environ_overrides=self.environ_overrides_tester,
+                           status=200,
+                           follow_redirects=False)  # no need for redirects
+        xloader_job = response.json['result']
+
+        assert xloader_job['error'] == {}
+        assert xloader_job['job_id'] == rq_job.id
+        assert xloader_job['status'] == 'complete'
+        assert xloader_job['task_info']['data']['metadata']['ckan_url'] == None
+        assert xloader_job['task_info']['data']['metadata']['resource_id'] == pkg_dict['resources'][0]['id']
+        assert xloader_job['task_info']['data']['metadata']['original_url'] == '/dataset/%s/resource/%s/download/sample.csv' % (
+            pkg_id, pkg_dict['resources'][0]['id'])
+        assert xloader_job['task_info']['metadata']['ckan_url'] == None
+        assert xloader_job['task_info']['metadata']['resource_id'] == pkg_dict['resources'][0]['id']
+        assert xloader_job['task_info']['metadata']['original_url'] == '/dataset/%s/resource/%s/download/sample.csv' % (
+            pkg_id, pkg_dict['resources'][0]['id'])
+        assert xloader_job['task_info']['error'] == None
+        assert xloader_job['task_info']['job_id'] == rq_job.id
+        assert xloader_job['task_info']['status'] == 'complete'
 
         # check package_show in english
         offset = h.url_for('api.action', ver=3, logic_function='package_show', id=pkg_id, locale='en')
@@ -1099,6 +1153,11 @@ class TestDomainMap(CanadaTestBase):
                            follow_redirects=False)  # no need for redirects
         pkg_dict = response.json['result']
         res_dict = pkg_dict['resources'][0]
+
+        assert res_dict['url'] == 'http://%s/en/dataset/%s/resource/%s/download/sample.csv' % (
+            self.test_domain_map['registry']['en'], pkg_id, pkg_dict['resources'][0]['id'])
+        assert res_dict['original_url'] == 'http://%s/en/dataset/%s/resource/%s/download/sample.csv' % (
+            self.test_domain_map['registry']['en'], pkg_id, pkg_dict['resources'][0]['id'])
 
         # check datastore_search in english
         offset = h.url_for('api.action', ver=3, logic_function='datastore_search',
@@ -1111,25 +1170,13 @@ class TestDomainMap(CanadaTestBase):
 
         assert response['help'] == 'http://%s/en/api/3/action/help_show?name=datastore_search' % (
             self.test_domain_map['registry']['en'])
-        assert response['result']['_links']['start'] == '/en/api/3/action/datastore_search?resource_id=%s' % (
-            res_dict['id'])
-        assert response['result']['_links']['next'] == '/en/api/3/action/datastore_search?resource_id=%s&offset=100' % (
-            res_dict['id'])
+        assert response['result']['_links']['start'] == 'http://%s/en/api/3/action/datastore_search?resource_id=%s' % (
+            self.test_domain_map['registry']['en'], res_dict['id'])
+        assert response['result']['_links']['next'] == 'http://%s/en/api/3/action/datastore_search?resource_id=%s&offset=100' % (
+            self.test_domain_map['registry']['en'], res_dict['id'])
 
-        from pprint import pprint
-        print('    ')
-        print('DEBUGGING::')
-        print('    ')
-        print(pprint(response))
-        print('    ')
-        print(pprint(pkg_dict))
-        print('    ')
-        print(pprint(res_dict))
-        print('    ')
-        assert False
-
-    # TODO: xloader ckan_url
-    # TODO: xloader original_url
+    # TODO: xloader ckan_url in French
+    # TODO: xloader original_url in French
     # TODO: validation report URIs
 
     # print('    ')
