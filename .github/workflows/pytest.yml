@@ -136,12 +136,30 @@ jobs:
       - name: Check Source Dependency Versions
         run: |
           source /srv/app/venv/bin/activate
+          CURRENT_BRANCH="${GITHUB_HEAD_REF:-${GITHUB_REF_NAME}}";
+          CONFIG=.github/test-dependencies.json;
           for dir in /srv/app/src/*; do
             srcName=$(echo "$dir" | awk -F'/' '{print $NF}');
             if [[ -d "$dir/.git"  ]]; then
                 printf "\n${srcName}: Checking for updates..."
                 cd $dir;
-                current_branch=$(git rev-parse --abbrev-ref HEAD);
+                if jq -e --arg name "$srcName" '.repositories | has($name)' "$CONFIG" > /dev/null; then
+                  current_branch = $(
+                      jq -r \
+                        --arg repo "$srcName" \
+                        --arg current "$CURRENT_BRANCH" \
+                        '
+                        .repositories[$repo].branches as $b
+                        | $b[$current]
+                          // (if $current | startswith("feature/") then $b["feature/*"] else null end)
+                          // (if $current | startswith("fix/") then $b["fix/*"] else null end)
+                          // $b["*"]
+                        ' \
+                        "$CONFIG"
+                    );
+                else
+                  current_branch=$(git rev-parse --abbrev-ref HEAD);
+                fi;
                 if [[ "$srcName" == "ckan" ]]; then
                     git fetch canada;
                     reslog=$(git log HEAD..canada/$current_branch --oneline);
