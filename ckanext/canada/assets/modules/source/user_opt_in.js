@@ -58,10 +58,7 @@ function _load_user_opt_in(CKAN_MODULE){
           if( _data.responseJSON ){  // we have response JSON
             if( _data.responseJSON.success ){  // successful patch
               if(
-                _data.responseJSON.result.plugin_extras &&
-                typeof _data.responseJSON.result.plugin_extras == 'object' &&
-                ! Array.isArray(_data.responseJSON.result.plugin_extras) &&
-                _data.responseJSON.result.plugin_extras[featureKey] == featureValue
+                _data.responseJSON.result[featureKey] == featureValue
               ){
                 if( pageRedirect && pageRedirect.startsWith('#') ){
                   window.location.hash = pageRedirect.replace('#', '');
