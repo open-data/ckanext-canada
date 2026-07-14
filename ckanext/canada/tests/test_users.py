@@ -62,23 +62,23 @@ class TestUserSchema(CanadaTestBase):
         # user_show should fill in defaults
         user_dict = self.sysadmin_action.user_show(id=user_id)
 
-        assert user_dict['opt_in_features__pd_datatables'] == False
+        assert user_dict['opt_in_features__pd_datatables'] is False
 
         user_dict = self.sysadmin_action.user_patch(
             id=user_id,
             opt_in_features__pd_datatables=True)
 
-        assert user_dict['opt_in_features__pd_datatables'] == True
-        assert user_dict['plugin_extras']['opt_in_features__pd_datatables'] == True
+        assert user_dict['opt_in_features__pd_datatables'] is True
+        assert user_dict['plugin_extras']['opt_in_features__pd_datatables'] is True
 
         # own user should be able to update opt_in_features
         user_dict = self.normal_action.user_patch(
             id=user_id, opt_in_features__pd_datatables=False)
 
-        assert user_dict['opt_in_features__pd_datatables'] == False
+        assert user_dict['opt_in_features__pd_datatables'] is False
 
         # excluding custom fields should not change their values
         user_dict = self.normal_action.user_patch(
             id=user_id, fullname='Updated Name')
 
-        assert user_dict['opt_in_features__pd_datatables'] == False
+        assert user_dict['opt_in_features__pd_datatables'] is False

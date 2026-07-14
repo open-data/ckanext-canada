@@ -4,7 +4,6 @@ from ckan.types import Context, DataDict, Action, ChainedAction, Schema, ErrorDi
 from ckan.logic.validators import isodate, Invalid
 from ckan import model
 from ckanext.activity.model import Activity, activity
-from ckan.logic import get_or_bust
 from ckan.logic.schema import (
     default_create_resource_view_schema_filtered,
     default_update_resource_view_schema_changes,
