@@ -89,3 +89,11 @@ class TestUserSchema(CanadaTestBase):
         assert user_dict['default_dataset_visibility'] == 'public'
         assert user_dict['opt_in_features__pd_datatables'] == False
 
+        # default_dataset_visibility can only be private or public
+        with pytest.raises(ValidationError) as ve:
+            user_dict = self.sysadmin_action.user_patch(
+                id=user_id, default_dataset_visibility='fail')
+        err = ve.value.error_dict
+
+        assert 'default_dataset_visibility' in err
+        assert err['default_dataset_visibility'] == ["Value must be one of ['private', 'public']"]
