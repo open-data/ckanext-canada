@@ -133,6 +133,12 @@ jobs:
         run: |
           mkdir -p /srv/app/junit/result
           touch /srv/app/junit/result/test-summary.md
+      - name: Debug workspace
+        run: |
+          echo "GITHUB_WORKSPACE=$GITHUB_WORKSPACE"
+          pwd
+          ls -la "$GITHUB_WORKSPACE"
+          find "$GITHUB_WORKSPACE" -name "test-dependencies.json"
       - name: Check Source Dependency Versions
         run: |
           source /srv/app/venv/bin/activate
