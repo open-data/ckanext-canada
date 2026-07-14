@@ -294,7 +294,7 @@ class TestRecombinantWebForms(CanadaTestBase):
         self.environ_overrides_member = {'REMOTE_USER': member['name'].encode('ascii')}
         self.extra_environ_editor = {'Authorization': editor['token']}
         self.environ_overrides_editor = {'REMOTE_USER': editor['name'].encode('ascii')}
-        self.extra_environ_system = {'Authorization': sysadmin['token'],}
+        self.extra_environ_system = {'Authorization': sysadmin['token']}
         self.environ_overrides_system = {'REMOTE_USER': sysadmin['name'].encode('ascii')}
         self.org = Organization(users=[{
             'name': member['name'],
@@ -442,7 +442,7 @@ class TestRecombinantWebForms(CanadaTestBase):
         offset, _host = get_relative_offset_from_response(response)
         response = app.get(offset, extra_environ=self.extra_environ_editor,
                            environ_overrides=self.environ_overrides_editor,
-                            follow_redirects=False)  # no need for redirects
+                           follow_redirects=False)  # no need for redirects
 
         assert 'Create and update multiple records' in response.body
 
@@ -466,7 +466,7 @@ class TestRecombinantWebForms(CanadaTestBase):
                            owner_org=self.org['name'])
         response = app.get(offset, extra_environ=self.extra_environ_system,
                            environ_overrides=self.environ_overrides_system,
-                            follow_redirects=False)  # no need for redirects
+                           follow_redirects=False)  # no need for redirects
 
         assert 'Your organization does not have an Access to Information email on file' not in response.body
         assert 'Informal Requests for ATI Records Previously Released are being sent to' in response.body

@@ -293,7 +293,7 @@ def map_facet_queries(search_results: Dict[str, Any]):
                 if f_item['name'] not in FACET_QUERY_MAP[facet_name]:
                     continue
                 # update the count to the facet query one
-                f_item['count'] =  facet_queries[
+                f_item['count'] = facet_queries[
                     FACET_QUERY_MAP[facet_name][f_item['name']]]
             # pop zero counts
             search_facets[facet_name]['items'] = [
