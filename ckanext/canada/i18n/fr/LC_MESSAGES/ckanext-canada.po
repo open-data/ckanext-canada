@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-07-10 10:24-0400\n"
+"POT-Creation-Date: 2026-07-10 14:12-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: fr\n"
@@ -266,28 +266,28 @@ msgstr "Gouvernement ouvert"
 msgid "Search"
 msgstr "Rechercher"
 
-#: ckanext/canada/logic.py:364
+#: ckanext/canada/logic.py:365
 msgid "Could not determine a resource format. Please supply a format."
 msgstr ""
 "Il est impossible de déterminer le format de la ressource. Veuillez "
 "indiquer un format."
 
-#: ckanext/canada/logic.py:554
+#: ckanext/canada/logic.py:555
 msgid "Unknown Job"
 msgstr "Tâche inconnue "
 
-#: ckanext/canada/logic.py:561
+#: ckanext/canada/logic.py:562
 msgid "Entire Site"
 msgstr ""
 
-#: ckanext/canada/logic.py:674
+#: ckanext/canada/logic.py:675
 #, python-format
 msgid "No Portal Sync information found for package %s"
 msgstr ""
 "Aucune information de synchronisation du portail n'a été trouvée pour le "
 "jeu de données %s"
 
-#: ckanext/canada/logic.py:763
+#: ckanext/canada/logic.py:764
 msgid ""
 "Invalid request. Full text search is not supported for data with more "
 "than {} rows."
@@ -1256,7 +1256,7 @@ msgstr ""
 
 #: ckanext/canada/assets/datatables/pd_datatables.js:79
 msgid "Reset Table"
-msgstr ""
+msgstr "Réinitialiser le tableau"
 
 #: ckanext/canada/assets/datatables/pd_datatables.js:80
 msgid "Fullscreen"
@@ -1272,15 +1272,15 @@ msgstr ""
 
 #: ckanext/canada/assets/datatables/pd_datatables.js:83
 msgid "Full Table"
-msgstr ""
+msgstr "Tableau complet"
 
 #: ckanext/canada/assets/datatables/pd_datatables.js:84
 msgid "Compact Table"
-msgstr ""
+msgstr "Tableau compact"
 
 #: ckanext/canada/assets/datatables/pd_datatables.js:85
 msgid "Edit Online"
-msgstr ""
+msgstr "Modifier en ligne"
 
 #: ckanext/canada/assets/datatables/pd_datatables.js:86
 msgid "Add new record in Table"
@@ -1397,7 +1397,7 @@ msgstr ""
 
 #: ckanext/canada/assets/datatables/pd_datatables.js:113
 msgid "Edit<span class=\"pd-datatbales-btn-count\"></span> in Excel"
-msgstr ""
+msgstr "Modifier<span class=\"pd-datatbales-btn-count\"></span> dans Excel"
 
 #: ckanext/canada/assets/datatables/pd_datatables.js:114
 msgid "Exporting{COUNT} record(s) to an Excel Template"
@@ -1405,7 +1405,7 @@ msgstr ""
 
 #: ckanext/canada/assets/datatables/pd_datatables.js:115
 msgid "Delete<span class=\"pd-datatbales-btn-count\"></span>"
-msgstr ""
+msgstr "Supprimer<span class=\"pd-datatbales-btn-count\"></span>"
 
 #: ckanext/canada/assets/datatables/pd_datatables.js:116
 msgid "Save<span class=\"pd-datatbales-btn-count\"></span>"
@@ -1429,7 +1429,7 @@ msgstr ""
 
 #: ckanext/canada/assets/datatables/pd_datatables.js:125
 msgid "_MENU_ Show number of entries"
-msgstr ""
+msgstr "_MENU_ Afficher le nombre d'entrées"
 
 #: ckanext/canada/assets/datatables/pd_datatables.js:126
 #: ckanext/canada/templates/package/snippets/data_api_button.html:2
@@ -1438,7 +1438,7 @@ msgstr "Chargement..."
 
 #: ckanext/canada/assets/datatables/pd_datatables.js:128
 msgid "Full Text Search"
-msgstr ""
+msgstr "La recherche en texte intégral"
 
 #: ckanext/canada/assets/datatables/pd_datatables.js:129
 msgid "No matching records found"
@@ -1458,9 +1458,9 @@ msgstr ""
 msgid ": "
 msgstr " : "
 
-#: ckanext/canada/assets/modules/user_opt_in.js:77
-#: ckanext/canada/assets/modules/user_opt_in.js:81
-#: ckanext/canada/assets/modules/user_opt_in.js:85
+#: ckanext/canada/assets/modules/user_opt_in.js:74
+#: ckanext/canada/assets/modules/user_opt_in.js:78
+#: ckanext/canada/assets/modules/user_opt_in.js:82
 msgid "Failed to change user settings"
 msgstr ""
 
@@ -4539,10 +4539,11 @@ msgid "Resource Formats:"
 msgstr "Formats des ressources :"
 
 #: ckanext/canada/templates/snippets/pd_datatable.html:46
-msgid "Interactive Table"
-msgstr ""
+msgid "Interactive Table (beta version)"
+msgstr "Tableau interactif (version bêta)"
 
 #: ckanext/canada/templates/snippets/pd_datatable.html:54
+#, python-format
 msgid ""
 "The new table interface will become the default experience. Try the "
 "updated interface and share your <a href='mailto:%(email)s'>feedback</a> "
@@ -4558,31 +4559,38 @@ msgstr "Retourner à l’ancienne interface des tableaux"
 
 #: ckanext/canada/templates/snippets/pd_datatable.html:61
 msgid "Keyboard controls"
-msgstr ""
+msgstr "Commandes du clavier"
 
 #: ckanext/canada/templates/snippets/pd_datatable.html:63
 msgid ""
 "Hold <pre>SHIFT</pre> key while clicking on sort controls for multi-"
 "column sorting"
 msgstr ""
+"Maintenez la touche <pre>SHIFT</pre> enfoncée tout en cliquant sur les "
+"commandes de tri pour trier plusieurs colonnes."
 
 #: ckanext/canada/templates/snippets/pd_datatable.html:64
 msgid ""
 "Press <pre>ALT + K</pre> keys to enter KeyTable mode, allowing you to "
 "navigate the table with arrow keys"
 msgstr ""
+"Appuyez sur les touches <pre>ALT + K</pre> pour passer en mode « KeyTable"
+" », ce qui vous permet de naviguer dans le tableau avec les touches "
+"fléchées"
 
 #: ckanext/canada/templates/snippets/pd_datatable.html:66
 msgid "Press <pre>SPACE</pre> key to select a row"
-msgstr ""
+msgstr "Appuyez sur la touche <pre>SPACE</pre> pour sélectionner une ligne."
 
 #: ckanext/canada/templates/snippets/pd_datatable.html:67
 msgid "Press <pre>E</pre> key to expand a row (Compact Table mode only)"
 msgstr ""
+"Appuyez sur la touche <pre>E</pre> pour agrandir une rangée (mode Tableau"
+" compact seulement)."
 
 #: ckanext/canada/templates/snippets/pd_datatable.html:68
 msgid "Press <pre>ESC</pre> key to exit KeyTable mode"
-msgstr ""
+msgstr "Appuyez sur la touche <pre>ESC</pre> pour quitter le mode « KeyTable »"
 
 #: ckanext/canada/templates/snippets/pd_datatable.html:77
 #: ckanext/canada/templates/snippets/pd_datatable.html:88

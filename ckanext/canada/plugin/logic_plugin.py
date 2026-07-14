@@ -227,6 +227,8 @@ class CanadaLogicPlugin(SchemingDatasetsPlugin, CkanSecurityPlugin):
 
         Implement of: ckan.plugins.interfaces.IPackageController
         """
+        if context.get('ignore_auth') or context.get('for_index'):
+            return
         dataset.raise_exception_show_non_published_dataset(pkg_dict)
         return
 
@@ -238,6 +240,7 @@ class CanadaLogicPlugin(SchemingDatasetsPlugin, CkanSecurityPlugin):
         Implement of: ckan.plugins.interfaces.IPackageController
         """
         dataset.expand_solr_french_extras(search_results)
+        dataset.map_facet_queries(search_results)
         return search_results
 
     def before_dataset_search(self, search_params: Dict[str, Any]) -> Dict[str, Any]:
