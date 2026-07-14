@@ -6,7 +6,7 @@ from geomet import wkt
 import json
 import uuid
 from datetime import datetime
-from urllib.parse import urlparse
+from urllib.parse import urlparse, urlunparse
 
 from typing import Any, cast, Dict
 from ckan.types import (
@@ -773,16 +773,26 @@ def canada_output_resource_original_url(key: FlattenKey,
     XLoader saves full qualified URIs by default. Strip domains from them,
     if the file is an upload.
     """
+    if h.plugin_loaded('language_domains'):
+        # logic is handled in chained package_show in language_domains plugin
+        return
     url_type = data.get(key[:-1] + ('url_type',))
     if url_type == 'upload':
         original_url = data[key]
         original_url_parts = urlparse(original_url)
-        if original_url_parts.netloc:
-            original_url = original_url.replace(
-                '%s://' % str(original_url_parts.scheme), '')
-            original_url = original_url.replace(
-                str(original_url_parts.netloc), '')
-            data[key] = original_url
+        original_url_path = original_url_parts.path.rstrip('/')
+        # strip any possible language dirs
+        for _lang in config.get('ckan.locales_offered', ['en']):
+            while original_url_path.startswith(f'/{_lang}/'):
+                original_url_path = original_url_path[len(f'/{_lang}'):]
+        data[key] = urlunparse((
+            '',
+            '',
+            original_url_path,
+            original_url_parts.params,
+            original_url_parts.query,
+            original_url_parts.fragment
+        ))
 
 
 def canada_dataset_visibility(key: FlattenKey,

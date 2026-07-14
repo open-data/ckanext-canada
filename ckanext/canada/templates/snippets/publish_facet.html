@@ -1,56 +1,65 @@
 {% set title=g.facet_titles['ready_to_publish'] %}
 {% set name='ready_to_publish' %}
+{% set ns = namespace(has_items=false) %}
+{% set collection_type = request.args.get('collection') %}
+{% set registry_only_collections = h.recombinant_get_types() + ['pd', 'prop', 'doc'] %}
+
+{# FIXME: draft & pending etc should never include Registry Only types!!! #}
 
 <div class="panel panel-primary">
   <div class="panel-heading"><i class="fa fa-filter" aria-hidden="true"></i>&nbsp;{{ title or h.get_facet_title(name) }}</div>
   <div class="panel-body">
-    <nav>
-      <ul class="list-unstyled list-facets">
-        {% with items = h.get_facet_items_dict('capacity', search_facets=search_facets, limit=5) %}
-          {% set items = items[0:5] if h.get_param_int('_capacity_limit') else items%}
-          {% if items %}
-            {% for item in items %}
-              {% if item.display_name != 'public' %}
-                {% continue %}
-              {% endif %}
-              {% set href = h.remove_url_param('capacity', item.name, extras=extras, alternative_url=alternative_url) if item.active else h.add_url_param(new_params={'capacity': item.name}, extras=extras, alternative_url=alternative_url) %}
-              {% set count = count_label(item['count']) if count_label else ('(%d)' % item['count']) %}
-                <li class="nav-item{% if item.active %} active{% endif %} facet-item">
-                  <a href="{{ href }}">
-                    <i class="fa{{ 's' if item.active else 'r' }} fa-{{ 'check-' if item.active else '' }}square" aria-hidden="true"></i>&nbsp;<span>{{ _('Published') }} {{ count }}</span>
-                  </a>
-                </li>
-            {% endfor %}
-          {% endif %}
-        {% endwith %}
-        {% with items = items or h.get_facet_items_dict(name, search_facets=search_facets, limit=5) %}
-          {% set items = items[0:5] if h.get_param_int('_%s_limit' % name) else items%}
-          {% if items %}
-            {% for item in items %}
-              {% set href = h.remove_url_param(name, item.name, extras=extras, alternative_url=alternative_url) if item.active else h.add_url_param(new_params={name: item.name}, extras=extras, alternative_url=alternative_url) %}
-              {% set label = _('Pending') if item.display_name == 'true' else _('Draft') %}
-              {% set count = count_label(item['count']) if count_label else ('(%d)' % item['count']) %}
-                <li class="nav-item{% if item.active %} active{% endif %} facet-item">
-                  <a href="{{ href }}">
-                    <i class="fa{{ 's' if item.active else 'r' }} fa-{{ 'check-' if item.active else '' }}square" aria-hidden="true"></i>&nbsp;<span>{{ label }} {{ count }}</span>
-                  </a>
-                </li>
-            {% endfor %}
-          {% endif %}
-        {% endwith %}
-      </ul>
-    </nav>
-    {% if request.args.get(facet_range_name) or request.args.get(name) %}
-      {% set clear_uri = h.remove_url_param([name, facet_range_name], extras=extras, alternative_url=alternative_url) %}
-      <ul class="list-unstyled list-facets">
-        <li>
-          <a href="{{ clear_uri }}" class="action" title="{{_('Clear All')}} {{facet_name}}">
-            <span class="glyphicon glyphicon-remove"></span>&nbsp;{{ _('Clear All') }}
-          </a>
-        </li>
-      </ul>
+    {% if collection_type not in registry_only_collections %}
+      <nav>
+        <ul class="list-unstyled list-facets">
+          {% with items = h.get_facet_items_dict('capacity', search_facets=search_facets, limit=5) %}
+            {% set items = items[0:5] if h.get_param_int('_capacity_limit') else items%}
+            {% if items %}
+              {% for item in items %}
+                {% if item.display_name != 'public' %}
+                  {% continue %}
+                {% endif %}
+                {% set ns.has_items = true %}
+                {% set href = h.remove_url_param('capacity', item.name, extras=extras, alternative_url=alternative_url) if item.active else h.add_url_param(new_params={'capacity': item.name}, extras=extras, alternative_url=alternative_url) %}
+                {% set count = count_label(item['count']) if count_label else ('(%d)' % item['count']) %}
+                  <li class="nav-item{% if item.active %} active{% endif %} facet-item">
+                    <a href="{{ href }}">
+                      <i class="fa{{ 's' if item.active else 'r' }} fa-{{ 'check-' if item.active else '' }}square" aria-hidden="true"></i>&nbsp;<span>{{ _('Published') }} {{ count }}</span>
+                    </a>
+                  </li>
+              {% endfor %}
+            {% endif %}
+          {% endwith %}
+          {% with items = items or h.get_facet_items_dict(name, search_facets=search_facets, limit=5) %}
+            {% set items = items[0:5] if h.get_param_int('_%s_limit' % name) else items%}
+            {% if items %}
+              {% set ns.has_items = true %}
+              {% for item in items %}
+                {% set href = h.remove_url_param(name, item.name, extras=extras, alternative_url=alternative_url) if item.active else h.add_url_param(new_params={name: item.name}, extras=extras, alternative_url=alternative_url) %}
+                {% set label = _('Pending') if item.display_name == 'true' else _('Draft') %}
+                {% set count = count_label(item['count']) if count_label else ('(%d)' % item['count']) %}
+                  <li class="nav-item{% if item.active %} active{% endif %} facet-item">
+                    <a href="{{ href }}">
+                      <i class="fa{{ 's' if item.active else 'r' }} fa-{{ 'check-' if item.active else '' }}square" aria-hidden="true"></i>&nbsp;<span>{{ label }} {{ count }}</span>
+                    </a>
+                  </li>
+              {% endfor %}
+            {% endif %}
+          {% endwith %}
+        </ul>
+      </nav>
+      {% if request.args.get(facet_range_name) or request.args.get(name) or request.args.get('capacity') %}
+        {% set clear_uri = h.remove_url_param([name, facet_range_name, 'capacity'], extras=extras, alternative_url=alternative_url) %}
+        <ul class="list-unstyled list-facets">
+          <li>
+            <a href="{{ clear_uri }}" class="action small" title="{{_('Clear All')}} {{facet_name}}">
+              <span class="fa fa-times"></span>&nbsp;{{ _('Clear All') }}
+            </a>
+          </li>
+        </ul>
+      {% endif %}
     {% endif %}
-    {% if not items and parsed_facet_range == 'False' %}
+    {% if not ns.has_items %}
       <p class="module-content color-medium">{{ _('There are no filters for this search') }}</p>
     {% endif %}
   </div>
