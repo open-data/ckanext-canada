@@ -64,30 +64,30 @@ class TestUserSchema(CanadaTestBase):
         user_dict = self.sysadmin_action.user_show(id=user_id)
 
         assert user_dict['default_dataset_visibility'] == 'private'
-        assert user_dict['opt_in_features__pd_datatables'] == False
+        assert user_dict['opt_in_features__pd_datatables'] is False
 
         user_dict = self.sysadmin_action.user_patch(
             id=user_id, default_dataset_visibility='public',
             opt_in_features__pd_datatables=True)
 
         assert user_dict['default_dataset_visibility'] == 'public'
-        assert user_dict['opt_in_features__pd_datatables'] == True
+        assert user_dict['opt_in_features__pd_datatables'] is True
         assert user_dict['plugin_extras']['default_dataset_visibility'] == 'public'
-        assert user_dict['plugin_extras']['opt_in_features__pd_datatables'] == True
+        assert user_dict['plugin_extras']['opt_in_features__pd_datatables'] is True
 
         # normal user cannot set default_dataset_visibility
         user_dict = self.normal_action.user_patch(
             id=user_id, default_dataset_visibility='private')
 
         assert user_dict['default_dataset_visibility'] == 'public'
-        assert user_dict['opt_in_features__pd_datatables'] == True
+        assert user_dict['opt_in_features__pd_datatables'] is True
 
         # own user should be able to update opt_in_features
         user_dict = self.normal_action.user_patch(
             id=user_id, opt_in_features__pd_datatables=False)
 
         assert user_dict['default_dataset_visibility'] == 'public'
-        assert user_dict['opt_in_features__pd_datatables'] == False
+        assert user_dict['opt_in_features__pd_datatables'] is False
 
         # default_dataset_visibility can only be private or public
         with pytest.raises(ValidationError) as ve:
