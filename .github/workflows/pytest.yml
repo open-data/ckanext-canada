@@ -136,10 +136,13 @@ jobs:
       - name: Check Source Dependency Versions
         run: |
           cd /srv/app/src/ckanext-canada
+          BRANCH="${{ github.head_ref || github.ref_name }}"
           git fetch origin
-          if [[ "${{ github.head_ref || github.ref_name }}" != "master" ]]; then
-            git checkout -b ${{ github.head_ref || github.ref_name }} origin/${{ github.head_ref || github.ref_name }}
-          fi;
+          if git show-ref --verify --quiet "refs/heads/$BRANCH"; then
+            git checkout "$BRANCH"
+          else
+            git checkout -b "$BRANCH" "origin/$BRANCH"
+          fi
           git fetch
           git pull --ff-only || true
           CONFIG="/srv/app/src/ckanext-canada/.github/test-dependencies.json";
@@ -152,49 +155,68 @@ jobs:
                 printf "\n${srcName}: Checking for updates..."
                 cd $dir;
                 if jq -e --arg name "$srcName" '.repositories | has($name)' "$CONFIG" > /dev/null; then
+                  printf "\n    ${srcName}: Checking configuration from ${CONFIG}..."
                   current_branch=$(
-                      jq -r \
-                        --arg repo "$srcName" \
-                        --arg current "$CURRENT_BRANCH" \
-                        '
-                        .repositories[$repo].branches as $b
-                        | $b[$current]
-                          // (if $current | startswith("feature/") then $b["feature/*"] else null end)
-                          // (if $current | startswith("fix/") then $b["fix/*"] else null end)
-                          // $b["*"]
-                        ' \
-                        "$CONFIG"
+                    jq -r \
+                      --arg repo "$srcName" \
+                      --arg current "$CURRENT_BRANCH" \
+                      '
+                      .repositories[$repo].branches as $b
+                      | $b[$current]
+                        // (if $current | startswith("feature/") then $b["feature/*"] else null end)
+                        // (if $current | startswith("fix/") then $b["fix/*"] else null end)
+                        // $b["*"]
+                      ' \
+                      "$CONFIG"
                     );
+                  printf "\n    ${srcName}: ${CURRENT_BRANCH} configured to use branch ${current_branch}...";
                 else
+                  printf "\n    ${srcName}: Using default/current branch..."
                   current_branch=$(git rev-parse --abbrev-ref HEAD);
+                  printf "\n    ${srcName}: using branch ${current_branch}...";
                 fi;
                 if [[ -z "$current_branch" || "$current_branch" == "null" ]]; then
                   current_branch=$(git rev-parse --abbrev-ref HEAD);
+                  printf "\n    ${srcName}: unable to determine branch using current branch ${current_branch}..."
                 fi
                 if [[ "$srcName" == "ckan" ]]; then
-                    git fetch canada;
-                    reslog=$(git log HEAD..canada/$current_branch --oneline);
+                  git fetch canada;
+                  if git show-ref --verify --quiet "refs/heads/$current_branch"; then
+                    git checkout "$current_branch"
+                  else
+                    git checkout -b "$current_branch" "canada/$current_branch"
+                  fi
+                  git fetch
+                  git pull --ff-only || true
+                  reslog=$(git log HEAD..canada/$current_branch --oneline);
                 else
-                    git fetch origin;
-                    reslog=$(git log HEAD..origin/$current_branch --oneline);
+                  git fetch origin;
+                  if git show-ref --verify --quiet "refs/heads/$current_branch"; then
+                    git checkout "$current_branch"
+                  else
+                    git checkout -b "$current_branch" "origin/$current_branch"
+                  fi
+                  git fetch
+                  git pull --ff-only || true
+                  reslog=$(git log HEAD..origin/$current_branch --oneline);
                 fi;
                 if [[ "${reslog}" == "" ]]; then
-                    printf "\n${srcName}: Up to date. Skipping..."
+                  printf "\n${srcName}: Up to date. Skipping..."
                 else
                     git pull --ff-only || true;
                     printf "\n${srcName}: Pulled updated code. Re-initializing in python environment..."
                     cd /srv/app;
                     if [[ -f "$dir/requirements.txt" ]]; then
-                        pip install -r $dir/requirements.txt || true;
+                      pip install -r $dir/requirements.txt || true;
                     fi;
                     if [[ -f "$dir/dev-requirements.txt" ]]; then
-                        pip install -r $dir/dev-requirements.txt || true;
+                      pip install -r $dir/dev-requirements.txt || true;
                     fi;
                     if [[ -f "$dir/test-requirements.txt" ]]; then
-                        pip install -r $dir/test-requirements.txt || true;
+                      pip install -r $dir/test-requirements.txt || true;
                     fi;
                     if [[ -f "$dir/setup.py" ]]; then
-                        python $dir/setup.py develop || true;
+                      python $dir/setup.py develop || true;
                     fi;
                 fi;
             else
@@ -208,9 +230,9 @@ jobs:
           BRANCH="${{ github.head_ref || github.ref_name }}"
           git fetch origin
           if git show-ref --verify --quiet "refs/heads/$BRANCH"; then
-              git checkout "$BRANCH"
+            git checkout "$BRANCH"
           else
-              git checkout -b "$BRANCH" "origin/$BRANCH"
+            git checkout -b "$BRANCH" "origin/$BRANCH"
           fi
           git fetch
           git pull --ff-only || true
