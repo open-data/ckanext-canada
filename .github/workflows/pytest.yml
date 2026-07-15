@@ -230,8 +230,8 @@ jobs:
       - name: Setup Databases
         run: |
           source /srv/app/venv/bin/activate
-          . /srv/app/src/ckanext-canada/links/ckan/bin/postgres_init/1_create_ckan_db.sh
-          . /srv/app/src/ckanext-canada/links/ckan/bin/postgres_init/2_create_ckan_datastore_db.sh
+          . /srv/app/src/ckan/bin/postgres_init/1_create_ckan_db.sh
+          . /srv/app/src/ckan/bin/postgres_init/2_create_ckan_datastore_db.sh
           ckan -c /srv/app/src/ckanext-canada/test-core.ini db init
           ckan -c /srv/app/src/ckanext-canada/test-core.ini datastore set-permissions | psql -U postgres --set ON_ERROR_STOP=1
           ckan -c /srv/app/src/ckanext-canada/test-core.ini canada update-triggers
