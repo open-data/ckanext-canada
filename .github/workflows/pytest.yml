@@ -141,7 +141,7 @@ jobs:
             git checkout -b ${{ github.head_ref || github.ref_name }} origin/${{ github.head_ref || github.ref_name }}
           fi;
           git fetch
-          git pull
+          git pull --ff-only || true
           CONFIG="/srv/app/src/ckanext-canada/.github/test-dependencies.json";
           cd /srv/app;
           source /srv/app/venv/bin/activate
@@ -168,6 +168,9 @@ jobs:
                 else
                   current_branch=$(git rev-parse --abbrev-ref HEAD);
                 fi;
+                if [[ -z "$current_branch" || "$current_branch" == "null" ]]; then
+                  current_branch=$(git rev-parse --abbrev-ref HEAD);
+                fi
                 if [[ "$srcName" == "ckan" ]]; then
                     git fetch canada;
                     reslog=$(git log HEAD..canada/$current_branch --oneline);
@@ -178,7 +181,7 @@ jobs:
                 if [[ "${reslog}" == "" ]]; then
                     printf "\n${srcName}: Up to date. Skipping..."
                 else
-                    git pull || true;
+                    git pull --ff-only || true;
                     printf "\n${srcName}: Pulled updated code. Re-initializing in python environment..."
                     cd /srv/app;
                     if [[ -f "$dir/requirements.txt" ]]; then
@@ -202,12 +205,15 @@ jobs:
       - name: Checkout Repository (${{ github.head_ref || github.ref_name }})
         run: |
           cd /srv/app/src/ckanext-canada
+          BRANCH="${{ github.head_ref || github.ref_name }}"
           git fetch origin
-          if [[ "${{ github.head_ref || github.ref_name }}" != "master" ]]; then
-            git checkout -b ${{ github.head_ref || github.ref_name }} origin/${{ github.head_ref || github.ref_name }} || true
-          fi;
+          if git show-ref --verify --quiet "refs/heads/$BRANCH"; then
+              git checkout "$BRANCH"
+          else
+              git checkout -b "$BRANCH" "origin/$BRANCH"
+          fi
           git fetch
-          git pull
+          git pull --ff-only || true
           source /srv/app/venv/bin/activate
           pip install -e .
           pip install -r requirements.txt
@@ -354,7 +360,7 @@ jobs:
                 if [[ "${reslog}" == "" ]]; then
                     printf "\n${srcName}: Up to date. Skipping..."
                 else
-                    git pull || true;
+                    git pull --ff-only || true;
                     printf "\n${srcName}: Pulled updated code. Re-initializing in python environment..."
                     cd /srv/app;
                     if [[ -f "$dir/requirements.txt" ]]; then
@@ -383,7 +389,7 @@ jobs:
             git checkout -b ${{ github.head_ref || github.ref_name }} origin/${{ github.head_ref || github.ref_name }}
           fi;
           git fetch
-          git pull
+          git pull --ff-only || true
           source /srv/app/venv/bin/activate
           pip install -e .
           pip install -r requirements.txt
