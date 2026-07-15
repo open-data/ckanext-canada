@@ -235,7 +235,7 @@ class TestNewUserWebForms(CanadaTestBase):
         offset, _host = get_relative_offset_from_response(response)
         response = app.get(offset, extra_environ=self.extra_environ_tester,
                            environ_overrides=self.environ_overrides_tester,
-                           follow_redirects=True)  # expecting redirect
+                           follow_redirects=False)  # no need for redirects
 
         assert 'Account Created' in response.body
         assert 'Thank you for creating your account for the Open Government registry' in response.body

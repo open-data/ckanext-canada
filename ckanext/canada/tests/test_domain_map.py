@@ -561,8 +561,12 @@ class TestDomainMap(CanadaTestBase):
         offset = '/fr/organization'
         response = app.get(offset, extra_environ=self.extra_environ_tester_registry,
                            environ_overrides=self.environ_overrides_tester,
+                           follow_redirects=False)  # catch redirect
+        offset = get_relative_offset_from_response(response)
+        response = app.get(offset, extra_environ=self.extra_environ_tester_registry,
+                           environ_overrides=self.environ_overrides_tester,
                            status=200,
-                           follow_redirects=True)  # no need for redirects
+                           follow_redirects=False)  # no need for redirects
 
         # test for both in the case that the i18n catalogues are not built
         assert 'Organizations' in response.body or 'Organisations' in response.body
@@ -590,8 +594,11 @@ class TestDomainMap(CanadaTestBase):
         offset = '/fr/organization'
         response = app.get(offset, extra_environ=self.extra_environ_tester_portal_fr,
                            environ_overrides=self.environ_overrides_tester,
-                           status=200,
-                           follow_redirects=True)  # no need for redirects
+                           follow_redirects=False)  # catch redirect
+        offset = get_relative_offset_from_response(response)
+        response = app.get(offset, extra_environ=self.extra_environ_tester_portal_fr,
+                           environ_overrides=self.environ_overrides_tester,
+                           follow_redirects=False)  # no need for redirects
 
         # test for both in the case that the i18n catalogues are not built
         assert 'Organizations' in response.body or 'Organisations' in response.body
