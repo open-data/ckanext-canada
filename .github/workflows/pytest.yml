@@ -152,7 +152,7 @@ jobs:
                 printf "\n${srcName}: Checking for updates..."
                 cd $dir;
                 if jq -e --arg name "$srcName" '.repositories | has($name)' "$CONFIG" > /dev/null; then
-                  current_branch = $(
+                  current_branch=$(
                       jq -r \
                         --arg repo "$srcName" \
                         --arg current "$CURRENT_BRANCH" \
