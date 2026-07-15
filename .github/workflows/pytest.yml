@@ -204,7 +204,7 @@ jobs:
           cd /srv/app/src/ckanext-canada
           git fetch origin
           if [[ "${{ github.head_ref || github.ref_name }}" != "master" ]]; then
-            git checkout -b ${{ github.head_ref || github.ref_name }} origin/${{ github.head_ref || github.ref_name }}
+            git checkout -b ${{ github.head_ref || github.ref_name }} origin/${{ github.head_ref || github.ref_name }} || true
           fi;
           git fetch
           git pull
