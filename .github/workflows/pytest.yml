@@ -133,17 +133,19 @@ jobs:
         run: |
           mkdir -p /srv/app/junit/result
           touch /srv/app/junit/result/test-summary.md
-      - name: Debug workspace
-        run: |
-          echo "GITHUB_WORKSPACE=$GITHUB_WORKSPACE"
-          pwd
-          ls -la "$GITHUB_WORKSPACE"
-          find "$GITHUB_WORKSPACE" -name "test-dependencies.json"
       - name: Check Source Dependency Versions
         run: |
+          cd /srv/app/src/ckanext-canada
+          git fetch origin
+          if [[ "${{ github.head_ref || github.ref_name }}" != "master" ]]; then
+            git checkout -b ${{ github.head_ref || github.ref_name }} origin/${{ github.head_ref || github.ref_name }}
+          fi;
+          git fetch
+          git pull
+          CONFIG="/srv/app/src/ckanext-canada/.github/test-dependencies.json";
+          cd /srv/app;
           source /srv/app/venv/bin/activate
           CURRENT_BRANCH="${GITHUB_HEAD_REF:-${GITHUB_REF_NAME}}";
-          CONFIG="$GITHUB_WORKSPACE/.github/test-dependencies.json";
           for dir in /srv/app/src/*; do
             srcName=$(echo "$dir" | awk -F'/' '{print $NF}');
             if [[ -d "$dir/.git"  ]]; then
