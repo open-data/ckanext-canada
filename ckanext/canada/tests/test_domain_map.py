@@ -39,8 +39,6 @@ from ckanext.canada.tests.helpers import (
 logger = logging.getLogger(__name__)
 
 
-@pytest.mark.ckan_config('ckan.plugins', 'xloader')
-@pytest.mark.usefixtures('use_xloader')
 class TestDomainMap(CanadaTestBase):
     """
     Tests for expected behaviour with the language_domains plugin.
@@ -992,6 +990,7 @@ class TestDomainMap(CanadaTestBase):
         assert dataset.find('dct:accrualPeriodicity', dcat_ns).text == pkg_dict['frequency']
 
     @mock.patch.object(h, 'is_registry_domain', mock_is_registry_domain)
+    @pytest.mark.usefixtures('use_xloader')
     @pytest.mark.usefixtures('mock_uploads')
     def test_registry_datastore_urls(self, app, mock_uploads):  # noqa: F811
         """
@@ -1289,6 +1288,7 @@ class TestDomainMap(CanadaTestBase):
             self.test_domain_map['registry']['fr'], res_dict['id'])
 
     @mock.patch.object(h, 'is_registry_domain', mock_is_portal_domain)
+    @pytest.mark.usefixtures('use_xloader')
     @pytest.mark.usefixtures('mock_uploads')
     def test_portal_datastore_urls(self, app, mock_uploads):  # noqa: F811
         """
