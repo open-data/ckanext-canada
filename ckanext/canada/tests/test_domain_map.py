@@ -28,7 +28,6 @@ from ckanext.canada.tests.factories import (
 # type_ignore_reason: custom fixtures
 from ckanext.canada.tests.fixtures import (  # noqa: F401
     mock_uploads,  # type: ignore
-    use_xloader,  # type: ignore
 )
 from ckanext.canada.tests.helpers import (
     get_relative_offset_from_response,
@@ -990,7 +989,6 @@ class TestDomainMap(CanadaTestBase):
         assert dataset.find('dct:accrualPeriodicity', dcat_ns).text == pkg_dict['frequency']
 
     @mock.patch.object(h, 'is_registry_domain', mock_is_registry_domain)
-    @pytest.mark.usefixtures('use_xloader')
     @pytest.mark.usefixtures('mock_uploads')
     def test_registry_datastore_urls(self, app, mock_uploads):  # noqa: F811
         """
@@ -1092,6 +1090,21 @@ class TestDomainMap(CanadaTestBase):
                             environ_overrides=self.environ_overrides_tester,
                             status=400,
                             follow_redirects=False)  # no need for redirects
+        print('   ')
+        print('DEBUGGING:: STEP 1')
+        print('   ')
+        print('XLOADER LOADED:')
+        print(plugins.plugin_loaded('xloader'))
+        print('VALIDATION LOADED:')
+        print(plugins.plugin_loaded('validation'))
+        print('RESPONSE:')
+        print(response)
+        print('RESPONSE HEADERS:')
+        print(response.headers)
+        print('RESPONSE JSON:')
+        print(response.json)
+        print('   ')
+        assert False
         response = response.json
 
         task = self.sysadmin_action.xloader_status(resource_id=pkg_dict['resources'][0]['id'])
@@ -1273,7 +1286,6 @@ class TestDomainMap(CanadaTestBase):
             self.test_domain_map['registry']['fr'], res_dict['id'])
 
     @mock.patch.object(h, 'is_registry_domain', mock_is_portal_domain)
-    @pytest.mark.usefixtures('use_xloader')
     @pytest.mark.usefixtures('mock_uploads')
     def test_portal_datastore_urls(self, app, mock_uploads):  # noqa: F811
         """
@@ -1371,6 +1383,21 @@ class TestDomainMap(CanadaTestBase):
                             environ_overrides=self.environ_overrides_tester,
                             status=400,
                             follow_redirects=False)  # no need for redirects
+        print('   ')
+        print('DEBUGGING:: STEP 1')
+        print('   ')
+        print('XLOADER LOADED:')
+        print(plugins.plugin_loaded('xloader'))
+        print('VALIDATION LOADED:')
+        print(plugins.plugin_loaded('validation'))
+        print('RESPONSE:')
+        print(response)
+        print('RESPONSE HEADERS:')
+        print(response.headers)
+        print('RESPONSE JSON:')
+        print(response.json)
+        print('   ')
+        assert False
         response = response.json
 
         task = self.sysadmin_action.xloader_status(resource_id=pkg_dict['resources'][0]['id'])
