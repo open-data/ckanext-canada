@@ -99,16 +99,6 @@ class TestCanadaMiddleware(CanadaTestBase):
                     environ_overrides=self.environ_overrides_system,
                     follow_redirects=False)  # catch redirect
 
-                print('   ')
-                print('DEBUGGING:: STEP 1')
-                print('   ')
-                print(response.headers)
-                print(response)
-                print('   ')
-                assert False
-
-                offset, _host = get_relative_offset_from_response(response)
-
                 expected_header = 'user=%s org=%s type=%s id=%s rid=%s' % \
                     (self.sysadmin['name'], org['name'], pkg['type'], pkg['id'], res['id'])
 
@@ -129,7 +119,7 @@ class TestCanadaMiddleware(CanadaTestBase):
                     },
                     extra_environ=self.extra_environ_system,
                     environ_overrides=self.environ_overrides_system,
-                    follow_redirects=True)
+                    follow_redirects=False)  # catch redirect
 
                 expected_header = 'user=%s org=%s type=%s id=%s' % \
                     (self.sysadmin['name'], org['name'], pkg['type'], pkg['id'])
