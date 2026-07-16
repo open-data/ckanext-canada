@@ -1092,21 +1092,6 @@ class TestDomainMap(CanadaTestBase):
                             environ_overrides=self.environ_overrides_tester,
                             status=400,
                             follow_redirects=False)  # no need for redirects
-        print('   ')
-        print('DEBUGGING:: STEP 1')
-        print('   ')
-        print('XLOADER LOADED:')
-        print(plugins.plugin_loaded('xloader'))
-        print('VALIDATION LOADED:')
-        print(plugins.plugin_loaded('validation'))
-        print('RESPONSE:')
-        print(response)
-        print('RESPONSE HEADERS:')
-        print(response.headers)
-        print('RESPONSE JSON:')
-        print(response.json)
-        print('   ')
-        assert False
         response = response.json
 
         task = self.sysadmin_action.xloader_status(resource_id=pkg_dict['resources'][0]['id'])
@@ -1386,21 +1371,6 @@ class TestDomainMap(CanadaTestBase):
                             environ_overrides=self.environ_overrides_tester,
                             status=400,
                             follow_redirects=False)  # no need for redirects
-        print('   ')
-        print('DEBUGGING:: STEP 1')
-        print('   ')
-        print('XLOADER LOADED:')
-        print(plugins.plugin_loaded('xloader'))
-        print('VALIDATION LOADED:')
-        print(plugins.plugin_loaded('validation'))
-        print('RESPONSE:')
-        print(response)
-        print('RESPONSE HEADERS:')
-        print(response.headers)
-        print('RESPONSE JSON:')
-        print(response.json)
-        print('   ')
-        assert False
         response = response.json
 
         task = self.sysadmin_action.xloader_status(resource_id=pkg_dict['resources'][0]['id'])
