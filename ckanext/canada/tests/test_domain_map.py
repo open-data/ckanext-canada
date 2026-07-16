@@ -1109,6 +1109,14 @@ class TestDomainMap(CanadaTestBase):
                             environ_overrides=self.environ_overrides_tester,
                             status=200,
                             follow_redirects=False)  # no need for redirects
+        print('   ')
+        print('DEBUGGING:: STEP 1')
+        print('   ')
+        print(response)
+        print(response.headers)
+        print(response.json)
+        print('   ')
+        assert False
         response = response.json
 
         task = self.sysadmin_action.xloader_status(resource_id=pkg_dict['resources'][0]['id'])
@@ -1385,8 +1393,16 @@ class TestDomainMap(CanadaTestBase):
                             },
                             extra_environ=self.extra_environ_tester_portal_en,
                             environ_overrides=self.environ_overrides_tester,
-                            status=200,
+                            status=400,
                             follow_redirects=False)  # no need for redirects
+        print('   ')
+        print('DEBUGGING:: STEP 1')
+        print('   ')
+        print(response)
+        print(response.headers)
+        print(response.json)
+        print('   ')
+        assert False
         response = response.json
 
         task = self.sysadmin_action.xloader_status(resource_id=pkg_dict['resources'][0]['id'])

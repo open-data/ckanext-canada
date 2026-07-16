@@ -98,15 +98,16 @@ class TestCanadaMiddleware(CanadaTestBase):
                     extra_environ=self.extra_environ_system,
                     environ_overrides=self.environ_overrides_system,
                     follow_redirects=False)  # catch redirect
-                offset, _host = get_relative_offset_from_response(response)
 
                 print('   ')
                 print('DEBUGGING:: STEP 1')
                 print('   ')
-                print(offset)
                 print(response.headers)
                 print(response)
                 print('   ')
+                assert False
+
+                offset, _host = get_relative_offset_from_response(response)
 
                 expected_header = 'user=%s org=%s type=%s id=%s rid=%s' % \
                     (self.sysadmin['name'], org['name'], pkg['type'], pkg['id'], res['id'])
