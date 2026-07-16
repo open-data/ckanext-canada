@@ -34,7 +34,7 @@ class TestCanadaMiddleware(CanadaTestBase):
         test_domain_map = get_test_domains()
         self.sysadmin = Sysadmin()
         self.extra_environ_host_only = {'HTTP_HOST': test_domain_map['registry']['en']}
-        self.extra_environ_system = {'REMOTE_USER': self.sysadmin['name'].encode('ascii'),
+        self.extra_environ_system = {'Authorization': self.sysadmin['token'],
                                      'HTTP_HOST': test_domain_map['registry']['en']}
         self.environ_overrides_system = {'REMOTE_USER': self.sysadmin['name'].encode('ascii')}
 

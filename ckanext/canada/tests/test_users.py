@@ -29,8 +29,9 @@ class TestUserSchema(CanadaTestBase):
         """
         Users cannot change their usernames.
         """
+        username = make_uuid().replace('-', '_')
         user_dict = self.sysadmin_action.user_create(
-            email='example@example.com', name='example', password=make_uuid())
+            email='example@example.com', name=username, password=make_uuid())
 
         with pytest.raises(ValidationError) as ve:
             user_dict = self.sysadmin_action.user_patch(
@@ -52,8 +53,9 @@ class TestUserSchema(CanadaTestBase):
         """
         Custom plugin_extras and Schema should work as expected.
         """
+        username = make_uuid().replace('-', '_')
         user_dict = self.sysadmin_action.user_create(
-            email='example@example.com', name='example', password=make_uuid())
+            email='example@example.com', name=username, password=make_uuid())
 
         assert 'default_dataset_visibility' not in user_dict
         assert 'opt_in_features__pd_datatables' not in user_dict
