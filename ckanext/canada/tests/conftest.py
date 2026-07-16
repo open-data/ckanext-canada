@@ -13,6 +13,7 @@ from ckanext.canada.triggers import update_triggers
 from ckanext.recombinant.cli import _create_triggers
 from ckan.cli.db import _run_migrations
 from ckanapi import LocalCKAN, NotFound
+from ckan.plugins.toolkit import config
 
 
 def pytest_collection_finish(session: Session) -> None:
@@ -34,7 +35,7 @@ def pytest_collection_finish(session: Session) -> None:
 
     try:
         print('Creating ckanext-xloader tables...')
-        xloader_create_tables()
+        xloader_create_tables(config, echo=True)
     except Exception:
         pass
 
