@@ -5,6 +5,7 @@ from ckanext.validation.model import (
     create_tables as validation_create_tables,
     tables_exist as validation_tables_exist
 )
+from ckanext.xloader.db import init as xloader_create_tables
 from ckan import model
 from ckanext.security.model import db_setup as security_db_setup
 from ckanext.canada.tests.factories import CanadaOrganization as Organization
@@ -30,6 +31,12 @@ def pytest_collection_finish(session: Session) -> None:
     if not validation_tables_exist():
         print('Creating ckanext-validation tables...')
         validation_create_tables()
+
+    try:
+        print('Creating ckanext-xloader tables...')
+        xloader_create_tables()
+    except Exception:
+        pass
 
     print('Creating ckanext-security tables...')
     security_db_setup()

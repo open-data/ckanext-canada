@@ -14,7 +14,6 @@ import logging
 import xml.etree.ElementTree as ET
 from ckan.plugins.toolkit import h, config
 from ckan.lib.jobs import get_queue
-from ckan import plugins
 
 from ckan.tests.helpers import CKANResponse  # noqa: F401
 from ckan.model.types import make_uuid
@@ -1088,23 +1087,8 @@ class TestDomainMap(CanadaTestBase):
                             },
                             extra_environ=self.extra_environ_tester_registry,
                             environ_overrides=self.environ_overrides_tester,
-                            status=400,
+                            status=200,
                             follow_redirects=False)  # no need for redirects
-        print('   ')
-        print('DEBUGGING:: STEP 1')
-        print('   ')
-        print('XLOADER LOADED:')
-        print(plugins.plugin_loaded('xloader'))
-        print('VALIDATION LOADED:')
-        print(plugins.plugin_loaded('validation'))
-        print('RESPONSE:')
-        print(response)
-        print('RESPONSE HEADERS:')
-        print(response.headers)
-        print('RESPONSE JSON:')
-        print(response.json)
-        print('   ')
-        assert False
         response = response.json
 
         task = self.sysadmin_action.xloader_status(resource_id=pkg_dict['resources'][0]['id'])
@@ -1381,23 +1365,8 @@ class TestDomainMap(CanadaTestBase):
                             },
                             extra_environ=self.extra_environ_tester_portal_en,
                             environ_overrides=self.environ_overrides_tester,
-                            status=400,
+                            status=200,
                             follow_redirects=False)  # no need for redirects
-        print('   ')
-        print('DEBUGGING:: STEP 1')
-        print('   ')
-        print('XLOADER LOADED:')
-        print(plugins.plugin_loaded('xloader'))
-        print('VALIDATION LOADED:')
-        print(plugins.plugin_loaded('validation'))
-        print('RESPONSE:')
-        print(response)
-        print('RESPONSE HEADERS:')
-        print(response.headers)
-        print('RESPONSE JSON:')
-        print(response.json)
-        print('   ')
-        assert False
         response = response.json
 
         task = self.sysadmin_action.xloader_status(resource_id=pkg_dict['resources'][0]['id'])
