@@ -1,5 +1,9 @@
 # -*- coding: UTF-8 -*-
-from ckanext.canada.tests import CanadaTestBase, mock_is_registry_domain
+from ckanext.canada.tests import (
+    CanadaTestBase,
+    mock_is_registry_domain,
+    get_test_domains
+)
 import pytest
 import mock
 from io import BytesIO
@@ -43,8 +47,11 @@ class TestPackageWebForms(CanadaTestBase):
         Setup any state specific to the execution of the given class.
         """
         super(TestPackageWebForms, self).setup_class()
+
+        test_domain_map = get_test_domains()
         self.sysadmin = Sysadmin()
-        self.extra_environ_tester = {'Authorization': self.sysadmin['token']}
+        self.extra_environ_tester = {'Authorization': self.sysadmin['token'],
+                                     'HTTP_HOST': test_domain_map['registry']['en']}
         self.environ_overrides_tester = {'REMOTE_USER': self.sysadmin['name'].encode('ascii')}
         self.org = Organization(users=[{
             'name': self.sysadmin['name'],
@@ -235,7 +242,7 @@ class TestNewUserWebForms(CanadaTestBase):
         offset, _host = get_relative_offset_from_response(response)
         response = app.get(offset, extra_environ=self.extra_environ_tester,
                            environ_overrides=self.environ_overrides_tester,
-                           follow_redirects=False)  # no need for redirects
+                           follow_redirects=True)  # expecting redirect
 
         assert 'Account Created' in response.body
         assert 'Thank you for creating your account for the Open Government registry' in response.body

@@ -1,7 +1,8 @@
 # -*- coding: UTF-8 -*-
 from ckanext.canada.tests import (
     CanadaTestBase,
-    mock_is_registry_domain
+    mock_is_registry_domain,
+    get_test_domains
 )
 from ckan.plugins.toolkit import h, g, request
 from ckanext.canada.tests.factories import (
@@ -30,8 +31,10 @@ class TestCanadaMiddleware(CanadaTestBase):
         """
         super(TestCanadaMiddleware, self).setup_class()
 
+        test_domain_map = get_test_domains()
         self.sysadmin = Sysadmin()
-        self.extra_environ_system = {'REMOTE_USER': self.sysadmin['name'].encode('ascii')}
+        self.extra_environ_system = {'REMOTE_USER': self.sysadmin['name'].encode('ascii'),
+                                     'HTTP_HOST': test_domain_map['registry']['en']}
         self.environ_overrides_system = {'REMOTE_USER': self.sysadmin['name'].encode('ascii')}
 
     @mock.patch.object(h, 'is_registry_domain', mock_is_registry_domain)
