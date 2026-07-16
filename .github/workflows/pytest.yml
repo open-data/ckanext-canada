@@ -256,9 +256,13 @@ jobs:
           . /srv/app/src/ckan/bin/postgres_init/2_create_ckan_datastore_db.sh
           ckan -c /srv/app/src/ckanext-canada/test-core.ini db init
           ckan -c /srv/app/src/ckanext-canada/test-core.ini datastore set-permissions | psql -U postgres --set ON_ERROR_STOP=1
+          ckan -c /srv/app/src/ckanext-canada/test-core.ini xloader db-init
+          ckan -c /srv/app/src/ckanext-canada/test-core.ini validation init-db
+          ckan -c /srv/app/src/ckanext-canada/test-core.ini security migrate
           ckan -c /srv/app/src/ckanext-canada/test-core.ini canada update-triggers
           ckan -c /srv/app/src/ckanext-canada/test-core.ini recombinant create-triggers -a
           ckan -c /srv/app/src/ckanext-canada/test-core.ini db upgrade
+          ckan -c /srv/app/src/ckanext-canada/test-core.ini db pending-migrations --apply
           ckan -c /srv/app/src/ckanext-canada/test-core.ini db pending-migrations --apply
       - name: Download Test Durations
         if: needs.define-matrix.outputs.restored == 'true'

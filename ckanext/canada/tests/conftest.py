@@ -41,9 +41,6 @@ def pytest_collection_finish(session: Session) -> None:
     print('Creating ckanext-security tables...')
     security_db_setup()
 
-    # commit initial tables
-    model.Session.commit()
-
     print('Running XLoader plugin migrations...')
     _run_migrations('xloader')
 
