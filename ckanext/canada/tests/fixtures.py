@@ -1,6 +1,5 @@
 import pytest
 from ckan.lib import uploader
-from ckan import plugins
 
 
 @pytest.fixture
