@@ -211,7 +211,10 @@ class TestNewUserWebForms(CanadaTestBase):
         Setup any state specific to the execution of the given class.
         """
         super(TestNewUserWebForms, self).setup_class()
-        self.extra_environ_tester = {'Authorization': str(u"")}
+
+        test_domain_map = get_test_domains()
+        self.extra_environ_tester = {'Authorization': str(u""),
+                                     'HTTP_HOST': test_domain_map['registry']['en']}
         self.environ_overrides_tester = {'REMOTE_USER': str(u"")}
         self.org = Organization()
 
@@ -294,14 +297,19 @@ class TestRecombinantWebForms(CanadaTestBase):
         Setup any state specific to the execution of the given class.
         """
         super(TestRecombinantWebForms, self).setup_class()
+        test_domain_map = get_test_domains()
+
         member = User()
         editor = User()
         sysadmin = Sysadmin()
-        self.extra_environ_member = {'Authorization': member['token']}
+        self.extra_environ_member = {'Authorization': member['token'],
+                                     'HTTP_HOST': test_domain_map['registry']['en']}
         self.environ_overrides_member = {'REMOTE_USER': member['name'].encode('ascii')}
-        self.extra_environ_editor = {'Authorization': editor['token']}
+        self.extra_environ_editor = {'Authorization': editor['token'],
+                                     'HTTP_HOST': test_domain_map['registry']['en']}
         self.environ_overrides_editor = {'REMOTE_USER': editor['name'].encode('ascii')}
-        self.extra_environ_system = {'Authorization': sysadmin['token']}
+        self.extra_environ_system = {'Authorization': sysadmin['token'],
+                                     'HTTP_HOST': test_domain_map['registry']['en']}
         self.environ_overrides_system = {'REMOTE_USER': sysadmin['name'].encode('ascii')}
         self.org = Organization(users=[{
             'name': member['name'],

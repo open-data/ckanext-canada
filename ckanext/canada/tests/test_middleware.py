@@ -33,6 +33,7 @@ class TestCanadaMiddleware(CanadaTestBase):
 
         test_domain_map = get_test_domains()
         self.sysadmin = Sysadmin()
+        self.extra_environ_host_only = {'HTTP_HOST': test_domain_map['registry']['en']}
         self.extra_environ_system = {'REMOTE_USER': self.sysadmin['name'].encode('ascii'),
                                      'HTTP_HOST': test_domain_map['registry']['en']}
         self.environ_overrides_system = {'REMOTE_USER': self.sysadmin['name'].encode('ascii')}
@@ -75,7 +76,7 @@ class TestCanadaMiddleware(CanadaTestBase):
             return _finish_ok({})
 
         # logged out users do not have log extras
-        get_response = app.get('/_test')
+        get_response = app.get('/_test', extra_environ=self.extra_environ_host_only)
         assert 'X-LogExtra' not in get_response.headers
 
         with mock.patch('ckan.lib.helpers.current_user', current_user):
