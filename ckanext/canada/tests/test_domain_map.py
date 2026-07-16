@@ -28,6 +28,7 @@ from ckanext.canada.tests.factories import (
 # type_ignore_reason: custom fixtures
 from ckanext.canada.tests.fixtures import (  # noqa: F401
     mock_uploads,  # type: ignore
+    use_xloader,  # type: ignore
 )
 from ckanext.canada.tests.helpers import (
     get_relative_offset_from_response,
@@ -38,6 +39,7 @@ from ckanext.canada.tests.helpers import (
 logger = logging.getLogger(__name__)
 
 
+@pytest.mark.usefixtures('use_xloader')
 class TestDomainMap(CanadaTestBase):
     """
     Tests for expected behaviour with the language_domains plugin.
@@ -56,12 +58,6 @@ class TestDomainMap(CanadaTestBase):
         """
         super(TestDomainMap, self).setup_class()
 
-        if not plugins.plugin_loaded('xloader'):
-            plugins.load('xloader')
-
-        if not plugins.plugin_loaded('validation'):
-            plugins.load('validation')
-
         self.test_domain_map = get_test_domains()
         sysadmin = Sysadmin()
         self.sysadmin_action = LocalCKAN(username=sysadmin['name']).action
@@ -75,19 +71,6 @@ class TestDomainMap(CanadaTestBase):
         self.org = Organization(users=[{
             'name': sysadmin['name'],
             'capacity': 'admin'}])
-
-    @classmethod
-    def teardown_class(self):
-        """Method is called at class level after ALL test methods of the class are called.
-        Remove any state specific to the execution of the given class.
-        """
-        if plugins.plugin_loaded('xloader'):
-            plugins.unload('xloader')
-
-        if not plugins.plugin_loaded('validation'):
-            plugins.load('validation')
-
-        super(TestDomainMap, self).teardown_class()
 
     @mock.patch.object(h, 'is_registry_domain', mock_is_registry_domain)
     def test_registry_base_redirect(self, app):

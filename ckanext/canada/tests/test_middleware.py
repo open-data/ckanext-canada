@@ -11,7 +11,6 @@ from ckanext.canada.tests.factories import (
     CanadaDataset as Dataset,
     CanadaResource as Resource
 )
-from ckanext.canada.tests.helpers import get_relative_offset_from_response
 from ckan.tests.helpers import change_config
 
 import re
@@ -129,7 +128,8 @@ class TestCanadaMiddleware(CanadaTestBase):
 
             # non-API requests will just include username
             get_response = app.get('/_test', extra_environ=self.extra_environ_system,
-                                   environ_overrides=self.environ_overrides_system)
+                                   environ_overrides=self.environ_overrides_system,
+                                   follow_redirects=False)  # catch redirect
 
             assert 'X-LogExtra' in get_response.headers
             assert get_response.headers['X-LogExtra'] == 'user=%s' % self.sysadmin['name']
