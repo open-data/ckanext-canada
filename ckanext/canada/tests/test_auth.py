@@ -5,8 +5,6 @@ from ckan.logic import _actions, check_access
 
 from ckan.plugins.toolkit import NotAuthorized
 
-import traceback
-
 from ckanext.canada.tests.factories import (
     CanadaOrganization as Organization,
     CanadaUser as User,
@@ -81,12 +79,6 @@ class TestCanadaAuth(CanadaTestBase):
             except ValueError:  # TODO: remove after followee auth backport
                 continue
             except NotAuthorized as e:
-                print('    ')
-                print('DEBUGGING::STEP 1')
-                print('    ')
-                print(e)
-                print(traceback.format_exc())
-                print('    ')
                 assert any(p in action_func_name for p in name_patterns)
                 assert e.message == 'Site is in read only mode'
 
@@ -99,12 +91,6 @@ class TestCanadaAuth(CanadaTestBase):
             except ValueError:  # TODO: remove after followee auth backport
                 continue
             except NotAuthorized as e:
-                print('    ')
-                print('DEBUGGING::STEP 2')
-                print('    ')
-                print(e)
-                print(traceback.format_exc())
-                print('    ')
                 assert any(p in action_func_name for p in name_patterns)
                 assert e.message == 'Site is in read only mode'
 
@@ -117,12 +103,6 @@ class TestCanadaAuth(CanadaTestBase):
             except ValueError:  # TODO: remove after followee auth backport
                 continue
             except NotAuthorized as e:
-                print('    ')
-                print('DEBUGGING::STEP 3')
-                print('    ')
-                print(e)
-                print(traceback.format_exc())
-                print('    ')
                 assert any(p in action_func_name for p in name_patterns)
                 assert e.message == 'Site is in read only mode'
 

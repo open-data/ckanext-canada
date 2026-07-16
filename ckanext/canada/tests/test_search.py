@@ -37,6 +37,17 @@ class TestRegistrySearch(CanadaTestBase):
         self.editor_lc = LocalCKAN(username=editor['name'])
         self.system_lc = LocalCKAN(username=sysadmin['name'])
         #
+        # pre-delete any packages as we are going to be
+        # asserting package counts in this test class
+        #
+        datasets = self.system_lc.action.package_search(
+            q='*:*',
+            fl='id',
+            include_private=True)
+
+        for dataset in datasets['results']:
+            self.system_lc.action.package_delete(id=dataset['id'])
+        #
         # Datasets 0, 1, 2, and 3
         # 1 & 3 will be ready to publish
         # 3 will not have a portal release date

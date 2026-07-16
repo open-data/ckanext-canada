@@ -11,6 +11,7 @@ from ckanext.canada.tests.factories import (
     CanadaDataset as Dataset,
     CanadaResource as Resource
 )
+from ckanext.canada.tests.helpers import get_relative_offset_from_response
 from ckan.tests.helpers import change_config
 
 import re
@@ -96,7 +97,16 @@ class TestCanadaMiddleware(CanadaTestBase):
                     },
                     extra_environ=self.extra_environ_system,
                     environ_overrides=self.environ_overrides_system,
-                    follow_redirects=True)
+                    follow_redirects=False)  # catch redirect
+                offset, _host = get_relative_offset_from_response(response)
+
+                print('   ')
+                print('DEBUGGING:: STEP 1')
+                print('   ')
+                print(offset)
+                print(response.headers)
+                print(response)
+                print('   ')
 
                 expected_header = 'user=%s org=%s type=%s id=%s rid=%s' % \
                     (self.sysadmin['name'], org['name'], pkg['type'], pkg['id'], res['id'])

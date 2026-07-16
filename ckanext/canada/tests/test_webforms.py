@@ -239,12 +239,13 @@ class TestNewUserWebForms(CanadaTestBase):
         new_user = lc.action.user_show(name='newusername')
         api_token = APIToken(user=new_user['id'])
         new_user['token'] = api_token['token']
-        self.extra_environ_tester = {'Authorization': new_user['token']}
-        self.environ_overrides_tester = {'REMOTE_USER': new_user['name'].encode('ascii')}
+        _extra_environ_tester = {'Authorization': new_user['token'],
+                                 'HTTP_HOST': self.extra_environ_tester['HTTP_HOST']}
+        _environ_overrides_tester = {'REMOTE_USER': new_user['name'].encode('ascii')}
 
         offset, _host = get_relative_offset_from_response(response)
-        response = app.get(offset, extra_environ=self.extra_environ_tester,
-                           environ_overrides=self.environ_overrides_tester,
+        response = app.get(offset, extra_environ=_extra_environ_tester,
+                           environ_overrides=_environ_overrides_tester,
                            follow_redirects=True)  # expecting redirect
 
         assert 'Account Created' in response.body

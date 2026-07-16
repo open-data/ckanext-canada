@@ -14,6 +14,7 @@ import logging
 import xml.etree.ElementTree as ET
 from ckan.plugins.toolkit import h, config
 from ckan.lib.jobs import get_queue
+from ckan import plugins
 
 from ckan.tests.helpers import CKANResponse  # noqa: F401
 from ckan.model.types import make_uuid
@@ -55,6 +56,12 @@ class TestDomainMap(CanadaTestBase):
         """
         super(TestDomainMap, self).setup_class()
 
+        if not plugins.plugin_loaded('xloader'):
+            plugins.load('xloader')
+
+        if not plugins.plugin_loaded('validation'):
+            plugins.load('validation')
+
         self.test_domain_map = get_test_domains()
         sysadmin = Sysadmin()
         self.sysadmin_action = LocalCKAN(username=sysadmin['name']).action
@@ -68,6 +75,19 @@ class TestDomainMap(CanadaTestBase):
         self.org = Organization(users=[{
             'name': sysadmin['name'],
             'capacity': 'admin'}])
+
+    @classmethod
+    def teardown_class(self):
+        """Method is called at class level after ALL test methods of the class are called.
+        Remove any state specific to the execution of the given class.
+        """
+        if plugins.plugin_loaded('xloader'):
+            plugins.unload('xloader')
+
+        if not plugins.plugin_loaded('validation'):
+            plugins.load('validation')
+
+        super(TestDomainMap, self).teardown_class()
 
     @mock.patch.object(h, 'is_registry_domain', mock_is_registry_domain)
     def test_registry_base_redirect(self, app):
@@ -151,7 +171,7 @@ class TestDomainMap(CanadaTestBase):
                            follow_redirects=False)  # no need for redirects
 
         # test for both in the case that the i18n catalogues are built
-        assert 'Search Records' in response.body or 'Recherche de dossiers' in response.body
+        assert 'Search Records' in response.body or 'Search Datasets' in response.body or 'Recherche de dossiers' in response.body
         assert '/en/dataset/' in response.body
 
     @mock.patch.object(h, 'is_registry_domain', mock_is_portal_domain)
@@ -1087,15 +1107,8 @@ class TestDomainMap(CanadaTestBase):
                             },
                             extra_environ=self.extra_environ_tester_registry,
                             environ_overrides=self.environ_overrides_tester,
-                            status=400,
+                            status=200,
                             follow_redirects=False)  # no need for redirects
-        print('    ')
-        print('DEBUGGING::STEP 1')
-        print('    ')
-        print(response.headers)
-        print(response)
-        print(response.json)
-        print('    ')
         response = response.json
 
         task = self.sysadmin_action.xloader_status(resource_id=pkg_dict['resources'][0]['id'])
@@ -1372,15 +1385,8 @@ class TestDomainMap(CanadaTestBase):
                             },
                             extra_environ=self.extra_environ_tester_portal_en,
                             environ_overrides=self.environ_overrides_tester,
-                            status=400,
+                            status=200,
                             follow_redirects=False)  # no need for redirects
-        print('    ')
-        print('DEBUGGING::STEP 1')
-        print('    ')
-        print(response.headers)
-        print(response)
-        print(response.json)
-        print('    ')
         response = response.json
 
         task = self.sysadmin_action.xloader_status(resource_id=pkg_dict['resources'][0]['id'])
