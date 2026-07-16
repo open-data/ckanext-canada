@@ -39,6 +39,7 @@ from ckanext.canada.tests.helpers import (
 logger = logging.getLogger(__name__)
 
 
+@pytest.mark.ckan_config('ckan.plugins', 'xloader')
 @pytest.mark.usefixtures('use_xloader')
 class TestDomainMap(CanadaTestBase):
     """

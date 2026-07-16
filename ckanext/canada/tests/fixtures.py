@@ -1,6 +1,6 @@
 import pytest
 from ckan.lib import uploader
-from ckan.tests.pytest_ckan.fixtures import with_plugins
+from ckan import plugins
 
 
 @pytest.fixture
@@ -13,4 +13,8 @@ def mock_uploads(ckan_config, monkeypatch, tmp_path):
 
 @pytest.fixture
 def use_xloader():
-    with_plugins('xloader')
+    if not plugins.plugin_loaded('xloader'):
+        plugins.load('xloader')
+    yield
+    if plugins.plugin_loaded('xloader'):
+        plugins.unload('xloader')
