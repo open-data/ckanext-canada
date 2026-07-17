@@ -184,7 +184,7 @@ jobs:
                   if git show-ref --verify --quiet "refs/heads/$current_branch"; then
                     git checkout "$current_branch"
                   else
-                    git checkout -b "$current_branch" "canada/$current_branch"
+                    git checkout -B "$current_branch" "canada/$current_branch"
                   fi
                   git fetch
                   git pull --ff-only || true
@@ -194,12 +194,18 @@ jobs:
                   if git show-ref --verify --quiet "refs/heads/$current_branch"; then
                     git checkout "$current_branch"
                   else
-                    git checkout -b "$current_branch" "origin/$current_branch"
+                    git checkout -B "$current_branch" "origin/$current_branch"
                   fi
                   git fetch
                   git pull --ff-only || true
                   reslog=$(git log HEAD..origin/$current_branch --oneline);
                 fi;
+                printf "\n    ${srcName}: git info";
+                git branch --show-current;
+                git rev-parse HEAD;
+                git log -1 --oneline;
+                printf "\n    ${srcName}: pip info";
+                pip show ${srcName};
                 if [[ "${reslog}" == "" ]]; then
                   printf "\n${srcName}: Up to date. Skipping..."
                 else
@@ -222,6 +228,7 @@ jobs:
             else
                 printf "\n${srcName}: Not a source repository. Skipping..."
             fi;
+            printf "\n\n";
           done;
           cd /srv/app;
       - name: Checkout Repository (${{ github.head_ref || github.ref_name }})
