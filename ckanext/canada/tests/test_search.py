@@ -232,6 +232,13 @@ class TestPortalSearch(CanadaTestBase):
             fl='id',
             include_private=True)
 
+        print('    ')
+        print('DEBUGGING::')
+        print('    ')
+        print(datasets)
+        print('    ')
+        assert False
+
         for dataset in datasets['results']:
             try:
                 self.lc.action.package_delete(id=dataset['id'])
