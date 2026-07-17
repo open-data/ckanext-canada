@@ -2,6 +2,7 @@
 from ckanext.canada.tests import CanadaTestBase, mock_is_registry_domain
 from ckan.plugins.toolkit import h
 from ckanapi import LocalCKAN
+from ckan.model.types import make_uuid
 
 import pytest
 import mock
@@ -28,11 +29,10 @@ class TestPackageAlerts(CanadaTestBase):
     def test_marked_not_ready_to_publish(self, app):
         data = self._filled_dataset_data()
         data['imso_approval'] = 'false'
-        self.sysadmin_action.package_create(
-            name='12345678-9abc-def0-1234-56789abcdef0', **data)
+        pname = make_uuid()
+        self.sysadmin_action.package_create(name=pname, **data)
 
-        offset = h.url_for('dataset.read',
-                           id='12345678-9abc-def0-1234-56789abcdef0')
+        offset = h.url_for('dataset.read', id=pname)
         response = app.get(offset, extra_environ=self.extra_environ_tester)
 
         # Check dataset page
@@ -43,11 +43,10 @@ class TestPackageAlerts(CanadaTestBase):
     def test_approval_required(self, app):
         data = self._filled_dataset_data()
         data['ready_to_publish'] = 'false'
-        self.sysadmin_action.package_create(
-            name='12345678-9abc-def0-1234-56789abcdef1', **data)
+        pname = make_uuid()
+        self.sysadmin_action.package_create(name=pname, **data)
 
-        offset = h.url_for('dataset.read',
-                           id='12345678-9abc-def0-1234-56789abcdef1')
+        offset = h.url_for('dataset.read', id=pname)
         response = app.get(offset, extra_environ=self.extra_environ_tester)
 
         # Check dataset page
@@ -59,11 +58,10 @@ class TestPackageAlerts(CanadaTestBase):
         data = self._filled_dataset_data()
         data['imso_approval'] = 'true'
         data['ready_to_publish'] = 'true'
-        self.sysadmin_action.package_create(
-            name='12345678-9abc-def0-1234-56789abcdef3', **data)
+        pname = make_uuid()
+        self.sysadmin_action.package_create(name=pname, **data)
 
-        offset = h.url_for('dataset.read',
-                           id='12345678-9abc-def0-1234-56789abcdef3')
+        offset = h.url_for('dataset.read', id=pname)
         response = app.get(offset, extra_environ=self.extra_environ_tester)
 
         # Check dataset page
@@ -77,11 +75,10 @@ class TestPackageAlerts(CanadaTestBase):
         data['imso_approval'] = 'true'
         data['ready_to_publish'] = 'true'
         data['portal_release_date'] = '2023-07-07'
-        self.sysadmin_action.package_create(
-            name='12345678-9abc-def0-1234-56789abcdef4', **data)
+        pname = make_uuid()
+        self.sysadmin_action.package_create(name=pname, **data)
 
-        offset = h.url_for('dataset.read',
-                           id='12345678-9abc-def0-1234-56789abcdef4')
+        offset = h.url_for('dataset.read', id=pname)
         response = app.get(offset, extra_environ=self.extra_environ_tester)
 
         # Check dataset page

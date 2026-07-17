@@ -37,7 +37,14 @@
             </p>
           {% endif %}
         {% elif code == 500 %}
-          <p class="mrgn-tp-lg">{{ _('We encountered an error and are unable to serve your request. Please try again in short time or contact <a href="mailto:{support}">{support}</a> if you need immediate assistance or if this issue persists. Note that your login expires after 1 hour of inactivity.').format(support=h.support_email_address()) | safe }}</p>
+          <p class="mrgn-tp-lg">
+            {% if g.ERROR_SUPPORT_ID %}
+              <p>{{ _('Support ID: ') }}&nbsp;<strong><em>{{- g.ERROR_SUPPORT_ID -}}</em></strong></p>
+              {{ _('We encountered an error and are unable to serve your request. Please try again in short time or contact <a href="mailto:{support}">{support}</a> <strong><em>with the above support ID</em></strong> if you need immediate assistance or if this issue persists. Note that your login expires after 1 hour of inactivity.').format(support=h.support_email_address()) | safe }}
+            {% else %}
+              {{ _('We encountered an error and are unable to serve your request. Please try again in short time or contact <a href="mailto:{support}">{support}</a> if you need immediate assistance or if this issue persists. Note that your login expires after 1 hour of inactivity.').format(support=h.support_email_address()) | safe }}
+            {% endif %}
+          </p>
         {% endif %}
       </div>
     </div>

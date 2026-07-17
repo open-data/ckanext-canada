@@ -1,0 +1,1 @@
+Update validation for Grants and Contributions: `agreement_value` now accepts numeric values greater than or equal to 0 when `agreement_start_date` is on or after May 1, 2026.

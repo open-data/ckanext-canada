@@ -18,6 +18,7 @@ class CanadaThemePlugin(p.SingletonPlugin):
         p.toolkit.add_resource('../public/static/js', 'js')
         p.toolkit.add_resource('../assets/internal', 'canada_internal')
         p.toolkit.add_resource('../assets/datatables', 'canada_datatables')
+        p.toolkit.add_resource('../assets/modules', 'canada_modules')
         p.toolkit.add_resource('../assets/public', 'canada_public')
         p.toolkit.add_resource('../assets/invitation-manager', 'invitation_manager')
         config['ckan.favicon'] = helpers.cdts_asset('/assets/favicon.ico')
@@ -87,5 +88,6 @@ class CanadaThemePlugin(p.SingletonPlugin):
             'support_email_address',
             'get_inline_script_nonce',
             'obfuscate_to_code_points',
-            'mail_to'
+            'mail_to',
+            'get_allowed_frame_hosts',
         ])

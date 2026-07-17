@@ -24,7 +24,7 @@ from ckanext.xloader import loader
 from ckanext.xloader.job_exceptions import LoaderError
 from ckanext.validation.jobs import run_validation_job
 
-from ckanapi import LocalCKAN
+from ckanapi import LocalCKAN, ValidationError
 
 logger = logging.getLogger(__name__)
 
@@ -55,6 +55,8 @@ class TestDatastoreValidation(CanadaTestBase):
         if not plugins.plugin_loaded('validation'):
             plugins.load('validation')
 
+        resource = Resource()
+        self.resource_id = resource['id']
         self.action = LocalCKAN().action
 
     @classmethod
@@ -90,6 +92,37 @@ class TestDatastoreValidation(CanadaTestBase):
             fake_stream = io.BufferedReader(io.BytesIO(file_data))
 
         return resource, fake_stream
+
+    def test_max_column_length(self):
+        """
+        Column length max is the pSQL 63 bytes max
+        """
+        with pytest.raises(ValidationError) as ve:
+            self.action.datastore_create(
+                resource_id=self.resource_id,
+                force=True,
+                records=[],
+                fields=[{'id': 'thisfieldissooooooooolonnggggggthisfieldissooooooooolonnggggggthisfieldissooooooooolonngggggg', 'type': 'text'},])
+        err = ve.value.error_dict
+        assert err['fields'] == ['Column heading "thisfieldissooooooooolonnggggggthisfieldissooooooooolonnggggggthisfieldissooooooooolonngggggg" exceeds limit of 63 characters.']
+
+    def test_duplicate_column_names(self):
+        """
+        Duplicate column names is not allowed and should show
+        them in the error message
+        """
+        with pytest.raises(ValidationError) as ve:
+            self.action.datastore_create(
+                resource_id=self.resource_id,
+                force=True,
+                records=[],
+                fields=[{'id': 'this_is_a_field', 'type': 'text'},
+                        {'id': 'this_is_a_field', 'type': 'text'},
+                        {'id': 'this_is_a_field', 'type': 'text'},
+                        {'id': 'another_dupe', 'type': 'text'},
+                        {'id': 'another_dupe', 'type': 'text'}])
+        err = ve.value.error_dict
+        assert err['field'] == ['Duplicate column names are not supported: this_is_a_field, another_dupe']
 
     @change_config('ckanext.validation.run_on_create_async', False)
     @change_config('ckanext.validation.run_on_update_async', False)

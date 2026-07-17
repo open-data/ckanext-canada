@@ -64,6 +64,10 @@ resources:
       2025-2026-Q2: 2025-2026-Q2
       2025-2026-Q3: 2025-2026-Q3
       2025-2026-Q4: 2025-2026-Q4
+      2026-2027-Q1: 2026-2027-Q1
+      2026-2027-Q2: 2026-2027-Q2
+      2026-2027-Q3: 2026-2027-Q3
+      2026-2027-Q4: 2026-2027-Q4
 
   - datastore_id: line_number
     label:
@@ -173,6 +177,7 @@ resources:
     obligation: Mandatory
     excel_required: true
     form_required: true
+    # FIXME: role does not have required trigger, or choices trigger
     excel_full_text_choices: true
     datatables_full_text_choices: true
     format_type:

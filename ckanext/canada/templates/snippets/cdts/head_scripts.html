@@ -1,5 +1,5 @@
 <script src="{{ h.cdts_asset('/compiled/soyutils.js', theme=False) }}" integrity="sha384-hfwnpowMIP7hDqCMoNULlqSq7k2nu8R7zl+zHfYpNc5iokyd+Gbk5NO5ZdJFCv0o" crossorigin="anonymous" nonce="{{- h.get_inline_script_nonce() -}}"></script>
-<script src="{{ h.cdts_asset('/compiled/wet-' ~ (h.lang() or 'en') ~ '.js', theme=False) }}" integrity="{{- 'sha384-RGMFGZMCJKgVZPBWoH+xj/UlWA8tKt5hnOqKri2Y/NpPeVYzg4+eI1K1NVfkR7VR' if (h.lang() or 'en') == 'en' else 'sha384-uUG0C9gTNvYwZ1GW/xEfNqqs/ZFGBcR6y+yyKSXEWuB3nqCpDelitWilNMGXMwT3' -}}" crossorigin="anonymous" nonce="{{- h.get_inline_script_nonce() -}}"></script>
+<script src="{{ h.cdts_asset('/compiled/wet-' ~ (h.lang() or 'en') ~ '.js', theme=False) }}" integrity="{{- 'sha384-XbAqbWNWbJWYx+IQnyjPh+/kbGbXlHn05z831ogYTb+w7WP5omwATQjrLFHc2OHe' if (h.lang() or 'en') == 'en' else 'sha384-iPu8BEDakicWakhuvqtWpzlyNK7fuZMwyG7ejrvzI0kL2SteL231wdSn1AMokhIG' -}}" crossorigin="anonymous" nonce="{{- h.get_inline_script_nonce() -}}"></script>
 {# See: https://github.com/wet-boew/cdts-sgdc/blob/v4.1.0/src/gcweb/refTop.ejs #}
 {# NOTE: DOMParser, nonce injection, and re-stringing is necessary for WET Builder to work with CSP header #}
 <script nonce="{{- h.get_inline_script_nonce() -}}">

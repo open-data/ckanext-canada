@@ -478,6 +478,31 @@ class TestMakePD(CanadaTestBase):
         assert "rebuild-nap5] Error" not in stdout
         assert 'import_data_csv' in stdout
 
+    def test_make_nap6(self):
+        assert self.ckan_ini
+        self._setup_ini(self.ckan_ini)
+
+        self._setup_pd(type='nap6')
+
+        make_process = subprocess.Popen(["make upload-nap6"], shell=True, cwd=MAKE_PATH, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        stdout, stderr = make_process.communicate()
+
+        stdout = stdout.decode("utf-8")
+
+        assert "Usage:" not in stdout
+        assert "upload-nap6] Error" not in stdout
+
+        make_process = subprocess.Popen(["make rebuild-nap6"], shell=True, cwd=MAKE_PATH, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        stdout, stderr = make_process.communicate()
+
+        stdout = stdout.decode("utf-8")
+
+        # Django, just test for command output from echo
+        # TODO: add test once Django seach is ready for nap6
+        # assert "Usage:" not in stdout
+        # assert "rebuild-nap6] Error" not in stdout
+        # assert 'import_data_csv' in stdout
+
     def test_make_reclassification(self):
         assert self.ckan_ini
         self._setup_ini(self.ckan_ini)
@@ -561,8 +586,8 @@ class TestMakePD(CanadaTestBase):
             'service_scope': 'EXTERN',
             'client_target_groups': 'PERSON',
             'program_id': 'BGN01',
-            'program_name_en': "'Old Age Security'",
-            'program_name_fr': "'Sécurité de la vieillesse'",
+            'program_name_en': '"Old Age Security"',
+            'program_name_fr': '"Sécurité de la vieillesse"',
             'client_feedback_channel': 'EML,FAX,ONL,PERSON,POST,TEL',
             'automated_decision_system': 'N',
             'automated_decision_system_description_en': None,
@@ -640,7 +665,7 @@ class TestMakePD(CanadaTestBase):
             'target': '0.9',
             'volume_meeting_target': '315128',
             'total_volume': '359919',
-            'performance': '0.8756',
+            'performance': '0.8755525548804036',
             'comments_en': 'The total volumes assessed against the first month of entitlement service standard excludes 3,550 decisions involving files submitted under international agreements and interactions with foreign governments.',
             'comments_fr': "Les volumes totaux évalués par rapport à la norme de service du premier mois de droit excluent 3 550 décisions concernant des dossiers soumis dans le cadre d'accords internationaux et d'interactions avec des gouvernements étrangers.",
             'target_met': 'N',

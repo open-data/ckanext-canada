@@ -1,22 +1,13 @@
 # -*- coding: UTF-8 -*-
-import sys
-import os
-from importlib import util
-
 from ckanext.canada.tests import CanadaTestBase
 from ckanapi import LocalCKAN, ValidationError
 
 import pytest
 from ckan import model
 from ckanext.canada.tests.factories import CanadaOrganization as Organization
+from ckanext.canada.tests.filters import filter_service_std
 
 from ckanext.recombinant.tables import get_chromo
-
-filter_service_std_path = os.path.join(os.path.dirname(str(__file__)), '../../../bin/filter/filter_service_std.py')
-spec = util.spec_from_file_location("canada.bin.filters.service_std", filter_service_std_path)
-filter_service_std = util.module_from_spec(spec)
-sys.modules["canada.bin.filters.service_std"] = filter_service_std
-spec.loader.exec_module(filter_service_std)
 
 
 class TestService(CanadaTestBase):
@@ -736,3 +727,17 @@ class TestStdService(CanadaTestBase):
         test_record = filter_service_std.test(dict(record))
         assert test_record['performance'] is None
         assert test_record['target_met'] == 'NA'
+
+        record['target'] = 1.0
+        record['volume_meeting_target'] = 405504991
+        record['total_volume'] = 405565059
+        test_record = filter_service_std.test(dict(record))
+        assert test_record['performance'] == 0.9998518905939577
+        assert test_record['target_met'] == 'N'
+
+        record['target'] = 1.0
+        record['volume_meeting_target'] = 421615262
+        record['total_volume'] = 421615691
+        test_record = filter_service_std.test(dict(record))
+        assert test_record['performance'] == 0.9999989824856874
+        assert test_record['target_met'] == 'N'

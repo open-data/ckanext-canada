@@ -5,6 +5,7 @@ from ckan.plugins.toolkit import Invalid, config, NotAuthorized
 
 import pytest
 from ckan import model
+from ckan.model.types import make_uuid
 from ckanext.canada.tests.factories import (
     CanadaOrganization as Organization,
     CanadaResource as Resource,
@@ -88,7 +89,11 @@ class TestNAVLSchema(CanadaTestBase):
             id=self.org['name'],
             role='editor')
 
-        self.incomplete_pkg = {
+    @property
+    def incomplete_pkg(self):
+        return {
+            'id': make_uuid(),
+            'name': make_uuid(),
             'type': 'dataset',
             'collection': 'primary',
             'title_translated': {'en': 'A Novel By Tolstoy'},
@@ -99,6 +104,7 @@ class TestNAVLSchema(CanadaTestBase):
             'maintainer_email': 'not@all.example.com',
             'restrictions': 'unrestricted',
             'resources': [{
+                'id': make_uuid(),
                 'name_translated': {'en': 'Full text.', 'fr': 'Full text.'},
                 'format': 'TXT',
                 'url': 'http://www.annakarenina.com/download/',
@@ -108,21 +114,23 @@ class TestNAVLSchema(CanadaTestBase):
             }],
         }
 
-        self.complete_pkg = dict(self.incomplete_pkg,
-                                 owner_org=self.org['name'],
-                                 title_translated={
-                                    'en': 'A Novel By Tolstoy', 'fr': 'Un novel par Tolstoy'},
-                                 frequency='as_needed',
-                                 notes_translated={'en': '...', 'fr': '...'},
-                                 subject=['persons'],
-                                 date_published='2013-01-01',
-                                 keywords={'en': ['book'], 'fr': ['livre']})
+    @property
+    def complete_pkg(self):
+        return dict(self.incomplete_pkg,
+                    owner_org=self.org['name'],
+                    title_translated={
+                        'en': 'A Novel By Tolstoy',
+                        'fr': 'Un novel par Tolstoy',
+                    },
+                    frequency='as_needed',
+                    notes_translated={'en': '...', 'fr': '...'},
+                    subject=['persons'],
+                    date_published='2013-01-01',
+                    keywords={'en': ['book'], 'fr': ['livre']})
 
     def test_basic_package(self):
         with pytest.raises(ValidationError) as ve:
-            self.normal_action.package_create(
-                name='12345678-9abc-def0-1234-56789abcdef0',
-                **self.incomplete_pkg)
+            self.normal_action.package_create(**self.incomplete_pkg)
         model.Session.rollback()
         err = ve.value.error_dict
         expected = {
@@ -140,8 +148,7 @@ class TestNAVLSchema(CanadaTestBase):
         for k in set(err) | set(expected):
             assert k in err
             assert err[k] == expected[k]
-        resp = self.normal_action.package_create(
-            name='8efcb678-9abc-def0-1234-56789abcdef0', **self.complete_pkg)
+        resp = self.normal_action.package_create(**self.complete_pkg)
         assert resp['title_translated']['fr'] == 'Un novel par Tolstoy'
 
         resp = self.action.package_show(id=resp['id'])
@@ -175,40 +182,39 @@ class TestNAVLSchema(CanadaTestBase):
         assert 'keywords' in err
         assert 'length is more than maximum' in err['keywords'][0]
 
-        self.normal_action.package_create(
-            **dict(self.complete_pkg, keywords={'en': ['these', 'ones', 'are', 'a-ok'], 'fr': ['test']}))
+        self.normal_action.package_create(**dict(
+            self.complete_pkg,
+            keywords={'en': ['these', 'ones', 'are', 'a-ok'], 'fr': ['test']}))
 
     def test_custom_dataset_id(self):
         my_uuid = '3056920043b943f1a1fb9e7974cbb997'
         norm_uuid = '30569200-43b9-43f1-a1fb-9e7974cbb997'
-        self.normal_action.package_create(
-            name='02345678-9abc-def0-1234-56789abcdef0', id=my_uuid, **self.complete_pkg)
+        pname = make_uuid()
+        self.normal_action.package_create(**dict(
+            self.complete_pkg, name=pname, id=my_uuid))
 
-        resp = self.action.package_show(id='02345678-9abc-def0-1234-56789abcdef0')
+        resp = self.action.package_show(id=pname)
         assert resp['id'] == norm_uuid
-        assert resp['name'] == '02345678-9abc-def0-1234-56789abcdef0'
+        assert resp['name'] == pname
 
         with pytest.raises(ValidationError) as ve:
-            self.sysadmin_action.package_create(
-                name='12345678-9abc-def0-1234-56789abcdef0',
-                id=my_uuid,
-                **self.complete_pkg)
+            self.sysadmin_action.package_create(**dict(
+                self.complete_pkg, name=make_uuid(), id=my_uuid))
         model.Session.rollback()
         err = ve.value.error_dict
         assert 'id' in err
         assert 'Dataset id already exists' in err['id'][0]
 
         with pytest.raises(ValidationError) as ve:
-            self.sysadmin_action.package_create(
-                id='my-custom-id',
-                **self.complete_pkg)
+            self.sysadmin_action.package_create(**dict(
+                self.complete_pkg, id='my-custom-id'))
         model.Session.rollback()
         err = ve.value.error_dict
         assert 'id' in err
         assert 'Badly formed hexadecimal UUID string' in err['id'][0]
 
     def test_raw_required(self):
-        raw_pkg = dict(self.complete_pkg)
+        raw_pkg = dict(**self.complete_pkg)
         del raw_pkg['title_translated']
 
         with pytest.raises(ValidationError) as ve:
@@ -225,15 +231,15 @@ class TestNAVLSchema(CanadaTestBase):
             assert err[k] == expected[k]
 
     def test_tag_extras_bug(self):
-        resp = self.normal_action.package_create(
-            **self.complete_pkg)
+        resp = self.normal_action.package_create(**self.complete_pkg)
 
         resp = self.action.package_show(id=resp['id'])
         assert 'subject' not in [e['key'] for e in resp.get('extras', [])]
 
     def test_keywords_with_apostrophe(self):
-        self.normal_action.package_create(
-            **dict(self.complete_pkg, keywords={'en': ['test'], 'fr': ["emissions de l'automobile"]}))
+        self.normal_action.package_create(**dict(
+            self.complete_pkg,
+            keywords={'en': ['test'], 'fr': ["emissions de l'automobile"]}))
 
     def test_invalid_resource_size(self):
         with pytest.raises(ValidationError) as ve:
@@ -256,7 +262,8 @@ class TestNAVLSchema(CanadaTestBase):
 
     def test_dont_copy_org_name(self):
         pkg = self.normal_action.package_create(**dict(
-            self.complete_pkg, org_title_at_publication={'en': 'a', 'fr': 'b'}))
+            self.complete_pkg,
+            org_title_at_publication={'en': 'a', 'fr': 'b'}))
 
         assert pkg['org_title_at_publication']['en'] == 'a'
         assert pkg['org_title_at_publication']['fr'] == 'b'
@@ -270,7 +277,7 @@ class TestNAVLSchema(CanadaTestBase):
         assert pkg['license_title'] == 'Open Government Licence - Canada'
 
     def test_portal_release_date(self):
-        release_pkg = dict(self.complete_pkg, portal_release_date='2012-01-01')
+        release_pkg = dict(**self.complete_pkg, portal_release_date='2012-01-01')
 
         with pytest.raises(ValidationError) as ve:
             self.normal_action.package_create(**release_pkg)
@@ -283,14 +290,14 @@ class TestNAVLSchema(CanadaTestBase):
         self.sysadmin_action.package_create(**release_pkg)
 
     def test_spatial(self):
-        spatial_pkg = dict(self.complete_pkg,
+        spatial_pkg = dict(**self.complete_pkg,
                            spatial='{"type": "Polygon", "coordinates": '
                                    '[[[-141.001333, 41.736231], [-141.001333, 82.514468], '
                                    '[-52.622540, 82.514468], [-52.622540, 41.736231], '
                                    '[-141.001333, 41.736231]]]}')
         self.normal_action.package_create(**spatial_pkg)
 
-        bad_spatial_pkg = dict(self.complete_pkg,
+        bad_spatial_pkg = dict(**self.complete_pkg,
                                spatial='{"type": "Line", "coordinates": '
                                        '[[[-141.001333, 41.736231], [-141.001333, 82.514468], '
                                        '[-52.622540, 82.514468], [-52.622540, 41.736231], '
@@ -302,7 +309,7 @@ class TestNAVLSchema(CanadaTestBase):
         assert 'spatial' in err
         assert 'Invalid GeoJSON' in err['spatial'][0]
 
-        bad_spatial_pkg2 = dict(self.complete_pkg, spatial='forty')
+        bad_spatial_pkg2 = dict(**self.complete_pkg, spatial='forty')
         with pytest.raises(ValidationError) as ve:
             self.normal_action.package_create(**bad_spatial_pkg2)
         model.Session.rollback()
@@ -310,7 +317,8 @@ class TestNAVLSchema(CanadaTestBase):
         assert 'spatial' in err
         assert 'Invalid GeoJSON' in err['spatial'][0]
 
-        bad_spatial_pkg3 = dict(self.complete_pkg, spatial='{"type": "Polygon", "coordinates": ''}')
+        bad_spatial_pkg3 = dict(**self.complete_pkg,
+                                spatial='{"type": "Polygon", "coordinates": ''}')
         with pytest.raises(ValidationError) as ve:
             self.normal_action.package_create(**bad_spatial_pkg3)
         model.Session.rollback()
@@ -318,7 +326,8 @@ class TestNAVLSchema(CanadaTestBase):
         assert 'spatial' in err
         assert 'Invalid GeoJSON' in err['spatial'][0]
 
-        bad_spatial_pkg4 = dict(self.complete_pkg, spatial='{"type": "Polygon", "coordinates": [1,2,3,4]}')
+        bad_spatial_pkg4 = dict(**self.complete_pkg,
+                                spatial='{"type": "Polygon", "coordinates": [1,2,3,4]}')
         with pytest.raises(ValidationError) as ve:
             self.normal_action.package_create(**bad_spatial_pkg4)
         model.Session.rollback()
@@ -328,12 +337,11 @@ class TestNAVLSchema(CanadaTestBase):
 
     def test_dont_change_portal_release_date(self):
         "normal users should not be able to reset the portal release date"
-        resp = self.sysadmin_action.package_create(
-            portal_release_date='2012-01-01',
-            **self.complete_pkg)
+        resp = self.sysadmin_action.package_create(**dict(
+            self.complete_pkg, portal_release_date='2012-01-01'))
 
         # silently ignore missing portal_release_date
-        self.normal_action.package_update(id=resp['id'], **self.complete_pkg)
+        self.normal_action.package_update(**dict(self.complete_pkg, id=resp['id']))
 
         resp2 = self.normal_action.package_show(id=resp['id'])
 
@@ -366,6 +374,7 @@ class TestNAVLSchema(CanadaTestBase):
         pkg = self.sysadmin_action.package_create(**self.complete_pkg)
 
         resource_data = {
+            'id': make_uuid(),
             'name_translated': {'en': 'Full text.', 'fr': 'Full text.'},
             'format': 'TXT',
             'url': 'http://www.annakarenina.com/download/',
@@ -390,8 +399,9 @@ class TestNAVLSchema(CanadaTestBase):
         """
         pkg = self.sysadmin_action.package_create(**self.complete_pkg)
 
-        # creating a resource WITH a format should use the supplied format
+        # creating a resource WITH a format will still try to guess format
         resource_data = {
+            'id': make_uuid(),
             'name_translated': {'en': 'Full text.', 'fr': 'Full text.'},
             'url': 'http://www.annakarenina.com/download/image.jpeg',
             'format': 'TXT',
@@ -404,10 +414,18 @@ class TestNAVLSchema(CanadaTestBase):
         res_dict = self.sysadmin_action.resource_create(**resource_data)
 
         assert 'format' in res_dict
+        assert res_dict['format'] == 'JPG'
+
+        # updating the resource with a new format should use that format
+
+        res_dict = self.sysadmin_action.resource_patch(id=res_dict['id'], format='TXT')
+
+        assert 'format' in res_dict
         assert res_dict['format'] == 'TXT'
 
         # creating a resource WITHOUT a format should guess the format
         resource_data = {
+            'id': make_uuid(),
             'name_translated': {'en': 'Full text.', 'fr': 'Full text.'},
             'url': 'http://www.annakarenina.com/download/image.jpeg',
             'size': 42,
@@ -459,6 +477,7 @@ class TestNAVLSchema(CanadaTestBase):
         pkg = self.sysadmin_action.package_create(**self.complete_pkg)
 
         resource_data = {
+            'id': make_uuid(),
             'name_translated': {'en': 'Full text.', 'fr': 'Full text.'},
             'format': 'TXT',
             'url': 'http://www.annakarenina.com/download/',

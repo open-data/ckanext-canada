@@ -86,7 +86,8 @@ class CanadaSecurityPlugin(CkanSecurityPlugin):
 
     # IMiddleware
     def make_middleware(self, app: CKANApp, config: 'CKANConfig') -> CKANApp:
-        return CSPNonceMiddleware(app, config)
+        return CSPNonceMiddleware(
+            app, config, getattr(app, 'original_flask_app', None))
 
     # IAuthenticator
     def abort(self, status_code: int, detail: str,
@@ -112,7 +113,9 @@ class CanadaSecurityPlugin(CkanSecurityPlugin):
 
 
 class CSPNonceMiddleware(object):
-    def __init__(self, app: Any, config: 'CKANConfig'):
+    def __init__(self, app: Any, config: 'CKANConfig',
+                 flask_app: Optional[Any] = None):
+        self.original_flask_app = flask_app or app
         self.config = config
         self.app = app
 

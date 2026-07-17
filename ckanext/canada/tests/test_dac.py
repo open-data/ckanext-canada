@@ -1,4 +1,8 @@
 # -*- coding: UTF-8 -*-
+import sys
+import os
+from importlib import util
+
 from ckanext.canada.tests import CanadaTestBase
 from ckanapi import LocalCKAN, ValidationError
 
@@ -7,6 +11,13 @@ from ckan import model
 from ckanext.canada.tests.factories import CanadaOrganization as Organization
 
 from ckanext.recombinant.tables import get_chromo
+
+
+filter_generic_path = os.path.join(os.path.dirname(str(__file__)), '../../../bin/filter/filter_modified_created.py')
+spec = util.spec_from_file_location("canada.bin.filters.generic", filter_generic_path)
+filter_generic = util.module_from_spec(spec)
+sys.modules["canada.bin.filters.generic"] = filter_generic
+spec.loader.exec_module(filter_generic)
 
 
 class TestDAC(CanadaTestBase):
@@ -26,12 +37,18 @@ class TestDAC(CanadaTestBase):
         self.resource_id = rval['resources'][0]['id']
 
     def test_example(self):
-        record = get_chromo('dac')['examples']['record']
+        """
+        Example data should load
+        """
+        record = get_chromo('dac')['examples']['record'].copy()
         self.lc.action.datastore_upsert(
             resource_id=self.resource_id,
             records=[record])
 
     def test_blank(self):
+        """
+        Should raise a Database key error
+        """
         with pytest.raises(ValidationError) as ve:
             self.lc.action.datastore_upsert(
                 resource_id=self.resource_id,
@@ -40,3 +57,109 @@ class TestDAC(CanadaTestBase):
         err = ve.value.error_dict
         assert 'key' in err
         assert 'reporting_period, line_number' in err['key'][0]
+
+    def test_required_fields(self):
+        """
+        Excluding required fields should raise an exception
+        """
+        chromo = get_chromo('dac')
+        record = chromo['examples']['record'].copy()
+
+        # FIXME: role does not have required trigger, or choices trigger
+        skips = ['role']
+
+        expected_required_fields = ['member_name', 'province',
+                                    'meeting_hours', 'other_hours',
+                                    'remuneration', 'travel_expenses',]
+
+        for field in chromo['fields']:
+            if field['datastore_id'] in skips:
+                continue
+            if field['datastore_id'] in chromo['datastore_primary_key']:
+                continue
+            if field.get('excel_required') or field.get('form_required'):
+                assert field['datastore_id'] in expected_required_fields
+                record[field['datastore_id']] = None
+
+        with pytest.raises(ValidationError) as ve:
+            self.lc.action.datastore_upsert(
+                resource_id=self.resource_id,
+                records=[record])
+        model.Session.rollback()
+        err = ve.value.error_dict
+        assert 'records' in err
+        for required_field in expected_required_fields:
+            assert required_field in err['records'][0]
+
+    def test_choice_fields(self):
+        """
+        Fields with choices should expect those values
+        """
+        chromo = get_chromo('dac')
+        record = chromo['examples']['record'].copy()
+
+        # FIXME: role does not have required trigger, or choices trigger
+        skips = ['role']
+
+        expected_choice_fields = ['reporting_period', 'province',]
+
+        for field in chromo['fields']:
+            if field['datastore_id'] in skips:
+                continue
+            if field.get('published_resource_computed_field'):
+                continue
+            if 'choices_file' in field or 'choices' in field:
+                assert field['datastore_id'] in expected_choice_fields
+                if field['datastore_type'] == '_text':
+                    record[field['datastore_id']] = ['zzz']
+                else:
+                    record[field['datastore_id']] = 'zzz'
+
+        with pytest.raises(ValidationError) as ve:
+            self.lc.action.datastore_upsert(
+                resource_id=self.resource_id,
+                records=[record])
+        model.Session.rollback()
+        err = ve.value.error_dict
+        assert 'records' in err
+        for expected_choice_field in expected_choice_fields:
+            assert expected_choice_field in err['records'][0]
+
+    def test_number_rounding(self):
+        """
+        Numbers should be rounded to 2 decimal points
+        """
+        record = get_chromo('dac')['examples']['record'].copy()
+
+        record['remuneration'] = 760.827294842
+        record['travel_expenses'] = 260.271628
+
+        self.lc.action.datastore_upsert(
+                resource_id=self.resource_id,
+                records=[record])
+
+        result = self.lc.action.datastore_search(resource_id=self.resource_id)
+        assert result['records'][0]['remuneration'] == 760.83
+        assert result['records'][0]['travel_expenses'] == 260.27
+
+    def test_filter_script(self):
+        """
+        Filter out default Registry fields.
+
+        NOTE: csv.DictReader treats every dict value as a string,
+              so we need to use Strings here. Empty strings ("") is None.
+
+        NOTE: the filter test returns a Dict, not a csv.DictWriter,
+              so we can assert on object types here.
+        """
+        record = get_chromo('dac')['examples']['record'].copy()
+
+        # filters out record_created, record_modified, user_modified
+        record['record_created'] = 'Not Blank'
+        record['record_modified'] = 'Not Blank'
+        record['user_modified'] = 'Not Blank'
+
+        test_record = filter_generic.test(dict(record))
+        assert 'record_created' not in test_record
+        assert 'record_modified' not in test_record
+        assert 'user_modified' not in test_record

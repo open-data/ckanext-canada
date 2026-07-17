@@ -43,7 +43,19 @@
 {% endif %}
 
 <section id="dt-preview">
-  <h2 id="prtable">{{_("Interactive Table")}}</h2>
+  <h2 id="prtable">{{_("Interactive Table (beta version)")}}</h2>
+  <div data-module="canada-user-opt-in-feature"
+       data-module-csrf_name="{{- g.csrf_field_name -}}"
+       data-module-csrf_value="{{- csrf_token() -}}"
+       data-module-user_id="{{ g.user }}"
+       data-module-feature_key="opt_in_features__pd_datatables"
+       data-module-feature_value=false
+       data-module-page_redirect="#prtable"
+       data-module-label="{{ _(
+            "The new table interface will become the default experience. Try the updated interface and share your <a href='mailto:%(email)s'>feedback</a> to help shape future improvements.",
+            email=h.support_email_address()
+        ) }}"
+       data-module-button_label="{{ _('Revert to older table interface') }}"></div>
   <div class="pd-datable-instructions">
     <details>
       <summary>{{ _('Keyboard controls') }}</summary>

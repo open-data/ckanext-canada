@@ -1,4 +1,7 @@
 # -*- coding: UTF-8 -*-
+import sys
+import os
+from importlib import util
 from ckanext.canada.tests import CanadaTestBase
 from ckanapi import LocalCKAN, ValidationError
 
@@ -7,6 +10,12 @@ from ckan import model
 from ckanext.canada.tests.factories import CanadaOrganization as Organization
 
 from ckanext.recombinant.tables import get_chromo
+
+filter_consultations_path = os.path.join(os.path.dirname(str(__file__)), '../../../bin/filter/filter_consultations.py')
+spec = util.spec_from_file_location("canada.bin.filters.consultations", filter_consultations_path)
+filter_consultations = util.module_from_spec(spec)
+sys.modules["canada.bin.filters.consultations"] = filter_consultations
+spec.loader.exec_module(filter_consultations)
 
 
 class TestConsultations(CanadaTestBase):
@@ -26,12 +35,34 @@ class TestConsultations(CanadaTestBase):
         self.resource_id = rval['resources'][0]['id']
 
     def test_example(self):
-        record = get_chromo('consultations')['examples']['record']
+        """
+        Example data should load
+        """
+        record = get_chromo('consultations')['examples']['record'].copy()
         self.lc.action.datastore_upsert(
             resource_id=self.resource_id,
             records=[record])
 
+    def test_primary_key_commas(self):
+        """
+        Commas in primary keys should error
+        """
+        record = get_chromo('consultations')['examples']['record'].copy()
+        record['registration_number'] = 'this,is,a,failure'
+        with pytest.raises(ValidationError) as ve:
+            self.lc.action.datastore_upsert(
+                resource_id=self.resource_id,
+                records=[record])
+        model.Session.rollback()
+        err = ve.value.error_dict
+        assert 'records' in err
+        assert 'registration_number' in err['records'][0]
+        assert err['records'][0]['registration_number'] == ['Comma is not allowed in Registration Number field']
+
     def test_blank(self):
+        """
+        Should raise a Database key error
+        """
         with pytest.raises(ValidationError) as ve:
             self.lc.action.datastore_upsert(
                 resource_id=self.resource_id,
@@ -40,6 +71,121 @@ class TestConsultations(CanadaTestBase):
         err = ve.value.error_dict
         assert 'key' in err
         assert 'registration_number' in err['key'][0]
+
+    def test_required_fields(self):
+        """
+        Excluding required fields should raise an exception
+        """
+        chromo = get_chromo('consultations')
+        record = chromo['examples']['record'].copy()
+
+        # FIXME: missing required trigger for status
+        # FIXME: missing required trigger for report_available_online
+        skips = ['status', 'report_available_online', ]
+
+        expected_required_fields = ['publishable', 'title_en', 'title_fr',
+                                    'start_date', 'end_date',
+                                    'profile_page_en', 'profile_page_fr',
+                                    'high_profile', ]
+        record['end_date'] = '2017-12-31'
+        record['high_profile'] = 'N'
+
+        for field in chromo['fields']:
+            if field['datastore_id'] in skips:
+                continue
+            if field['datastore_id'] in chromo['datastore_primary_key']:
+                continue
+            # bypass conditional required fields
+            if 'excel_required_formula' in field:
+                continue
+            if field.get('excel_required') or field.get('form_required'):
+                assert field['datastore_id'] in expected_required_fields
+                record[field['datastore_id']] = None
+
+        with pytest.raises(ValidationError) as ve:
+            self.lc.action.datastore_upsert(
+                resource_id=self.resource_id,
+                records=[record])
+        model.Session.rollback()
+        err = ve.value.error_dict
+        assert 'records' in err
+        for required_field in expected_required_fields:
+            assert required_field in err['records'][0]
+
+    def test_conditional_required_fields(self):
+        """
+        Excluding conditional required fields should raise an exception
+        """
+        chromo = get_chromo('consultations')
+        record = chromo['examples']['record'].copy()
+
+        # FIXME: missing required trigger for status
+        # FIXME: missing required trigger for report_available_online
+        skips = ['status', 'report_available_online', ]
+
+        required_fields = ['registration_number', 'publishable',
+                           'title_en', 'title_fr',
+                           'start_date', 'end_date',
+                           'profile_page_en', 'profile_page_fr',
+                           'high_profile', ]
+
+        expected_conditional_required_fields = ['subjects',
+                                                'description_en', 'description_fr',
+                                                'target_participants_and_audience', ]
+
+        if record['high_profile'] == 'Y':
+            expected_conditional_required_fields.append('rationale')
+            record['rationale'] = None
+
+        for field in chromo['fields']:
+            if field['datastore_id'] in skips:
+                continue
+            if field['datastore_id'] in required_fields:
+                continue
+            if field.get('excel_required') or field.get('form_required'):
+                assert field['datastore_id'] in expected_conditional_required_fields
+                record[field['datastore_id']] = None
+
+        with pytest.raises(ValidationError) as ve:
+            self.lc.action.datastore_upsert(
+                resource_id=self.resource_id,
+                records=[record])
+        model.Session.rollback()
+        err = ve.value.error_dict
+        assert 'records' in err
+        for required_field in expected_conditional_required_fields:
+            assert required_field in err['records'][0]
+
+    def test_choice_fields(self):
+        """
+        Fields with choices should expect those values
+        """
+        chromo = get_chromo('consultations')
+        record = chromo['examples']['record'].copy()
+
+        expected_choice_fields = ['publishable', 'partner_departments', 'subjects',
+                                  'target_participants_and_audience', 'status',
+                                  'report_available_online', 'high_profile', 'rationale', ]
+
+        for field in chromo['fields']:
+            if field.get('published_resource_computed_field'):
+                continue
+            if 'choices_file' in field or 'choices' in field:
+                assert field['datastore_id'] in expected_choice_fields
+                if field['datastore_type'] == '_text':
+                    record[field['datastore_id']] = ['zzz']
+                else:
+                    record[field['datastore_id']] = 'zzz'
+
+        with pytest.raises(ValidationError) as ve:
+            self.lc.action.datastore_upsert(
+                resource_id=self.resource_id,
+                records=[record])
+        model.Session.rollback()
+        err = ve.value.error_dict
+        assert 'records' in err
+        for expected_choice_field in expected_choice_fields:
+            assert expected_choice_field in err['records'][0]
 
     def test_multiple_errors(self):
         with pytest.raises(ValidationError) as ve:
@@ -87,3 +233,27 @@ class TestConsultations(CanadaTestBase):
         err = ve.value.error_dict
         assert 'records' in err
         assert 'status' in err['records'][0]
+
+    def test_filter_script(self):
+        """
+        Filter out default Registry fields.
+
+        NOTE: csv.DictReader treats every dict value as a string,
+              so we need to use Strings here. Empty strings ("") is None.
+
+        NOTE: the filter test returns a Dict, not a csv.DictWriter,
+              so we can assert on object types here.
+        """
+        record = get_chromo('consultations')['examples']['record'].copy()
+
+        # filters out publishable, record_created, record_modified, user_modified
+        record['publishable'] = 'Y'
+        record['record_created'] = 'Not Blank'
+        record['record_modified'] = 'Not Blank'
+        record['user_modified'] = 'Not Blank'
+
+        test_record = filter_consultations.test(dict(record))
+        assert 'publishable' not in test_record
+        assert 'record_created' not in test_record
+        assert 'record_modified' not in test_record
+        assert 'user_modified' not in test_record

@@ -75,7 +75,7 @@
             {% if 'tbs-sct' in orgs | map(attribute='name') | list %}
               {{ quick_link_pd('aistrategy') }}
             {% endif %}
-            {{ quick_link_pd('nap5') }}
+            {{ quick_link_pd('nap6') }}
           </ul>
         </section>
         <section id="ql-open-info">
@@ -87,6 +87,22 @@
               'fa fa-folder-open',
               _('Create Information Asset'),
               _('Add information about government programs, activities and publications.')
+            )}}
+            {% set new_aia_path = h.url_for('info_new', collection='aia') %}
+            {{ quick_link(
+              'new_aia',
+              new_aia_path,
+              'fa fa-upload',
+              _('Algorithmic Impact Assessment'),
+              _('Access, add or modify Algorithmic Impact Assessment.')
+            )}}
+            {% set new_accessibiliy_plans_path = h.url_for('info_new', collection='accessibiliy_plans') %}
+            {{ quick_link(
+              'new_accessibiliy_plans',
+              new_accessibiliy_plans_path,
+              'fa fa-upload',
+              _('Institutional Accessibility plans'),
+              _('Access, add or modify Institutional Accessibility plans.')
             )}}
           </ul>
         </section>
@@ -196,7 +212,8 @@
               </ul>
             <li>
 
-            {% if h.canada_check_access('98abeb62-7c76-4dfb-a134-1551f55ede55') %}
+            {% set user_org_names = orgs | map(attribute='name') | list %}
+            {% if ['tbs-sct', 'dnd-mdn'] | select('in', user_org_names) | list %}
               {{ quick_link_pd('adminaircraft') }}
             {% endif %}
 

@@ -387,6 +387,11 @@ button.dt-button, div.dt-button, a.dt-button {
 .label.lb-open-dialogue { float:right; border-color: #f08; background: #fff }
 .label.lb-open-info { float:right; border-color: #80f; background: #fff }
 .label.lb-pd { float:right; border-color: #44f; background: #fff }
+.lb-page-display{
+  font-size: 22px !important;
+  font-weight: 700 !important;
+  font-family: Lato, sans-serif !important;
+}
 
 a#edit-comment-body-0-format-help-about, button#edit-submit,button#edit-actions-submit  {
   width: auto;
@@ -1191,6 +1196,16 @@ ul.resource-list > li.resource-item span.format-label[data-format="wmv"]{
   transform: scale(0.53);
   margin: -14px 0 0 -14px;
 }
+ul.resource-list > li.resource-item span.format-label[data-format="md"],
+ul.resource-list > li.resource-item span.format-label[data-format="markdown"]{
+  background-image: url("/data/static/img/sprite-resource-additional-icons.png");
+  background-repeat: no-repeat;
+  width: 60px;
+  height: 65px;
+  background-position: -320px -220px;
+  transform: scale(0.53);
+  margin: -14px 0 0 -14px;
+}
 /*############################
 ##            END           ##
 ##  Custom Resource Sprites ##
@@ -1688,6 +1703,23 @@ body #timeout > .modal-dialog{
     width: 80% !important;
   }
 }
+body .modal.canada-resource-view-embed .modal-dialog{
+  display: inline-block;
+  text-align: left;
+  vertical-align: middle;
+  position: absolute;
+  top: 20%;
+  left: 50%;
+  transform: translate(-50%, 0);
+  max-width: 80%;
+}
+@media all and (max-width: 768px){
+  body .modal.canada-resource-view-embed .modal-dialog{
+    min-width: 80%;
+    max-width: 80%;
+    width: 80%;
+  }
+}
 /* BS4+ Fix. TODO: remove after upgrade to BS4+ */
 body .modal .modal-dialog .modal-content button.btn-close{
   background-color: transparent;
@@ -1806,6 +1838,16 @@ footer#wb-info{
   border: none !important;
   background: #f6f6f6 !important;
   transition-duration: 0.325s !important;
+}
+
+.canada-action-toolbar .content_action a.btn-success{
+  background-color: #1b6c1c !important;
+}
+
+.canada-action-toolbar .content_action a.btn-success:hover,
+.canada-action-toolbar .content_action a.btn-success:active,
+.canada-action-toolbar .content_action a.btn-success:focus{
+  background-color: #114311 !important;
 }
 
 .canada-action-toolbar header .content_action a:not(:last-of-type){
@@ -2088,4 +2130,31 @@ body select[data-field-select2="True"]{
   font-weight: 600 !important;
   font-size: 32px !important;
   color: #38414d !important;
+}
+
+.canada-resource-search-wrapper #dataset-resource-search{
+  display: flex;
+  width: auto;
+}
+
+.canada-resource-search-wrapper input#resource_query{
+  min-width: 40%;
+  border-radius: 3px 0 0 3px;
+}
+
+.canada-resource-search-wrapper input#resource_query,
+.canada-resource-search-wrapper span.input-group-btn{
+  display: inline-block;
+}
+
+span.resource-heading-text mark.highlight{
+  padding: 0 !important;
+  margin: 0 !important;
+  border: none !important;
+  outline: none !important;
+}
+
+.dataset-resource-pager li.active a{
+  pointer-events: none !important;
+  cursor: not-allowed;
 }

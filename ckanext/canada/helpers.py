@@ -51,7 +51,8 @@ PORTAL_URL_OPTION = 'canada.portal_url'
 PORTAL_URL_DEFAULT_EN = 'https://open.canada.ca'
 PORTAL_URL_DEFAULT_FR = 'https://ouvert.canada.ca'
 DATAPREVIEW_MAX = 500
-CDTS_VERSION = config.get('ckanext.canada.cdts_version', 'v5_0_1')
+# update SHA384 integrity in template when changing CDTS_VERSION
+CDTS_VERSION = 'v5_0_5'
 CDTS_URI = 'https://www.canada.ca/etc/designs/canada/cdts/gcweb'
 GEO_MAP_TYPE_OPTION = 'wet_theme.geo_map_type'
 GEO_MAP_TYPE_DEFAULT = 'static'
@@ -530,8 +531,13 @@ def get_pd_datatable(resource_name: str,
                         for fk_ci, fk_cc in enumerate(fk['child_columns']))
 
     # TODO: DEPRECATED: REMOVE AFTER FULL PD DATATABLES QA
-    snippet = 'pd_datatable.html' if config.get(
-        'ckanext.canada.enable_pd_datatable_editor') else 'pd_datatable_depr.html'
+    try:
+        user_dict = get_action('user_show')({'ignore_auth': True}, {'id': g.user})
+    except (ObjectNotFound, RuntimeError):
+        user_dict = {}
+    enable_new_template = user_dict.get('opt_in_features__pd_datatables', config.get(
+        'ckanext.canada.enable_pd_datatable_editor'))
+    snippet = 'pd_datatable.html' if enable_new_template else 'pd_datatable_depr.html'
 
     return h.snippet('snippets/%s' % snippet,
                      resource_name=resource_name,
@@ -903,7 +909,7 @@ def fgp_viewer_url(package: Dict[str, Any]) -> Optional[str]:
         else:
             openmap_uri = 'openmap'
 
-        return h.adv_search_url() + '/' + openmap_uri + '/' + package.get('id')
+        return '/' + openmap_uri + '/' + h.lang() + '.html#' + package.get('id')
 
 
 def date_field(field: str, pkg: Dict[str, Any]) -> Any:
@@ -1172,3 +1178,8 @@ def mail_to_with_params(email_address: str, name: str,
 
 def get_inline_script_nonce() -> str:
     return str(request.environ.get('CSP_NONCE', ''))
+
+
+# type_ignore_reason: incomplete typing
+def get_allowed_frame_hosts() -> Optional[list]:  # type: ignore
+    return config.get('ckanext.canada.allowed_frame_hosts')
