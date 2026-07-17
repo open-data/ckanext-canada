@@ -152,6 +152,7 @@ jobs:
           for dir in /srv/app/src/*; do
             srcName=$(echo "$dir" | awk -F'/' '{print $NF}');
             if [[ -d "$dir/.git"  ]]; then
+                DO_PIP_REINSTALL='false';
                 printf "\n${srcName}: Checking for updates..."
                 cd $dir;
                 if jq -e --arg name "$srcName" '.repositories | has($name)' "$CONFIG" > /dev/null; then
@@ -170,6 +171,7 @@ jobs:
                       "$CONFIG"
                     );
                   printf "\n    ${srcName}: ${CURRENT_BRANCH} configured to use branch ${current_branch}...";
+                  DO_PIP_REINSTALL='true';
                 else
                   printf "\n    ${srcName}: Using default/current branch..."
                   current_branch=$(git rev-parse --abbrev-ref HEAD);
@@ -200,14 +202,18 @@ jobs:
                   git pull --ff-only || true
                   reslog=$(git log HEAD..origin/$current_branch --oneline);
                 fi;
-                printf "\n    ${srcName}: git info";
+                printf "\n    ${srcName}: git info\n";
+                printf "\n";
                 git branch --show-current;
+                printf "\n";
                 git rev-parse HEAD;
+                printf "\n";
                 git log -1 --oneline;
-                printf "\n    ${srcName}: pip info";
+                printf "\n";
+                printf "\n    ${srcName}: pip info\n";
                 pip show ${srcName};
-                if [[ "${reslog}" == "" ]]; then
-                  printf "\n${srcName}: Up to date. Skipping..."
+                if [[ "${reslog}" == "" && "${DO_PIP_REINSTALL}" == "false" ]]; then
+                  printf "${srcName}: Up to date. Skipping..."
                 else
                     git pull --ff-only || true;
                     printf "\n${srcName}: Pulled updated code. Re-initializing in python environment..."
