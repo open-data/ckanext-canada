@@ -142,6 +142,22 @@ def update_config(config: 'CKANConfig'):
         'deleted resource view': 'package_id_exists',
     })
 
+    # NOTE: our ckan plugin stack relies on various config options to be present
+    assert 'ckan.locale_default' in config
+    assert 'ckan.locales_offered' in config
+    assert 'ckanext.canada.portal_url' in config
+    assert 'ckanext.language_domains.domain_map' in config
+    assert 'ckanext.language_domains.root_paths' in config
+    assert 'ckanext.security.min_password_length' in config
+    assert 'ckanext.security.nzism_compliant_passwords' in config
+
+    # force some settings
+    config['ckan.csrf_protection.ignore_extensions'] = False
+    config['ckan.feeds.authority_name'] = config['ckan.site_url']
+    config['ckan.feeds.date'] = '2014-01-01'
+    config['ckan.feeds.author_name'] = 'Open Government Canada'
+    config['ckan.feeds.author_link'] = 'https://open.canada.ca'
+
 
 def configure():
     """
