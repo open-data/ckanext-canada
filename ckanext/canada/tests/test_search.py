@@ -246,13 +246,6 @@ class TestPortalSearch(CanadaTestBase):
             q='*:*',
             include_private=self.include_private)
 
-        print('    ')
-        print('DEBUGGING::')
-        print('    ')
-        print(response)
-        print('    ')
-        assert False
-
         assert 'count' in response
         assert response['count'] == 6
 

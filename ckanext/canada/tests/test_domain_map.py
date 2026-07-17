@@ -1111,6 +1111,7 @@ class TestDomainMap(CanadaTestBase):
         print('DEBUGGING::')
         print('    ')
         print(job.args[0]['metadata']['original_url'])
+        print(task)
         print('    ')
         assert False
 
@@ -1397,6 +1398,7 @@ class TestDomainMap(CanadaTestBase):
         print('DEBUGGING::')
         print('    ')
         print(job.args[0]['metadata']['original_url'])
+        print(task)
         print('    ')
         assert False
 
