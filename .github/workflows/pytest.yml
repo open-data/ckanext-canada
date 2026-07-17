@@ -135,37 +135,88 @@ jobs:
           touch /srv/app/junit/result/test-summary.md
       - name: Check Source Dependency Versions
         run: |
+          cd /srv/app/src/ckanext-canada
+          BRANCH="${{ github.head_ref || github.ref_name }}"
+          git fetch origin
+          if git show-ref --verify --quiet "refs/heads/$BRANCH"; then
+            git checkout "$BRANCH"
+          else
+            git checkout -b "$BRANCH" "origin/$BRANCH"
+          fi
+          git fetch
+          git pull --ff-only || true
+          CONFIG="/srv/app/src/ckanext-canada/.github/test-dependencies.json";
+          cd /srv/app;
           source /srv/app/venv/bin/activate
+          CURRENT_BRANCH="${GITHUB_HEAD_REF:-${GITHUB_REF_NAME}}";
           for dir in /srv/app/src/*; do
             srcName=$(echo "$dir" | awk -F'/' '{print $NF}');
             if [[ -d "$dir/.git"  ]]; then
                 printf "\n${srcName}: Checking for updates..."
                 cd $dir;
-                current_branch=$(git rev-parse --abbrev-ref HEAD);
-                if [[ "$srcName" == "ckan" ]]; then
-                    git fetch canada;
-                    reslog=$(git log HEAD..canada/$current_branch --oneline);
+                if jq -e --arg name "$srcName" '.repositories | has($name)' "$CONFIG" > /dev/null; then
+                  printf "\n    ${srcName}: Checking configuration from ${CONFIG}..."
+                  current_branch=$(
+                    jq -r \
+                      --arg repo "$srcName" \
+                      --arg current "$CURRENT_BRANCH" \
+                      '
+                      .repositories[$repo].branches as $b
+                      | $b[$current]
+                        // (if $current | startswith("feature/") then $b["feature/*"] else null end)
+                        // (if $current | startswith("fix/") then $b["fix/*"] else null end)
+                        // $b["*"]
+                      ' \
+                      "$CONFIG"
+                    );
+                  printf "\n    ${srcName}: ${CURRENT_BRANCH} configured to use branch ${current_branch}...";
                 else
-                    git fetch origin;
-                    reslog=$(git log HEAD..origin/$current_branch --oneline);
+                  printf "\n    ${srcName}: Using default/current branch..."
+                  current_branch=$(git rev-parse --abbrev-ref HEAD);
+                  printf "\n    ${srcName}: using branch ${current_branch}...";
+                fi;
+                if [[ -z "$current_branch" || "$current_branch" == "null" ]]; then
+                  current_branch=$(git rev-parse --abbrev-ref HEAD);
+                  printf "\n    ${srcName}: unable to determine branch using current branch ${current_branch}..."
+                fi
+                if [[ "$srcName" == "ckan" ]]; then
+                  git fetch canada;
+                  if git show-ref --verify --quiet "refs/heads/$current_branch"; then
+                    git checkout "$current_branch"
+                  else
+                    git checkout -b "$current_branch" "canada/$current_branch"
+                  fi
+                  git fetch
+                  git pull --ff-only || true
+                  reslog=$(git log HEAD..canada/$current_branch --oneline);
+                else
+                  git fetch origin;
+                  if git show-ref --verify --quiet "refs/heads/$current_branch"; then
+                    git checkout "$current_branch"
+                  else
+                    git checkout -b "$current_branch" "origin/$current_branch"
+                  fi
+                  git fetch
+                  git pull --ff-only || true
+                  reslog=$(git log HEAD..origin/$current_branch --oneline);
                 fi;
                 if [[ "${reslog}" == "" ]]; then
-                    printf "\n${srcName}: Up to date. Skipping..."
+                  printf "\n${srcName}: Up to date. Skipping..."
                 else
-                    git pull || true;
+                    git pull --ff-only || true;
                     printf "\n${srcName}: Pulled updated code. Re-initializing in python environment..."
                     cd /srv/app;
                     if [[ -f "$dir/requirements.txt" ]]; then
-                        pip install -r $dir/requirements.txt || true;
+                      pip install -r $dir/requirements.txt || true;
                     fi;
                     if [[ -f "$dir/dev-requirements.txt" ]]; then
-                        pip install -r $dir/dev-requirements.txt || true;
+                      pip install -r $dir/dev-requirements.txt || true;
                     fi;
                     if [[ -f "$dir/test-requirements.txt" ]]; then
-                        pip install -r $dir/test-requirements.txt || true;
+                      pip install -r $dir/test-requirements.txt || true;
                     fi;
                     if [[ -f "$dir/setup.py" ]]; then
-                        python $dir/setup.py develop || true;
+                      python $dir/setup.py develop || true;
                     fi;
                 fi;
             else
@@ -176,12 +227,15 @@ jobs:
       - name: Checkout Repository (${{ github.head_ref || github.ref_name }})
         run: |
           cd /srv/app/src/ckanext-canada
+          BRANCH="${{ github.head_ref || github.ref_name }}"
           git fetch origin
-          if [[ "${{ github.head_ref || github.ref_name }}" != "master" ]]; then
-            git checkout -b ${{ github.head_ref || github.ref_name }} origin/${{ github.head_ref || github.ref_name }}
-          fi;
+          if git show-ref --verify --quiet "refs/heads/$BRANCH"; then
+            git checkout "$BRANCH"
+          else
+            git checkout -b "$BRANCH" "origin/$BRANCH"
+          fi
           git fetch
-          git pull
+          git pull --ff-only || true
           source /srv/app/venv/bin/activate
           pip install -e .
           pip install -r requirements.txt
@@ -202,13 +256,17 @@ jobs:
           python3 setup.py develop
           pip install setuptools==70.0.0
           cd /srv/app
-          . /srv/app/src/ckanext-canada/links/ckan/bin/postgres_init/1_create_ckan_db.sh
-          . /srv/app/src/ckanext-canada/links/ckan/bin/postgres_init/2_create_ckan_datastore_db.sh
+          . /srv/app/src/ckan/bin/postgres_init/1_create_ckan_db.sh
+          . /srv/app/src/ckan/bin/postgres_init/2_create_ckan_datastore_db.sh
           ckan -c /srv/app/src/ckanext-canada/test-core.ini db init
           ckan -c /srv/app/src/ckanext-canada/test-core.ini datastore set-permissions | psql -U postgres --set ON_ERROR_STOP=1
+          ckan -c /srv/app/src/ckanext-canada/test-core.ini xloader db-init
+          ckan -c /srv/app/src/ckanext-canada/test-core.ini validation init-db
+          ckan -c /srv/app/src/ckanext-canada/test-core.ini security migrate
           ckan -c /srv/app/src/ckanext-canada/test-core.ini canada update-triggers
           ckan -c /srv/app/src/ckanext-canada/test-core.ini recombinant create-triggers -a
           ckan -c /srv/app/src/ckanext-canada/test-core.ini db upgrade
+          ckan -c /srv/app/src/ckanext-canada/test-core.ini db pending-migrations --apply
           ckan -c /srv/app/src/ckanext-canada/test-core.ini db pending-migrations --apply
       - name: Download Test Durations
         if: needs.define-matrix.outputs.restored == 'true'
@@ -319,7 +377,7 @@ jobs:
           for dir in /srv/app/src/*; do
             srcName=$(echo "$dir" | awk -F'/' '{print $NF}');
             if [[ -d "$dir/.git"  ]]; then
-                printf "\n${srcName}: Checking for updates..."
+                printf "\n\n${srcName}: Checking for updates..."
                 cd $dir;
                 current_branch=$(git rev-parse --abbrev-ref HEAD);
                 if [[ "$srcName" == "ckan" ]]; then
@@ -330,10 +388,10 @@ jobs:
                     reslog=$(git log HEAD..origin/$current_branch --oneline);
                 fi;
                 if [[ "${reslog}" == "" ]]; then
-                    printf "\n${srcName}: Up to date. Skipping..."
+                    printf "    ${srcName}: Up to date. Skipping..."
                 else
-                    git pull || true;
-                    printf "\n${srcName}: Pulled updated code. Re-initializing in python environment..."
+                    git pull --ff-only || true;
+                    printf "\n    ${srcName}: Pulled updated code. Re-initializing in python environment..."
                     cd /srv/app;
                     if [[ -f "$dir/requirements.txt" ]]; then
                         pip install -r $dir/requirements.txt || true;
@@ -361,7 +419,7 @@ jobs:
             git checkout -b ${{ github.head_ref || github.ref_name }} origin/${{ github.head_ref || github.ref_name }}
           fi;
           git fetch
-          git pull
+          git pull --ff-only || true
           source /srv/app/venv/bin/activate
           pip install -e .
           pip install -r requirements.txt

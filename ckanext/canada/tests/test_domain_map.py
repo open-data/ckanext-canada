@@ -139,7 +139,8 @@ class TestDomainMap(CanadaTestBase):
                            status=200,
                            follow_redirects=False)  # no need for redirects
 
-        assert 'Search Records' in response.body
+        # test for both in the case that the i18n catalogues are built
+        assert 'Search Records' in response.body or 'Search Datasets' in response.body
         assert '/fr/dataset/' in response.body
 
         # french request
@@ -149,8 +150,8 @@ class TestDomainMap(CanadaTestBase):
                            status=200,
                            follow_redirects=False)  # no need for redirects
 
-        # test for both in the case that the i18n catalogues are not built
-        assert 'Search Records' in response.body or 'Recherche de dossiers' in response.body
+        # test for both in the case that the i18n catalogues are built
+        assert 'Search Records' in response.body or 'Search Datasets' in response.body or 'Recherche de dossiers' in response.body
         assert '/en/dataset/' in response.body
 
     @mock.patch.object(h, 'is_registry_domain', mock_is_portal_domain)
@@ -175,7 +176,7 @@ class TestDomainMap(CanadaTestBase):
                            status=200,
                            follow_redirects=False)  # no need for redirects
 
-        # test for both in the case that the i18n catalogues are not built
+        # test for both in the case that the i18n catalogues are built
         assert 'Organizations' in response.body or 'Organisations' in response.body
         assert self.test_domain_map['portal']['en'] + '/data/en/organization' in response.body
 
@@ -561,10 +562,9 @@ class TestDomainMap(CanadaTestBase):
         offset = '/fr/organization'
         response = app.get(offset, extra_environ=self.extra_environ_tester_registry,
                            environ_overrides=self.environ_overrides_tester,
-                           status=200,
-                           follow_redirects=True)  # no need for redirects
+                           follow_redirects=True)
 
-        # test for both in the case that the i18n catalogues are not built
+        # test for both in the case that the i18n catalogues are built
         assert 'Organizations' in response.body or 'Organisations' in response.body
         assert '/fr/base/css/main.css' in response.body or re.search(r'/fr/webassets/base/.{8}_main.css', response.body)
         assert '/fr/base/vendor/jquery.js' in response.body or re.search(r'/fr/webassets/vendor/.{8}_jquery.js', response.body)
@@ -590,10 +590,9 @@ class TestDomainMap(CanadaTestBase):
         offset = '/fr/organization'
         response = app.get(offset, extra_environ=self.extra_environ_tester_portal_fr,
                            environ_overrides=self.environ_overrides_tester,
-                           status=200,
-                           follow_redirects=True)  # no need for redirects
+                           follow_redirects=True)
 
-        # test for both in the case that the i18n catalogues are not built
+        # test for both in the case that the i18n catalogues are built
         assert 'Organizations' in response.body or 'Organisations' in response.body
         assert '/data/fr/base/css/main.css' in response.body or re.search(r'/data/fr/webassets/base/.{8}_main.css', response.body)
         assert '/data/fr/base/vendor/jquery.js' in response.body or re.search(r'/data/fr/webassets/vendor/.{8}_jquery.js', response.body)
@@ -1107,6 +1106,14 @@ class TestDomainMap(CanadaTestBase):
         assert job.meta['title'] == 'Upload to DataStore'
         assert job.args[0]['metadata']['ckan_url'] is None
         assert job.args[0]['metadata']['resource_id'] == pkg_dict['resources'][0]['id']
+
+        print('    ')
+        print('DEBUGGING::')
+        print('    ')
+        print(job.args[0]['metadata']['original_url'])
+        print('    ')
+        assert False
+
         assert job.args[0]['metadata']['original_url'] == '/dataset/%s/resource/%s/download/sample.csv' % (
             pkg_id, pkg_dict['resources'][0]['id'])
 
@@ -1385,6 +1392,14 @@ class TestDomainMap(CanadaTestBase):
         assert job.meta['title'] == 'Upload to DataStore'
         assert job.args[0]['metadata']['ckan_url'] is None
         assert job.args[0]['metadata']['resource_id'] == pkg_dict['resources'][0]['id']
+
+        print('    ')
+        print('DEBUGGING::')
+        print('    ')
+        print(job.args[0]['metadata']['original_url'])
+        print('    ')
+        assert False
+
         assert job.args[0]['metadata']['original_url'] == '/dataset/%s/resource/%s/download/sample.csv' % (
             pkg_id, pkg_dict['resources'][0]['id'])
 

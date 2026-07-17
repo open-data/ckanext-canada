@@ -1,5 +1,9 @@
 # -*- coding: UTF-8 -*-
-from ckanext.canada.tests import CanadaTestBase, mock_is_registry_domain
+from ckanext.canada.tests import (
+    CanadaTestBase,
+    mock_is_registry_domain,
+    get_test_domains
+)
 from ckan.plugins.toolkit import h
 from ckanapi import LocalCKAN
 from ckan.model.types import make_uuid
@@ -19,8 +23,10 @@ class TestPackageAlerts(CanadaTestBase):
         """
         super(TestPackageAlerts, self).setup_class()
 
+        test_domain_map = get_test_domains()
         self.sysadmin = Sysadmin()
-        self.extra_environ_tester = {'REMOTE_USER': self.sysadmin['name'].encode('ascii')}
+        self.extra_environ_tester = {'REMOTE_USER': self.sysadmin['name'].encode('ascii'),
+                                     'HTTP_HOST': test_domain_map['registry']['en']}
         self.org = Organization()
         self.sysadmin_action = LocalCKAN(
             username=self.sysadmin['name']).action

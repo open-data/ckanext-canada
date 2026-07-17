@@ -1,5 +1,9 @@
 # -*- coding: UTF-8 -*-
-from ckanext.canada.tests import CanadaTestBase, mock_is_registry_domain
+from ckanext.canada.tests import (
+    CanadaTestBase,
+    mock_is_registry_domain,
+    get_test_domains
+)
 import pytest
 import mock
 from io import BytesIO
@@ -43,8 +47,11 @@ class TestPackageWebForms(CanadaTestBase):
         Setup any state specific to the execution of the given class.
         """
         super(TestPackageWebForms, self).setup_class()
+
+        test_domain_map = get_test_domains()
         self.sysadmin = Sysadmin()
-        self.extra_environ_tester = {'Authorization': self.sysadmin['token']}
+        self.extra_environ_tester = {'Authorization': self.sysadmin['token'],
+                                     'HTTP_HOST': test_domain_map['registry']['en']}
         self.environ_overrides_tester = {'REMOTE_USER': self.sysadmin['name'].encode('ascii')}
         self.org = Organization(users=[{
             'name': self.sysadmin['name'],
@@ -204,7 +211,10 @@ class TestNewUserWebForms(CanadaTestBase):
         Setup any state specific to the execution of the given class.
         """
         super(TestNewUserWebForms, self).setup_class()
-        self.extra_environ_tester = {'Authorization': str(u"")}
+
+        test_domain_map = get_test_domains()
+        self.extra_environ_tester = {'Authorization': str(u""),
+                                     'HTTP_HOST': test_domain_map['registry']['en']}
         self.environ_overrides_tester = {'REMOTE_USER': str(u"")}
         self.org = Organization()
 
@@ -229,12 +239,13 @@ class TestNewUserWebForms(CanadaTestBase):
         new_user = lc.action.user_show(name='newusername')
         api_token = APIToken(user=new_user['id'])
         new_user['token'] = api_token['token']
-        self.extra_environ_tester = {'Authorization': new_user['token']}
-        self.environ_overrides_tester = {'REMOTE_USER': new_user['name'].encode('ascii')}
+        _extra_environ_tester = {'Authorization': new_user['token'],
+                                 'HTTP_HOST': self.extra_environ_tester['HTTP_HOST']}
+        _environ_overrides_tester = {'REMOTE_USER': new_user['name'].encode('ascii')}
 
         offset, _host = get_relative_offset_from_response(response)
-        response = app.get(offset, extra_environ=self.extra_environ_tester,
-                           environ_overrides=self.environ_overrides_tester,
+        response = app.get(offset, extra_environ=_extra_environ_tester,
+                           environ_overrides=_environ_overrides_tester,
                            follow_redirects=True)  # expecting redirect
 
         assert 'Account Created' in response.body
@@ -287,14 +298,19 @@ class TestRecombinantWebForms(CanadaTestBase):
         Setup any state specific to the execution of the given class.
         """
         super(TestRecombinantWebForms, self).setup_class()
+        test_domain_map = get_test_domains()
+
         member = User()
         editor = User()
         sysadmin = Sysadmin()
-        self.extra_environ_member = {'Authorization': member['token']}
+        self.extra_environ_member = {'Authorization': member['token'],
+                                     'HTTP_HOST': test_domain_map['registry']['en']}
         self.environ_overrides_member = {'REMOTE_USER': member['name'].encode('ascii')}
-        self.extra_environ_editor = {'Authorization': editor['token']}
+        self.extra_environ_editor = {'Authorization': editor['token'],
+                                     'HTTP_HOST': test_domain_map['registry']['en']}
         self.environ_overrides_editor = {'REMOTE_USER': editor['name'].encode('ascii')}
-        self.extra_environ_system = {'Authorization': sysadmin['token']}
+        self.extra_environ_system = {'Authorization': sysadmin['token'],
+                                     'HTTP_HOST': test_domain_map['registry']['en']}
         self.environ_overrides_system = {'REMOTE_USER': sysadmin['name'].encode('ascii')}
         self.org = Organization(users=[{
             'name': member['name'],
