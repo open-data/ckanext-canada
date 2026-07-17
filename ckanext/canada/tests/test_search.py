@@ -232,13 +232,6 @@ class TestPortalSearch(CanadaTestBase):
             fl='id',
             include_private=True)
 
-        print('    ')
-        print('DEBUGGING::')
-        print('    ')
-        print(datasets)
-        print('    ')
-        assert False
-
         for dataset in datasets['results']:
             try:
                 self.lc.action.package_delete(id=dataset['id'])
@@ -252,6 +245,13 @@ class TestPortalSearch(CanadaTestBase):
         response = self.lc.action.package_search(
             q='*:*',
             include_private=self.include_private)
+
+        print('    ')
+        print('DEBUGGING::')
+        print('    ')
+        print(response)
+        print('    ')
+        assert False
 
         assert 'count' in response
         assert response['count'] == 6
