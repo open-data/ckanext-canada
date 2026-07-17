@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 from ckanext.canada.tests import CanadaTestBase, mock_is_portal_domain
 from ckan.plugins.toolkit import h
-from ckanapi import LocalCKAN
+from ckanapi import LocalCKAN, NotFound
 
 import mock
 
@@ -36,6 +36,20 @@ class TestRegistrySearch(CanadaTestBase):
         self.user_lc = LocalCKAN(username=user['name'])
         self.editor_lc = LocalCKAN(username=editor['name'])
         self.system_lc = LocalCKAN(username=sysadmin['name'])
+        #
+        # pre-delete any packages as we are going to be
+        # asserting package counts in this test class
+        #
+        datasets = self.system_lc.action.package_search(
+            q='*:*',
+            fl='id',
+            include_private=True)
+
+        for dataset in datasets['results']:
+            try:
+                self.system_lc.action.package_delete(id=dataset['id'])
+            except NotFound:
+                pass
         #
         # Datasets 0, 1, 2, and 3
         # 1 & 3 will be ready to publish
@@ -91,7 +105,10 @@ class TestRegistrySearch(CanadaTestBase):
             include_private=True)
 
         for dataset in datasets['results']:
-            self.system_lc.action.package_delete(id=dataset['id'])
+            try:
+                self.system_lc.action.package_delete(id=dataset['id'])
+            except NotFound:
+                pass
 
         super(TestRegistrySearch, self).teardown_class()
 
@@ -156,6 +173,21 @@ class TestPortalSearch(CanadaTestBase):
         self.include_private = False
         self.org = Organization()
         self.lc = LocalCKAN()
+        #
+        # pre-delete any packages as we are going to be
+        # asserting package counts in this test class
+        #
+        datasets = self.lc.action.package_search(
+            q='*:*',
+            fl='id',
+            include_private=True)
+
+        for dataset in datasets['results']:
+            try:
+                self.lc.action.package_delete(id=dataset['id'])
+            except NotFound:
+                pass
+
         for i in range(0, 4):  # 0-3
             Dataset(
                 owner_org=self.org['id'],
@@ -201,7 +233,10 @@ class TestPortalSearch(CanadaTestBase):
             include_private=True)
 
         for dataset in datasets['results']:
-            self.lc.action.package_delete(id=dataset['id'])
+            try:
+                self.lc.action.package_delete(id=dataset['id'])
+            except NotFound:
+                pass
 
         super(TestPortalSearch, self).teardown_class()
 
@@ -210,6 +245,13 @@ class TestPortalSearch(CanadaTestBase):
         response = self.lc.action.package_search(
             q='*:*',
             include_private=self.include_private)
+
+        print('    ')
+        print('DEBUGGING::')
+        print('    ')
+        print(response)
+        print('    ')
+        assert False
 
         assert 'count' in response
         assert response['count'] == 6
