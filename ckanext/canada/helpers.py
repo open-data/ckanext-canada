@@ -482,6 +482,9 @@ def get_pd_datatable(resource_name: str,
     activity_priority = 1
     fields = []
     fids = []
+    if chromo['edit_using__id']:
+        fields.append({'type': 'int', 'id': '_id', 'label': 'open_canada_id', 'priority': 0})
+        fids.append('_id')
     for f in chromo['fields']:
         if f.get('published_resource_computed_field'):
             continue

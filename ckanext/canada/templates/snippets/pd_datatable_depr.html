@@ -157,6 +157,7 @@
         {% if chromo.edit_form and can_edit %}
           {"className": "bg-info", "orderable": false, "targets": "no-sort"},
         {% endif %}
+        {% if chromo.edit_using__id %}null,{% endif %}
         {% for f in chromo.fields %}
           {% if not f.get('published_resource_computed_field', false) %}
             {{- "null" if 'preview_class' not in f else '{"className":"' | safe ~ f['preview_class'] ~ '"}' | safe }}
