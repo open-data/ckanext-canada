@@ -189,10 +189,10 @@
             }));
             form.append($('<input>').attr({
               type: 'hidden',
-              value: {{primary_keys}},
+              value: {{edit_keys}},
               name: 'key_indices'
             }));
-            var pk_cols = {{primary_keys}}.map(function(value){
+            var pk_cols = {{edit_keys}}.map(function(value){
               return value + {{offset}};
             });
             let rows = dt.rows( { selected: true } );

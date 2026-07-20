@@ -482,7 +482,7 @@ def get_pd_datatable(resource_name: str,
     activity_priority = 1
     fields = []
     fids = []
-    if chromo['edit_using__id']:
+    if chromo.get('edit_using__id'):
         fields.append({'type': 'int', 'id': '_id', 'label': 'open_canada_id', 'priority': 0})
         fids.append('_id')
     for f in chromo['fields']:
@@ -505,6 +505,10 @@ def get_pd_datatable(resource_name: str,
         fids.append(f['datastore_id'])
 
     pkids = [fids.index(k) for k in aslist(chromo['datastore_primary_key'])]
+    if chromo.get('edit_using__id'):
+        ekids = [0]
+    else:
+        ekids = pkids
 
     fkids = {}
     ds_info = get_action('datastore_info')(
@@ -542,6 +546,7 @@ def get_pd_datatable(resource_name: str,
                      resource_id=resource_id,
                      owner_org=owner_org,
                      primary_keys=pkids,
+                     edit_keys=ekids,
                      foreign_keys=fkids,
                      dataset_type=dataset_type,
                      ds_fields=fields)
