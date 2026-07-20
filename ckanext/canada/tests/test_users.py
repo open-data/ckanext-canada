@@ -30,7 +30,6 @@ class TestUserSchema(CanadaTestBase):
         Users cannot change their usernames.
         """
         username = make_uuid().replace('-', '_')
-
         user_dict = self.sysadmin_action.user_create(
             email='example+%s@example.com' % username, name=username, password=make_uuid())
 
@@ -84,6 +83,15 @@ class TestUserSchema(CanadaTestBase):
 
         assert user_dict['default_dataset_visibility'] == 'public'
         assert user_dict['opt_in_features__pd_datatables'] is True
+
+        user_dict = self.sysadmin_action.user_patch(
+            id=user_id,
+            opt_in_features__pd_datatables=True)
+
+        assert user_dict['opt_in_features__pd_datatables'] is True
+        assert user_dict['default_dataset_visibility'] == 'public'
+        assert user_dict['plugin_extras']['opt_in_features__pd_datatables'] is True
+        assert user_dict['plugin_extras']['default_dataset_visibility'] == 'public'
 
         # own user should be able to update opt_in_features
         user_dict = self.normal_action.user_patch(
