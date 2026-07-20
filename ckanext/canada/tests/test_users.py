@@ -31,7 +31,7 @@ class TestUserSchema(CanadaTestBase):
         """
         username = make_uuid().replace('-', '_')
         user_dict = self.sysadmin_action.user_create(
-            email='example@example.com', name=username, password=make_uuid())
+            email='example+%s@example.com' % username, name=username, password=make_uuid())
 
         with pytest.raises(ValidationError) as ve:
             user_dict = self.sysadmin_action.user_patch(
@@ -55,7 +55,7 @@ class TestUserSchema(CanadaTestBase):
         """
         username = make_uuid().replace('-', '_')
         user_dict = self.sysadmin_action.user_create(
-            email='example@example.com', name=username, password=make_uuid())
+            email='example+%s@example.com' % username, name=username, password=make_uuid())
 
         assert 'default_dataset_visibility' not in user_dict
         assert 'opt_in_features__pd_datatables' not in user_dict
@@ -84,6 +84,15 @@ class TestUserSchema(CanadaTestBase):
         assert user_dict['default_dataset_visibility'] == 'public'
         assert user_dict['opt_in_features__pd_datatables'] is True
 
+        user_dict = self.sysadmin_action.user_patch(
+            id=user_id,
+            opt_in_features__pd_datatables=True)
+
+        assert user_dict['opt_in_features__pd_datatables'] is True
+        assert user_dict['default_dataset_visibility'] == 'public'
+        assert user_dict['plugin_extras']['opt_in_features__pd_datatables'] is True
+        assert user_dict['plugin_extras']['default_dataset_visibility'] == 'public'
+
         # own user should be able to update opt_in_features
         user_dict = self.normal_action.user_patch(
             id=user_id, opt_in_features__pd_datatables=False)
@@ -99,3 +108,27 @@ class TestUserSchema(CanadaTestBase):
 
         assert 'default_dataset_visibility' in err
         assert err['default_dataset_visibility'] == ["Value must be one of ['private', 'public']"]
+        assert user_dict['opt_in_features__pd_datatables'] is False
+
+        # excluding custom fields should not change their values
+        user_dict = self.normal_action.user_patch(
+            id=user_id, fullname='Updated Name')
+
+        assert user_dict['default_dataset_visibility'] == 'public'
+        assert user_dict['opt_in_features__pd_datatables'] is False
+
+        # adding arbitrary key/values is not allowed
+        user_dict = self.normal_action.user_patch(
+            id=user_id, plugin_extras={'this': 'that'})
+
+        assert user_dict['default_dataset_visibility'] == 'public'
+        assert user_dict['opt_in_features__pd_datatables'] is False
+        assert 'this' not in user_dict
+
+        user_dict = self.sysadmin_action.user_patch(
+            id=user_id, plugin_extras={'this': 'that'})
+
+        assert user_dict['default_dataset_visibility'] == 'public'
+        assert user_dict['opt_in_features__pd_datatables'] is False
+        assert 'this' not in user_dict
+        assert 'this' not in user_dict['plugin_extras']
