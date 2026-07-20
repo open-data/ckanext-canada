@@ -103,6 +103,7 @@ class TestNAVLSchema(CanadaTestBase):
             'jurisdiction': 'federal',
             'maintainer_email': 'not@all.example.com',
             'restrictions': 'unrestricted',
+            'state': 'draft',
             'resources': [{
                 'id': make_uuid(),
                 'name_translated': {'en': 'Full text.', 'fr': 'Full text.'},
@@ -129,25 +130,42 @@ class TestNAVLSchema(CanadaTestBase):
                     keywords={'en': ['book'], 'fr': ['livre']})
 
     def test_basic_package(self):
-        with pytest.raises(ValidationError) as ve:
-            self.normal_action.package_create(**self.incomplete_pkg)
-        model.Session.rollback()
-        err = ve.value.error_dict
-        expected = {
-            'notes_translated-en': ['Missing value'],
-            'frequency': ['Missing value'],
-            'subject': ['Select at least one'],
-            'notes_translated-fr': ['Missing value'],
-            'keywords-en': ['Missing value'],
-            'title_translated': ['Required language "fr" missing'],
-            'date_published': ['Missing value'],
-            'keywords-fr': ['Missing value'],
-            'owner_org': ['Missing value'],
-        }
-        assert isinstance(err, dict), err
-        for k in set(err) | set(expected):
-            assert k in err
-            assert err[k] == expected[k]
+        """
+        draft_fields_required=False should not required Optional fields.
+        """
+        resp = self.normal_action.package_create(**self.incomplete_pkg)
+        # expected = {
+        #     'notes_translated-en': ['Missing value'],
+        #     'frequency': ['Missing value'],
+        #     'subject': ['Select at least one'],
+        #     'notes_translated-fr': ['Missing value'],
+        #     'keywords-en': ['Missing value'],
+        #     'title_translated': ['Required language "fr" missing'],
+        #     'date_published': ['Missing value'],
+        #     'keywords-fr': ['Missing value'],
+        #     'owner_org': ['Missing value'],
+        # }
+        # assert isinstance(err, dict), err
+        # for k in set(err) | set(expected):
+        #     assert k in err
+        #     assert err[k] == expected[k]
+
+        assert 'notes_translated' not in resp
+        assert 'frequency' not in resp
+        assert 'subject' not in resp
+        assert 'fr' not in resp['title_translated']
+        assert 'date_published' not in resp
+        assert 'keywords' not in resp
+        assert 'owner_org' not in resp
+
+        from pprint import pprint
+        print('    ')
+        print('DEBUGGING::')
+        print('    ')
+        print(pprint(resp))
+        print('    ')
+        assert False
+
         resp = self.normal_action.package_create(**self.complete_pkg)
         assert resp['title_translated']['fr'] == 'Un novel par Tolstoy'
 

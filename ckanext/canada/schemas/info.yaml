@@ -93,7 +93,7 @@ dataset_fields:
   form_snippet: fluent_text.html
   display_snippet: fluent_text.html
   error_snippet: fluent_text.html
-  validators: fluent_text
+  validators: scheming_required fluent_text
   output_validators: fluent_text_output
   form_attrs:
       size: 100
@@ -326,6 +326,7 @@ dataset_fields:
       en: The beginning/ending date(s) of publication and/or sequential designations used on items in a series, in French
       fr: Dates de début/fin de la publication et/ou de désignation séquentielle utilisées pour les articles d’une série, en français
   preset: fluent_text
+  validators: scheming_required fluent_text
   form_attrs:
     class: form-control
 

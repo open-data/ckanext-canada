@@ -138,6 +138,7 @@ dataset_fields:
     en: Metadata contact
     fr: Contact métadonnée
   preset: fluent_text
+  validators: scheming_required fluent_text
   form_snippet: null
 - field_name: parent_id
   label:
@@ -168,6 +169,7 @@ dataset_fields:
     en: Position Name
     fr: Nom position
   preset: fluent_text
+  validators: scheming_required fluent_text
   form_snippet: null
 - field_name: responsible_role
   label:
@@ -187,7 +189,7 @@ dataset_fields:
     fr: Catégorie thématique
   form_snippet: null
   display_snippet: list_inline.html
-  validators: scheming_multiple_choice
+  validators: scheming_required scheming_multiple_choice
   output_validators: scheming_multiple_choice_output
   choices:
   - label:
@@ -327,7 +329,7 @@ dataset_fields:
   label:
     en: Association Type
     fr: Type association
-  validators: scheming_multiple_choice
+  validators: scheming_required scheming_multiple_choice
   output_validators: scheming_multiple_choice_output
   form_snippet: null
   choices:
@@ -463,7 +465,7 @@ dataset_fields:
     en: Display Flags
   form_snippet: null
   display_snippet: null
-  validators: scheming_multiple_choice
+  validators: scheming_required scheming_multiple_choice
   output_validators: scheming_multiple_choice_output
   choices:
   - label:
