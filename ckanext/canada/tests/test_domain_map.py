@@ -1106,14 +1106,6 @@ class TestDomainMap(CanadaTestBase):
         assert job.meta['title'] == 'Upload to DataStore'
         assert job.args[0]['metadata']['ckan_url'] is None
         assert job.args[0]['metadata']['resource_id'] == pkg_dict['resources'][0]['id']
-
-        print('    ')
-        print('DEBUGGING::')
-        print('    ')
-        print(job.args[0]['metadata']['original_url'])
-        print('    ')
-        assert False
-
         assert job.args[0]['metadata']['original_url'] == '/dataset/%s/resource/%s/download/sample.csv' % (
             pkg_id, pkg_dict['resources'][0]['id'])
 
@@ -1392,14 +1384,6 @@ class TestDomainMap(CanadaTestBase):
         assert job.meta['title'] == 'Upload to DataStore'
         assert job.args[0]['metadata']['ckan_url'] is None
         assert job.args[0]['metadata']['resource_id'] == pkg_dict['resources'][0]['id']
-
-        print('    ')
-        print('DEBUGGING::')
-        print('    ')
-        print(job.args[0]['metadata']['original_url'])
-        print('    ')
-        assert False
-
         assert job.args[0]['metadata']['original_url'] == '/dataset/%s/resource/%s/download/sample.csv' % (
             pkg_id, pkg_dict['resources'][0]['id'])
 

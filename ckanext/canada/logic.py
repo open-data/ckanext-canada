@@ -583,7 +583,9 @@ def canada_user_update(up_func: Action,
     user_obj = model.User.get(id)
     if user_obj is None:
         raise ObjectNotFound('User was not found.')
-    context['user_obj'] = user_obj
+
+    # fresh context copy
+    context = cast(Context, dict(context, user_obj=user_obj))
     extras = context['user_obj'].plugin_extras or {}
 
     # get custom validators for custom fields
@@ -612,7 +614,6 @@ def canada_user_update(up_func: Action,
         ],
         'opt_in_features__pd_datatables': [
             ignore_missing_validator,
-            # type_ignore_reason: incomplete typing
             bool_validator,
         ]
     }
@@ -632,12 +633,13 @@ def canada_user_update(up_func: Action,
         data['opt_in_features__pd_datatables'] = extras.get(
             'opt_in_features__pd_datatables', False)
 
-    if 'plugin_extras' not in data_dict:
-        data_dict['plugin_extras'] = {}
+    # always use current("before") extras to prevent arbitrary key/values
+    data_dict['plugin_extras'] = extras
 
     # add our validated values to plugin_extras for core to save
     data_dict['plugin_extras']['default_dataset_visibility'] = \
         data['default_dataset_visibility']
+
     data_dict['plugin_extras']['opt_in_features__pd_datatables'] = \
         data['opt_in_features__pd_datatables']
 
