@@ -78,8 +78,7 @@ def is_registry_domain() -> bool:
     return re.search(REGISTRY_SUBDOMAIN_MATCH, subdomain) is not None
 
 
-# type_ignore_reason: incomplete typing
-def get_environment() -> str:  # type: ignore
+def get_environment() -> str:
     return config['ckanext.canada.environment']
 
 
