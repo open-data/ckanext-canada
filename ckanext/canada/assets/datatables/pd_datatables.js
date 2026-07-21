@@ -37,6 +37,10 @@ this.ckan.module('pd-datatables', function($){
 
 function load_pd_datatable(CKAN_MODULE){
   const _ = CKAN_MODULE._;
+
+  // TODO: Disable Editor - enable Table Editor when ready...
+  const DISABLE_EDITOR = true;
+
   const searchParams = new URLSearchParams(document.location.search);
   const currentDate = new Date().toISOString().split('T')[0];
   const currentYear = new Date().getFullYear();
@@ -63,9 +67,7 @@ function load_pd_datatable(CKAN_MODULE){
   const isEditable = CKAN_MODULE.options.is_editable;
   const tableStyles = CKAN_MODULE.options.table_styles;
 
-  // TODO: Disable Editor - enable Table Editor when ready...
-  // const EDITOR = pd_datatables__EDITOR;
-  const EDITOR = false;
+  const EDITOR = DISABLE_EDITOR ? false : pd_datatables__EDITOR;  // force editor disablement
   const hasOpenCanadaID = (primaryKeys != editKeys && editKeys.length == 1 && editKeys[0] == 0);
 
   const selectAllLabel = _('Select All');
@@ -174,8 +176,9 @@ function load_pd_datatable(CKAN_MODULE){
   let isFullScreen = is_page_fullscreen();
   let isEditMode = typeof tableState != 'undefined' && typeof tableState.edit_view != 'undefined' ? tableState.edit_view : false;
 
-  // TODO: Disable Editor - enable Table Editor when ready...
-  isEditMode = false;
+  if( DISABLE_EDITOR ){
+    isEditMode = false;  // force editor disablement
+  }
 
   if( isEditMode ){
     $('.pd-datable-instructions').css({'display': 'none'});
@@ -207,8 +210,8 @@ function load_pd_datatable(CKAN_MODULE){
       "orderable": false,
       "targets": 0,
       "render": function(_data, _type, _row, _meta){
-        if( isEditMode && editingRows.length > 0 ){
-          if( hasOpenCanadaID ){
+        if( isEditMode ){
+          if( editingRows.length > 0 && hasOpenCanadaID ){
             return _data;
           }
           return _meta.row + 1;
@@ -1864,6 +1867,15 @@ function load_pd_datatable(CKAN_MODULE){
           $(_field).css({'height': 'auto'});
           $(_field).css({'height': this.scrollHeight + 'px'});
         });
+      }else{
+        // do not submit form fields on enter
+        // textarea can have newlines, select2 opens on enter
+        $(_field).off('keydown.PreventSubmit');
+        $(_field).on('keydown.PreventSubmit', function(_event){
+          if( _event.keyCode == 13 ){
+            _event.preventDefault();
+          }
+        });
       }
       $(_field).off('change.EDITOR');
       $(_field).on('change.EDITOR', function(_event){
@@ -2037,8 +2049,9 @@ function load_pd_datatable(CKAN_MODULE){
         _data.compact_view = isCompactView;
         _data.edit_view = isEditMode;
 
-        // TODO: Disable Editor - enable Table Editor when ready...
-        _data.edit_view = false;
+        if( DISABLE_EDITOR ){
+          _data.edit_view = false;  // force editor disablement
+        }
 
         _data.editing_rows = editingRows;
         // TODO: save filledRows, erroredRows, requiredRows??? need to save the field values too???
@@ -2047,8 +2060,9 @@ function load_pd_datatable(CKAN_MODULE){
         tableState.selected = localInstanceSelected;
         tableState.edit_view = isEditMode;
 
-        // TODO: Disable Editor - enable Table Editor when ready...
-        tableState.edit_view = false;
+        if( DISABLE_EDITOR ){
+          tableState.edit_view = false;  // force editor disablement
+        }
 
         tableState.editing_rows = editingRows;
       },
@@ -2057,8 +2071,9 @@ function load_pd_datatable(CKAN_MODULE){
         tableState = _data;
         tableState.selected = localInstanceSelected;
 
-        // TODO: Disable Editor - enable Table Editor when ready...
-        tableState.edit_view = false;
+        if( DISABLE_EDITOR ){
+          tableState.edit_view = false;  // force editor disablement
+        }
       },
       buttons: get_available_buttons(),
     });

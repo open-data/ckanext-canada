@@ -584,7 +584,8 @@ def update_pd_record(owner_org: str, resource_name: str, pk: str):
                 else:
                     err = dict({
                         k: list(format_trigger_error(v))
-                        for (k, v) in ve.error_dict['records'][0].items()  # type: ignore
+                        for (k, v) in
+                        ve.error_dict['records'][0].items()  # type: ignore
                     }, **err)
             except AttributeError:
                 log.warning('Failed to update %s record for org %s:\n%s',
