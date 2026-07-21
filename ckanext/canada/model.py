@@ -21,7 +21,7 @@ class RefData(Base):  # type: ignore
 
     table_name = Column(Unicode, primary_key=True)
     last_sync = Column(DateTime, nullable=False,
-                      default=datetime.datetime.now(datetime.timezone.utc))
+                       default=datetime.datetime.now(datetime.timezone.utc))
     file_hash = Column(Unicode, nullable=False)
 
     Session = meta.Session

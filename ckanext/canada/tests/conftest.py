@@ -84,7 +84,6 @@ def pytest_collection_finish(session: Session) -> None:
     if loaded:
         print('Loaded test_ref_service_program_ids.csv into ref_service_program_ids')
 
-
     # NOTE: always make a tbs-sct org
     try:
         lc = LocalCKAN()
