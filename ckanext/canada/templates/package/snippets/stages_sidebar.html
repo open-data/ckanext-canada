@@ -1,7 +1,7 @@
 {# stages side bar #}
 
 {%- set pages = h.scheming_get_dataset_form_pages(dataset_type) -%}
-{%- if pages -%}
+{%- if pages and data.get('state') -%}
   {%- set is_draft = data.get('state') == 'draft' -%}
   {%- set active_page = data.get('_form_page', 1) | int -%}
   {%- set draft_missing_required = h.scheming_missing_required_fields(
