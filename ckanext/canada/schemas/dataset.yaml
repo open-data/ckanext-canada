@@ -138,7 +138,7 @@ dataset_fields:
     en: Metadata contact
     fr: Contact métadonnée
   preset: fluent_text
-  validators: scheming_required fluent_text
+  validators: fluent_text scheming_required
   form_snippet: null
 - field_name: parent_id
   label:
@@ -169,7 +169,7 @@ dataset_fields:
     en: Position Name
     fr: Nom position
   preset: fluent_text
-  validators: scheming_required fluent_text
+  validators: fluent_text scheming_required
   form_snippet: null
 - field_name: responsible_role
   label:

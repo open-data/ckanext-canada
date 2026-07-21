@@ -148,7 +148,7 @@ presets:
     form_snippet: fluent_text.html
     display_snippet: fluent_text.html
     error_snippet: fluent_text.html
-    validators: scheming_required fluent_text
+    validators: fluent_text scheming_required
     output_validators: fluent_core_translated_output
     form_attrs:
       size: 60
@@ -207,7 +207,7 @@ presets:
         fr: Nom de l’organisation au moment de la publication, en français. Veuillez
           laisser le champ libre si le nom de l'organisation lors de la publication
           est identique au nom actuel de votre organisation.
-    validators: scheming_required fluent_text json_string canada_copy_from_org_name
+    validators: fluent_text scheming_required json_string canada_copy_from_org_name
     # copied from fluent_text preset
     form_snippet: fluent_text.html
     display_snippet: fluent_text.html
@@ -246,7 +246,7 @@ presets:
     form_snippet: fluent_text.html
     display_snippet: fluent_text.html
     error_snippet: fluent_text.html
-    validators: scheming_required fluent_text
+    validators: fluent_text scheming_required
     output_validators: fluent_text_output
     form_attrs:
       size: 60
@@ -296,7 +296,7 @@ presets:
     form_snippet: fluent_text.html
     display_snippet: fluent_text.html
     error_snippet: fluent_text.html
-    validators: scheming_required fluent_text
+    validators: fluent_text scheming_required
     output_validators: fluent_text_output
     form_attrs:
       size: 60
@@ -329,7 +329,7 @@ presets:
     display_snippet: fluent_link.html
     # copied from fluent_text preset
     error_snippet: fluent_text.html
-    validators: scheming_required fluent_text
+    validators: fluent_text scheming_required
     output_validators: fluent_text_output
 
 
@@ -363,7 +363,7 @@ presets:
       form_snippet: fluent_text.html
       display_snippet: fluent_text.html
       error_snippet: fluent_text.html
-      validators: scheming_required fluent_text
+      validators: fluent_text scheming_required
       output_validators: fluent_text_output
       form_attrs:
         size: 60
@@ -401,7 +401,7 @@ presets:
     form_snippet: fluent_markdown.html
     display_snippet: fluent_markdown.html
     error_snippet: fluent_text.html
-    validators: scheming_required fluent_text
+    validators: fluent_text scheming_required
     output_validators: fluent_core_translated_output
     form_attrs:
       class: form-control
@@ -438,7 +438,7 @@ presets:
     form_snippet: fluent_tags.html
     display_snippet: fluent_tags.html
     error_snippet: fluent_text.html
-    validators: scheming_required fluent_tags
+    validators: fluent_tags scheming_required
     output_validators: fluent_tags_output
     form_attrs:
       class: form-control canada-width-full
@@ -2210,7 +2210,7 @@ presets:
     form_snippet: fluent_text.html
     display_snippet: fluent_text.html
     error_snippet: fluent_text.html
-    validators: scheming_required fluent_text
+    validators: fluent_text scheming_required
     output_validators: fluent_text_output
 
 # Field = Classification code
@@ -2255,7 +2255,7 @@ presets:
     display_attributes:
       class: canada-break-words
     error_snippet: fluent_text.html
-    validators: scheming_required fluent_text
+    validators: fluent_text scheming_required
     output_validators: fluent_text_output
     form_attrs:
       class: form-control canada-width-full
@@ -2289,7 +2289,7 @@ presets:
     form_snippet: fluent_text.html
     display_snippet: fluent_text.html
     error_snippet: fluent_text.html
-    validators: scheming_required fluent_text
+    validators: fluent_text scheming_required
     output_validators: fluent_text_output
     form_attrs:
       size: 60
@@ -2324,7 +2324,7 @@ presets:
     form_snippet: fluent_text.html
     display_snippet: fluent_text.html
     error_snippet: fluent_text.html
-    validators: scheming_required fluent_text
+    validators: fluent_text scheming_required
     output_validators: fluent_text_output
     form_attrs:
       size: 60
@@ -2685,7 +2685,7 @@ presets:
     form_snippet: fluent_text.html
     display_snippet: fluent_text.html
     error_snippet: fluent_text.html
-    validators: scheming_required fluent_text
+    validators: fluent_text scheming_required
     output_validators: fluent_core_translated_output
     form_attrs:
       size: 60
@@ -2803,7 +2803,7 @@ presets:
     display_attributes:
       class: canada-break-words
     error_snippet: fluent_text.html
-    validators: scheming_required fluent_text
+    validators: fluent_text scheming_required
     output_validators: fluent_text_output
     required: true
     form_panel: relationships

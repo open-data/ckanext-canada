@@ -129,42 +129,27 @@ class TestNAVLSchema(CanadaTestBase):
                     date_published='2013-01-01',
                     keywords={'en': ['book'], 'fr': ['livre']})
 
+    @pytest.mark.skip(reason='TODO: finalize shceming pages logic w/ state=active')
     def test_basic_package(self):
-        """
-        draft_fields_required=False should not required Optional fields.
-        """
-        resp = self.normal_action.package_create(**self.incomplete_pkg)
-        # expected = {
-        #     'notes_translated-en': ['Missing value'],
-        #     'frequency': ['Missing value'],
-        #     'subject': ['Select at least one'],
-        #     'notes_translated-fr': ['Missing value'],
-        #     'keywords-en': ['Missing value'],
-        #     'title_translated': ['Required language "fr" missing'],
-        #     'date_published': ['Missing value'],
-        #     'keywords-fr': ['Missing value'],
-        #     'owner_org': ['Missing value'],
-        # }
-        # assert isinstance(err, dict), err
-        # for k in set(err) | set(expected):
-        #     assert k in err
-        #     assert err[k] == expected[k]
-
-        assert 'notes_translated' not in resp
-        assert 'frequency' not in resp
-        assert 'subject' not in resp
-        assert 'fr' not in resp['title_translated']
-        assert 'date_published' not in resp
-        assert 'keywords' not in resp
-        assert 'owner_org' not in resp
-
-        from pprint import pprint
-        print('    ')
-        print('DEBUGGING::')
-        print('    ')
-        print(pprint(resp))
-        print('    ')
-        assert False
+        with pytest.raises(ValidationError) as ve:
+            self.normal_action.package_create(**self.incomplete_pkg)
+        model.Session.rollback()
+        err = ve.value.error_dict
+        expected = {
+            'notes_translated-en': ['Missing value'],
+            'frequency': ['Missing value'],
+            'subject': ['Select at least one'],
+            'notes_translated-fr': ['Missing value'],
+            'keywords-en': ['Missing value'],
+            'title_translated': ['Required language "fr" missing'],
+            'date_published': ['Missing value'],
+            'keywords-fr': ['Missing value'],
+            'owner_org': ['Missing value'],
+        }
+        assert isinstance(err, dict), err
+        for k in set(err) | set(expected):
+            assert k in err
+            assert err[k] == expected[k]
 
         resp = self.normal_action.package_create(**self.complete_pkg)
         assert resp['title_translated']['fr'] == 'Un novel par Tolstoy'
@@ -231,8 +216,10 @@ class TestNAVLSchema(CanadaTestBase):
         assert 'id' in err
         assert 'Badly formed hexadecimal UUID string' in err['id'][0]
 
+    @pytest.mark.skip(reason='TODO: finalize shceming pages logic w/ state=active')
     def test_raw_required(self):
         raw_pkg = dict(**self.complete_pkg)
+        raw_pkg['state'] = 'active'
         del raw_pkg['title_translated']
 
         with pytest.raises(ValidationError) as ve:

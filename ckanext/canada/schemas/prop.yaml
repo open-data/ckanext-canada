@@ -34,18 +34,18 @@ dataset_fields:
 
 - preset: canada_title
   form_snippet: ro_fluent_title.html
-  validators: user_read_only scheming_required fluent_text
+  validators: user_read_only fluent_text
 
 - preset: canada_owner_org
   label:
     en: Organization Name
     fr: Nom de l’organisation
   form_snippet: ro_org.html
-  validators: user_read_only scheming_required string_safe owner_org_validator
+  validators: user_read_only string_safe owner_org_validator
 
 - preset: canada_notes
   form_snippet: ro_fluent_markdown.html
-  validators: user_read_only scheming_required fluent_text
+  validators: user_read_only fluent_text
 
 - field_name: comments
   label:
@@ -60,11 +60,11 @@ dataset_fields:
       fr: "Autres commentaires (français)"
   form_snippet: ro_fluent_markdown.html
   preset: fluent_markdown
-  validators: user_read_only scheming_required fluent_text
+  validators: user_read_only fluent_text
 
 - preset: canada_keywords
   form_snippet: ro_fluent_tags.html
-  validators: user_read_only_json scheming_required fluent_tags
+  validators: user_read_only_json fluent_tags
 
 - field_name: reason
   label:
@@ -93,7 +93,7 @@ dataset_fields:
 
 - preset: canada_subject
   form_snippet: ro_multiple_choice.html
-  validators: user_read_only_json scheming_required scheming_multiple_choice
+  validators: user_read_only_json scheming_multiple_choice
 
 - field_name: date_submitted
   help_text:
@@ -211,7 +211,6 @@ dataset_fields:
         en: The comments provided by the data holder related to the suggestions. For example, whether or not the dataset can be published, if there are reasons why it should be exempted or not published (i.e. licence issues, security or privacy concerns)
         fr: Les commentaires fournis par le détenteur des données concernant les propositions. Par exemple, si le jeu de données peut être publié ou non, s'il existe des raisons pour lesquelles il devrait être exempté ou non publié (c'est-à-dire problèmes de licence ou préoccupations liées à la sécurité ou à la protection des renseignements personnels).
     preset: fluent_markdown
-    validators: scheming_required fluent_text
 
 after_validators: canada_sort_prop_status
 
