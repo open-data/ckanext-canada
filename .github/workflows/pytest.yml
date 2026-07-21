@@ -152,87 +152,87 @@ jobs:
           for dir in /srv/app/src/*; do
             srcName=$(echo "$dir" | awk -F'/' '{print $NF}');
             if [[ -d "$dir/.git"  ]]; then
-                DO_PIP_REINSTALL='false';
-                printf "\n${srcName}: Checking for updates..."
-                cd $dir;
-                if jq -e --arg name "$srcName" '.repositories | has($name)' "$CONFIG" > /dev/null; then
-                  printf "\n    ${srcName}: Checking configuration from ${CONFIG}..."
-                  current_branch=$(
-                    jq -r \
-                      --arg repo "$srcName" \
-                      --arg current "$CURRENT_BRANCH" \
-                      '
-                      .repositories[$repo].branches as $b
-                      | $b[$current]
-                        // (if $current | startswith("feature/") then $b["feature/*"] else null end)
-                        // (if $current | startswith("fix/") then $b["fix/*"] else null end)
-                        // $b["*"]
-                      ' \
-                      "$CONFIG"
-                    );
-                  printf "\n    ${srcName}: ${CURRENT_BRANCH} configured to use branch ${current_branch}...";
-                  DO_PIP_REINSTALL='true';
+              DO_PIP_REINSTALL='false';
+              printf "\n${srcName}: Checking for updates..."
+              cd $dir;
+              if jq -e --arg name "$srcName" '.repositories | has($name)' "$CONFIG" > /dev/null; then
+                printf "\n    ${srcName}: Checking configuration from ${CONFIG}..."
+                current_branch=$(
+                  jq -r \
+                    --arg repo "$srcName" \
+                    --arg current "$CURRENT_BRANCH" \
+                    '
+                    .repositories[$repo].branches as $b
+                    | $b[$current]
+                      // (if $current | startswith("feature/") then $b["feature/*"] else null end)
+                      // (if $current | startswith("fix/") then $b["fix/*"] else null end)
+                      // $b["*"]
+                    ' \
+                    "$CONFIG"
+                  );
+                printf "\n    ${srcName}: ${CURRENT_BRANCH} configured to use branch ${current_branch}...";
+                DO_PIP_REINSTALL='true';
+              else
+                printf "\n    ${srcName}: Using default/current branch..."
+                current_branch=$(git rev-parse --abbrev-ref HEAD);
+                printf "\n    ${srcName}: using branch ${current_branch}...";
+              fi;
+              if [[ -z "$current_branch" || "$current_branch" == "null" ]]; then
+                current_branch=$(git rev-parse --abbrev-ref HEAD);
+                printf "\n    ${srcName}: unable to determine branch using current branch ${current_branch}..."
+              fi
+              if [[ "$srcName" == "ckan" ]]; then
+                git fetch canada;
+                if git show-ref --verify --quiet "refs/heads/$current_branch"; then
+                  git checkout "$current_branch"
                 else
-                  printf "\n    ${srcName}: Using default/current branch..."
-                  current_branch=$(git rev-parse --abbrev-ref HEAD);
-                  printf "\n    ${srcName}: using branch ${current_branch}...";
-                fi;
-                if [[ -z "$current_branch" || "$current_branch" == "null" ]]; then
-                  current_branch=$(git rev-parse --abbrev-ref HEAD);
-                  printf "\n    ${srcName}: unable to determine branch using current branch ${current_branch}..."
+                  git checkout -B "$current_branch" "canada/$current_branch"
                 fi
-                if [[ "$srcName" == "ckan" ]]; then
-                  git fetch canada;
-                  if git show-ref --verify --quiet "refs/heads/$current_branch"; then
-                    git checkout "$current_branch"
-                  else
-                    git checkout -B "$current_branch" "canada/$current_branch"
-                  fi
-                  git fetch
-                  git pull --ff-only || true
-                  reslog=$(git log HEAD..canada/$current_branch --oneline);
+                git fetch
+                git pull --ff-only || true
+                reslog=$(git log HEAD..canada/$current_branch --oneline);
+              else
+                git fetch origin;
+                if git show-ref --verify --quiet "refs/heads/$current_branch"; then
+                  git checkout "$current_branch"
                 else
-                  git fetch origin;
-                  if git show-ref --verify --quiet "refs/heads/$current_branch"; then
-                    git checkout "$current_branch"
-                  else
-                    git checkout -B "$current_branch" "origin/$current_branch"
-                  fi
-                  git fetch
-                  git pull --ff-only || true
-                  reslog=$(git log HEAD..origin/$current_branch --oneline);
-                fi;
-                printf "\n    ${srcName}: git info\n";
-                printf "\n";
-                git branch --show-current;
-                printf "\n";
-                git rev-parse HEAD;
-                printf "\n";
-                git log -1 --oneline;
-                printf "\n";
-                printf "\n    ${srcName}: pip info\n";
-                pip show ${srcName};
-                if [[ "${reslog}" == "" && "${DO_PIP_REINSTALL}" == "false" ]]; then
+                  git checkout -B "$current_branch" "origin/$current_branch"
+                fi
+                git fetch
+                git pull --ff-only || true
+                reslog=$(git log HEAD..origin/$current_branch --oneline);
+              fi;
+              printf "\n    ${srcName}: git info\n";
+              printf "\n";
+              git branch --show-current;
+              printf "\n";
+              git rev-parse HEAD;
+              printf "\n";
+              git log -1 --oneline;
+              printf "\n";
+              printf "\n    ${srcName}: pip info\n";
+              pip show ${srcName};
+              if [[ "${reslog}" == "" && "${DO_PIP_REINSTALL}" == "false" ]]; then
                   printf "${srcName}: Up to date. Skipping..."
-                else
-                  git pull --ff-only || true;
-                  printf "\n${srcName}: Pulled updated code. Re-initializing in python environment..."
-                  cd /srv/app;
-                  if [[ -f "$dir/requirements.txt" ]]; then
-                    pip install -r $dir/requirements.txt || true;
-                  fi;
-                  if [[ -f "$dir/dev-requirements.txt" ]]; then
-                    pip install -r $dir/dev-requirements.txt || true;
-                  fi;
-                  if [[ -f "$dir/test-requirements.txt" ]]; then
-                    pip install -r $dir/test-requirements.txt || true;
-                  fi;
-                  if [[ -f "$dir/setup.py" ]]; then
-                    python $dir/setup.py develop || true;
-                  fi;
+              else
+                git pull --ff-only || true;
+                printf "\n${srcName}: Pulled updated code. Re-initializing in python environment..."
+                cd /srv/app;
+                if [[ -f "$dir/requirements.txt" ]]; then
+                  pip install -r $dir/requirements.txt || true;
                 fi;
+                if [[ -f "$dir/dev-requirements.txt" ]]; then
+                  pip install -r $dir/dev-requirements.txt || true;
+                fi;
+                if [[ -f "$dir/test-requirements.txt" ]]; then
+                  pip install -r $dir/test-requirements.txt || true;
+                fi;
+                if [[ -f "$dir/setup.py" ]]; then
+                  python $dir/setup.py develop || true;
+                fi;
+              fi;
             else
-                printf "\n${srcName}: Not a source repository. Skipping..."
+              printf "\n${srcName}: Not a source repository. Skipping..."
             fi;
             printf "\n\n";
           done;

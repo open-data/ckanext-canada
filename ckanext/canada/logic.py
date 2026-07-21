@@ -773,41 +773,66 @@ def canada_user_update(up_func: Action,
                        data_dict: DataDict) -> ChainedAction:
     """
     Add new fields to the User schema.
+
+    - opt_in_features__pd_datatables
     """
+    # get user object as we need existing plugin_extras
+    id = get_or_bust(data_dict, 'id')
+    user_obj = model.User.get(id)
+    if user_obj is None:
+        raise ObjectNotFound('User was not found.')
+
+    # fresh context copy
+    context = cast(Context, dict(context, user_obj=user_obj))
+    extras = context['user_obj'].plugin_extras or {}
+
+    # get custom validators for custom fields
     bool_validator = get_validator('boolean_validator')
-    default_validator = get_validator('default')
     ignore_missing_validator = get_validator('ignore_missing')
+
+    # use passed data_dict values, defaulting to existing user settings,
+    # then defaulting to our default values. This is done so the
+    # ignore_missing and ignore_not_sysadmin validators can stop the chain.
     custom_data_dict = {
         'opt_in_features__pd_datatables': data_dict.get(
-            'opt_in_features__pd_datatables', None)
+            'opt_in_features__pd_datatables', extras.get(
+                'opt_in_features__pd_datatables', False))
     }
     schema = {
         'opt_in_features__pd_datatables': [
             ignore_missing_validator,
-            # type_ignore_reason: incomplete typing
-            default_validator(False),  # type: ignore
             bool_validator,
         ]
     }
+    # validate the custom fields
     data, errors = validate(custom_data_dict, schema, context)
     if errors:
         model.Session.rollback()
         raise ValidationError(errors)
+
     if 'opt_in_features__pd_datatables' not in data:
-        return up_func(context, data_dict)
-    if 'plugin_extras' not in data_dict:
-        data_dict['plugin_extras'] = {}
+        # use existing or default value
+        data['opt_in_features__pd_datatables'] = extras.get(
+            'opt_in_features__pd_datatables', False)
+
+    # always use current("before") extras to prevent arbitrary key/values
+    data_dict['plugin_extras'] = extras
+
+    # add our validated values to plugin_extras for core to save
     data_dict['plugin_extras']['opt_in_features__pd_datatables'] = \
         data['opt_in_features__pd_datatables']
-    user_update_schema = default_update_user_schema()
+
+    if 'schema' not in context:
+        context['schema'] = default_update_user_schema()
     # remove ignore_not_sysadmin validator from plugin_extras
-    user_update_schema['plugin_extras'] = [get_validator('json_object')]
-    up_context = cast(Context, dict(context, schema=user_update_schema))
-    response = up_func(up_context, data_dict)
-    extras = up_context['user_obj'].plugin_extras or {}
-    response['opt_in_features__pd_datatables'] = extras.get(
+    context['schema']['plugin_extras'] = [get_validator('json_object')]
+    user_dict = up_func(context, data_dict)
+    extras = context['user_obj'].plugin_extras or {}
+
+    user_dict['opt_in_features__pd_datatables'] = extras.get(
         'opt_in_features__pd_datatables', False)
-    return response
+
+    return user_dict
 
 
 @chained_action
@@ -817,6 +842,8 @@ def canada_user_show(up_func: Action,
                      data_dict: DataDict) -> ChainedAction:
     """
     Return new fields in the User dictionary.
+
+    - opt_in_features__pd_datatables
     """
     user_dict = up_func(context, data_dict)
     extras = context['user_obj'].plugin_extras or {}
