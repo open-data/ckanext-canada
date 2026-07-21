@@ -1,3 +1,4 @@
+import os
 from pytest import Session
 from ckan.tests.helpers import reset_db
 from ckan.lib.search import clear_all
@@ -10,6 +11,7 @@ from ckanext.security.model import db_setup as security_db_setup
 from ckanext.canada.tests.factories import CanadaOrganization as Organization
 from ckanext.canada.triggers import update_triggers
 from ckanext.recombinant.cli import _create_triggers
+from ckanext.canada.pd import _load_csv_ref_data
 from ckan.cli.db import _run_migrations
 from ckanapi import LocalCKAN, NotFound
 
@@ -51,6 +53,37 @@ def pytest_collection_finish(session: Session) -> None:
         _run_migrations('canada_public')
     except Exception:
         pass
+
+    # create test reference data
+    print('Loading test reference data...')
+    service_id_data = os.path.join(
+        os.path.split(__file__)[0],
+        'samples/ref_data/test_ref_service_service_ids.csv')
+    loaded = _load_csv_ref_data('ref_service_service_ids',
+                                [
+                                    'service_id',
+                                    'label_en',
+                                    'label_fr',
+                                    'org_years',
+                                ],
+                                service_id_data, verbose=False)
+    if loaded:
+        print('Loaded test_ref_service_service_ids.csv into ref_service_service_ids')
+
+    program_id_data = os.path.join(
+        os.path.split(__file__)[0],
+        'samples/ref_data/test_ref_service_program_ids.csv')
+    loaded = _load_csv_ref_data('ref_service_program_ids',
+                                [
+                                    'program_id',
+                                    'label_en',
+                                    'label_fr',
+                                    'org_years',
+                                ],
+                                program_id_data, verbose=False)
+    if loaded:
+        print('Loaded test_ref_service_program_ids.csv into ref_service_program_ids')
+
 
     # NOTE: always make a tbs-sct org
     try:

@@ -18,7 +18,7 @@ class TestService(CanadaTestBase):
         """
         super(TestService, self).setup_class()
 
-        org = Organization()
+        org = Organization(name='service-test-org')
         self.lc = LocalCKAN()
 
         self.lc.action.recombinant_create(dataset_type='service', owner_org=org['name'])
@@ -50,7 +50,8 @@ class TestService(CanadaTestBase):
         err = ve.value.error_dict
         assert 'records' in err
         assert 'service_id' in err['records'][0]
-        assert err['records'][0]['service_id'] == ['Comma is not allowed in Service ID Number field']
+        assert err['records'][0]['service_id'] == ['Comma is not allowed in Service ID Number field',
+                                                   'Invalid choice for Organization service-test-org: this,is,a,failure']
 
     def test_foreign_constraint(self):
         """
@@ -246,7 +247,7 @@ class TestService(CanadaTestBase):
         chromo = get_chromo('service')
         record = chromo['examples']['record'].copy()
 
-        expected_choice_fields = ['fiscal_yr', 'service_type', 'service_recipient_type',
+        expected_choice_fields = ['service_id', 'service_type', 'service_recipient_type',
                                   'service_scope', 'client_target_groups', 'program_id',
                                   'client_feedback_channel', 'automated_decision_system',
                                   'service_fee', 'os_account_registration',
@@ -258,7 +259,7 @@ class TestService(CanadaTestBase):
         for field in chromo['fields']:
             if field.get('published_resource_computed_field'):
                 continue
-            if 'choices_file' in field or 'choices' in field:
+            if 'choices_file' in field or 'choices' in field or 'choices_reference_table' in field:
                 assert field['datastore_id'] in expected_choice_fields
                 if field['datastore_type'] == '_text':
                     record[field['datastore_id']] = ['zzz']
@@ -274,6 +275,94 @@ class TestService(CanadaTestBase):
         assert 'records' in err
         for expected_choice_field in expected_choice_fields:
             assert expected_choice_field in err['records'][0]
+
+    def test_fiscal_year(self):
+        """
+        Fiscal Year should be minimum 2014 and a maximum of current
+        """
+        chromo = get_chromo('service')
+        record = chromo['examples']['record'].copy()
+
+        # min is 2014
+        record['fiscal_yr'] = '2012-2013'
+        with pytest.raises(ValidationError) as ve:
+            self.lc.action.datastore_upsert(
+                resource_id=self.resource_id,
+                records=[record])
+        model.Session.rollback()
+        err = ve.value.error_dict
+        assert 'records' in err
+        assert err['records'][0] == {'fiscal_yr': ['Invalid fiscal year: "2012-2013"']}
+
+        # max should be now
+        record['fiscal_yr'] = '4012-4013'
+        with pytest.raises(ValidationError) as ve:
+            self.lc.action.datastore_upsert(
+                resource_id=self.resource_id,
+                records=[record])
+        model.Session.rollback()
+        err = ve.value.error_dict
+        assert 'records' in err
+        assert err['records'][0] == {'fiscal_yr': ['Invalid fiscal year: "4012-4013"']}
+
+        # spread is invalid
+        record['fiscal_yr'] = '2015-2025'
+        with pytest.raises(ValidationError) as ve:
+            self.lc.action.datastore_upsert(
+                resource_id=self.resource_id,
+                records=[record])
+        model.Session.rollback()
+        err = ve.value.error_dict
+        assert 'records' in err
+        assert err['records'][0] == {'fiscal_yr': ['Invalid fiscal year: "2015-2025"']}
+
+    def test_org_based_fields(self):
+        """
+        Fields using choices_reference_table should
+        use the reference data as valid choices
+        """
+        chromo = get_chromo('service')
+        record = chromo['examples']['record'].copy()
+
+        expected_org_based_fields = ['service_id', 'program_id']
+        for field in chromo['fields']:
+            if field.get('published_resource_computed_field'):
+                continue
+            if 'choices_reference_table' in field:
+                assert field['datastore_id'] in expected_org_based_fields
+
+        record['service_id'] = 'NOT VALID'
+        with pytest.raises(ValidationError) as ve:
+            self.lc.action.datastore_upsert(
+                resource_id=self.resource_id,
+                records=[record])
+        model.Session.rollback()
+        err = ve.value.error_dict
+        assert 'records' in err
+        assert err['records'][0] == {'service_id': ['Invalid choice for Organization service-test-org: NOT VALID']}
+
+        record['service_id'] = '1001'
+
+        record['program_id'] = ['NOT VALID']
+        with pytest.raises(ValidationError) as ve:
+            self.lc.action.datastore_upsert(
+                resource_id=self.resource_id,
+                records=[record])
+        model.Session.rollback()
+        err = ve.value.error_dict
+        assert 'records' in err
+        assert err['records'][0] == {'program_id': ['Invalid choice(s) for Organization service-test-org: NOT VALID']}
+
+        # test mix of valid and invalid
+        record['program_id'] = ['NOT VALID', 'BGN01']
+        with pytest.raises(ValidationError) as ve:
+            self.lc.action.datastore_upsert(
+                resource_id=self.resource_id,
+                records=[record])
+        model.Session.rollback()
+        err = ve.value.error_dict
+        assert 'records' in err
+        assert err['records'][0] == {'program_id': ['Invalid choice(s) for Organization service-test-org: NOT VALID']}
 
     def test_max_chars(self):
         """
@@ -354,7 +443,7 @@ class TestStdService(CanadaTestBase):
         """
         super(TestStdService, self).setup_class()
 
-        org = Organization()
+        org = Organization(name='service-std-test-org')
         self.lc = LocalCKAN()
 
         self.lc.action.recombinant_create(dataset_type='service', owner_org=org['name'])
@@ -395,7 +484,8 @@ class TestStdService(CanadaTestBase):
         assert 'records' in err
         assert 'service_id' in err['records'][0]
         assert 'service_standard_id' in err['records'][0]
-        assert err['records'][0]['service_id'] == ['Comma is not allowed in Service ID Number field']
+        assert err['records'][0]['service_id'] == ['Comma is not allowed in Service ID Number field',
+                                                   'Invalid choice for Organization service-std-test-org: this,is,a,failure']
         assert err['records'][0]['service_standard_id'] == ['Comma is not allowed in Service Standard ID field']
 
     def test_foreign_constraint(self):
@@ -509,12 +599,12 @@ class TestStdService(CanadaTestBase):
         chromo = get_chromo('service-std')
         record = chromo['examples']['record'].copy()
 
-        expected_choice_fields = ['fiscal_yr', 'type', 'channel']
+        expected_choice_fields = ['service_id', 'type', 'channel']
 
         for field in chromo['fields']:
             if field.get('published_resource_computed_field'):
                 continue
-            if 'choices_file' in field or 'choices' in field:
+            if 'choices_file' in field or 'choices' in field or 'choices_reference_table' in field:
                 assert field['datastore_id'] in expected_choice_fields
                 if field['datastore_type'] == '_text':
                     record[field['datastore_id']] = ['zzz']
@@ -530,6 +620,71 @@ class TestStdService(CanadaTestBase):
         assert 'records' in err
         for expected_choice_field in expected_choice_fields:
             assert expected_choice_field in err['records'][0]
+
+    def test_fiscal_year(self):
+        """
+        Fiscal Year should be minimum 2014 and a maximum of current
+        """
+        chromo = get_chromo('service-std')
+        record = chromo['examples']['record'].copy()
+
+        # min is 2014
+        record['fiscal_yr'] = '2012-2013'
+        with pytest.raises(ValidationError) as ve:
+            self.lc.action.datastore_upsert(
+                resource_id=self.resource_id,
+                records=[record])
+        model.Session.rollback()
+        err = ve.value.error_dict
+        assert 'records' in err
+        assert err['records'][0] == {'fiscal_yr': ['Invalid fiscal year: "2012-2013"']}
+
+        # max should be now
+        record['fiscal_yr'] = '4012-4013'
+        with pytest.raises(ValidationError) as ve:
+            self.lc.action.datastore_upsert(
+                resource_id=self.resource_id,
+                records=[record])
+        model.Session.rollback()
+        err = ve.value.error_dict
+        assert 'records' in err
+        assert err['records'][0] == {'fiscal_yr': ['Invalid fiscal year: "4012-4013"']}
+
+        # spread is invalid
+        record['fiscal_yr'] = '2015-2025'
+        with pytest.raises(ValidationError) as ve:
+            self.lc.action.datastore_upsert(
+                resource_id=self.resource_id,
+                records=[record])
+        model.Session.rollback()
+        err = ve.value.error_dict
+        assert 'records' in err
+        assert err['records'][0] == {'fiscal_yr': ['Invalid fiscal year: "2015-2025"']}
+
+    def test_org_based_fields(self):
+        """
+        Fields using choices_reference_table should
+        use the reference data as valid choices
+        """
+        chromo = get_chromo('service-std')
+        record = chromo['examples']['record'].copy()
+
+        expected_org_based_fields = ['service_id']
+        for field in chromo['fields']:
+            if field.get('published_resource_computed_field'):
+                continue
+            if 'choices_reference_table' in field:
+                assert field['datastore_id'] in expected_org_based_fields
+
+        record['service_id'] = 'NOT VALID'
+        with pytest.raises(ValidationError) as ve:
+            self.lc.action.datastore_upsert(
+                resource_id=self.resource_id,
+                records=[record])
+        model.Session.rollback()
+        err = ve.value.error_dict
+        assert 'records' in err
+        assert err['records'][0] == {'service_id': ['Invalid choice for Organization service-std-test-org: NOT VALID']}
 
     def test_max_chars(self):
         """
