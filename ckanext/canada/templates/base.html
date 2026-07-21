@@ -78,7 +78,7 @@
         height: calc(100% + 50px);
         content: "";
         pointer-events: none;
-        background-image: url("/static/img/{{- h.get_environment() -}}.svg");
+        background-image: url("/static/img/{{- h.get_environment() -}}-{{- h.lang() -}}.svg");
         background-repeat: repeat;
         background-size: 60px 60px;
         opacity: 0.06;
@@ -102,7 +102,7 @@
         height: calc(100% + 300px);
         content: "";
         pointer-events: none;
-        background-image: url("/static/img/{{- h.get_environment() -}}.svg");
+        background-image: url("/static/img/{{- h.get_environment() -}}-{{- h.lang() -}}.svg");
         background-repeat: repeat;
         background-size: 60px 60px;
         opacity: 0.06;
