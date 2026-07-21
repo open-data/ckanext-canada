@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-03-19 17:41+0000\n"
+"POT-Creation-Date: 2026-07-10 14:12-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: fr\n"
@@ -158,136 +158,136 @@ msgstr "Numéro d’entreprise non valide"
 msgid "Treasury Board of Canada Secretariat"
 msgstr "Secrétariat du Conseil du Trésor du Canada"
 
-#: ckanext/canada/helpers.py:711 ckanext/canada/strings.py:14
+#: ckanext/canada/helpers.py:716 ckanext/canada/strings.py:14
 #: ckanext/canada/view.py:1517
 msgid "Members not found"
 msgstr "Membres non trouvés"
 
-#: ckanext/canada/helpers.py:846
+#: ckanext/canada/helpers.py:851
 msgid "Data awaiting load to DataStore"
 msgstr "Le versement des données dans DataStore est en attente"
 
-#: ckanext/canada/helpers.py:847
+#: ckanext/canada/helpers.py:852
 msgid "Loading data into DataStore"
 msgstr "Le versement des données dans DataStore est en cours"
 
-#: ckanext/canada/helpers.py:848
+#: ckanext/canada/helpers.py:853
 msgid "Data loaded into DataStore"
 msgstr "Les données ont été versées dans DataStore"
 
-#: ckanext/canada/helpers.py:849
+#: ckanext/canada/helpers.py:854
 msgid "Failed to load data into DataStore"
 msgstr "Les données n'ont pas été versées dans DataStore"
 
-#: ckanext/canada/helpers.py:850
+#: ckanext/canada/helpers.py:855
 msgid "Data available in DataStore"
 msgstr "Les données sont disponibles dans DataStore"
 
-#: ckanext/canada/helpers.py:851
+#: ckanext/canada/helpers.py:856
 msgid "Resource not active in DataStore"
 msgstr "La ressource est inactive dans DataStore"
 
-#: ckanext/canada/helpers.py:852
+#: ckanext/canada/helpers.py:857
 msgid "DataStore status unknown"
 msgstr "L'état de DataStore est inconnu"
 
 # Search facets
-#: ckanext/canada/helpers.py:931
+#: ckanext/canada/helpers.py:936
 #: ckanext/canada/templates/home/quick_links.html:65
+#: ckanext/canada/templates/package/snippets/package_type_label.html:16
 #: ckanext/canada/templates/scheming/package/snippets/package_form.html:28
-#: ckanext/canada/templates/snippets/cdts/header.html:31
+#: ckanext/canada/templates/snippets/cdts/header.html:33
 #: ckanext/canada/templates/snippets/dataset_facets.html:3
 #: ckanext/canada/templates/snippets/dataset_facets.html:10
-#: ckanext/canada/templates/snippets/package_item.html:11
 msgid "Open Data"
 msgstr "Données ouvertes"
 
-#: ckanext/canada/helpers.py:932
+#: ckanext/canada/helpers.py:937
 #: ckanext/canada/templates/home/quick_links.html:82
+#: ckanext/canada/templates/package/snippets/package_type_label.html:22
 #: ckanext/canada/templates/scheming/package/snippets/package_form.html:30
 #: ckanext/canada/templates/snippets/cdts/header.html:57
 #: ckanext/canada/templates/snippets/dataset_facets.html:5
 #: ckanext/canada/templates/snippets/dataset_facets.html:11
-#: ckanext/canada/templates/snippets/package_item.html:17
 msgid "Open Information"
 msgstr "Information ouverte"
 
-#: ckanext/canada/helpers.py:944
+#: ckanext/canada/helpers.py:949
 #: ckanext/canada/templates/snippets/dataset_facets.html:27
 msgid "Request sent to data owner - awaiting response"
 msgstr "Demande envoyée au propriétaire des données, en attente de réponse"
 
-#: ckanext/canada/helpers.py:948
+#: ckanext/canada/helpers.py:953
 #: ckanext/canada/templates/snippets/publish_facet.html:44
 msgid "Pending"
 msgstr "En attente"
 
-#: ckanext/canada/helpers.py:949 ckanext/canada/templates/package/read.html:13
-#: ckanext/canada/templates/snippets/package_item.html:33
+#: ckanext/canada/helpers.py:954 ckanext/canada/templates/package/read.html:48
+#: ckanext/canada/templates/snippets/package_item.html:21
 #: ckanext/canada/templates/snippets/publish_facet.html:44
 msgid "Draft"
 msgstr "Ébauche"
 
-#: ckanext/canada/helpers.py:966
-#: ckanext/canada/templates/home/quick_links.html:136
-#: ckanext/canada/templates/snippets/cdts/header.html:60
+#: ckanext/canada/helpers.py:971
+#: ckanext/canada/templates/home/quick_links.html:152
+#: ckanext/canada/templates/package/snippets/package_type_label.html:20
+#: ckanext/canada/templates/package/snippets/package_type_label.html:26
+#: ckanext/canada/templates/snippets/cdts/header.html:75
 #: ckanext/canada/templates/snippets/dataset_facets.html:33
-#: ckanext/canada/templates/snippets/package_item.html:15
-#: ckanext/canada/templates/snippets/package_item.html:21
 msgid "Proactive Publication"
 msgstr "Publication proactive"
 
-#: ckanext/canada/helpers.py:995
+#: ckanext/canada/helpers.py:1000
 #: ckanext/canada/templates/snippets/publish_facet.html:25
 msgid "Published"
 msgstr "Publié"
 
-#: ckanext/canada/helpers.py:997
+#: ckanext/canada/helpers.py:1002
 #: ckanext/canada/templates/snippets/publish_facet.html:34
 msgid "Scheduled"
 msgstr "Prévu"
 
-#: ckanext/canada/helpers.py:1037
+#: ckanext/canada/helpers.py:1042
 msgid "Registry Home"
 msgstr "Accueil du registre"
 
-#: ckanext/canada/helpers.py:1042
+#: ckanext/canada/helpers.py:1047
 msgid "Open Government"
 msgstr "Gouvernement ouvert"
 
-#: ckanext/canada/helpers.py:1045
+#: ckanext/canada/helpers.py:1050
 #: ckanext/canada/templates/admin/publish_search.html:19
-#: ckanext/canada/templates/home/quick_links.html:107
+#: ckanext/canada/templates/home/quick_links.html:123
 #: ckanext/canada/templates/organization/snippets/organization_search.html:8
 #: ckanext/canada/templates/package/snippets/resources_list.html:36
-#: ckanext/canada/templates/snippets/cdts/header.html:153
+#: ckanext/canada/templates/snippets/cdts/header.html:174
 #: ckanext/canada/templates/snippets/search_form.html:45
-#: ckanext/canada/templates/user/snippets/user_search.html:10
+#: ckanext/canada/templates/user/snippets/user_search.html:11
 msgid "Search"
 msgstr "Rechercher"
 
-#: ckanext/canada/logic.py:364
+#: ckanext/canada/logic.py:365
 msgid "Could not determine a resource format. Please supply a format."
 msgstr ""
 "Il est impossible de déterminer le format de la ressource. Veuillez "
 "indiquer un format."
 
-#: ckanext/canada/logic.py:554
+#: ckanext/canada/logic.py:555
 msgid "Unknown Job"
 msgstr "Tâche inconnue "
 
-#: ckanext/canada/logic.py:561
+#: ckanext/canada/logic.py:562
 msgid "Entire Site"
 msgstr ""
 
-#: ckanext/canada/logic.py:674
+#: ckanext/canada/logic.py:675
 #, python-format
 msgid "No Portal Sync information found for package %s"
 msgstr ""
 "Aucune information de synchronisation du portail n'a été trouvée pour le "
 "jeu de données %s"
 
-#: ckanext/canada/logic.py:763
+#: ckanext/canada/logic.py:764
 msgid ""
 "Invalid request. Full text search is not supported for data with more "
 "than {} rows."
@@ -979,7 +979,7 @@ msgstr ""
 
 #: ckanext/canada/templates/package/new_resource.html:19
 #: ckanext/canada/templates/package/new_resource_not_draft.html:11
-#: ckanext/canada/templates/package/read.html:35
+#: ckanext/canada/templates/package/read.html:80
 #: ckanext/canada/validators.py:646
 msgid ""
 "You can only add up to {max_resource_count} resources to a dataset. You "
@@ -1150,7 +1150,7 @@ msgstr " d’enregistrements publiés."
 #: ckanext/canada/templates/package/edit.html:8
 #: ckanext/canada/templates/package/resource_edit.html:3
 #: ckanext/canada/templates/package/resource_edit_base.html:7
-#: ckanext/canada/templates/snippets/pd_datatable_depr.html:20
+#: ckanext/canada/templates/snippets/pd_datatable_depr.html:31
 #: ckanext/canada/view.py:1195
 msgid "Edit"
 msgstr "Modifier"
@@ -1209,254 +1209,260 @@ msgstr "L’utilisateur %r n’est pas autorisé à modifier les membres de %s"
 msgid "User %r not authorized to view members of %s"
 msgstr "L’utilisateur %r n’est pas autorisé à voir les membres de %s"
 
-#: ckanext/canada/assets/datatables/pd_datatables.js:65
-#: ckanext/canada/templates/snippets/pd_datatable_depr.html:79
+#: ckanext/canada/assets/datatables/pd_datatables.js:68
+#: ckanext/canada/templates/snippets/pd_datatable_depr.html:90
 msgid "Select All"
 msgstr "Sélectionner tout"
 
-#: ckanext/canada/assets/datatables/pd_datatables.js:66
+#: ckanext/canada/assets/datatables/pd_datatables.js:69
 msgid "Search:"
 msgstr "Rechercher :"
 
-#: ckanext/canada/assets/datatables/pd_datatables.js:67
+#: ckanext/canada/assets/datatables/pd_datatables.js:70
 msgid "Sorting by:"
 msgstr ""
 
-#: ckanext/canada/assets/datatables/pd_datatables.js:68
+#: ckanext/canada/assets/datatables/pd_datatables.js:71
 msgid "Ascending"
 msgstr ""
 
-#: ckanext/canada/assets/datatables/pd_datatables.js:69
+#: ckanext/canada/assets/datatables/pd_datatables.js:72
 msgid "Descending"
 msgstr ""
 
-#: ckanext/canada/assets/datatables/pd_datatables.js:70
+#: ckanext/canada/assets/datatables/pd_datatables.js:73
 msgid "Any"
 msgstr ""
 
-#: ckanext/canada/assets/datatables/pd_datatables.js:71
+#: ckanext/canada/assets/datatables/pd_datatables.js:74
 msgid "less"
 msgstr ""
 
-#: ckanext/canada/assets/datatables/pd_datatables.js:72
+#: ckanext/canada/assets/datatables/pd_datatables.js:75
 msgid "Row"
 msgstr ""
 
-#: ckanext/canada/assets/datatables/pd_datatables.js:73
+#: ckanext/canada/assets/datatables/pd_datatables.js:76
 msgid "New"
 msgstr ""
 
-#: ckanext/canada/assets/datatables/pd_datatables.js:74
+#: ckanext/canada/assets/datatables/pd_datatables.js:77
 msgid "Updated"
 msgstr ""
 
-#: ckanext/canada/assets/datatables/pd_datatables.js:75
+#: ckanext/canada/assets/datatables/pd_datatables.js:78
 msgid "Jump to page"
 msgstr ""
 
-#: ckanext/canada/assets/datatables/pd_datatables.js:76
+#: ckanext/canada/assets/datatables/pd_datatables.js:79
 msgid "Reset Table"
-msgstr ""
+msgstr "Réinitialiser le tableau"
 
-#: ckanext/canada/assets/datatables/pd_datatables.js:77
+#: ckanext/canada/assets/datatables/pd_datatables.js:80
 msgid "Fullscreen"
 msgstr ""
 
-#: ckanext/canada/assets/datatables/pd_datatables.js:78
+#: ckanext/canada/assets/datatables/pd_datatables.js:81
 msgid "Exit Fullscreen"
 msgstr ""
 
-#: ckanext/canada/assets/datatables/pd_datatables.js:79
+#: ckanext/canada/assets/datatables/pd_datatables.js:82
 msgid "Exit Edit Mode"
 msgstr ""
 
-#: ckanext/canada/assets/datatables/pd_datatables.js:80
-msgid "Full Table"
-msgstr ""
-
-#: ckanext/canada/assets/datatables/pd_datatables.js:81
-msgid "Compact Table"
-msgstr ""
-
-#: ckanext/canada/assets/datatables/pd_datatables.js:82
-msgid "Edit Online"
-msgstr ""
-
 #: ckanext/canada/assets/datatables/pd_datatables.js:83
+msgid "Full Table"
+msgstr "Tableau complet"
+
+#: ckanext/canada/assets/datatables/pd_datatables.js:84
+msgid "Compact Table"
+msgstr "Tableau compact"
+
+#: ckanext/canada/assets/datatables/pd_datatables.js:85
+msgid "Edit Online"
+msgstr "Modifier en ligne"
+
+#: ckanext/canada/assets/datatables/pd_datatables.js:86
 msgid "Add new record in Table"
 msgstr ""
 
-#: ckanext/canada/assets/datatables/pd_datatables.js:84
+#: ckanext/canada/assets/datatables/pd_datatables.js:87
 msgid "Edit<span class=\"pd-datatbales-btn-count\"></span> in Table"
 msgstr ""
 
-#: ckanext/canada/assets/datatables/pd_datatables.js:85
+#: ckanext/canada/assets/datatables/pd_datatables.js:88
 msgid "Record is valid"
 msgstr ""
 
-#: ckanext/canada/assets/datatables/pd_datatables.js:86
+#: ckanext/canada/assets/datatables/pd_datatables.js:89
 msgid "Some fields have validation errors"
 msgstr ""
 
-#: ckanext/canada/assets/datatables/pd_datatables.js:87
+#: ckanext/canada/assets/datatables/pd_datatables.js:90
 msgid "Some fields are required"
 msgstr ""
 
-#: ckanext/canada/assets/datatables/pd_datatables.js:88
+#: ckanext/canada/assets/datatables/pd_datatables.js:91
 msgid "Detailed error summary"
 msgstr ""
 
-#: ckanext/canada/assets/datatables/pd_datatables.js:89
+#: ckanext/canada/assets/datatables/pd_datatables.js:92
 msgid "Field errors"
 msgstr ""
 
-#: ckanext/canada/assets/datatables/pd_datatables.js:90
+#: ckanext/canada/assets/datatables/pd_datatables.js:93
 msgid ""
 "You have unsaved records in the table. Do you want to discard your "
 "changes or continue editing?"
 msgstr ""
 
-#: ckanext/canada/assets/datatables/pd_datatables.js:91
+#: ckanext/canada/assets/datatables/pd_datatables.js:94
 msgid "Validating records"
 msgstr ""
 
-#: ckanext/canada/assets/datatables/pd_datatables.js:92
+#: ckanext/canada/assets/datatables/pd_datatables.js:95
 msgid "Saving records to the system"
 msgstr ""
 
-#: ckanext/canada/assets/datatables/pd_datatables.js:94
+#: ckanext/canada/assets/datatables/pd_datatables.js:97
 msgid "Records saved to the system."
 msgstr ""
 
-#: ckanext/canada/assets/datatables/pd_datatables.js:95
+#: ckanext/canada/assets/datatables/pd_datatables.js:98
 msgid "Would you like to add more records, or preview them in the table?"
 msgstr ""
 
-#: ckanext/canada/assets/datatables/pd_datatables.js:96
+#: ckanext/canada/assets/datatables/pd_datatables.js:99
 msgid "Add more records"
 msgstr ""
 
-#: ckanext/canada/assets/datatables/pd_datatables.js:97
+#: ckanext/canada/assets/datatables/pd_datatables.js:100
 msgid "Preview records"
 msgstr ""
 
-#: ckanext/canada/assets/datatables/pd_datatables.js:98
+#: ckanext/canada/assets/datatables/pd_datatables.js:101
 msgid ""
 "Your records did not save because one or more of them have errors. Fix "
 "the errors and save again to finalize your records."
 msgstr ""
 
-#: ckanext/canada/assets/datatables/pd_datatables.js:99
+#: ckanext/canada/assets/datatables/pd_datatables.js:102
 msgid "Could not save the records due to the following error: "
 msgstr ""
 
-#: ckanext/canada/assets/datatables/pd_datatables.js:100
+#: ckanext/canada/assets/datatables/pd_datatables.js:103
 msgid ""
 "Your records did not save. Try saving again. If the issue persist please "
 "contact support with Support ID: "
 msgstr ""
 
-#: ckanext/canada/assets/datatables/pd_datatables.js:101
+#: ckanext/canada/assets/datatables/pd_datatables.js:104
 msgid ""
 "Your records did not save. Try saving again. If the issue persist please "
 "contact support."
 msgstr ""
 
-#: ckanext/canada/assets/datatables/pd_datatables.js:102
+#: ckanext/canada/assets/datatables/pd_datatables.js:105
 msgid "{PRIM_IDS} already used in this Editor Table."
 msgstr ""
 
-#: ckanext/canada/assets/datatables/pd_datatables.js:103
+#: ckanext/canada/assets/datatables/pd_datatables.js:106
 msgid " record(s)"
 msgstr ""
 
-#: ckanext/canada/assets/datatables/pd_datatables.js:104
+#: ckanext/canada/assets/datatables/pd_datatables.js:107
 msgid "Legend:"
 msgstr ""
 
-#: ckanext/canada/assets/datatables/pd_datatables.js:105
+#: ckanext/canada/assets/datatables/pd_datatables.js:108
 msgid "Valid"
 msgstr ""
 
-#: ckanext/canada/assets/datatables/pd_datatables.js:106
+#: ckanext/canada/assets/datatables/pd_datatables.js:109
 #: ckanext/canada/templates/error_document_template.html:18
 msgid "Error"
 msgstr "Erreur"
 
-#: ckanext/canada/assets/datatables/pd_datatables.js:107
+#: ckanext/canada/assets/datatables/pd_datatables.js:110
 msgid "Required"
 msgstr ""
 
-#: ckanext/canada/assets/datatables/pd_datatables.js:108
+#: ckanext/canada/assets/datatables/pd_datatables.js:111
 msgid "Error: Could not query records. Please try again."
 msgstr ""
 
-#: ckanext/canada/assets/datatables/pd_datatables.js:109
+#: ckanext/canada/assets/datatables/pd_datatables.js:112
 msgid "Error: Could not generate Excel template. Please try again."
 msgstr ""
 
-#: ckanext/canada/assets/datatables/pd_datatables.js:110
+#: ckanext/canada/assets/datatables/pd_datatables.js:113
 msgid "Edit<span class=\"pd-datatbales-btn-count\"></span> in Excel"
-msgstr ""
+msgstr "Modifier<span class=\"pd-datatbales-btn-count\"></span> dans Excel"
 
-#: ckanext/canada/assets/datatables/pd_datatables.js:111
+#: ckanext/canada/assets/datatables/pd_datatables.js:114
 msgid "Exporting{COUNT} record(s) to an Excel Template"
 msgstr ""
 
-#: ckanext/canada/assets/datatables/pd_datatables.js:112
+#: ckanext/canada/assets/datatables/pd_datatables.js:115
 msgid "Delete<span class=\"pd-datatbales-btn-count\"></span>"
-msgstr ""
+msgstr "Supprimer<span class=\"pd-datatbales-btn-count\"></span>"
 
-#: ckanext/canada/assets/datatables/pd_datatables.js:113
+#: ckanext/canada/assets/datatables/pd_datatables.js:116
 msgid "Save<span class=\"pd-datatbales-btn-count\"></span>"
 msgstr ""
 
-#: ckanext/canada/assets/datatables/pd_datatables.js:116
+#: ckanext/canada/assets/datatables/pd_datatables.js:119
 msgid "No data available in table"
 msgstr ""
 
-#: ckanext/canada/assets/datatables/pd_datatables.js:117
+#: ckanext/canada/assets/datatables/pd_datatables.js:120
 msgid "Showing _START_ to _END_ of _TOTAL_ entries"
 msgstr ""
 
-#: ckanext/canada/assets/datatables/pd_datatables.js:118
+#: ckanext/canada/assets/datatables/pd_datatables.js:121
 msgid "Showing 0 to 0 of 0 entries"
 msgstr ""
 
-#: ckanext/canada/assets/datatables/pd_datatables.js:119
+#: ckanext/canada/assets/datatables/pd_datatables.js:122
 msgid "(filtered from _MAX_ total entries)"
 msgstr ""
 
-#: ckanext/canada/assets/datatables/pd_datatables.js:122
+#: ckanext/canada/assets/datatables/pd_datatables.js:125
 msgid "_MENU_ Show number of entries"
-msgstr ""
+msgstr "_MENU_ Afficher le nombre d'entrées"
 
-#: ckanext/canada/assets/datatables/pd_datatables.js:123
+#: ckanext/canada/assets/datatables/pd_datatables.js:126
 #: ckanext/canada/templates/package/snippets/data_api_button.html:2
 msgid "Loading..."
 msgstr "Chargement..."
 
-#: ckanext/canada/assets/datatables/pd_datatables.js:125
+#: ckanext/canada/assets/datatables/pd_datatables.js:128
 msgid "Full Text Search"
-msgstr ""
+msgstr "La recherche en texte intégral"
 
-#: ckanext/canada/assets/datatables/pd_datatables.js:126
+#: ckanext/canada/assets/datatables/pd_datatables.js:129
 msgid "No matching records found"
 msgstr ""
 
-#: ckanext/canada/assets/datatables/pd_datatables.js:134
+#: ckanext/canada/assets/datatables/pd_datatables.js:137
 msgid "Order by this column"
 msgstr ""
 
-#: ckanext/canada/assets/datatables/pd_datatables.js:135
+#: ckanext/canada/assets/datatables/pd_datatables.js:138
 msgid "Reverse order this column"
 msgstr ""
 
-#: ckanext/canada/assets/datatables/pd_datatables.js:439
-#: ckanext/canada/assets/datatables/pd_datatables.js:487
-#: ckanext/canada/assets/datatables/pd_datatables.js:503
+#: ckanext/canada/assets/datatables/pd_datatables.js:446
+#: ckanext/canada/assets/datatables/pd_datatables.js:494
+#: ckanext/canada/assets/datatables/pd_datatables.js:510
 msgid ": "
 msgstr " : "
+
+#: ckanext/canada/assets/modules/user_opt_in.js:74
+#: ckanext/canada/assets/modules/user_opt_in.js:78
+#: ckanext/canada/assets/modules/user_opt_in.js:82
+msgid "Failed to change user settings"
+msgstr ""
 
 #: ckanext/canada/plugin/public_plugin.py:151
 #: ckanext/canada/templates/scheming/package/snippets/package_form.html:25
@@ -1513,18 +1519,18 @@ msgstr "Juridiction"
 msgid "Suggestion Status"
 msgstr "État de la suggestion"
 
-#: ckanext/canada/plugin/public_plugin.py:257
-#: ckanext/canada/plugin/public_plugin.py:264
+#: ckanext/canada/plugin/public_plugin.py:259
+#: ckanext/canada/plugin/public_plugin.py:266
 msgid "container_title"
 msgstr ""
 
-#: ckanext/canada/plugin/public_plugin.py:330
-#: ckanext/canada/templates/package/read.html:186
+#: ckanext/canada/plugin/public_plugin.py:333
+#: ckanext/canada/templates/package/read.html:194
 msgid "Previous"
 msgstr "Précédent"
 
-#: ckanext/canada/plugin/public_plugin.py:331
-#: ckanext/canada/templates/package/read.html:202
+#: ckanext/canada/plugin/public_plugin.py:334
+#: ckanext/canada/templates/package/read.html:210
 msgid "Next"
 msgstr "Suivant"
 
@@ -1702,14 +1708,14 @@ msgstr ""
 "pour votre organisation"
 
 #. SQL Trigger String for PD Type: consultations
-#: ckanext/canada/tables/consultations.yaml:682
+#: ckanext/canada/tables/consultations.yaml:685
 msgid "If Status is set to: Not Going Forward, Publish Record must be set to No"
 msgstr ""
 "Si le statut est établi à : Ne pas aller de l’avant, alors l’option de "
 "Publier le document doit être réglée à Non."
 
 #. SQL Trigger String for PD Type: consultations
-#: ckanext/canada/tables/consultations.yaml:683
+#: ckanext/canada/tables/consultations.yaml:686
 msgid "Comma is not allowed in Registration Number field"
 msgstr "La virgule n’est pas autorisée dans le champ du Numéro d’enregistrement"
 
@@ -1992,8 +1998,8 @@ msgstr ""
 
 #. SQL Trigger String for PD Type: grants
 #: ckanext/canada/tables/grants.yaml:1315
-msgid "Must be greater than zero"
-msgstr "Le nombre doit être supérieur à 0"
+msgid "Must be greater than or equal to zero"
+msgstr "Le nombre doit être supérieur ou égal à 0"
 
 #. Resource Title for PD Type: grants
 #: ckanext/canada/tables/grants.yaml:1364
@@ -2860,7 +2866,7 @@ msgid "Load more"
 msgstr "En charger davantage"
 
 #: ckanext/canada/templates/admin/base.html:5
-#: ckanext/canada/templates/snippets/cdts/header.html:201
+#: ckanext/canada/templates/snippets/cdts/header.html:222
 msgid "Admin"
 msgstr "Administrateur"
 
@@ -3095,7 +3101,7 @@ msgstr ""
 
 #: ckanext/canada/templates/home/quick_links.html:71
 #: ckanext/canada/templates/package/new.html:7
-#: ckanext/canada/templates/snippets/cdts/header.html:36
+#: ckanext/canada/templates/snippets/cdts/header.html:38
 msgid "Create an Open Data Record"
 msgstr "Créer un enregistrement de données ouvert"
 
@@ -3118,19 +3124,41 @@ msgstr ""
 "Ajouter de l'information sur les programmes, activités et publications du"
 " gouvernement."
 
-#: ckanext/canada/templates/home/quick_links.html:94
-#: ckanext/canada/templates/snippets/cdts/header.html:138
+#: ckanext/canada/templates/home/quick_links.html:96
+#: ckanext/canada/templates/snippets/cdts/header.html:66
+msgid "Algorithmic Impact Assessment"
+msgstr "Evaluation d'incidence algorithmique"
+
+#: ckanext/canada/templates/home/quick_links.html:97
+msgid "Access, add or modify Algorithmic Impact Assessment."
+msgstr ""
+"Accédez, téléchargez et modifiez l'evaluation d'incidence algorithmique "
+"pour votre organisation"
+
+#: ckanext/canada/templates/home/quick_links.html:104
+#: ckanext/canada/templates/snippets/cdts/header.html:70
+msgid "Institutional Accessibility plans"
+msgstr "Plans sur l'accessibilité des institutions"
+
+#: ckanext/canada/templates/home/quick_links.html:105
+msgid "Access, add or modify Institutional Accessibility plans."
+msgstr ""
+"Accédez, téléchargez et modifiez l'Plans sur l'accessibilité des "
+"institutions pour votre organisation"
+
+#: ckanext/canada/templates/home/quick_links.html:110
+#: ckanext/canada/templates/package/snippets/package_type_label.html:24
+#: ckanext/canada/templates/snippets/cdts/header.html:159
 #: ckanext/canada/templates/snippets/dataset_facets.html:4
-#: ckanext/canada/templates/snippets/package_item.html:19
 msgid "Open Dialogue"
 msgstr "Dialogue ouvert"
 
-#: ckanext/canada/templates/home/quick_links.html:101
-#: ckanext/canada/templates/snippets/cdts/header.html:147
+#: ckanext/canada/templates/home/quick_links.html:117
+#: ckanext/canada/templates/snippets/cdts/header.html:168
 msgid "Consultations master dataset"
 msgstr "Données de consultations principals"
 
-#: ckanext/canada/templates/home/quick_links.html:102
+#: ckanext/canada/templates/home/quick_links.html:118
 msgid ""
 "Access the dataset that consolidates all the consultations reports "
 "submitted by federal institutions."
@@ -3138,53 +3166,53 @@ msgstr ""
 "Ayez accès au jeu de données qui vient consolider tous les rapports de "
 "consultation ayant été soumis par les institutions fédérales."
 
-#: ckanext/canada/templates/home/quick_links.html:113
+#: ckanext/canada/templates/home/quick_links.html:129
 msgid "Search All Records"
 msgstr "Faire une recherche dans tous les dossiers"
 
-#: ckanext/canada/templates/home/quick_links.html:114
+#: ckanext/canada/templates/home/quick_links.html:130
 msgid "Add all Open Data and Information records in the Registry."
 msgstr "Faire une recherche dans tous les dossiers du registre."
 
-#: ckanext/canada/templates/home/quick_links.html:121
+#: ckanext/canada/templates/home/quick_links.html:137
 msgid "Search your Organization Records"
 msgstr "Faire une recherche dans les dossiers de votre organisation"
 
-#: ckanext/canada/templates/home/quick_links.html:122
+#: ckanext/canada/templates/home/quick_links.html:138
 msgid "Search all records in the Registry, for your Organization."
 msgstr ""
 "Faire une recherche dans tous les dossiers du registre, pour votre "
 "organisation."
 
-#: ckanext/canada/templates/home/quick_links.html:128
+#: ckanext/canada/templates/home/quick_links.html:144
 msgid "View Members of your Organization"
 msgstr "Voir les members liés à votre organisation"
 
-#: ckanext/canada/templates/home/quick_links.html:129
+#: ckanext/canada/templates/home/quick_links.html:145
 msgid "View the list of members linked to your organization."
 msgstr "Voir la liste des membres liés à votre organisation."
 
-#: ckanext/canada/templates/home/quick_links.html:154
-#: ckanext/canada/templates/snippets/cdts/header.html:109
+#: ckanext/canada/templates/home/quick_links.html:170
+#: ckanext/canada/templates/snippets/cdts/header.html:124
 msgid "Reports Tabled in Parliament"
 msgstr "Rapports déposés au Parlement"
 
-#: ckanext/canada/templates/home/quick_links.html:155
+#: ckanext/canada/templates/home/quick_links.html:171
 msgid "Access, add or modify your reports tabled in Parliament."
 msgstr ""
 "Consultez vos rapports déposés au Parlement, ajoutez-y du contenu ou "
 "modifiez-les."
 
-#: ckanext/canada/templates/home/quick_links.html:162
+#: ckanext/canada/templates/home/quick_links.html:178
 msgid "Briefing packages"
 msgstr "Documents d’information"
 
-#: ckanext/canada/templates/home/quick_links.html:169
-#: ckanext/canada/templates/snippets/cdts/header.html:121
+#: ckanext/canada/templates/home/quick_links.html:185
+#: ckanext/canada/templates/snippets/cdts/header.html:136
 msgid "New or incoming ministers"
 msgstr "Documents d’information pour les nouveaux ministres"
 
-#: ckanext/canada/templates/home/quick_links.html:170
+#: ckanext/canada/templates/home/quick_links.html:186
 msgid ""
 "Access, add or modify briefing package information for your new or "
 "incoming minister."
@@ -3192,12 +3220,12 @@ msgstr ""
 "Consultez la trousse d’information pour le nouveau ministre, ajoutez-y du"
 " contenu ou modifiez-la."
 
-#: ckanext/canada/templates/home/quick_links.html:177
-#: ckanext/canada/templates/snippets/cdts/header.html:125
+#: ckanext/canada/templates/home/quick_links.html:193
+#: ckanext/canada/templates/snippets/cdts/header.html:140
 msgid "New or incoming deputy heads"
 msgstr "Documents d’information pour les nouveaux administrateurs généraux"
 
-#: ckanext/canada/templates/home/quick_links.html:178
+#: ckanext/canada/templates/home/quick_links.html:194
 msgid ""
 "Access, add or modify briefing package information for your new or "
 "incoming deputy head."
@@ -3205,14 +3233,14 @@ msgstr ""
 "Consultez la trousse d’information pour le nouvel administrateur général,"
 " ajoutez-y du contenu ou modifiez-la."
 
-#: ckanext/canada/templates/home/quick_links.html:185
-#: ckanext/canada/templates/snippets/cdts/header.html:129
+#: ckanext/canada/templates/home/quick_links.html:201
+#: ckanext/canada/templates/snippets/cdts/header.html:144
 msgid "Parliamentary Committee appearances for ministers"
 msgstr ""
 "Documents d’information à l’intention des ministres pour les comparutions"
 " devant un comité parlementaire"
 
-#: ckanext/canada/templates/home/quick_links.html:186
+#: ckanext/canada/templates/home/quick_links.html:202
 msgid ""
 "Access, add or modify briefing packages for Parliamentary Committee "
 "appearance for your minister."
@@ -3220,14 +3248,14 @@ msgstr ""
 "Consultez la trousse d’information pour la comparution de votre ministre "
 "devant un comité parlementaire, ajoutez-y du contenu ou modifiez-la."
 
-#: ckanext/canada/templates/home/quick_links.html:193
-#: ckanext/canada/templates/snippets/cdts/header.html:133
+#: ckanext/canada/templates/home/quick_links.html:209
+#: ckanext/canada/templates/snippets/cdts/header.html:148
 msgid "Parliamentary Committee appearances for deputy heads"
 msgstr ""
 "Documents d’information à l’intention des administrateurs généraux pour "
 "les comparutions devant un comité parlementaire"
 
-#: ckanext/canada/templates/home/quick_links.html:194
+#: ckanext/canada/templates/home/quick_links.html:210
 msgid ""
 "Access, add or modify briefing packages for Parliamentary Committee "
 "appearance for your deputy head."
@@ -3253,7 +3281,7 @@ msgid "Activity Stream"
 msgstr "Flux d’Activités"
 
 #: ckanext/canada/templates/organization/activity_stream.html:11
-#: ckanext/canada/templates/package/read_base.html:163
+#: ckanext/canada/templates/package/read_base.html:159
 msgid "Atom Feed"
 msgstr "Fil de nouvelles Atom"
 
@@ -3281,7 +3309,7 @@ msgstr "Gérer"
 #: ckanext/canada/templates/organization/index.html:26
 #: ckanext/canada/templates/organization/members.html:10
 #: ckanext/canada/templates/organization/read_base.html:7
-#: ckanext/canada/templates/snippets/cdts/header.html:157
+#: ckanext/canada/templates/snippets/cdts/header.html:178
 #: ckanext/canada/templates/user/read.html:28
 #: ckanext/canada/templates/user/read_base.html:17
 #: ckanext/canada/templates/user/read_base.html:76
@@ -3518,15 +3546,44 @@ msgstr "Créer un enregistrement d'informations ouvertes"
 
 #: ckanext/canada/templates/package/new_resource.html:18
 #: ckanext/canada/templates/package/new_resource_not_draft.html:10
-#: ckanext/canada/templates/package/read.html:34
+#: ckanext/canada/templates/package/read.html:79
 msgid "Resource Limit Reached"
 msgstr "Limite de ressources atteinte"
 
+#: ckanext/canada/templates/package/read.html:15
+#: ckanext/canada/templates/package/read.html:23
+msgid "Action required:"
+msgstr "Mesure requise :"
+
 #: ckanext/canada/templates/package/read.html:16
-#: ckanext/canada/templates/package/read.html:108
+msgid ""
+"Draft record has been saved and can be edited. Mark as ready to publish "
+"to continue."
+msgstr ""
+"Une ébauche du document a été sauvegardée et peut-être modifiée. Marquer "
+"en tant que prête à publier pour poursuivre."
+
+#: ckanext/canada/templates/package/read.html:24
+msgid "Seek out departmental approval and mark as approved to continue."
+msgstr ""
+"Chercher à obtenir l'approbation du ministère et marquer en tant "
+"qu'approuvé pour poursuivre."
+
+#: ckanext/canada/templates/package/read.html:31
+msgid "Data record is in queue for validation."
+msgstr "La fiche est dans la file d'attente à des fins de validation."
+
+#: ckanext/canada/templates/package/read.html:32
+msgid "Record will be published by the following business day upon validation."
+msgstr ""
+"Le document sera publié d'ici le prochain jour ouvrable une fois qu'il "
+"aura été validé."
+
+#: ckanext/canada/templates/package/read.html:51
+#: ckanext/canada/templates/package/read.html:116
 #: ckanext/canada/templates/scheming/display_snippets/fluent_tags.html:8
-#: ckanext/canada/templates/snippets/package_item.html:39
-#: ckanext/canada/templates/snippets/package_item.html:55
+#: ckanext/canada/templates/snippets/package_item.html:27
+#: ckanext/canada/templates/snippets/package_item.html:43
 msgid ""
 "This third party metadata element has been translated using an automated "
 "translation tool.  To report any discrepancies please contact {support}"
@@ -3535,49 +3592,20 @@ msgstr ""
 "traduction automatique. Pour signaler toute anomalie veuillez communiquer"
 " avec {support}"
 
-#: ckanext/canada/templates/package/read.html:54
-#: ckanext/canada/templates/package/read.html:62
-msgid "Action required:"
-msgstr "Mesure requise :"
-
-#: ckanext/canada/templates/package/read.html:55
-msgid ""
-"Draft record has been saved and can be edited. Mark as ready to publish "
-"to continue."
-msgstr ""
-"Une ébauche du document a été sauvegardée et peut-être modifiée. Marquer "
-"en tant que prête à publier pour poursuivre."
-
-#: ckanext/canada/templates/package/read.html:63
-msgid "Seek out departmental approval and mark as approved to continue."
-msgstr ""
-"Chercher à obtenir l'approbation du ministère et marquer en tant "
-"qu'approuvé pour poursuivre."
-
-#: ckanext/canada/templates/package/read.html:70
-msgid "Data record is in queue for validation."
-msgstr "La fiche est dans la file d'attente à des fins de validation."
-
-#: ckanext/canada/templates/package/read.html:71
-msgid "Record will be published by the following business day upon validation."
-msgstr ""
-"Le document sera publié d'ici le prochain jour ouvrable une fois qu'il "
-"aura été validé."
-
-#: ckanext/canada/templates/package/read.html:89
-#: ckanext/canada/templates/package/read.html:90
+#: ckanext/canada/templates/package/read.html:60
+#: ckanext/canada/templates/package/read.html:61
 msgid "View on Portal"
 msgstr "Consulter le Portail"
 
-#: ckanext/canada/templates/package/read.html:96
+#: ckanext/canada/templates/package/read.html:104
 msgid "This dataset has been deleted and is no longer accessible"
 msgstr "Cet ensemble de données a été supprimé et n’est plus accessible"
 
-#: ckanext/canada/templates/package/read.html:119
+#: ckanext/canada/templates/package/read.html:127
 msgid "Made available by the "
 msgstr "Rendus disponibles par l’entremise du "
 
-#: ckanext/canada/templates/package/read.html:121
+#: ckanext/canada/templates/package/read.html:129
 msgid ""
 "<p>These resources are not under the control of the Government of Canada "
 "and the link is provided solely for the convenience of our website "
@@ -3615,59 +3643,59 @@ msgstr ""
 " Web non gouvernemental avant de fournir leurs renseignements "
 "personnels.</p>"
 
-#: ckanext/canada/templates/package/read.html:136
-#: ckanext/canada/templates/package/read.html:159
+#: ckanext/canada/templates/package/read.html:144
+#: ckanext/canada/templates/package/read.html:167
 #: ckanext/canada/templates/package/read_base.html:62
 #: ckanext/canada/templates/package/read_base.html:71
 #: ckanext/canada/templates/package/read_base.html:87
-#: ckanext/canada/templates/package/read_base.html:168
+#: ckanext/canada/templates/package/read_base.html:164
 #: ckanext/canada/templates/recombinant/create_pd_record.html:30
 #: ckanext/canada/templates/recombinant/update_pd_record.html:30
-#: ckanext/canada/templates/snippets/package_item.html:90
+#: ckanext/canada/templates/snippets/package_item.html:78
 msgid ":"
 msgstr " :"
 
-#: ckanext/canada/templates/package/read.html:157
+#: ckanext/canada/templates/package/read.html:165
 msgid "Issued by"
 msgstr "Publiée par"
 
-#: ckanext/canada/templates/package/read.html:212
+#: ckanext/canada/templates/package/read.html:220
 msgid "Dataset Relationships"
 msgstr "Relations entre ensembles de données"
 
-#: ckanext/canada/templates/package/read.html:222
+#: ckanext/canada/templates/package/read.html:230
 msgid "Contact Information"
 msgstr "Coordonnées"
 
-#: ckanext/canada/templates/package/read.html:224
+#: ckanext/canada/templates/package/read.html:232
 msgid "Delivery Point:"
 msgstr "Point de livraison :"
 
-#: ckanext/canada/templates/package/read.html:227
-#: ckanext/canada/templates/package/read_base.html:191
+#: ckanext/canada/templates/package/read.html:235
+#: ckanext/canada/templates/package/read_base.html:187
 msgid "City:"
 msgstr "Ville :"
 
-#: ckanext/canada/templates/package/read.html:230
-#: ckanext/canada/templates/package/read_base.html:194
+#: ckanext/canada/templates/package/read.html:238
+#: ckanext/canada/templates/package/read_base.html:190
 msgid "Administrative Area:"
 msgstr "Zone administrative :"
 
-#: ckanext/canada/templates/package/read.html:233
-#: ckanext/canada/templates/package/read_base.html:193
+#: ckanext/canada/templates/package/read.html:241
+#: ckanext/canada/templates/package/read_base.html:189
 msgid "Postal Code:"
 msgstr "Code postal :"
 
-#: ckanext/canada/templates/package/read.html:236
-#: ckanext/canada/templates/package/read_base.html:192
+#: ckanext/canada/templates/package/read.html:244
+#: ckanext/canada/templates/package/read_base.html:188
 msgid "Country:"
 msgstr "Pays :"
 
-#: ckanext/canada/templates/package/read.html:239
+#: ckanext/canada/templates/package/read.html:247
 msgid "Electronic Mail Address:"
 msgstr "Adresse de courrier électronique :"
 
-#: ckanext/canada/templates/package/read.html:261
+#: ckanext/canada/templates/package/read.html:269
 msgid "Similar records"
 msgstr "Dossiers similaires"
 
@@ -3752,43 +3780,43 @@ msgstr "DCAT (JSON-LD)"
 msgid "DCAT (XML)"
 msgstr "DCAT (XML)"
 
-#: ckanext/canada/templates/package/read_base.html:155
+#: ckanext/canada/templates/package/read_base.html:151
 msgid "FGP Metadata:"
 msgstr "Métadonnées de la PGF :"
 
-#: ckanext/canada/templates/package/read_base.html:157
+#: ckanext/canada/templates/package/read_base.html:153
 msgid "HNAP ISO:19115 Metadata Record"
 msgstr "Enregistrement de métadonnées de HNAP ISO:19115"
 
-#: ckanext/canada/templates/package/read_base.html:175
+#: ckanext/canada/templates/package/read_base.html:171
 msgid "Data Contact"
 msgstr "Point de contact pour les données"
 
-#: ckanext/canada/templates/package/read_base.html:175
+#: ckanext/canada/templates/package/read_base.html:171
 msgid "Distributor Contact"
 msgstr "Renseignements au sujet du distributeur"
 
-#: ckanext/canada/templates/package/read_base.html:186
+#: ckanext/canada/templates/package/read_base.html:182
 msgid "Organization Name:"
 msgstr "Nom de organisation :"
 
-#: ckanext/canada/templates/package/read_base.html:187
+#: ckanext/canada/templates/package/read_base.html:183
 msgid "Telephone Number:"
 msgstr "Numéro de téléphone :"
 
-#: ckanext/canada/templates/package/read_base.html:188
+#: ckanext/canada/templates/package/read_base.html:184
 msgid "Email:"
 msgstr "Courriel :"
 
-#: ckanext/canada/templates/package/read_base.html:189
+#: ckanext/canada/templates/package/read_base.html:185
 msgid "Contact Form:"
 msgstr "Formulaire de contact :"
 
-#: ckanext/canada/templates/package/read_base.html:190
+#: ckanext/canada/templates/package/read_base.html:186
 msgid "Address:"
 msgstr "Adresse :"
 
-#: ckanext/canada/templates/package/read_base.html:195
+#: ckanext/canada/templates/package/read_base.html:191
 msgid "Role:"
 msgstr "Rôle :"
 
@@ -3804,45 +3832,45 @@ msgstr "Toutes les ressources"
 msgid "View resource"
 msgstr "Afficher la ressource"
 
-#: ckanext/canada/templates/package/resource_read.html:48
+#: ckanext/canada/templates/package/resource_read.html:51
 #: ckanext/canada/templates/package/snippets/resource_item.html:119
 msgid "Resource data has failed validation."
 msgstr "Les données de ressource ont échoué à la validation."
 
-#: ckanext/canada/templates/package/resource_read.html:48
-#: ckanext/canada/templates/package/resource_read.html:56
+#: ckanext/canada/templates/package/resource_read.html:51
+#: ckanext/canada/templates/package/resource_read.html:59
 #: ckanext/canada/templates/package/snippets/resource_item.html:119
 #: ckanext/canada/templates/package/snippets/resource_item.html:122
 msgid "View Report"
 msgstr "Voir le rapport"
 
-#: ckanext/canada/templates/package/resource_read.html:56
+#: ckanext/canada/templates/package/resource_read.html:59
 #: ckanext/canada/templates/package/snippets/resource_item.html:122
 msgid "Resource data has failed to load to the DataStore."
 msgstr "Les données de ressource n'ont pas pu être chargées dans le DataStore."
 
-#: ckanext/canada/templates/package/resource_read.html:75
+#: ckanext/canada/templates/package/resource_read.html:78
 msgid "List of downloadable formats"
 msgstr "Liste des formats téléchargeables"
 
-#: ckanext/canada/templates/package/resource_read.html:77
+#: ckanext/canada/templates/package/resource_read.html:80
 #: ckanext/canada/templates/package/snippets/resource_item.html:89
 msgid "Download"
 msgstr "Télécharger"
 
-#: ckanext/canada/templates/package/resource_read.html:85
+#: ckanext/canada/templates/package/resource_read.html:88
 msgid "CSV type files"
 msgstr ""
 
-#: ckanext/canada/templates/package/resource_read.html:92
+#: ckanext/canada/templates/package/resource_read.html:95
 msgid "TSV type files"
 msgstr ""
 
-#: ckanext/canada/templates/package/resource_read.html:99
+#: ckanext/canada/templates/package/resource_read.html:102
 msgid "JSON type files"
 msgstr ""
 
-#: ckanext/canada/templates/package/resource_read.html:106
+#: ckanext/canada/templates/package/resource_read.html:109
 msgid "XML type files"
 msgstr ""
 
@@ -3911,6 +3939,11 @@ msgstr "État"
 msgid "Data API"
 msgstr "API de données"
 
+#: ckanext/canada/templates/package/snippets/package_type_label.html:18
+#: ckanext/canada/templates/scheming/package/snippets/package_form.html:32
+msgid "Suggested Dataset"
+msgstr "Jeu de données suggéré"
+
 #: ckanext/canada/templates/package/snippets/resource_info.html:8
 msgid "Additional Information "
 msgstr "Informations complémentaires "
@@ -3973,6 +4006,44 @@ msgstr "Etes-vous sûr de vouloir supprimer cette ressource?"
 #: ckanext/canada/templates/package/snippets/resources.html:44
 msgid "Delete resource"
 msgstr "Supprimer la ressource"
+
+#: ckanext/canada/templates/package/snippets/resource_view.html:19
+msgid "Embed"
+msgstr "Embarquer sur un site"
+
+#: ckanext/canada/templates/package/snippets/resource_view.html:40
+msgid "Embed resource view"
+msgstr "Incorporer cette visualisation de ressource"
+
+#: ckanext/canada/templates/package/snippets/resource_view.html:41
+msgid "Close"
+msgstr ""
+
+#: ckanext/canada/templates/package/snippets/resource_view.html:44
+msgid ""
+"You can copy and paste the embed code into a CMS or blog software that "
+"supports raw HTML"
+msgstr ""
+"Vous pouvez copier et coller le code intégré dans un système de gestion "
+"de contenu ou un logiciel de blogue qui prend en charge le HTML brut"
+
+#: ckanext/canada/templates/package/snippets/resource_view.html:47
+msgid "Only certain websites are allowed to embed content from open.canada.ca:"
+msgstr ""
+"Seuls certains sites Web sont autorisés à intégrer du contenu provenant "
+"de open.canada.ca :"
+
+#: ckanext/canada/templates/package/snippets/resource_view.html:53
+msgid "Width"
+msgstr "Largeur"
+
+#: ckanext/canada/templates/package/snippets/resource_view.html:56
+msgid "Height"
+msgstr "Hauteur"
+
+#: ckanext/canada/templates/package/snippets/resource_view.html:59
+msgid "Code"
+msgstr "Code"
 
 #: ckanext/canada/templates/package/snippets/resources.html:35
 msgid "DataStore"
@@ -4306,11 +4377,6 @@ msgstr ""
 "alimentés par le système utilisés pour décrire le type et l’emplacement "
 "du dossier dans le registre"
 
-#: ckanext/canada/templates/scheming/package/snippets/package_form.html:32
-#: ckanext/canada/templates/snippets/package_item.html:13
-msgid "Suggested Dataset"
-msgstr "Jeu de données suggéré"
-
 #: ckanext/canada/templates/scheming/package/snippets/package_form.html:35
 msgid ""
 "The portal to which the metadata record belongs (Open Data or Open "
@@ -4439,82 +4505,120 @@ msgstr "Aucun filtre sélectionné pour cette recherche"
 msgid "read more"
 msgstr "en savoir plus"
 
-#: ckanext/canada/templates/snippets/package_item.html:35
+#: ckanext/canada/templates/snippets/package_item.html:23
 msgid "Deleted"
 msgstr "Supprimer"
 
-#: ckanext/canada/templates/snippets/package_item.html:59
+#: ckanext/canada/templates/snippets/package_item.html:47
 msgid "This dataset has no description"
 msgstr "Aucune description disponible pour cet ensemble de données"
 
-#: ckanext/canada/templates/snippets/package_item.html:66
+#: ckanext/canada/templates/snippets/package_item.html:54
 msgid "Organization:"
 msgstr "Organisation :"
 
-#: ckanext/canada/templates/snippets/package_item.html:77
+#: ckanext/canada/templates/snippets/package_item.html:65
 msgid "Issued by:"
 msgstr "Publiée par :"
 
-#: ckanext/canada/templates/snippets/package_item.html:99
-#: ckanext/canada/templates/snippets/package_item.html:116
+#: ckanext/canada/templates/snippets/package_item.html:87
+#: ckanext/canada/templates/snippets/package_item.html:104
 msgid "Status:"
 msgstr "État :"
 
-#: ckanext/canada/templates/snippets/package_item.html:107
+#: ckanext/canada/templates/snippets/package_item.html:95
 msgid "Date:"
 msgstr "Date :"
 
-#: ckanext/canada/templates/snippets/package_item.html:119
+#: ckanext/canada/templates/snippets/package_item.html:107
 msgid "Request sent to data owner – awaiting response"
 msgstr "Demande envoyée au propriétaire des données, en attente de réponse"
 
-#: ckanext/canada/templates/snippets/package_item.html:128
+#: ckanext/canada/templates/snippets/package_item.html:116
 msgid "Resource Formats:"
 msgstr "Formats des ressources :"
 
 #: ckanext/canada/templates/snippets/pd_datatable.html:46
-msgid "Interactive Table"
-msgstr ""
+msgid "Interactive Table (beta version)"
+msgstr "Tableau interactif (version bêta)"
 
-#: ckanext/canada/templates/snippets/pd_datatable.html:49
+#: ckanext/canada/templates/snippets/pd_datatable.html:54
+#, python-format
+msgid ""
+"The new table interface will become the default experience. Try the "
+"updated interface and share your <a href='mailto:%(email)s'>feedback</a> "
+"to help shape future improvements."
+msgstr ""
+"La nouvelle interface sera appliquée par défaut à compter. Testez-la et "
+"faites-nous part de vos <a href='mailto:%(email)s'>commentaires</a> afin "
+"de nous aider à l’améliorer."
+
+#: ckanext/canada/templates/snippets/pd_datatable.html:58
+msgid "Revert to older table interface"
+msgstr "Retourner à l’ancienne interface des tableaux"
+
+#: ckanext/canada/templates/snippets/pd_datatable.html:61
 msgid "Keyboard controls"
-msgstr ""
+msgstr "Commandes du clavier"
 
-#: ckanext/canada/templates/snippets/pd_datatable.html:51
+#: ckanext/canada/templates/snippets/pd_datatable.html:63
 msgid ""
 "Hold <pre>SHIFT</pre> key while clicking on sort controls for multi-"
 "column sorting"
 msgstr ""
+"Maintenez la touche <pre>SHIFT</pre> enfoncée tout en cliquant sur les "
+"commandes de tri pour trier plusieurs colonnes."
 
-#: ckanext/canada/templates/snippets/pd_datatable.html:52
+#: ckanext/canada/templates/snippets/pd_datatable.html:64
 msgid ""
 "Press <pre>ALT + K</pre> keys to enter KeyTable mode, allowing you to "
 "navigate the table with arrow keys"
 msgstr ""
+"Appuyez sur les touches <pre>ALT + K</pre> pour passer en mode « KeyTable"
+" », ce qui vous permet de naviguer dans le tableau avec les touches "
+"fléchées"
 
-#: ckanext/canada/templates/snippets/pd_datatable.html:54
+#: ckanext/canada/templates/snippets/pd_datatable.html:66
 msgid "Press <pre>SPACE</pre> key to select a row"
-msgstr ""
+msgstr "Appuyez sur la touche <pre>SPACE</pre> pour sélectionner une ligne."
 
-#: ckanext/canada/templates/snippets/pd_datatable.html:55
+#: ckanext/canada/templates/snippets/pd_datatable.html:67
 msgid "Press <pre>E</pre> key to expand a row (Compact Table mode only)"
 msgstr ""
+"Appuyez sur la touche <pre>E</pre> pour agrandir une rangée (mode Tableau"
+" compact seulement)."
 
-#: ckanext/canada/templates/snippets/pd_datatable.html:56
+#: ckanext/canada/templates/snippets/pd_datatable.html:68
 msgid "Press <pre>ESC</pre> key to exit KeyTable mode"
-msgstr ""
+msgstr "Appuyez sur la touche <pre>ESC</pre> pour quitter le mode « KeyTable »"
 
-#: ckanext/canada/templates/snippets/pd_datatable.html:65
-#: ckanext/canada/templates/snippets/pd_datatable.html:76
-#: ckanext/canada/templates/snippets/pd_datatable_depr.html:18
+#: ckanext/canada/templates/snippets/pd_datatable.html:77
+#: ckanext/canada/templates/snippets/pd_datatable.html:88
+#: ckanext/canada/templates/snippets/pd_datatable_depr.html:29
 msgid "Select"
 msgstr "Sélectionner"
 
-#: ckanext/canada/templates/snippets/pd_datatable_depr.html:173
+#: ckanext/canada/templates/snippets/pd_datatable_depr.html:21
+#, python-format
+msgid ""
+"A new table experience is now available! Try the updated interface and "
+"share your <a href='mailto:%(email)s'>feedback</a> to help shape future "
+"improvements."
+msgstr ""
+"Une toute nouvelle interface est maintenant disponible pour vos tableaux!"
+" Testez-la et faites-nous part de vos <a "
+"href='mailto:%(email)s'>commentaires</a> afin de nous aider à "
+"l’améliorer."
+
+#: ckanext/canada/templates/snippets/pd_datatable_depr.html:25
+msgid "Enable new table interface"
+msgstr "Activer la nouvelle interface des tableaux"
+
+#: ckanext/canada/templates/snippets/pd_datatable_depr.html:184
 msgid "Edit in Excel"
 msgstr "Modifier dans Excel"
 
-#: ckanext/canada/templates/snippets/pd_datatable_depr.html:207
+#: ckanext/canada/templates/snippets/pd_datatable_depr.html:218
 msgid "Delete records"
 msgstr "Supprimer des dossiers"
 
@@ -4581,30 +4685,34 @@ msgstr ""
 "Consulter les 60 derniers jours d'activités des métadonnées et les 150 "
 "derniers jours d'activités du DataStore."
 
-#: ckanext/canada/templates/snippets/cdts/header.html:21
-#: ckanext/canada/templates/snippets/cdts/header.html:26
+#: ckanext/canada/templates/snippets/cdts/header.html:23
+#: ckanext/canada/templates/snippets/cdts/header.html:28
 msgid "Home"
 msgstr "Accueil"
 
-#: ckanext/canada/templates/snippets/cdts/header.html:162
+#: ckanext/canada/templates/snippets/cdts/header.html:62
+msgid "Create an Open Information Record"
+msgstr "Créer un enregistrement d'informations ouvertes"
+
+#: ckanext/canada/templates/snippets/cdts/header.html:183
 msgid "FAQ"
 msgstr "FAQ"
 
-#: ckanext/canada/templates/snippets/cdts/header.html:193
+#: ckanext/canada/templates/snippets/cdts/header.html:214
 #: ckanext/canada/templates/user/dashboard.html:9
 #: ckanext/canada/templates/user/dashboard_datasets.html:19
 msgid "Dashboard"
 msgstr "Tableau de bord"
 
-#: ckanext/canada/templates/snippets/cdts/header.html:209
+#: ckanext/canada/templates/snippets/cdts/header.html:230
 msgid "Get Help"
 msgstr "Obtenez de l’aide"
 
-#: ckanext/canada/templates/snippets/cdts/header.html:230
+#: ckanext/canada/templates/snippets/cdts/header.html:251
 msgid "Signed in as"
 msgstr "Connecté en tant que"
 
-#: ckanext/canada/templates/snippets/cdts/header.html:230
+#: ckanext/canada/templates/snippets/cdts/header.html:251
 msgid "View profile"
 msgstr "Afficher le profil"
 

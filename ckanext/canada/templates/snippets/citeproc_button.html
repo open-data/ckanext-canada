@@ -1,0 +1,7 @@
+{% ckan_extends %}
+
+{% block citeproc_button %}
+  {% if not h.is_registry_domain() %}
+    {{ super() }}
+  {% endif %}
+{% endblock %}

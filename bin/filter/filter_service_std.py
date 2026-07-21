@@ -67,7 +67,7 @@ def process_row(row: Dict[str, Any]) -> Dict[str, Any]:
         # performance is not possible
         row['performance'] = None
     else:
-        row['performance'] = max(round(num / den, 4), 0)
+        row['performance'] = max(num / den, 0)
 
     target = float(row['target']) if row['target'] else 0.0
 

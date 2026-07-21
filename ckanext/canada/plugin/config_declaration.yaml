@@ -35,3 +35,11 @@ groups:
           Enables the improved DataTables and custom editor for
           Recombinant type resources.
         validators: boolean_validator
+      - key: ckanext.canada.allowed_frame_hosts
+        default: ['canada.ca', '*.canada.ca', '*.gc.ca']
+        description: |
+          A list of hostnames that are allowed to iFrame web content.
+          This is only used to display to end users, not to define values
+          in frame-ancestors.
+        required: false
+        type: list
