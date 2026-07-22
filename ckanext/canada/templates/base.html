@@ -62,10 +62,24 @@
   {% endif %}
   {% snippet 'snippets/cdts/head_scripts.html' %}
   {% if h.get_environment() in ['staging', 'development'] %}
+    {% set bg_size = '180' if h.get_environment() == 'development' else '140' %}
     <style nonce="{{- h.get_inline_script_nonce() -}}">
       body #wb-bnr{
         position: relative !important;
         overflow: visible !important;
+      }
+      body #wb-bnr::before{
+        display: block;
+        position: absolute;
+        top: 0;
+        right: 0;
+        left: calc(50% - 100vw / 2);
+        bottom: 0;
+        width: 100vw;
+        height: calc(100% + 5px);
+        content: "";
+        pointer-events: none;
+        background: white;
       }
       body #wb-bnr::after{
         display: block;
@@ -75,12 +89,12 @@
         left: calc(50% - 100vw / 2);
         bottom: 0;
         width: 100vw;
-        height: calc(100% + 50px);
+        height: calc(100% + 5px);
         content: "";
         pointer-events: none;
         background-image: url("{{- '/data' if not h.is_registry_domain() else '' -}}/static/img/{{- h.get_environment() -}}-{{- h.lang() -}}.svg");
         background-repeat: repeat;
-        background-size: 60px 60px;
+        background-size: {{- '{size}px {size}px'.format(size=bg_size) -}};
         opacity: 0.06;
       }
       body #canada-main-container{
@@ -104,7 +118,7 @@
         pointer-events: none;
         background-image: url("{{- '/data' if not h.is_registry_domain() else '' -}}/static/img/{{- h.get_environment() -}}-{{- h.lang() -}}.svg");
         background-repeat: repeat;
-        background-size: 60px 60px;
+        background-size: {{- '{size}px {size}px'.format(size=bg_size) -}};
         opacity: 0.06;
       }
       body #canada-main-container::before{
