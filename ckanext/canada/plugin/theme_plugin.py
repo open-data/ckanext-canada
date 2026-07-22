@@ -79,6 +79,7 @@ class CanadaThemePlugin(p.SingletonPlugin, DefaultTranslation):
         Implement of: ckan.plugins.interfaces.ITemplateHelpers
         """
         return dict((h, getattr(helpers, h)) for h in [
+            'get_environment',
             'may_publish_datasets',
             'today',
             'date_format',
