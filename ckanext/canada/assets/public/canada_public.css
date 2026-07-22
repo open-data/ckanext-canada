@@ -146,6 +146,20 @@ body .canada-w10-spacer{
   line-height: 0 !important;
 }
 
+body .canada-v10-spacer{
+  display: block !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  min-height: 10px !important;
+  max-height: 10px !important;
+  height: 10px !important;
+  min-width: 0 !important;
+  max-width: 0 !important;
+  width: 0 !important;
+  line-height: 0 !important;
+}
+
+
 img.openness-rating-stars {
   margin-bottom: 0px !important;
 }
