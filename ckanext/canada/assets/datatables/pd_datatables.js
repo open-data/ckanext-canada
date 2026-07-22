@@ -24,6 +24,7 @@ this.ckan.module('pd-datatables', function($){
       table_styles: null,
       primary_keys: null,
       foreign_keys: null,
+      edit_keys: null,
       foreign_links: null,
       chromo_fields: null,
       is_editable: false,
@@ -36,6 +37,10 @@ this.ckan.module('pd-datatables', function($){
 
 function load_pd_datatable(CKAN_MODULE){
   const _ = CKAN_MODULE._;
+
+  // TODO: Disable Editor - enable Table Editor when ready...
+  const DISABLE_EDITOR = true;
+
   const searchParams = new URLSearchParams(document.location.search);
   const currentDate = new Date().toISOString().split('T')[0];
   const currentYear = new Date().getFullYear();
@@ -56,14 +61,14 @@ function load_pd_datatable(CKAN_MODULE){
   const ajaxURI = CKAN_MODULE.options.ajax_uri;
   const primaryKeys = CKAN_MODULE.options.primary_keys;
   const foreignKeys = CKAN_MODULE.options.foreign_keys;
+  const editKeys = CKAN_MODULE.options.edit_keys;
   const foreignLinks = CKAN_MODULE.options.foreign_links;
   const chromoFields = CKAN_MODULE.options.chromo_fields;
   const isEditable = CKAN_MODULE.options.is_editable;
   const tableStyles = CKAN_MODULE.options.table_styles;
 
-  // TODO: Disable Editor - enable Table Editor when ready...
-  // const EDITOR = pd_datatables__EDITOR;
-  const EDITOR = false;
+  const EDITOR = DISABLE_EDITOR ? false : pd_datatables__EDITOR;  // force editor disablement
+  const hasOpenCanadaID = (primaryKeys != editKeys && editKeys.length == 1 && editKeys[0] == 0);
 
   const selectAllLabel = _('Select All');
   const colSearchLabel = _('Search:');
@@ -171,8 +176,9 @@ function load_pd_datatable(CKAN_MODULE){
   let isFullScreen = is_page_fullscreen();
   let isEditMode = typeof tableState != 'undefined' && typeof tableState.edit_view != 'undefined' ? tableState.edit_view : false;
 
-  // TODO: Disable Editor - enable Table Editor when ready...
-  isEditMode = false;
+  if( DISABLE_EDITOR ){
+    isEditMode = false;  // force editor disablement
+  }
 
   if( isEditMode ){
     $('.pd-datable-instructions').css({'display': 'none'});
@@ -205,6 +211,9 @@ function load_pd_datatable(CKAN_MODULE){
       "targets": 0,
       "render": function(_data, _type, _row, _meta){
         if( isEditMode ){
+          if( editingRows.length > 0 && hasOpenCanadaID ){
+            return _data;
+          }
           return _meta.row + 1;
         }
         return _data;
@@ -408,7 +417,8 @@ function load_pd_datatable(CKAN_MODULE){
     let readOnlyClass = '';
     let tabIndex = 0;
     let isPrimaryKey = primaryKeys.includes(_colIndex);
-    if( editingRows.length > 0 && primaryKeys.includes(_colIndex) ){
+    let isEditingKey = editKeys.includes(_colIndex);
+    if( editingRows.length > 0 && primaryKeys.includes(_colIndex) && ! hasOpenCanadaID ){
       readOnly = 'readonly';
       readOnlyClass = 'editor-input-readonly';
       tabIndex = -1;
@@ -574,13 +584,33 @@ function load_pd_datatable(CKAN_MODULE){
 
   // Compile available columns
   let _sortOrderIndex = 1;
+  if( hasOpenCanadaID ){
+    // render the open_canada_id (_id) field, and treat as primary key field
+    let _openCanadaIdField = {
+      'type': 'int',
+      'name': '_id',
+      'id': '_id',
+      'datastore_id': '_id',
+      'label': 'open_canada_id',
+      'priority': 0,
+    }
+    availableColumns.push({
+      "name": '_id',
+      "className": ' pd-datatables-non-editable-col pd-datatables-primary-key-fixed col-sm ',
+      "searchable": true,
+      "render": function(_data, _type, _row, _meta){
+        return cell_renderer(_data, _type, _row, _meta, _openCanadaIdField);
+      }
+    });
+    _sortOrderIndex += 1;
+  }
   for( let i = 0; i < chromoFields.length; i++ ){
     if( typeof chromoFields[i].published_resource_computed_field == 'undefined' || ! chromoFields[i].published_resource_computed_field ){
       let previewClass = '';
       if( typeof chromoFields[i].preview_class != 'undefined' ){
         previewClass = chromoFields[i].preview_class;
       }
-      if( primaryKeys.includes(i) ){
+      if( !hasOpenCanadaID && primaryKeys.includes(i) ){
         previewClass += ' pd-datatables-primary-key-fixed ';
       }
       if( typeof chromoFields[i].import_template_include != 'undefined' && ! chromoFields[i].import_template_include ){
@@ -1270,14 +1300,14 @@ function load_pd_datatable(CKAN_MODULE){
         enabled: ! isExportingExcel,
         className: "pd-datatable-btn pd-datatable-excel-btn btn-primary",
         action: function(e, dt, button, config){
-          let pk_cols = primaryKeys.map(function(value){
+          let pk_cols = editKeys.map(function(value){
             return value + colOffset;
           });
           let rows = dt.rows({ selected: true });
           let params = new Object();
           params['resource_name'] = resourceName;
           params[csrfTokenName] = csrfTokenValue;
-          params['key_indices'] = primaryKeys;
+          params['key_indices'] = editKeys;
           params['bulk-template'] = [];
           rows.eq(0).each(function(index){
             params['bulk-template'].push(dt.cells(index, pk_cols).data().toArray());
@@ -1322,7 +1352,7 @@ function load_pd_datatable(CKAN_MODULE){
         text: '<i aria-hidden="true" class="fas fa-edit"></i>&nbsp;' + editSingleButtonLabel,
         className: "pd-datatable-btn pd-datatable-btn-single btn-success",
         action: function(e, dt, button, config){
-          let pk_cols = primaryKeys.map(function(value){
+          let pk_cols = editKeys.map(function(value){
             return value + colOffset;
           });
           let rows = dt.rows({ selected: true });
@@ -1837,6 +1867,15 @@ function load_pd_datatable(CKAN_MODULE){
           $(_field).css({'height': 'auto'});
           $(_field).css({'height': this.scrollHeight + 'px'});
         });
+      }else{
+        // do not submit form fields on enter
+        // textarea can have newlines, select2 opens on enter
+        $(_field).off('keydown.PreventSubmit');
+        $(_field).on('keydown.PreventSubmit', function(_event){
+          if( _event.keyCode == 13 ){
+            _event.preventDefault();
+          }
+        });
       }
       $(_field).off('change.EDITOR');
       $(_field).on('change.EDITOR', function(_event){
@@ -2010,8 +2049,9 @@ function load_pd_datatable(CKAN_MODULE){
         _data.compact_view = isCompactView;
         _data.edit_view = isEditMode;
 
-        // TODO: Disable Editor - enable Table Editor when ready...
-        _data.edit_view = false;
+        if( DISABLE_EDITOR ){
+          _data.edit_view = false;  // force editor disablement
+        }
 
         _data.editing_rows = editingRows;
         // TODO: save filledRows, erroredRows, requiredRows??? need to save the field values too???
@@ -2020,8 +2060,9 @@ function load_pd_datatable(CKAN_MODULE){
         tableState.selected = localInstanceSelected;
         tableState.edit_view = isEditMode;
 
-        // TODO: Disable Editor - enable Table Editor when ready...
-        tableState.edit_view = false;
+        if( DISABLE_EDITOR ){
+          tableState.edit_view = false;  // force editor disablement
+        }
 
         tableState.editing_rows = editingRows;
       },
@@ -2030,8 +2071,9 @@ function load_pd_datatable(CKAN_MODULE){
         tableState = _data;
         tableState.selected = localInstanceSelected;
 
-        // TODO: Disable Editor - enable Table Editor when ready...
-        tableState.edit_view = false;
+        if( DISABLE_EDITOR ){
+          tableState.edit_view = false;  // force editor disablement
+        }
       },
       buttons: get_available_buttons(),
     });
