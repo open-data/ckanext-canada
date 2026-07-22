@@ -5,7 +5,8 @@ from ckanapi import LocalCKAN, ValidationError
 import pytest
 from ckan import model
 from ckanext.canada.tests.factories import CanadaOrganization as Organization
-from ckanext.canada.tests.filters import filter_service_std
+import filter_service
+import filter_service_std
 
 from ckanext.recombinant.tables import get_chromo
 
@@ -434,6 +435,28 @@ class TestService(CanadaTestBase):
         for int_na_nd_field in expected_int_na_nd_fields:
             assert int_na_nd_field in err['records'][0]
 
+    def test_filter_script(self):
+        """
+        published_resource_computed_field should be correctly populated
+
+        NOTE: csv.DictReader treats every dict value as a string,
+              so we need to use Strings here for target, volume_meeting_target,
+              and total_volume. Empty strings ("") is None.
+
+        NOTE: the filter test returns a Dict, not a csv.DictWriter,
+              so we can assert on object types here.
+        """
+        chromo = get_chromo('service')
+        record = chromo['examples']['record'].copy()
+
+        record['program_id'] = ','.join(record['program_id'])
+
+        test_record = filter_service.test(dict(record))
+        assert test_record['service_name_en'] == 'Old Age Security (OAS) Benefits'
+        assert test_record['service_name_fr'] == 'Prestations de la Sécurité de la vieillesse'
+        assert test_record['program_name_en'] == '"Old Age Security"'
+        assert test_record['program_name_fr'] == '"Sécurité de la vieillesse"'
+
 
 class TestStdService(CanadaTestBase):
     @classmethod
@@ -770,6 +793,8 @@ class TestStdService(CanadaTestBase):
         The calculations for performance and target_met
         should be correct for the required Business Logic
 
+        published_resource_computed_field should be correctly populated
+
         NOTE: csv.DictReader treats every dict value as a string,
               so we need to use Strings here for target, volume_meeting_target,
               and total_volume. Empty strings ("") is None.
@@ -780,6 +805,10 @@ class TestStdService(CanadaTestBase):
         self._make_parent_record()
         chromo = get_chromo('service-std')
         record = chromo['examples']['record'].copy()
+
+        test_record = filter_service_std.test(dict(record))
+        assert test_record['service_name_en'] == 'Old Age Security (OAS) Benefits'
+        assert test_record['service_name_fr'] == 'Prestations de la Sécurité de la vieillesse'
 
         record['target'] = '0.2'
         record['volume_meeting_target'] = '0'

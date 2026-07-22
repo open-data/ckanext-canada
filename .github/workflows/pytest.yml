@@ -292,6 +292,7 @@ jobs:
           echo "${{ matrix.split }} of $SPLIT_COUNT"
 
           source /srv/app/venv/bin/activate
+          cd /srv/app/src/ckanext-canada
 
           echo "::group::pytest"
           pytest $PYTEST_COMMON_OPTIONS --splits $SPLIT_COUNT --group ${{ matrix.split }} --splitting-algorithm least_duration --store-durations --clean-durations
