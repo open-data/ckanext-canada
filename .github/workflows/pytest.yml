@@ -213,7 +213,7 @@ jobs:
               printf "\n    ${srcName}: pip info\n";
               pip show ${srcName};
               if [[ "${reslog}" == "" && "${DO_PIP_REINSTALL}" == "false" ]]; then
-                  printf "${srcName}: Up to date. Skipping..."
+                printf "${srcName}: Up to date. Skipping..."
               else
                 git pull --ff-only || true;
                 printf "\n${srcName}: Pulled updated code. Re-initializing in python environment..."
@@ -230,6 +230,15 @@ jobs:
                 if [[ -f "$dir/setup.py" ]]; then
                   python $dir/setup.py develop || true;
                 fi;
+              fi;
+              if [[ -f "$dir/dev-requirements.txt" ]]; then
+                pip install -r $dir/dev-requirements.txt || true;
+              fi;
+              if [[ -f "$dir/test-requirements.txt" ]]; then
+                pip install -r $dir/test-requirements.txt || true;
+              fi;
+              if [[ -f "$dir/setup.py" ]]; then
+                python $dir/setup.py develop || true;
               fi;
             else
               printf "\n${srcName}: Not a source repository. Skipping..."
@@ -255,6 +264,8 @@ jobs:
           pip install -r test-requirements.txt
           pip install setuptools==70.0.0
           python3 setup.py develop
+          npm install -D
+          npm run build
           cd /srv/app/src/ckan
           pip install -e .
           python3 setup.py develop
@@ -267,11 +278,13 @@ jobs:
           . /srv/app/src/ckan/bin/postgres_init/2_create_ckan_datastore_db.sh
           ckan -c /srv/app/src/ckanext-canada/test-core.ini db init
           ckan -c /srv/app/src/ckanext-canada/test-core.ini datastore set-permissions | psql -U postgres --set ON_ERROR_STOP=1
+          ckan -c /srv/app/src/ckanext-canada/test-core.ini xloader db-init
           ckan -c /srv/app/src/ckanext-canada/test-core.ini validation init-db
           ckan -c /srv/app/src/ckanext-canada/test-core.ini security migrate
           ckan -c /srv/app/src/ckanext-canada/test-core.ini canada update-triggers
           ckan -c /srv/app/src/ckanext-canada/test-core.ini recombinant create-triggers -a
           ckan -c /srv/app/src/ckanext-canada/test-core.ini db upgrade
+          ckan -c /srv/app/src/ckanext-canada/test-core.ini db pending-migrations --apply
           ckan -c /srv/app/src/ckanext-canada/test-core.ini db pending-migrations --apply
       - name: Download Test Durations
         if: needs.define-matrix.outputs.restored == 'true'
@@ -383,7 +396,7 @@ jobs:
           for dir in /srv/app/src/*; do
             srcName=$(echo "$dir" | awk -F'/' '{print $NF}');
             if [[ -d "$dir/.git"  ]]; then
-                printf "\n${srcName}: Checking for updates..."
+                printf "\n\n${srcName}: Checking for updates..."
                 cd $dir;
                 current_branch=$(git rev-parse --abbrev-ref HEAD);
                 if [[ "$srcName" == "ckan" ]]; then
@@ -394,10 +407,10 @@ jobs:
                     reslog=$(git log HEAD..origin/$current_branch --oneline);
                 fi;
                 if [[ "${reslog}" == "" ]]; then
-                    printf "\n${srcName}: Up to date. Skipping..."
+                    printf "    ${srcName}: Up to date. Skipping..."
                 else
-                    git pull || true;
-                    printf "\n${srcName}: Pulled updated code. Re-initializing in python environment..."
+                    git pull --ff-only || true;
+                    printf "\n    ${srcName}: Pulled updated code. Re-initializing in python environment..."
                     cd /srv/app;
                     if [[ -f "$dir/requirements.txt" ]]; then
                         pip install -r $dir/requirements.txt || true;
@@ -425,7 +438,7 @@ jobs:
             git checkout -b ${{ github.head_ref || github.ref_name }} origin/${{ github.head_ref || github.ref_name }}
           fi;
           git fetch
-          git pull
+          git pull --ff-only || true
           source /srv/app/venv/bin/activate
           pip install -e .
           pip install -r requirements.txt

@@ -32,7 +32,7 @@
 {% block scripts %}
   {% if h.is_registry_domain() %}
     <script type="text/javascript" src="{{ h.url_for_static('/registry_resource_edit.js') }}" nonce="{{- h.get_inline_script_nonce() -}}"></script>
-    {% asset 'canada_internal/guess_mimetype' %}
+    {% asset 'canada_custom/guess_mimetype' %}
   {% endif %}
   {{ super() }}
 {% endblock %}

@@ -29,8 +29,7 @@ class TestUserSchema(CanadaTestBase):
         """
         Users cannot change their usernames.
         """
-        username = make_uuid()
-
+        username = make_uuid().replace('-', '_')
         user_dict = self.sysadmin_action.user_create(
             email='example+%s@example.com' % username, name=username, password=make_uuid())
 
@@ -54,11 +53,11 @@ class TestUserSchema(CanadaTestBase):
         """
         Custom plugin_extras and Schema should work as expected.
         """
-        username = make_uuid()
-
+        username = make_uuid().replace('-', '_')
         user_dict = self.sysadmin_action.user_create(
             email='example+%s@example.com' % username, name=username, password=make_uuid())
 
+        assert 'default_dataset_visibility' not in user_dict
         assert 'opt_in_features__pd_datatables' not in user_dict
 
         user_id = self.normal_user['id']
@@ -66,37 +65,70 @@ class TestUserSchema(CanadaTestBase):
         # user_show should fill in defaults
         user_dict = self.sysadmin_action.user_show(id=user_id)
 
+        assert user_dict['default_dataset_visibility'] == 'private'
         assert user_dict['opt_in_features__pd_datatables'] is False
+
+        user_dict = self.sysadmin_action.user_patch(
+            id=user_id, default_dataset_visibility='public',
+            opt_in_features__pd_datatables=True)
+
+        assert user_dict['default_dataset_visibility'] == 'public'
+        assert user_dict['opt_in_features__pd_datatables'] is True
+        assert user_dict['plugin_extras']['default_dataset_visibility'] == 'public'
+        assert user_dict['plugin_extras']['opt_in_features__pd_datatables'] is True
+
+        # normal user cannot set default_dataset_visibility
+        user_dict = self.normal_action.user_patch(
+            id=user_id, default_dataset_visibility='private')
+
+        assert user_dict['default_dataset_visibility'] == 'public'
+        assert user_dict['opt_in_features__pd_datatables'] is True
 
         user_dict = self.sysadmin_action.user_patch(
             id=user_id,
             opt_in_features__pd_datatables=True)
 
         assert user_dict['opt_in_features__pd_datatables'] is True
+        assert user_dict['default_dataset_visibility'] == 'public'
         assert user_dict['plugin_extras']['opt_in_features__pd_datatables'] is True
+        assert user_dict['plugin_extras']['default_dataset_visibility'] == 'public'
 
         # own user should be able to update opt_in_features
         user_dict = self.normal_action.user_patch(
             id=user_id, opt_in_features__pd_datatables=False)
 
+        assert user_dict['default_dataset_visibility'] == 'public'
+        assert user_dict['opt_in_features__pd_datatables'] is False
+
+        # default_dataset_visibility can only be private or public
+        with pytest.raises(ValidationError) as ve:
+            user_dict = self.sysadmin_action.user_patch(
+                id=user_id, default_dataset_visibility='fail')
+        err = ve.value.error_dict
+
+        assert 'default_dataset_visibility' in err
+        assert err['default_dataset_visibility'] == ["Value must be one of ['private', 'public']"]
         assert user_dict['opt_in_features__pd_datatables'] is False
 
         # excluding custom fields should not change their values
         user_dict = self.normal_action.user_patch(
             id=user_id, fullname='Updated Name')
 
+        assert user_dict['default_dataset_visibility'] == 'public'
         assert user_dict['opt_in_features__pd_datatables'] is False
 
         # adding arbitrary key/values is not allowed
         user_dict = self.normal_action.user_patch(
             id=user_id, plugin_extras={'this': 'that'})
 
+        assert user_dict['default_dataset_visibility'] == 'public'
         assert user_dict['opt_in_features__pd_datatables'] is False
         assert 'this' not in user_dict
 
         user_dict = self.sysadmin_action.user_patch(
             id=user_id, plugin_extras={'this': 'that'})
 
+        assert user_dict['default_dataset_visibility'] == 'public'
         assert user_dict['opt_in_features__pd_datatables'] is False
         assert 'this' not in user_dict
         assert 'this' not in user_dict['plugin_extras']
