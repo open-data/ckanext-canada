@@ -48,3 +48,10 @@ groups:
           in frame-ancestors.
         required: false
         type: list
+      - key: ckanext.canada.environment
+        default: production
+        description: |
+          Configurable environment state, defines various code throughout
+          the app stack. Can be "production", "staging", or "development".
+          Default: "production"
+        required: false
