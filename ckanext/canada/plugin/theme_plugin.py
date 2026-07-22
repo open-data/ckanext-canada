@@ -27,6 +27,7 @@ class CanadaThemePlugin(p.SingletonPlugin):
     def get_helpers(self) -> Dict[str, Callable[..., Any]]:
         return dict((h, getattr(helpers, h)) for h in [
             # Registry
+            'get_environment',
             'may_publish_datasets',
             'today',
             'date_format',

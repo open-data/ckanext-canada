@@ -24,7 +24,9 @@
   {% if h.is_registry_domain() %}
     <div class="row">
       <div class="col-md-12">
-        {% if content %}
+        {% if h.get_environment() in ['staging', 'development'] %}
+          <p>{{ _('We Encountered an Error and your request could not be completed.') }}</p>
+        {% elif content %}
           <p>{{- _(content) -}}</p>
         {% endif %}
         {% if code == 403 or code == 404 %}
@@ -38,7 +40,10 @@
           {% endif %}
         {% elif code == 500 %}
           <p class="mrgn-tp-lg">
-            {% if g.ERROR_SUPPORT_ID %}
+            {% if h.get_environment() in ['staging', 'development'] %}
+              <p><strong>{{ _('The staging environment may experience occasional outages as part of our regular development process.') }}</strong></p>
+              <p>{{ _('If you are conducting any testing related to preparation of data for publishing, please do so directly in the <a href="https://registry.open.canada.ca/en">Open Government Registry.</a> The draft mode in the Registry is designed to allow users to do the necessary preparations for publishing before it is made public in the Open Government Portal.') }}</p>
+            {% elif g.ERROR_SUPPORT_ID %}
               <p>{{ _('Support ID: ') }}&nbsp;<strong><em>{{- g.ERROR_SUPPORT_ID -}}</em></strong></p>
               {{ _('We encountered an error and are unable to serve your request. Please try again in short time or contact <a href="mailto:{support}">{support}</a> <strong><em>with the above support ID</em></strong> if you need immediate assistance or if this issue persists. Note that your login expires after 1 hour of inactivity.').format(support=h.support_email_address()) | safe }}
             {% else %}
