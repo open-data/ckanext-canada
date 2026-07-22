@@ -297,6 +297,8 @@ jobs:
           echo "::group::pytest"
           pytest $PYTEST_COMMON_OPTIONS --splits $SPLIT_COUNT --group ${{ matrix.split }} --splitting-algorithm least_duration --store-durations --clean-durations
           echo "::endgroup::"
+
+          cd /srv/app
       - name: Upload Test Durations
         if: github.run_attempt == 1
         uses: actions/upload-artifact@v4
