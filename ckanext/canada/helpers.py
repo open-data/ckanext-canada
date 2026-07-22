@@ -80,6 +80,10 @@ def is_registry_domain() -> bool:
     return re.search(REGISTRY_SUBDOMAIN_MATCH, subdomain) is not None
 
 
+def get_environment() -> str:
+    return config['ckanext.canada.environment']
+
+
 def get_translated_t(data_dict: Dict[str, Any],
                      field: str) -> Tuple[str, bool]:
     '''

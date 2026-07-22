@@ -1,9 +1,42 @@
+[tool.pytest.ini_options]
+testpaths = [
+  "ckanext/canada/tests",
+]
+pythonpath = [
+  "bin/filter",
+  "../../lib/python3.9/site-packages",
+  "../.",
+  "../ckan",
+  "../ckanapi",
+  "../ckantoolkit",
+  "../frictionless-py",
+  "../frictionless",
+  "../ckanext-cloudstorage",
+  "../ckanext-dcat",
+  "../ckanext-dsaudit",
+  "../ckanext-fluent",
+  "../ckanext-gcnotify",
+  "../ckanext-recombinant",
+  "../ckanext-scheming",
+  "../ckanext-security",
+  "../ckanext-validation",
+  "../ckanext-xloader",
+]
+python_files = [
+  "test_*.py",
+]
+addopts = [
+  "--ckan-ini=test-core.ini",
+  "--disable-warnings",
+]
 [tool.pyright]
 pythonVersion = "3.9"
 include = ["ckanext"]
 exclude = [
     "**/tests",
     "**/migration",
+    "**/node_modules",
+    "**/__pycache__",
 ]
 extraPaths = [
   "../../lib/python3.9/site-packages",
