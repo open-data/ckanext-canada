@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  CKAN\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-07-10 14:12-0400\n"
+"POT-Creation-Date: 2026-07-21 18:51+0000\n"
 "PO-Revision-Date: 2014-01-23 13:04+0000\n"
 "Last-Translator: Sean Hammond <sean.hammond@okfn.org>\n"
 "Language: en\n"
@@ -133,44 +133,44 @@ msgstr ""
 msgid "Invalid business number"
 msgstr ""
 
-#: ckanext/canada/helpers.py:365 ckanext/canada/helpers.py:366
+#: ckanext/canada/helpers.py:370 ckanext/canada/helpers.py:371
 msgid "Treasury Board of Canada Secretariat"
 msgstr ""
 
-#: ckanext/canada/helpers.py:716 ckanext/canada/strings.py:14
+#: ckanext/canada/helpers.py:721 ckanext/canada/strings.py:14
 #: ckanext/canada/view.py:1517
 msgid "Members not found"
 msgstr ""
 
-#: ckanext/canada/helpers.py:851
+#: ckanext/canada/helpers.py:856
 msgid "Data awaiting load to DataStore"
 msgstr ""
 
-#: ckanext/canada/helpers.py:852
+#: ckanext/canada/helpers.py:857
 msgid "Loading data into DataStore"
 msgstr ""
 
-#: ckanext/canada/helpers.py:853
+#: ckanext/canada/helpers.py:858
 msgid "Data loaded into DataStore"
 msgstr ""
 
-#: ckanext/canada/helpers.py:854
+#: ckanext/canada/helpers.py:859
 msgid "Failed to load data into DataStore"
 msgstr ""
 
-#: ckanext/canada/helpers.py:855
+#: ckanext/canada/helpers.py:860
 msgid "Data available in DataStore"
 msgstr ""
 
-#: ckanext/canada/helpers.py:856
+#: ckanext/canada/helpers.py:861
 msgid "Resource not active in DataStore"
 msgstr ""
 
-#: ckanext/canada/helpers.py:857
+#: ckanext/canada/helpers.py:862
 msgid "DataStore status unknown"
 msgstr ""
 
-#: ckanext/canada/helpers.py:936
+#: ckanext/canada/helpers.py:941
 #: ckanext/canada/templates/home/quick_links.html:65
 #: ckanext/canada/templates/package/snippets/package_type_label.html:16
 #: ckanext/canada/templates/scheming/package/snippets/package_form.html:28
@@ -180,7 +180,7 @@ msgstr ""
 msgid "Open Data"
 msgstr ""
 
-#: ckanext/canada/helpers.py:937
+#: ckanext/canada/helpers.py:942
 #: ckanext/canada/templates/home/quick_links.html:82
 #: ckanext/canada/templates/package/snippets/package_type_label.html:22
 #: ckanext/canada/templates/scheming/package/snippets/package_form.html:30
@@ -190,23 +190,23 @@ msgstr ""
 msgid "Open Information"
 msgstr ""
 
-#: ckanext/canada/helpers.py:949
+#: ckanext/canada/helpers.py:954
 #: ckanext/canada/templates/snippets/dataset_facets.html:27
 msgid "Request sent to data owner - awaiting response"
 msgstr ""
 
-#: ckanext/canada/helpers.py:953
+#: ckanext/canada/helpers.py:958
 #: ckanext/canada/templates/snippets/publish_facet.html:44
 msgid "Pending"
 msgstr ""
 
-#: ckanext/canada/helpers.py:954 ckanext/canada/templates/package/read.html:48
+#: ckanext/canada/helpers.py:959 ckanext/canada/templates/package/read.html:48
 #: ckanext/canada/templates/snippets/package_item.html:21
 #: ckanext/canada/templates/snippets/publish_facet.html:44
 msgid "Draft"
 msgstr ""
 
-#: ckanext/canada/helpers.py:971
+#: ckanext/canada/helpers.py:976
 #: ckanext/canada/templates/home/quick_links.html:152
 #: ckanext/canada/templates/package/snippets/package_type_label.html:20
 #: ckanext/canada/templates/package/snippets/package_type_label.html:26
@@ -215,25 +215,25 @@ msgstr ""
 msgid "Proactive Publication"
 msgstr ""
 
-#: ckanext/canada/helpers.py:1000
+#: ckanext/canada/helpers.py:1005
 #: ckanext/canada/templates/snippets/publish_facet.html:25
 msgid "Published"
 msgstr ""
 
-#: ckanext/canada/helpers.py:1002
+#: ckanext/canada/helpers.py:1007
 #: ckanext/canada/templates/snippets/publish_facet.html:34
 msgid "Scheduled"
 msgstr ""
 
-#: ckanext/canada/helpers.py:1042
+#: ckanext/canada/helpers.py:1047
 msgid "Registry Home"
 msgstr ""
 
-#: ckanext/canada/helpers.py:1047
+#: ckanext/canada/helpers.py:1052
 msgid "Open Government"
 msgstr ""
 
-#: ckanext/canada/helpers.py:1050
+#: ckanext/canada/helpers.py:1055
 #: ckanext/canada/templates/admin/publish_search.html:19
 #: ckanext/canada/templates/home/quick_links.html:123
 #: ckanext/canada/templates/organization/snippets/organization_search.html:8
@@ -2159,24 +2159,44 @@ msgstr ""
 msgid "We encountered an error"
 msgstr ""
 
-#: ckanext/canada/templates/error_document_template.html:32
+#: ckanext/canada/templates/error_document_template.html:28
+msgid "We Encountered an Error and your request could not be completed."
+msgstr ""
+
+#: ckanext/canada/templates/error_document_template.html:34
 msgid ""
 "You are not logged in to the Open Government Registry. Note that your "
 "login expires after 1 hour of inactivity. Click on the log in button "
 "below to log in."
 msgstr ""
 
-#: ckanext/canada/templates/error_document_template.html:35
+#: ckanext/canada/templates/error_document_template.html:37
 #: ckanext/canada/templates/page.html:29
 #: ckanext/canada/templates/user/snippets/login_form.html:37
 msgid "Log in"
 msgstr ""
 
-#: ckanext/canada/templates/error_document_template.html:42
+#: ckanext/canada/templates/error_document_template.html:44
+msgid ""
+"The staging environment may experience occasional outages as part of our "
+"regular development process."
+msgstr ""
+
+#: ckanext/canada/templates/error_document_template.html:45
+msgid ""
+"If you are conducting any testing related to preparation of data for "
+"publishing, please do so directly in the <a "
+"href=\"https://registry.open.canada.ca/en\">Open Government Registry.</a>"
+" The draft mode in the Registry is designed to allow users to do the "
+"necessary preparations for publishing before it is made public in the "
+"Open Government Portal."
+msgstr ""
+
+#: ckanext/canada/templates/error_document_template.html:47
 msgid "Support ID: "
 msgstr ""
 
-#: ckanext/canada/templates/error_document_template.html:43
+#: ckanext/canada/templates/error_document_template.html:48
 msgid ""
 "We encountered an error and are unable to serve your request. Please try "
 "again in short time or contact <a href=\"mailto:{support}\">{support}</a>"
@@ -2185,7 +2205,7 @@ msgid ""
 "expires after 1 hour of inactivity."
 msgstr ""
 
-#: ckanext/canada/templates/error_document_template.html:45
+#: ckanext/canada/templates/error_document_template.html:50
 msgid ""
 "We encountered an error and are unable to serve your request. Please try "
 "again in short time or contact <a href=\"mailto:{support}\">{support}</a>"

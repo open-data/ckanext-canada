@@ -5,7 +5,8 @@ from ckanapi import LocalCKAN, ValidationError
 import pytest
 from ckan import model
 from ckanext.canada.tests.factories import CanadaOrganization as Organization
-from ckanext.canada.tests.filters import filter_service_std
+# see pyproject.toml:tool.pytest.ini_options.pythonpath
+import filter_service_std
 
 from ckanext.recombinant.tables import get_chromo
 
