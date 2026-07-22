@@ -1,21 +1,14 @@
 # -*- coding: UTF-8 -*-
-import sys
-import os
-from importlib import util
 from ckanext.canada.tests import CanadaTestBase
 from ckanapi import LocalCKAN, ValidationError
 
 import pytest
 from ckan import model
 from ckanext.canada.tests.factories import CanadaOrganization as Organization
+# see pyproject.toml:tool.pytest.ini_options.pythonpath
+import filter_consultations
 
 from ckanext.recombinant.tables import get_chromo
-
-filter_consultations_path = os.path.join(os.path.dirname(str(__file__)), '../../../bin/filter/filter_consultations.py')
-spec = util.spec_from_file_location("canada.bin.filters.consultations", filter_consultations_path)
-filter_consultations = util.module_from_spec(spec)
-sys.modules["canada.bin.filters.consultations"] = filter_consultations
-spec.loader.exec_module(filter_consultations)
 
 
 class TestConsultations(CanadaTestBase):
