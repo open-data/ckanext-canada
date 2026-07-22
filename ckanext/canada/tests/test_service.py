@@ -5,6 +5,7 @@ from ckanapi import LocalCKAN, ValidationError
 import pytest
 from ckan import model
 from ckanext.canada.tests.factories import CanadaOrganization as Organization
+# see pyproject.toml:tool.pytest.ini_options.pythonpath
 import filter_service
 import filter_service_std
 
