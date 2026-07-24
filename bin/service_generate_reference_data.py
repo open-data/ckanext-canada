@@ -104,6 +104,8 @@ def _generate_data():
         for row in c:
             oname = _clean_intake_text(row['org_name_variant'])
             if oname in open_orgs:
+                # FIXME: org names can share an ID for historical purposes.
+                # e.g. nsira-ossnr,302 is also sirc-csars,302
                 org_id_abbr_map[_clean_intake_text(row['org_id'])] = oname
     assert org_id_abbr_map
 
