@@ -40,7 +40,7 @@
     {% endif %}
     {% if res.resource_type %}
       <span class="badge res-tag">
-        {{ res.resource_type }}
+        {{ h.scheming_choices_label(h.scheming_get_preset('canada_resource_type').choices, res.resource_type) }}
       </span>
     {% endif %}
     {% if res.format %}

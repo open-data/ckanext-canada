@@ -584,7 +584,8 @@ def update_pd_record(owner_org: str, resource_name: str, pk: str):
                 else:
                     err = dict({
                         k: list(format_trigger_error(v))
-                        for (k, v) in ve.error_dict['records'][0].items()  # type: ignore
+                        for (k, v) in
+                        ve.error_dict['records'][0].items()  # type: ignore
                     }, **err)
             except AttributeError:
                 log.warning('Failed to update %s record for org %s:\n%s',
@@ -1058,6 +1059,9 @@ def pd_datatable(resource_name: str, resource_id: str):
     can_edit = h.check_access('resource_update', {'id': resource_id})
     cols = []
     fids = []
+    if chromo.get('edit_using__id'):
+        cols.append('_id')
+        fids.append('_id')
     for f in chromo['fields']:
         if f.get('published_resource_computed_field', False):
             continue
@@ -1117,7 +1121,8 @@ def pd_datatable(resource_name: str, resource_id: str):
             ['' for _col in cols] for _row in range(default_fill)]
     else:
         aadata = [
-            [''] +  # Expand column
+            ['' if not (is_edit_mode and chromo.get('edit_using__id'))
+             else row.get('_id', '')] +  # Expand column
             ['<input type="checkbox">'] +  # Select column
             [row.get(col, '') for col in cols] for row in response['records']]
 

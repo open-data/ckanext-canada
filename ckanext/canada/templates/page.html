@@ -148,6 +148,7 @@
   {%- endif -%}
   {{ super() }}
   {% if h.is_registry_domain() %}
+    {% asset 'canada_modules/main_js' %}
     {%- block session_timeout -%}
       {% if g.userobj and h.get_timeout_length() %}
         <script nonce="{{- h.get_inline_script_nonce() -}}">

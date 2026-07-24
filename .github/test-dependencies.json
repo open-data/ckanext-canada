@@ -1,0 +1,24 @@
+{
+  "repositories": {
+    "ckan": {
+      "branches": {
+        "master": "canada-v2.10",
+        "dev": "canada-dev",
+        "staging": "canada-staging",
+        "feature/*": "canada-staging",
+        "fix/*": "canada-staging",
+        "*": "canada-staging"
+      }
+    },
+    "ckanext-xloader": {
+      "branches": {
+        "master": "canada-v2.10",
+        "dev": "canada-staging",
+        "staging": "canada-staging",
+        "feature/*": "canada-staging",
+        "fix/*": "canada-staging",
+        "*": "canada-staging"
+      }
+    }
+  }
+}
