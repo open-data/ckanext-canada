@@ -304,15 +304,17 @@ def datastore_create_temp_user_table(context: Context,
         context['connection'].execute('''
             CREATE TEMP TABLE IF NOT EXISTS datastore_user (
                 username text NOT NULL,
-                sysadmin boolean NOT NULL
+                sysadmin boolean NOT NULL,
+                importing boolean NOT NULL
                 ){drop_statement};
             INSERT INTO datastore_user VALUES (
-                {username}, {sysadmin}
+                {username}, {sysadmin}, {importing}
                 );
             '''.format(
                 drop_statement=' ON COMMIT DROP' if drop_on_commit else '',
                 username=literal_string(username),
-                sysadmin='TRUE' if is_sysadmin(username) else 'FALSE'))
+                sysadmin='TRUE' if is_sysadmin(username) else 'FALSE',
+                importing='TRUE' if context.get('datastore_import') else 'FALSE'))
         yield
 
     # __exit__ of context manager
