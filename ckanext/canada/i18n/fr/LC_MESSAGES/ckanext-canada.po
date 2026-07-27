@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-07-21 18:51+0000\n"
+"POT-Creation-Date: 2026-07-27 16:23-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: fr\n"
@@ -154,45 +154,45 @@ msgstr ""
 msgid "Invalid business number"
 msgstr "Numéro d’entreprise non valide"
 
-#: ckanext/canada/helpers.py:370 ckanext/canada/helpers.py:371
+#: ckanext/canada/helpers.py:369 ckanext/canada/helpers.py:370
 msgid "Treasury Board of Canada Secretariat"
 msgstr "Secrétariat du Conseil du Trésor du Canada"
 
-#: ckanext/canada/helpers.py:721 ckanext/canada/strings.py:14
+#: ckanext/canada/helpers.py:720 ckanext/canada/strings.py:14
 #: ckanext/canada/view.py:1517
 msgid "Members not found"
 msgstr "Membres non trouvés"
 
-#: ckanext/canada/helpers.py:856
+#: ckanext/canada/helpers.py:855
 msgid "Data awaiting load to DataStore"
 msgstr "Le versement des données dans DataStore est en attente"
 
-#: ckanext/canada/helpers.py:857
+#: ckanext/canada/helpers.py:856
 msgid "Loading data into DataStore"
 msgstr "Le versement des données dans DataStore est en cours"
 
-#: ckanext/canada/helpers.py:858
+#: ckanext/canada/helpers.py:857
 msgid "Data loaded into DataStore"
 msgstr "Les données ont été versées dans DataStore"
 
-#: ckanext/canada/helpers.py:859
+#: ckanext/canada/helpers.py:858
 msgid "Failed to load data into DataStore"
 msgstr "Les données n'ont pas été versées dans DataStore"
 
-#: ckanext/canada/helpers.py:860
+#: ckanext/canada/helpers.py:859
 msgid "Data available in DataStore"
 msgstr "Les données sont disponibles dans DataStore"
 
-#: ckanext/canada/helpers.py:861
+#: ckanext/canada/helpers.py:860
 msgid "Resource not active in DataStore"
 msgstr "La ressource est inactive dans DataStore"
 
-#: ckanext/canada/helpers.py:862
+#: ckanext/canada/helpers.py:861
 msgid "DataStore status unknown"
 msgstr "L'état de DataStore est inconnu"
 
 # Search facets
-#: ckanext/canada/helpers.py:941
+#: ckanext/canada/helpers.py:940
 #: ckanext/canada/templates/home/quick_links.html:65
 #: ckanext/canada/templates/package/snippets/package_type_label.html:16
 #: ckanext/canada/templates/scheming/package/snippets/package_form.html:28
@@ -202,7 +202,7 @@ msgstr "L'état de DataStore est inconnu"
 msgid "Open Data"
 msgstr "Données ouvertes"
 
-#: ckanext/canada/helpers.py:942
+#: ckanext/canada/helpers.py:941
 #: ckanext/canada/templates/home/quick_links.html:82
 #: ckanext/canada/templates/package/snippets/package_type_label.html:22
 #: ckanext/canada/templates/scheming/package/snippets/package_form.html:30
@@ -212,23 +212,23 @@ msgstr "Données ouvertes"
 msgid "Open Information"
 msgstr "Information ouverte"
 
-#: ckanext/canada/helpers.py:954
+#: ckanext/canada/helpers.py:953
 #: ckanext/canada/templates/snippets/dataset_facets.html:27
 msgid "Request sent to data owner - awaiting response"
 msgstr "Demande envoyée au propriétaire des données, en attente de réponse"
 
-#: ckanext/canada/helpers.py:958
+#: ckanext/canada/helpers.py:957
 #: ckanext/canada/templates/snippets/publish_facet.html:44
 msgid "Pending"
 msgstr "En attente"
 
-#: ckanext/canada/helpers.py:959 ckanext/canada/templates/package/read.html:48
+#: ckanext/canada/helpers.py:958 ckanext/canada/templates/package/read.html:48
 #: ckanext/canada/templates/snippets/package_item.html:21
 #: ckanext/canada/templates/snippets/publish_facet.html:44
 msgid "Draft"
 msgstr "Ébauche"
 
-#: ckanext/canada/helpers.py:976
+#: ckanext/canada/helpers.py:975
 #: ckanext/canada/templates/home/quick_links.html:152
 #: ckanext/canada/templates/package/snippets/package_type_label.html:20
 #: ckanext/canada/templates/package/snippets/package_type_label.html:26
@@ -237,25 +237,25 @@ msgstr "Ébauche"
 msgid "Proactive Publication"
 msgstr "Publication proactive"
 
-#: ckanext/canada/helpers.py:1005
+#: ckanext/canada/helpers.py:1004
 #: ckanext/canada/templates/snippets/publish_facet.html:25
 msgid "Published"
 msgstr "Publié"
 
-#: ckanext/canada/helpers.py:1007
+#: ckanext/canada/helpers.py:1006
 #: ckanext/canada/templates/snippets/publish_facet.html:34
 msgid "Scheduled"
 msgstr "Prévu"
 
-#: ckanext/canada/helpers.py:1047
+#: ckanext/canada/helpers.py:1046
 msgid "Registry Home"
 msgstr "Accueil du registre"
 
-#: ckanext/canada/helpers.py:1052
+#: ckanext/canada/helpers.py:1051
 msgid "Open Government"
 msgstr "Gouvernement ouvert"
 
-#: ckanext/canada/helpers.py:1055
+#: ckanext/canada/helpers.py:1054
 #: ckanext/canada/templates/admin/publish_search.html:19
 #: ckanext/canada/templates/home/quick_links.html:123
 #: ckanext/canada/templates/organization/snippets/organization_search.html:8
@@ -1220,39 +1220,39 @@ msgstr "Rechercher :"
 
 #: ckanext/canada/assets/datatables/pd_datatables.js:70
 msgid "Sorting by:"
-msgstr ""
+msgstr "Tri par :"
 
 #: ckanext/canada/assets/datatables/pd_datatables.js:71
 msgid "Ascending"
-msgstr ""
+msgstr "Ordre croissant"
 
 #: ckanext/canada/assets/datatables/pd_datatables.js:72
 msgid "Descending"
-msgstr ""
+msgstr "Ordre décroissant"
 
 #: ckanext/canada/assets/datatables/pd_datatables.js:73
 msgid "Any"
-msgstr ""
+msgstr "N’importe quel"
 
 #: ckanext/canada/assets/datatables/pd_datatables.js:74
-msgid "less"
-msgstr ""
+msgid "Less"
+msgstr "Moins"
 
 #: ckanext/canada/assets/datatables/pd_datatables.js:75
 msgid "Row"
-msgstr ""
+msgstr "Rangée"
 
 #: ckanext/canada/assets/datatables/pd_datatables.js:76
 msgid "New"
-msgstr ""
+msgstr "Nouveau"
 
 #: ckanext/canada/assets/datatables/pd_datatables.js:77
 msgid "Updated"
-msgstr ""
+msgstr "Mis à jour"
 
 #: ckanext/canada/assets/datatables/pd_datatables.js:78
 msgid "Jump to page"
-msgstr ""
+msgstr "Aller à la page"
 
 #: ckanext/canada/assets/datatables/pd_datatables.js:79
 msgid "Reset Table"
@@ -1260,15 +1260,15 @@ msgstr "Réinitialiser le tableau"
 
 #: ckanext/canada/assets/datatables/pd_datatables.js:80
 msgid "Fullscreen"
-msgstr ""
+msgstr "Plein écran"
 
 #: ckanext/canada/assets/datatables/pd_datatables.js:81
 msgid "Exit Fullscreen"
-msgstr ""
+msgstr "Quitter le mode plein écran"
 
 #: ckanext/canada/assets/datatables/pd_datatables.js:82
 msgid "Exit Edit Mode"
-msgstr ""
+msgstr "Quitter le mode de révision"
 
 #: ckanext/canada/assets/datatables/pd_datatables.js:83
 msgid "Full Table"
@@ -1276,107 +1276,122 @@ msgstr "Tableau complet"
 
 #: ckanext/canada/assets/datatables/pd_datatables.js:84
 msgid "Compact Table"
-msgstr "Tableau compact"
+msgstr "Tableau réduit"
 
 #: ckanext/canada/assets/datatables/pd_datatables.js:85
 msgid "Edit Online"
-msgstr "Modifier en ligne"
+msgstr "Modification en ligne"
 
 #: ckanext/canada/assets/datatables/pd_datatables.js:86
 msgid "Add new record in Table"
-msgstr ""
+msgstr "Ajouter un nouvel enregistrement dans le tableau"
 
 #: ckanext/canada/assets/datatables/pd_datatables.js:87
-msgid "Edit<span class=\"pd-datatbales-btn-count\"></span> in Table"
-msgstr ""
+msgid "Edit<span class=\"pd-datatables-btn-count\"></span> in Table"
+msgstr "Modifier <span class=\"pd-datatables-btn-count\"></span> dans le tableau"
 
 #: ckanext/canada/assets/datatables/pd_datatables.js:88
 msgid "Record is valid"
-msgstr ""
+msgstr "L’enregistrement est valide"
 
 #: ckanext/canada/assets/datatables/pd_datatables.js:89
 msgid "Some fields have validation errors"
-msgstr ""
+msgstr "Certains champs comportent des erreurs de validation"
 
 #: ckanext/canada/assets/datatables/pd_datatables.js:90
 msgid "Some fields are required"
-msgstr ""
+msgstr "Certains champs sont obligatoires"
 
 #: ckanext/canada/assets/datatables/pd_datatables.js:91
 msgid "Detailed error summary"
-msgstr ""
+msgstr "Description détaillée de l’erreur"
 
 #: ckanext/canada/assets/datatables/pd_datatables.js:92
 msgid "Field errors"
-msgstr ""
+msgstr "Erreurs de champs"
 
 #: ckanext/canada/assets/datatables/pd_datatables.js:93
 msgid ""
 "You have unsaved records in the table. Do you want to discard your "
 "changes or continue editing?"
 msgstr ""
+"Vous avez des enregistrements non sauvegardés dans le tableau. Voulez-"
+"vous annuler vos modifications ou continuer ?"
 
 #: ckanext/canada/assets/datatables/pd_datatables.js:94
 msgid "Validating records"
-msgstr ""
+msgstr "Validation des enregistrements"
 
 #: ckanext/canada/assets/datatables/pd_datatables.js:95
 msgid "Saving records to the system"
-msgstr ""
+msgstr "Sauvegarde des enregistrements dans le système"
 
 #: ckanext/canada/assets/datatables/pd_datatables.js:97
 msgid "Records saved to the system."
-msgstr ""
+msgstr "Enregistrements sauvegardés dans le système."
 
 #: ckanext/canada/assets/datatables/pd_datatables.js:98
 msgid "Would you like to add more records, or preview them in the table?"
 msgstr ""
+"Souhaitez-vous ajouter d’autres enregistrements ou les prévisualiser dans"
+" le tableau ?"
 
 #: ckanext/canada/assets/datatables/pd_datatables.js:99
 msgid "Add more records"
-msgstr ""
+msgstr "Ajouter d’autres enregistrements"
 
 #: ckanext/canada/assets/datatables/pd_datatables.js:100
 msgid "Preview records"
-msgstr ""
+msgstr "Prévisualiser les enregistrements"
 
 #: ckanext/canada/assets/datatables/pd_datatables.js:101
 msgid ""
 "Your records did not save because one or more of them have errors. Fix "
 "the errors and save again to finalize your records."
 msgstr ""
+"Vos enregistrements n’ont pas été sauvegardés parce qu’un ou plusieurs "
+"d’entre eux comportent des erreurs. Corrigez les erreurs et sauvegardez "
+"de nouveau pour mettre la touche finale à vos enregistrements."
 
 #: ckanext/canada/assets/datatables/pd_datatables.js:102
 msgid "Could not save the records due to the following error: "
 msgstr ""
+"Impossible de sauvegarder les enregistrements en raison de l’erreur "
+"suivante :"
 
 #: ckanext/canada/assets/datatables/pd_datatables.js:103
 msgid ""
-"Your records did not save. Try saving again. If the issue persist please "
-"contact support with Support ID: "
+"Your records did not save. Try saving again. If the issue persists, "
+"please contact support with Support ID: "
 msgstr ""
+"Vos enregistrements n’ont pas été sauvegardés. Essayez de sauvegarder de "
+"nouveau. Si le problème persiste, veuillez communiquer avec le service de"
+" soutien au moyen du numéro de soutien :"
 
 #: ckanext/canada/assets/datatables/pd_datatables.js:104
 msgid ""
-"Your records did not save. Try saving again. If the issue persist please "
-"contact support."
+"Your records did not save. Try saving again. If the issue persists, "
+"please contact support."
 msgstr ""
+"Vos enregistrements n’ont pas été sauvegardés. Essayez de sauvegarder de "
+"nouveau. Si le problème persiste, veuillez communiquer avec le service de"
+" soutien."
 
 #: ckanext/canada/assets/datatables/pd_datatables.js:105
 msgid "{PRIM_IDS} already used in this Editor Table."
-msgstr ""
+msgstr "{PRIM_IDS} déjà utilisé dans ce tableau d’édition."
 
 #: ckanext/canada/assets/datatables/pd_datatables.js:106
 msgid " record(s)"
-msgstr ""
+msgstr " enregistrement(s)"
 
 #: ckanext/canada/assets/datatables/pd_datatables.js:107
 msgid "Legend:"
-msgstr ""
+msgstr "Légende :"
 
 #: ckanext/canada/assets/datatables/pd_datatables.js:108
 msgid "Valid"
-msgstr ""
+msgstr "Valide"
 
 #: ckanext/canada/assets/datatables/pd_datatables.js:109
 #: ckanext/canada/templates/error_document_template.html:18
@@ -1385,51 +1400,51 @@ msgstr "Erreur"
 
 #: ckanext/canada/assets/datatables/pd_datatables.js:110
 msgid "Required"
-msgstr ""
+msgstr "Obligatoire"
 
 #: ckanext/canada/assets/datatables/pd_datatables.js:111
 msgid "Error: Could not query records. Please try again."
-msgstr ""
+msgstr "Erreur : Impossible d’interroger les enregistrements. Veuillez réessayer."
 
 #: ckanext/canada/assets/datatables/pd_datatables.js:112
 msgid "Error: Could not generate Excel template. Please try again."
-msgstr ""
+msgstr "Erreur : Impossible de générer un modèle Excel. Veuillez réessayer."
 
 #: ckanext/canada/assets/datatables/pd_datatables.js:113
-msgid "Edit<span class=\"pd-datatbales-btn-count\"></span> in Excel"
-msgstr "Modifier<span class=\"pd-datatbales-btn-count\"></span> dans Excel"
+msgid "Edit<span class=\"pd-datatables-btn-count\"></span> in Excel"
+msgstr "Modifier <span class=\"pd-datatables-btn-count\"></span> dans Excel\""
 
 #: ckanext/canada/assets/datatables/pd_datatables.js:114
 msgid "Exporting{COUNT} record(s) to an Excel Template"
-msgstr ""
+msgstr "Exportation de {COUNT} enregistrement(s) vers un modèle Excel"
 
 #: ckanext/canada/assets/datatables/pd_datatables.js:115
-msgid "Delete<span class=\"pd-datatbales-btn-count\"></span>"
-msgstr "Supprimer<span class=\"pd-datatbales-btn-count\"></span>"
+msgid "Delete<span class=\"pd-datatables-btn-count\"></span>"
+msgstr "Supprimer <span class=\"pd-datatables-btn-count\"></span>"
 
 #: ckanext/canada/assets/datatables/pd_datatables.js:116
-msgid "Save<span class=\"pd-datatbales-btn-count\"></span>"
-msgstr ""
+msgid "Save<span class=\"pd-datatables-btn-count\"></span>"
+msgstr "Sauvegarder <span class=\"pd-datatables-btn-count\"></span>"
 
 #: ckanext/canada/assets/datatables/pd_datatables.js:119
 msgid "No data available in table"
-msgstr ""
+msgstr "Aucune donnée disponible dans le tableau"
 
 #: ckanext/canada/assets/datatables/pd_datatables.js:120
 msgid "Showing _START_ to _END_ of _TOTAL_ entries"
-msgstr ""
+msgstr "Affichage de _START_ à _END_ des entrées _TOTAL_"
 
 #: ckanext/canada/assets/datatables/pd_datatables.js:121
 msgid "Showing 0 to 0 of 0 entries"
-msgstr ""
+msgstr "Affichage des entrées 0 à 0 sur 0"
 
 #: ckanext/canada/assets/datatables/pd_datatables.js:122
 msgid "(filtered from _MAX_ total entries)"
-msgstr ""
+msgstr "(filtré à partir du total des entrées _MAX_)"
 
 #: ckanext/canada/assets/datatables/pd_datatables.js:125
 msgid "_MENU_ Show number of entries"
-msgstr "_MENU_ Afficher le nombre d'entrées"
+msgstr "_MENU_ Afficher le nombre d’entrées"
 
 #: ckanext/canada/assets/datatables/pd_datatables.js:126
 #: ckanext/canada/templates/package/snippets/data_api_button.html:2
@@ -1438,19 +1453,19 @@ msgstr "Chargement..."
 
 #: ckanext/canada/assets/datatables/pd_datatables.js:128
 msgid "Full Text Search"
-msgstr "La recherche en texte intégral"
+msgstr "Recherche en texte intégral"
 
 #: ckanext/canada/assets/datatables/pd_datatables.js:129
 msgid "No matching records found"
-msgstr ""
+msgstr "Aucun enregistrement correspondant trouvé"
 
 #: ckanext/canada/assets/datatables/pd_datatables.js:137
 msgid "Order by this column"
-msgstr ""
+msgstr "Placer en ordre selon cette colonne"
 
 #: ckanext/canada/assets/datatables/pd_datatables.js:138
 msgid "Reverse order this column"
-msgstr ""
+msgstr "Inverser l’ordre de cette colonne"
 
 #: ckanext/canada/assets/datatables/pd_datatables.js:446
 #: ckanext/canada/assets/datatables/pd_datatables.js:494
@@ -1462,7 +1477,7 @@ msgstr " : "
 #: ckanext/canada/assets/modules/user_opt_in.js:78
 #: ckanext/canada/assets/modules/user_opt_in.js:82
 msgid "Failed to change user settings"
-msgstr ""
+msgstr "Échec de la modification des paramètres de l’utilisateur"
 
 #: ckanext/canada/plugin/public_plugin.py:151
 #: ckanext/canada/templates/scheming/package/snippets/package_form.html:25
@@ -2361,8 +2376,7 @@ msgstr "Nous rencontrons une erreur"
 
 #: ckanext/canada/templates/error_document_template.html:28
 msgid "We Encountered an Error and your request could not be completed."
-msgstr ""
-"Une erreur s'est produite et votre demande n'a pas pu être traitée."
+msgstr "Une erreur s'est produite et votre demande n'a pas pu être traitée."
 
 #: ckanext/canada/templates/error_document_template.html:34
 msgid ""
@@ -2385,8 +2399,8 @@ msgid ""
 "The staging environment may experience occasional outages as part of our "
 "regular development process."
 msgstr ""
-"L'environnement d'essai peut subir des interruptions "
-"occasionnelles dans le cadre de notre processus de développement habituel."
+"L'environnement d'essai peut subir des interruptions occasionnelles dans "
+"le cadre de notre processus de développement habituel."
 
 #: ckanext/canada/templates/error_document_template.html:45
 msgid ""
@@ -2398,11 +2412,12 @@ msgid ""
 "Open Government Portal."
 msgstr ""
 "Si vous effectuez des tests liés à la préparation des données en vue de "
-"leur publication, veuillez les réaliser directement dans <a href=\"https://"
-"registry.open.canada.ca/fr\">le Registre du gouvernement ouvert.</a> "
-"Le mode « brouillon » du registre est conçu pour permettre aux utilisateurs "
-"de procéder aux ajustements préalables nécessaires avant que les données ne "
-"soient rendues publiques sur le Portail du gouvernement ouvert."
+"leur publication, veuillez les réaliser directement dans <a "
+"href=\"https://registry.open.canada.ca/fr\">le Registre du gouvernement "
+"ouvert.</a> Le mode « brouillon » du registre est conçu pour permettre "
+"aux utilisateurs de procéder aux ajustements préalables nécessaires avant"
+" que les données ne soient rendues publiques sur le Portail du "
+"gouvernement ouvert."
 
 #: ckanext/canada/templates/error_document_template.html:47
 msgid "Support ID: "
@@ -4588,7 +4603,7 @@ msgstr "Retourner à l’ancienne interface des tableaux"
 
 #: ckanext/canada/templates/snippets/pd_datatable.html:61
 msgid "Keyboard controls"
-msgstr "Commandes du clavier"
+msgstr "Commandes clavier"
 
 #: ckanext/canada/templates/snippets/pd_datatable.html:63
 msgid ""
@@ -4596,16 +4611,15 @@ msgid ""
 "column sorting"
 msgstr ""
 "Maintenez la touche <pre>SHIFT</pre> enfoncée tout en cliquant sur les "
-"commandes de tri pour trier plusieurs colonnes."
+"commandes de tri pour trier en plusieurs colonnes."
 
 #: ckanext/canada/templates/snippets/pd_datatable.html:64
 msgid ""
 "Press <pre>ALT + K</pre> keys to enter KeyTable mode, allowing you to "
 "navigate the table with arrow keys"
 msgstr ""
-"Appuyez sur les touches <pre>ALT + K</pre> pour passer en mode « KeyTable"
-" », ce qui vous permet de naviguer dans le tableau avec les touches "
-"fléchées"
+"Appuyez sur les touches <pre>ALT + K</pre> pour entrer en mode de tableau"
+" de clés, ce qui vous permet de naviguer dans le tableau avec des flèches"
 
 #: ckanext/canada/templates/snippets/pd_datatable.html:66
 msgid "Press <pre>SPACE</pre> key to select a row"
@@ -4614,12 +4628,14 @@ msgstr "Appuyez sur la touche <pre>SPACE</pre> pour sélectionner une ligne."
 #: ckanext/canada/templates/snippets/pd_datatable.html:67
 msgid "Press <pre>E</pre> key to expand a row (Compact Table mode only)"
 msgstr ""
-"Appuyez sur la touche <pre>E</pre> pour agrandir une rangée (mode Tableau"
-" compact seulement)."
+"Appuyez sur la touche <pre>E</pre> pour agrandir une rangée (mode de "
+"tableau réduit seulement)."
 
 #: ckanext/canada/templates/snippets/pd_datatable.html:68
 msgid "Press <pre>ESC</pre> key to exit KeyTable mode"
-msgstr "Appuyez sur la touche <pre>ESC</pre> pour quitter le mode « KeyTable »"
+msgstr ""
+"Appuyez sur la touche <pre>ESC</pre> pour quitter le mode de tableau de "
+"clés"
 
 #: ckanext/canada/templates/snippets/pd_datatable.html:77
 #: ckanext/canada/templates/snippets/pd_datatable.html:88

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ckanext-canada 0.4.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-07-21 18:51+0000\n"
+"POT-Creation-Date: 2026-07-27 16:23-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -130,44 +130,44 @@ msgstr ""
 msgid "Invalid business number"
 msgstr ""
 
-#: ckanext/canada/helpers.py:370 ckanext/canada/helpers.py:371
+#: ckanext/canada/helpers.py:369 ckanext/canada/helpers.py:370
 msgid "Treasury Board of Canada Secretariat"
 msgstr ""
 
-#: ckanext/canada/helpers.py:721 ckanext/canada/strings.py:14
+#: ckanext/canada/helpers.py:720 ckanext/canada/strings.py:14
 #: ckanext/canada/view.py:1517
 msgid "Members not found"
 msgstr ""
 
-#: ckanext/canada/helpers.py:856
+#: ckanext/canada/helpers.py:855
 msgid "Data awaiting load to DataStore"
 msgstr ""
 
-#: ckanext/canada/helpers.py:857
+#: ckanext/canada/helpers.py:856
 msgid "Loading data into DataStore"
 msgstr ""
 
-#: ckanext/canada/helpers.py:858
+#: ckanext/canada/helpers.py:857
 msgid "Data loaded into DataStore"
 msgstr ""
 
-#: ckanext/canada/helpers.py:859
+#: ckanext/canada/helpers.py:858
 msgid "Failed to load data into DataStore"
 msgstr ""
 
-#: ckanext/canada/helpers.py:860
+#: ckanext/canada/helpers.py:859
 msgid "Data available in DataStore"
 msgstr ""
 
-#: ckanext/canada/helpers.py:861
+#: ckanext/canada/helpers.py:860
 msgid "Resource not active in DataStore"
 msgstr ""
 
-#: ckanext/canada/helpers.py:862
+#: ckanext/canada/helpers.py:861
 msgid "DataStore status unknown"
 msgstr ""
 
-#: ckanext/canada/helpers.py:941 ckanext/canada/templates/home/quick_links.html:65
+#: ckanext/canada/helpers.py:940 ckanext/canada/templates/home/quick_links.html:65
 #: ckanext/canada/templates/package/snippets/package_type_label.html:16
 #: ckanext/canada/templates/scheming/package/snippets/package_form.html:28
 #: ckanext/canada/templates/snippets/cdts/header.html:33
@@ -176,7 +176,7 @@ msgstr ""
 msgid "Open Data"
 msgstr ""
 
-#: ckanext/canada/helpers.py:942 ckanext/canada/templates/home/quick_links.html:82
+#: ckanext/canada/helpers.py:941 ckanext/canada/templates/home/quick_links.html:82
 #: ckanext/canada/templates/package/snippets/package_type_label.html:22
 #: ckanext/canada/templates/scheming/package/snippets/package_form.html:30
 #: ckanext/canada/templates/snippets/cdts/header.html:57
@@ -185,23 +185,23 @@ msgstr ""
 msgid "Open Information"
 msgstr ""
 
-#: ckanext/canada/helpers.py:954
+#: ckanext/canada/helpers.py:953
 #: ckanext/canada/templates/snippets/dataset_facets.html:27
 msgid "Request sent to data owner - awaiting response"
 msgstr ""
 
-#: ckanext/canada/helpers.py:958
+#: ckanext/canada/helpers.py:957
 #: ckanext/canada/templates/snippets/publish_facet.html:44
 msgid "Pending"
 msgstr ""
 
-#: ckanext/canada/helpers.py:959 ckanext/canada/templates/package/read.html:48
+#: ckanext/canada/helpers.py:958 ckanext/canada/templates/package/read.html:48
 #: ckanext/canada/templates/snippets/package_item.html:21
 #: ckanext/canada/templates/snippets/publish_facet.html:44
 msgid "Draft"
 msgstr ""
 
-#: ckanext/canada/helpers.py:976 ckanext/canada/templates/home/quick_links.html:152
+#: ckanext/canada/helpers.py:975 ckanext/canada/templates/home/quick_links.html:152
 #: ckanext/canada/templates/package/snippets/package_type_label.html:20
 #: ckanext/canada/templates/package/snippets/package_type_label.html:26
 #: ckanext/canada/templates/snippets/cdts/header.html:75
@@ -209,25 +209,25 @@ msgstr ""
 msgid "Proactive Publication"
 msgstr ""
 
-#: ckanext/canada/helpers.py:1005
+#: ckanext/canada/helpers.py:1004
 #: ckanext/canada/templates/snippets/publish_facet.html:25
 msgid "Published"
 msgstr ""
 
-#: ckanext/canada/helpers.py:1007
+#: ckanext/canada/helpers.py:1006
 #: ckanext/canada/templates/snippets/publish_facet.html:34
 msgid "Scheduled"
 msgstr ""
 
-#: ckanext/canada/helpers.py:1047
+#: ckanext/canada/helpers.py:1046
 msgid "Registry Home"
 msgstr ""
 
-#: ckanext/canada/helpers.py:1052
+#: ckanext/canada/helpers.py:1051
 msgid "Open Government"
 msgstr ""
 
-#: ckanext/canada/helpers.py:1055
+#: ckanext/canada/helpers.py:1054
 #: ckanext/canada/templates/admin/publish_search.html:19
 #: ckanext/canada/templates/home/quick_links.html:123
 #: ckanext/canada/templates/organization/snippets/organization_search.html:8
@@ -1129,7 +1129,7 @@ msgid "Any"
 msgstr ""
 
 #: ckanext/canada/assets/datatables/pd_datatables.js:74
-msgid "less"
+msgid "Less"
 msgstr ""
 
 #: ckanext/canada/assets/datatables/pd_datatables.js:75
@@ -1181,7 +1181,7 @@ msgid "Add new record in Table"
 msgstr ""
 
 #: ckanext/canada/assets/datatables/pd_datatables.js:87
-msgid "Edit<span class=\"pd-datatbales-btn-count\"></span> in Table"
+msgid "Edit<span class=\"pd-datatables-btn-count\"></span> in Table"
 msgstr ""
 
 #: ckanext/canada/assets/datatables/pd_datatables.js:88
@@ -1246,13 +1246,13 @@ msgstr ""
 
 #: ckanext/canada/assets/datatables/pd_datatables.js:103
 msgid ""
-"Your records did not save. Try saving again. If the issue persist please "
+"Your records did not save. Try saving again. If the issue persists, please "
 "contact support with Support ID: "
 msgstr ""
 
 #: ckanext/canada/assets/datatables/pd_datatables.js:104
 msgid ""
-"Your records did not save. Try saving again. If the issue persist please "
+"Your records did not save. Try saving again. If the issue persists, please "
 "contact support."
 msgstr ""
 
@@ -1290,7 +1290,7 @@ msgid "Error: Could not generate Excel template. Please try again."
 msgstr ""
 
 #: ckanext/canada/assets/datatables/pd_datatables.js:113
-msgid "Edit<span class=\"pd-datatbales-btn-count\"></span> in Excel"
+msgid "Edit<span class=\"pd-datatables-btn-count\"></span> in Excel"
 msgstr ""
 
 #: ckanext/canada/assets/datatables/pd_datatables.js:114
@@ -1298,11 +1298,11 @@ msgid "Exporting{COUNT} record(s) to an Excel Template"
 msgstr ""
 
 #: ckanext/canada/assets/datatables/pd_datatables.js:115
-msgid "Delete<span class=\"pd-datatbales-btn-count\"></span>"
+msgid "Delete<span class=\"pd-datatables-btn-count\"></span>"
 msgstr ""
 
 #: ckanext/canada/assets/datatables/pd_datatables.js:116
-msgid "Save<span class=\"pd-datatbales-btn-count\"></span>"
+msgid "Save<span class=\"pd-datatables-btn-count\"></span>"
 msgstr ""
 
 #: ckanext/canada/assets/datatables/pd_datatables.js:119
