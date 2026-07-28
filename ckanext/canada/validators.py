@@ -221,7 +221,7 @@ def canada_copy_from_org_name(key: FlattenKey,
     try:
         json_string(value, context)
     except Invalid as e:
-        errors[key].append(e)
+        errors[key].append(e.error)
         return
     if json.loads(value) not in ({}, {'en': '', 'fr': ''}):
         # do not set if there is a value
