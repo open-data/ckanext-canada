@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ckanext-canada 0.4.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-07-27 16:23-0400\n"
+"POT-Creation-Date: 2026-07-28 16:27+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -261,37 +261,41 @@ msgid ""
 " rows."
 msgstr ""
 
-#: ckanext/canada/strings.js:11 ckanext/canada/strings.py:98
+#: ckanext/canada/strings.js:11
+msgid "JS_I18N_LOADED"
+msgstr ""
+
+#: ckanext/canada/strings.js:13 ckanext/canada/strings.py:98
 msgid "Requesting Download..."
 msgstr ""
 
-#: ckanext/canada/strings.js:12 ckanext/canada/strings.py:99
+#: ckanext/canada/strings.js:14 ckanext/canada/strings.py:99
 msgid "Downloads"
 msgstr ""
 
-#: ckanext/canada/strings.js:13 ckanext/canada/strings.py:100
+#: ckanext/canada/strings.js:15 ckanext/canada/strings.py:100
 msgid ""
 "You have unfinished downloads in this page. Do you want to stop these "
 "downloads and leave the page?"
 msgstr ""
 
-#: ckanext/canada/strings.js:14 ckanext/canada/strings.py:101
+#: ckanext/canada/strings.js:16 ckanext/canada/strings.py:101
 msgid "Downloading file..."
 msgstr ""
 
-#: ckanext/canada/strings.js:15 ckanext/canada/strings.py:102
+#: ckanext/canada/strings.js:17 ckanext/canada/strings.py:102
 msgid "Successfully downloaded file"
 msgstr ""
 
-#: ckanext/canada/strings.js:16 ckanext/canada/strings.py:103
+#: ckanext/canada/strings.js:18 ckanext/canada/strings.py:103
 msgid "Error downloading file, trying again through your browser"
 msgstr ""
 
-#: ckanext/canada/strings.js:17 ckanext/canada/strings.py:104
+#: ckanext/canada/strings.js:19 ckanext/canada/strings.py:104
 msgid "Searching..."
 msgstr ""
 
-#: ckanext/canada/strings.js:18 ckanext/canada/strings.py:106
+#: ckanext/canada/strings.js:20 ckanext/canada/strings.py:106
 msgid "Saved new order"
 msgstr ""
 
@@ -866,31 +870,31 @@ msgstr ""
 msgid "Invalid GeoJSON"
 msgstr ""
 
-#: ckanext/canada/validators.py:274
+#: ckanext/canada/validators.py:284
 msgid "Date may not be in the future when this record is marked ready to publish"
 msgstr ""
 
-#: ckanext/canada/validators.py:370
+#: ckanext/canada/validators.py:380
 msgid "Date format incorrect. Expecting YYYY-MM-DD"
 msgstr ""
 
-#: ckanext/canada/validators.py:385 ckanext/canada/validators.py:406
+#: ckanext/canada/validators.py:395 ckanext/canada/validators.py:416
 msgid "Must be a Unicode string value"
 msgstr ""
 
-#: ckanext/canada/validators.py:414 ckanext/canada/validators.py:426
+#: ckanext/canada/validators.py:424 ckanext/canada/validators.py:436
 msgid "Must be a JSON string"
 msgstr ""
 
-#: ckanext/canada/validators.py:422
+#: ckanext/canada/validators.py:432
 msgid "JSON object must contain \"en\" key"
 msgstr ""
 
-#: ckanext/canada/validators.py:424
+#: ckanext/canada/validators.py:434
 msgid "JSON object must contain \"fr\" key"
 msgstr ""
 
-#: ckanext/canada/validators.py:609
+#: ckanext/canada/validators.py:619
 #, python-format
 msgid ""
 "Cannot change value of registry_access field from '%s' to '%s'. This field is"
@@ -899,7 +903,7 @@ msgstr ""
 
 #: ckanext/canada/templates/package/new_resource.html:19
 #: ckanext/canada/templates/package/new_resource_not_draft.html:11
-#: ckanext/canada/templates/package/read.html:80 ckanext/canada/validators.py:646
+#: ckanext/canada/templates/package/read.html:80 ckanext/canada/validators.py:656
 msgid ""
 "You can only add up to {max_resource_count} resources to a dataset. You can "
 "segment your resources across multiple datasets or merge your data to limit "
@@ -907,7 +911,7 @@ msgid ""
 "assistance."
 msgstr ""
 
-#: ckanext/canada/validators.py:664
+#: ckanext/canada/validators.py:674
 msgid ""
 "Invalid name for an API Token. API Token names can only contain alphanumeric "
 "characters, hyphens, and underscores."

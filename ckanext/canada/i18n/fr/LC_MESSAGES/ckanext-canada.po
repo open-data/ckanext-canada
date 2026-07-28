@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-07-27 16:23-0400\n"
+"POT-Creation-Date: 2026-07-28 16:27+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: fr\n"
@@ -293,37 +293,41 @@ msgid ""
 "than {} rows."
 msgstr ""
 
-#: ckanext/canada/strings.js:11 ckanext/canada/strings.py:98
+#: ckanext/canada/strings.js:11
+msgid "JS_I18N_LOADED"
+msgstr "JS_I18N_LOADED_FR"
+
+#: ckanext/canada/strings.js:13 ckanext/canada/strings.py:98
 msgid "Requesting Download..."
 msgstr "Préparation du téléchargement..."
 
-#: ckanext/canada/strings.js:12 ckanext/canada/strings.py:99
+#: ckanext/canada/strings.js:14 ckanext/canada/strings.py:99
 msgid "Downloads"
 msgstr "Téléchargements"
 
-#: ckanext/canada/strings.js:13 ckanext/canada/strings.py:100
+#: ckanext/canada/strings.js:15 ckanext/canada/strings.py:100
 msgid ""
 "You have unfinished downloads in this page. Do you want to stop these "
 "downloads and leave the page?"
 msgstr ""
 
-#: ckanext/canada/strings.js:14 ckanext/canada/strings.py:101
+#: ckanext/canada/strings.js:16 ckanext/canada/strings.py:101
 msgid "Downloading file..."
 msgstr "Téléchargement du fichier..."
 
-#: ckanext/canada/strings.js:15 ckanext/canada/strings.py:102
+#: ckanext/canada/strings.js:17 ckanext/canada/strings.py:102
 msgid "Successfully downloaded file"
 msgstr "Fichier téléchargé avec succès"
 
-#: ckanext/canada/strings.js:16 ckanext/canada/strings.py:103
+#: ckanext/canada/strings.js:18 ckanext/canada/strings.py:103
 msgid "Error downloading file, trying again through your browser"
 msgstr "Erreur lors du téléchargement du fichier, réessayez via votre navigateur"
 
-#: ckanext/canada/strings.js:17 ckanext/canada/strings.py:104
+#: ckanext/canada/strings.js:19 ckanext/canada/strings.py:104
 msgid "Searching..."
 msgstr "Recherche..."
 
-#: ckanext/canada/strings.js:18 ckanext/canada/strings.py:106
+#: ckanext/canada/strings.js:20 ckanext/canada/strings.py:106
 msgid "Saved new order"
 msgstr ""
 
@@ -942,33 +946,33 @@ msgstr "S’il vous plaît, mettez une adresse email valide."
 msgid "Invalid GeoJSON"
 msgstr "GeoJSON invalide"
 
-#: ckanext/canada/validators.py:274
+#: ckanext/canada/validators.py:284
 msgid "Date may not be in the future when this record is marked ready to publish"
 msgstr ""
 "Une fois que ce document est marqué comme étant prêt à publier, la date "
 "ne peut pas être dans le futur"
 
-#: ckanext/canada/validators.py:370
+#: ckanext/canada/validators.py:380
 msgid "Date format incorrect. Expecting YYYY-MM-DD"
 msgstr "Le format de la date est incorrect. Il devrait être AAAA-MM-JJ"
 
-#: ckanext/canada/validators.py:385 ckanext/canada/validators.py:406
+#: ckanext/canada/validators.py:395 ckanext/canada/validators.py:416
 msgid "Must be a Unicode string value"
 msgstr "Doit être une chaîne de caractères Unicode"
 
-#: ckanext/canada/validators.py:414 ckanext/canada/validators.py:426
+#: ckanext/canada/validators.py:424 ckanext/canada/validators.py:436
 msgid "Must be a JSON string"
 msgstr "Doit être une chaîne JSON"
 
-#: ckanext/canada/validators.py:422
+#: ckanext/canada/validators.py:432
 msgid "JSON object must contain \"en\" key"
 msgstr "L’objet JSON doit contenir la clé \"en\""
 
-#: ckanext/canada/validators.py:424
+#: ckanext/canada/validators.py:434
 msgid "JSON object must contain \"fr\" key"
 msgstr "L’objet JSON doit contenir la clé \"fr\""
 
-#: ckanext/canada/validators.py:609
+#: ckanext/canada/validators.py:619
 #, python-format
 msgid ""
 "Cannot change value of registry_access field from '%s' to '%s'. This "
@@ -980,7 +984,7 @@ msgstr ""
 #: ckanext/canada/templates/package/new_resource.html:19
 #: ckanext/canada/templates/package/new_resource_not_draft.html:11
 #: ckanext/canada/templates/package/read.html:80
-#: ckanext/canada/validators.py:646
+#: ckanext/canada/validators.py:656
 msgid ""
 "You can only add up to {max_resource_count} resources to a dataset. You "
 "can segment your resources across multiple datasets or merge your data to"
@@ -992,7 +996,7 @@ msgstr ""
 "de données ou fusionner vos données pour limiter le nombre de ressources."
 " Pour du support veuillez contacter {support}."
 
-#: ckanext/canada/validators.py:664
+#: ckanext/canada/validators.py:674
 msgid ""
 "Invalid name for an API Token. API Token names can only contain "
 "alphanumeric characters, hyphens, and underscores."
@@ -1404,15 +1408,15 @@ msgstr "Obligatoire"
 
 #: ckanext/canada/assets/datatables/pd_datatables.js:111
 msgid "Error: Could not query records. Please try again."
-msgstr "Erreur : Impossible d’interroger les enregistrements. Veuillez réessayer."
+msgstr "Erreur : Impossible d’interroger les enregistrements. Veuillez réessayer."
 
 #: ckanext/canada/assets/datatables/pd_datatables.js:112
 msgid "Error: Could not generate Excel template. Please try again."
-msgstr "Erreur : Impossible de générer un modèle Excel. Veuillez réessayer."
+msgstr "Erreur : Impossible de générer un modèle Excel. Veuillez réessayer."
 
 #: ckanext/canada/assets/datatables/pd_datatables.js:113
 msgid "Edit<span class=\"pd-datatables-btn-count\"></span> in Excel"
-msgstr "Modifier <span class=\"pd-datatables-btn-count\"></span> dans Excel\""
+msgstr "Modifier <span class=\"pd-datatables-btn-count\"></span> dans Excel"
 
 #: ckanext/canada/assets/datatables/pd_datatables.js:114
 msgid "Exporting{COUNT} record(s) to an Excel Template"
