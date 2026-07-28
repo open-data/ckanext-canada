@@ -67,14 +67,14 @@
     <aside class="col-md-3">
       {% if geno.notes %}
         <div class="panel panel-primary">
-          <div class="panel-heading">{{ _("Info") }}</div>
+          <div class="panel-heading canada-panel-heading">{{ _("Info") }}</div>
           <div class="panel-body">
             <p>{{ _(geno.notes) }}</p>
           </div>
         </div>
       {% endif %}
       <div class="panel panel-primary">
-        <div class="panel-heading">{{ _("Guide") }}</div>
+        <div class="panel-heading canada-panel-heading">{{ _("Guide") }}</div>
         <div class="panel-body">
           {% set default_guidelink = h.operations_guide_link(stub='publication-proactive' if h.lang() == 'fr' else 'proactive-publication' ) %}
           {% set guide_link = h.recombinant_language_text(h.recombinant_get_geno(dataset_type).get('guide_link', default_guidelink) ) %}

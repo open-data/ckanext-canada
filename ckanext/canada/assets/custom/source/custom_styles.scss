@@ -129,6 +129,15 @@ footer{
     overflow: scroll !important;
   }
 }
+
+body{
+  > header{
+    z-index: 3 !important;
+  }
+  #canada-main-container{
+    z-index: 2 !important;
+  }
+}
 /*##########
 ##  END   ##
 ##  Root  ##
@@ -332,6 +341,9 @@ button#edit-submit,button#edit-actions-submit{
         color: #fff;
       }
     }
+  }
+  .canada-panel-heading{
+    font-weight: 600;
   }
 }
 
@@ -1340,16 +1352,19 @@ ul#brf-pkg{
 /*##############################
 ##  Modals, Popups, & Alerts  ##
 ################################*/
-#confirm-contact-email .modal-dialog{
-  position: absolute;
-  top: 20%;
-  left: 50%;
-  transform: translate(-50%, 0);
-  max-width: 80%;
-  @media all and (max-width: 768px){
-    min-width: 80%;
+#confirm-contact-email{
+  z-index: 5 !important;
+  .modal-dialog{
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    transform: translate(-50%, 0);
     max-width: 80%;
-    width: 80%;
+    @media all and (max-width: 768px){
+      min-width: 80%;
+      max-width: 80%;
+      width: 80%;
+    }
   }
 }
 
@@ -2914,6 +2929,7 @@ body{
 }
 
 footer#wb-info{
+  z-index: 1 !important;
   margin-top: 36px !important;
 }
 /*###########################
