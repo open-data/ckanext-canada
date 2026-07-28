@@ -103,10 +103,14 @@ def _generate_data():
 
         for row in c:
             oname = _clean_intake_text(row['org_name_variant'])
+            oid = _clean_intake_text(row['org_id'])
             if oname in open_orgs:
-                # FIXME: org names can share an ID for historical purposes.
-                # e.g. nsira-ossnr,302 is also sirc-csars,302
-                org_id_abbr_map[_clean_intake_text(row['org_id'])] = oname
+                # NOTE: org names can share an ID for historical purposes.
+                # e.g. nsira-ossnr,302 is also sirc-csars,302 (abbr,umd)
+                # and the Registry may have both abbreviations.
+                if oid not in org_id_abbr_map:
+                    org_id_abbr_map[oid] = []
+                org_id_abbr_map[_clean_intake_text(row['org_id'])].append(oname)
     assert org_id_abbr_map
 
     # compile map of program_ids
@@ -148,16 +152,17 @@ def _generate_data():
                           'in Open Gov Registry. Skipping...' % org)
                     skipped_orgs.add(org)
                 continue
-            org = org_id_abbr_map[org]
+            mapped_orgs = org_id_abbr_map[org]
 
-            if 'org_years' not in program_id_map[program_id]:
-                program_id_map[program_id]['org_years'] = {}
-            if org not in program_id_map[program_id]['org_years']:
-                program_id_map[program_id]['org_years'][org] = []
-            year = _clean_intake_text(row['latest_valid_fy'])
-            if year in program_id_map[program_id]['org_years'][org]:
-                continue
-            program_id_map[program_id]['org_years'][org].append(year)
+            for _org in mapped_orgs:
+                if 'org_years' not in program_id_map[program_id]:
+                    program_id_map[program_id]['org_years'] = {}
+                if _org not in program_id_map[program_id]['org_years']:
+                    program_id_map[program_id]['org_years'][_org] = []
+                year = _clean_intake_text(row['latest_valid_fy'])
+                if year in program_id_map[program_id]['org_years'][_org]:
+                    continue
+                program_id_map[program_id]['org_years'][_org].append(year)
     assert program_id_map
 
     # write program_id ref data
@@ -206,20 +211,21 @@ def _generate_data():
                               'in Open Gov Registry. Skipping...' % org)
                         skipped_orgs.add(org)
                     continue
-                org = org_id_abbr_map[org]
+                mapped_orgs = org_id_abbr_map[org]
 
                 inserted_service_ids.add(service_id)
 
                 # just make same format as program_id
                 # org_years to make queries the same
                 org_years = {}
-                org_years[org] = [_clean_intake_text(row['fiscal_yr_latest'])]
+                for _org in mapped_orgs:
+                    org_years[_org] = [_clean_intake_text(row['fiscal_yr_latest'])]
 
                 writer.writerow({
                     'service_id': service_id,
                     'label_en': _clean_intake_text(row['service_name_en']),
                     'label_fr': _clean_intake_text(row['service_name_fr']),
-                    'org_years': json.dumps(org_years) if org else None})
+                    'org_years': json.dumps(org_years) if mapped_orgs else None})
     assert inserted_service_ids
 
 
