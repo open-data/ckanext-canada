@@ -438,6 +438,10 @@ ul#brf-pkg { padding-left: 0; }
   vertical-align: middle;
 }
 
+#confirm-contact-email {
+  z-index: 5 !important;
+}
+
 #confirm-contact-email .modal-dialog{
   position: absolute;
   top: 20%;
