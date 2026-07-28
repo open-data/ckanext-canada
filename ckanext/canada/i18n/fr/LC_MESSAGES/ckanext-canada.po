@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-07-28 09:45-0400\n"
+"POT-Creation-Date: 2026-07-28 15:58+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: fr\n"
@@ -1019,37 +1019,37 @@ msgstr "S’il vous plaît, mettez une adresse email valide."
 msgid "Invalid GeoJSON"
 msgstr "GeoJSON invalide"
 
-#: ckanext/canada/validators.py:350
+#: ckanext/canada/validators.py:360
 msgid "Date cannot be in the future."
 msgstr "La date ne doit pas être dans le futur"
 
-#: ckanext/canada/validators.py:364
+#: ckanext/canada/validators.py:374
 msgid "Date may not be in the future when this record is marked ready to publish"
 msgstr ""
 "Une fois que ce document est marqué comme étant prêt à publier, la date "
 "ne peut pas être dans le futur"
 
-#: ckanext/canada/validators.py:460
+#: ckanext/canada/validators.py:470
 msgid "Date format incorrect. Expecting YYYY-MM-DD"
 msgstr "Le format de la date est incorrect. Il devrait être AAAA-MM-JJ"
 
-#: ckanext/canada/validators.py:475 ckanext/canada/validators.py:496
+#: ckanext/canada/validators.py:485 ckanext/canada/validators.py:506
 msgid "Must be a Unicode string value"
 msgstr "Doit être une chaîne de caractères Unicode"
 
-#: ckanext/canada/validators.py:504 ckanext/canada/validators.py:516
+#: ckanext/canada/validators.py:514 ckanext/canada/validators.py:526
 msgid "Must be a JSON string"
 msgstr "Doit être une chaîne JSON"
 
-#: ckanext/canada/validators.py:512
+#: ckanext/canada/validators.py:522
 msgid "JSON object must contain \"en\" key"
 msgstr "L’objet JSON doit contenir la clé \"en\""
 
-#: ckanext/canada/validators.py:514
+#: ckanext/canada/validators.py:524
 msgid "JSON object must contain \"fr\" key"
 msgstr "L’objet JSON doit contenir la clé \"fr\""
 
-#: ckanext/canada/validators.py:699
+#: ckanext/canada/validators.py:709
 #, python-format
 msgid ""
 "Cannot change value of registry_access field from '%s' to '%s'. This "
@@ -1058,14 +1058,14 @@ msgstr ""
 "Impossible de modifier la valeur du champ d’accès au registre de '%s' à "
 "'%s'. Ce champ ne sert qu’à des fins de lecture."
 
-#: ckanext/canada/validators.py:707
+#: ckanext/canada/validators.py:717
 msgid "Invalid value for a digital object identifier."
 msgstr ""
 
 #: ckanext/canada/templates/package/new_resource.html:30
 #: ckanext/canada/templates/package/new_resource_not_draft.html:11
 #: ckanext/canada/templates/package/read.html:80
-#: ckanext/canada/validators.py:744
+#: ckanext/canada/validators.py:754
 msgid ""
 "You can only add up to {max_resource_count} resources to a dataset. You "
 "can segment your resources across multiple datasets or merge your data to"
@@ -1077,7 +1077,7 @@ msgstr ""
 "de données ou fusionner vos données pour limiter le nombre de ressources."
 " Pour du support veuillez contacter {support}."
 
-#: ckanext/canada/validators.py:762
+#: ckanext/canada/validators.py:772
 msgid ""
 "Invalid name for an API Token. API Token names can only contain "
 "alphanumeric characters, hyphens, and underscores."
@@ -1569,18 +1569,6 @@ msgstr "Inverser l’ordre de cette colonne"
 msgid ": "
 msgstr " : "
 
-#: ckanext/canada/assets/modules/build/user_opt_in.min.js:1
-msgid "Opt-in Feature — Unexpected response data."
-msgstr ""
-
-#: ckanext/canada/assets/modules/build/user_opt_in.min.js:1
-msgid "Opt-in Feature — ValidationError exception was raised."
-msgstr ""
-
-#: ckanext/canada/assets/modules/build/user_opt_in.min.js:1
-msgid "Opt-in Feature — Failed to gather a JSON response."
-msgstr ""
-
 #: ckanext/canada/assets/modules/source/user_opt_in.js:74
 #: ckanext/canada/assets/modules/source/user_opt_in.js:78
 #: ckanext/canada/assets/modules/source/user_opt_in.js:82
@@ -2061,8 +2049,12 @@ msgstr ""
 
 #. SQL Trigger String for PD Type: grants
 #: ckanext/canada/tables/grants.yaml:1315
-msgid "Must be greater than or equal to zero"
-msgstr "Le nombre doit être supérieur ou égal à 0"
+msgid ""
+"\"Agreement Value\" must be zero or greater for agreements starting on or"
+" after May 1, 2026"
+msgstr ""
+"La « valeur de l'entente » doit être supérieur ou égal à "
+"0 pour les accords qui commencent le 1er mai 2026 ou après"
 
 #. Resource Title for PD Type: grants
 #: ckanext/canada/tables/grants.yaml:1364
@@ -8327,4 +8319,16 @@ msgstr "Télécharger vers le DataStore"
 
 #~ msgid "Empty Cart"
 #~ msgstr "Vider le panier"
+
+#~ msgid "Opt-in Feature — Unexpected response data."
+#~ msgstr ""
+
+#~ msgid "Opt-in Feature — ValidationError exception was raised."
+#~ msgstr ""
+
+#~ msgid "Opt-in Feature — Failed to gather a JSON response."
+#~ msgstr ""
+
+#~ msgid "Must be greater than or equal to zero"
+#~ msgstr "Le nombre doit être supérieur ou égal à 0"
 

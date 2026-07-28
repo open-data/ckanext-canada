@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ckanext-canada 0.4.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-07-28 09:45-0400\n"
+"POT-Creation-Date: 2026-07-28 15:58+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -932,48 +932,48 @@ msgstr ""
 msgid "Invalid GeoJSON"
 msgstr ""
 
-#: ckanext/canada/validators.py:350
+#: ckanext/canada/validators.py:360
 msgid "Date cannot be in the future."
 msgstr ""
 
-#: ckanext/canada/validators.py:364
+#: ckanext/canada/validators.py:374
 msgid "Date may not be in the future when this record is marked ready to publish"
 msgstr ""
 
-#: ckanext/canada/validators.py:460
+#: ckanext/canada/validators.py:470
 msgid "Date format incorrect. Expecting YYYY-MM-DD"
 msgstr ""
 
-#: ckanext/canada/validators.py:475 ckanext/canada/validators.py:496
+#: ckanext/canada/validators.py:485 ckanext/canada/validators.py:506
 msgid "Must be a Unicode string value"
 msgstr ""
 
-#: ckanext/canada/validators.py:504 ckanext/canada/validators.py:516
+#: ckanext/canada/validators.py:514 ckanext/canada/validators.py:526
 msgid "Must be a JSON string"
 msgstr ""
 
-#: ckanext/canada/validators.py:512
+#: ckanext/canada/validators.py:522
 msgid "JSON object must contain \"en\" key"
 msgstr ""
 
-#: ckanext/canada/validators.py:514
+#: ckanext/canada/validators.py:524
 msgid "JSON object must contain \"fr\" key"
 msgstr ""
 
-#: ckanext/canada/validators.py:699
+#: ckanext/canada/validators.py:709
 #, python-format
 msgid ""
 "Cannot change value of registry_access field from '%s' to '%s'. This field is"
 " read-only."
 msgstr ""
 
-#: ckanext/canada/validators.py:707
+#: ckanext/canada/validators.py:717
 msgid "Invalid value for a digital object identifier."
 msgstr ""
 
 #: ckanext/canada/templates/package/new_resource.html:30
 #: ckanext/canada/templates/package/new_resource_not_draft.html:11
-#: ckanext/canada/templates/package/read.html:80 ckanext/canada/validators.py:744
+#: ckanext/canada/templates/package/read.html:80 ckanext/canada/validators.py:754
 msgid ""
 "You can only add up to {max_resource_count} resources to a dataset. You can "
 "segment your resources across multiple datasets or merge your data to limit "
@@ -981,7 +981,7 @@ msgid ""
 "assistance."
 msgstr ""
 
-#: ckanext/canada/validators.py:762
+#: ckanext/canada/validators.py:772
 msgid ""
 "Invalid name for an API Token. API Token names can only contain alphanumeric "
 "characters, hyphens, and underscores."
@@ -1438,18 +1438,6 @@ msgstr ""
 msgid ": "
 msgstr ""
 
-#: ckanext/canada/assets/modules/build/user_opt_in.min.js:1
-msgid "Opt-in Feature — Unexpected response data."
-msgstr ""
-
-#: ckanext/canada/assets/modules/build/user_opt_in.min.js:1
-msgid "Opt-in Feature — ValidationError exception was raised."
-msgstr ""
-
-#: ckanext/canada/assets/modules/build/user_opt_in.min.js:1
-msgid "Opt-in Feature — Failed to gather a JSON response."
-msgstr ""
-
 #: ckanext/canada/assets/modules/source/user_opt_in.js:74
 #: ckanext/canada/assets/modules/source/user_opt_in.js:78
 #: ckanext/canada/assets/modules/source/user_opt_in.js:82
@@ -1853,7 +1841,9 @@ msgstr ""
 
 #. SQL Trigger String for PD Type: grants
 #: ckanext/canada/tables/grants.yaml:1315
-msgid "Must be greater than or equal to zero"
+msgid ""
+"\"Agreement Value\" must be zero or greater for agreements starting on or "
+"after May 1, 2026"
 msgstr ""
 
 #. Resource Title for PD Type: grants
