@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-07-21 18:51+0000\n"
+"POT-Creation-Date: 2026-07-28 15:51+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: fr\n"
@@ -154,45 +154,45 @@ msgstr ""
 msgid "Invalid business number"
 msgstr "Numéro d’entreprise non valide"
 
-#: ckanext/canada/helpers.py:370 ckanext/canada/helpers.py:371
+#: ckanext/canada/helpers.py:369 ckanext/canada/helpers.py:370
 msgid "Treasury Board of Canada Secretariat"
 msgstr "Secrétariat du Conseil du Trésor du Canada"
 
-#: ckanext/canada/helpers.py:721 ckanext/canada/strings.py:14
+#: ckanext/canada/helpers.py:720 ckanext/canada/strings.py:14
 #: ckanext/canada/view.py:1517
 msgid "Members not found"
 msgstr "Membres non trouvés"
 
-#: ckanext/canada/helpers.py:856
+#: ckanext/canada/helpers.py:855
 msgid "Data awaiting load to DataStore"
 msgstr "Le versement des données dans DataStore est en attente"
 
-#: ckanext/canada/helpers.py:857
+#: ckanext/canada/helpers.py:856
 msgid "Loading data into DataStore"
 msgstr "Le versement des données dans DataStore est en cours"
 
-#: ckanext/canada/helpers.py:858
+#: ckanext/canada/helpers.py:857
 msgid "Data loaded into DataStore"
 msgstr "Les données ont été versées dans DataStore"
 
-#: ckanext/canada/helpers.py:859
+#: ckanext/canada/helpers.py:858
 msgid "Failed to load data into DataStore"
 msgstr "Les données n'ont pas été versées dans DataStore"
 
-#: ckanext/canada/helpers.py:860
+#: ckanext/canada/helpers.py:859
 msgid "Data available in DataStore"
 msgstr "Les données sont disponibles dans DataStore"
 
-#: ckanext/canada/helpers.py:861
+#: ckanext/canada/helpers.py:860
 msgid "Resource not active in DataStore"
 msgstr "La ressource est inactive dans DataStore"
 
-#: ckanext/canada/helpers.py:862
+#: ckanext/canada/helpers.py:861
 msgid "DataStore status unknown"
 msgstr "L'état de DataStore est inconnu"
 
 # Search facets
-#: ckanext/canada/helpers.py:941
+#: ckanext/canada/helpers.py:940
 #: ckanext/canada/templates/home/quick_links.html:65
 #: ckanext/canada/templates/package/snippets/package_type_label.html:16
 #: ckanext/canada/templates/scheming/package/snippets/package_form.html:28
@@ -202,7 +202,7 @@ msgstr "L'état de DataStore est inconnu"
 msgid "Open Data"
 msgstr "Données ouvertes"
 
-#: ckanext/canada/helpers.py:942
+#: ckanext/canada/helpers.py:941
 #: ckanext/canada/templates/home/quick_links.html:82
 #: ckanext/canada/templates/package/snippets/package_type_label.html:22
 #: ckanext/canada/templates/scheming/package/snippets/package_form.html:30
@@ -212,23 +212,23 @@ msgstr "Données ouvertes"
 msgid "Open Information"
 msgstr "Information ouverte"
 
-#: ckanext/canada/helpers.py:954
+#: ckanext/canada/helpers.py:953
 #: ckanext/canada/templates/snippets/dataset_facets.html:27
 msgid "Request sent to data owner - awaiting response"
 msgstr "Demande envoyée au propriétaire des données, en attente de réponse"
 
-#: ckanext/canada/helpers.py:958
+#: ckanext/canada/helpers.py:957
 #: ckanext/canada/templates/snippets/publish_facet.html:44
 msgid "Pending"
 msgstr "En attente"
 
-#: ckanext/canada/helpers.py:959 ckanext/canada/templates/package/read.html:48
+#: ckanext/canada/helpers.py:958 ckanext/canada/templates/package/read.html:48
 #: ckanext/canada/templates/snippets/package_item.html:21
 #: ckanext/canada/templates/snippets/publish_facet.html:44
 msgid "Draft"
 msgstr "Ébauche"
 
-#: ckanext/canada/helpers.py:976
+#: ckanext/canada/helpers.py:975
 #: ckanext/canada/templates/home/quick_links.html:152
 #: ckanext/canada/templates/package/snippets/package_type_label.html:20
 #: ckanext/canada/templates/package/snippets/package_type_label.html:26
@@ -237,25 +237,25 @@ msgstr "Ébauche"
 msgid "Proactive Publication"
 msgstr "Publication proactive"
 
-#: ckanext/canada/helpers.py:1005
+#: ckanext/canada/helpers.py:1004
 #: ckanext/canada/templates/snippets/publish_facet.html:25
 msgid "Published"
 msgstr "Publié"
 
-#: ckanext/canada/helpers.py:1007
+#: ckanext/canada/helpers.py:1006
 #: ckanext/canada/templates/snippets/publish_facet.html:34
 msgid "Scheduled"
 msgstr "Prévu"
 
-#: ckanext/canada/helpers.py:1047
+#: ckanext/canada/helpers.py:1046
 msgid "Registry Home"
 msgstr "Accueil du registre"
 
-#: ckanext/canada/helpers.py:1052
+#: ckanext/canada/helpers.py:1051
 msgid "Open Government"
 msgstr "Gouvernement ouvert"
 
-#: ckanext/canada/helpers.py:1055
+#: ckanext/canada/helpers.py:1054
 #: ckanext/canada/templates/admin/publish_search.html:19
 #: ckanext/canada/templates/home/quick_links.html:123
 #: ckanext/canada/templates/organization/snippets/organization_search.html:8
@@ -942,33 +942,33 @@ msgstr "S’il vous plaît, mettez une adresse email valide."
 msgid "Invalid GeoJSON"
 msgstr "GeoJSON invalide"
 
-#: ckanext/canada/validators.py:274
+#: ckanext/canada/validators.py:284
 msgid "Date may not be in the future when this record is marked ready to publish"
 msgstr ""
 "Une fois que ce document est marqué comme étant prêt à publier, la date "
 "ne peut pas être dans le futur"
 
-#: ckanext/canada/validators.py:370
+#: ckanext/canada/validators.py:380
 msgid "Date format incorrect. Expecting YYYY-MM-DD"
 msgstr "Le format de la date est incorrect. Il devrait être AAAA-MM-JJ"
 
-#: ckanext/canada/validators.py:385 ckanext/canada/validators.py:406
+#: ckanext/canada/validators.py:395 ckanext/canada/validators.py:416
 msgid "Must be a Unicode string value"
 msgstr "Doit être une chaîne de caractères Unicode"
 
-#: ckanext/canada/validators.py:414 ckanext/canada/validators.py:426
+#: ckanext/canada/validators.py:424 ckanext/canada/validators.py:436
 msgid "Must be a JSON string"
 msgstr "Doit être une chaîne JSON"
 
-#: ckanext/canada/validators.py:422
+#: ckanext/canada/validators.py:432
 msgid "JSON object must contain \"en\" key"
 msgstr "L’objet JSON doit contenir la clé \"en\""
 
-#: ckanext/canada/validators.py:424
+#: ckanext/canada/validators.py:434
 msgid "JSON object must contain \"fr\" key"
 msgstr "L’objet JSON doit contenir la clé \"fr\""
 
-#: ckanext/canada/validators.py:609
+#: ckanext/canada/validators.py:619
 #, python-format
 msgid ""
 "Cannot change value of registry_access field from '%s' to '%s'. This "
@@ -980,7 +980,7 @@ msgstr ""
 #: ckanext/canada/templates/package/new_resource.html:19
 #: ckanext/canada/templates/package/new_resource_not_draft.html:11
 #: ckanext/canada/templates/package/read.html:80
-#: ckanext/canada/validators.py:646
+#: ckanext/canada/validators.py:656
 msgid ""
 "You can only add up to {max_resource_count} resources to a dataset. You "
 "can segment your resources across multiple datasets or merge your data to"
@@ -992,7 +992,7 @@ msgstr ""
 "de données ou fusionner vos données pour limiter le nombre de ressources."
 " Pour du support veuillez contacter {support}."
 
-#: ckanext/canada/validators.py:664
+#: ckanext/canada/validators.py:674
 msgid ""
 "Invalid name for an API Token. API Token names can only contain "
 "alphanumeric characters, hyphens, and underscores."
@@ -1998,8 +1998,12 @@ msgstr ""
 
 #. SQL Trigger String for PD Type: grants
 #: ckanext/canada/tables/grants.yaml:1315
-msgid "Must be greater than or equal to zero"
-msgstr "Le nombre doit être supérieur ou égal à 0"
+msgid ""
+"\"Agreement Value\" must be zero or greater for agreements starting on or"
+" after May 1, 2026"
+msgstr ""
+"La « valeur de l'entente » doit être supérieur ou égal à "
+"0 pour les accords qui commencent le 1er mai 2026 ou après"
 
 #. Resource Title for PD Type: grants
 #: ckanext/canada/tables/grants.yaml:1364
@@ -2361,8 +2365,7 @@ msgstr "Nous rencontrons une erreur"
 
 #: ckanext/canada/templates/error_document_template.html:28
 msgid "We Encountered an Error and your request could not be completed."
-msgstr ""
-"Une erreur s'est produite et votre demande n'a pas pu être traitée."
+msgstr "Une erreur s'est produite et votre demande n'a pas pu être traitée."
 
 #: ckanext/canada/templates/error_document_template.html:34
 msgid ""
@@ -2385,8 +2388,8 @@ msgid ""
 "The staging environment may experience occasional outages as part of our "
 "regular development process."
 msgstr ""
-"L'environnement d'essai peut subir des interruptions "
-"occasionnelles dans le cadre de notre processus de développement habituel."
+"L'environnement d'essai peut subir des interruptions occasionnelles dans "
+"le cadre de notre processus de développement habituel."
 
 #: ckanext/canada/templates/error_document_template.html:45
 msgid ""
@@ -2398,11 +2401,12 @@ msgid ""
 "Open Government Portal."
 msgstr ""
 "Si vous effectuez des tests liés à la préparation des données en vue de "
-"leur publication, veuillez les réaliser directement dans <a href=\"https://"
-"registry.open.canada.ca/fr\">le Registre du gouvernement ouvert.</a> "
-"Le mode « brouillon » du registre est conçu pour permettre aux utilisateurs "
-"de procéder aux ajustements préalables nécessaires avant que les données ne "
-"soient rendues publiques sur le Portail du gouvernement ouvert."
+"leur publication, veuillez les réaliser directement dans <a "
+"href=\"https://registry.open.canada.ca/fr\">le Registre du gouvernement "
+"ouvert.</a> Le mode « brouillon » du registre est conçu pour permettre "
+"aux utilisateurs de procéder aux ajustements préalables nécessaires avant"
+" que les données ne soient rendues publiques sur le Portail du "
+"gouvernement ouvert."
 
 #: ckanext/canada/templates/error_document_template.html:47
 msgid "Support ID: "
@@ -5567,4 +5571,7 @@ msgstr "Télécharger vers le DataStore"
 
 #~ msgid "Maintainer"
 #~ msgstr "Responsable de la maintenance"
+
+#~ msgid "Must be greater than or equal to zero"
+#~ msgstr "Le nombre doit être supérieur ou égal à 0"
 
