@@ -33,9 +33,7 @@
     {% set license = h.get_license('ca-ogl-lgo') %}
     {% if license != None %}
       <div class="panel panel-default">
-        <div class="panel-heading">
-          <i class="fa-solid fa-id-card" aria-hidden="true"></i>&nbsp;{{ _('License') }}
-        </div>
+        <div class="panel-heading"><i class="fa-solid fa-id-card" aria-hidden="true"></i>&nbsp;{{- _('License') -}}</div>
         <div class="panel-body">
           {% if h.lang() == 'en' %}
             <a href="{{ license.url }}">View the {{ license.title }}</a>
