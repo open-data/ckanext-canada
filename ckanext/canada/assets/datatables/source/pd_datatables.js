@@ -29,12 +29,26 @@ this.ckan.module('pd-datatables', function($){
       is_editable: false,
     },
     initialize: function (){
-      load_pd_datatable(this);
+      const module = this;
+      const maxTries = 35;
+      let interval = false;
+      let tries = 0;
+      interval = setInterval(function(){
+        const CHECK = module._('JS_I18N_LOADED');
+        const LOCALE = module.options.locale;
+        if( LOCALE == 'en' || CHECK != 'JS_I18N_LOADED' || tries > maxTries ){
+          clearInterval(interval);
+          interval = false;
+          load_pd_datatable(module, (LOCALE == 'en' || CHECK != 'JS_I18N_LOADED'));
+          return;
+        }
+        tries++;
+      }, 150);
     }
   };
 });
 
-function load_pd_datatable(CKAN_MODULE){
+function load_pd_datatable(CKAN_MODULE, HAS_TRANSLATIONS){
   const _ = CKAN_MODULE._;
   const searchParams = new URLSearchParams(document.location.search);
   const currentDate = new Date().toISOString().split('T')[0];
@@ -615,33 +629,33 @@ function load_pd_datatable(CKAN_MODULE){
 
   function open_fullscreen(_element){
     if( _element.requestFullscreen ){
+      isFullScreen = true;
       _element.requestFullscreen();
-      isFullScreen = true;
     }else if( _element.webkitRequestFullscreen ){
+      isFullScreen = true;
       _element.webkitRequestFullscreen();
-      isFullScreen = true;
     }else if( _element.mozRequestFullScreen ){
+      isFullScreen = true;
       _element.mozRequestFullScreen();
-      isFullScreen = true;
     }else if(_element.msRequestFullscreen){
-      _element.msRequestFullscreen();
       isFullScreen = true;
+      _element.msRequestFullscreen();
     }
   }
 
   function close_fullscreen(){
     if( document.exitFullscreen ){
+      isFullScreen = false;
       document.exitFullscreen();
-      isFullScreen = false;
     }else if( document.webkitExitFullscreen ){
+      isFullScreen = false;
       document.webkitExitFullscreen();
-      isFullScreen = false;
     }else if( document.mozExitFullscreen ){
+      isFullScreen = false;
       document.mozExitFullscreen();
-      isFullScreen = false;
     }else if( document.msExitFullscreen ){
-      document.msExitFullscreen();
       isFullScreen = false;
+      document.msExitFullscreen();
     }
   }
 
@@ -1126,6 +1140,16 @@ function load_pd_datatable(CKAN_MODULE){
         text: (isFullScreen && is_page_fullscreen()) ? '<i aria-hidden="true" class="fas fa-compress"></i>&nbsp;' + exitFullscreenLabel : '<i aria-hidden="true" class="fas fa-expand"></i>&nbsp;' + fullscreenLabel,
         className: 'pd-datatable-btn btn-secondary pd-datatable-fullscreen-btn',
         action: function(e, dt, node, config){
+          $(document).off('fullscreenchange.setButtonLabel');
+          $(document).on('fullscreenchange.setButtonLabel', function(_event){
+            if( isFullScreen && is_page_fullscreen() ){
+              $('.pd-datatable-fullscreen-btn').html('<i aria-hidden="true" class="fas fa-compress"></i>&nbsp;' + exitFullscreenLabel);
+              isFullScreen = true;
+            }else{
+              $('.pd-datatable-fullscreen-btn').html('<i aria-hidden="true" class="fas fa-expand"></i>&nbsp;' + fullscreenLabel);
+              isFullScreen = false;
+            }
+          });
           let datatableSection = $('#dt-preview')[0];
           if( is_page_fullscreen() ){
             close_fullscreen();
@@ -1137,16 +1161,6 @@ function load_pd_datatable(CKAN_MODULE){
           if( isFullScreen ){
             dt.button('fullscreenButton:name').text('<i aria-hidden="true" class="fas fa-compress"></i>&nbsp;' + exitFullscreenLabel);
           }
-        }
-      });
-      $(document).off('fullscreenchange.setButtonLabel');
-      $(document).on('fullscreenchange.setButtonLabel', function(_event){
-        if( isFullScreen && is_page_fullscreen() ){
-          $('.pd-datatable-fullscreen-btn').html('<i aria-hidden="true" class="fas fa-compress"></i>&nbsp;' + exitFullscreenLabel);
-          isFullScreen = true;
-        }else{
-          $('.pd-datatable-fullscreen-btn').html('<i aria-hidden="true" class="fas fa-expand"></i>&nbsp;' + fullscreenLabel);
-          isFullScreen = false;
         }
       });
     }
@@ -1918,6 +1932,10 @@ function load_pd_datatable(CKAN_MODULE){
       table.columns.adjust();
       $('.pd-datable-instructions').css({'display': 'none'});
     }
+  }
+
+  if( ! HAS_TRANSLATIONS ){
+    $('#dtprv_wrapper').before('<div id="dtprv_failure_message_i18n" class="alert alert-dismissible show alert-warning"><p>Failed to load the translations for the Table.</p></div>');
   }
 
   function initialize_datatable(){

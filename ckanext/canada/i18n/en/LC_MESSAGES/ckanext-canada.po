@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  CKAN\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-07-28 15:58+0000\n"
+"POT-Creation-Date: 2026-07-28 18:46+0000\n"
 "PO-Revision-Date: 2014-01-23 13:04+0000\n"
 "Last-Translator: Sean Hammond <sean.hammond@okfn.org>\n"
 "Language: en\n"
@@ -334,37 +334,42 @@ msgid ""
 "than {} rows."
 msgstr ""
 
-#: ckanext/canada/strings.js:11 ckanext/canada/strings.py:98
+#: ckanext/canada/assets/datatables/source/pd_datatables.js:37
+#: ckanext/canada/strings.js:11
+msgid "JS_I18N_LOADED"
+msgstr ""
+
+#: ckanext/canada/strings.js:13 ckanext/canada/strings.py:98
 msgid "Requesting Download..."
 msgstr ""
 
-#: ckanext/canada/strings.js:12 ckanext/canada/strings.py:99
+#: ckanext/canada/strings.js:14 ckanext/canada/strings.py:99
 msgid "Downloads"
 msgstr ""
 
-#: ckanext/canada/strings.js:13 ckanext/canada/strings.py:100
+#: ckanext/canada/strings.js:15 ckanext/canada/strings.py:100
 msgid ""
 "You have unfinished downloads in this page. Do you want to stop these "
 "downloads and leave the page?"
 msgstr ""
 
-#: ckanext/canada/strings.js:14 ckanext/canada/strings.py:101
+#: ckanext/canada/strings.js:16 ckanext/canada/strings.py:101
 msgid "Downloading file..."
 msgstr ""
 
-#: ckanext/canada/strings.js:15 ckanext/canada/strings.py:102
+#: ckanext/canada/strings.js:17 ckanext/canada/strings.py:102
 msgid "Successfully downloaded file"
 msgstr ""
 
-#: ckanext/canada/strings.js:16 ckanext/canada/strings.py:103
+#: ckanext/canada/strings.js:18 ckanext/canada/strings.py:103
 msgid "Error downloading file, trying again through your browser"
 msgstr ""
 
-#: ckanext/canada/strings.js:17 ckanext/canada/strings.py:104
+#: ckanext/canada/strings.js:19 ckanext/canada/strings.py:104
 msgid "Searching..."
 msgstr ""
 
-#: ckanext/canada/strings.js:18 ckanext/canada/strings.py:106
+#: ckanext/canada/strings.js:20 ckanext/canada/strings.py:106
 msgid "Saved new order"
 msgstr ""
 
@@ -1201,252 +1206,252 @@ msgstr ""
 msgid "User %r not authorized to view members of %s"
 msgstr ""
 
-#: ckanext/canada/assets/datatables/source/pd_datatables.js:68
+#: ckanext/canada/assets/datatables/source/pd_datatables.js:82
 #: ckanext/canada/templates/snippets/pd_datatable_depr.html:90
 msgid "Select All"
 msgstr ""
 
-#: ckanext/canada/assets/datatables/source/pd_datatables.js:69
+#: ckanext/canada/assets/datatables/source/pd_datatables.js:83
 msgid "Search:"
 msgstr ""
 
-#: ckanext/canada/assets/datatables/source/pd_datatables.js:70
+#: ckanext/canada/assets/datatables/source/pd_datatables.js:84
 msgid "Sorting by:"
 msgstr ""
 
-#: ckanext/canada/assets/datatables/source/pd_datatables.js:71
+#: ckanext/canada/assets/datatables/source/pd_datatables.js:85
 msgid "Ascending"
 msgstr ""
 
-#: ckanext/canada/assets/datatables/source/pd_datatables.js:72
+#: ckanext/canada/assets/datatables/source/pd_datatables.js:86
 msgid "Descending"
 msgstr ""
 
-#: ckanext/canada/assets/datatables/source/pd_datatables.js:73
+#: ckanext/canada/assets/datatables/source/pd_datatables.js:87
 msgid "Any"
 msgstr ""
 
-#: ckanext/canada/assets/datatables/source/pd_datatables.js:74
+#: ckanext/canada/assets/datatables/source/pd_datatables.js:88
 msgid "Less"
 msgstr ""
 
-#: ckanext/canada/assets/datatables/source/pd_datatables.js:75
+#: ckanext/canada/assets/datatables/source/pd_datatables.js:89
 msgid "Row"
 msgstr ""
 
-#: ckanext/canada/assets/datatables/source/pd_datatables.js:76
+#: ckanext/canada/assets/datatables/source/pd_datatables.js:90
 msgid "New"
 msgstr ""
 
-#: ckanext/canada/assets/datatables/source/pd_datatables.js:77
+#: ckanext/canada/assets/datatables/source/pd_datatables.js:91
 msgid "Updated"
 msgstr ""
 
-#: ckanext/canada/assets/datatables/source/pd_datatables.js:78
+#: ckanext/canada/assets/datatables/source/pd_datatables.js:92
 msgid "Jump to page"
 msgstr ""
 
-#: ckanext/canada/assets/datatables/source/pd_datatables.js:79
+#: ckanext/canada/assets/datatables/source/pd_datatables.js:93
 msgid "Reset Table"
 msgstr ""
 
-#: ckanext/canada/assets/datatables/source/pd_datatables.js:80
+#: ckanext/canada/assets/datatables/source/pd_datatables.js:94
 msgid "Fullscreen"
 msgstr ""
 
-#: ckanext/canada/assets/datatables/source/pd_datatables.js:81
+#: ckanext/canada/assets/datatables/source/pd_datatables.js:95
 msgid "Exit Fullscreen"
 msgstr ""
 
-#: ckanext/canada/assets/datatables/source/pd_datatables.js:82
+#: ckanext/canada/assets/datatables/source/pd_datatables.js:96
 msgid "Exit Edit Mode"
 msgstr ""
 
-#: ckanext/canada/assets/datatables/source/pd_datatables.js:83
+#: ckanext/canada/assets/datatables/source/pd_datatables.js:97
 msgid "Full Table"
 msgstr ""
 
-#: ckanext/canada/assets/datatables/source/pd_datatables.js:84
+#: ckanext/canada/assets/datatables/source/pd_datatables.js:98
 msgid "Compact Table"
 msgstr ""
 
-#: ckanext/canada/assets/datatables/source/pd_datatables.js:85
+#: ckanext/canada/assets/datatables/source/pd_datatables.js:99
 msgid "Edit Online"
 msgstr ""
 
-#: ckanext/canada/assets/datatables/source/pd_datatables.js:86
+#: ckanext/canada/assets/datatables/source/pd_datatables.js:100
 msgid "Add new record in Table"
 msgstr ""
 
-#: ckanext/canada/assets/datatables/source/pd_datatables.js:87
+#: ckanext/canada/assets/datatables/source/pd_datatables.js:101
 msgid "Edit<span class=\"pd-datatables-btn-count\"></span> in Table"
 msgstr ""
 
-#: ckanext/canada/assets/datatables/source/pd_datatables.js:88
+#: ckanext/canada/assets/datatables/source/pd_datatables.js:102
 msgid "Record is valid"
 msgstr ""
 
-#: ckanext/canada/assets/datatables/source/pd_datatables.js:89
+#: ckanext/canada/assets/datatables/source/pd_datatables.js:103
 msgid "Some fields have validation errors"
 msgstr ""
 
-#: ckanext/canada/assets/datatables/source/pd_datatables.js:90
+#: ckanext/canada/assets/datatables/source/pd_datatables.js:104
 msgid "Some fields are required"
 msgstr ""
 
-#: ckanext/canada/assets/datatables/source/pd_datatables.js:91
+#: ckanext/canada/assets/datatables/source/pd_datatables.js:105
 msgid "Detailed error summary"
 msgstr ""
 
-#: ckanext/canada/assets/datatables/source/pd_datatables.js:92
+#: ckanext/canada/assets/datatables/source/pd_datatables.js:106
 msgid "Field errors"
 msgstr ""
 
-#: ckanext/canada/assets/datatables/source/pd_datatables.js:93
+#: ckanext/canada/assets/datatables/source/pd_datatables.js:107
 msgid ""
 "You have unsaved records in the table. Do you want to discard your "
 "changes or continue editing?"
 msgstr ""
 
-#: ckanext/canada/assets/datatables/source/pd_datatables.js:94
+#: ckanext/canada/assets/datatables/source/pd_datatables.js:108
 msgid "Validating records"
 msgstr ""
 
-#: ckanext/canada/assets/datatables/source/pd_datatables.js:95
+#: ckanext/canada/assets/datatables/source/pd_datatables.js:109
 msgid "Saving records to the system"
 msgstr ""
 
-#: ckanext/canada/assets/datatables/source/pd_datatables.js:97
+#: ckanext/canada/assets/datatables/source/pd_datatables.js:111
 msgid "Records saved to the system."
 msgstr ""
 
-#: ckanext/canada/assets/datatables/source/pd_datatables.js:98
+#: ckanext/canada/assets/datatables/source/pd_datatables.js:112
 msgid "Would you like to add more records, or preview them in the table?"
 msgstr ""
 
-#: ckanext/canada/assets/datatables/source/pd_datatables.js:99
+#: ckanext/canada/assets/datatables/source/pd_datatables.js:113
 msgid "Add more records"
 msgstr ""
 
-#: ckanext/canada/assets/datatables/source/pd_datatables.js:100
+#: ckanext/canada/assets/datatables/source/pd_datatables.js:114
 msgid "Preview records"
 msgstr ""
 
-#: ckanext/canada/assets/datatables/source/pd_datatables.js:101
+#: ckanext/canada/assets/datatables/source/pd_datatables.js:115
 msgid ""
 "Your records did not save because one or more of them have errors. Fix "
 "the errors and save again to finalize your records."
 msgstr ""
 
-#: ckanext/canada/assets/datatables/source/pd_datatables.js:102
+#: ckanext/canada/assets/datatables/source/pd_datatables.js:116
 msgid "Could not save the records due to the following error: "
 msgstr ""
 
-#: ckanext/canada/assets/datatables/source/pd_datatables.js:103
+#: ckanext/canada/assets/datatables/source/pd_datatables.js:117
 msgid ""
 "Your records did not save. Try saving again. If the issue persists, "
 "please contact support with Support ID: "
 msgstr ""
 
-#: ckanext/canada/assets/datatables/source/pd_datatables.js:104
+#: ckanext/canada/assets/datatables/source/pd_datatables.js:118
 msgid ""
 "Your records did not save. Try saving again. If the issue persists, "
 "please contact support."
 msgstr ""
 
-#: ckanext/canada/assets/datatables/source/pd_datatables.js:105
+#: ckanext/canada/assets/datatables/source/pd_datatables.js:119
 msgid "{PRIM_IDS} already used in this Editor Table."
 msgstr ""
 
-#: ckanext/canada/assets/datatables/source/pd_datatables.js:106
+#: ckanext/canada/assets/datatables/source/pd_datatables.js:120
 msgid " record(s)"
 msgstr ""
 
-#: ckanext/canada/assets/datatables/source/pd_datatables.js:107
+#: ckanext/canada/assets/datatables/source/pd_datatables.js:121
 msgid "Legend:"
 msgstr ""
 
-#: ckanext/canada/assets/datatables/source/pd_datatables.js:108
+#: ckanext/canada/assets/datatables/source/pd_datatables.js:122
 msgid "Valid"
 msgstr ""
 
-#: ckanext/canada/assets/datatables/source/pd_datatables.js:109
+#: ckanext/canada/assets/datatables/source/pd_datatables.js:123
 #: ckanext/canada/templates/error_document_template.html:18
 msgid "Error"
 msgstr ""
 
-#: ckanext/canada/assets/datatables/source/pd_datatables.js:110
+#: ckanext/canada/assets/datatables/source/pd_datatables.js:124
 msgid "Required"
 msgstr ""
 
-#: ckanext/canada/assets/datatables/source/pd_datatables.js:111
+#: ckanext/canada/assets/datatables/source/pd_datatables.js:125
 msgid "Error: Could not query records. Please try again."
 msgstr ""
 
-#: ckanext/canada/assets/datatables/source/pd_datatables.js:112
+#: ckanext/canada/assets/datatables/source/pd_datatables.js:126
 msgid "Error: Could not generate Excel template. Please try again."
 msgstr ""
 
-#: ckanext/canada/assets/datatables/source/pd_datatables.js:113
+#: ckanext/canada/assets/datatables/source/pd_datatables.js:127
 msgid "Edit<span class=\"pd-datatables-btn-count\"></span> in Excel"
 msgstr ""
 
-#: ckanext/canada/assets/datatables/source/pd_datatables.js:114
+#: ckanext/canada/assets/datatables/source/pd_datatables.js:128
 msgid "Exporting{COUNT} record(s) to an Excel Template"
 msgstr ""
 
-#: ckanext/canada/assets/datatables/source/pd_datatables.js:115
+#: ckanext/canada/assets/datatables/source/pd_datatables.js:129
 msgid "Delete<span class=\"pd-datatables-btn-count\"></span>"
 msgstr ""
 
-#: ckanext/canada/assets/datatables/source/pd_datatables.js:116
+#: ckanext/canada/assets/datatables/source/pd_datatables.js:130
 msgid "Save<span class=\"pd-datatables-btn-count\"></span>"
 msgstr ""
 
-#: ckanext/canada/assets/datatables/source/pd_datatables.js:119
+#: ckanext/canada/assets/datatables/source/pd_datatables.js:133
 msgid "No data available in table"
 msgstr ""
 
-#: ckanext/canada/assets/datatables/source/pd_datatables.js:120
+#: ckanext/canada/assets/datatables/source/pd_datatables.js:134
 msgid "Showing _START_ to _END_ of _TOTAL_ entries"
 msgstr ""
 
-#: ckanext/canada/assets/datatables/source/pd_datatables.js:121
+#: ckanext/canada/assets/datatables/source/pd_datatables.js:135
 msgid "Showing 0 to 0 of 0 entries"
 msgstr ""
 
-#: ckanext/canada/assets/datatables/source/pd_datatables.js:122
+#: ckanext/canada/assets/datatables/source/pd_datatables.js:136
 msgid "(filtered from _MAX_ total entries)"
 msgstr ""
 
-#: ckanext/canada/assets/datatables/source/pd_datatables.js:125
+#: ckanext/canada/assets/datatables/source/pd_datatables.js:139
 msgid "_MENU_ Show number of entries"
 msgstr ""
 
-#: ckanext/canada/assets/datatables/source/pd_datatables.js:126
+#: ckanext/canada/assets/datatables/source/pd_datatables.js:140
 #: ckanext/canada/templates/package/snippets/data_api_button.html:2
 msgid "Loading..."
 msgstr ""
 
-#: ckanext/canada/assets/datatables/source/pd_datatables.js:128
+#: ckanext/canada/assets/datatables/source/pd_datatables.js:142
 msgid "Full Text Search"
 msgstr ""
 
-#: ckanext/canada/assets/datatables/source/pd_datatables.js:129
+#: ckanext/canada/assets/datatables/source/pd_datatables.js:143
 msgid "No matching records found"
 msgstr ""
 
-#: ckanext/canada/assets/datatables/source/pd_datatables.js:137
+#: ckanext/canada/assets/datatables/source/pd_datatables.js:151
 msgid "Order by this column"
 msgstr ""
 
-#: ckanext/canada/assets/datatables/source/pd_datatables.js:138
+#: ckanext/canada/assets/datatables/source/pd_datatables.js:152
 msgid "Reverse order this column"
 msgstr ""
 
-#: ckanext/canada/assets/datatables/source/pd_datatables.js:446
-#: ckanext/canada/assets/datatables/source/pd_datatables.js:494
-#: ckanext/canada/assets/datatables/source/pd_datatables.js:510
+#: ckanext/canada/assets/datatables/source/pd_datatables.js:460
+#: ckanext/canada/assets/datatables/source/pd_datatables.js:508
+#: ckanext/canada/assets/datatables/source/pd_datatables.js:524
 msgid ": "
 msgstr ""
 
@@ -1483,15 +1488,15 @@ msgstr ""
 #. SQL Trigger String for PD Type: reclassification
 #. SQL Trigger String for PD Type: travelq
 #. SQL Trigger String for PD Type: wrongdoing
-#: ckanext/canada/tables/adminaircraft.yaml:355
-#: ckanext/canada/tables/contracts.yaml:2253
-#: ckanext/canada/tables/grants.yaml:1310
+#: ckanext/canada/tables/adminaircraft.yaml:361
+#: ckanext/canada/tables/contracts.yaml:2259
+#: ckanext/canada/tables/grants.yaml:1316
 #: ckanext/canada/tables/grantsmonthly.yaml:1841
-#: ckanext/canada/tables/hospitalityq.yaml:739
-#: ckanext/canada/tables/qpnotes.yaml:382
-#: ckanext/canada/tables/reclassification.yaml:310
-#: ckanext/canada/tables/travelq.yaml:774
-#: ckanext/canada/tables/wrongdoing.yaml:274
+#: ckanext/canada/tables/hospitalityq.yaml:745
+#: ckanext/canada/tables/qpnotes.yaml:388
+#: ckanext/canada/tables/reclassification.yaml:316
+#: ckanext/canada/tables/travelq.yaml:780
+#: ckanext/canada/tables/wrongdoing.yaml:280
 msgid "Comma is not allowed in Reference Number field"
 msgstr ""
 
@@ -1512,7 +1517,7 @@ msgstr ""
 #. Title for PD Type: ati
 #. Resource Title for PD Type: ati
 #: ckanext/canada/tables/ati.yaml:4 ckanext/canada/tables/ati.yaml:15
-#: ckanext/canada/tables/ati.yaml:216
+#: ckanext/canada/tables/ati.yaml:222
 msgid "ATI Summaries"
 msgstr ""
 
@@ -1524,34 +1529,34 @@ msgid ""
 msgstr ""
 
 #. SQL Trigger String for PD Type: ati
-#: ckanext/canada/tables/ati.yaml:266 ckanext/canada/tables/ati.yaml:402
+#: ckanext/canada/tables/ati.yaml:272 ckanext/canada/tables/ati.yaml:414
 msgid "Please enter a valid year"
 msgstr ""
 
 #. SQL Trigger String for PD Type: ati
 #. SQL Trigger String for PD Type: briefingt
-#: ckanext/canada/tables/ati.yaml:267 ckanext/canada/tables/ati.yaml:403
-#: ckanext/canada/tables/briefingt.yaml:451
+#: ckanext/canada/tables/ati.yaml:273 ckanext/canada/tables/ati.yaml:415
+#: ckanext/canada/tables/briefingt.yaml:461
 msgid "Please enter a month number from 1-12"
 msgstr ""
 
 #. SQL Trigger String for PD Type: ati
 #. SQL Trigger String for PD Type: hospitalityq
 #. SQL Trigger String for PD Type: service
-#: ckanext/canada/tables/ati.yaml:150 ckanext/canada/tables/ati.yaml:268
-#: ckanext/canada/tables/hospitalityq.yaml:741
+#: ckanext/canada/tables/ati.yaml:150 ckanext/canada/tables/ati.yaml:274
+#: ckanext/canada/tables/hospitalityq.yaml:747
 #: ckanext/canada/tables/service.yaml:1784
 #: ckanext/canada/tables/service.yaml:2687
 msgid "This value must not be negative"
 msgstr ""
 
 #. SQL Trigger String for PD Type: ati
-#: ckanext/canada/tables/ati.yaml:269
+#: ckanext/canada/tables/ati.yaml:275
 msgid "Comma is not allowed in Request Number field"
 msgstr ""
 
 #. Resource Title for PD Type: ati
-#: ckanext/canada/tables/ati.yaml:296
+#: ckanext/canada/tables/ati.yaml:302
 msgid "ATI Nothing to Report"
 msgstr ""
 
@@ -1575,12 +1580,12 @@ msgid ""
 msgstr ""
 
 #. SQL Trigger String for PD Type: briefingt
-#: ckanext/canada/tables/briefingt.yaml:326
+#: ckanext/canada/tables/briefingt.yaml:330
 msgid "Comma is not allowed in Briefing Note Number field"
 msgstr ""
 
 #. Resource Title for PD Type: briefingt
-#: ckanext/canada/tables/briefingt.yaml:346
+#: ckanext/canada/tables/briefingt.yaml:350
 msgid "Proactive Publication - Briefing Note Titles and Numbers Nothing to Report"
 msgstr ""
 
@@ -1591,13 +1596,13 @@ msgstr ""
 #. SQL Trigger String for PD Type: reclassification
 #. SQL Trigger String for PD Type: travela
 #. SQL Trigger String for PD Type: travelq
-#: ckanext/canada/tables/briefingt.yaml:450
-#: ckanext/canada/tables/contractsa.yaml:397
-#: ckanext/canada/tables/hospitalityq.yaml:874
-#: ckanext/canada/tables/qpnotes.yaml:512
-#: ckanext/canada/tables/reclassification.yaml:432
-#: ckanext/canada/tables/travela.yaml:690
-#: ckanext/canada/tables/travelq.yaml:924
+#: ckanext/canada/tables/briefingt.yaml:460
+#: ckanext/canada/tables/contractsa.yaml:403
+#: ckanext/canada/tables/hospitalityq.yaml:886
+#: ckanext/canada/tables/qpnotes.yaml:524
+#: ckanext/canada/tables/reclassification.yaml:444
+#: ckanext/canada/tables/travela.yaml:696
+#: ckanext/canada/tables/travelq.yaml:936
 msgid "This must list the year you are reporting on (not the fiscal year)."
 msgstr ""
 
@@ -1619,12 +1624,12 @@ msgid "Access, upload and modify consultation reports for your organization"
 msgstr ""
 
 #. SQL Trigger String for PD Type: consultations
-#: ckanext/canada/tables/consultations.yaml:685
+#: ckanext/canada/tables/consultations.yaml:691
 msgid "If Status is set to: Not Going Forward, Publish Record must be set to No"
 msgstr ""
 
 #. SQL Trigger String for PD Type: consultations
-#: ckanext/canada/tables/consultations.yaml:686
+#: ckanext/canada/tables/consultations.yaml:692
 msgid "Comma is not allowed in Registration Number field"
 msgstr ""
 
@@ -1648,75 +1653,75 @@ msgid ""
 msgstr ""
 
 #. SQL Trigger String for PD Type: contracts
-#: ckanext/canada/tables/contracts.yaml:2252
+#: ckanext/canada/tables/contracts.yaml:2258
 msgid "This field must not be empty"
 msgstr ""
 
 #. SQL Trigger String for PD Type: contracts
-#: ckanext/canada/tables/contracts.yaml:2254
+#: ckanext/canada/tables/contracts.yaml:2260
 msgid ""
 "This field must contain the first three digits of a postal code in A1A "
 "format or the value \"NA\""
 msgstr ""
 
 #. SQL Trigger String for PD Type: contracts
-#: ckanext/canada/tables/contracts.yaml:2255
+#: ckanext/canada/tables/contracts.yaml:2261
 msgid ""
 "This field must be populated with an NA if an amendment is disclosed "
 "under Instrument Type"
 msgstr ""
 
 #. SQL Trigger String for PD Type: contracts
-#: ckanext/canada/tables/contracts.yaml:2256
+#: ckanext/canada/tables/contracts.yaml:2262
 msgid "This field is limited to only 3 or 4 digits."
 msgstr ""
 
 #. SQL Trigger String for PD Type: contracts
-#: ckanext/canada/tables/contracts.yaml:2257
+#: ckanext/canada/tables/contracts.yaml:2263
 msgid ""
 "If N/A, then Instrument Type must be identified as a standing "
 "offer/supply arrangement (SOSA)"
 msgstr ""
 
 #. SQL Trigger String for PD Type: contracts
-#: ckanext/canada/tables/contracts.yaml:2258
+#: ckanext/canada/tables/contracts.yaml:2264
 msgid ""
 "If the value XX (none) is entered, then no other value can be entered in "
 "this field."
 msgstr ""
 
 #. SQL Trigger String for PD Type: contracts
-#: ckanext/canada/tables/contracts.yaml:2259
+#: ckanext/canada/tables/contracts.yaml:2265
 msgid "Discontinued as of 2022-01-01"
 msgstr ""
 
 #. SQL Trigger String for PD Type: contracts
-#: ckanext/canada/tables/contracts.yaml:2260
+#: ckanext/canada/tables/contracts.yaml:2266
 msgid "Must be left blank when trade agreements specified"
 msgstr ""
 
 #. SQL Trigger String for PD Type: contracts
-#: ckanext/canada/tables/contracts.yaml:2261
+#: ckanext/canada/tables/contracts.yaml:2267
 msgid ""
 "If the value NA (not applicable) is entered, then no other value can be "
 "entered in this field."
 msgstr ""
 
 #. SQL Trigger String for PD Type: contracts
-#: ckanext/canada/tables/contracts.yaml:2262
+#: ckanext/canada/tables/contracts.yaml:2268
 msgid "The field is limited to eight alpha-numeric digits or less."
 msgstr ""
 
 #. SQL Trigger String for PD Type: contracts
-#: ckanext/canada/tables/contracts.yaml:2263
-#: ckanext/canada/tables/contracts.yaml:2266
+#: ckanext/canada/tables/contracts.yaml:2269
+#: ckanext/canada/tables/contracts.yaml:2272
 msgid ""
 "If the value 00 (none) is entered, then no other value can be entered in "
 "this field."
 msgstr ""
 
 #. SQL Trigger String for PD Type: contracts
-#: ckanext/canada/tables/contracts.yaml:2264
+#: ckanext/canada/tables/contracts.yaml:2270
 msgid ""
 "If TC, TN or AC is selected in the Solicitation Procedure data field with"
 " a value other than XX (None) selected in the Trade Agreement data field,"
@@ -1724,7 +1729,7 @@ msgid ""
 msgstr ""
 
 #. SQL Trigger String for PD Type: contracts
-#: ckanext/canada/tables/contracts.yaml:2265
+#: ckanext/canada/tables/contracts.yaml:2271
 msgid ""
 "If “TC” (Competitive - Traditional), “TN” (Non-Competitive) or “AC” "
 "(Advanced Contract Award Notice) is selected and trade agreement with a "
@@ -1733,21 +1738,21 @@ msgid ""
 msgstr ""
 
 #. SQL Trigger String for PD Type: contracts
-#: ckanext/canada/tables/contracts.yaml:2267
+#: ckanext/canada/tables/contracts.yaml:2273
 msgid ""
 "This field must be N, No or Non, if the Procurement Strategy for "
 "Aboriginal Business field is MS or VS."
 msgstr ""
 
 #. SQL Trigger String for PD Type: contracts
-#: ckanext/canada/tables/contracts.yaml:2268
+#: ckanext/canada/tables/contracts.yaml:2274
 msgid ""
 "This field must be populated with a 1 if the solicitation procedure is "
 "identified as non-competitive (TN) or Advance Contract Award Notice (AC)."
 msgstr ""
 
 #. SQL Trigger String for PD Type: contracts
-#: ckanext/canada/tables/contracts.yaml:2269
+#: ckanext/canada/tables/contracts.yaml:2275
 msgid ""
 "If this field is populated, it must be with a “0” if the procurement was "
 "identified as non-competitive (TN) or advance contract award notice (AC) "
@@ -1755,7 +1760,7 @@ msgid ""
 msgstr ""
 
 #. SQL Trigger String for PD Type: contracts
-#: ckanext/canada/tables/contracts.yaml:2270
+#: ckanext/canada/tables/contracts.yaml:2276
 msgid ""
 "This field may only be populated with “0” if the procurement was "
 "identified as competitive (open bidding (OB), traditional competitive "
@@ -1763,7 +1768,7 @@ msgid ""
 msgstr ""
 
 #. Resource Title for PD Type: contracts
-#: ckanext/canada/tables/contracts.yaml:2321
+#: ckanext/canada/tables/contracts.yaml:2327
 msgid "Proactive Publication - Contracts Nothing to Report"
 msgstr ""
 
@@ -1838,41 +1843,41 @@ msgstr ""
 
 #. SQL Trigger String for PD Type: grants
 #. SQL Trigger String for PD Type: grantsmonthly
-#: ckanext/canada/tables/grants.yaml:1311
+#: ckanext/canada/tables/grants.yaml:1317
 #: ckanext/canada/tables/grantsmonthly.yaml:1846
 msgid "Must be a valid Canadian postal code in the format of \"A1A 1A1\""
 msgstr ""
 
 #. SQL Trigger String for PD Type: grants
 #. SQL Trigger String for PD Type: grantsmonthly
-#: ckanext/canada/tables/grants.yaml:1312
+#: ckanext/canada/tables/grants.yaml:1318
 #: ckanext/canada/tables/grantsmonthly.yaml:1847
 msgid "Must be a 9 digit number"
 msgstr ""
 
 #. SQL Trigger String for PD Type: grants
 #. SQL Trigger String for PD Type: grantsmonthly
-#: ckanext/canada/tables/grants.yaml:1313
+#: ckanext/canada/tables/grants.yaml:1319
 #: ckanext/canada/tables/grantsmonthly.yaml:1848
 msgid "Must be a 5 digit number"
 msgstr ""
 
 #. SQL Trigger String for PD Type: grants
 #. SQL Trigger String for PD Type: grantsmonthly
-#: ckanext/canada/tables/grants.yaml:1314
+#: ckanext/canada/tables/grants.yaml:1320
 #: ckanext/canada/tables/grantsmonthly.yaml:1849
 msgid "\"Agreement Start Date\" cannot be after \"Projected Agreement End Date\""
 msgstr ""
 
 #. SQL Trigger String for PD Type: grants
-#: ckanext/canada/tables/grants.yaml:1315
+#: ckanext/canada/tables/grants.yaml:1321
 msgid ""
 "\"Agreement Value\" must be zero or greater for agreements starting on or"
 " after May 1, 2026"
 msgstr ""
 
 #. Resource Title for PD Type: grants
-#: ckanext/canada/tables/grants.yaml:1364
+#: ckanext/canada/tables/grants.yaml:1370
 msgid "Proactive Publication - Grants and Contributions Nothing to Report"
 msgstr ""
 
@@ -1941,7 +1946,7 @@ msgstr ""
 
 #. Label for PD Type: hospitalityq
 #: ckanext/canada/tables/hospitalityq.yaml:5
-#: ckanext/canada/tables/hospitalityq.yaml:654
+#: ckanext/canada/tables/hospitalityq.yaml:660
 msgid "Hospitality Expenses"
 msgstr ""
 
@@ -1953,33 +1958,33 @@ msgid ""
 msgstr ""
 
 #. SQL Trigger String for PD Type: hospitalityq
-#: ckanext/canada/tables/hospitalityq.yaml:740
+#: ckanext/canada/tables/hospitalityq.yaml:746
 msgid ""
 "Invalid format for multiple commercial establishments or vendors. Use "
 "<Vendor Name>;<Vendor 2 Name> (e.g. Les Impertinentes;Les Street Monkeys)"
 msgstr ""
 
 #. SQL Trigger String for PD Type: hospitalityq
-#: ckanext/canada/tables/hospitalityq.yaml:742
+#: ckanext/canada/tables/hospitalityq.yaml:748
 msgid "Zero is an invalid entry. Please enter a different number"
 msgstr ""
 
 #. SQL Trigger String for PD Type: hospitalityq
 #. SQL Trigger String for PD Type: travelq
-#: ckanext/canada/tables/hospitalityq.yaml:743
-#: ckanext/canada/tables/travelq.yaml:776
+#: ckanext/canada/tables/hospitalityq.yaml:749
+#: ckanext/canada/tables/travelq.yaml:782
 msgid "Start date cannot be after the end date"
 msgstr ""
 
 #. SQL Trigger String for PD Type: hospitalityq
 #. SQL Trigger String for PD Type: travelq
-#: ckanext/canada/tables/hospitalityq.yaml:744
-#: ckanext/canada/tables/travelq.yaml:777
+#: ckanext/canada/tables/hospitalityq.yaml:750
+#: ckanext/canada/tables/travelq.yaml:783
 msgid "Date can’t be in the future"
 msgstr ""
 
 #. Resource Title for PD Type: hospitalityq
-#: ckanext/canada/tables/hospitalityq.yaml:780
+#: ckanext/canada/tables/hospitalityq.yaml:786
 msgid "Proactive Publication - Hospitality Nothing to Report"
 msgstr ""
 
@@ -2034,7 +2039,7 @@ msgid "Access, upload and modify Question Period notes for your organization"
 msgstr ""
 
 #. Resource Title for PD Type: qpnotes
-#: ckanext/canada/tables/qpnotes.yaml:407
+#: ckanext/canada/tables/qpnotes.yaml:413
 msgid "Proactive Publication - Question Period Notes Nothing to Report"
 msgstr ""
 
@@ -2047,7 +2052,7 @@ msgstr ""
 
 #. Label for PD Type: reclassification
 #: ckanext/canada/tables/reclassification.yaml:4
-#: ckanext/canada/tables/reclassification.yaml:270
+#: ckanext/canada/tables/reclassification.yaml:276
 msgid "Position Reclassification"
 msgstr ""
 
@@ -2059,7 +2064,7 @@ msgid ""
 msgstr ""
 
 #. Resource Title for PD Type: reclassification
-#: ckanext/canada/tables/reclassification.yaml:332
+#: ckanext/canada/tables/reclassification.yaml:338
 msgid "Proactive Publication - Position Reclassification Nothing to Report"
 msgstr ""
 
@@ -2187,7 +2192,7 @@ msgid "Proactive Publication - Travel Expenses"
 msgstr ""
 
 #. Label for PD Type: travelq
-#: ckanext/canada/tables/travelq.yaml:5 ckanext/canada/tables/travelq.yaml:687
+#: ckanext/canada/tables/travelq.yaml:5 ckanext/canada/tables/travelq.yaml:693
 msgid "Travel Expenses"
 msgstr ""
 
@@ -2199,7 +2204,7 @@ msgid ""
 msgstr ""
 
 #. SQL Trigger String for PD Type: travelq
-#: ckanext/canada/tables/travelq.yaml:775
+#: ckanext/canada/tables/travelq.yaml:781
 msgid ""
 "Invalid format for destination: \"{}\". Use <City Name>, <State/Province "
 "Name>, <Country Name> for Canada and US, or <City Name>, <Country Name> "
@@ -2207,7 +2212,7 @@ msgid ""
 msgstr ""
 
 #. Resource Title for PD Type: travelq
-#: ckanext/canada/tables/travelq.yaml:815
+#: ckanext/canada/tables/travelq.yaml:821
 msgid "Proactive Publication - Travel Expenses Nothing to Report"
 msgstr ""
 

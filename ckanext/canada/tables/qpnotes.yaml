@@ -323,21 +323,27 @@ resources:
 
   # audit trail
   - datastore_id: record_created
-    label: Record Creation Time
+    label:
+      en: Record Creation Time
+      fr: Heure de la création du dossier
     import_template_include: false
     visible_to_public: false
     datastore_type: timestamp
     preview_class: bg-info
 
   - datastore_id: record_modified
-    label: Last Record Modification Time
+    label:
+      en: Last Record Modification Time
+      fr: Heure de la dernière modification au dossier
     import_template_include: false
     visible_to_public: false
     datastore_type: timestamp
     preview_class: bg-info
 
   - datastore_id: user_modified
-    label: User Last Modified Record
+    label:
+      en: User Last Modified Record
+      fr: Dernier enregistrement modifié par l'utilisateur
     import_template_include: false
     visible_to_public: false
     datastore_type: text
@@ -459,21 +465,27 @@ resources:
 
 
   - datastore_id: record_created
-    label: Record Creation Time
+    label:
+      en: Record Creation Time
+      fr: Heure de la création du dossier
     import_template_include: false
     visible_to_public: false
     datastore_type: timestamp
     preview_class: bg-info
 
   - datastore_id: record_modified
-    label: Last Record Modification Time
+    label:
+      en: Last Record Modification Time
+      fr: Heure de la dernière modification au dossier
     import_template_include: false
     visible_to_public: false
     datastore_type: timestamp
     preview_class: bg-info
 
   - datastore_id: user_modified
-    label: User Last Modified Record
+    label:
+      en: User Last Modified Record
+      fr: Dernier enregistrement modifié par l'utilisateur
     import_template_include: false
     visible_to_public: false
     datastore_type: text
