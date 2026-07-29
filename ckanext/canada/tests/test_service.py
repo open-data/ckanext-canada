@@ -373,6 +373,12 @@ class TestService(CanadaTestBase):
         chromo = get_chromo('service')
         record = chromo['examples']['record'].copy()
 
+        # new line characters \n \r should not be counted
+        record['service_description_fr'] = "Pour les évaluations d'impact, les promoteurs d'un projet sont tenus de présenter à l'AEIC une étude d'impact qui évalue les effets négatifs du projet relevant de la compétence fédérale. Après le dépôt de cette étude d'impact par le promoteur, les groupes autochtones et le public sont invités à présenter des commentaires sur le résumé de cette étude d'impact, en particulier sur les effets potentiels et les mesures d'atténuation et de surveillance des effets potentiels négatifs. L'étude d'impact est également examinée par les ministères fédéraux compétents.\r\n\r\nL'AEIC prépare une version provisoire du rapport d'évaluation d'impact contenant sa justifications et ses conclusions sur les effets potentiels du projet, ainsi qu'une version provisoire des conditions. Le public et les groupes autochtones ont la possibilité d'examiner et de commenter ces documents avant qu'ils ne soient transmis au ministre afin de déterminer si les effets négatifs du projet relevant de la compétence fédérale sont dans l'intérêt public.\r\n\r\nLe ministre de l'Environnement et du Changement climatique peut renvoyer une évaluation d'impact à une commission d'examen s'il est dans l'intérêt public de procéder ainsi. Une commission d'examen est un groupe d'experts indépendants qui a pour mandat d'effectuer une évaluation d'impact.\r\n\r\nChaque commission d'examen effectue son analyse de l'étude d'impact présentée par le promoteur. Une commission d'examen doit tenir des audiences publiques pour permettre aux participants de présenter des renseignements, des préoccupations et des commentaires sur les effets potentiels du projet et de poser des questions à propos du projet. La commission d'examen prépare un rapport contenant sa justification, ses conclusions et ses recommandations, et présente ce rapport au ministre."
+        self.lc.action.datastore_upsert(
+            resource_id=self.resource_id,
+            records=[record])
+
         expect_maxchar_fields = ['service_description_en', 'service_description_fr',
                                  'automated_decision_system_description_en',
                                  'automated_decision_system_description_fr',
@@ -395,6 +401,8 @@ class TestService(CanadaTestBase):
         assert 'records' in err
         for maxchar_field in expect_maxchar_fields:
             assert maxchar_field in err['records'][0]
+
+
 
     def test_int_na_nd(self):
         """
