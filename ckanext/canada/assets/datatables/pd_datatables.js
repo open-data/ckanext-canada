@@ -64,6 +64,7 @@ function load_pd_datatable(CKAN_MODULE){
   // TODO: Disable Editor - enable Table Editor when ready...
   // const EDITOR = pd_datatables__EDITOR;
   const EDITOR = false;
+  const JS_CHROMO = pd_datatables__EDITOR;
 
   const selectAllLabel = _('Select All');
   const colSearchLabel = _('Search:');
@@ -445,6 +446,7 @@ function load_pd_datatable(CKAN_MODULE){
         if( typeof _chromo_field.datatables_full_text_choices != 'undefined' && _chromo_field.datatables_full_text_choices ){
           label = editorObject.select_choices[_i][0] + _(': ') + label;
         }
+        // FIXME: if there is an existing value that is no longer in choices...
         fieldInput += '<option value="' + editorObject.select_choices[_i][0] + '" ' + selected + '>' + label + '</option>';
       }
       fieldInput += '</select>';
@@ -474,8 +476,8 @@ function load_pd_datatable(CKAN_MODULE){
         return '';  // blank cell for None/null values
       }
       let editorObject = false;
-      if( EDITOR ){
-        editorObject = EDITOR[_chromo_field.datastore_id];
+      if( JS_CHROMO ){
+        editorObject = JS_CHROMO[_chromo_field.datastore_id] || false;
       }
       if( typeof _chromo_field.markdown != 'undefined' && _chromo_field.markdown ){
         _data = _data.replace('•', '\n-').replace('\r\n•', '\n-').replace('\n•', '\n-').replace('\r•', '\n-').replace(String.fromCharCode(8226), '\n-').replace(String.fromCharCode(183), '\n-');  // replace commonly used list characters
@@ -488,6 +490,12 @@ function load_pd_datatable(CKAN_MODULE){
         let displayList = '<ul class="text-left">';
         _data.forEach(function(_val, _i, _arr){
           let _l = _val;
+          if( editorObject && typeof editorObject.choices_suffix_filter != 'undefined' && editorObject.choices_suffix_filter ){
+            let [_suffix, _labels] = Object.entries(editorObject.choices_suffix_filter)[0];
+            if( _l.endsWith(_suffix) ){
+              editorObject.select_choices.push([_l, _labels[locale]]);
+            }
+          }
           if( editorObject && showFullTextChoices && typeof editorObject.select_choices != 'undefined' && editorObject.select_choices ){
             for( let _i = 0; _i < editorObject.select_choices.length; _i++ ){
               if( _val == editorObject.select_choices[_i][0] ){

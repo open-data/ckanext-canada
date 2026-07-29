@@ -105,12 +105,24 @@ def process_row(row: Dict[str, Any]) -> Dict[str, Any]:
     row['program_name_fr'] = []
     program_ids = row['program_id'].split(',')
     for id in program_ids:
+        # TODO: update suffix labels
+        # handle suffix "-INV"
+        #   en: (Invalid for Organization EN)
+        #   fr: (Invalid for Organization FR)
+        suffix_en = ''
+        suffix_fr = ''
+        if id.endswith('-INV'):
+            suffix_en = ' (Invalid for Organization EN)'
+            suffix_fr = ' (Invalid for Organization FR)'
+            id = id.replace('-INV', '')
         if id not in PROGRAM_IDS:
+            row['program_name_en'].append('"Unknown Program EN%s"' % suffix_en)
+            row['program_name_fr'].append('"Unknown Program FR%s"' %suffix_fr)
             continue
         # NOTE: we add double quotes as Program Names can have
         #       single quotes and commas in them
-        row['program_name_en'].append('"%s"' % PROGRAM_IDS[id]['en'])
-        row['program_name_fr'].append('"%s"' % PROGRAM_IDS[id]['fr'])
+        row['program_name_en'].append('"%s%s"' % (PROGRAM_IDS[id]['en'], suffix_en))
+        row['program_name_fr'].append('"%s%s"' % (PROGRAM_IDS[id]['fr'], suffix_fr))
 
     row['program_name_en'] = ', '.join(row['program_name_en'])
     row['program_name_fr'] = ', '.join(row['program_name_fr'])

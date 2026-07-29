@@ -303,20 +303,29 @@ def datastore_create_temp_user_table(context: Context,
     else:
         from ckanext.datastore.backend.postgres import literal_string
         username = context['user']
+        recombinant_marks = context.get('RECOMBINANT_MARKS', [])
         context['connection'].execute('''
             CREATE TEMP TABLE IF NOT EXISTS datastore_user (
                 username text NOT NULL,
                 sysadmin boolean NOT NULL,
+                importing boolean NOT NULL,
                 org_name text
+                {mark_definitions}
                 ){drop_statement};
             INSERT INTO datastore_user VALUES (
-                {username}, {sysadmin}, {org_name}
+                {username}, {sysadmin}, {importing}, {org_name} {mark_values}
                 );
             '''.format(
                 drop_statement=' ON COMMIT DROP' if drop_on_commit else '',
                 username=literal_string(username),
                 sysadmin='TRUE' if is_sysadmin(username) else 'FALSE',
-                org_name=literal_string(org_name) if org_name else None))
+                importing='TRUE' if 'recombinant_import' in recombinant_marks else 'FALSE',
+                org_name=literal_string(org_name) if org_name else None,
+                mark_definitions=(',' if recombinant_marks else '') +
+                ', '.join('%s boolean' % m for m in recombinant_marks),
+                mark_values=(',' if recombinant_marks else '') +
+                ', '.join('TRUE' for _m in recombinant_marks)
+            ))
         yield
 
     # __exit__ of context manager

@@ -22,6 +22,7 @@ class TestService(CanadaTestBase):
 
         org = Organization(name='service-test-org')
         self.lc = LocalCKAN()
+        self.lc_migration = LocalCKAN(context={'RECOMBINANT_MARKS': ['service_migration']})
 
         self.lc.action.recombinant_create(dataset_type='service', owner_org=org['name'])
         rval = self.lc.action.recombinant_show(dataset_type='service', owner_org=org['name'])
@@ -366,6 +367,24 @@ class TestService(CanadaTestBase):
         assert 'records' in err
         assert err['records'][0] == {'program_id': ['Invalid choice(s) for Organization service-test-org: NOT VALID']}
 
+        # special migration cases
+        record['program_id'] = ['NOT VALID', 'BGN01']
+        self.lc_migration.action.datastore_upsert(
+            resource_id=self.resource_id,
+            records=[record])
+        resp = self.lc.action.datastore_search(
+            resource_id=self.resource_id)
+        assert resp['records'][0]['program_id'] == ['NOT VALID-INV', 'BGN01']
+
+        # suffix program_ids keep same order
+        record['program_id'] = ['BGN01', 'NOT VALID']
+        self.lc_migration.action.datastore_upsert(
+            resource_id=self.resource_id,
+            records=[record])
+        resp = self.lc.action.datastore_search(
+            resource_id=self.resource_id)
+        assert resp['records'][0]['program_id'] == ['BGN01', 'NOT VALID-INV']
+
     def test_max_chars(self):
         """
         Over max character field values should raise an exception
@@ -465,6 +484,19 @@ class TestService(CanadaTestBase):
         assert test_record['service_name_fr'] == 'Prestations de la Sécurité de la vieillesse'
         assert test_record['program_name_en'] == '"Old Age Security"'
         assert test_record['program_name_fr'] == '"Sécurité de la vieillesse"'
+
+        record = chromo['examples']['record'].copy()
+        record['program_id'] = ','.join(record['program_id'])
+        record['program_id'] += ',NOT VALID'
+        test_record = filter_service.test(dict(record))
+        assert test_record['program_name_en'] == '"Old Age Security", "Unknown Program EN"'
+        assert test_record['program_name_fr'] == '"Sécurité de la vieillesse", "Unknown Program FR"'
+
+        record = chromo['examples']['record'].copy()
+        record['program_id'] = 'BGN01-INV'
+        test_record = filter_service.test(dict(record))
+        assert test_record['program_name_en'] == '"Old Age Security (Invalid for Organization EN)"'
+        assert test_record['program_name_fr'] == '"Sécurité de la vieillesse (Invalid for Organization FR)"'
 
 
 class TestStdService(CanadaTestBase):

@@ -13,7 +13,7 @@
   {% do fk_links.update({_res_name: h.url_for('recombinant.preview_table', resource_name=_res_name, owner_org=owner_org)}) %}
 {% endfor  %}
 {% set magic_priority_no_field_should_be_below = 2 %}
-{% set choice_fields = h.recombinant_choice_fields(resource_name, org_name=owner_org) if can_edit else {} %}
+{% set choice_fields = h.recombinant_choice_fields(resource_name, org_name=owner_org) %}
 {% set nonEditableCols = ['record_created', 'record_modified', 'user_modified'] %}
 {% set tableStyles = {
     'header': {
@@ -123,6 +123,7 @@
           label: '{{- h.scheming_language_text(field.label) -}}',
           form_attrs: {{ field.form_attrs|tojson if 'form_attrs' in field else None|tojson}},
           select_choices: {{ choice_fields[field.datastore_id]|tojson if field.datastore_id in choice_fields else None|tojson}},
+          choices_suffix_filter: {{ field.choices_suffix_filter|tojson if 'choices_suffix_filter' in field else None|tojson}},
           is_required: function(VALUE, ROW_INDEX){
             {%- if field.js_required_eval -%}
               {%- set ns = namespace(js_required_eval=field.js_required_eval) -%}
