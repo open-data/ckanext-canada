@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  CKAN\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-07-28 18:46+0000\n"
+"POT-Creation-Date: 2026-07-30 20:37+0000\n"
 "PO-Revision-Date: 2014-01-23 13:04+0000\n"
 "Last-Translator: Sean Hammond <sean.hammond@okfn.org>\n"
 "Language: en\n"
@@ -169,7 +169,7 @@ msgid "Subject"
 msgstr ""
 
 #: ckanext/canada/dataset.py:372
-#: ckanext/canada/templates/package/snippets/resource_info.html:13
+#: ckanext/canada/templates/package/snippets/resource_info.html:11
 #: ckanext/canada/templates/scheming/package/resource_read.html:19
 #: ckanext/canada/templates/tabledesigner/view_snippets/cra_business_number.html:1
 msgid "Format"
@@ -402,7 +402,7 @@ msgstr ""
 #: ckanext/canada/strings.py:17
 #: ckanext/canada/templates/user/edit_user_form.html:26
 #: ckanext/canada/templates/user/new_user_form.html:12
-#: ckanext/canada/templates/user/read_base.html:61
+#: ckanext/canada/templates/user/read_base.html:59
 #: ckanext/canada/templates/user/recover_username.html:17
 #: ckanext/canada/view.py:1622
 msgid "Email"
@@ -2665,7 +2665,7 @@ msgstr ""
 #: ckanext/canada/templates/user/list.html:10
 #: ckanext/canada/templates/user/list.html:22
 #: ckanext/canada/templates/user/list.html:33
-#: ckanext/canada/templates/user/list.html:97
+#: ckanext/canada/templates/user/list.html:95
 #: ckanext/canada/templates/user/read_base.html:5
 msgid "Users"
 msgstr ""
@@ -2675,15 +2675,15 @@ msgid "Publish Records"
 msgstr ""
 
 #: ckanext/canada/templates/admin/base.html:17
-#: ckanext/canada/templates/admin/jobs.html:59
+#: ckanext/canada/templates/admin/jobs.html:57
 msgid "Job Queue"
 msgstr ""
 
-#: ckanext/canada/templates/admin/index.html:7
+#: ckanext/canada/templates/admin/index.html:5
 msgid "Administer CKAN"
 msgstr ""
 
-#: ckanext/canada/templates/admin/index.html:12
+#: ckanext/canada/templates/admin/index.html:8
 #, python-format
 msgid ""
 "<p>As a sysadmin user you have full control over this CKAN instance. "
@@ -2710,7 +2710,7 @@ msgstr ""
 msgid "There are currently no queued or running jobs."
 msgstr ""
 
-#: ckanext/canada/templates/admin/jobs.html:63
+#: ckanext/canada/templates/admin/jobs.html:59
 msgid "View the current job queue and running jobs."
 msgstr ""
 
@@ -2754,23 +2754,23 @@ msgstr ""
 msgid "Clear All"
 msgstr ""
 
-#: ckanext/canada/templates/admin/search_rebuild.html:6
-#: ckanext/canada/templates/organization/search_rebuild.html:6
+#: ckanext/canada/templates/admin/search_rebuild.html:5
+#: ckanext/canada/templates/organization/search_rebuild.html:5
 msgid "Why re-index?"
 msgstr ""
 
-#: ckanext/canada/templates/admin/search_rebuild.html:9
+#: ckanext/canada/templates/admin/search_rebuild.html:7
 msgid ""
 "The SOLR index is used for searching datasets and search facets. In the "
 "case that some datasets are not showing in the search or a search facet "
 "is not working, you can try to re-index the site."
 msgstr ""
 
-#: ckanext/canada/templates/admin/trash.html:13
+#: ckanext/canada/templates/admin/trash.html:11
 msgid "Trash"
 msgstr "Deleted Records"
 
-#: ckanext/canada/templates/admin/trash.html:17
+#: ckanext/canada/templates/admin/trash.html:13
 msgid "Purge deleted datasets, organizations or groups forever and irreversibly."
 msgstr ""
 
@@ -2994,7 +2994,7 @@ msgid "Activity Stream"
 msgstr ""
 
 #: ckanext/canada/templates/organization/activity_stream.html:11
-#: ckanext/canada/templates/package/read_base.html:182
+#: ckanext/canada/templates/package/read_base.html:176
 msgid "Atom Feed"
 msgstr ""
 
@@ -3027,7 +3027,7 @@ msgstr ""
 #: ckanext/canada/templates/snippets/cdts/header.html:182
 #: ckanext/canada/templates/user/read.html:33
 #: ckanext/canada/templates/user/read_base.html:15
-#: ckanext/canada/templates/user/read_base.html:74
+#: ckanext/canada/templates/user/read_base.html:72
 msgid "Organizations"
 msgstr ""
 
@@ -3115,11 +3115,11 @@ msgstr ""
 msgid "Update Member"
 msgstr ""
 
-#: ckanext/canada/templates/organization/member_new.html:79
+#: ckanext/canada/templates/organization/member_new.html:78
 msgid "What are roles?"
 msgstr ""
 
-#: ckanext/canada/templates/organization/member_new.html:82
+#: ckanext/canada/templates/organization/member_new.html:80
 msgid ""
 "<p><strong>Admin:</strong> Can add/edit and delete datasets, as well as "
 "manage organization members.</p> <p><strong>Editor:</strong> Can add and "
@@ -3134,7 +3134,7 @@ msgstr ""
 "but not add new records.</p> "
 
 #: ckanext/canada/templates/organization/members.html:18
-#: ckanext/canada/templates/snippets/organization.html:31
+#: ckanext/canada/templates/snippets/organization.html:30
 msgid "Members"
 msgstr ""
 
@@ -3144,20 +3144,20 @@ msgstr ""
 
 #: ckanext/canada/templates/organization/read_base.html:20
 #: ckanext/canada/templates/package/search.html:16
-#: ckanext/canada/templates/snippets/organization.html:37
+#: ckanext/canada/templates/snippets/organization.html:34
 #: ckanext/canada/templates/user/read.html:26
 #: ckanext/canada/templates/user/read_base.html:11
 msgid "Datasets"
 msgstr "Records"
 
-#: ckanext/canada/templates/organization/search_rebuild.html:9
+#: ckanext/canada/templates/organization/search_rebuild.html:7
 msgid ""
 "If you update an Organization's <strong>title</strong> or "
 "<strong>name,</strong> it's datasets in the SOLR Index will not have the "
 "new title or name."
 msgstr ""
 
-#: ckanext/canada/templates/organization/search_rebuild.html:10
+#: ckanext/canada/templates/organization/search_rebuild.html:8
 msgid ""
 "To solve this, you can re-index all of the Organization's records in a "
 "background job."
@@ -3200,11 +3200,11 @@ msgstr "0 Records"
 msgid "Search organizations..."
 msgstr ""
 
-#: ckanext/canada/templates/package/base_form_page.html:42
+#: ckanext/canada/templates/package/base_form_page.html:41
 msgid "What are datasets?"
 msgstr "What are records?"
 
-#: ckanext/canada/templates/package/base_form_page.html:45
+#: ckanext/canada/templates/package/base_form_page.html:43
 msgid ""
 "Datasets are simply used to group related pieces of data. These can then "
 "be found under a single url with a description and licensing information."
@@ -3260,12 +3260,14 @@ msgstr ""
 #: ckanext/canada/templates/package/new.html:20
 #: ckanext/canada/templates/package/read.html:144
 #: ckanext/canada/templates/package/read.html:167
-#: ckanext/canada/templates/package/read_base.html:84
-#: ckanext/canada/templates/package/read_base.html:93
-#: ckanext/canada/templates/package/read_base.html:109
-#: ckanext/canada/templates/package/read_base.html:188
+#: ckanext/canada/templates/package/read_base.html:80
+#: ckanext/canada/templates/package/read_base.html:89
+#: ckanext/canada/templates/package/read_base.html:105
+#: ckanext/canada/templates/package/read_base.html:182
 #: ckanext/canada/templates/recombinant/create_pd_record.html:34
 #: ckanext/canada/templates/recombinant/update_pd_record.html:34
+#: ckanext/canada/templates/snippets/organization.html:30
+#: ckanext/canada/templates/snippets/organization.html:34
 #: ckanext/canada/templates/snippets/package_item.html:95
 msgid ":"
 msgstr ""
@@ -3358,22 +3360,22 @@ msgid "Delivery Point:"
 msgstr ""
 
 #: ckanext/canada/templates/package/read.html:235
-#: ckanext/canada/templates/package/read_base.html:211
+#: ckanext/canada/templates/package/read_base.html:203
 msgid "City:"
 msgstr ""
 
 #: ckanext/canada/templates/package/read.html:238
-#: ckanext/canada/templates/package/read_base.html:214
+#: ckanext/canada/templates/package/read_base.html:206
 msgid "Administrative Area:"
 msgstr ""
 
 #: ckanext/canada/templates/package/read.html:241
-#: ckanext/canada/templates/package/read_base.html:213
+#: ckanext/canada/templates/package/read_base.html:205
 msgid "Postal Code:"
 msgstr ""
 
 #: ckanext/canada/templates/package/read.html:244
-#: ckanext/canada/templates/package/read_base.html:212
+#: ckanext/canada/templates/package/read_base.html:204
 msgid "Country:"
 msgstr ""
 
@@ -3393,120 +3395,120 @@ msgstr ""
 msgid "Reorder resources"
 msgstr ""
 
-#: ckanext/canada/templates/package/read_base.html:69
+#: ckanext/canada/templates/package/read_base.html:67
 #: ckanext/canada/templates/scheming/package/resource_read.html:9
 msgid "Additional Information"
 msgstr ""
 
-#: ckanext/canada/templates/package/read_base.html:93
+#: ckanext/canada/templates/package/read_base.html:89
 msgid "Temporal Coverage"
 msgstr ""
 
-#: ckanext/canada/templates/package/read_base.html:96
+#: ckanext/canada/templates/package/read_base.html:92
 msgid "to"
 msgstr ""
 
-#: ckanext/canada/templates/package/read_base.html:98
+#: ckanext/canada/templates/package/read_base.html:94
 msgid "to undefined"
 msgstr ""
 
-#: ckanext/canada/templates/package/read_base.html:100
+#: ckanext/canada/templates/package/read_base.html:96
 msgid "undefined to"
 msgstr ""
 
-#: ckanext/canada/templates/package/read_base.html:109
+#: ckanext/canada/templates/package/read_base.html:105
 msgid "Openness Rating"
 msgstr ""
 
-#: ckanext/canada/templates/package/read_base.html:114
+#: ckanext/canada/templates/package/read_base.html:110
 msgid "one star"
 msgstr ""
 
-#: ckanext/canada/templates/package/read_base.html:115
+#: ckanext/canada/templates/package/read_base.html:111
 msgid "two stars"
 msgstr ""
 
-#: ckanext/canada/templates/package/read_base.html:116
+#: ckanext/canada/templates/package/read_base.html:112
 msgid "three stars"
 msgstr ""
 
-#: ckanext/canada/templates/package/read_base.html:117
+#: ckanext/canada/templates/package/read_base.html:113
 msgid "four stars"
 msgstr ""
 
-#: ckanext/canada/templates/package/read_base.html:118
+#: ckanext/canada/templates/package/read_base.html:114
 msgid "five stars"
 msgstr ""
 
-#: ckanext/canada/templates/package/read_base.html:129
+#: ckanext/canada/templates/package/read_base.html:124
 msgid "About this Record"
 msgstr ""
 
-#: ckanext/canada/templates/package/read_base.html:133
+#: ckanext/canada/templates/package/read_base.html:127
 msgid "Record Released:"
 msgstr ""
 
-#: ckanext/canada/templates/package/read_base.html:137
+#: ckanext/canada/templates/package/read_base.html:131
 msgid "Record Modified:"
 msgstr ""
 
-#: ckanext/canada/templates/package/read_base.html:141
+#: ckanext/canada/templates/package/read_base.html:135
 msgid "Record ID:"
 msgstr ""
 
-#: ckanext/canada/templates/package/read_base.html:145
+#: ckanext/canada/templates/package/read_base.html:139
 msgid "Metadata:"
 msgstr ""
 
-#: ckanext/canada/templates/package/read_base.html:149
+#: ckanext/canada/templates/package/read_base.html:143
 msgid "Link to JSON format"
 msgstr ""
 
-#: ckanext/canada/templates/package/read_base.html:155
+#: ckanext/canada/templates/package/read_base.html:149
 msgid "DCAT (JSON-LD)"
 msgstr ""
 
-#: ckanext/canada/templates/package/read_base.html:162
+#: ckanext/canada/templates/package/read_base.html:156
 msgid "DCAT (XML)"
 msgstr ""
 
-#: ckanext/canada/templates/package/read_base.html:173
+#: ckanext/canada/templates/package/read_base.html:167
 msgid "FGP Metadata:"
 msgstr ""
 
-#: ckanext/canada/templates/package/read_base.html:175
+#: ckanext/canada/templates/package/read_base.html:169
 msgid "HNAP ISO:19115 Metadata Record"
 msgstr ""
 
-#: ckanext/canada/templates/package/read_base.html:195
+#: ckanext/canada/templates/package/read_base.html:189
 msgid "Data Contact"
 msgstr ""
 
-#: ckanext/canada/templates/package/read_base.html:195
+#: ckanext/canada/templates/package/read_base.html:189
 msgid "Distributor Contact"
 msgstr ""
 
-#: ckanext/canada/templates/package/read_base.html:206
+#: ckanext/canada/templates/package/read_base.html:198
 msgid "Organization Name:"
 msgstr ""
 
-#: ckanext/canada/templates/package/read_base.html:207
+#: ckanext/canada/templates/package/read_base.html:199
 msgid "Telephone Number:"
 msgstr ""
 
-#: ckanext/canada/templates/package/read_base.html:208
+#: ckanext/canada/templates/package/read_base.html:200
 msgid "Email:"
 msgstr ""
 
-#: ckanext/canada/templates/package/read_base.html:209
+#: ckanext/canada/templates/package/read_base.html:201
 msgid "Contact Form:"
 msgstr ""
 
-#: ckanext/canada/templates/package/read_base.html:210
+#: ckanext/canada/templates/package/read_base.html:202
 msgid "Address:"
 msgstr ""
 
-#: ckanext/canada/templates/package/read_base.html:215
+#: ckanext/canada/templates/package/read_base.html:207
 msgid "Role:"
 msgstr ""
 
@@ -3573,11 +3575,11 @@ msgstr ""
 msgid "Search Open Government"
 msgstr ""
 
-#: ckanext/canada/templates/package/search.html:37
+#: ckanext/canada/templates/package/search.html:36
 msgid "License"
 msgstr ""
 
-#: ckanext/canada/templates/package/search.html:57
+#: ckanext/canada/templates/package/search.html:55
 msgid "Please review your spelling, or reduce the number of filters selected."
 msgstr ""
 
@@ -3632,11 +3634,11 @@ msgstr ""
 msgid "Suggested Dataset"
 msgstr ""
 
-#: ckanext/canada/templates/package/snippets/resource_info.html:8
+#: ckanext/canada/templates/package/snippets/resource_info.html:7
 msgid "Additional Information "
 msgstr ""
 
-#: ckanext/canada/templates/package/snippets/resource_info.html:40
+#: ckanext/canada/templates/package/snippets/resource_info.html:38
 #: ckanext/canada/templates/package/snippets/resource_item.html:38
 #: ckanext/canada/templates/package/snippets/resources.html:65
 #, python-format
@@ -4474,11 +4476,11 @@ msgstr ""
 msgid "Member"
 msgstr ""
 
-#: ckanext/canada/templates/user/list.html:102
+#: ckanext/canada/templates/user/list.html:98
 msgid "Search and view users."
 msgstr ""
 
-#: ckanext/canada/templates/user/list.html:104
+#: ckanext/canada/templates/user/list.html:100
 msgid "Search and manage users."
 msgstr ""
 
@@ -4538,48 +4540,48 @@ msgid ""
 " to meet the new requirements before they can access the Registry."
 msgstr ""
 
-#: ckanext/canada/templates/user/login.html:44
+#: ckanext/canada/templates/user/login.html:43
 msgid "Need an account"
 msgstr ""
 
-#: ckanext/canada/templates/user/login.html:47
+#: ckanext/canada/templates/user/login.html:45
 msgid "Then sign right up, it only takes a minute"
 msgstr ""
 
-#: ckanext/canada/templates/user/login.html:49
+#: ckanext/canada/templates/user/login.html:47
 #: ckanext/canada/templates/user/new.html:5
 msgid "Request an Account"
 msgstr ""
 
-#: ckanext/canada/templates/user/login.html:55
+#: ckanext/canada/templates/user/login.html:52
 msgid "Forgotten your password?"
 msgstr ""
 
-#: ckanext/canada/templates/user/login.html:57
+#: ckanext/canada/templates/user/login.html:54
 msgid "No problem, use our password recovery form to reset it"
 msgstr ""
 
-#: ckanext/canada/templates/user/login.html:59
+#: ckanext/canada/templates/user/login.html:56
 msgid "Reset password"
 msgstr ""
 
-#: ckanext/canada/templates/user/login.html:67
+#: ckanext/canada/templates/user/login.html:63
 msgid "Forgotten your username?"
 msgstr ""
 
-#: ckanext/canada/templates/user/login.html:70
+#: ckanext/canada/templates/user/login.html:65
 msgid "No problem, use our username recovery form to recover it"
 msgstr ""
 
-#: ckanext/canada/templates/user/login.html:72
+#: ckanext/canada/templates/user/login.html:67
 msgid "Recover username"
 msgstr ""
 
-#: ckanext/canada/templates/user/login.html:87
+#: ckanext/canada/templates/user/login.html:82
 msgid " Create an Account"
 msgstr ""
 
-#: ckanext/canada/templates/user/login.html:97
+#: ckanext/canada/templates/user/login.html:92
 msgid "Forgot your password?"
 msgstr ""
 
@@ -4764,35 +4766,35 @@ msgstr ""
 msgid "MFA"
 msgstr ""
 
-#: ckanext/canada/templates/user/read_base.html:27
+#: ckanext/canada/templates/user/read_base.html:26
 msgid "Details"
 msgstr ""
 
-#: ckanext/canada/templates/user/read_base.html:39
+#: ckanext/canada/templates/user/read_base.html:37
 msgid "Followers:"
 msgstr ""
 
-#: ckanext/canada/templates/user/read_base.html:43
+#: ckanext/canada/templates/user/read_base.html:41
 msgid "Datasets:"
 msgstr ""
 
-#: ckanext/canada/templates/user/read_base.html:51
+#: ckanext/canada/templates/user/read_base.html:49
 msgid "Open ID:"
 msgstr ""
 
-#: ckanext/canada/templates/user/read_base.html:54
+#: ckanext/canada/templates/user/read_base.html:52
 msgid "Username:"
 msgstr ""
 
-#: ckanext/canada/templates/user/read_base.html:62
+#: ckanext/canada/templates/user/read_base.html:60
 msgid "This means only you can see this"
 msgstr ""
 
-#: ckanext/canada/templates/user/read_base.html:62
+#: ckanext/canada/templates/user/read_base.html:60
 msgid "Private"
 msgstr ""
 
-#: ckanext/canada/templates/user/read_base.html:67
+#: ckanext/canada/templates/user/read_base.html:65
 msgid "Member Since"
 msgstr ""
 
