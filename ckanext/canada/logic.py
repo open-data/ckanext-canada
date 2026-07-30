@@ -286,15 +286,18 @@ def _activities_from_user_list_since(since: str,
 
 
 @contextmanager
-def datastore_create_temp_user_table(context: Context,
-                                     drop_on_commit: Optional[bool] = True,
-                                     org_name: Optional[str] = None):
+def datastore_create_temp_app_context_table(context: Context,
+                                            drop_on_commit: Optional[bool] = True,
+                                            org_name: Optional[str] = None):
     """
     Context manager for wrapping DataStore transactions with
-    a temporary user table.
+    a temporary application context table.
 
-    The table is to pass the current username and sysadmin
-    state to our triggers for marking modified rows
+    The table is used to pass the current username, sysadmin
+    state, and org names/abbreviations to our triggers for marking modified rows.
+
+    Other contextual flags and values may be passed via the CKAN app context in
+    a more dynamic way.
     """
     # __enter__ of context manager
 
@@ -303,35 +306,35 @@ def datastore_create_temp_user_table(context: Context,
     else:
         from ckanext.datastore.backend.postgres import literal_string
         username = context['user']
-        recombinant_marks = context.get('RECOMBINANT_MARKS', [])
+        contextual_flags = context.get('DATASTORE_APP_CONTEXT_FLAGS', [])
         context['connection'].execute('''
-            CREATE TEMP TABLE IF NOT EXISTS datastore_user (
+            CREATE TEMP TABLE IF NOT EXISTS datastore_app_context (
                 username text NOT NULL,
                 sysadmin boolean NOT NULL,
-                importing boolean NOT NULL,
+                cli_importing boolean NOT NULL,
                 org_name text
-                {mark_definitions}
+                {flag_definitions}
                 ){drop_statement};
-            INSERT INTO datastore_user VALUES (
-                {username}, {sysadmin}, {importing}, {org_name} {mark_values}
+            INSERT INTO datastore_app_context VALUES (
+                {username}, {sysadmin}, {cli_importing}, {org_name} {flag_values}
                 );
             '''.format(
                 drop_statement=' ON COMMIT DROP' if drop_on_commit else '',
                 username=literal_string(username),
                 sysadmin='TRUE' if is_sysadmin(username) else 'FALSE',
-                importing='TRUE' if 'recombinant_import' in recombinant_marks else 'FALSE',
+                cli_importing='TRUE' if 'recombinant_import' in contextual_flags else 'FALSE',
                 org_name=literal_string(org_name) if org_name else None,
-                mark_definitions=(',' if recombinant_marks else '') +
-                ', '.join('%s boolean' % m for m in recombinant_marks),
-                mark_values=(',' if recombinant_marks else '') +
-                ', '.join('TRUE' for _m in recombinant_marks)
+                flag_definitions=(',' if contextual_flags else '') +
+                ', '.join('%s boolean' % m for m in contextual_flags),
+                flag_values=(',' if contextual_flags else '') +
+                ', '.join('TRUE' for _m in contextual_flags)
             ))
         yield
 
     # __exit__ of context manager
 
     if 'user' in context and not drop_on_commit:
-        context['connection'].execute('''DROP TABLE datastore_user;''')
+        context['connection'].execute('''DROP TABLE datastore_app_context;''')
 
 
 def canada_guess_mimetype(context: Context, data_dict: DataDict) -> str:
@@ -668,8 +671,8 @@ def canada_datastore_run_triggers(up_func: Action,
         # type_ignore_reason: incomplete typing
         context['connection'] = backend._get_write_engine().connect()  # type: ignore
     org_name = org_name_from_res_id(data_dict.get('resource_id'))
-    with datastore_create_temp_user_table(context, drop_on_commit=False,
-                                          org_name=org_name):
+    with datastore_create_temp_app_context_table(context, drop_on_commit=False,
+                                                 org_name=org_name):
         return up_func(context, data_dict)
 
 

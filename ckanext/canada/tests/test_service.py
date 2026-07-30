@@ -22,7 +22,8 @@ class TestService(CanadaTestBase):
 
         org = Organization(name='service-test-org')
         self.lc = LocalCKAN()
-        self.lc_migration = LocalCKAN(context={'RECOMBINANT_MARKS': ['service_migration']})
+        self.lc_migration = LocalCKAN(context={
+            'DATASTORE_APP_CONTEXT_FLAGS': ['service_migration']})
 
         self.lc.action.recombinant_create(dataset_type='service', owner_org=org['name'])
         rval = self.lc.action.recombinant_show(dataset_type='service', owner_org=org['name'])

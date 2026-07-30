@@ -64,7 +64,7 @@ class CanadaInternalPlugin(p.SingletonPlugin):
 
         def patched_upsert_data(context: Context, data_dict: DataDict) -> Any:
             org_name = org_name_from_res_id(data_dict.get('resource_id'))
-            with logic.datastore_create_temp_user_table(context, org_name=org_name):
+            with logic.datastore_create_temp_app_context_table(context, org_name=org_name):
                 try:
                     return original_upsert_data(context, data_dict)
                 except ValidationError as e:

@@ -1583,16 +1583,16 @@ resources:
   - service_trigger: |
       DECLARE
         errors text[][] := '{{}}';
-        org_name text NOT NULL := (SELECT org_name FROM datastore_user LIMIT 1);
+        org_name text NOT NULL := (SELECT org_name FROM datastore_app_context LIMIT 1);
         crval RECORD;
         refval text[];
         referr text[];
         is_migration boolean NOT NULL := FALSE;
       BEGIN
         IF EXISTS (
-          SELECT 1 FROM information_schema.columns WHERE table_name = 'datastore_user' AND column_name = 'service_migration'
+          SELECT 1 FROM information_schema.columns WHERE table_name = 'datastore_app_context' AND column_name = 'service_migration'
         ) THEN
-          SELECT COALESCE(service_migration, FALSE) INTO is_migration FROM datastore_user LIMIT 1;
+          SELECT COALESCE(service_migration, FALSE) INTO is_migration FROM datastore_app_context LIMIT 1;
         END IF;
 
         NEW.fiscal_yr := trim(both E'\t\n\x0b\x0c\r \xc2\xa0' from NEW.fiscal_yr);
@@ -2577,7 +2577,7 @@ resources:
   - service_std_trigger: |
       DECLARE
         errors text[][] := '{{}}';
-        org_name text NOT NULL := (SELECT org_name FROM datastore_user LIMIT 1);
+        org_name text NOT NULL := (SELECT org_name FROM datastore_app_context LIMIT 1);
         crval RECORD;
       BEGIN
         NEW.fiscal_yr := trim(both E'\t\n\x0b\x0c\r \xc2\xa0' from NEW.fiscal_yr);
