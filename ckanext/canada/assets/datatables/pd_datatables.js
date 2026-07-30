@@ -29,12 +29,26 @@ this.ckan.module('pd-datatables', function($){
       is_editable: false,
     },
     initialize: function (){
-      load_pd_datatable(this);
+      const module = this;
+      const maxTries = 35;
+      let interval = false;
+      let tries = 0;
+      interval = setInterval(function(){
+        const CHECK = module._('JS_I18N_LOADED');
+        const LOCALE = module.options.locale;
+        if( LOCALE == 'en' || CHECK != 'JS_I18N_LOADED' || tries > maxTries ){
+          clearInterval(interval);
+          interval = false;
+          load_pd_datatable(module, (LOCALE == 'en' || CHECK != 'JS_I18N_LOADED'));
+          return;
+        }
+        tries++;
+      }, 150);
     }
   };
 });
 
-function load_pd_datatable(CKAN_MODULE){
+function load_pd_datatable(CKAN_MODULE, HAS_TRANSLATIONS){
   const _ = CKAN_MODULE._;
   const searchParams = new URLSearchParams(document.location.search);
   const currentDate = new Date().toISOString().split('T')[0];
@@ -72,7 +86,7 @@ function load_pd_datatable(CKAN_MODULE){
   const colSortAscLabel = _('Ascending');
   const colSortDescLabel = _('Descending');
   const colSortAnyLabel = _('Any');
-  const readLessLabel = _('less');
+  const readLessLabel = _('Less');
   const rowLabel = _('Row');
   const newBadgeLabel = _('New');
   const updatedBadgeLabel = _('Updated');
@@ -85,7 +99,7 @@ function load_pd_datatable(CKAN_MODULE){
   const compactTableLabel = _('Compact Table');
   const editSingleButtonLabel = _('Edit Online');
   const addInTableButtonLabel = _('Add new record in Table');
-  const editInTableButtonLabel = _('Edit<span class="pd-datatbales-btn-count"></span> in Table');
+  const editInTableButtonLabel = _('Edit<span class="pd-datatables-btn-count"></span> in Table');
   const validRowLabel = _('Record is valid');
   const errorInRowLabel = _('Some fields have validation errors');
   const requiredInRowLabel = _('Some fields are required');
@@ -101,8 +115,8 @@ function load_pd_datatable(CKAN_MODULE){
   const completeViewButtonLabel = _('Preview records');
   const validationErrorMessage = _('Your records did not save because one or more of them have errors. Fix the errors and save again to finalize your records.');
   const exceptionErrorMessage = _('Could not save the records due to the following error: ');
-  const supprtErrorMessage = _('Your records did not save. Try saving again. If the issue persist please contact support with Support ID: ');
-  const genericErrorMessage = _('Your records did not save. Try saving again. If the issue persist please contact support.');
+  const supprtErrorMessage = _('Your records did not save. Try saving again. If the issue persists, please contact support with Support ID: ');
+  const genericErrorMessage = _('Your records did not save. Try saving again. If the issue persists, please contact support.');
   const dupePrimaryKeysErrorMessage = _('{PRIM_IDS} already used in this Editor Table.');
   const countSuffix = _(' record(s)');
   const editorLegendLabel = _('Legend:');
@@ -111,10 +125,10 @@ function load_pd_datatable(CKAN_MODULE){
   const editorLegendRequiredLabel = _('Required');
   const ajaxErrorMessage = _('Error: Could not query records. Please try again.');
   const excelTemplateErrorMessage = _('Error: Could not generate Excel template. Please try again.');
-  const editButtonLabel = _('Edit<span class="pd-datatbales-btn-count"></span> in Excel');
+  const editButtonLabel = _('Edit<span class="pd-datatables-btn-count"></span> in Excel');
   const exportingButtonLabel = _('Exporting{COUNT} record(s) to an Excel Template');
-  const deleteButtonLabel = _('Delete<span class="pd-datatbales-btn-count"></span>');
-  const saveButtonLabel = _('Save<span class="pd-datatbales-btn-count"></span>');
+  const deleteButtonLabel = _('Delete<span class="pd-datatables-btn-count"></span>');
+  const saveButtonLabel = _('Save<span class="pd-datatables-btn-count"></span>');
   const tableLanguage = {
     decimal: "",
     emptyTable:  '<span id="pd-dtatable-no-records">' + _('No data available in table') + '</span>',
@@ -623,33 +637,33 @@ function load_pd_datatable(CKAN_MODULE){
 
   function open_fullscreen(_element){
     if( _element.requestFullscreen ){
+      isFullScreen = true;
       _element.requestFullscreen();
-      isFullScreen = true;
     }else if( _element.webkitRequestFullscreen ){
+      isFullScreen = true;
       _element.webkitRequestFullscreen();
-      isFullScreen = true;
     }else if( _element.mozRequestFullScreen ){
+      isFullScreen = true;
       _element.mozRequestFullScreen();
-      isFullScreen = true;
     }else if(_element.msRequestFullscreen){
-      _element.msRequestFullscreen();
       isFullScreen = true;
+      _element.msRequestFullscreen();
     }
   }
 
   function close_fullscreen(){
     if( document.exitFullscreen ){
+      isFullScreen = false;
       document.exitFullscreen();
-      isFullScreen = false;
     }else if( document.webkitExitFullscreen ){
+      isFullScreen = false;
       document.webkitExitFullscreen();
-      isFullScreen = false;
     }else if( document.mozExitFullscreen ){
+      isFullScreen = false;
       document.mozExitFullscreen();
-      isFullScreen = false;
     }else if( document.msExitFullscreen ){
-      document.msExitFullscreen();
       isFullScreen = false;
+      document.msExitFullscreen();
     }
   }
 
@@ -668,13 +682,13 @@ function load_pd_datatable(CKAN_MODULE){
     }
     if( isEditable && selectCount > 0 ){
       table.buttons('tableEditorButton:name').text('<i aria-hidden="true" class="fas fa-edit"></i>&nbsp;' + editInTableButtonLabel);
-      let buttonStats = $('#dtprv_wrapper').find('span.pd-datatbales-btn-count');
+      let buttonStats = $('#dtprv_wrapper').find('span.pd-datatables-btn-count');
       $(buttonStats).each(function(_index, _button){
         $(_button).html('&nbsp;' + selectCount + countSuffix);
       });
     }else{
       table.buttons('tableEditorButton:name').text('<i aria-hidden="true" class="fas fa-plus"></i>&nbsp;' + addInTableButtonLabel);
-      let buttonStats = $('#dtprv_wrapper').find('span.pd-datatbales-btn-count');
+      let buttonStats = $('#dtprv_wrapper').find('span.pd-datatables-btn-count');
       $(buttonStats).each(function(_index, _button){
         $(_button).html('');
       });
@@ -941,7 +955,7 @@ function load_pd_datatable(CKAN_MODULE){
     if( isEditMode ){
       let hasFilledRows = false;
       let isIncomplete = false;
-      let buttonStats = $('#dtprv_wrapper').find('.pd-datatable-save-btn').find('span.pd-datatbales-btn-count');
+      let buttonStats = $('#dtprv_wrapper').find('.pd-datatable-save-btn').find('span.pd-datatables-btn-count');
       for(let [_rowIndex, _erroredCells] of Object.entries(erroredRows)){
         if( _erroredCells.length > 0 ){
           isIncomplete = true;
@@ -1134,6 +1148,16 @@ function load_pd_datatable(CKAN_MODULE){
         text: (isFullScreen && is_page_fullscreen()) ? '<i aria-hidden="true" class="fas fa-compress"></i>&nbsp;' + exitFullscreenLabel : '<i aria-hidden="true" class="fas fa-expand"></i>&nbsp;' + fullscreenLabel,
         className: 'pd-datatable-btn btn-secondary pd-datatable-fullscreen-btn',
         action: function(e, dt, node, config){
+          $(document).off('fullscreenchange.setButtonLabel');
+          $(document).on('fullscreenchange.setButtonLabel', function(_event){
+            if( isFullScreen && is_page_fullscreen() ){
+              $('.pd-datatable-fullscreen-btn').html('<i aria-hidden="true" class="fas fa-compress"></i>&nbsp;' + exitFullscreenLabel);
+              isFullScreen = true;
+            }else{
+              $('.pd-datatable-fullscreen-btn').html('<i aria-hidden="true" class="fas fa-expand"></i>&nbsp;' + fullscreenLabel);
+              isFullScreen = false;
+            }
+          });
           let datatableSection = $('#dt-preview')[0];
           if( is_page_fullscreen() ){
             close_fullscreen();
@@ -1145,16 +1169,6 @@ function load_pd_datatable(CKAN_MODULE){
           if( isFullScreen ){
             dt.button('fullscreenButton:name').text('<i aria-hidden="true" class="fas fa-compress"></i>&nbsp;' + exitFullscreenLabel);
           }
-        }
-      });
-      $(document).off('fullscreenchange.setButtonLabel');
-      $(document).on('fullscreenchange.setButtonLabel', function(_event){
-        if( isFullScreen && is_page_fullscreen() ){
-          $('.pd-datatable-fullscreen-btn').html('<i aria-hidden="true" class="fas fa-compress"></i>&nbsp;' + exitFullscreenLabel);
-          isFullScreen = true;
-        }else{
-          $('.pd-datatable-fullscreen-btn').html('<i aria-hidden="true" class="fas fa-expand"></i>&nbsp;' + fullscreenLabel);
-          isFullScreen = false;
         }
       });
     }
@@ -1312,7 +1326,7 @@ function load_pd_datatable(CKAN_MODULE){
           isExportingExcel = true;
           download_excel_template(editRecordsURI, urlEncodedData).then(function(){
             table.buttons('excelEditorButton:name').text('<i aria-hidden="true" class="fas fa-file-excel"></i>&nbsp;' + editButtonLabel);
-            let buttonStats = $('#dtprv_wrapper').find('.pd-datatable-excel-btn').find('span.pd-datatbales-btn-count');
+            let buttonStats = $('#dtprv_wrapper').find('.pd-datatable-excel-btn').find('span.pd-datatables-btn-count');
             let selectCount = table.rows({ selected: true })[0].length;
             if( selectCount > 0 ){
               $(buttonStats).html('&nbsp;' + selectCount + countSuffix);
@@ -1926,6 +1940,10 @@ function load_pd_datatable(CKAN_MODULE){
       table.columns.adjust();
       $('.pd-datable-instructions').css({'display': 'none'});
     }
+  }
+
+  if( ! HAS_TRANSLATIONS ){
+    $('#dtprv_wrapper').before('<div id="dtprv_failure_message_i18n" class="alert alert-dismissible show alert-warning"><p>Failed to load the translations for the Table.</p></div>');
   }
 
   function initialize_datatable(){

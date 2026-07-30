@@ -8,6 +8,8 @@
 
 const _ = function(x){ return x; }
 
+_('JS_I18N_LOADED')  // special flag for js i18n binding
+
 _('Requesting Download...')  // promise-download js module
 _('Downloads')  // promise-download js module
 _('You have unfinished downloads in this page. Do you want to stop these downloads and leave the page?')  // promise-download js module
