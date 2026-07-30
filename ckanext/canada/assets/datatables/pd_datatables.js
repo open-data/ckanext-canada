@@ -176,6 +176,12 @@ function load_pd_datatable(CKAN_MODULE, HAS_TRANSLATIONS){
     }, 0);
   }
 
+  let windowConfirmSupported = typeof window !== 'undefined' && typeof window.confirm === 'function';
+  const isFirefox = /firefox|fxios/i.test(navigator.userAgent);
+  if( isFirefox && window.location.protocol == 'http:' ){
+    windowConfirmSupported = false;
+  }
+
   let table;
   let tableState;
   let _savedState = window.localStorage.getItem('DataTables_dtprv_' + window.location.pathname);
@@ -187,7 +193,9 @@ function load_pd_datatable(CKAN_MODULE, HAS_TRANSLATIONS){
   let isEditMode = typeof tableState != 'undefined' && typeof tableState.edit_view != 'undefined' ? tableState.edit_view : false;
 
   // TODO: Disable Editor - enable Table Editor when ready...
-  isEditMode = false;
+  if( ! EDITOR ){
+    isEditMode = false;
+  }
 
   if( isEditMode ){
     $('.pd-datable-instructions').css({'display': 'none'});
@@ -412,6 +420,24 @@ function load_pd_datatable(CKAN_MODULE, HAS_TRANSLATIONS){
     }
   }
 
+  function get_legacy_choices(_editorObject, _value, _chromo_field, _suffix, _suffix_label){
+    let legacyChoices = [];
+    let available_keys = [];
+    for( let _i = 0; _i < _editorObject.select_choices.length; _i++ ){
+      available_keys.push(_editorObject.select_choices[_i][0]);
+    }
+    let _v = _value;
+    if( ! Array.isArray(_v) ){
+      _v = _v.toString().split(',');  // split to Array if not already
+    }
+    _v.forEach(function(_val, _i, _arr){
+      if( _val && _val.length > 0 && ! available_keys.includes(_val) ){
+        legacyChoices.push([_val, _val]);
+      }
+    });
+    return legacyChoices;
+  }
+
   function render_cell_input(_value, _rowIndex, _colIndex, _chromo_field){
     let ds_type = _chromo_field.datastore_type;
     let fieldID = 'pd-records_' + _rowIndex + '_' + _chromo_field.datastore_id;
@@ -451,17 +477,29 @@ function load_pd_datatable(CKAN_MODULE, HAS_TRANSLATIONS){
     }else if( ds_type == 'money' ){
       fieldInput = '<input class="pd-datatable-editor-input ' + readOnlyClass + '" value="' + _value + '" name=' + fieldID + '" id="' + fieldID + '" data-primary-key="' + isPrimaryKey + '" data-row-index="' + _rowIndex + '" data-datastore-id="' + _chromo_field.datastore_id + '" data-number-type="money" type="number" ' + readOnly + maxLength + ' tabindex="' + tabIndex + '" autocomplete="off" />';
     }
+    let choicesSuffix = '';
+    let choicesSuffixLabel = '';
+    if( typeof editorObject.choices_suffix_filter != 'undefined' && editorObject.choices_suffix_filter ){
+      let [_suffix, _slabels] = Object.entries(editorObject.choices_suffix_filter)[0];
+      choicesSuffix = _suffix;
+      choicesSuffixLabel = _slabels[locale];
+    }
     if( typeof editorObject.select_choices != 'undefined' && editorObject.select_choices ){
       let isMultiple = ds_type == '_text' ? 'multiple' : '';
       fieldInput = '<select class="pd-datatable-editor-input ' + readOnlyClass + '" name=' + fieldID + '" id="' + fieldID + '" ' + isMultiple + ' data-primary-key="' + isPrimaryKey + '" data-row-index="' + _rowIndex + '" data-datastore-id="' + _chromo_field.datastore_id + '" ' + readOnly + ' tabindex="' + tabIndex + '" autocomplete="off"><option></option>';
-      for( let _i = 0; _i < editorObject.select_choices.length; _i++ ){
-        let selected = _value == editorObject.select_choices[_i][0] || (Array.isArray(_value) && _value.includes(editorObject.select_choices[_i][0])) ? 'selected' : '';
-        let label = editorObject.select_choices[_i][1];
-        if( typeof _chromo_field.datatables_full_text_choices != 'undefined' && _chromo_field.datatables_full_text_choices ){
-          label = editorObject.select_choices[_i][0] + _(': ') + label;
+      // support current data that may not be in the choices anymore
+      let legacy_choices = get_legacy_choices(editorObject, _value, _chromo_field);
+      let _availableChoices = legacy_choices.concat(editorObject.select_choices);
+      for( let _i = 0; _i < _availableChoices.length; _i++ ){
+        let selected = _value == _availableChoices[_i][0] || (Array.isArray(_value) && _value.includes(_availableChoices[_i][0])) ? 'selected' : '';
+        let label = _availableChoices[_i][1];
+        if( choicesSuffix && choicesSuffix.length > 0 && _availableChoices[_i][0].endsWith(choicesSuffix) ){
+          label += ' ' + choicesSuffixLabel;
         }
-        // FIXME: if there is an existing value that is no longer in choices...
-        fieldInput += '<option value="' + editorObject.select_choices[_i][0] + '" ' + selected + '>' + label + '</option>';
+        if( typeof _chromo_field.datatables_full_text_choices != 'undefined' && _chromo_field.datatables_full_text_choices ){
+          label = _availableChoices[_i][0] + _(': ') + label;
+        }
+        fieldInput += '<option value="' + _availableChoices[_i][0] + '" ' + selected + '>' + label + '</option>';
       }
       fieldInput += '</select>';
     }
@@ -497,6 +535,13 @@ function load_pd_datatable(CKAN_MODULE, HAS_TRANSLATIONS){
         _data = _data.replace('•', '\n-').replace('\r\n•', '\n-').replace('\n•', '\n-').replace('\r•', '\n-').replace(String.fromCharCode(8226), '\n-').replace(String.fromCharCode(183), '\n-');  // replace commonly used list characters
         _data = DataTable.render.ellipsis(ellipsesLength, _meta.row, _chromo_field.datastore_id, true)(_data, _type, _row, _meta);
       }
+      let choicesSuffix = '';
+      let choicesSuffixLabel = '';
+      if( typeof editorObject.choices_suffix_filter != 'undefined' && editorObject.choices_suffix_filter ){
+        let [_suffix, _slabels] = Object.entries(editorObject.choices_suffix_filter)[0];
+        choicesSuffix = _suffix;
+        choicesSuffixLabel = _slabels[locale];
+      }
       if( _chromo_field.datastore_type == '_text' ){
         if( ! Array.isArray(_data) ){
           _data = _data.toString().split(',');  // split to Array if not already
@@ -504,16 +549,16 @@ function load_pd_datatable(CKAN_MODULE, HAS_TRANSLATIONS){
         let displayList = '<ul class="text-left">';
         _data.forEach(function(_val, _i, _arr){
           let _l = _val;
-          if( editorObject && typeof editorObject.choices_suffix_filter != 'undefined' && editorObject.choices_suffix_filter ){
-            let [_suffix, _labels] = Object.entries(editorObject.choices_suffix_filter)[0];
-            if( _l.endsWith(_suffix) ){
-              editorObject.select_choices.push([_l, _labels[locale]]);
-            }
-          }
           if( editorObject && showFullTextChoices && typeof editorObject.select_choices != 'undefined' && editorObject.select_choices ){
-            for( let _i = 0; _i < editorObject.select_choices.length; _i++ ){
-              if( _val == editorObject.select_choices[_i][0] ){
-                _l += _(': ') + editorObject.select_choices[_i][1];
+            // support current data that may not be in the choices anymore
+            let legacy_choices = get_legacy_choices(editorObject, _val, _chromo_field);
+            let _availableChoices = legacy_choices.concat(editorObject.select_choices);
+            for( let _i = 0; _i < _availableChoices.length; _i++ ){
+              if( _val == _availableChoices[_i][0] ){
+                _l += _(': ') + _availableChoices[_i][1];
+                if( choicesSuffix && choicesSuffix.length > 0 && _availableChoices[_i][0].endsWith(choicesSuffix) ){
+                  _l += ' ' + choicesSuffixLabel;
+                }
                 break;
               }
             }
@@ -527,9 +572,15 @@ function load_pd_datatable(CKAN_MODULE, HAS_TRANSLATIONS){
         displayList += '</ul>';
         _data = displayList;
       }else if( editorObject && showFullTextChoices && typeof editorObject.select_choices != 'undefined' && editorObject.select_choices ){
-        for( let _i = 0; _i < editorObject.select_choices.length; _i++ ){
-          if( _data == editorObject.select_choices[_i][0] ){
-            let _l = originalData + _(': ') + editorObject.select_choices[_i][1];
+        // support current data that may not be in the choices anymore
+        let legacy_choices = get_legacy_choices(editorObject, _data, _chromo_field);
+        let _availableChoices = legacy_choices.concat(editorObject.select_choices);
+        for( let _i = 0; _i < _availableChoices.length; _i++ ){
+          if( _data == _availableChoices[_i][0] ){
+            let _l = originalData + _(': ') + _availableChoices[_i][1];
+            if( choicesSuffix && choicesSuffix.length > 0 && _availableChoices[_i][0].endsWith(choicesSuffix) ){
+              _l += ' ' + choicesSuffixLabel;
+            }
             _data = '<span class="pd-datatable-choice-title" title="' + _l + '" aria-label="' + _l + '">' + _data + '</span>';
             break;
           }
@@ -1197,7 +1248,7 @@ function load_pd_datatable(CKAN_MODULE, HAS_TRANSLATIONS){
               break;
             }
           }
-          if( hasUnsaved && ! window.confirm(leavingEditorWarning) ){
+          if( hasUnsaved && windowConfirmSupported && ! window.confirm(leavingEditorWarning) ){
             return;
           }
           erroredRows = {};
@@ -2037,7 +2088,9 @@ function load_pd_datatable(CKAN_MODULE, HAS_TRANSLATIONS){
         _data.edit_view = isEditMode;
 
         // TODO: Disable Editor - enable Table Editor when ready...
-        _data.edit_view = false;
+        if( ! EDITOR ){
+          _data.edit_view = false;
+        }
 
         _data.editing_rows = editingRows;
         // TODO: save filledRows, erroredRows, requiredRows??? need to save the field values too???
@@ -2047,7 +2100,9 @@ function load_pd_datatable(CKAN_MODULE, HAS_TRANSLATIONS){
         tableState.edit_view = isEditMode;
 
         // TODO: Disable Editor - enable Table Editor when ready...
-        tableState.edit_view = false;
+        if( ! EDITOR ){
+          tableState.edit_view = false;
+        }
 
         tableState.editing_rows = editingRows;
       },
@@ -2057,7 +2112,9 @@ function load_pd_datatable(CKAN_MODULE, HAS_TRANSLATIONS){
         tableState.selected = localInstanceSelected;
 
         // TODO: Disable Editor - enable Table Editor when ready...
-        tableState.edit_view = false;
+        if( ! EDITOR ){
+          tableState.edit_view = false;
+        }
       },
       buttons: get_available_buttons(),
     });
