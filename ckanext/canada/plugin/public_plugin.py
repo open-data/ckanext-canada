@@ -116,7 +116,7 @@ class CanadaPublicPlugin(p.SingletonPlugin, DefaultTranslation):
         assert 'ckanext.canada:schemas/dataset%s.yaml' % pages_affix \
             in scheming_dataset_schemas
         assert 'ckanext.canada:schemas/info%s.yaml' % pages_affix \
-                    in scheming_dataset_schemas
+            in scheming_dataset_schemas
         assert 'ckanext.canada:schemas/prop.yaml' in scheming_dataset_schemas
 
         # Set our preset schemas

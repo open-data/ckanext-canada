@@ -260,7 +260,7 @@ def _flash_new_dataset(response: Union[Response, str], package_type: str):
     """
     Custom flash messages for scheming pages.
     """
-    if hasattr(response, 'status_code'):
+    if isinstance(response, Response) and hasattr(response, 'status_code'):
         if (
           response.status_code == 200 or
           response.status_code == 302
