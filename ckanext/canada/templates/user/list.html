@@ -92,11 +92,7 @@
 {% block secondary_content %}
   {% if h.is_registry_domain() %}
     <section class="panel panel-info">
-      <header class="panel-heading">
-        <h3 class="panel-title">
-          <i class="fa fa-info-circle" aria-hidden="true"></i>&nbsp;{{ _('Users') }}
-        </h3>
-      </header>
+      <header class="panel-heading canada-panel-heading"><i class="fa fa-info-circle" aria-hidden="true"></i>&nbsp;{{- _('Users') -}}</header>
       <div class="panel-body">
         {% if g.userobj and not g.userobj.sysadmin %}
           <p>{{ _("Search and view users.") }}</p>
