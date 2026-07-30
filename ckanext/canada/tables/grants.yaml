@@ -779,10 +779,10 @@ resources:
     validation:
       en: |
         This field must not be empty.
-        The number must be greater than or equal to 0.
+        "Agreement Value" must be zero or greater for agreements starting on or after May 1, 2026.
       fr: |
         Ce champ ne doit pas être vide.
-        Le nombre doit être supérieur ou égal à 0.
+        La « valeur de l’entente » doit être supérieur ou égal à 0 pour les accords qui commencent le 1er mai 2026 ou après.
     excel_required: true
     form_required: true
     datastore_type: money
@@ -1312,7 +1312,7 @@ resources:
     recipient_business_number_error: Must be a 9 digit number
     federal_riding_number_error: Must be a 5 digit number
     start_end_date_error: '"Agreement Start Date" cannot be after "Projected Agreement End Date"'
-    agreement_value_error: Must be greater than or equal to zero
+    agreement_value_error: '"Agreement Value" must be zero or greater for agreements starting on or after May 1, 2026'
 
   examples:
     record:

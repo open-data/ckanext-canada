@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  CKAN\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-07-21 18:51+0000\n"
+"POT-Creation-Date: 2026-07-28 15:51+0000\n"
 "PO-Revision-Date: 2014-01-23 13:04+0000\n"
 "Last-Translator: Sean Hammond <sean.hammond@okfn.org>\n"
 "Language: en\n"
@@ -133,44 +133,44 @@ msgstr ""
 msgid "Invalid business number"
 msgstr ""
 
-#: ckanext/canada/helpers.py:370 ckanext/canada/helpers.py:371
+#: ckanext/canada/helpers.py:369 ckanext/canada/helpers.py:370
 msgid "Treasury Board of Canada Secretariat"
 msgstr ""
 
-#: ckanext/canada/helpers.py:721 ckanext/canada/strings.py:14
+#: ckanext/canada/helpers.py:720 ckanext/canada/strings.py:14
 #: ckanext/canada/view.py:1517
 msgid "Members not found"
 msgstr ""
 
-#: ckanext/canada/helpers.py:856
+#: ckanext/canada/helpers.py:855
 msgid "Data awaiting load to DataStore"
 msgstr ""
 
-#: ckanext/canada/helpers.py:857
+#: ckanext/canada/helpers.py:856
 msgid "Loading data into DataStore"
 msgstr ""
 
-#: ckanext/canada/helpers.py:858
+#: ckanext/canada/helpers.py:857
 msgid "Data loaded into DataStore"
 msgstr ""
 
-#: ckanext/canada/helpers.py:859
+#: ckanext/canada/helpers.py:858
 msgid "Failed to load data into DataStore"
 msgstr ""
 
-#: ckanext/canada/helpers.py:860
+#: ckanext/canada/helpers.py:859
 msgid "Data available in DataStore"
 msgstr ""
 
-#: ckanext/canada/helpers.py:861
+#: ckanext/canada/helpers.py:860
 msgid "Resource not active in DataStore"
 msgstr ""
 
-#: ckanext/canada/helpers.py:862
+#: ckanext/canada/helpers.py:861
 msgid "DataStore status unknown"
 msgstr ""
 
-#: ckanext/canada/helpers.py:941
+#: ckanext/canada/helpers.py:940
 #: ckanext/canada/templates/home/quick_links.html:65
 #: ckanext/canada/templates/package/snippets/package_type_label.html:16
 #: ckanext/canada/templates/scheming/package/snippets/package_form.html:28
@@ -180,7 +180,7 @@ msgstr ""
 msgid "Open Data"
 msgstr ""
 
-#: ckanext/canada/helpers.py:942
+#: ckanext/canada/helpers.py:941
 #: ckanext/canada/templates/home/quick_links.html:82
 #: ckanext/canada/templates/package/snippets/package_type_label.html:22
 #: ckanext/canada/templates/scheming/package/snippets/package_form.html:30
@@ -190,23 +190,23 @@ msgstr ""
 msgid "Open Information"
 msgstr ""
 
-#: ckanext/canada/helpers.py:954
+#: ckanext/canada/helpers.py:953
 #: ckanext/canada/templates/snippets/dataset_facets.html:27
 msgid "Request sent to data owner - awaiting response"
 msgstr ""
 
-#: ckanext/canada/helpers.py:958
+#: ckanext/canada/helpers.py:957
 #: ckanext/canada/templates/snippets/publish_facet.html:44
 msgid "Pending"
 msgstr ""
 
-#: ckanext/canada/helpers.py:959 ckanext/canada/templates/package/read.html:48
+#: ckanext/canada/helpers.py:958 ckanext/canada/templates/package/read.html:48
 #: ckanext/canada/templates/snippets/package_item.html:21
 #: ckanext/canada/templates/snippets/publish_facet.html:44
 msgid "Draft"
 msgstr ""
 
-#: ckanext/canada/helpers.py:976
+#: ckanext/canada/helpers.py:975
 #: ckanext/canada/templates/home/quick_links.html:152
 #: ckanext/canada/templates/package/snippets/package_type_label.html:20
 #: ckanext/canada/templates/package/snippets/package_type_label.html:26
@@ -215,25 +215,25 @@ msgstr ""
 msgid "Proactive Publication"
 msgstr ""
 
-#: ckanext/canada/helpers.py:1005
+#: ckanext/canada/helpers.py:1004
 #: ckanext/canada/templates/snippets/publish_facet.html:25
 msgid "Published"
 msgstr ""
 
-#: ckanext/canada/helpers.py:1007
+#: ckanext/canada/helpers.py:1006
 #: ckanext/canada/templates/snippets/publish_facet.html:34
 msgid "Scheduled"
 msgstr ""
 
-#: ckanext/canada/helpers.py:1047
+#: ckanext/canada/helpers.py:1046
 msgid "Registry Home"
 msgstr ""
 
-#: ckanext/canada/helpers.py:1052
+#: ckanext/canada/helpers.py:1051
 msgid "Open Government"
 msgstr ""
 
-#: ckanext/canada/helpers.py:1055
+#: ckanext/canada/helpers.py:1054
 #: ckanext/canada/templates/admin/publish_search.html:19
 #: ckanext/canada/templates/home/quick_links.html:123
 #: ckanext/canada/templates/organization/snippets/organization_search.html:8
@@ -874,31 +874,31 @@ msgstr ""
 msgid "Invalid GeoJSON"
 msgstr ""
 
-#: ckanext/canada/validators.py:274
+#: ckanext/canada/validators.py:284
 msgid "Date may not be in the future when this record is marked ready to publish"
 msgstr ""
 
-#: ckanext/canada/validators.py:370
+#: ckanext/canada/validators.py:380
 msgid "Date format incorrect. Expecting YYYY-MM-DD"
 msgstr ""
 
-#: ckanext/canada/validators.py:385 ckanext/canada/validators.py:406
+#: ckanext/canada/validators.py:395 ckanext/canada/validators.py:416
 msgid "Must be a Unicode string value"
 msgstr ""
 
-#: ckanext/canada/validators.py:414 ckanext/canada/validators.py:426
+#: ckanext/canada/validators.py:424 ckanext/canada/validators.py:436
 msgid "Must be a JSON string"
 msgstr ""
 
-#: ckanext/canada/validators.py:422
+#: ckanext/canada/validators.py:432
 msgid "JSON object must contain \"en\" key"
 msgstr ""
 
-#: ckanext/canada/validators.py:424
+#: ckanext/canada/validators.py:434
 msgid "JSON object must contain \"fr\" key"
 msgstr ""
 
-#: ckanext/canada/validators.py:609
+#: ckanext/canada/validators.py:619
 #, python-format
 msgid ""
 "Cannot change value of registry_access field from '%s' to '%s'. This "
@@ -908,7 +908,7 @@ msgstr ""
 #: ckanext/canada/templates/package/new_resource.html:19
 #: ckanext/canada/templates/package/new_resource_not_draft.html:11
 #: ckanext/canada/templates/package/read.html:80
-#: ckanext/canada/validators.py:646
+#: ckanext/canada/validators.py:656
 msgid ""
 "You can only add up to {max_resource_count} resources to a dataset. You "
 "can segment your resources across multiple datasets or merge your data to"
@@ -916,7 +916,7 @@ msgid ""
 "further assistance."
 msgstr ""
 
-#: ckanext/canada/validators.py:664
+#: ckanext/canada/validators.py:674
 msgid ""
 "Invalid name for an API Token. API Token names can only contain "
 "alphanumeric characters, hyphens, and underscores."
@@ -1840,7 +1840,9 @@ msgstr ""
 
 #. SQL Trigger String for PD Type: grants
 #: ckanext/canada/tables/grants.yaml:1315
-msgid "Must be greater than or equal to zero"
+msgid ""
+"\"Agreement Value\" must be zero or greater for agreements starting on or"
+" after May 1, 2026"
 msgstr ""
 
 #. Resource Title for PD Type: grants
@@ -5019,5 +5021,8 @@ msgstr ""
 #~ msgstr ""
 
 #~ msgid "Maintainer"
+#~ msgstr ""
+
+#~ msgid "Must be greater than or equal to zero"
 #~ msgstr ""
 
