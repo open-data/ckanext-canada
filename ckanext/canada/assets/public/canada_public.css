@@ -2,6 +2,10 @@
   --canada-root-dir: '/data';
 }
 
+body button#dropdown-manage-dataset.show{
+  display: inline-block !important;
+}
+
 body > header{
   z-index: 3 !important;
 }

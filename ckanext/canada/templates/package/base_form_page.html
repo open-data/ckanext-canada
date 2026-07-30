@@ -13,7 +13,8 @@
       dataset_type=form_vars.dataset_type,
       form_style=form_vars.form_style,
       s1 = form_vars.stage[0] or 'active',
-      s2 = form_vars.stage[1] or 'uncomplete'
+      s2 = form_vars.stage[1] or 'uncomplete',
+      stages = form_vars.stage
     %}
     {{ super() }}
     {% if form_vars.data and form_vars.data.resources %}

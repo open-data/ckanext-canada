@@ -256,14 +256,15 @@ class CanadaDatasetEditPageView(SchemingEditPageView):
         return response
 
 
-def _flash_new_dataset(response, package_type):
+def _flash_new_dataset(response: Union[Response, str], package_type: str):
     """
     Custom flash messages for scheming pages.
     """
     if hasattr(response, 'status_code'):
         if (
-            response.status_code == 200 or
-            response.status_code == 302):
+          response.status_code == 200 or
+          response.status_code == 302
+        ):
             pages = h.scheming_get_dataset_form_pages(package_type)
             if pages:
                 h.flash_success(

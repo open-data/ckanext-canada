@@ -108,21 +108,32 @@ class CanadaPublicPlugin(p.SingletonPlugin, DefaultTranslation):
             assert 'ckanext.canada:schemas/validation_placeholder_presets.yaml' in \
                 scheming_presets
 
+        # TODO: in combined instance, w/ canada_logic plugin set dynamically...
         pages_affix = '.pages' if config['ckanext.canada.use_scheming_pages'] else ''
+        assert 'ckanext.canada:schemas/presets%s.yaml' % pages_affix in scheming_presets
+
+        scheming_dataset_schemas = config.get('scheming.dataset_schemas', '')
+        assert 'ckanext.canada:schemas/dataset%s.yaml' % pages_affix \
+            in scheming_dataset_schemas
+        assert 'ckanext.canada:schemas/info%s.yaml' % pages_affix \
+                    in scheming_dataset_schemas
+        assert 'ckanext.canada:schemas/prop.yaml' in scheming_dataset_schemas
 
         # Set our preset schemas
         # NOTE: scheming wants space separated string
-        if scheming_presets:
-            config['scheming.presets'] += ' ckanext.canada:schemas/presets%s.yaml' % (
-                pages_affix)
+        # TODO: in combined instance, w/ canada_logic plugin set dynamically...
+        # if scheming_presets:
+        #     config['scheming.presets'] += ' ckanext.canada:schemas/presets%s.yaml' % (
+        #         pages_affix)
 
         # Set our package schemas
         # NOTE: scheming wants space separated string
-        config['scheming.dataset_schemas'] = ' '.join([
-            'ckanext.canada:schemas/dataset%s.yaml' % pages_affix,
-            'ckanext.canada:schemas/info%s.yaml' % pages_affix,
-            'ckanext.canada:schemas/prop.yaml',
-        ])
+        # TODO: in combined instance, w/ canada_logic plugin set dynamically...
+        # config['scheming.dataset_schemas'] = ' '.join([
+        #     'ckanext.canada:schemas/dataset%s.yaml' % pages_affix,
+        #     'ckanext.canada:schemas/info%s.yaml' % pages_affix,
+        #     'ckanext.canada:schemas/prop.yaml',
+        # ])
 
         scheming_organization_schemas = config.get('scheming.organization_schemas', '')
         assert 'ckanext.canada:schemas/organization.yaml' in \
