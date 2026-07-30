@@ -1,1 +1,1 @@
-The temporary session pSQL table `datastore_user` now has an `org_name` column which is the Organization name/abbreviation that the Resource belongs to.
+The temporary session pSQL table `datastore_user` (now `datastore_app_context`) now has an `org_name` column which is the Organization name/abbreviation that the Resource belongs to.
