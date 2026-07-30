@@ -322,7 +322,8 @@ def datastore_create_temp_app_context_table(context: Context,
                 drop_statement=' ON COMMIT DROP' if drop_on_commit else '',
                 username=literal_string(username),
                 sysadmin='TRUE' if is_sysadmin(username) else 'FALSE',
-                cli_importing='TRUE' if 'recombinant_import' in contextual_flags else 'FALSE',
+                cli_importing='TRUE' if 'recombinant_import' in
+                contextual_flags else 'FALSE',
                 org_name=literal_string(org_name) if org_name else None,
                 flag_definitions=(',' if contextual_flags else '') +
                 ', '.join('%s boolean' % m for m in contextual_flags),

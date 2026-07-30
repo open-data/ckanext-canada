@@ -117,7 +117,7 @@ def process_row(row: Dict[str, Any]) -> Dict[str, Any]:
             id = id.replace('-INV', '')
         if id not in PROGRAM_IDS:
             row['program_name_en'].append('"Unknown Program EN%s"' % suffix_en)
-            row['program_name_fr'].append('"Unknown Program FR%s"' %suffix_fr)
+            row['program_name_fr'].append('"Unknown Program FR%s"' % suffix_fr)
             continue
         # NOTE: we add double quotes as Program Names can have
         #       single quotes and commas in them

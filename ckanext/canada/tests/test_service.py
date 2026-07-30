@@ -422,8 +422,6 @@ class TestService(CanadaTestBase):
         for maxchar_field in expect_maxchar_fields:
             assert maxchar_field in err['records'][0]
 
-
-
     def test_int_na_nd(self):
         """
         Special ND, NA, or positive integer fields

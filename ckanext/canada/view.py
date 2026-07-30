@@ -447,7 +447,7 @@ def create_pd_record(owner_org: str, resource_name: str):
     except NotAuthorized:
         return abort(403, _('Unauthorized to create a resource for this package'))
 
-    choice_fields = _get_choice_fields(resource_name, owner_org)
+    choice_fields = _get_choice_fields(resource_name, org_name=owner_org)
     pk_fields = aslist(chromo['datastore_primary_key'])
 
     if request.method == 'POST':
@@ -582,8 +582,9 @@ def update_pd_record(owner_org: str, resource_name: str, pk: str):
     data = {}
     for f in chromo['fields']:
         if (
-            not f.get('import_template_include', True) or
-            f.get('published_resource_computed_field', False)):
+          not f.get('import_template_include', True) or
+          f.get('published_resource_computed_field', False)
+        ):
             continue
         val = record[f['datastore_id']]
         if val and f.get('datastore_type') == 'money':
@@ -594,7 +595,7 @@ def update_pd_record(owner_org: str, resource_name: str, pk: str):
         else:
             data[f['datastore_id']] = val
 
-    choice_fields = _get_choice_fields(resource_name, data, owner_org)
+    choice_fields = _get_choice_fields(resource_name, data, org_name=owner_org)
 
     if request.method == 'POST':
         post_data = parse_params(request.form, ignore_keys=['save'] + pk_fields)
