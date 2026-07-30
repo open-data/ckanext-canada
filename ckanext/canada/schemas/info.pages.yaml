@@ -1,0 +1,447 @@
+dataset_type: info
+
+draft_fields_required: false
+
+before_validators: limit_resources_per_dataset
+
+about: 'open.canada.ca: open information metadata definition'
+about_url: http://github.com/open-data/ckanext-canada
+catalog_type_label:
+  en: Open Information
+  fr: Info
+
+form_languages:
+- en
+- fr
+
+sidebar_show_fields:
+- creator
+- maintainer_email
+- credit
+- keywords
+- subject
+- topic_category
+- audience
+- place_of_publication
+- homepage
+- series_title
+- series_issue_id
+- program_page_url
+- data_series_name
+- data_series_issue_identification
+- edition
+- series_publication_dates
+- digital_object_identifier
+- isbn
+- issn
+- gc_catalogue_number
+- frequency
+- issuance
+- issuance_frequency
+- spatial_representation_type
+- status
+- date_published
+- date_created
+- date_captured
+- date_modified
+
+
+
+#
+#   DATASET FIELDS
+#
+dataset_fields:
+
+# our id + name fields are uuids and always equal
+- start_form_page:
+    title: Descriptive Metadata
+  preset: canada_dataset_id
+- preset: canada_dataset_name
+
+- preset: canada_collection
+  form_restrict_choices_to:
+    - publication
+    - transition
+    - transition_deputy
+    - parliament_report
+    - parliament_committee
+    - parliament_committee_deputy
+    - aia
+    - accessibiliy_plans
+
+- preset: canada_title
+- preset: canada_owner_org
+- preset: canada_notes
+- field_name: additional_notes
+  label:
+    en: Note
+  fluent_form_label:
+    en:
+      en: Note (English)
+      fr: Remarque (anglais)
+    fr:
+      en: Note (French)
+      fr: Remarque (français)
+  fluent_help_text:
+    en:
+      en: General information relating to an asset, in English
+      fr: Information générale concernant un produit, en anglais
+    fr:
+      en: General information relating to an asset, in French
+      fr: Information générale concernant un produit, en français
+  # copied from fluent_text preset
+  form_snippet: fluent_text.html
+  display_snippet: fluent_text.html
+  error_snippet: fluent_text.html
+  validators: fluent_text scheming_required
+  output_validators: fluent_text_output
+  form_attrs:
+      size: 100
+      class: form-control
+
+- preset: canada_keywords
+
+- start_form_page:
+    title: Publishing Information
+  preset: canada_org_title_at_publication
+- preset: canada_org_section_name
+- preset: canada_creator
+- preset: canada_contributor
+- preset: canada_maintainer_email
+- preset: canada_credit
+
+# Field = ISBN.
+# {The identification of the asset’s - International Standard Book Number, a unique identifier assigned to many types of publications except serials by a registration agency.}
+- field_name: isbn
+  label:
+    en: ISBN
+  help_text:
+    en: The identification of the asset’s - International Standard Book Number, a unique identifier assigned to many types of publications except serials by a registration agency
+
+# Field = ISSN.
+# {The identification of the asset’s International Standard Serial Number, a unique identifier assigned to serial publications by a registration agency.}
+- field_name: issn
+  label:
+    en: ISSN
+  help_text:
+    en: The identification of the asset’s International Standard Serial Number, a unique identifier assigned to serial publications by a registration agency
+    fr: Identification du Numéro international normalisé des publications en série du produit, un identificateur unique assigné aux publications en série par un organisme d’enregistrement
+
+# Field = Government of Canada Catalogue Number.
+# {The identification of the asset’s  GC Catalogue Number}
+- field_name: gc_catalogue_number
+  label:
+    en: Government of Canada Catalogue Number
+    fr: Numéro de catalogue du gouvernement du Canada
+  help_text:
+    en: The identification of the asset’s  GC Catalogue Number
+    fr: Identification du numéro du produit dans le catalogue du GC
+
+# Field = Departmental Identification Number.
+# {The identification number of the organization which published the asset}
+- field_name: departmental_identification_number
+  label:
+    en: Departmental Identification Number
+    fr: Numéro d’identification du ministère
+  help_text:
+    en: The identification number of the organization which published the asset
+    fr: Numéro d’identification de l’organisation qui a publié le produit
+
+# Field = PSPC System Identifier.
+# {The identification number given to the asset by Public Service and Procurement Canada}
+- field_name: pspc_identification_number
+  label:
+    en: PSPC System Identifier
+    fr: Identificateur de système de SPAC
+  help_text:
+    en: The identification number given to the asset by Public Service and Procurement Canada
+    fr: Le numéro d’identification attribué au produit par Services publics et Approvisionnement Canada
+
+- preset: canada_digital_object_identifier
+
+- start_form_page:
+    title: Taxonomic Metadata
+  preset: canada_subject
+- preset: canada_audience
+
+- field_name: place_of_publication
+  label:
+    en: Place of Publication
+    fr: Endroit de publication
+  help_text:
+    en: The region where the asset was originally published. You may select or deselect multiple options (Ctrl+Click)
+    fr: La région où le produit a été publié initialement. Vous pouvez sélectionner ou désélectionner de multiples options (Ctrl+Clic)
+  preset: canada_geographic_region # use same multi-select controlled list
+
+- preset: canada_spatial
+- preset: canada_geographic_region
+
+- start_form_page:
+    title: Series Metadata
+  preset: canada_data_series_name
+- preset: canada_data_series_issue_identification
+- preset: canada_program_page_url
+- preset: canada_dataset_relationship
+
+- start_form_page:
+    title: Coverage
+  preset: canada_time_period_coverage_start
+- preset: canada_time_period_coverage_end
+- field_name: issuance_frequency
+  label:
+    en: Frequency of Issuance
+    fr: Fréquence de publication
+  help_text:
+    en: A statement of publication frequency in textual form
+    fr: Représentation textuelle de la fréquence de publication
+  form_snippet: select.html
+  display_snippet: select.html
+  validators: scheming_required scheming_choices
+  choices:
+  - label:
+      en: Continuously updated
+      fr: Continuellement actualisé
+    value: continual
+  - label:
+      en: Daily
+      fr: Quotidien
+    value: P1D
+  - label:
+      en: Semiweekly
+      fr: Bihebdomadaire
+    value: P0.5W
+  - label:
+      en: Three times a week
+      fr: Trois fois par semaine
+    value: P0.33W
+  - label:
+      en: Weekly
+      fr: Chaque semaine
+    value: P1W
+  - label:
+      en: Biweekly
+      fr: Aux deux semaines
+    value: P2W
+  - label:
+      en: Three times a month
+      fr: Trois fois par mois
+    value: P0.33M
+  - label:
+      en: Semimonthly
+      fr: Deux fois par mois
+    value: P0.5M
+  - label:
+      en: Monthly
+      fr: Chaque mois (par mois)
+    value: P1M
+  - label:
+      en: Bimonthly
+      fr: Bimensuel
+    value: P2M
+  - label:
+      en: Quarterly
+      fr: Trimestriel
+    value: P3M
+  - label:
+      en: Three times a year
+      fr: Trois fois par année
+    value: P4M
+  - label:
+      en: Semiannual
+      fr: Semi-annuel
+    value: P6M
+  - label:
+      en: Annual
+      fr: Annuel
+    value: P1Y
+  - label:
+      en: Biennial
+      fr: Deux fois année
+    value: P2Y
+  - label:
+      en: Triennial
+      fr: Trois fois par année
+    value: P3Y
+  - label:
+      en: Completely irregular
+      fr: Entièrement irrégulier
+    value: irregular
+
+- preset: canada_frequency
+- preset: canada_date_published
+- preset: canada_date_modified
+
+# Field = Date Created.
+# Add a Calendar control to select a Date.
+# {The date of creation of the asset (YYYY-MM-DD)}
+- field_name: date_created
+  label:
+    en: Date Created
+    fr: Date de création
+  help_text:
+    en: The date of creation of the asset (YYYY-MM-DD)
+    fr: Date de création du produit (AAAA-MM-JJ)
+  preset: date
+
+# Field = Date Captured.
+# Add a Calendar control to select a Date.
+# {The date on which the asset was digitized or a subsequent snapshot was taken (YYYY-MM-DD)}
+- field_name: date_captured
+  label:
+    en: Date Captured
+    fr: Date de saisie
+  help_text:
+    en: The date on which the asset was digitized or a subsequent snapshot was taken (YYYY-MM-DD)
+    fr: Date à laquelle le produit a été numérisé ou un instantané subséquent a été pris (AAAA-MM-JJ)
+  preset: date
+
+# Field = Edition.
+# {Information identifying the version of the asset}
+- field_name: edition
+  label:
+    en: Edition
+  help_text:
+    en: Information identifying the version of the asset
+    fr: Information qui identifie la version du produit
+
+# Field = Series Dates of Publication and/or Sequential Designation English.
+# {The beginning/ending date(s) of publication and/or sequential designations used on items in a series, in English}
+# Field = Series Dates of Publication and/or Sequential Designation French.
+# {The beginning/ending date(s) of publication and/or sequential designations used on items in a series, in French}
+- field_name: series_publication_dates
+  label:
+    en: Series Dates of Publication and/or Sequential Designation
+  fluent_form_label:
+    en:
+      en: Series Dates of Publication and/or Sequential Designation (English)
+      fr: Dates de publication des séries et/ou de désignation séquentielle (eanglais)
+    fr:
+      en: Series Dates of Publication and/or Sequential Designation (French)
+      fr: Dates de publication des séries et/ou de désignation séquentielle (français)
+  fluent_help_text:
+    en:
+      en: The beginning/ending date(s) of publication and/or sequential designations used on items in a series, in English
+      fr: Dates de début/fin de la publication et/ou de désignation séquentielle utilisées pour les articles d’une série, en anglais
+    fr:
+      en: The beginning/ending date(s) of publication and/or sequential designations used on items in a series, in French
+      fr: Dates de début/fin de la publication et/ou de désignation séquentielle utilisées pour les articles d’une série, en français
+  preset: fluent_text
+  validators: fluent_text scheming_required
+  form_attrs:
+    class: form-control
+
+# Field = Issuance.
+# List box Source: Issuance code table (refer to Data Migration).
+# { A term that designates how the resource is issued }
+- field_name: issuance
+  label:
+    en: Issuance
+    fr: Publication
+  help_text:
+    en: A term that designates how the asset is issued
+    fr: Un terme qui décrit comment la ressource est publié
+  form_snippet: select.html
+  display_snippet: select.html
+  validators: scheming_required scheming_choices
+  choices:
+  - label:
+      en: Monographic
+      fr: Monographique
+    value: monographic
+  - label:
+      en: Single Unit
+      fr: Unité simple
+    value: single_unit
+  - label:
+      en: Multipart monograph
+      fr: Monographie en plusieurs volumes
+    value: multipart_monograph
+  - label:
+      en: Continuing
+      fr: Suite
+    value: continuing
+  - label:
+      en: Serial
+      fr: Série
+    value: serial
+  - label:
+      en: Integrating Resource
+      fr: Ressource intégratrice
+    value: integrating_resource
+
+- preset: canada_jurisdiction
+- preset: canada_license_id
+- preset: canada_restrictions
+
+- start_form_page:
+    title: Approval
+  preset: canada_imso_approval
+- preset: canada_ready_to_publish
+- preset: canada_portal_release_date
+
+
+#
+#   RESOURCE FIELDS
+#
+resource_fields:
+
+# Field = Unique Identifier.
+# {A unique phrase or string which identifies the resource}
+- preset: canada_resource_unique_identifier
+
+# Field = Title English.
+# {An English name given to the resource}
+# Field = Title French.
+# {A French name given to the resource}
+- preset: canada_resource_name
+
+- preset: canada_resource_relationship
+
+# Field = Date Published.
+# Add a Calendar control to select a Date.
+# {Date of issuance of the resource (e.g. publication)}
+- preset: canada_resource_date_published
+  help_text:
+    en: Date of issuance of the resource (e.g. publication)
+
+# Field = Resource Type.
+# List box Source: Resource Type code table (refer to Data Migration).
+# Format: Displayed text is the concatenation of First and Second Level Terms separated by “-“. Example: Assessment - Audit
+# {The nature or genre of the resource, i.e. publication, briefing material.}
+- preset: canada_resource_type
+
+# Field = Format.
+# List box Source: Format code table (refer to Data Migration).
+# {The file format, physical medium or dimensions of the resource}
+- preset: canada_resource_format
+
+# Field = Size.
+# {The [estimated] size of a distribution in kilobytes}
+- preset: canada_resource_size
+
+# Field = Character Set.
+# {This is the character set of the dataset}
+- preset: canada_resource_character_set
+
+# Field = Language.
+# List box Source: Language code table (refer to Data Migration).
+# Order: Blank, English and French first, followed by all other language options in alphabetic order.
+# {The language of the resource}
+- preset: canada_resource_language
+
+# This control opens a file selection dialogue in order to find and select a file to upload as a resource.
+# Label = Upload URL.
+# {The location for online access to the distribution of the resource}
+# Field = Location.
+# {The location for online access to the distribution of the resource, if the file resides elsewhere.}
+- preset: canada_resource_url
+
+# Validation Fields.
+- preset: canada_resource_validation_schema
+- preset: canada_resource_validation_options
+- preset: canada_resource_validation_status
+- preset: canada_resource_validation_timestamp
+
+# LEGACY FIELDS
+- preset: _legacy_canada_related_type
+- preset: _legacy_canada_related_relationship

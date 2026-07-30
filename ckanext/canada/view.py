@@ -38,6 +38,7 @@ from ckan.lib.helpers import (
 from ckan.views import nocache_store
 from ckan.views.dataset import (
     EditView as DatasetEditView,
+    CreateView as DatasetCreateView,
     search as dataset_search,
 )
 from ckanext.scheming.views import (
@@ -243,27 +244,52 @@ class CanadaDatasetEditPageView(SchemingEditPageView):
                                       'reflected on open.canada.ca shortly.'))
                 else:
                     pages = h.scheming_get_dataset_form_pages(package_type)
-                    h.flash_success(
-                        _('Saved "%s" for dataset %s.')
-                        % (h.scheming_language_text(pages[int(page) - 1]['title']),
-                           pkg_dict['id']))
+                    if pages:
+                        h.flash_success(
+                            _('Saved "%s" for dataset %s.')
+                            % (h.scheming_language_text(pages[int(page) - 1]['title']),
+                               pkg_dict['id']))
+                    else:
+                        h.flash_success(
+                            _("Your dataset %s has been saved.")
+                            % pkg_dict['id'])
         return response
 
 
-class CanadaDatasetCreateView(SchemingCreateView):
-    def post(self, package_type: str) -> Union[Response, str]:
-        """
-        Custom flash messages for scheming pages.
-        """
-        response = super(CanadaDatasetCreateView, self).post(package_type)
-        if hasattr(response, 'status_code'):
-            if (
-              response.status_code == 200 or
-              response.status_code == 302):
-                pages = h.scheming_get_dataset_form_pages(package_type)
+def _flash_new_dataset(response, package_type):
+    """
+    Custom flash messages for scheming pages.
+    """
+    if hasattr(response, 'status_code'):
+        if (
+            response.status_code == 200 or
+            response.status_code == 302):
+            pages = h.scheming_get_dataset_form_pages(package_type)
+            if pages:
                 h.flash_success(
                     _('Saved "%s" for new dataset.')
                     % h.scheming_language_text(pages[0]['title']))
+            else:
+                h.flash_success(_('Dataset added.'))
+
+
+class CanadaDatasetCreateView(DatasetCreateView):
+    def post(self, package_type: str) -> Union[Response, str]:
+        """
+        Custom flash messages for core package form pages.
+        """
+        response = super(CanadaDatasetCreateView, self).post(package_type)
+        _flash_new_dataset(response, package_type)
+        return response
+
+
+class CanadaSchemingCreateView(SchemingCreateView):
+    def post(self, package_type: str) -> Union[Response, str]:
+        """
+        Custom flash messages for scheming form pages.
+        """
+        response = super(CanadaSchemingCreateView, self).post(package_type)
+        _flash_new_dataset(response, package_type)
         return response
 
 
@@ -280,9 +306,13 @@ class CanadaDatasetCreatePageView(SchemingCreatePageView):
               response.status_code == 200 or  # type: ignore
               response.status_code == 302):  # type: ignore
                 pages = h.scheming_get_dataset_form_pages(package_type)
-                h.flash_success(
-                    _('Saved "%s" for dataset %s.')
-                    % (h.scheming_language_text(pages[int(page) - 1]['title']), id))
+                if pages:
+                    h.flash_success(
+                        _('Saved "%s" for dataset %s.')
+                        % (h.scheming_language_text(pages[int(page) - 1]['title']),
+                           id))
+                else:
+                    h.flash_success(_('Dataset added.'))
         return response
 
 
