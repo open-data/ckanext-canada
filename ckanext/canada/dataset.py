@@ -38,6 +38,7 @@ from ckanext.canada.view import (
     canada_prevent_pd_views,
     CanadaResourceEditView,
     CanadaResourceCreateView,
+    CanadaSchemingCreateView,
     _get_package_type_from_dict,
     CanadaDatasetEditView,
     CanadaDatasetCreateView,
@@ -199,7 +200,8 @@ def modify_core_dataset_blueprint(package_type: str, blueprint: Blueprint,
     blueprint.add_url_rule(
         '/new',
         endpoint='canada_new_%s' % package_type,
-        view_func=CanadaDatasetCreateView.as_view(str('new')),
+        view_func=CanadaSchemingCreateView.as_view(str('new')) if has_form_pages
+        else CanadaDatasetCreateView.as_view(str('new')),
         methods=['GET', 'POST']
     )
     blueprint.add_url_rule(

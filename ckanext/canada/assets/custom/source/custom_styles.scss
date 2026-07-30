@@ -1981,6 +1981,9 @@ label:lang(fr):after{
       background-color: #335075 !important;
       color: white !important;
     }
+    &.show{
+      display: inline-block !important;
+    }
   }
 
   ul.dropdown-menu#dropdown-manage-dataset-menu{
