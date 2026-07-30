@@ -31,7 +31,7 @@ presets:
     field_name: name
     form_snippet: null
     validators: if_empty_same_as(id)
-      unicode_safe not_empty canada_validate_generate_uuid
+      unicode_safe not_empty canada_validate_generate_uuid scheming_required
 
 # Field = Collection Type.
 # Display the English or the French Description from the Collection Type code table (refer to Data Migration), depending on the selected language.
@@ -148,7 +148,7 @@ presets:
     form_snippet: fluent_text.html
     display_snippet: fluent_text.html
     error_snippet: fluent_text.html
-    validators: fluent_text
+    validators: fluent_text scheming_required
     output_validators: fluent_core_translated_output
     form_attrs:
       size: 60
@@ -246,7 +246,7 @@ presets:
     form_snippet: fluent_text.html
     display_snippet: fluent_text.html
     error_snippet: fluent_text.html
-    validators: fluent_text
+    validators: fluent_text scheming_required
     output_validators: fluent_text_output
     form_attrs:
       size: 60
@@ -263,7 +263,7 @@ presets:
     help_text:
       en: Individual entities (persons) primarily responsible for making the dataset (separate multiple entities by commas)
       fr: Entités individuelles (personnes) principalement responsables de produire le jeu de données (séparer les multiples entités par des virgules)
-    validators: ignore_missing string_safe
+    validators: scheming_required string_safe
     form_attrs:
       size: 60
 
@@ -296,7 +296,7 @@ presets:
     form_snippet: fluent_text.html
     display_snippet: fluent_text.html
     error_snippet: fluent_text.html
-    validators: fluent_text
+    validators: fluent_text scheming_required
     output_validators: fluent_text_output
     form_attrs:
       size: 60
@@ -329,7 +329,7 @@ presets:
     display_snippet: fluent_link.html
     # copied from fluent_text preset
     error_snippet: fluent_text.html
-    validators: fluent_text
+    validators: fluent_text scheming_required
     output_validators: fluent_text_output
 
 
@@ -363,7 +363,7 @@ presets:
       form_snippet: fluent_text.html
       display_snippet: fluent_text.html
       error_snippet: fluent_text.html
-      validators: fluent_text
+      validators: fluent_text scheming_required
       output_validators: fluent_text_output
       form_attrs:
         size: 60
@@ -401,7 +401,7 @@ presets:
     form_snippet: fluent_markdown.html
     display_snippet: fluent_markdown.html
     error_snippet: fluent_text.html
-    validators: fluent_text
+    validators: fluent_text scheming_required
     output_validators: fluent_core_translated_output
     form_attrs:
       class: form-control
@@ -438,7 +438,7 @@ presets:
     form_snippet: fluent_tags.html
     display_snippet: fluent_tags.html
     error_snippet: fluent_text.html
-    validators: fluent_tags
+    validators: fluent_tags scheming_required
     output_validators: fluent_tags_output
     form_attrs:
       class: form-control canada-width-full
@@ -459,7 +459,7 @@ presets:
     required: true
     form_snippet: multiple_select.html
     display_snippet: list_inline.html
-    validators: scheming_multiple_choice
+    validators: scheming_required scheming_multiple_choice
     output_validators: scheming_multiple_choice_output
     select_size: 10
     choices:
@@ -573,7 +573,7 @@ presets:
       fr: "Description de l’audience ou du groupe de personnes pour lequel le jeu de données décrit est destiné ou utile. Vous pouvez sélectionner ou désélectionner de multiples options (Ctrl+Clic)"
     form_snippet: multiple_select.html
     display_snippet: list_inline.html
-    validators: scheming_multiple_choice
+    validators: scheming_required scheming_multiple_choice
     output_validators: scheming_multiple_choice_output
     select_size: 10
     choices:
@@ -1965,7 +1965,7 @@ presets:
     form_select_attrs:
       data-field-select2: true
     display_snippet: multiple_choice.html
-    validators: scheming_multiple_choice
+    validators: scheming_required scheming_multiple_choice
     output_validators: scheming_multiple_choice_output
     select_size: 10
 
@@ -2210,7 +2210,7 @@ presets:
     form_snippet: fluent_text.html
     display_snippet: fluent_text.html
     error_snippet: fluent_text.html
-    validators: fluent_text
+    validators: fluent_text scheming_required
     output_validators: fluent_text_output
 
 # Field = Classification code
@@ -2255,7 +2255,7 @@ presets:
     display_attributes:
       class: canada-break-words
     error_snippet: fluent_text.html
-    validators: fluent_text
+    validators: fluent_text scheming_required
     output_validators: fluent_text_output
     form_attrs:
       class: form-control canada-width-full
@@ -2289,7 +2289,7 @@ presets:
     form_snippet: fluent_text.html
     display_snippet: fluent_text.html
     error_snippet: fluent_text.html
-    validators: fluent_text
+    validators: fluent_text scheming_required
     output_validators: fluent_text_output
     form_attrs:
       size: 60
@@ -2324,7 +2324,7 @@ presets:
     form_snippet: fluent_text.html
     display_snippet: fluent_text.html
     error_snippet: fluent_text.html
-    validators: fluent_text
+    validators: fluent_text scheming_required
     output_validators: fluent_text_output
     form_attrs:
       size: 60
@@ -2521,7 +2521,7 @@ presets:
       fr: Catégorie thématique
     form_snippet: null
     display_snippet: multiple_choice.html
-    validators: scheming_multiple_choice
+    validators: scheming_required scheming_multiple_choice
     output_validators: scheming_multiple_choice_output
     choices:
       - label:
@@ -2609,7 +2609,7 @@ presets:
       fr: Type représentation spatiale
     form_snippet: null
     display_snippet: multiple_choice.html
-    validators: scheming_multiple_choice
+    validators: scheming_required scheming_multiple_choice
     output_validators: scheming_multiple_choice_output
     choices:
     - label:
@@ -2685,7 +2685,7 @@ presets:
     form_snippet: fluent_text.html
     display_snippet: fluent_text.html
     error_snippet: fluent_text.html
-    validators: fluent_text
+    validators: fluent_text scheming_required
     output_validators: fluent_core_translated_output
     form_attrs:
       size: 60
@@ -2803,7 +2803,7 @@ presets:
     display_attributes:
       class: canada-break-words
     error_snippet: fluent_text.html
-    validators: fluent_text
+    validators: fluent_text scheming_required
     output_validators: fluent_text_output
     required: true
     form_panel: relationships
@@ -3693,7 +3693,7 @@ presets:
       en: The [estimated] size of a distribution in bytes.
       fr: Taille [estimative] d’une distribution en octets
     form_panel: resource
-    validators: ignore_missing int_validator
+    validators: scheming_required int_validator
     display_snippet: filesize.html
 
 # Field = Character Set.
@@ -4142,7 +4142,7 @@ presets:
 
     # copied from multiple_select preset
     form_snippet: multiple_select.html
-    validators: scheming_multiple_choice
+    validators: scheming_required scheming_multiple_choice
     output_validators: scheming_multiple_choice_output
 
 # Field = Download URL.
@@ -4189,7 +4189,7 @@ presets:
       value: data_includes_links
     form_snippet: multiple_checkbox.html
     display_snippet: multiple_choice.html
-    validators: scheming_multiple_choice
+    validators: scheming_required scheming_multiple_choice
     output_validators: scheming_multiple_choice_output
 
 # Field = Validation Schema.

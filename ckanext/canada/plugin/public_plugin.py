@@ -105,13 +105,19 @@ class CanadaPublicPlugin(p.SingletonPlugin, DefaultTranslation):
         if 'validation' not in scheming_presets:
             assert 'ckanext.scheming:presets.json' in scheming_presets
             assert 'ckanext.fluent:presets.json' in scheming_presets
-            assert 'ckanext.canada:schemas/presets.yaml' in scheming_presets
             assert 'ckanext.canada:schemas/validation_placeholder_presets.yaml' in \
                 scheming_presets
 
+        pages_affix = '.pages' if config['ckanext.canada.use_scheming_pages'] else ''
+
+        # Set our preset schemas
+        # NOTE: scheming wants space separated string
+        if scheming_presets:
+            config['scheming.presets'] += ' ckanext.canada:schemas/presets%s.yaml' % (
+                pages_affix)
+
         # Set our package schemas
         # NOTE: scheming wants space separated string
-        pages_affix = '.pages' if config['ckanext.canada.use_scheming_pages'] else ''
         config['scheming.dataset_schemas'] = ' '.join([
             'ckanext.canada:schemas/dataset%s.yaml' % pages_affix,
             'ckanext.canada:schemas/info%s.yaml' % pages_affix,
