@@ -2,6 +2,22 @@
   --canada-root-dir: '/data';
 }
 
+body > header{
+  z-index: 3 !important;
+}
+
+body #canada-main-container{
+  z-index: 2 !important;
+}
+
+footer#wb-info{
+  z-index: 1 !important;
+}
+
+body .panel .canada-panel-heading{
+  font-weight: 600;
+}
+
 #flDebug .flDebugPanelContentParent{
   overflow: scroll !important;
 }

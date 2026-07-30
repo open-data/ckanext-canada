@@ -4,7 +4,7 @@
   <section class="panel panel-default resources-side-section">
     {% block resources_inner %}
       {% block resources_title %}
-        <div class="panel-heading"><i class="fa fa-bars" aria-hidden="true"></i>&nbsp;{{ _("Resources") }}</div>
+        <div class="panel-heading canada-panel-heading"><i class="fa fa-bars" aria-hidden="true"></i>&nbsp;{{ _("Resources") }}</div>
       {% endblock %}
       <div class="panel-body resources-side-panel {% if not can_edit or is_activity_archive %} resources-side-panel-no-edit {% endif %}">
         {% block resources_list %}

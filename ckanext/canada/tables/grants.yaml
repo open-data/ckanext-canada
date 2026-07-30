@@ -779,10 +779,10 @@ resources:
     validation:
       en: |
         This field must not be empty.
-        The number must be greater than or equal to 0.
+        "Agreement Value" must be zero or greater for agreements starting on or after May 1, 2026.
       fr: |
         Ce champ ne doit pas être vide.
-        Le nombre doit être supérieur ou égal à 0.
+        La « valeur de l’entente » doit être supérieur ou égal à 0 pour les accords qui commencent le 1er mai 2026 ou après.
     excel_required: true
     form_required: true
     datastore_type: money
@@ -1171,21 +1171,27 @@ resources:
     markdown: true
 
   - datastore_id: record_created
-    label: Record Creation Time
+    label:
+      en: Record Creation Time
+      fr: Heure de la création du dossier
     import_template_include: false
     visible_to_public: false
     datastore_type: timestamp
     preview_class: bg-info
 
   - datastore_id: record_modified
-    label: Last Record Modification Time
+    label:
+      en: Last Record Modification Time
+      fr: Heure de la dernière modification au dossier
     import_template_include: false
     visible_to_public: false
     datastore_type: timestamp
     preview_class: bg-info
 
   - datastore_id: user_modified
-    label: User Last Modified Record
+    label:
+      en: User Last Modified Record
+      fr: Dernier enregistrement modifié par l'utilisateur
     import_template_include: false
     visible_to_public: false
     datastore_type: text
@@ -1312,7 +1318,7 @@ resources:
     recipient_business_number_error: Must be a 9 digit number
     federal_riding_number_error: Must be a 5 digit number
     start_end_date_error: '"Agreement Start Date" cannot be after "Projected Agreement End Date"'
-    agreement_value_error: Must be greater than or equal to zero
+    agreement_value_error: '"Agreement Value" must be zero or greater for agreements starting on or after May 1, 2026'
 
   examples:
     record:
@@ -1410,21 +1416,27 @@ resources:
         fr: 1 janvier - 31 mars
 
   - datastore_id: record_created
-    label: Record Creation Time
+    label:
+      en: Record Creation Time
+      fr: Heure de la création du dossier
     import_template_include: false
     visible_to_public: false
     datastore_type: timestamp
     preview_class: bg-info
 
   - datastore_id: record_modified
-    label: Last Record Modification Time
+    label:
+      en: Last Record Modification Time
+      fr: Heure de la dernière modification au dossier
     import_template_include: false
     visible_to_public: false
     datastore_type: timestamp
     preview_class: bg-info
 
   - datastore_id: user_modified
-    label: User Last Modified Record
+    label:
+      en: User Last Modified Record
+      fr: Dernier enregistrement modifié par l'utilisateur
     import_template_include: false
     visible_to_public: false
     datastore_type: text

@@ -207,7 +207,7 @@ presets:
         fr: Nom de l’organisation au moment de la publication, en français. Veuillez
           laisser le champ libre si le nom de l'organisation lors de la publication
           est identique au nom actuel de votre organisation.
-    validators: fluent_text scheming_required json_string canada_copy_from_org_name
+    validators: fluent_text canada_copy_from_org_name
     # copied from fluent_text preset
     form_snippet: fluent_text.html
     display_snippet: fluent_text.html
