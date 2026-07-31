@@ -25,22 +25,15 @@ from ckanext.canada.logic import datastore_create_temp_user_table
 from ckanext.canada.plugin.validation_plugin import CanadaValidationPlugin
 
 
-def update_config(config: 'CKANConfig'):
+def load_schemas(config: 'CKANConfig'):
     """
-    Add template directories and set initial configuration values.
+    Set the ckanext-scheming presets and schemas.
 
-    Assert certain config options that need to be present for the Canada stack.
+    This is done separately so it can load prior
+    to calling SchemingDatasetsPlugin.update_config
 
-    Monkey-patch some things.
+    NOTE: scheming wants space separated string
     """
-    config.update({
-        "ckan.user_list_limit": 250
-    })
-
-    # TODO: test that this works...
-    # CKAN 2.10 plugin loading does not allow us to set the schema
-    # files in update_config in a way that the load order will work fully.
-    # NOTE: scheming wants space separated string
     pages_affix = '.pages' if config['ckanext.canada.use_scheming_pages'] else ''
     config['scheming.presets'] = ' '.join([
         'ckanext.scheming:presets.json',
@@ -58,6 +51,19 @@ def update_config(config: 'CKANConfig'):
     config['scheming.organization_schemas'] = ' '.join([
         'ckanext.canada:schemas/organization.yaml'
     ])
+
+
+def update_config(config: 'CKANConfig'):
+    """
+    Add template directories and set initial configuration values.
+
+    Assert certain config options that need to be present for the Canada stack.
+
+    Monkey-patch some things.
+    """
+    config.update({
+        "ckan.user_list_limit": 250
+    })
 
     # Include private datasets in Feeds
     # NOTE: before_dataset_search in dataset_plugin.py will handle permissions

@@ -95,6 +95,7 @@ class CanadaLogicPlugin(SchemingDatasetsPlugin, CkanSecurityPlugin):
         Implement of: ckan.plugins.interfaces.IConfigurer
         SubMethod of: SchemingDatasetsPlugin, CkanSecurityPlugin
         """
+        canada_config.load_schemas(config)
         SchemingDatasetsPlugin.update_config(self, config)
         CkanSecurityPlugin.update_config(self, config)
         canada_config.update_config(config)
