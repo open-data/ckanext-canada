@@ -379,11 +379,10 @@ resources:
     form_snippet: scheming/form_snippets/multiple_select.html
     choices_reference_table: ref_service_program_ids
     choices_filter_query: WHERE org_years ? {org}
-    # FIXME: update suffix labels
     choices_suffix_filter:
       "-INV":
-        en: (Invalid for Organization EN)
-        fr: (Invalid for Organization FR)
+        en: Invalid for Organization
+        fr: non valide pour l'organisation
     form_choices_prefix_code: true
     form_select_attrs:
       class: form-control recombinant-select2

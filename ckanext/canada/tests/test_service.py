@@ -488,14 +488,15 @@ class TestService(CanadaTestBase):
         record['program_id'] = ','.join(record['program_id'])
         record['program_id'] += ',NOT VALID'
         test_record = filter_service.test(dict(record))
-        assert test_record['program_name_en'] == '"Old Age Security", "Unknown Program EN"'
-        assert test_record['program_name_fr'] == '"Sécurité de la vieillesse", "Unknown Program FR"'
+        assert test_record['program_name_en'] == '"Old Age Security", "Unknown Program Name for NOT VALID"'
+        assert test_record['program_name_fr'] == '"Sécurité de la vieillesse", "Inconnue désignation du programme pour NOT VALID"'
 
+        # invalid program name should jusy use the none -INV program names
         record = chromo['examples']['record'].copy()
         record['program_id'] = 'BGN01-INV'
         test_record = filter_service.test(dict(record))
-        assert test_record['program_name_en'] == '"Old Age Security (Invalid for Organization EN)"'
-        assert test_record['program_name_fr'] == '"Sécurité de la vieillesse (Invalid for Organization FR)"'
+        assert test_record['program_name_en'] == '"Old Age Security"'
+        assert test_record['program_name_fr'] == '"Sécurité de la vieillesse"'
 
 
 class TestStdService(CanadaTestBase):

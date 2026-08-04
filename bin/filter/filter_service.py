@@ -105,24 +105,18 @@ def process_row(row: Dict[str, Any]) -> Dict[str, Any]:
     row['program_name_fr'] = []
     program_ids = row['program_id'].split(',')
     for id in program_ids:
-        # FIXME: update suffix labels
-        # handle suffix "-INV"
-        #   en: (Invalid for Organization EN)
-        #   fr: (Invalid for Organization FR)
-        suffix_en = ''
-        suffix_fr = ''
         if id.endswith('-INV'):
-            suffix_en = ' (Invalid for Organization EN)'
-            suffix_fr = ' (Invalid for Organization FR)'
+            # NOTE: not adding the suffix label to the published
+            #       program_name_en and program_name_fr fields.
             id = id.replace('-INV', '')
         if id not in PROGRAM_IDS:
-            row['program_name_en'].append(f'"Unknown Program Name for {id} EN"')
-            row['program_name_fr'].append(f'"Unknown Program Name for {id} FR"')
+            row['program_name_en'].append(f'"Unknown Program Name for {id}"')
+            row['program_name_fr'].append(f'"Inconnue désignation du programme pour {id}"')
             continue
         # NOTE: we add double quotes as Program Names can have
         #       single quotes and commas in them
-        row['program_name_en'].append(f'"{PROGRAM_IDS[id]['en']}{suffix_en}"')
-        row['program_name_fr'].append(f'"{PROGRAM_IDS[id]['fr']}{suffix_fr}"')
+        row['program_name_en'].append(f'"{PROGRAM_IDS[id]['en']}"')
+        row['program_name_fr'].append(f'"{PROGRAM_IDS[id]['fr']}"')
 
     row['program_name_en'] = ', '.join(row['program_name_en'])
     row['program_name_fr'] = ', '.join(row['program_name_fr'])

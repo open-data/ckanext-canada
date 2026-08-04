@@ -2160,3 +2160,11 @@ span.resource-heading-text mark.highlight{
   pointer-events: none !important;
   cursor: not-allowed;
 }
+
+body tbody.recombinant-data-dictionary-suffix-ref{
+  display: table-header-group !important;
+}
+body tbody.recombinant-data-dictionary-suffix-ref th,
+body tbody.recombinant-data-dictionary-suffix-ref td{
+  background-color: #d9edf7 !important;
+}

@@ -428,6 +428,15 @@ def canada_organization_bulk_process(id: str, group_type: str = 'organization',
     return h.redirect_to('%s.read' % group_type, id=id)
 
 
+def _normalize_record_newlines(record: Dict[str, Any]) -> Dict[str, Any]:
+    """
+    Normalizes newline characters to \\n
+    """
+    return dict((k, v.replace('\r\n', '\n').replace('\r', '\n')
+                 if isinstance(v, str) else v)
+                for k, v in record.items())
+
+
 @canada_views.route('/create-pd-record/<owner_org>/<resource_name>',
                     methods=['GET', 'POST'])
 def create_pd_record(owner_org: str, resource_name: str):
@@ -466,6 +475,8 @@ def create_pd_record(owner_org: str, resource_name: str):
             pk_fields,
             choice_fields)
         error_summary = None
+        # normalize newlines to \n
+        data = _normalize_record_newlines(data)
         try:
             lc.action.datastore_upsert(
                 resource_id=res['id'],
@@ -617,6 +628,10 @@ def update_pd_record(owner_org: str, resource_name: str, pk: str):
         for f_id in data:
             if f_id in pk_fields:
                 data[f_id] = record[f_id]
+
+        # normalize newlines to \n
+        data = _normalize_record_newlines(data)
+
         try:
             lc.action.datastore_upsert(
                 resource_id=res['id'],
@@ -707,13 +722,14 @@ def upsert_pd_data(owner_org: str, resource_name: str):
     # NOTE: upserting each record one-by-one is crazy slower,
     #       but it is the only way to get all of the errors back in one object.
     while offset < len(records):
+        record = _normalize_record_newlines(records[offset])
         try:
             data = get_action('datastore_upsert')(
                 context, {
                     'method': method,
                     'resource_id': resource_id,
                     'dry_run': dry_run,
-                    'records': [records[offset]]
+                    'records': [record]
                 })
             if 'result' not in return_dict:
                 return_dict['result'] = {}

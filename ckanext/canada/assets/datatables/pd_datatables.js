@@ -246,12 +246,14 @@ function load_pd_datatable(CKAN_MODULE, HAS_TRANSLATIONS){
         let str = _data.toString();
         let htmlStr = $($.parseHTML(str)).text();
         if( str.length < _cutoff || htmlStr.length < _cutoff ){
+          _data = _data.replaceAll(/\r?\n/g, '<br>');
           return _isMarkdown ? marked.parse(_data, {renderer: markedRenderer}) : _data;
         }
         let _elementID = 'datatableReadMore_' + _rowIndex + '_' + _datatoreID;
         let expander = '<a class="pd-datatable-readmore-expander" href="javascript:void(0);" data-toggle="collapse" data-bs-toggle="collapse" aria-expanded="false" aria-controls="' +_elementID + '">&#8230;</a>';
         let preview = _isMarkdown ? marked.parse(str.substr(0, _cutoff - 1) + expander + '\n', {renderer: markedRenderer}) : str.substr(0, _cutoff - 1) + expander;
         let remaining = _isMarkdown ? marked.parse(str, {renderer: markedRenderer}) : str.substr(_cutoff - 1);
+        remaining = remaining.replaceAll(/\r?\n/g, '<br>');
         return '<div class="pd-datatable-readmore"><span data-markdown="' + _isMarkdown + '">' + preview + '</span><span class="collapse" id="' + _elementID + '">' + remaining + '<a class="pd-datatable-readmore-minimizer" href="javascript:void(0);" data-toggle="collapse" data-bs-toggle="collapse" aria-expanded="true" aria-controls="' + _elementID + '"><small>[' + readLessLabel + ']</small></a><span></div>';
       }
       return _data;
@@ -482,7 +484,7 @@ function load_pd_datatable(CKAN_MODULE, HAS_TRANSLATIONS){
     if( typeof editorObject.choices_suffix_filter != 'undefined' && editorObject.choices_suffix_filter ){
       let [_suffix, _slabels] = Object.entries(editorObject.choices_suffix_filter)[0];
       choicesSuffix = _suffix;
-      choicesSuffixLabel = _slabels[locale];
+      choicesSuffixLabel = '(' + _slabels[locale] + ')';
     }
     if( typeof editorObject.select_choices != 'undefined' && editorObject.select_choices ){
       let isMultiple = ds_type == '_text' ? 'multiple' : '';
@@ -540,7 +542,7 @@ function load_pd_datatable(CKAN_MODULE, HAS_TRANSLATIONS){
       if( typeof editorObject.choices_suffix_filter != 'undefined' && editorObject.choices_suffix_filter ){
         let [_suffix, _slabels] = Object.entries(editorObject.choices_suffix_filter)[0];
         choicesSuffix = _suffix;
-        choicesSuffixLabel = _slabels[locale];
+        choicesSuffixLabel = '(' + _slabels[locale] + ')';
       }
       if( _chromo_field.datastore_type == '_text' ){
         if( ! Array.isArray(_data) ){
