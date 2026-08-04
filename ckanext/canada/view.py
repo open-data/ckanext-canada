@@ -722,7 +722,8 @@ def upsert_pd_data(owner_org: str, resource_name: str):
     # NOTE: upserting each record one-by-one is crazy slower,
     #       but it is the only way to get all of the errors back in one object.
     while offset < len(records):
-        record = _normalize_record_newlines(records[offset])
+        # type_ignore_reason: incomplete typing
+        record = _normalize_record_newlines(records[offset])  # type: ignore
         try:
             data = get_action('datastore_upsert')(
                 context, {

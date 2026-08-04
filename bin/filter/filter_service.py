@@ -110,8 +110,10 @@ def process_row(row: Dict[str, Any]) -> Dict[str, Any]:
             #       program_name_en and program_name_fr fields.
             id = id.replace('-INV', '')
         if id not in PROGRAM_IDS:
-            row['program_name_en'].append(f'"Unknown Program Name for {id}"')
-            row['program_name_fr'].append(f'"Inconnue désignation du programme pour {id}"')
+            row['program_name_en'].append(
+                f'"Unknown Program Name for {id}"')
+            row['program_name_fr'].append(
+                f'"Inconnue désignation du programme pour {id}"')
             continue
         # NOTE: we add double quotes as Program Names can have
         #       single quotes and commas in them
