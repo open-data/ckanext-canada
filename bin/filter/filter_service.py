@@ -115,8 +115,8 @@ def process_row(row: Dict[str, Any]) -> Dict[str, Any]:
             continue
         # NOTE: we add double quotes as Program Names can have
         #       single quotes and commas in them
-        row['program_name_en'].append(f'"{PROGRAM_IDS[id]['en']}"')
-        row['program_name_fr'].append(f'"{PROGRAM_IDS[id]['fr']}"')
+        row['program_name_en'].append('"%s"' % PROGRAM_IDS[id]['en'])
+        row['program_name_fr'].append('"%s"' % PROGRAM_IDS[id]['fr'])
 
     row['program_name_en'] = ', '.join(row['program_name_en'])
     row['program_name_fr'] = ', '.join(row['program_name_fr'])
