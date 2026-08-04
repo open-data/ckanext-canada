@@ -306,29 +306,25 @@ def datastore_create_temp_app_context_table(context: Context,
     else:
         from ckanext.datastore.backend.postgres import literal_string
         username = context['user']
-        contextual_flags = context.get('DATASTORE_APP_CONTEXT_FLAGS', [])
+        contextual_flags = context.get('datastore_app_context_flags', [])
+        if not isinstance(contextual_flags, list):
+            contextual_flags = []  # prevent any database errors
         context['connection'].execute('''
             CREATE TEMP TABLE IF NOT EXISTS datastore_app_context (
                 username text NOT NULL,
                 sysadmin boolean NOT NULL,
-                cli_importing boolean NOT NULL,
+                flags text[] NOT NULL,
                 org_name text
-                {flag_definitions}
                 ){drop_statement};
             INSERT INTO datastore_app_context VALUES (
-                {username}, {sysadmin}, {cli_importing}, {org_name} {flag_values}
+                {username}, {sysadmin}, ARRAY[{flag_values}]::text[], {org_name}
                 );
             '''.format(
                 drop_statement=' ON COMMIT DROP' if drop_on_commit else '',
                 username=literal_string(username),
                 sysadmin='TRUE' if is_sysadmin(username) else 'FALSE',
-                cli_importing='TRUE' if 'recombinant_import' in
-                contextual_flags else 'FALSE',
+                flag_values=', '.join(literal_string(_f) for _f in contextual_flags),
                 org_name=literal_string(org_name) if org_name else None,
-                flag_definitions=(',' if contextual_flags else '') +
-                ', '.join('%s boolean' % m for m in contextual_flags),
-                flag_values=(',' if contextual_flags else '') +
-                ', '.join('TRUE' for _m in contextual_flags)
             ))
         yield
 

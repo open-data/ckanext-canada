@@ -265,8 +265,7 @@ def update_triggers():
         rettype='_text',
         definition='''
     BEGIN
-        IF value IS NOT NULL AND value <> '' AND LENGTH(REGEXP_REPLACE(
-        value, E'[\r\n]', '', 'g')) > max_chars THEN
+        IF value IS NOT NULL AND value <> '' AND LENGTH(value) > max_chars THEN
             RETURN ARRAY[[field_name,
             'This field has a maximum length of {} characters.\uF8FF' || max_chars]];
         END IF;

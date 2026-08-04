@@ -34,7 +34,7 @@ def upgrade():
         sa.Column("last_sync", sa.DateTime,
                   nullable=False,
                   default=datetime.datetime.now(datetime.timezone.utc)),
-        sa.Column("file_hash", sa.Unicode, nullable=False),
+        sa.Column("sha256", sa.Unicode, nullable=False),
     )
     print('ref_data database table created')
     pass

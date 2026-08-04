@@ -647,7 +647,7 @@ def _load_csv_ref_data(table_name: str, columns: List[str],
             f_hash = f_hash.hexdigest()
             f.seek(0)  # point zero after hash check
             db_obj = canada_model.RefData.get(table_name=table_name)
-            if db_obj and db_obj.file_hash == f_hash:
+            if db_obj and db_obj.sha256 == f_hash:
                 # no change to the ref data file
                 if verbose:
                     click.echo('Ref data file %s has '
@@ -655,7 +655,7 @@ def _load_csv_ref_data(table_name: str, columns: List[str],
                 return False
             canada_model.RefData.upsert(
                 table_name=table_name,
-                file_hash=f_hash)
+                sha256=f_hash)
             try:
                 cursor.copy_expert(
                     'COPY "%s" '

@@ -379,7 +379,7 @@ resources:
     form_snippet: scheming/form_snippets/multiple_select.html
     choices_reference_table: ref_service_program_ids
     choices_filter_query: WHERE org_years ? {org}
-    # TODO: update suffix labels
+    # FIXME: update suffix labels
     choices_suffix_filter:
       "-INV":
         en: (Invalid for Organization EN)
@@ -1587,14 +1587,9 @@ resources:
         crval RECORD;
         refval text[];
         referr text[];
-        is_migration boolean NOT NULL := FALSE;
+        is_migration boolean NOT NULL := (SELECT EXISTS (SELECT 1 FROM datastore_app_context WHERE 'service_migration' = ANY(flags)));
+        skip_validation boolean NOT NULL := (SELECT EXISTS (SELECT 1 FROM datastore_app_context WHERE 'skip_validation' = ANY(flags)));
       BEGIN
-        IF EXISTS (
-          SELECT 1 FROM information_schema.columns WHERE table_name = 'datastore_app_context' AND column_name = 'service_migration'
-        ) THEN
-          SELECT COALESCE(service_migration, FALSE) INTO is_migration FROM datastore_app_context LIMIT 1;
-        END IF;
-
         NEW.fiscal_yr := trim(both E'\t\n\x0b\x0c\r \xc2\xa0' from NEW.fiscal_yr);
         errors := errors || required_error(NEW.fiscal_yr, 'fiscal_yr');
         errors := errors || fiscal_year_error(NEW.fiscal_yr, 'fiscal_yr', 2014);
@@ -1648,12 +1643,23 @@ resources:
         );
         SELECT coalesce(array_agg(v), '{{}}') INTO referr FROM unnest(NEW.program_id) v WHERE NOT (v = ANY(coalesce(refval, '{{}}')));
         IF refval IS NULL OR array_length(referr, 1) > 0 THEN
-          IF is_migration THEN
-            SELECT array_agg(CASE WHEN v = ANY(coalesce(refval, '{{}}')) THEN v ELSE v || '-INV' END)
-              INTO refval
+          IF is_migration OR skip_validation THEN
+
+            -- NOTE: if this is a Service Migration (service_migration flag) or it is skipping validation (skip_validation flag),
+            --       then accept invalid Program IDs, suffixing the invalid ones with "-INV" if it does not already have the suffix.
+            --       keeps the original ordering.
+
+            SELECT array_agg(
+                CASE WHEN v = ANY(coalesce(refval, '{{}}')) THEN v
+                WHEN v LIKE '%-INV' THEN v
+                ELSE v || '-INV' END
+              ) INTO refval
               FROM unnest(NEW.program_id) v;
             NEW.program_id := refval;
           ELSE
+
+            -- NOTE:  is the special character for i18n string replacements: \\uF8FF
+
             errors := errors || ARRAY[['program_id', {program_id_org_limit_error} || '' || org_name || '' || coalesce(array_to_string(referr, ','), '')]];
           END IF;
         ELSE

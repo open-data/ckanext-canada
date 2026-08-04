@@ -34,7 +34,7 @@ PROGRAM_ID_HEADERS = ['program_id', 'label_en', 'label_fr', 'org_years']
 
 REQUEST_HEADERS = {'User-Agent': 'CKAN/open-gov/service/gen_ref_data'}
 
-WHITE_SPACE_SUBS = re.compile(r'\xa0|\t|\n|\s+')
+WHITE_SPACE_SUBS = re.compile(r'[\xa0\s]+')
 TIMESTAMP_MATCH = re.compile(r'^Timestamp:')
 
 ORG_VARIANTS_FILENAME = 'org_var.csv'

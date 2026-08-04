@@ -22,7 +22,7 @@ class RefData(Base):  # type: ignore
     table_name = Column(Unicode, primary_key=True)
     last_sync = Column(DateTime, nullable=False,
                        default=datetime.datetime.now(datetime.timezone.utc))
-    file_hash = Column(Unicode, nullable=False)
+    sha256 = Column(Unicode, nullable=False)
 
     Session = meta.Session
 
@@ -48,7 +48,7 @@ class RefData(Base):  # type: ignore
 
     @classmethod
     def upsert(cls, table_name: str,
-               file_hash: str,
+               sha256: str,
                last_sync: Optional[datetime.datetime] = None):
         """
         Sets and returns a ref_data object referenced by its table_name.
@@ -56,13 +56,13 @@ class RefData(Base):  # type: ignore
         ref_data = cls.get(table_name, for_update=True)
 
         if ref_data:
-            ref_data.file_hash = file_hash
+            ref_data.sha256 = sha256
             ref_data.last_sync = last_sync if \
                 last_sync else datetime.datetime.now(datetime.timezone.utc)
         else:
             ref_data = cls(table_name=table_name,
                            last_sync=last_sync,
-                           file_hash=file_hash)
+                           sha256=sha256)
 
         cls.Session.add(ref_data)
         cls.Session.commit()
