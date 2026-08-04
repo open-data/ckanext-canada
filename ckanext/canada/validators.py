@@ -677,7 +677,7 @@ def canada_api_token_name_validator(value: Any, context: Context):
     return value
 
 
-def canada_resource_language_validator(value: Any, context: Context):
+def canada_resource_language_validator(value: Any, context: Context) -> Any:
     """
     No linguistic content; Not applicable (zxx) should not be accompanied
     by any other languages.
