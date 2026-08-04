@@ -675,3 +675,14 @@ def canada_api_token_name_validator(value: Any, context: Context):
                         'names can only contain alphanumeric characters, '
                         'hyphens, and underscores.'))
     return value
+
+
+def canada_resource_language_validator(value: Any, context: Context):
+    """
+    No linguistic content; Not applicable (zxx) should not be accompanied
+    by any other languages.
+    """
+    if isinstance(value, list) and 'zxx' in value and len(value) > 1:
+        raise Invalid(_('Cannot define other languages '
+                        'alongside "No linguistic content; Not applicable"'))
+    return value
