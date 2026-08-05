@@ -129,6 +129,14 @@ footer{
     overflow: scroll !important;
   }
 }
+
+body > header{
+  z-index: 3 !important;
+}
+
+body #canada-main-container{
+  z-index: 2 !important;
+}
 /*##########
 ##  END   ##
 ##  Root  ##
@@ -332,6 +340,9 @@ button#edit-submit,button#edit-actions-submit{
         color: #fff;
       }
     }
+  }
+  .canada-panel-heading{
+    font-weight: 600;
   }
 }
 
@@ -1340,16 +1351,19 @@ ul#brf-pkg{
 /*##############################
 ##  Modals, Popups, & Alerts  ##
 ################################*/
-#confirm-contact-email .modal-dialog{
-  position: absolute;
-  top: 20%;
-  left: 50%;
-  transform: translate(-50%, 0);
-  max-width: 80%;
-  @media all and (max-width: 768px){
-    min-width: 80%;
+#confirm-contact-email{
+  z-index: 5 !important;
+  .modal-dialog{
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    transform: translate(-50%, 0);
     max-width: 80%;
-    width: 80%;
+    @media all and (max-width: 768px){
+      min-width: 80%;
+      max-width: 80%;
+      width: 80%;
+    }
   }
 }
 
@@ -1428,6 +1442,25 @@ ul#brf-pkg{
   display: inline-block;
   text-align: left;
   vertical-align: middle;
+}
+
+.alert{
+  &.alert-guidance{
+    border-color: #335075;
+    &::before{
+      content: '\f14e';
+      color: #a62a1e;
+      font-family: 'FontAwesome';
+      line-height: 1;
+      top: 25%;
+      background-color: white;
+      border-radius: 100%;
+      font-weight: 700;
+      font-size: 28px;
+      padding: 4px;
+      transform: translateX(-1px) rotate(-45deg);
+    }
+  }
 }
 
 .alert-error, .label-error, details.alert-error{
@@ -2824,6 +2857,7 @@ body{
 
 footer#wb-info{
   margin-top: 36px !important;
+  z-index: 1 !important;
 }
 /*###########################
 ##           END           ##

@@ -14,7 +14,7 @@ from ckanext.canada.tests.factories import (
     CanadaResource as Resource,
 )
 
-from ckanapi import LocalCKAN
+from ckanapi import LocalCKAN, ValidationError
 
 from ckanext.recombinant.tables import get_chromo
 from ckanext.xloader import loader
@@ -172,7 +172,11 @@ class TestMakePD(CanadaTestBase):
         assert self.ckan_ini
         self._setup_ini(self.ckan_ini)
 
-        self._setup_pd(type='ati', nil_type='ati-nil')
+        try:
+            self._setup_pd(type='ati', nil_type='ati-nil')
+        except ValidationError as ve:
+            if ve.error_dict != {'owner_org': 'dataset type ati already exists for this organization'}:
+                raise
 
         make_process = subprocess.Popen(["make upload-ati"], shell=True, cwd=MAKE_PATH, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
         stdout, stderr = make_process.communicate()

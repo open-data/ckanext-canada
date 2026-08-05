@@ -4,13 +4,13 @@
   {% for field_data in fields %}
     {% if loop.index == fields|length %}
       <div class="panel panel-default mrgn-tp-md mrgn-bttm-md">
-        <header class="panel-heading">
-          <p class="panel-title">{{ h.scheming_language_text(field.label) }} {{ loop.index }}</p>
+        <header class="panel-heading canada-panel-heading">
+          <span>{{ h.scheming_language_text(field.label) }} {{ loop.index }}</span>
         </header>
     {%- else -%}
       <details class="mrgn-tp-md mrgn-bttm-md">
         <summary>
-          <p class="panel-title">{{ h.scheming_language_text(field.label) }} {{ loop.index }}</p>
+          <span>{{ h.scheming_language_text(field.label) }} {{ loop.index }}</span>
         </summary>
     {%- endif -%}
     <div class="panel-body">

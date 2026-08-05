@@ -89,6 +89,7 @@ def get_validator_methods() -> Dict[str, Validator]:
         'canada_security_upload_presence': canada_security_upload_presence,
         'canada_api_token_name_validator': canada_api_token_name_validator,
         'canada_output_resource_original_url': canada_output_resource_original_url,
+        'canada_resource_language_validator': canada_resource_language_validator,
     }
 
 
@@ -262,17 +263,27 @@ def canada_copy_from_org_name(key: FlattenKey,
     When org name at publication not provided, copy from owner_org
     """
     value = data[key]
+    if value is None or value is missing:
+        # fluent_text sets to None/missing
+        value = r'{}'
+    try:
+        json_string(value, context)
+    except Invalid as e:
+        errors[key].append(e.error)
+        return
     if json.loads(value) not in ({}, {'en': '', 'fr': ''}):
+        # do not set if there is a value
         return
     org_id = data[('owner_org',)]
     if not org_id:
+        # do not set if there is no owner_org
         return
     try:
         org = get_action('organization_show')(cast(Context, dict(context)),
                                               {'id': org_id})
     except ObjectNotFound:
+        # do not set if the org does not exist
         return
-
     data[key] = json.dumps({
         'en': org['title'].split(' | ')[0],
         'fr': org['title'].split(' | ')[-1],
@@ -816,3 +827,14 @@ def canada_dataset_visibility(key: FlattenKey,
 
     # always default to Private datasets
     data[key[:-1] + ('private',)] = True
+
+
+def canada_resource_language_validator(value: Any, context: Context) -> Any:
+    """
+    No linguistic content; Not applicable (zxx) should not be accompanied
+    by any other languages.
+    """
+    if isinstance(value, list) and 'zxx' in value and len(value) > 1:
+        raise Invalid(_('Cannot define other languages '
+                        'alongside "No linguistic content; Not applicable"'))
+    return value

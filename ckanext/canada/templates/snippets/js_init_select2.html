@@ -1,0 +1,22 @@
+{#
+NOTE: this is done as an inline script for fastest select2 paint
+#}
+<script nonce="{{- h.get_inline_script_nonce() -}}">
+  window.addEventListener('load', function(){
+    $(document).ready(function(){
+      let select2Fields = $('[data-field-select2="True"]');
+      if( select2Fields.length > 0 ){
+        $(select2Fields).each(function(_index, _select2Field){
+          const initialID = $(_select2Field).attr('id');
+          $(_select2Field).select2({});
+          $(_select2Field).parent()
+                          .children('#s2id_' + initialID)
+                          .addClass('conrtol-medium')
+                          .removeClass('form-control')
+                          .removeClass('form-select')
+                          .css({'display': 'block'});
+        });
+      }
+    });
+  });
+</script>
