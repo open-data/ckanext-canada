@@ -89,6 +89,7 @@ def get_validator_methods() -> Dict[str, Validator]:
         'canada_security_upload_presence': canada_security_upload_presence,
         'canada_api_token_name_validator': canada_api_token_name_validator,
         'canada_output_resource_original_url': canada_output_resource_original_url,
+        'canada_resource_language_validator': canada_resource_language_validator,
     }
 
 
@@ -826,3 +827,14 @@ def canada_dataset_visibility(key: FlattenKey,
 
     # always default to Private datasets
     data[key[:-1] + ('private',)] = True
+
+
+def canada_resource_language_validator(value: Any, context: Context) -> Any:
+    """
+    No linguistic content; Not applicable (zxx) should not be accompanied
+    by any other languages.
+    """
+    if isinstance(value, list) and 'zxx' in value and len(value) > 1:
+        raise Invalid(_('Cannot define other languages '
+                        'alongside "No linguistic content; Not applicable"'))
+    return value

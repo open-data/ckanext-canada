@@ -30,7 +30,7 @@ from ckan.plugins.toolkit import (
     asbool,
     ObjectNotFound
 )
-
+from ckan.model.resource import Resource
 from ckanext.activity.model import activity as activity_model
 
 from ckanext.canada.view import (
@@ -172,6 +172,8 @@ def _redirect_pd_dataset_endpoints() -> Optional[Response]:
 
     Checks if the actual package type is a PD Type and redirects it
     to the correct Recombinant route.
+
+    Redirect alias for direct package_show view.
     """
     if has_request_context() and hasattr(request, 'view_args'):
         if not request.view_args:
@@ -181,6 +183,19 @@ def _redirect_pd_dataset_endpoints() -> Optional[Response]:
             return
         package_type = request.view_args.get('package_type')
         package_type = _get_package_type_from_dict(id, package_type)
+        if id in h.recombinant_get_types():
+            geno = h.recombinant_get_geno(id)
+            if geno and geno.get('resources'):
+                res_id = None
+                for r in geno['resources']:
+                    res_id = r.get('published_resource_id', res_id)
+                if res_id:
+                    res = Resource.get(res_id)
+                    if res:
+                        # redirect /dataset/<recombinant-type> to
+                        # it's published dataset page
+                        return h.redirect_to('%s.read' % res.package.type,
+                                             id=res.package_id)
         if package_type in h.recombinant_get_types():
             return h.redirect_to('canada.type_redirect',
                                  resource_name=package_type)
