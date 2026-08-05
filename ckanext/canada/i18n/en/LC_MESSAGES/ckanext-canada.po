@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  CKAN\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-07-30 12:36+0000\n"
+"POT-Creation-Date: 2026-08-05 15:44+0000\n"
 "PO-Revision-Date: 2014-01-23 13:04+0000\n"
 "Last-Translator: Sean Hammond <sean.hammond@okfn.org>\n"
 "Language: en\n"
@@ -3208,6 +3208,7 @@ msgstr ""
 
 #: ckanext/canada/templates/package/read.html:51
 #: ckanext/canada/templates/package/read.html:116
+#: ckanext/canada/templates/package/resource_read.html:70
 #: ckanext/canada/templates/scheming/display_snippets/fluent_tags.html:8
 #: ckanext/canada/templates/snippets/package_item.html:27
 #: ckanext/canada/templates/snippets/package_item.html:43
@@ -3456,28 +3457,28 @@ msgstr ""
 msgid "Resource data has failed to load to the DataStore."
 msgstr ""
 
-#: ckanext/canada/templates/package/resource_read.html:78
+#: ckanext/canada/templates/package/resource_read.html:87
 msgid "List of downloadable formats"
 msgstr ""
 
-#: ckanext/canada/templates/package/resource_read.html:80
+#: ckanext/canada/templates/package/resource_read.html:89
 #: ckanext/canada/templates/package/snippets/resource_item.html:89
 msgid "Download"
 msgstr ""
 
-#: ckanext/canada/templates/package/resource_read.html:88
+#: ckanext/canada/templates/package/resource_read.html:97
 msgid "CSV type files"
 msgstr ""
 
-#: ckanext/canada/templates/package/resource_read.html:95
+#: ckanext/canada/templates/package/resource_read.html:104
 msgid "TSV type files"
 msgstr ""
 
-#: ckanext/canada/templates/package/resource_read.html:102
+#: ckanext/canada/templates/package/resource_read.html:111
 msgid "JSON type files"
 msgstr ""
 
-#: ckanext/canada/templates/package/resource_read.html:109
+#: ckanext/canada/templates/package/resource_read.html:118
 msgid "XML type files"
 msgstr ""
 
@@ -4012,6 +4013,10 @@ msgid "Metadata Fields for Resources"
 msgstr ""
 
 #: ckanext/canada/templates/scheming/package/snippets/resource_form.html:41
+msgid "Semantic Metadata Fields for Resources"
+msgstr ""
+
+#: ckanext/canada/templates/scheming/package/snippets/resource_form.html:53
 msgid "Metadata Fields for Resource Relationships"
 msgstr ""
 
