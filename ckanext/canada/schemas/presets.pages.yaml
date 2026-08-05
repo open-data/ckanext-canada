@@ -2697,6 +2697,41 @@ presets:
       size: 60
       class: form-control
 
+# Field = Description English.
+# {An English description given to the resource}
+# Field = Description French.
+# {A French description given to the resource}
+- preset_name: canada_resource_description
+  values:
+    field_name: description_translated
+    label:
+      en: Description
+      fr: Description
+    fluent_form_label:
+      en:
+        en: "Description (English)"
+        fr: "Description (anglais)"
+      fr:
+        en: "Description (French)"
+        fr: "Description (français)"
+    fluent_help_text:
+      en:
+        en: "An account of the resource, in English. A description may include but is not limited to: an abstract, a table of contents, or a free-text account of the resource."
+        fr: "Description du ressource, en anglais. La description peut comprendre un résumé, une table des matières ou un texte libre."
+      fr:
+        en: "An account of the resource, in French. A description may include but is not limited to: an abstract, a table of contents, or a free-text account of the resource."
+        fr: "Description du ressource, en anglais. La description peut comprendre un résumé, une table des matières ou un texte libre."
+    required: false
+    form_panel: descriptive
+    # copied from fluent_markdown preset
+    form_snippet: fluent_markdown.html
+    display_snippet: fluent_markdown.html
+    error_snippet: fluent_text.html
+    validators: fluent_text
+    output_validators: fluent_core_translated_output
+    form_attrs:
+      class: form-control
+
 # Field = Relationship Type.
 - preset_name: canada_dataset_related_relationship
   values:
@@ -3803,7 +3838,20 @@ presets:
       fr: Langue de la ressource. Vous pouvez sélectionner ou désélectionner de multiples langues (Ctrl+Clic).
     required: true
     display_snippet: br_multiple_choice.html
+    select_size: 10
+    classes:
+      - control-full
+      - canada-select2-field-wrapper
+    form_select_attrs:
+      data-field-select2: true
+    form_snippet: multiple_select.html
+    validators: canada_resource_language_validator scheming_multiple_choice
+    output_validators: scheming_multiple_choice_output
     choices:
+    - label:
+        en: No linguistic content; Not applicable
+        fr: pas de contenu linguistique; non applicable
+      value: zxx
     - label:
         en: English
         fr: anglais
@@ -4144,16 +4192,6 @@ presets:
         en: Yiddish
         fr: yiddish
       value: yi
-    - label:
-        en: No linguistic content; Not applicable
-        fr: pas de contenu linguistique; non applicable
-      value: zxx
-    select_size: 10
-
-    # copied from multiple_select preset
-    form_snippet: multiple_select.html
-    validators: scheming_required scheming_multiple_choice
-    output_validators: scheming_multiple_choice_output
 
 # Field = Download URL.
 # {The location for online access to the distribution of the resource, if the file resides elsewhere.}

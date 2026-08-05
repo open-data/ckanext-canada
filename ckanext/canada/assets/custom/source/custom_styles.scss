@@ -1445,6 +1445,25 @@ ul#brf-pkg{
   vertical-align: middle;
 }
 
+.alert{
+  &.alert-guidance{
+    border-color: #335075;
+    &::before{
+      content: '\f14e';
+      color: #a62a1e;
+      font-family: 'FontAwesome';
+      line-height: 1;
+      top: 25%;
+      background-color: white;
+      border-radius: 100%;
+      font-weight: 700;
+      font-size: 28px;
+      padding: 4px;
+      transform: translateX(-1px) rotate(-45deg);
+    }
+  }
+}
+
 .alert-error, .label-error, details.alert-error{
   background: #f3e9e8;
   border-color: #d3080c;

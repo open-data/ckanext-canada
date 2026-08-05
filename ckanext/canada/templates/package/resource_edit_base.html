@@ -30,6 +30,7 @@
   {% asset 'canada_custom/resource_edit' %}
   {% asset 'canada_custom/guess_mimetype' %}
   {{ super() }}
+  {% snippet 'snippets/js_init_select2.html' %}
 {% endblock %}
 
 {% block custom_styles %}
