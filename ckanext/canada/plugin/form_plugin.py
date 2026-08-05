@@ -100,4 +100,6 @@ class CanadaFormsPlugin(p.SingletonPlugin, DefaultDatasetForm):
                 validators.protect_registry_access,
             'limit_resources_per_dataset':
                 validators.limit_resources_per_dataset,
+            'canada_resource_language_validator':
+                validators.canada_resource_language_validator,
             }

@@ -3793,7 +3793,20 @@ presets:
       fr: Langue de la ressource. Vous pouvez sélectionner ou désélectionner de multiples langues (Ctrl+Clic).
     required: true
     display_snippet: br_multiple_choice.html
+    select_size: 10
+    classes:
+      - control-full
+      - canada-select2-field-wrapper
+    form_select_attrs:
+      data-field-select2: true
+    form_snippet: multiple_select.html
+    validators: canada_resource_language_validator scheming_multiple_choice
+    output_validators: scheming_multiple_choice_output
     choices:
+    - label:
+        en: No linguistic content; Not applicable
+        fr: pas de contenu linguistique; non applicable
+      value: zxx
     - label:
         en: English
         fr: anglais
@@ -4134,16 +4147,6 @@ presets:
         en: Yiddish
         fr: yiddish
       value: yi
-    - label:
-        en: No linguistic content; Not applicable
-        fr: pas de contenu linguistique; non applicable
-      value: zxx
-    select_size: 10
-
-    # copied from multiple_select preset
-    form_snippet: multiple_select.html
-    validators: scheming_multiple_choice
-    output_validators: scheming_multiple_choice_output
 
 # Field = Download URL.
 # {The location for online access to the distribution of the resource, if the file resides elsewhere.}
