@@ -2691,6 +2691,41 @@ presets:
       size: 60
       class: form-control
 
+# Field = Description English.
+# {An English description given to the resource}
+# Field = Description French.
+# {A French description given to the resource}
+- preset_name: canada_resource_description
+  values:
+    field_name: description_translated
+    label:
+      en: Description
+      fr: Description
+    fluent_form_label:
+      en:
+        en: "Description (English)"
+        fr: "Description (anglais)"
+      fr:
+        en: "Description (French)"
+        fr: "Description (français)"
+    fluent_help_text:
+      en:
+        en: "An account of the resource, in English. A description may include but is not limited to: an abstract, a table of contents, or a free-text account of the resource."
+        fr: "Description du ressource, en anglais. La description peut comprendre un résumé, une table des matières ou un texte libre."
+      fr:
+        en: "An account of the resource, in French. A description may include but is not limited to: an abstract, a table of contents, or a free-text account of the resource."
+        fr: "Description du ressource, en anglais. La description peut comprendre un résumé, une table des matières ou un texte libre."
+    required: false
+    form_panel: descriptive
+    # copied from fluent_markdown preset
+    form_snippet: fluent_markdown.html
+    display_snippet: fluent_markdown.html
+    error_snippet: fluent_text.html
+    validators: fluent_text
+    output_validators: fluent_core_translated_output
+    form_attrs:
+      class: form-control
+
 # Field = Relationship Type.
 - preset_name: canada_dataset_related_relationship
   values:
