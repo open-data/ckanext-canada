@@ -36,7 +36,8 @@ class TestRedirects(CanadaTestBase):
         try:
             self._setup_pd(self, type='ati', nil_type='ati-nil')
         except ValidationError as ve:
-            if ve.error_dict != {'owner_org': 'dataset type ati already exists for this organization'}:
+            # incase other test classes have already made the combined resources
+            if ve.error_dict != {'id': ['Resource id already exists.']}:
                 raise
 
     def _setup_pd(self, type, nil_type=None, extra_resource_ids=[]):

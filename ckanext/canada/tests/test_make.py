@@ -175,7 +175,8 @@ class TestMakePD(CanadaTestBase):
         try:
             self._setup_pd(type='ati', nil_type='ati-nil')
         except ValidationError as ve:
-            if ve.error_dict != {'owner_org': 'dataset type ati already exists for this organization'}:
+            # incase other test classes have already made the combined resources
+            if ve.error_dict != {'id': ['Resource id already exists.']}:
                 raise
 
         make_process = subprocess.Popen(["make upload-ati"], shell=True, cwd=MAKE_PATH, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
