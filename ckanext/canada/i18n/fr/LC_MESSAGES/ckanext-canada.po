@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-07-30 12:36+0000\n"
+"POT-Creation-Date: 2026-08-05 15:44+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: fr\n"
@@ -2022,8 +2022,8 @@ msgid ""
 "\"Agreement Value\" must be zero or greater for agreements starting on or"
 " after May 1, 2026"
 msgstr ""
-"La « valeur de l'entente » doit être supérieur ou égal à "
-"0 pour les accords qui commencent le 1er mai 2026 ou après"
+"La « valeur de l'entente » doit être supérieur ou égal à 0 pour les "
+"accords qui commencent le 1er mai 2026 ou après"
 
 #. Resource Title for PD Type: grants
 #: ckanext/canada/tables/grants.yaml:1370
@@ -3634,6 +3634,7 @@ msgstr ""
 
 #: ckanext/canada/templates/package/read.html:51
 #: ckanext/canada/templates/package/read.html:116
+#: ckanext/canada/templates/package/resource_read.html:70
 #: ckanext/canada/templates/scheming/display_snippets/fluent_tags.html:8
 #: ckanext/canada/templates/snippets/package_item.html:27
 #: ckanext/canada/templates/snippets/package_item.html:43
@@ -3904,28 +3905,28 @@ msgstr "Voir le rapport"
 msgid "Resource data has failed to load to the DataStore."
 msgstr "Les données de ressource n'ont pas pu être chargées dans le DataStore."
 
-#: ckanext/canada/templates/package/resource_read.html:78
+#: ckanext/canada/templates/package/resource_read.html:87
 msgid "List of downloadable formats"
 msgstr "Liste des formats téléchargeables"
 
-#: ckanext/canada/templates/package/resource_read.html:80
+#: ckanext/canada/templates/package/resource_read.html:89
 #: ckanext/canada/templates/package/snippets/resource_item.html:89
 msgid "Download"
 msgstr "Télécharger"
 
-#: ckanext/canada/templates/package/resource_read.html:88
+#: ckanext/canada/templates/package/resource_read.html:97
 msgid "CSV type files"
 msgstr ""
 
-#: ckanext/canada/templates/package/resource_read.html:95
+#: ckanext/canada/templates/package/resource_read.html:104
 msgid "TSV type files"
 msgstr ""
 
-#: ckanext/canada/templates/package/resource_read.html:102
+#: ckanext/canada/templates/package/resource_read.html:111
 msgid "JSON type files"
 msgstr ""
 
-#: ckanext/canada/templates/package/resource_read.html:109
+#: ckanext/canada/templates/package/resource_read.html:118
 msgid "XML type files"
 msgstr ""
 
@@ -4500,6 +4501,10 @@ msgid "Metadata Fields for Resources"
 msgstr "Champs de métadonnées pour les ressources"
 
 #: ckanext/canada/templates/scheming/package/snippets/resource_form.html:41
+msgid "Semantic Metadata Fields for Resources"
+msgstr "Champs de métadonnées sémantiques pour les ressources"
+
+#: ckanext/canada/templates/scheming/package/snippets/resource_form.html:53
 msgid "Metadata Fields for Resource Relationships"
 msgstr "Champs de métadonnées pour les relations entre ressources"
 
