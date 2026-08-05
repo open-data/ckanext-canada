@@ -35,7 +35,7 @@ window.addEventListener('load', function(){
       if( lang == 'fr' ){
         message = 'Vous créez un lien vers un fichier <strong>' + format + '.</strong> En téléversant le fichier dans le Registre, les données seront validées, importées dans une table de base de données dédiée et rendues accessibles par l\'entremise de l\'API pour en faciliter l\'accès et l\'intégration.';
       }
-      $(dataUploadWrapper).after('<div class="module-alert alert alert-warning mrgn-tp-sm mrgn-bttm-sm canada-link-ds-upload-alert" style="margin-left: 3px;"><p>' + message + '</p></div>');
+      $(dataUploadWrapper).after('<div class="module-alert alert alert-guidance mrgn-tp-sm mrgn-bttm-sm canada-link-ds-upload-alert" style="margin-left: 3px;"><p>' + message + '</p></div>');
     }
 
     function _set_success_message(format){
