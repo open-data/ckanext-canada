@@ -37,13 +37,13 @@ from ckanext.canada.view import (
     canada_search,
     canada_prevent_pd_views,
     CanadaResourceEditView,
+    CanadaDatasetEditPageView,
     CanadaResourceCreateView,
     CanadaSchemingCreateView,
+    CanadaDatasetCreatePageView,
     _get_package_type_from_dict,
     CanadaDatasetEditView,
     CanadaDatasetCreateView,
-    CanadaDatasetEditPageView,
-    CanadaDatasetCreatePageView,
 )
 from ckanext.canada.helpers import PUBLIC_ACTIVITY_USER, RELEASE_DATE_FACET_STEP
 
