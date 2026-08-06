@@ -50,7 +50,6 @@ class CanadaInternalPlugin(p.SingletonPlugin):
         scheming_presets = config.get('scheming.presets', '')
         assert 'ckanext.scheming:presets.json' in scheming_presets
         assert 'ckanext.fluent:presets.json' in scheming_presets
-        assert 'ckanext.canada:schemas/presets.yaml' in scheming_presets
         assert 'ckanext.validation:presets.json' in scheming_presets
 
         # Include private datasets in Feeds

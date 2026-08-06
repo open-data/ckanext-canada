@@ -17,7 +17,10 @@ from ckanext.scheming.plugins import SchemingDatasetsPlugin
 from ckanext.canada.helpers import RELEASE_DATE_FACET_STEP
 from ckanext.canada.view import (
     CanadaDatasetEditView,
+    CanadaDatasetEditPageView,
     CanadaDatasetCreateView,
+    CanadaSchemingCreateView,
+    CanadaDatasetCreatePageView,
     CanadaResourceEditView,
     CanadaResourceCreateView,
     canada_search,
@@ -113,6 +116,7 @@ class CanadaDatasetsPlugin(SchemingDatasetsPlugin):
     # IDatasetForm
     def prepare_dataset_blueprint(self, package_type: str,
                                   blueprint: Blueprint) -> Blueprint:
+        pages = h.scheming_get_dataset_form_pages(package_type)
         blueprint.add_url_rule(
             '/edit/<id>',
             endpoint='canada_edit_%s' % package_type,
@@ -122,7 +126,8 @@ class CanadaDatasetsPlugin(SchemingDatasetsPlugin):
         blueprint.add_url_rule(
             '/new',
             endpoint='canada_new_%s' % package_type,
-            view_func=CanadaDatasetCreateView.as_view(str('new')),
+            view_func=CanadaSchemingCreateView.as_view(str('new')) if pages
+            else CanadaDatasetCreateView.as_view(str('new')),
             methods=['GET', 'POST']
         )
         blueprint.add_url_rule(
@@ -132,6 +137,17 @@ class CanadaDatasetsPlugin(SchemingDatasetsPlugin):
             methods=['GET'],
             strict_slashes=False
         )
+        if pages:
+            blueprint.add_url_rule(
+                '/new/<id>/<page>',
+                'scheming_new_page',
+                CanadaDatasetCreatePageView.as_view('new_page'),
+            )
+            blueprint.add_url_rule(
+                '/edit/<id>/<page>',
+                'scheming_edit_page',
+                CanadaDatasetEditPageView.as_view('edit_page'),
+            )
         # redirect PD endpoints accessed from /dataset/<pd pkg id>
         blueprint.before_request(cast(BeforeRequestCallable,
                                       self._redirect_pd_dataset_endpoints))
