@@ -139,7 +139,8 @@ def update_citation_map(cite_data: DataDict, pkg_dict: DataDict):
     """
     Updates cite_data for the Canada dataset schema.
     """
-    cite_data['container_title'] = _(cite_data['container_title'])
+    title = cite_data['container_title']
+    cite_data['container_title'] = _(title)
     lang = 'en'
     try:
         lang = h.lang()
