@@ -277,14 +277,16 @@ class CanadaPublicPlugin(p.SingletonPlugin, DefaultTranslation):
     # ICiteProcMappings
     def update_dataset_citation_map(self, cite_data: DataDict,
                                     pkg_dict: DataDict) -> bool:
-        cite_data['container_title'] = _(cite_data['container_title'])
+        title = cite_data['container_title']
+        cite_data['container_title'] = _(title)
         self._update_canada_citation_map(cite_data, pkg_dict)
         return False
 
     def update_resource_citation_map(self, cite_data: DataDict,
                                      pkg_dict: DataDict,
                                      res_dict: DataDict) -> bool:
-        cite_data['container_title'] = _(cite_data['container_title'])
+        title = cite_data['container_title']
+        cite_data['container_title'] = _(title)
         self._update_canada_citation_map(cite_data, pkg_dict)
         return False
 
