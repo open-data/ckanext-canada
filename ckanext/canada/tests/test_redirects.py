@@ -3,7 +3,11 @@ import pytest
 import mock
 from urllib.parse import urlparse
 
-from ckanext.canada.tests import CanadaTestBase, mock_is_registry_domain
+from ckanext.canada.tests import (
+    CanadaTestBase,
+    mock_is_registry_domain,
+    get_test_domains
+)
 from ckanext.canada.tests.factories import (
     CanadaOrganization as Organization,
     CanadaResource as Resource,
@@ -30,7 +34,10 @@ class TestRedirects(CanadaTestBase):
         self.action = LocalCKAN(
             username=self.sysadmin_user['name']).action
 
-        self.extra_environ_tester = {'Authorization': self.sysadmin_user['token']}
+        self.test_domain_map = get_test_domains()
+
+        self.extra_environ_tester = {'Authorization': self.sysadmin_user['token'],
+                                     'HTTP_HOST': self.test_domain_map['registry']['en']}
         self.environ_overrides_tester = {'REMOTE_USER': self.sysadmin_user['name'].encode('ascii')}
 
         try:
