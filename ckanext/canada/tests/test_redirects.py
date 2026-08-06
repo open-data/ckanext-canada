@@ -187,6 +187,8 @@ class TestRedirects(CanadaTestBase):
         to the combined published resource page.
         """
         ati_chromo = get_chromo('ati')
+        ati_nil_chromo = get_chromo('ati-nil')
+
         res = self.action.resource_show(id=ati_chromo['published_resource_id'])
         pkg_id = res['package_id']
 
@@ -201,9 +203,6 @@ class TestRedirects(CanadaTestBase):
 
         assert loc == '/en/dataset/%s/resource/%s' % (pkg_id, ati_chromo['published_resource_id'])
 
-        ati_nil_chromo = get_chromo('ati-nil')
-        res = self.action.resource_show(id=ati_nil_chromo['published_resource_id'])
-        pkg_id = res['package_id']  # pkg_id may be different from above due to MAKE file tests
         response = app.get('/en/resource/ati-nil',
                            extra_environ=self.extra_environ_tester,
                            environ_overrides=self.environ_overrides_tester,
