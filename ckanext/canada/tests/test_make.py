@@ -130,8 +130,10 @@ class TestMakePD(CanadaTestBase):
             resource_id=rval['resources'][0]['id'],
             records=[chromo['examples']['record']])
 
+        published_pkg_id = None
         if 'published_resource_id' in chromo:
-            Resource(id=chromo['published_resource_id'])
+            res = Resource(id=chromo['published_resource_id'])
+            published_pkg_id = res.get('package_id')
 
         if nil_type:
             nil_chromo = get_chromo(nil_type)
@@ -141,7 +143,11 @@ class TestMakePD(CanadaTestBase):
                 records=[nil_chromo['examples']['record']])
 
             if 'published_resource_id' in nil_chromo:
-                Resource(id=nil_chromo['published_resource_id'])
+                if published_pkg_id:
+                    Resource(id=nil_chromo['published_resource_id'],
+                             package_id=published_pkg_id)
+                else:
+                    Resource(id=nil_chromo['published_resource_id'])
 
         for _id in extra_resource_ids:
             Resource(id=_id)

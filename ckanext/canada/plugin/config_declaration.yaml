@@ -55,3 +55,8 @@ groups:
           the app stack. Can be "production", "staging", or "development".
           Default: "production"
         required: false
+      - key: ckanext.canada.use_scheming_pages
+        default: false
+        description: |
+          Enables the use of Scheming Pages for our Schemas (dataset and info).
+        validators: boolean_validator

@@ -188,6 +188,7 @@ class TestRedirects(CanadaTestBase):
         """
         ati_chromo = get_chromo('ati')
         ati_nil_chromo = get_chromo('ati-nil')
+
         res = self.action.resource_show(id=ati_chromo['published_resource_id'])
         pkg_id = res['package_id']
 

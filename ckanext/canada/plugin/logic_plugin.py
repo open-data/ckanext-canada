@@ -95,6 +95,7 @@ class CanadaLogicPlugin(SchemingDatasetsPlugin, CkanSecurityPlugin):
         Implement of: ckan.plugins.interfaces.IConfigurer
         SubMethod of: SchemingDatasetsPlugin, CkanSecurityPlugin
         """
+        canada_config.load_schemas(config)
         SchemingDatasetsPlugin.update_config(self, config)
         CkanSecurityPlugin.update_config(self, config)
         canada_config.update_config(config)
@@ -289,7 +290,8 @@ class CanadaLogicPlugin(SchemingDatasetsPlugin, CkanSecurityPlugin):
         SubMethod of: SchemingDatasetsPlugin
         """
         super().prepare_dataset_blueprint(package_type, blueprint)
-        dataset.modify_core_dataset_blueprint(package_type, blueprint)
+        dataset.modify_core_dataset_blueprint(
+            package_type, blueprint, bool(self._dataset_form_pages[package_type]))
         return blueprint
 
     def prepare_resource_blueprint(self, package_type: str,
