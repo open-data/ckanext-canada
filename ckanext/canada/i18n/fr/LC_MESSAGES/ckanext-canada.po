@@ -346,13 +346,15 @@ msgstr "Tâche inconnue "
 
 #: ckanext/canada/logic.py:472
 msgid "Entire Site"
-msgstr ""
+msgstr "L'ensemble du site"
 
 #: ckanext/canada/logic.py:565
 msgid ""
 "Invalid request. Full text search is not supported for data with more "
 "than {} rows."
 msgstr ""
+"Requête non valide. La recherche en texte intégral n'est pas prise en "
+"charge pour les données contenant plus de {} lignes."
 
 #: ckanext/canada/assets/datatables/source/pd_datatables.js:37
 #: ckanext/canada/strings.js:11
@@ -372,6 +374,8 @@ msgid ""
 "You have unfinished downloads in this page. Do you want to stop these "
 "downloads and leave the page?"
 msgstr ""
+"Vous avez des téléchargements en cours sur cette page. Voulez-vous "
+"arrêter ces téléchargements et quitter la page?"
 
 #: ckanext/canada/strings.js:16 ckanext/canada/strings.py:101
 msgid "Downloading file..."
@@ -391,7 +395,7 @@ msgstr "Recherche..."
 
 #: ckanext/canada/strings.js:20 ckanext/canada/strings.py:106
 msgid "Saved new order"
-msgstr ""
+msgstr "Nouvel ordre enregistré"
 
 #: ckanext/canada/strings.py:12
 #: ckanext/canada/templates/package/base_form_page.html:5
@@ -840,7 +844,7 @@ msgstr ""
 
 #: ckanext/canada/strings.py:105
 msgid "Site is in read only mode"
-msgstr ""
+msgstr "Le site est en mode lecture seule"
 
 #: ckanext/canada/strings.py:109
 msgid "Please upload a file or link to an external resource"
@@ -1083,12 +1087,17 @@ msgid ""
 "Invalid name for an API Token. API Token names can only contain "
 "alphanumeric characters, hyphens, and underscores."
 msgstr ""
+"Nom non valide pour un jeton d’API. Les noms de jetons d’API peuvent "
+"uniquement contenir des caractères alphanumériques, des traits d’union et"
+" des traits de soulignement."
 
 #: ckanext/canada/validators.py:882
 msgid ""
 "Cannot define other languages alongside \"No linguistic content; Not "
 "applicable\""
 msgstr ""
+"Impossible de définir d'autres langues en plus de « pas de contenu "
+"linguistique; non applicable »."
 
 #: ckanext/canada/view.py:130
 msgid "<strong>Note</strong><br>{0} is now logged in"
@@ -1114,12 +1123,12 @@ msgstr "Votre jeu de données %s a été sauvegardé."
 #: ckanext/canada/view.py:247 ckanext/canada/view.py:310
 #, python-format
 msgid "Saved \"%s\" for dataset %s."
-msgstr ""
+msgstr "« %s » enregistré pour le jeu de données : %s"
 
 #: ckanext/canada/view.py:269
 #, python-format
 msgid "Saved \"%s\" for new dataset."
-msgstr ""
+msgstr "« %s » enregistré pour le nouveau jeu de données"
 
 #: ckanext/canada/view.py:272 ckanext/canada/view.py:314
 msgid "Dataset added."
@@ -1207,7 +1216,7 @@ msgstr "Accès refusé"
 
 #: ckanext/canada/view.py:870
 msgid "Internal Server Error"
-msgstr ""
+msgstr "Erreur interne du serveur"
 
 #: ckanext/canada/view.py:886
 msgid "No organizations found"
@@ -3700,7 +3709,7 @@ msgstr "Désactivé"
 
 #: ckanext/canada/templates/package/new.html:8
 msgid "Edit Draft Open Information Asset:"
-msgstr ""
+msgstr "Modifier l'ébauche de l'enregistrement d'informations ouvertes :"
 
 #: ckanext/canada/templates/package/new.html:10
 msgid "Create an Open Information Asset"
@@ -3708,11 +3717,11 @@ msgstr "Créer un enregistrement d'informations ouvertes"
 
 #: ckanext/canada/templates/package/new.html:14
 msgid "Edit Draft Open Data Record:"
-msgstr ""
+msgstr "Modifier l'ébauche de l'enregistrement de données ouvert :"
 
 #: ckanext/canada/templates/package/new.html:20
 msgid "Edit Dataset"
-msgstr "Modifier ensemble de données"
+msgstr "Modifier le jeu de données"
 
 #: ckanext/canada/templates/package/new.html:20
 #: ckanext/canada/templates/package/read.html:144
@@ -3835,7 +3844,7 @@ msgstr "Publiée par"
 
 #: ckanext/canada/templates/package/read.html:220
 msgid "Dataset Relationships"
-msgstr ""
+msgstr "Relations entre ensembles de données"
 
 #: ckanext/canada/templates/package/read.html:230
 msgid "Contact Information"
@@ -4038,19 +4047,19 @@ msgstr "Télécharger"
 
 #: ckanext/canada/templates/package/resource_read.html:97
 msgid "CSV type files"
-msgstr ""
+msgstr "Fichiers de type CSV"
 
 #: ckanext/canada/templates/package/resource_read.html:104
 msgid "TSV type files"
-msgstr ""
+msgstr "Fichiers de type TSV"
 
 #: ckanext/canada/templates/package/resource_read.html:111
 msgid "JSON type files"
-msgstr ""
+msgstr "Fichiers de type JSON"
 
 #: ckanext/canada/templates/package/resource_read.html:118
 msgid "XML type files"
-msgstr ""
+msgstr "Fichiers de type XML"
 
 #: ckanext/canada/templates/package/resources.html:5
 #: ckanext/canada/templates/package/snippets/resources.html:7
@@ -4189,7 +4198,7 @@ msgstr "Incorporer cette visualisation de ressource"
 
 #: ckanext/canada/templates/package/snippets/resource_view.html:41
 msgid "Close"
-msgstr ""
+msgstr "Fermer"
 
 #: ckanext/canada/templates/package/snippets/resource_view.html:44
 msgid ""
@@ -4318,8 +4327,8 @@ msgstr "Métadonnées"
 #: ckanext/canada/templates/package/snippets/stages_sidebar.html:46
 msgid "Missing required field"
 msgid_plural "Missing required fields"
-msgstr[0] "Champ obligatoire manquant"
-msgstr[1] "Champs obligatoires manquants"
+msgstr[0] "Champ requis manquant"
+msgstr[1] "Champs requis manquants"
 
 #: ckanext/canada/templates/package/snippets/view_form.html:8
 msgid "Title (English)"
@@ -4399,7 +4408,7 @@ msgstr ""
 
 #: ckanext/canada/templates/recombinant/resource_edit.html:70
 msgid "Info"
-msgstr ""
+msgstr "Info"
 
 #: ckanext/canada/templates/recombinant/resource_edit.html:77
 msgid "Guide"
@@ -4519,6 +4528,48 @@ msgid ""
 "legal, contractual, or third party, policy restrictions or "
 "limitations).</li> </ol> </small>"
 msgstr ""
+"<small class='text-info canada-imso-approval-help-text'><p>A-t-on obtenu "
+"l'approbation? En sélectionnant « oui », vous avez fait certain que les "
+"énoncés suivants sont vrais:</p><ol><li><b>Confidentialité</b> - Les "
+"ressources en données ou documentaires ne sont pas assujetties à aucune "
+"restriction liée à la confidentialité, comme les documents confidentiels "
+"du Cabinet, le secret professionnel de l'avocat, les renseignements, "
+"conseils ou recommandations classifiés ou protégés, les renseignements de"
+" tiers ou les renseignements obtenus à titre "
+"confidentiel.</li><li><b>Autorisation de diffuser</b> - L'institution a "
+"le mandat, l'autorisation législative ou la permission d'un fournisseur "
+"tiers de publier les ressources en données ou documentaires en vertu de "
+"la <a href='https://ouvert.canada.ca/fr/licence-du-gouvernement-ouvert-"
+"canada'><u>Licence du gouvernement ouvert – "
+"Canada</u></a>.</li><li><b>Formats</b> - Les ressources en données ou "
+"documentaires sont dans un format ouvert et accessible qui est conforme à"
+" la <a href='https://www.tbs-sct.gc.ca/pol/doc-"
+"fra.aspx?id=23601'><u>Norme sur l'accessibilité des sites "
+"Web</u></a>.</li><li><b>Protection des renseignements personnels</b> - "
+"Les ressources en données ou documentaires ne contiennent pas des "
+"renseignements personnels, au sens de l'article 3 de la <a "
+"href='https://www.priv.gc.ca/fr/sujets-lies-a-la-protection-de-la-vie-"
+"privee/lois-sur-la-protection-des-renseignements-personnels-au-canada/la-"
+"loi-sur-la-protection-des-renseignements-personnels'><u>Loi sur la "
+"protection des renseignements personnels</u></a>, à moins que la personne"
+" concernée n'ait consenti à leur divulgation ou que les renseignements "
+"personnels ne répondent aux critères énoncés au paragraphe 8(2) de cette "
+"même Loi.</li><li><b>Langues officielles</b> - Les ressources en données "
+"ou documentaires sont disponibles dans les deux langues officielles et "
+"sont conformes aux exigences de la <a href='https://laws-"
+"lois.justice.gc.ca/fra/lois/O-3.01/'><u>Loi sur les langues "
+"officielles</u></a>.</li><li><b>Sécurité</b> - Les ressources en données "
+"ou documentaires n'augmentent pas les risques à la sécurité de "
+"l'institution, des autres institutions ou du gouvernement dans son "
+"ensemble et sont conformes aux exigences de la <a href='https://www.tbs-"
+"sct.gc.ca/pol/doc-fra.aspx?id=16578'><u>Politique sur la sécurité du "
+"gouvernement</u></a> et de ses instruments connexes.</li><li><b>Autres – "
+"Aspects juridiques, réglementaires, stratégiques ou contractuels</b> - La"
+" diffusion des ressources en données ou d'autres ressources documentaires"
+" est conforme à toutes les autres exigences juridiques, réglementaires, "
+"contractuelles et stratégiques pertinentes (p. ex., il est confirmé qu'il"
+" n'y a pas de restrictions ou de limitations juridiques, contractuelles, "
+"de tiers ou de stratégiques pertinentes).</li></ol></small>"
 
 #: ckanext/canada/templates/scheming/form_snippets/repeating_subfields.html:17
 msgid "Add"
@@ -5241,7 +5292,7 @@ msgstr "Exemplar : Joe Bloggs"
 
 #: ckanext/canada/templates/user/new_user_form.html:13
 msgid "Example: {example_email}"
-msgstr ""
+msgstr "Exemple : {example_email}"
 
 #: ckanext/canada/templates/user/new_user_form.html:18
 msgid "Phone Number"
