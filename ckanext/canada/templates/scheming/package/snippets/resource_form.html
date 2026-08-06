@@ -43,6 +43,18 @@
         {%- endfor -%}
       </div>
     </details>
+    <details id="descriptive-resource-meta-group" class="acc-group-des" open="open">
+      <summary class="wb-toggle tgl-tab" data-bs-toggle='{"parent": ".accordion", "group": ".acc-group-des"}'>
+        {{ _("Semantic Metadata Fields for Resources") }}
+      </summary>
+      <div class="tgl-panel">
+        {%- for field in schema.resource_fields -%}
+          {%- if field.form_panel == 'descriptive' -%}
+            {%- snippet 'scheming/snippets/form_field.html', field=field, data=data, errors=errors, entity_type='dataset', object_type=dataset_type -%}
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    </details>
     <details id="related-resource-meta-group" class="acc-group-rel" open="open">
       <summary class="wb-toggle tgl-tab" data-bs-toggle='{"parent": ".accordion", "group": ".acc-group-rel"}'>
         {{ _("Metadata Fields for Resource Relationships") }}

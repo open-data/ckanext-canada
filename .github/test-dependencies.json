@@ -10,6 +10,16 @@
         "*": "canada-staging"
       }
     },
+    "ckanext-recombinant": {
+      "branches": {
+        "master": "master",
+        "dev": "dev",
+        "staging": "dev",
+        "feature/*": "dev",
+        "fix/*": "dev",
+        "*": "dev"
+      }
+    },
     "ckanext-xloader": {
       "branches": {
         "master": "canada-v2.10",

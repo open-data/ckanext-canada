@@ -2,12 +2,14 @@ window.addEventListener('load', function(){
   $(document).ready(function() {
 
     const lang = $('html').attr('lang').length > 0 ? $('html').attr('lang') : 'en';
+    const ds_formats = ['csv', 'tsv'];
 
     let dataUploadWrapper = $('.resource-upload-field.form-group');
 
     let rtypeField = $('#field-resource_type');
     let charsetField = $('#field-character_set');
     let formatField = $('#field-format');
+    const currentFormat = $(formatField).val();
     if ( formatField.length > 0 ){
 
       // initialize select2 for the Resource Format field
@@ -21,6 +23,21 @@ window.addEventListener('load', function(){
 
     }
 
+    let urlTypeField = $('#resource-url-upload');
+    const isUploadType = typeof urlTypeField != 'undefined' && urlTypeField.length > 0 ? $(urlTypeField).is(':checked') : false;
+
+    if ( ! isUploadType && typeof currentFormat != 'undefined' && currentFormat.length > 0 && ds_formats.includes(currentFormat.toLowerCase()) ){
+      _set_datastore_alert_message(currentFormat);
+    }
+
+    function _set_datastore_alert_message(format){
+      let message = 'You are linking to a <strong>' + format + '</strong> file. Uploading the file to the Registry will validate the data, import it into a dedicated database table, and make it available through the API for easier access and integration.';
+      if( lang == 'fr' ){
+        message = 'Vous créez un lien vers un fichier <strong>' + format + '.</strong> En téléversant le fichier dans le Registre, les données seront validées, importées dans une table de base de données dédiée et rendues accessibles par l\'entremise de l\'API pour en faciliter l\'accès et l\'intégration.';
+      }
+      $(dataUploadWrapper).after('<div class="module-alert alert alert-guidance mrgn-tp-sm mrgn-bttm-sm canada-link-ds-upload-alert" style="margin-left: 3px;"><p>' + message + '</p></div>');
+    }
+
     function _set_success_message(format){
       let message = 'Set Resource Format to <strong>' + format + '</strong>';
       if( lang == 'fr' ){
@@ -29,11 +46,12 @@ window.addEventListener('load', function(){
       $(dataUploadWrapper).after('<div class="module-alert alert alert-info mrgn-tp-sm mrgn-bttm-sm canada-guess-mimetype-alert" style="margin-left: 3px;"><p>' + message + '</p></div>');
     }
 
-    function _clear_alert(){
+    function _clear_alerts(){
       $('.canada-guess-mimetype-alert').remove();
+      $('.canada-link-ds-upload-alert').remove();
     }
 
-    function _guess_mimetype(url){
+    function _guess_mimetype(url, _is_upload_field){
       let tokenFieldName = $('meta[name="csrf_field_name"]').attr('content');
       let tokenValue = $('meta[name="' + tokenFieldName + '"]').attr('content');
       payload = {'url': url};
@@ -47,6 +65,9 @@ window.addEventListener('load', function(){
           if( _data.responseJSON ){  // we have response JSON
             if( _data.responseJSON.success ){  // successful format guess
               _set_resource_format(_data.responseJSON.result);
+              if ( ! _is_upload_field && ds_formats.includes(_data.responseJSON.result.toLowerCase()) ){
+                _set_datastore_alert_message(_data.responseJSON.result);
+              }
             }else{  // validation error
               _set_resource_format('');
             }
@@ -92,7 +113,7 @@ window.addEventListener('load', function(){
           $(_button).off('click.reset_guessing');
           $(_button).on('click.reset_guessing', function(_event){
 
-            _clear_alert();
+            _clear_alerts();
             _bind_events();
 
           });
@@ -105,7 +126,7 @@ window.addEventListener('load', function(){
             // space and enter keys required for a11y
             if( keyCode == 32 || keyCode == 13 ){
 
-              _clear_alert();
+              _clear_alerts();
               _bind_events();
 
             }
@@ -117,29 +138,29 @@ window.addEventListener('load', function(){
 
       $(urlField).off('change.guess_mimetype');
       $(urlField).on('change.guess_mimetype', function(_event){
-        _clear_alert();
+        _clear_alerts();
         let urlValue = $(urlField).val()
         if( urlValue.length > 0 ){
-           _guess_mimetype(urlValue);
+           _guess_mimetype(urlValue, false);
         }
       });
 
       $(uploadField).off('change.guess_mimetype');
       $(uploadField).on('change.guess_mimetype', function(_event){
-        _clear_alert();
+        _clear_alerts();
         const selectedFile = _event.target.files[0];
         let fileName = '';
         if( selectedFile ){
           fileName = selectedFile.name;
         }
         if( fileName.length > 0 ){
-          _guess_mimetype(fileName);
+          _guess_mimetype(fileName, true);
         }
       });
 
       $(tableDesignerButton).off('click.set_mimetype');
       $(tableDesignerButton).on('click.set_mimetype', function(_event){
-        _clear_alert();
+        _clear_alerts();
         _set_tabledesigner_related_fields();
       });
 
@@ -148,7 +169,7 @@ window.addEventListener('load', function(){
         let keyCode = _event.keyCode ? _event.keyCode : _event.which;
         // space and enter keys required for a11y
         if( keyCode == 32 || keyCode == 13 ){
-          _clear_alert();
+          _clear_alerts();
           _set_tabledesigner_related_fields();
         }
       });
