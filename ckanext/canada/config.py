@@ -25,6 +25,34 @@ from ckanext.canada.logic import datastore_create_temp_user_table
 from ckanext.canada.plugin.validation_plugin import CanadaValidationPlugin
 
 
+def load_schemas(config: 'CKANConfig'):
+    """
+    Set the ckanext-scheming presets and schemas.
+
+    This is done separately so it can load prior
+    to calling SchemingDatasetsPlugin.update_config
+
+    NOTE: scheming wants space separated string
+    """
+    pages_affix = '.pages' if config['ckanext.canada.use_scheming_pages'] else ''
+    config['scheming.presets'] = ' '.join([
+        'ckanext.scheming:presets.json',
+        'ckanext.fluent:presets.json',
+        'ckanext.canada:schemas/presets%s.yaml' % pages_affix,
+        'ckanext.validation:presets.json',
+    ])
+
+    config['scheming.dataset_schemas'] = ' '.join([
+        'ckanext.canada:schemas/dataset%s.yaml' % pages_affix,
+        'ckanext.canada:schemas/info%s.yaml' % pages_affix,
+        'ckanext.canada:schemas/prop.yaml',
+    ])
+
+    config['scheming.organization_schemas'] = ' '.join([
+        'ckanext.canada:schemas/organization.yaml'
+    ])
+
+
 def update_config(config: 'CKANConfig'):
     """
     Add template directories and set initial configuration values.
@@ -99,23 +127,6 @@ def update_config(config: 'CKANConfig'):
     config['ckan.search.show_all_types'] = True
     config['ckan.gravatar_default'] = 'disabled'
     config['search.facets.limit'] = 200  # because org list
-
-    scheming_presets = config.get('scheming.presets', '')
-    if 'validation' not in scheming_presets:
-        assert 'ckanext.scheming:presets.json' in scheming_presets
-        assert 'ckanext.fluent:presets.json' in scheming_presets
-        assert 'ckanext.canada:schemas/presets.yaml' in scheming_presets
-        assert 'ckanext.canada:schemas/validation_placeholder_presets.yaml' in \
-            scheming_presets
-
-    scheming_dataset_schemas = config.get('scheming.dataset_schemas', '')
-    assert 'ckanext.canada:schemas/dataset.yaml' in scheming_dataset_schemas
-    assert 'ckanext.canada:schemas/info.yaml' in scheming_dataset_schemas
-    assert 'ckanext.canada:schemas/prop.yaml' in scheming_dataset_schemas
-
-    scheming_organization_schemas = config.get('scheming.organization_schemas', '')
-    assert 'ckanext.canada:schemas/organization.yaml' in \
-        scheming_organization_schemas
 
     # Pretty output for Feeds
     config['ckan.feeds.pretty'] = True

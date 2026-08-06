@@ -2,6 +2,13 @@
 
 {% import 'macros/form.html' as form %}
 
+{% block stages %}
+  {%- set pages = h.scheming_get_dataset_form_pages(dataset_type) -%}
+  {%- if not pages and form_style != 'edit' and dataset_type != 'prop' -%}
+    {{ h.snippet('package/snippets/stages.html', stages=stage, dataset_type=dataset_type) }}
+  {%- endif -%}
+{% endblock %}
+
 {% block errors %}
   {%- if resource_validation_errors -%}
     {%- set schema = h.scheming_get_dataset_schema(dataset_type) -%}

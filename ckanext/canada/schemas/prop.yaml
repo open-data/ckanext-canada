@@ -155,7 +155,6 @@ dataset_fields:
     help_text:
       en: This field should be populated with a value that indicates the status of the request.
       fr: Ce champ doit être rempli avec une valeur qui indique l'état de la demande.
-
     required: true
     preset: select
     form_include_blank_choice: true
