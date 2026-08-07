@@ -13,6 +13,7 @@ collection: briefingt
 
 resources:
 - title: Proactive Publication - Briefing Note Titles and Numbers
+  shortname: Briefing Note Titles and Numbers
   resource_name: briefingt
 
   published_resource_id: 299a2e26-5103-4a49-ac3a-53db9fcc06c7
@@ -348,6 +349,7 @@ resources:
     sort: tracking_number asc
 
 - title: Proactive Publication - Briefing Note Titles and Numbers Nothing to Report
+  shortname: Nothing to Report
   resource_name: briefingt-nil
 
   published_resource_id: 5e28b544-720b-4745-9e55-3aac6464a4fb
