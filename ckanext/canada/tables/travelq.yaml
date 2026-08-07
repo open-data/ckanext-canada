@@ -18,6 +18,7 @@ collection: pd
 
 resources:
 - title: Proactive Publication - Travel Expenses
+  shortname: Travel Expenses
   resource_name: travelq
 
   published_resource_id: 8282db2a-878f-475c-af10-ad56aa8fa72c
@@ -819,6 +820,7 @@ resources:
 
 
 - title: Proactive Publication - Travel Expenses Nothing to Report
+  shortname: Nothing to Report
   resource_name: travelq-nil
 
   published_resource_id: d3f883ce-4133-48da-bc76-c6b063d257a2

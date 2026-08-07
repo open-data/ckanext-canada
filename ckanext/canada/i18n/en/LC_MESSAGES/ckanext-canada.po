@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  CKAN\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-06 17:54+0000\n"
+"POT-Creation-Date: 2026-08-07 15:29+0000\n"
 "PO-Revision-Date: 2014-01-23 13:04+0000\n"
 "Last-Translator: Sean Hammond <sean.hammond@okfn.org>\n"
 "Language: en\n"
@@ -1470,13 +1470,14 @@ msgstr ""
 #. Title for PD Type: adminaircraft
 #. Resource Title for PD Type: adminaircraft
 #: ckanext/canada/tables/adminaircraft.yaml:5
-#: ckanext/canada/tables/adminaircraft.yaml:16
-#: ckanext/canada/tables/adminaircraft.yaml:21
+#: ckanext/canada/tables/adminaircraft.yaml:18
 msgid "Proactive Publication - Use of Administrative Aircraft"
 msgstr ""
 
 #. Label for PD Type: adminaircraft
+#. Resource Label for PD Type: adminaircraft
 #: ckanext/canada/tables/adminaircraft.yaml:6
+#: ckanext/canada/tables/adminaircraft.yaml:19
 msgid "Use of Administrative Aircraft"
 msgstr ""
 
@@ -1494,15 +1495,15 @@ msgstr ""
 #. SQL Trigger String for PD Type: reclassification
 #. SQL Trigger String for PD Type: travelq
 #. SQL Trigger String for PD Type: wrongdoing
-#: ckanext/canada/tables/adminaircraft.yaml:361
-#: ckanext/canada/tables/contracts.yaml:2259
-#: ckanext/canada/tables/grants.yaml:1316
+#: ckanext/canada/tables/adminaircraft.yaml:359
+#: ckanext/canada/tables/contracts.yaml:2260
+#: ckanext/canada/tables/grants.yaml:1317
 #: ckanext/canada/tables/grantsmonthly.yaml:1841
-#: ckanext/canada/tables/hospitalityq.yaml:745
-#: ckanext/canada/tables/qpnotes.yaml:388
-#: ckanext/canada/tables/reclassification.yaml:316
-#: ckanext/canada/tables/travelq.yaml:780
-#: ckanext/canada/tables/wrongdoing.yaml:280
+#: ckanext/canada/tables/hospitalityq.yaml:746
+#: ckanext/canada/tables/qpnotes.yaml:389
+#: ckanext/canada/tables/reclassification.yaml:317
+#: ckanext/canada/tables/travelq.yaml:781
+#: ckanext/canada/tables/wrongdoing.yaml:281
 msgid "Comma is not allowed in Reference Number field"
 msgstr ""
 
@@ -1542,7 +1543,7 @@ msgstr ""
 #. SQL Trigger String for PD Type: ati
 #. SQL Trigger String for PD Type: briefingt
 #: ckanext/canada/tables/ati.yaml:273 ckanext/canada/tables/ati.yaml:415
-#: ckanext/canada/tables/briefingt.yaml:461
+#: ckanext/canada/tables/briefingt.yaml:463
 msgid "Please enter a month number from 1-12"
 msgstr ""
 
@@ -1550,7 +1551,7 @@ msgstr ""
 #. SQL Trigger String for PD Type: hospitalityq
 #. SQL Trigger String for PD Type: service
 #: ckanext/canada/tables/ati.yaml:150 ckanext/canada/tables/ati.yaml:274
-#: ckanext/canada/tables/hospitalityq.yaml:747
+#: ckanext/canada/tables/hospitalityq.yaml:748
 #: ckanext/canada/tables/service.yaml:1784
 #: ckanext/canada/tables/service.yaml:2687
 msgid "This value must not be negative"
@@ -1566,6 +1567,24 @@ msgstr ""
 msgid "ATI Nothing to Report"
 msgstr ""
 
+#. Resource Label for PD Type: ati
+#. Resource Label for PD Type: briefingt
+#. Resource Label for PD Type: contracts
+#. Resource Label for PD Type: grants
+#. Resource Label for PD Type: hospitalityq
+#. Resource Label for PD Type: qpnotes
+#. Resource Label for PD Type: reclassification
+#. Resource Label for PD Type: travelq
+#: ckanext/canada/tables/ati.yaml:303 ckanext/canada/tables/briefingt.yaml:352
+#: ckanext/canada/tables/contracts.yaml:2329
+#: ckanext/canada/tables/grants.yaml:1372
+#: ckanext/canada/tables/hospitalityq.yaml:788
+#: ckanext/canada/tables/qpnotes.yaml:415
+#: ckanext/canada/tables/reclassification.yaml:340
+#: ckanext/canada/tables/travelq.yaml:823
+msgid "Nothing to Report"
+msgstr ""
+
 #. Title for PD Type: briefingt
 #. Resource Title for PD Type: briefingt
 #: ckanext/canada/tables/briefingt.yaml:4
@@ -1574,7 +1593,9 @@ msgid "Proactive Publication - Briefing Note Titles and Numbers"
 msgstr ""
 
 #. Label for PD Type: briefingt
+#. Resource Label for PD Type: briefingt
 #: ckanext/canada/tables/briefingt.yaml:5
+#: ckanext/canada/tables/briefingt.yaml:16
 msgid "Briefing Note Titles and Numbers"
 msgstr ""
 
@@ -1586,12 +1607,12 @@ msgid ""
 msgstr ""
 
 #. SQL Trigger String for PD Type: briefingt
-#: ckanext/canada/tables/briefingt.yaml:330
+#: ckanext/canada/tables/briefingt.yaml:331
 msgid "Comma is not allowed in Briefing Note Number field"
 msgstr ""
 
 #. Resource Title for PD Type: briefingt
-#: ckanext/canada/tables/briefingt.yaml:350
+#: ckanext/canada/tables/briefingt.yaml:351
 msgid "Proactive Publication - Briefing Note Titles and Numbers Nothing to Report"
 msgstr ""
 
@@ -1602,13 +1623,13 @@ msgstr ""
 #. SQL Trigger String for PD Type: reclassification
 #. SQL Trigger String for PD Type: travela
 #. SQL Trigger String for PD Type: travelq
-#: ckanext/canada/tables/briefingt.yaml:460
-#: ckanext/canada/tables/contractsa.yaml:403
-#: ckanext/canada/tables/hospitalityq.yaml:886
-#: ckanext/canada/tables/qpnotes.yaml:524
-#: ckanext/canada/tables/reclassification.yaml:444
-#: ckanext/canada/tables/travela.yaml:696
-#: ckanext/canada/tables/travelq.yaml:936
+#: ckanext/canada/tables/briefingt.yaml:462
+#: ckanext/canada/tables/contractsa.yaml:404
+#: ckanext/canada/tables/hospitalityq.yaml:888
+#: ckanext/canada/tables/qpnotes.yaml:526
+#: ckanext/canada/tables/reclassification.yaml:446
+#: ckanext/canada/tables/travela.yaml:697
+#: ckanext/canada/tables/travelq.yaml:938
 msgid "This must list the year you are reporting on (not the fiscal year)."
 msgstr ""
 
@@ -1620,7 +1641,9 @@ msgid "Open Dialogue - Consultations"
 msgstr ""
 
 #. Label for PD Type: consultations
+#. Resource Label for PD Type: consultations
 #: ckanext/canada/tables/consultations.yaml:5
+#: ckanext/canada/tables/consultations.yaml:22
 msgid "Consultations"
 msgstr ""
 
@@ -1630,12 +1653,12 @@ msgid "Access, upload and modify consultation reports for your organization"
 msgstr ""
 
 #. SQL Trigger String for PD Type: consultations
-#: ckanext/canada/tables/consultations.yaml:691
+#: ckanext/canada/tables/consultations.yaml:692
 msgid "If Status is set to: Not Going Forward, Publish Record must be set to No"
 msgstr ""
 
 #. SQL Trigger String for PD Type: consultations
-#: ckanext/canada/tables/consultations.yaml:692
+#: ckanext/canada/tables/consultations.yaml:693
 msgid "Comma is not allowed in Registration Number field"
 msgstr ""
 
@@ -1647,7 +1670,9 @@ msgid "Proactive Publication - Contracts over $10,000"
 msgstr ""
 
 #. Label for PD Type: contracts
+#. Resource Label for PD Type: contracts
 #: ckanext/canada/tables/contracts.yaml:5
+#: ckanext/canada/tables/contracts.yaml:90
 msgid "Contracts over $10,000"
 msgstr ""
 
@@ -1659,75 +1684,75 @@ msgid ""
 msgstr ""
 
 #. SQL Trigger String for PD Type: contracts
-#: ckanext/canada/tables/contracts.yaml:2258
+#: ckanext/canada/tables/contracts.yaml:2259
 msgid "This field must not be empty"
 msgstr ""
 
 #. SQL Trigger String for PD Type: contracts
-#: ckanext/canada/tables/contracts.yaml:2260
+#: ckanext/canada/tables/contracts.yaml:2261
 msgid ""
 "This field must contain the first three digits of a postal code in A1A "
 "format or the value \"NA\""
 msgstr ""
 
 #. SQL Trigger String for PD Type: contracts
-#: ckanext/canada/tables/contracts.yaml:2261
+#: ckanext/canada/tables/contracts.yaml:2262
 msgid ""
 "This field must be populated with an NA if an amendment is disclosed "
 "under Instrument Type"
 msgstr ""
 
 #. SQL Trigger String for PD Type: contracts
-#: ckanext/canada/tables/contracts.yaml:2262
+#: ckanext/canada/tables/contracts.yaml:2263
 msgid "This field is limited to only 3 or 4 digits."
 msgstr ""
 
 #. SQL Trigger String for PD Type: contracts
-#: ckanext/canada/tables/contracts.yaml:2263
+#: ckanext/canada/tables/contracts.yaml:2264
 msgid ""
 "If N/A, then Instrument Type must be identified as a standing "
 "offer/supply arrangement (SOSA)"
 msgstr ""
 
 #. SQL Trigger String for PD Type: contracts
-#: ckanext/canada/tables/contracts.yaml:2264
+#: ckanext/canada/tables/contracts.yaml:2265
 msgid ""
 "If the value XX (none) is entered, then no other value can be entered in "
 "this field."
 msgstr ""
 
 #. SQL Trigger String for PD Type: contracts
-#: ckanext/canada/tables/contracts.yaml:2265
+#: ckanext/canada/tables/contracts.yaml:2266
 msgid "Discontinued as of 2022-01-01"
 msgstr ""
 
 #. SQL Trigger String for PD Type: contracts
-#: ckanext/canada/tables/contracts.yaml:2266
+#: ckanext/canada/tables/contracts.yaml:2267
 msgid "Must be left blank when trade agreements specified"
 msgstr ""
 
 #. SQL Trigger String for PD Type: contracts
-#: ckanext/canada/tables/contracts.yaml:2267
+#: ckanext/canada/tables/contracts.yaml:2268
 msgid ""
 "If the value NA (not applicable) is entered, then no other value can be "
 "entered in this field."
 msgstr ""
 
 #. SQL Trigger String for PD Type: contracts
-#: ckanext/canada/tables/contracts.yaml:2268
+#: ckanext/canada/tables/contracts.yaml:2269
 msgid "The field is limited to eight alpha-numeric digits or less."
 msgstr ""
 
 #. SQL Trigger String for PD Type: contracts
-#: ckanext/canada/tables/contracts.yaml:2269
-#: ckanext/canada/tables/contracts.yaml:2272
+#: ckanext/canada/tables/contracts.yaml:2270
+#: ckanext/canada/tables/contracts.yaml:2273
 msgid ""
 "If the value 00 (none) is entered, then no other value can be entered in "
 "this field."
 msgstr ""
 
 #. SQL Trigger String for PD Type: contracts
-#: ckanext/canada/tables/contracts.yaml:2270
+#: ckanext/canada/tables/contracts.yaml:2271
 msgid ""
 "If TC, TN or AC is selected in the Solicitation Procedure data field with"
 " a value other than XX (None) selected in the Trade Agreement data field,"
@@ -1735,7 +1760,7 @@ msgid ""
 msgstr ""
 
 #. SQL Trigger String for PD Type: contracts
-#: ckanext/canada/tables/contracts.yaml:2271
+#: ckanext/canada/tables/contracts.yaml:2272
 msgid ""
 "If “TC” (Competitive - Traditional), “TN” (Non-Competitive) or “AC” "
 "(Advanced Contract Award Notice) is selected and trade agreement with a "
@@ -1744,21 +1769,21 @@ msgid ""
 msgstr ""
 
 #. SQL Trigger String for PD Type: contracts
-#: ckanext/canada/tables/contracts.yaml:2273
+#: ckanext/canada/tables/contracts.yaml:2274
 msgid ""
 "This field must be N, No or Non, if the Procurement Strategy for "
 "Aboriginal Business field is MS or VS."
 msgstr ""
 
 #. SQL Trigger String for PD Type: contracts
-#: ckanext/canada/tables/contracts.yaml:2274
+#: ckanext/canada/tables/contracts.yaml:2275
 msgid ""
 "This field must be populated with a 1 if the solicitation procedure is "
 "identified as non-competitive (TN) or Advance Contract Award Notice (AC)."
 msgstr ""
 
 #. SQL Trigger String for PD Type: contracts
-#: ckanext/canada/tables/contracts.yaml:2275
+#: ckanext/canada/tables/contracts.yaml:2276
 msgid ""
 "If this field is populated, it must be with a “0” if the procurement was "
 "identified as non-competitive (TN) or advance contract award notice (AC) "
@@ -1766,7 +1791,7 @@ msgid ""
 msgstr ""
 
 #. SQL Trigger String for PD Type: contracts
-#: ckanext/canada/tables/contracts.yaml:2276
+#: ckanext/canada/tables/contracts.yaml:2277
 msgid ""
 "This field may only be populated with “0” if the procurement was "
 "identified as competitive (open bidding (OB), traditional competitive "
@@ -1774,7 +1799,7 @@ msgid ""
 msgstr ""
 
 #. Resource Title for PD Type: contracts
-#: ckanext/canada/tables/contracts.yaml:2327
+#: ckanext/canada/tables/contracts.yaml:2328
 msgid "Proactive Publication - Contracts Nothing to Report"
 msgstr ""
 
@@ -1786,7 +1811,9 @@ msgid "Proactive Publication - Aggregated Contracts from -$10,000 to $10,000"
 msgstr ""
 
 #. Label for PD Type: contractsa
+#. Resource Label for PD Type: contractsa
 #: ckanext/canada/tables/contractsa.yaml:5
+#: ckanext/canada/tables/contractsa.yaml:16
 msgid "Aggregated Contracts from -$10,000 to $10,000"
 msgstr ""
 
@@ -1804,7 +1831,8 @@ msgid "Proactive Publication - Departmental Audit Committee"
 msgstr ""
 
 #. Label for PD Type: dac
-#: ckanext/canada/tables/dac.yaml:4
+#. Resource Label for PD Type: dac
+#: ckanext/canada/tables/dac.yaml:4 ckanext/canada/tables/dac.yaml:15
 msgid "Departmental Audit Committee"
 msgstr ""
 
@@ -1836,7 +1864,8 @@ msgid "Proactive Publication - Grants and Contributions"
 msgstr ""
 
 #. Label for PD Type: grants
-#: ckanext/canada/tables/grants.yaml:4
+#. Resource Label for PD Type: grants
+#: ckanext/canada/tables/grants.yaml:4 ckanext/canada/tables/grants.yaml:19
 msgid "Grants and Contributions"
 msgstr ""
 
@@ -1849,41 +1878,41 @@ msgstr ""
 
 #. SQL Trigger String for PD Type: grants
 #. SQL Trigger String for PD Type: grantsmonthly
-#: ckanext/canada/tables/grants.yaml:1317
+#: ckanext/canada/tables/grants.yaml:1318
 #: ckanext/canada/tables/grantsmonthly.yaml:1846
 msgid "Must be a valid Canadian postal code in the format of \"A1A 1A1\""
 msgstr ""
 
 #. SQL Trigger String for PD Type: grants
 #. SQL Trigger String for PD Type: grantsmonthly
-#: ckanext/canada/tables/grants.yaml:1318
+#: ckanext/canada/tables/grants.yaml:1319
 #: ckanext/canada/tables/grantsmonthly.yaml:1847
 msgid "Must be a 9 digit number"
 msgstr ""
 
 #. SQL Trigger String for PD Type: grants
 #. SQL Trigger String for PD Type: grantsmonthly
-#: ckanext/canada/tables/grants.yaml:1319
+#: ckanext/canada/tables/grants.yaml:1320
 #: ckanext/canada/tables/grantsmonthly.yaml:1848
 msgid "Must be a 5 digit number"
 msgstr ""
 
 #. SQL Trigger String for PD Type: grants
 #. SQL Trigger String for PD Type: grantsmonthly
-#: ckanext/canada/tables/grants.yaml:1320
+#: ckanext/canada/tables/grants.yaml:1321
 #: ckanext/canada/tables/grantsmonthly.yaml:1849
 msgid "\"Agreement Start Date\" cannot be after \"Projected Agreement End Date\""
 msgstr ""
 
 #. SQL Trigger String for PD Type: grants
-#: ckanext/canada/tables/grants.yaml:1321
+#: ckanext/canada/tables/grants.yaml:1322
 msgid ""
 "\"Agreement Value\" must be zero or greater for agreements starting on or"
 " after May 1, 2026"
 msgstr ""
 
 #. Resource Title for PD Type: grants
-#: ckanext/canada/tables/grants.yaml:1370
+#: ckanext/canada/tables/grants.yaml:1371
 msgid "Proactive Publication - Grants and Contributions Nothing to Report"
 msgstr ""
 
@@ -1951,8 +1980,10 @@ msgid "Proactive Publication - Hospitality Expenses"
 msgstr ""
 
 #. Label for PD Type: hospitalityq
+#. Resource Label for PD Type: hospitalityq
 #: ckanext/canada/tables/hospitalityq.yaml:5
-#: ckanext/canada/tables/hospitalityq.yaml:660
+#: ckanext/canada/tables/hospitalityq.yaml:21
+#: ckanext/canada/tables/hospitalityq.yaml:661
 msgid "Hospitality Expenses"
 msgstr ""
 
@@ -1964,33 +1995,33 @@ msgid ""
 msgstr ""
 
 #. SQL Trigger String for PD Type: hospitalityq
-#: ckanext/canada/tables/hospitalityq.yaml:746
+#: ckanext/canada/tables/hospitalityq.yaml:747
 msgid ""
 "Invalid format for multiple commercial establishments or vendors. Use "
 "<Vendor Name>;<Vendor 2 Name> (e.g. Les Impertinentes;Les Street Monkeys)"
 msgstr ""
 
 #. SQL Trigger String for PD Type: hospitalityq
-#: ckanext/canada/tables/hospitalityq.yaml:748
-msgid "Zero is an invalid entry. Please enter a different number"
-msgstr ""
-
-#. SQL Trigger String for PD Type: hospitalityq
-#. SQL Trigger String for PD Type: travelq
 #: ckanext/canada/tables/hospitalityq.yaml:749
-#: ckanext/canada/tables/travelq.yaml:782
-msgid "Start date cannot be after the end date"
+msgid "Zero is an invalid entry. Please enter a different number"
 msgstr ""
 
 #. SQL Trigger String for PD Type: hospitalityq
 #. SQL Trigger String for PD Type: travelq
 #: ckanext/canada/tables/hospitalityq.yaml:750
 #: ckanext/canada/tables/travelq.yaml:783
+msgid "Start date cannot be after the end date"
+msgstr ""
+
+#. SQL Trigger String for PD Type: hospitalityq
+#. SQL Trigger String for PD Type: travelq
+#: ckanext/canada/tables/hospitalityq.yaml:751
+#: ckanext/canada/tables/travelq.yaml:784
 msgid "Date can’t be in the future"
 msgstr ""
 
 #. Resource Title for PD Type: hospitalityq
-#: ckanext/canada/tables/hospitalityq.yaml:786
+#: ckanext/canada/tables/hospitalityq.yaml:787
 msgid "Proactive Publication - Hospitality Nothing to Report"
 msgstr ""
 
@@ -2035,7 +2066,8 @@ msgid "Proactive Publication - Question Period Notes"
 msgstr ""
 
 #. Label for PD Type: qpnotes
-#: ckanext/canada/tables/qpnotes.yaml:5
+#. Resource Label for PD Type: qpnotes
+#: ckanext/canada/tables/qpnotes.yaml:5 ckanext/canada/tables/qpnotes.yaml:16
 msgid "Question Period Notes"
 msgstr ""
 
@@ -2045,7 +2077,7 @@ msgid "Access, upload and modify Question Period notes for your organization"
 msgstr ""
 
 #. Resource Title for PD Type: qpnotes
-#: ckanext/canada/tables/qpnotes.yaml:413
+#: ckanext/canada/tables/qpnotes.yaml:414
 msgid "Proactive Publication - Question Period Notes Nothing to Report"
 msgstr ""
 
@@ -2057,8 +2089,10 @@ msgid "Proactive Publication - Position Reclassification"
 msgstr ""
 
 #. Label for PD Type: reclassification
+#. Resource Label for PD Type: reclassification
 #: ckanext/canada/tables/reclassification.yaml:4
-#: ckanext/canada/tables/reclassification.yaml:276
+#: ckanext/canada/tables/reclassification.yaml:15
+#: ckanext/canada/tables/reclassification.yaml:277
 msgid "Position Reclassification"
 msgstr ""
 
@@ -2070,7 +2104,7 @@ msgid ""
 msgstr ""
 
 #. Resource Title for PD Type: reclassification
-#: ckanext/canada/tables/reclassification.yaml:338
+#: ckanext/canada/tables/reclassification.yaml:339
 msgid "Proactive Publication - Position Reclassification Nothing to Report"
 msgstr ""
 
@@ -2180,7 +2214,8 @@ msgid "Proactive Publication - Annual Travel, Hospitality and Conferences"
 msgstr ""
 
 #. Label for PD Type: travela
-#: ckanext/canada/tables/travela.yaml:4
+#. Resource Label for PD Type: travela
+#: ckanext/canada/tables/travela.yaml:4 ckanext/canada/tables/travela.yaml:19
 msgid "Annual Travel, Hospitality and Conferences"
 msgstr ""
 
@@ -2198,7 +2233,9 @@ msgid "Proactive Publication - Travel Expenses"
 msgstr ""
 
 #. Label for PD Type: travelq
-#: ckanext/canada/tables/travelq.yaml:5 ckanext/canada/tables/travelq.yaml:693
+#. Resource Label for PD Type: travelq
+#: ckanext/canada/tables/travelq.yaml:5 ckanext/canada/tables/travelq.yaml:21
+#: ckanext/canada/tables/travelq.yaml:694
 msgid "Travel Expenses"
 msgstr ""
 
@@ -2210,7 +2247,7 @@ msgid ""
 msgstr ""
 
 #. SQL Trigger String for PD Type: travelq
-#: ckanext/canada/tables/travelq.yaml:781
+#: ckanext/canada/tables/travelq.yaml:782
 msgid ""
 "Invalid format for destination: \"{}\". Use <City Name>, <State/Province "
 "Name>, <Country Name> for Canada and US, or <City Name>, <Country Name> "
@@ -2218,7 +2255,7 @@ msgid ""
 msgstr ""
 
 #. Resource Title for PD Type: travelq
-#: ckanext/canada/tables/travelq.yaml:821
+#: ckanext/canada/tables/travelq.yaml:822
 msgid "Proactive Publication - Travel Expenses Nothing to Report"
 msgstr ""
 
@@ -2242,6 +2279,11 @@ msgstr ""
 #. Resource Title for PD Type: wrongdoing
 #: ckanext/canada/tables/wrongdoing.yaml:14
 msgid "Proactive Publication - Founded Wrongdoing"
+msgstr ""
+
+#. Resource Label for PD Type: wrongdoing
+#: ckanext/canada/tables/wrongdoing.yaml:15
+msgid "Founded Wrongdoing"
 msgstr ""
 
 #: ckanext/canada/templates/base.html:5
@@ -4884,3 +4926,4 @@ msgstr ""
 #: ckanext/canada/templates/xloader/resource_data.html:8
 msgid "Upload to DataStore"
 msgstr ""
+
