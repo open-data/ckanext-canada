@@ -81,6 +81,13 @@ def extract_pd(fileobj: BinaryIO,
                 yield (line_number, '', resource_title,
                        ['Resource Title for PD Type: %s' % pd_type])
 
+        # resource short label
+        resource_label = resource.get('shortname')
+        if isinstance(resource_label, string_types):
+            for line_number in line_numbers.get(resource_label, [0]):
+                yield (line_number, '', resource_label,
+                       ['Resource Label for PD Type: %s' % pd_type])
+
         # resource sql error messages
         resource_trigger_strings = resource.get('trigger_strings')
         if resource_trigger_strings:

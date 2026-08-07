@@ -18,6 +18,7 @@ collection: pd
 
 resources:
 - title: Proactive Publication - Hospitality Expenses
+  shortname: Hospitality Expenses
   resource_name: hospitalityq
 
   published_resource_id: 7b301f1a-2a7a-48bd-9ea9-e0ac4a5313ed
@@ -784,6 +785,7 @@ resources:
 
 
 - title: Proactive Publication - Hospitality Nothing to Report
+  shortname: Nothing to Report
   resource_name: hospitalityq-nil
 
   published_resource_id: 36a3b6cc-4f45-4081-8dbd-2340ca487041

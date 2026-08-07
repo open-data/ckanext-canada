@@ -13,6 +13,7 @@ collection: qpnotes
 
 resources:
 - title: Proactive Publication - Question Period Notes
+  shortname: Question Period Notes
   resource_name: qpnotes
 
   published_resource_id: c55a2862-7ec4-462c-a844-22acab664812
@@ -411,6 +412,7 @@ resources:
     sort: date_received desc
 
 - title: Proactive Publication - Question Period Notes Nothing to Report
+  shortname: Nothing to Report
   resource_name: qpnotes-nil
 
   published_resource_id: dba8cc4a-2a57-435c-a270-fa024474e609
