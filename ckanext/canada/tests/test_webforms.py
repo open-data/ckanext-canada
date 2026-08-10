@@ -15,6 +15,7 @@ from ckanapi import (
 )
 
 from ckan.tests.helpers import CKANResponse  # noqa: F401
+from ckan.model.types import make_uuid
 
 from ckanext.canada.tests.factories import (
     CanadaOrganization as Organization,
@@ -50,12 +51,18 @@ class TestPackageWebForms(CanadaTestBase):
 
         test_domain_map = get_test_domains()
         self.sysadmin = Sysadmin()
+        editor = User()
         self.extra_environ_tester = {'Authorization': self.sysadmin['token'],
                                      'HTTP_HOST': test_domain_map['registry']['en']}
         self.environ_overrides_tester = {'REMOTE_USER': self.sysadmin['name'].encode('ascii')}
+        self.extra_environ_editor = {'Authorization': editor['token'],
+                                     'HTTP_HOST': test_domain_map['registry']['en']}
+        self.environ_overrides_editor = {'REMOTE_USER': editor['name'].encode('ascii')}
         self.org = Organization(users=[{
             'name': self.sysadmin['name'],
-            'capacity': 'admin'}])
+            'capacity': 'admin'},
+            {'name': editor['name'],
+             'capacity': 'editor'},])
 
     @mock.patch.object(h, 'flash_success', flashes.mock_flash)
     @mock.patch.object(h, 'get_flashed_messages', flashes.mock_get_flashed_messages)
@@ -95,6 +102,40 @@ class TestPackageWebForms(CanadaTestBase):
         response = app.get(offset, extra_environ=self.extra_environ_tester,
                            environ_overrides=self.environ_overrides_tester,
                            follow_redirects=False)  # no need for redirects
+
+        assert 'Resource added' in response.body
+
+        # test editor user
+        dataset_id = make_uuid()
+
+        offset = h.url_for('dataset.new')
+        response = app.get(offset, extra_environ=self.extra_environ_editor,
+                           environ_overrides=self.environ_overrides_editor)
+
+        assert 'Create Dataset' in response.body
+        assert 'Before you can create a dataset you need to create an organization' not in response.body
+
+        response = app.post(offset,
+                            data=self._filled_dataset_form(dataset_id),
+                            extra_environ=self.extra_environ_editor,
+                            environ_overrides=self.environ_overrides_editor,
+                            follow_redirects=False)
+
+        offset = _get_relative_offset_from_response(response)
+        response = app.get(offset, extra_environ=self.extra_environ_editor,
+                            environ_overrides=self.environ_overrides_editor)
+
+        assert 'Add data to the dataset' in response.body
+
+        response = app.post(offset,
+                            data=self._filled_resource_form(dataset_id),
+                            extra_environ=self.extra_environ_editor,
+                            environ_overrides=self.environ_overrides_editor,
+                            follow_redirects=False)
+
+        offset = _get_relative_offset_from_response(response)
+        response = app.get(offset, extra_environ=self.extra_environ_editor,
+                            environ_overrides=self.environ_overrides_editor)
 
         assert 'Resource added' in response.body
 
