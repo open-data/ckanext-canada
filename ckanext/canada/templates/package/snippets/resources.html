@@ -11,7 +11,7 @@
           <ul class="list-unstyled nav nav-simple">
             {# TODO: upstream contrib "loop.index > 8" !!! #}
             {% set ns = namespace(aria_controls='') %}
-            {% set can_edit_pkg = h.check_access('package_update', {'id': pkg.id }) %}
+            {% set can_edit_pkg = h.check_access('package_update', {'id': pkg.id }) if pkg.id else h.check_access('package_create') %}
             {% for resource in resources %}
               {% set collapse_class = '' %}
               {% set collapse_id = '' %}

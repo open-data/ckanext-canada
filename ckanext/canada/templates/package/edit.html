@@ -23,7 +23,7 @@
 {% endblock %}
 
 {% block secondary_content %}
-  {% set can_edit = h.check_access('package_update', {'id': pkg.id }) if pkg.id else h.check_access('package_create', {'owner_org': group_dict.id}) %}
+  {% set can_edit = h.check_access('package_update', {'id': pkg.id }) if pkg.id else h.check_access('package_create') %}
   {% if form_vars and form_vars.dataset_type not in h.recombinant_get_types() %}
     {% snippet "package/snippets/stages_sidebar.html",
       data=form_vars.data,
