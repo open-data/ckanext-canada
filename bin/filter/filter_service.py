@@ -3,7 +3,6 @@
 import csv
 import os
 import sys
-import yaml
 
 from typing import Dict, Any
 
@@ -37,13 +36,31 @@ COLUMNS = [
 
 BOM = "\N{bom}"
 
-PROGRAM_IDS_FILE = os.path.join(
-                    os.path.split(__file__)[0],
-                    '../../ckanext/canada/tables/choices'
-                    '/service_program_ids.yaml')
+SERVICE_ID_REF_DATA_FILE = os.path.join(
+    os.path.split(__file__)[0],
+    '../../ckanext/canada/tables/references'
+    '/data/ref_service_service_ids.csv')
+SERVICE_IDS = {}
+with open(SERVICE_ID_REF_DATA_FILE, 'r') as f:
+    c = csv.DictReader(f)
+    for row in c:
+        SERVICE_IDS[row['service_id']] = {
+            'en': row['label_en'],
+            'fr': row['label_fr']
+        }
+
+PROGRAM_ID_REF_DATA_FILE = os.path.join(
+    os.path.split(__file__)[0],
+    '../../ckanext/canada/tables/references'
+    '/data/ref_service_program_ids.csv')
 PROGRAM_IDS = {}
-with open(PROGRAM_IDS_FILE, 'r') as f:
-    PROGRAM_IDS = yaml.safe_load(f)
+with open(PROGRAM_ID_REF_DATA_FILE, 'r') as f:
+    c = csv.DictReader(f)
+    for row in c:
+        PROGRAM_IDS[row['program_id']] = {
+            'en': row['label_en'],
+            'fr': row['label_fr']
+        }
 
 
 def test(record: Dict[str, Any]) -> Dict[str, Any]:
@@ -79,12 +96,24 @@ def process_row(row: Dict[str, Any]) -> Dict[str, Any]:
             count = int(row[field])
         row['num_applications_total'] += count
 
+    # populate service names from ids
+    row['service_name_en'] = SERVICE_IDS[row['service_id']]['en']
+    row['service_name_fr'] = SERVICE_IDS[row['service_id']]['fr']
+
     # populate program names from ids
     row['program_name_en'] = []
     row['program_name_fr'] = []
     program_ids = row['program_id'].split(',')
     for id in program_ids:
+        if id.endswith('-INV'):
+            # NOTE: not adding the suffix label to the published
+            #       program_name_en and program_name_fr fields.
+            id = id.replace('-INV', '')
         if id not in PROGRAM_IDS:
+            row['program_name_en'].append(
+                f'"Unknown Program Name for {id}"')
+            row['program_name_fr'].append(
+                f'"Inconnue désignation du programme pour {id}"')
             continue
         # NOTE: we add double quotes as Program Names can have
         #       single quotes and commas in them
