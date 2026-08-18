@@ -21,8 +21,9 @@ from ckanext.datastore.backend import postgres as db
 from ckanext.datatablesview.blueprint import datatablesview
 
 from ckanext.canada import dataset
-from ckanext.canada.logic import datastore_create_temp_user_table
+from ckanext.canada.logic import datastore_create_temp_app_context_table
 from ckanext.canada.plugin.validation_plugin import CanadaValidationPlugin
+from ckanext.canada.helpers import org_name_from_res_id
 
 
 def load_schemas(config: 'CKANConfig'):
@@ -181,7 +182,9 @@ def configure():
     original_upsert_data = db.upsert_data
 
     def patched_upsert_data(context: Context, data_dict: DataDict) -> Any:
-        with datastore_create_temp_user_table(context):
+        org_name = org_name_from_res_id(data_dict.get('resource_id'))
+        with datastore_create_temp_app_context_table(context,
+                                                     org_name=org_name):
             try:
                 return original_upsert_data(context, data_dict)
             except ValidationError as e:
