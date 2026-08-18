@@ -473,6 +473,13 @@ body details.canada-abbr{
     }
   }
 }
+
+tbody.recombinant-data-dictionary-suffix-ref{
+  display: table-header-group !important;
+  th, td{
+    background-color: #d9edf7 !important;
+  }
+}
 /*###################
 ##       END       ##
 ##  Miscellaneous  ##

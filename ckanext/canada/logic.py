@@ -196,14 +196,18 @@ def resource_view_update_bilingual(up_func: Action,
 
 
 @contextmanager
-def datastore_create_temp_user_table(context: Context,
-                                     drop_on_commit: Optional[bool] = True):
+def datastore_create_temp_app_context_table(context: Context,
+                                            drop_on_commit: Optional[bool] = True,
+                                            org_name: Optional[str] = None):
     """
     Context manager for wrapping DataStore transactions with
-    a temporary user table.
+    a temporary application context table.
 
-    The table is to pass the current username and sysadmin
-    state to our triggers for marking modified rows
+    The table is used to pass the current username, sysadmin
+    state, and org names/abbreviations to our triggers for marking modified rows.
+
+    Other contextual flags and values may be passed via the CKAN app context in
+    a more dynamic way.
     """
     # __enter__ of context manager
 
@@ -212,24 +216,32 @@ def datastore_create_temp_user_table(context: Context,
     else:
         from ckanext.datastore.backend.postgres import literal_string
         username = context['user']
+        contextual_flags = context.get('datastore_app_context_flags', [])
+        if not isinstance(contextual_flags, list):
+            contextual_flags = []  # prevent any database errors
         context['connection'].execute('''
-            CREATE TEMP TABLE IF NOT EXISTS datastore_user (
+            CREATE TEMP TABLE IF NOT EXISTS datastore_app_context (
                 username text NOT NULL,
-                sysadmin boolean NOT NULL
+                sysadmin boolean NOT NULL,
+                flags text[] NOT NULL,
+                org_name text
                 ){drop_statement};
-            INSERT INTO datastore_user VALUES (
-                {username}, {sysadmin}
+            INSERT INTO datastore_app_context VALUES (
+                {username}, {sysadmin}, ARRAY[{flag_values}]::text[], {org_name}
                 );
             '''.format(
                 drop_statement=' ON COMMIT DROP' if drop_on_commit else '',
                 username=literal_string(username),
-                sysadmin='TRUE' if is_sysadmin(username) else 'FALSE'))
+                sysadmin='TRUE' if is_sysadmin(username) else 'FALSE',
+                flag_values=', '.join(literal_string(_f) for _f in contextual_flags),
+                org_name=literal_string(org_name) if org_name else None,
+            ))
         yield
 
     # __exit__ of context manager
 
     if 'user' in context and not drop_on_commit:
-        context['connection'].execute('''DROP TABLE datastore_user;''')
+        context['connection'].execute('''DROP TABLE datastore_app_context;''')
 
 
 def canada_guess_mimetype(context: Context, data_dict: DataDict) -> str:
@@ -526,7 +538,9 @@ def canada_datastore_run_triggers(up_func: Action,
         backend = DatastoreBackend.get_active_backend()
         # type_ignore_reason: incomplete typing
         context['connection'] = backend._get_write_engine().connect()  # type: ignore
-    with datastore_create_temp_user_table(context, drop_on_commit=False):
+    org_name = org_name_from_res_id(data_dict.get('resource_id'))
+    with datastore_create_temp_app_context_table(context, drop_on_commit=False,
+                                                 org_name=org_name):
         return up_func(context, data_dict)
 
 

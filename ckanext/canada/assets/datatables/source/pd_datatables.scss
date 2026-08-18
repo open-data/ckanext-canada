@@ -632,6 +632,13 @@ body #dtprv_wrapper{
     #dtprv-foot-main .pd-datatables-primary-key-offset-sm_md{
       left: calc(360px + 36px);
     }
+    .pd-datatables-primary-key-offset-md_lg{
+      left: 525px;
+    }
+    .dt-scroll-head th:not(:first-of-type).pd-datatables-primary-key-offset-md_lg,
+    #dtprv-foot-main .pd-datatables-primary-key-offset-md_lg{
+      left: calc(525px + 36px);
+    }
     .pd-datatables-primary-key-offset-lg{
       left: 300px;
     }
