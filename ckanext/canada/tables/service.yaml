@@ -2584,6 +2584,8 @@ resources:
         errors text[][] := '{{}}';
         org_name text NOT NULL := (SELECT org_name FROM datastore_app_context LIMIT 1);
         crval RECORD;
+        is_migration boolean NOT NULL := (SELECT EXISTS (SELECT 1 FROM datastore_app_context WHERE 'service_migration' = ANY(flags)));
+        skip_validation boolean NOT NULL := (SELECT EXISTS (SELECT 1 FROM datastore_app_context WHERE 'skip_validation' = ANY(flags)));
       BEGIN
         NEW.fiscal_yr := trim(both E'\t\n\x0b\x0c\r \xc2\xa0' from NEW.fiscal_yr);
         errors := errors || required_error(NEW.fiscal_yr, 'fiscal_yr');
@@ -2641,7 +2643,10 @@ resources:
             errors := errors || ARRAY[['total_volume', {negative_number_error}]];
         END IF;
 
-        IF NEW.volume_meeting_target > NEW.total_volume THEN
+        -- NOTE: if this is a Service Migration (service_migration flag) or it is skipping validation (skip_validation flag),
+        --       then accept volume_meeting_target greater than total_volume.
+        --
+        IF is_migration IS NOT TRUE AND skip_validation IS NOT TRUE AND NEW.volume_meeting_target > NEW.total_volume THEN
             errors := errors || ARRAY[['volume_meeting_target', {volume_error}]];
         END IF;
 

@@ -503,6 +503,8 @@ class TestStdService(CanadaTestBase):
 
         org = Organization(name='service-std-test-org')
         self.lc = LocalCKAN()
+        self.lc_migration = LocalCKAN(context={
+            'datastore_app_context_flags': ['service_migration']})
 
         self.lc.action.recombinant_create(dataset_type='service', owner_org=org['name'])
         rval = self.lc.action.recombinant_show(dataset_type='service', owner_org=org['name'])
@@ -822,6 +824,29 @@ class TestStdService(CanadaTestBase):
         assert 'records' in err
         assert 'volume_meeting_target' in err['records'][0]
         assert 'total_volume' in err['records'][0]
+
+        # volume_meeting_target cannot be larger than total_volume
+
+        record = chromo['examples']['record'].copy()
+        record['volume_meeting_target'] = 102
+        record['total_volume'] = 100
+
+        with pytest.raises(ValidationError) as ve:
+            self.lc.action.datastore_upsert(
+                resource_id=self.resource_id,
+                records=[record])
+        model.Session.rollback()
+        err = ve.value.error_dict
+        assert 'records' in err
+        assert 'volume_meeting_target' in err['records'][0]
+        assert err['records'][0]['volume_meeting_target'] == ['Volume Meeting Target can not exceed Total Volume.']
+
+        # volume_meeting_target cannot be larger than total_volume
+        # ignored if migration
+        self.lc_migration.action.datastore_upsert(
+            resource_id=self.resource_id,
+            records=[record])
+
 
     def test_filter_script(self):
         """
