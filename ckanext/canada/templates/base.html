@@ -57,6 +57,13 @@
 {%- block custom_styles -%}
   {% asset 'canada_custom/css' %}
   {% snippet 'snippets/cdts/head_scripts.html' %}
+  {# START: first paint styles #}
+  <style nonce="{{- h.get_inline_script_nonce() -}}">
+    body .d-none{
+      display: none;
+    }
+  </style>
+  {# END: first paint styles #}
   {% if h.get_environment() in ['staging', 'development'] %}
     {% set bg_size = '180' if h.get_environment() == 'development' else '140' %}
     <style nonce="{{- h.get_inline_script_nonce() -}}">
