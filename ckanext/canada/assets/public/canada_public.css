@@ -2205,3 +2205,8 @@ body tbody.recombinant-data-dictionary-suffix-ref td{
   padding: 4px;
   transform: translateX(-1px) rotate(-45deg);
 }
+
+.canada-cursor-help{
+  cursor: help !important;
+  text-decoration: underline dotted !important;
+}

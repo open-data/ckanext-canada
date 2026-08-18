@@ -31,9 +31,9 @@ window.addEventListener('load', function(){
     }
 
     function _set_datastore_alert_message(format){
-      let message = 'You are linking to a <strong>' + format + '</strong> file. Uploading the file to the Registry will validate the data, import it into a dedicated database table, and make it available through the API for easier access and integration.';
+      let message = 'You are linking to an external <strong>' + format + '</strong> file. To access full validation and <span class="canada-cursor-help" title="Application Programming Interface" aria-label="Application Programming Interface">API</span> features, upload it directly to the Registry. Your data will be validated for errors, loaded into a dedicated database table, and accessible via the <span class="canada-cursor-help" title="Application Programming Interface" aria-label="Application Programming Interface">API.</span> This will make your data simpler to manage, access, reuse, and share with other tools and systems.';
       if( lang == 'fr' ){
-        message = 'Vous créez un lien vers un fichier <strong>' + format + '.</strong> En téléversant le fichier dans le Registre, les données seront validées, importées dans une table de base de données dédiée et rendues accessibles par l\'entremise de l\'API pour en faciliter l\'accès et l\'intégration.';
+        message = 'Vous avez créé un lien vers un fichier <strong>' + format + '</strong> externe. Pour avoir accès à toutes les fonctionnalités de validation et d\'intégration d\'une <span class="canada-cursor-help" title="Interface de programmation d\'applications" aria-label="Interface de programmation d\'applications">API,</span> téléversez le fichier directement dans le Registre. Vos données seront validées pour détecter les erreurs, chargées dans une table de base de données qui leur est destinée et accessibles au moyen de <span class="canada-cursor-help" title="Interface de programmation d\'applications" aria-label="Interface de programmation d\'applications">l\'API.</span> Vos données seront ainsi plus faciles à gérer, à consulter, à réutiliser et à partager avec d\'autres outils et systèmes.';
       }
       $(dataUploadWrapper).after('<div class="module-alert alert alert-guidance mrgn-tp-sm mrgn-bttm-sm canada-link-ds-upload-alert" style="margin-left: 3px;"><p>' + message + '</p></div>');
     }
