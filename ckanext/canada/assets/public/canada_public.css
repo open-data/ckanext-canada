@@ -2182,6 +2182,7 @@ span.resource-heading-text mark.highlight{
 .alert.alert-guidance{
   border-color: #335075;
 }
+
 .alert.alert-guidance::before{
   content: '\f14e';
   color: #a62a1e;
@@ -2194,4 +2195,9 @@ span.resource-heading-text mark.highlight{
   font-size: 28px;
   padding: 4px;
   transform: translateX(-1px) rotate(-45deg);
+}
+
+.canada-cursor-help{
+  cursor: help !important;
+  text-decoration: underline dotted !important;
 }
