@@ -1,9 +1,11 @@
 {% ckan_extends %}
 
+{%- set pages = h.scheming_get_dataset_form_pages(dataset_type) -%}
+
 {% block stages %}
-  {% if form_style != 'edit' and dataset_type != 'prop' %}
+  {%- if not pages and form_style != 'edit' and dataset_type != 'prop' and stage -%}
     {{ h.snippet('package/snippets/stages.html', stages=stage, dataset_type=dataset_type) }}
-  {% endif %}
+  {%- endif -%}
 {% endblock %}
 
 {% block basic_fields %}
@@ -96,15 +98,28 @@
 {% block publish_button %}{% endblock %}
 
 {% block save_button_text %}
-  {% if form_style != 'edit' %}
+  {%- if pages -%}
+    {{ super() }}
+  {%- elif form_style != 'edit' -%}
     {{- _('Next: Add Resource') -}}
-  {% else %}
+  {%- else -%}
     {{- _('Update Record') -}}
-  {% endif %}
+  {%- endif -%}
 {% endblock %}
 
 {% block save_button %}
-  <div data-module="package_confirm_contact_email">
-    {{ super() }}
-  </div>
+  {%- if pages -%}
+    {%- set active_page = data.get('_form_page', 1) | int -%}
+    {% if active_page == 2 %}
+      <div data-module="package_confirm_contact_email">
+        {{ super() }}
+      </div>
+    {% else %}
+      {{ super() }}
+    {% endif %}
+  {%- else -%}
+    <div data-module="package_confirm_contact_email">
+      {{ super() }}
+    </div>
+  {%- endif -%}
 {% endblock %}

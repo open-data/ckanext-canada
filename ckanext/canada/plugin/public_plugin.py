@@ -105,14 +105,35 @@ class CanadaPublicPlugin(p.SingletonPlugin, DefaultTranslation):
         if 'validation' not in scheming_presets:
             assert 'ckanext.scheming:presets.json' in scheming_presets
             assert 'ckanext.fluent:presets.json' in scheming_presets
-            assert 'ckanext.canada:schemas/presets.yaml' in scheming_presets
             assert 'ckanext.canada:schemas/validation_placeholder_presets.yaml' in \
                 scheming_presets
 
+        # TODO: in combined instance, w/ canada_logic plugin set dynamically...
+        pages_affix = '.pages' if config['ckanext.canada.use_scheming_pages'] else ''
+        assert 'ckanext.canada:schemas/presets%s.yaml' % pages_affix in scheming_presets
+
         scheming_dataset_schemas = config.get('scheming.dataset_schemas', '')
-        assert 'ckanext.canada:schemas/dataset.yaml' in scheming_dataset_schemas
-        assert 'ckanext.canada:schemas/info.yaml' in scheming_dataset_schemas
+        assert 'ckanext.canada:schemas/dataset%s.yaml' % pages_affix \
+            in scheming_dataset_schemas
+        assert 'ckanext.canada:schemas/info%s.yaml' % pages_affix \
+            in scheming_dataset_schemas
         assert 'ckanext.canada:schemas/prop.yaml' in scheming_dataset_schemas
+
+        # Set our preset schemas
+        # NOTE: scheming wants space separated string
+        # TODO: in combined instance, w/ canada_logic plugin set dynamically...
+        # if scheming_presets:
+        #     config['scheming.presets'] += ' ckanext.canada:schemas/presets%s.yaml' % (
+        #         pages_affix)
+
+        # Set our package schemas
+        # NOTE: scheming wants space separated string
+        # TODO: in combined instance, w/ canada_logic plugin set dynamically...
+        # config['scheming.dataset_schemas'] = ' '.join([
+        #     'ckanext.canada:schemas/dataset%s.yaml' % pages_affix,
+        #     'ckanext.canada:schemas/info%s.yaml' % pages_affix,
+        #     'ckanext.canada:schemas/prop.yaml',
+        # ])
 
         scheming_organization_schemas = config.get('scheming.organization_schemas', '')
         assert 'ckanext.canada:schemas/organization.yaml' in \
@@ -256,14 +277,16 @@ class CanadaPublicPlugin(p.SingletonPlugin, DefaultTranslation):
     # ICiteProcMappings
     def update_dataset_citation_map(self, cite_data: DataDict,
                                     pkg_dict: DataDict) -> bool:
-        cite_data['container_title'] = _(cite_data['container_title'])
+        title = cite_data['container_title']
+        cite_data['container_title'] = _(title)
         self._update_canada_citation_map(cite_data, pkg_dict)
         return False
 
     def update_resource_citation_map(self, cite_data: DataDict,
                                      pkg_dict: DataDict,
                                      res_dict: DataDict) -> bool:
-        cite_data['container_title'] = _(cite_data['container_title'])
+        title = cite_data['container_title']
+        cite_data['container_title'] = _(title)
         self._update_canada_citation_map(cite_data, pkg_dict)
         return False
 

@@ -12,6 +12,7 @@ from ckanapi import (
 )
 
 from ckan.tests.helpers import CKANResponse  # noqa: F401
+from ckan.model.types import make_uuid
 
 from ckanext.canada.tests.factories import (
     CanadaOrganization as Organization,
@@ -48,15 +49,21 @@ class TestPackageWebForms(CanadaTestBase):
         """
         super(TestPackageWebForms, self).setup_class()
         self.sysadmin = Sysadmin()
+        editor = User()
         self.extra_environ_tester = {'Authorization': self.sysadmin['token']}
         self.environ_overrides_tester = {'REMOTE_USER': self.sysadmin['name'].encode('ascii')}
+        self.extra_environ_editor = {'Authorization': editor['token']}
+        self.environ_overrides_editor = {'REMOTE_USER': editor['name'].encode('ascii')}
         self.org = Organization(users=[{
             'name': self.sysadmin['name'],
-            'capacity': 'admin'}])
+            'capacity': 'admin'},
+            {'name': editor['name'],
+             'capacity': 'editor'},])
 
     @mock.patch.object(h, 'flash_success', flashes.mock_flash)
     @mock.patch.object(h, 'get_flashed_messages', flashes.mock_get_flashed_messages)
     @mock.patch.object(h, 'is_registry_domain', mock_is_registry_domain)
+    # @pytest.mark.skip(reason='TODO: finalize shceming pages form layouts')
     def test_new_dataset_required_fields(self, app):
         dataset_id = 'f3e4adb9-6e32-4cb4-bf68-1eab9d1288f5'
 
@@ -91,7 +98,42 @@ class TestPackageWebForms(CanadaTestBase):
 
         assert 'Resource added' in response.body
 
+        # test editor user
+        dataset_id = make_uuid()
+
+        offset = h.url_for('dataset.new')
+        response = app.get(offset, extra_environ=self.extra_environ_editor,
+                           environ_overrides=self.environ_overrides_editor)
+
+        assert 'Create Dataset' in response.body
+        assert 'Before you can create a dataset you need to create an organization' not in response.body
+
+        response = app.post(offset,
+                            data=self._filled_dataset_form(dataset_id),
+                            extra_environ=self.extra_environ_editor,
+                            environ_overrides=self.environ_overrides_editor,
+                            follow_redirects=False)
+
+        offset = _get_relative_offset_from_response(response)
+        response = app.get(offset, extra_environ=self.extra_environ_editor,
+                            environ_overrides=self.environ_overrides_editor)
+
+        assert 'Add data to the dataset' in response.body
+
+        response = app.post(offset,
+                            data=self._filled_resource_form(dataset_id),
+                            extra_environ=self.extra_environ_editor,
+                            environ_overrides=self.environ_overrides_editor,
+                            follow_redirects=False)
+
+        offset = _get_relative_offset_from_response(response)
+        response = app.get(offset, extra_environ=self.extra_environ_editor,
+                            environ_overrides=self.environ_overrides_editor)
+
+        assert 'Resource added' in response.body
+
     @mock.patch.object(h, 'is_registry_domain', mock_is_registry_domain)
+    # @pytest.mark.skip(reason='TODO: finalize shceming pages form layouts')
     def test_new_dataset_missing_fields(self, app):
         dataset_id = 'f3e4adb9-6e32-4cb4-bf68-1eab9d1288f4'
 

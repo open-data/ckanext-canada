@@ -1,6 +1,10 @@
 {% extends "package/base_form_page.html" %}
 
-{% block page_title %}<h3>{{ _("Update Record") }}</h3>{% endblock %}
+{% block page_title %}
+  <h1 id="wb-cont">{{- h.recombinant_language_text(chromo_title) -}}</h1>
+  <h2 class="wb-invisible">{{- h.get_translated(org_dict, 'title') -}}</h2>
+  <h3>{{ _("Update Record") }}</h3>
+{% endblock %}
 {% block subtitle %}{{ _("Update Record") }}{% endblock %}
 
 {% block breadcrumb_content %}

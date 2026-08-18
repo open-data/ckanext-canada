@@ -2,6 +2,13 @@
 
 {% import 'macros/form.html' as form %}
 
+{% block stages %}
+  {%- set pages = h.scheming_get_dataset_form_pages(dataset_type) -%}
+  {%- if not pages and form_style != 'edit' and dataset_type != 'prop' and stage -%}
+    {{ h.snippet('package/snippets/stages.html', stages=stage, dataset_type=dataset_type) }}
+  {%- endif -%}
+{% endblock %}
+
 {% block errors %}
   {%- if resource_validation_errors -%}
     {%- set schema = h.scheming_get_dataset_schema(dataset_type) -%}
@@ -31,6 +38,18 @@
       <div class="tgl-panel">
         {%- for field in schema.resource_fields -%}
           {%- if field.form_panel == 'resource' -%}
+            {%- snippet 'scheming/snippets/form_field.html', field=field, data=data, errors=errors, entity_type='dataset', object_type=dataset_type -%}
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    </details>
+    <details id="descriptive-resource-meta-group" class="acc-group-des" open="open">
+      <summary class="wb-toggle tgl-tab" data-bs-toggle='{"parent": ".accordion", "group": ".acc-group-des"}'>
+        {{ _("Semantic Metadata Fields for Resources") }}
+      </summary>
+      <div class="tgl-panel">
+        {%- for field in schema.resource_fields -%}
+          {%- if field.form_panel == 'descriptive' -%}
             {%- snippet 'scheming/snippets/form_field.html', field=field, data=data, errors=errors, entity_type='dataset', object_type=dataset_type -%}
           {%- endif -%}
         {%- endfor -%}
