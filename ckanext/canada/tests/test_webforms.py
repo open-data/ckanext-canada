@@ -121,7 +121,7 @@ class TestPackageWebForms(CanadaTestBase):
                             environ_overrides=self.environ_overrides_editor,
                             follow_redirects=False)
 
-        offset = _get_relative_offset_from_response(response)
+        offset, _host = get_relative_offset_from_response(response)
         response = app.get(offset, extra_environ=self.extra_environ_editor,
                            environ_overrides=self.environ_overrides_editor)
 
@@ -133,7 +133,7 @@ class TestPackageWebForms(CanadaTestBase):
                             environ_overrides=self.environ_overrides_editor,
                             follow_redirects=False)
 
-        offset = _get_relative_offset_from_response(response)
+        offset, _host = get_relative_offset_from_response(response)
         response = app.get(offset, extra_environ=self.extra_environ_editor,
                            environ_overrides=self.environ_overrides_editor)
 

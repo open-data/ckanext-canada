@@ -37,6 +37,7 @@ from ckan.lib.navl.dictization_functions import validate
 from ckanext.scheming.helpers import scheming_get_preset
 from ckanext.datastore.backend import DatastoreBackend
 from ckanext.datastore.logic.schema import datastore_search_schema
+from ckanext.canada.helpers import org_name_from_res_id
 
 
 MIMETYPES_AS_DOMAINS = [
