@@ -2945,6 +2945,10 @@ presets:
     field_name: resource_type
     form_snippet: select.html
     display_snippet: select.html
+    classes:
+      - control-full
+    form_attrs:
+      data-field-select2: true
     validators: scheming_required canada_static_rtype_tabledesigner scheming_choices
     required: true
     form_include_blank_choice: true
