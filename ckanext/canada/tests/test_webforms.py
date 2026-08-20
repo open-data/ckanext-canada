@@ -116,7 +116,7 @@ class TestPackageWebForms(CanadaTestBase):
 
         offset = _get_relative_offset_from_response(response)
         response = app.get(offset, extra_environ=self.extra_environ_editor,
-                            environ_overrides=self.environ_overrides_editor)
+                           environ_overrides=self.environ_overrides_editor)
 
         assert 'Add data to the dataset' in response.body
 
@@ -128,7 +128,7 @@ class TestPackageWebForms(CanadaTestBase):
 
         offset = _get_relative_offset_from_response(response)
         response = app.get(offset, extra_environ=self.extra_environ_editor,
-                            environ_overrides=self.environ_overrides_editor)
+                           environ_overrides=self.environ_overrides_editor)
 
         assert 'Resource added' in response.body
 
