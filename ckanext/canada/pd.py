@@ -1,9 +1,8 @@
 # NOTE: used to connect to the SOLR cores for Drupal PD Searches
 # TODO: remove once all PDs are in Django
-from typing import Optional, Union, Dict, Any, List, Tuple
-
 import click
 import os
+import sys
 import hashlib
 import calendar
 import time
@@ -11,6 +10,11 @@ from pysolr import Solr
 from babel.numbers import format_currency, format_decimal
 
 from ckanapi import LocalCKAN, NotFound
+from ckanext.datastore.backend.postgres import get_write_engine
+
+from typing import Optional, Union, Dict, Any, List, Tuple, Generator
+
+from ckan.plugins.toolkit import config
 
 from ckanext.recombinant.tables import (
     get_chromo,
@@ -20,14 +24,26 @@ from ckanext.recombinant.read_csv import csv_data_batch
 from ckanext.recombinant.helpers import (
     recombinant_choice_fields,
     recombinant_language_text)
-
-from ckanext.canada.dataset import (
-    MONTHS_FR,
-    solr_connection,
-    data_batch,
-    safe_for_solr)
+from ckanext.canada import model as canada_model
 
 SOLR_MAX_UTF8_LENGTH = 28000
+_REMOVE_CONTROL_CODES = dict((x, None) for x in range(32) if x != 10 and x != 13)
+BATCH_SIZE = 1000
+MONTHS_FR = [
+    '',  # "month 0"
+    'janvier',
+    'février',
+    'mars',
+    'avril',
+    'mai',
+    'juin',
+    'juillet',
+    'août',
+    'septembre',
+    'octobre',
+    'novembre',
+    'décembre',
+]
 
 
 def get_commands():
@@ -624,3 +640,169 @@ def compare_output(prev_solrrec: Dict[str, Any],
                     sum_to_field(out, sc, sum_change)
 
     return out
+
+
+def solr_connection(ini_prefix: str,
+                    solr_url: Optional[str] = None) -> Solr:
+    """
+    Set up solr connection
+    :param ini_prefix: prefix to use in specifying .ini file keys (e.g.,
+        ati_summaries to use config setting ati_summaries.solr_url etc.)
+    :ptype ini_prefix: str
+
+    :return a solr connection from configured URL, user, password settings
+    :rtype object
+    """
+    if not solr_url:
+        url = config.get('{0:s}.solr_url'.format(ini_prefix))
+        user = config.get('{0:s}.solr_user'.format(ini_prefix))
+        password = config.get('{0:s}.solr_password'.format(ini_prefix))
+    else:
+        url = solr_url
+        user = None
+        password = None
+    if url is None:
+        raise KeyError('{0:s}.solr_url'.format(ini_prefix))
+    if user is not None and password is not None:
+        # type_ignore_reason: solr user pass may be required for Drupal PD searches
+        return Solr(url, http_user=user, http_pass=password)  # type: ignore
+    return Solr(url)
+
+
+def data_batch(org_id: str, lc: LocalCKAN,
+               dataset_type: str) -> Generator[Tuple[str, List[Any]], None, None]:
+    """
+    Generator of dataset dicts for organization with name org
+
+    :param org_id: the id for the organization of interest
+    :ptype org_id: str
+    :param lc: local CKAN
+    :ptype lc: obj
+    :param dataset_type: e.g., 'ati', 'pd', etc.
+    :ptype dataset_type: str
+
+    generates (resource name, batch of records) tuples
+    """
+    result = lc.action.package_search(
+        q="type:{0:s} owner_org:{1:s}".format(dataset_type, org_id),
+        rows=2)['results']
+
+    if not result:
+        return
+    if len(result) != 1:
+        sys.stderr.write('1 record expected for %s %s, found %d' %
+                         (dataset_type, org_id, len(result)))
+
+    dataset = result[0]
+    for resource in dataset['resources']:
+        offset = 0
+        while True:
+            rval = lc.action.datastore_search(
+                resource_id=resource['id'],
+                limit=BATCH_SIZE,
+                offset=offset)
+            records = rval['records']
+            if not records:
+                break
+            offset += len(records)
+            yield (resource['name'], records)
+
+
+def safe_for_solr(s: Optional[str]) -> str:
+    """
+    return a string that is safe for solr to ingest by removing all
+    control characters except for CR and LF
+    """
+    if s is None:
+        return ''
+    assert isinstance(s, str)
+    return s.translate(_REMOVE_CONTROL_CODES)
+
+
+def _load_csv_ref_data(table_name: str, columns: List[str],
+                       file_path: str, verbose: Optional[bool] = False) -> bool:
+    """
+    Runs a copy_expert to insert CSV data into a DataStore table.
+    """
+    write_engine = get_write_engine()
+    with write_engine.begin() as connection:
+        connection.execute("SET LOCAL lock_timeout = '5s'")
+        connection.execute('TRUNCATE TABLE "%s"' % table_name)
+    connection = write_engine.raw_connection()
+    try:
+        cursor = connection.cursor()
+        with open(file_path, 'rb') as f:
+            f_hash = hashlib.sha256()
+            for chunk in iter(lambda: f.read(8192), b''):
+                f_hash.update(chunk)
+            f_hash = f_hash.hexdigest()
+            f.seek(0)  # point zero after hash check
+            db_obj = canada_model.RefData.get(table_name=table_name)
+            if db_obj and db_obj.sha256 == f_hash:
+                # no change to the ref data file
+                if verbose:
+                    click.echo('Ref data file %s has '
+                               'not changed. Skipping...' % os.path.basename(f.name))
+                return False
+            canada_model.RefData.upsert(
+                table_name=table_name,
+                sha256=f_hash)
+            try:
+                cursor.copy_expert(
+                    'COPY "%s" '
+                    '(%s) FROM STDIN '
+                    "WITH (DELIMITER ',', FORMAT csv, HEADER 1, ENCODING 'UTF8');" % (
+                        table_name,
+                        ','.join(['"%s"' % f for f in columns])
+                    ), f)
+            finally:
+                cursor.close()
+    finally:
+        connection.commit()
+    return True
+
+
+@pd.command()
+@click.argument("pd_type", required=False)
+@click.option('-v', '--verbose', is_flag=True,
+              type=click.BOOL, help='Increase verbosity.')
+def load_ref_data(pd_type: Optional[str] = None,
+                  verbose: Optional[bool] = False):
+    """
+    Loads CSV data into DataStore reference tables.
+    """
+    if pd_type is None or pd_type == 'service':
+        if verbose:
+            click.echo('Loading service Service IDs '
+                       'into ref_service_service_ids table...')
+        service_id_data = os.path.join(
+            os.path.split(__file__)[0],
+            'tables/references/data/ref_service_service_ids.csv')
+        loaded = _load_csv_ref_data('ref_service_service_ids',
+                                    [
+                                        'service_id',
+                                        'label_en',
+                                        'label_fr',
+                                        'org_years',
+                                    ],
+                                    service_id_data, verbose=verbose)
+        if verbose and loaded:
+            click.echo('Successfully loaded service Service IDs '
+                       'into ref_service_service_ids table')
+        if verbose:
+            click.echo('Loading service Program IDs '
+                       'into ref_service_program_ids table...')
+        program_id_data = os.path.join(
+            os.path.split(__file__)[0],
+            'tables/references/data/ref_service_program_ids.csv')
+        loaded = _load_csv_ref_data('ref_service_program_ids',
+                                    [
+                                        'program_id',
+                                        'label_en',
+                                        'label_fr',
+                                        'org_years',
+                                    ],
+                                    program_id_data, verbose=verbose)
+        if verbose and loaded:
+            click.echo('Successfully loaded service Program IDs '
+                       'into ref_service_program_ids table')

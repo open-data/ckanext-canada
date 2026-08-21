@@ -10,6 +10,6 @@
     {% if h.is_registry_domain() and pkg.type in h.recombinant_get_types() %}
       {% set dataset = dataset ~ ' - ' ~ h.split_piped_bilingual_field(pkg.organization.title, h.lang()) %}
     {% endif %}
-    <li{{ self.breadcrumb_content_selected() }}><a href="{{ pkg_url }}" title="{{ dataset }}">{{ dataset|truncate(80) }}</a></li>
+    <li {{ self.breadcrumb_content_selected() }}><a href="{{ pkg_url }}" title="{{ dataset }}">{{ dataset|truncate(80) }}</a></li>
   {% endif %}
 {% endblock %}
