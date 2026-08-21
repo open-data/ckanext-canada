@@ -102,4 +102,6 @@ class CanadaFormsPlugin(p.SingletonPlugin, DefaultDatasetForm):
                 validators.limit_resources_per_dataset,
             'canada_resource_language_validator':
                 validators.canada_resource_language_validator,
+            'canada_output_resource_original_url':
+                validators.canada_output_resource_original_url,
             }
