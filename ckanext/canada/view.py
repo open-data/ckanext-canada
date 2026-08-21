@@ -465,16 +465,30 @@ def fivehundred():
     raise IntentionalServerError()
 
 
-def _get_choice_fields(resource_name: str) -> Dict[str, Any]:
+def _get_choice_fields(resource_name: str,
+                       data: Optional[Dict[str, Any]] = None,
+                       org_name: Optional[str] = None) -> Dict[str, Any]:
     separator = ' : ' if h.lang() == 'fr' else ': '
     choice_fields = {}
-    for datastore_id, choices in h.recombinant_choice_fields(resource_name).items():
+    for datastore_id, choices in h.recombinant_choice_fields(
+      resource_name, org_name=org_name).items():
+        available_keys = []
         f = h.recombinant_get_field(resource_name, datastore_id)
         form_choices_prefix_code = f.get('form_choices_prefix_code', False)
         form_choice_keys_only = f.get('form_choice_keys_only', False)
         if datastore_id not in choice_fields:
             choice_fields[datastore_id] = []
+        # allow for suffixes to labels. If the value has the suffix, add
+        # the suffix labels.
+        suffix = None
+        suffix_label = ''
+        for _suffix, _labels in f.get('choices_suffix_filter', {}).items():
+            suffix = _suffix
+            suffix_label = _labels[h.lang()]
         for (k, v) in choices:
+            available_keys.append(k)
+            if suffix and k.endswith(suffix):
+                v += ' %s' % suffix_label
             if form_choice_keys_only:
                 choice_fields[datastore_id].append({'value': k,
                                                     'label': k})
@@ -485,6 +499,30 @@ def _get_choice_fields(resource_name: str) -> Dict[str, Any]:
                 continue
             choice_fields[datastore_id].append({'value': k,
                                                 'label': v})
+        # support current data that may not be in the choices anymore
+        if data and data.get(datastore_id):
+            _current_val = data[datastore_id]
+            if isinstance(_current_val, str):
+                # support multi choice
+                _current_val = [_current_val]
+            for _v in _current_val:
+                if _v in available_keys:
+                    continue
+                _l = _v
+                if suffix and _l.endswith(suffix):
+                    # we don't have any other labels at this point,
+                    # so can only use the suffix label
+                    _l = suffix_label
+                if form_choice_keys_only:
+                    choice_fields[datastore_id].append({'value': _v,
+                                                        'label': _v})
+                    continue
+                elif form_choices_prefix_code:
+                    choice_fields[datastore_id].append({'value': _v,
+                                                        'label': _v + separator + _l})
+                    continue
+                choice_fields[datastore_id].append({'value': _v,
+                                                    'label': _l})
     return choice_fields
 
 
@@ -510,6 +548,15 @@ def canada_organization_bulk_process(id: str, group_type: str = 'organization',
     return h.redirect_to('%s.read' % group_type, id=id)
 
 
+def _normalize_record_newlines(record: Dict[str, Any]) -> Dict[str, Any]:
+    """
+    Normalizes newline characters to \\n
+    """
+    return dict((k, v.replace('\r\n', '\n').replace('\r', '\n')
+                 if isinstance(v, str) else v)
+                for k, v in record.items())
+
+
 @canada_views.route('/create-pd-record/<owner_org>/<resource_name>',
                     methods=['GET', 'POST'])
 def create_pd_record(owner_org: str, resource_name: str):
@@ -531,7 +578,7 @@ def create_pd_record(owner_org: str, resource_name: str):
     except NotAuthorized:
         return abort(403, _('Unauthorized to create a resource for this package'))
 
-    choice_fields = _get_choice_fields(resource_name)
+    choice_fields = _get_choice_fields(resource_name, org_name=owner_org)
     pk_fields = aslist(chromo['datastore_primary_key'])
 
     if request.method == 'POST':
@@ -550,6 +597,8 @@ def create_pd_record(owner_org: str, resource_name: str):
             pk_fields,
             choice_fields)
         error_summary = None
+        # normalize newlines to \n
+        data = _normalize_record_newlines(data)
         try:
             lc.action.datastore_upsert(
                 resource_id=res['id'],
@@ -655,7 +704,6 @@ def update_pd_record(owner_org: str, resource_name: str, pk: str):
     except NotAuthorized:
         abort(403, _('Unauthorized to update dataset'))
 
-    choice_fields = _get_choice_fields(resource_name)
     pk_fields = aslist(chromo['datastore_primary_key'])
     pk_filter = dict(zip(pk_fields, pk_list))
 
@@ -667,6 +715,24 @@ def update_pd_record(owner_org: str, resource_name: str, pk: str):
     if len(records) > 1:
         abort(400, _('Multiple records found'))
     record = records[0]
+
+    data = {}
+    for f in chromo['fields']:
+        if (
+          not f.get('import_template_include', True) or
+          f.get('published_resource_computed_field', False)
+        ):
+            continue
+        val = record[f['datastore_id']]
+        if val and f.get('datastore_type') == 'money':
+            if isinstance(val, str) and '$' in val:
+                data[f['datastore_id']] = val
+            else:
+                data[f['datastore_id']] = '${:,.2f}'.format(val)
+        else:
+            data[f['datastore_id']] = val
+
+    choice_fields = _get_choice_fields(resource_name, data, org_name=owner_org)
 
     if request.method == 'POST':
         post_data = parse_params(request.form, ignore_keys=['save'] + pk_fields)
@@ -688,6 +754,10 @@ def update_pd_record(owner_org: str, resource_name: str, pk: str):
         for f_id in data:
             if f_id in pk_fields:
                 data[f_id] = record[f_id]
+
+        # normalize newlines to \n
+        data = _normalize_record_newlines(data)
+
         try:
             lc.action.datastore_upsert(
                 resource_id=res['id'],
@@ -729,21 +799,6 @@ def update_pd_record(owner_org: str, resource_name: str, pk: str):
             resource_name=resource_name,
             owner_org=rcomb['owner_org'],
             )
-
-    data = {}
-    for f in chromo['fields']:
-        if (
-          not f.get('import_template_include', True) or
-          f.get('published_resource_computed_field', False)):
-            continue
-        val = record[f['datastore_id']]
-        if val and f.get('datastore_type') == 'money':
-            if isinstance(val, str) and '$' in val:
-                data[f['datastore_id']] = val
-            else:
-                data[f['datastore_id']] = '${:,.2f}'.format(val)
-        else:
-            data[f['datastore_id']] = val
 
     return render('recombinant/update_pd_record.html',
                   extra_vars={
@@ -795,13 +850,15 @@ def upsert_pd_data(owner_org: str, resource_name: str):
     # NOTE: upserting each record one-by-one is crazy slower,
     #       but it is the only way to get all of the errors back in one object.
     while offset < len(records):
+        # type_ignore_reason: incomplete typing
+        record = _normalize_record_newlines(records[offset])  # type: ignore
         try:
             data = get_action('datastore_upsert')(
                 context, {
                     'method': method,
                     'resource_id': resource_id,
                     'dry_run': dry_run,
-                    'records': [records[offset]]
+                    'records': [record]
                 })
             if 'result' not in return_dict:
                 return_dict['result'] = {}
