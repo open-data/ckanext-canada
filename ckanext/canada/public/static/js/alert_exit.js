@@ -33,7 +33,7 @@ document.addEventListener('click', function(_event){
     modal.setAttribute('aria-hidden', false);
     modal.setAttribute('aria-modal', true);
     modal.setAttribute('aria-labelledby', 'canada-external-site-warning--label');
-    modal.setAttribute('style', 'background: rgba(0, 0, 0, 0.15) !important;');
+    modal.setAttribute('style', 'background: rgba(0, 0, 0, 0.15) !important; text-align: center;');
     const modalTitle = language === 'fr' ? 'Quitter le site' : 'Leaving Site';
     const modalLeadingContent = language === 'fr' ? 'Vous êtes sur le point de quitter le site web Canada.ca. Ce lien vous dirigera vers un site externe non gouvernemental.' : 'You are about to leave the Canada.ca website and access a site that is not affiliated with the Government of Canada.';
     const modelContent = language === 'fr' ? "Le gouvernement du Canada n'est pas responsable de l'exactitude, de l'actualité, ni de la fiabilité du contenu de ce site externe. Il se peut également que ce dernier ne soit pas assujetti à la <em>Loi sur les langues officielles,</em> à la <em>Loi sur la protection des renseignements personnels,</em> ni à la <em>Loi canadienne sur l'accessibilité.</em>" : 'The Government of Canada is not responsible for the accuracy, timeliness or reliability of the content of this external site. This site may not be subject to the <em>Official Languages Act,</em> the <em>Privacy Act,</em> or the <em>Accessible Canada Act.</em>';
