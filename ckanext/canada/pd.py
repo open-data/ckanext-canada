@@ -720,14 +720,13 @@ def safe_for_solr(s: Optional[str]) -> str:
 
 
 def _load_csv_ref_data(table_name: str, columns: List[str],
-                       file_path: str, verbose: Optional[bool] = False) -> bool:
+                       file_path: str,
+                       ignore_hash: Optional[bool] = False,
+                       verbose: Optional[bool] = False) -> bool:
     """
     Runs a copy_expert to insert CSV data into a DataStore table.
     """
     write_engine = get_write_engine()
-    with write_engine.begin() as connection:
-        connection.execute("SET LOCAL lock_timeout = '5s'")
-        connection.execute('TRUNCATE TABLE "%s"' % table_name)
     connection = write_engine.raw_connection()
     try:
         cursor = connection.cursor()
@@ -738,12 +737,15 @@ def _load_csv_ref_data(table_name: str, columns: List[str],
             f_hash = f_hash.hexdigest()
             f.seek(0)  # point zero after hash check
             db_obj = canada_model.RefData.get(table_name=table_name)
-            if db_obj and db_obj.sha256 == f_hash:
+            if db_obj and not ignore_hash and db_obj.sha256 == f_hash:
                 # no change to the ref data file
                 if verbose:
                     click.echo('Ref data file %s has '
                                'not changed. Skipping...' % os.path.basename(f.name))
                 return False
+            with write_engine.begin() as _connection:
+                _connection.execute("SET LOCAL lock_timeout = '5s'")
+                _connection.execute('TRUNCATE TABLE "%s"' % table_name)
             canada_model.RefData.upsert(
                 table_name=table_name,
                 sha256=f_hash)
@@ -764,9 +766,12 @@ def _load_csv_ref_data(table_name: str, columns: List[str],
 
 @pd.command()
 @click.argument("pd_type", required=False)
+@click.option('-i', '--ignore-hash', is_flag=True,
+              type=click.BOOL, help='Ignore file hashes, forcing a reload of data.')
 @click.option('-v', '--verbose', is_flag=True,
               type=click.BOOL, help='Increase verbosity.')
 def load_ref_data(pd_type: Optional[str] = None,
+                  ignore_hash: Optional[bool] = False,
                   verbose: Optional[bool] = False):
     """
     Loads CSV data into DataStore reference tables.
@@ -785,7 +790,9 @@ def load_ref_data(pd_type: Optional[str] = None,
                                         'label_fr',
                                         'org_years',
                                     ],
-                                    service_id_data, verbose=verbose)
+                                    service_id_data,
+                                    ignore_hash=ignore_hash,
+                                    verbose=verbose)
         if verbose and loaded:
             click.echo('Successfully loaded service Service IDs '
                        'into ref_service_service_ids table')
@@ -802,7 +809,9 @@ def load_ref_data(pd_type: Optional[str] = None,
                                         'label_fr',
                                         'org_years',
                                     ],
-                                    program_id_data, verbose=verbose)
+                                    program_id_data,
+                                    ignore_hash=ignore_hash,
+                                    verbose=verbose)
         if verbose and loaded:
             click.echo('Successfully loaded service Program IDs '
                        'into ref_service_program_ids table')
