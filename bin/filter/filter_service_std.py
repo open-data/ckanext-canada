@@ -91,8 +91,10 @@ def process_row(row: Dict[str, Any]) -> Dict[str, Any]:
         row['target_met'] = 'N'
 
     # populate service names from ids
-    row['service_name_en'] = SERVICE_IDS[row['service_id']]['en']
-    row['service_name_fr'] = SERVICE_IDS[row['service_id']]['fr']
+    # though part of service_id controlled list, still require
+    # users to input the Service Name. (2026-09-01;Sept.)
+    # row['service_name_en'] = SERVICE_IDS[row['service_id']]['en']
+    # row['service_name_fr'] = SERVICE_IDS[row['service_id']]['fr']
 
     return row
 
