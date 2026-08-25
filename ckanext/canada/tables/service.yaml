@@ -85,7 +85,8 @@ resources:
     choices_filter_query: WHERE org_years ? {org}
 
   # DEP 1-4
-  # Dev: Published Resource Field
+  # Dev: though part of service_id controlled list, still require
+  #      users to input the Service Name. (2026-09-01;Sept.)
   - datastore_id: service_name_en
     label:
       en: Service Name (English)
@@ -94,12 +95,30 @@ resources:
       en: Identifies the official name of the service.
       fr: Indique le nom officiel du service.
     obligation: Mandatory
+    excel_required: true
+    excel_column_width: 40
+    form_required: true
+    format_type:
+      en: Free text
+      fr: Texte libre
+    validation:
+      en: |
+        This field must not be empty.
+        This field has a maximum length of 350 characters.
+      fr: |
+        Ce champ ne doit pas être vide.
+        Ce champ a une longueur maximale de 350 caractères.
     occurrence: Single
     datastore_type: text
-    published_resource_computed_field: true
+    datatables_col_class: col-lg
+    max_chars: 350
+    form_attrs:
+      class: form-control canada-width-full d-block
+      maxlength: 350
 
   # DEP 1-5
-  # Dev: Published Resource Field
+  # Dev: though part of service_id controlled list, still require
+  #      users to input the Service Name. (2026-09-01;Sept.)
   - datastore_id: service_name_fr
     label:
       en: Service Name (French)
@@ -108,9 +127,26 @@ resources:
       en: Identifies the official name of the service.
       fr: Indique le nom officiel du service.
     obligation: Mandatory
+    excel_required: true
+    excel_column_width: 40
+    form_required: true
+    format_type:
+      en: Free text
+      fr: Texte libre
+    validation:
+      en: |
+        This field must not be empty.
+        This field has a maximum length of 350 characters.
+      fr: |
+        Ce champ ne doit pas être vide.
+        Ce champ a une longueur maximale de 350 caractères.
     occurrence: Single
     datastore_type: text
-    published_resource_computed_field: true
+    datatables_col_class: col-lg
+    max_chars: 350
+    form_attrs:
+      class: form-control canada-width-full d-block
+      maxlength: 350
 
   # DEP 1-6
   - datastore_id: service_description_en
@@ -1606,6 +1642,14 @@ resources:
           errors := errors || ARRAY[['service_id', {service_id_org_limit_error} || '' || org_name || '' || NEW.service_id]];
         END IF;
 
+        errors := errors || required_error(NEW.service_name_en, 'service_name_en');
+        NEW.service_name_en := trim_lead_trailing(NEW.service_name_en);
+        errors := errors || max_char_error(NEW.service_name_en, 350, 'service_name_en');
+
+        errors := errors || required_error(NEW.service_name_fr, 'service_name_fr');
+        NEW.service_name_fr := trim_lead_trailing(NEW.service_name_fr);
+        errors := errors || max_char_error(NEW.service_name_fr, 350, 'service_name_fr');
+
         errors := errors || required_error(NEW.service_description_en, 'service_description_en');
         NEW.service_description_en := trim_lead_trailing(NEW.service_description_en);
         errors := errors || max_char_error(NEW.service_description_en, 1800, 'service_description_en');
@@ -1812,6 +1856,8 @@ resources:
     record:
       fiscal_yr: 2022-2023
       service_id: '1001'
+      service_name_en: Old Age Security (OAS) Benefits
+      service_name_fr: Prestations de la Sécurité de la vieillesse
       service_description_en: >
         The Old Age Security (OAS) pension is a monthly payment available to most Canadians 65 years
         of age who meet the Canadian legal status and residence requirements. In addition to the Old
@@ -1949,7 +1995,8 @@ resources:
     choices_filter_query: WHERE org_years ? {org}
 
   # DEP 2-3
-  # Dev: Published Resource Field
+  # Dev: though part of service_id controlled list, still require
+  #      users to input the Service Name. (2026-09-01;Sept.)
   - datastore_id: service_name_en
     label:
       en: Service Name (English)
@@ -1958,12 +2005,30 @@ resources:
       en: Identifies the official name of the service.
       fr: Indique le nom officiel du service.
     obligation: Mandatory
+    excel_required: true
+    excel_column_width: 40
+    form_required: true
+    validation:
+      en: |
+        This field must not be empty.
+        This field has a maximum length of 350 characters.
+      fr: |
+        Ce champ ne doit pas être vide.
+        Ce champ a une longueur maximale de 350 caractères.
+    format_type:
+      en: Free text
+      fr: Texte libre
     occurrence: Single
     datastore_type: text
-    published_resource_computed_field: true
+    datatables_col_class: col-lg
+    max_chars: 350
+    form_attrs:
+      class: form-control canada-width-full d-block
+      maxlength: 350
 
   # DEP 2-4
-  # Dev: Published Resource Field
+  # Dev: though part of service_id controlled list, still require
+  #      users to input the Service Name. (2026-09-01;Sept.)
   - datastore_id: service_name_fr
     label:
       en: Service Name (French)
@@ -1972,9 +2037,26 @@ resources:
       en: Identifies the official name of the service.
       fr: Indique le nom officiel du service.
     obligation: Mandatory
+    excel_required: true
+    excel_column_width: 40
+    form_required: true
+    validation:
+      en: |
+        This field must not be empty.
+        This field has a maximum length of 350 characters.
+      fr: |
+        Ce champ ne doit pas être vide.
+        Ce champ a une longueur maximale de 350 caractères.
+    format_type:
+      en: Free text
+      fr: Texte libre
     occurrence: Single
     datastore_type: text
-    published_resource_computed_field: true
+    datatables_col_class: col-lg
+    max_chars: 350
+    form_attrs:
+      class: form-control canada-width-full d-block
+      maxlength: 350
 
   # DEP 2-5
   - datastore_id: service_standard_id
@@ -2604,6 +2686,14 @@ resources:
           errors := errors || ARRAY[['service_id', {service_id_org_limit_error} || '' || org_name || '' || NEW.service_id]];
         END IF;
 
+        errors := errors || required_error(NEW.service_name_en, 'service_name_en');
+        NEW.service_name_en := trim_lead_trailing(NEW.service_name_en);
+        errors := errors || max_char_error(NEW.service_name_en, 350, 'service_name_en');
+
+        errors := errors || required_error(NEW.service_name_fr, 'service_name_fr');
+        NEW.service_name_fr := trim_lead_trailing(NEW.service_name_fr);
+        errors := errors || max_char_error(NEW.service_name_fr, 350, 'service_name_fr');
+
         errors := errors || required_error(NEW.service_standard_id, 'service_standard_id');
         IF NEW.service_standard_id LIKE '%,%' THEN
           errors := errors || ARRAY[['service_standard_id', {service_standard_id_comma_error}]];
@@ -2701,6 +2791,8 @@ resources:
     record:
       fiscal_yr: 2022-2023
       service_id: '1001'
+      service_name_en: Old Age Security (OAS) Benefits
+      service_name_fr: Prestations de la Sécurité de la vieillesse
       service_standard_id: '925'
       service_standard_en: OAS basic benefits are paid within the first month of entitlement
       service_standard_fr: Les prestations de base de la SV sont versées au cours du premier mois d’admissibilité.
