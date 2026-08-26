@@ -68,6 +68,7 @@ resources:
     js_error_eval: 'VALUE.length > 0 && VALUE.includes(",")'
     excel_full_text_choices: false
     datatables_full_text_choices: true
+    form_choices_prefix_code: true
     # form_snippet: scheming/form_snippets/multiple_select.html
     format_type:
       en: Controlled List
@@ -1978,6 +1979,7 @@ resources:
     js_error_eval: 'VALUE.length > 0 && VALUE.includes(",")'
     excel_full_text_choices: false
     datatables_full_text_choices: true
+    form_choices_prefix_code: true
     # form_snippet: scheming/form_snippets/multiple_select.html
     format_type:
       en: Controlled List
