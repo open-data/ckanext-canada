@@ -29,6 +29,7 @@
 {% endblock %}
 
 {% block links %}
+  <script src="{{- h.url_for_static('/static/js/alert_exit.js') -}}" nonce="{{- h.get_inline_script_nonce() -}}"></script>
   {{ super() }}
   {% block google_analytics %}
     {% set ga4_id = h.ga4_id() %}
@@ -55,11 +56,7 @@
 {% endblock %}
 
 {%- block custom_styles -%}
-  {% asset 'canada_public/css' %}
-  {% if h.is_registry_domain() %}
-    {# Remove when WET v4.0.21 is out #}
-    {% asset 'canada_internal/css' %}
-  {% endif %}
+  {% asset 'canada_custom/css' %}
   {% snippet 'snippets/cdts/head_scripts.html' %}
   {# START: first paint styles #}
   <style nonce="{{- h.get_inline_script_nonce() -}}">

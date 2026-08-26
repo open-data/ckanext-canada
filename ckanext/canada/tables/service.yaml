@@ -8,7 +8,7 @@ title: Service Inventory
 notes: Access, upload and modify the Service Inventory of external and internal enterprise services for your organization
 
 template_version: 3
-template_updated: 2025-08-11  # last qa confirmed: 2025-02-19
+template_updated: 2026-04-20  # last qa confirmed: 2025-02-19
 
 portal_type: dataset
 collection: service
@@ -49,7 +49,8 @@ resources:
     occurrence: Single
     datastore_type: text
     datatables_col_class: col-md
-    choices_file: choices/fiscal_year.yaml
+    choices_fiscal_year:
+      min_year: 2014
 
   # DEP 1-2
   - datastore_id: service_id
@@ -62,12 +63,16 @@ resources:
     obligation: Mandatory
     excel_required: true
     form_required: true
-    datatables_col_class: col-sm pd-datatables-primary-key-offset-md
+    datatables_col_class: col-lg pd-datatables-primary-key-offset-md
     excel_error_formula: 'OR({default_formula},LEN({cell})-LEN(SUBSTITUTE({cell},",",""))>0)'
     js_error_eval: 'VALUE.length > 0 && VALUE.includes(",")'
+    excel_full_text_choices: false
+    datatables_full_text_choices: true
+    form_choices_prefix_code: true
+    # form_snippet: scheming/form_snippets/multiple_select.html
     format_type:
-      en: Free text
-      fr: Texte libre
+      en: Controlled List
+      fr: Liste contrôlée
     validation:
       en: |
         This field must not be empty.
@@ -77,8 +82,12 @@ resources:
         Ce champ ne peut pas contenir de virgules.
     occurrence: Single
     datastore_type: text
+    choices_reference_table: ref_service_service_ids
+    choices_filter_query: WHERE org_years ? {org}
 
   # DEP 1-4
+  # Dev: though part of service_id controlled list, still require
+  #      users to input the Service Name. (2026-09-01;Sept.)
   - datastore_id: service_name_en
     label:
       en: Service Name (English)
@@ -109,6 +118,8 @@ resources:
       maxlength: 350
 
   # DEP 1-5
+  # Dev: though part of service_id controlled list, still require
+  #      users to input the Service Name. (2026-09-01;Sept.)
   - datastore_id: service_name_fr
     label:
       en: Service Name (French)
@@ -403,7 +414,12 @@ resources:
     excel_full_text_choices: false
     datatables_full_text_choices: true
     form_snippet: scheming/form_snippets/multiple_select.html
-    choices_file: choices/service_program_ids.yaml
+    choices_reference_table: ref_service_program_ids
+    choices_filter_query: WHERE org_years ? {org}
+    choices_suffix_filter:
+      "-INV":
+        en: Invalid for Organization
+        fr: non valide pour l'organisation
     form_choices_prefix_code: true
     form_select_attrs:
       class: form-control recombinant-select2
@@ -1588,6 +1604,9 @@ resources:
     published_resource_computed_field: true
 
   datastore_primary_key: [fiscal_yr, service_id]
+  org_specific_fields:
+    - service_id
+    - program_id
   datastore_indexes: ""
   datastore_constraint_error_templates:
     delete: recombinant/snippets/service_delete_fk_error.html
@@ -1600,14 +1619,28 @@ resources:
   - service_trigger: |
       DECLARE
         errors text[][] := '{{}}';
+        org_name text NOT NULL := (SELECT org_name FROM datastore_app_context LIMIT 1);
         crval RECORD;
+        refval text[];
+        referr text[];
+        is_migration boolean NOT NULL := (SELECT EXISTS (SELECT 1 FROM datastore_app_context WHERE 'service_migration' = ANY(flags)));
+        skip_validation boolean NOT NULL := (SELECT EXISTS (SELECT 1 FROM datastore_app_context WHERE 'skip_validation' = ANY(flags)));
       BEGIN
+        NEW.fiscal_yr := trim(both E'\t\n\x0b\x0c\r \xc2\xa0' from NEW.fiscal_yr);
         errors := errors || required_error(NEW.fiscal_yr, 'fiscal_yr');
-        errors := errors || choice_error(NEW.fiscal_yr, {fiscal_yr}, 'fiscal_yr');
+        errors := errors || fiscal_year_error(NEW.fiscal_yr, 'fiscal_yr', 2014);
 
         errors := errors || required_error(NEW.service_id, 'service_id');
         IF NEW.service_id LIKE '%,%' THEN
           errors := errors || ARRAY[['service_id', {service_id_comma_error}]];
+        END IF;
+
+        IF NOT EXISTS(
+          SELECT FROM "ref_service_service_ids"
+            WHERE org_years ? org_name
+            AND service_id = NEW.service_id
+        ) THEN
+          errors := errors || ARRAY[['service_id', {service_id_org_limit_error} || '' || org_name || '' || NEW.service_id]];
         END IF;
 
         errors := errors || required_error(NEW.service_name_en, 'service_name_en');
@@ -1644,10 +1677,38 @@ resources:
         errors := errors || crval.error;
         NEW.client_target_groups := crval.clean;
 
-        errors := errors || required_error(NEW.program_id, 'program_id');
-        crval := choices_clean_error(NEW.program_id, {program_id}, 'program_id');
-        errors := errors || crval.error;
-        NEW.program_id := crval.clean;
+        refval := (
+          SELECT array_agg(program_id) FROM (
+            SELECT program_id FROM "ref_service_program_ids"
+            WHERE org_years ? org_name
+            AND program_id = ANY(NEW.program_id)
+            ORDER BY program_id
+          ) a
+        );
+        SELECT coalesce(array_agg(v), '{{}}') INTO referr FROM unnest(NEW.program_id) v WHERE NOT (v = ANY(coalesce(refval, '{{}}')));
+        IF refval IS NULL OR array_length(referr, 1) > 0 THEN
+          IF is_migration OR skip_validation THEN
+
+            -- NOTE: if this is a Service Migration (service_migration flag) or it is skipping validation (skip_validation flag),
+            --       then accept invalid Program IDs, suffixing the invalid ones with "-INV" if it does not already have the suffix.
+            --       keeps the original ordering.
+
+            SELECT array_agg(
+                CASE WHEN v = ANY(coalesce(refval, '{{}}')) THEN v
+                WHEN v LIKE '%-INV' THEN v
+                ELSE v || '-INV' END
+              ) INTO refval
+              FROM unnest(NEW.program_id) v;
+            NEW.program_id := refval;
+          ELSE
+
+            -- NOTE:  is the special character for i18n string replacements: \\uF8FF
+
+            errors := errors || ARRAY[['program_id', {program_id_org_limit_error} || '' || org_name || '' || coalesce(array_to_string(referr, ','), '')]];
+          END IF;
+        ELSE
+          NEW.program_id := refval;
+        END IF;
 
         errors := errors || required_error(NEW.client_feedback_channel, 'client_feedback_channel');
         crval := choices_clean_error(NEW.client_feedback_channel, {client_feedback_channel}, 'client_feedback_channel');
@@ -1780,6 +1841,7 @@ resources:
   - update_record_modified_created_trigger
 
   trigger_strings:  # yaml | not supported
+    fiscal_year_error: 'Invalid fiscal year: {}'
     num_na_nd_error: This field must be either a number, "NA", or "ND"
     negative_number_error: This value must not be negative
     max_length_error: This field has a maximum length of {} characters.
@@ -1788,6 +1850,8 @@ resources:
     conditional_required_error: This field is required due to a response in a different field.
     both_lang_error: This text must be provided in both languages
     service_id_comma_error: Comma is not allowed in Service ID Number field
+    service_id_org_limit_error: 'Invalid choice for Organization {}: {}'
+    program_id_org_limit_error: 'Invalid choice(s) for Organization {}: {}'
 
   examples:
     record:
@@ -1896,7 +1960,8 @@ resources:
     datastore_type: text
     excel_full_text_choices: false
     datatables_full_text_choices: false
-    choices_file: choices/fiscal_year.yaml
+    choices_fiscal_year:
+      min_year: 2014
 
   # DEP 2-2
   - datastore_id: service_id
@@ -1907,11 +1972,18 @@ resources:
       en: The unique number assigned to a service in the inventory to make it easier to refer to specific services.
       fr: Le numéro unique attribué à un service dans le répertoire afin de faciliter le référencement à des services précis.
     obligation: Mandatory
-    datatables_col_class: col-sm pd-datatables-primary-key-offset-md
+    datatables_col_class: col-lg pd-datatables-primary-key-offset-md
     excel_required: true
     form_required: true
     excel_error_formula: 'OR({default_formula},LEN({cell})-LEN(SUBSTITUTE({cell},",",""))>0)'
     js_error_eval: 'VALUE.length > 0 && VALUE.includes(",")'
+    excel_full_text_choices: false
+    datatables_full_text_choices: true
+    form_choices_prefix_code: true
+    # form_snippet: scheming/form_snippets/multiple_select.html
+    format_type:
+      en: Controlled List
+      fr: Liste contrôlée
     validation:
       en: |
         This field must not be empty.
@@ -1919,13 +1991,14 @@ resources:
       fr: |
         Ce champ ne doit pas être vide.
         Ce champ ne peut pas contenir de virgules.
-    format_type:
-      en: Free text
-      fr: Texte libre
     occurrence: Single
     datastore_type: text
+    choices_reference_table: ref_service_service_ids
+    choices_filter_query: WHERE org_years ? {org}
 
   # DEP 2-3
+  # Dev: though part of service_id controlled list, still require
+  #      users to input the Service Name. (2026-09-01;Sept.)
   - datastore_id: service_name_en
     label:
       en: Service Name (English)
@@ -1956,6 +2029,8 @@ resources:
       maxlength: 350
 
   # DEP 2-4
+  # Dev: though part of service_id controlled list, still require
+  #      users to input the Service Name. (2026-09-01;Sept.)
   - datastore_id: service_name_fr
     label:
       en: Service Name (French)
@@ -2000,7 +2075,7 @@ resources:
         service. Facilite le référencement, car un service peut avoir de multiples
         normes.
     obligation: Mandatory
-    datatables_col_class: col-sm pd-datatables-primary-key-offset-sm_md
+    datatables_col_class: col-sm pd-datatables-primary-key-offset-md_lg
     excel_required: true
     form_required: true
     excel_error_formula: 'OR({default_formula},LEN({cell})-LEN(SUBSTITUTE({cell},",",""))>0)'
@@ -2572,6 +2647,8 @@ resources:
     published_resource_computed_field: true
 
   datastore_primary_key: [fiscal_yr, service_id, service_standard_id]
+  org_specific_fields:
+    - service_id
   datastore_reference_table_only: true
   datastore_foreign_keys:
     service:
@@ -2589,14 +2666,26 @@ resources:
   - service_std_trigger: |
       DECLARE
         errors text[][] := '{{}}';
+        org_name text NOT NULL := (SELECT org_name FROM datastore_app_context LIMIT 1);
         crval RECORD;
+        is_migration boolean NOT NULL := (SELECT EXISTS (SELECT 1 FROM datastore_app_context WHERE 'service_migration' = ANY(flags)));
+        skip_validation boolean NOT NULL := (SELECT EXISTS (SELECT 1 FROM datastore_app_context WHERE 'skip_validation' = ANY(flags)));
       BEGIN
+        NEW.fiscal_yr := trim(both E'\t\n\x0b\x0c\r \xc2\xa0' from NEW.fiscal_yr);
         errors := errors || required_error(NEW.fiscal_yr, 'fiscal_yr');
-        errors := errors || choice_error(NEW.fiscal_yr, {fiscal_yr}, 'fiscal_yr');
+        errors := errors || fiscal_year_error(NEW.fiscal_yr, 'fiscal_yr', 2014);
 
         errors := errors || required_error(NEW.service_id, 'service_id');
         IF NEW.service_id LIKE '%,%' THEN
           errors := errors || ARRAY[['service_id', {service_id_comma_error}]];
+        END IF;
+
+        IF NOT EXISTS(
+          SELECT FROM "ref_service_service_ids"
+            WHERE org_years ? org_name
+            AND service_id = NEW.service_id
+        ) THEN
+          errors := errors || ARRAY[['service_id', {service_id_org_limit_error} || '' || org_name || '' || NEW.service_id]];
         END IF;
 
         errors := errors || required_error(NEW.service_name_en, 'service_name_en');
@@ -2646,7 +2735,10 @@ resources:
             errors := errors || ARRAY[['total_volume', {negative_number_error}]];
         END IF;
 
-        IF NEW.volume_meeting_target > NEW.total_volume THEN
+        -- NOTE: if this is a Service Migration (service_migration flag) or it is skipping validation (skip_validation flag),
+        --       then accept volume_meeting_target greater than total_volume.
+        --
+        IF is_migration IS NOT TRUE AND skip_validation IS NOT TRUE AND NEW.volume_meeting_target > NEW.total_volume THEN
             errors := errors || ARRAY[['volume_meeting_target', {volume_error}]];
         END IF;
 
@@ -2683,6 +2775,7 @@ resources:
   - update_record_modified_created_trigger
 
   trigger_strings:  # yaml | not supported
+    fiscal_year_error: 'Invalid fiscal year: {}'
     target_error: This field must be a single number between 0 and 1 representing a percentage.
     negative_number_error: This value must not be negative
     max_length_error: This field has a maximum length of {} characters.
@@ -2694,6 +2787,7 @@ resources:
     service_id_comma_error: Comma is not allowed in Service ID Number field
     service_standard_id_comma_error: Comma is not allowed in Service Standard ID field
     volume_error: Volume Meeting Target can not exceed Total Volume.
+    service_id_org_limit_error: 'Invalid choice for Organization {}: {}'
 
   examples:
     record:

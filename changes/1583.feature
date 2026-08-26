@@ -1,0 +1,1 @@
+Reworked the Public Publishing Flow to use Core CKAN public/private. This assumes that the Registry and Portal share a database.

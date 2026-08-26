@@ -58,7 +58,8 @@ class TestMakePD(CanadaTestBase):
         if plugins.plugin_loaded('validation'):
             plugins.unload('validation')
 
-        self.org = Organization(umd_number='example_umd',
+        self.org = Organization(name='service-test-make-org',
+                                umd_number='example_umd',
                                 department_number='example_department')
 
         self.action = LocalCKAN().action

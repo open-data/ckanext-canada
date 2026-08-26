@@ -8,7 +8,10 @@ import csv
 from six import string_types
 from datetime import datetime, timedelta
 import traceback
-from functools import partial
+from flask import Blueprint, make_response
+from io import StringIO
+
+from ckanapi import LocalCKAN
 
 from typing import Optional, Union, Any, cast, Dict, List, Tuple
 from ckan.types import Context, Response
@@ -33,7 +36,6 @@ from ckan import model
 from ckan.lib.helpers import (
     date_str_to_datetime,
     lang,
-    Page,
 )
 from ckan.views import nocache_store
 from ckan.views.dataset import (
@@ -51,7 +53,10 @@ from ckan.views.resource import (
     EditView as ResourceEditView,
     CreateView as ResourceCreateView
 )
-from ckan.views.user import RegisterView as UserRegisterView
+from ckan.views.user import (
+    RegisterView as UserRegisterView,
+    login as core_login
+)
 from ckan.views.api import (
     API_DEFAULT_VERSION,
     API_MAX_VERSION,
@@ -62,7 +67,6 @@ from ckan.views.api import (
 )
 from ckan.views.group import set_org
 from ckan.views.admin import _get_sysadmins
-
 from ckan.authz import is_sysadmin
 from ckan.logic import (
     parse_params,
@@ -80,12 +84,6 @@ from ckanext.recombinant.tables import get_chromo
 from ckanext.recombinant.errors import RecombinantException, format_trigger_error
 from ckanext.recombinant.helpers import recombinant_primary_key_fields
 from ckanext.recombinant.views import _render_recombinant_constraint_errors
-
-from ckanapi import LocalCKAN
-
-from flask import Blueprint, make_response
-
-from io import StringIO
 
 # TODO: DEPRECATED: REMOVE AFTER FULL PD DATATABLES QA
 import re
@@ -465,16 +463,30 @@ def fivehundred():
     raise IntentionalServerError()
 
 
-def _get_choice_fields(resource_name: str) -> Dict[str, Any]:
+def _get_choice_fields(resource_name: str,
+                       data: Optional[Dict[str, Any]] = None,
+                       org_name: Optional[str] = None) -> Dict[str, Any]:
     separator = ' : ' if h.lang() == 'fr' else ': '
     choice_fields = {}
-    for datastore_id, choices in h.recombinant_choice_fields(resource_name).items():
+    for datastore_id, choices in h.recombinant_choice_fields(
+      resource_name, org_name=org_name).items():
+        available_keys = []
         f = h.recombinant_get_field(resource_name, datastore_id)
         form_choices_prefix_code = f.get('form_choices_prefix_code', False)
         form_choice_keys_only = f.get('form_choice_keys_only', False)
         if datastore_id not in choice_fields:
             choice_fields[datastore_id] = []
+        # allow for suffixes to labels. If the value has the suffix, add
+        # the suffix labels.
+        suffix = None
+        suffix_label = ''
+        for _suffix, _labels in f.get('choices_suffix_filter', {}).items():
+            suffix = _suffix
+            suffix_label = _labels[h.lang()]
         for (k, v) in choices:
+            available_keys.append(k)
+            if suffix and k.endswith(suffix):
+                v += ' %s' % suffix_label
             if form_choice_keys_only:
                 choice_fields[datastore_id].append({'value': k,
                                                     'label': k})
@@ -485,6 +497,30 @@ def _get_choice_fields(resource_name: str) -> Dict[str, Any]:
                 continue
             choice_fields[datastore_id].append({'value': k,
                                                 'label': v})
+        # support current data that may not be in the choices anymore
+        if data and data.get(datastore_id):
+            _current_val = data[datastore_id]
+            if isinstance(_current_val, str):
+                # support multi choice
+                _current_val = [_current_val]
+            for _v in _current_val:
+                if _v in available_keys:
+                    continue
+                _l = _v
+                if suffix and _l.endswith(suffix):
+                    # we don't have any other labels at this point,
+                    # so can only use the suffix label
+                    _l = suffix_label
+                if form_choice_keys_only:
+                    choice_fields[datastore_id].append({'value': _v,
+                                                        'label': _v})
+                    continue
+                elif form_choices_prefix_code:
+                    choice_fields[datastore_id].append({'value': _v,
+                                                        'label': _v + separator + _l})
+                    continue
+                choice_fields[datastore_id].append({'value': _v,
+                                                    'label': _l})
     return choice_fields
 
 
@@ -510,6 +546,15 @@ def canada_organization_bulk_process(id: str, group_type: str = 'organization',
     return h.redirect_to('%s.read' % group_type, id=id)
 
 
+def _normalize_record_newlines(record: Dict[str, Any]) -> Dict[str, Any]:
+    """
+    Normalizes newline characters to \\n
+    """
+    return dict((k, v.replace('\r\n', '\n').replace('\r', '\n')
+                 if isinstance(v, str) else v)
+                for k, v in record.items())
+
+
 @canada_views.route('/create-pd-record/<owner_org>/<resource_name>',
                     methods=['GET', 'POST'])
 def create_pd_record(owner_org: str, resource_name: str):
@@ -531,7 +576,7 @@ def create_pd_record(owner_org: str, resource_name: str):
     except NotAuthorized:
         return abort(403, _('Unauthorized to create a resource for this package'))
 
-    choice_fields = _get_choice_fields(resource_name)
+    choice_fields = _get_choice_fields(resource_name, org_name=owner_org)
     pk_fields = aslist(chromo['datastore_primary_key'])
 
     if request.method == 'POST':
@@ -550,6 +595,8 @@ def create_pd_record(owner_org: str, resource_name: str):
             pk_fields,
             choice_fields)
         error_summary = None
+        # normalize newlines to \n
+        data = _normalize_record_newlines(data)
         try:
             lc.action.datastore_upsert(
                 resource_id=res['id'],
@@ -655,7 +702,6 @@ def update_pd_record(owner_org: str, resource_name: str, pk: str):
     except NotAuthorized:
         abort(403, _('Unauthorized to update dataset'))
 
-    choice_fields = _get_choice_fields(resource_name)
     pk_fields = aslist(chromo['datastore_primary_key'])
     pk_filter = dict(zip(pk_fields, pk_list))
 
@@ -667,6 +713,24 @@ def update_pd_record(owner_org: str, resource_name: str, pk: str):
     if len(records) > 1:
         abort(400, _('Multiple records found'))
     record = records[0]
+
+    data = {}
+    for f in chromo['fields']:
+        if (
+          not f.get('import_template_include', True) or
+          f.get('published_resource_computed_field', False)
+        ):
+            continue
+        val = record[f['datastore_id']]
+        if val and f.get('datastore_type') == 'money':
+            if isinstance(val, str) and '$' in val:
+                data[f['datastore_id']] = val
+            else:
+                data[f['datastore_id']] = '${:,.2f}'.format(val)
+        else:
+            data[f['datastore_id']] = val
+
+    choice_fields = _get_choice_fields(resource_name, data, org_name=owner_org)
 
     if request.method == 'POST':
         post_data = parse_params(request.form, ignore_keys=['save'] + pk_fields)
@@ -688,6 +752,10 @@ def update_pd_record(owner_org: str, resource_name: str, pk: str):
         for f_id in data:
             if f_id in pk_fields:
                 data[f_id] = record[f_id]
+
+        # normalize newlines to \n
+        data = _normalize_record_newlines(data)
+
         try:
             lc.action.datastore_upsert(
                 resource_id=res['id'],
@@ -729,21 +797,6 @@ def update_pd_record(owner_org: str, resource_name: str, pk: str):
             resource_name=resource_name,
             owner_org=rcomb['owner_org'],
             )
-
-    data = {}
-    for f in chromo['fields']:
-        if (
-          not f.get('import_template_include', True) or
-          f.get('published_resource_computed_field', False)):
-            continue
-        val = record[f['datastore_id']]
-        if val and f.get('datastore_type') == 'money':
-            if isinstance(val, str) and '$' in val:
-                data[f['datastore_id']] = val
-            else:
-                data[f['datastore_id']] = '${:,.2f}'.format(val)
-        else:
-            data[f['datastore_id']] = val
 
     return render('recombinant/update_pd_record.html',
                   extra_vars={
@@ -795,13 +848,15 @@ def upsert_pd_data(owner_org: str, resource_name: str):
     # NOTE: upserting each record one-by-one is crazy slower,
     #       but it is the only way to get all of the errors back in one object.
     while offset < len(records):
+        # type_ignore_reason: incomplete typing
+        record = _normalize_record_newlines(records[offset])  # type: ignore
         try:
             data = get_action('datastore_upsert')(
                 context, {
                     'method': method,
                     'resource_id': resource_id,
                     'dry_run': dry_run,
-                    'records': [records[offset]]
+                    'records': [record]
                 })
             if 'result' not in return_dict:
                 return_dict['result'] = {}
@@ -1098,10 +1153,15 @@ def ckanadmin_publish_datasets():
         publish_packages = [publish_packages]
     count = len(publish_packages)
     for package_id in publish_packages:
-        lc.action.package_patch(
-            id=package_id,
-            portal_release_date=publish_date,
-        )
+        try:
+            lc.action.package_patch(
+                id=package_id,
+                portal_release_date=publish_date,
+            )
+        except ValidationError as e:
+            h.flash_error(_('Error publishing dataset %s: %s' %
+                            (package_id, str(e.error_dict))))
+            return h.redirect_to('canada.ckanadmin_publish')
 
     # flash notice that records are published
     h.flash_notice(str(count) + _(' record(s) published.'))
@@ -1772,39 +1832,9 @@ def ckan_admin_config():
     return abort(404)
 
 
-@canada_views.route('/ckan-admin/portal-sync', methods=['GET'])
-def ckan_admin_portal_sync():
-    """
-    Lists any packages that are out of date with the Portal.
-    """
-    try:
-        check_access('list_out_of_sync_packages', {'user': g.user})
-    except NotAuthorized:
-        return abort(403)
-
-    page_number = h.get_page_number(request.args) or 1
-    limit = 25
-    start = limit * (page_number - 1)
-    extra_vars = {}
-
-    out_of_sync_packages = get_action('list_out_of_sync_packages')(
-        {'user': g.user}, {'limit': limit, 'start': start})
-    extra_vars['out_of_sync_packages'] = out_of_sync_packages
-
-    def _basic_pager_uri(page: Union[int, str], text: str):
-        return h.url_for('canada.ckan_admin_portal_sync', page=page)
-    pager_url = partial(_basic_pager_uri, page=page_number, text='')
-
-    extra_vars['page'] = Page(
-        collection=out_of_sync_packages['results'],
-        page=page_number,
-        url=pager_url,
-        item_count=out_of_sync_packages.get('count', 0),
-        items_per_page=limit
-    )
-    extra_vars['page'].items = out_of_sync_packages['results']
-
-    # TODO: remove in CKAN 2.11??
-    setattr(g, 'page', extra_vars['page'])
-
-    return render('admin/portal_sync.html', extra_vars=extra_vars)
+@canada_views.route('/user/login', methods=['GET', 'POST'])
+@nocache_store
+def login():
+    if not h.is_registry_domain():
+        return abort(404)
+    return core_login()

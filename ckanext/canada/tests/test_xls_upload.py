@@ -1,8 +1,9 @@
 # -*- coding: UTF-8 -*-
-from ckanext.canada.tests import CanadaTestBase
+from ckanext.canada.tests import CanadaTestBase, mock_is_registry_domain
 import flask
 import mock
 import tempfile
+from ckan.plugins.toolkit import h
 from ckanapi import LocalCKAN
 
 from ckan import model
@@ -59,6 +60,7 @@ class TestXlsUpload(CanadaTestBase):
         except Exception:
             pass
 
+    @mock.patch.object(h, 'is_registry_domain', mock_is_registry_domain)
     def test_upload_empty(self):
         current_user = model.User.get(self.editor['name'])
         with mock.patch('ckan.lib.helpers.current_user', current_user):
@@ -75,6 +77,7 @@ class TestXlsUpload(CanadaTestBase):
                     True)
             assert e.value.message == 'The template uploaded is empty'
 
+    @mock.patch.object(h, 'is_registry_domain', mock_is_registry_domain)
     def test_upload_example(self):
         current_user = model.User.get(self.editor['name'])
         with mock.patch('ckan.lib.helpers.current_user', current_user):
@@ -121,6 +124,7 @@ class TestXlsUpload(CanadaTestBase):
 
         assert records == expected_records
 
+    @mock.patch.object(h, 'is_registry_domain', mock_is_registry_domain)
     def test_upload_example_dry_run(self):
         current_user = model.User.get(self.editor['name'])
         with mock.patch('ckan.lib.helpers.current_user', current_user):
@@ -144,6 +148,7 @@ class TestXlsUpload(CanadaTestBase):
         records = result.get('records')
         assert records == []
 
+    @mock.patch.object(h, 'is_registry_domain', mock_is_registry_domain)
     def test_upload_wrong_type(self):
         flask.g.user = self.editor['name']
         wb = excel_template('travela', self.org)
