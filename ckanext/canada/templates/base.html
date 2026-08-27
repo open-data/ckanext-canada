@@ -29,6 +29,7 @@
 {% endblock %}
 
 {% block links %}
+  <script src="{{- h.url_for_static('/static/js/alert_exit.js') -}}" nonce="{{- h.get_inline_script_nonce() -}}"></script>
   {{ super() }}
   {% block google_analytics %}
     {% set ga4_id = h.ga4_id() %}
