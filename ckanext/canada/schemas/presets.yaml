@@ -4311,6 +4311,29 @@ presets:
     - preset: canada_resource_type
     - preset: canada_dataset_related_url
 
+###
+# XLOADER FIELDS
+###
+
+- preset_name: canada_ckan_url
+  values:
+    field_name: ckan_url
+    form_snippet: null
+    display_snippet: null
+    required: false
+    validators: ignore_missing
+    form_panel: _exclude_from_form
+    output_validators: canada_output_none
+
+- preset_name: canada_original_url
+  values:
+    field_name: original_url
+    form_snippet: null
+    display_snippet: null
+    required: false
+    validators: ignore_missing
+    form_panel: _exclude_from_form
+    output_validators: canada_output_resource_original_url
 
 ###
 # LEGACY FIELDS

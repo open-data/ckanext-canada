@@ -153,7 +153,32 @@ function load_pd_datatable(CKAN_MODULE, HAS_TRANSLATIONS){
       orderableReverse: _('Reverse order this column')
     }
   };
+
   const markedRenderer = new marked.Renderer();
+  const markedTags = [
+    'a', 'abbr', 'acronym', 'b', 'blockquote',
+    'code', 'em', 'i', 'li', 'ol', 'strong', 'ul',
+    'del','dd', 'dl', 'dt', 'kbd', 'p', 'pre', 's',
+    'sup', 'sub', 'strike', 'br', 'hr', 'h1', 'h2', 'h3',
+    'h4', 'h5', 'h6',
+  ];
+  const markedAttributes = {
+      'a': ['href', 'title'],
+      'abbr': ['title'],
+      'acronym': ['title'],
+      'img': ['src', 'alt', 'title'],
+  };
+  const htmlPurifier = DOMPurify(window);
+  htmlPurifier.setConfig({
+    ALLOWED_TAGS: markedTags,
+  });
+  htmlPurifier.addHook('uponSanitizeAttribute', function(_node, _data){
+    const allowed = markedAttributes[_node.tagName.toLowerCase()] || [];
+    if( ! allowed.includes(_data.attrName) ){
+      _data.keepAttr = false;
+    }
+  });
+
   const numberTypes = [
     'year',
     'month',
@@ -240,21 +265,52 @@ function load_pd_datatable(CKAN_MODULE, HAS_TRANSLATIONS){
     console.warn(_message);
   };
 
+  function truncateHtml(_html, _cutoff) {
+    const template = document.createElement('template');
+    template.innerHTML = _html;
+    let length = 0;
+    function _truncateNode(_node){
+      if( length >= _cutoff ){
+        _node.remove();
+        return;
+      }
+      if( _node.nodeType === Node.TEXT_NODE ){
+        const remaining = _cutoff - length;
+        if( _node.textContent.length > remaining ){
+          _node.textContent = _node.textContent.slice(0, remaining);
+        }
+        length += _node.textContent.length;
+        return;
+      }
+      if( _node.nodeType !== Node.ELEMENT_NODE ){
+        return;
+      }
+      [..._node.childNodes].forEach(_truncateNode);
+    }
+    [...template.content.childNodes].forEach(_truncateNode);
+    return template.innerHTML;
+  }
+
   DataTable.render.ellipsis = function(_cutoff, _rowIndex, _datatoreID, _isMarkdown){
     return function(_data, _type, _row, _meta){
       if( _type == 'display' ){
+        if( typeof _data === 'string' && _data.includes('class="pd-datatable-readmore"') ){
+          // FIXME: FRAGILE: if a user inputs 'class="pd-datatable-readmore"' into their data, it will never get rendered in Markdown.
+          return _data;
+        }
         let str = _data.toString();
-        let htmlStr = $($.parseHTML(str)).text();
+        let htmlStr = _isMarkdown ?  htmlPurifier.sanitize(marked.parse(str, {renderer: markedRenderer})) : htmlPurifier.sanitize($($.parseHTML(str)).text());
         if( str.length < _cutoff || htmlStr.length < _cutoff ){
           _data = _data.replaceAll(/\r?\n/g, '<br>');
-          return _isMarkdown ? marked.parse(_data, {renderer: markedRenderer}) : _data;
+          return _isMarkdown ? htmlPurifier.sanitize(marked.parse(_data, {renderer: markedRenderer})) : _data;
         }
         let _elementID = 'datatableReadMore_' + _rowIndex + '_' + _datatoreID;
         let expander = '<a class="pd-datatable-readmore-expander" href="javascript:void(0);" data-toggle="collapse" data-bs-toggle="collapse" aria-expanded="false" aria-controls="' +_elementID + '">&#8230;</a>';
-        let preview = _isMarkdown ? marked.parse(str.substr(0, _cutoff - 1) + expander + '\n', {renderer: markedRenderer}) : str.substr(0, _cutoff - 1) + expander;
-        let remaining = _isMarkdown ? marked.parse(str, {renderer: markedRenderer}) : str.substr(_cutoff - 1);
+        let fullRender = _isMarkdown ? htmlPurifier.sanitize(marked.parse(str, {renderer: markedRenderer})) : str;
+        let preview = _isMarkdown ? truncateHtml(fullRender, _cutoff - 1) + expander : fullRender.substr(0, _cutoff - 1) + expander;
+        let remaining = _isMarkdown ? fullRender : fullRender.substr(_cutoff - 1);
         remaining = remaining.replaceAll(/\r?\n/g, '<br>');
-        return '<div class="pd-datatable-readmore"><span data-markdown="' + _isMarkdown + '">' + preview + '</span><span class="collapse" id="' + _elementID + '">' + remaining + '<a class="pd-datatable-readmore-minimizer" href="javascript:void(0);" data-toggle="collapse" data-bs-toggle="collapse" aria-expanded="true" aria-controls="' + _elementID + '"><small>[' + readLessLabel + ']</small></a><span></div>';
+        return '<div class="pd-datatable-readmore"><span data-markdown="' + _isMarkdown + '">' + preview + '</span><span class="collapse" id="' + _elementID + '">' + remaining + '<a class="pd-datatable-readmore-minimizer" href="javascript:void(0);" data-toggle="collapse" data-bs-toggle="collapse" aria-expanded="true" aria-controls="' + _elementID + '"><small>[' + readLessLabel + ']</small></a></span></div>';
       }
       return _data;
     };
