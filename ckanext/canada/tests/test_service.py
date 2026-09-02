@@ -851,7 +851,6 @@ class TestStdService(CanadaTestBase):
             resource_id=self.resource_id,
             records=[record])
 
-
     def test_filter_script(self):
         """
         The calculations for performance and target_met
