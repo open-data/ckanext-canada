@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-09-08 10:36-0400\n"
+"POT-Creation-Date: 2026-09-08 13:03-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: fr\n"
@@ -934,15 +934,15 @@ msgstr ""
 msgid "Confirm Delete"
 msgstr "Confirmer la suppression"
 
-#: ckanext/canada/strings.py:134
+#: ckanext/canada/strings.py:134 ckanext/canada/strings.py:163
 msgid "text"
 msgstr "texte"
 
-#: ckanext/canada/strings.py:135
+#: ckanext/canada/strings.py:135 ckanext/canada/strings.py:161
 msgid "numeric"
 msgstr "numérique"
 
-#: ckanext/canada/strings.py:136
+#: ckanext/canada/strings.py:136 ckanext/canada/strings.py:165
 msgid "timestamp"
 msgstr "horodatage"
 
@@ -998,7 +998,35 @@ msgstr "La ressource publiée est obsolète"
 msgid "The Recombinant resource is out of date:"
 msgstr "La ressource publiée est obsolète :"
 
-#: ckanext/canada/validators.py:223
+#: ckanext/canada/strings.py:156
+msgid "year"
+msgstr "année"
+
+#: ckanext/canada/strings.py:157
+msgid "month"
+msgstr "mois"
+
+#: ckanext/canada/strings.py:158
+msgid "date"
+msgstr "date"
+
+#: ckanext/canada/strings.py:159
+msgid "int"
+msgstr "entier"
+
+#: ckanext/canada/strings.py:160
+msgid "bigint"
+msgstr "entier long"
+
+#: ckanext/canada/strings.py:162
+msgid "money"
+msgstr "monétaire"
+
+#: ckanext/canada/strings.py:164
+msgid "boolean"
+msgstr "booléen"
+
+#: ckanext/canada/validators.py:140
 #, python-format
 msgid "Tag \"%s\" length is less than minimum %s"
 msgstr "La longueur de la balise \"%s\" est inférieure au minimum %s"
