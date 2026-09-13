@@ -77,7 +77,7 @@ resources:
         `owner_org`, `agreement_number` and `amendment_number`
 
         Agreement terminations should be identified as another amendment number and
-        report 'termination' in the 'Additional information' column.
+        report the termination date as 'Agreement Termination Date'
       fr: |
         FIXME
     obligation:
@@ -749,7 +749,7 @@ resources:
     description:
       en: |
         Alternate Agreement Number captures Agreement Number values present in records published
-        before 2026 that can't be used to link records
+        before 2026 that can't be used to link records, or former reference numbers.
       fr: |
         FIXME
     obligation:
@@ -916,6 +916,28 @@ resources:
     excel_error_formula: 'OR({default_formula},AND(NOT(ISBLANK({agreement_start_date})),NOT(ISBLANK({cell})),{cell}<{agreement_start_date}))'
     excel_required_formula: 'AND(NOT(ISBLANK({agreement_start_date})),VALUE({agreement_start_date})>=DATE(2025,12,1))'
     js_required_eval: '{{agreement_start_date}}.length > 0 && new Date({{agreement_start_date}}) >= new Date("2025-12-01")'
+    js_error_eval: >-
+      VALUE.length > 0 &&
+      {{agreement_start_date}}.length > 0 &&
+      new Date(VALUE) < new Date({{agreement_start_date}})
+    datastore_type: date
+    form_snippet: scheming/form_snippets/date.html
+
+  # Agreement Termination Date (New Field)
+  - datastore_id: agreement_termination_date
+    label:
+      en: Agreement Termination Date
+      fr: FIXME
+    description:
+      en: The date an agreement was terminated, used when an agreement is terminated before the projected agreement end date.
+      fr: FIXME
+    obligation:
+      en: Optional
+      fr: Facultatif
+    format_type:
+      en: Date (Please format the date as YYYY-MM-DD)
+      fr: "Date (Veuillez utiliser le format de date suivant : AAAA-MM-JJ)"
+    excel_error_formula: 'OR({default_formula},{cell}<{agreement_start_date})'
     js_error_eval: >-
       VALUE.length > 0 &&
       {{agreement_start_date}}.length > 0 &&
