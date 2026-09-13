@@ -9,7 +9,8 @@ import json
 from codecs import BOM_UTF8
 
 assert sys.argv[1] and sys.argv[2], \
-       'usage: amendment_delta_records.py input.csv output.csv'
+       'usage: filter_grants.py input.csv output.csv'
+PK_COLUMN = 'agreement_number'
 AMENDMENT_COLUMN = 'amendment_number'
 OWNER_ORG = 'owner_org'
 OWNER_ORG_TITLE = 'owner_org_title'
@@ -47,11 +48,10 @@ with tempfile.NamedTemporaryFile() as dbfile:
     with open(sys.argv[1], 'rb') as infile:
         assert infile.read(3) == BOM_UTF8  # first 3 bytes, we are in read,bytes mode
         in_csv = unicodecsv.DictReader(infile, encoding='utf-8')
-        f0 = in_csv.fieldnames[0]
 
         for line in in_csv:
             owner_org = line['owner_org']
-            pk = line[f0]
+            pk = line[PK_COLUMN]
             amendment = line[AMENDMENT_COLUMN]
             original = json.dumps(line)
 
@@ -81,7 +81,7 @@ with tempfile.NamedTemporaryFile() as dbfile:
                 out_csv.writerow({
                     k:
                         v for (k, v) in row.items() if
-                        k in (f0, AMENDMENT_COLUMN, OWNER_ORG, OWNER_ORG_TITLE) or
+                        k in (PK_COLUMN, AMENDMENT_COLUMN, OWNER_ORG, OWNER_ORG_TITLE) or
                         v != prev[k]
                 })
                 prev = row

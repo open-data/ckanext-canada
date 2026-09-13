@@ -4,6 +4,8 @@ title: Proactive Publication - Grants and Contributions
 shortname: Grants and Contributions
 notes: Access, upload and modify the Grants and Contributions reports for your organization
 
+datastore_create_sequence: grants_seq
+
 template_version: 3
 template_updated: 2025-12-01  # last qa confirmed: 2025-12-01
 
@@ -20,37 +22,34 @@ resources:
   resource_name: grants
 
   published_resource_id: 1d15a62f-5656-49ad-8c88-f40ce689d831
+  edit_using__id: true
 
   create_form: true
   edit_form: true
   fields:
 
-  # 3.1 Reference Number
-  - datastore_id: ref_number
+  # Agreement Number
+  - datastore_id: agreement_number
     label:
       en: Reference Number
       fr: Numéro de référence
     description:
       en: |
-        The Reference number is populated by departments. It is a unique reference number given to each entry. Having a unique identifier for each item will allow departments to locate a specific item in the registry should they need to modify or delete.
+        Agreement Number is the number for the agreement in the departmental Grants
+        and Contributions system. Agreement Numbers are unique only within an
+        Organization (`owner_org`).
 
-        Controlled format; This field is populated in the following format DDD-YYYY-YYYY-QX-XXXXX
-         1. DDD represents the department number – Use the same three-digit number as the ‘Departmental Identifier’, which is the department number per the Chart of Accounts list of departments. Ensure you are reviewing the most current year: https://www.tpsgc-pwgsc.gc.ca/recgen/pceaf-gwcoa/2425/txt/rg-3-num-eng.html
-         2. YYYY-YYYY represents the fiscal year
-         3. QX represents the fiscal quarter
-         4. XXXXX represents the unique number assigned by the department for each entry.
+        Agreement Number is the second part of the primary key for this table:
+        `owner_org`, `agreement_number` and `amendment_number`
 
-        For example, entries in the 2018-2019 Q1 fiscal year should be assigned numbers as follows: 001-2018-2019-Q1-00001, 001-2018-2019-Q1-00002, 001-2018-2019-Q1-00003, etc.'
+        Amendments to agreements are published with the same Agreement Number and
+        different Amendment Number values.
+
+        Some records published before 2026 were linked by Reference Number and included
+        no usable Agreement Number. The original Reference Number has been used as the
+        Agreement Number in these cases.
       fr: |
-        Ce champ est rempli par l’utilisateur. L’identificateur de projet ministériel permet aux ministères d’identifier rapidement les rapports produits dans leur propre système. Les ministères devraient utiliser un chiffre qui est logique pour le ministère. Ces renseignements seront publiés dans le cadre du rapport.
-
-        Format contrôlé; Ce champ est rempli au format suivant: DDD-YYYY-YYYY-QX-XXXXX
-         1.	DDD représente le numéro du ministère - Utilisez le même numéro à trois chiffres que l’«Identificateur ministériel», qui est le numéro de ministère selon la liste du plan comptable des ministères. Assurez-vous de consulter l’année la plus récente : https://www.tpsgc-pwgsc.gc.ca/recgen/pceaf-gwcoa/2425/txt/rg-3-num-fra.html
-         2.	AAAA-AAAA représente l'année fiscale
-         3.	QX représente le trimestre fiscal
-         4.	XXXXX représente le numéro unique attribué par le département pour chaque entrée.
-
-        Par exemple, les numéros de l'exercice 2018-2019 du T1 devraient recevoir les numéros suivants: 001-2018-2019-Q1-00001, 001-2018-2019-Q1-00002, 001-2018-2019-Q1-00003, etc.'
+        FIXME
     obligation:
       en: Mandatory
       fr: Obligatoire
@@ -61,26 +60,27 @@ resources:
       fr: Texte libre
     datastore_type: text
     datatables_col_class: col-lg
-    js_error_eval: 'VALUE.length > 0 && VALUE.includes(",")'
 
-  # 3.2 Amendment Number (New Field)
+  # Amendment Number
   - datastore_id: amendment_number
     label:
       en: Amendment Number
       fr: Numéro de modification
     description:
-      en: >
-        This field is populated by departments and identifies that an amendment is
-        occurring to original information. Use 0 for original records.
-        The first amendment after the original agreement should be identified as 1, then 2, etc.
-        Agreement terminations should be identified as another amendment number and report
-        'termination' in the 'Additional information' column.
-      fr: >
-        Ce champ est rempli par les ministères et indique qu'une modification est apportée
-        aux renseignements originaux. Utiliser 0 pour les enregistrements originaux. La
-        première modification après l'accord initial doit être identifiée comme numéro 1,
-        puis 2, etc. Les résiliations d'accord doivent être identifiées comme un autre numéro
-        de modification et indiquer 'résiliation' dans la colonne 'Renseignements supplémentaires'.
+      en: |
+        Amendment Number identifies whether a record is original information or an
+        amendment to the original information.
+
+        Use 0 for original records. The first amendment after the original agreement
+        should be identified as 1, then 2, etc.
+
+        Amendment Number is the third part of the primary key for this table:
+        `owner_org`, `agreement_number` and `amendment_number`
+
+        Agreement terminations should be identified as another amendment number and
+        report 'termination' in the 'Additional information' column.
+      fr: |
+        FIXME
     obligation:
       en: Mandatory
       fr: Obligatoire
@@ -141,6 +141,53 @@ resources:
         en: Other transfer payment
         fr: autre
 
+  # 3.21 Agreement Title (English) (formerly proj_name_en)
+  - datastore_id: agreement_title_en
+    label:
+      en: Agreement Title (English)
+      fr: Titre de l’entente (anglais)
+    description:
+      en: The agreement title is the title of the project or agreement that the recipient is undertaking. In cases where there is no title, the agreement number will be duplicated here.
+      fr: Le nom de l'entente est le titre du projet ou de l'entente à l'égard duquel s'engage le bénéficiaire. S'il n'y a pas de titre, le numéro de l'entente peut être réinscrit ici.
+    obligation:
+      en: Mandatory
+      fr: Obligatoire
+    validation:
+      en: Required if "Agreement Start Date" is on or after December 1st 2025
+      fr: Requis si la "date de début de l’entente" est le 1er décembre 2025 ou après
+    format_type:
+      en: Free text
+      fr: Texte libre
+    excel_required_formula: 'AND(NOT(ISBLANK({agreement_start_date})),VALUE({agreement_start_date})>=DATE(2025,12,1))'
+    datastore_type: text
+    datatables_col_class: col-lg
+    js_required_eval: '{{agreement_title_fr}}.length > 0 || ({{agreement_start_date}}.length > 0 && new Date({{agreement_start_date}}) >= new Date("2025-12-01"))'
+    form_attrs:
+      size: 60
+
+  # 3.22 Agreement Title (French) (formerly proj_name_fr)
+  - datastore_id: agreement_title_fr
+    label:
+      en: Agreement Title (French)
+      fr: Titre de l’entente (français)
+    description:
+      en: The agreement title is the title of the project or agreement that the recipient is undertaking. In cases where there is no title, the agreement number will be duplicated here.
+      fr: Le nom de l'entente est le titre du projet ou de l'entente à l'égard duquel s'engage le bénéficiaire. S'il n'y a pas de titre, le numéro de l'entente peut être réinscrit ici.
+    obligation:
+      en: Mandatory
+      fr: Obligatoire
+    validation:
+      en: Required if "Agreement Start Date" is on or after December 1st 2025
+      fr: Requis si la "date de début de l’entente" est le 1er décembre 2025 ou après
+    format_type:
+      en: Free text
+      fr: Texte libre
+    excel_required_formula: 'AND(NOT(ISBLANK({agreement_start_date})),VALUE({agreement_start_date})>=DATE(2025,12,1))'
+    datastore_type: text
+    datatables_col_class: col-lg
+    js_required_eval: '{{agreement_title_en}}.length > 0 || ({{agreement_start_date}}.length > 0 && new Date({{agreement_start_date}}) >= new Date("2025-12-01"))'
+    form_attrs:
+      size: 60
   # 3.5 Recipient Type (New field)
   - datastore_id: recipient_type
     label:
@@ -695,62 +742,17 @@ resources:
       class: form-control canada-width-full d-block
     markdown: true
 
-  # 3.21 Agreement Title (English) (formerly proj_name_en)
-  - datastore_id: agreement_title_en
+  # Alternate Agreement Number (formerly prog_number, proj_number, agreement_number)
+  - datastore_id: alternate_agreement_number
     label:
-      en: Agreement Title (English)
-      fr: Titre de l’entente (anglais)
+      en: Alternate Agreement Number
+      fr: FIXME TR Numéro de l’entente
     description:
-      en: The agreement title is the title of the project or agreement that the recipient is undertaking. In cases where there is no title, the agreement number will be duplicated here.
-      fr: Le nom de l'entente est le titre du projet ou de l'entente à l'égard duquel s'engage le bénéficiaire. S'il n'y a pas de titre, le numéro de l'entente peut être réinscrit ici.
-    obligation:
-      en: Mandatory
-      fr: Obligatoire
-    validation:
-      en: Required if "Agreement Start Date" is on or after December 1st 2025
-      fr: Requis si la "date de début de l’entente" est le 1er décembre 2025 ou après
-    format_type:
-      en: Free text
-      fr: Texte libre
-    excel_required_formula: 'AND(NOT(ISBLANK({agreement_start_date})),VALUE({agreement_start_date})>=DATE(2025,12,1))'
-    datastore_type: text
-    datatables_col_class: col-lg
-    js_required_eval: '{{agreement_title_fr}}.length > 0 || ({{agreement_start_date}}.length > 0 && new Date({{agreement_start_date}}) >= new Date("2025-12-01"))'
-    form_attrs:
-      size: 60
-
-  # 3.22 Agreement Title (French) (formerly proj_name_fr)
-  - datastore_id: agreement_title_fr
-    label:
-      en: Agreement Title (French)
-      fr: Titre de l’entente (français)
-    description:
-      en: The agreement title is the title of the project or agreement that the recipient is undertaking. In cases where there is no title, the agreement number will be duplicated here.
-      fr: Le nom de l'entente est le titre du projet ou de l'entente à l'égard duquel s'engage le bénéficiaire. S'il n'y a pas de titre, le numéro de l'entente peut être réinscrit ici.
-    obligation:
-      en: Mandatory
-      fr: Obligatoire
-    validation:
-      en: Required if "Agreement Start Date" is on or after December 1st 2025
-      fr: Requis si la "date de début de l’entente" est le 1er décembre 2025 ou après
-    format_type:
-      en: Free text
-      fr: Texte libre
-    excel_required_formula: 'AND(NOT(ISBLANK({agreement_start_date})),VALUE({agreement_start_date})>=DATE(2025,12,1))'
-    datastore_type: text
-    datatables_col_class: col-lg
-    js_required_eval: '{{agreement_title_en}}.length > 0 || ({{agreement_start_date}}.length > 0 && new Date({{agreement_start_date}}) >= new Date("2025-12-01"))'
-    form_attrs:
-      size: 60
-
-  # 3.23 Agreement Number (formerly prog_number, proj_number)
-  - datastore_id: agreement_number
-    label:
-      en: Agreement Number
-      fr: Numéro de l’entente
-    description:
-      en: The agreement number should be the number on the agreement and/or in the departmental Gs&Cs system.
-      fr: Le numéro de l'entente est celui qui figure à l'entente et/ou dans le système de subventions et de contributions du ministère.
+      en: |
+        Alternate Agreement Number captures Agreement Number values present in records published
+        before 2026 that can't be used to link records
+      fr: |
+        FIXME
     obligation:
       en: Optional
       fr: Facultatif
@@ -1217,6 +1219,8 @@ resources:
       DECLARE
         errors text[][] := '{{}}';
         crval RECORD;
+        importing boolean NOT NULL := (SELECT importing
+          FROM datastore_user LIMIT 1);
       BEGIN
         errors := errors || required_error(NEW.ref_number, 'ref_number');
         IF NEW.ref_number LIKE '%,%' THEN
@@ -1305,7 +1309,29 @@ resources:
 
         END IF;
 
+        IF TG_OP = 'UPDATE' THEN
+          errors := errors || required_error(NEW._id, '_id');
+        END IF;
+
         IF errors = '{{}}' THEN
+          IF NOT importing AND TG_OP = 'INSERT' THEN
+            -- Grants & Contributions open_canada_id generation rule, see also:
+            -- https://github.com/open-data/ckanext-canada/issues/1693
+
+            -- Assign unique _id across *all* Grants & Contributions records and so that:
+            --     (_id % 97) == 63 and (_id % 100) > 2
+            -- These _id values are exported as open_canada_id in the combined csv dataset
+
+            -- The last two _id digits are check digits. The mod 97 check prevents almost
+            -- all numeric typos.
+
+            -- 63 is the Mod 97 value selected for Grants & Contributions records.
+            -- open_canada_id values for other record types use different values so that
+            -- open_canada_ids are unique across all record types.
+
+            NEW._id := nextval('grants_seq') * 100 + 99;
+            NEW._id := NEW._id - (NEW._id - 63) % 97;
+          END IF;
           RETURN NEW;
         END IF;
         RAISE EXCEPTION E'TAB-DELIMITED\t%', array_to_string(errors, E'\t');
@@ -1323,9 +1349,9 @@ resources:
 
   examples:
     record:
-      ref_number: "001-2018-2019-Q2-00045"
+      agreement_number: "2664134"
       amendment_number: "3"
-      amendment_date: "2018-04-01"
+      amendment_date: "2026-04-01"
       agreement_type: "G"
       recipient_type: "G"
       recipient_business_number: "123456789"
@@ -1345,7 +1371,7 @@ resources:
       prog_purpose_fr: "Le programme de subventions du Canada incite les Canadiens à se renseigner sur la géographie, l’histoire et l’économie du Canada. Le programme offre des opportunités de réseautage pour aider les bénéficiaires d’améliorer leur compréhension du Canada."
       agreement_title_en: "Building better buildings"
       agreement_title_fr: "Construire des meilleurs bâtiments"
-      agreement_number: "F1580-140737"
+      alternate_agreement_number: "F1580-140737"
       agreement_value: "500000"
       foreign_currency_type: "USD"
       foreign_currency_value: "450000"
