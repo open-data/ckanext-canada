@@ -444,7 +444,7 @@ upload-grants: $(workdir)/filtered/grants.csv $(workdir)/filtered/grants-nil.csv
 rebuild-grants: $(workdir)/filtered/grants.csv $(workdir)/filtered/grants-nil.csv
 	@$(echo_date) Rebuilding Grants and Contributions...
 	mkdir -p $(workdir)/amendments
-	$(registry_python) $(fdir)/amendment_delta_records.py \
+	$(registry_python) $(fdir)/filter_grants.py \
 	"$(workdir)/filtered/grants.csv" "$(workdir)/amendments/grants.csv"
 	@$(oc_search) import_data_csv --csv "$(workdir)/amendments/grants.csv" --search grants
 	@$(oc_search) import_data_csv --csv "$(workdir)/filtered/grants-nil.csv" --search grants --nothing_to_report
