@@ -96,6 +96,8 @@ class CanadaThemePlugin(p.SingletonPlugin, DefaultTranslation):
             'is_user_locked',
             'is_registry_domain',
             'linked_user',
+            'enable_pd_datatable_editor',
+            # Portal
             'user_organizations',
             'openness_score',
             'remove_duplicates',
