@@ -542,8 +542,10 @@ def get_pd_datatable(resource_name: str,
         user_dict = get_action('user_show')({'ignore_auth': True}, {'id': g.user})
     except (ObjectNotFound, RuntimeError):
         user_dict = {}
-    enable_new_template = user_dict.get('opt_in_features__pd_datatables', config.get(
-        'ckanext.canada.enable_pd_datatable_editor'))
+    enable_new_template = config['ckanext.canada.enable_pd_datatable_enhanced']
+    if not enable_new_template:
+        enable_new_template = user_dict.get('opt_in_features__pd_datatables',
+                                            enable_new_template)
     snippet = 'pd_datatable.html' if enable_new_template else 'pd_datatable_depr.html'
 
     return h.snippet('snippets/%s' % snippet,
@@ -554,6 +556,13 @@ def get_pd_datatable(resource_name: str,
                      foreign_keys=fkids,
                      dataset_type=dataset_type,
                      ds_fields=fields)
+
+
+def enable_pd_datatable_editor() -> bool:
+    """
+    Return if the PD DataTable Editor should be used or not.
+    """
+    return config['ckanext.canada.enable_pd_datatable_editor']
 
 
 def contact_information(info: str) -> Dict[str, Any]:
