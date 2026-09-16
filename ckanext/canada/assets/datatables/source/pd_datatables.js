@@ -26,6 +26,7 @@ this.ckan.module('pd-datatables', function($){
       foreign_keys: null,
       foreign_links: null,
       chromo_fields: null,
+      editor_enabled: false,
       is_editable: false,
     },
     initialize: function (){
@@ -72,12 +73,11 @@ function load_pd_datatable(CKAN_MODULE, HAS_TRANSLATIONS){
   const foreignKeys = CKAN_MODULE.options.foreign_keys;
   const foreignLinks = CKAN_MODULE.options.foreign_links;
   const chromoFields = CKAN_MODULE.options.chromo_fields;
+  const enableEditor = CKAN_MODULE.options.editor_enabled;
   const isEditable = CKAN_MODULE.options.is_editable;
   const tableStyles = CKAN_MODULE.options.table_styles;
 
-  // TODO: Disable Editor - enable Table Editor when ready...
-  // const EDITOR = pd_datatables__EDITOR;
-  const EDITOR = false;
+  const EDITOR = enableEditor ? pd_datatables__EDITOR : false;
   const JS_CHROMO = pd_datatables__EDITOR;
 
   const selectAllLabel = _('Select All');
@@ -204,6 +204,7 @@ function load_pd_datatable(CKAN_MODULE, HAS_TRANSLATIONS){
   let windowConfirmSupported = typeof window !== 'undefined' && typeof window.confirm === 'function';
   const isFirefox = /firefox|fxios/i.test(navigator.userAgent);
   if( isFirefox && window.location.protocol == 'http:' ){
+    // NOTE: fix for firefox throwing JS blocking errors in nonsecure webpages
     windowConfirmSupported = false;
   }
 
@@ -217,7 +218,6 @@ function load_pd_datatable(CKAN_MODULE, HAS_TRANSLATIONS){
   let isFullScreen = is_page_fullscreen();
   let isEditMode = typeof tableState != 'undefined' && typeof tableState.edit_view != 'undefined' ? tableState.edit_view : false;
 
-  // TODO: Disable Editor - enable Table Editor when ready...
   if( ! EDITOR ){
     isEditMode = false;
   }
@@ -299,9 +299,12 @@ function load_pd_datatable(CKAN_MODULE, HAS_TRANSLATIONS){
           return _data;
         }
         let str = _data.toString();
+        let newLineMatch = /\r?\n/g;
         let htmlStr = _isMarkdown ?  htmlPurifier.sanitize(marked.parse(str, {renderer: markedRenderer})) : htmlPurifier.sanitize($($.parseHTML(str)).text());
         if( str.length < _cutoff || htmlStr.length < _cutoff ){
-          _data = _data.replaceAll(/\r?\n/g, '<br>');
+          if( newLineMatch.test(_data) ){
+            _data = _data.replaceAll(newLineMatch, '<br>');
+          }
           return _isMarkdown ? htmlPurifier.sanitize(marked.parse(_data, {renderer: markedRenderer})) : _data;
         }
         let _elementID = 'datatableReadMore_' + _rowIndex + '_' + _datatoreID;
@@ -310,7 +313,9 @@ function load_pd_datatable(CKAN_MODULE, HAS_TRANSLATIONS){
         let preview = _isMarkdown ? truncateHtml(fullRender, _cutoff - 1) + expander : fullRender.substr(0, _cutoff - 1) + expander;
         preview = preview.replaceAll(/\r?\n/g, '<br>');
         let remaining = _isMarkdown ? fullRender : fullRender.substr(_cutoff - 1);
-        remaining = remaining.replaceAll(/\r?\n/g, '<br>');
+        if( newLineMatch.test(_data) ){
+          remaining = remaining.replaceAll(newLineMatch, '<br>');
+        }
         return '<div class="pd-datatable-readmore"><span data-markdown="' + _isMarkdown + '">' + preview + '</span><span class="collapse" id="' + _elementID + '">' + remaining + '<a class="pd-datatable-readmore-minimizer" href="javascript:void(0);" data-toggle="collapse" data-bs-toggle="collapse" aria-expanded="true" aria-controls="' + _elementID + '"><small>[' + readLessLabel + ']</small></a></span></div>';
       }
       return _data;
@@ -2146,7 +2151,6 @@ function load_pd_datatable(CKAN_MODULE, HAS_TRANSLATIONS){
         _data.compact_view = isCompactView;
         _data.edit_view = isEditMode;
 
-        // TODO: Disable Editor - enable Table Editor when ready...
         if( ! EDITOR ){
           _data.edit_view = false;
         }
@@ -2158,7 +2162,6 @@ function load_pd_datatable(CKAN_MODULE, HAS_TRANSLATIONS){
         tableState.selected = localInstanceSelected;
         tableState.edit_view = isEditMode;
 
-        // TODO: Disable Editor - enable Table Editor when ready...
         if( ! EDITOR ){
           tableState.edit_view = false;
         }
@@ -2170,7 +2173,6 @@ function load_pd_datatable(CKAN_MODULE, HAS_TRANSLATIONS){
         tableState = _data;
         tableState.selected = localInstanceSelected;
 
-        // TODO: Disable Editor - enable Table Editor when ready...
         if( ! EDITOR ){
           tableState.edit_view = false;
         }
