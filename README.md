@@ -15,6 +15,7 @@
 | [Configurations](#configurations)    |
 | [SOLR](#solr)    |
 | [Localization](#localization)    |
+| [WebAssets](#webassets)    |
 | [Migrations](#migrations)    |
 | [Data Flows](#data-flows)    |
 
@@ -257,6 +258,17 @@ updated translations by running:
 
 ```bash
 python setup.py compile_catalog
+```
+
+## WebAssets
+
+CKAN uses python webassets to compile and serve front-end assets like CSS stylesheets and JS scripts. Though webassets offers filters for Sass and JS Minify, it is better practice to not have Node build utilities on production servers. Thus we compile the assets locally via Node and commit to the source GitHub repository (though this is also not best practice, it is required due to deployment constraints).
+
+If you change webassets, you will need to build them:
+
+```
+npm install -D
+npm run build
 ```
 
 ## Migrations
