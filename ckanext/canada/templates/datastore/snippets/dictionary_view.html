@@ -1,5 +1,8 @@
 {% ckan_extends %}
 
+{% block dictionary_field_type %}
+  {{ _(field.type) }}
+{% endblock %}
 {% block dictionary_field_extras %}
   {# we save <field>_en and <field>_fr, not <field>_translated_<lang> #}
   {# so get_translated will not work for our data dictionary fields. #}
@@ -11,3 +14,4 @@
     {{ h.render_markdown(field.get('info', {}).get('notes_' ~ h.lang(), '')) }}
   {% endcall %}
 {% endblock %}
+
