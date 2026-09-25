@@ -1222,7 +1222,7 @@ resources:
     datastore_type: text
     preview_class: bg-info
 
-  datastore_primary_key: [ref_number, amendment_number]
+  datastore_primary_key: [agreement_number, amendment_number]
   datastore_indexes: ""
   excel_organization_style:
     PatternFill:
@@ -1244,9 +1244,9 @@ resources:
         importing boolean NOT NULL := (SELECT importing
           FROM datastore_user LIMIT 1);
       BEGIN
-        errors := errors || required_error(NEW.ref_number, 'ref_number');
-        IF NEW.ref_number LIKE '%,%' THEN
-          errors := errors || ARRAY[['ref_number', {ref_number_error}]];
+        errors := errors || required_error(NEW.agreement_number, 'agreement_number');
+        IF NEW.agreement_number LIKE '%,%' THEN
+          errors := errors || ARRAY[['agreement_number', {agreement_number_error}]];
         END IF;
 
         errors := errors || required_error(NEW.amendment_number, 'amendment_number');
@@ -1362,7 +1362,7 @@ resources:
   - update_record_modified_created_trigger
 
   trigger_strings:  # yaml | not supported
-    ref_number_error: Comma is not allowed in Reference Number field
+    agreement_number_error: Comma is not allowed in Agreement Number field
     recipient_postal_code_error: 'Must be a valid Canadian postal code in the format of "A1A 1A1"'
     recipient_business_number_error: Must be a 9 digit number
     federal_riding_number_error: Must be a 5 digit number
@@ -1411,7 +1411,7 @@ resources:
     filters:
       recipient_province: "ON"
     filter_one:
-      ref_number: "001-2018-2019-Q2-00045"
+      agreement_number: "001-2018-2019-Q2-00045"
       amendment_number: "0"
     sort: agreement_date desc
 
