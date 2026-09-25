@@ -372,7 +372,7 @@ def update_triggers():
             {'argname': 'clean', 'argtype': 'text', 'argmode': 'out'},
             {'argname': 'error', 'argtype': '_text', 'argmode': 'out'}],
         rettype='record',
-        definition='''
+        definition=r'''
     DECLARE
         destination_match text[] := regexp_split_to_array(value::text, ','::text);
         destination_match_group text;
@@ -424,7 +424,7 @@ def update_triggers():
             {'argname': 'clean', 'argtype': 'text', 'argmode': 'out'},
             {'argname': 'error', 'argtype': '_text', 'argmode': 'out'}],
         rettype='record',
-        definition='''
+        definition=r'''
     DECLARE
         destination_matches text[] := regexp_split_to_array(value::text, ';'::text);
         destination_matches_group text;
@@ -537,7 +537,7 @@ def update_triggers():
             {'argname': 'clean', 'argtype': 'text', 'argmode': 'out'},
             {'argname': 'error', 'argtype': '_text', 'argmode': 'out'}],
         rettype='record',
-        definition='''
+        definition=r'''
     DECLARE
         vendor_matches text[] := regexp_split_to_array(value::text, ';'::text);
         vendor_matches_group text;
