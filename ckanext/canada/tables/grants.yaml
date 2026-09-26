@@ -31,8 +31,8 @@ resources:
   # Agreement Number
   - datastore_id: agreement_number
     label:
-      en: Reference Number
-      fr: Numéro de référence
+      en: Agreement number
+      fr: Numéro d'entente
     description:
       en: |
         Agreement Number is the number for the agreement in the departmental Grants
@@ -49,7 +49,13 @@ resources:
         no usable Agreement Number. The original Reference Number has been used as the
         Agreement Number in these cases.
       fr: |
-        FIXME
+        Le numéro d'entente est le numéro attribué à l'entente dans le système ministériel des subventions et contributions. Les numéros d'entente sont uniques seulement à l'intérieur d'une organisation (`owner_org`).
+
+        Le numéro d'entente constitue la deuxième partie de la clé primaire de cette table : `owner_org`, `agreement_number` et `amendment_number`.
+
+        Les modifications apportées aux ententes sont publiées avec le même numéro d'entente, mais avec des valeurs différentes de numéro de modification.
+
+        Certains dossiers publiés avant 2026 étaient associés à un numéro de référence et ne comportaient aucun numéro d'entente utilisable. Dans ces cas, le numéro de référence original a été utilisé comme numéro d'entente.
     obligation:
       en: Mandatory
       fr: Obligatoire
@@ -78,9 +84,15 @@ resources:
         `owner_org`, `agreement_number` and `amendment_number`
 
         Agreement terminations should be identified as another amendment number and
-        report the termination date as 'Agreement Termination Date'
+        report the termination date as "Agreement Termination Date"
       fr: |
-        FIXME
+        Le numéro de modification indique si un dossier constitue l'information originale ou une modification apportée à l'information originale.
+
+        Utilisez 0 pour les dossiers originaux. La première modification suivant l'entente originale doit porter le numéro 1, puis 2, et ainsi de suite.
+
+        Le numéro de modification constitue la troisième partie de la clé primaire de cette table : `owner_org`, `agreement_number` et `amendment_number`.
+
+        Les résiliations d'entente doivent être identifiées par un autre numéro de modification, et la date de résiliation doit être indiquée sous « Date de résiliation de l'entente ».
     obligation:
       en: Mandatory
       fr: Obligatoire
@@ -746,13 +758,13 @@ resources:
   - datastore_id: alternate_agreement_number
     label:
       en: Alternate Agreement Number
-      fr: FIXME TR Numéro de l’entente
+      fr: Numéro d'entente alternatif
     description:
       en: |
         Alternate Agreement Number captures Agreement Number values present in records published
         before 2026 that can't be used to link records, or former reference numbers.
       fr: |
-        FIXME
+        Le numéro d'entente alternatif saisit les valeurs de numéro d'entente présentes dans les dossiers publiés avant 2026 qui ne peuvent pas être utilisées pour établir des liens entre les dossiers, ou les anciens numéros de référence.
     obligation:
       en: Optional
       fr: Facultatif
@@ -928,10 +940,10 @@ resources:
   - datastore_id: agreement_termination_date
     label:
       en: Agreement Termination Date
-      fr: FIXME
+      fr: Date de résiliation de l'entente
     description:
       en: The date an agreement was terminated, used when an agreement is terminated before the projected agreement end date.
-      fr: FIXME
+      fr: La date à laquelle une entente a été résiliée, utilisée lorsqu'une entente est résiliée avant la date de fin prévue de l'entente.
     obligation:
       en: Optional
       fr: Facultatif
