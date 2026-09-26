@@ -1253,8 +1253,7 @@ resources:
       DECLARE
         errors text[][] := '{{}}';
         crval RECORD;
-        importing boolean NOT NULL := (SELECT importing
-          FROM datastore_user LIMIT 1);
+        importing boolean NOT NULL := (SELECT EXISTS (SELECT 1 FROM datastore_app_context WHERE 'grants_migration' = ANY(flags)));
       BEGIN
         errors := errors || required_error(NEW.agreement_number, 'agreement_number');
         IF NEW.agreement_number LIKE '%,%' THEN
