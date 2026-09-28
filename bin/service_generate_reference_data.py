@@ -39,7 +39,7 @@ TIMESTAMP_MATCH = re.compile(r'^Timestamp:')
 
 ORG_VARIANTS_FILENAME = 'org_var.csv'
 PROGRAM_IDS_FILENAME = 'program_list.csv'
-SERVICE_IDS_FILENAME = 'sid_list.csv'
+SERVICE_IDS_FILENAME = 'sid_registry.csv'
 
 
 def _clean_intake_text(text: str) -> str:
@@ -182,14 +182,15 @@ def _generate_data():
     with requests.get(service_ids_uri, stream=True) as response:
         response.encoding = 'utf-8-sig'
         c = csv.DictReader(response.iter_lines(decode_unicode=True),
-                           delimiter=';')
+                           delimiter=',')
 
+        # TODO: reimplement fiscal years
         assert 'service_id' in c.fieldnames
-        assert 'service_name_en' in c.fieldnames
-        assert 'service_name_fr' in c.fieldnames
+        assert 'service_en' in c.fieldnames
+        assert 'service_fr' in c.fieldnames
         assert 'org_id' in c.fieldnames
-        assert 'fiscal_yr_first' in c.fieldnames
-        assert 'fiscal_yr_latest' in c.fieldnames
+        # assert 'fiscal_yr_first' in c.fieldnames
+        # assert 'fiscal_yr_latest' in c.fieldnames
 
         with open(SERVICE_ID_OUTPUT_FILE, 'w') as f:
             writer = csv.DictWriter(f, SERVICE_ID_HEADERS)
@@ -219,12 +220,14 @@ def _generate_data():
                 # org_years to make queries the same
                 org_years = {}
                 for _org in mapped_orgs:
-                    org_years[_org] = [_clean_intake_text(row['fiscal_yr_latest'])]
+                    # TODO: reimplement fiscal years
+                    # org_years[_org] = [_clean_intake_text(row['fiscal_yr_latest'])]
+                    org_years[_org] = []
 
                 writer.writerow({
                     'service_id': service_id,
-                    'label_en': _clean_intake_text(row['service_name_en']),
-                    'label_fr': _clean_intake_text(row['service_name_fr']),
+                    'label_en': _clean_intake_text(row['service_en']),
+                    'label_fr': _clean_intake_text(row['service_fr']),
                     'org_years': json.dumps(org_years) if mapped_orgs else None})
     assert inserted_service_ids
 
