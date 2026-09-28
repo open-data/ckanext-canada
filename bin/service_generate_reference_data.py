@@ -96,7 +96,8 @@ def _generate_data():
     org_id_abbr_map = {}
     with requests.get(org_variants_uri, stream=True) as response:
         response.encoding = 'utf-8-sig'
-        c = csv.DictReader(response.iter_lines(decode_unicode=True))
+        c = csv.DictReader(response.iter_lines(decode_unicode=True),
+                           delimiter=';')
 
         assert 'org_name_variant' in c.fieldnames
         assert 'org_id' in c.fieldnames
