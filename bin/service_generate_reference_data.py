@@ -103,6 +103,8 @@ def _generate_data():
         assert 'org_id' in c.fieldnames
 
         for row in c:
+            if not row['org_id']:
+                continue
             oname = _clean_intake_text(row['org_name_variant'])
             oid = _clean_intake_text(row['org_id'])
             if oname in open_orgs:
