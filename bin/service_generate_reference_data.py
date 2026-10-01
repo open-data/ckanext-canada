@@ -7,7 +7,7 @@ https://github.com/gcperformance/service-data
 
 https://github.com/gcperformance/service-data/blob/master/src/utils.py
     NOTE: program_list compiles fiscal years, orgs, program_ids, and their labels
-    NOTE: sid_list compiles fiscal years, orgs, service_ids, and their labels
+    NOTE: sid_registry compiles fiscal years, orgs, service_ids, and their labels
 https://github.com/gcperformance/service-data/blob/master/src/export.py
     NOTE: CSV files in the release use semicolon(;) as the delimiter
 """
@@ -41,6 +41,8 @@ ORG_VARIANTS_FILENAME = 'org_var.csv'
 PROGRAM_IDS_FILENAME = 'program_list.csv'
 SERVICE_IDS_FILENAME = 'sid_registry.csv'
 
+NOT_IN_USE = 'id not used'
+
 
 def _clean_intake_text(text: str) -> str:
     """
@@ -59,7 +61,7 @@ def _generate_data():
     https://api.github.com/repos/gcperformance/service-data/releases/latest/program_list.csv
 
     Gather Service IDs and their English and French names from
-    https://api.github.com/repos/gcperformance/service-data/releases/latest/sid_list.csv
+    https://api.github.com/repos/gcperformance/service-data/releases/latest/sid_registry.csv
 
     NOTE: we only start in the 2018-2019 fiscal year as per Policy.
 
@@ -96,12 +98,15 @@ def _generate_data():
     org_id_abbr_map = {}
     with requests.get(org_variants_uri, stream=True) as response:
         response.encoding = 'utf-8-sig'
-        c = csv.DictReader(response.iter_lines(decode_unicode=True))
+        c = csv.DictReader(response.iter_lines(decode_unicode=True),
+                           delimiter=';')
 
         assert 'org_name_variant' in c.fieldnames
         assert 'org_id' in c.fieldnames
 
         for row in c:
+            if not row['org_id']:
+                continue
             oname = _clean_intake_text(row['org_name_variant'])
             oid = _clean_intake_text(row['org_id'])
             if oname in open_orgs:
@@ -165,11 +170,13 @@ def _generate_data():
                 program_id_map[program_id]['org_years'][_org].append(year)
     assert program_id_map
 
+    sorted_program_id_map= dict(sorted(program_id_map.items()))
+
     # write program_id ref data
     with open(PROGRAM_ID_OUTPUT_FILE, 'w') as f:
         writer = csv.DictWriter(f, PROGRAM_ID_HEADERS)
         writer.writeheader()
-        for program_id, program_data in program_id_map.items():
+        for program_id, program_data in sorted_program_id_map.items():
             writer.writerow({
                 'program_id': program_id,
                 'label_en': program_data['label_en'],
@@ -178,7 +185,7 @@ def _generate_data():
                 if 'org_years' in program_data else None})
 
     # write service_id ref data
-    inserted_service_ids = set()
+    service_id_map = {}
     with requests.get(service_ids_uri, stream=True) as response:
         response.encoding = 'utf-8-sig'
         c = csv.DictReader(response.iter_lines(decode_unicode=True),
@@ -189,47 +196,73 @@ def _generate_data():
         assert 'service_en' in c.fieldnames
         assert 'service_fr' in c.fieldnames
         assert 'org_id' in c.fieldnames
+        assert 'date_transferred' in c.fieldnames
         # assert 'fiscal_yr_first' in c.fieldnames
         # assert 'fiscal_yr_latest' in c.fieldnames
 
-        with open(SERVICE_ID_OUTPUT_FILE, 'w') as f:
-            writer = csv.DictWriter(f, SERVICE_ID_HEADERS)
-            writer.writeheader()
-            for row in c:
-                if not row['service_id']:
-                    continue
-                service_id = _clean_intake_text(row['service_id'])
-                if not service_id or re.search(TIMESTAMP_MATCH, service_id):
-                    continue
-                if service_id in inserted_service_ids:
-                    raise Exception('%s already added...' % service_id)
+        for row in c:
+            if not row['service_id']:
+                continue
+            if row['date_transferred'] and _clean_intake_text(row['date_transferred']):
+                continue  # skip Services that were transferred to a different Org
+            service_id = _clean_intake_text(row['service_id'])
+            if not service_id or re.search(TIMESTAMP_MATCH, service_id):
+                continue
+            if service_id in service_id_map:
+                raise Exception('%s already added...' % service_id)
+            if (
+              row['service_en'] and
+              _clean_intake_text(row['service_en']) == NOT_IN_USE
+            ):
+                continue  # skip Services that are not assigned
+            if service_id not in service_id_map:
+                service_id_map[service_id] = {}
 
-                org = _clean_intake_text(row['org_id'])
-                if org not in org_id_abbr_map:
-                    # org not in open gov, skip
-                    if org not in skipped_orgs:
-                        print('Organization %s not available '
-                              'in Open Gov Registry. Skipping...' % org)
-                        skipped_orgs.add(org)
-                    continue
-                mapped_orgs = org_id_abbr_map[org]
+            label_en = _clean_intake_text(row['service_en'])
+            label_fr = _clean_intake_text(row['service_fr'])
+            if 'label_en' not in service_id_map[service_id]:
+                # take first occuring label
+                service_id_map[service_id]['label_en'] = label_en
+            if 'label_fr' not in service_id_map[service_id]:
+                # take first occuring label
+                service_id_map[service_id]['label_fr'] = label_fr
 
-                inserted_service_ids.add(service_id)
+            org = _clean_intake_text(row['org_id'])
+            if org not in org_id_abbr_map:
+                # org not in open gov, skip
+                if org not in skipped_orgs:
+                    print('Organization %s not available '
+                          'in Open Gov Registry. Skipping...' % org)
+                    skipped_orgs.add(org)
+                continue
+            mapped_orgs = org_id_abbr_map[org]
 
-                # just make same format as program_id
-                # org_years to make queries the same
-                org_years = {}
-                for _org in mapped_orgs:
-                    # TODO: reimplement fiscal years
-                    # org_years[_org] = [_clean_intake_text(row['fiscal_yr_latest'])]
-                    org_years[_org] = []
+            # just make same format as program_id
+            # org_years to make queries the same
+            for _org in mapped_orgs:
+                if 'org_years' not in service_id_map[service_id]:
+                    service_id_map[service_id]['org_years'] = {}
+                if _org not in service_id_map[service_id]['org_years']:
+                    service_id_map[service_id]['org_years'][_org] = []
+                # TODO: reimplement fiscal years
+                # year = _clean_intake_text(row['latest_valid_fy'])
+                # if year in service_id_map[service_id]['org_years'][_org]:
+                #     continue
+                # service_id_map[service_id]['org_years'][_org].append(year)
+    assert service_id_map
 
-                writer.writerow({
-                    'service_id': service_id,
-                    'label_en': _clean_intake_text(row['service_en']),
-                    'label_fr': _clean_intake_text(row['service_fr']),
-                    'org_years': json.dumps(org_years) if mapped_orgs else None})
-    assert inserted_service_ids
+    sorted_service_id_map = dict(sorted(service_id_map.items()))
+
+    with open(SERVICE_ID_OUTPUT_FILE, 'w') as f:
+        writer = csv.DictWriter(f, SERVICE_ID_HEADERS)
+        writer.writeheader()
+        for service_id, service_data in sorted_service_id_map.items():
+            writer.writerow({
+                'service_id': service_id,
+                'label_en': service_data['label_en'],
+                'label_fr': service_data['label_fr'],
+                'org_years': json.dumps(service_data['org_years'])
+                if 'org_years' in service_data else None})
 
 
 if __name__ == '__main__':
