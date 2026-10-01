@@ -1,7 +1,6 @@
 # this is a namespace package
 try:
-    # type_ignore_reason: try/catch
-    import pkg_resources  # type: ignore
+    import pkg_resources
     # type_ignore_reason: reportAttributeAccessIssue
     pkg_resources.declare_namespace(__name__)
 except ImportError:

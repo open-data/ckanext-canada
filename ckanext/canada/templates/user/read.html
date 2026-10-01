@@ -13,6 +13,11 @@
       {% else %}
         &nbsp;<span class="text-muted"><span class="fa fa-unlock-alt"></span></span>
       {% endif %}
+      {% if user.default_dataset_visibility == 'public' %}
+        &nbsp;<span class="text-muted" title="{{- _('Creates Public Datasets') -}}"><i class="fa fa-eye"></i></span>
+      {% else %}
+        &nbsp;<span class="text-muted" title="{{- _('Creates Private Datasets') -}}"><i class="fa fa-eye-slash"></i></span>
+      {% endif %}
     {% endif %}
   {% endif %}
 {% endblock %}
@@ -35,7 +40,7 @@
 
 {% block scripts %}
   {% if h.is_registry_domain() %}
-    {% asset 'canada_internal/user_lock' %}
+    {% asset 'canada_custom/user_lock' %}
   {% endif %}
   {{ super() }}
 {% endblock %}

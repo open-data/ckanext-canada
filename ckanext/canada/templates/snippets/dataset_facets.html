@@ -43,7 +43,7 @@
   name='collection',
   scheming_choices=collection_choices,
   extras=extras,
-  unlimit=is_registry,
+  unlimit=h.is_registry_domain(),
   search_facets=search_facets %}
 
 {% if not h.is_registry_domain() %}

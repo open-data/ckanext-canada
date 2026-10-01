@@ -188,7 +188,7 @@
         "lngLinks": [
           {
             "lang": "{{ 'en' if lang == 'fr' else 'fr' }}",
-            "href": {{ h.url_for(h.current_url(), locale=('en' if lang == 'fr' else 'fr')) | tojson }},
+            "href": {{ h.url_for(h.current_url(), locale=('en' if lang == 'fr' else 'fr'), qualified=True) | tojson }},
             "text": "{{ 'English' if lang == 'fr' else 'Français' }}",
           }
         ],
@@ -273,7 +273,7 @@
         "lngLinks": [
           {
             "lang": "{{ 'en' if lang == 'fr' else 'fr' }}",
-            "href": {{ h.url_for(h.current_url(), locale=('en' if lang == 'fr' else 'fr')) | tojson }},
+            "href": {{ h.url_for(h.current_url(), locale=('en' if lang == 'fr' else 'fr'), qualified=True) | tojson }},
             "text": "{{ 'English' if lang == 'fr' else 'Français' }}",
           }
         ],
