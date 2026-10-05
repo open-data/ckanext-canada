@@ -15,7 +15,7 @@ import sqlalchemy as sa
 import gettext
 import os
 
-from typing import Optional, Union, Tuple, cast, Generator, Dict, Any, List
+from typing import Optional, Union, Tuple, cast, Generator, Dict, Any, List, Callable
 from ckan.types import Context, ErrorDict
 
 from contextlib import contextmanager
@@ -44,6 +44,7 @@ from ckanapi.cli.workers import worker_pool
 from ckanapi.cli.utils import completion_stats
 
 import ckanext.datastore.backend.postgres as datastore
+from ckanext.datastore.logic.action import set_datastore_active_flag
 
 from ckanext.recombinant.tables import get_geno
 
@@ -1727,7 +1728,11 @@ def _get_datastore_tables(verbose: Optional[bool] = False) -> List[str]:
     if verbose:
         click.echo("Gathered %s table names from the DataStore." % len(
             tables.get('records', [])))
-    return [r.get('name') for r in tables.get('records', [])]
+    skip_tables = toolkit.config.get('ckan.datastore.public_table_search', [])
+    if verbose:
+        click.echo("Excluding tables: %s" % ', '.join(skip_tables))
+    return [r.get('name') for r in tables.get('records', [])
+            if r.get('name') not in skip_tables]
 
 
 def _get_datastore_resources(valid: Optional[bool] = True,
@@ -1773,7 +1778,8 @@ def _get_datastore_resources(valid: Optional[bool] = True,
                     # we only want upload or link types
                     if (
                       _resource.get('url_type') != 'upload' and
-                      _resource.get('url_type') != ''):
+                      _resource.get('url_type') != ''
+                    ):
                         continue
                     if is_datastore_active and not _resource.get('datastore_active'):
                         continue
@@ -1825,6 +1831,231 @@ def _success_message(message: Any):
     click.echo("\n\033[0;36m\033[1m%s\033[0;0m\n\n" % message)
 
 
+DATASTORE_DESTRUCTION_MESSAGE = """
+    WARNING: this command has the capability to be highly destructive.
+    It is recommended to use the `ckan datastore purge` command.
+
+    If you need to check for invalid and/or empty Resources, then the
+    recommended execution of commands is:
+
+    1. `ckan datastore purge`
+    2. `ckan canada resolve-datastore-tables`
+    3. `ckan canada resolve-datastore-flags`
+    4. `ckan canada resolve-datatables-views`
+
+    Do you wish to continue?
+"""
+
+
+def resolve_datatables_views():
+    """
+    Handles purging of DataTables Views for invalid and empty DataStore Resources.
+    """
+    return
+    # views = get_action('resource_view_list')(context, {"id": id})
+    # if views:
+    #     for view in views:
+    #         if view.get('view_type') == 'datatables_view':
+    #             get_action('resource_view_delete')(
+    #                 context, {"id": view.get('id')})
+    #             if verbose:
+    #                 click.echo("%s/%s -- Deleted datatables_view %s "
+    #                             "from Invalid Resource %s" % (
+    #                                 status, max, view.get('id'), id))
+
+    # TODO: psql query resource_view table for datatables_view
+    #       check if they have a DS table
+    #       check if the table is empty
+    #       check the ckanext-validation failure
+    #       delete views
+
+
+def _set_datastore_flag(method: Callable , resource_id: str,
+                        value: bool = False) -> Tuple[bool, Any]:
+    """
+    Sets the datastore_active flag to false for a given resource.
+    """
+    try:
+        method(cast(Context, {'model': model}),
+               {"resource_id": resource_id}, value)
+    except Exception as e:
+        return False, e
+    return True, None
+
+
+@canada.command(short_help="Handles datastore_active=False of "
+                           "invalid and empty DataStore tables.")
+@click.option('-r', '--resource-id', required=False, type=click.STRING, default=None,
+              help='Resource ID to resolve DataStore issues with. Defaults to None.')
+@click.option('-q', '--quiet', is_flag=True,
+              type=click.BOOL, help='Suppress human interaction.')
+@click.option('-l', '--list', is_flag=True,
+              type=click.BOOL,
+              help='List the Resource IDs instead of executing everything.')
+@click.option('-v', '--verbose', is_flag=True,
+              type=click.BOOL, help='Increase verbosity.')
+def resolve_datastore_flags(
+        resource_id: Optional[str] = None,
+        quiet: Optional[bool] = False,
+        list: Optional[bool] = False,
+        verbose: Optional[bool] = False):
+    """
+    Handles setting Resource MetaData datastore_active=False for
+    invalid and empty DataStore Resources.
+    """
+    if not quiet:
+        click.confirm(DATASTORE_DESTRUCTION_MESSAGE, abort=True)
+
+    errors = StringIO()
+
+    context = _get_site_user_context()
+
+    q = model.Session.query(model.Resource.id) \
+            .filter(model.Resource.url_type != "datastore") \
+            .filter(model.Resource.extras.like('%"datastore_active": true%')) \
+            .order_by(model.Resource.id).all()
+    resource_ids_to_set = []
+    status = 1
+    max = len(q)
+    for rid in q:
+        rid = rid[0]
+        try:
+            res_dict = get_action('resource_show')(
+                {'ignore_auth': True}, {'id': rid})
+        except Exception as e:
+            if verbose:
+                errors.write('Failed to get DataStore info '
+                                'for Resource %s with errors:\n\n%s' % (
+                                    rid, e))
+                errors.write('\n')
+                traceback.print_exc(file=errors)
+            status += 1
+            continue
+
+        status += 1
+    return
+    # TODO: psql query resource table for datastore_active=True
+    #       check if they have a DS table
+    #       check if the table is empty
+    #       check the ckanext-validation failure
+    #       set datastore_active=False
+    # TODO: try/catch resource_show
+
+
+@canada.command(short_help="Handles purging of invalid and empty DataStore tables.")
+@click.option('-r', '--resource-id', required=False, type=click.STRING, default=None,
+              help='Resource ID to resolve DataStore issues with. Defaults to None.')
+@click.option('-q', '--quiet', is_flag=True,
+              type=click.BOOL, help='Suppress human interaction.')
+@click.option('-l', '--list', is_flag=True,
+              type=click.BOOL,
+              help='List the Resource IDs instead of executing everything.')
+@click.option('-v', '--verbose', is_flag=True,
+              type=click.BOOL, help='Increase verbosity.')
+def resolve_datastore_tables(
+        resource_id: Optional[str] = None,
+        quiet: Optional[bool] = False,
+        list: Optional[bool] = False,
+        verbose: Optional[bool] = False):
+    """
+    Handles purging of invalid and empty DataStore tables.
+
+    The command will:
+        1. Purge invalid DataStore tables;
+        2. Purge empty DataStore tables;
+        3. Set datastore_active flag to False on those Resources.
+    """
+    if not quiet:
+        click.confirm(DATASTORE_DESTRUCTION_MESSAGE, abort=True)
+
+    errors = StringIO()
+
+    context = _get_site_user_context()
+
+    datastore_tables = _get_datastore_tables(verbose=verbose)
+
+    # gets invalid Resources, w/ datastore_active=1
+    invalid_resource_ids = _get_datastore_resources(valid=False, verbose=verbose)
+    invalid_table_count = len(invalid_resource_ids)
+    # gets valid Resources, w/ datastore_active=1
+    valid_resource_ids = _get_datastore_resources(valid=True, verbose=verbose)
+    empty_table_count = 0
+    resource_ids_to_delete = invalid_resource_ids.copy()
+    status = 1
+    max = len(valid_resource_ids)
+    if verbose:
+        click.echo('Checking DataStore counts of valid resources...')
+    for rid in valid_resource_ids:
+        if rid in resource_ids_to_delete:
+            status += 1
+            continue
+        if rid not in datastore_tables:
+            status += 1
+            continue
+        try:
+            count = _get_datastore_count(context, rid, verbose=verbose,
+                                         status=status, max=max)
+            if int(count) == 0:
+                if verbose:
+                    click.echo("%s/%s -- Resource %s has %s rows "
+                               "in DataStore. Let's delete this one..." % (
+                                   status, max, rid, count))
+                resource_ids_to_delete.append(rid)
+                empty_table_count += 1
+            elif verbose:
+                click.echo("%s/%s -- Resource %s has %s rows "
+                           "in DataStore. Skipping..." % (
+                               status, max, rid, count))
+        except Exception as e:
+            if verbose:
+                errors.write('Failed to get DataStore info '
+                             'for Resource %s with errors:\n\n%s' % (
+                                 rid, e))
+                errors.write('\n')
+                traceback.print_exc(file=errors)
+            pass
+        status += 1
+    total_count = len(resource_ids_to_delete)
+
+    if total_count and not quiet and not list:
+        click.confirm("Do you want to delete the "
+                      "DataStore tables for %s Resources? (Invalid: %s; Empty: %s)" %
+                      (total_count, invalid_table_count,
+                      empty_table_count), abort=True)
+
+    status = 1
+    max = len(resource_ids_to_delete)
+    for rid in resource_ids_to_delete:
+        if list:
+            click.echo(rid)
+            continue
+        else:
+            try:
+                get_action('datastore_delete')(
+                    context, {"resource_id": rid, "force": True})
+                if verbose:
+                    click.echo("%s/%s -- Deleted DataStore "
+                               "table for Resource %s" % (status, max, rid))
+            except Exception as e:
+                if verbose:
+                    errors.write('Failed to delete DataStore '
+                                 'table for Resource %s with errors:\n\n%s' % (rid, e))
+                    errors.write('\n')
+                    traceback.print_exc(file=errors)
+                pass
+        status += 1
+
+    has_errors = errors.tell()
+    errors.seek(0)
+    if has_errors:
+        _error_message(errors.read())
+    elif resource_ids_to_delete and not list:
+        _success_message('Deleted %s DataStore tables. (Invalid: %s; Empty: %s)' %
+                         (total_count, invalid_table_count, empty_table_count))
+    elif not resource_ids_to_delete:
+        _success_message('No Invalid or Empty DataStore tables to delete at this time.')
+
+
 @canada.command(short_help="Sets datastore_active to False for Invalid Resources.")
 @click.option('-r', '--resource-id', required=False, type=click.STRING, default=None,
               help='Resource ID to set the datastore_active flag. Defaults to None.')
@@ -1847,6 +2078,8 @@ def set_datastore_false_for_invalid_resources(
     Sets datastore_active to False for Resources that are
     not valid but are empty in the DataStore database.
     """
+    if not quiet:
+        click.confirm(DATASTORE_DESTRUCTION_MESSAGE, abort=True)
 
     try:
         from ckanext.datastore.logic.action import set_datastore_active_flag
@@ -2264,18 +2497,20 @@ def resubmit_datastore_resources(resource_id: Optional[str] = None,
 @click.option('-l', '--list', is_flag=True,
               type=click.BOOL,
               help='List the Resource IDs instead of deleting their DataStore tables.')
-@click.option('-e', '--any-empty', is_flag=True,
+@click.option('-e', '--only-empty', is_flag=True,
               type=click.BOOL,
-              help='Deletes any empty DataStore tables, valid or invalid Resources.')
+              help='Deletes only empty DataStore tables, valid or invalid Resources.')
 def delete_invalid_datastore_tables(resource_id: Optional[str] = None,
                                     delete_table_views: Optional[bool] = False,
                                     verbose: Optional[bool] = False,
                                     quiet: Optional[bool] = False,
                                     list: Optional[bool] = False,
-                                    any_empty: Optional[bool] = False):
+                                    only_empty: Optional[bool] = False):
     """
-    Deletes Invalid Resources DataStore tables. Even if the table is not empty.
+    Deletes Invalid or Empty Resources DataStore tables. Even if the table is not empty.
     """
+    if not quiet:
+        click.confirm(DATASTORE_DESTRUCTION_MESSAGE, abort=True)
 
     errors = StringIO()
 
@@ -2283,17 +2518,47 @@ def delete_invalid_datastore_tables(resource_id: Optional[str] = None,
 
     datastore_tables = _get_datastore_tables(verbose=verbose)
     resource_ids_to_delete = []
+    status = 1
     if not resource_id:
         get_valid = False
-        if any_empty:
+        if only_empty:
             get_valid = None  # will get valid and invalid Resources
         # w/ datastore_active=1
         resource_ids = _get_datastore_resources(valid=get_valid, verbose=verbose)
+        max = len(resource_ids)
         for resource_id in resource_ids:
             if resource_id in resource_ids_to_delete:
+                status += 1
+                continue
+            if resource_id not in datastore_tables:
+                status += 1
+                continue
+            try:
+                count = _get_datastore_count(context, resource_id, verbose=verbose)
+                if int(count) == 0:
+                    if verbose:
+                        click.echo("%s/%s -- Resource %s has %s rows "
+                                    "in DataStore. Let's delete this one..." % (
+                                        status, max, resource_id, count))
+                    resource_ids_to_delete.append(resource_id)
+                elif verbose:
+                    click.echo("%s/%s -- Resource %s has %s rows "
+                                "in DataStore. Skipping..." % (
+                                    status, max, resource_id, count))
+            except Exception as e:
+                if verbose:
+                    errors.write('Failed to get DataStore info '
+                                 'for Resource %s with errors:\n\n%s' % (
+                                    resource_id, e))
+                    errors.write('\n')
+                    traceback.print_exc(file=errors)
+                pass
+            if only_empty:
+                status += 1
                 continue
             if resource_id in datastore_tables:
                 resource_ids_to_delete.append(resource_id)
+            status += 1
     else:
         resource_ids_to_delete.append(resource_id)
 
@@ -2362,6 +2627,8 @@ def delete_table_view_from_non_datastore_resources(
     """
     Deletes all datatable views from Resources that are not datastore_active.
     """
+    if not quiet:
+        click.confirm(DATASTORE_DESTRUCTION_MESSAGE, abort=True)
 
     errors = StringIO()
 
