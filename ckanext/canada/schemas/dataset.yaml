@@ -3,6 +3,7 @@ scheming_version: 1
 dataset_type: dataset
 
 before_validators: limit_resources_per_dataset
+after_validators: canada_dataset_visibility
 
 about: 'open.canada.ca: raw open data metadata definition'
 about_url: http://github.com/open-data/ckanext-canada
@@ -346,6 +347,7 @@ dataset_fields:
 - preset: canada_imso_approval
 - preset: canada_ready_to_publish
 - preset: canada_portal_release_date
+- preset: canada_private
 
 # fields hidden from the form to support loading fgp and geogratis data
 
