@@ -2022,6 +2022,8 @@ def purge_datastore_tables(
     datastore_tables = _get_datastore_tables(verbose=verbose)
 
     resource_ids_to_delete = []
+    invalid_resource_ids = []
+    valid_resource_ids = []
     if resource_id:
         try:
             res_dict = get_action('resource_show')(
