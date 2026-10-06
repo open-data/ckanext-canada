@@ -2024,6 +2024,8 @@ def purge_datastore_tables(
     resource_ids_to_delete = []
     invalid_resource_ids = []
     valid_resource_ids = []
+    invalid_table_count = 0
+    empty_table_count = 0
     if resource_id:
         try:
             res_dict = get_action('resource_show')(
@@ -2045,7 +2047,6 @@ def purge_datastore_tables(
         valid_resource_ids = _get_datastore_resources(valid=True, verbose=verbose)
         resource_ids_to_delete = invalid_resource_ids.copy()
 
-    empty_table_count = 0
     status = 1
     max = len(valid_resource_ids)
     if verbose:
