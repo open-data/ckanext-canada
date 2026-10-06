@@ -705,7 +705,11 @@ def update_pd_record(owner_org: str, resource_name: str, pk: str):
         abort(403, _('Unauthorized to update dataset'))
 
     pk_fields = aslist(chromo['datastore_primary_key'])
-    pk_filter = dict(zip(pk_fields, pk_list))
+    if chromo.get('edit_using__id'):
+        pk_fields = ['_id']
+        pk_filter = {'_id': pk_list[0]}
+    else:
+        pk_filter = dict(zip(pk_fields, pk_list))
 
     records = lc.action.datastore_search(
         resource_id=res['id'],
@@ -751,9 +755,8 @@ def update_pd_record(owner_org: str, resource_name: str, pk: str):
             choice_fields)
         error_summary = None
         # can't change pk fields
-        for f_id in data:
-            if f_id in pk_fields:
-                data[f_id] = record[f_id]
+        for f_id in pk_fields:
+            data[f_id] = record[f_id]
 
         # normalize newlines to \n
         data = _normalize_record_newlines(data)
@@ -761,16 +764,25 @@ def update_pd_record(owner_org: str, resource_name: str, pk: str):
         try:
             lc.action.datastore_upsert(
                 resource_id=res['id'],
-                # method='update',    FIXME not raising ValidationErrors
+                method='update',
                 records=[{k: None if k in err else v for (k, v) in data.items()}],
                 dry_run=bool(err))
         except ValidationError as ve:
             try:
+                if (
+                  'duplicate key value violates unique constraint' in
+                  ve.error_dict['records'][0]):  # type: ignore
+                    err = dict({
+                        k: [_("This record already exists")]
+                        for k in aslist(chromo['datastore_primary_key'])
+                    }, **err)
                 # type_ignore_reason: incomplete typing
-                err = dict({
-                    k: list(format_trigger_error(v))
-                    for (k, v) in ve.error_dict['records'][0].items()  # type: ignore
-                }, **err)
+                else:
+                    err = dict({
+                        k: list(format_trigger_error(v))
+                        for (k, v) in ve.error_dict[
+                            'records'][0].items()  # type: ignore
+                    }, **err)
             except AttributeError:
                 log.warning('Failed to update %s record for org %s:\n%s',
                             resource_name, owner_org, traceback.format_exc())
@@ -799,6 +811,9 @@ def update_pd_record(owner_org: str, resource_name: str, pk: str):
             resource_name=resource_name,
             owner_org=rcomb['owner_org'],
             )
+
+    if chromo.get('edit_using__id'):
+        data['_id'] = pk_list[0]
 
     return render('recombinant/update_pd_record.html',
                   extra_vars={
@@ -842,6 +857,8 @@ def upsert_pd_data(owner_org: str, resource_name: str):
     lc = LocalCKAN()
     chromo = h.recombinant_get_chromo(resource_name)
     pk_fields = aslist(chromo['datastore_primary_key'])
+    if chromo.get('edit_using__id'):
+        pk_fields = ['_id']
     offset = 0
     records = data_dict.get('records', [])
     resource_id = data_dict.get('resource_id')
@@ -1336,6 +1353,9 @@ def datatable(resource_name: str, resource_id: str):
     can_edit = h.check_access('resource_update', {'id': resource_id})
     cols = []
     fids = []
+    if chromo.get('edit_using__id'):
+        cols.append('_id')
+        fids.append('_id')
     for f in chromo['fields']:
         if f.get('published_resource_computed_field', False):
             continue
@@ -1383,7 +1403,8 @@ def datatable(resource_name: str, resource_id: str):
                         'canada.update_pd_record',
                         owner_org=pkg['organization']['name'],
                         resource_name=resource_name,
-                        pk=','.join(_url_part_escape(row[i+1]) for i in pkids)
+                        pk=_url_part_escape(row[1]) if chromo.get('edit_using__id') else
+                        ','.join(_url_part_escape(row[i+1]) for i in pkids)
                     )
                 )
             )
