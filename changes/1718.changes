@@ -1,0 +1,1 @@
+Reworked the `set-datastore-false-for-invalid-resources`, `delete-invalid-datastore-tables`, and `delete-table-view-from-non-datastore-resources` commands into the two commands `purge-datastore-tables` and `purge-datatables-views`. Made the commands a lot less destructive, and more clear as to what they do. Added extra fail-safes and warnings when running the new commands.

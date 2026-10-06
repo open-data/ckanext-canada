@@ -15,7 +15,7 @@ import sqlalchemy as sa
 import gettext
 import os
 
-from typing import Optional, Union, Tuple, cast, Generator, Dict, Any, List, Callable
+from typing import Optional, Union, Tuple, cast, Generator, Dict, Any, List
 from ckan.types import Context, ErrorDict
 
 from contextlib import contextmanager
@@ -25,8 +25,6 @@ from datetime import datetime, timedelta, timezone
 
 from ckan.logic import get_action
 from ckan import model
-from ckan.cli.db import db
-from itertools import groupby
 
 from ckanapi import (
     RemoteCKAN,
@@ -1878,7 +1876,7 @@ def purge_datatables_views(
     context = _get_site_user_context()
 
     q = model.Session.query(model.ResourceView.id, model.ResourceView.resource_id) \
-            .filter(model.ResourceView.view_type == 'datatables_view')
+        .filter(model.ResourceView.view_type == 'datatables_view')
     if resource_id:
         q = q.filter(model.ResourceView.resource_id == resource_id)
     results = q.all()
@@ -2086,7 +2084,7 @@ def purge_datastore_tables(
         click.confirm("Do you want to delete the "
                       "DataStore tables for %s Resources? (Invalid: %s; Empty: %s)" %
                       (total_count, invalid_table_count,
-                      empty_table_count), abort=True)
+                       empty_table_count), abort=True)
 
     status = 1
     max = len(resource_ids_to_delete)
