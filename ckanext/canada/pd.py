@@ -692,7 +692,7 @@ def load_ref_data(pd_type: Optional[str] = None,
         service_id_data = os.path.join(
             os.path.split(__file__)[0],
             'tables/references/data/ref_service_service_ids.csv')
-        loaded = _load_csv_ref_data('ref_service_service_ids',
+        loaded = _load_csv_ref_data('_ref_service_service_ids',
                                     [
                                         'service_id',
                                         'label_en',
@@ -711,7 +711,7 @@ def load_ref_data(pd_type: Optional[str] = None,
         program_id_data = os.path.join(
             os.path.split(__file__)[0],
             'tables/references/data/ref_service_program_ids.csv')
-        loaded = _load_csv_ref_data('ref_service_program_ids',
+        loaded = _load_csv_ref_data('_ref_service_program_ids',
                                     [
                                         'program_id',
                                         'label_en',
