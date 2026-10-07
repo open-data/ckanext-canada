@@ -1,4 +1,5 @@
 -- Program IDs
+DROP TABLE IF EXISTS ref_service_program_ids;
 DROP TABLE IF EXISTS _ref_service_program_ids;
 CREATE TABLE _ref_service_program_ids (
   _id SMALLSERIAL,  -- needed for datastore_search
@@ -15,6 +16,7 @@ GRANT SELECT ON TABLE _ref_service_program_ids TO {readuser};
 ALTER TABLE _ref_service_program_ids OWNER TO {writeuser};
 
 -- Service IDs
+DROP TABLE IF EXISTS ref_service_service_ids;
 DROP TABLE IF EXISTS _ref_service_service_ids;
 CREATE TABLE _ref_service_service_ids (
   _id SMALLSERIAL,  -- needed for datastore_search
