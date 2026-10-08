@@ -277,7 +277,6 @@ resources:
     excel_required: true
     form_required: true
     datatables_col_class: col-md
-    format_type: Controlled List
     format_type:
       en: Controlled List
       fr: Liste contrôlée
@@ -2350,8 +2349,8 @@ resources:
     obligation: Optional
     excel_required: false
     format_type:
-      en: Decimal
-      fr: Décimale
+      en: Whole number
+      fr: Chiffre entier
     validation:
       en: |
         This value must not be negative.
@@ -2381,8 +2380,8 @@ resources:
     obligation: Optional
     excel_required: false
     format_type:
-      en: Decimal
-      fr: Décimale
+      en: Whole number
+      fr: Chiffre entier
     validation:
       en: This value must not be negative.
       fr: Cette valeur ne doit pas être négative.
