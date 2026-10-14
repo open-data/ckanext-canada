@@ -1715,6 +1715,8 @@ def _get_datastore_tables(verbose: Optional[bool] = False) -> List[str]:
     """
     Returns a list of resource ids (table names) from
     the DataStore database.
+
+    Ignores tables starting with underscores.
     """
     tables = get_action('datastore_search')(_get_site_user_context(),
                                             {"resource_id": "_table_metadata",
@@ -1725,11 +1727,10 @@ def _get_datastore_tables(verbose: Optional[bool] = False) -> List[str]:
     if verbose:
         click.echo("Gathered %s table names from the DataStore." % len(
             tables.get('records', [])))
-    skip_tables = toolkit.config.get('ckan.datastore.public_table_search', [])
     if verbose:
-        click.echo("Excluding tables: %s" % ', '.join(skip_tables))
+        click.echo("Excluding tables starting with _")
     return [r.get('name') for r in tables.get('records', [])
-            if r.get('name') not in skip_tables]
+            if not r.get('name').startswith('_')]
 
 
 def _get_datastore_resources(valid: Optional[bool] = True,
@@ -1808,13 +1809,13 @@ def _get_datastore_count(context: Context,
                          resource_id: str,
                          verbose: Optional[bool] = False,
                          status: Optional[int] = 1,
-                         max: Optional[int] = 1):
+                         max_count: Optional[int] = 1):
     """
     Returns the count of rows in the DataStore table for a given resource ID.
     """
     if verbose:
         click.echo("%s/%s -- Checking DataStore record "
-                   "count for Resource %s" % (status, max, resource_id))
+                   "count for Resource %s" % (status, max_count, resource_id))
     info = get_action('datastore_search')(
         context, {"resource_id": resource_id, "limit": 0})
     return info.get('total')
@@ -1850,7 +1851,7 @@ DATASTORE_DESTRUCTION_MESSAGE = """
                    'with. Defaults to None.')
 @click.option('-q', '--quiet', is_flag=True,
               type=click.BOOL, help='Suppress human interaction.')
-@click.option('-l', '--list', is_flag=True,
+@click.option('-l', '--list-output', is_flag=True,
               type=click.BOOL,
               help='List the Resource View IDs instead of executing everything.')
 @click.option('-v', '--verbose', is_flag=True,
@@ -1858,7 +1859,7 @@ DATASTORE_DESTRUCTION_MESSAGE = """
 def purge_datatables_views(
         resource_id: Optional[str] = None,
         quiet: Optional[bool] = False,
-        list: Optional[bool] = False,
+        list_output: Optional[bool] = False,
         verbose: Optional[bool] = False):
     """
     Handles purging of DataTables Views for invalid and empty DataStore Resources.
@@ -1885,7 +1886,7 @@ def purge_datatables_views(
     empty_table_count = 0
     na_count = 0
     status = 1
-    max = len(results)
+    max_count = len(results)
     for result in results:
         vid = result[0]
         rid = result[1]
@@ -1900,7 +1901,7 @@ def purge_datatables_views(
             if verbose:
                 click.echo("%s/%s -- Resource %s does not exist "
                            "in DB. Let's delete views for this one..." % (
-                               status, max, rid))
+                               status, max_count, rid))
             na_count += 1
             status += 1
             view_ids_to_delete.append(vid)
@@ -1913,20 +1914,20 @@ def purge_datatables_views(
             if verbose:
                 click.echo("%s/%s -- Resource %s is invalid for "
                            "DataStore. Let's delete views for this one..." % (
-                               status, max, rid))
+                               status, max_count, rid))
             invalid_table_count += 1
             status += 1
             view_ids_to_delete.append(vid)
             continue
         try:
             count = _get_datastore_count(context, rid, verbose=verbose,
-                                         status=status, max=max)
+                                         status=status, max_count=max_count)
             if int(count) == 0:
                 # 0 record DataStore, should delete DT view
                 if verbose:
                     click.echo("%s/%s -- Resource %s has %s rows "
                                "in DataStore. Let's delete views for this one..." % (
-                                   status, max, rid, count))
+                                   status, max_count, rid, count))
                 empty_table_count += 1
                 status += 1
                 view_ids_to_delete.append(vid)
@@ -1934,7 +1935,7 @@ def purge_datatables_views(
             elif verbose:
                 click.echo("%s/%s -- Resource %s has %s rows "
                            "in DataStore. Skipping..." % (
-                               status, max, rid, count))
+                               status, max_count, rid, count))
                 continue
         except Exception as e:
             if verbose:
@@ -1947,16 +1948,16 @@ def purge_datatables_views(
 
     total_count = len(view_ids_to_delete)
 
-    if total_count and not quiet and not list:
+    if total_count and not quiet and not list_output:
         click.confirm("Do you want to delete %s DataTable "
                       "Views? (Invalid: %s; Empty: %s; N/A: %s)" %
                       (total_count, invalid_table_count,
                        empty_table_count, na_count), abort=True)
 
     status = 1
-    max = len(view_ids_to_delete)
+    max_count = len(view_ids_to_delete)
     for vid in view_ids_to_delete:
-        if list:
+        if list_output:
             click.echo(vid)
             continue
         else:
@@ -1965,7 +1966,7 @@ def purge_datatables_views(
                     context, {"id": vid})
                 if verbose:
                     click.echo("%s/%s -- Deleted DataTable "
-                               "View %s" % (status, max, vid))
+                               "View %s" % (status, max_count, vid))
             except Exception as e:
                 if verbose:
                     errors.write('Failed to delete DataTable '
@@ -1979,7 +1980,7 @@ def purge_datatables_views(
     errors.seek(0)
     if has_errors:
         _error_message(errors.read())
-    elif view_ids_to_delete and not list:
+    elif view_ids_to_delete and not list_output:
         _success_message(
             'Deleted %s DataTables Views. (Invalid: %s; Empty: %s; N/A: %s)' %
             (total_count, invalid_table_count, empty_table_count, na_count))
@@ -1993,7 +1994,7 @@ def purge_datatables_views(
               help='Resource ID to resolve DataStore issues with. Defaults to None.')
 @click.option('-q', '--quiet', is_flag=True,
               type=click.BOOL, help='Suppress human interaction.')
-@click.option('-l', '--list', is_flag=True,
+@click.option('-l', '--list-output', is_flag=True,
               type=click.BOOL,
               help='List the Resource IDs instead of executing everything.')
 @click.option('-v', '--verbose', is_flag=True,
@@ -2001,7 +2002,7 @@ def purge_datatables_views(
 def purge_datastore_tables(
         resource_id: Optional[str] = None,
         quiet: Optional[bool] = False,
-        list: Optional[bool] = False,
+        list_output: Optional[bool] = False,
         verbose: Optional[bool] = False):
     """
     Handles purging of invalid and empty DataStore tables.
@@ -2048,7 +2049,7 @@ def purge_datastore_tables(
         resource_ids_to_delete = invalid_resource_ids.copy()
 
     status = 1
-    max = len(valid_resource_ids)
+    max_count = len(valid_resource_ids)
     if verbose:
         click.echo('Checking DataStore counts of valid resources...')
     for rid in valid_resource_ids:
@@ -2060,18 +2061,18 @@ def purge_datastore_tables(
             continue
         try:
             count = _get_datastore_count(context, rid, verbose=verbose,
-                                         status=status, max=max)
+                                         status=status, max_count=max_count)
             if int(count) == 0:
                 if verbose:
                     click.echo("%s/%s -- Resource %s has %s rows "
                                "in DataStore. Let's delete this one..." % (
-                                   status, max, rid, count))
+                                   status, max_count, rid, count))
                 resource_ids_to_delete.append(rid)
                 empty_table_count += 1
             elif verbose:
                 click.echo("%s/%s -- Resource %s has %s rows "
                            "in DataStore. Skipping..." % (
-                               status, max, rid, count))
+                               status, max_count, rid, count))
         except Exception as e:
             if verbose:
                 errors.write('Failed to get DataStore info '
@@ -2083,16 +2084,16 @@ def purge_datastore_tables(
         status += 1
     total_count = len(resource_ids_to_delete)
 
-    if total_count and not quiet and not list:
+    if total_count and not quiet and not list_output:
         click.confirm("Do you want to delete the "
                       "DataStore tables for %s Resources? (Invalid: %s; Empty: %s)" %
                       (total_count, invalid_table_count,
                        empty_table_count), abort=True)
 
     status = 1
-    max = len(resource_ids_to_delete)
+    max_count = len(resource_ids_to_delete)
     for rid in resource_ids_to_delete:
-        if list:
+        if list_output:
             click.echo(rid)
             continue
         else:
@@ -2101,7 +2102,7 @@ def purge_datastore_tables(
                     context, {"resource_id": rid, "force": True})
                 if verbose:
                     click.echo("%s/%s -- Deleted DataStore "
-                               "table for Resource %s" % (status, max, rid))
+                               "table for Resource %s" % (status, max_count, rid))
             except Exception as e:
                 if verbose:
                     errors.write('Failed to delete DataStore '
@@ -2115,7 +2116,7 @@ def purge_datastore_tables(
     errors.seek(0)
     if has_errors:
         _error_message(errors.read())
-    elif resource_ids_to_delete and not list:
+    elif resource_ids_to_delete and not list_output:
         _success_message('Deleted %s DataStore tables. (Invalid: %s; Empty: %s)' %
                          (total_count, invalid_table_count, empty_table_count))
     elif not resource_ids_to_delete:
@@ -2132,7 +2133,7 @@ def purge_datastore_tables(
               type=click.BOOL, help='Increase verbosity.')
 @click.option('-q', '--quiet', is_flag=True,
               type=click.BOOL, help='Suppress human interaction.')
-@click.option('-l', '--list', is_flag=True,
+@click.option('-l', '--list-output', is_flag=True,
               type=click.BOOL, help='List the Resource IDs instead '
                                     'of submitting them to Validation.')
 @click.option('-x', '--xloader', is_flag=True,
@@ -2150,7 +2151,7 @@ def resubmit_datastore_resources(resource_id: Optional[str] = None,
                                  empty_only: Optional[bool] = False,
                                  verbose: Optional[bool] = False,
                                  quiet: Optional[bool] = False,
-                                 list: Optional[bool] = False,
+                                 list_output: Optional[bool] = False,
                                  xloader: Optional[bool] = False,
                                  failed: Optional[bool] = False,
                                  sync: Optional[bool] = False,
@@ -2184,7 +2185,7 @@ def resubmit_datastore_resources(resource_id: Optional[str] = None,
         # gets valid Resources, w/ datastore_active=1
         resource_ids = _get_datastore_resources(verbose=verbose)
 
-    max = len(resource_ids)
+    max_count = len(resource_ids)
     for resource_id in resource_ids:
         if resource_id in resource_ids_to_submit:
             continue
@@ -2193,17 +2194,17 @@ def resubmit_datastore_resources(resource_id: Optional[str] = None,
                 if empty_only:
                     count = _get_datastore_count(
                         context, resource_id, verbose=verbose,
-                        status=status, max=max)
+                        status=status, max_count=max_count)
                     if int(count) == 0:
                         if verbose:
                             click.echo("%s/%s -- Resource %s has %s rows in "
                                        "DataStore. Let's fix this one..." % (
-                                           status, max, resource_id, count))
+                                           status, max_count, resource_id, count))
                         resource_ids_to_submit.append(resource_id)
                     elif verbose:
                         click.echo("%s/%s -- Resource %s has %s "
                                    "rows in DataStore. Skipping..." % (
-                                       status, max, resource_id, count))
+                                       status, max_count, resource_id, count))
                 elif failed:
                     if xloader:
                         # check xloader status
@@ -2224,11 +2225,11 @@ def resubmit_datastore_resources(resource_id: Optional[str] = None,
                             if verbose:
                                 click.echo("%s/%s -- Going to re-submit "
                                            "Resource %s..." % (
-                                               status, max, resource_id))
+                                               status, max_count, resource_id))
                         elif verbose:
                             click.echo("%s/%s -- Resource %s did "
                                        "not fail XLoader. Skipping..." % (
-                                            status, max, resource_id))
+                                            status, max_count, resource_id))
                     else:
                         # check validation status
                         try:
@@ -2248,17 +2249,17 @@ def resubmit_datastore_resources(resource_id: Optional[str] = None,
                             if verbose:
                                 click.echo("%s/%s -- Going to re-submit "
                                            "Resource %s..." % (
-                                               status, max, resource_id))
+                                               status, max_count, resource_id))
                         elif verbose:
                             click.echo("%s/%s -- Resource %s did not fail "
                                        "Validation. Skipping..." % (
-                                           status, max, resource_id))
+                                           status, max_count, resource_id))
                 else:
                     resource_ids_to_submit.append(resource_id)
                     if verbose:
                         click.echo("%s/%s -- Going to re-submit "
                                    "Resource %s..." % (
-                                       status, max, resource_id))
+                                       status, max_count, resource_id))
             except Exception as e:
                 if verbose:
                     errors.write('Failed to get DataStore info '
@@ -2269,7 +2270,7 @@ def resubmit_datastore_resources(resource_id: Optional[str] = None,
                 pass
         status += 1
 
-    if resource_ids_to_submit and not quiet and not list:
+    if resource_ids_to_submit and not quiet and not list_output:
         if xloader:
             click.confirm("Do you want to re-submit %s "
                           "Resources to Xloader?" %
@@ -2280,10 +2281,10 @@ def resubmit_datastore_resources(resource_id: Optional[str] = None,
                           len(resource_ids_to_submit), abort=True)
 
     status = 1
-    max = len(resource_ids_to_submit)
+    max_count = len(resource_ids_to_submit)
     async_mode = False if sync else True
     for id in resource_ids_to_submit:
-        if list:
+        if list_output:
             click.echo(id)
         else:
             try:
@@ -2291,17 +2292,17 @@ def resubmit_datastore_resources(resource_id: Optional[str] = None,
                     get_action('xloader_submit')(
                         context, {"resource_id": id, "ignore_hash": True})
                     msg = "%s/%s -- Submitted Resource %s "\
-                          "to Xloader" % (status, max, id)
+                          "to Xloader" % (status, max_count, id)
                 else:
                     get_action('resource_validation_run')(
                         context, {"resource_id": id, "async": async_mode,
                                   "skip_xloader": skip_xloader})
                     if async_mode:
                         msg = "%s/%s -- Submitted Resource %s "\
-                              "to Validation" % (status, max, id)
+                              "to Validation" % (status, max_count, id)
                     else:
                         msg = "%s/%s -- Ran Resource %s "\
-                              "through Validation" % (status, max, id)
+                              "through Validation" % (status, max_count, id)
                 if verbose:
                     click.echo(msg)
             except Exception as e:
@@ -2326,7 +2327,7 @@ def resubmit_datastore_resources(resource_id: Optional[str] = None,
     errors.seek(0)
     if has_errors:
         _error_message(errors.read())
-    elif resource_ids_to_submit and not list:
+    elif resource_ids_to_submit and not list_output:
         if xloader:
             _success_message('Re-submitted %s Resources '
                              'to Xloader.' % len(resource_ids_to_submit))
