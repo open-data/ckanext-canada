@@ -3,9 +3,10 @@ mock
 importlib-metadata==4.11.4
 zipp==3.19.1
 beautifulsoup4==4.11.1
-pytest==7.4.4
+pytest==8.4.2  # latest for py-3.9.2
 pytest-ckan
-pytest-cov==3.0.0
-coverage==7.7.1
-junitparser==3.2.0
-junit2html==31.0.2
+pytest-cov==7.1.0  # latest for py-3.9.2
+pytest-split==0.10.0  # latest for py-3.9.2
+coverage==7.10.7  # latest for py-3.9.2
+junitparser==4.0.2  # latest for py-3.9.2
+junit2html==31.1.4  # latest for py-3.9.2
