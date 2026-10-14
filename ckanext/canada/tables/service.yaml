@@ -82,7 +82,7 @@ resources:
         Ce champ ne peut pas contenir de virgules.
     occurrence: Single
     datastore_type: text
-    choices_reference_table: ref_service_service_ids
+    choices_reference_table: _ref_service_service_ids
     choices_filter_query: WHERE org_years ? {org}
 
   # DEP 1-4
@@ -413,7 +413,7 @@ resources:
     excel_full_text_choices: false
     datatables_full_text_choices: true
     form_snippet: scheming/form_snippets/multiple_select.html
-    choices_reference_table: ref_service_program_ids
+    choices_reference_table: _ref_service_program_ids
     choices_filter_query: WHERE org_years ? {org}
     choices_suffix_filter:
       "-INV":
@@ -1635,7 +1635,7 @@ resources:
         END IF;
 
         IF NOT EXISTS(
-          SELECT FROM "ref_service_service_ids"
+          SELECT FROM "_ref_service_service_ids"
             WHERE org_years ? org_name
             AND service_id = NEW.service_id
         ) THEN
@@ -1678,7 +1678,7 @@ resources:
 
         refval := (
           SELECT array_agg(program_id) FROM (
-            SELECT program_id FROM "ref_service_program_ids"
+            SELECT program_id FROM "_ref_service_program_ids"
             WHERE org_years ? org_name
             AND program_id = ANY(NEW.program_id)
             ORDER BY program_id
@@ -1992,7 +1992,7 @@ resources:
         Ce champ ne peut pas contenir de virgules.
     occurrence: Single
     datastore_type: text
-    choices_reference_table: ref_service_service_ids
+    choices_reference_table: _ref_service_service_ids
     choices_filter_query: WHERE org_years ? {org}
 
   # DEP 2-3
@@ -2680,7 +2680,7 @@ resources:
         END IF;
 
         IF NOT EXISTS(
-          SELECT FROM "ref_service_service_ids"
+          SELECT FROM "_ref_service_service_ids"
             WHERE org_years ? org_name
             AND service_id = NEW.service_id
         ) THEN
