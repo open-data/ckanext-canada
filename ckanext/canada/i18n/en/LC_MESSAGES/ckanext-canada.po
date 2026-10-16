@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  CKAN\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-09-08 13:03-0400\n"
+"POT-Creation-Date: 2026-10-16 10:25-0400\n"
 "PO-Revision-Date: 2014-01-23 13:04+0000\n"
 "Last-Translator: Sean Hammond <sean.hammond@okfn.org>\n"
 "Language: en\n"
@@ -179,7 +179,7 @@ msgstr ""
 msgid "Maintenance and Update Frequency"
 msgstr ""
 
-#: ckanext/canada/dataset.py:393 ckanext/canada/helpers.py:1016
+#: ckanext/canada/dataset.py:393 ckanext/canada/helpers.py:1025
 #: ckanext/canada/templates/snippets/package_item.html:43
 #: ckanext/canada/templates/snippets/publish_facet.html:27
 #: ckanext/canada/templates/snippets/search_form.html:64
@@ -207,40 +207,40 @@ msgstr ""
 msgid "Treasury Board of Canada Secretariat"
 msgstr ""
 
-#: ckanext/canada/helpers.py:732 ckanext/canada/strings.py:14
+#: ckanext/canada/helpers.py:741 ckanext/canada/strings.py:14
 #: ckanext/canada/view.py:1705
 msgid "Members not found"
 msgstr ""
 
-#: ckanext/canada/helpers.py:867
+#: ckanext/canada/helpers.py:876
 msgid "Data awaiting load to DataStore"
 msgstr ""
 
-#: ckanext/canada/helpers.py:868
+#: ckanext/canada/helpers.py:877
 msgid "Loading data into DataStore"
 msgstr ""
 
-#: ckanext/canada/helpers.py:869
+#: ckanext/canada/helpers.py:878
 msgid "Data loaded into DataStore"
 msgstr ""
 
-#: ckanext/canada/helpers.py:870
+#: ckanext/canada/helpers.py:879
 msgid "Failed to load data into DataStore"
 msgstr ""
 
-#: ckanext/canada/helpers.py:871
+#: ckanext/canada/helpers.py:880
 msgid "Data available in DataStore"
 msgstr ""
 
-#: ckanext/canada/helpers.py:872
+#: ckanext/canada/helpers.py:881
 msgid "Resource not active in DataStore"
 msgstr ""
 
-#: ckanext/canada/helpers.py:873
+#: ckanext/canada/helpers.py:882
 msgid "DataStore status unknown"
 msgstr ""
 
-#: ckanext/canada/helpers.py:952
+#: ckanext/canada/helpers.py:961
 #: ckanext/canada/templates/home/quick_links.html:65
 #: ckanext/canada/templates/package/snippets/package_type_label.html:16
 #: ckanext/canada/templates/scheming/package/snippets/package_form.html:30
@@ -250,7 +250,7 @@ msgstr ""
 msgid "Open Data"
 msgstr ""
 
-#: ckanext/canada/helpers.py:953
+#: ckanext/canada/helpers.py:962
 #: ckanext/canada/templates/home/quick_links.html:82
 #: ckanext/canada/templates/package/snippets/package_type_label.html:22
 #: ckanext/canada/templates/scheming/package/snippets/package_form.html:32
@@ -260,23 +260,23 @@ msgstr ""
 msgid "Open Information"
 msgstr ""
 
-#: ckanext/canada/helpers.py:965
+#: ckanext/canada/helpers.py:974
 #: ckanext/canada/templates/snippets/dataset_facets.html:27
 msgid "Request sent to data owner - awaiting response"
 msgstr ""
 
-#: ckanext/canada/helpers.py:969
+#: ckanext/canada/helpers.py:978
 #: ckanext/canada/templates/snippets/publish_facet.html:39
 msgid "Pending"
 msgstr ""
 
-#: ckanext/canada/helpers.py:970 ckanext/canada/templates/package/read.html:48
+#: ckanext/canada/helpers.py:979 ckanext/canada/templates/package/read.html:48
 #: ckanext/canada/templates/snippets/package_item.html:20
 #: ckanext/canada/templates/snippets/publish_facet.html:39
 msgid "Draft"
 msgstr ""
 
-#: ckanext/canada/helpers.py:987
+#: ckanext/canada/helpers.py:996
 #: ckanext/canada/templates/home/quick_links.html:152
 #: ckanext/canada/templates/package/snippets/package_type_label.html:20
 #: ckanext/canada/templates/package/snippets/package_type_label.html:26
@@ -285,19 +285,19 @@ msgstr ""
 msgid "Proactive Publication"
 msgstr ""
 
-#: ckanext/canada/helpers.py:1018
+#: ckanext/canada/helpers.py:1027
 msgid "Scheduled"
 msgstr ""
 
-#: ckanext/canada/helpers.py:1058
+#: ckanext/canada/helpers.py:1067
 msgid "Registry Home"
 msgstr ""
 
-#: ckanext/canada/helpers.py:1063
+#: ckanext/canada/helpers.py:1072
 msgid "Open Government"
 msgstr ""
 
-#: ckanext/canada/helpers.py:1066
+#: ckanext/canada/helpers.py:1075
 #: ckanext/canada/templates/admin/publish_search.html:19
 #: ckanext/canada/templates/home/quick_links.html:123
 #: ckanext/canada/templates/organization/snippets/organization_search.html:8
@@ -308,7 +308,7 @@ msgstr ""
 msgid "Search"
 msgstr ""
 
-#: ckanext/canada/helpers.py:1207
+#: ckanext/canada/helpers.py:1216
 msgid "System"
 msgstr ""
 
@@ -330,7 +330,7 @@ msgid ""
 "than {} rows."
 msgstr ""
 
-#: ckanext/canada/assets/datatables/source/pd_datatables.js:37
+#: ckanext/canada/assets/datatables/source/pd_datatables.js:38
 #: ckanext/canada/strings.js:11
 msgid "JS_I18N_LOADED"
 msgstr ""
@@ -944,7 +944,7 @@ msgstr ""
 msgid "boolean"
 msgstr ""
 
-#: ckanext/canada/validators.py:140
+#: ckanext/canada/validators.py:223
 #, python-format
 msgid "Tag \"%s\" length is less than minimum %s"
 msgstr ""
@@ -1495,9 +1495,9 @@ msgstr ""
 msgid "Reverse order this column"
 msgstr ""
 
-#: ckanext/canada/assets/datatables/source/pd_datatables.js:559
-#: ckanext/canada/assets/datatables/source/pd_datatables.js:617
-#: ckanext/canada/assets/datatables/source/pd_datatables.js:639
+#: ckanext/canada/assets/datatables/source/pd_datatables.js:564
+#: ckanext/canada/assets/datatables/source/pd_datatables.js:622
+#: ckanext/canada/assets/datatables/source/pd_datatables.js:644
 msgid ": "
 msgstr ""
 
@@ -1527,6 +1527,7 @@ msgid "Access, upload and modify government administrative aircraft use"
 msgstr ""
 
 #. SQL Trigger String for PD Type: adminaircraft
+#. SQL Trigger String for PD Type: briefingt
 #. SQL Trigger String for PD Type: contracts
 #. SQL Trigger String for PD Type: grants
 #. SQL Trigger String for PD Type: grantsmonthly
@@ -1536,6 +1537,7 @@ msgstr ""
 #. SQL Trigger String for PD Type: travelq
 #. SQL Trigger String for PD Type: wrongdoing
 #: ckanext/canada/tables/adminaircraft.yaml:359
+#: ckanext/canada/tables/briefingt.yaml:331
 #: ckanext/canada/tables/contracts.yaml:2260
 #: ckanext/canada/tables/grants.yaml:1317
 #: ckanext/canada/tables/grantsmonthly.yaml:1841
@@ -1644,11 +1646,6 @@ msgstr ""
 msgid ""
 "Access, upload and modify the Briefing Note Titles and Numbers reports "
 "for your organization"
-msgstr ""
-
-#. SQL Trigger String for PD Type: briefingt
-#: ckanext/canada/tables/briefingt.yaml:331
-msgid "Comma is not allowed in Briefing Note Number field"
 msgstr ""
 
 #. Resource Title for PD Type: briefingt
@@ -4321,11 +4318,11 @@ msgstr ""
 msgid "Resource Formats:"
 msgstr ""
 
-#: ckanext/canada/templates/snippets/pd_datatable.html:46
+#: ckanext/canada/templates/snippets/pd_datatable.html:47
 msgid "Interactive Table (beta version)"
 msgstr ""
 
-#: ckanext/canada/templates/snippets/pd_datatable.html:54
+#: ckanext/canada/templates/snippets/pd_datatable.html:55
 #, python-format
 msgid ""
 "The new table interface will become the default experience. Try the "
@@ -4333,40 +4330,40 @@ msgid ""
 "to help shape future improvements."
 msgstr ""
 
-#: ckanext/canada/templates/snippets/pd_datatable.html:58
+#: ckanext/canada/templates/snippets/pd_datatable.html:59
 msgid "Revert to older table interface"
 msgstr ""
 
-#: ckanext/canada/templates/snippets/pd_datatable.html:61
+#: ckanext/canada/templates/snippets/pd_datatable.html:62
 msgid "Keyboard controls"
 msgstr ""
 
-#: ckanext/canada/templates/snippets/pd_datatable.html:63
+#: ckanext/canada/templates/snippets/pd_datatable.html:64
 msgid ""
 "Hold <pre>SHIFT</pre> key while clicking on sort controls for multi-"
 "column sorting"
 msgstr ""
 
-#: ckanext/canada/templates/snippets/pd_datatable.html:64
+#: ckanext/canada/templates/snippets/pd_datatable.html:65
 msgid ""
 "Press <pre>ALT + K</pre> keys to enter KeyTable mode, allowing you to "
 "navigate the table with arrow keys"
 msgstr ""
 
-#: ckanext/canada/templates/snippets/pd_datatable.html:66
+#: ckanext/canada/templates/snippets/pd_datatable.html:67
 msgid "Press <pre>SPACE</pre> key to select a row"
 msgstr ""
 
-#: ckanext/canada/templates/snippets/pd_datatable.html:67
+#: ckanext/canada/templates/snippets/pd_datatable.html:68
 msgid "Press <pre>E</pre> key to expand a row (Compact Table mode only)"
 msgstr ""
 
-#: ckanext/canada/templates/snippets/pd_datatable.html:68
+#: ckanext/canada/templates/snippets/pd_datatable.html:69
 msgid "Press <pre>ESC</pre> key to exit KeyTable mode"
 msgstr ""
 
-#: ckanext/canada/templates/snippets/pd_datatable.html:77
-#: ckanext/canada/templates/snippets/pd_datatable.html:88
+#: ckanext/canada/templates/snippets/pd_datatable.html:78
+#: ckanext/canada/templates/snippets/pd_datatable.html:89
 #: ckanext/canada/templates/snippets/pd_datatable_depr.html:29
 msgid "Select"
 msgstr ""
@@ -4983,4 +4980,7 @@ msgstr ""
 #: ckanext/canada/templates/xloader/resource_data.html:8
 msgid "Upload to DataStore"
 msgstr ""
+
+#~ msgid "Comma is not allowed in Briefing Note Number field"
+#~ msgstr ""
 

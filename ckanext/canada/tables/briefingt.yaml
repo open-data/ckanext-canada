@@ -328,7 +328,7 @@ resources:
   - update_record_modified_created_trigger
 
   trigger_strings:  # yaml | not supported
-    tracking_number_error: Comma is not allowed in Briefing Note Number field
+    tracking_number_error: Comma is not allowed in Reference Number field
 
   examples:
     record:
