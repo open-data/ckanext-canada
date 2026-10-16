@@ -25,8 +25,8 @@ resources:
   # 3.3
   - datastore_id: tracking_number
     label:
-      en: Briefing Note Number
-      fr: Numéro de suivi
+      en: Reference Number
+      fr: Numéro de référence
     description:
       en: This field will display the internal tracking number of the Briefing Note.
       fr: Ce champ affichera le numéro de suivi interne de la note de breffage.
@@ -328,7 +328,7 @@ resources:
   - update_record_modified_created_trigger
 
   trigger_strings:  # yaml | not supported
-    tracking_number_error: Comma is not allowed in Briefing Note Number field
+    tracking_number_error: Comma is not allowed in Reference Number field
 
   examples:
     record:

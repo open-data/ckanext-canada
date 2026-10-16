@@ -170,7 +170,7 @@ def _generate_data():
                 program_id_map[program_id]['org_years'][_org].append(year)
     assert program_id_map
 
-    sorted_program_id_map= dict(sorted(program_id_map.items()))
+    sorted_program_id_map = dict(sorted(program_id_map.items()))
 
     # write program_id ref data
     with open(PROGRAM_ID_OUTPUT_FILE, 'w') as f:
