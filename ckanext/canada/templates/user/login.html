@@ -40,9 +40,7 @@
     {% set reset_link = h.url_for('user.request_reset') %}
     {% set name_reset_link = h.url_for('canada.recover_username') %}
     <div class="panel panel-info">
-      <div class="panel-heading panel-title">
-        {{ _('Need an account') }}
-      </div>
+      <div class="panel-heading canada-panel-heading">{{- _('Need an account') -}}</div>
       <div class="panel-body">
         <p>{{ _('Then sign right up, it only takes a minute') }}.</p>
         <p class="action">
@@ -51,8 +49,7 @@
       </div>
     </div>
     <div class="panel panel-warning">
-      <div class="panel-heading panel-title">
-      {{ _('Forgotten your password?') }}</div>
+      <div class="panel-heading canada-panel-heading">{{- _('Forgotten your password?') -}}</div>
       <div class="panel-body">
         <p>{{ _('No problem, use our password recovery form to reset it') }}.</p>
         <p>
@@ -63,9 +60,7 @@
     {% if h.plugin_loaded('gcnotify') %}
       {# The email template for username recovery is monkey patched in GC Notify so we need that loaded #}
       <div class="panel panel-warning">
-        <div class="panel-heading panel-title">
-          {{ _('Forgotten your username?') }}
-        </div>
+        <div class="panel-heading canada-panel-heading">{{- _('Forgotten your username?') -}}</div>
         <div class="panel-body">
           <p>{{ _('No problem, use our username recovery form to recover it') }}.</p>
           <p>

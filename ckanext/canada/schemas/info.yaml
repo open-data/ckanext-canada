@@ -551,6 +551,11 @@ resource_fields:
 # Field = Location.
 # {The location for online access to the distribution of the resource, if the file resides elsewhere.}
 - preset: canada_resource_url
+- preset: canada_resource_description
+
+# XLoader Fields.
+- preset: canada_ckan_url
+- preset: canada_original_url
 
 # Validation Fields.
 - preset: canada_resource_validation_schema

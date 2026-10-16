@@ -28,6 +28,7 @@ from geomet import wkt
 import json
 import uuid
 from datetime import datetime
+from urllib.parse import urlparse, urlunparse
 
 from ckan.lib.helpers import date_str_to_datetime
 from ckanext.scheming.helpers import scheming_get_preset
@@ -215,17 +216,27 @@ def canada_copy_from_org_name(key: FlattenKey,
     When org name at publication not provided, copy from owner_org
     """
     value = data[key]
+    if value is None or value is missing:
+        # fluent_text sets to None/missing
+        value = r'{}'
+    try:
+        json_string(value, context)
+    except Invalid as e:
+        errors[key].append(e.error)
+        return
     if json.loads(value) not in ({}, {'en': '', 'fr': ''}):
+        # do not set if there is a value
         return
     org_id = data[('owner_org',)]
     if not org_id:
+        # do not set if there is no owner_org
         return
     try:
         org = get_action('organization_show')(cast(Context, dict(context)),
                                               {'id': org_id})
     except ObjectNotFound:
+        # do not set if the org does not exist
         return
-
     data[key] = json.dumps({
         'en': org['title'].split(' | ')[0],
         'fr': org['title'].split(' | ')[-1],
@@ -664,4 +675,45 @@ def canada_api_token_name_validator(value: Any, context: Context):
         raise Invalid(_('Invalid name for an API Token. API Token '
                         'names can only contain alphanumeric characters, '
                         'hyphens, and underscores.'))
+    return value
+
+
+def canada_output_resource_original_url(key: FlattenKey,
+                                        data: FlattenDataDict,
+                                        errors: FlattenErrorDict,
+                                        context: Context):
+    """
+    XLoader saves full qualified URIs by default. Strip domains from them,
+    if the file is an upload.
+    """
+    if h.plugin_loaded('language_domains'):
+        # logic is handled in chained package_show in language_domains plugin
+        return
+    url_type = data.get(key[:-1] + ('url_type',))
+    if url_type == 'upload':
+        original_url = data[key]
+        original_url_parts = urlparse(original_url)
+        original_url_path = original_url_parts.path.rstrip('/')
+        # strip any possible language dirs
+        for _lang in config.get('ckan.locales_offered', ['en']):
+            while original_url_path.startswith(f'/{_lang}/'):
+                original_url_path = original_url_path[len(f'/{_lang}'):]
+        data[key] = urlunparse((
+            '',
+            '',
+            original_url_path,
+            original_url_parts.params,
+            original_url_parts.query,
+            original_url_parts.fragment
+        ))
+
+
+def canada_resource_language_validator(value: Any, context: Context) -> Any:
+    """
+    No linguistic content; Not applicable (zxx) should not be accompanied
+    by any other languages.
+    """
+    if isinstance(value, list) and 'zxx' in value and len(value) > 1:
+        raise Invalid(_('Cannot define other languages '
+                        'alongside "No linguistic content; Not applicable"'))
     return value

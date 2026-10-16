@@ -1,0 +1,1 @@
+Added a bin script to generate Service Inventory Service IDs, Service Names, Program IDs, and Program Names (along with valid Organizations) for reference data from `https://github.com/gcperformance/service-data`. The data is tracked in CSV files in `ckanext.canada.tables.references.data`

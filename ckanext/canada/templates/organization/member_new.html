@@ -75,9 +75,7 @@
 {% block secondary_content %}
   {{ super() }}
   <div class="panel panel-info">
-    <div class="panel-heading">
-      <i class="fa fa-lg fa-info-circle" aria-hidden="true"></i>&nbsp;{{ _('What are roles?') }}
-    </div>
+    <div class="panel-heading canada-panel-heading"><i class="fa fa-lg fa-info-circle" aria-hidden="true"></i>&nbsp;{{- _('What are roles?') -}}</div>
     <div class="panel-body">
       {% trans %}
         <p><strong>Admin:</strong> Can add/edit and delete datasets, as well as

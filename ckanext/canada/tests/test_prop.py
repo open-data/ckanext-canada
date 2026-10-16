@@ -30,7 +30,6 @@ SIMPLE_SUGGESTION = {
     'subject': ['persons'],
     'date_submitted': '2021-01-01',
     'date_forwarded': '2021-02-01',
-
     'status': [],
 }
 

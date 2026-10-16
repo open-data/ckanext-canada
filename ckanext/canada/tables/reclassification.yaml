@@ -12,6 +12,7 @@ collection: pd
 
 resources:
 - title: Proactive Publication - Position Reclassification
+  shortname: Position Reclassification
   resource_name: reclassification
 
   published_resource_id: bdaa5515-3782-4e5c-9d44-c25e032addb7
@@ -246,21 +247,27 @@ resources:
       class: form-control canada-width-full d-block
 
   - datastore_id: record_created
-    label: Record Creation Time
+    label:
+      en: Record Creation Time
+      fr: Heure de la création du dossier
     import_template_include: false
     visible_to_public: false
     datastore_type: timestamp
     preview_class: bg-info
 
   - datastore_id: record_modified
-    label: Last Record Modification Time
+    label:
+      en: Last Record Modification Time
+      fr: Heure de la dernière modification au dossier
     import_template_include: false
     visible_to_public: false
     datastore_type: timestamp
     preview_class: bg-info
 
   - datastore_id: user_modified
-    label: User Last Modified Record
+    label:
+      en: User Last Modified Record
+      fr: Dernier enregistrement modifié par l'utilisateur
     import_template_include: false
     visible_to_public: false
     datastore_type: text
@@ -330,6 +337,7 @@ resources:
 
 
 - title: Proactive Publication - Position Reclassification Nothing to Report
+  shortname: Nothing to Report
   resource_name: reclassification-nil
 
   published_resource_id: 1e955e4d-df35-4441-bf38-b7086192ece2
@@ -381,21 +389,27 @@ resources:
         fr: 1 janvier - 31 mars
 
   - datastore_id: record_created
-    label: Record Creation Time
+    label:
+      en: Record Creation Time
+      fr: Heure de la création du dossier
     import_template_include: false
     visible_to_public: false
     datastore_type: timestamp
     preview_class: bg-info
 
   - datastore_id: record_modified
-    label: Last Record Modification Time
+    label:
+      en: Last Record Modification Time
+      fr: Heure de la dernière modification au dossier
     import_template_include: false
     visible_to_public: false
     datastore_type: timestamp
     preview_class: bg-info
 
   - datastore_id: user_modified
-    label: User Last Modified Record
+    label:
+      en: User Last Modified Record
+      fr: Dernier enregistrement modifié par l'utilisateur
     import_template_include: false
     visible_to_public: false
     datastore_type: text

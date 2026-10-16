@@ -19,6 +19,7 @@ guide_link: http://www.gcpedia.gc.ca/wiki/Consultations_Registry_on_Open.Canada.
 
 resources:
 - title: Open Dialogue - Consultations
+  shortname: Consultations
   resource_name: consultations
 
   published_resource_id: 92bec4b7-6feb-4215-a5f7-61da342b2354
@@ -593,21 +594,27 @@ resources:
         fr: Discours du Trône
 
   - datastore_id: record_created
-    label: Record Creation Time
+    label:
+      en: Record Creation Time
+      fr: Heure de la création du dossier
     import_template_include: false
     visible_to_public: false
     datastore_type: timestamp
     preview_class: bg-info
 
   - datastore_id: record_modified
-    label: Last Record Modification Time
+    label:
+      en: Last Record Modification Time
+      fr: Heure de la dernière modification au dossier
     import_template_include: false
     visible_to_public: false
     datastore_type: timestamp
     preview_class: bg-info
 
   - datastore_id: user_modified
-    label: User Last Modified Record
+    label:
+      en: User Last Modified Record
+      fr: Dernier enregistrement modifié par l'utilisateur
     import_template_include: false
     visible_to_public: false
     datastore_type: text

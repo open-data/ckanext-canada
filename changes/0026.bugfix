@@ -1,0 +1,1 @@
+Fixed an issue with the `canada_copy_from_org_name` validator and the `prop` fields using the `fluent_text` validator. The `fluent_text` validator now returns `None` instead of an empty dictionary [eb5581a](https://github.com/ckan/ckanext-fluent/compare/bbb61594a49c836c7d211782a1d8edbe44d5daff...eb5581ac952cd1d0d3ceac78b43adb97e7068895)

@@ -13,6 +13,7 @@ collection: qpnotes
 
 resources:
 - title: Proactive Publication - Question Period Notes
+  shortname: Question Period Notes
   resource_name: qpnotes
 
   published_resource_id: c55a2862-7ec4-462c-a844-22acab664812
@@ -323,21 +324,27 @@ resources:
 
   # audit trail
   - datastore_id: record_created
-    label: Record Creation Time
+    label:
+      en: Record Creation Time
+      fr: Heure de la création du dossier
     import_template_include: false
     visible_to_public: false
     datastore_type: timestamp
     preview_class: bg-info
 
   - datastore_id: record_modified
-    label: Last Record Modification Time
+    label:
+      en: Last Record Modification Time
+      fr: Heure de la dernière modification au dossier
     import_template_include: false
     visible_to_public: false
     datastore_type: timestamp
     preview_class: bg-info
 
   - datastore_id: user_modified
-    label: User Last Modified Record
+    label:
+      en: User Last Modified Record
+      fr: Dernier enregistrement modifié par l'utilisateur
     import_template_include: false
     visible_to_public: false
     datastore_type: text
@@ -405,6 +412,7 @@ resources:
     sort: date_received desc
 
 - title: Proactive Publication - Question Period Notes Nothing to Report
+  shortname: Nothing to Report
   resource_name: qpnotes-nil
 
   published_resource_id: dba8cc4a-2a57-435c-a270-fa024474e609
@@ -458,21 +466,27 @@ resources:
 
 
   - datastore_id: record_created
-    label: Record Creation Time
+    label:
+      en: Record Creation Time
+      fr: Heure de la création du dossier
     import_template_include: false
     visible_to_public: false
     datastore_type: timestamp
     preview_class: bg-info
 
   - datastore_id: record_modified
-    label: Last Record Modification Time
+    label:
+      en: Last Record Modification Time
+      fr: Heure de la dernière modification au dossier
     import_template_include: false
     visible_to_public: false
     datastore_type: timestamp
     preview_class: bg-info
 
   - datastore_id: user_modified
-    label: User Last Modified Record
+    label:
+      en: User Last Modified Record
+      fr: Dernier enregistrement modifié par l'utilisateur
     import_template_include: false
     visible_to_public: false
     datastore_type: text

@@ -103,6 +103,8 @@ class TestNAVLSchema(CanadaTestBase):
             'jurisdiction': 'federal',
             'maintainer_email': 'not@all.example.com',
             'restrictions': 'unrestricted',
+            # TODO: finalize shceming pages logic w/ state=active
+            # 'state': 'draft',
             'resources': [{
                 'id': make_uuid(),
                 'name_translated': {'en': 'Full text.', 'fr': 'Full text.'},
@@ -128,6 +130,7 @@ class TestNAVLSchema(CanadaTestBase):
                     date_published='2013-01-01',
                     keywords={'en': ['book'], 'fr': ['livre']})
 
+    # @pytest.mark.skip(reason='TODO: finalize shceming pages logic w/ state=active')
     def test_basic_package(self):
         with pytest.raises(ValidationError) as ve:
             self.normal_action.package_create(**self.incomplete_pkg)
@@ -148,6 +151,7 @@ class TestNAVLSchema(CanadaTestBase):
         for k in set(err) | set(expected):
             assert k in err
             assert err[k] == expected[k]
+
         resp = self.normal_action.package_create(**self.complete_pkg)
         assert resp['title_translated']['fr'] == 'Un novel par Tolstoy'
 
@@ -213,8 +217,10 @@ class TestNAVLSchema(CanadaTestBase):
         assert 'id' in err
         assert 'Badly formed hexadecimal UUID string' in err['id'][0]
 
+    # @pytest.mark.skip(reason='TODO: finalize shceming pages logic w/ state=active')
     def test_raw_required(self):
         raw_pkg = dict(**self.complete_pkg)
+        raw_pkg['state'] = 'active'
         del raw_pkg['title_translated']
 
         with pytest.raises(ValidationError) as ve:
@@ -471,6 +477,31 @@ class TestNAVLSchema(CanadaTestBase):
 
         assert 'format' in res_dict
         assert res_dict['format'] == 'other' or res_dict['format'] == 'other'
+
+    def test_resource_languages(self):
+        """
+        You should not be able to use zxx along with other languages.
+        """
+        pkg = self.sysadmin_action.package_create(**self.complete_pkg)
+
+        resource_data = {
+            'id': make_uuid(),
+            'name_translated': {'en': 'Full text.', 'fr': 'Full text.'},
+            'format': 'TXT',
+            'url': 'http://www.annakarenina.com/download/',
+            'size': 42,
+            'resource_type': 'dataset',
+            'language': ['zxx', 'en', 'fr'],
+            'package_id': pkg['id'],
+            'schema': 'https://www.annakarenina.com'
+        }
+
+        with pytest.raises(ValidationError) as ve:
+            self.sysadmin_action.resource_create(**resource_data)
+        model.Session.rollback()
+        err = ve.value.error_dict
+        assert 'language' in err
+        assert err['language'] == ['Cannot define other languages alongside "No linguistic content; Not applicable"']
 
     def test_validation_options(self):
         "creating a resource with lax validation options should remove them"

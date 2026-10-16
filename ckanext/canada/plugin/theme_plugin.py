@@ -43,6 +43,7 @@ class CanadaThemePlugin(p.SingletonPlugin):
             'validation_status',
             'is_user_locked',
             'is_registry_domain',
+            'enable_pd_datatable_editor',
             # Portal
             'user_organizations',
             'openness_score',

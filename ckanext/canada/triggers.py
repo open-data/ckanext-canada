@@ -588,9 +588,9 @@ def update_triggers():
         req_record_modified timestamp := NEW.record_modified;
         req_user_modified text := NEW.user_modified;
         username text NOT NULL := (SELECT username
-            FROM datastore_user LIMIT 1);
+            FROM datastore_app_context LIMIT 1);
         sysadmin boolean NOT NULL := (SELECT sysadmin
-            FROM datastore_user LIMIT 1);
+            FROM datastore_app_context LIMIT 1);
     BEGIN
         IF NOT sysadmin THEN
             NEW.record_created := NULL;
@@ -660,7 +660,7 @@ def update_triggers():
     DECLARE
         req_user_votes int := NEW.user_votes;
         sysadmin boolean NOT NULL := (SELECT sysadmin
-            FROM datastore_user LIMIT 1);
+            FROM datastore_app_context LIMIT 1);
     BEGIN
         IF NOT sysadmin THEN
             req_user_votes := NULL;
@@ -746,6 +746,42 @@ def update_triggers():
             RETURN ARRAY[[field_name_fr,
             'This text must be provided in both languages']];
         END IF;
+        RETURN NULL;
+    END;
+        ''')
+
+    lc.action.datastore_function_create(
+        name='fiscal_year_error',
+        or_replace=True,
+        arguments=[
+            {'argname': 'value', 'argtype': 'text'},
+            {'argname': 'field_name', 'argtype': 'text'},
+            # min/max refers to the first year in the fiscal year
+            # e.g. 2014 means 2014-2015
+            {'argname': 'min', 'argtype': 'int4', 'argdefault': 2005},
+            {'argname': 'max', 'argtype': 'int4', 'argdefault': 'NULL'}],
+        rettype='_text',
+        definition='''
+    DECLARE
+        min_val int4 := min;
+        max_val int4 := max;
+    BEGIN
+        IF max_val IS NULL THEN
+            SELECT CASE
+                WHEN EXTRACT(MONTH FROM CURRENT_DATE) >= 4
+                    THEN EXTRACT(YEAR FROM CURRENT_DATE)::int
+                ELSE
+                    EXTRACT(YEAR FROM CURRENT_DATE)::int - 1
+            END INTO max_val;
+        END IF;
+
+        IF split_part(value, '-', 1)::int < min_val OR
+        split_part(value, '-', 1)::int > max_val OR
+        split_part(value, '-', 2)::int - split_part(value, '-', 1)::int <> 1 THEN
+           RETURN ARRAY[[field_name, 'Invalid fiscal year: {}\uF8FF"'
+                || replace(value, E'\\t', ' ') || '"']];
+        END IF;
+
         RETURN NULL;
     END;
         ''')

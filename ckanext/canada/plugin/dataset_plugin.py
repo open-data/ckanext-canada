@@ -9,6 +9,7 @@ from flask.typing import BeforeRequestCallable
 from ckan.types import Context, Response, Any
 
 import ckan.plugins as p
+from ckan.model.resource import Resource
 from ckan.plugins.toolkit import g, h, request
 
 from ckanext.datastore.interfaces import IDataDictionaryForm
@@ -16,7 +17,10 @@ from ckanext.scheming.plugins import SchemingDatasetsPlugin
 from ckanext.canada.helpers import RELEASE_DATE_FACET_STEP
 from ckanext.canada.view import (
     CanadaDatasetEditView,
+    CanadaDatasetEditPageView,
     CanadaDatasetCreateView,
+    CanadaSchemingCreateView,
+    CanadaDatasetCreatePageView,
     CanadaResourceEditView,
     CanadaResourceCreateView,
     canada_search,
@@ -81,6 +85,8 @@ class CanadaDatasetsPlugin(SchemingDatasetsPlugin):
         Runs before request for /dataset and /dataset/<pkg id>/resource
 
         Checks if the actual package type is a PD type and redirects it.
+
+        Redirect alias for direct package_show view.
         """
         if has_request_context() and hasattr(request, 'view_args'):
             if not request.view_args:
@@ -90,6 +96,19 @@ class CanadaDatasetsPlugin(SchemingDatasetsPlugin):
                 return
             package_type = request.view_args.get('package_type')
             package_type = _get_package_type_from_dict(id, package_type)
+            if id in h.recombinant_get_types():
+                geno = h.recombinant_get_geno(id)
+                if geno and geno.get('resources'):
+                    res_id = None
+                    for r in geno['resources']:
+                        res_id = r.get('published_resource_id', res_id)
+                    if res_id:
+                        res = Resource.get(res_id)
+                        if res:
+                            # redirect /dataset/<recombinant-type> to
+                            # it's published dataset page
+                            return h.redirect_to('%s.read' % res.package.type,
+                                                 id=res.package_id)
             if package_type in h.recombinant_get_types():
                 return h.redirect_to('canada.type_redirect',
                                      resource_name=package_type)
@@ -97,6 +116,7 @@ class CanadaDatasetsPlugin(SchemingDatasetsPlugin):
     # IDatasetForm
     def prepare_dataset_blueprint(self, package_type: str,
                                   blueprint: Blueprint) -> Blueprint:
+        pages = h.scheming_get_dataset_form_pages(package_type)
         blueprint.add_url_rule(
             '/edit/<id>',
             endpoint='canada_edit_%s' % package_type,
@@ -106,7 +126,8 @@ class CanadaDatasetsPlugin(SchemingDatasetsPlugin):
         blueprint.add_url_rule(
             '/new',
             endpoint='canada_new_%s' % package_type,
-            view_func=CanadaDatasetCreateView.as_view(str('new')),
+            view_func=CanadaSchemingCreateView.as_view(str('new')) if pages
+            else CanadaDatasetCreateView.as_view(str('new')),
             methods=['GET', 'POST']
         )
         blueprint.add_url_rule(
@@ -116,6 +137,17 @@ class CanadaDatasetsPlugin(SchemingDatasetsPlugin):
             methods=['GET'],
             strict_slashes=False
         )
+        if pages:
+            blueprint.add_url_rule(
+                '/new/<id>/<page>',
+                'scheming_new_page',
+                CanadaDatasetCreatePageView.as_view('new_page'),
+            )
+            blueprint.add_url_rule(
+                '/edit/<id>/<page>',
+                'scheming_edit_page',
+                CanadaDatasetEditPageView.as_view('edit_page'),
+            )
         # redirect PD endpoints accessed from /dataset/<pd pkg id>
         blueprint.before_request(cast(BeforeRequestCallable,
                                       self._redirect_pd_dataset_endpoints))

@@ -14,7 +14,7 @@ from ckanext.canada.tests.factories import (
     CanadaResource as Resource,
 )
 
-from ckanapi import LocalCKAN
+from ckanapi import LocalCKAN, ValidationError
 
 from ckanext.recombinant.tables import get_chromo
 from ckanext.xloader import loader
@@ -58,7 +58,8 @@ class TestMakePD(CanadaTestBase):
         if plugins.plugin_loaded('validation'):
             plugins.unload('validation')
 
-        self.org = Organization(umd_number='example_umd',
+        self.org = Organization(name='service-test-make-org',
+                                umd_number='example_umd',
                                 department_number='example_department')
 
         self.action = LocalCKAN().action
@@ -130,8 +131,10 @@ class TestMakePD(CanadaTestBase):
             resource_id=rval['resources'][0]['id'],
             records=[chromo['examples']['record']])
 
+        published_pkg_id = None
         if 'published_resource_id' in chromo:
-            Resource(id=chromo['published_resource_id'])
+            res = Resource(id=chromo['published_resource_id'])
+            published_pkg_id = res.get('package_id')
 
         if nil_type:
             nil_chromo = get_chromo(nil_type)
@@ -141,7 +144,11 @@ class TestMakePD(CanadaTestBase):
                 records=[nil_chromo['examples']['record']])
 
             if 'published_resource_id' in nil_chromo:
-                Resource(id=nil_chromo['published_resource_id'])
+                if published_pkg_id:
+                    Resource(id=nil_chromo['published_resource_id'],
+                             package_id=published_pkg_id)
+                else:
+                    Resource(id=nil_chromo['published_resource_id'])
 
         for _id in extra_resource_ids:
             Resource(id=_id)
@@ -172,7 +179,12 @@ class TestMakePD(CanadaTestBase):
         assert self.ckan_ini
         self._setup_ini(self.ckan_ini)
 
-        self._setup_pd(type='ati', nil_type='ati-nil')
+        try:
+            self._setup_pd(type='ati', nil_type='ati-nil')
+        except ValidationError as ve:
+            # incase other test classes have already made the combined resources
+            if ve.error_dict != {'id': ['Resource id already exists.']}:
+                raise
 
         make_process = subprocess.Popen(["make upload-ati"], shell=True, cwd=MAKE_PATH, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
         stdout, stderr = make_process.communicate()

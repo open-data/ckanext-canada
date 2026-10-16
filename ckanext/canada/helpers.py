@@ -5,6 +5,9 @@ import json
 import re
 import inspect
 from urllib.parse import urlsplit
+from sqlalchemy import and_
+# type_ignore_reason: incomplete typing
+from sqlalchemy.exc import NoResultFound, MultipleResultsFound  # type: ignore
 from ckan.plugins.toolkit import (
     config,
     asbool,
@@ -539,8 +542,10 @@ def get_pd_datatable(resource_name: str,
         user_dict = get_action('user_show')({'ignore_auth': True}, {'id': g.user})
     except (ObjectNotFound, RuntimeError):
         user_dict = {}
-    enable_new_template = user_dict.get('opt_in_features__pd_datatables', config.get(
-        'ckanext.canada.enable_pd_datatable_editor'))
+    enable_new_template = config['ckanext.canada.enable_pd_datatable_enhanced']
+    if not enable_new_template:
+        enable_new_template = user_dict.get('opt_in_features__pd_datatables',
+                                            enable_new_template)
     snippet = 'pd_datatable.html' if enable_new_template else 'pd_datatable_depr.html'
 
     return h.snippet('snippets/%s' % snippet,
@@ -551,6 +556,13 @@ def get_pd_datatable(resource_name: str,
                      foreign_keys=fkids,
                      dataset_type=dataset_type,
                      ds_fields=fields)
+
+
+def enable_pd_datatable_editor() -> bool:
+    """
+    Return if the PD DataTable Editor should be used or not.
+    """
+    return config['ckanext.canada.enable_pd_datatable_editor']
 
 
 def contact_information(info: str) -> Dict[str, Any]:
@@ -1182,6 +1194,26 @@ def mail_to_with_params(email_address: str, name: str,
 
 def get_inline_script_nonce() -> str:
     return str(request.environ.get('CSP_NONCE', ''))
+
+
+def org_name_from_res_id(resource_id: Optional[str] = None) -> Optional[str]:
+    """
+    Get a Resource's Organization name/abbreviation from the database.
+    """
+    if not resource_id:
+        return
+    try:
+        return model.Session.query(model.Group.name).join(
+            model.Package,
+            model.Group.id == model.Package.owner_org).join(
+                model.Resource,
+                model.Resource.package_id == model.Package.id).filter(
+                and_(
+                    model.Resource.id == resource_id,
+                    model.Resource.state == "active",
+                    model.Package.state == "active")).one()[0]
+    except (NoResultFound, MultipleResultsFound):
+        return
 
 
 # type_ignore_reason: incomplete typing

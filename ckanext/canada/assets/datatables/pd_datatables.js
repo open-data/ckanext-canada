@@ -26,15 +26,30 @@ this.ckan.module('pd-datatables', function($){
       foreign_keys: null,
       foreign_links: null,
       chromo_fields: null,
+      editor_enabled: false,
       is_editable: false,
     },
     initialize: function (){
-      load_pd_datatable(this);
+      const module = this;
+      const maxTries = 35;
+      let interval = false;
+      let tries = 0;
+      interval = setInterval(function(){
+        const CHECK = module._('JS_I18N_LOADED');
+        const LOCALE = module.options.locale;
+        if( LOCALE == 'en' || CHECK != 'JS_I18N_LOADED' || tries > maxTries ){
+          clearInterval(interval);
+          interval = false;
+          load_pd_datatable(module, (LOCALE == 'en' || CHECK != 'JS_I18N_LOADED'));
+          return;
+        }
+        tries++;
+      }, 150);
     }
   };
 });
 
-function load_pd_datatable(CKAN_MODULE){
+function load_pd_datatable(CKAN_MODULE, HAS_TRANSLATIONS){
   const _ = CKAN_MODULE._;
   const searchParams = new URLSearchParams(document.location.search);
   const currentDate = new Date().toISOString().split('T')[0];
@@ -58,12 +73,12 @@ function load_pd_datatable(CKAN_MODULE){
   const foreignKeys = CKAN_MODULE.options.foreign_keys;
   const foreignLinks = CKAN_MODULE.options.foreign_links;
   const chromoFields = CKAN_MODULE.options.chromo_fields;
+  const enableEditor = CKAN_MODULE.options.editor_enabled;
   const isEditable = CKAN_MODULE.options.is_editable;
   const tableStyles = CKAN_MODULE.options.table_styles;
 
-  // TODO: Disable Editor - enable Table Editor when ready...
-  // const EDITOR = pd_datatables__EDITOR;
-  const EDITOR = false;
+  const EDITOR = enableEditor ? pd_datatables__EDITOR : false;
+  const JS_CHROMO = pd_datatables__EDITOR;
 
   const selectAllLabel = _('Select All');
   const colSearchLabel = _('Search:');
@@ -71,7 +86,7 @@ function load_pd_datatable(CKAN_MODULE){
   const colSortAscLabel = _('Ascending');
   const colSortDescLabel = _('Descending');
   const colSortAnyLabel = _('Any');
-  const readLessLabel = _('less');
+  const readLessLabel = _('Less');
   const rowLabel = _('Row');
   const newBadgeLabel = _('New');
   const updatedBadgeLabel = _('Updated');
@@ -84,7 +99,7 @@ function load_pd_datatable(CKAN_MODULE){
   const compactTableLabel = _('Compact Table');
   const editSingleButtonLabel = _('Edit Online');
   const addInTableButtonLabel = _('Add new record in Table');
-  const editInTableButtonLabel = _('Edit<span class="pd-datatbales-btn-count"></span> in Table');
+  const editInTableButtonLabel = _('Edit<span class="pd-datatables-btn-count"></span> in Table');
   const validRowLabel = _('Record is valid');
   const errorInRowLabel = _('Some fields have validation errors');
   const requiredInRowLabel = _('Some fields are required');
@@ -100,8 +115,8 @@ function load_pd_datatable(CKAN_MODULE){
   const completeViewButtonLabel = _('Preview records');
   const validationErrorMessage = _('Your records did not save because one or more of them have errors. Fix the errors and save again to finalize your records.');
   const exceptionErrorMessage = _('Could not save the records due to the following error: ');
-  const supprtErrorMessage = _('Your records did not save. Try saving again. If the issue persist please contact support with Support ID: ');
-  const genericErrorMessage = _('Your records did not save. Try saving again. If the issue persist please contact support.');
+  const supprtErrorMessage = _('Your records did not save. Try saving again. If the issue persists, please contact support with Support ID: ');
+  const genericErrorMessage = _('Your records did not save. Try saving again. If the issue persists, please contact support.');
   const dupePrimaryKeysErrorMessage = _('{PRIM_IDS} already used in this Editor Table.');
   const countSuffix = _(' record(s)');
   const editorLegendLabel = _('Legend:');
@@ -110,10 +125,10 @@ function load_pd_datatable(CKAN_MODULE){
   const editorLegendRequiredLabel = _('Required');
   const ajaxErrorMessage = _('Error: Could not query records. Please try again.');
   const excelTemplateErrorMessage = _('Error: Could not generate Excel template. Please try again.');
-  const editButtonLabel = _('Edit<span class="pd-datatbales-btn-count"></span> in Excel');
+  const editButtonLabel = _('Edit<span class="pd-datatables-btn-count"></span> in Excel');
   const exportingButtonLabel = _('Exporting{COUNT} record(s) to an Excel Template');
-  const deleteButtonLabel = _('Delete<span class="pd-datatbales-btn-count"></span>');
-  const saveButtonLabel = _('Save<span class="pd-datatbales-btn-count"></span>');
+  const deleteButtonLabel = _('Delete<span class="pd-datatables-btn-count"></span>');
+  const saveButtonLabel = _('Save<span class="pd-datatables-btn-count"></span>');
   const tableLanguage = {
     decimal: "",
     emptyTable:  '<span id="pd-dtatable-no-records">' + _('No data available in table') + '</span>',
@@ -138,7 +153,32 @@ function load_pd_datatable(CKAN_MODULE){
       orderableReverse: _('Reverse order this column')
     }
   };
+
   const markedRenderer = new marked.Renderer();
+  const markedTags = [
+    'a', 'abbr', 'acronym', 'b', 'blockquote',
+    'code', 'em', 'i', 'li', 'ol', 'strong', 'ul',
+    'del','dd', 'dl', 'dt', 'kbd', 'p', 'pre', 's',
+    'sup', 'sub', 'strike', 'br', 'hr', 'h1', 'h2', 'h3',
+    'h4', 'h5', 'h6',
+  ];
+  const markedAttributes = {
+      'a': ['href', 'title'],
+      'abbr': ['title'],
+      'acronym': ['title'],
+      'img': ['src', 'alt', 'title'],
+  };
+  const htmlPurifier = DOMPurify(window);
+  htmlPurifier.setConfig({
+    ALLOWED_TAGS: markedTags,
+  });
+  htmlPurifier.addHook('uponSanitizeAttribute', function(_node, _data){
+    const allowed = markedAttributes[_node.tagName.toLowerCase()] || [];
+    if( ! allowed.includes(_data.attrName) ){
+      _data.keepAttr = false;
+    }
+  });
+
   const numberTypes = [
     'year',
     'month',
@@ -161,6 +201,13 @@ function load_pd_datatable(CKAN_MODULE){
     }, 0);
   }
 
+  let windowConfirmSupported = typeof window !== 'undefined' && typeof window.confirm === 'function';
+  const isFirefox = /firefox|fxios/i.test(navigator.userAgent);
+  if( isFirefox && window.location.protocol == 'http:' ){
+    // NOTE: fix for firefox throwing JS blocking errors in nonsecure webpages
+    windowConfirmSupported = false;
+  }
+
   let table;
   let tableState;
   let _savedState = window.localStorage.getItem('DataTables_dtprv_' + window.location.pathname);
@@ -171,8 +218,9 @@ function load_pd_datatable(CKAN_MODULE){
   let isFullScreen = is_page_fullscreen();
   let isEditMode = typeof tableState != 'undefined' && typeof tableState.edit_view != 'undefined' ? tableState.edit_view : false;
 
-  // TODO: Disable Editor - enable Table Editor when ready...
-  isEditMode = false;
+  if( ! EDITOR ){
+    isEditMode = false;
+  }
 
   if( isEditMode ){
     $('.pd-datable-instructions').css({'display': 'none'});
@@ -217,19 +265,57 @@ function load_pd_datatable(CKAN_MODULE){
     console.warn(_message);
   };
 
+  function truncateHtml(_html, _cutoff) {
+    const template = document.createElement('template');
+    template.innerHTML = _html;
+    let length = 0;
+    function _truncateNode(_node){
+      if( length >= _cutoff ){
+        _node.remove();
+        return;
+      }
+      if( _node.nodeType === Node.TEXT_NODE ){
+        const remaining = _cutoff - length;
+        if( _node.textContent.length > remaining ){
+          _node.textContent = _node.textContent.slice(0, remaining);
+        }
+        length += _node.textContent.length;
+        return;
+      }
+      if( _node.nodeType !== Node.ELEMENT_NODE ){
+        return;
+      }
+      [..._node.childNodes].forEach(_truncateNode);
+    }
+    [...template.content.childNodes].forEach(_truncateNode);
+    return template.innerHTML;
+  }
+
   DataTable.render.ellipsis = function(_cutoff, _rowIndex, _datatoreID, _isMarkdown){
     return function(_data, _type, _row, _meta){
       if( _type == 'display' ){
+        if( typeof _data === 'string' && _data.includes('class="pd-datatable-readmore"') ){
+          // FIXME: FRAGILE: if a user inputs 'class="pd-datatable-readmore"' into their data, it will never get rendered in Markdown.
+          return _data;
+        }
         let str = _data.toString();
-        let htmlStr = $($.parseHTML(str)).text();
+        let newLineMatch = /\r?\n/g;
+        let htmlStr = _isMarkdown ?  htmlPurifier.sanitize(marked.parse(str, {renderer: markedRenderer})) : htmlPurifier.sanitize($($.parseHTML(str)).text());
         if( str.length < _cutoff || htmlStr.length < _cutoff ){
-          return _isMarkdown ? marked.parse(_data, {renderer: markedRenderer}) : _data;
+          if( newLineMatch.test(_data) ){
+            _data = _data.replaceAll(newLineMatch, '<br>');
+          }
+          return _isMarkdown ? htmlPurifier.sanitize(marked.parse(_data, {renderer: markedRenderer})) : _data;
         }
         let _elementID = 'datatableReadMore_' + _rowIndex + '_' + _datatoreID;
         let expander = '<a class="pd-datatable-readmore-expander" href="javascript:void(0);" data-toggle="collapse" data-bs-toggle="collapse" aria-expanded="false" aria-controls="' +_elementID + '">&#8230;</a>';
-        let preview = _isMarkdown ? marked.parse(str.substr(0, _cutoff - 1) + expander + '\n', {renderer: markedRenderer}) : str.substr(0, _cutoff - 1) + expander;
-        let remaining = _isMarkdown ? marked.parse(str, {renderer: markedRenderer}) : str.substr(_cutoff - 1);
-        return '<div class="pd-datatable-readmore"><span data-markdown="' + _isMarkdown + '">' + preview + '</span><span class="collapse" id="' + _elementID + '">' + remaining + '<a class="pd-datatable-readmore-minimizer" href="javascript:void(0);" data-toggle="collapse" data-bs-toggle="collapse" aria-expanded="true" aria-controls="' + _elementID + '"><small>[' + readLessLabel + ']</small></a><span></div>';
+        let fullRender = _isMarkdown ? htmlPurifier.sanitize(marked.parse(str, {renderer: markedRenderer})) : str;
+        let preview = _isMarkdown ? truncateHtml(fullRender, _cutoff - 1) + expander : fullRender.substr(0, _cutoff - 1) + expander;
+        let remaining = _isMarkdown ? fullRender : fullRender.substr(_cutoff - 1);
+        if( newLineMatch.test(_data) ){
+          remaining = remaining.replaceAll(newLineMatch, '<br>');
+        }
+        return '<div class="pd-datatable-readmore"><span data-markdown="' + _isMarkdown + '">' + preview + '</span><span class="collapse" id="' + _elementID + '">' + remaining + '<a class="pd-datatable-readmore-minimizer" href="javascript:void(0);" data-toggle="collapse" data-bs-toggle="collapse" aria-expanded="true" aria-controls="' + _elementID + '"><small>[' + readLessLabel + ']</small></a></span></div>';
       }
       return _data;
     };
@@ -397,6 +483,24 @@ function load_pd_datatable(CKAN_MODULE){
     }
   }
 
+  function get_legacy_choices(_editorObject, _value, _chromo_field, _suffix, _suffix_label){
+    let legacyChoices = [];
+    let available_keys = [];
+    for( let _i = 0; _i < _editorObject.select_choices.length; _i++ ){
+      available_keys.push(_editorObject.select_choices[_i][0]);
+    }
+    let _v = _value;
+    if( ! Array.isArray(_v) ){
+      _v = _v.toString().split(',');  // split to Array if not already
+    }
+    _v.forEach(function(_val, _i, _arr){
+      if( _val && _val.length > 0 && ! available_keys.includes(_val) ){
+        legacyChoices.push([_val, _val]);
+      }
+    });
+    return legacyChoices;
+  }
+
   function render_cell_input(_value, _rowIndex, _colIndex, _chromo_field){
     let ds_type = _chromo_field.datastore_type;
     let fieldID = 'pd-records_' + _rowIndex + '_' + _chromo_field.datastore_id;
@@ -436,16 +540,29 @@ function load_pd_datatable(CKAN_MODULE){
     }else if( ds_type == 'money' ){
       fieldInput = '<input class="pd-datatable-editor-input ' + readOnlyClass + '" value="' + _value + '" name=' + fieldID + '" id="' + fieldID + '" data-primary-key="' + isPrimaryKey + '" data-row-index="' + _rowIndex + '" data-datastore-id="' + _chromo_field.datastore_id + '" data-number-type="money" type="number" ' + readOnly + maxLength + ' tabindex="' + tabIndex + '" autocomplete="off" />';
     }
+    let choicesSuffix = '';
+    let choicesSuffixLabel = '';
+    if( typeof editorObject.choices_suffix_filter != 'undefined' && editorObject.choices_suffix_filter ){
+      let [_suffix, _slabels] = Object.entries(editorObject.choices_suffix_filter)[0];
+      choicesSuffix = _suffix;
+      choicesSuffixLabel = '(' + _slabels[locale] + ')';
+    }
     if( typeof editorObject.select_choices != 'undefined' && editorObject.select_choices ){
       let isMultiple = ds_type == '_text' ? 'multiple' : '';
       fieldInput = '<select class="pd-datatable-editor-input ' + readOnlyClass + '" name=' + fieldID + '" id="' + fieldID + '" ' + isMultiple + ' data-primary-key="' + isPrimaryKey + '" data-row-index="' + _rowIndex + '" data-datastore-id="' + _chromo_field.datastore_id + '" ' + readOnly + ' tabindex="' + tabIndex + '" autocomplete="off"><option></option>';
-      for( let _i = 0; _i < editorObject.select_choices.length; _i++ ){
-        let selected = _value == editorObject.select_choices[_i][0] || (Array.isArray(_value) && _value.includes(editorObject.select_choices[_i][0])) ? 'selected' : '';
-        let label = editorObject.select_choices[_i][1];
-        if( typeof _chromo_field.datatables_full_text_choices != 'undefined' && _chromo_field.datatables_full_text_choices ){
-          label = editorObject.select_choices[_i][0] + _(': ') + label;
+      // support current data that may not be in the choices anymore
+      let legacy_choices = get_legacy_choices(editorObject, _value, _chromo_field);
+      let _availableChoices = legacy_choices.concat(editorObject.select_choices);
+      for( let _i = 0; _i < _availableChoices.length; _i++ ){
+        let selected = _value == _availableChoices[_i][0] || (Array.isArray(_value) && _value.includes(_availableChoices[_i][0])) ? 'selected' : '';
+        let label = _availableChoices[_i][1];
+        if( choicesSuffix && choicesSuffix.length > 0 && _availableChoices[_i][0].endsWith(choicesSuffix) ){
+          label += ' ' + choicesSuffixLabel;
         }
-        fieldInput += '<option value="' + editorObject.select_choices[_i][0] + '" ' + selected + '>' + label + '</option>';
+        if( typeof _chromo_field.datatables_full_text_choices != 'undefined' && _chromo_field.datatables_full_text_choices ){
+          label = _availableChoices[_i][0] + _(': ') + label;
+        }
+        fieldInput += '<option value="' + _availableChoices[_i][0] + '" ' + selected + '>' + label + '</option>';
       }
       fieldInput += '</select>';
     }
@@ -474,12 +591,19 @@ function load_pd_datatable(CKAN_MODULE){
         return '';  // blank cell for None/null values
       }
       let editorObject = false;
-      if( EDITOR ){
-        editorObject = EDITOR[_chromo_field.datastore_id];
+      if( JS_CHROMO ){
+        editorObject = JS_CHROMO[_chromo_field.datastore_id] || false;
       }
       if( typeof _chromo_field.markdown != 'undefined' && _chromo_field.markdown ){
         _data = _data.replace('•', '\n-').replace('\r\n•', '\n-').replace('\n•', '\n-').replace('\r•', '\n-').replace(String.fromCharCode(8226), '\n-').replace(String.fromCharCode(183), '\n-');  // replace commonly used list characters
         _data = DataTable.render.ellipsis(ellipsesLength, _meta.row, _chromo_field.datastore_id, true)(_data, _type, _row, _meta);
+      }
+      let choicesSuffix = '';
+      let choicesSuffixLabel = '';
+      if( typeof editorObject.choices_suffix_filter != 'undefined' && editorObject.choices_suffix_filter ){
+        let [_suffix, _slabels] = Object.entries(editorObject.choices_suffix_filter)[0];
+        choicesSuffix = _suffix;
+        choicesSuffixLabel = '(' + _slabels[locale] + ')';
       }
       if( _chromo_field.datastore_type == '_text' ){
         if( ! Array.isArray(_data) ){
@@ -489,9 +613,15 @@ function load_pd_datatable(CKAN_MODULE){
         _data.forEach(function(_val, _i, _arr){
           let _l = _val;
           if( editorObject && showFullTextChoices && typeof editorObject.select_choices != 'undefined' && editorObject.select_choices ){
-            for( let _i = 0; _i < editorObject.select_choices.length; _i++ ){
-              if( _val == editorObject.select_choices[_i][0] ){
-                _l += _(': ') + editorObject.select_choices[_i][1];
+            // support current data that may not be in the choices anymore
+            let legacy_choices = get_legacy_choices(editorObject, _val, _chromo_field);
+            let _availableChoices = legacy_choices.concat(editorObject.select_choices);
+            for( let _i = 0; _i < _availableChoices.length; _i++ ){
+              if( _val == _availableChoices[_i][0] ){
+                _l += _(': ') + _availableChoices[_i][1];
+                if( choicesSuffix && choicesSuffix.length > 0 && _availableChoices[_i][0].endsWith(choicesSuffix) ){
+                  _l += ' ' + choicesSuffixLabel;
+                }
                 break;
               }
             }
@@ -505,9 +635,15 @@ function load_pd_datatable(CKAN_MODULE){
         displayList += '</ul>';
         _data = displayList;
       }else if( editorObject && showFullTextChoices && typeof editorObject.select_choices != 'undefined' && editorObject.select_choices ){
-        for( let _i = 0; _i < editorObject.select_choices.length; _i++ ){
-          if( _data == editorObject.select_choices[_i][0] ){
-            let _l = originalData + _(': ') + editorObject.select_choices[_i][1];
+        // support current data that may not be in the choices anymore
+        let legacy_choices = get_legacy_choices(editorObject, _data, _chromo_field);
+        let _availableChoices = legacy_choices.concat(editorObject.select_choices);
+        for( let _i = 0; _i < _availableChoices.length; _i++ ){
+          if( _data == _availableChoices[_i][0] ){
+            let _l = originalData + _(': ') + _availableChoices[_i][1];
+            if( choicesSuffix && choicesSuffix.length > 0 && _availableChoices[_i][0].endsWith(choicesSuffix) ){
+              _l += ' ' + choicesSuffixLabel;
+            }
             _data = '<span class="pd-datatable-choice-title" title="' + _l + '" aria-label="' + _l + '">' + _data + '</span>';
             break;
           }
@@ -615,33 +751,33 @@ function load_pd_datatable(CKAN_MODULE){
 
   function open_fullscreen(_element){
     if( _element.requestFullscreen ){
+      isFullScreen = true;
       _element.requestFullscreen();
-      isFullScreen = true;
     }else if( _element.webkitRequestFullscreen ){
+      isFullScreen = true;
       _element.webkitRequestFullscreen();
-      isFullScreen = true;
     }else if( _element.mozRequestFullScreen ){
+      isFullScreen = true;
       _element.mozRequestFullScreen();
-      isFullScreen = true;
     }else if(_element.msRequestFullscreen){
-      _element.msRequestFullscreen();
       isFullScreen = true;
+      _element.msRequestFullscreen();
     }
   }
 
   function close_fullscreen(){
     if( document.exitFullscreen ){
+      isFullScreen = false;
       document.exitFullscreen();
-      isFullScreen = false;
     }else if( document.webkitExitFullscreen ){
+      isFullScreen = false;
       document.webkitExitFullscreen();
-      isFullScreen = false;
     }else if( document.mozExitFullscreen ){
+      isFullScreen = false;
       document.mozExitFullscreen();
-      isFullScreen = false;
     }else if( document.msExitFullscreen ){
-      document.msExitFullscreen();
       isFullScreen = false;
+      document.msExitFullscreen();
     }
   }
 
@@ -660,13 +796,13 @@ function load_pd_datatable(CKAN_MODULE){
     }
     if( isEditable && selectCount > 0 ){
       table.buttons('tableEditorButton:name').text('<i aria-hidden="true" class="fas fa-edit"></i>&nbsp;' + editInTableButtonLabel);
-      let buttonStats = $('#dtprv_wrapper').find('span.pd-datatbales-btn-count');
+      let buttonStats = $('#dtprv_wrapper').find('span.pd-datatables-btn-count');
       $(buttonStats).each(function(_index, _button){
         $(_button).html('&nbsp;' + selectCount + countSuffix);
       });
     }else{
       table.buttons('tableEditorButton:name').text('<i aria-hidden="true" class="fas fa-plus"></i>&nbsp;' + addInTableButtonLabel);
-      let buttonStats = $('#dtprv_wrapper').find('span.pd-datatbales-btn-count');
+      let buttonStats = $('#dtprv_wrapper').find('span.pd-datatables-btn-count');
       $(buttonStats).each(function(_index, _button){
         $(_button).html('');
       });
@@ -933,7 +1069,7 @@ function load_pd_datatable(CKAN_MODULE){
     if( isEditMode ){
       let hasFilledRows = false;
       let isIncomplete = false;
-      let buttonStats = $('#dtprv_wrapper').find('.pd-datatable-save-btn').find('span.pd-datatbales-btn-count');
+      let buttonStats = $('#dtprv_wrapper').find('.pd-datatable-save-btn').find('span.pd-datatables-btn-count');
       for(let [_rowIndex, _erroredCells] of Object.entries(erroredRows)){
         if( _erroredCells.length > 0 ){
           isIncomplete = true;
@@ -1126,6 +1262,16 @@ function load_pd_datatable(CKAN_MODULE){
         text: (isFullScreen && is_page_fullscreen()) ? '<i aria-hidden="true" class="fas fa-compress"></i>&nbsp;' + exitFullscreenLabel : '<i aria-hidden="true" class="fas fa-expand"></i>&nbsp;' + fullscreenLabel,
         className: 'pd-datatable-btn btn-secondary pd-datatable-fullscreen-btn',
         action: function(e, dt, node, config){
+          $(document).off('fullscreenchange.setButtonLabel');
+          $(document).on('fullscreenchange.setButtonLabel', function(_event){
+            if( isFullScreen && is_page_fullscreen() ){
+              $('.pd-datatable-fullscreen-btn').html('<i aria-hidden="true" class="fas fa-compress"></i>&nbsp;' + exitFullscreenLabel);
+              isFullScreen = true;
+            }else{
+              $('.pd-datatable-fullscreen-btn').html('<i aria-hidden="true" class="fas fa-expand"></i>&nbsp;' + fullscreenLabel);
+              isFullScreen = false;
+            }
+          });
           let datatableSection = $('#dt-preview')[0];
           if( is_page_fullscreen() ){
             close_fullscreen();
@@ -1137,16 +1283,6 @@ function load_pd_datatable(CKAN_MODULE){
           if( isFullScreen ){
             dt.button('fullscreenButton:name').text('<i aria-hidden="true" class="fas fa-compress"></i>&nbsp;' + exitFullscreenLabel);
           }
-        }
-      });
-      $(document).off('fullscreenchange.setButtonLabel');
-      $(document).on('fullscreenchange.setButtonLabel', function(_event){
-        if( isFullScreen && is_page_fullscreen() ){
-          $('.pd-datatable-fullscreen-btn').html('<i aria-hidden="true" class="fas fa-compress"></i>&nbsp;' + exitFullscreenLabel);
-          isFullScreen = true;
-        }else{
-          $('.pd-datatable-fullscreen-btn').html('<i aria-hidden="true" class="fas fa-expand"></i>&nbsp;' + fullscreenLabel);
-          isFullScreen = false;
         }
       });
     }
@@ -1175,7 +1311,7 @@ function load_pd_datatable(CKAN_MODULE){
               break;
             }
           }
-          if( hasUnsaved && ! window.confirm(leavingEditorWarning) ){
+          if( hasUnsaved && windowConfirmSupported && ! window.confirm(leavingEditorWarning) ){
             return;
           }
           erroredRows = {};
@@ -1304,7 +1440,7 @@ function load_pd_datatable(CKAN_MODULE){
           isExportingExcel = true;
           download_excel_template(editRecordsURI, urlEncodedData).then(function(){
             table.buttons('excelEditorButton:name').text('<i aria-hidden="true" class="fas fa-file-excel"></i>&nbsp;' + editButtonLabel);
-            let buttonStats = $('#dtprv_wrapper').find('.pd-datatable-excel-btn').find('span.pd-datatbales-btn-count');
+            let buttonStats = $('#dtprv_wrapper').find('.pd-datatable-excel-btn').find('span.pd-datatables-btn-count');
             let selectCount = table.rows({ selected: true })[0].length;
             if( selectCount > 0 ){
               $(buttonStats).html('&nbsp;' + selectCount + countSuffix);
@@ -1920,6 +2056,10 @@ function load_pd_datatable(CKAN_MODULE){
     }
   }
 
+  if( ! HAS_TRANSLATIONS ){
+    $('#dtprv_wrapper').before('<div id="dtprv_failure_message_i18n" class="alert alert-dismissible show alert-warning"><p>Failed to load the translations for the Table.</p></div>');
+  }
+
   function initialize_datatable(){
     let keySettings = {
       columns: isCompactView ? ':not(.dtr-hidden)' : ':not(.dtr-hidden):not(.expanders)'
@@ -2010,8 +2150,9 @@ function load_pd_datatable(CKAN_MODULE){
         _data.compact_view = isCompactView;
         _data.edit_view = isEditMode;
 
-        // TODO: Disable Editor - enable Table Editor when ready...
-        _data.edit_view = false;
+        if( ! EDITOR ){
+          _data.edit_view = false;
+        }
 
         _data.editing_rows = editingRows;
         // TODO: save filledRows, erroredRows, requiredRows??? need to save the field values too???
@@ -2020,8 +2161,9 @@ function load_pd_datatable(CKAN_MODULE){
         tableState.selected = localInstanceSelected;
         tableState.edit_view = isEditMode;
 
-        // TODO: Disable Editor - enable Table Editor when ready...
-        tableState.edit_view = false;
+        if( ! EDITOR ){
+          tableState.edit_view = false;
+        }
 
         tableState.editing_rows = editingRows;
       },
@@ -2030,8 +2172,9 @@ function load_pd_datatable(CKAN_MODULE){
         tableState = _data;
         tableState.selected = localInstanceSelected;
 
-        // TODO: Disable Editor - enable Table Editor when ready...
-        tableState.edit_view = false;
+        if( ! EDITOR ){
+          tableState.edit_view = false;
+        }
       },
       buttons: get_available_buttons(),
     });

@@ -1,0 +1,1 @@
+The Resource `language` field now renders as a Select2 in the webform. You can no longer define `zxx` ("No linguistic content; Not applicable") language alongside other languages, this will raise a ValidationError.

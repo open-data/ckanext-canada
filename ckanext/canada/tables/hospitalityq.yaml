@@ -18,6 +18,7 @@ collection: pd
 
 resources:
 - title: Proactive Publication - Hospitality Expenses
+  shortname: Hospitality Expenses
   resource_name: hospitalityq
 
   published_resource_id: 7b301f1a-2a7a-48bd-9ea9-e0ac4a5313ed
@@ -630,21 +631,27 @@ resources:
       class: form-control canada-width-full d-block
 
   - datastore_id: record_created
-    label: Record Creation Time
+    label:
+      en: Record Creation Time
+      fr: Heure de la création du dossier
     import_template_include: false
     visible_to_public: false
     datastore_type: timestamp
     preview_class: bg-info
 
   - datastore_id: record_modified
-    label: Last Record Modification Time
+    label:
+      en: Last Record Modification Time
+      fr: Heure de la dernière modification au dossier
     import_template_include: false
     visible_to_public: false
     datastore_type: timestamp
     preview_class: bg-info
 
   - datastore_id: user_modified
-    label: User Last Modified Record
+    label:
+      en: User Last Modified Record
+      fr: Dernier enregistrement modifié par l'utilisateur
     import_template_include: false
     visible_to_public: false
     datastore_type: text
@@ -778,6 +785,7 @@ resources:
 
 
 - title: Proactive Publication - Hospitality Nothing to Report
+  shortname: Nothing to Report
   resource_name: hospitalityq-nil
 
   published_resource_id: 36a3b6cc-4f45-4081-8dbd-2340ca487041
@@ -822,21 +830,27 @@ resources:
     choices_file: choices/gregor_month.yaml
 
   - datastore_id: record_created
-    label: Record Creation Time
+    label:
+      en: Record Creation Time
+      fr: Heure de la création du dossier
     import_template_include: false
     visible_to_public: false
     datastore_type: timestamp
     preview_class: bg-info
 
   - datastore_id: record_modified
-    label: Last Record Modification Time
+    label:
+      en: Last Record Modification Time
+      fr: Heure de la dernière modification au dossier
     import_template_include: false
     datastore_type: timestamp
     visible_to_public: false
     preview_class: bg-info
 
   - datastore_id: user_modified
-    label: User Last Modified Record
+    label:
+      en: User Last Modified Record
+      fr: Dernier enregistrement modifié par l'utilisateur
     import_template_include: false
     visible_to_public: false
     datastore_type: text

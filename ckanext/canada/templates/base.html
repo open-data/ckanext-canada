@@ -29,6 +29,7 @@
 {% endblock %}
 
 {% block links %}
+  <script src="{{- h.url_for_static('/static/js/alert_exit.js') -}}" nonce="{{- h.get_inline_script_nonce() -}}"></script>
   {{ super() }}
   {% block google_analytics %}
     {% set ga4_id = h.ga4_id() %}
@@ -61,6 +62,13 @@
     {% asset 'canada_internal/css' %}
   {% endif %}
   {% snippet 'snippets/cdts/head_scripts.html' %}
+  {# START: first paint styles #}
+  <style nonce="{{- h.get_inline_script_nonce() -}}">
+    body .d-none{
+      display: none;
+    }
+  </style>
+  {# END: first paint styles #}
   {% if h.get_environment() in ['staging', 'development'] %}
     {% set bg_size = '180' if h.get_environment() == 'development' else '140' %}
     <style nonce="{{- h.get_inline_script_nonce() -}}">
@@ -100,10 +108,10 @@
       body #canada-main-container{
         position: relative !important;
         overflow: visible !important;
-        z-index: 1 !important;
+        z-index: 2 !important;
       }
       body > header{
-        z-index: 2 !important;
+        z-index: 3 !important;
       }
       body #canada-main-container::before,
       body #canada-main-container::after{
@@ -122,10 +130,10 @@
         opacity: 0.06;
       }
       body #canada-main-container::before{
-        left: calc(-1 * ((100vw - 100%) / 2 + 32px));;
+        left: calc(-1 * ((100vw - 100%) / 2));
       }
       body #canada-main-container::after{
-        right: calc(-1 * ((100vw - 100%) / 2 + 32px));;
+        right: calc(-1 * ((100vw - 100%) / 2));
       }
     </style>
   {% endif %}

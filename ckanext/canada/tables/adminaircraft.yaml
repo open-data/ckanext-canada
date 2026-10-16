@@ -12,13 +12,11 @@ template_updated: 2025-01-10  # last qa confirmed: 2025-02-19
 
 portal_type: info
 
-resources:
-- title: Proactive Publication - Use of Administrative Aircraft
-
 collection: pd
 
 resources:
 - title: Proactive Publication - Use of Administrative Aircraft
+  shortname: Use of Administrative Aircraft
   resource_name: adminaircraft
 
   published_resource_id: 1495406e-338c-43ec-9995-ec8d8c90d17e
@@ -295,21 +293,27 @@ resources:
 
   # audit trail
   - datastore_id: record_created
-    label: Record Creation Time
+    label:
+      en: Record Creation Time
+      fr: Heure de la création du dossier
     import_template_include: false
     visible_to_public: false
     datastore_type: timestamp
     preview_class: bg-info
 
   - datastore_id: record_modified
-    label: Last Record Modification Time
+    label:
+      en: Last Record Modification Time
+      fr: Heure de la dernière modification au dossier
     import_template_include: false
     visible_to_public: false
     datastore_type: timestamp
     preview_class: bg-info
 
   - datastore_id: user_modified
-    label: User Last Modified Record
+    label:
+      en: User Last Modified Record
+      fr: Dernier enregistrement modifié par l'utilisateur
     import_template_include: false
     visible_to_public: false
     datastore_type: text

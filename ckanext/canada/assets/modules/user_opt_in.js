@@ -33,7 +33,7 @@ function _load_user_opt_in(CKAN_MODULE){
   postData[csrfTokenName] = csrfTokenValue;
 
   let container = $('[data-module="canada-user-opt-in-feature"][data-module-feature_key="' + featureKey + '"]');
-  let htmlContent = '<div class="alert alert-warning"><p>' + label + '</p><p><a role="button" class="btn btn-primary btn-small" href="javascript:void(0);">' + buttonLabel + '</a></p></div>';
+  let htmlContent = '<div class="alert alert-guidance"><p>' + label + '</p><p><a role="button" class="btn btn-primary btn-small" href="javascript:void(0);">' + buttonLabel + '</a></p></div>';
 
   function _render_failure(_consoleMessage, _message, _type){
     console.warn(_consoleMessage);

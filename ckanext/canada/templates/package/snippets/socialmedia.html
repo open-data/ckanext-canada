@@ -2,7 +2,7 @@
   {% if not h.is_registry_domain() %}
     <div class="panel panel-primary">
       {% set pkg = pkg_dict %}
-      <div class="panel-heading"><div class="panel-title">{{ _('Have your say') }}</div></div>
+      <div class="panel-heading canada-panel-heading">{{- _('Have your say') -}}</div>
       <div class="panel-body">
         <ul class="list-unstyled">
           <div data-ajax-replace="/{{ h.lang() }}/vote-result/vote/{{ pkg_dict.id }}"></div>

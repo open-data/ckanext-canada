@@ -102,6 +102,7 @@ class TestGrants(CanadaTestBase):
             err = ve.value.error_dict
             assert 'records' in err
             assert 'agreement_value' in err['records'][0]
+            assert err['records'][0]['agreement_value'] == ['"Agreement Value" must be zero or greater for agreements starting on or after May 1, 2026']
 
         good_formats = [
             200,

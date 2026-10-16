@@ -87,6 +87,7 @@ front_matter:
 
 resources:
 - title: Proactive Publication - Contracts over $10,000
+  shortname: Contracts over $10,000
   resource_name: contracts
 
   published_resource_id: fac950c0-00d5-4ec1-a4d3-9cbebf98a305
@@ -1964,21 +1965,27 @@ resources:
     choices_file: choices/quarter.yaml
 
   - datastore_id: record_created
-    label: Record Creation Time
+    label:
+      en: Record Creation Time
+      fr: Heure de la création du dossier
     import_template_include: false
     visible_to_public: false
     datastore_type: timestamp
     preview_class: bg-info
 
   - datastore_id: record_modified
-    label: Last Record Modification Time
+    label:
+      en: Last Record Modification Time
+      fr: Heure de la dernière modification au dossier
     import_template_include: false
     visible_to_public: false
     datastore_type: timestamp
     preview_class: bg-info
 
   - datastore_id: user_modified
-    label: User Last Modified Record
+    label:
+      en: User Last Modified Record
+      fr: Dernier enregistrement modifié par l'utilisateur
     import_template_include: false
     visible_to_public: false
     datastore_type: text
@@ -2320,6 +2327,7 @@ resources:
     sort: contract_date desc
 
 - title: Proactive Publication - Contracts Nothing to Report
+  shortname: Nothing to Report
   resource_name: contracts-nil
 
   published_resource_id: fa4ff6c4-e9af-4491-9d4e-2b468e415a68
@@ -2341,21 +2349,27 @@ resources:
     form_required: true
 
   - datastore_id: record_created
-    label: Record Creation Time
+    label:
+      en: Record Creation Time
+      fr: Heure de la création du dossier
     import_template_include: false
     visible_to_public: false
     datastore_type: timestamp
     preview_class: bg-info
 
   - datastore_id: record_modified
-    label: Last Record Modification Time
+    label:
+      en: Last Record Modification Time
+      fr: Heure de la dernière modification au dossier
     import_template_include: false
     visible_to_public: false
     datastore_type: timestamp
     preview_class: bg-info
 
   - datastore_id: user_modified
-    label: User Last Modified Record
+    label:
+      en: User Last Modified Record
+      fr: Dernier enregistrement modifié par l'utilisateur
     import_template_include: false
     visible_to_public: false
     datastore_type: text
