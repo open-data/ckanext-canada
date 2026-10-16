@@ -9,32 +9,7 @@
 <form class="form-inline mrgn-bttm-lg" role="form" method="get" data-module="select-switch">
   {% block search_input %}
     {% block search_input_label %}
-      {% if h.is_registry_domain() %}
-        <label for="search_field" class="wb-inv">{{ _('Search Datasets') }}</label>
-      {% else %}
-        {% if h.show_openinfo_facets() %}
-          <div class="row mrgn-bttm-sm mrgn-rght-sm">
-            <div class="col-md-12">
-              <section class="alert alert-info" >
-                <p>{{ _('Please note that the Open Information Portal contains a sample of government of Canada publications and information resources. For more resources, please visit <a href="http://publications.gc.ca/">Government of Canada Publications</a> and <a href="http://www.bac-lac.gc.ca/">Library and Archives Canada</a>.')|safe }}</p>
-              </section>
-            </div>
-          </div>
-        {% endif %}
-        <div class="row mrgn-bttm-md mrgn-tp-md">
-          <div class="col-md-12">
-            <h2 class="mrgn-tp-0 mrgn-bttm-0">
-              <label for="search_field" >{{ _('Search Datasets') }}</label>
-            </h2>
-          </div>
-        </div>
-        <div class="ogscartwrapper mrgn-bttm-md">
-          <span class="ogscarttally fa fa-shopping-cart"> {{ _('Tally of Cart Items') }}</span>
-          <a id="OGSCartListItems" class="ogscartlistbtn btn btn-primary btn-xs" href="#"><span class="fa fa-list-alt" aria-hidden="true"></span>&nbsp;{{ _('List Cart Items') }}</a>
-          <a id="OGSCartPlotItems" class="ogscartplotbtn btn btn-primary btn-xs" href="#"><span class="fa fa-globe" aria-hidden="true"></span>&nbsp;{{ _('View on Map') }}</a>
-          <a id="OGSCartDumpItems" class="ogscartplotbtn btn btn-danger btn-xs" href="#"><span class="fa fa-trash-o" aria-hidden="true"></span>&nbsp;{{ _('Empty Cart') }}</a>
-        </div>
-      {% endif %}
+      <label for="search_field" class="wb-inv">{{ _('Search Datasets') }}</label>
     {% endblock %}
     <div class="input-group col-md-12">
       <div class="canada-search-field-wrapper">
@@ -86,7 +61,7 @@
       {% for field in g.fields_grouped %}
         {% for link, label in h.search_filter_pill_link_label(field, extras) %}
           <a href="{{ link }}" class="btn btn-info btn-xs mrgn-lft-sm mrgn-bttm-sm facet-pill" title="{{ _('Remove') }}">
-            {{ label }}&nbsp;<i class="fa fa-times" aria-hidden="true"></i></a>
+            {{ _('Published') if label == 'public' else label }}&nbsp;<i class="fa fa-times" aria-hidden="true"></i></a>
           </a>
         {% endfor %}
       {% endfor %}

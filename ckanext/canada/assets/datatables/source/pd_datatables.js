@@ -311,6 +311,7 @@ function load_pd_datatable(CKAN_MODULE, HAS_TRANSLATIONS){
         let expander = '<a class="pd-datatable-readmore-expander" href="javascript:void(0);" data-toggle="collapse" data-bs-toggle="collapse" aria-expanded="false" aria-controls="' +_elementID + '">&#8230;</a>';
         let fullRender = _isMarkdown ? htmlPurifier.sanitize(marked.parse(str, {renderer: markedRenderer})) : str;
         let preview = _isMarkdown ? truncateHtml(fullRender, _cutoff - 1) + expander : fullRender.substr(0, _cutoff - 1) + expander;
+        preview = preview.replaceAll(/\r?\n/g, '<br>');
         let remaining = _isMarkdown ? fullRender : fullRender.substr(_cutoff - 1);
         if( newLineMatch.test(_data) ){
           remaining = remaining.replaceAll(newLineMatch, '<br>');
