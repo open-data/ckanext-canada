@@ -11,7 +11,6 @@ from sqlalchemy.exc import NoResultFound, MultipleResultsFound  # type: ignore
 from ckan.plugins.toolkit import (
     config,
     asbool,
-    aslist,
     get_action,
     _,
     h,
@@ -39,7 +38,6 @@ from ckan.lib.helpers import core_helper
 from ckan.plugins.core import plugin_loaded
 import ckan.lib.datapreview as datapreview
 
-from ckanext.recombinant.tables import get_chromo
 from ckanext.security.cache.login import max_login_attempts
 
 try:

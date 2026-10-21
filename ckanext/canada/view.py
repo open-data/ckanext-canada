@@ -59,7 +59,6 @@ from ckan.logic import (
     parse_params,
     tuplize_dict,
     clean_dict,
-    ValidationError,
     NotFound,
     NotAuthorized
 )
@@ -68,8 +67,6 @@ from ckan.common import repr_untrusted
 
 from ckanext.recombinant.tables import get_chromo
 from ckanext.recombinant.errors import RecombinantException
-from ckanext.recombinant.helpers import recombinant_primary_key_fields
-from ckanext.recombinant.views import _render_recombinant_constraint_errors
 
 from ckanapi import LocalCKAN
 
