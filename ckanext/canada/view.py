@@ -65,8 +65,7 @@ from ckan.logic import (
 from ckan.lib.navl.dictization_functions import unflatten
 from ckan.common import repr_untrusted
 
-from ckanext.recombinant.tables import get_chromo
-from ckanext.recombinant.errors import RecombinantException
+from ckanext.recombinant.views import type_redirect
 
 from ckanapi import LocalCKAN
 
@@ -456,43 +455,6 @@ def canada_organization_bulk_process(id: str, group_type: str = 'organization',
     the IPackageController and IResourceController implementations.
     """
     return h.redirect_to('%s.read' % group_type, id=id)
-
-
-@canada_views.route('/recombinant/<resource_name>', methods=['GET'])
-def type_redirect(resource_name: str, dataset_id: Optional[str] = None):
-    orgs = h.organizations_available('read')
-
-    if not orgs:
-        abort(404, _('No organizations found'))
-    try:
-        get_chromo(resource_name)
-    except RecombinantException:
-        abort(404, _('Recombinant resource_name not found'))
-
-    if is_sysadmin(g.user):
-        # if sysadmin, always go to tbs-sct
-        owner_org_name = 'tbs-sct'
-    else:
-        # otherwise, go to first org in user's available list
-        owner_org_name = orgs[0]['name']
-
-    if dataset_id:
-        try:
-            dataset = get_action('package_show')(
-                {'user': g.user}, {'id': dataset_id})
-        except NotAuthorized:
-            return abort(403)
-        except NotFound:
-            return abort(404)
-
-        if dataset.get('owner_org'):
-            org_obj = model.Group.get(dataset.get('owner_org'))
-            if org_obj:
-                owner_org_name = org_obj.name
-
-    return h.redirect_to(h.url_for('recombinant.preview_table',
-                                   resource_name=resource_name,
-                                   owner_org=owner_org_name))
 
 
 @canada_views.route('/', methods=['GET'])

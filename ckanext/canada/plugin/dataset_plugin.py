@@ -110,7 +110,7 @@ class CanadaDatasetsPlugin(SchemingDatasetsPlugin):
                             return h.redirect_to('%s.read' % res.package.type,
                                                  id=res.package_id)
             if package_type in h.recombinant_get_types():
-                return h.redirect_to('canada.type_redirect',
+                return h.redirect_to('recombinant.type_redirect',
                                      resource_name=package_type)
 
     # IDatasetForm
