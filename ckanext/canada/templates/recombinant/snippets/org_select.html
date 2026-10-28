@@ -14,7 +14,7 @@
     <input id="org-select"
            type="text"
            name="org_select"
-           value="{{ h.split_piped_bilingual_field(selected.title, h.lang()) }}"
+           value="{{ h.split_piped_bilingual_field(selected.title, h.lang())|truncate(120) }}"
            placeholder="{{ _('Search organizations...') }}"
            data-module="autocomplete"
            data-module-source="{{ h.url_for('canada.organization_autocomplete') ~ '?q=?' }}"

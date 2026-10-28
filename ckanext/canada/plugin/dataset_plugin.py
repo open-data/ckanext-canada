@@ -24,7 +24,7 @@ from ckanext.canada.view import (
     CanadaResourceEditView,
     CanadaResourceCreateView,
     canada_search,
-    canada_prevent_pd_views,
+    _prevent_recombinant_ckan_views,
     _get_package_type_from_dict
 )
 
@@ -72,21 +72,24 @@ class CanadaDatasetsPlugin(SchemingDatasetsPlugin):
             blueprint.add_url_rule(
                 '/<path:uri>',
                 endpoint='canada_prevent_%s' % pd_type,
-                view_func=canada_prevent_pd_views,
+                view_func=_prevent_recombinant_ckan_views,
                 methods=['GET', 'POST']
             )
             blueprints.append(blueprint)
         return blueprints
 
     # type_ignore_reason: incomplete typing
-    def _redirect_pd_dataset_endpoints(blueprint: Blueprint  # type: ignore
-                                       ) -> Optional[Response]:
+    def _redirect_recombinant_dataset_endpoints(
+            blueprint: Blueprint) -> Optional[Response]:  # type: ignore
         """
         Runs before request for /dataset and /dataset/<pkg id>/resource
 
         Checks if the actual package type is a PD type and redirects it.
 
         Redirect alias for direct package_show view.
+
+        NOTE: this must be in the Canada plugin as the plugin handles
+              the core /dataset/ types and routes (along with others like info)
         """
         if has_request_context() and hasattr(request, 'view_args'):
             if not request.view_args:
@@ -149,8 +152,10 @@ class CanadaDatasetsPlugin(SchemingDatasetsPlugin):
                 CanadaDatasetEditPageView.as_view('edit_page'),
             )
         # redirect PD endpoints accessed from /dataset/<pd pkg id>
+        # NOTE: this must be in the Canada plugin as the plugin handles
+        #       the core /dataset/ types and routes (along with others like info)
         blueprint.before_request(cast(BeforeRequestCallable,
-                                      self._redirect_pd_dataset_endpoints))
+                                      self._redirect_recombinant_dataset_endpoints))
         return blueprint
 
     # IDatasetForm
@@ -169,8 +174,10 @@ class CanadaDatasetsPlugin(SchemingDatasetsPlugin):
             methods=['GET', 'POST']
         )
         # redirect PD endpoints accessed from /dataset/<pd pkg id>/resource
+        # NOTE: this must be in the Canada plugin as the plugin handles
+        #       the core /dataset/ types and routes (along with others like info)
         blueprint.before_request(cast(BeforeRequestCallable,
-                                      self._redirect_pd_dataset_endpoints))
+                                      self._redirect_recombinant_dataset_endpoints))
         return blueprint
 
     # IDataValidation

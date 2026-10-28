@@ -117,6 +117,10 @@ def logged_in():
 def _get_package_type_from_dict(package_id: str,
                                 package_type:
                                     Optional[Union[str, Any]] = 'dataset') -> str:
+    """
+    NOTE: this must be in the Canada plugin as the plugin handles
+          the core /dataset/ types and routes (along with others like info)
+    """
     try:
         context = cast(Context, {'model': model,
                                  'session': model.Session,
@@ -129,7 +133,12 @@ def _get_package_type_from_dict(package_id: str,
         return package_type  # type: ignore
 
 
-def canada_prevent_pd_views(uri: str, package_type: str) -> Union[Response, str]:
+def _prevent_recombinant_ckan_views(
+        uri: str, package_type: str) -> Union[Response, str]:
+    """
+    NOTE: this must be in the Canada plugin as the plugin handles
+          the core /dataset/ types and routes (along with others like info)
+    """
     uri_parts = uri.split('/')
     id = None
     if uri_parts[0]:
