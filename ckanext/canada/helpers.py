@@ -11,7 +11,6 @@ from sqlalchemy.exc import NoResultFound, MultipleResultsFound  # type: ignore
 from ckan.plugins.toolkit import (
     config,
     asbool,
-    aslist,
     get_action,
     _,
     h,
@@ -39,7 +38,6 @@ from ckan.lib.helpers import core_helper
 from ckan.plugins.core import plugin_loaded
 import ckan.lib.datapreview as datapreview
 
-from ckanext.recombinant.tables import get_chromo
 from ckanext.security.cache.login import max_login_attempts
 
 try:
@@ -477,92 +475,6 @@ def is_ready_to_publish(package: Dict[str, Any]) -> bool:
         return True
     else:
         return False
-
-
-def get_pd_datatable(resource_name: str,
-                     resource_id: str,
-                     owner_org: str,
-                     dataset_type: str) -> str:
-    chromo = get_chromo(resource_name)
-    priority = len(chromo['datastore_primary_key'])
-    pk_priority = 0
-    activity_priority = 1
-    fields = []
-    fids = []
-    for f in chromo['fields']:
-        if f.get('published_resource_computed_field'):
-            continue
-        out = {
-            'type': f['datastore_type'],
-            'id': f['datastore_id'],
-            'label': h.recombinant_language_text(f['label'])}
-        if out['id'] in chromo['datastore_primary_key']:
-            out['priority'] = pk_priority
-            pk_priority += 1
-        elif out['id'] in ('record_modified', 'user_modified'):
-            out['priority'] = activity_priority
-            pk_priority += 1
-        else:
-            out['priority'] = priority
-            priority += 1
-        fields.append(out)
-        fids.append(f['datastore_id'])
-
-    pkids = [fids.index(k) for k in aslist(chromo['datastore_primary_key'])]
-
-    fkids = {}
-    ds_info = get_action('datastore_info')(
-        cast(Context, {'ignore_auth': True}), {'id': resource_id})
-    if 'foreignkeys' in ds_info['meta']:
-        dataset = get_action('recombinant_show')(
-            cast(Context, {'ignore_auth': True}),
-            {'dataset_type': dataset_type,
-             'owner_org': owner_org})
-        resource_names = dict((r['id'], r['name']) for r in dataset['resources'])
-        for fk in ds_info['meta']['foreignkeys']:
-            if resource_id == fk['child_table']:
-                if fk['parent_table'] not in resource_names:
-                    # do not include refs from resources not in this dataset
-                    continue
-                if resource_names[fk['parent_table']] not in fkids:
-                    fkids[resource_names[fk['parent_table']]] = dict(
-                        (fk['child_columns'][fk_pi], fk_pc)
-                        for fk_pi, fk_pc in enumerate(fk['parent_columns']))
-            elif resource_id == fk['parent_table']:
-                if fk['child_table'] not in resource_names:
-                    # do not include records from resources not in this dataset
-                    continue
-                if resource_names[fk['child_table']] not in fkids:
-                    fkids[resource_names[fk['child_table']]] = dict(
-                        (fk['parent_columns'][fk_ci], fk_cc)
-                        for fk_ci, fk_cc in enumerate(fk['child_columns']))
-
-    # TODO: DEPRECATED: REMOVE AFTER FULL PD DATATABLES QA
-    try:
-        user_dict = get_action('user_show')({'ignore_auth': True}, {'id': g.user})
-    except (ObjectNotFound, RuntimeError):
-        user_dict = {}
-    enable_new_template = config['ckanext.canada.enable_pd_datatable_enhanced']
-    if not enable_new_template:
-        enable_new_template = user_dict.get('opt_in_features__pd_datatables',
-                                            enable_new_template)
-    snippet = 'pd_datatable.html' if enable_new_template else 'pd_datatable_depr.html'
-
-    return h.snippet('snippets/%s' % snippet,
-                     resource_name=resource_name,
-                     resource_id=resource_id,
-                     owner_org=owner_org,
-                     primary_keys=pkids,
-                     foreign_keys=fkids,
-                     dataset_type=dataset_type,
-                     ds_fields=fields)
-
-
-def enable_pd_datatable_editor() -> bool:
-    """
-    Return if the PD DataTable Editor should be used or not.
-    """
-    return config['ckanext.canada.enable_pd_datatable_editor']
 
 
 def contact_information(info: str) -> Dict[str, Any]:
