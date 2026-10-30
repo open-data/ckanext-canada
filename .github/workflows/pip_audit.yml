@@ -112,7 +112,7 @@ jobs:
           fi
       - name: Create Pull Request
         id: crpr
-        if: steps.security-changes.outputs.changes == 'true'
+        if: steps.secchanges.outputs.changes == 'true'
         uses: peter-evans/create-pull-request@v6
         with:
           commit-message: |
@@ -143,7 +143,7 @@ jobs:
             | select(.vulns != null and (.vulns | length > 0))
             | .name as $package
             | .vulns[]
-            | "  - \($package): \(.id)"
+            | "  - \($package): \(.id) (fix: \(.fix_versions | join(", ")))"
           ' pip-audit.json >> "$CHANGELOG"
 
           git config user.name "github-actions[bot]"
