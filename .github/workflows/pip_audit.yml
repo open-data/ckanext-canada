@@ -111,9 +111,15 @@ jobs:
           else
             echo "changes=true" >> "$GITHUB_OUTPUT"
           fi
+      - name: Copy Security Requirements
+        id: haschanges
+        if: steps.secchanges.outputs.changes == 'true'
+        run: |
+          cp /srv/app/src/ckanext-canada/requirements-security-patch.txt \
+            "$GITHUB_WORKSPACE/requirements-security-patch.txt"
       - name: Create Pull Request
         id: crpr
-        if: steps.secchanges.outputs.changes == 'true'
+        if: steps.haschanges.outcome == 'success'
         uses: peter-evans/create-pull-request@v6
         with:
           commit-message: |
