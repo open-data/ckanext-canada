@@ -82,6 +82,7 @@ jobs:
           cd /srv/app/src/ckanext-canada
           source /srv/app/venv/bin/activate
           pip-audit --format=json --output=pip-audit.json || true
+          echo "# NOTE: file is managed by pip-audit workflow, see .github/workflows/pip_audit.yml" > requirements-security-patch.txt
           jq -r '
             [
               .dependencies[]
@@ -99,7 +100,7 @@ jobs:
             | group_by(.name)
             | .[]
             | "\(.[0].name)==\(map(.version) | unique | last)"
-          ' pip-audit.json > requirements-security-patch.txt
+          ' pip-audit.json >> requirements-security-patch.txt
       - name: Check for Security Patch Changes
         id: secchanges
         if: steps.audit.outcome == 'success'
