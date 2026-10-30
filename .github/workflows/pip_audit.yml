@@ -134,6 +134,8 @@ jobs:
           commit-message: |
             patch(security): pip audit;
           branch: "feature/security-requirements-patch"
+          base: rlease
+          delete-branch: true
           title: "[SECURITY] New PIP Fix Releases"
           body: |
             Security Dependency Updates
@@ -143,9 +145,15 @@ jobs:
 
             Please review the proposed versions before merging.
           reviewers: JVickery-TBS, RabiaSajjad
+          add-paths: |
+            requirements-security-patch.txt
       - name: Create Change Log
         if: ${{ steps.crpr.outputs.pull-request-number }}
         run: |
+          git config --global --add safe.directory "$GITHUB_WORKSPACE"
+
+          cd "$GITHUB_WORKSPACE"
+
           git fetch origin feature/security-requirements-patch
           git checkout feature/security-requirements-patch
 
@@ -163,6 +171,6 @@ jobs:
 
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add changes/${{ steps.crpr.outputs.pull-request-number }}.security
+          git add "$CHANGELOG"
           git commit -m "feat(misc): changelog; [skip ci]"
           git push origin feature/security-requirements-patch
