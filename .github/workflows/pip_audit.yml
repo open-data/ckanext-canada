@@ -79,6 +79,7 @@ jobs:
         id: audit
         if: steps.gitcheckout.outcome == 'success'
         run: |
+          cd /srv/app/src/ckanext-canada
           source /srv/app/venv/bin/activate
           pip-audit --format=json --output=pip-audit.json || true
           jq -r '
@@ -103,6 +104,7 @@ jobs:
         id: secchanges
         if: steps.audit.outcome == 'success'
         run: |
+          cd /srv/app/src/ckanext-canada
           if git diff --quiet -- requirements-security-patch.txt; then
             echo "changes=false" >> "$GITHUB_OUTPUT"
           else
@@ -128,6 +130,7 @@ jobs:
       - name: Create Change Log
         if: ${{ steps.crpr.outputs.pull-request-number }}
         run: |
+          cd /srv/app/src/ckanext-canada
           git fetch origin feature/security-requirements-patch
           git checkout feature/security-requirements-patch
 
