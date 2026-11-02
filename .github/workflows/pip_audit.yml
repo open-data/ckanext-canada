@@ -83,42 +83,42 @@ jobs:
           source /srv/app/venv/bin/activate
           pip-audit --format=json --output=pip-audit.json || true
           python3 - <<'PY'
-            import json
-            from pathlib import Path
-            from packaging.version import Version
-            from packaging.utils import canonicalize_name
+          import json
+          from pathlib import Path
+          from packaging.version import Version
+          from packaging.utils import canonicalize_name
 
-            requirements_file = Path('requirements-security-patch.txt')
-            audit_file = Path('pip-audit.json')
-            packages = {}
+          requirements_file = Path('requirements-security-patch.txt')
+          audit_file = Path('pip-audit.json')
+          packages = {}
 
-            if requirements_file.exists():
-                for line in requirements_file.read_text().splitlines():
-                    line = line.strip()
-                    if not line or line.startswith('#') or '==' not in line:
-                        continue
-                    name, version = line.split('==', 1)
-                    key = canonicalize_name(name)
-                    packages[key] = {'name': name, 'version': Version(version)}
+          if requirements_file.exists():
+              for line in requirements_file.read_text().splitlines():
+                  line = line.strip()
+                  if not line or line.startswith('#') or '==' not in line:
+                      continue
+                  name, version = line.split('==', 1)
+                  key = canonicalize_name(name)
+                  packages[key] = {'name': name, 'version': Version(version)}
 
-            audit = json.loads(audit_file.read_text())
-            for dependency in audit.get('dependencies', []):
-                name = dependency['name']
-                key = canonicalize_name(name)
-                fixes = [Version(version)
-                        for vuln in dependency.get('vulns', [])
-                        for version in (vuln.get('fix_versions') or [])]
-                if not fixes:
-                    continue
-                new_version = max(fixes)
-                if key not in packages or new_version > packages[key]['version']:
-                    packages[key] = {'name': name, 'version': new_version}
+          audit = json.loads(audit_file.read_text())
+          for dependency in audit.get('dependencies', []):
+              name = dependency['name']
+              key = canonicalize_name(name)
+              fixes = [Version(version)
+                      for vuln in dependency.get('vulns', [])
+                      for version in (vuln.get('fix_versions') or [])]
+              if not fixes:
+                  continue
+              new_version = max(fixes)
+              if key not in packages or new_version > packages[key]['version']:
+                  packages[key] = {'name': name, 'version': new_version}
 
-            requirements_file.write_text(
-                '# NOTE: file is managed by pip-audit workflow, see .github/workflows/pip_audit.yml\n' +
-                ''.join(f'{item["name"]}=={item["version"]}\n'
-                        for _, item in sorted(packages.items()))
-            )
+          requirements_file.write_text(
+              '# NOTE: file is managed by pip-audit workflow, see .github/workflows/pip_audit.yml\n' +
+              ''.join(f'{item["name"]}=={item["version"]}\n'
+                      for _, item in sorted(packages.items()))
+          )
           PY
       - name: Check for Security Patch Changes
         id: secchanges
