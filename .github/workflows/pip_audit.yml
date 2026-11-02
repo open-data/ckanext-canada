@@ -87,6 +87,7 @@ jobs:
           source /srv/app/venv/bin/activate
           pip-audit --format=json --output=pip-audit.json || true
           python3 - <<'PY'
+          import os
           import json
           import urllib.request
           import urllib.error
@@ -97,10 +98,12 @@ jobs:
           from packaging.version import Version
           from packaging.specifiers import SpecifierSet
           from packaging.utils import canonicalize_name
+          from packaging.requirements import Requirement, InvalidRequirement
 
           TARGET_PYTHON = Version('3.9.2')
           AUDIT_FILE = Path('pip-audit.json')
           REQUIREMENTS_FILE = Path('requirements-security-patch.txt')
+          CKAN_REQUIREMENTS_FILE = Path('/srv/app/ckan/src/ckan/requirements.txt')
           CHANGELOG_FILE = Path('pip-changes.txt')
           EXCLUDED_PACKAGES = {
               canonicalize_name('ckan'),
@@ -112,6 +115,47 @@ jobs:
           audit = json.loads(AUDIT_FILE.read_text())
           changelog = ['New security patches from pip-audit', '',
                       f'Target Python version: {TARGET_PYTHON}', '']
+          email_reports = {}
+
+          def load_ckan_pins(requirements_file):
+              pins = {}
+              if not requirements_file.is_file():
+                  raise FileNotFoundError(f'CKAN requirements file not found: {requirements_file}')
+              for line_number, raw_line in enumerate(requirements_file.read_text().splitlines(), start=1):
+                  line = raw_line.strip()
+                  if not line or line.startswith('#') or line.startswith('-'):
+                      continue
+                  requirement_text = line.split('#', 1)[0].strip()
+                  try:
+                      requirement = Requirement(requirement_text)
+                  except InvalidRequirement:
+                      continue
+                  package = canonicalize_name(requirement.name)
+                  exact_pins = [
+                      spec.version
+                      for spec in requirement.specifier
+                      if spec.operator == '==' and '*' not in spec.version
+                  ]
+                  if len(exact_pins) != 1:
+                      continue
+                  version = exact_pins[0]
+                  if package in pins and pins[package][1] != version:
+                      raise ValueError('Conflicting CKAN pins for {requirement.name} at line {line_number}')
+                  pins[package] = (requirement.name, version)
+              return pins
+          ckan_pins = load_ckan_pins(CKAN_REQUIREMENTS_FILE)
+
+          def add_email_report_entry(name, installed_version, reasons, vulnerability=None):
+              if name not in email_reports:
+                  email_reports[name] = {'installed_version': installed_version,
+                                        'reasons': reasons,
+                                        'vulnerabilities': []}
+
+              if vulnerability:
+                  email_reports[name]['vulnerabilities'].append({
+                      'id': vulnerability.get('id', 'Unknown ID'),
+                      'fix_versions': vulnerability.get('fix_versions', [])
+                  })
 
           def get_requires_python(name, version):
               key = (canonicalize_name(name), str(version))
@@ -152,18 +196,21 @@ jobs:
               return min(candidates)
 
           if REQUIREMENTS_FILE.exists():
-              for line in REQUIREMENTS_FILE.read_text().splitlines():
-                  line = line.strip()
+              for line_number, raw_line in enumerate(REQUIREMENTS_FILE.read_text().splitlines(), start=1):
+                  line = raw_line.strip()
+                  if not line or line.startswith('#') or line.startswith('-'):
+                      continue
+                  requirement_text = line.split('#', 1)[0].strip()
                   if not line or line.startswith('#') or '==' not in line:
                       continue
-                  name, version = line.split('==', 1)
+                  name, version = requirement_text.split('==', 1)
                   package_key = canonicalize_name(name)
                   if package_key in EXCLUDED_PACKAGES:
                       continue
                   try:
                       parsed_version = Version(version)
                   except Exception:
-                      print(f'WARNING: Invalid version: {line}')
+                      print(f'WARNING: Invalid version: {requirement_text}')
                       continue
                   compatible = supports_python(name, parsed_version)
                   if compatible is False:
@@ -186,6 +233,10 @@ jobs:
               vulnerabilities = dependency.get('vulns') or []
               if not vulnerabilities:
                   continue
+              ckan_detail = ''
+              if package_key in ckan_pins:
+                  ckan_name, ckan_version = ckan_pins[package_key]
+                  ckan_detail = f'CKAN 2.10 pins this dependency to `{ckan_name}=={ckan_version}`. Vulnerability remains unresolved.'
               package_fixes = []
               package_has_unresolved_vulnerability = False
               for vuln in vulnerabilities:
@@ -219,9 +270,14 @@ jobs:
                   if unknown:
                       details.append('compatibility unknown: ' +
                                     ', '.join(map(str, sorted(unknown))))
-                  if not fix_versions:
-                      details.append('no fix version listed')
-                  changelog.append(f'  - {name}: {vuln_id} ({"; ".join(details) or "no usable fix version"})')
+                  if ckan_detail or not compatible:
+                      if not fix_versions:
+                          details.append('no fix version listed')
+                      if ckan_detail:
+                          details.append(ckan_detail)
+                      add_email_report_entry(name=name, installed_version=installed_version, reasons=details, vulnerability=vuln)
+                  else:
+                      changelog.append(f'  - {name}: {vuln_id} ({"; ".join(details) or "no usable fix version"})')
                   if not compatible:
                       package_has_unresolved_vulnerability = True
                       continue
@@ -238,26 +294,64 @@ jobs:
                   continue
               existing = packages.get(package_key)
               if existing is None or recommended_version > existing['version']:
-                  packages[package_key] = {'name': name, 'version': recommended_version}
+                  packages[package_key] = {'name': name, 'version': recommended_version, 'ckan_pinned': False}
+              if package_key in ckan_pins:
+                  ckan_name, ckan_version = ckan_pins[package_key]
+                  packages[package_key]['name'] = ckan_name
+                  packages[package_key]['version'] = ckan_version
+                  packages[package_key]['ckan_pinned'] = True
 
-          requirements = [f'{item["name"]}=={item["version"]}'
-                          for _, item in sorted(packages.items())]
+          def generate_email_report(reports):
+              lines = ['Failed security patches from pip-audit', ''
+                      f'Target Python: {TARGET_PYTHON}', '']
+              for name in sorted(reports, key=str.lower):
+                  entry = reports[name]
+                  lines.append(f'{name} (installed: {entry["installed_version"]})')
+                  lines.append('  Reasons:')
+                  for r in entry['reasons']:
+                      lines.append(f'    - {r}')
+                  for vuln in entry['vulnerabilities']:
+                      lines.append(f'  Vulnerability: {vuln["id"]}')
+                      lines.append('    Available fixes:')
+                      if vuln['fix_versions']:
+                          for version in sorted(set(vuln['fix_versions'])):
+                              lines.append(f'      - {version}')
+                      else:
+                          lines.append('      - None listed')
+                  lines.append('')
+              return '\n'.join(lines)
+
+          requirements = []
+          for package in sorted(packages):
+              details = packages[package]
+              name = details['name']
+              version = details['version']
+              if details.get('ckan_pinned', False):
+                  requirements.append(f'{name}=={version}  # Pinned by CKAN requirements.txt;')
+                  continue
+              requirements.append(f'{name}=={version}')
 
           REQUIREMENTS_FILE.write_text(
               '# NOTE: file is managed by pip-audit workflow, see .github/workflows/pip_audit.yml\n' +
               '\n'.join(requirements) + '\n')
           CHANGELOG_FILE.write_text('\n'.join(changelog) + '\n')
+
+          report = generate_email_report(email_reports)
+          with open(os.environ['GITHUB_ENV'], 'a') as f:
+            f.write('SECURITY_REPORT<<EOF\n')
+            f.write(report)
+            f.write('\nEOF\n')
           PY
-      - name: Check for Security Patch Changes
-        id: secchanges
-        if: steps.audit.outcome == 'success'
-        run: |
-          cd /srv/app/src/ckanext-canada
-          if git diff --quiet -- requirements-security-patch.txt; then
-            echo "changes=false" >> "$GITHUB_OUTPUT"
-          else
-            echo "changes=true" >> "$GITHUB_OUTPUT"
-          fi
+      # - name: Check for Security Patch Changes
+      #   id: secchanges
+      #   if: steps.audit.outcome == 'success'
+      #   run: |
+      #     cd /srv/app/src/ckanext-canada
+      #     if git diff --quiet -- requirements-security-patch.txt; then
+      #       echo "changes=false" >> "$GITHUB_OUTPUT"
+      #     else
+      #       echo "changes=true" >> "$GITHUB_OUTPUT"
+      #     fi
       - name: Checkout Repository for PR
         uses: actions/checkout@v4
         id: hascheckout
@@ -275,6 +369,42 @@ jobs:
             "$GITHUB_WORKSPACE/pip-audit.json"
           cp /srv/app/src/ckanext-canada/pip-changes.txt \
             "$GITHUB_WORKSPACE/pip-changes.txt"
+      - name: Slack Notification
+        if: steps.haschanges.outcome == 'success'
+        uses: slackapi/slack-github-action@v1.23.0
+        with:
+          payload: |
+            {
+              "blocks": [
+                {
+                  "type": "header",
+                  "text": {
+                    "type": "plain_text",
+                    "text": "Unsupported Python Packages :rotating_light:",
+                    "emoji": true
+                  }
+                },
+                {
+                  "type": "section",
+                  "fields": [
+                    {
+                      "type": "mrkdwn",
+                      "text": "*Project:*\nCKAN"
+                    }
+                  ]
+                },
+                {
+                  "type": "section",
+                  "text": {
+                    "type": "mrkdwn",
+                    "text": "*Report:*\n${{ env.SECURITY_REPORT }}"
+                  }
+                }
+              ]
+            }
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
       - name: Create Pull Request
         id: crpr
         if: steps.haschanges.outcome == 'success'
