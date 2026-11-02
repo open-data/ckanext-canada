@@ -88,49 +88,165 @@ jobs:
           pip-audit --format=json --output=pip-audit.json || true
           python3 - <<'PY'
           import json
+          import urllib.request
+          import urllib.error
+
           from pathlib import Path
+          from urllib.parse import quote
+
           from packaging.version import Version
+          from packaging.specifiers import SpecifierSet
           from packaging.utils import canonicalize_name
 
+          TARGET_PYTHON = Version('3.9.2')
+          AUDIT_FILE = Path('pip-audit.json')
+          REQUIREMENTS_FILE = Path('requirements-security-patch.txt')
+          CHANGELOG_FILE = Path('pip-changes.txt')
           EXCLUDED_PACKAGES = {
               canonicalize_name('ckan'),
               canonicalize_name('ckanapi'),
           }
-          requirements_file = Path('requirements-security-patch.txt')
-          audit_file = Path('pip-audit.json')
-          packages = {}
+          METADATA_CACHE = {}
 
-          if requirements_file.exists():
-              for line in requirements_file.read_text().splitlines():
+          packages = {}
+          audit = json.loads(AUDIT_FILE.read_text())
+          changelog = ['New security patches from pip-audit', '',
+                      f'Target Python version: {TARGET_PYTHON}', '']
+
+          def get_requires_python(name, version):
+              key = (canonicalize_name(name), str(version))
+              if key in METADATA_CACHE:
+                  return METADATA_CACHE[key]
+              url = f'https://pypi.org/pypi/{quote(name, safe="")}/{quote(str(version), safe="")}/json'
+
+              try:
+                  request = urllib.request.Request(url, headers={'User-Agent': 'CKAN-Security-Audit/1.0'})
+                  with urllib.request.urlopen(request, timeout=15) as response:
+                      data = json.loads(response.read())
+                  result = data.get('info', {}).get('requires_python')
+              except (urllib.error.URLError, TimeoutError, ValueError) as exc:
+                  print(f'WARNING: Could not retrieve {name}=={version}: {exc}')
+                  result = None
+              METADATA_CACHE[key] = result
+              return result
+
+          def supports_python(name, version):
+              requires_python = get_requires_python(name, version)
+              if requires_python is None:
+                  return None
+              try:
+                  return TARGET_PYTHON in SpecifierSet(requires_python)
+              except Exception:
+                  return None
+
+          def select_fix_version(installed_version, candidates):
+              if not candidates:
+                  return None
+              installed = Version(installed_version)
+              same_branch = [
+                  version for version in candidates
+                  if version.release[:2] == installed.release[:2]
+              ]
+              if same_branch:
+                  return min(same_branch)
+              return min(candidates)
+
+          if REQUIREMENTS_FILE.exists():
+              for line in REQUIREMENTS_FILE.read_text().splitlines():
                   line = line.strip()
                   if not line or line.startswith('#') or '==' not in line:
                       continue
                   name, version = line.split('==', 1)
-                  key = canonicalize_name(name)
-                  if key in EXCLUDED_PACKAGES:
-                    continue
-                  packages[key] = {'name': name, 'version': Version(version)}
+                  package_key = canonicalize_name(name)
+                  if package_key in EXCLUDED_PACKAGES:
+                      continue
+                  try:
+                      parsed_version = Version(version)
+                  except Exception:
+                      print(f'WARNING: Invalid version: {line}')
+                      continue
+                  compatible = supports_python(name, parsed_version)
+                  if compatible is False:
+                      print(f'REMOVED: {name}=={version} (incompatible with Python {TARGET_PYTHON})')
+                      continue
+                  if compatible is None:
+                      print(f'WARNING: Could not verify Python compatibility for {name}=={version}')
+                      continue
+                  packages[package_key] = {'name': name, 'version': parsed_version}
 
-          audit = json.loads(audit_file.read_text())
           for dependency in audit.get('dependencies', []):
               name = dependency['name']
-              key = canonicalize_name(name)
-              if key in EXCLUDED_PACKAGES:
-                continue
-              fixes = [Version(version)
-                       for vuln in dependency.get('vulns', [])
-                       for version in (vuln.get('fix_versions') or [])]
-              if not fixes:
+              installed_version = dependency.get('version')
+              if not installed_version:
+                  print(f'WARNING: Skipping {name}: no installed version in audit results')
                   continue
-              new_version = max(fixes)
-              if key not in packages or new_version > packages[key]['version']:
-                  packages[key] = {'name': name, 'version': new_version}
+              package_key = canonicalize_name(name)
+              if package_key in EXCLUDED_PACKAGES:
+                  continue
+              vulnerabilities = dependency.get('vulns') or []
+              if not vulnerabilities:
+                  continue
+              package_fixes = []
+              package_has_unresolved_vulnerability = False
+              for vuln in vulnerabilities:
+                  vuln_id = vuln['id']
+                  fix_versions = vuln.get('fix_versions') or []
+                  compatible = []
+                  incompatible = []
+                  unknown = []
+                  for fix in fix_versions:
+                      try:
+                          version = Version(fix)
+                      except Exception:
+                          continue
+                      result = supports_python(name, version)
+                      if result is True:
+                          compatible.append(version)
+                      elif result is False:
+                          incompatible.append(version)
+                      else:
+                          unknown.append(version)
+                  details = []
+                  if compatible:
+                      details.append('Python 3.9 compatible: ' +
+                                    ', '.join(map(str, sorted(compatible))))
+                  if incompatible:
+                      incompatible_details = []
+                      for version in sorted(incompatible):
+                          requires_python = get_requires_python(name, version)
+                          incompatible_details.append(f'{version} (requires Python {requires_python})')
+                      details.append('requires newer Python: ' + ', '.join(incompatible_details))
+                  if unknown:
+                      details.append('compatibility unknown: ' +
+                                    ', '.join(map(str, sorted(unknown))))
+                  if not fix_versions:
+                      details.append('no fix version listed')
+                  changelog.append(f'  - {name}: {vuln_id} ({"; ".join(details) or "no usable fix version"})')
+                  if not compatible:
+                      package_has_unresolved_vulnerability = True
+                      continue
+                  selected = select_fix_version(installed_version, compatible)
+                  if selected:
+                      package_fixes.append(selected)
+              if package_has_unresolved_vulnerability:
+                  continue
+              if not package_fixes:
+                  continue
+              recommended_version = max(package_fixes)
+              if supports_python(name, recommended_version) is not True:
+                  changelog.append(f'  - {name}: no verified combined Python {TARGET_PYTHON} recommendation')
+                  continue
+              existing = packages.get(package_key)
+              if existing is None or recommended_version > existing['version']:
+                  packages[package_key] = {'name': name, 'version': recommended_version}
 
-          requirements_file.write_text(
+          requirements = [f'{item["name"]}=={item["version"]}'
+                          for _, item in sorted(packages.items())]
+
+          REQUIREMENTS_FILE.write_text(
               '# NOTE: file is managed by pip-audit workflow, see .github/workflows/pip_audit.yml\n' +
-              ''.join(f'{item["name"]}=={item["version"]}\n'
-                      for _, item in sorted(packages.items()))
-          )
+              '\n'.join(requirements) + '\n')
+          CHANGELOG_FILE.write_text('\n'.join(changelog) + '\n')
           PY
       - name: Check for Security Patch Changes
         id: secchanges
@@ -157,6 +273,8 @@ jobs:
             "$GITHUB_WORKSPACE/requirements-security-patch.txt"
           cp /srv/app/src/ckanext-canada/pip-audit.json \
             "$GITHUB_WORKSPACE/pip-audit.json"
+          cp /srv/app/src/ckanext-canada/pip-changes.txt \
+            "$GITHUB_WORKSPACE/pip-changes.txt"
       - name: Create Pull Request
         id: crpr
         if: steps.haschanges.outcome == 'success'
@@ -181,9 +299,6 @@ jobs:
       - name: Create Change Log
         if: ${{ steps.crpr.outputs.pull-request-number }}
         run: |
-          cd /srv/app/src/ckanext-canada
-          source /srv/app/venv/bin/activate
-
           git config --global --add safe.directory "$GITHUB_WORKSPACE"
 
           cd "$GITHUB_WORKSPACE"
@@ -192,33 +307,6 @@ jobs:
           git checkout feature/security-requirements-patch
 
           CHANGELOG="changes/${{ steps.crpr.outputs.pull-request-number }}.security"
-
-          python3 - <<'PY'
-          import json
-          from pathlib import Path
-          from packaging.utils import canonicalize_name
-
-          EXCLUDED_PACKAGES = {
-              canonicalize_name('ckan'),
-              canonicalize_name('ckanapi'),
-          }
-          audit = json.loads(Path('pip-audit.json').read_text())
-          changelog = ['New security patches from pip-audit', '']
-
-          for dependency in audit.get('dependencies', []):
-              name = dependency['name']
-              if canonicalize_name(name) in EXCLUDED_PACKAGES:
-                  continue
-              for vuln in dependency.get('vulns', []):
-                  fixes = vuln.get('fix_versions') or []
-                  if fixes:
-                      fix_text = f'fix: {", ".join(fixes)}'
-                  else:
-                      fix_text = 'no fix version listed'
-                  changelog.append(f'  - {name}: {vuln["id"]} ({fix_text})')
-
-          Path('pip-changes.txt').write_text('\n'.join(changelog) + '\n')
-          PY
 
           cp pip-changes.txt "$CHANGELOG"
 
