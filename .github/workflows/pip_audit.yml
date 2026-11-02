@@ -336,7 +336,7 @@ jobs:
               '\n'.join(requirements) + '\n')
           CHANGELOG_FILE.write_text('\n'.join(changelog) + '\n')
 
-          report = generate_email_report(email_reports)
+          report = generate_email_report(email_reports).replace('\n', '\\n')
           with open(os.environ['GITHUB_ENV'], 'a') as f:
             f.write('SECURITY_REPORT<<EOF\n')
             f.write(report)
