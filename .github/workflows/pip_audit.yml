@@ -71,8 +71,12 @@ jobs:
           pip install -e .
           pip install -r requirements.txt
           pip install -r test-requirements.txt
+          if [[ -f "requirements-security-patch.txt" ]]; then
+            pip install -r requirements-security-patch.txt
+          fi;
           python3 setup.py develop
           pip install -e 'git+https://github.com/open-data/ckanext-cloudstorage.git@canada-v2.10#egg=ckanext-cloudstorage' -r 'https://raw.githubusercontent.com/open-data/ckanext-cloudstorage/canada-v2.10/requirements.txt'
+          pip install -e 'git+https://github.com/open-data/ckanext-power-bi@main#egg=ckanext-power-bi' -r 'https://raw.githubusercontent.com/open-data/ckanext-power-bi/main/requirements.txt'
           pip install pip-audit
           cd /srv/app
       - name: Run Audit
@@ -88,6 +92,10 @@ jobs:
           from packaging.version import Version
           from packaging.utils import canonicalize_name
 
+          EXCLUDED_PACKAGES = {
+              canonicalize_name('ckan'),
+              canonicalize_name('ckanapi'),
+          }
           requirements_file = Path('requirements-security-patch.txt')
           audit_file = Path('pip-audit.json')
           packages = {}
@@ -99,15 +107,19 @@ jobs:
                       continue
                   name, version = line.split('==', 1)
                   key = canonicalize_name(name)
+                  if key in EXCLUDED_PACKAGES:
+                    continue
                   packages[key] = {'name': name, 'version': Version(version)}
 
           audit = json.loads(audit_file.read_text())
           for dependency in audit.get('dependencies', []):
               name = dependency['name']
               key = canonicalize_name(name)
+              if key in EXCLUDED_PACKAGES:
+                continue
               fixes = [Version(version)
-                      for vuln in dependency.get('vulns', [])
-                      for version in (vuln.get('fix_versions') or [])]
+                       for vuln in dependency.get('vulns', [])
+                       for version in (vuln.get('fix_versions') or [])]
               if not fixes:
                   continue
               new_version = max(fixes)
@@ -177,16 +189,35 @@ jobs:
           git checkout feature/security-requirements-patch
 
           CHANGELOG="changes/${{ steps.crpr.outputs.pull-request-number }}.security"
-          echo "New security patches from pip-audit" > "$CHANGELOG"
-          echo "" >> "$CHANGELOG"
 
-          jq -r '
-            .dependencies[]
-            | select(.vulns != null and (.vulns | length > 0))
-            | .name as $package
-            | .vulns[]
-            | "  - \($package): \(.id) (fix: \(.fix_versions | join(", ")))"
-          ' pip-audit.json >> "$CHANGELOG"
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          from packaging.utils import canonicalize_name
+
+          EXCLUDED_PACKAGES = {
+              canonicalize_name('ckan'),
+              canonicalize_name('ckanapi'),
+          }
+          audit = json.loads(Path('pip-audit.json').read_text())
+          changelog = ['New security patches from pip-audit', '']
+
+          for dependency in audit.get('dependencies', []):
+              name = dependency['name']
+              if canonicalize_name(name) in EXCLUDED_PACKAGES:
+                  continue
+              for vuln in dependency.get('vulns', []):
+                  fixes = vuln.get('fix_versions') or []
+                  if fixes:
+                      fix_text = f'fix: {", ".join(fixes)}'
+                  else:
+                      fix_text = 'no fix version listed'
+                  changelog.append(f'  - {name}: {vuln["id"]} ({fix_text})')
+
+          Path('pip-changes.txt').write_text('\n'.join(changelog) + '\n')
+          PY
+
+          cp pip-changes.txt "$CHANGELOG"
 
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
