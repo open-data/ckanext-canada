@@ -355,7 +355,7 @@ jobs:
       - name: Checkout Repository for PR
         uses: actions/checkout@v4
         id: hascheckout
-        if: steps.secchanges.outputs.changes == 'true'
+        if: steps.audit.outcome == 'success'
         with:
           ref: ${{ github.head_ref || github.ref_name }}
           fetch-depth: 0
