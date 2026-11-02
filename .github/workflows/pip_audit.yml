@@ -181,6 +181,9 @@ jobs:
       - name: Create Change Log
         if: ${{ steps.crpr.outputs.pull-request-number }}
         run: |
+          cd /srv/app/src/ckanext-canada
+          source /srv/app/venv/bin/activate
+
           git config --global --add safe.directory "$GITHUB_WORKSPACE"
 
           cd "$GITHUB_WORKSPACE"
