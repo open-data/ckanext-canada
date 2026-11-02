@@ -103,7 +103,7 @@ jobs:
           TARGET_PYTHON = Version('3.9.2')
           AUDIT_FILE = Path('pip-audit.json')
           REQUIREMENTS_FILE = Path('requirements-security-patch.txt')
-          CKAN_REQUIREMENTS_FILE = Path('/srv/app/ckan/src/ckan/requirements.txt')
+          CKAN_REQUIREMENTS_FILE = Path('/srv/app/src/ckan/requirements.txt')
           CHANGELOG_FILE = Path('pip-changes.txt')
           EXCLUDED_PACKAGES = {
               canonicalize_name('ckan'),
