@@ -1,8 +1,5 @@
 name: PIP Audit
 on:
-  pull_request:
-  workflow_dispatch:
-  workflow_call:
   push:
     branches:
       - master
@@ -301,43 +298,52 @@ jobs:
                   packages[package_key]['ckan_pinned'] = True
 
           def generate_report(reports):
-              blocks = [
-                  {
-                      'type': 'header',
-                      'text': {
-                          'type': 'plain_text',
-                          'text': 'Unsupported Python Packages :rotating_light:',
-                          'emoji': True,
-                      },
-                  },
-                  {
-                      'type': 'section',
-                      'fields': [
-                          {'type': 'mrkdwn', 'text': '*Project:*\nCKAN'},
-                          {'type': 'mrkdwn', 'text': f'*Target Python:*\n{TARGET_PYTHON}'},
-                      ],
-                  },
-                  {'type': 'divider'},
-              ]
-              for i, name in enumerate(sorted(reports, key=str.lower)):
+            blocks = [
+                {
+                    'type': 'header',
+                    'text': {
+                        'type': 'plain_text',
+                        'text': 'Unsupported Python Packages :rotating_light:',
+                        'emoji': True,
+                    },
+                },
+                {
+                    'type': 'section',
+                    'fields': [
+                        {'type': 'mrkdwn', 'text': '*Project:*\nCKAN'},
+                        {'type': 'mrkdwn', 'text': f'*Target Python:*\n{TARGET_PYTHON}'},
+                    ],
+                },
+                {'type': 'divider'},
+            ]
+            fields = []
+            for i, name in enumerate(sorted(reports, key=str.lower)):
                 entry = reports[name]
                 text = f'*{name}* (installed: `{entry["installed_version"]}`)\n\n*Reasons:*\n'
                 for r in entry['reasons']:
                     text += f'• {r}\n'
-                text += '\n\n*Vulnerabilities:*\n'
+                text += '\n*Vulnerabilities:*\n'
                 for vuln in entry['vulnerabilities']:
                     fix_text = ', '.join(f'`{v}`' for v in vuln['fix_versions']) if vuln['fix_versions'] else 'None listed'
                     text += f'• `{vuln["id"]}` — Available fixes: {fix_text}\n'
+                fields.append({
+                    'type': 'mrkdwn',
+                    'text': text.strip(),
+                })
+                if len(fields) == 2:
+                    blocks.append({
+                        'type': 'section',
+                        'fields': fields,
+                    })
+                    fields = []
+                    if i + 1 < len(reports):
+                        blocks.append({'type': 'divider'})
+            if fields:
                 blocks.append({
                     'type': 'section',
-                    'text': {
-                        'type': 'mrkdwn',
-                        'text': text.strip(),
-                    },
+                    'fields': fields,
                 })
-                if (i + 1) % 2 == 0 and i + 1 < len(reports):
-                    blocks.append({'type': 'divider'})
-              return {'blocks': blocks}
+            return {'blocks': blocks}
 
           requirements = []
           for package in sorted(packages):
