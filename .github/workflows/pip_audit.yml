@@ -87,7 +87,6 @@ jobs:
           source /srv/app/venv/bin/activate
           pip-audit --format=json --output=pip-audit.json || true
           python3 - <<'PY'
-          import os
           import json
           import urllib.request
           import urllib.error
@@ -105,9 +104,9 @@ jobs:
           REQUIREMENTS_FILE = Path('requirements-security-patch.txt')
           CKAN_REQUIREMENTS_FILE = Path('/srv/app/src/ckan/requirements.txt')
           CHANGELOG_FILE = Path('pip-changes.txt')
+          EMAIL_FILE = Path('pip-email.json')
           EXCLUDED_PACKAGES = {
-              canonicalize_name('ckan'),
-              canonicalize_name('ckanapi'),
+              canonicalize_name('pkg-resources'),
           }
           METADATA_CACHE = {}
 
@@ -205,7 +204,7 @@ jobs:
                       continue
                   name, version = requirement_text.split('==', 1)
                   package_key = canonicalize_name(name)
-                  if package_key in EXCLUDED_PACKAGES:
+                  if package_key in EXCLUDED_PACKAGES or package_key.startswith('ckanext-'):
                       continue
                   try:
                       parsed_version = Version(version)
@@ -224,11 +223,13 @@ jobs:
           for dependency in audit.get('dependencies', []):
               name = dependency['name']
               installed_version = dependency.get('version')
+              if name in EXCLUDED_PACKAGES or name.startswith('ckanext-'):
+                  continue
               if not installed_version:
                   print(f'WARNING: Skipping {name}: no installed version in audit results')
                   continue
               package_key = canonicalize_name(name)
-              if package_key in EXCLUDED_PACKAGES:
+              if package_key in EXCLUDED_PACKAGES or package_key.startswith('ckanext-'):
                   continue
               vulnerabilities = dependency.get('vulns') or []
               if not vulnerabilities:
@@ -270,7 +271,9 @@ jobs:
                   if unknown:
                       details.append('compatibility unknown: ' +
                                     ', '.join(map(str, sorted(unknown))))
-                  if ckan_detail or not compatible:
+                  if package_key in ['ckan', 'ckanapi']:
+                      details.append('installed from source')
+                  if ckan_detail or not compatible or package_key in ['ckan', 'ckanapi']:
                       if not fix_versions:
                           details.append('no fix version listed')
                       if ckan_detail:
@@ -301,30 +304,49 @@ jobs:
                   packages[package_key]['version'] = ckan_version
                   packages[package_key]['ckan_pinned'] = True
 
-          def generate_email_report(reports):
-              lines = ['Failed security patches from pip-audit', ''
-                      f'Target Python: {TARGET_PYTHON}', '']
+          def generate_report(reports):
+              blocks = [
+                  {
+                      'type': 'header',
+                      'text': {
+                          'type': 'plain_text',
+                          'text': 'Unsupported Python Packages :rotating_light:',
+                          'emoji': True,
+                      },
+                  },
+                  {
+                      'type': 'section',
+                      'fields': [
+                          {'type': 'mrkdwn', 'text': '*Project:*\nCKAN'},
+                          {'type': 'mrkdwn', 'text': f'*Target Python:*\n{TARGET_PYTHON}'},
+                      ],
+                  },
+                  {'type': 'divider'},
+              ]
               for name in sorted(reports, key=str.lower):
                   entry = reports[name]
-                  lines.append(f'{name} (installed: {entry["installed_version"]})')
-                  lines.append('  Reasons:')
+                  text = f'*{name}* (installed: `{entry["installed_version"]}`)\n*Reasons:*\n'
                   for r in entry['reasons']:
-                      lines.append(f'    - {r}')
+                      text += f'- {r}\n'
                   for vuln in entry['vulnerabilities']:
-                      lines.append(f'  Vulnerability: {vuln["id"]}')
-                      lines.append('    Available fixes:')
-                      if vuln['fix_versions']:
-                          for version in sorted(set(vuln['fix_versions'])):
-                              lines.append(f'      - {version}')
-                      else:
-                          lines.append('      - None listed')
-                  lines.append('')
-              return '\n'.join(lines)
+                      fix_text = ', '.join(f'`{v}`' for v in vuln['fix_versions']) if vuln['fix_versions'] else 'None listed'
+                      text += f'- `{vuln["id"]}` — Available fixes: {fix_text}\n'
+                  blocks.append({
+                      'type': 'section',
+                      'text': {
+                          'type': 'mrkdwn',
+                          'text': text.strip(),
+                      },
+                  })
+                  blocks.append({'type': 'divider'})
+              return {'blocks': blocks}
 
           requirements = []
           for package in sorted(packages):
               details = packages[package]
               name = details['name']
+              if name in ['ckan', 'ckanapi']:
+                  continue  # never have ckan or ckanapi as a requirement, we install from source
               version = details['version']
               if details.get('ckan_pinned', False):
                   requirements.append(f'{name}=={version}  # Pinned by CKAN requirements.txt;')
@@ -335,12 +357,7 @@ jobs:
               '# NOTE: file is managed by pip-audit workflow, see .github/workflows/pip_audit.yml\n' +
               '\n'.join(requirements) + '\n')
           CHANGELOG_FILE.write_text('\n'.join(changelog) + '\n')
-
-          report = generate_email_report(email_reports).replace('\n', '\\n')
-          with open(os.environ['GITHUB_ENV'], 'a') as f:
-            f.write('SECURITY_REPORT<<EOF\n')
-            f.write(report)
-            f.write('\nEOF\n')
+          EMAIL_FILE.write_text(json.dumps(generate_report(email_reports), ensure_ascii=False, indent=2), encoding='utf-8')
           PY
       # - name: Check for Security Patch Changes
       #   id: secchanges
@@ -369,39 +386,13 @@ jobs:
             "$GITHUB_WORKSPACE/pip-audit.json"
           cp /srv/app/src/ckanext-canada/pip-changes.txt \
             "$GITHUB_WORKSPACE/pip-changes.txt"
+          cp /srv/app/src/ckanext-canada/pip-email.json \
+            "$GITHUB_WORKSPACE/pip-email.json"
       - name: Slack Notification
         if: steps.haschanges.outcome == 'success'
         uses: slackapi/slack-github-action@v1.23.0
         with:
-          payload: |
-            {
-              "blocks": [
-                {
-                  "type": "header",
-                  "text": {
-                    "type": "plain_text",
-                    "text": "Unsupported Python Packages :rotating_light:",
-                    "emoji": true
-                  }
-                },
-                {
-                  "type": "section",
-                  "fields": [
-                    {
-                      "type": "mrkdwn",
-                      "text": "*Project:*\nCKAN"
-                    }
-                  ]
-                },
-                {
-                  "type": "section",
-                  "text": {
-                    "type": "mrkdwn",
-                    "text": "*Report:*\n${{ env.SECURITY_REPORT }}"
-                  }
-                }
-              ]
-            }
+          payload-file-path: pip-email.json
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
           SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
