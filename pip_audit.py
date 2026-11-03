@@ -13,7 +13,7 @@ from packaging.requirements import Requirement, InvalidRequirement
 TARGET_PYTHON = Version('3.9.2')
 AUDIT_FILE = Path('pip-audit.json')
 REQUIREMENTS_FILE = Path('requirements-security-patch.txt')
-CKAN_REQUIREMENTS_FILE = Path('/srv/app/ckan/src/ckan/requirements.txt')
+CKAN_REQUIREMENTS_FILE = Path('/srv/app/src/ckan/requirements.txt')
 CHANGELOG_FILE = Path('pip-changes.txt')
 SLACK_FILE = Path('pip-slack.json')
 EXCLUDED_PACKAGES = {
@@ -80,7 +80,7 @@ def get_requires_python(name, version):
     if key in METADATA_CACHE:
         return METADATA_CACHE[key]
     url = f'https://pypi.org/pypi/{quote(name, safe="")}' + \
-    f'/{quote(str(version), safe="")}/json'
+        f'/{quote(str(version), safe="")}/json'
 
     try:
         request = urllib.request.Request(
@@ -165,7 +165,7 @@ for dependency in audit.get('dependencies', []):
     if package_key in ckan_pins:
         ckan_name, ckan_version = ckan_pins[package_key]
         ckan_detail = 'CKAN 2.10 pins this dependency to ' + \
-        f'`{ckan_name}=={ckan_version}`. Vulnerability remains unresolved.'
+            f'`{ckan_name}=={ckan_version}`. Vulnerability remains unresolved.'
     package_fixes = []
     for vuln in vulnerabilities:
         vuln_id = vuln['id']
