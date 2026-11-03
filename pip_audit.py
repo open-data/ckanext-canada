@@ -266,7 +266,6 @@ def generate_report(reports):
         },
         {'type': 'divider'},
     ]
-    fields = []
     for i, name in enumerate(sorted(reports, key=str.lower)):
         entry = reports[name]
         text = f'*{name}* (installed: `{entry["installed_version"]}`)\n\n*Reasons:*\n'
@@ -278,39 +277,17 @@ def generate_report(reports):
                 if vuln['fix_versions'] else 'None listed'
             text += f'• `{vuln["id"]}` — Available fixes: {fix_text}\n'
         text = text.strip()
-        if len(text) > 2000:
-            if fields:
-                blocks.append({
-                    'type': 'section',
-                    'fields': fields,
-                })
-                fields = []
-            for chunk in split_slack_text(text):
-                blocks.append({
-                    'type': 'section',
-                    'text': {
-                        'type': 'mrkdwn',
-                        'text': chunk,
-                    },
-                })
-        else:
-            fields.append({
-                'type': 'mrkdwn',
-                'text': text,
+        chunks = split_slack_text(text, max_length=2900)
+        for chunk in chunks:
+            blocks.append({
+                'type': 'section',
+                'text': {
+                    'type': 'mrkdwn',
+                    'text': chunk,
+                },
             })
-            if len(fields) == 2:
-                blocks.append({
-                    'type': 'section',
-                    'fields': fields,
-                })
-                fields = []
         if i + 1 < len(reports):
             blocks.append({'type': 'divider'})
-    if fields:
-        blocks.append({
-            'type': 'section',
-            'fields': fields,
-        })
     return {'blocks': blocks}
 
 
