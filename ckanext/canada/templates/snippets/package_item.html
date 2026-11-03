@@ -3,18 +3,17 @@
 {% set client_lang = h.lang() %}
 
 {% block package_item %}
-  {% set geno = h.recombinant_get_geno(package.type) %}
+  {% set pd_types = h.recombinant_get_types() %}
   <li>
     <article class="panel panel-default mrgn-bttm-sm relative">
-      <header class="panel-heading">
-        {% snippet 'package/snippets/package_type_label.html', pkg_dict=package %}
+      <header class="panel-heading canada-package-panel-heading">
         <h3 class="panel-title">
           {% block heading %}
             {% set my_title, machine_translated = h.get_translated_t(package, 'title') %}
             {% if 'title_translated' not in package %}
               {% set my_title = _(my_title) %}
             {% endif %}
-            {% block heading_private %}{# Do not show "Private" label #}{% endblock %}
+            {% block heading_private %}{# Do not show "Private" label show above in template... #}{% endblock %}
             {{ h.link_to(my_title|truncate(150), h.url_for(package.type ~ '.read', id=package.name), title=my_title) }}
             {% block heading_meta %}
               {% if package.get('state', '').startswith('draft') %}
@@ -28,6 +27,24 @@
             {% endif %}
           {% endblock %}
         </h3>
+        <div class="canada-package-panel-heading--labels">
+          {% snippet 'package/snippets/package_type_label.html', pkg_dict=package %}
+          {% if h.is_registry_domain() %}
+            {% if package.type in pd_types or package.type == 'prop' or package.type == 'doc' %}
+              <span class="dataset-private badge bg-secondary">
+                  <i class="fa fa-database"></i>&nbsp;{{- _('Registry Only') -}}
+              </span>
+            {% elif package.private %}
+              <span class="dataset-private badge bg-secondary">
+                  <i class="fa fa-lock"></i>&nbsp;{{- _('Unpublished') -}}
+              </span>
+            {% else %}
+              <span class="dataset-private badge bg-secondary">
+                  <i class="fa fa-eye"></i>&nbsp;{{- _('Published') -}}
+              </span>
+            {% endif %}
+          {% endif %}
+        </div>
       </header>
       <div class="panel-body">
         {% block notes %}

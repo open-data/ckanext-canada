@@ -1,13 +1,41 @@
-from ckan.types import Context, DataDict, AuthResult
+from typing import Dict, Union
+from ckan.types import Context, DataDict, AuthResult, AuthFunction, ChainedAuthFunction
 
-from ckan.plugins.toolkit import config
+from ckan.plugins.toolkit import config, h, auth_allow_anonymous_access
 from ckan.authz import has_user_permission_for_group_or_org
 
 
-def _is_reporting_user(context: Context):
+def get_auth_methods() -> Dict[str, Union[AuthFunction,
+                                          ChainedAuthFunction]]:
+    """
+    Returns a dict of registered authentication methods.
+    """
+    return {
+        'group_list': group_list,
+        'group_show': group_show,
+        'organization_list': organization_list,
+        'organization_show': organization_show,
+        'view_org_members': view_org_members,
+        'recently_changed_packages_activity_list':
+            recently_changed_packages_activity_list,
+        'dcat_auth': dcat_auth,
+    }
+
+
+# type_ignore_reason: underscored method
+def _is_reporting_user(context: Context):  # type: ignore
     if not context.get('user') or not config.get('ckanext.canada.reporting_user'):
         return False
     return context.get('user') == config.get('ckanext.canada.reporting_user')
+
+
+def _registry_org_perms(context: Context) -> AuthResult:
+    try:
+        if h.is_registry_domain():
+            return {'success': bool(context.get('user'))}
+    except RuntimeError:
+        pass
+    return {'success': True}
 
 
 def view_org_members(context: Context, data_dict: DataDict) -> AuthResult:
@@ -17,26 +45,27 @@ def view_org_members(context: Context, data_dict: DataDict) -> AuthResult:
     return {'success': can_view}
 
 
-def registry_jobs_running(context: Context, data_dict: DataDict) -> AuthResult:
-    return {'success': _is_reporting_user(context)}
-
-
+@auth_allow_anonymous_access
 def group_list(context: Context, data_dict: DataDict) -> AuthResult:
-    return {'success': bool(context.get('user'))}
+    return _registry_org_perms(context)
 
 
+@auth_allow_anonymous_access
 def group_show(context: Context, data_dict: DataDict) -> AuthResult:
-    return {'success': bool(context.get('user'))}
+    return _registry_org_perms(context)
 
 
+@auth_allow_anonymous_access
 def organization_list(context: Context, data_dict: DataDict) -> AuthResult:
-    return {'success': bool(context.get('user'))}
+    return _registry_org_perms(context)
 
 
+@auth_allow_anonymous_access
 def organization_show(context: Context, data_dict: DataDict) -> AuthResult:
-    return {'success': bool(context.get('user'))}
+    return _registry_org_perms(context)
 
 
+@auth_allow_anonymous_access
 def recently_changed_packages_activity_list(
         context: Context,
         data_dict: DataDict) -> AuthResult:
@@ -46,19 +75,14 @@ def recently_changed_packages_activity_list(
     return {'success': True}
 
 
-def portal_sync_info(context: Context, data_dict: DataDict) -> AuthResult:
+@auth_allow_anonymous_access
+def dcat_auth(context: Context,
+              data_dict: DataDict) -> AuthResult:
     """
-    Registry users have to be logged in.
-
-    Anyone on public Portal can access.
+    Override dcat_auth, only allowed on the Portal
     """
-    # TODO: remove during PortalUpdater removal/rework
+    try:
+        return {'success': not h.is_registry_domain()}
+    except RuntimeError:
+        pass
     return {'success': True}
-
-
-def list_out_of_sync_packages(context: Context,
-                              data_dict: DataDict) -> AuthResult:
-    """
-    Only sysadmins can list the out of sync packages.
-    """
-    return {'success': False}

@@ -3,6 +3,7 @@ scheming_version: 1
 dataset_type: info
 
 before_validators: limit_resources_per_dataset
+after_validators: canada_dataset_visibility
 
 about: 'open.canada.ca: open information metadata definition'
 about_url: http://github.com/open-data/ckanext-canada
@@ -492,6 +493,8 @@ dataset_fields:
 # Add a Calendar control to select a Date.
 # {The date the asset may be published on the Portal (YYYY-MM-DD)}
 - preset: canada_portal_release_date
+
+- preset: canada_private
 
 - preset: canada_dataset_relationship
 
