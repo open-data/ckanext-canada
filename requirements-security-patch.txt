@@ -1,1 +1,15 @@
 # NOTE: file is managed by pip-audit workflow, see .github/workflows/pip_audit.yml
+azure-identity==1.16.1
+certifi==2024.7.4  # Pinned by CKAN requirements.txt;
+cryptography==50.0.0
+flask==2.0.3  # Pinned by CKAN requirements.txt;
+idna==3.7  # Pinned by CKAN requirements.txt;
+lxml==4.9.1  # Pinned by CKAN requirements.txt;
+mako==1.2.2  # Pinned by CKAN requirements.txt;
+pip==26.0
+pyjwt==2.4.0  # Pinned by CKAN requirements.txt;
+requests==2.32.3  # Pinned by CKAN requirements.txt;
+sqlparse==0.5.0  # Pinned by CKAN requirements.txt;
+urllib3==1.26.19  # Pinned by CKAN requirements.txt;
+webob==1.8.11
+werkzeug==2.0.3  # Pinned by CKAN requirements.txt;
