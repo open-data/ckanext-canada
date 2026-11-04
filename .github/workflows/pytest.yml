@@ -253,11 +253,13 @@ jobs:
           pip install -e .
           pip install -r requirements.txt
           pip install -r test-requirements.txt
+          pip install setuptools==78.1.1
           python3 setup.py develop
           cd /srv/app/src/ckan
           pip install -e .
           python3 setup.py develop
           cd /srv/app/src/ckanext-canada
+          pip install setuptools==78.1.1
           if [[ -f "requirements-security-patch.txt" ]]; then
             pip install -r requirements-security-patch.txt
           fi;
