@@ -1,16 +1,24 @@
 import re
 import json
-from flask import has_request_context, Blueprint
+from flask import has_request_context, Blueprint, abort
 from urllib.parse import urlsplit
 import logging
 
-from typing import Optional, List, Dict, cast
+from typing import Optional, List, Dict, cast, Union
 from flask.typing import BeforeRequestCallable
 from ckan.types import Context, Response, Any
 
 import ckan.plugins as p
+from ckan import model
 from ckan.model.resource import Resource
-from ckan.plugins.toolkit import g, h, request
+from ckan.plugins.toolkit import (
+    g,
+    h,
+    request,
+    get_action,
+    ObjectNotFound,
+    NotAuthorized
+)
 
 from ckanext.datastore.interfaces import IDataDictionaryForm
 from ckanext.scheming.plugins import SchemingDatasetsPlugin
@@ -23,10 +31,10 @@ from ckanext.canada.view import (
     CanadaDatasetCreatePageView,
     CanadaResourceEditView,
     CanadaResourceCreateView,
-    canada_search,
-    _prevent_recombinant_ckan_views,
-    _get_package_type_from_dict
+    canada_search
 )
+from ckanext.activity.views import package_activity
+from ckanext.recombinant.views import type_redirect
 
 
 log = logging.getLogger(__name__)
@@ -327,3 +335,40 @@ class CanadaDatasetsPlugin(SchemingDatasetsPlugin):
             elif '_info' in plugin_data:
                 field['info'] = plugin_data.get('_info', {})
         return field
+
+
+def _get_package_type_from_dict(package_id: str,
+                                package_type:
+                                    Optional[Union[str, Any]] = 'dataset') -> str:
+    """
+    NOTE: this must be in the Canada plugin as the plugin handles
+          the core /dataset/ types and routes (along with others like info)
+    """
+    try:
+        context = cast(Context, {'model': model,
+                                 'session': model.Session,
+                                 'user': g.user,
+                                 'auth_user_obj': g.userobj,
+                                 'for_view': True})
+        pkg_dict = get_action('package_show')(context, {'id': package_id})
+        return pkg_dict['type']
+    except (NotAuthorized, ObjectNotFound):
+        return package_type  # type: ignore
+
+
+def _prevent_recombinant_ckan_views(
+        uri: str, package_type: str) -> Union[Response, str]:
+    """
+    NOTE: this must be in the Canada plugin as the plugin handles
+          the core /dataset/ types and routes (along with others like info)
+    """
+    uri_parts = uri.split('/')
+    id = None
+    if uri_parts[0]:
+        if uri_parts[0] == 'activity':  # allow activity route
+            return package_activity(package_type)
+        id = uri_parts[0]
+        package_type = _get_package_type_from_dict(id, package_type)
+    if package_type in h.recombinant_get_types():
+        return type_redirect(package_type, id)
+    return abort(404)
