@@ -1672,7 +1672,7 @@ def delete_activities(days: Optional[int] = 90,
         click.echo(f'Including activity_type {include_types}')
     if exclude_types:
         click.echo(f'Excluding activity_type {exclude_types}')
-    activity_count = model.Session.execute(
+    activity_count = model.Session.execute(sa.text(
         "SELECT count(*) FROM activity "
         "WHERE timestamp < NOW() - INTERVAL '{d} days' {i} {e};"
         .format(
@@ -1680,7 +1680,7 @@ def delete_activities(days: Optional[int] = 90,
             i="AND activity_type IN {i}".format(i=include_types) if
             include_types else "",
             e="AND activity_type NOT IN {e}".format(e=exclude_types) if
-            exclude_types else "")) \
+            exclude_types else ""))) \
         .fetchall()[0][0]
 
     if not bool(activity_count):
@@ -1691,7 +1691,7 @@ def delete_activities(days: Optional[int] = 90,
         click.confirm("\nAre you sure you want to delete {num} activities?".format(
             num=activity_count), abort=True)
 
-    model.Session.execute(
+    model.Session.execute(sa.text(
         "DELETE FROM activity "
         "WHERE timestamp < NOW() - INTERVAL '{d} days' {i} {e};"
         .format(
@@ -1699,7 +1699,7 @@ def delete_activities(days: Optional[int] = 90,
             i="AND activity_type IN {i}".format(i=include_types) if
             include_types else "",
             e="AND activity_type NOT IN {e}".format(e=exclude_types) if
-            exclude_types else ""))
+            exclude_types else "")))
     model.Session.commit()
 
     click.echo("\nDeleted {num} rows from the activity table".format(
