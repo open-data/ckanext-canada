@@ -254,4 +254,4 @@ fields:
   required: true
   form_snippet: radio.html
   display_snippet: select.html
-  validators: protect_registry_access scheming_required scheming_choices
+  validators: default(public) protect_registry_access scheming_required scheming_choices
