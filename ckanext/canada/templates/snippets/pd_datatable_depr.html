@@ -168,6 +168,7 @@
         {% if chromo.edit_form and can_edit %}
           {"className": "bg-info", "orderable": false, "targets": "no-sort"},
         {% endif %}
+        {% if chromo.edit_using__id %}null,{% endif %}
         {% for f in chromo.fields %}
           {% if not f.get('published_resource_computed_field', false) %}
             {{- "null" if 'preview_class' not in f else '{"className":"' | safe ~ f['preview_class'] ~ '"}' | safe }}
@@ -199,10 +200,10 @@
             }));
             form.append($('<input>').attr({
               type: 'hidden',
-              value: {{primary_keys}},
+              value: {{edit_keys}},
               name: 'key_indices'
             }));
-            var pk_cols = {{primary_keys}}.map(function(value){
+            var pk_cols = {{edit_keys}}.map(function(value){
               return value + {{offset}};
             });
             let rows = dt.rows( { selected: true } );

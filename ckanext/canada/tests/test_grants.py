@@ -47,7 +47,7 @@ class TestGrants(CanadaTestBase):
         model.Session.rollback()
         err = ve.value.error_dict
         assert 'key' in err
-        assert 'ref_number, amendment_number' in err['key'][0]
+        assert 'agreement_number, amendment_number' in err['key'][0]
 
     def test_empty_string_instead_of_null(self):
         record = dict(get_chromo('grants')['examples']['record'])
@@ -62,7 +62,7 @@ class TestGrants(CanadaTestBase):
         Commas in primary keys should error
         """
         record = get_chromo('grants')['examples']['record'].copy()
-        record['ref_number'] = 'this,is,a,failure'
+        record['agreement_number'] = 'this,is,a,failure'
         with pytest.raises(ValidationError) as ve:
             self.lc.action.datastore_upsert(
                 resource_id=self.resource_id,
@@ -70,8 +70,8 @@ class TestGrants(CanadaTestBase):
         model.Session.rollback()
         err = ve.value.error_dict
         assert 'records' in err
-        assert 'ref_number' in err['records'][0]
-        assert err['records'][0]['ref_number'] == ['Comma is not allowed in Reference Number field']
+        assert 'agreement_number' in err['records'][0]
+        assert err['records'][0]['agreement_number'] == ['Comma is not allowed in Agreement Number field']
 
     def test_agreement_value(self):
         """
@@ -433,7 +433,7 @@ class TestGrants(CanadaTestBase):
         ref_record = chromo['examples']['record'].copy()
 
         record = {
-            'ref_number': ref_record['ref_number'],
+            'agreement_number': ref_record['agreement_number'],
             'amendment_number': 0
         }
 
