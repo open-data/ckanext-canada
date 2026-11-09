@@ -14,10 +14,7 @@ from ckan.model.resource import Resource
 from ckan.plugins.toolkit import (
     g,
     h,
-    request,
-    get_action,
-    ObjectNotFound,
-    NotAuthorized
+    request
 )
 
 from ckanext.datastore.interfaces import IDataDictionaryForm
