@@ -1664,24 +1664,31 @@ def delete_activities(days: Optional[int] = 90,
     """
     Delete rows from the activity table past a certain number of days.
     """
-    if include_types and len(include_types) == 1:
-        include_types = f"('{include_types[0]}')"
-    if exclude_types and len(exclude_types) == 1:
-        exclude_types = f"('{exclude_types[0]}')"
+    if include_types and exclude_types:
+        raise click.ClickException(
+            'Options --include-types and --exclude-types are mutually exclusive')
+    if include_types and isinstance(include_types, str):
+        # click version compatibility for single values
+        include_types = [include_types]
+    if exclude_types and isinstance(exclude_types, str):
+        # click version compatibility for single values
+        exclude_types = [exclude_types]
+    conditions = ["timestamp < NOW() - INTERVAL ':days days'"]
+    params = {'days': days}
     if include_types:
         click.echo(f'Including activity_type {include_types}')
+        conditions.append('activity_type IN :include_types')
+        params['include_types'] = include_types
     if exclude_types:
         click.echo(f'Excluding activity_type {exclude_types}')
+        conditions.append('activity_type NOT IN :exclude_types')
+        params['exclude_types'] = exclude_types
     activity_count = model.Session.execute(sa.text(
-        "SELECT count(*) FROM activity "
-        "WHERE timestamp < NOW() - INTERVAL '{d} days' {i} {e};"
-        .format(
-            d=days,
-            i="AND activity_type IN {i}".format(i=include_types) if
-            include_types else "",
-            e="AND activity_type NOT IN {e}".format(e=exclude_types) if
-            exclude_types else ""))) \
-        .fetchall()[0][0]
+        "SELECT count(*) FROM activity WHERE " + " AND ".join(conditions)
+        ).bindparams(
+            sa.bindparam('include_types', expanding=True),
+            sa.bindparam('exclude_types', expanding=True)
+        ), params).scalar()
 
     if not bool(activity_count):
         click.echo("\nNo activities found past {d} days".format(d=days))
@@ -1692,14 +1699,11 @@ def delete_activities(days: Optional[int] = 90,
             num=activity_count), abort=True)
 
     model.Session.execute(sa.text(
-        "DELETE FROM activity "
-        "WHERE timestamp < NOW() - INTERVAL '{d} days' {i} {e};"
-        .format(
-            d=days,
-            i="AND activity_type IN {i}".format(i=include_types) if
-            include_types else "",
-            e="AND activity_type NOT IN {e}".format(e=exclude_types) if
-            exclude_types else "")))
+        "DELETE FROM activity WHERE " + " AND ".join(conditions)
+            ).bindparams(
+                sa.bindparam('include_types', expanding=True),
+                sa.bindparam('exclude_types', expanding=True)
+            ), params)
     model.Session.commit()
 
     click.echo("\nDeleted {num} rows from the activity table".format(
