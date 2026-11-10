@@ -61,7 +61,8 @@ resources:
     form_required: true
     excel_required: true
     excel_column_width: 18
-    excel_error_formula: 'OR({default_formula},{cell}<1,{cell}>12)'
+    excel_error_formula: 'OR({default_formula},{cell}<1,{cell}>12,AND({year}=YEAR(TODAY()),{cell}>MONTH(TODAY())))'
+    js_error_eval: 'VALUE.length > 0 && ( VALUE < 1 || VALUE > 12 || ({year} == new Date().getFullYear() && VALUE > (new Date().getMonth() + 1)) )'
     solr_month_names: true
 
   - datastore_id: request_number
@@ -250,6 +251,9 @@ resources:
         IF NEW.month < 1 OR NEW.month > 12 THEN
           errors := errors || ARRAY[['month', {month_error}]];
         END IF;
+        IF NEW.year = date_part('year', CURRENT_DATE) AND NEW.month > date_part('month', CURRENT_DATE) THEN
+          errors := errors || ARRAY[['month', {future_date_error}]];
+        END IF;
         IF NEW.pages < 0 THEN
           errors := errors || ARRAY[['pages', {pages_error}]];
         END IF;
@@ -273,6 +277,7 @@ resources:
     month_error: Please enter a month number from 1-12
     pages_error: This value must not be negative
     request_number_error: Comma is not allowed in Request Number field
+    future_date_error: Date can’t be in the future
 
   examples:
     record:
