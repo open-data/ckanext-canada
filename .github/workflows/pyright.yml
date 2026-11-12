@@ -8,14 +8,14 @@ permissions:
 
 jobs:
   typecheck:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04  # ubuntu-latest
     container:
       image: opendatacanada/ckan-pytest  # primary executor
     steps:
       - name: Install Node
         run: |
           apk add nodejs npm
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v6
         with:
           node-version: ${{ env.NODE_VERSION }}
       - name: Check Source Dependency Versions
