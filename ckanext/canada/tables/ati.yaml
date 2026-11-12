@@ -62,7 +62,7 @@ resources:
     excel_required: true
     excel_column_width: 18
     excel_error_formula: 'OR({default_formula},{cell}<1,{cell}>12,AND({year}=YEAR(TODAY()),{cell}>MONTH(TODAY())))'
-    js_error_eval: 'VALUE.length > 0 && ( VALUE < 1 || VALUE > 12 || ({year} == new Date().getFullYear() && VALUE > (new Date().getMonth() + 1)) )'
+    js_error_eval: 'VALUE.length > 0 && ( VALUE < 1 || VALUE > 12 || ({{year}} == new Date().getFullYear() && VALUE > (new Date().getMonth() + 1)) )'
     solr_month_names: true
 
   - datastore_id: request_number
