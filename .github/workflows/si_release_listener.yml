@@ -25,6 +25,7 @@ jobs:
 
             - Auto build ref data from issue ${{ github.event.issue.number }}.
           branch: "si-release/${{ github.event.issue.number }}"
+          base: release
           title: "[SI-RELEASE] Issue #${{ github.event.issue.number }}"
           body: |
             Newly generated reference data for Service Inventory.
