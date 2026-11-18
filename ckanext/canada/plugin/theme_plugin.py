@@ -33,7 +33,6 @@ class CanadaThemePlugin(p.SingletonPlugin):
             'date_format',
             'parse_release_date_facet',
             'is_ready_to_publish',
-            'recombinant_description_to_markup',
             'mail_to_with_params',
             'get_timeout_length',
             'canada_check_access',

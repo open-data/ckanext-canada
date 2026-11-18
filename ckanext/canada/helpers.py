@@ -569,27 +569,6 @@ def _add_extra_longitude_points(gjson: Dict[str, Any]) -> Dict[str, Any]:
     return {'coordinates': [out], 'type': 'Polygon'}
 
 
-def recombinant_description_to_markup(text: str) -> Dict[str, Markup]:
-    """
-    Return text as HTML escaped strings joined with '<br/>, links enabled'
-    """
-    # very lax, this is trusted text defined in a schema not user-provided
-    url_pattern = r'(https?:[^)\s"]{20,})'
-    markup = []
-    for i, part in enumerate(re.split(url_pattern,
-                                      h.recombinant_language_text(text))):
-        if i % 2:
-            markup.append(Markup('<a href="{0}">{1}</a>'.format(
-                part, escape(part))))
-        else:
-            markup.extend(Markup('<br/>'.join(
-               escape(t) for t in part.split('\n')
-            )))
-    # extra dict because language text expected and language text helper
-    # will cause plain markup to be escaped
-    return {'en': Markup(''.join(markup))}
-
-
 def get_timeout_length() -> int:
     return int(config.get('beaker.session.timeout', 0))
 
