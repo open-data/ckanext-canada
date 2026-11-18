@@ -1,0 +1,16 @@
+New security patches from pip-audit
+
+Target Python version: 3.9.2
+
+  - azure-identity: PYSEC-2026-1209 (Python 3.9 compatible: 1.16.1)
+  - cryptography: PYSEC-2026-36 (Python 3.9 compatible: 46.0.7)
+  - cryptography: PYSEC-2026-35 (Python 3.9 compatible: 46.0.6)
+  - cryptography: PYSEC-2026-2141 (Python 3.9 compatible: 46.0.5)
+  - cryptography: PYSEC-2026-3552 (Python 3.9 compatible: 50.0.0)
+  - cryptography: PYSEC-2026-3553 (Python 3.9 compatible: 49.0.0)
+  - cryptography: PYSEC-2026-3554 (Python 3.9 compatible: 49.0.0)
+  - cryptography: GHSA-537c-gmf6-5ccf (Python 3.9 compatible: 48.0.1)
+  - pip: PYSEC-2023-228 (Python 3.9 compatible: 23.3)
+  - pip: PYSEC-2026-1795 (Python 3.9 compatible: 25.3)
+  - pip: PYSEC-2026-1796 (Python 3.9 compatible: 26.0)
+  - webob: PYSEC-2026-3943 (Python 3.9 compatible: 1.8.11)
