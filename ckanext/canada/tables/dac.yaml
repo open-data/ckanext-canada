@@ -26,8 +26,10 @@ resources:
       en: Reporting Period
       fr: Période de déclaration
     description:
-      en: The current reporting period and fiscal year
-      fr: La période de déclaration et l’exercice financier en cours.
+      en: >
+        The current reporting period and fiscal year
+      fr: >
+        La période de déclaration et l’exercice financier en cours.
     obligation: Mandatory
     form_required: true
     datastore_type: text
@@ -75,8 +77,10 @@ resources:
       en: Line Number
       fr: Numéro de ligne
     description:
-      en: The line number of the disclosure.
-      fr: Le numéro de ligne de la divulgation.
+      en: >
+        The line number of the disclosure.
+      fr: >
+        Le numéro de ligne de la divulgation.
     obligation: Mandatory
     form_required: true
     datatables_col_class: col-sm pd-datatables-primary-key-offset-md
@@ -87,8 +91,10 @@ resources:
       en: Member’s Name
       fr: Nom du membre
     description:
-      en: The member’s full name.
-      fr: Le nom complet du membre.
+      en: >
+        The member’s full name.
+      fr: >
+        Le nom complet du membre.
     obligation: Mandatory
     excel_required: true
     form_required: true
@@ -113,8 +119,12 @@ resources:
         Province ou territoire
         de résidence primaire
     description:
-      en: The province or territory of the member’s main residence at the time the remuneration and/or expenses were incurred.
-      fr: La province ou le territoire de la résidence principale du membre au moment où la rémunération et/ou les frais ont été engagés.
+      en: >
+        The province or territory of the member’s main residence at the time
+        the remuneration and/or expenses were incurred.
+      fr: >
+        La province ou le territoire de la résidence principale du membre au
+        moment où la rémunération et/ou les frais ont été engagés.
     obligation: Mandatory
     excel_required: true
     form_required: true
@@ -173,8 +183,13 @@ resources:
       en: Role
       fr: Rôle
     description:
-      en: The member’s role at the time the remuneration and/or expenses were incurred (i.e. “C-P” is for chair and “M-M” is for member)
-      fr: Le rôle du membre au moment où la rémunération et/ou les frais ont été engagés (c’est-à-dire, « C-P » est pour président(e) et « M-M » est pour membre).
+      en: >
+        The member’s role at the time the remuneration and/or expenses were
+        incurred (i.e. “C-P” is for chair and “M-M” is for member)
+      fr: >
+        Le rôle du membre au moment où la rémunération et/ou les frais ont
+        été engagés (c’est-à-dire, « C-P » est pour président(e) et
+        « M-M » est pour membre).
     obligation: Mandatory
     excel_required: true
     form_required: true
@@ -205,8 +220,12 @@ resources:
         Nombre d'heures consacrées à la
         rencontre (ou aux rencontres)
     description:
-      en: "The number of hours when the member met with the committee in person or via teleconference during the reporting period."
-      fr: "Le nombre d’heures où le membre a rencontré le comité en personne ou par téléconférence au cours de la période de déclaration."
+      en: >
+        The number of hours when the member met with the committee in
+        person or via teleconference during the reporting period.
+      fr: >
+        Le nombre d’heures où le membre a rencontré le comité en personne ou par
+        téléconférence au cours de la période de déclaration.
     obligation: Mandatory
     excel_required: true
     form_required: true
@@ -228,8 +247,12 @@ resources:
         Nombre d'heures consacrées à la préparation, le
         déplacement et/ou à la formation ou à l'orientation
     description:
-      en: "The number of hours the member spent on preparation, travel and/or training or orientation during the reporting period."
-      fr: "Le nombre d’heures que le membre a consacré à la préparation, le déplacement et/ou à la formation ou à l’orientation au cours de la période de déclaration."
+      en: >
+        The number of hours the member spent on preparation, travel and/or
+        training or orientation during the reporting period.
+      fr: >
+        Le nombre d’heures que le membre a consacré à la préparation, le
+        déplacement et/ou à la formation ou à l’orientation au cours de la période de déclaration.
     obligation: Mandatory
     excel_required: true
     form_required: true
@@ -244,8 +267,12 @@ resources:
       en: Total Remuneration
       fr: Rémunération totale
     description:
-      en: The total amount paid to the member for time spent at meetings, preparation, travel and/or training or orientation during the reporting period (i.e. per diem rate ÷ 7.5 hours x number of hours worked).
-      fr: Le montant total payé au membre pour le temps consacré aux réunions, à la préparation, le déplacement et/ou à la formation ou à l’orientation au cours de la période de déclaration (c’est-à-dire, taux journalier ÷ 7,5 heures x nombre d’heures travaillées).
+      en: >
+        The total amount paid to the member for time spent at meetings, preparation, travel
+        and/or training or orientation during the reporting period (i.e. per diem rate ÷
+        7.5 hours x number of hours worked).
+      fr: >
+        Le montant total payé au membre pour le temps consacré aux réunions, à la préparation, le déplacement et/ou à la formation ou à l’orientation au cours de la période de déclaration (c’est-à-dire, taux journalier ÷ 7,5 heures x nombre d’heures travaillées).
     obligation: Mandatory
     excel_required: true
     form_required: true
@@ -256,8 +283,12 @@ resources:
       en: Total Travel Expenses
       fr: Frais de voyage totaux
     description:
-      en: The total travel expenses incurred by the member during the reporting period, including transportation, meals, incidentals, etc.
-      fr: Les frais de voyage totaux engagés par le membre au cours de la période de déclaration, y compris le transport, les repas, faux frais, etc.
+      en: >
+        The total travel expenses incurred by the member during the reporting period,
+        including transportation, meals, incidentals, etc.
+      fr: >
+        Les frais de voyage totaux engagés par le membre au cours de la période de
+        déclaration, y compris le transport, les repas, faux frais, etc.
     obligation: Mandatory
     excel_required: true
     form_required: true
@@ -268,8 +299,12 @@ resources:
       en: Notes (English)
       fr: Notes (Anglais)
     description:
-      en: Any other relevant information (e.g. description of the activities included in the total remuneration, point of origin of a member’s travel, etc.)
-      fr: Toute autre information pertinente (par exemple, une description des activités incluses dans la rémunération totale, le point de départ du déplacement d’un membre, etc.)
+      en: >
+        Any other relevant information (e.g. description of the activities included
+        in the total remuneration, point of origin of a member’s travel, etc.)
+      fr: >
+        Toute autre information pertinente (par exemple, une description des activités
+        incluses dans la rémunération totale, le point de départ du déplacement d’un membre, etc.)
     excel_column_width: 50
     datastore_type: text
     datatables_col_class: col-xl
@@ -282,8 +317,12 @@ resources:
       en: Notes (French)
       fr: Notes (Français)
     description:
-      en: Any other relevant information (e.g. description of the activities included in the total remuneration, point of origin of a member’s travel, etc.)
-      fr: Toute autre information pertinente (par exemple, une description des activités incluses dans la rémunération totale, le point de départ du déplacement d’un membre, etc.)
+      en: >
+        Any other relevant information (e.g. description of the activities included in
+        the total remuneration, point of origin of a member’s travel, etc.)
+      fr: >
+        Toute autre information pertinente (par exemple, une description des activités
+        incluses dans la rémunération totale, le point de départ du déplacement d’un membre, etc.)
     excel_column_width: 50
     datastore_type: text
     datatables_col_class: col-xl
