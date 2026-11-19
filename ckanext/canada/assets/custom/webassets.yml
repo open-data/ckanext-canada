@@ -33,11 +33,6 @@ guess_mimetype:
     - build/guess_mimetype.min.js
   output: canada_custom/%(version)s_guess_mimetype.js
 
-cascading_select:
-  contents:
-    - build/cascading_select.min.js
-  output: canada_custom/%(version)s_cascading_select.js
-
 analytics:
   contents:
     - build/analytics.min.js
@@ -52,11 +47,6 @@ user_lock:
   contents:
     - build/users.min.js
   output: canada_custom/%(version)s_users.js
-
-recombinant_webforms:
-  contents:
-    - build/recombinant_webform.min.js
-  output: canada_custom/%(version)s_recombinant_webform.js
 
 frictionless:
   contents:
