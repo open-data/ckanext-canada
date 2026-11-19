@@ -31,8 +31,12 @@ resources:
       - datastore_id: reference_number
         datastore_type: text
         description:
-          en: "This field is populated by the user with the reference number of the Experiment. This number is a mandatory system requirement when publishing a template."
-          fr: "Ce champ est rempli par l’utilisateur avec le numéro de référence de l'experiment. Le numéro est une exigence de système obligatoire pour la publication d’un modèle."
+          en: >
+            This field is populated by the user with the reference number of the Experiment.
+            This number is a mandatory system requirement when publishing a template.
+          fr: >
+            Ce champ est rempli par l’utilisateur avec le numéro de référence de l'experiment.
+            Le numéro est une exigence de système obligatoire pour la publication d’un modèle.
         excel_required: true
         format_type:
           en: Free text
@@ -47,8 +51,10 @@ resources:
       - datastore_id: titre_du_projet_en
         datastore_type: text
         description:
-          en: "This field describes the project title, in English"
-          fr: "Ce champ décrira le titre du projet, en anglais"
+          en: >
+            This field describes the project title, in English
+          fr: >
+            Ce champ décrira le titre du projet, en anglais
         excel_required: true
         format_type:
           en: Free text
@@ -67,8 +73,10 @@ resources:
       - datastore_id: titre_du_projet_fr
         datastore_type: text
         description:
-          en: "This field describes the project title, in French"
-          fr: "Ce champ décrira le titre du projet, en français"
+          en: >
+            This field describes the project title, in French
+          fr: >
+            Ce champ décrira le titre du projet, en français
         excel_required: true
         format_type:
           en: Free text
@@ -87,8 +95,10 @@ resources:
       - datastore_id: question_de_recherche_en
         datastore_type: text
         description:
-          en: "This field describes the research question informing the project, in English"
-          fr: "Ce champ décrira la question de recherche guidant le projet, en anglais"
+          en: >
+            This field describes the research question informing the project, in English
+          fr: >
+            Ce champ décrira la question de recherche guidant le projet, en anglais
         excel_column_width: 50
         excel_required: true
         datatables_col_class: col-xl
@@ -108,8 +118,10 @@ resources:
       - datastore_id: question_de_recherche_fr
         datastore_type: text
         description:
-          en: "This field describes the research question informing the project, in French"
-          fr: "Ce champ décrira la question de recherche guidant le projet, en français"
+          en: >
+            This field describes the research question informing the project, in French
+          fr: >
+            Ce champ décrira la question de recherche guidant le projet, en français
         excel_column_width: 50
         excel_required: true
         datatables_col_class: col-xl
@@ -129,8 +141,12 @@ resources:
       - datastore_id: project_summary_en
         datastore_type: text
         description:
-          en: "This field summarizes the key information about the project, including any findings once the initiative is completed, in English"
-          fr: "Ce champ résumera les information-clés à propos du projet, y compris les résultats lorque le projet est complété, en anglais"
+          en: >
+            This field summarizes the key information about the project,
+            including any findings once the initiative is completed, in English
+          fr: >
+            Ce champ résumera les information-clés à propos du projet, y compris les
+            résultats lorque le projet est complété, en anglais
         excel_column_width: 50
         datatables_col_class: col-xxl
         excel_required: true
@@ -151,8 +167,12 @@ resources:
       - datastore_id: project_summary_fr
         datastore_type: text
         description:
-          en: "This field summarizes the key information about the project, including any findings once the initiatve is completed, in French"
-          fr: "Ce champ résumera les information-clés à propos du projet, y compris les résultats lorque le projet est complété, en français"
+          en: >
+            This field summarizes the key information about the project, including
+            any findings once the initiatve is completed, in French
+          fr: >
+            Ce champ résumera les information-clés à propos du projet, y
+            compris les résultats lorque le projet est complété, en français
         excel_column_width: 50
         datatables_col_class: col-xxl
         excel_required: true
@@ -173,8 +193,10 @@ resources:
       - datastore_id: last_updated
         datastore_type: date
         description:
-          en: "This field will display the latest update provided for the project."
-          fr: "Ce champ décrira à quand remonte la dernière mise à jour."
+          en: >
+            This field will display the latest update provided for the project.
+          fr: >
+            Ce champ décrira à quand remonte la dernière mise à jour.
         excel_column_width: 28
         excel_required: true
         format_type:
@@ -214,8 +236,10 @@ resources:
             fr: autres
         datastore_type: text
         description:
-          en: "This field will display the area in which the experiment is taking place."
-          fr: "Ce champ décrira dans quel secteur l'expérience prend place."
+          en: >
+            This field will display the area in which the experiment is taking place.
+          fr: >
+            Ce champ décrira dans quel secteur l'expérience prend place.
         excel_column_width: 20
         excel_full_text_choices: true
         datatables_full_text_choices: true
@@ -247,8 +271,10 @@ resources:
             fr: Autre
         datastore_type: text
         description:
-          en: "This field will describe the research design used for the project."
-          fr: "Ce champ décrira le devis de recherche employé dans le projet."
+          en: >
+            This field will describe the research design used for the project.
+          fr: >
+            Ce champ décrira le devis de recherche employé dans le projet.
         excel_column_width: 20
         excel_full_text_choices: true
         datatables_full_text_choices: true
@@ -267,8 +293,10 @@ resources:
       - datastore_id: design_details_en
         datastore_type: text
         description:
-          en: "This field will describe the details of the research design used for the project."
-          fr: "Ce champ décrira les détails du devis de recherche employé dans le projet."
+          en: >
+            This field will describe the details of the research design used for the project.
+          fr: >
+            Ce champ décrira les détails du devis de recherche employé dans le projet.
         excel_column_width: 50
         datatables_col_class: col-xxl
         excel_required: true
@@ -289,8 +317,10 @@ resources:
       - datastore_id: design_details_fr
         datastore_type: text
         description:
-          en: "This field will describe the details of the research design used for the project."
-          fr: "Ce champ décrira les détails du devis de recherche employé dans le projet."
+          en: >
+            This field will describe the details of the research design used for the project.
+          fr: >
+            Ce champ décrira les détails du devis de recherche employé dans le projet.
         excel_column_width: 50
         datatables_col_class: col-xxl
         excel_required: true
@@ -311,8 +341,10 @@ resources:
       - datastore_id: intervention_en
         datastore_type: text
         description:
-          en: "This field will describe the intervention tested in the project."
-          fr: "Ce champ décrira l’intervention testée dans le projet."
+          en: >
+            This field will describe the intervention tested in the project.
+          fr: >
+            Ce champ décrira l’intervention testée dans le projet.
         excel_column_width: 50
         datatables_col_class: col-xxl
         excel_required: true
@@ -333,8 +365,10 @@ resources:
       - datastore_id: intervention_fr
         datastore_type: text
         description:
-          en: "This field will describe the intervention tested in the project."
-          fr: "Ce champ décrira l’intervention testée dans le projet."
+          en: >
+            This field will describe the intervention tested in the project.
+          fr: >
+            Ce champ décrira l’intervention testée dans le projet.
         excel_column_width: 50
         datatables_col_class: col-xxl
         excel_required: true
@@ -355,8 +389,10 @@ resources:
       - datastore_id: mesure_des_resultats_en
         datastore_type: text
         description:
-          en: "This field will describe the intervention tested in the project."
-          fr: "Ce champ décrira l’intervention testée dans le projet."
+          en: >
+            This field will describe the intervention tested in the project.
+          fr: >
+            Ce champ décrira l’intervention testée dans le projet.
         excel_column_width: 50
         datatables_col_class: col-xxl
         excel_required: true
@@ -377,8 +413,10 @@ resources:
       - datastore_id: mesure_des_resultats_fr
         datastore_type: text
         description:
-          en: "This field will describe the outcomes measured in the project."
-          fr: "Ce champ décrira la/les mesure(s) de résultat(s) employée(s) dans le projet."
+          en: >
+            This field will describe the outcomes measured in the project.
+          fr: >
+            Ce champ décrira la/les mesure(s) de résultat(s) employée(s) dans le projet.
         excel_column_width: 50
         datatables_col_class: col-xxl
         excel_required: true
@@ -399,8 +437,10 @@ resources:
       - datastore_id: resultats_en
         datastore_type: text
         description:
-          en: "This field will describe the outcomes measured in the project."
-          fr: "Ce champ décrira la/les mesure(s) de résultat(s) employée(s) dans le projet."
+          en: >
+            This field will describe the outcomes measured in the project.
+          fr: >
+            Ce champ décrira la/les mesure(s) de résultat(s) employée(s) dans le projet.
         excel_column_width: 50
         datatables_col_class: col-xxl
         excel_required: true
@@ -421,8 +461,10 @@ resources:
       - datastore_id: resultats_fr
         datastore_type: text
         description:
-          en: "This field will describe the findings of the project."
-          fr: "Ce champ décrira les résultats observés dans le projet."
+          en: >
+            This field will describe the findings of the project.
+          fr: >
+            Ce champ décrira les résultats observés dans le projet.
         excel_column_width: 50
         datatables_col_class: col-xxl
         excel_required: true
@@ -453,8 +495,10 @@ resources:
             fr: Complété
         datastore_type: text
         description:
-          en: "This field will describe the status of the project."
-          fr: "Ce champ décrira le statut du projet."
+          en: >
+            This field will describe the status of the project.
+          fr: >
+            Ce champ décrira le statut du projet.
         excel_column_width: 20
         excel_full_text_choices: true
         datatables_full_text_choices: true
@@ -473,8 +517,12 @@ resources:
       - datastore_id: lead_branch_en
         datastore_type: text
         description:
-          en: "This field describes the organizational structure tied to the project owner (if applicable), in English"
-          fr: "Ce champ décrira la structure organisationnelle liée à ce projet (si applicable), en anglais"
+          en: >
+            This field describes the organizational structure tied to
+            the project owner (if applicable), in English
+          fr: >
+            Ce champ décrira la structure organisationnelle liée à
+            ce projet (si applicable), en anglais
         excel_column_width: 35
         datatables_col_class: col-lg
         excel_required: false
@@ -492,8 +540,12 @@ resources:
       - datastore_id: lead_branch_fr
         datastore_type: text
         description:
-          en: "This field describes the organizational structure tied to the project owner (if applicable), in French."
-          fr: "Ce champ décrira la structure organisationnelle liée à ce projet (si applicable), en français"
+          en: >
+            This field describes the organizational structure tied to
+            the project owner (if applicable), in French.
+          fr: >
+            Ce champ décrira la structure organisationnelle liée à ce
+            projet (si applicable), en français
         excel_column_width: 35
         datatables_col_class: col-lg
         excel_required: false
@@ -511,8 +563,12 @@ resources:
       - datastore_id: info_supplementaire_en
         datastore_type: text
         description:
-          en: "This field includes a URL link to additional information on the project (e.g. report, blog post, etc.), in English."
-          fr: "Ce champ incluera un lien URL fournissant des information additionnelles (p.ex. rapport, blogue), en anglais."
+          en: >
+            This field includes a URL link to additional information on
+            the project (e.g. report, blog post, etc.), in English.
+          fr: >
+            Ce champ incluera un lien URL fournissant des information
+            additionnelles (p.ex. rapport, blogue), en anglais.
         excel_column_width: 50
         datatables_col_class: col-lg
         excel_required: false
@@ -533,8 +589,12 @@ resources:
       - datastore_id: info_supplementaire_fr
         datastore_type: text
         description:
-          en: "This field includes a URL link to additional information on the project (e.g. report, blog post, etc.), in Frencjh."
-          fr: "Ce champ incluera un lien URL fournissant des information additionnelles (p.ex. rapport, blogue), en français."
+          en: >
+            This field includes a URL link to additional information on
+            the project (e.g. report, blog post, etc.), in French.
+          fr: >
+            Ce champ incluera un lien URL fournissant des information
+            additionnelles (p.ex. rapport, blogue), en français.
         excel_column_width: 50
         datatables_col_class: col-lg
         excel_required: false

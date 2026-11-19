@@ -14,10 +14,11 @@
     <input id="org-select"
            type="text"
            name="org_select"
-           value="{{ h.split_piped_bilingual_field(selected.title, h.lang()) }}"
+           value="{{ h.split_piped_bilingual_field(selected.title, h.lang())|truncate(120) }}"
            placeholder="{{ _('Search organizations...') }}"
            data-module="autocomplete"
-           data-module-source="{{ h.url_for('canada.organization_autocomplete') ~ '?q=?' }}"
+           {# IMPORTANT: do not do url_for here, as the JS module will add language and root paths #}
+           data-module-source="/organization/autocomplete?q=?"
            data-module-key="name"
            data-module-label="title"
            data-module-dropdownClass="recombinant-org-select2-dropdown"

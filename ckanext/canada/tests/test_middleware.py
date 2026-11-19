@@ -1,7 +1,8 @@
 # -*- coding: UTF-8 -*-
 from ckanext.canada.tests import (
     CanadaTestBase,
-    mock_is_registry_domain
+    mock_is_registry_domain,
+    get_test_domains
 )
 from ckan.plugins.toolkit import h, g, request
 from ckanext.canada.tests.factories import (
@@ -30,8 +31,11 @@ class TestCanadaMiddleware(CanadaTestBase):
         """
         super(TestCanadaMiddleware, self).setup_class()
 
+        test_domain_map = get_test_domains()
         self.sysadmin = Sysadmin()
-        self.extra_environ_system = {'REMOTE_USER': self.sysadmin['name'].encode('ascii')}
+        self.extra_environ_host_only = {'HTTP_HOST': test_domain_map['registry']['en']}
+        self.extra_environ_system = {'Authorization': self.sysadmin['token'],
+                                     'HTTP_HOST': test_domain_map['registry']['en']}
         self.environ_overrides_system = {'REMOTE_USER': self.sysadmin['name'].encode('ascii')}
 
     @mock.patch.object(h, 'is_registry_domain', mock_is_registry_domain)
@@ -72,7 +76,7 @@ class TestCanadaMiddleware(CanadaTestBase):
             return _finish_ok({})
 
         # logged out users do not have log extras
-        get_response = app.get('/_test')
+        get_response = app.get('/_test', extra_environ=self.extra_environ_host_only)
         assert 'X-LogExtra' not in get_response.headers
 
         with mock.patch('ckan.lib.helpers.current_user', current_user):
@@ -92,7 +96,7 @@ class TestCanadaMiddleware(CanadaTestBase):
                     },
                     extra_environ=self.extra_environ_system,
                     environ_overrides=self.environ_overrides_system,
-                    follow_redirects=True)
+                    follow_redirects=False)  # catch redirect
 
                 expected_header = 'user=%s org=%s type=%s id=%s rid=%s' % \
                     (self.sysadmin['name'], org['name'], pkg['type'], pkg['id'], res['id'])
@@ -114,7 +118,7 @@ class TestCanadaMiddleware(CanadaTestBase):
                     },
                     extra_environ=self.extra_environ_system,
                     environ_overrides=self.environ_overrides_system,
-                    follow_redirects=True)
+                    follow_redirects=False)  # catch redirect
 
                 expected_header = 'user=%s org=%s type=%s id=%s' % \
                     (self.sysadmin['name'], org['name'], pkg['type'], pkg['id'])
@@ -124,7 +128,8 @@ class TestCanadaMiddleware(CanadaTestBase):
 
             # non-API requests will just include username
             get_response = app.get('/_test', extra_environ=self.extra_environ_system,
-                                   environ_overrides=self.environ_overrides_system)
+                                   environ_overrides=self.environ_overrides_system,
+                                   follow_redirects=False)  # catch redirect
 
             assert 'X-LogExtra' in get_response.headers
             assert get_response.headers['X-LogExtra'] == 'user=%s' % self.sysadmin['name']
