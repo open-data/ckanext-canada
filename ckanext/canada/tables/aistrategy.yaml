@@ -26,8 +26,10 @@ resources:
       en: Reference Number
       fr: Numéro de référence
     description:
-      en: The unique number assigned to a service using AI to make it easier to refer to specific services.
-      fr: Le numéro unique attribué à un service à l'aide de l'IA pour faciliter le référencement à des services précis.
+      en: >
+        The unique number assigned to a service using AI to make it easier to refer to specific services.
+      fr: >
+        Le numéro unique attribué à un service à l'aide de l'IA pour faciliter le référencement à des services précis.
     obligation: Mandatory
     excel_required: true
     form_required: true
@@ -54,8 +56,10 @@ resources:
       en: Reporting Period
       fr: Période de déclaration
     description:
-      en: Year and month of the update
-      fr: Année et mois de la mise à jour
+      en: >
+        Year and month of the update
+      fr: >
+        Année et mois de la mise à jour
     obligation: Mandatory
     excel_required: true
     form_required: true
@@ -102,8 +106,10 @@ resources:
       en: Priority Area
       fr: Domaine Prioritaire
     description:
-      en: The strategic focus area within the AI Strategy Implementation
-      fr: Le domaine d'action stratégique dans le cadre de la mise en œuvre de la stratégie en matière d'IA
+      en: >
+        The strategic focus area within the AI Strategy Implementation
+      fr: >
+        Le domaine d'action stratégique dans le cadre de la mise en œuvre de la stratégie en matière d'IA
     obligation: Mandatory
     excel_required: true
     form_required: true
@@ -140,8 +146,10 @@ resources:
       en: Key Action
       fr: Action Clé
     description:
-      en: The key action described in the AI Strategy
-      fr: L'action clé décrite dans la stratégie en matière d'IA
+      en: >
+        The key action described in the AI Strategy
+      fr: >
+        L'action clé décrite dans la stratégie en matière d'IA
     obligation: Mandatory
     excel_required: true
     form_required: true
@@ -208,8 +216,10 @@ resources:
       en: Strategic sub-action
       fr: Sous-action stratégique
     description:
-      en: Specific sub-action under the AI Strategy
-      fr: Sous-action spécifique dans le cadre de la stratégie d'IA
+      en: >
+        Specific sub-action under the AI Strategy
+      fr: >
+        Sous-action spécifique dans le cadre de la stratégie d'IA
     obligation: Mandatory
     excel_required: true
     form_required: true
@@ -342,8 +352,10 @@ resources:
       en: Activity
       fr: Activité
     description:
-      en: Activity in support of the AI Strategy
-      fr: Activité de soutien à la stratégie en matière d'IA
+      en: >
+        Activity in support of the AI Strategy
+      fr: >
+        Activité de soutien à la stratégie en matière d'IA
     obligation: Mandatory
     excel_required: true
     form_required: true
@@ -548,8 +560,10 @@ resources:
       en: Description (English)
       fr: Description (anglais)
     description:
-      en: Operational description in the AI Strategy
-      fr: Description opérationnelle de la stratégie en matière d'IA
+      en: >
+        Operational description in the AI Strategy
+      fr: >
+        Description opérationnelle de la stratégie en matière d'IA
     obligation: Optional
     excel_required: false
     excel_column_width: 80
@@ -576,8 +590,10 @@ resources:
       en: Description (French)
       fr: Description (français)
     description:
-      en: Operational description in the AI Strategy
-      fr: Description opérationnelle de la stratégie en matière d'IA
+      en: >
+        Operational description in the AI Strategy
+      fr: >
+        Description opérationnelle de la stratégie en matière d'IA
     obligation: Optional
     excel_required: false
     excel_column_width: 80
@@ -604,8 +620,10 @@ resources:
       en: Expected Completion
       fr: Achèvement attendu
     description:
-      en: Completion of activity
-      fr: Achèvement de l'activité
+      en: >
+        Completion of activity
+      fr: >
+        Achèvement de l'activité
     obligation: Mandatory
     excel_required: true
     form_required: true
@@ -651,8 +669,10 @@ resources:
       en: Lead Department(s)
       fr: Ministère(s) responsable(s)
     description:
-      en: Primary departments involved
-      fr: Principaux départements concernés
+      en: >
+        Primary departments involved
+      fr: >
+        Principaux départements concernés
     obligation: Mandatory
     excel_required: true
     form_required: true
@@ -709,8 +729,10 @@ resources:
       en: Status
       fr: État
     description:
-      en: AI Strategy tracker status
-      fr: Statut du tracker de la stratégie IA
+      en: >
+        AI Strategy tracker status
+      fr: >
+        Statut du tracker de la stratégie IA
     obligation: Mandatory
     excel_required: true
     form_required: true
@@ -742,8 +764,10 @@ resources:
       en: Progress Made (English)
       fr: Progrès réalisés (anglais)
     description:
-      en: Describes any progress made
-      fr: Décrit les progrès réalisés
+      en: >
+        Describes any progress made
+      fr: >
+        Décrit les progrès réalisés
     obligation: Optional
     excel_required: false
     excel_column_width: 80
@@ -768,8 +792,10 @@ resources:
       en: Progress Made (French)
       fr: Progrès réalisés (français)
     description:
-      en: Describes any progress made
-      fr: Décrit les progrès réalisés
+      en: >
+        Describes any progress made
+      fr: >
+        Décrit les progrès réalisés
     obligation: Optional
     excel_required: false
     excel_column_width: 80

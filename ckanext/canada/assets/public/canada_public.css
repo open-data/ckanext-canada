@@ -1864,6 +1864,16 @@ footer#wb-info{
   background-color: #1b6c1c !important;
 }
 
+.canada-action-toolbar .content_action a.btn-danger{
+  background-color: #bc3331 !important;
+}
+
+.canada-action-toolbar .content_action a.btn-danger:hover,
+.canada-action-toolbar .content_action a.btn-danger:active,
+.canada-action-toolbar .content_action a.btn-danger:focus{
+  background-color: #942826 !important;
+}
+
 .canada-action-toolbar .content_action a.btn-success:hover,
 .canada-action-toolbar .content_action a.btn-success:active,
 .canada-action-toolbar .content_action a.btn-success:focus{

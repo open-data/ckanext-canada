@@ -24,8 +24,10 @@ resources:
       en: Reporting Period
       fr: Période de déclaration
     description:
-      en: Year and month of the update
-      fr: Année et mois de la mise à jour
+      en: >
+        Year and month of the update
+      fr: >
+        Année et mois de la mise à jour
     obligation: Mandatory
     excel_required: true
     form_required: true
@@ -50,12 +52,14 @@ resources:
       en: Commitments
       fr: Engagements
     description:
-      en: The 5 commitments in the 2022-2024 National Action Plan on Open Government
-      fr: Les 5 engagements dans le Plan d'action national du Canada pour un gouvernement ouvert de 2022-2024
+      en: >
+        The 5 commitments in the 2022-2024 National Action Plan on Open Government
+      fr: >
+        Les 5 engagements dans le Plan d'action national du Canada pour un gouvernement ouvert de 2022-2024
     obligation: Mandatory
     excel_required: true
     form_required: true
-    datastore_type: text
+    datastdescription:ore_type: text
     excel_full_text_choices: true
     datatables_full_text_choices: true
     form_choices_prefix_code: true
@@ -82,8 +86,10 @@ resources:
       en: Milestones
       fr: Jalons
     description:
-      en: This list contains milestones that correspond to the chosen commitment
-      fr: Cette liste contient des jalons correspondant à l'engagement choisi
+      en: >
+        This list contains milestones that correspond to the chosen commitment
+      fr: >
+        Cette liste contient des jalons correspondant à l'engagement choisi
     obligation: Mandatory
     excel_required: true
     form_required: true
@@ -99,7 +105,6 @@ resources:
     js_error_eval: '{{commitments}}.length > 0 && VALUE.length > 0 && VALUE.split(".")[0] != {{commitments}}'
     form_attrs:
       cascading_select_field: commitments
-
     choices:
       C01.1:
         en: Through the Open Science and Data Platform make information related to cumulative effects, including climate change and sustainable growth, easier for people in Canada to find and understand
@@ -165,8 +170,10 @@ resources:
       en: Indicators
       fr: Indicateurs
     description:
-      en: The indicators related to the chosen milestone
-      fr: Les indicateurs liés au jalon choisi
+      en: >
+        The indicators related to the chosen milestone
+      fr: >
+        Les indicateurs liés au jalon choisi
     obligation: Mandatory
     excel_required: true
     form_required: true
@@ -182,7 +189,6 @@ resources:
     js_error_eval: '{{milestones}}.length > 0 && VALUE.length > 0 && VALUE.split(".")[0] + "." + VALUE.split(".")[1] != {{milestones}}'
     form_attrs:
       cascading_select_field: milestones
-
     choices:
       C01.1.1:
         en: Add content and features to the Open Science and Data Platform, using user engagement and feedback, both internal and external to government to set priorities for additions
@@ -1162,8 +1168,10 @@ resources:
       en: Status
       fr: État
     description:
-      en: Indicate the current status of the commitment
-      fr: Indiquer l'état actuel de l'engagement
+      en: >
+        Indicate the current status of the commitment
+      fr: >
+        Indiquer l'état actuel de l'engagement
     obligation: Mandatory
     excel_required: true
     form_required: true
@@ -1190,8 +1198,12 @@ resources:
       en: Progress during previous quarter (English)
       fr: Progrès au cours du trimestre précédent (anglais)
     description:
-      en: 1-3 bullets outlining progress made during the most recent quarter. If no progress has been made, please write "NIL"
-      fr: 1-3 balles décrivant les progrès réalisés au cours du dernier trimestre. Si aucun progrès n'a été réalisé, veuillez écrire "NIL"
+      en: >
+        1-3 bullets outlining progress made during the most recent quarter.
+        If no progress has been made, please write "NIL"
+      fr: >
+        1-3 balles décrivant les progrès réalisés au cours du dernier trimestre.
+        Si aucun progrès n'a été réalisé, veuillez écrire "NIL"
     obligation: Mandatory
     excel_required: true
     form_required: true
@@ -1207,8 +1219,12 @@ resources:
       en: Progress during previous quarter (French)
       fr: Progrès au cours du trimestre précédent (français)
     description:
-      en: 1-3 bullets outlining progress made during the most recent quarter. If no progress has been made, please write "NUL"
-      fr: 1-3 balles décrivant les progrès réalisés au cours du dernier trimestre. Si aucun progrès n'a été réalisé, veuillez écrire "NUL"
+      en: >
+        1-3 bullets outlining progress made during the most recent quarter.
+        If no progress has been made, please write "NUL"
+      fr: >
+        1-3 balles décrivant les progrès réalisés au cours du dernier trimestre.
+        Si aucun progrès n'a été réalisé, veuillez écrire "NUL"
     obligation: Mandatory
     excel_required: true
     form_required: true
@@ -1224,8 +1240,12 @@ resources:
       en: Evidence of progress (English)
       fr: Preuve de progrès (anglais)
     description:
-      en: Any supporting evidence to demonstrate the progress you have made. This could include websites, links to documents, or other information.
-      fr: Toute preuve à l'appui pour démontrer les progrès que vous avez accomplis. Cela peut inclure des sites Web, des liens vers des documents ou d'autres informations.
+      en: >
+        Any supporting evidence to demonstrate the progress you have made.
+        This could include websites, links to documents, or other information.
+      fr: >
+        Toute preuve à l'appui pour démontrer les progrès que vous avez accomplis.
+        Cela peut inclure des sites Web, des liens vers des documents ou d'autres informations.
     obligation: Optional
     datastore_type: text
     datatables_col_class: col-xxl
@@ -1239,8 +1259,12 @@ resources:
       en: Evidence of progress (French)
       fr: Preuve de progrès (français)
     description:
-      en: Any supporting evidence to demonstrate the progress you have made. This could include websites, links to documents, or other information.
-      fr: Toute preuve à l'appui pour démontrer les progrès que vous avez accomplis. Cela peut inclure des sites Web, des liens vers des documents ou d'autres informations.
+      en: >
+        Any supporting evidence to demonstrate the progress you have made.
+        This could include websites, links to documents, or other information.
+      fr: >
+        Toute preuve à l'appui pour démontrer les progrès que vous avez accomplis.
+        Cela peut inclure des sites Web, des liens vers des documents ou d'autres informations.
     obligation: Optional
     datastore_type: text
     datatables_col_class: col-xxl
@@ -1254,8 +1278,10 @@ resources:
       en: Challenges (English)
       fr: Défis (anglais)
     description:
-      en: Describe any challenges faced
-      fr: Décrivez les défis rencontrés
+      en: >
+        Describe any challenges faced
+      fr: >
+        Décrivez les défis rencontrés
     obligation: Optional
     datastore_type: text
     datatables_col_class: col-xxl
@@ -1269,8 +1295,10 @@ resources:
       en: Challenges (French)
       fr: Défis (français)
     description:
-      en: Describe any challenges faced
-      fr: Décrivez les défis rencontrés
+      en: >
+        Describe any challenges faced
+      fr: >
+        Décrivez les défis rencontrés
     obligation: Optional
     datastore_type: text
     datatables_col_class: col-xxl

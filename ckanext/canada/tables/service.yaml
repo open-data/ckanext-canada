@@ -13,7 +13,7 @@ template_updated: 2026-04-20  # last qa confirmed: 2025-02-19
 portal_type: dataset
 collection: service
 
-guide_link: http://www.gcpedia.gc.ca/wiki/GC_Service_Policy_Agenda
+guide_link: https//www.gcpedia.gc.ca/wiki/GC_Service_Policy_Agenda
 
 resources:
 - title: Service Identification Information & Metrics
@@ -58,8 +58,12 @@ resources:
       en: Service ID Number
       fr: Numéro d'identification du service
     description:
-      en: The unique number assigned to a service in the inventory to make it easier to refer to specific services.
-      fr: Le numéro unique attribué à un service dans le répertoire afin de faciliter le référencement à des services précis.
+      en: >
+        The unique number assigned to a service in the inventory to make
+        it easier to refer to specific services.
+      fr: >
+        Le numéro unique attribué à un service dans le répertoire afin
+        de faciliter le référencement à des services précis.
     obligation: Mandatory
     excel_required: true
     form_required: true
@@ -93,8 +97,10 @@ resources:
       en: Service Name (English)
       fr: Nom du service (anglais)
     description:
-      en: Identifies the official name of the service.
-      fr: Indique le nom officiel du service.
+      en: >
+        Identifies the official name of the service.
+      fr: >
+        Indique le nom officiel du service.
     obligation: Mandatory
     excel_required: true
     excel_column_width: 40
@@ -125,8 +131,10 @@ resources:
       en: Service Name (French)
       fr: Nom du service (français)
     description:
-      en: Identifies the official name of the service.
-      fr: Indique le nom officiel du service.
+      en: >
+        Identifies the official name of the service.
+      fr: >
+        Indique le nom officiel du service.
     obligation: Mandatory
     excel_required: true
     excel_column_width: 40
@@ -155,8 +163,10 @@ resources:
       en: Service Description (English)
       fr: Description du service (anglais)
     description:
-      en: Provides a brief description of the service, in plain language.
-      fr: Offre une brève description du service, en langage simple.
+      en: >
+        Provides a brief description of the service, in plain language.
+      fr: >
+        Offre une brève description du service, en langage simple.
     obligation: Mandatory
     excel_required: true
     excel_column_width: 80
@@ -185,8 +195,10 @@ resources:
       en: Service Description (French)
       fr: Description du service (français)
     description:
-      en: Provides a brief description of the service, in plain language.
-      fr: Offre une brève description du service, en langage simple.
+      en: >
+        Provides a brief description of the service, in plain language.
+      fr: >
+        Offre une brève description du service, en langage simple.
     obligation: Mandatory
     excel_required: true
     excel_column_width: 80
@@ -215,8 +227,13 @@ resources:
       en: Service Type
       fr: Type de service
     description:
-      en: Identifies the service type as outlined in the Guideline on Service and Digital. Multiple values must be separated by a comma (,).
-      fr: Indique le type de service tel qu'indiqué dans la Ligne directrice sur les services et le numérique. Séparez les entrées par une virgule (,) s’il y en a plusieurs qui s’appliquent.
+      en: >
+        Identifies the service type as outlined in the Guideline on Service and Digital.
+        Multiple values must be separated by a comma (,).
+      fr: >
+        Indique le type de service tel qu'indiqué dans la Ligne directrice sur les
+        services et le numérique. Séparez les entrées par une virgule (,) s’il y en
+        a plusieurs qui s’appliquent.
     obligation: Mandatory
     excel_required: true
     form_required: true
@@ -301,8 +318,12 @@ resources:
       en: Service Scope
       fr: Étendue du service
     description:
-      en: Indicates whether the service is external or internal to government. Multiple values must be separated by a comma (,).
-      fr: Indique si le service est offert aux clients externes ou internes au gouvernement. Séparez les entrées par une virgule (,) s’il y en a plusieurs qui s’appliquent.
+      en: >
+        Indicates whether the service is external or internal to government.
+        Multiple values must be separated by a comma (,).
+      fr: >
+        Indique si le service est offert aux clients externes ou internes au gouvernement.
+        Séparez les entrées par une virgule (,) s’il y en a plusieurs qui s’appliquent.
     obligation: Mandatory
     excel_required: true
     form_required: true
@@ -338,8 +359,12 @@ resources:
       en: Client/Target Groups
       fr: Clients/groupes cibles
     description:
-      en: Identifies the clients or target groups of the service. Multiple values must be separated by a comma (,).
-      fr: Identifie les clients ou les groupes de services cibles. Séparez les entrées par une virgule (,) s’il y en a plusieurs qui s’appliquent.
+      en: >
+        Identifies the clients or target groups of the service.
+        Multiple values must be separated by a comma (,).
+      fr: >
+        Identifie les clients ou les groupes de services cibles.
+        Séparez les entrées par une virgule (,) s’il y en a plusieurs qui s’appliquent.
     obligation: Mandatory
     excel_required: true
     form_required: true
@@ -386,6 +411,7 @@ resources:
         strategic outcomes, programs, sub-programs, and sub-sub-programs. The Program
         codes in the government-wide Chart of Accounts can be used.
 
+
         Corporate planners in the department/agency who are responsible for the Policy on Results
         can assist in identifying this, if needed. Multiple values must be separated by a comma (,).
       fr: >
@@ -393,6 +419,7 @@ resources:
         les résultats stratégiques, les programmes, les sous-programmes et les
         sous-sous-programmes. Les codes de programme du Plan comptable à l'échelle de
         l'administration fédérale peuvent être utilisés.
+
 
         Les planificateurs ministériels du ministère ou de l'organisme responsables de la
         Politique sur les résultats peuvent aider à déterminer le code d'identification
@@ -430,8 +457,10 @@ resources:
       en: Program Name (English)
       fr: Désignation du programme (anglais)
     description:
-      en: Identifies the name of the program under which the service is delivered.
-      fr: Indique le nom du programme sous lequel le service est offert.
+      en: >
+        Identifies the name of the program under which the service is delivered.
+      fr: >
+        Indique le nom du programme sous lequel le service est offert.
     obligation: Mandatory
     occurrence: Repeatable
     datastore_type: _text
@@ -444,8 +473,10 @@ resources:
       en: Program Name (French)
       fr: Désignation du programme (français)
     description:
-      en: Identifies the name of the program under which the service is delivered.
-      fr: Indique le nom du programme sous lequel le service est offert.
+      en: >
+        Identifies the name of the program under which the service is delivered.
+      fr: >
+        Indique le nom du programme sous lequel le service est offert.
     obligation: Mandatory
     occurrence: Repeatable
     datastore_type: _text
@@ -518,6 +549,7 @@ resources:
         computer science, and use techniques such as rules-based systems, regression,
         predictive analytics, machine learning, deep learning, and neural networks.
 
+
         For the scope of this question, please answer yes if the service uses an automated decision
         systems to make or assist officers in making administrative decisions, those that
         affect legal rights, privileges or interests of clients, whether internal or external.
@@ -535,6 +567,7 @@ resources:
         et les sciences informatiques, et utilisent des techniques telles que les systèmes basés
         sur des règles, la régression, l’analytique prédictive, l’apprentissage automatique,
         l’apprentissage en profondeur et les réseaux neuronaux.
+
 
         Pour la portée de cette question, veuillez répondre "oui" si le service utilise des systèmes
         décisionnel automatisé pour prendre ou aider les agents à prendre des décisions administratives,
@@ -654,8 +687,10 @@ resources:
       en: Service Fees
       fr: Frais de service
     description:
-      en: Identifies whether a service fee is collected for the provision of the service.
-      fr: Indique si des frais de service sont perçus pour la prestation du service.
+      en: >
+        Identifies whether a service fee is collected for the provision of the service.
+      fr: >
+        Indique si des frais de service sont perçus pour la prestation du service.
     obligation: Mandatory
     excel_required: true
     form_required: true
@@ -709,8 +744,10 @@ resources:
       en: "Online Services: Authentication"
       fr: "Services en ligne : Authentification"
     description:
-      en: Identifies whether a client can authenticate their identity online.
-      fr: Indique si un client peut confirmer son identité en ligne.
+      en: >
+        Identifies whether a client can authenticate their identity online.
+      fr: >
+        Indique si un client peut confirmer son identité en ligne.
     obligation: Mandatory
     excel_required: true
     form_required: true
@@ -734,8 +771,10 @@ resources:
       en: "Online Services: Application"
       fr: "Services en ligne : Demande"
     description:
-      en: Identifies whether a client can apply for a service online.
-      fr: Indique si un client peut présenter une demande de service en ligne.
+      en: >
+        Identifies whether a client can apply for a service online.
+      fr: >
+        Indique si un client peut présenter une demande de service en ligne.
     obligation: Mandatory
     excel_required: true
     form_required: true
@@ -759,8 +798,12 @@ resources:
       en: "Online Services: Decision"
       fr: "Services en ligne : Décision"
     description:
-      en: Identifies whether a client can be notified online of the outcome of their request for this service.
-      fr: Indique si un client peut être informé en ligne du résultat de sa demande de ce service.
+      en: >
+        Identifies whether a client can be notified online of
+        the outcome of their request for this service.
+      fr: >
+        Indique si un client peut être informé en ligne du
+        résultat de sa demande de ce service.
     obligation: Mandatory
     excel_required: true
     form_required: true
@@ -784,8 +827,12 @@ resources:
       en: "Online Services: Issuance"
       fr: "Services en ligne : Émission"
     description:
-      en: Identifies whether a client can receive the service online, perhaps in the form of permits, certificates, money or information.
-      fr: Indique si un client peut recevoir le service en ligne, peut-être sous forme de permis, de certificats, d'argent ou d'information.
+      en: >
+        Identifies whether a client can receive the service online, perhaps
+        in the form of permits, certificates, money or information.
+      fr: >
+        Indique si un client peut recevoir le service en ligne, peut-être
+        sous forme de permis, de certificats, d'argent ou d'information.
     obligation: Mandatory
     excel_required: true
     form_required: true
@@ -809,8 +856,12 @@ resources:
       en: "Online Services: Issue Resolution and Feedback"
       fr: "Services en ligne : Solution de problème et rétroaction"
     description:
-      en: Identifies whether a client can seek resolution to their issues or provide feedback online.
-      fr: Indique si un client peut demander une résolution à ses problèmes avec le service ou fournir de la rétroaction en ligne.
+      en: >
+        Identifies whether a client can seek resolution to
+        their issues or provide feedback online.
+      fr: >
+        Indique si un client peut demander une résolution à ses
+        problèmes avec le service ou fournir de la rétroaction en ligne.
     obligation: Mandatory
     excel_required: true
     form_required: true
@@ -908,8 +959,10 @@ resources:
       en: Year of last service review
       fr: Année du dernier examen de service
     description:
-      en: Identifies the fiscal year when the most recent service review was completed.
-      fr: Identifie l’exercice financier lors duquel le plus récent examen de service a été mené.
+      en: >
+        Identifies the fiscal year when the most recent service review was completed.
+      fr: >
+        Identifie l’exercice financier lors duquel le plus récent examen de service a été mené.
     obligation: Optional
     excel_required: false
     form_required: false
@@ -925,8 +978,11 @@ resources:
       en: Year of last service improvement based on client feedback
       fr: Année de la dernière amélioration du service sur la base de la rétroaction du client
     description:
-      en: Identifies the most recent year in which this service was improved based on client feedback.
-      fr: Identifie l'exercice financier la plus récente au cours de laquelle ce service a été amélioré en fonction des commentaires des clients.
+      en: >
+        Identifies the most recent year in which this service was improved based on client feedback.
+      fr: >
+        Identifie l'exercice financier la plus récente au cours de laquelle ce service
+        a été amélioré en fonction des commentaires des clients.
     obligation: Optional
     excel_required: false
     form_required: false
@@ -942,8 +998,10 @@ resources:
       en: Use of Social Insurance Number
       fr: Utilisation du numéro d'assurance sociale (NAS)
     description:
-      en: Identifies whether the Social Insurance Number (SIN) is used in the delivery of the service.
-      fr: Indique si le numéro d'assurance sociale (NAS) est utilisé dans la prestation du service.
+      en: >
+        Identifies whether the Social Insurance Number (SIN) is used in the delivery of the service.
+      fr: >
+        Indique si le numéro d'assurance sociale (NAS) est utilisé dans la prestation du service.
     obligation: Mandatory
     excel_required: true
     form_required: true
@@ -1024,6 +1082,7 @@ resources:
         no calls were received; ND means no data was collected; and NA means
         it is not possible to submit telephone enquiries.
 
+
         Note: This field is not included in 'Total Applications'.
       fr: >
         Indique le nombre de demandes d'information reçues par téléphone au cours
@@ -1033,6 +1092,7 @@ resources:
         reçues par téléphone. La valeur 0 signifie qu'aucun appel n'a été reçu, ND
         signifie qu'aucune donnée n'est disponible, et NA signifie qu'il n'est pas
         possible de présenter des demandes d’information par téléphone.
+
 
         Remarque : Ce champ n'est pas inclus dans « Nombre total de demandes ».
     obligation: Mandatory
@@ -1105,12 +1165,14 @@ resources:
         A value of 0 means there were no visits; ND means there is no data collected
         website visits; and NA means there is no associated public website.
 
+
         Note: This field is not included in 'Total Applications'.
       fr: >
         Indique le nombre de de visites au site Web du service lors d'un exercice
         financier. La valeur 0 signifie qu'aucune visite au site Web n’a été enregistrée,
         aucune donnée (ND) signifie que le nombre de visites n’est pas mesuré,
         et sans objet (NA) signifie qu’il n’y a aucune site web à visiter.
+
 
         Remarque : Ce champ n'est pas inclus dans « Nombre total de demandes ».
     obligation: Mandatory
@@ -1269,6 +1331,7 @@ resources:
         for this channel; ND means there is no data collected for this channel;
         and NA means no applications can be submitted through this channel.
 
+
         Examples include applications received by email and audits, reviews
         and evaluations by email.
       fr: >
@@ -1277,6 +1340,7 @@ resources:
         via ce mode de prestation, aucune donnée (ND) signifie qu'aucune donnée n’est
         disponible, et sans objet (NA) signifie que le service n’est pas offert au moyen
         de ce mode de prestation.
+
 
         Il s'agit par exemple des demandes reçues par courriel
         et des audits, examens et évaluations par courriel.
@@ -1352,12 +1416,14 @@ resources:
         this channel; and NA means no applications can be submitted through this
         channel.
 
+
         If service volumes are not tracked by channel, please include
         service volumes in this field. As well, please include in this field volumes
         for funding allocations without applications or other services that do not
         require applications (e.g. medical screening at intake, investigations,
         hearings, advice) or which do not disaggregate service demand by delivery
         channel.
+
 
         Note: Volumes reported in each channel should be mutually
         exclusive. Do not report the same application or interaction in more
@@ -1369,11 +1435,13 @@ resources:
         aucune donnée (ND) signifie qu'aucune donnée n’est disponible, et sans objet (NA)
         signifie que le service n’est pas offert au moyen de ce mode de prestation.
 
+
         Si les volumes de service ne sont pas suivis par canal, veuillez inclure les volumes
         de service dans ce champ. De même, veuillez inclure dans ce champ les volumes
         d'allocations de fonds sans demandes ou d'autres services qui ne nécessitent pas
         de demandes (p. ex., examen médical à l'admission, enquêtes, audiences, conseils)
         ou qui ne ventilent pas la demande de service par canal de prestation.
+
 
         Remarque : les volumes déclarés dans chaque canal doivent s'exclure mutuellement.
         Ne déclarez pas la même demande ou interaction dans plus d'un canal.
@@ -1405,8 +1473,12 @@ resources:
       en: Total Number of Applications
       fr: Nombre total de demandes soumises
     description:
-      en: Identifies the total number of applications submitted in a fiscal year for all application channels.
-      fr: Indique le nombre total de demandes reçues au cours d'un exercice pour tous les modes de prestation.
+      en: >
+        Identifies the total number of applications submitted in
+        a fiscal year for all application channels.
+      fr: >
+        Indique le nombre total de demandes reçues au cours d'un
+        exercice pour tous les modes de prestation.
     obligation: Mandatory
     datastore_type: int
     published_resource_computed_field: true
@@ -1501,8 +1573,10 @@ resources:
       en: URL to Service (English)
       fr: URL du service (anglais)
     description:
-      en: Identifies the departmental webpage where the service is described and/or accessed.
-      fr: Indique la page Web du ministère où le service est décrit ou peut être lancé.
+      en: >
+        Identifies the departmental webpage where the service is described and/or accessed.
+      fr: >
+        Indique la page Web du ministère où le service est décrit ou peut être lancé.
     obligation: Optional
     excel_required: false
     format_type:
@@ -1527,8 +1601,10 @@ resources:
       en: URL to Service (French)
       fr: URL du service (français)
     description:
-      en: Identifies the departmental webpage where the service is described and/or accessed.
-      fr: Indique la page Web du ministère où le service est décrit ou peut être lancé.
+      en: >
+        Identifies the departmental webpage where the service is described and/or accessed.
+      fr: >
+        Indique la page Web du ministère où le service est décrit ou peut être lancé.
     obligation: Optional
     excel_required: false
     format_type:
@@ -1583,8 +1659,10 @@ resources:
       en: Department ID
       fr: ID du ministère
     description:
-      en: Identifies the applied ID of the department or agency.
-      fr: Identifie le code d'usage du ministère ou de l'organisme.
+      en: >
+        Identifies the applied ID of the department or agency.
+      fr: >
+        Identifie le code d'usage du ministère ou de l'organisme.
     obligation: Mandatory
     datastore_type: text
     published_resource_computed_field: true
@@ -1596,8 +1674,10 @@ resources:
       en: Department Name
       fr: Nom du ministère
     description:
-      en: Identifies the applied title of the department or agency.
-      fr: Identifie le titre d'usage du ministère ou de l'organisme.
+      en: >
+        Identifies the applied title of the department or agency.
+      fr: >
+        Identifie le titre d'usage du ministère ou de l'organisme.
     obligation: Mandatory
     datastore_type: text
     published_resource_computed_field: true
@@ -1968,8 +2048,12 @@ resources:
       en: Service ID Number
       fr: Numéro d'identification du service
     description:
-      en: The unique number assigned to a service in the inventory to make it easier to refer to specific services.
-      fr: Le numéro unique attribué à un service dans le répertoire afin de faciliter le référencement à des services précis.
+      en: >
+        The unique number assigned to a service in the inventory to
+        make it easier to refer to specific services.
+      fr: >
+        Le numéro unique attribué à un service dans le répertoire
+        afin de faciliter le référencement à des services précis.
     obligation: Mandatory
     datatables_col_class: col-lg pd-datatables-primary-key-offset-md
     excel_required: true
@@ -2003,8 +2087,10 @@ resources:
       en: Service Name (English)
       fr: Nom du service (anglais)
     description:
-      en: Identifies the official name of the service.
-      fr: Indique le nom officiel du service.
+      en: >
+        Identifies the official name of the service.
+      fr: >
+        Indique le nom officiel du service.
     obligation: Mandatory
     excel_required: true
     excel_column_width: 40
@@ -2035,8 +2121,10 @@ resources:
       en: Service Name (French)
       fr: Nom du service (français)
     description:
-      en: Identifies the official name of the service.
-      fr: Indique le nom officiel du service.
+      en: >
+        Identifies the official name of the service.
+      fr: >
+        Indique le nom officiel du service.
     obligation: Mandatory
     excel_required: true
     excel_column_width: 40
@@ -2218,8 +2306,10 @@ resources:
       en: Service Standard Channel
       fr: Mode de prestation de la norme de service
     description:
-      en: Identifies the service channel to which the service standard applies
-      fr: Indique le mode de prestation de service à laquelle s'applique la norme de service
+      en: >
+        Identifies the service channel to which the service standard applies
+      fr: >
+        Indique le mode de prestation de service à laquelle s'applique la norme de service
     obligation: Mandatory
     excel_required: true
     form_required: true
@@ -2262,8 +2352,11 @@ resources:
       en: Comments on the service standard channel (English)
       fr: Commentaires sur le mode de prestation de la norme de service (anglais)
     description:
-      en: Comments related to the service standard channel and provides explanation of "Other" channel selection.
-      fr: Commentaires en lien au mode de prestation de la norme de service et fournit une explication de la sélection des modes de prestation « Autre ».
+      en: >
+        Comments related to the service standard channel and provides explanation of "Other" channel selection.
+      fr: >
+        Commentaires en lien au mode de prestation de la norme de service et
+        fournit une explication de la sélection des modes de prestation « Autre ».
     obligation: Optional
     excel_required: false
     excel_column_width: 80
@@ -2288,8 +2381,11 @@ resources:
       en: Comments on the service standard channel (French)
       fr: Commentaires sur le mode de prestation de la norme de service (Francais)
     description:
-      en: Comments related to the service standard channel and provides explanation of "Other" channel selection.
-      fr: Commentaires en lien au mode de prestation de la norme de service et fournit une explication de la sélection des modes de prestation « Autre ».
+      en: >
+        Comments related to the service standard channel and provides explanation of "Other" channel selection.
+      fr: >
+        Commentaires en lien au mode de prestation de la norme de service et fournit
+        une explication de la sélection des modes de prestation « Autre ».
     obligation: Optional
     excel_required: false
     excel_column_width: 80
@@ -2314,8 +2410,10 @@ resources:
       en: Service Standard Target
       fr: Cible de la norme relative aux services
     description:
-      en: The frequency that the organization expects to meet service standard (reported as a percentage).
-      fr: Fréquence à laquelle l'organisation s'attend à respecter la norme de service (exprimée en pourcentage).
+      en: >
+        The frequency that the organization expects to meet service standard (reported as a percentage).
+      fr: >
+        Fréquence à laquelle l'organisation s'attend à respecter la norme de service (exprimée en pourcentage).
     obligation: Optional
     excel_required: false
     format_type:
@@ -2412,8 +2510,10 @@ resources:
       en: Comments on the service standard in general (English)
       fr: Commentaires sur la norme de service en général (anglais)
     description:
-      en: Comments related to the service standard in general.
-      fr: Commentaires en lien à la norme de service en general.
+      en: >
+        Comments related to the service standard in general.
+      fr: >
+        Commentaires en lien à la norme de service en general.
     obligation: Optional
     excel_required: false
     excel_column_width: 80
@@ -2438,8 +2538,10 @@ resources:
       en: Comments on the service standard in general (French)
       fr: Commentaires sur la norme de service en général (français)
     description:
-      en: Comments related to the service standard in general.
-      fr: Commentaires en lien à la norme de service en general.
+      en: >
+        Comments related to the service standard in general.
+      fr: >
+        Commentaires en lien à la norme de service en general.
     obligation: Optional
     excel_required: false
     excel_column_width: 80
@@ -2488,8 +2590,10 @@ resources:
       en: URL to Service Standards and Targets (English)
       fr: URL vers les normes de service et les cibles (anglais)
     description:
-      en: Identifies the departmental webpage (Canada.ca) where the service standards and targets are published.
-      fr: Indique la page Web ministérielle (Canada.ca) où les normes de service et les cibles sont publiées.
+      en: >
+        Identifies the departmental webpage (Canada.ca) where the service standards and targets are published.
+      fr: >
+        Indique la page Web ministérielle (Canada.ca) où les normes de service et les cibles sont publiées.
     obligation: Mandatory
     excel_required: true
     form_required: true
@@ -2517,8 +2621,10 @@ resources:
       en: URL to Service Standards and Targets (French)
       fr: URL vers les normes de service et les cibles (français)
     description:
-      en: Identifies the departmental webpage (Canada.ca) where the service standards and targets are published.
-      fr: Indique la page Web ministérielle (Canada.ca) où les normes de service et les cibles sont publiées.
+      en: >
+        Identifies the departmental webpage (Canada.ca) where the service standards and targets are published.
+      fr: >
+        Indique la page Web ministérielle (Canada.ca) où les normes de service et les cibles sont publiées.
     obligation: Mandatory
     excel_required: true
     form_required: true
@@ -2546,8 +2652,10 @@ resources:
       en: URL to Real-Time Performance Results (English)
       fr: URL aux résultats de rendement en temps réel (anglais)
     description:
-      en: Identifies the departmental webpage where the real-time performance results for a service are published.
-      fr: Indique la page Web (en anglais) sur laquelle les résultats de rendement en temps réel d'un service sont publiés.
+      en: >
+        Identifies the departmental webpage where the real-time performance results for a service are published.
+      fr: >
+        Indique la page Web (en anglais) sur laquelle les résultats de rendement en temps réel d'un service sont publiés.
     obligation: Optional
     excel_required: false
     format_type:
@@ -2571,8 +2679,10 @@ resources:
       en: URL to Real-Time Performance Results (French)
       fr: URL aux résultats de rendement en temps réel (français)
     description:
-      en: Identifies the departmental webpage where the real-time performance results for a service are published.
-      fr: Indique la page Web (en anglais) sur laquelle les résultats de rendement en temps réel d'un service sont publiés.
+      en: >
+        Identifies the departmental webpage where the real-time performance results for a service are published.
+      fr: >
+        Indique la page Web (en anglais) sur laquelle les résultats de rendement en temps réel d'un service sont publiés.
     obligation: Optional
     excel_required: false
     format_type:
@@ -2626,8 +2736,10 @@ resources:
       en: Department ID
       fr: ID du ministère
     description:
-      en: Identifies the applied ID of the department or agency.
-      fr: Identifie l’ID d'usage du ministère ou de l'organisme.
+      en: >
+        Identifies the applied ID of the department or agency.
+      fr: >
+        Identifie l’ID d'usage du ministère ou de l'organisme.
     obligation: Mandatory
     datastore_type: text
     published_resource_computed_field: true
@@ -2639,8 +2751,10 @@ resources:
       en: Department Name
       fr: Nom du ministère
     description:
-      en: Identifies the applied title of the department or agency.
-      fr: Identifie le titre d'usage du ministère ou de l'organisme.
+      en: >
+        Identifies the applied title of the department or agency.
+      fr: >
+        Identifie le titre d'usage du ministère ou de l'organisme.
     obligation: Mandatory
     datastore_type: text
     published_resource_computed_field: true

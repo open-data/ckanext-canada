@@ -15,5 +15,6 @@ beautifulsoup4==4.11.1
 cryptography==45.0.7
 pydantic==2.10.6
 typing_extensions==4.12.2
-greenlet==3.2.4  # req for threading
-gevent==25.5.1  # req for threading
+greenlet==3.2.4  # req for uwsgi workers
+gevent==25.5.1  # req for uwsgi workers
+types-psycopg2==2.9.21.20251012
