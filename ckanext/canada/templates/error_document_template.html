@@ -24,7 +24,7 @@
   {% if h.is_registry_domain() %}
     <div class="row">
       <div class="col-md-12">
-        {% if h.get_environment() in ['staging', 'development'] %}
+        {% if not g.debug and h.get_environment() in ['staging', 'development'] %}
           <p>{{ _('We Encountered an Error and your request could not be completed.') }}</p>
         {% elif content %}
           <p>{{- _(content) -}}</p>

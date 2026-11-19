@@ -85,8 +85,6 @@ class CanadaThemePlugin(p.SingletonPlugin, DefaultTranslation):
             'date_format',
             'parse_release_date_facet',
             'is_ready_to_publish',
-            'get_pd_datatable',
-            'recombinant_description_to_markup',
             'mail_to_with_params',
             'get_timeout_length',
             'canada_check_access',
@@ -96,7 +94,6 @@ class CanadaThemePlugin(p.SingletonPlugin, DefaultTranslation):
             'is_user_locked',
             'is_registry_domain',
             'linked_user',
-            'enable_pd_datatable_editor',
             # Portal
             'user_organizations',
             'openness_score',

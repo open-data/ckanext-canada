@@ -34,8 +34,16 @@ resources:
       en: Reference Number
       fr: Numéro de référence
     description:
-      en: This field is populated by the organization. It is a unique reference number given to each line item in the spreadsheet. Having a unique identifier for each item will allow users locate a specific item in the registry should they need to modify or delete.
-      fr: Cette zone est remplie par chaque organisation. Un identificateur unique est attribué à chaque poste dans le tableur. Un identificateur unique pour chaque poste permettra aux utilisateurs de repérer un article en particulier s’ils doivent le modifier ou le supprimer.
+      en: >
+        This field is populated by the organization. It is a unique reference number
+        given to each line item in the spreadsheet. Having a unique identifier for
+        each item will allow users locate a specific item in the registry should they
+        need to modify or delete.
+      fr: >
+        Cette zone est remplie par chaque organisation. Un identificateur unique est
+        attribué à chaque poste dans le tableur. Un identificateur unique pour chaque
+        poste permettra aux utilisateurs de repérer un article en particulier s’ils
+        doivent le modifier ou le supprimer.
     obligation: Mandatory
     excel_required: true
     form_required: true
@@ -52,8 +60,10 @@ resources:
       en: Disclosure Group
       fr: Groupe de divulgation
     description:
-      en: This field will display the group to which the individual belongs.
-      fr: Ce champ indique le groupe auquel appartient l’individu.
+      en: >
+        This field will display the group to which the individual belongs.
+      fr: >
+        Ce champ indique le groupe auquel appartient l’individu.
     obligation:
       en: Required if "End Date" is on or after April 1st 2025
       fr: Requis si la "date de fin" est le 1er avril 2025 ou après
@@ -82,8 +92,12 @@ resources:
       en: Title (English)
       fr: Titre (anglais)
     description:
-      en: This field will display, in English, the position title of the individual who incurred the hospitality expenses (the hospitality expenses were charged to their responsibility centre).
-      fr: Cette zone indique, en anglais, le titre du poste de la personne qui a engagé les dépenses d’accueil (les dépenses d’accueil ont été imputées à leur centre de responsabilité).
+      en: >
+        This field will display, in English, the position title of the individual who incurred
+        the hospitality expenses (the hospitality expenses were charged to their responsibility centre).
+      fr: >
+        Cette zone indique, en anglais, le titre du poste de la personne qui a engagé les dépenses
+        d’accueil (les dépenses d’accueil ont été imputées à leur centre de responsabilité).
     obligation: Mandatory
     excel_required: true
     form_required: true
@@ -105,8 +119,12 @@ resources:
       en: Title (French)
       fr: Titre (français)
     description:
-      en: This field will display, in French, the position title of the individual who incurred the hospitality expenses (the hospitality expenses were charged to their responsibility centre).
-      fr: Cette zone indique, en français, le titre du poste de la personne qui a engagé les dépenses d’accueil (les dépenses d’accueil ont été imputées à leur centre de responsabilité).
+      en: >
+        This field will display, in French, the position title of the individual who incurred the
+        hospitality expenses (the hospitality expenses were charged to their responsibility centre).
+      fr: >
+        Cette zone indique, en français, le titre du poste de la personne qui a engagé les dépenses
+        d’accueil (les dépenses d’accueil ont été imputées à leur centre de responsabilité).
     obligation: Mandatory
     excel_required: true
     form_required: true
@@ -128,8 +146,12 @@ resources:
       en: Name
       fr: Nom
     description:
-      en: This field will display the name of the individual who incurred the hospitality expenses (the hospitality expenses were charged to their responsibility centre).
-      fr: Ce champ affiche le nom de la personne qui a engagé les dépenses d’accueil (les dépenses d’accueil ont été imputées à leur centre de responsabilité.
+      en: >
+        This field will display the name of the individual who incurred the hospitality
+        expenses (the hospitality expenses were charged to their responsibility centre).
+      fr: >
+        Ce champ affiche le nom de la personne qui a engagé les dépenses d’accueil
+        (les dépenses d’accueil ont été imputées à leur centre de responsabilité).
     obligation: Mandatory
     excel_required: true
     form_required: true
@@ -151,8 +173,12 @@ resources:
       en: Purpose of hospitality activity (English)
       fr: But de l’activité d’accueil (anglais)
     description:
-      en: This will cover both the forms (for example, breakfast, refreshment, lunch, reception, dinner and other forms of hospitality) and circumstances (the purpose) of the hospitality, in English.
-      fr: Cette zone comprend la forme d’accueil (par exemple, déjeuner, rafraîchissement, dîner, réception, souper, et autres formes d’accueil) et les circonstances (le but) de l’accueil, en anglais.
+      en: >
+        This will cover both the forms (for example, breakfast, refreshment, lunch, reception,
+        dinner and other forms of hospitality) and circumstances (the purpose) of the hospitality, in English.
+      fr: >
+        Cette zone comprend la forme d’accueil (par exemple, déjeuner, rafraîchissement, dîner,
+        réception, souper, et autres formes d’accueil) et les circonstances (le but) de l’accueil, en anglais.
     obligation: Mandatory
     excel_required: true
     form_required: true
@@ -174,8 +200,12 @@ resources:
       en: Purpose of hospitality activity (French)
       fr: But de l’activité d’accueil (français)
     description:
-      en: This will cover both the forms (for example, breakfast, refreshment, lunch, reception, dinner and other forms of hospitality) and circumstances (the purpose) of the hospitality, in French.
-      fr: Cette zone comprend la forme d’accueil (par exemple, déjeuner, rafraîchissement, dîner, réception, souper, et autres formes d’accueil) et les circonstances (le but) de l’accueil, en français.
+      en: >
+        This will cover both the forms (for example, breakfast, refreshment, lunch, reception,
+        dinner and other forms of hospitality) and circumstances (the purpose) of the hospitality, in French.
+      fr: >
+        Cette zone comprend la forme d’accueil (par exemple, déjeuner, rafraîchissement, dîner,
+        réception, souper, et autres formes d’accueil) et les circonstances (le but) de l’accueil, en français.
     obligation: Mandatory
     excel_required: true
     form_required: true
@@ -197,8 +227,10 @@ resources:
       en: Start Date
       fr: Date de début
     description:
-      en: The start date on which the hospitality was provided.
-      fr: La date du début auxquelles les activités d’accueil ont eu lieu.
+      en: >
+        The start date on which the hospitality was provided.
+      fr: >
+        La date du début auxquelles les activités d’accueil ont eu lieu.
     obligation: Mandatory
     excel_required: true
     form_required: true
@@ -227,8 +259,10 @@ resources:
       en: End Date
       fr: Date de fin
     description:
-      en: The end date on which the hospitality was provided. (can be the same as start date)
-      fr: La date de fin auxquelles les activités d’accueil ont eu lieu. (peut être la même date du début)
+      en: >
+        The end date on which the hospitality was provided. (can be the same as start date)
+      fr: >
+        La date de fin auxquelles les activités d’accueil ont eu lieu. (peut être la même date du début)
     obligation: Mandatory
     excel_required: true
     form_required: true
@@ -263,8 +297,10 @@ resources:
         Municipalité où l’activité d’accueil
         a eu lieu (anglais)
     description:
-      en: Must include the Municipality where hospitality was provided, in English
-      fr: Comprend la municipalité où les services d’accueil ont été fournis, en anglais
+      en: >
+        Must include the Municipality where hospitality was provided, in English
+      fr: >
+        Comprend la municipalité où les services d’accueil ont été fournis, en anglais
     obligation: Mandatory
     excel_required: true
     form_required: true
@@ -292,8 +328,10 @@ resources:
         Municipalité où l’activité d’accueil
         a eu lieu (français)
     description:
-      en: Must include the Municipality where hospitality was provided, in French.
-      fr: Comprend la municipalité où les services d’accueil ont été fournis, en français.
+      en: >
+        Must include the Municipality where hospitality was provided, in French.
+      fr: >
+        Comprend la municipalité où les services d’accueil ont été fournis, en français.
     obligation: Mandatory
     excel_required: true
     form_required: true
@@ -440,8 +478,10 @@ resources:
         (par exemple, restaurant, hôtel ou autre lieu) et/ou du fournisseur (par exemple, un traiteur), en anglais.
         Remarque : Utilisez le format <nom du fournisseur>;<nom du fournisseur 2> (par exemple : Les Impertinentes;Les Street Monkeys)
     form_help:
-      en: Note, use the format <Vendor Name>;<Vendor 2 Name> (e.g. Les Impertinentes;Les Street Monkeys)
-      fr: 'Remarque : Utilisez le format <nom du fournisseur>;<nom du fournisseur 2> (par exemple : Les Impertinentes;Les Street Monkeys)'
+      en: >
+        Note, use the format <Vendor Name>;<Vendor 2 Name> (e.g. Les Impertinentes;Les Street Monkeys)
+      fr: >
+        Remarque : Utilisez le format <nom du fournisseur>;<nom du fournisseur 2> (par exemple : Les Impertinentes;Les Street Monkeys)
     validation:
       en: Must be in the format of <Vendor Name>;<Vendor 2 Name>
       fr: Doit être au format <nom du fournisseur>;<nom du fournisseur 2>
@@ -478,8 +518,10 @@ resources:
         (par exemple, restaurant, hôtel ou autre lieu) et/ou du fournisseur (par exemple, un traiteur), en français.
         Remarque : Utilisez le format {nom du fournisseur};{nom du fournisseur 2} (par exemple : Les Impertinentes;Les Street Monkeys)'
     form_help:
-      en: Note, use the format <Vendor Name>;<Vendor 2 Name> (e.g. Les Impertinentes;Les Street Monkeys)
-      fr: 'Remarque : Utilisez le format <nom du fournisseur>;<nom du fournisseur 2> (par exemple : Les Impertinentes;Les Street Monkeys)'
+      en: >
+        Note, use the format <Vendor Name>;<Vendor 2 Name> (e.g. Les Impertinentes;Les Street Monkeys)
+      fr: >
+        Remarque : Utilisez le format <nom du fournisseur>;<nom du fournisseur 2> (par exemple : Les Impertinentes;Les Street Monkeys)
     validation:
       en: Must be in the format of <Vendor Name>;<Vendor 2 Name>
       fr: Doit être au format <nom du fournisseur>;<nom du fournisseur 2>
@@ -548,8 +590,10 @@ resources:
       en: Attendees (Guests)
       fr: Participants (Nombre d’invités)
     description:
-      en: The total number of attendees (Guests)
-      fr: Nombre total de participants (invités)
+      en: >
+        The total number of attendees (Guests)
+      fr: >
+        Nombre total de participants (invités)
     obligation: Mandatory
     excel_required: true
     form_required: true
@@ -571,8 +615,10 @@ resources:
       en: Total cost
       fr: Total des coûts
     description:
-      en: Total Amount of the expenses for the hospitality activity
-      fr: Montant total des dépenses pour l’activité d’accueil
+      en: >
+        Total Amount of the expenses for the hospitality activity
+      fr: >
+        Montant total des dépenses pour l’activité d’accueil
     obligation: Mandatory
     excel_required: true
     form_required: true
@@ -601,8 +647,10 @@ resources:
       en: Additional comments (English)
       fr: Commentaires additionnels (anglais)
     description:
-      en: This field may be populated with additional explanatory comments, in English.
-      fr: Ce champ peut indiquer des commentaires explicatifs additionnels, en anglais.
+      en: >
+        This field may be populated with additional explanatory comments, in English.
+      fr: >
+        Ce champ peut indiquer des commentaires explicatifs additionnels, en anglais.
     obligation: Optional
     datatables_col_class: col-xl
     format_type:
@@ -619,8 +667,10 @@ resources:
       en: Additional comments (French)
       fr: Commentaires additionnels (français)
     description:
-      en: This field may be populated with additional explanatory comments, in French.
-      fr: Ce champ peut indiquer des commentaires explicatifs additionnels, en français.
+      en: >
+        This field may be populated with additional explanatory comments, in French.
+      fr: >
+        Ce champ peut indiquer des commentaires explicatifs additionnels, en français.
     obligation: Optional
     datatables_col_class: col-xl
     format_type:
@@ -800,8 +850,12 @@ resources:
       en: Year
       fr: Année
     description:
-      en: "This tab / field in the template is only populated if there are no hospitality expenses for the reporting period. This field should be populated with the year of the reporting period."
-      fr: "Cet onglet/champ du modèle n’est rempli que s'il n'y a pas de frais d'accueil pour la période d’établissement de rapports. Ce champ doit être rempli avec l’année de la période d’établissement de rapports."
+      en: >
+        This tab / field in the template is only populated if there are no hospitality expenses
+        for the reporting period. This field should be populated with the year of the reporting period.
+      fr: >
+        Cet onglet/champ du modèle n’est rempli que s'il n'y a pas de frais d'accueil pour la période
+        d’établissement de rapports. Ce champ doit être rempli avec l’année de la période d’établissement de rapports.
     obligation: Mandatory
     excel_required: true
     form_required: true
@@ -818,8 +872,12 @@ resources:
       en: Month
       fr: mois
     description:
-      en: "This tab / field in the template is only populated if there are no hospitality expenses for the reporting period. This field should be populated with the month of the reporting period."
-      fr: "Cet onglet/champ du modèle n’est rempli que s'il n'y a pas de frais d'accueil pour la période d’établissement de rapports. Ce champ doit être rempli avec le mois de la période d’établissement de rapports."
+      en: >
+        This tab / field in the template is only populated if there are no hospitality expenses for the
+        reporting period. This field should be populated with the month of the reporting period.
+      fr: >
+        Cet onglet/champ du modèle n’est rempli que s'il n'y a pas de frais d'accueil pour la période
+        d’établissement de rapports. Ce champ doit être rempli avec le mois de la période d’établissement de rapports.
     obligation: Mandatory
     excel_required: true
     form_required: true

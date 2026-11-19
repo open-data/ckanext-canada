@@ -60,8 +60,10 @@ resources:
       en: Disclosure Group
       fr: Groupe de divulgation
     description:
-      en: This field will display the group to which the individual belongs.
-      fr: Ce champ indique le groupe auquel appartient l’individu.
+      en: >
+        This field will display the group to which the individual belongs.
+      fr: >
+        Ce champ indique le groupe auquel appartient l’individu.
     obligation:
       en: Required if "Travel End Date" is on or after April 1st 2025
       fr: Requis si la "date de fin du voyage" est le 1er avril 2025 ou après
@@ -91,8 +93,10 @@ resources:
       en: Title (English)
       fr: Titre (anglais)
     description:
-      en: This field will display the position title of the person who travelled, in English
-      fr: Cette zone indique le titre du poste de la personne qui a voyagé, en anglais.
+      en: >
+        This field will display the position title of the person who travelled, in English
+      fr: >
+        Cette zone indique le titre du poste de la personne qui a voyagé, en anglais.
     obligation: Mandatory
     excel_required: true
     form_required: true
@@ -114,8 +118,10 @@ resources:
       en: Title (French)
       fr: Titre (français)
     description:
-      en: This field will display the position title of the person who travelled, in French.
-      fr: Cette zone indique le titre du poste de la personne qui a voyagé, en français.
+      en: >
+        This field will display the position title of the person who travelled, in French.
+      fr: >
+        Cette zone indique le titre du poste de la personne qui a voyagé, en français.
     obligation: Mandatory
     excel_required: true
     form_required: true
@@ -137,8 +143,10 @@ resources:
       en: Name
       fr: Nom
     description:
-      en: This field will display the name of the  person who travelled
-      fr: Ce champ affiche le nom de la personne qui a voyagé
+      en: >
+        This field will display the name of the  person who travelled
+      fr: >
+        Ce champ affiche le nom de la personne qui a voyagé
     obligation: Mandatory
     excel_required: true
     form_required: true
@@ -216,8 +224,10 @@ resources:
       en: Travel Start Date
       fr: Date de début du voyage
     description:
-      en: To cover the date the travel started
-      fr: Date de début du voyage
+      en: >
+        To cover the date the travel started
+      fr: >
+        Date de début du voyage
     obligation: Mandatory
     excel_required: true
     form_required: true
@@ -245,8 +255,10 @@ resources:
       en: Travel End Date
       fr: Date de fin du voyage
     description:
-      en: To cover the date the travel ended (can be the same as travel start date)
-      fr: Date de fin du voyage (peut être la même date que la date du début du voyage)
+      en: >
+        To cover the date the travel ended (can be the same as travel start date)
+      fr: >
+        Date de fin du voyage (peut être la même date que la date du début du voyage)
     obligation: Mandatory
     excel_required: true
     form_required: true
@@ -273,8 +285,10 @@ resources:
       en: Place visited (English)
       fr: Endroits visités (anglais)
     description:
-      en: To include name of the first place visited during the trip in question, in English.
-      fr: Inclure le nom du premier lieu visité lors du voyage en question, en anglais.
+      en: >
+        To include name of the first place visited during the trip in question, in English.
+      fr: >
+        Inclure le nom du premier lieu visité lors du voyage en question, en anglais.
     form_help:
       en: >
         Note, use the format <City Name>, <State/Province Name>, <Country Name> for Canada and US,
@@ -314,8 +328,10 @@ resources:
       en: Place visited (French)
       fr: Endroits visités (français)
     description:
-      en: To include name of the first place visited during the trip in question, in French.
-      fr: Inclure le nom du premier lieu visité lors du voyage en question, en français.
+      en: >
+        To include name of the first place visited during the trip in question, in French.
+      fr: >
+        Inclure le nom du premier lieu visité lors du voyage en question, en français.
     form_help:
       en: >
         Note, use the format <City Name>, <State/Province Name>, <Country Name> for Canada and US,
@@ -355,8 +371,10 @@ resources:
       en: Second place visited (English)
       fr: Deuxième lieu visité (anglais)
     description:
-      en: To include name of second place visited during the trip in question, in English.
-      fr: Inclure le nom du deuxième lieu visité au cours du voyage en question, en anglais.
+      en: >
+        To include name of second place visited during the trip in question, in English.
+      fr: >
+        Inclure le nom du deuxième lieu visité au cours du voyage en question, en anglais.
     form_help:
       en: >
         Note, use the format <City Name>, <State/Province Name>, <Country Name> for Canada and US,
@@ -394,8 +412,10 @@ resources:
       en: Second place visited (French)
       fr: Deuxième lieu visité (français)
     description:
-      en: To include name of second place visited during the trip in question, in French.
-      fr: Inclure le nom du deuxième lieu visité au cours du voyage en question, en français.
+      en: >
+        To include name of second place visited during the trip in question, in French.
+      fr: >
+        Inclure le nom du deuxième lieu visité au cours du voyage en question, en français.
     form_help:
       en: >
         Note, use the format <City Name>, <State/Province Name>, <Country Name> for Canada and US,
@@ -433,8 +453,10 @@ resources:
       en: Other places visited (English)
       fr: Autres lieux visités (anglais)
     description:
-      en: To include names of all other places visited during the trip in question, in English.
-      fr: Inclure les noms de tous les autres lieux visités au cours du voyage en question, en anglais.
+      en: >
+        To include names of all other places visited during the trip in question, in English.
+      fr: >
+        Inclure les noms de tous les autres lieux visités au cours du voyage en question, en anglais.
     form_help:
       en: >
         Note, use the format <City Name>, <State/Province Name>, <Country Name>;<City 2 Name>, <Country 2 Name>
@@ -472,8 +494,10 @@ resources:
       en: Other places visited (French)
       fr: Autres lieux visités (français)
     description:
-      en: To include names of all other places visited during the trip in question, in French.
-      fr: Inclure les noms de tous les autres lieux visités au cours du voyage en question, en français.
+      en: >
+        To include names of all other places visited during the trip in question, in French.
+      fr: >
+        Inclure les noms de tous les autres lieux visités au cours du voyage en question, en français.
     form_help:
       en: >
         Note, use the format <City Name>, <State/Province Name>, <Country Name>;<City 2 Name>, <Country 2 Name>
@@ -511,8 +535,10 @@ resources:
       en: Airfare
       fr: Tarif aérien
     description:
-      en: Total cost of any airline tickets, if applicable.
-      fr: Coût total des billets d’avion, s’il y a lieu.
+      en: >
+        Total cost of any airline tickets, if applicable.
+      fr: >
+        Coût total des billets d’avion, s’il y a lieu.
     obligation: Optional
     format_type:
       en: Numerical – Note, do not include dollar signs ($), all amounts include taxes.
@@ -528,8 +554,12 @@ resources:
       en: Other transportation
       fr: Autres moyens de transport
     description:
-      en: Total cost of any other forms of transportation (for example, train, bus, vehicle rental, private vehicle, taxis, etc), if applicable.
-      fr: Coût total de toutes autres forme de transport (par exemple, train, autobus, véhicule loué, véhicule particulier, taxis), s’il y a lieu.
+      en: >
+        Total cost of any other forms of transportation (for example, train, bus, vehicle
+        rental, private vehicle, taxis, etc), if applicable.
+      fr: >
+        Coût total de toutes autres forme de transport (par exemple, train, autobus,
+        véhicule loué, véhicule particulier, taxis), s’il y a lieu.
     obligation: Optional
     format_type:
       en: Numerical – Note, do not include dollar signs ($), all amounts include taxes.
@@ -545,8 +575,10 @@ resources:
       en: Lodging
       fr: Hébergement
     description:
-      en: Total cost of accommodation
-      fr: Coût total de l’hébergement
+      en: >
+        Total cost of accommodation
+      fr: >
+        Coût total de l’hébergement
     obligation: Mandatory
     excel_required: true
     form_required: true
@@ -567,8 +599,10 @@ resources:
       en: Meals and incidentals
       fr: Frais de repas et frais accessoires
     description:
-      en: Total cost of meals and incidentals expenses.
-      fr: Total des frais de repas et accessoires
+      en: >
+        Total cost of meals and incidentals expenses.
+      fr: >
+        Total des frais de repas et accessoires
     obligation: Mandatory
     excel_required: true
     form_required: true
@@ -589,8 +623,13 @@ resources:
       en: Other expenses
       fr: Autres dépenses
     description:
-      en: Total cost of all other items that are not covered by the above fields (for example. special passport, visas, associated photos, calls to the office or home, dependant care where applicable, etc.).
-      fr: Coût total de tous les autres éléments qui ne sont pas couverts par les champs ci-dessus (par exemple, passeport spécial, visas, photos connexes, appels au bureau ou à la maison, soin aux personnes à charge, le cas échéant)
+      en: >
+        Total cost of all other items that are not covered by the above fields (for example. special
+        passport, visas, associated photos, calls to the office or home, dependant care where applicable, etc.).
+      fr: >
+        Coût total de tous les autres éléments qui ne sont pas couverts par les champs ci-dessus
+        (par exemple, passeport spécial, visas, photos connexes, appels au bureau ou à la maison,
+        soin aux personnes à charge, le cas échéant)
     obligation: Optional
     format_type:
       en: Numerical – Note, do not include dollar signs ($), all amounts include taxes.
@@ -606,8 +645,10 @@ resources:
       en: Total Amount
       fr: Montant total
     description:
-      en: The total of the amount listed above.
-      fr: Le total des montants énumérés ci-dessus
+      en: >
+        The total of the amount listed above.
+      fr: >
+        Le total des montants énumérés ci-dessus
     obligation: Mandatory
     excel_required: true
     form_required: true
@@ -634,8 +675,10 @@ resources:
     datastore_type: text
     label: Additional Comments English
     description:
-      en: This field may be populated with additional comments in English.
-      fr: Ce champ peut indiquer des commentaires supplémentaires en anglais.
+      en: >
+        This field may be populated with additional comments in English.
+      fr: >
+        Ce champ peut indiquer des commentaires supplémentaires en anglais.
     obligation: Optional
     datatables_col_class: col-xxl
     format_type:
@@ -651,8 +694,10 @@ resources:
     datastore_type: text
     label: Additional Comments French
     description:
-      en: This field may be populated with additional comments in French.
-      fr: Ce champ peut indiquer des commentaires supplémentaires en français.
+      en: >
+        This field may be populated with additional comments in French.
+      fr: >
+        Ce champ peut indiquer des commentaires supplémentaires en français.
     obligation: Optional
     datatables_col_class: col-xxl
     format_type:
