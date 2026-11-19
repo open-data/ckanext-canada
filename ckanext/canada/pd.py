@@ -1,5 +1,11 @@
 # NOTE: used to connect to the SOLR cores for Drupal PD Searches
 # TODO: remove once all PDs are in Django
+from typing import Optional, Union, Dict, Any, List, Tuple, cast
+from ckanext.recombinant.types import (
+    RecombinantFieldDict,
+    RecombinantChromoDict
+)
+
 import click
 import os
 import sys
@@ -8,6 +14,7 @@ import calendar
 import time
 from pysolr import Solr
 from babel.numbers import format_currency, format_decimal
+from psycopg2.extensions import cursor as PsycopgCursor
 
 from ckanapi import LocalCKAN, NotFound
 from ckanext.datastore.backend.postgres import get_write_engine
@@ -212,9 +219,6 @@ def _update_records(records: List[Any],
     """
     chromo = get_chromo(resource_name)
     pk = chromo.get('datastore_primary_key', [])
-    if not isinstance(pk, list):
-        pk = [pk]
-
     org = org_detail['name']
     orghash = hashlib.md5(org.encode('utf-8')).hexdigest()
 
@@ -417,7 +421,7 @@ def _add_choice(solrrec: Dict[str, Any],
                 key: str,
                 record: Dict[str, Any],
                 choice: Dict[str, Any],
-                field: Dict[str, Any]):
+                field: RecombinantFieldDict):
     """
     add the english+french values for choice to solrrec
     """
@@ -578,7 +582,7 @@ def sum_to_field(solrrec: Dict[str, Any],
 def match_compare_output(solrrec: Dict[str, Any],
                          out: List[Dict[str, Any]],
                          unmatched: Tuple[Dict[Any, Any], Dict[Any, Any]],
-                         chromo: Dict[str, Any]):
+                         chromo: RecombinantChromoDict):
     """
     pop matching prev/next records from unmatched, create compare fields
     and append on out
@@ -599,7 +603,7 @@ def match_compare_output(solrrec: Dict[str, Any],
 
 def compare_output(prev_solrrec: Dict[str, Any],
                    solrrec: Dict[str, Any],
-                   chromo: Dict[str, Any]):
+                   chromo: RecombinantChromoDict):
     """
     process solr_compare_previous_year fields and return solrrec with
     extra sum and change fields added
@@ -729,7 +733,7 @@ def _load_csv_ref_data(table_name: str, columns: List[str],
     write_engine = get_write_engine()
     connection = write_engine.raw_connection()
     try:
-        cursor = connection.cursor()
+        cursor = cast(PsycopgCursor, connection.cursor())
         with open(file_path, 'rb') as f:
             f_hash = hashlib.sha256()
             for chunk in iter(lambda: f.read(8192), b''):

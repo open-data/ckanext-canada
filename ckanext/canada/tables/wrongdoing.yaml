@@ -26,8 +26,16 @@ resources:
       en: Reference Number
       fr: Numéro de référence
     description:
-      en: This field is populated by the user. It is a unique reference number given to each line item in the spreadsheet. Having a unique identifier for each item will allow users locate a specific item in the registry should they need to modify or delete.
-      fr: Cette zone est remplie par chaque organisation. Un identificateur unique est attribué à chaque poste dans le tableur. Un identificateur unique pour chaque poste permettra aux utilisateurs de repérer un article en particulier s’ils doivent le modifier ou le supprimer.
+      en: >
+        This field is populated by the user. It is a unique reference number given to
+        each line item in the spreadsheet. Having a unique identifier for each item
+        will allow users locate a specific item in the registry should they need
+        to modify or delete.
+      fr: >
+        Cette zone est remplie par chaque organisation. Un identificateur unique
+        est attribué à chaque poste dans le tableur. Un identificateur unique pour
+        chaque poste permettra aux utilisateurs de repérer un article en particulier
+        s’ils doivent le modifier ou le supprimer.
     obligation: Mandatory
     excel_required: true
     form_required: true
@@ -42,8 +50,10 @@ resources:
       en: File Identification Number
       fr: Numéro d’identification du fichier
     description:
-      en: This field will contain the file identification number of the founded wrongdoing file.
-      fr: Cette zone renferme le numéro d’identification du dossier de l’acte répréhensible constaté.
+      en: >
+        This field will contain the file identification number of the founded wrongdoing file.
+      fr: >
+        Cette zone renferme le numéro d’identification du dossier de l’acte répréhensible constaté.
     obligation: Mandatory
     excel_required: true
     form_required: true
@@ -57,8 +67,10 @@ resources:
       en: File Identification date
       fr: Date d’identification du ficher
     description:
-      en: This field will provide the date that the file was created/received.
-      fr: Cette zone renferme la date à laquelle le dossier a été créé ou reçu.
+      en: >
+        This field will provide the date that the file was created/received.
+      fr: >
+        Cette zone renferme la date à laquelle le dossier a été créé ou reçu.
     obligation: Mandatory
     # FIXME: file_id_date does not have required trigger
     excel_required: true
@@ -77,8 +89,10 @@ resources:
       en: English Case Description
       fr: Description anglaise
     description:
-      en: The field will contain the case description, in English.
-      fr: Cette zone renferme la description du cas en anglais.
+      en: >
+        The field will contain the case description, in English.
+      fr: >
+        Cette zone renferme la description du cas en anglais.
     obligation: Mandatory
     excel_required: true
     form_required: true
@@ -96,8 +110,10 @@ resources:
       en: French Case Description
       fr: Description française
     description:
-      en: This field will contain the case description, in French.
-      fr: Cette zone renferme la description du cas en français.
+      en: >
+        This field will contain the case description, in French.
+      fr: >
+        Cette zone renferme la description du cas en français.
     obligation: Mandatory
     excel_required: true
     form_required: true
@@ -115,8 +131,10 @@ resources:
       en: Findings and Conclusions
       fr: Constatations et Conclusions
     description:
-      en: The field will contain value(s) a – f, separated by commas if more than one value.
-      fr: Le champ contiendra une (des) valeur(s) a – f, séparées par une virgule s´il y en a plus d´une.
+      en: >
+        The field will contain value(s) a – f, separated by commas if more than one value.
+      fr: >
+        Le champ contiendra une (des) valeur(s) a – f, séparées par une virgule s´il y en a plus d´une.
     obligation: Mandatory
     # FIXME:  findings_conclusions does not have required trigger
     excel_required: true
@@ -177,8 +195,13 @@ resources:
         Recommendations et mesures
         Correctives anglaises
     description:
-      en: The Field will contain the Recommendations and Corrective Measures as per the article 11 of the Public Servants Disclosure Protection Act, in English.
-      fr: Cette zone renferme les recommandations et mesures correctives en anglais, en conformité à l’article 11 de la Loi sur la protection des fonctionnaires divulgateurs d’actes répréhensibles.
+      en: >
+        The Field will contain the Recommendations and Corrective Measures as per the
+        article 11 of the Public Servants Disclosure Protection Act, in English.
+      fr: >
+        Cette zone renferme les recommandations et mesures correctives en anglais, en
+        conformité à l’article 11 de la Loi sur la protection des fonctionnaires
+        divulgateurs d’actes répréhensibles.
     obligation: Mandatory
     excel_required: true
     form_required: true
@@ -204,8 +227,13 @@ resources:
         Recommendations et mesures
         Correctives françaises
     description:
-      en: The Field will contain the Recommendations and Corrective Measures as per the article 11 of the Public Servants Disclosure Protection Act, in French.
-      fr: Cette zone renferme les recommandations et mesures correctives en français, en conformité à l’article 11 de la Loi sur la protection des fonctionnaires divulgateurs d’actes répréhensibles.
+      en: >
+        The Field will contain the Recommendations and Corrective Measures as per the
+        article 11 of the Public Servants Disclosure Protection Act, in French.
+      fr: >
+        Cette zone renferme les recommandations et mesures correctives en français,
+        en conformité à l’article 11 de la Loi sur la protection des fonctionnaires
+        divulgateurs d’actes répréhensibles.
     obligation: Mandatory
     excel_required: true
     form_required: true

@@ -420,13 +420,6 @@ class TestRecombinantWebForms(CanadaTestBase):
         self._lc_create_pd_record(org=org, is_nil=True)
         return excel_template(dataset_type=self.pd_type, org=org)
 
-    def _lc_get_pd_package_id(self, org=None):
-        lc = LocalCKAN()
-        org = org if org else self.org
-        self._lc_init_pd(org=org)
-        rval = lc.action.recombinant_show(dataset_type=self.pd_type, owner_org=org['name'])
-        return rval['id']
-
     @mock.patch.object(h, 'is_registry_domain', mock_is_registry_domain)
     def test_member_cannot_init_pd(self, app):
         offset = h.url_for('recombinant.preview_table',
@@ -534,7 +527,7 @@ class TestRecombinantWebForms(CanadaTestBase):
     def test_member_cannot_create_single_record(self, app):
         self._lc_init_pd()
 
-        offset = h.url_for('canada.create_pd_record',
+        offset = h.url_for('recombinant.create_record',
                            resource_name=self.pd_type,
                            owner_org=self.org['name'])
         # members should not be able to acces create_pd_record endpoint
@@ -560,7 +553,7 @@ class TestRecombinantWebForms(CanadaTestBase):
     def test_editor_can_create_single_record(self, app):
         self._lc_init_pd()
 
-        offset = h.url_for('canada.create_pd_record',
+        offset = h.url_for('recombinant.create_record',
                            resource_name=self.pd_type,
                            owner_org=self.org['name'])
         response = app.get(offset, extra_environ=self.extra_environ_editor,
@@ -584,7 +577,7 @@ class TestRecombinantWebForms(CanadaTestBase):
     def test_admin_can_create_single_record(self, app):
         self._lc_init_pd()
 
-        offset = h.url_for('canada.create_pd_record',
+        offset = h.url_for('recombinant.create_record',
                            resource_name=self.pd_type,
                            owner_org=self.org['name'])
         response = app.get(offset, extra_environ=self.extra_environ_system,
@@ -606,7 +599,7 @@ class TestRecombinantWebForms(CanadaTestBase):
     def test_member_cannot_update_single_record(self, app):
         self._lc_create_pd_record()
 
-        offset = h.url_for('canada.update_pd_record',
+        offset = h.url_for('recombinant.update_record',
                            resource_name=self.pd_type,
                            owner_org=self.org['name'],
                            pk=self.example_record['request_number'])
@@ -636,7 +629,7 @@ class TestRecombinantWebForms(CanadaTestBase):
     def test_editor_can_update_single_record(self, app):
         self._lc_create_pd_record()
 
-        offset = h.url_for('canada.update_pd_record',
+        offset = h.url_for('recombinant.update_record',
                            resource_name=self.pd_type,
                            owner_org=self.org['name'],
                            pk=self.example_record['request_number'])
@@ -663,7 +656,7 @@ class TestRecombinantWebForms(CanadaTestBase):
     def test_admin_can_update_single_record(self, app):
         self._lc_create_pd_record()
 
-        offset = h.url_for('canada.update_pd_record',
+        offset = h.url_for('recombinant.update_record',
                            resource_name=self.pd_type,
                            owner_org=self.org['name'],
                            pk=self.example_record['request_number'])
@@ -810,7 +803,8 @@ class TestRecombinantWebForms(CanadaTestBase):
         assert 'xls_update' not in response.body
 
         form_action = h.url_for('recombinant.upload',
-                                id=self._lc_get_pd_package_id())
+                                resource_name=self.pd_type,
+                                owner_org=self.org['name'])
         dataset_form = self._filled_upload_form(filestream=template_file)
         response = app.post(form_action,
                             data=dataset_form,
@@ -838,7 +832,8 @@ class TestRecombinantWebForms(CanadaTestBase):
         assert 'Create and update multiple records' in response.body
 
         form_action = h.url_for('recombinant.upload',
-                                id=self._lc_get_pd_package_id())
+                                resource_name=self.pd_type,
+                                owner_org=self.org['name'])
         dataset_form = self._filled_upload_form(filestream=template_file)
         response = app.post(form_action,
                             data=dataset_form,
@@ -865,7 +860,8 @@ class TestRecombinantWebForms(CanadaTestBase):
         assert 'Create and update multiple records' in response.body
 
         form_action = h.url_for('recombinant.upload',
-                                id=self._lc_get_pd_package_id())
+                                resource_name=self.pd_type,
+                                owner_org=self.org['name'])
         dataset_form = self._filled_upload_form(filestream=template_file)
         response = app.post(form_action,
                             data=dataset_form,
@@ -889,7 +885,8 @@ class TestRecombinantWebForms(CanadaTestBase):
         assert 'xls_update' not in response.body
 
         form_action = h.url_for('recombinant.upload',
-                                id=self._lc_get_pd_package_id())
+                                resource_name=self.pd_type,
+                                owner_org=self.org['name'])
         dataset_form = self._filled_upload_form(filestream=good_template_file,
                                                 action='validate')
         response = app.post(form_action,
@@ -920,7 +917,8 @@ class TestRecombinantWebForms(CanadaTestBase):
         assert 'Create and update multiple records' in response.body
 
         form_action = h.url_for('recombinant.upload',
-                                id=self._lc_get_pd_package_id())
+                                resource_name=self.pd_type,
+                                owner_org=self.org['name'])
         dataset_form = self._filled_upload_form(filestream=bad_template_file,
                                                 action='validate')
         response = app.post(form_action,
@@ -962,7 +960,8 @@ class TestRecombinantWebForms(CanadaTestBase):
         assert 'Create and update multiple records' in response.body
 
         form_action = h.url_for('recombinant.upload',
-                                id=self._lc_get_pd_package_id())
+                                resource_name=self.pd_type,
+                                owner_org=self.org['name'])
         dataset_form = self._filled_upload_form(filestream=bad_template_file,
                                                 action='validate')
         response = app.post(form_action,
@@ -1048,8 +1047,8 @@ class TestRecombinantWebForms(CanadaTestBase):
 
         # members are no longer allowed to submit the bulk delete form
         form_action = h.url_for('recombinant.delete_records',
-                                id=self._lc_get_pd_package_id(),
-                                resource_id=records_to_delete['resource_id'])
+                                resource_name=self.pd_type,
+                                owner_org=self.org['name'])
         response = app.post(form_action,
                             data=records_to_delete['form'],
                             extra_environ=self.extra_environ_member,
@@ -1085,8 +1084,8 @@ class TestRecombinantWebForms(CanadaTestBase):
         assert 'Create and update multiple records' in response.body
 
         form_action = h.url_for('recombinant.delete_records',
-                                id=self._lc_get_pd_package_id(),
-                                resource_id=records_to_delete['resource_id'])
+                                resource_name=self.pd_type,
+                                owner_org=self.org['name'])
         response = app.post(form_action,
                             data=records_to_delete['form'],
                             extra_environ=self.extra_environ_editor,
@@ -1122,8 +1121,8 @@ class TestRecombinantWebForms(CanadaTestBase):
         assert 'Create and update multiple records' in response.body
 
         form_action = h.url_for('recombinant.delete_records',
-                                id=self._lc_get_pd_package_id(),
-                                resource_id=records_to_delete['resource_id'])
+                                resource_name=self.pd_type,
+                                owner_org=self.org['name'])
         response = app.post(form_action,
                             data=records_to_delete['form'],
                             extra_environ=self.extra_environ_system,

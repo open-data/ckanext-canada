@@ -36,7 +36,7 @@
                   <strong>{% snippet 'snippets/search_result_text.html', query=g.q, count=g.page.item_count, type='dataset' %}</strong>
                 </div>
                 <div class="text-left">
-                  {{ h.snippet('snippets/sort_by.html', sort=g.sort_by_selected) }}
+                  {% snippet 'snippets/sort_by.html', sort=g.sort_by_selected %}
                 </div>
               {% endif %}
             </div>
@@ -76,7 +76,7 @@
           <p><strong>There was an error while searching.</strong> Please try again.</p>
         {% endtrans %}
       {% endif %}
-      {{ h.snippet('admin/snippets/publish_package_list.html', packages=g.page.items) }}
+      {% snippet 'admin/snippets/publish_package_list.html', packages=g.page.items %}
     </div>
     {%- block pager -%}
       {{ g.page.pager(q=g.q) }}

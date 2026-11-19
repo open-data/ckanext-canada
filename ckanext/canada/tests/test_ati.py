@@ -207,6 +207,23 @@ class TestAti(CanadaTestBase):
         assert 'month' in err['records'][0]
         assert err['records'][0]['month'] == ['Please enter a month number from 1-12']
 
+        # cannot be a future month in the current year
+        db_today = model.Session.execute("SELECT CURRENT_DATE").scalar()
+        if db_today.month < 12:
+            record['year'] = db_today.year
+            record['month'] = db_today.month + 1
+            with pytest.raises(ValidationError) as ve:
+                self.lc.action.datastore_upsert(
+                    resource_id=self.resource_id,
+                    records=[record])
+            model.Session.rollback()
+            err = ve.value.error_dict
+            assert 'records' in err
+            assert 'month' in err['records'][0]
+            assert err['records'][0]['month'] == [
+                'Date can’t be in the future'
+            ]
+
     def test_negative_page_num(self):
         """
         Cannot have pages be a negative number

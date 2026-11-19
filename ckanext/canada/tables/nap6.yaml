@@ -28,8 +28,10 @@ resources:
       en: Reporting Period
       fr: Période de déclaration
     description:
-      en: Year and month of the update
-      fr: Année et mois de la mise à jour
+      en: >
+        Year and month of the update
+      fr: >
+        Année et mois de la mise à jour
     obligation: Mandatory
     occurrence: Single
     excel_required: true
@@ -56,8 +58,11 @@ resources:
       en: Commitments
       fr: Engagements
     description:
-      en: The 4 commitments in the 2025-2029 National Action Plan on Open Government
-      fr: Les 4 engagements dans le Plan d'action national du Canada pour un gouvernement ouvert de 2025-2029
+      en: >
+        The 4 commitments in the 2025-2029 National Action Plan on Open Government
+      fr: >
+        Les 4 engagements dans le Plan d'action national du Canada
+        pour un gouvernement ouvert de 2025-2029
     obligation: Mandatory
     occurrence: Single
     excel_required: true
@@ -90,8 +95,10 @@ resources:
       en: Milestones
       fr: Jalons
     description:
-      en: This list contains milestones that correspond to the chosen commitment
-      fr: Cette liste contient des jalons correspondant à l'engagement choisi
+      en: >
+        This list contains milestones that correspond to the chosen commitment
+      fr: >
+        Cette liste contient des jalons correspondant à l'engagement choisi
     obligation: Mandatory
     occurrence: Single
     excel_required: true
@@ -137,8 +144,8 @@ resources:
         en: "Establish an organization-wide approach to conducting public participation activities with Canadian communities. Engage with communities on a wide variety of topics and encourage feedback at multiple levels to demonstrate the RCMP's commitment to the principles in the Government of Canada (GC) Digital Standards: Playbook"
         fr: "Mettre en place une approche pangouvernementale pour la réalisation d'activités de participation publique auprès des communautés canadiennes. Mobiliser les communautés sur un grand nombre de sujets et encourager la rétroaction à plusieurs niveaux pour démontrer l'engagement de la GRC envers les principes figurant dans les Normes relatives au numérique du gouvernement du Canada : Directives."
       C02.2:
-        en: Improve the effectiveness of the Digital Citizen Initiative
-        fr: Accroître l'efficacité de l'Initiative de citoyenneté numérique.
+        en: Bolster Canadians' resilience to online disinformation by developing options to strengthen the Digital Citizen Initiative, including through strategic assessment, stakeholder engagement, and knowledge mobilization
+        fr: Renforcer la résilience des Canadiennes et des Canadiens face à la désinformation en ligne en élaborant des options pour renforcer l’Initiative de citoyenneté numérique, notamment par moyen d’évaluation stratégique; ainsi que la mobilisation des parties prenantes et la partage des connaissances.
       C02.3:
         en: Increase Canadians' access to government information
         fr: Accroître l'accès des Canadiens à l'information gouvernementale.
@@ -149,8 +156,8 @@ resources:
         en: Consolidate key data from the Creative Export Strategy into one user-friendly interface that is interactive and accessible
         fr: Regrouper les données clés de la Stratégie d'exportation créative en une seule interface conviviale, interactive et accessible.
       C03.3:
-        en: Publish a Government of Canada Artificial Intelligence (AI) Register that would include information about what and how data is being used, how the AI model was trained, and what quality assurance, accountability, success metrics, bias identification and mitigation, and privacy and security measures are in place
-        fr: Publier un registre de l'intelligence artificielle (IA) du gouvernement du Canada qui contiendrait des renseignements sur les données qui sont utilisées et la façon dont celles-ci sont utilisées, sur la façon dont le modèle d'IA a été entraîné, ainsi que sur l'assurance de la qualité, la responsabilisation, les indicateurs de réussite, la détermination et l'atténuation des préjugés, et les mesures de sécurité et de protection de la vie privée en place.
+        en: Publish a Government of Canada Artificial Intelligence (AI) Register
+        fr: Publier un registre de l'intelligence artificielle (IA) du gouvernement du Canada.
       C03.4:
         en: Advance trust and transparency for the Government of Canada's human resources (HR) and pay transformation
         fr: Accroître la confiance et la transparence par rapport à la transformation des ressources humaines (RH) et de la paye du gouvernement du Canada.
@@ -161,27 +168,11 @@ resources:
         en: Develop a targeted learning series on open data for use by federal public servants
         fr: Préparer un programme d'apprentissage ciblé sur les données ouvertes à l'intention des fonctionnaires fédéraux.
       C04.3:
-        en: |
-          Monitor Canadians' experiences with serious legal problems and enhance the Department of Justice Canada's understanding of effective responses using findings from the National Justice Survey and Serious Legal Problems in Canada
-
-          Publish findings from the National Justice Survey and from Statistics Canada's Canadian Legal Problems Survey (CLPS), in user-friendly formats (for example, infographics or a simple dashboard).
-
-          Use the National Justice Survey data to inform decision-making both by the Department of Justice Canada and by key external stakeholders.
-        fr: |
-          Faire le suivi de l'expérience des Canadiens aux prises avec des problèmes juridiques graves et approfondir la compréhension qu'a le ministère de la Justice Canada des réponses efficaces, en s'appuyant sur les résultats du Sondage national sur la justice et de l'Enquête canadienne sur les problèmes juridiques.
-
-          Publier les résultats du Sondage national sur la justice et de l'Enquête canadienne sur les problèmes juridiques de Statistique Canada dans des formats conviviaux (par exemple, infographies ou tableau de bord simple).
-
-          Utiliser les données du Sondage national sur la justice pour éclairer le processus décisionnel du ministère de la Justice Canada et des principaux intervenants externes.
+        en: "Making Justice Data Accessible: National Justice Survey (NJS) data on serious legal problems"
+        fr: "Accessibilité des données sur la justice : données du Sondage national sur la justice (SNJ) sur les problèmes juridiques graves"
       C04.4:
-        en: |
-          Update Justice Canada's State of the Criminal Justice System Dashboard and pursue the automation of updates to support easier dissemination of data to the public.
-
-          Explore, in collaboration with key partners, the possibility of expanding the indicators in the Department of Justice Canada's State of the Criminal Justice System dashboard to include available disaggregated data related to court delays and other key justice system issues.
-        fr: |
-          Mettre à jour le Tableau de bord sur l'état du système de justice pénale du ministère de la Justice Canada et automatiser les mises à jour pour faciliter la diffusion des données au public.
-
-          Explorer, en collaboration avec les partenaires clés, la possibilité d'élargir les indicateurs du Tableau de bord sur l'état du système de justice pénale du ministère de la Justice Canada pour y inclure les données désagrégées disponibles concernant les retards judiciaires et d'autres enjeux importants du système de justice.
+        en: "State of the Criminal Justice System: Automation and expansion"
+        fr: "État du système de justice pénale : automatisation et amélioration du Tableau de bord"
       C04.5:
         en: Support the design and delivery of accessible administrative services.
         fr: Appuyer la conception et la prestation de services administratifs accessibles.
@@ -192,8 +183,10 @@ resources:
       en: Indicators
       fr: Indicateurs
     description:
-      en: The indicators related to the chosen milestone
-      fr: Les indicateurs liés au jalon choisi
+      en: >
+        The indicators related to the chosen milestone
+      fr: >
+        Les indicateurs liés au jalon choisi
     obligation: Mandatory
     occurrence: Single
     excel_required: true
@@ -686,8 +679,10 @@ resources:
       en: Indicator (English)
       fr: Indicateur (anglais)
     description:
-      en: The indicator related to the chosen milestone, in English
-      fr: L'indicateurs liés au jalon choisi en anglais
+      en: >
+        The indicator related to the chosen milestone, in English
+      fr: >
+        L'indicateurs liés au jalon choisi en anglais
     obligation: Mandatory
     datastore_type: text
     published_resource_computed_field: true
@@ -699,8 +694,10 @@ resources:
       en: Indicator (French)
       fr: Indicateur (français)
     description:
-      en: The indicator related to the chosen milestone, in French
-      fr: L'indicateur liés au jalon choisi en français
+      en: >
+        The indicator related to the chosen milestone, in French
+      fr: >
+        L'indicateur liés au jalon choisi en français
     obligation: Mandatory
     datastore_type: text
     published_resource_computed_field: true
@@ -712,8 +709,10 @@ resources:
       en: Indicator Deadline (English)
       fr: Date limite de l'indicateur (anglais)
     description:
-      en: Completion deadline for selected indicator, in English
-      fr: Date limite d'achèvement pour l'indicateur sélectionné en anglais
+      en: >
+        Completion deadline for selected indicator, in English
+      fr: >
+        Date limite d'achèvement pour l'indicateur sélectionné en anglais
     obligation: Mandatory
     datastore_type: text
     published_resource_computed_field: true
@@ -725,8 +724,10 @@ resources:
       en: Indicator Deadline (French)
       fr: Date limite de l'indicateur (français)
     description:
-      en: Completion deadline for selected indicator, in French
-      fr: Date limite d'achèvement pour l'indicateur sélectionné en français
+      en: >
+        Completion deadline for selected indicator, in French
+      fr: >
+        Date limite d'achèvement pour l'indicateur sélectionné en français
     obligation: Mandatory
     datastore_type: text
     published_resource_computed_field: true
@@ -738,8 +739,10 @@ resources:
       en: Indicator Lead Department
       fr: Ministère responsable
     description:
-      en: Department responsible for the implementation of the selected indicator
-      fr: Ministère responsable de la mise en oeuvre de l'indicateur sélectionné
+      en: >
+        Department responsible for the implementation of the selected indicator
+      fr: >
+        Ministère responsable de la mise en oeuvre de l'indicateur sélectionné
     obligation: Mandatory
     datastore_type: _text
     published_resource_computed_field: true
@@ -750,8 +753,10 @@ resources:
       en: Status
       fr: État
     description:
-      en: Indicate the current status of the commitment
-      fr: Indiquer l'état actuel de l'engagement
+      en: >
+        Indicate the current status of the commitment
+      fr: >
+        Indiquer l'état actuel de l'engagement
     obligation: Mandatory
     occurrence: Single
     excel_required: true
@@ -787,8 +792,12 @@ resources:
       en: Progress during reporting period (English)
       fr: Progrès au cours du  période de déclaration (anglais)
     description:
-      en: 1-3 bullets outlining progress made during the most recent reportnig period. If no progress has been made, please write "NIL"
-      fr: 1-3 balles décrivant les progrès réalisés au cours dupériode de déclaration. Si aucun progrès n'a été réalisé, veuillez écrire "NIL"
+      en: >
+        1-3 bullets outlining progress made during the most recent reportnig period.
+        If no progress has been made, please write "NIL"
+      fr: >
+        1-3 balles décrivant les progrès réalisés au cours dupériode de déclaration.
+        Si aucun progrès n'a été réalisé, veuillez écrire "NIL"
     obligation: Mandatory
     occurrence: Single
     excel_required: true
@@ -810,8 +819,12 @@ resources:
       en: Progress during reporting period (French)
       fr: Progrès au cours du période de déclaration (français)
     description:
-      en: 1-3 bullets outlining progress made during the most recent reporting period. If no progress has been made, please write "NUL"
-      fr: 1-3 balles décrivant les progrès réalisés au cours du dernier période de déclaration. Si aucun progrès n'a été réalisé, veuillez écrire "NUL"
+      en: >
+        1-3 bullets outlining progress made during the most recent reporting period.
+        If no progress has been made, please write "NUL"
+      fr: >
+        1-3 balles décrivant les progrès réalisés au cours du dernier période de déclaration.
+        Si aucun progrès n'a été réalisé, veuillez écrire "NUL"
     obligation: Mandatory
     occurrence: Single
     excel_required: true
@@ -833,8 +846,12 @@ resources:
       en: Evidence of progress (English)
       fr: Preuve de progrès (anglais)
     description:
-      en: Any supporting evidence to demonstrate the progress you have made. This could include websites, links to documents, or other information.
-      fr: Toute preuve à l'appui pour démontrer les progrès que vous avez accomplis. Cela peut inclure des sites Web, des liens vers des documents ou d'autres informations.
+      en: >
+        Any supporting evidence to demonstrate the progress you have made.
+        This could include websites, links to documents, or other information.
+      fr: >
+        Toute preuve à l'appui pour démontrer les progrès que vous avez accomplis.
+        Cela peut inclure des sites Web, des liens vers des documents ou d'autres informations.
     obligation: Optional
     occurrence: Single
     datastore_type: text
@@ -856,8 +873,12 @@ resources:
       en: Evidence of progress (French)
       fr: Preuve de progrès (français)
     description:
-      en: Any supporting evidence to demonstrate the progress you have made. This could include websites, links to documents, or other information.
-      fr: Toute preuve à l'appui pour démontrer les progrès que vous avez accomplis. Cela peut inclure des sites Web, des liens vers des documents ou d'autres informations.
+      en: >
+        Any supporting evidence to demonstrate the progress you have made.
+        This could include websites, links to documents, or other information.
+      fr: >
+        Toute preuve à l'appui pour démontrer les progrès que vous avez accomplis.
+        Cela peut inclure des sites Web, des liens vers des documents ou d'autres informations.
     obligation: Optional
     occurrence: Single
     datastore_type: text
@@ -879,8 +900,10 @@ resources:
       en: Challenges (English)
       fr: Défis (anglais)
     description:
-      en: Describe any challenges faced, in English
-      fr: Décrivez les défis rencontrés en anglais
+      en: >
+        Describe any challenges faced, in English
+      fr: >
+        Décrivez les défis rencontrés en anglais
     obligation:
       en: Mandatory, conditional
       fr: Obligatoire, conditionnel
@@ -920,8 +943,10 @@ resources:
       en: Challenges (French)
       fr: Défis (français)
     description:
-      en: Describe any challenges faced, in French
-      fr: Décrivez les défis rencontrés en français
+      en: >
+        Describe any challenges faced, in French
+      fr: >
+        Décrivez les défis rencontrés en français
     obligation:
       en: Mandatory, conditional
       fr: Obligatoire, conditionnel
@@ -991,8 +1016,10 @@ resources:
       en: Department ID
       fr: ID du ministère
     description:
-      en: Identifies the applied ID of the department or agency.
-      fr: Identifie l'ID d'usage du ministère ou de l'organisme.
+      en: >
+        Identifies the applied ID of the department or agency.
+      fr: >
+        Identifie l'ID d'usage du ministère ou de l'organisme.
     obligation: Mandatory
     datastore_type: text
     published_resource_computed_field: true
@@ -1003,8 +1030,10 @@ resources:
       en: Department Name
       fr: Nom du ministère
     description:
-      en: Identifies the applied title of the department or agency.
-      fr: Identifie le titre d'usage du ministère ou de l'organisme.
+      en: >
+        Identifies the applied title of the department or agency.
+      fr: >
+        Identifie le titre d'usage du ministère ou de l'organisme.
     obligation: Mandatory
     datastore_type: text
     published_resource_computed_field: true
