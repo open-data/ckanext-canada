@@ -1664,6 +1664,8 @@ def delete_activities(days: Optional[int] = 90,
     """
     Delete rows from the activity table past a certain number of days.
     """
+    if days is None:
+        days = 90
     if include_types and exclude_types:
         raise click.ClickException(
             'Options --include-types and --exclude-types are mutually exclusive')
@@ -1674,7 +1676,7 @@ def delete_activities(days: Optional[int] = 90,
         # click version compatibility for single values
         exclude_types = [exclude_types]
     conditions = ["timestamp < NOW() - INTERVAL ':days days'"]
-    params = {'days': days}
+    params: Dict[str, Any] = {'days': days}
     if include_types:
         click.echo(f'Including activity_type {include_types}')
         conditions.append('activity_type IN :include_types')
