@@ -2220,3 +2220,25 @@ body tbody.recombinant-data-dictionary-suffix-ref td{
   cursor: help !important;
   text-decoration: underline dotted !important;
 }
+
+
+.canada-demo-card{
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: nowrap !important;
+  align-items: flex-start !important;
+}
+
+.canada-demo-card .card-img-top{
+  width: 40% !important;
+  max-width: 40% !important;
+  min-width: 40% !important;
+}
+
+.canada-demo-card .card-body{
+  flex: 1;
+}
+
+.canada-demo-card .card-text{
+  font-size: 16px !important;
+}

@@ -1,0 +1,28 @@
+{% extends "admin/base.html" %}
+
+{% block secondary_content %}
+  <section class="panel panel-info">
+    <header class="panel-heading canada-panel-heading"><i class="fa fa-info-circle" aria-hidden="true"></i>&nbsp;{{- _('Demo') -}}</header>
+    <div class="panel-body">
+      <p>{{- _('As a sysadmin user you have full control over this CKAN instance. You can access special parts of the web application to demo certain features.') -}}</p>
+    </div>
+  </section>
+{% endblock %}
+
+{% block primary_content_inner %}
+  {%- set available_demos = [] -%}
+  {%- if 'demo_info' in h.recombinant_get_types() -%}
+    <div class="card canada-demo-card">
+      <img class="card-img-top" src="{{- h.url_for_static('/static/img/demo/demo_info.png') -}}" alt="{{- _('Image of the info collection Registry screen') -}}">
+      <div class="card-body">
+        <strong class="card-title">{{- _('Info Collection Type for Proactive Disclosure') -}}</strong>
+        <p class="card-text">{{- _('Demo how this Proactive Disclosure type works without Excel Templates, using only Webforms and APIs. Show how the Stately Records work with the "Save for later" feature.') -}}</p>
+        <a href="{{- h.url_for('recombinant.type_redirect', resource_name='demo_info') -}}" class="btn btn-primary btn-sm">{{- _('Go to Info Collection Registry') -}}</a>
+      </div>
+    </div>
+    {%- do available_demos.append('demo_info') -%}
+  {%- endif -%}
+  {%- if not available_demos -%}
+  <p>{{- _('There are no available demos at this time.') -}}</p>
+  {%- endif -%}
+{% endblock %}

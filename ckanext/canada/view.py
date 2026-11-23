@@ -948,3 +948,11 @@ def ckan_admin_portal_sync():
     setattr(g, 'page', extra_vars['page'])
 
     return render('admin/portal_sync.html', extra_vars=extra_vars)
+
+
+@canada_views.route('/ckan-admin/demo', methods=['GET'])
+def admin_demo():
+    if not is_sysadmin(g.user):
+        abort(403, _('Not authorized to see this page'))
+
+    return render('admin/demo.html', extra_vars={})
