@@ -247,6 +247,15 @@ class CanadaDatasetsPlugin(SchemingDatasetsPlugin):
                 search_params['fq'] = search_params['fq'].replace(
                     release_date_query, release_date_query.replace('"', ''))
 
+        if 'fq_list' not in search_params:
+            search_params['fq_list'] = []
+        if not search_params.get('extras', {}).pop('__RECOMBINANT_CONTEXT__', False):
+            # exclude demo schemas from the package_search
+            # if not doing Recombinant logic actions.
+            search_params['fq_list'] += [
+                '-dataset_type:(demo_info OR demo_sequence OR demo_foreign_keys)'
+            ]
+
         return search_params
 
     # IPackageController
