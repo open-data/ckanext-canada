@@ -2242,3 +2242,19 @@ body tbody.recombinant-data-dictionary-suffix-ref td{
 .canada-demo-card .card-text{
   font-size: 16px !important;
 }
+
+.canada-recombinant-display-card{
+  text-align: left !important;
+}
+
+.canada-recombinant-display-card > div{
+  display: inline !important;
+  text-align: left !important;
+}
+
+.canada-recombinant-display-card .canada-recombinant-display-card-separator{
+  margin-left: 5px;
+  margin-right: 5px;
+  display: inline-block;
+  opacity: 0.75;
+}
