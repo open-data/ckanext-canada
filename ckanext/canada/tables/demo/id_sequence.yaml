@@ -6,7 +6,22 @@ title: Demo ID Sequence Dataset Type
 shortname: Demo ID Sequence Dataset Type
 notes: Demo ID Sequence Dataset Type
 
+# open_canada_id generation rule:
+#
+#   Assign unique _id across *all* records and so that (_id % 97) == 45
+#   These _id values are exported as open_canada_id in the combined csv dataset
+#
+#   The last two _id digits are check digits. Mod 97 prevents almost all numeric
+#   typos (Mod 97 is also used for international bank account check digits)
+#
+#   45 chosen only because "Demo Sequence", D ≈ 4, S ≈ 5.
+#   open_canada_id values for other record types use values
+#   different than 45 so that open_canada_ids are unique across all record types
+#
+#   Use check digits from 03-99 because numbers ending in 00 look approximate,
+#   i.e. for all open_canada_id values (_id % 100) > 2
 datastore_create_sequence: demo_sequence_seq
+sequence_modulo_offset: 45
 
 template_version: 3
 
@@ -19,14 +34,14 @@ resources:
 
   published_resource_id: 1495487f-338c-33fc-8715-ecb48c67d17e
 
-  edit_using__id: true
+  edit_using__id: true  # new standard of _id usage
   create_form: true
   edit_form: true
   excel_template: true
 
   fields:
   # Dev: Published Resource Field
-  - datastore_id: _id
+  - datastore_id: open_canada_id
     label:
       en: open_canada_id
       fr: open_canada_id
@@ -266,23 +281,8 @@ resources:
 
         IF errors = '{{}}' THEN
           IF NOT importing AND TG_OP = 'INSERT' THEN
-            -- open_canada_id generation rule --
-
-            -- Assign unique _id across *all* records and so that (_id % 97) == 45
-            -- These _id values are exported as open_canada_id in the combined csv dataset
-
-            -- The last two _id digits are check digits. Mod 97 prevents almost all numeric
-            -- typos (Mod 97 is also used for international bank account check digits)
-
-            -- 45 chosen only because "Demo Sequence", D ≈ 4, S ≈ 5.
-            -- open_canada_id values for other record types use values
-            -- different than 45 so that open_canada_ids are unique across all record types
-
-            -- Use check digits from 03-99 because numbers ending in 00 look approximate,
-            -- i.e. for all open_canada_id values (_id % 100) > 2
-
             NEW._id := nextval('demo_sequence_seq') * 100 + 99;
-            NEW._id := NEW._id - (NEW._id - 45) % 97;
+            NEW._id := NEW._id - (NEW._id - {sequence_modulo_offset}) % 97;
           END IF;
           RETURN NEW;
         END IF;

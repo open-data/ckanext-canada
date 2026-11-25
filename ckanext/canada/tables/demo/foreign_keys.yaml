@@ -6,7 +6,22 @@ title: Demo Foreign Keys Dataset Type
 shortname: Demo Foreign Keys Dataset Type
 notes: Demo Foreign Keys Dataset Type
 
+# open_canada_id generation rule:
+#
+#   Assign unique _id across *all* records and so that (_id % 97) == 61
+#   These _id values are exported as open_canada_id in the combined csv dataset
+#
+#   The last two _id digits are check digits. Mod 97 prevents almost all numeric
+#   typos (Mod 97 is also used for international bank account check digits)
+#
+#   61 chosen only because "Foreign Keys", F ≈ 6, K ≈ 1.
+#   open_canada_id values for other record types use values
+#   different than 61 so that open_canada_ids are unique across all record types
+#
+#   Use check digits from 03-99 because numbers ending in 00 look approximate,
+#   i.e. for all open_canada_id values (_id % 100) > 2
 datastore_create_sequence: demo_foreign_keys_seq
+sequence_modulo_offset: 61
 
 template_version: 3
 
@@ -19,14 +34,14 @@ resources:
 
   published_resource_id: 1473887f-338c-22ec-8715-ecb48c67d17e
 
-  edit_using__id: true
+  edit_using__id: false  # the foreign constraints work best without it
   create_form: true
   edit_form: true
   excel_template: true
 
   fields:
   # Dev: Published Resource Field
-  - datastore_id: _id
+  - datastore_id: open_canada_id
     label:
       en: open_canada_id
       fr: open_canada_id
@@ -163,7 +178,6 @@ resources:
       DECLARE
         errors text[][] := '{{}}';
         crval RECORD;
-        importing boolean NOT NULL := (SELECT EXISTS (SELECT 1 FROM datastore_app_context WHERE 'recombinant_import' = ANY(flags)));
       BEGIN
         -- NOTE: always require primary keys
         errors := errors || required_error(NEW.reference_number, 'reference_number');
@@ -182,30 +196,7 @@ resources:
         NEW.description := trim_lead_trailing(NEW.description);
         errors := errors || max_char_error(NEW.description, 350, 'description');
 
-        IF TG_OP = 'UPDATE' THEN
-          errors := errors || required_error(NEW._id, '_id');
-        END IF;
-
         IF errors = '{{}}' THEN
-          IF NOT importing AND TG_OP = 'INSERT' THEN
-            -- open_canada_id generation rule --
-
-            -- Assign unique _id across *all* records and so that (_id % 97) == 61
-            -- These _id values are exported as open_canada_id in the combined csv dataset
-
-            -- The last two _id digits are check digits. Mod 97 prevents almost all numeric
-            -- typos (Mod 97 is also used for international bank account check digits)
-
-            -- 61 chosen only because "Foreign Keys", F ≈ 6, K ≈ 1.
-            -- open_canada_id values for other record types use values
-            -- different than 61 so that open_canada_ids are unique across all record types
-
-            -- Use check digits from 03-99 because numbers ending in 00 look approximate,
-            -- i.e. for all open_canada_id values (_id % 100) > 2
-
-            NEW._id := nextval('demo_foreign_keys_seq') * 100 + 99;
-            NEW._id := NEW._id - (NEW._id - 61) % 97;
-          END IF;
           RETURN NEW;
         END IF;
         RAISE EXCEPTION E'TAB-DELIMITED\t%', array_to_string(errors, E'\t');
@@ -232,7 +223,7 @@ resources:
 
   published_resource_id: 1523887f-338c-22ec-8715-ecb48c67d17e
 
-  edit_using__id: true
+  edit_using__id: false  # the foreign constraints work best without it
   create_form: true
   edit_form: true
   excel_template: true
@@ -404,23 +395,8 @@ resources:
 
         IF errors = '{{}}' THEN
           IF NOT importing AND TG_OP = 'INSERT' THEN
-            -- open_canada_id generation rule --
-
-            -- Assign unique _id across *all* records and so that (_id % 97) == 61
-            -- These _id values are exported as open_canada_id in the combined csv dataset
-
-            -- The last two _id digits are check digits. Mod 97 prevents almost all numeric
-            -- typos (Mod 97 is also used for international bank account check digits)
-
-            -- 61 chosen only because "Foreign Keys", F ≈ 6, K ≈ 1.
-            -- open_canada_id values for other record types use values
-            -- different than 61 so that open_canada_ids are unique across all record types
-
-            -- Use check digits from 03-99 because numbers ending in 00 look approximate,
-            -- i.e. for all open_canada_id values (_id % 100) > 2
-
             NEW._id := nextval('demo_foreign_keys_seq') * 100 + 99;
-            NEW._id := NEW._id - (NEW._id - 61) % 97;
+            NEW._id := NEW._id - (NEW._id - {sequence_modulo_offset}) % 97;
           END IF;
           RETURN NEW;
         END IF;

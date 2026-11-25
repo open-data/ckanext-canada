@@ -38,6 +38,19 @@
     <div class="canada-v10-spacer"></div>
     {%- do available_demos.append('demo_sequence') -%}
   {%- endif -%}
+  {%- if 'demo_foreign_keys' in rcomb_types -%}
+    <div class="card canada-demo-card">
+      <img class="card-img-top" src="{{- h.url_for_static('/static/img/demo/demo_foreign_keys.png') -}}" alt="{{- _('Image of the foreign keys JSON output') -}}">
+      <div class="card-body">
+        <strong class="card-title">{{- _('Foreign Keys for Proactive Disclosure') -}}</strong>
+        <p class="card-text">{{- _('Demo how this Proactive Disclosure type works with Foreign Key Constraints in a Parent/Child table relationship. Show how Parent data is required in order to create and reference Child data.') -}}</p>
+        <a href="{{- h.url_for('recombinant.type_redirect', resource_name='demo_foreign_keys_parent') -}}" target="_blank" class="btn btn-primary btn-sm">{{- _('Go to Foreign Key Demo') -}}</a>
+      </div>
+    </div>
+    <div class="canada-v10-spacer"></div>
+    <div class="canada-v10-spacer"></div>
+    {%- do available_demos.append('demo_foreign_keys') -%}
+  {%- endif -%}
   {%- if not available_demos -%}
   <p>{{- _('There are no available demos at this time.') -}}</p>
   {%- endif -%}
