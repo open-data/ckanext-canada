@@ -101,7 +101,7 @@ class PortalUpdater(object):
                  log: Optional[str],
                  tries: int,
                  delay: int,
-                 verbose: bool,
+                 verbose: int,
                  dataset_id: Optional[str] = None,
                  ignore_hashes: bool = False):
         self.portal_ini = portal_ini
@@ -136,6 +136,12 @@ class PortalUpdater(object):
             time.sleep(self.delay)
 
     def _portal_update(self, activity_date: Optional[str]):
+        outer_verbosity_trace = ''
+        if self.verbose >= 3:
+            outer_verbosity_trace += (
+                '\n    VERBOSITY OUTPUT FOR '
+                'portal_update command'
+            )
         # determine activity date
         if activity_date:
             past = re.match(PAST_RE, activity_date)
@@ -147,10 +153,22 @@ class PortalUpdater(object):
                     days=days,
                     seconds=(hours * 60 + minutes) * 60
                 )
+                if self.verbose >= 3:
+                    outer_verbosity_trace += (
+                        '\n    activity_datetime=%s' % activity_datetime
+                    )
             else:
                 activity_datetime = isodate(activity_date, cast(Context, {}))
+                if self.verbose >= 3:
+                    outer_verbosity_trace += (
+                        '\n    activity_datetime=%s' % activity_datetime
+                    )
         else:
             activity_datetime = datetime.now() - timedelta(days=7)
+            if self.verbose >= 3:
+                outer_verbosity_trace += (
+                    '\n    activity_datetime=%s' % activity_datetime
+                )
 
         log = None
         if self.log is not None:
@@ -159,8 +177,11 @@ class PortalUpdater(object):
         registry = LocalCKAN()
         source_datastore_uri = str(datastore.get_write_engine().url)
 
+        # TODO: continue outer_verbosity_trace output...
+
         def changed_package_id_runs(start_date: datetime,
-                                    verbose: Optional[bool] = False) -> \
+                                    verbose: Optional[int] = 0,
+                                    _outer_verbosity_trace: Optional[str] = '') -> \
             Generator[Union[
                 Tuple[List[bytes], datetime],
                 Tuple[None, None]],
@@ -193,7 +214,7 @@ class PortalUpdater(object):
         if self.mirror:
             cmd.append('-m')
         if self.verbose:
-            cmd.append('-v')
+            cmd.append('-' + ('v' * self.verbose))
         if self.ignore_hashes:
             cmd.append('-i')
 
@@ -212,7 +233,8 @@ class PortalUpdater(object):
                        package_id: Optional[str],
                        action: str,
                        reason: str,
-                       error: Optional[str] = None):
+                       error: Optional[str] = None,
+                       verbose_str: Optional[str] = None):
 
             if not log:
                 return
@@ -225,6 +247,8 @@ class PortalUpdater(object):
                 ]) + '\n')
             if error:
                 log.write(error + '\n')
+            if verbose_str:
+                log.write(verbose_str + '\n')
             log.flush()
 
         with _quiet_int_pipe():
@@ -238,7 +262,9 @@ class PortalUpdater(object):
             has_errored = False
 
             for packages, next_date in (
-                    changed_package_id_runs(activity_datetime, verbose=self.verbose)):
+                    changed_package_id_runs(
+                        activity_datetime, verbose=self.verbose,
+                        _outer_verbosity_trace=outer_verbosity_trace)):
                 if not packages:
                     continue
                 job_ids, finished, result = pool.send(enumerate(packages))
@@ -247,6 +273,7 @@ class PortalUpdater(object):
                     try:
                         package_id, action, reason, error, \
                             failure_reason, failure_trace, \
+                            verbosity_trace, \
                             do_update_sync_success_time = json.loads(result)
                     except Exception:
                         error_stack = traceback.format_exc()
@@ -254,10 +281,13 @@ class PortalUpdater(object):
                                    None,
                                    'ERROR',
                                    'Error when processing worker pool',
-                                   error_stack)
+                                   error_stack,
+                                   verbosity_trace if self.verbose >= 3 else None)
                         if self.verbose:
                             print('ERROR', 'Error when processing worker pool',
                                   error_stack, file=sys.stderr)
+                        if self.verbose >= 3:
+                            print('VERBOSE', verbosity_trace)
                         raise click.ClickException(
                             "Worker proccess failed. See stderr or log file.")
                     _stats = next(stats)
@@ -268,8 +298,12 @@ class PortalUpdater(object):
                         print(job_ids, _stats, finished, package_id,
                               'ERROR', error, file=sys.stderr)
                         has_errored = True
+                    if self.verbose >= 3:
+                        print(job_ids, _stats, finished, package_id,
+                              'VERBOSE', verbosity_trace)
 
-                    append_log(finished, package_id, action, reason, error)
+                    append_log(finished, package_id, action, reason, error,
+                               verbosity_trace if self.verbose >= 3 else None)
                     job_ids, finished, result = next(pool)
 
                     # save the sync state in the database
@@ -310,7 +344,7 @@ class PortalUpdater(object):
 def _changed_packages_since(registry: Union[LocalCKAN, RemoteCKAN],
                             since_time: Optional[datetime],
                             ids_only: Optional[bool] = False,
-                            verbose: Optional[bool] = False,
+                            verbose: Optional[int] = 0,
                             dataset_id: Optional[str] = None) -> \
                                 Union[Tuple[List[bytes], datetime],
                                       Tuple[None, None]]:
@@ -391,7 +425,7 @@ def _changed_packages_since(registry: Union[LocalCKAN, RemoteCKAN],
 def _copy_datasets(source_datastore_uri: Optional[str],
                    user: Optional[str] = None,
                    mirror: Optional[bool] = False,
-                   verbose: Optional[bool] = False,
+                   verbose: Optional[int] = 0,
                    ignore_hashes: Optional[bool] = False):
     """
     PortalUpdater member: Syncs package dicts from the stdin (valid JSON).
@@ -415,6 +449,8 @@ def _copy_datasets(source_datastore_uri: Optional[str],
             # will output to stderr, while action gets outputted to stdout
             error: str = ''
             do_update_sync_success_time = False
+            # will output to stdout if -vvv
+            verbosity_trace: str = ''
 
             @contextmanager
             def _capture_exception_details(_reason: str, _package_id: str):
@@ -445,32 +481,73 @@ def _copy_datasets(source_datastore_uri: Optional[str],
 
             source_pkg: Optional[Dict[str, Any]] = json.loads(package)
             package_id = source_pkg['id'] if source_pkg else 'unknown'
+            if verbose >= 3:
+                verbosity_trace += (
+                    '\n VERBOSITY OUTPUT FOR '
+                    'PACKAGE ID: %s' % package_id
+                )
             reason = ''
             target_deleted = False
             if source_pkg and source_pkg['state'] == 'deleted':
                 source_pkg = None
+                if verbose >= 3:
+                    verbosity_trace += (
+                        '\n    Registry package is state=deleted'
+                    )
 
             if source_pkg and source_pkg['type'] not in DATASET_TYPES:
                 # non-default dataset types ignored
                 source_pkg = None
+                if verbose >= 3:
+                    verbosity_trace += (
+                        '\n    Registry package type ("%s") is not in '
+                        'the "public" types %s' %
+                        (source_pkg['type'], ', '.join(DATASET_TYPES))
+                    )
 
-            _trim_package(source_pkg)
+            if verbose >= 3:
+                verbosity_trace += (
+                    '\n    Trimming key/values from '
+                    'Registry package %s' % package_id
+                )
+            _trim_package(source_pkg, verbose=verbose,
+                          verbosity_trace=verbosity_trace)
 
             action = ''
             if source_pkg and not mirror:
                 if source_pkg.get('ready_to_publish') == 'false':
                     source_pkg = None
                     reason = 'marked not ready to publish'
+                    if verbose >= 3:
+                        verbosity_trace += (
+                            '\n    Registry '
+                            'package ready_to_publish=false'
+                        )
                 elif not source_pkg.get('portal_release_date'):
                     source_pkg = None
                     reason = 'release date not set'
+                    if verbose >= 3:
+                        verbosity_trace += (
+                            '\n    Registry '
+                            'package portal_release_date=None'
+                        )
                 elif isodate(source_pkg['portal_release_date'],
                              cast(Context, {})) > now:
                     source_pkg = None
                     reason = 'release date in future'
+                    if verbose >= 3:
+                        verbosity_trace += (
+                            '\n    Registry '
+                            'package portal_release_date>%s' % str(now)
+                        )
                 else:
                     # portal packages published public
                     source_pkg['private'] = False
+                    if verbose >= 3:
+                        verbosity_trace += (
+                            '\n    Setting '
+                            'package private=False'
+                        )
 
             target_pkg: Optional[Dict[str, Any]] = None
             # type_ignore_reason: future skip capabilities
@@ -479,8 +556,18 @@ def _copy_datasets(source_datastore_uri: Optional[str],
                     target_pkg = portal.call_action('package_show', {
                         'id': package_id
                     })
+                    if verbose >= 3:
+                        verbosity_trace += (
+                            '\n    Found '
+                            'Portal package with id:%s' % package_id
+                        )
                 except (NotFound, NotAuthorized):
                     target_pkg = None
+                    if verbose >= 3:
+                        verbosity_trace += (
+                            '\n    Did not find '
+                            'Portal package with id:%s' % package_id
+                        )
                 except (CKANAPIError, URLError) as e:
                     sys.stdout.write(
                         json.dumps([
@@ -489,14 +576,35 @@ def _copy_datasets(source_datastore_uri: Optional[str],
                             str(e.args)
                         ]) + '\n'
                     )
+                    if verbose >= 3:
+                        verbosity_trace += (
+                            '\n    package_show action '
+                            'raised a CKANAPIError or URLError'
+                        )
                     raise
                 if target_pkg and target_pkg['state'] == 'deleted':
                     target_pkg = None
                     target_deleted = True
+                    if verbose >= 3:
+                        verbosity_trace += (
+                            '\n    Portal package state=deleted'
+                        )
 
+                if verbose >= 3:
+                    verbosity_trace += (
+                        '\n    Getting datastore_info and '
+                        'resource views for Portal package'
+                    )
                 target_pkg = get_datastore_and_views(
-                    target_pkg, portal, verbose=verbose)
-                _trim_package(target_pkg)
+                    target_pkg, portal, verbose=verbose,
+                    verbosity_trace=verbosity_trace)
+                if verbose >= 3:
+                    verbosity_trace += (
+                        '\n    Trimming key/values from '
+                        'Portal package'
+                    )
+                _trim_package(target_pkg, verbose=verbose,
+                              verbosity_trace=verbosity_trace)
 
             resource_file_hashes = {}
 
@@ -627,7 +735,8 @@ def _copy_datasets(source_datastore_uri: Optional[str],
                                          error,
                                          failure_reason,
                                          failure_trace,
-                                         do_update_sync_success_time]) + '\n')
+                                         do_update_sync_success_time,
+                                         verbosity_trace]) + '\n')
             sys.stdout.flush()
 
 
@@ -933,7 +1042,9 @@ def _bulk_validate():
     log.close()
 
 
-def _trim_package(pkg: Optional[Dict[str, Any]] = None):
+def _trim_package(pkg: Optional[Dict[str, Any]] = None,
+                  verbose: Optional[int] = 0,
+                  verbosity_trace: Optional[str] = ''):
     """
     PortalUpdater member: removes keys from provided package dict.
 
@@ -943,37 +1054,85 @@ def _trim_package(pkg: Optional[Dict[str, Any]] = None):
     """
     # XXX full of custom hacks and deep knowledge of our schema :-(
     if not pkg:
+        if verbose >= 3:
+            verbosity_trace += (
+                '\n    No package supplied...'
+            )
         return
     for k in PACKAGE_TRIM_FIELDS:
         if k in pkg:
             del pkg[k]
+            if verbose >= 3:
+                verbosity_trace += (
+                    '\n    Trim: removed %s '
+                    'from the package metadata' % k
+                )
     for r in pkg['resources']:
         for k in RESOURCE_TRIM_FIELDS:
             if k in r:
                 del r[k]
+                if verbose >= 3:
+                    verbosity_trace += (
+                        '\n    Trim: removed %s '
+                        'from the resource ("%s") metadata' % (k, r['id'])
+                    )
         if 'datastore_contains_all_records_of_source_file' in r:
             r['datastore_contains_all_records_of_source_file'] = \
                 toolkit.asbool(r['datastore_contains_all_records_of_source_file'])
+            if verbose >= 3:
+                verbosity_trace += (
+                    '\n    Trim: set datastore_contains_all_records_of_source_file=%s '
+                    'for the resource ("%s")' % (
+                        toolkit.asbool(
+                            r['datastore_contains_all_records_of_source_file']),
+                            r['id'])
+                )
         if r.get('url_type') == 'upload' and r['url']:
             r['url'] = r['url'].rsplit('/', 1)[-1]
+            if verbose >= 3:
+                verbosity_trace += (
+                    '\n    Trim: set url to %s '
+                    'for the resource ("%s")' % (r['url'], r['id'])
+                )
         for k in ['name', 'size']:
             if k not in r:
                 r[k] = None
+                if verbose >= 3:
+                    verbosity_trace += (
+                        '\n    Trim: set %s to None '
+                        'for the resource ("%s")' % (k, r['id'])
+                    )
     if 'name' not in pkg or not pkg['name']:
         pkg['name'] = pkg['id']
+        if verbose >= 3:
+            verbosity_trace += (
+                '\n    Trim: set name=id ("%s")' % pkg['name']
+            )
     if 'type' not in pkg:
         pkg['type'] = 'dataset'
+        if verbose >= 3:
+            verbosity_trace += (
+                '\n    Trim: set type=dataset'
+            )
     if 'state' not in pkg:
         pkg['state'] = 'active'
+        if verbose >= 3:
+            verbosity_trace += (
+                '\n    Trim: set state=active'
+            )
     for k in ['url']:
         if k not in pkg:
             pkg[k] = ''
+            if verbose >= 3:
+                verbosity_trace += (
+                    '\n    Trim: set %s=""' % k
+                )
 
 
 def _add_datastore_and_views(package: Dict[str, Any], portal: LocalCKAN,
                              resource_file_hashes: Dict[str, Any],
                              source_datastore_uri: Optional[str],
-                             verbose: Optional[bool] = False) \
+                             verbose: Optional[int] = 0) \
                              -> Tuple[str, str, str, str]:
     """
     PortalUpdater member: Syncs DataDictionaries, Resource Views, and DataStore tables.
@@ -1021,7 +1180,7 @@ def _add_to_datastore(portal: LocalCKAN, resource: Dict[str, Any],
                       resource_details: Dict[str, Any],
                       resource_file_hashes: Dict[str, Any],
                       source_datastore_uri: Optional[str],
-                      verbose: Optional[bool] = False) -> Tuple[str, str, str, str]:
+                      verbose: Optional[int] = 0) -> Tuple[str, str, str, str]:
     """
     PortalUpdater member: Syncs DataDictionaries and DataStore tables.
     """
@@ -1146,7 +1305,7 @@ def _add_to_datastore(portal: LocalCKAN, resource: Dict[str, Any],
 
 def _add_views(portal: LocalCKAN, resource: Dict[str, Any],
                resource_details: Dict[str, Any],
-               verbose: Optional[bool] = False) -> Tuple[str, str, str, str]:
+               verbose: Optional[int] = 0) -> Tuple[str, str, str, str]:
     """
     PortalUpdater member: Syncs Resource Views.
     """
@@ -1231,7 +1390,8 @@ def _add_views(portal: LocalCKAN, resource: Dict[str, Any],
 
 def get_datastore_and_views(package: Optional[Dict[str, Any]],
                             ckan_instance: Union[LocalCKAN, RemoteCKAN],
-                            verbose: Optional[bool] = False) -> \
+                            verbose: Optional[int] = 0,
+                            verbosity_trace: Optional[str] = '') -> \
                                 Optional[Dict[str, Any]]:
     if package and 'resources' in package:
         for resource in package['resources']:
@@ -1242,26 +1402,63 @@ def get_datastore_and_views(package: Optional[Dict[str, Any]],
                           file=sys.stderr)
                     print("  Getting resource views and DataStore fields...",
                           file=sys.stderr)
+                if verbose >= 3:
+                    verbosity_trace += (
+                        '\n    DataStore is active for resource %s. '
+                        'Getting resource views and DataStore fields...' %
+                        resource['id']
+                    )
                 try:
                     table = ckan_instance.call_action('datastore_search',
                                                       {'resource_id': resource['id'],
                                                        'limit': 0})
                     if table:
                         # add hash, views and data dictionary
+                        _views = ckan_instance.call_action(
+                            'resource_view_list', {'id': resource['id']})
+                        _data_dict = _datastore_dictionary(
+                            ckan_instance, resource['id'], verbose=verbose,
+                            verbosity_trace=verbosity_trace)
                         package[resource['id']] = {
                             "hash": resource.get('hash'),
-                            "views": ckan_instance.call_action(
-                                'resource_view_list', {'id': resource['id']}),
-                            "data_dict": _datastore_dictionary(
-                                ckan_instance, resource['id']),
+                            "views": _views,
+                            "data_dict": _data_dict,
                         }
+                        if verbose >= 3:
+                            verbosity_trace += (
+                                '\n    Resource %s file hash: %s ' %
+                                (resource['id'], resource.get('hash'))
+                            )
+                            verbosity_trace += (
+                                '\n    Resource %s number of views: %s ' %
+                                (resource['id'], len(_views))
+                            )
+                            verbosity_trace += (
+                                '\n    Resource %s has data dictionary: %s ' %
+                                (resource['id'], len(_data_dict) > 0)
+                            )
                 except NotFound:
                     if verbose:
                         print("  WARNING: Did not find "
                               "resource views or DataStore fields...",
                               file=sys.stderr)
+                    if verbose >= 3:
+                        verbosity_trace += (
+                            '\n    WARNING: Did not find resource views '
+                            'or DataStore fields for resource %s' %
+                            resource['id']
+                        )
                     pass
                 except ValidationError as e:
+                    if verbose >= 3:
+                        verbosity_trace += (
+                            '\n    ERROR: raised when trying to get '
+                            'views or DataStore fields for resource %s' %
+                            resource['id']
+                        )
+                        verbosity_trace += (
+                            '\n    %s' % repr(e)
+                        )
                     raise ValidationError(cast(ErrorDict, {
                         'original_error': repr(e),
                         'original_error_dict': e.error_dict,
@@ -1273,11 +1470,27 @@ def get_datastore_and_views(package: Optional[Dict[str, Any]],
                           file=sys.stderr)
                     print("  Only getting resource views...",
                           file=sys.stderr)
+                if verbose >= 3:
+                    verbosity_trace += (
+                        '\n    DataStore is inactive for resource %s. '
+                        'Only getting resource views...' %
+                        resource['id']
+                    )
                 resource_views = ckan_instance.call_action(
                     'resource_view_list', {'id': resource['id']})
                 if resource_views:
                     package[resource['id']] = {
                         "views": resource_views}
+                if verbose >= 3:
+                    verbosity_trace += (
+                        '\n    Resource %s number of views: %s ' %
+                        (resource['id'], len(resource_views))
+                    )
+    else:
+        if verbose >= 3:
+            verbosity_trace += (
+                '\n    Package has no resources...'
+            )
     return package
 
 
@@ -1314,7 +1527,8 @@ def _update_inventory_votes(json_name: str):
 
 
 def _datastore_dictionary(ckan_instance: Union[LocalCKAN, RemoteCKAN],
-                          resource_id: str) -> List[Dict[str, Any]]:
+                          resource_id: str, verbose: Optional[int] = 0,
+                          verbosity_trace: Optional[str] = '') -> List[Dict[str, Any]]:
     """
     Return the data dictionary info for a resource
     """
@@ -1326,6 +1540,11 @@ def _datastore_dictionary(ckan_instance: Union[LocalCKAN, RemoteCKAN],
                     'include_total': False})['fields']
             if not f['id'].startswith('_')]
     except (NotFound, NotAuthorized):
+        if verbose >= 3:
+            verbosity_trace += (
+                '\n    datastore_search returned NotFound '
+                'for resource %s' % resource_id
+            )
         return []
 
 
@@ -1403,7 +1622,8 @@ def canada():
 @click.option(
     "-v",
     "--verbose",
-    is_flag=True,
+    type=click.INT,
+    count=True,
     help="Increase verbosity",
 )
 @click.option(
@@ -1426,7 +1646,7 @@ def portal_update(portal_ini: str,
                   log: Optional[str] = None,
                   tries: int = 1,
                   delay: int = 60,
-                  verbose: bool = False,
+                  verbose: int = 0,
                   dataset_id: Optional[str] = None,
                   ignore_hashes: bool = False):
     """
@@ -1480,7 +1700,8 @@ def portal_update(portal_ini: str,
 @click.option(
     "-v",
     "--verbose",
-    is_flag=True,
+    type=click.INT,
+    count=True,
     help="Increase verbosity",
 )
 @click.option(
@@ -1492,7 +1713,7 @@ def portal_update(portal_ini: str,
 def copy_datasets(mirror: Optional[bool] = False,
                   ckan_user: Optional[str] = None,
                   source: Optional[str] = None,
-                  verbose: Optional[bool] = False,
+                  verbose: Optional[int] = 0,
                   ignore_hashes: bool = False):
     """
     PortalUpdater member: CKAN cli command entrance
@@ -1711,7 +1932,7 @@ def _get_site_user_context() -> Context:
     return cast(Context, {"user": user['name'], "ignore_auth": True})
 
 
-def _get_datastore_tables(verbose: Optional[bool] = False) -> List[str]:
+def _get_datastore_tables(verbose: Optional[int] = 0) -> List[str]:
     """
     Returns a list of resource ids (table names) from
     the DataStore database.
@@ -1735,7 +1956,7 @@ def _get_datastore_tables(verbose: Optional[bool] = False) -> List[str]:
 
 def _get_datastore_resources(valid: Optional[bool] = True,
                              is_datastore_active: Optional[bool] = True,
-                             verbose: Optional[bool] = False) -> List[str]:
+                             verbose: Optional[int] = 0) -> List[str]:
     """
     Returns a list of resource ids that are DataStore
     enabled and that are of upload url_type.
@@ -1807,7 +2028,7 @@ def _get_datastore_resources(valid: Optional[bool] = True,
 
 def _get_datastore_count(context: Context,
                          resource_id: str,
-                         verbose: Optional[bool] = False,
+                         verbose: Optional[int] = 0,
                          status: Optional[int] = 1,
                          max_count: Optional[int] = 1):
     """
@@ -1854,13 +2075,13 @@ DATASTORE_DESTRUCTION_MESSAGE = """
 @click.option('-l', '--list-output', is_flag=True,
               type=click.BOOL,
               help='List the Resource View IDs instead of executing everything.')
-@click.option('-v', '--verbose', is_flag=True,
-              type=click.BOOL, help='Increase verbosity.')
+@click.option('-v', '--verbose', count=True,
+              type=click.INT, help='Increase verbosity.')
 def purge_datatables_views(
         resource_id: Optional[str] = None,
         quiet: Optional[bool] = False,
         list_output: Optional[bool] = False,
-        verbose: Optional[bool] = False):
+        verbose: Optional[int] = 0):
     """
     Handles purging of DataTables Views for invalid and empty DataStore Resources.
 
@@ -1997,13 +2218,13 @@ def purge_datatables_views(
 @click.option('-l', '--list-output', is_flag=True,
               type=click.BOOL,
               help='List the Resource IDs instead of executing everything.')
-@click.option('-v', '--verbose', is_flag=True,
-              type=click.BOOL, help='Increase verbosity.')
+@click.option('-v', '--verbose', count=True,
+              type=click.INT, help='Increase verbosity.')
 def purge_datastore_tables(
         resource_id: Optional[str] = None,
         quiet: Optional[bool] = False,
         list_output: Optional[bool] = False,
-        verbose: Optional[bool] = False):
+        verbose: Optional[int] = 0):
     """
     Handles purging of invalid and empty DataStore tables.
 
@@ -2129,8 +2350,8 @@ def purge_datastore_tables(
               help='Resource ID to re-submit to Validation. Defaults to None.')
 @click.option('-e', '--empty-only', is_flag=True,
               type=click.BOOL, help='Only re-submit empty DataStore Resources.')
-@click.option('-v', '--verbose', is_flag=True,
-              type=click.BOOL, help='Increase verbosity.')
+@click.option('-v', '--verbose', count=True,
+              type=click.INT, help='Increase verbosity.')
 @click.option('-q', '--quiet', is_flag=True,
               type=click.BOOL, help='Suppress human interaction.')
 @click.option('-l', '--list-output', is_flag=True,
@@ -2149,7 +2370,7 @@ def purge_datastore_tables(
               help='Skip submitting to Xloader after Validation.')
 def resubmit_datastore_resources(resource_id: Optional[str] = None,
                                  empty_only: Optional[bool] = False,
-                                 verbose: Optional[bool] = False,
+                                 verbose: Optional[int] = 0,
                                  quiet: Optional[bool] = False,
                                  list_output: Optional[bool] = False,
                                  xloader: Optional[bool] = False,
@@ -2344,8 +2565,8 @@ def resubmit_datastore_resources(resource_id: Optional[str] = None,
 
 
 @canada.command(short_help="Generates the report for dataset Opennes Ratings.")
-@click.option('-v', '--verbose', is_flag=True,
-              type=click.BOOL, help='Increase verbosity.')
+@click.option('-v', '--verbose', count=True,
+              type=click.INT, help='Increase verbosity.')
 @click.option('-d', '--details', is_flag=True,
               type=click.BOOL, help='Include more dataset details.')
 @click.option('-D', '--dump', type=click.File('w'),
@@ -2354,7 +2575,7 @@ def resubmit_datastore_resources(resource_id: Optional[str] = None,
               default='c4c5c7f1-bfa6-4ff6-b4a0-c164cb2060f7',
               help='Dataset ID, defaults to c4c5c7f1-bfa6-4ff6-b4a0-c164cb2060f7')
 def openness_report(
-        verbose: Optional[bool] = False,
+        verbose: Optional[int] = 0,
         details: Optional[bool] = False,
         dump: Optional[Union['click.File', bool]] = False,
         package_id: Optional[str] = 'c4c5c7f1-bfa6-4ff6-b4a0-c164cb2060f7'):
@@ -2478,9 +2699,9 @@ def openness_report(
 
 
 @canada.command(short_help="Deletes old database triggers.")
-@click.option('-v', '--verbose', is_flag=True,
-              type=click.BOOL, help='Increase verbosity.')
-def delete_old_triggers(verbose: Optional[bool] = False):
+@click.option('-v', '--verbose', count=True,
+              type=click.INT, help='Increase verbosity.')
+def delete_old_triggers(verbose: Optional[int] = 0):
     """
     Delete old, unused database triggers.
     """
@@ -2491,7 +2712,7 @@ def delete_old_triggers(verbose: Optional[bool] = False):
     _drop_function('inventory_trigger', verbose)
 
 
-def _drop_function(name: str, verbose: Optional[bool] = False):
+def _drop_function(name: str, verbose: Optional[int] = 0):
     sql = '''
         DROP FUNCTION {name};
         '''.format(name=datastore.identifier(name))
@@ -2514,13 +2735,13 @@ def _drop_function(name: str, verbose: Optional[bool] = False):
               help='Dump results to a CSV file.')
 @click.option('-l', '--lite', is_flag=True,
               type=click.BOOL, help='Only output one record per unique user.')
-@click.option('-v', '--verbose', is_flag=True,
-              type=click.BOOL, help='Increase verbosity.')
+@click.option('-v', '--verbose', count=True,
+              type=click.INT, help='Increase verbosity.')
 def export_pd_reporting_info(since: str,
                              type: Union[str, List[str]],
                              output: 'click.File',
                              lite: Optional[bool] = False,
-                             verbose: Optional[bool] = False):
+                             verbose: Optional[int] = 0):
     if verbose:
         click.echo('Compiling PD names...')
     type_names = {}
