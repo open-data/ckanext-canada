@@ -377,12 +377,14 @@ function load_pd_datatable(CKAN_MODULE, HAS_TRANSLATIONS){
         let ds_type = $('.dt-scroll-head').find('th').eq(column.index()).attr('data-datastore-type');
         if( colSearch ){
           if( ds_type == 'numeric' || ds_type == 'float' || ds_type == 'double' || ds_type == 'int' || ds_type == 'bigint' ){
+            const decimalMatch = String(highlightText).match(/\.(\d+)/);
+            const precisionPoint = decimalMatch ? decimalMatch[1].length : null;
             if( locale == 'en' ){
-              highlightText = DataTable.render.number(',', '.', null, null).display(highlightText, null, null);
+              highlightText = DataTable.render.number(',', '.', precisionPoint, null).display(highlightText, null, null);
             }else if( locale == 'fr' ){
-              highlightText = DataTable.render.number(' ', ',', null, null).display(highlightText, null, null);
+              highlightText = DataTable.render.number(' ', ',', precisionPoint, null).display(highlightText, null, null);
             }else{
-              highlightText = DataTable.render.number(null, null, null, null).display(highlightText, null, null);
+              highlightText = DataTable.render.number(null, null, precisionPoint, null).display(highlightText, null, null);
             }
           }else if( ds_type == 'money' ){
             if( highlightText.toString().includes('$') ){
@@ -656,12 +658,14 @@ function load_pd_datatable(CKAN_MODULE, HAS_TRANSLATIONS){
         _data = 'FALSE';
       }
       if( _chromo_field.datastore_type == 'numeric' || _chromo_field.datastore_type == 'int' || _chromo_field.datastore_type == 'bigint' ){
+        const decimalMatch = String(_data).match(/\.(\d+)/);
+        const precisionPoint = decimalMatch ? decimalMatch[1].length : null;
         if( locale == 'en' ){
-          _data = DataTable.render.number(',', '.', null, null).display(_data, _type, _row);
+          _data = DataTable.render.number(',', '.', precisionPoint, null).display(_data, _type, _row);
         }else if( locale == 'fr' ){
-          _data = DataTable.render.number(' ', ',', null, null).display(_data, _type, _row);
+          _data = DataTable.render.number(' ', ',', precisionPoint, null).display(_data, _type, _row);
         }else{
-          _data = DataTable.render.number(null, null, null, null).display(_data, _type, _row);
+          _data = DataTable.render.number(null, null, precisionPoint, null).display(_data, _type, _row);
         }
       }
       if( _chromo_field.datastore_type == 'timestamp' ){
